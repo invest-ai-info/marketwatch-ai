@@ -1,793 +1,379 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MarketWatch AI — 投資情報ダッシュボード</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0a0d12;
-    --bg2: #111520;
-    --bg3: #161b27;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(255,255,255,0.12);
-    --text: #e8ecf1;
-    --text2: #8892a4;
-    --text3: #4d5666;
-    --green: #00d97e;
-    --green-dim: rgba(0,217,126,0.12);
-    --red: #ff4d6a;
-    --red-dim: rgba(255,77,106,0.12);
-    --amber: #f5a623;
-    --amber-dim: rgba(245,166,35,0.12);
-    --blue: #4a9eff;
-    --blue-dim: rgba(74,158,255,0.12);
-    --gold: #c9a84c;
-    --gold-dim: rgba(201,168,76,0.1);
-    --radius: 10px;
-    --radius-lg: 16px;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── Header ── */
-  header {
-    background: var(--bg2);
-    border-bottom: 1px solid var(--border);
-    padding: 0 28px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 28px;
-    height: 28px;
-    background: var(--gold);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    color: #0a0d12;
-    font-family: 'Playfair Display', serif;
-  }
-
-  .logo-text {
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-
-  .logo-text span {
-    color: var(--gold);
-  }
-
-  nav {
-    display: flex;
-    gap: 4px;
-  }
-
-  nav a {
-    padding: 6px 14px;
-    border-radius: 6px;
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 13px;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-
-  nav a:hover, nav a.active {
-    background: var(--bg3);
-    color: var(--text);
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .update-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--green-dim);
-    border: 1px solid rgba(0,217,126,0.2);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 11px;
-    color: var(--green);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ── Ticker ── */
-  .ticker-bar {
-    background: var(--bg3);
-    border-bottom: 1px solid var(--border);
-    padding: 8px 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .ticker-inner {
-    display: inline-flex;
-    gap: 40px;
-    animation: ticker 30s linear infinite;
-  }
-
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .ticker-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-  }
-
-  .ticker-name { color: var(--text2); }
-  .ticker-price { color: var(--text); font-weight: 500; }
-  .ticker-change.up { color: var(--green); }
-  .ticker-change.down { color: var(--red); }
-
-  /* ── Layout ── */
-  .container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 24px 28px;
-  }
-
-  .page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .page-subtitle {
-    font-size: 12px;
-    color: var(--text3);
-    margin-bottom: 24px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* ── Market Cards ── */
-  .market-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .market-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    transition: border-color 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .market-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-
-  .market-card.green::before { background: var(--green); }
-  .market-card.red::before { background: var(--red); }
-  .market-card.amber::before { background: var(--amber); }
-  .market-card.gold::before { background: var(--gold); }
-
-  .market-card:hover { border-color: var(--border2); }
-
-  .market-label {
-    font-size: 11px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .market-price {
-    font-size: 26px;
-    font-weight: 700;
-    font-family: 'DM Mono', monospace;
-    color: var(--text);
-    margin-bottom: 6px;
-    letter-spacing: -0.02em;
-  }
-
-  .market-change {
-    font-size: 12px;
-    font-family: 'DM Mono', monospace;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .market-change.up { color: var(--green); }
-  .market-change.down { color: var(--red); }
-
-  .market-sub {
-    font-size: 11px;
-    color: var(--text3);
-    margin-top: 8px;
-  }
-
-  /* ── Mini Sparkline ── */
-  .sparkline {
-    margin-top: 12px;
-    height: 32px;
-  }
-
-  /* ── Main Grid ── */
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  /* ── Section ── */
-  .section {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .section-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .section-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .section-title .icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-  }
-
-  .section-badge {
-    font-size: 11px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* ── News Items ── */
-  .news-item {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .news-item:last-child { border-bottom: none; }
-  .news-item:hover { background: var(--bg3); }
-
-  .news-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .news-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-family: 'DM Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .news-tag.geopolitics { background: var(--red-dim); color: var(--red); }
-  .news-tag.monetary { background: var(--blue-dim); color: var(--blue); }
-  .news-tag.earnings { background: var(--green-dim); color: var(--green); }
-  .news-tag.crypto { background: var(--amber-dim); color: var(--amber); }
-  .news-tag.commodity { background: var(--gold-dim); color: var(--gold); }
-
-  .news-time {
-    font-size: 11px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .news-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-
-  .news-summary {
-    font-size: 12px;
-    color: var(--text2);
-    line-height: 1.6;
-  }
-
-  /* ── AI Forecast ── */
-  .forecast-item {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .forecast-item:last-child { border-bottom: none; }
-
-  .forecast-asset {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-
-  .forecast-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .forecast-period {
-    font-size: 11px;
-    color: var(--text3);
-    width: 40px;
-  }
-
-  .forecast-bar-wrap {
-    flex: 1;
-    margin: 0 10px;
-    height: 4px;
-    background: var(--bg3);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .forecast-bar {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 1s ease;
-  }
-
-  .forecast-bar.bull { background: var(--green); }
-  .forecast-bar.neutral { background: var(--amber); }
-  .forecast-bar.bear { background: var(--red); }
-
-  .forecast-label {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    width: 50px;
-    text-align: right;
-  }
-
-  .forecast-label.bull { color: var(--green); }
-  .forecast-label.neutral { color: var(--amber); }
-  .forecast-label.bear { color: var(--red); }
-
-  /* ── Calendar ── */
-  .calendar-item {
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .calendar-item:last-child { border-bottom: none; }
-
-  .calendar-date {
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    color: var(--text3);
-    min-width: 40px;
-  }
-
-  .calendar-text { font-size: 13px; color: var(--text2); }
-  .calendar-text strong { color: var(--text); font-weight: 500; }
-
-  .impact-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-
-  .impact-high { background: var(--red); }
-  .impact-mid { background: var(--amber); }
-  .impact-low { background: var(--text3); }
-
-  /* ── Disclaimer ── */
-  .disclaimer {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 20px;
-    font-size: 11px;
-    color: var(--text3);
-    line-height: 1.7;
-    margin-top: 8px;
-  }
-
-  /* ── Footer ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .footer-links { display: flex; gap: 20px; }
-  .footer-links a { color: var(--text3); text-decoration: none; }
-  .footer-links a:hover { color: var(--text2); }
-
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
-    .market-grid { grid-template-columns: repeat(2, 1fr); }
-    .main-grid { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 600px) {
-    .market-grid { grid-template-columns: 1fr 1fr; }
-    header { padding: 0 16px; }
-    .container { padding: 16px; }
-    nav { display: none; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マーケットニュース - 2026年4月12日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #161b22 0%, #1c2128 100%);
+      border-bottom: 1px solid #30363d;
+      padding: 24px 32px;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #58a6ff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-meta {
+      font-size: 0.85rem;
+      color: #8b949e;
+    }
+    .header-meta span {
+      color: #58a6ff;
+      font-weight: 600;
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .sentiment-banner {
+      background: linear-gradient(135deg, #1c2f1c 0%, #162416 100%);
+      border: 1px solid #2ea043;
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .sentiment-badge {
+      background: #238636;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 6px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .sentiment-text {
+      color: #7ee787;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #58a6ff; }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .icon-stocks { background: #1a3a5c; }
+    .icon-fx     { background: #3a2a1a; }
+    .icon-cmd    { background: #2a1a3a; }
+    .icon-crypto { background: #1a3a2a; }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #e6edf3;
+    }
+    .card-subtitle {
+      font-size: 0.75rem;
+      color: #8b949e;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #21262d;
+    }
+    .price-row:last-of-type { border-bottom: none; }
+    .price-label { font-size: 0.85rem; color: #8b949e; }
+    .price-value { font-size: 0.95rem; font-weight: 600; color: #e6edf3; }
+    .price-change { font-size: 0.8rem; }
+    .up   { color: #3fb950; }
+    .down { color: #f85149; }
+    .card-summary {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #21262d;
+      font-size: 0.82rem;
+      color: #8b949e;
+      line-height: 1.65;
+    }
+    .highlights-section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    .highlight-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #21262d;
+    }
+    .highlight-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .highlight-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1f6feb;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .highlight-content h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #58a6ff;
+      margin-bottom: 4px;
+    }
+    .highlight-content p {
+      font-size: 0.83rem;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+    footer {
+      background: #161b22;
+      border-top: 1px solid #30363d;
+      padding: 20px 32px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #6e7681;
+    }
+    footer a { color: #58a6ff; text-decoration: none; }
+    @media (max-width: 600px) {
+      .header-inner { flex-direction: column; align-items: flex-start; }
+      .sentiment-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
-  <div class="logo">
-    <div class="logo-icon">M</div>
-    <div class="logo-text">Market<span>Watch</span> AI</div>
-  </div>
-  <nav>
-    <a href="#" class="active">ダッシュボード</a>
-    <a href="#">株式</a>
-    <a href="#">為替</a>
-    <a href="#">コモディティ</a>
-    <a href="#">暗号資産</a>
-  </nav>
-  <div class="header-right">
-    <div class="update-badge">
-      <div class="dot"></div>
-      毎朝 07:00 自動更新
+  <div class="header-inner">
+    <div>
+      <div class="header-title">📊 マーケットニュース</div>
+      <div class="header-meta">最終更新: <span>2026年4月12日（日）自動更新</span></div>
     </div>
+    <div class="header-meta">powered by Claude AI</div>
   </div>
 </header>
 
-<!-- Ticker -->
-<div class="ticker-bar">
-  <div class="ticker-inner" id="ticker"></div>
-</div>
+<main>
 
-<!-- Main -->
-<div class="container">
-  <div class="page-title">マーケット概況</div>
-  <div class="page-subtitle" id="datetime">読み込み中...</div>
-
-  <!-- Market Cards -->
-  <div class="market-grid">
-    <div class="market-card green">
-      <div class="market-label">日経平均</div>
-      <div class="market-price">57,490</div>
-      <div class="market-change up">▲ +630 &nbsp;+1.11%</div>
-      <div class="market-sub">前日比 先物終値</div>
-      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
-        <polyline points="0,28 20,22 40,26 60,18 80,14 100,10 120,6" fill="none" stroke="#00d97e" stroke-width="1.5" opacity="0.8"/>
-      </svg>
-    </div>
-    <div class="market-card amber">
-      <div class="market-label">USD / JPY</div>
-      <div class="market-price">159.24</div>
-      <div class="market-change down">▼ -0.31 &nbsp;-0.19%</div>
-      <div class="market-sub">東京市場 現在値</div>
-      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
-        <polyline points="0,8 20,10 40,7 60,12 80,16 100,20 120,22" fill="none" stroke="#f5a623" stroke-width="1.5" opacity="0.8"/>
-      </svg>
-    </div>
-    <div class="market-card gold">
-      <div class="market-label">GOLD (USD/oz)</div>
-      <div class="market-price">4,743</div>
-      <div class="market-change up">▲ +87 &nbsp;+1.87%</div>
-      <div class="market-sub">NY市場 現在値</div>
-      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
-        <polyline points="0,26 20,22 40,18 60,24 80,14 100,10 120,8" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
-      </svg>
-    </div>
-    <div class="market-card amber">
-      <div class="market-label">BTC / USD</div>
-      <div class="market-price">72,100</div>
-      <div class="market-change up">▲ +2,841 &nbsp;+4.10%</div>
-      <div class="market-sub">Binance 現在値</div>
-      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
-        <polyline points="0,28 20,24 40,28 60,20 80,16 100,8 120,4" fill="none" stroke="#f5a623" stroke-width="1.5" opacity="0.8"/>
-      </svg>
+  <!-- センチメント -->
+  <div class="sentiment-banner">
+    <div class="sentiment-badge">📈 中立〜やや強気</div>
+    <div class="sentiment-text">
+      米・イラン停戦合意を受け株価は7連続上昇。原油は100ドル割れで落ち着きを取り戻したが、
+      米消費者信頼感が過去最低水準（47.6）に急落しており、景気後退リスクへの警戒が続く。
+      金は3週連続上昇で安全資産需要は根強い。
     </div>
   </div>
 
-  <!-- Main Grid -->
-  <div class="main-grid">
+  <!-- カテゴリカード -->
+  <p class="section-title">カテゴリ別マーケット動向</p>
+  <div class="cards-grid">
 
-    <!-- News -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <div class="icon" style="background:rgba(74,158,255,0.15);">📰</div>
-          AI収集 最新ニュース
+    <!-- 株式 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-stocks">🗾</div>
+        <div>
+          <div class="card-title">株式市場</div>
+          <div class="card-subtitle">日本株・米国株</div>
         </div>
-        <div class="section-badge">2026-04-11 07:00 更新</div>
       </div>
-      <div class="news-item">
-        <div class="news-meta">
-          <span class="news-tag geopolitics">中東・地政学</span>
-          <span class="news-time">06:30</span>
-        </div>
-        <div class="news-title">米・イラン停戦交渉、イスラマバードで第2ラウンドへ — ホルムズ海峡の行方が焦点</div>
-        <div class="news-summary">JDバンス副大統領がイラン代表団と直接会合。一部船舶の通航が再開される案が浮上しているが、イスラエルのレバノン攻撃を受けイラン側は合意違反を主張。先行き不透明感は継続。</div>
+      <div class="price-row">
+        <span class="price-label">日経平均</span>
+        <span class="price-value">53,413 <span class="up price-change">▲290</span></span>
       </div>
-      <div class="news-item">
-        <div class="news-meta">
-          <span class="news-tag monetary">米金融政策</span>
-          <span class="news-time">05:45</span>
-        </div>
-        <div class="news-title">FRB、年内利下げ確率57%が「据え置き」— パウエル議長が現行政策維持を強調</div>
-        <div class="news-summary">CME FedWatchによると12月FOMCでの据え置き確率が最有力。本日のCPIデータ（3月分）が今後の金融政策の鍵を握る。利下げ1回予想は25.6%に上昇。</div>
+      <div class="price-row">
+        <span class="price-label">S&P500</span>
+        <span class="price-value up">7日続伸</span>
       </div>
-      <div class="news-item">
-        <div class="news-meta">
-          <span class="news-tag earnings">決算</span>
-          <span class="news-time">04:00</span>
-        </div>
-        <div class="news-title">米主要企業 1Q決算シーズン開幕 — 前年比+12.8%増益予想、経営陣発言に注目</div>
-        <div class="news-summary">今週から金融大手を皮切りに決算発表がスタート。中東情勢の長期化を受け、各社経営陣が先行き見通しで慎重姿勢を示すか否かが株価の分岐点となりそう。</div>
+      <div class="price-row">
+        <span class="price-label">米消費者信頼感</span>
+        <span class="price-value down">47.6（過去最低）</span>
       </div>
-      <div class="news-item">
-        <div class="news-meta">
-          <span class="news-tag crypto">暗号資産</span>
-          <span class="news-time">03:20</span>
-        </div>
-        <div class="news-title">BTC一時12万2,000ドル回復 — トランプ大統領、DC年金の暗号資産投資解禁令に署名</div>
-        <div class="news-summary">米国の確定拠出年金による暗号資産投資を可能にする大統領令が発効。モルガン・スタンレーのBTC現物ETFも上場し機関資金流入期待が高まる。8万ドルが次の心理的節目。</div>
-      </div>
-      <div class="news-item">
-        <div class="news-meta">
-          <span class="news-tag commodity">コモディティ</span>
-          <span class="news-time">02:10</span>
-        </div>
-        <div class="news-title">原油 WTI 100ドル台で推移 — 北海原油は最高値更新、ゴールドは4,700ドル台堅調</div>
-        <div class="news-summary">ホルムズ海峡封鎖継続で供給リスクが持続。JPモルガンは2026年末までにゴールド5,000ドル到達を予想。ウェルズ・ファーゴはレンジを6,100〜6,300ドルに引き上げた。</div>
+      <div class="card-summary">
+        停戦合意を受け米株は7連続上昇と大幅反発。TSMC Q1売上が35%増でAI需要を確認。
+        S&P500構成銘柄のQ1予想EPSは前年比+13%と6四半期連続2桁増益見通し。
+        一方、米消費者信頼感指数が過去最低を更新し景気減速懸念が浮上。
       </div>
     </div>
 
-    <!-- Right Column -->
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-
-      <!-- AI Forecast -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">
-            <div class="icon" style="background:rgba(0,217,126,0.15);">🤖</div>
-            AI 相場予想
-          </div>
-          <div class="section-badge">参考情報</div>
-        </div>
-
-        <div class="forecast-item">
-          <div class="forecast-asset">ゴールド (XAU/USD)</div>
-          <div class="forecast-row">
-            <div class="forecast-period">短期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:55%"></div></div>
-            <div class="forecast-label neutral">中立</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">中期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:78%"></div></div>
-            <div class="forecast-label bull">強気</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">長期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:90%"></div></div>
-            <div class="forecast-label bull">強気↑↑</div>
-          </div>
-        </div>
-
-        <div class="forecast-item">
-          <div class="forecast-asset">ビットコイン (BTC)</div>
-          <div class="forecast-row">
-            <div class="forecast-period">短期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:48%"></div></div>
-            <div class="forecast-label neutral">注意</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">中期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:72%"></div></div>
-            <div class="forecast-label bull">強気</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">長期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:85%"></div></div>
-            <div class="forecast-label bull">強気↑↑</div>
-          </div>
-        </div>
-
-        <div class="forecast-item">
-          <div class="forecast-asset">日経平均</div>
-          <div class="forecast-row">
-            <div class="forecast-period">短期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bear" style="width:40%"></div></div>
-            <div class="forecast-label bear">弱気</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">中期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:55%"></div></div>
-            <div class="forecast-label neutral">中立</div>
-          </div>
-          <div class="forecast-row">
-            <div class="forecast-period">長期</div>
-            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:70%"></div></div>
-            <div class="forecast-label bull">強気</div>
-          </div>
+    <!-- 為替 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-fx">💱</div>
+        <div>
+          <div class="card-title">為替（FX）</div>
+          <div class="card-subtitle">ドル円・ユーロ円</div>
         </div>
       </div>
+      <div class="price-row">
+        <span class="price-label">USD/JPY</span>
+        <span class="price-value">159円台半ば</span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">EUR/JPY</span>
+        <span class="price-value">183円台後半</span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">米政策金利</span>
+        <span class="price-value">3.50〜3.75%（据え置き）</span>
+      </div>
+      <div class="card-summary">
+        FOMCは2会合連続で金利を据え置き。2026年の利下げ予想は1回（▲0.25%）にとどまる。
+        中東緊張のエネルギー価格高騰がインフレ見通しを引き上げ、円安基調が継続。
+        ドル円は159円台で推移し高止まり状態。
+      </div>
+    </div>
 
-      <!-- Economic Calendar -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">
-            <div class="icon" style="background:rgba(245,166,35,0.15);">📅</div>
-            今週の重要指標
-          </div>
+    <!-- コモディティ -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-cmd">🛢️</div>
+        <div>
+          <div class="card-title">コモディティ</div>
+          <div class="card-subtitle">原油・金</div>
         </div>
-        <div class="calendar-item">
-          <div class="impact-dot impact-high"></div>
-          <div class="calendar-date">4/11</div>
-          <div class="calendar-text"><strong>米CPI（3月）</strong><br>前回 +3.1% 予想 +3.0%</div>
+      </div>
+      <div class="price-row">
+        <span class="price-label">WTI原油</span>
+        <span class="price-value">$95.63 <span class="down price-change">▼2.29%</span></span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">金（スポット）</span>
+        <span class="price-value up">$4,790 / oz</span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">原油1ヶ月変化</span>
+        <span class="price-value up">+9.60%</span>
+      </div>
+      <div class="card-summary">
+        米・イラン停戦で原油は100ドルを割り込み下落傾向。ただしサウジ石油施設攻撃による
+        生産能力60万BPD減少が供給不安を残す。金は4,700ドル超で3週連続上昇。
+        インフレ懸念と地政学リスクが安全資産への資金流入を支えている。
+      </div>
+    </div>
+
+    <!-- 暗号資産 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-crypto">₿</div>
+        <div>
+          <div class="card-title">暗号資産</div>
+          <div class="card-subtitle">BTC・ETH</div>
         </div>
-        <div class="calendar-item">
-          <div class="impact-dot impact-high"></div>
-          <div class="calendar-date">4/14</div>
-          <div class="calendar-text"><strong>米PPI（3月）</strong><br>生産者物価指数</div>
-        </div>
-        <div class="calendar-item">
-          <div class="impact-dot impact-mid"></div>
-          <div class="calendar-date">4/15</div>
-          <div class="calendar-text"><strong>FRBベージュブック</strong><br>地区連銀景況報告</div>
-        </div>
-        <div class="calendar-item">
-          <div class="impact-dot impact-mid"></div>
-          <div class="calendar-date">4/13〜</div>
-          <div class="calendar-text"><strong>米主要企業 1Q決算</strong><br>金融・IT大手が相次ぎ発表</div>
-        </div>
-        <div class="calendar-item">
-          <div class="impact-dot impact-high"></div>
-          <div class="calendar-date">随時</div>
-          <div class="calendar-text"><strong>米・イラン停戦交渉</strong><br>イスラマバード会合の動向</div>
-        </div>
+      </div>
+      <div class="price-row">
+        <span class="price-label">Bitcoin (BTC)</span>
+        <span class="price-value">$72,885 <span class="up price-change">▲0.85%</span></span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">Ethereum (ETH)</span>
+        <span class="price-value">$2,237 <span class="up price-change">▲2.36%</span></span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">BTC時価総額</span>
+        <span class="price-value">$1.45兆</span>
+      </div>
+      <div class="card-summary">
+        米コアCPIが予想を下回る+0.2%となりリスクオンムードでBTC・ETHともに上昇。
+        TradFi先物の日次出来高が1〜3月で3→8.6BドルへとほぼトリプルになりBTCの
+        価格発見機能が拡大。Crypto Clarity法案の通過見込みは30%程度。
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 本日の注目ポイント -->
+  <div class="highlights-section">
+    <p class="section-title" style="margin-bottom:18px;">🔍 本日の注目ポイント</p>
+    <div class="highlight-item">
+      <div class="highlight-num">1</div>
+      <div class="highlight-content">
+        <h4>米・イラン停戦合意 — 地政学リスクの一時的後退</h4>
+        <p>2週間の停戦合意成立でホルムズ海峡閉鎖懸念が後退。株式は7連続上昇、原油は100ドルを下回り
+        インフレへの圧力が低下。ただし停戦の持続性次第では市場が再び急変する可能性がある。</p>
+      </div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-num">2</div>
+      <div class="highlight-content">
+        <h4>米消費者信頼感が過去最低 47.6 — 景気後退リスクが浮上</h4>
+        <p>ミシガン大消費者信頼感指数が全属性・全構成項目で悪化。エネルギー高騰と金利高が家計を圧迫。
+        FRBの利下げ余地が限られる中、景気減速と高インフレが併存するスタグフレーションシナリオへの警戒が必要。</p>
+      </div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-num">3</div>
+      <div class="highlight-content">
+        <h4>金が4,700ドル超で高値更新継続 — 不確実性相場の安全資産需要</h4>
+        <p>地政学リスク・インフレ・ドル信認低下の三重要因が重なり金価格が4,790ドルに迫る水準で推移。
+        中央銀行の買い越しも続いており、短期的な調整はあっても上昇トレンドは継続しやすい環境。</p>
       </div>
     </div>
   </div>
 
-  <!-- Disclaimer -->
-  <div class="disclaimer">
-    ⚠️ <strong>免責事項</strong>：本サイトの情報はAIが自動収集・分析したものであり、投資助言を目的としたものではありません。掲載情報の正確性・完全性を保証するものではなく、投資判断および損益に関して一切の責任を負いません。投資は必ずご自身の判断と責任において行ってください。金融商品取引法に基づく投資助言業務は行っておりません。
-  </div>
-</div>
+</main>
 
-<!-- Footer -->
 <footer>
-  <div>© 2026 MarketWatch AI — Powered by Claude (Anthropic)</div>
-  <div class="footer-links">
-    <a href="#">免責事項</a>
-    <a href="#">プライバシー</a>
-    <a href="#">お問い合わせ</a>
-  </div>
+  <p>データソース: Yahoo Finance / Bloomberg / CoinDesk / Trading Economics / 日本経済新聞 &nbsp;|&nbsp;
+  <a href="https://invest-ai-info.github.io/marketwatch-ai/">GitHub Pages</a> &nbsp;|&nbsp;
+  本サイトはAIによる自動収集・要約です。投資判断の参考情報であり、投資助言ではありません。</p>
 </footer>
 
-<script>
-  const tickerData = [
-    { name: '日経225', price: '57,490', change: '+630', pct: '+1.11%', up: true },
-    { name: 'TOPIX', price: '3,834', change: '+28', pct: '+0.74%', up: true },
-    { name: 'USD/JPY', price: '159.24', change: '-0.31', pct: '-0.19%', up: false },
-    { name: 'EUR/JPY', price: '172.48', change: '+0.52', pct: '+0.30%', up: true },
-    { name: 'GOLD', price: '$4,743', change: '+87', pct: '+1.87%', up: true },
-    { name: 'WTI原油', price: '$101.4', change: '-1.8', pct: '-1.74%', up: false },
-    { name: 'BTC', price: '$72,100', change: '+2,841', pct: '+4.10%', up: true },
-    { name: 'ETH', price: '$3,432', change: '+201', pct: '+6.2%', up: true },
-    { name: 'S&P500', price: '5,621', change: '+45', pct: '+0.81%', up: true },
-    { name: 'NASDAQ', price: '18,342', change: '+182', pct: '+1.00%', up: true },
-  ];
-
-  function buildTicker() {
-    const ticker = document.getElementById('ticker');
-    const html = [...tickerData, ...tickerData].map(d => `
-      <span class="ticker-item">
-        <span class="ticker-name">${d.name}</span>
-        <span class="ticker-price">${d.price}</span>
-        <span class="ticker-change ${d.up ? 'up' : 'down'}">${d.up ? '▲' : '▼'} ${d.change} (${d.pct})</span>
-      </span>
-    `).join('');
-    ticker.innerHTML = html;
-  }
-
-  function updateDatetime() {
-    const now = new Date();
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
-    document.getElementById('datetime').textContent = now.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) + ' JST — データは自動収集されたものです';
-  }
-
-  buildTicker();
-  updateDatetime();
-  setInterval(updateDatetime, 1000);
-</script>
 </body>
 </html>
