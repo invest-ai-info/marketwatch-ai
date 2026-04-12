@@ -1,6 +1,6 @@
 """
-毎朝マーケットニュース自動生成スクリプト（歴史的イベント年表付き）
-yfinance で価格データ取得、Chart.js でチャート表示
+æ¯æãã¼ã±ãããã¥ã¼ã¹èªåçæã¹ã¯ãªããï¼æ­´å²çã¤ãã³ãå¹´è¡¨ä»ãï¼
+yfinance ã§ä¾¡æ ¼ãã¼ã¿åå¾ãChart.js ã§ãã£ã¼ãè¡¨ç¤º
 """
 
 import yfinance as yf
@@ -9,40 +9,40 @@ from datetime import datetime, timezone, timedelta
 
 JST = timezone(timedelta(hours=9))
 
-# ─────────────────────────────────────────
-# 歴史的イベントデータ（1971〜）
-# ─────────────────────────────────────────
+# âââââââââââââââââââââââââââââââââââââââââ
+# æ­´å²çã¤ãã³ããã¼ã¿ï¼1971ãï¼
+# âââââââââââââââââââââââââââââââââââââââââ
 HISTORICAL_EVENTS = [
-    {"date": "1971-08", "label": "ニクソンショック",       "desc": "米ドルと金の兌換停止。変動相場制へ移行。ドル円が急落し360円台から100円台への長期円高が始まった。",           "assets": ["usdjpy", "gold"]},
-    {"date": "1973-11", "label": "第一次オイルショック",   "desc": "OAPEC原油禁輸。原油価格が約4倍に急騰。世界的インフレと株安を引き起こした。",                            "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "1979-02", "label": "第二次オイルショック",   "desc": "イラン革命で原油供給が激減。原油価格が再び急騰し世界経済を直撃した。",                                   "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "1985-09", "label": "プラザ合意",             "desc": "G5がドル高是正で合意。ドル円が240円台から120円台へと急落する大規模な円高が進行した。",                    "assets": ["usdjpy", "nikkei"]},
-    {"date": "1987-10", "label": "ブラックマンデー",       "desc": "ニューヨーク株式市場で1日に22.6%の暴落。世界同時株安となり日経平均も翌日約15%下落した。",               "assets": ["nikkei", "sp500"]},
-    {"date": "1990-01", "label": "日本バブル崩壊",         "desc": "日経平均が38,915円のピークから急落開始。失われた30年の始まりとなった歴史的な大暴落。",                    "assets": ["nikkei"]},
-    {"date": "1995-01", "label": "阪神大震災・円高",       "desc": "阪神淡路大震災後に円が急騰し1ドル=79円台の史上最高値を記録。日経平均も急落した。",                        "assets": ["nikkei", "usdjpy"]},
-    {"date": "1997-07", "label": "アジア通貨危機",         "desc": "タイバーツ暴落から始まったアジア通貨危機が日本の金融機関にも波及。山一証券など相次いで破綻した。",          "assets": ["nikkei", "usdjpy"]},
-    {"date": "1998-08", "label": "ロシア財政危機/LTCM",   "desc": "ロシアがデフォルト宣言。ヘッジファンドLTCM破綻。世界的な信用収縮とドル安・円高が加速した。",              "assets": ["nikkei", "sp500", "usdjpy"]},
-    {"date": "2000-03", "label": "ITバブル崩壊",           "desc": "NASDAQが5,048の最高値から急落。ITバブルが崩壊し2002年まで世界的な株安が続いた。",                       "assets": ["nikkei", "sp500"]},
-    {"date": "2001-09", "label": "9.11テロ",               "desc": "米同時多発テロ。ニューヨーク市場が1週間閉鎖。再開後に株価が急落し金が安全資産として買われた。",            "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "2003-03", "label": "イラク戦争",             "desc": "米英軍がイラク侵攻を開始。地政学リスクが高まり原油・金価格が乱高下した。",                               "assets": ["gold", "nikkei"]},
-    {"date": "2008-09", "label": "リーマンショック",       "desc": "リーマン・ブラザーズ経営破綻で世界金融危機が勃発。日経平均はピークから約60%、S&P500は約57%下落した。",   "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
-    {"date": "2010-05", "label": "欧州債務危機",           "desc": "ギリシャ財政危機が欧州全体に波及。ユーロが急落し世界的なリスクオフの動きが強まった。",                    "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "2011-03", "label": "東日本大震災",           "desc": "東日本大震災・福島原発事故。日経平均が約20%急落し円が急騰。一時1ドル=76円台の超円高を記録した。",        "assets": ["nikkei", "usdjpy"]},
-    {"date": "2013-04", "label": "アベノミクス/異次元緩和","desc": "日銀が異次元金融緩和を発表。円安・株高が一気に加速し日経平均は約2年で倍増した。",                        "assets": ["nikkei", "usdjpy"]},
-    {"date": "2015-08", "label": "チャイナショック",       "desc": "中国株式市場の急落が世界に波及。VIX指数が急騰し日経平均は1週間で約11%下落した。",                        "assets": ["nikkei", "sp500"]},
-    {"date": "2016-06", "label": "Brexit国民投票",         "desc": "英国がEU離脱を決定。ポンドが急落し世界株安・円高が進行。市場の想定外の結果に衝撃が走った。",             "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "2016-11", "label": "トランプ大統領当選",     "desc": "トランプ当選後に「トランプラリー」が発生。米株・ドル高・日本株が大きく上昇した。",                        "assets": ["nikkei", "sp500", "usdjpy"]},
-    {"date": "2018-12", "label": "米中貿易戦争",           "desc": "米中貿易摩擦が激化。S&P500が年末にかけて約20%急落し世界の株式市場が動揺した。",                          "assets": ["nikkei", "sp500"]},
-    {"date": "2020-02", "label": "コロナショック",         "desc": "新型コロナパンデミック宣言。世界の株式市場が約1ヶ月で30〜40%急落。史上最速の弱気相場入りとなった。",      "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
-    {"date": "2022-02", "label": "ロシア・ウクライナ侵攻", "desc": "ロシアがウクライナに軍事侵攻。原油・天然ガス・金価格が急騰し世界的なインフレ加速の引き金となった。",       "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "2022-03", "label": "FRB急速利上げ開始",     "desc": "FRBがゼロ金利政策を終了し急速な利上げを開始。債券・株式が同時下落し円は対ドルで30年ぶりの円安に。",      "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
-    {"date": "2023-03", "label": "SVB破綻",               "desc": "シリコンバレーバンク破綻。米地銀への信用不安が拡大。金が安全資産として急騰した。",                        "assets": ["nikkei", "sp500", "gold"]},
-    {"date": "2024-08", "label": "日経平均歴史的暴落",     "desc": "日経平均が1日で-4,451円（-12.4%）の歴史的暴落。円キャリートレード巻き戻しで円が急騰した。",              "assets": ["nikkei", "usdjpy"]},
+    {"date": "1971-08", "label": "ãã¯ã½ã³ã·ã§ãã¯",       "desc": "ç±³ãã«ã¨éã®åæåæ­¢ãå¤åç¸å ´å¶ã¸ç§»è¡ããã«åãæ¥è½ã360åå°ãã100åå°ã¸ã®é·æåé«ãå§ã¾ã£ãã",           "assets": ["usdjpy", "gold"]},
+    {"date": "1973-11", "label": "ç¬¬ä¸æ¬¡ãªã¤ã«ã·ã§ãã¯",   "desc": "OAPECåæ²¹ç¦è¼¸ãåæ²¹ä¾¡æ ¼ãç´4åã«æ¥é¨°ãä¸ççã¤ã³ãã¬ã¨æ ªå®ãå¼ãèµ·ãããã",                            "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "1979-02", "label": "ç¬¬äºæ¬¡ãªã¤ã«ã·ã§ãã¯",   "desc": "ã¤ã©ã³é©å½ã§åæ²¹ä¾çµ¦ãæ¿æ¸ãåæ²¹ä¾¡æ ¼ãåã³æ¥é¨°ãä¸ççµæ¸ãç´æããã",                                   "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "1985-09", "label": "ãã©ã¶åæ",             "desc": "G5ããã«é«æ¯æ­£ã§åæããã«åã240åå°ãã120åå°ã¸ã¨æ¥è½ããå¤§è¦æ¨¡ãªåé«ãé²è¡ããã",                    "assets": ["usdjpy", "nikkei"]},
+    {"date": "1987-10", "label": "ãã©ãã¯ãã³ãã¼",       "desc": "ãã¥ã¼ã¨ã¼ã¯æ ªå¼å¸å ´ã§1æ¥ã«22.6%ã®æ´è½ãä¸çåææ ªå®ã¨ãªãæ¥çµå¹³åãç¿æ¥ç´15%ä¸è½ããã",               "assets": ["nikkei", "sp500"]},
+    {"date": "1990-01", "label": "æ¥æ¬ããã«å´©å£",         "desc": "æ¥çµå¹³åã38,915åã®ãã¼ã¯ããæ¥è½éå§ãå¤±ããã30å¹´ã®å§ã¾ãã¨ãªã£ãæ­´å²çãªå¤§æ´è½ã",                    "assets": ["nikkei"]},
+    {"date": "1995-01", "label": "éªç¥å¤§éç½ã»åé«",       "desc": "éªç¥æ·¡è·¯å¤§éç½å¾ã«åãæ¥é¨°ã1ãã«=79åå°ã®å²ä¸æé«å¤ãè¨é²ãæ¥çµå¹³åãæ¥è½ããã",                        "assets": ["nikkei", "usdjpy"]},
+    {"date": "1997-07", "label": "ã¢ã¸ã¢éè²¨å±æ©",         "desc": "ã¿ã¤ãã¼ãæ´è½ããå§ã¾ã£ãã¢ã¸ã¢éè²¨å±æ©ãæ¥æ¬ã®éèæ©é¢ã«ãæ³¢åãå±±ä¸è¨¼å¸ãªã©ç¸æ¬¡ãã§ç ´ç¶»ããã",          "assets": ["nikkei", "usdjpy"]},
+    {"date": "1998-08", "label": "ã­ã·ã¢è²¡æ¿å±æ©/LTCM",   "desc": "ã­ã·ã¢ãããã©ã«ãå®£è¨ãããã¸ãã¡ã³ãLTCMç ´ç¶»ãä¸ççãªä¿¡ç¨åç¸®ã¨ãã«å®ã»åé«ãå éããã",              "assets": ["nikkei", "sp500", "usdjpy"]},
+    {"date": "2000-03", "label": "ITããã«å´©å£",           "desc": "NASDAQã5,048ã®æé«å¤ããæ¥è½ãITããã«ãå´©å£ã2002å¹´ã¾ã§ä¸ççãªæ ªå®ãç¶ããã",                       "assets": ["nikkei", "sp500"]},
+    {"date": "2001-09", "label": "9.11ãã­",               "desc": "ç±³åæå¤çºãã­ããã¥ã¼ã¨ã¼ã¯å¸å ´ã1é±éééãåéå¾ã«æ ªä¾¡ãæ¥è½ãéãå®å¨è³ç£ã¨ãã¦è²·ãããã",            "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "2003-03", "label": "ã¤ã©ã¯æ¦äº",             "desc": "ç±³è±è»ãã¤ã©ã¯ä¾µæ»ãéå§ãå°æ¿å­¦ãªã¹ã¯ãé«ã¾ãåæ²¹ã»éä¾¡æ ¼ãä¹±é«ä¸ããã",                               "assets": ["gold", "nikkei"]},
+    {"date": "2008-09", "label": "ãªã¼ãã³ã·ã§ãã¯",       "desc": "ãªã¼ãã³ã»ãã©ã¶ã¼ãºçµå¶ç ´ç¶»ã§ä¸çéèå±æ©ãåçºãæ¥çµå¹³åã¯ãã¼ã¯ããç´60%ãS&P500ã¯ç´57%ä¸è½ããã",   "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
+    {"date": "2010-05", "label": "æ¬§å·åµåå±æ©",           "desc": "ã®ãªã·ã£è²¡æ¿å±æ©ãæ¬§å·å¨ä½ã«æ³¢åãã¦ã¼ã­ãæ¥è½ãä¸ççãªãªã¹ã¯ãªãã®åããå¼·ã¾ã£ãã",                    "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "2011-03", "label": "æ±æ¥æ¬å¤§éç½",           "desc": "æ±æ¥æ¬å¤§éç½ã»ç¦å³¶åçºäºæãæ¥çµå¹³åãç´20%æ¥è½ãåãæ¥é¨°ãä¸æ1ãã«=76åå°ã®è¶åé«ãè¨é²ããã",        "assets": ["nikkei", "usdjpy"]},
+    {"date": "2013-04", "label": "ã¢ãããã¯ã¹/ç°æ¬¡åç·©å","desc": "æ¥éãç°æ¬¡åéèç·©åãçºè¡¨ãåå®ã»æ ªé«ãä¸æ°ã«å éãæ¥çµå¹³åã¯ç´2å¹´ã§åå¢ããã",                        "assets": ["nikkei", "usdjpy"]},
+    {"date": "2015-08", "label": "ãã£ã¤ãã·ã§ãã¯",       "desc": "ä¸­å½æ ªå¼å¸å ´ã®æ¥è½ãä¸çã«æ³¢åãVIXææ°ãæ¥é¨°ãæ¥çµå¹³åã¯1é±éã§ç´11%ä¸è½ããã",                        "assets": ["nikkei", "sp500"]},
+    {"date": "2016-06", "label": "Brexitå½æ°æç¥¨",         "desc": "è±å½ãEUé¢è±ãæ±ºå®ããã³ããæ¥è½ãä¸çæ ªå®ã»åé«ãé²è¡ãå¸å ´ã®æ³å®å¤ã®çµæã«è¡æãèµ°ã£ãã",             "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "2016-11", "label": "ãã©ã³ãå¤§çµ±é å½é¸",     "desc": "ãã©ã³ãå½é¸å¾ã«ããã©ã³ãã©ãªã¼ããçºçãç±³æ ªã»ãã«é«ã»æ¥æ¬æ ªãå¤§ããä¸æããã",                        "assets": ["nikkei", "sp500", "usdjpy"]},
+    {"date": "2018-12", "label": "ç±³ä¸­è²¿ææ¦äº",           "desc": "ç±³ä¸­è²¿ææ©æ¦ãæ¿åãS&P500ãå¹´æ«ã«ããã¦ç´20%æ¥è½ãä¸çã®æ ªå¼å¸å ´ãåæºããã",                          "assets": ["nikkei", "sp500"]},
+    {"date": "2020-02", "label": "ã³ã­ãã·ã§ãã¯",         "desc": "æ°åã³ã­ããã³ãããã¯å®£è¨ãä¸çã®æ ªå¼å¸å ´ãç´1ã¶æã§30ã40%æ¥è½ãå²ä¸æéã®å¼±æ°ç¸å ´å¥ãã¨ãªã£ãã",      "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
+    {"date": "2022-02", "label": "ã­ã·ã¢ã»ã¦ã¯ã©ã¤ãä¾µæ»", "desc": "ã­ã·ã¢ãã¦ã¯ã©ã¤ãã«è»äºä¾µæ»ãåæ²¹ã»å¤©ç¶ã¬ã¹ã»éä¾¡æ ¼ãæ¥é¨°ãä¸ççãªã¤ã³ãã¬å éã®å¼ãéã¨ãªã£ãã",       "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "2022-03", "label": "FRBæ¥éå©ä¸ãéå§",     "desc": "FRBãã¼ã­éå©æ¿ç­ãçµäºãæ¥éãªå©ä¸ããéå§ãåµå¸ã»æ ªå¼ãåæä¸è½ãåã¯å¯¾ãã«ã§30å¹´ã¶ãã®åå®ã«ã",      "assets": ["nikkei", "sp500", "usdjpy", "gold"]},
+    {"date": "2023-03", "label": "SVBç ´ç¶»",               "desc": "ã·ãªã³ã³ãã¬ã¼ãã³ã¯ç ´ç¶»ãç±³å°éã¸ã®ä¿¡ç¨ä¸å®ãæ¡å¤§ãéãå®å¨è³ç£ã¨ãã¦æ¥é¨°ããã",                        "assets": ["nikkei", "sp500", "gold"]},
+    {"date": "2024-08", "label": "æ¥çµå¹³åæ­´å²çæ´è½",     "desc": "æ¥çµå¹³åã1æ¥ã§-4,451åï¼-12.4%ï¼ã®æ­´å²çæ´è½ãåã­ã£ãªã¼ãã¬ã¼ãå·»ãæ»ãã§åãæ¥é¨°ããã",              "assets": ["nikkei", "usdjpy"]},
 ]
 
-# ─────────────────────────────────────────
-# データ取得関数
-# ─────────────────────────────────────────
+# âââââââââââââââââââââââââââââââââââââââââ
+# ãã¼ã¿åå¾é¢æ°
+# âââââââââââââââââââââââââââââââââââââââââ
 def get_price(ticker_symbol):
     try:
         t = yf.Ticker(ticker_symbol)
@@ -61,9 +61,9 @@ def get_historical_monthly(ticker, start="1975-01-01"):
         hist = t.history(start=start)
         if hist.empty:
             return [], []
-        monthly = hist["Close"].resample("ME").last().dropna()
-        dates  = [d.strftime("%Y-%m") for d in monthly.index]
-        prices = [round(float(v), 2) for v in monthly.values]
+        yearly = hist["Close"].resample("YE").last().dropna()
+        dates  = [d.strftime("%Y") for d in yearly.index]
+        prices = [round(float(v), 2) for v in yearly.values]
         return dates, prices
     except Exception:
         return [], []
@@ -76,7 +76,7 @@ def fmt_price(val, decimals=2, prefix="", suffix=""):
 def fmt_change(pct):
     if pct is None:
         return ""
-    sign = "▲" if pct >= 0 else "▼"
+    sign = "â²" if pct >= 0 else "â¼"
     cls  = "up" if pct >= 0 else "down"
     return f'<span class="{cls} price-change">{sign}{abs(pct):.2f}%</span>'
 
@@ -84,21 +84,21 @@ def sentiment(changes):
     ups   = sum(1 for c in changes if c and c > 0)
     downs = sum(1 for c in changes if c and c < 0)
     if ups > downs:
-        return "やや強気", "#238636", "📈"
+        return "ããå¼·æ°", "#238636", "ð"
     elif downs > ups:
-        return "やや弱気", "#da3633", "📉"
-    return "中立", "#9e6a03", "➡️"
+        return "ããå¼±æ°", "#da3633", "ð"
+    return "ä¸­ç«", "#9e6a03", "â¡ï¸"
 
 def build_annotations(asset_key, dates):
-    """指定アセットに関するイベントのChart.jsアノテーションを生成"""
+    """æå®ã¢ã»ããã«é¢ããã¤ãã³ãã®Chart.jsã¢ããã¼ã·ã§ã³ãçæ"""
     anns = {}
     date_set = set(dates)
     for i, ev in enumerate(HISTORICAL_EVENTS):
         if asset_key not in ev["assets"]:
             continue
-        # 月次データに含まれる最近の月を探す
+        # ææ¬¡ãã¼ã¿ã«å«ã¾ããæè¿ã®æãæ¢ã
         ev_date = ev["date"]
-        # 対応する月かそれ以降の最初の月を探す
+        # å¯¾å¿ããæãããä»¥éã®æåã®æãæ¢ã
         target = next((d for d in dates if d >= ev_date), None)
         if target is None:
             continue
@@ -124,12 +124,12 @@ def build_annotations(asset_key, dates):
         }
     return anns
 
-# ─────────────────────────────────────────
-# HTML生成
-# ─────────────────────────────────────────
+# âââââââââââââââââââââââââââââââââââââââââ
+# HTMLçæ
+# âââââââââââââââââââââââââââââââââââââââââ
 def build_html(data, hist, now_jst):
-    date_str = now_jst.strftime("%Y年%-m月%-d日")
-    time_str = now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
+    date_str = now_jst.strftime("%Yå¹´%-mæ%-dæ¥")
+    time_str = now_jst.strftime("%Yå¹´%-mæ%-dæ¥ %H:%M JST")
 
     nk,  _, nk_chg  = data["nikkei"]
     sp,  _, sp_chg  = data["sp500"]
@@ -142,23 +142,23 @@ def build_html(data, hist, now_jst):
 
     label, badge_color, emoji = sentiment([nk_chg, sp_chg, btc_chg, gld_chg])
 
-    # 歴史チャートデータをJSON化
+    # æ­´å²ãã£ã¼ããã¼ã¿ãJSONå
     nk_dates,  nk_prices  = hist["nikkei"]
     sp_dates,  sp_prices  = hist["sp500"]
     fx_dates,  fx_prices  = hist["usdjpy"]
     gld_dates, gld_prices = hist["gold"]
 
-    # アノテーション
+    # ã¢ããã¼ã·ã§ã³
     nk_ann  = json.dumps(build_annotations("nikkei", nk_dates),  ensure_ascii=False)
     sp_ann  = json.dumps(build_annotations("sp500",  sp_dates),  ensure_ascii=False)
     fx_ann  = json.dumps(build_annotations("usdjpy", fx_dates),  ensure_ascii=False)
     gld_ann = json.dumps(build_annotations("gold",   gld_dates), ensure_ascii=False)
 
-    # イベント一覧テーブル行を生成
+    # ã¤ãã³ãä¸è¦§ãã¼ãã«è¡ãçæ
     event_rows = ""
     for ev in sorted(HISTORICAL_EVENTS, key=lambda x: x["date"], reverse=True):
         asset_badges = ""
-        map_ = {"nikkei": "日経", "sp500": "S&P", "usdjpy": "ドル円", "gold": "金"}
+        map_ = {"nikkei": "æ¥çµ", "sp500": "S&P", "usdjpy": "ãã«å", "gold": "é"}
         for a in ev["assets"]:
             asset_badges += f'<span class="badge">{map_.get(a, a)}</span>'
         event_rows += f"""
@@ -174,7 +174,7 @@ def build_html(data, hist, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マーケットニュース - {date_str}</title>
+  <title>ãã¼ã±ãããã¥ã¼ã¹ - {date_str}</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
   <style>
@@ -205,13 +205,13 @@ def build_html(data, hist, now_jst):
     .price-change{{font-size:.8rem;margin-left:4px}}
     .up{{color:#3fb950}}.down{{color:#f85149}}
     .card-summary{{margin-top:14px;padding-top:14px;border-top:1px solid #21262d;font-size:.82rem;color:#8b949e;line-height:1.65}}
-    /* チャートセクション */
+    /* ãã£ã¼ãã»ã¯ã·ã§ã³ */
     .chart-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}}
     .chart-title{{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}}
     .chart-subtitle{{font-size:.78rem;color:#8b949e;margin-bottom:16px}}
     .chart-hint{{font-size:.75rem;color:#ffd700;margin-bottom:12px}}
     .chart-wrap{{position:relative;height:280px}}
-    /* イベントテーブル */
+    /* ã¤ãã³ããã¼ãã« */
     .event-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:32px;overflow-x:auto}}
     table{{width:100%;border-collapse:collapse;font-size:.83rem}}
     th{{text-align:left;padding:10px 12px;border-bottom:2px solid #30363d;color:#8b949e;font-weight:600;white-space:nowrap}}
@@ -230,99 +230,99 @@ def build_html(data, hist, now_jst):
 <header>
   <div class="header-inner">
     <div>
-      <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
+      <div class="header-title">ð ãã¼ã±ãããã¥ã¼ã¹</div>
+      <div class="header-meta">æçµæ´æ°: <span>{time_str}</span></div>
     </div>
-    <div class="header-meta">GitHub Actions 自動更新</div>
+    <div class="header-meta">GitHub Actions èªåæ´æ°</div>
   </div>
 </header>
 <main>
 
-  <!-- センチメント -->
+  <!-- ã»ã³ãã¡ã³ã -->
   <div class="sentiment-banner">
     <div class="sentiment-badge">{emoji} {label}</div>
     <div class="sentiment-text">
-      日経平均 {fmt_price(nk, 0, suffix='円')} / S&amp;P500 {fmt_price(sp, 2)} /
-      USD/JPY {fmt_price(fx, 2, suffix='円')} / BTC {fmt_price(btc, 0, prefix='$')} /
-      金 {fmt_price(gld, 2, prefix='$', suffix='/oz')}
+      æ¥çµå¹³å {fmt_price(nk, 0, suffix='å')} / S&amp;P500 {fmt_price(sp, 2)} /
+      USD/JPY {fmt_price(fx, 2, suffix='å')} / BTC {fmt_price(btc, 0, prefix='$')} /
+      é {fmt_price(gld, 2, prefix='$', suffix='/oz')}
     </div>
   </div>
 
-  <!-- 今日のカード -->
-  <p class="section-title">本日のマーケット</p>
+  <!-- ä»æ¥ã®ã«ã¼ã -->
+  <p class="section-title">æ¬æ¥ã®ãã¼ã±ãã</p>
   <div class="cards-grid">
     <div class="card">
       <div class="card-header">
-        <div class="card-icon icon-stocks">🗾</div>
-        <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
+        <div class="card-icon icon-stocks">ð¾</div>
+        <div><div class="card-title">æ ªå¼å¸å ´</div><div class="card-subtitle">æ¥æ¬æ ªã»ç±³å½æ ª</div></div>
       </div>
-      <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">{fmt_price(nk, 0, suffix='円')} {fmt_change(nk_chg)}</span></div>
+      <div class="price-row"><span class="price-label">æ¥çµå¹³å</span><span class="price-value">{fmt_price(nk, 0, suffix='å')} {fmt_change(nk_chg)}</span></div>
       <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">{fmt_price(sp, 2)} {fmt_change(sp_chg)}</span></div>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="card-icon icon-fx">💱</div>
-        <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
+        <div class="card-icon icon-fx">ð±</div>
+        <div><div class="card-title">çºæ¿ï¼FXï¼</div><div class="card-subtitle">ãã«åã»ã¦ã¼ã­å</div></div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='円')} {fmt_change(fx_chg)}</span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='円')} {fmt_change(efx_chg)}</span></div>
+      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='å')} {fmt_change(fx_chg)}</span></div>
+      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='å')} {fmt_change(efx_chg)}</span></div>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="card-icon icon-cmd">🛢️</div>
-        <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
+        <div class="card-icon icon-cmd">ð¢ï¸</div>
+        <div><div class="card-title">ã³ã¢ãã£ãã£</div><div class="card-subtitle">åæ²¹ã»é</div></div>
       </div>
-      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
-      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
+      <div class="price-row"><span class="price-label">WTIåæ²¹</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
+      <div class="price-row"><span class="price-label">éï¼ã¹ãããï¼</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="card-icon icon-crypto">₿</div>
-        <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
+        <div class="card-icon icon-crypto">â¿</div>
+        <div><div class="card-title">æå·è³ç£</div><div class="card-subtitle">BTCã»ETH</div></div>
       </div>
       <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">{fmt_price(btc, 0, prefix='$')} {fmt_change(btc_chg)}</span></div>
       <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">{fmt_price(eth, 2, prefix='$')} {fmt_change(eth_chg)}</span></div>
     </div>
   </div>
 
-  <!-- 歴史チャート -->
-  <p class="section-title">📈 50年価格チャート（歴史的イベント付き）</p>
+  <!-- æ­´å²ãã£ã¼ã -->
+  <p class="section-title">ð 50å¹´ä¾¡æ ¼ãã£ã¼ãï¼æ­´å²çã¤ãã³ãä»ãï¼</p>
 
   <div class="chart-section">
-    <div class="chart-title">株式市場 — 日経平均 / S&amp;P500</div>
-    <div class="chart-subtitle">月次終値（左軸: 日経平均円、右軸: S&amp;P500ポイント）</div>
-    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-title">æ ªå¼å¸å ´ â æ¥çµå¹³å / S&amp;P500</div>
+    <div class="chart-subtitle">ææ¬¡çµå¤ï¼å·¦è»¸: æ¥çµå¹³ååãå³è»¸: S&amp;P500ãã¤ã³ãï¼</div>
+    <div class="chart-hint">ð¡ ç¹ç·ãã¼ã«ã¼ã«ã«ã¼ã½ã«ãå½ã¦ãã¨ã¤ãã³ãåãè¡¨ç¤ºããã¾ã</div>
     <div class="chart-wrap"><canvas id="chartStocks"></canvas></div>
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">為替 — USD/JPY（ドル円）</div>
-    <div class="chart-subtitle">月次終値（円/ドル）</div>
-    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-title">çºæ¿ â USD/JPYï¼ãã«åï¼</div>
+    <div class="chart-subtitle">ææ¬¡çµå¤ï¼å/ãã«ï¼</div>
+    <div class="chart-hint">ð¡ ç¹ç·ãã¼ã«ã¼ã«ã«ã¼ã½ã«ãå½ã¦ãã¨ã¤ãã³ãåãè¡¨ç¤ºããã¾ã</div>
     <div class="chart-wrap"><canvas id="chartFX"></canvas></div>
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">ゴールド — 金価格（スポット/先物）</div>
-    <div class="chart-subtitle">月次終値（USD/oz）</div>
-    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-title">ã´ã¼ã«ã â éä¾¡æ ¼ï¼ã¹ããã/åç©ï¼</div>
+    <div class="chart-subtitle">ææ¬¡çµå¤ï¼USD/ozï¼</div>
+    <div class="chart-hint">ð¡ ç¹ç·ãã¼ã«ã¼ã«ã«ã¼ã½ã«ãå½ã¦ãã¨ã¤ãã³ãåãè¡¨ç¤ºããã¾ã</div>
     <div class="chart-wrap"><canvas id="chartGold"></canvas></div>
   </div>
 
-  <!-- イベント一覧 -->
-  <p class="section-title">📋 歴史的イベント一覧</p>
+  <!-- ã¤ãã³ãä¸è¦§ -->
+  <p class="section-title">ð æ­´å²çã¤ãã³ãä¸è¦§</p>
   <div class="event-section">
     <table>
-      <thead><tr><th>年月</th><th>イベント</th><th>関連資産</th><th>概要</th></tr></thead>
+      <thead><tr><th>å¹´æ</th><th>ã¤ãã³ã</th><th>é¢é£è³ç£</th><th>æ¦è¦</th></tr></thead>
       <tbody>{event_rows}</tbody>
     </table>
   </div>
 
 </main>
 <footer>
-  <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
+  <p>ãã¼ã¿ã½ã¼ã¹: Yahoo Finance (yfinance) &nbsp;|&nbsp;
   <a href="https://invest-ai-info.github.io/marketwatch-ai/">GitHub Pages</a> &nbsp;|&nbsp;
-  本データは自動取得・表示であり、投資助言ではありません。</p>
+  æ¬ãã¼ã¿ã¯èªååå¾ã»è¡¨ç¤ºã§ãããæè³å©è¨ã§ã¯ããã¾ããã</p>
 </footer>
 
 <script>
@@ -384,30 +384,30 @@ function makeChart(id, datasets, annotations, yLabels) {{
   }});
 }}
 
-// 株式チャート（日経 + S&P500）
+// æ ªå¼ãã£ã¼ãï¼æ¥çµ + S&P500ï¼
 const mergedDates = [...new Set([...NK_DATES, ...SP_DATES])].sort();
 const nkMap = Object.fromEntries(NK_DATES.map((d,i) => [d, NK_PRICES[i]]));
 const spMap = Object.fromEntries(SP_DATES.map((d,i) => [d, SP_PRICES[i]]));
 makeChart('chartStocks', [
-  {{ label: '日経平均（円）', dates: NK_DATES, data: NK_PRICES,
+  {{ label: 'æ¥çµå¹³åï¼åï¼', dates: NK_DATES, data: NK_PRICES,
      borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,0.08)',
      borderWidth: 1.5, fill: true }},
   {{ label: 'S&P500', dates: SP_DATES, data: SP_PRICES,
      borderColor: '#3fb950', backgroundColor: 'rgba(63,185,80,0.06)',
      borderWidth: 1.5, fill: true }},
 ], Object.assign({{}}, NK_ANN, SP_ANN),
-[v => v.toLocaleString()+'円', v => v.toLocaleString()]);
+[v => v.toLocaleString()+'å', v => v.toLocaleString()]);
 
-// 為替チャート
+// çºæ¿ãã£ã¼ã
 makeChart('chartFX', [
-  {{ label: 'USD/JPY（円）', dates: FX_DATES, data: FX_PRICES,
+  {{ label: 'USD/JPYï¼åï¼', dates: FX_DATES, data: FX_PRICES,
      borderColor: '#f0883e', backgroundColor: 'rgba(240,136,62,0.08)',
      borderWidth: 1.5, fill: true }},
-], FX_ANN, [v => v.toFixed(1)+'円']);
+], FX_ANN, [v => v.toFixed(1)+'å']);
 
-// 金チャート
+// éãã£ã¼ã
 makeChart('chartGold', [
-  {{ label: '金価格（USD/oz）', dates: GLD_DATES, data: GLD_PRICES,
+  {{ label: 'éä¾¡æ ¼ï¼USD/ozï¼', dates: GLD_DATES, data: GLD_PRICES,
      borderColor: '#ffd700', backgroundColor: 'rgba(255,215,0,0.08)',
      borderWidth: 1.5, fill: true }},
 ], GLD_ANN, [v => '$'+v.toLocaleString()]);
@@ -416,12 +416,12 @@ makeChart('chartGold', [
 </html>"""
 
 
-# ─────────────────────────────────────────
-# メイン
-# ─────────────────────────────────────────
+# âââââââââââââââââââââââââââââââââââââââââ
+# ã¡ã¤ã³
+# âââââââââââââââââââââââââââââââââââââââââ
 def main():
     now_jst = datetime.now(JST)
-    print("📡 現在価格を取得中...")
+    print("ð¡ ç¾å¨ä¾¡æ ¼ãåå¾ä¸­...")
     data = {
         "nikkei": get_price("^N225"),
         "sp500":  get_price("^GSPC"),
@@ -432,18 +432,18 @@ def main():
         "btc":    get_price("BTC-USD"),
         "eth":    get_price("ETH-USD"),
     }
-    print("📊 歴史的価格データを取得中（50年分）...")
+    print("ð æ­´å²çä¾¡æ ¼ãã¼ã¿ãåå¾ä¸­ï¼50å¹´åï¼...")
     hist = {
         "nikkei": get_historical_monthly("^N225",  "1975-01-01"),
         "sp500":  get_historical_monthly("^GSPC",  "1975-01-01"),
         "usdjpy": get_historical_monthly("JPY=X",  "1975-01-01"),
         "gold":   get_historical_monthly("GC=F",   "1975-01-01"),
     }
-    print("🖊️  HTML生成中...")
+    print("ðï¸  HTMLçæä¸­...")
     content = build_html(data, hist, now_jst)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"✅ index.html 生成完了 ({now_jst.strftime('%Y-%m-%d %H:%M JST')})")
+    print(f"â index.html çæå®äº ({now_jst.strftime('%Y-%m-%d %H:%M JST')})")
 
 if __name__ == "__main__":
     main()
