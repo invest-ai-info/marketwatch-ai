@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketWatch AI — 投資情報ダッシュボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0d12;
+    --bg2: #111520;
+    --bg3: #161b27;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8ecf1;
+    --text2: #8892a4;
+    --text3: #4d5666;
+    --green: #00d97e;
+    --green-dim: rgba(0,217,126,0.12);
+    --red: #ff4d6a;
+    --red-dim: rgba(255,77,106,0.12);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.12);
+    --blue: #4a9eff;
+    --blue-dim: rgba(74,158,255,0.12);
+    --gold: #c9a84c;
+    --gold-dim: rgba(201,168,76,0.1);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0a0d12;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .logo-text {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .logo-text span {
+    color: var(--gold);
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  nav a {
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  nav a:hover, nav a.active {
+    background: var(--bg3);
+    color: var(--text);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .update-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-dim);
+    border: 1px solid rgba(0,217,126,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── Ticker ── */
+  .ticker-bar {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 40px;
+    animation: ticker 30s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  .ticker-name { color: var(--text2); }
+  .ticker-price { color: var(--text); font-weight: 500; }
+  .ticker-change.up { color: var(--green); }
+  .ticker-change.down { color: var(--red); }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 28px;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .page-subtitle {
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── Market Cards ── */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .market-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .market-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .market-card.green::before { background: var(--green); }
+  .market-card.red::before { background: var(--red); }
+  .market-card.amber::before { background: var(--amber); }
+  .market-card.gold::before { background: var(--gold); }
+
+  .market-card:hover { border-color: var(--border2); }
+
+  .market-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .market-price {
+    font-size: 26px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+
+  .market-change {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .market-change.up { color: var(--green); }
+  .market-change.down { color: var(--red); }
+
+  .market-sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 8px;
+  }
+
+  /* ── Mini Sparkline ── */
+  .sparkline {
+    margin-top: 12px;
+    height: 32px;
+  }
+
+  /* ── Main Grid ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── Section ── */
+  .section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  .section-badge {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── News Items ── */
+  .news-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .news-item:last-child { border-bottom: none; }
+  .news-item:hover { background: var(--bg3); }
+
+  .news-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .news-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .news-tag.geopolitics { background: var(--red-dim); color: var(--red); }
+  .news-tag.monetary { background: var(--blue-dim); color: var(--blue); }
+  .news-tag.earnings { background: var(--green-dim); color: var(--green); }
+  .news-tag.crypto { background: var(--amber-dim); color: var(--amber); }
+  .news-tag.commodity { background: var(--gold-dim); color: var(--gold); }
+
+  .news-time {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .news-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .news-summary {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── AI Forecast ── */
+  .forecast-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .forecast-item:last-child { border-bottom: none; }
+
+  .forecast-asset {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .forecast-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .forecast-period {
+    font-size: 11px;
+    color: var(--text3);
+    width: 40px;
+  }
+
+  .forecast-bar-wrap {
+    flex: 1;
+    margin: 0 10px;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .forecast-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .forecast-bar.bull { background: var(--green); }
+  .forecast-bar.neutral { background: var(--amber); }
+  .forecast-bar.bear { background: var(--red); }
+
+  .forecast-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 50px;
+    text-align: right;
+  }
+
+  .forecast-label.bull { color: var(--green); }
+  .forecast-label.neutral { color: var(--amber); }
+  .forecast-label.bear { color: var(--red); }
+
+  /* ── Calendar ── */
+  .calendar-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .calendar-item:last-child { border-bottom: none; }
+
+  .calendar-date {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text3);
+    min-width: 40px;
+  }
+
+  .calendar-text { font-size: 13px; color: var(--text2); }
+  .calendar-text strong { color: var(--text); font-weight: 500; }
+
+  .impact-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .impact-high { background: var(--red); }
+  .impact-mid { background: var(--amber); }
+  .impact-low { background: var(--text3); }
+
+  /* ── Disclaimer ── */
+  .disclaimer {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: var(--text3); text-decoration: none; }
+  .footer-links a:hover { color: var(--text2); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .market-grid { grid-template-columns: repeat(2, 1fr); }
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .market-grid { grid-template-columns: 1fr 1fr; }
+    header { padding: 0 16px; }
+    .container { padding: 16px; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">M</div>
+    <div class="logo-text">Market<span>Watch</span> AI</div>
+  </div>
+  <nav>
+    <a href="#" class="active">ダッシュボード</a>
+    <a href="#">株式</a>
+    <a href="#">為替</a>
+    <a href="#">コモディティ</a>
+    <a href="#">暗号資産</a>
+  </nav>
+  <div class="header-right">
+    <div class="update-badge">
+      <div class="dot"></div>
+      毎朝 07:00 自動更新
+    </div>
+  </div>
+</header>
+
+<!-- Ticker -->
+<div class="ticker-bar">
+  <div class="ticker-inner" id="ticker"></div>
+</div>
+
+<!-- Main -->
+<div class="container">
+  <div class="page-title">マーケット概況</div>
+  <div class="page-subtitle" id="datetime">読み込み中...</div>
+
+  <!-- Market Cards -->
+  <div class="market-grid">
+    <div class="market-card green">
+      <div class="market-label">日経平均</div>
+      <div class="market-price">57,490</div>
+      <div class="market-change up">▲ +630 &nbsp;+1.11%</div>
+      <div class="market-sub">前日比 先物終値</div>
+      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
+        <polyline points="0,28 20,22 40,26 60,18 80,14 100,10 120,6" fill="none" stroke="#00d97e" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="market-card amber">
+      <div class="market-label">USD / JPY</div>
+      <div class="market-price">159.24</div>
+      <div class="market-change down">▼ -0.31 &nbsp;-0.19%</div>
+      <div class="market-sub">東京市場 現在値</div>
+      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
+        <polyline points="0,8 20,10 40,7 60,12 80,16 100,20 120,22" fill="none" stroke="#f5a623" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="market-card gold">
+      <div class="market-label">GOLD (USD/oz)</div>
+      <div class="market-price">4,743</div>
+      <div class="market-change up">▲ +87 &nbsp;+1.87%</div>
+      <div class="market-sub">NY市場 現在値</div>
+      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
+        <polyline points="0,26 20,22 40,18 60,24 80,14 100,10 120,8" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="market-card amber">
+      <div class="market-label">BTC / USD</div>
+      <div class="market-price">72,100</div>
+      <div class="market-change up">▲ +2,841 &nbsp;+4.10%</div>
+      <div class="market-sub">Binance 現在値</div>
+      <svg class="sparkline" viewBox="0 0 120 32" preserveAspectRatio="none">
+        <polyline points="0,28 20,24 40,28 60,20 80,16 100,8 120,4" fill="none" stroke="#f5a623" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="main-grid">
+
+    <!-- News -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <div class="icon" style="background:rgba(74,158,255,0.15);">📰</div>
+          AI収集 最新ニュース
+        </div>
+        <div class="section-badge">2026-04-11 07:00 更新</div>
+      </div>
+      <div class="news-item">
+        <div class="news-meta">
+          <span class="news-tag geopolitics">中東・地政学</span>
+          <span class="news-time">06:30</span>
+        </div>
+        <div class="news-title">米・イラン停戦交渉、イスラマバードで第2ラウンドへ — ホルムズ海峡の行方が焦点</div>
+        <div class="news-summary">JDバンス副大統領がイラン代表団と直接会合。一部船舶の通航が再開される案が浮上しているが、イスラエルのレバノン攻撃を受けイラン側は合意違反を主張。先行き不透明感は継続。</div>
+      </div>
+      <div class="news-item">
+        <div class="news-meta">
+          <span class="news-tag monetary">米金融政策</span>
+          <span class="news-time">05:45</span>
+        </div>
+        <div class="news-title">FRB、年内利下げ確率57%が「据え置き」— パウエル議長が現行政策維持を強調</div>
+        <div class="news-summary">CME FedWatchによると12月FOMCでの据え置き確率が最有力。本日のCPIデータ（3月分）が今後の金融政策の鍵を握る。利下げ1回予想は25.6%に上昇。</div>
+      </div>
+      <div class="news-item">
+        <div class="news-meta">
+          <span class="news-tag earnings">決算</span>
+          <span class="news-time">04:00</span>
+        </div>
+        <div class="news-title">米主要企業 1Q決算シーズン開幕 — 前年比+12.8%増益予想、経営陣発言に注目</div>
+        <div class="news-summary">今週から金融大手を皮切りに決算発表がスタート。中東情勢の長期化を受け、各社経営陣が先行き見通しで慎重姿勢を示すか否かが株価の分岐点となりそう。</div>
+      </div>
+      <div class="news-item">
+        <div class="news-meta">
+          <span class="news-tag crypto">暗号資産</span>
+          <span class="news-time">03:20</span>
+        </div>
+        <div class="news-title">BTC一時12万2,000ドル回復 — トランプ大統領、DC年金の暗号資産投資解禁令に署名</div>
+        <div class="news-summary">米国の確定拠出年金による暗号資産投資を可能にする大統領令が発効。モルガン・スタンレーのBTC現物ETFも上場し機関資金流入期待が高まる。8万ドルが次の心理的節目。</div>
+      </div>
+      <div class="news-item">
+        <div class="news-meta">
+          <span class="news-tag commodity">コモディティ</span>
+          <span class="news-time">02:10</span>
+        </div>
+        <div class="news-title">原油 WTI 100ドル台で推移 — 北海原油は最高値更新、ゴールドは4,700ドル台堅調</div>
+        <div class="news-summary">ホルムズ海峡封鎖継続で供給リスクが持続。JPモルガンは2026年末までにゴールド5,000ドル到達を予想。ウェルズ・ファーゴはレンジを6,100〜6,300ドルに引き上げた。</div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+
+      <!-- AI Forecast -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="icon" style="background:rgba(0,217,126,0.15);">🤖</div>
+            AI 相場予想
+          </div>
+          <div class="section-badge">参考情報</div>
+        </div>
+
+        <div class="forecast-item">
+          <div class="forecast-asset">ゴールド (XAU/USD)</div>
+          <div class="forecast-row">
+            <div class="forecast-period">短期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:55%"></div></div>
+            <div class="forecast-label neutral">中立</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">中期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:78%"></div></div>
+            <div class="forecast-label bull">強気</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">長期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:90%"></div></div>
+            <div class="forecast-label bull">強気↑↑</div>
+          </div>
+        </div>
+
+        <div class="forecast-item">
+          <div class="forecast-asset">ビットコイン (BTC)</div>
+          <div class="forecast-row">
+            <div class="forecast-period">短期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:48%"></div></div>
+            <div class="forecast-label neutral">注意</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">中期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:72%"></div></div>
+            <div class="forecast-label bull">強気</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">長期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:85%"></div></div>
+            <div class="forecast-label bull">強気↑↑</div>
+          </div>
+        </div>
+
+        <div class="forecast-item">
+          <div class="forecast-asset">日経平均</div>
+          <div class="forecast-row">
+            <div class="forecast-period">短期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bear" style="width:40%"></div></div>
+            <div class="forecast-label bear">弱気</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">中期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar neutral" style="width:55%"></div></div>
+            <div class="forecast-label neutral">中立</div>
+          </div>
+          <div class="forecast-row">
+            <div class="forecast-period">長期</div>
+            <div class="forecast-bar-wrap"><div class="forecast-bar bull" style="width:70%"></div></div>
+            <div class="forecast-label bull">強気</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Economic Calendar -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="icon" style="background:rgba(245,166,35,0.15);">📅</div>
+            今週の重要指標
+          </div>
+        </div>
+        <div class="calendar-item">
+          <div class="impact-dot impact-high"></div>
+          <div class="calendar-date">4/11</div>
+          <div class="calendar-text"><strong>米CPI（3月）</strong><br>前回 +3.1% 予想 +3.0%</div>
+        </div>
+        <div class="calendar-item">
+          <div class="impact-dot impact-high"></div>
+          <div class="calendar-date">4/14</div>
+          <div class="calendar-text"><strong>米PPI（3月）</strong><br>生産者物価指数</div>
+        </div>
+        <div class="calendar-item">
+          <div class="impact-dot impact-mid"></div>
+          <div class="calendar-date">4/15</div>
+          <div class="calendar-text"><strong>FRBベージュブック</strong><br>地区連銀景況報告</div>
+        </div>
+        <div class="calendar-item">
+          <div class="impact-dot impact-mid"></div>
+          <div class="calendar-date">4/13〜</div>
+          <div class="calendar-text"><strong>米主要企業 1Q決算</strong><br>金融・IT大手が相次ぎ発表</div>
+        </div>
+        <div class="calendar-item">
+          <div class="impact-dot impact-high"></div>
+          <div class="calendar-date">随時</div>
+          <div class="calendar-text"><strong>米・イラン停戦交渉</strong><br>イスラマバード会合の動向</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    ⚠️ <strong>免責事項</strong>：本サイトの情報はAIが自動収集・分析したものであり、投資助言を目的としたものではありません。掲載情報の正確性・完全性を保証するものではなく、投資判断および損益に関して一切の責任を負いません。投資は必ずご自身の判断と責任において行ってください。金融商品取引法に基づく投資助言業務は行っておりません。
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div>© 2026 MarketWatch AI — Powered by Claude (Anthropic)</div>
+  <div class="footer-links">
+    <a href="#">免責事項</a>
+    <a href="#">プライバシー</a>
+    <a href="#">お問い合わせ</a>
+  </div>
+</footer>
+
+<script>
+  const tickerData = [
+    { name: '日経225', price: '57,490', change: '+630', pct: '+1.11%', up: true },
+    { name: 'TOPIX', price: '3,834', change: '+28', pct: '+0.74%', up: true },
+    { name: 'USD/JPY', price: '159.24', change: '-0.31', pct: '-0.19%', up: false },
+    { name: 'EUR/JPY', price: '172.48', change: '+0.52', pct: '+0.30%', up: true },
+    { name: 'GOLD', price: '$4,743', change: '+87', pct: '+1.87%', up: true },
+    { name: 'WTI原油', price: '$101.4', change: '-1.8', pct: '-1.74%', up: false },
+    { name: 'BTC', price: '$72,100', change: '+2,841', pct: '+4.10%', up: true },
+    { name: 'ETH', price: '$3,432', change: '+201', pct: '+6.2%', up: true },
+    { name: 'S&P500', price: '5,621', change: '+45', pct: '+0.81%', up: true },
+    { name: 'NASDAQ', price: '18,342', change: '+182', pct: '+1.00%', up: true },
+  ];
+
+  function buildTicker() {
+    const ticker = document.getElementById('ticker');
+    const html = [...tickerData, ...tickerData].map(d => `
+      <span class="ticker-item">
+        <span class="ticker-name">${d.name}</span>
+        <span class="ticker-price">${d.price}</span>
+        <span class="ticker-change ${d.up ? 'up' : 'down'}">${d.up ? '▲' : '▼'} ${d.change} (${d.pct})</span>
+      </span>
+    `).join('');
+    ticker.innerHTML = html;
+  }
+
+  function updateDatetime() {
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+    document.getElementById('datetime').textContent = now.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) + ' JST — データは自動収集されたものです';
+  }
+
+  buildTicker();
+  updateDatetime();
+  setInterval(updateDatetime, 1000);
+</script>
+</body>
+</html>
