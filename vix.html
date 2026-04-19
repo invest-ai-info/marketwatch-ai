@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>恐怖指数（VIX） - MarketWatch AI</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
+    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    .header-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#f85149,#f0883e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#8b949e}
+    .header-meta span{color:#58a6ff;font-weight:600}
+    .back-link{display:inline-flex;align-items:center;gap:6px;color:#58a6ff;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #30363d;border-radius:8px;transition:background .2s}
+    .back-link:hover{background:#161b22}
+    main{max-width:900px;margin:0 auto;padding:32px 24px}
+    .vix-hero{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}
+    .vix-value{font-size:4rem;font-weight:800;color:#3fb950;line-height:1.2}
+    .vix-change{font-size:1rem;margin-top:4px}
+    .vix-level{font-size:1.4rem;font-weight:700;color:#3fb950;margin-top:8px}
+    .vix-mood{font-size:.95rem;color:#8b949e;margin-top:4px}
+    .gauge{margin:24px auto 0;max-width:500px;height:18px;background:linear-gradient(90deg,#238636 0%,#3fb950 20%,#d29922 40%,#f0883e 60%,#f85149 80%,#da3633 100%);border-radius:10px;position:relative}
+    .gauge-marker{position:absolute;top:-6px;width:4px;height:30px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,0.5)}
+    .gauge-labels{display:flex;justify-content:space-between;max-width:500px;margin:6px auto 0;font-size:.7rem;color:#8b949e}
+    .analysis-box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}
+    .analysis-title{font-size:1.1rem;font-weight:700;color:#e6edf3;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .analysis-text{font-size:.92rem;color:#c9d1d9;line-height:1.8}
+    .beginner-box{margin-top:20px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}
+    .beginner-box::before{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}
+    .chart-section{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}
+    .chart-title{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}
+    .chart-subtitle{font-size:.78rem;color:#8b949e;margin-bottom:16px}
+    .chart-wrap{position:relative;height:300px}
+    .level-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.85rem}
+    .level-table th{text-align:left;padding:8px 12px;border-bottom:2px solid #30363d;color:#8b949e}
+    .level-table td{padding:8px 12px;border-bottom:1px solid #21262d}
+    .level-table tr:hover td{background:#1c2128}
+    .level-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
+    footer a{color:#58a6ff;text-decoration:none}
+    @media(max-width:600px){.header-inner{flex-direction:column}.vix-value{font-size:3rem}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">😱 恐怖指数（VIX）</div>
+      <div class="header-meta">最終更新: <span>2026年4月19日 15:52 JST</span></div>
+    </div>
+    <a href="index.html" class="back-link">← マーケットニュースに戻る</a>
+  </div>
+</header>
+<main>
+
+  <div class="vix-hero">
+    <div class="vix-value">17.5</div>
+    <div class="vix-change"><span class="up" style="font-size:1.1rem">-0.46 (-2.6%)</span></div>
+    <div class="vix-level">😊 平常</div>
+    <div class="vix-mood">市場は落ち着いている</div>
+    <div class="gauge"><div class="gauge-marker" style="left:21.84999942779541%"></div></div>
+    <div class="gauge-labels"><span>安心</span><span>平常</span><span>警戒</span><span>恐怖</span><span>パニック</span></div>
+  </div>
+
+  <div class="analysis-box">
+    <div class="analysis-title">📝 AIアナリスト・コメント</div>
+    <div class="analysis-text">VIXは現在 17.5 で、恐怖レベルは「平常」です。市場は落ち着いている。前日比 -0.5pt とやや低下。市場の緊張が和らいでいます。 直近90日の範囲は 13.5〜31.1（平均 19.8）。平均的な水準で推移しています。 通常の市場環境です。長期投資家にとっては安定した投資環境といえます。</div>
+    <div class="beginner-box">
+      VIX（Volatility Index）は「恐怖指数」とも呼ばれ、S&amp;P500のオプション価格から算出される「今後30日間の市場の変動予想」です。
+      数値が高いほど「投資家が大きな値動きを予想＝不安」を意味します。
+      一般に20以下は平常、30超は警戒、40超はパニックとされます。
+      VIXが急上昇した局面は、歴史的に見ると中長期での「買い場」になることが多いですが、短期的にはさらに下落する可能性もあるため注意が必要です。
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-title">VIX 直近90日チャート</div>
+    <div class="chart-subtitle">日次終値</div>
+    <div class="chart-wrap"><canvas id="chartVIX"></canvas></div>
+  </div>
+
+  <div class="analysis-box">
+    <div class="analysis-title">📊 VIXレベル早見表</div>
+    <table class="level-table">
+      <thead><tr><th>レベル</th><th>VIX範囲</th><th>意味</th><th>投資家の行動指針</th></tr></thead>
+      <tbody>
+        <tr><td><span class="level-dot" style="background:#238636"></span>極めて低い</td><td>0〜12</td><td>過度な楽観</td><td>上昇トレンドだが過熱に注意。利確を検討</td></tr>
+        <tr><td><span class="level-dot" style="background:#3fb950"></span>平常</td><td>12〜20</td><td>安定した市場</td><td>通常の投資判断でOK。積立投資に最適</td></tr>
+        <tr><td><span class="level-dot" style="background:#d29922"></span>やや高い</td><td>20〜25</td><td>警戒感あり</td><td>リスク管理を意識。分散投資の確認を</td></tr>
+        <tr><td><span class="level-dot" style="background:#f0883e"></span>高い</td><td>25〜30</td><td>不安拡大</td><td>パニック売りは禁物。冷静な判断を</td></tr>
+        <tr><td><span class="level-dot" style="background:#f85149"></span>非常に高い</td><td>30〜40</td><td>強い恐怖</td><td>逆張りのチャンスかも。ただし慎重に</td></tr>
+        <tr><td><span class="level-dot" style="background:#da3633"></span>パニック</td><td>40超</td><td>極度のパニック</td><td>歴史的買い場の可能性。ただし底は誰にもわからない</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+<footer>
+  <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
+  <a href="index.html">マーケットニュースに戻る</a> &nbsp;|&nbsp;
+  本データは自動取得・表示であり、投資助言ではありません。</p>
+</footer>
+
+<script>
+const VIX_DATES  = ["2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-26", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17"];
+const VIX_PRICES = [16.5, 16.48, 17.62, 16.87, 14.91, 14.08, 14.0, 13.47, 13.6, 14.2, 14.33, 14.95, 14.51, 14.9, 14.75, 15.38, 15.45, 14.49, 15.12, 15.98, 16.75, 15.84, 15.86, 20.09, 16.9, 15.64, 16.09, 16.15, 16.35, 16.35, 16.88, 17.44, 16.34, 18.0, 18.64, 21.77, 20.37, 17.36, 17.79, 17.65, 20.82, 20.6, 20.29, 19.62, 20.23, 19.09, 21.01, 19.55, 17.93, 18.63, 19.86, 21.44, 23.57, 21.15, 23.75, 29.49, 25.5, 24.93, 24.23, 27.29, 27.19, 23.51, 22.37, 25.09, 24.06, 26.78, 26.15, 26.95, 25.33, 27.44, 31.05, 30.61, 25.25, 24.54, 23.87, 24.17, 25.78, 21.04, 19.49, 19.23, 19.12, 18.36, 18.17, 17.94, 17.48];
+
+if (VIX_DATES.length > 0) {
+  const ctx = document.getElementById('chartVIX').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: VIX_DATES,
+      datasets: [{
+        label: 'VIX',
+        data: VIX_PRICES,
+        borderColor: '#f85149',
+        backgroundColor: 'rgba(248,81,73,0.1)',
+        borderWidth: 2,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        tension: 0.2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#e6edf3' } },
+        tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#f85149',
+                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1 },
+        annotation: {
+          annotations: {
+            line20: { type: 'line', yMin: 20, yMax: 20, borderColor: 'rgba(210,153,34,0.5)', borderWidth: 1, borderDash: [6,3],
+              label: { content: '警戒ライン (20)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#d29922', font: { size: 10 }, padding: 4 } },
+            line30: { type: 'line', yMin: 30, yMax: 30, borderColor: 'rgba(248,81,73,0.5)', borderWidth: 1, borderDash: [6,3],
+              label: { content: '恐怖ライン (30)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#f85149', font: { size: 10 }, padding: 4 } },
+          }
+        },
+      },
+      scales: {
+        x: { ticks: { color: '#8b949e', font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: 'rgba(48,54,61,0.8)' } },
+        y: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: 'rgba(48,54,61,0.8)' },
+             suggestedMin: 10, suggestedMax: 50 },
+      },
+    }
+  });
+}
+</script>
+</body>
+</html>
