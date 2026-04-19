@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>マーケットニュース - 2026年4月20日</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
@@ -14,14 +16,14 @@
     .header-meta span{color:#58a6ff;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
     .sentiment-banner{background:linear-gradient(135deg,#1c2f1c,#162416);border:1px solid #2ea043;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    .sentiment-badge{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#da3633}
+    .sentiment-badge{color:#fff;font-weight:700;font-size:.9rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#da3633}
     .sentiment-text{color:#7ee787;font-size:.95rem;line-height:1.6}
     .section-title{font-size:1.1rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}
     .card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;transition:border-color .2s}
     .card:hover{border-color:#58a6ff}
     .card-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .card-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .card-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
     .icon-stocks{background:#1a3a5c}.icon-fx{background:#3a2a1a}.icon-cmd{background:#2a1a3a}.icon-crypto{background:#1a3a2a}
     .card-title{font-weight:700;font-size:1rem;color:#e6edf3}
     .card-subtitle{font-size:.75rem;color:#8b949e}
@@ -29,30 +31,25 @@
     .price-row:last-of-type{border-bottom:none}
     .price-label{font-size:.85rem;color:#8b949e}
     .price-value{font-size:.95rem;font-weight:600;color:#e6edf3}
-    .price-change{font-size:1.3rem;margin-left:4px}
+    .price-change{font-size:.8rem;margin-left:4px}
     .up{color:#3fb950}.down{color:#f85149}
     .card-summary{margin-top:14px;padding-top:14px;border-top:1px solid #21262d;font-size:.82rem;color:#8b949e;line-height:1.65}
-    .beginner-box{margin-top:12px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#79c0ff;line-height:1.7}
-    .beginner-box::before{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}
-    .chart-link-section{text-align:center;margin-bottom:40px}
-    .chart-link-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:linear-gradient(135deg,#1a2a4a,#161b22);border:1px solid #58a6ff;border-radius:12px;color:#58a6ff;text-decoration:none;font-size:1rem;font-weight:600;transition:all .3s}
-    .chart-link-btn:hover{background:#1c3a6a;transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,166,255,0.2)}
-    .chart-link-desc{font-size:.8rem;color:#8b949e;margin-top:8px}
-    /* トップニュース */
-    .top-news{background:linear-gradient(135deg,#1a1f2e,#161b22);border:1px solid #58a6ff;border-radius:12px;padding:20px 24px;margin-bottom:32px}
-    .top-news-title{font-size:1rem;font-weight:700;color:#58a6ff;margin-bottom:12px}
-    .news-item{display:block;padding:10px 0;border-bottom:1px solid #21262d;text-decoration:none;transition:background .15s}
-    .news-item:last-child{border-bottom:none}
-    .news-item:hover{background:#1c2128;border-radius:6px;padding-left:8px}
-    .news-title{display:block;font-size:.88rem;color:#e6edf3;font-weight:600;line-height:1.5;margin-bottom:2px}
-    .news-meta{display:block;font-size:.72rem;color:#8b949e}
-    .news-sent{margin-right:6px;font-size:1.3rem;vertical-align:middle}
-    .news-empty{font-size:.82rem;color:#6e7681;padding:8px 0}
-    .card-news{margin-top:14px;padding-top:14px;border-top:1px solid #21262d}
-    .card-news-title{font-size:.78rem;color:#58a6ff;font-weight:600;margin-bottom:8px}
-    .card-news .news-item{padding:6px 0}
-    .card-news .news-title{font-size:.8rem}
-    .card-news .news-meta{font-size:.68rem}
+    /* チャートセクション */
+    .chart-section{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}
+    .chart-title{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}
+    .chart-subtitle{font-size:.78rem;color:#8b949e;margin-bottom:16px}
+    .chart-hint{font-size:.75rem;color:#ffd700;margin-bottom:12px}
+    .chart-wrap{position:relative;height:280px}
+    /* イベントテーブル */
+    .event-section{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:32px;overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:.83rem}
+    th{text-align:left;padding:10px 12px;border-bottom:2px solid #30363d;color:#8b949e;font-weight:600;white-space:nowrap}
+    td{padding:10px 12px;border-bottom:1px solid #21262d;vertical-align:top;line-height:1.5}
+    tr:hover td{background:#1c2128}
+    .ev-date{color:#58a6ff;white-space:nowrap;font-weight:600}
+    .ev-label{font-weight:700;color:#e6edf3;white-space:nowrap}
+    .ev-desc{color:#8b949e;font-size:.8rem}
+    .badge{display:inline-block;background:#21262d;color:#79c0ff;border:1px solid #30363d;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}
     footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
     footer a{color:#58a6ff;text-decoration:none}
     @media(max-width:600px){.header-inner{flex-direction:column}.sentiment-banner{flex-direction:column}}
@@ -63,7 +60,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年4月20日 06:42 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年4月20日 08:55 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
@@ -75,44 +72,9 @@
     <div class="sentiment-badge">😢 やや弱気</div>
     <div class="sentiment-text">
       日経平均 58,476円 / S&amp;P500 7,126.06 /
-      USD/JPY 158.81円 / BTC $74,803 /
-      金 N/A
+      USD/JPY 159.15円 / BTC $73,902 /
+      金 $4,762.10/oz
     </div>
-  </div>
-
-  <!-- 騰落レシオ -->
-  <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px 24px;margin-bottom:32px">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
-      <span style="font-size:1.1rem;font-weight:700;color:#e6edf3">📊 騰落レシオ（25日）</span>
-      <span style="font-size:1.5rem;font-weight:700;color:#3fb950">108%</span>
-      <span style="background:#3fb950;color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:12px">😊 通常</span>
-    </div>
-    <div style="position:relative;height:18px;border-radius:9px;background:linear-gradient(90deg, #238636 0%, #3fb950 25%, #d29922 50%, #f0883e 75%, #da3633 100%);margin-bottom:10px;overflow:visible">
-      <div style="position:absolute;left:56%;top:-2px;width:4px;height:22px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 6px rgba(255,255,255,0.6)"></div>
-      <div style="position:absolute;left:0;top:22px;font-size:.6rem;color:#8b949e">30</div>
-      <div style="position:absolute;left:36%;top:22px;font-size:.6rem;color:#8b949e">80</div>
-      <div style="position:absolute;left:64%;top:22px;font-size:.6rem;color:#8b949e">120</div>
-      <div style="position:absolute;right:0;top:22px;font-size:.6rem;color:#8b949e">170</div>
-    </div>
-    <div style="font-size:.82rem;color:#8b949e;line-height:1.65;margin-top:20px">騰落レシオ 108%：通常の範囲内。市場は安定しています。</div>
-    <div style="margin-top:10px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#79c0ff;line-height:1.7">
-      <span style="font-weight:700;color:#58a6ff">🔰 初心者メモ　</span>騰落レシオは「値上がり銘柄数÷値下がり銘柄数×100」で計算されます。120%以上は「買われすぎ」、70%以下は「売られすぎ」の目安。逆張り投資の参考指標として人気があります。
-    </div>
-  </div>
-
-  <!-- トップニュース -->
-  <div class="top-news">
-    <div class="top-news-title">🔥 マーケットを動かすニュース TOP3</div>
-    <a class="news-item" href="https://finance.yahoo.com/markets/crypto/articles/justin-sun-says-bitcoin-debates-163115646.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> ジャスティン・サン氏、ビットコインは「議論」、イーサリアムは「研究委員会」を設立、ブロックチェーンがポスト量子構想を明らかにする中、トロンは「構築中」と語る</span>
-          <span class="news-meta">Yahoo Entertainment · 2026-04-18</span>
-        </a><a class="news-item" href="https://www.cnbc.com/2026/04/18/ai-fears-graduate-school.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> AIへの恐怖で一部の若者は大学院に進学―「人々は高等教育に避難している」と専門家が語る</span>
-          <span class="news-meta">CNBC · 2026-04-18</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/news/morning-brief-the-future-of-netflix-is-now-100051740.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> モーニング ブリーフ: Netflix の未来は今です</span>
-          <span class="news-meta">Yahoo Entertainment · 2026-04-18</span>
-        </a>
   </div>
 
   <!-- 今日のカード -->
@@ -125,33 +87,14 @@
       </div>
       <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">58,476円 <span class="down price-change">😢▼1.75%</span></span></div>
       <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,126.06 <span class="up price-change">😊▲1.20%</span></span></div>
-      <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://247wallst.com/investing/2026/04/17/while-you-are-watching-iran-south-koreas-stock-market-is-going-absolutely-berserk/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> イランを見ている間に韓国の株式市場は完全に狂っている</span>
-          <span class="news-meta">24/7 Wall St. · 2026-04-17</span>
-        </a><a class="news-item" href="https://cryptobriefing.com/strategy-shares-surge-bitcoin-rebound/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ビットコイン価格の反発を受けてストラテジー株が150ドルを超えて急騰</span>
-          <span class="news-meta">Crypto Briefing · 2026-04-17</span>
-        </a><a class="news-item" href="https://economictimes.indiatimes.com/markets/stocks/news/why-stock-market-rose-today-sensex-jumps-500-points-nifty-settles-above-24350-5-key-factors-explained/articleshow/130329422.cms" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> なぜ今日株式市場は上昇したのでしょうか? Sensex は 500 ポイント急上昇し、Nifty は 24,350 ポイントを超えて落ち着きました。 5 つの重要な要素の説明</span>
-          <span class="news-meta">The Times of India · 2026-04-17</span>
-        </a></div>
     </div>
     <div class="card">
       <div class="card-header">
         <div class="card-icon icon-fx">💱</div>
         <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">158.81円 <span class="down price-change">😢▼0.24%</span></span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">186.32円 <span class="down price-change">😢▼0.66%</span></span></div>
-      <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.channelnewsasia.com/business/safe-haven-dollar-sinks-slowly-traders-hope-mideast-breakthrough-6054676" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> トレーダーらが中東の躍進を期待する中、安全資産ドルはゆっくりと下落</span>
-          <span class="news-meta">CNA · 2026-04-14</span>
-        </a><a class="news-item" href="https://www.thehindubusinessline.com/markets/stock-market-highlights-30-march-2026/article70799147.ece" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> 株式市場のハイライト: 26年度が低迷して終了、センセックスとニフティは2%超下落</span>
-          <span class="news-meta">BusinessLine · 2026-03-30</span>
-        </a></div>
+      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">159.15円 <span class="down price-change">😢▼0.03%</span></span></div>
+      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">186.84円 <span class="down price-change">😢▼0.38%</span></span></div>
     </div>
     <div class="card">
       <div class="card-header">
@@ -159,52 +102,199 @@
         <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
       </div>
       <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">N/A </span></div>
-      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">N/A </span></div>
-      <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.thehindubusinessline.com/markets/stock-market-highlights-april-10-2026/article70843139.ece" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> 株式市場のハイライト: 閉会ベル: センセックスは918ポイント高の7,550で清算、ニフティ50は275ポイント高の24,050で清算</span>
-          <span class="news-meta">BusinessLine · 2026-04-10</span>
-        </a><a class="news-item" href="https://www.thehindubusinessline.com/markets/stock-market-nifty-sensex-live-updates-7th-april-2026/article70830012.ece" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> 株式市場のライブ：米国とイランの緊張が続く中、センセックスは370ポイント下落、ニフティは22,800ポイントを突破</span>
-          <span class="news-meta">BusinessLine · 2026-04-07</span>
-        </a><a class="news-item" href="https://www.thehindubusinessline.com/markets/gold/gold-steadies-near-4700-as-west-asia-uncertainty-keeps-markets-on-edge/article70833074.ece" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> 西アジアの不確実性により市場が緊張状態にある中、金は4,700ドル付近で安定</span>
-          <span class="news-meta">BusinessLine · 2026-04-07</span>
-        </a></div>
+      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,762.10/oz <span class="down price-change">😢▼1.97%</span></span></div>
     </div>
     <div class="card">
       <div class="card-header">
         <div class="card-icon icon-crypto">₿</div>
         <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
       </div>
-      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$74,803 <span class="down price-change">😢▼1.22%</span></span></div>
-      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,289.81 <span class="down price-change">😢▼2.61%</span></span></div>
-      <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://decrypt.co/364715/morning-minute-11t-schwab-goes-all-in-on-crypto" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> 午前の議事録: 11兆ドル以上のシュワブが仮想通貨に全力投球</span>
-          <span class="news-meta">Decrypt · 2026-04-17</span>
-        </a><a class="news-item" href="https://bitcoinist.com/charles-schwabs-crypto-plan-platform-details/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> チャールズ・シュワブの仮想通貨計画は段階的に進行中—主要なプラットフォームの詳細が発表</span>
-          <span class="news-meta">Bitcoinist · 2026-04-17</span>
-        </a><a class="news-item" href="http://www.newsbtc.com/breaking-news-ticker/could-bitcoin-hit-90000-and-trigger-a-new-altcoin-rally-expert-cites-6-major-catalysts/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ビットコインが9万ドルに到達し、新たなアルトコインの上昇を引き起こす可能性はあるだろうか？専門家は6つの主要な触媒を引用</span>
-          <span class="news-meta">newsBTC · 2026-04-16</span>
-        </a></div>
+      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$73,902 <span class="down price-change">😢▼2.41%</span></span></div>
+      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,266.60 <span class="down price-change">😢▼3.59%</span></span></div>
     </div>
   </div>
 
-  <!-- サブページへのリンク -->
-  <div class="chart-link-section">
-    <a href="calendar.html" class="chart-link-btn" style="border-color:#7cf2c8;color:#7cf2c8;margin-bottom:12px">📅 マクロ経済カレンダーを見る →</a>
-    <div class="chart-link-desc">日米欧中の重要経済指標（FOMC・BOJ・CPI・雇用統計など）を月間カレンダーで一覧</div>
-    <div style="margin-top:16px">
-      <a href="vix.html" class="chart-link-btn" style="border-color:#f85149;color:#f85149">😱 恐怖指数（VIX）分析を見る →</a>
-      <div class="chart-link-desc">VIXの現在値・90日チャート・AIコメントで市場の恐怖度をチェック</div>
-    </div>
-    <div style="margin-top:16px">
-      <a href="charts.html" class="chart-link-btn">📈 50年価格チャート＆歴史的イベント一覧を見る →</a>
-      <div class="chart-link-desc">日経平均・S&amp;P500・ドル円・金の50年チャートに歴史的イベントを重ねて表示</div>
-    </div>
+  <!-- 歴史チャート -->
+  <p class="section-title">📈 50年価格チャート（歴史的イベント付き）</p>
+
+  <div class="chart-section">
+    <div class="chart-title">株式市場 — 日経平均 / S&amp;P500</div>
+    <div class="chart-subtitle">月次終値（左軸: 日経平均円、右軸: S&amp;P500ポイント）</div>
+    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-wrap"><canvas id="chartStocks"></canvas></div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-title">為替 — USD/JPY（ドル円）</div>
+    <div class="chart-subtitle">月次終値（円/ドル）</div>
+    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-wrap"><canvas id="chartFX"></canvas></div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-title">ゴールド — 金価格（スポット/先物）</div>
+    <div class="chart-subtitle">月次終値（USD/oz）</div>
+    <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
+    <div class="chart-wrap"><canvas id="chartGold"></canvas></div>
+  </div>
+
+  <!-- イベント一覧 -->
+  <p class="section-title">📋 歴史的イベント一覧</p>
+  <div class="event-section">
+    <table>
+      <thead><tr><th>年月</th><th>イベント</th><th>関連資産</th><th>概要</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="ev-date">2024-08</td>
+          <td class="ev-label">日経平均歴史的暴落</td>
+          <td><span class="badge">日経</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">日経平均が1日で-4,451円（-12.4%）の歴史的暴落。円キャリートレード巻き戻しで円が急騰した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2023-03</td>
+          <td class="ev-label">SVB破綻</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">シリコンバレーバンク破綻。米地銀への信用不安が拡大。金が安全資産として急騰した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2022-03</td>
+          <td class="ev-label">FRB急速利上げ開始</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">ドル円</span><span class="badge">金</span></td>
+          <td class="ev-desc">FRBがゼロ金利政策を終了し急速な利上げを開始。債券・株式が同時下落し円は対ドルで30年ぶりの円安に。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2022-02</td>
+          <td class="ev-label">ロシア・ウクライナ侵攻</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">ロシアがウクライナに軍事侵攻。原油・天然ガス・金価格が急騰し世界的なインフレ加速の引き金となった。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2020-02</td>
+          <td class="ev-label">コロナショック</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">ドル円</span><span class="badge">金</span></td>
+          <td class="ev-desc">新型コロナパンデミック宣言。世界の株式市場が約1ヶ月で30〜40%急落。史上最速の弱気相場入りとなった。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2018-12</td>
+          <td class="ev-label">米中貿易戦争</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span></td>
+          <td class="ev-desc">米中貿易摩擦が激化。S&P500が年末にかけて約20%急落し世界の株式市場が動揺した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2016-11</td>
+          <td class="ev-label">トランプ大統領当選</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">トランプ当選後に「トランプラリー」が発生。米株・ドル高・日本株が大きく上昇した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2016-06</td>
+          <td class="ev-label">Brexit国民投票</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">英国がEU離脱を決定。ポンドが急落し世界株安・円高が進行。市場の想定外の結果に衝撃が走った。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2015-08</td>
+          <td class="ev-label">チャイナショック</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span></td>
+          <td class="ev-desc">中国株式市場の急落が世界に波及。VIX指数が急騰し日経平均は1週間で約11%下落した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2013-04</td>
+          <td class="ev-label">アベノミクス/異次元緩和</td>
+          <td><span class="badge">日経</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">日銀が異次元金融緩和を発表。円安・株高が一気に加速し日経平均は約2年で倍増した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2011-03</td>
+          <td class="ev-label">東日本大震災</td>
+          <td><span class="badge">日経</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">東日本大震災・福島原発事故。日経平均が約20%急落し円が急騰。一時1ドル=76円台の超円高を記録した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2010-05</td>
+          <td class="ev-label">欧州債務危機</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">ギリシャ財政危機が欧州全体に波及。ユーロが急落し世界的なリスクオフの動きが強まった。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2008-09</td>
+          <td class="ev-label">リーマンショック</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">ドル円</span><span class="badge">金</span></td>
+          <td class="ev-desc">リーマン・ブラザーズ経営破綻で世界金融危機が勃発。日経平均はピークから約60%、S&P500は約57%下落した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2003-03</td>
+          <td class="ev-label">イラク戦争</td>
+          <td><span class="badge">金</span><span class="badge">日経</span></td>
+          <td class="ev-desc">米英軍がイラク侵攻を開始。地政学リスクが高まり原油・金価格が乱高下した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2001-09</td>
+          <td class="ev-label">9.11テロ</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">米同時多発テロ。ニューヨーク市場が1週間閉鎖。再開後に株価が急落し金が安全資産として買われた。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">2000-03</td>
+          <td class="ev-label">ITバブル崩壊</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span></td>
+          <td class="ev-desc">NASDAQが5,048の最高値から急落。ITバブルが崩壊し2002年まで世界的な株安が続いた。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1998-08</td>
+          <td class="ev-label">ロシア財政危機/LTCM</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">ロシアがデフォルト宣言。ヘッジファンドLTCM破綻。世界的な信用収縮とドル安・円高が加速した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1997-07</td>
+          <td class="ev-label">アジア通貨危機</td>
+          <td><span class="badge">日経</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">タイバーツ暴落から始まったアジア通貨危機が日本の金融機関にも波及。山一証券など相次いで破綻した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1995-01</td>
+          <td class="ev-label">阪神大震災・円高</td>
+          <td><span class="badge">日経</span><span class="badge">ドル円</span></td>
+          <td class="ev-desc">阪神淡路大震災後に円が急騰し1ドル=79円台の史上最高値を記録。日経平均も急落した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1990-01</td>
+          <td class="ev-label">日本バブル崩壊</td>
+          <td><span class="badge">日経</span></td>
+          <td class="ev-desc">日経平均が38,915円のピークから急落開始。失われた30年の始まりとなった歴史的な大暴落。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1987-10</td>
+          <td class="ev-label">ブラックマンデー</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span></td>
+          <td class="ev-desc">ニューヨーク株式市場で1日に22.6%の暴落。世界同時株安となり日経平均も翌日約15%下落した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1985-09</td>
+          <td class="ev-label">プラザ合意</td>
+          <td><span class="badge">ドル円</span><span class="badge">日経</span></td>
+          <td class="ev-desc">G5がドル高是正で合意。ドル円が240円台から120円台へと急落する大規模な円高が進行した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1979-02</td>
+          <td class="ev-label">第二次オイルショック</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">イラン革命で原油供給が激減。原油価格が再び急騰し世界経済を直撃した。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1973-11</td>
+          <td class="ev-label">第一次オイルショック</td>
+          <td><span class="badge">日経</span><span class="badge">S&P</span><span class="badge">金</span></td>
+          <td class="ev-desc">OAPEC原油禁輸。原油価格が約4倍に急騰。世界的インフレと株安を引き起こした。</td>
+        </tr>
+        <tr>
+          <td class="ev-date">1971-08</td>
+          <td class="ev-label">ニクソンショック</td>
+          <td><span class="badge">ドル円</span><span class="badge">金</span></td>
+          <td class="ev-desc">米ドルと金の兌換停止。変動相場制へ移行。ドル円が急落し360円台から100円台への長期円高が始まった。</td>
+        </tr></tbody>
+    </table>
   </div>
 
 </main>
@@ -213,5 +303,93 @@
   <a href="https://invest-ai-info.github.io/marketwatch-ai/">GitHub Pages</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
 </footer>
+
+<script>
+const NK_DATES  = ["1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+const NK_PRICES = [4342.06, 4990.85, 4863.01, 6001.85, 6569.47, 7063.13, 7681.84, 8016.67, 9893.82, 11542.6, 13083.18, 18820.65, 21564.0, 30159.0, 38915.87, 23848.71, 22983.77, 16924.95, 17417.24, 19723.06, 19868.15, 19361.35, 15258.74, 13842.17, 18934.34, 13785.69, 10542.62, 8578.95, 10676.64, 11488.76, 16111.43, 17225.83, 15307.78, 8859.56, 10546.44, 10228.92, 8455.35, 10395.18, 16291.31, 17450.77, 19033.71, 19114.37, 22764.94, 20014.77, 23656.62, 27444.17, 28791.71, 26094.5, 33464.17, 39894.54, 50339.48, 58475.9];
+const SP_DATES  = ["1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+const SP_PRICES = [90.19, 107.46, 95.1, 96.11, 107.94, 135.76, 122.55, 140.64, 164.93, 167.24, 211.28, 242.17, 247.08, 277.72, 353.4, 330.22, 417.09, 435.71, 466.45, 459.27, 615.93, 740.74, 970.43, 1229.23, 1469.25, 1320.28, 1148.08, 879.82, 1111.92, 1211.92, 1248.29, 1418.3, 1468.36, 903.25, 1115.1, 1257.64, 1257.6, 1426.19, 1848.36, 2058.9, 2043.94, 2238.83, 2673.61, 2506.85, 3230.78, 3756.07, 4766.18, 3839.5, 4769.83, 5881.63, 6845.5, 7126.06];
+const FX_DATES  = ["1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+const FX_PRICES = [115.9, 130.56, 113.45, 102.18, 114.38, 131.67, 118.7, 107.4, 102.51, 117.98, 118.98, 111.65, 90.65, 92.91, 81.48, 77.66, 85.96, 104.93, 119.46, 120.45, 116.27, 112.88, 110.33, 108.87, 103.12, 115.06, 132.92, 141.43, 156.99, 156.41, 159.15];
+const GLD_DATES  = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+const GLD_PRICES = [272.0, 278.7, 347.6, 415.7, 437.5, 517.1, 635.2, 834.9, 883.6, 1095.2, 1421.1, 1565.8, 1674.8, 1201.9, 1183.9, 1060.3, 1150.0, 1306.3, 1278.3, 1519.5, 1893.1, 1827.5, 1819.7, 2062.4, 2629.2, 4325.6, 4762.1];
+
+const NK_ANN  = {"ev1": {"type": "line", "xMin": "1975", "xMax": "1975", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第一次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev2": {"type": "line", "xMin": "1980", "xMax": "1980", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第二次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev3": {"type": "line", "xMin": "1986", "xMax": "1986", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "プラザ合意", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev4": {"type": "line", "xMin": "1988", "xMax": "1988", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ブラックマンデー", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev5": {"type": "line", "xMin": "1991", "xMax": "1991", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "日本バブル崩壊", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev6": {"type": "line", "xMin": "1996", "xMax": "1996", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "阪神大震災・円高", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev7": {"type": "line", "xMin": "1998", "xMax": "1998", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "アジア通貨危機", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev8": {"type": "line", "xMin": "1999", "xMax": "1999", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア財政危機/LTCM", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev9": {"type": "line", "xMin": "2001", "xMax": "2001", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ITバブル崩壊", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev10": {"type": "line", "xMin": "2002", "xMax": "2002", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "9.11テロ", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev11": {"type": "line", "xMin": "2004", "xMax": "2004", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "イラク戦争", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev12": {"type": "line", "xMin": "2009", "xMax": "2009", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "リーマンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev13": {"type": "line", "xMin": "2011", "xMax": "2011", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "欧州債務危機", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev14": {"type": "line", "xMin": "2012", "xMax": "2012", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "東日本大震災", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev15": {"type": "line", "xMin": "2014", "xMax": "2014", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "アベノミクス/異次元緩和", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev16": {"type": "line", "xMin": "2016", "xMax": "2016", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "チャイナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev17": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "Brexit国民投票", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev18": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "トランプ大統領当選", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev19": {"type": "line", "xMin": "2019", "xMax": "2019", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "米中貿易戦争", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev20": {"type": "line", "xMin": "2021", "xMax": "2021", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "コロナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev21": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア・ウクライナ侵攻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev22": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "FRB急速利上げ開始", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev23": {"type": "line", "xMin": "2024", "xMax": "2024", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "SVB破綻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev24": {"type": "line", "xMin": "2025", "xMax": "2025", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "日経平均歴史的暴落", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}};
+const SP_ANN  = {"ev1": {"type": "line", "xMin": "1975", "xMax": "1975", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第一次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev2": {"type": "line", "xMin": "1980", "xMax": "1980", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第二次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev4": {"type": "line", "xMin": "1988", "xMax": "1988", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ブラックマンデー", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev8": {"type": "line", "xMin": "1999", "xMax": "1999", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア財政危機/LTCM", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev9": {"type": "line", "xMin": "2001", "xMax": "2001", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ITバブル崩壊", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev10": {"type": "line", "xMin": "2002", "xMax": "2002", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "9.11テロ", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev12": {"type": "line", "xMin": "2009", "xMax": "2009", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "リーマンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev13": {"type": "line", "xMin": "2011", "xMax": "2011", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "欧州債務危機", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev16": {"type": "line", "xMin": "2016", "xMax": "2016", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "チャイナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev17": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "Brexit国民投票", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev18": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "トランプ大統領当選", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev19": {"type": "line", "xMin": "2019", "xMax": "2019", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "米中貿易戦争", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev20": {"type": "line", "xMin": "2021", "xMax": "2021", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "コロナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev21": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア・ウクライナ侵攻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev22": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "FRB急速利上げ開始", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev23": {"type": "line", "xMin": "2024", "xMax": "2024", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "SVB破綻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}};
+const FX_ANN  = {"ev0": {"type": "line", "xMin": "1996", "xMax": "1996", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ニクソンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev3": {"type": "line", "xMin": "1996", "xMax": "1996", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "プラザ合意", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev6": {"type": "line", "xMin": "1996", "xMax": "1996", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "阪神大震災・円高", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev7": {"type": "line", "xMin": "1998", "xMax": "1998", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "アジア通貨危機", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev8": {"type": "line", "xMin": "1999", "xMax": "1999", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア財政危機/LTCM", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev12": {"type": "line", "xMin": "2009", "xMax": "2009", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "リーマンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev14": {"type": "line", "xMin": "2012", "xMax": "2012", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "東日本大震災", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev15": {"type": "line", "xMin": "2014", "xMax": "2014", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "アベノミクス/異次元緩和", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev18": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "トランプ大統領当選", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev20": {"type": "line", "xMin": "2021", "xMax": "2021", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "コロナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev22": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "FRB急速利上げ開始", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev24": {"type": "line", "xMin": "2025", "xMax": "2025", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "日経平均歴史的暴落", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}};
+const GLD_ANN = {"ev0": {"type": "line", "xMin": "2000", "xMax": "2000", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ニクソンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev1": {"type": "line", "xMin": "2000", "xMax": "2000", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第一次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev2": {"type": "line", "xMin": "2000", "xMax": "2000", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "第二次オイルショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev10": {"type": "line", "xMin": "2002", "xMax": "2002", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "9.11テロ", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev11": {"type": "line", "xMin": "2004", "xMax": "2004", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "イラク戦争", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev12": {"type": "line", "xMin": "2009", "xMax": "2009", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "リーマンショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev13": {"type": "line", "xMin": "2011", "xMax": "2011", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "欧州債務危機", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev17": {"type": "line", "xMin": "2017", "xMax": "2017", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "Brexit国民投票", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev20": {"type": "line", "xMin": "2021", "xMax": "2021", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "コロナショック", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev21": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "ロシア・ウクライナ侵攻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev22": {"type": "line", "xMin": "2023", "xMax": "2023", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "FRB急速利上げ開始", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}, "ev23": {"type": "line", "xMin": "2024", "xMax": "2024", "borderColor": "rgba(255, 193, 7, 0.7)", "borderWidth": 1.5, "borderDash": [4, 3], "label": {"content": "SVB破綻", "display": false, "backgroundColor": "rgba(30,30,40,0.95)", "color": "#ffd700", "font": {"size": 11}, "padding": 6, "position": "start"}, "enter": {"label": {"display": true}}, "leave": {"label": {"display": false}}}};
+
+const gridColor  = 'rgba(48,54,61,0.8)';
+const labelColor = '#8b949e';
+
+function makeChart(id, datasets, annotations, yLabels) {
+  const ctx = document.getElementById(id).getContext('2d');
+  const scales = {};
+  datasets.forEach((ds, i) => {
+    const axId = 'y' + i;
+    ds.yAxisID = axId;
+    scales[axId] = {
+      position: i === 0 ? 'left' : 'right',
+      grid: { color: i === 0 ? gridColor : 'transparent', drawBorder: false },
+      ticks: { color: labelColor, font: { size: 10 }, maxTicksLimit: 6,
+        callback: v => yLabels[i] ? yLabels[i](v) : v },
+      title: { display: false },
+    };
+  });
+  scales['x'] = {
+    ticks: { color: labelColor, font: { size: 10 }, maxTicksLimit: 12,
+      callback: function(val, idx) {
+        const lbl = this.getLabelForValue(val);
+        return lbl && lbl.endsWith('-01') ? lbl.substring(0,4) : '';
+      }
+    },
+    grid: { color: gridColor, drawBorder: false },
+  };
+  return new Chart(ctx, {
+    type: 'line',
+    data: { labels: datasets[0].dates, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#e6edf3', font: { size: 12 } } },
+        tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#58a6ff',
+                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1 },
+        annotation: { annotations },
+      },
+      scales,
+      elements: { point: { radius: 0, hoverRadius: 4 }, line: { tension: 0.2 } },
+    }
+  });
+}
+
+// 株式チャート（日経 + S&P500）
+const mergedDates = [...new Set([...NK_DATES, ...SP_DATES])].sort();
+const nkMap = Object.fromEntries(NK_DATES.map((d,i) => [d, NK_PRICES[i]]));
+const spMap = Object.fromEntries(SP_DATES.map((d,i) => [d, SP_PRICES[i]]));
+makeChart('chartStocks', [
+  { label: '日経平均（円）', dates: NK_DATES, data: NK_PRICES,
+     borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,0.08)',
+     borderWidth: 1.5, fill: true },
+  { label: 'S&P500', dates: SP_DATES, data: SP_PRICES,
+     borderColor: '#3fb950', backgroundColor: 'rgba(63,185,80,0.06)',
+     borderWidth: 1.5, fill: true },
+], Object.assign({}, NK_ANN, SP_ANN),
+[v => v.toLocaleString()+'円', v => v.toLocaleString()]);
+
+// 為替チャート
+makeChart('chartFX', [
+  { label: 'USD/JPY（円）', dates: FX_DATES, data: FX_PRICES,
+     borderColor: '#f0883e', backgroundColor: 'rgba(240,136,62,0.08)',
+     borderWidth: 1.5, fill: true },
+], FX_ANN, [v => v.toFixed(1)+'円']);
+
+// 金チャート
+makeChart('chartGold', [
+  { label: '金価格（USD/oz）', dates: GLD_DATES, data: GLD_PRICES,
+     borderColor: '#ffd700', backgroundColor: 'rgba(255,215,0,0.08)',
+     borderWidth: 1.5, fill: true },
+], GLD_ANN, [v => '$'+v.toLocaleString()]);
+</script>
 </body>
 </html>
