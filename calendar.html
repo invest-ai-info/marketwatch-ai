@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マクロ経済カレンダー - 2026年4月〜5月</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
+    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#8b949e}
+    .header-meta span{color:#58a6ff;font-weight:600}
+    .back-link{color:#58a6ff;text-decoration:none;font-size:.85rem}
+    .back-link:hover{text-decoration:underline}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding:16px 20px;background:#161b22;border:1px solid #30363d;border-radius:12px}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#8b949e}
+    .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+    .dot-jp{background:#f85149}.dot-us{background:#58a6ff}.dot-eu{background:#e3b341}.dot-cn{background:#3fb950}
+    .month-title{font-size:1.3rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #58a6ff;display:inline-block}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:24px}
+    .cal-header{background:#1c2128;padding:8px 4px;text-align:center;font-size:.75rem;font-weight:600;color:#8b949e}
+    .cal-header.sun{color:#f85149}.cal-header.sat{color:#58a6ff}
+    .cal-cell{background:#161b22;min-height:90px;padding:6px;border:1px solid #21262d;transition:border-color .2s}
+    .cal-cell:hover{border-color:#58a6ff}
+    .cal-cell.empty{background:#0d1117;border-color:#161b22}
+    .cal-cell.today{border:2px solid #58a6ff;background:#1a2233}
+    .cal-day{font-size:.8rem;font-weight:600;color:#8b949e;margin-bottom:4px}
+    .cal-cell.sun .cal-day{color:#f85149}.cal-cell.sat .cal-day{color:#58a6ff}
+    .cal-event{font-size:.65rem;line-height:1.4;padding:2px 4px;border-radius:4px;margin-bottom:2px;display:block}
+    .cal-event.jp{background:#3d1a1a;color:#f8a4a0;border-left:2px solid #f85149}
+    .cal-event.us{background:#1a2a4a;color:#a4ccff;border-left:2px solid #58a6ff}
+    .cal-event.eu{background:#3d3a1a;color:#f0d878;border-left:2px solid #e3b341}
+    .cal-event.cn{background:#1a3d1a;color:#7ee787;border-left:2px solid #3fb950}
+    .cal-event .imp{font-weight:700}
+    .event-list{margin-top:8px}
+    .event-card{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#161b22;border:1px solid #30363d;border-radius:10px;margin-bottom:8px;transition:border-color .2s}
+    .event-card:hover{border-color:#58a6ff}
+    .event-date-box{min-width:52px;text-align:center;padding:8px 6px;background:#1c2128;border-radius:8px}
+    .event-date-day{font-size:1.3rem;font-weight:700;color:#e6edf3}
+    .event-date-dow{font-size:.65rem;color:#8b949e}
+    .event-body{flex:1}
+    .event-name{font-size:.88rem;font-weight:600;color:#e6edf3;margin-bottom:4px}
+    .event-desc{font-size:.78rem;color:#8b949e;line-height:1.6}
+    .event-tag{display:inline-block;font-size:.6rem;font-weight:600;padding:2px 6px;border-radius:4px;margin-right:4px}
+    .tag-jp{background:#3d1a1a;color:#f8a4a0}.tag-us{background:#1a2a4a;color:#a4ccff}.tag-eu{background:#3d3a1a;color:#f0d878}.tag-cn{background:#1a3d1a;color:#7ee787}
+    .tag-high{background:#da3633;color:#fff}.tag-mid{background:#e3b341;color:#0d1117}
+    .tab-bar{display:flex;gap:8px;margin-bottom:20px}
+    .tab-btn{padding:8px 20px;border:1px solid #30363d;border-radius:8px;background:#161b22;color:#8b949e;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+    .tab-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    .tab-btn.active{background:#1a2a4a;border-color:#58a6ff;color:#58a6ff}
+    .beginner-box{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}
+    .beginner-box::before{content:"🔰 経済指標の見方　";font-weight:700;color:#58a6ff}
+    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
+    footer a{color:#58a6ff;text-decoration:none}
+    @media(max-width:768px){.cal-cell{min-height:60px;padding:3px}.cal-event{font-size:.55rem}.header-inner{flex-direction:column}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">📅 マクロ経済カレンダー</div>
+      <div class="header-meta">最終更新: <span>2026年04月20日 06:21 JST</span></div>
+    </div>
+    <a class="back-link" href="index.html">← マーケットニュースに戻る</a>
+  </div>
+</header>
+<main>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot dot-jp"></span> 🇯🇵 日本</div>
+    <div class="legend-item"><span class="legend-dot dot-us"></span> 🇺🇸 米国</div>
+    <div class="legend-item"><span class="legend-dot dot-eu"></span> 🇪🇺 欧州</div>
+    <div class="legend-item"><span class="legend-dot dot-cn"></span> 🇨🇳 中国</div>
+    <div class="legend-item">⭐ = 最重要 ｜ ● = 重要</div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showMonth('cur')">4月</button>
+    <button class="tab-btn" onclick="showMonth('next')">5月</button>
+  </div>
+  <div class="month-section" id="month-cur">
+    <div class="month-title">📆 2026年4月</div>\n<div class="cal-grid">\n<div class="cal-header sun">日</div><div class="cal-header">月</div><div class="cal-header">火</div><div class="cal-header">水</div><div class="cal-header">木</div><div class="cal-header">金</div><div class="cal-header sat">土</div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell">\n<div class="cal-day">1</div>\n<span class="cal-event jp"><span class="imp">⭐</span> 日銀短観（4月調査）</span>\n<span class="cal-event us"><span class="imp">●</span> ISM製造業</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">2</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">3</div>\n<span class="cal-event us"><span class="imp">⭐</span> 米雇用統計（3月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">4</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">5</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">6</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">7</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">8</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">9</div>\n<span class="cal-event us"><span class="imp">●</span> PPI（3月分）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">10</div>\n<span class="cal-event us"><span class="imp">⭐</span> 米CPI（3月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">11</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">12</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">13</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">14</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">15</div>\n<span class="cal-event cn"><span class="imp">⭐</span> 中国GDP（第1四半期）</span>\n<span class="cal-event us"><span class="imp">●</span> 小売売上高</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">16</div>\n<span class="cal-event eu"><span class="imp">⭐</span> ECB理事会（金利決定）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">17</div>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">18</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">19</div>\n</div>\n<div class="cal-cell today">\n<div class="cal-day">20 ← 今日</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">21</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">22</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">23</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">24</div>\n<span class="cal-event jp"><span class="imp">●</span> 全国CPI（3月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">25</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">26</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">27</div>\n<span class="cal-event jp"><span class="imp">⭐</span> 日銀金融政策決定会合①</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">28</div>\n<span class="cal-event jp"><span class="imp">⭐</span> 日銀会合</span>\n<span class="cal-event us"><span class="imp">⭐</span> FOMC①</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">29</div>\n<span class="cal-event us"><span class="imp">⭐</span> FOMC</span>\n<span class="cal-event us"><span class="imp">●</span> 米GDP速報値（Q1）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">30</div>\n<span class="cal-event cn"><span class="imp">●</span> 中国製造業PMI（4月…</span>\n<span class="cal-event jp"><span class="imp">●</span> 鉱工業生産（3月速報）</span>\n<span class="cal-event eu"><span class="imp">●</span> ユーロ圏GDP速報（Q…</span>\n</div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n</div>\n
+    <p style="font-size:.95rem;font-weight:600;color:#8b949e;margin-bottom:12px">📋 4月の重要イベント詳細</p>\n<div class="event-list">\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">1</div><div class="event-date-dow">水</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-jp">🇯🇵</span><span class="event-tag tag-high">⭐最重要</span> 日銀短観（4月調査）</div>
+<div class="event-desc">企業景況感</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">3</div><div class="event-date-dow">金</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米雇用統計（3月分）</div>
+<div class="event-desc">日本時間21:30発表</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">10</div><div class="event-date-dow">金</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米CPI（3月分）</div>
+<div class="event-desc">消費者物価指数。インフレの代表指標。コアCPI（食品・エネ除く）が特に重要。</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">15</div><div class="event-date-dow">水</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-cn">🇨🇳</span><span class="event-tag tag-high">⭐最重要</span> 中国GDP（第1四半期）</div>
+<div class="event-desc">小売売上高・鉱工業生産も同時発表</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">16</div><div class="event-date-dow">木</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-eu">🇪🇺</span><span class="event-tag tag-high">⭐最重要</span> ECB理事会（金利決定）</div>
+<div class="event-desc">欧州中央銀行の金利決定。ユーロ円・ユーロドルに影響。</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">27</div><div class="event-date-dow">月</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-jp">🇯🇵</span><span class="event-tag tag-high">⭐最重要</span> 日銀金融政策決定会合（1日目）</div>
+<div class="event-desc">展望レポートあり</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">28</div><div class="event-date-dow">火</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-jp">🇯🇵</span><span class="event-tag tag-high">⭐最重要</span> 日銀会合（結果発表）</div>
+<div class="event-desc">利上げ判断に注目</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">28</div><div class="event-date-dow">火</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> FOMC（1日目）</div>
+<div class="event-desc">FRBの金利決定会合。利下げ・据え置き・利上げを決定。ドル円・日経に大きく影響。</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">29</div><div class="event-date-dow">水</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> FOMC（結果発表）</div>
+<div class="event-desc">日本時間4/30 3:00</div>
+</div></div>\n</div>\n
+  </div>
+  <div class="month-section" id="month-next" style="display:none">
+    <div class="month-title">📆 2026年5月</div>\n<div class="cal-grid">\n<div class="cal-header sun">日</div><div class="cal-header">月</div><div class="cal-header">火</div><div class="cal-header">水</div><div class="cal-header">木</div><div class="cal-header">金</div><div class="cal-header sat">土</div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell">\n<div class="cal-day">1</div>\n<span class="cal-event us"><span class="imp">●</span> ISM製造業</span>\n<span class="cal-event cn"><span class="imp">●</span> 財新PMI</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">2</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">3</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">4</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">5</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">6</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">7</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">8</div>\n<span class="cal-event us"><span class="imp">⭐</span> 米雇用統計（4月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">9</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">10</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">11</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">12</div>\n<span class="cal-event us"><span class="imp">⭐</span> 米CPI（4月分）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">13</div>\n<span class="cal-event us"><span class="imp">●</span> PPI（4月分）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">14</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">15</div>\n<span class="cal-event us"><span class="imp">●</span> 小売売上高</span>\n<span class="cal-event cn"><span class="imp">●</span> 中国経済指標（4月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">16</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">17</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">18</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">19</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">20</div>\n<span class="cal-event jp"><span class="imp">●</span> 日本GDP速報値（Q1）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">21</div>\n<span class="cal-event jp"><span class="imp">●</span> 貿易統計（4月分）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">22</div>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">23</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">24</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">25</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">26</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">27</div>\n</div>\n<div class="cal-cell">\n<div class="cal-day">28</div>\n<span class="cal-event us"><span class="imp">●</span> 米GDP改定値（Q1）</span>\n</div>\n<div class="cal-cell">\n<div class="cal-day">29</div>\n<span class="cal-event jp"><span class="imp">●</span> 全国CPI（4月分）</span>\n</div>\n<div class="cal-cell sat">\n<div class="cal-day">30</div>\n</div>\n<div class="cal-cell sun">\n<div class="cal-day">31</div>\n<span class="cal-event cn"><span class="imp">●</span> 中国製造業PMI（5月…</span>\n</div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n<div class="cal-cell empty"></div>\n</div>\n
+    <p style="font-size:.95rem;font-weight:600;color:#8b949e;margin-bottom:12px">📋 5月の重要イベント詳細</p>\n<div class="event-list">\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">8</div><div class="event-date-dow">金</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米雇用統計（4月分）</div>
+<div class="event-desc">GW中に発表</div>
+</div></div>\n<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">12</div><div class="event-date-dow">火</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米CPI（4月分）</div>
+<div class="event-desc">基準年変更に注意</div>
+</div></div>\n</div>\n
+  </div>
+  <div class="beginner-box">
+    経済指標は発表の瞬間に株価・為替が大きく動くことがあります。特に「⭐最重要」マークの指標発表前後は値動きが荒くなりやすいため、初心者はこの時間帯の売買を避けるのが無難です。「予想値」と「実績値」の差（サプライズ）が大きいほど相場が動きます。長期投資なら日々の指標に一喜一憂せず、トレンドを確認する程度でOKです。
+  </div>
+</main>
+<footer>
+  <p>📅 マクロ経済カレンダー ─ 日本人投資家のための経済指標ガイド</p>
+  <p style="margin-top:6px">※ 日程は変更される場合があります ｜ 最新情報は各公式サイトでご確認ください</p>
+  <p style="margin-top:6px"><a href="index.html">📊 マーケットニュース</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a></p>
+</footer>
+<script>
+function showMonth(m) {
+  document.getElementById('month-cur').style.display = m === 'cur' ? 'block' : 'none';
+  document.getElementById('month-next').style.display = m === 'next' ? 'block' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(function(btn) { btn.classList.remove('active'); });
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
