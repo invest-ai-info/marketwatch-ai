@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>市場健康度ダッシュボード - MarketWatch AI</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;font-size:16px;line-height:1.75}
+  header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:26px 32px;text-align:center}
+  .header-title{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+  .header-meta{font-size:1rem;color:#8b949e}
+  main{max-width:1200px;margin:0 auto;padding:32px 24px}
+  .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+  .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
+  .summary{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #d29922;border-radius:14px;padding:22px 26px;margin-bottom:28px}
+  .summary h2{font-size:1.15rem;color:#d29922;margin-bottom:10px}
+  .summary p{color:#e6edf3;font-size:.98rem}
+  .section{margin-bottom:32px}
+  .section-title{font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding:6px 0 6px 14px;border-left:4px solid #58a6ff}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:22px;transition:transform .15s,border-color .2s}
+  .card:hover{border-color:#58a6ff;transform:translateY(-2px)}
+  .card-header{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+  .card-title{font-size:1.05rem;font-weight:700;color:#e6edf3}
+  .card-sub{font-size:.78rem;color:#8b949e}
+  .big-num{font-size:2.6rem;font-weight:800;margin:6px 0}
+  .tag{display:inline-block;font-size:.82rem;font-weight:700;padding:4px 12px;border-radius:999px;color:#001}
+  .gauge{position:relative;height:14px;border-radius:7px;margin:14px 0 8px;overflow:visible}
+  .gauge.fear{background:linear-gradient(90deg,#238636 0%,#3fb950 25%,#d29922 50%,#f85149 75%,#da3633 100%)}
+  .gauge.val{background:linear-gradient(90deg,#3fb950 0%,#58a6ff 40%,#d29922 65%,#f85149 85%,#da3633 100%)}
+  .gauge.vol{background:linear-gradient(90deg,#3fb950 0%,#d29922 50%,#f85149 75%,#da3633 100%)}
+  .gauge-pin{position:absolute;top:-4px;width:5px;height:22px;background:#fff;border-radius:3px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,.7)}
+  .gauge-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7681;margin-top:4px}
+  .comment{font-size:.93rem;color:#c8d1e6;margin-top:10px;line-height:1.7}
+  .beginner{margin-top:12px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#79c0ff;line-height:1.75}
+  .beginner::before{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}
+  .formula{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #30363d;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#a4ccff;margin:8px 0;display:inline-block}
+  footer{background:#161b22;border-top:1px solid #30363d;padding:24px 32px;text-align:center;font-size:.9rem;color:#8b949e;line-height:1.85}
+  footer a{color:#58a6ff;text-decoration:none}
+  @media(max-width:600px){.big-num{font-size:2.1rem}.header-title{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-title">🩺 市場健康度ダッシュボード</div>
+  <div class="header-meta">最終更新: 2026年04月20日 22:17 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+    <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
+  </nav>
+
+  <section class="summary">
+    <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
+    <p>
+      センチメント・ボラティリティ・割高割安・過熱感を<b>4セクション</b>で総合判定。
+      <b>米VIX 18.9</b> ／ <b>騰落レシオ 127.3%</b> はリアルタイム更新。
+      その他の指標（CNN F&amp;G、バフェット指数、CAPE、RSI等）は<b>月次手動メンテ</b>で参考値を表示しています。
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-title">① ボラティリティ（恐怖指数）</div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-header"><div class="card-title">😱 米国 VIX</div><div class="card-sub">S&amp;P500 オプションIV</div></div>
+        <div class="big-num" style="color:#3fb950">18.9 <span class="tag" style="background:#3fb950;color:#fff">通常</span></div>
+        <div class="gauge vol"><div class="gauge-pin" style="left:25%"></div></div>
+        <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
+        <p class="comment">20〜25は通常モード。30超は調整警戒、40超はパニック領域。リアルタイム値。</p>
+        <div class="beginner">VIXは「今後30日間にS&amp;P500がどれだけ動くと投資家が予想しているか」。高いほど不安感が強い。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">🗾 日経VI</div><div class="card-sub">日経225 オプションIV</div></div>
+        <div class="big-num" style="color:#f0883e">参考値 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <p class="comment">大阪取引所が算出する日本版VIX。米VIX＋5〜10が通常。40超は警戒圏。</p>
+        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#79c0ff">JPX公式</a> で確認できます。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">📊 騰落レシオ（25日）</div><div class="card-sub">東証プライム</div></div>
+        <div class="big-num" style="color:#f0883e">127.3% <span class="tag" style="background:#f0883e;color:#fff">買われすぎ</span></div>
+        <div class="gauge fear"><div class="gauge-pin" style="left:80%"></div></div>
+        <div class="gauge-labels"><span>30</span><span>70</span><span>100</span><span>120</span><span>170</span></div>
+        <p class="comment">120%以上は買われすぎ、70%以下は売られすぎの目安。リアルタイム値。</p>
+        <div class="beginner">値上がり銘柄数÷値下がり銘柄数×100。日本株の短期的な過熱感を測る定番指標。</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">② 投資家センチメント（月次手動更新）</div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-header"><div class="card-title">📊 CNN Fear &amp; Greed</div><div class="card-sub">米国株・7指標合成</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <p class="comment">0=極度の恐怖、100=極度の強欲。75超でバフェット格言「他人が強欲なときは恐れよ」が効く領域。</p>
+        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#79c0ff">CNN公式</a> で確認できます。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">₿ Crypto Fear &amp; Greed</div><div class="card-sub">BTC/暗号資産</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <p class="comment">alternative.me が公開。ボラ・出来高・SNS・ドミナンスから算出。BTC逆張りの定番指標。</p>
+        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#79c0ff">alternative.me</a> で確認できます。</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">③ バリュエーション（月次手動更新）</div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-header"><div class="card-title">💰 バフェット指数（米）</div><div class="card-sub">株式時価総額 ÷ GDP</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="formula">米国株時価総額 (Wilshire 5000) ÷ 米GDP × 100</div>
+        <p class="comment">バフェット本人「200%は火遊び」発言水準。70%以下=割安、135%以上=割高の目安。</p>
+        <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#79c0ff">currentmarketvaluation.com</a></div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">🗾 バフェット指数（日）</div><div class="card-sub">東証時価総額 ÷ 日本GDP</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="formula">東証全銘柄時価総額 ÷ 日本名目GDP × 100</div>
+        <p class="comment">1989年バブル期で約140%。100%を超えると割高圏の目安。</p>
+        <div class="beginner">JPX公表の時価総額÷内閣府公表の名目GDPで計算可能。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">📈 S&amp;P500 CAPE（シラーPER）</div><div class="card-sub">10年平均利益で算出</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="formula">S&amp;P500 ÷ （過去10年のインフレ調整済みEPS平均）</div>
+        <p class="comment">20世紀平均15.2。30超は歴史的高水準。2000年ITバブル期44、1929年大恐慌前32。</p>
+        <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#79c0ff">multpl.com</a></div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">🇯🇵 日経平均 PER（予想）</div><div class="card-sub">12ヶ月先の予想利益ベース</div></div>
+        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <p class="comment">歴史平均14〜16倍。米国S&amp;P500の約24倍よりは日本株が割安感あり。</p>
+        <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#79c0ff">日経インデックス公式</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#58a6ff">
+    <h2 style="color:#58a6ff">📋 投資判断のヒント</h2>
+    <p>
+      <b>短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
+      <b>中期（3〜12ヶ月）</b>: バフェット指数・CAPEが歴史的高水準なら <b>新規資金一括投入は避け、段階投資＋分散</b> が鉄則。<br>
+      <b>長期（1年以上）</b>: 日本株・新興国・金・債券などへの分散で米国一極集中リスクを下げる戦略が有効。
+    </p>
+  </section>
+
+</main>
+<footer>
+  <p>🩺 市場健康度ダッシュボード ─ 日本人投資家のための総合診断ツール</p>
+  <p style="margin-top:6px">データ出典: Yahoo Finance (VIX・騰落) ／ CNN ／ alternative.me ／ currentmarketvaluation.com ／ Shiller PE (multpl.com) ／ JPX 等</p>
+  <p style="margin-top:6px">※ 本ページはAIによる自動集計・要約であり、投資判断はご自身の責任でお願いいたします。</p>
+  <p style="margin-top:6px">
+    <a href="index.html">📊 マーケットニュース</a> ｜
+    <a href="calendar.html">📅 経済カレンダー</a> ｜
+    <a href="charts.html">📈 50年チャート</a> ｜
+    <a href="vix.html">😱 VIX恐怖指数</a>
+  </p>
+</footer>
+</body>
+</html>
