@@ -55,6 +55,10 @@
     .card-news .news-meta{font-size:.68rem}
     footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
     footer a{color:#58a6ff;text-decoration:none}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+    .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+    .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
     @media(max-width:600px){.header-inner{flex-direction:column}.sentiment-banner{flex-direction:column}}
   </style>
 </head>
@@ -63,19 +67,28 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年4月20日 22:17 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年4月20日 22:22 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
 </header>
 <main>
 
+  <!-- ナビゲーション -->
+  <nav class="nav-bar">
+    <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  </nav>
+
   <!-- センチメント -->
   <div class="sentiment-banner">
     <div class="sentiment-badge">😊 やや強気</div>
     <div class="sentiment-text">
       日経平均 58,825円 / S&amp;P500 7,126.06 /
-      USD/JPY 158.77円 / BTC $75,186 /
+      USD/JPY 158.81円 / BTC $75,131 /
       金 N/A
     </div>
   </div>
@@ -142,8 +155,8 @@
         <div class="card-icon icon-fx">💱</div>
         <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">158.77円 <span class="down price-change">😢▼0.26%</span></span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">186.86円 <span class="down price-change">😢▼0.37%</span></span></div>
+      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">158.81円 <span class="down price-change">😢▼0.24%</span></span></div>
+      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">186.85円 <span class="down price-change">😢▼0.38%</span></span></div>
       <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
       <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.channelnewsasia.com/business/safe-haven-dollar-sinks-slowly-traders-hope-mideast-breakthrough-6054676" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neg">😢</span> トレーダーらが中東の躍進を期待する中、安全資産ドルはゆっくりと下落</span>
@@ -177,8 +190,8 @@
         <div class="card-icon icon-crypto">₿</div>
         <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
       </div>
-      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$75,186 <span class="up price-change">😊▲1.80%</span></span></div>
-      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,316.70 <span class="up price-change">😊▲2.29%</span></span></div>
+      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$75,131 <span class="up price-change">😊▲1.73%</span></span></div>
+      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,315.14 <span class="up price-change">😊▲2.22%</span></span></div>
       <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
       <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://decrypt.co/364715/morning-minute-11t-schwab-goes-all-in-on-crypto" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> 午前の議事録: 11兆ドル以上のシュワブが仮想通貨に全力投球</span>
@@ -187,7 +200,7 @@
           <span class="news-title"><span class="news-sent sent-neu">😐</span> チャールズ・シュワブの仮想通貨計画は段階的に進行中—主要なプラットフォームの詳細が発表</span>
           <span class="news-meta">Bitcoinist · 2026-04-17</span>
         </a><a class="news-item" href="http://www.newsbtc.com/breaking-news-ticker/could-bitcoin-hit-90000-and-trigger-a-new-altcoin-rally-expert-cites-6-major-catalysts/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ビットコインが9万ドルに到達し、新たなアルトコインの上昇を引き起こす可能性はあるだろうか？専門家は6つの主要な触媒を引用</span>
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> ビットコインが9万ドルに達し、新たなアルトコインの上昇を引き起こす可能性はあるだろうか？専門家は6つの主要な触媒を引用</span>
           <span class="news-meta">newsBTC · 2026-04-16</span>
         </a></div>
     </div>
