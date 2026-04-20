@@ -46,7 +46,7 @@
 <body>
 <header>
   <div class="header-title">🩺 市場健康度ダッシュボード</div>
-  <div class="header-meta">最終更新: 2026年04月20日 22:22 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
+  <div class="header-meta">最終更新: 2026年04月21日 06:22 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
 </header>
 <main>
   <nav class="nav-bar">
@@ -60,9 +60,10 @@
   <section class="summary">
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
-      センチメント・ボラティリティ・割高割安・過熱感を<b>4セクション</b>で総合判定。
+      センチメント・ボラティリティ・割高割安を総合判定。
       <b>米VIX 18.9</b> ／ <b>騰落レシオ 127.3%</b> はリアルタイム更新。
-      その他の指標（CNN F&amp;G、バフェット指数、CAPE、RSI等）は<b>月次手動メンテ</b>で参考値を表示しています。
+      その他の指標は <b>2026-04-20 時点の参考値</b>（月次手動更新）。
+      <br>● 青=適正／割安　● 橙=やや割高・過熱　● 赤=危険水準
     </p>
   </section>
 
@@ -78,10 +79,12 @@
         <div class="beginner">VIXは「今後30日間にS&amp;P500がどれだけ動くと投資家が予想しているか」。高いほど不安感が強い。</div>
       </article>
       <article class="card">
-        <div class="card-header"><div class="card-title">🗾 日経VI</div><div class="card-sub">日経225 オプションIV</div></div>
-        <div class="big-num" style="color:#f0883e">参考値 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="card-header"><div class="card-title">🗾 日経VI</div><div class="card-sub">日経225 オプションIV ／ 2026-04-20時点</div></div>
+        <div class="big-num" style="color:#f0883e">32.9 <span class="tag" style="background:#f0883e;color:#fff">やや警戒</span></div>
+        <div class="gauge vol"><div class="gauge-pin" style="left:66%"></div></div>
+        <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">大阪取引所が算出する日本版VIX。米VIX＋5〜10が通常。40超は警戒圏。</p>
-        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#79c0ff">JPX公式</a> で確認できます。</div>
+        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#79c0ff">JPX公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📊 騰落レシオ（25日）</div><div class="card-sub">東証プライム</div></div>
@@ -95,50 +98,62 @@
   </section>
 
   <section class="section">
-    <div class="section-title">② 投資家センチメント（月次手動更新）</div>
+    <div class="section-title">② 投資家センチメント（2026-04-20時点・月次更新）</div>
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">📊 CNN Fear &amp; Greed</div><div class="card-sub">米国株・7指標合成</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
-        <p class="comment">0=極度の恐怖、100=極度の強欲。75超でバフェット格言「他人が強欲なときは恐れよ」が効く領域。</p>
-        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#79c0ff">CNN公式</a> で確認できます。</div>
+        <div class="big-num" style="color:#f0883e">68 <span class="tag" style="background:#f0883e;color:#fff">強欲</span></div>
+        <div class="gauge fear"><div class="gauge-pin" style="left:68%"></div></div>
+        <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
+        <p class="comment">0=極度の恐怖、100=極度の強欲。75超で「他人が強欲なときは恐れよ」領域。</p>
+        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#79c0ff">CNN公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">₿ Crypto Fear &amp; Greed</div><div class="card-sub">BTC/暗号資産</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="big-num" style="color:#d29922">50 <span class="tag" style="background:#d29922;color:#fff">中立</span></div>
+        <div class="gauge fear"><div class="gauge-pin" style="left:50%"></div></div>
+        <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
         <p class="comment">alternative.me が公開。ボラ・出来高・SNS・ドミナンスから算出。BTC逆張りの定番指標。</p>
-        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#79c0ff">alternative.me</a> で確認できます。</div>
+        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#79c0ff">alternative.me</a></div>
       </article>
     </div>
   </section>
 
   <section class="section">
-    <div class="section-title">③ バリュエーション（月次手動更新）</div>
+    <div class="section-title">③ バリュエーション（2026-04-20時点・月次更新）</div>
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">💰 バフェット指数（米）</div><div class="card-sub">株式時価総額 ÷ GDP</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="big-num" style="color:#da3633">232% <span class="tag" style="background:#da3633;color:#fff">大きく割高</span></div>
+        <div class="gauge val"><div class="gauge-pin" style="left:93%"></div></div>
+        <div class="gauge-labels"><span>70</span><span>100</span><span>135</span><span>180</span><span>250</span></div>
         <div class="formula">米国株時価総額 (Wilshire 5000) ÷ 米GDP × 100</div>
-        <p class="comment">バフェット本人「200%は火遊び」発言水準。70%以下=割安、135%以上=割高の目安。</p>
+        <p class="comment">バフェット本人「200%は火遊び」発言水準を超過。70%以下=割安、135%以上=割高。</p>
         <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#79c0ff">currentmarketvaluation.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🗾 バフェット指数（日）</div><div class="card-sub">東証時価総額 ÷ 日本GDP</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="big-num" style="color:#f0883e">142% <span class="tag" style="background:#f0883e;color:#fff">割高</span></div>
+        <div class="gauge val"><div class="gauge-pin" style="left:57%"></div></div>
+        <div class="gauge-labels"><span>70</span><span>100</span><span>135</span><span>180</span><span>250</span></div>
         <div class="formula">東証全銘柄時価総額 ÷ 日本名目GDP × 100</div>
         <p class="comment">1989年バブル期で約140%。100%を超えると割高圏の目安。</p>
         <div class="beginner">JPX公表の時価総額÷内閣府公表の名目GDPで計算可能。</div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📈 S&amp;P500 CAPE（シラーPER）</div><div class="card-sub">10年平均利益で算出</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="big-num" style="color:#f0883e">36.5 <span class="tag" style="background:#f0883e;color:#fff">歴史的高水準</span></div>
+        <div class="gauge val"><div class="gauge-pin" style="left:73%"></div></div>
+        <div class="gauge-labels"><span>10</span><span>15</span><span>22</span><span>30</span><span>50+</span></div>
         <div class="formula">S&amp;P500 ÷ （過去10年のインフレ調整済みEPS平均）</div>
         <p class="comment">20世紀平均15.2。30超は歴史的高水準。2000年ITバブル期44、1929年大恐慌前32。</p>
         <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#79c0ff">multpl.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🇯🇵 日経平均 PER（予想）</div><div class="card-sub">12ヶ月先の予想利益ベース</div></div>
-        <div class="big-num" style="color:#8b949e">参考 <span class="tag" style="background:#6e7681;color:#fff">手動更新</span></div>
+        <div class="big-num" style="color:#58a6ff">17.8倍 <span class="tag" style="background:#58a6ff;color:#fff">適正</span></div>
+        <div class="gauge val"><div class="gauge-pin" style="left:59%"></div></div>
+        <div class="gauge-labels"><span>10</span><span>13</span><span>16</span><span>20</span><span>30</span></div>
         <p class="comment">歴史平均14〜16倍。米国S&amp;P500の約24倍よりは日本株が割安感あり。</p>
         <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#79c0ff">日経インデックス公式</a></div>
       </article>
