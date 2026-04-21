@@ -14,7 +14,7 @@
     .header-meta span{color:#58a6ff;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
     .sentiment-banner{background:linear-gradient(135deg,#1c2f1c,#162416);border:1px solid #2ea043;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    .sentiment-badge{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#238636}
+    .sentiment-badge{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#9e6a03}
     .sentiment-text{color:#7ee787;font-size:.95rem;line-height:1.6}
     .section-title{font-size:1.1rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}
@@ -67,7 +67,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年4月21日 20:55 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年4月21日 21:52 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
@@ -81,15 +81,16 @@
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-badge">😊 やや強気</div>
+    <div class="sentiment-badge">😐 中立</div>
     <div class="sentiment-text">
       日経平均 59,349円 / S&amp;P500 7,109.14 /
-      USD/JPY 159.11円 / BTC $76,472 /
-      金 $4,811.90/oz
+      USD/JPY 159.16円 / BTC $75,888 /
+      金 $4,801.30/oz
     </div>
   </div>
 
@@ -116,15 +117,15 @@
   <!-- トップニュース -->
   <div class="top-news">
     <div class="top-news-title">🔥 マーケットを動かすニュース TOP3</div>
-    <a class="news-item" href="https://finance.yahoo.com/news/why-goldman-sachs-thinks-stocks-will-rip-even-higher-112018077.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ゴールドマン・サックスが株価はさらに上昇すると考える理由</span>
+    <a class="news-item" href="https://finance.yahoo.com/news/goldman-sachs-warns-us-consumers-could-have-a-challenging-few-months-113704421.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> ゴールドマン・サックス、米国の消費者は数カ月間厳しい状況に陥る可能性があると警告</span>
           <span class="news-meta">Yahoo Finance · 2026-04-21</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/stocks-rise-pre-bell-traders-112837914.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> トレーダーらが米国とイラン協議の不確実性を考慮し、株価はベル前に上昇</span>
-          <span class="news-meta">MT Newswires · 2026-04-21</span>
-        </a><a class="news-item" href="https://www.fool.com/investing/2026/04/21/2-stocks-im-ready-to-buy-if-the-market-drops-again/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> 市場が再び下落した場合に購入できる 2 つの銘柄</span>
-          <span class="news-meta">Motley Fool · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/morning-brief-mr-warsh-goes-to-washington-100004961.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 朝のブリーフ: ウォーシュ氏がワシントンへ行く</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-retail-sales-warsh-hearing/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日の株式市場: 小売売上高データが驚きでダウが反発。 UnitedHealth のサージ (ライブ中継)</span>
+          <span class="news-meta">Investor's Business Daily · 2026-04-21</span>
         </a>
   </div>
 
@@ -139,15 +140,15 @@
       <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">59,349円 <span class="up price-change">😊▲0.89%</span></span></div>
       <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,109.14 <span class="down price-change">😢▼0.24%</span></span></div>
       <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/why-goldman-sachs-thinks-stocks-will-rip-even-higher-112018077.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ゴールドマン・サックスが株価はさらに上昇すると考える理由</span>
+      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/goldman-sachs-warns-us-consumers-could-have-a-challenging-few-months-113704421.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> ゴールドマン・サックス、米国の消費者は数カ月間厳しい状況に陥る可能性があると警告</span>
           <span class="news-meta">Yahoo Finance · 2026-04-21</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/stocks-rise-pre-bell-traders-112837914.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> トレーダーらが米国とイラン協議の不確実性を考慮し、株価はベル前に上昇</span>
-          <span class="news-meta">MT Newswires · 2026-04-21</span>
-        </a><a class="news-item" href="https://www.fool.com/investing/2026/04/21/2-stocks-im-ready-to-buy-if-the-market-drops-again/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> 市場が再び下落した場合に購入できる 2 つの銘柄</span>
-          <span class="news-meta">Motley Fool · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/morning-brief-mr-warsh-goes-to-washington-100004961.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 朝のブリーフ: ウォーシュ氏がワシントンへ行く</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-retail-sales-warsh-hearing/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日の株式市場: 小売売上高データが驚きでダウが反発。 UnitedHealth のサージ (ライブ中継)</span>
+          <span class="news-meta">Investor's Business Daily · 2026-04-21</span>
         </a></div>
     </div>
     <div class="card">
@@ -155,8 +156,8 @@
         <div class="card-icon icon-fx">💱</div>
         <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">159.11円 <span class="down price-change">😢▼0.03%</span></span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">187.21円 <span class="up price-change">😊▲0.20%</span></span></div>
+      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">159.16円 <span class="down price-change">😢▼0.00%</span></span></div>
+      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">187.16円 <span class="up price-change">😊▲0.17%</span></span></div>
       <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
       <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/us-dollar-edges-higher-iran-084015564.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-pos">😊</span> イランの停戦期限が近づくにつれ、米ドルが上昇</span>
@@ -174,18 +175,18 @@
         <div class="card-icon icon-cmd">🛢️</div>
         <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
       </div>
-      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$87.51/bbl <span class="down price-change">😢▼2.34%</span></span></div>
-      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,811.90/oz <span class="up price-change">😊▲0.11%</span></span></div>
+      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$87.45/bbl <span class="down price-change">😢▼2.41%</span></span></div>
+      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,801.30/oz <span class="down price-change">😢▼0.11%</span></span></div>
       <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
       <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-tuesday-april-21-gold-and-silver-prices-slip-in-early-trading-110209452.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neg">😢</span> 本日、4月21日火曜日の金と銀の価格：金と銀の価格は序盤の取引で下落</span>
           <span class="news-meta">Yahoo Personal Finance · 2026-04-21</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/sectors/energy/articles/fortune-bay-provides-high-grade-112907157.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Fortune Bay、サスカチュワン州のボックス デポジットから高グレードのドリル結果を提供</span>
-          <span class="news-meta">MT Newswires · 2026-04-21</span>
-        </a><a class="news-item" href="https://www.mining-technology.com/news/liberty-star-acquires-13-arizona-mining-permits/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> リバティスター、アリゾナ州で新たに13件の採掘許可を取得</span>
-          <span class="news-meta">Mining Technology · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.proactiveinvestors.com/companies/news/1090917/g-mining-ventures-sees-production-growth-ahead-as-brazil-mine-advances-to-higher-grades-1090917.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> G Mining Ventures はブラジル鉱山のグレードの向上に伴い生産量の増加が見込まれる</span>
+          <span class="news-meta">Proactive · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/equinox-gold-eqx-projects-annual-115613262.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> Equinox Gold (EQX)、最新の技術レポートに裏付けられた年間生産量の増加を予測</span>
+          <span class="news-meta">Insider Monkey · 2026-04-21</span>
         </a></div>
     </div>
     <div class="card">
@@ -193,18 +194,18 @@
         <div class="card-icon icon-crypto">₿</div>
         <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
       </div>
-      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$76,472 <span class="up price-change">😊▲0.79%</span></span></div>
-      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,321.21 <span class="up price-change">😊▲0.26%</span></span></div>
+      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$75,888 <span class="up price-change">😊▲0.02%</span></span></div>
+      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,304.32 <span class="down price-change">😢▼0.47%</span></span></div>
       <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-april-21-2026-prices-on-the-rise-this-morning-113401602.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日、2026年4月21日火曜日のビットコインとイーサリアムの価格：今朝の価格は上昇中</span>
-          <span class="news-meta">Yahoo Personal Finance · 2026-04-21</span>
-        </a><a class="news-item" href="https://247wallst.com/investing/2026/04/21/xrp-price-prediction-xrps-macd-just-flipped-bullish-after-three-months-of-sell-signals/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> XRP価格予測：XRPのMACDは3か月の売りシグナルの後、強気に反転</span>
-          <span class="news-meta">24/7 Wall St. · 2026-04-21</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/crypto/articles/strategy-record-bitcoin-buy-reshapes-110715991.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> ストラテジーの記録的なビットコイン購入が資本構造と収益プロファイルを再構築</span>
-          <span class="news-meta">Simply Wall St. · 2026-04-21</span>
+      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/sam-bankman-fried-says-bitcoin-creator-satoshi-nakamoto-could-be-paul-le-roux-in-2021-interview-120013562.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> サム・バンクマン・フリード氏、インタビューでビットコイン創始者サトシ・ナカモトは2021年のポール・ル・ルーになる可能性があると発言</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-retail-sales-warsh-hearing/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日の株式市場: 小売売上高データが驚きでダウが反発。 UnitedHealth のサージ (ライブ中継)</span>
+          <span class="news-meta">Investor's Business Daily · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.fool.com/investing/2026/04/21/xrp-vs-bitcoin-which-cryptocurrency-to-buy-right-n/" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> XRP vs. ビットコイン: 今買うべき仮想通貨はどれ?</span>
+          <span class="news-meta">Motley Fool · 2026-04-21</span>
         </a></div>
     </div>
   </div>
