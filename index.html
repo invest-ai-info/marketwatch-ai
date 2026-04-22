@@ -22,7 +22,7 @@
     .header-meta span{color:#58a6ff;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
     .sentiment-banner{background:linear-gradient(135deg,#1c2f1c,#162416);border:1px solid #2ea043;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    .sentiment-badge{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#238636}
+    .sentiment-badge{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:#da3633}
     .sentiment-text{color:#7ee787;font-size:.95rem;line-height:1.6}
     .section-title{font-size:1.1rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}
@@ -75,7 +75,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年4月22日 21:41 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年4月22日 06:22 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
@@ -94,11 +94,11 @@
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-badge">😊 やや強気</div>
+    <div class="sentiment-badge">😢 やや弱気</div>
     <div class="sentiment-text">
-      日経平均 59,586円 / S&amp;P500 7,064.01 /
-      USD/JPY 159.32円 / BTC $78,214 /
-      金 $4,768.30/oz
+      日経平均 N/A / S&amp;P500 7,064.01 /
+      USD/JPY 159.39円 / BTC $75,697 /
+      金 $4,738.50/oz
     </div>
   </div>
 
@@ -106,17 +106,17 @@
   <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px 24px;margin-bottom:32px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
       <span style="font-size:1.1rem;font-weight:700;color:#e6edf3">📊 騰落レシオ（25日）</span>
-      <span style="font-size:1.5rem;font-weight:700;color:#3fb950">108%</span>
-      <span style="background:#3fb950;color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:12px">😊 通常</span>
+      <span style="font-size:1.5rem;font-weight:700;color:#f0883e">127%</span>
+      <span style="background:#f0883e;color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:12px">😐 買われすぎ</span>
     </div>
     <div style="position:relative;height:18px;border-radius:9px;background:linear-gradient(90deg, #238636 0%, #3fb950 25%, #d29922 50%, #f0883e 75%, #da3633 100%);margin-bottom:10px;overflow:visible">
-      <div style="position:absolute;left:56%;top:-2px;width:4px;height:22px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 6px rgba(255,255,255,0.6)"></div>
+      <div style="position:absolute;left:70%;top:-2px;width:4px;height:22px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 6px rgba(255,255,255,0.6)"></div>
       <div style="position:absolute;left:0;top:22px;font-size:.6rem;color:#8b949e">30</div>
       <div style="position:absolute;left:36%;top:22px;font-size:.6rem;color:#8b949e">80</div>
       <div style="position:absolute;left:64%;top:22px;font-size:.6rem;color:#8b949e">120</div>
       <div style="position:absolute;right:0;top:22px;font-size:.6rem;color:#8b949e">170</div>
     </div>
-    <div style="font-size:.82rem;color:#8b949e;line-height:1.65;margin-top:20px">騰落レシオ 108%：通常の範囲内。市場は安定しています。</div>
+    <div style="font-size:.82rem;color:#8b949e;line-height:1.65;margin-top:20px">騰落レシオ 127%：やや買われすぎの水準。利益確定売りが出やすい局面です。</div>
     <div style="margin-top:10px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#79c0ff;line-height:1.7">
       <span style="font-weight:700;color:#58a6ff">🔰 初心者メモ　</span>騰落レシオは「値上がり銘柄数÷値下がり銘柄数×100」で計算されます。120%以上は「買われすぎ」、70%以下は「売られすぎ」の目安。逆張り投資の参考指標として人気があります。
     </div>
@@ -125,15 +125,15 @@
   <!-- トップニュース -->
   <div class="top-news">
     <div class="top-news-title">🔥 マーケットを動かすニュース TOP3</div>
-    <a class="news-item" href="https://finance.yahoo.com/news/are-consumers-finally-cracking-under-the-weight-of-4-gas-111859680.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> Are consumers finally cracking under the weight of $4 gas?</span>
-          <span class="news-meta">Yahoo Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/article/morning-brief-ceasefire-extended-100000849.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> Morning Brief:  Ceasefire extended</span>
-          <span class="news-meta">Yahoo Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-trump-iran-tesla-earnings-tsla-stock/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Stock Market Today: Dow Rises On Trump Ceasefire; Tesla Earnings Due (Live Coverage)</span>
-          <span class="news-meta">Investor's Business Daily · 2026-04-22</span>
+    <a class="news-item" href="https://finance.yahoo.com/news/apple-may-have-revealed-a-big-earnings-clue-by-announcing-tim-cook-successor-182550256.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> Appleはティム・クックの後任を発表することで大きな収益の手掛かりを明らかにした可能性がある</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/goldman-sachs-warns-us-consumers-could-have-a-challenging-few-months-113704421.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> ゴールドマン・サックス、米国の消費者は数カ月間厳しい状況に陥る可能性があると警告</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/morning-brief-mr-warsh-goes-to-washington-100004961.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 朝のブリーフ: ウォーシュ氏がワシントンへ行く</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
         </a>
   </div>
 
@@ -145,18 +145,18 @@
         <div class="card-icon icon-stocks">🗾</div>
         <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
       </div>
-      <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">59,586円 <span class="up price-change">😊▲0.40%</span></span></div>
+      <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">N/A </span></div>
       <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,064.01 <span class="down price-change">😢▼0.63%</span></span></div>
       <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/are-consumers-finally-cracking-under-the-weight-of-4-gas-111859680.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> Are consumers finally cracking under the weight of $4 gas?</span>
-          <span class="news-meta">Yahoo Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/article/morning-brief-ceasefire-extended-100000849.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> Morning Brief:  Ceasefire extended</span>
-          <span class="news-meta">Yahoo Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-trump-iran-tesla-earnings-tsla-stock/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Stock Market Today: Dow Rises On Trump Ceasefire; Tesla Earnings Due (Live Coverage)</span>
-          <span class="news-meta">Investor's Business Daily · 2026-04-22</span>
+      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/news/apple-may-have-revealed-a-big-earnings-clue-by-announcing-tim-cook-successor-182550256.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> Appleはティム・クックの後任を発表することで大きな収益の手掛かりを明らかにした可能性がある</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/goldman-sachs-warns-us-consumers-could-have-a-challenging-few-months-113704421.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> ゴールドマン・サックス、米国の消費者は数カ月間厳しい状況に陥る可能性があると警告</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/morning-brief-mr-warsh-goes-to-washington-100004961.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 朝のブリーフ: ウォーシュ氏がワシントンへ行く</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
         </a></div>
     </div>
     <div class="card">
@@ -164,17 +164,17 @@
         <div class="card-icon icon-fx">💱</div>
         <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">159.32円 <span class="up price-change">😊▲0.30%</span></span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">186.80円 <span class="down price-change">😢▼0.21%</span></span></div>
+      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">159.39円 <span class="up price-change">😊▲0.14%</span></span></div>
+      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">187.07円 <span class="up price-change">😊▲0.12%</span></span></div>
       <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
       <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/video/fed-chair-nominee-kevin-warsh-loves-crypto-164635368.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neg">😢</span> Fed chair nominee Kevin Warsh loves crypto</span>
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> FRB議長候補のケビン・ウォーシュ氏は仮想通貨が大好き</span>
           <span class="news-meta">Yahoo Finance Video · 2026-04-21</span>
         </a><a class="news-item" href="https://finance.yahoo.com/video/is-this-the-most-confusing-market-ever-for-bitcoin-holders-164236267.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> Is this the most confusing market ever for bitcoin holders?</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> これはビットコイン保有者にとってこれまでで最も混乱する市場なのでしょうか?</span>
           <span class="news-meta">Yahoo Finance Video · 2026-04-21</span>
         </a><a class="news-item" href="https://finance.yahoo.com/news/us-dollar-edges-higher-iran-084015564.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> US dollar edges higher as Iran ceasefire deadline approaches</span>
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> イランの停戦期限が近づくにつれ、米ドルが上昇</span>
           <span class="news-meta">Reuters · 2026-04-21</span>
         </a></div>
     </div>
@@ -183,18 +183,18 @@
         <div class="card-icon icon-cmd">🛢️</div>
         <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
       </div>
-      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$90.73/bbl <span class="down price-change">😢▼1.52%</span></span></div>
-      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,768.30/oz <span class="up price-change">😊▲1.49%</span></span></div>
+      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$90.22/bbl <span class="up price-change">😊▲0.68%</span></span></div>
+      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,738.50/oz <span class="down price-change">😢▼1.42%</span></span></div>
       <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/markets/crypto/article/bitcoin-jumps-to-78000-as-trump-extends-iran-ceasefire-113359216.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Bitcoin jumps to $78,000 as Trump extends Iran ceasefire</span>
-          <span class="news-meta">Yahoo Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/commodities/articles/gold-rises-1-1-above-121316346.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Gold Rises 1.1% Above $4,770 As Trump Extends Iran Ceasefire</span>
-          <span class="news-meta">GuruFocus.com · 2026-04-22</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/commodities/articles/soma-gold-provides-operational-updates-115537646.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> Soma Gold Provides Operational Updates Across Its Colombian Mining Portfolio</span>
-          <span class="news-meta">MT Newswires · 2026-04-22</span>
+      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/gold-and-silver-prices-today-prices-drop-tuesday-april-21-110209807.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> 今日の金と銀の価格: 4 月 21 日火曜日に価格が下落</span>
+          <span class="news-meta">Yahoo Personal Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-retail-sales-warsh-hearing/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日の株式市場: 原油価格上昇でダウ下落、トランプ大統領が停戦延長。これらの金鉱夫が倒れる (ライブカバレッジ)</span>
+          <span class="news-meta">Investor's Business Daily · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/markets/world-indices/articles/tsx-closer-index-slumps-profit-201725335.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> TSXクロージング：利益確定で指数低迷、中東停戦への不安</span>
+          <span class="news-meta">MT Newswires · 2026-04-21</span>
         </a></div>
     </div>
     <div class="card">
@@ -202,18 +202,18 @@
         <div class="card-icon icon-crypto">₿</div>
         <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
       </div>
-      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$78,214 <span class="up price-change">😊▲2.44%</span></span></div>
-      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,398.85 <span class="up price-change">😊▲3.04%</span></span></div>
+      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$75,697 <span class="down price-change">😢▼0.23%</span></span></div>
+      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,317.81 <span class="up price-change">😊▲0.11%</span></span></div>
       <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-april-22-2026-prices-rising-following-ceasefire-extension-114636596.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> Bitcoin and ethereum prices today, Wednesday, April 22, 2026: Prices rising following ceasefire extension</span>
-          <span class="news-meta">Yahoo Personal Finance · 2026-04-22</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/keel-infrastructure-higher-u-pre-120946055.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Keel Infrastructure Higher in U.S. Pre-Market Trading as Completes Sale of Paraguay Asset</span>
-          <span class="news-meta">MT Newswires · 2026-04-22</span>
-        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-trump-iran-tesla-earnings-tsla-stock/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> Stock Market Today: Dow Rises On Trump Ceasefire; Tesla Earnings Due (Live Coverage)</span>
-          <span class="news-meta">Investor's Business Daily · 2026-04-22</span>
+      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/video/finding-satoshi-reporter-talks-journey-to-identify-bitcoin-creator-201127264.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neg">😢</span> 「サトシを探して」: 記者がビットコイン作成者を特定する旅を語る</span>
+          <span class="news-meta">Yahoo Finance Video · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/news/sam-bankman-fried-says-bitcoin-creator-satoshi-nakamoto-could-be-paul-le-roux-in-2021-interview-120013562.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> サム・バンクマン・フリード氏、インタビューでビットコイン創始者サトシ・ナカモトは2021年のポール・ル・ルーになる可能性があると発言</span>
+          <span class="news-meta">Yahoo Finance · 2026-04-21</span>
+        </a><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-april-21-2026-prices-on-the-rise-this-morning-113401602.html" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日、2026年4月21日火曜日のビットコインとイーサリアムの価格：今朝の価格は上昇中</span>
+          <span class="news-meta">Yahoo Personal Finance · 2026-04-21</span>
         </a></div>
     </div>
   </div>
