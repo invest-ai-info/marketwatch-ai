@@ -2423,5 +2423,12 @@ def main():
     print("📤 hot-assets.html をアップロード中...")
     upload_to_github(hot_path)
 
+    # ── スクリプト自身も同期（再発防止: 古い .py が GitHub に残るのを防ぐ）──
+    # GitHub Actions 環境では workflow 側の git push に委譲されるので
+    # upload_to_github 内で自動スキップされる。ローカル実行時のみ実際に PUT。
+    script_path = os.path.abspath(__file__)
+    print(f"📤 {os.path.basename(script_path)} （スクリプト本体）をアップロード中...")
+    upload_to_github(script_path)
+
 if __name__ == "__main__":
     main()
