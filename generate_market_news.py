@@ -10,13 +10,42 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 
-# 翻訳関数（deep_translatorがない場合はタイトルをそのまま表示）
+# 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
+import re as _re_for_ja
+_HAS_JA_RE = _re_for_ja.compile(r'[\u3040-\u30ff\u4e00-\u9fff]')
+
 def translate_to_ja(text):
+    """英文タイトルを日本語に翻訳。失敗時は原文を返すが console にログを残す。"""
+    if not text or not str(text).strip():
+        return text
+    # 既に日本語が含まれていれば翻訳不要
+    if _HAS_JA_RE.search(text):
+        return text
+
+    src = str(text).strip()[:4500]  # 5000字制限の保険
+
+    # ① Google 翻訳（deep_translator）
     try:
         from deep_translator import GoogleTranslator
-        return GoogleTranslator(source="en", target="ja").translate(text)
-    except Exception:
-        return text
+        out = GoogleTranslator(source="auto", target="ja").translate(src)
+        if out and out.strip() and out.strip().lower() != src.strip().lower():
+            return out
+        else:
+            print(f"  ⚠️ GoogleTranslator: 空または無変換 → fallback")
+    except Exception as e:
+        print(f"  ⚠️ GoogleTranslator 失敗: {e} → fallback")
+
+    # ② MyMemory フォールバック
+    try:
+        from deep_translator import MyMemoryTranslator
+        out = MyMemoryTranslator(source="en-US", target="ja-JP").translate(src[:480])
+        if out and out.strip():
+            return out
+    except Exception as e:
+        print(f"  ⚠️ MyMemoryTranslator 失敗: {e}")
+
+    # ③ 全部失敗 → 原文（最低限ニュース内容は伝わる）
+    return text
 
 JST = timezone(timedelta(hours=9))
 
@@ -306,10 +335,15 @@ def fetch_news(api_key):
                 unique.append(a)
         unique.sort(key=lambda x: x.get("publishedAt", ""), reverse=True)
 
-        # ④ 上位3件を日本語に翻訳
+        # ④ 上位3件を日本語に翻訳（rate limit回避で軽くsleep）
+        import time as _time
         top3 = unique[:3]
         for a in top3:
-            a["title"] = translate_to_ja(a["title"])
+            original = a["title"]
+            a["title"] = translate_to_ja(original)
+            if a["title"] != original:
+                print(f"  ✅ 翻訳: {original[:40]}... → {a['title'][:40]}...")
+            _time.sleep(0.4)
         results[cat] = top3
 
     return results
