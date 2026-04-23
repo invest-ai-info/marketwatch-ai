@@ -2,8 +2,12 @@ name: Update Market News
 
 on:
   schedule:
-    # 毎朝7時JST（= 22時UTC）に実行
-    - cron: '0 22 * * *'
+    # 朝7:27 JST（= 22:27 UTC 前日）— 米国市場クローズ後 + 混雑時間帯を回避
+    - cron: '27 22 * * *'
+    # 夕方16:13 JST（= 07:13 UTC）— 東京市場クローズ後 + 混雑時間帯を回避
+    - cron: '13 7 * * *'
+    # ※GitHubは「:00丁度」が最も混雑し実行スキップが起きやすいため、敢えてオフピークの分にずらしている
+    # ※それでも GitHub 側の遅延で実際は数十分後になることあり
   workflow_dispatch:  # 手動実行も可能
 
 jobs:
@@ -11,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
+    env:
+      # GitHub Actions 実行中であることをスクリプトに伝える（API経由のアップロードをスキップさせる）
+      GITHUB_ACTIONS_RUN: "true"
+      # NewsAPI キーは GitHub Secrets から取得
+      NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
 
     steps:
       - name: Checkout repository
@@ -22,15 +32,20 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install yfinance requests
+        run: pip install yfinance requests deep_translator
 
-      - name: Generate market news HTML
+      - name: Generate market news HTML (6 files)
         run: python generate_market_news.py
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git diff --cached --quiet || git commit -m "chore: update market news $(date +'%Y-%m-%d %H:%M JST' -d '+9 hours')"
-          git push
+          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update market news $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
