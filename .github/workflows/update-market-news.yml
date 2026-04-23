@@ -19,7 +19,7 @@ jobs:
     env:
       # GitHub Actions 実行中であることをスクリプトに伝える（API経由のアップロードをスキップさせる）
       GITHUB_ACTIONS_RUN: "true"
-      # NewsAPI キーは GitHub Secrets から取得
+      # NewsAPI キーは GitHub Secrets から取得（要: リポジトリ設定 > Secrets > NEWSAPI_KEY を登録）
       NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
 
     steps:
@@ -41,11 +41,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html
+          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html sitemap.xml robots.txt
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
             git commit -m "chore: update market news $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 競合回避: 先に API 経由で push されていた場合に備えて pull --rebase
             git pull --rebase origin main || true
             git push
           fi
