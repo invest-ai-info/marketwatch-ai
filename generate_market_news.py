@@ -63,6 +63,93 @@ GA4_TAG = f"""<!-- Google tag (gtag.js) -->
 </script>"""
 
 # ─────────────────────────────────────────
+# SEO 共通定数 / ヘルパー
+#   - 各ページの <head> に title/description/canonical/OGP/Twitter/JSON-LD を出力
+#   - GitHub Pages の URL 構造に合わせる
+# ─────────────────────────────────────────
+SITE_NAME = "MarketWatch AI"
+SITE_TAGLINE = "日本人投資家のためのマーケット情報サイト"
+BASE_URL = "https://invest-ai-info.github.io/marketwatch-ai/"
+OG_IMAGE = BASE_URL + "og-image.png"  # 後で画像設置可。当面は無くても致命傷ではない
+
+def seo_head(slug: str, title: str, description: str, og_type: str = "website") -> str:
+    """ページごとの SEO 用 <head> 要素を返す。
+
+    slug: "" なら index、それ以外は "vix.html" 等のファイル名
+    title: ページタイトル（"〜 - MarketWatch AI" の "〜" 部分）
+    description: 100〜160 文字程度の要約。検索結果スニペットに出る
+    og_type: "website" / "article" など
+    """
+    canonical = BASE_URL + slug
+    full_title = f"{title} | {SITE_NAME}"
+    # description はクォート崩しを避けるため簡易にエスケープ
+    desc = description.replace('"', '&quot;')
+    json_ld = (
+        '{'
+        '"@context":"https://schema.org",'
+        '"@type":"WebSite",'
+        f'"name":"{SITE_NAME}",'
+        f'"url":"{BASE_URL}",'
+        f'"description":"{SITE_TAGLINE}",'
+        '"inLanguage":"ja-JP"'
+        '}'
+    )
+    return f"""<title>{full_title}</title>
+  <meta name="description" content="{desc}">
+  <meta name="robots" content="index,follow">
+  <meta name="author" content="{SITE_NAME}">
+  <link rel="canonical" href="{canonical}">
+  <meta property="og:type" content="{og_type}">
+  <meta property="og:site_name" content="{SITE_NAME}">
+  <meta property="og:title" content="{full_title}">
+  <meta property="og:description" content="{desc}">
+  <meta property="og:url" content="{canonical}">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="{OG_IMAGE}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{full_title}">
+  <meta name="twitter:description" content="{desc}">
+  <meta name="twitter:image" content="{OG_IMAGE}">
+  <script type="application/ld+json">{json_ld}</script>"""
+
+
+def build_sitemap_xml(now_jst) -> str:
+    """全ページの sitemap.xml を生成。lastmod は実行時刻 (JST)。"""
+    lastmod = now_jst.strftime("%Y-%m-%dT%H:%M:%S+09:00")
+    pages = [
+        ("",                    "1.0", "hourly"),
+        ("vix.html",            "0.9", "daily"),
+        ("market-health.html",  "0.9", "daily"),
+        ("hot-assets.html",     "0.9", "daily"),
+        ("calendar.html",       "0.8", "daily"),
+        ("charts.html",         "0.7", "weekly"),
+    ]
+    urls = "\n".join(
+        f"  <url>\n"
+        f"    <loc>{BASE_URL}{slug}</loc>\n"
+        f"    <lastmod>{lastmod}</lastmod>\n"
+        f"    <changefreq>{cf}</changefreq>\n"
+        f"    <priority>{pri}</priority>\n"
+        f"  </url>"
+        for slug, pri, cf in pages
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}\n"
+        "</urlset>\n"
+    )
+
+
+def build_robots_txt() -> str:
+    """robots.txt — 全許可 + sitemap 位置を明示。"""
+    return (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {BASE_URL}sitemap.xml\n"
+    )
+
+# ─────────────────────────────────────────
 # 歴史的イベントデータ（1971〜）
 # ─────────────────────────────────────────
 HISTORICAL_EVENTS = [
@@ -547,8 +634,8 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("vix.html", "恐怖指数（VIX）分析", "VIX指数（恐怖指数）の最新値・90日チャート・AIコメントを毎日更新。市場心理を読み解き、暴落の予兆や買い場のヒントを日本人投資家向けに分かりやすく解説します。")}
   {GA4_TAG}
-  <title>恐怖指数（VIX） - MarketWatch AI</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
@@ -1065,8 +1152,8 @@ def build_hot_assets_html(hot_data, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("hot-assets.html", "出来高急増ランキング", "米国セクター・日本株・世界指数・FX/コモディティ/暗号資産の出来高急増銘柄を毎日ランキング更新。資金が集まっている市場をひと目で確認できます。")}
   {GA4_TAG}
-  <title>🔥 出来高急増ランキング - {time_str}</title>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
@@ -1261,8 +1348,8 @@ def build_calendar_html(now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("calendar.html", f"マクロ経済カレンダー {cur_year}年{cur_month}月〜{next_month}月", "米雇用統計・FOMC・CPI・日銀金融政策決定会合・ECB理事会・中国主要指標など、相場を動かす重要イベントを月間カレンダーで一覧表示。日本人投資家向けに重要度ランク付き。")}
   {GA4_TAG}
-  <title>マクロ経済カレンダー - {cur_year}年{cur_month}月〜{next_month}月</title>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
@@ -1481,8 +1568,8 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{seo_head("market-health.html", "市場健康度ダッシュボード", "VIX・恐怖&強欲指数・バフェット指数・CAPEレシオ・騰落レシオを一画面で可視化。割高/割安/過熱/底値圏を色分け表示し、相場全体の温度感を瞬時に判断できます。")}
 {GA4_TAG}
-<title>市場健康度ダッシュボード - MarketWatch AI</title>
 <style>
   *{{margin:0;padding:0;box-sizing:border-box}}
   body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;font-size:16px;line-height:1.75}}
@@ -1775,8 +1862,8 @@ def build_charts_html(hist, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("charts.html", "50年価格チャート＆歴史的イベント", "日経平均・S&P500・ドル円・金の50年長期チャートを、ニクソンショック/プラザ合意/リーマン/コロナショックなど主要イベントと重ねて表示。歴史的視点で相場を読み解けます。")}
   {GA4_TAG}
-  <title>50年価格チャート＆歴史的イベント - MarketWatch AI</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
   <style>
@@ -2015,8 +2102,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("", f"マーケットニュース {date_str}", "日経平均・ダウ・S&P500・ドル円・原油・金・ビットコインの最新価格と日本語ニュースを毎日2回更新。AIが市場センチメントを判定し、日本人投資家にとっての注目ポイントを解説します。")}
   {GA4_TAG}
-  <title>マーケットニュース - {date_str}</title>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
@@ -2443,6 +2530,19 @@ def main():
         print(f"❌ hot-assets.html 生成エラー: {e}")
         import traceback; traceback.print_exc()
 
+    # ── sitemap.xml / robots.txt 生成 ──
+    sitemap_path = os.path.join(script_dir, "sitemap.xml")
+    robots_path  = os.path.join(script_dir, "robots.txt")
+    print("🗺️  sitemap.xml / robots.txt 生成中...")
+    try:
+        with open(sitemap_path, "w", encoding="utf-8") as f:
+            f.write(build_sitemap_xml(now_jst))
+        with open(robots_path, "w", encoding="utf-8") as f:
+            f.write(build_robots_txt())
+        print(f"✅ sitemap.xml / robots.txt 生成完了")
+    except Exception as e:
+        print(f"❌ sitemap/robots 生成エラー: {e}")
+
     # ── GitHub Pages へアップロード ──
     print("\n📤 GitHub Pages にアップロード中...")
     upload_to_github(index_path)
@@ -2456,6 +2556,10 @@ def main():
     upload_to_github(health_path)
     print("📤 hot-assets.html をアップロード中...")
     upload_to_github(hot_path)
+    print("📤 sitemap.xml をアップロード中...")
+    upload_to_github(sitemap_path)
+    print("📤 robots.txt をアップロード中...")
+    upload_to_github(robots_path)
 
     # ── スクリプト自身も同期（再発防止: 古い .py が GitHub に残るのを防ぐ）──
     # GitHub Actions 環境では workflow 側の git push に委譲されるので
