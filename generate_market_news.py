@@ -69,7 +69,7 @@ GA4_TAG = f"""<!-- Google tag (gtag.js) -->
 # ─────────────────────────────────────────
 SITE_NAME = "MarketWatch AI"
 SITE_TAGLINE = "日本人投資家のためのマーケット情報サイト"
-BASE_URL = "https://invest-ai-info.github.io/marketwatch-ai/"
+BASE_URL = "https://marketwatch-jp.com/"
 OG_IMAGE = BASE_URL + "og-image.png"  # 後で画像設置可。当面は無くても致命傷ではない
 
 def seo_head(slug: str, title: str, description: str, og_type: str = "website") -> str:
@@ -2269,7 +2269,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
-  <a href="https://invest-ai-info.github.io/marketwatch-ai/">GitHub Pages</a> &nbsp;|&nbsp;
+  <a href="https://marketwatch-jp.com/">marketwatch-jp.com</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
 </footer>
 </body>
