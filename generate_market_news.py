@@ -123,6 +123,9 @@ def build_sitemap_xml(now_jst) -> str:
         ("hot-assets.html",     "0.9", "daily"),
         ("calendar.html",       "0.8", "daily"),
         ("charts.html",         "0.7", "weekly"),
+        ("about.html",          "0.5", "monthly"),
+        ("privacy.html",        "0.4", "monthly"),
+        ("contact.html",        "0.4", "monthly"),
     ]
     urls = "\n".join(
         f"  <url>\n"
@@ -674,6 +677,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     footer a{{color:#58a6ff;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.vix-value{{font-size:3rem}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -738,6 +742,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <a href="market-health.html">🩺 市場健康度</a> &nbsp;|&nbsp;
   <a href="hot-assets.html">🔥 出来高急増</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 
 <script>
@@ -1198,6 +1203,7 @@ def build_hot_assets_html(hot_data, now_jst):
     footer a{{color:#58a6ff;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -1235,6 +1241,7 @@ def build_hot_assets_html(hot_data, now_jst):
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
   <a href="index.html">📊 マーケットニュース</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 </body>
 </html>"""
@@ -1403,6 +1410,7 @@ def build_calendar_html(now_jst):
     footer a{{color:#58a6ff;text-decoration:none}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -1442,6 +1450,7 @@ def build_calendar_html(now_jst):
   <p>📅 マクロ経済カレンダー ─ 日本人投資家のための経済指標ガイド</p>
   <p style="margin-top:6px">※ 日程は変更される場合があります ｜ 最新情報は各公式サイトでご確認ください</p>
   <p style="margin-top:6px"><a href="index.html">📊 マーケットニュース</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 <script>
 function showMonth(m) {{
@@ -1608,6 +1617,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   footer a{{color:#58a6ff;text-decoration:none}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}}}
 </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -1747,6 +1757,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a href="charts.html">📈 50年チャート</a> ｜
     <a href="vix.html">😱 VIX恐怖指数</a>
   </p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 </body>
 </html>"""
@@ -1896,6 +1907,7 @@ def build_charts_html(hist, now_jst):
     footer a{{color:#58a6ff;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.chart-wrap{{height:240px}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -1952,6 +1964,7 @@ def build_charts_html(hist, now_jst):
   <a href="market-health.html">🩺 市場健康度</a> &nbsp;|&nbsp;
   <a href="hot-assets.html">🔥 出来高急増</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 
 <script>
@@ -2161,6 +2174,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.sentiment-banner{{flex-direction:column}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -2271,6 +2285,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
   <a href="https://marketwatch-jp.com/">marketwatch-jp.com</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
+  <p style="margin-top:8px">
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
 </footer>
 </body>
 </html>"""
@@ -2562,11 +2580,4 @@ def main():
     upload_to_github(robots_path)
 
     # ── スクリプト自身も同期（再発防止: 古い .py が GitHub に残るのを防ぐ）──
-    # GitHub Actions 環境では workflow 側の git push に委譲されるので
-    # upload_to_github 内で自動スキップされる。ローカル実行時のみ実際に PUT。
-    script_path = os.path.abspath(__file__)
-    print(f"📤 {os.path.basename(script_path)} （スクリプト本体）をアップロード中...")
-    upload_to_github(script_path)
-
-if __name__ == "__main__":
-    main()
+    # GitHub Actions 環境では workflow �
