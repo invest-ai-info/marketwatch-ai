@@ -2580,4 +2580,16 @@ def main():
     upload_to_github(robots_path)
 
     # ── スクリプト自身も同期（再発防止: 古い .py が GitHub に残るのを防ぐ）──
-    # GitHub Actions 環境では workflow �
+    # GitHub Actions 環境では workflow 側で git push されるためスキップ
+    if not os.environ.get("GITHUB_ACTIONS_RUN"):
+        try:
+            print("📤 generate_market_news.py 自身もアップロード中...")
+            upload_to_github(os.path.abspath(__file__))
+        except Exception as e:
+            print(f"⚠️  スクリプト自身のアップロード失敗: {e}")
+
+    print("\n✨ すべての処理が完了しました！")
+
+
+if __name__ == "__main__":
+    main()
