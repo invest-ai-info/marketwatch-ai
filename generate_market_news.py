@@ -126,6 +126,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("about.html",          "0.5", "monthly"),
         ("privacy.html",        "0.4", "monthly"),
         ("contact.html",        "0.4", "monthly"),
+        ("guide-vix.html",      "0.7", "monthly"),
     ]
     urls = "\n".join(
         f"  <url>\n"
@@ -710,6 +711,10 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     <div class="vix-mood">{mood}</div>
     <div class="gauge"><div class="gauge-marker" style="left:{gauge_pct}%"></div></div>
     <div class="gauge-labels"><span>安心</span><span>平常</span><span>警戒</span><span>恐怖</span><span>パニック</span></div>
+  </div>
+
+  <div style="text-align:center;margin:18px 0 24px">
+    <a href="guide-vix.html" style="display:inline-block;padding:10px 22px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.92rem;font-weight:600">📚 VIX恐怖指数とは？読み方を初心者向けに解説 →</a>
   </div>
 
   <div class="analysis-box">
