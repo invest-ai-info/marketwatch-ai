@@ -65,6 +65,10 @@
     footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
     footer a{color:#58a6ff;text-decoration:none}
     @media(max-width:600px){.header-inner{flex-direction:column}.vix-value{font-size:3rem}}
+  .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+  .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
@@ -73,12 +77,21 @@
   <div class="header-inner">
     <div>
       <div class="header-title">😱 恐怖指数（VIX）</div>
-      <div class="header-meta">最終更新: <span>2026年4月26日 09:07 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年4月26日 16:28 JST</span></div>
     </div>
     <a href="index.html" class="back-link">← マーケットニュースに戻る</a>
   </div>
 </header>
 <main>
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn current" href="vix.html">😱 VIX恐怖指数</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+</nav>
 
   <div class="vix-hero">
     <div class="vix-value">18.7</div>
