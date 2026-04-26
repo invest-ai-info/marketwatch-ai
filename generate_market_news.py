@@ -690,7 +690,6 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
       <div class="header-title">😱 恐怖指数（VIX）</div>
       <div class="header-meta">最終更新: <span>{time_str}</span></div>
     </div>
-    <a href="index.html" class="back-link">← マーケットニュースに戻る</a>
   </div>
 </header>
 <main>
@@ -699,7 +698,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn current" href="vix.html">😱 VIX恐怖指数</a>
+  <a class="nav-btn current" href="vix.html">😱 VIX</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -1235,7 +1234,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+    <a class="nav-btn" href="vix.html">😱 VIX</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn current" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
@@ -1436,7 +1435,6 @@ def build_calendar_html(now_jst):
       <div class="header-title">📅 マクロ経済カレンダー</div>
       <div class="header-meta">最終更新: <span>{time_str}</span></div>
     </div>
-    <a class="back-link" href="index.html">← マーケットニュースに戻る</a>
   </div>
 </header>
 <main>
@@ -1444,7 +1442,7 @@ def build_calendar_html(now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+  <a class="nav-btn" href="vix.html">😱 VIX</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -1655,7 +1653,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+    <a class="nav-btn" href="vix.html">😱 VIX</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
@@ -1946,7 +1944,6 @@ def build_charts_html(hist, now_jst):
       <div class="header-title">📈 50年価格チャート</div>
       <div class="header-meta">最終更新: <span>{time_str}</span></div>
     </div>
-    <a href="index.html" class="back-link">← マーケットニュースに戻る</a>
   </div>
 </header>
 <main>
@@ -1955,7 +1952,7 @@ def build_charts_html(hist, now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+  <a class="nav-btn" href="vix.html">😱 VIX</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -2232,7 +2229,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX恐怖指数</a>
+    <a class="nav-btn" href="vix.html">😱 VIX</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
