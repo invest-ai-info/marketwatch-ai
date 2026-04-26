@@ -126,7 +126,9 @@ def build_sitemap_xml(now_jst) -> str:
         ("about.html",          "0.5", "monthly"),
         ("privacy.html",        "0.4", "monthly"),
         ("contact.html",        "0.4", "monthly"),
-        ("guide-vix.html",      "0.7", "monthly"),
+        ("guide-vix.html",              "0.7", "monthly"),
+        ("guide-buffett-indicator.html","0.7", "monthly"),
+        ("guide-fear-greed.html",       "0.7", "monthly"),
     ]
     urls = "\n".join(
         f"  <url>\n"
