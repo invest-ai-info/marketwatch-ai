@@ -644,13 +644,13 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
     header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
-    .header-inner{{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
+    .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
     .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#f85149,#f0883e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
     .header-meta{{font-size:.85rem;color:#8b949e}}
     .header-meta span{{color:#58a6ff;font-weight:600}}
     .back-link{{display:inline-flex;align-items:center;gap:6px;color:#58a6ff;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #30363d;border-radius:8px;transition:background .2s}}
     .back-link:hover{{background:#161b22}}
-    main{{max-width:900px;margin:0 auto;padding:32px 24px}}
+    main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
     .vix-hero{{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}}
     .vix-value{{font-size:4rem;font-weight:800;color:{color};line-height:1.2}}
     .vix-change{{font-size:1rem;margin-top:4px}}
@@ -698,7 +698,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn current" href="vix.html">😱 VIX</a>
+  <a class="nav-btn current" href="vix.html">😱 恐怖指数</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -1234,7 +1234,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX</a>
+    <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn current" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
@@ -1442,7 +1442,7 @@ def build_calendar_html(now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn" href="vix.html">😱 VIX</a>
+  <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -1653,7 +1653,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX</a>
+    <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
@@ -1952,7 +1952,7 @@ def build_charts_html(hist, now_jst):
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn" href="vix.html">😱 VIX</a>
+  <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -2229,7 +2229,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 VIX</a>
+    <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
