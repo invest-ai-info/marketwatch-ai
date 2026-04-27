@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バフェット指数とは？市場の割高・割安を見極める使い方を初心者向けに解説 - MarketWatch AI</title>
+  <meta name="description" content="バフェット指数の意味・計算方法・水準別の解釈・米国版と日本版の違い・実際の活用方法を初心者向けに分かりやすく解説。歴史的バブルとの比較も紹介。">
+  <meta name="keywords" content="バフェット指数,Buffett Indicator,株式市場,割高,割安,GDP,時価総額,投資">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-buffett-indicator.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="バフェット指数とは？市場の割高・割安を見極める使い方">
+  <meta property="og:description" content="バフェット指数の意味・水準別解釈・実際の活用方法を初心者向けに解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-buffett-indicator.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "バフェット指数とは？市場の割高・割安を見極める使い方を初心者向けに解説",
+    "description": "バフェット指数の意味・計算方法・水準別の解釈・米国版と日本版の違い・実際の活用方法を初心者向けに分かりやすく解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-04-26",
+    "dateModified": "2026-04-26",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-buffett-indicator.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#8b949e;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+    .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#8b949e;margin-bottom:16px}
+    .breadcrumb a{color:#58a6ff;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#58a6ff;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#8b949e;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #30363d}
+    h2{font-size:1.35rem;color:#79c0ff;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #30363d}
+    h3{font-size:1.1rem;color:#e6edf3;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#c9d1d9;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#c9d1d9}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#58a6ff;font-weight:700}
+    a{color:#58a6ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#0d1117;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#79c0ff}
+    .toc{background:#0d1117;border:1px solid #2d4a7a;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#58a6ff;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    .level-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    .level-table th,.level-table td{padding:11px 14px;border-bottom:1px solid #30363d;text-align:left}
+    .level-table th{background:#0d1117;color:#79c0ff;font-weight:600;font-size:.88rem}
+    .level-table td:first-child{font-weight:700;white-space:nowrap}
+    .badge-cheap{color:#3fb950}
+    .badge-fair{color:#79c0ff}
+    .badge-expensive{color:#d29922}
+    .badge-bubble{color:#f85149}
+    .highlight-box{background:#1a2030;border-left:4px solid #58a6ff;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#79c0ff}
+    .highlight-box strong{color:#58a6ff}
+    .warning-box{background:#2e1f1a;border-left:4px solid #d29922;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#f0c674}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .history-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.92rem}
+    .history-table th,.history-table td{padding:10px 12px;border:1px solid #30363d;text-align:left}
+    .history-table th{background:#0d1117;color:#79c0ff;font-weight:600}
+    .cta-box{background:linear-gradient(135deg,#1a2a4a,#161b22);border:1px solid #58a6ff;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#58a6ff;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#8b949e;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#2a4a7a;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #30363d}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#58a6ff;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#79c0ff;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#8b949e;line-height:1.55}
+    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681;margin-top:40px}
+    footer a{color:#58a6ff;text-decoration:none}
+    @media(max-width:600px){.article{padding:24px 20px}h1{font-size:1.45rem}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
+    <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="market-health.html">市場健康度</a> &gt; バフェット指数とは？
+  </div>
+
+  <article class="article">
+    <h1>バフェット指数とは？市場の割高・割安を見極める使い方を初心者向けに解説</h1>
+    <div class="meta-line">公開日: 2026年4月26日 ｜ 最終更新: 2026年4月26日 ｜ 読了目安: 約7分</div>
+
+    <p>世界一の投資家として知られる<strong>ウォーレン・バフェット氏</strong>が「株式市場の割高・割安を測る指標として最良のもの」と評したと言われるのが、通称<strong>「バフェット指数」</strong>です。</p>
+    <p>この記事では、バフェット指数の意味・計算式・水準別の解釈・米国版と日本版の違い・実際の活用方法までを、初心者にも分かりやすく整理して解説します。</p>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">バフェット指数とは？基本の定義</a></li>
+        <li><a href="#section-2">計算式と意味するもの</a></li>
+        <li><a href="#section-3">水準別の解釈（早見表）</a></li>
+        <li><a href="#section-4">過去の歴史的バブルとの比較</a></li>
+        <li><a href="#section-5">米国版と日本版の違い</a></li>
+        <li><a href="#section-6">バフェット指数の実践的な活用方法</a></li>
+        <li><a href="#section-7">バフェット指数の限界・注意点</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <h2 id="section-1">1. バフェット指数とは？基本の定義</h2>
+    <p>バフェット指数（<strong>Buffett Indicator</strong>）は、その国の<strong>株式市場の時価総額をGDP（国内総生産）で割った値</strong>です。一般にパーセンテージ（%）で表示されます。</p>
+    <p>2001年12月、ウォーレン・バフェット氏が経済誌Fortuneのインタビュー記事の中で「any given moment（任意の時点）における株価評価指標として、おそらく最良のもの」と述べたことから、世界中で広く知られるようになりました。</p>
+    <p>シンプルな指標ですが、<strong>「経済規模に対して株価がどれだけ膨らんでいるか」</strong>を直感的に把握できるため、長期投資家を中心に重視されています。</p>
+
+    <div class="highlight-box">
+      <strong>💡 ポイント</strong>: バフェット指数は短期トレード用ではなく、<strong>長期目線でのバリュエーション判断</strong>に使う指標です。「今が買い時か・売り時か」を年単位で考えるときに役立ちます。
+    </div>
+
+    <h2 id="section-2">2. 計算式と意味するもの</h2>
+    <p>計算式は非常にシンプルです。</p>
+    <p style="text-align:center;font-size:1.1rem;color:#79c0ff;margin:18px 0"><code>バフェット指数 = 株式市場の時価総額 ÷ 名目GDP × 100 (%)</code></p>
+    <p>例えば米国の場合、<strong>Wilshire 5000指数</strong>（米国株のほぼ全銘柄を含む時価総額加重平均指数）の合計時価総額を、米国GDPで割って算出します。</p>
+    <p>意味するところは「<strong>その国が1年間に生み出した付加価値（GDP）と比べて、株式市場の評価額がどれくらい大きいか</strong>」ということです。</p>
+    <ul>
+      <li>100%なら、株式市場の規模 ＝ GDPの規模（バランスが取れている）</li>
+      <li>200%なら、株式市場 ＝ GDPの2倍（市場が経済を大きく上回って評価されている）</li>
+      <li>50%なら、株式市場 ＝ GDPの半分（市場が割安かもしれない）</li>
+    </ul>
+
+    <h2 id="section-3">3. 水準別の解釈（早見表）</h2>
+    <p>米国市場の場合、過去のデータから一般的に次のように解釈されます。</p>
+    <table class="level-table">
+      <thead>
+        <tr>
+          <th>水準</th>
+          <th>評価</th>
+          <th>市場心理</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="badge-cheap">〜70%</td><td>大幅な割安</td><td>歴史的なバーゲンセール水準</td></tr>
+        <tr><td class="badge-cheap">70〜90%</td><td>割安</td><td>長期投資の好機</td></tr>
+        <tr><td class="badge-fair">90〜115%</td><td>適正</td><td>長期平均並み</td></tr>
+        <tr><td class="badge-expensive">115〜135%</td><td>やや割高</td><td>慎重姿勢が必要</td></tr>
+        <tr><td class="badge-expensive">135〜160%</td><td>明確に割高</td><td>調整リスク上昇</td></tr>
+        <tr><td class="badge-bubble">160%以上</td><td>歴史的な割高（バブル懸念）</td><td>長期リターンが低くなる傾向</td></tr>
+      </tbody>
+    </table>
+    <p>※ あくまで目安です。長期金利やマネーサプライの状況によって「適正」とされる水準は変動します。近年は世界的な金融緩和の影響で、過去に比べて全体的に高めの水準で推移する傾向が見られます。</p>
+
+    <h2 id="section-4">4. 過去の歴史的バブルとの比較</h2>
+    <p>バフェット指数の歴史的な推移を見ると、その有効性が分かります。</p>
+    <table class="history-table">
+      <thead>
+        <tr><th>時期</th><th>イベント</th><th>米国バフェット指数</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2000年3月</td><td>ITバブルピーク</td><td>約 <strong>140%</strong></td></tr>
+        <tr><td>2007年10月</td><td>サブプライム危機前</td><td>約 110%</td></tr>
+        <tr><td>2009年3月</td><td>リーマン後の底値</td><td>約 <strong>57%</strong></td></tr>
+        <tr><td>2020年3月</td><td>コロナショック直前</td><td>約 155%</td></tr>
+        <tr><td>2021年11月</td><td>コロナ後の天井圏</td><td>約 <strong>200%超</strong></td></tr>
+        <tr><td>2022年10月</td><td>利上げ局面の調整局面</td><td>約 150%</td></tr>
+      </tbody>
+    </table>
+    <p>2000年のITバブルや2021年のコロナ後の天井圏では、バフェット指数が大きく100%を超えていました。逆にリーマンショック後の2009年は<strong>約57%</strong>まで下落し、ここから始まった上昇相場は10年以上続く強気相場となりました。</p>
+
+    <h2 id="section-5">5. 米国版と日本版の違い</h2>
+
+    <h3>米国版（Wilshire 5000 ÷ 米国GDP）</h3>
+    <p>世界で最も注目されるバージョン。Wilshire 5000指数（または同等の市場全体の時価総額）を米国の名目GDPで割って算出。長期平均は<strong>約85〜100%</strong>。</p>
+
+    <h3>日本版（東証時価総額 ÷ 日本GDP）</h3>
+    <p>東京証券取引所の時価総額合計を日本の名目GDPで割った値。日本は1989年バブル期に<strong>約140%</strong>に達した後、長期低迷で50〜70%台の時期が長く続きました。直近では円安効果や海外投資家の買いで<strong>120〜140%</strong>程度まで回復しています。</p>
+
+    <div class="highlight-box">
+      <strong>注意</strong>: 日本市場は外国人投資家比率が高く、海外企業の売上比率が高い銘柄も多いため、米国版ほどGDPと時価総額の関係が綺麗には連動しないという特徴があります。
+    </div>
+
+    <h2 id="section-6">6. バフェット指数の実践的な活用方法</h2>
+
+    <h3>① 長期インデックス投資の積み増しタイミング</h3>
+    <p>バフェット指数が<strong>長期平均を大きく下回ったとき</strong>（例: 米国版で90%以下）は、長期インデックス投資（S&P500やオールカントリーなど）の<strong>積み増しに適した局面</strong>と判断できます。逆に160%超のような高水準では、新規投資を控えめにする判断材料になります。</p>
+
+    <h3>② リスクポートフォリオの調整に使う</h3>
+    <p>バフェット指数が高水準のときは、<strong>債券や金などのディフェンシブ資産</strong>の比率を高めることでポートフォリオ全体のリスクを抑える、という戦略が一般的です。</p>
+
+    <h3>③ 国別の相対バリュエーション比較</h3>
+    <p>米国・日本・欧州・新興国それぞれのバフェット指数を比較することで、「相対的にどの国が割安か」を判断できます。例えば米国が180%、新興国が60%なら、<strong>新興国に分散投資する妙味</strong>があるかもしれません。</p>
+
+    <div class="highlight-box">
+      <strong>当サイトの活用</strong>: 直近のバフェット指数（米国版）と他の市場健康度指標は <a href="market-health.html">市場健康度ダッシュボード</a> で日々自動更新中です。
+    </div>
+
+    <h2 id="section-7">7. バフェット指数の限界・注意点</h2>
+    <ol>
+      <li><strong>長期金利を考慮していない</strong>: 金利が低い時代は、バフェット指数が高くても妥当と評価されやすい。</li>
+      <li><strong>多国籍企業の影響</strong>: 米国の上場企業は海外売上比率が高く、米国GDPでは正確に評価できない側面がある。</li>
+      <li><strong>タイミング指標としては鈍い</strong>: 「割高」と判定されてから実際に下落するまで、数年かかることもある。</li>
+      <li><strong>業種構成の変化を反映しない</strong>: ハイテク主体に変わった現代市場と、製造業中心だった過去の市場を同じ基準で比較するのは難しい。</li>
+      <li><strong>GDPは四半期データ</strong>: 速報値の修正や算出ラグがあり、リアルタイムではない。</li>
+    </ol>
+
+    <div class="warning-box">
+      バフェット指数だけで投資判断するのは危険です。VIX、PER、CAPE、長期金利、企業業績などと組み合わせて<strong>総合的に判断</strong>することが重要です。
+    </div>
+
+    <h2 id="section-8">8. まとめ</h2>
+    <ul>
+      <li>バフェット指数 = <strong>株式時価総額 ÷ GDP × 100</strong></li>
+      <li>長期平均はおよそ<strong>米国85〜100%、日本70〜100%</strong>。</li>
+      <li>160%以上は歴史的な割高、70%以下は歴史的な割安の目安。</li>
+      <li>2000年ITバブル時は約140%、2021年は<strong>200%超</strong>と歴史的高値。</li>
+      <li>長期投資のタイミング判断やポートフォリオ調整に有用。</li>
+      <li>金利環境や企業構成の変化により絶対水準の解釈には幅がある。</li>
+    </ul>
+    <p>バフェット指数は短期トレード用ではないものの、<strong>「今、自分は歴史的に見てどんな水準で投資しているのか」</strong>を客観的に把握できる優れた指標です。日々の値動きに振り回されず、長期的な視点で市場と向き合うための地図として活用してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🩺 今日の市場健康度をチェック</div>
+      <div class="cta-box-desc">バフェット指数を含む5つの主要指標で、市場の総合的な健康状態を毎日自動診断しています。</div>
+      <a class="cta-btn" href="market-health.html">市場健康度ダッシュボードを見る →</a>
+    </div>
+
+    <div class="related-section">
+      <h2 style="border:none;padding:0;margin:0 0 4px">📚 関連ページ</h2>
+      <div class="related-grid">
+        <a class="related-card" href="market-health.html">
+          <div class="related-card-title">🩺 市場健康度ダッシュボード</div>
+          <div class="related-card-desc">バフェット指数・VIX・恐怖&強欲指数を総合判定</div>
+        </a>
+        <a class="related-card" href="guide-vix.html">
+          <div class="related-card-title">📖 VIX恐怖指数とは？</div>
+          <div class="related-card-desc">市場の不安レベルを測る指標を徹底解説</div>
+        </a>
+        <a class="related-card" href="charts.html">
+          <div class="related-card-title">📈 50年価格チャート</div>
+          <div class="related-card-desc">歴史的暴落イベント付きの長期チャート</div>
+        </a>
+        <a class="related-card" href="index.html">
+          <div class="related-card-title">📊 マーケットニュース</div>
+          <div class="related-card-desc">毎日2回更新の市場サマリー</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="warning-box" style="margin-top:32px">
+      本記事は情報提供を目的としたものであり、投資助言ではありません。投資判断はご自身の責任で行ってください。
+    </div>
+  </article>
+</main>
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+</footer>
+</body>
+</html>
