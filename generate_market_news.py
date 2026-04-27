@@ -1665,6 +1665,12 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
 
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:24px">
+    <a href="guide-buffett-indicator.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 バフェット指数とは？</a>
+    <a href="guide-fear-greed.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 恐怖と強欲指数とは？</a>
+    <a href="guide-vix.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 VIX恐怖指数とは？</a>
+  </div>
+
   <section class="summary">
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
@@ -2622,8 +2628,7 @@ def main():
     print("📤 robots.txt をアップロード中...")
     upload_to_github(robots_path)
 
-    # ── スクリプト自身も同期（再発防止: 古い .py が GitHub に残るのを防ぐ）──
-    # GitHub Actions 環境では workflow 側で git push されるためスキップ
+    # ── スクリプト自身も同期 ──
     if not os.environ.get("GITHUB_ACTIONS_RUN"):
         try:
             print("📤 generate_market_news.py 自身もアップロード中...")
