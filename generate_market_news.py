@@ -2257,6 +2257,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </div>
   </div>
 
+  <!-- 更新履歴 -->
+  <div style="background:#161b22;border:1px solid #30363d;border-left:4px solid #58a6ff;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
+    <div style="color:#58a6ff;font-weight:700;margin-bottom:6px">📰 更新履歴</div>
+    <div style="color:#c9d1d9">
+      ・<b>2026-04-26</b>: 解説記事3本追加（<a href="guide-vix.html" style="color:#79c0ff">VIX恐怖指数</a>／<a href="guide-buffett-indicator.html" style="color:#79c0ff">バフェット指数</a>／<a href="guide-fear-greed.html" style="color:#79c0ff">恐怖と強欲指数</a>）<br>
+      ・<b>2026-04-25</b>: 独自ドメイン <b>marketwatch-jp.com</b> に移行＋全ページAdSense対応<br>
+      ・<b>2026-04-24</b>: ナビバーを全ページに統一表示
+    </div>
+  </div>
+
   <!-- 騰落レシオ -->
   {_build_touraku_section(touraku)}
 
@@ -2628,7 +2638,6 @@ def main():
     print("📤 robots.txt をアップロード中...")
     upload_to_github(robots_path)
 
-    # ── スクリプト自身も同期 ──
     if not os.environ.get("GITHUB_ACTIONS_RUN"):
         try:
             print("📤 generate_market_news.py 自身もアップロード中...")
