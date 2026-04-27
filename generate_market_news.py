@@ -130,6 +130,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-buffett-indicator.html","0.7", "monthly"),
         ("guide-fear-greed.html",       "0.7", "monthly"),
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
+        ("guides.html",                 "0.8", "weekly"),
     ]
     urls = "\n".join(
         f"  <url>\n"
@@ -2260,7 +2261,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- 更新履歴 -->
   <div style="background:#161b22;border:1px solid #30363d;border-left:4px solid #58a6ff;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
-    <div style="color:#58a6ff;font-weight:700;margin-bottom:6px">📰 更新履歴</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
+      <span style="color:#58a6ff;font-weight:700">📰 更新履歴</span>
+      <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
+    </div>
     <div style="color:#c9d1d9">
       ・<b>2026-04-26</b>: 🔥 速報記事「<a href="guide-nikkei-60000.html" style="color:#ffa198"><b>日経平均6万円突破！どこまで上がる？</b></a>」公開<br>
       ・<b>2026-04-26</b>: 解説記事3本追加（<a href="guide-vix.html" style="color:#79c0ff">VIX恐怖指数</a>／<a href="guide-buffett-indicator.html" style="color:#79c0ff">バフェット指数</a>／<a href="guide-fear-greed.html" style="color:#79c0ff">恐怖と強欲指数</a>）<br>
