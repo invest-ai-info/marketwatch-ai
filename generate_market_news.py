@@ -118,6 +118,7 @@ def build_sitemap_xml(now_jst) -> str:
     lastmod = now_jst.strftime("%Y-%m-%dT%H:%M:%S+09:00")
     pages = [
         ("",                    "1.0", "hourly"),
+        ("preview.html",        "0.9", "daily"),
         ("vix.html",            "0.9", "daily"),
         ("market-health.html",  "0.9", "daily"),
         ("hot-assets.html",     "0.9", "daily"),
@@ -701,6 +702,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn current" href="vix.html">😱 恐怖指数</a>
@@ -960,6 +962,321 @@ def _get_event_detail(name):
         if key in name:
             return desc
     return ""
+
+
+# ─────────────────────────────────────────
+# 指標解説辞書（preview.html 用）
+#   各指標の「事前解説記事」のもとになる詳細情報。
+#   発表前日にこの情報をもとにシナリオ別の影響を解説する。
+# ─────────────────────────────────────────
+INDICATOR_GUIDES = {
+    "米雇用統計": {
+        "emoji": "👷", "country": "us",
+        "title": "米雇用統計（NFP）",
+        "release": "毎月第1金曜・日本時間 21:30〜22:30",
+        "what": "米労働省が発表する非農業部門雇用者数（NFP）と失業率の月次統計。米経済の最重要指標のひとつ。",
+        "why": "FRBの金融政策（利上げ・利下げ）に直結。雇用が強ければ景気拡大・利下げ後退観測、弱ければ景気減速・利下げ加速観測につながる。",
+        "scenarios": [
+            ("強い結果（予想を大幅上回る）", "ドル高・円安／米10年債利回り上昇／株は『良いニュース＝強い経済』で上昇する場合と、『利下げが遠のく』で下落する場合あり"),
+            ("ほぼ予想通り", "材料出尽くしで小動き。失業率と平均時給のサプライズに注目が移る"),
+            ("弱い結果（予想を大幅下回る）", "ドル安・円高／米10年債利回り低下／株は利下げ期待で上昇する場合と、景気後退懸念で下落する場合あり"),
+        ],
+        "watch": ["NFP変化数（予想vs実績）", "失業率", "平均時給（前月比・前年同月比）", "前月分の改定値"],
+        "tip": "結果発表の瞬間にドル円が1〜2円動くこともある最重要指標。短期トレードは避け、結果が出た後の方向感を見てから動くのが無難。",
+    },
+    "米CPI": {
+        "emoji": "🛒", "country": "us",
+        "title": "米消費者物価指数（CPI）",
+        "release": "毎月中旬・日本時間 21:30（夏時間）/ 22:30（冬時間）",
+        "what": "米労働省が発表する消費者物価指数。インフレ動向を示す代表指標。総合CPIとコアCPI（食品・エネルギー除く）の2種類が公表される。",
+        "why": "FRBは『2%インフレ目標』を掲げており、CPIの推移が利上げ・利下げ判断の核心材料になる。FOMCの結果以上に株・為替を動かすことも多い。",
+        "scenarios": [
+            ("予想を上回る（インフレ加速）", "ドル高・円安／米長期金利上昇／株安（特にハイテク株が下げやすい）"),
+            ("予想通り", "FRBの利下げシナリオに変化なし。小動きが多いがコアCPIの『前月比』に注目"),
+            ("予想を下回る（インフレ鈍化）", "ドル安・円高／米長期金利低下／株高（利下げ期待）"),
+        ],
+        "watch": ["コアCPI 前年同月比（最重要）", "コアCPI 前月比（直近のトレンド）", "住居費（粘着的インフレの指標）", "サービス価格"],
+        "tip": "実績が予想と0.1%違うだけでドル円が1円以上動くことも。発表前後30分はボラティリティが極端に高い。",
+    },
+    "FOMC": {
+        "emoji": "🏛️", "country": "us",
+        "title": "FOMC（連邦公開市場委員会）",
+        "release": "年8回・日本時間 翌日 3:00（または 4:00）に政策金利発表＋議長会見",
+        "what": "米FRBが政策金利（FFレート誘導目標）を決定する会合。年4回（3・6・9・12月）は経済見通し（SEP）とドットプロットも公表。",
+        "why": "世界中の株・為替・債券を動かす最重要イベント。利下げ・据え置き・利上げの判断と、議長の今後の政策スタンスが市場を支配する。",
+        "scenarios": [
+            ("タカ派（利下げ慎重・利上げ示唆）", "ドル高・円安／米長期金利上昇／世界の株安（特に新興国・ハイテク株）"),
+            ("中立（市場予想通り）", "材料出尽くしで小動きだが、議長会見でのニュアンス次第で振れる"),
+            ("ハト派（利下げ前倒し示唆）", "ドル安・円高／米長期金利低下／世界の株高（リスクオン）"),
+        ],
+        "watch": ["政策金利の決定", "声明文の文言変更（特に『data-dependent』『patient』など）", "ドットプロット（年内利下げ回数）", "議長会見でのインフレ見通し発言"],
+        "tip": "結果発表（3:00 or 4:00 JST）→ 議長会見（30分後）の二段階で動く。日本時間の早朝なので、寝ている間にドル円が2〜3円動くこともある。前日にポジションを軽くするのが鉄則。",
+    },
+    "日銀金融政策決定会合": {
+        "emoji": "🇯🇵", "country": "jp",
+        "title": "日銀金融政策決定会合",
+        "release": "年8回・2日目の昼前後に結果発表＋総裁会見（15:30〜）",
+        "what": "日本銀行が政策金利（短期金利・長期金利の誘導目標）を決定する会合。1月・4月・7月・10月は『展望レポート』も公表され、物価見通しが改定される。",
+        "why": "ドル円・日経平均・日本国債利回りを動かす最重要イベント。利上げ・据え置き、長期金利の上限（YCC）、物価見通しの変化が焦点。",
+        "scenarios": [
+            ("タカ派（利上げ・YCC柔軟化）", "円高・ドル安／日本長期金利上昇／日経下落（特に銀行株は上昇、不動産株は下落）"),
+            ("据え置き＆中立", "予想通りなら小動き。総裁会見の『今後の利上げ示唆』に焦点"),
+            ("ハト派（利上げ後ろ倒し示唆）", "円安・ドル高／日本長期金利低下／日経上昇（特に輸出株）"),
+        ],
+        "watch": ["政策金利の決定", "展望レポートの物価見通し（コアCPI 2%超えを継続予想か）", "総裁会見での『次回利上げ』示唆", "国債買入れオペの変更"],
+        "tip": "結果発表は不規則（11時〜13時頃）。総裁会見（15:30〜）まで様子見の投資家が多い。会見でドル円が1〜2円動くこともある。",
+    },
+    "ECB理事会": {
+        "emoji": "🇪🇺", "country": "eu",
+        "title": "ECB理事会（欧州中央銀行）",
+        "release": "年8回・日本時間 21:15 に金利発表＋21:45〜 ラガルド総裁会見",
+        "what": "ECBが政策金利（主要リファイナンス金利・預金ファシリティ金利）を決定する会合。ユーロ圏のインフレと景気を主眼に判断。",
+        "why": "ユーロ円・ユーロドルを動かす最重要イベント。日本人投資家には『クロス円』経由でドル円にも波及するため間接的に影響。",
+        "scenarios": [
+            ("タカ派（利下げ慎重）", "ユーロ高・円安／欧州株は下落しやすい"),
+            ("中立", "予想通りなら小動き。総裁会見のニュアンスで方向決定"),
+            ("ハト派（利下げ前倒し）", "ユーロ安・円高／欧州株は上昇しやすい"),
+        ],
+        "watch": ["政策金利の決定", "声明文のインフレ見通し", "ラガルド総裁の『今後の利下げペース』発言", "QT（量的引き締め）の進捗"],
+        "tip": "FOMCより市場へのインパクトはやや小さいが、ユーロドル経由でドル円にも波及する。",
+    },
+    "日銀短観": {
+        "emoji": "📊", "country": "jp",
+        "title": "日銀短観（全国企業短期経済観測調査）",
+        "release": "年4回（4月・7月・10月・12月）・日本時間 8:50",
+        "what": "日銀が約1万社の企業に景況感を聞き取る調査。『業況判断DI』（良い-悪いの差）が代表指標。大企業製造業のDIが最注目。",
+        "why": "日本経済の実態を最も正確に反映する指標。日銀の利上げ判断材料となり、日経平均・ドル円に影響。",
+        "scenarios": [
+            ("予想を大幅に上回る", "円高・日経上昇／日銀の利上げ前倒し観測"),
+            ("予想通り", "小動き"),
+            ("予想を大幅に下回る", "円安・日経下落（一時的）／日銀の利上げ後ろ倒し観測"),
+        ],
+        "watch": ["大企業製造業 業況判断DI", "大企業非製造業 業況判断DI", "中小企業のDI", "設備投資計画（前年度比）", "想定為替レート"],
+        "tip": "朝8:50発表のため、日経の寄付き（9:00）に影響大。前日にポジション調整しておくと安心。",
+    },
+    "中国GDP": {
+        "emoji": "🇨🇳", "country": "cn",
+        "title": "中国GDP（国内総生産）",
+        "release": "四半期ごと（1月・4月・7月・10月）・日本時間 11:00",
+        "what": "中国の四半期ごとの経済成長率。同時に小売売上高・鉱工業生産・固定資産投資も発表されることが多い。",
+        "why": "世界第2位の経済大国の動向は、日本の輸出企業（自動車・機械・電子部品）の業績に直結。中国経済の減速は資源価格にも波及。",
+        "scenarios": [
+            ("予想を上回る（景気回復）", "資源価格上昇／豪ドル・NZドル上昇／日経は中国関連株（コマツ・ファナック等）が上昇"),
+            ("予想通り", "小動き"),
+            ("予想を下回る（景気減速）", "資源価格下落／豪ドル・NZドル下落／日経は中国関連株が下落／円高（リスクオフ）"),
+        ],
+        "watch": ["GDP前年同期比（政府目標との乖離）", "小売売上高（消費の強さ）", "鉱工業生産（生産活動）", "固定資産投資（不動産含む）"],
+        "tip": "中国当局の発表する数字は『目標達成しやすいよう調整される』との見方も。あくまで参考値として扱うのが賢明。",
+    },
+    "中国製造業PMI": {
+        "emoji": "🏭", "country": "cn",
+        "title": "中国製造業PMI（購買担当者景気指数）",
+        "release": "毎月月末・日本時間 10:00（公式）/ 10:45（財新）",
+        "what": "中国の製造業の景況感を示す指標。50以上=景気拡大、50以下=景気縮小を意味する。『公式PMI』（国家統計局）と『財新PMI』（民間企業中心）の2種類。",
+        "why": "中国の景気の先行指標。日本の素材・機械メーカーの受注動向を先読みできる。",
+        "scenarios": [
+            ("50以上＆改善", "豪ドル・銅価格上昇／日経の素材株（鉄鋼・化学）上昇"),
+            ("50付近で小動き", "材料視されず"),
+            ("50割れ＆悪化", "豪ドル・銅価格下落／日経の素材株下落／円高（リスクオフ）"),
+        ],
+        "watch": ["公式PMIと財新PMIの乖離", "新規受注（先行性が高い）", "雇用指数"],
+        "tip": "公式PMIは国有大企業中心、財新PMIは民間中小企業中心。両方見ることで全体像が掴める。",
+    },
+    "全国CPI": {
+        "emoji": "🇯🇵", "country": "jp",
+        "title": "全国消費者物価指数（日本）",
+        "release": "毎月19日前後・日本時間 8:30",
+        "what": "総務省が発表する日本の消費者物価指数。総合・コア（生鮮食品除く）・コアコア（生鮮食品＋エネルギー除く）の3種類。",
+        "why": "日銀の『2%物価安定目標』との比較で利上げ判断材料に。コアCPIが2%を継続して超えるかが焦点。",
+        "scenarios": [
+            ("予想を大幅に上回る", "円高（日銀利上げ観測）／日経下落"),
+            ("予想通り", "小動き"),
+            ("予想を大幅に下回る", "円安（日銀利上げ後退観測）／日経上昇"),
+        ],
+        "watch": ["コアCPI 前年同月比", "コアコアCPI 前年同月比（粘着的インフレ）", "サービス価格上昇率"],
+        "tip": "発表は8:30、日経寄付き（9:00）の30分前なので相場に直接影響する。",
+    },
+    "日本GDP": {
+        "emoji": "🇯🇵", "country": "jp",
+        "title": "日本GDP",
+        "release": "四半期ごと・日本時間 8:50（速報→改定→確定の3回発表）",
+        "what": "日本の四半期ごとの経済成長率。実質GDP前期比年率が代表指標。",
+        "why": "日本経済の実態を示す最重要指標。マイナス成長なら日銀の利上げが遠のく。",
+        "scenarios": [
+            ("予想を大幅に上回る", "円高・日経上昇"),
+            ("予想通り", "小動き"),
+            ("マイナス成長", "円安・日経下落（一時的）／日銀利上げ後退観測"),
+        ],
+        "watch": ["実質GDP前期比年率", "個人消費（GDPの過半数）", "設備投資", "輸出"],
+        "tip": "速報値が最も注目される。改定値・確定値はサプライズが少ない。",
+    },
+    "米GDP": {
+        "emoji": "📈", "country": "us",
+        "title": "米GDP",
+        "release": "四半期ごと・日本時間 21:30（速報→改定→確定の3回発表）",
+        "what": "米国の四半期ごとの経済成長率。実質GDP前期比年率（年換算値）が代表指標。",
+        "why": "米景気の実態を示す指標。市場予想との乖離でドル・株・債券が動く。",
+        "scenarios": [
+            ("予想を大幅に上回る", "ドル高／米長期金利上昇／株は強い経済で上昇 or 利下げ後退で下落"),
+            ("予想通り", "小動き"),
+            ("予想を大幅に下回る", "ドル安／米長期金利低下／株は利下げ期待で上昇 or 景気後退懸念で下落"),
+        ],
+        "watch": ["実質GDP前期比年率（年換算）", "個人消費", "設備投資", "GDPデフレーター（インフレ指標）"],
+        "tip": "速報値（Advance）が最大のインパクト。改定値（Second/Third）はサプライズ少。",
+    },
+    "ISM製造業": {
+        "emoji": "🏭", "country": "us",
+        "title": "ISM製造業景況感指数",
+        "release": "毎月月初・日本時間 23:00（夏時間）/ 24:00（冬時間）",
+        "what": "ISM（全米供給管理協会）が発表する製造業の景況感指数。50以上=拡大、50以下=縮小。",
+        "why": "米景気の先行指標。雇用統計・GDPに先行して景気の方向を示す。",
+        "scenarios": [
+            ("50超＆改善", "ドル高／株高（特にシクリカル）"),
+            ("50付近で小動き", "材料視されず"),
+            ("50割れ＆悪化", "ドル安／株安（景気後退懸念）"),
+        ],
+        "watch": ["総合指数（50との比較）", "新規受注（先行性大）", "雇用指数（NFPの先行指標）", "価格指数（インフレの先行指標）"],
+        "tip": "雇用指数はNFPの先行指標として要注目。",
+    },
+    "ISM非製造業": {
+        "emoji": "🏢", "country": "us",
+        "title": "ISM非製造業景況感指数（サービス業）",
+        "release": "毎月月初・日本時間 23:00（夏時間）/ 24:00（冬時間）",
+        "what": "ISMが発表するサービス業の景況感指数。米GDPの約7割を占めるサービス業の動向を示す。",
+        "why": "米景気の中核を示す指標。雇用統計と並ぶ重要指標。",
+        "scenarios": [
+            ("50超＆改善", "ドル高／株高"),
+            ("50付近で小動き", "材料視されず"),
+            ("50割れ", "ドル安／株安（景気後退懸念）"),
+        ],
+        "watch": ["総合指数", "新規受注", "雇用指数", "価格指数"],
+        "tip": "製造業よりサービス業のシェアが大きく、ISM非製造業の方がGDPへの影響大。",
+    },
+    "PPI": {
+        "emoji": "📦", "country": "us",
+        "title": "米生産者物価指数（PPI）",
+        "release": "毎月中旬・日本時間 21:30（夏時間）/ 22:30（冬時間）",
+        "what": "米労働省が発表する生産者（卸売）段階の物価指数。CPIの先行指標。",
+        "why": "PPIの上昇は1〜2か月後のCPIに波及するため、インフレの先行指標として注目される。",
+        "scenarios": [
+            ("予想を上回る", "ドル高・米長期金利上昇／株安"),
+            ("予想通り", "小動き"),
+            ("予想を下回る", "ドル安・米長期金利低下／株高"),
+        ],
+        "watch": ["コアPPI 前年同月比", "コアPPI 前月比"],
+        "tip": "CPIの数日前に発表されることが多く、CPI予想を修正するきっかけになる。",
+    },
+    "小売売上高": {
+        "emoji": "🛍️", "country": "us",
+        "title": "米小売売上高",
+        "release": "毎月中旬・日本時間 21:30（夏時間）/ 22:30（冬時間）",
+        "what": "米国の小売・サービス業の売上を集計した指標。個人消費の動向を示す。",
+        "why": "米GDPの約7割を占める個人消費の代表指標。FRBの政策判断にも影響。",
+        "scenarios": [
+            ("予想を大幅に上回る", "ドル高／株高（消費が強い）"),
+            ("予想通り", "小動き"),
+            ("予想を下回る", "ドル安／株安（消費低迷）"),
+        ],
+        "watch": ["前月比", "コア小売（自動車除く）", "コントロール・グループ（GDPに直接寄与）"],
+        "tip": "コントロール・グループの方がGDPへの寄与度が高く、本質的に重要。",
+    },
+    "ユーロ圏GDP": {
+        "emoji": "🇪🇺", "country": "eu",
+        "title": "ユーロ圏GDP",
+        "release": "四半期ごと・日本時間 18:00",
+        "what": "ユーロ圏全体の四半期GDP。",
+        "why": "ECBの利下げ判断材料。ユーロ円・ユーロドルに影響。",
+        "scenarios": [
+            ("予想を上回る", "ユーロ高（ECB利下げ後退観測）"),
+            ("予想通り", "小動き"),
+            ("予想を下回る", "ユーロ安（ECB利下げ前倒し観測）"),
+        ],
+        "watch": ["前期比年率", "ドイツGDP（最大経済国）"],
+        "tip": "ドイツGDPと同時か近接して発表されるため、合わせて見る。",
+    },
+    "鉱工業生産": {
+        "emoji": "🏭", "country": "jp",
+        "title": "鉱工業生産（日本）",
+        "release": "毎月月末・日本時間 8:50（速報）",
+        "what": "経産省が発表する日本の鉱工業の生産指数。",
+        "why": "日本の製造業の活動度合いを示す指標。輸出関連株や日経平均に影響。",
+        "scenarios": [
+            ("前月比プラス", "日経の輸出株上昇"),
+            ("ほぼ横ばい", "材料視されず"),
+            ("前月比マイナス", "日経の輸出株下落"),
+        ],
+        "watch": ["前月比", "前年同月比", "出荷・在庫指数"],
+        "tip": "速報値発表後、確報値で大きく改定されることもあるので速報値の数字を過信しない。",
+    },
+    "貿易統計": {
+        "emoji": "📦", "country": "jp",
+        "title": "日本 貿易統計",
+        "release": "毎月20日前後・日本時間 8:50",
+        "what": "財務省が発表する日本の輸出入・貿易収支。",
+        "why": "貿易黒字の推移は円需要に直結。日本企業の輸出競争力を示す。",
+        "scenarios": [
+            ("貿易黒字拡大", "円高圧力"),
+            ("ほぼ予想通り", "材料視されず"),
+            ("貿易赤字拡大", "円安圧力"),
+        ],
+        "watch": ["輸出 前年同月比（特に対米国・中国）", "輸入 前年同月比（資源価格の影響）", "貿易収支"],
+        "tip": "日本は資源輸入国のため、原油価格上昇期には貿易赤字が膨らみ円安要因になる。",
+    },
+    "財新PMI": {
+        "emoji": "🇨🇳", "country": "cn",
+        "title": "中国 財新PMI",
+        "release": "毎月月初・日本時間 10:45",
+        "what": "民間企業中心の中国製造業PMI（公式PMIは国有企業中心）。",
+        "why": "中国の中小企業・民間企業の景況感を反映。公式PMIとの乖離が中国経済の実態を示すヒントに。",
+        "scenarios": [
+            ("50超", "豪ドル上昇／日経の中国関連株上昇"),
+            ("50付近", "小動き"),
+            ("50割れ", "豪ドル下落／日経の中国関連株下落"),
+        ],
+        "watch": ["総合指数", "公式PMIとの乖離"],
+        "tip": "公式PMIの翌日に発表されることが多い。両方見ることで中国経済の全体像が掴める。",
+    },
+}
+
+
+def match_indicator_guide(event_name):
+    """イベント名から該当する指標解説を検索。最も具体的にマッチするキーを返す。"""
+    # 「日銀金融政策決定会合」が「日銀」より優先されるよう、キー長で降順ソート
+    keys = sorted(INDICATOR_GUIDES.keys(), key=len, reverse=True)
+    for key in keys:
+        if key in event_name:
+            return key, INDICATOR_GUIDES[key]
+    return None, None
+
+
+def find_upcoming_events(now_jst, days_ahead=3):
+    """now_jst から days_ahead 日先までの経済イベントを返す。
+
+    日付順・重要度順にソート。同日内では high → mid の順。
+    """
+    today = now_jst.date()
+    target_dates = [today + timedelta(days=i) for i in range(1, days_ahead + 1)]
+    target_year = now_jst.year
+
+    upcoming = []
+    for m, d, c, imp, n, desc in ECONOMIC_EVENTS_2026:
+        try:
+            event_date = datetime(target_year, m, d).date()
+        except ValueError:
+            continue
+        if event_date in target_dates:
+            upcoming.append({
+                "date": event_date,
+                "country": c,
+                "importance": imp,
+                "name": n,
+                "desc": desc,
+            })
+
+    # 日付昇順、同日内は high 優先
+    imp_rank = {"high": 0, "mid": 1}
+    upcoming.sort(key=lambda x: (x["date"], imp_rank.get(x["importance"], 9)))
+    return upcoming
 
 
 import calendar as cal_module
@@ -1241,6 +1558,7 @@ def build_hot_assets_html(hot_data, now_jst):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -1449,6 +1767,7 @@ def build_calendar_html(now_jst):
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -1493,6 +1812,282 @@ function showMonth(m) {{
   event.target.classList.add('active');
 }}
 </script>
+</body>
+</html>"""
+
+
+# ─────────────────────────────────────────
+# 経済指標プレビュー（preview.html）
+#   翌日〜数日内の重要指標を事前解説する
+# ─────────────────────────────────────────
+def build_preview_html(now_jst):
+    """翌日〜3日先までの重要経済指標を事前解説するページを生成"""
+    time_str = now_jst.strftime("%Y年%m月%d日 %H:%M JST")
+    upcoming = find_upcoming_events(now_jst, days_ahead=3)
+
+    DOW_JA = ["月", "火", "水", "木", "金", "土", "日"]
+
+    def country_flag(c):
+        return {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}.get(c, "")
+
+    def country_label(c):
+        return {"jp": "日本", "us": "米国", "eu": "欧州", "cn": "中国"}.get(c, "")
+
+    def imp_label(imp):
+        return "⭐最重要" if imp == "high" else "●重要"
+
+    def imp_class(imp):
+        return "tag-high" if imp == "high" else "tag-mid"
+
+    def days_until(event_date):
+        delta = (event_date - now_jst.date()).days
+        if delta == 1:
+            return "明日"
+        elif delta == 2:
+            return "明後日"
+        else:
+            return f"{delta}日後"
+
+    # ── 各イベント詳細カード ──
+    if not upcoming:
+        cards_html = '''
+<div class="empty-state">
+  <div class="empty-icon">🌙</div>
+  <div class="empty-title">直近3日間に重要指標の予定はありません</div>
+  <div class="empty-msg">
+    <p>今は相場が静かに推移しやすい時期です。<br>
+    長期投資のポートフォリオを見直すのに適した時間かもしれません。</p>
+    <p style="margin-top:12px"><a href="calendar.html" style="color:#58a6ff">📅 経済カレンダー</a> で今月・来月のスケジュールを確認できます。</p>
+  </div>
+</div>
+'''
+    else:
+        cards_html = ""
+        for ev in upcoming:
+            d = ev["date"]
+            dow_idx = d.weekday()
+            dow_ja = DOW_JA[dow_idx]
+            flag = country_flag(ev["country"])
+            country = country_label(ev["country"])
+            imp_lbl = imp_label(ev["importance"])
+            imp_cls = imp_class(ev["importance"])
+            until = days_until(d)
+            short_desc = ev["desc"] if ev["desc"] else _get_event_detail(ev["name"])
+
+            key, guide = match_indicator_guide(ev["name"])
+
+            if guide:
+                # 詳細解説あり
+                scenarios_html = ""
+                for label, impact in guide["scenarios"]:
+                    scenarios_html += f'''<div class="scenario">
+  <div class="scenario-label">▸ {label}</div>
+  <div class="scenario-impact">{impact}</div>
+</div>
+'''
+                watch_html = "".join(f"<li>{w}</li>" for w in guide["watch"])
+
+                cards_html += f'''
+<article class="indicator-card">
+  <div class="card-header">
+    <div class="card-date-block">
+      <div class="card-until">{until}</div>
+      <div class="card-date">{d.month}/{d.day}（{dow_ja}）</div>
+    </div>
+    <div class="card-title-block">
+      <div class="card-tags">
+        <span class="event-tag tag-{ev["country"]}">{flag} {country}</span>
+        <span class="event-tag {imp_cls}">{imp_lbl}</span>
+      </div>
+      <h2 class="card-title">{guide["emoji"]} {guide["title"]}</h2>
+      <div class="card-event-name">該当イベント: {ev["name"]}</div>
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">⏰ 発表タイミング</div>
+    <div class="section-body">{guide["release"]}</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">📖 どんな指標？</div>
+    <div class="section-body">{guide["what"]}</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">💡 なぜ相場を動かす？</div>
+    <div class="section-body">{guide["why"]}</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">📊 結果別シナリオ</div>
+    <div class="scenarios">
+      {scenarios_html}
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">🔍 注目ポイント</div>
+    <ul class="watch-list">
+      {watch_html}
+    </ul>
+  </div>
+
+  <div class="card-tip">
+    <strong>💼 投資家の心得</strong>
+    {guide["tip"]}
+  </div>
+</article>
+'''
+            else:
+                # 解説辞書になし → 簡易表示
+                cards_html += f'''
+<article class="indicator-card simple">
+  <div class="card-header">
+    <div class="card-date-block">
+      <div class="card-until">{until}</div>
+      <div class="card-date">{d.month}/{d.day}（{dow_ja}）</div>
+    </div>
+    <div class="card-title-block">
+      <div class="card-tags">
+        <span class="event-tag tag-{ev["country"]}">{flag} {country}</span>
+        <span class="event-tag {imp_cls}">{imp_lbl}</span>
+      </div>
+      <h2 class="card-title">{ev["name"]}</h2>
+      {f'<div class="card-event-name">{short_desc}</div>' if short_desc else ""}
+    </div>
+  </div>
+</article>
+'''
+
+    # ── ヘッダー要約 ──
+    high_count = sum(1 for ev in upcoming if ev["importance"] == "high")
+    mid_count = sum(1 for ev in upcoming if ev["importance"] == "mid")
+    if upcoming:
+        summary_html = f'''
+<div class="summary-box">
+  <div class="summary-num">{len(upcoming)}件の経済指標</div>
+  <div class="summary-detail">
+    今後3日間に発表予定 — <span class="high-count">⭐最重要 {high_count}件</span> ｜ <span class="mid-count">●重要 {mid_count}件</span>
+  </div>
+</div>
+'''
+    else:
+        summary_html = ""
+
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {seo_head("preview.html", "明日の重要経済指標プレビュー", "米CPI・FOMC・雇用統計・日銀金融政策決定会合・ECB理事会など、明日〜数日先に発表される重要経済指標の事前解説。結果別の市場影響シナリオを日本人投資家向けに簡潔に解説。")}
+  {GA4_TAG}
+  <style>
+    *{{margin:0;padding:0;box-sizing:border-box}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;line-height:1.7}}
+    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    .header-inner{{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#7ee787,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#8b949e}}
+    .header-meta span{{color:#7ee787;font-weight:600}}
+    main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+    .nav-btn:hover{{border-color:#7ee787;color:#7ee787}}
+    .nav-btn.current{{background:#1a3a2a;border-color:#7ee787;color:#7ee787}}
+    .summary-box{{background:linear-gradient(135deg,#1a3a2a,#1a2a3a);border:1px solid #2d6a4a;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center}}
+    .summary-num{{font-size:1.8rem;font-weight:700;color:#7ee787;margin-bottom:6px}}
+    .summary-detail{{font-size:.95rem;color:#c0d4cc}}
+    .high-count{{color:#f85149;font-weight:600}}
+    .mid-count{{color:#e3b341;font-weight:600}}
+    .indicator-card{{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:24px 26px;margin-bottom:24px;transition:border-color .2s}}
+    .indicator-card:hover{{border-color:#7ee787}}
+    .indicator-card.simple{{padding:18px 22px}}
+    .card-header{{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid #21262d;margin-bottom:18px}}
+    .card-date-block{{flex-shrink:0;text-align:center;background:#1c2128;border-radius:10px;padding:12px 14px;min-width:80px}}
+    .card-until{{font-size:.7rem;color:#8b949e;margin-bottom:2px;font-weight:600}}
+    .card-date{{font-size:1.1rem;font-weight:700;color:#7ee787}}
+    .card-title-block{{flex:1;min-width:0}}
+    .card-tags{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}}
+    .card-title{{font-size:1.4rem;font-weight:700;color:#e6edf3;margin-bottom:4px;line-height:1.3}}
+    .card-event-name{{font-size:.82rem;color:#8b949e}}
+    .event-tag{{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:5px}}
+    .tag-jp{{background:#3d1a1a;color:#f8a4a0}}
+    .tag-us{{background:#1a2a4a;color:#a4ccff}}
+    .tag-eu{{background:#3d3a1a;color:#f0d878}}
+    .tag-cn{{background:#1a3d1a;color:#7ee787}}
+    .tag-high{{background:#da3633;color:#fff}}
+    .tag-mid{{background:#e3b341;color:#0d1117}}
+    .card-section{{margin-bottom:18px}}
+    .card-section:last-of-type{{margin-bottom:0}}
+    .section-label{{font-size:.85rem;font-weight:700;color:#7ee787;margin-bottom:6px}}
+    .section-body{{font-size:.92rem;color:#c0d4cc;line-height:1.75}}
+    .scenarios{{display:flex;flex-direction:column;gap:10px;margin-top:8px}}
+    .scenario{{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}}
+    .scenario-label{{font-size:.88rem;font-weight:600;color:#79c0ff;margin-bottom:4px}}
+    .scenario-impact{{font-size:.85rem;color:#c0d4cc;line-height:1.7}}
+    .watch-list{{list-style:none;padding:0;margin-top:6px}}
+    .watch-list li{{padding:6px 0 6px 20px;font-size:.88rem;color:#c0d4cc;position:relative;line-height:1.6}}
+    .watch-list li::before{{content:"▸";color:#7ee787;position:absolute;left:0;font-weight:700}}
+    .card-tip{{background:#1a2a3a;border-left:3px solid #58a6ff;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#a4ccff;line-height:1.7}}
+    .card-tip strong{{color:#79c0ff;display:block;margin-bottom:4px}}
+    .empty-state{{text-align:center;padding:60px 20px;background:#161b22;border:1px dashed #30363d;border-radius:14px}}
+    .empty-icon{{font-size:3rem;margin-bottom:12px}}
+    .empty-title{{font-size:1.2rem;font-weight:700;color:#e6edf3;margin-bottom:12px}}
+    .empty-msg{{font-size:.92rem;color:#8b949e;line-height:1.8}}
+    .beginner-box{{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.85rem;color:#79c0ff;line-height:1.85}}
+    .beginner-box::before{{content:"🔰 このページの使い方　";font-weight:700;color:#58a6ff}}
+    .disclaimer{{margin-top:20px;font-size:.78rem;color:#6e7681;line-height:1.7;padding:12px 16px;background:#161b22;border:1px solid #21262d;border-radius:8px}}
+    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681;margin-top:40px}}
+    footer a{{color:#58a6ff;text-decoration:none}}
+    @media(max-width:768px){{
+      .header-inner{{flex-direction:column;align-items:flex-start}}
+      .card-header{{flex-direction:column;gap:12px}}
+      .card-date-block{{align-self:flex-start;min-width:auto;padding:8px 14px}}
+      .card-title{{font-size:1.2rem}}
+      .indicator-card{{padding:18px 16px}}
+    }}
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">📰 明日の経済指標プレビュー</div>
+      <div class="header-meta">最終更新: <span>{time_str}</span></div>
+    </div>
+  </div>
+</header>
+<main>
+<nav class="nav-bar">
+  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn current" href="preview.html">📰 指標プレビュー</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+</nav>
+
+  <div class="beginner-box">
+    今後3日以内に発表される重要経済指標について、<strong>「どんな結果ならマーケットがどう動くか」</strong>を事前にシナリオ別に解説しています。発表の前にポジションを軽くするか、結果が出てから動くかの判断材料にお使いください。
+  </div>
+
+  {summary_html}
+
+  {cards_html}
+
+  <div class="disclaimer">
+    ※ 各シナリオは過去の傾向に基づく一般的な解説であり、実際の相場の動きを保証するものではありません。指標発表時のヘッドラインや要人発言など複数の要因で動きが変わるため、参考情報としてご活用ください。投資判断はご自身の責任で行ってください。
+  </div>
+
+</main>
+<footer>
+  <p>📰 経済指標プレビュー ─ 日本人投資家のための事前解説ページ</p>
+  <p style="margin-top:6px">毎日更新 ｜ <a href="index.html">📊 マーケットニュース</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
+</footer>
 </body>
 </html>"""
 
@@ -1660,6 +2255,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -1965,6 +2561,7 @@ def build_charts_html(hist, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -2242,6 +2839,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -2471,6 +3069,7 @@ def main():
     calendar_path = os.path.join(script_dir, "calendar.html")
     health_path   = os.path.join(script_dir, "market-health.html")
     hot_path      = os.path.join(script_dir, "hot-assets.html")
+    preview_path  = os.path.join(script_dir, "preview.html")
 
     # ── 価格データ取得（個別にtry-exceptで保護）──
     print("📡 現在価格を取得中...")
@@ -2612,6 +3211,18 @@ def main():
         print(f"❌ hot-assets.html 生成エラー: {e}")
         import traceback; traceback.print_exc()
 
+    # ── preview.html 生成（経済指標プレビュー）──
+    print("📰 preview.html 生成中...")
+    try:
+        preview_content = build_preview_html(now_jst)
+        if safe_write(preview_path, preview_content):
+            print(f"✅ preview.html 生成完了")
+        else:
+            print("❌ preview.html の書き込みに失敗しました")
+    except Exception as e:
+        print(f"❌ preview.html 生成エラー: {e}")
+        import traceback; traceback.print_exc()
+
     # ── sitemap.xml / robots.txt 生成 ──
     sitemap_path = os.path.join(script_dir, "sitemap.xml")
     robots_path  = os.path.join(script_dir, "robots.txt")
@@ -2638,6 +3249,8 @@ def main():
     upload_to_github(health_path)
     print("📤 hot-assets.html をアップロード中...")
     upload_to_github(hot_path)
+    print("📤 preview.html をアップロード中...")
+    upload_to_github(preview_path)
     print("📤 sitemap.xml をアップロード中...")
     upload_to_github(sitemap_path)
     print("📤 robots.txt をアップロード中...")
