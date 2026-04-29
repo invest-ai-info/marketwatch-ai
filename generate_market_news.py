@@ -132,6 +132,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-fear-greed.html",       "0.7", "monthly"),
         ("guide-fomc.html",             "0.8", "monthly"),
         ("guide-us-gdp.html",           "0.8", "monthly"),
+        ("guide-boj-2026-04.html",      "0.9", "weekly"),
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
         ("guides.html",                 "0.8", "weekly"),
     ]
@@ -2884,9 +2885,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#c9d1d9">
-      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>明日の経済指標プレビュー</b></a>ページ新設＋経済指標解説記事2本追加（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）<br>
-      ・<b>2026-04-26</b>: 🔥 速報記事「<a href="guide-nikkei-60000.html" style="color:#ffa198"><b>日経平均6万円突破！どこまで上がる？</b></a>」公開<br>
-      ・<b>2026-04-26</b>: 解説記事3本追加（<a href="guide-vix.html" style="color:#79c0ff">VIX恐怖指数</a>／<a href="guide-buffett-indicator.html" style="color:#79c0ff">バフェット指数</a>／<a href="guide-fear-greed.html" style="color:#79c0ff">恐怖と強欲指数</a>）
+      ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#ffa198"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開<br>
+      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>経済指標プレビュー</b></a>ページ新設＋指標解説記事2本（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）<br>
+      ・<b>2026-04-26</b>: 🔥 速報記事「<a href="guide-nikkei-60000.html" style="color:#ffa198"><b>日経平均6万円突破！どこまで上がる？</b></a>」公開
     </div>
   </div>
 
