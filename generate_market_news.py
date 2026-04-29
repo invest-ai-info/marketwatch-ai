@@ -130,6 +130,8 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-vix.html",              "0.7", "monthly"),
         ("guide-buffett-indicator.html","0.7", "monthly"),
         ("guide-fear-greed.html",       "0.7", "monthly"),
+        ("guide-fomc.html",             "0.8", "monthly"),
+        ("guide-us-gdp.html",           "0.8", "monthly"),
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
         ("guides.html",                 "0.8", "weekly"),
     ]
@@ -1001,6 +1003,7 @@ INDICATOR_GUIDES = {
     "FOMC": {
         "emoji": "🏛️", "country": "us",
         "title": "FOMC（連邦公開市場委員会）",
+        "guide_url": "guide-fomc.html",
         "release": "年8回・日本時間 翌日 3:00（または 4:00）に政策金利発表＋議長会見",
         "what": "米FRBが政策金利（FFレート誘導目標）を決定する会合。年4回（3・6・9・12月）は経済見通し（SEP）とドットプロットも公表。",
         "why": "世界中の株・為替・債券を動かす最重要イベント。利下げ・据え置き・利上げの判断と、議長の今後の政策スタンスが市場を支配する。",
@@ -1113,6 +1116,7 @@ INDICATOR_GUIDES = {
     "米GDP": {
         "emoji": "📈", "country": "us",
         "title": "米GDP",
+        "guide_url": "guide-us-gdp.html",
         "release": "四半期ごと・日本時間 21:30（速報→改定→確定の3回発表）",
         "what": "米国の四半期ごとの経済成長率。実質GDP前期比年率（年換算値）が代表指標。",
         "why": "米景気の実態を示す指標。市場予想との乖離でドル・株・債券が動く。",
@@ -1937,6 +1941,8 @@ def build_preview_html(now_jst):
     <strong>💼 投資家の心得</strong>
     {guide["tip"]}
   </div>
+
+  {f'<div class="card-guide-link"><a href="{guide["guide_url"]}">📖 {guide["title"]}を詳しく解説した記事を見る →</a></div>' if guide.get("guide_url") else ""}
 </article>
 '''
             else:
@@ -2031,6 +2037,9 @@ def build_preview_html(now_jst):
     .watch-list li::before{{content:"▸";color:#7ee787;position:absolute;left:0;font-weight:700}}
     .card-tip{{background:#1a2a3a;border-left:3px solid #58a6ff;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#a4ccff;line-height:1.7}}
     .card-tip strong{{color:#79c0ff;display:block;margin-bottom:4px}}
+    .card-guide-link{{margin-top:16px;text-align:center}}
+    .card-guide-link a{{display:inline-block;padding:10px 22px;background:#0d1117;border:1px solid #2d4a7a;border-radius:8px;color:#79c0ff;text-decoration:none;font-size:.88rem;font-weight:600;transition:all .2s}}
+    .card-guide-link a:hover{{border-color:#7ee787;color:#7ee787;background:#1a2a3a}}
     .empty-state{{text-align:center;padding:60px 20px;background:#161b22;border:1px dashed #30363d;border-radius:14px}}
     .empty-icon{{font-size:3rem;margin-bottom:12px}}
     .empty-title{{font-size:1.2rem;font-weight:700;color:#e6edf3;margin-bottom:12px}}
@@ -2864,9 +2873,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#c9d1d9">
+      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>明日の経済指標プレビュー</b></a>ページ新設＋経済指標解説記事2本追加（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）<br>
       ・<b>2026-04-26</b>: 🔥 速報記事「<a href="guide-nikkei-60000.html" style="color:#ffa198"><b>日経平均6万円突破！どこまで上がる？</b></a>」公開<br>
-      ・<b>2026-04-26</b>: 解説記事3本追加（<a href="guide-vix.html" style="color:#79c0ff">VIX恐怖指数</a>／<a href="guide-buffett-indicator.html" style="color:#79c0ff">バフェット指数</a>／<a href="guide-fear-greed.html" style="color:#79c0ff">恐怖と強欲指数</a>）<br>
-      ・<b>2026-04-25</b>: 独自ドメイン <b>marketwatch-jp.com</b> に移行＋全ページAdSense対応
+      ・<b>2026-04-26</b>: 解説記事3本追加（<a href="guide-vix.html" style="color:#79c0ff">VIX恐怖指数</a>／<a href="guide-buffett-indicator.html" style="color:#79c0ff">バフェット指数</a>／<a href="guide-fear-greed.html" style="color:#79c0ff">恐怖と強欲指数</a>）
     </div>
   </div>
 
