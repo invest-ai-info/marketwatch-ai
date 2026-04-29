@@ -704,7 +704,6 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn current" href="vix.html">😱 恐怖指数</a>
@@ -1562,7 +1561,6 @@ def build_hot_assets_html(hot_data, now_jst):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -1756,6 +1754,15 @@ def build_calendar_html(now_jst):
   .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
   .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
   .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
+  .preview-banner{{display:flex;align-items:center;gap:18px;padding:18px 24px;margin-bottom:24px;background:linear-gradient(135deg,#1a3a2a 0%,#1a2a4a 100%);border:1px solid #2d6a4a;border-radius:12px;text-decoration:none;transition:all .2s}}
+  .preview-banner:hover{{border-color:#7ee787;background:linear-gradient(135deg,#1f4a35 0%,#1f3555 100%);transform:translateY(-1px)}}
+  .preview-banner-icon{{font-size:2rem;flex-shrink:0}}
+  .preview-banner-body{{flex:1;min-width:0}}
+  .preview-banner-title{{font-size:1.05rem;font-weight:700;color:#7ee787;margin-bottom:4px}}
+  .preview-banner-desc{{font-size:.85rem;color:#c0d4cc;line-height:1.6}}
+  .preview-banner-desc strong{{color:#79c0ff}}
+  .preview-banner-arrow{{font-size:1.5rem;color:#7ee787;font-weight:700;flex-shrink:0}}
+  @media(max-width:600px){{.preview-banner{{padding:14px 16px;gap:12px}}.preview-banner-icon{{font-size:1.6rem}}.preview-banner-title{{font-size:.95rem}}.preview-banner-desc{{font-size:.78rem}}}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
@@ -1771,13 +1778,21 @@ def build_calendar_html(now_jst):
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
+
+  <a href="preview.html" class="preview-banner">
+    <div class="preview-banner-icon">📰</div>
+    <div class="preview-banner-body">
+      <div class="preview-banner-title">明日〜数日先の重要指標プレビュー</div>
+      <div class="preview-banner-desc">FOMC・米CPI・雇用統計・日銀会合など、近日発表される指標の<strong>結果別シナリオ</strong>を事前に解説しています。</div>
+    </div>
+    <div class="preview-banner-arrow">→</div>
+  </a>
 
   <div class="legend">
     <div class="legend-item"><span class="legend-dot dot-jp"></span> 🇯🇵 日本</div>
@@ -2071,7 +2086,6 @@ def build_preview_html(now_jst):
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-  <a class="nav-btn current" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -2264,7 +2278,6 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -2570,7 +2583,6 @@ def build_charts_html(hist, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-  <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
@@ -2848,7 +2860,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
-    <a class="nav-btn" href="preview.html">📰 指標プレビュー</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
