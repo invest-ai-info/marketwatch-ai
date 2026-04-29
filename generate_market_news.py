@@ -132,6 +132,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-fear-greed.html",       "0.7", "monthly"),
         ("guide-fomc.html",             "0.8", "monthly"),
         ("guide-us-gdp.html",           "0.8", "monthly"),
+        ("guide-fomc-2026-04.html",     "0.9", "weekly"),
         ("guide-boj-2026-04.html",      "0.9", "weekly"),
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
         ("guides.html",                 "0.8", "weekly"),
@@ -690,7 +691,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
   .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -1545,7 +1546,7 @@ def build_hot_assets_html(hot_data, now_jst):
     footer a{{color:#58a6ff;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}}}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -1765,7 +1766,7 @@ def build_calendar_html(now_jst):
   .preview-banner-arrow{{font-size:1.5rem;color:#7ee787;font-weight:700;flex-shrink:0}}
   @media(max-width:600px){{.preview-banner{{padding:14px 16px;gap:12px}}.preview-banner-icon{{font-size:1.6rem}}.preview-banner-title{{font-size:.95rem}}.preview-banner-desc{{font-size:.78rem}}}}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -2073,7 +2074,7 @@ def build_preview_html(now_jst):
       .indicator-card{{padding:18px 16px}}
     }}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -2269,7 +2270,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   footer a{{color:#58a6ff;text-decoration:none}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}}}
 </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -2569,7 +2570,7 @@ def build_charts_html(hist, now_jst):
   .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
   .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -2844,7 +2845,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.sentiment-banner{{flex-direction:column}}}}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
 <header>
@@ -2885,14 +2886,21 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#c9d1d9">
+      ・<b>2026-04-30</b>: 🔥 速報記事「<a href="guide-fomc-2026-04.html" style="color:#ffa198"><b>FOMC4月会合速報：据え置き＋反対4票・パウエル退任とマーケット影響</b></a>」公開<br>
       ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#ffa198"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開<br>
-      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>経済指標プレビュー</b></a>ページ新設＋指標解説記事2本（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）<br>
-      ・<b>2026-04-26</b>: 🔥 速報記事「<a href="guide-nikkei-60000.html" style="color:#ffa198"><b>日経平均6万円突破！どこまで上がる？</b></a>」公開
+      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>経済指標プレビュー</b></a>ページ新設＋指標解説記事2本（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）
     </div>
   </div>
 
   <!-- 騰落レシオ -->
   {_build_touraku_section(touraku)}
+
+  <!-- A8広告枠①（トップページ・ニュース上）-->
+  <div style="margin:24px 0;padding:18px;background:#0d1117;border:1px solid #2d4a7a;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+    <div style="font-size:.7rem;color:#6e7681;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
+    <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー / 300×250 レクタングル）-->
+    <div style="font-size:.82rem;color:#8b949e;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+  </div>
 
   <!-- トップニュース -->
   <div class="top-news">
@@ -2961,6 +2969,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="charts.html" class="chart-link-btn">📈 50年価格チャート＆歴史的イベント一覧を見る →</a>
       <div class="chart-link-desc">日経平均・S&amp;P500・ドル円・金の50年チャートに歴史的イベントを重ねて表示</div>
     </div>
+  </div>
+
+  <!-- A8広告枠②（トップページ・フッター上）-->
+  <div style="margin:32px 0;padding:18px;background:#0d1117;border:1px solid #2d4a7a;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+    <div style="font-size:.7rem;color:#6e7681;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
+    <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー）-->
+    <div style="font-size:.82rem;color:#8b949e;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
   </div>
 
 </main>
