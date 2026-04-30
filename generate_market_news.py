@@ -132,6 +132,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-fear-greed.html",       "0.7", "monthly"),
         ("guide-fomc.html",             "0.8", "monthly"),
         ("guide-us-gdp.html",           "0.8", "monthly"),
+        ("guide-jpy-intervention-2026-04.html","0.95","daily"),
         ("guide-fomc-2026-04.html",     "0.9", "weekly"),
         ("guide-boj-2026-04.html",      "0.9", "weekly"),
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
@@ -2886,9 +2887,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#c9d1d9">
+      ・<b>2026-04-30</b>: 🚨 緊急速報「<a href="guide-jpy-intervention-2026-04.html" style="color:#ffa198"><b>ドル円急落：片山財務相「断固たる措置」発言で為替介入警戒最高潮</b></a>」公開<br>
       ・<b>2026-04-30</b>: 🔥 速報記事「<a href="guide-fomc-2026-04.html" style="color:#ffa198"><b>FOMC4月会合速報：据え置き＋反対4票・パウエル退任とマーケット影響</b></a>」公開<br>
-      ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#ffa198"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開<br>
-      ・<b>2026-04-29</b>: 📰 <a href="preview.html" style="color:#7ee787"><b>経済指標プレビュー</b></a>ページ新設＋指標解説記事2本（<a href="guide-fomc.html" style="color:#79c0ff">FOMCとは</a>／<a href="guide-us-gdp.html" style="color:#79c0ff">米GDP速報値とは</a>）
+      ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#ffa198"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開
     </div>
   </div>
 
