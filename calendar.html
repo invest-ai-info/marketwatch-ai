@@ -30,68 +30,68 @@
 </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
-    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
     .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .header-meta{font-size:.85rem;color:#8b949e}
-    .header-meta span{color:#58a6ff;font-weight:600}
-    .back-link{color:#58a6ff;text-decoration:none;font-size:.85rem}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a}
+    .header-meta span{color:#0969da;font-weight:600}
+    .back-link{color:#0969da;text-decoration:none;font-size:.85rem}
     .back-link:hover{text-decoration:underline}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding:16px 20px;background:#161b22;border:1px solid #30363d;border-radius:12px}
-    .legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#8b949e}
+    .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding:16px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#57606a}
     .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-    .dot-jp{background:#f85149}.dot-us{background:#58a6ff}.dot-eu{background:#e3b341}.dot-cn{background:#3fb950}
-    .month-title{font-size:1.3rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #58a6ff;display:inline-block}
+    .dot-jp{background:#cf222e}.dot-us{background:#0969da}.dot-eu{background:#bf8700}.dot-cn{background:#1a7f37}
+    .month-title{font-size:1.3rem;font-weight:700;color:#1f2328;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #0969da;display:inline-block}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:24px}
-    .cal-header{background:#1c2128;padding:8px 4px;text-align:center;font-size:.75rem;font-weight:600;color:#8b949e}
-    .cal-header.sun{color:#f85149}.cal-header.sat{color:#58a6ff}
-    .cal-cell{background:#161b22;min-height:90px;padding:6px;border:1px solid #21262d;transition:border-color .2s}
-    .cal-cell:hover{border-color:#58a6ff}
-    .cal-cell.empty{background:#0d1117;border-color:#161b22}
-    .cal-cell.today{border:2px solid #58a6ff;background:#1a2233}
-    .cal-day{font-size:.8rem;font-weight:600;color:#8b949e;margin-bottom:4px}
-    .cal-cell.sun .cal-day{color:#f85149}.cal-cell.sat .cal-day{color:#58a6ff}
+    .cal-header{background:#ffffff;padding:8px 4px;text-align:center;font-size:.75rem;font-weight:600;color:#57606a}
+    .cal-header.sun{color:#cf222e}.cal-header.sat{color:#0969da}
+    .cal-cell{background:#f6f8fa;min-height:90px;padding:6px;border:1px solid #d0d7de;transition:border-color .2s}
+    .cal-cell:hover{border-color:#0969da}
+    .cal-cell.empty{background:#ffffff;border-color:#f6f8fa}
+    .cal-cell.today{border:2px solid #0969da;background:#1a2233}
+    .cal-day{font-size:.8rem;font-weight:600;color:#57606a;margin-bottom:4px}
+    .cal-cell.sun .cal-day{color:#cf222e}.cal-cell.sat .cal-day{color:#0969da}
     .cal-event{font-size:.65rem;line-height:1.4;padding:2px 4px;border-radius:4px;margin-bottom:2px;display:block}
-    .cal-event.jp{background:#3d1a1a;color:#f8a4a0;border-left:2px solid #f85149}
-    .cal-event.us{background:#1a2a4a;color:#a4ccff;border-left:2px solid #58a6ff}
-    .cal-event.eu{background:#3d3a1a;color:#f0d878;border-left:2px solid #e3b341}
-    .cal-event.cn{background:#1a3d1a;color:#7ee787;border-left:2px solid #3fb950}
+    .cal-event.jp{background:#ffebe9;color:#cf222e;border-left:2px solid #cf222e}
+    .cal-event.us{background:#ddf4ff;color:#218bff;border-left:2px solid #0969da}
+    .cal-event.eu{background:#fff8c5;color:#9a6700;border-left:2px solid #bf8700}
+    .cal-event.cn{background:#dafbe1;color:#1a7f37;border-left:2px solid #1a7f37}
     .cal-event .imp{font-weight:700}
     .event-list{margin-top:8px}
-    .event-card{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#161b22;border:1px solid #30363d;border-radius:10px;margin-bottom:8px;transition:border-color .2s}
-    .event-card:hover{border-color:#58a6ff}
-    .event-date-box{min-width:52px;text-align:center;padding:8px 6px;background:#1c2128;border-radius:8px}
-    .event-date-day{font-size:1.3rem;font-weight:700;color:#e6edf3}
-    .event-date-dow{font-size:.65rem;color:#8b949e}
+    .event-card{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;margin-bottom:8px;transition:border-color .2s}
+    .event-card:hover{border-color:#0969da}
+    .event-date-box{min-width:52px;text-align:center;padding:8px 6px;background:#ffffff;border-radius:8px}
+    .event-date-day{font-size:1.3rem;font-weight:700;color:#1f2328}
+    .event-date-dow{font-size:.65rem;color:#57606a}
     .event-body{flex:1}
-    .event-name{font-size:.88rem;font-weight:600;color:#e6edf3;margin-bottom:4px}
-    .event-desc{font-size:.78rem;color:#8b949e;line-height:1.6}
+    .event-name{font-size:.88rem;font-weight:600;color:#1f2328;margin-bottom:4px}
+    .event-desc{font-size:.78rem;color:#57606a;line-height:1.6}
     .event-tag{display:inline-block;font-size:.6rem;font-weight:600;padding:2px 6px;border-radius:4px;margin-right:4px}
-    .tag-jp{background:#3d1a1a;color:#f8a4a0}.tag-us{background:#1a2a4a;color:#a4ccff}.tag-eu{background:#3d3a1a;color:#f0d878}.tag-cn{background:#1a3d1a;color:#7ee787}
-    .tag-high{background:#da3633;color:#fff}.tag-mid{background:#e3b341;color:#0d1117}
+    .tag-jp{background:#ffebe9;color:#cf222e}.tag-us{background:#ddf4ff;color:#218bff}.tag-eu{background:#fff8c5;color:#9a6700}.tag-cn{background:#dafbe1;color:#1a7f37}
+    .tag-high{background:#da3633;color:#fff}.tag-mid{background:#bf8700;color:#ffffff}
     .tab-bar{display:flex;gap:8px;margin-bottom:20px}
-    .tab-btn{padding:8px 20px;border:1px solid #30363d;border-radius:8px;background:#161b22;color:#8b949e;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
-    .tab-btn:hover{border-color:#58a6ff;color:#58a6ff}
-    .tab-btn.active{background:#1a2a4a;border-color:#58a6ff;color:#58a6ff}
-    .beginner-box{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}
-    .beginner-box::before{content:"🔰 経済指標の見方　";font-weight:700;color:#58a6ff}
-    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
-    footer a{color:#58a6ff;text-decoration:none}
+    .tab-btn{padding:8px 20px;border:1px solid #d0d7de;border-radius:8px;background:#f6f8fa;color:#57606a;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+    .tab-btn:hover{border-color:#0969da;color:#0969da}
+    .tab-btn.active{background:#ddf4ff;border-color:#0969da;color:#0969da}
+    .beginner-box{margin:24px 0;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#1f6feb;line-height:1.8}
+    .beginner-box::before{content:"🔰 経済指標の見方　";font-weight:700;color:#0969da}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}
+    footer a{color:#0969da;text-decoration:none}
     @media(max-width:768px){.cal-cell{min-height:60px;padding:3px}.cal-event{font-size:.55rem}.header-inner{flex-direction:column}}
   .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
-  .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
-  .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
-  .preview-banner{display:flex;align-items:center;gap:18px;padding:18px 24px;margin-bottom:24px;background:linear-gradient(135deg,#1a3a2a 0%,#1a2a4a 100%);border:1px solid #2d6a4a;border-radius:12px;text-decoration:none;transition:all .2s}
-  .preview-banner:hover{border-color:#7ee787;background:linear-gradient(135deg,#1f4a35 0%,#1f3555 100%);transform:translateY(-1px)}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn:hover{border-color:#0969da;color:#0969da}
+  .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+  .preview-banner{display:flex;align-items:center;gap:18px;padding:18px 24px;margin-bottom:24px;background:linear-gradient(135deg,#dafbe1 0%,#ddf4ff 100%);border:1px solid #1a7f37;border-radius:12px;text-decoration:none;transition:all .2s}
+  .preview-banner:hover{border-color:#1a7f37;background:linear-gradient(135deg,#cef0d3 0%,#b3d4ff 100%);transform:translateY(-1px)}
   .preview-banner-icon{font-size:2rem;flex-shrink:0}
   .preview-banner-body{flex:1;min-width:0}
-  .preview-banner-title{font-size:1.05rem;font-weight:700;color:#7ee787;margin-bottom:4px}
-  .preview-banner-desc{font-size:.85rem;color:#c0d4cc;line-height:1.6}
-  .preview-banner-desc strong{color:#79c0ff}
-  .preview-banner-arrow{font-size:1.5rem;color:#7ee787;font-weight:700;flex-shrink:0}
+  .preview-banner-title{font-size:1.05rem;font-weight:700;color:#1a7f37;margin-bottom:4px}
+  .preview-banner-desc{font-size:.85rem;color:#424a53;line-height:1.6}
+  .preview-banner-desc strong{color:#1f6feb}
+  .preview-banner-arrow{font-size:1.5rem;color:#1a7f37;font-weight:700;flex-shrink:0}
   @media(max-width:600px){.preview-banner{padding:14px 16px;gap:12px}.preview-banner-icon{font-size:1.6rem}.preview-banner-title{font-size:.95rem}.preview-banner-desc{font-size:.78rem}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -101,7 +101,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📅 マクロ経済カレンダー</div>
-      <div class="header-meta">最終更新: <span>2026年05月01日 00:29 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年05月01日 06:38 JST</span></div>
     </div>
   </div>
 </header>
@@ -257,7 +257,7 @@
 <div class="cal-cell empty"></div>
 </div>
 
-    <p style="font-size:.95rem;font-weight:600;color:#8b949e;margin-bottom:12px">📋 5月の重要イベント詳細</p>
+    <p style="font-size:.95rem;font-weight:600;color:#57606a;margin-bottom:12px">📋 5月の重要イベント詳細</p>
 <div class="event-list">
 <div class="event-card">
 <div class="event-date-box"><div class="event-date-day">8</div><div class="event-date-dow">金</div></div>
@@ -385,7 +385,7 @@
 <div class="cal-cell empty"></div>
 </div>
 
-    <p style="font-size:.95rem;font-weight:600;color:#8b949e;margin-bottom:12px">📋 6月の重要イベント詳細</p>
+    <p style="font-size:.95rem;font-weight:600;color:#57606a;margin-bottom:12px">📋 6月の重要イベント詳細</p>
 <div class="event-list">
 <div class="event-card">
 <div class="event-date-box"><div class="event-date-day">5</div><div class="event-date-dow">金</div></div>

@@ -31,44 +31,44 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}
-    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
     .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#f85149,#f0883e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .header-meta{font-size:.85rem;color:#8b949e}
-    .header-meta span{color:#58a6ff;font-weight:600}
-    .back-link{display:inline-flex;align-items:center;gap:6px;color:#58a6ff;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #30363d;border-radius:8px;transition:background .2s}
-    .back-link:hover{background:#161b22}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#cf222e,#bf3989);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a}
+    .header-meta span{color:#0969da;font-weight:600}
+    .back-link{display:inline-flex;align-items:center;gap:6px;color:#0969da;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #d0d7de;border-radius:8px;transition:background .2s}
+    .back-link:hover{background:#f6f8fa}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .vix-hero{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}
-    .vix-value{font-size:4rem;font-weight:800;color:#3fb950;line-height:1.2}
+    .vix-hero{background:#f6f8fa;border:1px solid #d0d7de;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}
+    .vix-value{font-size:4rem;font-weight:800;color:#1a7f37;line-height:1.2}
     .vix-change{font-size:1rem;margin-top:4px}
-    .vix-level{font-size:1.4rem;font-weight:700;color:#3fb950;margin-top:8px}
-    .vix-mood{font-size:.95rem;color:#8b949e;margin-top:4px}
-    .gauge{margin:24px auto 0;max-width:500px;height:18px;background:linear-gradient(90deg,#238636 0%,#3fb950 20%,#d29922 40%,#f0883e 60%,#f85149 80%,#da3633 100%);border-radius:10px;position:relative}
+    .vix-level{font-size:1.4rem;font-weight:700;color:#1a7f37;margin-top:8px}
+    .vix-mood{font-size:.95rem;color:#57606a;margin-top:4px}
+    .gauge{margin:24px auto 0;max-width:500px;height:18px;background:linear-gradient(90deg,#238636 0%,#1a7f37 20%,#9a6700 40%,#bf3989 60%,#cf222e 80%,#da3633 100%);border-radius:10px;position:relative}
     .gauge-marker{position:absolute;top:-6px;width:4px;height:30px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,0.5)}
-    .gauge-labels{display:flex;justify-content:space-between;max-width:500px;margin:6px auto 0;font-size:.7rem;color:#8b949e}
-    .analysis-box{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}
-    .analysis-title{font-size:1.1rem;font-weight:700;color:#e6edf3;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .analysis-text{font-size:.92rem;color:#c9d1d9;line-height:1.8}
-    .beginner-box{margin-top:20px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}
-    .beginner-box::before{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}
-    .chart-section{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}
-    .chart-title{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}
-    .chart-subtitle{font-size:.78rem;color:#8b949e;margin-bottom:16px}
+    .gauge-labels{display:flex;justify-content:space-between;max-width:500px;margin:6px auto 0;font-size:.7rem;color:#57606a}
+    .analysis-box{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px}
+    .analysis-title{font-size:1.1rem;font-weight:700;color:#1f2328;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .analysis-text{font-size:.92rem;color:#424a53;line-height:1.8}
+    .beginner-box{margin-top:20px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#1f6feb;line-height:1.8}
+    .beginner-box::before{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}
+    .chart-section{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px}
+    .chart-title{font-size:1rem;font-weight:700;color:#1f2328;margin-bottom:4px}
+    .chart-subtitle{font-size:.78rem;color:#57606a;margin-bottom:16px}
     .chart-wrap{position:relative;height:300px}
     .level-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.85rem}
-    .level-table th{text-align:left;padding:8px 12px;border-bottom:2px solid #30363d;color:#8b949e}
-    .level-table td{padding:8px 12px;border-bottom:1px solid #21262d}
-    .level-table tr:hover td{background:#1c2128}
+    .level-table th{text-align:left;padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a}
+    .level-table td{padding:8px 12px;border-bottom:1px solid #d0d7de}
+    .level-table tr:hover td{background:#ffffff}
     .level-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
-    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}
-    footer a{color:#58a6ff;text-decoration:none}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}
+    footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.header-inner{flex-direction:column}.vix-value{font-size:3rem}}
   .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
-  .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
-  .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn:hover{border-color:#0969da;color:#0969da}
+  .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
@@ -77,7 +77,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">😱 恐怖指数（VIX）</div>
-      <div class="header-meta">最終更新: <span>2026年5月1日 00:29 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年5月1日 06:38 JST</span></div>
     </div>
   </div>
 </header>
@@ -93,21 +93,21 @@
 </nav>
 
   <div class="vix-hero">
-    <div class="vix-value">17.3</div>
-    <div class="vix-change"><span class="up" style="font-size:1.1rem">-1.47 (-7.8%)</span></div>
+    <div class="vix-value">16.9</div>
+    <div class="vix-change"><span class="up" style="font-size:1.1rem">-1.92 (-10.2%)</span></div>
     <div class="vix-level">😊 平常</div>
     <div class="vix-mood">市場は落ち着いている</div>
-    <div class="gauge"><div class="gauge-marker" style="left:21.675000190734863%"></div></div>
+    <div class="gauge"><div class="gauge-marker" style="left:21.112499237060547%"></div></div>
     <div class="gauge-labels"><span>安心</span><span>平常</span><span>警戒</span><span>恐怖</span><span>パニック</span></div>
   </div>
 
   <div style="text-align:center;margin:18px 0 24px">
-    <a href="guide-vix.html" style="display:inline-block;padding:10px 22px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.92rem;font-weight:600">📚 VIX恐怖指数とは？読み方を初心者向けに解説 →</a>
+    <a href="guide-vix.html" style="display:inline-block;padding:10px 22px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.92rem;font-weight:600">📚 VIX恐怖指数とは？読み方を初心者向けに解説 →</a>
   </div>
 
   <div class="analysis-box">
     <div class="analysis-title">📝 AIアナリスト・コメント</div>
-    <div class="analysis-text">VIXは現在 17.3 で、恐怖レベルは「平常」です。市場は落ち着いている。前日比 -1.5pt とやや低下。市場の緊張が和らいでいます。 直近90日の範囲は 13.6〜31.1（平均 20.0）。平均的な水準で推移しています。 通常の市場環境です。長期投資家にとっては安定した投資環境といえます。</div>
+    <div class="analysis-text">VIXは現在 16.9 で、恐怖レベルは「平常」です。市場は落ち着いている。前日比 -1.9pt とやや低下。市場の緊張が和らいでいます。 直近90日の範囲は 13.6〜31.1（平均 20.0）。平均的な水準で推移しています。 通常の市場環境です。長期投資家にとっては安定した投資環境といえます。</div>
     <div class="beginner-box">
       VIX（Volatility Index）は「恐怖指数」とも呼ばれ、S&amp;P500のオプション価格から算出される「今後30日間の市場の変動予想」です。
       数値が高いほど「投資家が大きな値動きを予想＝不安」を意味します。
@@ -128,10 +128,10 @@
       <thead><tr><th>レベル</th><th>VIX範囲</th><th>意味</th><th>投資家の行動指針</th></tr></thead>
       <tbody>
         <tr><td><span class="level-dot" style="background:#238636"></span>極めて低い</td><td>0〜12</td><td>過度な楽観</td><td>上昇トレンドだが過熱に注意。利確を検討</td></tr>
-        <tr><td><span class="level-dot" style="background:#3fb950"></span>平常</td><td>12〜20</td><td>安定した市場</td><td>通常の投資判断でOK。積立投資に最適</td></tr>
-        <tr><td><span class="level-dot" style="background:#d29922"></span>やや高い</td><td>20〜25</td><td>警戒感あり</td><td>リスク管理を意識。分散投資の確認を</td></tr>
-        <tr><td><span class="level-dot" style="background:#f0883e"></span>高い</td><td>25〜30</td><td>不安拡大</td><td>パニック売りは禁物。冷静な判断を</td></tr>
-        <tr><td><span class="level-dot" style="background:#f85149"></span>非常に高い</td><td>30〜40</td><td>強い恐怖</td><td>逆張りのチャンスかも。ただし慎重に</td></tr>
+        <tr><td><span class="level-dot" style="background:#1a7f37"></span>平常</td><td>12〜20</td><td>安定した市場</td><td>通常の投資判断でOK。積立投資に最適</td></tr>
+        <tr><td><span class="level-dot" style="background:#9a6700"></span>やや高い</td><td>20〜25</td><td>警戒感あり</td><td>リスク管理を意識。分散投資の確認を</td></tr>
+        <tr><td><span class="level-dot" style="background:#bf3989"></span>高い</td><td>25〜30</td><td>不安拡大</td><td>パニック売りは禁物。冷静な判断を</td></tr>
+        <tr><td><span class="level-dot" style="background:#cf222e"></span>非常に高い</td><td>30〜40</td><td>強い恐怖</td><td>逆張りのチャンスかも。ただし慎重に</td></tr>
         <tr><td><span class="level-dot" style="background:#da3633"></span>パニック</td><td>40超</td><td>極度のパニック</td><td>歴史的買い場の可能性。ただし底は誰にもわからない</td></tr>
       </tbody>
     </table>
@@ -152,7 +152,7 @@
 
 <script>
 const VIX_DATES  = ["2025-12-26", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-02", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30"];
-const VIX_PRICES = [13.6, 14.2, 14.33, 14.95, 14.51, 14.9, 14.75, 15.38, 15.45, 14.49, 15.12, 15.98, 16.75, 15.84, 15.86, 20.09, 16.9, 15.64, 16.09, 16.15, 16.35, 16.35, 16.88, 17.44, 16.34, 18.0, 18.64, 21.77, 20.37, 17.36, 17.79, 17.65, 20.82, 20.6, 20.29, 19.62, 20.23, 19.09, 21.01, 19.55, 17.93, 18.63, 19.86, 21.44, 23.57, 21.15, 23.75, 29.49, 25.5, 24.93, 24.23, 27.29, 27.19, 23.51, 22.37, 25.09, 24.06, 26.78, 26.15, 26.95, 25.33, 27.44, 31.05, 30.61, 25.25, 24.54, 23.87, 24.17, 25.78, 21.04, 19.49, 19.23, 19.12, 18.36, 18.17, 17.94, 17.48, 18.87, 19.5, 18.92, 19.31, 18.71, 18.02, 17.83, 18.81, 17.34];
+const VIX_PRICES = [13.6, 14.2, 14.33, 14.95, 14.51, 14.9, 14.75, 15.38, 15.45, 14.49, 15.12, 15.98, 16.75, 15.84, 15.86, 20.09, 16.9, 15.64, 16.09, 16.15, 16.35, 16.35, 16.88, 17.44, 16.34, 18.0, 18.64, 21.77, 20.37, 17.36, 17.79, 17.65, 20.82, 20.6, 20.29, 19.62, 20.23, 19.09, 21.01, 19.55, 17.93, 18.63, 19.86, 21.44, 23.57, 21.15, 23.75, 29.49, 25.5, 24.93, 24.23, 27.29, 27.19, 23.51, 22.37, 25.09, 24.06, 26.78, 26.15, 26.95, 25.33, 27.44, 31.05, 30.61, 25.25, 24.54, 23.87, 24.17, 25.78, 21.04, 19.49, 19.23, 19.12, 18.36, 18.17, 17.94, 17.48, 18.87, 19.5, 18.92, 19.31, 18.71, 18.02, 17.83, 18.81, 16.89];
 
 if (VIX_DATES.length > 0) {
   const ctx = document.getElementById('chartVIX').getContext('2d');
@@ -163,7 +163,7 @@ if (VIX_DATES.length > 0) {
       datasets: [{
         label: 'VIX',
         data: VIX_PRICES,
-        borderColor: '#f85149',
+        borderColor: '#cf222e',
         backgroundColor: 'rgba(248,81,73,0.1)',
         borderWidth: 2,
         fill: true,
@@ -176,21 +176,21 @@ if (VIX_DATES.length > 0) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#e6edf3' } },
-        tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#f85149',
-                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1 },
+        legend: { labels: { color: '#1f2328' } },
+        tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#cf222e',
+                    bodyColor: '#1f2328', borderColor: '#d0d7de', borderWidth: 1 },
         annotation: {
           annotations: {
             line20: { type: 'line', yMin: 20, yMax: 20, borderColor: 'rgba(210,153,34,0.5)', borderWidth: 1, borderDash: [6,3],
-              label: { content: '警戒ライン (20)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#d29922', font: { size: 10 }, padding: 4 } },
+              label: { content: '警戒ライン (20)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#9a6700', font: { size: 10 }, padding: 4 } },
             line30: { type: 'line', yMin: 30, yMax: 30, borderColor: 'rgba(248,81,73,0.5)', borderWidth: 1, borderDash: [6,3],
-              label: { content: '恐怖ライン (30)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#f85149', font: { size: 10 }, padding: 4 } },
+              label: { content: '恐怖ライン (30)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#cf222e', font: { size: 10 }, padding: 4 } },
           }
         },
       },
       scales: {
-        x: { ticks: { color: '#8b949e', font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: 'rgba(48,54,61,0.8)' } },
-        y: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: 'rgba(48,54,61,0.8)' },
+        x: { ticks: { color: '#57606a', font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: 'rgba(48,54,61,0.8)' } },
+        y: { ticks: { color: '#57606a', font: { size: 10 } }, grid: { color: 'rgba(48,54,61,0.8)' },
              suggestedMin: 10, suggestedMax: 50 },
       },
     }

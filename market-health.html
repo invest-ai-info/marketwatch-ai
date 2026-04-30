@@ -30,40 +30,40 @@
 </script>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;font-size:16px;line-height:1.75}
-  header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:26px 32px;text-align:center}
-  .header-title{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-  .header-meta{font-size:1rem;color:#8b949e}
+  body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;font-size:16px;line-height:1.75}
+  header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:26px 32px;text-align:center}
+  .header-title{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#0969da,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+  .header-meta{font-size:1rem;color:#57606a}
   main{max-width:1200px;margin:0 auto;padding:32px 24px}
   .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
-  .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
-  .nav-btn.current{background:#1c3a6a;border-color:#58a6ff;color:#fff}
-  .summary{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #d29922;border-radius:14px;padding:22px 26px;margin-bottom:28px}
-  .summary h2{font-size:1.15rem;color:#d29922;margin-bottom:10px}
-  .summary p{color:#e6edf3;font-size:.98rem}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn:hover{border-color:#0969da;color:#0969da}
+  .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+  .summary{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #9a6700;border-radius:14px;padding:22px 26px;margin-bottom:28px}
+  .summary h2{font-size:1.15rem;color:#9a6700;margin-bottom:10px}
+  .summary p{color:#1f2328;font-size:.98rem}
   .section{margin-bottom:32px}
-  .section-title{font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding:6px 0 6px 14px;border-left:4px solid #58a6ff}
+  .section-title{font-size:1.25rem;font-weight:700;color:#1f2328;margin-bottom:16px;padding:6px 0 6px 14px;border-left:4px solid #0969da}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-  .card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:22px;transition:transform .15s,border-color .2s}
-  .card:hover{border-color:#58a6ff;transform:translateY(-2px)}
+  .card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:22px;transition:transform .15s,border-color .2s}
+  .card:hover{border-color:#0969da;transform:translateY(-2px)}
   .card-header{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
-  .card-title{font-size:1.05rem;font-weight:700;color:#e6edf3}
-  .card-sub{font-size:.78rem;color:#8b949e}
+  .card-title{font-size:1.05rem;font-weight:700;color:#1f2328}
+  .card-sub{font-size:.78rem;color:#57606a}
   .big-num{font-size:2.6rem;font-weight:800;margin:6px 0}
   .tag{display:inline-block;font-size:.82rem;font-weight:700;padding:4px 12px;border-radius:999px;color:#001}
   .gauge{position:relative;height:14px;border-radius:7px;margin:14px 0 8px;overflow:visible}
-  .gauge.fear{background:linear-gradient(90deg,#238636 0%,#3fb950 25%,#d29922 50%,#f85149 75%,#da3633 100%)}
-  .gauge.val{background:linear-gradient(90deg,#3fb950 0%,#58a6ff 40%,#d29922 65%,#f85149 85%,#da3633 100%)}
-  .gauge.vol{background:linear-gradient(90deg,#3fb950 0%,#d29922 50%,#f85149 75%,#da3633 100%)}
+  .gauge.fear{background:linear-gradient(90deg,#238636 0%,#1a7f37 25%,#9a6700 50%,#cf222e 75%,#da3633 100%)}
+  .gauge.val{background:linear-gradient(90deg,#1a7f37 0%,#0969da 40%,#9a6700 65%,#cf222e 85%,#da3633 100%)}
+  .gauge.vol{background:linear-gradient(90deg,#1a7f37 0%,#9a6700 50%,#cf222e 75%,#da3633 100%)}
   .gauge-pin{position:absolute;top:-4px;width:5px;height:22px;background:#fff;border-radius:3px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,.7)}
-  .gauge-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7681;margin-top:4px}
+  .gauge-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7781;margin-top:4px}
   .comment{font-size:.93rem;color:#c8d1e6;margin-top:10px;line-height:1.7}
-  .beginner{margin-top:12px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#79c0ff;line-height:1.75}
-  .beginner::before{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}
-  .formula{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #30363d;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#a4ccff;margin:8px 0;display:inline-block}
-  footer{background:#161b22;border-top:1px solid #30363d;padding:24px 32px;text-align:center;font-size:.9rem;color:#8b949e;line-height:1.85}
-  footer a{color:#58a6ff;text-decoration:none}
+  .beginner{margin-top:12px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#1f6feb;line-height:1.75}
+  .beginner::before{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}
+  .formula{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#218bff;margin:8px 0;display:inline-block}
+  footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:24px 32px;text-align:center;font-size:.9rem;color:#57606a;line-height:1.85}
+  footer a{color:#0969da;text-decoration:none}
   @media(max-width:600px){.big-num{font-size:2.1rem}.header-title{font-size:1.4rem}}
 </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -71,7 +71,7 @@
 <body>
 <header>
   <div class="header-title">🩺 市場健康度ダッシュボード</div>
-  <div class="header-meta">最終更新: 2026年05月01日 00:29 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
+  <div class="header-meta">最終更新: 2026年05月01日 06:38 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
 </header>
 <main>
   <nav class="nav-bar">
@@ -84,16 +84,16 @@
   </nav>
 
   <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:24px">
-    <a href="guide-buffett-indicator.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 バフェット指数とは？</a>
-    <a href="guide-fear-greed.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 恐怖と強欲指数とは？</a>
-    <a href="guide-vix.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 VIX恐怖指数とは？</a>
+    <a href="guide-buffett-indicator.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 バフェット指数とは？</a>
+    <a href="guide-fear-greed.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 恐怖と強欲指数とは？</a>
+    <a href="guide-vix.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 VIX恐怖指数とは？</a>
   </div>
 
   <section class="summary">
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
       センチメント・ボラティリティ・割高割安を総合判定。
-      <b>米VIX 17.3</b> ／ <b>騰落レシオ 108.3%</b> はリアルタイム更新。
+      <b>米VIX 16.9</b> ／ <b>騰落レシオ 108.3%</b> はリアルタイム更新。
       その他の指標は <b>2026-04-20 時点の参考値</b>（月次手動更新）。
       <br>● 青=適正／割安　● 橙=やや割高・過熱　● 赤=危険水準
     </p>
@@ -104,7 +104,7 @@
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">😱 米国 VIX</div><div class="card-sub">S&amp;P500 オプションIV</div></div>
-        <div class="big-num" style="color:#3fb950">17.3 <span class="tag" style="background:#3fb950;color:#fff">通常</span></div>
+        <div class="big-num" style="color:#1a7f37">16.9 <span class="tag" style="background:#1a7f37;color:#fff">通常</span></div>
         <div class="gauge vol"><div class="gauge-pin" style="left:25%"></div></div>
         <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">20〜25は通常モード。30超は調整警戒、40超はパニック領域。リアルタイム値。</p>
@@ -112,15 +112,15 @@
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🗾 日経VI</div><div class="card-sub">日経225 オプションIV ／ 2026-04-20時点</div></div>
-        <div class="big-num" style="color:#f0883e">32.9 <span class="tag" style="background:#f0883e;color:#fff">やや警戒</span></div>
+        <div class="big-num" style="color:#bf3989">32.9 <span class="tag" style="background:#bf3989;color:#fff">やや警戒</span></div>
         <div class="gauge vol"><div class="gauge-pin" style="left:66%"></div></div>
         <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">大阪取引所が算出する日本版VIX。米VIX＋5〜10が通常。40超は警戒圏。</p>
-        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#79c0ff">JPX公式</a></div>
+        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#1f6feb">JPX公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📊 騰落レシオ（25日）</div><div class="card-sub">東証プライム</div></div>
-        <div class="big-num" style="color:#d29922">108.3% <span class="tag" style="background:#d29922;color:#fff">やや加熱</span></div>
+        <div class="big-num" style="color:#9a6700">108.3% <span class="tag" style="background:#9a6700;color:#fff">やや加熱</span></div>
         <div class="gauge fear"><div class="gauge-pin" style="left:60%"></div></div>
         <div class="gauge-labels"><span>30</span><span>70</span><span>100</span><span>120</span><span>170</span></div>
         <p class="comment">120%以上は買われすぎ、70%以下は売られすぎの目安。リアルタイム値。</p>
@@ -134,19 +134,19 @@
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">📊 CNN Fear &amp; Greed</div><div class="card-sub">米国株・7指標合成</div></div>
-        <div class="big-num" style="color:#f0883e">68 <span class="tag" style="background:#f0883e;color:#fff">強欲</span></div>
+        <div class="big-num" style="color:#bf3989">68 <span class="tag" style="background:#bf3989;color:#fff">強欲</span></div>
         <div class="gauge fear"><div class="gauge-pin" style="left:68%"></div></div>
         <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
         <p class="comment">0=極度の恐怖、100=極度の強欲。75超で「他人が強欲なときは恐れよ」領域。</p>
-        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#79c0ff">CNN公式</a></div>
+        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#1f6feb">CNN公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">₿ Crypto Fear &amp; Greed</div><div class="card-sub">BTC/暗号資産</div></div>
-        <div class="big-num" style="color:#d29922">50 <span class="tag" style="background:#d29922;color:#fff">中立</span></div>
+        <div class="big-num" style="color:#9a6700">50 <span class="tag" style="background:#9a6700;color:#fff">中立</span></div>
         <div class="gauge fear"><div class="gauge-pin" style="left:50%"></div></div>
         <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
         <p class="comment">alternative.me が公開。ボラ・出来高・SNS・ドミナンスから算出。BTC逆張りの定番指標。</p>
-        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#79c0ff">alternative.me</a></div>
+        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#1f6feb">alternative.me</a></div>
       </article>
     </div>
   </section>
@@ -161,11 +161,11 @@
         <div class="gauge-labels"><span>70</span><span>100</span><span>135</span><span>180</span><span>250</span></div>
         <div class="formula">米国株時価総額 (Wilshire 5000) ÷ 米GDP × 100</div>
         <p class="comment">バフェット本人「200%は火遊び」発言水準を超過。70%以下=割安、135%以上=割高。</p>
-        <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#79c0ff">currentmarketvaluation.com</a></div>
+        <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#1f6feb">currentmarketvaluation.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🗾 バフェット指数（日）</div><div class="card-sub">東証時価総額 ÷ 日本GDP</div></div>
-        <div class="big-num" style="color:#f0883e">142% <span class="tag" style="background:#f0883e;color:#fff">割高</span></div>
+        <div class="big-num" style="color:#bf3989">142% <span class="tag" style="background:#bf3989;color:#fff">割高</span></div>
         <div class="gauge val"><div class="gauge-pin" style="left:57%"></div></div>
         <div class="gauge-labels"><span>70</span><span>100</span><span>135</span><span>180</span><span>250</span></div>
         <div class="formula">東証全銘柄時価総額 ÷ 日本名目GDP × 100</div>
@@ -174,26 +174,26 @@
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📈 S&amp;P500 CAPE（シラーPER）</div><div class="card-sub">10年平均利益で算出</div></div>
-        <div class="big-num" style="color:#f0883e">36.5 <span class="tag" style="background:#f0883e;color:#fff">歴史的高水準</span></div>
+        <div class="big-num" style="color:#bf3989">36.5 <span class="tag" style="background:#bf3989;color:#fff">歴史的高水準</span></div>
         <div class="gauge val"><div class="gauge-pin" style="left:73%"></div></div>
         <div class="gauge-labels"><span>10</span><span>15</span><span>22</span><span>30</span><span>50+</span></div>
         <div class="formula">S&amp;P500 ÷ （過去10年のインフレ調整済みEPS平均）</div>
         <p class="comment">20世紀平均15.2。30超は歴史的高水準。2000年ITバブル期44、1929年大恐慌前32。</p>
-        <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#79c0ff">multpl.com</a></div>
+        <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#1f6feb">multpl.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🇯🇵 日経平均 PER（予想）</div><div class="card-sub">12ヶ月先の予想利益ベース</div></div>
-        <div class="big-num" style="color:#58a6ff">17.8倍 <span class="tag" style="background:#58a6ff;color:#fff">適正</span></div>
+        <div class="big-num" style="color:#0969da">17.8倍 <span class="tag" style="background:#0969da;color:#fff">適正</span></div>
         <div class="gauge val"><div class="gauge-pin" style="left:59%"></div></div>
         <div class="gauge-labels"><span>10</span><span>13</span><span>16</span><span>20</span><span>30</span></div>
         <p class="comment">歴史平均14〜16倍。米国S&amp;P500の約24倍よりは日本株が割安感あり。</p>
-        <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#79c0ff">日経インデックス公式</a></div>
+        <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#1f6feb">日経インデックス公式</a></div>
       </article>
     </div>
   </section>
 
-  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#58a6ff">
-    <h2 style="color:#58a6ff">📋 投資判断のヒント</h2>
+  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#0969da">
+    <h2 style="color:#0969da">📋 投資判断のヒント</h2>
     <p>
       <b>短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
       <b>中期（3〜12ヶ月）</b>: バフェット指数・CAPEが歴史的高水準なら <b>新規資金一括投入は避け、段階投資＋分散</b> が鉄則。<br>
