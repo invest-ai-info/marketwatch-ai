@@ -284,15 +284,15 @@ def get_touraku_ratio():
 def analyze_touraku(ratio):
     """騰落レシオの水準を分析してコメントを返す"""
     if ratio is None:
-        return "N/A", "#6e7681", "😐", "データを取得できませんでした。"
+        return "N/A", "#6e7781", "😐", "データを取得できませんでした。"
     if ratio >= 140:
         return "過熱圏", "#da3633", "😢", f"騰落レシオ {ratio:.0f}%：市場は過熱状態です。短期的な調整（下落）に警戒が必要です。"
     elif ratio >= 120:
-        return "買われすぎ", "#f0883e", "😐", f"騰落レシオ {ratio:.0f}%：やや買われすぎの水準。利益確定売りが出やすい局面です。"
+        return "買われすぎ", "#bf3989", "😐", f"騰落レシオ {ratio:.0f}%：やや買われすぎの水準。利益確定売りが出やすい局面です。"
     elif ratio >= 80:
-        return "通常", "#3fb950", "😊", f"騰落レシオ {ratio:.0f}%：通常の範囲内。市場は安定しています。"
+        return "通常", "#1a7f37", "😊", f"騰落レシオ {ratio:.0f}%：通常の範囲内。市場は安定しています。"
     elif ratio >= 60:
-        return "売られすぎ", "#d29922", "😐", f"騰落レシオ {ratio:.0f}%：やや売られすぎの水準。反発のきっかけ待ちです。"
+        return "売られすぎ", "#9a6700", "😐", f"騰落レシオ {ratio:.0f}%：やや売られすぎの水準。反発のきっかけ待ちです。"
     else:
         return "底値圏", "#238636", "😊", f"騰落レシオ {ratio:.0f}%：歴史的な底値圏です。長期投資家にとっては買いのチャンスかもしれません。"
 
@@ -474,7 +474,7 @@ def build_annotations(asset_key, dates):
                 "content": ev["label"],
                 "display": False,
                 "backgroundColor": "rgba(30,30,40,0.95)",
-                "color": "#ffd700",
+                "color": "#9a6700",
                 "font": {"size": 11},
                 "padding": 6,
                 "position": "start",
@@ -552,7 +552,7 @@ def get_vix_history(days=90):
 def analyze_vix(current, prev=None, hist_prices=None):
     """VIX値から市場の恐怖レベルを分析しコメントを生成"""
     if current is None:
-        return "N/A", "#6e7681", "😐", "データを取得できませんでした。", ""
+        return "N/A", "#6e7781", "😐", "データを取得できませんでした。", ""
 
     # レベル判定
     if current < 12:
@@ -563,25 +563,25 @@ def analyze_vix(current, prev=None, hist_prices=None):
         warning  = "ただし、過度な楽観は相場の転換点を示唆することがあります。「みんなが安心しているときこそ注意」という格言もあります。"
     elif current < 20:
         level    = "平常"
-        color    = "#3fb950"
+        color    = "#1a7f37"
         icon     = "😊"
         mood     = "市場は落ち着いている"
         warning  = "通常の市場環境です。長期投資家にとっては安定した投資環境といえます。"
     elif current < 25:
         level    = "やや高い"
-        color    = "#d29922"
+        color    = "#9a6700"
         icon     = "😐"
         mood     = "市場にやや緊張感あり"
         warning  = "不確実性が高まっています。ポートフォリオの分散やリスク管理を意識しましょう。"
     elif current < 30:
         level    = "高い"
-        color    = "#f0883e"
+        color    = "#bf3989"
         icon     = "😢"
         mood     = "市場は不安を感じている"
         warning  = "恐怖が広がっています。パニック売りは避け、冷静に判断することが大切です。逆張り投資家にとってはチャンスの兆しかもしれません。"
     elif current < 40:
         level    = "非常に高い"
-        color    = "#f85149"
+        color    = "#cf222e"
         icon     = "😢"
         mood     = "市場は強い恐怖に包まれている"
         warning  = "歴史的に見て、VIXが30を超える局面は長くは続きません。パニックに乗らず、中長期の視点で判断しましょう。"
@@ -653,44 +653,44 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#f85149,#f0883e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#58a6ff;font-weight:600}}
-    .back-link{{display:inline-flex;align-items:center;gap:6px;color:#58a6ff;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #30363d;border-radius:8px;transition:background .2s}}
-    .back-link:hover{{background:#161b22}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#cf222e,#bf3989);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#0969da;font-weight:600}}
+    .back-link{{display:inline-flex;align-items:center;gap:6px;color:#0969da;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #d0d7de;border-radius:8px;transition:background .2s}}
+    .back-link:hover{{background:#f6f8fa}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .vix-hero{{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}}
+    .vix-hero{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:16px;padding:32px;margin-bottom:28px;text-align:center}}
     .vix-value{{font-size:4rem;font-weight:800;color:{color};line-height:1.2}}
     .vix-change{{font-size:1rem;margin-top:4px}}
     .vix-level{{font-size:1.4rem;font-weight:700;color:{color};margin-top:8px}}
-    .vix-mood{{font-size:.95rem;color:#8b949e;margin-top:4px}}
-    .gauge{{margin:24px auto 0;max-width:500px;height:18px;background:linear-gradient(90deg,#238636 0%,#3fb950 20%,#d29922 40%,#f0883e 60%,#f85149 80%,#da3633 100%);border-radius:10px;position:relative}}
+    .vix-mood{{font-size:.95rem;color:#57606a;margin-top:4px}}
+    .gauge{{margin:24px auto 0;max-width:500px;height:18px;background:linear-gradient(90deg,#238636 0%,#1a7f37 20%,#9a6700 40%,#bf3989 60%,#cf222e 80%,#da3633 100%);border-radius:10px;position:relative}}
     .gauge-marker{{position:absolute;top:-6px;width:4px;height:30px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,0.5)}}
-    .gauge-labels{{display:flex;justify-content:space-between;max-width:500px;margin:6px auto 0;font-size:.7rem;color:#8b949e}}
-    .analysis-box{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}}
-    .analysis-title{{font-size:1.1rem;font-weight:700;color:#e6edf3;margin-bottom:12px;display:flex;align-items:center;gap:8px}}
-    .analysis-text{{font-size:.92rem;color:#c9d1d9;line-height:1.8}}
-    .beginner-box{{margin-top:20px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}}
-    .beginner-box::before{{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}}
-    .chart-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}}
-    .chart-title{{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}}
-    .chart-subtitle{{font-size:.78rem;color:#8b949e;margin-bottom:16px}}
+    .gauge-labels{{display:flex;justify-content:space-between;max-width:500px;margin:6px auto 0;font-size:.7rem;color:#57606a}}
+    .analysis-box{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px}}
+    .analysis-title{{font-size:1.1rem;font-weight:700;color:#1f2328;margin-bottom:12px;display:flex;align-items:center;gap:8px}}
+    .analysis-text{{font-size:.92rem;color:#424a53;line-height:1.8}}
+    .beginner-box{{margin-top:20px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#1f6feb;line-height:1.8}}
+    .beginner-box::before{{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}}
+    .chart-section{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px}}
+    .chart-title{{font-size:1rem;font-weight:700;color:#1f2328;margin-bottom:4px}}
+    .chart-subtitle{{font-size:.78rem;color:#57606a;margin-bottom:16px}}
     .chart-wrap{{position:relative;height:300px}}
     .level-table{{width:100%;border-collapse:collapse;margin-top:16px;font-size:.85rem}}
-    .level-table th{{text-align:left;padding:8px 12px;border-bottom:2px solid #30363d;color:#8b949e}}
-    .level-table td{{padding:8px 12px;border-bottom:1px solid #21262d}}
-    .level-table tr:hover td{{background:#1c2128}}
+    .level-table th{{text-align:left;padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a}}
+    .level-table td{{padding:8px 12px;border-bottom:1px solid #d0d7de}}
+    .level-table tr:hover td{{background:#ffffff}}
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
+    footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.vix-value{{font-size:3rem}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-  .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-  .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
+  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+  .nav-btn:hover{{border-color:#0969da;color:#0969da}}
+  .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
@@ -724,7 +724,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   </div>
 
   <div style="text-align:center;margin:18px 0 24px">
-    <a href="guide-vix.html" style="display:inline-block;padding:10px 22px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.92rem;font-weight:600">📚 VIX恐怖指数とは？読み方を初心者向けに解説 →</a>
+    <a href="guide-vix.html" style="display:inline-block;padding:10px 22px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.92rem;font-weight:600">📚 VIX恐怖指数とは？読み方を初心者向けに解説 →</a>
   </div>
 
   <div class="analysis-box">
@@ -750,10 +750,10 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
       <thead><tr><th>レベル</th><th>VIX範囲</th><th>意味</th><th>投資家の行動指針</th></tr></thead>
       <tbody>
         <tr><td><span class="level-dot" style="background:#238636"></span>極めて低い</td><td>0〜12</td><td>過度な楽観</td><td>上昇トレンドだが過熱に注意。利確を検討</td></tr>
-        <tr><td><span class="level-dot" style="background:#3fb950"></span>平常</td><td>12〜20</td><td>安定した市場</td><td>通常の投資判断でOK。積立投資に最適</td></tr>
-        <tr><td><span class="level-dot" style="background:#d29922"></span>やや高い</td><td>20〜25</td><td>警戒感あり</td><td>リスク管理を意識。分散投資の確認を</td></tr>
-        <tr><td><span class="level-dot" style="background:#f0883e"></span>高い</td><td>25〜30</td><td>不安拡大</td><td>パニック売りは禁物。冷静な判断を</td></tr>
-        <tr><td><span class="level-dot" style="background:#f85149"></span>非常に高い</td><td>30〜40</td><td>強い恐怖</td><td>逆張りのチャンスかも。ただし慎重に</td></tr>
+        <tr><td><span class="level-dot" style="background:#1a7f37"></span>平常</td><td>12〜20</td><td>安定した市場</td><td>通常の投資判断でOK。積立投資に最適</td></tr>
+        <tr><td><span class="level-dot" style="background:#9a6700"></span>やや高い</td><td>20〜25</td><td>警戒感あり</td><td>リスク管理を意識。分散投資の確認を</td></tr>
+        <tr><td><span class="level-dot" style="background:#bf3989"></span>高い</td><td>25〜30</td><td>不安拡大</td><td>パニック売りは禁物。冷静な判断を</td></tr>
+        <tr><td><span class="level-dot" style="background:#cf222e"></span>非常に高い</td><td>30〜40</td><td>強い恐怖</td><td>逆張りのチャンスかも。ただし慎重に</td></tr>
         <tr><td><span class="level-dot" style="background:#da3633"></span>パニック</td><td>40超</td><td>極度のパニック</td><td>歴史的買い場の可能性。ただし底は誰にもわからない</td></tr>
       </tbody>
     </table>
@@ -785,7 +785,7 @@ if (VIX_DATES.length > 0) {{
       datasets: [{{
         label: 'VIX',
         data: VIX_PRICES,
-        borderColor: '#f85149',
+        borderColor: '#cf222e',
         backgroundColor: 'rgba(248,81,73,0.1)',
         borderWidth: 2,
         fill: true,
@@ -798,21 +798,21 @@ if (VIX_DATES.length > 0) {{
       responsive: true,
       maintainAspectRatio: false,
       plugins: {{
-        legend: {{ labels: {{ color: '#e6edf3' }} }},
-        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#f85149',
-                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1 }},
+        legend: {{ labels: {{ color: '#1f2328' }} }},
+        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#cf222e',
+                    bodyColor: '#1f2328', borderColor: '#d0d7de', borderWidth: 1 }},
         annotation: {{
           annotations: {{
             line20: {{ type: 'line', yMin: 20, yMax: 20, borderColor: 'rgba(210,153,34,0.5)', borderWidth: 1, borderDash: [6,3],
-              label: {{ content: '警戒ライン (20)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#d29922', font: {{ size: 10 }}, padding: 4 }} }},
+              label: {{ content: '警戒ライン (20)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#9a6700', font: {{ size: 10 }}, padding: 4 }} }},
             line30: {{ type: 'line', yMin: 30, yMax: 30, borderColor: 'rgba(248,81,73,0.5)', borderWidth: 1, borderDash: [6,3],
-              label: {{ content: '恐怖ライン (30)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#f85149', font: {{ size: 10 }}, padding: 4 }} }},
+              label: {{ content: '恐怖ライン (30)', display: true, position: 'end', backgroundColor: 'rgba(30,30,40,0.9)', color: '#cf222e', font: {{ size: 10 }}, padding: 4 }} }},
           }}
         }},
       }},
       scales: {{
-        x: {{ ticks: {{ color: '#8b949e', font: {{ size: 10 }}, maxTicksLimit: 10 }}, grid: {{ color: 'rgba(48,54,61,0.8)' }} }},
-        y: {{ ticks: {{ color: '#8b949e', font: {{ size: 10 }} }}, grid: {{ color: 'rgba(48,54,61,0.8)' }},
+        x: {{ ticks: {{ color: '#57606a', font: {{ size: 10 }}, maxTicksLimit: 10 }}, grid: {{ color: 'rgba(48,54,61,0.8)' }} }},
+        y: {{ ticks: {{ color: '#57606a', font: {{ size: 10 }} }}, grid: {{ color: 'rgba(48,54,61,0.8)' }},
              suggestedMin: 10, suggestedMax: 50 }},
       }},
     }}
@@ -1423,10 +1423,10 @@ def _surge_badge(ratio):
 def _change_cell(pct):
     """前日比%を色付きセルに"""
     if pct > 0:
-        return f'<span style="color:#3fb950;font-weight:600">+{pct:.2f}%</span>'
+        return f'<span style="color:#1a7f37;font-weight:600">+{pct:.2f}%</span>'
     if pct < 0:
-        return f'<span style="color:#f85149;font-weight:600">{pct:.2f}%</span>'
-    return f'<span style="color:#8b949e">{pct:.2f}%</span>'
+        return f'<span style="color:#cf222e;font-weight:600">{pct:.2f}%</span>'
+    return f'<span style="color:#57606a">{pct:.2f}%</span>'
 
 
 def _build_hot_rows(rows, show_volume=True):
@@ -1439,8 +1439,8 @@ def _build_hot_rows(rows, show_volume=True):
 
     html = ""
     for i, r in enumerate(sorted_rows, 1):
-        rank_color = "#f0883e" if i <= 3 else "#8b949e"
-        vol_cell = f'<td class="vol-cell">{_fmt_vol(r["today_vol"])}</td><td>{_surge_badge(r["surge_ratio"])}</td>' if show_volume else '<td colspan="2" style="text-align:center;color:#6e7681;font-size:.75rem">（出来高非対象）</td>'
+        rank_color = "#bf3989" if i <= 3 else "#57606a"
+        vol_cell = f'<td class="vol-cell">{_fmt_vol(r["today_vol"])}</td><td>{_surge_badge(r["surge_ratio"])}</td>' if show_volume else '<td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>'
         html += f"""
         <tr>
           <td class="rank" style="color:{rank_color}">{i}</td>
@@ -1468,7 +1468,7 @@ def build_hot_assets_html(hot_data, now_jst):
         info = HOT_ASSETS[cat]
         rows = hot_data.get(cat, [])
         if not rows:
-            body = '<tr><td colspan="6" style="text-align:center;color:#6e7681;padding:20px">データを取得できませんでした</td></tr>'
+            body = '<tr><td colspan="6" style="text-align:center;color:#6e7781;padding:20px">データを取得できませんでした</td></tr>'
         else:
             body = _build_hot_rows(rows, show_volume=show_vol)
 
@@ -1505,46 +1505,46 @@ def build_hot_assets_html(hot_data, now_jst):
   {GA4_TAG}
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#f0883e,#f85149);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#f0883e;font-weight:600}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#bf3989,#cf222e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#bf3989;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-    .nav-btn:hover{{border-color:#f0883e;color:#f0883e}}
-    .nav-btn.current{{background:#3a1f0f;border-color:#f0883e;color:#fff}}
+    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+    .nav-btn:hover{{border-color:#bf3989;color:#bf3989}}
+    .nav-btn.current{{background:#3a1f0f;border-color:#bf3989;color:#fff}}
 
-    .intro{{background:linear-gradient(135deg,#2a1f0f,#1c1611);border:1px solid #f0883e;border-radius:12px;padding:18px 24px;margin-bottom:32px;color:#e6edf3;line-height:1.75;font-size:.9rem}}
-    .intro b{{color:#f0883e}}
+    .intro{{background:linear-gradient(135deg,#2a1f0f,#1c1611);border:1px solid #bf3989;border-radius:12px;padding:18px 24px;margin-bottom:32px;color:#1f2328;line-height:1.75;font-size:.9rem}}
+    .intro b{{color:#bf3989}}
 
-    .hot-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px 24px;margin-bottom:24px}}
-    .hot-title{{font-size:1.15rem;font-weight:700;color:#e6edf3;margin-bottom:6px}}
-    .hot-subtitle{{font-size:.8rem;color:#8b949e;margin-bottom:16px;line-height:1.5}}
-    .sort-note{{color:#6e7681;font-size:.72rem}}
+    .hot-section{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px 24px;margin-bottom:24px}}
+    .hot-title{{font-size:1.15rem;font-weight:700;color:#1f2328;margin-bottom:6px}}
+    .hot-subtitle{{font-size:.8rem;color:#57606a;margin-bottom:16px;line-height:1.5}}
+    .sort-note{{color:#6e7781;font-size:.72rem}}
 
     .table-wrap{{overflow-x:auto}}
     .hot-table{{width:100%;border-collapse:collapse;font-size:.85rem}}
-    .hot-table thead th{{background:#0d1117;color:#8b949e;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;text-align:left;border-bottom:2px solid #30363d}}
-    .hot-table tbody td{{padding:10px 8px;border-bottom:1px solid #21262d;vertical-align:middle}}
-    .hot-table tbody tr:hover{{background:#1c2128}}
+    .hot-table thead th{{background:#ffffff;color:#57606a;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;text-align:left;border-bottom:2px solid #d0d7de}}
+    .hot-table tbody td{{padding:10px 8px;border-bottom:1px solid #d0d7de;vertical-align:middle}}
+    .hot-table tbody tr:hover{{background:#ffffff}}
     .rank{{font-weight:700;font-size:1rem;text-align:center}}
-    .asset-name{{font-weight:600;color:#e6edf3}}
-    .asset-sym{{font-size:.7rem;color:#6e7681;font-weight:400}}
-    .price-cell{{color:#8b949e;font-variant-numeric:tabular-nums}}
-    .vol-cell{{color:#8b949e;font-variant-numeric:tabular-nums;font-size:.8rem}}
+    .asset-name{{font-weight:600;color:#1f2328}}
+    .asset-sym{{font-size:.7rem;color:#6e7781;font-weight:400}}
+    .price-cell{{color:#57606a;font-variant-numeric:tabular-nums}}
+    .vol-cell{{color:#57606a;font-variant-numeric:tabular-nums;font-size:.8rem}}
 
     .badge-vol{{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:700;font-variant-numeric:tabular-nums}}
-    .badge-hot{{background:#5c1a1a;color:#ff7b72;border:1px solid #da3633}}
-    .badge-warm{{background:#4a2f0f;color:#f0883e;border:1px solid #d29922}}
-    .badge-mild{{background:#1a3a2a;color:#7ee787;border:1px solid #2ea043}}
-    .badge-calm{{background:#1a2030;color:#8b949e;border:1px solid #30363d}}
-    .badge-na{{background:#1a2030;color:#6e7681;border:1px solid #30363d}}
+    .badge-hot{{background:#5c1a1a;color:#cf222e;border:1px solid #da3633}}
+    .badge-warm{{background:#4a2f0f;color:#bf3989;border:1px solid #9a6700}}
+    .badge-mild{{background:#dafbe1;color:#1a7f37;border:1px solid #2ea043}}
+    .badge-calm{{background:#ddf4ff;color:#57606a;border:1px solid #d0d7de}}
+    .badge-na{{background:#ddf4ff;color:#6e7781;border:1px solid #d0d7de}}
 
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
+    footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -1665,7 +1665,7 @@ def build_calendar_html(now_jst):
         return grid
 
     def build_event_list(events, month):
-        html = f'<p style="font-size:.95rem;font-weight:600;color:#8b949e;margin-bottom:12px">📋 {month}月の重要イベント詳細</p>\n'
+        html = f'<p style="font-size:.95rem;font-weight:600;color:#57606a;margin-bottom:12px">📋 {month}月の重要イベント詳細</p>\n'
         html += '<div class="event-list">\n'
         seen_days = set()
         for d, c, imp, n, desc in events:
@@ -1703,68 +1703,68 @@ def build_calendar_html(now_jst):
   {GA4_TAG}
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#58a6ff;font-weight:600}}
-    .back-link{{color:#58a6ff;text-decoration:none;font-size:.85rem}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#0969da;font-weight:600}}
+    .back-link{{color:#0969da;text-decoration:none;font-size:.85rem}}
     .back-link:hover{{text-decoration:underline}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .legend{{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding:16px 20px;background:#161b22;border:1px solid #30363d;border-radius:12px}}
-    .legend-item{{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#8b949e}}
+    .legend{{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding:16px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px}}
+    .legend-item{{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#57606a}}
     .legend-dot{{width:10px;height:10px;border-radius:50%;display:inline-block}}
-    .dot-jp{{background:#f85149}}.dot-us{{background:#58a6ff}}.dot-eu{{background:#e3b341}}.dot-cn{{background:#3fb950}}
-    .month-title{{font-size:1.3rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #58a6ff;display:inline-block}}
+    .dot-jp{{background:#cf222e}}.dot-us{{background:#0969da}}.dot-eu{{background:#bf8700}}.dot-cn{{background:#1a7f37}}
+    .month-title{{font-size:1.3rem;font-weight:700;color:#1f2328;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #0969da;display:inline-block}}
     .cal-grid{{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:24px}}
-    .cal-header{{background:#1c2128;padding:8px 4px;text-align:center;font-size:.75rem;font-weight:600;color:#8b949e}}
-    .cal-header.sun{{color:#f85149}}.cal-header.sat{{color:#58a6ff}}
-    .cal-cell{{background:#161b22;min-height:90px;padding:6px;border:1px solid #21262d;transition:border-color .2s}}
-    .cal-cell:hover{{border-color:#58a6ff}}
-    .cal-cell.empty{{background:#0d1117;border-color:#161b22}}
-    .cal-cell.today{{border:2px solid #58a6ff;background:#1a2233}}
-    .cal-day{{font-size:.8rem;font-weight:600;color:#8b949e;margin-bottom:4px}}
-    .cal-cell.sun .cal-day{{color:#f85149}}.cal-cell.sat .cal-day{{color:#58a6ff}}
+    .cal-header{{background:#ffffff;padding:8px 4px;text-align:center;font-size:.75rem;font-weight:600;color:#57606a}}
+    .cal-header.sun{{color:#cf222e}}.cal-header.sat{{color:#0969da}}
+    .cal-cell{{background:#f6f8fa;min-height:90px;padding:6px;border:1px solid #d0d7de;transition:border-color .2s}}
+    .cal-cell:hover{{border-color:#0969da}}
+    .cal-cell.empty{{background:#ffffff;border-color:#f6f8fa}}
+    .cal-cell.today{{border:2px solid #0969da;background:#1a2233}}
+    .cal-day{{font-size:.8rem;font-weight:600;color:#57606a;margin-bottom:4px}}
+    .cal-cell.sun .cal-day{{color:#cf222e}}.cal-cell.sat .cal-day{{color:#0969da}}
     .cal-event{{font-size:.65rem;line-height:1.4;padding:2px 4px;border-radius:4px;margin-bottom:2px;display:block}}
-    .cal-event.jp{{background:#3d1a1a;color:#f8a4a0;border-left:2px solid #f85149}}
-    .cal-event.us{{background:#1a2a4a;color:#a4ccff;border-left:2px solid #58a6ff}}
-    .cal-event.eu{{background:#3d3a1a;color:#f0d878;border-left:2px solid #e3b341}}
-    .cal-event.cn{{background:#1a3d1a;color:#7ee787;border-left:2px solid #3fb950}}
+    .cal-event.jp{{background:#ffebe9;color:#cf222e;border-left:2px solid #cf222e}}
+    .cal-event.us{{background:#ddf4ff;color:#218bff;border-left:2px solid #0969da}}
+    .cal-event.eu{{background:#fff8c5;color:#9a6700;border-left:2px solid #bf8700}}
+    .cal-event.cn{{background:#dafbe1;color:#1a7f37;border-left:2px solid #1a7f37}}
     .cal-event .imp{{font-weight:700}}
     .event-list{{margin-top:8px}}
-    .event-card{{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#161b22;border:1px solid #30363d;border-radius:10px;margin-bottom:8px;transition:border-color .2s}}
-    .event-card:hover{{border-color:#58a6ff}}
-    .event-date-box{{min-width:52px;text-align:center;padding:8px 6px;background:#1c2128;border-radius:8px}}
-    .event-date-day{{font-size:1.3rem;font-weight:700;color:#e6edf3}}
-    .event-date-dow{{font-size:.65rem;color:#8b949e}}
+    .event-card{{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;margin-bottom:8px;transition:border-color .2s}}
+    .event-card:hover{{border-color:#0969da}}
+    .event-date-box{{min-width:52px;text-align:center;padding:8px 6px;background:#ffffff;border-radius:8px}}
+    .event-date-day{{font-size:1.3rem;font-weight:700;color:#1f2328}}
+    .event-date-dow{{font-size:.65rem;color:#57606a}}
     .event-body{{flex:1}}
-    .event-name{{font-size:.88rem;font-weight:600;color:#e6edf3;margin-bottom:4px}}
-    .event-desc{{font-size:.78rem;color:#8b949e;line-height:1.6}}
+    .event-name{{font-size:.88rem;font-weight:600;color:#1f2328;margin-bottom:4px}}
+    .event-desc{{font-size:.78rem;color:#57606a;line-height:1.6}}
     .event-tag{{display:inline-block;font-size:.6rem;font-weight:600;padding:2px 6px;border-radius:4px;margin-right:4px}}
-    .tag-jp{{background:#3d1a1a;color:#f8a4a0}}.tag-us{{background:#1a2a4a;color:#a4ccff}}.tag-eu{{background:#3d3a1a;color:#f0d878}}.tag-cn{{background:#1a3d1a;color:#7ee787}}
-    .tag-high{{background:#da3633;color:#fff}}.tag-mid{{background:#e3b341;color:#0d1117}}
+    .tag-jp{{background:#ffebe9;color:#cf222e}}.tag-us{{background:#ddf4ff;color:#218bff}}.tag-eu{{background:#fff8c5;color:#9a6700}}.tag-cn{{background:#dafbe1;color:#1a7f37}}
+    .tag-high{{background:#da3633;color:#fff}}.tag-mid{{background:#bf8700;color:#ffffff}}
     .tab-bar{{display:flex;gap:8px;margin-bottom:20px}}
-    .tab-btn{{padding:8px 20px;border:1px solid #30363d;border-radius:8px;background:#161b22;color:#8b949e;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}}
-    .tab-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-    .tab-btn.active{{background:#1a2a4a;border-color:#58a6ff;color:#58a6ff}}
-    .beginner-box{{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#79c0ff;line-height:1.8}}
-    .beginner-box::before{{content:"🔰 経済指標の見方　";font-weight:700;color:#58a6ff}}
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    .tab-btn{{padding:8px 20px;border:1px solid #d0d7de;border-radius:8px;background:#f6f8fa;color:#57606a;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}}
+    .tab-btn:hover{{border-color:#0969da;color:#0969da}}
+    .tab-btn.active{{background:#ddf4ff;border-color:#0969da;color:#0969da}}
+    .beginner-box{{margin:24px 0;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#1f6feb;line-height:1.8}}
+    .beginner-box::before{{content:"🔰 経済指標の見方　";font-weight:700;color:#0969da}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
+    footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-  .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-  .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
-  .preview-banner{{display:flex;align-items:center;gap:18px;padding:18px 24px;margin-bottom:24px;background:linear-gradient(135deg,#1a3a2a 0%,#1a2a4a 100%);border:1px solid #2d6a4a;border-radius:12px;text-decoration:none;transition:all .2s}}
-  .preview-banner:hover{{border-color:#7ee787;background:linear-gradient(135deg,#1f4a35 0%,#1f3555 100%);transform:translateY(-1px)}}
+  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+  .nav-btn:hover{{border-color:#0969da;color:#0969da}}
+  .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+  .preview-banner{{display:flex;align-items:center;gap:18px;padding:18px 24px;margin-bottom:24px;background:linear-gradient(135deg,#dafbe1 0%,#ddf4ff 100%);border:1px solid #1a7f37;border-radius:12px;text-decoration:none;transition:all .2s}}
+  .preview-banner:hover{{border-color:#1a7f37;background:linear-gradient(135deg,#cef0d3 0%,#b3d4ff 100%);transform:translateY(-1px)}}
   .preview-banner-icon{{font-size:2rem;flex-shrink:0}}
   .preview-banner-body{{flex:1;min-width:0}}
-  .preview-banner-title{{font-size:1.05rem;font-weight:700;color:#7ee787;margin-bottom:4px}}
-  .preview-banner-desc{{font-size:.85rem;color:#c0d4cc;line-height:1.6}}
-  .preview-banner-desc strong{{color:#79c0ff}}
-  .preview-banner-arrow{{font-size:1.5rem;color:#7ee787;font-weight:700;flex-shrink:0}}
+  .preview-banner-title{{font-size:1.05rem;font-weight:700;color:#1a7f37;margin-bottom:4px}}
+  .preview-banner-desc{{font-size:.85rem;color:#424a53;line-height:1.6}}
+  .preview-banner-desc strong{{color:#1f6feb}}
+  .preview-banner-arrow{{font-size:1.5rem;color:#1a7f37;font-weight:700;flex-shrink:0}}
   @media(max-width:600px){{.preview-banner{{padding:14px 16px;gap:12px}}.preview-banner-icon{{font-size:1.6rem}}.preview-banner-title{{font-size:.95rem}}.preview-banner-desc{{font-size:.78rem}}}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -1879,7 +1879,7 @@ def build_preview_html(now_jst):
   <div class="empty-msg">
     <p>今は相場が静かに推移しやすい時期です。<br>
     長期投資のポートフォリオを見直すのに適した時間かもしれません。</p>
-    <p style="margin-top:12px"><a href="calendar.html" style="color:#58a6ff">📅 経済カレンダー</a> で今月・来月のスケジュールを確認できます。</p>
+    <p style="margin-top:12px"><a href="calendar.html" style="color:#0969da">📅 経済カレンダー</a> で今月・来月のスケジュールを確認できます。</p>
   </div>
 </div>
 '''
@@ -2008,65 +2008,65 @@ def build_preview_html(now_jst):
   {GA4_TAG}
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;line-height:1.7}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#7ee787,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#7ee787;font-weight:600}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1a7f37,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#1a7f37;font-weight:600}}
     main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-    .nav-btn:hover{{border-color:#7ee787;color:#7ee787}}
-    .nav-btn.current{{background:#1a3a2a;border-color:#7ee787;color:#7ee787}}
-    .summary-box{{background:linear-gradient(135deg,#1a3a2a,#1a2a3a);border:1px solid #2d6a4a;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center}}
-    .summary-num{{font-size:1.8rem;font-weight:700;color:#7ee787;margin-bottom:6px}}
-    .summary-detail{{font-size:.95rem;color:#c0d4cc}}
-    .high-count{{color:#f85149;font-weight:600}}
-    .mid-count{{color:#e3b341;font-weight:600}}
-    .indicator-card{{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:24px 26px;margin-bottom:24px;transition:border-color .2s}}
-    .indicator-card:hover{{border-color:#7ee787}}
+    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+    .nav-btn:hover{{border-color:#1a7f37;color:#1a7f37}}
+    .nav-btn.current{{background:#dafbe1;border-color:#1a7f37;color:#1a7f37}}
+    .summary-box{{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #1a7f37;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center}}
+    .summary-num{{font-size:1.8rem;font-weight:700;color:#1a7f37;margin-bottom:6px}}
+    .summary-detail{{font-size:.95rem;color:#424a53}}
+    .high-count{{color:#cf222e;font-weight:600}}
+    .mid-count{{color:#bf8700;font-weight:600}}
+    .indicator-card{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px;padding:24px 26px;margin-bottom:24px;transition:border-color .2s}}
+    .indicator-card:hover{{border-color:#1a7f37}}
     .indicator-card.simple{{padding:18px 22px}}
-    .card-header{{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid #21262d;margin-bottom:18px}}
-    .card-date-block{{flex-shrink:0;text-align:center;background:#1c2128;border-radius:10px;padding:12px 14px;min-width:80px}}
-    .card-until{{font-size:.7rem;color:#8b949e;margin-bottom:2px;font-weight:600}}
-    .card-date{{font-size:1.1rem;font-weight:700;color:#7ee787}}
+    .card-header{{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid #d0d7de;margin-bottom:18px}}
+    .card-date-block{{flex-shrink:0;text-align:center;background:#ffffff;border-radius:10px;padding:12px 14px;min-width:80px}}
+    .card-until{{font-size:.7rem;color:#57606a;margin-bottom:2px;font-weight:600}}
+    .card-date{{font-size:1.1rem;font-weight:700;color:#1a7f37}}
     .card-title-block{{flex:1;min-width:0}}
     .card-tags{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}}
-    .card-title{{font-size:1.4rem;font-weight:700;color:#e6edf3;margin-bottom:4px;line-height:1.3}}
-    .card-event-name{{font-size:.82rem;color:#8b949e}}
+    .card-title{{font-size:1.4rem;font-weight:700;color:#1f2328;margin-bottom:4px;line-height:1.3}}
+    .card-event-name{{font-size:.82rem;color:#57606a}}
     .event-tag{{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:5px}}
-    .tag-jp{{background:#3d1a1a;color:#f8a4a0}}
-    .tag-us{{background:#1a2a4a;color:#a4ccff}}
-    .tag-eu{{background:#3d3a1a;color:#f0d878}}
-    .tag-cn{{background:#1a3d1a;color:#7ee787}}
+    .tag-jp{{background:#ffebe9;color:#cf222e}}
+    .tag-us{{background:#ddf4ff;color:#218bff}}
+    .tag-eu{{background:#fff8c5;color:#9a6700}}
+    .tag-cn{{background:#dafbe1;color:#1a7f37}}
     .tag-high{{background:#da3633;color:#fff}}
-    .tag-mid{{background:#e3b341;color:#0d1117}}
+    .tag-mid{{background:#bf8700;color:#ffffff}}
     .card-section{{margin-bottom:18px}}
     .card-section:last-of-type{{margin-bottom:0}}
-    .section-label{{font-size:.85rem;font-weight:700;color:#7ee787;margin-bottom:6px}}
-    .section-body{{font-size:.92rem;color:#c0d4cc;line-height:1.75}}
+    .section-label{{font-size:.85rem;font-weight:700;color:#1a7f37;margin-bottom:6px}}
+    .section-body{{font-size:.92rem;color:#424a53;line-height:1.75}}
     .scenarios{{display:flex;flex-direction:column;gap:10px;margin-top:8px}}
-    .scenario{{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}}
-    .scenario-label{{font-size:.88rem;font-weight:600;color:#79c0ff;margin-bottom:4px}}
-    .scenario-impact{{font-size:.85rem;color:#c0d4cc;line-height:1.7}}
+    .scenario{{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px}}
+    .scenario-label{{font-size:.88rem;font-weight:600;color:#1f6feb;margin-bottom:4px}}
+    .scenario-impact{{font-size:.85rem;color:#424a53;line-height:1.7}}
     .watch-list{{list-style:none;padding:0;margin-top:6px}}
-    .watch-list li{{padding:6px 0 6px 20px;font-size:.88rem;color:#c0d4cc;position:relative;line-height:1.6}}
-    .watch-list li::before{{content:"▸";color:#7ee787;position:absolute;left:0;font-weight:700}}
-    .card-tip{{background:#1a2a3a;border-left:3px solid #58a6ff;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#a4ccff;line-height:1.7}}
-    .card-tip strong{{color:#79c0ff;display:block;margin-bottom:4px}}
+    .watch-list li{{padding:6px 0 6px 20px;font-size:.88rem;color:#424a53;position:relative;line-height:1.6}}
+    .watch-list li::before{{content:"▸";color:#1a7f37;position:absolute;left:0;font-weight:700}}
+    .card-tip{{background:#ddf4ff;border-left:3px solid #0969da;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#218bff;line-height:1.7}}
+    .card-tip strong{{color:#1f6feb;display:block;margin-bottom:4px}}
     .card-guide-link{{margin-top:16px;text-align:center}}
-    .card-guide-link a{{display:inline-block;padding:10px 22px;background:#0d1117;border:1px solid #2d4a7a;border-radius:8px;color:#79c0ff;text-decoration:none;font-size:.88rem;font-weight:600;transition:all .2s}}
-    .card-guide-link a:hover{{border-color:#7ee787;color:#7ee787;background:#1a2a3a}}
-    .empty-state{{text-align:center;padding:60px 20px;background:#161b22;border:1px dashed #30363d;border-radius:14px}}
+    .card-guide-link a{{display:inline-block;padding:10px 22px;background:#ffffff;border:1px solid #54aeff;border-radius:8px;color:#1f6feb;text-decoration:none;font-size:.88rem;font-weight:600;transition:all .2s}}
+    .card-guide-link a:hover{{border-color:#1a7f37;color:#1a7f37;background:#ddf4ff}}
+    .empty-state{{text-align:center;padding:60px 20px;background:#f6f8fa;border:1px dashed #d0d7de;border-radius:14px}}
     .empty-icon{{font-size:3rem;margin-bottom:12px}}
-    .empty-title{{font-size:1.2rem;font-weight:700;color:#e6edf3;margin-bottom:12px}}
-    .empty-msg{{font-size:.92rem;color:#8b949e;line-height:1.8}}
-    .beginner-box{{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.85rem;color:#79c0ff;line-height:1.85}}
-    .beginner-box::before{{content:"🔰 このページの使い方　";font-weight:700;color:#58a6ff}}
-    .disclaimer{{margin-top:20px;font-size:.78rem;color:#6e7681;line-height:1.7;padding:12px 16px;background:#161b22;border:1px solid #21262d;border-radius:8px}}
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681;margin-top:40px}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    .empty-title{{font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:12px}}
+    .empty-msg{{font-size:.92rem;color:#57606a;line-height:1.8}}
+    .beginner-box{{margin:24px 0;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.85rem;color:#1f6feb;line-height:1.85}}
+    .beginner-box::before{{content:"🔰 このページの使い方　";font-weight:700;color:#0969da}}
+    .disclaimer{{margin-top:20px;font-size:.78rem;color:#6e7781;line-height:1.7;padding:12px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
+    footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:768px){{
       .header-inner{{flex-direction:column;align-items:flex-start}}
       .card-header{{flex-direction:column;gap:12px}}
@@ -2141,39 +2141,39 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         return f'<span class="tag" style="background:{color};color:#fff">{label}</span>'
 
     def _classify_nikkei_vi(v):
-        if v < 20: return "#3fb950", "落ち着き", min(v / 50 * 100, 100)
-        if v < 30: return "#d29922", "通常", v / 50 * 100
-        if v < 40: return "#f0883e", "やや警戒", v / 50 * 100
+        if v < 20: return "#1a7f37", "落ち着き", min(v / 50 * 100, 100)
+        if v < 30: return "#9a6700", "通常", v / 50 * 100
+        if v < 40: return "#bf3989", "やや警戒", v / 50 * 100
         return "#da3633", "警戒", min(v / 50 * 100, 100)
 
     def _classify_fg(v):
         # CNN/Crypto Fear&Greed: 0=Extreme Fear, 100=Extreme Greed
-        if v < 25: return "#3fb950", "極度の恐怖"
-        if v < 45: return "#58a6ff", "恐怖"
-        if v < 55: return "#d29922", "中立"
-        if v < 75: return "#f0883e", "強欲"
+        if v < 25: return "#1a7f37", "極度の恐怖"
+        if v < 45: return "#0969da", "恐怖"
+        if v < 55: return "#9a6700", "中立"
+        if v < 75: return "#bf3989", "強欲"
         return "#da3633", "極度の強欲"
 
     def _classify_buffett(v):
-        if v < 70: return "#3fb950", "大きく割安"
-        if v < 100: return "#58a6ff", "適正"
-        if v < 135: return "#d29922", "やや割高"
-        if v < 180: return "#f0883e", "割高"
+        if v < 70: return "#1a7f37", "大きく割安"
+        if v < 100: return "#0969da", "適正"
+        if v < 135: return "#9a6700", "やや割高"
+        if v < 180: return "#bf3989", "割高"
         return "#da3633", "大きく割高"
 
     def _classify_cape(v):
-        if v < 15: return "#3fb950", "割安"
-        if v < 22: return "#58a6ff", "適正"
-        if v < 30: return "#d29922", "やや割高"
-        if v < 40: return "#f0883e", "歴史的高水準"
+        if v < 15: return "#1a7f37", "割安"
+        if v < 22: return "#0969da", "適正"
+        if v < 30: return "#9a6700", "やや割高"
+        if v < 40: return "#bf3989", "歴史的高水準"
         return "#da3633", "バブル級"
 
     def _classify_per(v):
-        if v < 13: return "#3fb950", "割安"
-        if v < 16: return "#58a6ff", "やや割安"
-        if v < 20: return "#58a6ff", "適正"
-        if v < 25: return "#d29922", "やや割高"
-        return "#f0883e", "割高"
+        if v < 13: return "#1a7f37", "割安"
+        if v < 16: return "#0969da", "やや割安"
+        if v < 20: return "#0969da", "適正"
+        if v < 25: return "#9a6700", "やや割高"
+        return "#bf3989", "割高"
 
     # 手動値を分類
     nvi = MANUAL_METRICS["nikkei_vi"]
@@ -2198,29 +2198,29 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 
     # 米VIX
     if vix_val is None:
-        vix_disp, vix_tag, vix_color, vix_pos = "N/A", _tag("#8b949e", "取得不可"), "#8b949e", 30
+        vix_disp, vix_tag, vix_color, vix_pos = "N/A", _tag("#57606a", "取得不可"), "#57606a", 30
     elif vix_val < 15:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#3fb950", "落ち着き"), "#3fb950", 15
+        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#1a7f37", "落ち着き"), "#1a7f37", 15
     elif vix_val < 20:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#3fb950", "通常"), "#3fb950", 25
+        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#1a7f37", "通常"), "#1a7f37", 25
     elif vix_val < 30:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#d29922", "中位"), "#d29922", 45
+        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#9a6700", "中位"), "#9a6700", 45
     elif vix_val < 40:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#f0883e", "警戒"), "#f0883e", 65
+        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#bf3989", "警戒"), "#bf3989", 65
     else:
         vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#da3633", "パニック"), "#da3633", 85
 
     # 騰落レシオ
     if touraku is None:
-        tr_disp, tr_tag, tr_color, tr_pos = "N/A", _tag("#8b949e", "取得不可"), "#8b949e", 50
+        tr_disp, tr_tag, tr_color, tr_pos = "N/A", _tag("#57606a", "取得不可"), "#57606a", 50
     elif touraku < 70:
-        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#3fb950", "売られすぎ"), "#3fb950", 15
+        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#1a7f37", "売られすぎ"), "#1a7f37", 15
     elif touraku < 100:
-        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#58a6ff", "適正"), "#58a6ff", 40
+        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#0969da", "適正"), "#0969da", 40
     elif touraku < 120:
-        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#d29922", "やや加熱"), "#d29922", 60
+        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#9a6700", "やや加熱"), "#9a6700", 60
     elif touraku < 140:
-        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#f0883e", "買われすぎ"), "#f0883e", 80
+        tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#bf3989", "買われすぎ"), "#bf3989", 80
     else:
         tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#da3633", "過熱"), "#da3633", 95
 
@@ -2235,40 +2235,40 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 {GA4_TAG}
 <style>
   *{{margin:0;padding:0;box-sizing:border-box}}
-  body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;font-size:16px;line-height:1.75}}
-  header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:26px 32px;text-align:center}}
-  .header-title{{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}}
-  .header-meta{{font-size:1rem;color:#8b949e}}
+  body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;font-size:16px;line-height:1.75}}
+  header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:26px 32px;text-align:center}}
+  .header-title{{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#0969da,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}}
+  .header-meta{{font-size:1rem;color:#57606a}}
   main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-  .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-  .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
-  .summary{{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #d29922;border-radius:14px;padding:22px 26px;margin-bottom:28px}}
-  .summary h2{{font-size:1.15rem;color:#d29922;margin-bottom:10px}}
-  .summary p{{color:#e6edf3;font-size:.98rem}}
+  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+  .nav-btn:hover{{border-color:#0969da;color:#0969da}}
+  .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+  .summary{{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #9a6700;border-radius:14px;padding:22px 26px;margin-bottom:28px}}
+  .summary h2{{font-size:1.15rem;color:#9a6700;margin-bottom:10px}}
+  .summary p{{color:#1f2328;font-size:.98rem}}
   .section{{margin-bottom:32px}}
-  .section-title{{font-size:1.25rem;font-weight:700;color:#e6edf3;margin-bottom:16px;padding:6px 0 6px 14px;border-left:4px solid #58a6ff}}
+  .section-title{{font-size:1.25rem;font-weight:700;color:#1f2328;margin-bottom:16px;padding:6px 0 6px 14px;border-left:4px solid #0969da}}
   .cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}}
-  .card{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:22px;transition:transform .15s,border-color .2s}}
-  .card:hover{{border-color:#58a6ff;transform:translateY(-2px)}}
+  .card{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:22px;transition:transform .15s,border-color .2s}}
+  .card:hover{{border-color:#0969da;transform:translateY(-2px)}}
   .card-header{{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}}
-  .card-title{{font-size:1.05rem;font-weight:700;color:#e6edf3}}
-  .card-sub{{font-size:.78rem;color:#8b949e}}
+  .card-title{{font-size:1.05rem;font-weight:700;color:#1f2328}}
+  .card-sub{{font-size:.78rem;color:#57606a}}
   .big-num{{font-size:2.6rem;font-weight:800;margin:6px 0}}
   .tag{{display:inline-block;font-size:.82rem;font-weight:700;padding:4px 12px;border-radius:999px;color:#001}}
   .gauge{{position:relative;height:14px;border-radius:7px;margin:14px 0 8px;overflow:visible}}
-  .gauge.fear{{background:linear-gradient(90deg,#238636 0%,#3fb950 25%,#d29922 50%,#f85149 75%,#da3633 100%)}}
-  .gauge.val{{background:linear-gradient(90deg,#3fb950 0%,#58a6ff 40%,#d29922 65%,#f85149 85%,#da3633 100%)}}
-  .gauge.vol{{background:linear-gradient(90deg,#3fb950 0%,#d29922 50%,#f85149 75%,#da3633 100%)}}
+  .gauge.fear{{background:linear-gradient(90deg,#238636 0%,#1a7f37 25%,#9a6700 50%,#cf222e 75%,#da3633 100%)}}
+  .gauge.val{{background:linear-gradient(90deg,#1a7f37 0%,#0969da 40%,#9a6700 65%,#cf222e 85%,#da3633 100%)}}
+  .gauge.vol{{background:linear-gradient(90deg,#1a7f37 0%,#9a6700 50%,#cf222e 75%,#da3633 100%)}}
   .gauge-pin{{position:absolute;top:-4px;width:5px;height:22px;background:#fff;border-radius:3px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,.7)}}
-  .gauge-labels{{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7681;margin-top:4px}}
+  .gauge-labels{{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7781;margin-top:4px}}
   .comment{{font-size:.93rem;color:#c8d1e6;margin-top:10px;line-height:1.7}}
-  .beginner{{margin-top:12px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#79c0ff;line-height:1.75}}
-  .beginner::before{{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}}
-  .formula{{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #30363d;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#a4ccff;margin:8px 0;display:inline-block}}
-  footer{{background:#161b22;border-top:1px solid #30363d;padding:24px 32px;text-align:center;font-size:.9rem;color:#8b949e;line-height:1.85}}
-  footer a{{color:#58a6ff;text-decoration:none}}
+  .beginner{{margin-top:12px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#1f6feb;line-height:1.75}}
+  .beginner::before{{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}}
+  .formula{{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#218bff;margin:8px 0;display:inline-block}}
+  footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:24px 32px;text-align:center;font-size:.9rem;color:#57606a;line-height:1.85}}
+  footer a{{color:#0969da;text-decoration:none}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}}}
 </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -2289,9 +2289,9 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   </nav>
 
   <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:24px">
-    <a href="guide-buffett-indicator.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 バフェット指数とは？</a>
-    <a href="guide-fear-greed.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 恐怖と強欲指数とは？</a>
-    <a href="guide-vix.html" style="display:inline-block;padding:9px 18px;background:#1c3a6a;border:1px solid #58a6ff;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 VIX恐怖指数とは？</a>
+    <a href="guide-buffett-indicator.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 バフェット指数とは？</a>
+    <a href="guide-fear-greed.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 恐怖と強欲指数とは？</a>
+    <a href="guide-vix.html" style="display:inline-block;padding:9px 18px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-size:.88rem;font-weight:600">📖 VIX恐怖指数とは？</a>
   </div>
 
   <section class="summary">
@@ -2321,7 +2321,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge vol"><div class="gauge-pin" style="left:{nvi_pos:.0f}%"></div></div>
         <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">大阪取引所が算出する日本版VIX。米VIX＋5〜10が通常。40超は警戒圏。</p>
-        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#79c0ff">JPX公式</a></div>
+        <div class="beginner">最新値は <a href="https://www.jpx.co.jp/markets/indices/nikkei225-vi/" target="_blank" style="color:#1f6feb">JPX公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📊 騰落レシオ（25日）</div><div class="card-sub">東証プライム</div></div>
@@ -2343,7 +2343,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge fear"><div class="gauge-pin" style="left:{cnn}%"></div></div>
         <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
         <p class="comment">0=極度の恐怖、100=極度の強欲。75超で「他人が強欲なときは恐れよ」領域。</p>
-        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#79c0ff">CNN公式</a></div>
+        <div class="beginner">最新値は <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" style="color:#1f6feb">CNN公式</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">₿ Crypto Fear &amp; Greed</div><div class="card-sub">BTC/暗号資産</div></div>
@@ -2351,7 +2351,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge fear"><div class="gauge-pin" style="left:{cry}%"></div></div>
         <div class="gauge-labels"><span>0 恐怖</span><span>25</span><span>50</span><span>75</span><span>100 強欲</span></div>
         <p class="comment">alternative.me が公開。ボラ・出来高・SNS・ドミナンスから算出。BTC逆張りの定番指標。</p>
-        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#79c0ff">alternative.me</a></div>
+        <div class="beginner">最新値は <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" style="color:#1f6feb">alternative.me</a></div>
       </article>
     </div>
   </section>
@@ -2366,7 +2366,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge-labels"><span>70</span><span>100</span><span>135</span><span>180</span><span>250</span></div>
         <div class="formula">米国株時価総額 (Wilshire 5000) ÷ 米GDP × 100</div>
         <p class="comment">バフェット本人「200%は火遊び」発言水準を{'超過' if bfu>=200 else '未満'}。70%以下=割安、135%以上=割高。</p>
-        <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#79c0ff">currentmarketvaluation.com</a></div>
+        <div class="beginner">最新値は <a href="https://www.currentmarketvaluation.com/models/buffett-indicator.php" target="_blank" style="color:#1f6feb">currentmarketvaluation.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🗾 バフェット指数（日）</div><div class="card-sub">東証時価総額 ÷ 日本GDP</div></div>
@@ -2384,7 +2384,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge-labels"><span>10</span><span>15</span><span>22</span><span>30</span><span>50+</span></div>
         <div class="formula">S&amp;P500 ÷ （過去10年のインフレ調整済みEPS平均）</div>
         <p class="comment">20世紀平均15.2。30超は歴史的高水準。2000年ITバブル期44、1929年大恐慌前32。</p>
-        <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#79c0ff">multpl.com</a></div>
+        <div class="beginner">最新値は <a href="https://www.multpl.com/shiller-pe" target="_blank" style="color:#1f6feb">multpl.com</a></div>
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">🇯🇵 日経平均 PER（予想）</div><div class="card-sub">12ヶ月先の予想利益ベース</div></div>
@@ -2392,13 +2392,13 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="gauge val"><div class="gauge-pin" style="left:{nper_pos:.0f}%"></div></div>
         <div class="gauge-labels"><span>10</span><span>13</span><span>16</span><span>20</span><span>30</span></div>
         <p class="comment">歴史平均14〜16倍。米国S&amp;P500の約24倍よりは日本株が割安感あり。</p>
-        <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#79c0ff">日経インデックス公式</a></div>
+        <div class="beginner">最新値は <a href="https://indexes.nikkei.co.jp/nkave/statistics/dataload" target="_blank" style="color:#1f6feb">日経インデックス公式</a></div>
       </article>
     </div>
   </section>
 
-  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#58a6ff">
-    <h2 style="color:#58a6ff">📋 投資判断のヒント</h2>
+  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#0969da">
+    <h2 style="color:#0969da">📋 投資判断のヒント</h2>
     <p>
       <b>短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
       <b>中期（3〜12ヶ月）</b>: バフェット指数・CAPEが歴史的高水準なら <b>新規資金一括投入は避け、段階投資＋分散</b> が鉄則。<br>
@@ -2526,7 +2526,7 @@ def build_charts_html(hist, now_jst):
     event_rows = build_event_rows()
 
     has_charts = any([nk_dates, sp_dates, fx_dates, gld_dates])
-    no_data_msg = '<p style="color:#f85149;text-align:center;padding:40px">⚠ チャートデータを取得できませんでした。次回更新時に再取得されます。</p>' if not has_charts else ''
+    no_data_msg = '<p style="color:#cf222e;text-align:center;padding:40px">⚠ チャートデータを取得できませんでした。次回更新時に再取得されます。</p>' if not has_charts else ''
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -2539,37 +2539,37 @@ def build_charts_html(hist, now_jst):
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#58a6ff;font-weight:600}}
-    .back-link{{display:inline-flex;align-items:center;gap:6px;color:#58a6ff;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #30363d;border-radius:8px;transition:background .2s}}
-    .back-link:hover{{background:#161b22}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#0969da;font-weight:600}}
+    .back-link{{display:inline-flex;align-items:center;gap:6px;color:#0969da;text-decoration:none;font-size:.9rem;padding:8px 16px;border:1px solid #d0d7de;border-radius:8px;transition:background .2s}}
+    .back-link:hover{{background:#f6f8fa}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .section-title{{font-size:1.1rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
-    .chart-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:24px}}
-    .chart-title{{font-size:1rem;font-weight:700;color:#e6edf3;margin-bottom:4px}}
-    .chart-subtitle{{font-size:.78rem;color:#8b949e;margin-bottom:16px}}
-    .chart-hint{{font-size:.75rem;color:#ffd700;margin-bottom:12px}}
+    .section-title{{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
+    .chart-section{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px}}
+    .chart-title{{font-size:1rem;font-weight:700;color:#1f2328;margin-bottom:4px}}
+    .chart-subtitle{{font-size:.78rem;color:#57606a;margin-bottom:16px}}
+    .chart-hint{{font-size:.75rem;color:#9a6700;margin-bottom:12px}}
     .chart-wrap{{position:relative;height:320px}}
-    .event-section{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;margin-bottom:32px;overflow-x:auto}}
+    .event-section{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:32px;overflow-x:auto}}
     table{{width:100%;border-collapse:collapse;font-size:.83rem}}
-    th{{text-align:left;padding:10px 12px;border-bottom:2px solid #30363d;color:#8b949e;font-weight:600;white-space:nowrap}}
-    td{{padding:10px 12px;border-bottom:1px solid #21262d;vertical-align:top;line-height:1.5}}
-    tr:hover td{{background:#1c2128}}
-    .ev-date{{color:#58a6ff;white-space:nowrap;font-weight:600}}
-    .ev-label{{font-weight:700;color:#e6edf3;white-space:nowrap}}
-    .ev-desc{{color:#8b949e;font-size:.8rem}}
-    .badge{{display:inline-block;background:#21262d;color:#79c0ff;border:1px solid #30363d;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    th{{text-align:left;padding:10px 12px;border-bottom:2px solid #d0d7de;color:#57606a;font-weight:600;white-space:nowrap}}
+    td{{padding:10px 12px;border-bottom:1px solid #d0d7de;vertical-align:top;line-height:1.5}}
+    tr:hover td{{background:#ffffff}}
+    .ev-date{{color:#0969da;white-space:nowrap;font-weight:600}}
+    .ev-label{{font-weight:700;color:#1f2328;white-space:nowrap}}
+    .ev-desc{{color:#57606a;font-size:.8rem}}
+    .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
+    footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.chart-wrap{{height:240px}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-  .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-  .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
+  .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+  .nav-btn:hover{{border-color:#0969da;color:#0969da}}
+  .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
@@ -2655,7 +2655,7 @@ const FX_ANN  = {fx_ann};
 const GLD_ANN = {gld_ann};
 
 const gridColor  = 'rgba(48,54,61,0.8)';
-const labelColor = '#8b949e';
+const labelColor = '#57606a';
 
 function makeChart(id, datasets, annotations, yLabels) {{
   const canvas = document.getElementById(id);
@@ -2689,9 +2689,9 @@ function makeChart(id, datasets, annotations, yLabels) {{
       responsive: true, maintainAspectRatio: false,
       interaction: {{ mode: 'index', intersect: false }},
       plugins: {{
-        legend: {{ labels: {{ color: '#e6edf3', font: {{ size: 12 }} }} }},
-        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#58a6ff',
-                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1 }},
+        legend: {{ labels: {{ color: '#1f2328', font: {{ size: 12 }} }} }},
+        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#0969da',
+                    bodyColor: '#1f2328', borderColor: '#d0d7de', borderWidth: 1 }},
         annotation: {{ annotations }},
       }},
       scales,
@@ -2702,23 +2702,23 @@ function makeChart(id, datasets, annotations, yLabels) {{
 
 makeChart('chartStocks', [
   {{ label: '日経平均（円）', dates: NK_DATES, data: NK_PRICES,
-     borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,0.08)',
+     borderColor: '#0969da', backgroundColor: 'rgba(88,166,255,0.08)',
      borderWidth: 1.5, fill: true }},
   {{ label: 'S&P500', dates: SP_DATES, data: SP_PRICES,
-     borderColor: '#3fb950', backgroundColor: 'rgba(63,185,80,0.06)',
+     borderColor: '#1a7f37', backgroundColor: 'rgba(63,185,80,0.06)',
      borderWidth: 1.5, fill: true }},
 ], Object.assign({{}}, NK_ANN, SP_ANN),
 [v => v.toLocaleString()+'円', v => v.toLocaleString()]);
 
 makeChart('chartFX', [
   {{ label: 'USD/JPY（円）', dates: FX_DATES, data: FX_PRICES,
-     borderColor: '#f0883e', backgroundColor: 'rgba(240,136,62,0.08)',
+     borderColor: '#bf3989', backgroundColor: 'rgba(240,136,62,0.08)',
      borderWidth: 1.5, fill: true }},
 ], FX_ANN, [v => v.toFixed(1)+'円']);
 
 makeChart('chartGold', [
   {{ label: '金価格（USD/oz）', dates: GLD_DATES, data: GLD_PRICES,
-     borderColor: '#ffd700', backgroundColor: 'rgba(255,215,0,0.08)',
+     borderColor: '#9a6700', backgroundColor: 'rgba(255,215,0,0.08)',
      borderWidth: 1.5, fill: true }},
 ], GLD_ANN, [v => '$'+v.toLocaleString()]);
 </script>
@@ -2736,24 +2736,24 @@ def _build_touraku_section(touraku):
     pct = max(0, min(100, (touraku - 30) / 140 * 100))
 
     # ゲージの背景グラデーション
-    gauge_bg = "linear-gradient(90deg, #238636 0%, #3fb950 25%, #d29922 50%, #f0883e 75%, #da3633 100%)"
+    gauge_bg = "linear-gradient(90deg, #238636 0%, #1a7f37 25%, #9a6700 50%, #bf3989 75%, #da3633 100%)"
 
-    return f'''<div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px 24px;margin-bottom:32px">
+    return f'''<div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px 24px;margin-bottom:32px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
-      <span style="font-size:1.1rem;font-weight:700;color:#e6edf3">📊 騰落レシオ（25日）</span>
+      <span style="font-size:1.1rem;font-weight:700;color:#1f2328">📊 騰落レシオ（25日）</span>
       <span style="font-size:1.5rem;font-weight:700;color:{color}">{touraku:.0f}%</span>
       <span style="background:{color};color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:12px">{icon} {level}</span>
     </div>
     <div style="position:relative;height:18px;border-radius:9px;background:{gauge_bg};margin-bottom:10px;overflow:visible">
       <div style="position:absolute;left:{pct:.0f}%;top:-2px;width:4px;height:22px;background:#fff;border-radius:2px;transform:translateX(-50%);box-shadow:0 0 6px rgba(255,255,255,0.6)"></div>
-      <div style="position:absolute;left:0;top:22px;font-size:.6rem;color:#8b949e">30</div>
-      <div style="position:absolute;left:36%;top:22px;font-size:.6rem;color:#8b949e">80</div>
-      <div style="position:absolute;left:64%;top:22px;font-size:.6rem;color:#8b949e">120</div>
-      <div style="position:absolute;right:0;top:22px;font-size:.6rem;color:#8b949e">170</div>
+      <div style="position:absolute;left:0;top:22px;font-size:.6rem;color:#57606a">30</div>
+      <div style="position:absolute;left:36%;top:22px;font-size:.6rem;color:#57606a">80</div>
+      <div style="position:absolute;left:64%;top:22px;font-size:.6rem;color:#57606a">120</div>
+      <div style="position:absolute;right:0;top:22px;font-size:.6rem;color:#57606a">170</div>
     </div>
-    <div style="font-size:.82rem;color:#8b949e;line-height:1.65;margin-top:20px">{comment}</div>
-    <div style="margin-top:10px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#79c0ff;line-height:1.7">
-      <span style="font-weight:700;color:#58a6ff">🔰 初心者メモ　</span>騰落レシオは「値上がり銘柄数÷値下がり銘柄数×100」で計算されます。120%以上は「買われすぎ」、70%以下は「売られすぎ」の目安。逆張り投資の参考指標として人気があります。
+    <div style="font-size:.82rem;color:#57606a;line-height:1.65;margin-top:20px">{comment}</div>
+    <div style="margin-top:10px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#1f6feb;line-height:1.7">
+      <span style="font-weight:700;color:#0969da">🔰 初心者メモ　</span>騰落レシオは「値上がり銘柄数÷値下がり銘柄数×100」で計算されます。120%以上は「買われすぎ」、70%以下は「売られすぎ」の目安。逆張り投資の参考指標として人気があります。
     </div>
   </div>'''
 
@@ -2791,59 +2791,59 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {GA4_TAG}
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
-    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh}}
-    header{{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}}
+    body{{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
+    header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
-    .header-meta{{font-size:.85rem;color:#8b949e}}
-    .header-meta span{{color:#58a6ff;font-weight:600}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-meta{{font-size:.85rem;color:#57606a}}
+    .header-meta span{{color:#0969da;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
     .sentiment-banner{{background:linear-gradient(135deg,#1c2f1c,#162416);border:1px solid #2ea043;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}}
     .sentiment-badge{{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:{badge_color}}}
-    .sentiment-text{{color:#7ee787;font-size:.95rem;line-height:1.6}}
-    .section-title{{font-size:1.1rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
+    .sentiment-text{{color:#1a7f37;font-size:.95rem;line-height:1.6}}
+    .section-title{{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
     .cards-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}}
-    .card{{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;transition:border-color .2s}}
-    .card:hover{{border-color:#58a6ff}}
+    .card{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px;transition:border-color .2s}}
+    .card:hover{{border-color:#0969da}}
     .card-header{{display:flex;align-items:center;gap:10px;margin-bottom:14px}}
     .card-icon{{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}}
-    .icon-stocks{{background:#1a3a5c}}.icon-fx{{background:#3a2a1a}}.icon-cmd{{background:#2a1a3a}}.icon-crypto{{background:#1a3a2a}}
-    .card-title{{font-weight:700;font-size:1rem;color:#e6edf3}}
-    .card-subtitle{{font-size:.75rem;color:#8b949e}}
-    .price-row{{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #21262d}}
+    .icon-stocks{{background:#1a3a5c}}.icon-fx{{background:#3a2a1a}}.icon-cmd{{background:#2a1a3a}}.icon-crypto{{background:#dafbe1}}
+    .card-title{{font-weight:700;font-size:1rem;color:#1f2328}}
+    .card-subtitle{{font-size:.75rem;color:#57606a}}
+    .price-row{{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #d0d7de}}
     .price-row:last-of-type{{border-bottom:none}}
-    .price-label{{font-size:.85rem;color:#8b949e}}
-    .price-value{{font-size:.95rem;font-weight:600;color:#e6edf3}}
+    .price-label{{font-size:.85rem;color:#57606a}}
+    .price-value{{font-size:.95rem;font-weight:600;color:#1f2328}}
     .price-change{{font-size:1.3rem;margin-left:4px}}
-    .up{{color:#3fb950}}.down{{color:#f85149}}
-    .card-summary{{margin-top:14px;padding-top:14px;border-top:1px solid #21262d;font-size:.82rem;color:#8b949e;line-height:1.65}}
-    .beginner-box{{margin-top:12px;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#79c0ff;line-height:1.7}}
-    .beginner-box::before{{content:"🔰 初心者メモ　";font-weight:700;color:#58a6ff}}
+    .up{{color:#1a7f37}}.down{{color:#cf222e}}
+    .card-summary{{margin-top:14px;padding-top:14px;border-top:1px solid #d0d7de;font-size:.82rem;color:#57606a;line-height:1.65}}
+    .beginner-box{{margin-top:12px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#1f6feb;line-height:1.7}}
+    .beginner-box::before{{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}}
     .chart-link-section{{text-align:center;margin-bottom:40px}}
-    .chart-link-btn{{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:linear-gradient(135deg,#1a2a4a,#161b22);border:1px solid #58a6ff;border-radius:12px;color:#58a6ff;text-decoration:none;font-size:1rem;font-weight:600;transition:all .3s}}
-    .chart-link-btn:hover{{background:#1c3a6a;transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,166,255,0.2)}}
-    .chart-link-desc{{font-size:.8rem;color:#8b949e;margin-top:8px}}
+    .chart-link-btn{{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;color:#0969da;text-decoration:none;font-size:1rem;font-weight:600;transition:all .3s}}
+    .chart-link-btn:hover{{background:#0969da;transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,166,255,0.2)}}
+    .chart-link-desc{{font-size:.8rem;color:#57606a;margin-top:8px}}
     /* トップニュース */
-    .top-news{{background:linear-gradient(135deg,#1a1f2e,#161b22);border:1px solid #58a6ff;border-radius:12px;padding:20px 24px;margin-bottom:32px}}
-    .top-news-title{{font-size:1rem;font-weight:700;color:#58a6ff;margin-bottom:12px}}
-    .news-item{{display:block;padding:10px 0;border-bottom:1px solid #21262d;text-decoration:none;transition:background .15s}}
+    .top-news{{background:linear-gradient(135deg,#1a1f2e,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:20px 24px;margin-bottom:32px}}
+    .top-news-title{{font-size:1rem;font-weight:700;color:#0969da;margin-bottom:12px}}
+    .news-item{{display:block;padding:10px 0;border-bottom:1px solid #d0d7de;text-decoration:none;transition:background .15s}}
     .news-item:last-child{{border-bottom:none}}
-    .news-item:hover{{background:#1c2128;border-radius:6px;padding-left:8px}}
-    .news-title{{display:block;font-size:.88rem;color:#e6edf3;font-weight:600;line-height:1.5;margin-bottom:2px}}
-    .news-meta{{display:block;font-size:.72rem;color:#8b949e}}
+    .news-item:hover{{background:#ffffff;border-radius:6px;padding-left:8px}}
+    .news-title{{display:block;font-size:.88rem;color:#1f2328;font-weight:600;line-height:1.5;margin-bottom:2px}}
+    .news-meta{{display:block;font-size:.72rem;color:#57606a}}
     .news-sent{{margin-right:6px;font-size:1.3rem;vertical-align:middle}}
-    .news-empty{{font-size:.82rem;color:#6e7681;padding:8px 0}}
-    .card-news{{margin-top:14px;padding-top:14px;border-top:1px solid #21262d}}
-    .card-news-title{{font-size:.78rem;color:#58a6ff;font-weight:600;margin-bottom:8px}}
+    .news-empty{{font-size:.82rem;color:#6e7781;padding:8px 0}}
+    .card-news{{margin-top:14px;padding-top:14px;border-top:1px solid #d0d7de}}
+    .card-news-title{{font-size:.78rem;color:#0969da;font-weight:600;margin-bottom:8px}}
     .card-news .news-item{{padding:6px 0}}
     .card-news .news-title{{font-size:.8rem}}
     .card-news .news-meta{{font-size:.68rem}}
-    footer{{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681}}
-    footer a{{color:#58a6ff;text-decoration:none}}
+    footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
+    footer a{{color:#0969da;text-decoration:none}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
-    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
-    .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-    .nav-btn.current{{background:#1c3a6a;border-color:#58a6ff;color:#fff}}
+    .nav-btn{{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}}
+    .nav-btn:hover{{border-color:#0969da;color:#0969da}}
+    .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.sentiment-banner{{flex-direction:column}}}}
   </style>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -2881,15 +2881,15 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <!-- 更新履歴 -->
-  <div style="background:#161b22;border:1px solid #30363d;border-left:4px solid #58a6ff;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
-      <span style="color:#58a6ff;font-weight:700">📰 更新履歴</span>
-      <a href="guides.html" style="color:#79c0ff;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
+      <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
+      <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
-    <div style="color:#c9d1d9">
-      ・<b>2026-04-30</b>: 🚨 緊急速報「<a href="guide-jpy-intervention-2026-04.html" style="color:#ffa198"><b>ドル円急落：片山財務相「断固たる措置」発言で為替介入警戒最高潮</b></a>」公開<br>
-      ・<b>2026-04-30</b>: 🔥 速報記事「<a href="guide-fomc-2026-04.html" style="color:#ffa198"><b>FOMC4月会合速報：据え置き＋反対4票・パウエル退任とマーケット影響</b></a>」公開<br>
-      ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#ffa198"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開
+    <div style="color:#424a53">
+      ・<b>2026-04-30</b>: 🚨 緊急速報「<a href="guide-jpy-intervention-2026-04.html" style="color:#cf222e"><b>ドル円急落：片山財務相「断固たる措置」発言で為替介入警戒最高潮</b></a>」公開<br>
+      ・<b>2026-04-30</b>: 🔥 速報記事「<a href="guide-fomc-2026-04.html" style="color:#cf222e"><b>FOMC4月会合速報：据え置き＋反対4票・パウエル退任とマーケット影響</b></a>」公開<br>
+      ・<b>2026-04-29</b>: 🔥 速報記事「<a href="guide-boj-2026-04.html" style="color:#cf222e"><b>日銀4月会合速報：金利据え置き＋上田総裁会見・利上げシナリオ</b></a>」公開
     </div>
   </div>
 
@@ -2897,10 +2897,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {_build_touraku_section(touraku)}
 
   <!-- A8広告枠①（トップページ・ニュース上）-->
-  <div style="margin:24px 0;padding:18px;background:#0d1117;border:1px solid #2d4a7a;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-    <div style="font-size:.7rem;color:#6e7681;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
+  <div style="margin:24px 0;padding:18px;background:#ffffff;border:1px solid #54aeff;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
     <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー / 300×250 レクタングル）-->
-    <div style="font-size:.82rem;color:#8b949e;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+    <div style="font-size:.82rem;color:#57606a;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
   </div>
 
   <!-- トップニュース -->
@@ -2956,14 +2956,14 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- サブページへのリンク -->
   <div class="chart-link-section">
-    <a href="market-health.html" class="chart-link-btn" style="border-color:#d29922;color:#d29922;margin-bottom:12px">🩺 市場健康度ダッシュボードを見る →</a>
+    <a href="market-health.html" class="chart-link-btn" style="border-color:#9a6700;color:#9a6700;margin-bottom:12px">🩺 市場健康度ダッシュボードを見る →</a>
     <div class="chart-link-desc">VIX・恐怖&amp;強欲指数・バフェット指数・CAPE・RSIを一枚で総合診断</div>
     <div style="margin-top:16px">
       <a href="calendar.html" class="chart-link-btn" style="border-color:#7cf2c8;color:#7cf2c8">📅 マクロ経済カレンダーを見る →</a>
       <div class="chart-link-desc">日米欧中の重要経済指標（FOMC・BOJ・CPI・雇用統計など）を月間カレンダーで一覧</div>
     </div>
     <div style="margin-top:16px">
-      <a href="vix.html" class="chart-link-btn" style="border-color:#f85149;color:#f85149">😱 恐怖指数（VIX）分析を見る →</a>
+      <a href="vix.html" class="chart-link-btn" style="border-color:#cf222e;color:#cf222e">😱 恐怖指数（VIX）分析を見る →</a>
       <div class="chart-link-desc">VIXの現在値・90日チャート・AIコメントで市場の恐怖度をチェック</div>
     </div>
     <div style="margin-top:16px">
@@ -2973,10 +2973,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <!-- A8広告枠②（トップページ・フッター上）-->
-  <div style="margin:32px 0;padding:18px;background:#0d1117;border:1px solid #2d4a7a;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-    <div style="font-size:.7rem;color:#6e7681;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
+  <div style="margin:32px 0;padding:18px;background:#ffffff;border:1px solid #54aeff;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
     <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー）-->
-    <div style="font-size:.82rem;color:#8b949e;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+    <div style="font-size:.82rem;color:#57606a;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
   </div>
 
 </main>
