@@ -693,6 +693,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -1548,6 +1549,7 @@ def build_hot_assets_html(hot_data, now_jst):
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -1768,6 +1770,7 @@ def build_calendar_html(now_jst):
   .preview-banner-arrow{{font-size:1.5rem;color:#1a7f37;font-weight:700;flex-shrink:0}}
   @media(max-width:600px){{.preview-banner{{padding:14px 16px;gap:12px}}.preview-banner-icon{{font-size:1.6rem}}.preview-banner-title{{font-size:.95rem}}.preview-banner-desc{{font-size:.78rem}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -2076,6 +2079,7 @@ def build_preview_html(now_jst):
       .indicator-card{{padding:18px 16px}}
     }}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -2272,6 +2276,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   footer a{{color:#0969da;text-decoration:none}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}}}
 </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -2572,6 +2577,7 @@ def build_charts_html(hist, now_jst):
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
@@ -2847,6 +2853,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.sentiment-banner{{flex-direction:column}}}}
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
 </head>
 <body>
