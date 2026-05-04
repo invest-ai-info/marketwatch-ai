@@ -132,6 +132,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-fear-greed.html",       "0.7", "monthly"),
         ("guide-fomc.html",             "0.8", "monthly"),
         ("guide-us-gdp.html",           "0.8", "monthly"),
+        ("guide-investment-tax.html",   "0.85","monthly"),
         ("guide-weekly-2026-05-04.html","0.95","daily"),
         ("guide-jpy-intervention-2026-04.html","0.95","daily"),
         ("guide-fomc-2026-04.html",     "0.9", "weekly"),
