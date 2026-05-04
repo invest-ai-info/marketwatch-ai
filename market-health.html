@@ -36,7 +36,7 @@
   .header-meta{font-size:1rem;color:#57606a}
   main{max-width:1200px;margin:0 auto;padding:32px 24px}
   .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
+  .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
   .nav-btn:hover{border-color:#0969da;color:#0969da}
   .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
   .summary{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #9a6700;border-radius:14px;padding:22px 26px;margin-bottom:28px}
@@ -72,14 +72,14 @@
 <body>
 <header>
   <div class="header-title">🩺 市場健康度ダッシュボード</div>
-  <div class="header-meta">最終更新: 2026年05月05日 00:33 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
+  <div class="header-meta">最終更新: 2026年05月05日 07:28 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
 </header>
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-    <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
+    <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
@@ -94,7 +94,7 @@
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
       センチメント・ボラティリティ・割高割安を総合判定。
-      <b>米VIX 17.8</b> ／ <b>騰落レシオ 127.3%</b> はリアルタイム更新。
+      <b>米VIX 18.3</b> ／ <b>騰落レシオ 127.3%</b> はリアルタイム更新。
       その他の指標は <b>2026-04-20 時点の参考値</b>（月次手動更新）。
       <br>● 青=適正／割安　● 橙=やや割高・過熱　● 赤=危険水準
     </p>
@@ -105,7 +105,7 @@
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">😱 米国 VIX</div><div class="card-sub">S&amp;P500 オプションIV</div></div>
-        <div class="big-num" style="color:#1a7f37">17.8 <span class="tag" style="background:#1a7f37;color:#fff">通常</span></div>
+        <div class="big-num" style="color:#1a7f37">18.3 <span class="tag" style="background:#1a7f37;color:#fff">通常</span></div>
         <div class="gauge vol"><div class="gauge-pin" style="left:25%"></div></div>
         <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">20〜25は通常モード。30超は調整警戒、40超はパニック領域。リアルタイム値。</p>
