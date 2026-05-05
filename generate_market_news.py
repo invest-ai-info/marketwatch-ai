@@ -3006,9 +3006,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-05-05</b>: 📊 プレビュー「<a href="guide-us-jobs-2026-05.html" style="color:#0969da"><b>米雇用統計5月8日プレビュー：予想・3シナリオ・ドル円/株式インパクト</b></a>」公開<br>
-      ・<b>2026-05-05</b>: 📊 分析記事「<a href="guide-gw-gap-2026-05.html" style="color:#0969da"><b>GW明け5月7日東京市場ギャップ分析：休場中の海外動向と窓開けリスク</b></a>」公開<br>
-      ・<b>2026-05-05</b>: 📚 解説記事「<a href="guide-ideco.html" style="color:#0969da"><b>iDeCo完全ガイド：節税効果・拠出限度額・始め方を徹底解説</b></a>」公開<br>
+      ・<b>2026-05-06</b>: 📊 プレビュー「<a href="guide-us-jobs-2026-05.html" style="color:#0969da"><b>米雇用統計5月8日プレビュー：予想・3シナリオ・ドル円/株式インパクト</b></a>」公開<br>
+      ・<b>2026-05-06</b>: 📊 分析記事「<a href="guide-gw-gap-2026-05.html" style="color:#0969da"><b>GW明け5月7日東京市場ギャップ分析：休場中の海外動向と窓開けリスク</b></a>」公開<br>
+      ・<b>2026-05-06</b>: 📚 解説記事「<a href="guide-ideco.html" style="color:#0969da"><b>iDeCo完全ガイド：節税効果・拠出限度額・始め方を徹底解説</b></a>」公開<br>
       ・<b>2026-05-04</b>: 📚 解説記事3本追加（<a href="guide-investment-tax.html" style="color:#0969da">投資の税金完全ガイド</a>／<a href="guide-nisa.html" style="color:#0969da">新NISA完全ガイド</a>／<a href="guide-nisa-ranking.html" style="color:#0969da">NISA積立投信ランキング</a>）<br>
       ・<b>2026-05-04</b>: 📅 週間展望「<a href="guide-weekly-2026-05-04.html" style="color:#0969da"><b>今週のマーケット戦略（5/4〜5/10）：4/30介入実施・連続介入リスク・米雇用統計</b></a>」公開
     </div>
