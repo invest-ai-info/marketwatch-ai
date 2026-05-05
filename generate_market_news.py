@@ -794,11 +794,11 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
-    @media(max-width:600px){{.header-inner{{flex-direction:column}}.vix-value{{font-size:3rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+    @media(max-width:600px){{.header-inner{{flex-direction:column}}.vix-value{{font-size:3rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -2682,11 +2682,11 @@ def build_charts_html(hist, now_jst):
     .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
-    @media(max-width:600px){{.header-inner{{flex-direction:column}}.chart-wrap{{height:240px}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+    @media(max-width:600px){{.header-inner{{flex-direction:column}}.chart-wrap{{height:240px}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
