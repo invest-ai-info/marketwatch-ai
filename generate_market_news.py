@@ -1522,7 +1522,7 @@ def build_hot_assets_html(hot_data, now_jst):
     .nav-btn:hover{{border-color:#bf3989;color:#bf3989}}
     .nav-btn.current{{background:#3a1f0f;border-color:#bf3989;color:#fff}}
 
-    .intro{{background:linear-gradient(135deg,#2a1f0f,#1c1611);border:1px solid #bf3989;border-radius:12px;padding:18px 24px;margin-bottom:32px;color:#1f2328;line-height:1.75;font-size:.9rem}}
+    .intro{{background:linear-gradient(135deg,#fff8c5,#ffffff);border:1px solid #bf3989;border-radius:12px;padding:18px 24px;margin-bottom:32px;color:#1f2328;line-height:1.75;font-size:.9rem}}
     .intro b{{color:#bf3989}}
 
     .hot-section{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px 24px;margin-bottom:24px}}
@@ -2252,7 +2252,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
-  .summary{{background:linear-gradient(135deg,#2a1f0e,#1c1508);border:1px solid #9a6700;border-radius:14px;padding:22px 26px;margin-bottom:28px}}
+  .summary{{background:linear-gradient(135deg,#fff8c5,#ffffff);border:1px solid #9a6700;border-radius:14px;padding:22px 26px;margin-bottom:28px}}
   .summary h2{{font-size:1.15rem;color:#9a6700;margin-bottom:10px}}
   .summary p{{color:#1f2328;font-size:.98rem}}
   .section{{margin-bottom:32px}}
@@ -2271,10 +2271,10 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .gauge.vol{{background:linear-gradient(90deg,#1a7f37 0%,#9a6700 50%,#cf222e 75%,#da3633 100%)}}
   .gauge-pin{{position:absolute;top:-4px;width:5px;height:22px;background:#fff;border-radius:3px;transform:translateX(-50%);box-shadow:0 0 8px rgba(255,255,255,.7)}}
   .gauge-labels{{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7781;margin-top:4px}}
-  .comment{{font-size:.93rem;color:#c8d1e6;margin-top:10px;line-height:1.7}}
+  .comment{{font-size:.93rem;color:#424a53;margin-top:10px;line-height:1.7}}
   .beginner{{margin-top:12px;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 14px;font-size:.86rem;color:#1f6feb;line-height:1.75}}
   .beginner::before{{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}}
-  .formula{{font-family:'Consolas',monospace;background:#0a0d13;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#218bff;margin:8px 0;display:inline-block}}
+  .formula{{font-family:'Consolas',monospace;background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#218bff;margin:8px 0;display:inline-block}}
   footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:24px 32px;text-align:center;font-size:.9rem;color:#57606a;line-height:1.85}}
   footer a{{color:#0969da;text-decoration:none}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}}}
@@ -2834,7 +2834,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .chart-link-btn:hover{{background:#0969da;transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,166,255,0.2)}}
     .chart-link-desc{{font-size:.8rem;color:#57606a;margin-top:8px}}
     /* トップニュース */
-    .top-news{{background:linear-gradient(135deg,#1a1f2e,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:20px 24px;margin-bottom:32px}}
+    .top-news{{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:20px 24px;margin-bottom:32px}}
     .top-news-title{{font-size:1rem;font-weight:700;color:#0969da;margin-bottom:12px}}
     .news-item{{display:block;padding:10px 0;border-bottom:1px solid #d0d7de;text-decoration:none;transition:background .15s}}
     .news-item:last-child{{border-bottom:none}}
