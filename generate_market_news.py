@@ -343,6 +343,74 @@ YF_NEWS_TICKERS = {
     "crypto":    ["BTC-USD", "ETH-USD"],
 }
 
+# ─────────────────────────────────────────
+# 影響度スコアリング（マーケットを動かすTOP3用）
+# 全カテゴリのニュースから「市場へのインパクトが大きい」記事を選別
+# ─────────────────────────────────────────
+IMPACT_KEYWORDS = {
+    # 中央銀行・金融政策（最高重要度）
+    "fomc": 10, "frb": 10, "federal reserve": 10, "powell": 9, "パウエル": 9,
+    "rate hike": 10, "rate cut": 10, "interest rate": 7, "monetary policy": 7,
+    "利上げ": 10, "利下げ": 10, "政策金利": 9, "金融政策": 7,
+    "boj": 10, "bank of japan": 10, "日銀": 10, "ueda": 8, "上田": 8,
+    "ecb": 8, "lagarde": 7, "ラガルド": 7,
+    "yield curve": 6, "イールドカーブ": 6,
+
+    # 主要経済指標
+    "jobs report": 9, "nonfarm": 9, "nfp": 9, "雇用統計": 9,
+    "unemployment": 7, "失業率": 8, "employment": 6,
+    "cpi": 9, "inflation": 7, "消費者物価": 9, "インフレ": 6,
+    "gdp": 8, "pce": 8, "ppi": 6, "ism": 6, "pmi": 6,
+    "retail sales": 5, "小売売上": 5,
+
+    # 為替介入・通貨
+    "intervention": 10, "為替介入": 10, "介入": 7,
+    "財務省": 6, "神田": 7, "三村": 7, "片山": 7, "kanda": 7, "mimura": 7, "katayama": 7,
+
+    # 地政学・大事件
+    "war": 8, "戦争": 8, "ukraine": 6, "ウクライナ": 6,
+    "middle east": 7, "中東": 7, "iran": 7, "イラン": 7,
+    "russia": 6, "ロシア": 6, "israel": 6, "イスラエル": 6,
+    "north korea": 7, "北朝鮮": 7, "taiwan": 6, "台湾": 6, "china": 5, "中国": 5,
+
+    # 政治・関税
+    "trump": 6, "トランプ": 6, "tariff": 8, "関税": 8,
+    "election": 5, "選挙": 5, "sanction": 7, "制裁": 7,
+
+    # 大手企業・決算
+    "earnings": 4, "決算": 4, "guidance": 5,
+    "nvidia": 6, "apple": 5, "microsoft": 5, "meta": 5,
+    "tesla": 5, "テスラ": 5, "amazon": 5, "google": 5, "alphabet": 5,
+
+    # 急騰・急落
+    "crash": 9, "plunge": 8, "tumble": 7, "sell-off": 7, "selloff": 7,
+    "暴落": 9, "急落": 8,
+    "surge": 6, "rally": 5, "soar": 6, "急騰": 7, "急上昇": 6,
+    "record high": 6, "最高値": 7, "all-time high": 7,
+
+    # 信用・債券・リセッション
+    "downgrade": 8, "格下げ": 8, "default": 9, "デフォルト": 9,
+    "recession": 8, "景気後退": 8, "リセッション": 8,
+    "treasury yield": 5, "国債": 4, "債券": 4,
+    "bubble": 6, "バブル": 6,
+
+    # OPEC・原油
+    "opec": 6, "supply cut": 6, "減産": 6,
+}
+
+
+def score_article(article):
+    """記事の影響度スコアを計算（タイトル+概要のキーワードマッチ）"""
+    text = ((article.get("title", "") or "") + " " +
+            (article.get("description", "") or "")).lower()
+    if not text.strip():
+        return 0
+    score = 0
+    for kw, weight in IMPACT_KEYWORDS.items():
+        if kw in text:
+            score += weight
+    return score
+
 
 def fetch_yf_news_for_category(tickers):
     """yfinance.Ticker(X).news を複数銘柄から集約して取得"""
@@ -408,29 +476,33 @@ def fetch_newsapi_articles(api_key, q, lang, from_date):
 
 
 def fetch_news(api_key):
-    """ニュース取得（yfinance優先 + NewsAPIフォールバック）"""
+    """ニュース取得（yfinance優先 + NewsAPIフォールバック）
+
+    - 各カテゴリ（stocks/fx/commodity/crypto）：最新3件
+    - topカテゴリ：全カテゴリ統合 + 影響度スコア順 TOP3（マーケット全体に影響大）
+    """
     from_date = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
-    results = {}
 
+    # ─── ① 各カテゴリで記事を収集（topは後で全統合から生成） ───
+    raw_by_cat = {}
     for cat, queries in NEWS_CATEGORIES.items():
+        if cat == "top":
+            continue  # topは後で生成
         articles = []
-
-        # ① yfinanceから取得（最新・無遅延）
+        # yfinance
         yf_tickers = YF_NEWS_TICKERS.get(cat, [])
         try:
             articles.extend(fetch_yf_news_for_category(yf_tickers))
         except Exception as e:
             print(f"⚠️ yfinance news集約エラー ({cat}): {e}")
-
-        # ② NewsAPIから取得（補完・api_keyがあれば）
+        # NewsAPI
         if api_key:
             for q in queries:
                 try:
                     articles.extend(fetch_newsapi_articles(api_key, q, "en", from_date))
                 except Exception as e:
                     print(f"⚠️ NewsAPI取得エラー ({cat}/{q}): {e}")
-
-        # ③ 重複除去（URL基準）、日付で新しい順にソート
+        # カテゴリ内で重複除去 + 日付降順
         seen = set()
         unique = []
         for a in articles:
@@ -439,18 +511,50 @@ def fetch_news(api_key):
                 seen.add(key)
                 unique.append(a)
         unique.sort(key=lambda x: x.get("publishedAt", ""), reverse=True)
+        raw_by_cat[cat] = unique
 
-        # ④ 上位3件を日本語に翻訳（rate limit回避で軽くsleep）
-        import time as _time
-        top3 = unique[:3]
-        for a in top3:
-            original = a["title"]
-            a["title"] = translate_to_ja(original)
-            if a["title"] != original:
-                print(f"  ✅ 翻訳: {original[:40]}... → {a['title'][:40]}...")
-            _time.sleep(0.4)
-        results[cat] = top3
+    # ─── ② TOP：全カテゴリ統合 → 影響度スコア順 ───
+    all_seen = set()
+    pool = []
+    for cat, arts in raw_by_cat.items():
+        for a in arts:
+            key = a.get("url") or a.get("title")
+            if key and key not in all_seen:
+                all_seen.add(key)
+                a["_score"] = score_article(a)
+                a["_source_cat"] = cat
+                pool.append(a)
+    # スコア降順 → 同点は新しい順
+    pool.sort(key=lambda x: (x.get("_score", 0), x.get("publishedAt", "")), reverse=True)
+    # スコア0の記事しかない場合は最新3件にフォールバック
+    top_pool = pool[:3]
 
+    # ─── ③ 結果集計（各カテゴリTOP3 + topのTOP3） ───
+    results = {}
+    selected = []
+    for cat in raw_by_cat:
+        results[cat] = raw_by_cat[cat][:3]
+        selected.extend(results[cat])
+    results["top"] = top_pool
+    selected.extend(top_pool)
+
+    # ─── ④ 翻訳（同じdict参照は1回だけ翻訳されるよう id() で重複排除） ───
+    import time as _time
+    translated_ids = set()
+    for a in selected:
+        if id(a) in translated_ids:
+            continue
+        original = a.get("title", "")
+        if not original:
+            continue
+        a["title"] = translate_to_ja(original)
+        if a["title"] != original:
+            print(f"  ✅ 翻訳: {original[:40]}... → {a['title'][:40]}...")
+        translated_ids.add(id(a))
+        _time.sleep(0.4)
+
+    # デバッグログ
+    print(f"  📊 TOP3スコア: {[a.get('_score', 0) for a in top_pool]}")
     return results
 
 
@@ -2918,7 +3022,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- トップニュース -->
   <div class="top-news">
-    <div class="top-news-title">🔥 マーケットを動かすニュース TOP3</div>
+    <div class="top-news-title">🔥 マーケットを動かすニュース TOP3 <span style="font-size:.7rem;color:#57606a;font-weight:500">（中央銀行・経済指標・地政学など影響度の高いキーワードでスコアリング）</span></div>
     {top_news_html}
   </div>
 
