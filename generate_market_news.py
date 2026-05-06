@@ -3027,6 +3027,17 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
 
+  <!-- ヒーロー画像 -->
+  <div style="position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)">
+    <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" style="width:100%;height:auto;display:block;max-height:280px;object-fit:cover">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px">
+      <div>
+        <div style="font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)">マーケットニュース</div>
+        <div style="font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)">最新の市場動向をAIがわかりやすくお届け</div>
+      </div>
+    </div>
+  </div>
+
   <!-- センチメント -->
   <div class="sentiment-banner">
     <div class="sentiment-icon">{emoji}</div>
@@ -3147,25 +3158,33 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <div style="font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:6px">🔍 AIが導く、より深い市場分析へ</div>
     <div style="font-size:.88rem;color:#57606a;margin-bottom:20px">主要機能ページへのショートカット</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
-      <a href="market-health.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#dafbe1,#ffffff);border:1px solid #1a7f37;border-radius:12px;text-decoration:none;transition:all .25s">
-        <div style="font-size:1.7rem;margin-bottom:8px">🩺</div>
-        <div style="font-size:1.02rem;font-weight:700;color:#1a7f37;margin-bottom:6px">市場健康度ダッシュボード</div>
-        <div style="font-size:.78rem;color:#57606a;line-height:1.6">VIX・恐怖と強欲・バフェット指数で市場の過熱感を多角的に可視化</div>
+      <a href="market-health.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
+        <img src="12_feature_market_health.png" alt="市場健康度" style="width:100%;height:140px;object-fit:cover;display:block">
+        <div style="padding:18px 22px">
+          <div style="font-size:1.02rem;font-weight:700;color:#1a7f37;margin-bottom:6px">🩺 市場健康度ダッシュボード</div>
+          <div style="font-size:.78rem;color:#57606a;line-height:1.6">VIX・恐怖と強欲・バフェット指数で市場の過熱感を多角的に可視化</div>
+        </div>
       </a>
-      <a href="calendar.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#ddf4ff,#ffffff);border:1px solid #0969da;border-radius:12px;text-decoration:none;transition:all .25s">
-        <div style="font-size:1.7rem;margin-bottom:8px">📅</div>
-        <div style="font-size:1.02rem;font-weight:700;color:#0969da;margin-bottom:6px">マクロ経済カレンダー</div>
-        <div style="font-size:.78rem;color:#57606a;line-height:1.6">日米欧中の主要指標・FOMC・日銀イベントを月間一覧でチェック</div>
+      <a href="calendar.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
+        <img src="13_feature_macro_calendar.png" alt="マクロ経済カレンダー" style="width:100%;height:140px;object-fit:cover;display:block">
+        <div style="padding:18px 22px">
+          <div style="font-size:1.02rem;font-weight:700;color:#0969da;margin-bottom:6px">📅 マクロ経済カレンダー</div>
+          <div style="font-size:.78rem;color:#57606a;line-height:1.6">日米欧中の主要指標・FOMC・日銀イベントを月間一覧でチェック</div>
+        </div>
       </a>
-      <a href="charts.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#fff8c5,#ffffff);border:1px solid #9a6700;border-radius:12px;text-decoration:none;transition:all .25s">
-        <div style="font-size:1.7rem;margin-bottom:8px">📈</div>
-        <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">50年価格チャート</div>
-        <div style="font-size:.78rem;color:#57606a;line-height:1.6">日経・S&amp;P500・ドル円・金の超長期トレンドと歴史的イベント一覧</div>
+      <a href="charts.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
+        <img src="15_feature_50year_chart.png" alt="50年チャート" style="width:100%;height:140px;object-fit:cover;display:block">
+        <div style="padding:18px 22px">
+          <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">📈 50年価格チャート</div>
+          <div style="font-size:.78rem;color:#57606a;line-height:1.6">日経・S&amp;P500・ドル円・金の超長期トレンドと歴史的イベント一覧</div>
+        </div>
       </a>
-      <a href="guides.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#ffe5e5,#ffffff);border:1px solid #cf222e;border-radius:12px;text-decoration:none;transition:all .25s">
-        <div style="font-size:1.7rem;margin-bottom:8px">📚</div>
-        <div style="font-size:1.02rem;font-weight:700;color:#cf222e;margin-bottom:6px">解説記事・速報一覧</div>
-        <div style="font-size:.78rem;color:#57606a;line-height:1.6">投資の基礎から最新の速報まで、AIが厳選した記事を一覧表示</div>
+      <a href="market-health.html#vix" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
+        <img src="14_feature_vix.png" alt="VIX恐怖指数" style="width:100%;height:140px;object-fit:cover;display:block">
+        <div style="padding:18px 22px">
+          <div style="font-size:1.02rem;font-weight:700;color:#cf222e;margin-bottom:6px">😱 恐怖指数（VIX）分析</div>
+          <div style="font-size:.78rem;color:#57606a;line-height:1.6">投資家心理を数値化したVIXでリスクオン・オフを判定</div>
+        </div>
       </a>
     </div>
   </div>
