@@ -30,62 +30,65 @@
 </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;line-height:1.7}
-    header{background:linear-gradient(135deg,#161b22,#1c2128);border-bottom:1px solid #30363d;padding:24px 32px}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
     .header-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#7ee787,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .header-meta{font-size:.85rem;color:#8b949e}
-    .header-meta span{color:#7ee787;font-weight:600}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1a7f37,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a}
+    .header-meta span{color:#1a7f37;font-weight:600}
     main{max-width:1100px;margin:0 auto;padding:32px 24px}
     .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
-    .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#161b22;border:1px solid #30363d;border-radius:10px;color:#8b949e;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s}
-    .nav-btn:hover{border-color:#7ee787;color:#7ee787}
-    .nav-btn.current{background:#1a3a2a;border-color:#7ee787;color:#7ee787}
-    .summary-box{background:linear-gradient(135deg,#1a3a2a,#1a2a3a);border:1px solid #2d6a4a;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center}
-    .summary-num{font-size:1.8rem;font-weight:700;color:#7ee787;margin-bottom:6px}
-    .summary-detail{font-size:.95rem;color:#c0d4cc}
-    .high-count{color:#f85149;font-weight:600}
-    .mid-count{color:#e3b341;font-weight:600}
-    .indicator-card{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:24px 26px;margin-bottom:24px;transition:border-color .2s}
-    .indicator-card:hover{border-color:#7ee787}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#1a7f37;color:#1a7f37}
+    .nav-btn.current{background:#dafbe1;border-color:#1a7f37;color:#1a7f37}
+    .summary-box{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #1a7f37;border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:center}
+    .summary-num{font-size:1.8rem;font-weight:700;color:#1a7f37;margin-bottom:6px}
+    .summary-detail{font-size:.95rem;color:#424a53}
+    .high-count{color:#cf222e;font-weight:600}
+    .mid-count{color:#bf8700;font-weight:600}
+    .indicator-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px;padding:24px 26px;margin-bottom:24px;transition:border-color .2s}
+    .indicator-card:hover{border-color:#1a7f37}
     .indicator-card.simple{padding:18px 22px}
-    .card-header{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid #21262d;margin-bottom:18px}
-    .card-date-block{flex-shrink:0;text-align:center;background:#1c2128;border-radius:10px;padding:12px 14px;min-width:80px}
-    .card-until{font-size:.7rem;color:#8b949e;margin-bottom:2px;font-weight:600}
-    .card-date{font-size:1.1rem;font-weight:700;color:#7ee787}
+    .card-header{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid #d0d7de;margin-bottom:18px}
+    .card-date-block{flex-shrink:0;text-align:center;background:#ffffff;border-radius:10px;padding:12px 14px;min-width:80px}
+    .card-until{font-size:.7rem;color:#57606a;margin-bottom:2px;font-weight:600}
+    .card-date{font-size:1.1rem;font-weight:700;color:#1a7f37}
     .card-title-block{flex:1;min-width:0}
     .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-    .card-title{font-size:1.4rem;font-weight:700;color:#e6edf3;margin-bottom:4px;line-height:1.3}
-    .card-event-name{font-size:.82rem;color:#8b949e}
+    .card-title{font-size:1.4rem;font-weight:700;color:#1f2328;margin-bottom:4px;line-height:1.3}
+    .card-event-name{font-size:.82rem;color:#57606a}
     .event-tag{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:5px}
-    .tag-jp{background:#3d1a1a;color:#f8a4a0}
-    .tag-us{background:#1a2a4a;color:#a4ccff}
-    .tag-eu{background:#3d3a1a;color:#f0d878}
-    .tag-cn{background:#1a3d1a;color:#7ee787}
+    .tag-jp{background:#ffebe9;color:#cf222e}
+    .tag-us{background:#ddf4ff;color:#218bff}
+    .tag-eu{background:#fff8c5;color:#9a6700}
+    .tag-cn{background:#dafbe1;color:#1a7f37}
     .tag-high{background:#da3633;color:#fff}
-    .tag-mid{background:#e3b341;color:#0d1117}
+    .tag-mid{background:#bf8700;color:#ffffff}
     .card-section{margin-bottom:18px}
     .card-section:last-of-type{margin-bottom:0}
-    .section-label{font-size:.85rem;font-weight:700;color:#7ee787;margin-bottom:6px}
-    .section-body{font-size:.92rem;color:#c0d4cc;line-height:1.75}
+    .section-label{font-size:.85rem;font-weight:700;color:#1a7f37;margin-bottom:6px}
+    .section-body{font-size:.92rem;color:#424a53;line-height:1.75}
     .scenarios{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-    .scenario{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}
-    .scenario-label{font-size:.88rem;font-weight:600;color:#79c0ff;margin-bottom:4px}
-    .scenario-impact{font-size:.85rem;color:#c0d4cc;line-height:1.7}
+    .scenario{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px}
+    .scenario-label{font-size:.88rem;font-weight:600;color:#1f6feb;margin-bottom:4px}
+    .scenario-impact{font-size:.85rem;color:#424a53;line-height:1.7}
     .watch-list{list-style:none;padding:0;margin-top:6px}
-    .watch-list li{padding:6px 0 6px 20px;font-size:.88rem;color:#c0d4cc;position:relative;line-height:1.6}
-    .watch-list li::before{content:"▸";color:#7ee787;position:absolute;left:0;font-weight:700}
-    .card-tip{background:#1a2a3a;border-left:3px solid #58a6ff;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#a4ccff;line-height:1.7}
-    .card-tip strong{color:#79c0ff;display:block;margin-bottom:4px}
-    .empty-state{text-align:center;padding:60px 20px;background:#161b22;border:1px dashed #30363d;border-radius:14px}
+    .watch-list li{padding:6px 0 6px 20px;font-size:.88rem;color:#424a53;position:relative;line-height:1.6}
+    .watch-list li::before{content:"▸";color:#1a7f37;position:absolute;left:0;font-weight:700}
+    .card-tip{background:#ddf4ff;border-left:3px solid #0969da;border-radius:6px;padding:12px 16px;margin-top:18px;font-size:.85rem;color:#218bff;line-height:1.7}
+    .card-tip strong{color:#1f6feb;display:block;margin-bottom:4px}
+    .card-guide-link{margin-top:16px;text-align:center}
+    .card-guide-link a{display:inline-block;padding:10px 22px;background:#ffffff;border:1px solid #54aeff;border-radius:8px;color:#1f6feb;text-decoration:none;font-size:.88rem;font-weight:600;transition:all .2s}
+    .card-guide-link a:hover{border-color:#1a7f37;color:#1a7f37;background:#ddf4ff}
+    .empty-state{text-align:center;padding:60px 20px;background:#f6f8fa;border:1px dashed #d0d7de;border-radius:14px}
     .empty-icon{font-size:3rem;margin-bottom:12px}
-    .empty-title{font-size:1.2rem;font-weight:700;color:#e6edf3;margin-bottom:12px}
-    .empty-msg{font-size:.92rem;color:#8b949e;line-height:1.8}
-    .beginner-box{margin:24px 0;background:#1a2030;border:1px solid #2d4a7a;border-radius:8px;padding:14px 18px;font-size:.85rem;color:#79c0ff;line-height:1.85}
-    .beginner-box::before{content:"🔰 このページの使い方　";font-weight:700;color:#58a6ff}
-    .disclaimer{margin-top:20px;font-size:.78rem;color:#6e7681;line-height:1.7;padding:12px 16px;background:#161b22;border:1px solid #21262d;border-radius:8px}
-    footer{background:#161b22;border-top:1px solid #30363d;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7681;margin-top:40px}
-    footer a{color:#58a6ff;text-decoration:none}
+    .empty-title{font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:12px}
+    .empty-msg{font-size:.92rem;color:#57606a;line-height:1.8}
+    .beginner-box{margin:24px 0;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.85rem;color:#1f6feb;line-height:1.85}
+    .beginner-box::before{content:"🔰 このページの使い方　";font-weight:700;color:#0969da}
+    .disclaimer{margin-top:20px;font-size:.78rem;color:#6e7781;line-height:1.7;padding:12px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
     @media(max-width:768px){
       .header-inner{flex-direction:column;align-items:flex-start}
       .card-header{flex-direction:column;gap:12px}
@@ -93,25 +96,34 @@
       .card-title{font-size:1.2rem}
       .indicator-card{padding:18px 16px}
     }
+    @media(max-width:600px){
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <!-- A8.net広告タグはここに貼る予定 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
 <header>
   <div class="header-inner">
     <div>
       <div class="header-title">📰 明日の経済指標プレビュー</div>
-      <div class="header-meta">最終更新: <span>2026年04月29日 06:44 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年05月06日 22:28 JST</span></div>
     </div>
   </div>
 </header>
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
-  <a class="nav-btn current" href="preview.html">📰 指標プレビュー</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
-  <a class="nav-btn" href="vix.html">😱 恐怖指数</a>
+  <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
 </nav>
@@ -122,9 +134,9 @@
 
   
 <div class="summary-box">
-  <div class="summary-num">5件の経済指標</div>
+  <div class="summary-num">1件の経済指標</div>
   <div class="summary-detail">
-    今後3日間に発表予定 — <span class="high-count">⭐最重要 0件</span> ｜ <span class="mid-count">●重要 5件</span>
+    今後3日間に発表予定 — <span class="high-count">⭐最重要 1件</span> ｜ <span class="mid-count">●重要 0件</span>
   </div>
 </div>
 
@@ -133,237 +145,48 @@
 <article class="indicator-card">
   <div class="card-header">
     <div class="card-date-block">
-      <div class="card-until">明日</div>
-      <div class="card-date">4/30（木）</div>
-    </div>
-    <div class="card-title-block">
-      <div class="card-tags">
-        <span class="event-tag tag-cn">🇨🇳 中国</span>
-        <span class="event-tag tag-mid">●重要</span>
-      </div>
-      <h2 class="card-title">🏭 中国製造業PMI（購買担当者景気指数）</h2>
-      <div class="card-event-name">該当イベント: 中国製造業PMI（4月分）</div>
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">⏰ 発表タイミング</div>
-    <div class="section-body">毎月月末・日本時間 10:00（公式）/ 10:45（財新）</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📖 どんな指標？</div>
-    <div class="section-body">中国の製造業の景況感を示す指標。50以上=景気拡大、50以下=景気縮小を意味する。『公式PMI』（国家統計局）と『財新PMI』（民間企業中心）の2種類。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">💡 なぜ相場を動かす？</div>
-    <div class="section-body">中国の景気の先行指標。日本の素材・機械メーカーの受注動向を先読みできる。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📊 結果別シナリオ</div>
-    <div class="scenarios">
-      <div class="scenario">
-  <div class="scenario-label">▸ 50以上＆改善</div>
-  <div class="scenario-impact">豪ドル・銅価格上昇／日経の素材株（鉄鋼・化学）上昇</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 50付近で小動き</div>
-  <div class="scenario-impact">材料視されず</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 50割れ＆悪化</div>
-  <div class="scenario-impact">豪ドル・銅価格下落／日経の素材株下落／円高（リスクオフ）</div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">🔍 注目ポイント</div>
-    <ul class="watch-list">
-      <li>公式PMIと財新PMIの乖離</li><li>新規受注（先行性が高い）</li><li>雇用指数</li>
-    </ul>
-  </div>
-
-  <div class="card-tip">
-    <strong>💼 投資家の心得</strong>
-    公式PMIは国有大企業中心、財新PMIは民間中小企業中心。両方見ることで全体像が掴める。
-  </div>
-</article>
-
-<article class="indicator-card">
-  <div class="card-header">
-    <div class="card-date-block">
-      <div class="card-until">明日</div>
-      <div class="card-date">4/30（木）</div>
-    </div>
-    <div class="card-title-block">
-      <div class="card-tags">
-        <span class="event-tag tag-jp">🇯🇵 日本</span>
-        <span class="event-tag tag-mid">●重要</span>
-      </div>
-      <h2 class="card-title">🏭 鉱工業生産（日本）</h2>
-      <div class="card-event-name">該当イベント: 鉱工業生産（3月速報）</div>
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">⏰ 発表タイミング</div>
-    <div class="section-body">毎月月末・日本時間 8:50（速報）</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📖 どんな指標？</div>
-    <div class="section-body">経産省が発表する日本の鉱工業の生産指数。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">💡 なぜ相場を動かす？</div>
-    <div class="section-body">日本の製造業の活動度合いを示す指標。輸出関連株や日経平均に影響。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📊 結果別シナリオ</div>
-    <div class="scenarios">
-      <div class="scenario">
-  <div class="scenario-label">▸ 前月比プラス</div>
-  <div class="scenario-impact">日経の輸出株上昇</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ ほぼ横ばい</div>
-  <div class="scenario-impact">材料視されず</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 前月比マイナス</div>
-  <div class="scenario-impact">日経の輸出株下落</div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">🔍 注目ポイント</div>
-    <ul class="watch-list">
-      <li>前月比</li><li>前年同月比</li><li>出荷・在庫指数</li>
-    </ul>
-  </div>
-
-  <div class="card-tip">
-    <strong>💼 投資家の心得</strong>
-    速報値発表後、確報値で大きく改定されることもあるので速報値の数字を過信しない。
-  </div>
-</article>
-
-<article class="indicator-card">
-  <div class="card-header">
-    <div class="card-date-block">
-      <div class="card-until">明日</div>
-      <div class="card-date">4/30（木）</div>
-    </div>
-    <div class="card-title-block">
-      <div class="card-tags">
-        <span class="event-tag tag-eu">🇪🇺 欧州</span>
-        <span class="event-tag tag-mid">●重要</span>
-      </div>
-      <h2 class="card-title">🇪🇺 ユーロ圏GDP</h2>
-      <div class="card-event-name">該当イベント: ユーロ圏GDP速報（Q1）</div>
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">⏰ 発表タイミング</div>
-    <div class="section-body">四半期ごと・日本時間 18:00</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📖 どんな指標？</div>
-    <div class="section-body">ユーロ圏全体の四半期GDP。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">💡 なぜ相場を動かす？</div>
-    <div class="section-body">ECBの利下げ判断材料。ユーロ円・ユーロドルに影響。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📊 結果別シナリオ</div>
-    <div class="scenarios">
-      <div class="scenario">
-  <div class="scenario-label">▸ 予想を上回る</div>
-  <div class="scenario-impact">ユーロ高（ECB利下げ後退観測）</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 予想通り</div>
-  <div class="scenario-impact">小動き</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 予想を下回る</div>
-  <div class="scenario-impact">ユーロ安（ECB利下げ前倒し観測）</div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">🔍 注目ポイント</div>
-    <ul class="watch-list">
-      <li>前期比年率</li><li>ドイツGDP（最大経済国）</li>
-    </ul>
-  </div>
-
-  <div class="card-tip">
-    <strong>💼 投資家の心得</strong>
-    ドイツGDPと同時か近接して発表されるため、合わせて見る。
-  </div>
-</article>
-
-<article class="indicator-card">
-  <div class="card-header">
-    <div class="card-date-block">
       <div class="card-until">明後日</div>
-      <div class="card-date">5/1（金）</div>
+      <div class="card-date">5/8（金）</div>
     </div>
     <div class="card-title-block">
       <div class="card-tags">
         <span class="event-tag tag-us">🇺🇸 米国</span>
-        <span class="event-tag tag-mid">●重要</span>
+        <span class="event-tag tag-high">⭐最重要</span>
       </div>
-      <h2 class="card-title">🏭 ISM製造業景況感指数</h2>
-      <div class="card-event-name">該当イベント: ISM製造業</div>
+      <h2 class="card-title">👷 米雇用統計（NFP）</h2>
+      <div class="card-event-name">該当イベント: 米雇用統計（4月分）</div>
     </div>
   </div>
 
   <div class="card-section">
     <div class="section-label">⏰ 発表タイミング</div>
-    <div class="section-body">毎月月初・日本時間 23:00（夏時間）/ 24:00（冬時間）</div>
+    <div class="section-body">毎月第1金曜・日本時間 21:30〜22:30</div>
   </div>
 
   <div class="card-section">
     <div class="section-label">📖 どんな指標？</div>
-    <div class="section-body">ISM（全米供給管理協会）が発表する製造業の景況感指数。50以上=拡大、50以下=縮小。</div>
+    <div class="section-body">米労働省が発表する非農業部門雇用者数（NFP）と失業率の月次統計。米経済の最重要指標のひとつ。</div>
   </div>
 
   <div class="card-section">
     <div class="section-label">💡 なぜ相場を動かす？</div>
-    <div class="section-body">米景気の先行指標。雇用統計・GDPに先行して景気の方向を示す。</div>
+    <div class="section-body">FRBの金融政策（利上げ・利下げ）に直結。雇用が強ければ景気拡大・利下げ後退観測、弱ければ景気減速・利下げ加速観測につながる。</div>
   </div>
 
   <div class="card-section">
     <div class="section-label">📊 結果別シナリオ</div>
     <div class="scenarios">
       <div class="scenario">
-  <div class="scenario-label">▸ 50超＆改善</div>
-  <div class="scenario-impact">ドル高／株高（特にシクリカル）</div>
+  <div class="scenario-label">▸ 強い結果（予想を大幅上回る）</div>
+  <div class="scenario-impact">ドル高・円安／米10年債利回り上昇／株は『良いニュース＝強い経済』で上昇する場合と、『利下げが遠のく』で下落する場合あり</div>
 </div>
 <div class="scenario">
-  <div class="scenario-label">▸ 50付近で小動き</div>
-  <div class="scenario-impact">材料視されず</div>
+  <div class="scenario-label">▸ ほぼ予想通り</div>
+  <div class="scenario-impact">材料出尽くしで小動き。失業率と平均時給のサプライズに注目が移る</div>
 </div>
 <div class="scenario">
-  <div class="scenario-label">▸ 50割れ＆悪化</div>
-  <div class="scenario-impact">ドル安／株安（景気後退懸念）</div>
+  <div class="scenario-label">▸ 弱い結果（予想を大幅下回る）</div>
+  <div class="scenario-impact">ドル安・円高／米10年債利回り低下／株は利下げ期待で上昇する場合と、景気後退懸念で下落する場合あり</div>
 </div>
 
     </div>
@@ -372,77 +195,16 @@
   <div class="card-section">
     <div class="section-label">🔍 注目ポイント</div>
     <ul class="watch-list">
-      <li>総合指数（50との比較）</li><li>新規受注（先行性大）</li><li>雇用指数（NFPの先行指標）</li><li>価格指数（インフレの先行指標）</li>
+      <li>NFP変化数（予想vs実績）</li><li>失業率</li><li>平均時給（前月比・前年同月比）</li><li>前月分の改定値</li>
     </ul>
   </div>
 
   <div class="card-tip">
     <strong>💼 投資家の心得</strong>
-    雇用指数はNFPの先行指標として要注目。
-  </div>
-</article>
-
-<article class="indicator-card">
-  <div class="card-header">
-    <div class="card-date-block">
-      <div class="card-until">明後日</div>
-      <div class="card-date">5/1（金）</div>
-    </div>
-    <div class="card-title-block">
-      <div class="card-tags">
-        <span class="event-tag tag-cn">🇨🇳 中国</span>
-        <span class="event-tag tag-mid">●重要</span>
-      </div>
-      <h2 class="card-title">🇨🇳 中国 財新PMI</h2>
-      <div class="card-event-name">該当イベント: 財新PMI</div>
-    </div>
+    結果発表の瞬間にドル円が1〜2円動くこともある最重要指標。短期トレードは避け、結果が出た後の方向感を見てから動くのが無難。
   </div>
 
-  <div class="card-section">
-    <div class="section-label">⏰ 発表タイミング</div>
-    <div class="section-body">毎月月初・日本時間 10:45</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📖 どんな指標？</div>
-    <div class="section-body">民間企業中心の中国製造業PMI（公式PMIは国有企業中心）。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">💡 なぜ相場を動かす？</div>
-    <div class="section-body">中国の中小企業・民間企業の景況感を反映。公式PMIとの乖離が中国経済の実態を示すヒントに。</div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">📊 結果別シナリオ</div>
-    <div class="scenarios">
-      <div class="scenario">
-  <div class="scenario-label">▸ 50超</div>
-  <div class="scenario-impact">豪ドル上昇／日経の中国関連株上昇</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 50付近</div>
-  <div class="scenario-impact">小動き</div>
-</div>
-<div class="scenario">
-  <div class="scenario-label">▸ 50割れ</div>
-  <div class="scenario-impact">豪ドル下落／日経の中国関連株下落</div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="card-section">
-    <div class="section-label">🔍 注目ポイント</div>
-    <ul class="watch-list">
-      <li>総合指数</li><li>公式PMIとの乖離</li>
-    </ul>
-  </div>
-
-  <div class="card-tip">
-    <strong>💼 投資家の心得</strong>
-    公式PMIの翌日に発表されることが多い。両方見ることで中国経済の全体像が掴める。
-  </div>
+  
 </article>
 
 
