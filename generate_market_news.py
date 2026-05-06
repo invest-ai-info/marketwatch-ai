@@ -2946,9 +2946,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#0969da;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .sentiment-banner{{background:linear-gradient(135deg,#1c2f1c,#162416);border:1px solid #2ea043;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}}
-    .sentiment-badge{{color:#fff;font-weight:700;font-size:1.3rem;padding:6px 16px;border-radius:20px;white-space:nowrap;background:{badge_color}}}
-    .sentiment-text{{color:#1a7f37;font-size:.95rem;line-height:1.6}}
+    .sentiment-banner{{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid {badge_color};border-radius:16px;padding:32px 36px;margin-bottom:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}}
+    .sentiment-icon{{font-size:4rem;line-height:1;flex-shrink:0}}
+    .sentiment-body{{flex:1;min-width:200px}}
+    .sentiment-label-small{{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}}
+    .sentiment-badge{{color:{badge_color};font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}}
+    .sentiment-text{{color:#424a53;font-size:.92rem;line-height:1.6}}
     .section-title{{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
     .cards-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}}
     .card{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px;transition:border-color .2s}}
@@ -3026,11 +3029,15 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-badge">{emoji} {label}</div>
-    <div class="sentiment-text">
-      日経平均 {fmt_price(nk, 0, suffix='円')} / S&amp;P500 {fmt_price(sp, 2)} /
-      USD/JPY {fmt_price(fx, 2, suffix='円')} / BTC {fmt_price(btc, 0, prefix='$')} /
-      金 {fmt_price(gld, 2, prefix='$', suffix='/oz')}
+    <div class="sentiment-icon">{emoji}</div>
+    <div class="sentiment-body">
+      <div class="sentiment-label-small">本日のマーケットセンチメント</div>
+      <span class="sentiment-badge">{label}</span>
+      <div class="sentiment-text">
+        日経 {fmt_price(nk, 0, suffix='円')} ／ S&amp;P500 {fmt_price(sp, 2)} ／
+        USD/JPY {fmt_price(fx, 2, suffix='円')} ／ BTC {fmt_price(btc, 0, prefix='$')} ／
+        金 {fmt_price(gld, 2, prefix='$', suffix='/oz')}
+      </div>
     </div>
   </div>
 
@@ -3133,6 +3140,34 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
     <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー）-->
     <div style="font-size:.82rem;color:#57606a;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+  </div>
+
+  <!-- 4機能カード（より深い市場分析へ）-->
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid #d0d7de">
+    <div style="font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:6px">🔍 AIが導く、より深い市場分析へ</div>
+    <div style="font-size:.88rem;color:#57606a;margin-bottom:20px">主要機能ページへのショートカット</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+      <a href="market-health.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#dafbe1,#ffffff);border:1px solid #1a7f37;border-radius:12px;text-decoration:none;transition:all .25s">
+        <div style="font-size:1.7rem;margin-bottom:8px">🩺</div>
+        <div style="font-size:1.02rem;font-weight:700;color:#1a7f37;margin-bottom:6px">市場健康度ダッシュボード</div>
+        <div style="font-size:.78rem;color:#57606a;line-height:1.6">VIX・恐怖と強欲・バフェット指数で市場の過熱感を多角的に可視化</div>
+      </a>
+      <a href="calendar.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#ddf4ff,#ffffff);border:1px solid #0969da;border-radius:12px;text-decoration:none;transition:all .25s">
+        <div style="font-size:1.7rem;margin-bottom:8px">📅</div>
+        <div style="font-size:1.02rem;font-weight:700;color:#0969da;margin-bottom:6px">マクロ経済カレンダー</div>
+        <div style="font-size:.78rem;color:#57606a;line-height:1.6">日米欧中の主要指標・FOMC・日銀イベントを月間一覧でチェック</div>
+      </a>
+      <a href="charts.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#fff8c5,#ffffff);border:1px solid #9a6700;border-radius:12px;text-decoration:none;transition:all .25s">
+        <div style="font-size:1.7rem;margin-bottom:8px">📈</div>
+        <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">50年価格チャート</div>
+        <div style="font-size:.78rem;color:#57606a;line-height:1.6">日経・S&amp;P500・ドル円・金の超長期トレンドと歴史的イベント一覧</div>
+      </a>
+      <a href="guides.html" style="display:block;padding:22px 24px;background:linear-gradient(135deg,#ffe5e5,#ffffff);border:1px solid #cf222e;border-radius:12px;text-decoration:none;transition:all .25s">
+        <div style="font-size:1.7rem;margin-bottom:8px">📚</div>
+        <div style="font-size:1.02rem;font-weight:700;color:#cf222e;margin-bottom:6px">解説記事・速報一覧</div>
+        <div style="font-size:.78rem;color:#57606a;line-height:1.6">投資の基礎から最新の速報まで、AIが厳選した記事を一覧表示</div>
+      </a>
+    </div>
   </div>
 
 </main>
