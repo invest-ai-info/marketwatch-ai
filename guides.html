@@ -21,9 +21,12 @@
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}
     header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
     .header-inner{max-width:1200px;margin:0 auto}
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -32,6 +35,7 @@
     .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
     .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
     .breadcrumb a{color:#0969da;text-decoration:none}
     .breadcrumb a:hover{text-decoration:underline}
@@ -53,9 +57,30 @@
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .page-header{background:#161b22;border-color:#30363d}
+    body.dark .page-desc{color:#8b949e}
+    body.dark h1{color:#79c0ff}
+    body.dark h2,body.dark .category-title{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark .article-card{background:#161b22;border-color:#30363d}
+    body.dark .article-card:hover{background:#1c2128;border-color:#58a6ff}
+    body.dark .article-title{color:#e6edf3}
+    body.dark .article-desc{color:#8b949e}
+    body.dark .article-meta{color:#6e7681}
+    body.dark .article-meta time{color:#79c0ff}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
   </style>
 </head>
 <body>
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
 <header>
   <div class="header-inner">
     <div class="header-title">📊 MarketWatch AI</div>
@@ -72,29 +97,11 @@
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   </nav>
 
-  <div class="breadcrumb">
-    <a href="index.html">トップ</a> &gt; 解説記事・速報一覧
-  </div>
+  <div class="breadcrumb"><a href="index.html">トップ</a> ＞ 解説記事一覧</div>
 
   <div class="page-header">
     <h1>📚 解説記事・速報一覧</h1>
-    <div class="page-desc">MarketWatch AIで公開している投資・市場分析の解説記事および速報を一覧でご覧いただけます。新しい記事ほど上に表示されます。</div>
-  </div>
-
-  <!-- 週間展望 -->
-  <div class="category-section">
-    <div class="category-title">📅 週間マーケット展望</div>
-    <div class="article-list">
-      <a class="article-card" href="guide-weekly-2026-05-04.html">
-        <span class="article-badge badge-guide">週間展望</span>
-        <div class="article-title">今週のマーケット戦略（5/4〜5/10）：4/30介入実施・連続介入リスク・米雇用統計</div>
-        <div class="article-desc">4/30の為替介入（約5兆円）でドル円155円台へ。連続介入の可能性、外貨準備の弾切れ議論、5/8米雇用統計、5/7日経ギャップ、投資家の戦略を解説。</div>
-        <div class="article-meta">
-          <time datetime="2026-05-04">2026年5月4日</time>
-          <span>読了 約8分</span>
-        </div>
-      </a>
-    </div>
+    <div class="page-desc">投資判断に役立つ解説記事や緊急速報をカテゴリ別にまとめています。</div>
   </div>
 
   <!-- 速報・タイムリー記事 -->
@@ -121,7 +128,7 @@
       </a>
       <a class="article-card" href="guide-gw-gap-2026-05.html">
         <span class="article-badge badge-news">分析</span>
-        <div class="article-title">GW明け5月7日東京市場ギャップ分析：休場中の海外動向と日経の窓開けリスク</div>
+        <div class="article-title">GW明け5月7日東京市場ギャップ分析:休場中の海外動向と日経の窓開けリスク</div>
         <div class="article-desc">GW明け5/7の東京市場ギャップリスクを分析。休場中の海外動向、CME日経先物での先読み法、3シナリオ別売買戦略を解説。</div>
         <div class="article-meta">
           <time datetime="2026-05-06">2026年5月6日</time>
@@ -149,7 +156,7 @@
       <a class="article-card" href="guide-boj-2026-04.html">
         <span class="article-badge badge-news">速報</span>
         <div class="article-title">日銀4月会合速報：政策金利据え置き＋上田総裁会見・今後の利上げシナリオを徹底分析</div>
-        <div class="article-desc">2026年4月28日の日銀会合は政策金利を0.75%で据え置き。3名の反対票・物価見通し大幅上方修正・6月利上げ観測の意味を解説。</div>
+        <div class="article-desc">2026年4月29日の日銀会合は0.75%据え置き。賛成6・反対3、物価見通し+1.9→+2.8%、上田総裁会見と次回利上げのタイミングを解説。</div>
         <div class="article-meta">
           <time datetime="2026-04-29">2026年4月29日</time>
           <span>読了 約8分</span>
@@ -157,19 +164,28 @@
       </a>
       <a class="article-card" href="guide-nikkei-60000.html">
         <span class="article-badge badge-news">速報</span>
-        <div class="article-title">日経平均6万円突破！どこまで上がる？上値目処と4つのリスクを徹底分析</div>
-        <div class="article-desc">2026年4月、日経平均が史上初の6万円突破。バブル期との比較、上値目処の3シナリオ、上昇要因とリスクを分析。</div>
+        <div class="article-title">日経平均6万円突破！どこまで上がる？背景と今後の展望を徹底解説</div>
+        <div class="article-desc">日経平均が史上初の6万円台を突破。米株高・円安・企業業績好調などの背景、今後のシナリオを分かりやすく解説。</div>
         <div class="article-meta">
           <time datetime="2026-04-26">2026年4月26日</time>
-          <span>読了 約8分</span>
+          <span>読了 約7分</span>
+        </div>
+      </a>
+      <a class="article-card" href="guide-weekly-2026-05-04.html">
+        <span class="article-badge badge-news">週間展望</span>
+        <div class="article-title">今週のマーケット戦略（5/4〜5/10）：4/30介入実施・連続介入リスク・米雇用統計</div>
+        <div class="article-desc">GWはざまの介入後の市場、5/8米雇用統計、5/7東京市場再開時のギャップリスクを徹底分析。</div>
+        <div class="article-meta">
+          <time datetime="2026-05-04">2026年5月4日</time>
+          <span>読了 約9分</span>
         </div>
       </a>
     </div>
   </div>
 
-  <!-- 経済指標の解説記事 -->
+  <!-- 経済指標解説 -->
   <div class="category-section">
-    <div class="category-title">📰 経済指標の解説記事</div>
+    <div class="category-title">📰 経済指標解説</div>
     <div class="article-list">
       <a class="article-card" href="guide-fomc.html">
         <span class="article-badge badge-guide">解説</span>
@@ -235,11 +251,50 @@
     </div>
   </div>
 
-  <!-- 解説記事 -->
+  <!-- 投資指標解説 -->
   <div class="category-section">
     <div class="category-title">📖 投資指標の解説記事</div>
     <div class="article-list">
       <a class="article-card" href="guide-vix.html">
         <span class="article-badge badge-guide">解説</span>
         <div class="article-title">VIX恐怖指数とは？読み方・水準別の意味・暴落予兆を初心者向けに徹底解説</div>
-        <div class="article-desc">VIXの意味・計算方法・レベル別解釈�
+        <div class="article-desc">VIXの意味・計算方法・レベル別解釈・過去の暴落事例・S&P500との関係を解説。</div>
+        <div class="article-meta">
+          <time datetime="2026-04-26">2026年4月26日</time>
+          <span>読了 約6分</span>
+        </div>
+      </a>
+      <a class="article-card" href="guide-buffett-indicator.html">
+        <span class="article-badge badge-guide">解説</span>
+        <div class="article-title">バフェット指数とは？市場の割高・割安判定の使い方を初心者向けに徹底解説</div>
+        <div class="article-desc">バフェット指数の意味・計算式・水準別の解釈・歴史的データを使った市場判断方法を解説。</div>
+        <div class="article-meta">
+          <time datetime="2026-04-26">2026年4月26日</time>
+          <span>読了 約6分</span>
+        </div>
+      </a>
+      <a class="article-card" href="guide-fear-greed.html">
+        <span class="article-badge badge-guide">解説</span>
+        <div class="article-title">恐怖と強欲指数とは？投資家心理を数値化したCNN指標の使い方を徹底解説</div>
+        <div class="article-desc">恐怖と強欲指数の構成要素7つ、レベル別解釈、逆張り投資の使い方を分かりやすく解説。</div>
+        <div class="article-meta">
+          <time datetime="2026-04-26">2026年4月26日</time>
+          <span>読了 約6分</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a>
+</footer>
+
+<script>
+(function(){function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
