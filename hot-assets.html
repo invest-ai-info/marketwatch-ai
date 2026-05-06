@@ -30,7 +30,7 @@
 </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}
     header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
     .header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#bf3989,#cf222e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -74,13 +74,18 @@
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
 <header>
   <div class="header-inner">
     <div>
       <div class="header-title">🔥 出来高急増ランキング</div>
-      <div class="header-meta">最終更新: <span>2026年05月06日 15:13 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年05月06日 20:27 JST</span></div>
     </div>
     <div class="header-meta">本日出来高 ÷ 20日平均</div>
   </div>
@@ -335,58 +340,58 @@
         <tbody>
         <tr>
           <td class="rank" style="color:#bf3989">1</td>
-          <td class="asset-name">英FTSE<br><span class="asset-sym">^FTSE</span></td>
-          <td class="price-cell">10,219.10</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.40%</span></td>
-          <td class="vol-cell">1.1B</td><td><span class="badge-vol badge-calm">1.1×</span></td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#bf3989">2</td>
           <td class="asset-name">S&P500<br><span class="asset-sym">^GSPC</span></td>
           <td class="price-cell">7,259.22</td>
           <td><span style="color:#1a7f37;font-weight:600">+0.81%</span></td>
           <td class="vol-cell">5.3B</td><td><span class="badge-vol badge-calm">1.0×</span></td>
         </tr>
         <tr>
-          <td class="rank" style="color:#bf3989">3</td>
+          <td class="rank" style="color:#bf3989">2</td>
           <td class="asset-name">日経平均<br><span class="asset-sym">^N225</span></td>
           <td class="price-cell">59,513.12</td>
           <td><span style="color:#1a7f37;font-weight:600">+0.38%</span></td>
           <td class="vol-cell">150.7M</td><td><span class="badge-vol badge-calm">1.0×</span></td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">4</td>
-          <td class="asset-name">独DAX<br><span class="asset-sym">^GDAXI</span></td>
-          <td class="price-cell">24,401.70</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.71%</span></td>
-          <td class="vol-cell">67.7M</td><td><span class="badge-vol badge-calm">1.0×</span></td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#57606a">5</td>
+          <td class="rank" style="color:#bf3989">3</td>
           <td class="asset-name">ナスダック<br><span class="asset-sym">^IXIC</span></td>
           <td class="price-cell">25,326.13</td>
           <td><span style="color:#1a7f37;font-weight:600">+1.03%</span></td>
           <td class="vol-cell">8.1B</td><td><span class="badge-vol badge-calm">0.9×</span></td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">6</td>
+          <td class="rank" style="color:#57606a">4</td>
           <td class="asset-name">NYダウ<br><span class="asset-sym">^DJI</span></td>
           <td class="price-cell">49,298.25</td>
           <td><span style="color:#1a7f37;font-weight:600">+0.73%</span></td>
           <td class="vol-cell">395.6M</td><td><span class="badge-vol badge-calm">0.8×</span></td>
         </tr>
         <tr>
+          <td class="rank" style="color:#57606a">5</td>
+          <td class="asset-name">独DAX<br><span class="asset-sym">^GDAXI</span></td>
+          <td class="price-cell">25,118.71</td>
+          <td><span style="color:#1a7f37;font-weight:600">+2.94%</span></td>
+          <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">6</td>
+          <td class="asset-name">英FTSE<br><span class="asset-sym">^FTSE</span></td>
+          <td class="price-cell">10,466.87</td>
+          <td><span style="color:#1a7f37;font-weight:600">+2.42%</span></td>
+          <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
+        </tr>
+        <tr>
           <td class="rank" style="color:#57606a">7</td>
-          <td class="asset-name">欧州Stoxx50<br><span class="asset-sym">^STOXX50E</span></td>
-          <td class="price-cell">5,869.63</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.84%</span></td>
-          <td class="vol-cell">20.1M</td><td><span class="badge-vol badge-calm">0.8×</span></td>
+          <td class="asset-name">香港ハンセン<br><span class="asset-sym">^HSI</span></td>
+          <td class="price-cell">26,213.78</td>
+          <td><span style="color:#1a7f37;font-weight:600">+1.22%</span></td>
+          <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">8</td>
-          <td class="asset-name">香港ハンセン<br><span class="asset-sym">^HSI</span></td>
-          <td class="price-cell">26,136.98</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.92%</span></td>
+          <td class="asset-name">欧州Stoxx50<br><span class="asset-sym">^STOXX50E</span></td>
+          <td class="price-cell">6,054.08</td>
+          <td><span style="color:#1a7f37;font-weight:600">+3.14%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         </tbody>
@@ -410,86 +415,86 @@
         <tbody>
         <tr>
           <td class="rank" style="color:#bf3989">1</td>
-          <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
-          <td class="price-cell">76.37</td>
-          <td><span style="color:#1a7f37;font-weight:600">+4.46%</span></td>
+          <td class="asset-name">WTI原油<br><span class="asset-sym">CL=F</span></td>
+          <td class="price-cell">90.48</td>
+          <td><span style="color:#cf222e;font-weight:600">-11.53%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">2</td>
-          <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
-          <td class="price-cell">6.10</td>
-          <td><span style="color:#1a7f37;font-weight:600">+2.63%</span></td>
+          <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
+          <td class="price-cell">78.07</td>
+          <td><span style="color:#1a7f37;font-weight:600">+6.79%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">3</td>
-          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
-          <td class="price-cell">4,672.70</td>
-          <td><span style="color:#1a7f37;font-weight:600">+2.57%</span></td>
+          <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
+          <td class="price-cell">6.20</td>
+          <td><span style="color:#1a7f37;font-weight:600">+4.30%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">4</td>
-          <td class="asset-name">WTI原油<br><span class="asset-sym">CL=F</span></td>
-          <td class="price-cell">99.98</td>
-          <td><span style="color:#cf222e;font-weight:600">-2.24%</span></td>
+          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
+          <td class="price-cell">89.70</td>
+          <td><span style="color:#1a7f37;font-weight:600">+3.92%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">5</td>
-          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
-          <td class="price-cell">79,827.91</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.64%</span></td>
+          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
+          <td class="price-cell">4,724.70</td>
+          <td><span style="color:#1a7f37;font-weight:600">+3.71%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">6</td>
-          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
-          <td class="price-cell">2,346.40</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.07%</span></td>
+          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
+          <td class="price-cell">1.45</td>
+          <td><span style="color:#1a7f37;font-weight:600">+2.89%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">7</td>
-          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
-          <td class="price-cell">113.29</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.57%</span></td>
+          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
+          <td class="price-cell">2,416.82</td>
+          <td><span style="color:#1a7f37;font-weight:600">+2.36%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">8</td>
-          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
-          <td class="price-cell">156.38</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.52%</span></td>
+          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
+          <td class="price-cell">82,696.18</td>
+          <td><span style="color:#1a7f37;font-weight:600">+2.19%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">9</td>
-          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
-          <td class="price-cell">1.39</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.32%</span></td>
+          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
+          <td class="price-cell">155.88</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.84%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">10</td>
-          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
-          <td class="price-cell">84.09</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.23%</span></td>
+          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
+          <td class="price-cell">113.21</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.49%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">11</td>
           <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
-          <td class="price-cell">183.45</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.18%</span></td>
+          <td class="price-cell">183.78</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.09%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">12</td>
           <td class="asset-name">GBP/JPY<br><span class="asset-sym">GBPJPY=X</span></td>
-          <td class="price-cell">212.68</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.16%</span></td>
+          <td class="price-cell">212.60</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.04%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         </tbody>
