@@ -3086,45 +3086,57 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <!-- 今日のカード -->
   <p class="section-title">本日のマーケット</p>
   <div class="cards-grid">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon icon-stocks">🗾</div>
-        <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <img src="08_market_stock.png" alt="株式市場" style="width:100%;height:120px;object-fit:cover;display:block">
+      <div style="padding:20px">
+        <div class="card-header">
+          <div class="card-icon icon-stocks">🗾</div>
+          <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
+        </div>
+        <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">{fmt_price(nk, 0, suffix='円')} {fmt_change(nk_chg)}</span></div>
+        <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">{fmt_price(sp, 2)} {fmt_change(sp_chg)}</span></div>
+        <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{stocks_news_html}</div>
       </div>
-      <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">{fmt_price(nk, 0, suffix='円')} {fmt_change(nk_chg)}</span></div>
-      <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">{fmt_price(sp, 2)} {fmt_change(sp_chg)}</span></div>
-      <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{stocks_news_html}</div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon icon-fx">💱</div>
-        <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <img src="09_market_fx.png" alt="為替FX" style="width:100%;height:120px;object-fit:cover;display:block">
+      <div style="padding:20px">
+        <div class="card-header">
+          <div class="card-icon icon-fx">💱</div>
+          <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
+        </div>
+        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='円')} {fmt_change(fx_chg)}</span></div>
+        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='円')} {fmt_change(efx_chg)}</span></div>
+        <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{fx_news_html}</div>
       </div>
-      <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='円')} {fmt_change(fx_chg)}</span></div>
-      <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='円')} {fmt_change(efx_chg)}</span></div>
-      <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{fx_news_html}</div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon icon-cmd">🛢️</div>
-        <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <img src="10_market_commodity.png" alt="コモディティ" style="width:100%;height:120px;object-fit:cover;display:block">
+      <div style="padding:20px">
+        <div class="card-header">
+          <div class="card-icon icon-cmd">🛢️</div>
+          <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
+        </div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
+        <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{cmd_news_html}</div>
       </div>
-      <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
-      <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
-      <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{cmd_news_html}</div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon icon-crypto">₿</div>
-        <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <img src="11_market_crypto.png" alt="暗号資産" style="width:100%;height:120px;object-fit:cover;display:block">
+      <div style="padding:20px">
+        <div class="card-header">
+          <div class="card-icon icon-crypto">₿</div>
+          <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
+        </div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">{fmt_price(btc, 0, prefix='$')} {fmt_change(btc_chg)}</span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">{fmt_price(eth, 2, prefix='$')} {fmt_change(eth_chg)}</span></div>
+        <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}</div>
       </div>
-      <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">{fmt_price(btc, 0, prefix='$')} {fmt_change(btc_chg)}</span></div>
-      <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">{fmt_price(eth, 2, prefix='$')} {fmt_change(eth_chg)}</span></div>
-      <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-      <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}</div>
     </div>
   </div>
 
