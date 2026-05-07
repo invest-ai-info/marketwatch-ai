@@ -2995,7 +2995,21 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
-    @media(max-width:600px){{.header-inner{{flex-direction:column}}.sentiment-banner{{flex-direction:column}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
+    .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
+    .hero-img{{width:100%;height:auto;display:block;max-height:280px;object-fit:cover}}
+    .hero-overlay{{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px}}
+    .hero-title{{font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)}}
+    .hero-sub{{font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)}}
+    @media(max-width:600px){{
+      .header-inner{{flex-direction:column}}
+      .sentiment-banner{{flex-direction:column}}
+      .nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
+      .nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
+      .hero-img{{max-height:140px;object-position:center}}
+      .hero-overlay{{padding:0 18px;background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.7) 70%,rgba(255,255,255,.5) 100%)}}
+      .hero-title{{font-size:1.3rem;margin-bottom:2px;text-shadow:0 1px 2px #fff,0 0 4px #fff}}
+      .hero-sub{{font-size:.78rem;text-shadow:0 1px 2px #fff,0 0 3px #fff}}
+    }}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -3028,12 +3042,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </nav>
 
   <!-- ヒーロー画像 -->
-  <div style="position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)">
-    <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" style="width:100%;height:auto;display:block;max-height:280px;object-fit:cover">
-    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px">
+  <div class="hero-banner">
+    <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
+    <div class="hero-overlay">
       <div>
-        <div style="font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)">マーケットニュース</div>
-        <div style="font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)">最新の市場動向をAIがわかりやすくお届け</div>
+        <div class="hero-title">マーケットニュース</div>
+        <div class="hero-sub">最新の市場動向をAIがわかりやすくお届け</div>
       </div>
     </div>
   </div>
