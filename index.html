@@ -86,7 +86,21 @@
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
-    @media(max-width:600px){.header-inner{flex-direction:column}.sentiment-banner{flex-direction:column}.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
+    .hero-banner{position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+    .hero-img{width:100%;height:auto;display:block;max-height:280px;object-fit:cover}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px}
+    .hero-title{font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)}
+    .hero-sub{font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)}
+    @media(max-width:600px){
+      .header-inner{flex-direction:column}
+      .sentiment-banner{flex-direction:column}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+      .hero-img{max-height:140px;object-position:center}
+      .hero-overlay{padding:0 18px;background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.7) 70%,rgba(255,255,255,.5) 100%)}
+      .hero-title{font-size:1.3rem;margin-bottom:2px;text-shadow:0 1px 2px #fff,0 0 4px #fff}
+      .hero-sub{font-size:.78rem;text-shadow:0 1px 2px #fff,0 0 3px #fff}
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -101,7 +115,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年5月7日 18:44 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年5月7日 18:51 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
@@ -119,12 +133,12 @@
   </nav>
 
   <!-- ヒーロー画像 -->
-  <div style="position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)">
-    <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" style="width:100%;height:auto;display:block;max-height:280px;object-fit:cover">
-    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px">
+  <div class="hero-banner">
+    <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
+    <div class="hero-overlay">
       <div>
-        <div style="font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)">マーケットニュース</div>
-        <div style="font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)">最新の市場動向をAIがわかりやすくお届け</div>
+        <div class="hero-title">マーケットニュース</div>
+        <div class="hero-sub">最新の市場動向をAIがわかりやすくお届け</div>
       </div>
     </div>
   </div>
@@ -137,8 +151,8 @@
       <span class="sentiment-badge">やや強気</span>
       <div class="sentiment-text">
         日経 62,834円 ／ S&amp;P500 7,365.12 ／
-        USD/JPY 156.33円 ／ BTC $80,888 ／
-        金 $4,743.70/oz
+        USD/JPY 156.35円 ／ BTC $80,940 ／
+        金 $4,746.50/oz
       </div>
     </div>
   </div>
@@ -214,13 +228,13 @@
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,365.12 <span class="up price-change">😊▲1.46%</span></span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.fool.com/investing/2026/05/07/citadel-ken-griffin-quiet-part-out-loud-inflation/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> シタデルのケン・グリフィン氏がインフレについて大声で静かな部分を語ったが、ウォール街はそれを気に入らないだろう</span>
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> シタデルのケン・グリフィン氏がインフレについて大声で静かな部分を語った -- そしてウォール街はそれを気に入らないだろう</span>
           <span class="news-meta">Motley Fool · 2026-05-07</span>
         </a><a class="news-item" href="https://www.fool.com/investing/2026/05/07/ai-stocks-were-just-put-to-the-test-heres-how-they/" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> AI株はまさに試練にさらされた。彼らがどうやってうまくいったかは次のとおりです。</span>
           <span class="news-meta">Motley Fool · 2026-05-07</span>
         </a><a class="news-item" href="https://www.barrons.com/articles/bitcoin-price-ethereum-xrp-crypto-iran-9e5461dd?siteid=yhoof2&yptr=yahoo" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> ビットコイン、イーサリアム、XRPの下落。なぜイランの平和を願っても仮想通貨危機を打開できないのか。</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> ビットコイン、イーサリアム、XRP下落。なぜイランの平和を願っても仮想通貨危機を打開できないのか。</span>
           <span class="news-meta">Barrons.com · 2026-05-07</span>
         </a></div>
       </div>
@@ -232,8 +246,8 @@
           <div class="card-icon icon-fx">💱</div>
           <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
         </div>
-        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">156.33円 <span class="down price-change">😢▼0.86%</span></span></div>
-        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">184.09円 <span class="down price-change">😢▼0.35%</span></span></div>
+        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">156.35円 <span class="down price-change">😢▼0.84%</span></span></div>
+        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">184.11円 <span class="down price-change">😢▼0.34%</span></span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/markets/currencies/articles/japan-may-spent-32-billion-091340085.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> 日本は追加の円買い介入に320億ドルを費やした可能性がある</span>
@@ -254,8 +268,8 @@
           <div class="card-icon icon-cmd">🛢️</div>
           <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
         </div>
-        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$92.51/bbl <span class="down price-change">😢▼2.70%</span></span></div>
-        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,743.70/oz <span class="up price-change">😊▲1.32%</span></span></div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$92.41/bbl <span class="down price-change">😢▼2.81%</span></span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,746.50/oz <span class="up price-change">😊▲1.38%</span></span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.mining-technology.com/news/arizona-eagle-results-eagle-project-drilling/" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-pos">😊</span> アリゾナ・イーグルがイーグル・プロジェクトの掘削結果を報告</span>
@@ -276,14 +290,14 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$80,888 <span class="down price-change">😢▼0.66%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,328.29 <span class="down price-change">😢▼0.96%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$80,940 <span class="down price-change">😢▼0.60%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,329.30 <span class="down price-change">😢▼0.91%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.fool.com/investing/2026/05/07/better-meme-coin-dogecoin-vs-pepe/" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> より優れたミームコイン: ドージコイン vs. ペペ</span>
           <span class="news-meta">Motley Fool · 2026-05-07</span>
         </a><a class="news-item" href="https://www.barrons.com/articles/bitcoin-price-ethereum-xrp-crypto-iran-9e5461dd?siteid=yhoof2&yptr=yahoo" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> ビットコイン、イーサリアム、XRPの下落。なぜイランの平和を願っても仮想通貨危機を打開できないのか。</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> ビットコイン、イーサリアム、XRP下落。なぜイランの平和を願っても仮想通貨危機を打開できないのか。</span>
           <span class="news-meta">Barrons.com · 2026-05-07</span>
         </a><a class="news-item" href="https://beincrypto.com/bitcoin-miners-q1-losses-ai-pivot/" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neg">😢</span> AIピボットの加速でビットコインマイナーの第1四半期損失が拡大</span>
