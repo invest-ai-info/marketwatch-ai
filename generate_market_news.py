@@ -2995,6 +2995,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+    .market-card-img{{width:100%;height:120px;object-fit:cover;object-position:top;display:block}}
+    .a8-pc{{display:inline-block}}.a8-mobile{{display:none}}
     .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
     .hero-img{{width:100%;height:auto;display:block;max-height:280px;object-fit:cover}}
     .hero-overlay{{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px}}
@@ -3009,6 +3011,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       .hero-overlay{{padding:0 18px;background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.7) 70%,rgba(255,255,255,.5) 100%)}}
       .hero-title{{font-size:1.3rem;margin-bottom:2px;text-shadow:0 1px 2px #fff,0 0 4px #fff}}
       .hero-sub{{font-size:.78rem;text-shadow:0 1px 2px #fff,0 0 3px #fff}}
+      .market-card-img{{height:160px;object-position:top center}}
+      .a8-pc{{display:none}}.a8-mobile{{display:inline-block}}
     }}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
@@ -3086,10 +3090,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {_build_touraku_section(touraku)}
 
   <!-- A8広告枠①（トップページ・ニュース上）-->
-  <div style="margin:24px 0;padding:18px;background:#ffffff;border:1px solid #54aeff;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
-    <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー / 300×250 レクタングル）-->
-    <div style="font-size:.82rem;color:#57606a;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+  <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
+    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
+    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
   <!-- トップニュース -->
@@ -3102,7 +3106,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <p class="section-title">本日のマーケット</p>
   <div class="cards-grid">
     <div class="card" style="overflow:hidden;padding:0">
-      <img src="08_market_stock.png" alt="株式市場" style="width:100%;height:120px;object-fit:cover;display:block">
+      <img src="08_market_stock.png" alt="株式市場" class="market-card-img">
       <div style="padding:20px">
         <div class="card-header">
           <div class="card-icon icon-stocks">🗾</div>
@@ -3115,7 +3119,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
-      <img src="09_market_fx.png" alt="為替FX" style="width:100%;height:120px;object-fit:cover;display:block">
+      <img src="09_market_fx.png" alt="為替FX" class="market-card-img">
       <div style="padding:20px">
         <div class="card-header">
           <div class="card-icon icon-fx">💱</div>
@@ -3128,7 +3132,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
-      <img src="10_market_commodity.png" alt="コモディティ" style="width:100%;height:120px;object-fit:cover;display:block">
+      <img src="10_market_commodity.png" alt="コモディティ" class="market-card-img">
       <div style="padding:20px">
         <div class="card-header">
           <div class="card-icon icon-cmd">🛢️</div>
@@ -3141,7 +3145,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
-      <img src="11_market_crypto.png" alt="暗号資産" style="width:100%;height:120px;object-fit:cover;display:block">
+      <img src="11_market_crypto.png" alt="暗号資産" class="market-card-img">
       <div style="padding:20px">
         <div class="card-header">
           <div class="card-icon icon-crypto">₿</div>
@@ -3174,10 +3178,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <!-- A8広告枠②（トップページ・フッター上）-->
-  <div style="margin:32px 0;padding:18px;background:#ffffff;border:1px solid #54aeff;border-radius:10px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:10px">広告 / PR</div>
-    <!-- A8.net 広告コードをここに貼り付け（推奨：728×90 バナー）-->
-    <div style="font-size:.82rem;color:#57606a;line-height:1.6">＊ A8.net広告コード貼付け予定（証券口座・FX口座など）</div>
+  <div style="margin:32px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
+    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
+    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
   <!-- 4機能カード（より深い市場分析へ）-->
