@@ -820,7 +820,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 <main>
 
 <nav class="nav-bar">
-  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -876,7 +876,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
-  <a href="index.html">📊 マーケットニュース</a> &nbsp;|&nbsp;
+  <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   <a href="calendar.html">📅 経済カレンダー</a> &nbsp;|&nbsp;
   <a href="charts.html">📈 50年チャート</a> &nbsp;|&nbsp;
   <a href="vix.html">😱 VIX</a> &nbsp;|&nbsp;
@@ -1683,7 +1683,7 @@ def build_hot_assets_html(hot_data, now_jst):
 
   <!-- ナビゲーション -->
   <nav class="nav-bar">
-    <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -1703,7 +1703,7 @@ def build_hot_assets_html(hot_data, now_jst):
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
-  <a href="index.html">📊 マーケットニュース</a> &nbsp;|&nbsp;
+  <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   本データは自動取得・表示であり、投資助言ではありません。</p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
@@ -1906,7 +1906,7 @@ def build_calendar_html(now_jst):
 </header>
 <main>
 <nav class="nav-bar">
-  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -1949,7 +1949,7 @@ def build_calendar_html(now_jst):
 <footer>
   <p>📅 マクロ経済カレンダー ─ 日本人投資家のための経済指標ガイド</p>
   <p style="margin-top:6px">※ 日程は変更される場合があります ｜ 最新情報は各公式サイトでご確認ください</p>
-  <p style="margin-top:6px"><a href="index.html">📊 マーケットニュース</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:6px"><a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 <script>
@@ -2224,7 +2224,7 @@ def build_preview_html(now_jst):
 </header>
 <main>
 <nav class="nav-bar">
-  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -2247,7 +2247,7 @@ def build_preview_html(now_jst):
 </main>
 <footer>
   <p>📰 経済指標プレビュー ─ 日本人投資家のための事前解説ページ</p>
-  <p style="margin-top:6px">毎日更新 ｜ <a href="index.html">📊 マーケットニュース</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:6px">毎日更新 ｜ <a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
 </body>
@@ -2422,7 +2422,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 </header>
 <main>
   <nav class="nav-bar">
-    <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -2554,7 +2554,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <p style="margin-top:6px">データ出典: Yahoo Finance (VIX・騰落) ／ CNN ／ alternative.me ／ currentmarketvaluation.com ／ Shiller PE (multpl.com) ／ JPX 等</p>
   <p style="margin-top:6px">※ 本ページはAIによる自動集計・要約であり、投資判断はご自身の責任でお願いいたします。</p>
   <p style="margin-top:6px">
-    <a href="index.html">📊 マーケットニュース</a> ｜
+    <a href="index.html">🏠 トップページ</a> ｜
     <a href="calendar.html">📅 経済カレンダー</a> ｜
     <a href="charts.html">📈 50年チャート</a> ｜
     <a href="vix.html">😱 VIX恐怖指数</a>
@@ -2733,7 +2733,7 @@ def build_charts_html(hist, now_jst):
 <main>
 
 <nav class="nav-bar">
-  <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
@@ -2777,7 +2777,7 @@ def build_charts_html(hist, now_jst):
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
-  <a href="index.html">📊 マーケットニュース</a> &nbsp;|&nbsp;
+  <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   <a href="calendar.html">📅 経済カレンダー</a> &nbsp;|&nbsp;
   <a href="charts.html">📈 50年チャート</a> &nbsp;|&nbsp;
   <a href="vix.html">😱 VIX</a> &nbsp;|&nbsp;
@@ -3061,7 +3061,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <header>
   <div class="header-inner">
     <div>
-      <div class="header-title">📊 マーケットニュース</div>
+      <div class="header-title">🏠 トップページ</div>
       <div class="header-meta">最終更新: <span>{time_str}</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
@@ -3071,7 +3071,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- ナビゲーション -->
   <nav class="nav-bar">
-    <a class="nav-btn current" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn current" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
