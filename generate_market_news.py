@@ -3061,7 +3061,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <header>
   <div class="header-inner">
     <div>
-      <div class="header-title">🏠 トップページ</div>
+      <div class="header-title">📊 マーケットニュース</div>
       <div class="header-meta">最終更新: <span>{time_str}</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
