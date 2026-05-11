@@ -3077,6 +3077,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
+      ・<b>2026-05-12</b>: 📊 図解記事「<a href="guide-us-cpi.html" style="color:#0969da"><b>米CPIとは？読み方・市場反応・FRB影響を図解で徹底解説</b></a>」公開<br>
+      ・<b>2026-05-12</b>: 📰 プレビュー「<a href="guide-us-cpi-2026-05.html" style="color:#0969da"><b>米CPI5月14日プレビュー：3シナリオ・ドル円/株式インパクトを図解分析</b></a>」公開<br>
       ・<b>2026-05-11</b>: 📅 週間展望「<a href="guide-weekly-2026-05-11.html" style="color:#0969da"><b>今週の投資戦略（5/11〜5/17）：戦争続く中で日経最高値更新の謎・米CPI待ち</b></a>」公開<br>
       ・<b>2026-05-06</b>: 🚨 緊急速報「<a href="guide-jpy-intervention-2026-05-06.html" style="color:#cf222e"><b>ドル円155円台に急落・追加介入観測：GW中の連続介入か投機筋の巻き戻しか</b></a>」公開<br>
       ・<b>2026-05-06</b>: 📊 プレビュー「<a href="guide-us-jobs-2026-05.html" style="color:#0969da"><b>米雇用統計5月8日プレビュー：予想・3シナリオ・ドル円/株式インパクト</b></a>」公開<br>
