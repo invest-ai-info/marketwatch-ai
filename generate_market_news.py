@@ -3014,6 +3014,40 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       .market-card-img{{height:160px;object-position:top center}}
       .a8-pc{{display:none}}.a8-mobile{{display:inline-block}}
     }}
+    /* ダークモード切替時のスタイル */
+    body.dark{{background:#0d1117;color:#e6edf3}}
+    body.dark header{{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}}
+    body.dark .header-meta,body.dark .header-meta span{{color:#8b949e}}
+    body.dark .nav-btn{{background:#161b22;border-color:#30363d;color:#8b949e}}
+    body.dark .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
+    body.dark .nav-btn.current{{background:#1f6feb;border-color:#58a6ff;color:#fff}}
+    body.dark .hero-overlay{{background:linear-gradient(90deg,rgba(13,17,23,.85) 0%,rgba(13,17,23,.5) 60%,rgba(13,17,23,0) 100%)}}
+    body.dark .hero-title{{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}}
+    body.dark .hero-sub{{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}}
+    body.dark .sentiment-banner{{background:linear-gradient(135deg,#0d2616,#0d1f2a);border-color:#2ea043}}
+    body.dark .sentiment-label-small{{color:#8b949e}}
+    body.dark .sentiment-text{{color:#c9d1d9}}
+    body.dark .section-title{{color:#8b949e}}
+    body.dark .card{{background:#161b22;border-color:#30363d}}
+    body.dark .card:hover{{border-color:#58a6ff}}
+    body.dark .card-title{{color:#e6edf3}}
+    body.dark .card-subtitle{{color:#8b949e}}
+    body.dark .price-row{{border-bottom-color:#30363d}}
+    body.dark .price-label{{color:#8b949e}}
+    body.dark .price-value{{color:#e6edf3}}
+    body.dark .card-summary,body.dark .card-news{{border-top-color:#30363d;color:#8b949e}}
+    body.dark .card-news-title{{color:#79c0ff}}
+    body.dark .beginner-box{{background:#0d1f2a;border-color:#1f6feb;color:#79c0ff}}
+    body.dark .beginner-box::before{{color:#79c0ff}}
+    body.dark .news-item:hover{{background:#1c2128}}
+    body.dark .news-title{{color:#e6edf3}}
+    body.dark .news-meta{{color:#8b949e}}
+    body.dark .top-news{{background:linear-gradient(135deg,#0d2030,#0d1117);border-color:#1f6feb}}
+    body.dark .top-news-title{{color:#79c0ff}}
+    body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
+    body.dark footer a{{color:#79c0ff}}
+    body.dark #theme-toggle{{background:#161b22;border-color:#30363d;color:#fff}}
+    body.dark .market-card-img,body.dark .hero-img{{filter:brightness(.85)}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
