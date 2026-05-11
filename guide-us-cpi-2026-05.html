@@ -65,7 +65,7 @@
     .visual-card{background:#ffffff;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin:18px 0;box-shadow:0 2px 6px rgba(0,0,0,.04)}
     .visual-card-title{font-size:1.05rem;font-weight:700;color:#0969da;margin-bottom:14px}
     .gauge-bar{position:relative;background:#eaeef2;border-radius:20px;height:36px;margin:18px 0;overflow:hidden}
-    .gauge-fill{position:absolute;top:0;left:0;height:100%;border-radius:20px;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;color:#fff;font-weight:700;font-size:.92rem}
+    .gauge-fill{position:absolute;top:0;left:0;height:100%;border-radius:20px;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;color:#fff;font-weight:800;font-size:.92rem;text-shadow:0 1px 2px rgba(0,0,0,.35)}
     .gauge-target{position:absolute;top:-4px;bottom:-4px;width:2px;background:#cf222e}
     .gauge-target-label{position:absolute;top:-22px;font-size:.7rem;color:#cf222e;font-weight:700;white-space:nowrap;transform:translateX(-50%)}
     .react-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:18px 0}
@@ -85,9 +85,9 @@
     .scenario-card.bear .scenario-title{color:#cf222e}
     .scenario-card.base .scenario-title{color:#9a6700}
     .probability-bar{display:flex;height:32px;border-radius:6px;overflow:hidden;margin:14px 0;font-size:.85rem;font-weight:700}
-    .prob-bull{background:#1a7f37;color:#fff;display:flex;align-items:center;justify-content:center}
-    .prob-base{background:#9a6700;color:#fff;display:flex;align-items:center;justify-content:center}
-    .prob-bear{background:#cf222e;color:#fff;display:flex;align-items:center;justify-content:center}
+    .prob-bull{background:#1a7f37;color:#fff;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+    .prob-base{background:#9a6700;color:#fff;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+    .prob-bear{background:#cf222e;color:#fff;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.35)}
     .highlight-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
     .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
     .warning-box::before{content:"⚠️ ";font-weight:700}
@@ -107,7 +107,10 @@
     footer a{color:#0969da;text-decoration:none}
     #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
     @media(max-width:600px){.article{padding:24px 20px}h1{font-size:1.45rem}.react-grid{grid-template-columns:1fr}.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
-    .ad-slot{margin:28px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center}
+    .ad-slot{margin:28px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center;overflow:hidden}
+    .ad-slot img{max-width:100%;height:auto}
+    .a8-pc{display:inline-block}.a8-mobile{display:none}
+    @media(max-width:600px){.a8-pc{display:none}.a8-mobile{display:inline-block}.gauge-fill{font-size:.78rem;padding-right:8px}.gauge-target-label{font-size:.62rem}}
   </style>
 </head>
 <body>
@@ -120,7 +123,7 @@
 </header>
 <main>
   <nav class="nav-bar">
-    <a class="nav-btn" href="index.html">📊 マーケットニュース</a>
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn current" href="guides.html">📚 解説記事</a>
