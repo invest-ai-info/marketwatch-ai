@@ -331,6 +331,18 @@ def main():
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  ✅ {filename}: 生成完了")
+
+    # 生成と同時にGitHubへアップロード
+    try:
+        from auto_indicator_preview import _load_gh_config, upload_to_github
+        gh_cfg = _load_gh_config(script_dir)
+        if gh_cfg is not None:
+            upload_to_github(filepath, gh_cfg, repo_path=filename)
+        else:
+            print("  ⚠️  market-news-config.json が見つからず、GitHubアップロードはスキップ")
+    except ImportError:
+        print("  ⚠️  auto_indicator_preview.py のヘルパーをインポートできず、アップロードスキップ")
+
     print(f"📊 完了")
 
 
