@@ -3563,6 +3563,24 @@ def main():
     print("📤 robots.txt をアップロード中...")
     upload_to_github(robots_path)
 
+    # ── 自動記事生成（指標プレビュー＆週次戦略）──
+    # 朝7時/夕方16時の自動更新と同時に、指標が3日以内なら告知記事を、
+    # 日曜なら翌週戦略記事を生成＋GitHubへ直接アップロード。
+    print("\n📰 自動記事生成チェック中...")
+    try:
+        import auto_indicator_preview
+        auto_indicator_preview.main()
+    except Exception as e:
+        print(f"  ⚠️  auto_indicator_preview 実行エラー: {e}")
+        import traceback; traceback.print_exc()
+
+    try:
+        import auto_weekly_strategy
+        auto_weekly_strategy.main()
+    except Exception as e:
+        print(f"  ⚠️  auto_weekly_strategy 実行エラー: {e}")
+        import traceback; traceback.print_exc()
+
     print("\n🎉 全処理完了！")
 
 
