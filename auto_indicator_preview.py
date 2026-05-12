@@ -21,10 +21,92 @@
 """
 import os
 import re
+import json
+import base64
+import urllib.request
+import urllib.error
 from datetime import datetime, timedelta, timezone
 
 # 日本標準時
 JST = timezone(timedelta(hours=9))
+
+
+# ─────────────────────────────────────────
+# GitHub アップロードヘルパー（生成後の自動公開用）
+# ─────────────────────────────────────────
+def _load_gh_config(script_dir):
+    """market-news-config.json(.json) から token/owner/repo/branch を読む。"""
+    for fname in ("market-news-config.json.json", "market-news-config.json"):
+        p = os.path.join(script_dir, fname)
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                return json.load(f)
+    return None
+
+
+def upload_to_github(local_path, cfg, repo_path=None):
+    """単一ファイルを GitHub Contents API で PUT。既存ならSHAで上書き。
+    成功で True、失敗で False。
+    """
+    fname = os.path.basename(local_path)
+    rpath = (repo_path or fname).replace("\\", "/").lstrip("/")
+    token = cfg["github_token"]
+    owner = cfg["github_owner"]
+    repo = cfg["github_repo"]
+    branch = cfg.get("github_branch", "main")
+
+    api_url = f"https://api.github.com/repos/{owner}/{repo}/contents/{rpath}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    sha = None
+    try:
+        req = urllib.request.Request(f"{api_url}?ref={branch}", headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            sha = json.load(resp).get("sha")
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            print(f"  ❌ {fname}: SHA取得失敗 ({e.code})")
+            return False
+    except Exception as e:
+        print(f"  ❌ {fname}: 接続失敗 {e}")
+        return False
+
+    try:
+        with open(local_path, "rb") as f:
+            content_b64 = base64.b64encode(f.read()).decode("ascii")
+    except Exception as e:
+        print(f"  ❌ {fname}: ファイル読込失敗 {e}")
+        return False
+
+    now = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
+    payload = {
+        "message": f"auto: publish {fname} [{now}]",
+        "content": content_b64,
+        "branch": branch,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    try:
+        body = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(api_url, data=body, headers=headers, method="PUT")
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            j = json.load(resp)
+            short = j.get("commit", {}).get("sha", "")[:7]
+        action = "更新" if sha else "新規公開"
+        print(f"  📤 {fname}: GitHub {action} 成功 (commit {short})")
+        return True
+    except urllib.error.HTTPError as e:
+        print(f"  ❌ {fname}: PUT失敗 ({e.code}) {e.read().decode()[:200]}")
+        return False
+    except Exception as e:
+        print(f"  ❌ {fname}: PUTエラー {e}")
+        return False
 
 # ─────────────────────────────────────────
 # 経済指標スケジュール
@@ -474,7 +556,12 @@ def main():
         print("  - 3日以内の重要指標なし、スキップ")
         return
 
+    gh_cfg = _load_gh_config(script_dir)
+    if gh_cfg is None:
+        print("  ⚠️  market-news-config.json が見つからず、GitHubアップロードはスキップ")
+
     generated_count = 0
+    uploaded_count = 0
     for event in upcoming:
         key = event["key"]
         event_date_str = event["event_date"].strftime("%Y-%m-%d")
@@ -491,7 +578,12 @@ def main():
         print(f"  ✅ {filename}: 生成完了 ({event['days_until']}日前)")
         generated_count += 1
 
-    print(f"📊 完了: {generated_count}件の新規記事を生成")
+        # 生成と同時にGitHubへアップロード
+        if gh_cfg is not None:
+            if upload_to_github(filepath, gh_cfg, repo_path=filename):
+                uploaded_count += 1
+
+    print(f"📊 完了: {generated_count}件の新規記事を生成 / {uploaded_count}件をGitHubへ公開")
 
 
 if __name__ == "__main__":
