@@ -37,11 +37,11 @@
     .header-meta{font-size:.85rem;color:#57606a}
     .header-meta span{color:#0969da;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #238636;border-radius:16px;padding:32px 36px;margin-bottom:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #9e6a03;border-radius:16px;padding:32px 36px;margin-bottom:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .sentiment-icon{font-size:4rem;line-height:1;flex-shrink:0}
     .sentiment-body{flex:1;min-width:200px}
     .sentiment-label-small{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}
-    .sentiment-badge{color:#238636;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
+    .sentiment-badge{color:#9e6a03;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
     .sentiment-text{color:#424a53;font-size:.92rem;line-height:1.6}
     .section-title{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}
@@ -105,40 +105,7 @@
       .market-card-img{height:160px;object-position:top center}
       .a8-pc{display:none}.a8-mobile{display:inline-block}
     }
-    /* ダークモード切替時のスタイル */
-    body.dark{background:#0d1117;color:#e6edf3}
-    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
-    body.dark .header-meta,body.dark .header-meta span{color:#8b949e}
-    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
-    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
-    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
-    body.dark .hero-overlay{background:linear-gradient(90deg,rgba(13,17,23,.85) 0%,rgba(13,17,23,.5) 60%,rgba(13,17,23,0) 100%)}
-    body.dark .hero-title{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}
-    body.dark .hero-sub{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}
-    body.dark .sentiment-banner{background:linear-gradient(135deg,#0d2616,#0d1f2a);border-color:#2ea043}
-    body.dark .sentiment-label-small{color:#8b949e}
-    body.dark .sentiment-text{color:#c9d1d9}
-    body.dark .section-title{color:#8b949e}
-    body.dark .card{background:#161b22;border-color:#30363d}
-    body.dark .card:hover{border-color:#58a6ff}
-    body.dark .card-title{color:#e6edf3}
-    body.dark .card-subtitle{color:#8b949e}
-    body.dark .price-row{border-bottom-color:#30363d}
-    body.dark .price-label{color:#8b949e}
-    body.dark .price-value{color:#e6edf3}
-    body.dark .card-summary,body.dark .card-news{border-top-color:#30363d;color:#8b949e}
-    body.dark .card-news-title{color:#79c0ff}
-    body.dark .beginner-box{background:#0d1f2a;border-color:#1f6feb;color:#79c0ff}
-    body.dark .beginner-box::before{color:#79c0ff}
-    body.dark .news-item:hover{background:#1c2128}
-    body.dark .news-title{color:#e6edf3}
-    body.dark .news-meta{color:#8b949e}
-    body.dark .top-news{background:linear-gradient(135deg,#0d2030,#0d1117);border-color:#1f6feb}
-    body.dark .top-news-title{color:#79c0ff}
-    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
-    body.dark footer a{color:#79c0ff}
-    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
-    body.dark .market-card-img,body.dark .hero-img{filter:brightness(.85)}
+    /* ダークモードは JS でフィルター方式（解説記事と同じ）を注入 */
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -153,7 +120,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>2026年5月12日 10:49 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年5月12日 11:02 JST</span></div>
     </div>
     <div class="header-meta">GitHub Actions 自動更新</div>
   </div>
@@ -183,14 +150,14 @@
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-icon">😊</div>
+    <div class="sentiment-icon">😐</div>
     <div class="sentiment-body">
       <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">やや強気</span>
+      <span class="sentiment-badge">中立</span>
       <div class="sentiment-text">
-        日経 62,578円 ／ S&amp;P500 7,412.84 ／
-        USD/JPY 157.54円 ／ BTC $81,128 ／
-        金 $4,733.70/oz
+        日経 62,405円 ／ S&amp;P500 7,412.84 ／
+        USD/JPY 157.54円 ／ BTC $81,226 ／
+        金 $4,739.00/oz
       </div>
     </div>
   </div>
@@ -241,7 +208,7 @@
   <div class="top-news">
     <div class="top-news-title">🔥 マーケットを動かすニュース TOP3 <span style="font-size:.7rem;color:#57606a;font-weight:500">（中央銀行・経済指標・地政学など影響度の高いキーワードでスコアリング）</span></div>
     <a class="news-item" href="https://finance.yahoo.com/markets/currencies/articles/fed-data-suggest-japan-sold-034041385.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> FRBデータ、介入の中で日本が米国国債を売却したことを示唆</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> FRBデータ、介入のさなか日本が米国国債を売却したことを示唆</span>
           <span class="news-meta">Bloomberg · 2026-05-08</span>
         </a><a class="news-item" href="https://www.euronews.com/2026/05/06/resilience-amid-ruins-why-markets-are-hitting-record-highs-despite-iran-war-effects?utm_source=yahoo&utm_campaign=feeds_business_articles_2024&utm_medium=referral" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-pos">😊</span> 廃墟の中での回復力: イラン戦争にもかかわらず市場が過去最高値を更新している理由</span>
@@ -262,18 +229,18 @@
           <div class="card-icon icon-stocks">🗾</div>
           <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
         </div>
-        <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">62,578円 <span class="up price-change">😊▲0.26%</span></span></div>
+        <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">62,405円 <span class="down price-change">😢▼0.02%</span></span></div>
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,412.84 <span class="up price-change">😊▲0.19%</span></span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.fool.com/investing/2026/05/11/brookfield-corps-next-earnings-report-on-may-14-co/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ブルックフィールド社が5月14日に発表する次の決算発表で株価は急騰する可能性がある。その理由は次のとおりです。</span>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.fool.com/investing/2026/05/11/best-fintech-stocks-to-buy-in-2026/" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> 2026 年に買うべきベストフィンテック株</span>
           <span class="news-meta">Motley Fool · 2026-05-12</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/openai-cap-microsoft-revenue-sharing-012201531.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> OpenAIはMicrosoftの収益分配の上限を380億ドルにするとThe Informationが報じた</span>
-          <span class="news-meta">Reuters · 2026-05-12</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/markets/article/wall-street-says-stock-market-euphoria-has-echoes-of-1999-but-a-firmer-foundation-180757836.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> ウォール街は株式市場の高揚感には1999年の名残があるが、より強固な基盤があると述べている</span>
-          <span class="news-meta">Yahoo Finance · 2026-05-11</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-chip-stocks-oil-prices-trump-iran-comments-cpi-inflation/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> ダウ・ジョーンズ先物：AI、チップ株が原油価格を無視、トランプ大統領のコメント。 CPIインフレ率</span>
+          <span class="news-meta">Investor's Business Daily · 2026-05-12</span>
+        </a><a class="news-item" href="https://www.fool.com/investing/2026/05/11/brookfield-corps-next-earnings-report-on-may-14-co/" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> ブルックフィールド社が5月14日に発表する次の決算発表で株価が急騰する可能性がある。その理由は次のとおりです。</span>
+          <span class="news-meta">Motley Fool · 2026-05-12</span>
         </a></div>
       </div>
     </div>
@@ -285,7 +252,7 @@
           <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
         </div>
         <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">157.54円 <span class="up price-change">😊▲0.43%</span></span></div>
-        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">185.29円 <span class="up price-change">😊▲0.39%</span></span></div>
+        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">185.28円 <span class="up price-change">😊▲0.38%</span></span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://app.moby.co/home/news/news-alphabet-is-issuing-bonds-in-yen-why-not?utm_source=yahoo_finance&utm_medium=rss" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> アルファベットは円で社債を発行している。なぜだめですか？</span>
@@ -294,7 +261,7 @@
           <span class="news-title"><span class="news-sent sent-neu">😐</span> 円相場が「極端な投機」で下落する中、日銀が投資家に介入の「最終警告」</span>
           <span class="news-meta">Benzinga · 2026-05-11</span>
         </a><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/alphabet-taps-yen-bond-market-141521567.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> アルファベット、AIインフラ支出の拡大を支援するため円債市場を活用</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> アルファベット、AIインフラ支出の拡大を支援するために円債市場を活用</span>
           <span class="news-meta">Simply Wall St. · 2026-05-11</span>
         </a></div>
       </div>
@@ -306,18 +273,18 @@
           <div class="card-icon icon-cmd">🛢️</div>
           <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
         </div>
-        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$98.76/bbl <span class="up price-change">😊▲3.50%</span></span></div>
-        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,733.70/oz <span class="up price-change">😊▲0.28%</span></span></div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$98.92/bbl <span class="up price-change">😊▲3.67%</span></span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,739.00/oz <span class="up price-change">😊▲0.39%</span></span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/markets/stocks/articles/assessing-vermilion-energy-tsx-vet-011450903.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-pos">😊</span> 好調な一年と最近の株価下落後のバーミリオン・エナジー (TSX:VET) の評価額の評価</span>
           <span class="news-meta">Simply Wall St. · 2026-05-12</span>
-        </a><a class="news-item" href="https://sg.finance.yahoo.com/news/dollar-steady-middle-east-peace-013522672.html" target="_blank" rel="noopener">
+        </a><a class="news-item" href="https://finance.yahoo.com/news/dollar-steady-middle-east-peace-013522672.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> 中東和平への期待が後退する中、ドルは安定</span>
           <span class="news-meta">Reuters · 2026-05-12</span>
-        </a><a class="news-item" href="https://finance.yahoo.com/sectors/energy/articles/oil-holds-gain-trump-casts-224300121.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-pos">😊</span> トランプ大統領がイランとの停戦に疑問を投げかける中、原油は上昇幅を拡大</span>
-          <span class="news-meta">Bloomberg · 2026-05-12</span>
+        </a><a class="news-item" href="https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-chip-stocks-oil-prices-trump-iran-comments-cpi-inflation/?src=A00220&yptr=yahoo" target="_blank" rel="noopener">
+          <span class="news-title"><span class="news-sent sent-pos">😊</span> ダウ・ジョーンズ先物：AI、チップ株が原油価格を無視、トランプ大統領のコメント。 CPIインフレ率</span>
+          <span class="news-meta">Investor's Business Daily · 2026-05-12</span>
         </a></div>
       </div>
     </div>
@@ -328,38 +295,20 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$81,128 <span class="down price-change">😢▼1.23%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,312.22 <span class="down price-change">😢▼2.40%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$81,226 <span class="down price-change">😢▼1.11%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,313.54 <span class="down price-change">😢▼2.34%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.marketbeat.com/instant-alerts/marathon-digital-q1-earnings-call-highlights-2026-05-11/?utm_source=yahoofinance&utm_medium=yahoofinance" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-neu">😐</span> マラソンデジタル第 1 四半期決算報告ハイライト</span>
           <span class="news-meta">MarketBeat · 2026-05-12</span>
         </a><a class="news-item" href="https://finance.yahoo.com/markets/article/micron-helps-dram-become-the-fastest-etf-to-hit-65-billion-chart-of-the-day-145645255.html" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> マイクロン、DRAMが最速で65億ドルに達するETFに支援: 今日のチャート</span>
+          <span class="news-title"><span class="news-sent sent-neu">😐</span> マイクロンはDRAMが最速で65億ドルに達するETFになるよう支援：今日のチャート</span>
           <span class="news-meta">Yahoo Finance · 2026-05-11</span>
         </a><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-monday-may-11-2026-bitcoins-strongest-opening-in-months-113216131.html" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent sent-pos">😊</span> 今日、2026年5月11日月曜日のビットコインとイーサリアムの価格：ビットコインのここ数カ月で最も強い始値</span>
           <span class="news-meta">Yahoo Personal Finance · 2026-05-11</span>
         </a></div>
       </div>
-    </div>
-  </div>
-
-  <!-- サブページへのリンク -->
-  <div class="chart-link-section">
-    <a href="market-health.html" class="chart-link-btn" style="border-color:#9a6700;color:#9a6700;margin-bottom:12px">🩺 市場健康度ダッシュボードを見る →</a>
-    <div class="chart-link-desc">VIX・恐怖&amp;強欲指数・バフェット指数・CAPE・RSIを一枚で総合診断</div>
-    <div style="margin-top:16px">
-      <a href="calendar.html" class="chart-link-btn" style="border-color:#7cf2c8;color:#7cf2c8">📅 マクロ経済カレンダーを見る →</a>
-      <div class="chart-link-desc">日米欧中の重要経済指標（FOMC・BOJ・CPI・雇用統計など）を月間カレンダーで一覧</div>
-    </div>
-    <div style="margin-top:16px">
-      <a href="vix.html" class="chart-link-btn" style="border-color:#cf222e;color:#cf222e">😱 恐怖指数（VIX）分析を見る →</a>
-      <div class="chart-link-desc">VIXの現在値・90日チャート・AIコメントで市場の恐怖度をチェック</div>
-    </div>
-    <div style="margin-top:16px">
-      <a href="charts.html" class="chart-link-btn">📈 50年価格チャート＆歴史的イベント一覧を見る →</a>
-      <div class="chart-link-desc">日経平均・S&amp;P500・ドル円・金の50年チャートに歴史的イベントを重ねて表示</div>
     </div>
   </div>
 
