@@ -3020,40 +3020,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       .market-card-img{{height:160px;object-position:top center}}
       .a8-pc{{display:none}}.a8-mobile{{display:inline-block}}
     }}
-    /* ダークモード切替時のスタイル */
-    body.dark{{background:#0d1117;color:#e6edf3}}
-    body.dark header{{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}}
-    body.dark .header-meta,body.dark .header-meta span{{color:#8b949e}}
-    body.dark .nav-btn{{background:#161b22;border-color:#30363d;color:#8b949e}}
-    body.dark .nav-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
-    body.dark .nav-btn.current{{background:#1f6feb;border-color:#58a6ff;color:#fff}}
-    body.dark .hero-overlay{{background:linear-gradient(90deg,rgba(13,17,23,.85) 0%,rgba(13,17,23,.5) 60%,rgba(13,17,23,0) 100%)}}
-    body.dark .hero-title{{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}}
-    body.dark .hero-sub{{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}}
-    body.dark .sentiment-banner{{background:linear-gradient(135deg,#0d2616,#0d1f2a);border-color:#2ea043}}
-    body.dark .sentiment-label-small{{color:#8b949e}}
-    body.dark .sentiment-text{{color:#c9d1d9}}
-    body.dark .section-title{{color:#8b949e}}
-    body.dark .card{{background:#161b22;border-color:#30363d}}
-    body.dark .card:hover{{border-color:#58a6ff}}
-    body.dark .card-title{{color:#e6edf3}}
-    body.dark .card-subtitle{{color:#8b949e}}
-    body.dark .price-row{{border-bottom-color:#30363d}}
-    body.dark .price-label{{color:#8b949e}}
-    body.dark .price-value{{color:#e6edf3}}
-    body.dark .card-summary,body.dark .card-news{{border-top-color:#30363d;color:#8b949e}}
-    body.dark .card-news-title{{color:#79c0ff}}
-    body.dark .beginner-box{{background:#0d1f2a;border-color:#1f6feb;color:#79c0ff}}
-    body.dark .beginner-box::before{{color:#79c0ff}}
-    body.dark .news-item:hover{{background:#1c2128}}
-    body.dark .news-title{{color:#e6edf3}}
-    body.dark .news-meta{{color:#8b949e}}
-    body.dark .top-news{{background:linear-gradient(135deg,#0d2030,#0d1117);border-color:#1f6feb}}
-    body.dark .top-news-title{{color:#79c0ff}}
-    body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
-    body.dark footer a{{color:#79c0ff}}
-    body.dark #theme-toggle{{background:#161b22;border-color:#30363d;color:#fff}}
-    body.dark .market-card-img,body.dark .hero-img{{filter:brightness(.85)}}
+    /* ダークモードは JS でフィルター方式（解説記事と同じ）を注入 */
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -3195,24 +3162,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}</div>
       </div>
-    </div>
-  </div>
-
-  <!-- サブページへのリンク -->
-  <div class="chart-link-section">
-    <a href="market-health.html" class="chart-link-btn" style="border-color:#9a6700;color:#9a6700;margin-bottom:12px">🩺 市場健康度ダッシュボードを見る →</a>
-    <div class="chart-link-desc">VIX・恐怖&amp;強欲指数・バフェット指数・CAPE・RSIを一枚で総合診断</div>
-    <div style="margin-top:16px">
-      <a href="calendar.html" class="chart-link-btn" style="border-color:#7cf2c8;color:#7cf2c8">📅 マクロ経済カレンダーを見る →</a>
-      <div class="chart-link-desc">日米欧中の重要経済指標（FOMC・BOJ・CPI・雇用統計など）を月間カレンダーで一覧</div>
-    </div>
-    <div style="margin-top:16px">
-      <a href="vix.html" class="chart-link-btn" style="border-color:#cf222e;color:#cf222e">😱 恐怖指数（VIX）分析を見る →</a>
-      <div class="chart-link-desc">VIXの現在値・90日チャート・AIコメントで市場の恐怖度をチェック</div>
-    </div>
-    <div style="margin-top:16px">
-      <a href="charts.html" class="chart-link-btn">📈 50年価格チャート＆歴史的イベント一覧を見る →</a>
-      <div class="chart-link-desc">日経平均・S&amp;P500・ドル円・金の50年チャートに歴史的イベントを重ねて表示</div>
     </div>
   </div>
 
