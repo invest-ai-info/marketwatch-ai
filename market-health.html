@@ -77,7 +77,7 @@
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
 <header>
   <div class="header-title">🩺 市場健康度ダッシュボード</div>
-  <div class="header-meta">最終更新: 2026年05月12日 08:28 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
+  <div class="header-meta">最終更新: 2026年05月12日 10:49 JST ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
 </header>
 <main>
   <nav class="nav-bar">
@@ -220,5 +220,6 @@
   </p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 </footer>
+<script>(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{filter:invert(.94) hue-rotate(180deg);background:#fff!important}body.dark img,body.dark video,body.dark iframe,body.dark picture,body.dark canvas,body.dark #theme-toggle{filter:invert(1) hue-rotate(180deg)}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();</script>
 </body>
 </html>
