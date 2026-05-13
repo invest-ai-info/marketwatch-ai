@@ -412,6 +412,41 @@ def score_article(article):
     return score
 
 
+def hours_since_published(iso_str):
+    """ISO 8601文字列から経過時間（hour）を返す。パース失敗時はNone。"""
+    if not iso_str:
+        return None
+    s = iso_str.replace("Z", "+00:00")
+    try:
+        dt = datetime.fromisoformat(s)
+    except Exception:
+        # 日付のみの形式（YYYY-MM-DD）にフォールバック
+        try:
+            dt = datetime.fromisoformat(s[:10]).replace(tzinfo=timezone.utc)
+        except Exception:
+            return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    age = (datetime.now(timezone.utc) - dt).total_seconds() / 3600.0
+    return max(0.0, age)
+
+
+def score_article_with_recency(article):
+    """影響度スコア × 時間減衰。
+    24h以内はほぼ満点、36hで半減、72hで1/4。古い記事がTOP固定されるのを防ぐ。
+    """
+    base = score_article(article)
+    if base <= 0:
+        return 0.0
+    hrs = hours_since_published(article.get("publishedAt", ""))
+    if hrs is None:
+        # 時刻不明は控えめに扱う（新鮮さ不明 → 24h相当として減衰）
+        hrs = 24.0
+    # 半減期36h の指数減衰
+    decay = 0.5 ** (hrs / 36.0)
+    return base * decay
+
+
 def fetch_yf_news_for_category(tickers):
     """yfinance.Ticker(X).news を複数銘柄から集約して取得"""
     articles = []
@@ -434,12 +469,12 @@ def fetch_yf_news_for_category(tickers):
             elif isinstance(content.get("clickThroughUrl"), dict):
                 url = content["clickThroughUrl"].get("url", "")
             url = url or n.get("link", "") or "#"
-            # 発行日時（UNIXタイムスタンプ or ISO形式）
+            # 発行日時（UNIXタイムスタンプ or ISO形式）— 時刻まで保持して鮮度判定に使う
             pub = ""
             if "pubDate" in content:
-                pub = content["pubDate"][:10]  # ISO形式
+                pub = content["pubDate"]  # ISO形式（時刻付き）
             elif "providerPublishTime" in n:
-                pub = datetime.fromtimestamp(n["providerPublishTime"], tz=timezone.utc).strftime("%Y-%m-%d")
+                pub = datetime.fromtimestamp(n["providerPublishTime"], tz=timezone.utc).isoformat()
             # ソース名
             source = ""
             if isinstance(content.get("provider"), dict):
@@ -471,7 +506,7 @@ def fetch_newsapi_articles(api_key, q, lang, from_date):
             "description": a.get("description", "") or "",
             "source": a.get("source", {}).get("name", ""),
             "url": a.get("url", "#"),
-            "publishedAt": a.get("publishedAt", "")[:10],
+            "publishedAt": a.get("publishedAt", ""),  # ISO形式（時刻まで）
         } for a in data.get("articles", [])]
 
 
@@ -479,9 +514,11 @@ def fetch_news(api_key):
     """ニュース取得（yfinance優先 + NewsAPIフォールバック）
 
     - 各カテゴリ（stocks/fx/commodity/crypto）：最新3件
-    - topカテゴリ：全カテゴリ統合 + 影響度スコア順 TOP3（マーケット全体に影響大）
+    - topカテゴリ：全カテゴリ統合 + 影響度×時間減衰スコア順 TOP3
+      （36h半減期で古い記事がTOPに居座らないようにする）
     """
-    from_date = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%d")
+    # NewsAPI問い合わせ用の検索開始日（過去2日）— TOP選定では時間減衰でさらに鮮度を要求
+    from_date = (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
 
     # ─── ① 各カテゴリで記事を収集（topは後で全統合から生成） ───
     raw_by_cat = {}
@@ -513,20 +550,42 @@ def fetch_news(api_key):
         unique.sort(key=lambda x: x.get("publishedAt", ""), reverse=True)
         raw_by_cat[cat] = unique
 
-    # ─── ② TOP：全カテゴリ統合 → 影響度スコア順 ───
+    # ─── ② TOP：全カテゴリ統合 → 影響度×時間減衰スコア順 ───
+    # 古い高インパクト記事がTOPに張り付くのを防ぐため、半減期36hの指数減衰を適用。
+    # さらに、48h以上前の記事はTOP候補から除外（生のインパクトが高くても）。
+    MAX_AGE_HOURS = 48.0
     all_seen = set()
     pool = []
     for cat, arts in raw_by_cat.items():
         for a in arts:
             key = a.get("url") or a.get("title")
-            if key and key not in all_seen:
-                all_seen.add(key)
-                a["_score"] = score_article(a)
+            if not key or key in all_seen:
+                continue
+            all_seen.add(key)
+            hrs = hours_since_published(a.get("publishedAt", ""))
+            # 48h超は除外（時刻不明はそのまま採用）
+            if hrs is not None and hrs > MAX_AGE_HOURS:
+                continue
+            a["_score"] = score_article_with_recency(a)
+            a["_raw_score"] = score_article(a)
+            a["_age_h"] = hrs if hrs is not None else -1
+            a["_source_cat"] = cat
+            pool.append(a)
+    # 減衰後スコア降順 → 同点は新しい順
+    pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
+    # 該当が3件未満なら、48h制限を解除して全件から再選定（フォールバック）
+    if len(pool) < 3:
+        pool = []
+        for cat, arts in raw_by_cat.items():
+            for a in arts:
+                key = a.get("url") or a.get("title")
+                if not key or key in all_seen:
+                    continue
+                a["_score"] = score_article_with_recency(a)
+                a["_raw_score"] = score_article(a)
                 a["_source_cat"] = cat
                 pool.append(a)
-    # スコア降順 → 同点は新しい順
-    pool.sort(key=lambda x: (x.get("_score", 0), x.get("publishedAt", "")), reverse=True)
-    # スコア0の記事しかない場合は最新3件にフォールバック
+        pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
     top_pool = pool[:3]
 
     # ─── ③ 結果集計（各カテゴリTOP3 + topのTOP3） ───
