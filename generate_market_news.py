@@ -3187,8 +3187,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       ・<b>2026-05-13</b>: 🇺🇸🤝🇨🇳 プレビュー「<a href="guide-us-china-summit-2026-05.html" style="color:#0969da"><b>米中首脳会談5/14-15プレビュー：3シナリオ別マーケット影響を図解で徹底分析</b></a>」公開<br>
       ・<b>2026-05-11</b>: 🌸 図解記事「<a href="guide-sell-in-may.html" style="color:#0969da"><b>Sell in May（5月に売れ）は本当か？データで検証する投資格言の真実</b></a>」公開<br>
       ・<b>2026-05-11</b>: 📊 図解記事「<a href="guide-us-cpi.html" style="color:#0969da"><b>米CPIとは？読み方・市場反応・FRB影響を図解で徹底解説</b></a>」公開<br>
-      ・<b>2026-05-11</b>: 📰 プレビュー「<a href="guide-us-cpi-2026-05.html" style="color:#0969da"><b>米CPI5月12日プレビュー：3シナリオ・ドル円/株式インパクトを図解分析</b></a>」公開<br>
-      ・<b>2026-05-11</b>: 📅 週間展望「<a href="guide-weekly-2026-05-11.html" style="color:#0969da"><b>今週の投資戦略（5/11〜5/17）：戦争続く中で日経最高値更新の謎・米CPI待ち</b></a>」公開
+      ・<b>2026-05-11</b>: 📰 プレビュー「<a href="guide-us-cpi-2026-05.html" style="color:#0969da"><b>米CPI5月12日プレビュー：3シナリオ・ドル円/株式インパクトを図解分析</b></a>」公開
     </div>
   </div>
 
