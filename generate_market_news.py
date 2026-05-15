@@ -3183,11 +3183,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
+      ・<b>2026-05-15</b>: 💴 解説「<a href="guide-yen-carry-trade.html" style="color:#0969da"><b>円キャリートレード徹底解説：仕組み・規模・解消の境界線と日経平均への影響【完全版】</b></a>」公開<br>
       ・<b>2026-05-14</b>: 🚨 速報「<a href="guide-us-china-summit-result-2026-05-14.html" style="color:#cf222e"><b>米中首脳会談リザルト：5/14北京1日目で何が起きたか／NVIDIA H200解禁・「戦略的安定」合意とマーケット反応</b></a>」公開<br>
       ・<b>2026-05-13</b>: 🇺🇸🤝🇨🇳 プレビュー「<a href="guide-us-china-summit-2026-05.html" style="color:#0969da"><b>米中首脳会談5/14-15プレビュー：3シナリオ別マーケット影響を図解で徹底分析</b></a>」公開<br>
       ・<b>2026-05-11</b>: 🌸 図解記事「<a href="guide-sell-in-may.html" style="color:#0969da"><b>Sell in May（5月に売れ）は本当か？データで検証する投資格言の真実</b></a>」公開<br>
-      ・<b>2026-05-11</b>: 📊 図解記事「<a href="guide-us-cpi.html" style="color:#0969da"><b>米CPIとは？読み方・市場反応・FRB影響を図解で徹底解説</b></a>」公開<br>
-      ・<b>2026-05-11</b>: 📰 プレビュー「<a href="guide-us-cpi-2026-05.html" style="color:#0969da"><b>米CPI5月12日プレビュー：3シナリオ・ドル円/株式インパクトを図解分析</b></a>」公開
+      ・<b>2026-05-11</b>: 📊 図解記事「<a href="guide-us-cpi.html" style="color:#0969da"><b>米CPIとは？読み方・市場反応・FRB影響を図解で徹底解説</b></a>」公開
     </div>
   </div>
 
