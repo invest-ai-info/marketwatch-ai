@@ -38,7 +38,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install yfinance requests deep_translator
+        run: pip install yfinance requests deep_translator feedparser
 
       - name: Generate market news HTML (6 files)
         run: python generate_market_news.py
