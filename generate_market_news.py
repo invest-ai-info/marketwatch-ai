@@ -410,7 +410,12 @@ IMPACT_BONUS_PATTERNS = [
     (_re_for_impact.compile(r"速報|breaking|flash|決定|発表|引下げ|引上げ|cut|hike|raise|signed", _re_for_impact.IGNORECASE), 3),
     # 数字含み（具体性 — %, 円, ドル, bp, 億, 兆 など）
     (_re_for_impact.compile(r"\d+\.?\d*\s*(%|％|円|ドル|\$|¥|bp|bps|億|兆|万|million|billion)", _re_for_impact.IGNORECASE), 3),
+    # 銘柄羅列・「動き手」系の薄い記事を抑制
+    (_re_for_impact.compile(r"stocks?\s*(movers?|to\s+watch|moving|on\s+the\s+move)|today.?s\s*(gainers|losers|movers)|premarket\s+movers|動き手|値動きの大きい|動く銘柄|gainers\s+and\s+losers", _re_for_impact.IGNORECASE), -5),
 ]
+
+# 5個以上のカンマ・読点区切り＝銘柄羅列とみなして減点
+_LIST_TITLE_RE = _re_for_impact.compile(r"[,、，]")
 
 # ─────────────────────────────────────────
 # 日本語高品質 RSS ソース（TOP3候補プールに追加）
@@ -461,13 +466,18 @@ def fetch_rss_articles(source_name, url):
 def score_article_with_bonuses(article):
     """既存 score_article にボーナスを加算した強化版スコア。
     - キーワード由来のサプライズ・速報・数字ボーナス
+    - 銘柄羅列リスト型見出しは減点
     - curated 高品質ソース（RSS_FEEDS）にはベース +5 を付与
     """
     base = score_article(article)
-    text = (article.get("title", "") or "") + " " + (article.get("description", "") or "")
+    title = article.get("title", "") or ""
+    text = title + " " + (article.get("description", "") or "")
     for pattern, bonus in IMPACT_BONUS_PATTERNS:
         if pattern.search(text):
             base += bonus
+    # タイトルに 5 個以上のカンマ・読点 → 銘柄羅列とみなして減点
+    if len(_LIST_TITLE_RE.findall(title)) >= 5:
+        base -= 5
     # curated RSS ソース優遇（マーケット影響度の高い厳選ソース）
     if article.get("_is_rss"):
         base += 5
@@ -827,17 +837,32 @@ def classify_news_sentiment(title, description=""):
 # ─────────────────────────────────────────
 # HTML生成
 # ─────────────────────────────────────────
+def _format_pub_date(pub_str):
+    """ISO 形式または RFC822 形式から YYYY-MM-DD を抽出"""
+    if not pub_str:
+        return ""
+    # ISO 形式（"2026-05-15T...") はそのまま 10 文字
+    if len(pub_str) >= 10 and pub_str[4] == "-" and pub_str[7] == "-":
+        return pub_str[:10]
+    # RFC822 形式 ("Sat, 16 May 2026 ...") は dateutil で解析
+    try:
+        from email.utils import parsedate_to_datetime
+        return parsedate_to_datetime(pub_str).strftime("%Y-%m-%d")
+    except Exception:
+        return pub_str[:10]
+
+
 def build_news_html(articles, limit=3):
     """ニュース記事リストをHTML文字列に変換（センチメントアイコン付き）"""
     if not articles:
         return '<div class="news-empty">ニュースを取得できませんでした</div>'
     html = ""
     for a in articles[:limit]:
-        source = a.get("source", "")
+        source = _get_source_name(a)
         title = a.get("title", "").replace("{", "").replace("}", "")
         desc = a.get("description", "")
         url = a.get("url", "#")
-        pub = a.get("publishedAt", "")[:10]
+        pub = _format_pub_date(a.get("publishedAt", ""))
         icon, cls = classify_news_sentiment(title, desc)
         html += f'''<a class="news-item" href="{url}" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent {cls}">{icon}</span> {title}</span>
