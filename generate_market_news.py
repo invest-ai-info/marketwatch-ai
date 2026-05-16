@@ -398,6 +398,74 @@ IMPACT_KEYWORDS = {
     "opec": 6, "supply cut": 6, "減産": 6,
 }
 
+# ─────────────────────────────────────────
+# ニュース品質向上：追加スコアボーナス
+# 「具体性のある記事」「サプライズ・速報」「確定事項」を浮上させる
+# ─────────────────────────────────────────
+import re as _re_for_impact
+IMPACT_BONUS_PATTERNS = [
+    # サプライズ・想定外（市場が動く要素）
+    (_re_for_impact.compile(r"予想外|想定外|サプライズ|surprise|unexpected|shock|ショック", _re_for_impact.IGNORECASE), 5),
+    # 速報・確定事項（観測より結果を優先）
+    (_re_for_impact.compile(r"速報|breaking|flash|決定|発表|引下げ|引上げ|cut|hike|raise|signed", _re_for_impact.IGNORECASE), 3),
+    # 数字含み（具体性 — %, 円, ドル, bp, 億, 兆 など）
+    (_re_for_impact.compile(r"\d+\.?\d*\s*(%|％|円|ドル|\$|¥|bp|bps|億|兆|万|million|billion)", _re_for_impact.IGNORECASE), 3),
+]
+
+# ─────────────────────────────────────────
+# 日本語高品質 RSS ソース（TOP3候補プールに追加）
+# ─────────────────────────────────────────
+RSS_FEEDS = [
+    ("Bloomberg Markets", "https://feeds.bloomberg.com/markets/news.rss"),
+    ("ロイター日本",       "https://assets.wor.jp/rss/rdf/reuters/top.rdf"),
+    ("NHK経済",            "https://www3.nhk.or.jp/rss/news/cat5.xml"),
+    ("東洋経済オンライン",  "https://toyokeizai.net/list/feed/rss"),
+]
+
+
+_HTML_TAG_RE = _re_for_impact.compile(r"<[^>]+>")
+
+def _strip_html(text):
+    if not text:
+        return ""
+    return _HTML_TAG_RE.sub("", str(text)).strip()
+
+
+def fetch_rss_articles(source_name, url):
+    """RSS フィードから記事を NewsAPI 互換形式で取得"""
+    try:
+        import feedparser
+    except ImportError:
+        print(f"⚠️ feedparser 未インストール、RSS スキップ ({source_name})")
+        return []
+    articles = []
+    try:
+        feed = feedparser.parse(url, request_headers={"User-Agent": "Mozilla/5.0 marketwatch-jp/1.0"})
+        for entry in (feed.entries or [])[:20]:
+            title = _strip_html(entry.get("title", ""))
+            if not title:
+                continue
+            articles.append({
+                "title": title,
+                "description": _strip_html(entry.get("summary", ""))[:300],
+                "url": entry.get("link", "") or "",
+                "publishedAt": entry.get("published", "") or entry.get("updated", "") or "",
+                "source": {"name": source_name},
+            })
+    except Exception as e:
+        print(f"⚠️ RSS 取得エラー ({source_name}): {e}")
+    return articles
+
+
+def score_article_with_bonuses(article):
+    """既存 score_article にボーナスを加算した強化版スコア"""
+    base = score_article(article)
+    text = (article.get("title", "") or "") + " " + (article.get("description", "") or "")
+    for pattern, bonus in IMPACT_BONUS_PATTERNS:
+        if pattern.search(text):
+            base += bonus
+    return base
+
 
 def score_article(article):
     """記事の影響度スコアを計算（タイトル+概要のキーワードマッチ）"""
@@ -432,10 +500,11 @@ def hours_since_published(iso_str):
 
 
 def score_article_with_recency(article):
-    """影響度スコア × 時間減衰。
+    """影響度スコア（ボーナス込み）× 時間減衰。
     24h以内はほぼ満点、36hで半減、72hで1/4。古い記事がTOP固定されるのを防ぐ。
+    ボーナス：サプライズ語 / 速報・確定語 / 数字含みの記事を加点。
     """
-    base = score_article(article)
+    base = score_article_with_bonuses(article)
     if base <= 0:
         return 0.0
     hrs = hours_since_published(article.get("publishedAt", ""))
@@ -445,6 +514,37 @@ def score_article_with_recency(article):
     # 半減期36h の指数減衰
     decay = 0.5 ** (hrs / 36.0)
     return base * decay
+
+
+def select_top_diverse(pool, n=3, source_cap=2, sim_threshold=0.7):
+    """スコア順に並んだ pool から、ソース多様性と類似タイトル除外を考慮して n 件選ぶ。
+    - source_cap: 同一ソースから採用する最大件数
+    - sim_threshold: タイトル類似度（SequenceMatcher ratio）。これ以上は同一とみなして除外
+    """
+    from difflib import SequenceMatcher
+    selected = []
+    source_count = {}
+    for a in pool:
+        if len(selected) >= n:
+            break
+        title = a.get("title", "")
+        if not title:
+            continue
+        src = (a.get("source") or {}).get("name") or "unknown"
+        if source_count.get(src, 0) >= source_cap:
+            continue
+        # 既選択との類似度チェック
+        too_similar = False
+        for s in selected:
+            ratio = SequenceMatcher(None, title, s.get("title", "")).ratio()
+            if ratio >= sim_threshold:
+                too_similar = True
+                break
+        if too_similar:
+            continue
+        selected.append(a)
+        source_count[src] = source_count.get(src, 0) + 1
+    return selected
 
 
 def fetch_yf_news_for_category(tickers):
@@ -550,12 +650,14 @@ def fetch_news(api_key):
         unique.sort(key=lambda x: x.get("publishedAt", ""), reverse=True)
         raw_by_cat[cat] = unique
 
-    # ─── ② TOP：全カテゴリ統合 → 影響度×時間減衰スコア順 ───
+    # ─── ② TOP候補プール：全カテゴリ + 高品質 RSS フィード ───
     # 古い高インパクト記事がTOPに張り付くのを防ぐため、半減期36hの指数減衰を適用。
     # さらに、48h以上前の記事はTOP候補から除外（生のインパクトが高くても）。
     MAX_AGE_HOURS = 48.0
     all_seen = set()
     pool = []
+
+    # 既存カテゴリ記事から
     for cat, arts in raw_by_cat.items():
         for a in arts:
             key = a.get("url") or a.get("title")
@@ -563,30 +665,54 @@ def fetch_news(api_key):
                 continue
             all_seen.add(key)
             hrs = hours_since_published(a.get("publishedAt", ""))
-            # 48h超は除外（時刻不明はそのまま採用）
             if hrs is not None and hrs > MAX_AGE_HOURS:
                 continue
             a["_score"] = score_article_with_recency(a)
-            a["_raw_score"] = score_article(a)
+            a["_raw_score"] = score_article_with_bonuses(a)
             a["_age_h"] = hrs if hrs is not None else -1
             a["_source_cat"] = cat
             pool.append(a)
+
+    # RSS フィードから（環境変数 USE_RSS_FEEDS=false で OFF にできる）
+    if os.environ.get("USE_RSS_FEEDS", "true").lower() in ("1", "true", "yes"):
+        rss_count = 0
+        for name, url in RSS_FEEDS:
+            for a in fetch_rss_articles(name, url):
+                key = a.get("url") or a.get("title")
+                if not key or key in all_seen:
+                    continue
+                all_seen.add(key)
+                hrs = hours_since_published(a.get("publishedAt", ""))
+                if hrs is not None and hrs > MAX_AGE_HOURS:
+                    continue
+                a["_score"] = score_article_with_recency(a)
+                a["_raw_score"] = score_article_with_bonuses(a)
+                a["_age_h"] = hrs if hrs is not None else -1
+                a["_source_cat"] = "rss"
+                pool.append(a)
+                rss_count += 1
+        print(f"  📡 RSS: {rss_count}件追加（候補プール合計 {len(pool)}件）")
+
     # 減衰後スコア降順 → 同点は新しい順
     pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
     # 該当が3件未満なら、48h制限を解除して全件から再選定（フォールバック）
     if len(pool) < 3:
         pool = []
+        all_seen.clear()
         for cat, arts in raw_by_cat.items():
             for a in arts:
                 key = a.get("url") or a.get("title")
                 if not key or key in all_seen:
                     continue
+                all_seen.add(key)
                 a["_score"] = score_article_with_recency(a)
-                a["_raw_score"] = score_article(a)
+                a["_raw_score"] = score_article_with_bonuses(a)
                 a["_source_cat"] = cat
                 pool.append(a)
         pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
-    top_pool = pool[:3]
+
+    # 多様性確保（ソース上限 + 類似タイトル除外）で TOP3 を選ぶ
+    top_pool = select_top_diverse(pool, n=3, source_cap=2, sim_threshold=0.7)
 
     # ─── ③ 結果集計（各カテゴリTOP3 + topのTOP3） ───
     results = {}
