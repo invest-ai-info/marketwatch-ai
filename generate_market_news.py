@@ -516,6 +516,18 @@ def score_article_with_recency(article):
     return base * decay
 
 
+def _get_source_name(article):
+    """記事の source 名を安全に取得する。
+    yfinance は str、NewsAPI/RSS は dict 形式で source を持つので両方に対応。
+    """
+    src = article.get("source")
+    if isinstance(src, dict):
+        return src.get("name") or "unknown"
+    if isinstance(src, str) and src:
+        return src
+    return "unknown"
+
+
 def select_top_diverse(pool, n=3, source_cap=2, sim_threshold=0.7):
     """スコア順に並んだ pool から、ソース多様性と類似タイトル除外を考慮して n 件選ぶ。
     - source_cap: 同一ソースから採用する最大件数
@@ -530,7 +542,7 @@ def select_top_diverse(pool, n=3, source_cap=2, sim_threshold=0.7):
         title = a.get("title", "")
         if not title:
             continue
-        src = (a.get("source") or {}).get("name") or "unknown"
+        src = _get_source_name(a)
         if source_count.get(src, 0) >= source_cap:
             continue
         # 既選択との類似度チェック
