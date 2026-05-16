@@ -377,10 +377,10 @@ IMPACT_KEYWORDS = {
     "trump": 6, "トランプ": 6, "tariff": 8, "関税": 8,
     "election": 5, "選挙": 5, "sanction": 7, "制裁": 7,
 
-    # 大手企業・決算
+    # 大手企業・決算（個別株名は重みを抑え、決算サプライズ系を相対的に浮上させる）
     "earnings": 4, "決算": 4, "guidance": 5,
-    "nvidia": 6, "apple": 5, "microsoft": 5, "meta": 5,
-    "tesla": 5, "テスラ": 5, "amazon": 5, "google": 5, "alphabet": 5,
+    "nvidia": 3, "apple": 3, "microsoft": 3, "meta": 3,
+    "tesla": 3, "テスラ": 3, "amazon": 3, "google": 3, "alphabet": 3,
 
     # 急騰・急落
     "crash": 9, "plunge": 8, "tumble": 7, "sell-off": 7, "selloff": 7,
@@ -451,6 +451,7 @@ def fetch_rss_articles(source_name, url):
                 "url": entry.get("link", "") or "",
                 "publishedAt": entry.get("published", "") or entry.get("updated", "") or "",
                 "source": {"name": source_name},
+                "_is_rss": True,  # curated 高品質ソースのマーカー（スコアボーナス用）
             })
     except Exception as e:
         print(f"⚠️ RSS 取得エラー ({source_name}): {e}")
@@ -458,12 +459,18 @@ def fetch_rss_articles(source_name, url):
 
 
 def score_article_with_bonuses(article):
-    """既存 score_article にボーナスを加算した強化版スコア"""
+    """既存 score_article にボーナスを加算した強化版スコア。
+    - キーワード由来のサプライズ・速報・数字ボーナス
+    - curated 高品質ソース（RSS_FEEDS）にはベース +5 を付与
+    """
     base = score_article(article)
     text = (article.get("title", "") or "") + " " + (article.get("description", "") or "")
     for pattern, bonus in IMPACT_BONUS_PATTERNS:
         if pattern.search(text):
             base += bonus
+    # curated RSS ソース優遇（マーケット影響度の高い厳選ソース）
+    if article.get("_is_rss"):
+        base += 5
     return base
 
 
@@ -723,8 +730,9 @@ def fetch_news(api_key):
                 pool.append(a)
         pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
 
-    # 多様性確保（ソース上限 + 類似タイトル除外）で TOP3 を選ぶ
-    top_pool = select_top_diverse(pool, n=3, source_cap=2, sim_threshold=0.7)
+    # 多様性確保（ソース完全分散 + 類似タイトル除外）で TOP3 を選ぶ
+    # source_cap=1: 同じソースの記事は1件まで → 3ソース完全分散を強制
+    top_pool = select_top_diverse(pool, n=3, source_cap=1, sim_threshold=0.7)
 
     # ─── ③ 結果集計（各カテゴリTOP3 + topのTOP3） ───
     results = {}
