@@ -1,0 +1,50 @@
+name: Update YouTube Summary
+
+# 目的: 厳選 YouTube 投資チャンネルから新着動画を取得・字幕抽出・Gemini で要約し
+#       youtube-summary.html を生成して push する。
+#       Update Market News とは独立。1 日 1 回（朝の市場ニュース更新後）実行。
+
+on:
+  schedule:
+    # 朝の更新 (Update Market News) 完了後を狙う
+    - cron: '0 1 * * *'    # 10:00 JST 本命
+    - cron: '0 2 * * *'    # 11:00 JST バックアップ
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      GITHUB_ACTIONS_RUN: "true"
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install feedparser youtube-transcript-api google-generativeai
+
+      - name: Generate YouTube summary
+        run: python generate_youtube_summary.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add youtube-summary.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update youtube summary $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
