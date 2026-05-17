@@ -12,8 +12,12 @@ GitHub Actionsから毎日呼び出してOK（日曜以外はスキップ）。
 INDICATOR_SCHEDULE は auto_indicator_preview.py から自動取得。
 """
 import os
+import re
 import sys
+import time
+import urllib.request
 from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 
 JST = timezone(timedelta(hours=9))
 
@@ -22,6 +26,188 @@ try:
     from auto_indicator_preview import INDICATOR_SCHEDULE
 except ImportError:
     INDICATOR_SCHEDULE = {}
+
+# ─────────────────────────────────────────────
+# 週末動向収集用の高品質日本語 RSS ソース
+# ─────────────────────────────────────────────
+NEWS_RSS_FEEDS = [
+    ("Bloomberg Markets", "https://feeds.bloomberg.com/markets/news.rss"),
+    ("ロイター日本",       "https://assets.wor.jp/rss/rdf/reuters/top.rdf"),
+    ("NHK経済",            "https://www3.nhk.or.jp/rss/news/cat5.xml"),
+    ("東洋経済オンライン",  "https://toyokeizai.net/list/feed/rss"),
+]
+
+
+def fetch_recent_news(hours=72, max_per_source=15):
+    """過去 N 時間以内のニュースを RSS から収集"""
+    try:
+        import feedparser
+    except ImportError:
+        print("  ⚠️ feedparser 未インストール、週末ニュース取得スキップ")
+        return []
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    items = []
+    for source_name, url in NEWS_RSS_FEEDS:
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+            )
+            with urllib.request.urlopen(req, timeout=20) as r:
+                content = r.read()
+            feed = feedparser.parse(content)
+            for entry in feed.entries[:max_per_source]:
+                pub_str = entry.get("published", "") or entry.get("updated", "")
+                if not pub_str:
+                    continue
+                try:
+                    pub_dt = parsedate_to_datetime(pub_str)
+                    if pub_dt.tzinfo is None:
+                        pub_dt = pub_dt.replace(tzinfo=timezone.utc)
+                except Exception:
+                    continue
+                if pub_dt < cutoff:
+                    continue
+                title = re.sub(r"<[^>]+>", "", entry.get("title", "")).strip()
+                if title:
+                    items.append({"source": source_name, "title": title, "pub": pub_dt})
+        except Exception as e:
+            print(f"  ⚠️ RSS {source_name} エラー: {type(e).__name__}: {str(e)[:60]}")
+        time.sleep(0.5)
+    items.sort(key=lambda x: x["pub"], reverse=True)
+    return items
+
+
+def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators):
+    """Gemini で週末動向+来週への注目ポイント HTML セクションを生成。
+    API キーがない場合や失敗時は None を返す（既存テンプレートのみで生成される）。
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("  ℹ️ GEMINI_API_KEY 未設定、AI 週末セクションはスキップ")
+        return None
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        print("  ⚠️ google-generativeai 未インストール、AI 週末セクションはスキップ")
+        return None
+
+    news_items = fetch_recent_news(hours=72)
+    print(f"  📡 直近 72h ニュース: {len(news_items)} 件取得")
+    if not news_items:
+        return None
+
+    news_text = "\n".join(
+        [f"- [{n['source']}] {n['title']}" for n in news_items[:25]]
+    )
+    if indicators:
+        ind_text = "\n".join(
+            [
+                f"- {ev['date']} {ev['info'].get('emoji', '')} {ev['info'].get('name_short', '')}（重要度 {'★' * ev['info'].get('importance', 1)}）"
+                for ev in indicators
+            ]
+        )
+    else:
+        ind_text = "（来週は注目度の高い指標発表なし）"
+
+    week_label = f"{week_start.strftime('%Y-%m-%d')} 〜 {week_end.strftime('%Y-%m-%d')}"
+    prompt = f"""あなたは日本人個人投資家向けの投資戦略アナリストです。
+過去 72 時間（週末を含む）に流れたニュースと、来週の重要指標スケジュールを踏まえ、
+来週（{week_label}）の注目ポイントを簡潔にまとめてください。
+
+【直近 72h の主要ニュース見出し】
+{news_text}
+
+【来週の重要指標】
+{ind_text}
+
+【出力フォーマット】（このフォーマットを厳守。プレーンテキストのみ。HTML/Markdownは使わない）
+===週末動向の3行サマリー===
+- (週末で最も市場に影響しそうなトピック1)
+- (トピック2)
+- (トピック3)
+
+===来週ココに注目（3〜5項目）===
+- (具体的に。指標・地政学・決算・要人発言などから)
+- ...
+
+===日本人投資家へのひと言===
+(2〜3文。NISA/iDeCo・為替・日本株への波及視点を意識して、慎重な口調で。「〜の可能性」「〜要警戒」など)
+
+【注意】
+- 過度な断定や予想は避ける（「〜の可能性」「〜要注意」など慎重に）
+- ニュースに明示されていない情報の捏造はしない
+- 数字（価格目線）は具体的に書くが、根拠が薄ければ範囲表現にする
+- 日本語のみ
+- セクション見出し（"===..."）は必ず行頭にそのまま書く"""
+
+    genai.configure(api_key=api_key)
+    last_err = ""
+    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = (response.text or "").strip()
+            if text:
+                print(f"  ✅ AI 週末セクション生成 ({model_name}, {len(text)} 字)")
+                return _render_weekend_section_html(text, news_items)
+        except Exception as e:
+            last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
+            continue
+    print(f"  ⚠️ AI 週末セクション生成失敗: {last_err}")
+    return None
+
+
+def _render_weekend_section_html(ai_text, news_items):
+    """AI が出力したプレーンテキストを、既存 CSS にあわせた HTML セクションに変換"""
+    sections = {"weekend": [], "watch": [], "msg": ""}
+    current = None
+    for line in ai_text.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        if "週末動向" in s and "===" in s:
+            current = "weekend"; continue
+        if "来週ココに注目" in s and "===" in s:
+            current = "watch"; continue
+        if "日本人投資家へのひと言" in s and "===" in s:
+            current = "msg"; continue
+        if current == "weekend":
+            sections["weekend"].append(re.sub(r"^[-・*]\s*", "", s))
+        elif current == "watch":
+            sections["watch"].append(re.sub(r"^[-・*]\s*", "", s))
+        elif current == "msg":
+            sections["msg"] += s + " "
+
+    weekend_html = "".join(f"<li>{l}</li>" for l in sections["weekend"][:5])
+    watch_html = "".join(f"<li>{l}</li>" for l in sections["watch"][:6])
+    msg_html = sections["msg"].strip()
+
+    # 参考にしたニュースの代表 5 件
+    used_news_html = ""
+    for n in news_items[:5]:
+        used_news_html += f'<li><span style="color:#0969da;font-weight:600">[{n["source"]}]</span> {n["title"]}</li>'
+
+    section_html = f"""
+    <h2>🌐 週末動向 × 来週の作戦（AI 分析）</h2>
+    <div class="info-box" style="border-left-color:#1a7f37;background:#dafbe1;color:#1a7f37">
+      <strong>📰 週末動向の3行サマリー</strong>
+      <ul style="margin-top:8px;padding-left:22px">{weekend_html}</ul>
+    </div>
+    <div class="highlight-box">
+      <strong>👀 来週ココに注目</strong>
+      <ul style="margin-top:8px;padding-left:22px">{watch_html}</ul>
+    </div>
+    <div class="info-box" style="border-left-color:#9a6700;background:#fff8c5;color:#7b5a00">
+      <strong>💡 日本人投資家へのひと言</strong>
+      <p style="margin-top:6px;margin-bottom:0">{msg_html}</p>
+    </div>
+    <details style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:10px 16px;margin:14px 0">
+      <summary style="cursor:pointer;font-size:.88rem;color:#57606a">AI が参考にした直近ニュース（5 件）</summary>
+      <ul style="margin-top:8px;padding-left:22px;font-size:.85rem;color:#424a53;line-height:1.7">{used_news_html}</ul>
+    </details>
+"""
+    return section_html
 
 
 def get_next_monday(today_jst):
@@ -85,6 +271,9 @@ def build_weekly_html(week_start, week_end, today_jst):
 """
     else:
         events_html = '    <div class="info-box">今週は注目度の高い重要指標の発表はありません。地政学・企業決算・要人発言に注目。</div>\n'
+
+    # AI による週末動向セクション（GEMINI_API_KEY が設定されていれば自動生成、なければ空文字）
+    weekend_section_html = generate_weekend_section_with_ai(today_jst, week_start, week_end, events) or ""
 
     title = f"今週の投資戦略（{week_start_str}〜{week_end_str}）：注目指標と3シナリオ別マーケット展望"
 
@@ -165,6 +354,7 @@ def build_weekly_html(week_start, week_end, today_jst):
     .scenario-card.base .scenario-title{{color:#9a6700}}
     .info-box{{background:#dafbe1;border-left:4px solid #1a7f37;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#1a7f37}}
     .info-box::before{{content:"💡 ";font-weight:700}}
+    .highlight-box{{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#1f6feb}}
     .warning-box{{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#9a6700}}
     .warning-box::before{{content:"⚠️ ";font-weight:700}}
     .related-section{{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}}
@@ -224,6 +414,7 @@ def build_weekly_html(week_start, week_end, today_jst):
 
     <h2>📆 今週の重要スケジュール</h2>
 {events_html}
+{weekend_section_html}
     <div class="ad-slot">
       <div style="font-size:.7rem;color:#6e7681;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
       <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a>
