@@ -390,8 +390,10 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
     .page-header{{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #d0d7de;border-radius:12px;padding:24px 32px;margin-bottom:28px}}
-    .page-header h1{{font-size:1.6rem;color:#0969da;margin-bottom:6px}}
-    .page-header .page-meta{{font-size:.9rem;color:#57606a}}
+    .page-header h1{{font-size:1.6rem;color:#0969da;margin-bottom:10px;line-height:1.4}}
+    .page-header .page-tagline{{font-size:.95rem;color:#1f2328;line-height:1.7;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #d0d7de}}
+    .page-header .page-tagline strong{{color:#0969da}}
+    .page-header .page-meta{{font-size:.85rem;color:#57606a}}
     .channels-info{{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:14px 20px;margin-bottom:24px;font-size:.85rem;color:#424a53}}
     .channels-info strong{{color:#0969da}}
     .video-card{{display:grid;grid-template-columns:340px 1fr;gap:24px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 6px rgba(0,0,0,.04)}}
@@ -449,8 +451,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   </nav>
 
   <div class="page-header">
-    <h1>📺 投資系 YouTube 要約 — 日次 AI キャッチアップ</h1>
-    <div class="page-meta">最終更新: {updated_at} ／ 直近 48 時間の新着動画を AI（Gemini）で要約</div>
+    <h1>📺 投資系 YouTube 要約 — 忙しい人のための 5 分キャッチアップ</h1>
+    <div class="page-tagline">「動画を見る時間がない」を解決。<strong>厳選 {n_channels} チャンネルの新着動画を AI が毎朝自動要約</strong>。各動画の核心メッセージ・重要トピック・日本人投資家への示唆を、ひと目で把握できます。</div>
+    <div class="page-meta">最終更新: {updated_at} ／ 要約 AI: Google Gemini</div>
   </div>
 
   <div class="channels-info">
@@ -462,8 +465,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 
 <footer>
-  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a><br>
-  動画の著作権は各チャンネルに帰属します。本ページは AI による要約紹介であり、視聴は元動画でお願いします。
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="contact.html">お問い合わせ・削除要請</a><br>
+  動画の著作権は各チャンネルに帰属します。本ページは AI による要約・紹介であり、内容に誤りがある場合があります。詳細・正確な情報は元動画でご確認ください。<br>
+  <strong>チャンネル運営者の方へ：</strong> 当ページからのご自身のチャンネル/動画の掲載除外をご希望の場合は <a href="contact.html">お問い合わせフォーム</a> よりご連絡ください。速やかに対応いたします。
 </footer>
 
 <script>
