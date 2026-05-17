@@ -495,7 +495,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     now_jst = datetime.now(JST)
     today = now_jst.date()
-    force = "--force" in sys.argv
+    force = "--force" in sys.argv or os.environ.get("FORCE_WEEKLY", "").lower() in ("1", "true", "yes")
 
     print(f"📅 週次戦略記事 自動生成 ({today} {now_jst.strftime('%a')})")
 
