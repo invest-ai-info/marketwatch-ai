@@ -40,7 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add youtube-summary.html
+          git add youtube-summary.html youtube-summary-data.json 2>/dev/null || git add youtube-summary.html
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
