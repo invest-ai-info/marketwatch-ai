@@ -7,6 +7,7 @@ Gemini で要約して youtube-summary.html を生成する。
 import os
 import sys
 import re
+import json
 import time
 import urllib.request
 import urllib.error
@@ -38,11 +39,13 @@ CHANNELS = [
     ("@saki_kaigaihudousan", "UCpv0oCYCHywaOIsqh48MEVw", "Saki 海外不動産"),
 ]
 
-MAX_VIDEOS = 5        # 1日に要約する本数
-MAX_AGE_HOURS = 168   # 過去7日以内の動画を対象（毎日投稿しないチャンネルもカバー）
+MAX_VIDEOS = 5        # 1日に新規要約する本数（既要約はスキップ、これに含まない）
+MAX_AGE_HOURS = 168   # 候補とする動画の最大経過時間（過去7日）
 TRANSCRIPT_MAX_CHARS = 12000  # Gemini に渡す字幕の最大文字数
 RSS_RETRY = 3         # RSS 取得のリトライ回数
 RSS_RETRY_DELAY = 5   # リトライ間隔（秒）
+DATA_FILE = "youtube-summary-data.json"  # 要約データの永続化先
+KEEP_DAYS = 3         # 過去何日分の要約を保持するか
 
 
 # ─────────────────────────────────────────────
@@ -101,6 +104,56 @@ def fetch_channel_videos(channel_id, channel_name):
             "channel_id": channel_id,
         })
     return videos
+
+
+def load_existing_data():
+    """既存の要約データを JSON から読み込む"""
+    if not os.path.exists(DATA_FILE):
+        return []
+    try:
+        with open(DATA_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        videos = data.get("videos", [])
+        print(f"📦 {DATA_FILE} から {len(videos)} 件の既存要約を読み込み")
+        return videos
+    except Exception as e:
+        print(f"⚠️ {DATA_FILE} 読み込み失敗、新規開始: {e}")
+        return []
+
+
+def save_data(videos):
+    """要約データを JSON に保存"""
+    payload = {
+        "videos": videos,
+        "saved_at": datetime.now(JST).isoformat(timespec="seconds"),
+        "keep_days": KEEP_DAYS,
+    }
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    print(f"💾 {DATA_FILE} に {len(videos)} 件を保存")
+
+
+def prune_old_summaries(videos, keep_days):
+    """generated_at が keep_days より古いものを除外"""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=keep_days)
+    fresh = []
+    pruned = 0
+    for v in videos:
+        gen_at_str = v.get("generated_at", "")
+        try:
+            gen_at = datetime.fromisoformat(gen_at_str.replace("Z", "+00:00"))
+            if gen_at.tzinfo is None:
+                gen_at = gen_at.replace(tzinfo=JST)
+            if gen_at.astimezone(timezone.utc) >= cutoff:
+                fresh.append(v)
+            else:
+                pruned += 1
+        except Exception:
+            # 日付不明は捨てる
+            pruned += 1
+    if pruned:
+        print(f"🗑️  {pruned} 件を期限切れで削除（{keep_days} 日経過）")
+    return fresh
 
 
 def hours_since(published_str):
@@ -396,6 +449,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     .page-header .page-meta{{font-size:.85rem;color:#57606a}}
     .channels-info{{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:14px 20px;margin-bottom:24px;font-size:.85rem;color:#424a53}}
     .channels-info strong{{color:#0969da}}
+    .day-section{{margin-bottom:36px}}
+    .day-title{{font-size:1.15rem;color:#0969da;border-bottom:2px solid #d0d7de;padding-bottom:8px;margin-bottom:16px}}
     .video-card{{display:grid;grid-template-columns:340px 1fr;gap:24px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 6px rgba(0,0,0,.04)}}
     .video-thumb-wrap{{position:relative;border-radius:10px;overflow:hidden;height:fit-content}}
     .video-thumb-wrap img{{width:100%;height:auto;display:block;border-radius:10px}}
@@ -479,13 +534,42 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 
 
 def build_html(summaries):
-    """全要約から HTML ページを生成"""
+    """全要約から HTML ページを生成（generated_at 日付でグループ化）"""
     now_jst = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     channel_list = " / ".join([c[2] for c in CHANNELS])
+    today_str = datetime.now(JST).strftime("%Y-%m-%d")
     if not summaries:
-        videos_html = '<div class="empty-msg">直近 48 時間以内に対象チャンネルからの新着動画がなかったか、字幕取得・要約に失敗しました。次回更新（明日朝）をお待ちください。</div>'
+        videos_html = '<div class="empty-msg">直近の対象チャンネルから新着動画がなかったか、要約に失敗しました。次回更新をお待ちください。</div>'
     else:
-        videos_html = "\n".join(build_video_card(v) for v in summaries)
+        # generated_at の YYYY-MM-DD でグループ化
+        groups = {}
+        for v in summaries:
+            gen_at = v.get("generated_at", "")
+            try:
+                dt = datetime.fromisoformat(gen_at.replace("Z", "+00:00"))
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=JST)
+                day = dt.astimezone(JST).strftime("%Y-%m-%d")
+            except Exception:
+                day = "unknown"
+            groups.setdefault(day, []).append(v)
+        # 日付の新しい順
+        sorted_days = sorted(groups.keys(), reverse=True)
+        parts = []
+        for day in sorted_days:
+            vids = groups[day]
+            # 各日内でも公開日の新しい順
+            vids.sort(key=lambda v: v.get("published", ""), reverse=True)
+            if day == "unknown":
+                label = "📅 日付不明"
+            elif day == today_str:
+                label = f"🆕 本日（{day}）追加 — {len(vids)} 本"
+            else:
+                label = f"📅 {day} 追加 — {len(vids)} 本"
+            parts.append(f'<div class="day-section"><h2 class="day-title">{label}</h2>')
+            parts.extend(build_video_card(v) for v in vids)
+            parts.append("</div>")
+        videos_html = "\n".join(parts)
     return PAGE_TEMPLATE.format(
         updated_at=now_jst,
         n_channels=len(CHANNELS),
@@ -503,10 +587,16 @@ def main():
         print("❌ GEMINI_API_KEY が未設定です")
         sys.exit(1)
 
-    # TEST_MODE: RSS をスキップして既知の URL で Gemini 動作確認
+    # 既存データロード + 期限切れ削除
+    existing = load_existing_data()
+    existing = prune_old_summaries(existing, KEEP_DAYS)
+    existing_ids = {v.get("video_id") for v in existing if v.get("video_id")}
+    print(f"📦 過去 {KEEP_DAYS} 日分の既存要約: {len(existing)} 件\n")
+
+    # 候補収集（既存 video_id は除外）
     if os.environ.get("TEST_MODE", "").lower() in ("1", "true", "yes"):
         print("🧪 TEST_MODE: ハードコード URL で Gemini 動作確認")
-        targets = [
+        candidates = [
             {
                 "video_id": "rUtIgnvEhx0",
                 "url": "https://www.youtube.com/watch?v=rUtIgnvEhx0",
@@ -516,28 +606,32 @@ def main():
                 "published": "2026-05-16T00:00:00Z",
             },
         ]
-        all_videos = list(targets)
     else:
         print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集...")
-        all_videos = []
+        candidates = []
         for handle, cid, name in CHANNELS:
             vids = fetch_channel_videos(cid, name)
             recent = [v for v in vids if 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS]
             print(f"  {handle:25} {len(vids)}本 中 {len(recent)}本が直近 {MAX_AGE_HOURS}h 以内")
-            all_videos.extend(recent)
+            candidates.extend(recent)
             time.sleep(1)
-        # 新しい順
-        all_videos.sort(key=lambda v: v.get("published", ""), reverse=True)
-        targets = all_videos[:MAX_VIDEOS]
-    print(f"\n🎯 {len(all_videos)}本の候補から上位 {len(targets)} 本を要約します\n")
+        candidates.sort(key=lambda v: v.get("published", ""), reverse=True)
 
-    summaries = []
+    # 既要約は除外
+    new_candidates = [v for v in candidates if v.get("video_id") not in existing_ids]
+    skipped = len(candidates) - len(new_candidates)
+    if skipped:
+        print(f"⏭️  {skipped} 本は既に要約済みのためスキップ")
+    targets = new_candidates[:MAX_VIDEOS]
+    print(f"\n🎯 新規候補 {len(new_candidates)} 本から {len(targets)} 本を要約します\n")
+
+    new_summaries = []
     video_url_works = None  # None=未判定、True/False=判定済み
+    now_iso = datetime.now(JST).isoformat(timespec="seconds")
     for i, v in enumerate(targets, 1):
         print(f"[{i}/{len(targets)}] ▶ {v['channel_name']}: {v['title'][:60]}")
         summary_text = None
         method_used = None
-        # 動画 URL 方式が使える可能性があれば試す
         if video_url_works is not False:
             print(f"    🎬 動画 URL 方式 (Gemini video) で要約中...")
             summary_text = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key)
@@ -545,10 +639,8 @@ def main():
                 video_url_works = True
                 method_used = "video"
             elif video_url_works is None:
-                # 初回失敗 → 動画 URL は無理と判断、以降テキスト要約一本に
                 video_url_works = False
                 print(f"    ℹ️ 動画 URL 方式は使えないため、以降はタイトル+説明文要約にフォールバック")
-        # フォールバック：タイトル + 説明文で要約
         if not summary_text:
             print(f"    📝 テキスト要約 (タイトル + 説明文) で生成中...")
             summary_text = summarize_text_only(v["title"], v["channel_name"], v.get("description", ""), api_key)
@@ -560,14 +652,29 @@ def main():
         v["summary_raw"] = summary_text
         v["summary_parsed"] = parse_summary(summary_text)
         v["summary_method"] = method_used
-        summaries.append(v)
+        v["generated_at"] = now_iso  # ← 永続化用タイムスタンプ
+        new_summaries.append(v)
         print(f"    ✅ 要約完了 [{method_used}] ({len(summary_text)} 字)")
         time.sleep(2)
 
-    html = build_html(summaries)
+    # 既存 + 新規 を統合（video_id で重複排除、新しい方を優先）
+    combined_map = {}
+    for v in existing:  # 古いものから入れて
+        if v.get("video_id"):
+            combined_map[v["video_id"]] = v
+    for v in new_summaries:  # 新規で上書き
+        combined_map[v["video_id"]] = v
+    combined = list(combined_map.values())
+
+    # 保存（永続化）
+    save_data(combined)
+
+    # HTML 生成（公開日順、新しい順）
+    combined.sort(key=lambda v: v.get("published", ""), reverse=True)
+    html = build_html(combined)
     with open("youtube-summary.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"\n✅ youtube-summary.html を生成しました（{len(summaries)} 本の要約）")
+    print(f"\n✅ youtube-summary.html を生成しました（合計 {len(combined)} 本、新規 {len(new_summaries)} 本）")
 
 
 if __name__ == "__main__":
