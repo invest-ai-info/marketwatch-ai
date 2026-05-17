@@ -33,10 +33,9 @@ CHANNELS = [
     ("@yurumazu",            "UClDM5GP-nYn5gBvDryZDW9w", "ゆるまずの投資チャンネル"),
     ("@leveraged_NASDAQ100", "UCe1VbBy2kU_lMB6t4aJmukg", "レバナス1本リーマン"),
     ("@Joe_Bitcoin",         "UChHDspjk1RSMWXe36OyV5rg", "Joe Bitcoin"),
-    # 以下は YouTube 側で RSS 制限あり（後日要対応）
-    # ("@rakumachi",           "UCPMJKbrxtpARoTd1b49iUvA", "楽待 RAKUMACHI"),
-    # ("@mabuchi-mariko",      "UCXhiUvJK_0uyLY1YvaSa0AQ", "馬渕磨理子"),
-    # ("@saki_kaigaihudousan", "UCpv0oCYCHywaOIsqh48MEVw", "Saki 海外不動産"),
+    ("@rakumachi",           "UCPMJKbrxtpARoTd1b49iUvA", "楽待 不動産投資"),
+    ("@mabuchi-mariko",      "UCXhiUvJK_0uyLY1YvaSa0AQ", "馬渕磨理子"),
+    ("@saki_kaigaihudousan", "UCpv0oCYCHywaOIsqh48MEVw", "Saki 海外不動産"),
 ]
 
 MAX_VIDEOS = 5        # 1日に要約する本数
