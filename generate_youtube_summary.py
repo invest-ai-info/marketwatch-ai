@@ -212,6 +212,10 @@ SUMMARY_PROMPT_TEXT = """あなたは日本人投資家向けの動画紹介ラ�
 - 日本語で出力"""
 
 
+TEXT_MODEL_CANDIDATES = ("gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-latest")
+VIDEO_MODEL_CANDIDATES = ("gemini-2.0-flash", "gemini-2.5-flash")
+
+
 def summarize_with_gemini_video(video_url, title, channel_name, api_key):
     """Gemini で YouTube 動画を直接要約（複数モデルで試行）"""
     try:
@@ -221,7 +225,7 @@ def summarize_with_gemini_video(video_url, title, channel_name, api_key):
     genai.configure(api_key=api_key)
     prompt = SUMMARY_PROMPT_VIDEO.format(channel_name=channel_name, title=title)
     last_err = ""
-    for model_name in ("gemini-1.5-flash", "gemini-2.0-flash"):
+    for model_name in VIDEO_MODEL_CANDIDATES:
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content([
@@ -232,7 +236,7 @@ def summarize_with_gemini_video(video_url, title, channel_name, api_key):
             if text:
                 return text
         except Exception as e:
-            last_err = f"{type(e).__name__}: {str(e)[:80]}"
+            last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
             continue
     print(f"    ⚠️ video 要約失敗（全モデル）: {last_err}")
     return None
@@ -245,18 +249,24 @@ def summarize_text_only(title, channel_name, description, api_key):
     except ImportError:
         return None
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
     prompt = SUMMARY_PROMPT_TEXT.format(
         channel_name=channel_name,
         title=title,
         description=description or "（説明文なし）",
     )
-    try:
-        response = model.generate_content(prompt)
-        return (response.text or "").strip()
-    except Exception as e:
-        print(f"    ⚠️ text 要約失敗: {type(e).__name__}: {str(e)[:80]}")
-        return None
+    last_err = ""
+    for model_name in TEXT_MODEL_CANDIDATES:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = (response.text or "").strip()
+            if text:
+                return text
+        except Exception as e:
+            last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
+            continue
+    print(f"    ⚠️ text 要約失敗（全モデル）: {last_err}")
+    return None
 
 
 # ─────────────────────────────────────────────
