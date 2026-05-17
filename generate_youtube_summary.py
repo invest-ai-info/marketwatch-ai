@@ -63,26 +63,25 @@ def fetch_channel_videos(channel_id, channel_name):
     last_err = None
     for attempt in range(RSS_RETRY):
         ua = user_agents[attempt % len(user_agents)]
-        req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "application/atom+xml,application/xml"})
+        # Accept ヘッダーは付けない（YouTube が 406 を返すケースあり）
+        req = urllib.request.Request(url, headers={"User-Agent": ua})
         try:
             with urllib.request.urlopen(req, timeout=20) as r:
                 content = r.read()
-                break
+                if content and len(content) > 100:
+                    break
+                last_err = f"empty body ({len(content) if content else 0} bytes)"
         except urllib.error.HTTPError as e:
             last_err = f"HTTP {e.code}"
-            if e.code == 429 or e.code >= 500:
-                # レート制限/サーバーエラーはリトライ価値あり
-                if attempt < RSS_RETRY - 1:
-                    time.sleep(RSS_RETRY_DELAY * (attempt + 1))
-                    continue
-            return []  # 404 などはリトライしても無駄
+            # 4xx は一般にリトライ無意味だが、403/429 はレート制限の可能性で1回だけリトライ
+            if e.code not in (429, 403) and not (500 <= e.code < 600):
+                break
         except Exception as e:
-            last_err = str(e)
-            if attempt < RSS_RETRY - 1:
-                time.sleep(RSS_RETRY_DELAY * (attempt + 1))
-                continue
-    if not content:
-        print(f"⚠️ {channel_name} 取得失敗（{RSS_RETRY}回試行）: {last_err}")
+            last_err = f"{type(e).__name__}: {str(e)[:60]}"
+        if attempt < RSS_RETRY - 1:
+            time.sleep(RSS_RETRY_DELAY * (attempt + 1))
+    if not content or len(content) < 100:
+        print(f"⚠️ {channel_name} 取得失敗（{RSS_RETRY}回試行・最終: {last_err}）")
         return []
     feed = feedparser.parse(content)
     videos = []
