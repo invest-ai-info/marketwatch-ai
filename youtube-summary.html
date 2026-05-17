@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📺 投資系 YouTube 要約 — 日次AI要約で時短キャッチアップ | MarketWatch AI</title>
+  <meta name="description" content="日本人投資家向けの厳選YouTube投資チャンネルから、毎日5本の新着動画を AI（Gemini）で要約。3行サマリー・重要トピック・マーケット示唆を一覧で時短キャッチアップ。">
+  <meta name="keywords" content="YouTube,投資,要約,AI,Gemini,日本人投資家,PIVOT,NewsPicks,たぱぞう,ReHacQ">
+  <link rel="canonical" href="https://marketwatch-jp.com/youtube-summary.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="📺 投資系 YouTube 要約 — 日次AI要約で時短キャッチアップ">
+  <meta property="og:description" content="厳選YouTube投資チャンネルの新着動画を AI が毎日要約。3行サマリー・重要トピック・マーケット示唆。">
+  <meta property="og:url" content="https://marketwatch-jp.com/youtube-summary.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:160px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .page-header{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #d0d7de;border-radius:12px;padding:24px 32px;margin-bottom:28px}
+    .page-header h1{font-size:1.6rem;color:#0969da;margin-bottom:6px}
+    .page-header .page-meta{font-size:.9rem;color:#57606a}
+    .channels-info{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:14px 20px;margin-bottom:24px;font-size:.85rem;color:#424a53}
+    .channels-info strong{color:#0969da}
+    .video-card{display:grid;grid-template-columns:340px 1fr;gap:24px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+    .video-thumb-wrap{position:relative;border-radius:10px;overflow:hidden;height:fit-content}
+    .video-thumb-wrap img{width:100%;height:auto;display:block;border-radius:10px}
+    .video-thumb-wrap a{display:block;position:relative}
+    .video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;pointer-events:none;transition:background .15s}
+    .video-thumb-wrap a:hover .video-play{background:#cf222e}
+    .video-body{display:flex;flex-direction:column}
+    .video-channel{font-size:.85rem;color:#0969da;font-weight:600;margin-bottom:6px}
+    .video-title{font-size:1.15rem;line-height:1.4;margin-bottom:8px}
+    .video-title a{color:#1f2328;text-decoration:none}
+    .video-title a:hover{color:#0969da}
+    .video-pub{font-size:.78rem;color:#57606a;margin-bottom:14px}
+    .summary-section{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:12px 16px;margin-bottom:10px}
+    .summary-section.summary-3lines{border-left-color:#1a7f37}
+    .summary-section.summary-topics{border-left-color:#0969da}
+    .summary-section.summary-impl{border-left-color:#9a6700;background:#fffaf0}
+    .summary-section-title{font-size:.85rem;font-weight:700;color:#0969da;margin-bottom:6px}
+    .summary-section.summary-3lines .summary-section-title{color:#1a7f37}
+    .summary-section.summary-impl .summary-section-title{color:#9a6700}
+    .summary-section ul{padding-left:20px;font-size:.9rem;color:#424a53;line-height:1.7}
+    .summary-section ul li{margin-bottom:4px}
+    .summary-section p{font-size:.92rem;color:#424a53;line-height:1.7}
+    .video-watch{display:inline-block;margin-top:auto;padding:10px 16px;background:#cf222e;color:#fff;text-decoration:none;border-radius:6px;font-size:.88rem;font-weight:600;text-align:center;transition:background .15s}
+    .video-watch:hover{background:#a40e1f}
+    .empty-msg{background:#fff8c5;border:1px solid #d29922;border-radius:10px;padding:18px 24px;color:#7b5a00;font-size:.95rem}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    @media(max-width:780px){
+      .video-card{grid-template-columns:1fr}
+      .video-thumb-wrap img{width:100%;max-width:480px;margin:0 auto}
+      main{padding:20px 14px}
+      .nav-btn{min-width:0;width:auto;font-size:.82rem;padding:9px 14px}
+    }
+  </style>
+</head>
+<body>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn current" href="youtube-summary.html">📺 YouTube要約</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  </nav>
+
+  <div class="page-header">
+    <h1>📺 投資系 YouTube 要約 — 日次 AI キャッチアップ</h1>
+    <div class="page-meta">最終更新: 2026-05-17 14:38 JST ／ 直近 48 時間の新着動画を AI（Gemini）で要約</div>
+  </div>
+
+  <div class="channels-info">
+    <strong>対象チャンネル（7 件）:</strong> PIVOT 公式チャンネル / ReHacQ / たぱぞうの米国株投資 / NewsPicks / ゆるまずの投資チャンネル / レバナス1本リーマン / Joe Bitcoin
+  </div>
+
+  <div class="empty-msg">直近 48 時間以内に対象チャンネルからの新着動画がなかったか、字幕取得・要約に失敗しました。次回更新（明日朝）をお待ちください。</div>
+
+</main>
+
+<footer>
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a><br>
+  動画の著作権は各チャンネルに帰属します。本ページは AI による要約紹介であり、視聴は元動画でお願いします。
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark .header-title,body.dark .header-meta,body.dark .page-header h1{color:#e6edf3!important}body.dark a{color:#79c0ff!important}body.dark .video-card,body.dark .channels-info,body.dark .page-header{background:#161b22!important;border-color:#30363d!important}body.dark .video-title a{color:#e6edf3!important}body.dark .summary-section{background:#0d1117!important;border-color:#30363d!important}body.dark .summary-section.summary-impl{background:#1c1810!important}body.dark .summary-section ul,body.dark .summary-section p,body.dark .channels-info,body.dark .video-pub,body.dark .page-meta{color:#c9d1d9!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+</script>
+</body>
+</html>
