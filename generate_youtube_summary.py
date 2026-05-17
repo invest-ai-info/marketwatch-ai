@@ -160,14 +160,11 @@ def get_transcript(video_id):
 # ─────────────────────────────────────────────
 # Gemini で要約
 # ─────────────────────────────────────────────
-SUMMARY_PROMPT = """あなたは日本人投資家向けの動画要約ライターです。以下の YouTube 動画の字幕を読み、日本人投資家にとって有益な情報を抽出して要約してください。
+SUMMARY_PROMPT_VIDEO = """あなたは日本人投資家向けの動画要約ライターです。以下の YouTube 動画を視聴・分析し、日本人投資家にとって有益な情報を抽出して要約してください。
 
 【動画情報】
 チャンネル: {channel_name}
 タイトル: {title}
-
-【字幕】
-{transcript}
 
 【出力フォーマット】（このフォーマットを厳守。各セクションのタイトル文字も含めて出力）
 3行サマリー:
@@ -183,14 +180,14 @@ SUMMARY_PROMPT = """あなたは日本人投資家向けの動画要約ライタ
 (1〜2文。この情報を踏まえて日本人投資家はどう行動・思考すべきか)
 
 【注意】
-- 字幕に明示されていない情報は推測しない
+- 動画で明示されていない情報は推測しない
 - 過度な断定は避け、「〜の可能性」「〜と示唆」など慎重な表現を使う
 - 日本語で出力
 - 各セクションのタイトル文字（"3行サマリー:" など）は必ず行頭に置く"""
 
 
-def summarize_with_gemini(title, channel_name, transcript, api_key):
-    """Gemini で動画要約を生成"""
+def summarize_with_gemini_video(video_url, title, channel_name, api_key):
+    """Gemini で YouTube 動画を直接要約（URL を渡して動画理解を活用）"""
     try:
         import google.generativeai as genai
     except ImportError:
@@ -199,17 +196,18 @@ def summarize_with_gemini(title, channel_name, transcript, api_key):
 
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel("gemini-2.0-flash")
-    short = transcript[:TRANSCRIPT_MAX_CHARS]
-    prompt = SUMMARY_PROMPT.format(
+    prompt = SUMMARY_PROMPT_VIDEO.format(
         channel_name=channel_name,
         title=title,
-        transcript=short,
     )
     try:
-        response = model.generate_content(prompt)
+        response = model.generate_content([
+            {"file_data": {"file_uri": video_url, "mime_type": "video/youtube"}},
+            prompt,
+        ])
         return (response.text or "").strip()
     except Exception as e:
-        print(f"⚠️ Gemini 要約失敗: {e}")
+        print(f"    ⚠️ Gemini video 要約失敗: {type(e).__name__}: {str(e)[:120]}")
         return None
 
 
@@ -461,12 +459,9 @@ def main():
     summaries = []
     for i, v in enumerate(targets, 1):
         print(f"[{i}/{len(targets)}] ▶ {v['channel_name']}: {v['title'][:60]}")
-        transcript = get_transcript(v["video_id"])
-        if not transcript or len(transcript) < 100:
-            print(f"    ⏭️ 字幕取得失敗/短すぎ、スキップ")
-            continue
-        print(f"    📝 字幕 {len(transcript)} 字 → Gemini 要約中...")
-        summary_text = summarize_with_gemini(v["title"], v["channel_name"], transcript, api_key)
+        video_url = v["url"]
+        print(f"    🎬 Gemini に動画 URL を渡して要約中...")
+        summary_text = summarize_with_gemini_video(video_url, v["title"], v["channel_name"], api_key)
         if not summary_text:
             print(f"    ⏭️ 要約失敗、スキップ")
             continue
