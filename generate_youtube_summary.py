@@ -185,28 +185,77 @@ SUMMARY_PROMPT_VIDEO = """あなたは日本人投資家向けの動画要約ラ
 - 各セクションのタイトル文字（"3行サマリー:" など）は必ず行頭に置く"""
 
 
+SUMMARY_PROMPT_TEXT = """あなたは日本人投資家向けの動画紹介ライターです。以下の YouTube 動画情報（タイトルと説明文のみ・動画内容は未視聴）を読み、推測できる範囲で投資家向けの紹介文を作成してください。
+
+【動画情報】
+チャンネル: {channel_name}
+タイトル: {title}
+
+【説明文】
+{description}
+
+【出力フォーマット】（このフォーマットを厳守）
+3行サマリー:
+- (1行目: タイトルから推測される核心テーマ)
+- (2行目: 扱われそうな具体的トピック・銘柄・指標)
+- (3行目: 日本人投資家にとっての示唆)
+
+重要トピック:
+- (タイトル・説明から推測される話題 3〜5個)
+
+マーケット示唆:
+(1〜2文。動画を見た上で考えるべき点として)
+
+【注意】
+- 動画本編は未視聴である前提で、「〜と思われる」「〜の可能性」「〜について解説していると見られる」など慎重な表現を使う
+- タイトルや説明にない情報の捏造はしない
+- 日本語で出力"""
+
+
 def summarize_with_gemini_video(video_url, title, channel_name, api_key):
-    """Gemini で YouTube 動画を直接要約（URL を渡して動画理解を活用）"""
+    """Gemini で YouTube 動画を直接要約（複数モデルで試行）"""
     try:
         import google.generativeai as genai
     except ImportError:
-        print("⚠️ google-generativeai 未インストール")
         return None
-
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    prompt = SUMMARY_PROMPT_VIDEO.format(
+    prompt = SUMMARY_PROMPT_VIDEO.format(channel_name=channel_name, title=title)
+    last_err = ""
+    for model_name in ("gemini-1.5-flash", "gemini-2.0-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content([
+                {"file_data": {"file_uri": video_url, "mime_type": "video/youtube"}},
+                prompt,
+            ])
+            text = (response.text or "").strip()
+            if text:
+                return text
+        except Exception as e:
+            last_err = f"{type(e).__name__}: {str(e)[:80]}"
+            continue
+    print(f"    ⚠️ video 要約失敗（全モデル）: {last_err}")
+    return None
+
+
+def summarize_text_only(title, channel_name, description, api_key):
+    """フォールバック：タイトル + 説明文だけで要約（動画 URL 機能が使えない場合）"""
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return None
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    prompt = SUMMARY_PROMPT_TEXT.format(
         channel_name=channel_name,
         title=title,
+        description=description or "（説明文なし）",
     )
     try:
-        response = model.generate_content([
-            {"file_data": {"file_uri": video_url, "mime_type": "video/youtube"}},
-            prompt,
-        ])
+        response = model.generate_content(prompt)
         return (response.text or "").strip()
     except Exception as e:
-        print(f"    ⚠️ Gemini video 要約失敗: {type(e).__name__}: {str(e)[:120]}")
+        print(f"    ⚠️ text 要約失敗: {type(e).__name__}: {str(e)[:80]}")
         return None
 
 
@@ -441,33 +490,65 @@ def main():
         print("❌ GEMINI_API_KEY が未設定です")
         sys.exit(1)
 
-    print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集...")
-    all_videos = []
-    for handle, cid, name in CHANNELS:
-        vids = fetch_channel_videos(cid, name)
-        recent = [v for v in vids if 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS]
-        print(f"  {handle:25} {len(vids)}本 中 {len(recent)}本が直近 {MAX_AGE_HOURS}h 以内")
-        all_videos.extend(recent)
-        time.sleep(1)
-
-    # 新しい順
-    all_videos.sort(key=lambda v: v.get("published", ""), reverse=True)
-    targets = all_videos[:MAX_VIDEOS]
+    # TEST_MODE: RSS をスキップして既知の URL で Gemini 動作確認
+    if os.environ.get("TEST_MODE", "").lower() in ("1", "true", "yes"):
+        print("🧪 TEST_MODE: ハードコード URL で Gemini 動作確認")
+        targets = [
+            {
+                "video_id": "rUtIgnvEhx0",
+                "url": "https://www.youtube.com/watch?v=rUtIgnvEhx0",
+                "title": "リアルゲイトの増資が、\"ポジティブ材料\"なのか解説します!!",
+                "channel_name": "たぱぞうの米国株投資",
+                "channel_id": "UC7sEB_ylMuHJD4TjF4Ag1nw",
+                "published": "2026-05-16T00:00:00Z",
+            },
+        ]
+        all_videos = list(targets)
+    else:
+        print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集...")
+        all_videos = []
+        for handle, cid, name in CHANNELS:
+            vids = fetch_channel_videos(cid, name)
+            recent = [v for v in vids if 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS]
+            print(f"  {handle:25} {len(vids)}本 中 {len(recent)}本が直近 {MAX_AGE_HOURS}h 以内")
+            all_videos.extend(recent)
+            time.sleep(1)
+        # 新しい順
+        all_videos.sort(key=lambda v: v.get("published", ""), reverse=True)
+        targets = all_videos[:MAX_VIDEOS]
     print(f"\n🎯 {len(all_videos)}本の候補から上位 {len(targets)} 本を要約します\n")
 
     summaries = []
+    video_url_works = None  # None=未判定、True/False=判定済み
     for i, v in enumerate(targets, 1):
         print(f"[{i}/{len(targets)}] ▶ {v['channel_name']}: {v['title'][:60]}")
-        video_url = v["url"]
-        print(f"    🎬 Gemini に動画 URL を渡して要約中...")
-        summary_text = summarize_with_gemini_video(video_url, v["title"], v["channel_name"], api_key)
+        summary_text = None
+        method_used = None
+        # 動画 URL 方式が使える可能性があれば試す
+        if video_url_works is not False:
+            print(f"    🎬 動画 URL 方式 (Gemini video) で要約中...")
+            summary_text = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key)
+            if summary_text:
+                video_url_works = True
+                method_used = "video"
+            elif video_url_works is None:
+                # 初回失敗 → 動画 URL は無理と判断、以降テキスト要約一本に
+                video_url_works = False
+                print(f"    ℹ️ 動画 URL 方式は使えないため、以降はタイトル+説明文要約にフォールバック")
+        # フォールバック：タイトル + 説明文で要約
+        if not summary_text:
+            print(f"    📝 テキスト要約 (タイトル + 説明文) で生成中...")
+            summary_text = summarize_text_only(v["title"], v["channel_name"], v.get("description", ""), api_key)
+            if summary_text:
+                method_used = "text"
         if not summary_text:
             print(f"    ⏭️ 要約失敗、スキップ")
             continue
         v["summary_raw"] = summary_text
         v["summary_parsed"] = parse_summary(summary_text)
+        v["summary_method"] = method_used
         summaries.append(v)
-        print(f"    ✅ 要約完了 ({len(summary_text)} 字)")
+        print(f"    ✅ 要約完了 [{method_used}] ({len(summary_text)} 字)")
         time.sleep(2)
 
     html = build_html(summaries)
