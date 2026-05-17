@@ -40,29 +40,49 @@ CHANNELS = [
 ]
 
 MAX_VIDEOS = 5        # 1日に要約する本数
-MAX_AGE_HOURS = 48    # 過去48h以内の動画のみ対象
+MAX_AGE_HOURS = 168   # 過去7日以内の動画を対象（毎日投稿しないチャンネルもカバー）
 TRANSCRIPT_MAX_CHARS = 12000  # Gemini に渡す字幕の最大文字数
+RSS_RETRY = 3         # RSS 取得のリトライ回数
+RSS_RETRY_DELAY = 5   # リトライ間隔（秒）
 
 
 # ─────────────────────────────────────────────
 # RSS から動画リスト取得
 # ─────────────────────────────────────────────
 def fetch_channel_videos(channel_id, channel_name):
-    """RSS フィードから最新動画を取得"""
+    """RSS フィードから最新動画を取得（リトライ付き）"""
     import feedparser
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0 (compatible; marketwatch-jp/1.0)"},
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=20) as r:
-            content = r.read()
-    except urllib.error.HTTPError as e:
-        print(f"⚠️ {channel_name} HTTP {e.code}")
-        return []
-    except Exception as e:
-        print(f"⚠️ {channel_name} 取得失敗: {e}")
+    # GitHub Actions の IP は YouTube に弾かれやすいのでブラウザ風 UA で試行
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    ]
+    content = None
+    last_err = None
+    for attempt in range(RSS_RETRY):
+        ua = user_agents[attempt % len(user_agents)]
+        req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "application/atom+xml,application/xml"})
+        try:
+            with urllib.request.urlopen(req, timeout=20) as r:
+                content = r.read()
+                break
+        except urllib.error.HTTPError as e:
+            last_err = f"HTTP {e.code}"
+            if e.code == 429 or e.code >= 500:
+                # レート制限/サーバーエラーはリトライ価値あり
+                if attempt < RSS_RETRY - 1:
+                    time.sleep(RSS_RETRY_DELAY * (attempt + 1))
+                    continue
+            return []  # 404 などはリトライしても無駄
+        except Exception as e:
+            last_err = str(e)
+            if attempt < RSS_RETRY - 1:
+                time.sleep(RSS_RETRY_DELAY * (attempt + 1))
+                continue
+    if not content:
+        print(f"⚠️ {channel_name} 取得失敗（{RSS_RETRY}回試行）: {last_err}")
         return []
     feed = feedparser.parse(content)
     videos = []
@@ -105,7 +125,7 @@ def hours_since(published_str):
 # 字幕取得
 # ─────────────────────────────────────────────
 def get_transcript(video_id):
-    """字幕を取得。日本語優先、なければ英語、それでもなければ自動取得"""
+    """字幕を取得。日本語優先、なければ英語、それでもなければ利用可能な言語から1つ"""
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
     except ImportError:
@@ -113,17 +133,27 @@ def get_transcript(video_id):
         return None
 
     api = YouTubeTranscriptApi()
-    # 優先順位: 日本語 → 英語 → 何でも
-    for langs in (["ja"], ["en"], None):
+
+    # 試行1: 指定言語の優先順位（日本語 → 英語 → 中国語）
+    for langs in (["ja", "ja-JP"], ["en", "en-US", "en-GB"], ["zh", "zh-CN", "zh-TW"]):
         try:
-            if langs:
-                t = api.fetch(video_id, languages=langs)
-            else:
-                # languages 引数なし → 利用可能な言語から自動選択
-                t = api.fetch(video_id)
+            t = api.fetch(video_id, languages=langs)
             return " ".join([s.text for s in t])
         except Exception:
             continue
+
+    # 試行2: 利用可能な言語をリストアップ → 最初の1つを取得
+    try:
+        transcripts = api.list(video_id)
+        for t_info in transcripts:
+            try:
+                t = t_info.fetch()
+                return " ".join([s.text for s in t])
+            except Exception:
+                continue
+    except Exception as e:
+        print(f"    ⚠️ 字幕リスト取得失敗: {type(e).__name__}: {str(e)[:80]}")
+
     return None
 
 
