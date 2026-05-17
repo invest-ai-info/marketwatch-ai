@@ -15,6 +15,11 @@ on:
     # ※スクリプト側で「変更なし」判定すれば2回目以降のpushは自動でスキップされる
     # ※GitHub無料プランは混雑時にcronスキップされるため複数時刻で冗長化
   workflow_dispatch:  # 手動実行も可能
+    inputs:
+      force_weekly:
+        description: '週次戦略記事を強制再生成（既存上書き）'
+        required: false
+        default: 'false'
 
 jobs:
   update:
@@ -29,6 +34,8 @@ jobs:
       NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
       # Gemini API キー（auto_weekly_strategy.py が週末動向 AI 生成に使用）
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      # 強制再生成フラグ（workflow_dispatch input から）
+      FORCE_WEEKLY: ${{ github.event.inputs.force_weekly || 'false' }}
 
     steps:
       - name: Checkout repository
