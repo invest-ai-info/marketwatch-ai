@@ -3361,11 +3361,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
+      ・<b>2026-05-17</b>: 📅 週次戦略「<a href="guide-weekly-2026-05-18.html" style="color:#0969da"><b>今週の投資戦略（5/18〜5/22）：週末動向 AI 分析 × 注目指標 × 3 シナリオ別マーケット展望</b></a>」更新<br>
       ・<b>2026-05-15</b>: 📜 解説「<a href="guide-clarity-act.html" style="color:#0969da"><b>CLARITY法案（クラリティ法案）とは？暗号資産の新ルールを初心者向けに5分で解説</b></a>」公開<br>
       ・<b>2026-05-15</b>: 🚨 速報「<a href="guide-us-china-summit-result-2026-05-15.html" style="color:#cf222e"><b>米中首脳会談 Day 2 リザルト：5/15北京で何が決まったか／中南海会談・イラン核合意・台湾発言・マーケット反応</b></a>」公開<br>
       ・<b>2026-05-15</b>: 💴 解説「<a href="guide-yen-carry-trade.html" style="color:#0969da"><b>円キャリートレード徹底解説：仕組み・規模・解消の境界線と日経平均への影響【完全版】</b></a>」公開<br>
-      ・<b>2026-05-14</b>: 🚨 速報「<a href="guide-us-china-summit-result-2026-05-14.html" style="color:#cf222e"><b>米中首脳会談リザルト：5/14北京1日目で何が起きたか／NVIDIA H200解禁・「戦略的安定」合意とマーケット反応</b></a>」公開<br>
-      ・<b>2026-05-13</b>: 🇺🇸🤝🇨🇳 プレビュー「<a href="guide-us-china-summit-2026-05.html" style="color:#0969da"><b>米中首脳会談5/14-15プレビュー：3シナリオ別マーケット影響を図解で徹底分析</b></a>」公開
+      ・<b>2026-05-14</b>: 🚨 速報「<a href="guide-us-china-summit-result-2026-05-14.html" style="color:#cf222e"><b>米中首脳会談リザルト：5/14北京1日目で何が起きたか／NVIDIA H200解禁・「戦略的安定」合意とマーケット反応</b></a>」公開
     </div>
   </div>
 
