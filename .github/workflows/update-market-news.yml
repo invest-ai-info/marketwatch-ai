@@ -27,6 +27,8 @@ jobs:
       GITHUB_ACTIONS_RUN: "true"
       # NewsAPI キーは GitHub Secrets から取得（要: リポジトリ設定 > Secrets > NEWSAPI_KEY を登録）
       NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+      # Gemini API キー（auto_weekly_strategy.py が週末動向 AI 生成に使用）
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Checkout repository
@@ -38,7 +40,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install yfinance requests deep_translator feedparser
+        run: pip install yfinance requests deep_translator feedparser google-generativeai
 
       - name: Generate market news HTML (6 files)
         run: python generate_market_news.py
