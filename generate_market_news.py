@@ -697,24 +697,31 @@ def generate_news_comments_batch(articles, api_key):
 - 日本人投資家視点（NISA・為替・日本株への波及）
 - JSON として valid であること"""
 
-    try:
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        response = model.generate_content(prompt)
-        text = (response.text or "").strip()
-        # markdown コードフェンスを除去
-        text = re.sub(r"^```(?:json)?\s*", "", text)
-        text = re.sub(r"\s*```\s*$", "", text)
-        data = json.loads(text)
-        result = {}
-        for item in data:
-            i = item.get("id")
-            c = (item.get("comment") or "").strip()
-            if isinstance(i, int) and 1 <= i <= len(articles) and c:
-                result[i - 1] = c.replace("\n", " ")[:200]
-        return result
-    except Exception as e:
-        print(f"  ⚠️ batch コメント生成失敗: {type(e).__name__}: {str(e)[:120]}")
-        return {}
+    # クォータが緩いモデルから順に試す（無料枠の RPD/RPM 違いを考慮）
+    model_candidates = ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash")
+    last_err = ""
+    for model_name in model_candidates:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = (response.text or "").strip()
+            text = re.sub(r"^```(?:json)?\s*", "", text)
+            text = re.sub(r"\s*```\s*$", "", text)
+            data = json.loads(text)
+            result = {}
+            for item in data:
+                i = item.get("id")
+                c = (item.get("comment") or "").strip()
+                if isinstance(i, int) and 1 <= i <= len(articles) and c:
+                    result[i - 1] = c.replace("\n", " ")[:200]
+            if result:
+                print(f"  ✅ batch コメント生成成功 ({model_name})")
+                return result
+        except Exception as e:
+            last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
+            continue
+    print(f"  ⚠️ batch コメント生成失敗（全モデル）: {last_err}")
+    return {}
 
 
 def generate_news_comment(title, description, category, api_key):
@@ -786,7 +793,8 @@ def generate_asset_analysis(asset_name, price_str, news_titles, api_key):
     genai.configure(api_key=api_key)
     news_text = "\n".join([f"- {t[:120]}" for t in news_titles[:10]]) or "（直近の関連ニュースなし）"
     prompt = _GEMINI_ASSET_PROMPT.format(asset_name=asset_name, price=price_str, news=news_text)
-    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+    # クォータが緩いモデルから順に試す
+    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)
