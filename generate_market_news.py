@@ -5,6 +5,7 @@ yfinance で価格データ取得、Chart.js でチャート表示
 
 import yfinance as yf
 import json
+import re
 import os
 import urllib.request
 import urllib.parse
@@ -658,6 +659,64 @@ _CAT_LABEL = {"top": "マーケット全体", "stocks": "株式", "fx": "為替"
               "commodity": "コモディティ", "crypto": "暗号資産"}
 
 
+def generate_news_comments_batch(articles, api_key):
+    """複数記事を 1 回の Gemini コールでまとめてコメント生成（rate limit 回避）。
+    返り値: {index: comment文字列} の dict（インデックスは articles の順序）"""
+    if not api_key or not articles:
+        return {}
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return {}
+    genai.configure(api_key=api_key)
+
+    items = []
+    for i, a in enumerate(articles, 1):
+        title = (a.get("title") or "")[:180]
+        desc = (a.get("description") or "")[:250]
+        cat = a.get("_source_cat", "")
+        cat_label = _CAT_LABEL.get(cat, cat) if cat else ""
+        items.append(f"{i}. [{cat_label}] {title}\n   説明: {desc}")
+
+    prompt = f"""あなたは日本人個人投資家向けのマーケットアナリストです。以下の {len(articles)} 件のニュース見出しと説明を読み、それぞれに対して日本人個人投資家視点のコメントを 1〜2 文（80 字以内）で生成してください。
+
+【ニュース一覧】
+{chr(10).join(items)}
+
+【出力フォーマット】（このフォーマットを厳守。JSON 配列のみ。前置き・```マーク・コードフェンス・余計な文字は禁止）
+[
+  {{"id": 1, "comment": "コメント本文"}},
+  {{"id": 2, "comment": "コメント本文"}},
+  ...
+]
+
+【ルール】
+- 必ず {len(articles)} 件分のオブジェクトを返す
+- 各 comment は 80 字以内
+- 「〜の可能性」「〜要注意」など慎重表現
+- 日本人投資家視点（NISA・為替・日本株への波及）
+- JSON として valid であること"""
+
+    try:
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        response = model.generate_content(prompt)
+        text = (response.text or "").strip()
+        # markdown コードフェンスを除去
+        text = re.sub(r"^```(?:json)?\s*", "", text)
+        text = re.sub(r"\s*```\s*$", "", text)
+        data = json.loads(text)
+        result = {}
+        for item in data:
+            i = item.get("id")
+            c = (item.get("comment") or "").strip()
+            if isinstance(i, int) and 1 <= i <= len(articles) and c:
+                result[i - 1] = c.replace("\n", " ")[:200]
+        return result
+    except Exception as e:
+        print(f"  ⚠️ batch コメント生成失敗: {type(e).__name__}: {str(e)[:120]}")
+        return {}
+
+
 def generate_news_comment(title, description, category, api_key):
     """Gemini で 1〜2 文の投資家視点コメントを生成。失敗時は空文字"""
     if not api_key or not title:
@@ -905,35 +964,27 @@ def fetch_news(api_key):
     # デバッグログ
     print(f"  📊 TOP3スコア: {[a.get('_score', 0) for a in top_pool]}")
 
-    # ─── ⑤ AI（Gemini）で各ニュースに投資家視点コメント生成 ───
+    # ─── ⑤ AI（Gemini）で各ニュースに投資家視点コメント生成（バッチ処理）───
     gemini_key = os.environ.get("GEMINI_API_KEY")
     if gemini_key:
-        print("  💡 Gemini で各ニュースに投資家視点コメント生成中...")
-        commented_ids = set()
-        comment_count = 0
-        fail_count = 0
+        # 表示対象記事を id() で重複排除して収集
+        unique_articles = []
+        seen = set()
         for cat, arts in results.items():
             for a in arts:
-                if id(a) in commented_ids:
+                if id(a) in seen:
                     continue
-                commented_ids.add(id(a))
-                comment = generate_news_comment(
-                    a.get("title", ""),
-                    a.get("description", ""),
-                    cat,
-                    gemini_key,
-                )
-                if comment:
-                    a["ai_comment"] = comment
-                    comment_count += 1
-                else:
-                    fail_count += 1
-                # Gemini 無料枠 15 RPM 対策で 4.5 秒間隔
-                _time.sleep(4.5)
-        msg = f"  ✅ {comment_count} 件にコメント付与"
-        if fail_count:
-            msg += f"（{fail_count} 件は生成失敗）"
-        print(msg)
+                seen.add(id(a))
+                # _source_cat にカテゴリ情報を保持（プロンプト生成用）
+                if "_source_cat" not in a:
+                    a["_source_cat"] = cat
+                unique_articles.append(a)
+        print(f"  💡 Gemini で {len(unique_articles)} 件のニュースに投資家視点コメント生成中（1回のバッチ呼び出し）...")
+        comments = generate_news_comments_batch(unique_articles, gemini_key)
+        for idx, art in enumerate(unique_articles):
+            if idx in comments and comments[idx]:
+                art["ai_comment"] = comments[idx]
+        print(f"  ✅ {len(comments)} / {len(unique_articles)} 件にコメント付与")
     else:
         print("  ℹ️ GEMINI_API_KEY 未設定、AI コメントはスキップ")
 
