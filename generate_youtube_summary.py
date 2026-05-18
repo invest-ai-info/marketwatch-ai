@@ -482,7 +482,10 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       .video-card{{grid-template-columns:1fr}}
       .video-thumb-wrap img{{width:100%;max-width:480px;margin:0 auto}}
       main{{padding:20px 14px}}
-      .nav-btn{{min-width:0;width:auto;font-size:.82rem;padding:9px 14px}}
+    }}
+    @media(max-width:600px){{
+      .nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
+      .nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
     }}
   </style>
 </head>
