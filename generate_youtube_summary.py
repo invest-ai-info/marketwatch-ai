@@ -441,15 +441,17 @@ def build_video_card(v):
       <ul>{three_html}</ul>
     </div>
 
-    <div class="summary-section summary-topics">
-      <div class="summary-section-title">📋 重要トピック</div>
-      <ul>{topics_html}</ul>
-    </div>
-
-    <div class="summary-section summary-impl">
-      <div class="summary-section-title">💡 マーケット示唆</div>
-      <p>{implication}</p>
-    </div>
+    <details class="summary-details">
+      <summary>📋 重要トピックとマーケット示唆を見る</summary>
+      <div class="summary-section summary-topics">
+        <div class="summary-section-title">📋 重要トピック</div>
+        <ul>{topics_html}</ul>
+      </div>
+      <div class="summary-section summary-impl">
+        <div class="summary-section-title">💡 マーケット示唆</div>
+        <p>{implication}</p>
+      </div>
+    </details>
 
     <a class="video-watch" href="{v['url']}" target="_blank" rel="noopener">▶ YouTube で視聴 →</a>
   </div>
@@ -505,6 +507,13 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     .video-title a{{color:#1f2328;text-decoration:none}}
     .video-title a:hover{{color:#0969da}}
     .video-pub{{font-size:.78rem;color:#57606a;margin-bottom:14px}}
+    .summary-details{{margin:12px 0}}
+    .summary-details summary{{list-style:none;cursor:pointer;padding:10px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;font-size:.88rem;color:#0969da;font-weight:600;transition:background .15s}}
+    .summary-details summary:hover{{background:#ddf4ff}}
+    .summary-details summary::-webkit-details-marker{{display:none}}
+    .summary-details summary::before{{content:"▶  ";color:#57606a}}
+    .summary-details[open] summary{{margin-bottom:10px}}
+    .summary-details[open] summary::before{{content:"▼  ";color:#0969da}}
     .summary-section{{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:12px 16px;margin-bottom:10px}}
     .summary-section.summary-3lines{{border-left-color:#1a7f37}}
     .summary-section.summary-topics{{border-left-color:#0969da}}
