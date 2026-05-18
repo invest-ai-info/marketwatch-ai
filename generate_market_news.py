@@ -639,6 +639,137 @@ def fetch_newsapi_articles(api_key, q, lang, from_date):
         } for a in data.get("articles", [])]
 
 
+# ─────────────────────────────────────────
+# AI（Gemini）でニュースに「日本人投資家視点」コメントを 1〜2 文生成
+# ─────────────────────────────────────────
+_GEMINI_NEWS_PROMPT = """以下のマーケットニュースの見出しと説明を読み、日本人個人投資家にとっての意味を1〜2文（合計 80 字以内）で簡潔に解説してください。
+
+カテゴリ: {category}
+見出し: {title}
+説明: {description}
+
+【ルール】
+- 1〜2 文、合計 80 字以内
+- 「〜の可能性」「〜要注意」など慎重表現
+- 日本人投資家視点（NISA・為替・日本株への波及）を意識
+- 出力はコメント文のみ。前置きや見出しは不要"""
+
+_CAT_LABEL = {"top": "マーケット全体", "stocks": "株式", "fx": "為替",
+              "commodity": "コモディティ", "crypto": "暗号資産"}
+
+
+def generate_news_comment(title, description, category, api_key):
+    """Gemini で 1〜2 文の投資家視点コメントを生成。失敗時は空文字"""
+    if not api_key or not title:
+        return ""
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return ""
+    genai.configure(api_key=api_key)
+    prompt = _GEMINI_NEWS_PROMPT.format(
+        category=_CAT_LABEL.get(category, category),
+        title=title[:200],
+        description=(description or "")[:400],
+    )
+    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = (response.text or "").strip()
+            if text:
+                # 改行を半角スペースに置換、HTML 用にエスケープ
+                text = text.replace("\n", " ").replace("\r", "").strip()
+                return text[:200]
+        except Exception:
+            continue
+    return ""
+
+
+# ─────────────────────────────────────────
+# AI（Gemini）でアセット別投資判断（強気度 / スコア / アクション / 根拠）
+# ─────────────────────────────────────────
+_GEMINI_ASSET_PROMPT = """あなたは日本人個人投資家向けのマーケット・アナリストです。
+以下の {asset_name} の現在価格と直近ニュースから、現時点の投資スタンスを判定してください。
+
+【現在価格】{price}
+
+【直近のニュース見出し】
+{news}
+
+【出力フォーマット】（厳守。プレーンテキストのみ。HTML/Markdown は使わない）
+===強気度===
+(以下から1つ：強気 / やや強気 / ニュートラル / やや弱気 / 弱気)
+===スコア===
+(-100 から +100 の整数。+100=超強気、0=中立、-100=超弱気)
+===アクション===
+(以下から1つ：積極買い / 押し目買い準備 / 様子見 / 部分利確 / 一部ヘッジ)
+===根拠===
+(2 文程度。具体的な価格目線も含める)
+
+【注意】
+- ニュース内容に基づく（推測の上塗り禁止）
+- 「〜の可能性」など慎重表現
+- 日本語のみ"""
+
+
+def generate_asset_analysis(asset_name, price_str, news_titles, api_key):
+    """Gemini でアセット別の投資判断を取得。dict を返す（失敗時は None）"""
+    if not api_key:
+        return None
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return None
+    genai.configure(api_key=api_key)
+    news_text = "\n".join([f"- {t[:120]}" for t in news_titles[:10]]) or "（直近の関連ニュースなし）"
+    prompt = _GEMINI_ASSET_PROMPT.format(asset_name=asset_name, price=price_str, news=news_text)
+    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            text = (response.text or "").strip()
+            if text:
+                return _parse_asset_analysis(text)
+        except Exception:
+            continue
+    return None
+
+
+def _parse_asset_analysis(text):
+    """Gemini プレーンテキスト出力を {sentiment, score, action, reason} に分解"""
+    result = {"sentiment": "ニュートラル", "score": 0, "action": "様子見", "reason": ""}
+    current = None
+    import re as _re
+    for line in text.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        if "===強気度===" in s:
+            current = "sentiment"; continue
+        if "===スコア===" in s:
+            current = "score"; continue
+        if "===アクション===" in s:
+            current = "action"; continue
+        if "===根拠===" in s:
+            current = "reason"; continue
+        if current == "sentiment":
+            result["sentiment"] = s
+        elif current == "score":
+            try:
+                m = _re.search(r"-?\d+", s)
+                if m:
+                    result["score"] = max(-100, min(100, int(m.group(0))))
+            except Exception:
+                pass
+        elif current == "action":
+            result["action"] = s
+        elif current == "reason":
+            result["reason"] += s + " "
+    result["reason"] = result["reason"].strip()
+    return result
+
+
 def fetch_news(api_key):
     """ニュース取得（yfinance優先 + NewsAPIフォールバック）
 
@@ -770,6 +901,32 @@ def fetch_news(api_key):
 
     # デバッグログ
     print(f"  📊 TOP3スコア: {[a.get('_score', 0) for a in top_pool]}")
+
+    # ─── ⑤ AI（Gemini）で各ニュースに投資家視点コメント生成 ───
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    if gemini_key:
+        print("  💡 Gemini で各ニュースに投資家視点コメント生成中...")
+        commented_ids = set()
+        comment_count = 0
+        for cat, arts in results.items():
+            for a in arts:
+                if id(a) in commented_ids:
+                    continue
+                commented_ids.add(id(a))
+                comment = generate_news_comment(
+                    a.get("title", ""),
+                    a.get("description", ""),
+                    cat,
+                    gemini_key,
+                )
+                if comment:
+                    a["ai_comment"] = comment
+                    comment_count += 1
+                _time.sleep(0.5)  # Gemini rate limit 配慮
+        print(f"  ✅ {comment_count} 件にコメント付与")
+    else:
+        print("  ℹ️ GEMINI_API_KEY 未設定、AI コメントはスキップ")
+
     return results
 
 
@@ -852,8 +1009,90 @@ def _format_pub_date(pub_str):
         return pub_str[:10]
 
 
+def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, btc_val=None,
+                                stocks_news=None, commodity_news=None, crypto_news=None):
+    """AI（Gemini）でアセット別投資判断を生成し HTML セクションを返す。
+    GEMINI_API_KEY 未設定なら空文字。"""
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return ""
+
+    stocks_news = stocks_news or []
+    commodity_news = commodity_news or []
+    crypto_news = crypto_news or []
+    stock_titles = [a.get("title", "") for a in stocks_news[:10]]
+    commodity_titles = [a.get("title", "") for a in commodity_news[:10]]
+    crypto_titles = [a.get("title", "") for a in crypto_news[:10]]
+
+    # 4 アセット
+    assets = []
+    if nikkei_val is not None:
+        assets.append(("japan_stocks", "🇯🇵", "日本株（日経平均）", f"{nikkei_val:,.0f}円", stock_titles))
+    if sp500_val is not None:
+        assets.append(("us_stocks",    "🇺🇸", "米国株（S&P500）",   f"{sp500_val:,.2f}", stock_titles))
+    if gold_val is not None:
+        assets.append(("gold",         "🥇", "ゴールド",            f"${gold_val:,.0f}/oz", commodity_titles))
+    if btc_val is not None:
+        assets.append(("btc",          "🪙", "ビットコイン",        f"${btc_val:,.0f}", crypto_titles))
+
+    print(f"  🤖 アセット別 AI 投資判断を生成中（{len(assets)} 件）...")
+    import time as _time
+    analyses = []
+    for key, icon, name, price_str, titles in assets:
+        result = generate_asset_analysis(name, price_str, titles, api_key)
+        if result:
+            analyses.append((key, icon, name, price_str, result))
+            print(f"    ✅ {name}: {result.get('sentiment', '?')} / {result.get('action', '?')}")
+        _time.sleep(0.8)
+    if not analyses:
+        return ""
+
+    # HTML 生成
+    cards = []
+    for key, icon, name, price_str, a in analyses:
+        score = a.get("score", 0)
+        pct = max(0, min(100, (score + 100) / 2))
+        sentiment = a.get("sentiment", "ニュートラル")
+        # 色（弱気=赤、強気=緑、中立=橙）
+        if "強気" in sentiment and "弱" not in sentiment:
+            color = "#1a7f37"
+        elif "弱気" in sentiment:
+            color = "#cf222e"
+        else:
+            color = "#9a6700"
+        cards.append(f'''
+        <div class="ai-asset-card">
+          <div class="ai-asset-header">
+            <span class="ai-asset-icon">{icon}</span>
+            <div class="ai-asset-name-wrap">
+              <div class="ai-asset-name">{name}</div>
+              <div class="ai-asset-price">{price_str}</div>
+            </div>
+            <span class="ai-asset-sentiment" style="background:{color};color:#fff">{sentiment}</span>
+          </div>
+          <div class="ai-meter">
+            <div class="ai-meter-track">
+              <div class="ai-meter-dot" style="left:{pct:.0f}%;background:{color}"></div>
+            </div>
+            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
+          </div>
+          <div class="ai-action"><strong>✏️ アクション:</strong> {a.get("action", "様子見")}</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> {a.get("reason", "")}</div>
+        </div>''')
+
+    return f'''
+  <!-- AI 投資判断（Gemini） -->
+  <section class="ai-analysis-section">
+    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が分析。投資判断は自己責任で）</span></p>
+    <div class="ai-analysis-grid">
+      {''.join(cards)}
+    </div>
+  </section>
+'''
+
+
 def build_news_html(articles, limit=3):
-    """ニュース記事リストをHTML文字列に変換（センチメントアイコン付き）"""
+    """ニュース記事リストをHTML文字列に変換（センチメントアイコン + AI コメント付き）"""
     if not articles:
         return '<div class="news-empty">ニュースを取得できませんでした</div>'
     html = ""
@@ -863,9 +1102,12 @@ def build_news_html(articles, limit=3):
         desc = a.get("description", "")
         url = a.get("url", "#")
         pub = _format_pub_date(a.get("publishedAt", ""))
+        ai_comment = (a.get("ai_comment") or "").replace("{", "").replace("}", "")
+        ai_html = f'<span class="news-ai">💡 {ai_comment}</span>' if ai_comment else ''
         icon, cls = classify_news_sentiment(title, desc)
         html += f'''<a class="news-item" href="{url}" target="_blank" rel="noopener">
           <span class="news-title"><span class="news-sent {cls}">{icon}</span> {title}</span>
+          {ai_html}
           <span class="news-meta">{source} · {pub}</span>
         </a>'''
     return html
@@ -3172,6 +3414,15 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     cmd_news_html     = build_news_html(news.get("commodity", []))
     crypto_news_html  = build_news_html(news.get("crypto", []))
 
+    # AI 投資判断セクション（Gemini）
+    ai_analysis_html = build_ai_analysis_section(
+        nikkei_val=nk,    sp500_val=sp,
+        gold_val=gld,     btc_val=btc,
+        stocks_news=news.get("stocks", []),
+        commodity_news=news.get("commodity", []),
+        crypto_news=news.get("crypto", []),
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -3225,6 +3476,25 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .news-title{{display:block;font-size:.88rem;color:#1f2328;font-weight:600;line-height:1.5;margin-bottom:2px}}
     .news-meta{{display:block;font-size:.72rem;color:#57606a}}
     .news-sent{{margin-right:6px;font-size:1.3rem;vertical-align:middle}}
+    .news-ai{{display:block;font-size:.78rem;color:#1f6feb;line-height:1.65;margin:6px 0 4px;padding:6px 10px;background:#f6f8fa;border-left:3px solid #1f6feb;border-radius:4px}}
+    /* AI 投資判断セクション */
+    .ai-analysis-section{{margin:24px 0 36px}}
+    .ai-analysis-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:14px}}
+    .ai-asset-card{{background:#ffffff;border:1px solid #d0d7de;border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}}
+    .ai-asset-header{{display:flex;align-items:center;gap:10px;margin-bottom:12px}}
+    .ai-asset-icon{{font-size:1.6rem}}
+    .ai-asset-name-wrap{{flex:1;min-width:0}}
+    .ai-asset-name{{font-size:.95rem;font-weight:700;color:#1f2328}}
+    .ai-asset-price{{font-size:.78rem;color:#57606a;margin-top:2px}}
+    .ai-asset-sentiment{{font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap}}
+    .ai-meter{{margin:10px 0 12px}}
+    .ai-meter-track{{position:relative;height:8px;background:linear-gradient(90deg,#fee2e2 0%,#fef3c7 50%,#dcfce7 100%);border-radius:4px}}
+    .ai-meter-dot{{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:translate(-50%,-50%)}}
+    .ai-meter-labels{{display:flex;justify-content:space-between;font-size:.7rem;color:#57606a;margin-top:4px}}
+    .ai-action{{font-size:.85rem;color:#1f2328;margin-bottom:6px;line-height:1.5}}
+    .ai-action strong{{color:#0969da}}
+    .ai-reason{{font-size:.82rem;color:#424a53;line-height:1.6}}
+    .ai-reason strong{{color:#9a6700}}
     .news-empty{{font-size:.82rem;color:#6e7781;padding:8px 0}}
     .card-news{{margin-top:14px;padding-top:14px;border-top:1px solid #d0d7de}}
     .card-news-title{{font-size:.78rem;color:#0969da;font-weight:600;margin-bottom:8px}}
@@ -3384,6 +3654,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <div class="top-news-title">🔥 マーケットを動かすニュース TOP3 <span style="font-size:.7rem;color:#57606a;font-weight:500">（中央銀行・経済指標・地政学など影響度の高いキーワードでスコアリング）</span></div>
     {top_news_html}
   </div>
+
+  {ai_analysis_html}
 
   <!-- 今日のカード -->
   <p class="section-title">本日のマーケット</p>
