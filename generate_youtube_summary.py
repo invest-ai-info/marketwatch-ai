@@ -156,6 +156,48 @@ def prune_old_summaries(videos, keep_days):
     return fresh
 
 
+# ─────────────────────────────────────────────
+# YouTube Shorts 判定
+# ─────────────────────────────────────────────
+SHORTS_TITLE_MARKERS = (
+    "#shorts", "#short", "#ショート",
+    "【shorts】", "【short】", "【ショート】",
+    "shorts動画", "short動画",
+)
+
+
+def is_youtube_short(video_id, title="", description=""):
+    """YouTube Shorts かを判定。
+    1) タイトル/説明文に Shorts マーカーがあれば即 True（早期判定で HTTP 節約）
+    2) `/shorts/{id}` に直接アクセス。200 ならショート、リダイレクトされれば通常動画
+    """
+    text = (title + " " + description).lower()
+    if any(m in text for m in SHORTS_TITLE_MARKERS):
+        return True
+
+    # URL ベース確認（リダイレクトを追わない）
+    class _NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *args, **kwargs):
+            return None
+
+    opener = urllib.request.build_opener(_NoRedirect())
+    url = f"https://www.youtube.com/shorts/{video_id}"
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+    )
+    try:
+        response = opener.open(req, timeout=8)
+        # 2xx = Shorts ページが存在
+        return 200 <= response.status < 300
+    except urllib.error.HTTPError as e:
+        # 30x リダイレクト = /watch?v=... へ転送される = 通常動画
+        return False
+    except Exception:
+        # ネットワークエラー時は判定不能 → False（除外しない）
+        return False
+
+
 def hours_since(published_str):
     """発行時刻から経過時間（時間単位）。パース失敗時は -1"""
     if not published_str:
@@ -622,11 +664,25 @@ def main():
 
     # 既要約は除外
     new_candidates = [v for v in candidates if v.get("video_id") not in existing_ids]
-    skipped = len(candidates) - len(new_candidates)
-    if skipped:
-        print(f"⏭️  {skipped} 本は既に要約済みのためスキップ")
-    targets = new_candidates[:MAX_VIDEOS]
-    print(f"\n🎯 新規候補 {len(new_candidates)} 本から {len(targets)} 本を要約します\n")
+    skipped_existing = len(candidates) - len(new_candidates)
+    if skipped_existing:
+        print(f"⏭️  {skipped_existing} 本は既に要約済みのためスキップ")
+
+    # Shorts を除外して上位 MAX_VIDEOS を選ぶ
+    print(f"\n🔍 候補から Shorts を除外して上位 {MAX_VIDEOS} 本を選定中...")
+    targets = []
+    shorts_skipped = 0
+    for v in new_candidates:
+        if len(targets) >= MAX_VIDEOS:
+            break
+        if is_youtube_short(v["video_id"], v.get("title", ""), v.get("description", "")):
+            shorts_skipped += 1
+            print(f"  ⏭️  Shorts スキップ: {v['title'][:50]}")
+            continue
+        targets.append(v)
+    if shorts_skipped:
+        print(f"  📐 Shorts {shorts_skipped} 本を除外")
+    print(f"\n🎯 通常動画 {len(targets)} 本を要約します\n")
 
     new_summaries = []
     video_url_works = None  # None=未判定、True/False=判定済み
