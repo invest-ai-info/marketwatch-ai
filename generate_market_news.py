@@ -672,17 +672,20 @@ def generate_news_comment(title, description, category, api_key):
         title=title[:200],
         description=(description or "")[:400],
     )
+    last_err = ""
     for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)
             text = (response.text or "").strip()
             if text:
-                # 改行を半角スペースに置換、HTML 用にエスケープ
                 text = text.replace("\n", " ").replace("\r", "").strip()
                 return text[:200]
-        except Exception:
+        except Exception as e:
+            last_err = f"{model_name}: {type(e).__name__}: {str(e)[:60]}"
             continue
+    if last_err:
+        print(f"    ⚠️ news comment 失敗: {last_err}")
     return ""
 
 
@@ -908,6 +911,7 @@ def fetch_news(api_key):
         print("  💡 Gemini で各ニュースに投資家視点コメント生成中...")
         commented_ids = set()
         comment_count = 0
+        fail_count = 0
         for cat, arts in results.items():
             for a in arts:
                 if id(a) in commented_ids:
@@ -922,8 +926,14 @@ def fetch_news(api_key):
                 if comment:
                     a["ai_comment"] = comment
                     comment_count += 1
-                _time.sleep(0.5)  # Gemini rate limit 配慮
-        print(f"  ✅ {comment_count} 件にコメント付与")
+                else:
+                    fail_count += 1
+                # Gemini 無料枠 15 RPM 対策で 4.5 秒間隔
+                _time.sleep(4.5)
+        msg = f"  ✅ {comment_count} 件にコメント付与"
+        if fail_count:
+            msg += f"（{fail_count} 件は生成失敗）"
+        print(msg)
     else:
         print("  ℹ️ GEMINI_API_KEY 未設定、AI コメントはスキップ")
 
@@ -1043,7 +1053,10 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
         if result:
             analyses.append((key, icon, name, price_str, result))
             print(f"    ✅ {name}: {result.get('sentiment', '?')} / {result.get('action', '?')}")
-        _time.sleep(0.8)
+        else:
+            print(f"    ⚠️ {name}: 生成失敗（rate limit の可能性）")
+        # Gemini 無料枠 15 RPM 対策で 4.5 秒間隔
+        _time.sleep(4.5)
     if not analyses:
         return ""
 
