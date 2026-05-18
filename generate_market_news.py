@@ -3334,8 +3334,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
     <div class="hero-overlay">
       <div>
-        <div class="hero-title">お金の不安が消える、毎朝の 5 分。</div>
-        <div class="hero-sub">暮らしを楽しむための、日本人投資家サイト</div>
+        <div class="hero-title"><span style="display:inline-block">お金の不安が消える、</span><span style="display:inline-block">毎朝の 5 分。</span></div>
+        <div class="hero-sub"><span style="display:inline-block">暮らしを楽しむための、</span><span style="display:inline-block">日本人投資家サイト</span></div>
       </div>
     </div>
   </div>
