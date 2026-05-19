@@ -254,6 +254,49 @@ SHORTS_TITLE_MARKERS = (
 )
 
 
+# ─────────────────────────────────────────────
+# 投資関連トピック判定（投資・経済・金融以外の動画を除外）
+# ─────────────────────────────────────────────
+INVESTMENT_KEYWORDS = (
+    # 投資・金融全般
+    "投資", "資産", "運用", "ポートフォリオ", "ファンド", "信託", "債券",
+    "NISA", "iDeCo", "イデコ", "確定拠出年金",
+    # 株式
+    "株", "銘柄", "決算", "配当", "増配", "減配", "業績", "IPO", "上場",
+    "PER", "PBR", "ROE", "EPS", "株価", "株主",
+    "日経", "TOPIX", "S&P", "S&amp;P", "ナスダック", "ダウ", "NYダウ",
+    # 為替・通貨
+    "為替", "FX", "ドル円", "USDJPY", "円安", "円高", "通貨", "ドル", "ユーロ",
+    "介入", "FRB", "FOMC", "BOJ", "日銀", "ECB",
+    # 経済指標・マクロ
+    "金利", "利上げ", "利下げ", "インフレ", "デフレ", "GDP", "CPI", "PCE",
+    "雇用統計", "景気", "リセッション", "経済", "マクロ",
+    # 市場・相場
+    "市場", "マーケット", "相場", "出来高", "ボラティリティ", "VIX",
+    # コモディティ・暗号資産
+    "金", "ゴールド", "原油", "コモディティ", "WTI", "OPEC",
+    "ビットコイン", "BTC", "イーサ", "ETH", "暗号資産", "仮想通貨", "クリプト",
+    # 不動産投資
+    "不動産", "物件", "利回り", "賃貸", "投資用", "ローン", "住宅",
+    # 政策・地政学（市場影響）
+    "米中", "関税", "貿易", "FRB", "中央銀行",
+    # AI・半導体（テック投資テーマ）
+    "AI 株", "半導体", "NVIDIA", "エヌビディア", "テスラ", "TSMC",
+    # その他
+    "ETF", "REIT", "金融", "財務省", "増資", "M&A", "TOB",
+)
+
+
+def is_investment_related(title, description=""):
+    """投資関連動画かを判定（タイトル/説明文にキーワードが含まれるか）"""
+    text = (title + " " + (description or "")).lower()
+    # キーワードを lowercase で比較
+    for kw in INVESTMENT_KEYWORDS:
+        if kw.lower() in text:
+            return True
+    return False
+
+
 def is_youtube_short(video_id, title="", description="", duration_sec=0):
     """YouTube Shorts かを判定。
     1) duration ≤ 90 秒 → 確実に Shorts
@@ -724,11 +767,30 @@ def main():
     else:
         print("ℹ️ YOUTUBE_API_KEY 未設定、GEMINI_API_KEY を YouTube Data API でも使用")
 
-    # 既存データロード + 期限切れ削除
+    # 既存データロード + 期限切れ削除 + 現行フィルタの再適用
     existing = load_existing_data()
     existing = prune_old_summaries(existing, KEEP_DAYS)
+    # 既存データに「Shorts」「投資非関連」フィルタを再適用してクリーンアップ
+    cleaned = []
+    removed = 0
+    for v in existing:
+        title = v.get("title", "")
+        desc = v.get("description", "")
+        dur = v.get("duration_sec", 0)
+        if is_youtube_short(v.get("video_id", ""), title, desc, dur):
+            removed += 1
+            print(f"  🧹 既存から除外 (Shorts): {title[:50]}")
+            continue
+        if not is_investment_related(title, desc):
+            removed += 1
+            print(f"  🧹 既存から除外 (投資非関連): {title[:50]}")
+            continue
+        cleaned.append(v)
+    if removed:
+        print(f"  → 既存 {len(existing)} 件中 {removed} 件を新フィルタで除去")
+    existing = cleaned
     existing_ids = {v.get("video_id") for v in existing if v.get("video_id")}
-    print(f"📦 過去 {KEEP_DAYS} 日分の既存要約: {len(existing)} 件\n")
+    print(f"📦 過去 {KEEP_DAYS} 日分の既存要約（クリーンアップ後）: {len(existing)} 件\n")
 
     # 候補収集（既存 video_id は除外）
     if os.environ.get("TEST_MODE", "").lower() in ("1", "true", "yes"):
@@ -760,25 +822,30 @@ def main():
     if skipped_existing:
         print(f"⏭️  {skipped_existing} 本は既に要約済みのためスキップ")
 
-    # Shorts を除外して上位 MAX_VIDEOS を選ぶ（duration ベースで確実に判定）
-    print(f"\n🔍 候補から Shorts を除外して上位 {MAX_VIDEOS} 本を選定中...")
+    # Shorts + 投資非関連を除外して上位 MAX_VIDEOS を選ぶ
+    print(f"\n🔍 候補から Shorts/投資非関連を除外して上位 {MAX_VIDEOS} 本を選定中...")
     targets = []
     shorts_skipped = 0
+    nonfinance_skipped = 0
     for v in new_candidates:
         if len(targets) >= MAX_VIDEOS:
             break
-        if is_youtube_short(
-            v.get("video_id", ""),
-            v.get("title", ""),
-            v.get("description", ""),
-            v.get("duration_sec", 0),
-        ):
+        title = v.get("title", "")
+        desc = v.get("description", "")
+        dur = v.get("duration_sec", 0)
+        if is_youtube_short(v.get("video_id", ""), title, desc, dur):
             shorts_skipped += 1
-            print(f"  ⏭️  Shorts スキップ ({v.get('duration_sec', 0)}秒): {v['title'][:50]}")
+            print(f"  ⏭️  Shorts スキップ ({dur}秒): {title[:50]}")
+            continue
+        if not is_investment_related(title, desc):
+            nonfinance_skipped += 1
+            print(f"  ⏭️  投資非関連スキップ: {title[:50]}")
             continue
         targets.append(v)
     if shorts_skipped:
         print(f"  📐 Shorts {shorts_skipped} 本を除外")
+    if nonfinance_skipped:
+        print(f"  💼 投資非関連 {nonfinance_skipped} 本を除外")
     print(f"\n🎯 通常動画 {len(targets)} 本を要約します\n")
 
     new_summaries = []
