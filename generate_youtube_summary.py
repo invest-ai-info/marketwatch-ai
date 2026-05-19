@@ -11,6 +11,7 @@ import json
 import time
 import urllib.request
 import urllib.error
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
@@ -51,6 +52,93 @@ KEEP_DAYS = 3         # 過去何日分の要約を保持するか
 # ─────────────────────────────────────────────
 # RSS から動画リスト取得
 # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
+# YouTube Data API v3 ベースの動画取得（推奨パス）
+# - 認証付きで GitHub Actions IP でも安定して取得できる
+# - duration が取れるので Shorts 判定が確実に
+# - GEMINI_API_KEY と同じ Google Cloud プロジェクトのキーで動く
+# ─────────────────────────────────────────────
+YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3"
+
+
+def _youtube_api_get(endpoint, params, api_key):
+    """YouTube Data API v3 への GET リクエスト共通ラッパー"""
+    params = dict(params)
+    params["key"] = api_key
+    url = f"{YOUTUBE_API_BASE}/{endpoint}?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers={"User-Agent": "marketwatch-jp/1.0"})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
+def _parse_iso_duration(s):
+    """ISO 8601 duration (PT5M30S) → 秒"""
+    if not s:
+        return 0
+    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", s)
+    if not m:
+        return 0
+    h = int(m.group(1) or 0)
+    mn = int(m.group(2) or 0)
+    sec = int(m.group(3) or 0)
+    return h * 3600 + mn * 60 + sec
+
+
+def fetch_channel_videos_api(channel_id, channel_name, api_key, max_results=10):
+    """YouTube Data API v3 で channel の最新動画を取得（推奨）"""
+    if not api_key:
+        return []
+    try:
+        # ① uploads playlist ID を取得（1 unit）
+        ch_data = _youtube_api_get("channels", {
+            "part": "contentDetails", "id": channel_id,
+        }, api_key)
+        items = ch_data.get("items", [])
+        if not items:
+            print(f"  ⚠️ {channel_name}: チャンネル情報なし")
+            return []
+        uploads_id = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+
+        # ② uploads playlist の動画リスト取得（1 unit）
+        pl_data = _youtube_api_get("playlistItems", {
+            "part": "contentDetails",
+            "playlistId": uploads_id,
+            "maxResults": str(max_results),
+        }, api_key)
+        video_ids = [it["contentDetails"]["videoId"] for it in pl_data.get("items", [])]
+        if not video_ids:
+            return []
+
+        # ③ 動画詳細取得（snippet + contentDetails、duration 含む）（1 unit）
+        vid_data = _youtube_api_get("videos", {
+            "part": "snippet,contentDetails",
+            "id": ",".join(video_ids),
+        }, api_key)
+
+        results = []
+        for v in vid_data.get("items", []):
+            snippet = v.get("snippet", {})
+            duration_sec = _parse_iso_duration(v.get("contentDetails", {}).get("duration", ""))
+            results.append({
+                "video_id": v.get("id", ""),
+                "title": snippet.get("title", ""),
+                "url": f"https://www.youtube.com/watch?v={v.get('id', '')}",
+                "published": snippet.get("publishedAt", ""),
+                "channel_name": channel_name,
+                "channel_id": channel_id,
+                "description": (snippet.get("description", "") or "")[:500],
+                "duration_sec": duration_sec,
+            })
+        return results
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")[:200] if hasattr(e, "read") else ""
+        print(f"  ⚠️ {channel_name} API HTTP {e.code}: {body}")
+        return []
+    except Exception as e:
+        print(f"  ⚠️ {channel_name} エラー: {type(e).__name__}: {str(e)[:80]}")
+        return []
+
+
 def fetch_channel_videos(channel_id, channel_name):
     """RSS フィードから最新動画を取得（リトライ付き）"""
     import feedparser
@@ -166,36 +254,17 @@ SHORTS_TITLE_MARKERS = (
 )
 
 
-def is_youtube_short(video_id, title="", description=""):
+def is_youtube_short(video_id, title="", description="", duration_sec=0):
     """YouTube Shorts かを判定。
-    1) タイトル/説明文に Shorts マーカーがあれば即 True（早期判定で HTTP 節約）
-    2) `/shorts/{id}` に直接アクセス。200 ならショート、リダイレクトされれば通常動画
+    1) duration_sec が 0 < d ≤ 60 なら確実に Shorts（YouTube Data API 経由なら確実）
+    2) タイトル/説明文に Shorts マーカーがあれば True
     """
+    if duration_sec and 0 < duration_sec <= 60:
+        return True
     text = (title + " " + description).lower()
     if any(m in text for m in SHORTS_TITLE_MARKERS):
         return True
-
-    # URL ベース確認（リダイレクトを追わない）
-    class _NoRedirect(urllib.request.HTTPRedirectHandler):
-        def redirect_request(self, *args, **kwargs):
-            return None
-
-    opener = urllib.request.build_opener(_NoRedirect())
-    url = f"https://www.youtube.com/shorts/{video_id}"
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
-    )
-    try:
-        response = opener.open(req, timeout=8)
-        # 2xx = Shorts ページが存在
-        return 200 <= response.status < 300
-    except urllib.error.HTTPError as e:
-        # 30x リダイレクト = /watch?v=... へ転送される = 通常動画
-        return False
-    except Exception:
-        # ネットワークエラー時は判定不能 → False（除外しない）
-        return False
+    return False
 
 
 def hours_since(published_str):
@@ -661,14 +730,14 @@ def main():
             },
         ]
     else:
-        print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集...")
+        print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集（YouTube Data API v3）...")
         candidates = []
         for handle, cid, name in CHANNELS:
-            vids = fetch_channel_videos(cid, name)
+            vids = fetch_channel_videos_api(cid, name, api_key, max_results=10)
             recent = [v for v in vids if 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS]
             print(f"  {handle:25} {len(vids)}本 中 {len(recent)}本が直近 {MAX_AGE_HOURS}h 以内")
             candidates.extend(recent)
-            time.sleep(1)
+            time.sleep(0.3)  # API は十分速いので短く
         candidates.sort(key=lambda v: v.get("published", ""), reverse=True)
 
     # 既要約は除外
@@ -677,16 +746,21 @@ def main():
     if skipped_existing:
         print(f"⏭️  {skipped_existing} 本は既に要約済みのためスキップ")
 
-    # Shorts を除外して上位 MAX_VIDEOS を選ぶ
+    # Shorts を除外して上位 MAX_VIDEOS を選ぶ（duration ベースで確実に判定）
     print(f"\n🔍 候補から Shorts を除外して上位 {MAX_VIDEOS} 本を選定中...")
     targets = []
     shorts_skipped = 0
     for v in new_candidates:
         if len(targets) >= MAX_VIDEOS:
             break
-        if is_youtube_short(v["video_id"], v.get("title", ""), v.get("description", "")):
+        if is_youtube_short(
+            v.get("video_id", ""),
+            v.get("title", ""),
+            v.get("description", ""),
+            v.get("duration_sec", 0),
+        ):
             shorts_skipped += 1
-            print(f"  ⏭️  Shorts スキップ: {v['title'][:50]}")
+            print(f"  ⏭️  Shorts スキップ ({v.get('duration_sec', 0)}秒): {v['title'][:50]}")
             continue
         targets.append(v)
     if shorts_skipped:
