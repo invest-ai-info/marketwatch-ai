@@ -288,11 +288,13 @@ INVESTMENT_KEYWORDS = (
 
 
 def is_investment_related(title, description=""):
-    """投資関連動画かを判定（タイトル/説明文にキーワードが含まれるか）"""
-    text = (title + " " + (description or "")).lower()
-    # キーワードを lowercase で比較
+    """投資関連動画かを判定（タイトルに投資キーワードが含まれるか）。
+    説明文はチャンネル定型文に「経済」等が含まれることが多いので使わない。
+    タイトルで投資意図が明示されていない動画は除外する。
+    """
+    title_lower = (title or "").lower()
     for kw in INVESTMENT_KEYWORDS:
-        if kw.lower() in text:
+        if kw.lower() in title_lower:
             return True
     return False
 
