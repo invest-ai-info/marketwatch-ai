@@ -229,9 +229,31 @@ def detect_signals(df_4h):
 
 
 # ─────────────────────────────────────────────
-# Gemini で「なぜこのシグナルか」の解説生成
+# yfinance でティッカー関連ニュースを取得（ファンダ参考用）
 # ─────────────────────────────────────────────
-def generate_ai_narrative(asset_name, current_price_str, signals, indicators, api_key):
+def fetch_ticker_news(ticker, max_items=5):
+    """ティッカー関連の直近ニュース見出しを取得"""
+    try:
+        news = yf.Ticker(ticker).news or []
+    except Exception as e:
+        print(f"    ⚠️ {ticker} news 取得失敗: {type(e).__name__}: {str(e)[:60]}")
+        return []
+    titles = []
+    for n in news[:max_items * 2]:  # 余分に取って fall back 可能性に備える
+        # yfinance 新旧フォーマット両対応
+        content = n.get("content", n)
+        title = content.get("title", "") or n.get("title", "")
+        if title and title not in titles:
+            titles.append(title)
+        if len(titles) >= max_items:
+            break
+    return titles
+
+
+# ─────────────────────────────────────────────
+# Gemini で「なぜこのシグナルか」の解説生成（テクニカル + ニュース）
+# ─────────────────────────────────────────────
+def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, api_key):
     if not api_key:
         return ""
     try:
@@ -240,11 +262,17 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ap
         return ""
     genai.configure(api_key=api_key)
     signal_lines = "\n".join([f"- {s['label']}（{s['detail']}）" for s in signals])
-    prompt = f"""あなたは日本人個人投資家向けのテクニカルアナリストです。
-{asset_name}（現在 {current_price_str}）の 4H 足チャートで以下のシグナルが発火しました。
-このシグナルの市場的意味と、参考エントリー・ストップ・利確の目安を簡潔に解説してください。
+    # 直近ニュースをプロンプトに含める（あれば）
+    if news_titles:
+        news_section = "\n\n【直近の関連ニュース見出し（ファンダメンタル参考）】\n" + "\n".join([f"- {t[:120]}" for t in news_titles])
+    else:
+        news_section = ""
 
-【発火シグナル】
+    prompt = f"""あなたは日本人個人投資家向けのテクニカル + ファンダメンタル アナリストです。
+{asset_name}（現在 {current_price_str}）の 4H 足チャートで以下のシグナルが発火しました。
+テクニカルシグナルと、直近のニュース（ファンダメンタル）の両面から、参考エントリー・ストップ・利確の目安を簡潔に解説してください。
+
+【発火シグナル（テクニカル）】
 {signal_lines}
 
 【テクニカル指標】
@@ -253,9 +281,10 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ap
 - 25MA: {indicators['ma25']:.2f} / 75MA: {indicators['ma75']:.2f}
 - ボリンジャー: -2σ {indicators['bb_low']:.2f} / +2σ {indicators['bb_up']:.2f}
 - 直近 20 本: 高値 {indicators['recent_high']:.2f} / 安値 {indicators['recent_low']:.2f}
+{news_section}
 
-【出力フォーマット】（プレーンテキスト、120 字以内）
-1〜2 文で簡潔に。「〜の可能性」「〜要注意」など慎重表現。参考価格は具体的に。"""
+【出力フォーマット】（プレーンテキスト、200 字以内）
+2〜3 文。テクニカル要因とファンダ要因の両方に触れる。参考価格は具体的に。「〜の可能性」「〜要注意」など慎重表現。ニュースに該当する材料がなければ「足元のニュース材料は限定的」と書く。"""
 
     for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
         try:
@@ -263,7 +292,7 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ap
             response = model.generate_content(prompt)
             text = (response.text or "").strip()
             if text:
-                return text.replace("\n", " ")[:400]
+                return text.replace("\n", " ")[:600]
         except Exception:
             continue
     return ""
@@ -360,11 +389,19 @@ def main():
         price_str = f"{currency}{indicators['price']:.{decimals}f}"
         print(f"    🚨 新規シグナル {len(fresh_signals)} 件: {[s['type'] for s in fresh_signals]}")
 
-        # Gemini 解説
-        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, gemini_key)
+        # ファンダメンタル：ティッカー関連ニュースを取得
+        news_titles = fetch_ticker_news(ticker, max_items=5)
+        if news_titles:
+            print(f"    📰 関連ニュース {len(news_titles)} 件を Gemini に併せて渡します")
+
+        # Gemini 解説（テクニカル + ファンダ）
+        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, gemini_key)
 
         # メール本文構築
         signal_block = "\n".join([f"- {s['label']}\n  {s['detail']}" for s in fresh_signals])
+        news_block = ""
+        if news_titles:
+            news_block = "\n\n【参考にした直近ニュース】\n" + "\n".join([f"- {t}" for t in news_titles])
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
 現在価格: {price_str}
@@ -375,7 +412,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
-【AI 解説】
+【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
 
 【テクニカル指標】
@@ -384,6 +421,7 @@ def main():
 - 25MA: {indicators['ma25']:.{decimals}f} / 75MA: {indicators['ma75']:.{decimals}f}
 - ボリンジャー: -2σ {indicators['bb_low']:.{decimals}f} / +2σ {indicators['bb_up']:.{decimals}f}
 - 直近 20 本: 高値 {indicators['recent_high']:.{decimals}f} / 安値 {indicators['recent_low']:.{decimals}f}
+{news_block}
 
 ━━━━━━━━━━━━━━━━━━━━━
 ⚠️ AI による参考シグナルです。
