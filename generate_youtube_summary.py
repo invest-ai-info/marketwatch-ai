@@ -705,10 +705,17 @@ def build_html(summaries):
 # メイン
 # ─────────────────────────────────────────────
 def main():
+    # YouTube Data API 用のキー（専用キー優先、なければ GEMINI_API_KEY にフォールバック）
+    youtube_api_key = os.environ.get("YOUTUBE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    # Gemini 要約用のキー
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         print("❌ GEMINI_API_KEY が未設定です")
         sys.exit(1)
+    if os.environ.get("YOUTUBE_API_KEY"):
+        print("✅ YOUTUBE_API_KEY を検出（YouTube Data API 用）")
+    else:
+        print("ℹ️ YOUTUBE_API_KEY 未設定、GEMINI_API_KEY を YouTube Data API でも使用")
 
     # 既存データロード + 期限切れ削除
     existing = load_existing_data()
@@ -733,7 +740,7 @@ def main():
         print(f"📡 {len(CHANNELS)} チャンネルから動画候補を収集（YouTube Data API v3）...")
         candidates = []
         for handle, cid, name in CHANNELS:
-            vids = fetch_channel_videos_api(cid, name, api_key, max_results=10)
+            vids = fetch_channel_videos_api(cid, name, youtube_api_key, max_results=10)
             recent = [v for v in vids if 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS]
             print(f"  {handle:25} {len(vids)}本 中 {len(recent)}本が直近 {MAX_AGE_HOURS}h 以内")
             candidates.extend(recent)
