@@ -256,14 +256,21 @@ SHORTS_TITLE_MARKERS = (
 
 def is_youtube_short(video_id, title="", description="", duration_sec=0):
     """YouTube Shorts かを判定。
-    1) duration_sec が 0 < d ≤ 60 なら確実に Shorts（YouTube Data API 経由なら確実）
-    2) タイトル/説明文に Shorts マーカーがあれば True
+    1) duration ≤ 90 秒 → 確実に Shorts
+    2) duration ≤ 180 秒 + タイトルにハッシュタグ 3+ 個 → Shorts の可能性大
+    3) タイトル/説明文に Shorts マーカー → Shorts
+    （YouTube Shorts は最長 180 秒まで仕様変更されたため、単純な 60 秒判定では不十分）
     """
-    if duration_sec and 0 < duration_sec <= 60:
+    if duration_sec and 0 < duration_sec <= 90:
         return True
     text = (title + " " + description).lower()
     if any(m in text for m in SHORTS_TITLE_MARKERS):
         return True
+    # 180 秒以下でハッシュタグが多いタイトルは Shorts スタイル
+    if duration_sec and 0 < duration_sec <= 180:
+        hashtag_count = title.count("#")
+        if hashtag_count >= 3:
+            return True
     return False
 
 
