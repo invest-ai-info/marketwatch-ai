@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📊 シグナル品質トラッキング - MarketWatch AI</title>
+  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。サラリーマン投資家の実取引ログも公開。">
+  <link rel="canonical" href="https://marketwatch-jp.com/track-record.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="📊 シグナル品質トラッキング - MarketWatch AI">
+  <meta property="og:description" content="4H テクニカルシグナルの的中率・実取引ログを完全公開。AI 投資の透明性を追求。">
+  <meta property="og:url" content="https://marketwatch-jp.com/track-record.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;transition:all .2s}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .page-header{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:28px 32px;margin-bottom:24px}
+    h1{font-size:1.8rem;color:#0969da;margin-bottom:8px}
+    h2{font-size:1.25rem;color:#1f6feb;margin:24px 0 14px}
+    .page-desc{font-size:.92rem;color:#57606a}
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px}
+    .kpi-card{background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:10px;padding:18px 22px}
+    .kpi-label{font-size:.78rem;color:#57606a;letter-spacing:.04em;margin-bottom:6px}
+    .kpi-value{font-size:1.8rem;font-weight:700;color:#1f2328}
+    .kpi-sub{font-size:.75rem;color:#6e7781;margin-top:4px}
+    table{width:100%;border-collapse:collapse;font-size:.88rem;background:#fff;border:1px solid #d0d7de;border-radius:8px;overflow:hidden}
+    table th{background:#f6f8fa;padding:10px 12px;text-align:left;border-bottom:2px solid #d0d7de;font-size:.82rem;color:#424a53;font-weight:600}
+    table td{padding:9px 12px;border-bottom:1px solid #eaeef2;color:#1f2328}
+    table tr:last-child td{border-bottom:none}
+    .scroll-x{overflow-x:auto;border:1px solid #d0d7de;border-radius:8px}
+    .scroll-x table{border:none;border-radius:0}
+    .chart-box{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:18px;margin-bottom:32px;height:340px}
+    .info-box{background:#fff8c5;border-left:4px solid #d4a72c;border-radius:6px;padding:14px 18px;margin-bottom:24px;font-size:.85rem;color:#6e5d00}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    @media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}.kpi-value{font-size:1.4rem}h1{font-size:1.4rem}}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .page-header{background:#161b22;border-color:#30363d}
+    body.dark .page-desc{color:#8b949e}
+    body.dark h1{color:#79c0ff}
+    body.dark h2{color:#79c0ff}
+    body.dark .kpi-card{background:#161b22;border-color:#30363d}
+    body.dark .kpi-label{color:#8b949e}
+    body.dark .kpi-value{color:#e6edf3}
+    body.dark table{background:#161b22;border-color:#30363d}
+    body.dark table th{background:#0d1117;border-bottom-color:#30363d;color:#c9d1d9}
+    body.dark table td{border-bottom-color:#21262d;color:#e6edf3}
+    body.dark .scroll-x{border-color:#30363d}
+    body.dark .chart-box{background:#161b22;border-color:#30363d}
+    body.dark .info-box{background:#332700;border-left-color:#d4a72c;color:#f0d774}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+  </style>
+</head>
+<body>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">ホーム</a> &gt; シグナル品質トラッキング
+  </div>
+
+  <div class="page-header">
+    <h1>📊 シグナル品質トラッキング</h1>
+    <div class="page-desc">
+      MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
+      AI シグナルの透明性を追求し、サラリーマン投資家として実際にどう活用しているかを公開しています。
+      <span style="color:#6e7781">（最終更新: 2026-05-20 21:10 JST）</span>
+    </div>
+  </div>
+
+  <div class="info-box">
+    💡 <b>判定ルール</b>: シグナル発火後、ロングなら高値が TP1/TP2 に達したか、安値が SL に達したかをチェック。
+    7 日経過してどれもヒットしなければ「期限切れ」。SL/TP は ATR(14) × 1.5/2.0/3.0 で機械算出。
+    <b>R:R 期待値</b> は「リスク 1 単位あたり何倍リターンしたか」の指標で、+0.3R 以上が安定。
+  </div>
+
+  <h2>📈 全体パフォーマンス</h2>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">確定シグナル総数</div>
+      <div class="kpi-value">0</div>
+      <div class="kpi-sub">うち未確定 0 件</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#cf222e">
+      <div class="kpi-label">勝率（TP1+TP2 / 全確定）</div>
+      <div class="kpi-value" style="color:#cf222e">0.0%</div>
+      <div class="kpi-sub">勝ち 0 / 負け 0 / 期限切れ 0</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#1a7f37">
+      <div class="kpi-label">TP2 到達率</div>
+      <div class="kpi-value" style="color:#1a7f37">0.0%</div>
+      <div class="kpi-sub">R:R 1:2.0 達成</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#cf222e">
+      <div class="kpi-label">期待 R</div>
+      <div class="kpi-value" style="color:#cf222e">+0.00R</div>
+      <div class="kpi-sub">+0.3R 以上で安定</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#1a7f37">
+      <div class="kpi-label">平均最大含み益</div>
+      <div class="kpi-value" style="color:#1a7f37">+0.00%</div>
+      <div class="kpi-sub">MFE 指標</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#cf222e">
+      <div class="kpi-label">平均最大含み損</div>
+      <div class="kpi-value" style="color:#cf222e">+0.00%</div>
+      <div class="kpi-sub">MAE 指標</div>
+    </div>
+  </div>
+
+  <h2>💹 模擬エクイティカーブ</h2>
+  <div class="chart-box">
+    <canvas id="equityChart"></canvas>
+  </div>
+
+  
+      <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:24px;margin-bottom:32px;text-align:center">
+        <div style="font-size:1rem;color:#57606a;margin-bottom:8px">📒 実取引ログは準備中です</div>
+        <div style="font-size:.85rem;color:#6e7781">サラリーマン投資家として AI シグナルをどう活用したか、実際の取引記録を順次公開予定です。</div>
+      </div>
+
+  <h2>🎯 シグナル種別ブレイクダウン</h2>
+  <div class="scroll-x">
+  <table>
+    <thead><tr>
+      <th>シグナル</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
+    </tr></thead>
+    <tbody><tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr></tbody>
+  </table>
+  </div>
+
+  <h2 style="margin-top:24px">🏷️ 銘柄ブレイクダウン</h2>
+  <div class="scroll-x">
+  <table>
+    <thead><tr>
+      <th>銘柄</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
+    </tr></thead>
+    <tbody><tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr></tbody>
+  </table>
+  </div>
+
+  <h2 style="margin-top:24px">📐 方向別ブレイクダウン</h2>
+  <div class="scroll-x">
+  <table>
+    <thead><tr>
+      <th>方向</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
+    </tr></thead>
+    <tbody><tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr></tbody>
+  </table>
+  </div>
+
+  <h2 style="margin-top:24px">📒 直近 30 件のシグナル詳細</h2>
+  <div class="scroll-x">
+  <table style="font-size:.82rem">
+    <thead><tr>
+      <th>発火時刻</th><th>銘柄</th><th>シグナル</th><th>L/S</th>
+      <th style="text-align:right">エントリー</th><th style="text-align:right">SL</th><th style="text-align:right">TP1</th>
+      <th style="text-align:right">MFE</th><th style="text-align:right">MAE</th><th>結果</th>
+    </tr></thead>
+    <tbody><tr><td colspan="10" style="text-align:center;color:#6e7781;padding:16px">シグナル蓄積中（最初の発火を待っています）</td></tr></tbody>
+  </table>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI | <a href="about.html">サイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px;font-size:.72rem;color:#8b949e">
+    本ページの数値は yfinance の価格データを基に機械的に判定したものであり、実際の取引結果を保証するものではありません。
+    投資判断は自己責任でお願いします。
+  </p>
+</footer>
+
+<script>
+  // Equity Chart
+  const eqLabels = [];
+  const eqValues = [];
+  if (eqLabels.length > 0) {
+    const ctx = document.getElementById('equityChart').getContext('2d');
+    const isDark = document.body.classList.contains('dark');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: eqLabels,
+        datasets: [{
+          label: '模擬残高 ($1000 スタート / $100 リスク per シグナル)',
+          data: eqValues,
+          borderColor: '#0969da',
+          backgroundColor: 'rgba(9, 105, 218, 0.1)',
+          fill: true,
+          tension: 0.2,
+          pointRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+          y: { ticks: { callback: v => '$' + v.toLocaleString() } }
+        }
+      }
+    });
+  } else {
+    document.querySelector('#equityChart').parentElement.innerHTML =
+      '<div style="text-align:center;padding:60px 0;color:#6e7781">確定シグナルが揃ったらここにエクイティカーブが表示されます</div>';
+  }
+
+  // Dark mode toggle
+  function toggleTheme(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  }
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('theme-toggle').textContent = '☀️';
+  }
+</script>
+</body>
+</html>
