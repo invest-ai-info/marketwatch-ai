@@ -42,6 +42,7 @@ SYMBOLS = [
 
 ALERT_HISTORY_FILE = "technical-alerts-history.json"
 ALERT_COOLDOWN_HOURS = 12  # 同じ銘柄・同じシグナルは 12 時間連投しない
+SIGNALS_LOG_FILE = "signals-log.json"  # 全シグナル発火記録（track-record 用）
 
 
 # ─────────────────────────────────────────────
@@ -410,6 +411,88 @@ def load_history():
         return {}
 
 
+# ─────────────────────────────────────────────
+# シグナルログ（track-record 用） — 全発火を JSON に蓄積
+# ─────────────────────────────────────────────
+def load_signals_log():
+    if not os.path.exists(SIGNALS_LOG_FILE):
+        return []
+    try:
+        with open(SIGNALS_LOG_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+
+def save_signals_log(log):
+    try:
+        with open(SIGNALS_LOG_FILE, "w", encoding="utf-8") as f:
+            json.dump(log, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"⚠️ シグナルログ保存失敗: {e}")
+
+
+def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
+                            news_titles, narrative, fired_at_iso):
+    """1 アラート発火を構造化レコードに整形"""
+    primary = fresh_signals[0]
+    # ID: 例 "GC=F_20260520_2130"
+    dt_compact = datetime.fromisoformat(fired_at_iso).strftime("%Y%m%d_%H%M")
+    record_id = f"{ticker}_{dt_compact}"
+
+    entry = {
+        "id": record_id,
+        "fired_at": fired_at_iso,
+        "ticker": ticker,
+        "asset_name": name,
+        "signal_types": [s["type"] for s in fresh_signals],
+        "primary_signal": primary["type"],
+        "primary_signal_label": primary["label"],
+        "signal_count": len(fresh_signals),
+
+        # ポジションプラン（ATR 算出）
+        "direction": position_plan["direction"] if position_plan else None,
+        "entry": position_plan["entry"] if position_plan else indicators["price"],
+        "stop_loss": position_plan["stop_loss"] if position_plan else None,
+        "take_profit_1": position_plan["take_profit_1"] if position_plan else None,
+        "take_profit_2": position_plan["take_profit_2"] if position_plan else None,
+        "atr": position_plan["atr"] if position_plan else indicators.get("atr", 0),
+        "sl_pct": position_plan["sl_pct"] if position_plan else None,
+        "tp1_pct": position_plan["tp1_pct"] if position_plan else None,
+        "tp2_pct": position_plan["tp2_pct"] if position_plan else None,
+
+        # 指標スナップショット
+        "indicators_at_signal": {
+            "rsi": round(float(indicators.get("rsi", 0)), 2),
+            "macd": round(float(indicators.get("macd", 0)), 4),
+            "macd_sig": round(float(indicators.get("macd_sig", 0)), 4),
+            "ma25": round(float(indicators.get("ma25", 0)), 2),
+            "ma75": round(float(indicators.get("ma75", 0)), 2),
+            "bb_low": round(float(indicators.get("bb_low", 0)), 2),
+            "bb_up": round(float(indicators.get("bb_up", 0)), 2),
+            "recent_high": round(float(indicators.get("recent_high", 0)), 2),
+            "recent_low": round(float(indicators.get("recent_low", 0)), 2),
+        },
+
+        # ファンダ
+        "news_count": len(news_titles or []),
+        "news_titles": (news_titles or [])[:5],
+
+        # AI 解説
+        "ai_narrative": narrative or "",
+
+        # 結果（後で evaluate_signal_outcomes.py が更新）
+        "outcome": None,                 # "tp1" / "tp2" / "sl" / "expired" / null
+        "outcome_resolved_at": None,
+        "hit_tp1_at": None,
+        "hit_tp2_at": None,
+        "hit_sl_at": None,
+        "max_favorable_excursion_pct": None,  # 最大含み益 %
+        "max_adverse_excursion_pct": None,    # 最大含み損 %
+    }
+    return entry
+
+
 def save_history(history):
     try:
         with open(ALERT_HISTORY_FILE, "w", encoding="utf-8") as f:
@@ -448,9 +531,12 @@ def main():
 
     print(f"📡 {len(SYMBOLS)} 銘柄の 4H チャート分析を開始...")
     history = load_history()
+    signals_log = load_signals_log()
     total_signals = 0
     sent_emails = 0
-    now_jst_str = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
+    now_jst = datetime.now(JST)
+    now_jst_str = now_jst.strftime("%Y-%m-%d %H:%M JST")
+    now_iso = now_jst.isoformat(timespec="seconds")
 
     for ticker, name, currency, decimals in SYMBOLS:
         print(f"\n  📊 {name} ({ticker})")
@@ -552,19 +638,33 @@ MarketWatch AI Alerts
         subject = f"{emoji} {name} 4H シグナル: {primary['label'].split('（')[0].strip()}"
 
         # 送信
+        email_sent = False
         try:
             send_email(subject, body, gmail_user, gmail_password, recipient)
             print(f"    📧 メール送信完了: {recipient}")
             sent_emails += 1
+            email_sent = True
             # 履歴更新
             for s in fresh_signals:
                 history[f"{ticker}:{s['type']}"] = datetime.now(JST).isoformat(timespec="seconds")
         except Exception as e:
             print(f"    ❌ メール送信失敗: {type(e).__name__}: {str(e)[:80]}")
 
+        # シグナルログに記録（メール送信成否に関わらず、シグナル発火事実は残す）
+        log_entry = build_signal_log_entry(
+            ticker=ticker, name=name, fresh_signals=fresh_signals,
+            indicators=indicators, position_plan=position_plan,
+            news_titles=news_titles, narrative=narrative,
+            fired_at_iso=now_iso,
+        )
+        log_entry["email_sent"] = email_sent
+        signals_log.append(log_entry)
+        print(f"    📒 シグナルログに記録: id={log_entry['id']}")
+
     save_history(history)
+    save_signals_log(signals_log)
     print(f"\n━━━━━━━━━━━━━━━━━━━━━")
-    print(f"完了: 新規シグナル {total_signals} 件 / メール {sent_emails} 通送信")
+    print(f"完了: 新規シグナル {total_signals} 件 / メール {sent_emails} 通送信 / ログ累計 {len(signals_log)} 件")
 
 
 if __name__ == "__main__":
