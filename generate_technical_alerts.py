@@ -93,6 +93,68 @@ def calc_bbands(close, period=20, std=2):
     return sma + std * sd, sma, sma - std * sd
 
 
+def calc_atr(high, low, close, period=14):
+    """ATR (Average True Range) — ボラティリティ指標。
+    SL/TP の幅を決めるのに使う。4H 足の自然な揺れを定量化。"""
+    prev_close = close.shift(1)
+    tr = pd.concat([
+        (high - low),
+        (high - prev_close).abs(),
+        (low - prev_close).abs(),
+    ], axis=1).max(axis=1)
+    return tr.ewm(alpha=1/period, adjust=False).mean()
+
+
+# ─────────────────────────────────────────────
+# SL/TP をシグナル方向と ATR から算出
+# ─────────────────────────────────────────────
+def calc_entry_sl_tp(current_price, atr_value, direction):
+    """ATR ベースで参考エントリー・SL・TP を算出。
+    direction: "long" or "short"
+    R:R = 1:1.3（TP1）, 1:2.0（TP2）
+    SL 幅 = ATR × 1.5（4H 足の自然な揺れの 1.5 倍）"""
+    sl_dist = atr_value * 1.5
+    tp1_dist = atr_value * 2.0
+    tp2_dist = atr_value * 3.0
+    if direction == "long":
+        return {
+            "direction": "ロング（買い）",
+            "entry": current_price,
+            "stop_loss": current_price - sl_dist,
+            "take_profit_1": current_price + tp1_dist,
+            "take_profit_2": current_price + tp2_dist,
+            "sl_pct": -(sl_dist / current_price) * 100,
+            "tp1_pct": (tp1_dist / current_price) * 100,
+            "tp2_pct": (tp2_dist / current_price) * 100,
+            "atr": atr_value,
+        }
+    else:  # short
+        return {
+            "direction": "ショート（売り）",
+            "entry": current_price,
+            "stop_loss": current_price + sl_dist,
+            "take_profit_1": current_price - tp1_dist,
+            "take_profit_2": current_price - tp2_dist,
+            "sl_pct": (sl_dist / current_price) * 100,
+            "tp1_pct": -(tp1_dist / current_price) * 100,
+            "tp2_pct": -(tp2_dist / current_price) * 100,
+            "atr": atr_value,
+        }
+
+
+def determine_direction(signals):
+    """発火シグナル群から総合的にロング/ショート/中立を判定。
+    buy 多数 → long、sell 多数 → short、その他 → None"""
+    buy_count = sum(1 for s in signals if s["severity"] == "buy")
+    sell_count = sum(1 for s in signals if s["severity"] == "sell")
+    if buy_count > sell_count:
+        return "long"
+    elif sell_count > buy_count:
+        return "short"
+    else:
+        return None  # warn のみ等 → ポジション提案なし
+
+
 # ─────────────────────────────────────────────
 # シグナル判定（4H 足の最新バーを評価）
 # 返り値: list of dict [{type, severity, label, detail}, ...]
@@ -110,6 +172,7 @@ def detect_signals(df_4h):
     bb_up, bb_mid, bb_low = calc_bbands(close)
     ma25 = close.rolling(25).mean()
     ma75 = close.rolling(75).mean()
+    atr = calc_atr(high, low, close)
 
     cur = close.iloc[-1]
     prev = close.iloc[-2]
@@ -225,6 +288,7 @@ def detect_signals(df_4h):
         "ma75": ma75_cur,
         "recent_high": recent_high,
         "recent_low": recent_low,
+        "atr": float(atr.iloc[-1]) if not pd.isna(atr.iloc[-1]) else 0.0,
     }
 
 
@@ -253,7 +317,8 @@ def fetch_ticker_news(ticker, max_items=5):
 # ─────────────────────────────────────────────
 # Gemini で「なぜこのシグナルか」の解説生成（テクニカル + ニュース）
 # ─────────────────────────────────────────────
-def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, api_key):
+def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key):
+    """SL/TP は固定値（ATR 算出済）を渡し、AI には「なぜこの水準が妥当か」の解説のみさせる。"""
     if not api_key:
         return ""
     try:
@@ -268,9 +333,24 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
     else:
         news_section = ""
 
+    # ポジションプラン（数値は AI に判断させず固定値で渡す）
+    if position_plan:
+        plan_section = f"""
+
+【参考ポジションプラン（ATR ベースで算出済、AI は数値を変更しないこと）】
+- 方向: {position_plan['direction']}
+- エントリー: {position_plan['entry']:.2f}
+- ストップロス: {position_plan['stop_loss']:.2f}（{position_plan['sl_pct']:+.2f}%）
+- 利確 ①: {position_plan['take_profit_1']:.2f}（{position_plan['tp1_pct']:+.2f}%）
+- 利確 ②: {position_plan['take_profit_2']:.2f}（{position_plan['tp2_pct']:+.2f}%）
+- SL 根拠: ATR(14) = {position_plan['atr']:.2f} × 1.5
+- 想定時間軸: 4H スイング（1〜5 日保有）"""
+    else:
+        plan_section = "\n\n【参考ポジションプラン】方向感が定まらないため今回は提示なし（様子見推奨）"
+
     prompt = f"""あなたは日本人個人投資家向けのテクニカル + ファンダメンタル アナリストです。
 {asset_name}（現在 {current_price_str}）の 4H 足チャートで以下のシグナルが発火しました。
-テクニカルシグナルと、直近のニュース（ファンダメンタル）の両面から、参考エントリー・ストップ・利確の目安を簡潔に解説してください。
+**SL/TP の数値は既に ATR ベースで算出済み**なので、その数値を変更せず、「なぜこの方向感・この水準が妥当か」をテクニカルとファンダの両面から解説してください。
 
 【発火シグナル（テクニカル）】
 {signal_lines}
@@ -281,10 +361,14 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
 - 25MA: {indicators['ma25']:.2f} / 75MA: {indicators['ma75']:.2f}
 - ボリンジャー: -2σ {indicators['bb_low']:.2f} / +2σ {indicators['bb_up']:.2f}
 - 直近 20 本: 高値 {indicators['recent_high']:.2f} / 安値 {indicators['recent_low']:.2f}
+- ATR(14): {indicators.get('atr', 0):.2f}（1 本の平均的な値動き）
+{plan_section}
 {news_section}
 
-【出力フォーマット】（プレーンテキスト、200 字以内）
-2〜3 文。テクニカル要因とファンダ要因の両方に触れる。参考価格は具体的に。「〜の可能性」「〜要注意」など慎重表現。ニュースに該当する材料がなければ「足元のニュース材料は限定的」と書く。"""
+【出力フォーマット】（プレーンテキスト、250 字以内）
+2〜3 文。テクニカル要因（なぜこの方向か）とファンダ要因（ニュース材料との整合性）の両方に触れる。
+**SL/TP の数値は出さない（既に上で確定済み）**、代わりに「シナリオが崩れる条件（=SL に到達する展開）」を 1 つだけ言及する。
+ニュースに該当する材料がなければ「足元のニュース材料は限定的」と書く。"""
 
     for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
         try:
@@ -394,24 +478,54 @@ def main():
         if news_titles:
             print(f"    📰 関連ニュース {len(news_titles)} 件を Gemini に併せて渡します")
 
-        # Gemini 解説（テクニカル + ファンダ）
-        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, gemini_key)
+        # ポジションプラン算出（ATR ベース、4H スイング想定）
+        direction = determine_direction(fresh_signals)
+        atr_val = indicators.get("atr", 0.0)
+        position_plan = None
+        if direction and atr_val > 0:
+            position_plan = calc_entry_sl_tp(indicators["price"], atr_val, direction)
+            print(f"    📐 ポジションプラン: {position_plan['direction']} "
+                  f"SL={position_plan['stop_loss']:.{decimals}f} "
+                  f"TP1={position_plan['take_profit_1']:.{decimals}f} "
+                  f"(ATR={atr_val:.{decimals}f})")
+
+        # Gemini 解説（テクニカル + ファンダ + 確定済プランを渡す）
+        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, position_plan, gemini_key)
 
         # メール本文構築
         signal_block = "\n".join([f"- {s['label']}\n  {s['detail']}" for s in fresh_signals])
         news_block = ""
         if news_titles:
             news_block = "\n\n【参考にした直近ニュース】\n" + "\n".join([f"- {t}" for t in news_titles])
+
+        # ポジションプラン表示ブロック
+        if position_plan:
+            plan_block = f"""【参考ポジションプラン】（4H スイング想定 / 保有 1〜5 日）
+- 方向: {position_plan['direction']}
+- エントリー: {currency}{position_plan['entry']:.{decimals}f}
+- ストップロス: {currency}{position_plan['stop_loss']:.{decimals}f}（{position_plan['sl_pct']:+.2f}%）
+- 利確 ①: {currency}{position_plan['take_profit_1']:.{decimals}f}（{position_plan['tp1_pct']:+.2f}% / R:R 1:1.3）
+- 利確 ②: {currency}{position_plan['take_profit_2']:.{decimals}f}（{position_plan['tp2_pct']:+.2f}% / R:R 1:2.0）
+
+📊 SL 根拠: ATR(14) = {currency}{position_plan['atr']:.{decimals}f} × 1.5
+        （4H 足 1 本の自然な値動きの 1.5 倍 = 通常のヒゲでは刈られない幅）
+"""
+        else:
+            plan_block = """【参考ポジションプラン】
+- 方向感が定まらないシグナル構成のため、今回は数値プランなし（様子見推奨）
+"""
+
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
 現在価格: {price_str}
 判定時刻: {now_jst_str}
-時間足: 4H
+時間足: 4H / 想定保有: 1〜5 日（スイング）
 ━━━━━━━━━━━━━━━━━━━━━
 
 【発火シグナル】
 {signal_block}
 
+{plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
 
@@ -421,10 +535,12 @@ def main():
 - 25MA: {indicators['ma25']:.{decimals}f} / 75MA: {indicators['ma75']:.{decimals}f}
 - ボリンジャー: -2σ {indicators['bb_low']:.{decimals}f} / +2σ {indicators['bb_up']:.{decimals}f}
 - 直近 20 本: 高値 {indicators['recent_high']:.{decimals}f} / 安値 {indicators['recent_low']:.{decimals}f}
+- ATR(14): {currency}{indicators.get('atr', 0):.{decimals}f}（1 本の平均的な値動き幅）
 {news_block}
 
 ━━━━━━━━━━━━━━━━━━━━━
 ⚠️ AI による参考シグナルです。
+   SL/TP は ATR ベースの機械算出値であり、ニュース・需給は反映していません。
    投資判断は自己責任で行ってください。
 ━━━━━━━━━━━━━━━━━━━━━
 MarketWatch AI Alerts
