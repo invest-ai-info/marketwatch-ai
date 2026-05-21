@@ -527,6 +527,123 @@ def build_analytics_section(signals):
 </div>"""
 
 
+def build_loss_analysis_section(signals):
+    """SL ヒット案件の敗因分析タブ"""
+    sl_signals = [
+        s for s in signals
+        if s.get("outcome") == "sl" and s.get("loss_analysis", {}).get("ai_result")
+    ]
+
+    if not sl_signals:
+        return """
+<div class="tab-pane" id="pane-loss">
+  <h2>🔬 敗因分析</h2>
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:32px;text-align:center;color:#57606a">
+    <div style="font-size:1.6rem;margin-bottom:8px">🌱</div>
+    <div style="font-size:1rem;margin-bottom:6px">SL ヒット案件が蓄積されるとここに分析が表示されます</div>
+    <div style="font-size:.85rem;color:#6e7781">
+      SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析します。<br>
+      失敗から学ぶデータベースとして活用できます。
+    </div>
+  </div>
+</div>"""
+
+    # カテゴリ別集計
+    cat_counts = defaultdict(int)
+    cat_lessons = defaultdict(list)
+    for s in sl_signals:
+        ai = s.get("loss_analysis", {}).get("ai_result", {})
+        cat = ai.get("primary_category") or "未分類"
+        cat_counts[cat] += 1
+        lesson = ai.get("lesson") or ""
+        if lesson:
+            cat_lessons[cat].append(lesson)
+
+    # カテゴリ別バーチャート用データ
+    cat_labels = list(cat_counts.keys())
+    cat_values = [cat_counts[k] for k in cat_labels]
+
+    # カテゴリ別テーブル
+    cat_rows = []
+    total_sl = len(sl_signals)
+    for cat in sorted(cat_counts.keys(), key=lambda k: -cat_counts[k]):
+        pct = cat_counts[cat] / total_sl * 100
+        sample_lessons = list(set(cat_lessons[cat]))[:2]
+        lesson_html = "<br>".join([f"・{l[:60]}" for l in sample_lessons]) if sample_lessons else "—"
+        cat_rows.append(f"""
+        <tr>
+          <td><b>{cat}</b></td>
+          <td style="text-align:right">{cat_counts[cat]}</td>
+          <td style="text-align:right">{pct:.1f}%</td>
+          <td style="font-size:.82rem;color:#424a53">{lesson_html}</td>
+        </tr>""")
+
+    # 直近 SL 案件詳細
+    detail_cards = []
+    for s in sorted(sl_signals, key=lambda x: x.get("outcome_resolved_at", ""), reverse=True)[:10]:
+        ai = s.get("loss_analysis", {}).get("ai_result", {})
+        vix = s.get("loss_analysis", {}).get("vix_data") or {}
+        fired = s.get("fired_at", "")[:16].replace("T", " ")
+        resolved = s.get("outcome_resolved_at", "")[:16].replace("T", " ")
+        cat = ai.get("primary_category") or "—"
+        cause = ai.get("primary_cause") or "—"
+        diag = ai.get("ai_diagnosis") or "—"
+        lesson = ai.get("lesson") or "—"
+        vix_html = ""
+        if vix:
+            vix_html = f"<span style='font-size:.82rem;color:#cf222e'>VIX: {vix.get('start')} → {vix.get('end')} ({vix.get('change_pct'):+.1f}%)</span>"
+
+        news_html = ""
+        news = s.get("loss_analysis", {}).get("news_during_holding") or []
+        if news:
+            news_html = "<div style='margin-top:10px;font-size:.82rem;color:#57606a'><b>期間中のニュース:</b><ul style='margin:6px 0 0 20px'>" + \
+                "".join([f"<li>{n[:100]}</li>" for n in news[:3]]) + "</ul></div>"
+
+        detail_cards.append(f"""
+        <div class="loss-card">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+            <div>
+              <span class="loss-cat-tag">{cat}</span>
+              <b style="margin-left:8px">{s.get('asset_name')}</b>
+              <span style="color:#6e7781;font-size:.85rem;margin-left:6px">({s.get('timeframe','4h').upper()})</span>
+            </div>
+            <div style="font-size:.78rem;color:#6e7781">
+              {fired} → {resolved}
+            </div>
+          </div>
+          <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ {cause}</div>
+          <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">{diag}</div>
+          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
+            💡 <b>教訓:</b> {lesson}
+          </div>
+          {vix_html}
+          {news_html}
+        </div>""")
+
+    return f"""
+<div class="tab-pane" id="pane-loss">
+  <h2>🔬 敗因分析（SL ヒット案件: {total_sl} 件）</h2>
+  <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
+    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。
+    失敗から学ぶデータベースとして活用してください。
+  </p>
+
+  <h3 style="margin-top:24px">📊 カテゴリ別分布</h3>
+  <div class="chart-box" style="height:280px"><canvas id="lossCategoryChart"></canvas></div>
+
+  <h3 style="margin-top:32px">🏷️ カテゴリ別 集計と教訓</h3>
+  <div class="scroll-x"><table>
+    <thead><tr>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+    </tr></thead>
+    <tbody>{''.join(cat_rows)}</tbody>
+  </table></div>
+
+  <h3 style="margin-top:32px">📒 直近 10 件の敗因詳細</h3>
+  <div>{''.join(detail_cards)}</div>
+</div>"""
+
+
 def build_html(signals, trades):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
@@ -537,6 +654,17 @@ def build_html(signals, trades):
     pane_4h = build_dashboard_section(signals_4h, "4h", "4H 足のみ", "equityChart4h")
     pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
     pane_analytics = build_analytics_section(signals)
+    pane_loss = build_loss_analysis_section(signals)
+
+    # 敗因カテゴリチャート用データ
+    loss_cat_counts = defaultdict(int)
+    for s in signals:
+        if s.get("outcome") == "sl":
+            ai = s.get("loss_analysis", {}).get("ai_result", {}) if s.get("loss_analysis") else {}
+            cat = ai.get("primary_category") or "未分類"
+            loss_cat_counts[cat] += 1
+    loss_cat_labels = list(loss_cat_counts.keys())
+    loss_cat_values = [loss_cat_counts[k] for k in loss_cat_labels]
 
     # 時間帯ヒートマップ用データ（全シグナル対象）
     def _hour_data(sigs):
@@ -627,6 +755,8 @@ def build_html(signals, trades):
     .dl-card-icon{{font-size:1.8rem;margin-bottom:6px}}
     .dl-card-title{{font-weight:700;color:#0969da;font-size:1rem;margin-bottom:4px}}
     .dl-card-desc{{font-size:.82rem;color:#57606a;line-height:1.5}}
+    .loss-card{{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #cf222e;border-radius:10px;padding:16px 20px;margin:12px 0}}
+    .loss-cat-tag{{display:inline-block;background:#ffebe9;color:#cf222e;border:1px solid #cf222e;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.kpi-value{{font-size:1.4rem}}h1{{font-size:1.4rem}}}}
@@ -656,6 +786,8 @@ def build_html(signals, trades):
     body.dark .dl-card:hover{{border-color:#58a6ff}}
     body.dark .dl-card-title{{color:#79c0ff}}
     body.dark .dl-card-desc{{color:#8b949e}}
+    body.dark .loss-card{{background:#161b22;border-color:#30363d;border-left-color:#cf222e}}
+    body.dark .loss-cat-tag{{background:#3c0f10;color:#ff7b72;border-color:#cf222e}}
     body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
   </style>
 </head>
@@ -703,6 +835,7 @@ def build_html(signals, trades):
     <button class="tab-btn" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
+    <button class="tab-btn" data-tab="loss">🔬 敗因分析</button>
     <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
 
@@ -710,6 +843,7 @@ def build_html(signals, trades):
   {pane_4h}
   {pane_1h}
   {pane_analytics}
+  {pane_loss}
 
   <div class="tab-pane" id="pane-data">
     <h2>📥 生データのダウンロード</h2>
@@ -822,6 +956,34 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
   makeEquityChart('equityChartAll', {json.dumps(eq_all_labels, ensure_ascii=False)}, {json.dumps(eq_all_values)}, '#0969da');
   makeEquityChart('equityChart4h',  {json.dumps(eq_4h_labels, ensure_ascii=False)},  {json.dumps(eq_4h_values)},  '#1a7f37');
   makeEquityChart('equityChart1h',  {json.dumps(eq_1h_labels, ensure_ascii=False)},  {json.dumps(eq_1h_values)},  '#9a6700');
+
+  // 敗因カテゴリチャート
+  (function() {{
+    const catLabels = {json.dumps(loss_cat_labels, ensure_ascii=False)};
+    const catValues = {json.dumps(loss_cat_values)};
+    const el = document.getElementById('lossCategoryChart');
+    if (!el) return;
+    if (catLabels.length === 0) {{
+      el.parentElement.innerHTML = '<div style="text-align:center;padding:80px 0;color:#6e7781">SL ヒット案件が蓄積されたらカテゴリ別分布が表示されます</div>';
+      return;
+    }}
+    new Chart(el.getContext('2d'), {{
+      type: 'doughnut',
+      data: {{
+        labels: catLabels,
+        datasets: [{{
+          data: catValues,
+          backgroundColor: ['#cf222e', '#9a6700', '#0969da', '#1f6feb', '#6e7781', '#8250df'],
+          borderWidth: 1,
+        }}]
+      }},
+      options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{ legend: {{ position: 'right' }} }}
+      }}
+    }});
+  }})();
 
   // 時間帯ヒートマップ
   (function() {{
