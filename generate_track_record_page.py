@@ -29,6 +29,28 @@ SIGNALS_LOG_FILE = "signals-log.json"
 TRADES_LOG_FILE = "my-trades.json"  # P3.5 用、なくても OK
 OUTPUT_FILE = "track-record.html"
 
+# 曜日マッピング
+WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
+
+
+def get_time_session(hour):
+    """JST 時刻 → 市場セッション"""
+    if 0 <= hour < 6:
+        return "深夜 (0-6)"
+    elif 6 <= hour < 9:
+        return "早朝 (6-9)"
+    elif 9 <= hour < 15:
+        return "東京 (9-15)"
+    elif 15 <= hour < 17:
+        return "欧州オープン (15-17)"
+    elif 17 <= hour < 22:
+        return "欧州 (17-22)"
+    else:
+        return "NY (22-24)"
+
+
+SESSION_ORDER = ["深夜 (0-6)", "早朝 (6-9)", "東京 (9-15)", "欧州オープン (15-17)", "欧州 (17-22)", "NY (22-24)"]
+
 # シグナルタイプの日本語ラベル（generate_technical_alerts.py と一致させる）
 SIGNAL_LABELS = {
     "rsi_oversold_bounce": "🟢 RSI 過売り反発",
@@ -396,15 +418,143 @@ def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id):
 </div>"""
 
 
+def _parse_iso(s):
+    try:
+        return datetime.fromisoformat(s) if s else None
+    except Exception:
+        return None
+
+
+def build_analytics_section(signals):
+    """曜日別 / 時間帯別 / 月別 / セッション別の勝率分析タブ"""
+
+    def _by_key(signals, key_fn):
+        """key_fn(entry) でグルーピング → 各グループで勝率計算"""
+        groups = defaultdict(list)
+        for e in signals:
+            if e.get("outcome") not in ("tp1", "tp2", "sl", "expired"):
+                continue
+            dt = _parse_iso(e.get("fired_at"))
+            if dt is None:
+                continue
+            k = key_fn(e, dt)
+            if k is not None:
+                groups[k].append(e)
+        return {k: calc_stats(v) for k, v in groups.items()}
+
+    by_weekday = _by_key(signals, lambda e, dt: WEEKDAY_JP[dt.weekday()])
+    by_session = _by_key(signals, lambda e, dt: get_time_session(dt.hour))
+    by_month = _by_key(signals, lambda e, dt: f"{dt.year}-{dt.month:02d}")
+    by_hour = _by_key(signals, lambda e, dt: dt.hour)
+
+    # 曜日テーブル（月→日の固定順）
+    weekday_rows = []
+    for day in WEEKDAY_JP:
+        stats = by_weekday.get(day)
+        if stats and stats["total"] > 0:
+            weekday_rows.append(render_stat_row(day + "曜", stats))
+    weekday_html = "\n".join(weekday_rows) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
+
+    # セッションテーブル（時系列固定順）
+    session_rows = []
+    for sess in SESSION_ORDER:
+        stats = by_session.get(sess)
+        if stats and stats["total"] > 0:
+            session_rows.append(render_stat_row(sess, stats))
+    session_html = "\n".join(session_rows) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
+
+    # 月別テーブル（時系列ソート）
+    month_rows = []
+    for m in sorted(by_month.keys()):
+        stats = by_month[m]
+        if stats["total"] > 0:
+            month_rows.append(render_stat_row(m, stats))
+    month_html = "\n".join(month_rows) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
+
+    # 時間別ヒートマップデータ（0-23 時 × 勝率）
+    hour_labels = list(range(24))
+    hour_win_rates = []
+    hour_counts = []
+    for h in hour_labels:
+        s = by_hour.get(h)
+        if s and s["total"] > 0:
+            hour_win_rates.append(round(s["win_rate"], 1))
+            hour_counts.append(s["total"])
+        else:
+            hour_win_rates.append(None)
+            hour_counts.append(0)
+
+    return f"""
+<div class="tab-pane" id="pane-analytics">
+  <h2>📅 曜日別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>曜日</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{weekday_html}</tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 「月曜は勝率高い、金曜は要注意」みたいな傾向が見えてきます。最低 10 件あれば信頼性高。
+  </p>
+
+  <h2 style="margin-top:32px">🕐 時間帯（セッション）別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>セッション</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{session_html}</tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 「東京セッションは騙し多い、NY オープンは強い」など、自分の取引時間帯を最適化できます。
+  </p>
+
+  <h2 style="margin-top:32px">📊 月別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>月</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{month_html}</tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 月末（例: 12 月）の勝率パターン、長期トレンドの変化が見えます。
+  </p>
+
+  <h2 style="margin-top:32px">⏱️ 時間帯ヒートマップ（24 時間）</h2>
+  <div class="chart-box" style="height:280px"><canvas id="hourlyChart"></canvas></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 1 時間単位で見たいときに。FOMC や ECB の発言時刻周辺で勝率が変動するパターンを発見できます。
+  </p>
+</div>"""
+
+
 def build_html(signals, trades):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
     signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
 
-    # 3 タブそれぞれのダッシュボード
+    # 4 タブそれぞれのダッシュボード
     pane_all = build_dashboard_section(signals, "all", "全体", "equityChartAll")
     pane_4h = build_dashboard_section(signals_4h, "4h", "4H 足のみ", "equityChart4h")
     pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
+    pane_analytics = build_analytics_section(signals)
+
+    # 時間帯ヒートマップ用データ（全シグナル対象）
+    def _hour_data(sigs):
+        bucket = defaultdict(list)
+        for e in sigs:
+            if e.get("outcome") not in ("tp1", "tp2", "sl", "expired"):
+                continue
+            dt = _parse_iso(e.get("fired_at"))
+            if dt:
+                bucket[dt.hour].append(e)
+        win_rates = []
+        counts = []
+        for h in range(24):
+            s = calc_stats(bucket.get(h, []))
+            win_rates.append(round(s["win_rate"], 1) if s["total"] > 0 else None)
+            counts.append(s["total"])
+        return win_rates, counts
+    hour_win_rates, hour_counts = _hour_data(signals)
 
     # エクイティカーブ用データ（タブごと）
     eq_all_labels, eq_all_values = render_equity_curve_data(signals)
@@ -472,6 +622,11 @@ def build_html(signals, trades):
     .tab-btn.active{{background:#0969da;border-color:#0969da;color:#fff}}
     .tab-pane{{display:none}}
     .tab-pane.active{{display:block}}
+    .dl-card{{display:block;background:#f6f8fa;border:1px solid #d0d7de;border-left:5px solid #0969da;border-radius:10px;padding:18px 22px;text-decoration:none;color:#1f2328;transition:all .2s}}
+    .dl-card:hover{{border-color:#0969da;transform:translateY(-2px);box-shadow:0 4px 12px rgba(9,105,218,.15)}}
+    .dl-card-icon{{font-size:1.8rem;margin-bottom:6px}}
+    .dl-card-title{{font-weight:700;color:#0969da;font-size:1rem;margin-bottom:4px}}
+    .dl-card-desc{{font-size:.82rem;color:#57606a;line-height:1.5}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.kpi-value{{font-size:1.4rem}}h1{{font-size:1.4rem}}}}
@@ -497,6 +652,10 @@ def build_html(signals, trades):
     body.dark .tab-btn{{background:#161b22;border-color:#30363d;color:#8b949e}}
     body.dark .tab-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
     body.dark .tab-btn.active{{background:#1f6feb;border-color:#1f6feb;color:#fff}}
+    body.dark .dl-card{{background:#161b22;border-color:#30363d;border-left-color:#58a6ff;color:#e6edf3}}
+    body.dark .dl-card:hover{{border-color:#58a6ff}}
+    body.dark .dl-card-title{{color:#79c0ff}}
+    body.dark .dl-card-desc{{color:#8b949e}}
     body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
   </style>
 </head>
@@ -543,11 +702,67 @@ def build_html(signals, trades):
     <button class="tab-btn active" data-tab="all">🌐 全体（{count_all}）</button>
     <button class="tab-btn" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
+    <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
+    <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
 
   {pane_all}
   {pane_4h}
   {pane_1h}
+  {pane_analytics}
+
+  <div class="tab-pane" id="pane-data">
+    <h2>📥 生データのダウンロード</h2>
+    <p style="font-size:.93rem;color:#57606a;margin-bottom:20px">
+      シグナルログ・実取引ログの生データを CSV / JSON でダウンロードできます。
+      Excel / Google Sheets / Python pandas で自由に分析してください。
+      <br>毎回のワークフロー実行で自動更新されています（最終更新: {last_updated}）。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <a href="signals-log.csv" download class="dl-card">
+        <div class="dl-card-icon">📊</div>
+        <div class="dl-card-title">signals-log.csv</div>
+        <div class="dl-card-desc">全シグナル発火履歴（曜日・時間帯フィールド付き）<br>Excel で開くだけで分析可能</div>
+      </a>
+      <a href="my-trades.csv" download class="dl-card">
+        <div class="dl-card-icon">💼</div>
+        <div class="dl-card-title">my-trades.csv</div>
+        <div class="dl-card-desc">実取引履歴（エントリー曜日・決済曜日フィールド付き）</div>
+      </a>
+      <a href="signals-log.json" download class="dl-card">
+        <div class="dl-card-icon">🗃️</div>
+        <div class="dl-card-title">signals-log.json</div>
+        <div class="dl-card-desc">構造化生データ。プログラム処理向き</div>
+      </a>
+      <a href="my-trades.json" download class="dl-card">
+        <div class="dl-card-icon">💼</div>
+        <div class="dl-card-title">my-trades.json</div>
+        <div class="dl-card-desc">実取引 JSON。プログラム処理向き</div>
+      </a>
+    </div>
+    <h3 style="margin-top:32px">📦 月次バックアップ（GitHub Releases）</h3>
+    <p style="font-size:.93rem;color:#57606a">
+      毎月 1 日に snapshot を Release として公開しています。
+      <a href="https://github.com/invest-ai-info/marketwatch-ai/releases" target="_blank" rel="noopener">
+        過去のスナップショット一覧 →
+      </a>
+    </p>
+    <h3 style="margin-top:24px">🛠️ 分析テンプレート（pandas）</h3>
+    <pre style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:16px;font-size:.85rem;overflow-x:auto"><code>import pandas as pd
+df = pd.read_csv("https://marketwatch-jp.com/signals-log.csv")
+
+# 曜日別勝率
+df["win"] = df["outcome"].isin(["tp1", "tp2"])
+df.groupby("発火_曜日")["win"].mean()
+
+# 銘柄 × 曜日 マトリクス
+df.pivot_table(values="win", index="ticker", columns="発火_曜日", aggfunc="mean")
+
+# 月末勝率（毎月最終 3 営業日）
+df["fired_at"] = pd.to_datetime(df["fired_at"])
+df["is_month_end"] = df["fired_at"].dt.day >= 28
+df.groupby("is_month_end")["win"].mean()</code></pre>
+  </div>
 </main>
 
 <footer>
@@ -607,6 +822,47 @@ def build_html(signals, trades):
   makeEquityChart('equityChartAll', {json.dumps(eq_all_labels, ensure_ascii=False)}, {json.dumps(eq_all_values)}, '#0969da');
   makeEquityChart('equityChart4h',  {json.dumps(eq_4h_labels, ensure_ascii=False)},  {json.dumps(eq_4h_values)},  '#1a7f37');
   makeEquityChart('equityChart1h',  {json.dumps(eq_1h_labels, ensure_ascii=False)},  {json.dumps(eq_1h_values)},  '#9a6700');
+
+  // 時間帯ヒートマップ
+  (function() {{
+    const hourLabels = {json.dumps([f"{h:02d}時" for h in range(24)])};
+    const hourWinRates = {json.dumps(hour_win_rates)};
+    const hourCounts = {json.dumps(hour_counts)};
+    const el = document.getElementById('hourlyChart');
+    if (!el) return;
+    if (hourCounts.every(c => c === 0)) {{
+      el.parentElement.innerHTML = '<div style="text-align:center;padding:80px 0;color:#6e7781">確定シグナルが揃ったらヒートマップが表示されます</div>';
+      return;
+    }}
+    new Chart(el.getContext('2d'), {{
+      type: 'bar',
+      data: {{
+        labels: hourLabels,
+        datasets: [{{
+          label: '勝率 (%)',
+          data: hourWinRates,
+          backgroundColor: hourWinRates.map(v => v === null ? '#e6e8eb' : v >= 60 ? '#1a7f37' : v >= 45 ? '#9a6700' : '#cf222e'),
+          borderColor: '#d0d7de',
+          borderWidth: 1,
+        }}]
+      }},
+      options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ display: false }},
+          tooltip: {{
+            callbacks: {{
+              afterLabel: ctx => `確定数: ${{hourCounts[ctx.dataIndex]}} 件`
+            }}
+          }}
+        }},
+        scales: {{
+          y: {{ min: 0, max: 100, ticks: {{ callback: v => v + '%' }} }}
+        }}
+      }}
+    }});
+  }})();
 
   // ダークモードトグル
   function toggleTheme(){{
