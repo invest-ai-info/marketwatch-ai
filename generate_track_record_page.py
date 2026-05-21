@@ -129,6 +129,26 @@ def render_stat_row(label, stats, link=None):
     </tr>"""
 
 
+def _fmt_num(v, decimals=2, suffix=""):
+    """None を "—" にフォールバックする数値フォーマッタ"""
+    if v is None:
+        return "—"
+    try:
+        return f"{v:.{decimals}f}{suffix}"
+    except (ValueError, TypeError):
+        return "—"
+
+
+def _fmt_pct(v, decimals=2):
+    """符号付き % フォーマッタ。None は "—" """
+    if v is None:
+        return "—"
+    try:
+        return f"{v:+.{decimals}f}%"
+    except (ValueError, TypeError):
+        return "—"
+
+
 def render_recent_table(entries, limit=30):
     rows = []
     for e in sorted(entries, key=lambda x: x.get("fired_at", ""), reverse=True)[:limit]:
@@ -147,23 +167,19 @@ def render_recent_table(entries, limit=30):
         signal_label = SIGNAL_LABELS.get(e.get("primary_signal", ""), e.get("primary_signal_label", ""))
         direction = e.get("direction", "")
         direction_short = "L" if "ロング" in (direction or "") else "S" if "ショート" in (direction or "") else "-"
-        entry = e.get("entry") or 0
-        sl = e.get("stop_loss") or 0
-        tp1 = e.get("take_profit_1") or 0
-        mfe = e.get("max_favorable_excursion_pct")
-        mae = e.get("max_adverse_excursion_pct")
+        dir_color = "#1a7f37" if direction_short == "L" else "#cf222e" if direction_short == "S" else "#6e7781"
 
         rows.append(f"""
         <tr>
           <td style="white-space:nowrap">{fired}</td>
           <td><b>{ticker}</b></td>
           <td style="font-size:.82rem">{signal_label}</td>
-          <td style="text-align:center;font-weight:700;color:{'#1a7f37' if direction_short=='L' else '#cf222e' if direction_short=='S' else '#6e7781'}">{direction_short}</td>
-          <td style="text-align:right">{entry:.2f}</td>
-          <td style="text-align:right;color:#cf222e">{sl:.2f}</td>
-          <td style="text-align:right;color:#1a7f37">{tp1:.2f}</td>
-          <td style="text-align:right">{mfe:+.2f}%</td>
-          <td style="text-align:right">{mae:+.2f}%</td>
+          <td style="text-align:center;font-weight:700;color:{dir_color}">{direction_short}</td>
+          <td style="text-align:right">{_fmt_num(e.get("entry"))}</td>
+          <td style="text-align:right;color:#cf222e">{_fmt_num(e.get("stop_loss"))}</td>
+          <td style="text-align:right;color:#1a7f37">{_fmt_num(e.get("take_profit_1"))}</td>
+          <td style="text-align:right">{_fmt_pct(e.get("max_favorable_excursion_pct"))}</td>
+          <td style="text-align:right">{_fmt_pct(e.get("max_adverse_excursion_pct"))}</td>
           <td style="color:{outcome_color};font-weight:700;white-space:nowrap">{outcome_emoji}</td>
         </tr>""")
     return "\n".join(rows)
