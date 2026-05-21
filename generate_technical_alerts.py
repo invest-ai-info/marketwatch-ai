@@ -46,24 +46,29 @@ SIGNALS_LOG_FILE = "signals-log.json"  # 全シグナル発火記録（track-rec
 
 
 # ─────────────────────────────────────────────
-# 4H データ取得（yfinance の 1h → 4h リサンプル）
+# 価格データ取得（timeframe で 1h or 4h 切替）
 # ─────────────────────────────────────────────
-def fetch_4h_data(symbol, days=30):
-    """yfinance で 1h 足を取得し 4h にリサンプル"""
+def fetch_data(symbol, timeframe="4h", days=30):
+    """yfinance で 1h 足を取得。timeframe='4h' の場合はリサンプル、'1h' はそのまま。"""
     try:
         df = yf.download(symbol, period=f"{days}d", interval="1h", progress=False, auto_adjust=True)
         if df.empty:
             return None
-        # MultiIndex 列の場合は単一銘柄なので flatten
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
-        # 4H リサンプル
-        agg = {"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
-        df_4h = df.resample("4h").agg(agg).dropna(subset=["Close"])
-        return df_4h
+        if timeframe == "4h":
+            agg = {"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
+            df = df.resample("4h").agg(agg).dropna(subset=["Close"])
+        # "1h" の場合は何もしない（既に 1h）
+        return df
     except Exception as e:
-        print(f"  ⚠️ {symbol} データ取得失敗: {type(e).__name__}: {str(e)[:80]}")
+        print(f"  ⚠️ {symbol} データ取得失敗 ({timeframe}): {type(e).__name__}: {str(e)[:80]}")
         return None
+
+
+# 後方互換のためのエイリアス（旧名称を残す）
+def fetch_4h_data(symbol, days=30):
+    return fetch_data(symbol, timeframe="4h", days=days)
 
 
 # ─────────────────────────────────────────────
@@ -386,7 +391,7 @@ def translate_titles_to_jp(titles, api_key):
 # ─────────────────────────────────────────────
 # Gemini で「なぜこのシグナルか」の解説生成（テクニカル + ニュース）
 # ─────────────────────────────────────────────
-def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key):
+def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key, timeframe="4h"):
     """SL/TP は固定値（ATR 算出済）を渡し、AI には「なぜこの水準が妥当か」の解説のみさせる。"""
     if not api_key:
         return ""
@@ -402,6 +407,14 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
     else:
         news_section = ""
 
+    # timeframe ごとの想定保有期間
+    if timeframe == "1h":
+        tf_label = "1H 足"
+        hold_label = "短期スキャル〜デイトレ（数時間〜1 日保有）"
+    else:
+        tf_label = "4H 足"
+        hold_label = "4H スイング（1〜5 日保有）"
+
     # ポジションプラン（数値は AI に判断させず固定値で渡す）
     if position_plan:
         plan_section = f"""
@@ -413,12 +426,12 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
 - 利確 ①: {position_plan['take_profit_1']:.2f}（{position_plan['tp1_pct']:+.2f}%）
 - 利確 ②: {position_plan['take_profit_2']:.2f}（{position_plan['tp2_pct']:+.2f}%）
 - SL 根拠: ATR(14) = {position_plan['atr']:.2f} × 1.5
-- 想定時間軸: 4H スイング（1〜5 日保有）"""
+- 想定時間軸: {hold_label}"""
     else:
         plan_section = "\n\n【参考ポジションプラン】方向感が定まらないため今回は提示なし（様子見推奨）"
 
     prompt = f"""あなたは日本人個人投資家向けのテクニカル + ファンダメンタル アナリストです。
-{asset_name}（現在 {current_price_str}）の 4H 足チャートで以下のシグナルが発火しました。
+{asset_name}（現在 {current_price_str}）の {tf_label} チャートで以下のシグナルが発火しました。
 **SL/TP の数値は既に ATR ベースで算出済み**なので、その数値を変更せず、「なぜこの方向感・この水準が妥当か」をテクニカルとファンダの両面から解説してください。
 
 【発火シグナル（テクニカル）】
@@ -501,16 +514,17 @@ def save_signals_log(log):
 
 
 def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
-                            news_titles, narrative, fired_at_iso):
+                            news_titles, narrative, fired_at_iso, timeframe="4h"):
     """1 アラート発火を構造化レコードに整形"""
     primary = fresh_signals[0]
-    # ID: 例 "GC=F_20260520_2130"
+    # ID: 例 "GC=F_4h_20260520_2130" / "GC=F_1h_20260520_2130"
     dt_compact = datetime.fromisoformat(fired_at_iso).strftime("%Y%m%d_%H%M")
-    record_id = f"{ticker}_{dt_compact}"
+    record_id = f"{ticker}_{timeframe}_{dt_compact}"
 
     entry = {
         "id": record_id,
         "fired_at": fired_at_iso,
+        "timeframe": timeframe,
         "ticker": ticker,
         "asset_name": name,
         "signal_types": [s["type"] for s in fresh_signals],
@@ -588,17 +602,42 @@ def should_alert(history, symbol, signal_type, cooldown_hours=ALERT_COOLDOWN_HOU
 # メイン
 # ─────────────────────────────────────────────
 def main():
+    global ALERT_HISTORY_FILE  # timeframe で履歴ファイル名を切り替えるため
+
+    # CLI 引数パース（簡易）
+    import argparse
+    parser = argparse.ArgumentParser(description="Technical signal alert generator")
+    parser.add_argument("--timeframe", choices=["1h", "4h"], default="4h",
+                        help="分析する時間軸（1h or 4h、デフォルト 4h）")
+    parser.add_argument("--no-email", action="store_true",
+                        help="メール送信を無効化（データ収集のみ）")
+    args = parser.parse_args()
+    timeframe = args.timeframe
+    no_email = args.no_email
+
     gmail_user = os.environ.get("GMAIL_USER")
     gmail_password = os.environ.get("GMAIL_APP_PASSWORD")
     recipient = os.environ.get("ALERT_RECIPIENT") or gmail_user
     gemini_key = os.environ.get("GEMINI_API_KEY")
 
-    if not gmail_user or not gmail_password:
-        print("❌ GMAIL_USER / GMAIL_APP_PASSWORD が未設定です")
+    if not no_email and (not gmail_user or not gmail_password):
+        print("❌ GMAIL_USER / GMAIL_APP_PASSWORD が未設定です（--no-email なら不要）")
         sys.exit(1)
 
-    print(f"📡 {len(SYMBOLS)} 銘柄の 4H チャート分析を開始...")
+    # timeframe ごとに別ファイルでクールダウン管理
+    history_file = "technical-alerts-history.json" if timeframe == "4h" else f"technical-alerts-history-{timeframe}.json"
+    # 1H はクールダウンを短く（4H の 12h → 1H なら 4h）
+    cooldown_hours = ALERT_COOLDOWN_HOURS if timeframe == "4h" else 4
+
+    print(f"📡 {len(SYMBOLS)} 銘柄の {timeframe.upper()} 足チャート分析を開始 "
+          f"(email={'OFF' if no_email else 'ON'}, cooldown={cooldown_hours}h)")
+
+    # 履歴ロード（timeframe ごとに別ファイル）
+    _orig_history_file = ALERT_HISTORY_FILE
+    ALERT_HISTORY_FILE = history_file
     history = load_history()
+    ALERT_HISTORY_FILE = _orig_history_file  # グローバル復元
+
     signals_log = load_signals_log()
     total_signals = 0
     sent_emails = 0
@@ -608,7 +647,7 @@ def main():
 
     for ticker, name, currency, decimals in SYMBOLS:
         print(f"\n  📊 {name} ({ticker})")
-        df = fetch_4h_data(ticker)
+        df = fetch_data(ticker, timeframe=timeframe)
         if df is None or len(df) < 30:
             print(f"    ⏭️ データ不足、スキップ")
             continue
@@ -617,15 +656,15 @@ def main():
             print(f"    ✅ シグナルなし（現値 {currency}{indicators['price']:.{decimals}f}）")
             continue
 
-        # 連投フィルタ
-        fresh_signals = [s for s in signals if should_alert(history, ticker, s["type"])]
+        # 連投フィルタ（timeframe ごとに別クールダウン）
+        fresh_signals = [s for s in signals if should_alert(history, ticker, s["type"], cooldown_hours=cooldown_hours)]
         if not fresh_signals:
             print(f"    ⏭️ {len(signals)} シグナル検出も、全てクールダウン中")
             continue
 
         total_signals += len(fresh_signals)
         price_str = f"{currency}{indicators['price']:.{decimals}f}"
-        print(f"    🚨 新規シグナル {len(fresh_signals)} 件: {[s['type'] for s in fresh_signals]}")
+        print(f"    🚨 新規シグナル {len(fresh_signals)} 件 [{timeframe.upper()}]: {[s['type'] for s in fresh_signals]}")
 
         # ファンダメンタル：ティッカー関連ニュースを取得 → 日本語に翻訳
         news_titles_en = fetch_ticker_news(ticker, max_items=5)
@@ -649,7 +688,7 @@ def main():
                   f"(ATR={atr_val:.{decimals}f})")
 
         # Gemini 解説（テクニカル + ファンダ + 確定済プランを渡す）
-        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, position_plan, gemini_key)
+        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, position_plan, gemini_key, timeframe=timeframe)
 
         # メール本文構築
         signal_block = "\n".join([f"- {s['label']}\n  {s['detail']}" for s in fresh_signals])
@@ -657,9 +696,17 @@ def main():
         if news_titles:
             news_block = "\n\n【参考にした直近ニュース】\n" + "\n".join([f"- {t}" for t in news_titles])
 
+        # timeframe ごとの想定保有期間
+        if timeframe == "1h":
+            tf_label_display = "1H"
+            hold_label_display = "数時間〜1 日（短期）"
+        else:
+            tf_label_display = "4H"
+            hold_label_display = "1〜5 日（スイング）"
+
         # ポジションプラン表示ブロック
         if position_plan:
-            plan_block = f"""【参考ポジションプラン】（4H スイング想定 / 保有 1〜5 日）
+            plan_block = f"""【参考ポジションプラン】（{tf_label_display} 想定 / 保有 {hold_label_display}）
 - 方向: {position_plan['direction']}
 - エントリー: {currency}{position_plan['entry']:.{decimals}f}
 - ストップロス: {currency}{position_plan['stop_loss']:.{decimals}f}（{position_plan['sl_pct']:+.2f}%）
@@ -667,7 +714,7 @@ def main():
 - 利確 ②: {currency}{position_plan['take_profit_2']:.{decimals}f}（{position_plan['tp2_pct']:+.2f}% / R:R 1:2.0）
 
 📊 SL 根拠: ATR(14) = {currency}{position_plan['atr']:.{decimals}f} × 1.5
-        （4H 足 1 本の自然な値動きの 1.5 倍 = 通常のヒゲでは刈られない幅）
+        （{tf_label_display} 足 1 本の自然な値動きの 1.5 倍 = 通常のヒゲでは刈られない幅）
 """
         else:
             plan_block = """【参考ポジションプラン】
@@ -678,7 +725,7 @@ def main():
 {name}（{ticker}）
 現在価格: {price_str}
 判定時刻: {now_jst_str}
-時間足: 4H / 想定保有: 1〜5 日（スイング）
+時間足: {tf_label_display} / 想定保有: {hold_label_display}
 ━━━━━━━━━━━━━━━━━━━━━
 
 【発火シグナル】
@@ -708,36 +755,47 @@ MarketWatch AI Alerts
         # 主シグナルから件名を組み立て
         primary = fresh_signals[0]
         emoji = {"buy": "🟢", "sell": "🔴", "warn": "🟡"}.get(primary["severity"], "📊")
-        subject = f"{emoji} {name} 4H シグナル: {primary['label'].split('（')[0].strip()}"
+        subject = f"{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}"
 
-        # 送信
+        # 送信（--no-email 時は完全スキップ）
         email_sent = False
-        try:
-            send_email(subject, body, gmail_user, gmail_password, recipient)
-            print(f"    📧 メール送信完了: {recipient}")
-            sent_emails += 1
-            email_sent = True
-            # 履歴更新
+        if no_email:
+            print(f"    🔇 メール送信スキップ（--no-email モード、データ収集のみ）")
+            # 履歴更新（クールダウン目的）はメール送らなくても必要
             for s in fresh_signals:
                 history[f"{ticker}:{s['type']}"] = datetime.now(JST).isoformat(timespec="seconds")
-        except Exception as e:
-            print(f"    ❌ メール送信失敗: {type(e).__name__}: {str(e)[:80]}")
+        else:
+            try:
+                send_email(subject, body, gmail_user, gmail_password, recipient)
+                print(f"    📧 メール送信完了: {recipient}")
+                sent_emails += 1
+                email_sent = True
+                for s in fresh_signals:
+                    history[f"{ticker}:{s['type']}"] = datetime.now(JST).isoformat(timespec="seconds")
+            except Exception as e:
+                print(f"    ❌ メール送信失敗: {type(e).__name__}: {str(e)[:80]}")
 
-        # シグナルログに記録（メール送信成否に関わらず、シグナル発火事実は残す）
+        # シグナルログに記録（メール送信成否・モードに関わらず、シグナル発火事実は残す）
         log_entry = build_signal_log_entry(
             ticker=ticker, name=name, fresh_signals=fresh_signals,
             indicators=indicators, position_plan=position_plan,
             news_titles=news_titles, narrative=narrative,
-            fired_at_iso=now_iso,
+            fired_at_iso=now_iso, timeframe=timeframe,
         )
         log_entry["email_sent"] = email_sent
         signals_log.append(log_entry)
         print(f"    📒 シグナルログに記録: id={log_entry['id']}")
 
+    # 履歴保存（timeframe 別ファイル）
+    _orig_for_save = ALERT_HISTORY_FILE
+    ALERT_HISTORY_FILE = history_file
     save_history(history)
+    ALERT_HISTORY_FILE = _orig_for_save
+
     save_signals_log(signals_log)
     print(f"\n━━━━━━━━━━━━━━━━━━━━━")
-    print(f"完了: 新規シグナル {total_signals} 件 / メール {sent_emails} 通送信 / ログ累計 {len(signals_log)} 件")
+    print(f"完了 [{timeframe.upper()}]: 新規シグナル {total_signals} 件 / "
+          f"メール {sent_emails} 通送信 / ログ累計 {len(signals_log)} 件")
 
 
 if __name__ == "__main__":
