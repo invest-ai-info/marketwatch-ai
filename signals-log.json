@@ -487,8 +487,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.352,
+    "max_adverse_excursion_pct": -1.541,
     "email_sent": true,
     "environment": {
       "env_score": "B",
@@ -563,8 +563,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.096,
+    "max_adverse_excursion_pct": -0.377,
     "email_sent": true,
     "environment": {
       "env_score": "A",
@@ -583,6 +583,82 @@
         "current_atr": 685.69,
         "avg_atr_30d": 569.2925,
         "ratio": 1.2,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "BTC-USD_1h_20260522_0507",
+    "fired_at": "2026-05-22T05:07:21+09:00",
+    "timeframe": "1h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "macd_golden"
+    ],
+    "primary_signal": "macd_golden",
+    "primary_signal_label": "🟢 MACD ゴールデンクロス（短期上昇転換）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 77648.71875,
+    "stop_loss": 77036.25137020704,
+    "take_profit_1": 78465.34192305728,
+    "take_profit_2": 78873.65350958591,
+    "atr": 408.3115865286388,
+    "sl_pct": -0.7887668845700796,
+    "tp1_pct": 1.0516891794267729,
+    "tp2_pct": 1.5775337691401592,
+    "indicators_at_signal": {
+      "rsi": 54.22,
+      "macd": 13.5573,
+      "macd_sig": -0.5886,
+      "ma25": 77518.96,
+      "ma75": 77139.37,
+      "bb_low": 76800.48,
+      "bb_up": 78210.63,
+      "recent_high": 78115.94,
+      "recent_low": 76631.96
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアム、2026年5月21日（木）の価格動向：両通貨、類似した値動きに",
+      "主要仮想通貨が上昇、ビットコインは77,000ドル台を維持",
+      "マーク・キューバン氏、ビットコインの大部分を売却したと明かす",
+      "マーク・キューバン氏「ビットコインはインフレヘッジとして失敗」と主張、しかしデータは金よりもBTCが優位であることを示唆",
+      "ARMA法案、戦略的ビットコイン準備金を法制化へ"
+    ],
+    "ai_narrative": "ビットコインは1H足でMACDゴールデンクロスが発生し、短期的な上昇転換を示唆しています。RSIも50超えで買い優勢です。ボリンジャーバンドの-2σ付近から反発し、25MA、75MAも上向きでサポートとなる可能性が高いです。  ファンダメンタルズでは、仮想通貨全体の堅調な値動きや、ARMAR法案による戦略的準備金の法制化といったポジティブなニュースが見られます。マーク・キューバン氏の発言はネガティブですが、インフレヘッジとしてのBTCの優位性を示すデータもあり、全体としては上昇シナリオを支持します。  ただし、77000ドルを明確に下抜ける展開となれば、シナリオは崩れる可能性があります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.64,
+        "avg_30d": 18.05,
+        "change_24h_pct": -4.59
+      },
+      "atr_regime": {
+        "current_atr": 408.3116,
+        "avg_atr_30d": 365.8806,
+        "ratio": 1.12,
         "regime": "normal",
         "label": "🟢 平常"
       },
