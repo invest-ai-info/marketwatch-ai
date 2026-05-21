@@ -12,6 +12,8 @@ SL / TP1 / TP2 のどれに先にヒットしたかを判定する。
 
 MFE (Max Favorable Excursion) / MAE (Max Adverse Excursion) も計算して記録。
 
+🆕 SL ヒット時には Gemini が「敗因分析」を自動生成して loss_analysis に保存。
+
 GitHub Actions の technical-alerts ワークフローに後続ステップとして組み込む想定。
 """
 import os
@@ -30,6 +32,202 @@ if hasattr(sys.stderr, "reconfigure"):
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 EXPIRY_DAYS = 7  # シグナル発火から 7 日経って未到達なら expired
+
+
+# ─────────────────────────────────────────────
+# 敗因分析（SL ヒット時のみ呼ばれる）
+# ─────────────────────────────────────────────
+def get_vix_change(start_dt_utc, end_dt_iso):
+    """シグナル発火から SL ヒットまでの VIX 変動率を計算"""
+    try:
+        end_dt = datetime.fromisoformat(end_dt_iso)
+        end_utc = end_dt.astimezone(timezone.utc)
+        df = yf.download("^VIX",
+                         start=start_dt_utc.strftime("%Y-%m-%d"),
+                         end=(end_utc + timedelta(days=1)).strftime("%Y-%m-%d"),
+                         interval="1h", progress=False, auto_adjust=True)
+        if df.empty:
+            return None
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        if df.index.tz is None:
+            df.index = df.index.tz_localize("UTC")
+        df_start = df[df.index >= start_dt_utc]
+        df_end = df[df.index <= end_utc]
+        if df_start.empty or df_end.empty:
+            return None
+        vix_start = float(df_start["Close"].iloc[0])
+        vix_end = float(df_end["Close"].iloc[-1])
+        return {
+            "start": round(vix_start, 2),
+            "end": round(vix_end, 2),
+            "change_pct": round((vix_end - vix_start) / vix_start * 100, 2),
+        }
+    except Exception as e:
+        print(f"    ⚠️ VIX 取得失敗: {type(e).__name__}: {str(e)[:60]}")
+        return None
+
+
+def get_news_during_holding(ticker, start_iso, end_iso, max_items=8):
+    """保有期間中の関連ニュース見出しを取得（yfinance の最新ニュースから date でフィルタ）"""
+    try:
+        news = yf.Ticker(ticker).news or []
+    except Exception:
+        return []
+    try:
+        start_dt = datetime.fromisoformat(start_iso)
+        end_dt = datetime.fromisoformat(end_iso)
+    except Exception:
+        return []
+    titles = []
+    for n in news:
+        content = n.get("content", n)
+        title = content.get("title", "") or n.get("title", "")
+        # 発行時刻を取得
+        pub_str = content.get("pubDate") or n.get("providerPublishTime") or n.get("displayTime")
+        try:
+            if isinstance(pub_str, (int, float)):
+                pub_dt = datetime.fromtimestamp(pub_str, tz=timezone.utc)
+            else:
+                pub_dt = datetime.fromisoformat(str(pub_str).replace("Z", "+00:00"))
+            # 期間内チェック
+            if start_dt <= pub_dt.astimezone(JST) <= end_dt and title:
+                titles.append(title)
+        except Exception:
+            # 発行時刻が取れないものは含める（直近ニュースの可能性高）
+            if title and title not in titles:
+                titles.append(title)
+        if len(titles) >= max_items:
+            break
+    return titles[:max_items]
+
+
+def translate_titles_to_jp_quick(titles, api_key):
+    """ニュース見出しを日本語に翻訳（generate_technical_alerts.py と同じ実装の縮小版）"""
+    if not titles or not api_key:
+        return titles or []
+    import re
+    has_ja = re.compile(r'[぀-ヿ一-鿿]')
+    targets = [(i, t) for i, t in enumerate(titles) if t and not has_ja.search(t)]
+    if not targets:
+        return titles
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return titles
+    genai.configure(api_key=api_key)
+    numbered = "\n".join([f"{i+1}. {t}" for i, (_, t) in enumerate(targets)])
+    prompt = f"次の英語ニュース見出しを日本語に翻訳。番号付き行のみ出力:\n{numbered}"
+    text = ""
+    for m in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+        try:
+            text = (genai.GenerativeModel(m).generate_content(prompt).text or "").strip()
+            if text:
+                break
+        except Exception:
+            continue
+    if not text:
+        return titles
+    translations = {}
+    for line in text.splitlines():
+        m = re.match(r'^\s*(\d+)[.\)]\s*(.+)$', line.strip())
+        if m:
+            n = int(m.group(1)) - 1
+            if 0 <= n < len(targets):
+                translations[targets[n][0]] = m.group(2).strip()
+    result = list(titles)
+    for orig_idx, jp in translations.items():
+        result[orig_idx] = jp
+    return result
+
+
+def analyze_loss_with_ai(entry, sl_ts_iso, news_titles, vix_data, api_key):
+    """Gemini で敗因を 5 カテゴリ + 詳細 + 教訓で分析。
+    JSON 構造で返す: {primary_category, primary_cause, ai_diagnosis, lesson, category_tag}"""
+    if not api_key:
+        return None
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return None
+    genai.configure(api_key=api_key)
+
+    fired_at = entry.get("fired_at", "")
+    indicators = entry.get("indicators_at_signal", {})
+    direction = entry.get("direction", "")
+    asset = entry.get("asset_name", "")
+    timeframe = entry.get("timeframe", "4h")
+    entry_price = entry.get("entry")
+    sl_price = entry.get("stop_loss")
+    atr = entry.get("atr", 0)
+    original_narrative = entry.get("ai_narrative", "")
+
+    news_section = ""
+    if news_titles:
+        news_section = "\n\n【保有期間中の関連ニュース】\n" + "\n".join([f"- {t[:140]}" for t in news_titles[:6]])
+
+    vix_section = ""
+    if vix_data:
+        vix_section = f"\n\n【VIX 変動】{vix_data['start']} → {vix_data['end']}（{vix_data['change_pct']:+.1f}%）"
+
+    prompt = f"""あなたは日本人個人投資家向けのトレード分析アナリストです。
+以下のシグナル経由のトレードが SL（ストップロス）にヒットしました。
+**「なぜ失敗したのか」を客観的に分析**してください。シグナルを批判する目的ではなく、次回への教訓を抽出するためです。
+
+【トレード詳細】
+- 銘柄: {asset}
+- 時間軸: {timeframe.upper()}
+- 方向: {direction}
+- エントリー: {entry_price} @ {fired_at}
+- SL ヒット: {sl_price} @ {sl_ts_iso}
+- ATR(14): {atr:.2f}
+
+【シグナル発火時の指標】
+- RSI: {indicators.get('rsi', 'N/A')}
+- MACD: {indicators.get('macd', 'N/A')}
+- 25MA: {indicators.get('ma25', 'N/A')}
+- 75MA: {indicators.get('ma75', 'N/A')}
+
+【シグナル発火時の AI 解説（参考）】
+{original_narrative[:300]}
+{vix_section}
+{news_section}
+
+【出力フォーマット】（純粋な JSON のみ。前置きや コードフェンス不要）
+{{
+  "primary_category": "テクニカル悪化 / ファンダメンタル / 地政学・突発 / ボラ拡大 / シグナル品質 のいずれか",
+  "primary_cause": "1 文で具体的な敗因（30 字以内）",
+  "ai_diagnosis": "詳細解説 (200 字以内)。データに基づいて何が起きたかを説明",
+  "lesson": "次回への教訓 (80 字以内)。実行可能な改善案",
+  "category_tag": "短いラベル (10 字以内、例: イベント・リスクオフ / トレンド逆行 / ボラ爆発 / 弱シグナル)"
+}}"""
+
+    text = ""
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.5-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            resp = model.generate_content(prompt)
+            text = (resp.text or "").strip()
+            if text:
+                break
+        except Exception:
+            continue
+    if not text:
+        return None
+
+    # JSON 抽出（コードフェンスがあれば除去）
+    text = text.strip()
+    if text.startswith("```"):
+        # ```json ... ``` をはぎ取る
+        text = text.split("```", 2)[1] if "```" in text else text
+        if text.startswith("json"):
+            text = text[4:].strip()
+    try:
+        result = json.loads(text)
+        return result
+    except Exception as e:
+        print(f"    ⚠️ AI 敗因分析の JSON パース失敗: {e}; 生応答先頭: {text[:80]}")
+        return {"raw_response": text[:500]}
 
 
 def load_log():
@@ -183,6 +381,31 @@ def evaluate_one(entry, now_jst):
         entry["hit_tp2_at"] = hit_tp2_at
         print(f"  ✅ {entry['id']}: {outcome.upper()} @ {resolved_at} "
               f"(MFE {mfe_pct:+.2f}%, MAE {mae_pct:+.2f}%)")
+
+        # 🆕 SL ヒット時のみ AI 敗因分析を実行
+        if outcome == "sl":
+            gemini_key = os.environ.get("GEMINI_API_KEY")
+            if gemini_key:
+                print(f"    🔬 SL ヒット → AI 敗因分析を実行中...")
+                # 1) VIX 変動取得
+                vix_data = get_vix_change(fired_at_utc, resolved_at)
+                # 2) 保有期間中のニュース取得 → 日本語翻訳
+                news_en = get_news_during_holding(entry["ticker"], entry["fired_at"], resolved_at)
+                news_jp = translate_titles_to_jp_quick(news_en, gemini_key) if news_en else []
+                # 3) AI 分析
+                analysis = analyze_loss_with_ai(entry, resolved_at, news_jp, vix_data, gemini_key)
+                entry["loss_analysis"] = {
+                    "vix_data": vix_data,
+                    "news_during_holding": news_jp,
+                    "ai_result": analysis or {"error": "AI 分析失敗"},
+                }
+                if analysis and "primary_category" in analysis:
+                    print(f"    📋 敗因カテゴリ: {analysis.get('primary_category')} | "
+                          f"{analysis.get('primary_cause', '')[:50]}")
+                    print(f"    💡 教訓: {analysis.get('lesson', '')[:60]}")
+            else:
+                print(f"    ⚠️ GEMINI_API_KEY 未設定、敗因分析スキップ")
+
         return True
     else:
         print(f"  ⏳ {entry['id']}: 未確定（経過 {age_hours:.1f}h, "
