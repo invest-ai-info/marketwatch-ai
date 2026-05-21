@@ -85,7 +85,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.323,
+    "max_favorable_excursion_pct": 0.501,
     "max_adverse_excursion_pct": -1.349,
     "email_sent": true,
     "timeframe": "4h"
@@ -185,7 +185,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.139,
+    "max_favorable_excursion_pct": 0.286,
     "max_adverse_excursion_pct": -1.093,
     "email_sent": true,
     "timeframe": "4h"
@@ -296,7 +296,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.178,
+    "max_favorable_excursion_pct": 0.355,
     "max_adverse_excursion_pct": -1.493,
     "email_sent": true,
     "timeframe": "4h"
@@ -410,13 +410,35 @@
       "米・イラン和平交渉に複雑化の兆候をロイター報道が示唆し、原油が1%超上昇"
     ],
     "ai_narrative": "WTI原油は、-2σにタッチし反発の兆しを見せています。RSIも48台で過熱感はなく、MACDもデッドクロス後の垂れ下がりが鈍化しており、テクニカル的には短期的な押し目買いが期待できます。ファンダメンタルズでは、イラン交渉の不確実性による供給懸念と米国在庫減少が価格を下支えしており、買い方向のシナリオを支持します。ただし、原油供給の急増を示すニュースが出現した場合、シナリオは崩れる可能性があります。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-05-21T17:00:00+00:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-05-21T17:00:00+00:00",
     "max_favorable_excursion_pct": 1.694,
-    "max_adverse_excursion_pct": -0.674,
-    "email_sent": true
+    "max_adverse_excursion_pct": -3.328,
+    "email_sent": true,
+    "loss_analysis": {
+      "vix_data": {
+        "start": 17.75,
+        "end": 16.85,
+        "change_pct": -5.07
+      },
+      "news_during_holding": [
+        "TD、2022年のようなインフレ急騰のリスクは何かと問う",
+        "欧州株式、中東和平の進展を投資家が待つ中、横ばいで取引終了",
+        "米国株、イランの濃縮ウラン維持の試みがトランプ氏との対立リスクをもたらし下落",
+        "エネルギー・ユーティリティ・ラウンドアップ：マーケット・トーク",
+        "FTSE100、原油価格上昇にもかかわらず小幅上昇",
+        "原油価格、ロイター報道で米・イラン和平交渉の障害を示唆し3%上昇"
+      ],
+      "ai_result": {
+        "primary_category": "テクニカル悪化 / ファンダメンタル",
+        "primary_cause": "テクニカル指標が示唆した反発が持続しなかった",
+        "ai_diagnosis": "エントリー時点ではRSIやMACDの鈍化、2σタッチからの反発期待がありましたが、75MAを上抜けきれず、その後75MAを下抜けて急落しました。VIXの低下はリスクオンを示唆していましたが、原油市場特有の地政学リスクや需給バランスの急変が、テクニカルな反発期待を上回る下落圧力となった可能性があります。",
+        "lesson": "テクニカル指標だけでなく、地政学リスクや需給バランスの急変兆候を早期に察知し、判断を柔軟に変更する。",
+        "category_tag": "テクニカル崩壊"
+      }
+    }
   }
 ]
