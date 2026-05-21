@@ -43,6 +43,7 @@ SYMBOLS = [
 ALERT_HISTORY_FILE = "technical-alerts-history.json"
 ALERT_COOLDOWN_HOURS = 12  # 同じ銘柄・同じシグナルは 12 時間連投しない
 SIGNALS_LOG_FILE = "signals-log.json"  # 全シグナル発火記録（track-record 用）
+ECONOMIC_EVENTS_FILE = "economic-events.json"  # 重要指標カレンダー
 
 
 # ─────────────────────────────────────────────
@@ -318,6 +319,313 @@ def fetch_ticker_news(ticker, max_items=5):
         if len(titles) >= max_items:
             break
     return titles
+
+
+# ─────────────────────────────────────────────
+# 🆕 環境警戒システム — 取引推奨度 A〜D を算定
+# ─────────────────────────────────────────────
+def load_economic_events():
+    """economic-events.json をロード"""
+    if not os.path.exists(ECONOMIC_EVENTS_FILE):
+        return {"events": [], "crisis_keywords": {"japanese": [], "english": []}}
+    try:
+        with open(ECONOMIC_EVENTS_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"  ⚠️ {ECONOMIC_EVENTS_FILE} 読み込み失敗: {e}")
+        return {"events": [], "crisis_keywords": {"japanese": [], "english": []}}
+
+
+def check_upcoming_events(ticker, now_jst, events_data):
+    """ticker に関係する直近イベントを取得。
+    返り値: list of {name, hours_until, impact}（近い順）"""
+    relevant = []
+    for ev in events_data.get("events", []):
+        try:
+            ev_dt = datetime.fromisoformat(ev["datetime"])
+        except Exception:
+            continue
+        hours_until = (ev_dt - now_jst).total_seconds() / 3600.0
+        # 過去イベントは無視、48 時間より先も無視
+        if hours_until < 0 or hours_until > 48:
+            continue
+        # 影響銘柄チェック
+        affected = ev.get("affected_assets", ["all"])
+        if "all" not in affected and ticker not in affected:
+            continue
+        relevant.append({
+            "name": ev["name"],
+            "hours_until": round(hours_until, 1),
+            "impact": ev.get("impact", "high"),
+            "datetime": ev["datetime"],
+        })
+    return sorted(relevant, key=lambda x: x["hours_until"])
+
+
+def fetch_vix_data():
+    """現在 VIX と 30 日平均 VIX を取得"""
+    try:
+        df = yf.download("^VIX", period="35d", interval="1d", progress=False, auto_adjust=True)
+        if df.empty:
+            return None
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        current = float(df["Close"].iloc[-1])
+        avg30 = float(df["Close"].iloc[-30:].mean())
+        prev_24h = float(df["Close"].iloc[-2]) if len(df) >= 2 else current
+        change_24h_pct = (current - prev_24h) / prev_24h * 100 if prev_24h else 0
+        return {
+            "current": round(current, 2),
+            "avg_30d": round(avg30, 2),
+            "change_24h_pct": round(change_24h_pct, 2),
+        }
+    except Exception as e:
+        print(f"  ⚠️ VIX 取得失敗: {type(e).__name__}: {str(e)[:60]}")
+        return None
+
+
+def calc_atr_regime(df, current_atr):
+    """ATR の現在値 vs 過去 30 日平均 ATR の倍率を計算"""
+    try:
+        atr_series = calc_atr(df["High"], df["Low"], df["Close"])
+        # 直近 30 本の平均（4H なら約 5 日分、1H なら 30 時間分）
+        avg_atr = float(atr_series.iloc[-60:-1].mean())  # 最新は除く
+        if avg_atr <= 0:
+            return None
+        ratio = current_atr / avg_atr
+        # レジーム分類
+        if ratio < 1.5:
+            regime, label = "normal", "🟢 平常"
+        elif ratio < 2.0:
+            regime, label = "elevated", "🟡 やや高ボラ"
+        elif ratio < 3.0:
+            regime, label = "high", "🟠 高ボラ"
+        elif ratio < 4.0:
+            regime, label = "extreme", "🔴 異常ボラ"
+        else:
+            regime, label = "crisis", "⚫ 極端ボラ"
+        return {
+            "current_atr": round(current_atr, 4),
+            "avg_atr_30d": round(avg_atr, 4),
+            "ratio": round(ratio, 2),
+            "regime": regime,
+            "label": label,
+        }
+    except Exception as e:
+        print(f"  ⚠️ ATR レジーム計算失敗: {e}")
+        return None
+
+
+def check_crisis_keywords(news_titles, crisis_keywords):
+    """ニュースに危機キーワードが何件含まれるか"""
+    if not news_titles:
+        return {"hit_count": 0, "matched_keywords": [], "matched_titles": []}
+    all_kw = (crisis_keywords.get("japanese", []) + crisis_keywords.get("english", []))
+    matched_kw = set()
+    matched_titles = []
+    for title in news_titles:
+        if not title:
+            continue
+        for kw in all_kw:
+            if kw and kw.lower() in title.lower():
+                matched_kw.add(kw)
+                matched_titles.append(title[:80])
+                break  # 1 タイトル 1 マッチで十分
+    return {
+        "hit_count": len(matched_titles),
+        "matched_keywords": list(matched_kw),
+        "matched_titles": matched_titles[:5],
+    }
+
+
+def recommend_position_size(atr_ratio, env_score):
+    """ATR 倍率と環境スコアからポジションサイズ係数（0.0〜1.0）を返す"""
+    if env_score == "D":
+        return {"factor": 0.0, "label": "取引非推奨", "color": "#cf222e"}
+    if atr_ratio is None:
+        atr_ratio = 1.0
+
+    if atr_ratio < 1.5:
+        factor = 1.00
+    elif atr_ratio < 2.0:
+        factor = 0.70
+    elif atr_ratio < 3.0:
+        factor = 0.40
+    elif atr_ratio < 4.0:
+        factor = 0.15
+    else:
+        factor = 0.0  # 極端ボラは強制ゼロ
+
+    # 環境スコアでさらに調整
+    if env_score == "C":
+        factor = factor * 0.5
+    elif env_score == "B":
+        factor = factor * 0.75
+    # A はそのまま
+
+    if factor <= 0.01:
+        return {"factor": 0.0, "label": "取引非推奨", "color": "#cf222e"}
+    elif factor < 0.30:
+        return {"factor": round(factor, 2), "label": "サイズ大幅縮小", "color": "#9a6700"}
+    elif factor < 0.70:
+        return {"factor": round(factor, 2), "label": "サイズ縮小推奨", "color": "#9a6700"}
+    else:
+        return {"factor": round(factor, 2), "label": "通常運用", "color": "#1a7f37"}
+
+
+# ATR レジーム別の歴史的事例（参考表示用）
+HISTORICAL_REGIMES = {
+    "normal": "通常相場",
+    "elevated": "CPI 発表当日 / 中規模指標前後の典型水準",
+    "high": "為替介入観測 / 主要会合直後 / 突発ニュース",
+    "extreme": "2022 年 BoJ 介入 / SVB 破綻時 / 大幅利上げサプライズ級",
+    "crisis": "ウクライナ侵攻初日 / コロナショック級の異常事態",
+}
+
+
+def _build_environment_block(env, currency="", decimals=2):
+    """メール本文用の環境警戒ブロックを構築"""
+    lines = []
+    lines.append("【🛡️ 環境警戒】")
+    lines.append(f"取引推奨度: {env['env_score']} {env['score_label']}")
+
+    size = env["size_recommendation"]
+    if size["factor"] <= 0.01:
+        lines.append(f"📐 推奨ポジションサイズ: 🚫 取引非推奨（環境悪化のため見送り）")
+    else:
+        pct = int(size["factor"] * 100)
+        lines.append(f"📐 推奨ポジションサイズ: 通常の {pct}% ({size['label']})")
+        lines.append(f"   例: 通常 0.10 lot → {0.10 * size['factor']:.3f} lot 推奨")
+
+    # 警告詳細
+    if env["warnings"]:
+        lines.append("")
+        lines.append("⚠️ 検知された要因:")
+        for w in env["warnings"]:
+            lines.append(f"  {w}")
+
+    # 重要指標
+    if env["upcoming_events"]:
+        lines.append("")
+        lines.append("📅 直近の重要指標（48h 以内）:")
+        for ev in env["upcoming_events"]:
+            impact_emoji = "🔴" if ev["impact"] == "critical" else "🟠"
+            lines.append(f"  {impact_emoji} {ev['name']} まで {ev['hours_until']:.1f}h")
+
+    # VIX
+    if env["vix"]:
+        v = env["vix"]
+        lines.append("")
+        lines.append(f"📊 VIX: {v['current']}（30 日平均 {v['avg_30d']}, 24h {v['change_24h_pct']:+.1f}%）")
+
+    # ATR レジーム
+    if env["atr_regime"]:
+        a = env["atr_regime"]
+        lines.append(f"⚡ ATR: {currency}{a['current_atr']:.{decimals}f}（通常の {a['ratio']}x = {a['label']}）")
+        if env["historical_reference"]:
+            lines.append(f"   📚 同水準の過去事例: {env['historical_reference']}")
+
+    # 危機キーワード
+    crisis = env["crisis_news"]
+    if crisis["hit_count"] >= 1:
+        lines.append("")
+        lines.append(f"🚨 危機キーワード検知: {crisis['hit_count']} 件")
+        for t in crisis["matched_titles"][:3]:
+            lines.append(f"  - {t}")
+
+    return "\n".join(lines) + "\n"
+
+
+def check_environment(ticker, now_jst, df, current_atr, news_titles, events_data):
+    """総合環境チェック。各項目の検知結果と統合スコアを返す。
+    返り値: dict with upcoming_events, vix, atr_regime, crisis_news, env_score, size_rec, warnings
+    """
+    upcoming = check_upcoming_events(ticker, now_jst, events_data)
+    vix = fetch_vix_data()
+    atr_regime = calc_atr_regime(df, current_atr) if current_atr > 0 else None
+    crisis = check_crisis_keywords(news_titles, events_data.get("crisis_keywords", {}))
+
+    # スコア判定
+    warnings = []
+    danger_count = 0
+
+    # 1. 重要指標近接（最重要）
+    nearest_event = upcoming[0] if upcoming else None
+    if nearest_event:
+        h = nearest_event["hours_until"]
+        if h <= 6:
+            warnings.append(f"🚫 重要指標まで {h:.1f}h: {nearest_event['name']}")
+            danger_count += 2  # 致命的
+        elif h <= 24:
+            warnings.append(f"🟡 重要指標まで {h:.1f}h: {nearest_event['name']}")
+            danger_count += 1
+
+    # 2. VIX レベル
+    if vix:
+        if vix["current"] >= 30:
+            warnings.append(f"🚫 VIX {vix['current']} 極度の恐怖")
+            danger_count += 2
+        elif vix["current"] >= 25:
+            warnings.append(f"🟠 VIX {vix['current']} 高水準")
+            danger_count += 1
+        if vix["change_24h_pct"] >= 20:
+            warnings.append(f"🟠 VIX 24h +{vix['change_24h_pct']:.1f}% 急騰")
+            danger_count += 1
+
+    # 3. ATR レジーム
+    if atr_regime:
+        if atr_regime["regime"] == "crisis":
+            warnings.append(f"🚫 ATR {atr_regime['ratio']}x 極端ボラ（過去戦争・パンデミック級）")
+            danger_count += 3  # 即取引禁止級
+        elif atr_regime["regime"] == "extreme":
+            warnings.append(f"🔴 ATR {atr_regime['ratio']}x 異常ボラ")
+            danger_count += 2
+        elif atr_regime["regime"] == "high":
+            warnings.append(f"🟠 ATR {atr_regime['ratio']}x 高ボラ")
+            danger_count += 1
+
+    # 4. 危機キーワード
+    if crisis["hit_count"] >= 3:
+        warnings.append(f"🚫 危機キーワード {crisis['hit_count']} 件: {','.join(crisis['matched_keywords'][:3])}")
+        danger_count += 2
+    elif crisis["hit_count"] >= 1:
+        warnings.append(f"🟡 危機キーワード {crisis['hit_count']} 件: {','.join(crisis['matched_keywords'][:3])}")
+        danger_count += 1
+
+    # スコア決定
+    if danger_count >= 3:
+        env_score = "D"
+        score_label = "🚫 取引禁止"
+    elif danger_count == 2:
+        env_score = "C"
+        score_label = "🔴 非推奨"
+    elif danger_count == 1:
+        env_score = "B"
+        score_label = "🟡 警戒"
+    else:
+        env_score = "A"
+        score_label = "🟢 平常"
+
+    atr_ratio = atr_regime["ratio"] if atr_regime else 1.0
+    size_rec = recommend_position_size(atr_ratio, env_score)
+
+    # 歴史的参照
+    history_ref = ""
+    if atr_regime and atr_regime["regime"] in ("extreme", "crisis"):
+        history_ref = HISTORICAL_REGIMES.get(atr_regime["regime"], "")
+
+    return {
+        "env_score": env_score,
+        "score_label": score_label,
+        "warnings": warnings,
+        "danger_count": danger_count,
+        "upcoming_events": upcoming[:3],
+        "vix": vix,
+        "atr_regime": atr_regime,
+        "crisis_news": crisis,
+        "size_recommendation": size_rec,
+        "historical_reference": history_ref,
+    }
 
 
 # ─────────────────────────────────────────────
@@ -639,6 +947,7 @@ def main():
     ALERT_HISTORY_FILE = _orig_history_file  # グローバル復元
 
     signals_log = load_signals_log()
+    economic_events_data = load_economic_events()
     total_signals = 0
     sent_emails = 0
     now_jst = datetime.now(JST)
@@ -675,6 +984,14 @@ def main():
             print(f"    🌐 翻訳結果: {ja_count}/{len(news_titles)} 件が日本語化")
         else:
             news_titles = []
+
+        # 🆕 環境警戒チェック（取引推奨度 A〜D 判定）
+        env = check_environment(ticker, now_jst, df, indicators.get("atr", 0.0), news_titles, economic_events_data)
+        print(f"    🛡️ 環境スコア: {env['env_score']} {env['score_label']} "
+              f"| サイズ係数: {env['size_recommendation']['factor']:.2f} "
+              f"({env['size_recommendation']['label']})")
+        for w in env["warnings"]:
+            print(f"       {w}")
 
         # ポジションプラン算出（ATR ベース、4H スイング想定）
         direction = determine_direction(fresh_signals)
@@ -731,6 +1048,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
+{_build_environment_block(env, currency, decimals)}
 {plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
@@ -752,10 +1070,17 @@ def main():
 MarketWatch AI Alerts
 """
 
-        # 主シグナルから件名を組み立て
+        # 主シグナルから件名を組み立て（環境警告プレフィックス付）
         primary = fresh_signals[0]
         emoji = {"buy": "🟢", "sell": "🔴", "warn": "🟡"}.get(primary["severity"], "📊")
-        subject = f"{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}"
+        # 件名プレフィックス: D=🚫 / C=⛔ / B=⚠️ / A= (なし)
+        env_prefix = {"D": "🚫 ", "C": "⛔ ", "B": "⚠️ "}.get(env["env_score"], "")
+        subject = f"{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}"
+        # 重要指標が 24h 以内ならその名前も件名に
+        if env["upcoming_events"]:
+            nearest = env["upcoming_events"][0]
+            if nearest["hours_until"] <= 24:
+                subject += f" / {nearest['name']}まで {nearest['hours_until']:.0f}h"
 
         # 送信（--no-email 時は完全スキップ）
         email_sent = False
@@ -783,8 +1108,21 @@ MarketWatch AI Alerts
             fired_at_iso=now_iso, timeframe=timeframe,
         )
         log_entry["email_sent"] = email_sent
+        # 🆕 環境警戒データを記録（明日の集計タブ用）
+        log_entry["environment"] = {
+            "env_score": env["env_score"],
+            "score_label": env["score_label"],
+            "size_factor": env["size_recommendation"]["factor"],
+            "size_label": env["size_recommendation"]["label"],
+            "warnings": env["warnings"],
+            "danger_count": env["danger_count"],
+            "upcoming_events": env["upcoming_events"],
+            "vix": env["vix"],
+            "atr_regime": env["atr_regime"],
+            "crisis_news": env["crisis_news"],
+        }
         signals_log.append(log_entry)
-        print(f"    📒 シグナルログに記録: id={log_entry['id']}")
+        print(f"    📒 シグナルログに記録: id={log_entry['id']} env={env['env_score']}")
 
     # 履歴保存（timeframe 別ファイル）
     _orig_for_save = ALERT_HISTORY_FILE
