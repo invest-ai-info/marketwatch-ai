@@ -1,0 +1,113 @@
+{
+  "_comment": "重要経済イベントカレンダー。シグナル発火時に「6h/24h 以内に重要指標があるか」をチェックして取引非推奨警告を出す。",
+  "_format": "datetime は JST (Asia/Tokyo) ISO8601。impact は high/critical。affected_assets は影響を受ける銘柄リスト（all = 全銘柄）。",
+  "_update_policy": "月初に当月分を手動更新。FOMC・雇用統計・CPI など毎月決まったものはハードコード可。",
+
+  "events": [
+    {
+      "name": "FOMC 政策金利発表（5月）",
+      "datetime": "2026-05-21T03:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "5/20 18:00 EDT = 5/21 03:00 JST"
+    },
+    {
+      "name": "パウエル FRB 議長会見",
+      "datetime": "2026-05-21T03:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "米雇用統計 4 月 NFP",
+      "datetime": "2026-06-06T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "米 CPI 5 月",
+      "datetime": "2026-06-11T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "FOMC 政策金利発表（6月）",
+      "datetime": "2026-06-18T03:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "日銀金融政策決定会合（6月）",
+      "datetime": "2026-06-19T12:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["NKD=F", "USDJPY=X"],
+      "country": "JP"
+    },
+    {
+      "name": "ECB 政策金利発表",
+      "datetime": "2026-06-05T21:15:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "EU"
+    },
+    {
+      "name": "米雇用統計 5 月 NFP",
+      "datetime": "2026-06-06T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "米 GDP 速報（Q1）",
+      "datetime": "2026-05-29T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "米 PCE デフレーター",
+      "datetime": "2026-05-30T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "中国 CPI",
+      "datetime": "2026-06-09T10:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["NKD=F", "CL=F"],
+      "country": "CN"
+    },
+    {
+      "name": "OPEC+ 月次会合",
+      "datetime": "2026-06-05T20:00:00+09:00",
+      "impact": "high",
+      "affected_assets": ["CL=F"],
+      "country": "OPEC"
+    }
+  ],
+
+  "crisis_keywords": {
+    "_comment": "ニュース見出しに含まれていたら危機モード判定の材料にする",
+    "japanese": [
+      "戦争", "侵攻", "攻撃", "軍事衝突", "宣戦布告",
+      "テロ", "緊急事態",
+      "為替介入", "緊急利上げ", "緊急利下げ",
+      "暴落", "急落", "暴騰", "ストップ安",
+      "破綻", "倒産", "デフォルト",
+      "リーマン級", "サーキットブレーカー"
+    ],
+    "english": [
+      "war", "invasion", "attack", "military strike", "missile",
+      "terrorist", "emergency",
+      "intervention", "emergency rate",
+      "crash", "plunge", "collapse",
+      "bankruptcy", "default",
+      "circuit breaker", "halt"
+    ]
+  }
+}
