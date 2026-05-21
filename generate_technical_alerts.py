@@ -316,6 +316,74 @@ def fetch_ticker_news(ticker, max_items=5):
 
 
 # ─────────────────────────────────────────────
+# Gemini でニュース見出しを日本語に一括翻訳（バッチ 1 リクエスト）
+# 既に日本語のタイトルはスキップ。失敗時は原文をそのまま返す。
+# ─────────────────────────────────────────────
+import re as _re_ja_check
+_HAS_JA_RE = _re_ja_check.compile(r'[぀-ヿ一-鿿]')
+
+
+def translate_titles_to_jp(titles, api_key):
+    """ニュース見出し配列を Gemini で一括翻訳。失敗時は原文配列を返す。"""
+    if not titles or not api_key:
+        return titles or []
+    # 既に日本語のものは原文キープ、英語のもののみ翻訳対象
+    targets = []
+    for i, t in enumerate(titles):
+        if t and not _HAS_JA_RE.search(t):
+            targets.append((i, t))
+    if not targets:
+        return titles  # 全部日本語 → 何もしない
+
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return titles
+    genai.configure(api_key=api_key)
+
+    numbered = "\n".join([f"{i+1}. {t}" for i, (_, t) in enumerate(targets)])
+    prompt = f"""次の英語ニュース見出しを、それぞれ日本語に翻訳してください。
+ニュアンスを保ち、投資家が読みやすい自然な日本語にしてください。
+固有名詞（企業名・人名・通貨）はそのまま英字でも、カタカナでも、文脈に応じて選んでください。
+
+【入力】
+{numbered}
+
+【出力フォーマット】（番号付きの行のみ。前置きや解説は不要）
+1. 翻訳結果
+2. 翻訳結果
+...
+"""
+    text = ""
+    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            resp = model.generate_content(prompt)
+            text = (resp.text or "").strip()
+            if text:
+                break
+        except Exception:
+            continue
+    if not text:
+        return titles  # 全モデル失敗 → 原文
+
+    # 番号付き行をパース
+    translations = {}
+    for line in text.splitlines():
+        m = _re_ja_check.match(r'^\s*(\d+)[.\)]\s*(.+)$', line.strip())
+        if m:
+            n = int(m.group(1)) - 1  # 0-indexed in targets
+            if 0 <= n < len(targets):
+                translations[targets[n][0]] = m.group(2).strip()
+
+    # 結合：翻訳できたものは差し替え、できなかったものは原文
+    result = list(titles)
+    for orig_idx, jp_text in translations.items():
+        result[orig_idx] = jp_text
+    return result
+
+
+# ─────────────────────────────────────────────
 # Gemini で「なぜこのシグナルか」の解説生成（テクニカル + ニュース）
 # ─────────────────────────────────────────────
 def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key):
@@ -559,10 +627,15 @@ def main():
         price_str = f"{currency}{indicators['price']:.{decimals}f}"
         print(f"    🚨 新規シグナル {len(fresh_signals)} 件: {[s['type'] for s in fresh_signals]}")
 
-        # ファンダメンタル：ティッカー関連ニュースを取得
-        news_titles = fetch_ticker_news(ticker, max_items=5)
-        if news_titles:
-            print(f"    📰 関連ニュース {len(news_titles)} 件を Gemini に併せて渡します")
+        # ファンダメンタル：ティッカー関連ニュースを取得 → 日本語に翻訳
+        news_titles_en = fetch_ticker_news(ticker, max_items=5)
+        if news_titles_en:
+            print(f"    📰 関連ニュース {len(news_titles_en)} 件 → 日本語翻訳")
+            news_titles = translate_titles_to_jp(news_titles_en, gemini_key)
+            ja_count = sum(1 for t in news_titles if any('぀' <= c <= '鿿' for c in (t or '')))
+            print(f"    🌐 翻訳結果: {ja_count}/{len(news_titles)} 件が日本語化")
+        else:
+            news_titles = []
 
         # ポジションプラン算出（ATR ベース、4H スイング想定）
         direction = determine_direction(fresh_signals)
