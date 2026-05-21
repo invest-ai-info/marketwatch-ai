@@ -85,7 +85,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.501,
+    "max_favorable_excursion_pct": 0.8,
     "max_adverse_excursion_pct": -1.349,
     "email_sent": true,
     "timeframe": "4h"
@@ -185,7 +185,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.286,
+    "max_favorable_excursion_pct": 0.513,
     "max_adverse_excursion_pct": -1.093,
     "email_sent": true,
     "timeframe": "4h"
@@ -296,7 +296,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.355,
+    "max_favorable_excursion_pct": 0.654,
     "max_adverse_excursion_pct": -1.493,
     "email_sent": true,
     "timeframe": "4h"
@@ -438,6 +438,158 @@
         "ai_diagnosis": "エントリー時点ではRSIやMACDの鈍化、2σタッチからの反発期待がありましたが、75MAを上抜けきれず、その後75MAを下抜けて急落しました。VIXの低下はリスクオンを示唆していましたが、原油市場特有の地政学リスクや需給バランスの急変が、テクニカルな反発期待を上回る下落圧力となった可能性があります。",
         "lesson": "テクニカル指標だけでなく、地政学リスクや需給バランスの急変兆候を早期に察知し、判断を柔軟に変更する。",
         "category_tag": "テクニカル崩壊"
+      }
+    }
+  },
+  {
+    "id": "CL=F_4h_20260522_0319",
+    "fired_at": "2026-05-22T03:19:09+09:00",
+    "timeframe": "4h",
+    "ticker": "CL=F",
+    "asset_name": "原油 WTI 先物",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 96.72000122070312,
+    "stop_loss": 100.31888736153475,
+    "take_profit_1": 91.92148636626096,
+    "take_profit_2": 89.52222893903988,
+    "atr": 2.399257427221081,
+    "sl_pct": 3.7209326875621174,
+    "tp1_pct": -4.961243583416157,
+    "tp2_pct": -7.441865375124235,
+    "indicators_at_signal": {
+      "rsi": 33.64,
+      "macd": -0.751,
+      "macd_sig": -0.2528,
+      "ma25": 101.66,
+      "ma75": 99.72,
+      "bb_low": 97.06,
+      "bb_up": 106.1,
+      "recent_high": 105.21,
+      "recent_low": 96.94
+    },
+    "news_count": 5,
+    "news_titles": [
+      "本日の株式市場：ダウ、S&P500、ナスダックが反発、米・イラン和平交渉への期待で原油価格が反転",
+      "イラン最高指導者が濃縮ウランの国外持ち出しを否定、原油価格が急騰",
+      "カナダの石油・ガス投資環境は改善、幹部らが指摘",
+      "本日の株式市場：Nvidiaが損失縮小でダウ、S&P500が上昇、Intuitは急落、AI関連銘柄は混戦（ライブ速報）",
+      "最新情報：イランが新たな米和平案を検討、ドルと利回りが小幅に下落し金価格が上昇"
+    ],
+    "ai_narrative": "WTI 原油先物は、直近 20 本安値を下抜け、RSI も 33.6 と低迷しており、テクニカルにはショート優位の状況です。MACD もデッドクロスを示唆しており、25MA が 75MA を下回るゴールデンクロス形成も視野に入ります。  ファンダメンタルズでは、米・イラン和平交渉への期待が原油価格反転の材料と報じられていますが、イラン最高指導者の濃縮ウラン国外持ち出し否定といった地政学的リスクの高まりも同時に見られ、需給両面で不確実性が高い状態です。  このショートシナリオが崩れるのは、イラン情勢の緊迫化がさらに進行し、供給懸念が再燃した場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.02,
+        "avg_30d": 18.06,
+        "change_24h_pct": -2.41
+      },
+      "atr_regime": {
+        "current_atr": 2.3993,
+        "avg_atr_30d": 2.1557,
+        "ratio": 1.11,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "本日の株式市場：Nvidiaが損失縮小でダウ、S&P500が上昇、Intuitは急落、AI関連銘柄は混戦（ライブ速報）"
+        ]
+      }
+    }
+  },
+  {
+    "id": "NKD=F_4h_20260522_0319",
+    "fired_at": "2026-05-22T03:19:09+09:00",
+    "timeframe": "4h",
+    "ticker": "NKD=F",
+    "asset_name": "日経 225 先物 (CME)",
+    "signal_types": [
+      "high_break"
+    ],
+    "primary_signal": "high_break",
+    "primary_signal_label": "🟢 直近 20 本高値ブレイク（トレンド継続）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 62285.0,
+    "stop_loss": 61256.465061515475,
+    "take_profit_1": 63656.37991797937,
+    "take_profit_2": 64342.06987696906,
+    "atr": 685.6899589896854,
+    "sl_pct": -1.6513364991322599,
+    "tp1_pct": 2.201781998843013,
+    "tp2_pct": 3.3026729982645198,
+    "indicators_at_signal": {
+      "rsi": 58.76,
+      "macd": 5.3783,
+      "macd_sig": -209.7522,
+      "ma25": 61084.6,
+      "ma75": 62096.47,
+      "bb_low": 59643.0,
+      "bb_up": 62397.0,
+      "recent_high": 62075.0,
+      "recent_low": 59355.0
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "日経 225 先物は、直近 20 本高値ブレイクという力強いテクニカルシグナルを発火し、上昇トレンド継続の可能性を示唆しています。RSI も 58.8 と買われ過ぎではなく、MACD もゴールデンクロスを示唆しており、さらなる上値追いが期待できます。  ファンダメンタルズ面では、円安進行や決算発表シーズンへの期待感など、追い風となる材料は限定的ですが、グローバルな金融市場の安定ムードが日経平均を支えています。  このロングシナリオが崩れるとすれば、急激な円高や主要国の金融政策の引き締め観測が強まり、リスクオフムードが台頭した場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.02,
+        "avg_30d": 18.06,
+        "change_24h_pct": -2.41
+      },
+      "atr_regime": {
+        "current_atr": 685.69,
+        "avg_atr_30d": 569.2925,
+        "ratio": 1.2,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
