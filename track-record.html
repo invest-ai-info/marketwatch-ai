@@ -53,6 +53,11 @@
     .tab-btn.active{background:#0969da;border-color:#0969da;color:#fff}
     .tab-pane{display:none}
     .tab-pane.active{display:block}
+    .dl-card{display:block;background:#f6f8fa;border:1px solid #d0d7de;border-left:5px solid #0969da;border-radius:10px;padding:18px 22px;text-decoration:none;color:#1f2328;transition:all .2s}
+    .dl-card:hover{border-color:#0969da;transform:translateY(-2px);box-shadow:0 4px 12px rgba(9,105,218,.15)}
+    .dl-card-icon{font-size:1.8rem;margin-bottom:6px}
+    .dl-card-title{font-weight:700;color:#0969da;font-size:1rem;margin-bottom:4px}
+    .dl-card-desc{font-size:.82rem;color:#57606a;line-height:1.5}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}.kpi-value{font-size:1.4rem}h1{font-size:1.4rem}}
@@ -78,6 +83,10 @@
     body.dark .tab-btn{background:#161b22;border-color:#30363d;color:#8b949e}
     body.dark .tab-btn:hover{border-color:#58a6ff;color:#58a6ff}
     body.dark .tab-btn.active{background:#1f6feb;border-color:#1f6feb;color:#fff}
+    body.dark .dl-card{background:#161b22;border-color:#30363d;border-left-color:#58a6ff;color:#e6edf3}
+    body.dark .dl-card:hover{border-color:#58a6ff}
+    body.dark .dl-card-title{color:#79c0ff}
+    body.dark .dl-card-desc{color:#8b949e}
     body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
   </style>
 </head>
@@ -108,7 +117,7 @@
     <div class="page-desc">
       MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
       AI シグナルの透明性を追求し、サラリーマン投資家として実際にどう活用しているかを公開しています。
-      <span style="color:#6e7781">（最終更新: 2026-05-21 19:34 JST）</span>
+      <span style="color:#6e7781">（最終更新: 2026-05-21 20:12 JST）</span>
     </div>
   </div>
 
@@ -171,9 +180,11 @@
       </div>
 
   <div class="tab-bar">
-    <button class="tab-btn active" data-tab="all">🌐 全体（7）</button>
-    <button class="tab-btn" data-tab="4h">🕓 4H 足（6）</button>
+    <button class="tab-btn active" data-tab="all">🌐 全体（8）</button>
+    <button class="tab-btn" data-tab="4h">🕓 4H 足（7）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（1）</button>
+    <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
+    <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
 
   
@@ -183,7 +194,7 @@
     <div class="kpi-card">
       <div class="kpi-label">確定シグナル総数</div>
       <div class="kpi-value">1</div>
-      <div class="kpi-sub">うち未確定 5 件</div>
+      <div class="kpi-sub">うち未確定 6 件</div>
     </div>
     <div class="kpi-card" style="border-left-color:#1a7f37">
       <div class="kpi-label">勝率（TP1+TP2 / 全確定）</div>
@@ -275,6 +286,19 @@
     </tr></thead>
     <tbody>
         <tr>
+          <td style="white-space:nowrap">2026-05-21 20:11</td>
+          <td><b>CL=F</b></td>
+          <td style="font-size:.82rem">🟢 ボリンジャー -2σ タッチ</td>
+          <td style="text-align:center;font-weight:700;color:#1a7f37">L</td>
+          <td style="text-align:right">100.95</td>
+          <td style="text-align:right;color:#cf222e">97.68</td>
+          <td style="text-align:right;color:#1a7f37">105.32</td>
+          <td style="text-align:right">—</td>
+          <td style="text-align:right">—</td>
+          <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
+        </tr>
+
+        <tr>
           <td style="white-space:nowrap">2026-05-21 19:34</td>
           <td><b>BTC-USD</b></td>
           <td style="font-size:.82rem">🟢 ボリンジャー -2σ タッチ</td>
@@ -282,8 +306,8 @@
           <td style="text-align:right">77333.53</td>
           <td style="text-align:right;color:#cf222e">76803.48</td>
           <td style="text-align:right;color:#1a7f37">78040.26</td>
-          <td style="text-align:right">—</td>
-          <td style="text-align:right">—</td>
+          <td style="text-align:right">-0.15%</td>
+          <td style="text-align:right">-0.34%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -296,7 +320,7 @@
           <td style="text-align:right;color:#cf222e">4473.18</td>
           <td style="text-align:right;color:#1a7f37">4624.19</td>
           <td style="text-align:right">+0.14%</td>
-          <td style="text-align:right">-0.63%</td>
+          <td style="text-align:right">-0.71%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -309,7 +333,7 @@
           <td style="text-align:right;color:#cf222e">102.25</td>
           <td style="text-align:right;color:#1a7f37">94.87</td>
           <td style="text-align:right">+1.86%</td>
-          <td style="text-align:right">-1.20%</td>
+          <td style="text-align:right">-2.27%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -322,7 +346,7 @@
           <td style="text-align:right;color:#cf222e">60786.57</td>
           <td style="text-align:right;color:#1a7f37">63536.24</td>
           <td style="text-align:right">+0.18%</td>
-          <td style="text-align:right">-1.36%</td>
+          <td style="text-align:right">-1.49%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -335,7 +359,7 @@
           <td style="text-align:right;color:#cf222e">60872.92</td>
           <td style="text-align:right;color:#1a7f37">63211.11</td>
           <td style="text-align:right">+0.32%</td>
-          <td style="text-align:right">-1.22%</td>
+          <td style="text-align:right">-1.35%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -373,7 +397,7 @@
     <div class="kpi-card">
       <div class="kpi-label">確定シグナル総数</div>
       <div class="kpi-value">1</div>
-      <div class="kpi-sub">うち未確定 4 件</div>
+      <div class="kpi-sub">うち未確定 5 件</div>
     </div>
     <div class="kpi-card" style="border-left-color:#1a7f37">
       <div class="kpi-label">勝率（TP1+TP2 / 全確定）</div>
@@ -465,6 +489,19 @@
     </tr></thead>
     <tbody>
         <tr>
+          <td style="white-space:nowrap">2026-05-21 20:11</td>
+          <td><b>CL=F</b></td>
+          <td style="font-size:.82rem">🟢 ボリンジャー -2σ タッチ</td>
+          <td style="text-align:center;font-weight:700;color:#1a7f37">L</td>
+          <td style="text-align:right">100.95</td>
+          <td style="text-align:right;color:#cf222e">97.68</td>
+          <td style="text-align:right;color:#1a7f37">105.32</td>
+          <td style="text-align:right">—</td>
+          <td style="text-align:right">—</td>
+          <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
+        </tr>
+
+        <tr>
           <td style="white-space:nowrap">2026-05-21 13:51</td>
           <td><b>GC=F</b></td>
           <td style="font-size:.82rem">🟢 RSI 過売り反発</td>
@@ -473,7 +510,7 @@
           <td style="text-align:right;color:#cf222e">4473.18</td>
           <td style="text-align:right;color:#1a7f37">4624.19</td>
           <td style="text-align:right">+0.14%</td>
-          <td style="text-align:right">-0.63%</td>
+          <td style="text-align:right">-0.71%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -486,7 +523,7 @@
           <td style="text-align:right;color:#cf222e">102.25</td>
           <td style="text-align:right;color:#1a7f37">94.87</td>
           <td style="text-align:right">+1.86%</td>
-          <td style="text-align:right">-1.20%</td>
+          <td style="text-align:right">-2.27%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -499,7 +536,7 @@
           <td style="text-align:right;color:#cf222e">60786.57</td>
           <td style="text-align:right;color:#1a7f37">63536.24</td>
           <td style="text-align:right">+0.18%</td>
-          <td style="text-align:right">-1.36%</td>
+          <td style="text-align:right">-1.49%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -512,7 +549,7 @@
           <td style="text-align:right;color:#cf222e">60872.92</td>
           <td style="text-align:right;color:#1a7f37">63211.11</td>
           <td style="text-align:right">+0.32%</td>
-          <td style="text-align:right">-1.22%</td>
+          <td style="text-align:right">-1.35%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr>
 
@@ -622,12 +659,133 @@
           <td style="text-align:right">77333.53</td>
           <td style="text-align:right;color:#cf222e">76803.48</td>
           <td style="text-align:right;color:#1a7f37">78040.26</td>
-          <td style="text-align:right">—</td>
-          <td style="text-align:right">—</td>
+          <td style="text-align:right">-0.15%</td>
+          <td style="text-align:right">-0.34%</td>
           <td style="color:#9a6700;font-weight:700;white-space:nowrap">⏳</td>
         </tr></tbody>
   </table></div>
 </div>
+  
+<div class="tab-pane" id="pane-analytics">
+  <h2>📅 曜日別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>曜日</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>
+    <tr>
+      <td>水曜</td>
+      <td style="text-align:right">1</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">100.0%</td>
+      <td style="text-align:right">100.0%</td>
+      <td style="text-align:right">0.0%</td>
+      <td style="text-align:right">0</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">+1.33R</td>
+    </tr></tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 「月曜は勝率高い、金曜は要注意」みたいな傾向が見えてきます。最低 10 件あれば信頼性高。
+  </p>
+
+  <h2 style="margin-top:32px">🕐 時間帯（セッション）別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>セッション</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>
+    <tr>
+      <td>東京 (9-15)</td>
+      <td style="text-align:right">1</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">100.0%</td>
+      <td style="text-align:right">100.0%</td>
+      <td style="text-align:right">0.0%</td>
+      <td style="text-align:right">0</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">+1.33R</td>
+    </tr></tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 「東京セッションは騙し多い、NY オープンは強い」など、自分の取引時間帯を最適化できます。
+  </p>
+
+  <h2 style="margin-top:32px">📊 月別勝率</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>月</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>
+    <tr>
+      <td>2026-05</td>
+      <td style="text-align:right">1</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">100.0%</td>
+      <td style="text-align:right">100.0%</td>
+      <td style="text-align:right">0.0%</td>
+      <td style="text-align:right">0</td>
+      <td style="text-align:right;color:#1a7f37;font-weight:700">+1.33R</td>
+    </tr></tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 月末（例: 12 月）の勝率パターン、長期トレンドの変化が見えます。
+  </p>
+
+  <h2 style="margin-top:32px">⏱️ 時間帯ヒートマップ（24 時間）</h2>
+  <div class="chart-box" style="height:280px"><canvas id="hourlyChart"></canvas></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>使い方</b>: 1 時間単位で見たいときに。FOMC や ECB の発言時刻周辺で勝率が変動するパターンを発見できます。
+  </p>
+</div>
+
+  <div class="tab-pane" id="pane-data">
+    <h2>📥 生データのダウンロード</h2>
+    <p style="font-size:.93rem;color:#57606a;margin-bottom:20px">
+      シグナルログ・実取引ログの生データを CSV / JSON でダウンロードできます。
+      Excel / Google Sheets / Python pandas で自由に分析してください。
+      <br>毎回のワークフロー実行で自動更新されています（最終更新: 2026-05-21 20:12 JST）。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <a href="signals-log.csv" download class="dl-card">
+        <div class="dl-card-icon">📊</div>
+        <div class="dl-card-title">signals-log.csv</div>
+        <div class="dl-card-desc">全シグナル発火履歴（曜日・時間帯フィールド付き）<br>Excel で開くだけで分析可能</div>
+      </a>
+      <a href="my-trades.csv" download class="dl-card">
+        <div class="dl-card-icon">💼</div>
+        <div class="dl-card-title">my-trades.csv</div>
+        <div class="dl-card-desc">実取引履歴（エントリー曜日・決済曜日フィールド付き）</div>
+      </a>
+      <a href="signals-log.json" download class="dl-card">
+        <div class="dl-card-icon">🗃️</div>
+        <div class="dl-card-title">signals-log.json</div>
+        <div class="dl-card-desc">構造化生データ。プログラム処理向き</div>
+      </a>
+      <a href="my-trades.json" download class="dl-card">
+        <div class="dl-card-icon">💼</div>
+        <div class="dl-card-title">my-trades.json</div>
+        <div class="dl-card-desc">実取引 JSON。プログラム処理向き</div>
+      </a>
+    </div>
+    <h3 style="margin-top:32px">📦 月次バックアップ（GitHub Releases）</h3>
+    <p style="font-size:.93rem;color:#57606a">
+      毎月 1 日に snapshot を Release として公開しています。
+      <a href="https://github.com/invest-ai-info/marketwatch-ai/releases" target="_blank" rel="noopener">
+        過去のスナップショット一覧 →
+      </a>
+    </p>
+    <h3 style="margin-top:24px">🛠️ 分析テンプレート（pandas）</h3>
+    <pre style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:16px;font-size:.85rem;overflow-x:auto"><code>import pandas as pd
+df = pd.read_csv("https://marketwatch-jp.com/signals-log.csv")
+
+# 曜日別勝率
+df["win"] = df["outcome"].isin(["tp1", "tp2"])
+df.groupby("発火_曜日")["win"].mean()
+
+# 銘柄 × 曜日 マトリクス
+df.pivot_table(values="win", index="ticker", columns="発火_曜日", aggfunc="mean")
+
+# 月末勝率（毎月最終 3 営業日）
+df["fired_at"] = pd.to_datetime(df["fired_at"])
+df["is_month_end"] = df["fired_at"].dt.day >= 28
+df.groupby("is_month_end")["win"].mean()</code></pre>
+  </div>
 </main>
 
 <footer>
@@ -687,6 +845,47 @@
   makeEquityChart('equityChartAll', ["2026-05-21"], [1133.33], '#0969da');
   makeEquityChart('equityChart4h',  ["2026-05-21"],  [1133.33],  '#1a7f37');
   makeEquityChart('equityChart1h',  [],  [],  '#9a6700');
+
+  // 時間帯ヒートマップ
+  (function() {
+    const hourLabels = ["00\u6642", "01\u6642", "02\u6642", "03\u6642", "04\u6642", "05\u6642", "06\u6642", "07\u6642", "08\u6642", "09\u6642", "10\u6642", "11\u6642", "12\u6642", "13\u6642", "14\u6642", "15\u6642", "16\u6642", "17\u6642", "18\u6642", "19\u6642", "20\u6642", "21\u6642", "22\u6642", "23\u6642"];
+    const hourWinRates = [null, null, null, null, null, null, null, null, null, null, null, null, null, 100.0, null, null, null, null, null, null, null, null, null, null];
+    const hourCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const el = document.getElementById('hourlyChart');
+    if (!el) return;
+    if (hourCounts.every(c => c === 0)) {
+      el.parentElement.innerHTML = '<div style="text-align:center;padding:80px 0;color:#6e7781">確定シグナルが揃ったらヒートマップが表示されます</div>';
+      return;
+    }
+    new Chart(el.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: hourLabels,
+        datasets: [{
+          label: '勝率 (%)',
+          data: hourWinRates,
+          backgroundColor: hourWinRates.map(v => v === null ? '#e6e8eb' : v >= 60 ? '#1a7f37' : v >= 45 ? '#9a6700' : '#cf222e'),
+          borderColor: '#d0d7de',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              afterLabel: ctx => `確定数: ${hourCounts[ctx.dataIndex]} 件`
+            }
+          }
+        },
+        scales: {
+          y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+  })();
 
   // ダークモードトグル
   function toggleTheme(){
