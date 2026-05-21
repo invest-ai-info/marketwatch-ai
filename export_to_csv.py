@@ -99,6 +99,11 @@ def export_signals(log):
             except Exception:
                 pass
 
+        # 敗因分析（SL ヒット時のみ存在）
+        la = s.get("loss_analysis") or {}
+        ai = la.get("ai_result") or {}
+        vix = la.get("vix_data") or {}
+
         row = {
             "id": s.get("id", ""),
             "fired_at": s.get("fired_at", ""),
@@ -131,6 +136,15 @@ def export_signals(log):
             "ai_narrative": (s.get("ai_narrative") or "").replace("\n", " ").replace("\r", " "),
             "linked_trade_id": s.get("linked_trade_id", ""),
             "pseudo_record": "YES" if s.get("pseudo_record") else "",
+            # 敗因分析（SL のみ）
+            "loss_category": ai.get("primary_category", ""),
+            "loss_cause": ai.get("primary_cause", ""),
+            "loss_diagnosis": (ai.get("ai_diagnosis") or "").replace("\n", " ").replace("\r", " "),
+            "loss_lesson": ai.get("lesson", ""),
+            "loss_tag": ai.get("category_tag", ""),
+            "vix_start": vix.get("start", ""),
+            "vix_end": vix.get("end", ""),
+            "vix_change_pct": vix.get("change_pct", ""),
         }
         row.update(add_derived_fields(s.get("fired_at"), prefix="発火_"))
         rows.append(row)
