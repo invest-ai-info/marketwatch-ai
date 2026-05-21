@@ -1,0 +1,62 @@
+name: Technical Alerts (1H Data Only)
+
+# 目的: 5 銘柄の 1H 足チャートをテクニカル分析し、signals-log.json にデータ記録のみ。
+#       メール送信なし（仕事中の判断疲労を防止）。
+#       4H 足ワークフローと並行運用して、後で勝率比較する。
+
+on:
+  schedule:
+    # 1 時間ごと（UTC）。毎時 5 分（他ワークフローと時間ズラす）
+    - cron: '5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      # メール送信なしなので GMAIL 系は使わないが、スクリプト要件で空でも置く
+      GMAIL_USER:         ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_RECIPIENT:    ${{ secrets.ALERT_RECIPIENT }}
+      GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+      MY_TRADES_CSV_URL:  ${{ secrets.MY_TRADES_CSV_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy google-generativeai
+
+      - name: Run 1H signal collection (no email)
+        run: python generate_technical_alerts.py --timeframe 1h --no-email
+
+      - name: Evaluate signal outcomes
+        run: python evaluate_signal_outcomes.py
+
+      - name: Import my real trades
+        run: python import_my_trades.py
+
+      - name: Generate track-record.html
+        run: python generate_track_record_page.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add technical-alerts-history-1h.json signals-log.json my-trades.json track-record.html 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: 1H signal collection $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
