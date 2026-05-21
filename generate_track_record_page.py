@@ -292,15 +292,13 @@ def render_my_trades_section(trades):
       </div>"""
 
 
-def build_html(signals, trades):
+def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id):
+    """timeframe ごとに同じ構造のダッシュボードセクションを生成"""
     overall = calc_stats(signals)
     by_signal = group_stats(signals, lambda e: e.get("primary_signal"))
     by_ticker = group_stats(signals, lambda e: e.get("ticker"))
     by_direction = group_stats(signals, lambda e: e.get("direction"))
 
-    eq_labels, eq_values = render_equity_curve_data(signals)
-
-    # ブレイクダウン表のソート: 勝率降順、最低 3 件以上のみ表示
     def _filtered_sorted(stats_dict, min_total=1):
         return sorted(
             [(k, v) for k, v in stats_dict.items() if v["total"] >= min_total],
@@ -311,24 +309,113 @@ def build_html(signals, trades):
         render_stat_row(SIGNAL_LABELS.get(k, k), v)
         for k, v in _filtered_sorted(by_signal)
     ) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
-
     ticker_rows = "\n".join(
-        render_stat_row(k, v)
-        for k, v in _filtered_sorted(by_ticker)
+        render_stat_row(k, v) for k, v in _filtered_sorted(by_ticker)
     ) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
-
     direction_rows = "\n".join(
-        render_stat_row(k, v)
-        for k, v in _filtered_sorted(by_direction)
+        render_stat_row(k, v) for k, v in _filtered_sorted(by_direction)
     ) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
-
     recent_rows = render_recent_table(signals, limit=30)
-    my_trades_html = render_my_trades_section(trades)
-    last_updated = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
 
-    # サマリーカード
+    pending_count = sum(1 for e in signals if not e.get("outcome"))
     win_color = "#1a7f37" if overall["win_rate"] >= 60 else "#9a6700" if overall["win_rate"] >= 45 else "#cf222e"
     er_color = "#1a7f37" if overall["expected_R"] > 0.3 else "#9a6700" if overall["expected_R"] > 0 else "#cf222e"
+
+    return f"""
+<div class="tab-pane" id="pane-{tab_id}">
+  <h2>📈 全体パフォーマンス（{tab_label}）</h2>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">確定シグナル総数</div>
+      <div class="kpi-value">{overall['total']}</div>
+      <div class="kpi-sub">うち未確定 {pending_count} 件</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:{win_color}">
+      <div class="kpi-label">勝率（TP1+TP2 / 全確定）</div>
+      <div class="kpi-value" style="color:{win_color}">{overall['win_rate']:.1f}%</div>
+      <div class="kpi-sub">勝ち {overall['wins']} / 負け {overall['losses']} / 期限切れ {overall['expired']}</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#1a7f37">
+      <div class="kpi-label">TP2 到達率</div>
+      <div class="kpi-value" style="color:#1a7f37">{overall['tp2_rate']:.1f}%</div>
+      <div class="kpi-sub">R:R 1:2.0 達成</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:{er_color}">
+      <div class="kpi-label">期待 R</div>
+      <div class="kpi-value" style="color:{er_color}">{overall['expected_R']:+.2f}R</div>
+      <div class="kpi-sub">+0.3R 以上で安定</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#1a7f37">
+      <div class="kpi-label">平均最大含み益</div>
+      <div class="kpi-value" style="color:#1a7f37">{overall['avg_mfe']:+.2f}%</div>
+      <div class="kpi-sub">MFE 指標</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:#cf222e">
+      <div class="kpi-label">平均最大含み損</div>
+      <div class="kpi-value" style="color:#cf222e">{overall['avg_mae']:+.2f}%</div>
+      <div class="kpi-sub">MAE 指標</div>
+    </div>
+  </div>
+
+  <h2>💹 模擬エクイティカーブ</h2>
+  <div class="chart-box"><canvas id="{chart_canvas_id}"></canvas></div>
+
+  <h2>🎯 シグナル種別ブレイクダウン</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>シグナル</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{signal_rows}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:24px">🏷️ 銘柄ブレイクダウン</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>銘柄</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{ticker_rows}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:24px">📐 方向別ブレイクダウン</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>方向</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{direction_rows}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:24px">📒 直近 30 件のシグナル詳細</h2>
+  <div class="scroll-x"><table style="font-size:.82rem">
+    <thead><tr>
+      <th>発火時刻</th><th>銘柄</th><th>シグナル</th><th>L/S</th>
+      <th style="text-align:right">エントリー</th><th style="text-align:right">SL</th><th style="text-align:right">TP1</th>
+      <th style="text-align:right">MFE</th><th style="text-align:right">MAE</th><th>結果</th>
+    </tr></thead>
+    <tbody>{recent_rows or '<tr><td colspan="10" style="text-align:center;color:#6e7781;padding:16px">シグナル蓄積中</td></tr>'}</tbody>
+  </table></div>
+</div>"""
+
+
+def build_html(signals, trades):
+    # timeframe ごとに分割
+    signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
+    signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
+
+    # 3 タブそれぞれのダッシュボード
+    pane_all = build_dashboard_section(signals, "all", "全体", "equityChartAll")
+    pane_4h = build_dashboard_section(signals_4h, "4h", "4H 足のみ", "equityChart4h")
+    pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
+
+    # エクイティカーブ用データ（タブごと）
+    eq_all_labels, eq_all_values = render_equity_curve_data(signals)
+    eq_4h_labels, eq_4h_values = render_equity_curve_data(signals_4h)
+    eq_1h_labels, eq_1h_values = render_equity_curve_data(signals_1h)
+
+    my_trades_html = render_my_trades_section(trades)
+    last_updated = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
+    count_all = len(signals)
+    count_4h = len(signals_4h)
+    count_1h = len(signals_1h)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -379,6 +466,12 @@ def build_html(signals, trades):
     .scroll-x table{{border:none;border-radius:0}}
     .chart-box{{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:18px;margin-bottom:32px;height:340px}}
     .info-box{{background:#fff8c5;border-left:4px solid #d4a72c;border-radius:6px;padding:14px 18px;margin-bottom:24px;font-size:.85rem;color:#6e5d00}}
+    .tab-bar{{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 18px;border-bottom:2px solid #d0d7de;padding-bottom:8px}}
+    .tab-btn{{padding:9px 18px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px 8px 0 0;font-size:.92rem;font-weight:600;color:#57606a;cursor:pointer;transition:all .15s}}
+    .tab-btn:hover{{border-color:#0969da;color:#0969da}}
+    .tab-btn.active{{background:#0969da;border-color:#0969da;color:#fff}}
+    .tab-pane{{display:none}}
+    .tab-pane.active{{display:block}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.kpi-value{{font-size:1.4rem}}h1{{font-size:1.4rem}}}}
@@ -400,6 +493,10 @@ def build_html(signals, trades):
     body.dark .scroll-x{{border-color:#30363d}}
     body.dark .chart-box{{background:#161b22;border-color:#30363d}}
     body.dark .info-box{{background:#332700;border-left-color:#d4a72c;color:#f0d774}}
+    body.dark .tab-bar{{border-bottom-color:#30363d}}
+    body.dark .tab-btn{{background:#161b22;border-color:#30363d;color:#8b949e}}
+    body.dark .tab-btn:hover{{border-color:#58a6ff;color:#58a6ff}}
+    body.dark .tab-btn.active{{background:#1f6feb;border-color:#1f6feb;color:#fff}}
     body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
   </style>
 </head>
@@ -440,94 +537,17 @@ def build_html(signals, trades):
     <b>R:R 期待値</b> は「リスク 1 単位あたり何倍リターンしたか」の指標で、+0.3R 以上が安定。
   </div>
 
-  <h2>📈 全体パフォーマンス</h2>
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">確定シグナル総数</div>
-      <div class="kpi-value">{overall['total']}</div>
-      <div class="kpi-sub">うち未確定 {sum(1 for e in signals if not e.get('outcome'))} 件</div>
-    </div>
-    <div class="kpi-card" style="border-left-color:{win_color}">
-      <div class="kpi-label">勝率（TP1+TP2 / 全確定）</div>
-      <div class="kpi-value" style="color:{win_color}">{overall['win_rate']:.1f}%</div>
-      <div class="kpi-sub">勝ち {overall['wins']} / 負け {overall['losses']} / 期限切れ {overall['expired']}</div>
-    </div>
-    <div class="kpi-card" style="border-left-color:#1a7f37">
-      <div class="kpi-label">TP2 到達率</div>
-      <div class="kpi-value" style="color:#1a7f37">{overall['tp2_rate']:.1f}%</div>
-      <div class="kpi-sub">R:R 1:2.0 達成</div>
-    </div>
-    <div class="kpi-card" style="border-left-color:{er_color}">
-      <div class="kpi-label">期待 R</div>
-      <div class="kpi-value" style="color:{er_color}">{overall['expected_R']:+.2f}R</div>
-      <div class="kpi-sub">+0.3R 以上で安定</div>
-    </div>
-    <div class="kpi-card" style="border-left-color:#1a7f37">
-      <div class="kpi-label">平均最大含み益</div>
-      <div class="kpi-value" style="color:#1a7f37">{overall['avg_mfe']:+.2f}%</div>
-      <div class="kpi-sub">MFE 指標</div>
-    </div>
-    <div class="kpi-card" style="border-left-color:#cf222e">
-      <div class="kpi-label">平均最大含み損</div>
-      <div class="kpi-value" style="color:#cf222e">{overall['avg_mae']:+.2f}%</div>
-      <div class="kpi-sub">MAE 指標</div>
-    </div>
-  </div>
-
-  <h2>💹 模擬エクイティカーブ</h2>
-  <div class="chart-box">
-    <canvas id="equityChart"></canvas>
-  </div>
-
   {my_trades_html}
 
-  <h2>🎯 シグナル種別ブレイクダウン</h2>
-  <div class="scroll-x">
-  <table>
-    <thead><tr>
-      <th>シグナル</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
-      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
-      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
-    </tr></thead>
-    <tbody>{signal_rows}</tbody>
-  </table>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="all">🌐 全体（{count_all}）</button>
+    <button class="tab-btn" data-tab="4h">🕓 4H 足（{count_4h}）</button>
+    <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
   </div>
 
-  <h2 style="margin-top:24px">🏷️ 銘柄ブレイクダウン</h2>
-  <div class="scroll-x">
-  <table>
-    <thead><tr>
-      <th>銘柄</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
-      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
-      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
-    </tr></thead>
-    <tbody>{ticker_rows}</tbody>
-  </table>
-  </div>
-
-  <h2 style="margin-top:24px">📐 方向別ブレイクダウン</h2>
-  <div class="scroll-x">
-  <table>
-    <thead><tr>
-      <th>方向</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
-      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
-      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th>
-    </tr></thead>
-    <tbody>{direction_rows}</tbody>
-  </table>
-  </div>
-
-  <h2 style="margin-top:24px">📒 直近 30 件のシグナル詳細</h2>
-  <div class="scroll-x">
-  <table style="font-size:.82rem">
-    <thead><tr>
-      <th>発火時刻</th><th>銘柄</th><th>シグナル</th><th>L/S</th>
-      <th style="text-align:right">エントリー</th><th style="text-align:right">SL</th><th style="text-align:right">TP1</th>
-      <th style="text-align:right">MFE</th><th style="text-align:right">MAE</th><th>結果</th>
-    </tr></thead>
-    <tbody>{recent_rows or '<tr><td colspan="10" style="text-align:center;color:#6e7781;padding:16px">シグナル蓄積中（最初の発火を待っています）</td></tr>'}</tbody>
-  </table>
-  </div>
+  {pane_all}
+  {pane_4h}
+  {pane_1h}
 </main>
 
 <footer>
@@ -539,21 +559,37 @@ def build_html(signals, trades):
 </footer>
 
 <script>
-  // Equity Chart
-  const eqLabels = {json.dumps(eq_labels, ensure_ascii=False)};
-  const eqValues = {json.dumps(eq_values)};
-  if (eqLabels.length > 0) {{
-    const ctx = document.getElementById('equityChart').getContext('2d');
-    const isDark = document.body.classList.contains('dark');
-    new Chart(ctx, {{
+  // タブ切替
+  document.querySelectorAll('.tab-btn').forEach(btn => {{
+    btn.addEventListener('click', () => {{
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === `pane-${{target}}`));
+      // Chart.js は表示後に resize しないと canvas サイズが 0 のまま
+      window.dispatchEvent(new Event('resize'));
+    }});
+  }});
+  // 初期状態：全体タブ active
+  document.getElementById('pane-all').classList.add('active');
+
+  // エクイティカーブ生成ヘルパー
+  function makeEquityChart(canvasId, labels, values, color) {{
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    if (labels.length === 0) {{
+      el.parentElement.innerHTML =
+        '<div style="text-align:center;padding:60px 0;color:#6e7781">確定シグナルが揃ったらエクイティカーブが表示されます</div>';
+      return;
+    }}
+    new Chart(el.getContext('2d'), {{
       type: 'line',
       data: {{
-        labels: eqLabels,
+        labels: labels,
         datasets: [{{
           label: '模擬残高 ($1000 スタート / $100 リスク per シグナル)',
-          data: eqValues,
-          borderColor: '#0969da',
-          backgroundColor: 'rgba(9, 105, 218, 0.1)',
+          data: values,
+          borderColor: color,
+          backgroundColor: color + '20',
           fill: true,
           tension: 0.2,
           pointRadius: 3,
@@ -563,17 +599,16 @@ def build_html(signals, trades):
         responsive: true,
         maintainAspectRatio: false,
         plugins: {{ legend: {{ position: 'top' }} }},
-        scales: {{
-          y: {{ ticks: {{ callback: v => '$' + v.toLocaleString() }} }}
-        }}
+        scales: {{ y: {{ ticks: {{ callback: v => '$' + v.toLocaleString() }} }} }}
       }}
     }});
-  }} else {{
-    document.querySelector('#equityChart').parentElement.innerHTML =
-      '<div style="text-align:center;padding:60px 0;color:#6e7781">確定シグナルが揃ったらここにエクイティカーブが表示されます</div>';
   }}
 
-  // Dark mode toggle
+  makeEquityChart('equityChartAll', {json.dumps(eq_all_labels, ensure_ascii=False)}, {json.dumps(eq_all_values)}, '#0969da');
+  makeEquityChart('equityChart4h',  {json.dumps(eq_4h_labels, ensure_ascii=False)},  {json.dumps(eq_4h_values)},  '#1a7f37');
+  makeEquityChart('equityChart1h',  {json.dumps(eq_1h_labels, ensure_ascii=False)},  {json.dumps(eq_1h_values)},  '#9a6700');
+
+  // ダークモードトグル
   function toggleTheme(){{
     document.body.classList.toggle('dark');
     localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
