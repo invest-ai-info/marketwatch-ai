@@ -1,0 +1,79 @@
+name: Monthly Backup Snapshot
+
+# 目的: 毎月 1 日に signals-log / my-trades の月次スナップショットを
+#       GitHub Release として固定化。後で時系列バックアップとして使える。
+
+on:
+  schedule:
+    # 毎月 1 日 00:10 UTC (= 09:10 JST)
+    - cron: '10 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 履歴も取得（Release タグ作成のため）
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate fresh CSV
+        run: python export_to_csv.py
+
+      - name: Determine snapshot date
+        id: dates
+        run: |
+          YEAR_MONTH=$(TZ=Asia/Tokyo date +'%Y-%m')
+          PREV_MONTH=$(TZ=Asia/Tokyo date -d 'last month' +'%Y-%m')
+          echo "year_month=$YEAR_MONTH" >> $GITHUB_OUTPUT
+          echo "prev_month=$PREV_MONTH" >> $GITHUB_OUTPUT
+          echo "tag=backup-$PREV_MONTH" >> $GITHUB_OUTPUT
+
+      - name: Create backup zip
+        run: |
+          mkdir -p backup
+          cp signals-log.json signals-log.csv my-trades.json my-trades.csv backup/ 2>/dev/null || true
+          cd backup && zip -r ../backup-${{ steps.dates.outputs.prev_month }}.zip . && cd ..
+          ls -la backup-*.zip
+
+      - name: Count records
+        id: counts
+        run: |
+          SIG_COUNT=$(python -c "import json; print(len(json.load(open('signals-log.json'))))" 2>/dev/null || echo 0)
+          TRADE_COUNT=$(python -c "import json; print(len(json.load(open('my-trades.json'))))" 2>/dev/null || echo 0)
+          echo "signals=$SIG_COUNT" >> $GITHUB_OUTPUT
+          echo "trades=$TRADE_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.dates.outputs.tag }}" \
+            --title "📦 ${{ steps.dates.outputs.prev_month }} 月次バックアップ" \
+            --notes "MarketWatch AI シグナル & 取引記録の月次スナップショット
+
+          ## 📊 統計
+          - シグナル累計: ${{ steps.counts.outputs.signals }} 件
+          - 実取引累計: ${{ steps.counts.outputs.trades }} 件
+          - 取得日時: $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')
+
+          ## 📥 含まれるファイル
+          - signals-log.json - 全シグナル発火履歴
+          - signals-log.csv - 同上 CSV 版（曜日・時間帯フィールド付き）
+          - my-trades.json - 実取引履歴
+          - my-trades.csv - 同上 CSV 版
+
+          ## 🔍 用途
+          - 時系列バックアップ（過去のスナップショットを参照可能）
+          - Excel / pandas での分析
+          - 障害時の復旧" \
+            "backup-${{ steps.dates.outputs.prev_month }}.zip"
