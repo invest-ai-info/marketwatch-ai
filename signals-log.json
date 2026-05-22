@@ -563,7 +563,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 2.087,
+    "max_favorable_excursion_pct": 2.119,
     "max_adverse_excursion_pct": -0.377,
     "email_sent": true,
     "environment": {
@@ -1068,7 +1068,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.069,
+    "max_favorable_excursion_pct": 0.095,
     "max_adverse_excursion_pct": -0.053,
     "email_sent": false,
     "whipsaw_check": {
@@ -2352,6 +2352,697 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GC=F_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "GC=F",
+    "asset_name": "ゴールド先物",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 4518.39990234375,
+    "stop_loss": 4489.5913831388925,
+    "take_profit_1": 4556.811261283559,
+    "take_profit_2": 4576.016940753464,
+    "atr": 19.205679469904798,
+    "sl_pct": -0.6375823262105211,
+    "tp1_pct": 0.8501097682806948,
+    "tp2_pct": 1.2751646524210423,
+    "indicators_at_signal": {
+      "rsi": 48.05,
+      "macd": -3.1549,
+      "macd_sig": -1.4307,
+      "ma25": 4526.21,
+      "ma75": 4517.37,
+      "bb_low": 4504.18,
+      "bb_up": 4548.29,
+      "recent_high": 4557.8,
+      "recent_low": 4488.0
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今週の金価格：金は週を通して4,500ドル近辺で推移",
+      "Caledonia Mining（NYSEAM: CMCL）の株価下落と長期リターンを踏まえた企業価値評価",
+      "McEwen Mining（MUX）の企業価値評価：サンホセ新配当とプロジェクト成長アップデートを受けて",
+      "Richemont、11%の売上成長を報告：カルティエ需要がラグジュアリー市場の減速を打破",
+      "金価格下落：FRBウォーラー理事が利上げの可能性を示唆"
+    ],
+    "ai_narrative": "ゴールド先物、現在4518.40ドル。ボリンジャーバンド-2σタッチからの反発を狙うロング戦略です。テクニカルには、25MAが75MAを上回っており、MACDもデッドクロスから回復の兆しを見せています。ファンダメンタルズでは、FRB理事の利上げ示唆が金価格の上値を抑える要因となりうる一方、週を通して4500ドル近辺で推移していることから、底堅さも伺えます。このシナリオが崩れるのは、4489.59ドルを下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 11.5,
+      "prev_direction": "ショート（売り）",
+      "prev_signal_id": "GC=F_1h_20260522_1324"
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 4H 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.63,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.78
+      },
+      "atr_regime": {
+        "current_atr": 19.2057,
+        "avg_atr_30d": 19.4967,
+        "ratio": 0.99,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "NKD=F_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "NKD=F",
+    "asset_name": "日経 225 先物 (CME)",
+    "signal_types": [
+      "high_break"
+    ],
+    "primary_signal": "high_break",
+    "primary_signal_label": "🟢 直近 20 本高値ブレイク（トレンド継続）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 63555.0,
+    "stop_loss": 63172.51243636468,
+    "take_profit_1": 64064.983418180425,
+    "take_profit_2": 64319.97512727064,
+    "atr": 254.9917090902129,
+    "sl_pct": -0.6018213573051991,
+    "tp1_pct": 0.8024284764069323,
+    "tp2_pct": 1.2036427146103983,
+    "indicators_at_signal": {
+      "rsi": 73.47,
+      "macd": 412.1674,
+      "macd_sig": 426.1901,
+      "ma25": 62783.8,
+      "ma75": 61487.13,
+      "bb_low": 62136.72,
+      "bb_up": 63914.28,
+      "recent_high": 63545.0,
+      "recent_low": 61980.0
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "日経225先物は直近20本高値ブレイクを達成し、RSIも73.5と買われ過ぎを示唆する一方、MACDもゴールデンクロス近辺で上昇ポテンシャルを示唆しています。25MAが75MAを上回っていることも強気トレンドを支持。ボリンジャーバンド+2σ近辺での推移は、さらなる上昇を示唆する一方、+2σを大きく超える場合は過熱感からの反落リスクも。  ファンダメンタルズ面では、足元のニュース材料は限定的ですが、米国のインフレ指標の鈍化やFRBの利上げ停止観測が、リスクオンムードを支えています。通貨強弱ではJPYが弱含みであり、円安による輸出関連企業への追い風も期待されます。  このロングシナリオが崩れるとすれば、想定外のインフレ再燃や、主要国中央銀行からのタカ派的な発言により、リスクオフムードが急速に広がり、株価が急落する展開が考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.63,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.78
+      },
+      "atr_regime": {
+        "current_atr": 254.9917,
+        "avg_atr_30d": 314.6318,
+        "ratio": 0.81,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "BTC-USD_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 76683.96875,
+    "stop_loss": 76212.28430723936,
+    "take_profit_1": 77312.88134034752,
+    "take_profit_2": 77627.3376355213,
+    "atr": 314.45629517376335,
+    "sl_pct": -0.6151017617494465,
+    "tp1_pct": 0.8201356823325954,
+    "tp2_pct": 1.230203523498893,
+    "indicators_at_signal": {
+      "rsi": 34.95,
+      "macd": -130.7515,
+      "macd_sig": -54.5442,
+      "ma25": 77363.29,
+      "ma75": 77266.3,
+      "bb_low": 76792.48,
+      "bb_up": 77915.41,
+      "recent_high": 77829.15,
+      "recent_low": 76663.09
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアムの今日（2026年5月22日、金曜日）の価格：今週は値動きわずか",
+      "今日の株式市場：消費者データにサプライズもダウは上昇を維持；このニュースにDellが急騰（ライブ速報）",
+      "MicroStrategyのマイケル・セイラー氏、7年間のBTC/株最大化のためビットコイン売却が必要になる可能性を示唆",
+      "Arthur Hayes氏の「聖なる三位一体」がビットコインをアウトパフォーム – HYPEは史上最高値、ZEC、NEARは今週6ヶ月ぶりの高値に急騰",
+      "Galaxy、BitGoとの1億ドル訴訟で仮想通貨ディール破綻の余波に再び焦点"
+    ],
+    "ai_narrative": "ビットコインはボリンジャーバンド-2σにタッチし、RSIも売られすぎ水準を示唆しており、短期的な反発が期待される。MACDのデッドクロスは一時的であり、75MA、25MAが上向きであることから、上昇トレンドは継続すると見られる。足元のニュース材料は限定的だが、通貨強弱でUSD、JPYが弱含み、ビットコインの買い圧力となりうる。シナリオが崩れるとすれば、76663.09の直近安値を明確に割り込んだ場合。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 破綻"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.62,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.84
+      },
+      "atr_regime": {
+        "current_atr": 314.4563,
+        "avg_atr_30d": 350.1966,
+        "ratio": 0.9,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "破綻"
+        ],
+        "matched_titles": [
+          "Galaxy、BitGoとの1億ドル訴訟で仮想通貨ディール破綻の余波に再び焦点"
+        ]
+      }
+    }
+  },
+  {
+    "id": "USDJPY=X_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "USDJPY=X",
+    "asset_name": "ドル円",
+    "signal_types": [
+      "macd_golden",
+      "bb_upper_break",
+      "high_break"
+    ],
+    "primary_signal": "macd_golden",
+    "primary_signal_label": "🟢 MACD ゴールデンクロス（短期上昇転換）",
+    "signal_count": 3,
+    "direction": "ロング（買い）",
+    "entry": 159.21400451660156,
+    "stop_loss": 159.045131161487,
+    "take_profit_1": 159.43916899008764,
+    "take_profit_2": 159.55175122683067,
+    "atr": 0.11258223674304209,
+    "sl_pct": -0.10606689758686046,
+    "tp1_pct": 0.1414225301158139,
+    "tp2_pct": 0.2121337951737209,
+    "indicators_at_signal": {
+      "rsi": 61.46,
+      "macd": 0.0304,
+      "macd_sig": 0.024,
+      "ma25": 159.07,
+      "ma75": 159.01,
+      "bb_low": 158.94,
+      "bb_up": 159.21,
+      "recent_high": 159.18,
+      "recent_low": 158.85
+    },
+    "news_count": 3,
+    "news_titles": [
+      "ドル安がリリーフラリーの恩恵を受けられない理由",
+      "トランプ氏のイラン関連投稿に対する市場の反応（チャートで見る）",
+      "ドルはまだ終わっていない。イラン危機下でライバルを凌駕する理由"
+    ],
+    "ai_narrative": "ドル円は、MACDのゴールデンクロス、ボリンジャーバンド+2σ突破、直近高値更新といったテクニカルシグナルから、短期的な上昇トレンドへの転換が示唆されています。為替強弱でもドルは小幅な下落ながらも円よりは強く、この上昇方向感と整合的です。足元のニュースでは、地政学リスクを背景としたドル高圧力も示唆されており、テクニカルとファンダメンタルの両面で買い目線が妥当と考えられます。シナリオが崩れる展開としては、25MA（159.07）を下回る動きが挙げられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 USD/JPY 強弱差は小さい（+0.05%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.63,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.78
+      },
+      "atr_regime": {
+        "current_atr": 0.1126,
+        "avg_atr_30d": 0.1373,
+        "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURJPY=X_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "EURJPY=X",
+    "asset_name": "ユーロ円",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 184.70899963378906,
+    "stop_loss": 184.4886639858603,
+    "take_profit_1": 185.0027804976941,
+    "take_profit_2": 185.1496709296466,
+    "atr": 0.14689043195250728,
+    "sl_pct": -0.11928798724783665,
+    "tp1_pct": 0.15905064966378218,
+    "tp2_pct": 0.2385759744956733,
+    "indicators_at_signal": {
+      "rsi": 54.36,
+      "macd": -0.0157,
+      "macd_sig": -0.0079,
+      "ma25": 184.65,
+      "ma75": 184.6,
+      "bb_low": 184.51,
+      "bb_up": 184.81,
+      "recent_high": 184.81,
+      "recent_low": 184.44
+    },
+    "news_count": 2,
+    "news_titles": [
+      "インフレと日銀会合を前に、円はまちまちな値動き",
+      "EUR/USDの逆説：景気減速下でのユーロ高"
+    ],
+    "ai_narrative": "ユーロ円は、ボリンジャーバンド-2σにタッチし、反発の兆しを見せています。RSIも50台で中立圏にあり、MACDもクロス間近であることから、短期的な上昇が期待できます。通貨強弱でもユーロは堅調で、GBPに次ぐ強さを見せており、円は弱含みです。直近のニュースでは、ユーロ高を示唆する材料もあり、ファンダメンタルズとも整合性が取れています。このシナリオは、-2σを下抜ける展開で崩れる可能性があります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 EUR/JPY 強弱差は小さい（+0.18%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.63,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.78
+      },
+      "atr_regime": {
+        "current_atr": 0.1469,
+        "avg_atr_30d": 0.1558,
+        "ratio": 0.94,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPJPY=X_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPJPY=X",
+    "asset_name": "ポンド円",
+    "signal_types": [
+      "rsi_overbought",
+      "bb_upper_break"
+    ],
+    "primary_signal": "rsi_overbought",
+    "primary_signal_label": "🟡 RSI 過買い（利確検討）",
+    "signal_count": 2,
+    "direction": null,
+    "entry": 213.9409942626953,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.2034397118697258,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 70.16,
+      "macd": 0.0794,
+      "macd_sig": 0.0526,
+      "ma25": 213.57,
+      "ma75": 213.35,
+      "bb_low": 213.35,
+      "bb_up": 213.83,
+      "recent_high": 214.04,
+      "recent_low": 213.26
+    },
+    "news_count": 5,
+    "news_titles": [
+      "弱いGDP発表後、ポンドはほぼ横ばい",
+      "BoE（イングランド銀行）がよりハト派的な姿勢を示し、ポンド下落",
+      "弱い雇用統計を受け、ポンドはまちまちな値動き",
+      "月次GDPの改善にもかかわらず、ポンドは若干下落",
+      "予算発表後、ポンドは全体的に上昇"
+    ],
+    "ai_narrative": "ポンド円はRSI70.2、ボリンジャーバンド+2σ超えとテクニカル的に過熱感が見られます。直近のニュースでは弱いGDP、雇用統計、BoEのハト派姿勢がポンドにとってネガティブに作用しており、ファンダメンタルズも上昇の勢いを削ぐ要因となっています。通貨強弱でもポンドはユーロに次ぐ上昇ですが、ドル円の上昇にはやや劣勢です。このまま75MA（213.35）を明確に下抜ける展開となれば、シナリオは崩れるでしょう。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-23T00:53:52+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.63,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.78
+      },
+      "atr_regime": {
+        "current_atr": 0.2034,
+        "avg_atr_30d": 0.2019,
+        "ratio": 1.01,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPUSD=X_1h_20260523_0052",
+    "fired_at": "2026-05-23T00:52:38+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 1.343833088874817,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.0012778626341216313,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 58.24,
+      "macd": 0.0002,
+      "macd_sig": 0.0001,
+      "ma25": 1.34,
+      "ma75": 1.34,
+      "bb_low": 1.34,
+      "bb_up": 1.34,
+      "recent_high": 1.35,
+      "recent_low": 1.34
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ドイツ銀行、ユーロ/ポンドの上昇余地を見込む",
+      "バーナム氏のスターマー氏への挑戦見込みでギルト（英国債）が急落",
+      "バーナム氏の挑戦にシティが身構える中、英国の借り入れコストが28年ぶり高水準に",
+      "英首相スターマー氏に危機、退任のタイミングが市場に与える影響",
+      "英スターマー氏、リーダーシップ危機が市場に波及する中、職務維持に奮闘"
+    ],
+    "ai_narrative": "ポンドドルはボリンジャーバンド+2σを上抜けましたが、RSIは58と過熱圏には達しておらず、MACDもゴールデンクロス間近と、更なる上昇の可能性も示唆されます。英国債急落や借り入れコスト高騰といったニュースはポンド売り材料ですが、スターマー首相のリーダーシップ危機による政治的不透明感がポンドの重しとなり、現状のレンジ相場を形成していると考えられます。通貨強弱ではポンドはユーロに次ぐ強さを見せており、ややポジティブな状況です。シナリオが崩れるとすれば、75MA（1.34）を明確に下抜けた場合でしょう。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-23T00:53:52+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.039,
+      "EUR": 0.095,
+      "GBP": 0.261,
+      "JPY": -0.09,
+      "AUD": -0.139
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.62,
+        "avg_30d": 17.96,
+        "change_24h_pct": -0.84
+      },
+      "atr_regime": {
+        "current_atr": 0.0013,
+        "avg_atr_30d": 0.0014,
+        "ratio": 0.91,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "バーナム氏のスターマー氏への挑戦見込みでギルト（英国債）が急落"
+        ]
       }
     }
   }
