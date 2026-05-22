@@ -344,6 +344,204 @@ def fetch_ticker_news(ticker, max_items=5):
 
 
 # ─────────────────────────────────────────────
+# 🆕 通貨強弱分析（Currency Strength Index）
+# ─────────────────────────────────────────────
+# FX ペアと通貨の対応マップ（pair: (base, quote)）
+# 例: EURJPY=X は base=EUR, quote=JPY → EUR/JPY 上昇 = EUR 強・JPY 弱
+FX_PAIR_MAP = {
+    "USDJPY=X": ("USD", "JPY"),
+    "EURJPY=X": ("EUR", "JPY"),
+    "GBPJPY=X": ("GBP", "JPY"),
+    "AUDJPY=X": ("AUD", "JPY"),
+    "EURUSD=X": ("EUR", "USD"),
+    "GBPUSD=X": ("GBP", "USD"),
+    "AUDUSD=X": ("AUD", "USD"),
+    "EURAUD=X": ("EUR", "AUD"),
+    "GBPAUD=X": ("GBP", "AUD"),
+}
+
+
+def calc_pair_change_24h(ticker, period="3d"):
+    """指定 FX ペアの 24h 変動率（%）を計算"""
+    try:
+        df = yf.download(ticker, period=period, interval="1h", progress=False, auto_adjust=True)
+        if df.empty or len(df) < 24:
+            return None
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        # 直近 24 本前と最新の比較
+        latest = float(df["Close"].iloc[-1])
+        prev = float(df["Close"].iloc[-24])
+        if prev == 0:
+            return None
+        return round((latest - prev) / prev * 100, 3)
+    except Exception:
+        return None
+
+
+def calc_currency_strength():
+    """全 FX ペアの 24h 変動率から、各通貨（USD/EUR/GBP/JPY/AUD）の総合強弱を算出。
+    返り値: {USD: +0.42, EUR: -0.10, ...} 単位は %"""
+    pair_changes = {}
+    for pair_ticker in FX_PAIR_MAP.keys():
+        ch = calc_pair_change_24h(pair_ticker)
+        if ch is not None:
+            pair_changes[pair_ticker] = ch
+
+    if not pair_changes:
+        return None
+
+    # 各通貨に対して、base のときは +変動率、quote のときは -変動率を集計
+    currency_scores = {"USD": [], "EUR": [], "GBP": [], "JPY": [], "AUD": []}
+    for pair, change in pair_changes.items():
+        base, quote = FX_PAIR_MAP[pair]
+        if base in currency_scores:
+            currency_scores[base].append(change)
+        if quote in currency_scores:
+            currency_scores[quote].append(-change)  # 後者は逆相関
+
+    # 平均
+    result = {}
+    for cur, scores in currency_scores.items():
+        if scores:
+            result[cur] = round(sum(scores) / len(scores), 3)
+        else:
+            result[cur] = None
+
+    return result
+
+
+def format_currency_strength(strength):
+    """通貨強弱を文字列で整形（ランキング表示用）"""
+    if not strength:
+        return ""
+    # None でないもののみソート
+    valid = [(c, v) for c, v in strength.items() if v is not None]
+    valid.sort(key=lambda x: -x[1])
+    rank_emoji = ["🥇", "🥈", "🥉", "4位", "5位"]
+    lines = ["【💪 通貨強弱（24h）】"]
+    for i, (cur, val) in enumerate(valid):
+        emoji = rank_emoji[i] if i < len(rank_emoji) else f"{i+1}位"
+        marker = ""
+        if i == 0 and val > 0.3:
+            marker = "  ⭐ 強い"
+        elif i == len(valid) - 1 and val < -0.3:
+            marker = "  ⚠️ 弱い"
+        lines.append(f"  {emoji} {cur}  {val:+.2f}%{marker}")
+    return "\n".join(lines) + "\n"
+
+
+def evaluate_currency_strength_alignment(ticker, position_direction, strength):
+    """シグナルが通貨強弱とアラインしているか判定。
+    例: AUDJPY ロング → AUD 強 + JPY 弱 なら "順張り"、逆なら "逆張り"
+    返り値: dict {aligned: True/False/None, explanation, suggested_direction}"""
+    if not strength or ticker not in FX_PAIR_MAP or not position_direction:
+        return None
+    base, quote = FX_PAIR_MAP[ticker]
+    base_str = strength.get(base)
+    quote_str = strength.get(quote)
+    if base_str is None or quote_str is None:
+        return None
+
+    # 強弱差
+    strength_diff = base_str - quote_str  # 正なら base 強 = ペア上昇圧力
+    current_sign = _direction_str_to_sign(position_direction)
+
+    if abs(strength_diff) < 0.2:
+        return {
+            "aligned": None,
+            "explanation": f"💪 {base}/{quote} 強弱差は小さい（{strength_diff:+.2f}%、中立）",
+            "suggested_direction": None,
+        }
+
+    expected_sign = 1 if strength_diff > 0 else -1  # 強弱差から想定方向
+    aligned = expected_sign == current_sign
+
+    if aligned:
+        explanation = (f"✅ {base} {'強' if base_str > 0 else '弱'}（{base_str:+.2f}%）× "
+                       f"{quote} {'強' if quote_str > 0 else '弱'}（{quote_str:+.2f}%）"
+                       f" → 通貨強弱もシグナル方向と一致（複合順張り）")
+    else:
+        explanation = (f"⚠️ {base} {'強' if base_str > 0 else '弱'}（{base_str:+.2f}%）× "
+                       f"{quote} {'強' if quote_str > 0 else '弱'}（{quote_str:+.2f}%）"
+                       f" → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）")
+
+    return {
+        "aligned": aligned,
+        "explanation": explanation,
+        "strength_diff": round(strength_diff, 3),
+        "base_strength": base_str,
+        "quote_strength": quote_str,
+    }
+
+
+# ─────────────────────────────────────────────
+# 🆕 AUD ペア専用 中国情勢フォーカス
+# ─────────────────────────────────────────────
+def fetch_china_market_data():
+    """上海総合・ハンセン指数の現状と 24h 変動を取得"""
+    indices = {
+        "000001.SS": "上海総合指数",
+        "^HSI": "香港ハンセン指数",
+    }
+    result = {}
+    for ticker, name in indices.items():
+        try:
+            df = yf.download(ticker, period="5d", interval="1d", progress=False, auto_adjust=True)
+            if df.empty or len(df) < 2:
+                continue
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+            latest = float(df["Close"].iloc[-1])
+            prev = float(df["Close"].iloc[-2])
+            change_pct = (latest - prev) / prev * 100 if prev else 0
+            result[ticker] = {
+                "name": name,
+                "current": round(latest, 2),
+                "change_pct": round(change_pct, 2),
+            }
+        except Exception as e:
+            print(f"    ⚠️ {ticker} 取得失敗: {type(e).__name__}: {str(e)[:60]}")
+            continue
+    return result
+
+
+def fetch_china_news(api_key, max_items=5):
+    """中国関連ニュースを取得（^HSI と上海関連ティッカーから）"""
+    titles = []
+    seen = set()
+    for ticker in ("^HSI", "000001.SS"):
+        try:
+            news = yf.Ticker(ticker).news or []
+            for n in news[:max_items * 2]:
+                content = n.get("content", n)
+                title = content.get("title", "") or n.get("title", "")
+                if title and title not in seen:
+                    titles.append(title)
+                    seen.add(title)
+                if len(titles) >= max_items:
+                    break
+        except Exception:
+            continue
+        if len(titles) >= max_items:
+            break
+    # 日本語翻訳
+    if titles and api_key:
+        titles = translate_titles_to_jp(titles, api_key)
+    return titles
+
+
+def build_china_context_for_aud(ticker, api_key):
+    """AUD ペアの場合のみ中国コンテキストを構築。AUD ペアでなければ None。"""
+    if ticker not in ("AUDJPY=X", "AUDUSD=X", "EURAUD=X", "GBPAUD=X"):
+        return None
+    print(f"    🇨🇳 AUD ペアのため中国情勢を取得中...")
+    market = fetch_china_market_data()
+    news = fetch_china_news(api_key, max_items=5)
+    return {"market": market, "news": news}
+
+
+# ─────────────────────────────────────────────
 # 🆕 往復ビンタ防止 — シグナル反転検知
 # ─────────────────────────────────────────────
 REVERSAL_LOOKBACK_HOURS = 12  # 直近 N 時間以内に反対方向シグナルがあったら反転候補と判定
@@ -656,6 +854,53 @@ HISTORICAL_REGIMES = {
 }
 
 
+def _build_currency_strength_block(strength, fx_alignment):
+    """メール本文用の通貨強弱ブロック（FX ペア時のみ表示）"""
+    if not strength:
+        return ""
+    block = format_currency_strength(strength)
+    if fx_alignment:
+        block += "\n" + fx_alignment["explanation"] + "\n"
+    return block + "\n"
+
+
+def _build_china_block(china_ctx):
+    """AUD ペア専用：中国情勢ブロック"""
+    if not china_ctx:
+        return ""
+    lines = ["【🇨🇳 中国情勢（AUD ペア専用フォーカス）】"]
+
+    market = china_ctx.get("market") or {}
+    for ticker, data in market.items():
+        ch = data["change_pct"]
+        emoji = "🟢" if ch > 0 else "🔴" if ch < 0 else "⚪"
+        lines.append(f"  {emoji} {data['name']}: {data['current']:,.2f}（前日比 {ch:+.2f}%）")
+
+    news = china_ctx.get("news") or []
+    if news:
+        lines.append("")
+        lines.append("📰 中国関連ニュース:")
+        for t in news[:5]:
+            lines.append(f"  - {t[:100]}")
+
+    # AUD 解釈ヒント
+    avg_change = 0
+    cnt = 0
+    for data in market.values():
+        avg_change += data["change_pct"]
+        cnt += 1
+    if cnt > 0:
+        avg_change /= cnt
+        if avg_change > 0.5:
+            lines.append("\n💡 中国市場は堅調 → AUD 上値追い風の可能性")
+        elif avg_change < -0.5:
+            lines.append("\n💡 中国市場は軟調 → AUD 上値抑制要因。AUD ロングは慎重に")
+        else:
+            lines.append("\n💡 中国市場は中立、AUD への影響は限定的")
+
+    return "\n".join(lines) + "\n\n"
+
+
 def _build_whipsaw_block(reversal, trend_align):
     """メール本文用のシグナル反転・トレンド整合性ブロックを構築"""
     has_reversal = reversal and reversal.get("is_reversal")
@@ -912,7 +1157,8 @@ def translate_titles_to_jp(titles, api_key):
 # ─────────────────────────────────────────────
 # Gemini で「なぜこのシグナルか」の解説生成（テクニカル + ニュース）
 # ─────────────────────────────────────────────
-def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key, timeframe="4h"):
+def generate_ai_narrative(asset_name, current_price_str, signals, indicators, news_titles, position_plan, api_key, timeframe="4h",
+                            currency_strength=None, fx_alignment=None, china_ctx=None):
     """SL/TP は固定値（ATR 算出済）を渡し、AI には「なぜこの水準が妥当か」の解説のみさせる。"""
     if not api_key:
         return ""
@@ -951,6 +1197,34 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
     else:
         plan_section = "\n\n【参考ポジションプラン】方向感が定まらないため今回は提示なし（様子見推奨）"
 
+    # 🆕 通貨強弱セクション
+    currency_section = ""
+    if currency_strength:
+        valid = [(c, v) for c, v in currency_strength.items() if v is not None]
+        valid.sort(key=lambda x: -x[1])
+        ranking = " > ".join([f"{c}({v:+.2f}%)" for c, v in valid])
+        currency_section = f"\n\n【通貨強弱（24h）】\n{ranking}"
+        if fx_alignment and fx_alignment.get("aligned") is not None:
+            currency_section += f"\n→ {fx_alignment['explanation']}"
+
+    # 🆕 中国情勢セクション（AUD ペア専用）
+    china_section = ""
+    if china_ctx:
+        market_lines = []
+        for tk, d in (china_ctx.get("market") or {}).items():
+            market_lines.append(f"- {d['name']}: {d['current']:,.2f}（前日比 {d['change_pct']:+.2f}%）")
+        market_block = "\n".join(market_lines) if market_lines else "（取得失敗）"
+        news_lines = "\n".join([f"- {t[:100]}" for t in (china_ctx.get("news") or [])[:5]])
+        china_section = f"""
+
+【🇨🇳 中国情勢（AUD ペア専用フォーカス／重要：AUD は中国景気依存通貨）】
+{market_block}
+{news_lines if news_lines else '（中国関連ニュース取得失敗）'}
+
+【⚠️ 解説時の注意】
+このペアは AUD を含むため、中国景気が AUD の方向性に強く影響する。
+中国市場が軟調なら AUD の上値抑制要因、堅調なら追い風になる点を解説に必ず織り込むこと。"""
+
     prompt = f"""あなたは日本人個人投資家向けのテクニカル + ファンダメンタル アナリストです。
 {asset_name}（現在 {current_price_str}）の {tf_label} チャートで以下のシグナルが発火しました。
 **SL/TP の数値は既に ATR ベースで算出済み**なので、その数値を変更せず、「なぜこの方向感・この水準が妥当か」をテクニカルとファンダの両面から解説してください。
@@ -965,11 +1239,13 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
 - ボリンジャー: -2σ {indicators['bb_low']:.2f} / +2σ {indicators['bb_up']:.2f}
 - 直近 20 本: 高値 {indicators['recent_high']:.2f} / 安値 {indicators['recent_low']:.2f}
 - ATR(14): {indicators.get('atr', 0):.2f}（1 本の平均的な値動き）
-{plan_section}
+{plan_section}{currency_section}{china_section}
 {news_section}
 
-【出力フォーマット】（プレーンテキスト、250 字以内）
-2〜3 文。テクニカル要因（なぜこの方向か）とファンダ要因（ニュース材料との整合性）の両方に触れる。
+【出力フォーマット】（プレーンテキスト、{350 if china_ctx else 250} 字以内）
+2〜4 文。テクニカル要因（なぜこの方向か）とファンダ要因（ニュース材料との整合性）の両方に触れる。
+通貨強弱情報がある場合は、それと方向感が一致しているかも 1 文触れる。
+{('AUD ペアなので中国景気の影響を必ず 1 文触れること。' if china_ctx else '')}
 **SL/TP の数値は出さない（既に上で確定済み）**、代わりに「シナリオが崩れる条件（=SL に到達する展開）」を 1 つだけ言及する。
 ニュースに該当する材料がなければ「足元のニュース材料は限定的」と書く。"""
 
@@ -1161,6 +1437,14 @@ def main():
 
     signals_log = load_signals_log()
     economic_events_data = load_economic_events()
+    # 🆕 通貨強弱を 1 回だけ取得（全銘柄で共有）
+    print("💪 通貨強弱（24h）を取得中...")
+    currency_strength = calc_currency_strength()
+    if currency_strength:
+        sorted_strength = sorted([(c, v) for c, v in currency_strength.items() if v is not None],
+                                  key=lambda x: -x[1])
+        ranking = " > ".join([f"{c}({v:+.2f}%)" for c, v in sorted_strength])
+        print(f"  📊 {ranking}")
     total_signals = 0
     sent_emails = 0
     now_jst = datetime.now(JST)
@@ -1232,8 +1516,26 @@ def main():
         if trend_align and trend_align.get("aligned") is not None:
             print(f"    📊 {trend_align['explanation']}")
 
-        # Gemini 解説（テクニカル + ファンダ + 確定済プランを渡す）
-        narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, position_plan, gemini_key, timeframe=timeframe)
+        # 🆕 通貨強弱との整合性チェック（FX ペアのみ）
+        fx_alignment = None
+        if ticker in FX_PAIR_MAP and position_direction:
+            fx_alignment = evaluate_currency_strength_alignment(ticker, position_direction, currency_strength)
+            if fx_alignment and fx_alignment.get("aligned") is not None:
+                print(f"    💪 {fx_alignment['explanation']}")
+
+        # 🆕 AUD ペア専用：中国情勢取得
+        china_ctx = build_china_context_for_aud(ticker, gemini_key)
+        if china_ctx and china_ctx.get("market"):
+            for tk, d in china_ctx["market"].items():
+                print(f"       {d['name']}: {d['current']:,.2f} ({d['change_pct']:+.2f}%)")
+
+        # Gemini 解説（テクニカル + ファンダ + 確定済プラン + 通貨強弱 + 中国コンテキストを渡す）
+        narrative = generate_ai_narrative(
+            name, price_str, fresh_signals, indicators, news_titles, position_plan,
+            gemini_key, timeframe=timeframe,
+            currency_strength=currency_strength, fx_alignment=fx_alignment,
+            china_ctx=china_ctx,
+        )
 
         # メール本文構築
         signal_block = "\n".join([f"- {s['label']}\n  {s['detail']}" for s in fresh_signals])
@@ -1276,7 +1578,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
-{_build_whipsaw_block(reversal, trend_align)}{_build_environment_block(env, currency, decimals)}
+{_build_currency_strength_block(currency_strength, fx_alignment) if ticker in FX_PAIR_MAP else ''}{_build_china_block(china_ctx)}{_build_whipsaw_block(reversal, trend_align)}{_build_environment_block(env, currency, decimals)}
 {plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
@@ -1357,6 +1659,12 @@ MarketWatch AI Alerts
             "higher_tf_trend": trend_align.get("higher_tf_trend") if trend_align else None,
             "explanation": trend_align.get("explanation") if trend_align else "",
         }
+        # 🆕 通貨強弱データを記録（全銘柄共通スナップショット）
+        log_entry["currency_strength"] = currency_strength
+        # 🆕 FX 整合性データ（FX ペアのみ）
+        log_entry["fx_alignment"] = fx_alignment
+        # 🆕 中国コンテキスト（AUD ペアのみ）
+        log_entry["china_context"] = china_ctx
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
             "env_score": env["env_score"],
