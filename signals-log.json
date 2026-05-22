@@ -487,7 +487,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": -0.207,
+    "max_favorable_excursion_pct": 1.106,
     "max_adverse_excursion_pct": -2.802,
     "email_sent": true,
     "environment": {
@@ -1051,7 +1051,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.049,
+    "max_favorable_excursion_pct": 0.052,
     "max_adverse_excursion_pct": -0.013,
     "email_sent": false,
     "whipsaw_check": {
@@ -1324,7 +1324,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.033,
+    "max_favorable_excursion_pct": 0.056,
     "max_adverse_excursion_pct": -0.118,
     "email_sent": false,
     "whipsaw_check": {
@@ -1409,8 +1409,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.073,
+    "max_adverse_excursion_pct": 0.001,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1507,8 +1507,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.019,
+    "max_adverse_excursion_pct": -0.152,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1628,8 +1628,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.093,
+    "max_adverse_excursion_pct": -0.012,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1841,8 +1841,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.02,
+    "max_adverse_excursion_pct": -0.095,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1956,8 +1956,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.01,
+    "max_adverse_excursion_pct": -0.128,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -2021,6 +2021,104 @@
         "current_atr": 0.0021,
         "avg_atr_30d": 0.0025,
         "ratio": 0.85,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "CL=F_1h_20260522_2132",
+    "fired_at": "2026-05-22T21:32:16+09:00",
+    "timeframe": "1h",
+    "ticker": "CL=F",
+    "asset_name": "原油 WTI 先物",
+    "signal_types": [
+      "macd_dead",
+      "bb_lower_touch"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 2,
+    "direction": null,
+    "entry": 96.22000122070312,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 1.2185074900968171,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 36.24,
+      "macd": -0.4916,
+      "macd_sig": -0.4694,
+      "ma25": 98.46,
+      "ma75": 100.55,
+      "bb_low": 96.22,
+      "bb_up": 99.49,
+      "recent_high": 102.14,
+      "recent_low": 95.76
+    },
+    "news_count": 5,
+    "news_titles": [
+      "原油価格、K字型経済の底辺層の消費者を圧迫",
+      "米・イラン、取引成立「数時間以内」か、イラン国営通信が報道、原油価格下落",
+      "金利はまだ十分ではない、債券市場がFRBに静かに警告",
+      "ナイキ（NKE）株上昇、知っておくべきこと",
+      "G-III、Steven Madden、Somnigroup、Hyatt Hotels、YETI株が急騰、知っておくべきこと"
+    ],
+    "ai_narrative": "WTI原油は、MACDのデッドクロスとボリンジャーバンド-2σタッチによる短期的な下降圧力と反発期待が交錯しています。テクニカルには、MACDがシグナル線を下抜け、RSIも36台と売られすぎを示唆しており、更なる下落の可能性も視野に入ります。ファンダメンタルでは、米・イランの取引成立報道が原油価格下落要因として意識されます。FRBの利上げ継続懸念もドル高を通じて原油価格への下押し圧力となる可能性があります。通貨強弱ではドルが弱含みですが、原油固有の材料が優勢と見られます。シナリオが崩れるのは、ボリンジャーバンド-2σを明確に下抜けた場合です。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-22T21:32:38+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.035,
+      "EUR": 0.046,
+      "GBP": 0.131,
+      "JPY": 0.034,
+      "AUD": -0.133
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.79,
+        "avg_30d": 17.97,
+        "change_24h_pct": 0.18
+      },
+      "atr_regime": {
+        "current_atr": 1.2185,
+        "avg_atr_30d": 1.1663,
+        "ratio": 1.04,
         "regime": "normal",
         "label": "🟢 平常"
       },
