@@ -85,7 +85,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.8,
+    "max_favorable_excursion_pct": 0.97,
     "max_adverse_excursion_pct": -1.349,
     "email_sent": true,
     "timeframe": "4h"
@@ -296,7 +296,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.654,
+    "max_favorable_excursion_pct": 0.823,
     "max_adverse_excursion_pct": -1.493,
     "email_sent": true,
     "timeframe": "4h"
@@ -563,7 +563,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": -0.064,
+    "max_favorable_excursion_pct": 0.305,
     "max_adverse_excursion_pct": -0.377,
     "email_sent": true,
     "environment": {
@@ -639,8 +639,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.122,
-    "max_adverse_excursion_pct": -0.186,
+    "max_favorable_excursion_pct": -0.106,
+    "max_adverse_excursion_pct": -0.334,
     "email_sent": false,
     "environment": {
       "env_score": "A",
@@ -659,6 +659,76 @@
         "current_atr": 408.3116,
         "avg_atr_30d": 365.8806,
         "ratio": 1.12,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "NKD=F_1h_20260522_0913",
+    "fired_at": "2026-05-22T09:13:21+09:00",
+    "timeframe": "1h",
+    "ticker": "NKD=F",
+    "asset_name": "日経 225 先物 (CME)",
+    "signal_types": [
+      "high_break"
+    ],
+    "primary_signal": "high_break",
+    "primary_signal_label": "🟢 直近 20 本高値ブレイク（トレンド継続）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 62455.0,
+    "stop_loss": 62034.310558371275,
+    "take_profit_1": 63015.91925550497,
+    "take_profit_2": 63296.37888325746,
+    "atr": 280.4596277524847,
+    "sl_pct": -0.6735880900307855,
+    "tp1_pct": 0.8981174533743805,
+    "tp2_pct": 1.347176180061571,
+    "indicators_at_signal": {
+      "rsi": 67.24,
+      "macd": 304.3167,
+      "macd_sig": 248.1578,
+      "ma25": 61768.4,
+      "ma75": 61021.4,
+      "bb_low": 60958.01,
+      "bb_up": 62583.99,
+      "recent_high": 62405.0,
+      "recent_low": 61040.0
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "日経 225 先物は直近 20 本高値ブレイクにより、上昇トレンド継続のシグナルが出ています。RSI も 67.2 と強気を示唆しており、MACD もゴールデンクロス状態です。25MA が 75MA を上回っており、短期的な上昇圧力が確認できます。ボリンジャーバンドの +2σ 付近での推移は、勢いのある上昇を示唆します。  足元のニュース材料は限定的ですが、グローバルな景気回復期待や円安進行などが、日本株への追い風となる可能性が考えられます。  このシナリオが崩れる条件としては、62034.31 を下抜ける展開が挙げられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.76,
+        "avg_30d": 18.05,
+        "change_24h_pct": -3.9
+      },
+      "atr_regime": {
+        "current_atr": 280.4596,
+        "avg_atr_30d": 333.1984,
+        "ratio": 0.84,
         "regime": "normal",
         "label": "🟢 平常"
       },
