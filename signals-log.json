@@ -296,7 +296,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 2.356,
+    "max_favorable_excursion_pct": 2.364,
     "max_adverse_excursion_pct": -1.493,
     "email_sent": true,
     "timeframe": "4h"
@@ -563,7 +563,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.83,
+    "max_favorable_excursion_pct": 1.838,
     "max_adverse_excursion_pct": -0.377,
     "email_sent": true,
     "environment": {
@@ -785,8 +785,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.135,
+    "max_adverse_excursion_pct": -0.002,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -868,8 +868,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.024,
+    "max_adverse_excursion_pct": -0.016,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -989,6 +989,280 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "USDJPY=X_1h_20260522_1411",
+    "fired_at": "2026-05-22T14:11:30+09:00",
+    "timeframe": "1h",
+    "ticker": "USDJPY=X",
+    "asset_name": "ドル円",
+    "signal_types": [
+      "macd_golden"
+    ],
+    "primary_signal": "macd_golden",
+    "primary_signal_label": "🟢 MACD ゴールデンクロス（短期上昇転換）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 159.0679931640625,
+    "stop_loss": 158.88806450174152,
+    "take_profit_1": 159.30789804715712,
+    "take_profit_2": 159.42785048870445,
+    "atr": 0.11995244154731902,
+    "sl_pct": -0.11311430963701187,
+    "tp1_pct": 0.1508190795160158,
+    "tp2_pct": 0.22622861927402374,
+    "indicators_at_signal": {
+      "rsi": 52.96,
+      "macd": 0.013,
+      "macd_sig": 0.0124,
+      "ma25": 159.05,
+      "ma75": 159.01,
+      "bb_low": 158.87,
+      "bb_up": 159.25,
+      "recent_high": 159.35,
+      "recent_low": 158.81
+    },
+    "news_count": 3,
+    "news_titles": [
+      "ドル急落、なぜ「リリーフ・ラリー」から取り残されているのか",
+      "トランプ氏のイラン関連投稿、市場の反応をチャートで見る",
+      "ドルはまだ終わらない。イラン危機下でライバルを凌駕する理由"
+    ],
+    "ai_narrative": "MACDのゴールデンクロスは短期的な上昇転換を示唆しており、25MAが75MAを上回っていることも同様のシグナルです。RSIも50台で中立圏にあり、ボリンジャーバンドの+2σ近辺で推移していることから、上値余地が期待できます。ニュースでは、イラン危機下でドルがライバル通貨を凌駕する理由が示唆されており、ドル高圧力とテクニカルの買いシグナルが合致しています。シナリオが崩れるとすれば、急激な円買い介入や、予想外の米国の金融政策変更など、ドル売りに繋がる材料が出現した場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.76,
+        "avg_30d": 18.05,
+        "change_24h_pct": -3.9
+      },
+      "atr_regime": {
+        "current_atr": 0.12,
+        "avg_atr_30d": 0.1469,
+        "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "ドル急落、なぜ「リリーフ・ラリー」から取り残されているのか"
+        ]
+      }
+    }
+  },
+  {
+    "id": "GBPJPY=X_1h_20260522_1411",
+    "fired_at": "2026-05-22T14:11:30+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPJPY=X",
+    "asset_name": "ポンド円",
+    "signal_types": [
+      "macd_golden"
+    ],
+    "primary_signal": "macd_golden",
+    "primary_signal_label": "🟢 MACD ゴールデンクロス（短期上昇転換）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 213.6320037841797,
+    "stop_loss": 213.37629180172596,
+    "take_profit_1": 213.972953094118,
+    "take_profit_2": 214.14342774908718,
+    "atr": 0.17047465496916167,
+    "sl_pct": -0.11969741327337538,
+    "tp1_pct": 0.15959655103116718,
+    "tp2_pct": 0.23939482654675076,
+    "indicators_at_signal": {
+      "rsi": 58.47,
+      "macd": 0.0428,
+      "macd_sig": 0.041,
+      "ma25": 213.54,
+      "ma75": 213.29,
+      "bb_low": 213.34,
+      "bb_up": 213.69,
+      "recent_high": 213.78,
+      "recent_low": 213.26
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ポンド、GDPの弱さを受けてほぼ横ばい",
+      "BOE（イングランド銀行）のタカ派姿勢後退でポンド下落",
+      "雇用統計の弱さを受け、ポンドのパフォーマンスはまちまち",
+      "月次GDPの改善にもかかわらず、ポンドは一時下落",
+      "予算発表後、ポンドは全体的に上昇"
+    ],
+    "ai_narrative": "ポンド円はMACDのゴールデンクロスにより短期的な上昇転換を示唆しており、25MA、75MAが上向きであることからも、このロングシナリオはテクニカル的に妥当と判断できます。直近のニュースではBOEのタカ派姿勢後退や雇用統計の弱さなど、ポンドにとってはネガティブな材料も見られますが、予算発表後の上昇や月次GDP改善といったポジティブな動きも混在しており、市場は材料を消化しつつあると見られます。このシナリオが崩れるのは、GDPの弱さやBOEのハト派姿勢への移行がより顕著になる展開です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.76,
+        "avg_30d": 18.05,
+        "change_24h_pct": -3.9
+      },
+      "atr_regime": {
+        "current_atr": 0.1705,
+        "avg_atr_30d": 0.2135,
+        "ratio": 0.8,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPUSD=X_1h_20260522_1411",
+    "fired_at": "2026-05-22T14:11:30+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "macd_golden"
+    ],
+    "primary_signal": "macd_golden",
+    "primary_signal_label": "🟢 MACD ゴールデンクロス（短期上昇転換）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.3431652784347534,
+    "stop_loss": 1.3414788270072733,
+    "take_profit_1": 1.3454138803380604,
+    "take_profit_2": 1.346538181289714,
+    "atr": 0.0011243009516534713,
+    "sl_pct": -0.12555799755674887,
+    "tp1_pct": 0.1674106634089985,
+    "tp2_pct": 0.25111599511349775,
+    "indicators_at_signal": {
+      "rsi": 53.71,
+      "macd": 0.0002,
+      "macd_sig": 0.0002,
+      "ma25": 1.34,
+      "ma75": 1.34,
+      "bb_low": 1.34,
+      "bb_up": 1.34,
+      "recent_high": 1.34,
+      "recent_low": 1.34
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ドイツ銀行、ユーロ/ポンドの上昇余地を見込む",
+      "バーナム氏のスターマー氏への挑戦観測でギルト（英国債）が急落",
+      "バーナム氏の挑戦をシティが警戒、英国の借り入れコストが28年ぶり高水準に",
+      "英首相スターマー氏に危機、退任時期が市場に影響する理由",
+      "英スターマー氏、リーダーシップ危機が市場に波及する中、進退をかけて戦う"
+    ],
+    "ai_narrative": "ポンドドルは1H足でMACDゴールデンクロスが発生し、短期的な上昇転換の兆候が見られます。25MAと75MA、ボリンジャーバンドの±2σがエントリー水準で収斂しており、これらのテクニカルサポートを背景とした買いが優位と判断します。  ファンダメンタルズでは、英国債急落とそれに伴う英国の借り入れコスト高騰がポンドにとってネガティブ要因ですが、スターマー首相のリーダーシップ危機が市場に波及している状況は、むしろポンドのさらなる下落を招き、相対的にドル高が進みにくい可能性も示唆します。  このシナリオが崩れるのは、英国の政治的混乱がさらに悪化し、ポンドへの売り圧力が強まる場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.76,
+        "avg_30d": 18.05,
+        "change_24h_pct": -3.9
+      },
+      "atr_regime": {
+        "current_atr": 0.0011,
+        "avg_atr_30d": 0.0014,
+        "ratio": 0.78,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "バーナム氏のスターマー氏への挑戦観測でギルト（英国債）が急落"
+        ]
       }
     }
   }
