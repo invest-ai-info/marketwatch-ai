@@ -2589,8 +2589,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.414,
-    "max_adverse_excursion_pct": -0.044,
+    "max_favorable_excursion_pct": 0.406,
+    "max_adverse_excursion_pct": -0.112,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -3269,6 +3269,103 @@
         "matched_titles": [
           "イラン戦争開始時よりドル安に"
         ]
+      }
+    }
+  },
+  {
+    "id": "BTC-USD_4h_20260523_0313",
+    "fired_at": "2026-05-23T03:13:48+09:00",
+    "timeframe": "4h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 76684.09375,
+    "stop_loss": 77696.79389894691,
+    "take_profit_1": 75333.82688473746,
+    "take_profit_2": 74658.69345210619,
+    "atr": 675.1334326312705,
+    "sl_pct": 1.3206130494916435,
+    "tp1_pct": -1.7608173993221912,
+    "tp2_pct": -2.641226098983287,
+    "indicators_at_signal": {
+      "rsi": 40.16,
+      "macd": -184.6231,
+      "macd_sig": -174.6448,
+      "ma25": 77155.48,
+      "ma75": 78857.81,
+      "bb_low": 76350.54,
+      "bb_up": 78103.98,
+      "recent_high": 78104.34,
+      "recent_low": 76075.98
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアム、5月22日（金）の価格：今週の値動きはわずか",
+      "トランプ・メディア、未実現損失の増大の中で2億500万ドルを移動",
+      "セクターアップデート：金融株、金曜午後高値",
+      "本日の株式市場：FRBのウォルシュ時代幕開け、ダウは上昇（ライブ報道）",
+      "マーク・キューバン氏、ビットコインはヘッジとして失敗したと発言"
+    ],
+    "ai_narrative": "ビットコインはMACDのデッドクロスにより短期的な下降転換のシグナルが点灯しました。RSIも40近辺と中立域下限に位置し、弱含みの可能性を示唆しています。ボリンジャーバンドの-2σ近辺への接近も、短期的な下落圧力を裏付けます。  ファンダメンタルズ面では、マーク・キューバン氏の「ビットコインはヘッジとして失敗」との発言は、投資家心理にネガティブな影響を与える可能性があります。足元のニュース材料は限定的ですが、全体的なリスクオフムードが強まれば、このショートシナリオは維持されます。  このシナリオが崩れるのは、価格が25MA（77155.48）を明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": 0.104,
+      "EUR": 0.044,
+      "GBP": 0.194,
+      "JPY": -0.082,
+      "AUD": -0.201
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.57,
+        "avg_30d": 17.96,
+        "change_24h_pct": -1.13
+      },
+      "atr_regime": {
+        "current_atr": 675.1334,
+        "avg_atr_30d": 768.516,
+        "ratio": 0.88,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
