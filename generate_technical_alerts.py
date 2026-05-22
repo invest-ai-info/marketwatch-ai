@@ -33,11 +33,14 @@ JST = timezone(timedelta(hours=9))
 # (ティッカー, 表示名, 通貨記号, 価格小数桁)
 # ─────────────────────────────────────────────
 SYMBOLS = [
-    ("GC=F",     "ゴールド先物",         "$", 2),
-    ("CL=F",     "原油 WTI 先物",        "$", 2),
-    ("NKD=F",    "日経 225 先物 (CME)",  "",  0),
-    ("USDJPY=X", "ドル円",               "¥", 3),
-    ("BTC-USD",  "ビットコイン",         "$", 0),
+    # (ticker, name, currency, decimals, cooldown_hours_4h)
+    # cooldown_hours_4h: 同銘柄・同シグナルの連投防止期間（4H ワークフロー用）
+    # 1H ワークフローは別途 4h 固定（main 内のロジック）
+    ("GC=F",     "ゴールド先物",         "$", 2, 12),
+    ("CL=F",     "原油 WTI 先物",        "$", 2, 24),  # ニュース感応度高、往復ビンタ多発のため長めに
+    ("NKD=F",    "日経 225 先物 (CME)",  "",  0, 12),
+    ("USDJPY=X", "ドル円",               "¥", 3, 18),  # 介入リスク考慮で長めに
+    ("BTC-USD",  "ビットコイン",         "$", 0, 12),
 ]
 
 ALERT_HISTORY_FILE = "technical-alerts-history.json"
@@ -322,6 +325,157 @@ def fetch_ticker_news(ticker, max_items=5):
 
 
 # ─────────────────────────────────────────────
+# 🆕 往復ビンタ防止 — シグナル反転検知
+# ─────────────────────────────────────────────
+REVERSAL_LOOKBACK_HOURS = 12  # 直近 N 時間以内に反対方向シグナルがあったら反転候補と判定
+
+
+def _direction_str_to_sign(direction):
+    """方向文字列 → +1 (long), -1 (short), 0 (中立/不明)"""
+    if not direction:
+        return 0
+    if "ロング" in direction or "long" in direction.lower() or "buy" in direction.lower():
+        return 1
+    if "ショート" in direction or "short" in direction.lower() or "sell" in direction.lower():
+        return -1
+    return 0
+
+
+def detect_reversal(signals_log, ticker, timeframe, current_direction, now_jst):
+    """直近 12h 以内に反対方向のシグナルが同銘柄・同時間軸で発火していたか判定。
+    返り値: {is_reversal, previous_signal, hours_since_prev, prev_direction}"""
+    if not current_direction:
+        return {"is_reversal": False, "previous_signal": None, "hours_since_prev": None, "prev_direction": None}
+
+    current_sign = _direction_str_to_sign(current_direction)
+    if current_sign == 0:
+        return {"is_reversal": False, "previous_signal": None, "hours_since_prev": None, "prev_direction": None}
+
+    # 同銘柄 + 同 timeframe + 直近 N 時間以内のシグナルを抽出
+    candidates = []
+    for entry in signals_log:
+        if entry.get("ticker") != ticker:
+            continue
+        if entry.get("timeframe", "4h") != timeframe:
+            continue
+        prev_dir = entry.get("direction")
+        if not prev_dir:
+            continue
+        try:
+            fired_at = datetime.fromisoformat(entry["fired_at"])
+            hours_ago = (now_jst - fired_at).total_seconds() / 3600.0
+            if 0 <= hours_ago <= REVERSAL_LOOKBACK_HOURS:
+                candidates.append((hours_ago, entry))
+        except Exception:
+            continue
+
+    if not candidates:
+        return {"is_reversal": False, "previous_signal": None, "hours_since_prev": None, "prev_direction": None}
+
+    # 最も最近のシグナルを取得
+    candidates.sort(key=lambda x: x[0])
+    hours_ago, prev_entry = candidates[0]
+    prev_sign = _direction_str_to_sign(prev_entry.get("direction"))
+
+    # 反対方向なら反転判定
+    if prev_sign != 0 and prev_sign != current_sign:
+        return {
+            "is_reversal": True,
+            "previous_signal": {
+                "id": prev_entry.get("id"),
+                "fired_at": prev_entry.get("fired_at"),
+                "primary_signal_label": prev_entry.get("primary_signal_label"),
+                "entry": prev_entry.get("entry"),
+                "outcome": prev_entry.get("outcome"),
+            },
+            "hours_since_prev": round(hours_ago, 1),
+            "prev_direction": prev_entry.get("direction"),
+        }
+    return {"is_reversal": False, "previous_signal": None, "hours_since_prev": None, "prev_direction": None}
+
+
+# ─────────────────────────────────────────────
+# 🆕 マルチタイムフレーム整合性チェック
+# ─────────────────────────────────────────────
+def check_trend_alignment(ticker, current_direction, current_timeframe):
+    """現在のシグナル方向と上位時間軸のトレンドが一致しているか確認。
+    1H シグナル → 4H トレンド、4H シグナル → 日足トレンドを参照。
+    返り値: {aligned, higher_tf, higher_tf_trend, explanation}"""
+    if not current_direction:
+        return {"aligned": None, "higher_tf": None, "higher_tf_trend": None, "explanation": ""}
+
+    current_sign = _direction_str_to_sign(current_direction)
+    if current_sign == 0:
+        return {"aligned": None, "higher_tf": None, "higher_tf_trend": None, "explanation": ""}
+
+    # 上位時間軸を決定
+    if current_timeframe == "1h":
+        higher_tf, higher_interval, days = "4H", "1h", 40  # 4H = 1h を resample
+    elif current_timeframe == "4h":
+        higher_tf, higher_interval, days = "日足", "1d", 200
+    else:
+        return {"aligned": None, "higher_tf": None, "higher_tf_trend": None, "explanation": ""}
+
+    try:
+        df = yf.download(ticker, period=f"{days}d", interval=higher_interval, progress=False, auto_adjust=True)
+        if df.empty or len(df) < 80:
+            return {"aligned": None, "higher_tf": higher_tf, "higher_tf_trend": None,
+                    "explanation": f"{higher_tf} データ不足"}
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        # 4H 用の場合は 1h → 4h リサンプル
+        if higher_tf == "4H":
+            agg = {"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
+            df = df.resample("4h").agg(agg).dropna(subset=["Close"])
+
+        close = df["Close"]
+        ma25 = close.rolling(25).mean()
+        ma75 = close.rolling(75).mean()
+
+        ma25_now = float(ma25.iloc[-1])
+        ma75_now = float(ma75.iloc[-1])
+        ma25_prev = float(ma25.iloc[-5]) if len(ma25) >= 5 else ma25_now
+        ma25_slope_up = ma25_now > ma25_prev
+
+        # トレンド判定: MA25 > MA75 かつ MA25 上昇 → 上昇トレンド
+        if ma25_now > ma75_now and ma25_slope_up:
+            trend = "上昇"
+            trend_sign = 1
+        elif ma25_now < ma75_now and not ma25_slope_up:
+            trend = "下降"
+            trend_sign = -1
+        else:
+            trend = "中立・もみあい"
+            trend_sign = 0
+
+        if trend_sign == 0:
+            aligned = None  # トレンドが中立なら判定不能
+        else:
+            aligned = (trend_sign == current_sign)
+
+        if aligned is True:
+            explanation = f"✅ {higher_tf} {trend}トレンド継続中、シグナル方向と一致（順張り）"
+        elif aligned is False:
+            explanation = f"⚠️ {higher_tf} {trend}トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+        else:
+            explanation = f"〜 {higher_tf} はもみあい、トレンド判定不能（中立）"
+
+        return {
+            "aligned": aligned,
+            "higher_tf": higher_tf,
+            "higher_tf_trend": trend,
+            "ma25": round(ma25_now, 4),
+            "ma75": round(ma75_now, 4),
+            "explanation": explanation,
+        }
+    except Exception as e:
+        print(f"    ⚠️ {higher_tf} 整合性チェック失敗: {type(e).__name__}: {str(e)[:60]}")
+        return {"aligned": None, "higher_tf": higher_tf, "higher_tf_trend": None,
+                "explanation": f"{higher_tf} 取得失敗"}
+
+
+# ─────────────────────────────────────────────
 # 🆕 環境警戒システム — 取引推奨度 A〜D を算定
 # ─────────────────────────────────────────────
 def load_economic_events():
@@ -481,6 +635,46 @@ HISTORICAL_REGIMES = {
     "extreme": "2022 年 BoJ 介入 / SVB 破綻時 / 大幅利上げサプライズ級",
     "crisis": "ウクライナ侵攻初日 / コロナショック級の異常事態",
 }
+
+
+def _build_whipsaw_block(reversal, trend_align):
+    """メール本文用のシグナル反転・トレンド整合性ブロックを構築"""
+    has_reversal = reversal and reversal.get("is_reversal")
+    has_trend = trend_align and trend_align.get("aligned") is not None
+
+    if not has_reversal and not has_trend:
+        return ""
+
+    lines = []
+    lines.append("【🔄 シグナル品質チェック】")
+
+    if has_reversal:
+        prev = reversal["previous_signal"]
+        prev_dir = reversal["prev_direction"]
+        prev_outcome = prev.get("outcome")
+        outcome_label = {"tp1": "✅ TP1 到達済", "tp2": "🎯 TP2 到達済", "sl": "❌ SL ヒット済",
+                         "expired": "⏰ 期限切れ", None: "⏳ 未確定"}.get(prev_outcome, "—")
+        lines.append("")
+        lines.append(f"⚠️ 往復ビンタ警戒: {reversal['hours_since_prev']}h 前に反対方向シグナル")
+        lines.append(f"  前回: {prev_dir} ({prev.get('primary_signal_label', '')})")
+        lines.append(f"       エントリー価格 {prev.get('entry')}, 結果: {outcome_label}")
+        lines.append(f"")
+        lines.append(f"  💡 同銘柄でロング/ショートが短期間に切り替わる相場は、")
+        lines.append(f"     ニュース・地政学要因による短期混乱の典型パターン。")
+        lines.append(f"     ⚠️ 往復で損失拡大しやすいので、ポジションサイズ縮小 or 見送り推奨。")
+
+    if has_trend:
+        lines.append("")
+        if trend_align["aligned"] is True:
+            lines.append(f"✅ {trend_align['explanation']}")
+            lines.append(f"  → 信頼度: ⭐⭐⭐ HIGH（上位時間軸トレンドに乗る順張りシグナル）")
+        elif trend_align["aligned"] is False:
+            lines.append(f"⚠️ {trend_align['explanation']}")
+            lines.append(f"  → 信頼度: ⭐ LOW（逆張りシグナルは反発時のみ機能。慎重に）")
+        else:
+            lines.append(f"〜 {trend_align['explanation']}")
+
+    return "\n".join(lines) + "\n\n"
 
 
 def _build_environment_block(env, currency="", decimals=2):
@@ -954,7 +1148,9 @@ def main():
     now_jst_str = now_jst.strftime("%Y-%m-%d %H:%M JST")
     now_iso = now_jst.isoformat(timespec="seconds")
 
-    for ticker, name, currency, decimals in SYMBOLS:
+    for ticker, name, currency, decimals, asset_cooldown_4h in SYMBOLS:
+        # 銘柄別クールダウン: 4H ワークフローは銘柄ごと、1H ワークフローは一律 4h
+        effective_cooldown = asset_cooldown_4h if timeframe == "4h" else cooldown_hours
         print(f"\n  📊 {name} ({ticker})")
         df = fetch_data(ticker, timeframe=timeframe)
         if df is None or len(df) < 30:
@@ -965,8 +1161,8 @@ def main():
             print(f"    ✅ シグナルなし（現値 {currency}{indicators['price']:.{decimals}f}）")
             continue
 
-        # 連投フィルタ（timeframe ごとに別クールダウン）
-        fresh_signals = [s for s in signals if should_alert(history, ticker, s["type"], cooldown_hours=cooldown_hours)]
+        # 連投フィルタ（timeframe + 銘柄別クールダウン）
+        fresh_signals = [s for s in signals if should_alert(history, ticker, s["type"], cooldown_hours=effective_cooldown)]
         if not fresh_signals:
             print(f"    ⏭️ {len(signals)} シグナル検出も、全てクールダウン中")
             continue
@@ -1003,6 +1199,19 @@ def main():
                   f"SL={position_plan['stop_loss']:.{decimals}f} "
                   f"TP1={position_plan['take_profit_1']:.{decimals}f} "
                   f"(ATR={atr_val:.{decimals}f})")
+
+        # 🆕 シグナル反転検知（往復ビンタ防止）
+        position_direction = position_plan["direction"] if position_plan else None
+        reversal = detect_reversal(signals_log, ticker, timeframe, position_direction, now_jst)
+        if reversal["is_reversal"]:
+            prev = reversal["previous_signal"]
+            print(f"    🔄 反転検知: {reversal['hours_since_prev']}h 前に反対方向シグナル "
+                  f"({prev.get('primary_signal_label', '')[:30]})")
+
+        # 🆕 マルチタイムフレーム整合性チェック
+        trend_align = check_trend_alignment(ticker, position_direction, timeframe) if position_direction else None
+        if trend_align and trend_align.get("aligned") is not None:
+            print(f"    📊 {trend_align['explanation']}")
 
         # Gemini 解説（テクニカル + ファンダ + 確定済プランを渡す）
         narrative = generate_ai_narrative(name, price_str, fresh_signals, indicators, news_titles, position_plan, gemini_key, timeframe=timeframe)
@@ -1048,7 +1257,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
-{_build_environment_block(env, currency, decimals)}
+{_build_whipsaw_block(reversal, trend_align)}{_build_environment_block(env, currency, decimals)}
 {plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
@@ -1075,7 +1284,15 @@ MarketWatch AI Alerts
         emoji = {"buy": "🟢", "sell": "🔴", "warn": "🟡"}.get(primary["severity"], "📊")
         # 件名プレフィックス: D=🚫 / C=⛔ / B=⚠️ / A= (なし)
         env_prefix = {"D": "🚫 ", "C": "⛔ ", "B": "⚠️ "}.get(env["env_score"], "")
-        subject = f"{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}"
+        # 🆕 反転・トレンドタグ
+        reversal_tag = "🔄 " if reversal and reversal.get("is_reversal") else ""
+        trend_tag = ""
+        if trend_align and trend_align.get("aligned") is True:
+            trend_tag = " [✅順張り]"
+        elif trend_align and trend_align.get("aligned") is False:
+            trend_tag = " [⚠️逆張り]"
+
+        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}{trend_tag}"
         # 重要指標が 24h 以内ならその名前も件名に
         if env["upcoming_events"]:
             nearest = env["upcoming_events"][0]
@@ -1108,6 +1325,19 @@ MarketWatch AI Alerts
             fired_at_iso=now_iso, timeframe=timeframe,
         )
         log_entry["email_sent"] = email_sent
+        # 🆕 往復ビンタ防止データを記録
+        log_entry["whipsaw_check"] = {
+            "is_reversal": reversal.get("is_reversal") if reversal else False,
+            "hours_since_prev": reversal.get("hours_since_prev") if reversal else None,
+            "prev_direction": reversal.get("prev_direction") if reversal else None,
+            "prev_signal_id": (reversal.get("previous_signal") or {}).get("id") if reversal else None,
+        }
+        log_entry["trend_alignment"] = {
+            "aligned": trend_align.get("aligned") if trend_align else None,
+            "higher_tf": trend_align.get("higher_tf") if trend_align else None,
+            "higher_tf_trend": trend_align.get("higher_tf_trend") if trend_align else None,
+            "explanation": trend_align.get("explanation") if trend_align else "",
+        }
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
             "env_score": env["env_score"],
