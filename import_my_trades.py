@@ -132,18 +132,41 @@ def main():
 
     reader = csv.DictReader(StringIO(text))
     rows = list(reader)
-    print(f"  {len(rows)} 行を読み込み")
+    print(f"  CSV から {len(rows)} 行を読み込み")
 
-    trades = convert_rows(rows)
-    # 重複排除（ID ベース）
+    csv_trades = convert_rows(rows)
+
+    # 既存 my-trades.json を読み込んで手動入力レコードを保護
+    existing = []
+    if os.path.exists(TRADES_FILE):
+        try:
+            with open(TRADES_FILE, encoding="utf-8") as f:
+                existing = json.load(f)
+            print(f"  既存ファイルから {len(existing)} 件読み込み（手動入力分を保護）")
+        except Exception as e:
+            print(f"  ⚠️ 既存ファイル読み込み失敗（無視して継続）: {e}")
+            existing = []
+
+    # マージ: 既存を先に入れる → CSV 由来で上書き（同 ID は「再入力＝修正」と解釈）
     unique = {}
-    for t in trades:
-        unique[t["id"]] = t  # 後優先 = 決済情報が反映される
-    trades = list(unique.values())
+    for t in existing:
+        if t.get("id"):
+            unique[t["id"]] = t
+    csv_overwrites = 0
+    csv_new = 0
+    for t in csv_trades:
+        if t["id"] in unique:
+            csv_overwrites += 1
+        else:
+            csv_new += 1
+        unique[t["id"]] = t
+
+    # エントリー日時昇順でソート（古い→新しい、第 1 号が先頭）
+    merged = sorted(unique.values(), key=lambda x: (x.get("entry_at") or ""))
 
     with open(TRADES_FILE, "w", encoding="utf-8") as f:
-        json.dump(trades, f, ensure_ascii=False, indent=2)
-    print(f"✅ {TRADES_FILE} に {len(trades)} 件を保存")
+        json.dump(merged, f, ensure_ascii=False, indent=2)
+    print(f"✅ {TRADES_FILE} に {len(merged)} 件を保存（CSV 新規: {csv_new} / CSV 上書き: {csv_overwrites} / 既存保持: {len(existing) - csv_overwrites}）")
 
 
 if __name__ == "__main__":
