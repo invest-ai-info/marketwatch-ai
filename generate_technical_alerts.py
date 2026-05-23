@@ -941,6 +941,23 @@ def _build_whipsaw_block(reversal, trend_align):
     return "\n".join(lines) + "\n\n"
 
 
+def _build_confidence_block(confidence):
+    """メール本文用の信頼度スコアブロックを構築 (B2)"""
+    if not confidence:
+        return ""
+    lines = []
+    lines.append(f"【💯 信頼度: {confidence['stars']} {confidence['label']} (スコア {confidence['score']:+d})】")
+    for f in confidence["factors"]:
+        lines.append(f"  ・{f}")
+    if confidence["label"] == "HIGH":
+        lines.append("  → 強いシグナル。複数要因が一致しており、優先的に検討する価値あり。")
+    elif confidence["label"] == "MID":
+        lines.append("  → 中程度のシグナル。他の判断材料と組み合わせて判断を。")
+    else:
+        lines.append("  → 弱いシグナル。単独要因のみ／不利な要因あり。慎重に。")
+    return "\n".join(lines) + "\n\n"
+
+
 def _build_environment_block(env, currency="", decimals=2):
     """メール本文用の環境警戒ブロックを構築"""
     lines = []
@@ -1290,6 +1307,81 @@ def load_history():
 
 
 # ─────────────────────────────────────────────
+# 🆕 信頼度スコア（B2）— 複数シグナル × 環境 × 整合性を統合
+# ─────────────────────────────────────────────
+def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment):
+    """シグナル発火時の信頼度を 3 段階（HIGH/MID/LOW）で算出
+
+    スコアリング:
+      + シグナル数 (1-3 シグナル併発): 各 +1 ポイント (max +3)
+      + 環境スコア: A=+2 / B=+1 / C=0 / D=-2
+      + トレンド整合: aligned=true → +2 / false → -1 / null → 0
+      + 反転検知: あり → -2 / なし → 0
+      + FX 強弱整合 (FX のみ): aligned=true → +1 / false → -1 / null → 0
+
+    閾値:
+      score >= 5  → ⭐⭐⭐ HIGH（強）
+      2 <= score < 5 → ⭐⭐ MID（中）
+      score < 2  → ⭐ LOW（弱）
+    """
+    factors = []
+    score = 0
+
+    # 複数シグナル併発
+    n = min(len(fresh_signals or []), 3)
+    score += n
+    factors.append(f"シグナル {n} 種併発 (+{n})")
+
+    # 環境スコア
+    env_score = (env or {}).get("env_score")
+    env_pts = {"A": 2, "B": 1, "C": 0, "D": -2}.get(env_score, 0)
+    score += env_pts
+    if env_pts != 0:
+        factors.append(f"環境 {env_score} ({env_pts:+d})")
+
+    # トレンド整合
+    aligned = (trend_align or {}).get("aligned")
+    if aligned is True:
+        score += 2
+        factors.append("上位足トレンド順張り (+2)")
+    elif aligned is False:
+        score -= 1
+        factors.append("上位足トレンド逆張り (-1)")
+
+    # 反転検知
+    if reversal and reversal.get("is_reversal"):
+        score -= 2
+        factors.append("反転検知あり (-2)")
+
+    # FX 強弱整合 (FX シグナルのみ)
+    fx_aligned = (fx_alignment or {}).get("aligned")
+    if fx_aligned is True:
+        score += 1
+        factors.append("FX 強弱順張り (+1)")
+    elif fx_aligned is False:
+        score -= 1
+        factors.append("FX 強弱逆張り (-1)")
+
+    # ラベル判定
+    if score >= 5:
+        label = "HIGH"
+        stars = "⭐⭐⭐"
+    elif score >= 2:
+        label = "MID"
+        stars = "⭐⭐"
+    else:
+        label = "LOW"
+        stars = "⭐"
+
+    return {
+        "score": score,
+        "label": label,
+        "stars": stars,
+        "factors": factors,
+    }
+
+
+# ─────────────────────────────────────────────
 # シグナルログ（track-record 用） — 全発火を JSON に蓄積
 # ─────────────────────────────────────────────
 def load_signals_log():
@@ -1568,6 +1660,9 @@ def main():
 - 方向感が定まらないシグナル構成のため、今回は数値プランなし（様子見推奨）
 """
 
+        # 🆕 B2: 信頼度スコア算出（body / subject で参照するため事前に計算）
+        confidence = calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment)
+
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
 現在価格: {price_str}
@@ -1578,7 +1673,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
-{_build_currency_strength_block(currency_strength, fx_alignment) if ticker in FX_PAIR_MAP else ''}{_build_china_block(china_ctx)}{_build_whipsaw_block(reversal, trend_align)}{_build_environment_block(env, currency, decimals)}
+{_build_currency_strength_block(currency_strength, fx_alignment) if ticker in FX_PAIR_MAP else ''}{_build_china_block(china_ctx)}{_build_whipsaw_block(reversal, trend_align)}{_build_confidence_block(confidence)}{_build_environment_block(env, currency, decimals)}
 {plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
@@ -1613,7 +1708,10 @@ MarketWatch AI Alerts
         elif trend_align and trend_align.get("aligned") is False:
             trend_tag = " [⚠️逆張り]"
 
-        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}{trend_tag}"
+        # 🆕 B2: 信頼度タグ
+        conf_tag = f" {confidence['stars']}"
+
+        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}{trend_tag}{conf_tag}"
         # 重要指標が 24h 以内ならその名前も件名に
         if env["upcoming_events"]:
             nearest = env["upcoming_events"][0]
@@ -1665,6 +1763,8 @@ MarketWatch AI Alerts
         log_entry["fx_alignment"] = fx_alignment
         # 🆕 中国コンテキスト（AUD ペアのみ）
         log_entry["china_context"] = china_ctx
+        # 🆕 B2: 信頼度スコアを記録
+        log_entry["confidence"] = confidence
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
             "env_score": env["env_score"],
