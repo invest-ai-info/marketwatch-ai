@@ -3710,11 +3710,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
+      ・<b>2026-05-23</b>: 🚗 解説「<a href="guide-toyota-2026-05.html" style="color:#0969da"><b>トヨタ自動車（7203）徹底解説：売上 50 兆円超で日本企業初の偉業 — しかし営業益 -21.5% の「増収減益」を読む</b></a>」公開<br>
+      ・<b>2026-05-23</b>: 📅 週次レポート「<a href="guide-weekly-review-2026-05-16.html" style="color:#0969da"><b>週次振り返り（5/16〜5/22）：先週のシグナル全件と教訓 — 勝率 62.5%、信頼度別検証</b></a>」公開<br>
       ・<b>2026-05-20</b>: 🚨 緊急速報「<a href="guide-nikkei-60k-break-2026-05-20.html" style="color:#cf222e"><b>日経平均6万円割れ速報：金利上昇警戒で続落 — 押し目買いタイミングと3シナリオ</b></a>」公開<br>
       ・<b>2026-05-19</b>: 🚨 緊急速報「<a href="guide-btc-crash-2026-05-19.html" style="color:#cf222e"><b>BTC一時$76K割れ速報：イラン情勢でリスクオフ三重苦、$72K/$65K下値メドと日本人投資家3つの示唆</b></a>」公開<br>
-      ・<b>2026-05-19</b>: 💾 解説「<a href="guide-kioxia-2026-05.html" style="color:#0969da"><b>キオクシア徹底解説：時価総額 25 兆円超で国内 4 位浮上 — AI 半導体ブームの本命銘柄を読む</b></a>」公開<br>
-      ・<b>2026-05-17</b>: 📅 週次戦略「<a href="guide-weekly-2026-05-18.html" style="color:#0969da"><b>今週の投資戦略（5/18〜5/22）：週末動向 AI 分析 × 注目指標 × 3 シナリオ別マーケット展望</b></a>」更新<br>
-      ・<b>2026-05-15</b>: 📜 解説「<a href="guide-clarity-act.html" style="color:#0969da"><b>CLARITY法案（クラリティ法案）とは？暗号資産の新ルールを初心者向けに5分で解説</b></a>」公開
+      ・<b>2026-05-19</b>: 💾 解説「<a href="guide-kioxia-2026-05.html" style="color:#0969da"><b>キオクシア徹底解説：時価総額 25 兆円超で国内 4 位浮上 — AI 半導体ブームの本命銘柄を読む</b></a>」公開
     </div>
   </div>
 
