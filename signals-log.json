@@ -4667,8 +4667,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.169,
+    "max_adverse_excursion_pct": -0.107,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -4717,6 +4717,358 @@
         "current_atr": 741.8415,
         "avg_atr_30d": 769.7483,
         "ratio": 0.96,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GC=F_1h_20260523_2136",
+    "fired_at": "2026-05-23T21:36:04+09:00",
+    "timeframe": "1h",
+    "ticker": "GC=F",
+    "asset_name": "ゴールド先物",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 4523.2001953125,
+    "stop_loss": 4496.765001859653,
+    "take_profit_1": 4558.447119916295,
+    "take_profit_2": 4576.070582218193,
+    "atr": 17.623462301897654,
+    "sl_pct": -0.5844356276832916,
+    "tp1_pct": 0.7792475035777221,
+    "tp2_pct": 1.1688712553665832,
+    "indicators_at_signal": {
+      "rsi": 50.69,
+      "macd": -2.7035,
+      "macd_sig": -2.4345,
+      "ma25": 4524.56,
+      "ma75": 4516.86,
+      "bb_low": 4505.43,
+      "bb_up": 4536.29,
+      "recent_high": 4541.9,
+      "recent_low": 4488.0
+    },
+    "news_count": 5,
+    "news_titles": [
+      "Metals One：投資家、資金提供者、開発者として（復習）",
+      "GLD vs IAU：同じ金でも手数料が違う。長期投資家が本当に持つべきはどちらか？",
+      "Canaccord、Hudbay Minerals（HBM）に「買い」レーティングを維持",
+      "複数年にわたる強力な上昇の後、Endeavour Mining（TSX:EDV）を検討するには遅すぎるか？",
+      "複数年にわたる強力な上昇の後、Centerra Gold（TSX:CG）を検討するには遅すぎるか？"
+    ],
+    "ai_narrative": "ゴールド先物、1H足でボリンジャーバンド-2σタッチからの反発期待でロングを推奨します。RSIは50超、MACDもゼロライン付近でクロス手前であり、短期的な過熱感の解消と上昇への転換を示唆しています。為替強弱ではUSDが小幅上昇ですが、円安基調は金価格にプラスに働きやすい状況です。シナリオが崩れるのは、直近安値を明確に下回る展開です。足元のニュース材料は限定的ですが、市場全体のセンチメントとしては安全資産としての金への関心は依然として高いと考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 4H 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 17.6235,
+        "avg_atr_30d": 19.2283,
+        "ratio": 0.92,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURUSD=X_1h_20260523_2136",
+    "fired_at": "2026-05-23T21:36:04+09:00",
+    "timeframe": "1h",
+    "ticker": "EURUSD=X",
+    "asset_name": "ユーロドル",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 1.160496711730957,
+    "stop_loss": 1.1618820433078607,
+    "take_profit_1": 1.1586496029617523,
+    "take_profit_2": 1.15772604857715,
+    "atr": 0.0009235543846023891,
+    "sl_pct": 0.1193740200122817,
+    "tp1_pct": -0.1591653600163756,
+    "tp2_pct": -0.2387480400245634,
+    "indicators_at_signal": {
+      "rsi": 44.37,
+      "macd": -0.0002,
+      "macd_sig": -0.0002,
+      "ma25": 1.16,
+      "ma75": 1.16,
+      "bb_low": 1.16,
+      "bb_up": 1.16,
+      "recent_high": 1.16,
+      "recent_low": 1.16
+    },
+    "news_count": 5,
+    "news_titles": [
+      "WSJドル指数、0.02%高の95.80へ上昇",
+      "米国債利回り、勢いを失うもホルムズ海峡合意への期待から上昇継続",
+      "イラン戦争によるエネルギーショック、欧州成長の重しとなりインフレを押し上げへ",
+      "高止まりするエネルギー価格がEU経済の重しに。ユーロはここで売却を。",
+      "ユーロ連動ステーブルコインプロジェクト、新たに25行が参加"
+    ],
+    "ai_narrative": "ユーロドルは、MACDのデッドクロスにより短期的な下降転換のシグナルが出ました。RSIも50を下回り、弱含みを示唆しています。ファンダメンタルズでは、エネルギー価格高騰が欧州経済の重しとなり、インフレ懸念からユーロ売り圧力が強まる可能性が指摘されています。通貨強弱でもドルがユーロを上回っており、ショート（売り）の方向感が支持されます。このシナリオが崩れるのは、米国債利回りの大幅な低下など、ドル売りの要因が強まった場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 4H 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 EUR/USD 強弱差は小さい（-0.14%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド順張り (+2)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 戦争"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.0009,
+        "avg_atr_30d": 0.0011,
+        "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "戦争"
+        ],
+        "matched_titles": [
+          "イラン戦争によるエネルギーショック、欧州成長の重しとなりインフレを押し上げへ"
+        ]
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_1h_20260523_2136",
+    "fired_at": "2026-05-23T21:36:04+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "ma_golden"
+    ],
+    "primary_signal": "ma_golden",
+    "primary_signal_label": "🟢 移動平均ゴールデンクロス（中期上昇入り）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.8844000101089478,
+    "stop_loss": 1.8813334013239873,
+    "take_profit_1": 1.8884888218222284,
+    "take_profit_2": 1.8905332276788689,
+    "atr": 0.0020444058566403593,
+    "sl_pct": -0.16273661475852153,
+    "tp1_pct": 0.21698215301136203,
+    "tp2_pct": 0.32547322951704305,
+    "indicators_at_signal": {
+      "rsi": 59.03,
+      "macd": 0.0009,
+      "macd_sig": 0.0008,
+      "ma25": 1.88,
+      "ma75": 1.88,
+      "bb_low": 1.88,
+      "bb_up": 1.89,
+      "recent_high": 1.89,
+      "recent_low": 1.88
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドルは、25MAが75MAを上抜けるゴールデンクロスが発生し、中期的な上昇トレンド入りを示唆しています。RSIが59と買われすぎでない水準であり、MACDもシグナルを上回ったことから、この上昇は短期的に継続する可能性が高いと判断できます。  通貨強弱でも、ポンドが堅調、豪ドルが弱含みと、このロングの方向性と一致しています。中国情勢については、上海・香港市場が上昇するなど、足元では豪ドルにとって好材料が見られますが、原油や地政学リスクといった下押し要因も存在するため、中国景気の動向には引き続き注視が必要です。  このシナリオが崩れるとすれば、ボリンジャーバンドの-2σを明確に下抜ける展開が考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 強（+0.15%）× AUD 弱（-0.27%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": 0.428,
+      "base_strength": 0.155,
+      "quote_strength": -0.273
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 4112.9,
+          "change_pct": 0.87
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25606.03,
+          "change_pct": 0.86
+        }
+      },
+      "news": [
+        "Lenovo、PC販売好調で第4四半期売上高が予想を上回る、株価は15%上昇",
+        "決算、ハイテク株の強さ、ペルシャ湾の見通しがアジア株市場を押し上げ",
+        "原油、ハイテク見通しがアジア株市場を揺るがす",
+        "原油、金利、地政学がアジア株市場を下押し",
+        "ペルシャ湾の見通しがアジア株市場を揺るがす"
+      ]
+    },
+    "confidence": {
+      "score": 6,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "FX 強弱順張り (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.002,
+        "avg_atr_30d": 0.0025,
+        "ratio": 0.83,
         "regime": "normal",
         "label": "🟢 平常"
       },
