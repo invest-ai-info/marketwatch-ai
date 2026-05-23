@@ -1,7 +1,7 @@
 {
   "_comment": "重要経済イベントカレンダー。シグナル発火時に「6h/24h 以内に重要指標があるか」をチェックして取引非推奨警告を出す。",
   "_format": "datetime は JST (Asia/Tokyo) ISO8601。impact は high/critical。affected_assets は影響を受ける銘柄リスト（all = 全銘柄）。",
-  "_update_policy": "月初に当月分を手動更新。FOMC・雇用統計・CPI など毎月決まったものはハードコード可。",
+  "_update_policy": "月初に当月分を手動更新。FOMC・雇用統計・CPI など毎月決まったものはハードコード可。WebSearch で発表日を確認すること。",
 
   "events": [
     {
@@ -13,50 +13,8 @@
       "note": "5/20 18:00 EDT = 5/21 03:00 JST"
     },
     {
-      "name": "パウエル FRB 議長会見",
+      "name": "パウエル FRB 議長会見（5月 FOMC）",
       "datetime": "2026-05-21T03:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "米雇用統計 4 月 NFP",
-      "datetime": "2026-06-06T21:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "米 CPI 5 月",
-      "datetime": "2026-06-11T21:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "FOMC 政策金利発表（6月）",
-      "datetime": "2026-06-18T03:00:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "日銀金融政策決定会合（6月）",
-      "datetime": "2026-06-19T12:00:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["NKD=F", "USDJPY=X"],
-      "country": "JP"
-    },
-    {
-      "name": "ECB 政策金利発表",
-      "datetime": "2026-06-05T21:15:00+09:00",
-      "impact": "high",
-      "affected_assets": ["all"],
-      "country": "EU"
-    },
-    {
-      "name": "米雇用統計 5 月 NFP",
-      "datetime": "2026-06-06T21:30:00+09:00",
       "impact": "critical",
       "affected_assets": ["all"],
       "country": "US"
@@ -69,18 +27,20 @@
       "country": "US"
     },
     {
-      "name": "米 PCE デフレーター",
-      "datetime": "2026-05-30T21:30:00+09:00",
+      "name": "米 PCE デフレーター（4月）",
+      "datetime": "2026-05-29T21:30:00+09:00",
       "impact": "high",
       "affected_assets": ["all"],
-      "country": "US"
+      "country": "US",
+      "note": "8:30 EDT = 21:30 JST。5/29 (金) BLS 公表"
     },
     {
-      "name": "中国 CPI",
-      "datetime": "2026-06-09T10:30:00+09:00",
-      "impact": "high",
-      "affected_assets": ["NKD=F", "CL=F"],
-      "country": "CN"
+      "name": "米雇用統計 5 月 NFP",
+      "datetime": "2026-06-05T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "第 1 金曜 8:30 EDT = 21:30 JST"
     },
     {
       "name": "OPEC+ 月次会合",
@@ -88,6 +48,91 @@
       "impact": "high",
       "affected_assets": ["CL=F"],
       "country": "OPEC"
+    },
+    {
+      "name": "中国 CPI（5月）",
+      "datetime": "2026-06-09T10:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["NKD=F", "CL=F"],
+      "country": "CN"
+    },
+    {
+      "name": "米 CPI 5 月",
+      "datetime": "2026-06-10T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "8:30 EDT = 21:30 JST。BLS 公式日程"
+    },
+    {
+      "name": "ECB 政策金利発表（6月）",
+      "datetime": "2026-06-11T21:15:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "EU",
+      "note": "14:15 CET = 21:15 JST。記者会見は 14:45 CET"
+    },
+    {
+      "name": "米 PPI 5 月",
+      "datetime": "2026-06-11T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "通常 CPI の翌日に発表"
+    },
+    {
+      "name": "日銀金融政策決定会合（6月）",
+      "datetime": "2026-06-16T12:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["NKD=F", "USDJPY=X"],
+      "country": "JP",
+      "note": "6/15-16 開催、16 日 12:00 JST 頃発表"
+    },
+    {
+      "name": "米小売売上高 5 月",
+      "datetime": "2026-06-16T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "毎月中旬、8:30 EDT = 21:30 JST"
+    },
+    {
+      "name": "FOMC 政策金利発表（6月）",
+      "datetime": "2026-06-18T03:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "6/16-17 開催、17 日 14:00 EDT = 18 日 03:00 JST"
+    },
+    {
+      "name": "パウエル FRB 議長会見（6月 FOMC）",
+      "datetime": "2026-06-18T03:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "BOE 政策金利発表（6月）",
+      "datetime": "2026-06-18T20:00:00+09:00",
+      "impact": "high",
+      "affected_assets": ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X"],
+      "country": "UK",
+      "note": "12:00 BST = 20:00 JST"
+    },
+    {
+      "name": "米 GDP 確定値（Q1）",
+      "datetime": "2026-06-26T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US"
+    },
+    {
+      "name": "米 PCE デフレーター（5月）",
+      "datetime": "2026-06-26T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": ["all"],
+      "country": "US",
+      "note": "FRB が重視するインフレ指標、8:30 EDT = 21:30 JST"
     }
   ],
 
