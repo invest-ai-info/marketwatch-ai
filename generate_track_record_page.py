@@ -527,6 +527,272 @@ def build_analytics_section(signals):
 </div>"""
 
 
+def build_quality_analysis_section(signals):
+    """WS-5 + EW-6 + CS-5 統合：シグナル品質を多面的に分析するタブ
+
+    - WS-5: 往復ビンタ防止（反転検知別 × 勝率、トレンド整合性 × 勝率）
+    - EW-6: 環境スコア × 勝率（A/B/C/D、VIX 帯、ATR レジーム）
+    - CS-5: 通貨強弱マトリクス（FX のみ、整合性別勝率 + 直近 30 件詳細）
+    """
+
+    # === WS-5-A: 反転検知別 ===
+    def _reversal_label(e):
+        wc = e.get("whipsaw_check") or {}
+        if wc.get("is_reversal") is True:
+            return "🔄 反転検知あり"
+        if wc.get("is_reversal") is False:
+            return "✅ 反転なし"
+        return None
+    reversal_groups = group_stats(signals, _reversal_label)
+
+    # === WS-5-B: マルチタイムフレーム整合性別 ===
+    def _trend_label(e):
+        return {
+            True: "✅ 順張り（上位足と一致）",
+            False: "⚠️ 逆張り（上位足と逆）",
+            None: "〜 中立・判定不能",
+        }.get((e.get("trend_alignment") or {}).get("aligned"))
+    trend_groups = group_stats(signals, _trend_label)
+
+    # === EW-6-A: 環境スコア別 ===
+    env_groups = group_stats(signals, lambda e: (e.get("environment") or {}).get("env_score"))
+
+    # === EW-6-B: VIX 帯別 ===
+    def _vix_bucket(e):
+        v = ((e.get("environment") or {}).get("vix") or {}).get("current")
+        if v is None:
+            return None
+        if v < 15:
+            return "VIX 低 (< 15)"
+        elif v < 20:
+            return "VIX 平常 (15-20)"
+        elif v < 25:
+            return "VIX 高め (20-25)"
+        elif v < 30:
+            return "VIX 警戒 (25-30)"
+        else:
+            return "VIX 危険 (30+)"
+    vix_groups = group_stats(signals, _vix_bucket)
+
+    # === EW-6-C: ATR レジーム別 ===
+    ATR_LABELS = {"low": "🟢 低 ATR", "normal": "🟡 通常 ATR", "high": "🟠 高 ATR", "extreme": "🔴 異常 ATR"}
+    atr_groups = group_stats(
+        signals,
+        lambda e: ATR_LABELS.get(((e.get("environment") or {}).get("atr_regime") or {}).get("regime")),
+    )
+
+    # === CS-5: 通貨強弱マトリクス（FX のみ） ===
+    def _parse_fx_pair(ticker):
+        """USDJPY=X → ('USD','JPY'), AUDUSD=X → ('AUD','USD')、それ以外は (None, None)"""
+        if not ticker or not ticker.endswith("=X"):
+            return None, None
+        sym = ticker[:-2]
+        if len(sym) != 6:
+            return None, None
+        return sym[:3], sym[3:]
+
+    closed = [s for s in signals if s.get("outcome") in ("tp1", "tp2", "sl", "expired")]
+    fx_rows = []
+    for s in closed:
+        base, quote = _parse_fx_pair(s.get("ticker", ""))
+        if base is None:
+            continue
+        strengths = s.get("currency_strength") or {}
+        base_s = strengths.get(base)
+        quote_s = strengths.get(quote)
+        if base_s is None or quote_s is None:
+            continue
+        direction = s.get("direction") or ""
+        is_long = ("ロング" in direction) or ("買い" in direction)
+        diff = base_s - quote_s
+        # ロング = 買い通貨が強く、売り通貨が弱い ⇒ diff > 0 で順張り
+        # ショート = 逆
+        signed_diff = diff if is_long else -diff
+        if signed_diff > 0.1:
+            alignment = "順張り"
+        elif signed_diff < -0.1:
+            alignment = "逆張り"
+        else:
+            alignment = "中立"
+        fx_rows.append({
+            "ticker": s.get("ticker"),
+            "direction_short": "L" if is_long else "S",
+            "base": base, "quote": quote,
+            "base_s": base_s, "quote_s": quote_s,
+            "diff": diff,
+            "alignment": alignment,
+            "outcome": s.get("outcome"),
+            "fired_at": (s.get("fired_at") or "")[:16].replace("T", " "),
+        })
+
+    # CS-5 クロス集計
+    fx_align_stats = defaultdict(lambda: defaultdict(int))
+    for r in fx_rows:
+        fx_align_stats[r["alignment"]][r["outcome"]] += 1
+
+    def _fx_alignment_row(label, counts):
+        total = sum(counts.values())
+        if total == 0:
+            return ""
+        tp1 = counts.get("tp1", 0)
+        tp2 = counts.get("tp2", 0)
+        sl = counts.get("sl", 0)
+        wins = tp1 + tp2
+        wr = wins / (wins + sl) * 100 if (wins + sl) else 0
+        color = "#1a7f37" if wr >= 60 else "#9a6700" if wr >= 45 else "#cf222e"
+        return f"""
+        <tr>
+          <td><b>{label}</b></td>
+          <td style="text-align:right">{total}</td>
+          <td style="text-align:right">{tp1}</td>
+          <td style="text-align:right">{tp2}</td>
+          <td style="text-align:right">{sl}</td>
+          <td style="text-align:right;color:{color};font-weight:700">{wr:.1f}%</td>
+        </tr>"""
+
+    fx_align_html = "\n".join(
+        _fx_alignment_row(k, fx_align_stats.get(k, {})) for k in ("順張り", "中立", "逆張り")
+    ) or '<tr><td colspan="6" style="text-align:center;color:#6e7781;padding:16px">FX シグナル蓄積中</td></tr>'
+
+    # CS-5 直近 30 件詳細
+    fx_detail_rows = []
+    for r in sorted(fx_rows, key=lambda x: x["fired_at"], reverse=True)[:30]:
+        outcome = r["outcome"] or "—"
+        out_emoji = {"tp1": "✅ TP1", "tp2": "🎯 TP2", "sl": "❌ SL", "expired": "⏰ 期限"}.get(outcome, outcome)
+        out_color = {"tp1": "#1a7f37", "tp2": "#1a7f37", "sl": "#cf222e", "expired": "#6e7781"}.get(outcome, "#6e7781")
+        align_color = {"順張り": "#1a7f37", "逆張り": "#cf222e", "中立": "#6e7781"}.get(r["alignment"], "#6e7781")
+        dir_color = "#1a7f37" if r["direction_short"] == "L" else "#cf222e"
+        fx_detail_rows.append(f"""
+        <tr>
+          <td style="white-space:nowrap">{r['fired_at']}</td>
+          <td><b>{r['ticker']}</b></td>
+          <td style="text-align:center;font-weight:700;color:{dir_color}">{r['direction_short']}</td>
+          <td style="text-align:right">{r['base']}: {r['base_s']:+.3f}</td>
+          <td style="text-align:right">{r['quote']}: {r['quote_s']:+.3f}</td>
+          <td style="text-align:right">{r['diff']:+.3f}</td>
+          <td style="color:{align_color};font-weight:700">{r['alignment']}</td>
+          <td style="color:{out_color};font-weight:700;white-space:nowrap">{out_emoji}</td>
+        </tr>""")
+
+    # 汎用テーブルレンダラ（既存の render_stat_row を流用）
+    def _render_groups(groups_dict, key_order=None):
+        if key_order:
+            keys = [k for k in key_order if k in groups_dict]
+        else:
+            keys = sorted(
+                groups_dict.keys(),
+                key=lambda k: -(groups_dict[k].get("win_rate", 0)),
+            )
+        rows = []
+        for k in keys:
+            s = groups_dict.get(k)
+            if s and s.get("total", 0) > 0:
+                rows.append(render_stat_row(k, s))
+        return "\n".join(rows) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
+
+    reversal_html = _render_groups(reversal_groups, key_order=["✅ 反転なし", "🔄 反転検知あり"])
+    trend_html = _render_groups(
+        trend_groups,
+        key_order=["✅ 順張り（上位足と一致）", "〜 中立・判定不能", "⚠️ 逆張り（上位足と逆）"],
+    )
+    env_html = _render_groups(env_groups, key_order=["A", "B", "C", "D"])
+    vix_html = _render_groups(
+        vix_groups,
+        key_order=["VIX 低 (< 15)", "VIX 平常 (15-20)", "VIX 高め (20-25)", "VIX 警戒 (25-30)", "VIX 危険 (30+)"],
+    )
+    atr_html = _render_groups(
+        atr_groups,
+        key_order=["🟢 低 ATR", "🟡 通常 ATR", "🟠 高 ATR", "🔴 異常 ATR"],
+    )
+
+    fx_detail_html = "".join(fx_detail_rows) or \
+        '<tr><td colspan="8" style="text-align:center;color:#6e7781;padding:16px">FX シグナル蓄積中</td></tr>'
+
+    return f"""
+<div class="tab-pane" id="pane-quality">
+  <h2>🔄 往復ビンタ防止：反転検知別 勝率（WS-5）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 直近 12 時間以内に反対方向シグナルが出たケース（反転検知あり）と、なかったケースで実際の勝率に差があるかを検証します。
+    反転検知ありの勝率が低ければ「反転後の見送り推奨」が有効である裏付けになります。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>反転検知</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{reversal_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">📐 マルチタイムフレーム整合性別 勝率（WS-5）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 上位足（4H シグナルなら日足、1H シグナルなら 4H）のトレンドと整合する「順張り」と、逆らう「逆張り」で勝率を比較。
+    順張りが 60% を超えれば「上位足整合性チェック」が勝率向上に寄与している証拠です。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>整合性</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{trend_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">🛡️ 環境警戒スコア別 勝率（EW-6）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 環境スコア A（平常）→ D（取引非推奨）の各スコアで実際の勝率を検証。
+    理想は <b>A &gt; B &gt; C &gt; D</b> と順序が保たれること。D が高勝率なら「警告閾値が厳しすぎる」可能性も示唆。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>スコア</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{env_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">📊 VIX 帯別 勝率（EW-6 補足）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 シグナル発火時の VIX レベル別に勝率を集計。VIX 25 超で取引推奨度を下げているのが妥当か検証できます。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>VIX 帯</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{vix_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">⚡ ATR レジーム別 勝率（EW-6 補足）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 過去 30 日平均との比率で測ったボラ環境別の勝率。3 倍超（異常 ATR）では取引推奨度を最低まで下げているのが妥当か検証。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>レジーム</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{atr_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">💱 通貨強弱マトリクス（CS-5）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 FX シグナル発火時の通貨強弱と方向の整合性を集計。<br>
+    <b>順張り</b>: 強い通貨を買い・弱い通貨を売り（強弱差が ±0.10% を超え方向と一致）<br>
+    <b>逆張り</b>: 弱い通貨を買い・強い通貨を売り<br>
+    <b>中立</b>: 強弱差が ±0.10% 以内
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>整合性</th><th style="text-align:right">FX 確定数</th><th style="text-align:right">TP1</th>
+      <th style="text-align:right">TP2</th><th style="text-align:right">SL</th><th style="text-align:right">勝率</th></tr></thead>
+    <tbody>{fx_align_html}</tbody>
+  </table></div>
+
+  <h3 style="margin-top:24px">📒 FX シグナル × 通貨強弱 直近 30 件</h3>
+  <div class="scroll-x"><table style="font-size:.82rem">
+    <thead><tr>
+      <th>発火時刻</th><th>ペア</th><th>L/S</th>
+      <th style="text-align:right">買い側 通貨強弱</th><th style="text-align:right">売り側 通貨強弱</th>
+      <th style="text-align:right">差</th><th>整合性</th><th>結果</th>
+    </tr></thead>
+    <tbody>{fx_detail_html}</tbody>
+  </table></div>
+</div>"""
+
+
 def build_loss_analysis_section(signals):
     """SL ヒット案件の敗因分析タブ"""
     sl_signals = [
@@ -654,6 +920,7 @@ def build_html(signals, trades):
     pane_4h = build_dashboard_section(signals_4h, "4h", "4H 足のみ", "equityChart4h")
     pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
     pane_analytics = build_analytics_section(signals)
+    pane_quality = build_quality_analysis_section(signals)
     pane_loss = build_loss_analysis_section(signals)
 
     # 敗因カテゴリチャート用データ
@@ -835,6 +1102,7 @@ def build_html(signals, trades):
     <button class="tab-btn" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
+    <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
     <button class="tab-btn" data-tab="loss">🔬 敗因分析</button>
     <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
@@ -843,6 +1111,7 @@ def build_html(signals, trades):
   {pane_4h}
   {pane_1h}
   {pane_analytics}
+  {pane_quality}
   {pane_loss}
 
   <div class="tab-pane" id="pane-data">
