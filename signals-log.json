@@ -4667,7 +4667,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.255,
+    "max_favorable_excursion_pct": 1.65,
     "max_adverse_excursion_pct": -0.107,
     "email_sent": true,
     "whipsaw_check": {
@@ -5121,12 +5121,12 @@
       "今日のビットコインニュース：ARMA法案とは何か、BTCへの影響は？"
     ],
     "ai_narrative": "ビットコインは、RSIの過売りからの反発とMACDのゴールデンクロスにより、短期的な上昇転換の兆しが見られます。直近のニュースでは、CLARITY法案成立予測やArthur Hayes氏の「政策パニック」ラリーへの期待が、ビットコインへのポジティブなセンチメントを後押ししています。USD高の通貨強弱も、リスク資産への資金流入を示唆しています。このシナリオは、75MAを明確に下抜けた場合に崩れる可能性があります。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-05-23T18:00:00+00:00",
+    "hit_tp1_at": "2026-05-23T18:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.61,
+    "max_favorable_excursion_pct": 1.003,
     "max_adverse_excursion_pct": -0.16,
     "email_sent": false,
     "whipsaw_check": {
@@ -5177,6 +5177,358 @@
         "current_atr": 309.9176,
         "avg_atr_30d": 343.7039,
         "ratio": 0.9,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GC=F_1h_20260524_0425",
+    "fired_at": "2026-05-24T04:25:05+09:00",
+    "timeframe": "1h",
+    "ticker": "GC=F",
+    "asset_name": "ゴールド先物",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 4523.2001953125,
+    "stop_loss": 4496.765001859653,
+    "take_profit_1": 4558.447119916295,
+    "take_profit_2": 4576.070582218193,
+    "atr": 17.623462301897654,
+    "sl_pct": -0.5844356276832916,
+    "tp1_pct": 0.7792475035777221,
+    "tp2_pct": 1.1688712553665832,
+    "indicators_at_signal": {
+      "rsi": 50.69,
+      "macd": -2.7035,
+      "macd_sig": -2.4345,
+      "ma25": 4524.56,
+      "ma75": 4516.86,
+      "bb_low": 4505.43,
+      "bb_up": 4536.29,
+      "recent_high": 4541.9,
+      "recent_low": 4488.0
+    },
+    "news_count": 5,
+    "news_titles": [
+      "債務削減と四半期決算の改善を経て、Americas Gold and Silver（TSX: USA）の企業価値を分析",
+      "ビリオネア、マーク・キューバン氏がビットコイン保有分を売却、アダム・バック氏がそのデータに異議",
+      "ほとんどの金ETFは毎年0.40%を徴収、しかし、あるETFはその4分の1。計算すれば、その差は家族旅行になる",
+      "1911 Gold、マニトバ州True North鉱山での地下掘削プログラムを拡大 - ICYMI",
+      "First Phosphate CEO、Agnico Eagleのリン鉱石市場への9400万ドルでの参入について語る - ICYMI"
+    ],
+    "ai_narrative": "ゴールド先物（4523.20ドル）は、ボリンジャーバンド-2σ（4505.43ドル）にタッチし、RSIが50.7と中立圏にあることから、短期的な反発が期待されます。MACDはシグナル線を下回っていますが、75MA（4516.86ドル）が25MA（4524.56ドル）を下回っており、下落トレンドが継続する可能性も示唆されます。  ファンダメンタルズ面では、金ETFのコスト削減や鉱山企業の掘削拡大といったニュースは、相対的に金への投資妙味を高める可能性があります。ただし、ビリオネアのビットコイン売却は、リスク資産への資金シフトを示唆しており、ゴールドにとっては逆風となる可能性も否定できません。  通貨強弱ではUSDが上昇しており、ドル高はゴールドにとってネガティブ要因となります。  このシナリオが崩れるのは、-2σを明確に下抜け、75MAも下回った場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 4H 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 17.6235,
+        "avg_atr_30d": 19.2283,
+        "ratio": 0.92,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURUSD=X_1h_20260524_0425",
+    "fired_at": "2026-05-24T04:25:05+09:00",
+    "timeframe": "1h",
+    "ticker": "EURUSD=X",
+    "asset_name": "ユーロドル",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 1.160496711730957,
+    "stop_loss": 1.1618820433078607,
+    "take_profit_1": 1.1586496029617523,
+    "take_profit_2": 1.15772604857715,
+    "atr": 0.0009235543846023891,
+    "sl_pct": 0.1193740200122817,
+    "tp1_pct": -0.1591653600163756,
+    "tp2_pct": -0.2387480400245634,
+    "indicators_at_signal": {
+      "rsi": 44.37,
+      "macd": -0.0002,
+      "macd_sig": -0.0002,
+      "ma25": 1.16,
+      "ma75": 1.16,
+      "bb_low": 1.16,
+      "bb_up": 1.16,
+      "recent_high": 1.16,
+      "recent_low": 1.16
+    },
+    "news_count": 5,
+    "news_titles": [
+      "WSJドル指数、0.02%上昇し95.80に",
+      "米国債利回り、勢いを失うもホルムズ海峡合意への期待から上昇",
+      "イラン戦争によるエネルギーショック、欧州経済の成長を圧迫しインフレを押し上げへ",
+      "高止まりするエネルギー価格、EU経済の重しに。ユーロはここから売り推奨。",
+      "ユーロ建てステーブルコインプロジェクト、新たに25行が参加"
+    ],
+    "ai_narrative": "ユーロドルはMACDのデッドクロスと25MA、75MAが水平であることから、短期的な下降転換の兆候が見られます。直近20本も高値安値が同じ水準に収束しており、方向感の定まらない状況ですが、MACDがシグナル線を下抜けたことで売り優勢に。  ファンダメンタルズでは、イラン情勢によるエネルギーショックが欧州経済の成長を圧迫し、ユーロ売りを後押しする材料となっています。通貨強弱でもドルがユーロを上回っており、ショート方向への見方を補強します。  このショートシナリオが崩れるのは、1.16 (+0.12%)のストップロスを上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 4H 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 EUR/USD 強弱差は小さい（-0.14%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド順張り (+2)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 戦争"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.0009,
+        "avg_atr_30d": 0.0011,
+        "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "戦争"
+        ],
+        "matched_titles": [
+          "イラン戦争によるエネルギーショック、欧州経済の成長を圧迫しインフレを押し上げへ"
+        ]
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_1h_20260524_0425",
+    "fired_at": "2026-05-24T04:25:05+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "ma_golden"
+    ],
+    "primary_signal": "ma_golden",
+    "primary_signal_label": "🟢 移動平均ゴールデンクロス（中期上昇入り）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.8844000101089478,
+    "stop_loss": 1.8813334013239873,
+    "take_profit_1": 1.8884888218222284,
+    "take_profit_2": 1.8905332276788689,
+    "atr": 0.0020444058566403593,
+    "sl_pct": -0.16273661475852153,
+    "tp1_pct": 0.21698215301136203,
+    "tp2_pct": 0.32547322951704305,
+    "indicators_at_signal": {
+      "rsi": 59.03,
+      "macd": 0.0009,
+      "macd_sig": 0.0008,
+      "ma25": 1.88,
+      "ma75": 1.88,
+      "bb_low": 1.88,
+      "bb_up": 1.89,
+      "recent_high": 1.89,
+      "recent_low": 1.88
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドルの1時間足チャートで、25MAが75MAを上抜けるゴールデンクロスが発生し、中期的な上昇トレンド入りが示唆されています。RSIも59と買われすぎではない水準にあり、MACDもシグナルを上回っており、テクニカル的には買いシグナルが優勢です。  通貨強弱も、GBPが堅調、AUDが軟調と、このペアのロング（買い）方向と一致しています。中国経済については、上海総合指数や香港ハンセン指数が上昇しており、ハイテク株の決算も好調といったポジティブなニュースが、AUDの押し上げ要因となる可能性があります。  このシナリオが崩れる（ストップロスに到達する）展開としては、中国経済の減速懸念が再燃し、AUDが急落するケースが考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 強（+0.15%）× AUD 弱（-0.27%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": 0.428,
+      "base_strength": 0.155,
+      "quote_strength": -0.273
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 4112.9,
+          "change_pct": 0.87
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25606.03,
+          "change_pct": 0.86
+        }
+      },
+      "news": [
+        "Lenovo、PC販売好調で第4四半期収益が予想を上回る、株価は15%急騰",
+        "決算、ハイテク株の強さ、ペルシャ湾の見通しがアジア株市場を押し上げる",
+        "原油、ハイテク見通しがアジア株市場を揺さぶる",
+        "原油、金利、地政学がアジア株市場を下押し",
+        "ペルシャ湾の見通しがアジア株市場を揺さぶる"
+      ]
+    },
+    "confidence": {
+      "score": 6,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "FX 強弱順張り (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.002,
+        "avg_atr_30d": 0.0025,
+        "ratio": 0.83,
         "regime": "normal",
         "label": "🟢 平常"
       },
