@@ -268,6 +268,17 @@ def render_html(today, week_start, week_end, sig_stats, trade_stats, events, les
 <title>📅 週次振り返り（{week_start_str}〜{week_end_str}）｜ MarketWatch AI</title>
 <meta name="description" content="先週のシグナル全件・結果・教訓を自動集計。AI トレードの透明性を追求する週次レポート。">
 <link rel="canonical" href="https://marketwatch-jp.com/guide-weekly-review-{week_start_str}.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="📅 週次振り返り（{week_start_str}〜{week_end_str}）｜ MarketWatch AI">
+<meta property="og:description" content="先週のシグナル全件・結果・教訓を自動集計。AI トレードの透明性を追求する週次レポート。">
+<meta property="og:url" content="https://marketwatch-jp.com/guide-weekly-review-{week_start_str}.html">
+<meta property="og:site_name" content="MarketWatch AI">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
