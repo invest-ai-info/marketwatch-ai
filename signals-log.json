@@ -3878,7 +3878,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": -0.079,
-    "max_adverse_excursion_pct": -1.07,
+    "max_adverse_excursion_pct": -1.089,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": true,
@@ -4142,6 +4142,103 @@
         "current_atr": 0.002,
         "avg_atr_30d": 0.0025,
         "ratio": 0.83,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "BTC-USD_1h_20260523_1418",
+    "fired_at": "2026-05-23T14:18:15+09:00",
+    "timeframe": "1h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "rsi_oversold_bounce"
+    ],
+    "primary_signal": "rsi_oversold_bounce",
+    "primary_signal_label": "🟢 RSI 過売り反発（押し目買い候補）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 75459.1328125,
+    "stop_loss": 75010.55344376118,
+    "take_profit_1": 76057.2386374851,
+    "take_profit_2": 76356.29154997764,
+    "atr": 299.05291249254986,
+    "sl_pct": -0.5944666364685767,
+    "tp1_pct": 0.7926221819581022,
+    "tp2_pct": 1.1889332729371533,
+    "indicators_at_signal": {
+      "rsi": 29.82,
+      "macd": -491.7751,
+      "macd_sig": -450.5051,
+      "ma25": 76408.97,
+      "ma75": 77096.22,
+      "bb_low": 74671.88,
+      "bb_up": 77704.43,
+      "recent_high": 77491.21,
+      "recent_low": 75127.33
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアムの価格、2026年5月22日（金）：今週の価格変動はわずか",
+      "ケビン・オライリー氏、「この仮想通貨法案が可決されるまで、ビットコインとトークン化は「ニッチ」なままだろう」と発言",
+      "マイケル・セイラー氏、ビットコインの最もホットなトレンドについて率直な評価を下す",
+      "トランプ・メディアはビットコインを売却するのか？",
+      "週刊まとめ：株式市場が上昇する中、ビットコインは横ばい"
+    ],
+    "ai_narrative": "ビットコインはRSIが過売り水準から反発し、短期的な押し目買いのチャンスを示唆しています。MACDも下落トレンドの勢いが鈍化しており、反転の兆しが見られます。25MA、75MA、ボリンジャーバンド-2σがサポートラインとして機能しており、エントリー水準はこれらのテクニカル指標とも整合性が取れています。  ニュース材料は価格変動に大きく影響するものは限定的ですが、仮想通貨法案の動向は中長期的には注視すべき点です。USDが通貨強弱で最も強く、ビットコインもUSD建てで取引されることを考慮すると、USDの堅調さはポジティブに働く可能性があります。  このシナリオが崩れるのは、直近の安値を明確に下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 4H 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 299.0529,
+        "avg_atr_30d": 350.9774,
+        "ratio": 0.85,
         "regime": "normal",
         "label": "🟢 平常"
       },
