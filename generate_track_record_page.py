@@ -554,6 +554,17 @@ def build_quality_analysis_section(signals):
         }.get((e.get("trend_alignment") or {}).get("aligned"))
     trend_groups = group_stats(signals, _trend_label)
 
+    # === B2: 信頼度スコア別 ===
+    CONFIDENCE_LABELS = {
+        "HIGH": "⭐⭐⭐ HIGH（強）",
+        "MID": "⭐⭐ MID（中）",
+        "LOW": "⭐ LOW（弱）",
+    }
+    conf_groups = group_stats(
+        signals,
+        lambda e: CONFIDENCE_LABELS.get((e.get("confidence") or {}).get("label")),
+    )
+
     # === EW-6-A: 環境スコア別 ===
     env_groups = group_stats(signals, lambda e: (e.get("environment") or {}).get("env_score"))
 
@@ -697,6 +708,10 @@ def build_quality_analysis_section(signals):
         trend_groups,
         key_order=["✅ 順張り（上位足と一致）", "〜 中立・判定不能", "⚠️ 逆張り（上位足と逆）"],
     )
+    conf_html = _render_groups(
+        conf_groups,
+        key_order=["⭐⭐⭐ HIGH（強）", "⭐⭐ MID（中）", "⭐ LOW（弱）"],
+    )
     env_html = _render_groups(env_groups, key_order=["A", "B", "C", "D"])
     vix_html = _render_groups(
         vix_groups,
@@ -734,6 +749,18 @@ def build_quality_analysis_section(signals):
       <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
       <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
     <tbody>{trend_html}</tbody>
+  </table></div>
+
+  <h2 style="margin-top:32px">💯 信頼度スコア別 勝率（B2）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    💡 シグナル発火時の信頼度（複数シグナル × 環境 × トレンド整合 × 反転 × FX 強弱を統合）別の勝率を集計。
+    HIGH の勝率が LOW より明確に高ければ、信頼度スコアの計算ロジックが機能していることの裏付けになります。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>信頼度</th><th style="text-align:right">確定数</th><th style="text-align:right">勝率</th>
+      <th style="text-align:right">TP1率</th><th style="text-align:right">TP2率</th>
+      <th style="text-align:right">SL</th><th style="text-align:right">期待 R</th></tr></thead>
+    <tbody>{conf_html}</tbody>
   </table></div>
 
   <h2 style="margin-top:32px">🛡️ 環境警戒スコア別 勝率（EW-6）</h2>
