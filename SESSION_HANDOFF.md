@@ -92,6 +92,17 @@
 
 ## 📅 直近の作業履歴
 
+### 2026-05-23（土）の作業 (第 4 波: 仕上げ R1/R2)
+- ✅ **R1: og:image を 3 テンプレに追加**
+  - トヨタ記事 → `08_market_stock.png`
+  - 週次振り返り（auto_weekly_review.py テンプレ + 公開済み記事） → `12_feature_market_health.png`
+  - マンスリーレポート（generate_monthly_report.py テンプレ） → `12_feature_market_health.png`
+  - twitter:card もまとめて追加。Twitter/X / LINE シェア時の見栄え改善
+- ✅ **R2: メール件名タグ整理（コンパクト化）**
+  - 「シグナル:」ラベル省略、トレンドタグを `[✅順張り]` → ` ↑` / `[⚠️逆張り]` → ` ↓` に短縮
+  - 指標近接タグから「まで」「発表」「（X月）」を削除
+  - Before/After 比較: 最長 60 文字 → 45 文字（25% 短縮）、スマホ件名表示で切れにくく
+
 ### 2026-05-23（土）の作業 (第 3 波: B2/C1/C2/C3 大規模追加)
 - ✅ **B2: AI 信頼度スコア機能**
   - `generate_technical_alerts.py` に `calc_confidence_score()` 追加
