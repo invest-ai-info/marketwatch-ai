@@ -272,6 +272,17 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
 <title>📊 {year}年{month}月 AI トレード成績レポート｜MarketWatch AI</title>
 <meta name="description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、実取引と AI 総評。">
 <link rel="canonical" href="https://marketwatch-jp.com/guide-monthly-report-{month_str}.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="📊 {year}年{month}月 AI トレード成績レポート｜MarketWatch AI">
+<meta property="og:description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、実取引と AI 総評。">
+<meta property="og:url" content="https://marketwatch-jp.com/guide-monthly-report-{month_str}.html">
+<meta property="og:site_name" content="MarketWatch AI">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
