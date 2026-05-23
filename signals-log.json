@@ -3334,12 +3334,12 @@
       "マーク・キューバン氏、ビットコインはヘッジとして失敗したと発言"
     ],
     "ai_narrative": "ビットコインはMACDのデッドクロスにより短期的な下降転換のシグナルが点灯しました。RSIも40近辺と中立域下限に位置し、弱含みの可能性を示唆しています。ボリンジャーバンドの-2σ近辺への接近も、短期的な下落圧力を裏付けます。  ファンダメンタルズ面では、マーク・キューバン氏の「ビットコインはヘッジとして失敗」との発言は、投資家心理にネガティブな影響を与える可能性があります。足元のニュース材料は限定的ですが、全体的なリスクオフムードが強まれば、このショートシナリオは維持されます。  このシナリオが崩れるのは、価格が25MA（77155.48）を明確に上抜けた場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-05-22T23:00:00+00:00",
+    "hit_tp1_at": "2026-05-22T23:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.587,
+    "max_favorable_excursion_pct": 2.03,
     "max_adverse_excursion_pct": 0.247,
     "email_sent": true,
     "whipsaw_check": {
@@ -3432,13 +3432,13 @@
       "トランプ・メディア、未実現損失の増大の中で2億500万ドルを動かす"
     ],
     "ai_narrative": "ビットコインは1H足でRSIが過売り水準から反発し、ボリンジャーバンド-2σにタッチしたことで、短期的な反発が期待されます。MACDのデッドクロスは依然として弱気ですが、直近の価格帯で押し目買いが入る可能性を示唆しています。  通貨強弱ではUSDが微増ですが、ビットコインへの直接的な影響は限定的です。ニュース材料も限定的で、市場を動かすような大きな材料は見当たりません。  このロングシナリオは、75,569.79ドルの直近安値を下抜けた場合に崩れる可能性があります。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-05-22T23:00:00+00:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-05-22T23:00:00+00:00",
     "max_favorable_excursion_pct": 0.228,
-    "max_adverse_excursion_pct": -0.468,
+    "max_adverse_excursion_pct": -0.916,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -3485,6 +3485,24 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    },
+    "loss_analysis": {
+      "vix_data": null,
+      "news_during_holding": [
+        "ケビン・オリアリー、ビットコインとトークン化は「この仮想通貨法案が可決されるまで『フリンジ』であり続ける」と発言",
+        "マイケル・セイラー、ビットコインの最もホットなトレンドについて率直な評価を下す",
+        "トランプ・メディアはビットコインを売却するのか？",
+        "週次ラップ：株価上昇の中、ビットコインは横ばい",
+        "Nasdaq、ビットコイン指数オプションの上場についてSECの承認を得る",
+        "SpaceXの2兆ドルIPO、FBIが詐欺師を詐欺、トランプ・メディアがビットコインを売却"
+      ],
+      "ai_result": {
+        "primary_category": "テクニカル悪化",
+        "primary_cause": "短期的な反発期待が早期に崩れた",
+        "ai_diagnosis": "RSIが過売り水準からの反発を示唆していましたが、MACDの弱気トレンドと25MA/75MAのデッドクロスが継続し、下落圧力が優位に働いたと考えられます。AI解説で示唆された「75,569.79ドルの直近安値を下抜けた場合」という条件が、想定より早く、かつ強く発現した可能性があります。保有期間中のニュースは、明確なビットコイン買い材料に繋がるものが少なかったようです。",
+        "lesson": "短期的なテクニカル指標の反発シグナルに過信せず、MAやMACDなどの長期的なトレンド指標をより重視し、強固な下落圧力を確認する。",
+        "category_tag": "トレンド逆行"
       }
     }
   },
@@ -3860,7 +3878,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": -0.079,
-    "max_adverse_excursion_pct": -0.641,
+    "max_adverse_excursion_pct": -1.089,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": true,
@@ -3900,6 +3918,230 @@
         "current_atr": 713.2871,
         "avg_atr_30d": 768.814,
         "ratio": 0.93,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURUSD=X_1h_20260523_1304",
+    "fired_at": "2026-05-23T13:04:47+09:00",
+    "timeframe": "1h",
+    "ticker": "EURUSD=X",
+    "asset_name": "ユーロドル",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 1.160496711730957,
+    "stop_loss": 1.1618820433078607,
+    "take_profit_1": 1.1586496029617523,
+    "take_profit_2": 1.15772604857715,
+    "atr": 0.0009235543846023891,
+    "sl_pct": 0.1193740200122817,
+    "tp1_pct": -0.1591653600163756,
+    "tp2_pct": -0.2387480400245634,
+    "indicators_at_signal": {
+      "rsi": 44.37,
+      "macd": -0.0002,
+      "macd_sig": -0.0002,
+      "ma25": 1.16,
+      "ma75": 1.16,
+      "bb_low": 1.16,
+      "bb_up": 1.16,
+      "recent_high": 1.16,
+      "recent_low": 1.16
+    },
+    "news_count": 5,
+    "news_titles": [
+      "WSJドル指数、0.02%高の95.80に上昇",
+      "米国債利回り、勢いを失うもホルムズ海峡合意への期待で上昇継続",
+      "イラン戦争によるエネルギーショック、欧州成長を圧迫、インフレを押し上げへ",
+      "高エネルギー価格がEU経済の重しに。ユーロはここで売り推奨。",
+      "ユーロ建てステーブルコインプロジェクト、新たに25行が参加"
+    ],
+    "ai_narrative": "ユーロドルはMACDのデッドクロスにより短期的な下降転換を示唆しており、1.16050からのショートエントリーは妥当です。直近のニュースでは、イラン情勢によるエネルギー価格高騰が欧州経済の重しとなり、ユーロ売りを推奨する内容が見られ、テクニカルとファンダメンタルズが一致しています。通貨強弱でもドルがユーロを上回っており、この流れを支持しています。シナリオが崩れるとすれば、米国のインフレ懸念が後退し、FRBの利上げ観測が後退する展開が考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 4H 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 EUR/USD 強弱差は小さい（-0.14%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 戦争"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.0009,
+        "avg_atr_30d": 0.0011,
+        "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "戦争"
+        ],
+        "matched_titles": [
+          "イラン戦争によるエネルギーショック、欧州成長を圧迫、インフレを押し上げへ"
+        ]
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_1h_20260523_1304",
+    "fired_at": "2026-05-23T13:04:47+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "ma_golden"
+    ],
+    "primary_signal": "ma_golden",
+    "primary_signal_label": "🟢 移動平均ゴールデンクロス（中期上昇入り）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.8844000101089478,
+    "stop_loss": 1.8813334013239873,
+    "take_profit_1": 1.8884888218222284,
+    "take_profit_2": 1.8905332276788689,
+    "atr": 0.0020444058566403593,
+    "sl_pct": -0.16273661475852153,
+    "tp1_pct": 0.21698215301136203,
+    "tp2_pct": 0.32547322951704305,
+    "indicators_at_signal": {
+      "rsi": 59.03,
+      "macd": 0.0009,
+      "macd_sig": 0.0008,
+      "ma25": 1.88,
+      "ma75": 1.88,
+      "bb_low": 1.88,
+      "bb_up": 1.89,
+      "recent_high": 1.89,
+      "recent_low": 1.88
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドルの1時間足チャートでは、25MAが75MAを上抜けるゴールデンクロスが発生し、中期的な上昇トレンド入りを示唆しています。RSIが59と買われすぎでない水準にあることも、さらなる上昇の余地を示唆します。  ファンダメンタルズでは、英国ポンドの通貨強弱がプラスである一方、豪ドルはマイナスと、通貨強弱もロングの方向感と一致しています。中国市場は上海総合指数、香港ハンセン指数ともに堅調であり、ハイテク株の好調さもアジア株式市場を押し上げており、豪ドルの上値追い風となる可能性があります。  このロングシナリオが崩れるのは、中国市場の軟調化が顕著になり、豪ドルの下落圧力が強まる場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.156,
+      "EUR": 0.015,
+      "GBP": 0.155,
+      "JPY": -0.011,
+      "AUD": -0.273
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 強（+0.15%）× AUD 弱（-0.27%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": 0.428,
+      "base_strength": 0.155,
+      "quote_strength": -0.273
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 4112.9,
+          "change_pct": 0.87
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25606.03,
+          "change_pct": 0.86
+        }
+      },
+      "news": [
+        "Lenovo、PC販売好調で第4四半期売上高が予想を上回る。株価は15%上昇。",
+        "決算、ハイテク株の強さ、ペルシャ湾の見通しがアジア株式市場を押し上げ。",
+        "原油、ハイテクの見通しがアジア株式市場を混乱させる。",
+        "原油、金利、地政学がアジア株式市場を下押し。",
+        "ペルシャ湾の見通しがアジア株式市場を混乱させる。"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.002,
+        "avg_atr_30d": 0.0025,
+        "ratio": 0.83,
         "regime": "normal",
         "label": "🟢 平常"
       },
