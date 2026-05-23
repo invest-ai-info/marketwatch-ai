@@ -608,9 +608,11 @@ def build_quality_analysis_section(signals):
         # ロング = 買い通貨が強く、売り通貨が弱い ⇒ diff > 0 で順張り
         # ショート = 逆
         signed_diff = diff if is_long else -diff
-        if signed_diff > 0.1:
+        # 閾値 ±0.05: 現状のシグナル発火時の強弱差は ±0.1 未満が大半のため、
+        # ±0.1 だと「中立」に偏る。±0.05 で順張り/逆張りの分離を確保する。
+        if signed_diff > 0.05:
             alignment = "順張り"
-        elif signed_diff < -0.1:
+        elif signed_diff < -0.05:
             alignment = "逆張り"
         else:
             alignment = "中立"
@@ -771,9 +773,9 @@ def build_quality_analysis_section(signals):
   <h2 style="margin-top:32px">💱 通貨強弱マトリクス（CS-5）</h2>
   <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
     💡 FX シグナル発火時の通貨強弱と方向の整合性を集計。<br>
-    <b>順張り</b>: 強い通貨を買い・弱い通貨を売り（強弱差が ±0.10% を超え方向と一致）<br>
+    <b>順張り</b>: 強い通貨を買い・弱い通貨を売り（強弱差が ±0.05% を超え方向と一致）<br>
     <b>逆張り</b>: 弱い通貨を買い・強い通貨を売り<br>
-    <b>中立</b>: 強弱差が ±0.10% 以内
+    <b>中立</b>: 強弱差が ±0.05% 以内
   </p>
   <div class="scroll-x"><table>
     <thead><tr><th>整合性</th><th style="text-align:right">FX 確定数</th><th style="text-align:right">TP1</th>
