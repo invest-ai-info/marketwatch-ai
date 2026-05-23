@@ -1696,27 +1696,38 @@ MarketWatch AI Alerts
 """
 
         # 主シグナルから件名を組み立て（環境警告プレフィックス付）
+        # R2: スマホ件名表示で切れないよう、コンパクト化（目安 50 文字以内）
         primary = fresh_signals[0]
         emoji = {"buy": "🟢", "sell": "🔴", "warn": "🟡"}.get(primary["severity"], "📊")
         # 件名プレフィックス: D=🚫 / C=⛔ / B=⚠️ / A= (なし)
         env_prefix = {"D": "🚫 ", "C": "⛔ ", "B": "⚠️ "}.get(env["env_score"], "")
-        # 🆕 反転・トレンドタグ
+        # 反転タグ
         reversal_tag = "🔄 " if reversal and reversal.get("is_reversal") else ""
+        # R2: トレンドタグを矢印 1 文字に短縮（順張り ↑ / 逆張り ↓）
         trend_tag = ""
         if trend_align and trend_align.get("aligned") is True:
-            trend_tag = " [✅順張り]"
+            trend_tag = " ↑"
         elif trend_align and trend_align.get("aligned") is False:
-            trend_tag = " [⚠️逆張り]"
+            trend_tag = " ↓"
 
-        # 🆕 B2: 信頼度タグ
+        # B2: 信頼度タグ
         conf_tag = f" {confidence['stars']}"
 
-        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} シグナル: {primary['label'].split('（')[0].strip()}{trend_tag}{conf_tag}"
-        # 重要指標が 24h 以内ならその名前も件名に
+        # R2: 「シグナル:」ラベルを省略してコンパクト化
+        sig_label = primary['label'].split('（')[0].strip()
+        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} {sig_label}{trend_tag}{conf_tag}"
+        # 重要指標が 24h 以内ならその名前も件名に（R2: 「まで」「発表」「（X月）」を削除）
         if env["upcoming_events"]:
             nearest = env["upcoming_events"][0]
             if nearest["hours_until"] <= 24:
-                subject += f" / {nearest['name']}まで {nearest['hours_until']:.0f}h"
+                import re as _re_short
+                short_name = nearest['name']
+                short_name = _re_short.sub(r'発表', '', short_name)
+                short_name = _re_short.sub(r'（[^）]*）', '', short_name)
+                short_name = short_name.strip()
+                if len(short_name) > 12:
+                    short_name = short_name[:12]
+                subject += f" /{short_name} {nearest['hours_until']:.0f}h"
 
         # 送信（--no-email 時は完全スキップ）
         email_sent = False
