@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚨 政治発言ライブフィード｜MarketWatch AI</title>
+<meta name="description" content="トランプ Truth Social・WhiteHouse 公式声明・主要中銀発言を 30 分ごとに自動収集。重要度別ランク付け、影響銘柄推定、Gemini による日本語化と一言コメント。">
+<link rel="canonical" href="https://marketwatch-jp.com/political-feed.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="🚨 政治発言ライブフィード｜MarketWatch AI">
+<meta property="og:description" content="トランプ・パウエル・植田など相場を動かす発言を 30 分ごと自動収集。重要度別ランク・影響銘柄・AI 一言コメント付き。">
+<meta property="og:url" content="https://marketwatch-jp.com/political-feed.html">
+<meta property="og:site_name" content="MarketWatch AI">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://marketwatch-jp.com/05_top_news_frb.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://marketwatch-jp.com/05_top_news_frb.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#fff;color:#1f2328;line-height:1.7;min-height:100vh}
+header{background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+.header-inner{max-width:1200px;margin:0 auto}
+.header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+main{max-width:1100px;margin:0 auto;padding:32px 24px}
+.nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+.nav-btn{padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.nav-btn:hover{border-color:#0969da;color:#0969da}
+.nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+.page-header{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:28px 32px;margin-bottom:24px}
+h1{font-size:1.8rem;color:#0969da;margin-bottom:8px}
+.page-desc{font-size:.92rem;color:#57606a}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:18px 0 28px}
+.kpi{background:#fff;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:10px;padding:16px;text-align:center}
+.kpi.high{border-left-color:#cf222e}
+.kpi.mid{border-left-color:#9a6700}
+.kpi.low{border-left-color:#6e7781}
+.kpi-num{font-size:1.7rem;font-weight:800;color:#1f2328}
+.kpi.high .kpi-num{color:#cf222e}
+.kpi.mid .kpi-num{color:#9a6700}
+.kpi.low .kpi-num{color:#6e7781}
+.kpi-label{font-size:.75rem;color:#57606a;margin-top:4px}
+h2{font-size:1.25rem;color:#1f6feb;margin:28px 0 14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+.info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:14px 18px;margin:14px 0;font-size:.9rem;color:#1f6feb}
+.info-box::before{content:"💡 ";font-weight:700}
+.warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:14px 18px;margin:14px 0;font-size:.9rem;color:#9a6700}
+.warning-box::before{content:"⚠️ ";font-weight:700}
+.feed-card{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:18px 20px;margin:14px 0;border-left:5px solid #6e7781}
+.feed-card.card-high{border-left-color:#cf222e;background:#fffafa}
+.feed-card.card-mid{border-left-color:#9a6700}
+.feed-card.card-low{border-left-color:#6e7781}
+.card-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px;font-size:.82rem}
+.badge{display:inline-block;padding:3px 10px;border-radius:4px;font-weight:700;font-size:.75rem;letter-spacing:.04em}
+.badge-high{background:#ffebe9;color:#cf222e;border:1px solid #cf222e}
+.badge-mid{background:#fff8c5;color:#9a6700;border:1px solid #9a6700}
+.badge-low{background:#f6f8fa;color:#6e7781;border:1px solid #d0d7de}
+.source-label{color:#0969da;font-weight:600}
+.time-label{color:#57606a;margin-left:auto}
+.title-ja{font-size:1.05rem;font-weight:700;color:#1f2328;margin-bottom:6px;line-height:1.5}
+.title-en{font-size:.82rem;color:#6e7781;margin-bottom:8px;font-style:italic}
+.ai-comment{background:#dafbe1;border-left:3px solid #1a7f37;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:.88rem;color:#1a7f37}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;font-size:.82rem}
+.asset-tag{display:inline-block;background:#ddf4ff;color:#0969da;border:1px solid #54aeff;padding:2px 8px;border-radius:4px;font-size:.75rem;font-weight:600;margin-right:4px}
+.orig-link{color:#0969da;font-weight:600;text-decoration:none}
+.orig-link:hover{text-decoration:underline}
+.empty-state{padding:60px 0;text-align:center;color:#6e7781;font-size:1rem}
+.src-row{display:flex;align-items:center;gap:12px;margin:6px 0;font-size:.85rem}
+.src-name{min-width:140px;color:#1f2328;font-weight:600}
+.src-bar-bg{flex:1;height:14px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:4px;overflow:hidden}
+.src-bar-fill{height:100%;background:linear-gradient(90deg,#0969da,#54aeff)}
+.src-count{min-width:60px;text-align:right;color:#57606a}
+footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+footer a{color:#0969da;text-decoration:none}
+@media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}.page-header{padding:20px}h1{font-size:1.4rem}.kpi-num{font-size:1.3rem}.time-label{margin-left:0}}
+body.dark{background:#0d1117;color:#e6edf3}
+body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+body.dark .page-header{background:#161b22;border-color:#30363d}
+body.dark .page-desc,body.dark .header-meta{color:#8b949e}
+body.dark h1,body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+body.dark .kpi,body.dark .feed-card{background:#161b22;border-color:#30363d}
+body.dark .feed-card.card-high{background:#2d0d0e}
+body.dark .kpi-num{color:#e6edf3}
+body.dark .title-ja{color:#e6edf3}
+body.dark .title-en{color:#8b949e}
+body.dark .source-label{color:#79c0ff}
+body.dark .src-bar-bg{background:#0d1117;border-color:#30363d}
+body.dark footer{background:#161b22;color:#8b949e;border-top-color:#30363d}
+</style>
+</head>
+<body>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+<header><div class="header-inner"><div class="header-title">📊 MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div></div></header>
+
+<main>
+<nav class="nav-bar">
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn current" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+</nav>
+
+<div class="page-header">
+  <h1>🚨 政治発言ライブフィード</h1>
+  <div class="page-desc">
+    トランプ大統領 Truth Social・WhiteHouse 公式声明・パウエル FRB・植田 BOJ・ラガルド ECB など、相場を動かす発言を <strong>30 分ごとに自動収集</strong>。
+    Gemini で日本語化 + 一言コメント、影響銘柄を推定して重要度別にランク付けします。
+    <br><span style="color:#6e7781;font-size:.85rem">最終更新: 2026-05-24 19:10 JST ／ 自動更新: 30 分間隔 (cron best-effort、実際は 30-45 分)</span>
+  </div>
+</div>
+
+<h2>📊 サマリ KPI</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-num">30</div><div class="kpi-label">蓄積件数（最大 100）</div></div>
+  <div class="kpi"><div class="kpi-num">0</div><div class="kpi-label">過去 24h</div></div>
+  <div class="kpi"><div class="kpi-num">5</div><div class="kpi-label">過去 7 日</div></div>
+  <div class="kpi high"><div class="kpi-num">0</div><div class="kpi-label">🔴 HIGH</div></div>
+  <div class="kpi mid"><div class="kpi-num">30</div><div class="kpi-label">🟠 MID</div></div>
+  <div class="kpi low"><div class="kpi-num">0</div><div class="kpi-label">📰 LOW</div></div>
+</div>
+
+<div class="info-box">
+  <strong>使い方:</strong> 🔴 HIGH 発言は新規検知時に <strong>メール通知</strong> も配信されます（GMAIL_USER / ALERT_RECIPIENT 設定済みの場合）。
+  日中はサイトを開きっぱなしにせず、メールに来た HIGH 発言だけ確認するのが効率的。
+</div>
+
+<h2>📡 発信元の分布（上位 5 ソース）</h2>
+<div class="src-row"><span class="src-name">WhiteHouse 公式</span><div class="src-bar-bg"><div class="src-bar-fill" style="width:100%"></div></div><span class="src-count">30 件</span></div>
+
+<h2>📒 直近の発言（新しい順）</h2>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/23 12:11 JST <span style="color:#8b949e">/ 31.0h 前</span></span>
+          </div>
+          <div class="title-ja">2026年戦没者追悼記念日</div>
+          <div class="title-en">📰 Memorial Day, 2026</div>
+          <div class="ai-comment">💡 休日明けの市場動向に注視。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/memorial-day-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/21 05:07 JST <span style="color:#8b949e">/ 86.1h 前</span></span>
+          </div>
+          <div class="title-ja">上院へ送付された候補者名簿</div>
+          <div class="title-en">📰 Nominations Sent to the Senate</div>
+          <div class="ai-comment">💡 人事案が今後の政策に影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/nominations-sent-to-the-senate-22d2/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/20 07:06 JST <span style="color:#8b949e">/ 108.1h 前</span></span>
+          </div>
+          <div class="title-ja">2026年歳出剰余金法の一部規定の施行等</div>
+          <div class="title-en">📰 To Implement Certain Provisions in the Consolidated Appropriations Act, 2026, and for Other Purposes</div>
+          <div class="ai-comment">💡 予算執行が経済に影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/to-implement-certain-provisions-in-the-consolidated-appropriations-act-2026-and-for-other-purposes/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/20 06:48 JST <span style="color:#8b949e">/ 108.4h 前</span></span>
+          </div>
+          <div class="title-ja">米金融システムへの信頼回復</div>
+          <div class="title-en">📰 Restoring Integrity to America’s Financial System</div>
+          <div class="ai-comment">💡 金融規制強化の動きに注視。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/restoring-integrity-to-americas-financial-system/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/20 06:44 JST <span style="color:#8b949e">/ 108.4h 前</span></span>
+          </div>
+          <div class="title-ja">金融技術革新と規制枠組みの統合</div>
+          <div class="title-en">📰 Integrating Financial Technology Innovation into Regulatory Frameworks</div>
+          <div class="ai-comment">💡 フィンテック関連企業に注目。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/integrating-financial-technology-innovation-into-regulatory-frameworks/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/13 04:21 JST <span style="color:#8b949e">/ 278.8h 前</span></span>
+          </div>
+          <div class="title-ja">上院へ送付された候補者名簿</div>
+          <div class="title-en">📰 Nominations Sent to the Senate</div>
+          <div class="ai-comment">💡 人事案が今後の政策に影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/nominations-sent-to-the-senate-3857/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/12 05:42 JST <span style="color:#8b949e">/ 301.5h 前</span></span>
+          </div>
+          <div class="title-ja">2026年平和警察官追悼記念日及び警察週間</div>
+          <div class="title-en">📰 Peace Officers Memorial Day and Police Week, 2026</div>
+          <div class="ai-comment">💡 関連法案の動向を注視。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/peace-officers-memorial-day-and-police-week-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/12 04:16 JST <span style="color:#8b949e">/ 302.9h 前</span></span>
+          </div>
+          <div class="title-ja">上院へ送付・撤回された候補者名簿</div>
+          <div class="title-en">📰 Nominations and Withdrawal Sent to the Senate</div>
+          <div class="ai-comment">💡 人事の流動性に注意。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/nominations-and-withdrawal-sent-to-the-senate-c6ad/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/08 05:59 JST <span style="color:#8b949e">/ 397.2h 前</span></span>
+          </div>
+          <div class="title-ja">2026年軍人配偶者デー</div>
+          <div class="title-en">📰 Military Spouse Day, 2026</div>
+          <div class="ai-comment">💡 軍事関連政策の行方に注意。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/military-spouse-day-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/08 05:58 JST <span style="color:#8b949e">/ 397.2h 前</span></span>
+          </div>
+          <div class="title-ja">第二次世界大戦戦勝記念日、2026年</div>
+          <div class="title-en">📰 Victory Day for World War II, 2026</div>
+          <div class="ai-comment">💡 国際情勢の変動に注意。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/victory-day-for-world-war-ii-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/06 01:52 JST <span style="color:#8b949e">/ 449.3h 前</span></span>
+          </div>
+          <div class="title-ja">2026年国民体育・スポーツ月間</div>
+          <div class="title-en">📰 National Physical Fitness and Sports Month, 2026</div>
+          <div class="ai-comment">💡 関連産業への間接的影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/national-physical-fitness-and-sports-month-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/05 08:06 JST <span style="color:#8b949e">/ 467.1h 前</span></span>
+          </div>
+          <div class="title-ja">2026年ユダヤ系アメリカ人遺産月間</div>
+          <div class="title-en">📰 Jewish American Heritage Month, 2026</div>
+          <div class="ai-comment">💡 文化・社会動向に注視。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/jewish-american-heritage-month-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/02 02:22 JST <span style="color:#8b949e">/ 544.8h 前</span></span>
+          </div>
+          <div class="title-ja">キューバでの弾圧と米国安保・外交への脅威に関与した者への制裁発動</div>
+          <div class="title-en">📰 Imposing Sanctions on Those Responsible for Repression in Cuba and for Threats to United States National Security and Foreign Policy</div>
+          <div class="ai-comment">💡 対キューバ経済への影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/05/imposing-sanctions-on-those-responsible-for-repression-in-cuba-and-for-threats-to-united-states-national-security-and-foreign-policy/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/01 05:08 JST <span style="color:#8b949e">/ 566.0h 前</span></span>
+          </div>
+          <div class="title-ja">大統領許可：ブリッジャー・パイプライン拡張社によるモンタナ州国境でのパイプライン施設建設、接続、運営、維持の承認</div>
+          <div class="title-en">📰 Presidential Permit: Authorizing Bridger Pipeline Expansion LLC to Construct, Connect, Operate, and Maintain Pipeline Facilities at the International Boundary at Phillips County, Montana, Between the United States and Canada</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-permit-authorizing-bridger-pipeline-expansion-llc-to-construct-connect-operate-and-maintain-pipeline-facilities-at-the-international-boundary-at-phillips-county-montana-between-the/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/01 05:08 JST <span style="color:#8b949e">/ 566.0h 前</span></span>
+          </div>
+          <div class="title-ja">2026年全国消防士追悼週末</div>
+          <div class="title-en">📰 National Fallen Firefighters Memorial Weekend, 2026</div>
+          <div class="ai-comment">💡 消防関連政策の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/national-fallen-firefighters-memorial-weekend-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/01 05:06 JST <span style="color:#8b949e">/ 566.1h 前</span></span>
+          </div>
+          <div class="title-ja">2026年全国フォスターケア月間</div>
+          <div class="title-en">📰 National Foster Care Month, 2026</div>
+          <div class="ai-comment">💡 社会福祉関連政策の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/national-foster-care-month-2026/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/01 05:02 JST <span style="color:#8b949e">/ 566.1h 前</span></span>
+          </div>
+          <div class="title-ja">TrumpIRA.gov創設による米国勤労者の退職貯蓄アクセス促進</div>
+          <div class="title-en">📰 Promoting Retirement-Savings Access for American Workers by Establishing TrumpIRA.gov</div>
+          <div class="ai-comment">💡 個人投資家の貯蓄行動への影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/promoting-retirement-savings-access-for-american-workers-by-establishing-trumpira-gov/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">05/01 05:02 JST <span style="color:#8b949e">/ 566.1h 前</span></span>
+          </div>
+          <div class="title-ja">連邦契約における効率性、説明責任、業績の促進</div>
+          <div class="title-en">📰 Promoting Efficiency, Accountability, and Performance in Federal Contracting</div>
+          <div class="ai-comment">💡 政府調達関連企業の業績に影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/promoting-efficiency-accountability-and-performance-in-federal-contracting/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/28 05:35 JST <span style="color:#8b949e">/ 637.6h 前</span></span>
+          </div>
+          <div class="title-ja">上院へ送付・撤回された候補者名簿</div>
+          <div class="title-en">📰 Nominations and Withdrawals Sent to the Senate</div>
+          <div class="ai-comment">💡 人事の流動性に注意。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/nominations-and-withdrawals-sent-to-the-senate-d935/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/22 03:49 JST <span style="color:#8b949e">/ 783.4h 前</span></span>
+          </div>
+          <div class="title-ja">上院へ送付された候補者名簿</div>
+          <div class="title-en">📰 Nominations Sent to the Senate</div>
+          <div class="ai-comment">💡 人事案が今後の政策に影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/nominations-sent-to-the-senate-633f/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:25 JST <span style="color:#8b949e">/ 805.8h 前</span></span>
+          </div>
+          <div class="title-ja">防衛生産法（1950年、改正後）第303条に基づく電力網インフラ、設備、供給網能力に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Grid Infrastructure, Equipment, and Supply Chain Capacity</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連への投資機会。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended-on-grid-infrastructure-equipment-and-supply-chain-capacity/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:18 JST <span style="color:#8b949e">/ 805.9h 前</span></span>
+          </div>
+          <div class="title-ja">防衛生産法（1950年、改正後）第303条に基づく大規模エネルギー・エネルギー関連インフラの開発、製造、展開に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Development, Manufacturing, and Deployment of Large-Scale Energy and Energy‑Related Infrastructure</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連への投資機会。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended-on-development-manufacturing-and-deployment-of-large-scale-energy-and-energy-related-inf/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:18 JST <span style="color:#8b949e">/ 805.9h 前</span></span>
+          </div>
+          <div class="title-ja">防衛生産法（1950年、改正後）第303条に基づく天然ガス輸送、処理、貯蔵、液化天然ガス能力に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Natural Gas Transmission, Processing, Storage, and Liquefied Natural Gas Capacity</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連への投資機会。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended-on-natural-gas-transmission-processing-storage-and-liquefied-natural-gas-capacity/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:15 JST <span style="color:#8b949e">/ 805.9h 前</span></span>
+          </div>
+          <div class="title-ja">防衛生産法（1950年、改正後）第303条に基づく石炭供給網およびベースロード発電能力に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Coal Supply Chains and Baseload Power Generation Capacity</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連への投資機会。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended-on-coal-supply-chains-and-baseload-power-generation-capacity/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:14 JST <span style="color:#8b949e">/ 805.9h 前</span></span>
+          </div>
+          <div class="title-ja">防衛生産法（1950年、改正後）第303条に基づく国内石油生産、精製、物流能力に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Domestic Petroleum Production, Refining, and Logistics Capacity</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連への投資機会。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended-on-domestic-petroleum-production-refining-and-logistics-capacity/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/21 05:13 JST <span style="color:#8b949e">/ 806.0h 前</span></span>
+          </div>
+          <div class="title-ja">アイダホ、オレゴン、ネバダ州における空軍のジェット戦闘機訓練運用に関する大統領決定</div>
+          <div class="title-en">📰 Presidential Determination Concerning the Air Force’s Jet Fighter Training Operations in Idaho, Oregon, and Nevada</div>
+          <div class="ai-comment">💡 軍事関連産業への間接的影響。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-determination-concerning-the-air-forces-jet-fighter-training-operations-in-idaho-oregon-and-nevada/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/18 23:07 JST <span style="color:#8b949e">/ 860.1h 前</span></span>
+          </div>
+          <div class="title-ja">重篤な精神疾患に対する医療処置の加速</div>
+          <div class="title-en">📰 Accelerating Medical Treatments for Serious Mental Illness</div>
+          <div class="ai-comment">💡 製薬・医療関連企業に注目。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/accelerating-medical-treatments-for-serious-mental-illness/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/16 05:31 JST <span style="color:#8b949e">/ 925.7h 前</span></span>
+          </div>
+          <div class="title-ja">大統領許可：エンブリッジ・エナジー・リミテッド・パートナーシップによるノースダコタ州ペンビナ郡国境における3つの既存パイプライン施設の運営・維持の承認</div>
+          <div class="title-en">📰 Presidential Permit: Authorizing Enbridge Energy, Limited Partnership to Operate and Maintain Three Existing Pipeline Facilities at Pembina County, North Dakota, at the International Boundary Between the United States and Canada</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-permit-authorizing-enbridge-energy-limited-partnership-to-operate-and-maintain-three-existing-pipeline-facilities-at-pembina-county-north-dakota-at-the-international-boundary-between/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/16 05:28 JST <span style="color:#8b949e">/ 925.7h 前</span></span>
+          </div>
+          <div class="title-ja">大統領許可：エンブリッジ・パイプライン（サザンライツ）LLCによるノースダコタ州ペンビナ郡国境における既存パイプライン施設の運営・維持の承認</div>
+          <div class="title-en">📰 Presidential Permit: Authorizing Enbridge Pipelines (Southern Lights) L.L.C. to Operate and Maintain Existing Pipeline Facilities at Pembina County, North Dakota, at the International Boundary Between the United States and Canada</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-permit-authorizing-enbridge-pipelines-southern-lights-l-l-c-to-operate-and-maintain-existing-pipeline-facilities-at-pembina-county-north-dakota-at-the-international-boundary-between/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+        <div class="feed-card card-mid">
+          <div class="card-header">
+            <span class="badge badge-mid">🟠 MID</span>
+            <span class="source-label">WhiteHouse 公式</span>
+            <span class="time-label">04/16 05:18 JST <span style="color:#8b949e">/ 925.9h 前</span></span>
+          </div>
+          <div class="title-ja">大統領許可：エンブリッジ・エナジー・リミテッド・パートナーシップによるノースダコタ州ペンビナ郡国境における既存パイプライン施設の運営・維持の承認</div>
+          <div class="title-en">📰 Presidential Permit: Authorizing Enbridge Energy, Limited Partnership to Operate and Maintain Existing Pipeline Facilities at Pembina County, North Dakota, at the International Boundary Between the United States and Canada</div>
+          <div class="ai-comment">💡 エネルギーインフラ関連の動向。</div>
+          <div class="card-footer">
+            <span class="asset-row">📊 <span class="asset-tag">all</span></span>
+            <a href="https://www.whitehouse.gov/presidential-actions/2026/04/presidential-permit-authorizing-enbridge-energy-limited-partnership-to-operate-and-maintain-existing-pipeline-facilities-at-pembina-county-north-dakota-at-the-international-boundary-between-the-un-9ef/" target="_blank" rel="noopener" class="orig-link">原文を読む →</a>
+          </div>
+        </div>
+
+<div class="warning-box">
+  <strong>免責:</strong> 重要度判定（HIGH/MID/LOW）はキーワードベースで自動算出されたものです。AI コメントは Gemini による一般的な示唆であり、個別の投資助言ではありません。
+  発信元の信頼性・タイミング・原文の解釈はご自身でご確認ください。投資判断は自己責任で。
+</div>
+
+</main>
+<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル成績</a></footer>
+
+<script>
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  document.getElementById('theme-toggle').textContent = '☀️';
+}
+</script>
+
+</body>
+</html>
