@@ -1,0 +1,56 @@
+name: Weekly Strategy (Sunday Evening)
+
+# 目的: 毎週日曜夜 18 時頃に「翌週の投資戦略記事」を自動生成して公開する。
+#
+# auto_weekly_strategy.py は曜日チェック（日曜のみ）を内蔵しているので、
+# 別の曜日に手動実行しても --force しない限りスキップされる。
+
+on:
+  schedule:
+    # 日曜 09:13 UTC = 日曜 18:13 JST（cron 混雑回避のため :00 を避ける）
+    - cron: '13 9 * * 0'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '曜日関係なく強制実行（既存ファイルも上書き）'
+        required: false
+        default: 'false'
+
+jobs:
+  weekly-strategy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      GEMINI_API_KEY:        ${{ secrets.GEMINI_API_KEY }}
+      GITHUB_ACTIONS_RUN:    "true"
+      FORCE_WEEKLY:          ${{ github.event.inputs.force || 'false' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install feedparser google-generativeai
+
+      - name: Generate weekly strategy article
+        run: python auto_weekly_strategy.py
+
+      - name: Commit & push if new article generated
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add guide-weekly-*.html 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No new weekly strategy article to commit (today is not Sunday, or article already exists)."
+          else
+            git commit -m "auto: weekly strategy $(TZ=Asia/Tokyo date +'%Y-%m-%d JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
