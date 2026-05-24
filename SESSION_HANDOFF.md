@@ -1,4 +1,4 @@
-# 🔄 セッション引継ぎ票（最終更新: 2026-05-23 深夜）
+# 🔄 セッション引継ぎ票（最終更新: 2026-05-24 夜）
 
 新セッション開始時はまず `CLAUDE.md`（全体像）+ このファイル（直近進捗）を読んでください。
 
@@ -91,6 +91,35 @@
 ---
 
 ## 📅 直近の作業履歴
+
+### 2026-05-24（日）の作業: 🚨 政治発言ライブフィード機能（Phase 1+2+B案）
+- ✅ **Phase 1-A: crisis_keywords 拡張**
+  - economic-events.json に「トランプ関税」「対中関税」「パウエル批判」「Truth Social」等 14 個追加
+  - 既存 generate_technical_alerts.py の危機検知が政治発言にも反応するように
+- ✅ **Phase 1-B + Phase 2: fetch_political_news.py 新規作成**
+  - NEWS API 13 クエリ（Trump tariff / Powell speech / BOJ intervention 等）
+  - WhiteHouse 公式 RSS 取得（feedparser）
+  - 重要度判定（HIGH/MID/LOW）+ 影響銘柄推定
+  - Gemini で一括日本語翻訳 + 一言コメント
+  - political-feed.json (過去 100 件キープ) に蓄積
+  - 新規 HIGH 発言があれば既存メールシステム経由で速報送信
+  - `--no-email` オプションでテスト可能
+- ✅ **B案-A: build_political_feed_page.py 新規作成**
+  - political-feed.json → political-feed.html へ変換
+  - 重要度別カードレイアウト（HIGH:赤 / MID:橙 / LOW:灰）
+  - サマリ KPI（蓄積件数 / 過去24h / 過去7日 / 重要度別件数）
+  - 発信元上位 5 ソース分布バー
+  - og:image (`05_top_news_frb.png`) + twitter:card
+- ✅ **B案-B: political-alerts.yml 新規作成**
+  - cron `*/30 * * * *`（30 分間隔、best-effort 実際 30-45 分）
+  - workflow_dispatch、permissions contents:write、env で secrets 集約
+  - fetch_political_news.py → build_political_feed_page.py → git push
+- ✅ **ナビバー「🚨 政治発言ライブ」追加**
+  - generate_market_news.py 7 箇所、generate_track_record_page.py、guides.html、トヨタ・NVIDIA・週次振り返り記事、auto_weekly_review.py / generate_monthly_report.py テンプレ
+- ✅ **SYNC_FILES + sitemap.xml 更新**
+  - fetch_political_news.py / build_political_feed_page.py / political-alerts.yml 追加
+  - political-feed.html / political-feed.json は workflow 管理（SYNC 外）
+- ✅ **ローカルテスト通過**: WhiteHouse RSS から 30 件取得確認、HTML 37 KB 生成成功
 
 ### 2026-05-23（土）の作業 (追加: NVIDIA 決算解説 第 3 弾)
 - ✅ **個別銘柄解説シリーズ第 3 弾**: `guide-nvidia-2026-05.html`（約 11 分読了）
