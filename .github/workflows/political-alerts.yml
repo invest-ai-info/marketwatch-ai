@@ -1,0 +1,57 @@
+name: Political Alerts (Live Feed)
+
+# 目的: トランプ Truth Social・WhiteHouse 公式声明・主要中銀発言を 30 分ごとに収集し、
+#       political-feed.json / political-feed.html を更新、
+#       新規 HIGH 発言があればメール通知を送る。
+
+on:
+  schedule:
+    # 30 分間隔。GitHub Actions cron は best-effort (遅延 0-30 分あり)
+    # 実際は 30-60 分間隔の動作になる
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  political-fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      NEWSAPI_KEY:        ${{ secrets.NEWSAPI_KEY }}
+      GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+      GMAIL_USER:         ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_RECIPIENT:    ${{ secrets.ALERT_RECIPIENT }}
+      GITHUB_ACTIONS_RUN: "true"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-generativeai feedparser
+
+      - name: Fetch political news
+        run: python fetch_political_news.py
+
+      - name: Build political-feed.html
+        run: python build_political_feed_page.py
+
+      - name: Commit & push if updated
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add political-feed.json political-feed.html 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No new political news to commit."
+          else
+            git commit -m "auto: political feed update $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
