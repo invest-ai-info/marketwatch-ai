@@ -397,6 +397,9 @@ def build_weekly_html(week_start, week_end, today_jst):
     <a class="nav-btn current" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
   </nav>
 
   <div class="breadcrumb"><a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ {week_start_str}〜{week_end_str}週の戦略</div>
@@ -523,7 +526,10 @@ def main():
         f.write(html)
     print(f"  ✅ {filename}: 生成完了")
 
-    # 生成と同時にGitHubへアップロード
+    # 生成と同時にGitHubへアップロード（ローカル実行時のみ。Actions 実行時は git push に委譲）
+    if os.environ.get("GITHUB_ACTIONS_RUN") == "true":
+        print("  ⏭️  GitHub Actions 実行中、API アップロードはスキップ（git push step で同期）")
+        return
     try:
         from auto_indicator_preview import _load_gh_config, upload_to_github
         gh_cfg = _load_gh_config(script_dir)
