@@ -1102,6 +1102,7 @@ def build_html(signals, trades):
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
