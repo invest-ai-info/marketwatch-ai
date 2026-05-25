@@ -2,13 +2,243 @@
   "_comment": "重要経済イベントカレンダー。シグナル発火時に「6h/24h 以内に重要指標があるか」をチェックして取引非推奨警告を出す。",
   "_format": "datetime は JST (Asia/Tokyo) ISO8601。impact は high/critical。affected_assets は影響を受ける銘柄リスト（all = 全銘柄）。",
   "_update_policy": "月初に当月分を手動更新。FOMC・雇用統計・CPI など毎月決まったものはハードコード可。WebSearch で発表日を確認すること。",
-
   "events": [
+    {
+      "name": "🏖️ 米国市場休場（New Year's Day）",
+      "datetime": "2026-01-01T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（New Year's Day）",
+      "datetime": "2026-01-01T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（年始 / 元日）",
+      "datetime": "2026-01-01T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "TSE 年始休場（1/1-1/3）"
+    },
+    {
+      "name": "🏖️ 日本市場休場（年始）",
+      "datetime": "2026-01-02T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "TSE 年始休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（成人の日）",
+      "datetime": "2026-01-12T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "第 2 月曜"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Martin Luther King Jr. Day）",
+      "datetime": "2026-01-19T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（建国記念の日）",
+      "datetime": "2026-02-11T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 米国市場休場（Washington's Birthday）",
+      "datetime": "2026-02-16T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（天皇誕生日）",
+      "datetime": "2026-02-23T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 日本市場休場（春分の日）",
+      "datetime": "2026-03-20T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 米国市場休場（Good Friday）",
+      "datetime": "2026-04-03T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Good Friday）",
+      "datetime": "2026-04-03T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Easter Monday）",
+      "datetime": "2026-04-06T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（昭和の日）",
+      "datetime": "2026-04-29T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW スタート"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Early May Bank Holiday）",
+      "datetime": "2026-05-04T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場、ポンド系ボラ低下"
+    },
+    {
+      "name": "🏖️ 日本市場休場（みどりの日）",
+      "datetime": "2026-05-04T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW"
+    },
+    {
+      "name": "🏖️ 日本市場休場（こどもの日）",
+      "datetime": "2026-05-05T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW"
+    },
+    {
+      "name": "🏖️ 日本市場休場（憲法記念日 振替）",
+      "datetime": "2026-05-06T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW、5/3 (日) の振替"
+    },
+    {
+      "name": "FOMC 政策金利発表（5月）",
+      "datetime": "2026-05-21T03:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "5/20 18:00 EDT = 5/21 03:00 JST"
+    },
+    {
+      "name": "パウエル FRB 議長会見（5月 FOMC）",
+      "datetime": "2026-05-21T03:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US"
+    },
     {
       "name": "🏖️ 米国市場休場（Memorial Day）",
       "datetime": "2026-05-25T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 終日休場、ボラ低下＆流動性減少。FX も米国時間は薄商い"
@@ -17,25 +247,183 @@
       "name": "🏖️ 英国市場休場（Spring Bank Holiday）",
       "datetime": "2026-05-25T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "EURUSD=X"],
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
       "country": "UK",
       "category": "market_holiday",
       "note": "LSE 終日休場、ポンド系ボラ低下"
     },
     {
+      "name": "米 GDP 速報（Q1）",
+      "datetime": "2026-05-29T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US"
+    },
+    {
+      "name": "米 PCE デフレーター（4月）",
+      "datetime": "2026-05-29T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "8:30 EDT = 21:30 JST。5/29 (金) BLS 公表"
+    },
+    {
+      "name": "OPEC+ 月次会合",
+      "datetime": "2026-06-05T20:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "CL=F"
+      ],
+      "country": "OPEC"
+    },
+    {
+      "name": "米雇用統計 5 月 NFP",
+      "datetime": "2026-06-05T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "第 1 金曜 8:30 EDT = 21:30 JST"
+    },
+    {
+      "name": "中国 CPI（5月）",
+      "datetime": "2026-06-09T10:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F",
+        "CL=F"
+      ],
+      "country": "CN"
+    },
+    {
+      "name": "米 CPI 5 月",
+      "datetime": "2026-06-10T21:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "8:30 EDT = 21:30 JST。BLS 公式日程"
+    },
+    {
+      "name": "ECB 政策金利発表（6月）",
+      "datetime": "2026-06-11T21:15:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "EU",
+      "note": "14:15 CET = 21:15 JST。記者会見は 14:45 CET"
+    },
+    {
+      "name": "米 PPI 5 月",
+      "datetime": "2026-06-11T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "通常 CPI の翌日に発表"
+    },
+    {
+      "name": "日銀金融政策決定会合（6月）",
+      "datetime": "2026-06-16T12:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "NKD=F",
+        "USDJPY=X"
+      ],
+      "country": "JP",
+      "note": "6/15-16 開催、16 日 12:00 JST 頃発表"
+    },
+    {
+      "name": "米小売売上高 5 月",
+      "datetime": "2026-06-16T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "毎月中旬、8:30 EDT = 21:30 JST"
+    },
+    {
+      "name": "FOMC 政策金利発表（6月）",
+      "datetime": "2026-06-18T03:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "6/16-17 開催、17 日 14:00 EDT = 18 日 03:00 JST"
+    },
+    {
+      "name": "パウエル FRB 議長会見（6月 FOMC）",
+      "datetime": "2026-06-18T03:30:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US"
+    },
+    {
+      "name": "BOE 政策金利発表（6月）",
+      "datetime": "2026-06-18T20:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X"
+      ],
+      "country": "UK",
+      "note": "12:00 BST = 20:00 JST"
+    },
+    {
       "name": "🏖️ 米国市場休場（Juneteenth）",
       "datetime": "2026-06-19T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 終日休場。FOMC 翌日のためボラ大の可能性あり、要警戒"
     },
     {
+      "name": "米 GDP 確定値（Q1）",
+      "datetime": "2026-06-26T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US"
+    },
+    {
+      "name": "米 PCE デフレーター（5月）",
+      "datetime": "2026-06-26T21:30:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "note": "FRB が重視するインフレ指標、8:30 EDT = 21:30 JST"
+    },
+    {
       "name": "🏖️ 米国市場休場（Independence Day 振替）",
       "datetime": "2026-07-03T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "7/4 (土) Independence Day の前倒し。早仕舞い or 休場。週末ギャップリスクと組合せ要注意"
@@ -44,7 +432,9 @@
       "name": "🏖️ 日本市場休場（海の日）",
       "datetime": "2026-07-20T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday",
       "note": "TSE 休場、日経 CME (CME GLOBEX) は取引可。ボラ低下"
@@ -53,7 +443,9 @@
       "name": "🏖️ 日本市場休場（山の日）",
       "datetime": "2026-08-11T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday"
     },
@@ -61,7 +453,12 @@
       "name": "🏖️ 英国市場休場（Summer Bank Holiday）",
       "datetime": "2026-08-31T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "EURUSD=X"],
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
       "country": "UK",
       "category": "market_holiday",
       "note": "LSE 終日休場、ポンド系ボラ低下"
@@ -70,7 +467,9 @@
       "name": "🏖️ 米国市場休場（Labor Day）",
       "datetime": "2026-09-07T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 終日休場。米国時間のボラ急減"
@@ -79,7 +478,9 @@
       "name": "🏖️ 日本市場休場（敬老の日）",
       "datetime": "2026-09-21T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday"
     },
@@ -87,7 +488,9 @@
       "name": "🏖️ 日本市場休場（国民の休日）",
       "datetime": "2026-09-22T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday",
       "note": "敬老の日と秋分の日に挟まれた休日"
@@ -96,7 +499,9 @@
       "name": "🏖️ 日本市場休場（秋分の日）",
       "datetime": "2026-09-23T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday",
       "note": "3 連休（9/21-23）、TSE 連休でボラ蓄積→週明け要警戒"
@@ -105,7 +510,9 @@
       "name": "🏖️ 日本市場休場（スポーツの日）",
       "datetime": "2026-10-12T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday"
     },
@@ -113,7 +520,9 @@
       "name": "🏖️ 日本市場休場（文化の日）",
       "datetime": "2026-11-03T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday"
     },
@@ -121,7 +530,9 @@
       "name": "🏖️ 日本市場休場（勤労感謝の日）",
       "datetime": "2026-11-23T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday",
       "note": "11/21-23 3 連休、JPX BCP テストのため祝日取引なし"
@@ -130,7 +541,9 @@
       "name": "🏖️ 米国市場休場（Thanksgiving）",
       "datetime": "2026-11-26T09:00:00+09:00",
       "impact": "critical",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 終日休場。米国感謝祭、世界的にもボラ激減"
@@ -139,7 +552,9 @@
       "name": "🏖️ 米国市場早仕舞い（Black Friday）",
       "datetime": "2026-11-27T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 13:00 ET (03:00 JST 土曜) で早仕舞い。米国時間ほぼ休場"
@@ -148,7 +563,9 @@
       "name": "🏖️ 米国市場早仕舞い（Christmas Eve）",
       "datetime": "2026-12-24T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 13:00 ET (03:00 JST 金曜) で早仕舞い。LSE も 12:30 GMT 早仕舞い"
@@ -157,7 +574,9 @@
       "name": "🏖️ 米英市場休場（Christmas Day）",
       "datetime": "2026-12-25T09:00:00+09:00",
       "impact": "critical",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "Global",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq / LSE 全て終日休場。世界的にボラ最低水準"
@@ -166,7 +585,12 @@
       "name": "🏖️ 英国市場休場（Boxing Day 振替）",
       "datetime": "2026-12-28T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "EURUSD=X"],
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
       "country": "UK",
       "category": "market_holiday",
       "note": "12/26 (土) Boxing Day の振替休場"
@@ -175,171 +599,540 @@
       "name": "🏖️ 日本市場休場（年末年始）",
       "datetime": "2026-12-31T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["NKD=F"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
       "category": "market_holiday",
       "note": "大納会後、12/31-1/3 まで TSE 休場。年末ボラ低下"
     },
     {
-      "name": "FOMC 政策金利発表（5月）",
-      "datetime": "2026-05-21T03:00:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "5/20 18:00 EDT = 5/21 03:00 JST"
-    },
-    {
-      "name": "パウエル FRB 議長会見（5月 FOMC）",
-      "datetime": "2026-05-21T03:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "米 GDP 速報（Q1）",
-      "datetime": "2026-05-29T21:30:00+09:00",
+      "name": "🏖️ 日本市場休場（年末 / 大納会後）",
+      "datetime": "2026-12-31T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "米 PCE デフレーター（4月）",
-      "datetime": "2026-05-29T21:30:00+09:00",
-      "impact": "high",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "8:30 EDT = 21:30 JST。5/29 (金) BLS 公表"
-    },
-    {
-      "name": "米雇用統計 5 月 NFP",
-      "datetime": "2026-06-05T21:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "第 1 金曜 8:30 EDT = 21:30 JST"
-    },
-    {
-      "name": "OPEC+ 月次会合",
-      "datetime": "2026-06-05T20:00:00+09:00",
-      "impact": "high",
-      "affected_assets": ["CL=F"],
-      "country": "OPEC"
-    },
-    {
-      "name": "中国 CPI（5月）",
-      "datetime": "2026-06-09T10:30:00+09:00",
-      "impact": "high",
-      "affected_assets": ["NKD=F", "CL=F"],
-      "country": "CN"
-    },
-    {
-      "name": "米 CPI 5 月",
-      "datetime": "2026-06-10T21:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "8:30 EDT = 21:30 JST。BLS 公式日程"
-    },
-    {
-      "name": "ECB 政策金利発表（6月）",
-      "datetime": "2026-06-11T21:15:00+09:00",
-      "impact": "high",
-      "affected_assets": ["all"],
-      "country": "EU",
-      "note": "14:15 CET = 21:15 JST。記者会見は 14:45 CET"
-    },
-    {
-      "name": "米 PPI 5 月",
-      "datetime": "2026-06-11T21:30:00+09:00",
-      "impact": "high",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "通常 CPI の翌日に発表"
-    },
-    {
-      "name": "日銀金融政策決定会合（6月）",
-      "datetime": "2026-06-16T12:00:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["NKD=F", "USDJPY=X"],
+      "affected_assets": [
+        "NKD=F"
+      ],
       "country": "JP",
-      "note": "6/15-16 開催、16 日 12:00 JST 頃発表"
+      "category": "market_holiday",
+      "note": "12/31-1/3 まで TSE 休場"
     },
     {
-      "name": "米小売売上高 5 月",
-      "datetime": "2026-06-16T21:30:00+09:00",
+      "name": "🏖️ 米国市場休場（New Year's Day）",
+      "datetime": "2027-01-01T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
-      "note": "毎月中旬、8:30 EDT = 21:30 JST"
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
     },
     {
-      "name": "FOMC 政策金利発表（6月）",
-      "datetime": "2026-06-18T03:00:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US",
-      "note": "6/16-17 開催、17 日 14:00 EDT = 18 日 03:00 JST"
-    },
-    {
-      "name": "パウエル FRB 議長会見（6月 FOMC）",
-      "datetime": "2026-06-18T03:30:00+09:00",
-      "impact": "critical",
-      "affected_assets": ["all"],
-      "country": "US"
-    },
-    {
-      "name": "BOE 政策金利発表（6月）",
-      "datetime": "2026-06-18T20:00:00+09:00",
+      "name": "🏖️ 英国市場休場（New Year's Day）",
+      "datetime": "2027-01-01T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X"],
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
       "country": "UK",
-      "note": "12:00 BST = 20:00 JST"
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
     },
     {
-      "name": "米 GDP 確定値（Q1）",
-      "datetime": "2026-06-26T21:30:00+09:00",
+      "name": "🏖️ 日本市場休場（年始 / 元日）",
+      "datetime": "2027-01-01T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
-      "country": "US"
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "TSE 年始休場"
     },
     {
-      "name": "米 PCE デフレーター（5月）",
-      "datetime": "2026-06-26T21:30:00+09:00",
+      "name": "🏖️ 日本市場休場（年始）",
+      "datetime": "2027-01-04T09:00:00+09:00",
       "impact": "high",
-      "affected_assets": ["all"],
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "TSE 年始休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（成人の日）",
+      "datetime": "2027-01-11T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "第 2 月曜"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Martin Luther King Jr. Day）",
+      "datetime": "2027-01-18T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
       "country": "US",
-      "note": "FRB が重視するインフレ指標、8:30 EDT = 21:30 JST"
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（建国記念の日）",
+      "datetime": "2027-02-11T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 米国市場休場（Washington's Birthday）",
+      "datetime": "2027-02-15T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（天皇誕生日）",
+      "datetime": "2027-02-23T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 日本市場休場（春分の日 振替）",
+      "datetime": "2027-03-22T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "3/21 (日) の振替"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Good Friday）",
+      "datetime": "2027-03-26T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Good Friday）",
+      "datetime": "2027-03-26T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Easter Monday）",
+      "datetime": "2027-03-29T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（昭和の日）",
+      "datetime": "2027-04-29T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW スタート"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Early May Bank Holiday）",
+      "datetime": "2027-05-03T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場、ポンド系ボラ低下"
+    },
+    {
+      "name": "🏖️ 日本市場休場（憲法記念日）",
+      "datetime": "2027-05-03T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW"
+    },
+    {
+      "name": "🏖️ 日本市場休場（みどりの日）",
+      "datetime": "2027-05-04T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW"
+    },
+    {
+      "name": "🏖️ 日本市場休場（こどもの日）",
+      "datetime": "2027-05-05T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "GW"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Memorial Day）",
+      "datetime": "2027-05-31T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Spring Bank Holiday）",
+      "datetime": "2027-05-31T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場、ポンド系ボラ低下"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Juneteenth 振替）",
+      "datetime": "2027-06-18T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "6/19 が土曜のため前倒し休場"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Independence Day 振替）",
+      "datetime": "2027-07-05T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "7/4 (日) の振替休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（海の日）",
+      "datetime": "2027-07-19T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "第 3 月曜"
+    },
+    {
+      "name": "🏖️ 日本市場休場（山の日）",
+      "datetime": "2027-08-11T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 英国市場休場（Summer Bank Holiday）",
+      "datetime": "2027-08-30T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "LSE 終日休場、ポンド系ボラ低下"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Labor Day）",
+      "datetime": "2027-09-06T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（敬老の日）",
+      "datetime": "2027-09-20T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "第 3 月曜"
+    },
+    {
+      "name": "🏖️ 日本市場休場（秋分の日）",
+      "datetime": "2027-09-23T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 日本市場休場（スポーツの日）",
+      "datetime": "2027-10-11T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "第 2 月曜"
+    },
+    {
+      "name": "🏖️ 日本市場休場（文化の日）",
+      "datetime": "2027-11-03T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 日本市場休場（勤労感謝の日）",
+      "datetime": "2027-11-23T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": ""
+    },
+    {
+      "name": "🏖️ 米国市場休場（Thanksgiving）",
+      "datetime": "2027-11-25T09:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 終日休場"
+    },
+    {
+      "name": "🏖️ 米国市場早仕舞い（Black Friday）",
+      "datetime": "2027-11-26T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "NYSE / Nasdaq 13:00 ET で早仕舞い"
+    },
+    {
+      "name": "🏖️ 米国市場早仕舞い（Christmas Eve 前日）",
+      "datetime": "2027-12-23T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "12/24 が金曜、Christmas Eve も平日のため要確認"
+    },
+    {
+      "name": "🏖️ 米国市場休場（Christmas Day 振替）",
+      "datetime": "2027-12-24T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "market_holiday",
+      "note": "12/25 が土曜のため前倒し休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Christmas Day 振替）",
+      "datetime": "2027-12-27T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "12/25 (土) の振替休場"
+    },
+    {
+      "name": "🏖️ 英国市場休場（Boxing Day 振替）",
+      "datetime": "2027-12-28T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "GBPUSD=X",
+        "GBPJPY=X",
+        "GBPAUD=X",
+        "EURUSD=X"
+      ],
+      "country": "UK",
+      "category": "market_holiday",
+      "note": "12/26 (日) の振替休場"
+    },
+    {
+      "name": "🏖️ 日本市場休場（年末 / 大納会後）",
+      "datetime": "2027-12-31T09:00:00+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "market_holiday",
+      "note": "12/31-1/3 まで TSE 休場"
     }
   ],
-
   "crisis_keywords": {
     "_comment": "ニュース見出しに含まれていたら危機モード判定の材料にする。政治発言系も含む（Phase 1 拡張）",
     "japanese": [
-      "戦争", "侵攻", "攻撃", "軍事衝突", "宣戦布告",
-      "テロ", "緊急事態",
-      "為替介入", "緊急利上げ", "緊急利下げ",
-      "暴落", "急落", "暴騰", "ストップ安",
-      "破綻", "倒産", "デフォルト",
-      "リーマン級", "サーキットブレーカー",
-      "トランプ関税", "対中関税", "報復関税", "追加関税", "関税発動", "関税撤回",
-      "パウエル批判", "FRB介入",
-      "ホワイトハウス声明", "大統領令",
-      "ホルムズ海峡", "台湾有事", "尖閣",
-      "口先介入", "鈴木財務相", "神田財務官",
-      "Truth Social", "トゥルース・ソーシャル"
+      "戦争",
+      "侵攻",
+      "攻撃",
+      "軍事衝突",
+      "宣戦布告",
+      "テロ",
+      "緊急事態",
+      "為替介入",
+      "緊急利上げ",
+      "緊急利下げ",
+      "暴落",
+      "急落",
+      "暴騰",
+      "ストップ安",
+      "破綻",
+      "倒産",
+      "デフォルト",
+      "リーマン級",
+      "サーキットブレーカー",
+      "トランプ関税",
+      "対中関税",
+      "報復関税",
+      "追加関税",
+      "関税発動",
+      "関税撤回",
+      "パウエル批判",
+      "FRB介入",
+      "ホワイトハウス声明",
+      "大統領令",
+      "ホルムズ海峡",
+      "台湾有事",
+      "尖閣",
+      "口先介入",
+      "鈴木財務相",
+      "神田財務官",
+      "Truth Social",
+      "トゥルース・ソーシャル"
     ],
     "english": [
-      "war", "invasion", "attack", "military strike", "missile",
-      "terrorist", "emergency",
-      "intervention", "emergency rate",
-      "crash", "plunge", "collapse",
-      "bankruptcy", "default",
-      "circuit breaker", "halt",
-      "Trump tariff", "Trump China tariff", "additional tariff", "retaliatory tariff",
-      "Powell criticism", "Trump Fed", "Trump Powell",
-      "White House statement", "executive order",
-      "Truth Social", "BOJ intervention", "yen intervention",
-      "Iran strike", "Strait of Hormuz", "Taiwan tension"
+      "war",
+      "invasion",
+      "attack",
+      "military strike",
+      "missile",
+      "terrorist",
+      "emergency",
+      "intervention",
+      "emergency rate",
+      "crash",
+      "plunge",
+      "collapse",
+      "bankruptcy",
+      "default",
+      "circuit breaker",
+      "halt",
+      "Trump tariff",
+      "Trump China tariff",
+      "additional tariff",
+      "retaliatory tariff",
+      "Powell criticism",
+      "Trump Fed",
+      "Trump Powell",
+      "White House statement",
+      "executive order",
+      "Truth Social",
+      "BOJ intervention",
+      "yen intervention",
+      "Iran strike",
+      "Strait of Hormuz",
+      "Taiwan tension"
     ]
   }
 }
