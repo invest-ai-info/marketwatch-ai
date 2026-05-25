@@ -60,6 +60,8 @@
     .dl-card-desc{font-size:.82rem;color:#57606a;line-height:1.5}
     .loss-card{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #cf222e;border-radius:10px;padding:16px 20px;margin:12px 0}
     .loss-cat-tag{display:inline-block;background:#ffebe9;color:#cf222e;border:1px solid #cf222e;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}
+    .win-card{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #1a7f37;border-radius:10px;padding:16px 20px;margin:12px 0}
+    .win-cat-tag{display:inline-block;background:#dafbe1;color:#1a7f37;border:1px solid #1a7f37;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}.kpi-value{font-size:1.4rem}h1{font-size:1.4rem}}
@@ -91,6 +93,8 @@
     body.dark .dl-card-desc{color:#8b949e}
     body.dark .loss-card{background:#161b22;border-color:#30363d;border-left-color:#cf222e}
     body.dark .loss-cat-tag{background:#3c0f10;color:#ff7b72;border-color:#cf222e}
+    body.dark .win-card{background:#161b22;border-color:#30363d;border-left-color:#1a7f37}
+    body.dark .win-cat-tag{background:#0a3014;color:#7ee787;border-color:#1a7f37}
     body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
   </style>
 </head>
@@ -105,14 +109,14 @@
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
   </nav>
 
   <div class="breadcrumb">
@@ -124,7 +128,7 @@
     <div class="page-desc">
       MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
       AI シグナルの透明性を追求し、サラリーマン投資家として実際にどう活用しているかを公開しています。
-      <span style="color:#6e7781">（最終更新: 2026-05-25 21:02 JST）</span>
+      <span style="color:#6e7781">（最終更新: 2026-05-25 21:25 JST）</span>
     </div>
   </div>
 
@@ -242,7 +246,7 @@
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（66）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
-    <button class="tab-btn" data-tab="loss">🔬 敗因分析</button>
+    <button class="tab-btn" data-tab="loss">🔬 勝因・敗因分析</button>
     <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
 
@@ -2848,10 +2852,30 @@
 </div>
   
 <div class="tab-pane" id="pane-loss">
-  <h2>🔬 敗因分析（SL ヒット案件: 36 件）</h2>
+  <h2>🔬 勝因・敗因分析</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。
-    失敗から学ぶデータベースとして活用してください。
+    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を Gemini が自動分析。「次回も再現する条件」と「避けるべき条件」を学べるデータベース。
+  </p>
+
+  <h2 style="margin-top:32px;color:#1a7f37;border-bottom-color:#1a7f37">✨ 勝因分析（TP1/TP2 到達: 0 件）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    再現性: 🟢 HIGH 0 / 🟡 MID 0 / 🔴 LOW 0
+  </p>
+
+  <h3 style="margin-top:20px">🏷️ カテゴリ別 集計と教訓</h3>
+  <div class="scroll-x"><table>
+    <thead><tr>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+    </tr></thead>
+    <tbody><tr><td colspan="4" style="text-align:center;color:#6e7781;padding:16px">勝因データ蓄積中</td></tr></tbody>
+  </table></div>
+
+  <h3 style="margin-top:24px">📒 直近 10 件の勝因詳細</h3>
+  <div><div style="color:#6e7781;padding:16px;text-align:center">勝因分析の蓄積待ち</div></div>
+
+  <h2 style="margin-top:48px;color:#cf222e;border-bottom-color:#cf222e">🔬 敗因分析（SL ヒット案件: 36 件）</h2>
+  <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
+    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。失敗から学ぶデータベースとして活用してください。
   </p>
 
   <h3 style="margin-top:24px">📊 カテゴリ別分布</h3>
@@ -2867,19 +2891,19 @@
           <td><b>テクニカル悪化</b></td>
           <td style="text-align:right">28</td>
           <td style="text-align:right">77.8%</td>
-          <td style="font-size:.82rem;color:#424a53">・MAクロスがゴールデンクロスでも、その後のMAの傾きやクロス幅を確認し、ダマシの可能性を考慮する。<br>・MAが収束しレンジ相場を示唆する際は、シグナル信頼度を低く評価し、エントリーを見送る、またはより明確なトレンドフォロー戦</td>
+          <td style="font-size:.82rem;color:#424a53">・MAのクロスやMACDのデッドクロスに加えて、MAの傾きや乖離率も考慮し、より確実なエントリーポイントを待つ。<br>・75MAを下抜けた場合は、AI解説のシナリオ崩壊とみなし、損切りを迅速に実行する。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ファンダメンタル</b></td>
           <td style="text-align:right">6</td>
           <td style="text-align:right">16.7%</td>
-          <td style="font-size:.82rem;color:#424a53">・MACDのデッドクロスが微弱な場合は、確度が高い根拠を補強するか、トレードを見送る。ファンダメンタルズの市場反応を注視す<br>・レンジ相場では、指標のクロスに過信せず、より確実なトレンド転換を確認してからエントリーする。</td>
+          <td style="font-size:.82rem;color:#424a53">・短期指標の過熱感だけでなく、MACDやニュースフローも総合的に判断し、シナリオ崩壊ラインを厳守する。<br>・レンジ相場では、指標のクロスに過信せず、より確実なトレンド転換を確認してからエントリーする。</td>
         </tr>
         <tr>
           <td><b>ファンダメンタル</b></td>
           <td style="text-align:right">2</td>
           <td style="text-align:right">5.6%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスク発生時は、テクニカルよりファンダメンタルズの動向を優先し、リスク許容度を再評価する。<br>・ファンダメンタルズ要因が強い場合は、テクニカル指標のみに頼らず、リスク管理を強化し、シナリオ崩壊ラインをより慎重に設定す</td>
+          <td style="font-size:.82rem;color:#424a53">・ファンダメンタルズ要因が強い場合は、テクニカル指標のみに頼らず、リスク管理を強化し、シナリオ崩壊ラインをより慎重に設定す<br>・地政学リスク発生時は、テクニカルよりファンダメンタルズの動向を優先し、リスク許容度を再評価する。</td>
         </tr></tbody>
   </table></div>
 
@@ -3082,7 +3106,7 @@
     <p style="font-size:.93rem;color:#57606a;margin-bottom:20px">
       シグナルログ・実取引ログの生データを CSV / JSON でダウンロードできます。
       Excel / Google Sheets / Python pandas で自由に分析してください。
-      <br>毎回のワークフロー実行で自動更新されています（最終更新: 2026-05-25 21:02 JST）。
+      <br>毎回のワークフロー実行で自動更新されています（最終更新: 2026-05-25 21:25 JST）。
     </p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
       <a href="signals-log.csv" download class="dl-card">
