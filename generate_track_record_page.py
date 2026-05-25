@@ -897,23 +897,31 @@ def build_quality_analysis_section(signals):
 </div>"""
 
 
-def build_loss_analysis_section(signals):
-    """SL ヒット案件の敗因分析タブ"""
+def build_outcome_analysis_section(signals):
+    """勝因 (TP1/TP2) + 敗因 (SL) を統合分析するタブ（R4 で勝因追加）"""
+    # 勝因対象: TP1/TP2 + win_analysis あり
+    win_signals = [
+        s for s in signals
+        if s.get("outcome") in ("tp1", "tp2") and s.get("win_analysis", {}).get("ai_result")
+    ]
+    # 敗因対象: SL + loss_analysis あり
     sl_signals = [
         s for s in signals
         if s.get("outcome") == "sl" and s.get("loss_analysis", {}).get("ai_result")
     ]
 
-    if not sl_signals:
+    # 両方なければ空ページ
+    if not win_signals and not sl_signals:
         return """
 <div class="tab-pane" id="pane-loss">
-  <h2>🔬 敗因分析</h2>
+  <h2>🔬 勝因・敗因分析</h2>
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:32px;text-align:center;color:#57606a">
     <div style="font-size:1.6rem;margin-bottom:8px">🌱</div>
-    <div style="font-size:1rem;margin-bottom:6px">SL ヒット案件が蓄積されるとここに分析が表示されます</div>
+    <div style="font-size:1rem;margin-bottom:6px">確定シグナルが蓄積されるとここに分析が表示されます</div>
     <div style="font-size:.85rem;color:#6e7781">
-      SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析します。<br>
-      失敗から学ぶデータベースとして活用できます。
+      ✨ <b>勝因分析</b>: TP1/TP2 到達時に Gemini が「成功要因・再現性・教訓」を自動分析<br>
+      🔬 <b>敗因分析</b>: SL ヒット時に Gemini が「敗因・カテゴリ・教訓」を自動分析<br>
+      → どちらも次回への学びデータベースとして活用
     </div>
   </div>
 </div>"""
@@ -990,12 +998,103 @@ def build_loss_analysis_section(signals):
           {news_html}
         </div>""")
 
+    # === R4: 勝因セクションの構築 ===
+    win_cat_counts = defaultdict(int)
+    win_cat_lessons = defaultdict(list)
+    win_repeatable = defaultdict(int)
+    for s in win_signals:
+        ai = s.get("win_analysis", {}).get("ai_result", {})
+        cat = ai.get("primary_category") or "未分類"
+        win_cat_counts[cat] += 1
+        lesson = ai.get("lesson") or ""
+        if lesson:
+            win_cat_lessons[cat].append(lesson)
+        rep = (ai.get("repeatable") or "?").lower()
+        win_repeatable[rep] += 1
+
+    total_win = len(win_signals)
+    win_cat_rows = []
+    for cat in sorted(win_cat_counts.keys(), key=lambda k: -win_cat_counts[k]):
+        pct = win_cat_counts[cat] / total_win * 100 if total_win else 0
+        sample_lessons = list(set(win_cat_lessons[cat]))[:2]
+        lesson_html = "<br>".join([f"・{l[:60]}" for l in sample_lessons]) if sample_lessons else "—"
+        win_cat_rows.append(f"""
+        <tr>
+          <td><b>{cat}</b></td>
+          <td style="text-align:right">{win_cat_counts[cat]}</td>
+          <td style="text-align:right">{pct:.1f}%</td>
+          <td style="font-size:.82rem;color:#424a53">{lesson_html}</td>
+        </tr>""")
+    win_cat_html = "".join(win_cat_rows) or '<tr><td colspan="4" style="text-align:center;color:#6e7781;padding:16px">勝因データ蓄積中</td></tr>'
+
+    # 勝因 直近 10 件詳細カード
+    win_detail_cards = []
+    for s in sorted(win_signals, key=lambda x: x.get("outcome_resolved_at", ""), reverse=True)[:10]:
+        ai = s.get("win_analysis", {}).get("ai_result", {})
+        fired = s.get("fired_at", "")[:16].replace("T", " ")
+        resolved = s.get("outcome_resolved_at", "")[:16].replace("T", " ")
+        outcome_label = (s.get("outcome") or "tp1").upper()
+        cat = ai.get("primary_category") or "—"
+        cause = ai.get("primary_cause") or "—"
+        diag = ai.get("ai_diagnosis") or "—"
+        lesson = ai.get("lesson") or "—"
+        rep = (ai.get("repeatable") or "?").lower()
+        rep_badge = {
+            "high": '<span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>',
+            "medium": '<span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>',
+            "low": '<span style="color:#cf222e;font-weight:700">🔁 再現性 LOW</span>',
+        }.get(rep, '<span style="color:#6e7781">🔁 再現性 ?</span>')
+
+        win_detail_cards.append(f"""
+        <div class="win-card">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+            <div>
+              <span class="win-cat-tag">{cat}</span>
+              <b style="margin-left:8px">{s.get('asset_name')}</b>
+              <span style="color:#6e7781;font-size:.85rem;margin-left:6px">({s.get('timeframe','4h').upper()}, {outcome_label})</span>
+            </div>
+            <div style="font-size:.78rem;color:#6e7781">
+              {fired} → {resolved}
+            </div>
+          </div>
+          <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ {cause}</div>
+          <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">{diag}</div>
+          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
+            💡 <b>教訓:</b> {lesson}
+          </div>
+          {rep_badge}
+        </div>""")
+    win_detail_html = "".join(win_detail_cards) or '<div style="color:#6e7781;padding:16px;text-align:center">勝因分析の蓄積待ち</div>'
+
+    # 再現性サマリ
+    win_rep_summary = f"再現性: 🟢 HIGH {win_repeatable.get('high', 0)} / 🟡 MID {win_repeatable.get('medium', 0)} / 🔴 LOW {win_repeatable.get('low', 0)}"
+
     return f"""
 <div class="tab-pane" id="pane-loss">
-  <h2>🔬 敗因分析（SL ヒット案件: {total_sl} 件）</h2>
+  <h2>🔬 勝因・敗因分析</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。
-    失敗から学ぶデータベースとして活用してください。
+    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を Gemini が自動分析。「次回も再現する条件」と「避けるべき条件」を学べるデータベース。
+  </p>
+
+  <h2 style="margin-top:32px;color:#1a7f37;border-bottom-color:#1a7f37">✨ 勝因分析（TP1/TP2 到達: {total_win} 件）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    {win_rep_summary}
+  </p>
+
+  <h3 style="margin-top:20px">🏷️ カテゴリ別 集計と教訓</h3>
+  <div class="scroll-x"><table>
+    <thead><tr>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+    </tr></thead>
+    <tbody>{win_cat_html}</tbody>
+  </table></div>
+
+  <h3 style="margin-top:24px">📒 直近 10 件の勝因詳細</h3>
+  <div>{win_detail_html}</div>
+
+  <h2 style="margin-top:48px;color:#cf222e;border-bottom-color:#cf222e">🔬 敗因分析（SL ヒット案件: {total_sl} 件）</h2>
+  <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
+    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。失敗から学ぶデータベースとして活用してください。
   </p>
 
   <h3 style="margin-top:24px">📊 カテゴリ別分布</h3>
@@ -1025,7 +1124,7 @@ def build_html(signals, trades):
     pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
     pane_analytics = build_analytics_section(signals)
     pane_quality = build_quality_analysis_section(signals)
-    pane_loss = build_loss_analysis_section(signals)
+    pane_loss = build_outcome_analysis_section(signals)
 
     # 敗因カテゴリチャート用データ
     loss_cat_counts = defaultdict(int)
@@ -1128,6 +1227,8 @@ def build_html(signals, trades):
     .dl-card-desc{{font-size:.82rem;color:#57606a;line-height:1.5}}
     .loss-card{{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #cf222e;border-radius:10px;padding:16px 20px;margin:12px 0}}
     .loss-cat-tag{{display:inline-block;background:#ffebe9;color:#cf222e;border:1px solid #cf222e;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}}
+    .win-card{{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #1a7f37;border-radius:10px;padding:16px 20px;margin:12px 0}}
+    .win-cat-tag{{display:inline-block;background:#dafbe1;color:#1a7f37;border:1px solid #1a7f37;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.kpi-value{{font-size:1.4rem}}h1{{font-size:1.4rem}}}}
@@ -1159,6 +1260,8 @@ def build_html(signals, trades):
     body.dark .dl-card-desc{{color:#8b949e}}
     body.dark .loss-card{{background:#161b22;border-color:#30363d;border-left-color:#cf222e}}
     body.dark .loss-cat-tag{{background:#3c0f10;color:#ff7b72;border-color:#cf222e}}
+    body.dark .win-card{{background:#161b22;border-color:#30363d;border-left-color:#1a7f37}}
+    body.dark .win-cat-tag{{background:#0a3014;color:#7ee787;border-color:#1a7f37}}
     body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
   </style>
 </head>
@@ -1210,7 +1313,7 @@ def build_html(signals, trades):
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
-    <button class="tab-btn" data-tab="loss">🔬 敗因分析</button>
+    <button class="tab-btn" data-tab="loss">🔬 勝因・敗因分析</button>
     <button class="tab-btn" data-tab="data">📥 データダウンロード</button>
   </div>
 
