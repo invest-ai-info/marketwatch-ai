@@ -8223,7 +8223,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": -0.014,
+    "max_favorable_excursion_pct": 0.014,
     "max_adverse_excursion_pct": -0.135,
     "email_sent": true,
     "whipsaw_check": {
@@ -8800,7 +8800,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.122,
-    "max_adverse_excursion_pct": -0.056,
+    "max_adverse_excursion_pct": -0.074,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -9035,7 +9035,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.139,
+    "max_favorable_excursion_pct": 0.141,
     "max_adverse_excursion_pct": 0.0,
     "email_sent": true,
     "whipsaw_check": {
@@ -9375,7 +9375,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.029,
-    "max_adverse_excursion_pct": -0.018,
+    "max_adverse_excursion_pct": -0.04,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -9487,7 +9487,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.032,
+    "max_favorable_excursion_pct": 0.059,
     "max_adverse_excursion_pct": -0.063,
     "email_sent": false,
     "whipsaw_check": {
@@ -9939,13 +9939,13 @@
       "予算発表後、ポンドは全体的に上昇"
     ],
     "ai_narrative": "ポンド円は直近20本高値ブレイク（214.63超え）により、上昇トレンド継続のサインが出ています。RSIが74.3と買われすぎ気味ですが、MACDもシグナルを上回っており、短期的な上昇圧力が示唆されます。通貨強弱でもGBPがJPYに対して優位であり、複合順張りの形です。GDPや雇用統計の弱さからポンドは不安定ですが、月次GDP改善や予算発表後の上昇といったプラス材料も確認できます。このシナリオが崩れるのは、25MA（214.30）を下抜ける展開です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-05-25T22:00:00+01:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "hit_sl_at": "2026-05-25T22:00:00+01:00",
+    "max_favorable_excursion_pct": 0.009,
+    "max_adverse_excursion_pct": -0.125,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -10010,6 +10010,17 @@
         "matched_keywords": [],
         "matched_titles": []
       }
+    },
+    "loss_analysis": {
+      "vix_data": null,
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル悪化",
+        "primary_cause": "高値圏からの短期的な反落",
+        "ai_diagnosis": "シグナル発火時、RSIは74.3と買われすぎ水準にあり、短期的な過熱感がありました。25MA（214.30）を明確に上回っていましたが、高値圏での利益確定売りや、相場全体のセンチメントの変化により、短期的な下落圧力に押されたと考えられます。ATR（0.13）に対して、SL幅が相対的に狭かった可能性も示唆されます。",
+        "lesson": "高値圏での買われすぎサイン発生時は、利益確定を早める、あるいはリスクリワードを再評価し、SL幅を広げる判断を検討する。",
+        "category_tag": "高値圏 / 過熱感"
+      }
     }
   },
   {
@@ -10058,8 +10069,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.003,
+    "max_adverse_excursion_pct": -0.069,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -10177,8 +10188,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.057,
+    "max_adverse_excursion_pct": -0.014,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -10269,6 +10280,589 @@
           "オイル下落とホルムズ海峡取引への楽観論でドルは軟調",
           "ドル、イラン戦争開始時よりも下落"
         ]
+      }
+    }
+  },
+  {
+    "id": "GC=F_1h_20260526_0620",
+    "fired_at": "2026-05-26T06:20:40+09:00",
+    "timeframe": "1h",
+    "ticker": "GC=F",
+    "asset_name": "ゴールド先物",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 4523.2001953125,
+    "stop_loss": 4496.765001859653,
+    "take_profit_1": 4558.447119916295,
+    "take_profit_2": 4576.070582218193,
+    "atr": 17.623462301897654,
+    "sl_pct": -0.5844356276832916,
+    "tp1_pct": 0.7792475035777221,
+    "tp2_pct": 1.1688712553665832,
+    "indicators_at_signal": {
+      "rsi": 50.69,
+      "macd": -2.7035,
+      "macd_sig": -2.4345,
+      "ma25": 4524.56,
+      "ma75": 4516.86,
+      "bb_low": 4505.43,
+      "bb_up": 4536.29,
+      "recent_high": 4541.9,
+      "recent_low": 4488.0
+    },
+    "news_count": 5,
+    "news_titles": [
+      "TSX終値：RBCとNational Bankが原油価格ショックの文脈化を試みる中、指数は過去最高値を更新",
+      "イラン合意の可能性がインフレ懸念を和らげ、金が上昇",
+      "Barclays、Agnico Eagle Mines (AEM)にOverweightレーティングで新規カバー",
+      "アナリストのアップグレードと決算への楽観論が関心を高める中、International Seaways (INSW)のバリュエーションを分析",
+      "SSR Mining、Copler鉱山の権益を15億ドルで売却。鉱山株にとってポジティブな兆候か？"
+    ],
+    "ai_narrative": "ボリンジャーバンド-2σタッチは、過売圏からの反発期待を示唆しており、RSIが50台で底堅いこと、MACDがシグナルラインに接近していることも買い方向を支持します。イラン合意の可能性がインフレ懸念を緩和するというニュースは、安全資産である金への資金流入を抑制する可能性もありますが、地政学リスクは依然として金価格を支える要因です。通貨強弱ではJPY、USDが弱含みであり、金への資金流入を促す可能性があります。シナリオが崩れるのは、-2σを下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 4H 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": -0.421,
+      "EUR": 0.036,
+      "GBP": 0.233,
+      "JPY": -0.159,
+      "AUD": 0.379
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 17.6235,
+        "avg_atr_30d": 19.2283,
+        "ratio": 0.92,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "USDJPY=X_1h_20260526_0620",
+    "fired_at": "2026-05-26T06:20:40+09:00",
+    "timeframe": "1h",
+    "ticker": "USDJPY=X",
+    "asset_name": "ドル円",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 158.8780059814453,
+    "stop_loss": 158.76671094247652,
+    "take_profit_1": 159.02639936673702,
+    "take_profit_2": 159.1005960593829,
+    "atr": 0.07419669264585906,
+    "sl_pct": -0.07005062675685032,
+    "tp1_pct": 0.09340083567580043,
+    "tp2_pct": 0.14010125351370065,
+    "indicators_at_signal": {
+      "rsi": 41.19,
+      "macd": -0.0323,
+      "macd_sig": -0.0348,
+      "ma25": 158.92,
+      "ma75": 159.0,
+      "bb_low": 158.84,
+      "bb_up": 158.96,
+      "recent_high": 159.04,
+      "recent_low": 158.75
+    },
+    "news_count": 3,
+    "news_titles": [
+      "ドル急落、なぜ「リリーフ・ラリー」から取り残されているのか",
+      "トランプ氏のイラン投稿、市場の反応をチャートで解説",
+      "ドルはまだ終わらない。イラン危機下でライバルを凌駕する理由"
+    ],
+    "ai_narrative": "ドル円はボリンジャーバンド-2σにタッチし、短期的な反発が期待されます。RSIも40台と売られすぎ水準に近づいており、テクニカル的には買いシグナルが点灯しています。  ファンダメンタルズでは、ドル急落に関する報道がある一方、イラン危機下でのドル優位性を示すニュースもあり、方向感はやや混沌としています。通貨強弱ではUSDが弱含み、JPYも弱いため、シグナルとは逆方向への動きも警戒が必要です。  このロングシナリオが崩れるのは、158.75近辺の直近安値を明確に下抜けた場合でしょう。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.421,
+      "EUR": 0.036,
+      "GBP": 0.233,
+      "JPY": -0.159,
+      "AUD": 0.379
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ USD 弱（-0.42%）× JPY 弱（-0.16%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": -0.262,
+      "base_strength": -0.421,
+      "quote_strength": -0.159
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "FX 強弱逆張り (-1)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 0.0742,
+        "avg_atr_30d": 0.1176,
+        "ratio": 0.63,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "ドル急落、なぜ「リリーフ・ラリー」から取り残されているのか"
+        ]
+      }
+    }
+  },
+  {
+    "id": "EURJPY=X_1h_20260526_0620",
+    "fired_at": "2026-05-26T06:20:40+09:00",
+    "timeframe": "1h",
+    "ticker": "EURJPY=X",
+    "asset_name": "ユーロ円",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 184.98899841308594,
+    "stop_loss": 184.83128747001675,
+    "take_profit_1": 185.19927967051152,
+    "take_profit_2": 185.3044202992243,
+    "atr": 0.1051406287127868,
+    "sl_pct": -0.08525422831740889,
+    "tp1_pct": 0.11367230442321187,
+    "tp2_pct": 0.17050845663481778,
+    "indicators_at_signal": {
+      "rsi": 54.88,
+      "macd": 0.0481,
+      "macd_sig": 0.063,
+      "ma25": 184.96,
+      "ma75": 184.77,
+      "bb_low": 184.88,
+      "bb_up": 185.09,
+      "recent_high": 185.14,
+      "recent_low": 184.84
+    },
+    "news_count": 2,
+    "news_titles": [
+      "インフレと日銀会合を控え、円はまちまちな値動き",
+      "ユーロ安経済下でのユーロ高のパラドックス（ユーロ/米ドル）"
+    ],
+    "ai_narrative": "ユーロ円はボリンジャーバンド-2σにタッチし、反発の兆しを見せています。RSIが54.9と中立圏にあり、MACDもシグナルライン近辺であることから、短期的な反転上昇が期待できます。通貨強弱ではユーロが円に対してやや強いため、この方向感は一致しています。インフレと日銀会合を控えた円のまちまちな値動きも、過度な円安進行を抑制する可能性があり、このロングシナリオを支持します。シナリオが崩れるのは、直近安値（184.84）を明確に下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 7.1,
+      "prev_direction": "ショート（売り）",
+      "prev_signal_id": "EURJPY=X_1h_20260525_2316"
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.421,
+      "EUR": 0.036,
+      "GBP": 0.233,
+      "JPY": -0.159,
+      "AUD": 0.379
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 EUR/JPY 強弱差は小さい（+0.20%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "反転検知あり (-2)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 0.1051,
+        "avg_atr_30d": 0.1449,
+        "ratio": 0.73,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURAUD=X_1h_20260526_0620",
+    "fired_at": "2026-05-26T06:20:40+09:00",
+    "timeframe": "1h",
+    "ticker": "EURAUD=X",
+    "asset_name": "ユーロ/豪ドル（ユーロオージー）",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.6221400499343872,
+    "stop_loss": 1.6200431017557488,
+    "take_profit_1": 1.6249359808392385,
+    "take_profit_2": 1.6263339462916642,
+    "atr": 0.0013979654524256206,
+    "sl_pct": -0.1292704769063096,
+    "tp1_pct": 0.17236063587507944,
+    "tp2_pct": 0.2585409538126192,
+    "indicators_at_signal": {
+      "rsi": 37.04,
+      "macd": -0.001,
+      "macd_sig": -0.0009,
+      "ma25": 1.62,
+      "ma75": 1.63,
+      "bb_low": 1.62,
+      "bb_up": 1.63,
+      "recent_high": 1.63,
+      "recent_low": 1.62
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ユーロ/豪ドル、ロング（買い）シグナルについて解説します。  テクニカル面では、ボリンジャーバンドの-2σ（1.62）にタッチし、反発の兆しが見られます。RSIが37.0と売られすぎ水準に近づいていることも、短期的な反発を後押しする可能性があります。25MAも1.62とサポートラインとして機能しています。  ファンダメンタルズ面では、中国の香港ハンセン指数が上昇しており、テクノロジー株の強さがアジア市場を押し上げています。これが豪ドルの支援材料となる可能性があります。ただし、通貨強弱ではユーロと豪ドルがいずれもプラス圏にあるため、複合逆張りとしての注意も必要です。  このシナリオが崩れるのは、中国経済の悪化懸念が強まり、豪ドルが急速に売られる展開となった場合です。  （337文字）",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.421,
+      "EUR": 0.036,
+      "GBP": 0.233,
+      "JPY": -0.159,
+      "AUD": 0.379
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ EUR 強（+0.04%）× AUD 強（+0.38%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": -0.343,
+      "base_strength": 0.036,
+      "quote_strength": 0.379
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": NaN,
+          "change_pct": NaN
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25606.03,
+          "change_pct": 0.86
+        }
+      },
+      "news": [
+        "Lenovo、PC販売好調で第4四半期売上高が予想を上回る、株価は15%上昇",
+        "決算、テクノロジー株の強さ、ペルシャ湾の見通しがアジア株市場を押し上げ",
+        "原油、テクノロジーの見通しがアジア株市場を揺るがす",
+        "原油、金利、地政学がアジア株市場を下押し",
+        "ペルシャ湾の見通しがアジア株市場を揺るがす"
+      ]
+    },
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "FX 強弱逆張り (-1)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 0.0014,
+        "avg_atr_30d": 0.002,
+        "ratio": 0.71,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_1h_20260526_0620",
+    "fired_at": "2026-05-26T06:20:40+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.88155996799469,
+    "stop_loss": 1.879264492730769,
+    "take_profit_1": 1.884620601679918,
+    "take_profit_2": 1.8861509185225322,
+    "atr": 0.001530316842614075,
+    "sl_pct": -0.12199851734555986,
+    "tp1_pct": 0.1626646897940798,
+    "tp2_pct": 0.24399703469111972,
+    "indicators_at_signal": {
+      "rsi": 45.52,
+      "macd": -0.0001,
+      "macd_sig": -0.0001,
+      "ma25": 1.88,
+      "ma75": 1.88,
+      "bb_low": 1.88,
+      "bb_up": 1.88,
+      "recent_high": 1.88,
+      "recent_low": 1.88
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドル（1.88156）の1H足チャートでは、ボリンジャーバンド-2σへのタッチで反発が期待できる局面です。RSIは45.5と中立圏であり、25MAと75MAが1.88でクロスしていることから、短期的な下落が一服し、反転の兆しが見られます。  ファンダメンタルズ面では、24時間の通貨強弱でAUDがGBPを上回っている点は、AUDの上昇を示唆しています。中国市場は香港ハンセン指数が堅調で、ハイテク株の決算も好調なことから、AUDにとって追い風となる可能性があります。  このロングシナリオが崩れるのは、1.88のサポートラインを明確に下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "4H",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 4H はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.421,
+      "EUR": 0.036,
+      "GBP": 0.233,
+      "JPY": -0.159,
+      "AUD": 0.379
+    },
+    "fx_alignment": {
+      "aligned": null,
+      "explanation": "💪 GBP/AUD 強弱差は小さい（-0.15%、中立）",
+      "suggested_direction": null
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": NaN,
+          "change_pct": NaN
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25606.03,
+          "change_pct": 0.86
+        }
+      },
+      "news": [
+        "Lenovo、PC販売好調で第4四半期売上高が予想を上回る、株価は15%上昇",
+        "決算、ハイテク株の強さ、ペルシャ湾の見通しがアジア株市場を押し上げる",
+        "原油、ハイテク見通しがアジア株市場を動揺させる",
+        "原油、金利、地政学がアジア株市場を下押し",
+        "ペルシャ湾の見通しがアジア株市場を動揺させる"
+      ]
+    },
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 0.0015,
+        "avg_atr_30d": 0.0022,
+        "ratio": 0.7,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
