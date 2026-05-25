@@ -230,6 +230,113 @@ def analyze_loss_with_ai(entry, sl_ts_iso, news_titles, vix_data, api_key):
         return {"raw_response": text[:500]}
 
 
+def analyze_win_with_ai(entry, win_ts_iso, outcome_label, news_titles, vix_data, api_key):
+    """🆕 R4: TP1/TP2 到達時に Gemini で勝因を 5 カテゴリ + 詳細 + 教訓で分析。
+    JSON 構造で返す: {primary_category, primary_cause, ai_diagnosis, lesson, category_tag, repeatable}"""
+    if not api_key:
+        return None
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        return None
+    genai.configure(api_key=api_key)
+
+    fired_at = entry.get("fired_at", "")
+    indicators = entry.get("indicators_at_signal", {})
+    direction = entry.get("direction", "")
+    asset = entry.get("asset_name", "")
+    timeframe = entry.get("timeframe", "4h")
+    entry_price = entry.get("entry")
+    target_price = entry.get("take_profit_1") if outcome_label == "tp1" else entry.get("take_profit_2")
+    atr = entry.get("atr", 0)
+    original_narrative = entry.get("ai_narrative", "")
+    confidence = entry.get("confidence") or {}
+    env = entry.get("environment") or {}
+    trend_align = entry.get("trend_alignment") or {}
+    whipsaw = entry.get("whipsaw_check") or {}
+
+    news_section = ""
+    if news_titles:
+        news_section = "\n\n【保有期間中の関連ニュース】\n" + "\n".join([f"- {t[:140]}" for t in news_titles[:6]])
+
+    vix_section = ""
+    if vix_data:
+        vix_section = f"\n\n【VIX 変動】{vix_data['start']} → {vix_data['end']}（{vix_data['change_pct']:+.1f}%）"
+
+    # 信頼度・環境・整合性データ
+    context_lines = []
+    if confidence.get("label"):
+        context_lines.append(f"信頼度スコア: {confidence.get('label')} ({confidence.get('score', '?')})")
+    if env.get("env_score"):
+        context_lines.append(f"環境スコア: {env.get('env_score')} {env.get('score_label', '')}")
+    if trend_align.get("aligned") is not None:
+        align_str = "順張り (上位足整合)" if trend_align.get("aligned") else "逆張り (上位足逆)"
+        context_lines.append(f"マルチTF整合: {align_str}")
+    if whipsaw.get("is_reversal"):
+        context_lines.append("反転検知: あり (往復ビンタ警告下でのトレード)")
+    context_section = ""
+    if context_lines:
+        context_section = "\n\n【シグナル発火時の付加コンテキスト】\n" + "\n".join([f"- {c}" for c in context_lines])
+
+    prompt = f"""あなたは日本人個人投資家向けのトレード分析アナリストです。
+以下のシグナル経由のトレードが {outcome_label.upper()}（利確）に到達して成功しました。
+**「なぜ成功したのか」を客観的に分析**してください。次回も同じ条件で積極的にエントリーする / サイズを上げるべきかの判断材料を抽出するためです。
+
+【トレード詳細】
+- 銘柄: {asset}
+- 時間軸: {timeframe.upper()}
+- 方向: {direction}
+- エントリー: {entry_price} @ {fired_at}
+- {outcome_label.upper()} 到達: {target_price} @ {win_ts_iso}
+- ATR(14): {atr:.2f}
+
+【シグナル発火時の指標】
+- RSI: {indicators.get('rsi', 'N/A')}
+- MACD: {indicators.get('macd', 'N/A')}
+- 25MA: {indicators.get('ma25', 'N/A')}
+- 75MA: {indicators.get('ma75', 'N/A')}
+
+【シグナル発火時の AI 解説（参考）】
+{original_narrative[:300]}
+{context_section}{vix_section}{news_section}
+
+【出力フォーマット】（純粋な JSON のみ。前置きや コードフェンス不要）
+{{
+  "primary_category": "テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度高の的中 / マルチTF整合 のいずれか",
+  "primary_cause": "1 文で具体的な勝因（30 字以内）",
+  "ai_diagnosis": "詳細解説 (200 字以内)。データに基づいて何が機能したかを説明",
+  "lesson": "次回への教訓 (80 字以内)。同条件再現時のアクション提案",
+  "category_tag": "短いラベル (10 字以内、例: 順張り高精度 / イベント追い風 / 信頼度的中 / ボラ穏当)",
+  "repeatable": "high/medium/low のいずれか。同じ条件が再現した時の期待値が高いほど high"
+}}"""
+
+    text = ""
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.5-flash"):
+        try:
+            model = genai.GenerativeModel(model_name)
+            resp = model.generate_content(prompt)
+            text = (resp.text or "").strip()
+            if text:
+                break
+        except Exception:
+            continue
+    if not text:
+        return None
+
+    # JSON 抽出
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("```", 2)[1] if "```" in text else text
+        if text.startswith("json"):
+            text = text[4:].strip()
+    try:
+        result = json.loads(text)
+        return result
+    except Exception as e:
+        print(f"    ⚠️ AI 勝因分析の JSON パース失敗: {e}; 生応答先頭: {text[:80]}")
+        return {"raw_response": text[:500]}
+
+
 def load_log():
     if not os.path.exists(SIGNALS_LOG_FILE):
         print(f"⚠️ {SIGNALS_LOG_FILE} が存在しません")
@@ -405,6 +512,28 @@ def evaluate_one(entry, now_jst):
                     print(f"    💡 教訓: {analysis.get('lesson', '')[:60]}")
             else:
                 print(f"    ⚠️ GEMINI_API_KEY 未設定、敗因分析スキップ")
+
+        # 🆕 R4: TP1/TP2 到達時に AI 勝因分析を実行（敗因分析の対称）
+        if outcome in ("tp1", "tp2"):
+            gemini_key = os.environ.get("GEMINI_API_KEY")
+            if gemini_key:
+                print(f"    ✨ {outcome.upper()} 到達 → AI 勝因分析を実行中...")
+                vix_data = get_vix_change(fired_at_utc, resolved_at)
+                news_en = get_news_during_holding(entry["ticker"], entry["fired_at"], resolved_at)
+                news_jp = translate_titles_to_jp_quick(news_en, gemini_key) if news_en else []
+                win_analysis = analyze_win_with_ai(entry, resolved_at, outcome, news_jp, vix_data, gemini_key)
+                entry["win_analysis"] = {
+                    "vix_data": vix_data,
+                    "news_during_holding": news_jp,
+                    "ai_result": win_analysis or {"error": "AI 分析失敗"},
+                }
+                if win_analysis and "primary_category" in win_analysis:
+                    print(f"    🌟 勝因カテゴリ: {win_analysis.get('primary_category')} | "
+                          f"{win_analysis.get('primary_cause', '')[:50]}")
+                    print(f"    💡 教訓: {win_analysis.get('lesson', '')[:60]}")
+                    print(f"    🔁 再現性: {win_analysis.get('repeatable', '?')}")
+            else:
+                print(f"    ⚠️ GEMINI_API_KEY 未設定、勝因分析スキップ")
 
         return True
     else:
