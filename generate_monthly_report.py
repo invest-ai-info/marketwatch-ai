@@ -157,25 +157,44 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
         return _fallback_summary(sig_stats, trade_stats)
     genai.configure(api_key=api_key)
 
-    prompt = f"""日本人個人投資家向け投資ブログのライターとして、{year}年{month}月の月次成績レポートの「総評」セクションを書いてください。
+    # 信頼度・環境スコアごとの勝率
+    conf_wr = {k: f"{v['wins']}/{v['total']} ({(v['wins']/v['total']*100):.0f}%)" if v['total'] else "0/0" for k, v in sig_stats["by_conf"].items()}
+    env_wr = {k: f"{v['wins']}/{v['total']} ({(v['wins']/v['total']*100):.0f}%)" if v['total'] else "0/0" for k, v in sig_stats["by_env"].items()}
+    # ベスト/ワースト銘柄
+    by_t = sig_stats.get("by_ticker", {})
+    top_winner = max(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
+    top_loser = min(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
+
+    prompt = f"""あなたは日本人個人投資家（サラリーマン × 4H スイング × MT4）向けの投資メディア編集長です。
+{year}年{month}月の AI シグナルと実取引データから、月次成績レポートの中核セクションを執筆してください。
 
 【シグナル統計】
 - 発火数: {sig_stats['total']} 件（4H {sig_stats['by_tf'].get('4h', 0)} / 1H {sig_stats['by_tf'].get('1h', 0)}）
 - 確定: {sig_stats['closed']} 件（TP1 {sig_stats['tp1']} / TP2 {sig_stats['tp2']} / SL {sig_stats['sl']} / 期限切れ {sig_stats['expired']}）
-- 勝率: {sig_stats['win_rate']}% / 期待 R: {sig_stats['expected_r']}
-- 信頼度別: {dict((k, (v['wins'], v['total'])) for k, v in sig_stats['by_conf'].items())}
-- 環境スコア別: {dict((k, (v['wins'], v['total'])) for k, v in sig_stats['by_env'].items())}
+- 月間勝率: {sig_stats['win_rate']}% / 期待 R: {sig_stats['expected_r']}
+- 信頼度別 勝率: {conf_wr}
+- 環境スコア別 勝率: {env_wr}
+- ベスト銘柄: {top_winner[0] if top_winner[0] else "なし"}（勝-負 = {(top_winner[1] or {{}}).get("wins", 0) - (top_winner[1] or {{}}).get("sl", 0) if top_winner[1] else 0}）
+- ワースト銘柄: {top_loser[0] if top_loser[0] else "なし"}（勝-負 = {(top_loser[1] or {{}}).get("wins", 0) - (top_loser[1] or {{}}).get("sl", 0) if top_loser[1] else 0}）
 
 【実取引】
-- 取引数: {trade_stats['closed']} 件 / 勝率: {trade_stats['win_rate']}% / P&L 合計: {trade_stats['total_pnl_pct']}%
+- 取引数: {trade_stats['closed']} 件 / 勝率: {trade_stats['win_rate']}% / 通算 P&L: {trade_stats['total_pnl_pct']}%
 
-【出力フォーマット】
-- 「今月のハイライト」: 1 段落（150 文字程度）
-- 「データから見えた示唆」: 箇条書き 3-4 項目
-- 「来月の改善ポイント」: 箇条書き 2-3 項目
-HTML タグは使わず、プレーンテキストで。
+【執筆要件】（必ず守る）
+- 「今月のハイライト」を 1 段落 (200-250 字): 数値を必ず引用、定量的な発見を最低 2 つ含める。例「{month}月は HIGH スコア勝率 {{HIGH_WR}} が MID {{MID_WR}} を 20pt 上回り、信頼度スコアの予測力が確認された月となった」
+- 「データから見えた示唆」を箇条書き 3-4 項目: それぞれデータ根拠を明示。例「・環境 A スコアは {{env_a_wr}} の勝率 → 経済イベント無い時の優位性を確認」
+- 「来月の改善ポイント」を箇条書き 2-3 項目: 具体的なアクション提案。例「・LOW スコアシグナルは {{low_wr}} なので、来月は完全に見送り、HIGH のみエントリー」
+
+【避けること】
+- 抽象的な感想（「市場は不安定だった」など）
+- 投資助言の断定（「○○を買え」）。「○○を検討する価値あり」までに留める
+- HTML / Markdown
+- 数値を引用しない一般論
+
+出力はプレーンテキスト、3 セクション構成。
 """
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    # マンスリーは月 1 回の最重要レポートなので、品質優先で上位モデルから試行
+    for model_name in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-flash-lite"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
