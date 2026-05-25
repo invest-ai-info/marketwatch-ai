@@ -3717,11 +3717,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
+      ・<b>2026-05-25</b>: 📱 解説「<a href="guide-softbank-group-2026-05.html" style="color:#0969da"><b>ソフトバンクグループ（9984）徹底解説：純利益 +399%、52 週で株価 3.8 倍 — OpenAI・Arm が織りなす NAV 40 兆円の正体と「孫正義の最大の賭け」</b></a>」公開<br>
       ・<b>2026-05-25</b>: 🚀 緊急速報「<a href="guide-nikkei-65k-break-2026-05-25.html" style="color:#cf222e"><b>日経平均 65,000 円突破速報：終値 65,158 円・史上初の大台 — トランプ Truth Social が引き金、米イラン緩和 × 原油急落 × SBG が織りなす AI 相場の正体</b></a>」公開<br>
       ・<b>2026-05-24</b>: 📅 週次戦略「<a href="guide-weekly-2026-05-25.html" style="color:#0969da"><b>今週の投資戦略（5/25〜5/29）：注目指標と3シナリオ別マーケット展望</b></a>」更新（日曜 18 時自動更新）<br>
       ・<b>2026-05-23</b>: 🤖 決算解説「<a href="guide-nvidia-2026-05.html" style="color:#0969da"><b>NVIDIA 2026 年 5 月決算解説：売上 816 億ドルで予想超過 — そして「AI バブルはいつ・どうやって崩れるのか」5 つのシナリオを検証</b></a>」公開<br>
-      ・<b>2026-05-23</b>: 🔧 機能アップデート「<a href="track-record.html" style="color:#0969da"><b>💯 信頼度スコア機能 & 📊 マンスリー成績レポート機能を新設</b></a>」（シグナル成績ページに信頼度別勝率セクション追加、月初に自動レポート配信）<br>
-      ・<b>2026-05-23</b>: 🚗 解説「<a href="guide-toyota-2026-05.html" style="color:#0969da"><b>トヨタ自動車（7203）徹底解説：売上 50 兆円超で日本企業初の偉業 — しかし営業益 -21.5% の「増収減益」を読む</b></a>」公開
+      ・<b>2026-05-23</b>: 🔧 機能アップデート「<a href="track-record.html" style="color:#0969da"><b>💯 信頼度スコア機能 & 📊 マンスリー成績レポート機能を新設</b></a>」（シグナル成績ページに信頼度別勝率セクション追加、月初に自動レポート配信）
     </div>
   </div>
 
