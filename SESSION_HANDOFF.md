@@ -1,4 +1,4 @@
-# 🔄 セッション引継ぎ票（最終更新: 2026-05-24 夜 — 政治発言フィード + 週次戦略自動化完了）
+# 🔄 セッション引継ぎ票（最終更新: 2026-05-25 夜 — 市場休場日カレンダー強化完了）
 
 新セッション開始時はまず `CLAUDE.md`（全体像）+ このファイル（直近進捗）を読んでください。
 
@@ -91,6 +91,30 @@
 ---
 
 ## 📅 直近の作業履歴
+
+### 2026-05-25（月）夜の作業: 🏖️ 市場休場日カレンダー強化（H1+H2+H3）
+- ✅ **H1: 主要市場休場日 年間データ整備**（economic-events.json）
+  - 米国 NYSE/Nasdaq: 7 件（Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving, Black Friday 早仕舞い, Christmas Eve 早仕舞い）
+  - 英国 LSE: 3 件（Spring Bank Holiday, Summer Bank Holiday, Boxing Day 振替）
+  - 日本 TSE: 9 件（海の日, 山の日, 敬老の日, 国民の休日, 秋分の日, スポーツの日, 文化の日, 勤労感謝の日, 年末年始）
+  - Global: 1 件（Christmas Day = 米英共通）
+  - 合計 **20 件の市場休場日**を 2026/12 末までカバー
+- ✅ **H2: 休場日カテゴリ専用警告ロジック**（generate_technical_alerts.py）
+  - 新規関数 `check_market_holidays(ticker, now_jst, events_data)` を実装
+  - `check_upcoming_events` から `category == "market_holiday"` を除外
+  - `_build_environment_block` に「🏖️ 市場休場」セクションを追加（当日 + 48h 以内）
+  - メール件名に当日休場タグ `🏖️US休` / `🏖️US/UK休` 等を追加
+- ✅ **H3: 当日休場で env_score を 1 段階引き下げ**
+  - `check_environment` に休場時の `danger_count += 1` を追加
+  - 通常 A スコア → 休場日は B スコア（推奨ポジション 70%）に自動降格
+  - 翌日休場の場合は警告のみ（スコアは下げない）
+- ✅ **ローカルテスト**: 6 シナリオ全てパス
+  - 5/25 NKD=F / GBPJPY / USDJPY、6/18 GC=F (翌朝休場警告)、7/3 CL=F、5/27 通常日
+
+### 2026-05-25（月）の作業: 4H cron 冗長化 + memory 3 層化
+- ✅ 4H シグナルメールが朝から来ない問題 → cron スキップが原因と判明
+- ✅ technical-alerts.yml に冗長 cron 3 重化（本命 + 30 分後 + 1 時間後）
+- ✅ 3 層 memory ファイル作成（01_profile / 02_evolution / 03_initiatives）
 
 ### 2026-05-24（日）の作業: 🚨 政治発言ライブフィード機能（Phase 1+2+B案）
 - ✅ **Phase 1-A: crisis_keywords 拡張**
