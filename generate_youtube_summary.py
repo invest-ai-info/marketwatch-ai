@@ -41,7 +41,7 @@ CHANNELS = [
 ]
 
 MAX_VIDEOS = 5        # 1日に新規要約する本数（既要約はスキップ、これに含まない）
-MAX_AGE_HOURS = 168   # 候補とする動画の最大経過時間（過去7日）
+MAX_AGE_HOURS = 72    # 候補とする動画の最大経過時間（過去 3 日、KEEP_DAYS と整合）
 TRANSCRIPT_MAX_CHARS = 12000  # Gemini に渡す字幕の最大文字数
 RSS_RETRY = 3         # RSS 取得のリトライ回数
 RSS_RETRY_DELAY = 5   # リトライ間隔（秒）
@@ -222,25 +222,32 @@ def save_data(videos):
 
 
 def prune_old_summaries(videos, keep_days):
-    """generated_at が keep_days より古いものを除外"""
+    """🆕 動画公開日 (published) が keep_days より古いものを除外。
+    旧バージョンでは generated_at 基準だったが、これだと「古い動画 + 直近に要約生成」が残って
+    並びがバラバラになっていたため、published 基準でフィルタとソートを揃える。"""
     cutoff = datetime.now(timezone.utc) - timedelta(days=keep_days)
     fresh = []
     pruned = 0
     for v in videos:
-        gen_at_str = v.get("generated_at", "")
+        pub_str = v.get("published", "")
         try:
-            gen_at = datetime.fromisoformat(gen_at_str.replace("Z", "+00:00"))
-            if gen_at.tzinfo is None:
-                gen_at = gen_at.replace(tzinfo=JST)
-            if gen_at.astimezone(timezone.utc) >= cutoff:
+            # ISO8601 or RFC822 両対応
+            try:
+                pub_dt = datetime.fromisoformat(pub_str.replace("Z", "+00:00"))
+            except ValueError:
+                from email.utils import parsedate_to_datetime
+                pub_dt = parsedate_to_datetime(pub_str)
+            if pub_dt.tzinfo is None:
+                pub_dt = pub_dt.replace(tzinfo=timezone.utc)
+            if pub_dt.astimezone(timezone.utc) >= cutoff:
                 fresh.append(v)
             else:
                 pruned += 1
         except Exception:
-            # 日付不明は捨てる
+            # 日付不明は捨てる（並びが乱れる原因になるため）
             pruned += 1
     if pruned:
-        print(f"🗑️  {pruned} 件を期限切れで削除（{keep_days} 日経過）")
+        print(f"🗑️  {pruned} 件を期限切れで削除（公開から {keep_days} 日経過）")
     return fresh
 
 
