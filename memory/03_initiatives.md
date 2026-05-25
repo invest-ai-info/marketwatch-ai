@@ -6,6 +6,28 @@
 
 ---
 
+## 🔥 明日すぐ着手（優先度最高）
+
+### YouTube 要約ページのコンテンツ欠落調査
+- **症状**: 一部の動画で「3 行サマリー」「重要トピック」「コメント」が空欄
+- **修正済み (5/25 深夜)**: フィルタ基準 generated_at → published、MAX_AGE_HOURS 168→72
+- **未解決**: 要約セクション自体の生成失敗
+- **原因仮説**:
+  - `summarize_with_gemini_video()` / `summarize_text_only()` が部分的に空文字を返している
+  - `parse_summary()` が Gemini レスポンスのフォーマット崩れで空辞書を返している
+  - transcript 取得失敗時のフォールバックで description が短すぎる
+  - Gemini モデル切替（gemini-2.5-flash 等）でフォーマット指示が無視されている
+- **調査手順**:
+  1. リモート `youtube-summary.json` を取得
+  2. summary / topics / comment が空 or "—" になっている動画を特定
+  3. その動画の transcript_used フラグ、video_id を確認
+  4. `generate_youtube_summary.py` の `parse_summary()` ロジック検証
+  5. Gemini プロンプトを `summarize_with_gemini_video()` / `summarize_text_only()` で確認
+- **修正案候補**:
+  - parse_summary を緩めて、見出し違いでも拾えるようにする
+  - 空フィールド時のフォールバック挿入（「要約取得失敗」表示）
+  - 失敗動画はリトライ機能を追加
+
 ## 🧪 現在検証中（データ蓄積待ち）
 
 ### B2 信頼度スコア検証
