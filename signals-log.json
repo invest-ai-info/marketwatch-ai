@@ -7957,7 +7957,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": -0.001,
+    "max_favorable_excursion_pct": 0.006,
     "max_adverse_excursion_pct": -0.097,
     "email_sent": false,
     "whipsaw_check": {
@@ -8207,8 +8207,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.035,
+    "max_adverse_excursion_pct": -0.035,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -8268,6 +8268,232 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "EURUSD=X_4h_20260525_1400",
+    "fired_at": "2026-05-25T14:00:28+09:00",
+    "timeframe": "4h",
+    "ticker": "EURUSD=X",
+    "asset_name": "ユーロドル",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 1.1645511388778687,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.002184804367535939,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 56.56,
+      "macd": -0.0005,
+      "macd_sig": -0.001,
+      "ma25": 1.16,
+      "ma75": 1.17,
+      "bb_low": 1.16,
+      "bb_up": 1.16,
+      "recent_high": 1.17,
+      "recent_low": 1.16
+    },
+    "news_count": 5,
+    "news_titles": [
+      "WSJドル指数、0.02%上昇し95.80に",
+      "米国債利回り、勢いを失うもホルムズ海峡合意への期待で上昇維持",
+      "イラン戦争によるエネルギーショック、欧州経済の成長を圧迫、インフレを押し上げへ",
+      "高止まりするエネルギー価格がEU経済の重しに。ユーロはここで売り",
+      "ユーロ連動ステーブルコインプロジェクト、新規銀行25行を追加"
+    ],
+    "ai_narrative": "ユーロドルはボリンジャーバンド+2σを上抜けましたが、RSIは56.6と過熱感は限定的で、MACDもシグナルを下回るなど、明確な上昇トレンドとは言えません。イラン情勢によるエネルギー価格高騰が欧州経済の重しとなり、ユーロ売り圧力となる一方、ドルは米国債利回りの上昇で底堅く推移しています。通貨強弱でもユーロは微増、ドルは減と、方向感は乏しい状況です。このシナリオが崩れるのは、+2σを明確に下回った場合でしょう。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-25T14:00:40+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.29,
+      "EUR": 0.065,
+      "GBP": 0.239,
+      "JPY": -0.14,
+      "AUD": 0.202
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 2 件: 戦争,ホルムズ海峡"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.0022,
+        "avg_atr_30d": 0.002,
+        "ratio": 1.09,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 2,
+        "matched_keywords": [
+          "戦争",
+          "ホルムズ海峡"
+        ],
+        "matched_titles": [
+          "米国債利回り、勢いを失うもホルムズ海峡合意への期待で上昇維持",
+          "イラン戦争によるエネルギーショック、欧州経済の成長を圧迫、インフレを押し上げへ"
+        ]
+      }
+    }
+  },
+  {
+    "id": "GBPUSD=X_4h_20260525_1400",
+    "fired_at": "2026-05-25T14:00:28+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 1.348435878753662,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.0028584721806735928,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 63.85,
+      "macd": 0.001,
+      "macd_sig": 0.0003,
+      "ma25": 1.34,
+      "ma75": 1.35,
+      "bb_low": 1.34,
+      "bb_up": 1.35,
+      "recent_high": 1.35,
+      "recent_low": 1.34
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ドイツ銀行、ユーロ／ポンドのさらなる上昇余地を見込む",
+      "バーナム氏、スターマー党首への挑戦を控えギルツ債が急落",
+      "バーナム氏の挑戦にシティが身構える中、英国の借入コストが28年ぶり高水準に",
+      "英首相スターマー氏、窮地に。党首辞任のタイミングが市場に与える影響。",
+      "英スターマー党首、リーダーシップ危機が市場に波及する中、党首の座を死守"
+    ],
+    "ai_narrative": "ポンドドルは、ボリンジャーバンドの+2σ（1.35）を上抜けたものの、RSI 63.9、MACDもシグナルを上回っており、短期的な上昇圧力が示唆されます。しかし、25MA（1.34）と75MA（1.35）の乖離が縮小傾向にあること、英国の政治不安を示すニュース見出し（スターマー党首のリーダーシップ危機）を考慮すると、さらなる大幅上昇は限定的と見られます。通貨強弱でもポンドは上昇していますが、ドルも下落しているため、方向感は定まりにくい状況です。シナリオが崩れる条件としては、英国の政治情勢悪化によるポンド売りが強まる展開が考えられます。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-25T14:00:40+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.29,
+      "EUR": 0.065,
+      "GBP": 0.239,
+      "JPY": -0.14,
+      "AUD": 0.202
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.7,
+        "avg_30d": 17.97,
+        "change_24h_pct": -0.36
+      },
+      "atr_regime": {
+        "current_atr": 0.0029,
+        "avg_atr_30d": 0.0031,
+        "ratio": 0.92,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "バーナム氏、スターマー党首への挑戦を控えギルツ債が急落"
+        ]
       }
     }
   }
