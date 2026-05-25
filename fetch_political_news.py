@@ -54,24 +54,61 @@ POLITICAL_QUERIES = [
     ("China retaliation tariff",  ["NKD=F", "CL=F", "AUDJPY=X"]),
 ]
 
-# WhiteHouse 公式 RSS
+# WhiteHouse 公式 RSS（複数候補を試行、動くものだけ使用）
+# Note: 政権交代やサイト改修で URL が変わることがあるため、複数指定して fallback
 WHITEHOUSE_FEEDS = [
-    "https://www.whitehouse.gov/briefing-room/feed/",
-    "https://www.whitehouse.gov/presidential-actions/feed/",
+    "https://www.whitehouse.gov/briefing-room/feed/",        # 動作確認済
+    "https://www.whitehouse.gov/news/feed/",                  # 新政権向け代替
+    "https://www.whitehouse.gov/feed/",                       # root RSS の可能性
+    "https://www.whitehouse.gov/presidential-actions/feed/",  # 旧 URL（残しておく）
 ]
 
 # 重要度判定キーワード（小文字比較）
+# HIGH_TRIGGERS: 単独で含まれていれば即 HIGH 判定（強い相場インパクト）
 HIGH_TRIGGERS = [
     "tariff announce", "tariff impose", "additional tariff", "retaliatory tariff",
     "intervention", "emergency rate", "executive order",
     "trump signs", "trump announces", "fed emergency",
     "boj intervene", "yen intervention",
     "iran strike", "china retaliat",
+    "trump tariff", "tariff hike", "tariff increase",
+    "sanctions on", "ban on china",
+    "halt trading", "circuit breaker",
 ]
+
+# HIGH_COMBOS: 2 語の組合せがタイトルに同時含まれれば HIGH 判定
+# 「Trump announces something about tariff」のような並びでも検知できる
+HIGH_COMBOS = [
+    ("trump", "tariff"),
+    ("trump", "china"),
+    ("trump", "powell"),
+    ("trump", "fed"),
+    ("trump", "russia"),
+    ("trump", "ukraine"),
+    ("trump", "iran"),
+    ("trump", "sanction"),
+    ("trump", "executive"),
+    ("white house", "executive"),
+    ("white house", "statement"),
+    ("powell", "rate"),
+    ("powell", "cut"),
+    ("powell", "hike"),
+    ("fed", "emergency"),
+    ("boj", "intervene"),
+    ("boj", "rate"),
+    ("yen", "intervention"),
+    ("ecb", "rate"),
+    ("lagarde", "rate"),
+    ("china", "retaliat"),
+    ("china", "sanction"),
+]
+
+# MID_TRIGGERS: 単独でも MID 判定（政治家・中銀関連）
 MID_TRIGGERS = [
     "trump", "powell", "fed", "boj", "white house", "ecb", "lagarde",
+    "bailey", "boe", "uedo", "ueda",
     "statement", "speech", "warning", "criticism", "tariff", "sanction",
-    "truth social",
+    "truth social", "press conference", "fomc minutes",
 ]
 
 
@@ -85,16 +122,29 @@ def make_id(source, url, pub):
 
 
 def calc_importance(title_en, source):
-    """タイトルと source から HIGH/MID/LOW を判定"""
+    """タイトルと source から HIGH/MID/LOW を判定（3 段階）
+
+    HIGH 判定基準（いずれか）:
+      1. HIGH_TRIGGERS の単一キーワードを含む
+      2. HIGH_COMBOS の 2 語コンビが両方含まれる（順序不問）
+      3. MID_TRIGGERS のキーワード 2 個以上を含む
+    """
     t = (title_en or "").lower()
-    # HIGH トリガー: 強い相場インパクトのキーワード
+
+    # 1. HIGH_TRIGGERS: 単独キーワード
     for kw in HIGH_TRIGGERS:
         if kw in t:
             return "HIGH"
-    # MID トリガー: 政治家・中銀関連の発言
+
+    # 2. HIGH_COMBOS: 2 語コンビ判定
+    for kw1, kw2 in HIGH_COMBOS:
+        if kw1 in t and kw2 in t:
+            return "HIGH"
+
+    # 3. MID_TRIGGERS: 単独カウント
     hits = sum(1 for kw in MID_TRIGGERS if kw in t)
     if hits >= 2:
-        return "HIGH"  # MID キーワード 2 個以上 = 重要
+        return "HIGH"  # 政治家・中銀の名前が 2 つ並ぶ = 重要会談など
     if hits >= 1:
         return "MID"
     return "LOW"
