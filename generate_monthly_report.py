@@ -348,10 +348,10 @@ footer a{{color:#0969da;text-decoration:none}}
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップ</a>
-  <a class="nav-btn" href="calendar.html">📅 カレンダー</a>
-  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
   <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="calendar.html">📅 カレンダー</a>
+  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
 </nav>
 <div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ {year}年{month}月 成績レポート</div>
 
