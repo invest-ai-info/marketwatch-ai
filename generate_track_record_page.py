@@ -1173,14 +1173,14 @@ def build_html(signals, trades):
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
   </nav>
 
   <div class="breadcrumb">
