@@ -708,10 +708,13 @@ def load_economic_events():
 
 
 def check_upcoming_events(ticker, now_jst, events_data):
-    """ticker に関係する直近イベントを取得。
+    """ticker に関係する直近イベントを取得（重要指標のみ、市場休場は除外）。
     返り値: list of {name, hours_until, impact}（近い順）"""
     relevant = []
     for ev in events_data.get("events", []):
+        # 市場休場は別関数 (check_market_holidays) で扱うので除外
+        if ev.get("category") == "market_holiday":
+            continue
         try:
             ev_dt = datetime.fromisoformat(ev["datetime"])
         except Exception:
@@ -731,6 +734,51 @@ def check_upcoming_events(ticker, now_jst, events_data):
             "datetime": ev["datetime"],
         })
     return sorted(relevant, key=lambda x: x["hours_until"])
+
+
+def check_market_holidays(ticker, now_jst, events_data):
+    """ticker に関係する直近 / 当日の市場休場を取得。
+    返り値: dict {
+        "today_holidays": [当日が休場の市場のリスト],
+        "upcoming_holidays": [48h 以内の休場リスト（当日含まず）],
+        "is_today_holiday": bool,  # ticker にとって今日が休場か
+    }
+    """
+    today_date = now_jst.date()
+    today_holidays = []
+    upcoming = []
+    for ev in events_data.get("events", []):
+        if ev.get("category") != "market_holiday":
+            continue
+        try:
+            ev_dt = datetime.fromisoformat(ev["datetime"])
+        except Exception:
+            continue
+
+        # 影響銘柄チェック
+        affected = ev.get("affected_assets", ["all"])
+        if "all" not in affected and ticker not in affected:
+            continue
+
+        hours_until = (ev_dt - now_jst).total_seconds() / 3600.0
+        ev_date = ev_dt.date()
+        item = {
+            "name": ev["name"],
+            "hours_until": round(hours_until, 1),
+            "country": ev.get("country", "?"),
+            "note": ev.get("note", ""),
+            "datetime": ev["datetime"],
+        }
+        if ev_date == today_date:
+            today_holidays.append(item)
+        elif 0 < hours_until <= 48:
+            upcoming.append(item)
+
+    return {
+        "today_holidays": today_holidays,
+        "upcoming_holidays": sorted(upcoming, key=lambda x: x["hours_until"]),
+        "is_today_holiday": len(today_holidays) > 0,
+    }
 
 
 def fetch_vix_data():
@@ -979,6 +1027,18 @@ def _build_environment_block(env, currency="", decimals=2):
         for w in env["warnings"]:
             lines.append(f"  {w}")
 
+    # 市場休場（当日 + 直近 48h）
+    mh = env.get("market_holidays") or {}
+    if mh.get("today_holidays") or mh.get("upcoming_holidays"):
+        lines.append("")
+        lines.append("🏖️ 市場休場:")
+        for h in mh.get("today_holidays", []):
+            lines.append(f"  🏖️ 当日: {h['name']}")
+            if h.get("note"):
+                lines.append(f"     📝 {h['note']}")
+        for h in mh.get("upcoming_holidays", []):
+            lines.append(f"  ⏳ {h['hours_until']:.1f}h 後: {h['name']}")
+
     # 重要指標
     if env["upcoming_events"]:
         lines.append("")
@@ -1013,9 +1073,10 @@ def _build_environment_block(env, currency="", decimals=2):
 
 def check_environment(ticker, now_jst, df, current_atr, news_titles, events_data):
     """総合環境チェック。各項目の検知結果と統合スコアを返す。
-    返り値: dict with upcoming_events, vix, atr_regime, crisis_news, env_score, size_rec, warnings
+    返り値: dict with upcoming_events, market_holidays, vix, atr_regime, crisis_news, env_score, size_rec, warnings
     """
     upcoming = check_upcoming_events(ticker, now_jst, events_data)
+    market_holidays = check_market_holidays(ticker, now_jst, events_data)
     vix = fetch_vix_data()
     atr_regime = calc_atr_regime(df, current_atr) if current_atr > 0 else None
     crisis = check_crisis_keywords(news_titles, events_data.get("crisis_keywords", {}))
@@ -1023,6 +1084,19 @@ def check_environment(ticker, now_jst, df, current_atr, news_titles, events_data
     # スコア判定
     warnings = []
     danger_count = 0
+
+    # 0. 市場休場（今日が休場 = ボラ低下・流動性減少）
+    if market_holidays["is_today_holiday"]:
+        # 影響国を集約してメッセージに
+        countries = sorted(set(h["country"] for h in market_holidays["today_holidays"]))
+        countries_label = "・".join(countries)
+        warnings.append(f"🏖️ 当日 {countries_label} 市場休場（ボラ低下、薄商い）")
+        danger_count += 1  # env_score を 1 段階下げる効果
+    # 翌日の休場（24h 以内）も警告のみ（スコアは下げない）
+    elif market_holidays["upcoming_holidays"]:
+        nearest_h = market_holidays["upcoming_holidays"][0]
+        if nearest_h["hours_until"] <= 24:
+            warnings.append(f"🏖️ {nearest_h['hours_until']:.0f}h 後に {nearest_h['country']} 市場休場予定")
 
     # 1. 重要指標近接（最重要）
     nearest_event = upcoming[0] if upcoming else None
@@ -1095,6 +1169,7 @@ def check_environment(ticker, now_jst, df, current_atr, news_titles, events_data
         "warnings": warnings,
         "danger_count": danger_count,
         "upcoming_events": upcoming[:3],
+        "market_holidays": market_holidays,
         "vix": vix,
         "atr_regime": atr_regime,
         "crisis_news": crisis,
@@ -1713,9 +1788,16 @@ MarketWatch AI Alerts
         # B2: 信頼度タグ
         conf_tag = f" {confidence['stars']}"
 
+        # 🆕 H2: 当日市場休場タグ（薄商い警告）
+        holiday_tag = ""
+        mh = env.get("market_holidays") or {}
+        if mh.get("today_holidays"):
+            countries = sorted(set(h["country"] for h in mh["today_holidays"]))
+            holiday_tag = f" 🏖️{'/'.join(countries)}休"
+
         # R2: 「シグナル:」ラベルを省略してコンパクト化
         sig_label = primary['label'].split('（')[0].strip()
-        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} {sig_label}{trend_tag}{conf_tag}"
+        subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} {sig_label}{trend_tag}{conf_tag}{holiday_tag}"
         # 重要指標が 24h 以内ならその名前も件名に（R2: 「まで」「発表」「（X月）」を削除）
         if env["upcoming_events"]:
             nearest = env["upcoming_events"][0]
