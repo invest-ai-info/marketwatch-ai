@@ -2343,7 +2343,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.275,
+    "max_favorable_excursion_pct": 0.302,
     "max_adverse_excursion_pct": -0.071,
     "email_sent": true,
     "whipsaw_check": {
@@ -9004,8 +9004,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.045,
+    "max_adverse_excursion_pct": 0.013,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -9068,6 +9068,127 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPUSD=X_4h_20260525_1837",
+    "fired_at": "2026-05-25T18:37:30+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "high_break"
+    ],
+    "primary_signal": "high_break",
+    "primary_signal_label": "🟢 直近 20 本高値ブレイク（トレンド継続）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.3494912385940552,
+    "stop_loss": 1.3452371741980294,
+    "take_profit_1": 1.3551633244554229,
+    "take_profit_2": 1.3579993673861066,
+    "atr": 0.0028360429306838113,
+    "sl_pct": -0.315234680623621,
+    "tp1_pct": 0.4203129074981613,
+    "tp2_pct": 0.630469361247242,
+    "indicators_at_signal": {
+      "rsi": 65.8,
+      "macd": 0.0013,
+      "macd_sig": 0.0005,
+      "ma25": 1.34,
+      "ma75": 1.35,
+      "bb_low": 1.34,
+      "bb_up": 1.35,
+      "recent_high": 1.35,
+      "recent_low": 1.34
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ホルムズ海峡の合意への期待感から原油価格が下落、ドルは軟調に推移",
+      "ドイツ銀行、ユーロ/ポンドの上昇余地を見込む",
+      "バーナム氏のスターマー氏への挑戦を前に、ギルト（英国債）が急落",
+      "バーナム氏の挑戦にシティが身構える中、英国の借入コストが28年ぶりの高値に",
+      "英首相スターマー氏に危機、政権交代のタイミングが市場に影響する理由"
+    ],
+    "ai_narrative": "ポンドドルは直近20本高値（1.35）をブレイクし、RSI65.8と上昇トレンドを示唆。MACDもゴールデンクロス寸前で、買い優勢。通貨強弱でもポンド強×ドル弱と一致。  ファンダメンタルズでは、ホルムズ海峡の合意期待でドルが軟調な一方、英国内政治の不透明感はリスク要因。  このロングシナリオが崩れるのは、1.35のストップロスを下回る展開。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.373,
+      "EUR": 0.117,
+      "GBP": 0.285,
+      "JPY": -0.236,
+      "AUD": 0.308
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 強（+0.28%）× USD 弱（-0.37%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": 0.658,
+      "base_strength": 0.285,
+      "quote_strength": -0.373
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "FX 強弱順張り (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 2 件: ホルムズ海峡,急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.69,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.06
+      },
+      "atr_regime": {
+        "current_atr": 0.0028,
+        "avg_atr_30d": 0.0031,
+        "ratio": 0.91,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 2,
+        "matched_keywords": [
+          "ホルムズ海峡",
+          "急落"
+        ],
+        "matched_titles": [
+          "ホルムズ海峡の合意への期待感から原油価格が下落、ドルは軟調に推移",
+          "バーナム氏のスターマー氏への挑戦を前に、ギルト（英国債）が急落"
+        ]
       }
     }
   }
