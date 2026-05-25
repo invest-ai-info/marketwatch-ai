@@ -154,27 +154,46 @@ def ai_lessons(sig_stats, trade_stats, api_key):
         for t in (s.get("signal_types") or []):
             sig_types[t] += 1
 
-    prompt = f"""あなたは日本人個人投資家向けの投資ブログを執筆するライターです。
-以下のデータから「先週の振り返り：何が機能して、何が機能しなかったか」を 200-300 文字でまとめてください。
+    # 信頼度ごとの勝率を算出して提示（仮説検証の核）
+    conf_winrates = {}
+    for label, d in sig_stats["by_conf"].items():
+        wr = (d["wins"] / d["total"] * 100) if d["total"] else 0
+        conf_winrates[label] = f"{d['wins']}/{d['total']} ({wr:.0f}%)"
+
+    # 銘柄ベスト・ワースト
+    by_t = sig_stats.get("by_ticker", {})
+    top_winner = max(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
+    top_loser = min(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
+
+    prompt = f"""あなたは日本人個人投資家（サラリーマン × 4H スイング × MT4）向けの投資メディアの編集者です。
+過去 1 週間の AI シグナル成績と実取引データを読み取り、「振り返り記事の核心セクション」を執筆してください。
 
 【シグナル統計】
 - 発火数: {sig_stats['total']} 件（4H {sig_stats['by_tf'].get('4h', 0)} / 1H {sig_stats['by_tf'].get('1h', 0)}）
 - 確定: {sig_stats['closed']} 件（TP1 {sig_stats['tp1']} / TP2 {sig_stats['tp2']} / SL {sig_stats['sl']}）
 - 勝率: {sig_stats['win_rate']}%
-- 信頼度別: {dict((k, v['wins'], v['total']) for k, v in sig_stats['by_conf'].items())}
+- 信頼度別 勝率: {conf_winrates}
 - 主要シグナル種別: {dict(sig_types)}
+- ベスト銘柄: {top_winner[0] if top_winner[0] else "なし"} (勝-負 = {(top_winner[1] or {{}}).get("wins", 0) - (top_winner[1] or {{}}).get("sl", 0) if top_winner[1] else 0})
+- ワースト銘柄: {top_loser[0] if top_loser[0] else "なし"} (勝-負 = {(top_loser[1] or {{}}).get("wins", 0) - (top_loser[1] or {{}}).get("sl", 0) if top_loser[1] else 0})
 
 【実取引】
-- 取引数: {trade_stats['closed']} 件
-- 勝率: {trade_stats['win_rate']}%
-- 通算 P&L: {trade_stats['total_pnl_pct']}%
+- 取引数: {trade_stats['closed']} 件 / 勝率: {trade_stats['win_rate']}% / 通算 P&L: {trade_stats['total_pnl_pct']}%
 
-【出力】
-- 「先週の総評」を 1 段落（150 文字程度）
-- 「教訓・反省」を箇条書きで 2-3 項目
-HTML タグは使わず、プレーンテキストで。
+【執筆要件】（必ず守ること）
+- 「先週の総評」を 1 段落 (200 字程度): 数値を必ず引用、感想ではなく事実に基づく分析。例「勝率 65% は前週から +5pt 改善、これは HIGH スコアシグナルが 3/3 で TP1 到達したことが寄与」
+- 「教訓・改善ポイント」を箇条書き 3 項目: 各項目はデータに基づく具体的なアクション提案。例「・反転検知ありシグナルは全て SL → 来週は完全に見送る」
+- 「来週の注意点」を箇条書き 2 項目: 来週の取引判断に直接使える内容
+
+【避けること】
+- 抽象的・曖昧な表現（「市場は難しい」など）
+- 投資助言（「○○を買え」など。「○○を検討してもよい」までに留める）
+- HTML タグ、Markdown 見出し（# など）は使わない
+
+出力はプレーンテキストのみで、3 セクション構成。
 """
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    # 週次振り返りは月 4 回のみで重要なので、品質優先で上位モデルから試行
+    for model_name in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-flash-lite"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
