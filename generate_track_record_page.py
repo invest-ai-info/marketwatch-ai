@@ -463,6 +463,57 @@ def build_analytics_section(signals):
             session_rows.append(render_stat_row(sess, stats))
     session_html = "\n".join(session_rows) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">データ蓄積中</td></tr>'
 
+    # ⏰ 時間別取引推奨度テーブル（サラリーマン視点）
+    def _session_recommendation(sess_label, stats):
+        """セッション統計から推奨度を判定 → 推奨タグ + アクションを返す"""
+        total = stats["total"] if stats else 0
+        wr = stats["win_rate"] if stats else 0
+        er = stats["expected_R"] if stats else 0
+        if total < 5:
+            badge = '<span style="color:#6e7781;font-weight:700">⚪ データ不足</span>'
+            action = f"確定 {total} 件のみ、判断保留。蓄積待ち"
+        elif wr >= 60 and er >= 0.3:
+            badge = '<span style="color:#1a7f37;font-weight:700">🟢 推奨</span>'
+            action = "この時間帯にシグナル発火したら積極エントリー候補"
+        elif wr >= 50:
+            badge = '<span style="color:#9a6700;font-weight:700">🟡 中立</span>'
+            action = "信頼度 ⭐⭐⭐ HIGH のみエントリー、サイズ控えめ"
+        elif wr >= 40:
+            badge = '<span style="color:#bc4c00;font-weight:700">🟠 注意</span>'
+            action = "HIGH かつトレンド順張りに限定、 SL は浅め"
+        else:
+            badge = '<span style="color:#cf222e;font-weight:700">🔴 非推奨</span>'
+            action = "原則見送り。この時間帯は様子見"
+
+        # サラリーマン視点メモ（時間帯の特性）
+        session_memo = {
+            "深夜 (0-6)": "📱 仕事終わり〜就寝前。NY 後半 〜 翌朝アジア早朝",
+            "早朝 (6-9)": "📱 出勤前。東京オープン直前のチェック向き",
+            "東京 (9-15)": "💼 仕事中。スマホで通知確認のみ推奨",
+            "欧州オープン (15-17)": "💼 仕事中〜退勤直前。トレンド転換多発時間帯",
+            "欧州 (17-22)": "📱 退勤後〜夜。ロンドンフィキシング (16:00 GMT)",
+            "NY (22-24)": "📱 夜〜深夜。NY オープン直後のボラ拡大",
+        }
+        memo = session_memo.get(sess_label, "")
+        return badge, f"{memo} ／ {action}"
+
+    sess_rec_rows = []
+    for sess in SESSION_ORDER:
+        stats = by_session.get(sess, {"total": 0, "win_rate": 0, "expected_R": 0})
+        badge, action = _session_recommendation(sess, stats)
+        wr_color = "#1a7f37" if stats.get("win_rate", 0) >= 60 else "#9a6700" if stats.get("win_rate", 0) >= 45 else "#cf222e" if stats.get("total", 0) > 0 else "#6e7781"
+        er_color = "#1a7f37" if stats.get("expected_R", 0) > 0.3 else "#9a6700" if stats.get("expected_R", 0) > 0 else "#cf222e" if stats.get("total", 0) > 0 else "#6e7781"
+        sess_rec_rows.append(f"""
+        <tr>
+          <td><b>{sess}</b></td>
+          <td style="text-align:center">{badge}</td>
+          <td style="text-align:right;color:{wr_color};font-weight:700">{stats.get('win_rate', 0):.1f}%</td>
+          <td style="text-align:right;color:{er_color};font-weight:700">{stats.get('expected_R', 0):+.2f}R</td>
+          <td style="text-align:right">{stats.get('total', 0)}</td>
+          <td style="font-size:.82rem;color:#57606a">{action}</td>
+        </tr>""")
+    session_recommend_html = "\n".join(sess_rec_rows)
+
     # 月別テーブル（時系列ソート）
     month_rows = []
     for m in sorted(by_month.keys()):
@@ -523,6 +574,30 @@ def build_analytics_section(signals):
   <div class="chart-box" style="height:280px"><canvas id="hourlyChart"></canvas></div>
   <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
     💡 <b>使い方</b>: 1 時間単位で見たいときに。FOMC や ECB の発言時刻周辺で勝率が変動するパターンを発見できます。
+  </p>
+
+  <h2 style="margin-top:32px">⏰ 時間別取引推奨度（サラリーマン投資家向け）</h2>
+  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
+    各セッションの勝率・期待 R から「取引すべき時間帯」を 5 段階で評価。「平日昼は仕事中だから取引しない」のような時間制約を最適化するためのガイド。
+  </p>
+  <div class="scroll-x"><table>
+    <thead><tr>
+      <th>セッション (JST)</th>
+      <th style="text-align:center">推奨度</th>
+      <th style="text-align:right">勝率</th>
+      <th style="text-align:right">期待 R</th>
+      <th style="text-align:right">確定数</th>
+      <th>サラリーマン視点アクション</th>
+    </tr></thead>
+    <tbody>{session_recommend_html}</tbody>
+  </table></div>
+  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
+    💡 <b>判定ルール</b>:
+    🟢 推奨 = 勝率 60%+ & 期待 R +0.3+ & 確定 5 件以上 ／
+    🟡 中立 = 勝率 50-60% ／
+    🟠 注意 = 勝率 40-50% ／
+    🔴 非推奨 = 勝率 40% 未満 ／
+    ⚪ データ不足 = 確定 5 件未満
   </p>
 </div>"""
 
