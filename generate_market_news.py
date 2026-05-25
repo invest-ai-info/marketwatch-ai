@@ -1365,14 +1365,14 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
 </nav>
 
   <div class="vix-hero">
@@ -2232,14 +2232,14 @@ def build_hot_assets_html(hot_data, now_jst):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn current" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
   <!-- 説明 -->
@@ -2459,14 +2459,14 @@ def build_calendar_html(now_jst):
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
 </nav>
 
   <a href="preview.html" class="preview-banner">
@@ -2781,14 +2781,14 @@ def build_preview_html(now_jst):
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
 </nav>
 
   <div class="beginner-box">
@@ -2983,14 +2983,14 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
   <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:24px">
@@ -3298,14 +3298,14 @@ def build_charts_html(hist, now_jst):
 
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-  <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
 </nav>
 
   {no_data_msg}
@@ -3675,14 +3675,14 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn current" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
   <!-- ヒーロー画像 -->
