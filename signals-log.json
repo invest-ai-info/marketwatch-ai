@@ -9035,7 +9035,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.107,
+    "max_favorable_excursion_pct": 0.111,
     "max_adverse_excursion_pct": 0.0,
     "email_sent": true,
     "whipsaw_check": {
@@ -9148,7 +9148,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.086,
+    "max_favorable_excursion_pct": 0.096,
     "max_adverse_excursion_pct": -0.051,
     "email_sent": true,
     "whipsaw_check": {
@@ -9781,6 +9781,120 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPUSD=X_4h_20260526_0307",
+    "fired_at": "2026-05-26T03:07:38+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 1.3505666255950928,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.0026504758590277086,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 67.82,
+      "macd": 0.0019,
+      "macd_sig": 0.001,
+      "ma25": 1.34,
+      "ma75": 1.35,
+      "bb_low": 1.34,
+      "bb_up": 1.35,
+      "recent_high": 1.35,
+      "recent_low": 1.34
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ホルムズ海峡の合意への楽観論で原油下落、ドルは軟調",
+      "ドイツ銀行、ユーロ/ポンドの上昇余地を見込む",
+      "バーナム氏のスターマー氏への挑戦見通しでギルト（英国債）急落",
+      "バーナム氏の挑戦にシティが備える中、英国の借入コストが28年ぶり高水準に",
+      "英首相スターマー氏に危機感、退任のタイミングが市場に影響する理由"
+    ],
+    "ai_narrative": "ポンドドルはボリンジャーバンド+2σを上抜けていますが、RSIが67.8と過熱感は限定的です。MACDもシグナルを上回っており、上昇の勢いが確認できます。直近のニュースでは、英国債急落などポンドにネガティブな材料が見られる一方、ホルムズ海峡の合意への楽観論はドル売りに繋がり、ポンドドルには中立〜ややポジティブに作用し得ます。通貨強弱でもポンドはドルを上回っており、短期的な上昇は維持される可能性があります。シナリオが崩れるとすれば、直近20本の安値である1.34を明確に下抜けた場合です。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-26T03:07:47+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.336,
+      "EUR": 0.037,
+      "GBP": 0.205,
+      "JPY": -0.154,
+      "AUD": 0.309
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)"
+      ]
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 2 件: ホルムズ海峡,急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.59,
+        "avg_30d": 17.88,
+        "change_24h_pct": -0.66
+      },
+      "atr_regime": {
+        "current_atr": 0.0027,
+        "avg_atr_30d": 0.0031,
+        "ratio": 0.85,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 2,
+        "matched_keywords": [
+          "ホルムズ海峡",
+          "急落"
+        ],
+        "matched_titles": [
+          "ホルムズ海峡の合意への楽観論で原油下落、ドルは軟調",
+          "バーナム氏のスターマー氏への挑戦見通しでギルト（英国債）急落"
+        ]
       }
     }
   }
