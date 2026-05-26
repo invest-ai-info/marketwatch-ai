@@ -83,7 +83,7 @@ UK_HOLIDAYS = [
     ("2027-12-28", "🏖️ 英国市場休場（Boxing Day 振替）", "12/26 (日) の振替休場"),
 ]
 
-UK_AFFECTED = ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "EURUSD=X"]
+UK_AFFECTED = ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "EURUSD=X", "^FTSE"]
 
 # ─────────────────────────────────────────────
 # 日本 TSE 休場日（国民の祝日 + 年末年始）
