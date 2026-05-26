@@ -297,7 +297,8 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </div>
 
 </main>
-<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル成績</a></footer>
+<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル成績</a><p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
 
 <script>
 function toggleTheme(){{
