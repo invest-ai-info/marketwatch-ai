@@ -29,12 +29,12 @@
 
 ---
 
-## 監視銘柄 13 種
+## 監視銘柄 18 種
 
 | カテゴリ | ティッカー |
 |---|---|
-| コモディティ | GC=F（ゴールド）、CL=F（原油） |
-| 指数 | NKD=F（日経 CME） |
+| コモディティ | GC=F（ゴールド）、SI=F（銀）、CL=F（原油） |
+| 株価指数 | NKD=F（日経 CME）、ES=F（S&P500）、NQ=F（Nasdaq 100）、YM=F（ダウ 30）、^FTSE（UK100） |
 | 暗号資産 | BTC-USD |
 | JPY ペア | USDJPY, EURJPY, GBPJPY, AUDJPY |
 | ドルストレート | EURUSD, GBPUSD |
