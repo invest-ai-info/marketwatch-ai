@@ -14011,7 +14011,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.815,
+    "max_favorable_excursion_pct": 0.841,
     "max_adverse_excursion_pct": -0.34,
     "email_sent": true,
     "whipsaw_check": {
@@ -15643,7 +15643,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.012,
-    "max_adverse_excursion_pct": -0.058,
+    "max_adverse_excursion_pct": -0.063,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -15868,7 +15868,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.014,
-    "max_adverse_excursion_pct": 0.014,
+    "max_adverse_excursion_pct": -0.021,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -15999,7 +15999,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.038,
+    "max_favorable_excursion_pct": 0.058,
     "max_adverse_excursion_pct": -0.052,
     "email_sent": false,
     "whipsaw_check": {
@@ -16123,7 +16123,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.086,
+    "max_favorable_excursion_pct": 0.096,
     "max_adverse_excursion_pct": -0.021,
     "email_sent": false,
     "whipsaw_check": {
@@ -16539,6 +16539,114 @@
         "current_atr": 0.0032,
         "avg_atr_30d": 0.0039,
         "ratio": 0.82,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "BTC-USD_4h_20260527_0717",
+    "fired_at": "2026-05-27T07:17:57+09:00",
+    "timeframe": "4h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 75706.359375,
+    "stop_loss": 74551.23703460032,
+    "take_profit_1": 77246.5224955329,
+    "take_profit_2": 78016.60405579935,
+    "atr": 770.0815602664524,
+    "sl_pct": -1.5257930112290232,
+    "tp1_pct": 2.0343906816386976,
+    "tp2_pct": 3.0515860224580464,
+    "indicators_at_signal": {
+      "rsi": 39.46,
+      "macd": -132.5859,
+      "macd_sig": -24.6096,
+      "ma25": 76429.92,
+      "ma75": 77440.8,
+      "bb_low": 75704.19,
+      "bb_up": 77806.14,
+      "recent_high": 78001.71,
+      "recent_low": 74577.53
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアムの価格：5月26日火曜日、米・イスラエル空爆にもかかわらず価格は底堅い",
+      "820万ドルのビットコインが消失 — その理由は？",
+      "Google出資企業、新AI契約で株価急騰",
+      "Grayscale幹部、ビットコインETFへの流入額は2026年に150億ドルに達する可能性",
+      "Arthur Hayes氏、規制は無関係、ビットコインを動かすのは法定通貨の流動性のみ"
+    ],
+    "ai_narrative": "ビットコインはボリンジャーバンドの-2σにタッチし、反発の兆しが見られる。RSIも39台と売られすぎ水準に近づいており、テクニカル的には反発ロングが有利と判断。Grayscale幹部のETF流入予測は、将来的な需要増加を示唆し、ファンダメンタルズからも買い優位性を補強する。USDが堅調な通貨強弱も、ビットコインのドル建て価格にとってはポジティブに働く。シナリオが崩れるのは、75000ドルを明確に下抜けた場合。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 6.0,
+      "prev_direction": "ショート（売り）",
+      "prev_signal_id": "BTC-USD_4h_20260527_0115"
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 日足 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.16,
+      "EUR": 0.034,
+      "GBP": -0.278,
+      "JPY": -0.11,
+      "AUD": 0.133
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "反転検知あり (-2)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.01,
+        "avg_30d": 17.84,
+        "change_24h_pct": 2.53
+      },
+      "atr_regime": {
+        "current_atr": 770.0816,
+        "avg_atr_30d": 736.0134,
+        "ratio": 1.05,
         "regime": "normal",
         "label": "🟢 平常"
       },
