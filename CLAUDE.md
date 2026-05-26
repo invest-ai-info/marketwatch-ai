@@ -13,7 +13,7 @@
 
 ## 🌐 サイト構成
 
-### コアページ（自動生成 6 ページ + 解説 1 ページ + ダッシュボード 2 ページ）
+### コアページ（自動生成 6 ページ + 解説 1 ページ + ダッシュボード 3 ページ）
 - **index.html** — メイン（価格・ニュース・センチメント・AI 投資判断・更新履歴）
 - **calendar.html** — マクロ経済カレンダー（日米欧中の重要指標）
 - **charts.html** — 50年価格チャート + 歴史的イベント表
@@ -21,11 +21,37 @@
 - **market-health.html** — 市場健康度（VIX・恐怖&強欲・バフェット・CAPE・RSI）
 - **hot-assets.html** — 出来高急増ランキング
 - **guides.html** — 解説記事 & 速報の一覧
-- **track-record.html** ⭐ — シグナル成績ダッシュボード（5 タブ構成）
+- **track-record.html** ⭐ — シグナル成績ダッシュボード（7 タブ構成）
 - **youtube-summary.html** — 投資系 YouTube チャンネル要約
+- **political-feed.html** 🆕 — 政治発言ライブフィード（30 分ごと更新、political-alerts.yml が GitHub 側で生成）
 
 ### 解説記事・速報（guide-*.html）
 速報・解説 25+ 件を guide-*.html として個別公開。最新は guides.html の最上段に。
+
+### ナビバー（9 ボタン、利用頻度順、2026-05-25 最適化）
+全ページのヘッダーに同一構成の `<nav class="nav-bar">` を配置。**ソース側 13 ファイル**（後発の `generate_*.py` テンプレ + 新しめの guide-*.html）で順序統一済み。自動生成 HTML（index/calendar/charts/vix/market-health/hot-assets）は `generate_market_news.py` の最新定義から毎日再生成されるので、結果的に公開 6 コアページ + 主要 guide-*.html がカバーされている。
+
+1. 🏠 **index.html**（トップページ）
+2. 🚨 **political-feed.html**（政治発言ライブ）
+3. 📊 **track-record.html**（シグナル成績）
+4. 📅 **calendar.html**（経済カレンダー）
+5. 📚 **guides.html**（解説記事）
+6. 🩺 **market-health.html**（市場健康度）
+7. 🔥 **hot-assets.html**（出来高急増）
+8. 📈 **charts.html**（50年チャート）
+9. 📺 **youtube-summary.html**（YouTube要約）
+
+⚠️ **vix.html はナビバー対象外** — charts.html / market-health.html / guide-vix.html からの導線で到達。ナビが 10 ボタンに増えてモバイル 2×N グリッドが崩れるのを避ける設計判断。
+
+ナビバー追加・変更時は **ソース 13 ファイル全部を一括更新**：
+- `generate_market_news.py`（6 コアページ生成）
+- `generate_youtube_summary.py`（youtube-summary.html）
+- `generate_track_record_page.py`（track-record.html）
+- `build_political_feed_page.py`（political-feed.html）
+- `auto_weekly_strategy.py` / `auto_weekly_review.py` / `generate_monthly_report.py`（週次・月次記事）
+- `guides.html` および後発の guide-*.html（NVDA / トヨタ / SBG / 日経65k / weekly-review-05-16 等）
+
+確認コマンド: `grep -l "political-feed.html.*政治発言ライブ" *.py *.html` で 13 件出ればOK。
 
 ---
 
