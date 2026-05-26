@@ -14226,7 +14226,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.031,
-    "max_adverse_excursion_pct": -0.025,
+    "max_adverse_excursion_pct": -0.029,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -14935,7 +14935,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.032,
+    "max_favorable_excursion_pct": 0.036,
     "max_adverse_excursion_pct": -0.024,
     "email_sent": false,
     "whipsaw_check": {
@@ -15299,7 +15299,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.138,
+    "max_favorable_excursion_pct": 0.234,
     "max_adverse_excursion_pct": 0.06,
     "email_sent": true,
     "whipsaw_check": {
@@ -15475,6 +15475,112 @@
         "matched_titles": [
           "イラン戦争への懸念からFTSE100と米国株が急落、原油は変動"
         ]
+      }
+    }
+  },
+  {
+    "id": "SI=F_1h_20260527_0426",
+    "fired_at": "2026-05-27T04:26:43+09:00",
+    "timeframe": "1h",
+    "ticker": "SI=F",
+    "asset_name": "銀 先物",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 77.1050033569336,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.6008735343374166,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 58.66,
+      "macd": 0.0915,
+      "macd_sig": 0.0501,
+      "ma25": 76.43,
+      "ma75": 76.24,
+      "bb_low": 75.92,
+      "bb_up": 77.04,
+      "recent_high": 77.21,
+      "recent_low": 75.75
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今後の10年、銀価格はどうなる？投資家が期待すべきことは？",
+      "本日（5月26日・火曜）の銀価格：米国のイラン空爆後、銀価格は横ばいを維持",
+      "テック株が米国株を押し上げ、イラン和平合意への期待でWTI原油は下落",
+      "FCX、和平期待で金属・鉱業株を買いポイント付近に牽引",
+      "Pecoy Copper、フェーズ1の冶金レビューで金回収率と最適化機会における「潜在的な飛躍」を特定"
+    ],
+    "ai_narrative": "銀先物はボリンジャーバンド+2σを一時的に上抜けたものの、RSIが58.7と過熱感は限定的です。MACDもシグナル線を上回っており、上昇の勢いは確認できます。  ファンダメンタルズでは、イラン情勢や金属・鉱業株への期待が銀価格を支える可能性があります。通貨強弱ではUSDが最も強く、リスクオンムードが窺えます。  この上昇シナリオが崩れる条件としては、ボリンジャーバンド+2σ（77.04）を下抜ける展開が挙げられます。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-05-27T04:26:57+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": 0.232,
+      "EUR": 0.024,
+      "GBP": -0.309,
+      "JPY": -0.139,
+      "AUD": 0.12
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)"
+      ]
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.95,
+        "avg_30d": 17.83,
+        "change_24h_pct": 2.17
+      },
+      "atr_regime": {
+        "current_atr": 0.6009,
+        "avg_atr_30d": 0.6888,
+        "ratio": 0.87,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
