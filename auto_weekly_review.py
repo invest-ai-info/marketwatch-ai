@@ -363,6 +363,7 @@ footer a{{color:#0969da;text-decoration:none}}
   <div class="kpi"><div class="kpi-num loss">{sig_stats['sl']}</div><div class="kpi-label">負け (SL)</div></div>
   <div class="kpi"><div class="kpi-num {'win' if sig_stats['win_rate'] >= 50 else 'loss'}">{sig_stats['win_rate']:.1f}%</div><div class="kpi-label">勝率</div></div>
 </div>
+<p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 上記の勝率は過去 1 週間の機械的なシグナル集計結果であり、将来の取引成績を保証するものではありません。本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
 
 <h2>💯 信頼度別 勝率</h2>
 <p>シグナル発火時の「信頼度スコア」（複数シグナル × 環境 × トレンド整合）別の的中率を集計。理想は HIGH > MID > LOW の順序。</p>
@@ -383,6 +384,7 @@ footer a{{color:#0969da;text-decoration:none}}
   <tbody>{trade_html}</tbody>
 </table>
 <div class="info-box">確定 {trade_stats['closed']} 件 / 勝率 {trade_stats['win_rate']}% / 通算 {trade_stats['total_pnl_pct']:+.2f}%</div>
+<p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 確定数が少ない場合、勝率の統計的信頼性は限定的です。過去の結果は将来の取引成績を保証しません。本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
 
 <h2>💡 先週の総評と教訓</h2>
 {lessons_html}
@@ -399,7 +401,8 @@ footer a{{color:#0969da;text-decoration:none}}
 
 </article>
 </main>
-<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a></footer>
+<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a><p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
 </body>
 </html>
 """
