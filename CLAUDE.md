@@ -56,14 +56,14 @@
 
 ## 🚨 テクニカルアラートシステム（核機能）
 
-### 監視銘柄 13 種
+### 監視銘柄 18 種
 ```
-コモディティ: GC=F (金), CL=F (原油)
-指数:        NKD=F (日経 CME)
-暗号:        BTC-USD
-JPY ペア:    USDJPY, EURJPY, GBPJPY, AUDJPY
+コモディティ:  GC=F (金), SI=F (銀), CL=F (原油)
+指数:         NKD=F (日経 CME), ES=F (S&P500), NQ=F (Nasdaq), YM=F (ダウ 30), ^FTSE (UK100)
+暗号:         BTC-USD
+JPY ペア:     USDJPY, EURJPY, GBPJPY, AUDJPY
 ドルストレート: EURUSD, GBPUSD
-AUD クロス:  AUDUSD, EURAUD, GBPAUD
+AUD クロス:   AUDUSD, EURAUD, GBPAUD
 ```
 
 ### シグナル検出（calc_atr / detect_signals）
