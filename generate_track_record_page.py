@@ -1299,6 +1299,16 @@ def build_html(signals, trades):
     </div>
   </div>
 
+  <div style="background:#ffebe9;border:2px solid #cf222e;border-left:6px solid #cf222e;border-radius:10px;padding:18px 22px;margin:18px 0;font-size:.93rem;color:#1f2328;line-height:1.75">
+    <div style="font-weight:700;color:#cf222e;font-size:1rem;margin-bottom:8px">⚠️ 本ページに関する重要なお知らせ</div>
+    <ul style="margin:6px 0 6px 22px;padding:0">
+      <li>本ページの数値は過去シグナルを機械的に集計した <b>記録</b> であり、<b>将来の取引成績を保証するものではありません</b>。</li>
+      <li>銘柄別・曜日別・時間帯別の勝率は <b>サンプル数（N）が少ないとブレが大きく、統計的信頼性は限定的</b> です（特に N&lt;10）。「勝率 100%」のような表示も同様です。</li>
+      <li>本ページの「⭐⭐⭐ HIGH」「🟢 推奨」等の表現は過去統計に基づく分類であり、<b>特定銘柄・時間帯への投資勧誘ではありません</b>。</li>
+      <li>本ページは情報提供を目的としており、<b>投資助言ではありません</b>。<b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません</b>。投資判断はご自身の責任で行ってください。</li>
+    </ul>
+  </div>
+
   <div class="info-box">
     💡 <b>判定ルール</b>: シグナル発火後、ロングなら高値が TP1/TP2 に達したか、安値が SL に達したかをチェック。
     7 日経過してどれもヒットしなければ「期限切れ」。SL/TP は ATR(14) × 1.5/2.0/3.0 で機械算出。
@@ -1384,6 +1394,7 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
     本ページの数値は yfinance の価格データを基に機械的に判定したものであり、実際の取引結果を保証するものではありません。
     投資判断は自己責任でお願いします。
   </p>
+<p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
 
 <script>
