@@ -1,6 +1,6 @@
 # 🔬 進行中の検証・打ち手
 
-**最終更新: 2026-05-25**
+**最終更新: 2026-05-26**
 **更新頻度: 週次（月曜朝の weekly-review 後）+ 必要時随時**
 **運用ルール: 完了したら [x]、結論を 1 行追記してから別ファイルへアーカイブ**
 
@@ -8,25 +8,16 @@
 
 ## 🔥 明日すぐ着手（優先度最高）
 
-### YouTube 要約ページのコンテンツ欠落調査
-- **症状**: 一部の動画で「3 行サマリー」「重要トピック」「コメント」が空欄
-- **修正済み (5/25 深夜)**: フィルタ基準 generated_at → published、MAX_AGE_HOURS 168→72
-- **未解決**: 要約セクション自体の生成失敗
-- **原因仮説**:
-  - `summarize_with_gemini_video()` / `summarize_text_only()` が部分的に空文字を返している
-  - `parse_summary()` が Gemini レスポンスのフォーマット崩れで空辞書を返している
-  - transcript 取得失敗時のフォールバックで description が短すぎる
-  - Gemini モデル切替（gemini-2.5-flash 等）でフォーマット指示が無視されている
-- **調査手順**:
-  1. リモート `youtube-summary.json` を取得
-  2. summary / topics / comment が空 or "—" になっている動画を特定
-  3. その動画の transcript_used フラグ、video_id を確認
-  4. `generate_youtube_summary.py` の `parse_summary()` ロジック検証
-  5. Gemini プロンプトを `summarize_with_gemini_video()` / `summarize_text_only()` で確認
-- **修正案候補**:
-  - parse_summary を緩めて、見出し違いでも拾えるようにする
-  - 空フィールド時のフォールバック挿入（「要約取得失敗」表示）
-  - 失敗動画はリトライ機能を追加
+### コンプライアンス改善 残作業（5/26 黒 5 件対応の続き）
+- **D3**: about.html / privacy.html / contact.html のナビバー旧 6 ボタン → 新 9 ボタン統一
+- **D2**: about.html のデータソース更新（Gemini AI / YouTube Data API / 政治発言 NEWS API / WhiteHouse RSS の追記）
+- **既存 guide-*.html 33 ファイル**にフッター B2 ディスクレイマーを一括追加（`add_disclaimer.py` 拡張、`C:\Users\info0\AppData\Local\Temp\add_disclaimer.py` を参照）
+- **B1 続き**: track-record の N<10 自動マーキング（kpi 値に N=●件を自動付与・灰色化）
+- **A1**: ニュース見出しの原文併記（generate_market_news.py で `（原文: ●●）` を追加）
+- **A2**: 政治発言フィードの NEWS API クレジット復活（build_political_feed_page.py で元 source 名表示）
+- **D1**: AdSense × 投資コンテンツのポリシー精査（Google ポリシーセンター確認）
+- **弁護士相談アジェンダ確定 + IT 系弁護士 1 時間相談**（来週中）
+- **関東財務局事前相談（無料）の申込**（来週中）
 
 ## 🧪 現在検証中（データ蓄積待ち）
 
@@ -85,6 +76,10 @@
 
 ## ✅ 検証完了（最近）
 
+- [x] **2026-05-26 夜** サイト全領域の法務リスク棚卸し → 「黒 5 件 / グレー 6 件 / 白 9 件」に整理
+- [x] **2026-05-26 夜** 黒 5 件すべて修正・push 完了（C1/C2/C3/B1/B2、計 14 commit）
+- [x] **2026-05-26 午後** YouTube 要約パーサ修正（Markdown 装飾耐性化 + 既存壊れデータ自動修復、commit `e75a294`）
+- [x] **2026-05-26 午後** CLAUDE.md にナビバー新順序反映（commit `49577d2`、political-feed 追加・track-record 7 タブ・9 ボタン構成説明）
 - [x] **2026-05-25 深夜** 個別銘柄解説 4 記事に TradingView インタラクティブチャート挿入（NVDA/トヨタ/SBG/Kioxia、generate_stock_chart.py 新設）
 - [x] **2026-05-25 深夜** R4 勝因分析機能 → TP1/TP2 到達時に Gemini が勝因+再現性を自動分析
 - [x] **2026-05-25 深夜** SBG 個別銘柄解説 第 4 弾、日経 65,000 突破速報、ナビバー利用頻度順最適化
