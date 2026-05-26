@@ -1,6 +1,60 @@
-# 🔄 セッション引継ぎ票（最終更新: 2026-05-25 深夜 — 47 タスク完了大セッション後）
+# 🔄 セッション引継ぎ票（最終更新: 2026-05-26 夜 — 法務リスク棚卸し + 黒 5 件対応）
 
 新セッション開始時はまず `CLAUDE.md`（全体像）→ このファイル（直近進捗）→ `memory/` 配下の 3 ファイル を読んでください。
+
+---
+
+## 🆕 2026-05-26 セッションサマリ
+
+### 🌅 午後の作業 (3 件)
+1. **YouTube 要約パーサ修正** (commit `e75a294`): Gemini が `**3行サマリー:**` のような Markdown 太字を返してパース失敗していた `503YENFXFIs` ライブ動画を修復。`parse_summary()` を Markdown 装飾耐性化 + プロンプトに「Markdown 不可」追記 + 既存壊れデータの自動修復ロジック追加（冪等）。明朝 cron で自動反映予定。
+2. **CLAUDE.md にナビバー新順序反映** (commit `49577d2`): 「コアページ」セクションに political-feed.html 追加（ダッシュボード 3 ページに）、track-record を 7 タブ構成に修正、新規「ナビバー（9 ボタン、利用頻度順）」セクション追加。vix.html がナビ対象外の設計理由も明記。
+3. **ライブ動画の限界について議論**: ライブ配信は Gemini video URL 方式が使えず text 方式にフォールバックするため要約品質が落ちる、という構造を共有。今回は様子見。
+
+### 🛡️ 夜の作業：サイト法務リスク棚卸し（最重要）
+全領域 A/B/C/D を実態調査して **「黒 5 件」「グレー 6 件」「白 9 件」** に整理（リスクレポート完成、当該セッション内で配信済み）。**黒 5 件全部を今晩中に修正・push 完了**：
+
+| # | 内容 | 該当 | commit |
+|---|---|---|---|
+| C1 | 「ほぼ確実」→「モメンタム継続シナリオで数日内に到達余地（外部環境次第）」 | guide-nikkei-65k-break-2026-05-25 | `1ae4ec7` |
+| C2 | 「オルカン一択」「これ買っとけば間違いない」→ 中立表現に | guide-nisa-ranking | `755e85c` |
+| C3 | 勝率 100% 表示直下に注釈追加 + auto_weekly_review.py テンプレ修正 | guide-weekly-review-* + auto_weekly_review.py | `708c430`/`d42bbcb` |
+| B1 | track-record ページ冒頭に大型免責バナー（赤枠、N<10 注意、推奨表現の意図説明） | generate_track_record_page.py | `83255f9` |
+| B2 | **11 ファイル × 17 箇所**のフッターに金商法ディスクレイマー一括挿入（`data-disclaimer="kinsho-v1"` マーカーで冪等） | テンプレ 8 + 静的 3 ページ | 11 commits |
+
+**B2 のディスクレイマー文言**: 「⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。」
+
+### ⏸ ライブ反映タイミング
+- 🟢 即〜10 分: 静的 HTML（guide-* / about / privacy / contact）— GitHub Pages デプロイ
+- 🟠 1 時間以内: track-record.html（technical-alerts-1h cron）、political-feed.html（political-alerts cron）
+- 🟠 明朝: index / calendar / charts / vix / market-health / hot-assets（update-market-news cron）、youtube-summary.html（update-youtube-summary cron）
+
+---
+
+## 🎯 2026-05-27 明日の計画
+
+### 🥇 即着手（朝、cron 反映後 30 分）
+1. **ライブ反映の全 9 ページ確認**: 朝のうちに track-record の大型バナー、各ページのフッターディスクレイマー、guide-nikkei-65k-break / guide-nisa-ranking / guide-weekly-review の文言修正、youtube-summary の Markdown パース修復（`503YENFXFIs`）が反映されているかチェック
+2. **D3: about / privacy / contact のナビバー旧 6 ボタン → 新 9 ボタン統一**（5/25 ナビバー最適化の漏れ）
+3. **D2: about.html のデータソース更新**（Gemini AI / YouTube Data API / 政治発言 NEWS API / WhiteHouse RSS の追記、透明性向上）
+4. **既存 guide-*.html 33 ファイルにフッター B2 ディスクレイマーを一括追加**（今晩の対応からスコープ外だった分。`add_disclaimer.py` を拡張して guide-*.html もターゲットに）
+
+### 🥈 中規模（1-2 時間ずつ）
+5. **B1 続き: track-record の N<10 自動マーキング**（kpi 値に N=●件を自動付与、灰色化）
+6. **A1: ニュース見出しの原文併記**（generate_market_news.py のニュース表示で `（原文: ●●）` を追加）
+7. **A2: 政治発言フィードの NEWS API クレジット復活**（build_political_feed_page.py で元 source 名を表示）
+8. **D1: AdSense × 投資コンテンツのポリシー精査**（Google ポリシーセンターで「金融商品 / 投資勧誘」関連の制限事項を確認）
+
+### 🥉 中長期（来週以降）
+9. **弁護士相談アジェンダ確定 + IT 系弁護士 1 時間相談**（聞くべき 3 点: ①track-record の過去シグナル統計開示が無登録投資助言業か ②⭐⭐⭐ HIGH / 🟢推奨ラベルが投資勧誘表現か ③将来の note + アフィリエイト時の必要表記）
+10. **関東財務局事前相談（無料）の申込**
+
+### 🥉 既存の積み残し（5/25 セッションから継続）
+11. R4 効果検証（TP1/TP2 到達シグナル発生時の AI 勝因分析動作確認）
+12. 政治発言フィード WhiteHouse RSS の 4 URL のうちどれが生きているかの動作確認
+13. 個別銘柄解説 第 5 弾（AMD / TSMC / SBI）
+14. 6/1 マンスリーレポート初回品質チェック
+15. note 開設・第 1 記事執筆
 
 ---
 
