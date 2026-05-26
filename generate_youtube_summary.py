@@ -758,6 +758,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="contact.html">お問い合わせ・削除要請</a><br>
   動画の著作権は各チャンネルに帰属します。本ページは AI による要約・紹介であり、内容に誤りがある場合があります。詳細・正確な情報は元動画でご確認ください。<br>
   <strong>チャンネル運営者の方へ：</strong> 当ページからのご自身のチャンネル/動画の掲載除外をご希望の場合は <a href="contact.html">お問い合わせフォーム</a> よりご連絡ください。速やかに対応いたします。
+<p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
 
 <script>
