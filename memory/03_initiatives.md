@@ -8,14 +8,16 @@
 
 ## 🔥 明日すぐ着手（優先度最高）
 
-### 🆕 トレード分析チーム 3 人の構築（5/27 夜の最優先タスク）
-- **technical-analyst**: テクニカル分析専門（チャート / シグナル / ATR / RSI / MACD / BB / MA / 出来高）
-- **fundamental-analyst**: ファンダ分析専門（経済指標 / 決算 / 地政学 / 政治発言 / 金融政策）
-- **risk-manager**: 統合判断・規律遵守の門番（SL/TP/ロット算出、金曜大引けチェック、環境警戒スコア D 見送り、反転検知見送り、N=6 戦 6 勝の罠への過信防止）。Opus 推奨
-- 配置: `.claude/agents/*.md`（プロジェクト単位、git 共有）。SYNC_FILES 追加、CLAUDE.md に「🤖 トレード分析チーム」セクション追加
-- 詳細仕様は SESSION_HANDOFF.md の「明日の計画 > 🥇🥇 最優先」を参照
-- 想定ワークフロー: ユーザーがエントリー検討時、メイン Claude が並列で technical + fundamental に依頼 → 結果を risk-manager に統合判断させて「✅/⚠️/❌ + 理由」を提示
-- サイト運営系 subagent（news-editor / compliance-reviewer / automation-ops）は当面作らない（半年運用後に検討）
+### ✅ トレード分析チーム 3 人 構築完了（5/27 夜） — 次回起動時に動作テスト
+- 3 人の subagent ファイル作成・push 完了。詳細は CLAUDE.md「🤖 トレード分析チーム」セクション参照
+- 現セッションでは動作テスト不可（subagent はセッション起動時にスキャン）→ 次回 Claude Code 起動後に「USDJPY どう？テクニカル・ファンダ両方で」を投げてテスト
+- 期待挙動: メイン Claude が technical + fundamental を並列起動 → 結果を risk-manager に統合 → 🟢/🟡/🔴 判定提示
+- 検証ポイント:
+  - [ ] 3 人が正しく認識されているか（Agent type not found エラーが出ないか）
+  - [ ] description ベースの自動委譲が機能するか（明示指定なしで呼ばれるか）
+  - [ ] risk-manager の規律チェック（金曜大引け / 環境 D / 反転検知）が実用的に動くか
+  - [ ] N=6 戦 6 勝の罠への過信防止リマインダーが出力されるか
+- 1-2 週間運用してプロンプトをチューニング。サイト運営系 subagent は当面作らない（半年運用後に検討）
 
 ### コンプライアンス改善 残作業（5/26 黒 5 件対応の続き）
 - **D3**: about.html / privacy.html / contact.html のナビバー旧 6 ボタン → 新 9 ボタン統一
