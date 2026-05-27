@@ -1,6 +1,36 @@
-# 🔄 セッション引継ぎ票（最終更新: 2026-05-26 夜 — 法務リスク棚卸し + 黒 5 件対応）
+# 🔄 セッション引継ぎ票（最終更新: 2026-05-27 夜 — トレード分析チーム 3 人構築完了）
 
 新セッション開始時はまず `CLAUDE.md`（全体像）→ このファイル（直近進捗）→ `memory/` 配下の 3 ファイル を読んでください。
+
+---
+
+## 🚨 セッション開始時の最重要確認事項（2026-05-27 構築直後）
+
+**`.claude/agents/` に 3 人のトレード分析 subagent を作成済み**。仕様詳細は CLAUDE.md の「🤖 トレード分析チーム」セクション参照。
+
+### 動作テストを最優先で実施
+
+1. このセッション開始時点で、3 人の subagent (`technical-analyst` / `fundamental-analyst` / `risk-manager`) が認識されているはず
+2. **動作テスト**: ユーザーに「動作テストとして 'USDJPY どう？テクニカルとファンダ両方の視点で見て、エントリーしていい？' を投げる」または、ユーザー自身が実際に銘柄相談を持ち込んだ時に並列起動
+3. 期待される挙動:
+   - メイン Claude が `technical-analyst` と `fundamental-analyst` を**並列起動**（同一メッセージ内で Agent ツール 2 つ）
+   - 両者の結果テキストを `risk-manager` の prompt に埋め込んで再呼び出し
+   - 最終判定（🟢/🟡/🔴 + 理由 + SL/TP/ロット）を提示
+4. うまく動かない場合: ファイル `.claude/agents/*.md` の frontmatter（特に `name:` と `description:`）を確認
+
+### 2026-05-27 セッション構築サマリ
+
+- `.claude/agents/technical-analyst.md` (Sonnet, ~5KB) — チャート / シグナル / ATR / 移動平均 / RSI / MACD / BB の評価
+- `.claude/agents/fundamental-analyst.md` (Sonnet, ~5KB) — 経済指標 / 決算 / 地政学 / 政治発言 / 金融政策の評価
+- `.claude/agents/risk-manager.md` (**Opus**, ~6KB) — 統合判断・規律遵守の門番。SL/TP/ロット算出、金曜大引け / 環境警戒 / 反転検知のチェック、過信防止
+- `sync_to_github.py` の SYNC_FILES に 3 ファイル追加
+- CLAUDE.md に「🤖 トレード分析チーム」セクション追加（ワークフロー図 + 自動委譲トリガー + 設計原則 5 点）
+- `claude-code-guide` で確認した重要仕様:
+  - subagent はセッション起動時にスキャン、手動ファイル追加は再起動必要
+  - `/agents` コマンド経由で作成すれば再起動不要
+  - Bash 経由の yfinance / urllib 等は問題なく動作
+  - 並列起動は 1 メッセージ内で複数 Agent ツール呼び出しで OK
+  - subagent 間の連携はメインがテキストを橋渡しするパターンが推奨
 
 ---
 
