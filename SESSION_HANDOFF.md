@@ -4,6 +4,28 @@
 
 ---
 
+## 🛡️ セキュリティ確認結果（2026-05-27 実施）
+
+API キー漏洩の 5 分チェックを実施し、**現状漏洩リスクは非常に低い**ことを確認:
+
+- ✅ GitHub Secret Scanning Alert: 0 件
+- ✅ リポジトリ public + Secret Scanning 自動有効
+- ✅ `market-news-config.json[.json]` は GitHub に存在しない（push されていない）
+- ✅ ローカルは git リポジトリではない → `git add` 誤操作リスクなし
+- ✅ `sync_to_github.py` の SYNC_FILES に config を含めていない
+- ✅ `.gitignore` を新規作成（将来 git init するときの保険）
+
+### 中期的な備え（未実施、Step 2 と並行で）
+- [ ] Gemini / NewsAPI / YouTube API ダッシュボードでの月次使用量チェック習慣化
+- [ ] GitHub アカウント 2FA / Gmail 2FA 状態確認
+- [ ] GitHub PAT が Classic か Fine-grained か確認 + 必要なら移行
+- [ ] 半年に 1 回のキーローテーション（11 月にカレンダー登録）
+- [ ] 万一の漏洩時の対応手順書を作成（再発行 → Secrets 更新 → ローカル更新 → API プロバイダー通知）
+
+詳細は `memory/` か別ドキュメント化を検討。
+
+---
+
 ## 🚀 新セッション開始用テンプレート（コピペで使用）
 
 **運用方針**: 用途別に新セッションを始めるのが推奨（subagent はセッション起動時にのみスキャンされる）。同じ作業の 10-30 分以内の続きだけ既存セッションで OK。
