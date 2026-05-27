@@ -1,0 +1,59 @@
+# =============================================================================
+# .gitignore — marketwatch-jp 作業フォルダ
+# =============================================================================
+# 現状このフォルダはローカル git リポジトリではない（sync_to_github.py が
+# GitHub Contents API 直叩きで push する方式）。このファイルは将来 git init
+# したときの保険として配置されている。
+#
+# 重要: API キー / PAT を含むファイルは絶対にコミットしないこと。
+# 詳細は CLAUDE.md 「🔄 SYNC_FILES の禁忌」セクション参照。
+# =============================================================================
+
+# ---- 機密情報（絶対コミット禁止） ----
+# GitHub PAT、Gemini/NewsAPI/YouTube API キー、Gmail App Password を含む
+market-news-config.json
+market-news-config.json.json
+*.env
+.env
+.env.*
+secrets/
+
+# ---- 同期スクリプトの内部キャッシュ ----
+.sync_cache.json
+
+# ---- workflow 管理ファイル（GitHub 側 cron が生成、ローカル変更禁止） ----
+# 詳細は CLAUDE.md 「SYNC_FILES の禁忌」参照
+# （ローカル編集してもよいが、commit してはいけない）
+signals-log.json
+signals-log.csv
+technical-alerts-history.json
+technical-alerts-history-1h.json
+track-record.html
+political-feed.html
+political-feed.json
+youtube-summary.html
+youtube-summary-data.json
+
+# ---- Python キャッシュ ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- OS / IDE ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- ログ・一時ファイル ----
+*.log
+tmp/
+temp/
+.tmp/
