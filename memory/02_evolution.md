@@ -37,6 +37,15 @@
 
 ## 🕰️ 履歴
 
+### 2026-05-27 夜 (トレード分析チーム 3 人 構築完了)
+- 昨晩設計した 3 人の Claude Code カスタム subagent を `.claude/agents/` に作成・push 完了
+- **technical-analyst** (Sonnet): テクニカル分析専門。yfinance を Bash 経由で呼べる
+- **fundamental-analyst** (Sonnet): ファンダ分析専門。economic-events.json と political-feed.json を主要ソース
+- **risk-manager** (Opus): 統合判断・規律遵守の門番。「N=6 戦 6 勝の罠」への過信防止が最重要任務
+- SYNC_FILES 追加、CLAUDE.md に「🤖 トレード分析チーム」セクション追加
+- 現セッションでの動作テストは不可（subagent はセッション起動時にスキャンするため、次回起動時から認識）
+- 次回起動後の最初の動作テスト: 「USDJPY どう？テクニカル・ファンダ両面で見て、エントリーしていい？」
+
 ### 2026-05-26 深夜 (方針転換: トレード成績向上を最優先化)
 - **「サイト運営の自動化」から「トレード成績向上のための AI 分析チーム構築」に軸足を明確化**
 - 当初はサイト運営系の subagent（news-editor / compliance-reviewer / automation-ops）を検討したが、「トレードで利益を出すこと」が本来の目的であり、サイトはその手段であると再定義
