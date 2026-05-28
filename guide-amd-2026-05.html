@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 - MarketWatch AI</title>
+  <meta name="description" content="AMD（NASDAQ: AMD）2026 Q1 決算を解説。MI300X / Instinct のデータセンター売上、NVIDIA との差、株価バリュエーション、NVDA との連動係数を日本人投資家視点で整理。円建てインパクトと注意点も明示します。">
+  <meta name="keywords" content="AMD,NASDAQ AMD,エーエムディー,2026年Q1,決算,MI300X,Instinct,データセンター,AI半導体,GPU,NVIDIA比較,NVDA連動,株価,バリュエーション,日本人投資家,円建て">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-amd-2026-05.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AMD 2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 | MarketWatch AI">
+  <meta property="og:description" content="AMD 2026 Q1 決算解説。データセンター $5.8B（+57% YoY）、Q2 ガイド $11.2B。MI300X/MI350 と NVDA 連動を日本人投資家視点で整理。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-amd-2026-05.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方",
+    "description": "AMD Q1 2026 決算結果、MI300X/MI350 ロードマップ、ZT Systems 統合、NVDA 連動と日本人投資家への示唆を解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-amd-2026-05.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1100px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.85rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.3rem;color:#1f6feb;margin-top:32px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f6feb;margin-top:22px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0 28px}
+    .kpi{background:#fff;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:10px;padding:18px;text-align:center}
+    .kpi-num{font-size:1.7rem;font-weight:800;color:#0969da;line-height:1.2}
+    .kpi-num.up{color:#1a7f37}
+    .kpi-num.down{color:#cf222e}
+    .kpi-label{font-size:.78rem;color:#57606a;margin-top:6px}
+    .kpi-sub{font-size:.72rem;color:#6e7781;margin-top:4px}
+    table{width:100%;border-collapse:collapse;font-size:.9rem;background:#fff;border:1px solid #d0d7de;border-radius:8px;overflow:hidden;margin:14px 0}
+    th{background:#f6f8fa;padding:10px 12px;text-align:left;border-bottom:2px solid #d0d7de;font-size:.82rem;color:#424a53}
+    td{padding:10px 12px;border-bottom:1px solid #eaeef2}
+    tr:last-child td{border-bottom:none}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#1f6feb}
+    .info-box::before{content:"💡 ";font-weight:700}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#cf222e}
+    .negative-box::before{content:"📉 ";font-weight:700}
+    .positive-box{background:#dafbe1;border-left:4px solid #1a7f37;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#1a7f37}
+    .positive-box::before{content:"📈 ";font-weight:700}
+    .disclaimer-banner{background:#ffebe9;border:2px solid #cf222e;border-radius:8px;padding:14px 18px;margin:0 0 22px;font-size:.9rem;color:#cf222e;font-weight:600;text-align:center}
+    .position-box{background:#f6f8fa;border:1px dashed #6e7781;border-radius:6px;padding:10px 14px;margin:14px 0;font-size:.82rem;color:#57606a}
+    .scenario-card{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:18px 22px;margin:14px 0;border-left:5px solid #cf222e}
+    .scenario-card.medium{border-left-color:#9a6700}
+    .scenario-card.low{border-left-color:#6e7781}
+    .scenario-card.positive{border-left-color:#1a7f37}
+    .scenario-title{font-size:1.05rem;font-weight:700;color:#cf222e;margin-bottom:8px}
+    .scenario-card.medium .scenario-title{color:#9a6700}
+    .scenario-card.low .scenario-title{color:#6e7781}
+    .scenario-card.positive .scenario-title{color:#1a7f37}
+    .scenario-meta{font-size:.8rem;color:#6e7781;margin-bottom:8px;font-weight:600}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;display:block}
+    .related-card:hover{border-color:#0969da}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a}
+    .disclaimer{background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:14px 18px;margin-top:24px;font-size:.82rem;color:#57606a;line-height:1.7}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    @media(max-width:600px){
+      .article{padding:24px 20px}h1{font-size:1.35rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+      .kpi-num{font-size:1.4rem}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+<main>
+<nav class="nav-bar">
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+</nav>
+
+<div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ AMD 2026 Q1 決算解説</div>
+
+<article class="article">
+
+<div class="disclaimer-banner">
+  ⚠️ 本記事は AMD（NASDAQ: AMD）の事業解説であり、株式の購入推奨・投資助言ではありません。投資判断はご自身でお願いします。
+</div>
+
+<h1>🎯 AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</h1>
+<div class="meta-line">公開日：2026 年 5 月 28 日／ 読了時間：約 14 分 ／ カテゴリ：個別銘柄解説（シリーズ第 5 弾）</div>
+
+<div class="position-box">
+  ※ 筆者は本記事公開時点で AMD 株を保有していません。本記事は中立的な事業解説を目的としており、売買推奨ではありません。
+</div>
+
+<h2>📌 この記事の結論（3 行サマリ）</h2>
+<ul>
+  <li>2026 年 5 月 6 日発表の Q1 2026 決算は <strong>売上 $10.3B（+38% YoY）、データセンター $5.8B（+57% YoY）</strong>、non-GAAP EPS $1.37（+43% YoY）。Q2 ガイダンスは <strong>$11.2B ± $300M</strong> と前年比 +46% を見込む（出典: AMD Q1 2026 Earnings Release, 取得日 2026-05-28）</li>
+  <li>Instinct ロードマップは <strong>MI300X → MI325X → MI350 → MI400</strong> と継続更新中。Meta との 6 GW 契約（初回 MI450 ベース 1 GW を 2026 下半期出荷予定）が中長期の追い風と見られる一方、ROCm の成熟度や CUDA エコシステムの壁は引き続き論点</li>
+  <li>株価は短期で急騰（2026 年 5 月時点で $493 前後）、アナリスト目標株価レンジも $248〜$579 と <strong>意見の幅が極めて大きい</strong>。NVDA との連動係数・為替・PSR の高さを冷静に整理することが重要</li>
+</ul>
+
+<h2>🎯 1. AMD（NASDAQ: AMD）とは何者か — NVIDIA の影で見えにくい「第 2 極」</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-num">AMD</div><div class="kpi-label">ティッカー（NASDAQ）</div></div>
+  <div class="kpi"><div class="kpi-num">4</div><div class="kpi-label">事業セグメント数</div></div>
+  <div class="kpi"><div class="kpi-num">56%</div><div class="kpi-label">Q2 ガイド non-GAAP 粗利率</div></div>
+  <div class="kpi"><div class="kpi-num">2014〜</div><div class="kpi-label">Lisa Su CEO 体制</div></div>
+</div>
+<p>AMD（Advanced Micro Devices）は 1969 年創業の米半導体メーカーで、現在は <strong>Lisa Su 氏（2014 年〜 CEO）</strong> 体制のもと、データセンター CPU（EPYC）、AI アクセラレータ（Instinct）、コンシューマー CPU（Ryzen）、ゲーミング GPU（Radeon）、FPGA・組込（Xilinx 由来）という 4 つの軸で事業を展開しています。</p>
+<p>本サイトの個別銘柄シリーズでは、AI 半導体バリューチェーンを「メモリ側（キオクシア）」「GPU 王者（NVIDIA）」「GPU 挑戦者 + CPU（AMD）」の 3 部作として整理してきました。AMD はその中で「<strong>NVIDIA の影で見えにくい第 2 極</strong>」の位置づけに当たり、データセンター CPU では Intel から大きくシェアを奪い続け、AI GPU では NVIDIA に挑む構図と見られています。</p>
+<div class="info-box">
+  <strong>3 部作の比較整理：</strong>NVIDIA = AI GPU の事実上の独占企業、キオクシア = HBM/NAND 供給側、AMD = CPU で利益基盤 + GPU で挑戦者。AMD だけが「<strong>CPU と GPU の両方</strong>」を持つことが構造的特徴と整理できる。
+</div>
+
+<h2>📊 2. 直近決算ハイライト — Q1 2026 を 60 秒で</h2>
+<p>2026 年 5 月 6 日（米国時間 5 月 5 日）に発表された 2026 年第 1 四半期決算の主要数値は以下の通りです（出典: AMD Q1 2026 Earnings Release、取得日 2026-05-28）。</p>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-num up">$10.3B</div><div class="kpi-label">総売上</div><div class="kpi-sub">+38% YoY</div></div>
+  <div class="kpi"><div class="kpi-num up">$5.8B</div><div class="kpi-label">データセンター売上</div><div class="kpi-sub">+57% YoY</div></div>
+  <div class="kpi"><div class="kpi-num up">$1.6B</div><div class="kpi-label">DC セグメント営業益</div><div class="kpi-sub">前年 $0.9B</div></div>
+  <div class="kpi"><div class="kpi-num up">$1.37</div><div class="kpi-label">non-GAAP EPS</div><div class="kpi-sub">+43% YoY</div></div>
+  <div class="kpi"><div class="kpi-num up">$11.2B</div><div class="kpi-label">Q2 2026 売上ガイダンス</div><div class="kpi-sub">±$300M / +46% YoY</div></div>
+  <div class="kpi"><div class="kpi-num up">$2.6B</div><div class="kpi-label">フリーキャッシュフロー</div><div class="kpi-sub">FCF マージン約 25%</div></div>
+</div>
+<div class="positive-box">
+  <strong>市場の反応：</strong>発表後の時間外で <strong>株価は二桁の上昇</strong> となり、データセンター売上の伸びとガイダンスのアップサイドが好感されたと報じられている（出典: TradingKey, 2026-05-06）。一方、過去にもガイダンス達成見送りの局面はあり、四半期ごとの数値変動は引き続き大きいと見られる。
+</div>
+<div class="warning-box">
+  決算データは AMD 公式 IR の数値を参照しているが、セグメント内訳の詳細は会計区分の見直しで前年比較が一部不連続となる場合がある。各四半期の補足資料を必ず原典で確認することを推奨する。
+</div>
+
+<h2>💼 3. 売上ブレイクダウン — 4 セグメントの「稼ぎ頭」はどこか</h2>
+<p>AMD の 4 セグメント（Data Center / Client / Gaming / Embedded）は、それぞれ <strong>役割と利益率が大きく異なる</strong> のが特徴です。Q1 2026 のセグメント別の概観は以下の通り（出典: AMD Q1 2026 Earnings Release / DataCenterDynamics, 取得日 2026-05-28、個別セグメントの数値は最新四半期決算で要確認）。</p>
+<table>
+  <thead><tr><th>セグメント</th><th>主要製品</th><th>Q1 2026 トレンド</th><th>役割</th></tr></thead>
+  <tbody>
+    <tr><td>Data Center</td><td>EPYC（サーバー CPU）／Instinct（AI GPU）</td><td style="color:#1a7f37">+57% YoY、$5.8B</td><td>成長エンジン</td></tr>
+    <tr><td>Client</td><td>Ryzen（PC 向け CPU）</td><td>増収基調、PC 市場の回復寄与（要確認）</td><td>キャッシュ源</td></tr>
+    <tr><td>Gaming</td><td>Radeon／カスタム（PlayStation・Xbox 向け）</td><td>サイクル要因で前年比減少傾向（要確認）</td><td>変動が大きい</td></tr>
+    <tr><td>Embedded</td><td>Xilinx 由来の FPGA／組込 SoC</td><td>底打ち〜回復局面（要確認）</td><td>高利益率の地味な柱</td></tr>
+  </tbody>
+</table>
+<div class="info-box">
+  <strong>構造のポイント：</strong>会社の成長ドライバーは明確に <strong>Data Center（EPYC + Instinct）</strong>。Client/Gaming/Embedded は「PC 景気・コンソール周期・産業景気」というそれぞれ別のサイクルに乗っており、Data Center の伸びを <strong>増幅したり打ち消したり</strong> する構造になっている。
+</div>
+<p>NVIDIA との比較で重要なのは、AMD の Data Center セグメントが <strong>EPYC（サーバー CPU）と Instinct（AI GPU）の合算</strong> である点です。Instinct 単体の売上はまだ NVIDIA データセンターの数十分の一規模と見られる一方、EPYC は Intel からシェアを奪い続けているとの分析が複数のリサーチで共有されています。両者の比率を切り分けて見ることが、AMD の AI ストーリーを冷静に評価するうえで欠かせません。</p>
+
+<h2>🚀 4. Instinct ロードマップ — MI300X → MI325X → MI350/400 の現実線</h2>
+<p>AMD の AI アクセラレータ「Instinct」シリーズは、ここ数年で世代交代のペースを大きく上げています（出典: AMD 公式ロードマップ発表 / Tweaktown, 取得日 2026-05-28）。</p>
+<table>
+  <thead><tr><th>世代</th><th>投入時期</th><th>位置づけ</th></tr></thead>
+  <tbody>
+    <tr><td>MI300X</td><td>2023 年末〜2024</td><td>HBM 容量で NVIDIA H100 を上回ると訴求、初期採用が広がった世代</td></tr>
+    <tr><td>MI325X</td><td>2024 年</td><td>MI300X のリフレッシュ、メモリ強化</td></tr>
+    <tr><td>MI350／MI355X</td><td>2025 年半ば</td><td>CDNA 4 採用、推論性能を大幅強化と訴求（MLPerf で複数首位の結果も）</td></tr>
+    <tr><td>MI400 系列</td><td>2026 年</td><td>CDNA "Next"、ラックスケール統合を意識した世代</td></tr>
+    <tr><td>MI450（カスタム）</td><td>2026 下半期〜</td><td>Meta の 6 GW 契約の初回 1 GW デプロイメント向け</td></tr>
+  </tbody>
+</table>
+<p>採用顧客としては Microsoft Azure、Meta、Oracle Cloud、Dell Technologies、HPE、Lenovo などが公表されています（出典: AMD IR, 取得日 2026-05-28）。特に Meta との <strong>6 GW（ギガワット）規模の長期契約</strong> は、AMD にとって象徴的なディールと位置づけられています。</p>
+<div class="info-box">
+  <strong>ROCm と CUDA の関係：</strong>AMD の AI ソフトウェアスタックは「ROCm」と呼ばれるオープン基盤で、NVIDIA の「CUDA」に対抗する立ち位置。MLPerf 等のベンチマークでは MI355X が複数カテゴリで首位を取った結果も出ている一方、<strong>既存のモデル開発・運用が CUDA に最適化されている資産の量</strong> が大きく、移行コストを理由に NVIDIA を選び続ける顧客も多い、というのが業界での一般的な見方とされる。
+</div>
+<div class="warning-box">
+  ロードマップは AMD 公式発表に基づくが、半導体業界では <strong>量産タイミングが数四半期ずれる</strong> ことは珍しくない。実出荷ペースは決算カンファレンスのコメントで継続確認することを推奨する。
+</div>
+
+<h2>🏗️ 5. ZT Systems 買収と「フルスタック化」戦略 — NVIDIA の DGX に対抗できるか</h2>
+<p>AMD は 2024 年 8 月に <strong>ZT Systems（米国のハイパースケール向けサーバー設計・製造企業）の買収を約 $4.9B で発表</strong>、2025 年 3 月 31 日に買収を完了しました（出典: AMD IR Press Release, 取得日 2026-05-28）。同年後半には ZT Systems の <strong>製造部門は Sanmina に売却</strong>し、AMD は設計・ラックスケール開発の機能だけを残す形に再構成されています（出典: Sanmina IR, 取得日 2026-05-28）。</p>
+<p>この買収の狙いは、単なるチップベンダーから <strong>「AI ファクトリー」（ラックスケール統合システム）の提供企業へ</strong> 移行することと見られています。NVIDIA が DGX・GB200 NVL72 のような統合システムで顧客の参入障壁を下げているのに対抗し、AMD も Helios と呼ばれるラックスケールシステムや Ultra Ethernet Consortium（UEC）の旗振りなど、システム全体での競争力強化を進めています。</p>
+<p>2022 年に完了した <strong>Xilinx 買収</strong>（FPGA・適応型 SoC）も統合から 4 年が経過し、Embedded セグメントの安定収益源として位置づけられるようになりました。Xilinx と ZT Systems を加えたことで、AMD のポートフォリオは「CPU + GPU + FPGA + ラックスケール」の <strong>水平統合</strong> に近づいたと整理できます。</p>
+<div class="info-box">
+  <strong>「フルスタック化」の意味：</strong>顧客がチップ単品ではなくラック・冷却・電源・ネットワーキングまで含めた <strong>「使える形」</strong> でハードを欲しがるようになっている、というのが背景。AMD がここでどこまで NVIDIA に追いつけるかは、2026〜2027 年の重要なウォッチポイントの一つと見られている。
+</div>
+
+<h2>📈 6. ガイダンスと市場予想 — どこに「期待」が織り込まれているか</h2>
+<p>AMD が示した Q2 2026 ガイダンスと市場予想・株価バリュエーションを並べると、市場が AMD に何を織り込もうとしているかが見えやすくなります。</p>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-num">$11.2B</div><div class="kpi-label">Q2 2026 売上ガイド</div><div class="kpi-sub">±$300M、+46% YoY</div></div>
+  <div class="kpi"><div class="kpi-num">約 56%</div><div class="kpi-label">non-GAAP 粗利率ガイド</div><div class="kpi-sub">NVDA は約 75%</div></div>
+  <div class="kpi"><div class="kpi-num">$248〜$579</div><div class="kpi-label">アナリスト目標株価レンジ</div><div class="kpi-sub">出典: 各社レポート 2026/4-5</div></div>
+  <div class="kpi"><div class="kpi-num">$493</div><div class="kpi-label">2026/5/27 終値圏</div><div class="kpi-sub">1 ヶ月 +63%、1 年 +253%</div></div>
+</div>
+<p>株価については、2026 年 5 月 27 日時点で <strong>約 $493</strong> 前後で推移しており、過去 1 ヶ月で +63%、過去 1 年で +253% と急騰しています（出典: Stock Analysis, 取得日 2026-05-28）。アナリスト目標株価は <strong>Citi が $248（2026/4/6）</strong> と低めの一方、<strong>Evercore ISI が $579（2026/5/19）</strong> と高めで、コンセンサスは複数集計で $411〜$472 のレンジとされています（出典: Benzinga / Stock Analysis, 取得日 2026-05-28）。</p>
+<div class="warning-box">
+  目標株価レンジが <strong>$248 から $579 と 2 倍以上</strong> に広がっていることは、アナリスト間で「Instinct の実需がどこまで伸びるか」「NVIDIA との競争でどこまでシェアを取れるか」の見方が割れていることを示唆していると整理できる。レンジ幅そのものを「不確実性の大きさ」として読むのも一つの考え方である。
+</div>
+<p>バリュエーションについては、PER（株価収益率）は予想ベースで NVIDIA より高めの水準にあるとの集計が複数で示されており、<strong>「成長率対比で妥当」と見るか「織り込みすぎ」と見るかは投資家により分かれる</strong> 状況です。NVDA より粗利率が約 20 ポイント低い構造を踏まえると、PSR や EV/Sales での比較は要注意です。</p>
+
+<h2>🎲 7.【看板】AMD 投資の 5 シナリオ — 強気・弱気を等価で</h2>
+<p>本サイトの NVIDIA 記事ではマクロ的な「AI バブル崩壊 5 シナリオ」を提示しました。AMD についてはマクロではなく <strong>個社の競争力軸</strong> で 5 つのシナリオを並列に整理します。確率は付与せず、強気 2 / 弱気 2 / 中立 1 の構成です。それぞれ「現実化したら効くセグメント／製品」と「読者が自己点検すべき指標」を明示します。</p>
+
+<div class="scenario-card positive">
+  <div class="scenario-meta">🟢 シナリオ #1（強気）／ 効果セグメント: Data Center（Instinct）</div>
+  <div class="scenario-title">S1: ハイパースケーラーの「第 2 ソース化」が定着する</div>
+  <p><strong>前提：</strong>クラウド大手 4 社が <strong>NVIDIA への過度な依存リスク</strong> を回避するため、AMD Instinct を「採用比率 10〜20% の第 2 ソース」として継続発注し続けるシナリオ。Meta の 6 GW 契約のような長期契約が他社にも広がる場合に効く。</p>
+  <p><strong>自己点検指標：</strong>四半期ごとの Data Center 売上 YoY 伸長率、新規ハイパースケーラー採用発表、MI400/MI450 の出荷タイミング達成度。</p>
+  <p>このシナリオが崩れる兆候は「特定顧客への依存解消＝ AMD GPU 採用比率が頭打ちになるアナウンス」で、当該銘柄を保有している投資家にとっては保有理由を再点検する材料の一つとなる。</p>
+</div>
+
+<div class="scenario-card positive">
+  <div class="scenario-meta">🟢 シナリオ #2（強気）／ 効果セグメント: Data Center（EPYC）</div>
+  <div class="scenario-title">S2: EPYC が Intel からのシェア奪取を継続し、利益基盤を厚くする</div>
+  <p><strong>前提：</strong>サーバー CPU 市場で AMD EPYC が <strong>Intel Xeon に対する性能・電力効率の優位</strong> を維持し、シェアを毎年数ポイント単位で奪い続けるシナリオ。Instinct の伸びほど派手ではないが、利益貢献としては地味に効く構造。</p>
+  <p><strong>自己点検指標：</strong>サーバー CPU シェアの四半期トラッカー（Mercury Research など）、AWS Graviton や Arm 系サーバー CPU の伸長度、EPYC 新世代の量産タイミング。</p>
+  <p>逆に Arm 系の伸びが想定以上だと、AMD と Intel の両方が圧迫されるシナリオも一考の余地がある。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-meta">🔴 シナリオ #3（弱気）／ 効果セグメント: Data Center（Instinct）</div>
+  <div class="scenario-title">S3: CUDA エコシステムの壁を崩せず ROCm の浸透が遅れる</div>
+  <p><strong>前提：</strong>性能ベンチマークで MI355X 等が一部優位を示しても、<strong>既存の AI モデル資産・ライブラリが CUDA に最適化されている</strong> 状態が崩れず、AMD Instinct の採用率が限定的に留まるシナリオ。「性能では勝てるがエコシステムで負ける」典型例。</p>
+  <p><strong>自己点検指標：</strong>主要 AI フレームワーク（PyTorch、JAX、vLLM 等）の ROCm 対応進捗、Hugging Face 上での ROCm 動作確認モデル数、開発者コミュニティでの ROCm 言及量。</p>
+  <p>このシナリオが現実化すると、Instinct の売上は伸びるが「特定大口の契約案件中心」のいびつな構造になり、想定された <strong>裾野の広がりは限定的</strong> となる可能性が指摘されている。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-meta">🔴 シナリオ #4（弱気）／ 効果セグメント: Data Center 全般</div>
+  <div class="scenario-title">S4: ハイパースケーラーのカスタム ASIC が想定以上に台頭する</div>
+  <p><strong>前提：</strong>Google TPU、AWS Trainium、Microsoft Maia、Meta MTIA など、<strong>クラウド大手の自社設計 AI チップ</strong> が量産フェーズに入り、コストパフォーマンスで NVIDIA / AMD の両方を侵食するシナリオ。AMD は「NVIDIA の代替品」のポジショニングそのものが弱まる。</p>
+  <p><strong>自己点検指標：</strong>各クラウド大手のカスタムチップ生産量・採用ワークロード比率（決算カンファレンスでの言及）、TSMC の高度パッケージ（CoWoS）の配分比率変化。</p>
+  <p>このシナリオは NVIDIA にも逆風だが、<strong>AMD の方が代替の代替として削られやすい</strong> 構造的なリスクがある点に注意が必要との指摘がある。</p>
+</div>
+
+<div class="scenario-card medium">
+  <div class="scenario-meta">🟠 シナリオ #5（中立）／ 効果セグメント: Client / Gaming / Embedded</div>
+  <div class="scenario-title">S5: 非 DC セグメントのサイクル底打ちが効く</div>
+  <p><strong>前提：</strong>PC 市場の更新需要、Embedded（産業・通信）の在庫調整完了、次世代ゲーム機サイクルなど、<strong>非 DC セグメントが揃って底打ち</strong> するシナリオ。データセンターの議論が強気・弱気どちらに振れても、相対的に <strong>利益のクッション</strong> として効く構造。</p>
+  <p><strong>自己点検指標：</strong>世界 PC 出荷台数の YoY、産業半導体の受注残（Embedded 顧客の決算コメント）、次世代コンソール発表のニュース。</p>
+  <p>非 DC セグメントは決算記事の脇役になりがちだが、<strong>サイクル底からの戻り幅が大きい</strong> と利益貢献は意外と無視できない、というシナリオも一考の余地がある。</p>
+</div>
+
+<div class="warning-box">
+  上記 5 シナリオは <strong>確率ではなく前提条件と自己点検指標</strong> を提示するためのフレームである。複数シナリオが同時に進む可能性もあり、また想定外の組み合わせが起こることもある。各シナリオの実現を保証するものではなく、投資判断の代替とはならない。
+</div>
+
+<h2>🇯🇵 8. 日本人投資家への 5 つの示唆</h2>
+<ol>
+  <li><strong>NVDA 連動係数の理解：</strong>AMD の株価は <strong>NVDA との連動性が高い局面が多い</strong> と観察されている。NVDA の決算後の反応や AI 半導体セクターのセンチメントが AMD にも波及するため、NVDA カレンダー（特に四半期決算日）を AMD ホルダーも把握しておくと、決算ボラの構造を理解しやすくなる。</li>
+  <li><strong>為替感応度：</strong>AMD は米ドル建てのため、<strong>株価が同じでも円安・円高で円建てリターンは大きく変動</strong> する。例えば株価変化ゼロでもドル円が 160 円 → 150 円に動けば、円建てで約 6% の評価損が発生する計算となる。為替リスクへの対処方法としてヘッジ付き商品の存在が市場で議論されているが、商品選択は読者ご自身で各種ファクトシートをご確認のうえご判断ください。</li>
+  <li><strong>決算カレンダーの先行性：</strong>AMD は通常 <strong>NVDA の決算より約 2〜3 週間前に発表</strong> する四半期が多い。AMD の決算でデータセンター・AI 関連のコメントが弱いと、後続の NVDA 決算への予想にも影響する構図が指摘されている。市場全体のセンチメントを読む先行指標として注目する見方もある。</li>
+  <li><strong>NISA 成長投資枠での扱い：</strong>AMD は主要ネット証券（SBI 証券、楽天証券、マネックス証券など）で <strong>NISA 成長投資枠の対象</strong> に含まれている。購入手段の選択肢の一つの情報として確認できるが、税制面の有利不利は個別事情により異なるため、税理士・各証券会社の最新情報をご確認ください。</li>
+  <li><strong>半導体集中リスクの把握：</strong>本サイトの 3 部作（キオクシア + NVDA + AMD）を <strong>すべて等ウェイトで保有</strong> すると、ポートフォリオ全体が AI 半導体サイクルに極端に集中する。AI バブル崩壊シナリオが現実化した場合、3 銘柄が同方向に動くため、<strong>分散効果は限定的</strong> という指摘がある。AI 半導体への配分上限を自分で決めておくことを推奨する声も多い。</li>
+</ol>
+<div class="info-box">
+  <strong>示唆のまとめ：</strong>AMD 単体の事業評価と、ポートフォリオ全体での AI 半導体配分は <strong>別の議論</strong> として整理すると、過剰集中を避けやすい。
+</div>
+
+<h2>📚 9. まとめ — 3 部作の総括</h2>
+<div class="info-box">
+  <strong>結論：</strong>AMD は Q1 2026 決算で <strong>売上 +38% YoY、データセンター +57% YoY、Q2 ガイド +46% YoY</strong> と高い成長を継続しており、Instinct の出荷拡大と EPYC のシェア奪取が両輪で効いていると整理できる。一方で、CUDA エコシステムの壁、ハイパースケーラーのカスタム ASIC 台頭、目標株価レンジの極端な幅（$248〜$579）など、不確実性も依然として大きい。<br>
+  <br>
+  <strong>3 部作の総括：</strong>キオクシアは「メモリ供給側」、NVIDIA は「AI GPU の事実上の独占」、AMD は「CPU 利益 + GPU 挑戦者」と位置づけが異なる。3 社を同時に保有する場合、<strong>同じ AI 半導体サイクル要因で同方向に動く</strong> ことに留意する必要がある。<br>
+  <br>
+  <strong>注視すべき指標：</strong>① 四半期ごとの Data Center 売上 YoY、② Instinct と EPYC の出荷比率コメント、③ MI400/MI450 量産タイミングの達成度、④ ROCm 対応モデル数の伸び、⑤ クラウド大手のカスタム ASIC 採用比率。
+</div>
+
+<h2>🔗 関連記事</h2>
+<div class="related-grid">
+  <a class="related-card" href="guide-nvidia-2026-05.html">
+    <div class="related-card-title">🤖 NVIDIA 2026/5 決算解説</div>
+    <div class="related-card-desc">AI バブル崩壊 5 シナリオで読む GPU 王者の現在地</div>
+  </a>
+  <a class="related-card" href="guide-kioxia-2026-05.html">
+    <div class="related-card-title">💾 キオクシア徹底解説</div>
+    <div class="related-card-desc">AI 半導体ブームの HBM/メモリ供給側</div>
+  </a>
+  <a class="related-card" href="market-health.html">
+    <div class="related-card-title">🩺 市場健康度ダッシュボード</div>
+    <div class="related-card-desc">VIX / 恐怖&強欲 / バフェット指標で過熱感確認</div>
+  </a>
+</div>
+
+<p class="disclaimer" data-disclaimer="kinsho-v1">
+  ⚠️ 当サイトは金融商品取引業者ではなく、本記事は AMD（NASDAQ: AMD）の事業内容・決算実績・市場で議論されているシナリオ等の <strong>情報提供</strong> を目的とした解説記事です。個別銘柄の購入・売却を推奨するものではなく、投資助言にも該当しません。記事中の数値は AMD 公式 IR 資料および公開報道（取得日 2026-05-28）に基づきますが、最新の状況は必ず一次情報でご確認ください。投資判断はご自身の責任で行ってください。米国株式投資は為替リスク・国際情勢リスクが日本株より大きいことに留意してください。将来予測・シナリオは前提条件付きであり、実現を保証するものではありません。
+</p>
+
+</article>
+</main>
+
+<footer>
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a>
+</footer>
+</body>
+</html>
