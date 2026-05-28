@@ -248,6 +248,154 @@ def passes_momentum_filter(entry, direction, indicators):
 
 
 # ─────────────────────────────────────────────
+# 🆕 2026-05-28: チャートパターン認識 P1（自前ロジック、scipy 不要）
+# ダブルトップ / ダブルボトム / 三角持ち合い を検出。
+# ダブルトップ/ボトムは「反転型」のため、メイン側でモメンタムフィルタをバイパスする。
+# ─────────────────────────────────────────────
+def find_local_extrema(values, mode='peak', distance=5, min_prominence_pct=0.003):
+    """ローカル極値（ピーク or 谷）を検出。scipy.signal.find_peaks の簡易版。
+    mode: 'peak'（極大）or 'trough'（極小）
+    distance: 検出する極値の最小間隔（バー数）
+    min_prominence_pct: 周囲との値差の最小相対値（ノイズ除去用、0.3% デフォルト）
+    返り値: インデックスのリスト
+    """
+    if values is None or len(values) < 3:
+        return []
+    arr = np.asarray(values, dtype=float)
+    sign = 1 if mode == 'peak' else -1
+    signed = arr * sign
+    extrema = []
+    for i in range(1, len(signed) - 1):
+        if signed[i] > signed[i - 1] and signed[i] > signed[i + 1]:
+            # prominence チェック（周囲 distance 内の最低値との差）
+            if min_prominence_pct > 0 and abs(arr[i]) > 0:
+                lo = max(0, i - distance)
+                hi = min(len(signed), i + distance + 1)
+                local_min = signed[lo:hi].min()
+                if (signed[i] - local_min) / abs(arr[i]) < min_prominence_pct:
+                    continue
+            # 直前の極値から distance 以上離れているか
+            if not extrema or i - extrema[-1] >= distance:
+                extrema.append(i)
+            elif signed[i] > signed[extrema[-1]]:
+                # より高い極値なら置換
+                extrema[-1] = i
+    return extrema
+
+
+def detect_double_top(highs, closes, lookback=40, tolerance_pct=0.5,
+                       neckline_drop_pct=2.0, distance=4):
+    """ダブルトップ検出（反転型シグナル）。
+    条件:
+      1. lookback 本以内に 2 つの高値ピークが close
+      2. 2 つのピーク高値の差が tolerance_pct（%）以内
+      3. 間の谷が両ピークから neckline_drop_pct（%）以上下
+      4. 現在 close がネックライン（谷の最低値）を下抜け
+    返り値: dict or None
+    """
+    if len(highs) < lookback + 5:
+        return None
+    recent_h = highs.iloc[-lookback:].values
+    peaks = find_local_extrema(recent_h, mode='peak', distance=distance)
+    if len(peaks) < 2:
+        return None
+    p1, p2 = peaks[-2], peaks[-1]
+    h1, h2 = float(recent_h[p1]), float(recent_h[p2])
+    if max(h1, h2) <= 0:
+        return None
+    # 2 つのピーク高値の近接判定
+    diff_pct = abs(h1 - h2) / max(h1, h2) * 100
+    if diff_pct > tolerance_pct:
+        return None
+    # 間の谷（ネックライン）
+    neckline = float(recent_h[p1:p2 + 1].min())
+    drop_pct = (min(h1, h2) - neckline) / min(h1, h2) * 100
+    if drop_pct < neckline_drop_pct:
+        return None
+    # 現 close がネックライン下抜けしているか
+    cur_close = float(closes.iloc[-1])
+    if cur_close >= neckline:
+        return None
+    return {
+        "peak1_value": round(h1, 5),
+        "peak2_value": round(h2, 5),
+        "neckline": round(neckline, 5),
+        "peak_diff_pct": round(diff_pct, 3),
+        "breakout_pct": round((cur_close - neckline) / neckline * 100, 3),
+        "bars_apart": int(p2 - p1),
+    }
+
+
+def detect_double_bottom(lows, closes, lookback=40, tolerance_pct=0.5,
+                          neckline_rise_pct=2.0, distance=4):
+    """ダブルボトム検出（反転型シグナル）。detect_double_top の対称。"""
+    if len(lows) < lookback + 5:
+        return None
+    recent_l = lows.iloc[-lookback:].values
+    troughs = find_local_extrema(recent_l, mode='trough', distance=distance)
+    if len(troughs) < 2:
+        return None
+    t1, t2 = troughs[-2], troughs[-1]
+    l1, l2 = float(recent_l[t1]), float(recent_l[t2])
+    if max(l1, l2) <= 0:
+        return None
+    diff_pct = abs(l1 - l2) / max(l1, l2) * 100
+    if diff_pct > tolerance_pct:
+        return None
+    neckline = float(recent_l[t1:t2 + 1].max())
+    rise_pct = (neckline - max(l1, l2)) / max(l1, l2) * 100
+    if rise_pct < neckline_rise_pct:
+        return None
+    cur_close = float(closes.iloc[-1])
+    if cur_close <= neckline:
+        return None
+    return {
+        "trough1_value": round(l1, 5),
+        "trough2_value": round(l2, 5),
+        "neckline": round(neckline, 5),
+        "trough_diff_pct": round(diff_pct, 3),
+        "breakout_pct": round((cur_close - neckline) / neckline * 100, 3),
+        "bars_apart": int(t2 - t1),
+    }
+
+
+def detect_triangle_squeeze(highs, lows, bb_up_series, bb_low_series, lookback=20,
+                              bb_width_ratio_threshold=0.7):
+    """三角持ち合い（シンメトリカル）検出。中立シグナル（ブレイク待ち）。
+    条件:
+      1. 直近 lookback 本の高値の傾きが負（高値切り下げ）
+      2. 直近 lookback 本の安値の傾きが正（安値切り上げ）
+      3. BB 幅が直近平均の 70% 以下に収縮
+    """
+    if len(highs) < lookback + 5:
+        return None
+    recent_h = highs.iloc[-lookback:].values
+    recent_l = lows.iloc[-lookback:].values
+    x = np.arange(lookback, dtype=float)
+    try:
+        h_slope = float(np.polyfit(x, recent_h, 1)[0])
+        l_slope = float(np.polyfit(x, recent_l, 1)[0])
+    except (np.linalg.LinAlgError, ValueError):
+        return None
+    if not (h_slope < 0 and l_slope > 0):
+        return None
+    # BB 幅縮小チェック
+    cur_bb_width = float(bb_up_series.iloc[-1] - bb_low_series.iloc[-1])
+    avg_bb_width = float((bb_up_series.iloc[-lookback:] - bb_low_series.iloc[-lookback:]).mean())
+    if avg_bb_width <= 0:
+        return None
+    bb_width_ratio = cur_bb_width / avg_bb_width
+    if bb_width_ratio > bb_width_ratio_threshold:
+        return None
+    return {
+        "h_slope": round(h_slope, 6),
+        "l_slope": round(l_slope, 6),
+        "bb_width_ratio": round(bb_width_ratio, 3),
+        "lookback": lookback,
+    }
+
+
+# ─────────────────────────────────────────────
 # SL/TP をシグナル方向と ATR から算出
 # ─────────────────────────────────────────────
 def calc_entry_sl_tp(current_price, atr_value, direction):
@@ -425,6 +573,50 @@ def detect_signals(df_4h):
             "severity": "sell",
             "label": "🔴 直近 20 本安値割れ（損切りライン）",
             "detail": f"直近安値 {recent_low:.2f} を下抜け",
+        })
+
+    # 🆕 2026-05-28: チャートパターン認識 P1（ダブルトップ / ダブルボトム / 三角持ち合い）
+    # ダブルトップ/ボトムは反転型シグナル → メイン側でモメンタムフィルタをバイパス
+    dt = detect_double_top(high, close, lookback=40)
+    if dt:
+        signals.append({
+            "type": "double_top",
+            "severity": "sell",
+            "label": "🔴 ダブルトップ完成（ネックライン割れ）",
+            "detail": (
+                f"2 高値 {dt['peak1_value']:.4f}/{dt['peak2_value']:.4f}（差 {dt['peak_diff_pct']:.2f}%）、"
+                f"ネックライン {dt['neckline']:.4f} 下抜け {dt['breakout_pct']:+.2f}%"
+            ),
+            "is_reversal_pattern": True,
+            "pattern_data": dt,
+        })
+
+    db = detect_double_bottom(low, close, lookback=40)
+    if db:
+        signals.append({
+            "type": "double_bottom",
+            "severity": "buy",
+            "label": "🟢 ダブルボトム完成（ネックライン突破）",
+            "detail": (
+                f"2 安値 {db['trough1_value']:.4f}/{db['trough2_value']:.4f}（差 {db['trough_diff_pct']:.2f}%）、"
+                f"ネックライン {db['neckline']:.4f} 上抜け {db['breakout_pct']:+.2f}%"
+            ),
+            "is_reversal_pattern": True,
+            "pattern_data": db,
+        })
+
+    ts = detect_triangle_squeeze(high, low, bb_up, bb_low, lookback=20)
+    if ts:
+        signals.append({
+            "type": "triangle_squeeze",
+            "severity": "warn",
+            "label": "🟡 三角持ち合い収束中（ブレイク待ち）",
+            "detail": (
+                f"高値傾き {ts['h_slope']:+.4f}、安値傾き {ts['l_slope']:+.4f}、"
+                f"BB 幅比 {ts['bb_width_ratio']:.2f}（収束）"
+            ),
+            "is_reversal_pattern": False,
+            "pattern_data": ts,
         })
 
     # 🆕 2026-05-28: 市況判定（ADX/Choppiness + MA 乖離率フォールバック）
@@ -1825,8 +2017,16 @@ def main():
         # 🆕 2026-05-28: Step A - モメンタムフィルタ（新案F）
         # entry_vs_ma25 × dsign > 0.5 OR momentum_score >= 1.0 でメール送信
         # バックテスト (N=139): 件数 1/4、勝率 32%→55%
+        # 🆕 P1: 反転型パターン（double_top / double_bottom）はモメンタムと逆方向のため、
+        #       フィルタをバイパスする（転換時点ではモメンタムがまだ逆を向いている）
         momentum_info = None
-        if filter_send_email and position_plan:
+        has_reversal_pattern = any(s.get("is_reversal_pattern") for s in fresh_signals)
+        if filter_send_email and position_plan and has_reversal_pattern:
+            # 反転型パターン優先、モメンタムフィルタは参考値のみ計算
+            momentum_info = calc_momentum_score(position_plan["entry"], direction, indicators)
+            pattern_types = [s["type"] for s in fresh_signals if s.get("is_reversal_pattern")]
+            print(f"    🔄 反転型パターン検出 ({', '.join(pattern_types)}): モメンタムフィルタをバイパス")
+        elif filter_send_email and position_plan:
             passed, reason, momentum_info = passes_momentum_filter(
                 position_plan["entry"], direction, indicators
             )
