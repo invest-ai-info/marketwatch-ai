@@ -359,6 +359,164 @@ def detect_double_bottom(lows, closes, lookback=40, tolerance_pct=0.5,
     }
 
 
+def detect_first_pullback(highs, lows, closes, signals_log_recent, ticker, timeframe,
+                            direction, ma25_cur, ma75_cur, now_jst,
+                            pullback_window=15, retest_tolerance_pct=0.3,
+                            min_overshoot_pct=1.0, ma_dev_gate_pct=0.5):
+    """ブレイク後の初押し検出（順張りシグナル、long/short 兼用）。
+    バックテスト N=10 で勝率 40%（単体）、+逆方向シグナルなし → 50%、+overshoot ≥1% → 100% (N=3)
+    サンプル不足のため当面 email_silent=True で記録のみ。N=20-30 で評価。
+
+    direction: "long" / "short"
+    signals_log_recent: 同 ticker, 同 timeframe の直近シグナルリスト
+    返り値: dict or None
+    """
+    if len(closes) < pullback_window + 5:
+        return None
+    if direction not in ("long", "short"):
+        return None
+    if ma75_cur is None or ma75_cur == 0:
+        return None
+
+    # トレンドゲート（MA 乖離率 ≥ 0.5%）
+    ma_dev_pct = abs(ma25_cur - ma75_cur) / ma75_cur * 100
+    if ma_dev_pct < ma_dev_gate_pct:
+        return None
+    # 順張り方向のみ
+    ma_dir_up = ma25_cur > ma75_cur
+    if direction == "long" and not ma_dir_up:
+        return None
+    if direction == "short" and ma_dir_up:
+        return None
+
+    # signals_log_recent から、ブレイクシグナル (high_break / low_break) を探す
+    if not signals_log_recent:
+        return None
+    target_break_type = "high_break" if direction == "long" else "low_break"
+    timeframe_hours = 4 if timeframe == "4h" else 1
+    window_hours = pullback_window * timeframe_hours
+
+    breakout_signal = None
+    for s in reversed(signals_log_recent):  # 新しい順
+        if s.get("ticker") != ticker or s.get("timeframe") != timeframe:
+            continue
+        sig_types = s.get("signal_types", [])
+        if target_break_type not in sig_types:
+            continue
+        # 経過時間チェック
+        try:
+            fired = datetime.fromisoformat(s["fired_at"])
+            if fired.tzinfo is None:
+                fired = fired.replace(tzinfo=JST)
+            hours_ago = (now_jst - fired).total_seconds() / 3600.0
+        except Exception:
+            continue
+        if hours_ago > window_hours:
+            break  # これより古いブレイクは対象外
+        if hours_ago < timeframe_hours * 0.5:
+            continue  # 直前すぎ（ブレイク即発火を避ける）
+        breakout_signal = s
+        break  # 直近のブレイクを採用
+
+    if not breakout_signal:
+        return None
+
+    # 旧レジ/旧サポ（ブレイク時の recent_high / recent_low）
+    ind_at_break = breakout_signal.get("indicators_at_signal", {})
+    if direction == "long":
+        old_level = ind_at_break.get("recent_high")
+    else:
+        old_level = ind_at_break.get("recent_low")
+    if not old_level or old_level <= 0:
+        return None
+
+    # ブレイク後の overshoot 確認（直近 pullback_window 本の最高値 or 最安値）
+    recent_h = float(highs.iloc[-pullback_window:].max())
+    recent_l = float(lows.iloc[-pullback_window:].min())
+    if direction == "long":
+        overshoot_pct = (recent_h - old_level) / old_level * 100
+    else:
+        overshoot_pct = (old_level - recent_l) / old_level * 100
+    if overshoot_pct < min_overshoot_pct:
+        return None
+
+    # 現 close が旧レジ/旧サポ付近に戻ってきたか
+    cur_close = float(closes.iloc[-1])
+    distance_pct = abs(cur_close - old_level) / old_level * 100
+    if distance_pct > retest_tolerance_pct:
+        return None
+
+    # 直近 3 本でロールリバーサル成立しているか（ロング: 旧レジを大きく下抜けていない）
+    if direction == "long":
+        recent_min_low = float(lows.iloc[-3:].min())
+        if recent_min_low < old_level * (1 - retest_tolerance_pct / 100 * 1.5):
+            return None
+    else:
+        recent_max_high = float(highs.iloc[-3:].max())
+        if recent_max_high > old_level * (1 + retest_tolerance_pct / 100 * 1.5):
+            return None
+
+    # 二重発火防止: ブレイク以降、first_pullback がまだ発火していないか
+    try:
+        break_fired = datetime.fromisoformat(breakout_signal["fired_at"])
+        if break_fired.tzinfo is None:
+            break_fired = break_fired.replace(tzinfo=JST)
+    except Exception:
+        break_fired = None
+    target_pb_type = "first_pullback_long" if direction == "long" else "first_pullback_short"
+    if break_fired:
+        for s in signals_log_recent:
+            if s.get("ticker") != ticker or s.get("timeframe") != timeframe:
+                continue
+            if target_pb_type not in s.get("signal_types", []):
+                continue
+            try:
+                pb_fired = datetime.fromisoformat(s["fired_at"])
+                if pb_fired.tzinfo is None:
+                    pb_fired = pb_fired.replace(tzinfo=JST)
+                if pb_fired > break_fired:
+                    return None  # 既に発火済み
+            except Exception:
+                continue
+
+    # 逆方向シグナルなしチェック（ブレイク以降、反対方向のシグナルが出ていないか）
+    opposite_break_type = "low_break" if direction == "long" else "high_break"
+    if break_fired:
+        for s in signals_log_recent:
+            if s.get("ticker") != ticker or s.get("timeframe") != timeframe:
+                continue
+            try:
+                s_fired = datetime.fromisoformat(s["fired_at"])
+                if s_fired.tzinfo is None:
+                    s_fired = s_fired.replace(tzinfo=JST)
+                if s_fired <= break_fired:
+                    continue
+            except Exception:
+                continue
+            if opposite_break_type in s.get("signal_types", []):
+                return None  # 逆方向ブレイク出てるのでロールリバーサル無効
+
+    # hours_since_break を安全に計算
+    try:
+        _bf = datetime.fromisoformat(breakout_signal["fired_at"])
+        if _bf.tzinfo is None:
+            _bf = _bf.replace(tzinfo=JST)
+        hours_since_break = round((now_jst - _bf).total_seconds() / 3600, 1)
+    except Exception:
+        hours_since_break = None
+
+    return {
+        "old_level": round(old_level, 5),
+        "current_close": round(cur_close, 5),
+        "distance_pct": round(distance_pct, 3),
+        "overshoot_pct": round(overshoot_pct, 2),
+        "ma_dev_pct": round(ma_dev_pct, 3),
+        "breakout_fired_at": breakout_signal["fired_at"],
+        "hours_since_break": hours_since_break,
+        "regime_at_signal": "trend_up" if direction == "long" else "trend_down",
+    }
+
+
 def detect_triangle_squeeze(highs, lows, bb_up_series, bb_low_series, lookback=20,
                               bb_width_ratio_threshold=0.7):
     """三角持ち合い（シンメトリカル）検出。中立シグナル（ブレイク待ち）。
@@ -449,7 +607,11 @@ def determine_direction(signals):
 # シグナル判定（4H 足の最新バーを評価）
 # 返り値: list of dict [{type, severity, label, detail}, ...]
 # ─────────────────────────────────────────────
-def detect_signals(df_4h):
+def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", now_jst=None):
+    """
+    signals_log_recent: 同 ticker, 同 timeframe の直近シグナルリスト（初押し検出用、オプショナル）
+    ticker / timeframe / now_jst: 初押し検出用コンテキスト
+    """
     if df_4h is None or len(df_4h) < 30:
         return []
     close = df_4h["Close"]
@@ -618,6 +780,37 @@ def detect_signals(df_4h):
             "is_reversal_pattern": False,
             "pattern_data": ts,
         })
+
+    # 🆕 2026-05-28: 初押しシグナル（順張り、ブレイク後の初回戻り）
+    # signals_log_recent が渡された場合のみ判定。サンプル不足のため email_silent=True で記録のみ
+    # バックテスト: 基本条件 N=10 で 40%、+overshoot=1% で N=3 で 100%（小サンプル注意）
+    if signals_log_recent is not None and ticker and now_jst:
+        for direction in ("long", "short"):
+            fp = detect_first_pullback(
+                high, low, close, signals_log_recent, ticker, timeframe,
+                direction, ma25_cur, ma75_cur, now_jst,
+                pullback_window=15, retest_tolerance_pct=0.3,
+                min_overshoot_pct=1.0, ma_dev_gate_pct=0.5,
+            )
+            if fp:
+                # 体制ラベル（バックテストでトレンド地合いの方が勝率良い）
+                regime_label = "トレンド継続" if abs(fp["ma_dev_pct"]) >= 1.0 else "弱トレンド"
+                signal_type = "first_pullback_long" if direction == "long" else "first_pullback_short"
+                emoji = "🟢" if direction == "long" else "🔴"
+                arrow = "上抜け" if direction == "long" else "下抜け"
+                signals.append({
+                    "type": signal_type,
+                    "severity": "buy" if direction == "long" else "sell",
+                    "label": f"{emoji} 初押し（{regime_label}・ブレイク後 {fp['hours_since_break']:.0f}h で旧{'レジ' if direction == 'long' else 'サポ'}リテスト）",
+                    "detail": (
+                        f"ブレイク後 {fp['overshoot_pct']:+.2f}% {arrow}、現在価格 {fp['current_close']:.4f} が"
+                        f"旧水準 {fp['old_level']:.4f} に戻り（距離 {fp['distance_pct']:.2f}%）、"
+                        f"MA 乖離 {fp['ma_dev_pct']:+.3f}%"
+                    ),
+                    "is_reversal_pattern": False,
+                    "email_silent": True,  # 🚫 N=20-30 まで蓄積、メール送信は当面 OFF
+                    "pattern_data": fp,
+                })
 
     # 🆕 2026-05-28: 市況判定（ADX/Choppiness + MA 乖離率フォールバック）
     adx_cur = float(adx_series.iloc[-1]) if not pd.isna(adx_series.iloc[-1]) else None
@@ -1959,7 +2152,26 @@ def main():
         if df is None or len(df) < 30:
             print(f"    ⏭️ データ不足、スキップ")
             continue
-        signals, indicators = detect_signals(df)
+        # 🆕 2026-05-28: 同 ticker/timeframe の直近シグナルを抽出して detect_signals に渡す（初押し検出用）
+        # pullback_window=15 本 × timeframe + バッファ
+        recent_lookback_hours = 15 * (4 if timeframe == "4h" else 1) + 12
+        signals_log_recent = []
+        for s in signals_log:
+            if s.get("ticker") != ticker or s.get("timeframe") != timeframe:
+                continue
+            try:
+                f_at = datetime.fromisoformat(s["fired_at"])
+                if f_at.tzinfo is None:
+                    f_at = f_at.replace(tzinfo=JST)
+                if (now_jst - f_at).total_seconds() / 3600 <= recent_lookback_hours:
+                    signals_log_recent.append(s)
+            except Exception:
+                continue
+
+        signals, indicators = detect_signals(
+            df, signals_log_recent=signals_log_recent,
+            ticker=ticker, timeframe=timeframe, now_jst=now_jst,
+        )
         if not signals:
             print(f"    ✅ シグナルなし（現値 {currency}{indicators['price']:.{decimals}f}）")
             continue
@@ -1984,6 +2196,13 @@ def main():
             filter_send_email = False
             filter_block_reason = "ma_golden 単独は過去 N=11 で 0 勝のため送信スキップ"
             print(f"    🚫 フィルタ: {filter_block_reason}")
+
+        # 🆕 2026-05-28: 全シグナルが email_silent（初押し等の蓄積期間中シグナル）ならメール送信スキップ
+        if filter_send_email and all(s.get("email_silent") for s in fresh_signals):
+            filter_send_email = False
+            silent_types = [s["type"] for s in fresh_signals]
+            filter_block_reason = f"全シグナルが内部ログ専用 (email_silent): {silent_types}"
+            print(f"    🔕 フィルタ: {filter_block_reason}")
 
         # ファンダメンタル：ティッカー関連ニュースを取得 → 日本語に翻訳
         news_titles_en = fetch_ticker_news(ticker, max_items=5)
