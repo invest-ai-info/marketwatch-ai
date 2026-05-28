@@ -146,6 +146,48 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 
 ---
 
+## 🌐 サイト運営チーム（Claude Code カスタム subagent、2026-05-28 構築）
+
+**目的**: marketwatch-jp.com のクオリティ向上。記事執筆・法務監査・SEO/UX の 3 観点で並列に動かし、サイト規模拡大と検索流入増を加速させる。
+
+| Agent | 配置 | 役割 | モデル |
+|---|---|---|---|
+| **content-writer** | `.claude/agents/content-writer.md` | 解説記事の執筆・編集、個別銘柄解説、速報記事、見出し作成 | Sonnet |
+| **compliance-reviewer** ⭐ | `.claude/agents/compliance-reviewer.md` | 法務監査（金商法・景表法・AdSense）、無登録投資助言業リスク判定、黒/グレー/白 3 段階評価 | **Opus** |
+| **seo-ux-strategist** | `.claude/agents/seo-ux-strategist.md` | SEO（メタタグ・構造化データ・sitemap）、ナビバー・内部リンク、Core Web Vitals、モバイル最適化 | Sonnet |
+
+### 想定ワークフロー
+
+```
+ユーザー「AMD 個別銘柄解説 第 5 弾を書きたい」
+   ↓
+メイン Claude が並列で 2 人に依頼（同一メッセージ内で Agent ツール 2 つ）
+   ├─ content-writer: 記事構成・本文ドラフト（NVIDIA/SBG 等のトーンを踏襲）
+   └─ seo-ux-strategist: タイトル/メタ/見出し最適化、構造化データ、内部リンク提案
+   ↓
+両方の結果を compliance-reviewer に渡す（テキスト橋渡し）
+   ├─ 断定表現チェック（「ほぼ確実」「一択」等）
+   ├─ 個別銘柄推奨に該当しないか
+   └─ 黒/グレー/白 判定 + 修正案
+   ↓
+メイン Claude が統合 → 8 ステップルール（記事追加）で公開
+```
+
+### 自動委譲のトリガー（description ベース）
+- 「記事」「解説」「ドラフト」「書いて」「執筆」「速報」「リライト」 → content-writer
+- 「法的に」「コンプラ」「金商法」「景表法」「ディスクレイマー」「免責」「投資助言」 → compliance-reviewer
+- 「SEO」「メタタグ」「サイトマップ」「内部リンク」「ナビバー」「モバイル」「構造化データ」 → seo-ux-strategist
+- 明示呼び出し例: 「compliance-reviewer に新記事 AMD を事前チェック頼んで」
+
+### 設計原則
+1. **投資助言ではなく情報提供** — content-writer は断定表現を避ける、compliance-reviewer が事後監査
+2. **黒/グレー/白の 3 段階評価** — compliance-reviewer は曖昧な「リスクあり」ではなく明確な判定
+3. **SEO はホワイトハットのみ** — リンクファーム・隠しテキスト等は禁止
+4. **8 ステップルール厳守** — 新記事追加時は必ず CLAUDE.md の 8 ステップに従う
+5. **触ってはいけないファイルを認識** — 6 コア HTML + political-feed.html + track-record.html 等は cron 管理
+
+---
+
 ## 🔄 SYNC_FILES の禁忌（重要・事故防止）
 
 ### ⚠️ 絶対に SYNC_FILES に含めないファイル
