@@ -142,6 +142,112 @@ def calc_atr(high, low, close, period=14):
 
 
 # ─────────────────────────────────────────────
+# 🆕 2026-05-28: ADX + Choppiness Index（市況判定の本物指標）
+# Step C で実装。signals-log に記録するが、当面はフィルタには使わない
+# （N=139 検証では擬似指標で十分機能したため、本物指標は次回検証用）
+# ─────────────────────────────────────────────
+def adx_choppiness(high, low, close, period=14):
+    """ADX (トレンド強度) + Choppiness Index (レンジ判定) を計算。
+    返り値: (adx_series, choppiness_series)
+    ADX ≥ 25 → トレンド、< 20 → レンジ
+    Choppiness > 61.8 → レンジ、< 38.2 → トレンド
+    """
+    prev_close = close.shift(1)
+    tr = pd.concat([
+        high - low,
+        (high - prev_close).abs(),
+        (low - prev_close).abs(),
+    ], axis=1).max(axis=1)
+    atr = tr.ewm(alpha=1/period, adjust=False).mean()
+
+    up_move = high.diff()
+    down_move = -low.diff()
+    plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0.0)
+    minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0.0)
+
+    plus_di = 100 * pd.Series(plus_dm, index=high.index).ewm(alpha=1/period, adjust=False).mean() / atr
+    minus_di = 100 * pd.Series(minus_dm, index=high.index).ewm(alpha=1/period, adjust=False).mean() / atr
+    dx = (plus_di - minus_di).abs() / (plus_di + minus_di).replace(0, np.nan) * 100
+    adx = dx.ewm(alpha=1/period, adjust=False).mean()
+
+    tr_sum = tr.rolling(period).sum()
+    high_n = high.rolling(period).max()
+    low_n = low.rolling(period).min()
+    range_n = (high_n - low_n).replace(0, np.nan)
+    chop = 100 * np.log10(tr_sum / range_n) / np.log10(period)
+
+    return adx, chop
+
+
+def classify_regime(adx_val, chop_val, ma_dev_pct, ma_dir):
+    """市況判定: range / trend_up / trend_down
+    本物の ADX/Choppiness があれば優先、なければ MA 乖離率にフォールバック。
+    検証 (N=139): MA 乖離率「大」区分で勝率 48.6% / レンジ区分で勝率 29%
+    """
+    # 本物の ADX/Choppiness 優先
+    if adx_val is not None and not pd.isna(adx_val) and chop_val is not None and not pd.isna(chop_val):
+        if adx_val >= 25 and chop_val < 38.2:
+            return "trend_up" if ma_dir == "up" else "trend_down"
+        if adx_val < 20 and chop_val > 61.8:
+            return "range"
+    # フォールバック: MA 乖離率（既存 indicators から計算可能）
+    # 中央値 0.170% を閾値に
+    if ma_dev_pct >= 0.17:
+        return "trend_up" if ma_dir == "up" else "trend_down"
+    return "range"
+
+
+# ─────────────────────────────────────────────
+# 🆕 2026-05-28: モメンタムスコア（Step A）
+# 「人気・モメンタムが出ている銘柄を動的に拾う」設計の中核。
+# 銘柄ブラックリストではなく動的判定でフィルタする。
+# 検証 (N=139): 新案F の閾値で N=29 残・勝率 55.2%（vs 現状 32.4%）
+# ─────────────────────────────────────────────
+def calc_momentum_score(entry, direction, indicators):
+    """既存 indicators から計算可能なモメンタムスコア（yfinance 不要）。
+    direction: "long" / "short" or 日本語表記
+    返り値 dict or None（欠損時）
+    """
+    if entry is None or direction is None or not indicators:
+        return None
+    dsign = 1 if (direction == "long" or "ロング" in str(direction) or "買い" in str(direction)) else -1
+    ma25 = indicators.get("ma25")
+    ma75 = indicators.get("ma75")
+    rh = indicators.get("recent_high")
+    rl = indicators.get("recent_low")
+    if not all([ma25, ma75, rh, rl, entry]) or ma75 == 0 or rh == rl:
+        return None
+    ma_ratio = (ma25 - ma75) / ma75 * 100
+    entry_vs_ma25 = (entry - ma25) / ma25 * 100
+    range_pos = (entry - rl) / (rh - rl)
+    score = (ma_ratio + entry_vs_ma25 + (range_pos - 0.5)) * dsign
+    return {
+        "score": round(score, 3),
+        "ma_ratio_pct": round(ma_ratio, 3),
+        "entry_vs_ma25_pct": round(entry_vs_ma25, 3),
+        "entry_vs_ma25_signed": round(entry_vs_ma25 * dsign, 3),
+        "range_pos": round(range_pos, 3),
+        "direction_sign": dsign,
+    }
+
+
+def passes_momentum_filter(entry, direction, indicators):
+    """新案F: entry_vs_ma25 × dsign > 0.5 OR score >= 1.0
+    バックテスト (N=139): N=29 残、勝率 55.2%（現状 32.4%）。
+    指標欠損時は安全側で False（メール送信スキップ、記録は残す）。
+    返り値: (passes: bool, reason: str, momentum_dict: dict or None)
+    """
+    m = calc_momentum_score(entry, direction, indicators)
+    if m is None:
+        return False, "指標欠損のため安全側でスキップ", None
+    if m["entry_vs_ma25_signed"] > 0.5:
+        return True, f"entry vs MA25 {m['entry_vs_ma25_signed']:+.2f}% で順方向強", m
+    if m["score"] >= 1.0:
+        return True, f"momentum_score {m['score']:+.2f} で閾値超え", m
+    return False, f"momentum 不足 (score={m['score']:+.2f}, entry_vs_ma25={m['entry_vs_ma25_signed']:+.2f}%)", m
+
+
+# ─────────────────────────────────────────────
 # SL/TP をシグナル方向と ATR から算出
 # ─────────────────────────────────────────────
 def calc_entry_sl_tp(current_price, atr_value, direction):
@@ -209,6 +315,8 @@ def detect_signals(df_4h):
     ma25 = close.rolling(25).mean()
     ma75 = close.rolling(75).mean()
     atr = calc_atr(high, low, close)
+    # 🆕 2026-05-28: ADX / Choppiness Index（市況判定の本物指標、当面は記録のみ）
+    adx_series, chop_series = adx_choppiness(high, low, close)
 
     cur = close.iloc[-1]
     prev = close.iloc[-2]
@@ -275,22 +383,28 @@ def detect_signals(df_4h):
             "detail": f"25MA が 75MA を下抜け",
         })
 
+    # 🆕 2026-05-28: BB 内の位置（0=下端、1=上端）を計算
+    bb_width = bb_up_cur - bb_low_cur
+    bb_pos = (cur - bb_low_cur) / bb_width if bb_width > 0 else 0.5
+
     # ボリンジャー -2σ タッチ（反発期待）
-    if low.iloc[-1] <= bb_low_cur and cur > low.iloc[-1]:
+    # 🆕 2026-05-28: bb_pos < 0.3 必須（検証で 35% が上半分で発火、勝率 13% のバグ修正）
+    if low.iloc[-1] <= bb_low_cur and cur > low.iloc[-1] and bb_pos < 0.3:
         signals.append({
             "type": "bb_lower_touch",
             "severity": "buy",
             "label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
-            "detail": f"-2σ ({bb_low_cur:.2f}) に接触後、反発の兆し",
+            "detail": f"-2σ ({bb_low_cur:.2f}) に接触後、反発の兆し（BB 位置 {bb_pos:.2f}）",
         })
 
     # ボリンジャー +2σ 突破（過熱）
-    if cur > bb_up_cur and prev <= bb_up_cur:
+    # 🆕 2026-05-28: bb_pos > 0.7 必須（バグ対称、過熱判定の精度向上）
+    if cur > bb_up_cur and prev <= bb_up_cur and bb_pos > 0.7:
         signals.append({
             "type": "bb_upper_break",
             "severity": "warn",
             "label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
-            "detail": f"+2σ ({bb_up_cur:.2f}) を上抜け",
+            "detail": f"+2σ ({bb_up_cur:.2f}) を上抜け（BB 位置 {bb_pos:.2f}）",
         })
 
     # 直近 20 本高値ブレイク
@@ -313,6 +427,13 @@ def detect_signals(df_4h):
             "detail": f"直近安値 {recent_low:.2f} を下抜け",
         })
 
+    # 🆕 2026-05-28: 市況判定（ADX/Choppiness + MA 乖離率フォールバック）
+    adx_cur = float(adx_series.iloc[-1]) if not pd.isna(adx_series.iloc[-1]) else None
+    chop_cur = float(chop_series.iloc[-1]) if not pd.isna(chop_series.iloc[-1]) else None
+    ma_dev_pct = abs(ma25_cur - ma75_cur) / ma75_cur * 100 if ma75_cur else 0.0
+    ma_dir = "up" if ma25_cur > ma75_cur else "down"
+    regime = classify_regime(adx_cur, chop_cur, ma_dev_pct, ma_dir)
+
     return signals, {
         "price": cur,
         "rsi": rsi_cur,
@@ -325,6 +446,12 @@ def detect_signals(df_4h):
         "recent_high": recent_high,
         "recent_low": recent_low,
         "atr": float(atr.iloc[-1]) if not pd.isna(atr.iloc[-1]) else 0.0,
+        # 🆕 2026-05-28
+        "adx": adx_cur,
+        "chop": chop_cur,
+        "ma_dev_pct": round(ma_dev_pct, 4),
+        "ma_dir": ma_dir,
+        "regime": regime,
     }
 
 
@@ -1519,12 +1646,19 @@ def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_pla
             "rsi": round(float(indicators.get("rsi", 0)), 2),
             "macd": round(float(indicators.get("macd", 0)), 4),
             "macd_sig": round(float(indicators.get("macd_sig", 0)), 4),
-            "ma25": round(float(indicators.get("ma25", 0)), 2),
-            "ma75": round(float(indicators.get("ma75", 0)), 2),
-            "bb_low": round(float(indicators.get("bb_low", 0)), 2),
-            "bb_up": round(float(indicators.get("bb_up", 0)), 2),
-            "recent_high": round(float(indicators.get("recent_high", 0)), 2),
-            "recent_low": round(float(indicators.get("recent_low", 0)), 2),
+            # 🆕 2026-05-28: MA は丸め桁を 4 桁に拡張（FX で同値化バグ回避）
+            "ma25": round(float(indicators.get("ma25", 0)), 4),
+            "ma75": round(float(indicators.get("ma75", 0)), 4),
+            "bb_low": round(float(indicators.get("bb_low", 0)), 4),
+            "bb_up": round(float(indicators.get("bb_up", 0)), 4),
+            "recent_high": round(float(indicators.get("recent_high", 0)), 4),
+            "recent_low": round(float(indicators.get("recent_low", 0)), 4),
+            # 🆕 2026-05-28: ADX / Choppiness / 市況判定（Step C: 記録のみ、当面フィルタには使わない）
+            "adx": round(float(indicators["adx"]), 2) if indicators.get("adx") is not None else None,
+            "chop": round(float(indicators["chop"]), 2) if indicators.get("chop") is not None else None,
+            "ma_dev_pct": indicators.get("ma_dev_pct"),
+            "ma_dir": indicators.get("ma_dir"),
+            "regime": indicators.get("regime"),
         },
 
         # ファンダ
@@ -1648,6 +1782,17 @@ def main():
         price_str = f"{currency}{indicators['price']:.{decimals}f}"
         print(f"    🚨 新規シグナル {len(fresh_signals)} 件 [{timeframe.upper()}]: {[s['type'] for s in fresh_signals]}")
 
+        # 🆕 2026-05-28: フィルタ初期化（メール送信判定、signals-log は常に残す）
+        filter_send_email = True
+        filter_block_reason = None
+
+        # 🆕 2026-05-28: Step B - ma_golden 単独シグナルは無条件で送信スキップ
+        # 検証 (N=11) で 0 勝。複合発火時は他シグナルが主導なので問題なし。
+        if len(fresh_signals) == 1 and fresh_signals[0]["type"] == "ma_golden":
+            filter_send_email = False
+            filter_block_reason = "ma_golden 単独は過去 N=11 で 0 勝のため送信スキップ"
+            print(f"    🚫 フィルタ: {filter_block_reason}")
+
         # ファンダメンタル：ティッカー関連ニュースを取得 → 日本語に翻訳
         news_titles_en = fetch_ticker_news(ticker, max_items=5)
         if news_titles_en:
@@ -1676,6 +1821,26 @@ def main():
                   f"SL={position_plan['stop_loss']:.{decimals}f} "
                   f"TP1={position_plan['take_profit_1']:.{decimals}f} "
                   f"(ATR={atr_val:.{decimals}f})")
+
+        # 🆕 2026-05-28: Step A - モメンタムフィルタ（新案F）
+        # entry_vs_ma25 × dsign > 0.5 OR momentum_score >= 1.0 でメール送信
+        # バックテスト (N=139): 件数 1/4、勝率 32%→55%
+        momentum_info = None
+        if filter_send_email and position_plan:
+            passed, reason, momentum_info = passes_momentum_filter(
+                position_plan["entry"], direction, indicators
+            )
+            if not passed:
+                filter_send_email = False
+                filter_block_reason = f"モメンタム不足: {reason}"
+                print(f"    🚫 フィルタ: {filter_block_reason}")
+            else:
+                print(f"    ✅ モメンタム通過: {reason}")
+        elif filter_send_email and not position_plan:
+            # 方向感なし（warn のみ等）→ メール送信スキップ
+            filter_send_email = False
+            filter_block_reason = "方向感なし（warn のみのシグナル）"
+            print(f"    🚫 フィルタ: {filter_block_reason}")
 
         # 🆕 シグナル反転検知（往復ビンタ防止）
         position_direction = position_plan["direction"] if position_plan else None
@@ -1818,11 +1983,17 @@ MarketWatch AI Alerts
                     short_name = short_name[:12]
                 subject += f" /{short_name} {nearest['hours_until']:.0f}h"
 
-        # 送信（--no-email 時は完全スキップ）
+        # 送信（--no-email 時は完全スキップ、フィルタで弾かれた場合もスキップ）
+        # 🆕 2026-05-28: filter_send_email が False なら記録のみでメール送信せず
         email_sent = False
         if no_email:
             print(f"    🔇 メール送信スキップ（--no-email モード、データ収集のみ）")
             # 履歴更新（クールダウン目的）はメール送らなくても必要
+            for s in fresh_signals:
+                history[f"{ticker}:{s['type']}"] = datetime.now(JST).isoformat(timespec="seconds")
+        elif not filter_send_email:
+            print(f"    🔇 メール送信スキップ（{filter_block_reason}、ログには記録）")
+            # クールダウン履歴は更新（連投防止のため）
             for s in fresh_signals:
                 history[f"{ticker}:{s['type']}"] = datetime.now(JST).isoformat(timespec="seconds")
         else:
@@ -1865,6 +2036,15 @@ MarketWatch AI Alerts
         log_entry["china_context"] = china_ctx
         # 🆕 B2: 信頼度スコアを記録
         log_entry["confidence"] = confidence
+        # 🆕 2026-05-28: モメンタムフィルタ判定とスコアを記録（次回検証用）
+        log_entry["momentum_filter"] = {
+            "passed": filter_send_email,
+            "reason": filter_block_reason if not filter_send_email else "通過",
+            "score": momentum_info["score"] if momentum_info else None,
+            "entry_vs_ma25_signed": momentum_info["entry_vs_ma25_signed"] if momentum_info else None,
+            "range_pos": momentum_info["range_pos"] if momentum_info else None,
+            "ma_ratio_pct": momentum_info["ma_ratio_pct"] if momentum_info else None,
+        }
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
             "env_score": env["env_score"],
