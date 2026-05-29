@@ -314,8 +314,9 @@ def render_my_trades_section(trades):
       </div>"""
 
 
-def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id):
-    """timeframe ごとに同じ構造のダッシュボードセクションを生成"""
+def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id, note=""):
+    """timeframe ごとに同じ構造のダッシュボードセクションを生成。
+    note: 指定時、見出し直下に説明バナーを表示（1H=実験的データ収集の注記など）"""
     overall = calc_stats(signals)
     by_signal = group_stats(signals, lambda e: e.get("primary_signal"))
     by_ticker = group_stats(signals, lambda e: e.get("ticker"))
@@ -343,9 +344,16 @@ def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id):
     win_color = "#1a7f37" if overall["win_rate"] >= 60 else "#9a6700" if overall["win_rate"] >= 45 else "#cf222e"
     er_color = "#1a7f37" if overall["expected_R"] > 0.3 else "#9a6700" if overall["expected_R"] > 0 else "#cf222e"
 
+    note_html = (
+        f'<div style="background:#fff8e6;border:1px solid #f0c36d;border-radius:8px;'
+        f'padding:10px 14px;margin:6px 0 14px;font-size:.86rem;color:#664d03;line-height:1.5">{note}</div>'
+        if note else ""
+    )
+
     return f"""
 <div class="tab-pane" id="pane-{tab_id}">
   <h2>📈 全体パフォーマンス（{tab_label}）</h2>
+  {note_html}
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">確定シグナル総数</div>
@@ -1119,9 +1127,20 @@ def build_html(signals, trades):
     signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
 
     # 4 タブそれぞれのダッシュボード
-    pane_all = build_dashboard_section(signals, "all", "全体", "equityChartAll")
-    pane_4h = build_dashboard_section(signals_4h, "4h", "4H 足のみ", "equityChart4h")
-    pane_1h = build_dashboard_section(signals_1h, "1h", "1H 足のみ", "equityChart1h")
+    pane_all = build_dashboard_section(
+        signals, "all", "全体", "equityChartAll",
+        note="ℹ️ この「全体」には、メール配信していない<strong>1H 足の実験的シグナル（データ収集用）</strong>も含まれます。"
+             "実際に配信しているシグナルの成績は <strong>「🕓 4H 足」タブ</strong>をご覧ください。",
+    )
+    pane_4h = build_dashboard_section(
+        signals_4h, "4h", "4H 足のみ", "equityChart4h",
+        note="✅ これがメールで配信している<strong>本番シグナル</strong>の成績です。",
+    )
+    pane_1h = build_dashboard_section(
+        signals_1h, "1h", "1H 足のみ", "equityChart1h",
+        note="⚠️ 1H 足は<strong>実験的なデータ収集用</strong>で、メール配信はしていません。"
+             "ノイズが多く成績は参考値です（本番は 4H 足）。",
+    )
     pane_analytics = build_analytics_section(signals)
     pane_quality = build_quality_analysis_section(signals)
     pane_loss = build_outcome_analysis_section(signals)
@@ -1318,8 +1337,8 @@ def build_html(signals, trades):
   {my_trades_html}
 
   <div class="tab-bar">
-    <button class="tab-btn active" data-tab="all">🌐 全体（{count_all}）</button>
-    <button class="tab-btn" data-tab="4h">🕓 4H 足（{count_4h}）</button>
+    <button class="tab-btn" data-tab="all">🌐 全体（{count_all}）</button>
+    <button class="tab-btn active" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
@@ -1408,8 +1427,8 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
       window.dispatchEvent(new Event('resize'));
     }});
   }});
-  // 初期状態：全体タブ active
-  document.getElementById('pane-all').classList.add('active');
+  // 初期状態：4H 足タブ active（本番配信シグナルの成績を既定表示）
+  document.getElementById('pane-4h').classList.add('active');
 
   // エクイティカーブ生成ヘルパー
   function makeEquityChart(canvasId, labels, values, color) {{
