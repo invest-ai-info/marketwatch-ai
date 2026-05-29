@@ -43,8 +43,11 @@
 - **試走済(5資産)**: 6エージェント/約238kトークン、収集32→採用11。出力品質OK（BEA一次=HIGH、corroborated_by列挙、BTCは薄材料でconviction=LOW自己抑制、除外理由も記録、日付もプロジェクト世界と整合）
 - **エンジン連携実装済(記録のみ、commit `058c4d9`)**: `load_fundamental_context`/`briefing_bias_for`、各シグナルに `fundamental_context.bias_aligned` を記録。不在/鮮度切れ(>30h)は計算regimeへ安全フォールバック
 - 検証/残タスク:
-  - [ ] **⏸ 定期実行の仕組み化は保留中**（2026-05-29 ユーザー判断で一旦停止。予約エージェント routine の remote cloud 実行・repo push 可否の確認が前提）
-  - [ ] 仕組み化と同時に `fundamental-context.json` を SYNC禁忌へ追加
+  - [x] **定期実行の仕組み化 完了**（予約エージェント routine `trig_01M7uY1H8uR6tEwF1CJ7jXzV`、Sonnet、毎日 06:00/15:00 JST。テスト実行でリモート→WebSearch→検証→`fundamental-context.json`を main へコミット成功・8資産確認）
+  - [x] `fundamental-context.json` を SYNC禁忌へ追加済（CLAUDE.md）
+  - [x] **サイト「🔍 信頼性検証済みニュース」セクション実装・公開**（`generate_market_news.py`、index.html、8件、ライブ確認済）。**方向観は非公開**（ホワイトリスト方式で構造的に遮断）。compliance-reviewer 監査 **🟢白**。指摘反映:「ソース信頼度」ラベル＋URL重複除去
+  - [ ] **Max枠 vs 別課金の計上確認**（claude.ai 利用状況で初回実行分を確認）
+  - [ ] 弁護士アジェンダ追加: 「ソース信頼度 高/中」ラベルが優良誤認に当たらないか
   - [ ] Phase2 で「bias_aligned=False を弾いていたら勝率は?」を signals-log で検証
   - [ ] 対象銘柄を主要トレード銘柄に拡張（コスト次第、1日1-2回厳守）
 
