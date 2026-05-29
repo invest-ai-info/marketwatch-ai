@@ -196,8 +196,9 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 - **workflow 管理ファイル**: `signals-log.json` / `technical-alerts-history*.json` / `track-record.html`
 - **political 系**: `political-feed.html` / `political-feed.json`
 - **YouTube 系**: `youtube-summary.html` / `youtube-summary-data.json`
+- **ファンダ・ブリーフィング**: `fundamental-context.json`（予約エージェント routine `fundamental-briefing` が 1日2回 GitHub 側で生成・コミット。`generate_technical_alerts.py` と `generate_market_news.py` が読む。ローカルから push すると routine の最新版を巻き戻すため禁止）
 
-**理由**: これらは cron が GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。
+**理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。
 
 HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で手動 trigger。
 
