@@ -1,15 +1,16 @@
 {
-  "generated_at": "2026-05-29T22:33:00+09:00",
+  "generated_at": "2026-05-30T06:05:06+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
+    "regime": "RISK_ON",
     "confidence": "MID",
-    "rationale": "S&P500・日経225・Nasdaqが史上最高値圏にあり表面的にはリスクオン。しかし4月PCEが前年比3.8%（約3年ぶり高水準）に急騰し、Fed利上げ再開確率が約40%に浮上。米イラン和平交渉はTrumpが「大筋合意済み」と発言しつつもイランが合意内容を否定しており、ホルムズ海峡の先行きは依然不透明。BTC・金が軟調で地政学プレミアムが剥落しつつあるが、原油高・高インフレが継続しセンチメントの上値を制限。リスクオンとリスクオフが拮抗するNEUTRAL状態と判断する。",
+    "rationale": "米国・イラン60日停戦MOU暫定合意観測が支配的材料。WTI原油が5月で約17%急落しインフレ懸念が後退、S&P500・ナスダックは史上最高値圏、日経225は5月で+11.6%。PCEコア月次が予想下回りFRBの利上げ観測もやや後退。一方でトランプ大統領の署名未了・BofA Bull&Bear指標が「売りシグナル」に接近・30年米債利回りが依然5%超という下方リスクが残り、MID確信にとどめる。BTCが5月中旬高値から約10%下落しているのも懐疑シグナル。",
     "key_drivers": [
-      "S&P500・日経225・Nasdaqが史上最高値更新（AI・半導体主導）",
-      "4月PCE前年比3.8%（コアPCE3.3%）と約3年ぶり高水準→Fed利上げ再開確率40%に急上昇",
-      "米イラン和平交渉「大筋合意済み」（Trump発言）だがイランが内容を否定、ホルムズ先行き不透明",
-      "BOJ：政策金利0.75%据え置き、インフレ上振れを警告するも急激な正常化を示唆せず",
-      "Fed新議長Kevin Warsh就任（Powell退任）、4月FOMCで反対票4名と分裂"
+      "米国・イラン停戦MOU暫定合意でホルムズ海峡リスクプレミアム解消",
+      "WTI原油が5月で約17%急落（Brentはコロナ禍以来最悪の月次下落）",
+      "米PCEコア月次が予想下回り、年率3.3%は依然高いが方向感は緩和",
+      "S&P500が7,412・ナスダックが26,274と史上最高値、Q1決算84%コンセンサス超え",
+      "日経225が66,329（+2.53%）、国内小売販売1年ぶり最大・鉱工業生産予想外増",
+      "リスク要因: 停戦署名なし・30年債5%超・BofA売りシグナル接近・BTC調整継続"
     ]
   },
   "assets": [
@@ -17,42 +18,32 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BULLISH",
-      "conviction": "MID",
-      "rationale": "5月27日に一時66,428円と史上最高値を更新（終値64,999）。AI・半導体関連の買いと米テック株高が牽引。円安（USDJPY≈159）が輸出株を支援。BOJは0.75%据え置きで緩和的な環境が継続。ただし高値圏での地政学リスクと利上げ懸念が上値を抑えており、BULLISHだがConvictionはMID。",
+      "conviction": "HIGH",
+      "rationale": "5月29日に66,329（+2.53%）と大幅上昇。月次+11.6%・前年同期比+74%と突出したパフォーマンス。国内小売販売が1年ぶり最大の伸び、鉱工業生産も予想外増と国内材料が好調。イラン停戦楽観論も追い風。キオクシア+7.5%・ソフトバンクG+5.1%・村田製作所+12.7%・太陽誘電+13.9%など電子部品・半導体が牽引。BOJは0.75%維持（タカ派票3票）で急激な円高の引き金にはなりにくく、輸出株にも引き続き有利。",
       "catalysts": [
-        "AI・半導体需要拡大によるソフトバンクなどテック株の急騰（SBG+18%超）",
-        "円安（USDJPY≈159）による輸出企業への追い風",
-        "BOJ政策金利0.75%据え置き、引き続き緩和的環境を提供",
-        "米Nasdaq最高値連動による東京市場へのモメンタム波及"
+        "国内小売販売1年ぶり最大の伸び・鉱工業生産予想外増",
+        "イラン停戦楽観論による地政学リスク後退",
+        "電子部品・半導体セクター急騰（キオクシア・村田・太陽誘電）",
+        "BOJ利上げ見送り継続（円安維持、輸出株追い風）"
       ],
       "top_news": [
         {
-          "headline": "日経225が一時66,428円と史上最高値更新、米テック株高を受けた半導体関連買いが牽引",
-          "source": "The Japan Times",
-          "tier": 3,
-          "credibility": "HIGH",
-          "corroborated_by": ["CNBC", "Yahoo Finance"],
+          "headline": "Nikkei 225 jumped 2.53% to 66,329 on May 29; Japan retail sales at fastest pace in a year, industrial production rose unexpectedly",
+          "source": "Trading Economics",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.japantimes.co.jp/business/2026/05/27/markets/nikkei-hit-high-may/"
+          "url": "https://tradingeconomics.com/japan/stock-market"
         },
         {
-          "headline": "ソフトバンク株が18%超急騰、日本テック株主導で日経225が最高値圏へ",
-          "source": "CNBC",
-          "tier": 2,
+          "headline": "Bank of Japan keeps policy rate at 0.75% in 6-3 vote; raises inflation forecast to 2.8%, cuts GDP growth to 0.5% on Iran war worries",
+          "source": "Bank of Japan / CNBC",
+          "tier": 1,
           "credibility": "HIGH",
-          "corroborated_by": ["Japan Times"],
+          "corroborated_by": ["BOJ official statement", "CNBC"],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.cnbc.com/2026/05/07/japan-softbank-tech-shares-nikkei-to-record-high.html"
-        },
-        {
-          "headline": "BOJ植田総裁：インフレリスク拡大を警告、次回会合での利上げシグナルは出さず",
-          "source": "CNBC",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics"],
-          "materiality": "mid",
           "direction": "neutral",
           "url": "https://www.cnbc.com/2026/04/28/bank-of-japan-keeps-policy-rate-steady-cpi-iran-war-gdp.html"
         }
@@ -61,35 +52,35 @@
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "NEUTRAL",
+      "bias": "BULLISH",
       "conviction": "MID",
-      "rationale": "5月28日に7,519で引けと史上最高値を更新。Q1 EPS成長率+28% YoYと企業業績は強い。しかしPCE3.8%・コアPCE3.3%という高インフレを受け、Fed利上げ再開確率が40%に浮上しており、バリュエーション面での制約が増す。AI関連が時価総額の約50%を占める集中リスクも存在。強い業績と高いインフレ・金利リスクが拮抗しNEUTRAL。",
+      "rationale": "S&P500は7,412で史上最高値圏。Q1決算で構成企業の84%がコンセンサスを上回り、純利益率13.4%は2009年以来最高。イラン停戦楽観論と原油急落がインフレ懸念後退に寄与。次FOMC（6/17-18）は据え置き確実視。下方リスクはBofAのBull&Bear指標が売りシグナルに接近（ファンドマネジャーの株式オーバーウェイトがネット50%と急拡大）、30年債利回り5%超が高バリュエーション銘柄の重しとなる点。",
       "catalysts": [
-        "Q1 S&P500決算EPS成長率+28% YoY（事前予想を大幅超過）",
-        "AI関連銘柄がS&P500の約50%を占め指数全体を牽引",
-        "PCE前年比3.8%（最高値）→Fed利上げ再開確率40%が上値を制限",
-        "Fed新議長Kevin Warsh就任、政策方向性の不確実性が増大"
+        "Q1決算84%がコンセンサス超え・純利益率13.4%（2009年来最高）",
+        "イラン停戦→インフレ懸念後退→リスクオン",
+        "PCEコア月次予想下回りで米利下げ観測がやや前進",
+        "リスク: BofA売りシグナル接近・30年債5%超・高バリュエーション"
       ],
       "top_news": [
         {
-          "headline": "S&P500が7,519で最高値更新、PCE3.8%で利上げ懸念も浮上（5月28日）",
-          "source": "TheStreet",
-          "tier": 3,
+          "headline": "S&P 500 closes at record 7,412.84; 84% of companies beat Q1 estimates, blended net profit margin 13.4%—highest since 2009",
+          "source": "CNBC / Crestwood Advisors",
+          "tier": 2,
           "credibility": "HIGH",
           "corroborated_by": ["CNBC", "Crestwood Advisors"],
           "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-may-28-2026"
+          "direction": "bullish",
+          "url": "https://www.crestwoodadvisors.com/may-2026-economic-and-market-update/"
         },
         {
-          "headline": "4月PCE前年比3.8%と約3年ぶり高水準、CME FedWatch Fed利上げ確率40%に急上昇",
-          "source": "Federal Reserve / CME FedWatch",
-          "tier": 1,
-          "credibility": "HIGH",
-          "corroborated_by": ["CNBC", "TheStreet", "unboxfuture.com報道"],
-          "materiality": "high",
+          "headline": "BofA Bull & Bear Indicator nearing 'sell signal'; fund managers at net 50% equity overweight, early June 'ripe for profit taking'",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
           "direction": "bearish",
-          "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260429.htm"
+          "url": "https://www.cnbc.com/2026/05/20/market-correction-equities-stocks-bonds-iran-inflation.html"
         }
       ]
     },
@@ -98,58 +89,58 @@
       "ticker": "NQ=F",
       "bias": "BULLISH",
       "conviction": "MID",
-      "rationale": "5月27日に26,656で引けと最高値更新。AI・半導体需要の拡大がNvidiaなどメガテックを牽引。インフレ高止まりによる金利上昇リスクはグロース株に理論上逆風だが、AI投資サイクルへの期待と強い決算が需要を支えており、短期的にBULLISH方向を維持。",
+      "rationale": "ナスダック総合は26,274で史上最高値。S&P500と同様に好調なQ1決算（Big Tech中心）、AIテーマ継続、イラン停戦観測が追い風。ただし高PER×30年債5%超という構造的な圧力がグロース株の上値を抑制する可能性があり、MID確信とする。BofA売りシグナル接近のリスクもS&P500と共有。",
       "catalysts": [
-        "AI・データセンター向け半導体需要の強い伸び（メモリ・GPU）",
-        "メガテック企業のQ1決算が予想を大幅超過",
-        "日経・ソフトバンクを含むグローバルなAIテーマの連鎖",
-        "利上げ確率40%は懸念材料だが、現時点では牽引力が優勢"
+        "Big Tech・AI関連Q1決算好調",
+        "ナスダック史上最高値26,274",
+        "イラン停戦→インフレ懸念後退→グロース株有利",
+        "リスク: 高PER×高長期金利・BofA売りシグナル接近"
       ],
       "top_news": [
         {
-          "headline": "NasdaqとS&P500が史上最高値更新、テクノロジー株が上昇を牽引（5月27〜28日）",
-          "source": "CNBC",
+          "headline": "Nasdaq Composite closes at record 26,274.13 alongside S&P 500 all-time highs; Big Tech rebound and Iran ceasefire optimism cited",
+          "source": "CNBC / Naga Markets",
           "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["TheStreet"],
+          "credibility": "MID",
+          "corroborated_by": ["CNBC", "Naga Markets"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.cnbc.com/2026/05/25/stock-futures-today-live-updates.html"
+          "url": "https://naga.com/en/news-and-analysis/articles/stock-market-forecast"
         }
       ]
     },
     {
       "name": "金",
       "ticker": "GC=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "5月26日時点で約$4,521/oz（一時$4,400まで約2%下落）。米イラン和平交渉の進展期待から地政学プレミアムが剥落し、約2ヶ月ぶり安値圏へ。ただし過去1年で+41%と歴史的高水準を維持しており、インフレヘッジ需要は根強い。和平実現なら下値余地、決裂ならサポートと二方向リスクが拮抗。Fed利上げ再開観測は実質金利上昇につながり逆風。方向感が定まりにくくNEUTRAL。",
+      "rationale": "5月28日時点で$4,502（前日比+1%）だが、1月の史上最高値$5,100から約12%下落。3か月間の下降トレンド継続中。イラン停戦楽観論により安全資産としての需要が後退。原油急落もインフレヘッジとしての金需要を減退させる。ドル安（DXY 98.9）は金の下支え要因だが、主導材料がリスクオンへのシフトである以上、近い好転には$5,000超えのブレイクが必要でハードルは高い。",
       "catalysts": [
-        "米イラン和平交渉進展→地政学プレミアム縮小→価格下押し圧力",
-        "PCE3.8%・インフレ高止まり→インフレヘッジ需要が下値を支える",
-        "Fed利上げ再開観測（40%）→実質金利上昇リスクで金には逆風",
-        "和平合意が失敗した場合の再上昇シナリオ"
+        "イラン停戦楽観論でリスクプレミアム・安全資産需要が後退",
+        "WTI急落でインフレヘッジ需要が低下",
+        "下支え要因: DXY 98.9と4年来安値（ドル安は金に有利）",
+        "下支え要因: 米財政赤字拡大・長期的な実質金利低下期待（短期効果は限定的）"
       ],
       "top_news": [
         {
-          "headline": "金が約2ヶ月ぶり安値$4,400へ下落、米イラン和平進展期待で地政学プレミアム後退",
-          "source": "Fortune",
-          "tier": 3,
-          "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics", "Barchart"],
+          "headline": "Gold at $4,502 on May 28, down ~12% from January ATH of $5,100; 3-month downtrend intact, Bollinger Bands moving sideways",
+          "source": "Trading Economics / SSGA Monthly Gold Monitor",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": ["Trading Economics", "SSGA"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://fortune.com/article/current-price-of-gold-05-26-2026/"
+          "url": "https://tradingeconomics.com/commodity/gold"
         },
         {
-          "headline": "Fedリサ・クック理事：現時点では金利据え置き支持、インフレ加速なら利上げ余地残す",
-          "source": "Reuters / 報道各社",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics"],
+          "headline": "Gold in the shadow of the oil price shock: if oil declines to $80/bbl on Iran deal, gold could cross $5,000; oil above $100 constrains rally",
+          "source": "Investing.com",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://tradingeconomics.com/commodity/gold"
+          "direction": "neutral",
+          "url": "https://www.investing.com/analysis/gold-in-the-shadow-of-the-oil-price-shock-200679807"
         }
       ]
     },
@@ -157,78 +148,68 @@
       "name": "原油",
       "ticker": "CL=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "WTIは$91〜$99/bbl圏（年初$60未満から急騰後）。Trump「和平は大筋合意、ホルムズ開放は近い」発言でここ2週連続下落トレンド。しかしイランは合意内容を否定し、米軍が新たな対イラン攻撃を実施するなど緊張は完全には解消されていない。UAE脱退でOPEC+の統制力が低下、短期的は和平期待でBEARISHだが不確実性が極めて高くConvictionはLOW。",
+      "conviction": "HIGH",
+      "rationale": "WTIは5月29日に$87.2と約6週ぶりの安値で、5月で約17%下落（Brentは約19%—コロナ禍以来最悪の月次下落）。米国・イラン間の60日停戦MOU暫定合意観測が支配的材料で、ホルムズ海峡のリスクプレミアムが解消方向。J.P.Morgan・Goldman SachsはBrent年平均$56-60を予想。リスク要因: ①トランプ大統領の署名未了 ②イランによるクウェートへの弾道ミサイル攻撃が継続 ③イラン原油出荷量が4月1.5mbpdから5月0.3mbpdに急減と供給正常化は道半ば。",
       "catalysts": [
-        "米イラン和平交渉進展→ホルムズ海峡再開への期待で供給懸念後退（価格下押し）",
-        "UAE がOPEC脱退（5月1日）→最大100万bbl/日の柔軟性獲得",
-        "イランが合意内容を否定、米軍の新たな攻撃で緊張が再燃するリスク",
-        "OPEC+ 4月産出が約174万bbl/日減と供給タイト継続"
+        "米国・イラン60日停戦MOU暫定合意、ホルムズ海峡リスクプレミアム解消",
+        "WTI 5月で約17%下落・Brentはコロナ禍以来最悪月次",
+        "J.P.Morgan・Goldman SachsがBrent年平均$56-60予想",
+        "リスク: トランプ未署名・イランが弾道ミサイル攻撃継続・原油出荷量1/5に急減"
       ],
       "top_news": [
         {
-          "headline": "Trump「イランとの合意はほぼ妥結、ホルムズは近く開放される」と発言",
+          "headline": "WTI crude drops ~2% to $87.2, on track for 17% monthly decline as US-Iran ceasefire extension talks advance; Brent posts worst month since COVID",
           "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["CNN", "CBS News", "Al Jazeera"],
+          "corroborated_by": ["CNBC", "Fortune", "Euronews"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/05/23/us-iran-war-talks.html"
+          "url": "https://www.cnbc.com/2026/05/29/oil-prices-iran-ceasefire-us-trump-strait-hormuz-energy-costs.html"
         },
         {
-          "headline": "イランがTrump発言を否定、ホルムズはイラン管理下と主張",
-          "source": "CNN / Al Jazeera",
+          "headline": "US and Iran 'mostly agreed' on 60-day ceasefire MOU; Trump has not yet approved and Iranian forces fired ballistic missiles at Kuwait",
+          "source": "CNBC / Euronews",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Al Jazeera", "Iran International"],
+          "corroborated_by": ["CNBC", "Euronews"],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.cnn.com/2026/05/27/world/live-news/iran-war-us-news"
-        },
-        {
-          "headline": "IEA 2026年5月石油市場レポート：需給逼迫継続を分析",
-          "source": "IEA",
-          "tier": 1,
-          "credibility": "HIGH",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.iea.org/reports/oil-market-report-may-2026"
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/05/28/oil-prices-us-strikes-in-iran-revive-strait-of-hormuz-turmoil-fears.html"
         }
       ]
     },
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "BULLISH",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "USDJPY≈159と約1ヶ月ぶりの円安水準。BOJは4月会合で0.75%を据え置き、植田総裁はインフレリスクを警告しつつも「急がない」スタンスを維持。一方FedはPCE3.8%を受け利上げ再開確率40%に浮上。日米金利差は依然325bpと大きくドルキャリーが有利。短期的にはドル高・円安方向（BULLISH on USDJPY）を維持とみる。",
+      "rationale": "ドル弱含み（DXY 98.9・4年来安値圏）とBOJタカ派圧力の組み合わせでUSDJPYはベアリッシュ。USD安要因: ①イラン停戦でドルの安全資産需要後退 ②PCEコア月次が予想下回り ③米財政赤字拡大への市場懸念 ④Powell→Warsh交代前後の政策不確実性。円強含み要因: BOJは0.75%維持も3人がタカ派反対票（1%への利上げ要求）で追加利上げ観測持続。ただしBOJが日本の成長率見通しを0.5%に下方修正したため円の上値は抑制される。総合してUSDJPYベアリッシュ・MID確信。",
       "catalysts": [
-        "日米金利差325bpと依然大きく、ドルキャリーが有利な環境が継続",
-        "BOJ：0.75%据え置き、急激な正常化を示唆せず（利上げ先送り観測）",
-        "Fed：PCE3.8%でインフレ高止まり→利上げ再開観測→金利差拡大リスク",
-        "植田総裁「インフレリスク高まっている」も「慌てる必要なし」で円高材料乏しい"
+        "DXY 98.9（4年来安値）、イラン停戦でドル安全資産需要後退",
+        "PCEコア月次予想下回りで米利下げ観測がやや前進",
+        "BOJタカ派票3票、追加利上げ観測が円を支持",
+        "リスク: 日本GDP成長率0.5%に下方修正、円の上値抑制"
       ],
       "top_news": [
         {
-          "headline": "円が159円台まで下落、BOJ植田総裁が次回会合での利上げシグナルを出さず",
-          "source": "Forex.com / FXStreet",
-          "tier": 3,
-          "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics"],
+          "headline": "DXY falls to 98.89 near 4-year low as Iran ceasefire safe-haven unwind and below-forecast PCE weigh on dollar",
+          "source": "Trading Economics / TradingKey / Goldman Sachs",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": ["Trading Economics", "TradingKey", "Goldman Sachs"],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.forex.com/en-us/news-and-analysis/usdjpy-forecast-whats-next-for-the-yen-after-the-boj-decision/"
+          "direction": "bearish",
+          "url": "https://www.goldmansachs.com/insights/articles/how-us-fiscal-concerns-are-affecting-bonds-currencies-stocks"
         },
         {
-          "headline": "BOJ、4月会合で政策金利0.75%据え置き。インフレ見通しを2.8%に上方修正",
-          "source": "CNBC",
-          "tier": 2,
+          "headline": "BOJ holds at 0.75% in 6-3 vote; dissenters demand 1% rate hike, inflation forecast raised to 2.8%, GDP forecast cut to 0.5%",
+          "source": "Bank of Japan / CNBC",
+          "tier": 1,
           "credibility": "HIGH",
-          "corroborated_by": ["BOJ公式カレンダー"],
-          "materiality": "high",
-          "direction": "bullish",
+          "corroborated_by": ["BOJ official", "CNBC"],
+          "materiality": "mid",
+          "direction": "bearish",
           "url": "https://www.cnbc.com/2026/04/28/bank-of-japan-keeps-policy-rate-steady-cpi-iran-war-gdp.html"
         }
       ]
@@ -238,88 +219,66 @@
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "EURUSD≈1.1617と6週ぶり安値圏。ECBは6月11日会合での25bp利上げ確率が約86%と高く、これはユーロ支援要因。しかし米イラン和平交渉進展により欧州エネルギー価格の下落が見込まれ、ECBのタカ派姿勢が後退するシナリオもある。一方でFedの利上げ再開観測はドル支援。相反する材料が均衡しており方向感を出しにくいためNEUTRAL・ConvictionLOW。",
+      "rationale": "EUR/USDは1.1668（5月29日、前日比+0.14%）。月次では0.8%下落と対ドルでやや弱含み。ドル安（DXY 4年来安値）はEUR/USDの下支えになるが、EUR自体も月次マイナスで相殺。2026年高値1.2019から現在1.1668まで調整継続。ECBの政策動向に関する明確な材料を本セッションで収集できず、材料が薄いため素直にNEUTRAL・LOW確信とする。",
       "catalysts": [
-        "ECB 6月11日会合での25bp利上げ確率86%→ユーロ支援要因",
-        "米イラン和平交渉進展→欧州エネルギーコスト低下→ECBタカ派後退リスク",
-        "Fed利上げ再開観測（40%）→ドル支援→ユーロ下押し",
-        "ECB声明「インフレ上振れリスクと成長下振れリスクが強まった」"
+        "DXY弱含み（4年来安値）はEUR/USD上値余地",
+        "EUR自体も月次0.8%安（相殺要因）",
+        "ECB政策動向（本回の収集範囲外のため判断保留）"
       ],
       "top_news": [
         {
-          "headline": "EURUSD≈1.1617と6週ぶり安値、米イラン和平交渉期待によるドル選好",
-          "source": "Trading Economics / ECB公式データ",
+          "headline": "EUR/USD rises to 1.1668 on May 29, up 0.14% on the day but down 0.8% for the month; 2026 high was 1.2019",
+          "source": "Trading Economics / ECB",
           "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["ECB exchange rate reference"],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html"
-        },
-        {
-          "headline": "ECB 6月11日会合での利上げ確率86%、ユーロ圏インフレリスクが上振れ継続",
-          "source": "Investing.com",
-          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
+          "corroborated_by": ["Trading Economics", "ECB reference rate"],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.investing.com/analysis/eurusd-enters-2026-near-key-resistance-as-fed-cuts-meet-ecb-hold-200672583"
+          "direction": "neutral",
+          "url": "https://tradingeconomics.com/euro-area/currency"
         }
       ]
     },
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "BTC≈$74,332（5月28日）と5月高値$80,120から約7.2%下落。ホルムズ海峡を巡る地政学的緊張とFedの利上げ再開観測が重なり、リスク資産として特に敏感に下落。ただし中期的な方向性は不明確で、Trump政権のBTC保有拡大構想などの支援材料も存在。短期はBEARISHだがConvictionはLOW。",
+      "rationale": "BTCは$73,048（5月29日）。5月中旬の$81,224から約10%下落し、$73,000-$77,000での統合フェーズ。リスクオン環境（株式ATH）は長期的な支援材料だが、短期では高値からの調整が継続中。アナリストの月末$79,021予想は強気だが依拠するソースがアグリゲーター系でtier4水準のため確信には使えない。暗号市場特有の規制・流動性リスクが短期の不確実性を高める。材料の質が低いためLOW確信とする。",
       "catalysts": [
-        "米イラン軍事衝突・ホルムズ緊張→リスクオフでBTC下押し",
-        "Fed利上げ再開観測浮上（40%）→リスク資産全般の割引率上昇",
-        "Trump政権：政府保有BTCの増加を検討→中期的な支援材料の可能性",
-        "5月高値$80,120から約7.2%の急落"
+        "リスクオン環境（株式ATH）は長期的支援材料",
+        "$73,000-$77,000での統合、方向性不明瞭",
+        "5月中旬$81,224から約10%下落中（調整フェーズ）"
       ],
       "top_news": [
         {
-          "headline": "ビットコインが5月28日に$74,332へ下落、ホルムズ緊張とFed利上げ懸念が重荷",
-          "source": "Yahoo Finance",
-          "tier": 3,
-          "credibility": "HIGH",
-          "corroborated_by": ["Fortune"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-prices-today-thursday-may-28-2026-down-this-morning-and-falling-further-113406336.html"
-        },
-        {
-          "headline": "Trump政権、政府保有ビットコインの増加を検討との報道",
-          "source": "Fortune",
-          "tier": 3,
+          "headline": "Bitcoin at ~$73,048 on May 29, down from mid-May high of $81,224; in critical consolidation phase in $73,000-$77,000 range",
+          "source": "Yahoo Finance / Fortune",
+          "tier": 2,
           "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "low",
-          "direction": "bullish",
-          "url": "https://fortune.com/article/price-of-bitcoin-05-27-2026/"
+          "corroborated_by": ["Yahoo Finance", "Fortune"],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-prices-today-thursday-may-28-2026-down-this-morning-and-falling-further-113406336.html"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "Elon MuskのGrok AIが2026年末の金価格を予測",
-      "reason": "AIによる価格予測はtier4相当、独立した一次情報なし。市場動向への直接的な影響材料ではないため除外。"
+      "headline": "Top 3 Cryptos Set to Follow Bitcoin (BTC) Price Surge in May 2026",
+      "reason": "アグリゲーター系記事（tier4）。具体的根拠なし・断定的な価格予測。除外。"
     },
     {
-      "headline": "2026年株式市場崩壊リスク5つ（US News）",
-      "reason": "アグリゲーター記事の年初来展望論評。直近3〜5日のフレッシュな市場材料ではなく除外。"
+      "headline": "Bitcoin price forecast: will reach $79,021.57 by May 31, 2026 (+7.73%)",
+      "reason": "Analyticsinsight/intellectia等のtier4アグリゲーター出所。単一ソース・AI予測記事。参考に留め断定材料として不採用。"
     },
     {
-      "headline": "各社2026年相場見通し（JPモルガン・Morgan Stanley・UBS等）",
-      "reason": "2026年初時点の年間見通しであり、直近3〜5日の具体的な市場動向材料ではないため除外。"
+      "headline": "Crude Oil on path to $90 as the peace trade continues – WTI Technical analysis (OANDA/MarketPulse)",
+      "reason": "5月29日の停戦報道（WTI急落17%）と方向性が逆。古い時点の分析であり現状と乖離。単一tier3ソース。除外。"
     },
     {
-      "headline": "JPモルガン：金価格2026年中に$6,300到達を予測",
-      "reason": "単一アナリスト予測（tier3相当）、独立した裏付けなし。直近の価格動向への直接的材料ではないため除外。"
+      "headline": "A 2026 global macro outlook: Patience (BlackRock)",
+      "reason": "2026年初頭時点の年初見通し記事。直近3-5日の材料ではないため直接採用せず参考に留める。"
     }
   ]
 }
