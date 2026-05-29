@@ -1067,6 +1067,51 @@ def assess_directional_bias(ticker, regime, signal_direction):
     }
 
 
+# 🆕 2026-05-29 L2: ファンダ・ブリーフィング（fundamental-context.json）連携
+# Claude の多サブエージェント・ブリーフィングが生成した信頼度検証済みの方向観を読み込み、
+# Layer0/1 の「厚い」入力として使う。当面は記録のみ（発火には未使用）。不在/鮮度切れは None。
+FUNDAMENTAL_CONTEXT_FILE = "fundamental-context.json"
+
+
+def load_fundamental_context(max_age_hours=30):
+    """fundamental-context.json を読み込む。鮮度切れ/不在/壊れは None を返す（計算regimeにフォールバック）。"""
+    try:
+        with open(FUNDAMENTAL_CONTEXT_FILE, encoding="utf-8") as f:
+            ctx = json.load(f)
+    except Exception:
+        return None
+    gen = ctx.get("generated_at")
+    gdt = None
+    if gen:
+        try:
+            gdt = datetime.fromisoformat(gen)
+        except Exception:
+            try:
+                gdt = datetime.strptime(gen, "%Y-%m-%d")
+            except Exception:
+                gdt = None
+    if gdt is not None:
+        if gdt.tzinfo is None:
+            gdt = gdt.replace(tzinfo=JST)
+        age_h = (datetime.now(JST) - gdt).total_seconds() / 3600
+        if age_h > max_age_hours:
+            print(f"  ⚠️ fundamental-context.json 鮮度切れ（{age_h:.0f}h 前）→ 計算 regime にフォールバック")
+            return None
+    # 資産バイアス lookup（FX の =X を除去して正規化: USDJPY=X ⇔ USDJPY）
+    ctx["_bias_map"] = {
+        (a.get("ticker") or "").replace("=X", ""): a
+        for a in ctx.get("assets", []) if a.get("ticker")
+    }
+    return ctx
+
+
+def briefing_bias_for(ctx, ticker):
+    """ブリーフィングから該当銘柄の資産エントリを返す（無ければ None）。"""
+    if not ctx:
+        return None
+    return ctx.get("_bias_map", {}).get((ticker or "").replace("=X", ""))
+
+
 def evaluate_currency_strength_alignment(ticker, position_direction, strength):
     """シグナルが通貨強弱とアラインしているか判定。
     例: AUDJPY ロング → AUD 強 + JPY 弱 なら "順張り"、逆なら "逆張り"
@@ -2260,6 +2305,14 @@ def main():
     _vix_snapshot = fetch_vix_data()
     risk_regime = assess_risk_regime(currency_strength, _vix_snapshot)
     print(f"  🧭 リスク環境: {risk_regime['regime']} (score={risk_regime['score']}) | {' / '.join(risk_regime['factors'])}")
+    # 🆕 2026-05-29 L2: ファンダ・ブリーフィングを 1 回読み込み（あれば Layer0/1 の主入力。記録のみ）
+    fundamental_ctx = load_fundamental_context()
+    if fundamental_ctx:
+        _br = fundamental_ctx.get("risk_regime", {})
+        print(f"  📰 ブリーフィング採用: regime={_br.get('regime')} ({_br.get('confidence')}) "
+              f"generated={fundamental_ctx.get('generated_at')} / 資産 {len(fundamental_ctx.get('_bias_map', {}))} 件")
+    else:
+        print("  📰 ブリーフィングなし → 計算 regime のみ")
     total_signals = 0
     sent_emails = 0
     now_jst = datetime.now(JST)
@@ -2576,6 +2629,22 @@ MarketWatch AI Alerts
         _sigdir = "long" if "ロング" in _dir else ("short" if "ショート" in _dir else "neutral")
         log_entry["risk_regime"] = risk_regime
         log_entry["directional_bias"] = assess_directional_bias(ticker, risk_regime["regime"], _sigdir)
+        # 🆕 2026-05-29 L2: ブリーフィング由来の方向観との一致を記録（記録のみ・発火未使用）
+        _fb = briefing_bias_for(fundamental_ctx, ticker)
+        _brief_bias = _fb.get("bias") if _fb else None  # BULLISH / BEARISH / NEUTRAL
+        _brief_allowed = {"BULLISH": "long", "BEARISH": "short"}.get(_brief_bias)
+        _brief_aligned = (_brief_allowed == _sigdir) if (_brief_allowed and _sigdir in ("long", "short")) else None
+        log_entry["fundamental_context"] = {
+            "available": fundamental_ctx is not None,
+            "source": "briefing" if fundamental_ctx else "computed",
+            "briefing_generated_at": fundamental_ctx.get("generated_at") if fundamental_ctx else None,
+            "regime": (fundamental_ctx.get("risk_regime", {}).get("regime") if fundamental_ctx else risk_regime["regime"]),
+            "regime_confidence": (fundamental_ctx.get("risk_regime", {}).get("confidence") if fundamental_ctx else None),
+            "asset_bias": _brief_bias,
+            "asset_conviction": (_fb.get("conviction") if _fb else None),
+            "signal_direction": _sigdir,
+            "bias_aligned": _brief_aligned,
+        }
         # 🆕 FX 整合性データ（FX ペアのみ）
         log_entry["fx_alignment"] = fx_alignment
         # 🆕 中国コンテキスト（AUD ペアのみ）
