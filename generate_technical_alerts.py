@@ -950,6 +950,123 @@ def format_currency_strength(strength):
     return "\n".join(lines) + "\n"
 
 
+# ─────────────────────────────────────────────
+# 🆕 2026-05-29 Phase1: トップダウン層（Layer0 リスク環境 / Layer1 方向バイアス）
+# 記録のみ。メール挙動・発火判断は一切変えない。検証用フィールドを signals-log に追加するだけ。
+# 詳細仕様: SIGNAL_REDESIGN.md
+# ─────────────────────────────────────────────
+
+# Layer1 資産分類（リスク資産＝オンで強気、安全資産＝オフで強気）
+RISK_ASSETS = {"ES=F", "NQ=F", "YM=F", "NKD=F", "^FTSE", "BTC-USD", "CL=F"}
+SAFE_ASSETS = {"GC=F"}  # 金。円・ドルは FX 側（通貨強弱）で扱う
+
+
+def fetch_5d_return(ticker):
+    """直近約5営業日リターン(%)。Layer0 の金vs株比較用。失敗時 None。"""
+    try:
+        df = yf.download(ticker, period="7d", interval="1d", progress=False, auto_adjust=True)
+        if df is None or df.empty or len(df) < 2:
+            return None
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        c = df["Close"].dropna()
+        if len(c) < 2 or float(c.iloc[0]) == 0:
+            return None
+        return round((float(c.iloc[-1]) - float(c.iloc[0])) / float(c.iloc[0]) * 100, 2)
+    except Exception:
+        return None
+
+
+def assess_risk_regime(currency_strength, vix):
+    """Layer0: リスクオン/オフを合成スコアで判定（市場共通スナップショット、1回/run）。
+    入力は既存の通貨強弱 + VIX + 金/株5日リターン。危機KWは Layer3(env) で別途処理。
+    返り値: {regime: RISK_ON/NEUTRAL/RISK_OFF, score: int, factors: [str]}"""
+    score = 0
+    factors = []
+    # 1. VIX 水準・方向
+    if vix and vix.get("current") is not None:
+        v = vix["current"]
+        if v < 15:
+            score += 2; factors.append(f"VIX {v} <15 (+2)")
+        elif v <= 20:
+            factors.append(f"VIX {v} 中立 (0)")
+        elif v <= 25:
+            score -= 1; factors.append(f"VIX {v} 高 (-1)")
+        else:
+            score -= 2; factors.append(f"VIX {v} >25 (-2)")
+        ch = vix.get("change_24h_pct")
+        if ch is not None and ch >= 20:
+            score -= 1; factors.append(f"VIX急騰 +{ch}% (-1)")
+    # 2. 通貨強弱（豪ドル=リスクオン通貨 / 円・ドル=安全通貨）
+    if currency_strength:
+        aud = currency_strength.get("AUD")
+        safe = [x for x in (currency_strength.get("JPY"), currency_strength.get("USD")) if x is not None]
+        if aud is not None and safe:
+            diff = aud - (sum(safe) / len(safe))
+            if diff >= 0.10:
+                score += 1; factors.append(f"豪ドル優位 (+1)")
+            elif diff <= -0.10:
+                score -= 1; factors.append(f"円・ドル優位 (-1)")
+    # 3. 金 vs 株（5日リターン差、株優位=オン / 金優位=オフ）
+    gold = fetch_5d_return("GC=F")
+    eq = fetch_5d_return("ES=F")
+    if gold is not None and eq is not None:
+        d = eq - gold
+        if d >= 1.0:
+            score += 1; factors.append(f"株>金 5d {d:+.1f}pt (+1)")
+        elif d <= -1.0:
+            score -= 1; factors.append(f"金>株 5d {d:+.1f}pt (-1)")
+    if score >= 2:
+        regime = "RISK_ON"
+    elif score <= -2:
+        regime = "RISK_OFF"
+    else:
+        regime = "NEUTRAL"
+    return {"regime": regime, "score": score, "factors": factors}
+
+
+def assess_directional_bias(ticker, regime, signal_direction):
+    """Layer1: その銘柄で許可される方向と、発火シグナルが一致しているか（記録のみ）。
+    signal_direction: 'long'/'short'/'neutral'
+    返り値: {asset_class, regime, allowed, signal_direction, aligned}
+      aligned=True  → バイアスと一致（本稼働時は通過候補）
+      aligned=False → バイアス逆行（本稼働時は抑制候補）
+      aligned=None  → FX/中立など Phase1 では判定保留"""
+    if ticker in RISK_ASSETS:
+        acls = "risk"
+    elif ticker in SAFE_ASSETS:
+        acls = "safe"
+    elif ticker in FX_PAIR_MAP:
+        acls = "fx"
+    else:
+        acls = "other"
+
+    allowed = None
+    if regime == "RISK_ON":
+        if acls == "risk":
+            allowed = "long"
+        elif acls == "safe":
+            allowed = "short_or_neutral"
+    elif regime == "RISK_OFF":
+        if acls == "risk":
+            allowed = "short"
+        elif acls == "safe":
+            allowed = "long"
+    # FX と NEUTRAL は通貨強弱/上位足準拠（既存 fx_alignment / trend_alignment が担当）→ Phase1 は保留
+
+    aligned = None
+    if allowed in ("long", "short") and signal_direction in ("long", "short"):
+        aligned = (allowed == signal_direction)
+
+    return {
+        "asset_class": acls,
+        "regime": regime,
+        "allowed": allowed,
+        "signal_direction": signal_direction,
+        "aligned": aligned,
+    }
+
+
 def evaluate_currency_strength_alignment(ticker, position_direction, strength):
     """シグナルが通貨強弱とアラインしているか判定。
     例: AUDJPY ロング → AUD 強 + JPY 弱 なら "順張り"、逆なら "逆張り"
@@ -2138,6 +2255,11 @@ def main():
                                   key=lambda x: -x[1])
         ranking = " > ".join([f"{c}({v:+.2f}%)" for c, v in sorted_strength])
         print(f"  📊 {ranking}")
+    # 🆕 2026-05-29 Phase1: Layer0 リスク環境を 1 回だけ判定（市場共通スナップショット、記録のみ）
+    print("🧭 リスク環境（Layer0）を判定中...")
+    _vix_snapshot = fetch_vix_data()
+    risk_regime = assess_risk_regime(currency_strength, _vix_snapshot)
+    print(f"  🧭 リスク環境: {risk_regime['regime']} (score={risk_regime['score']}) | {' / '.join(risk_regime['factors'])}")
     total_signals = 0
     sent_emails = 0
     now_jst = datetime.now(JST)
@@ -2449,6 +2571,11 @@ MarketWatch AI Alerts
         }
         # 🆕 通貨強弱データを記録（全銘柄共通スナップショット）
         log_entry["currency_strength"] = currency_strength
+        # 🆕 2026-05-29 Phase1: トップダウン層を記録（記録のみ・発火には未使用、検証用）
+        _dir = log_entry.get("direction", "")
+        _sigdir = "long" if "ロング" in _dir else ("short" if "ショート" in _dir else "neutral")
+        log_entry["risk_regime"] = risk_regime
+        log_entry["directional_bias"] = assess_directional_bias(ticker, risk_regime["regime"], _sigdir)
         # 🆕 FX 整合性データ（FX ペアのみ）
         log_entry["fx_alignment"] = fx_alignment
         # 🆕 中国コンテキスト（AUD ペアのみ）
