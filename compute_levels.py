@@ -72,7 +72,9 @@ def levels(d, dec):
 
 
 def main():
-    result = {"instruments": []}
+    from datetime import datetime, timezone, timedelta
+    jst = timezone(timedelta(hours=9))
+    result = {"generated_at": datetime.now(jst).isoformat(timespec="seconds"), "instruments": []}
     ok = 0
     for name, tk, dec in INSTRUMENTS:
         d = fetch(tk)
