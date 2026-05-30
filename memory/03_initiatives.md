@@ -13,6 +13,18 @@
 - シグナルメール改善は **データ蓄積待ち**（B2/C1/C3 検証期間中）、データ揃ってから再開
 - 逆張りバックテストは保留（USDJPY のみ手応え、追加検証は新セッション必要時）
 
+### 🔜 翌日(2026-05-31)のTODO ＋ 個人トレード支援システム（2026-05-30 構築）
+- **今セッションで構築した“感情に左右されないハイブリッド”の道具立て**：
+  - **fundamental-briefing routine**（予約EA `trig_01M7uY1H8uR6tEwF1CJ7jXzV`、毎日06/15 JST、`fundamental-context.json` 生成＝信頼性検証ニュース＋regime/bias。日本語化済）
+  - **weekly-zone-plan routine**（予約EA `trig_01LP5pbD28BK55bE3GZWaHJf`、日曜20:00 JST、18銘柄の上下ゾーン＋ラダー指値＋SL/TP/R:R → `weekly-zone-plan.md`。本人確認→指値の運用）
+  - **weekly-levels.yml**（Actions、日曜17:00 JST、`compute_levels.py`で正確な水準→`weekly-levels.json`。※リモートCCRはyfinance403不可のためActions側で計算する設計）
+  - **SwingTrend_EA.mq4**（日足トレンド押し目＋3ATR追従。実データ検証ではエッジ薄→実弾は見送り、手動の出口ツールとして保管）
+  - ⚠️ **SYNC禁忌追加対象**：`fundamental-context.json` / `weekly-levels.json` / `weekly-zone-plan.md`（routine/Actionsが生成、ローカルpush禁止。CLAUDE.md SYNC禁忌に正式追記推奨）
+- **明日やること（3件）**：
+  1. **週次ゾーンプランの正確版を検証**（weekly-levels.json 生成後に weekly-zone-plan routine 再実行＝A案の続き。クロス円が正しい値か確認）
+  2. **トップページ「信頼性検証済みニュース」が古い/精度が低い問題を解決**（briefing routine のニュース鮮度改善：直近性フィルタ・鮮度スコア・古い見出しの除外など）
+  3. **日本株でのゾーン分析の提案を検討**（日本株なら支持/抵抗ゾーンがもっと分かりやすく作れるのでは、というアイデア）
+
 ### 🆕 [2026-05-29] シグナルエンジン トップダウン再設計（4階建て）— Phase 1 デプロイ済
 - **発端**: ユーザー「ライブ成績が悪い」→ signals-log 199件(確定139)を再分析
 - **診断**: 全体勝率 **32.4%（期待値 −0.245R/回、R:R 1:1.33で損益分岐43%＝赤字構造）**
