@@ -3605,6 +3605,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
     # 🆕 信頼性検証済みニュース（方向観は非公開・事実とソース信頼性のみ）
     trust_news_html = build_trust_news_html(load_fundamental_context_for_site())
+    # 🆕 信頼性検証済みニュースがある時は「マーケットを動かすニュース TOP3」を非表示（重複回避）。
+    #    ブリーフィング不在/空のときだけ従来の TOP3 をフォールバック表示。
+    if trust_news_html.strip():
+        top3_block = ""
+    else:
+        top3_block = f'''  <!-- トップニュース（フォールバック）-->
+  <div class="top-news">
+    <div class="top-news-title">🔥 マーケットを動かすニュース TOP3 <span style="font-size:.7rem;color:#57606a;font-weight:500">（中央銀行・経済指標・地政学など影響度の高いキーワードでスコアリング）</span></div>
+    {top_news_html}
+  </div>'''
 
     # AI 投資判断セクション（Gemini）
     ai_analysis_html = build_ai_analysis_section(
@@ -3843,11 +3853,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
-  <!-- トップニュース -->
-  <div class="top-news">
-    <div class="top-news-title">🔥 マーケットを動かすニュース TOP3 <span style="font-size:.7rem;color:#57606a;font-weight:500">（中央銀行・経済指標・地政学など影響度の高いキーワードでスコアリング）</span></div>
-    {top_news_html}
-  </div>
+  {top3_block}
 
   {trust_news_html}
 
