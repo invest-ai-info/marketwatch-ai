@@ -1,0 +1,44 @@
+name: Weekly Levels
+
+# 週次ゾーン分析の素材（テクニカル水準）を計算してコミットする。
+# weekly-zone-plan ルーチン（日曜20:00 JST）がこの weekly-levels.json を読む。
+# ※リモートCCRでは yfinance が 403 で使えないため、データ計算は確実な GitHub Actions 側で実施。
+
+on:
+  schedule:
+    - cron: '0 8 * * 0'    # 日曜 17:00 JST 本命（ルーチン20:00より早めに余裕を持って）
+    - cron: '0 9 * * 0'    # 日曜 18:00 JST バックアップ（cron遅延対策）
+  workflow_dispatch:        # 手動実行も可能
+
+jobs:
+  levels:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy certifi
+
+      - name: Compute technical levels (18 instruments)
+        run: python compute_levels.py 1>/dev/null
+
+      - name: Commit weekly-levels.json if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add weekly-levels.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: weekly levels $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
