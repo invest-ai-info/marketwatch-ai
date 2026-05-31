@@ -3643,6 +3643,44 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
     return out
 
 
+def build_weekly_strategy_banner(now_jst):
+    """最新の guide-weekly-YYYY-MM-DD.html を探し、index 用の導線バナー HTML を返す。
+    記事が無ければ空文字。index.html は完全自動生成（SYNC 禁忌＝ローカルから push しない）なので、
+    手動 sync と競合せずに毎週の週次戦略記事へ自動でリンクが張り替わる（guides.html を
+    サーバ側で自動編集すると巻き戻し事故になるため、導線はこちらの自動生成ページに置く）。"""
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        latest_date = None
+        latest_file = None
+        for name in os.listdir(script_dir):
+            if not (name.startswith("guide-weekly-") and name.endswith(".html")):
+                continue
+            if name.startswith("guide-weekly-review-"):  # 週次「振り返り」は別物なので除外
+                continue
+            ds = name[len("guide-weekly-"):-len(".html")]
+            try:
+                d = datetime.strptime(ds, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if latest_date is None or d > latest_date:
+                latest_date, latest_file = d, name
+        if not latest_file:
+            return ""
+        wk_end = latest_date + timedelta(days=4)
+        if os.name == "nt":
+            rng = f"{latest_date.strftime('%#m/%#d')}〜{wk_end.strftime('%#m/%#d')}"
+        else:
+            rng = f"{latest_date.strftime('%-m/%-d')}〜{wk_end.strftime('%-m/%-d')}"
+        return f'''  <!-- 今週の投資戦略（最新の guide-weekly へ自動リンク。手動編集不要）-->
+  <a href="{latest_file}" style="display:block;text-decoration:none;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
+    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📅 今週の投資戦略（{rng}）</div>
+    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">注目指標と3シナリオ別マーケット展望を読む →</div>
+  </a>'''
+    except Exception as e:
+        print(f"  ⚠️ weekly strategy banner 生成スキップ: {e}")
+        return ""
+
+
 def build_html(data, hist, now_jst, news=None, touraku=None):
     date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
@@ -3688,6 +3726,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         commodity_news=news.get("commodity", []),
         crypto_news=news.get("crypto", []),
     )
+
+    # 🆕 今週の投資戦略への自動導線バナー（最新 guide-weekly を自動検出）
+    weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -3906,6 +3947,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       ・<b>2026-05-25</b>: 📱 解説「<a href="guide-softbank-group-2026-05.html" style="color:#0969da"><b>ソフトバンクグループ（9984）徹底解説：純利益 +399%、52 週で株価 3.8 倍 — OpenAI・Arm が織りなす NAV 40 兆円の正体と「孫正義の最大の賭け」</b></a>」公開
     </div>
   </div>
+
+  {weekly_strategy_banner}
 
   <!-- 騰落レシオ -->
   {_build_touraku_section(touraku)}
