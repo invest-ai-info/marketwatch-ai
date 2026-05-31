@@ -16,6 +16,12 @@
 | **weekly-levels** | Actions `weekly-levels.yml` | 日曜 17:00 | `compute_levels.py`で18銘柄の正確な水準 → `weekly-levels.json`（※CCRはyfinance403不可なのでActions側で計算） |
 | **weekly-zone-plan** | routine `trig_01LP5pbD28BK55bE3GZWaHJf` | 日曜 20:00 | 18銘柄の上下ゾーン＋ラダー指値＋SL/TP/R:R → `weekly-zone-plan.md`（weekly-levels.jsonを読む） |
 | **weekly-zone-email** | Actions `weekly-zone-email.yml` | 日曜 21:30 | `email_weekly_zone.py`で weekly-zone-plan.md をHTMLメール送信（→ info0414@gmail.com） |
+| **article-idea-scout** 🆕 | routine `trig_01FmFNFSTkdx35nu1kWwKoYW` | 毎日 07:30 | 記事ネタ候補（SEOタイトル案＋根拠ソース）→ `article-ideas.md`（非公開・編集用メモ） |
+| **daily-market-preview** 🆕 | routine `trig_01GFQ6tLGPhvEZ5crJgPRqCh` | 毎日 21:00 | 翌日の重要指標＋市場コンセンサス（economic-events.json突合）→ `daily-preview.md`（非公開・個人用） |
+| **political-digest** 🆕 | routine `trig_01B1WV4bru6iFxr7SFB94huh` | 毎日 22:00 | political-feed.json を要約（重要発言トップ3-5＋市場影響）→ `political-digest.md`（非公開） |
+| **compliance-patrol** 🆕 | routine `trig_016Pkyto4UfxhHP1sU2i5NP9` | 日曜 09:00 | 公開 guide-*.html を法務巡回（黒/グレー/白）→ `compliance-scan.md`（非公開・監査メモ） |
+
+> 🆕 4 routine は **2026-05-31 新設**（Max枠に余裕＝15/日中フル稼働でも6本程度のため活用）。いずれも社内向け md をリポジトリへコミット（公開しない＝8ステップ/compliance不要）。価値を見てメール化/サイト化に拡張可。出力4ファイルは **SYNC禁忌に追加済**。routine は Gmail鍵/yfinance不可なので、メール化する場合は Actions 側に送信を分離する（既存 weekly-zone-email.yml と同じ設計）。
 
 - routine の確認/編集: claude.ai `/code/routines/<ID>`、または schedule スキル＋RemoteTrigger ツール（プロンプト変更は update）。
 - routine は **クラウド(CCR)実行**。リポジトリへ commit は可能だが **yfinance は403で不可**・Gmail鍵も持てない（→データ計算とメール送信はActions側に分離している）。
@@ -43,7 +49,7 @@
 - **SYNC禁忌**（ローカルから絶対 push しない＝routine/cronがGitHub側で生成）：
   6コアHTML / `signals-log.json` / `technical-alerts-history*.json` / `track-record.html` / political系 / youtube系
   **＋今セッション追加：`fundamental-context.json` / `weekly-levels.json` / `weekly-zone-plan.md`**
-  （※CLAUDE.mdのSYNC禁忌リストに fundamental-context.json は追記済。weekly-levels.json / weekly-zone-plan.md も追記推奨＝**新セッションの軽タスク**）
+  （※CLAUDE.mdのSYNC禁忌リストに3件すべて追記済＝2026-05-31完了）
 - SYNC対象（OK）：`*.py`（compute_levels.py, email_weekly_zone.py 等）/ `.github/workflows/*.yml` / 個別 guide-*.html / guides.html / sitemap.xml / my-trades.json / memory/*.md / docs。
 - 記事追加は **CLAUDE.md の8ステップ厳守**（新HTML→guidesカード→sitemap→SYNC_FILES→generate_market_news.pyの更新履歴5件キープ→sync→update-market-news の workflow_dispatch→ライブ確認）。**公開前に compliance-reviewer（Opus）監査・教育トーン・特定銘柄の買い推奨は書かない・kinsho-v1免責・9ボタンナビ**。
 - ネット不調時は無限リトライせず手動 trigger 依頼（最大3-5回）。
@@ -52,8 +58,8 @@
 
 ## 📌 次セッションの候補・宿題
 
-1. **Max枠の確認**：routine実行が Claude Max の利用枠から引かれているか別課金か、claude.ai「利用状況」で確認（未確認）。
-2. **CLAUDE.md SYNC禁忌の追記**：`weekly-levels.json` / `weekly-zone-plan.md` を正式追加（軽タスク）。
+1. ✅ **Max枠の確認 完了（2026-05-31）**：routine 実行は **Maxプラン込みの「1日の含まれるルーティン実行数」枠**でカウント（追加課金なし）。**上限15回/日**、確認時 2/15 使用（fundamental-briefing 朝夕2回ぶん）。日次フル稼働でも枠に余裕大。
+2. ✅ **CLAUDE.md SYNC禁忌の追記 完了（2026-05-31）**：`weekly-levels.json` / `weekly-zone-plan.md`（＋後述の内部メモ4ファイル）を正式追加。
 3. **記事ネタ（ユーザー興味ベース）**：他セクター深掘り→記事化（AI半導体／ディフェンシブ／高配当 等。銀行は公開済）。
 4. **日本株ゾーンの週次組込**（保留中）：PBR1.0・配当利回りの床を weekly-zone-plan に「日本株セクション」として追加する案。
 5. **シグナル再設計 Phase2**：fundamental_context / bias_aligned のデータが貯まったら signals-log で検証。
