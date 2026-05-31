@@ -428,37 +428,17 @@ def build_weekly_html(week_start, week_end, today_jst):
       <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a>
     </div>
 
-    <h2>🎯 3つのメインシナリオ</h2>
-
-    <div class="scenario-card bull">
-      <div class="scenario-title">🟢 リスクオン：株高・ドル高</div>
-      <p>米利下げ期待維持＋好決算＋地政学リスク低下のシナリオ。日経・S&P500ともに上方ブレイク、ドル円は157〜158円台。</p>
+    <!-- ⚠️ シナリオ別の具体的価格水準は、固定値の陳腐化を防ぐためリニューアル中（多エージェント生成＋数値検証パイプラインへ移行予定）。誤情報防止のため一時非表示。 -->
+    <div class="info-box">
+      <strong>📊 シナリオ別の詳細水準はリニューアル中です。</strong><br>
+      より正確な価格水準にもとづくシナリオを提供するため、詳細表を一時的に非表示にしています。最新の価格・指標は <a href="index.html">🏠 最新マーケット</a>、<a href="calendar.html">📅 経済カレンダー</a> をご参照ください。
     </div>
-
-    <div class="scenario-card base">
-      <div class="scenario-title">🟡 レンジ膠着</div>
-      <p>重要指標が想定通り、明確な方向感が出ない。日経60,000〜61,000円、ドル円155〜157円のレンジ推移。</p>
-    </div>
-
-    <div class="scenario-card bear">
-      <div class="scenario-title">🔴 リスクオフ：株安・円高</div>
-      <p>インフレ再加速 or 地政学イベント発生のシナリオ。日経は59,000円台へ調整、ドル円は153円台へ。</p>
-    </div>
-
-    <h2>💼 資産別トレード戦略</h2>
-    <ul>
-      <li><strong>日本株：</strong>NISA積立は機械的継続。高値圏でも止めない。個別株は押し目買い徹底</li>
-      <li><strong>ドル円：</strong>介入警戒帯（157円超）でロング縮小。153〜154円台は押し目買い候補</li>
-      <li><strong>米国株：</strong>S&P500は決算次第、ハイテク中心に物色</li>
-      <li><strong>金：</strong>地政学リスクと利下げ期待で底堅い。$4,500割れで買い検討</li>
-      <li><strong>暗号資産：</strong>BTC $80,000台でレンジ、米CPI次第で大きく動く可能性</li>
-    </ul>
 
     <h2>⚠️ 注意すべきリスク</h2>
     <div class="warning-box">
       <strong>① 重要指標の上振れショック</strong>（特に米CPI・雇用統計）<br>
       <strong>② 地政学イベント</strong>（中東・台湾・北朝鮮）<br>
-      <strong>③ 介入リスク</strong>（ドル円158円超で警戒）<br>
+      <strong>③ 為替の急変動・介入リスク</strong>（円相場の急な動きに警戒）<br>
       <strong>④ 企業決算サプライズ</strong>（NVDA等大型銘柄）
     </div>
 
