@@ -197,6 +197,8 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 - **political 系**: `political-feed.html` / `political-feed.json`
 - **YouTube 系**: `youtube-summary.html` / `youtube-summary-data.json`
 - **ファンダ・ブリーフィング**: `fundamental-context.json`（予約エージェント routine `fundamental-briefing` が 1日2回 GitHub 側で生成・コミット。`generate_technical_alerts.py` と `generate_market_news.py` が読む。ローカルから push すると routine の最新版を巻き戻すため禁止）
+- **週次ゾーン系**: `weekly-levels.json`（Actions `weekly-levels.yml` が日曜 17:00 JST に `compute_levels.py` で生成）/ `weekly-zone-plan.md`（予約エージェント routine `weekly-zone-plan` が日曜 20:00 JST に生成、`weekly-zone-email.yml` がメール配信元として読む）。**どちらも GitHub 側で生成・コミットされるため、ローカルから push すると最新版を巻き戻す（fundamental-context.json と同じ事故）**
+- **内部メモ系（2026-05-31 追加の routine 出力、いずれも非公開・GitHub 側で生成）**: `article-ideas.md`（routine `article-idea-scout`、毎日 07:30 JST、記事ネタ候補）/ `daily-preview.md`（routine `daily-market-preview`、毎日 21:00 JST、翌日の指標プレビュー）/ `political-digest.md`（routine `political-digest`、毎日 22:00 JST、政治発言要約）/ `compliance-scan.md`（routine `compliance-patrol`、日曜 09:00 JST、公開記事の法務巡回）。**4 件とも routine が main へコミットするため、ローカルから push 禁止**
 
 **理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。
 
