@@ -3643,34 +3643,45 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
     return out
 
 
+def _find_latest_weekly_article():
+    """リポジトリ直下から最新の guide-weekly-YYYY-MM-DD.html を探し (filename, date) を返す。
+    見つからなければ (None, None)。週次「振り返り」(guide-weekly-review-*) は別物なので除外。"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    latest_date = None
+    latest_file = None
+    for name in os.listdir(script_dir):
+        if not (name.startswith("guide-weekly-") and name.endswith(".html")):
+            continue
+        if name.startswith("guide-weekly-review-"):
+            continue
+        ds = name[len("guide-weekly-"):-len(".html")]
+        try:
+            d = datetime.strptime(ds, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if latest_date is None or d > latest_date:
+            latest_date, latest_file = d, name
+    return latest_file, latest_date
+
+
+def _weekly_range_label(week_start):
+    """週開始(月)の date から「6/1〜6/5」形式の範囲ラベルを返す。"""
+    wk_end = week_start + timedelta(days=4)
+    if os.name == "nt":
+        return f"{week_start.strftime('%#m/%#d')}〜{wk_end.strftime('%#m/%#d')}"
+    return f"{week_start.strftime('%-m/%-d')}〜{wk_end.strftime('%-m/%-d')}"
+
+
 def build_weekly_strategy_banner(now_jst):
-    """最新の guide-weekly-YYYY-MM-DD.html を探し、index 用の導線バナー HTML を返す。
-    記事が無ければ空文字。index.html は完全自動生成（SYNC 禁忌＝ローカルから push しない）なので、
-    手動 sync と競合せずに毎週の週次戦略記事へ自動でリンクが張り替わる（guides.html を
-    サーバ側で自動編集すると巻き戻し事故になるため、導線はこちらの自動生成ページに置く）。"""
+    """最新の週次戦略記事への導線バナー HTML を返す。記事が無ければ空文字。
+    index.html は完全自動生成（SYNC 禁忌＝ローカルから push しない）なので、手動 sync と競合せず
+    毎週自動でリンクが張り替わる（guides.html をサーバ側で自動編集すると巻き戻し事故になるため、
+    導線はこちらの自動生成ページに置く）。"""
     try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        latest_date = None
-        latest_file = None
-        for name in os.listdir(script_dir):
-            if not (name.startswith("guide-weekly-") and name.endswith(".html")):
-                continue
-            if name.startswith("guide-weekly-review-"):  # 週次「振り返り」は別物なので除外
-                continue
-            ds = name[len("guide-weekly-"):-len(".html")]
-            try:
-                d = datetime.strptime(ds, "%Y-%m-%d").date()
-            except ValueError:
-                continue
-            if latest_date is None or d > latest_date:
-                latest_date, latest_file = d, name
+        latest_file, latest_date = _find_latest_weekly_article()
         if not latest_file:
             return ""
-        wk_end = latest_date + timedelta(days=4)
-        if os.name == "nt":
-            rng = f"{latest_date.strftime('%#m/%#d')}〜{wk_end.strftime('%#m/%#d')}"
-        else:
-            rng = f"{latest_date.strftime('%-m/%-d')}〜{wk_end.strftime('%-m/%-d')}"
+        rng = _weekly_range_label(latest_date)
         return f'''  <!-- 今週の投資戦略（最新の guide-weekly へ自動リンク。手動編集不要）-->
   <a href="{latest_file}" style="display:block;text-decoration:none;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
     <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📅 今週の投資戦略（{rng}）</div>
@@ -3678,6 +3689,24 @@ def build_weekly_strategy_banner(now_jst):
   </a>'''
     except Exception as e:
         print(f"  ⚠️ weekly strategy banner 生成スキップ: {e}")
+        return ""
+
+
+def build_weekly_history_entry(now_jst):
+    """📰 更新履歴 の先頭に差し込む「今週の投資戦略」エントリ（1行・末尾 <br> 付き）を返す。
+    最新の guide-weekly を自動検出するので、毎週の手動追記が不要（＝更新履歴への自動登録）。
+    記事が無ければ空文字。"""
+    try:
+        latest_file, latest_date = _find_latest_weekly_article()
+        if not latest_file:
+            return ""
+        rng = _weekly_range_label(latest_date)
+        # 公開日 = 翌週月曜の前日（＝記事が生成された日曜）
+        pub = (latest_date - timedelta(days=1)).strftime("%Y-%m-%d")
+        return (f'      ・<b>{pub}</b>: 📅 解説「<a href="{latest_file}" style="color:#0969da">'
+                f'<b>今週の投資戦略（{rng}）：注目指標と3シナリオ別マーケット展望</b></a>」公開<br>\n')
+    except Exception as e:
+        print(f"  ⚠️ weekly history entry 生成スキップ: {e}")
         return ""
 
 
@@ -3729,6 +3758,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
     # 🆕 今週の投資戦略への自動導線バナー（最新 guide-weekly を自動検出）
     weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
+    # 🆕 📰 更新履歴 への自動登録エントリ（毎週の手動追記が不要に）
+    weekly_history_entry = build_weekly_history_entry(now_jst)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -3940,7 +3971,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開<br>
+{weekly_history_entry}      ・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開<br>
       ・<b>2026-05-31</b>: 🗾 解説「<a href="guide-japan-strategy-2026-05.html" style="color:#0969da"><b>2026年 日本株の歩き方：日経を動かす「攻め」と暴落に強い「守り」のセクター戦略</b></a>」公開<br>
       ・<b>2026-05-29</b>: 🏭 解説「<a href="guide-tsmc-2026-05.html" style="color:#0969da"><b>TSMC（NYSE: TSM）2026 Q1 決算解説：売上 359 億ドルで過去最高、純利益 +58% — 世界最大ファウンドリの強さと「地政学リスク」をフラットに整理する</b></a>」公開<br>
       ・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開<br>
