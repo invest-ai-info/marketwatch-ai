@@ -3503,7 +3503,7 @@ def load_fundamental_context_for_site():
         return None
 
 
-def build_trust_news_html(ctx, max_items=8):
+def build_trust_news_html(ctx, max_items=10):
     """信頼性検証済みニュースのセクションHTML。
     ⚠️ bias / conviction / direction / risk_regime は一切読まない・出さない（投資助言回避）。
     不在・該当なしなら空文字（セクション自体を出さない＝安全フォールバック）。"""
@@ -3533,8 +3533,11 @@ def build_trust_news_html(ctx, max_items=8):
         return ""
     cred_rank = {"HIGH": 0, "MID": 1}
     mat_rank = {"high": 0, "mid": 1, "low": 2}
+    # 二段ソート（安定ソート利用）: まず信頼度×重要度、次に published 日付の新しい順。
+    # 日付(published, "YYYY-MM-DD")が無い項目は "0000-00-00" 扱いで末尾へ（除外はしない）。
     items.sort(key=lambda n: (cred_rank.get((n.get("credibility") or "").upper(), 9),
                               mat_rank.get((n.get("materiality") or "").lower(), 9)))
+    items.sort(key=lambda n: (n.get("published") or "0000-00-00"), reverse=True)
     items = items[:max_items]
 
     rows = []
@@ -3549,6 +3552,9 @@ def build_trust_news_html(ctx, max_items=8):
         mat = (n.get("materiality") or "").lower()
         mat_html = ('<span style="display:inline-block;padding:1px 8px;border-radius:10px;background:#fff1f0;color:#cf222e;font-size:.68rem;font-weight:600">重要度 高</span>'
                     if mat == "high" else "")
+        pub = (n.get("published") or "").strip()
+        pub_html = (f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;background:#eaf2ff;color:#0969da;font-weight:600">🗓 {html.escape(pub)}</span>'
+                    if pub else "")
         headline = html.escape(n.get("headline") or "")
         src = html.escape(n.get("source") or "")
         url = n.get("url") or ""
@@ -3557,6 +3563,7 @@ def build_trust_news_html(ctx, max_items=8):
         rows.append(f"""    <div style="padding:12px 0;border-bottom:1px solid #eaeef2">
       <div style="font-size:.93rem;font-weight:600;color:#1f2328;line-height:1.5;margin-bottom:6px">{headline}</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.72rem">
+        {pub_html}
         <span style="display:inline-block;padding:1px 8px;border-radius:10px;background:#eff3f6;color:#424a53;font-weight:600">{tier}</span>
         <span style="display:inline-block;padding:1px 8px;border-radius:10px;background:#eaf6ee;color:{cred_color};font-weight:700">✔ {cred_label}</span>
         {mat_html}
@@ -3572,7 +3579,7 @@ def build_trust_news_html(ctx, max_items=8):
   <!-- 信頼性検証済みニュース（fundamental-context.json 由来、方向観は非公開）-->
   <div style="margin:32px 0;padding:22px;background:#ffffff;border:1px solid #d0d7de;border-radius:12px">
     <div style="font-size:1.15rem;font-weight:700;color:#1f2328;margin-bottom:4px">🔍 信頼性検証済みニュース <span style="font-size:.68rem;color:#57606a;font-weight:500">（複数の信頼できる情報源でクロス照合・ソース格付け済み）</span></div>
-    <div style="font-size:.78rem;color:#6e7781;margin-bottom:8px">一次情報（中央銀行・政府統計など）や大手通信社を中心に、信頼性を検証したニュースのみ掲載。{gen} 時点。</div>
+    <div style="font-size:.78rem;color:#6e7781;margin-bottom:8px">一次情報（中央銀行・政府統計など）や大手通信社を中心に、信頼性を検証したニュースを新しい順に掲載。{gen} 更新。</div>
 {body}
     <p data-disclaimer="kinsho-v1" style="margin-top:14px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.75rem;color:#6e7781;line-height:1.6">⚠️ 掲載ニュースは事実の整理と出典提示を目的としており、投資助言ではありません。ソース格付け・信頼度は当サイトの編集上の評価です。投資判断はご自身の責任で行ってください。</p>
   </div>
