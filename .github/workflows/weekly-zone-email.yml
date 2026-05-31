@@ -1,0 +1,32 @@
+name: Weekly Zone Email
+
+# 週次ゾーン＆指値プラン（weekly-zone-plan.md）をメール送信する。
+# weekly-zone-plan ルーチン（日曜20:00 JST生成）の後に実行。
+# ※ルーチンはGmailシークレットを持てないため、メール送信は Gmail シークレットを持つ Actions 側で行う。
+
+on:
+  schedule:
+    - cron: '30 12 * * 0'   # 日曜 21:30 JST（ルーチン20:00生成の後、cron遅延も吸収）
+  workflow_dispatch:          # 手動送信も可能
+
+jobs:
+  email:
+    runs-on: ubuntu-latest
+    env:
+      GMAIL_USER: ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install markdown
+
+      - name: Email weekly zone plan
+        run: python email_weekly_zone.py
