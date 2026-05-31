@@ -21,7 +21,11 @@ generate_stock_chart.py
 import os
 import sys
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+# GitHub Actions のランナーは UTC で動くため、素の datetime.now() は UTC を返す。
+# 日本時間で扱うため JST を明示する（"JST" 表示の時刻が 9 時間ズレる事故を防ぐ）。
+JST = timezone(timedelta(hours=9))
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -64,7 +68,7 @@ def fetch_chart_data(ticker, years=3):
         lines = text.strip().splitlines()
         if len(lines) < 30:
             raise ValueError(f"Stooq data too short ({len(lines)} lines)")
-        cutoff = datetime.now() - timedelta(days=int(365 * years))
+        cutoff = datetime.now(JST).replace(tzinfo=None) - timedelta(days=int(365 * years))
         data = []
         for line in lines[1:]:  # 1 行目はヘッダ
             parts = line.split(",")
@@ -98,7 +102,7 @@ def fetch_chart_data(ticker, years=3):
         print("  ⚠️ yfinance / pandas 未インストール、フォールバック失敗")
         return None
 
-    end = datetime.now()
+    end = datetime.now(JST).replace(tzinfo=None)
     start = end - timedelta(days=int(365 * years) + 30)
     try:
         df = yf.download(ticker, start=start, end=end, interval="1d", progress=False, auto_adjust=True)
@@ -240,7 +244,7 @@ def build_chart_section_html(ticker, asset_name, currency="$", years=3, chart_id
   <canvas id="{chart_id}"></canvas>
 </div>
 <p style="font-size:.78rem;color:#6e7781;margin-top:8px">
-  💡 データ出典: Yahoo Finance (yfinance)、ティッカー <code>{ticker}</code>。最終取得: {datetime.now().strftime("%Y-%m-%d %H:%M JST")}
+  💡 データ出典: Yahoo Finance (yfinance)、ティッカー <code>{ticker}</code>。最終取得: {datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")}
 </p>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
