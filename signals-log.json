@@ -41412,7 +41412,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.077,
+    "max_favorable_excursion_pct": 0.158,
     "max_adverse_excursion_pct": -0.219,
     "email_sent": false,
     "whipsaw_check": {
@@ -41817,6 +41817,173 @@
         "matched_titles": [
           "ホルムズ海峡の合意への楽観論で原油下落、ドルは軟調"
         ]
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_4h_20260601_0257",
+    "fired_at": "2026-06-01T02:57:46+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.8724600076675415,
+    "stop_loss": 1.8666481769611085,
+    "take_profit_1": 1.880209115276119,
+    "take_profit_2": 1.8840836690804075,
+    "atr": 0.003874553804288676,
+    "sl_pct": -0.31038477097690376,
+    "tp1_pct": 0.41384636130253843,
+    "tp2_pct": 0.6207695419538075,
+    "indicators_at_signal": {
+      "rsi": 35.66,
+      "macd": -0.0018,
+      "macd_sig": -0.001,
+      "ma25": 1.8788,
+      "ma75": 1.8762,
+      "bb_low": 1.8713,
+      "bb_up": 1.8854,
+      "recent_high": 1.8858,
+      "recent_low": 1.8689,
+      "adx": 20.96,
+      "chop": 48.06,
+      "ma_dev_pct": 0.1358,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドル、4H足でボリンジャーバンド-2σタッチからの反発が期待されるロングシナリオとなります。RSIも35台と売られすぎ水準にあり、テクニカル的には買い優位の状況です。  ファンダメンタルズでは、AIサーバー需要急増によるLenovo株の上昇など、一部テック関連のポジティブニュースが見られますが、上海総合指数の下落や中東情勢の再燃など、AUDにとってネガティブな材料も存在します。通貨強弱はAUDが強、GBPが弱と、シグナルの方向感と一致しておりません。  このロングシナリオが崩れるのは、中国本土の経済指標が悪化し、AUDがさらに弱含み、1.87を明確に下抜ける展開となった場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 日足 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": -0.113,
+      "EUR": -0.031,
+      "GBP": -0.011,
+      "JPY": -0.117,
+      "AUD": 0.262
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 1,
+      "factors": [
+        "VIX 15.32 中立 (0)",
+        "豪ドル優位 (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-05-31T16:46:00+09:00",
+      "regime": "RISK_ON",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ GBP 弱（-0.01%）× AUD 強（+0.26%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": -0.273,
+      "base_strength": -0.011,
+      "quote_strength": 0.262
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 4068.57,
+          "change_pct": -0.73
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25182.39,
+          "change_pct": 0.7
+        }
+      },
+      "news": [
+        "AIサーバー需要の急増でLenovo株が5月に2倍に―27年ぶりの好月",
+        "ペルシャ湾とテクノロジー見通しがアジア株市場を後押し",
+        "原油高とペルシャ湾情勢見通しがアジア株市場を押し下げ",
+        "テック株の上昇と不透明な米イラン和平合意の間で、アジア市場は水曜終値でまちまち",
+        "中東情勢の再燃を受け、アジア主要株式市場が下落"
+      ]
+    },
+    "confidence": {
+      "score": 1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)",
+        "FX 強弱逆張り (-1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.49, entry_vs_ma25=-0.34%)",
+      "score": -0.491,
+      "entry_vs_ma25_signed": -0.336,
+      "range_pos": 0.21,
+      "ma_ratio_pct": 0.136
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 15.32,
+        "avg_30d": 17.63,
+        "change_24h_pct": -2.67
+      },
+      "atr_regime": {
+        "current_atr": 0.0039,
+        "avg_atr_30d": 0.0046,
+        "ratio": 0.84,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
