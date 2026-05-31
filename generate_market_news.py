@@ -3586,6 +3586,60 @@ def build_trust_news_html(ctx, max_items=10):
 """
 
 
+# 🆕 各マーケットカードに、信頼性検証済みブリーフィングのニュースを割り当てるマップ
+_CARD_TICKERS = {
+    "stocks":    {"NKD=F", "ES=F", "NQ=F"},
+    "fx":        {"USDJPY", "EURUSD", "USDJPY=X", "EURUSD=X"},
+    "commodity": {"GC=F", "CL=F"},
+    "crypto":    {"BTC-USD"},
+}
+
+
+def build_card_news_from_briefing(ctx, cat, limit=3):
+    """指定カテゴリ（stocks/fx/commodity/crypto）の信頼性検証済みニュースをカード用HTMLで返す。
+    ⚠️ bias / direction 等は出さない（事実・出典・日付・信頼度のみ）。
+    ctx不在 or 該当ニュース無しなら None（呼び出し側で旧パイプラインにフォールバック）。"""
+    if not ctx:
+        return None
+    want = _CARD_TICKERS.get(cat, set())
+    seen, items = set(), []
+    for a in ctx.get("assets", []):
+        if (a.get("ticker") or "") not in want:
+            continue
+        for n in (a.get("top_news") or []):
+            cred = (n.get("credibility") or "").upper()
+            if cred not in ("HIGH", "MID"):
+                continue
+            key = (n.get("headline") or "").strip()[:24]
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            items.append(n)
+    if not items:
+        return None
+    cred_rank = {"HIGH": 0, "MID": 1}
+    mat_rank = {"high": 0, "mid": 1, "low": 2}
+    items.sort(key=lambda n: (cred_rank.get((n.get("credibility") or "").upper(), 9),
+                              mat_rank.get((n.get("materiality") or "").lower(), 9)))
+    items.sort(key=lambda n: (n.get("published") or "0000-00-00"), reverse=True)
+    out = ""
+    for n in items[:limit]:
+        cred = (n.get("credibility") or "").upper()
+        cred_label = "ソース信頼度 高" if cred == "HIGH" else "ソース信頼度 中"
+        cred_color = "#1a7f37" if cred == "HIGH" else "#9a6700"
+        headline = html.escape(n.get("headline") or "")
+        src = html.escape(n.get("source") or "")
+        pub = html.escape((n.get("published") or "").strip())
+        url = n.get("url") or "#"
+        url = url if (isinstance(url, str) and url.startswith("http")) else "#"
+        meta = " · ".join([x for x in [src, pub] if x])
+        out += f'''<a class="news-item" href="{html.escape(url)}" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ {headline}</span>
+          <span class="news-meta">{meta} · <span style="color:{cred_color};font-weight:600">{cred_label}</span></span>
+        </a>'''
+    return out
+
+
 def build_html(data, hist, now_jst, news=None, touraku=None):
     date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
@@ -3604,14 +3658,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     # ニュースHTML生成
     if news is None:
         news = {cat: [] for cat in ["top", "stocks", "fx", "commodity", "crypto"]}
+    fc_ctx = load_fundamental_context_for_site()
     top_news_html     = build_news_html(news.get("top", []))
-    stocks_news_html  = build_news_html(news.get("stocks", []))
-    fx_news_html      = build_news_html(news.get("fx", []))
-    cmd_news_html     = build_news_html(news.get("commodity", []))
-    crypto_news_html  = build_news_html(news.get("crypto", []))
+    # 🆕 各カードの関連ニュースを信頼性検証済みブリーフィングで置換（無ければ旧パイプラインにフォールバック）
+    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []))
+    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []))
+    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []))
+    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []))
 
     # 🆕 信頼性検証済みニュース（方向観は非公開・事実とソース信頼性のみ）
-    trust_news_html = build_trust_news_html(load_fundamental_context_for_site())
+    trust_news_html = build_trust_news_html(fc_ctx)
     # 🆕 信頼性検証済みニュースがある時は「マーケットを動かすニュース TOP3」を非表示（重複回避）。
     #    ブリーフィング不在/空のときだけ従来の TOP3 をフォールバック表示。
     if trust_news_html.strip():
