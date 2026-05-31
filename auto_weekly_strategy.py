@@ -111,7 +111,10 @@ def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators
         ind_text = "（来週は注目度の高い指標発表なし）"
 
     week_label = f"{week_start.strftime('%Y-%m-%d')} 〜 {week_end.strftime('%Y-%m-%d')}"
+    today_str = today_jst.strftime("%Y-%m-%d (%a)")
     prompt = f"""あなたは日本人個人投資家向けの投資戦略アナリストです。
+
+【基準日】今日は {today_str}（日本時間）です。この記事は来週（{week_label}）向けに書きます。
 過去 72 時間（週末を含む）に流れたニュースと、来週の重要指標スケジュールを踏まえ、
 来週（{week_label}）の注目ポイントを簡潔にまとめてください。
 
@@ -137,6 +140,7 @@ def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators
 【注意】
 - 過度な断定や予想は避ける（「〜の可能性」「〜要注意」など慎重に）
 - ニュースに明示されていない情報の捏造はしない
+- 日付・曜日は【基準日】と【来週の重要指標】に書かれたものだけを使う。記憶や推測で具体的な日付・曜日を書かない（不確実なら「来週前半」「週半ば」など相対表現にする）
 - 数字（価格目線）は具体的に書くが、根拠が薄ければ範囲表現にする
 - 日本語のみ
 - セクション見出し（"===..."）は必ず行頭にそのまま書く"""
