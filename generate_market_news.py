@@ -3632,9 +3632,12 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
         pub = html.escape((n.get("published") or "").strip())
         url = n.get("url") or "#"
         url = url if (isinstance(url, str) and url.startswith("http")) else "#"
+        comment = html.escape((n.get("comment") or "").strip())
+        ai_html = f'<span class="news-ai">💡 {comment}</span>' if comment else ""
         meta = " · ".join([x for x in [src, pub] if x])
         out += f'''<a class="news-item" href="{html.escape(url)}" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ {headline}</span>
+          {ai_html}
           <span class="news-meta">{meta} · <span style="color:{cred_color};font-weight:600">{cred_label}</span></span>
         </a>'''
     return out
@@ -3666,11 +3669,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []))
     crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []))
 
-    # 🆕 信頼性検証済みニュース（方向観は非公開・事実とソース信頼性のみ）
-    trust_news_html = build_trust_news_html(fc_ctx)
-    # 🆕 信頼性検証済みニュースがある時は「マーケットを動かすニュース TOP3」を非表示（重複回避）。
-    #    ブリーフィング不在/空のときだけ従来の TOP3 をフォールバック表示。
-    if trust_news_html.strip():
+    # 🆕 ブリーフィングのニュースは各マーケットカードに集約済み。専用セクション(trust_news)とTOP3は
+    #    重複のため出さない。ブリーフィング不在時のみ従来の TOP3 をフォールバック表示。
+    if fc_ctx:
         top3_block = ""
     else:
         top3_block = f'''  <!-- トップニュース（フォールバック）-->
@@ -3917,8 +3918,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   {top3_block}
-
-  {trust_news_html}
 
   {ai_analysis_html}
 
