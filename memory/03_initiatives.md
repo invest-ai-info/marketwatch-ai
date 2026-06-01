@@ -1,12 +1,33 @@
 # 🔬 進行中の検証・打ち手
 
-**最終更新: 2026-05-31（ニュース鮮度改善・週次メール配信・市場解説2記事公開）**
+**最終更新: 2026-06-01（週次戦略の多エージェント＋数値検証パイプライン・日付バグ修正・routine計5本）**
 **更新頻度: 週次（月曜朝の weekly-review 後）+ 必要時随時**
 **運用ルール: 完了したら [x]、結論を 1 行追記してから別ファイルへアーカイブ**
 
 ---
 
 ## 🔥 明日すぐ着手（優先度最高）
+
+### 🆕 [2026-06-01] 週次戦略の多エージェント＋数値検証パイプライン（本命の品質UP・完成）
+- **発端**：週次戦略記事のシナリオ数字（日経60-61k/ドル円153-158/BTC$80k）が `auto_weekly_strategy.py` に**ハードコードされ陳腐化**（実勢66k/159/73k と乖離）。ユーザー指摘「3人で真剣に・数字は絶対正確・書いた後に照合する確認役が欲しい・信頼性に関わる」。
+- **構築（完了・デプロイ済）**：
+  - **producer** routine `weekly-strategy-brief`（`trig_01StownkcHrYyRbMMpVxVy2Z`、日曜18:30 JST）：fund/tech/risk の3サブエージェント起案 → **検証エージェントが全数値を `weekly-levels.json` と照合＋compliance** → `weekly-strategy-context.json`（`verified:true/false`）。**テスト実走で verified=true・全35数値一致・実勢価格に完全一致**を確認。
+  - **consumer** `auto_weekly_strategy.py`：`verified=true`＋**鮮度60h以内**のみ context からシナリオ描画。無ければプレースホルダ（誤情報を出さない）。`build_scenario_section_html`/`load_weekly_strategy_context` 追加。
+  - **render** `weekly-strategy.yml`（日曜20:13、force）：旧18:13冗長版を転用。routine後に強制再描画。
+  - `weekly-strategy-context.json` は **SYNC禁忌**（routineがmain生成）。
+- **稼働**：次の日曜(6/7)サイクルから「今週の投資戦略」が3人＋検証版で自動更新。現6/1週記事はプレースホルダのまま（構築前生成。月曜force再生成は6/8週を作るため見送り）。
+- **応急対応済**：誤数字のシナリオ表を撤去しプレースホルダ化（force再生成でライブ反映、誤情報除去）。
+- **検証ポイント**：[ ] 6/7初回サイクルで verified=true → 6/8週記事に正しい数字のシナリオが載るかライブ確認 [ ] routine の週計算が日曜に正しくMonday=翌週月曜になるか（月曜テストでは6/02と1日ズレ→鮮度ゲートで吸収済）。
+
+### 🆕 [2026-06-01] 日付バグの真因＝UTC/JST（横展開可）
+- GitHub Actions は**UTC実行**。素の `datetime.now()`/`date.today()` は9hズレ（JST午前0-9時は前日扱い）。`generate_stock_chart.py` の3箇所をJST明示に修正済。Gitコミット時刻がUTC=前日表示になるのも同根（仕様）。
+- Gemini等の推測日付対策：`auto_weekly_strategy.py` プロンプトに基準日明示＋「推測日付禁止」を追加済。
+- **教訓**：新規スクリプトで日付を扱うときは必ず `datetime.now(JST)`。「ローカルで合うのにActionsでズレる」はほぼこれ。
+
+### 🆕 [2026-06-01] 記事発見性の自動化＋Max枠確認
+- index.html に「今週の投資戦略」自動バナー＋📰更新履歴へ自動登録（最新 guide-weekly を自動検出。`build_weekly_strategy_banner`/`build_weekly_history_entry`）。**週次記事は更新履歴へ手動追記しない**（二重表示防止、CLAUDE.md 8ステップに明記）。
+- 入口は index.html（SYNC禁忌＝自動生成）に置き、guides.html のサーバ自動編集は回避（巻き戻し競合防止）。guides.html の6/1カードは手動で張替済。
+- **Max枠確認済**：routine は Maxプラン込み「1日の含まれるルーティン実行数」枠（15/日、追加課金なし）。日次でも実質5本程度で余裕。
 
 ### 🧭 当面の運営方針（2026-05-28 夜 ユーザー確認）
 - **Web サイトのクオリティ強化に注力**（記事追加・法務改善・SEO/UX）
