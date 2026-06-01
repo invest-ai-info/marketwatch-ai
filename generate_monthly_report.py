@@ -347,11 +347,15 @@ footer a{{color:#0969da;text-decoration:none}}
 <header><div class="header-inner"><div class="header-title">📊 MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div></div></header>
 <main>
 <nav class="nav-bar">
-  <a class="nav-btn" href="index.html">🏠 トップ</a>
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
   <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
-  <a class="nav-btn" href="calendar.html">📅 カレンダー</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 <div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ {year}年{month}月 成績レポート</div>
 
