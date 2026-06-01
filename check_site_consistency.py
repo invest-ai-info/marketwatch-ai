@@ -36,7 +36,7 @@ SD = os.path.dirname(os.path.abspath(__file__))
 # SYNC禁忌（CLAUDE.md準拠）: これらが SYNC_FILES に入っていたら巻き戻し事故 → error
 SYNC_FORBIDDEN = {
     "index.html", "calendar.html", "charts.html", "vix.html",
-    "market-health.html", "hot-assets.html",
+    "market-health.html", "hot-assets.html", "sitemap.xml",
     "signals-log.json", "signals-log.csv", "track-record.html",
     "political-feed.html", "political-feed.json",
     "youtube-summary.html", "youtube-summary-data.json",
@@ -86,7 +86,6 @@ def main():
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""
-    sitemap = _read("sitemap.xml") if _exists("sitemap.xml") else ""
     guide_files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html")))
     # 自動生成記事（テンプレは generate_*.py 側で管理。個別の登録チェック対象外）
     AUTO_PREFIXES = ("guide-weekly-", "guide-auto-", "guide-monthly-report-")
@@ -103,8 +102,8 @@ def main():
             warnings.append(f"{gf}: nav-btn が {nav} 個（9ボタン想定）")
         if sync_known and gf not in sync_files:
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
-        if gf not in sitemap:
-            warnings.append(f"{gf}: sitemap.xml に未登録")
+        # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
+        # 個別チェック不要（漏れない設計）。ここでは検査しない。
         if f'href="{gf}"' not in guides_html:
             warnings.append(f"{gf}: guides.html にカードが無い（一覧から辿れない）")
 
