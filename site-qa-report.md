@@ -1,6 +1,6 @@
-# 🧪 サイト整合性 QA レポート（基準日 2026-06-01 20:49 JST）
+# 🧪 サイト整合性 QA レポート（基準日 2026-06-01 21:01 JST）
 
-**実行日時**: 2026-06-01T20:49:25 JST（UTC+9）  
+**実行日時**: 2026-06-01T21:01 JST（UTC+9）  
 **実行環境**: GitHub Actions リモートコンテナ  
 **リンタースクリプト**: `check_site_consistency.py`（存在確認: ✅）
 
@@ -11,12 +11,13 @@
 | 区分 | 件数 |
 |---|---|
 | 総合判定 | ✅ OK |
-| ❌ エラー件数 | 0 件 |
-| ⚠️ 警告件数 | 24 件 |
+| ❌ エラー件数 | **0 件** |
+| ⚠️ 警告件数 | **0 件** |
 | 検査 guide 記事 | 36 件（自動生成記事除く） |
 | ✅ SYNC禁忌混入 | 検出なし |
 | ✅ 免責表示（kinsho-v1） | 問題なし |
 | ✅ ナビボタン 9 個 | 正常 |
+| ✅ sitemap 登録 | 全 guide 46 件登録済み |
 | SYNC_FILES チェック | スキップ（sync_to_github.py がリモートに無いため正常） |
 
 ---
@@ -28,48 +29,23 @@ SYNC禁忌の混入・免責文言漏れ・ナビバー9ボタン構成・リン
 
 ---
 
-## 警告一覧（sitemap.xml 未登録 24 件）
+## 警告一覧
 
-以下の guide-*.html ファイルが `sitemap.xml` に未登録です。SEO 上は Google クローラーのクロール誘導が不十分な状態ですが、ライブ公開されているページへの即座のユーザー影響はありません。余裕があるときに対応推奨。
+**警告なし。**
 
-| ファイル名 |
-|---|
-| guide-amd-2026-05.html |
-| guide-bank-stocks-2026-05.html |
-| guide-btc-crash-2026-05-19.html |
-| guide-clarity-act.html |
-| guide-gw-gap-2026-05.html |
-| guide-ideco.html |
-| guide-japan-strategy-2026-05.html |
-| guide-jpy-intervention-2026-05-06.html |
-| guide-kioxia-2026-05.html |
-| guide-nikkei-60k-break-2026-05-20.html |
-| guide-nikkei-65k-break-2026-05-25.html |
-| guide-nvidia-2026-05.html |
-| guide-oriental-land-2026-06.html |
-| guide-sell-in-may.html |
-| guide-softbank-group-2026-05.html |
-| guide-toyota-2026-05.html |
-| guide-tsmc-2026-05.html |
-| guide-us-china-summit-2026-05.html |
-| guide-us-china-summit-result-2026-05-14.html |
-| guide-us-china-summit-result-2026-05-15.html |
-| guide-us-cpi-2026-05.html |
-| guide-us-cpi.html |
-| guide-us-jobs-2026-05.html |
-| guide-yen-carry-trade.html |
+前回レポート（2026-06-01 20:49 JST）では sitemap.xml 未登録 24 件の警告が検出されていましたが、  
+`generate_market_news.py` の `build_sitemap_xml` による自動再生成（全 guide-*.html を自動収集）が  
+正常に機能し、本実行時点では guide 全 46 件が sitemap に登録済みとなっています。  
+**自動化システムが設計通りに動作していることが確認されました。**
 
 ---
 
 ## 推奨対応
 
-### 即時対応不要
-エラーゼロにつき、緊急対応は不要です。
+**即時対応不要**  
+エラー・警告ゼロ。すべての不変条件が満たされています。
 
-### 余裕対応（sitemap 未登録 24 件）
-上記 24 ファイルを `sitemap.xml` へ一括追加することで検索エンジンのクロールが改善されます。  
-`python mw.py publish` コマンドを使った公開フローを踏めば sitemap 登録が自動化されます。  
-一括追加は `python mw.py check` の警告ゼロを目標に、週次 QA のタイミングで対応推奨。
+次回 QA 予定: 2026-06-08（土曜 10:00 JST）
 
 ---
 
@@ -79,33 +55,7 @@ SYNC禁忌の混入・免責文言漏れ・ナビバー9ボタン構成・リン
 🔍 サイト整合性チェック（check_site_consistency.py）
   検査した guide記事: 36 件（自動生成記事を除く） / SYNC_FILES: ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）
 
-⚠️  警告 24 件:
-   - guide-amd-2026-05.html: sitemap.xml に未登録
-   - guide-bank-stocks-2026-05.html: sitemap.xml に未登録
-   - guide-btc-crash-2026-05-19.html: sitemap.xml に未登録
-   - guide-clarity-act.html: sitemap.xml に未登録
-   - guide-gw-gap-2026-05.html: sitemap.xml に未登録
-   - guide-ideco.html: sitemap.xml に未登録
-   - guide-japan-strategy-2026-05.html: sitemap.xml に未登録
-   - guide-jpy-intervention-2026-05-06.html: sitemap.xml に未登録
-   - guide-kioxia-2026-05.html: sitemap.xml に未登録
-   - guide-nikkei-60k-break-2026-05-20.html: sitemap.xml に未登録
-   - guide-nikkei-65k-break-2026-05-25.html: sitemap.xml に未登録
-   - guide-nvidia-2026-05.html: sitemap.xml に未登録
-   - guide-oriental-land-2026-06.html: sitemap.xml に未登録
-   - guide-sell-in-may.html: sitemap.xml に未登録
-   - guide-softbank-group-2026-05.html: sitemap.xml に未登録
-   - guide-toyota-2026-05.html: sitemap.xml に未登録
-   - guide-tsmc-2026-05.html: sitemap.xml に未登録
-   - guide-us-china-summit-2026-05.html: sitemap.xml に未登録
-   - guide-us-china-summit-result-2026-05-14.html: sitemap.xml に未登録
-   - guide-us-china-summit-result-2026-05-15.html: sitemap.xml に未登録
-   - guide-us-cpi-2026-05.html: sitemap.xml に未登録
-   - guide-us-cpi.html: sitemap.xml に未登録
-   - guide-us-jobs-2026-05.html: sitemap.xml に未登録
-   - guide-yen-carry-trade.html: sitemap.xml に未登録
-
-結果: ✅ OK（エラーなし・警告 24 件）
+結果: ✅ OK（エラーなし）
 EXIT_CODE:0
 ```
 
