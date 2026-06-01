@@ -15,6 +15,7 @@ import os
 import re
 import sys
 import time
+import json
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
@@ -242,6 +243,77 @@ def get_week_indicators(week_start, week_end):
     return events
 
 
+def load_weekly_strategy_context(script_dir, week_start):
+    """weekly-strategy-context.json を読み、(1)存在 (2)verified=true (3)対象週が一致 を全て満たす場合のみ
+    dict を返す。それ以外（不在/未検証/週ズレ/壊れ）は None → 呼び出し側はプレースホルダにフォールバック。
+    これにより『検証を通った数値だけ公開』を構造的に保証する。"""
+    path = os.path.join(script_dir, "weekly-strategy-context.json")
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            ctx = json.load(f)
+    except Exception as e:
+        print(f"  ⚠️ weekly-strategy-context.json 読み込み失敗: {e}")
+        return None
+    if ctx.get("verified") is not True:
+        print("  ℹ️ weekly-strategy-context.json は未検証(verified!=true) → シナリオ非表示")
+        return None
+    if ctx.get("week_start") != week_start.strftime("%Y-%m-%d"):
+        print(f"  ℹ️ context の対象週({ctx.get('week_start')}) ≠ 今週({week_start}) → シナリオ非表示")
+        return None
+    return ctx
+
+
+def build_scenario_section_html(ctx):
+    """検証済み context から『執筆時点の水準＋3シナリオ＋資産別戦略』HTMLを描画。
+    数値は weekly-strategy-brief routine が weekly-levels.json と照合済みのもののみ。"""
+    snap = ctx.get("snapshot") or []
+    snap_html = ""
+    if snap:
+        items = "".join(
+            f'<li><strong>{s.get("name","")}：</strong>{s.get("price","")}'
+            f'{(" — " + s["note"]) if s.get("note") else ""}</li>'
+            for s in snap
+        )
+        snap_html = (f'    <div class="info-box">\n'
+                     f'      <strong>📌 執筆時点の水準（出典 {ctx.get("levels_source","weekly-levels.json")}）</strong>\n'
+                     f'      <ul>{items}</ul>\n'
+                     f'    </div>\n')
+    type_label = {"bull": "🟢 リスクオン", "base": "🟡 レンジ", "bear": "🔴 リスクオフ"}
+    type_class = {"bull": "bull", "base": "base", "bear": "bear"}
+    sc_html = ""
+    for sc in ctx.get("scenarios", []):
+        t = sc.get("type", "base")
+        prob = (f' <span style="font-size:.8rem;color:#57606a">想定確度 {sc.get("prob")}</span>'
+                if sc.get("prob") else "")
+        sc_html += (f'    <div class="scenario-card {type_class.get(t,"base")}">\n'
+                    f'      <div class="scenario-title">{type_label.get(t,"")}：{sc.get("title","")}{prob}</div>\n'
+                    f'      <p>{sc.get("body","")}</p>\n'
+                    f'    </div>\n')
+    strat = ctx.get("asset_strategies") or []
+    strat_html = ""
+    if strat:
+        lis = "".join(f'<li><strong>{a.get("name","")}：</strong>{a.get("text","")}</li>' for a in strat)
+        strat_html = f'    <h2>💼 資産別トレード戦略</h2>\n    <ul>{lis}</ul>\n'
+    verified_note = ('    <p style="font-size:.78rem;color:#6e7781;margin-top:6px">'
+                     '✅ 本シナリオの数値は weekly-levels.json と自動照合済み（数値検証パイプライン）。'
+                     '投資判断は自己責任で。</p>\n')
+    return (f'    <h2>🎯 3つのメインシナリオ</h2>\n'
+            f'{snap_html}{sc_html}{strat_html}{verified_note}')
+
+
+# 検証済みシナリオが無いときのフォールバック（誤情報防止のプレースホルダ）
+_SCENARIO_PLACEHOLDER = (
+    '    <!-- 検証済みシナリオ(weekly-strategy-context.json)が未生成のため非表示。誤情報防止。 -->\n'
+    '    <div class="info-box">\n'
+    '      <strong>📊 シナリオ別の詳細水準はリニューアル中です。</strong><br>\n'
+    '      より正確な価格水準にもとづくシナリオを提供するため、詳細表を一時的に非表示にしています。'
+    '最新の価格・指標は <a href="index.html">🏠 最新マーケット</a>、<a href="calendar.html">📅 経済カレンダー</a> をご参照ください。\n'
+    '    </div>\n'
+)
+
+
 def build_weekly_html(week_start, week_end, today_jst):
     """週次戦略記事のHTMLを生成"""
     week_start_str = week_start.strftime("%-m/%-d") if os.name != "nt" else week_start.strftime("%#m/%#d")
@@ -278,6 +350,12 @@ def build_weekly_html(week_start, week_end, today_jst):
 
     # AI による週末動向セクション（GEMINI_API_KEY が設定されていれば自動生成、なければ空文字）
     weekend_section_html = generate_weekend_section_with_ai(today_jst, week_start, week_end, events) or ""
+
+    # 🆕 検証済みシナリオ（weekly-strategy-brief routine が生成・数値検証した context）を採用。
+    #    無ければ誤情報防止のプレースホルダにフォールバック。
+    _sd = os.path.dirname(os.path.abspath(__file__))
+    _ws_ctx = load_weekly_strategy_context(_sd, week_start)
+    scenario_section_html = build_scenario_section_html(_ws_ctx) if _ws_ctx else _SCENARIO_PLACEHOLDER
 
     title = f"今週の投資戦略（{week_start_str}〜{week_end_str}）：注目指標と3シナリオ別マーケット展望"
 
@@ -428,12 +506,7 @@ def build_weekly_html(week_start, week_end, today_jst):
       <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a>
     </div>
 
-    <!-- ⚠️ シナリオ別の具体的価格水準は、固定値の陳腐化を防ぐためリニューアル中（多エージェント生成＋数値検証パイプラインへ移行予定）。誤情報防止のため一時非表示。 -->
-    <div class="info-box">
-      <strong>📊 シナリオ別の詳細水準はリニューアル中です。</strong><br>
-      より正確な価格水準にもとづくシナリオを提供するため、詳細表を一時的に非表示にしています。最新の価格・指標は <a href="index.html">🏠 最新マーケット</a>、<a href="calendar.html">📅 経済カレンダー</a> をご参照ください。
-    </div>
-
+{scenario_section_html}
     <h2>⚠️ 注意すべきリスク</h2>
     <div class="warning-box">
       <strong>① 重要指標の上振れショック</strong>（特に米CPI・雇用統計）<br>
