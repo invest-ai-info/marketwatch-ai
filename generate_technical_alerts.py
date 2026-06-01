@@ -607,10 +607,77 @@ def determine_direction(signals):
 # シグナル判定（4H 足の最新バーを評価）
 # 返り値: list of dict [{type, severity, label, detail}, ...]
 # ─────────────────────────────────────────────
-def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", now_jst=None):
+def detect_fib_pullback(high, low, close, atr_cur, fundamental_bias,
+                        lookback=40, gp_lo=0.50, gp_hi=0.66, min_impulse_atr=3.0):
+    """🆕 2026-06-01 ファンダ整合フィボ押し目（ゴールデンポケット 50〜61.8%）検出。
+    fundamental_bias='BULLISH'→押し目買い(long)、'BEARISH'→戻り売り(short)、その他→None。
+    直近の上昇(下降)インパルスの 50〜61.8% リトレースに現値が到達したら発火（ファンダ方向と一致時のみ）。
+    インパルスは ≥3×ATR を要求し、ノイズの小さな押しは除外。モメンタムフィルタはメイン側でバイパス。"""
+    if fundamental_bias not in ("BULLISH", "BEARISH"):
+        return None
+    if atr_cur is None or atr_cur <= 0:
+        return None
+    if close is None or len(close) < lookback + 2:
+        return None
+    h = [float(x) for x in high.iloc[-lookback:]]
+    l = [float(x) for x in low.iloc[-lookback:]]
+    price = float(close.iloc[-1])
+    last = lookback - 1
+
+    if fundamental_bias == "BULLISH":
+        ih = max(range(lookback), key=lambda i: h[i])   # スイング高値の位置
+        if ih < 5 or ih > last - 1:                      # 高値の後に押し（バー）が必要
+            return None
+        swing_high = h[ih]
+        swing_low = min(l[:ih])                          # 高値より前の最安値＝インパルス起点
+        impulse = swing_high - swing_low
+        if impulse <= 0 or impulse < min_impulse_atr * atr_cur:
+            return None
+        if not (swing_low < price < swing_high):
+            return None
+        retr = (swing_high - price) / impulse
+        if not (gp_lo <= retr <= gp_hi):
+            return None
+        direction = "long"
+        fib_500 = swing_high - 0.500 * impulse
+        fib_618 = swing_high - 0.618 * impulse
+    else:  # BEARISH
+        il = min(range(lookback), key=lambda i: l[i])    # スイング安値の位置
+        if il < 5 or il > last - 1:
+            return None
+        swing_low = l[il]
+        swing_high = max(h[:il])                          # 安値より前の最高値＝下降インパルス起点
+        impulse = swing_high - swing_low
+        if impulse <= 0 or impulse < min_impulse_atr * atr_cur:
+            return None
+        if not (swing_low < price < swing_high):
+            return None
+        retr = (price - swing_low) / impulse
+        if not (gp_lo <= retr <= gp_hi):
+            return None
+        direction = "short"
+        fib_500 = swing_low + 0.500 * impulse
+        fib_618 = swing_low + 0.618 * impulse
+
+    return {
+        "direction": direction,
+        "fib_pct": "61.8%" if retr >= 0.559 else "50%",
+        "retr_pct": round(retr * 100, 1),
+        "swing_high": round(swing_high, 4),
+        "swing_low": round(swing_low, 4),
+        "fib_500": round(fib_500, 4),
+        "fib_618": round(fib_618, 4),
+        "price": round(price, 4),
+        "impulse_atr": round(impulse / atr_cur, 1),
+    }
+
+
+def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", now_jst=None,
+                   fundamental_bias=None):
     """
     signals_log_recent: 同 ticker, 同 timeframe の直近シグナルリスト（初押し検出用、オプショナル）
     ticker / timeframe / now_jst: 初押し検出用コンテキスト
+    fundamental_bias: 'BULLISH'/'BEARISH'/None（フィボ押し目シグナルのファンダゲート）
     """
     if df_4h is None or len(df_4h) < 30:
         return []
@@ -811,6 +878,29 @@ def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", 
                     "email_silent": True,  # 🚫 N=20-30 まで蓄積、メール送信は当面 OFF
                     "pattern_data": fp,
                 })
+
+    # 🆕 2026-06-01: ファンダ整合フィボ押し目（ゴールデンポケット 50-61.8%・両方向・メールON）
+    #   fundamental-context の方向（強気/弱気・HIGH/MID確信度のみ main 側で渡す）と一致する押し目で発火。
+    #   押し目は短期モメンタムに逆らうため、メイン側で bypass_momentum によりフィルタをバイパスする。
+    if fundamental_bias in ("BULLISH", "BEARISH"):
+        fbk = detect_fib_pullback(high, low, close, atr.iloc[-1], fundamental_bias)
+        if fbk:
+            _is_long = fbk["direction"] == "long"
+            signals.append({
+                "type": "fib_pullback_long" if _is_long else "fib_pullback_short",
+                "severity": "buy" if _is_long else "sell",
+                "label": (f"{'🟢' if _is_long else '🔴'} ファンダ{'強気' if _is_long else '弱気'}×フィボ{fbk['fib_pct']}"
+                          f"{'押し目（押し目買い候補）' if _is_long else '戻り（戻り売り候補）'}"),
+                "detail": (
+                    f"{'上昇' if _is_long else '下降'}インパルス {fbk['swing_low']}〜{fbk['swing_high']}"
+                    f"（{fbk['impulse_atr']}×ATR）の {fbk['fib_pct']}（戻し {fbk['retr_pct']}%）に到達。"
+                    f"現値 {fbk['price']}／フィボ 50%={fbk['fib_500']}・61.8%={fbk['fib_618']}。"
+                    f"ファンダ方向（{fundamental_bias}）と整合の押し目。"
+                ),
+                "is_reversal_pattern": False,
+                "bypass_momentum": True,
+                "pattern_data": fbk,
+            })
 
     # 🆕 2026-05-28: 市況判定（ADX/Choppiness + MA 乖離率フォールバック）
     adx_cur = float(adx_series.iloc[-1]) if not pd.isna(adx_series.iloc[-1]) else None
@@ -2343,9 +2433,13 @@ def main():
             except Exception:
                 continue
 
+        # 🆕 2026-06-01: フィボ押し目シグナル用のファンダ方向（確信度 HIGH/MID のみ採用＝選別的）
+        _fb_entry = briefing_bias_for(fundamental_ctx, ticker)
+        _ticker_bias = _fb_entry.get("bias") if (_fb_entry and _fb_entry.get("conviction") in ("HIGH", "MID")) else None
         signals, indicators = detect_signals(
             df, signals_log_recent=signals_log_recent,
             ticker=ticker, timeframe=timeframe, now_jst=now_jst,
+            fundamental_bias=_ticker_bias,
         )
         if not signals:
             print(f"    ✅ シグナルなし（現値 {currency}{indicators['price']:.{decimals}f}）")
@@ -2414,12 +2508,12 @@ def main():
         # 🆕 P1: 反転型パターン（double_top / double_bottom）はモメンタムと逆方向のため、
         #       フィルタをバイパスする（転換時点ではモメンタムがまだ逆を向いている）
         momentum_info = None
-        has_reversal_pattern = any(s.get("is_reversal_pattern") for s in fresh_signals)
+        has_reversal_pattern = any(s.get("is_reversal_pattern") or s.get("bypass_momentum") for s in fresh_signals)
         if filter_send_email and position_plan and has_reversal_pattern:
-            # 反転型パターン優先、モメンタムフィルタは参考値のみ計算
+            # 反転型パターン / フィボ押し目（bypass_momentum）はモメンタムと逆方向のため、フィルタをバイパス
             momentum_info = calc_momentum_score(position_plan["entry"], direction, indicators)
-            pattern_types = [s["type"] for s in fresh_signals if s.get("is_reversal_pattern")]
-            print(f"    🔄 反転型パターン検出 ({', '.join(pattern_types)}): モメンタムフィルタをバイパス")
+            pattern_types = [s["type"] for s in fresh_signals if (s.get("is_reversal_pattern") or s.get("bypass_momentum"))]
+            print(f"    🔄 反転型/押し目パターン検出 ({', '.join(pattern_types)}): モメンタムフィルタをバイパス")
         elif filter_send_email and position_plan:
             passed, reason, momentum_info = passes_momentum_filter(
                 position_plan["entry"], direction, indicators
