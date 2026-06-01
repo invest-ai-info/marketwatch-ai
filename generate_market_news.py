@@ -3692,22 +3692,21 @@ def build_weekly_strategy_banner(now_jst):
         return ""
 
 
-def build_weekly_history_entry(now_jst):
-    """📰 更新履歴 の先頭に差し込む「今週の投資戦略」エントリ（1行・末尾 <br> 付き）を返す。
-    最新の guide-weekly を自動検出するので、毎週の手動追記が不要（＝更新履歴への自動登録）。
-    記事が無ければ空文字。"""
+def build_weekly_history_item(now_jst):
+    """📰 更新履歴 に載せる「今週の投資戦略」エントリを {date, line} で返す（日付降順ソート用）。
+    最新の guide-weekly を自動検出。記事が無ければ None。line は先頭スペース・末尾<br>なし。"""
     try:
         latest_file, latest_date = _find_latest_weekly_article()
         if not latest_file:
-            return ""
+            return None
         rng = _weekly_range_label(latest_date)
-        # 公開日 = 翌週月曜の前日（＝記事が生成された日曜）
-        pub = (latest_date - timedelta(days=1)).strftime("%Y-%m-%d")
-        return (f'      ・<b>{pub}</b>: 📅 解説「<a href="{latest_file}" style="color:#0969da">'
-                f'<b>今週の投資戦略（{rng}）：注目指標と3シナリオ別マーケット展望</b></a>」公開<br>\n')
+        pub = (latest_date - timedelta(days=1)).strftime("%Y-%m-%d")  # 生成された日曜＝週開始(月)の前日
+        line = (f'・<b>{pub}</b>: 📅 解説「<a href="{latest_file}" style="color:#0969da">'
+                f'<b>今週の投資戦略（{rng}）：注目指標と3シナリオ別マーケット展望</b></a>」公開')
+        return {"date": pub, "line": line}
     except Exception as e:
-        print(f"  ⚠️ weekly history entry 生成スキップ: {e}")
-        return ""
+        print(f"  ⚠️ weekly history item 生成スキップ: {e}")
+        return None
 
 
 def build_html(data, hist, now_jst, news=None, touraku=None):
@@ -3758,8 +3757,21 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
     # 🆕 今週の投資戦略への自動導線バナー（最新 guide-weekly を自動検出）
     weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
-    # 🆕 📰 更新履歴 への自動登録エントリ（毎週の手動追記が不要に）
-    weekly_history_entry = build_weekly_history_entry(now_jst)
+    # 🆕 📰 更新履歴：手動エントリ＋週次自動エントリを「日付降順」に並べ、最新5件のみ表示。
+    #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
+    #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
+    _history_items = [
+        {"date": "2026-06-01", "line": '・<b>2026-06-01</b>: 🏰 解説「<a href="guide-oriental-land-2026-06.html" style="color:#0969da"><b>オリエンタルランド（4661）はなぜ約6割安に？ 暴落の5つの理由と「復活」3シナリオを整理</b></a>」公開'},
+        {"date": "2026-05-31", "line": '・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開'},
+        {"date": "2026-05-31", "line": '・<b>2026-05-31</b>: 🗾 解説「<a href="guide-japan-strategy-2026-05.html" style="color:#0969da"><b>2026年 日本株の歩き方：日経を動かす「攻め」と暴落に強い「守り」のセクター戦略</b></a>」公開'},
+        {"date": "2026-05-29", "line": '・<b>2026-05-29</b>: 🏭 解説「<a href="guide-tsmc-2026-05.html" style="color:#0969da"><b>TSMC（NYSE: TSM）2026 Q1 決算解説：売上 359 億ドルで過去最高、純利益 +58% — 世界最大ファウンドリの強さと「地政学リスク」をフラットに整理する</b></a>」公開'},
+        {"date": "2026-05-28", "line": '・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開'},
+    ]
+    _wk_item = build_weekly_history_item(now_jst)
+    if _wk_item:
+        _history_items.append(_wk_item)
+    _history_items.sort(key=lambda x: x["date"], reverse=True)  # 日付降順（安定ソート＝同日は手動を先に）
+    update_history_html = "<br>\n".join("      " + it["line"] for it in _history_items[:5])
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -3971,11 +3983,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-{weekly_history_entry}      ・<b>2026-06-01</b>: 🏰 解説「<a href="guide-oriental-land-2026-06.html" style="color:#0969da"><b>オリエンタルランド（4661）はなぜ約6割安に？ 暴落の5つの理由と「復活」3シナリオを整理</b></a>」公開<br>
-      ・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開<br>
-      ・<b>2026-05-31</b>: 🗾 解説「<a href="guide-japan-strategy-2026-05.html" style="color:#0969da"><b>2026年 日本株の歩き方：日経を動かす「攻め」と暴落に強い「守り」のセクター戦略</b></a>」公開<br>
-      ・<b>2026-05-29</b>: 🏭 解説「<a href="guide-tsmc-2026-05.html" style="color:#0969da"><b>TSMC（NYSE: TSM）2026 Q1 決算解説：売上 359 億ドルで過去最高、純利益 +58% — 世界最大ファウンドリの強さと「地政学リスク」をフラットに整理する</b></a>」公開<br>
-      ・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開
+{update_history_html}
     </div>
   </div>
 
