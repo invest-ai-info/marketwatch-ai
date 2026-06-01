@@ -1,67 +1,68 @@
-# 📅 明日のマーケット・プレビュー（2026年6月1日 月曜 JST）
+# 📅 明日のマーケット・プレビュー（2026年6月2日（火）JST）
 
-> 生成日時: 2026-05-31 21:08 JST（21:00 版に更新）  
-> 対象日: 2026-06-01（月）  
-> economic-events.json との整合: **6月1日の登録イベントなし**（同ファイルは市場休場・重大指標を主に収録。6/5 NFP・OPEC+、6/10 米CPI、6/16 日銀、6/18 FOMC は登録済み）
-
----
-
-## 📌 直近の市場振り返り（5/29〜5/31）
-
-- **5/29（金）終値**: 日経225 **+2.68% → 66,424円**（月中66,000超え）、ダウ **+0.72% → 51,032**、S&P500・Nasdaq 小幅高で月末を過去最高圏で締め。背景は米・イラン停戦MOU報道とAI関連株（Dell +40%超）の急騰。
-- **5/31（日）中国 NBS 製造業PMI（5月）**: **50.0**（前月 50.3 → ▲0.3pt）。新規受注指数が 49.9 と縮小圏へ転落し、中国製造業の回復ペース鈍化を示した。月初 Caixin PMI への注目度が上がっている。
-- **米・イラン 60 日停戦 MOU**: 週末に合意報道。ただしトランプ大統領の最終承認は未確認。Strait of Hormuz の通行制限緩和含む内容とされ、原油・金に影響。
+> 生成日時: 2026-06-01 21:02 JST  
+> 対象日: 2026-06-02（火）  
+> economic-events.json との整合: **6月2日の登録イベントなし**（同ファイルに 6/5 NFP・OPEC+、6/10 米CPI、6/16 日銀、6/18 FOMC は登録済み。6/2 JOLTS は未登録 → 次回手動追記推奨）
 
 ---
 
-## ⏰ 注目イベント表（2026年6月1日）
+## 📌 本日（6/1）の振り返り
+
+- **日経225**: 66,934 円（+0.91%）で史上最高値を更新。SoftBank Group（+14%）・Kioxia Holdings（+10.1%）・Murata Manufacturing（+9%）主導のAI・半導体関連株が急騰。
+- **USD/JPY**: 159.37 円（+0.06%）と小幅ドル高・円安。
+- **金（GC=F）**: $4,541.80（+0.01%）と高値圏で小動き。
+- **ISM 製造業景気指数（5月）**: **52.70**（前回 52.7 / 予想 53.0）。予想をわずかに下回るも4月と同水準を維持し、製造業拡張基調は継続。
+- **S&P Global 日本 製造業PMI 確報（5月）**: **54.5**（前回 55.1）。速報値から修正なし、高水準での拡張継続。
+
+> ※ S&P500・原油の本日終値は未確認。NASDAQは記録圏付近での推移が継続しているとみられる（要確認）。
+
+---
+
+## ⏰ 注目イベント表（2026年6月2日）
 
 | 時刻（JST） | 指標・イベント | 予想 | 前回 | 重要度 | 主に効く資産 |
 |:---:|:---|:---:|:---:|:---:|:---|
-| 08:30 頃 | 🇯🇵 au Jibun Bank 製造業PMI **確報**（5月） | 54.5（速報値） | 55.1 | 低 | 日経・JPY |
-| 10:45 頃 | 🇨🇳 **Caixin 製造業PMI**（5月） | 〜51.0（要確認） | 50.8 | **中** | AUDJPY・AUDUSD・日経 |
-| 17:00 頃 | 🇬🇧 S&P Global 英国製造業PMI **確報**（5月） | 53.7（速報値） | 53.7（4月） | 中 | GBPUSD・GBPJPY |
-| 17:00 頃 | 🇪🇺 HCOB ユーロ圏製造業PMI **確報**（5月） | 51.4（速報値） | 52.2（4月） | 中 | EURUSD・EURJPY |
-| 22:45 | 🇺🇸 S&P Global 製造業PMI **確報**（5月） | 55.3（速報値） | 54.5 | 低〜中 | USD系 |
-| **23:00** | 🇺🇸 ⭐ **ISM 製造業景気指数**（5月） | **〜53.0** | 52.7 | **高** | USD全般・米株（ES=F/NQ=F）・GC=F・CL=F |
-| 23:00 | 🇺🇸 建設支出（4月、MoM） | 〜＋0.5%（要確認） | ＋0.6% | 低 | USD |
+| 09:30 頃 | 🇯🇵 au Jibun Bank サービス業PMI 確報（5月） ⚠️要確認 | — | 53.7（4月） | 低〜中 | 日経・JPY |
+| **23:00** | 🇺🇸 ⭐ **JOLTS 求人件数（4月）** | **683.3 万件** | **690 万件（3月）** | **★★★高** | ドル円・米株・金 |
 
-> **予想値の注記**: ISM の市場予想 〜53.0 は複数ソース（babypips/mql5 等）を参照。Caixin PMI 予想は公式確認が取れていないため「要確認」。確報 PMI（日・ユーロ圏・米 S&P Global）は通常フラッシュ値に近い着地。
+> **時刻注記**: JOLTS は 10:00 AM ET = 23:00 JST（夏時間）。Jibun Bank サービス業PMI 確報の6/2発表はソースで最終確認が取れていないため「要確認」。発表済みの場合は6/1に発表された可能性あり。
 
 ---
 
 ## 👀 着眼点
 
-1. **ISM vs S&P Global PMI の二極化**  
-   S&P Global フラッシュ（55.3）は6年ぶり高水準で好調な一方、ISM は 52 台と二極化が続いている。ISM が予想（〜53.0）を上回れば → ドル高・米株高・金売り。下振れれば → FRB 利下げ観測前進・ドル安・株は反応が分かれやすい。本日最大の価格変動イベント。
+1. **JOLTS 求人件数が今日唯一の高重要度指標**  
+   4月分の求人件数は予想 683.3 万件 vs. 前回（3月）690 万件と小幅低下見込み。6/5（金）のNFP（雇用統計）を前に労働市場の先行指標として注目度が高い。予想を大幅に上回れば → USD 買い・ドル円上昇・株への追い風となりやすい。大幅下振れ → リスクオフ方向・金上昇の可能性（ただし単月データのブレに注意）。
 
-2. **中国 Caixin と月曜アジア開幕の方向感**  
-   今日の NBS PMI がボーダーライン（50.0）だったため、民間統計の Caixin PMI が最初の試金石になる。前回 50.8 からの乖離幅次第で AUD/JPY・AUD/USD が東京午前に動きやすい。Caixin 好結果 → AUD 買い・Nikkei の寄り付き支援。悪化 → リスクオフ方向。
+2. **ISM 製造業PMI（52.70）の市場消化**  
+   本日発表の ISM は予想をわずかに下回ったが横ばい水準を維持。「悪くはないが加速感も乏しい」という評価が翌朝（6/2）のアジア市場の寄り付きに影響しうる。日経は昨日史上最高値を更新しており、達成感からの利益確定売りが出やすい局面でもある。
 
-3. **米・イラン停戦 MOU の週明け消化**  
-   週末報道を月曜朝に市場が織り込み確認する局面。原油（CL=F）は停戦確認で続落方向バイアスだが、「承認前」のヘッドラインで乱高下しやすい。金（GC=F）は地政学プレミアム剥落圧力 vs. ドル動向の綱引き。停戦破談なら原油急騰・金反発に注意。
+3. **Fed ブラックアウト前の最終発言機会**  
+   FOMC 6/16-17 に向けたブラックアウト期間は **6/6（土）0:00 ET 以降**。6/2（火）はまだ Fed 高官の発言が可能。特定のスピーチ予定は未確認だが、ISM 後や雇用週前という文脈で市場が動くケースがある。
 
-4. **週後半の大イベントを前にした布石週**  
-   6/5（金）米雇用統計・OPEC+会合、6/10（水）米CPI、6/16（月）日銀決定会合、6/18（木）FOMC・パウエル会見、6/19（木）Juneteenth 休場 —— と超重要イベントが目白押し。6/1 の PMI ラッシュで大局の方向感を測る週となる。月初の PMI 結果が週後半トレードの前提条件になる可能性があり、早まったポジション構築は慎重に。
+4. **週後半の大イベントへの布石局面**  
+   今週残りのスケジュール（参考）:
+   - **6/3（水）**: ADP 民間雇用（5月）、製造業受注（4月）、ISM 非製造業PMI（要確認）
+   - **6/5（金）**: 米雇用統計（NFP・5月）、OPEC+ 会合
+   - **6/6（土）**: Fed ブラックアウト開始  
+   
+   6/2 は比較的静かな一日だが、JOLTS が予想から大きく外れた場合は 6/5 NFP への織り込みが早まる可能性がある。
 
-5. **日銀（6/16）への布石**  
-   経済指標カレンダーによれば 6/16 に日銀会合。今週の米国指標（PMI → NFP → CPI）の結果次第で USDJPY の方向性がある程度形成される。円安が進行するほど日銀が「引き締め加速」を示唆しやすい局面でもあり、JPY ペアは中長期の方向感に注意。
-
-6. **Fed ブラックアウト前の最後の発言週**  
-   FOMC（6/16-17）のブラックアウト期間は **6/6（土）以降**（ミーティング2週前の土曜ゼロ時から）。今週（6/1〜5）はまだ Fed 高官発言が可能で、任意の発言が利下げ期待・ドル相場に影響しうる。特に ISM PMI 後の発言には注意。
+5. **ドル円・日銀への視線**  
+   ドル円 159 円台は 2026 年の高値圏付近。今週の米労働指標（JOLTS → NFP）が強ければ 160 円台試しの展開も。逆に弱ければ円買い圧力が高まり、6/16 日銀会合（economic-events.json 登録済み）に向けた思惑が加わりやすい。
 
 ---
 
-## 📊 market-watch-jp.com 監視銘柄との関連（参考）
+## 📊 監視銘柄との関連（参考）
 
-| 銘柄 | 6/1 の主な材料 |
+| 銘柄 | 6/2 の主な材料 |
 |---|---|
-| NKD=F（日経CME） | Caixin PMI（10:45）+ 停戦報道消化 + ISM（23:00） |
-| GC=F（金） | 停戦進行 → 地政学プレミアム縮小 / ISM 弱 → 金買い |
-| CL=F（原油） | 停戦 MOU 確認 → 続落 / 破談 → 急騰 |
-| USDJPY | ISM 強 → ドル高・円安 / ISM 弱 → ドル安・円高 |
-| AUDJPY / AUDUSD | Caixin PMI が主ドライバー（中国経済代理指標） |
-| BTC-USD | リスクオン持続なら堅調バイアス（明確な指標なし） |
+| NKD=F（日経CME） | 昨日最高値更新後の利確圧力 vs. 夜間JOLTS結果のフォローオン |
+| GC=F（金） | JOLTS 弱 → 金買いバイアス / 強 → USD高で金売り圧力 |
+| CL=F（原油） | 米・イラン停戦MOU の続報次第（特定イベント未確認） |
+| USDJPY | 159 円台の上値・下値を JOLTS が方向付けする可能性 |
+| ES=F / NQ=F | JOLTS が雇用堅調を示せばソフトランディング期待で支持 |
+| BTC-USD | リスクオン継続なら高値圏維持バイアス（JOLTS 間接的） |
 
 ---
 
@@ -70,12 +71,15 @@
 ---
 
 ### 出典（ソース確認済み）
-- [China NBS Manufacturing PMI — Xinhua (2026-05-31)](https://english.news.cn/20260531/7be1c632781e4cd29dee051b56b6ece1/c.html)
-- [ISM Manufacturing PMI 発表スケジュール — ISMWorld](https://www.ismworld.org/supply-management-news-and-reports/reports/rob-report-calendar/)
-- [ISM Manufacturing PMI April 2026 — PR Newswire](https://www.prnewswire.com/news-releases/manufacturing-pmi-at-52-7-april-2026-ism-manufacturing-pmi-report-302759226.html)
-- [S&P Global US Manufacturing PMI Flash May 2026](https://www.pmi.spglobal.com/Public/Home/PressRelease/7ca2ebfa9cce4c768e0cf449ba966293)
-- [S&P Global Japan Manufacturing PMI May 2026](https://www.pmi.spglobal.com/Public/Home/PressRelease/6bf4b968d4f64cf68179409bb183fb6a)
-- [US Construction Spending — US Census Bureau](https://www.census.gov/construction/c30/release.html)
-- [US-Iran ceasefire MOU — TradingKey](https://www.tradingkey.com/analysis/stocks/us-stocks/261934134-iran-us-60-price-nasdaq-gold-oil-xau-sp500-war-usd-stock-tradingkey)
-- [Nikkei 66,000 — Japan Times (2026-05-27)](https://www.japantimes.co.jp/business/2026/05/27/markets/nikkei-hit-high-may/)
-- [economic-events.json (local)](./economic-events.json) — 6月1日登録なし（6/5〜6/18 の主要イベントは収録確認済み）
+
+- [JOLTS 4月分 BLS 発表スケジュール — BLS JOLTS Release Schedule](https://www.bls.gov/schedule/news_release/jolts.htm)
+- [JOLTS 3月分 結果（前回値） — BLS](https://www.bls.gov/news.release/jolts.nr0.htm)
+- [JOLTS 4月分 予想値 683.3 万件 — 検索結果（日本語経済カレンダー）](https://equity.jiji.com/economic_calendar)
+- [ISM 製造業PMI 5月結果 52.70 — Investing.com](https://www.investing.com/economic-calendar/ism-manufacturing-pmi-173)
+- [S&P Global 日本製造業PMI 5月確報 54.5 — S&P Global PMI](https://www.pmi.spglobal.com/Public/Home/PressRelease/f52d63602f2c4e1b8f9c1e5a597c3429)
+- [日経225 6/1 終値 66,934 — Trading Economics](https://tradingeconomics.com/japan/stock-market)
+- [USD/JPY 159.37 — Trading Economics](https://tradingeconomics.com/japan/currency)
+- [金 $4,541.80 — Trading Economics](https://tradingeconomics.com/commodity/gold)
+- [FOMC 6/16-17・ブラックアウン 6/6〜 — Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm)
+- [ADP 5月分 6/3 リリース — ADP Employment Report](https://adpemploymentreport.com/)
+- [economic-events.json (local)](./economic-events.json) — 6/2 登録なし・6/5 NFP・6/10 CPI・6/16 日銀・6/18 FOMC は登録確認済み
