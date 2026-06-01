@@ -44151,7 +44151,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.193,
-    "max_adverse_excursion_pct": -0.067,
+    "max_adverse_excursion_pct": -0.114,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -44941,13 +44941,13 @@
       "本日の株式市場：Appleが急伸し、ボラティリティの高い取引日を経てDow、S&P 500、Nasdaqが上昇して終了"
     ],
     "ai_narrative": "S&P500先物は、MACDがゴールデンクロスを形成し、短期的な上昇転換を示唆しています。RSIが62.9と買われすぎではない水準にあり、25MAも75MAを上回っていることから、このロング戦略はテクニカルに妥当性があります。直近のニュースでは、Nvidia決算やApple株高によるテクノロジー株の上昇が市場を下支えする可能性が示唆されており、ファンダメンタルズとの整合性も確認できます。USDの通貨強弱がプラスであることも、リスクオンの動きを後押ししています。このシナリオは、7605.58を下抜ける展開となった場合に崩れると考えられます。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-06-01T18:00:00-04:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-06-01T18:00:00-04:00",
     "max_favorable_excursion_pct": -0.003,
-    "max_adverse_excursion_pct": -0.266,
+    "max_adverse_excursion_pct": -0.41,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -45044,6 +45044,21 @@
         "matched_titles": [
           "FTSE 100と米国株が急落、イラン情勢の緊迫化で原油相場も変動"
         ]
+      }
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 16.0,
+        "end": 16.05,
+        "change_pct": 0.31
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル悪化",
+        "primary_cause": "MACDゴールデンクロス後の短期下落",
+        "ai_diagnosis": "シグナル発火時点ではMACDのゴールデンクロス、RSIの妥当な水準、MAの優位性など、ロングに有利なテクニカル指標が確認されていました。しかし、エントリー後、市場は想定外の短期的な下落に見舞われ、25MAを割り込み、最終的にストップロスに到達しました。VIXの微増は大きなリスクオフを示唆していませんでしたが、市場心理が急速に変化した可能性があります。",
+        "lesson": "短期的なテクニカル指標の反転後も、市場の勢いが持続するか注意深く観察する。短期的な急落への警戒も必要。",
+        "category_tag": "短期急落"
       }
     }
   },
@@ -45245,8 +45260,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.12,
+    "max_adverse_excursion_pct": -0.18,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -45398,7 +45413,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": -0.183,
-    "max_adverse_excursion_pct": -0.445,
+    "max_adverse_excursion_pct": -1.053,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -45543,8 +45558,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.323,
+    "max_adverse_excursion_pct": -0.625,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -45634,6 +45649,600 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "NKD=F_1h_20260602_0715",
+    "fired_at": "2026-06-02T07:15:44+09:00",
+    "timeframe": "1h",
+    "ticker": "NKD=F",
+    "asset_name": "日経 225 先物 (CME)",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 67170.0,
+    "stop_loss": 67585.8125979395,
+    "take_profit_1": 66615.58320274732,
+    "take_profit_2": 66338.37480412099,
+    "atr": 277.20839862633585,
+    "sl_pct": 0.6190451063562659,
+    "tp1_pct": -0.8253934751416878,
+    "tp2_pct": -1.2380902127125317,
+    "indicators_at_signal": {
+      "rsi": 56.7,
+      "macd": 219.7177,
+      "macd_sig": 224.0304,
+      "ma25": 66953.2,
+      "ma75": 66018.6,
+      "bb_low": 66557.2934,
+      "bb_up": 67528.2066,
+      "recent_high": 67635.0,
+      "recent_low": 66535.0,
+      "adx": 36.79,
+      "chop": 48.1,
+      "ma_dev_pct": 1.4157,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "日経 225 先物は 1H 足で MACD デッドクロスが発生し、短期的な下降転換を示唆しています。75MA を上回っているものの、直近のレンジ上限に迫っており、利益確定売りが出やすい水準です。強いて言えば、25MA への接近がシナリオ崩壊の条件です。足元のニュース材料は限定的ですが、米国のインフレ懸念後退による利下げ期待が、円安圧力を弱める可能性もあります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 4H 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.127,
+      "EUR": 0.011,
+      "GBP": 0.183,
+      "JPY": -0.087,
+      "AUD": -0.185
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-02T06:10:14+09:00",
+      "regime": "RISK_ON",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "HIGH",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-1.82, entry_vs_ma25=-0.32%)",
+      "score": -1.817,
+      "entry_vs_ma25_signed": -0.324,
+      "range_pos": 0.577,
+      "ma_ratio_pct": 1.416
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.53,
+        "change_24h_pct": 4.77
+      },
+      "atr_regime": {
+        "current_atr": 277.2084,
+        "avg_atr_30d": 291.1161,
+        "ratio": 0.95,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "ES=F_1h_20260602_0715",
+    "fired_at": "2026-06-02T07:15:44+09:00",
+    "timeframe": "1h",
+    "ticker": "ES=F",
+    "asset_name": "S&P500 先物",
+    "signal_types": [
+      "fib_pullback_long"
+    ],
+    "primary_signal": "fib_pullback_long",
+    "primary_signal_label": "🟢 ファンダ強気×フィボ61.8%押し目（押し目買い候補）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 7600.5,
+    "stop_loss": 7579.531990488387,
+    "take_profit_1": 7628.457346015483,
+    "take_profit_2": 7642.4360190232255,
+    "atr": 13.978673007741898,
+    "sl_pct": -0.2758767122112078,
+    "tp1_pct": 0.3678356162816104,
+    "tp2_pct": 0.5517534244224156,
+    "indicators_at_signal": {
+      "rsi": 47.63,
+      "macd": 3.2364,
+      "macd_sig": 4.4088,
+      "ma25": 7609.11,
+      "ma75": 7578.8967,
+      "bb_low": 7588.0831,
+      "bb_up": 7631.8919,
+      "recent_high": 7632.25,
+      "recent_low": 7576.25,
+      "adx": 21.02,
+      "chop": 50.89,
+      "ma_dev_pct": 0.3987,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今日の株式市場：債券利回りの上昇を受け、ダウ、S&P500、ナスダックが下落",
+      "FTSE100と米国株、イラン情勢の緊迫化で下落、原油は変動",
+      "FTSE100と米国株、FRB会合とイラン紛争を注視し上昇",
+      "今日の株式市場：Nvidiaの決算発表を控え、ハイテク株の急騰でダウ、S&P500、ナスダックが反発",
+      "今日の株式市場：Appleが急伸し、ボラティリティの高い取引となった本日、ダウ、S&P500、ナスダックは高値で引ける"
+    ],
+    "ai_narrative": "S&P500先物（現値7600.50）は、直近の7576.25〜7632.25の上昇インパルスのフィボナッチ61.8%水準に到達し、押し目買いの好機と判断できます。RSIが47.6と中立圏であり、MACDもデッドクロス寸前ですが、25MA（7609.11）がサポートとして機能する可能性も考慮されます。  ファンダメンタルズ面では、Nvidia決算やAppleの急伸といったハイテク株の勢いが市場を下支えしており、イラン情勢の緊迫化も短期的なリスクオフ要因となる一方、FRB会合の動向なども注視されています。USDが若干プラス圏で推移していることは、リスクセンチメントの過度な悪化がないことを示唆しています。  このロングシナリオは、7579.53を下抜ける展開となると、短期的な勢いが失われる可能性が出てきます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 4H 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.127,
+      "EUR": 0.011,
+      "GBP": 0.183,
+      "JPY": -0.087,
+      "AUD": -0.185
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-02T06:10:14+09:00",
+      "regime": "RISK_ON",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "HIGH",
+      "signal_direction": "long",
+      "bias_aligned": true
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 5,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 0.219,
+      "entry_vs_ma25_signed": -0.113,
+      "range_pos": 0.433,
+      "ma_ratio_pct": 0.399
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.53,
+        "change_24h_pct": 4.77
+      },
+      "atr_regime": {
+        "current_atr": 13.9787,
+        "avg_atr_30d": 12.7184,
+        "ratio": 1.1,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "NQ=F_1h_20260602_0715",
+    "fired_at": "2026-06-02T07:15:44+09:00",
+    "timeframe": "1h",
+    "ticker": "NQ=F",
+    "asset_name": "Nasdaq 100 先物",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 30481.25,
+    "stop_loss": 30615.84038347537,
+    "take_profit_1": 30301.796155366177,
+    "take_profit_2": 30212.069233049264,
+    "atr": 89.72692231691205,
+    "sl_pct": 0.44155139134834714,
+    "tp1_pct": -0.5887351884644629,
+    "tp2_pct": -0.8831027826966943,
+    "indicators_at_signal": {
+      "rsi": 49.7,
+      "macd": 37.0151,
+      "macd_sig": 42.5422,
+      "ma25": 30513.57,
+      "ma75": 30287.4433,
+      "bb_low": 30367.2478,
+      "bb_up": 30674.1022,
+      "recent_high": 30693.0,
+      "recent_low": 30291.5,
+      "adx": 21.21,
+      "chop": 46.59,
+      "ma_dev_pct": 0.7466,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "株価指数と配当先物の広がる乖離",
+      "今日の株式市場：債券利回りの上昇を受け、ダウ、S&P500、ナスダックが下落",
+      "歴史上最も奇妙なバブルがAI関連投資に示唆すること：今日のチャート",
+      "なぜ投資家は株式に楽観的で、配当には悲観的なのか？",
+      "イラン情勢への懸念でFTSE100と米国株が急落、原油は乱高下"
+    ],
+    "ai_narrative": "Nasdaq 100 先物は MACD がシグナル線を下抜けし、短期的な下降転換を示唆しています。債券利回りの上昇や地政学リスクへの懸念といったニュースが、ハイテク株中心のナスダックにとって下押し圧力となり、テクニカルの下降シグナルと整合しています。USD は相対的に強含みですが、本シグナルとの直接的な一致は見られません。シナリオが崩れるとすれば、サプライズの良い経済指標発表などで相場が急反発する展開が考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 4H 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.127,
+      "EUR": 0.011,
+      "GBP": 0.183,
+      "JPY": -0.087,
+      "AUD": -0.185
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-02T06:10:14+09:00",
+      "regime": "RISK_ON",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "HIGH",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド逆張り (-1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.61, entry_vs_ma25=+0.11%)",
+      "score": -0.613,
+      "entry_vs_ma25_signed": 0.106,
+      "range_pos": 0.473,
+      "ma_ratio_pct": 0.747
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.53,
+        "change_24h_pct": 4.77
+      },
+      "atr_regime": {
+        "current_atr": 89.7269,
+        "avg_atr_30d": 85.9636,
+        "ratio": 1.04,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "イラン情勢への懸念でFTSE100と米国株が急落、原油は乱高下"
+        ]
+      }
+    }
+  },
+  {
+    "id": "USDJPY=X_1h_20260602_0715",
+    "fired_at": "2026-06-02T07:15:44+09:00",
+    "timeframe": "1h",
+    "ticker": "USDJPY=X",
+    "asset_name": "ドル円",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 159.6300048828125,
+    "stop_loss": 159.78832048957608,
+    "take_profit_1": 159.41891740712774,
+    "take_profit_2": 159.31337366928534,
+    "atr": 0.10554373784238882,
+    "sl_pct": 0.09917659708136063,
+    "tp1_pct": -0.1322354627751475,
+    "tp2_pct": -0.19835319416272126,
+    "indicators_at_signal": {
+      "rsi": 57.65,
+      "macd": 0.0771,
+      "macd_sig": 0.0788,
+      "ma25": 159.53,
+      "ma75": 159.4106,
+      "bb_low": 159.3368,
+      "bb_up": 159.7859,
+      "recent_high": 159.765,
+      "recent_low": 159.403,
+      "adx": 29.48,
+      "chop": 59.43,
+      "ma_dev_pct": 0.0749,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "news_count": 2,
+    "news_titles": [
+      "ドル急落、なぜ「ラリー（反発）」から取り残されるのか",
+      "トランプ氏のイラン投稿、市場はどのように反応したか：チャートで見る"
+    ],
+    "ai_narrative": "ドル円はMACDのデッドクロスにより短期的な下降転換を示唆しています。ボリンジャーバンドの+2σ付近に位置し、短期的な過熱感も窺えるため、この水準からのショートは妥当と考えられます。直近のニュースでは、ドル急落の背景を探る報道があり、ファンダメンタルズも円安進行への一服を示唆する可能性があります。通貨強弱はドル高・円安を示唆していますが、一時的な調整局面と捉え、このまま25MAを明確に下抜ける展開になれば、ショートシナリオが継続するでしょう。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "4H",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 4H 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.127,
+      "EUR": 0.011,
+      "GBP": 0.183,
+      "JPY": -0.087,
+      "AUD": -0.185
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-02T06:10:14+09:00",
+      "regime": "RISK_ON",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "LOW",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ USD 強（+0.13%）× JPY 弱（-0.09%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": 0.214,
+      "base_strength": 0.127,
+      "quote_strength": -0.087
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 0,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド逆張り (-1)",
+        "FX 強弱逆張り (-1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.27, entry_vs_ma25=-0.06%)",
+      "score": -0.265,
+      "entry_vs_ma25_signed": -0.063,
+      "range_pos": 0.627,
+      "ma_ratio_pct": 0.075
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.53,
+        "change_24h_pct": 4.77
+      },
+      "atr_regime": {
+        "current_atr": 0.1055,
+        "avg_atr_30d": 0.0981,
+        "ratio": 1.08,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "ドル急落、なぜ「ラリー（反発）」から取り残されるのか"
+        ]
       }
     }
   }
