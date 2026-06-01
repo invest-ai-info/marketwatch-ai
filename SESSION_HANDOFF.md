@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-05-31）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-01）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md` を読めば文脈を復元できます。
 
@@ -20,11 +20,24 @@
 | **daily-market-preview** 🆕 | routine `trig_01GFQ6tLGPhvEZ5crJgPRqCh` | 毎日 21:00 | 翌日の重要指標＋市場コンセンサス（economic-events.json突合）→ `daily-preview.md`（非公開・個人用） |
 | **political-digest** 🆕 | routine `trig_01B1WV4bru6iFxr7SFB94huh` | 毎日 22:00 | political-feed.json を要約（重要発言トップ3-5＋市場影響）→ `political-digest.md`（非公開） |
 | **compliance-patrol** 🆕 | routine `trig_016Pkyto4UfxhHP1sU2i5NP9` | 日曜 09:00 | 公開 guide-*.html を法務巡回（黒/グレー/白）→ `compliance-scan.md`（非公開・監査メモ） |
+| **weekly-strategy-brief** 🆕 | routine `trig_01StownkcHrYyRbMMpVxVy2Z` | 日曜 18:30 | **3人エージェント(fund/tech/risk)で起案＋検証エージェントが全数値をweekly-levels.jsonと照合＋compliance** → `weekly-strategy-context.json`（`verified`付き） |
+| **weekly-strategy（描画）** | Actions `weekly-strategy.yml` | 日曜 20:13(+30) | 上記contextで週次戦略記事を強制再描画（旧18:13の冗長版を転用）。verified=trueのシナリオのみ反映 |
 
-> 🆕 4 routine は **2026-05-31 新設**（Max枠に余裕＝15/日中フル稼働でも6本程度のため活用）。いずれも社内向け md をリポジトリへコミット（公開しない＝8ステップ/compliance不要）。価値を見てメール化/サイト化に拡張可。出力4ファイルは **SYNC禁忌に追加済**。routine は Gmail鍵/yfinance不可なので、メール化する場合は Actions 側に送信を分離する（既存 weekly-zone-email.yml と同じ設計）。
+> 🆕 **2026-05-31〜06-01 新設 routine 計5本**（Max枠に余裕＝15/日中、日次でも実質5本程度）。article-idea-scout/daily-market-preview/political-digest/compliance-patrol は社内向けmd（非公開）。weekly-strategy-brief は週次戦略記事のシナリオ源（公開記事に反映）。出力JSON/mdは全て **SYNC禁忌に追加済**（routineがmain生成、ローカルpush禁止）。routine は Gmail鍵/yfinance不可（メール送信・価格計算はActions側）。
 
 - routine の確認/編集: claude.ai `/code/routines/<ID>`、または schedule スキル＋RemoteTrigger ツール（プロンプト変更は update）。
 - routine は **クラウド(CCR)実行**。リポジトリへ commit は可能だが **yfinance は403で不可**・Gmail鍵も持てない（→データ計算とメール送信はActions側に分離している）。
+
+### A2. 週次戦略の品質アップグレード＋日付バグ修正（2026-06-01）
+- **問題**：週次戦略記事のシナリオ数字（日経60-61k等）が `auto_weekly_strategy.py` に**ハードコードされ陳腐化**（実勢66k/ドル円159/BTC73k と乖離）。精度＆コンプラ問題。
+- **対応①応急**：誤数字のシナリオ表を撤去し「リニューアル中」プレースホルダへ（force再生成でライブ反映済み、誤情報除去）。リスク欄の「158円」も中立化。
+- **対応②本命＝多エージェント＋数値検証パイプライン**（あなたの要望「3人で真剣に・数字は絶対正確・書いた後に照合する確認役」を実装）：
+  - **producer**＝routine `weekly-strategy-brief`（日曜18:30）：fund/tech/risk の3エージェントで起案 → **検証エージェントが全数値を `weekly-levels.json` と1つずつ照合＋compliance** → `weekly-strategy-context.json`（`verified:true/false`）。テスト実走で **verified=true・全35数値一致**を確認済（実勢価格に完全一致）。
+  - **consumer**＝`auto_weekly_strategy.py`：`verified=true` かつ **鮮度60h以内**のときだけ context からシナリオ描画。無ければプレースホルダ（誤情報を出さない安全設計）。
+  - **render**＝`weekly-strategy.yml`（日曜20:13、force）：routine の後に記事を強制再描画して検証済みシナリオを反映。
+- **稼働**：**次の日曜(6/7)サイクルから「今週の投資戦略」が3人＋検証版で自動更新**。現6/1週記事は構築前生成のためプレースホルダのまま（月曜のforce再生成は6/8週を作る＝日付ズレになるので見送り）。
+- **日付バグの真因（重要・横展開可）**：GitHub Actions は**UTC実行**。素の `datetime.now()`/`date.today()` は9hズレ（JST午前0-9時は前日）。`generate_stock_chart.py` の3箇所をJST明示に修正済。Gitコミット時刻がUTC=前日表示になるのも同根。Geminiの推測日付対策として `auto_weekly_strategy.py` のプロンプトに基準日明示＋推測日付禁止を追加済。
+- **記事の発見性自動化（同セッション）**：index.html に「今週の投資戦略」自動バナー＋📰更新履歴へ自動登録（`build_weekly_strategy_banner()`/`build_weekly_history_entry()`、最新guide-weeklyを自動検出）。**週次記事は更新履歴に手動追記しない**（二重表示防止）。
 
 ### B. シグナルエンジン再設計（`SIGNAL_REDESIGN.md`）
 - トップダウン4階建て（Layer0リスク環境→Layer1方向バイアス→Layer2テクニカル→Layer3ブレーキ）。
