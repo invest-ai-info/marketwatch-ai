@@ -259,8 +259,19 @@ def load_weekly_strategy_context(script_dir, week_start):
     if ctx.get("verified") is not True:
         print("  ℹ️ weekly-strategy-context.json は未検証(verified!=true) → シナリオ非表示")
         return None
-    if ctx.get("week_start") != week_start.strftime("%Y-%m-%d"):
-        print(f"  ℹ️ context の対象週({ctx.get('week_start')}) ≠ 今週({week_start}) → シナリオ非表示")
+    # 鮮度チェック：generated_at が60時間以内のみ採用（先週の古い context を今週の記事に出さないため）。
+    # 週番号の厳密一致ではなく鮮度で判定することで、routine 側の週計算が1日ずれても日曜の描画が落ちない。
+    gen = ctx.get("generated_at", "")
+    try:
+        gdt = datetime.fromisoformat(gen)
+        if gdt.tzinfo is None:
+            gdt = gdt.replace(tzinfo=JST)
+        age_h = (datetime.now(JST) - gdt).total_seconds() / 3600
+    except Exception:
+        print(f"  ℹ️ context の generated_at 解析不可({gen}) → シナリオ非表示")
+        return None
+    if age_h > 60:
+        print(f"  ℹ️ context が古い（{age_h:.0f}h > 60h）→ シナリオ非表示")
         return None
     return ctx
 
