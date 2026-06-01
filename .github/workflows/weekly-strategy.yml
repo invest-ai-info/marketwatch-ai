@@ -1,20 +1,25 @@
-name: Weekly Strategy (Sunday Evening)
+name: Weekly Strategy (Sunday Evening Re-render)
 
-# 目的: 毎週日曜夜 18 時頃に「翌週の投資戦略記事」を自動生成して公開する。
+# 目的: 毎週日曜の夕方、予約エージェント routine `weekly-strategy-brief`（18:30 JST）が
+#       weekly-strategy-context.json（検証済みシナリオ）を生成した「後」に、
+#       週次戦略記事を強制再生成して検証済みシナリオを反映する。
 #
-# auto_weekly_strategy.py は曜日チェック（日曜のみ）を内蔵しているので、
-# 別の曜日に手動実行しても --force しない限りスキップされる。
+# ・朝の update-market-news 実行で記事自体は先に生成される（context 無しならプレースホルダ）。
+# ・この workflow が夕方にそれを検証済みシナリオ版へ上書きする（FORCE_WEEKLY=true）。
+# ・context が未生成/未検証なら auto_weekly_strategy 側がプレースホルダのまま描画（誤情報なし）。
 
 on:
   schedule:
-    # 日曜 09:13 UTC = 日曜 18:13 JST（cron 混雑回避のため :00 を避ける）
-    - cron: '13 9 * * 0'
+    # 日曜 11:13 UTC = 日曜 20:13 JST（routine 18:30 JST の後。cron 混雑回避で :00 を避ける）
+    - cron: '13 11 * * 0'
+    # バックアップ（routine 遅延・cron スキップ対策、30分後）
+    - cron: '43 11 * * 0'
   workflow_dispatch:
     inputs:
       force:
-        description: '曜日関係なく強制実行（既存ファイルも上書き）'
+        description: '（このworkflowは常に強制再生成。手動起動用）'
         required: false
-        default: 'false'
+        default: 'true'
 
 jobs:
   weekly-strategy:
@@ -25,7 +30,7 @@ jobs:
     env:
       GEMINI_API_KEY:        ${{ secrets.GEMINI_API_KEY }}
       GITHUB_ACTIONS_RUN:    "true"
-      FORCE_WEEKLY:          ${{ github.event.inputs.force || 'false' }}
+      FORCE_WEEKLY:          "true"   # 夕方の再描画は常に強制（朝のプレースホルダ版→検証済みシナリオ版へ上書き）
 
     steps:
       - name: Checkout repository
