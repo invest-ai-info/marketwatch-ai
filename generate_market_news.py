@@ -3971,11 +3971,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-{weekly_history_entry}      ・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開<br>
+{weekly_history_entry}      ・<b>2026-06-01</b>: 🏰 解説「<a href="guide-oriental-land-2026-06.html" style="color:#0969da"><b>オリエンタルランド（4661）はなぜ約6割安に？ 暴落の5つの理由と「復活」3シナリオを整理</b></a>」公開<br>
+      ・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開<br>
       ・<b>2026-05-31</b>: 🗾 解説「<a href="guide-japan-strategy-2026-05.html" style="color:#0969da"><b>2026年 日本株の歩き方：日経を動かす「攻め」と暴落に強い「守り」のセクター戦略</b></a>」公開<br>
       ・<b>2026-05-29</b>: 🏭 解説「<a href="guide-tsmc-2026-05.html" style="color:#0969da"><b>TSMC（NYSE: TSM）2026 Q1 決算解説：売上 359 億ドルで過去最高、純利益 +58% — 世界最大ファウンドリの強さと「地政学リスク」をフラットに整理する</b></a>」公開<br>
-      ・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開<br>
-      ・<b>2026-05-25</b>: 📱 解説「<a href="guide-softbank-group-2026-05.html" style="color:#0969da"><b>ソフトバンクグループ（9984）徹底解説：純利益 +399%、52 週で株価 3.8 倍 — OpenAI・Arm が織りなす NAV 40 兆円の正体と「孫正義の最大の賭け」</b></a>」公開
+      ・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開
     </div>
   </div>
 
