@@ -97,9 +97,6 @@ def main():
         html = _read(gf)
         if 'data-disclaimer="kinsho-v1"' not in html:
             errors.append(f"{gf}: kinsho-v1 免責が無い")
-        nav = html.count('class="nav-btn')
-        if nav < 9:
-            warnings.append(f"{gf}: nav-btn が {nav} 個（9ボタン想定）")
         if sync_known and gf not in sync_files:
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
@@ -114,6 +111,27 @@ def main():
             continue
         if not _exists(ref):
             errors.append(f"guides.html のリンク切れ: {ref} が存在しない")
+
+    # 4. ナビ9ボタン整合性：nav を持つ生成スクリプト(.py)・静的/手動HTMLが9リンク全部を含むか。
+    #    自動生成済みの過去記事(guide-weekly-*/guide-monthly-report-*/guide-auto-*)は出力なので除外。
+    #    ナビの正は生成スクリプト側で担保する＝ソースを検査してドリフトを根元で捕まえる。
+    NAV_LINKS = ["index.html", "political-feed.html", "track-record.html", "calendar.html",
+                 "guides.html", "market-health.html", "hot-assets.html", "charts.html",
+                 "youtube-summary.html"]
+    for src in sorted(glob.glob(os.path.join(SD, "*.py")) + glob.glob(os.path.join(SD, "*.html"))):
+        name = os.path.basename(src)
+        if name.startswith(("guide-weekly-", "guide-monthly-report-", "guide-auto-")):
+            continue
+        # 機械生成HTML出力（index等＝SYNC禁忌・preview）はローカルが陳腐化するので除外。
+        # ナビの正は生成スクリプト(.py)側で担保→そちらを検査することで根元のドリフトを捕まえる。
+        if name in SYNC_FORBIDDEN or name == "preview.html":
+            continue
+        navhrefs = set(re.findall(r'class="nav-btn[^"]*"\s+href="([^"]+)"', _read(name)))
+        if not navhrefs:
+            continue  # ナビを持たないファイルは対象外
+        missing = [l for l in NAV_LINKS if l not in navhrefs]
+        if missing:
+            warnings.append(f"{name}: ナビに不足リンク {missing}（9ボタン未満）")
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
