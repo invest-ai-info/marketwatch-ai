@@ -144,6 +144,17 @@ def build_sitemap_xml(now_jst) -> str:
         ("guide-nikkei-60000.html",     "0.9", "weekly"),
         ("guides.html",                 "0.8", "weekly"),
     ]
+    # 🆕 ハードコード漏れ防止：リポジト内の全 guide-*.html を自動追加（重複は除外）。
+    # これで sitemap は常に「完全」になり、手作業での追加が不要（＝sitemapの二重管理を解消）。
+    _listed = {slug for slug, _, _ in pages}
+    _sd = os.path.dirname(os.path.abspath(__file__))
+    try:
+        for _name in sorted(os.listdir(_sd)):
+            if _name.startswith("guide-") and _name.endswith(".html") and _name not in _listed:
+                pages.append((_name, "0.8", "monthly"))
+                _listed.add(_name)
+    except Exception as _e:
+        print(f"  ⚠️ sitemap: guide自動収集スキップ: {_e}")
     urls = "\n".join(
         f"  <url>\n"
         f"    <loc>{BASE_URL}{slug}</loc>\n"
