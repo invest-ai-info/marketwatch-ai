@@ -59,36 +59,41 @@ def _exists(p):
 
 
 def get_sync_files():
-    """sync_to_github.py の SYNC_FILES を正規表現で抽出（importせず安全に）。"""
+    """sync_to_github.py の SYNC_FILES を正規表現で抽出（importせず安全に）。
+    sync_to_github.py はローカル専用（GitHub 未追跡）なので、リモート(routine)実行時は不在。
+    その場合は None を返し、呼び出し側で SYNC_FILES 系チェックをスキップする（偽陽性防止）。"""
     if not _exists("sync_to_github.py"):
-        errors.append("sync_to_github.py が見つからない")
-        return set()
+        return None
     s = _read("sync_to_github.py")
     m = re.search(r"SYNC_FILES\s*=\s*\[(.*?)\n\]", s, re.S)
     if not m:
-        errors.append("sync_to_github.py の SYNC_FILES ブロックを解析できない")
-        return set()
+        warnings.append("sync_to_github.py の SYNC_FILES ブロックを解析できない → SYNC_FILESチェックをスキップ")
+        return None
     return set(re.findall(r'"([^"]+)"', m.group(1)))
 
 
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
+    sync_known = sync_files is not None  # sync_to_github.py を読めた = ローカル実行
 
-    # 1. 🚨 SYNC禁忌チェック（最重要：巻き戻し事故防止）
-    for f in sorted(sync_files):
-        base = os.path.basename(f)
-        if base in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
-            errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
+    # 1. 🚨 SYNC禁忌チェック（最重要：巻き戻し事故防止。push直前のローカル実行でのみ意味がある）
+    if sync_known:
+        for f in sorted(sync_files):
+            base = os.path.basename(f)
+            if base in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
+                errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""
     sitemap = _read("sitemap.xml") if _exists("sitemap.xml") else ""
     guide_files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html")))
+    # 自動生成記事（テンプレは generate_*.py 側で管理。個別の登録チェック対象外）
+    AUTO_PREFIXES = ("guide-weekly-", "guide-auto-", "guide-monthly-report-")
     checked = 0
     for gf in guide_files:
-        if gf.startswith("guide-weekly-") or gf.startswith("guide-auto-"):
-            continue  # 自動生成記事は対象外（最新のみカード/sitemap等の運用）
+        if gf.startswith(AUTO_PREFIXES):
+            continue
         checked += 1
         html = _read(gf)
         if 'data-disclaimer="kinsho-v1"' not in html:
@@ -96,7 +101,7 @@ def main():
         nav = html.count('class="nav-btn')
         if nav < 9:
             warnings.append(f"{gf}: nav-btn が {nav} 個（9ボタン想定）")
-        if gf not in sync_files:
+        if sync_known and gf not in sync_files:
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         if gf not in sitemap:
             warnings.append(f"{gf}: sitemap.xml に未登録")
@@ -113,7 +118,9 @@ def main():
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
-    print(f"  検査した guide記事: {checked} 件（自動生成記事を除く） / SYNC_FILES: {len(sync_files)} 件")
+    sf_disp = (f"{len(sync_files)} 件" if sync_known
+               else "ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）")
+    print(f"  検査した guide記事: {checked} 件（自動生成記事を除く） / SYNC_FILES: {sf_disp}")
     if warnings and not quiet:
         print(f"\n⚠️  警告 {len(warnings)} 件:")
         for w in warnings:
