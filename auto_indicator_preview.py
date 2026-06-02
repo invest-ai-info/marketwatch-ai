@@ -377,6 +377,7 @@ def build_preview_html(event):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow"><!-- 自動生成の指標プレビュー：薄ページのためインデックス除外（AdSense低価値対策） -->
   <title>{title} - MarketWatch AI</title>
   <meta name="description" content="{event_date_jp}発表の{info['name']}を事前プレビュー。注目ポイント・3シナリオ別の市場反応・トレード戦略を解説。">
   <meta name="keywords" content="{info['name_short']},経済指標,プレビュー,{event_date.strftime('%Y年%-m月') if os.name != 'nt' else event_date.strftime('%Y年%#m月')},ドル円,株式">
