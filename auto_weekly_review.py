@@ -284,6 +284,7 @@ def render_html(today, week_start, week_end, sig_stats, trade_stats, events, les
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- 自動生成の週次振り返り：薄ページのためインデックス除外（AdSense低価値対策） -->
 <title>📅 週次振り返り（{week_start_str}〜{week_end_str}）｜ MarketWatch AI</title>
 <meta name="description" content="先週のシグナル全件・結果・教訓を自動集計。AI トレードの透明性を追求する週次レポート。">
 <link rel="canonical" href="https://marketwatch-jp.com/guide-weekly-review-{week_start_str}.html">
