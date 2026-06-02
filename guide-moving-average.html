@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="移動平均線（MA）の種類（SMA・EMA）・期間の選び方・トレンド判断・ゴールデンクロス/デッドクロス・グランビルの法則・乖離率まで、初心者にも分かりやすく解説。テクニカル分析の基本指標を使いこなすための実践ガイド。">
+  <meta name="keywords" content="移動平均線,MA,SMA,EMA,ゴールデンクロス,デッドクロス,テクニカル分析,グランビルの法則,乖離率,株式投資">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-moving-average.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説">
+  <meta property="og:description" content="移動平均線の種類・期間の選び方・ゴールデンクロス/デッドクロス・グランビルの法則・乖離率まで、初心者向けに丁寧に解説。テクニカル分析の第一歩。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-moving-average.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説",
+    "description": "移動平均線（MA）の種類（SMA・EMA）・期間の選び方・トレンド判断・ゴールデンクロス/デッドクロス・グランビルの法則・乖離率まで、初心者にも分かりやすく解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-02",
+    "dateModified": "2026-06-02",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-moving-average.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    .granville-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+    .granville-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px}
+    .granville-card.buy{border-left:4px solid #1a7f37}
+    .granville-card.sell{border-left:4px solid #cf222e}
+    .granville-num{font-size:1.2rem;font-weight:700;margin-bottom:4px}
+    .granville-num.buy{color:#1a7f37}
+    .granville-num.sell{color:#cf222e}
+    .granville-desc{font-size:.85rem;color:#57606a;line-height:1.6}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    @media(max-width:700px){
+      .granville-grid{grid-template-columns:1fr}
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .granville-card{background:#0d1117;border-color:#30363d}
+    body.dark .granville-desc{color:#8b949e}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 移動平均線とは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は移動平均線の仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📈 移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 2 日 ／ 読了時間：約 12 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>チャートを見ると必ず出てくる「移動平均線（MA）」。線の向きや本数は何を意味していて、実際にどう使うのか——テクニカル分析の入り口として多くの投資家に使われているにもかかわらず、意外と体系的に学ぶ機会が少ない指標です。</p>
+    <p>この記事では、移動平均線の定義・種類・よく使う期間から、実際の読み方・使い方・注意点・当サイトのシグナルでの活用例まで、初心者の方でも一読して「ある程度使えるようになる」ことを目標に丁寧に解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>移動平均線は「一定期間の終値の平均をつないだ線」で、<strong>トレンドの方向・勢い</strong>を視覚的に確認するための基本指標。SMA（単純）と EMA（直近重視）の 2 種類がある。</li>
+      <li>ゴールデンクロス（短期線が長期線を上抜け）は<strong>上昇転換のシグナル</strong>として一般的に意識されるが、「ラグ（遅れ）指標」なので単独では機能しないケースも多い。</li>
+      <li>長所は<strong>万人に見られる＝意識されやすい</strong>こと。弱点は「ダマシ」と「後追い性」。他のシグナルと組み合わせて使うのが実践的な活用法として一般的とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">移動平均線（MA）とは何か</a></li>
+        <li><a href="#section-2">SMA と EMA：2 種類の移動平均線の違い</a></li>
+        <li><a href="#section-3">よく使う「期間」とその意味</a></li>
+        <li><a href="#section-4">5 つの実践的な使い方</a></li>
+        <li><a href="#section-5">グランビルの法則：8 つのシグナル</a></li>
+        <li><a href="#section-6">移動平均線の長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 移動平均線（MA）とは何か</h2>
+    <p><strong>移動平均線（Moving Average：MA）</strong>とは、ある一定期間の終値（その日の最終取引価格）を平均し、その平均値を時系列でつないだ折れ線グラフのことです。「移動」という名の通り、日々データが更新されるたびに計算の対象期間が 1 日ずつ前にずれていきます。</p>
+    <p>たとえば 25 日移動平均線であれば、「直近 25 日間の終値の平均値」を毎日計算してプロットします。日足チャートで表示すると、ローソク足の上下のノイズを吸収して、なめらかなトレンドの流れを視覚的に確認できます。</p>
+    <p>移動平均線が注目される理由は、その<strong>シンプルさ</strong>にあります。指標の計算式が単純明快であるため、個人投資家からプロのトレーダー、機関投資家まで幅広い参加者が同じ線を見ていると考えられます。「多くの人が意識するから、意識されやすい節目として機能しやすい」という自己成就的な側面もあり、テクニカル分析の中でも特に重要視されています。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：移動平均線の主な役割は「トレンドの方向と勢いを確認すること」です。「いつ買う・売る」という売買タイミングを直接教えてくれるものではなく、あくまで「現在の相場がどの方向に流れているか」を示すものとして捉えるのが一般的です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ SMA と EMA：2 種類の移動平均線の違い</h2>
+    <p>移動平均線には大きく分けて 2 種類あります。初心者の方はまず「SMA（単純移動平均）」と「EMA（指数平滑移動平均）」の違いを押さえておくと良いでしょう。</p>
+
+    <h3>SMA（Simple Moving Average：単純移動平均線）</h3>
+    <p><strong>SMA（シンプル・ムービング・アベレージ）</strong>は、一定期間の終値を単純に足して期間数で割ったものです。25 日 SMA であれば「直近 25 日間の終値の合計 ÷ 25」という計算式になります。計算がシンプルで分かりやすく、日本の株式市場では特に広く使われています。日経平均チャートで表示される移動平均線は、多くの場合この SMA です。</p>
+
+    <h3>EMA（Exponential Moving Average：指数平滑移動平均線）</h3>
+    <p><strong>EMA（エクスポネンシャル・ムービング・アベレージ）</strong>は、直近の終値に大きな重みを置いて計算する移動平均線です。具体的には、直近の価格に高い係数（ウェイト）を掛け算し、過去に向かうにつれて重みが指数関数的に減少していく仕組みになっています。米国株やFXのトレーダーが好む傾向があり、MACD などの他のテクニカル指標の計算にも使われています。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>SMA（単純移動平均）</th>
+          <th>EMA（指数平滑移動平均）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>計算の考え方</td>
+          <td>全期間の終値を等しく平均</td>
+          <td>直近の終値に高い比重を置いて平均</td>
+        </tr>
+        <tr>
+          <td>直近価格への反応</td>
+          <td>緩やか（ラグが大きい）</td>
+          <td>素早い（ラグが小さい）</td>
+        </tr>
+        <tr>
+          <td>ノイズへの耐性</td>
+          <td>高い（ぶれにくい）</td>
+          <td>やや低い（ぶれやすい）</td>
+        </tr>
+        <tr>
+          <td>使われやすい場面</td>
+          <td>日本株・中長期トレンド確認</td>
+          <td>米国株・FX・デイトレード・MACD計算</td>
+        </tr>
+        <tr>
+          <td>主な利用者層</td>
+          <td>日本の個人投資家全般</td>
+          <td>米国・海外のトレーダー・システムトレード</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>どちらが「正解」というわけではなく、対象市場・時間軸・トレードスタイルによって使い分けるのが一般的です。日本株で中長期投資をする場合は SMA が主流とされており、外国為替（FX）で短期売買をする場合は EMA を好む投資家も多い傾向があります。</p>
+
+    <div class="info-box">
+      <strong>💡 初心者向けアドバイス</strong>：最初は SMA から始めるのが無難です。証券会社のチャートツールで「移動平均線」を追加すると、多くの場合デフォルトで SMA が表示されます。まずは SMA の動きに慣れてから EMA を学ぶ流れが理解しやすいと言われています。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ よく使う「期間」とその意味</h2>
+    <p>移動平均線は「何日分の平均を取るか」によって、見えるトレンドの時間軸が変わります。短い期間はチャートの細かい動きを拾い、長い期間はゆったりとした大きなトレンドを反映します。以下が、日本の株式市場で一般的によく使われる期間とその解釈の目安です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>期間（日足）</th>
+          <th>通称</th>
+          <th>主な用途・意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5日線</td>
+          <td>短期線（1週間）</td>
+          <td>週単位のトレンド。デイトレード・スイングトレード向けの参考線として使われやすい</td>
+        </tr>
+        <tr>
+          <td>25日線</td>
+          <td>中期線（約1ヶ月）</td>
+          <td>日本株で最もよく使われる基準線。月次のトレンドを反映し、サポート/レジスタンスとして意識されやすい</td>
+        </tr>
+        <tr>
+          <td>75日線</td>
+          <td>中長期線（約3ヶ月）</td>
+          <td>四半期単位のトレンド確認。25日線との位置関係でトレンドの強弱を判断することが多い</td>
+        </tr>
+        <tr>
+          <td>200日線</td>
+          <td>長期線（約1年）</td>
+          <td>米国株・海外市場で特に重視される「大きなトレンドの境界線」。多くの機関投資家が注目するとされる</td>
+        </tr>
+        <tr>
+          <td>13週線・26週線</td>
+          <td>週足の中期線</td>
+          <td>週足チャートで使われる中期・中長期のトレンド確認用。長期投資家が参考にすることが多い</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>日本株では<strong>「5日・25日・75日の組み合わせ」</strong>が特に広く使われているとされ、多くの証券会社のチャートツールでもこの 3 本がデフォルト表示されていることがあります。米国株では<strong>50日線と200日線</strong>の組み合わせが重視される傾向があります。</p>
+
+    <div class="info-box">
+      <strong>💡 週足・月足での使い方</strong>：移動平均線は日足だけでなく、週足・月足チャートでも有効とされています。週足の 26 週線（約半年）は、中期のトレンド転換を確認する際に参考にされることがあります。異なる時間軸で同じ方向性が確認できると、シグナルの信頼性が高まると考えられています。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 5 つの実践的な使い方</h2>
+
+    <h3>① トレンドの方向と傾きを確認する</h3>
+    <p>移動平均線の最も基本的な使い方は、<strong>線の向き（上向き・横ばい・下向き）</strong>でトレンドの方向を確認することです。長期移動平均線（75日線・200日線など）が上向きであれば上昇トレンド、下向きであれば下降トレンドが続いていると見られます。また、傾きの角度が急なほどトレンドの勢いが強い可能性があるとされています。</p>
+    <p>複数本の移動平均線（たとえば 5日・25日・75日）が<strong>すべて上向きで、上から短期線・中期線・長期線の順に並んでいる状態</strong>（「パーフェクトオーダー」と呼ばれることがある）は、強い上昇トレンドのサインとして意識されやすいとされています。逆に線が交錯してバラバラな状態は、方向感がない横ばい局面と判断されることが多いです。</p>
+
+    <h3>② サポート・レジスタンスとして機能する</h3>
+    <p>多くの投資家が同じ移動平均線を見ているため、特定の線が<strong>「下値支持線（サポート）」や「上値抵抗線（レジスタンス）」</strong>として機能するケースが見られます。たとえば上昇トレンド中に株価が一時下落しても 25日線付近で下げ止まって反発するパターンは、多くのチャートで観察されることがあります。これは「25日線を割れたら売ろう」「25日線に触れたら買おう」と考える投資家が多いために起こる現象と考えられています。</p>
+    <p>ただし、サポート・レジスタンスとして機能するかどうかは相場の状況によって異なり、必ず機能するものではありません。<strong>「割れたら終わり」ではなく、「その後の値動きも観察する」</strong>姿勢が実践では大切とされています。</p>
+
+    <h3>③ ゴールデンクロス・デッドクロス</h3>
+    <p>移動平均線の使い方の中でも特に有名なシグナルが、<strong>ゴールデンクロス</strong>と<strong>デッドクロス</strong>です。</p>
+    <ul>
+      <li><strong>ゴールデンクロス（GC）</strong>：短期移動平均線が長期移動平均線を<strong>下から上に突き抜ける</strong>タイミング。上昇転換のシグナルとして広く知られており、多くの個人投資家が買いのタイミングの参考にすることがある。</li>
+      <li><strong>デッドクロス（DC）</strong>：短期移動平均線が長期移動平均線を<strong>上から下に突き抜ける</strong>タイミング。下降転換のシグナルとして知られており、売りのタイミングや手仕舞いの参考にされることがある。</li>
+    </ul>
+    <p>よく使われる組み合わせとしては「5日線 × 25日線」「25日線 × 75日線」「50日線 × 200日線（デッドクロス / ゴールデンクロス）」などがあります。移動平均線はラグ指標であるため、クロスが確認されたときには既に相場が動き始めた後であることも多く、<strong>「後追いになりやすい」点は常に意識しておく</strong>必要があります。</p>
+
+    <div class="warning-box">
+      ゴールデンクロスが発生した直後に下落する「ダマシ」は珍しくありません。特に相場が横ばい（レンジ）状態のときはクロスが頻繁に発生しやすく、誤シグナルが多くなる傾向があります。単独で判断せず、出来高や他のテクニカル指標との組み合わせで確認するのが一般的な対処法とされています。
+    </div>
+
+    <h3>④ 移動平均乖離率（行き過ぎのサイン）</h3>
+    <p><strong>移動平均乖離率（かいりりつ）</strong>とは、現在の株価が移動平均線からどれだけ離れているかを割合で示した指標です。計算式は <code>（株価 ー 移動平均線の値） ÷ 移動平均線の値 × 100（%）</code> となります。</p>
+    <p>乖離率が<strong>プラス方向に大きくなりすぎると「買われすぎ（上昇の行き過ぎ）」、マイナス方向に大きくなりすぎると「売られすぎ（下落の行き過ぎ）」</strong>のサインとして見られることがあります。価格は移動平均線に引き寄せられる傾向（平均回帰）があると考えられているためです。具体的な数値の目安は銘柄・時間軸によって異なりますが、日本株の短期的な指標として 25日線乖離率 ±10〜15% 程度を「やや行き過ぎ」の目安にするケースが見受けられます。</p>
+    <p>ただし、強いトレンドが継続している局面では乖離が長期間続くこともあり、乖離率だけを見た「逆張り」は高リスクになる場合があります。相場の状況全体を踏まえた上で、参考の一つとして使うのが実践的なアプローチとして一般的です。</p>
+
+    <h3>⑤ 株価と移動平均線の位置関係</h3>
+    <p>株価が移動平均線の上にあるか下にあるかも重要な判断材料とされています。<strong>株価が主要な移動平均線（25日線・75日線など）よりも上にある状態</strong>は強さの象徴として捉えられることが多く、逆に下にある状態は弱さを示すサインとして意識されやすいとされています。特に<strong>複数の移動平均線すべての下</strong>に株価が位置する状態は、弱い相場環境の一つの判断材料として使われることがあります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ グランビルの法則：8 つのシグナル</h2>
+    <p><strong>グランビルの法則</strong>は、米国のアナリスト ジョセフ・グランビルが提唱した、移動平均線と株価の位置関係から売買シグナルを 8 つに分類した考え方です。日本でも多くのテクニカル分析の書籍で紹介されており、特に<strong>200日移動平均線（長期移動平均）を基準</strong>として使われることが多いとされています。</p>
+
+    <p>8 つのシグナルは<strong>「買いの 4 パターン」と「売りの 4 パターン」</strong>に分かれます。</p>
+
+    <div class="granville-grid">
+      <div class="granville-card buy">
+        <div class="granville-num buy">買い ① 明確な上抜け</div>
+        <div class="granville-desc">移動平均線が下降から横ばいまたは上向きに変化し、株価が移動平均線を<strong>下から上に突破</strong>したとき。上昇トレンド転換のサインとして最も重視されやすいパターン。</div>
+      </div>
+      <div class="granville-card buy">
+        <div class="granville-num buy">買い ② 押し目反発</div>
+        <div class="granville-desc">移動平均線が上向きのまま、株価が一時的に線を下回った後<strong>再び上昇</strong>したとき。上昇トレンド継続中の押し目と見なされることが多い。</div>
+      </div>
+      <div class="granville-card buy">
+        <div class="granville-num buy">買い ③ 支持線反発</div>
+        <div class="granville-desc">株価が移動平均線を下回ることなく、線に近づいて<strong>下げ止まり反発</strong>したとき。強い上昇トレンドで見られるパターン。</div>
+      </div>
+      <div class="granville-card buy">
+        <div class="granville-num buy">買い ④ 売られすぎ反発</div>
+        <div class="granville-desc">移動平均線が下向きのまま、株価が線から大きく<strong>下方乖離</strong>したとき。乖離の反発（平均回帰）を狙う逆張りパターン。リスクが高く経験が必要とされる。</div>
+      </div>
+      <div class="granville-card sell">
+        <div class="granville-num sell">売り ① 明確な下抜け</div>
+        <div class="granville-desc">移動平均線が横ばいまたは下向きに変化し、株価が移動平均線を<strong>上から下に突破</strong>したとき。下降トレンド転換のサインとして重視されやすい。</div>
+      </div>
+      <div class="granville-card sell">
+        <div class="granville-num sell">売り ② 戻り売り</div>
+        <div class="granville-desc">移動平均線が下向きのまま、株価が一時的に線を上回った後<strong>再び下落</strong>したとき。下降トレンド継続中の戻り局面と見なされることが多い。</div>
+      </div>
+      <div class="granville-card sell">
+        <div class="granville-num sell">売り ③ 抵抗線反落</div>
+        <div class="granville-desc">株価が移動平均線を上回ることなく、線に近づいて<strong>上げ止まり反落</strong>したとき。強い下降トレンドで見られるパターン。</div>
+      </div>
+      <div class="granville-card sell">
+        <div class="granville-num sell">売り ④ 買われすぎ反落</div>
+        <div class="granville-desc">移動平均線が上向きのまま、株価が線から大きく<strong>上方乖離</strong>したとき。乖離の反落（平均回帰）を見込む逆張りパターン。リスクが高く経験が必要とされる。</div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      グランビルの法則は「絶対的なルール」ではなく、あくまで<strong>過去の相場パターンを整理した参考フレームワーク</strong>です。どのパターンも「機能しないこと（ダマシ）」は日常的にあります。出来高・他の指標・相場全体の地合いと組み合わせて複合的に判断することが、実践では不可欠とされています。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 移動平均線の長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：万人に見られる＝意識されやすい</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>シンプルで分かりやすい</strong>：計算式が単純で、初心者でも意味を理解しやすい。</li>
+        <li><strong>多くの参加者が意識する</strong>：個人投資家からプロまで広く使われているため、特定の線が節目（サポート・レジスタンス）として機能しやすいとされている。</li>
+        <li><strong>あらゆる市場・時間軸に使える</strong>：株・FX・商品先物・暗号資産を問わず適用可能。日足・週足・月足・分足でも同様の考え方が使える。</li>
+        <li><strong>複数の指標と組み合わせやすい</strong>：MACD・ボリンジャーバンド・RSI など多くの指標が移動平均線をベースに計算されており、連携しやすい。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：ラグ（遅れ）指標であること</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>遅行性が避けられない</strong>：過去の終値の平均であるため、相場が転換してもシグナルが出るまでに時間差が生じる。早い動きには対応しにくい。</li>
+        <li><strong>ダマシが多い（特にレンジ相場）</strong>：横ばいの相場ではゴールデンクロス・デッドクロスが頻発し、誤シグナルが増える傾向がある。</li>
+        <li><strong>将来を予測しない</strong>：過去のデータを元にした指標のため、急落・急騰などの突発的な動きには対応できない。</li>
+        <li><strong>期間の選択で結果が変わる</strong>：使う期間によって見え方が大きく変わり、「どの期間が最適か」に正解はない。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① 単独で使わず複数の根拠を組み合わせる</h3>
+    <p>移動平均線はあくまで「確認ツール」の一つです。ゴールデンクロスが出たとしても、<strong>出来高が伴っているか・RSI や MACD はどう示しているか・ファンダメンタルズは問題ないか</strong>など、複数の根拠が揃ってはじめてシグナルの信頼性が高まると一般的に考えられています。「移動平均線だけ」で売買判断を完結させるのは、経験者でも難しいとされています。</p>
+
+    <h3>② 時間軸（タイムフレーム）を揃えて見る</h3>
+    <p>日足・週足・月足のように<strong>複数の時間軸で移動平均線が同じ方向を示している</strong>とき、トレンドの信頼性が高いと考えられることがあります。たとえば日足でゴールデンクロスが出ていても、週足では依然として下降トレンドの中にある場合は慎重な姿勢が必要とされます。大きな時間軸のトレンドを確認してから小さな時間軸を見る、いわゆる「トップダウン分析」の習慣が実践では重視されています。</p>
+
+    <h3>③ 線が機能しなかった場合の対処を考えておく</h3>
+    <p>「25日線を割り込んだら撤退する」など、<strong>あらかじめシナリオを決めておく</strong>ことが重要です。移動平均線がサポートとして機能するかどうかは事前には分からないため、「機能しなかった場合どうするか」を判断のセットとして持っておくことで、感情的な売買を防ぎやすくなるとされています。</p>
+
+    <h3>④ レンジ相場では過信しない</h3>
+    <p>移動平均線はトレンドが明確なとき（上昇・下降が続くとき）に機能しやすく、<strong>横ばいのレンジ相場では機能しにくい</strong>傾向があります。ADX（平均方向性指数）などを使って「今の相場がトレンドかレンジか」を確認してから移動平均線のシグナルを判断する方法を取り入れるトレーダーもいます。</p>
+
+    <h3>⑤ 設定を「みんなと同じ」にすることも有効</h3>
+    <p>移動平均線のメリットの一つは「多くの人が同じ線を見ている」点です。あまり特殊な期間設定（例：32日線）を使うと、他の投資家が意識していない線を見ることになり、この利点が薄れる可能性があります。<strong>日本株なら 5・25・75日、米国株なら 50・200日</strong>という、多数派が使う設定を基本とするアプローチが自然と効きやすいと考えられています。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、複数の指標を組み合わせた複合シグナルで動作しています。移動平均線については、<strong>MA25（25日移動平均線）と MA75（75日移動平均線）のゴールデンクロス・デッドクロスの検出</strong>をシグナルのトリガーの一つとして使用しています。</p>
+    <p>ただし前述の通り、移動平均線はラグ指標であるため、<strong>クロス単体では信頼性が不十分</strong>と判断しています。当サイトのシステムでは、RSI・MACD・ボリンジャーバンドとの複合条件、出来高の状況、短期・中期・長期足の方向性の整合性などを組み合わせた上で、総合的にシグナルを判断する仕組みになっています。移動平均線はあくまでその複数の根拠のうちの「一つ」として機能させています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">テクニカルアラートが実際にどのような精度で機能しているか、過去のシグナル履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>移動平均線について学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>移動平均線は「一定期間の終値の平均をつないだ線」で、<strong>トレンドの方向・勢い</strong>を視覚化するテクニカル分析の基本指標。</li>
+      <li>種類は<strong>SMA（単純・日本株に多い）</strong>と<strong>EMA（直近重視・海外に多い）</strong>の 2 つが代表的。</li>
+      <li>よく使う期間は<strong>5・25・75・200日</strong>（日足）。短いほど短期トレンド、長いほど大きなトレンドを反映。</li>
+      <li>実践での使い方は①トレンド方向と傾き ②サポート/レジスタンス ③ゴールデンクロス/デッドクロス ④乖離率 ⑤株価との位置関係の 5 つが代表的。</li>
+      <li>グランビルの法則は買い 4 パターン・売り 4 パターンの参考フレームワーク。絶対ルールではなく、ダマシは常に存在する。</li>
+      <li>長所は「シンプルで多くの参加者が意識する」こと。弱点は「ラグ（遅れ）があること」と「レンジ相場でのダマシが多い」こと。</li>
+      <li>実践では<strong>単独でなく複数指標との組み合わせ</strong>、時間軸の整合性確認、機能しない場合のシナリオを持つことが重要とされている。</li>
+    </ul>
+
+    <p>移動平均線は「万能な予測ツール」ではありませんが、<strong>相場の大きな流れを掴む「地図」</strong>として非常に有効です。まずは日足の 25日線と 75日線から使い始め、チャートを日々追う習慣をつけることで徐々に感覚が身についていくと考えられています。テクニカル分析シリーズの次の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-vix.html">
+        <div class="related-card-title">😱 VIX恐怖指数の見方</div>
+        <div class="related-card-desc">市場の不安感を数値化した「恐怖指数」VIX の意味・水準別の解釈・活用法を初心者向けに解説。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">移動平均線を含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+      <a class="related-card" href="guides.html">
+        <div class="related-card-title">📚 解説記事一覧</div>
+        <div class="related-card-desc">VIX・バフェット指数・FOMC・NISA など投資判断に役立つ解説記事をカテゴリ別にまとめています。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は移動平均線の仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
