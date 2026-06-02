@@ -105,6 +105,34 @@
     .granville-num.buy{color:#1a7f37}
     .granville-num.sell{color:#cf222e}
     .granville-desc{font-size:.85rem;color:#57606a;line-height:1.6}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#57606a;font-size:14px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#8c959f;stroke-width:2;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-ma-s{stroke:#1f6feb;stroke-width:2.6;fill:none;stroke-linejoin:round}
+    .s-ma-m{stroke:#bc4c00;stroke-width:2.6;fill:none;stroke-linejoin:round}
+    .s-ma-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round}
+    .s-gc{fill:#ffffff;stroke:#1a7f37;stroke-width:2.5}
+    .s-dc{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-gc-txt{fill:#1a7f37;font-size:12px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-dc-txt{fill:#cf222e;font-size:12px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#6e7781}
+    body.dark .s-ma-s{stroke:#58a6ff}
+    body.dark .s-ma-m{stroke:#ec8e2c}
+    body.dark .s-ma-l{stroke:#ff7b72}
+    body.dark .s-gc{fill:#161b22;stroke:#3fb950}
+    body.dark .s-dc{fill:#161b22;stroke:#f85149}
+    body.dark .s-gc-txt{fill:#3fb950}
+    body.dark .s-dc-txt{fill:#f85149}
+    body.dark .s-legend{fill:#c9d1d9}
     p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
@@ -268,6 +296,23 @@
       </tbody>
     </table>
 
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 290" role="img" aria-labelledby="ma-smaema-title">
+        <title id="ma-smaema-title">SMAとEMAの反応の違いを示した概念図。EMAは直近の価格に速く反応し、SMAはゆるやかに追従する</title>
+        <polyline class="s-price" points="50,185 120,150 190,120 260,140 330,150 400,110 480,90 560,82"/>
+        <polyline class="s-ma-l" points="50,196 130,176 220,151 310,149 400,136 480,119 560,109"/>
+        <polyline class="s-ma-s" points="50,190 120,158 190,128 260,140 330,148 400,118 480,98 560,88"/>
+        <text class="s-label-sm" x="566" y="86" fill="#1f6feb">EMA</text>
+        <text class="s-label-sm" x="566" y="111" fill="#cf222e">SMA</text>
+        <g transform="translate(60,250)">
+          <line class="s-price" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">価格</text>
+          <line class="s-ma-s" x1="110" y1="0" x2="136" y2="0"/><text class="s-legend" x="142" y="5">EMA（反応が速い）</text>
+          <line class="s-ma-l" x1="330" y1="0" x2="356" y2="0"/><text class="s-legend" x="362" y="5">SMA（なめらか・遅い）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ EMA（青）は直近の価格に素早く反応し、SMA（赤）はゆるやかに追従する（概念図）。価格が急に動いたとき、EMA のほうが早く向きを変える。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
     <p>どちらが「正解」というわけではなく、対象市場・時間軸・トレードスタイルによって使い分けるのが一般的です。日本株で中長期投資をする場合は SMA が主流とされており、外国為替（FX）で短期売買をする場合は EMA を好む投資家も多い傾向があります。</p>
 
     <div class="info-box">
@@ -328,6 +373,25 @@
     <p>移動平均線の最も基本的な使い方は、<strong>線の向き（上向き・横ばい・下向き）</strong>でトレンドの方向を確認することです。長期移動平均線（75日線・200日線など）が上向きであれば上昇トレンド、下向きであれば下降トレンドが続いていると見られます。また、傾きの角度が急なほどトレンドの勢いが強い可能性があるとされています。</p>
     <p>複数本の移動平均線（たとえば 5日・25日・75日）が<strong>すべて上向きで、上から短期線・中期線・長期線の順に並んでいる状態</strong>（「パーフェクトオーダー」と呼ばれることがある）は、強い上昇トレンドのサインとして意識されやすいとされています。逆に線が交錯してバラバラな状態は、方向感がない横ばい局面と判断されることが多いです。</p>
 
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="ma-order-title">
+        <title id="ma-order-title">パーフェクトオーダーの概念図。短期・中期・長期の移動平均線が上から順に並びすべて上向き</title>
+        <polyline class="s-price" points="50,166 200,128 350,98 500,76 600,58"/>
+        <polyline class="s-ma-s" points="50,176 200,141 350,111 500,89 600,71"/>
+        <polyline class="s-ma-m" points="50,196 200,166 350,136 500,116 600,100"/>
+        <polyline class="s-ma-l" points="50,212 200,186 350,160 500,142 600,130"/>
+        <text class="s-label-sm" x="606" y="74" fill="#1f6feb">短期</text>
+        <text class="s-label-sm" x="606" y="103" fill="#bc4c00">中期</text>
+        <text class="s-label-sm" x="606" y="133" fill="#cf222e">長期</text>
+        <g transform="translate(60,250)">
+          <line class="s-ma-s" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">短期線（5日）</text>
+          <line class="s-ma-m" x1="170" y1="0" x2="196" y2="0"/><text class="s-legend" x="202" y="5">中期線（25日）</text>
+          <line class="s-ma-l" x1="350" y1="0" x2="376" y2="0"/><text class="s-legend" x="382" y="5">長期線（75日）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ 上から「短期＞中期＞長期」の順に並び、すべて上向き＝強い上昇トレンドのサインとして意識されやすい状態（パーフェクトオーダー）。下降トレンドではこの上下が逆順になる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
     <h3>② サポート・レジスタンスとして機能する</h3>
     <p>多くの投資家が同じ移動平均線を見ているため、特定の線が<strong>「下値支持線（サポート）」や「上値抵抗線（レジスタンス）」</strong>として機能するケースが見られます。たとえば上昇トレンド中に株価が一時下落しても 25日線付近で下げ止まって反発するパターンは、多くのチャートで観察されることがあります。これは「25日線を割れたら売ろう」「25日線に触れたら買おう」と考える投資家が多いために起こる現象と考えられています。</p>
     <p>ただし、サポート・レジスタンスとして機能するかどうかは相場の状況によって異なり、必ず機能するものではありません。<strong>「割れたら終わり」ではなく、「その後の値動きも観察する」</strong>姿勢が実践では大切とされています。</p>
@@ -339,6 +403,23 @@
       <li><strong>デッドクロス（DC）</strong>：短期移動平均線が長期移動平均線を<strong>上から下に突き抜ける</strong>タイミング。下降転換のシグナルとして知られており、売りのタイミングや手仕舞いの参考にされることがある。</li>
     </ul>
     <p>よく使われる組み合わせとしては「5日線 × 25日線」「25日線 × 75日線」「50日線 × 200日線（デッドクロス / ゴールデンクロス）」などがあります。移動平均線はラグ指標であるため、クロスが確認されたときには既に相場が動き始めた後であることも多く、<strong>「後追いになりやすい」点は常に意識しておく</strong>必要があります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="ma-cross-title">
+        <title id="ma-cross-title">ゴールデンクロスとデッドクロスの概念図。短期線が長期線を上抜く点と下抜く点</title>
+        <polyline class="s-ma-l" points="50,150 180,138 320,145 460,165 600,172"/>
+        <polyline class="s-ma-s" points="50,192 110,166 170,144 230,118 300,108 370,130 440,160 520,182 600,192"/>
+        <circle class="s-gc" cx="172" cy="143" r="15"/><text class="s-gc-txt" x="172" y="147">GC</text>
+        <circle class="s-dc" cx="452" cy="166" r="15"/><text class="s-dc-txt" x="452" y="170">DC</text>
+        <text class="s-gc-txt" x="172" y="178" style="font-size:11px">上昇転換</text>
+        <text class="s-dc-txt" x="452" y="201" style="font-size:11px">下降転換</text>
+        <g transform="translate(60,262)">
+          <line class="s-ma-s" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">短期線（例：25日）</text>
+          <line class="s-ma-l" x1="220" y1="0" x2="246" y2="0"/><text class="s-legend" x="252" y="5">長期線（例：75日）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ 短期線（青）が長期線（赤）を<strong>下から上に抜ける</strong>のがゴールデンクロス（GC・上昇転換のサインとされる）、<strong>上から下に抜ける</strong>のがデッドクロス（DC・下降転換のサインとされる）。クロスはラグ指標ゆえ後追いになりやすい。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
 
     <div class="warning-box">
       ゴールデンクロスが発生した直後に下落する「ダマシ」は珍しくありません。特に相場が横ばい（レンジ）状態のときはクロスが頻繁に発生しやすく、誤シグナルが多くなる傾向があります。単独で判断せず、出来高や他のテクニカル指標との組み合わせで確認するのが一般的な対処法とされています。
