@@ -14,7 +14,8 @@
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
-- **🎯 次セッション：シリーズを継続して量産**（第2弾以降：MACD／RSI／ボリンジャーバンド／フィボナッチ（実装済み fib_pullback と連携）／エリオット波動／一目均衡表／出来高 …）。狙い＝**エバーグリーン×高検索需要×低コンプラ＝SEO・AdSense両方に効く**。**内部リンクで束ねてトピック権威性**を作る。「薄い量産はNG・質が命」。
+- **第2弾「一目均衡表」公開済（2026-06-02）**（`guide-ichimoku.html`・41.5KB・compliance🟢白「そのまま公開OK」・事実10項目照合済）。雲／三役好転・逆転／5本の線／時間論・波動論・値幅観測論を網羅。guides.htmlの「📈チャートの読み方（テクニカル分析）」セクションに第1弾と並べて掲載（badge-guide「解説」）。section-8は「一目均衡表は発火トリガーに未使用」と正直に明記。第1弾↔第2弾を内部リンクで相互接続済。
+- **🎯 次セッション：シリーズを継続して量産**（第3弾以降：MACD／RSI／ボリンジャーバンド／フィボナッチ（実装済み fib_pullback と連携）／エリオット波動／出来高 …）。狙い＝**エバーグリーン×高検索需要×低コンプラ＝SEO・AdSense両方に効く**。**内部リンクで束ねてトピック権威性**を作る。「薄い量産はNG・質が命」。
 - 量産手順：WebSearchで事実確認 → content-writer（本文HTML）＋seo-ux（title/meta/JSON-LD）を並列起動（`.claude/agents/*.md` を Read→general-purpose に inline、model sonnet）→ compliance-reviewer（opus）監査 → `python mw.py publish --file … --category テクニカル分析 --emoji … --card-title … --desc …` または content-writer が②④⑤実行→sync→workflow。
 
 ### 💰 AdSense 審査突破（基盤収益・進行中）
