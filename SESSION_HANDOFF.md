@@ -9,7 +9,7 @@
 ### ⚠️ 最重要：設定ファイルの状態（事故対応済み）
 - セッション中に `market-news-config.json.json`（GitHubトークン入り）が**フォルダから消失**（原因不明・OneDrive疑い）。`.json.json` パスは**書込みもアクセス拒否**（ロック/ゴースト化）。
 - → **`market-news-config.json`（拡張子1つ）で復元**。sync_to_github / mw.py は両名を見るので動作OK（sync成功確認済み）。**今後の設定ファイルは `market-news-config.json`**。
-- 🔐 推奨：原因不明で消えたので、**GitHub PAT を失効＋新規発行（repo＋workflow scope）→ `market-news-config.json` の `github_token` を差し替え**が安全。
+- 🔐 ✅ **済（2026-06-02）**：原因不明で消えたため **GitHub PAT を失効＋新規発行**。旧トークン `cowork-marketwatch`（...0JYwwj）を delete（→401確認）し、新 `cowork-marketwatch-2`（repo＋workflow scope・期限2026-08-31）を発行→ `market-news-config.json` の `github_token` を差し替え。`GET /user` 200＋`mw status` 疎通確認済。設定ファイルは SYNC_FILES・.gitignore 双方で除外済（GitHubへ漏れない）。
 
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
