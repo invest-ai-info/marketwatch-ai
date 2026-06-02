@@ -288,6 +288,7 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- 自動生成の月次成績レポート：インデックス除外（AdSense低価値対策） -->
 <title>📊 {year}年{month}月 AI トレード成績レポート｜MarketWatch AI</title>
 <meta name="description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、実取引と AI 総評。">
 <link rel="canonical" href="https://marketwatch-jp.com/guide-monthly-report-{month_str}.html">
