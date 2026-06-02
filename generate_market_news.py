@@ -3720,6 +3720,35 @@ def build_weekly_history_item(now_jst):
         return None
 
 
+def build_featured_guides():
+    """🆕 2026-06-01 トップに『注目の解説記事』を前面表示。
+    独自の厚い解説記事を目立たせ、"データ寄せ集め"感を薄める（AdSense低価値対策＋内部リンク＋UX）。"""
+    items = [
+        ("guide-oriental-land-2026-06.html", "🏰", "オリエンタルランド（4661）はなぜ約6割安に？", "暴落の5つの理由と「復活」3シナリオをフラットに整理"),
+        ("guide-bank-stocks-2026-05.html", "🏦", "日銀利上げで銀行株はどうなる？", "メガバンク vs 地方銀行の違い・利ざや・株主還元を整理"),
+        ("guide-japan-strategy-2026-05.html", "🗾", "2026年 日本株の歩き方", "攻め（AI半導体・銀行）と守り（ディフェンシブ）のセクター戦略"),
+        ("guide-softbank-group-2026-05.html", "📱", "ソフトバンクグループ（9984）徹底解説", "OpenAI・Arm・Vision Fund と NAV、5つのリスクまで網羅"),
+        ("guide-nvidia-2026-05.html", "🎮", "NVIDIA 決算解説", "AI相場の中心銘柄を決算からフラットに読み解く"),
+        ("guide-nisa.html", "💰", "新NISA 完全ガイド", "制度の基本と、長期保有・高配当・積立の考え方"),
+    ]
+    cards = "\n".join(
+        f'''      <a href="{f}" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;padding:18px 22px;text-decoration:none">
+        <div style="font-size:1.0rem;font-weight:700;color:#0969da;margin-bottom:6px">{e} {t}</div>
+        <div style="font-size:.8rem;color:#57606a;line-height:1.6">{d}</div>
+      </a>'''
+        for f, e, t, d in items
+    )
+    return f'''  <!-- 注目の解説記事（独自コンテンツを前面に）-->
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid #d0d7de">
+    <div style="font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:6px">📚 注目の解説記事</div>
+    <div style="font-size:.88rem;color:#57606a;margin-bottom:20px">投資の「なぜ？」を、出典付きでわかりやすく解説（<a href="guides.html" style="color:#1f6feb;text-decoration:none">解説記事の一覧 →</a>）</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+{cards}
+    </div>
+  </div>
+'''
+
+
 def build_html(data, hist, now_jst, news=None, touraku=None):
     date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
@@ -3783,6 +3812,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         _history_items.append(_wk_item)
     _history_items.sort(key=lambda x: x["date"], reverse=True)  # 日付降順（安定ソート＝同日は手動を先に）
     update_history_html = "<br>\n".join("      " + it["line"] for it in _history_items[:5])
+    # 🆕 注目の解説記事（独自コンテンツを前面に）
+    featured_guides = build_featured_guides()
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -4078,6 +4109,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
+{featured_guides}
   <!-- 4機能カード（より深い市場分析へ）-->
   <div style="margin-top:48px;padding-top:24px;border-top:1px solid #d0d7de">
     <div style="font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:6px">🔍 AIが導く、より深い市場分析へ</div>
