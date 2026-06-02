@@ -99,6 +99,25 @@
     .related-card:hover{border-color:#0969da;text-decoration:none}
     .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
     .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#1f6feb;stroke-width:2.8;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-vix{stroke:#cf222e;stroke-width:2.8;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .vix-zlabel{fill:#ffffff;font-size:12px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .vix-tick{fill:#57606a;font-size:12px;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .vix-ptr{fill:#1f2328;font-size:12.5px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#58a6ff}
+    body.dark .s-vix{stroke:#ff7b72}
+    body.dark .vix-tick{fill:#8b949e}
+    body.dark .vix-ptr{fill:#e6edf3}
+    body.dark .s-legend{fill:#c9d1d9}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.article{padding:24px 20px}h1{font-size:1.45rem}.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
@@ -226,6 +245,39 @@
       </tbody>
     </table>
 
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 170" role="img" aria-labelledby="vix-gauge-title">
+        <title id="vix-gauge-title">VIX水準ゲージ。15未満は平穏、15〜20は平常、20〜30は警戒、30〜40は恐怖、40以上はパニック</title>
+        <!-- ゾーン帯（VIX 10〜50 を x=40〜600 にマッピング：14px/単位） -->
+        <rect x="40"  y="62" width="70"  height="38" fill="#2da44e"/>
+        <rect x="110" y="62" width="70"  height="38" fill="#1f6feb"/>
+        <rect x="180" y="62" width="140" height="38" fill="#d4a017"/>
+        <rect x="320" y="62" width="140" height="38" fill="#bf3989"/>
+        <rect x="460" y="62" width="140" height="38" fill="#cf222e"/>
+        <!-- ゾーン名 -->
+        <text class="vix-zlabel" x="75"  y="86">平穏</text>
+        <text class="vix-zlabel" x="145" y="86">平常</text>
+        <text class="vix-zlabel" x="250" y="86">警戒</text>
+        <text class="vix-zlabel" x="390" y="86">恐怖</text>
+        <text class="vix-zlabel" x="530" y="86">パニック</text>
+        <!-- 目盛り -->
+        <text class="vix-tick" x="40"  y="120">10</text>
+        <text class="vix-tick" x="110" y="120">15</text>
+        <text class="vix-tick" x="180" y="120">20</text>
+        <text class="vix-tick" x="320" y="120">30</text>
+        <text class="vix-tick" x="460" y="120">40</text>
+        <text class="vix-tick" x="600" y="120">50＋</text>
+        <!-- 長期平均ポインタ（≈19.5 → x≈173） -->
+        <polygon points="173,40 167,52 179,52" fill="#1f2328"/>
+        <line x1="173" y1="52" x2="173" y2="62" stroke="#1f2328" stroke-width="1.6"/>
+        <text class="vix-ptr" x="173" y="34">長期平均 ≈19〜20</text>
+        <!-- 補足 -->
+        <text class="s-label-sm" x="40" y="148">← 安心・楽観</text>
+        <text class="s-label-sm" x="600" y="148" text-anchor="end">危機・暴落 →</text>
+      </svg>
+      <figcaption class="chart-caption">▲ VIX の水準帯マップ。長期平均は約19〜20で、ふだんは15〜25の範囲で推移。30超で「恐怖」、40超で「パニック」とされる。絶対値だけでなく<strong>上昇のスピード</strong>も重要。</figcaption>
+    </figure>
+
     <p>過去30年の長期平均は<strong>約19〜20</strong>。多くの場合15〜25の範囲で推移しており、30を超えると「明確に異常な事態」が起きていると考えてよいでしょう。</p>
 
     <h2 id="section-4">4. 過去の主要な暴落時のVIX値</h2>
@@ -258,6 +310,26 @@
 
     <h3>④ 短期の方向感を読む補助指標として使う</h3>
     <p>S&amp;P500とVIXは通常、<strong>逆相関</strong>（株が下げるとVIXが上がる）になります。両者が同方向に動くときは、相場の転換点である可能性があり注意が必要です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 250" role="img" aria-labelledby="vix-inverse-title">
+        <title id="vix-inverse-title">株価とVIXの逆相関の概念図。株価が急落するとVIXが急騰する</title>
+        <!-- 急落ゾーンの網掛け -->
+        <rect x="350" y="20" width="120" height="200" fill="#cf222e" opacity="0.07"/>
+        <text class="s-label-sm" x="410" y="36" text-anchor="middle" fill="#cf222e">急落局面</text>
+        <!-- S&P500（上昇→急落） -->
+        <polyline class="s-price" points="40,70 150,64 250,74 330,92 390,150 470,176 600,168"/>
+        <text class="s-label-sm" x="56" y="58" fill="#1f6feb">S&amp;P500（株価）</text>
+        <!-- VIX（低位→急騰） -->
+        <polyline class="s-vix" points="40,196 150,194 250,190 330,176 390,108 470,66 600,82"/>
+        <text class="s-label-sm" x="56" y="214" fill="#cf222e">VIX（恐怖指数）</text>
+        <g transform="translate(60,238)">
+          <line class="s-price" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">株価（下落）</text>
+          <line class="s-vix" x1="180" y1="0" x2="206" y2="0"/><text class="s-legend" x="212" y="5">VIX（急騰）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ 株価とVIXは通常「逆相関」。株価が急落する局面でVIXは急騰する（恐怖の高まり）。だからVIXは市場の「温度計」として使われる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
 
     <div class="highlight-box">
       <strong>当サイトの活用</strong>: 毎日のVIX水準・90日チャート・AIコメントは <a href="vix.html">恐怖指数（VIX）ページ</a> で確認できます。市場健康度の総合判定は <a href="market-health.html">市場健康度ダッシュボード</a> をご覧ください。
