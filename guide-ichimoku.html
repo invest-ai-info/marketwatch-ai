@@ -105,6 +105,49 @@
     .granville-num.buy{color:#1a7f37}
     .granville-num.sell{color:#cf222e}
     .granville-desc{font-size:.85rem;color:#57606a;line-height:1.6}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .svg-panels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
+    .svg-panels .chart-figure{margin:0}
+    .svg-panels .chart-caption{margin-top:6px;font-weight:600}
+    .s-axis{stroke:#d0d7de;stroke-width:1.2}
+    .s-future{fill:#6e7781;opacity:.06}
+    .s-label{fill:#57606a;font-size:14px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#1f2328;stroke-width:3;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-tenkan{stroke:#1f6feb;stroke-width:2.2;fill:none;stroke-linejoin:round}
+    .s-kijun{stroke:#cf222e;stroke-width:2.2;fill:none;stroke-linejoin:round}
+    .s-chikou{stroke:#8250df;stroke-width:2.2;fill:none;stroke-dasharray:6 4;stroke-linejoin:round}
+    .s-cloud-up{fill:#1a7f37;opacity:.16}
+    .s-cloud-down{fill:#cf222e;opacity:.14}
+    .s-cloud-neutral{fill:#6e7781;opacity:.18}
+    .s-span1{stroke:#2ea043;stroke-width:1.6;fill:none}
+    .s-span2{stroke:#cf222e;stroke-width:1.6;fill:none}
+    .s-marker{fill:#ffffff;stroke:#bf8700;stroke-width:2}
+    .s-marker-txt{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;text-anchor:middle}
+    .s-dash{stroke:#6e7781;stroke-width:1.3;stroke-dasharray:5 4}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-axis{stroke:#30363d}
+    body.dark .s-future{fill:#8b949e;opacity:.09}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#e6edf3}
+    body.dark .s-tenkan{stroke:#58a6ff}
+    body.dark .s-kijun{stroke:#ff7b72}
+    body.dark .s-chikou{stroke:#bc8cff}
+    body.dark .s-cloud-up{fill:#2ea043;opacity:.26}
+    body.dark .s-cloud-down{fill:#f85149;opacity:.22}
+    body.dark .s-cloud-neutral{fill:#8b949e;opacity:.22}
+    body.dark .s-span1{stroke:#3fb950}
+    body.dark .s-span2{stroke:#f85149}
+    body.dark .s-marker{fill:#161b22;stroke:#d29922}
+    body.dark .s-marker-txt{fill:#e3b341}
+    body.dark .s-dash{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
     p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
     footer a{color:#0969da;text-decoration:none}
@@ -261,6 +304,40 @@
       </tbody>
     </table>
 
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 380" role="img" aria-labelledby="ichimoku-overview-title">
+        <title id="ichimoku-overview-title">一目均衡表の全体像：価格・転換線・基準線・雲・遅行スパンの位置関係を示した概念図</title>
+        <!-- 未来ゾーン（26日先行） -->
+        <rect class="s-future" x="430" y="38" width="170" height="214"/>
+        <line class="s-dash" x1="430" y1="38" x2="430" y2="252"/>
+        <text class="s-label-sm" x="424" y="32" text-anchor="end">← 過去〜現在</text>
+        <text class="s-label-sm" x="436" y="32">未来（26日先行）→</text>
+        <!-- 雲（先行スパン1・2に挟まれた帯） -->
+        <polygon class="s-cloud-up" points="150,170 250,158 350,148 430,140 510,132 600,128 600,178 510,180 430,186 350,192 250,200 150,205"/>
+        <polyline class="s-span1" points="150,170 250,158 350,148 430,140 510,132 600,128"/>
+        <polyline class="s-span2" points="150,205 250,200 350,192 430,186 510,180 600,178"/>
+        <text class="s-label-sm" x="505" y="162" fill="#1a7f37">雲</text>
+        <!-- 基準線(26) -->
+        <polyline class="s-kijun" points="50,218 130,210 210,196 290,178 370,158 430,146"/>
+        <!-- 転換線(9) -->
+        <polyline class="s-tenkan" points="50,205 110,192 170,176 230,158 290,144 350,124 430,108"/>
+        <!-- 価格 -->
+        <polyline class="s-price" points="50,210 110,198 170,182 230,160 290,150 350,128 430,112"/>
+        <!-- 遅行スパン（終値を26日過去へ） -->
+        <polyline class="s-chikou" points="50,232 110,216 170,198 230,176 290,162 350,140"/>
+        <!-- 凡例 -->
+        <g transform="translate(50,300)">
+          <line class="s-price" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">価格</text>
+          <line class="s-tenkan" x1="120" y1="0" x2="146" y2="0"/><text class="s-legend" x="152" y="5">転換線（9日）</text>
+          <line class="s-kijun" x1="290" y1="0" x2="316" y2="0"/><text class="s-legend" x="322" y="5">基準線（26日）</text>
+          <rect class="s-cloud-up" x="460" y="-7" width="26" height="14"/><text class="s-legend" x="492" y="5">雲</text>
+          <line class="s-chikou" x1="0" y1="34" x2="26" y2="34"/><text class="s-legend" x="32" y="39">遅行スパン（26日遅行）</text>
+          <line class="s-dash" x1="220" y1="34" x2="246" y2="34"/><text class="s-legend" x="252" y="39">「今日」（先行スパンはここから先へ）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ 一目均衡表の全体像（概念図）。転換線・基準線が価格に沿って動き、雲（先行スパン1・2）は26日先の未来側まで描かれ、遅行スパンは過去側にずれて表示される。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
     <h3>転換線と基準線</h3>
     <p><strong>転換線</strong>は過去 9 日間、<strong>基準線</strong>は過去 26 日間の「中値（最高値と最安値の真ん中）」をつないだ線です。移動平均線が「終値の平均」であるのに対し、一目均衡表は「高値と安値の中間」を使う点が異なります。一般に、<strong>基準線が上向きなら中期トレンドは上昇傾向</strong>、下向きなら下降傾向と見るのが基本とされています。また、転換線が基準線を上抜く動きは、移動平均線のゴールデンクロスに似た意味を持つと考えられています。</p>
 
@@ -286,6 +363,36 @@
       <li><strong>価格が雲の下</strong>：相場は弱い（下降基調）と見られることが多い。雲が上値抵抗帯（レジスタンス）として機能しやすいとされる。</li>
     </ul>
 
+    <div class="svg-panels">
+      <figure class="chart-figure">
+        <svg viewBox="0 0 210 150" role="img" aria-label="価格が雲の上にある強気の状態">
+          <polygon class="s-cloud-up" points="18,86 192,74 192,110 18,114"/>
+          <polyline class="s-span1" points="18,86 192,74"/>
+          <polyline class="s-span2" points="18,114 192,110"/>
+          <polyline class="s-price" points="18,68 60,56 100,50 145,40 192,34"/>
+        </svg>
+        <figcaption class="chart-caption">価格が雲の上 → 強気</figcaption>
+      </figure>
+      <figure class="chart-figure">
+        <svg viewBox="0 0 210 150" role="img" aria-label="価格が雲の中にあるもみ合いの状態">
+          <polygon class="s-cloud-neutral" points="18,58 192,58 192,94 18,94"/>
+          <polyline class="s-span1" points="18,58 192,58"/>
+          <polyline class="s-span2" points="18,94 192,94"/>
+          <polyline class="s-price" points="18,76 55,62 95,88 135,66 192,82"/>
+        </svg>
+        <figcaption class="chart-caption">雲の中 → もみ合い</figcaption>
+      </figure>
+      <figure class="chart-figure">
+        <svg viewBox="0 0 210 150" role="img" aria-label="価格が雲の下にある弱気の状態">
+          <polygon class="s-cloud-down" points="18,44 192,52 192,86 18,78"/>
+          <polyline class="s-span1" points="18,44 192,52"/>
+          <polyline class="s-span2" points="18,78 192,86"/>
+          <polyline class="s-price" points="18,82 60,92 100,100 145,108 192,116"/>
+        </svg>
+        <figcaption class="chart-caption">価格が雲の下 → 弱気</figcaption>
+      </figure>
+    </div>
+
     <h3>雲の「ねじれ」と厚さ</h3>
     <p>先行スパン 1 と 2 が交差して雲の上下が入れ替わる点は<strong>「雲のねじれ」</strong>と呼ばれ、トレンド転換が起こりやすいタイミングの目安として注目されることがあります。また、<strong>雲の厚さ</strong>も判断材料とされます。雲が厚いほど支持・抵抗が強い（価格が抜けにくい）、薄いほど抜けやすい、と一般的に考えられています。</p>
 
@@ -309,6 +416,30 @@
     </div>
 
     <p>3 つの条件は、それぞれ<strong>「短期の方向（転換線×基準線）」「勢い（遅行スパン）」「中長期の支持抵抗（雲）」</strong>という異なる視点を見ています。これらが同じ方向で揃うということは、複数の角度から見ても相場が一方向に傾いている、という解釈になります。だからこそ単独シグナルより重視される、というのが一般的な考え方です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="ichimoku-sanyaku-title">
+        <title id="ichimoku-sanyaku-title">三役好転：転換線が基準線を上抜き、遅行スパンが価格を上抜き、価格が雲を上抜く3条件を示した概念図</title>
+        <!-- 雲 -->
+        <polygon class="s-cloud-up" points="50,180 200,172 350,165 500,158 600,155 600,188 500,190 350,195 200,200 50,205"/>
+        <polyline class="s-span1" points="50,180 200,172 350,165 500,158 600,155"/>
+        <polyline class="s-span2" points="50,205 200,200 350,195 500,190 600,188"/>
+        <text class="s-label-sm" x="540" y="176" fill="#1a7f37">雲</text>
+        <!-- 基準線 -->
+        <polyline class="s-kijun" points="50,208 160,198 280,182 400,152 500,130 600,116"/>
+        <!-- 転換線 -->
+        <polyline class="s-tenkan" points="50,202 130,186 200,168 260,150 320,134 400,108 500,88 600,76"/>
+        <!-- 価格 -->
+        <polyline class="s-price" points="50,210 130,196 220,178 290,162 330,150 400,118 500,92 600,78"/>
+        <!-- 遅行スパン -->
+        <polyline class="s-chikou" points="50,150 110,135 175,120 240,108 300,98"/>
+        <!-- マーカー -->
+        <circle class="s-marker" cx="118" cy="192" r="13"/><text class="s-marker-txt" x="118" y="197">1</text>
+        <circle class="s-marker" cx="182" cy="115" r="13"/><text class="s-marker-txt" x="182" y="120">2</text>
+        <circle class="s-marker" cx="324" cy="160" r="13"/><text class="s-marker-txt" x="324" y="165">3</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 三役好転（買い）の3条件。<strong>①</strong>転換線が基準線を上抜く ／ <strong>②</strong>遅行スパンが価格（ローソク足）を上抜く ／ <strong>③</strong>価格が雲を上抜く。3つが同時に揃った状態を指す（売りの三役逆転はこの逆）。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
 
     <div class="warning-box">
       三役が揃うまで待つと、シグナルが出たときには<strong>すでに相場が大きく動いた後</strong>であることも少なくありません（後追い性）。逆に、3 条件のうち 1〜2 個だけで早めに動くと「ダマシ」に遭いやすくなります。「早さ」と「確実さ」はトレードオフの関係にあり、どちらを取るかは時間軸や戦略によって異なるとされています。
