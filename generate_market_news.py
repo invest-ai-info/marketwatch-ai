@@ -3801,11 +3801,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-02", "line": '・<b>2026-06-02</b>: 📈 解説「<a href="guide-moving-average.html" style="color:#0969da"><b>移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説【テクニカル分析シリーズ第1弾】</b></a>」公開'},
         {"date": "2026-06-01", "line": '・<b>2026-06-01</b>: 🏰 解説「<a href="guide-oriental-land-2026-06.html" style="color:#0969da"><b>オリエンタルランド（4661）はなぜ約6割安に？ 暴落の5つの理由と「復活」3シナリオを整理</b></a>」公開'},
         {"date": "2026-05-31", "line": '・<b>2026-05-31</b>: 🏦 解説「<a href="guide-bank-stocks-2026-05.html" style="color:#0969da"><b>日銀が利上げしたら銀行株はどうなる？ メガバンク vs 地方銀行の違いを整理（2026年版）</b></a>」公開'},
         {"date": "2026-05-31", "line": '・<b>2026-05-31</b>: 🗾 解説「<a href="guide-japan-strategy-2026-05.html" style="color:#0969da"><b>2026年 日本株の歩き方：日経を動かす「攻め」と暴落に強い「守り」のセクター戦略</b></a>」公開'},
         {"date": "2026-05-29", "line": '・<b>2026-05-29</b>: 🏭 解説「<a href="guide-tsmc-2026-05.html" style="color:#0969da"><b>TSMC（NYSE: TSM）2026 Q1 決算解説：売上 359 億ドルで過去最高、純利益 +58% — 世界最大ファウンドリの強さと「地政学リスク」をフラットに整理する</b></a>」公開'},
-        {"date": "2026-05-28", "line": '・<b>2026-05-28</b>: 🎯 解説「<a href="guide-amd-2026-05.html" style="color:#0969da"><b>AMD（NASDAQ: AMD）2026 Q1 決算解説：MI300X の実力と NVDA 連動の読み方 — 「第 2 極」の挑戦をフラットに整理する</b></a>」公開'},
     ]
     _wk_item = build_weekly_history_item(now_jst)
     if _wk_item:
