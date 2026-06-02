@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MACDとは？見方・ゴールデンクロス・ダイバージェンスを初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="MACD（マックディー）の3つの要素（MACD線・シグナル線・ヒストグラム）と計算式、ゴールデンクロス/デッドクロス、0ライン、ダイバージェンス（逆行現象）まで、トレンド系テクニカル指標を初心者向けに図解で分かりやすく解説。">
+  <meta name="keywords" content="MACD,マックディー,移動平均収束拡散,シグナル線,ヒストグラム,ゴールデンクロス,デッドクロス,ダイバージェンス,テクニカル分析,EMA,株式投資,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-macd.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MACDとは？見方・ゴールデンクロス・ダイバージェンスを初心者向けに徹底解説">
+  <meta property="og:description" content="MACDの3要素（MACD線・シグナル線・ヒストグラム）・計算式・ゴールデンクロス・ダイバージェンスを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-macd.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "MACDとは？見方・ゴールデンクロス・ダイバージェンスを初心者向けに徹底解説",
+    "description": "MACD（マックディー）の3つの要素（MACD線・シグナル線・ヒストグラム）と計算式、ゴールデンクロス/デッドクロス、0ライン、ダイバージェンスまで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-02",
+    "dateModified": "2026-06-02",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-macd.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#8c959f;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-macd{stroke:#1f6feb;stroke-width:2.6;fill:none;stroke-linejoin:round}
+    .s-signal{stroke:#bc4c00;stroke-width:2.6;fill:none;stroke-linejoin:round}
+    .s-hist-up{fill:#2da44e}
+    .s-hist-down{fill:#cf222e}
+    .s-zero{stroke:#6e7781;stroke-width:1.3;stroke-dasharray:5 4}
+    .s-divline{stroke:#cf222e;stroke-width:1.8;stroke-dasharray:6 4;fill:none}
+    .s-gc{fill:#ffffff;stroke:#1a7f37;stroke-width:2.5}
+    .s-dc{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-gc-txt{fill:#1a7f37;font-size:12px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-dc-txt{fill:#cf222e;font-size:12px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#6e7781}
+    body.dark .s-macd{stroke:#58a6ff}
+    body.dark .s-signal{stroke:#ec8e2c}
+    body.dark .s-hist-up{fill:#3fb950}
+    body.dark .s-hist-down{fill:#f85149}
+    body.dark .s-zero{stroke:#8b949e}
+    body.dark .s-divline{stroke:#ff7b72}
+    body.dark .s-gc{fill:#161b22;stroke:#3fb950}
+    body.dark .s-dc{fill:#161b22;stroke:#f85149}
+    body.dark .s-gc-txt{fill:#3fb950}
+    body.dark .s-dc-txt{fill:#f85149}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; MACDとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は MACD の仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 MACDとは？見方・ゴールデンクロス・ダイバージェンスを初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 2 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>テクニカル指標の中でも、移動平均線と並んで世界的に使われているのが <strong>MACD（マックディー）</strong> です。チャートの下に表示される2本の線と棒グラフ——一見すると難しそうですが、その正体は<a href="guide-moving-average.html">移動平均線</a>を応用したシンプルな「トレンドと勢いを測る指標」です。</p>
+    <p>この記事では、MACD の3つの構成要素と計算式から、有名なゴールデンクロス・デッドクロス、0ライン、トレンド転換を察知する「ダイバージェンス」まで、図解を交えて初心者にも分かるように丁寧に解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>MACD は<strong>「MACD線」「シグナル線」「ヒストグラム」の3つ</strong>で構成され、移動平均線（EMA）から計算されるトレンド系の指標。相場の方向と勢いを同時に確認できる。</li>
+      <li>最も基本的なサインは、<strong>MACD線がシグナル線を上抜く「ゴールデンクロス」（買い）・下抜く「デッドクロス」（売り）</strong>。移動平均線のクロスより早めに点灯しやすいとされる。</li>
+      <li>価格とMACDが逆行する<strong>「ダイバージェンス」はトレンド転換の予兆</strong>として注目される。ただしレンジ相場ではダマシが多く、単独利用は禁物とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">MACDとは何か（概要と歴史）</a></li>
+        <li><a href="#section-2">3つの構成要素と計算式</a></li>
+        <li><a href="#section-3">ゴールデンクロス・デッドクロス</a></li>
+        <li><a href="#section-4">0ライン（ゼロライン）の見方</a></li>
+        <li><a href="#section-5">ダイバージェンス（逆行現象）</a></li>
+        <li><a href="#section-6">MACDの長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ MACDとは何か（概要と歴史）</h2>
+    <p><strong>MACD</strong>は「<strong>Moving Average Convergence Divergence</strong>（移動平均収束拡散法）」の略で、「マックディー」と読みます。1970年代に米国のアナリスト<strong>ジェラルド・アペル（Gerald Appel）</strong>が考案したとされる、トレンド系のテクニカル指標です。</p>
+    <p>「Convergence（収束）」「Divergence（拡散）」という名前の通り、MACD は<strong>2本の移動平均線が近づいたり離れたりする動き</strong>に注目します。短期と長期の移動平均線の差を見ることで、トレンドの方向だけでなく「勢いが強まっているのか・弱まっているのか」まで読み取ろうとするのが特徴です。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：MACD は移動平均線の「応用版」です。<a href="guide-moving-average.html">移動平均線（MA）</a>の基本（特に直近を重視する EMA）を先に理解しておくと、MACD の仕組みがぐっと分かりやすくなります。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 3つの構成要素と計算式</h2>
+    <p>MACD は次の<strong>3つの要素</strong>で構成されます。チャートでは通常、ローソク足の<strong>下の別枠</strong>に表示されます。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>構成要素</th>
+          <th>計算（一般的な設定）</th>
+          <th>意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MACD線</td>
+          <td>短期EMA（12）− 長期EMA（26）</td>
+          <td>短期と長期の移動平均の差。トレンドの方向と勢いを示す</td>
+        </tr>
+        <tr>
+          <td>シグナル線</td>
+          <td>MACD線の移動平均（9）</td>
+          <td>MACD線をならした線。売買サインの基準になる</td>
+        </tr>
+        <tr>
+          <td>ヒストグラム</td>
+          <td>MACD線 − シグナル線</td>
+          <td>2本の線の差を棒グラフ化。勢いの変化を視覚化する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>一般的な期間設定は<strong>「短期12・長期26・シグナル9」</strong>で、多くのチャートツールでこれが初期値になっています。MACD線がプラス圏（0より上）なら短期EMAが長期EMAを上回る＝上昇基調、マイナス圏なら下降基調と読みます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 410" role="img" aria-labelledby="macd-structure-title">
+        <title id="macd-structure-title">MACDの構成図。上に価格、下にMACD線・シグナル線・ヒストグラム・0ライン</title>
+        <!-- 価格パネル -->
+        <text class="s-panel-label" x="40" y="24">価格（ローソク足）</text>
+        <polyline class="s-price" points="40,130 110,108 180,86 250,76 310,82 380,100 450,120 520,128 600,122"/>
+        <!-- 区切り -->
+        <line x1="40" y1="190" x2="600" y2="190" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="210">MACD（価格の下に別枠で表示）</text>
+        <!-- 0ライン -->
+        <line class="s-zero" x1="40" y1="290" x2="600" y2="290"/>
+        <text class="s-label-sm" x="28" y="294" text-anchor="end">0</text>
+        <!-- ヒストグラム -->
+        <rect class="s-hist-down" x="50" y="290" width="20" height="9"/>
+        <rect class="s-hist-down" x="92" y="290" width="20" height="4"/>
+        <rect class="s-hist-up" x="134" y="285" width="20" height="5"/>
+        <rect class="s-hist-up" x="176" y="277" width="20" height="13"/>
+        <rect class="s-hist-up" x="218" y="269" width="20" height="21"/>
+        <rect class="s-hist-up" x="260" y="264" width="20" height="26"/>
+        <rect class="s-hist-up" x="302" y="269" width="20" height="21"/>
+        <rect class="s-hist-up" x="344" y="277" width="20" height="13"/>
+        <rect class="s-hist-up" x="386" y="285" width="20" height="5"/>
+        <rect class="s-hist-down" x="428" y="290" width="20" height="4"/>
+        <rect class="s-hist-down" x="470" y="290" width="20" height="12"/>
+        <rect class="s-hist-down" x="512" y="290" width="20" height="18"/>
+        <rect class="s-hist-down" x="554" y="290" width="20" height="12"/>
+        <!-- シグナル線 -->
+        <polyline class="s-signal" points="40,312 100,306 144,298 186,286 228,274 270,264 312,258 354,262 396,278 438,294 480,304 522,310 600,309"/>
+        <!-- MACD線 -->
+        <polyline class="s-macd" points="40,308 100,298 144,286 186,270 228,254 270,248 312,254 354,268 396,284 438,296 480,306 522,310 600,306"/>
+        <!-- 凡例 -->
+        <g transform="translate(48,392)">
+          <line class="s-macd" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">MACD線</text>
+          <line class="s-signal" x1="120" y1="0" x2="146" y2="0"/><text class="s-legend" x="152" y="5">シグナル線</text>
+          <rect class="s-hist-up" x="270" y="-7" width="18" height="14"/><text class="s-legend" x="294" y="5">ヒストグラム（差）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ MACD の構成。価格の下の別枠に、MACD線（青）・シグナル線（橙）・ヒストグラム（緑/赤の棒＝2本の線の差）・0ラインが表示される。ヒストグラムが0ラインの上で伸びるほど上向きの勢いが強い。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ゴールデンクロス・デッドクロス</h2>
+    <p>MACD で最も基本的な売買サインが、<strong>MACD線とシグナル線のクロス</strong>です。移動平均線のゴールデンクロス・デッドクロスと同じ考え方ですが、MACD のほうが<strong>早めにサインが点灯しやすい</strong>とされています。</p>
+    <ul>
+      <li><strong>ゴールデンクロス（GC）</strong>：MACD線がシグナル線を<strong>下から上に抜ける</strong>。上昇への勢いが出てきたサインとして、買いの目安にされることが多い。</li>
+      <li><strong>デッドクロス（DC）</strong>：MACD線がシグナル線を<strong>上から下に抜ける</strong>。下降への勢いが出てきたサインとして、売り・手仕舞いの目安にされることが多い。</li>
+    </ul>
+    <p>このクロスは、ヒストグラムで見ると分かりやすくなります。ヒストグラムは「MACD線 − シグナル線」なので、<strong>クロスの瞬間にヒストグラムはちょうど0</strong>になり、プラス（緑）とマイナス（赤）が入れ替わります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="macd-cross-title">
+        <title id="macd-cross-title">MACDのゴールデンクロスとデッドクロスの拡大図</title>
+        <!-- 0ライン -->
+        <line class="s-zero" x1="40" y1="150" x2="600" y2="150"/>
+        <text class="s-label-sm" x="28" y="154" text-anchor="end">0</text>
+        <!-- ヒストグラム -->
+        <rect class="s-hist-down" x="60" y="150" width="20" height="8"/>
+        <rect class="s-hist-down" x="110" y="150" width="20" height="3"/>
+        <rect class="s-hist-up" x="160" y="144" width="20" height="6"/>
+        <rect class="s-hist-up" x="210" y="134" width="20" height="16"/>
+        <rect class="s-hist-up" x="260" y="126" width="20" height="24"/>
+        <rect class="s-hist-up" x="310" y="126" width="20" height="24"/>
+        <rect class="s-hist-up" x="360" y="134" width="20" height="16"/>
+        <rect class="s-hist-up" x="410" y="145" width="20" height="5"/>
+        <rect class="s-hist-down" x="460" y="150" width="20" height="6"/>
+        <rect class="s-hist-down" x="510" y="150" width="20" height="14"/>
+        <rect class="s-hist-down" x="560" y="150" width="20" height="12"/>
+        <!-- シグナル線 -->
+        <polyline class="s-signal" points="40,205 130,185 210,160 280,138 350,128 420,135 490,158 560,178 600,184"/>
+        <!-- MACD線 -->
+        <polyline class="s-macd" points="40,200 130,170 200,150 270,120 330,110 400,125 470,150 540,175 600,185"/>
+        <!-- マーカー -->
+        <circle class="s-gc" cx="198" cy="150" r="14"/><text class="s-gc-txt" x="198" y="154">GC</text>
+        <circle class="s-dc" cx="474" cy="152" r="14"/><text class="s-dc-txt" x="474" y="156">DC</text>
+        <text class="s-gc-txt" x="198" y="184" style="font-size:11px">買いサイン</text>
+        <text class="s-dc-txt" x="474" y="186" style="font-size:11px">売りサイン</text>
+        <!-- 凡例 -->
+        <g transform="translate(48,264)">
+          <line class="s-macd" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">MACD線</text>
+          <line class="s-signal" x1="120" y1="0" x2="146" y2="0"/><text class="s-legend" x="152" y="5">シグナル線</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ MACD線（青）がシグナル線（橙）を<strong>下から上に抜く＝ゴールデンクロス（買いサイン）</strong>、<strong>上から下に抜く＝デッドクロス（売りサイン）</strong>。クロスの瞬間にヒストグラムは0になり、緑↔赤が反転する。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 0ライン（ゼロライン）の見方</h2>
+    <p>MACD のもう一つの重要な目安が<strong>「0ライン」</strong>です。MACD線が0より上か下かは、<strong>短期EMA（12）と長期EMA（26）のどちらが上にあるか</strong>を表しています。</p>
+    <ul>
+      <li><strong>MACD線が0より上</strong>：短期EMAが長期EMAを上回っている＝<strong>上昇基調</strong>。</li>
+      <li><strong>MACD線が0より下</strong>：短期EMAが長期EMAを下回っている＝<strong>下降基調</strong>。</li>
+      <li><strong>MACD線が0ラインを上抜く</strong>：本格的な上昇トレンドへの移行を示すサインとして意識されることがある。</li>
+    </ul>
+    <p>実践では、<strong>「0ラインより上でのゴールデンクロス」</strong>は上昇トレンド中の押し目シグナルとして信頼度が高いと考えられることが多く、逆に0ラインより下でのデッドクロスは下降トレンド中の戻り売りシグナルとして見られることがあります。クロスが<strong>0ラインのどちら側で起きたか</strong>を合わせて見るのがコツとされています。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ ダイバージェンス（逆行現象）</h2>
+    <p>MACD の応用テクニックとして特に有名なのが<strong>「ダイバージェンス（逆行現象）」</strong>です。これは<strong>価格の動きとMACDの動きが逆方向になる</strong>状態を指し、トレンド転換の予兆として注目されます。</p>
+    <ul>
+      <li><strong>弱気のダイバージェンス</strong>：価格は高値を更新しているのに、MACDは高値を切り下げている状態。上昇の勢いが内部で衰えているサインとされ、<strong>天井圏での下落転換</strong>を警戒する材料になる。</li>
+      <li><strong>強気のダイバージェンス</strong>：価格は安値を更新しているのに、MACDは安値を切り上げている状態。下落の勢いが弱まっているサインとされ、<strong>底値圏での上昇転換</strong>を期待する材料になる。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 360" role="img" aria-labelledby="macd-diverge-title">
+        <title id="macd-diverge-title">弱気のダイバージェンスの概念図。価格は高値更新だがMACDは高値切り下げ</title>
+        <!-- 価格パネル -->
+        <text class="s-panel-label" x="40" y="24">価格</text>
+        <polyline class="s-price" points="40,140 110,80 180,130 250,60 320,108 400,145 480,158 600,160"/>
+        <!-- 価格の高値を結ぶ（上昇） -->
+        <line class="s-divline" x1="110" y1="78" x2="250" y2="58"/>
+        <text class="s-label-sm" x="150" y="52" fill="#cf222e">価格は高値更新 ↗</text>
+        <!-- 区切り -->
+        <line x1="40" y1="195" x2="600" y2="195" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="216">MACD</text>
+        <line class="s-zero" x1="40" y1="300" x2="600" y2="300"/>
+        <text class="s-label-sm" x="28" y="304" text-anchor="end">0</text>
+        <!-- MACD線 -->
+        <polyline class="s-macd" points="40,300 110,244 180,278 250,258 320,284 400,296 480,302 600,300"/>
+        <!-- MACDの高値を結ぶ（下降＝切り下げ） -->
+        <line class="s-divline" x1="110" y1="242" x2="250" y2="256"/>
+        <text class="s-label-sm" x="150" y="232" fill="#cf222e">MACDは高値切り下げ ↘</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 弱気のダイバージェンスの例。価格は2つ目の山で高値を更新しているのに、MACDの山は切り下がっている。上昇の勢いが衰えているサインとされ、トレンド転換の警戒材料として使われる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      ダイバージェンスは「転換の予兆」として有名ですが、<strong>発生してもすぐに転換するとは限りません</strong>。強いトレンドではダイバージェンスが何度も発生しながら価格が伸び続けることもあります。あくまで「勢いの衰えに気づくための注意サイン」として捉え、実際の転換は価格の動きやクロスで確認するのが安全とされています。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ MACDの長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：トレンドと勢いを同時に・早めに捉える</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>トレンドの方向と勢いが一目で分かる</strong>：線の位置（0ラインとの関係）で方向、ヒストグラムで勢いの変化を確認できる。</li>
+        <li><strong>移動平均線より反応が早い</strong>：EMAベースのため、単純な移動平均線のクロスより早めにサインが出やすい。</li>
+        <li><strong>ダイバージェンスで転換を察知できる</strong>：価格だけを見ていては気づきにくい「勢いの衰え」を捉えられる。</li>
+        <li><strong>あらゆる市場・時間軸で使える</strong>：株・FX・商品・暗号資産、日足から分足まで広く使われている。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：レンジ相場に弱く、遅行性もある</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>レンジ相場でダマシが多い</strong>：横ばいの相場では2本の線がもつれ合い、クロスが頻発して機能しにくい。MACD最大の弱点とされる。</li>
+        <li><strong>移動平均ベースゆえの遅行性</strong>：早めとはいえ、急激な相場の転換には追いつけないことがある。</li>
+        <li><strong>絶対水準の比較に向かない</strong>：MACDの値は価格水準に依存するため、異なる銘柄間で数値を単純比較できない。</li>
+        <li><strong>設定で見え方が変わる</strong>：期間設定（12・26・9）を変えると感度が変わり、「唯一の正解」はない。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① まずは「クロス」と「0ラインとの位置」から</h3>
+    <p>最初はヒストグラムやダイバージェンスまで欲張らず、<strong>ゴールデンクロス・デッドクロスと、それが0ラインのどちら側で起きたか</strong>を見るところから始めるのが分かりやすいとされています。「0ラインより上でのGC」「0ラインより下でのDC」はトレンドに沿ったサインとして信頼度が高いと考えられることが多いです。</p>
+
+    <h3>② レンジ相場では使わない・過信しない</h3>
+    <p>MACD は<strong>トレンドがある相場でこそ機能する</strong>指標です。価格が横ばいでMACDの2本の線が0ライン付近でもつれているときは、サインがダマシになりやすいので、いったん見送る判断も大切とされています。「今がトレンドかレンジか」を見極めてからMACDを使うのが実践的です。</p>
+
+    <h3>③ 単独で使わず複数の根拠を組み合わせる</h3>
+    <p>MACD も万能ではありません。<a href="guide-moving-average.html">移動平均線</a>でトレンドの大枠を確認し、RSIで買われすぎ・売られすぎを見て、出来高も合わせて確認する——といったように、<strong>複数の指標が同じ方向を示しているか</strong>で判断の信頼性が高まると一般的に考えられています。</p>
+
+    <h3>④ 時間軸を揃えて確認する</h3>
+    <p>日足でゴールデンクロスが出ていても、週足では下降トレンドの途中ということもあります。<strong>大きな時間軸のトレンドを確認してから小さな時間軸のサインを見る</strong>習慣をつけると、ダマシに引っかかりにくくなるとされています。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、複数の指標を組み合わせた複合シグナルで動作しており、<strong>MACD はその構成要素の一つとして実際に使用しています</strong>。MACD線とシグナル線のクロスや、ヒストグラムの傾きの変化を、トレンドと勢いを判断する材料として参照しています。</p>
+    <p>ただし本文で述べた通り、MACD は<strong>レンジ相場でダマシが多く、単独では信頼性が不十分</strong>です。そのため当サイトのシステムでは、移動平均線・RSI・ボリンジャーバンド・高値安値ブレイクなどの他のシグナルや、短期・中期・長期足の方向性の整合、出来高の状況などを組み合わせた上で、総合的に判断する仕組みになっています。MACD はあくまでその複数の根拠のうちの「一つ」として機能させています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">MACD を含む複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>MACD について学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>MACD は<strong>移動平均（EMA）を応用したトレンド系指標</strong>で、ジェラルド・アペルが考案。</li>
+      <li>構成は<strong>MACD線（短期EMA−長期EMA）・シグナル線（MACDの平均）・ヒストグラム（両者の差）</strong>の3つ。標準設定は12・26・9。</li>
+      <li>基本サインは<strong>ゴールデンクロス（買い）・デッドクロス（売り）</strong>。移動平均線のクロスより早めに出やすい。</li>
+      <li><strong>0ライン</strong>との位置関係でトレンドの方向を確認。クロスがどちら側で起きたかも重要。</li>
+      <li><strong>ダイバージェンス</strong>（価格とMACDの逆行）はトレンド転換の予兆として注目されるが、すぐ転換するとは限らない。</li>
+      <li>長所は「トレンドと勢いを早めに捉える」こと。弱点は「<strong>レンジ相場でのダマシ</strong>」と「遅行性」。</li>
+      <li>実践では<strong>単独でなく複数指標・複数時間軸との組み合わせ</strong>で使うのが基本とされる。</li>
+    </ul>
+
+    <p>MACD は、移動平均線の次に学ぶテクニカル指標として非常に人気があり、「トレンドの方向」と「勢いの変化」を1つで確認できる便利な道具です。まずはチャートにMACDを表示して、クロスと0ラインの動きを日々眺めるところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">MACD の土台となる移動平均線（SMA・EMA）・ゴールデンクロス・グランビルの法則を初心者向けに解説。</div>
+      </a>
+      <a class="related-card" href="guide-ichimoku.html">
+        <div class="related-card-title">☁️ 一目均衡表の見方</div>
+        <div class="related-card-desc">日本発の総合指標。雲・三役好転・5本の線をやさしく解説。テクニカル分析シリーズ。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">MACD を含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は MACD の仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
