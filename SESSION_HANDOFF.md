@@ -11,6 +11,14 @@
 - → **`market-news-config.json`（拡張子1つ）で復元**。sync_to_github / mw.py は両名を見るので動作OK（sync成功確認済み）。**今後の設定ファイルは `market-news-config.json`**。
 - 🔐 ✅ **済（2026-06-02）**：原因不明で消えたため **GitHub PAT を失効＋新規発行**。旧トークン `cowork-marketwatch`（...0JYwwj）を delete（→401確認）し、新 `cowork-marketwatch-2`（repo＋workflow scope・期限2026-08-31）を発行→ `market-news-config.json` の `github_token` を差し替え。`GET /user` 200＋`mw status` 疎通確認済。設定ファイルは SYNC_FILES・.gitignore 双方で除外済（GitHubへ漏れない）。
 
+### 🔬 シグナル勝てる組み合わせ調査（ultracode、2026-06-02）← 明日の続き候補
+- signals-log.json（**ライブ=GitHub側に346件・決済済み278件**。ローカルは空なので raw.githubusercontent から取得）を分析。再利用ツール `analyze_signal_edges.py`（ローカル・未SYNC）＋出力 `signal_edges_stats.json`。
+- **結論：13日分・単一レジームの薄いデータでは「robustな勝ちエッジ」はゼロ**。全体は勝率38.8%/−0.094R（弱い）。
+- **有望（採用でなく前向き検証行き）**：`macd_dead × MACD>0(0ライン上)のショート` n=38/60.5%/+0.412R（唯一stable）。`押し目買い(価格<MA25&MA75のロング)` n=79/48.1%/+0.122R。
+- **避けるべき負けエッジ（確度高い）**：`ma_goldenロング` n=25/12%/−0.72R、`飛びつき買い(価格>両MA)` n=89/30.3%/−0.292R、`macd_dead×MACD<0` 20%/−0.533R、`GC=F金` 22.6%/−0.473R。
+- **⚠️ 要修正の重大バグ（方法論監査が発見）**：①**TP2スコアリング**＝outcome に 'tp2' が0件で、本当はTP2(2.0R)到達の勝ち26/108件が+1.33Rで過小計上→期待値が系統的に過小。`analyze_signal_edges.py` と `generate_technical_alerts.py` のTP2判定を直すのが先決。②多重比較62セル（stable=trueは62回中1回＝偽陽性の可能性）。③打ち切りバイアス＋13日のみ＝過去≠未来が強い。
+- **明日の選択肢**：A=TP2バグ修正→再分析 / B=B2信頼度の微調整実装（macd_dead上0ライン+1・下−2／押し目+1・飛びつき−2／ma_goldenロングLOW降格）をA/B検証で仕込む / C=記録継続でデータ蓄積（1〜2か月） / D=テクニカル第4弾(RSI)記事。推奨はA→B、ただしデータ薄いのでCも妥当。SIGNAL_REDESIGN Phase2 と直結。
+
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
