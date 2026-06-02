@@ -1,6 +1,40 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-01）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-02）
 
-新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md` を読めば文脈を復元できます。
+新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
+
+---
+
+## 🆕 2026-06-02 セッションの続き（最新・まずここを読む）
+
+### ⚠️ 最重要：設定ファイルの状態（事故対応済み）
+- セッション中に `market-news-config.json.json`（GitHubトークン入り）が**フォルダから消失**（原因不明・OneDrive疑い）。`.json.json` パスは**書込みもアクセス拒否**（ロック/ゴースト化）。
+- → **`market-news-config.json`（拡張子1つ）で復元**。sync_to_github / mw.py は両名を見るので動作OK（sync成功確認済み）。**今後の設定ファイルは `market-news-config.json`**。
+- 🔐 推奨：原因不明で消えたので、**GitHub PAT を失効＋新規発行（repo＋workflow scope）→ `market-news-config.json` の `github_token` を差し替え**が安全。
+
+### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
+- guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
+- **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
+- **🎯 次セッション：シリーズを継続して量産**（第2弾以降：MACD／RSI／ボリンジャーバンド／フィボナッチ（実装済み fib_pullback と連携）／エリオット波動／一目均衡表／出来高 …）。狙い＝**エバーグリーン×高検索需要×低コンプラ＝SEO・AdSense両方に効く**。**内部リンクで束ねてトピック権威性**を作る。「薄い量産はNG・質が命」。
+- 量産手順：WebSearchで事実確認 → content-writer（本文HTML）＋seo-ux（title/meta/JSON-LD）を並列起動（`.claude/agents/*.md` を Read→general-purpose に inline、model sonnet）→ compliance-reviewer（opus）監査 → `python mw.py publish --file … --category テクニカル分析 --emoji … --card-title … --desc …` または content-writer が②④⑤実行→sync→workflow。
+
+### 💰 AdSense 審査突破（基盤収益・進行中）
+- **不承認理由＝「有用性の低いコンテンツ」**（自動データページ中心で独自価値が薄いと判断）。ads.txt は「不明」だった。
+- **実施済（6/1〜6/2）**：①`ads.txt` 設置（pub-2552122294306014・ライブ）②about.html **E-E-A-T強化** ③薄い自動ページ noindex ④トップに「📚 注目の解説記事」前面化 ⑤質の高い独自記事の量産開始（MA記事）。
+- **次（ユーザー操作）**：コンソールで**お支払い情報追加＋サイトをリンク → 数日後に再審査リクエスト**。質の高いシリーズ記事が増えるほど有利。
+
+### 🗺️ 年商1000万ロードマップ（`ROADMAP_10M.md`＝戦略の単一ソース・月初見直し）
+- ゴール月商83万＝3本柱（AdSense×アフィリ×note）。**最大レバー＝証券/FX口座アフィリ（弁護士相談クリアが前提）**。
+- **現状＝プレ収益・低トラフィック**（A8: 月1,200インプレ・成約0／AdSense未承認＝実質¥0）。当面の二大レバー＝**P1（記事量産でPV成長）＋P0（弁護士で金融アフィリ解禁）**。
+
+### 🎣 シグナル新機能：ファンダ整合フィボ押し目（メールON・6/2実装）
+- `fib_pullback_long/short`：fundamental-context が BULLISH/BEARISH（確信度HIGH/MID）× **ゴールデンポケット50-61.8%押し**で発火。両方向・モメンタムフィルタbypass・対象8資産。詳細 `memory/04_technical_rules.md`。発火件数と実勝率を signals-log で監視。
+
+### 🔧 その他（6/2）
+- ナビ崩れ修正：`generate_monthly_report.py`/`auto_weekly_review.py`/`auto_indicator_preview.py` を9ボタンに統一＋リンターにナビ整合チェック追加。
+- **routine 計8本**（fundamental-briefing / weekly-zone-plan / article-idea-scout / daily-market-preview / political-digest / compliance-patrol / weekly-strategy-brief / site-qa-lint）。
+
+### ⏰ 時間依存
+- **6/7(日)**：weekly-strategy-brief 初回サイクル（17:00 levels→18:30 routine 3人＋検証→20:13 描画）で、6/8週の「今週の投資戦略」記事に **verified シナリオ**が載るかライブ確認（`mw status weekly-strategy.yml`）。
 
 ---
 
