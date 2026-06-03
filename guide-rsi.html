@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSIとは？見方・買われすぎ売られすぎ・ダイバージェンスを初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="RSI（相対力指数）の計算式と仕組み、70/30の買われすぎ・売られすぎ、50ライン、ダイバージェンス（逆行現象）、トレンド相場での張り付きの注意点まで、代表的なオシレーター系テクニカル指標を初心者向けに図解でわかりやすく解説。">
+  <meta name="keywords" content="RSI,相対力指数,オシレーター,買われすぎ,売られすぎ,ダイバージェンス,70,30,逆行現象,テクニカル分析,ワイルダー,株式投資,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-rsi.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RSIとは？見方・買われすぎ売られすぎ・ダイバージェンスを初心者向けに徹底解説">
+  <meta property="og:description" content="RSI（相対力指数）の計算式・70/30の買われすぎ売られすぎ・ダイバージェンスを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-rsi.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RSIとは？見方・買われすぎ売られすぎ・ダイバージェンスを初心者向けに徹底解説",
+    "description": "RSI（相対力指数）の計算式と仕組み、70/30の買われすぎ・売られすぎ、50ライン、ダイバージェンス（逆行現象）まで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-03",
+    "dateModified": "2026-06-03",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-rsi.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#8c959f;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-rsi{stroke:#1f6feb;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-zero{stroke:#6e7781;stroke-width:1.3;stroke-dasharray:5 4}
+    .s-ob-zone{fill:#ffebe9}
+    .s-os-zone{fill:#e6ffed}
+    .s-ob-line{stroke:#cf222e;stroke-width:1.4;stroke-dasharray:5 4}
+    .s-os-line{stroke:#2da44e;stroke-width:1.4;stroke-dasharray:5 4}
+    .s-ob-mark{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-os-mark{fill:#ffffff;stroke:#2da44e;stroke-width:2.5}
+    .s-ob-txt{fill:#cf222e;font-size:11px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-os-txt{fill:#1a7f37;font-size:11px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-divline{stroke:#cf222e;stroke-width:1.8;stroke-dasharray:6 4;fill:none}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#6e7781}
+    body.dark .s-rsi{stroke:#58a6ff}
+    body.dark .s-zero{stroke:#8b949e}
+    body.dark .s-ob-zone{fill:#2a1010}
+    body.dark .s-os-zone{fill:#162416}
+    body.dark .s-ob-line{stroke:#f85149}
+    body.dark .s-os-line{stroke:#3fb950}
+    body.dark .s-ob-mark{fill:#161b22;stroke:#f85149}
+    body.dark .s-os-mark{fill:#161b22;stroke:#3fb950}
+    body.dark .s-ob-txt{fill:#ff8080}
+    body.dark .s-os-txt{fill:#7ee787}
+    body.dark .s-divline{stroke:#ff7b72}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; RSIとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は RSI の仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 RSIとは？見方・買われすぎ売られすぎ・ダイバージェンスを初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 3 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>テクニカル指標の中でも、初心者がまず触れることの多い人気指標が <strong>RSI（アールエスアイ）</strong> です。チャートの下に表示される 0〜100 を行き来する1本の曲線——これは「相場が買われすぎか・売られすぎか」を数値で教えてくれる、代表的な<strong>オシレーター系</strong>の指標です。</p>
+    <p>この記事では、RSI の計算式と仕組みから、有名な「70・30」の買われすぎ・売られすぎライン、50ライン、トレンド転換を察知する「ダイバージェンス」、そして初心者がハマりやすい落とし穴まで、図解を交えてやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>RSI は<strong>「値上がりの勢い」と「値下がりの勢い」の比率を 0〜100 で表す</strong>オシレーター系指標。一般に <strong>70 以上で買われすぎ・30 以下で売られすぎ</strong>と見られる。</li>
+      <li>ただし買われすぎ＝即下落ではない。<strong>強いトレンドでは RSI が 70 や 30 に張り付いたまま動き続ける</strong>ことがあり、逆張りの根拠だけにするのは危険とされる。</li>
+      <li>価格と RSI が逆行する<strong>「ダイバージェンス」はトレンド転換の予兆</strong>として注目されるが、単独利用は禁物。複数の指標・時間軸と組み合わせるのが基本とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">RSIとは何か（概要と歴史）</a></li>
+        <li><a href="#section-2">計算式と仕組み（0〜100の意味）</a></li>
+        <li><a href="#section-3">買われすぎ・売られすぎ（70・30）</a></li>
+        <li><a href="#section-4">50ライン（センターライン）の見方</a></li>
+        <li><a href="#section-5">ダイバージェンス（逆行現象）</a></li>
+        <li><a href="#section-6">RSIの長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ RSIとは何か（概要と歴史）</h2>
+    <p><strong>RSI</strong>は「<strong>Relative Strength Index</strong>（相対力指数）」の略です。1978年に米国のテクニカルアナリスト<strong>J・ウェルズ・ワイルダー（J. Welles Wilder Jr.）</strong>が著書『ニュー・コンセプト・イン・テクニカル・トレーディング・システムズ』で発表した、モメンタム（勢い）系のオシレーター指標とされています。</p>
+    <p>RSI が測っているのは、ある期間における<strong>「値上がりの勢い」と「値下がりの勢い」のバランス</strong>です。値上がりの勢いが強ければ RSI は 100 に近づき、値下がりの勢いが強ければ 0 に近づきます。これにより、価格そのものではなく<strong>「相場の過熱感」</strong>を 0〜100 の数値で読み取ろうとするのが特徴です。</p>
+
+    <div class="info-box">
+      <strong>💡 オシレーターとは</strong>：一定の範囲（RSI なら 0〜100）を行ったり来たり（振動）する指標のこと。「買われすぎ・売られすぎ」という相場の過熱感を測るのが得意で、<a href="guide-macd.html">MACD</a> がトレンドの方向を見るのに対し、RSI は<strong>勢いの強弱・行きすぎ</strong>を見るのに向いているとされます。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 計算式と仕組み（0〜100の意味）</h2>
+    <p>RSI は次の式で計算されます。少し複雑に見えますが、考え方はシンプルです。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>計算（一般的な設定）</th>
+          <th>意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RS（相対力）</td>
+          <td>一定期間の平均上昇幅 ÷ 平均下落幅</td>
+          <td>値上がりの勢いが値下がりの勢いの何倍かを表す</td>
+        </tr>
+        <tr>
+          <td>RSI</td>
+          <td>100 − ( 100 ÷ ( 1 + RS ) )</td>
+          <td>RS を 0〜100 の範囲に変換した値</td>
+        </tr>
+        <tr>
+          <td>期間</td>
+          <td>一般的に <code>14</code>（日足なら14日）</td>
+          <td>ワイルダーが推奨した標準設定。短くすると敏感に</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>ポイントは <strong>RS（平均上昇幅 ÷ 平均下落幅）</strong>です。期間中の上昇が下落より大きいほど RS は大きくなり、RSI は高くなります。極端な例で考えると分かりやすく、<strong>期間中ずっと上昇だけ</strong>なら RSI は 100 に、<strong>ずっと下落だけ</strong>なら 0 に近づきます。多くのチャートツールでは期間設定の初期値が「14」になっています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="rsi-structure-title">
+        <title id="rsi-structure-title">RSIの構成図。上に価格、下に0〜100を行き来するRSIと70・50・30ライン</title>
+        <!-- 価格パネル -->
+        <text class="s-panel-label" x="40" y="24">価格（ローソク足）</text>
+        <polyline class="s-price" points="40,120 110,95 180,72 250,62 320,95 390,130 460,150 530,135 600,118"/>
+        <!-- 区切り -->
+        <line x1="40" y1="185" x2="600" y2="185" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="205">RSI（0〜100・価格の下に別枠で表示）</text>
+        <!-- 買われすぎゾーン 70-100 -->
+        <rect class="s-ob-zone" x="40" y="215" width="560" height="42"/>
+        <!-- 売られすぎゾーン 0-30 -->
+        <rect class="s-os-zone" x="40" y="313" width="560" height="42"/>
+        <!-- 70/50/30ライン -->
+        <line class="s-ob-line" x1="40" y1="257" x2="600" y2="257"/>
+        <text class="s-label-sm" x="28" y="261" text-anchor="end">70</text>
+        <line class="s-zero" x1="40" y1="285" x2="600" y2="285"/>
+        <text class="s-label-sm" x="28" y="289" text-anchor="end">50</text>
+        <line class="s-os-line" x1="40" y1="313" x2="600" y2="313"/>
+        <text class="s-label-sm" x="28" y="317" text-anchor="end">30</text>
+        <!-- RSI線 -->
+        <polyline class="s-rsi" points="40,288 110,271 180,254 250,246 320,271 390,299 460,319 530,296 600,278"/>
+        <!-- ゾーンラベル -->
+        <text class="s-ob-txt" x="560" y="232" text-anchor="end">買われすぎ圏</text>
+        <text class="s-os-txt" x="560" y="349" text-anchor="end">売られすぎ圏</text>
+        <!-- 凡例 -->
+        <g transform="translate(48,402)">
+          <line class="s-price" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">価格</text>
+          <line class="s-rsi" x1="100" y1="0" x2="126" y2="0"/><text class="s-legend" x="132" y="5">RSI</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ RSI の構成。価格の下の別枠に、0〜100 を行き来する RSI（青）が表示される。価格が上昇して過熱すると RSI は 70 の買われすぎ圏（赤帯）へ、下落して売られすぎると 30 の売られすぎ圏（緑帯）へ入る。真ん中の 50 が強弱の分かれ目。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 買われすぎ・売られすぎ（70・30）</h2>
+    <p>RSI の最も基本的な使い方が、<strong>70 と 30 のライン</strong>で相場の過熱感を判断することです。考案者のワイルダーは、RSI が 70 を超えると天井圏、30 を下回ると底値圏のサインになりやすいと述べたとされています。</p>
+    <ul>
+      <li><strong>RSI 70 以上＝買われすぎ</strong>：短期的に買われすぎており、価格が反落しやすい状態とされる。</li>
+      <li><strong>RSI 30 以下＝売られすぎ</strong>：短期的に売られすぎており、価格が反発しやすい状態とされる。</li>
+      <li><strong>30〜70＝中立</strong>：明確な過熱感がなく、トレンドの中で推移している状態。</li>
+    </ul>
+    <p>より慎重に見る場合は <strong>「80・20」</strong>を基準にすることもあります。基準を厳しくするほどサインの回数は減りますが、より行きすぎた水準だけを拾うことになります。どの基準が「正解」というものはなく、銘柄や時間軸の値動きの大きさに合わせて使い分けるのが一般的とされています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="rsi-zone-title">
+        <title id="rsi-zone-title">RSIが買われすぎ圏から反落・売られすぎ圏から反発する概念図</title>
+        <!-- 買われすぎゾーン 70-100 -->
+        <rect class="s-ob-zone" x="40" y="40" width="560" height="60"/>
+        <!-- 売られすぎゾーン 0-30 -->
+        <rect class="s-os-zone" x="40" y="180" width="560" height="60"/>
+        <!-- 70/50/30ライン -->
+        <line class="s-ob-line" x1="40" y1="100" x2="600" y2="100"/>
+        <text class="s-label-sm" x="28" y="104" text-anchor="end">70</text>
+        <line class="s-zero" x1="40" y1="140" x2="600" y2="140"/>
+        <text class="s-label-sm" x="28" y="144" text-anchor="end">50</text>
+        <line class="s-os-line" x1="40" y1="180" x2="600" y2="180"/>
+        <text class="s-label-sm" x="28" y="184" text-anchor="end">30</text>
+        <!-- RSI線 -->
+        <polyline class="s-rsi" points="40,150 110,120 180,92 240,80 300,110 370,150 440,185 500,195 560,160 600,140"/>
+        <!-- マーカー -->
+        <circle class="s-ob-mark" cx="240" cy="80" r="13"/>
+        <circle class="s-os-mark" cx="500" cy="195" r="13"/>
+        <text class="s-ob-txt" x="240" y="64">買われすぎ→反落に注意</text>
+        <text class="s-os-txt" x="500" y="224">売られすぎ→反発に注意</text>
+      </svg>
+      <figcaption class="chart-caption">▲ RSI が 70 を超えて買われすぎ圏（赤帯）に入った後に反落、30 を割って売られすぎ圏（緑帯）に入った後に反発するイメージ。あくまで「行きすぎへの注意サイン」であり、サインが出てすぐ反転するとは限らない点に注意。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      <strong>「買われすぎ＝すぐ売り」ではありません。</strong>強い上昇トレンドでは RSI が 70 を超えたまま（時には 80〜90 で）張り付き、価格がさらに上がり続けることがよくあります。逆張りでRSI 70だけを根拠に売ると、トレンドに逆らって損失が膨らむ危険があります。これは RSI で初心者が最もハマりやすい落とし穴とされています。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 50ライン（センターライン）の見方</h2>
+    <p>70・30 と並んで意識されるのが、ちょうど真ん中の <strong>「50 ライン」</strong>です。RSI 50 は値上がりの勢いと値下がりの勢いがちょうど釣り合う水準で、<strong>トレンドの強弱を見分ける目安</strong>として使われます。</p>
+    <ul>
+      <li><strong>RSI が 50 より上で推移</strong>：値上がりの勢いが優勢＝<strong>上昇基調</strong>とみなされやすい。</li>
+      <li><strong>RSI が 50 より下で推移</strong>：値下がりの勢いが優勢＝<strong>下降基調</strong>とみなされやすい。</li>
+      <li><strong>RSI が 50 を上抜け／下抜け</strong>：勢いの主役が買い方／売り方に移ったサインとして注目されることがある。</li>
+    </ul>
+    <p>「70/30 で逆張りの過熱感を見る」だけでなく、「50 を境にどちら側で推移しているかで順張りのトレンドを確認する」——この2つの見方を組み合わせると、RSI をより立体的に使えるとされています。トレンド相場では特に、50ラインを基準にする見方が役立つと考えられています。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ ダイバージェンス（逆行現象）</h2>
+    <p>RSI の応用テクニックとして特に有名なのが<strong>「ダイバージェンス（逆行現象）」</strong>です。これは<strong>価格の動きと RSI の動きが逆方向になる</strong>状態を指し、トレンド転換の予兆として注目されます。<a href="guide-macd.html">MACD</a> のダイバージェンスと同じ考え方です。</p>
+    <ul>
+      <li><strong>弱気のダイバージェンス</strong>：価格は高値を更新しているのに、RSI は高値を切り下げている状態。上昇の勢いが内部で衰えているサインとされ、<strong>天井圏での下落転換</strong>を警戒する材料になる。</li>
+      <li><strong>強気のダイバージェンス</strong>：価格は安値を更新しているのに、RSI は安値を切り上げている状態。下落の勢いが弱まっているサインとされ、<strong>底値圏での上昇転換</strong>を期待する材料になる。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 380" role="img" aria-labelledby="rsi-diverge-title">
+        <title id="rsi-diverge-title">弱気のダイバージェンスの概念図。価格は高値更新だがRSIは高値切り下げ</title>
+        <!-- 価格パネル -->
+        <text class="s-panel-label" x="40" y="24">価格</text>
+        <polyline class="s-price" points="40,140 110,80 180,130 250,58 320,110 420,150 540,160 600,158"/>
+        <!-- 価格の高値を結ぶ（上昇） -->
+        <line class="s-divline" x1="110" y1="78" x2="250" y2="56"/>
+        <text class="s-label-sm" x="150" y="48" fill="#cf222e">価格は高値更新 ↗</text>
+        <!-- 区切り -->
+        <line x1="40" y1="195" x2="600" y2="195" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="216">RSI</text>
+        <!-- 買われすぎゾーン -->
+        <rect class="s-ob-zone" x="40" y="232" width="560" height="28"/>
+        <line class="s-ob-line" x1="40" y1="260" x2="600" y2="260"/>
+        <text class="s-label-sm" x="28" y="264" text-anchor="end">70</text>
+        <line class="s-os-line" x1="40" y1="320" x2="600" y2="320"/>
+        <text class="s-label-sm" x="28" y="324" text-anchor="end">30</text>
+        <!-- RSI線 -->
+        <polyline class="s-rsi" points="40,300 110,246 180,290 250,260 320,295 420,310 540,315 600,312"/>
+        <!-- RSIの高値を結ぶ（下降＝切り下げ） -->
+        <line class="s-divline" x1="110" y1="244" x2="250" y2="262"/>
+        <text class="s-label-sm" x="150" y="234" fill="#cf222e">RSIは高値切り下げ ↘</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 弱気のダイバージェンスの例。価格は2つ目の山で高値を更新しているのに、RSI の山は切り下がっている。上昇の勢いが衰えているサインとされ、トレンド転換の警戒材料として使われる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      ダイバージェンスは「転換の予兆」として有名ですが、<strong>発生してもすぐに転換するとは限りません</strong>。強いトレンドではダイバージェンスが何度も発生しながら価格が伸び続けることもあります。あくまで「勢いの衰えに気づくための注意サイン」として捉え、実際の転換は価格の動きや他の指標で確認するのが安全とされています。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ RSIの長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：過熱感が数値で一目で分かる</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>買われすぎ・売られすぎが数値で分かる</strong>：0〜100 の1本の線で相場の過熱感を直感的に把握できる。</li>
+        <li><strong>計算がシンプルで初心者にも分かりやすい</strong>：考え方が「上昇の勢い vs 下落の勢い」と理解しやすい。</li>
+        <li><strong>ダイバージェンスで転換を察知できる</strong>：価格だけを見ていては気づきにくい「勢いの衰え」を捉えられる。</li>
+        <li><strong>あらゆる市場・時間軸で使える</strong>：株・FX・商品・暗号資産、日足から分足まで広く使われている。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：強いトレンドに弱く、ダマシも出る</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>強いトレンドで張り付く</strong>：上昇トレンドでは 70 超え、下降トレンドでは 30 割れのまま推移し、逆張りサインが機能しなくなる。RSI最大の弱点とされる。</li>
+        <li><strong>レンジ相場向きの指標</strong>：もともと一定の範囲を行き来する相場で「行きすぎ」を測るのが得意で、強いトレンドには不向きな面がある。</li>
+        <li><strong>設定で見え方が変わる</strong>：期間（14）を短くすると敏感に・長くすると鈍感になり、「唯一の正解」はない。</li>
+        <li><strong>単独ではダマシが多い</strong>：70/30 をそのまま逆張りの根拠にすると、トレンドに逆らって損失が膨らみやすい。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① 「今がトレンドかレンジか」を先に見る</h3>
+    <p>RSI は<strong>方向感のないレンジ相場で「行きすぎ」を測る</strong>のが得意な指標です。強い上昇・下降トレンドでは 70/30 が張り付いて逆張りが効かなくなるため、まず<a href="guide-moving-average.html">移動平均線</a>などで相場がトレンドかレンジかを確認し、レンジ寄りのときに 70/30 を使う——という順番が実践的とされています。</p>
+
+    <h3>② 「買われすぎ＝即売り」と決めつけない</h3>
+    <p>RSI が 70 を超えてもすぐに価格が下がるとは限りません。トレンドが強いときは 70 を超えたまま上がり続けます。<strong>「過熱しているから注意」までにとどめ、実際の売買は価格の反転やクロスなど別の根拠で確認する</strong>のが安全とされています。</p>
+
+    <h3>③ ダイバージェンスは「予兆」として扱う</h3>
+    <p>価格と RSI の逆行（ダイバージェンス）は転換の有名なサインですが、出てすぐ転換するとは限りません。<strong>「勢いが衰えているかもしれない」という気づき</strong>として使い、実際のエントリーは価格が実際に向きを変えてから検討するのが無難とされています。</p>
+
+    <h3>④ 単独で使わず複数の根拠を組み合わせる</h3>
+    <p>RSI も万能ではありません。<a href="guide-moving-average.html">移動平均線</a>でトレンドの大枠を確認し、<a href="guide-macd.html">MACD</a> で勢いの方向を見て、出来高も合わせて確認する——といったように、<strong>複数の指標が同じ方向を示しているか</strong>で判断の信頼性が高まると一般的に考えられています。時間軸も、大きな足のトレンドを確認してから小さな足のサインを見るとダマシに引っかかりにくいとされています。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、複数の指標を組み合わせた複合シグナルで動作しており、<strong>RSI はその構成要素の一つとして実際に使用しています</strong>。買われすぎ・売られすぎの水準や、RSI の向きの変化を、相場の過熱感と勢いを判断する材料として参照しています。</p>
+    <p>ただし本文で述べた通り、RSI は<strong>強いトレンドで張り付き、単独では逆張りのダマシが多い</strong>指標です。そのため当サイトのシステムでは、移動平均線・MACD・ボリンジャーバンド・高値安値ブレイクなどの他のシグナルや、短期・中期・長期足の方向性の整合、出来高の状況などを組み合わせた上で、総合的に判断する仕組みになっています。RSI はあくまでその複数の根拠のうちの「一つ」として機能させています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">RSI を含む複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>RSI について学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>RSI は<strong>値上がりと値下がりの勢いの比率を 0〜100 で表すオシレーター系指標</strong>で、ワイルダーが1978年に考案。標準期間は14。</li>
+      <li>計算は <strong>RSI ＝ 100 −（100 ÷（1＋RS））、RS ＝ 平均上昇幅 ÷ 平均下落幅</strong>。上昇の勢いが強いほど 100 に近づく。</li>
+      <li>基本は<strong>70 以上で買われすぎ・30 以下で売られすぎ</strong>。慎重に見るなら 80/20 を使うこともある。</li>
+      <li><strong>50 ライン</strong>はトレンドの強弱の分かれ目。上で推移なら上昇基調、下なら下降基調とみなされやすい。</li>
+      <li><strong>ダイバージェンス</strong>（価格と RSI の逆行）はトレンド転換の予兆として注目されるが、すぐ転換するとは限らない。</li>
+      <li>最大の弱点は<strong>強いトレンドでの張り付き</strong>。「買われすぎ＝即売り」と決めつけないことが重要。</li>
+      <li>実践では<strong>単独でなく複数指標・複数時間軸との組み合わせ</strong>で使うのが基本とされる。</li>
+    </ul>
+
+    <p>RSI は、移動平均線・MACD と並んで初心者が最初に学ぶことの多い定番指標です。「相場の過熱感」を数値で教えてくれる便利な道具ですが、強いトレンドでは機能しにくいという弱点も合わせて理解しておくことが大切です。まずはチャートに RSI を表示して、70・50・30 のラインと価格の動きを日々眺めるところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-macd.html">
+        <div class="related-card-title">📊 MACDの見方</div>
+        <div class="related-card-desc">RSI と並ぶ人気指標。MACD線・シグナル線・ヒストグラム・ゴールデンクロス・ダイバージェンスを図解で解説。</div>
+      </a>
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">テクニカル分析の土台。SMA・EMA・ゴールデンクロス・グランビルの法則を初心者向けに解説。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">RSI を含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は RSI の仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
