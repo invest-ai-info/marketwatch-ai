@@ -2248,6 +2248,50 @@ def save_signals_log(log):
         print(f"⚠️ シグナルログ保存失敗: {e}")
 
 
+def compute_sr_runway(position_plan, indicators):
+    """発火時点の recent_high/recent_low（＝そのシグナルの時間足の直近スイング高安＝S/R）と
+    entry/TP1 から、runway（TP到達前に S/R が進路を塞ぐか）と S/R整合（サポ近接ロング/レジ近接
+    ショート）を算出して記録する。
+    ※ 2026-06-03 追加。【記録のみ】＝発火・メール・信頼度には一切使わない。signals-log に蓄積し、
+       blocked（TP前にS/Rが挟まる）取引の実勝率を前向きに検証するためのタグ。
+       過去データ集計では blocked 27.7%/−0.337R vs clear 44.3%/+0.110R（look-ahead無し）。"""
+    if not position_plan:
+        return None
+    try:
+        e = float(position_plan.get("entry"))
+        tp1 = float(position_plan.get("take_profit_1"))
+        atr = float(position_plan.get("atr") or indicators.get("atr") or 0)
+        rh = float(indicators.get("recent_high") or 0)
+        rl = float(indicators.get("recent_low") or 0)
+    except (TypeError, ValueError):
+        return None
+    if e <= 0 or tp1 <= 0 or atr <= 0 or rh <= 0 or rl <= 0:
+        return None
+    d = str(position_plan.get("direction", ""))
+    is_long = ("ロング" in d) or ("買" in d)
+    is_short = ("ショート" in d) or ("売" in d)
+    blocked, block_frac = False, None
+    if is_long and e < rh < tp1:
+        blocked, block_frac = True, round((rh - e) / (tp1 - e), 3)
+    elif is_short and tp1 < rl < e:
+        blocked, block_frac = True, round((e - rl) / (e - tp1), 3)
+    d_sup_atr = round((e - rl) / atr, 3) if rl < e else None  # entry→直近安値(サポ)距離 ATR
+    d_res_atr = round((rh - e) / atr, 3) if rh > e else None  # 直近高値(レジ)→entry距離 ATR
+    if is_long:
+        aligned = d_sup_atr is not None and 0 <= d_sup_atr <= 1.0
+    elif is_short:
+        aligned = d_res_atr is not None and 0 <= d_res_atr <= 1.0
+    else:
+        aligned = None
+    return {
+        "blocked": blocked,        # entry→TP1 の間に直近S/Rが挟まる（runway阻害＝過去集計で不利）
+        "block_frac": block_frac,  # 阻害位置（0=entry,1=TP1）。小さいほど早く塞ぐ＝より不利
+        "aligned": aligned,        # サポ近接ロング/レジ近接ショート（≤1ATR）
+        "d_sup_atr": d_sup_atr,
+        "d_res_atr": d_res_atr,
+    }
+
+
 def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
                             news_titles, narrative, fired_at_iso, timeframe="4h"):
     """1 アラート発火を構造化レコードに整形"""
@@ -2297,6 +2341,10 @@ def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_pla
             "ma_dir": indicators.get("ma_dir"),
             "regime": indicators.get("regime"),
         },
+
+        # 🆕 2026-06-03: S/R runway タグ（記録のみ・発火/メール/信頼度は不変）。
+        # TP前にS/Rが挟まる取引(blocked)の実勝率を前向き検証するためのデータ蓄積。
+        "sr_runway": compute_sr_runway(position_plan, indicators),
 
         # ファンダ
         "news_count": len(news_titles or []),
