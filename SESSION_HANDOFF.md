@@ -56,6 +56,16 @@
 - **A＝runwayタグを本番エンジンに【記録のみ】実装・SYNC済（commit 81e1f9e）**：`generate_technical_alerts.py` に `compute_sr_runway(position_plan, indicators)` を追加し、`build_signal_log_entry` のレコードに `"sr_runway"`（blocked / block_frac / aligned / d_sup_atr / d_res_atr）を記録。**発火・メール・信頼度は完全に不変**（build_signal_log_entryはレコード整形専用＝前段に影響なし）。py_compile✅、実304件で blocked=83/aligned=62 と再現一致を検証済。**次回 technical-alerts 実行から新規シグナルに記録され始める**。
 - **次の選択肢**：①数週間 sr_runway を蓄積 → blocked vs clear の**前向き実勝率**を確認（別レジームでの再現＝本採用の前提）。②再現すれば runway阻害を発火フィルタ/信頼度減点へ昇格（B案と統合）。③サポ近接ロング（+0.485R安定）も同様に前向きタグ化を検討。**まだ本採用しない**（13日・単一レジーム・多重比較の限界）。
 
+#### ✅ 2026-06-03：シグナル成績の底上げ＝MFE/MAE分析＋選別tagの記録実装（重要）
+- **問い**：「勝率は低くてOK、大きく取って資産を増やす案は？」→ MFE/MAE分析（`_mfe_analysis.py`、max_favorable/adverse_excursion を R換算）。
+- **判明（やや意外）**：このシグナルは**大相場を取るタイプではない**。MFE中央値0.90R・90%点でも2.37R、**3R以上に伸びたのは4.3%だけ・4R以上0.7%・5R以上ゼロ**。右裾が薄く、「利を伸ばす」改造をしても期待値はほぼ不変（理論上限+0.008R）。正体は**短期の逆張り/平均回帰**で、**レンジregimeで+0.518R・トレンドで+0.17R**（レンジで効きトレンドで削られる）。SL負け183件の大半は一度も伸びず直行（+1R以上含み益だったのは14.8%）。勝ちのMAE中央値0.40R（SL=1.0R）でSLには詰める余地。
+- **結論＝「大きく取る」より「選別＋建値で底上げ」**。`_selection_backtest.py`（look-ahead無しrunway直輸入）で厳密検証：
+  - **veto（飛びつき買い/ma_goldenロング/runway阻害 を除外）**：−0.012R→**+0.224R**・勝率40→49%・**取引は半分(152件)維持**（⚠不安定）。
+  - **keep tier**：`整合∪レンジ`(35%残/+0.425R/✅安定)、**`クリア∩レンジ`=精鋭(13%/勝率70%/+0.833R/✅安定)**。keep系は全て前後半黒字＝信頼度高い。
+  - **建値ストップ(+1R)**：全フィルタに+0.05〜0.08R上乗せの普遍レバー（あげ戻し約15%を救済、上限）。
+- **A＝選別tag `selection` を本番に【記録のみ】実装・SYNC済（commit 36171c3）**：`compute_selection_tier()` 追加、レコードに `selection`（tier=avoid/neutral/good/elite ＋ veto_chasing/veto_ma_golden_long/veto_runway_blocked/aligned/regime）。`sr_runway` と同じく **発火・メール・信頼度は不変**。py_compile✅、実304件で **tier別実Rが avoid −0.248R < neutral −0.093R < good +0.364R < elite +0.758R と完全単調**を確認。次回 technical-alerts から記録開始。
+- **次（前向き検証後に判断）**：tierの順序がライブで再現したら、avoid抑制／good・elite優遇を信頼度スコア or 発火に昇格、建値ストップ実装。**B案＝「大きく取る」本命は別系統**（週足トレンドフォロー/スイング、広SL・トレールrunner、weekly-zone/weekly-strategyインフラに乗せる）として中期テーマ。**まだ本採用しない**（13日・単一レジーム・多重比較）。
+
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
