@@ -31,7 +31,13 @@
 - **SVG概念図3点つき**：①全体像（価格＋0〜100オシレーター＋70/50/30ライン＋買われすぎ赤帯/売られすぎ緑帯）②買われすぎ→反落/売られすぎ→反発マーカー図 ③弱気ダイバージェンス（価格高値更新×RSI高値切り下げ）。**ライト/ダーク両対応をpreviewスクショで実機確認済**。RSI用クラス（.s-rsi/.s-ob-zone/.s-os-zone/.s-ob-line/.s-os-line/.s-ob-mark/.s-os-mark）を`<style>`に追加。
 - section-8は「RSIは複合シグナルの構成要素として実際に使用」と正直に明記（CLAUDE.md実装と整合）。第1弾(MA)↔第3弾(MACD)↔第4弾(RSI)を内部リンクで相互接続、関連カードはMACD/MA/track-record。guides.html「📈チャートの読み方」最上段に掲載（badge-guide「解説」）。
 - 公開フロー：guidesカードのみ手動挿入（publish_article.pyは--categoryをバッジ文字＆位置マッチ兼用のため）→`publish_article.py`でsync_to_github/更新履歴を自動追加→`mw check`✅→sync→`update-market-news.yml`起動(success)→index更新履歴・guides・記事すべてライブHTTP200確認。
-- **🎯 次セッション：シリーズ第5弾以降**（ボリンジャーバンド＝±2σバンド図／フィボナッチ＝実装済fib_pullbackと連携／エリオット波動／出来高 …。各記事にSVG概念図必須）。
+- **🎯 次セッション：シリーズ第6弾以降**（**第5弾「ボリンジャーバンド」は2026-06-03公開済**。次はフィボナッチ＝実装済fib_pullbackと連携／エリオット波動／出来高／ストキャスティクス …。各記事にSVG概念図必須）。
+
+#### ✅ 2026-06-03：テクニカル指標シリーズ 第5弾「ボリンジャーバンド」公開
+- **`guide-bollinger-bands.html`（新規・SYNC済・ライブHTTP200確認）**（約41KB・compliance🟢白「そのまま公開OK」）。中央20SMA＋上下±2σ（標準偏差）の3本・計算・**バンド内に収まる目安（正規分布の仮定で約95%／実際は約9割前後と明確に区別）**・スクイーズ↔エクスパンション（ボラ）・**バンドウォーク（＋2σタッチ＝即売りではない）**・順張り/逆張りの使い分けを網羅。事実はWebSearch照合（John Bollinger・期間20/±2σ・%b）。
+- **SVG概念図3点つき**：①構成図（価格＋±2σバンド塗り＋20SMA点線）②スクイーズ→エクスパンション（収縮帯→緑ブレイク線→拡大・上放れ）③バンドウォーク（右肩上がりバンドに価格が＋2σ張り付き）。**ライト/ダーク両対応をpreviewスクショで実機確認済**。BB用クラス（.s-bbfill/.s-bbband/.s-bbmid/.s-brk/.s-note/.s-note-g）を`<style>`に追加。
+- section-8は「BB（±2σ）は複合シグナルの構成要素として実際に使用」と正直に明記（CLAUDE.md「ボリンジャー±2σ」・signals-logの bb_lower_touch/bb_upper_break と整合）。第1弾(MA)↔第3弾(MACD)↔第4弾(RSI)↔第5弾(BB)を内部リンクで相互接続、関連カードはMA/RSI/track-record。guides.html「📈チャートの読み方」最上段に掲載（badge-guide「解説」）。
+- 公開フロー＝RSIと同一（guidesカードのみ手動挿入→publish_article→mw check✅→sync→update-market-news起動(success)→記事/guides/index更新履歴すべてライブHTTP200確認）。**シリーズ計5本**（MA/一目/MACD/RSI/BB）。
 
 #### ✅ 2026-06-03 昼：サポレジ自動検出を technical-analyst に統合
 - **`detect_sr_levels.py`（新規・SYNC済）**：スイングピボットのクラスタリングで主要S/Rを自動検出（★=タッチ回数=強さ、現値からの距離%、簡易トレンドライン）。ティッカー直接指定で自己完結（例 `python detect_sr_levels.py "GBPJPY=X"`）。`sys.stdout.reconfigure(utf-8)` でBashのcp932でも落ちない。
