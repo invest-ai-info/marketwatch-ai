@@ -2292,6 +2292,49 @@ def compute_sr_runway(position_plan, indicators):
     }
 
 
+def compute_selection_tier(position_plan, indicators, sr, primary_signal):
+    """選別タグ（quality_tier）。【記録のみ】＝発火・メール・信頼度には一切使わない。
+    過去304件の集計に基づく前向き検証用：
+      - avoid（飛びつき買い / ma_goldenロング / runway阻害 のいずれか）を除くと −0.012R→+0.224R（件数は半分維持）
+      - elite（runwayクリア ∩ レンジregime）は +0.833R / 勝率70% / ✅安定
+      - good（サポ整合 or レンジregime）は +0.4R 前後 / ✅安定
+    tier 別の実Rが avoid<neutral<good<elite の順に並ぶかをライブで確認してから、発火/信頼度への昇格を判断する。"""
+    if not position_plan:
+        return None
+    ind = indicators or {}
+    d = str(position_plan.get("direction", ""))
+    is_long = ("ロング" in d) or ("買" in d)
+    try:
+        e = float(position_plan.get("entry") or 0)
+        a25 = float(ind.get("ma25") or 0)
+        a75 = float(ind.get("ma75") or 0)
+    except (TypeError, ValueError):
+        e = a25 = a75 = 0
+    chasing = is_long and e > 0 and a25 > 0 and a75 > 0 and e > a25 and e > a75  # 飛びつき買い
+    ma_golden_long = is_long and str(primary_signal or "").startswith("ma_golden")
+    blocked = bool(sr and sr.get("blocked") is True)
+    clear = bool(sr and sr.get("blocked") is False)
+    aligned = bool(sr and sr.get("aligned") is True)
+    regime = ind.get("regime")
+    range_regime = (regime == "range")
+    if chasing or ma_golden_long or blocked:
+        tier = "avoid"
+    elif clear and range_regime:
+        tier = "elite"
+    elif aligned or range_regime:
+        tier = "good"
+    else:
+        tier = "neutral"
+    return {
+        "tier": tier,                       # avoid / neutral / good / elite（前向き検証用の選別ランク）
+        "veto_chasing": chasing,            # 飛びつき買い（価格>MA25&MA75のロング、過去 −0.29R）
+        "veto_ma_golden_long": ma_golden_long,  # ma_goldenロング（過去 12%/−0.69R）
+        "veto_runway_blocked": blocked,     # runway阻害（過去 −0.337R）
+        "aligned": aligned,                 # サポ近接ロング/レジ近接ショート
+        "regime": regime,                   # range で勝ちやすい傾向（4h足のみ記録）
+    }
+
+
 def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
                             news_titles, narrative, fired_at_iso, timeframe="4h"):
     """1 アラート発火を構造化レコードに整形"""
@@ -2299,6 +2342,10 @@ def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_pla
     # ID: 例 "GC=F_4h_20260520_2130" / "GC=F_1h_20260520_2130"
     dt_compact = datetime.fromisoformat(fired_at_iso).strftime("%Y%m%d_%H%M")
     record_id = f"{ticker}_{timeframe}_{dt_compact}"
+
+    # S/R runway ＋ 選別タグ（いずれも【記録のみ】＝発火・メール・信頼度には不使用）
+    sr_runway = compute_sr_runway(position_plan, indicators)
+    selection = compute_selection_tier(position_plan, indicators, sr_runway, primary["type"])
 
     entry = {
         "id": record_id,
@@ -2342,9 +2389,10 @@ def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_pla
             "regime": indicators.get("regime"),
         },
 
-        # 🆕 2026-06-03: S/R runway タグ（記録のみ・発火/メール/信頼度は不変）。
-        # TP前にS/Rが挟まる取引(blocked)の実勝率を前向き検証するためのデータ蓄積。
-        "sr_runway": compute_sr_runway(position_plan, indicators),
+        # 🆕 2026-06-03: S/R runway ＋ 選別(quality_tier) タグ（記録のみ・発火/メール/信頼度は不変）。
+        # TP前にS/Rが挟まる取引(blocked)・tier別の実勝率を前向き検証するためのデータ蓄積。
+        "sr_runway": sr_runway,
+        "selection": selection,
 
         # ファンダ
         "news_count": len(news_titles or []),
