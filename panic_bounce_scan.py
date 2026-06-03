@@ -17,13 +17,44 @@ JST = timezone(timedelta(hours=9))
 ASSETS=[("GC=F","金"),("SI=F","銀"),("CL=F","原油"),("NKD=F","日経225"),
         ("ES=F","S&P500"),("NQ=F","Nasdaq"),("YM=F","ダウ"),("^FTSE","英FTSE"),("BTC-USD","ビットコイン")]
 
-def fetch(tk,rng="6mo"):
+def fetch(tk,rng="9mo"):
     url=("https://query1.finance.yahoo.com/v8/finance/chart/"
          +urllib.parse.quote(tk)+f"?range={rng}&interval=1d")
     req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0"})
     d=json.load(urllib.request.urlopen(req,timeout=25))
     q=d["chart"]["result"][0]["indicators"]["quote"][0]
-    return q["close"], q.get("volume") or []
+    return q.get("high") or [], q.get("low") or [], q["close"], q.get("volume") or []
+
+def atr14(H,L,C,p=14):
+    H,L,C=map(lambda x:np.asarray(x,float),(H,L,C))
+    if len(C)<p+1: return np.nan
+    tr=np.maximum(H[1:]-L[1:], np.maximum(abs(H[1:]-C[:-1]),abs(L[1:]-C[:-1])))
+    a=np.nanmean(tr[:p])
+    for i in range(p,len(tr)):
+        a=(a*(p-1)+tr[i])/p
+    return a
+
+def _swings(H,L,k=3):
+    sh,sl=[],[]
+    for i in range(k,len(H)-k):
+        if H[i]==max(H[i-k:i+k+1]): sh.append(H[i])
+        if L[i]==min(L[i-k:i+k+1]): sl.append(L[i])
+    return sh,sl
+
+def supports_below(H,L,entry,tol=0.006,min_touch=2):
+    """現値より下のサポート（スイング高安クラスタ）を近い順に返す [(price,touches),...]"""
+    sh,sl=_swings(np.asarray(H,float),np.asarray(L,float))
+    pts=sorted(sh+sl)
+    if not pts: return []
+    zones,cur=[],[pts[0]]
+    for p in pts[1:]:
+        if abs(p-cur[-1])/cur[-1]<=tol: cur.append(p)
+        else: zones.append(cur); cur=[p]
+    zones.append(cur)
+    out=[(float(np.mean(z)),len(z)) for z in zones if len(z)>=min_touch and np.mean(z)<entry]
+    return sorted(out,key=lambda x:-x[0])  # 近い（高い）順
+
+def _dec(x): return 2 if x<1000 else (1 if x<100000 else 0)
 
 def rsi_wilder(C,p=14):
     C=np.asarray(C,float)
@@ -56,27 +87,55 @@ def assess(rsi, volz, move3):
         return "🟡やや売られすぎ(監視)", 1
     return "・中立〜", 0
 
+# 拾いゾーン定数（ATR倍）: _overshoot_depth.py 実測＝RSI≤30後の追加下落 中央0.9/75%1.7/90%3.7、反発中央1.2
+ZONE_SHALLOW, ZONE_DEEP, ZONE_MAX, ZONE_TP = 0.9, 1.7, 3.7, 1.2
+
+def build_zone(name):
+    H,L,C = series[name]
+    entry=float(C[-1]); a=atr14(H,L,C)
+    if not (a and a>0): return [f"  ◆{name}: ATR算出不可"]
+    d=_dec(entry)
+    z1=entry-ZONE_SHALLOW*a; z2=entry-ZONE_DEEP*a; zmax=entry-ZONE_MAX*a
+    tp=entry+ZONE_TP*a; sl=entry-(ZONE_MAX+0.6)*a
+    sups=supports_below(H,L,entry)
+    sup_txt="／".join(f"{p:.{d}f}(★{t})" for p,t in sups[:2]) if sups else "なし(レンジ下限)"
+    strong=[p for p,t in sups if t>=3 and p<zmax]
+    sl_final=min(sl,(max(strong)-0.3*a)) if strong else sl
+    return [
+        f"  ◆{name}  現値 {entry:.{d}f} / ATR {a:.{d}f}",
+        f"     拾いゾーン: 浅 {z1:.{d}f}（−0.9ATR）／ 深 {z2:.{d}f}（−1.7ATR）  ← 半数〜3/4はこの範囲で底",
+        f"     最大想定突っ込み: {zmax:.{d}f}（−3.7ATR）",
+        f"     近いサポート: {sup_txt}",
+        f"     SL目安: {sl_final:.{d}f}（最大想定/強サポート割れの下）",
+        f"     反発目安TP: {tp:.{d}f}（+1.2ATR・中央値）",
+    ]
+
 print("="*84)
 print("📉 パニック反発スキャン（非FX9資産・日足）— 投げ売り＝反発候補を探す")
 print("="*84)
 print(f"{'資産':<12}{'RSI':>6}{'%b':>7}{'出来高z':>8}{'3日%':>8}  シグナル")
 print("-"*84)
-results=[]
+results=[]; series={}
 for tk,name in ASSETS:
-    try: C,V=fetch(tk)
+    try: H,L,C,V=fetch(tk)
     except Exception as e:
         print(f"{name:<12}  取得失敗"); continue
+    H=np.array([x if x is not None else np.nan for x in H],float)
+    L=np.array([x if x is not None else np.nan for x in L],float)
     C=np.array([x if x is not None else np.nan for x in C],float)
     V=np.array([x if x is not None else np.nan for x in V],float)
-    ok=~np.isnan(C); C=C[ok]; V=V[ok]
+    ok=~(np.isnan(C)|np.isnan(H)|np.isnan(L)); H,L,C=H[ok],L[ok],C[ok]
+    Vv=V[~np.isnan(C)] if len(V)==len(ok) else V
     if len(C)<40: print(f"{name:<12}  データ不足"); continue
     rsi=rsi_wilder(C); pb=pctb(C)
     volz=None
-    if len(V)>=21 and np.isfinite(V[-21:-1]).all() and V[-21:-1].std()>0:
-        volz=(V[-3:].mean()-V[-21:-1].mean())/V[-21:-1].std()
+    Vf=np.array([x for x in V if not np.isnan(x)],float)
+    if len(Vf)>=21 and Vf[-21:-1].std()>0:
+        volz=(Vf[-3:].mean()-Vf[-21:-1].mean())/Vf[-21:-1].std()
     move3=(C[-1]/C[-4]-1)/(np.nanstd(np.diff(C)/C[:-1])*np.sqrt(3)) if len(C)>5 else 0
     label,score=assess(rsi, volz, move3)
     results.append((score,name,rsi,pb,volz,move3,label))
+    series[name]=(H,L,C)
 
 for score,name,rsi,pb,volz,move3,label in sorted(results,key=lambda x:(-x[0], x[2] if np.isfinite(x[2]) else 999)):
     vz=f"{volz:+.1f}σ" if volz is not None else "  —"
@@ -86,11 +145,20 @@ for score,name,rsi,pb,volz,move3,label in sorted(results,key=lambda x:(-x[0], x[
 cand=[r for r in results if r[0]>=2]
 cand_line = ("🎯 反発候補(RSI≤30): " + ", ".join(r[1] for r in cand)) if cand else "現在、RSI≤30の反発候補なし（無理に拾わない）"
 print("\n" + cand_line)
+
+zone_blocks=[]
+if cand:
+    print("\n――― 反発候補の拾いゾーン（参考・分割/損切り前提）―――")
+    for r in sorted(cand,key=lambda x:-x[0]):
+        lines=build_zone(r[1])
+        for ln in lines: print(ln)
+        zone_blocks.append((r[1],lines))
+
 print("\n※ 検出のみ。RSI≤30＝歴史的に前向き+0.9σ/78%だが、bandwalkで更に落ちる例もある。")
 print("  実トレードは反転確認(陽線/RSI反転)・分割・損切り前提で。本採用は前向き再現＋スリッページ確認後。")
 
 # ── panic-scan.md を出力（GitHub Actions が日次でコミット。SYNC禁忌＝ローカルから push しない）──
-def _write_md(results, cand, cand_line):
+def _write_md(results, cand, cand_line, zone_blocks):
     now = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     L = []
     L.append(f"# 📉 パニック反発スキャン（非FX 9資産）\n")
@@ -104,6 +172,14 @@ def _write_md(results, cand, cand_line):
         vz=f"{volz:+.1f}σ" if volz is not None else "—"
         pbs=f"{pb:+.2f}" if np.isfinite(pb) else "—"
         L.append(f"| {name} | {rsi:.1f} | {pbs} | {vz} | {move3:+.1f} | {label} |")
+    if zone_blocks:
+        L.append("\n## 🎯 反発候補の拾いゾーン（参考・分割/損切り前提）")
+        L.append("> RSI≤30後の追加下落は実測で中央0.9ATR・3/4が1.7ATR以内・最大(90%)3.7ATR、反発中央1.2ATR。\n")
+        for nm,lines in zone_blocks:
+            L.append(f"**{lines[0].strip().lstrip('◆ ')}**")
+            for ln in lines[1:]:
+                L.append(f"- {ln.strip()}")
+            L.append("")
     L.append("\n---\n")
     L.append("⚠️ **検出ツールであり売買推奨ではありません。** RSI≤30は歴史的に反発しやすい一方、強い下落では"
              "バンドウォークでさらに下げることもあります。実トレードは反転確認（陽線/RSI反転）・分割・損切り前提で。\n")
@@ -113,7 +189,7 @@ def _write_md(results, cand, cand_line):
         f.write("\n".join(L)+"\n")
 
 try:
-    _write_md(results, cand, cand_line)
+    _write_md(results, cand, cand_line, zone_blocks)
     print("\n→ panic-scan.md を出力。")
 except Exception as e:
     print(f"\n⚠️ panic-scan.md 出力失敗: {e}")
