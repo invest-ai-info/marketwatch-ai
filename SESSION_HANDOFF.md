@@ -40,6 +40,16 @@
 - **end-to-end実証済**：GBPJPYでエージェントがツール実行→S/R（212.29★25タッチが強固）を一次情報に完全レポート生成。水平S/Rは実用レベル、トレンドラインは近似（向きの参考）。
 - 残候補：B（S/R接近時の勝率をsignals-logで検証）／C（トレンドライン精度=チャネル検出）。S/Rを**実トレード採用**するなら別途バックテスト要。
 
+#### ✅ 2026-06-03：残候補B＝「S/R主軸＋テクニカル」の勝率をsignals-logで検証（重要・要点）
+- ツール `backtest_sr_edges.py`（日足S/R版）＋ `_sr_recent.py`（recent版）＋ `_sr_robust.py`（頑健性）。データ＝ライブ `_signals_live.json`（決済済み304件）。出力 `sr_edge_stats.json`/`sr_recent_stats.json`。**いずれもローカル・未SYNC**（analyze_signal_edges.pyと同方針）。
+- **日足S/R版（look-ahead有り）は要注意**：表面は「S/R整合≤1ATR=56%/+0.547R」だが頑健性チェックで**方向交絡が露呈**＝整合の手柄はショート側だけ（n=13/84.6%、primary=macd_dead大半＝既知の「macd_dead×レジ反落ショート」と同一の疑い）、**サポ買いは−0.417Rで負け**。距離の単調性も無し。＝**S/Rの手柄と断定できない**。
+- **C案＝recent_high/recent_low（発火時点・自分の時間足）でlook-ahead完全排除し再検証 → 結果が一変して良化**：
+  - **S/R整合（サポ買い/レジ売り）≤1ATR：n=62・56.5%・+0.403R・✅安定**。うち**整合×ロング n=57・59.6%・+0.485R・✅安定**（前半後半とも黒字、ロングは227件と十分サンプル）。日足版の「サポ買い負け」は look-ahead 由来の誤りで、正しくは**サポ近接ロングに実エッジ**。
+  - **runwayフィルタ（entry→TP1間にS/Rが挟まるか・方向非依存）：阻害 n=83・27.7%・−0.337R vs クリア n=221・44.3%・+0.110R**。long/short両方で一貫、**深さ感度も単調**（S/Rが進路の0–34%地点で塞ぐ＝−0.41R、TP直前67–100%＝−0.00R）。機構的に筋が通る。
+  - generic テクニカル上乗せは相変わらず無効（クリア+上位足トレンド一致は逆に−0.196R）。
+- **A＝runwayタグを本番エンジンに【記録のみ】実装・SYNC済（commit 81e1f9e）**：`generate_technical_alerts.py` に `compute_sr_runway(position_plan, indicators)` を追加し、`build_signal_log_entry` のレコードに `"sr_runway"`（blocked / block_frac / aligned / d_sup_atr / d_res_atr）を記録。**発火・メール・信頼度は完全に不変**（build_signal_log_entryはレコード整形専用＝前段に影響なし）。py_compile✅、実304件で blocked=83/aligned=62 と再現一致を検証済。**次回 technical-alerts 実行から新規シグナルに記録され始める**。
+- **次の選択肢**：①数週間 sr_runway を蓄積 → blocked vs clear の**前向き実勝率**を確認（別レジームでの再現＝本採用の前提）。②再現すれば runway阻害を発火フィルタ/信頼度減点へ昇格（B案と統合）。③サポ近接ロング（+0.485R安定）も同様に前向きタグ化を検討。**まだ本採用しない**（13日・単一レジーム・多重比較の限界）。
+
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
