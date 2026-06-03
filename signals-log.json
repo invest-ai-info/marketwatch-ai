@@ -31402,7 +31402,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.699,
-    "max_adverse_excursion_pct": -0.221,
+    "max_adverse_excursion_pct": -0.353,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -37639,13 +37639,13 @@
       "今日の株式市場：AIの混乱への懸念広がる、テック株に打撃、金、ビットコインも下落、ダウ、S&P 500、ナスダックが沈む"
     ],
     "ai_narrative": "S&P500先物は、直近20本高値ブレイクにより、上昇トレンド継続のテクニカルサインが点灯しました。RSIは68で買われすぎず、MACDもゴールデンクロス示唆で強気です。25MA、75MAも上向きで、75MAを上回っていることから、更なる上昇が期待されます。  ファンダメンタルズでは、Nvidia決算やApple株高など、テック株への活気はS&P500を押し上げる材料となり得ます。イラン情勢への懸念による原油相場の乱高下はリスクオフ要因にもなり得ますが、現時点では上昇シナリオが優位と見られます。  このロングシナリオが崩れるのは、直近20本安値（7505.75）を明確に下抜けた場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-06-03T16:00:00-04:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-06-03T16:00:00-04:00",
     "max_favorable_excursion_pct": 0.467,
-    "max_adverse_excursion_pct": -0.451,
+    "max_adverse_excursion_pct": -0.582,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -37742,6 +37742,21 @@
         "matched_titles": [
           "FTSE 100、米国株が急落、イラン情勢への懸念で原油相場は乱高下"
         ]
+      }
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 15.46,
+        "end": 16.1,
+        "change_pct": 4.14
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "ボラ拡大",
+        "primary_cause": "VIX上昇による市場の不確実性増大",
+        "ai_diagnosis": "エントリー時、RSIは68と過熱感はなく、MACDも強気だったものの、VIXが4.1%上昇し16.1となったことは、市場参加者のリスク回避姿勢が強まったことを示唆します。このボラティリティ上昇が、上昇トレンドの持続力を削ぎ、結果としてストップロスをヒットさせたと考えられます。",
+        "lesson": "VIXの急変はリスクオフの兆候。エントリー前にVIXの動向も確認し、ボラティリティ上昇時は慎重な判断を心がける。",
+        "category_tag": "VIX急伸"
       }
     }
   },
@@ -50991,8 +51006,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.673,
-    "max_adverse_excursion_pct": -1.703,
+    "max_favorable_excursion_pct": 1.666,
+    "max_adverse_excursion_pct": -1.708,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": true,
@@ -51143,7 +51158,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 2.774,
+    "max_favorable_excursion_pct": 2.78,
     "max_adverse_excursion_pct": -0.599,
     "email_sent": true,
     "whipsaw_check": {
@@ -53659,6 +53674,382 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "ES=F_4h_20260604_0539",
+    "fired_at": "2026-06-04T05:39:31+09:00",
+    "timeframe": "4h",
+    "ticker": "ES=F",
+    "asset_name": "S&P500 先物",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 7559.0,
+    "stop_loss": 7594.813216077617,
+    "take_profit_1": 7511.249045229843,
+    "take_profit_2": 7487.373567844766,
+    "atr": 23.875477385078064,
+    "sl_pct": 0.4737824590239066,
+    "tp1_pct": -0.6317099453652086,
+    "tp2_pct": -0.9475649180478132,
+    "indicators_at_signal": {
+      "rsi": 40.6,
+      "macd": 6.6794,
+      "macd_sig": 15.6956,
+      "ma25": 7600.84,
+      "ma75": 7512.5067,
+      "bb_low": 7565.8127,
+      "bb_up": 7641.3123,
+      "recent_high": 7632.25,
+      "recent_low": 7562.5,
+      "adx": 26.52,
+      "chop": 54.83,
+      "ma_dev_pct": 1.1758,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 3.068
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今日の株式市場：債券利回りの上昇を受け、ダウ、S&P500、ナスダックが下落",
+      "イラン戦争の懸念で、FTSE100と米国株は急落、原油は乱高下",
+      "米連邦準備制度理事会（FRB）の会合とイラン紛争を控え、FTSE100と米国株が上昇",
+      "今日の株式市場：Nvidiaの決算発表を控え、テック株の勢いに押され、ダウ、S&P500、ナスダックが上昇",
+      "今日の株式市場：Appleの急騰もあり、ボラティリティの高い取引となったが、ダウ、S&P500、ナスダックは高値引け"
+    ],
+    "ai_narrative": "S&P500先物は7562.50の直近20本安値を下抜け、40.6のRSI、MACDのデッドクロスを示唆する状況からショート方向が妥当です。債券利回り上昇や地政学的リスク（イラン情勢）といった、市場心理を冷え込ませるファンダメンタルズが複数見られ、USD優位の通貨強弱とも整合しています。このショートシナリオが崩れるのは、7594.81のストップロスを明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 0.4,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "ES=F_4h_20260604_0516"
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 日足 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.372,
+      "EUR": 0.025,
+      "GBP": -0.057,
+      "JPY": 0.219,
+      "AUD": -0.567
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.06 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-03T15:10:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "MID",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": -1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド逆張り (-1)",
+        "反転検知あり (-2)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": -0.075,
+      "entry_vs_ma25_signed": 0.55,
+      "range_pos": -0.05,
+      "ma_ratio_pct": 1.176
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 戦争"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 5 月 NFP",
+          "hours_until": 39.8,
+          "impact": "critical",
+          "datetime": "2026-06-05T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 16.06,
+        "avg_30d": 17.31,
+        "change_24h_pct": 1.84
+      },
+      "atr_regime": {
+        "current_atr": 23.8755,
+        "avg_atr_30d": 31.2107,
+        "ratio": 0.76,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "戦争"
+        ],
+        "matched_titles": [
+          "イラン戦争の懸念で、FTSE100と米国株は急落、原油は乱高下"
+        ]
+      }
+    }
+  },
+  {
+    "id": "AUDUSD=X_4h_20260604_0539",
+    "fired_at": "2026-06-04T05:39:31+09:00",
+    "timeframe": "4h",
+    "ticker": "AUDUSD=X",
+    "asset_name": "豪ドル米ドル（オージードル）",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 0.7130124568939209,
+    "stop_loss": 0.7154609166154129,
+    "take_profit_1": 0.7097478439319315,
+    "take_profit_2": 0.7081155374509368,
+    "atr": 0.0016323064809946925,
+    "sl_pct": 0.343396485968591,
+    "tp1_pct": -0.4578619812914546,
+    "tp2_pct": -0.686792971937182,
+    "indicators_at_signal": {
+      "rsi": 36.98,
+      "macd": -0.0004,
+      "macd_sig": 0.0002,
+      "ma25": 0.717,
+      "ma75": 0.7153,
+      "bb_low": 0.7134,
+      "bb_up": 0.7206,
+      "recent_high": 0.7203,
+      "recent_low": 0.7133,
+      "adx": 21.79,
+      "chop": 48.4,
+      "ma_dev_pct": 0.2377,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 4.436
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "米国債利回り、ドルが上昇：テヘランが協議離脱の報道受け",
+      "オイル相場下落、ホルムズ合意への楽観ムードでドルは軟調",
+      "イラン戦争開始時よりもドル安に",
+      "中東の停戦維持でドルが軟化",
+      "なぜ豪ドルは上昇しているのか？"
+    ],
+    "ai_narrative": "豪ドル米ドル（オージードル）は、直近20本安値割れというテクニカルシグナルと、豪ドル弱・米ドル強の通貨強弱の複合順張りからショート（売り）方向が優勢と判断されます。4H足チャートでは、RSIが37.0と売られすぎを示唆しており、MACDもクロス間近で下落圧力が見られます。ボリンジャーバンドでも-2σ付近まで下落しており、短期的な下値抵抗線である直近安値0.71を抜けたことで、さらなる下落が期待されます。  ファンダメンタルズ面では、中国経済の動向がAUDに大きく影響しますが、足元では香港ハンセン指数が上昇するなど、AI関連への楽観論がアジア株式市場を牽引しており、AUDにとっては追い風となりうる要素もあります。しかし、米国債利回りの上昇や中東情勢の不確実性といったドル高要因も無視できず、これらの材料が勢いを増す展開となれば、本シナリオは崩れる可能性があります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 0.6,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "AUDUSD=X_4h_20260604_0501"
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": 0.372,
+      "EUR": 0.025,
+      "GBP": -0.057,
+      "JPY": 0.219,
+      "AUD": -0.567
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.06 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-03T15:10:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ AUD 弱（-0.57%）× USD 強（+0.37%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": -0.939,
+      "base_strength": -0.567,
+      "quote_strength": 0.372
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": NaN,
+          "change_pct": NaN
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 26038.32,
+          "change_pct": 2.52
+        }
+      },
+      "news": [
+        "AIへの楽観論がアジア株式市場を押し上げる",
+        "テック株の強気派、地政学リスクをよそにアジア株式市場を牽引",
+        "テックへの楽観論がアジア株式市場を押し上げる",
+        "AIサーバー需要の急増でLenovo株が5月に倍増、27年ぶりの好況に",
+        "ペルシャ湾岸とテクノロジー見通しがアジア株式市場を刺激"
+      ]
+    },
+    "confidence": {
+      "score": 1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "反転検知あり (-2)",
+        "FX 強弱順張り (+1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 0.851,
+      "entry_vs_ma25_signed": 0.553,
+      "range_pos": -0.036,
+      "ma_ratio_pct": 0.238
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 戦争"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 5 月 NFP",
+          "hours_until": 39.8,
+          "impact": "critical",
+          "datetime": "2026-06-05T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 16.06,
+        "avg_30d": 17.31,
+        "change_24h_pct": 1.84
+      },
+      "atr_regime": {
+        "current_atr": 0.0016,
+        "avg_atr_30d": 0.0019,
+        "ratio": 0.85,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "戦争"
+        ],
+        "matched_titles": [
+          "イラン戦争開始時よりもドル安に"
+        ]
       }
     }
   }
