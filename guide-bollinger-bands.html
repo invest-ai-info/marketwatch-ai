@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ボリンジャーバンドとは？±2σ・スクイーズ・バンドウォークの見方を初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="ボリンジャーバンドの3本のバンド（20SMA・±2σ）と標準偏差の仕組み、約9割が収まる目安、スクイーズとエクスパンション（ボラティリティ）、バンドウォーク、±2σタッチ＝即売買ではない理由まで、初心者向けに図解でわかりやすく解説。">
+  <meta name="keywords" content="ボリンジャーバンド,標準偏差,シグマ,2シグマ,20SMA,スクイーズ,エクスパンション,バンドウォーク,ボラティリティ,テクニカル分析,ジョン・ボリンジャー,株式投資,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-bollinger-bands.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ボリンジャーバンドとは？±2σ・スクイーズ・バンドウォークの見方を初心者向けに徹底解説">
+  <meta property="og:description" content="ボリンジャーバンドの3本のバンド（20SMA・±2σ）・標準偏差・スクイーズ・バンドウォークを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-bollinger-bands.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ボリンジャーバンドとは？±2σ・スクイーズ・バンドウォークの見方を初心者向けに徹底解説",
+    "description": "ボリンジャーバンドの3本のバンド（20SMA・±2σ）と標準偏差の仕組み、スクイーズとエクスパンション、バンドウォークまで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-03",
+    "dateModified": "2026-06-03",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-bollinger-bands.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-bbfill{fill:#ddf4ff;opacity:.6}
+    .s-bbband{stroke:#1f6feb;stroke-width:2;fill:none;stroke-linejoin:round}
+    .s-bbmid{stroke:#bc4c00;stroke-width:1.8;stroke-dasharray:5 4;fill:none}
+    .s-brk{stroke:#1a7f37;stroke-width:1.6;stroke-dasharray:5 4}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-bbfill{fill:#16263f;opacity:.55}
+    body.dark .s-bbband{stroke:#58a6ff}
+    body.dark .s-bbmid{stroke:#ec8e2c}
+    body.dark .s-brk{stroke:#3fb950}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ボリンジャーバンドとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はボリンジャーバンドの仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 ボリンジャーバンドとは？±2σ・スクイーズ・バンドウォークの見方を初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 3 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>チャートの上に表示される、価格を包み込むような3本の曲線——それが <strong>ボリンジャーバンド</strong> です。移動平均線を中心に、その上下に「振れ幅（ボラティリティ）」を表すバンドを描くことで、<strong>価格の行きすぎと、相場の勢いの溜まり具合</strong>を同時に読み取ろうとする人気のテクニカル指標です。</p>
+    <p>この記事では、ボリンジャーバンドの3本のバンドと標準偏差（±2σ）の仕組みから、ボラティリティを表す「スクイーズ」と「エクスパンション」、強いトレンドで現れる「バンドウォーク」、そして初心者がやりがちな誤解まで、図解を交えてやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ボリンジャーバンドは<strong>「中央の移動平均線（標準は20本）」と「その上下の±2σ（標準偏差）」の3本</strong>で構成され、価格の振れ幅（ボラティリティ）を可視化する指標。</li>
+      <li>統計上、<strong>値動きの多くが±2σのバンド内に収まる</strong>とされ、バンドの<strong>幅が狭まる「スクイーズ」</strong>は低ボラ＝大きな動きの前触れ、<strong>幅が広がる「エクスパンション」</strong>は値動きの放れとして注目される。</li>
+      <li><strong>「上のバンドにタッチ＝即売り」ではない</strong>。強いトレンドでは価格がバンドに沿って進む「バンドウォーク」が起き、逆張りすると痛手になりやすい。単独利用は禁物とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">ボリンジャーバンドとは何か（概要と歴史）</a></li>
+        <li><a href="#section-2">3本のバンドと計算（標準偏差・±2σ）</a></li>
+        <li><a href="#section-3">基本の見方（バンド内に収まる目安）</a></li>
+        <li><a href="#section-4">スクイーズとエクスパンション（ボラティリティ）</a></li>
+        <li><a href="#section-5">バンドウォーク（強いトレンドの注意点）</a></li>
+        <li><a href="#section-6">長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ボリンジャーバンドとは何か（概要と歴史）</h2>
+    <p><strong>ボリンジャーバンド（Bollinger Bands）</strong>は、米国の投資家<strong>ジョン・ボリンジャー（John Bollinger）</strong>が1980年代に考案したテクニカル指標とされています。中心に<a href="guide-moving-average.html">移動平均線</a>を置き、その上下に<strong>標準偏差（σ：シグマ）</strong>で計算したバンドを描くのが特徴です。</p>
+    <p>標準偏差とは、データのばらつき（散らばり具合）を表す統計の指標です。価格が普段から大きく動いている（ボラティリティが高い）ときはバンドが広がり、おとなしく動いている（ボラティリティが低い）ときはバンドが狭まります。つまりボリンジャーバンドは、<strong>「価格がいつもと比べてどれくらい行きすぎているか」「相場が今どれくらい荒れているか」</strong>を一目で見える化してくれる指標です。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：ボリンジャーバンドの中央の線は、ただの<a href="guide-moving-average.html">移動平均線（SMA）</a>です。まずは移動平均線の基本を理解しておくと、「その上下に振れ幅の帯を足したもの」としてボリンジャーバンドがすっと頭に入ります。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 3本のバンドと計算（標準偏差・±2σ）</h2>
+    <p>ボリンジャーバンドは次の<strong>3本のライン</strong>で構成されます。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>バンド</th>
+          <th>計算（標準的な設定）</th>
+          <th>意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ミドルバンド</td>
+          <td>20本の単純移動平均（20SMA）</td>
+          <td>相場の中心・トレンドの方向を示す</td>
+        </tr>
+        <tr>
+          <td>アッパーバンド（+2σ）</td>
+          <td>20SMA ＋ 標準偏差 × 2</td>
+          <td>上の行きすぎの目安。価格の上限の帯</td>
+        </tr>
+        <tr>
+          <td>ロワーバンド（−2σ）</td>
+          <td>20SMA − 標準偏差 × 2</td>
+          <td>下の行きすぎの目安。価格の下限の帯</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>標準的な設定は<strong>「期間20・±2σ」</strong>で、多くのチャートツールでこれが初期値です。±1σや±3σのバンドを足して表示することもあります。バンドの<strong>幅（アッパーとロワーの間隔）がそのままボラティリティの大きさ</strong>を表し、相場が荒れるほど広く、静かなほど狭くなります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="bb-structure-title">
+        <title id="bb-structure-title">ボリンジャーバンドの構成図。中央20SMAと上下±2σのバンド、その中を動く価格</title>
+        <text class="s-panel-label" x="40" y="24">価格とボリンジャーバンド（3本）</text>
+        <!-- バンド内の塗り -->
+        <polygon class="s-bbfill" points="40,95 110,90 180,98 250,88 320,95 390,92 460,100 530,96 600,98 600,228 530,226 460,230 390,222 320,225 250,218 180,228 110,220 40,225"/>
+        <!-- アッパーバンド +2σ -->
+        <polyline class="s-bbband" points="40,95 110,90 180,98 250,88 320,95 390,92 460,100 530,96 600,98"/>
+        <!-- ロワーバンド -2σ -->
+        <polyline class="s-bbband" points="40,225 110,220 180,228 250,218 320,225 390,222 460,230 530,226 600,228"/>
+        <!-- ミドルバンド 20SMA -->
+        <polyline class="s-bbmid" points="40,160 110,155 180,163 250,153 320,160 390,157 460,165 530,161 600,163"/>
+        <!-- 価格（バンド内で上下にタッチ） -->
+        <polyline class="s-price" points="40,165 110,135 180,110 250,95 320,150 390,190 460,222 530,170 600,120"/>
+        <!-- ラベル -->
+        <text class="s-label-sm" x="606" y="96" >＋2σ</text>
+        <text class="s-label-sm" x="606" y="166">20SMA</text>
+        <text class="s-label-sm" x="606" y="229">−2σ</text>
+        <!-- 凡例 -->
+        <g transform="translate(48,304)">
+          <line class="s-price" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">価格</text>
+          <line class="s-bbband" x1="100" y1="0" x2="126" y2="0"/><text class="s-legend" x="132" y="5">±2σバンド</text>
+          <line class="s-bbmid" x1="260" y1="0" x2="286" y2="0"/><text class="s-legend" x="292" y="5">20SMA（中央）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ ボリンジャーバンドの構成。中央の20SMA（橙の点線）を挟んで、上下に±2σのバンド（青）が広がる。価格（灰）は多くの時間をこのバンドの内側で上下し、ときどき上下のバンドにタッチする。バンドの幅＝ボラティリティの大きさ。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 基本の見方（バンド内に収まる目安）</h2>
+    <p>標準偏差の性質から、<strong>価格の多くは±2σのバンドの内側に収まりやすい</strong>とされています。理論上（正規分布を仮定した場合）はおよそ95%、実際の相場ではおよそ9割前後がバンド内に収まると説明されることが多いです。逆に言えば、<strong>バンドの外に出る動きは「めったにない行きすぎ」</strong>ということになります。</p>
+    <p>ここから、ボリンジャーバンドには大きく2つの見方があります。考案者のジョン・ボリンジャー自身は<strong>順張り寄りの使い方</strong>を重視したとされますが、実際には両方の考え方が知られています。</p>
+    <ul>
+      <li><strong>逆張りの見方</strong>：価格が+2σにタッチ＝買われすぎ、−2σにタッチ＝売られすぎとみて、バンド内への戻りを狙う。<strong>レンジ相場で機能しやすい</strong>とされる。</li>
+      <li><strong>順張りの見方</strong>：価格がバンドを勢いよく抜ける＝新しいトレンドの始まりとみて、流れに乗る。<strong>トレンド相場で機能しやすい</strong>とされる。</li>
+    </ul>
+    <div class="warning-box">
+      重要なのは、<strong>「+2σタッチ＝必ず売り」「−2σタッチ＝必ず買い」と決めつけないこと</strong>です。後述する「バンドウォーク」のように、強いトレンドでは価格がバンドに張り付いたまま進み続けます。今がレンジなのかトレンドなのかを見極めずに逆張りすると、大きな損失につながりやすいとされています。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ スクイーズとエクスパンション（ボラティリティ）</h2>
+    <p>ボリンジャーバンドならではの見方が、<strong>バンドの幅の変化</strong>に注目するものです。幅はボラティリティそのものなので、その伸縮から相場のエネルギーの溜まり具合を読み取ろうとします。</p>
+    <ul>
+      <li><strong>スクイーズ（収縮）</strong>：バンドの幅が狭くなった状態。値動きが小さく、エネルギーが溜まっているサインとされる。ジョン・ボリンジャーは「低ボラティリティの後には高ボラティリティが続きやすい」と述べたとされ、<strong>大きな値動きの前触れ</strong>として注目される。</li>
+      <li><strong>エクスパンション（拡大）</strong>：バンドの幅が急に広がった状態。スクイーズで溜まったエネルギーが放たれ、価格が一方向に大きく動き出したサインとされる。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="bb-squeeze-title">
+        <title id="bb-squeeze-title">スクイーズ（バンド収縮）からエクスパンション（拡大）への概念図</title>
+        <!-- バンド内塗り -->
+        <polygon class="s-bbfill" points="40,150 130,148 220,150 300,150 360,140 440,100 520,75 600,68 600,212 520,210 440,205 360,200 300,190 220,190 130,192 40,190"/>
+        <!-- アッパー -->
+        <polyline class="s-bbband" points="40,150 130,148 220,150 300,150 360,140 440,100 520,75 600,68"/>
+        <!-- ロワー -->
+        <polyline class="s-bbband" points="40,190 130,192 220,190 300,190 360,200 440,205 520,210 600,212"/>
+        <!-- ミドル -->
+        <polyline class="s-bbmid" points="40,170 130,170 220,170 300,170 360,170 440,152 520,142 600,140"/>
+        <!-- 価格 -->
+        <polyline class="s-price" points="40,172 130,168 220,172 300,168 360,158 440,120 520,90 600,78"/>
+        <!-- ブレイクの縦線 -->
+        <line class="s-brk" x1="345" y1="60" x2="345" y2="250"/>
+        <!-- ラベル -->
+        <text class="s-note" x="60" y="125">スクイーズ（収縮＝低ボラ）</text>
+        <text class="s-note-g" x="392" y="56">エクスパンション（拡大＝放れ）</text>
+        <text class="s-label-sm" x="300" y="248" text-anchor="end">エネルギー蓄積</text>
+        <text class="s-label-sm" x="360" y="248">→ 放出</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 左半分はバンドが狭い「スクイーズ」（値動きが小さくエネルギーが溜まる）。そこから価格が放れてバンドが急拡大する「エクスパンション」へ。スクイーズは大きな動きの前触れとして注目されるが、放れる方向まではバンドだけでは分からない。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      スクイーズは「大きな動きが近い」ことを示唆しますが、<strong>上下どちらに放れるかまでは教えてくれません</strong>。スクイーズ後に一度ダマシで逆方向へ動いてから本番のトレンドが出る、ということもあります。方向の確認は価格の抜けた向きや出来高など、別の根拠と合わせるのが安全とされています。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ バンドウォーク（強いトレンドの注意点）</h2>
+    <p>初心者が最もつまずきやすいのが<strong>「バンドウォーク」</strong>です。これは強いトレンドが出たとき、価格が<strong>+2σ（または−2σ）のバンドに沿って張り付くように進み続ける</strong>現象を指します。</p>
+    <p>「+2σにタッチしたから売り」と逆張りしても、バンドウォーク中の相場はそのままぐんぐん上昇を続けるため、逆張りは大きな損失につながりやすくなります。<strong>バンドへのタッチは「売買サイン」ではなく、「強いトレンドが出ているサイン」かもしれない</strong>——この視点を持つことがとても重要です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="bb-walk-title">
+        <title id="bb-walk-title">バンドウォークの概念図。強い上昇で価格が+2σに沿って上昇し続ける</title>
+        <!-- バンド内塗り（右肩上がり） -->
+        <polygon class="s-bbfill" points="40,200 140,165 240,130 340,100 440,75 540,55 600,48 600,135 540,142 440,158 340,178 240,200 140,225 40,250"/>
+        <!-- アッパー -->
+        <polyline class="s-bbband" points="40,200 140,165 240,130 340,100 440,75 540,55 600,48"/>
+        <!-- ロワー -->
+        <polyline class="s-bbband" points="40,250 140,225 240,200 340,178 440,158 540,142 600,135"/>
+        <!-- ミドル -->
+        <polyline class="s-bbmid" points="40,225 140,195 240,165 340,139 440,116 540,98 600,91"/>
+        <!-- 価格（+2σに張り付いて上昇） -->
+        <polyline class="s-price" points="40,210 140,170 240,134 340,104 440,79 540,59 600,52"/>
+        <!-- ラベル -->
+        <text class="s-note" x="150" y="120">価格が＋2σに沿って上昇＝バンドウォーク</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 強い上昇トレンドでは、価格が+2σのバンドに張り付くように上がり続ける（バンドウォーク）。ここで「+2σタッチ＝売り」と逆張りすると流れに逆らうことになる。バンドへのタッチは「行きすぎ」ではなく「強い勢い」のサインのこともある。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：ボラティリティと行きすぎを同時に可視化</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>相場の振れ幅が一目で分かる</strong>：バンドの広い・狭いで、今が荒れ相場か静かな相場かを直感的に把握できる。</li>
+        <li><strong>行きすぎの目安になる</strong>：±2σを基準に、価格が普段と比べてどれだけ離れているかを測れる。</li>
+        <li><strong>スクイーズで「溜め」を察知できる</strong>：大きな値動きが近いかもしれない、という準備ができる。</li>
+        <li><strong>あらゆる市場・時間軸で使える</strong>：株・FX・商品・暗号資産、日足から分足まで広く使われている。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：方向は教えてくれず、逆張りはダマシも多い</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>バンドウォークで逆張りが機能しない</strong>：強いトレンドではバンドタッチ後も価格が伸び続け、逆張りが大やけどしやすい。最大の注意点とされる。</li>
+        <li><strong>方向を示さない</strong>：スクイーズは「大きく動く」とは示唆しても、上下どちらかは教えてくれない。</li>
+        <li><strong>遅行性がある</strong>：中央が移動平均線のため、急な転換にはやや遅れる。</li>
+        <li><strong>設定で見え方が変わる</strong>：期間（20）やσ（2）を変えると感度が変わり、「唯一の正解」はない。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① 「今がトレンドかレンジか」を先に見る</h3>
+    <p>ボリンジャーバンドの使い方は、相場の状態で正反対になります。<strong>レンジ相場では±2σでの逆張り、トレンド相場では順張り</strong>が基本とされ、状態を取り違えると逆効果です。バンドの傾き（横ばいか・一方向に傾いているか）やバンドウォークの有無で、まず相場の状態を見極めるのがコツです。</p>
+
+    <h3>② 「バンドタッチ＝即逆張り」をやめる</h3>
+    <p>+2σや−2σへのタッチは、それ単体では売買のサインになりません。むしろ強いトレンドの入り口のこともあります。<strong>「行きすぎかもしれない」という注意までにとどめ、実際の売買は価格が反転したことを確認してから</strong>検討するのが安全とされています。</p>
+
+    <h3>③ スクイーズは「方向」を別で確認する</h3>
+    <p>バンドが狭まるスクイーズは大きな動きの予兆ですが、方向は教えてくれません。<strong>放れた方向・出来高・他の指標</strong>と合わせて、ダマシに注意しながら確認するのが実践的です。</p>
+
+    <h3>④ 単独で使わず複数の根拠を組み合わせる</h3>
+    <p>ボリンジャーバンドも万能ではありません。<a href="guide-moving-average.html">移動平均線</a>でトレンドの大枠を確認し、<a href="guide-rsi.html">RSI</a>で買われすぎ・売られすぎを、<a href="guide-macd.html">MACD</a>で勢いの方向を見る——といったように、<strong>複数の指標が同じ方向を示しているか</strong>で判断の信頼性が高まると一般的に考えられています。大きな時間軸のトレンドを確認してから小さな時間軸を見る習慣も、ダマシ対策になります。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、複数の指標を組み合わせた複合シグナルで動作しており、<strong>ボリンジャーバンド（±2σ）はその構成要素の一つとして実際に使用しています</strong>。価格が±2σのバンドにタッチ・ブレイクしたかどうかを、行きすぎや勢いを判断する材料の一つとして参照しています。</p>
+    <p>ただし本文で述べた通り、ボリンジャーバンドは<strong>バンドウォーク中の逆張りでダマシが多く、単独では信頼性が不十分</strong>です。そのため当サイトのシステムでは、移動平均線・RSI・MACD・高値安値ブレイクなどの他のシグナルや、短期・中期・長期足の方向性の整合、出来高の状況などを組み合わせた上で、総合的に判断する仕組みになっています。ボリンジャーバンドはあくまでその複数の根拠のうちの「一つ」として機能させています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">ボリンジャーバンドを含む複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>ボリンジャーバンドについて学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>ボリンジャーバンドは<strong>中央の移動平均線（標準20本）と上下±2σ（標準偏差）の3本</strong>で構成され、ジョン・ボリンジャーが考案。</li>
+      <li>バンドの<strong>幅＝ボラティリティ</strong>。値動きの多くは±2σ内に収まるとされる（正規分布の仮定で約95%、実際はおよそ9割前後）。</li>
+      <li><strong>スクイーズ（収縮）</strong>は大きな動きの前触れ、<strong>エクスパンション（拡大）</strong>は値動きの放れ。ただし方向までは示さない。</li>
+      <li><strong>バンドウォーク</strong>に注意。「+2σタッチ＝即売り」ではなく、強いトレンドのサインのこともある。</li>
+      <li>使い方は相場で正反対（<strong>レンジは逆張り・トレンドは順張り</strong>）。状態の見極めが先。</li>
+      <li>長所は「ボラティリティと行きすぎの可視化」。弱点は「<strong>方向を示さない</strong>」「逆張りのダマシ」。</li>
+      <li>実践では<strong>単独でなく複数指標・複数時間軸との組み合わせ</strong>で使うのが基本とされる。</li>
+    </ul>
+
+    <p>ボリンジャーバンドは、移動平均線を一歩進めて「相場の振れ幅」まで見える化してくれる便利な道具です。まずはチャートに表示して、バンドが広がる・狭まる動きと、価格がバンドのどのあたりにいるかを日々眺めるところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">ボリンジャーバンドの中央線の正体。SMA・EMA・ゴールデンクロス・グランビルの法則を初心者向けに解説。</div>
+      </a>
+      <a class="related-card" href="guide-rsi.html">
+        <div class="related-card-title">📊 RSIの見方</div>
+        <div class="related-card-desc">買われすぎ・売られすぎを測るオシレーター。70/30・ダイバージェンスを図解。バンドと組み合わせやすい。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">ボリンジャーバンドを含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はボリンジャーバンドの仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
