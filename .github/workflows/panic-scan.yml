@@ -1,0 +1,45 @@
+name: Panic Bounce Scan
+
+# 非FX9資産（金/銀/原油/日経/S&P/Nasdaq/ダウ/FTSE/BTC）の日次「投げ売り＝反発候補」スキャン。
+# 本丸=RSI売られすぎ（歴史検証: RSI≤30→前向き5日+0.92σ/78%、RSI≤25+1.66σ/81%）、出来高急増は上乗せ。
+# ※リモートCCRでは Yahoo が 403 のため、データ取得は確実な GitHub Actions 側で実施（weekly-levels と同方針）。
+# 出力 panic-scan.md は前向き検証データ蓄積用の非公開メモ。実トレード採用は前向き再現＋スリッページ確認後。
+
+on:
+  schedule:
+    - cron: '27 22 * * *'   # 7:27 JST 狙い（米株引け+クリプト夜間が日足に確定した後・本命）
+    - cron: '47 22 * * *'   # 7:47 JST 狙い（cron遅延対策のバックアップ）
+  workflow_dispatch:        # 手動実行も可能
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy
+
+      - name: Run panic bounce scan (writes panic-scan.md)
+        run: python panic_bounce_scan.py 1>/dev/null
+
+      - name: Commit panic-scan.md if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add panic-scan.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: panic-scan $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
