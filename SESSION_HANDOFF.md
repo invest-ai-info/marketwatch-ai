@@ -75,7 +75,8 @@
 - **ツール（すべてローカル・未SYNC、Yahoo直叩き）**：`panic_bounce_scan.py`（日次「投げ売り＝反発候補」スキャン）／`_panic_cross.py`（交差検証）／`_volume_divergence_backtest.py`／`_money_flow_snapshot.py`／`_overshoot_analysis.py`／`_mfe_analysis.py`。
 - **現況スキャン例**：BTC（RSI23+出来高+2.1σ+下落）が唯一の🔴反発候補、米株/日経はRSI70台＝過熱側。
 - **マーチンゲール検討は却下**：時系列で最大13連敗（good+eliteでも6連敗）、倍張りは38件目で破産。健全策＝固定比率/逆マーチン×+EV選別。
-- **デプロイ路（任意・前向き検証後）**：スキャナはCCR routineではYahoo403で不可→**weekly-levels.yml型のGitHub Actions**で日次 `panic-scan.md` 出力 or hot-assetsに「売られすぎ反発候補」枠。**実トレード採用は前向き再現＋スリッページ確認後**（歴史内2年・上昇ドリフト期・深条件n小・bandwalk罠）。
+- **✅ デプロイ済（2026-06-03）＝D完了**：`panic-scan.yml`（GitHub Actions・毎日**7:27 JST**＋バックアップ7:47・workflow_dispatch併設・`weekly-levels.yml`型でYahoo直叩き、CCR403回避）。`panic_bounce_scan.py` が非FX9資産をスキャンし **`panic-scan.md`** を生成・コミット。手動triggerで completed success＋GitHubコミット＋HTTP200を実証。SYNC_FILESに py と yml を追加、`panic-scan.md` はSYNC禁忌（CLAUDE.md登録済・Actionが生成）。**panic-scan.md は前向き検証データ蓄積用の非公開メモ**。
+- **実トレード採用は前向き再現＋スリッページ確認後**（歴史内2年・上昇ドリフト期・深条件n小・bandwalk罠）。次の任意ステップ：数週間 panic-scan.md を蓄積→候補の実反発率を追跡／効けば hot-assets に「売られすぎ反発候補」枠 or 候補日のみメール通知。
 
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
