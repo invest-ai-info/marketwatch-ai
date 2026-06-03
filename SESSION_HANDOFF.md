@@ -26,6 +26,13 @@
 - **B（エンジン反映）は未適用＝レビュー待ち**。`generate_technical_alerts.py` の `calc_confidence_score`（L2158）に**データ駆動の加点/減点**を足す案。現状この関数は指標生値を受け取らないので**引数追加＋呼び出し側L2599の配線が必要**。本番のシグナルメールを変える変更なので、ユーザーGO後に実機の変数名を確認して安全に適用する。提案の中身はこのセッションのチャット参照（macd_dead×0ライン位置／方向×MA位置／ma_golden降格）。前向き検証タグも併せて入れる。
 - ⚠️ 多重比較62セルの懸念は残る（macd_dead×MACD>0は依然「best of many」の可能性）→ 別レジームで各候補 n≥40 の前向き再現を確認するまで本採用しない。
 
+#### ✅ 2026-06-03 昼：サポレジ自動検出を technical-analyst に統合
+- **`detect_sr_levels.py`（新規・SYNC済）**：スイングピボットのクラスタリングで主要S/Rを自動検出（★=タッチ回数=強さ、現値からの距離%、簡易トレンドライン）。ティッカー直接指定で自己完結（例 `python detect_sr_levels.py "GBPJPY=X"`）。`sys.stdout.reconfigure(utf-8)` でBashのcp932でも落ちない。
+- **データ取得の回避策（重要）**：yfinanceライブラリ＝Yahooにブロックされ空／Stooq＝APIキー必須化、で両方不可。**Yahoo chart API を直接叩く**のが現状の解（`https://query1.finance.yahoo.com/v8/finance/chart/<ticker>?range=9mo&interval=1d`＋UA、PowerShellでもpython urllibでも通る）。
+- **`technical-analyst.md` 更新（SYNC済）**：壊れたyfinance記述を上記に差し替え、「主要レベル」で `detect_sr_levels.py` を必ず使うよう指示。「レベルがある≠勝てる（high_break=-0.12R）」の戒めも追記。
+- **end-to-end実証済**：GBPJPYでエージェントがツール実行→S/R（212.29★25タッチが強固）を一次情報に完全レポート生成。水平S/Rは実用レベル、トレンドラインは近似（向きの参考）。
+- 残候補：B（S/R接近時の勝率をsignals-logで検証）／C（トレンドライン精度=チャネル検出）。S/Rを**実トレード採用**するなら別途バックテスト要。
+
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
