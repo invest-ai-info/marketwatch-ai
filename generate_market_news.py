@@ -3801,6 +3801,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-03", "line": '・<b>2026-06-03</b>: 📊 解説「<a href="guide-rsi.html" style="color:#0969da"><b>RSIとは？見方・買われすぎ売られすぎ・ダイバージェンスを初心者向けに徹底解説</b></a>」公開'},
         {"date": "2026-06-02", "line": '・<b>2026-06-02</b>: 📊 解説「<a href="guide-macd.html" style="color:#0969da"><b>MACD やさしい解説（GC・ダイバージェンス）</b></a>」公開'},
         {"date": "2026-06-02", "line": '・<b>2026-06-02</b>: ☁️ 解説「<a href="guide-ichimoku.html" style="color:#0969da"><b>一目均衡表 やさしい解説（雲・三役好転）</b></a>」公開'},
         {"date": "2026-06-02", "line": '・<b>2026-06-02</b>: 📈 解説「<a href="guide-moving-average.html" style="color:#0969da"><b>移動平均線とは？SMA・EMA・ゴールデンクロスの使い方を初心者向けに徹底解説【テクニカル分析シリーズ第1弾】</b></a>」公開'},
