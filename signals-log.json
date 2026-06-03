@@ -37794,13 +37794,13 @@
       "今日の株式市場：Nvidiaの決算発表を前に、テクノロジー株の活況でDow、S&P 500、Nasdaqが上昇"
     ],
     "ai_narrative": "ダウ30先物は、MACDのゴールデンクロス、20本高値ブレイクといったテクニカルサインから短期的な上昇トレンド継続が期待されます。ボリンジャーバンド+2σ突破は過熱感を示唆するものの、直近のニュースではNvidia決算への期待感など、テクノロジー株主導の上昇を後押しする材料も見られます。USDが通貨強弱で弱含みである点も、リスクオンの動きを支持する可能性があります。シナリオが崩れるとすれば、イラン情勢の急激な悪化によるリスクオフの動きが顕著になった場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-06-03T15:00:00-04:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-06-03T15:00:00-04:00",
     "max_favorable_excursion_pct": 0.691,
-    "max_adverse_excursion_pct": -0.521,
+    "max_adverse_excursion_pct": -0.599,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -37897,6 +37897,21 @@
         "matched_titles": [
           "イラン紛争への懸念でFTSE 100と米国株が急落、原油は変動"
         ]
+      }
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 15.46,
+        "end": 16.05,
+        "change_pct": 3.82
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "ボラ拡大",
+        "primary_cause": "VIX指数上昇によるボラティリティ拡大",
+        "ai_diagnosis": "シグナル発火時、VIX指数は15.46から16.05へと3.8%上昇していました。これは市場全体の不確実性やリスク回避の兆候であり、ダウ平均先物のようなリスク資産の価格変動を増大させる要因となります。エントリー時のRSI71.23という過熱感と相まって、このボラティリティ上昇が急激な価格調整を招き、SLヒットにつながった可能性があります。",
+        "lesson": "VIX指数の動向を注視し、ボラティリティ拡大時にはエントリーを控えたり、SL幅を広げるなどの対応を検討する。",
+        "category_tag": "VIX上昇"
       }
     }
   },
@@ -44301,7 +44316,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.232,
+    "max_favorable_excursion_pct": 0.241,
     "max_adverse_excursion_pct": -0.271,
     "email_sent": false,
     "whipsaw_check": {
@@ -49263,12 +49278,12 @@
     "news_count": 0,
     "news_titles": [],
     "ai_narrative": "ユーロ/豪ドル（EUR/AUD）は、ボリンジャーバンドの-2σにタッチし、過去20本の安値水準に接近したことから、短期的な反発が期待されます。RSIが39.5と買われすぎ/売られすぎの境界線（50）を下回っている点、MACDがシグナルを下回っている点は、この反発シナリオを支持するものです。25MAと75MAが横ばいであることも、レンジ相場での短期的な反転の可能性を示唆しています。  ファンダメンタルズ面では、中国のテック株の堅調がアジア株式市場を牽引しており、これが豪ドルにとって追い風となる可能性があります。しかし、通貨強弱ではユーロが弱く、豪ドルが強い状況であり、シグナルと逆方向の動きです。この通貨強弱の乖離が継続し、ユーロ安・豪ドル高がさらに進行する展開となれば、本シナリオは崩れる可能性があります。ATRベースで算出されたストップロスは、このリスクを管理するために設定されています。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-06-03T21:00:00+01:00",
+    "hit_tp1_at": "2026-06-03T21:00:00+01:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.413,
+    "max_favorable_excursion_pct": 0.427,
     "max_adverse_excursion_pct": -0.112,
     "email_sent": false,
     "whipsaw_check": {
@@ -49387,6 +49402,22 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 15.78,
+        "end": 16.05,
+        "change_pct": 1.71
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当",
+        "primary_cause": "ボリンジャーバンド-2σタッチからの短期反発成功",
+        "ai_diagnosis": "RSI39.47、MACDの弱気シグナル、ボリンジャーバンド-2σタッチが示唆する短期的な売られすぎからの反発が機能しました。25MAと75MAが横ばいであったことは、レンジ相場における短期的な反転の期待を強めました。AI解説にあったユーロの弱さと豪ドルの強さという通貨強弱の逆風にもかかわらず、テクニカル面での売られすぎサインが優位に働いたと考えられます。",
+        "lesson": "テクニカルな売られすぎサインは、多少のファンダメンタルズ逆風を覆すことがある。信頼度LOWでもテクニカル優位でエントリーを検討。",
+        "category_tag": "テクニカル逆張り",
+        "repeatable": "medium"
       }
     }
   },
@@ -50960,7 +50991,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.665,
+    "max_favorable_excursion_pct": 1.673,
     "max_adverse_excursion_pct": -1.703,
     "email_sent": true,
     "whipsaw_check": {
@@ -51112,7 +51143,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 2.481,
+    "max_favorable_excursion_pct": 2.774,
     "max_adverse_excursion_pct": -0.599,
     "email_sent": true,
     "whipsaw_check": {
@@ -51759,13 +51790,13 @@
       "BTCは6万7000ドルへ下落、ピーター・シフ氏はビットコインのチャートを「巨大なトップ」と指摘"
     ],
     "ai_narrative": "銀先物はボリンジャーバンドの-2σにタッチし、反発の兆しが見られます。RSIは40台後半と売られすぎ水準には達していませんが、MACDもデッドクロス後の横ばいであり、下値の堅さが示唆されます。ファンダメンタルズでは、インフレ懸念と金価格の上昇傾向が銀価格を下支えする可能性があります。通貨強弱ではUSDがやや優位ですが、銀の主要な取引通貨であるUSDとの関係性は中立的です。シナリオが崩れるのは、74.06ドルの直近安値を明確に下抜けた場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-06-03T16:00:00-04:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-06-03T16:00:00-04:00",
     "max_favorable_excursion_pct": 0.341,
-    "max_adverse_excursion_pct": -2.077,
+    "max_adverse_excursion_pct": -2.378,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -51856,6 +51887,29 @@
         "hit_count": 0,
         "matched_keywords": [],
         "matched_titles": []
+      }
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 16.08,
+        "end": 16.05,
+        "change_pct": -0.19
+      },
+      "news_during_holding": [
+        "本日2026年6月3日水曜日の銀価格：衝突が続く中、今朝は下落",
+        "カナディアン・クリティカル・ミネラルズ、ブルリバー鉱山の鉱業リース期間更新を受領",
+        "アップサイド・ゴールド、ケナ金銅プロジェクトでの資源拡大を目指す",
+        "シルバー・レンジ・リソーシズのパートナー、エクスカリバー、ベルヘレンで有望な掘削結果を報告",
+        "アウトクロップ・シルバー＆ゴールド、コロンビアのアギラターゲットからの分析結果を発表",
+        "原油価格の急騰で銀が4800万ドル流出",
+        "インドが国際収支への圧力を食い止めるために講じた措置"
+      ],
+      "ai_result": {
+        "primary_category": "テクニカル悪化 / ファンダメンタル",
+        "primary_cause": "テクニカル指標の弱さと原油価格急騰が影響",
+        "ai_diagnosis": "RSIが40台後半、MACDもデッドクロス後横ばいという弱めのテクニカル指標に対し、原油価格急騰による銀からの資金流出（4800万ドル）が重しとなった。AI解説で示唆された74.06ドルの下抜けは発生せずとも、ファンダメンタルズとテクニカルの複合的な悪化でSLに達した。",
+        "lesson": "テクニカルだけでなく、関連ニュースや市場全体の資金フローも複合的に考慮し、エントリー判断を洗練させる。",
+        "category_tag": "複合的悪化"
       }
     }
   },
@@ -53079,6 +53133,532 @@
           "ホルムズ海峡取引の楽観論で原油安、ドルは下落基調",
           "ドル、イラン戦争開始時よりも下落"
         ]
+      }
+    }
+  },
+  {
+    "id": "SI=F_4h_20260604_0516",
+    "fired_at": "2026-06-04T05:16:08+09:00",
+    "timeframe": "4h",
+    "ticker": "SI=F",
+    "asset_name": "銀 先物",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 73.11499786376953,
+    "stop_loss": 74.7806454881073,
+    "take_profit_1": 70.89413436465252,
+    "take_profit_2": 69.783702615094,
+    "atr": 1.1104317495585099,
+    "sl_pct": 2.2781203214164885,
+    "tp1_pct": -3.0374937618886504,
+    "tp2_pct": -4.556240642832977,
+    "indicators_at_signal": {
+      "rsi": 35.4,
+      "macd": -0.523,
+      "macd_sig": -0.2374,
+      "ma25": 75.4124,
+      "ma75": 75.7553,
+      "bb_low": 73.2181,
+      "bb_up": 77.3689,
+      "recent_high": 77.355,
+      "recent_low": 73.31,
+      "adx": 18.05,
+      "chop": 47.88,
+      "ma_dev_pct": 0.4526,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 3.818
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今週水曜日、6月3日、銀価格：衝突継続のため、今朝は下落",
+      "Canadian Critical Minerals、Bull River Mineの鉱業リース期間更新を受領",
+      "Upside Gold、Kena Gold-Copper Projectで資源増大を目標",
+      "Silver Range ResourcesのパートナーExcalibur、Bellehelenでの有望な掘削結果を発表",
+      "Outcrop Silver & Gold、コロンビアAguilar Targetからの分析結果を発表"
+    ],
+    "ai_narrative": "銀先物は直近安値割れ、RSI 35.4、MACD もデッドクロス気味で下落圧力が高まっています。ボリンジャーバンド -2σ近辺での推移は、さらなる下落を示唆します。通貨強弱では USD が最も強く、リスクオフムードが強まれば銀価格にはネガティブです。鉱業関連のニュースは個別のプロジェクトに留まり、銀価格全体への影響は限定的です。このショートシナリオは、74.78 を超えてくると崩れる可能性があります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 0.2,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "SI=F_4h_20260604_0501"
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.354,
+      "EUR": 0.025,
+      "GBP": -0.039,
+      "JPY": 0.212,
+      "AUD": -0.555
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "other",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-03T15:10:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "反転検知あり (-2)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 4.047,
+      "entry_vs_ma25_signed": 3.046,
+      "range_pos": -0.048,
+      "ma_ratio_pct": -0.453
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 5 月 NFP",
+          "hours_until": 40.2,
+          "impact": "critical",
+          "datetime": "2026-06-05T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.31,
+        "change_24h_pct": 1.78
+      },
+      "atr_regime": {
+        "current_atr": 1.1104,
+        "avg_atr_30d": 1.3657,
+        "ratio": 0.81,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "ES=F_4h_20260604_0516",
+    "fired_at": "2026-06-04T05:16:08+09:00",
+    "timeframe": "4h",
+    "ticker": "ES=F",
+    "asset_name": "S&P500 先物",
+    "signal_types": [
+      "fib_pullback_long"
+    ],
+    "primary_signal": "fib_pullback_long",
+    "primary_signal_label": "🟢 ファンダ強気×フィボ50%押し目（押し目買い候補）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 7568.0,
+    "stop_loss": 7533.740355350954,
+    "take_profit_1": 7613.679526198727,
+    "take_profit_2": 7636.519289298091,
+    "atr": 22.83976309936378,
+    "sl_pct": -0.45269086481297127,
+    "tp1_pct": 0.6035878197506285,
+    "tp2_pct": 0.9053817296259425,
+    "indicators_at_signal": {
+      "rsi": 42.98,
+      "macd": 7.3973,
+      "macd_sig": 15.8392,
+      "ma25": 7601.2,
+      "ma75": 7512.6267,
+      "bb_low": 7568.3421,
+      "bb_up": 7639.6829,
+      "recent_high": 7632.25,
+      "recent_low": 7562.5,
+      "adx": 26.14,
+      "chop": 58.25,
+      "ma_dev_pct": 1.179,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.241,
+      "d_res_atr": 2.813
+    },
+    "selection": {
+      "tier": "good",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今日の株式市場：債券利回りの上昇を受け、ダウ、S&P 500、ナスダックが下落",
+      "イラン情勢への懸念で、FTSE 100と米国株が下落、原油は変動",
+      "FOMC会合とイラン情勢を控え、FTSE 100と米国株が上昇",
+      "今日の株式市場：Nvidiaの決算発表を控え、テック関連の動きにダウ、S&P 500、ナスダックが上昇",
+      "今日の株式市場：Appleの株価上昇など、ボラティリティの高い取引を経てダウ、S&P 500、ナスダックが上昇して引け"
+    ],
+    "ai_narrative": "S&P500先物は、上昇インパルスの50%押し目水準に到達し、テクニカル的に買い場と判断されます。RSIは43と弱含みですが、MACDはまだプラス圏にあり、25MAを上回っています。イラン情勢やNvidia決算への期待感など、相場を支えるファンダメンタルズも存在し、USDの通貨強弱がポジティブな点もロング方向を後押しします。シナリオが崩れるのは、7533.74を下回った場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 日足 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.354,
+      "EUR": 0.025,
+      "GBP": -0.039,
+      "JPY": 0.212,
+      "AUD": -0.555
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-03T15:10:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "MID",
+      "signal_direction": "long",
+      "bias_aligned": true
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 5,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 0.321,
+      "entry_vs_ma25_signed": -0.437,
+      "range_pos": 0.079,
+      "ma_ratio_pct": 1.179
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 5 月 NFP",
+          "hours_until": 40.2,
+          "impact": "critical",
+          "datetime": "2026-06-05T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.31,
+        "change_24h_pct": 1.78
+      },
+      "atr_regime": {
+        "current_atr": 22.8398,
+        "avg_atr_30d": 31.2107,
+        "ratio": 0.73,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    }
+  },
+  {
+    "id": "GBPAUD=X_4h_20260604_0516",
+    "fired_at": "2026-06-04T05:16:08+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "high_break"
+    ],
+    "primary_signal": "high_break",
+    "primary_signal_label": "🟢 直近 20 本高値ブレイク（トレンド継続）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.8823299407958984,
+    "stop_loss": 1.8770794907962103,
+    "take_profit_1": 1.8893305407954828,
+    "take_profit_2": 1.8928308407952747,
+    "atr": 0.003500299999792132,
+    "sl_pct": -0.27893356450932133,
+    "tp1_pct": 0.37191141934576183,
+    "tp2_pct": 0.5578671290186427,
+    "indicators_at_signal": {
+      "rsi": 60.09,
+      "macd": 0.0005,
+      "macd_sig": -0.0002,
+      "ma25": 1.8769,
+      "ma75": 1.8797,
+      "bb_low": 1.8714,
+      "bb_up": 1.8829,
+      "recent_high": 1.8823,
+      "recent_low": 1.8689,
+      "adx": 13.84,
+      "chop": 61.19,
+      "ma_dev_pct": 0.1485,
+      "ma_dir": "down",
+      "regime": "range"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": 3.834,
+      "d_res_atr": null
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": true,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "range"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドル（ポンドオージー）は、直近20本高値ブレイクという力強いテクニカルシグナルが発火し、ロング（買い）方向が示唆されています。RSIが60台と買われすぎの領域には至っておらず、MACDもプラス圏への浮上を示唆していることから、トレンド継続の可能性が高いと考えられます。  ファンダメンタルズ面では、香港ハンセン指数が大幅上昇しており、AI関連への期待感がアジア株式市場全体を押し上げています。AUDは中国経済への依存度が高いため、こうしたアジア市場の堅調さはAUDにとって追い風となる可能性があります。通貨強弱も、GBPとAUDの弱さが一致しており、このロングシナリオを補強しています。  このロングシナリオが崩れるとすれば、中国本土の経済指標が悪化し、AUDが急速に下落した場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 日足 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.354,
+      "EUR": 0.025,
+      "GBP": -0.039,
+      "JPY": 0.212,
+      "AUD": -0.555
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 16.05 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-03T15:10:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 弱（-0.04%）× AUD 弱（-0.56%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": 0.516,
+      "base_strength": -0.039,
+      "quote_strength": -0.555
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": NaN,
+          "change_pct": NaN
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 26038.32,
+          "change_pct": 2.52
+        }
+      },
+      "news": [
+        "AIへの期待感がアジア株式市場を押し上げ",
+        "テック関連企業への楽観、アジア株式市場で地政学的リスクを払拭",
+        "テック関連への楽観がアジア株式市場を牽引",
+        "Lenovo株、AIサーバー需要の急増で5月に倍増—27年ぶりの好調月",
+        "ペルシャ湾岸とテック分野の見通しがアジア株式市場を後押し"
+      ]
+    },
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)",
+        "FX 強弱順張り (+1)"
+      ]
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=+0.65, entry_vs_ma25=+0.29%)",
+      "score": 0.648,
+      "entry_vs_ma25_signed": 0.291,
+      "range_pos": 1.005,
+      "ma_ratio_pct": -0.149
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 5 月 NFP",
+          "hours_until": 40.2,
+          "impact": "critical",
+          "datetime": "2026-06-05T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 16.05,
+        "avg_30d": 17.31,
+        "change_24h_pct": 1.78
+      },
+      "atr_regime": {
+        "current_atr": 0.0035,
+        "avg_atr_30d": 0.0042,
+        "ratio": 0.83,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
       }
     }
   }
