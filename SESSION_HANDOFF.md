@@ -26,6 +26,13 @@
 - **B（エンジン反映）は未適用＝レビュー待ち**。`generate_technical_alerts.py` の `calc_confidence_score`（L2158）に**データ駆動の加点/減点**を足す案。現状この関数は指標生値を受け取らないので**引数追加＋呼び出し側L2599の配線が必要**。本番のシグナルメールを変える変更なので、ユーザーGO後に実機の変数名を確認して安全に適用する。提案の中身はこのセッションのチャット参照（macd_dead×0ライン位置／方向×MA位置／ma_golden降格）。前向き検証タグも併せて入れる。
 - ⚠️ 多重比較62セルの懸念は残る（macd_dead×MACD>0は依然「best of many」の可能性）→ 別レジームで各候補 n≥40 の前向き再現を確認するまで本採用しない。
 
+#### ✅ 2026-06-03：テクニカル指標シリーズ 第4弾「RSI」公開
+- **`guide-rsi.html`（新規・SYNC済・ライブHTTP200確認）**（約42KB・compliance🟢白「そのまま公開OK」）。RSIの計算式（RS＝平均上昇幅÷平均下落幅、RSI＝100−100/(1+RS)）・標準14・70/30の買われすぎ売られすぎ・50ライン（センターライン）・ダイバージェンス・**強いトレンドでの張り付き＝最大の弱点**を網羅。事実はWebSearchで照合（Wilder 1978『New Concepts...』）。
+- **SVG概念図3点つき**：①全体像（価格＋0〜100オシレーター＋70/50/30ライン＋買われすぎ赤帯/売られすぎ緑帯）②買われすぎ→反落/売られすぎ→反発マーカー図 ③弱気ダイバージェンス（価格高値更新×RSI高値切り下げ）。**ライト/ダーク両対応をpreviewスクショで実機確認済**。RSI用クラス（.s-rsi/.s-ob-zone/.s-os-zone/.s-ob-line/.s-os-line/.s-ob-mark/.s-os-mark）を`<style>`に追加。
+- section-8は「RSIは複合シグナルの構成要素として実際に使用」と正直に明記（CLAUDE.md実装と整合）。第1弾(MA)↔第3弾(MACD)↔第4弾(RSI)を内部リンクで相互接続、関連カードはMACD/MA/track-record。guides.html「📈チャートの読み方」最上段に掲載（badge-guide「解説」）。
+- 公開フロー：guidesカードのみ手動挿入（publish_article.pyは--categoryをバッジ文字＆位置マッチ兼用のため）→`publish_article.py`でsync_to_github/更新履歴を自動追加→`mw check`✅→sync→`update-market-news.yml`起動(success)→index更新履歴・guides・記事すべてライブHTTP200確認。
+- **🎯 次セッション：シリーズ第5弾以降**（ボリンジャーバンド＝±2σバンド図／フィボナッチ＝実装済fib_pullbackと連携／エリオット波動／出来高 …。各記事にSVG概念図必須）。
+
 #### ✅ 2026-06-03 昼：サポレジ自動検出を technical-analyst に統合
 - **`detect_sr_levels.py`（新規・SYNC済）**：スイングピボットのクラスタリングで主要S/Rを自動検出（★=タッチ回数=強さ、現値からの距離%、簡易トレンドライン）。ティッカー直接指定で自己完結（例 `python detect_sr_levels.py "GBPJPY=X"`）。`sys.stdout.reconfigure(utf-8)` でBashのcp932でも落ちない。
 - **データ取得の回避策（重要）**：yfinanceライブラリ＝Yahooにブロックされ空／Stooq＝APIキー必須化、で両方不可。**Yahoo chart API を直接叩く**のが現状の解（`https://query1.finance.yahoo.com/v8/finance/chart/<ticker>?range=9mo&interval=1d`＋UA、PowerShellでもpython urllibでも通る）。
@@ -39,7 +46,7 @@
 - **第2弾「一目均衡表」公開済（2026-06-02）**（`guide-ichimoku.html`・50.4KB・compliance🟢白「そのまま公開OK」・事実10項目照合済）。雲／三役好転・逆転／5本の線／時間論・波動論・値幅観測論を網羅。guides.htmlの「📈チャートの読み方（テクニカル分析）」セクションに第1弾と並べて掲載（badge-guide「解説」）。section-8は「一目均衡表は発火トリガーに未使用」と正直に明記。第1弾↔第2弾を内部リンクで相互接続済。
 - **🖼️ シリーズ標準＝インラインSVG概念図（2026-06-02 確立）**：チャート系記事は文字だけだと伝わらないので、**手描きSVGの概念図**を入れる方針に決定。**第1弾・第2弾とも各3図実装済**：一目均衡表（①全体像 ②雲位置3パネル ③三役好転）／移動平均線（①SMA vs EMA ②パーフェクトオーダー ③GC・DC、2026-06-02後付け）。`<style>`に `.chart-figure/.svg-panels/.s-*` クラス（**ライト/ダーク両対応**・実価格不使用＝コンプラ安全）を定義。**実在価格でなく概念図とキャプション明記**。次弾以降も同手法で図解する（MACD=2線+ヒストグラム、RSI=0-100オシレーター等）。概念・マクロ記事にも後付け開始：**VIX**（水準ゲージ5色帯＋逆相関図）・**NISA**（年間枠内訳バー＋生涯枠1800万/成長枠1200万上限の箱型図）に図追加済（2026-06-02）。残り候補＝バフェット指数（ゲージ）／恐怖と強欲（メーター）／FOMC／iDeCo／投資の税金。ローカル確認は `.claude/launch.json` の `marketwatch-static`（python http.server 8765）→ preview スクショ。
 - **第3弾「MACD」公開済（2026-06-02）**（`guide-macd.html`・42.1KB・compliance🟢白「そのまま公開OK」・事実7項目照合済）。MACD線/シグナル線/ヒストグラムの3要素・計算式・GC/DC・0ライン・ダイバージェンスを網羅。**SVG概念図3点つき（①構成図＝price+MACD/signal/histogram/0ライン ②GC・DC拡大 ③弱気ダイバージェンス）**。section-8は「MACDは当サイトのシグナルで実際に複合条件の一つとして使用」と正直に明記（CLAUDE.md実装と整合）。第1弾(MA)↔第3弾(MACD)↔第2弾(一目)を内部リンクで相互接続。
-- **🎯 次セッション：シリーズを継続して量産**（第4弾以降：RSI／ボリンジャーバンド／フィボナッチ（実装済み fib_pullback と連携）／エリオット波動／出来高 …。**各記事にSVG概念図を必ず添える**。RSI=0-100オシレーター+30/70ライン図、ボリンジャー=±2σバンド図 が作りやすい）。狙い＝**エバーグリーン×高検索需要×低コンプラ＝SEO・AdSense両方に効く**。**内部リンクで束ねてトピック権威性**を作る。「薄い量産はNG・質が命」。
+- **🎯 次セッション：シリーズを継続して量産**（**第4弾「RSI」は2026-06-03公開済**。次は第5弾以降：ボリンジャーバンド／フィボナッチ（実装済み fib_pullback と連携）／エリオット波動／出来高 …。**各記事にSVG概念図を必ず添える**。RSI=0-100オシレーター+30/70ライン図、ボリンジャー=±2σバンド図 が作りやすい）。狙い＝**エバーグリーン×高検索需要×低コンプラ＝SEO・AdSense両方に効く**。**内部リンクで束ねてトピック権威性**を作る。「薄い量産はNG・質が命」。
 - 量産手順：WebSearchで事実確認 → content-writer（本文HTML）＋seo-ux（title/meta/JSON-LD）を並列起動（`.claude/agents/*.md` を Read→general-purpose に inline、model sonnet）→ compliance-reviewer（opus）監査 → `python mw.py publish --file … --category テクニカル分析 --emoji … --card-title … --desc …` または content-writer が②④⑤実行→sync→workflow。
 
 ### 💰 AdSense 審査突破（基盤収益・進行中）
