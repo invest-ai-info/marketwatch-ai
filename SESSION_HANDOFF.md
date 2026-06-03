@@ -66,6 +66,17 @@
 - **A＝選別tag `selection` を本番に【記録のみ】実装・SYNC済（commit 36171c3）**：`compute_selection_tier()` 追加、レコードに `selection`（tier=avoid/neutral/good/elite ＋ veto_chasing/veto_ma_golden_long/veto_runway_blocked/aligned/regime）。`sr_runway` と同じく **発火・メール・信頼度は不変**。py_compile✅、実304件で **tier別実Rが avoid −0.248R < neutral −0.093R < good +0.364R < elite +0.758R と完全単調**を確認。次回 technical-alerts から記録開始。
 - **次（前向き検証後に判断）**：tierの順序がライブで再現したら、avoid抑制／good・elite優遇を信頼度スコア or 発火に昇格、建値ストップ実装。**B案＝「大きく取る」本命は別系統**（週足トレンドフォロー/スイング、広SL・トレールrunner、weekly-zone/weekly-strategyインフラに乗せる）として中期テーマ。**まだ本採用しない**（13日・単一レジーム・多重比較）。
 
+#### ✅ 2026-06-03：エッジの正体＝「行き過ぎ（売られすぎ）の逆張り」を4データで確定＋パニック反発スキャナ
+- ユーザーの気づき（人気/出来高に資金集中、行き過ぎを取る）を順に検証。**結論：このシステムの実エッジは一貫して平均回帰＝“安いパニックを拾う/熱狂を売る”**。
+  - signals-log: 行き過ぎfade +0.31R（深い±2σ/RSI極値は+0.32R✅安定）、chase（順張り）は−0.03R。サポ買い+0.485R・レンジ+0.52R も同族。
+  - **非FX9資産 日足2年 OHLCV（出来高検証）**：下落+出来高急増(パニック)→前向き5日+0.24σ/62%。**出来高を伴わない上昇は10日で失速**（出来高は“続伸の確認”）。
+  - **交差検証（本丸特定）**：**RSI≤30 単独で +0.92σ/78%、RSI≤25 で +1.66σ/81%**。出来高急増は上乗せ（RSI≤30+パニックで+1.02σ）、バンド割れ%bはRSIと冗長。＝**主役はRSI売られすぎ、出来高は補助**。
+  - マネーフロー snapshot：資金は今 日本株>米テック>…>コモディティ/クリプト。
+- **ツール（すべてローカル・未SYNC、Yahoo直叩き）**：`panic_bounce_scan.py`（日次「投げ売り＝反発候補」スキャン）／`_panic_cross.py`（交差検証）／`_volume_divergence_backtest.py`／`_money_flow_snapshot.py`／`_overshoot_analysis.py`／`_mfe_analysis.py`。
+- **現況スキャン例**：BTC（RSI23+出来高+2.1σ+下落）が唯一の🔴反発候補、米株/日経はRSI70台＝過熱側。
+- **マーチンゲール検討は却下**：時系列で最大13連敗（good+eliteでも6連敗）、倍張りは38件目で破産。健全策＝固定比率/逆マーチン×+EV選別。
+- **デプロイ路（任意・前向き検証後）**：スキャナはCCR routineではYahoo403で不可→**weekly-levels.yml型のGitHub Actions**で日次 `panic-scan.md` 出力 or hot-assetsに「売られすぎ反発候補」枠。**実トレード採用は前向き再現＋スリッページ確認後**（歴史内2年・上昇ドリフト期・深条件n小・bandwalk罠）。
+
 ### 📈 テクニカル指標 解説シリーズ 始動 ← 次セッションの主タスク（P1＝記事量産）
 - guides.html に新カテゴリ **「📈 チャートの読み方（テクニカル分析）」** を追加。
 - **第1弾「移動平均線」公開済**（`guide-moving-average.html`・45KB・compliance🟢白）。**3人チーム（content-writer＋seo-ux-strategist＋compliance-reviewer）＋ `mw publish` で量産する流れを実証済み**。
