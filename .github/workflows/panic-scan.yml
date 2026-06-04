@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # 候補（RSI≤30）が出た日だけ panic_bounce_scan.py がメール送信に使う（候補なしの日は送らない）
+      GMAIL_USER: ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,10 +31,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install numpy
+        run: pip install numpy markdown
 
-      - name: Run panic bounce scan (writes panic-scan.md)
-        run: python panic_bounce_scan.py 1>/dev/null
+      - name: Run panic bounce scan (writes panic-scan.md, emails if candidate)
+        run: python panic_bounce_scan.py
 
       - name: Commit panic-scan.md if changed
         run: |
