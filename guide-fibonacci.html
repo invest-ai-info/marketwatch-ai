@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フィボナッチリトレースメントとは？黄金比・38.2/50/61.8%・押し目の見方を初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="フィボナッチリトレースメントの仕組みと黄金比（1.618・0.618）、23.6/38.2/50/61.8/78.6%の主要な比率、ゴールデンポケット（50〜61.8%）の押し目買い、フィボナッチ・エクステンション（利確目標）まで、初心者向けに図解でわかりやすく解説。">
+  <meta name="keywords" content="フィボナッチ,フィボナッチリトレースメント,黄金比,ゴールデンポケット,38.2,50,61.8,押し目,戻り,フィボナッチエクステンション,テクニカル分析,株式投資,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-fibonacci.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="フィボナッチリトレースメントとは？黄金比・38.2/50/61.8%・押し目の見方を初心者向けに徹底解説">
+  <meta property="og:description" content="フィボナッチの黄金比・主要な比率・ゴールデンポケット（50〜61.8%）の押し目・エクステンションを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-fibonacci.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "フィボナッチリトレースメントとは？黄金比・38.2/50/61.8%・押し目の見方を初心者向けに徹底解説",
+    "description": "フィボナッチの黄金比・主要な比率・ゴールデンポケット（50〜61.8%）の押し目・フィボナッチエクステンションまで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-04",
+    "dateModified": "2026-06-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-fibonacci.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fib{stroke:#8c959f;stroke-width:1;stroke-dasharray:4 3}
+    .s-fib-key{stroke:#bc4c00;stroke-width:1.4;stroke-dasharray:5 3}
+    .s-fib-gp{fill:#fff3cd;opacity:.75}
+    .s-fib-lbl{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-o{fill:#bc4c00;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-fib{stroke:#6e7781}
+    body.dark .s-fib-key{stroke:#ec8e2c}
+    body.dark .s-fib-gp{fill:#3a2e10;opacity:.6}
+    body.dark .s-fib-lbl{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-o{fill:#ec8e2c}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; フィボナッチとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はフィボナッチの仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📐 フィボナッチリトレースメントとは？黄金比・38.2/50/61.8%・押し目の見方を初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 4 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>「どこまで押したら買えばいい？」——トレンドに乗りたいとき、誰もが悩むのが<strong>押し目（一時的な下げ）の目安</strong>です。その答えのひとつとして世界中で使われているのが <strong>フィボナッチリトレースメント</strong>。自然界にも現れる<strong>黄金比</strong>を相場に当てはめ、価格が反転しやすい水準を前もって描いておく手法です。</p>
+    <p>この記事では、フィボナッチ数列と黄金比の関係から、23.6/38.2/50/61.8/78.6% という主要な比率、特に注目される「ゴールデンポケット（50〜61.8%）」の押し目買い、利益目標を測る「フィボナッチ・エクステンション」まで、図解を交えてやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>フィボナッチリトレースメントは、上昇（下降）した値幅に対し<strong>「どこまで押し戻すか」を黄金比（0.618など）で目盛りにした線</strong>。反転しやすい支持・抵抗の目安になる。</li>
+      <li>主要な比率は<strong>23.6 / 38.2 / 50 / 61.8 / 78.6%</strong>。中でも<strong>50〜61.8%は「ゴールデンポケット」</strong>と呼ばれ、押し目買い・戻り売りの注目ゾーンとされる。</li>
+      <li>ただしフィボは<strong>引き方（起点・終点の取り方）で線がずれ、後付けにもなりやすい</strong>。単独では使わず、<strong>トレンド方向や反転サインと組み合わせる</strong>のが基本とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">フィボナッチとは何か（黄金比）</a></li>
+        <li><a href="#section-2">リトレースメント＝押し目・戻りの考え方</a></li>
+        <li><a href="#section-3">主要な比率と意味（38.2/50/61.8）</a></li>
+        <li><a href="#section-4">ゴールデンポケット（50〜61.8%）</a></li>
+        <li><a href="#section-5">フィボナッチ・エクステンション（利確の目安）</a></li>
+        <li><a href="#section-6">長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ フィボナッチとは何か（黄金比）</h2>
+    <p><strong>フィボナッチ数列</strong>とは、<code>1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89…</code> のように、<strong>直前の2つの数を足して次の数を作る</strong>数列です。中世の数学者レオナルド・フィボナッチにちなんで名付けられました。この数列には不思議な性質があり、隣り合う数の比率が、進むほど一定の値<strong>「黄金比（約1.618）」</strong>に近づいていきます。</p>
+    <p>相場で使うのは、その逆数などから生まれる比率です。ある数を<strong>1つ後の数で割ると約0.618</strong>、<strong>2つ後で割ると約0.382</strong>、<strong>3つ後で割ると約0.236</strong>になります。これらをパーセントにした <strong>61.8% / 38.2% / 23.6%</strong> が、フィボナッチの代表的な比率です。「なぜ相場に効くのか」には諸説ありますが、<strong>世界中の多くの市場参加者が同じ水準を意識する</strong>ことが、結果的にその水準を機能させている面があると考えられています。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：フィボナッチは「未来を予言する魔法」ではなく、<strong>多くの人が見ているから意識されやすい目安</strong>です。<a href="guide-moving-average.html">移動平均線</a>や水平線と同じく、「ここで反応する人が多いかもしれない」というポイントを前もって知るための道具、と捉えるのが健全です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ リトレースメント＝押し目・戻りの考え方</h2>
+    <p><strong>リトレースメント（retracement）</strong>とは「引き返し」のこと。相場は一直線には動かず、上昇トレンドでも一時的に下げ（押し目）、下降トレンドでも一時的に上げ（戻り）ながら進みます。フィボナッチリトレースメントは、<strong>直近の上昇（下降）の値幅に対して、どこまで押し戻したか</strong>を 0%〜100% の目盛りで測る道具です。</p>
+    <p>使い方はシンプルで、<strong>上昇の起点（安値）と頂点（高値）を結ぶ</strong>と、その間に 23.6 / 38.2 / 50 / 61.8% の水平線が自動で引かれます。価格がこの線まで押してきたところが、<strong>反発して上昇トレンドに戻りやすい「押し目買いの候補」</strong>とされます（下降トレンドなら戻り売りの候補）。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="fib-retrace-title">
+        <title id="fib-retrace-title">上昇に対するフィボナッチリトレースメント。押し目が61.8%付近で反発</title>
+        <text class="s-panel-label" x="40" y="22">上昇トレンドの押し目をフィボで測る</text>
+        <!-- フィボ水平線（高値=0% 〜 安値=100%） -->
+        <line class="s-fib" x1="260" y1="70"  x2="600" y2="70"/>
+        <line class="s-fib" x1="260" y1="117" x2="600" y2="117"/>
+        <line class="s-fib" x1="260" y1="146" x2="600" y2="146"/>
+        <line class="s-fib" x1="260" y1="170" x2="600" y2="170"/>
+        <line class="s-fib-key" x1="260" y1="194" x2="600" y2="194"/>
+        <line class="s-fib" x1="260" y1="270" x2="600" y2="270"/>
+        <text class="s-fib-lbl" x="604" y="74">0%（高値）</text>
+        <text class="s-fib-lbl" x="604" y="121">23.6%</text>
+        <text class="s-fib-lbl" x="604" y="150">38.2%</text>
+        <text class="s-fib-lbl" x="604" y="174">50%</text>
+        <text class="s-fib-lbl" x="604" y="198">61.8%</text>
+        <text class="s-fib-lbl" x="604" y="274">100%（安値）</text>
+        <!-- ゴールデンポケット帯 50-61.8 -->
+        <rect class="s-fib-gp" x="260" y="170" width="340" height="24"/>
+        <!-- 価格：安値→高値→61.8%押し→反発 -->
+        <polyline class="s-price" points="40,270 150,170 260,70 330,130 400,191 470,140 560,92"/>
+        <text class="s-note" x="360" y="226" text-anchor="middle">押し目（リトレースメント）</text>
+        <text class="s-note-g" x="510" y="120">反発 ↗</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 上昇の起点（安値）と頂点（高値）を結ぶと、間に 23.6/38.2/50/61.8% の線が引かれる。価格が押し戻して 61.8%（黄金比）付近で反発すれば、押し目買いの候補になる。50〜61.8%の帯（黄色）が「ゴールデンポケット」。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 主要な比率と意味（38.2/50/61.8）</h2>
+    <p>フィボナッチの水準は複数ありますが、実戦でよく見られるのは次の通りです。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>比率</th>
+          <th>性格</th>
+          <th>意味・使われ方</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>23.6%</td>
+          <td>浅い押し</td>
+          <td>強いトレンドで、ほとんど押さずに進むときの目安。</td>
+        </tr>
+        <tr>
+          <td>38.2%</td>
+          <td>標準的な押し</td>
+          <td>勢いのあるトレンドの押し目としてよく意識される。</td>
+        </tr>
+        <tr>
+          <td>50%</td>
+          <td>心理的な節目</td>
+          <td>正式なフィボ比率ではないが「半値押し」として重視される。</td>
+        </tr>
+        <tr>
+          <td>61.8%</td>
+          <td>黄金比</td>
+          <td>最も重要とされる水準。ここを保てばトレンド継続の期待。</td>
+        </tr>
+        <tr>
+          <td>78.6%</td>
+          <td>深い押し</td>
+          <td>ここまで押すと深め。割れるとトレンド転換も警戒。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>注意したいのは、<strong>50%は本来のフィボナッチ比率ではない</strong>点です。1÷2＝0.5という「半値」が心理的に強く意識されるため、慣習的にフィボの線に加えられています。一方 <strong>61.8%は黄金比そのもの</strong>で、フィボナッチの中で最も重視される水準とされています。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ ゴールデンポケット（50〜61.8%）</h2>
+    <p>主要比率の中でも、<strong>50%と61.8%に挟まれた帯</strong>は特に注目され、<strong>「ゴールデンポケット（ゴールデンゾーン）」</strong>と呼ばれます。「半値押し」と「黄金比」という2つの重要水準が重なるこのゾーンは、<strong>押し目買い・戻り売りが最も意識されやすいエリア</strong>とされています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="fib-gp-title">
+        <title id="fib-gp-title">ゴールデンポケット50〜61.8%で価格が反発する概念図</title>
+        <!-- フィボ水準 38.2/50/61.8/78.6 -->
+        <line class="s-fib" x1="40" y1="80"  x2="600" y2="80"/>
+        <line class="s-fib" x1="40" y1="130" x2="600" y2="130"/>
+        <line class="s-fib-key" x1="40" y1="180" x2="600" y2="180"/>
+        <line class="s-fib" x1="40" y1="230" x2="600" y2="230"/>
+        <text class="s-fib-lbl" x="44" y="74">38.2%</text>
+        <text class="s-fib-lbl" x="44" y="124">50%</text>
+        <text class="s-fib-lbl" x="44" y="174">61.8%</text>
+        <text class="s-fib-lbl" x="44" y="224">78.6%</text>
+        <!-- ゴールデンポケット帯 50-61.8 -->
+        <rect class="s-fib-gp" x="40" y="130" width="560" height="50"/>
+        <text class="s-note-o" x="320" y="160" text-anchor="middle">ゴールデンポケット（50〜61.8%）＝押し目買いの注目ゾーン</text>
+        <!-- 価格：上から押してポケットで反発 -->
+        <polyline class="s-price" points="40,55 160,90 280,150 360,168 440,120 560,65"/>
+        <text class="s-note-g" x="470" y="100">反発して上昇再開 ↗</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 50%（半値押し）と61.8%（黄金比）に挟まれた「ゴールデンポケット」。押し目がこのゾーンに入って反発すれば、押し目買いの候補として注目される。ただしここで必ず反発するわけではなく、陽線・反転サインの確認とセットで使うのが基本。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      ゴールデンポケットは「反発しやすい注目ゾーン」であって、<strong>必ず反発する魔法のラインではありません</strong>。ここを下に割れば、トレンド転換やさらに深い下げに発展することもあります。「ゾーンに入ったから買い」ではなく、<strong>そこで実際に反発のサイン（陽線・<a href="guide-rsi.html">RSI</a>の反転など）が出たかを確認</strong>してから動くのが安全とされています。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ フィボナッチ・エクステンション（利確の目安）</h2>
+    <p>フィボナッチはエントリーだけでなく、<strong>利益確定の目標（どこまで伸びそうか）</strong>を測るのにも使われます。これが<strong>「フィボナッチ・エクステンション（拡張）」</strong>です。押し目をつけた後、トレンドが再開して<strong>もとの高値を超えて伸びる先</strong>に、<strong>127.2% / 161.8% / 261.8%</strong> といった水準を引いて目標にします。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="fib-ext-title">
+        <title id="fib-ext-title">フィボナッチエクステンションで利確目標を測る概念図</title>
+        <text class="s-panel-label" x="40" y="22">押し目から伸びる先＝利確の目安</text>
+        <!-- エクステンション水準 -->
+        <line class="s-fib" x1="250" y1="120" x2="600" y2="120"/>
+        <line class="s-fib" x1="250" y1="87"  x2="600" y2="87"/>
+        <line class="s-fib-key" x1="250" y1="46" x2="600" y2="46"/>
+        <text class="s-fib-lbl" x="604" y="124">100%（高値）</text>
+        <text class="s-fib-lbl" x="604" y="91">127.2%</text>
+        <text class="s-fib-lbl" x="604" y="50">161.8%</text>
+        <!-- 価格：安値→高値→押し目→高値超え→161.8% -->
+        <polyline class="s-price" points="40,240 160,120 250,175 340,120 430,87 540,46"/>
+        <text class="s-note" x="250" y="200" text-anchor="middle">押し目</text>
+        <text class="s-note-o" x="470" y="40">利確目標 161.8%</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 押し目をつけた後にトレンドが再開すると、もとの高値（100%）を超えて 127.2%・161.8% といった水準まで伸びることがある。これらをフィボナッチ・エクステンションとして利確の目安に使う。あくまで目安であり、必ず到達するわけではない。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：反転しやすい水準を前もって描ける</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>押し目・戻りの目安が分かる</strong>：「どこまで押したら買うか」の候補を、値動きの前に用意できる。</li>
+        <li><strong>利確の目標も測れる</strong>：エクステンションで「どこまで伸びそうか」の目安が立つ。</li>
+        <li><strong>多くの人が見ている</strong>：世界中で使われているため、その水準で反応が出やすい（自己成就的な面）。</li>
+        <li><strong>あらゆる市場・時間軸で使える</strong>：株・FX・商品・暗号資産、日足から分足まで広く使われている。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：主観が入り、後付けにもなりやすい</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>引き方で線が変わる</strong>：起点（安値）と終点（高値）の取り方しだいで水準がずれ、人によって違う線になる。最大の弱点とされる。</li>
+        <li><strong>後付けになりやすい</strong>：反発した後に「ほら61.8%だった」と当てはめるのは簡単。事前にどの水準を見るか決めておく規律が必要。</li>
+        <li><strong>必ず効くわけではない</strong>：意識される目安にすぎず、簡単に突き抜けることも多い。</li>
+        <li><strong>単独では根拠が弱い</strong>：水平線・移動平均・トレンドなど他の根拠と重なって初めて信頼度が上がるとされる。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① 明確なトレンドの「押し目・戻り」で使う</h3>
+    <p>フィボナッチリトレースメントは、<strong>はっきりした上昇（下降）の後の押し目（戻り）</strong>を測る道具です。方向感のないレンジ相場では機能しにくいので、まず<a href="guide-moving-average.html">移動平均線</a>などでトレンドの有無を確認し、トレンドがあるときに使うのがコツです。</p>
+
+    <h3>② 起点と終点は「分かりやすい高値・安値」で</h3>
+    <p>線の引き方で水準が変わるため、<strong>誰が見ても明らかなスイングの高値・安値</strong>を起点・終点に選ぶのが基本です。迷うような小さな波で引くと、再現性のない線になってしまいます。</p>
+
+    <h3>③ 「ゾーン到達＝即エントリー」にしない</h3>
+    <p>ゴールデンポケットなどに価格が来ても、それ自体は売買サインではありません。<strong>そこで実際に反発の兆し（陽線・<a href="guide-rsi.html">RSI</a>の反転・<a href="guide-macd.html">MACD</a>の好転など）が出たかを確認</strong>してから検討すると、ダマシを減らせるとされています。</p>
+
+    <h3>④ 他の根拠と「重なる」水準を重視する</h3>
+    <p>フィボの線が、ちょうど<strong>過去の高値安値・移動平均線・キリのいい価格などと重なる</strong>と、その水準は多くの人に意識され、反応が出やすくなると考えられています。<strong>複数の根拠が集まる水準</strong>ほど信頼度が高い、という見方が一般的です。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、<strong>フィボナッチを「ファンダメンタルズと整合したゴールデンポケット押し目」シグナルとして実際に使用しています</strong>。具体的には、ファンダメンタルズ分析が相場の方向性（上昇／下降）を一定の確信度で示しているときに、価格が<strong>50〜61.8%のゴールデンポケットまで押し戻した（戻した）局面</strong>を、押し目買い・戻り売りの候補として検出する仕組みです。</p>
+    <p>ただし本文で述べた通り、フィボナッチは<strong>引き方に主観が入り、単独ではダマシも多い</strong>指標です。そのため当サイトのシステムでは、フィボ単体で発火させるのではなく、<strong>ファンダメンタルズの方向性との一致</strong>を前提条件にしたうえで、移動平均線・RSI・MACD・ボリンジャーバンドなどの他のシグナルや、短期・中期・長期足の整合と組み合わせて総合的に判断しています。フィボナッチはあくまで「押し目・戻りの水準を測る一つの根拠」として機能させています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">フィボナッチ押し目を含む複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>フィボナッチについて学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>フィボナッチ数列から生まれる<strong>黄金比（1.618・0.618）</strong>を相場に当てはめ、反転しやすい水準を描くのがフィボナッチリトレースメント。</li>
+      <li>主要比率は<strong>23.6 / 38.2 / 50 / 61.8 / 78.6%</strong>。<strong>50%は心理的な半値、61.8%は黄金比</strong>で最重要。</li>
+      <li><strong>50〜61.8%＝ゴールデンポケット</strong>は押し目買い・戻り売りの注目ゾーン。</li>
+      <li><strong>エクステンション（127.2 / 161.8%）</strong>は利益確定の目標を測るのに使う。</li>
+      <li>弱点は<strong>引き方で線が変わる主観性・後付けのしやすさ</strong>。単独では根拠が弱い。</li>
+      <li>実践では<strong>明確なトレンドで・分かりやすい高安を起点に・反転確認とセットで・他の根拠と重ねて</strong>使うのが基本とされる。</li>
+    </ul>
+
+    <p>フィボナッチは、「どこまで押したら買うか」「どこまで伸びたら利確するか」という、トレードで必ずぶつかる問いに目安を与えてくれる道具です。まずはチャートで明確な上昇・下降にフィボを引いて、価格がどの水準で反応しているかを観察するところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">押し目はトレンドの中で起きる。トレンドの方向と押し目を確認する移動平均線を初心者向けに解説。</div>
+      </a>
+      <a class="related-card" href="guide-rsi.html">
+        <div class="related-card-title">📊 RSIの見方</div>
+        <div class="related-card-desc">買われすぎ・売られすぎを測るオシレーター。フィボの水準で反転を確認する際に役立つ。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">フィボナッチ押し目を含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はフィボナッチの仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
