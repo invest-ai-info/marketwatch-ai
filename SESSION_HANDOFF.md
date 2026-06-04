@@ -31,7 +31,13 @@
 - **SVG概念図3点つき**：①全体像（価格＋0〜100オシレーター＋70/50/30ライン＋買われすぎ赤帯/売られすぎ緑帯）②買われすぎ→反落/売られすぎ→反発マーカー図 ③弱気ダイバージェンス（価格高値更新×RSI高値切り下げ）。**ライト/ダーク両対応をpreviewスクショで実機確認済**。RSI用クラス（.s-rsi/.s-ob-zone/.s-os-zone/.s-ob-line/.s-os-line/.s-ob-mark/.s-os-mark）を`<style>`に追加。
 - section-8は「RSIは複合シグナルの構成要素として実際に使用」と正直に明記（CLAUDE.md実装と整合）。第1弾(MA)↔第3弾(MACD)↔第4弾(RSI)を内部リンクで相互接続、関連カードはMACD/MA/track-record。guides.html「📈チャートの読み方」最上段に掲載（badge-guide「解説」）。
 - 公開フロー：guidesカードのみ手動挿入（publish_article.pyは--categoryをバッジ文字＆位置マッチ兼用のため）→`publish_article.py`でsync_to_github/更新履歴を自動追加→`mw check`✅→sync→`update-market-news.yml`起動(success)→index更新履歴・guides・記事すべてライブHTTP200確認。
-- **🎯 次セッション：シリーズ第8弾以降**（**第5「ボリンジャーバンド」(6/3)・第6「出来高」(6/4)・第7「フィボナッチ」(6/4)公開済**。次はストキャスティクス＝RSIと対で書きやすい／エリオット波動／ダウ理論／一目の補完 …。各記事にSVG概念図必須）。
+- **🎯 次セッション：シリーズ第9弾以降**（**第5「ボリンジャーバンド」・第6「出来高」・第7「フィボナッチ」・第8「ストキャスティクス」公開済（6/3-6/4）**。次はダウ理論／エリオット波動／ADX・DMI／一目の補完／サポレジ＆トレンドライン …。各記事にSVG概念図必須）。
+
+#### ✅ 2026-06-04：テクニカル指標シリーズ 第8弾「ストキャスティクス」公開
+- **`guide-stochastics.html`（新規・SYNC済・ライブHTTP200確認）**（約41.5KB・compliance🟢白「そのまま公開OK」）。%K=(終値−最安値)/(最高値−最安値)×100・%D=%Kの3期間SMA・標準14・80/20の買われすぎ売られすぎ・**%Kと%Dのクロス（過熱圏GC/DC）**・ダイバージェンス・**ファスト/スロー/フル**・**RSIとの違い（勢いの比率 vs 値幅内の終値位置）**を網羅。事実WebSearch照合（George Lane）。
+- **SVG概念図3点つき**：①構成図（価格＋%K青/%D橙点線＋80/50/20＋赤緑ゾーン）②%K×%Dクロス（売られすぎ圏で緑GC＝買い/買われすぎ圏で赤DC＝売り）③弱気ダイバージェンス。**ライト/ダーク両対応をpreviewスクショで実機確認済**。RSIの`.s-ob-zone`系＋新規`.s-k`/`.s-d`を`<style>`に定義。
+- **section-8で正直に明記**：当サイトの自動シグナルはRSI/MACD/MA/BB/ブレイクを使用し**ストキャスティクスは未組込（過熱感の役割はRSIが担当）**＝「指標は数より役割で絞る」という設計思想。関連カードはRSI/MACD/track-record。第4(RSI)と内部リンク強化（RSIとの違いセクション）。**シリーズ計8本**（MA/一目/MACD/RSI/BB/出来高/フィボ/ストキャス）。
+- 公開フロー従来同一（guidesカード手動挿入→publish_article→mw check✅→sync→update-market-news(success)→記事/guides/index全ライブHTTP200確認）。
 
 #### ✅ 2026-06-04：速報「ビットコイン暴落（2026年6月）」公開
 - **`guide-btc-crash-2026-06.html`（新規・SYNC済・ライブHTTP200確認）**（約33.5KB・compliance🟢白「そのまま公開OK」・6高リスク次元すべて合格）。速報系＝**WebSearch事実確認を先に実施**（CoinDesk/Investing/Yahoo Finance/CryptoTimes 等で照合）。
