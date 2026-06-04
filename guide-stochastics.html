@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ストキャスティクスとは？%K・%D・80/20の見方とRSIとの違いを初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="ストキャスティクスの%Kと%Dの計算と仕組み、80/20の買われすぎ・売られすぎ、%Kと%Dのクロス（売買サイン）、ダイバージェンス、ファスト/スローの違い、RSIとの違いまで、オシレーター系テクニカル指標を初心者向けに図解でわかりやすく解説。">
+  <meta name="keywords" content="ストキャスティクス,ストキャス,%K,%D,80,20,買われすぎ,売られすぎ,ゴールデンクロス,ダイバージェンス,ファストストキャスティクス,スローストキャスティクス,RSIとの違い,テクニカル分析,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-stochastics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ストキャスティクスとは？%K・%D・80/20の見方とRSIとの違いを初心者向けに徹底解説">
+  <meta property="og:description" content="ストキャスティクスの%K・%D・80/20・%Kと%Dのクロス・ダイバージェンス・RSIとの違いを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-stochastics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ストキャスティクスとは？%K・%D・80/20の見方とRSIとの違いを初心者向けに徹底解説",
+    "description": "ストキャスティクスの%Kと%D・80/20の買われすぎ売られすぎ・%Kと%Dのクロス・ダイバージェンス・RSIとの違いまで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-04",
+    "dateModified": "2026-06-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-stochastics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#8c959f;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-k{stroke:#1f6feb;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-d{stroke:#bc4c00;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-dasharray:5 3}
+    .s-zero{stroke:#6e7781;stroke-width:1.3;stroke-dasharray:5 4}
+    .s-ob-zone{fill:#ffebe9}
+    .s-os-zone{fill:#e6ffed}
+    .s-ob-line{stroke:#cf222e;stroke-width:1.4;stroke-dasharray:5 4}
+    .s-os-line{stroke:#2da44e;stroke-width:1.4;stroke-dasharray:5 4}
+    .s-ob-txt{fill:#cf222e;font-size:11px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-os-txt{fill:#1a7f37;font-size:11px;font-weight:700;text-anchor:middle;font-family:'Noto Sans JP',sans-serif}
+    .s-gc{fill:#ffffff;stroke:#1a7f37;stroke-width:2.5}
+    .s-dc{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divline{stroke:#cf222e;stroke-width:1.8;stroke-dasharray:6 4;fill:none}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#6e7781}
+    body.dark .s-k{stroke:#58a6ff}
+    body.dark .s-d{stroke:#ec8e2c}
+    body.dark .s-zero{stroke:#8b949e}
+    body.dark .s-ob-zone{fill:#2a1010}
+    body.dark .s-os-zone{fill:#162416}
+    body.dark .s-ob-line{stroke:#f85149}
+    body.dark .s-os-line{stroke:#3fb950}
+    body.dark .s-ob-txt{fill:#ff8080}
+    body.dark .s-os-txt{fill:#7ee787}
+    body.dark .s-gc{fill:#161b22;stroke:#3fb950}
+    body.dark .s-dc{fill:#161b22;stroke:#f85149}
+    body.dark .s-divline{stroke:#ff7b72}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ストキャスティクスとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はストキャスティクスの仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 ストキャスティクスとは？%K・%D・80/20の見方とRSIとの違いを初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 4 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>RSI と並んでよく使われるオシレーター系の指標が <strong>ストキャスティクス</strong> です。チャートの下で 0〜100 を行き来する <strong>2本の線（%K と %D）</strong>——これは「直近の値幅の中で、今の終値がどのあたりにあるか」を測ることで、<strong>買われすぎ・売られすぎと、その転換のタイミング</strong>を読み取ろうとする指標です。</p>
+    <p>この記事では、%K と %D の計算と仕組みから、有名な「80・20」の買われすぎ・売られすぎ、2本の線のクロス（売買サイン）、ダイバージェンス、ファスト/スローの違い、そして<strong>RSIとの違い</strong>まで、図解を交えてやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ストキャスティクスは<strong>「直近の高値〜安値の値幅の中で、終値がどの位置にあるか」を 0〜100 で表す</strong>オシレーター。<strong>%K（敏感な線）と %D（%Kをならした線）の2本</strong>で構成される。</li>
+      <li>一般に <strong>80 以上で買われすぎ・20 以下で売られすぎ</strong>。さらに <strong>%K が %D を抜けるクロス</strong>が売買サインの目安とされる。</li>
+      <li>RSIより<strong>反応が速くサインが多い</strong>反面、<strong>ダマシも多い</strong>。強いトレンドでは高値（安値）に張り付くため、トレンドの有無を見極めて使うのが基本とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">ストキャスティクスとは何か（概要と歴史）</a></li>
+        <li><a href="#section-2">%Kと%Dの計算・仕組み</a></li>
+        <li><a href="#section-3">買われすぎ・売られすぎ（80・20）</a></li>
+        <li><a href="#section-4">%Kと%Dのクロス（売買サイン）</a></li>
+        <li><a href="#section-5">ダイバージェンス（逆行現象）</a></li>
+        <li><a href="#section-6">ファスト/スローとRSIとの違い</a></li>
+        <li><a href="#section-7">長所と弱点</a></li>
+        <li><a href="#section-8">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ストキャスティクスとは何か（概要と歴史）</h2>
+    <p><strong>ストキャスティクス（Stochastics）</strong>は、米国のテクニカルアナリスト<strong>ジョージ・レーン（George Lane）</strong>が1950年代後半に考案したとされる（普及は1970年代以降）、モメンタム系のオシレーター指標です。「stochastic」は「確率的な」という意味の言葉です。</p>
+    <p>この指標の発想はとてもシンプルで、<strong>「上昇しているときは、終値が直近の値幅の“上のほう”で引けやすい。下落しているときは“下のほう”で引けやすい」</strong>という性質を利用します。直近一定期間の高値〜安値という箱の中で、<strong>今の終値がどの高さにあるか</strong>を 0〜100% で測ることで、相場の勢いと過熱感を読み取ろうとするのです。レーンは「<strong>モメンタム（勢い）は価格より先に向きを変える</strong>」と述べたとされ、その点でストキャスティクスは転換の予兆を捉える道具として使われます。</p>
+
+    <div class="info-box">
+      <strong>💡 オシレーターとは</strong>：一定の範囲（ここでは 0〜100）を行ったり来たりする指標のこと。<a href="guide-rsi.html">RSI</a> と同じ仲間で、「買われすぎ・売られすぎ」という過熱感を測るのが得意です。RSIが「上昇と下落の勢いの比率」を見るのに対し、ストキャスティクスは「<strong>値幅の中での終値の位置</strong>」を見る、という違いがあります。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ %Kと%Dの計算・仕組み</h2>
+    <p>ストキャスティクスは<strong>2本の線</strong>でできています。少し式が出てきますが、考え方は「値幅の中の位置」です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>線</th>
+          <th>計算（一般的な設定）</th>
+          <th>意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>%K（パーセントK）</td>
+          <td>（終値 − 期間中の最安値）÷（期間中の最高値 − 最安値）× 100</td>
+          <td>値幅の中で終値がどの高さにあるか。敏感に動く主役の線</td>
+        </tr>
+        <tr>
+          <td>%D（パーセントD）</td>
+          <td>%K の移動平均（一般に <code>3</code> 期間）</td>
+          <td>%K をならした線。売買サインの基準になる（シグナル線）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>期間は一般に <strong>14</strong> がよく使われます。式の意味はシンプルで、<strong>終値が期間中の最高値で引ければ %K は 100、最安値で引ければ 0</strong> になります。つまり %K が高いほど「終値が値幅の上のほう＝買われている」、低いほど「下のほう＝売られている」という状態を表します。%D はその %K をならした線で、<strong>2本の交差（クロス）</strong>が売買サインの目安になります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 買われすぎ・売られすぎ（80・20）</h2>
+    <p>ストキャスティクスの基本的な使い方は、<strong>80 と 20 のライン</strong>で過熱感を見ることです。RSI の 70/30 に対して、ストキャスティクスでは <strong>80/20</strong> が使われるのが一般的です。</p>
+    <ul>
+      <li><strong>80 以上＝買われすぎ</strong>：終値が値幅の上のほうに偏っている。短期的に反落しやすい状態とされる。</li>
+      <li><strong>20 以下＝売られすぎ</strong>：終値が値幅の下のほうに偏っている。短期的に反発しやすい状態とされる。</li>
+      <li><strong>50 前後＝中立</strong>：値幅の真ん中あたりで、明確な過熱感がない状態。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="stoch-structure-title">
+        <title id="stoch-structure-title">ストキャスティクスの構成図。価格の下に%Kと%D、80/20ライン</title>
+        <text class="s-panel-label" x="40" y="24">価格（ローソク足）</text>
+        <polyline class="s-price" points="40,140 110,110 180,80 250,70 320,100 390,135 460,150 530,125 600,100"/>
+        <line x1="40" y1="185" x2="600" y2="185" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="205">ストキャスティクス（0〜100・%Kと%D）</text>
+        <!-- 買われすぎゾーン 80-100 -->
+        <rect class="s-ob-zone" x="40" y="215" width="560" height="28"/>
+        <!-- 売られすぎゾーン 0-20 -->
+        <rect class="s-os-zone" x="40" y="327" width="560" height="28"/>
+        <line class="s-ob-line" x1="40" y1="243" x2="600" y2="243"/>
+        <text class="s-label-sm" x="28" y="247" text-anchor="end">80</text>
+        <line class="s-zero" x1="40" y1="285" x2="600" y2="285"/>
+        <text class="s-label-sm" x="28" y="289" text-anchor="end">50</text>
+        <line class="s-os-line" x1="40" y1="327" x2="600" y2="327"/>
+        <text class="s-label-sm" x="28" y="331" text-anchor="end">20</text>
+        <!-- %D（ならした線・遅れる） -->
+        <polyline class="s-d" points="40,295 110,275 180,250 250,245 320,260 390,295 460,320 530,315 600,285"/>
+        <!-- %K（敏感な線） -->
+        <polyline class="s-k" points="40,290 110,255 180,235 250,240 320,275 390,320 460,335 530,300 600,265"/>
+        <text class="s-ob-txt" x="560" y="232" text-anchor="end">買われすぎ圏</text>
+        <text class="s-os-txt" x="560" y="349" text-anchor="end">売られすぎ圏</text>
+        <g transform="translate(48,402)">
+          <line class="s-k" x1="0" y1="0" x2="26" y2="0"/><text class="s-legend" x="32" y="5">%K（敏感）</text>
+          <line class="s-d" x1="130" y1="0" x2="156" y2="0"/><text class="s-legend" x="162" y="5">%D（ならした線）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ ストキャスティクスの構成。価格の下に %K（青）と %D（橙の点線）が 0〜100 を行き来する。価格が上昇して過熱すると 80 の買われすぎ圏（赤帯）へ、下落して売られすぎると 20 の売られすぎ圏（緑帯）へ入る。%K は敏感に、%D はそれをならして動く。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      RSI と同じく、<strong>「80超え＝すぐ売り」「20割れ＝すぐ買い」ではありません</strong>。強い上昇トレンドでは %K・%D が 80 以上に張り付いたまま価格が上がり続けることがあります。むしろ高値圏に張り付くのは「強い買い圧力が続いているサイン」のこともあり、過熱だけを根拠に逆張りするのは危険とされています。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ %Kと%Dのクロス（売買サイン）</h2>
+    <p>ストキャスティクスならではのサインが、<strong>%K と %D のクロス</strong>です。敏感な %K が、ならした %D を抜けるタイミングを売買の目安にします。特に<strong>買われすぎ圏・売られすぎ圏で起きたクロス</strong>が注目されます。</p>
+    <ul>
+      <li><strong>売られすぎ圏（20以下）での %K が %D を上抜け</strong>：下げ止まって反発に向かうサインとして、買いの目安にされることが多い。</li>
+      <li><strong>買われすぎ圏（80以上）での %K が %D を下抜け</strong>：上げ止まって反落に向かうサインとして、売り・手仕舞いの目安にされることが多い。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 290" role="img" aria-labelledby="stoch-cross-title">
+        <title id="stoch-cross-title">ストキャスティクスの%Kと%Dのクロスの拡大図</title>
+        <!-- ゾーン -->
+        <rect class="s-ob-zone" x="40" y="40" width="560" height="40"/>
+        <rect class="s-os-zone" x="40" y="200" width="560" height="40"/>
+        <line class="s-ob-line" x1="40" y1="80" x2="600" y2="80"/>
+        <text class="s-label-sm" x="28" y="84" text-anchor="end">80</text>
+        <line class="s-zero" x1="40" y1="140" x2="600" y2="140"/>
+        <text class="s-label-sm" x="28" y="144" text-anchor="end">50</text>
+        <line class="s-os-line" x1="40" y1="200" x2="600" y2="200"/>
+        <text class="s-label-sm" x="28" y="204" text-anchor="end">20</text>
+        <!-- %D -->
+        <polyline class="s-d" points="40,150 110,175 180,200 250,178 320,135 390,95 460,92 530,120 600,158"/>
+        <!-- %K -->
+        <polyline class="s-k" points="40,160 110,195 180,218 250,150 320,108 390,70 460,105 530,150 600,175"/>
+        <!-- クロスのマーカー -->
+        <circle class="s-gc" cx="216" cy="192" r="12"/>
+        <circle class="s-dc" cx="425" cy="86" r="12"/>
+        <text class="s-os-txt" x="216" y="232">%K↑%D（売られすぎ）＝買い</text>
+        <text class="s-ob-txt" x="425" y="34">%K↓%D（買われすぎ）＝売り</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 売られすぎ圏（緑帯）で %K（青）が %D（橙）を<strong>下から上に抜く＝買いサイン</strong>、買われすぎ圏（赤帯）で %K が %D を<strong>上から下に抜く＝売りサイン</strong>とされる。過熱圏で起きたクロスほど注目される。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ ダイバージェンス（逆行現象）</h2>
+    <p>RSI や MACD と同じく、ストキャスティクスでも<strong>「ダイバージェンス（逆行現象）」</strong>が転換の予兆として使われます。これは<strong>価格とストキャスティクスの動きが逆方向になる</strong>状態です。レーンが言う「モメンタムは価格より先に向きを変える」を捉える見方です。</p>
+    <ul>
+      <li><strong>弱気のダイバージェンス</strong>：価格は高値を更新しているのに、ストキャスティクスは高値を切り下げている。上昇の勢いが衰えているサインとされ、天井圏での下落転換を警戒する材料。</li>
+      <li><strong>強気のダイバージェンス</strong>：価格は安値を更新しているのに、ストキャスティクスは安値を切り上げている。下落の勢いが弱まっているサインとされ、底値圏での上昇転換を期待する材料。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 360" role="img" aria-labelledby="stoch-diverge-title">
+        <title id="stoch-diverge-title">弱気のダイバージェンスの概念図。価格は高値更新だがストキャスは高値切り下げ</title>
+        <text class="s-panel-label" x="40" y="24">価格</text>
+        <polyline class="s-price" points="40,140 110,80 180,130 250,58 320,110 420,150 540,160 600,158"/>
+        <line class="s-divline" x1="110" y1="78" x2="250" y2="56"/>
+        <text class="s-label-sm" x="150" y="48" fill="#cf222e">価格は高値更新 ↗</text>
+        <line x1="40" y1="195" x2="600" y2="195" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="216">ストキャスティクス</text>
+        <rect class="s-ob-zone" x="40" y="232" width="560" height="22"/>
+        <line class="s-ob-line" x1="40" y1="254" x2="600" y2="254"/>
+        <text class="s-label-sm" x="28" y="258" text-anchor="end">80</text>
+        <line class="s-os-line" x1="40" y1="320" x2="600" y2="320"/>
+        <text class="s-label-sm" x="28" y="324" text-anchor="end">20</text>
+        <!-- %K -->
+        <polyline class="s-k" points="40,300 110,240 180,290 250,262 320,298 420,312 540,316 600,314"/>
+        <line class="s-divline" x1="110" y1="238" x2="250" y2="264"/>
+        <text class="s-label-sm" x="140" y="228" fill="#cf222e">ストキャスは高値切り下げ ↘</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 弱気のダイバージェンスの例。価格は2つ目の山で高値を更新しているのに、ストキャスティクスの山は切り下がっている。上昇の勢いが衰えているサインとされ、トレンド転換の警戒材料として使われる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ ファスト/スローとRSIとの違い</h2>
+    <p>ストキャスティクスには、敏感さの異なる<strong>3つのタイプ</strong>があります。</p>
+    <ul>
+      <li><strong>ファスト・ストキャスティクス</strong>：%K がそのままで、最も反応が速い。ただし動きが激しく、ダマシも多い。</li>
+      <li><strong>スロー・ストキャスティクス</strong>：%K を少しならして滑らかにしたもの。ファストよりダマシが減り、実戦でよく使われる。</li>
+      <li><strong>フル・ストキャスティクス</strong>：期間を自由に設定できる、最も柔軟なタイプ。</li>
+    </ul>
+    <p>初心者には、<strong>動きが落ち着いていてダマシの少ないスロー・ストキャスティクスが扱いやすい</strong>とされています。</p>
+
+    <h3>RSIとの違い</h3>
+    <p>同じオシレーターでも、RSI とストキャスティクスは<strong>測っているものが違います</strong>。RSIが「一定期間の<strong>上昇と下落の勢いの比率</strong>」を見るのに対し、ストキャスティクスは「<strong>値幅の中での終値の位置</strong>」を見ます。一般に、<strong>ストキャスティクスの方が反応が速くサインが多い</strong>分、<strong>ダマシも多め</strong>。RSIの方がややゆったりしている、という性格の違いがあります。レンジ相場ではストキャスティクス、トレンドの強弱を見たいときはRSI、というように<strong>組み合わせて使う</strong>人も多いです。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：転換のタイミングを早めに捉える</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>反応が速い</strong>：%K が敏感に動くため、転換のサインを早めに出しやすい。</li>
+        <li><strong>クロスで具体的なタイミングが分かる</strong>：%Kと%Dの交差という、目で見て分かりやすい売買の目安がある。</li>
+        <li><strong>レンジ相場で機能しやすい</strong>：一定の範囲を行き来する相場での逆張りに向くとされる。</li>
+        <li><strong>ダイバージェンスで転換を察知</strong>：価格より先に勢いの衰えを捉えられることがある。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：ダマシが多く、強いトレンドに弱い</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>ダマシが多い</strong>：反応が速い分、無効なサインも多く出る。RSIより「だましやすい」とされる最大の弱点。</li>
+        <li><strong>強いトレンドで張り付く</strong>：上昇トレンドでは80以上、下降トレンドでは20以下に張り付き、逆張りが機能しなくなる。</li>
+        <li><strong>クロスが頻発する</strong>：%Kと%Dがもつれ合うと、クロスが何度も出て判断に迷う。</li>
+        <li><strong>設定で見え方が変わる</strong>：期間やファスト/スローの違いで感度が変わり、「唯一の正解」はない。</li>
+      </ul>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① まずはスロー＋「過熱圏でのクロス」から</h3>
+    <p>最初は<strong>スロー・ストキャスティクス</strong>を選び、<strong>「売られすぎ圏（20以下）での上抜けクロス」「買われすぎ圏（80以上）での下抜けクロス」</strong>だけに注目すると、ダマシを減らしやすいとされています。中間（50付近）のクロスは信頼度が低いと考えられることが多いです。</p>
+
+    <h3>② レンジ相場で使う・トレンドでは過信しない</h3>
+    <p>ストキャスティクスは<strong>方向感のないレンジ相場でこそ機能する</strong>指標です。強いトレンドが出ているときは80/20に張り付いて逆張りが効かなくなるので、まず相場がトレンドかレンジかを見極めてから使うのがコツです。</p>
+
+    <h3>③ 単独で使わず複数の根拠と組み合わせる</h3>
+    <p>ストキャスティクスは反応が速い分ダマシも多い指標です。<a href="guide-moving-average.html">移動平均線</a>でトレンドの大枠を確認し、<a href="guide-rsi.html">RSI</a>や<a href="guide-macd.html">MACD</a>と合わせて<strong>複数の指標が同じ方向を示しているか</strong>で判断すると、信頼性が高まると一般的に考えられています。</p>
+
+    <div class="info-box">
+      <strong>ℹ️ 当サイトでの扱い</strong>：当サイトの自動テクニカルアラートは、RSI・MACD・移動平均・ボリンジャーバンド・高値安値ブレイクなどを発火条件にしており、<strong>ストキャスティクスは現時点では組み込んでいません</strong>（似た「過熱感」の役割は<a href="guide-rsi.html">RSI</a>が担っています）。指標は数を増やせばよいわけではなく、役割の重なるものを絞って使う、という考え方です。実際のシグナル成績は<a href="track-record.html">成績ダッシュボード</a>で公開しています。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">RSI・MACD などを組み合わせた複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>ストキャスティクスについて学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>ストキャスティクスは<strong>「値幅の中での終値の位置」を 0〜100 で表す</strong>オシレーター。ジョージ・レーンが考案。標準期間は14。</li>
+      <li>構成は<strong>%K（敏感な線）と %D（%Kをならしたシグナル線）</strong>の2本。</li>
+      <li>基本は<strong>80以上で買われすぎ・20以下で売られすぎ</strong>。さらに<strong>過熱圏での %Kと%Dのクロス</strong>が売買サインの目安。</li>
+      <li><strong>ダイバージェンス</strong>（価格とストキャスの逆行）はトレンド転換の予兆。</li>
+      <li>RSIより<strong>反応が速くサインが多いが、ダマシも多い</strong>。スロー型・過熱圏のクロスに絞ると扱いやすい。</li>
+      <li>実践では<strong>レンジ相場で・単独でなく複数指標と組み合わせて</strong>使うのが基本とされる。</li>
+    </ul>
+
+    <p>ストキャスティクスは、RSIと並んで「買われすぎ・売られすぎ」を測る定番のオシレーターで、クロスという分かりやすいサインが魅力です。まずはチャートにスロー・ストキャスティクスを表示して、80/20のラインと%K・%Dの動きを日々眺めるところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-rsi.html">
+        <div class="related-card-title">📊 RSIの見方</div>
+        <div class="related-card-desc">ストキャスティクスと並ぶ代表的オシレーター。70/30・ダイバージェンスを図解。両者の違いもチェック。</div>
+      </a>
+      <a class="related-card" href="guide-macd.html">
+        <div class="related-card-title">📊 MACDの見方</div>
+        <div class="related-card-desc">2本の線のクロスで読むトレンド系指標。ストキャスのクロスと考え方が近い。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">RSI・MACDなどを組み合わせた複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はストキャスティクスの仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
