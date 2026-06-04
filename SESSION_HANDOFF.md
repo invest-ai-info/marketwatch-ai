@@ -39,6 +39,11 @@
 - **section-8で正直に明記**：当サイトの自動シグナルはRSI/MACD/MA/BB/ブレイクを使用し**ストキャスティクスは未組込（過熱感の役割はRSIが担当）**＝「指標は数より役割で絞る」という設計思想。関連カードはRSI/MACD/track-record。第4(RSI)と内部リンク強化（RSIとの違いセクション）。**シリーズ計8本**（MA/一目/MACD/RSI/BB/出来高/フィボ/ストキャス）。
 - 公開フロー従来同一（guidesカード手動挿入→publish_article→mw check✅→sync→update-market-news(success)→記事/guides/index全ライブHTTP200確認）。
 
+#### ✅ 2026-06-04：金融アフィリ（A8証券/FX口座）を教育記事末尾に掲載開始
+- 承認済みA8広告を **guide-nisa.html / guide-yen-carry-trade.html の末尾**に設置（300x250・compliance🟢白・ライブHTTP200確認）。形式＝「広告・PR（スポンサーリンク）」ラベル＋`rel="sponsored nofollow noopener"`＋免責4要素、**シグナルと分離した中立記事末尾**。
+- **方針確定**：「1枚の口座開設バナーを正しく置くだけなら弁護士相談は必須でない」（アフィリ広告自体は合法・助言業でない）。効くのは表記/誇大なし/配置分離/免責。**金融アフィリは教育記事限定・末尾のみ、track-record/シグナル/推奨銘柄の隣には貼らない**（詳細 memory `project_marketwatch_compliance`）。
+- **残TODO**：①about/privacyにアフィリ参加開示追加 ②既存yen-carry中段広告(253-258)のrelをsponsored統一 ③compliance-patrolにアフィリ画像も対象化。確実性が要れば関東財務局の無料事前相談。
+
 #### ✅ 2026-06-04：速報「ビットコイン暴落（2026年6月）」公開
 - **`guide-btc-crash-2026-06.html`（新規・SYNC済・ライブHTTP200確認）**（約33.5KB・compliance🟢白「そのまま公開OK」・6高リスク次元すべて合格）。速報系＝**WebSearch事実確認を先に実施**（CoinDesk/Investing/Yahoo Finance/CryptoTimes 等で照合）。
 - **内容**：BTCが週内高値約$75.8K→6/3-4に$66K台（一時$62K割れ）へ約2割急落／24h清算15-18億ドル。**6要因**（①スポットETF記録的流出 約$3.4B/1週・11日連続 ②レバレッジ清算連鎖 ③MicroStrategy約4年ぶり売却＝never sell神話 ④Mt.Gox配布 約10,400BTC ⑤FRB利下げ後退観測「2%目標」文言削除・Q3→2027説 ⑥米イラン緊張＋AIローテ）＋**今後の弱気/中立/強気3シナリオ（断定回避・条件付き）**。
