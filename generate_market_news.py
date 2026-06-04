@@ -3801,6 +3801,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-04", "line": '・<b>2026-06-04</b>: 📊 解説「<a href="guide-stochastics.html" style="color:#0969da"><b>ストキャスティクスとは？%K・%D・80/20の見方とRSIとの違いを初心者向けに徹底解説</b></a>」公開'},
         {"date": "2026-06-04", "line": '・<b>2026-06-04</b>: 📉 解説「<a href="guide-btc-crash-2026-06.html" style="color:#0969da"><b>ビットコイン暴落（2026年6月）はなぜ？6つの要因と今後の3シナリオを整理</b></a>」公開'},
         {"date": "2026-06-04", "line": '・<b>2026-06-04</b>: 📐 解説「<a href="guide-fibonacci.html" style="color:#0969da"><b>フィボナッチリトレースメントとは？黄金比・38.2/50/61.8%・押し目の見方を初心者向けに徹底解説</b></a>」公開'},
         {"date": "2026-06-04", "line": '・<b>2026-06-04</b>: 📊 解説「<a href="guide-volume.html" style="color:#0969da"><b>出来高とは？見方・価格との関係・セリングクライマックスを初心者向けに徹底解説</b></a>」公開'},
