@@ -3706,11 +3706,40 @@ def build_weekly_strategy_banner(now_jst):
         return ""
 
 
-def build_indicator_preview_banner(now_jst):
-    """発表3日以内（当日含む）の重要(high)経済指標をトップに常時表示するバナー HTML を返す。
-    📰更新履歴とは別枠。発表後は find_upcoming_events が翌イベントへ自動で切り替わり、対象が
-    無ければ空文字（自動で消える）。index は完全自動生成（SYNC禁忌）なので毎回張り替わる。"""
+def _load_indicator_result(now_jst):
+    """routine が WebSearch で生成・コミットする indicator-result.json（当日発表分の結果速報）を読む。
+    当日イベントの verified 済み結果のみ採用。無ければ None（＝発表前 or 未生成）。"""
     try:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "indicator-result.json")
+        if not os.path.exists(p):
+            return None
+        with open(p, encoding="utf-8") as f:
+            r = json.load(f)
+        if r.get("verified") and r.get("event_date") == now_jst.date().isoformat():
+            return r
+        return None
+    except Exception:
+        return None
+
+
+def build_indicator_preview_banner(now_jst):
+    """発表前＝プレビュー、発表後（routineが結果JSONを書いたら）＝結果速報、に自動で刷り替わる
+    トップの注目指標バナー HTML を返す。📰更新履歴とは別枠。対象が無ければ空文字（自動で消える）。
+    index は完全自動生成（SYNC禁忌）なので毎回張り替わる。"""
+    try:
+        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
+        # ── ① 発表後：当日の結果速報があれば「結果」バナーへ刷り替え ──
+        res = _load_indicator_result(now_jst)
+        if res:
+            nm = res.get("name", "経済指標")
+            head = res.get("headline", "結果が出ました")
+            fl = flag.get(res.get("country", "us"), "")
+            return f'''  <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。preview.html へ）-->
+  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#1a7f37,#0969da);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
+    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📊 経済指標の結果速報</div>
+    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">✅ {fl} {nm}：{head} — 結果と市場反応を見る →</div>
+  </a>'''
+        # ── ② 発表前：3日以内（当日含む）の high 重要度指標プレビュー ──
         ups = find_upcoming_events(now_jst, days_ahead=3)
         highs = [e for e in ups if e.get("importance") == "high"]
         if not highs:
@@ -3720,7 +3749,6 @@ def build_indicator_preview_banner(now_jst):
             delta = (d - now_jst.date()).days
             return "本日" if delta == 0 else ("明日" if delta == 1 else ("明後日" if delta == 2 else f"{delta}日後"))
 
-        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
         e0 = highs[0]
         delta0 = (e0["date"] - now_jst.date()).days
         emoji = "🚨" if delta0 <= 1 else ("⏰" if delta0 == 2 else "📅")
