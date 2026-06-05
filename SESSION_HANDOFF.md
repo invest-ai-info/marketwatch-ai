@@ -39,6 +39,10 @@
 - **section-8で正直に明記**：当サイトの自動シグナルはRSI/MACD/MA/BB/ブレイクを使用し**ストキャスティクスは未組込（過熱感の役割はRSIが担当）**＝「指標は数より役割で絞る」という設計思想。関連カードはRSI/MACD/track-record。第4(RSI)と内部リンク強化（RSIとの違いセクション）。**シリーズ計8本**（MA/一目/MACD/RSI/BB/出来高/フィボ/ストキャス）。
 - 公開フロー従来同一（guidesカード手動挿入→publish_article→mw check✅→sync→update-market-news(success)→記事/guides/index全ライブHTTP200確認）。
 
+#### ✅ 2026-06-05：トップに「注目の経済指標」バナー新設（A）＋ 結果刷り替えは設計中（B）
+- **A 実装済（ライブ確認）**：`generate_market_news.py` に `build_indicator_preview_banner(now_jst)` を追加し index.html へ注入（`weekly_strategy_banner` と同方式・自己完結インライン・条件付きで対象無しなら空）。**発表3日前〜当日まで常時表示・📰更新履歴とは別枠**、最も近い high 重要度指標を「本日/明日/…」カウントダウン＋国旗で表示し preview.html へリンク。現在「本日 🇺🇸 米雇用統計（5月分）」表示。high指標が3日以内に無ければ自動で消える。注入箇所＝index の weekly banner 直前。
+- **B 結果刷り替え（未実装・要設計）**：発表後にプレビュー→結果速報へ自動で切り替える案。**結果の数字（NFP/失業率/賃金等）は正確性必須＝速報ルールでWebSearch事実確認が前提**。推奨＝**結果生成は routine（CCRエージェント＋WebSearch）**で書かせ JSON/md に出力→generate_market_news が読んでバナー/記事を結果版に差し替え（Geminiの数値推測は誤りリスクで非推奨）。swap時刻は ECONOMIC_EVENTS_2026 に発表時刻が無いので、当日発表後 or 翌朝更新で切替が現実的。次回ユーザーと方式確定後に実装。
+
 #### ✅ 2026-06-05：指標プレビューの「発表“当日”に消える」日付バグを修正
 - **症状**：重要指標(例 6/5雇用統計)の前日まで preview.html に「明日 ◯◯」と出るのに、**発表当日になると消えて空状態**になる（ユーザー報告）。
 - **根本原因**：`generate_market_news.py` の `find_upcoming_events(now_jst, days_ahead=3)` が `range(1, days_ahead+1)`＝**翌日〜3日先のみ**で**当日(0日)を除外**。データ（1566行 `(6,5,"us","high","米雇用統計（5月分）")`）は登録済み。`auto_indicator_preview.get_upcoming_events` も `0<days_until` で同じ当日除外。
