@@ -33,6 +33,10 @@
 - 公開フロー：guidesカードのみ手動挿入（publish_article.pyは--categoryをバッジ文字＆位置マッチ兼用のため）→`publish_article.py`でsync_to_github/更新履歴を自動追加→`mw check`✅→sync→`update-market-news.yml`起動(success)→index更新履歴・guides・記事すべてライブHTTP200確認。
 - **🎯 次セッション：シリーズ第10弾以降**（**第5「ボリンジャーバンド」・第6「出来高」・第7「フィボナッチ」・第8「ストキャスティクス」・第9「ADX・DMI」公開済（6/3-6/5）**。次はダウ理論／サポレジ＆トレンドライン／エリオット波動／一目の補完 …。各記事にSVG概念図必須）。
 
+#### ✅ 2026-06-05：第10弾「ダウ理論」公開（シリーズ計10本）
+- `guide-dow-theory.html`（compliance🟢白・SVG3図・ライブHTTP200確認）。6つの基本原則／3つのトレンド／高値安値の切り上げと転換／3段階（先行・追随・利食い）。**シリーズ計10本**（MA/一目/MACD/RSI/BB/出来高/フィボ/ストキャス/ADX/ダウ理論）。**次は第11弾＝サポレジ&トレンドライン／エリオット波動 等**。
+- **⚠️横展開**：複数sync直後にupdate-market-newsをtriggerすると `git pull --rebase` 競合で失敗(exit128)あり（コード健全）。対処＝sync後ワンテンポ置く／失敗時は少し待って再トリガー。Windowsの`py_compile`はcp932で誤検知→真の構文確認は`compile(open(f,encoding='utf-8').read(),f,'exec')`。
+
 #### ✅ 2026-06-05：テクニカル指標シリーズ 第9弾「ADX・DMI」公開
 - **`guide-adx.html`（新規・SYNC済・ライブHTTP200確認）**（約38.5KB・compliance🟢白「そのまま公開OK」）。+DI/-DI/ADXの3本・14期間・**ADX25以上で強トレンド/20以下でレンジ・ADXは強さで方向でない**・**+DIと-DIのクロス（方向、ADX25超で信頼度↑）**・トレンド/レンジの見極めフィルター・遅行性を網羅。事実WebSearch照合（Wilder・RSI/ATRと同じ考案者）。
 - **SVG概念図3点つき**：①構成図（価格＋+DI緑/-DI赤/ADX青＋25ライン）②+DI×-DIクロス（緑GC＝買い＋ADX25超で信頼度高）③トレンド/レンジ見極め（ADXが25超で強トレンド→ピーク→レンジ復帰、25/20ライン）。**ライト/ダーク両対応をpreviewスクショ確認**。ADX用クラス（.s-pdi/.s-mdi/.s-adx/.s-th/.s-th2）を`<style>`に追加。
