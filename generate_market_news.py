@@ -3706,6 +3706,37 @@ def build_weekly_strategy_banner(now_jst):
         return ""
 
 
+def build_indicator_preview_banner(now_jst):
+    """発表3日以内（当日含む）の重要(high)経済指標をトップに常時表示するバナー HTML を返す。
+    📰更新履歴とは別枠。発表後は find_upcoming_events が翌イベントへ自動で切り替わり、対象が
+    無ければ空文字（自動で消える）。index は完全自動生成（SYNC禁忌）なので毎回張り替わる。"""
+    try:
+        ups = find_upcoming_events(now_jst, days_ahead=3)
+        highs = [e for e in ups if e.get("importance") == "high"]
+        if not highs:
+            return ""
+
+        def _lbl(d):
+            delta = (d - now_jst.date()).days
+            return "本日" if delta == 0 else ("明日" if delta == 1 else ("明後日" if delta == 2 else f"{delta}日後"))
+
+        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
+        e0 = highs[0]
+        delta0 = (e0["date"] - now_jst.date()).days
+        emoji = "🚨" if delta0 <= 1 else ("⏰" if delta0 == 2 else "📅")
+        when0 = _lbl(e0["date"])
+        date0 = f"{e0['date'].month}/{e0['date'].day}"
+        more = f"　ほか{len(highs) - 1}件" if len(highs) > 1 else ""
+        return f'''  <!-- 注目の経済指標バナー（発表3日前〜当日まで常時表示・📰更新履歴とは別枠。preview.html へ自動リンク）-->
+  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#cf222e,#bc4c00);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
+    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📅 注目の経済指標プレビュー</div>
+    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">{emoji} <span style="background:rgba(255,255,255,.22);border-radius:6px;padding:1px 8px">{when0}</span> {flag.get(e0["country"], "")} {e0["name"]}（{date0}）{more} — 結果別シナリオを見る →</div>
+  </a>'''
+    except Exception as e:
+        print(f"  ⚠️ indicator preview banner 生成スキップ: {e}")
+        return ""
+
+
 def build_weekly_history_item(now_jst):
     """📰 更新履歴 に載せる「今週の投資戦略」エントリを {date, line} で返す（日付降順ソート用）。
     最新の guide-weekly を自動検出。記事が無ければ None。line は先頭スペース・末尾<br>なし。"""
@@ -3800,6 +3831,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
     # 🆕 今週の投資戦略への自動導線バナー（最新 guide-weekly を自動検出）
     weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
+    # 🆕 注目の経済指標バナー（発表3日前〜当日まで常時表示・更新履歴とは別枠）
+    indicator_preview_banner = build_indicator_preview_banner(now_jst)
     # 🆕 📰 更新履歴：手動エントリ＋週次自動エントリを「日付降順」に並べ、最新5件のみ表示。
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
@@ -4040,6 +4073,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </div>
   </div>
 
+  {indicator_preview_banner}
   {weekly_strategy_banner}
 
   <!-- 騰落レシオ -->
