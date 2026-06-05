@@ -2699,6 +2699,58 @@ def build_preview_html(now_jst):
     else:
         summary_html = ""
 
+    # ── 🆕 2026-06-06 発表後の「結果速報」セクション（indicator-result.json 由来） ──
+    # index トップのバナーが結果速報へ刷り替わるのと同一条件（verified・発表当日〜翌日）で、
+    # preview.html 本体の先頭にも結果（実数値・市場反応・要約・出典）を表示する。
+    # ※ これまで preview 本体は upcoming（発表前）しか描画せず、バナーから飛んでも中身が空だった不具合の修正。
+    res = _load_indicator_result(now_jst)
+    result_html = ""
+    if res:
+        r_name = res.get("name", "経済指標")
+        r_flag = country_flag(res.get("country", "us"))
+        r_head = res.get("headline", "")
+        r_result = res.get("result", "")
+        r_react = res.get("market_reaction", "")
+        r_summary = res.get("summary", "")
+        try:
+            _ed = datetime.strptime(res.get("event_date", ""), "%Y-%m-%d")
+            r_date = f"{_ed.month}/{_ed.day} 発表"
+        except Exception:
+            r_date = "発表済み"
+        result_line = (f'<p style="font-size:.96rem;color:#1f2328;margin-bottom:12px">'
+                       f'<strong style="color:#1a7f37">📌 ポイント：</strong>{r_result}</p>') if r_result else ""
+        react_line = (f'<div style="background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;'
+                      f'padding:14px 18px;margin-bottom:14px;font-size:.93rem;color:#1f2328;line-height:1.7">'
+                      f'<strong style="color:#0969da">📈 市場の反応：</strong>{r_react}</div>') if r_react else ""
+        summary_line = (f'<p style="font-size:.95rem;color:#424a53;line-height:1.85">{r_summary}</p>') if r_summary else ""
+        src_list = [s for s in (res.get("sources") or []) if isinstance(s, str) and s.startswith("http")][:4]
+        if src_list:
+            links = "".join(
+                f'<a href="{u}" target="_blank" rel="nofollow noopener" '
+                f'style="color:#0969da;font-size:.82rem;margin-right:14px;word-break:break-all">🔗 '
+                f'{u.split("/")[2] if "//" in u else u}</a>'
+                for u in src_list
+            )
+            sources_html = (f'<div style="margin-top:14px"><span style="font-size:.78rem;color:#6e7781">出典：</span> '
+                            f'{links}</div>')
+        else:
+            sources_html = ""
+        result_html = f'''
+<section style="background:linear-gradient(135deg,#e6ffed,#ffffff);border:1px solid #1a7f37;border-radius:14px;padding:22px 26px;margin-bottom:28px">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+    <span style="background:#1a7f37;color:#fff;font-weight:700;font-size:.82rem;padding:4px 12px;border-radius:999px">📊 結果速報</span>
+    <span style="font-size:.82rem;color:#57606a">{r_date}</span>
+  </div>
+  <h2 style="font-size:1.25rem;color:#1a7f37;margin-bottom:12px;line-height:1.5">{r_flag} {r_name}</h2>
+  <div style="background:#ffffff;border:1px solid #1a7f37;border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:1.02rem;font-weight:700;color:#1f2328;line-height:1.6">{r_head}</div>
+  {result_line}
+  {react_line}
+  {summary_line}
+  {sources_html}
+  <p style="font-size:.78rem;color:#6e7781;margin-top:14px;line-height:1.7">※ 数値は発表直後に公開情報をもとに記録したもので、確報値・改定で変わる場合があります。本内容は情報提供であり投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+</section>
+'''
+
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -2812,6 +2864,8 @@ def build_preview_html(now_jst):
   <div class="beginner-box">
     今後3日以内に発表される重要経済指標について、<strong>「どんな結果ならマーケットがどう動くか」</strong>を事前にシナリオ別に解説しています。発表の前にポジションを軽くするか、結果が出てから動くかの判断材料にお使いください。
   </div>
+
+  {result_html}
 
   {summary_html}
 
