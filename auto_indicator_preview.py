@@ -333,7 +333,8 @@ def get_upcoming_events(today_jst):
             except ValueError:
                 continue
             days_until = (event_date - today_jst).days
-            if 0 < days_until <= DAYS_BEFORE:
+            # 0 を含める＝発表当日も対象（前日までに生成漏れした場合のキャッチアップ・2026-06-05）
+            if 0 <= days_until <= DAYS_BEFORE:
                 upcoming.append({
                     "key": key,
                     "info": info,
