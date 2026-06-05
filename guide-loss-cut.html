@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>損切りができない本当の理由｜プロスペクト理論と「淡々と切る技術」を徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="損切りができないのは意志が弱いからではなく、人間の脳の仕組み（損失回避・プロスペクト理論・処分効果）が原因。なぜ損を確定できないのかを行動経済学でやさしく解説し、感情を使わず淡々と損切りする技術（事前ルール化・逆指値の機械化・再現性・期待値）まで、初心者〜中級者向けに図解で網羅します。">
+  <meta name="keywords" content="損切り,ロスカット,プロスペクト理論,損失回避,処分効果,サンクコスト,コンコルド効果,投資心理,行動経済学,メンタル,逆指値,期待値,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-loss-cut.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="損切りができない本当の理由｜プロスペクト理論と「淡々と切る技術」を徹底解説">
+  <meta property="og:description" content="損切りができないのは意志ではなく脳の仕組み（損失回避・処分効果）。理由を行動経済学で解説し、感情を使わず淡々と切る技術まで図解で。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-loss-cut.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "損切りができない本当の理由｜プロスペクト理論と「淡々と切る技術」を徹底解説",
+    "description": "損切りができないのは意志ではなく脳の仕組み（損失回避・プロスペクト理論・処分効果）。理由を行動経済学で解説し、感情を使わず淡々と切る技術（事前ルール化・逆指値・再現性・期待値）まで図解で。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-05",
+    "dateModified": "2026-06-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-loss-cut.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 投資心理 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 損切りができない本当の理由
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は損切りにまつわる投資心理・行動経済学の考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧠 損切りができない本当の理由と、淡々と切る技術</h1>
+    <div class="meta-line">公開日：2026 年 6 月 5 日 ／ 読了時間：約 14 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <p>「損切りは大事」——投資をかじったことのある人なら、誰もが100回は聞いた言葉でしょう。それでも、<strong>いざ自分の含み損を前にすると、ほとんどの人が損を確定できません</strong>。「もう少し待てば戻るかも」とためらっているうちに、小さかった損が取り返しのつかない大損に育つ。これは初心者だけでなく、経験者でも繰り返してしまう、投資で最も根深い問題です。</p>
+    <p>大切なのは、<strong>「損切りできないのは、あなたの意志が弱いからではない」</strong>ということです。それは<strong>人間の脳に最初から組み込まれた“クセ”</strong>であり、行動経済学がはっきりと説明しています。この記事では、まず<strong>なぜ損切りができないのか（心理の正体）</strong>を図解でやさしく解き、後半で<strong>感情を使わずに淡々と切るための技術</strong>——事前のルール化・逆指値の機械化・期待値・再現性——まで踏み込んで解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>損切りができないのは意志の弱さではなく、<strong>「損失の痛みを利益の喜びの約2.25倍も重く感じる」脳の仕組み（損失回避・プロスペクト理論）</strong>が原因。だから「気合い」では直らない。</li>
+      <li>克服のカギは精神論ではなく<strong>「仕組み」</strong>。損切りラインを<strong>エントリー前に決め、逆指値で機械に執行させて</strong>、判断から感情を物理的に追い出すこと。</li>
+      <li>勝率の高さより、<strong>「小さく負けて大きく勝つ（＝期待値がプラス）を淡々と繰り返せる再現性」</strong>が資産を伸ばす。損切りは“負け”ではなく、優位性を守るための<strong>コスト</strong>。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">なぜ「正しい」と分かっていても損切りできないのか</a></li>
+        <li><a href="#section-2">プロスペクト理論：損失は利益の約2.25倍重い</a></li>
+        <li><a href="#section-3">処分効果：勝ちを急ぎ、負けを抱え込む</a></li>
+        <li><a href="#section-4">損切りを妨げるその他の罠（サンクコスト・自尊心）</a></li>
+        <li><a href="#section-5">発想の転換：「下手な勝ち」より「上手な負け」</a></li>
+        <li><a href="#section-6">淡々と切る技術①：エントリー前にルール化する</a></li>
+        <li><a href="#section-7">淡々と切る技術②：仕組み化・自動化で感情を断つ</a></li>
+        <li><a href="#section-8">「再現性」という最重要のものさし</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ なぜ「正しい」と分かっていても損切りできないのか</h2>
+    <p>まず、多くの人が経験する“あるある”を並べてみます。思い当たるものはないでしょうか。</p>
+    <ul>
+      <li>含み損が出ると、<strong>「確定しなければ、まだ負けじゃない」</strong>と自分に言い聞かせる。</li>
+      <li>少し戻すと「やっぱり待ってよかった」、また下げると「次に戻ったら売ろう」と先延ばしする。</li>
+      <li>一方で、<strong>含み益はすぐ確定したくなる</strong>（「利益が消えるのが怖い」）。</li>
+      <li>気づけば、<strong>勝ちは小さく・負けは大きく</strong>なっている。</li>
+    </ul>
+    <p>これらはすべて、バラバラの“悪い習慣”ではありません。<strong>一つの心理メカニズムから生まれる、必然の行動</strong>です。投資の世界では、感情のコントロールこそが成績を分けると言われますが、その正体を知らなければ、コントロールのしようがありません。次の章から、その「正体」を一つずつ解きほぐしていきます。</p>
+
+    <div class="info-box">
+      <strong>💡 この記事のスタンス</strong>：根性で「損切りできる強い人間」になろう、という話ではありません。むしろ逆で、<strong>「人間は弱いもの」という前提に立ち、感情に頼らずに済む“仕組み”を作る</strong>——これが現実的で再現性のある方法だと考えます。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ プロスペクト理論：損失は利益の約2.25倍重い</h2>
+    <p>損切りができない理由の“本丸”が、<strong>プロスペクト理論</strong>です。これは心理学者<strong>ダニエル・カーネマン</strong>（2002年にノーベル経済学賞を受賞）と<strong>エイモス・トベルスキー</strong>が1979年に発表した、人間の意思決定に関する理論です。その中心にあるのが<strong>「損失回避（loss aversion）」</strong>という性質です。</p>
+    <p>ポイントはシンプルです。<strong>人は、同じ金額でも「利益の喜び」より「損失の痛み」をはるかに大きく感じる</strong>。研究では、損失の心理的インパクトは利益の<strong>およそ2〜2.5倍（よく「約2.25倍」と紹介されます）</strong>とされています。1万円もうけた嬉しさより、1万円損した悔しさのほうが、ずっと尾を引くわけです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="pt-title">
+        <title id="pt-title">プロスペクト理論の価値関数（損失側が急＝損失回避）の概念図</title>
+        <text class="s-panel-label" x="40" y="24">プロスペクト理論の「価値関数」</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="170" x2="610" y2="170"/>
+        <line class="s-axis" x1="320" y1="44" x2="320" y2="306"/>
+        <text class="s-label-sm" x="600" y="190" text-anchor="end">利益 →</text>
+        <text class="s-label-sm" x="70" y="190">← 損失</text>
+        <text class="s-label-sm" x="326" y="56">心理的な満足 ↑</text>
+        <text class="s-label-sm" x="326" y="300">心理的な苦痛 ↓</text>
+        <!-- 利益側カーブ（ゆるやか） -->
+        <path class="s-curve-g" d="M320,170 C 370,138 410,126 460,116 C 520,104 560,98 600,90"/>
+        <!-- 損失側カーブ（急） -->
+        <path class="s-curve-l" d="M320,170 C 280,210 240,244 200,268 C 150,296 100,308 60,314"/>
+        <!-- 利益 +1万円のガイド -->
+        <line class="s-guide" x1="440" y1="170" x2="440" y2="120"/>
+        <line class="s-guide" x1="320" y1="120" x2="440" y2="120"/>
+        <circle class="s-hl" cx="440" cy="120" r="5"/>
+        <text class="s-note-g" x="452" y="112">＋1万円の「喜び」（小さい）</text>
+        <!-- 損失 −1万円のガイド -->
+        <line class="s-guide" x1="200" y1="170" x2="200" y2="268"/>
+        <line class="s-guide" x1="200" y1="268" x2="320" y2="268"/>
+        <circle class="s-rev" cx="200" cy="268" r="7"/>
+        <text class="s-note-r" x="92" y="288">−1万円の「痛み」（大きい）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 価値関数。横軸の右（利益）に同じだけ進んでも満足はゆるやかにしか増えない（緑）のに、左（損失）に同じだけ進むと苦痛は急角度で深まる（赤）。<strong>原点をはさんで左右が非対称</strong>で、損失側のほうが急——これが「損失回避」。だから人は、損を確定して痛みを“今ここで”受け入れるより、先延ばしにしてしまう。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この非対称性が、損切りを妨げる根本です。損を確定するということは、<strong>この急カーブの“痛み”を、自分の意思で、今この瞬間に確定させる行為</strong>。脳はそれを全力で避けようとします。「待てば戻るかも」という淡い期待は、<strong>痛みの確定を先延ばしにするための言い訳</strong>として、とても都合がいいのです。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 処分効果：勝ちを急ぎ、負けを抱え込む</h2>
+    <p>プロスペクト理論を投資行動に当てはめると、ある一貫したクセが現れます。それが<strong>処分効果（disposition effect）</strong>です。1985年に<strong>シェフリンとスタットマン</strong>が名づけたもので、内容はこうです。</p>
+    <div class="negative-box">
+      <strong>📉 処分効果</strong>：投資家は<strong>「値上がりした（勝っている）銘柄を早く売りたがり」、「値下がりした（負けている）銘柄を売りたがらない」</strong>。つまり、<strong>利益は小さく確定し、損失は大きく抱え込む</strong>という、本来やるべきことと真逆の行動を取りやすい。
+    </div>
+    <p>なぜこうなるのか。値下がりした銘柄を売れば「損が確定し、自分の判断が間違っていたと認める」ことになる——その<strong>後悔（regret）</strong>を避けたい。逆に値上がりした銘柄は、売って利益を確定すれば「自分は正しかった」という<strong>誇り（pride）</strong>を今すぐ味わえる。研究では、この<strong>「後悔を避け、誇りを得たい」という感情</strong>が処分効果の中心だと説明されています。税金の節約やリバランスといった合理的な理由では説明がつかない、純粋な心理の問題です。</p>
+    <p>結果として何が起きるか。勝ちトレードは数百円・数千円の利益でさっさと手放し、負けトレードは「戻るまで」と握り続けて含み損を膨らませる。<strong>勝ちは小さく、負けは大きく</strong>。これでは、たとえ勝率が5割を超えていても、トータルでは負けかねません。次の章でも触れますが、<strong>投資の損益を決めるのは勝率そのものより「1回の勝ちと1回の負けの大きさのバランス」</strong>なのです。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 損切りを妨げるその他の罠（サンクコスト・自尊心）</h2>
+    <p>損失回避と処分効果が二大要因ですが、ほかにも損切りを鈍らせる心理がいくつもあります。代表的なものを押さえておきましょう。</p>
+
+    <h3>① サンクコスト（埋没費用）効果＝コンコルド効果</h3>
+    <p><strong>「ここまで持ったんだから、今さら損切りできない」</strong>——これがサンクコスト効果です。すでに払ってしまって取り戻せないコスト（＝含み損や費やした時間）に引きずられ、合理的でない判断を続けてしまう心理。採算が合わないと分かっても開発を止められなかった超音速旅客機になぞらえ、<strong>「コンコルド効果」</strong>とも呼ばれます。本来、判断すべきは「過去にいくら損したか」ではなく「<strong>今ここから</strong>、この銘柄を持ち続けるのが最善か」だけ。しかし脳は、過去の投入を“もったいない”と感じてしまいます。</p>
+
+    <h3>② 自尊心・確証バイアス</h3>
+    <p>損切りは「自分の判断ミスを認める」行為でもあるため、<strong>プライドが邪魔</strong>をします。さらに人は、自分の判断を正当化してくれる情報ばかりを集めてしまう<strong>確証バイアス</strong>を持っています。含み損を抱えると、「この銘柄は割安だ」「いずれ見直される」といった<strong>“持ち続ける理由”ばかりが目につく</strong>ようになり、危険なサインからは目を背けがちになります。</p>
+
+    <h3>③ アンカリング（買値への固執）</h3>
+    <p>最初に意識した数字（＝自分の買値）が基準として頭に焼きつき、その後の判断を歪めるのが<strong>アンカリング</strong>です。<strong>「買値に戻ったら売ろう」</strong>と考えるのは典型例。しかし相場にとって、あなたの買値は何の意味も持ちません。市場は誰がいくらで買ったかなど一切気にせず動きます。買値という“錨（いかり）”に縛られると、本来は無関係な価格を判断の軸にしてしまうのです。</p>
+
+    <div class="warning-box">
+      これらの罠に共通するのは、<strong>どれも「その場の感情・主観」で判断しようとすると必ず発動する</strong>という点です。つまり、<strong>感情が判断に関わる余地を残している限り、人は同じ失敗を繰り返します</strong>。だからこそ、後半で解説する「仕組み化」が効いてくるのです。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 発想の転換：「下手な勝ち」より「上手な負け」</h2>
+    <p>ここからが後半、実践編です。技術の前に、まず<strong>損切りに対する“見方”そのもの</strong>を入れ替えておきましょう。これが土台になります。</p>
+    <p>多くの人は、損切り＝「負け」「失敗」だと感じています。しかし優位性（エッジ）を持って淡々とトレードする人にとって、<strong>損切りは“負け”ではなく、ビジネスにおける必要経費（コスト）</strong>です。お店が仕入れや家賃を払うのと同じで、<strong>損切りは「次の優位な勝負を続けるために、あらかじめ受け入れておくコスト」</strong>。コストを小さく一定に保つからこそ、優位性が長期的に効いてくるのです。</p>
+    <p>そして決定的に重要なのが、<strong>投資の成績は「勝率」だけでは決まらない</strong>という事実です。重要なのは <strong>勝率 ×（平均利益 ÷ 平均損失）</strong>、すなわち<strong>期待値</strong>。勝率が3〜4割でも、1回の勝ちが負けの何倍も大きければ、トータルでは資産が増えます。逆に勝率8割でも、たまの大負け1回で全部失えば終わりです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="ev-title">
+        <title id="ev-title">「小さく負けて大きく勝つ」と「コツコツ勝ってドカンと負ける」の資産曲線の対比</title>
+        <text class="s-panel-label" x="40" y="24">同じ「勝ったり負けたり」でも、資産曲線は正反対になる</text>
+        <line class="s-axis" x1="40" y1="280" x2="610" y2="280"/>
+        <text class="s-label-sm" x="48" y="300">時間 →</text>
+        <!-- 上手な負け方：小さく負けて大きく勝つ＝右肩上がり -->
+        <polyline class="s-curve-g" points="40,210 80,222 120,196 160,206 200,160 240,172 280,118 320,130 360,150 400,96 440,110 480,62 520,78 560,40"/>
+        <text class="s-note-g" x="120" y="54">上手な負け方：小さく負けて大きく勝つ ↗</text>
+        <!-- コツコツドカン：小さく勝ってドカンと負ける -->
+        <polyline class="s-curve-l" points="40,210 90,204 140,198 190,192 240,186 290,180 320,178 338,300 420,300 520,300 560,300"/>
+        <circle class="s-rev" cx="332" cy="250" r="8"/>
+        <text class="s-note-r" x="350" y="258">1回の大損（ドカン）で資産を失う</text>
+        <text class="s-label-sm" x="120" y="176">コツコツ小さく勝つ…</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 緑＝損切りを小さく一定に保ち、勝つときに伸ばす「上手な負け方」。負ける回数は多くても資産は右肩上がりになりうる。赤＝小さな利益を積み重ねるが、損切りできず<strong>1回の大損（コツコツドカン）</strong>で積み上げを一瞬で失うパターン。<strong>勝率より、勝ち負けの“大きさのバランス”が資産曲線を決める</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この絵が腹落ちすると、損切りの意味が変わります。<strong>損切りとは、赤いカーブ（コツコツドカン）を絶対に避けるための保険</strong>。小さな損を淡々と受け入れることが、致命的な大損から資産を守り、緑のカーブを描くための前提条件なのです。「上手に負ける」技術こそ、長く市場に生き残る投資家の核心です。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 淡々と切る技術①：エントリー前にルール化する</h2>
+    <p>では具体的に、どうすれば感情に邪魔されずに損切りできるのか。第一の技術は<strong>「損切りの判断を、ポジションを持つ“前”に終わらせておく」</strong>ことです。</p>
+    <p>含み損を抱えた“渦中”では、これまで見てきた心理（損失回避・サンクコスト・確証バイアス）がフル稼働します。その状態で冷静な判断はほぼ不可能です。だから、<strong>まだ何のポジションも持っておらず、感情がニュートラルなうち</strong>——つまりエントリーする前——に、損切りラインを数字で決めてしまうのです。</p>
+    <ul>
+      <li><strong>「いくらまで下がったら、理由を問わず撤退するか」をエントリー前に1つの価格で決める。</strong></li>
+      <li>決め方は機械的に。例：直近の安値の少し下、一定の値幅（ボラティリティ＝<a href="guide-bollinger-bands.html">ボリンジャーバンド</a>や ATR で測れる）、許容できる損失額から逆算、など。<strong>大切なのは“事前に・数字で”決めること</strong>。</li>
+      <li>その損切りラインまでの距離（＝リスク）に対して、<strong>狙える利益（リターン）が見合っているか</strong>もエントリー前に確認する（リスクリワード）。</li>
+    </ul>
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：ルール化の本質は、<strong>「冷静なときの自分」に、「感情的になっている未来の自分」を縛らせておく</strong>ことです。判断の主導権を、渦中の感情から、平常時の自分へ前倒しする。これが淡々と切るための最初の一歩です。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 淡々と切る技術②：仕組み化・自動化で感情を断つ</h2>
+    <p>ルールを決めても、いざその価格が来たときに<strong>手が止まる</strong>——これが次の壁です。「あと少しだけ様子を見よう」という心の声に、また負けてしまう。ここで効くのが<strong>第二の技術＝仕組み化・自動化</strong>です。決めたルールを、<strong>自分の手ではなく機械に執行させて</strong>、感情が介在する余地を物理的に断ちます。</p>
+    <ul>
+      <li><strong>逆指値（ストップ注文）を、エントリーと同時に置く。</strong>「この価格まで下がったら自動で決済」という注文を最初から入れておけば、その瞬間が来ても自分の意思決定は要りません。手が止まる隙を作らないのが狙いです。</li>
+      <li><strong>ポジションごとに損切り注文をセットで管理する。</strong>「入る」と「撤退ラインを置く」を必ずワンセットにする習慣にすると、逆指値の置き忘れを防げます。</li>
+      <li><strong>判断と執行を分離する。</strong>「どこで切るか（判断）」は冷静なときに済ませ、「実際に切る（執行）」は機械に任せる。この分離こそが、感情を判断から追い出す王道です。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="cut-title">
+        <title id="cut-title">損切りを抱え込む（塩漬け）と、ルールで淡々と切る場合の対比図</title>
+        <line class="s-divv" x1="320" y1="44" x2="320" y2="284"/>
+        <!-- 左：損切りできない -->
+        <text class="s-note-r" x="60" y="30">❌ 損切りできない（抱え込む）</text>
+        <line class="s-brk" x1="50" y1="118" x2="288" y2="118"/>
+        <text class="s-label-sm" x="54" y="110">損切りライン（SL）</text>
+        <polyline class="s-price" points="70,82 110,100 150,116 192,152 232,202 272,252"/>
+        <circle class="s-hl" cx="70" cy="82" r="5"/>
+        <text class="s-note-r" x="150" y="278" text-anchor="middle">SLを無視→含み損が拡大</text>
+        <!-- 右：ルールで淡々と切る -->
+        <text class="s-note-g" x="356" y="30">✅ ルールで淡々と切る</text>
+        <line class="s-brk" x1="352" y1="118" x2="600" y2="118"/>
+        <text class="s-label-sm" x="356" y="110">損切りライン（SL）</text>
+        <polyline class="s-price" points="372,82 412,100 448,117"/>
+        <circle class="s-hl" cx="372" cy="82" r="5"/>
+        <circle class="s-rev" cx="452" cy="118" r="8"/>
+        <polyline class="s-price" points="452,118 494,160 536,205 578,238" style="opacity:.3"/>
+        <text class="s-note-g" x="470" y="142">ここで即・撤退</text>
+        <text class="s-label-sm" x="600" y="250" text-anchor="end">その後さらに下げても、もう無関係</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 同じように損切りラインを下回っても、左は「もう少し待てば」と<strong>抱え込んで含み損が深まる（塩漬け）</strong>。右は<strong>あらかじめ置いた逆指値でSLに触れた瞬間に撤退</strong>し、損失を小さく確定。その後どれだけ下げても、すでに外に出ているので関係ありません。<strong>差は意志の強さではなく「仕組みがあるか」</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>ここに、このサイトが大切にしている考え方が表れています。<strong>「強い精神力で淡々と切る」</strong>のではなく、<strong>「淡々と切らざるを得ない仕組みを先に作っておく」</strong>。人間の意志力をあてにしない。これが、感情に左右されずに同じ行動を続けるための、最も現実的な答えだと考えています。</p>
+
+    <div class="warning-box">
+      逆指値や自動執行にも限界はあります。相場が急変して価格が飛んだ場合、決めた価格ぴったりでは約定せず、想定より不利な価格で決済される（スリッページ）こともあります。「自動だから絶対安全」ではなく、<strong>1回の損失が大きくなりすぎないようポジションの大きさ自体を抑えておく</strong>こと（資金管理）と組み合わせて初めて機能します。資金管理は、別記事で改めて取り上げる予定です。</div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 「再現性」という最重要のものさし</h2>
+    <p>最後に、損切りを含めた投資手法を評価するうえで、<strong>最も大切なものさし</strong>を共有します。それが<strong>再現性</strong>です。</p>
+    <p>一度の派手な勝ちは、運でも起こせます。本当に意味があるのは、<strong>「その判断を、感情が揺れる場面でも、来週も来月も、同じように淡々と実行できるか」</strong>。再現できない手法は、たとえ過去に当たっていても、資産を安定して増やす土台にはなりません。損切りが特に重要なのは、<strong>再現性をいちばん壊しやすいのが「損切りでの躊躇」だから</strong>です。1回の損切り見送りが、それまで積み上げた規律と資産を台無しにします。</p>
+    <p>自分の手法を点検するとき、次の問いを自分に投げかけてみてください。</p>
+    <ul>
+      <li>このトレードのルールは、<strong>感情を排して、誰がやっても同じ判断になる</strong>くらい明確か？</li>
+      <li>調子が悪いとき・含み損で苦しいときでも、<strong>同じルールを淡々と実行できる</strong>か？</li>
+      <li>「今回だけは特別」という例外を、自分に許していないか？</li>
+    </ul>
+    <p>感情を一定に保ち、同じ行動を淡々と繰り返す。そのために、判断をルール化し、執行を仕組みに委ね、再現性を測り続ける。<strong>損切りの問題は、突き詰めれば「感情のコントロール」と「再現性」の問題</strong>に行き着きます。そして人間の感情は、根性ではなく仕組みでこそ安定させられる、というのがこの記事の結論です。</p>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI は、まさにこの<strong>「感情を判断から追い出す」</strong>という思想で作られています。</p>
+    <ul>
+      <li><strong>シグナルは“あらかじめ決めたルール”で発火する</strong>：人間がその場の気分で「買いたい・売りたい」と判断するのではなく、テクニカル指標の条件をルール化し、機械的に検出してメールでお知らせします。判断の前倒し（前章の技術①）を仕組みにしたものです。</li>
+      <li><strong>ポジションプランに損切り（SL）が最初からセットで載る</strong>：シグナルメールには、エントリーの目安と一緒に<strong>ストップロスの目安が必ず併記</strong>されます。「入る」と「撤退ラインを決める」をワンセットにする（技術②）という発想です。<span style="font-size:.9em">（※ あくまで機械的に算出した参考値であり、売買の推奨ではありません）</span></li>
+      <li><strong>成績を隠さず公開している</strong>：勝ったトレードも負けたトレードも、<a href="track-record.html">シグナル成績ダッシュボード</a>で公開しています。再現性（前章）を自分たち自身で検証し続けるための姿勢です。</li>
+    </ul>
+    <p>そして、このサイトのもう一つの目的は<strong>あなたの時間と心の余白を取り戻すこと</strong>です。情報収集や監視をできるだけ自動化することで、空いた時間を、運動や休息、相場と距離を置いて頭を冷やす時間に使う。<strong>平常心そのものを整える時間</strong>に充ててもらえたら——それが、淡々と損切りできる自分を作る、遠回りに見えていちばんの近道だと考えています。</p>
+
+    <div class="info-box">
+      <strong>ℹ️ 関連する考え方</strong>：相場が暴落して多くの人が恐怖で投げ売る場面は、裏を返せば「冷静な人にとっての機会」でもあります。市場参加者の心理が数字で見える<a href="guide-fear-greed.html">恐怖と強欲指数</a>や、<a href="market-health.html">市場健康度</a>もあわせてご覧ください。群衆の感情に飲まれず、自分のルールを淡々と守る——その助けになるはずです。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 「ルールで動く」をのぞいてみる</div>
+      <div class="cta-box-desc">あらかじめ決めた条件で発火し、損切りの目安まで併記する複合テクニカルシグナルが、実際にどう機能しているか——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 10 -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <p>損切りについて学んできた内容を、最後に整理します。</p>
+    <ul>
+      <li>損切りができないのは<strong>意志の弱さではなく、脳の仕組み</strong>。損失を利益の約2.25倍重く感じる<strong>損失回避（プロスペクト理論）</strong>が根本。</li>
+      <li>その結果、勝ちを急ぎ負けを抱える<strong>処分効果</strong>が起き、<strong>サンクコスト・自尊心・アンカリング</strong>がさらに損切りを鈍らせる。</li>
+      <li>克服のカギは精神論ではなく<strong>仕組み</strong>。<strong>①エントリー前にルール化</strong>し、<strong>②逆指値で機械に執行させて</strong>、感情を判断から物理的に追い出す。</li>
+      <li>損切りは“負け”ではなく<strong>優位性を守るコスト</strong>。勝率より<strong>期待値（勝ち負けの大きさのバランス）</strong>が資産曲線を決める。「上手な負け方」が<strong>コツコツドカン</strong>を防ぐ。</li>
+      <li>すべての土台は<strong>再現性</strong>。感情が揺れても同じ行動を淡々と続けられるか——損切りはそれを最も試される場面。</li>
+    </ul>
+    <p>「損切りは大事」という言葉を、これからは<strong>「だから感情に頼らない仕組みを作る」</strong>という具体的な行動に変えてみてください。淡々と小さく負け、淡々と大きく勝つ。その積み重ねこそが、相場で長く生き残る投資家の姿です。投資の心理・メンタルに関する記事は、今後も一つずつ増やしていきます。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-fear-greed.html">
+        <div class="related-card-title">😱 恐怖と強欲指数の見方</div>
+        <div class="related-card-desc">市場参加者の心理を数値化した指標。群衆の感情に飲まれず、自分のルールを守るための“温度計”。</div>
+      </a>
+      <a class="related-card" href="guide-bollinger-bands.html">
+        <div class="related-card-title">📊 ボリンジャーバンドの使い方</div>
+        <div class="related-card-desc">損切りラインの目安に使えるボラティリティ（値動きの幅）の測り方を図解で解説。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">ルールで発火し損切り目安も併記する複合シグナルの、勝ちも負けも含めた実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は損切りにまつわる投資心理・行動経済学の考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
