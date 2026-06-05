@@ -2155,7 +2155,8 @@ def load_history():
 # ─────────────────────────────────────────────
 # 🆕 信頼度スコア（B2）— 複数シグナル × 環境 × 整合性を統合
 # ─────────────────────────────────────────────
-def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment):
+def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment,
+                          position_plan=None, indicators=None):
     """シグナル発火時の信頼度を 3 段階（HIGH/MID/LOW）で算出
 
     スコアリング:
@@ -2164,6 +2165,8 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
       + トレンド整合: aligned=true → +2 / false → -1 / null → 0
       + 反転検知: あり → -2 / なし → 0
       + FX 強弱整合 (FX のみ): aligned=true → +1 / false → -1 / null → 0
+      + 🆕 2026-06-05 B案: データ駆動の選別ティア補正
+          avoid=-2 / neutral=0 / good=+1 / elite=+2（position_plan/indicators がある時のみ）
 
     閾値:
       score >= 5  → ⭐⭐⭐ HIGH（強）
@@ -2208,6 +2211,29 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         score -= 1
         factors.append("FX 強弱逆張り (-1)")
 
+    # 🆕 2026-06-05 B案: データ駆動の選別ティア補正（記録のみだった selection タグを信頼度に昇格）
+    # 根拠＝過去304件で tier別の実Rが avoid −0.248 < neutral −0.093 < good +0.364 < elite +0.758
+    #       と完全単調（前後半とも安定）。avoid＝飛びつき買い/ma_goldenロング/runway阻害 を内包。
+    # ⚠️ 前向き検証段階：multiple-comparison / 13日・単一レジームの限界があるため、これは
+    #    【信頼度の表示と記録だけ】を補正する。発火・メール送信・ロットには一切影響しない
+    #    （送信可否は filter_send_email が独立制御）。confidence は signals-log に記録されるので、
+    #    補正後に tier 別の実勝率が単調を保つか＝本採用してよいかをライブで検証できる。
+    edge_tier = None
+    if position_plan and indicators:
+        _sr = compute_sr_runway(position_plan, indicators)
+        _primary_type = (fresh_signals or [{}])[0].get("type")
+        _sel = compute_selection_tier(position_plan, indicators, _sr, _primary_type)
+        edge_tier = (_sel or {}).get("tier")
+        _tier_pts = {"avoid": -2, "neutral": 0, "good": 1, "elite": 2}.get(edge_tier, 0)
+        if _tier_pts != 0:
+            score += _tier_pts
+            _tier_label = {
+                "avoid": "回避(飛びつき/ma_goldenロング/runway阻害)",
+                "good": "良(サポ整合orレンジ)",
+                "elite": "精鋭(runwayクリア×レンジ)",
+            }.get(edge_tier, edge_tier)
+            factors.append(f"選別ティア: {_tier_label} ({_tier_pts:+d})")
+
     # ラベル判定
     if score >= 5:
         label = "HIGH"
@@ -2224,6 +2250,7 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         "label": label,
         "stars": stars,
         "factors": factors,
+        "edge_tier": edge_tier,  # 🆕 2026-06-05 B案: 適用された選別ティア（前向き検証用に記録）
     }
 
 
@@ -2692,7 +2719,9 @@ def main():
 """
 
         # 🆕 B2: 信頼度スコア算出（body / subject で参照するため事前に計算）
-        confidence = calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment)
+        # 🆕 2026-06-05 B案: position_plan / indicators を渡して選別ティア補正を有効化（表示・記録のみ）
+        confidence = calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment,
+                                           position_plan=position_plan, indicators=indicators)
 
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
