@@ -41,7 +41,11 @@
 
 #### ✅ 2026-06-05：トップに「注目の経済指標」バナー新設（A）＋ 結果刷り替えは設計中（B）
 - **A 実装済（ライブ確認）**：`generate_market_news.py` に `build_indicator_preview_banner(now_jst)` を追加し index.html へ注入（`weekly_strategy_banner` と同方式・自己完結インライン・条件付きで対象無しなら空）。**発表3日前〜当日まで常時表示・📰更新履歴とは別枠**、最も近い high 重要度指標を「本日/明日/…」カウントダウン＋国旗で表示し preview.html へリンク。現在「本日 🇺🇸 米雇用統計（5月分）」表示。high指標が3日以内に無ければ自動で消える。注入箇所＝index の weekly banner 直前。
-- **B 結果刷り替え（未実装・要設計）**：発表後にプレビュー→結果速報へ自動で切り替える案。**結果の数字（NFP/失業率/賃金等）は正確性必須＝速報ルールでWebSearch事実確認が前提**。推奨＝**結果生成は routine（CCRエージェント＋WebSearch）**で書かせ JSON/md に出力→generate_market_news が読んでバナー/記事を結果版に差し替え（Geminiの数値推測は誤りリスクで非推奨）。swap時刻は ECONOMIC_EVENTS_2026 に発表時刻が無いので、当日発表後 or 翌朝更新で切替が現実的。次回ユーザーと方式確定後に実装。
+- **B 結果刷り替え 実装済（2026-06-05）**：発表後にトップのバナーを「プレビュー→結果速報」へ自動で刷り替える仕組みを完成。
+  - **描画側**：`generate_market_news.py` に `_load_indicator_result(now_jst)` ＋ build_indicator_preview_banner の結果分岐を追加。`indicator-result.json` があり verified かつ **event_date が当日 or 翌日(0〜1日)**なら緑の「📊 結果速報」バナー（headlineの実数値表示）、無ければ従来のプレビュー。単体テストで当日/翌日=結果・2日後=プレビュー復帰を確認。`indicator-result.json` は **SYNC禁忌（CLAUDE.md登録済）**。
+  - **routine**：`indicator-result`（**trig_0183wxDTjBRPNzWBtEM1MfsM**・毎日**23:13 JST**=14:13 UTC・sonnet）。その日に発表された重要指標(NFP/CPI/PCE/GDP/ISM/FOMC/日銀/日本GDP・CPI)があればWebSearchで実数値・市場反応を確認し indicator-result.json をコミット。**数値はWebSearch実値のみ・不確実なら verified=false・断定/助言なし**。発表が無い日は何もコミットしない。
+  - **タイミング**：jobs(21:30 JST)→routine(23:13 JST)で結果JSON生成→翌朝7:27のupdate-market-newsでindex再生成し結果バナー表示（当日＋翌日ウィンドウで確実に拾う）。**routine総数9本**（Max枠15/日に余裕）。
+  - **残（任意）**：①同夜に刷り替えたいなら routine 末尾で update-market-news を workflow_dispatch（CCRのgitトークンにworkflow scopeがあれば）。②preview.html 本体にも結果セクションを出す。③FOMC(翌3:00)/BOJ(12:00)は23:13起動では拾えないので別cron追加。④auto-preview内A8広告のrel sponsored統一。
 
 #### ✅ 2026-06-05：指標プレビューの「発表“当日”に消える」日付バグを修正
 - **症状**：重要指標(例 6/5雇用統計)の前日まで preview.html に「明日 ◯◯」と出るのに、**発表当日になると消えて空状態**になる（ユーザー報告）。
