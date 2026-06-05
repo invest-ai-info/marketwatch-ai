@@ -4,7 +4,22 @@
 
 ---
 
-## 🆕 2026-06-05 セッションの続き（最新・まずここを読む）
+## 🆕 2026-06-06 セッションの続き（最新・まずここを読む）
+
+#### ✅ 2026-06-06：記事シリーズの「毎日自動更新」＝ストック＆ドリップ方式に着手（下書き自動routine 稼働）
+- **ユーザー要望**：心理＆リスク管理シリーズを「毎日1本ずつ自動更新」したい（ルーティン化）。
+- **方針（ユーザー承認）＝ストック＆ドリップ**：コンプラ（無登録投資助言業・景表法）と品質が生命線なので**「無人で自動公開」はしない**。創作は自動化、**公開前は必ず人間＋compliance-reviewer(Opus)監査**。①下書きを毎日自動生成→②人間がレビュー&仕上げ&コンプラ監査→③承認済みを毎日1本ドリップ公開。
+- **✅ 実装①＝下書き自動生成 routine（本日稼働）**：
+  - routine **`autodraft-article`（trig_01VpreEMybEJCmFiU5TS7Vet・毎日 05:30 JST＝cron `30 20 * * *` UTC・sonnet）**。`drafts/AUTODRAFT_GUIDE.md`（手順書＋topicキュー）と `guide-loss-cut.html`（テンプレ手本）を読み、topicキューの未着手1件をWebSearch事実確認のうえ **`drafts/draft-<key>.html` に下書き生成＋`drafts/REVIEW.md` 追記→drafts/配下のみコミット**。**本番ファイル（guides.html/generate_market_news.py/index等）には触れない・公開しない・1日1本**。下書きは `noindex,nofollow`＋robots.txt で `/drafts/` Disallow 済。
+  - topicキュー（公開順）：①position-sizing ②trading-psychology-calm ③risk-reward ④profit-taking ⑤compounding-drawdown ⑥cognitive-biases ⑦diversification ⑧trading-journal ⑨leverage（リスク管理は新カテゴリ「🛡️ リスク管理・資金管理」を初回公開時に人間が新設）。
+  - 本日テスト実行を1回 trigger 済（初回は①position-sizing の下書きが `drafts/` に出るはず・要確認）。通常運転の初回は 6/7 05:30 JST。
+  - **routine 総数 10本**（Max枠15/日に余裕）。`drafts/AUTODRAFT_GUIDE.md` のみ SYNC_FILES 入り（人間が編集）、`drafts/draft-*.html`・`drafts/REVIEW.md` は routine がGitHub側生成＝**SYNC_FILESに入れない**（ローカルから push しない＝巻き戻し防止）。
+- **🔜 実装②＝ドリップ公開（未着手・次タスク）**：承認済み記事を毎日1本だけ自動公開する仕組み。**設計上の注意＝公開処理は guides.html / generate_market_news.py（更新履歴）を編集するため、ローカル手動編集と競合(clobber)し得る**。GitHub Action 化するなら「ローカルとの同期ドリフト」を必ず設計で潰すこと（履歴をデータ駆動化 or pull-before-edit ルール）。在庫（承認済み記事）が貯まってから着手で良い（今は在庫ゼロ）。
+- **運用フロー**：朝 `drafts/REVIEW.md` を見る → メインClaudeが下書きを仕上げ（SVG実機ライト/ダーク確認・微修正）→ **compliance-reviewer(Opus)監査** → 🟢で `guide-<key>.html` 確定 → `mw publish`（将来はドリップキュー投入）→ ライブ確認。
+
+---
+
+## 🆕 2026-06-05 セッションの続き（まずここを読む）
 
 #### ✅ 2026-06-06：preview.html に「結果速報」セクションを実装（雇用統計が空だった不具合の修正）
 - **症状**：トップの「📊 結果速報」バナー（NFP +17.2万…）から「結果と市場反応を見る →」で飛ぶと、リンク先 **preview.html に雇用統計の内容が何も無い**（ユーザー報告）。
