@@ -39,6 +39,13 @@
 - **section-8で正直に明記**：当サイトの自動シグナルはRSI/MACD/MA/BB/ブレイクを使用し**ストキャスティクスは未組込（過熱感の役割はRSIが担当）**＝「指標は数より役割で絞る」という設計思想。関連カードはRSI/MACD/track-record。第4(RSI)と内部リンク強化（RSIとの違いセクション）。**シリーズ計8本**（MA/一目/MACD/RSI/BB/出来高/フィボ/ストキャス）。
 - 公開フロー従来同一（guidesカード手動挿入→publish_article→mw check✅→sync→update-market-news(success)→記事/guides/index全ライブHTTP200確認）。
 
+#### ✅ 2026-06-05：指標プレビューの「発表“当日”に消える」日付バグを修正
+- **症状**：重要指標(例 6/5雇用統計)の前日まで preview.html に「明日 ◯◯」と出るのに、**発表当日になると消えて空状態**になる（ユーザー報告）。
+- **根本原因**：`generate_market_news.py` の `find_upcoming_events(now_jst, days_ahead=3)` が `range(1, days_ahead+1)`＝**翌日〜3日先のみ**で**当日(0日)を除外**。データ（1566行 `(6,5,"us","high","米雇用統計（5月分）")`）は登録済み。`auto_indicator_preview.get_upcoming_events` も `0<days_until` で同じ当日除外。
+- **修正（3か所）**：①find_upcoming_events を `range(0, days_ahead+1)`＝当日含む ②build_preview_html の days_until に `delta==0→"本日"` 追加 ③auto_indicator_preview を `0<=days_until` に。py_compile✅・sync・update-market-news再生成→**preview.htmlに「本日 米雇用統計（5月分）」表示・空メッセージ消滅をライブ確認**。
+- **横展開メモ**：これは以前のUTC日付バグと同系統の「境界(当日/0)取りこぼし」。日付範囲は当日を含めるか毎回確認。
+- **残課題（任意）**：個別記事 `guide-auto-*`（auto_indicator_preview生成）は preview.html と別系統で**どこからもリンクされない孤立ページ**（preview.html自体はリッチなインライン内容を持つので機能的には重複）。①guide-autoをpreview.htmlから貼る or ②生成を止める、のどちらかで整理可。プレビューバナーは calendar.html のみで index.html に無い→index追加で露出増。auto-preview内のA8広告(514-515行)は`rel="nofollow"`のみ→`sponsored`統一推奨。
+
 #### ✅ 2026-06-04：金融アフィリ（A8証券/FX口座）を教育記事末尾に掲載開始
 - 承認済みA8広告を **guide-nisa.html / guide-yen-carry-trade.html の末尾**に設置（300x250・compliance🟢白・ライブHTTP200確認）。形式＝「広告・PR（スポンサーリンク）」ラベル＋`rel="sponsored nofollow noopener"`＋免責4要素、**シグナルと分離した中立記事末尾**。
 - **方針確定**：「1枚の口座開設バナーを正しく置くだけなら弁護士相談は必須でない」（アフィリ広告自体は合法・助言業でない）。効くのは表記/誇大なし/配置分離/免責。**金融アフィリは教育記事限定・末尾のみ、track-record/シグナル/推奨銘柄の隣には貼らない**（詳細 memory `project_marketwatch_compliance`）。
