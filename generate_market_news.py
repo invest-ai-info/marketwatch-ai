@@ -1936,7 +1936,8 @@ def find_upcoming_events(now_jst, days_ahead=3):
     日付順・重要度順にソート。同日内では high → mid の順。
     """
     today = now_jst.date()
-    target_dates = [today + timedelta(days=i) for i in range(1, days_ahead + 1)]
+    # range を 0 始まりにして「発表当日」も含める（当日にプレビューが消える不具合の修正・2026-06-05）
+    target_dates = [today + timedelta(days=i) for i in range(0, days_ahead + 1)]
     target_year = now_jst.year
 
     upcoming = []
@@ -2560,7 +2561,9 @@ def build_preview_html(now_jst):
 
     def days_until(event_date):
         delta = (event_date - now_jst.date()).days
-        if delta == 1:
+        if delta == 0:
+            return "本日"
+        elif delta == 1:
             return "明日"
         elif delta == 2:
             return "明後日"
