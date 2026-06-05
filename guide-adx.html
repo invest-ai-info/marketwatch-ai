@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADX・DMIとは？トレンドの強さの測り方と+DI/-DIの見方を初心者向けに徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="ADX（平均方向性指数）とDMIの仕組み、+DI・-DI・ADXの3本の線、ADX25/20でのトレンドの強さの判定、+DIと-DIのクロス（方向のサイン）、トレンドとレンジの見極めまで、ワイルダーが考案したトレンド系テクニカル指標を初心者向けに図解でわかりやすく解説。">
+  <meta name="keywords" content="ADX,DMI,平均方向性指数,方向性指数,+DI,-DI,トレンドの強さ,ワイルダー,25,トレンド,レンジ,テクニカル分析,株式投資,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-adx.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ADX・DMIとは？トレンドの強さの測り方と+DI/-DIの見方を初心者向けに徹底解説">
+  <meta property="og:description" content="ADX・DMIの3本の線（+DI・-DI・ADX）・トレンドの強さ・DIのクロスを図解で初心者向けに丁寧に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-adx.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ADX・DMIとは？トレンドの強さの測り方と+DI/-DIの見方を初心者向けに徹底解説",
+    "description": "ADX・DMIの3本の線（+DI・-DI・ADX）・トレンドの強さの判定・DIのクロス・トレンドとレンジの見極めまで初心者向けに図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-05",
+    "dateModified": "2026-06-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-adx.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* テクニカル概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#8c959f;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-pdi{stroke:#2da44e;stroke-width:2.4;fill:none;stroke-linejoin:round}
+    .s-mdi{stroke:#cf222e;stroke-width:2.4;fill:none;stroke-linejoin:round}
+    .s-adx{stroke:#1f6feb;stroke-width:2.9;fill:none;stroke-linejoin:round}
+    .s-th{stroke:#bc4c00;stroke-width:1.3;stroke-dasharray:5 4}
+    .s-th2{stroke:#8c959f;stroke-width:1.1;stroke-dasharray:3 4}
+    .s-gc{fill:#ffffff;stroke:#1a7f37;stroke-width:2.5}
+    .s-dc{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#6e7781}
+    body.dark .s-pdi{stroke:#3fb950}
+    body.dark .s-mdi{stroke:#f85149}
+    body.dark .s-adx{stroke:#58a6ff}
+    body.dark .s-th{stroke:#ec8e2c}
+    body.dark .s-th2{stroke:#6e7781}
+    body.dark .s-gc{fill:#161b22;stroke:#3fb950}
+    body.dark .s-dc{fill:#161b22;stroke:#f85149}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ADX・DMIとは？
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は ADX・DMI の仕組みと使い方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 ADX・DMIとは？トレンドの強さの測り方と+DI/-DIの見方を初心者向けに徹底解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 5 日 ／ 読了時間：約 13 分 ／ カテゴリ：テクニカル分析（チャートの読み方）</div>
+
+    <p>RSI や MACD は「相場の方向」や「過熱感」を測りますが、<strong>「今のトレンドはどれくらい強いのか？」</strong>を教えてはくれません。その“強さ”を専門に測るのが <strong>ADX（平均方向性指数）</strong> と、その仲間の <strong>DMI（方向性指数）</strong> です。</p>
+    <p>この記事では、ADX・DMI を構成する3本の線（+DI・-DI・ADX）の意味から、ADX 25/20 を使ったトレンドの強さの判定、+DI と -DI のクロス（方向のサイン）、そしてトレンドとレンジの見極めまで、図解を交えてやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ADX・DMI は<strong>「+DI」「-DI」「ADX」の3本の線</strong>で構成される。+DI/-DI が<strong>方向</strong>を、ADX が<strong>トレンドの強さ（方向は問わない）</strong>を表す。</li>
+      <li>一般に <strong>ADX が 25 以上で強いトレンド、20 以下で弱い（レンジ）</strong>とされる。ADX は方向を示さないので、向きは +DI/-DI で見る。</li>
+      <li><strong>+DI が -DI を上抜けたら上昇、-DI が +DI を上抜けたら下降</strong>のサイン。<strong>ADX が高い（25超）ときほどこのサインの信頼度が高い</strong>とされる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">ADX・DMIとは何か（概要と歴史）</a></li>
+        <li><a href="#section-2">3本の線と計算（+DI・-DI・ADX）</a></li>
+        <li><a href="#section-3">ADXの水準：トレンドの強さ（25・20）</a></li>
+        <li><a href="#section-4">+DIと-DIのクロス（方向のサイン）</a></li>
+        <li><a href="#section-5">トレンドとレンジの見極め</a></li>
+        <li><a href="#section-6">長所と弱点</a></li>
+        <li><a href="#section-7">初心者が実践で気をつけるコツ</a></li>
+        <li><a href="#section-8">当サイトのシグナルでの使われ方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ADX・DMIとは何か（概要と歴史）</h2>
+    <p><strong>DMI</strong>は「<strong>Directional Movement Index</strong>（方向性指数）」、<strong>ADX</strong>は「<strong>Average Directional Index</strong>（平均方向性指数）」の略です。RSI や ATR と同じ、米国の<strong>J・ウェルズ・ワイルダー（J. Welles Wilder Jr.）</strong>が1970年代後半に考案したとされる、トレンド系のテクニカル指標です。</p>
+    <p>最大の特徴は、<strong>「トレンドの“強さ”を、向きとは切り離して数値化する」</strong>点です。多くの指標が「上か下か」を見るのに対し、ADX は<strong>「強いトレンドが出ているのか、それともレンジ（横ばい）なのか」</strong>を教えてくれます。トレンドに乗る順張りは「強いトレンドが出ているとき」にこそ機能するため、その地合いを見極める道具として重宝されます。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：ADX は<strong>「強さ」専門</strong>で、<strong>方向は示しません</strong>。ADX が高くても、それが上昇トレンドか下降トレンドかは ADX 単体では分かりません。向きは +DI と -DI のどちらが上かで判断します。「強さ＝ADX」「方向＝DI」とセットで覚えるのがコツです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 3本の線と計算（+DI・-DI・ADX）</h2>
+    <p>ADX・DMI は<strong>3本の線</strong>で表示されます。計算は複雑ですが、各線の「意味」をつかめば十分使えます。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>線</th>
+          <th>計算の考え方（一般的な設定）</th>
+          <th>意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>+DI（プラスDI）</td>
+          <td>上昇方向の値動きの大きさを <code>14</code> 期間でならしたもの</td>
+          <td>上昇の勢いの強さ</td>
+        </tr>
+        <tr>
+          <td>-DI（マイナスDI）</td>
+          <td>下落方向の値動きの大きさを 14 期間でならしたもの</td>
+          <td>下落の勢いの強さ</td>
+        </tr>
+        <tr>
+          <td>ADX</td>
+          <td>+DI と -DI の差をならして指数化したもの</td>
+          <td>トレンドの強さ（方向は問わない）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>標準の期間設定は <strong>14</strong> です。+DI と -DI が<strong>大きく離れている</strong>ほど（どちらか一方が強い）ADX は上がり、<strong>2本が近い</strong>（方向が拮抗）ほど ADX は下がります。つまり ADX は「+DI と -DI のどちらかが、もう一方を引き離している度合い」を表しているとも言えます。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ADXの水準：トレンドの強さ（25・20）</h2>
+    <p>ADX の基本的な使い方は、その<strong>水準（高さ）でトレンドの強さを判定する</strong>ことです。目安は次の通りで、<strong>25 と 20</strong>がよく使われます。</p>
+    <ul>
+      <li><strong>ADX 25 以上＝強いトレンド</strong>：上昇でも下降でも、はっきりした方向感がある状態。順張りが機能しやすい。</li>
+      <li><strong>ADX 20 以下＝弱い／レンジ</strong>：方向感がなく、横ばいでもみ合っている状態。順張りはダマシになりやすい。</li>
+      <li><strong>ADX が上向き</strong>：トレンドが強まっている。<strong>下向き</strong>：トレンドが弱まっている（終わりかけ）。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="adx-structure-title">
+        <title id="adx-structure-title">ADX・DMIの構成図。価格の下に+DI・-DI・ADXの3本と25ライン</title>
+        <text class="s-panel-label" x="40" y="24">価格（ローソク足）</text>
+        <polyline class="s-price" points="40,150 110,120 180,95 250,78 320,72 390,80 460,95 530,92 600,88"/>
+        <line x1="40" y1="190" x2="600" y2="190" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-panel-label" x="40" y="210">ADX・DMI（+DI・-DI・ADX の3本）</text>
+        <!-- 25ライン -->
+        <line class="s-th" x1="40" y1="285" x2="600" y2="285"/>
+        <text class="s-label-sm" x="28" y="289" text-anchor="end">25</text>
+        <!-- -DI（下落・赤）下がる -->
+        <polyline class="s-mdi" points="40,310 110,320 180,330 250,335 320,330 390,320 460,310 530,305 600,305"/>
+        <!-- +DI（上昇・緑）上がる -->
+        <polyline class="s-pdi" points="40,300 110,278 180,258 250,248 320,256 390,276 460,290 530,294 600,296"/>
+        <!-- ADX（青・主役）トレンドで上昇→ピーク→鈍化 -->
+        <polyline class="s-adx" points="40,320 110,300 180,270 250,245 320,235 390,250 460,270 530,283 600,295"/>
+        <text class="s-note" x="318" y="226" text-anchor="middle">ADXが25超へ＝トレンド強まる</text>
+        <!-- 凡例 -->
+        <g transform="translate(48,402)">
+          <line class="s-pdi" x1="0" y1="0" x2="24" y2="0"/><text class="s-legend" x="30" y="5">+DI</text>
+          <line class="s-mdi" x1="84" y1="0" x2="108" y2="0"/><text class="s-legend" x="114" y="5">-DI</text>
+          <line class="s-adx" x1="168" y1="0" x2="192" y2="0"/><text class="s-legend" x="198" y="5">ADX（トレンドの強さ）</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ ADX・DMI の構成。価格の下に +DI（緑）・-DI（赤）・ADX（青）が表示される。価格が上昇トレンドに入ると +DI が上・-DI が下に離れ、その差を映して ADX（青）が25ラインを超えて上昇＝トレンドが強い。トレンドが鈍ると ADX も下がる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ +DIと-DIのクロス（方向のサイン）</h2>
+    <p>ADX が「強さ」を見るのに対し、<strong>+DI と -DI のクロス</strong>は「方向」のサインです。移動平均線のゴールデンクロス・デッドクロスと同じ考え方で読みます。</p>
+    <ul>
+      <li><strong>+DI が -DI を下から上に抜ける</strong>：上昇の勢いが下落を上回った＝<strong>買いの目安</strong>。</li>
+      <li><strong>-DI が +DI を下から上に抜ける</strong>：下落の勢いが上昇を上回った＝<strong>売り・手仕舞いの目安</strong>。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 290" role="img" aria-labelledby="adx-cross-title">
+        <title id="adx-cross-title">+DIと-DIのクロスとADXの水準の拡大図</title>
+        <!-- 25ライン -->
+        <line class="s-th" x1="40" y1="140" x2="600" y2="140"/>
+        <text class="s-label-sm" x="28" y="144" text-anchor="end">25</text>
+        <!-- ADX（青）25以上で推移＝信頼度高 -->
+        <polyline class="s-adx" points="40,120 130,115 220,118 300,108 380,102 460,106 540,114 600,120"/>
+        <!-- -DI（赤）高い→下がる -->
+        <polyline class="s-mdi" points="40,90 130,110 220,140 300,165 380,185 460,195 540,188 600,180"/>
+        <!-- +DI（緑）低い→上がる -->
+        <polyline class="s-pdi" points="40,205 130,175 220,140 300,112 380,92 460,86 540,96 600,108"/>
+        <!-- クロスのマーカー -->
+        <circle class="s-gc" cx="220" cy="140" r="12"/>
+        <text class="s-note-g" x="220" y="175" text-anchor="middle">+DI↑-DI＝買いサイン</text>
+        <text class="s-note" x="470" y="92">ADXが25超＝信頼度が高い</text>
+        <!-- 凡例 -->
+        <g transform="translate(48,274)">
+          <line class="s-pdi" x1="0" y1="0" x2="24" y2="0"/><text class="s-legend" x="30" y="5">+DI</text>
+          <line class="s-mdi" x1="84" y1="0" x2="108" y2="0"/><text class="s-legend" x="114" y="5">-DI</text>
+          <line class="s-adx" x1="168" y1="0" x2="192" y2="0"/><text class="s-legend" x="198" y="5">ADX</text>
+        </g>
+      </svg>
+      <figcaption class="chart-caption">▲ +DI（緑）が -DI（赤）を<strong>下から上に抜く＝買いサイン</strong>（逆は売りサイン）。このクロスは、<strong>ADX（青）が25ラインより上にあるとき</strong>ほど信頼度が高いとされる。ADX が低い（レンジ）ときのクロスはダマシになりやすい。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ トレンドとレンジの見極め</h2>
+    <p>ADX の最も実践的な使い方は、<strong>「今はトレンドか、レンジか」を見極めるフィルター</strong>として使うことです。テクニカル指標には「トレンドで効くもの」と「レンジで効くもの」があり、ADX でどちらの局面かを判断してから使い分けると、ダマシを減らせると考えられています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="adx-regime-title">
+        <title id="adx-regime-title">ADXの水準でトレンドとレンジを見極める概念図</title>
+        <!-- 25/20ライン -->
+        <line class="s-th" x1="40" y1="130" x2="600" y2="130"/>
+        <text class="s-label-sm" x="28" y="134" text-anchor="end">25</text>
+        <line class="s-th2" x1="40" y1="160" x2="600" y2="160"/>
+        <text class="s-label-sm" x="28" y="164" text-anchor="end">20</text>
+        <!-- ADX：レンジ(低)→トレンド(上昇・高)→鈍化(低へ) -->
+        <polyline class="s-adx" points="40,200 110,205 180,195 250,160 320,118 390,108 460,150 530,185 600,205"/>
+        <text class="s-note" x="355" y="98" text-anchor="middle">ADX↑25超＝強いトレンド（順張り向き）</text>
+        <text class="s-label-sm" x="110" y="228">ADX低い＝レンジ・様子見</text>
+        <text class="s-label-sm" x="540" y="228" text-anchor="end">トレンド終了→レンジへ</text>
+      </svg>
+      <figcaption class="chart-caption">▲ ADX（青）が25ラインより下で横ばいのときはレンジ（方向感なし）、25を超えて上昇していくと強いトレンド＝順張りが機能しやすい局面。ADX がピークから下がり始めたら、トレンドの勢いが衰えてレンジに戻るサインとされる。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      ADX は<strong>反応がやや遅い（遅行性）</strong>指標です。ADX が25を超えたと確認できる頃には、すでにトレンドがある程度進んでいることもあります。また ADX は方向を示さないため、<strong>「ADX が高い＝買い」ではありません</strong>（強い下降トレンドでも ADX は高くなります）。必ず +DI/-DI で向きを確認してください。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 長所と弱点</h2>
+
+    <div class="positive-box">
+      <strong>📈 長所：トレンドの「強さ」を客観的に測れる</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>トレンドかレンジかが分かる</strong>：順張り指標を使ってよい局面かを、客観的な数値で判断できる。</li>
+        <li><strong>方向と強さを分けて見られる</strong>：強さ（ADX）と向き（+DI/-DI）を別々に確認でき、判断が整理しやすい。</li>
+        <li><strong>ダマシのフィルターになる</strong>：ADX が低いときのクロスやブレイクを「信頼度が低い」と切り分けられる。</li>
+        <li><strong>あらゆる市場・時間軸で使える</strong>：株・FX・商品・暗号資産、日足から分足まで広く使われている。</li>
+      </ul>
+    </div>
+
+    <div class="negative-box">
+      <strong>📉 弱点：遅く、単独では売買サインにならない</strong><br><br>
+      <ul style="margin-left:20px;margin-top:8px;color:inherit">
+        <li><strong>遅行性がある</strong>：ならして計算するため反応が遅く、トレンドの初動には間に合いにくい。</li>
+        <li><strong>方向を示さない</strong>：ADX 単体では上か下か分からない。必ず +DI/-DI とセットで使う必要がある。</li>
+        <li><strong>レンジでは機能しにくい</strong>：もみ合いでは3本の線がもつれ、サインがダマシになりやすい。</li>
+        <li><strong>水準の解釈に幅がある</strong>：25/20 はあくまで目安で、銘柄や時間軸で最適値は変わる。</li>
+      </ul>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 初心者が実践で気をつけるコツ</h2>
+
+    <h3>① まずは「ADXの水準」でトレンドかレンジかを見る</h3>
+    <p>最初は細かいクロスより、<strong>ADX が25より上か下か・上向きか下向きか</strong>だけに注目するのが分かりやすいとされています。「ADX が25超で上向き＝強いトレンド、20以下で横ばい＝レンジ」という大きな地合い判断にまず使うのがおすすめです。</p>
+
+    <h3>② 方向は必ず +DI/-DI で確認する</h3>
+    <p>ADX はあくまで「強さ」です。<strong>+DI が上なら上昇、-DI が上なら下降</strong>と、向きは必ず DI で確認します。「ADX が高い＝買い」と勘違いしないことが大切です。</p>
+
+    <h3>③ ADXが高いときのDIクロスを重視する</h3>
+    <p>+DI/-DI のクロスは、<strong>ADX が25より上にあるとき</strong>ほど信頼度が高いとされます。ADX が低い（レンジ）局面でのクロスは頻発しダマシになりやすいので、いったん見送る判断も有効です。</p>
+
+    <h3>④ 単独で使わず複数の根拠と組み合わせる</h3>
+    <p>ADX はトレンドの有無を見るフィルターとして優秀ですが、それ単体で売買タイミングを決める指標ではありません。<a href="guide-moving-average.html">移動平均線</a>や<a href="guide-macd.html">MACD</a>でトレンドの方向を、<a href="guide-rsi.html">RSI</a>で過熱感を見て、<strong>複数の指標が同じ方向を示しているか</strong>で判断の信頼性が高まると一般的に考えられています。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトのシグナルでの使われ方</h2>
+    <p>当サイトのテクニカルアラートシステムは、各シグナルの発火時に <strong>ADX とチョピネス（Choppiness：相場のもみ合い度）を記録</strong>しており、<strong>「その時の相場がトレンドかレンジか」という市況判定の材料</strong>として活用しています。ADX が高くトレンドがはっきりしている局面と、ADX が低くもみ合っている局面とでは、同じシグナルでも信頼度が変わるためです。</p>
+    <p>ただし現時点では、ADX は主に<strong>記録と市況の把握（レジーム判定）</strong>に使っており、ADX 単体を発火の合否を決めるハードな条件には組み込んでいません。本文で述べた通り ADX は遅行性があり方向も示さないため、移動平均線・RSI・MACD・ボリンジャーバンドなどの他の指標や、短期・中期・長期足の整合と合わせて、総合的に判断する設計にしています。今後データが蓄積すれば、「ADX が高い局面のシグナルは勝率が高いか」といった検証に役立てられます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績を確認する</div>
+      <div class="cta-box-desc">ADX を含む複数の指標を組み合わせた複合テクニカルシグナルが、実際にどのような精度で機能しているか、過去の発火履歴と結果を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>ADX・DMI について学んできた内容を最後に整理します。</p>
+    <ul>
+      <li>ADX・DMI は<strong>トレンドの「強さ」と「方向」を測るトレンド系指標</strong>で、ワイルダーが考案。標準期間は14。</li>
+      <li>構成は<strong>+DI（上昇の勢い）・-DI（下落の勢い）・ADX（トレンドの強さ）</strong>の3本。</li>
+      <li><strong>ADX 25以上で強いトレンド・20以下で弱い（レンジ）</strong>。ADX は方向を示さない。</li>
+      <li>向きは<strong>+DIと-DIのクロス</strong>で見る（+DI上抜け＝買い／-DI上抜け＝売り）。<strong>ADXが高いほどクロスの信頼度が高い</strong>。</li>
+      <li>最大の使いどころは<strong>「トレンドかレンジか」の見極めフィルター</strong>。弱点は遅行性と、単独では使えないこと。</li>
+      <li>実践では<strong>ADXで地合いを判断し、方向はDIで確認、他の指標と組み合わせて</strong>使うのが基本とされる。</li>
+    </ul>
+
+    <p>ADX・DMI は、「今はトレンドに乗っていい相場なのか？」という、順張りの大前提を客観的に教えてくれる頼もしい指標です。まずはチャートに表示して、ADX が25ラインを超えて上下する動きと、+DI/-DI の位置関係を日々眺めるところから始めてみてください。テクニカル分析シリーズの他の記事もあわせてご覧ください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">トレンドの方向を見る基本指標。ADXで「強さ」を、移動平均で「方向」を確認すると相性が良い。</div>
+      </a>
+      <a class="related-card" href="guide-macd.html">
+        <div class="related-card-title">📊 MACDの見方</div>
+        <div class="related-card-desc">トレンドの方向と勢いを見る指標。ADXのトレンド判定と組み合わせやすい。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">ADXを含む複合テクニカルシグナルの過去の発火履歴と実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は ADX・DMI の仕組みと使い方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、相場の先行きや利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
