@@ -204,6 +204,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 - **QAレポート（2026-06-01 追加）**: `site-qa-report.md`（routine `site-qa-lint` `trig_01Ph7pZ1WpjL8mZn7gXj5TEm`、土曜 10:00 JST。`check_site_consistency.py` を実行した整合性チェック結果）。**routine が main へ生成・コミットするため、ローカルから push 禁止**
 - **指標結果速報（2026-06-05 追加）**: `indicator-result.json`（routine が重要指標の発表後に WebSearch で実数値・市場反応を生成・コミット。`generate_market_news.py` の `build_indicator_preview_banner` が読み、トップの注目指標バナーを「プレビュー→結果速報」に刷り替える）。**routine が GitHub 側で生成・コミットするため、ローカルから push 禁止**（SYNC_FILES に入れない）
 - **パニック反発スキャン（2026-06-03 追加）**: `panic-scan.md`（GitHub Actions `panic-scan.yml`、毎日 7:27 JST。`panic_bounce_scan.py` が非FX9資産の「投げ売り＝反発候補」を出力）。**Actions が GitHub 側で生成・コミットするため、ローカルから push 禁止**（ローカル実行時に同名ファイルができるが SYNC_FILES に入れない）。前向き検証データ蓄積用の非公開メモ
+- **記事下書き（2026-06-06 追加）**: `drafts/draft-*.html` / `drafts/REVIEW.md`（routine `autodraft-article` `trig_01VpreEMybEJCmFiU5TS7Vet`、毎日 05:30 JST が心理＆リスク管理シリーズの**下書き**を生成・コミット）。**routine が GitHub 側で生成するため SYNC_FILES に入れない**（ローカルから push 禁止）。下書きは `noindex,nofollow`＋robots.txt で `/drafts/` Disallow。**例外＝`drafts/AUTODRAFT_GUIDE.md`（手順書＋topicキュー）は人間が編集するので SYNC_FILES 入り**。公開は必ず人間＋compliance-reviewer(Opus)監査を経て `guide-<key>.html` として行う（無人公開しない＝ストック＆ドリップ方式）
 
 **理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。
 
