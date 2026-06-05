@@ -3715,9 +3715,14 @@ def _load_indicator_result(now_jst):
             return None
         with open(p, encoding="utf-8") as f:
             r = json.load(f)
-        if r.get("verified") and r.get("event_date") == now_jst.date().isoformat():
-            return r
-        return None
+        ed = r.get("event_date")
+        if not (r.get("verified") and ed):
+            return None
+        # 結果速報は「発表当日＋翌日まで」表示（翌朝の再生成でも昨日の結果を拾えるように）。
+        # それ以降は古い結果として無視し、自動でプレビュー（次の指標）へ戻る。
+        edate = datetime.strptime(ed, "%Y-%m-%d").date()
+        delta = (now_jst.date() - edate).days
+        return r if 0 <= delta <= 1 else None
     except Exception:
         return None
 
