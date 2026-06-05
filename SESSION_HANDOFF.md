@@ -4,7 +4,19 @@
 
 ---
 
-## 🆕 2026-06-02 セッションの続き（最新・まずここを読む）
+## 🆕 2026-06-05 セッションの続き（最新・まずここを読む）
+
+#### ✅ 2026-06-05：シグB案＝選別ティアを信頼度スコアに昇格（本番メール反映・commit 8e72c82）
+- **何を**：6/3に【記録のみ】で実装した `selection` ティア（avoid/neutral/good/elite）を `generate_technical_alerts.py` の **B2 信頼度スコア `calc_confidence_score` に配線**。これでメールの ⭐ ランクがデータ駆動の選別エッジを反映する。
+- **補正値（ユーザーが「単調対称」を選択）**：**avoid −2 / neutral 0 / good +1 / elite +2**。根拠＝過去304件で tier別実Rが −0.248 / −0.093 / +0.364 / +0.758 と**完全単調・前後半とも安定**。avoid＝飛びつき買い/ma_goldenロング/runway阻害 を内包（6/2案の負けエッジを全て含む）。**当初案の macd_dead×0ライン加点は「best of many＝偽陽性最有力」のため不採用**。
+- **実装**：`calc_confidence_score(... , position_plan=None, indicators=None)` に引数追加→内部で監査済み `compute_sr_runway`/`compute_selection_tier` を再利用しティア算出→score補正＋factors追記＋`edge_tier` を戻り値に追加。呼び出し側L2695で `position_plan`/`indicators` を渡す。後方互換（引数なし→補正なし）も確認。
+- **⚠️ 安全性（影響範囲を全追跡で確定）**：`confidence` は **件名⭐・本文信頼度ブロック・signals-log記録 の3箇所のみ**で使用、**メール送信可否には不使用**（送信は `filter_send_email` が独立制御）。＝**メールの増減はゼロ・⭐ランクの再ランク付けと記録だけ**の安全な変更。`log_entry["confidence"]` に edge_tier も記録されるので**前向き検証フックは自動**。
+- **検証**：UTF-8 compile✅／合成データで5ティア全て期待通り（ELITE+2/GOOD+1/NEUTRAL 0/AVOID-chasing・blocked・ma_golden −2）／`mw check`✅／sync成功。**次回 technical-alerts.yml（4h）実行から本番メールに反映**（手動trigger不要＝triggerは実メールを早める副作用のみ）。
+- **次（前向き検証）**：数週間後、6/5以降に発火したシグナルで `confidence.edge_tier` 別の実勝率/実Rが単調を保つか確認 → 保てば**発火フィルタへの昇格**（avoid抑制 or elite優遇）を検討。崩れれば補正値を縮小/撤回。multiple-comparison・13日単一レジームの限界は残るため、これは依然「前向き検証段階」。
+
+---
+
+## 🆕 2026-06-02 セッションの続き（過去分）
 
 ### ⚠️ 最重要：設定ファイルの状態（事故対応済み）
 - セッション中に `market-news-config.json.json`（GitHubトークン入り）が**フォルダから消失**（原因不明・OneDrive疑い）。`.json.json` パスは**書込みもアクセス拒否**（ロック/ゴースト化）。
@@ -23,7 +35,7 @@
 - `analyze_signal_edges.py` の `rec_R` を **TP2対応**に修正（勝ちでhit_tp2_at有り→tp2_pct/sl_pct≈2.0R、TP1止まり→1.33R）。ベースライン両建て表示（TP2対応 / 保守=全TP1利確）も追加。
 - 再分析（最新294件、TP2対応）：**ベースライン 39.8%・−0.012R（保守−0.071R）＝ほぼ均衡**。勝ち117中TP2到達26件。
 - **昨日の結論はTP2修正＋1日分データ増でも崩れず**。最有力 `macd_dead×MACD>0(0ライン上ショート)` は **n=44・56.8%・+0.462R・✅安定**（昨日n38/+0.412Rから改善＝軽い前向き確認）。負けエッジ（ma_goldenロング 12%/−0.69R、飛びつき買い−0.195R、GC=F −0.47R）も不変。
-- **B（エンジン反映）は未適用＝レビュー待ち**。`generate_technical_alerts.py` の `calc_confidence_score`（L2158）に**データ駆動の加点/減点**を足す案。現状この関数は指標生値を受け取らないので**引数追加＋呼び出し側L2599の配線が必要**。本番のシグナルメールを変える変更なので、ユーザーGO後に実機の変数名を確認して安全に適用する。提案の中身はこのセッションのチャット参照（macd_dead×0ライン位置／方向×MA位置／ma_golden降格）。前向き検証タグも併せて入れる。
+- **✅ B（エンジン反映）2026-06-05 適用済（commit 8e72c82・下記専用節参照）**。当初案の macd_dead×0ライン加点は「best of many＝偽陽性の可能性が最も高い」ため**不採用**とし、代わりに監査済みの **selection ティア（avoid/neutral/good/elite）を信頼度に配線**（より頑健・負けエッジを内包）。`calc_confidence_score` に `position_plan`/`indicators` 引数追加＋呼び出し側L2695配線済。**信頼度の表示と記録のみ補正・発火/送信/ロットは不変**。
 - ⚠️ 多重比較62セルの懸念は残る（macd_dead×MACD>0は依然「best of many」の可能性）→ 別レジームで各候補 n≥40 の前向き再現を確認するまで本採用しない。
 
 #### ✅ 2026-06-03：テクニカル指標シリーズ 第4弾「RSI」公開
