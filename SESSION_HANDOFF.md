@@ -6,6 +6,12 @@
 
 ## 🆕 2026-06-05 セッションの続き（最新・まずここを読む）
 
+#### ✅ 2026-06-06：preview.html に「結果速報」セクションを実装（雇用統計が空だった不具合の修正）
+- **症状**：トップの「📊 結果速報」バナー（NFP +17.2万…）から「結果と市場反応を見る →」で飛ぶと、リンク先 **preview.html に雇用統計の内容が何も無い**（ユーザー報告）。
+- **原因**：indicator-result.json も index バナーも正常だが、**preview.html を生成する `generate_market_news.py` の `build_preview_html` が upcoming（発表前）イベントしか描画せず、indicator-result.json を一切参照していなかった**。さらに発表が終わった指標は翌日に upcoming 一覧から外れる→翌朝は完全に空。＝6/5に「残課題（任意）②preview.html 本体にも結果セクションを出す」としていた未実装部分が表面化（バグというより未配線）。※preview.html は auto_indicator_preview.py ではなく generate_market_news.py が生成（auto_indicator_preview.py は guide-auto-*.html の個別記事のみ）。
+- **修正（commit be80173）**：`build_preview_html` に index バナーと**同一条件**（`_load_indicator_result`＝verified・発表当日〜翌日 0〜1日窓）で「📊 結果速報」セクション（ヘッドライン実数値／📌ポイント／📈市場の反応／要約／🔗出典／免責）を本文先頭（beginner-box の直後・upcoming プレビューの上）に描画。結果が無ければ空文字で従来通り。ローカルで実JSONをDLしてレンダリング検証（結果速報/NFP/市場の反応/出典すべて描画）→mw check✅→sync→update-market-news(success)→**ライブ preview.html に反映確認（15.8KB）**。＝バナーとページ本体が同期した。
+
+
 #### ✅ 2026-06-05：シグB案＝選別ティアを信頼度スコアに昇格（本番メール反映・commit 8e72c82）
 - **何を**：6/3に【記録のみ】で実装した `selection` ティア（avoid/neutral/good/elite）を `generate_technical_alerts.py` の **B2 信頼度スコア `calc_confidence_score` に配線**。これでメールの ⭐ ランクがデータ駆動の選別エッジを反映する。
 - **補正値（ユーザーが「単調対称」を選択）**：**avoid −2 / neutral 0 / good +1 / elite +2**。根拠＝過去304件で tier別実Rが −0.248 / −0.093 / +0.364 / +0.758 と**完全単調・前後半とも安定**。avoid＝飛びつき買い/ma_goldenロング/runway阻害 を内包（6/2案の負けエッジを全て含む）。**当初案の macd_dead×0ライン加点は「best of many＝偽陽性最有力」のため不採用**。
@@ -75,7 +81,7 @@
   - **routine**：`indicator-result`（**trig_0183wxDTjBRPNzWBtEM1MfsM**・毎日**23:13 JST**=14:13 UTC・sonnet）。その日に発表された重要指標(NFP/CPI/PCE/GDP/ISM/FOMC/日銀/日本GDP・CPI)があればWebSearchで実数値・市場反応を確認し indicator-result.json をコミット。**数値はWebSearch実値のみ・不確実なら verified=false・断定/助言なし**。発表が無い日は何もコミットしない。
   - **タイミング**：jobs(21:30 JST)→routine(23:13 JST)で結果JSON生成→**同夜23:43 JSTにindex再生成して結果バナーを当夜表示**（翌朝7:27もフォールバック。当日＋翌日ウィンドウで確実に拾う）。**routine総数9本**（Max枠15/日に余裕）。
   - **✅ 同夜表示の理由（2026-06-05 ユーザーと確認）**：雇用統計は金21:30 JST発表＝動きの本番は“金曜の夜”（FXは土曜朝6時頃クローズ）。翌朝表示だとアクティブ層に遅い。そこで `update-market-news.yml` に **23:43 JST(14:43 UTC)＋0:13 JST(15:13 UTC)** の夜枠を追加。結果routineの直後に再生成→金曜夜のうちに結果バナーへ刷り替わる。発表が無い夜は「変更なし」でほぼ無害（夕方以降の最新値も反映されるおまけ付き）。
-  - **残（任意）**：②preview.html 本体にも結果セクションを出す。③FOMC(翌3:00)/BOJ(12:00)は23:13起動では拾えないので別cron追加。④auto-preview内A8広告のrel sponsored統一。
+  - **残（任意）**：~~②preview.html 本体にも結果セクションを出す~~ ✅**完了（2026-06-06・commit be80173）**。③FOMC(翌3:00)/BOJ(12:00)は23:13起動では拾えないので別cron追加。④auto-preview内A8広告のrel sponsored統一。
 
 #### ✅ 2026-06-05：指標プレビューの「発表“当日”に消える」日付バグを修正
 - **症状**：重要指標(例 6/5雇用統計)の前日まで preview.html に「明日 ◯◯」と出るのに、**発表当日になると消えて空状態**になる（ユーザー報告）。
