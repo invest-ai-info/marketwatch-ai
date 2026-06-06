@@ -2370,6 +2370,61 @@ def compute_selection_tier(position_plan, indicators, sr, primary_signal):
     }
 
 
+# 🆕 2026-06-06: ルールベース規律フィルタ（記録のみ・発火/メール/信頼度は不変）
+#   過去の4Hシグナル分析（売られすぎ逆張り=勝ち / 飛びつき・落ちるナイフ・指標直前・相関集中=負け）と
+#   MY_TRADING_RULES を決定論ルールに落とし、各シグナルに verdict(green/yellow/red)＋理由 を付与して記録する。
+#   数週間ためて「green が red より実際に勝つか」を前向き検証し、効けば発火/メールゲートへ昇格する。
+INDEX_TICKERS = {"NKD=F", "ES=F", "NQ=F", "YM=F", "^FTSE"}
+WEAK_SIGNAL_TYPES = {"ma_golden", "high_break", "macd_golden"}            # 実績で負け側（順張り/飛びつき）
+STRONG_SIGNAL_TYPES = {"bb_lower_touch", "low_break", "rsi_oversold_bounce"}  # 実績で勝ち側（売られすぎ逆張り）
+
+
+def compute_discipline_filter(primary_type, sigdir, indicators, env_score, is_index, prior_index_same_dir):
+    """データ駆動の規律フィルタ。verdict=green/yellow/red を返す（記録のみ）。"""
+    ind = indicators or {}
+    score = 0
+    reasons = []
+    is_long = (sigdir == "long")
+    try:
+        price = float(ind.get("price") or 0)
+        ma25 = float(ind.get("ma25") or 0)
+        ma75 = float(ind.get("ma75") or 0)
+        rsi = float(ind.get("rsi") or 0)
+    except (TypeError, ValueError):
+        price = ma25 = ma75 = rsi = 0
+    # ① シグナルタイプの実績品質
+    if primary_type in WEAK_SIGNAL_TYPES:
+        score -= 2; reasons.append(f"弱いタイプ({primary_type})")
+    elif primary_type in STRONG_SIGNAL_TYPES:
+        score += 1; reasons.append("売られすぎ/逆張り系の勝ち筋")
+    # ② 落ちるナイフ＝下降構造でのロング（今週の最大の敗因）
+    if is_long and ma25 > 0 and ma75 > 0 and ma25 < ma75 and price > 0 and price < ma25:
+        score -= 2; reasons.append("落ちるナイフ(下降中のロング)")
+    # ②' 上昇構造でのショート（対称・軽め）
+    if sigdir == "short" and ma25 > 0 and ma75 > 0 and ma25 > ma75 and price > 0 and price > ma25:
+        score -= 1; reasons.append("上昇中のショート")
+    # ③ RSI 極値の後押し（売られすぎ逆張り＝サイトの実エッジ）
+    if is_long and 0 < rsi <= 30:
+        score += 1; reasons.append("RSI売られすぎ(<=30)")
+    elif sigdir == "short" and rsi >= 70:
+        score += 1; reasons.append("RSI買われすぎ(>=70)")
+    # ④ 重要指標直前/警戒（env_score に集約済み）
+    if env_score == "D":
+        score -= 2; reasons.append("環境D(指標直前/危機)")
+    elif env_score == "C":
+        score -= 1; reasons.append("環境C(警戒)")
+    # ⑤ 相関集中（同 run で指数の同方向シグナルが既出）
+    if is_index and prior_index_same_dir:
+        score -= 2; reasons.append("相関集中(指数の同方向重ね建て)")
+    if score >= 2:
+        verdict = "green"
+    elif score >= 0:
+        verdict = "yellow"
+    else:
+        verdict = "red"
+    return {"verdict": verdict, "score": score, "reasons": reasons}
+
+
 def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
                             news_titles, narrative, fired_at_iso, timeframe="4h"):
     """1 アラート発火を構造化レコードに整形"""
@@ -2539,6 +2594,7 @@ def main():
     now_jst = datetime.now(JST)
     now_jst_str = now_jst.strftime("%Y-%m-%d %H:%M JST")
     now_iso = now_jst.isoformat(timespec="seconds")
+    _index_fired_dirs = []  # 🆕 2026-06-06: この run で発火した指数シグナルの方向（相関集中チェック用）
 
     for ticker, name, currency, decimals, asset_cooldown_4h in SYMBOLS:
         # 銘柄別クールダウン: 4H ワークフローは銘柄ごと、1H ワークフローは一律 4h
@@ -2903,6 +2959,13 @@ MarketWatch AI Alerts
             "atr_regime": env["atr_regime"],
             "crisis_news": env["crisis_news"],
         }
+        # 🆕 2026-06-06: ルールベース規律フィルタ（記録のみ・発火/メール/信頼度は不変）
+        _is_index = ticker in INDEX_TICKERS
+        _prior_idx_same = _is_index and any(_d == _sigdir for _d in _index_fired_dirs)
+        log_entry["discipline_filter"] = compute_discipline_filter(
+            primary["type"], _sigdir, indicators, env["env_score"], _is_index, _prior_idx_same)
+        if _is_index and _sigdir in ("long", "short"):
+            _index_fired_dirs.append(_sigdir)
         signals_log.append(log_entry)
         print(f"    📒 シグナルログに記録: id={log_entry['id']} env={env['env_score']}")
 
