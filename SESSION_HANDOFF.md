@@ -12,7 +12,8 @@
 - **🆕 コンソール状況（ユーザー提供スクショ・2026-06-06）**：所有権✅／**「ポリシー違反：有用性の低いコンテンツ」**＋「審査をリクエスト」ボタンあり。→ **今すぐ再審査は非推奨**。6コア解説の追加を **Googleが再クロールするまで数日〜1週間待ってから**1回で出す（`site:marketwatch-jp.com`で索引確認）。再不承認の繰り返しは不利。
 - **② 技術的な穴埋め（quick）**：privacy.html を強化（「利用予定→利用しています」／**Google広告設定 adssettings.google.com・aboutads.info のオプトアウトリンク追加**／更新日2026-06-06）。`build_sitemap_xml` で **noindex の `guide-auto-*` を sitemap から除外**（索引矛盾を解消・ライブで guide-auto 消滅を確認）。
 - **③ 既に出来ていた点**：ads.txt（pub-2552122294306014・DIRECT）✅／about E-E-A-T✅／contact✅／kinsho-v1免責✅／オリジナル記事49本✅／drafts noindex+Disallow✅。
-- **残タスク**：①market-health/charts/index も解説追加 ②記事を増やし続ける（autodraft稼働中）③**ユーザー操作＝AdSenseコンソールで支払い情報追加＋サイトリンク→再審査リクエスト** ④承認後に広告配置最適化。詳細は `ADSENSE_CHECKLIST.md`。
+- **🆕 youtube-summary / political-feed も独自解説を追加（2026-06-06）**：`generate_youtube_summary.py`（YouTube要約の使い方＝ポジショントーク注意・元動画確認）と `build_political_feed_page.py`（政治発言フィードの見方＝相場を動かす仕組み・一次情報確認）の `</main>` 直前に独自セクション注入→各workflow trigger で再生成。アグリゲーション色を独自編集色で緩和。**＝公開ページ群はほぼ全て“独自解説つき”に。**
+- **残タスク**：①記事を増やし続ける（autodraft稼働中）②**数日〜1週間 Google再クロール待ち→`site:`で確認→再審査リクエスト（ユーザー操作）** ③承認後に広告配置最適化。詳細は `ADSENSE_CHECKLIST.md`。
 
 
 #### ✅ 2026-06-06：自動シグナルに「ルールベース規律フィルタ」を実装（記録のみ・commit e9bfa01）
