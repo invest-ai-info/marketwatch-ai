@@ -205,6 +205,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 - **指標結果速報（2026-06-05 追加）**: `indicator-result.json`（routine が重要指標の発表後に WebSearch で実数値・市場反応を生成・コミット。`generate_market_news.py` の `build_indicator_preview_banner` が読み、トップの注目指標バナーを「プレビュー→結果速報」に刷り替える）。**routine が GitHub 側で生成・コミットするため、ローカルから push 禁止**（SYNC_FILES に入れない）
 - **パニック反発スキャン（2026-06-03 追加）**: `panic-scan.md`（GitHub Actions `panic-scan.yml`、毎日 7:27 JST。`panic_bounce_scan.py` が非FX9資産の「投げ売り＝反発候補」を出力）。**Actions が GitHub 側で生成・コミットするため、ローカルから push 禁止**（ローカル実行時に同名ファイルができるが SYNC_FILES に入れない）。前向き検証データ蓄積用の非公開メモ
 - **記事下書き（2026-06-06 追加）**: `drafts/draft-*.html` / `drafts/REVIEW.md`（routine `autodraft-article` `trig_01VpreEMybEJCmFiU5TS7Vet`、毎日 05:30 JST が心理＆リスク管理シリーズの**下書き**を生成・コミット）。**routine が GitHub 側で生成するため SYNC_FILES に入れない**（ローカルから push 禁止）。下書きは `noindex,nofollow`＋robots.txt で `/drafts/` Disallow。**例外＝`drafts/AUTODRAFT_GUIDE.md`（手順書＋topicキュー）は人間が編集するので SYNC_FILES 入り**。公開は必ず人間＋compliance-reviewer(Opus)監査を経て `guide-<key>.html` として行う（無人公開しない＝ストック＆ドリップ方式）
+- **週次トレード自己レビュー（2026-06-06 追加）**: `my-trade-review.md`（routine `weekly-trade-review` `trig_01LgSjdK2is5m6oP7ta1mh7z`、毎週土曜 12:00 JST が `my-trades.json` を分析し敗因・ルール遵守度・改善点をまとめる非公開メモ）。**routine が GitHub 側で生成するため SYNC_FILES に入れない**（ローカルから push 禁止）。**読む対象＝`my-trades.json`（実取引）/ `MY_TRADING_RULES.md`（発注前チェックリスト・SYNC_FILES入り）/ `economic-events.json`**。投資助言ではなく本人の自己点検
 
 **理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。
 
