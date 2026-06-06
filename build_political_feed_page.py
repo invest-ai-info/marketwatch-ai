@@ -296,6 +296,18 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
   発信元の信頼性・タイミング・原文の解釈はご自身でご確認ください。投資判断は自己責任で。
 </div>
 
+<div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+  <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 政治発言フィードの見方・活用法</h2>
+  <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">なぜ政治家・中央銀行関係者の「発言」を追うのか——それは、<strong>金融政策・関税・財政・地政学</strong>といった相場の土台が、要人の一言で大きく動くことがあるからです。たとえば中銀総裁の利上げ/利下げを示唆する発言、通商をめぐる強硬発言、為替介入への言及などは、株価や為替が<strong>発言の瞬間に反応する</strong>ことがあります。このページは、そうした“相場を動かしうる発言”を時系列で拾い、重要度（HIGH/MID/LOW）の目安をつけて並べたものです。</p>
+  <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">使うときのコツは、<strong>ヘッドラインだけで反応しないこと</strong>。同じ言葉でも「誰が・どういう文脈で・本気度はどれくらいか」で市場へのインパクトは変わります。重要度（HIGH）に加えて、<strong>発信元の信頼性</strong>と<strong>発言の前後関係</strong>を確認し、一次情報（公式声明・会見の全文）に当たるのが基本です。</p>
+  <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+    <li><strong>速報性の裏返し</strong>：発言は速い分、噂・観測・後の撤回も混じります。最初の急な値動きに飛びつくと往復ビンタになりがち。</li>
+    <li><strong>カレンダーと併用</strong>：要人発言は<a href="calendar.html" style="color:#0969da">重要指標の発表</a>前後に集中しがち。イベントとセットで見ると流れがつかめます。</li>
+  </ul>
+  <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="calendar.html" style="color:#0969da">経済カレンダー</a> ／ <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">ニュースに振り回されない損切りの技術</a></p>
+  <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページは発言の整理・情報提供であり、特定銘柄の売買推奨や投資助言ではありません。発言の解釈・市場影響は不確実です。投資判断はご自身の責任で行ってください。</p>
+</div>
+
 </main>
 <footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル成績</a><p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
