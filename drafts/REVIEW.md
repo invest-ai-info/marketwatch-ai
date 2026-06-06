@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-06-07 | trading-psychology-calm
+
+- **基準日（JST）**: 2026-06-07（UTC 2026-06-06T20:33:37Z）
+- **Topic**: 感情のコントロール・平常心の作り方（FOMO／狼狽売り／リベンジトレード）
+- **Key**: `trading-psychology-calm`
+- **生成ファイル**: `drafts/draft-trading-psychology-calm.html`
+- **シリーズ**: 🧠 投資の心理・メンタル（guides.html 既存カテゴリ）
+
+### 参照出典 URL
+| 項目 | 出典 |
+|---|---|
+| FOMO の定義・投資心理 | https://fxshinri.com/mindset/fx-mindset-fomo/ |
+| FOMO の定義（野村証券用語集） | https://www.nomura.co.jp/terms/english/other/A03432.html |
+| Barber &amp; Odean (2000) 研究 | https://www.britannica.com/money/trading-psychology |
+| 行動経済学・感情とトレード | https://www.heygotrade.com/en/blog/behavioral-finance-in-trading |
+| マインドフルネスとトレード成績 | https://www.researchgate.net/publication/327138465_The_Role_of_Mindfulness_Meditation_on_Stock_Trading_Performance |
+| マインドフルネスと処分効果 | https://oro.open.ac.uk/84403/1/PhD_thesis_Wong_Ernest.pdf |
+| 扁桃体・感情制御（一般） | https://www.sciencedirect.com/science/article/abs/pii/S0306453025003440 |
+
+### 自己コンプライアンスチェック結果
+| チェック項目 | 結果 |
+|---|---|
+| 個別銘柄の売買推奨なし | ✅ 教育・一般論のみ。「今 ○○ を買え」等の表現なし |
+| 断定・利益保証表現なし | ✅「絶対」「必ず」「100%」「保証」「儲かる」使用なし |
+| kinsho-v1 免責（冒頭バナー＋本文末＋footer）あり | ✅ 3箇所に data-disclaimer="kinsho-v1" または同等の文言を配置 |
+| noindex,nofollow あり | ✅ `<meta name="robots" content="noindex,nofollow">` を head に配置済み |
+| 出典の妥当性 | ✅ Barber &amp; Odean (2000) は学術誌 Journal of Finance 掲載。マインドフルネス研究は ResearchGate / ScienceDirect の論文を参照。不確実な数値（「70%」「15%」等の出典不明統計）は使用していない |
+| SVG 概念図に「※ 概念を示すイメージ図です」の注記 | ✅ 全 2 点に注記あり |
+
+### SVG 図の構成
+1. **感情の悪循環ループ**（FOMO→含み損・恐怖→狼狽売り／リベンジ→損失拡大の4ステップ循環図）— 実装済み
+2. **2パターン比較図**（感情主導 vs ルール主導の3ステップ比較）— 実装済み
+3. `<!-- TODO(SVG): 取引前→中→後のトレードルーティン・タイムライン図（横フロー）を要追加・要ライト/ダーク実機確認 -->`
+
+### 人間の残作業
+- [ ] **SVG の実機ライト/ダーク確認**：追加クラス `.s-box-warn` `.s-box-neg` `.s-box-pos` `.s-box-neu` `.s-box-label` `.s-box-sub` `.s-arr-r` `.s-arr-g` `.s-arr-fill-r` `.s-arr-fill-g` をライト・ダークモードで目視確認
+- [ ] **ルーティン・タイムライン SVG の追加**（HTML 内の TODO(SVG) コメントを参照）：取引前・中・後の3フェーズを横フローで示す図
+- [ ] **Opus compliance-reviewer 監査**：公開前に `compliance-reviewer` エージェント（Opus）に下書き全文を渡してレビューを依頼
+- [ ] **タイトル・見出しの微調整**：タイトルが長いため短縮案を検討（例：「感情のコントロール完全ガイド｜FOMO・狼狽売り・リベンジトレードを克服する」）
+- [ ] **関連記事リンクの確認**：`guide-risk-reward.html`（第3弾予定）が公開されたら related カードに追加
+
+---
+
 ## 2026-06-06 | position-sizing
 
 - **基準日（JST）**: 2026-06-06（UTC 2026-06-05T23:51:50Z）
