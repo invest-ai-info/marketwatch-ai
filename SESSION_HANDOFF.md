@@ -6,6 +6,14 @@
 
 ## 🆕 2026-06-06 セッションの続き（最新・まずここを読む）
 
+#### 🚨→✅ 2026-06-06：technical-alerts（4H/1H）が約18h全失敗していた→修正（既存バグ・VIX急騰で顕在化）
+- **症状**：GitHubから「Technical Alerts (1H/4H) All jobs have failed」通知が毎回。調査の結果、**6/5 12:23 UTC まで success → 6/5 15:33 UTC 以降は4H・1H とも全 run failure**（リトライではなく毎回1回失敗。最終的にも成功していなかった＝シグナルメールが約18h停止）。
+- **根本原因**：`generate_technical_alerts.py` の `_dir = log_entry.get("direction", "")`（2026-05-29 Phase1の既存コード）。**warn のみで方向が定まらないシグナルは `direction=None`**。`.get(key, "")` は「キーが存在し値がNone」だと**Noneを返す**ため、次行 `"ロング" in _dir` が `TypeError: argument of type 'NoneType' is not iterable` でクラッシュ→main全体が exit 1。引き金は **6/5 の VIX 24h +39.7% 急騰**で NKD=F 等に方向感なし warn シグナルが多発したこと（市場条件依存の潜在バグ）。
+- **⚠️ B案（信頼度スコア）変更が原因ではない**：B案コミット8e72c82（12:16 UTC）を含む12:23 UTCの run は success。B案は当該行を行番号でずらしただけ（2818→2848）。
+- **修正（commit 87d4961）**：`_dir = log_entry.get("direction") or ""` で None を空文字に正規化。py_compile✅＋ローカル再現テスト（None→"neutral"でクラッシュせず）。**4H・1H とも手動trigger→success を確認**＝復旧。失敗通知メールも停止する。
+- **横展開の教訓**：`direction` は warn のみ等で **None になり得る**。`"○" in x` 系は **`str(x)` か `x or ""`** で None 安全にする（同種の既存箇所 L213/1325/2297/2332 は str()/not direction ガード済みで安全。危険は2847の1箇所のみだった）。値が None を取りうるキーに `dict.get(k, default)` の default は効かない（キー存在時）ことに注意。
+
+
 #### ✅ 2026-06-06：記事シリーズの「毎日自動更新」＝ストック＆ドリップ方式に着手（下書き自動routine 稼働）
 - **ユーザー要望**：心理＆リスク管理シリーズを「毎日1本ずつ自動更新」したい（ルーティン化）。
 - **方針（ユーザー承認）＝ストック＆ドリップ**：コンプラ（無登録投資助言業・景表法）と品質が生命線なので**「無人で自動公開」はしない**。創作は自動化、**公開前は必ず人間＋compliance-reviewer(Opus)監査**。①下書きを毎日自動生成→②人間がレビュー&仕上げ&コンプラ監査→③承認済みを毎日1本ドリップ公開。
