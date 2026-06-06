@@ -2844,7 +2844,10 @@ MarketWatch AI Alerts
         # 🆕 通貨強弱データを記録（全銘柄共通スナップショット）
         log_entry["currency_strength"] = currency_strength
         # 🆕 2026-05-29 Phase1: トップダウン層を記録（記録のみ・発火には未使用、検証用）
-        _dir = log_entry.get("direction", "")
+        # ⚠️ 2026-06-06 修正：warn のみ等で direction が None のとき get(...,"") は None を返し
+        #    「"ロング" in None」で TypeError → 全 run が落ちていた（VIX急騰で warn シグナル多発時に発覚）。
+        #    `or ""` で None を空文字に正規化する。
+        _dir = log_entry.get("direction") or ""
         _sigdir = "long" if "ロング" in _dir else ("short" if "ショート" in _dir else "neutral")
         log_entry["risk_regime"] = risk_regime
         log_entry["directional_bias"] = assess_directional_bias(ticker, risk_regime["regime"], _sigdir)
