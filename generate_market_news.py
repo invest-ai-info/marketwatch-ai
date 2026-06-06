@@ -3994,6 +3994,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-07", "line": '・<b>2026-06-07</b>: 🏛️ 解説「<a href="guide-honebuto-2026.html" style="color:#0969da"><b>骨太の方針2026とは？ いつ発表？ 高市政権初・「責任ある積極財政」の論点と市場への影響</b></a>」公開'},
         {"date": "2026-06-06", "line": '・<b>2026-06-06</b>: 🛡️ 解説「<a href="guide-position-sizing.html" style="color:#0969da"><b>ポジションサイジングの基本｜2%ルールと損切り幅から逆算するロット計算</b></a>」公開'},
         {"date": "2026-06-05", "line": '・<b>2026-06-05</b>: 🧠 解説「<a href="guide-loss-cut.html" style="color:#0969da"><b>損切りができない本当の理由と、淡々と切る技術</b></a>」公開'},
         {"date": "2026-06-05", "line": '・<b>2026-06-05</b>: 📈 解説「<a href="guide-dow-theory.html" style="color:#0969da"><b>ダウ理論とは？6つの基本原則とトレンドの3段階を初心者向けに徹底解説</b></a>」公開'},
