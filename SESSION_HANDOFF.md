@@ -6,6 +6,12 @@
 
 ## 🆕 2026-06-06 セッションの続き（最新・まずここを読む）
 
+#### ✅ 2026-06-06：自動シグナルに「ルールベース規律フィルタ」を実装（記録のみ・commit e9bfa01）
+- **背景**：fib停止後、ユーザーが「自動シグナルを3人(担当)の判断でフィルタしたい」。設計協議の結果、**曖昧なLLM判定はfibと同じ轍**になりかねないため、**データが示した敗因を決定論ルール化**する方式を採用（ユーザー選択）。
+- **実装（`generate_technical_alerts.py`・記録のみ＝発火/メール/信頼度は不変）**：`compute_discipline_filter(primary_type, sigdir, indicators, env_score, is_index, prior_index_same_dir)` を追加。各シグナルに `log_entry["discipline_filter"]={verdict:green/yellow/red, score, reasons}` を付与。ルール＝**減点：弱いタイプ(ma_golden/high_break/macd_golden −2)・落ちるナイフ(下降中ロング＝price<ma25<ma75 −2)・上昇中ショート(−1)・環境D(−2)/C(−1)・相関集中(同run指数の同方向重ね −2)／加点：売られすぎ逆張り系(bb_lower_touch/low_break/rsi_oversold_bounce +1)・RSI極値(売られすぎ<=30ロング/買われすぎ>=70ショート +1)**。閾値 green≥1 / yellow=0 / red<0。相関集中は run 内で `_index_fired_dirs` を追跡（INDEX_TICKERS={NKD=F,ES=F,NQ=F,YM=F,^FTSE}）。
+- **過去167件で in-sample 検証（強力に分離）**：**🟢green 65.5%(n=29) / 🟡yellow 34.0%(n=50) / 🔴red 33.0%(n=88)**＝**green−red 差 +32.6pt**。redを見送れば全体38.9%→45.6%、greenのみなら65.5%（初期の好調水準に相当）。⚠️ in-sample（同データでルール化）なので楽観値・前向き検証が必要。ただしルールは型別/条件別の既知効果の符号化なので筋は通る。
+- **次（前向き検証→昇格）**：次回 technical-alerts から discipline_filter が記録され始める。数週間ためて **green が red より実際に勝つか**を確認 → 効けば「redはメール送信スキップ or 件名タグ」へ昇格（記録のみ→発火/メールゲート）。weekly-trade-review/SIGNAL_REDESIGN と統合可。
+
 #### ✅ 2026-06-06：fib_pullback を完全停止＝シグナルを100%テクニカルに戻す（反実仮想分析の帰結・commit 087a019）
 - **きっかけ**：ユーザーが「4Hシグナルは最初好調→“ファンダ先行”にしてから成績が下がった気がする。元ルールなら勝率は？」と問題提起。
 - **反実仮想分析（signals-log.json・4H決済済み167件）**：週次勝率 **W21 69.2%(n=13)→W22 38.5%→W23 34.2%** と低下を確認。切り分けの結果：
