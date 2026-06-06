@@ -607,6 +607,14 @@ def determine_direction(signals):
 # シグナル判定（4H 足の最新バーを評価）
 # 返り値: list of dict [{type, severity, label, detail}, ...]
 # ─────────────────────────────────────────────
+# 🆕 2026-06-06: fib_pullback（ファンダ整合フィボ押し目）を完全停止（ユーザー判断）。
+#   理由＝実績 0勝8敗（勝率0%）。「ファンダ強気の押し目買い」がこのサイトの実エッジ（売られすぎ＝
+#   パニックの逆張り）と逆向きで、かつモメンタムフィルタを bypass するため“落ちるナイフ買い”になりやすい。
+#   この銘柄ゲート（ファンダで signal を発火させる唯一の経路）を切ると、シグナルは 100% テクニカルに戻る。
+#   検出・発火・メール・ログをすべて停止。True に戻せば即復活（他シグナルには一切無関係）。
+FIB_PULLBACK_ENABLED = False
+
+
 def detect_fib_pullback(high, low, close, atr_cur, fundamental_bias,
                         lookback=40, gp_lo=0.50, gp_hi=0.66, min_impulse_atr=3.0):
     """🆕 2026-06-01 ファンダ整合フィボ押し目（ゴールデンポケット 50〜61.8%）検出。
@@ -882,7 +890,7 @@ def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", 
     # 🆕 2026-06-01: ファンダ整合フィボ押し目（ゴールデンポケット 50-61.8%・両方向・メールON）
     #   fundamental-context の方向（強気/弱気・HIGH/MID確信度のみ main 側で渡す）と一致する押し目で発火。
     #   押し目は短期モメンタムに逆らうため、メイン側で bypass_momentum によりフィルタをバイパスする。
-    if fundamental_bias in ("BULLISH", "BEARISH"):
+    if FIB_PULLBACK_ENABLED and fundamental_bias in ("BULLISH", "BEARISH"):
         fbk = detect_fib_pullback(high, low, close, atr.iloc[-1], fundamental_bias)
         if fbk:
             _is_long = fbk["direction"] == "long"
