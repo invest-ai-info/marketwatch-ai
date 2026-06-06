@@ -3229,6 +3229,19 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     </p>
   </section>
 
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 市場健康度の読み方</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このダッシュボードは、性質の異なる複数の“体温計”を1画面に集めたものです。大きく分けて、<strong>市場心理</strong>を測る指標（VIX恐怖指数・恐怖と強欲指数）、<strong>過熱/売られすぎ</strong>を測る指標（騰落レシオ）、そして<strong>割高/割安（バリュエーション）</strong>を測る指標（バフェット指数・CAPEレシオ・PER）です。性格が違うものを並べることで、相場全体の“温度感”を多面的に把握できます。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">読み方のコツは、<strong>1つの指標だけで判断しないこと</strong>。複数の指標が<strong>同じ方向（過熱、または悲観）を同時に指したときほど、シグナルの信頼度が高い</strong>とされます。たとえば「VIXが急騰（恐怖）＋騰落レシオが70未満（売られすぎ）」が重なれば、行き過ぎた悲観＝逆張りを検討する材料に。逆に「バフェット指数もCAPEも歴史的高水準（割高）＋恐怖と強欲が極度の強欲」なら、新規の一括投資は控えめに、という具合です。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>短期の温度</strong>はVIX・騰落レシオで（数日〜数週間の振れ）。</li>
+      <li><strong>中長期の割高/割安</strong>はバフェット指数・CAPE・PERで（数ヶ月〜数年の目安）。</li>
+      <li>あくまで“環境認識”の道具であり、個別の売買タイミングは価格そのもののテクニカルと資金管理で。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guide-vix.html" style="color:#0969da">VIX恐怖指数</a> ／ <a href="guide-buffett-indicator.html" style="color:#0969da">バフェット指数</a> ／ <a href="guide-fear-greed.html" style="color:#0969da">恐怖と強欲指数</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 一部の指標は月次の手動更新値を含みます。本ページは情報提供・一般的な解説であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+  </div>
+
 </main>
 <footer>
   <p>🩺 市場健康度ダッシュボード ─ 日本人投資家のための総合診断ツール</p>
@@ -3458,6 +3471,18 @@ def build_charts_html(hist, now_jst):
       <thead><tr><th>年月</th><th>イベント</th><th>関連資産</th><th>概要</th></tr></thead>
       <tbody>{event_rows}</tbody>
     </table>
+  </div>
+
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 50年チャートの活かし方</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">日々のニュースを追っていると、目先の上げ下げに心が振り回されがちです。このページの<strong>数十年スケールの長期チャート</strong>は、いま起きている値動きを<strong>“歴史の文脈”の中で見る</strong>ための地図です。長い目で見れば、株価はオイルショック・ブラックマンデー・ITバブル崩壊・リーマンショック・コロナショックといった<strong>暴落を何度もはさみながら、それでも長期では上昇</strong>してきました。下の年表は、その節目となった出来事をまとめたものです。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このページの一番の使いどころは、<strong>暴落の渦中で冷静さを保つ</strong>ことです。渦中では「もう終わりだ」と感じても、後から長期チャートで振り返ると、多くの危機は<strong>一時的な急落</strong>として刻まれています。ただし——<strong>「いつか戻る」と“どこが底か”は別問題</strong>。回復まで何年もかかった局面もあり、底は誰にも当てられません。だからこそ、長期では強気でも、<strong>一度に動かず分割で・損切りラインを決めて</strong>臨むのが現実的です。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>長期投資の視点</strong>：短期の急落を“割安に買えるバーゲン”と捉えられるかは、長期チャートで歴史を知っているかどうかで変わります。</li>
+      <li><strong>過信は禁物</strong>：「過去がこうだったから未来もこうなる」とは限りません。歴史はパターンの参考であって、保証ではありません。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="market-health.html" style="color:#0969da">市場健康度（割高/割安の温度）</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">暴落で動揺しない損切りの技術</a> ／ <a href="guide-position-sizing.html" style="color:#0969da">分割で買う資金管理</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページは過去データの表示と一般的な解説であり、将来の値動きや特定銘柄の売買を示唆するものではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 
 </main>
@@ -4325,6 +4350,19 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         </div>
       </a>
     </div>
+  </div>
+
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:26px 30px;margin-top:28px">
+    <h2 style="font-size:1.25rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
+    <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
+    <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
+      <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
+      <li style="margin-bottom:10px">🩺 <strong>市場の“温度”を読む</strong> — <a href="market-health.html" style="color:#0969da">市場健康度</a>・<a href="vix.html" style="color:#0969da">VIX恐怖指数</a>・<a href="calendar.html" style="color:#0969da">経済カレンダー</a>・<a href="hot-assets.html" style="color:#0969da">出来高急増</a>を、データだけでなく<strong>「読み方・活用法」つき</strong>で。</li>
+      <li style="margin-bottom:10px">📊 <strong><a href="track-record.html" style="color:#0969da">シグナル成績を隠さず公開</a></strong> — 自動テクニカルシグナルの発火履歴と結果を、<strong>勝ちも負けも</strong>そのまま公開。実データで検証し、機能しない手法は正直に見直す姿勢を大切にしています。</li>
+      <li>🚨 <a href="political-feed.html" style="color:#0969da">政治発言ライブ</a>・<a href="youtube-summary.html" style="color:#0969da">YouTube要約</a>など、忙しい個人投資家の<strong>情報収集の時間を短縮</strong>する機能も。</li>
+    </ul>
+    <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 
 </main>
