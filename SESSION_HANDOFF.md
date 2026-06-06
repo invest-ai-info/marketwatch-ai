@@ -6,6 +6,14 @@
 
 ## 🆕 2026-06-06 セッションの続き（最新・まずここを読む）
 
+#### ✅ 2026-06-06：AdSense対策（データページ解説追加＋技術穴埋め＋総点検レポート）
+- **不承認理由＝「有用性の低いコンテンツ」**への対策3点（ユーザーが3つとも選択）。総点検は **`ADSENSE_CHECKLIST.md`（新規・SYNC_FILES入り）** に採点＋残タスクをまとめた。
+- **① データページにオリジナル解説を追加**（“データダンプ”→“データ＋解説”化）：`generate_market_news.py` の vix/hot-assets/calendar 各ビルダーの `</main>` 直前に、独自の「📘 見方・活用法」セクション（オリジナル本文＋関連guide内部リンク＋免責）を注入。ライブHTTP確認済。**残＝market-health/charts/index も同様に厚くできる**（次の打ち手）。
+- **② 技術的な穴埋め（quick）**：privacy.html を強化（「利用予定→利用しています」／**Google広告設定 adssettings.google.com・aboutads.info のオプトアウトリンク追加**／更新日2026-06-06）。`build_sitemap_xml` で **noindex の `guide-auto-*` を sitemap から除外**（索引矛盾を解消・ライブで guide-auto 消滅を確認）。
+- **③ 既に出来ていた点**：ads.txt（pub-2552122294306014・DIRECT）✅／about E-E-A-T✅／contact✅／kinsho-v1免責✅／オリジナル記事49本✅／drafts noindex+Disallow✅。
+- **残タスク**：①market-health/charts/index も解説追加 ②記事を増やし続ける（autodraft稼働中）③**ユーザー操作＝AdSenseコンソールで支払い情報追加＋サイトリンク→再審査リクエスト** ④承認後に広告配置最適化。詳細は `ADSENSE_CHECKLIST.md`。
+
+
 #### ✅ 2026-06-06：自動シグナルに「ルールベース規律フィルタ」を実装（記録のみ・commit e9bfa01）
 - **背景**：fib停止後、ユーザーが「自動シグナルを3人(担当)の判断でフィルタしたい」。設計協議の結果、**曖昧なLLM判定はfibと同じ轍**になりかねないため、**データが示した敗因を決定論ルール化**する方式を採用（ユーザー選択）。
 - **実装（`generate_technical_alerts.py`・記録のみ＝発火/メール/信頼度は不変）**：`compute_discipline_filter(primary_type, sigdir, indicators, env_score, is_index, prior_index_same_dir)` を追加。各シグナルに `log_entry["discipline_filter"]={verdict:green/yellow/red, score, reasons}` を付与。ルール＝**減点：弱いタイプ(ma_golden/high_break/macd_golden −2)・落ちるナイフ(下降中ロング＝price<ma25<ma75 −2)・上昇中ショート(−1)・環境D(−2)/C(−1)・相関集中(同run指数の同方向重ね −2)／加点：売られすぎ逆張り系(bb_lower_touch/low_break/rsi_oversold_bounce +1)・RSI極値(売られすぎ<=30ロング/買われすぎ>=70ショート +1)**。閾値 green≥1 / yellow=0 / red<0。相関集中は run 内で `_index_fired_dirs` を追跡（INDEX_TICKERS={NKD=F,ES=F,NQ=F,YM=F,^FTSE}）。
