@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ポジションサイジングの基本｜「2%ルール」と損切り幅から逆算するロット計算 - MarketWatch AI</title>
+  <meta name="description" content="ポジションサイジング（資金管理）は、勝率よりも資産を左右する最重要スキル。1トレードの許容リスクを口座残高の2%以内に抑える「2%ルール」、損切り幅とATRから逆算するロット計算、破産確率を下げる考え方まで、初心者〜中上級者向けに図解で解説します。">
+  <meta name="keywords" content="ポジションサイジング,資金管理,2%ルール,損切り,ロット計算,ATR,リスク管理,ドローダウン,ケリー基準,Rマルチプル,期待値,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-position-sizing.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ポジションサイジングの基本｜「2%ルール」と損切り幅から逆算するロット計算">
+  <meta property="og:description" content="勝率より資産を左右する「資金管理」の全体像。2%ルール・ATRロット計算・破産確率を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-position-sizing.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ポジションサイジングの基本｜「2%ルール」と損切り幅から逆算するロット計算",
+    "description": "勝率より資産を左右する「資金管理」の全体像。2%ルール・ATRロット計算・破産確率を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-06",
+    "dateModified": "2026-06-06",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-position-sizing.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-b{fill:#0969da;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-y{fill:#9a6700;opacity:.85}
+    .s-fill-b{fill:#ddf4ff}
+    .s-fill-r{fill:#ffebe9}
+    .s-stroke-b{stroke:#0969da;stroke-width:2;fill:none}
+    .s-stroke-r{stroke:#cf222e;stroke-width:2;fill:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-stroke-b{stroke:#79c0ff}
+    body.dark .s-stroke-r{stroke:#f85149}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ポジションサイジングの基本
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はポジションサイジング・資金管理に関する考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。記事内の数値例はすべて概念の説明のためのものです。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ ポジションサイジングの基本｜口座を守る「2%ルール」と損切り幅から逆算するロット計算</h1>
+    <div class="meta-line">公開日：2026 年 6 月 6 日 ／ 読了時間：約 15 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <p><strong>「いくら買えばいいか？」</strong>——株でも FX でも先物でも、エントリーの直前に必ずぶつかるこの問いに、多くの投資家は明確な答えを持っていません。「何となくいつもと同じ枚数」「資金の半分くらい」——そんな曖昧な基準でポジションを組んでいないでしょうか。</p>
+    <p>実は、<strong>トレードの成績を長期的に左右するのは「勝率」でも「銘柄選び」でもなく、「1回のトレードでどれだけのリスクを取るか（ポジションサイジング）」</strong>だというのが、多くの実践家が辿り着く結論です。ポジションが大きすぎれば、一度の損失で口座が致命的なダメージを受ける。小さすぎれば、期待値がプラスの手法を持っていても利益が積み上がらない。<strong>「適切な大きさで市場に参加し続ける」</strong>こそが、資金管理の核心です。</p>
+    <p>この記事では、前半で初心者にも実践しやすい<strong>「2%ルール」と損切り幅から逆算するロット計算</strong>の基本を解説し、後半では中上級者向けに<strong>ATRを使ったボラティリティ連動型のポジションサイジング・R倍数・ケリー基準・破産確率の考え方</strong>まで踏み込みます。<a href="guide-loss-cut.html">損切りの記事</a>で「資金管理は別記事で」と予告していた続編です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>ポジションサイジングは「どこで買うか（エントリー）」よりも「どのくらい買うか（サイズ）」が長期成績を決める</strong>。2%ルール（1トレードのリスクを口座残高の2%以内）は、多くの場面で機能するシンプルな出発点。</li>
+      <li>計算の順序は<strong>「許容損失額 ÷ 損切り幅 ＝ ポジションサイズ」</strong>。先に損切りラインを決め、そこから逆算してロットを決める——この順番が重要。</li>
+      <li>大きなドローダウンからの回復は想像以上に難しい（30% 損失には 43% の回復が必要）。<strong>破産確率をゼロに近づけるのではなく、回復不能になる前に「生き残り続ける」</strong>ことが資産を守る本質。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">なぜポジションサイジングが勝率より大事か</a></li>
+        <li><a href="#section-2">2%ルール：1トレードの許容リスクを決める</a></li>
+        <li><a href="#section-3">損切り幅から逆算するロット計算の基本</a></li>
+        <li><a href="#section-4">ATRを使ったボラティリティ連動型サイジング（中上級）</a></li>
+        <li><a href="#section-5">R倍数（R-Multiple）でトレードを標準化する（中上級）</a></li>
+        <li><a href="#section-6">ドローダウンと回復の非線形性：大損の怖さを数字で知る</a></li>
+        <li><a href="#section-7">ケリー基準と「分数ケリー」（発展）</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <h2 id="section-1">1️⃣ なぜポジションサイジングが勝率より大事か</h2>
+    <p>投資・トレードの世界で語られる「上手さ」の多くは、<strong>銘柄の選び方・エントリータイミング・テクニカル分析</strong>に集中しています。しかしトレード研究家の<strong>バン・サープ（Van K. Tharp）</strong>は、著作の中で次のような指摘をしています。</p>
+    <div class="info-box">
+      <strong>💡 バン・サープの研究</strong>：学術的な研究を引用し、「<strong>ポジションサイジングの使い方がポートフォリオ成績のばらつきの 91% を説明する</strong>」と述べています。（出典：Van Tharp Institute）言い換えると、<strong>結果の違いの大部分は「何を買ったか」より「いくら買ったか」で生まれる</strong>、ということです。
+    </div>
+    <p>なぜそうなるのか。シンプルな例で考えてみましょう。同じ「勝率 50%・勝ちは+5%・負けは−5%」の手法でも、ポジションの大きさが違えば口座残高の軌跡は全く変わります。</p>
+    <ul>
+      <li><strong>小さいサイズ（口座の5%）</strong>：一度の負けで口座が 0.25% しか減らない。連敗が続いても致命傷にならず、市場に居続けられる。</li>
+      <li><strong>大きいサイズ（口座の50%）</strong>：一度の負けで口座が 25% 失われる。3 連敗すれば口座は 42% 以下に。精神的に続けられなくなる。</li>
+    </ul>
+    <p>つまり<strong>ポジションサイジングとは「手法の優位性（エッジ）を、時間をかけて口座に反映させるための調整装置」</strong>です。サイズが大きすぎれば、良い手法を持っていても退場させられる。サイズが適切なら、エッジが時間とともに自然に積み上がっていく。</p>
+
+    <h2 id="section-2">2️⃣ 2%ルール：1トレードの許容リスクを決める</h2>
+    <p>最もシンプルで多くの場面で使いやすいのが<strong>「2%ルール」</strong>です。これは<strong>「1回のトレードで失ってもよい最大金額を、口座残高の 2% 以内に抑える」</strong>という経験則です（出典：CME Group の教育コンテンツ等、複数の投資教育機関で紹介されている一般的なルール）。</p>
+    <div class="positive-box">
+      <strong>📐 2%ルールの計算式</strong><br>
+      <code>許容損失額（円）＝ 口座残高 × 0.02</code><br><br>
+      例：口座残高が 100 万円の場合 → 1 トレードの許容損失 ＝ <strong>2 万円</strong><br>
+      口座残高が 50 万円の場合 → 1 トレードの許容損失 ＝ <strong>1 万円</strong>
+    </div>
+    <p>注意すべき重要な点があります。<strong>2%ルールは「ポジションサイズを口座の 2% に制限する」という意味ではありません</strong>。「<strong>損切りが発動したときに失う金額を 2% 以内に収める</strong>」というリスク制限のルールです。損切り幅が小さければ、同じ 2% リスクでも大きなポジションが持てる。損切り幅が大きければ（ボラティリティが高ければ）、自然とポジションは小さくなります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="risk2-title">
+        <title id="risk2-title">2%ルール：口座残高とリスク額・ポジションサイズの関係の概念図</title>
+        <text class="s-panel-label" x="40" y="24">2%ルールの構造：「損失 2% 以内」から逆算してサイズを決める</text>
+        <rect class="s-fill-b" x="60" y="50" width="520" height="44" rx="6"/>
+        <text class="s-note" x="320" y="78" text-anchor="middle">口座残高　100 万円</text>
+        <rect class="s-bar-b" x="60" y="110" width="104" height="36" rx="4"/>
+        <text class="s-note" x="112" y="134" text-anchor="middle" style="fill:#ffffff;font-size:10.5px">2%＝2万円</text>
+        <line class="s-guide" x1="112" y1="94" x2="112" y2="110"/>
+        <text class="s-label-sm" x="170" y="134">← この 2 万円が「1 トレードの予算（許容損失）」</text>
+        <text class="s-panel-label" x="60" y="178">損切り幅（SL 幅）が違うと、ポジションサイズも変わる</text>
+        <rect class="s-bar-g" x="60" y="198" width="160" height="28" rx="4"/>
+        <text class="s-note-g" x="140" y="218" text-anchor="middle">SL 幅 1,000 円 → 20 株</text>
+        <rect class="s-bar-r" x="60" y="238" width="60" height="28" rx="4"/>
+        <text class="s-note-r" x="90" y="257" text-anchor="middle">SL 幅 5,000 円 → 4 株</text>
+        <text class="s-label-sm" x="140" y="258">← SL 幅が広いほどポジションは小さくなる</text>
+        <text class="s-label-sm" x="60" y="276">（いずれも「最大損失 2 万円以内」は同じ）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 2%ルールは口座残高からリスク額を決め、そこから逆算してポジションサイズを導く仕組み。損切り幅が広いほどポジションは小さく、狭いほど大きくなる——ボラティリティを自動的に反映する点が優れています。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p><strong>2%という数値の意味</strong>も理解しておきましょう。単純計算では「2% × 50 回 ＝ 100%」で 50 連敗すると口座がゼロという計算になりますが、実際には残高に対する比率で複利的に減るため、<strong>50 連敗しても約 36% が残ります</strong>（0.98 の 50 乗 ≒ 0.36）。ほとんどの手法で 50 連敗は現実的ではないため、<strong>破産せずに市場に居続けられる安全域</strong>として機能します。なお、リスクを 1% に設定すればさらに保守的になり、経験が浅い段階や相場環境が不安定なときはより小さいリスク比率から始めることも選択肢の一つです。</p>
+
+    <h2 id="section-3">3️⃣ 損切り幅から逆算するロット計算の基本</h2>
+    <p>2%ルールで「いくら失ってよいか」が決まったら、次は<strong>「それが損切りが発動したときの損失になるように、ポジションサイズを逆算する」</strong>ステップです。</p>
+    <div class="positive-box">
+      <strong>📐 基本の計算式</strong><br>
+      <code>ポジションサイズ（単位数）＝ 許容損失額 ÷ 損切り幅（1 単位あたり）</code><br><br>
+      例：許容損失額＝ 2 万円、損切り幅＝ 500 円/株<br>
+      → 2 万円 ÷ 500 円 ＝ <strong>40 株</strong> が適切なポジションサイズ
+    </div>
+    <p>この計算の重要な点は、<strong>先に損切りラインを決め、そこからポジションサイズが決まる</strong>という順序にあります。多くの初心者はポジションサイズを先に決めてから損切りを考えますが、正しい順序は逆です。</p>
+    <ol>
+      <li><strong>エントリーラインを決める</strong>（テクニカル分析・シグナルで）</li>
+      <li><strong>損切りライン（SL）を決める</strong>（ここを下回ったら手法の前提が崩れると判断する価格）</li>
+      <li><strong>損切り幅を計算する</strong>（エントリー価格 − SL 価格）</li>
+      <li><strong>許容損失額 ÷ 損切り幅 でポジションサイズを算出する</strong></li>
+    </ol>
+    <p>この流れで計算すると、相場のボラティリティや各トレードの状況に応じて、ポジションサイズが自動的に増減します。ボラティリティが高い相場ではポジションが小さくなり、安定した相場では大きくなる——これは自然なリスク調整として機能します。</p>
+    <div class="info-box">
+      <strong>💡 FX・先物の場合</strong>：1 単位あたりの損失額を、<strong>損切り幅（pips / ティック）× 1 ティックあたりの価値</strong> で計算します。例えば USD/JPY の場合、1 ロット（10 万通貨）で 1 pip の動きは 1,000 円の損益に相当します。損切り幅 × 1 pip 価値 × ロット数 ＝ 許容損失額、という式から逆算してロット数を求めます。（※ 商品・証拠金条件はブローカーにより異なります。必ず取引先の仕様を確認してください）
+    </div>
+
+    <h2 id="section-4">4️⃣ ATRを使ったボラティリティ連動型サイジング（中上級）</h2>
+    <p>前章の「損切り幅から逆算する」考え方をさらに発展させたのが、<strong>ATR（Average True Range、平均真のレンジ）</strong>を使ったポジションサイジングです。</p>
+    <p>ATR は、設定期間内の「1 本あたりの値動きの平均幅」を表すテクニカル指標です（詳しくは <a href="guide-bollinger-bands.html">ボリンジャーバンドの記事</a> でも触れているボラティリティ概念と同じ文脈にあります）。相場のボラティリティが高いときは ATR が大きく、低いときは小さくなります。</p>
+    <div class="positive-box">
+      <strong>📐 ATR を使ったポジションサイズ計算式</strong><br>
+      <code>ポジションサイズ ＝ 許容損失額 ÷ (ATR × 係数)</code><br><br>
+      例：許容損失額＝ 2 万円、ATR ＝ 500 円、係数＝ 2.0<br>
+      → 2 万円 ÷（500 円 × 2.0）＝ <strong>20 単位</strong>
+    </div>
+    <p>「ATR × 係数」が実質的な損切り幅として機能します。係数（マルチプライア）には 1.5〜2.5 程度がよく使われますが、これは手法や時間足によって調整が必要です。<strong>ATR が大きいとき（相場が荒れているとき）はポジションが自動的に小さくなり、ATR が小さいとき（静かな相場）はポジションが大きくなる</strong>——ボラティリティを自動的に反映する点が優れています。</p>
+    <p>当サイトのテクニカルシグナルでは、ATR × 1.5 を SL の目安として使用しています。これと 2%ルールを組み合わせると、ロットを自動的に導ける計算になります。</p>
+    <div class="warning-box">
+      ATR は過去の平均値であり、急激な相場変動（ギャップアップ/ダウン、重要指標の発表後など）ではこの計算が機能しないことがあります。また、ATR だけに頼らず、自分の口座規模・リスク許容度・相場環境を総合して判断することが重要です。</div>
+
+    <h2 id="section-5">5️⃣ R倍数（R-Multiple）でトレードを標準化する（中上級）</h2>
+    <p>ポジションサイジングの考え方を一段深めるのが、トレード研究家の<strong>バン・サープ（Van K. Tharp）</strong>が提唱した<strong>「R」（リスク単位）</strong>という概念です（出典：Van Tharp Institute）。</p>
+    <p><strong>R とは、1 回のトレードで最初に想定した損失額（リスク）</strong>のことです。エントリー価格と損切りライン（SL）の差から計算されます。</p>
+    <div class="positive-box">
+      <strong>📐 R の計算例</strong><br>
+      エントリー：1,000 円、損切りライン：950 円 → <strong>1R ＝ 50 円/株</strong><br>
+      100 株保有 → 1R ＝ 5,000 円（このトレードの最大許容損失額）<br><br>
+      このトレードが 1,100 円で決済された場合の利益：100 円 × 100 株 ＝ 1 万円 ＝ <strong>+2R</strong>（利益が 2 倍の R）<br>
+      損切りで 950 円で決済された場合：−5,000 円 ＝ <strong>−1R</strong>
+    </div>
+    <p>R 倍数の優れた点は、<strong>トレードの結果を「金額」ではなく「最初に取ったリスクの何倍か」という統一の尺度で比較できる</strong>ことです。10 万円の口座と 1,000 万円の口座でも、R 倍数で見ればトレードの質を同じ土台で評価できます。</p>
+    <table>
+      <tr><th>指標</th><th>説明</th><th>目安</th></tr>
+      <tr><td>平均 R 倍数</td><td>全トレードの R 倍数の平均</td><td>プラスであれば「期待値あり」</td></tr>
+      <tr><td>リスクリワード比</td><td>TP ÷ SL（例：2R リターンで 1R リスク＝1:2）</td><td>最低でも 1:1 以上が目安</td></tr>
+      <tr><td>期待 R</td><td>（勝率 × 平均勝ち R）−（敗率 × 平均負け R）</td><td>ゼロより大きければ長期プラス期待</td></tr>
+    </table>
+    <p>例えば「勝率 40%・勝ちの平均 +2.5R・負けの平均 −1R」であれば、期待 R ＝（0.4 × 2.5）−（0.6 × 1.0）＝ 1.0 − 0.6 ＝ <strong>+0.4R</strong>。勝率が 4 割でもプラス期待値を持つ手法といえます。<strong>ポジションサイジングで R（1 トレードのリスク）を一定に保てれば、この期待値が時間とともに口座に積み上がっていく</strong>仕組みになります。</p>
+
+    <h2 id="section-6">6️⃣ ドローダウンと回復の非線形性：大損の怖さを数字で知る</h2>
+    <p>なぜポジションサイジングで損失を小さく抑えることが重要なのか——これをもっとも直感的に示す数字が、<strong>「ドローダウンからの回復に必要な上昇率の非線形性」</strong>です。</p>
+    <p>口座残高が減ると、元に戻すために必要な上昇率は、失った比率よりも大きくなります。これは単純な計算の結果です。</p>
+    <table>
+      <tr><th>ドローダウン（損失）</th><th>元に戻すために必要な上昇率</th></tr>
+      <tr><td>10% 損失（100→90）</td><td>約 11% の上昇が必要</td></tr>
+      <tr><td>20% 損失（100→80）</td><td>約 25% の上昇が必要</td></tr>
+      <tr><td>30% 損失（100→70）</td><td>約 43% の上昇が必要</td></tr>
+      <tr><td>50% 損失（100→50）</td><td>100% の上昇が必要</td></tr>
+      <tr><td>75% 損失（100→25）</td><td><strong>300% の上昇が必要</strong></td></tr>
+    </table>
+    <p>（出典：The Arca Labs / Day Trading Toolkit 等の複数の投資教育サイトで確認できる数値。計算式は 1 ÷ (1 − 損失率) − 1）</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="dd-title">
+        <title id="dd-title">ドローダウンと回復に必要な上昇率の非線形な関係の概念図</title>
+        <text class="s-panel-label" x="40" y="24">ドローダウンと「回復に必要な上昇率」の非線形な関係</text>
+        <line class="s-axis" x1="80" y1="280" x2="600" y2="280"/>
+        <line class="s-axis" x1="80" y1="280" x2="80" y2="44"/>
+        <text class="s-label-sm" x="80" y="300" text-anchor="middle">0%</text>
+        <text class="s-label-sm" x="186" y="300" text-anchor="middle">10%</text>
+        <text class="s-label-sm" x="292" y="300" text-anchor="middle">20%</text>
+        <text class="s-label-sm" x="398" y="300" text-anchor="middle">30%</text>
+        <text class="s-label-sm" x="504" y="300" text-anchor="middle">50%</text>
+        <text class="s-label-sm" x="340" y="316" text-anchor="middle">← ドローダウン（損失率）</text>
+        <text class="s-label-sm" x="76" y="284" text-anchor="end">0%</text>
+        <text class="s-label-sm" x="76" y="216" text-anchor="end">100%</text>
+        <text class="s-label-sm" x="76" y="149" text-anchor="end">200%</text>
+        <text class="s-label-sm" x="76" y="82" text-anchor="end">300%</text>
+        <text class="s-label-sm" x="30" y="200" text-anchor="middle" transform="rotate(-90,30,200)">必要な回復上昇率 →</text>
+        <line class="s-divv" x1="80" y1="216" x2="600" y2="216"/>
+        <line class="s-divv" x1="80" y1="149" x2="600" y2="149"/>
+        <line class="s-divv" x1="80" y1="82" x2="600" y2="82"/>
+        <path class="s-curve-l" d="M80,280 C120,278 186,270 292,256 C398,241 450,228 504,216 C540,208 570,182 600,82"/>
+        <circle class="s-rev" cx="186" cy="271" r="6"/>
+        <text class="s-note-r" x="196" y="265">11%</text>
+        <circle class="s-rev" cx="292" cy="261" r="6"/>
+        <text class="s-note-r" x="302" y="255">25%</text>
+        <circle class="s-rev" cx="398" cy="244" r="6"/>
+        <text class="s-note-r" x="408" y="238">43%</text>
+        <circle class="s-rev" cx="504" cy="216" r="6"/>
+        <text class="s-note-r" x="514" y="210">100%</text>
+        <circle class="s-rev" cx="575" cy="122" r="6"/>
+        <text class="s-note-r" x="490" y="112">75%損失→300%必要</text>
+        <line class="s-guide" x1="575" y1="122" x2="575" y2="280"/>
+      </svg>
+      <figcaption class="chart-caption">▲ ドローダウン（横軸）が増えるにつれ、回復に必要な上昇率（縦軸）は指数関数的に膨らむ。50%の損失は 100%の利益で初めてイーブンに。75%の損失を取り戻すには 300%の上昇が必要になる計算。<strong>大きく負けないことが、長期的な資産成長にいかに直結するか</strong>を示す。※ 概念を示すイメージ図です。数値は計算式（1 ÷ (1−損失率) − 1）から導出。</figcaption>
+    </figure>
+
+    <p>このグラフが示すメッセージは明確です。<strong>一度大きく負けると、それを取り戻すコストは指数関数的に増える</strong>。だから「少しくらいルールを外れても大丈夫」という一回の判断ミスが、長期の資産形成を台無しにしかねません。2%ルールで小さく負けを抑えることは、単なる保守的な姿勢ではなく、<strong>回復のしやすさを確保する合理的な選択</strong>です。</p>
+
+    <h2 id="section-7">7️⃣ ケリー基準と「分数ケリー」（発展）</h2>
+    <p>数学的に「最も速く資産を増やす最適なベット比率」を求める式として有名なのが<strong>ケリー基準（Kelly Criterion）</strong>です。1956 年に<strong>ジョン・ケリー（John Kelly）</strong>がベル研究所で情報理論の観点から導いた式で（出典：Corporate Finance Institute 等）、次の形で表されます。</p>
+    <div class="positive-box">
+      <strong>📐 ケリー基準の式</strong><br>
+      <code>f* = (b × p − q) ÷ b</code><br>
+      ・f*：口座残高に対してベットすべき比率<br>
+      ・b：勝ったときに得られるオッズ（例：1 リスクで 2 リターン → b = 2）<br>
+      ・p：勝率<br>
+      ・q：敗率（＝ 1 − p）<br><br>
+      例：勝率 50%（p=0.5）、リスクリワード 1:2（b=2）の場合<br>
+      → f* ＝（2 × 0.5 − 0.5）÷ 2 ＝ 0.5 ÷ 2 ＝ <strong>0.25（口座の 25% をリスクに）</strong>
+    </div>
+    <p>理論的には最適ですが、実際の運用ではほとんどの実践家が<strong>「分数ケリー（フラクショナル・ケリー）」</strong>を使います。フルケリーを適用すると短期的なドローダウンが非常に大きくなるためです。<strong>フルケリーの 25〜50% 程度にスケールダウンして使うのが一般的</strong>とされています（出典：QuantifiedStrategies.com）。</p>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="kelly-title">
+        <title id="kelly-title">ケリー基準：ベット比率と長期成長率の関係（分数ケリーの位置）の概念図</title>
+        <text class="s-panel-label" x="40" y="24">ケリー基準：ベットが大きすぎても成長率は下がる</text>
+        <line class="s-axis" x1="80" y1="250" x2="600" y2="250"/>
+        <line class="s-axis" x1="80" y1="250" x2="80" y2="48"/>
+        <text class="s-label-sm" x="596" y="270" text-anchor="end">ベット比率（リスクの大きさ）→</text>
+        <text class="s-label-sm" x="28" y="150" text-anchor="middle" transform="rotate(-90,28,150)">長期の資産成長率 →</text>
+        <path class="s-curve-g" d="M80,250 C150,150 245,92 300,86 C360,92 455,160 520,250 C552,292 576,300 596,300"/>
+        <line class="s-guide" x1="300" y1="250" x2="300" y2="86"/>
+        <circle class="s-hl" cx="300" cy="86" r="6"/>
+        <text class="s-note-g" x="300" y="74" text-anchor="middle">フルケリー f*（成長が最大）</text>
+        <circle class="s-rev" cx="188" cy="138" r="6"/>
+        <text class="s-note" x="196" y="128">分数ケリー（控えめ）</text>
+        <circle class="s-rev" cx="520" cy="250" r="6"/>
+        <text class="s-note-r" x="512" y="238" text-anchor="end">約 2×f* で成長ゼロ</text>
+        <text class="s-note-r" x="560" y="284" text-anchor="middle">過剰ベット</text>
+        <text class="s-note-r" x="560" y="299" text-anchor="middle">＝資産が減る域</text>
+      </svg>
+      <figcaption class="chart-caption">▲ ベット比率（横軸）を上げるほど長期成長率（縦軸）が高まるのは「フルケリー f*」まで。そこを超えると逆に成長率は落ち、約 2×f* でゼロ、さらに大きくすると資産はむしろ減っていく。実務ではピーク手前の<strong>分数ケリー（フルの 25〜50%）</strong>を使い、予測誤差や連敗に備えるのが一般的とされます。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+    <p>ケリー基準はあくまで「過去データから推定された勝率とリスクリワードが正確に未来も続く」という前提のもとで機能します。現実の相場では勝率・リスクリワードは変動するため、<strong>ケリー基準を機械的に適用するよりも、2%ルールのような保守的な固定ルールを使いながら、ケリー基準の考え方でリスク比率の上限を把握する</strong>という使い方が現実的です。</p>
+    <div class="info-box">
+      <strong>ℹ️ 2% ルールとケリー基準の関係</strong>：ケリー基準の計算では、多くのトレード手法（勝率 50%・リスクリワード 1:1.5〜2.0 程度）において最適ベット比率は 10〜25% 程度になることがあります。2%ルールはこれよりはるかに保守的で、「フルケリーの 1/10 以下」に相当する場合もあります。つまり<strong>2%ルールは数学的最適からは遠いが、予測誤差・連敗・市場の急変への耐性を持たせた安全設計</strong>と解釈できます。
+    </div>
+
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI のテクニカルシグナルは、ポジションサイジングを念頭に置いた設計になっています。</p>
+    <ul>
+      <li><strong>シグナルには SL（ストップロス）の目安が必ず併記</strong>：シグナルメールには、エントリーの目安と一緒に<strong>ATR × 1.5 を基準にした SL の目安が記載</strong>されます。これを使えば、本記事で解説した「ATR を使ったポジションサイジング計算」をそのまま適用できます。<span style="font-size:.9em">（※ 機械的に算出した参考値です。売買の推奨ではありません）</span></li>
+      <li><strong>勝ちも負けも含めた成績の公開</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a>では、SL ヒット（−1R）・TP ヒット（+2R〜+3R）を含む全記録を公開。R 倍数・期待値の実績値を確認できます。</li>
+      <li><strong>TP1 / TP2 の 2 段階設定</strong>：当サイトのシグナルは ATR × 2.0（TP1）と ATR × 3.0（TP2）の 2 段階設定。部分利確（半分を TP1 で確定し、残りを TP2 まで伸ばす）は、<strong>R 倍数の観点でも期待値を高めつつドローダウンを抑えるアプローチ</strong>の一つです。</li>
+    </ul>
+    <p>ポジションサイジングは、シグナルやエントリーと同様に「毎回のルーティン」として機械的に実行できるようにするのが理想です。計算を習慣化するための手順を作っておくと、エントリーの興奮状態でもブレずに適切なサイズを維持できます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの SL・TP 実績をチェックする</div>
+      <div class="cta-box-desc">ATR ベースの SL/TP が実際にどう機能しているか、勝ちも負けも含めた記録を公開しています。R 倍数の観点での期待値もご確認ください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>ポジションサイジングについて学んできた内容を整理します。</p>
+    <ul>
+      <li><strong>ポジションサイジングとは何を買うかではなくいくら買うか</strong>であり、長期成績に最も影響する要素の一つ。</li>
+      <li><strong>2%ルール</strong>（1トレードの損失を口座残高の 2% 以内）は、実装しやすく、連敗耐性も高いシンプルな出発点。</li>
+      <li>計算の順序は<strong>「損切りラインを決める → 損切り幅を計算する → 許容損失額 ÷ 損切り幅 = ポジションサイズ」</strong>。先に SL、後でサイズ。</li>
+      <li><strong>ATR を使うとボラティリティが自動的に反映</strong>され、荒れた相場では小さく、静かな相場では大きく——自然なリスク調整になる。</li>
+      <li><strong>R 倍数</strong>でトレードを標準化すると、勝率だけでなく期待値（勝ち負けの大きさのバランス）で手法を評価できる。</li>
+      <li><strong>ドローダウンと回復の非線形性</strong>：75% 損失には 300% の回復が必要。大きく負けないことが、長期的な資産形成の土台。</li>
+      <li><strong>ケリー基準</strong>は数学的最適ベット比率を示すが、現実の不確実性には分数ケリー（25〜50%）の適用が現実的。</li>
+    </ul>
+    <p>損切りの記事で「意志力より仕組み」と述べましたが、ポジションサイジングも同じです。<strong>毎回計算する習慣と、上限を超えないルールを先に決めておくこと</strong>——それが、感情に引きずられずに一定のリスクを保ち続ける鍵です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・処分効果・サンクコスト……損切りを妨げる心理の正体と、淡々と切る仕組みの作り方。</div>
+      </a>
+      <a class="related-card" href="guide-bollinger-bands.html">
+        <div class="related-card-title">📊 ボリンジャーバンドの使い方</div>
+        <div class="related-card-desc">ATR と同じくボラティリティを測る手法。損切り幅の目安として活用できる基礎知識。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">ATR ベースの SL/TP を使ったシグナルの実績。R 倍数・勝率・期待値を実データで確認。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はポジションサイジング・資金管理に関する考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記事内の数値例はすべて概念の説明のためのものであり、特定の方法による利益・損失を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
+
