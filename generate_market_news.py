@@ -150,6 +150,10 @@ def build_sitemap_xml(now_jst) -> str:
     _sd = os.path.dirname(os.path.abspath(__file__))
     try:
         for _name in sorted(os.listdir(_sd)):
+            # 🆕 2026-06-06: guide-auto-*（自動生成の指標プレビュー＝noindex）は sitemap から除外。
+            #   noindex のページを sitemap に載せると「索引して/するな」の矛盾になり AdSense/SEO 上もマイナス。
+            if _name.startswith("guide-auto-"):
+                continue
             if _name.startswith("guide-") and _name.endswith(".html") and _name not in _listed:
                 pages.append((_name, "0.8", "monthly"))
                 _listed.add(_name)
@@ -1432,6 +1436,19 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     </table>
   </div>
 
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 VIX恐怖指数の見方・活用法</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">VIX（恐怖指数）は、S&amp;P500のオプション価格から算出される「今後30日間の予想変動率」です。数字が大きいほど投資家が将来の値動きを大きく（＝不安に）見ている、という<strong>市場の“体温計”</strong>のような指標です。株価が急落する局面ではVIXが跳ね上がり、相場が落ち着くと低下します（株価とVIXは逆相関の傾向）。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このページの<strong>90日チャートと早見表</strong>は、次のように読むと実用的です。まず<strong>今のVIXがどの帯（平常/警戒/恐怖）にいるか</strong>を確認します。20以下なら平常運転、20〜30は警戒、30超は強い恐怖です。重要なのは“絶対水準”だけでなく<strong>「直近からの変化の速さ」</strong>。短期間でVIXが急騰したときほど、市場がパニックに傾いている合図になります。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>VIXが低い（〜15）</strong>：相場は静か。積立など淡々とした投資がしやすい一方、過度な楽観は反落の前触れになることも。</li>
+      <li><strong>VIXが高い（30〜）</strong>：恐怖が支配。歴史的には“行き過ぎた恐怖”が買い場になったことも多いものの、<strong>どこが底かは誰にも分かりません</strong>。一度に動かず分割で、損切りラインを決めてから臨むのが鉄則です。</li>
+      <li><strong>使い方の注意</strong>：VIXは“タイミングを当てる魔法の杖”ではありません。あくまで市場心理の温度を測る補助で、価格そのもののテクニカルや資金管理と<strong>組み合わせて</strong>使うものです。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guide-vix.html" style="color:#0969da">VIX恐怖指数とは？</a> ／ <a href="guide-fear-greed.html" style="color:#0969da">恐怖と強欲指数</a> ／ <a href="market-health.html" style="color:#0969da">市場健康度ダッシュボード</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">恐怖に飲まれない損切りの技術</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページは市場データの提供と一般的な解説であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+  </div>
+
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
@@ -2265,6 +2282,20 @@ def build_hot_assets_html(hot_data, now_jst):
   </div>
 {sections_html}
 
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 出来高急増ランキングの見方・活用法</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">出来高は「その銘柄にどれだけ資金と関心が集まっているか」を示す、価格と並んで重要な情報です。このランキングは<strong>本日の出来高が直近20営業日の平均の何倍か（急増率）</strong>で並べており、ニュース・決算・思惑などで<strong>市場の注目が一気に集まった銘柄</strong>がひと目で分かります。「相場のどこに今、資金が向かっているか」を把握する地図として使えます。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">ただし大切な注意点があります。<strong>出来高が急増している＝上がる、ではありません</strong>。急増は「注目された」という事実にすぎず、買いで急増することも、投げ売り（パニック）で急増することもあります。急騰して話題になっている銘柄に勢いで<strong>飛びつくと高値づかみ</strong>になりやすいのは、出来高急増の典型的な落とし穴です。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>“監視リスト”として使う</strong>：ランキングは「今日の主役」を教えてくれる入口。そこから値動き（陽線/陰線・サポートやレジスタンス）を確認してから判断するのが安全です。</li>
+      <li><strong>出来高は価格を「確認」する</strong>：上昇に出来高が伴えば本物の買い、出来高を伴わない上昇は息切れしやすい、という見方が基本です。</li>
+      <li><strong>急落＋出来高急増＝セリングクライマックス</strong>の可能性も。投げ売りで出来高が爆発した後に反発することもありますが、底は読めないため分割・損切り前提で。</li>
+      <li>FX・コモディティ・暗号資産は本当の出来高が取れないため、ここでは<strong>値動き率</strong>でランキングしています。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guide-volume.html" style="color:#0969da">出来高の見方</a> ／ <a href="guide-dow-theory.html" style="color:#0969da">ダウ理論（出来高はトレンドを確認する）</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">飛びつき買いを防ぐ損切りの技術</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページは市場データの提供と一般的な解説であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+  </div>
+
 </main>
 <footer>
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
@@ -2514,6 +2545,20 @@ def build_calendar_html(now_jst):
   </div>
   <div class="beginner-box">
     経済指標は発表の瞬間に株価・為替が大きく動くことがあります。特に「⭐最重要」マークの指標発表前後は値動きが荒くなりやすいため、初心者はこの時間帯の売買を避けるのが無難です。「予想値」と「実績値」の差（サプライズ）が大きいほど相場が動きます。長期投資なら日々の指標に一喜一憂せず、トレンドを確認する程度でOKです。
+  </div>
+
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 経済カレンダーの見方・活用法</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">経済指標とは、雇用・物価・景気などの「国の経済の通信簿」です。相場が動くのは指標の良し悪しそのものより、<strong>事前の「予想値」と発表された「実績値」のズレ（サプライズ）</strong>。予想を大きく上回る/下回るほど、株価や為替が瞬間的に大きく動きます。このカレンダーは、そうした<strong>“相場が動きやすい日”を前もって把握する</strong>ためのものです。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">使い方はシンプルです。まず<strong>今週・来週の「⭐最重要」指標がいつあるか</strong>を確認します。そして——これは実体験からの教訓でもありますが——<strong>重要指標の直前に、新しいポジションを大きく持ち越さない</strong>こと。たとえば米雇用統計やFOMCの前夜にうっかり建てたポジションが、発表直後の急変で損切りになる、というのはよくある失敗です。発表を「跨ぐ」のか「避ける」のかを、事前に決めておくだけでリスクが大きく変わります。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>米雇用統計（NFP）</strong>：毎月第1金曜。米国の景気と利下げ/利上げ観測を左右し、ドル円・米国株が大きく反応。</li>
+      <li><strong>米CPI（消費者物価指数）</strong>：インフレの体温計。FRBの政策見通しを通じて全市場に波及。</li>
+      <li><strong>FOMC（米金融政策決定会合）</strong>：政策金利の決定。声明・会見のニュアンスまで材料に。</li>
+      <li><strong>日銀金融政策決定会合</strong>：日本の金利・円相場・日本株に直結。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="preview.html" style="color:#0969da">近日の指標プレビュー（結果別シナリオ）</a> ／ <a href="guide-fomc.html" style="color:#0969da">FOMCとは</a> ／ <a href="guide-us-cpi.html" style="color:#0969da">米CPIとは</a> ／ <a href="guide-position-sizing.html" style="color:#0969da">指標を跨がない資金管理</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 日程は変更される場合があります。本ページは情報提供・一般的な解説であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 </main>
 <footer>
