@@ -8,7 +8,8 @@
 
 #### ✅ 2026-06-06：AdSense対策（データページ解説追加＋技術穴埋め＋総点検レポート）
 - **不承認理由＝「有用性の低いコンテンツ」**への対策3点（ユーザーが3つとも選択）。総点検は **`ADSENSE_CHECKLIST.md`（新規・SYNC_FILES入り）** に採点＋残タスクをまとめた。
-- **① データページにオリジナル解説を追加**（“データダンプ”→“データ＋解説”化）：`generate_market_news.py` の vix/hot-assets/calendar 各ビルダーの `</main>` 直前に、独自の「📘 見方・活用法」セクション（オリジナル本文＋関連guide内部リンク＋免責）を注入。ライブHTTP確認済。**残＝market-health/charts/index も同様に厚くできる**（次の打ち手）。
+- **① データページにオリジナル解説を追加（6コア全て完了）**（“データダンプ”→“データ＋解説”化）：`generate_market_news.py` の各ビルダーの `</main>` 直前に独自セクションを注入。**vix/hot-assets/calendar（前半）＋market-health/charts/index（後半）の計6ページ完了**（market-health=「読み方」/charts=「50年チャートの活かし方」/index=「MarketWatch AIでできること」＝オリジナル本文＋関連guide内部リンク＋免責）。ライブHTTP確認済。
+- **🆕 コンソール状況（ユーザー提供スクショ・2026-06-06）**：所有権✅／**「ポリシー違反：有用性の低いコンテンツ」**＋「審査をリクエスト」ボタンあり。→ **今すぐ再審査は非推奨**。6コア解説の追加を **Googleが再クロールするまで数日〜1週間待ってから**1回で出す（`site:marketwatch-jp.com`で索引確認）。再不承認の繰り返しは不利。
 - **② 技術的な穴埋め（quick）**：privacy.html を強化（「利用予定→利用しています」／**Google広告設定 adssettings.google.com・aboutads.info のオプトアウトリンク追加**／更新日2026-06-06）。`build_sitemap_xml` で **noindex の `guide-auto-*` を sitemap から除外**（索引矛盾を解消・ライブで guide-auto 消滅を確認）。
 - **③ 既に出来ていた点**：ads.txt（pub-2552122294306014・DIRECT）✅／about E-E-A-T✅／contact✅／kinsho-v1免責✅／オリジナル記事49本✅／drafts noindex+Disallow✅。
 - **残タスク**：①market-health/charts/index も解説追加 ②記事を増やし続ける（autodraft稼働中）③**ユーザー操作＝AdSenseコンソールで支払い情報追加＋サイトリンク→再審査リクエスト** ④承認後に広告配置最適化。詳細は `ADSENSE_CHECKLIST.md`。
