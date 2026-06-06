@@ -2416,9 +2416,10 @@ def compute_discipline_filter(primary_type, sigdir, indicators, env_score, is_in
     # ⑤ 相関集中（同 run で指数の同方向シグナルが既出）
     if is_index and prior_index_same_dir:
         score -= 2; reasons.append("相関集中(指数の同方向重ね建て)")
-    if score >= 2:
+    # 閾値（2026-06-06 過去167件でキャリブレーション：green=加点側/yellow=中立/red=減点側）
+    if score >= 1:
         verdict = "green"
-    elif score >= 0:
+    elif score == 0:
         verdict = "yellow"
     else:
         verdict = "red"
