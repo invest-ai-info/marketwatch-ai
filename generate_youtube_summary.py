@@ -752,6 +752,18 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 
   {videos_html}
 
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 YouTube要約の使い方</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">投資系YouTubeは情報の宝庫ですが、1本20〜30分の動画を毎日何本も見るのは大変です。このページは、厳選チャンネルの新着動画を<strong>AIが「核心メッセージ・重要トピック・日本人投資家への示唆」に要約</strong>したもの。<strong>「見るべき動画」を見分け、情報収集の時間を短縮する</strong>ための入口として使ってください。要約はあくまで概要なので、<strong>気になったものは必ず元動画で内容を確認</strong>することをおすすめします（動画の著作権は各チャンネルに帰属します）。</p>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">投資系の発信を見るときの<strong>大切な心構え</strong>も添えておきます。発信者には立場（ポジション）があり、自分が持っている資産に有利な見方を語りがちです（ポジショントーク）。だからこそ、<strong>一つの意見を鵜呑みにせず、強気・弱気の両方の見方を比べ、最後は自分のルールで判断する</strong>ことが大切です。</p>
+    <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
+      <li><strong>断定・煽りに注意</strong>：「必ず上がる」「今すぐ買え」式の断定は鵜呑みにしない。</li>
+      <li><strong>“なぜそう言えるのか”を見る</strong>：結論より根拠（データ・ロジック）を確認すると学びになります。</li>
+    </ul>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">情報に流されない損切りの技術</a> ／ <a href="track-record.html" style="color:#0969da">当サイトのシグナル成績（実データ）</a></p>
+    <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページはAIによる要約・紹介であり、特定銘柄の売買推奨や投資助言ではありません。要約に誤りがある場合があります。正確な情報は元動画でご確認ください。</p>
+  </div>
+
 </main>
 
 <footer>
