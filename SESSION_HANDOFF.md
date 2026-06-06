@@ -6,6 +6,14 @@
 
 ## 🆕 2026-06-06 セッションの続き（最新・まずここを読む）
 
+#### ✅ 2026-06-06：実トレード分析→改善案→仕組み化（発注前チェックリスト＋週次自動レビュー routine）
+- **今週の実トレード（第18〜23号）を分析**：全23件で純+112,441円・勝率45%・損益比2.73（負け小・勝ち大の良い形・ただし利益は日経大勝ち2本に依存）。今週6件は−41,364円・1勝5敗。**敗因＝①下げ局面での逆張りロング(6件中5件・落ちるナイフ)②NFP(6/5)持ち越し(最大2敗の22日経・23ナス)③相関集中(日経＋ナスの同時ロング＝同じリスクオフの賭け)**。Yahoo chart API直叩きで各エントリーの直近24h値動きを実測して確定（6/4→6/5に日経−3.6%・ナス−2.9%の急落）。**守れている点＝損切りは全部≈−1Rで止まった（出口の規律は合格）・勝ちは伸ばせている**。
+- **改善案を2つの仕組みに（ユーザー承認）**：
+  - **① 発注前チェックリスト `MY_TRADING_RULES.md`（新規・SYNC_FILES入り・非公開）**：エントリー前に見る5つの質問（1.落ちてる最中に買わない＝RSI≤30/サポート/panic-scan候補から 2.重要指標を持ち越さない 3.相関する指数を重ねない 4.損失上限2% 5.SL先決め）＋守るべき良い点。
+  - **② 週次自動レビュー routine `weekly-trade-review`（trig_01LgSjdK2is5m6oP7ta1mh7z・毎週土曜12:00 JST＝cron `0 3 * * 6`・sonnet）**：`my-trades.json`＋`MY_TRADING_RULES.md`＋`economic-events.json`を読み、純損益/勝率/期待値/R・銘柄/方向別・**5ルールの遵守スコアカード（指標持ち越し=economic-events突合／相関集中=保有期間重複／損切り規律=R判定）**・敗因トップ・来週の重点 を `my-trade-review.md` に毎週コミット。**`my-trade-review.md` は routine生成＝SYNC禁忌**（CLAUDE.md登録済）。本日テスト実行1回 trigger 済（要・生成確認）。**routine総数12本**。
+- 補足：MT4サーバー時刻=GMT+3（夏時間）→**JST=表示+6時間**で記録するのが今週確定した変換規則（my-trades.json の note にも明記）。
+
+
 #### 🚨→✅ 2026-06-06：technical-alerts（4H/1H）が約18h全失敗していた→修正（既存バグ・VIX急騰で顕在化）
 - **症状**：GitHubから「Technical Alerts (1H/4H) All jobs have failed」通知が毎回。調査の結果、**6/5 12:23 UTC まで success → 6/5 15:33 UTC 以降は4H・1H とも全 run failure**（リトライではなく毎回1回失敗。最終的にも成功していなかった＝シグナルメールが約18h停止）。
 - **根本原因**：`generate_technical_alerts.py` の `_dir = log_entry.get("direction", "")`（2026-05-29 Phase1の既存コード）。**warn のみで方向が定まらないシグナルは `direction=None`**。`.get(key, "")` は「キーが存在し値がNone」だと**Noneを返す**ため、次行 `"ロング" in _dir` が `TypeError: argument of type 'NoneType' is not iterable` でクラッシュ→main全体が exit 1。引き金は **6/5 の VIX 24h +39.7% 急騰**で NKD=F 等に方向感なし warn シグナルが多発したこと（市場条件依存の潜在バグ）。
