@@ -77922,5 +77922,176 @@
         "環境C(警戒)"
       ]
     }
+  },
+  {
+    "id": "BTC-USD_1h_20260607_2317",
+    "fired_at": "2026-06-07T23:17:00+09:00",
+    "timeframe": "1h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 61785.98046875,
+    "stop_loss": 62516.48691154751,
+    "take_profit_1": 60811.971878353324,
+    "take_profit_2": 60324.96758315498,
+    "atr": 487.0042951983394,
+    "sl_pct": 1.1823174727590238,
+    "tp1_pct": -1.5764232970120318,
+    "tp2_pct": -2.3646349455180475,
+    "indicators_at_signal": {
+      "rsi": 51.91,
+      "macd": 269.9455,
+      "macd_sig": 270.6699,
+      "ma25": 61430.3756,
+      "ma75": 61802.1959,
+      "bb_low": 60165.2716,
+      "bb_up": 63069.5702,
+      "recent_high": 62900.8711,
+      "recent_low": 60368.9688,
+      "adx": 24.56,
+      "chop": 43.36,
+      "ma_dev_pct": 0.6016,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": 2.91,
+      "d_res_atr": 2.289
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "暗号資産を直接保有せずに、その値動きに投資する方法",
+      "ビットコインが6万ドルを割り込んだ場合、XRPは1ドルまで下落するのか？",
+      "ビットコイン金曜日の6万ドル割れ、WGMI保有者にとっては4%の仮想通貨下落が11%の損失に",
+      "Patrick Bet-David ShowのAdam Sosnick氏、自身のビットコイン「現金」をSpaceXを築いたテスラの現金に例える",
+      "6月10日のCPIと6月17日のFOMC、ビットコインの次の大きな動きは今後7日間で決定される"
+    ],
+    "ai_narrative": "MACDデッドクロスは短期的な下降トレンドへの転換を示唆しており、短期MA（25MA）が長期MA（75MA）を下回っている点も下降を示唆します。直近のニュースでは「ビットコインが6万ドルを割り込んだ場合」といった下落シナリオに言及するものが確認でき、テクニカルとファンダメンタルズが下落方向で一致しています。USDが強含んでいる点も、ビットコインのようなリスク資産には逆風となる可能性があります。このシナリオが崩れるのは、62516.49を明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 4H 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.708,
+      "EUR": -0.319,
+      "GBP": -0.149,
+      "JPY": 0.455,
+      "AUD": -0.812
+    },
+    "risk_regime": {
+      "regime": "RISK_OFF",
+      "score": -3,
+      "factors": [
+        "VIX 21.51 高 (-1)",
+        "VIX急騰 +39.68% (-1)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "RISK_OFF",
+      "allowed": "short",
+      "signal_direction": "short",
+      "aligned": true
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-07T15:06:53+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "MID",
+      "asset_bias": "BEARISH",
+      "asset_conviction": "MID",
+      "signal_direction": "short",
+      "bias_aligned": true
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド順張り (+2)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.04, entry_vs_ma25=-0.58%)",
+      "score": -0.037,
+      "entry_vs_ma25_signed": -0.579,
+      "range_pos": 0.56,
+      "ma_ratio_pct": -0.602
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟠 VIX 24h +39.7% 急騰"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 21.51,
+        "avg_30d": 17.28,
+        "change_24h_pct": 39.68
+      },
+      "atr_regime": {
+        "current_atr": 487.0043,
+        "avg_atr_30d": 766.3073,
+        "ratio": 0.64,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
   }
 ]
