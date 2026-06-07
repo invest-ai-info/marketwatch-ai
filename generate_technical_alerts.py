@@ -2174,7 +2174,9 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
       + 反転検知: あり → -2 / なし → 0
       + FX 強弱整合 (FX のみ): aligned=true → +1 / false → -1 / null → 0
       + 🆕 2026-06-05 B案: データ駆動の選別ティア補正
-          avoid=-2 / neutral=0 / good=+1 / elite=+2（position_plan/indicators がある時のみ）
+          avoid=-2 / neutral=0 / good=0 / elite=+2（position_plan/indicators がある時のみ）
+          （good は 2026-06-07 に +1→0 へ縮小＝前向き検証で再現せず）
+      + 🆕 2026-06-07: 飛びつき順張り(macd_golden/ma_golden/high_break のロング)を -2（前向き負け筋）
 
     閾値:
       score >= 5  → ⭐⭐⭐ HIGH（強）
@@ -2232,7 +2234,10 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         _primary_type = (fresh_signals or [{}])[0].get("type")
         _sel = compute_selection_tier(position_plan, indicators, _sr, _primary_type)
         edge_tier = (_sel or {}).get("tier")
-        _tier_pts = {"avoid": -2, "neutral": 0, "good": 1, "elite": 2}.get(edge_tier, 0)
+        # 🆕 2026-06-07: good を +1→0 に縮小。6/4以降の前向き検証(48件)で tier の単調順序が
+        #   崩れ、good が in-sample(+0.364R)に反して -0.30R と負けたため（neutral と分離できず）。
+        #   両端（avoid=負け筋／elite=+1.39R・勝率83%）は前向きでも再現したので維持する。
+        _tier_pts = {"avoid": -2, "neutral": 0, "good": 0, "elite": 2}.get(edge_tier, 0)
         if _tier_pts != 0:
             score += _tier_pts
             _tier_label = {
@@ -2241,6 +2246,19 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
                 "elite": "精鋭(runwayクリア×レンジ)",
             }.get(edge_tier, edge_tier)
             factors.append(f"選別ティア: {_tier_label} ({_tier_pts:+d})")
+
+    # 🆕 2026-06-07: 飛びつき順張りの「ソフト格下げ」（型ベース・前向き検証で確認）
+    # 根拠＝6/4以降の前向き48件で macd_golden ロングが 0勝7敗(-1.0R)、飛びつき/順張り系 全体 -0.089R、
+    #       対して逆張り系(売られすぎ等) +0.181R。型(=飛びつき)の方が composite ティアより負け筋を綺麗に切れる
+    #       （avoid ティアは macd_golden を 5/7 しか拾えず勝ち型も混入して薄まる）。
+    # ⚠️ 表示・記録のみ＝件名⭐と本文信頼度を下げるだけ。発火・メール送信可否・ロットには一切影響しない
+    #    （送信可否は filter_send_email が独立制御）。可逆。chasing_downgrade を記録して前向き検証を継続。
+    chasing_downgrade = False
+    _p0 = (fresh_signals or [{}])[0]
+    if _p0.get("type") in ("macd_golden", "ma_golden", "high_break") and _p0.get("severity") == "buy":
+        score -= 2
+        chasing_downgrade = True
+        factors.append("飛びつき順張り (前向き負け筋・-2)")
 
     # ラベル判定
     if score >= 5:
@@ -2259,6 +2277,7 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         "stars": stars,
         "factors": factors,
         "edge_tier": edge_tier,  # 🆕 2026-06-05 B案: 適用された選別ティア（前向き検証用に記録）
+        "chasing_downgrade": chasing_downgrade,  # 🆕 2026-06-07: 飛びつき順張りで格下げしたか（前向き検証用に記録）
     }
 
 
@@ -2837,6 +2856,9 @@ MarketWatch AI Alerts
 
         # B2: 信頼度タグ
         conf_tag = f" {confidence['stars']}"
+        # 🆕 2026-06-07: 飛びつき順張りのソフト格下げタグ（🐢＝追いかけない／前向き負け筋）
+        if confidence.get("chasing_downgrade"):
+            conf_tag += " 🐢"
 
         # 🆕 H2: 当日市場休場タグ（薄商い警告）
         holiday_tag = ""
