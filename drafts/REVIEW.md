@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-06-08 | risk-reward
+
+- **基準日（JST）**: 2026-06-08（UTC 2026-06-07T20:35:16Z）
+- **Topic**: リスクリワードと期待値（勝率×損益比）
+- **Key**: `risk-reward`
+- **生成ファイル**: `drafts/draft-risk-reward.html`
+- **シリーズ**: 🛡️ リスク管理・資金管理（guides.html 既存カテゴリ、初回は人間が新設）
+
+### 参照出典 URL
+| 項目 | 出典 |
+|---|---|
+| リスクリワード比・期待値計算式（松井証券） | https://www.matsui.co.jp/fx/study/article/analysis/risk-reward/ |
+| リスクリワードの意味・計算式・目安（OANDA Japan） | https://www.oanda.jp/lab-education/beginners/aboutfx/moneymanagement1/ |
+| リスクリワード比の解説（IG証券） | https://www.ig.com/jp/trading-strategies/risk-reward-ratio-explained-210729 |
+| Risk Reward Ratio Explained（VT Markets） | https://www.vtmarkets.com/discover/risk-reward-ratio-explained-formula-trading/ |
+| Win Rate vs Risk-Reward（JournalPlus） | https://journalplus.co/learn/guides/win-rate-vs-risk-reward/ |
+| Win Rate and R:R: Connection Explained（LuxAlgo） | https://www.luxalgo.com/blog/win-rate-and-riskreward-connection-explained/ |
+
+### 自己コンプライアンスチェック結果
+| チェック項目 | 結果 |
+|---|---|
+| 個別銘柄の売買推奨なし | ✅ 教育・一般論のみ。「今 ○○ を買え」等の表現なし |
+| 断定・利益保証表現なし | ✅「絶対」「必ず」「100%」「保証」「儲かる」使用なし。計算例は「概念の説明用」と明記 |
+| kinsho-v1 免責（冒頭バナー＋本文末＋footer）あり | ✅ 3箇所に data-disclaimer="kinsho-v1" または同等の文言を配置 |
+| noindex,nofollow あり | ✅ `<meta name="robots" content="noindex,nofollow">` を head に配置済み |
+| 出典の妥当性 | ✅ 松井証券・OANDA・IG証券（国内金融機関）の公開記事、VT Markets・JournalPlus・LuxAlgoの英語教育記事を参照。損益分岐勝率の計算式（BEW = 1÷(1+R:R)×100）は業界標準的な数学公式であり、複数の信頼できる出典で確認済み。期待値例（勝率60%・R:R=0.5 → EV=−1,000円など）は自己計算値だが式に基づく純粋な算術 |
+| SVG 概念図に「※ 概念を示すイメージ図です」の注記 | ✅ 全 2 点の figcaption に注記あり |
+
+### SVG 図の構成
+1. **損益分岐勝率カーブ**（X軸=R:R、Y軸=勝率、曲線で緑/赤ゾーンを区切り、例示点A・B をプロット）— 実装済み
+2. **R:R=1:2 エントリー・SL・TP 設定図**（価格ライン＋リスク/リワードのブラケット注釈）— 実装済み
+3. `<!-- TODO(SVG): トレーダーAとBの100トレード累積損益バーチャート（横軸=トレード回数, 縦軸=累積損益）を要追加・要ライト/ダーク実機確認 -->`
+
+### 人間の残作業
+- [ ] **SVG の実機ライト/ダーク確認**：追加クラス `.s-zone-g` `.s-zone-r` `.s-bew` `.s-entry-line` `.s-sl-line` `.s-tp-line` `.s-bracket` `.s-dot-b` `.s-dot-r` `.s-dot-g` をライト・ダークモードで目視確認。特にポリゴン塗りつぶしのゾーン色（fill-opacity）がダークモードで見づらくないか確認
+- [ ] **累積損益バーチャートの追加**（HTML 内の `TODO(SVG)` コメントを参照）：トレーダーA vs B の100トレード累積損益を横フローバーチャートで示す
+- [ ] **Opus compliance-reviewer 監査**：公開前に `compliance-reviewer` エージェント（Opus）に下書き全文を渡してレビューを依頼
+- [ ] **タイトル・見出しの微調整**：現タイトルは適切だが「期待値計算」「損益分岐勝率」など検索需要の高いキーワードをtitle/descriptionでさらに前出しすることを検討
+- [ ] **関連記事リンクの確認**：`guide-profit-taking.html`（第4弾予定）公開後に related カードに追加
+- [ ] **loss-cut.html との相互リンク確認**：loss-cut.html 末尾の「リスクリワードは別記事で」予告から本記事への内部リンクを公開時に追加
+
+---
+
 ## 2026-06-07 | trading-psychology-calm
 
 - **基準日（JST）**: 2026-06-07（UTC 2026-06-06T20:33:37Z）
