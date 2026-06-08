@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リスクリワードと期待値の本質｜勝率より大事な「損益比」の考え方 - MarketWatch AI</title>
+  <meta name="description" content="「勝率6割あるのに資産が増えない」——その謎の答えはリスクリワード比（損益比）と期待値にある。期待値の計算方法からブレークイーブン勝率の公式、損切りを戦略の武器に変える思考法まで初心者〜中上級者向けに図解で解説。">
+  <meta name="keywords" content="リスクリワード,損益比,期待値,ブレークイーブン,勝率,損切り,リスク管理,トレード,投資初心者,資金管理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-risk-reward.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="リスクリワードと期待値の本質｜勝率より大事な「損益比」の考え方">
+  <meta property="og:description" content="勝率6割でも損益比が悪ければ資産は増えない。期待値・R:R・ブレークイーブン勝率を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-risk-reward.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "リスクリワードと期待値の本質｜勝率より大事な「損益比」の考え方",
+    "description": "勝率6割でも損益比が悪ければ資産は増えない。期待値・R:R・ブレークイーブン勝率を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-08",
+    "dateModified": "2026-06-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-risk-reward.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    /* SVG共通クラス */
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-flow-b{fill:#ddf4ff;stroke:#0969da;stroke-width:2}
+    .s-flow-r{fill:#ffebe9;stroke:#cf222e;stroke-width:2}
+    .s-flow-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:2}
+    .s-flow-n{fill:#ffffff;stroke:#8b949e;stroke-width:1.6}
+    .s-stack-1{fill:#ddf4ff;stroke:#0969da;stroke-width:2}
+    .s-stack-2{fill:#fff8c5;stroke:#9a6700;stroke-width:2}
+    .s-stack-3{fill:#e6ffed;stroke:#1a7f37;stroke-width:2}
+    /* risk-reward 固有 */
+    .s-entry{stroke:#0969da;stroke-width:2.8;stroke-dasharray:none}
+    .s-tp{stroke:#1a7f37;stroke-width:1.8;stroke-dasharray:6 4}
+    .s-sl{stroke:#cf222e;stroke-width:1.8;stroke-dasharray:6 4}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.55}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-flow-b{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-flow-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-flow-g{fill:#162416;stroke:#2ea043}
+    body.dark .s-flow-n{fill:#161b22;stroke:#8b949e}
+    body.dark .s-stack-1{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-stack-2{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-stack-3{fill:#162416;stroke:#2ea043}
+    body.dark .s-entry{stroke:#58a6ff}
+    body.dark .s-tp{stroke:#3fb950}
+    body.dark .s-sl{stroke:#f85149}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; リスクリワードと期待値の本質
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はリスク管理・資金管理の考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資には元本割れリスクがあります。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📐 リスクリワードと期待値の本質｜なぜ「勝率より損益比」が投資成績を決めるのか</h1>
+    <div class="meta-line">公開日：2026 年 6 月 8 日 ／ 読了時間：約 15 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <p>「勝率6割で取引しているのに、なぜか資産が少しずつ減っていく」——そんな経験はありませんか。その原因の多くは、勝率を高めることに意識が向きすぎて、<strong>1回に勝った額と負けた額のバランス（損益比）</strong>を見落としていることにあります。</p>
+    <p>たとえば、1回の利益が500円・1回の損失が1,500円のトレードを繰り返せば、勝率60%でも計算上は赤字になります（0.6 × 500 − 0.4 × 1,500 = 300 − 600 = <strong>−300円/トレード</strong>）。逆に言えば、<strong>損益比を整えれば、勝率4割以下でも期待値プラスの戦略が作れる</strong>のです。本記事では、投資成績を左右する「期待値」と「リスクリワード比（R:R）」を解説し、<a href="guide-loss-cut.html">損切りの記事</a>・<a href="guide-position-sizing.html">ポジションサイジングの記事</a>と合わせて使える実践的な思考法をお伝えします。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>期待値 ＝ 勝率 × 平均利益 − 敗率 × 平均損失</strong>。勝率が高くても損益比が悪ければ期待値はマイナスになる。勝率だけ見ていると損する理由はここにある。</li>
+      <li><strong>リスクリワード比（R:R）1:2 なら、勝率34%超で期待値プラス</strong>になる計算。高い勝率は必須ではなく、「上手な負け方の設計」こそが長期成績を決める。</li>
+      <li>損切りは「失敗」ではなく、<strong>期待値を成立させるために欠かせない部品</strong>。確信を持って損切りできるのは、その損失が戦略の想定内だと数字で理解しているからだ。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">なぜ「勝率だけ見ていると損する」のか</a></li>
+        <li><a href="#section-2">期待値とは何か</a></li>
+        <li><a href="#section-3">リスクリワード比（R:R）を理解する</a></li>
+        <li><a href="#section-4">ブレークイーブン勝率の公式</a></li>
+        <li><a href="#section-5">損切りを「戦略の部品」として使う（後半）</a></li>
+        <li><a href="#section-6">3つの戦略パターンで比べる</a></li>
+        <li><a href="#section-7">当サイトのシグナル設計と期待値の考え方</a></li>
+        <li><a href="#section-8">自分の期待値を計算する</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ なぜ「勝率だけ見ていると損する」のか</h2>
+    <p>多くの人が投資の成績を語るとき、まず口にするのは「勝率」です。「先週は8勝2敗だった」「自分の手法は勝率70%だ」——それ自体は事実を伝えていますが、<strong>勝率だけでは「儲かっているか」を判断できません</strong>。</p>
+    <p>直感に反するかもしれませんが、下の2つの成績を比べてみてください。</p>
+    <table>
+      <thead><tr><th>成績</th><th>勝率</th><th>平均利益</th><th>平均損失</th><th>10回の期待収益</th></tr></thead>
+      <tbody>
+        <tr><td>トレーダーA</td><td>70%（7勝3敗）</td><td>+300円</td><td>−1,000円</td><td>7×300 − 3×1,000 = <strong style="color:#cf222e">−900円</strong></td></tr>
+        <tr><td>トレーダーB</td><td>40%（4勝6敗）</td><td>+2,000円</td><td>−500円</td><td>4×2,000 − 6×500 = <strong style="color:#1a7f37">+5,000円</strong></td></tr>
+      </tbody>
+    </table>
+    <p>勝率が高いAは赤字、勝率が低いBは黒字——です。Aは「7割当てているのになぜ？」と思うでしょう。答えはシンプルです。<strong>「小さく勝って大きく負ける」を繰り返していたから</strong>です。Bはその逆で、「多く負けても1回の勝ちで十分取り返せる」設計をしていました。</p>
+    <p>この表が示す本質は一つ：<strong>投資の成績は「勝率」だけでなく、勝ち負けの"大きさのバランス"を含めた期待値で決まる</strong>ということです。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 期待値とは何か</h2>
+    <p><strong>期待値</strong>とは、「1回のトレードを繰り返したとき、平均して何円の損得になるか」を表す数値です。数式で書くと：</p>
+    <div class="info-box">
+      <strong>📐 期待値の公式</strong><br>
+      期待値 ＝ <strong>勝率 × 平均利益</strong> − <strong>敗率 × 平均損失</strong><br>
+      <br>
+      ※ 敗率 ＝ 1 − 勝率　　（例：勝率60%なら敗率40%）<br>
+      ※ 期待値 ＞ 0 であれば長期的にプラスを期待できる設計といえます（ただし短期は変動あり）。
+    </div>
+    <p>この式で重要なのは、「勝率」と「平均損益の大きさ（損益比）」の<strong>両方が絡み合って</strong>期待値が決まるという点です。どちらか一方だけを最大化しようとすると、もう一方が悪化してバランスが崩れることがよくあります。</p>
+    <p>たとえば、「絶対に損切りしない」ようにすれば勝率は上がります。しかし平均損失がどんどん大きくなり、いつかの一発で期待値は大きくマイナスになります。逆に「すぐ利確、早く逃げる」と平均利益が小さくなり、少しの負けで帳消しになります。<strong>期待値プラスを実現するには、勝率と損益比のバランスを意識した設計が必要</strong>なのです。</p>
+    <div class="warning-box">よくある誤解：「期待値プラス＝毎回プラス」ではありません。期待値は確率的な"長期の平均"を表すもの。期待値プラスの戦略でも、連敗することはあります。だからこそ<a href="guide-position-sizing.html">ポジションサイジング</a>で連敗を耐えられる資金管理をセットで考えることが大切です。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ リスクリワード比（R:R）を理解する</h2>
+    <p>期待値の話を実際のトレードに落とし込むとき、最もシンプルで使いやすい道具が<strong>リスクリワード比（Risk-Reward Ratio、R:R）</strong>です。定義は単純です。</p>
+    <div class="info-box">
+      <strong>📐 リスクリワード比（R:R）の定義</strong><br>
+      R:R ＝ 期待リワード（利確目標までの幅） ÷ リスク（損切りまでの幅）<br>
+      <br>
+      例：SL（損切り）まで100円 / TP（利確目標）まで200円 → R:R ＝ 200 ÷ 100 ＝ <strong>2.0</strong><br>
+      → 「1のリスクを取って、2のリターンを狙う」という意味。「1:2」または「1R リスク / 2R リワード」と表記することもある。
+    </div>
+
+    <p>R:R を具体的にイメージしてもらうため、エントリー・SL・TP の位置関係を図解します。</p>
+
+    <!-- SVG 1: エントリー/SL/TP 概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 210" role="img" aria-labelledby="rr-diagram-title">
+        <title id="rr-diagram-title">エントリー・損切り（SL）・利確目標（TP1/TP2）の位置関係とリスクリワード比の概念図</title>
+        <!-- 凡例 -->
+        <text class="s-panel-label" x="20" y="18">エントリー・SL・TP の位置関係</text>
+        <!-- ゾーン塗り -->
+        <!-- 利益ゾーン（エントリーからTP2まで） -->
+        <rect class="s-zone-g" x="60" y="40" width="420" height="60" rx="4"/>
+        <!-- 損失ゾーン（エントリーからSLまで） -->
+        <rect class="s-zone-r" x="60" y="120" width="420" height="50" rx="4"/>
+
+        <!-- TP2ライン -->
+        <line class="s-tp" x1="60" y1="40" x2="480" y2="40"/>
+        <text class="s-note-g" x="490" y="44" font-size="12" font-family="'Noto Sans JP',sans-serif">TP2（利確目標2）</text>
+        <text class="s-label-sm" x="490" y="57">ATR×3.0 = 2R</text>
+
+        <!-- TP1ライン -->
+        <line class="s-tp" x1="60" y1="70" x2="480" y2="70"/>
+        <text class="s-note-g" x="490" y="74" font-size="12" font-family="'Noto Sans JP',sans-serif">TP1（利確目標1）</text>
+        <text class="s-label-sm" x="490" y="87">ATR×2.0 = 1.33R</text>
+
+        <!-- エントリーライン -->
+        <line class="s-entry" x1="60" y1="120" x2="480" y2="120"/>
+        <circle class="s-dot-b" cx="120" cy="120" r="6"/>
+        <text class="s-note" x="490" y="124" font-size="12" font-family="'Noto Sans JP',sans-serif">エントリー</text>
+
+        <!-- SLライン -->
+        <line class="s-sl" x1="60" y1="170" x2="480" y2="170"/>
+        <text class="s-note-r" x="490" y="174" font-size="12" font-family="'Noto Sans JP',sans-serif">SL（損切りライン）</text>
+        <text class="s-label-sm" x="490" y="187">ATR×1.5 = 1R</text>
+
+        <!-- 左側ブレース：リスク -->
+        <line class="s-axis" x1="50" y1="120" x2="50" y2="170"/>
+        <line class="s-axis" x1="46" y1="120" x2="54" y2="120"/>
+        <line class="s-axis" x1="46" y1="170" x2="54" y2="170"/>
+        <text class="s-note-r" x="10" y="150" text-anchor="middle" transform="rotate(-90,26,150)" font-size="11" font-family="'Noto Sans JP',sans-serif">リスク 1R</text>
+
+        <!-- 左側ブレース：リワード（TP1まで） -->
+        <line class="s-axis" x1="35" y1="70" x2="35" y2="120"/>
+        <line class="s-axis" x1="31" y1="70" x2="39" y2="70"/>
+        <line class="s-axis" x1="31" y1="120" x2="39" y2="120"/>
+        <text class="s-note-g" x="14" y="98" text-anchor="middle" transform="rotate(-90,14,98)" font-size="11" font-family="'Noto Sans JP',sans-serif">1.33R</text>
+
+        <!-- ゾーンラベル -->
+        <text class="s-note-g" x="270" y="95" text-anchor="middle" font-size="13" font-family="'Noto Sans JP',sans-serif">利益ゾーン（リワード側）</text>
+        <text class="s-note-r" x="270" y="150" text-anchor="middle" font-size="13" font-family="'Noto Sans JP',sans-serif">損失ゾーン（リスク側）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ エントリーから SL（損切り）までがリスク（1R）、TP1・TP2 が利確目標。R:R＝1.33 なら1のリスクで1.33のリターンを狙う。<strong>エントリー前に SL と TP を決めてR:Rを計算する</strong>のが基本。※ 概念を示すイメージ図です。数値はATRベース設計の一例。</figcaption>
+    </figure>
+
+    <p>R:R を計算するのは、エントリーの前です。「この位置に入るなら、SL はここ、TP はここ、R:R はいくつ」と確認してからポジションを取る習慣が、期待値を管理する第一歩になります。<strong>R:R が 1 を下回る（リスク＞リワード）設定でエントリーを繰り返せば、仮に勝率が5割あっても長期的には負け越す</strong>計算になります。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ ブレークイーブン勝率の公式</h2>
+    <p>R:R が決まれば、「最低でも何%勝てばプラスになるか（ブレークイーブン勝率）」を計算できます。これが分かると、<strong>「この手法で期待値プラスを保つには、どこまで勝率が落ちても大丈夫か」</strong>という感覚が生まれます。</p>
+    <div class="info-box">
+      <strong>📐 ブレークイーブン勝率の公式</strong><br>
+      最小勝率 ＝ 1 ÷ （1 ＋ R:R）× 100（%）<br>
+      <br>
+      例 1：R:R ＝ 1.0 なら　最小勝率 ＝ 1/(1+1) ＝ <strong>50%</strong><br>
+      例 2：R:R ＝ 2.0 なら　最小勝率 ＝ 1/(1+2) ＝ <strong>33%</strong>（勝率3割超でOK）<br>
+      例 3：R:R ＝ 3.0 なら　最小勝率 ＝ 1/(1+3) ＝ <strong>25%</strong>（4回に1回勝てばOK）
+    </div>
+    <p>この公式が示すのは、<strong>R:Rが上がるほど、必要な勝率が下がる</strong>という関係です。次のグラフで視覚化してみましょう。</p>
+
+    <!-- SVG 2: ブレークイーブン勝率カーブ -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 590 230" role="img" aria-labelledby="beq-title">
+        <title id="beq-title">R:R比（損益比）とブレークイーブン勝率の関係を示す曲線グラフ。R:Rが上がるほど必要最小勝率が下がる。</title>
+        <!-- ゾーン塗り -->
+        <!-- プラスゾーン（曲線より上＝実際の勝率が最小勝率を超えている） -->
+        <polygon class="s-zone-g" points="70,30 520,30 520,190 463,183 405,174 348,163 290,147 233,126 175,94 118,41 70,41"/>
+        <!-- マイナスゾーン（曲線より下＝実際の勝率が最小勝率に届かない） -->
+        <polygon class="s-zone-r" points="70,41 118,41 175,94 233,126 290,147 348,163 405,174 463,183 520,190 520,200 70,200"/>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="70" y1="30" x2="70" y2="200"/>
+        <line class="s-axis" x1="70" y1="200" x2="530" y2="200"/>
+
+        <!-- X軸目盛り -->
+        <line class="s-axis" x1="118" y1="197" x2="118" y2="203"/>
+        <text class="s-label-sm" x="118" y="215" text-anchor="middle">0.5</text>
+        <line class="s-axis" x1="175" y1="197" x2="175" y2="203"/>
+        <text class="s-label-sm" x="175" y="215" text-anchor="middle">1.0</text>
+        <line class="s-axis" x1="233" y1="197" x2="233" y2="203"/>
+        <text class="s-label-sm" x="233" y="215" text-anchor="middle">1.5</text>
+        <line class="s-axis" x1="290" y1="197" x2="290" y2="203"/>
+        <text class="s-label-sm" x="290" y="215" text-anchor="middle">2.0</text>
+        <line class="s-axis" x1="405" y1="197" x2="405" y2="203"/>
+        <text class="s-label-sm" x="405" y="215" text-anchor="middle">3.0</text>
+        <line class="s-axis" x1="520" y1="197" x2="520" y2="203"/>
+        <text class="s-label-sm" x="520" y="215" text-anchor="middle">4.0</text>
+        <text class="s-label-sm" x="295" y="228" text-anchor="middle">R:R 比（損益比）→</text>
+
+        <!-- Y軸目盛り -->
+        <line class="s-axis" x1="67" y1="190" x2="73" y2="190"/>
+        <text class="s-label-sm" x="62" y="194" text-anchor="end">20%</text>
+        <line class="s-axis" x1="67" y1="126" x2="73" y2="126"/>
+        <text class="s-label-sm" x="62" y="130" text-anchor="end">40%</text>
+        <line class="s-axis" x1="67" y1="94" x2="73" y2="94"/>
+        <text class="s-label-sm" x="62" y="98" text-anchor="end">50%</text>
+        <line class="s-axis" x1="67" y1="62" x2="73" y2="62"/>
+        <text class="s-label-sm" x="62" y="66" text-anchor="end">60%</text>
+        <line class="s-axis" x1="67" y1="30" x2="73" y2="30"/>
+        <text class="s-label-sm" x="62" y="34" text-anchor="end">70%</text>
+        <text class="s-label-sm" x="24" y="115" text-anchor="middle" transform="rotate(-90,24,115)">必要最小勝率 →</text>
+
+        <!-- ブレークイーブン曲線 -->
+        <polyline class="s-curve-l" points="118,41 175,94 233,126 290,147 348,163 405,174 463,183 520,190" fill="none"/>
+
+        <!-- 主要ポイント -->
+        <circle class="s-dot-r" cx="118" cy="41" r="5"/>
+        <text class="s-note-r" x="124" y="36" font-size="11" font-family="'Noto Sans JP',sans-serif">67%（R:R=0.5）</text>
+        <circle class="s-dot-r" cx="175" cy="94" r="5"/>
+        <text class="s-note-r" x="181" y="90" font-size="11" font-family="'Noto Sans JP',sans-serif">50%（R:R=1.0）</text>
+        <circle class="s-dot-g" cx="290" cy="147" r="5"/>
+        <text class="s-note-g" x="296" y="144" font-size="11" font-family="'Noto Sans JP',sans-serif">33%（R:R=2.0）</text>
+        <circle class="s-dot-g" cx="405" cy="174" r="5"/>
+        <text class="s-note-g" x="411" y="171" font-size="11" font-family="'Noto Sans JP',sans-serif">25%（R:R=3.0）</text>
+
+        <!-- ゾーンラベル -->
+        <text class="s-note-g" x="430" y="65" text-anchor="middle" font-size="12" font-family="'Noto Sans JP',sans-serif">プラスゾーン</text>
+        <text class="s-label-sm" x="430" y="80" text-anchor="middle">（実勝率 ≥ 最小勝率）</text>
+        <text class="s-note-r" x="155" y="170" text-anchor="middle" font-size="12" font-family="'Noto Sans JP',sans-serif">マイナスゾーン</text>
+        <text class="s-label-sm" x="155" y="185" text-anchor="middle">（実勝率 ＜ 最小勝率）</text>
+
+        <!-- ガイドライン：R:R=1.33（このサイトのTP1参考） -->
+        <line class="s-guide" x1="213" y1="30" x2="213" y2="115"/>
+        <circle class="s-dot-b" cx="213" cy="115" r="4"/>
+        <text class="s-note" x="218" y="108" font-size="10" font-family="'Noto Sans JP',sans-serif">43%（R:R≈1.33）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 赤い曲線 ＝ ブレークイーブン勝率（期待値ゼロの境界線）。<strong>自分の実勝率が曲線より上（プラスゾーン）にあれば、長期的に期待値プラスを期待できる</strong>。R:R を上げれば上げるほど、必要な勝率が下がる（余裕が広がる）のがわかる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>このグラフを見れば、<strong>「勝率4割台でも期待値プラスの設計ができる」</strong>ことが数字で確認できます。重要なのは「どれだけ当てるか」ではなく「当たったときにどれだけ取り、外れたときにどれだけ抑えるか」のバランス——それが損益比であり、R:R の本質です。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 損切りを「戦略の部品」として使う</h2>
+    <p>ここから後半です。前半の「期待値とR:Rの入門」を土台に、<strong>損切りの位置づけを戦略的に捉え直す</strong>ことを考えます。</p>
+    <p><a href="guide-loss-cut.html">損切りの記事</a>では、損を切れないのは「意志の弱さ」ではなく脳の仕組み（損失回避・プロスペクト理論）によるものだとお話ししました。しかし「切れない理由」がわかっても、<strong>「切ることの価値」を数字で理解していないと、手はなかなか動きません</strong>。</p>
+    <p>期待値の公式に照らすと、損切りの意味が変わります。</p>
+    <ul>
+      <li><strong>損切りしないと</strong>：平均損失が膨らみ続ける → 期待値は急速にマイナス方向へ</li>
+      <li><strong>損切りすると</strong>：平均損失が「計画どおりの1R」に収まる → 設計した R:R が機能する</li>
+    </ul>
+    <p>つまり<strong>損切りは「失敗を認める行為」ではなく、「期待値を成立させるための部品を正しく動かす行為」</strong>です。SL を計算してエントリーしたなら、SL に到達したとき損切りするのは"予定どおり"。それを「損した」と捉えるのか「設計どおり」と捉えるのかで、その後の判断が変わります。</p>
+    <div class="positive-box">
+      <strong>✅ 「確信を持って損切りできる」状態とは</strong>：損切りを戦略に組み込んでいる人は、SL を触れたときに「これは想定内のコスト」と感じます。一方、損切りの意味を理解していない人は「今切ったら確定損になる」という恐怖が先に来て手が止まります。<strong>R:R と期待値の数字を理解することが、損切りを「恐怖の判断」ではなく「ルールの実行」に変える第一歩</strong>です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 3 つの戦略パターンで比べる</h2>
+    <p>期待値の概念をさらに具体的にするため、3 つの異なる戦略パターンを比較します。仮想の数値ですが、よく見かける「型」を表しています。</p>
+
+    <!-- SVG 3: 3戦略比較 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 200" role="img" aria-labelledby="strategy-title">
+        <title id="strategy-title">3つの戦略パターン（高勝率・低損益比 vs 均衡型 vs 低勝率・高損益比）の期待値比較概念図</title>
+        <text class="s-panel-label" x="20" y="20">3つの戦略パターン：期待値比較（仮想例）</text>
+
+        <!-- 戦略A：高勝率・低R:R（マイナス） -->
+        <rect class="s-flow-r" x="20" y="35" width="170" height="140" rx="8"/>
+        <text x="105" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">戦略 A</text>
+        <text x="105" y="78" text-anchor="middle" class="s-label-sm">高勝率 × 低損益比</text>
+        <text x="105" y="98" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">勝率：70%</text>
+        <text x="105" y="116" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">R:R：0.4（小利 × 大損）</text>
+        <text x="105" y="138" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">期待値 = 0.7×0.4 − 0.3×1</text>
+        <text x="105" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">≈ −0.02 /トレード</text>
+        <text x="105" y="175" text-anchor="middle" font-size="12" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">→ 長期的に減る</text>
+
+        <!-- 戦略B：均衡型 -->
+        <rect class="s-flow-n" x="210" y="35" width="170" height="140" rx="8"/>
+        <text x="295" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">戦略 B</text>
+        <text x="295" y="78" text-anchor="middle" class="s-label-sm">均衡型（50/50）</text>
+        <text x="295" y="98" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">勝率：50%</text>
+        <text x="295" y="116" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">R:R：1.0（同額勝ち負け）</text>
+        <text x="295" y="138" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">期待値 = 0.5×1 − 0.5×1</text>
+        <text x="295" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">＝ 0.0 /トレード</text>
+        <text x="295" y="175" text-anchor="middle" font-size="12" fill="#57606a" font-family="'Noto Sans JP',sans-serif">→ コスト分だけ減る</text>
+
+        <!-- 戦略C：低勝率・高R:R（プラス） -->
+        <rect class="s-flow-g" x="400" y="35" width="175" height="140" rx="8"/>
+        <text x="488" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">戦略 C</text>
+        <text x="488" y="78" text-anchor="middle" class="s-label-sm">低勝率 × 高損益比</text>
+        <text x="488" y="98" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">勝率：40%</text>
+        <text x="488" y="116" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">R:R：2.0（大利 × 小損）</text>
+        <text x="488" y="138" text-anchor="middle" font-size="12" fill="#424a53" font-family="'Noto Sans JP',sans-serif">期待値 = 0.4×2 − 0.6×1</text>
+        <text x="488" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">＝ +0.20 /トレード</text>
+        <text x="488" y="175" text-anchor="middle" font-size="12" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">→ 長期的に増やせる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 戦略 A は高勝率（70%）でも R:R が低すぎて期待値マイナス。戦略 B は完全均衡だがスプレッドやコスト分で負け。<strong>戦略 C は勝率4割台でも R:R=2.0 の設計で期待値プラス</strong>を実現している。勝率より損益比の設計が成績を決める。※ 仮想の数値によるイメージ図です。実際の成績は個人・手法・市場環境によって大きく異なります。</figcaption>
+    </figure>
+
+    <p>戦略 A のような「小さく勝って大きく負ける」パターンは、短期的には「勝率が高い！」と気持ちよく感じます。しかし時折来る大きな損失がそれまでの利益を一気に飲み込みます。<strong>「高勝率なのに資産が増えない」謎の正体は、多くの場合これです</strong>。逆に戦略 C は10回中6回負けるため精神的には苦しいですが、<strong>期待値はしっかりプラス</strong>です。「上手な負け方」を設計している、とはこういうことです。</p>
+
+    <div class="info-box">
+      <strong>💡 スプレッドと手数料の現実</strong>：理論上 B の期待値はゼロですが、実際には毎トレードにスプレッド（買値と売値の差）や手数料がかかります。R:R=1.0 で勝率50%は、コスト込みでは赤字になりやすい。これが「期待値ゼロ以上の設計では不十分で、コストを上回るプラスの余裕が必要」と言われる理由です。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトのシグナル設計と期待値の考え方</h2>
+    <p>当サイトのテクニカルシグナルは、ATR（平均真の値幅）を基準に SL と TP を設定しています。設計の考え方（参考値）は以下のとおりです。</p>
+    <table>
+      <thead><tr><th>水準</th><th>設定幅</th><th>R:R（SL=1Rとして）</th><th>最小勝率</th></tr></thead>
+      <tbody>
+        <tr><td>SL（損切り）</td><td>ATR × 1.5</td><td>基準（1R）</td><td>—</td></tr>
+        <tr><td>TP1（利確目標1）</td><td>ATR × 2.0</td><td>1.33（1Rリスク / 1.33Rリワード）</td><td>43%以上</td></tr>
+        <tr><td>TP2（利確目標2）</td><td>ATR × 3.0</td><td>2.0（1Rリスク / 2Rリワード）</td><td>34%以上</td></tr>
+      </tbody>
+    </table>
+    <p>TP1 を目標にする場合、<strong>最低43%以上の勝率があれば期待値プラスになる計算</strong>です。TP2 なら34%以上。これはあくまで設計上の目標値であり、実際の達成を保証するものではありません。市場環境・銘柄・手法によって実績は大きく異なります。</p>
+    <p>実際にシグナルがどのような成績になっているかは、<strong>数値で確認</strong>するのが最善です。理論値と実績値のギャップを知ることが、期待値思考の実践です。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際の成績で期待値を確認する</div>
+      <div class="cta-box-desc">シグナルの成績（勝率・平均損益・期待値相当）を勝ちも負けも含めてオープンに公開しています。理論値と実績の差を実データで確かめてみてください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 自分の期待値を計算する</h2>
+    <p>ここまでの知識を最も活かせるのは、<strong>自分の過去トレードに当てはめて期待値を計算する</strong>ときです。計算自体は単純で、トレード記録があればすぐできます。</p>
+    <h3>ステップ 1：トレード記録を集める</h3>
+    <p>最低でも20〜30トレード分のデータを用意します。記録に必要な項目は「エントリー価格・SL価格・決済価格・勝ち/負け」だけです。<a href="guide-trading-journal.html">売買日誌</a>をつけていない方は、まず記録を始めることが出発点になります。</p>
+    <h3>ステップ 2：平均利益・平均損失を計算する</h3>
+    <p>勝ちトレードの損益を全部足して勝ちの件数で割る（＝平均利益）。負けトレードも同様に（＝平均損失）。</p>
+    <h3>ステップ 3：期待値を計算する</h3>
+    <p><code>期待値 ＝ 勝率 × 平均利益 − 敗率 × 平均損失</code></p>
+    <p>この数字が<strong>プラスなら長期的に優位性がある設計</strong>、マイナスなら改善が必要なサインです。</p>
+    <h3>どこを改善すれば期待値が上がるか</h3>
+    <p>期待値がマイナスだった場合、改善の方向は大きく2つです。</p>
+    <ul>
+      <li><strong>平均損失を減らす（損切りを守る・ナンピンをしない）</strong>：多くのケースで、損失が膨らんでいるトレードがいくつかあり、それが全体の期待値を押し下げています。<a href="guide-loss-cut.html">損切りの仕組み化</a>と<a href="guide-position-sizing.html">ポジションサイジング</a>の見直しが効果的です。</li>
+      <li><strong>利益を伸ばす（早期利確を抑える・トレーリングを使う）</strong>：平均利益が小さい場合、「すぐ利確してしまうクセ」が原因のことがあります。これは<a href="guide-trading-psychology-calm.html">感情コントロール</a>の問題でもあります。</li>
+    </ul>
+    <div class="warning-box">注意：20〜30トレードは統計的に十分なサンプルとは言えません（とくにまれな相場環境に偏っている可能性があります）。期待値の計算はあくまで「現時点の傾向」を把握するための参考として使い、サンプルを増やしながら定点観測することが重要です。</div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>リスクリワードと期待値について学んできた内容を整理します。</p>
+    <ul>
+      <li>投資成績は勝率だけでは決まらず、<strong>勝率 × 平均利益 − 敗率 × 平均損失 ＝ 期待値</strong>で決まる。勝率70%でも損益比が悪ければ期待値はマイナスになる。</li>
+      <li><strong>R:R（リスクリワード比）</strong>はエントリー前に計算できる最も重要な指標。R:R=2.0 なら勝率34%以上で期待値プラスが成立する。</li>
+      <li><strong>ブレークイーブン勝率 ＝ 1 ÷（1 + R:R）</strong>を覚えておくと、「自分の手法はこの R:R でどれだけ当てればよいか」がすぐわかる。</li>
+      <li>損切りは「失敗」でなく<strong>「期待値を機能させる部品」</strong>。SL を守ることで平均損失が設計どおりに収まり、R:R の前提が成立する。</li>
+      <li>過去トレードから期待値を計算し、改善の方向（損失を抑えるか、利益を伸ばすか）を数字で判断する習慣が、長期成績を上げる近道。</li>
+    </ul>
+    <p>「高勝率の手法を探す」よりも、「今の手法の期待値を整える」ことの方が、多くの場合で効果的です。損益比と期待値の視点を持つだけで、損切りへの見方も、ポジションサイジングへの取り組み方も、一段階深くなるはずです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・処分効果・サンクコスト……損切りを妨げる心理の正体と、淡々と切る仕組みの作り方。期待値を守るための前提条件。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジングの基本</div>
+        <div class="related-card-desc">「2%ルール」と損切り幅から逆算するロット計算。リスク1Rをいくらに設定するかが、期待値を実額に変換するカギ。</div>
+      </a>
+      <a class="related-card" href="guide-trading-psychology-calm.html">
+        <div class="related-card-title">🧘 平常心の作り方</div>
+        <div class="related-card-desc">FOMO・狼狽売り・リベンジトレードは意志でなく脳の仕組み。期待値を知っていても感情で崩れるなら、仕組み化で平常心を作る。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はリスク管理・資金管理の考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な概念の解説であり、特定の手法による利益や損失回避を保証するものではありません。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
