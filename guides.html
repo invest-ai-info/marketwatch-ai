@@ -76,6 +76,11 @@
     body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
     body.dark footer a{color:#79c0ff}
     body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    .cat-more-btn{display:none;margin:14px auto 0;padding:9px 22px;background:#f6f8fa;border:1.5px solid #d0d7de;border-radius:8px;color:#0969da;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;width:100%;max-width:360px}
+    .cat-more-btn:hover{background:#ddf4ff;border-color:#0969da}
+    body.dark .cat-more-btn{background:#161b22;border-color:#30363d;color:#79c0ff}
+    body.dark .cat-more-btn:hover{background:#1c2128;border-color:#58a6ff}
+    @media(max-width:700px){.cat-hidden{display:none}.cat-more-btn{display:block}}
   </style>
 </head>
 <body>
@@ -681,4 +686,18 @@
 </main>
 
 <footer>
-  © 2026 MarketWatch AI ｜ <a href="index.html">トップに
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+(function(){document.querySelectorAll('.article-list').forEach(function(list){var cards=list.querySelectorAll('.article-card');var total=cards.length;if(total<=3)return;var hidden=total-3;for(var i=3;i<total;i++)cards[i].classList.add('cat-hidden');var btn=document.createElement('button');btn.className='cat-more-btn';btn.textContent='もっと見る（'+hidden+'件）';btn.onclick=function(){var expanded=btn.classList.contains('expanded');if(expanded){for(var i=3;i<total;i++)cards[i].classList.add('cat-hidden');btn.classList.remove('expanded');btn.textContent='もっと見る（'+hidden+'件）';list.closest('.category-section').scrollIntoView({behavior:'smooth',block:'start'});}else{for(var i=3;i<total;i++)cards[i].classList.remove('cat-hidden');btn.classList.add('expanded');btn.textContent='折りたたむ ↑';}};list.parentNode.insertBefore(btn,list.nextSibling);});})();
+</script>
+
+</body>
+</html>
