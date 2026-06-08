@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信用残とは｜買い残・売り残・信用倍率・評価損益率の見方を図解で解説 - MarketWatch AI</title>
+  <meta name="description" content="「信用残が多い」は何を意味するのか？買い残・売り残・信用倍率・信用評価損益率の仕組みと市場への影響を図解で整理。日本株の需給分析の入口。">
+  <meta name="keywords" content="信用残,信用買い残,信用売り残,信用倍率,信用評価損益率,信用取引,日本株,需給分析,株式投資,信用残の見方">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-margin-balance.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="信用残とは｜買い残・売り残・信用倍率・評価損益率の見方を図解で解説">
+  <meta property="og:description" content="信用残の仕組みと市場への影響を買い残・売り残・信用倍率・評価損益率の4軸で図解解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-margin-balance.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "信用残とは｜買い残・売り残・信用倍率・評価損益率の見方を図解で解説",
+    "description": "信用残の仕組みと市場への影響を買い残・売り残・信用倍率・評価損益率の4軸で図解解説。日本株の需給分析の入口。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-08",
+    "dateModified": "2026-06-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-margin-balance.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 信用残の見方
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>📊 信用残とは<br><small style="font-size:.65em;color:#57606a;font-weight:400">買い残・売り残・信用倍率・評価損益率の見方を図解で解説</small></h1>
+    <div class="meta-line">
+      カテゴリ：💹 投資指標・経済知識 &nbsp;|&nbsp; 公開：2026年6月8日 &nbsp;|&nbsp; 読了：約12分
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#what">信用残とは何か――週次で発表される需給の「地図」</a></li>
+        <li><a href="#two-types">買い残と売り残――2種類の信用残の意味</a></li>
+        <li><a href="#mechanics">買い残・売り残が生む「将来の売り圧力・買い圧力」</a></li>
+        <li><a href="#ratio">信用倍率（NT倍率）の見方</a></li>
+        <li><a href="#eval-loss">信用評価損益率――「追証ゾーン」を見抜く指標</a></li>
+        <li><a href="#practical">実践的な使い方（どこで確認・何に注意するか）</a></li>
+        <li><a href="#limits">信用残の限界と注意点</a></li>
+        <li><a href="#conclusion">まとめ</a></li>
+      </ol>
+    </div>
+
+    <p>株式投資の解説やニュースで「信用買い残が膨らんでいる」「信用倍率が高水準だ」という表現を目にしたことはないでしょうか。これらは<strong>需給分析</strong>の重要な指標ですが、「なぜ需給と関係するのか」「どんな影響があるのか」をきちんと理解している人は意外に少ないと感じられます。</p>
+    <p>本記事では、信用残の仕組みと市場への影響を<strong>買い残・売り残・信用倍率・信用評価損益率</strong>の4軸で整理します。</p>
+
+    <!-- ====================================== -->
+    <h2 id="what">① 信用残とは何か――週次で発表される需給の「地図」</h2>
+
+    <p>信用取引とは、証券会社から資金や株式を借りて売買する仕組みです。<strong>信用残（しんようざん）</strong>とは、この信用取引で建てたまま（まだ決済していない）ポジションの合計残高のことをいいます。</p>
+
+    <div class="info-box">
+      <strong>発表タイミング</strong><br>
+      東京証券取引所（JPX）が毎週木曜日の取引終了後（取引所信用）または翌週月曜日（制度信用の一部）に集計・発表します。証券会社の取引ツールや「JPXウェブサイト」「Yahoo!ファイナンス 個別銘柄ページ」などで確認できます。市場全体の集計値（東証全銘柄合計）と個別銘柄ごとの数値の両方が公表されます。
+    </div>
+
+    <p>信用残が注目される理由は、<strong>「今後の売り圧力・買い圧力の予測材料」になる</strong>からです。信用取引には返済期限（制度信用は最長6か月）があり、建てたポジションは必ずいつか決済されます。このため「今どれだけ信用ポジションが積み上がっているか」を知ることで、将来の需給の傾きをある程度推し量ることができるとされています。</p>
+
+    <!-- ====================================== -->
+    <h2 id="two-types">② 買い残と売り残――2種類の信用残の意味</h2>
+
+    <p>信用残には大きく2種類あります。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>種類</th>
+          <th>内容</th>
+          <th>決済時の市場への動き</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>📈 信用買い残（買い残）</td>
+          <td>信用買いで購入し、まだ売っていない株数・金額の合計</td>
+          <td>返済売り → <strong style="color:#cf222e">売り圧力</strong></td>
+        </tr>
+        <tr>
+          <td>📉 信用売り残（売り残）</td>
+          <td>信用売り（空売り）して、まだ買い戻していない株数・金額の合計</td>
+          <td>買い戻し → <strong style="color:#1a7f37">買い圧力</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>ポイントは<strong>「買い残は将来の売り圧力を積み上げている」「売り残は将来の買い圧力を積み上げている」</strong>という非対称な関係です。相場が動くと、この積み上がったポジションが一斉に解消されるため、急激な値動きにつながることがあります。</p>
+
+    <!-- ====================================== -->
+    <h2 id="mechanics">③ 買い残・売り残が生む「将来の売り圧力・買い圧力」</h2>
+
+    <!-- SVG ①: 買い残・売り残の力学図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowRed" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,9 3.5,0 7" fill="#cf222e"/>
+          </marker>
+          <marker id="arrowGreen" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,9 3.5,0 7" fill="#1a7f37"/>
+          </marker>
+          <marker id="arrowBlue" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,9 3.5,0 7" fill="#0969da"/>
+          </marker>
+        </defs>
+
+        <!-- 左ブロック: 買い残 -->
+        <rect x="30" y="50" width="220" height="90" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="2"/>
+        <text x="140" y="82" text-anchor="middle" class="s-label-r" style="font-size:15px;font-weight:700">📈 信用買い残（買い残）</text>
+        <text x="140" y="102" text-anchor="middle" class="s-label-sm">信用買いで保有中の株</text>
+        <text x="140" y="120" text-anchor="middle" class="s-label-r" style="font-size:11.5px">→ 返済期限までに「売る」必要がある</text>
+
+        <!-- 左矢印: 返済売り -->
+        <line x1="250" y1="95" x2="325" y2="150" stroke="#cf222e" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+        <text x="278" y="125" class="s-label-r" style="font-size:11px">返済売り</text>
+
+        <!-- 中央: 市場（株価） -->
+        <rect x="280" y="130" width="140" height="60" rx="10" fill="#f6f8fa" stroke="#8b949e" stroke-width="1.8"/>
+        <text x="350" y="158" text-anchor="middle" class="s-label" style="font-size:14px;font-weight:700">市場（株価）</text>
+        <text x="350" y="178" text-anchor="middle" class="s-label-sm">需給バランス</text>
+
+        <!-- 右矢印: 買い戻し -->
+        <line x1="420" y1="150" x2="456" y2="105" stroke="#1a7f37" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+        <text x="435" y="125" class="s-label-g" style="font-size:11px">買い戻し</text>
+
+        <!-- 右ブロック: 売り残 -->
+        <rect x="450" y="50" width="220" height="90" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="2"/>
+        <text x="560" y="82" text-anchor="middle" class="s-label-g" style="font-size:15px;font-weight:700">📉 信用売り残（売り残）</text>
+        <text x="560" y="102" text-anchor="middle" class="s-label-sm">空売りで保有中のポジション</text>
+        <text x="560" y="120" text-anchor="middle" class="s-label-g" style="font-size:11.5px">→ 返済期限までに「買う」必要がある</text>
+
+        <!-- 下段: 影響ラベル -->
+        <rect x="30" y="200" width="220" height="62" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="140" y="223" text-anchor="middle" class="s-label-r" style="font-size:13px;font-weight:700">将来の 売り圧力 ↓</text>
+        <text x="140" y="245" text-anchor="middle" class="s-label-sm">買い残が多いほど</text>
+        <text x="140" y="258" text-anchor="middle" class="s-label-sm">潜在的な売りが積み上がる</text>
+
+        <rect x="450" y="200" width="220" height="62" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="560" y="223" text-anchor="middle" class="s-label-g" style="font-size:13px;font-weight:700">将来の 買い圧力 ↑</text>
+        <text x="560" y="245" text-anchor="middle" class="s-label-sm">売り残が多いほど</text>
+        <text x="560" y="258" text-anchor="middle" class="s-label-sm">潜在的な買い戻しが積み上がる</text>
+
+        <!-- 中央の説明テキスト -->
+        <text x="350" y="215" text-anchor="middle" class="s-label-sm">買い残↑ → 売り圧力↑</text>
+        <text x="350" y="233" text-anchor="middle" class="s-label-sm">売り残↑ → 買い圧力↑</text>
+        <text x="350" y="251" text-anchor="middle" class="s-label-sm">（需給の蓄積）</text>
+      </svg>
+      <div class="chart-caption">図①：信用買い残・売り残と市場への影響（概念図）。買い残は将来の返済売り（売り圧力）を、売り残は将来の買い戻し（買い圧力）を予め積み上げた状態を示します。</div>
+    </div>
+
+    <h3>買い残が急増したとき（相場過熱の可能性）</h3>
+    <p>買い残が短期間で大きく増加する場面は、投資家が「まだ上がる」と信用買いで追いかけている状況を示す場合があります。この状態では<strong>潜在的な売り圧力が積み上がり、相場が転換した際に一気に返済売りが出やすくなる</strong>とされています。天井圏のシグナルとして見られることがあります。</p>
+
+    <h3>売り残が急増したとき（ショートスクイーズの可能性）</h3>
+    <p>売り残が急増している状況では、多くの空売り投資家が「下がる」と賭けているとみなせます。相場が予想と逆方向に上昇すると、空売り勢が損失拡大を避けるために一斉に買い戻し（損切り）を迫られる「<strong>ショートスクイーズ</strong>」が発生する場合があります。売り残が多い銘柄ほどスクイーズ時の急騰幅が大きくなる傾向があるとされています。</p>
+
+    <!-- ====================================== -->
+    <h2 id="ratio">④ 信用倍率（NT倍率）の見方</h2>
+
+    <p><strong>信用倍率</strong>（しんようばいりつ）とは、<strong>買い残 ÷ 売り残</strong> で計算される比率です。別名「NT倍率」とも呼ばれます。</p>
+
+    <div class="info-box">
+      <strong>計算式</strong><br>
+      信用倍率 ＝ 信用買い残（株数） ÷ 信用売り残（株数）<br><br>
+      例：買い残 1,000万株 ÷ 売り残 200万株 ＝ 信用倍率 5.0倍
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>信用倍率の水準</th>
+          <th>意味</th>
+          <th>一般的な見方（参考）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10倍以上</td>
+          <td>買い残が売り残の10倍超</td>
+          <td>強い過熱感。返済売り圧力が非常に高い水準とされる</td>
+        </tr>
+        <tr>
+          <td>5〜10倍</td>
+          <td>買いが売りを大きく上回る</td>
+          <td>過熱ゾーンの可能性。上昇後の調整に注意されやすい</td>
+        </tr>
+        <tr>
+          <td>2〜5倍（中立圏）</td>
+          <td>買いが売りよりやや多い</td>
+          <td>通常の状態とされることが多い</td>
+        </tr>
+        <tr>
+          <td>1倍前後</td>
+          <td>買いと売りがほぼ拮抗</td>
+          <td>弱気筋も多い。逆に上昇反転時の買い戻し燃料になることも</td>
+        </tr>
+        <tr>
+          <td>1倍未満（逆転）</td>
+          <td>売り残が買い残を上回る</td>
+          <td>弱気優勢。上昇時のスクイーズが大きくなる可能性</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SVG ②: 信用倍率と相場局面の概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowUp2" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto">
+            <polygon points="0 6,4 0,8 6" fill="#1a7f37"/>
+          </marker>
+          <marker id="arrowDown2" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto">
+            <polygon points="0 0,4 6,8 0" fill="#cf222e"/>
+          </marker>
+        </defs>
+
+        <!-- 横軸: 時間 -->
+        <line x1="60" y1="200" x2="660" y2="200" class="s-axis"/>
+        <!-- 縦軸: 信用倍率 -->
+        <line x1="60" y1="30" x2="60" y2="200" class="s-axis"/>
+        <text x="55" y="40" text-anchor="end" class="s-label-sm">高</text>
+        <text x="55" y="204" text-anchor="end" class="s-label-sm">低</text>
+        <text x="25" y="120" text-anchor="middle" class="s-label-sm" style="writing-mode:vertical-rl">信用倍率</text>
+
+        <!-- 参考ライン: 5倍 / 2倍 -->
+        <line x1="60" y1="80" x2="660" y2="80" class="s-guide"/>
+        <text x="55" y="83" text-anchor="end" class="s-label-r" style="font-size:10.5px">高水準</text>
+        <line x1="60" y1="140" x2="660" y2="140" class="s-guide"/>
+        <text x="55" y="143" text-anchor="end" class="s-label-sm" style="font-size:10.5px">中立圏</text>
+
+        <!-- 信用倍率の波形（山→谷→山） -->
+        <path d="M80,155 C120,145 160,100 220,72 C260,58 290,55 320,62 C360,72 380,90 400,120 C430,150 460,170 500,160 C540,148 580,100 630,78"
+          stroke="#0969da" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- ゾーンラベル -->
+        <!-- 高倍率ゾーン（山） -->
+        <rect x="200" y="36" width="130" height="20" rx="4" fill="#ffebe9" stroke="#cf222e" stroke-width="1"/>
+        <text x="265" y="50" text-anchor="middle" class="s-label-r" style="font-size:11px;font-weight:700">⚠️ 過熱ゾーン（返済売り圧力大）</text>
+        <line x1="265" y1="56" x2="265" y2="68" stroke="#cf222e" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+        <!-- 低倍率ゾーン（谷） -->
+        <rect x="390" y="148" width="130" height="20" rx="4" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text x="455" y="162" text-anchor="middle" class="s-label-g" style="font-size:11px;font-weight:700">✅ 低倍率（買い戻し圧力の蓄積）</text>
+        <line x1="455" y1="168" x2="455" y2="150" stroke="#1a7f37" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+        <!-- X軸ラベル（時間） -->
+        <text x="360" y="220" text-anchor="middle" class="s-label-sm">時間（週次発表）→</text>
+
+        <!-- 注釈 -->
+        <rect x="60" y="232" width="580" height="36" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text x="350" y="248" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">※信用倍率はあくまで需給の一指標。高倍率が必ず下落を意味するわけではありません。</text>
+        <text x="350" y="263" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">他の指標（出来高・チャート・ファンダメンタルズ等）と組み合わせて総合的に判断することが一般的です（概念図）。</text>
+      </svg>
+      <div class="chart-caption">図②：信用倍率の推移と相場局面の概念図。倍率が高水準に積み上がると返済売り圧力が増し、倍率が低水準に下がると空売り勢の買い戻しが潜在的に積み上がります。ただし倍率だけで相場の天底を断定することはできません。</div>
+    </div>
+
+    <div class="warning-box">
+      信用倍率の「高い/低い」は業種や銘柄の特性によって大きく異なります。市場全体の平均倍率と個別銘柄の倍率を同じ基準で比較することには注意が必要です。また、倍率が高くても返済売りが一度に出るとは限らず、期限延長（乗り換え）が行われることもあります。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="eval-loss">⑤ 信用評価損益率――「追証ゾーン」を見抜く指標</h2>
+
+    <p><strong>信用評価損益率</strong>（しんようひょうかそんえきりつ）とは、信用買い残全体の含み損益をパーセントで表した指標です。東証が週次で発表します。</p>
+
+    <div class="info-box">
+      <strong>計算式（イメージ）</strong><br>
+      信用評価損益率 ＝ （信用買い残の含み損益合計 ÷ 信用買い残の建玉金額合計） × 100<br><br>
+      例：−12% → 信用買いをしている投資家全体が平均12%の含み損を抱えている状態
+    </div>
+
+    <!-- SVG ③: 信用評価損益率ゾーン図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- バーゲージ背景 -->
+        <rect x="60" y="65" width="580" height="50" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+
+        <!-- 0%より右（プラス） = 通常または過熱 -->
+        <rect x="350" y="65" width="180" height="50" rx="0" fill="#fff8c5" opacity="0.7"/>
+        <rect x="530" y="65" width="110" height="50" rx="0" fill="#ffebe9" opacity="0.7"/>
+
+        <!-- 0%より左（マイナス） = 含み損ゾーン -->
+        <!-- -5%〜0% = 軽微 -->
+        <rect x="290" y="65" width="60" height="50" fill="#f6f8fa" rx="0"/>
+        <!-- -10%〜-5% = 要注意 -->
+        <rect x="200" y="65" width="90" height="50" fill="#fff8c5" opacity="0.8" rx="0"/>
+        <!-- -15%〜-10% = 警戒 -->
+        <rect x="120" y="65" width="80" height="50" fill="#ffb55a" opacity="0.5" rx="0"/>
+        <!-- -20%以下 = 底値圏シグナル（歴史的な経験則） -->
+        <rect x="60" y="65" width="60" height="50" fill="#ffebe9" opacity="0.9" rx="6 0 0 6"/>
+
+        <!-- 区切り線 -->
+        <line x1="120" y1="65" x2="120" y2="115" stroke="#d0d7de" stroke-width="1"/>
+        <line x1="200" y1="65" x2="200" y2="115" stroke="#d0d7de" stroke-width="1"/>
+        <line x1="290" y1="65" x2="290" y2="115" stroke="#d0d7de" stroke-width="1"/>
+        <line x1="530" y1="65" x2="530" y2="115" stroke="#d0d7de" stroke-width="1"/>
+
+        <!-- 0%中央ライン -->
+        <line x1="350" y1="55" x2="350" y2="125" stroke="#8b949e" stroke-width="2"/>
+        <text x="350" y="50" text-anchor="middle" class="s-label-sm" style="font-size:11.5px;font-weight:700">0%</text>
+
+        <!-- 目盛ラベル -->
+        <text x="90" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">−20%以下</text>
+        <text x="160" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">−15%〜−10%</text>
+        <text x="245" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">−10%〜−5%</text>
+        <text x="320" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">−5%〜0%</text>
+        <text x="440" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">0〜+5%</text>
+        <text x="595" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">+5%以上</text>
+
+        <!-- ゾーンラベル（ゲージ内） -->
+        <text x="90" y="87" text-anchor="middle" class="s-label-r" style="font-size:10.5px;font-weight:700">底値圏</text>
+        <text x="90" y="102" text-anchor="middle" class="s-label-r" style="font-size:10px">シグナル</text>
+        <text x="160" y="87" text-anchor="middle" class="s-label-y" style="font-size:10.5px;font-weight:700">追証・</text>
+        <text x="160" y="102" text-anchor="middle" class="s-label-y" style="font-size:10px">投げ売り警戒</text>
+        <text x="245" y="90" text-anchor="middle" class="s-label-y" style="font-size:10.5px">含み損</text>
+        <text x="245" y="104" text-anchor="middle" class="s-label-y" style="font-size:10px">要注意</text>
+        <text x="320" y="90" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">軽微な</text>
+        <text x="320" y="104" text-anchor="middle" class="s-label-sm" style="font-size:10px">含み損</text>
+        <text x="440" y="90" text-anchor="middle" class="s-label-y" style="font-size:10.5px">含み益</text>
+        <text x="440" y="104" text-anchor="middle" class="s-label-y" style="font-size:10px">（過熱気味）</text>
+        <text x="595" y="90" text-anchor="middle" class="s-label-r" style="font-size:10.5px">高含み益</text>
+        <text x="595" y="104" text-anchor="middle" class="s-label-r" style="font-size:10px">（過熱）</text>
+
+        <!-- 注釈 -->
+        <text x="350" y="165" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">※−15%〜−20%を「底値圏のシグナル」とする経験則は過去データに基づくものです。将来の同じ結果を保証するものではありません。</text>
+        <text x="350" y="180" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">「追証（おいしょう）」= 含み損が証拠金維持率を下回ると証券会社から追加入金または強制決済を求められる。</text>
+      </svg>
+      <div class="chart-caption">図③：信用評価損益率のゾーン別概念図。−10%を下回ると追証・投げ売りが出やすくなるとされ、−15%〜−20%付近では「歴史的に相場の底圏に近い」とされる経験則があります（あくまで参考。将来の結果を保証するものではありません）。</div>
+    </div>
+
+    <h3>追証（おいしょう）とは何か</h3>
+    <p>信用取引では、株価下落で評価損が拡大すると、証券会社が定める「証拠金維持率」を下回ることがあります。この場合、翌営業日の正午までに追加入金（追証）するか、強制的にポジションが決済されます。<strong>追証による強制決済は大きな売り圧力になる</strong>ため、−10%〜−15%付近は市場が警戒するゾーンとされています。</p>
+
+    <p>逆に信用評価損益率が−15%〜−20%以下まで悪化した局面は、「売れるものは売り尽くした＝投げ売り一巡」として相場の反転シグナルとして参考にされる経験則があります。ただしこれは<strong>あくまで過去の傾向であり、将来も同じになることを意味するわけではありません</strong>。</p>
+
+    <!-- ====================================== -->
+    <h2 id="practical">⑥ 実践的な使い方（どこで確認・何に注意するか）</h2>
+
+    <h3>確認できる場所</h3>
+    <ul>
+      <li><strong>JPX（日本取引所グループ）公式サイト</strong>：東証全体の信用残・信用倍率を週次で公表。一次情報として最も正確。</li>
+      <li><strong>Yahoo!ファイナンス 個別銘柄ページ</strong>：「信用残」タブから個別銘柄の買い残・売り残・信用倍率を確認できます。</li>
+      <li><strong>各証券会社のツール（SBI・楽天・マネックスなど）</strong>：銘柄スクリーニングや個別銘柄ページで信用倍率・信用評価損益率を確認できることが多いです。</li>
+    </ul>
+
+    <h3>週次データの「タイムラグ」に注意</h3>
+    <p>信用残は週次発表のため、<strong>発表時点で1週間前の状態</strong>を示しています。急激に相場が動いた週は、次回発表まで最新の状況が分からないという欠点があります。週次データを「現在の需給の概算」として使う点を意識することが参考になります。</p>
+
+    <h3>市場全体 vs 個別銘柄</h3>
+    <p>市場全体の信用残データは「相場全体の過熱感・底値感」を把握するのに参考になります。個別銘柄の信用倍率は「その銘柄固有の需給」を把握するのに参考になります。両方を組み合わせて使う考え方が一般的です。</p>
+
+    <div class="positive-box">
+      <strong>信用残の実践チェックリスト（参考）</strong><br>
+      ① 市場全体の信用評価損益率が−10%を下回っていないか確認<br>
+      ② 注目銘柄の信用倍率が急上昇していないか確認（高倍率＝返済売り圧力の蓄積）<br>
+      ③ 売り残が大きい銘柄は上昇時にスクイーズが起きやすいと意識する<br>
+      ④ 週次データのラグを考慮し、あくまで補助指標として使う
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="limits">⑦ 信用残の限界と注意点</h2>
+
+    <p>信用残は有用な需給指標ですが、以下の限界がある点に注意が必要です。</p>
+
+    <ul>
+      <li><strong>週次データのラグ</strong>：発表は木曜午後から翌週月曜が多く、最大1週間のタイムラグがあります</li>
+      <li><strong>返済期限の延長（ロールオーバー）</strong>：投資家は返済期限前に別の建玉に乗り換えることができるため、「買い残が多いからすぐ売りが出る」とは限りません</li>
+      <li><strong>信用取引以外の需給は反映されない</strong>：機関投資家の現物売買・ETF・海外投資家動向は信用残に含まれません</li>
+      <li><strong>個別銘柄の特殊性</strong>：小型株は信用取引の制限（申込停止・注意喚起）を受けることがあり、倍率の解釈が変わります</li>
+      <li><strong>過去の経験則はあくまで参考</strong>：「信用倍率○倍で天井」「評価損益率−15%で底」などの経験則は過去の傾向であり、今後も同じになるとは限りません</li>
+    </ul>
+
+    <div class="warning-box">
+      信用残はあくまで「需給の一指標」です。これだけで売買判断を行うのではなく、チャート・ファンダメンタルズ・出来高・マクロ環境などと組み合わせて総合的に判断することが、より参考になる使い方とされています。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="conclusion">⑧ まとめ</h2>
+
+    <p>信用残の本質を整理します。</p>
+    <ul>
+      <li><strong>信用買い残</strong>：信用買いで保有中の株数合計。将来の<strong>返済売り（売り圧力）</strong>を積み上げている状態。買い残が多いと「上昇後の調整」に警戒が高まる傾向</li>
+      <li><strong>信用売り残</strong>：空売りで保有中のポジション合計。将来の<strong>買い戻し（買い圧力）</strong>を積み上げている状態。急騰時のショートスクイーズの燃料になる</li>
+      <li><strong>信用倍率</strong>：買い残 ÷ 売り残。高倍率ほど過熱感・返済売り圧力が高いとされる。1倍未満は売り方優勢の状態</li>
+      <li><strong>信用評価損益率</strong>：信用買い残全体の含み損益率。−10%以下で追証警戒ゾーン、−15%〜−20%付近が過去の経験則的な底圏シグナルとされることがある</li>
+      <li><strong>週次発表のラグ</strong>と<strong>乗り換え（ロールオーバー）</strong>を考慮した上で補助指標として活用するのが一般的な考え方</li>
+    </ul>
+
+    <p>「信用残が多いから売り」「信用残が少ないから買い」と単純に判断するのではなく、<strong>「需給の蓄積状況を知り、相場の熱量を測るための参考材料のひとつ」</strong>として活用する視点が参考になります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">💹 投資指標・需給分析 関連記事</div>
+      <div class="cta-box-desc">恐怖＆強欲指数・バフェット指数・VIXなどと組み合わせて市場の体温を測る</div>
+      <div class="related-grid">
+        <a class="related-card" href="market-health.html">
+          <div class="related-card-title">🩺 市場健康度ダッシュボード</div>
+          <div class="related-card-desc">VIX・恐怖&強欲指数・バフェット指数・CAPEを一覧表示</div>
+        </a>
+        <a class="related-card" href="guide-fear-greed.html">
+          <div class="related-card-title">😨 恐怖＆強欲指数の見方</div>
+          <div class="related-card-desc">0〜100の感情指数から市場のセンチメントを読む</div>
+        </a>
+        <a class="related-card" href="guide-vix.html">
+          <div class="related-card-title">📉 VIX（恐怖指数）とは</div>
+          <div class="related-card-desc">VIXの水準別シナリオと投資家への活用法</div>
+        </a>
+        <a class="related-card" href="guide-volume.html">
+          <div class="related-card-title">📊 出来高分析の基本</div>
+          <div class="related-card-desc">価格と出来高の関係から売買圧力を読む</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の数値・水準・経験則はすべて過去の傾向に基づく概念的整理であり、将来の相場結果を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
