@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>利益確定の心理と技術｜チキン利食いを止め、利を伸ばす仕組み - MarketWatch AI</title>
+  <meta name="description" content="「含み益が少し出るとすぐ売ってしまう」——これはチキン利食いと呼ばれる処分効果の典型。なぜ人は利益を急いで確定するのか脳の仕組みから解き、トレーリングストップ・部分利確・事前ルール化の3つの解決策を初心者〜中上級者向けに図解で解説します。">
+  <meta name="keywords" content="チキン利食い,利益確定,処分効果,トレーリングストップ,部分利確,利を伸ばす,投資心理,プロスペクト理論,リスク管理,トレード">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-profit-taking.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="利益確定の心理と技術｜チキン利食いを止め、利を伸ばす仕組み">
+  <meta property="og:description" content="処分効果・チキン利食いの正体と、トレーリング/部分利確/ルール化で「利を伸ばす」仕組みを図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-profit-taking.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "利益確定の心理と技術｜チキン利食いを止め、利を伸ばす仕組み",
+    "description": "処分効果・チキン利食いの正体と、トレーリング/部分利確/ルール化で「利を伸ばす」仕組みを図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-08",
+    "dateModified": "2026-06-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-profit-taking.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-flow-b{fill:#ddf4ff;stroke:#0969da;stroke-width:2}
+    .s-flow-r{fill:#ffebe9;stroke:#cf222e;stroke-width:2}
+    .s-flow-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:2}
+    .s-flow-n{fill:#ffffff;stroke:#8b949e;stroke-width:1.6}
+    .s-stack-1{fill:#ddf4ff;stroke:#0969da;stroke-width:2}
+    .s-stack-2{fill:#fff8c5;stroke:#9a6700;stroke-width:2}
+    .s-stack-3{fill:#e6ffed;stroke:#1a7f37;stroke-width:2}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    .s-trail{stroke:#9a6700;stroke-width:2;stroke-dasharray:6 3;fill:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-flow-b{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-flow-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-flow-g{fill:#162416;stroke:#2ea043}
+    body.dark .s-flow-n{fill:#161b22;stroke:#8b949e}
+    body.dark .s-stack-1{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-stack-2{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-stack-3{fill:#162416;stroke:#2ea043}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+    body.dark .s-trail{stroke:#d4a017}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 利益確定の心理と技術
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は投資にまつわる心理・行動の考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資には元本割れリスクがあります。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 利益確定の心理と技術｜「チキン利食い」はなぜ起きるのか、どう直すか</h1>
+    <div class="meta-line">公開日：2026 年 6 月 8 日 ／ 読了時間：約 14 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <p>「少し利益が出るとすぐ売ってしまう。でも損が出ると売れなくてずるずる持ち続ける」——多くの投資家が心当たりのあるこのパターン、実は<strong>「処分効果」</strong>という名前のついた行動バイアスです。<a href="guide-loss-cut.html">損切りができない本当の理由</a>の裏側——「勝ちを急ぐ」心理の正体を解き、どう対処するかを解説します。</p>
+    <p>前回の<a href="guide-risk-reward.html">リスクリワードと期待値の記事</a>で学んだとおり、期待値は「平均利益 × 勝率 − 平均損失 × 敗率」で決まります。<strong>チキン利食いは平均利益を小さくする直接の原因</strong>であり、仮に勝率が高くても期待値をマイナス方向に引き下げます。損切りとセットで「出口の設計」を整えることが、成績の安定を目指すうえで重視される考え方です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>チキン利食い</strong>は「利益が消えるかもしれない」という恐怖から来る行動で、<strong>処分効果（Disposition Effect）</strong>と呼ばれる認知バイアスの典型。プロスペクト理論の「利益域でリスク回避的になる」性質から生じるとされる。</li>
+      <li>早すぎる利確は<strong>平均利益を縮め、期待値を下げる</strong>。「小さく勝って大きく負ける」パターンの一因であり、損切りを守っても利を伸ばさなければ期待値はプラスにならない。</li>
+      <li>解決策は3つ：<strong>①トレーリングストップ（機械的に追い上げる）②部分利確（TP1/TP2の段階的確定）③事前ルール（ホールドの根拠を入る前に書く）</strong>。どれも「感情が暴れる前に仕組みを作る」発想。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「チキン利食い」とは何か</a></li>
+        <li><a href="#section-2">処分効果——勝ちを売り、負けを持つ非対称な心理</a></li>
+        <li><a href="#section-3">チキン利食いが期待値を壊す仕組み</a></li>
+        <li><a href="#section-4">解決策①：トレーリングストップで機械的に追い上げる</a></li>
+        <li><a href="#section-5">解決策②：部分利確（TP1 / TP2 の2段階出口）</a></li>
+        <li><a href="#section-6">解決策③：「ホールドの根拠」を事前に書く</a></li>
+        <li><a href="#section-7">当サイトのシグナル設計と出口の考え方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 「チキン利食い」とは何か</h2>
+    <p><strong>チキン利食い</strong>とは、含み益が少し出た段階で慌てて利益を確定してしまい、その後も価格が上昇し続けて「あのままホールドしていれば……」と悔やむパターンのことです。「チキン（chicken）」は臆病者を意味する英語スラングで、利益を守ることへの過剰な恐怖が引き金になります。</p>
+    <p>典型的なシーンを想像してみてください。</p>
+    <ul>
+      <li>エントリー後に価格が上昇し、<strong>「少し利益が出た。今売れば確実に勝てる」</strong>という気持ちが湧く。</li>
+      <li>もう少し待てばもっと取れると頭ではわかっていても、<strong>「また下がったら怖い」</strong>と感情が先に動く。</li>
+      <li>事前に決めたTP（利確目標）の半分にも届かないのに売ってしまい、その後価格はTPを大きく超えていく。</li>
+    </ul>
+    <p>この行動が厄介なのは、<strong>「1回1回は小さく勝てている」のに積み重なると負け越す</strong>点です。<a href="guide-risk-reward.html">期待値の記事</a>で確認したとおり、平均利益が小さくなれば、どんなに勝率を高めても期待値はマイナスになりえます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 処分効果——勝ちを売り、負けを持つ非対称な心理</h2>
+    <p>チキン利食いの背景には、行動経済学で<strong>処分効果（Disposition Effect）</strong>と呼ばれる現象があります。Shefrin & Statman（1985年）が示したもので、<strong>「投資家は利益が出た資産を早く売りたがり、損失が出た資産を長く持ち続けがちだ」</strong>という非対称な傾向です。</p>
+    <p>なぜこのような非対称が生まれるのか。根底にあるのは<a href="guide-loss-cut.html">損切りの記事</a>でも登場した<strong>プロスペクト理論</strong>です。カーネマンとトベルスキーが示したこの理論によれば、人は</p>
+    <ul>
+      <li><strong>利益が出ているとき（含み益の状態）</strong>は「リスク回避的」になる——確実な小さな利益を取ろうとする。</li>
+      <li><strong>損失が出ているとき（含み損の状態）</strong>は「リスク愛好的」になる——損を確定したくないのでギャンブルを続ける。</li>
+    </ul>
+    <p>つまり同じ人が、ポジションの状態によって<strong>まったく逆のリスク判断をする</strong>のです。含み益が小さければ「今すぐ確定！」、含み損が大きければ「もう少し待とう……」——これが処分効果のパターンです。</p>
+
+    <!-- SVG 1: 処分効果の対比図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 190" role="img" aria-labelledby="disp-title">
+        <title id="disp-title">処分効果：利益域でリスク回避（早期売却）・損失域でリスク愛好（保有継続）の非対称パターン概念図</title>
+        <text class="s-panel-label" x="20" y="18">処分効果：同じ人が利益/損失で真逆の行動をとる</text>
+
+        <!-- 利益ゾーン（含み益） -->
+        <rect class="s-zone-g" x="30" y="28" width="255" height="148" rx="6"/>
+        <text class="s-note-g" x="157" y="48" text-anchor="middle" font-size="13" font-family="'Noto Sans JP',sans-serif">含み益の状態（利益ゾーン）</text>
+        <!-- 脳の反応 -->
+        <rect class="s-flow-g" x="50" y="58" width="215" height="44" rx="6"/>
+        <text x="157" y="75" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">脳の反応：「リスク回避的」</text>
+        <text x="157" y="93" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">確実な利益を確定したい衝動</text>
+        <!-- 行動 -->
+        <rect class="s-flow-r" x="50" y="112" width="215" height="50" rx="6"/>
+        <text x="157" y="131" text-anchor="middle" font-size="12" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">→ 早すぎる利確</text>
+        <text x="157" y="151" text-anchor="middle" font-size="11" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">（チキン利食い・期待値↓）</text>
+
+        <!-- 区切り -->
+        <line class="s-axis" x1="298" y1="28" x2="298" y2="176"/>
+
+        <!-- 損失ゾーン（含み損） -->
+        <rect class="s-zone-r" x="312" y="28" width="255" height="148" rx="6"/>
+        <text class="s-note-r" x="440" y="48" text-anchor="middle" font-size="13" font-family="'Noto Sans JP',sans-serif">含み損の状態（損失ゾーン）</text>
+        <!-- 脳の反応 -->
+        <rect class="s-flow-r" x="330" y="58" width="220" height="44" rx="6"/>
+        <text x="440" y="75" text-anchor="middle" font-size="11" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">脳の反応：「リスク愛好的」</text>
+        <text x="440" y="93" text-anchor="middle" font-size="11" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">損を確定したくない・回復を期待</text>
+        <!-- 行動 -->
+        <rect class="s-flow-r" x="330" y="112" width="220" height="50" rx="6"/>
+        <text x="440" y="131" text-anchor="middle" font-size="12" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">→ 損切りできない</text>
+        <text x="440" y="151" text-anchor="middle" font-size="11" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">（損失が膨らむ・期待値↓↓）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ <strong>処分効果の非対称パターン</strong>。同じ人が含み益では「リスク回避的」（早く確定）、含み損では「リスク愛好的」（損を持ち続ける）になる傾向があるとされる。これが「小さく勝って大きく負ける」結果につながりやすい。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この非対称パターンは、<strong>損切りできないことと利を伸ばせないことは、同じ心理メカニズムのコインの表裏</strong>だと示しています。損切りの仕組みを作るだけでなく、利確のルールも同時に整える必要があるのです。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ チキン利食いが期待値を壊す仕組み</h2>
+    <p>チキン利食いが積み重なると、成績にどのくらいのダメージを与えるでしょうか。具体的な数字で考えてみます。</p>
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">以下の数値はあくまで「期待値の計算の仕組みを説明するための仮の例」です。特定の手法で得られる成績を示すものではありません。</div>
+    <table>
+      <thead><tr><th>パターン</th><th>勝率</th><th>平均利益</th><th>平均損失</th><th>期待値</th></tr></thead>
+      <tbody>
+        <tr><td>チキン利食いあり</td><td>55%</td><td>+400円（目標の半分で確定）</td><td>−600円（損切りは守る）</td><td>0.55×400 − 0.45×600 = <strong style="color:#cf222e">−50円</strong></td></tr>
+        <tr><td>利を伸ばす</td><td>45%</td><td>+1,000円（目標まで待つ）</td><td>−600円（損切りは守る）</td><td>0.45×1,000 − 0.55×600 = <strong style="color:#1a7f37">+120円</strong></td></tr>
+      </tbody>
+    </table>
+    <p>チキン利食いパターンは勝率が高いにもかかわらず、期待値はマイナスです。一方、利を伸ばすパターンは勝率が低くても期待値はプラスです。<strong>「勝率が高ければ良い」という感覚が完全に逆転している</strong>ことがわかります。</p>
+    <p>注目してほしいのは、<strong>損切りは両パターンで同じ（−600円）</strong>という点です。損切りを守っても、出口の設計が崩れれば期待値はマイナスになります。損切りと利確は一体の設計として考える必要があります。</p>
+    <div class="warning-box">よくある誤解：「早めに利確しておけばリスクが下がる」——これは一見正しそうですが、期待値の観点では誤りです。早すぎる利確は平均利益を縮め、<strong>1回の損失で複数の利益が帳消しになる</strong>状態を作り出します。「リスクを下げた」のではなく、「長期的な収益可能性を下げた」のです。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 解決策①：トレーリングストップで機械的に追い上げる</h2>
+    <p><strong>トレーリングストップ（Trailing Stop）</strong>とは、価格が有利方向に動くにつれて損切りラインを自動的に追い上げていく仕組みです。価格が上昇すれば損切りも引き上げ、逆転してSLに触れた時点でポジションをクローズします。</p>
+    <p>メリットは2つです。</p>
+    <ul>
+      <li><strong>利益を機械的にロックしながら、上昇継続に乗れる</strong>：価格が上がり続ければホールドが続き、反転した時点で自動決済。感情が関与しない。</li>
+      <li><strong>「いつ利確するか」という判断ストレスをなくす</strong>：SLが動くので、市場の動きに任せて出口が決まる。チャートを見続ける必要が減る。</li>
+    </ul>
+
+    <!-- SVG 2: トレーリングストップ概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 210" role="img" aria-labelledby="trail-title">
+        <title id="trail-title">トレーリングストップの概念図。価格上昇に伴いSLが追い上げ、反転時に自動決済。含み益をロックしながら上昇継続に乗る。</title>
+        <text class="s-panel-label" x="20" y="18">トレーリングストップ：SLが価格を追いかけ、含み益をロックする</text>
+
+        <!-- 含み益ロック帯（エントリーとSL決済の間） -->
+        <rect class="s-zone-g" x="60" y="98" width="430" height="45" rx="4" opacity="0.4"/>
+        <text class="s-note-g" x="275" y="118" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">含み益ロック帯（エントリーとSL決済水準の差）</text>
+
+        <!-- 価格ライン（上昇→天井→反落） -->
+        <polyline class="s-curve-b" points="60,170 120,145 180,118 250,85 320,55 380,45 420,60 460,98 490,130"/>
+
+        <!-- 初期SLライン（水平） -->
+        <line class="s-sl" x1="60" y1="195" x2="180" y2="195" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text class="s-label-sm" x="62" y="192">初期SL</text>
+
+        <!-- トレーリングSLライン（価格を追う→最終水準で止まる） -->
+        <polyline class="s-trail" points="180,195 250,162 320,132 380,120 420,120 460,120 490,130"/>
+
+        <!-- SL最終水準の水平線 -->
+        <line stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 4" x1="380" y1="120" x2="500" y2="120"/>
+        <text class="s-label-sm" x="502" y="124" fill="#9a6700">SL決済水準</text>
+
+        <!-- エントリー水準 -->
+        <line class="s-guide" x1="60" y1="170" x2="490" y2="170"/>
+        <text class="s-label-sm" x="502" y="174">エントリー</text>
+
+        <!-- キーポイント -->
+        <circle class="s-dot-b" cx="60" cy="170" r="5"/>
+        <text class="s-note" x="62" y="165" font-size="10" font-family="'Noto Sans JP',sans-serif">エントリー</text>
+        <circle class="s-dot-g" cx="380" cy="45" r="5"/>
+        <text class="s-note-g" x="320" y="40" font-size="10" font-family="'Noto Sans JP',sans-serif">最高値（SLもここで最高位）</text>
+        <circle class="s-dot-r" cx="490" cy="130" r="5"/>
+        <text class="s-note-r" x="400" y="145" font-size="10" font-family="'Noto Sans JP',sans-serif">SL発動（利益を確保して自動決済）</text>
+
+        <!-- 矢印ラベル -->
+        <text class="s-label-sm" x="155" y="185">SLが追い上がる →</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 価格が上昇するにつれてトレーリングSLも上昇（点線）。価格が反転してSLに触れた時点で自動決済。<strong>感情に関係なく含み益の一部をロックしながら、上昇トレンドに乗り続けられる</strong>のが最大のメリット。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>注意点もあります。トレーリングの幅が狭すぎると、一時的な押し目（小幅な反落）でSLが発動してしまい、その後も上昇が続く場面で退場してしまいます。<strong>幅はATR（Average True Range）など市場のノイズ幅を基準にする</strong>のが一般的です。また、MT4などのトレーディングプラットフォームではトレーリングストップ機能が標準搭載されていることが多く、機械的な実装が可能です。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 解決策②：部分利確（TP1 / TP2 の2段階出口）</h2>
+    <p>「トレーリングストップは使いたいが、全部の利益が消えるリスクは怖い」——そういった心理的な抵抗に対して有効なのが、<strong>部分利確（TP1/TP2の2段階出口戦略）</strong>です。</p>
+    <p>仕組みはシンプルです。</p>
+    <ul>
+      <li><strong>TP1（近い利確目標）</strong>でポジションの一部（例：50〜60%）を確定する。これが「お土産」となり、残りをホールドする心理的余裕が生まれる。</li>
+      <li><strong>TP2（遠い利確目標）</strong>まで残りをホールドして、期待値を最大化する。</li>
+    </ul>
+
+    <!-- SVG 3: 部分利確の2段階構造 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 180" role="img" aria-labelledby="partial-title">
+        <title id="partial-title">部分利確（TP1/TP2）の2段階出口戦略概念図。TP1で50%確定し心理的余裕を確保、残り50%をTP2まで引っ張る</title>
+        <text class="s-panel-label" x="20" y="18">部分利確（2段階出口）：TP1でお土産を取り、残りをTP2へ</text>
+
+        <!-- エントリー -->
+        <rect class="s-flow-b" x="20" y="38" width="120" height="110" rx="8"/>
+        <text x="80" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="#0969da" font-family="'Noto Sans JP',sans-serif">エントリー</text>
+        <text x="80" y="82" text-anchor="middle" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">100% ポジション</text>
+        <text x="80" y="100" text-anchor="middle" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">SL ＝ ATR×1.5</text>
+        <text x="80" y="118" text-anchor="middle" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">TP1 ＝ ATR×2.0</text>
+        <text x="80" y="136" text-anchor="middle" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">TP2 ＝ ATR×3.0</text>
+
+        <!-- 矢印1 -->
+        <line class="s-axis" x1="142" y1="93" x2="178" y2="93"/>
+        <polygon fill="#8b949e" points="178,88 188,93 178,98"/>
+        <text class="s-label-sm" x="160" y="88" text-anchor="middle">TP1到達</text>
+
+        <!-- TP1確定 -->
+        <rect class="s-flow-g" x="188" y="38" width="120" height="50" rx="8"/>
+        <text x="248" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">50% 確定 ✅</text>
+        <text x="248" y="76" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">利益をロック（安心感）</text>
+
+        <!-- TP1後継続 -->
+        <rect class="s-flow-b" x="188" y="98" width="120" height="50" rx="8"/>
+        <text x="248" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="#0969da" font-family="'Noto Sans JP',sans-serif">50% 継続 📈</text>
+        <text x="248" y="136" text-anchor="middle" font-size="11" fill="#0969da" font-family="'Noto Sans JP',sans-serif">SLをBEP以上に引き上げ</text>
+
+        <!-- 矢印2 -->
+        <line class="s-axis" x1="310" y1="123" x2="346" y2="123"/>
+        <polygon fill="#8b949e" points="346,118 356,123 346,128"/>
+        <text class="s-label-sm" x="328" y="118" text-anchor="middle">TP2到達</text>
+
+        <!-- TP2確定 -->
+        <rect class="s-flow-g" x="356" y="98" width="130" height="50" rx="8"/>
+        <text x="421" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">残り50% 確定 🎯</text>
+        <text x="421" y="136" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">高R:Rを実現</text>
+
+        <!-- 結果サマリ -->
+        <rect class="s-stack-3" x="356" y="30" width="215" height="32" rx="6"/>
+        <text x="463" y="50" text-anchor="middle" font-size="12" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">混合出口：心理的安定 × 期待値最大</text>
+      </svg>
+      <figcaption class="chart-caption">▲ TP1（近い目標）で半分を確定することで「お土産」が手に入り、<strong>残りをTP2（遠い目標）まで引っ張る心理的余裕</strong>が生まれる。TP1通過後はSLをBEP（損益分岐点）以上に引き上げると「残りは最悪ゼロ損」の状態になり、ホールドへの恐怖が大幅に下がる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>部分利確の最大のメリットは、<strong>「残りは最悪タダでもらった利益」という心理的フレームを作れる</strong>ことです。TP1でSLをBEP（エントリー価格＝損益分岐点）以上に移動させると、残りのポジションは理論上「損益分岐点を割りにくい状態」に近づきます（スプレッドや急変時の滑りによって実際の損失がゼロになるわけではありません）。これで「怖いからホールドしない」という衝動が大幅に弱まります。</p>
+    <div class="positive-box">
+      <strong>✅ 部分利確 × トレーリングの組み合わせ</strong>：TP1で50%を確定 → 残り50%にトレーリングストップを設定して上昇継続を狙う——というハイブリッドの考え方もあります。「お土産で心を落ち着かせ、後半は機械に任せる」という発想です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 解決策③：「ホールドの根拠」を事前に書く</h2>
+    <p>トレーリングや部分利確は仕組みの話ですが、そもそも<strong>「どこまでホールドするか」の根拠をエントリー前に書いておく</strong>ことが最も根本的な対策です。</p>
+    <p>チキン利食いが起きる瞬間は、含み益が出た後に「ここで売るべきか続けるべきか」を<em>その場で判断しようとする</em>ときです。その場の感情が最も揺れる状態で判断するから、処分効果に引きずられます。対策は「その場で判断しない」こと——判断を事前に済ませておくことです。</p>
+    <h3>発注前チェックリストに「出口」を追加する</h3>
+    <ul>
+      <li><strong>TP1はどこか？</strong>（具体的な価格または ATR の何倍か）</li>
+      <li><strong>TP2はどこか？</strong>（どこまでホールドするのか）</li>
+      <li><strong>TP1とTP2の間の押し目でホールドを崩さない理由は何か？</strong>（トレンドがあれば / 経済イベントがなければ 等）</li>
+      <li><strong>TP2到達前に決済する条件は何か？</strong>（逆行シグナルが出たら / 環境が急変したら）</li>
+    </ul>
+    <p>この4項目を入る前に書いておけば、含み益が出たときに「今自分は計画の途中にいる」と客観視できます。<a href="guide-trading-psychology-calm.html">平常心の記事</a>で触れた<strong>発注前チェックリスト</strong>の「出口バージョン」です。</p>
+    <div class="info-box">
+      <strong>💡 「利が乗ったら計画を見直す」はNG</strong>：「今の利益を見て、そこからどうするか考え直す」という行動は処分効果の温床です。<strong>計画変更は感情が穏やかなとき（エントリー前か、ポジションがないとき）に行う</strong>。ポジションを持っている最中の計画変更は感情バイアスの影響を強く受けるため、変更するなら明確な新ルールを事前に決めてからにします。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトのシグナル設計と出口の考え方</h2>
+    <p>当サイトのテクニカルシグナルでは、エントリー通知と同時に<strong>SL（損切り目安）・TP1・TP2（利確目標の参考値）</strong>を提示しています。これは「入り口だけ示して出口は自己判断」という設計では、受け取った側がチキン利食いや損切り放置に陥りやすいという考えからです。</p>
+    <table>
+      <thead><tr><th>水準</th><th>設定幅（参考値）</th><th>役割</th></tr></thead>
+      <tbody>
+        <tr><td>SL</td><td>ATR × 1.5</td><td>損切りの基準（1R のリスク）</td></tr>
+        <tr><td>TP1</td><td>ATR × 2.0</td><td>部分利確の「お土産」（R:R≈1.33）</td></tr>
+        <tr><td>TP2</td><td>ATR × 3.0</td><td>期待値最大化の最終目標（R:R=2.0）</td></tr>
+      </tbody>
+    </table>
+    <p>TP1 まで到達したらSLをBEP以上に移動させ、損益分岐点以上にSLを移した状態でTP2 を狙う——というのが設計の意図です。ただしこれはあくまで参考値であり、実際の運用は市場状況・個人のリスク許容度によって異なります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のシグナル成績で出口設計を確認する</div>
+      <div class="cta-box-desc">TP1・TP2への到達率、平均損益などを勝ちも負けも含めてオープンに公開しています。出口設計が期待値にどう影響しているか、実データで確かめてみてください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>利益確定の心理と技術について学んできた内容を整理します。</p>
+    <ul>
+      <li><strong>チキン利食い</strong>は処分効果（利益域でリスク回避的になるプロスペクト理論の性質）から生まれる認知バイアス。意志の弱さではなく脳の仕組みが原因で、気合いでは止められない。</li>
+      <li><strong>早すぎる利確は平均利益を縮め、期待値をマイナス方向に引き下げる</strong>。損切りを守っても出口設計が崩れれば長期的に負け越す。損切りと利確は一体の設計として考える。</li>
+      <li>解決策3つ：<strong>①トレーリングストップ</strong>（感情に関係なく機械的に利益をロック）、<strong>②部分利確</strong>（TP1でお土産を取り心理的余裕を確保）、<strong>③事前ルール</strong>（ホールドの根拠をエントリー前に書く）。</li>
+      <li>3つの解決策に共通するのは、<strong>「感情が揺れる場面での判断を事前に済ませる」</strong>という発想。処分効果は止められないが、それが発動しても被害が出ない仕組みを先に作れる。</li>
+    </ul>
+    <p>損切りの規律と利確の設計がセットで整ったとき、はじめて「平均損失が抑えられ、平均利益が伸びる」期待値プラスの設計が完成します。そこに<a href="guide-position-sizing.html">ポジションサイジング</a>の考え方を加えれば、連敗を耐えながら長期で積み上げるための土台が揃います。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">処分効果の「損失側」。利確と損切りは同じ心理メカニズムのコインの表裏。本記事の前提知識。</div>
+      </a>
+      <a class="related-card" href="guide-risk-reward.html">
+        <div class="related-card-title">📐 リスクリワードと期待値の本質</div>
+        <div class="related-card-desc">平均利益を縮めると期待値がどう変わるか。チキン利食いのコストを数式で理解するための記事。</div>
+      </a>
+      <a class="related-card" href="guide-trading-psychology-calm.html">
+        <div class="related-card-title">🧘 平常心の作り方</div>
+        <div class="related-card-desc">FOMO・狼狽売り・リベンジトレードを止める仕組み。発注前チェックリストの基本形はここで。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は投資にまつわる心理・行動の考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な概念の解説であり、特定の手法による利益や損失回避を保証するものではありません。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
