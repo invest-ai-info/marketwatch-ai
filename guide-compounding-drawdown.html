@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>複利とドローダウン｜大きな損失が「複利の力」を破壊する仕組み - MarketWatch AI</title>
+  <meta name="description" content="「複利は世界8番目の不思議」と言われる一方、ドローダウン（最大損失）が複利成長を根本から破壊することはあまり知られていない。-30%の損失を取り戻すには+43%必要、-50%なら+100%必要——この非線形の壁と、複利を守るための資金管理の考え方を図解で解説します。">
+  <meta name="keywords" content="複利,ドローダウン,回復,リスク管理,資金管理,ポジションサイジング,ケリー基準,損切り,期待値,トレード">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-compounding-drawdown.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="複利とドローダウン｜大きな損失が「複利の力」を破壊する仕組み">
+  <meta property="og:description" content="-30%の損失を取り戻すには+43%必要。ドローダウンが複利を壊す非線形の壁と、複利を守るための資金管理の考え方を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-compounding-drawdown.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "複利とドローダウン｜大きな損失が「複利の力」を破壊する仕組み",
+    "description": "-30%の損失を取り戻すには+43%必要。ドローダウンが複利を壊す非線形の壁と、複利を守るための資金管理の考え方を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-08",
+    "dateModified": "2026-06-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-compounding-drawdown.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:600;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    /* SVG classes */
+    .s-label{fill:#424a53;font-size:12.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#d0d7de;stroke-width:1;stroke-dasharray:4 3}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-o{fill:#9a6700;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-o{stroke:#9a6700;stroke-width:2;stroke-dasharray:6 3;fill:none;stroke-linejoin:round}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.5}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.5}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.6}
+    .s-bar-g{fill:#1a7f37;fill-opacity:0.85}
+    .s-bar-r{fill:#cf222e;fill-opacity:0.85}
+    .s-bar-b{fill:#0969da;fill-opacity:0.85}
+    .s-bar-y{fill:#9a6700;fill-opacity:0.85}
+    .s-fill-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1.8}
+    .s-fill-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1.8}
+    .s-fill-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1.8}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-note-o{fill:#d4a017}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-o{stroke:#d4a017}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-b{fill:#58a6ff}
+    body.dark .s-bar-y{fill:#d4a017}
+    body.dark .s-fill-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-fill-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030;stroke:#58a6ff}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 複利とドローダウン
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は投資にまつわる仕組みや考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資には元本割れリスクがあります。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📈 複利とドローダウン｜「大きな損失」が複利の力を破壊する仕組み</h1>
+    <div class="meta-line">公開日：2026 年 6 月 8 日 ／ 読了時間：約 15 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <p>「複利は世界8番目の不思議だ」——アルベルト・アインシュタインが語ったとされるこの言葉は、投資の世界で繰り返し引用されます。しかし、複利の力には決定的な弱点があります。<strong>大きなドローダウン（損失）は、それまで積み上げた複利成長を根本から破壊する</strong>のです。</p>
+    <p>−30% の損失を取り戻すには +42.9% の利益が必要です。−50% なら +100%、−75% なら +300% が必要になります。この非線形の壁こそが、<a href="guide-loss-cut.html">損切りの規律</a>や<a href="guide-position-sizing.html">ポジションサイジング</a>が「複利のためにある」と言える理由です。本記事では複利とドローダウンの相互作用を数式と図で解き明かし、複利を守るための考え方を整理します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>複利は「利益が利益を生む」指数関数的成長</strong>。年率 10% なら 7.2 年で資産が 2 倍になる（ルール 72）。時間が長いほど威力が増す。</li>
+      <li><strong>ドローダウン回復は非線形</strong>。−30% の損失を取り戻すには +42.9% 必要で、損失が大きいほど回復に必要な利益は指数関数的に膨らむ。この非対称性が「大きく負けない」ことを最優先にする理由。</li>
+      <li><strong>ボラティリティドラッグ（分散コスト）</strong>：同じ平均リターンでも、大きな損失を挟むと複利成長は大幅に縮む。資産を守ることは「機会損失の回避」ではなく「複利エンジンの維持」そのものである。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">複利の力——指数関数的成長とルール72</a></li>
+        <li><a href="#section-2">ドローダウンとは何か</a></li>
+        <li><a href="#section-3">ドローダウン回復の「非線形の壁」</a></li>
+        <li><a href="#section-4">ボラティリティドラッグ——なぜ大きな損失が複利を壊すのか</a></li>
+        <li><a href="#section-5">複利を守るための3つの考え方</a></li>
+        <li><a href="#section-6">当サイトのリスク管理設計との接続</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 複利の力——指数関数的成長とルール72</h2>
+    <p><strong>複利（Compound Interest）</strong>とは、元本だけでなく利息（利益）にも利息がつく仕組みです。単利が「毎年同じ額が増える直線」であるのに対して、複利は「増えた分がさらに増える指数関数」として成長します。</p>
+    <p>基本の公式は <code>A = P × (1 + r)^n</code> です（P=元本、r=年率、n=年数）。例えば 100 万円を年率 10% で複利運用すると：</p>
+    <ul>
+      <li>10 年後：100 × 1.10^10 ≒ <strong>259 万円</strong></li>
+      <li>20 年後：100 × 1.10^20 ≒ <strong>673 万円</strong></li>
+      <li>30 年後：100 × 1.10^30 ≒ <strong>1,745 万円</strong></li>
+    </ul>
+    <p>30 年で元本の 17 倍以上になります。この威力を直感的に掴む便利な計算が<strong>ルール 72</strong> です。</p>
+    <div class="info-box">
+      <strong>💡 ルール 72</strong>：資産が 2 倍になるまでの年数 ≒ <strong>72 ÷ 年率（%）</strong><br>
+      年率 10% → 72 ÷ 10 = <strong>7.2 年</strong>で 2 倍<br>
+      年率 7% → 72 ÷ 7 ≒ <strong>10.3 年</strong>で 2 倍<br>
+      年率 4% → 72 ÷ 4 = <strong>18 年</strong>で 2 倍
+    </div>
+
+    <!-- SVG 1: 複利成長カーブ（3本） -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 220" role="img" aria-labelledby="compound-title">
+        <title id="compound-title">複利成長の比較：年率10%・7%・4%の30年間資産推移概念図</title>
+        <text class="s-panel-label" x="20" y="18">複利成長の比較（30年・仮の計算例）</text>
+
+        <!-- Y軸・X軸 -->
+        <line class="s-axis" x1="55" y1="25" x2="55" y2="190"/>
+        <line class="s-axis" x1="55" y1="190" x2="570" y2="190"/>
+
+        <!-- X軸目盛り -->
+        <text class="s-label-sm" x="55" y="205" text-anchor="middle">0年</text>
+        <text class="s-label-sm" x="228" y="205" text-anchor="middle">10年</text>
+        <text class="s-label-sm" x="400" y="205" text-anchor="middle">20年</text>
+        <text class="s-label-sm" x="570" y="205" text-anchor="middle">30年</text>
+
+        <!-- Y軸目盛り（100万円起点で） -->
+        <text class="s-label-sm" x="48" y="193" text-anchor="end">100万</text>
+        <line class="s-guide" x1="55" y1="150" x2="570" y2="150"/>
+        <text class="s-label-sm" x="48" y="154" text-anchor="end">500万</text>
+        <line class="s-guide" x1="55" y1="110" x2="570" y2="110"/>
+        <text class="s-label-sm" x="48" y="114" text-anchor="end">1000万</text>
+        <line class="s-guide" x1="55" y1="60" x2="570" y2="60"/>
+        <text class="s-label-sm" x="48" y="64" text-anchor="end">2000万</text>
+
+        <!-- 年率4% カーブ（30年で約324万 → y=140程度） -->
+        <!-- スケール：100万=y190, 2000万=y60 → 1900万で130px → 1万円=0.0684px -->
+        <!-- 4%: 10yr=148, 20yr=219, 30yr=324 -->
+        <polyline class="s-curve-o" points="55,190 228,186 400,182 570,168"/>
+        <text class="s-note-o" x="575" y="165">年率4%</text>
+
+        <!-- 年率7% カーブ：10yr=197, 20yr=387, 30yr=761 -->
+        <polyline class="s-curve-b" points="55,190 228,183 400,157 570,124"/>
+        <text class="s-note" x="575" y="121">年率7%</text>
+
+        <!-- 年率10% カーブ：10yr=259, 20yr=673, 30yr=1745 -->
+        <!-- 1745万 → (1745-100)/1900*130 ≒ 112px上 → y=190-112=78 -->
+        <!-- 20yr 673万 → (673-100)/1900*130 ≒ 39px上 → y=151 -->
+        <!-- 10yr 259万 → (259-100)/1900*130 ≒ 11px上 → y=179 -->
+        <polyline class="s-curve-g" points="55,190 228,179 400,151 570,78"/>
+        <text class="s-note-g" x="575" y="75">年率10%</text>
+
+        <!-- エンドポイントの注釈 -->
+        <circle class="s-dot-g" cx="570" cy="78" r="5"/>
+        <text class="s-note-g" x="490" y="70" font-size="10" font-family="'Noto Sans JP',sans-serif">約1,745万円</text>
+        <circle class="s-dot-b" cx="570" cy="124" r="5"/>
+        <text class="s-note" x="490" y="120" font-size="10" font-family="'Noto Sans JP',sans-serif">約761万円</text>
+        <circle class="s-dot-r" cx="570" cy="168" r="5"/>
+        <text class="s-note-o" x="490" y="165" font-size="10" font-family="'Noto Sans JP',sans-serif">約324万円</text>
+
+        <!-- 出発点 -->
+        <circle cx="55" cy="190" r="4" fill="#8b949e"/>
+        <text class="s-label-sm" x="68" y="188">100万円（元本）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ <strong>複利成長の比較（仮の計算例）</strong>。同じ 100 万円の元本でも、年率の違いが 30 年後に大きな差を生む。年率 10% なら約 1,745 万円と元本の 17 倍超に。ただしこれは税・手数料・損失なしの単純計算であり、実際の投資成果を示すものではありません。</figcaption>
+    </figure>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ ドローダウンとは何か</h2>
+    <p><strong>ドローダウン（Drawdown）</strong>とは、資産曲線の「最高値から現在値までの下落率」のことです。特に過去の最高値からの最大の落ち込みを<strong>最大ドローダウン（Maximum Drawdown）</strong>と呼び、リスク管理の主要指標として使われます。</p>
+    <ul>
+      <li><strong>最大ドローダウン（MDD）</strong>：記録された最高値から最も深く落ち込んだ時点までの下落率。ヘッジファンドや運用評価の標準指標。</li>
+      <li><strong>ドローダウン期間</strong>：最高値を更新する前に低迷していた期間。長いほど精神的・機会的コストが大きい。</li>
+    </ul>
+    <p>例えば 100 万円が 70 万円まで下落した場合、ドローダウンは −30% です。感覚的には「30 万円損した」ですが、問題はここから元の 100 万円に戻すために必要な利益率です。</p>
+    <div class="warning-box">ドローダウンはただ「いくら失ったか」ではなく、「元に戻すためにどれだけ頑張らなければならないか」を示しています。この<strong>回復コスト</strong>の非線形性が、リスク管理の核心にあります。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ドローダウン回復の「非線形の壁」</h2>
+    <p>ドローダウンからの回復に必要な利益率を計算してみましょう。元本が X% 減少したとき、回復に必要な利益率は <code>X ÷ (100 − X) × 100</code> で求められます。</p>
+
+    <table>
+      <thead><tr><th>ドローダウン</th><th>残資産</th><th>元本回復に必要な利益率</th><th>感覚的な印象</th></tr></thead>
+      <tbody>
+        <tr><td>−10%</td><td>90 万円</td><td style="color:#1a7f37"><strong>+11.1%</strong></td><td>比較的軽い</td></tr>
+        <tr><td>−20%</td><td>80 万円</td><td style="color:#9a6700"><strong>+25.0%</strong></td><td>やや辛い</td></tr>
+        <tr><td>−30%</td><td>70 万円</td><td style="color:#cf222e"><strong>+42.9%</strong></td><td>かなり辛い</td></tr>
+        <tr><td>−40%</td><td>60 万円</td><td style="color:#cf222e"><strong>+66.7%</strong></td><td>非常に辛い</td></tr>
+        <tr><td>−50%</td><td>50 万円</td><td style="color:#cf222e"><strong>+100.0%</strong></td><td>2倍にする必要</td></tr>
+        <tr><td>−75%</td><td>25 万円</td><td style="color:#cf222e"><strong>+300.0%</strong></td><td>4倍にする必要</td></tr>
+      </tbody>
+    </table>
+
+    <p>−50% の損失から元本を回復するには、残りの資産を<strong>2 倍にしなければなりません</strong>。−75% なら 4 倍です。損失が小さいうちに止めることの価値が、この表から明確にわかります。</p>
+
+    <!-- SVG 2: ドローダウン回復の非線形性 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 220" role="img" aria-labelledby="dd-title">
+        <title id="dd-title">ドローダウン回復に必要な利益率の非線形性。損失が大きくなるほど回復に必要な利益が指数関数的に膨らむ概念図。</title>
+        <text class="s-panel-label" x="20" y="18">ドローダウン回復に必要な利益率（非線形の壁）</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="70" y1="25" x2="70" y2="185"/>
+        <line class="s-axis" x1="70" y1="185" x2="570" y2="185"/>
+
+        <!-- X軸ラベル（損失率） -->
+        <text class="s-label-sm" x="120" y="198" text-anchor="middle">−10%</text>
+        <text class="s-label-sm" x="200" y="198" text-anchor="middle">−20%</text>
+        <text class="s-label-sm" x="285" y="198" text-anchor="middle">−30%</text>
+        <text class="s-label-sm" x="370" y="198" text-anchor="middle">−40%</text>
+        <text class="s-label-sm" x="455" y="198" text-anchor="middle">−50%</text>
+        <text class="s-label-sm" x="540" y="198" text-anchor="middle">−75%</text>
+        <text class="s-label-sm" x="320" y="213" text-anchor="middle">← ドローダウン（損失率）</text>
+
+        <!-- Y軸ガイドライン（必要回復率） -->
+        <line class="s-guide" x1="70" y1="155" x2="570" y2="155"/>
+        <text class="s-label-sm" x="64" y="158" text-anchor="end">+50%</text>
+        <line class="s-guide" x1="70" y1="105" x2="570" y2="105"/>
+        <text class="s-label-sm" x="64" y="108" text-anchor="end">+100%</text>
+        <line class="s-guide" x1="70" y1="55" x2="570" y2="55"/>
+        <text class="s-label-sm" x="64" y="58" text-anchor="end">+200%</text>
+
+        <!-- 棒グラフ（バー幅=55） -->
+        <!-- -10%: +11.1% → 高さ ≒ (11.1/250)*130 ≒ 6px → y=185-6=179 -->
+        <rect class="s-bar-g" x="93" y="179" width="55" height="6" rx="3"/>
+        <text class="s-note-g" x="120" y="174" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+11%</text>
+
+        <!-- -20%: +25% → 高さ ≒ (25/250)*130 ≒ 13px → y=172 -->
+        <rect class="s-bar-g" x="173" y="172" width="55" height="13" rx="3"/>
+        <text class="s-note-g" x="200" y="167" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+25%</text>
+
+        <!-- -30%: +42.9% → 高さ ≒ (42.9/250)*130 ≒ 22px → y=163 -->
+        <rect class="s-bar-y" x="258" y="163" width="55" height="22" rx="3"/>
+        <text class="s-note-o" x="285" y="157" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+43%</text>
+
+        <!-- -40%: +66.7% → 高さ ≒ (66.7/250)*130 ≒ 35px → y=150 -->
+        <rect class="s-bar-r" x="343" y="150" width="55" height="35" rx="3"/>
+        <text class="s-note-r" x="370" y="144" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+67%</text>
+
+        <!-- -50%: +100% → 高さ ≒ (100/250)*130 ≒ 52px → y=133 -->
+        <rect class="s-bar-r" x="428" y="133" width="55" height="52" rx="3"/>
+        <text class="s-note-r" x="455" y="127" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+100%</text>
+
+        <!-- -75%: +300% → 高さ ≒ (300/250)*130 ≒ 156px → y=29 (上限capped at 35) -->
+        <rect class="s-bar-r" x="513" y="35" width="55" height="150" rx="3"/>
+        <text class="s-note-r" x="540" y="29" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">+300%</text>
+
+        <!-- 矢印で「急増」を示す -->
+        <path d="M 380 80 Q 430 60 510 45" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow)"/>
+        <text class="s-note-r" x="390" y="75" font-size="11" font-family="'Noto Sans JP',sans-serif">損失が大きいほど</text>
+        <text class="s-note-r" x="390" y="88" font-size="11" font-family="'Noto Sans JP',sans-serif">急激に増大</text>
+      </svg>
+      <figcaption class="chart-caption">▲ <strong>ドローダウン回復に必要な利益率の非線形性（仮の計算例）</strong>。−30% 損失は +43% で回復できるが、−50% は +100%、−75% は +300% 必要。損失が深いほど回復コストは指数関数的に増大する。早期に損失を止めることの価値を示す概念図です。実際の投資成果を示すものではありません。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ ボラティリティドラッグ——なぜ大きな損失が複利を壊すのか</h2>
+    <p>複利とドローダウンの関係でもう一つ重要な概念が<strong>ボラティリティドラッグ（Volatility Drag）</strong>です。「平均リターンが同じでも、大きな損失を挟むと最終的な複利成長は大きく縮む」という現象です。</p>
+    <p>数値例で確認します。</p>
+
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">以下の数値例は、複利とボラティリティの仕組みを説明するための仮の計算例です。特定の手法や銘柄の成績を示すものではありません。</div>
+
+    <table>
+      <thead><tr><th>パターン</th><th>4 年間の推移</th><th>算術平均リターン</th><th>最終資産（100 万円出発）</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>A：安定型</td>
+          <td>+10%, +10%, +10%, +10%</td>
+          <td>+10%</td>
+          <td><strong style="color:#1a7f37">146.4 万円</strong>（1.1^4）</td>
+        </tr>
+        <tr>
+          <td>B：乱高下型</td>
+          <td>+50%, −30%, +50%, −30%</td>
+          <td>+10%</td>
+          <td><strong style="color:#cf222e">110.3 万円</strong>（1.5×0.7×1.5×0.7）</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>2 つのパターンの<strong>算術平均リターンは同じ +10%</strong> です。しかしパターン B は大きな上下を繰り返すだけで、最終資産はパターン A の 75% 程度にしかなりません。これがボラティリティドラッグです。</p>
+    <p>なぜこうなるのか。−30% の後に +50% 上がっても、元値には戻りません（0.7 × 1.5 = 1.05、つまり +5% どまり）。複利計算では損失と利益が非対称で、<strong>損失の破壊力が利益の修復力を上回る</strong>のです。</p>
+
+    <!-- SVG 3: ボラティリティドラッグの概念図（2経路比較） -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 220" role="img" aria-labelledby="vdrag-title">
+        <title id="vdrag-title">ボラティリティドラッグの概念図。同じ平均リターンでも、大きな損失を挟む経路では最終資産が大きく下回る。</title>
+        <text class="s-panel-label" x="20" y="18">ボラティリティドラッグ（仮の計算例）：同じ平均リターンでも経路で差が出る</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="55" y1="25" x2="55" y2="185"/>
+        <line class="s-axis" x1="55" y1="185" x2="560" y2="185"/>
+
+        <!-- X軸ラベル -->
+        <text class="s-label-sm" x="55" y="198" text-anchor="middle">スタート</text>
+        <text class="s-label-sm" x="175" y="198" text-anchor="middle">1年</text>
+        <text class="s-label-sm" x="295" y="198" text-anchor="middle">2年</text>
+        <text class="s-label-sm" x="415" y="198" text-anchor="middle">3年</text>
+        <text class="s-label-sm" x="535" y="198" text-anchor="middle">4年</text>
+
+        <!-- Y軸ガイド -->
+        <!-- スケール: 100万=y185, 200万=y75 → 110万差=110px → 1万=1px -->
+        <!-- 100万→y185, 110万→y175, 120万→y165, 146万→y139, 110万→y175 -->
+        <line class="s-guide" x1="55" y1="135" x2="560" y2="135"/>
+        <text class="s-label-sm" x="50" y="138" text-anchor="end">150万</text>
+        <line class="s-guide" x1="55" y1="160" x2="560" y2="160"/>
+        <text class="s-label-sm" x="50" y="163" text-anchor="end">125万</text>
+        <text class="s-label-sm" x="50" y="188" text-anchor="end">100万</text>
+
+        <!-- パターンA：安定型 +10%×4 -->
+        <!-- 100, 110, 121, 133, 146.4 → y: 185, 175, 164, 152, 139 -->
+        <polyline class="s-curve-g" points="55,185 175,175 295,164 415,152 535,139"/>
+        <!-- ドット -->
+        <circle class="s-dot-g" cx="55" cy="185" r="4"/>
+        <circle class="s-dot-g" cx="175" cy="175" r="4"/>
+        <circle class="s-dot-g" cx="295" cy="164" r="4"/>
+        <circle class="s-dot-g" cx="415" cy="152" r="4"/>
+        <circle class="s-dot-g" cx="535" cy="139" r="4"/>
+        <text class="s-note-g" x="542" y="136">146万円</text>
+
+        <!-- パターンB：乱高下型 +50%, -30%, +50%, -30% -->
+        <!-- 100, 150, 105, 157.5, 110.25 → y: 185, 135, 180, 128, 175 -->
+        <polyline class="s-curve-l" points="55,185 175,135 295,180 415,128 535,175"/>
+        <!-- ドット -->
+        <circle class="s-dot-r" cx="55" cy="185" r="4"/>
+        <circle class="s-dot-r" cx="175" cy="135" r="4"/>
+        <circle class="s-dot-r" cx="295" cy="180" r="4"/>
+        <circle class="s-dot-r" cx="415" cy="128" r="4"/>
+        <circle class="s-dot-r" cx="535" cy="175" r="4"/>
+        <text class="s-note-r" x="542" y="178">110万円</text>
+
+        <!-- 差を示すブレース -->
+        <line stroke="#6e7781" stroke-width="1.5" x1="538" y1="139" x2="538" y2="175"/>
+        <text class="s-label-sm" x="556" y="158" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">差</text>
+        <text class="s-label-sm" x="556" y="168" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">36万</text>
+
+        <!-- 凡例 -->
+        <line class="s-curve-g" x1="75" y1="35" x2="105" y2="35" stroke-width="2"/>
+        <text class="s-label" x="110" y="39">パターンA（安定型 +10%×4）　算術平均=+10%</text>
+        <line class="s-curve-l" x1="75" y1="52" x2="105" y2="52" stroke-width="2"/>
+        <text class="s-label" x="110" y="56">パターンB（乱高下型 +50%/−30%繰返）　算術平均=+10%</text>
+      </svg>
+      <figcaption class="chart-caption">▲ <strong>ボラティリティドラッグの概念図（仮の計算例）</strong>。算術平均リターンが同じ +10% でも、大きな損失を挟む乱高下経路（赤）は安定成長（緑）の 75% 程度にしか到達しない。これが「ボラティリティドラッグ」——損失は複利エンジンを静かに蝕む。実際の投資成果を示すものではありません。</figcaption>
+    </figure>
+
+    <p>この概念が示すことは明確です。<strong>リターンを最大化する前に、損失の最小化が優先される</strong>。大きなドローダウンを避けることは「機会損失の回避」ではなく、「複利エンジンを守る」行為そのものなのです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 複利を守るための3つの考え方</h2>
+
+    <h3>① 1トレードのリスクを口座全体の 2% 以内に抑える</h3>
+    <p><a href="guide-position-sizing.html">ポジションサイジングの記事</a>で詳しく解説した 2% ルールは、複利の観点からも最重要の考え方です。1 回の損失が口座全体の 2% 以内であれば、50 連敗しても口座の約 36% が残る計算になります（0.98^50 ≒ 0.364 ／手数料・スリッページを除いた単純計算）。</p>
+    <p>逆に 1 回のリスクが 10% なら、10 連敗で 35% を失います（0.90^10 ≒ 0.349）。大きなロットで「一撃逆転」を狙うトレードは、複利エンジンを止めるリスクが高いと言えます。</p>
+
+    <h3>② 連敗への備え——ドローダウンは必ず来る</h3>
+    <p>期待値がプラスの戦略でも、連敗は確率論的に必ず発生します。勝率 60% の戦略でも 5 連敗する確率は約 1%（0.4^5）、100 回トレードすれば統計的に 1 回は発生します。これは「ヘタだから」ではなく、確率の問題です。</p>
+    <p>大切なのは連敗が来ても退場しないこと——つまり<strong>1 トレードのリスクを小さく保ち、精神的に継続できる状態を維持する</strong>ことです。複利を生かすには「長く続ける」ことが最大の武器になります。</p>
+
+    <h3>③ 損切りは「コスト」ではなく「複利エンジンの保険料」</h3>
+    <p><a href="guide-loss-cut.html">損切りの記事</a>で解説したとおり、多くの投資家は損切りを「損失の確定」と捉えて後ろ向きになります。しかし複利の観点では、損切りは「大きなドローダウンから複利エンジンを守るための保険料」として捉え直せます。</p>
+    <p>小さな損切りを積み重ねることは、大きなドローダウンのリスクを取り除く行為です。−10% の損切り 3 回より、−30% の損切り 1 回のほうが複利へのダメージははるかに大きくなります。</p>
+
+    <div class="positive-box">
+      <strong>✅ 複利を守る3箇条</strong><br>
+      ① 1 トレードのリスク = 口座の 2% 以内<br>
+      ② 連敗を想定した心理的・資金的バッファを持つ<br>
+      ③ 損切りを「保険料」として前向きに捉える
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 当サイトのリスク管理設計との接続</h2>
+    <p>当サイトのシグナル設計では、以下の考え方を採用しています。</p>
+    <table>
+      <thead><tr><th>設計要素</th><th>仕組み</th><th>複利保護の役割</th></tr></thead>
+      <tbody>
+        <tr><td>SL（損切り目安）</td><td>ATR × 1.5 を基準に提示</td><td>1 回の損失を 1R 以内に抑え、大きなドローダウンを防ぐ</td></tr>
+        <tr><td>TP1 / TP2</td><td>ATR × 2.0 / 3.0 を参考値で提示</td><td>利益を確定させ、複利の種（元本＋利益）を守る</td></tr>
+        <tr><td>成績の公開</td><td>勝ちも負けも全記録を公開</td><td>ドローダウン実績を透明化し、継続可能かを判断できる</td></tr>
+      </tbody>
+    </table>
+    <p>ただしこれらの設計値はあくまで参考であり、実際の運用成果を保証するものではありません。市場環境・銘柄・タイミングによって実績は大きく異なります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 実際のドローダウン実績を確認する</div>
+      <div class="cta-box-desc">勝ちだけでなく負けトレードも含めた成績データをオープンに公開しています。最大ドローダウンや連敗数の実績を確認できます。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <ul>
+      <li><strong>複利は時間と共に指数関数的に成長する</strong>が、その威力を発揮するためには「長く続けること」と「大きな損失を避けること」が前提になる。</li>
+      <li><strong>ドローダウンの回復は非線形</strong>。−30% の損失を取り戻すには +43% 必要で、損失が深いほど回復コストは急増する。これが損切りを「早く小さく」実行する数学的根拠。</li>
+      <li><strong>ボラティリティドラッグ</strong>：同じ平均リターンでも大きな損失を挟む経路では最終的な複利成長が大幅に縮む。リターンの最大化より損失の最小化が複利の観点から優先される。</li>
+      <li>「損切りをしない・ポジションが大きすぎる」は<strong>複利エンジンを停止させる行為</strong>。損切りとポジションサイジングは技術論ではなく、複利を生かすための基盤設計として理解する。</li>
+    </ul>
+    <p>複利の威力を最大限に引き出すために必要なのは、奇跡的な大勝ちではなく、<strong>大きく負けない仕組みと長く続けることができる心理的・資金的な土台</strong>です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジングの基本</div>
+        <div class="related-card-desc">2% ルールとATR連動サイジング。複利を守るロット計算の基本。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">損切りを「保険料」として捉え直す考え方。処分効果の心理から解説。</div>
+      </a>
+      <a class="related-card" href="guide-risk-reward.html">
+        <div class="related-card-title">📐 リスクリワードと期待値</div>
+        <div class="related-card-desc">期待値がプラスの設計と複利の組み合わせが長期成績の根拠になる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は投資にまつわる仕組みや考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載の数値例は仕組みを説明するための仮の計算であり、特定の手法による利益や損失回避を保証するものではありません。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
