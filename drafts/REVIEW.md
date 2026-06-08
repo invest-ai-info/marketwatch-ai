@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-06-09 | trading-journal
+
+- **基準日（JST）**: 2026-06-09（UTC 2026-06-08T20:31:27Z）
+- **Topic**: 売買日誌で自分のエッジを見つける（メタ認知・振り返りの型）
+- **Key**: `trading-journal`
+- **生成ファイル**: `drafts/draft-trading-journal.html`
+- **シリーズ**: 🧠 投資の心理・メンタル（guides.html 既存カテゴリ）
+
+### 参照出典 URL
+| 項目 | 出典 |
+|---|---|
+| トレード日誌の書き方・活用法（FX Replay） | https://fxreplay.com/learn/how-to-use-a-trading-journal-to-improve-your-strategy |
+| トレード心理・感情トラッキング（TradesViz） | https://www.tradesviz.com/blog/trading-journal-psychology-tracking/ |
+| 売買記録の継続方法（トレーダーを赤字から安定へ、FX Replay） | https://fxreplay.com/ja/learn/the-trading-journal-routine-that-move-traders-from-loss-to-consistency |
+| トレードノートの書き方・3項目（Fintokei） | https://www.fintokei.com/jp/blog/how-to-keep-trading-journal/ |
+| トレードの記録をつけましょう（マーケットEYE） | https://tradeone.comtex.co.jp/market-eye/column/column(05.17).php |
+| 統計的に証明できるエッジを探す実践例（note.com） | https://note.com/calm_clover830/n/n507cca5f2335 |
+| Trading Journal Techniques 7 Steps（TradeFundrr） | https://tradefundrr.com/trading-journal-techniques/ |
+
+### 自己コンプライアンスチェック結果
+| チェック項目 | 結果 |
+|---|---|
+| 個別銘柄の売買推奨なし | ✅ 教育・一般論のみ。「今 ○○ を買え」等の表現なし |
+| 断定・利益保証表現なし | ✅「絶対」「必ず」「100%」「保証」「儲かる」使用なし。期待値計算例は「概念の説明用」と明記。「かもしれません」「ことがあります」「多くの場合」など慎重な表現を使用 |
+| kinsho-v1 免責（冒頭バナー＋本文末＋footer）あり | ✅ 3箇所に data-disclaimer="kinsho-v1" または同等の文言を配置 |
+| noindex,nofollow あり | ✅ `<meta name="robots" content="noindex,nofollow">` を head に配置済み |
+| 出典の妥当性 | ✅ 後知恵バイアス・確証バイアスは心理学の確立された概念。期待値計算式は数学的公式（正確）。「20〜30件」はトレード界隈で一般的に言及される目安として使用（特定の論文由来の断定ではなく実践指針）。FOMO等の用語は一般的用語。不確実な具体的数値（「○%改善する」等）は使用していない |
+| SVG 概念図に「※ 概念を示すイメージ図です」の注記 | ✅ 全 2 点の figcaption に注記あり |
+
+### SVG 図の構成
+1. **PDCAサイクル図**（PLAN→DO→CHECK→ACT の2×2グリッド、中央に「売買日誌が回す」）— 実装済み
+2. **心理状態別勝率の棒グラフ**（平常心・少し焦り・FOMO/狼狽の3段階比較、高さで概念的な差を表現）— 実装済み
+3. `<!-- TODO(SVG): セットアップ種別×心理状態の2次元マトリクスヒートマップ（行=セットアップ種別、列=心理状態3分類）で期待値の高低をカラー表示する概念図を要追加・要ライト/ダーク実機確認 -->`
+
+### 人間の残作業
+- [ ] **SVG の実機ライト/ダーク確認**：追加クラス `.s-box-fill-b/g/y/r`・`.s-box-stroke-b/g/y/r`・`.s-box-text`・`.s-box-text-g`・`.s-box-subtext`・`.s-arr-fill-b`・`.s-bar-high/mid/low`・`.s-center-text` をライト・ダークモードで目視確認。特にPDCAボックスの塗りつぶし色と棒グラフの色がダークモードで視認できるか確認
+- [ ] **2次元マトリクスヒートマップSVGの追加**（HTML内 `TODO(SVG)` コメントを参照）：セットアップ種別×心理状態の期待値マップ
+- [ ] **Opus compliance-reviewer 監査**：公開前に `compliance-reviewer` エージェント（Opus）に下書き全文を渡してレビューを依頼
+- [ ] **タイトル微調整**：「メタ認知・振り返りの型」は内容と合っているが、「エッジ」という用語が初心者に伝わるか検討（例：「勝ちパターンを見つける方法」等への変更を検討）
+- [ ] **関連記事リンクの確認**：`guide-risk-reward.html`・`guide-position-sizing.html` が公開済みのため、本文内リンクは有効。`guide-cognitive-biases.html` も公開済み ✓
+
+---
+
 ## 2026-06-08 | risk-reward
 
 - **基準日（JST）**: 2026-06-08（UTC 2026-06-07T20:35:16Z）
