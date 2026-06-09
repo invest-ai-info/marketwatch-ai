@@ -1,155 +1,190 @@
 {
-  "generated_at": "2026-06-09T06:06:29+09:00",
+  "generated_at": "2026-06-09T15:08:00+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
+    "regime": "RISK_OFF",
     "confidence": "MID",
-    "rationale": "5月雇用統計が市場予想の2倍超（+17.2万人 vs +8.5万人）と強く、FRBの年内利上げ観測が急浮上（12月確率72%）。一方、イスラエル・イランの武力衝突によるホルムズ海峡封鎖で原油は96ドル近辺を維持し、インフレ長期化懸念が残る。米株は6月8日に小幅反発（S&P+1%、ナスダック+1.7%）も、週次では大きく下落した後の戻し段階。リスクオン・オフが交錯するNEUTRAL環境。",
+    "rationale": "5月米雇用統計が市場予想の2倍超（+17.2万人 vs 予想+8万人）となり10年国債利回りが4.5%台に急騰、FRB利上げ再開観測が高まった。同日ブロードコムのAI売上が予想を14%下回り半導体株が連鎖崩落（SOX -10.3%、ナスダック -4.18%、$1.4兆超の時価総額消失）。イスラエル・イランがミサイルを応酬してホルムズ海峡リスクが再燃し原油が急騰。月曜に小幅反発したが、金融政策・地政学の両面でリスクは残存。",
     "key_drivers": [
-      "5月NFP+17.2万人（市場予想+8.5万人の2倍超）→FRBの年内利上げ観測が再燃",
-      "イスラエル・イラン紛争でホルムズ海峡が事実上封鎖→原油96ドル近辺",
-      "10年米国債利回りが2週間ぶり高水準→金利上昇でグロース株に逆風",
-      "米株6月8日に反発も週次ではナスダック▲4%超の急落後",
-      "日銀6月16日会合で追加利上げ観測が高まりつつある"
+      "5月米NFPが+17.2万人と予想の2倍超、FRBの年内利上げ確率が60〜70%に上昇し10年利回りが4.5%超",
+      "ブロードコムのAI売上失望でSOXが歴史的急落、AI半導体株全般に$1.4兆超の時価総額が消失",
+      "イスラエル・イランのミサイル応酬が激化、ホルムズ海峡の供給途絶リスクが再燃し原油が4%超急騰",
+      "日銀が1.24兆円規模の緊急介入を実施もドル円は160円台で高止まり、金利差が円安圧力の根本因"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "6月3日に68,402円と史上最高値を更新したが、翌4日に地政学リスク・原油高・米金利上昇を受けて1,300円超下落し67,101円で引け。6月16日の日銀会合で追加利上げが見込まれ、円高シフトなら輸出株に重しとなる可能性。短期的には高値圏での調整局面が続くと見られ、方向感は定まりにくい。",
+      "rationale": "6月8日（月）に3,123円（4.69%）急落し63,465ptで引け。米AI半導体崩落を受け東京エレクトロン・ムラタ・ソフトバンクGなど関連銘柄が6〜10%超下落。日本の5月名目賃金は+3.5%と堅調ながら実質家計消費は5ヶ月連続マイナスで内需が弱い。ドル円160円台の円安は輸入コスト増で企業マージンを圧迫。",
       "catalysts": [
-        "日銀6月16日会合での利上げ決定（円高要因）",
-        "米国株の動向（日経との相関が高い）",
-        "ホルムズ海峡情勢の改善または悪化（原油価格経由でインフレに波及）"
+        "米AI半導体崩落の継続・追加ネガティブサプライズ",
+        "FRB利上げ再開による円安加速とコスト圧力",
+        "中東緊張激化でリスクオフ継続"
       ],
       "top_news": [
         {
-          "headline": "日経平均が68,402円で史上最高値を更新、6万8,000円台を初めて突破",
-          "published": "2026-06-03",
-          "comment": "歴史的節目の突破は注目材料だが、翌日に急反落しており過熱感にも警戒が必要",
-          "source": "岩井コスモ証券 / note.com",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": ["岩井コスモ証券", "note.com（Desk Research Design）"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.iwaicosmo.co.jp/investment/market/20260604.html"
-        },
-        {
-          "headline": "日経平均が6月4日に1,300円超下落、原油高・米金利上昇・ハイテク株手仕舞いが重なる",
-          "published": "2026-06-04",
-          "comment": "地政学リスクと金利上昇が同時に重なると、高値圏の株は利益確定売りを誘発しやすい",
-          "source": "岩井コスモ証券",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": ["岩井コスモ証券"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.iwaicosmo.co.jp/investment/market/20260604.html"
-        },
-        {
-          "headline": "日銀6月会合で追加利上げ観測が高まる、4月の賃金上昇率が前年比3.5%に加速",
-          "published": "2026-06-07",
-          "comment": "利上げが実現すれば円高・輸出株の重しになりうるが、日本経済の体温上昇の証左とも言える",
-          "source": "Reuters / tradingeconomics.com",
+          "headline": "日経平均が一日で3,123円（4.69%）急落し63,465pt、半導体・AI株が連鎖崩落",
+          "published": "2026-06-08",
+          "comment": "米株安の余波で日本の半導体大手が軒並み急落、1日の下落幅としては近年最大級",
+          "source": "Trading Economics / CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Reuters", "tradingeconomics.com"],
+          "corroborated_by": ["CNBC", "Trading Economics"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://tradingeconomics.com/japan/currency"
+          "url": "https://tradingeconomics.com/japan/stock-market"
+        },
+        {
+          "headline": "東京エレクトロン・ムラタ・ソフトバンクGが6〜10%急落、キオクシアも8%安",
+          "published": "2026-06-08",
+          "comment": "米国でAI半導体への期待が崩れたことで、日本の関連銘柄にも売りが波及",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Yahoo Finance"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/quotes/.N225"
+        },
+        {
+          "headline": "日本5月名目賃金+3.5%と堅調、ただし実質家計消費は5ヶ月連続マイナス",
+          "published": "2026-06-09",
+          "comment": "賃金が上がっても消費が増えない矛盾が続き、内需回復シナリオに懐疑的な見方も",
+          "source": "T. Rowe Price / Reuters",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.troweprice.com/personal-investing/resources/insights/global-markets-weekly-update.html"
         }
       ]
     },
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "5月NFP発表後の急落（6月4-5日）から6月8日に約1%反発。ただし年内利上げ観測が定着しつつあり（12月利上げ確率72%）、バリュエーションが割高な水準での上昇維持は難しい。半導体株の持ち直しが支え。マクロ環境は利上げリスクと堅調な経済の綱引き状態でNEUTRAL。",
+      "rationale": "6月5日（金）に2.64%急落（7,383）し9週連続上昇が終了。強い雇用統計でFRB利上げ懸念が台頭、2年利回りが13bp急騰しリスク資産に逆風。S&P500の時価総額の約40%をAI大型株10銘柄が占めAI集中リスクが顕在化。月曜に部分的反発があったが、利上げ確率60〜70%が上値を抑制。",
       "catalysts": [
-        "FRB政策発言・次回FOMC（7月）の方向性",
-        "半導体・AI関連銘柄の業績動向",
-        "原油価格上昇を通じた消費者物価・実質購買力への影響"
+        "FOMCでの利上げ示唆または実施（7月・9月・12月FOMC）",
+        "AI半導体企業の追加決算ミス",
+        "中東地政学悪化による原油高・インフレ再加速"
       ],
       "top_news": [
         {
-          "headline": "5月雇用統計が市場予想の2倍超、FRBの年内利上げ観測が急浮上",
+          "headline": "S&P500が2.64%急落し7,383ptで9週連続上昇が終了、強い雇用統計が逆風に",
           "published": "2026-06-05",
-          "comment": "利上げ転換は株式市場全体に逆風で、特に高PERのグロース銘柄に打撃となる可能性がある",
+          "comment": "雇用の強さがかえって利上げ懸念を呼び、高バリュエーション株の売り材料になった",
+          "source": "CNBC / TheStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Bloomberg", "CNBC"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/06/04/stock-market-today-live-updates.html"
+        },
+        {
+          "headline": "5月雇用統計+17.2万人と予想80Kの2倍超、10年利回りが4.5%台に急騰",
+          "published": "2026-06-05",
+          "comment": "利上げ再開リスクが高まり、高バリュエーションの成長株には強い逆風",
           "source": "Bloomberg / BLS",
           "tier": 1,
           "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg", "CNBC", "Morningstar", "BLS（米労働省）"],
+          "corroborated_by": ["Bloomberg", "Reuters", "Morningstar"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-05/us-adds-172-000-jobs-in-may-beating-all-economists-estimates"
-        },
-        {
-          "headline": "6月8日に米株小幅反発、S&P500が約1%・ナスダックが約1.7%上昇",
-          "published": "2026-06-08",
-          "comment": "急落後の自律反発の範囲内で、トレンド転換と判断するには材料として不十分",
-          "source": "TheStreet / CNBC",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": ["TheStreet"],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-june-08-2026"
+          "url": "https://www.bls.gov/news.release/empsit.nr0.htm"
         }
       ]
     },
     {
       "name": "ナスダック",
       "ticker": "NQ=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "6月4日に2025年4月以来最大の下落幅（▲4.18%）を記録後、6月8日に約1.7%反発。AI・半導体関連の高バリュエーションと利上げ懸念が共存しており、方向感は定まらない。FRB利上げへの感応度がS&P500より高く、10年金利上昇局面では引き続き売り圧力がかかりやすい。",
+      "rationale": "6月5日に4.18%急落（25,709）し2025年4月以来最大の下落。ブロードコムのAI売上がアナリスト予想を14%下回りトリガーに。SOXが10.3%急落しNVIDIA・AMD・インテル・マイクロンが軒並み大幅安。月曜に0.9%反発したが構造的な過熱感とFRB利上げリスクで回復は限定的とみられる。",
       "catalysts": [
-        "AIメモリ消費報告など半導体需要の再評価",
-        "10年米国債利回りの方向性",
-        "主要テック企業の決算・ガイダンス次第"
+        "ブロードコム・NVIDIA等大型半導体株の追加決算ミス",
+        "10年国債利回りのさらなる上昇による成長株の割引率上昇",
+        "AI収益化の遅延懸念の拡大"
       ],
       "top_news": [
         {
-          "headline": "ナスダックが6月4日に2025年4月以来最大の日間下落幅、チップ株への売りが加速",
-          "published": "2026-06-04",
-          "comment": "高PERのテック株は金利上昇に特に敏感で、利上げ観測が重なると急落リスクが高まりやすい",
-          "source": "CNBC",
+          "headline": "ナスダック4.18%急落——ブロードコムAI売上ミスが引き金で$1.4兆超の時価総額消失",
+          "published": "2026-06-05",
+          "comment": "1社の決算ミスがAI株全体に波及、集中投資リスクが改めて浮き彫りに",
+          "source": "CNBC / TheStreet",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["CNBC", "TheStreet"],
+          "corroborated_by": ["Bloomberg", "Reuters"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/06/04/stock-market-today-live-updates.html"
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-june-05-2026"
+        },
+        {
+          "headline": "SOXが10.3%急落、AMD -10.9%・インテル -11.3%・NVIDIA -6%・マイクロン -7%",
+          "published": "2026-06-05",
+          "comment": "半導体セクター全体に売りが広がり、AI投資テーマ全体の地合いが急速に悪化",
+          "source": "Intellectia AI / Yahoo Finance",
+          "tier": 3,
+          "credibility": "HIGH",
+          "corroborated_by": ["Benzinga", "GuruFocus", "Kavout"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://intellectia.ai/blog/semiconductor-stocks-selloff-june-2026"
+        },
+        {
+          "headline": "月曜日にナスダックが0.9%反発、NVIDIAのCEOが「買い場」とコメント",
+          "published": "2026-06-08",
+          "comment": "一時的な反発は見られるが、構造的な過熱修正が完全に終わったとは言えない",
+          "source": "HeyGoTrade / Benzinga",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.heygotrade.com/en/news/semiconductor-selloff-nvidia-chip-rebound/"
         }
       ]
     },
     {
       "name": "金",
       "ticker": "GC=F",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "6月8日に$4,313.99と2ヵ月ぶりの安値に下落。強い雇用統計を受けてFRBの年内利上げ確率が72%に急上昇し、ドル高・米国債利回り上昇が金の機会費用を高めている。中東情勢は地政学プレミアムとして下支えになるが、年初$5,500超の高値から大きく調整しており利上げ環境が続けば追加下落リスクがある。",
+      "rationale": "強い雇用統計によるFRB利上げ観測（ドル高・利回り上昇）が金の上値を抑制し$4,330まで下落。一方でイスラエル・イランのミサイル応酬に伴う安全資産需要と各国中央銀行の継続的な金購入が下支え。停戦合意で一服感も出ており$4,300〜$4,408のレンジで方向感が出にくい状況。",
       "catalysts": [
-        "FRB利上げ観測の変化（12月会合の確率が金価格の反転トリガー）",
-        "ドル指数の動向（ドル高は金にとって逆風）",
-        "中東紛争の拡大・縮小（地政学プレミアムの変化）"
+        "イスラエル・イラン緊張のさらなる悪化（安全資産需要増加）",
+        "FRBの利上げ実施または明確な示唆（ドル高→金下押し）",
+        "中央銀行の継続的な金購入（下値支持）"
       ],
       "top_news": [
         {
-          "headline": "金が$4,314と2ヵ月ぶり安値まで下落、FRB利上げ確率72%への急上昇が圧迫",
+          "headline": "金は1オンス$4,330へ下落、FRB利上げ観測が重石もイラン緊張が下値を支持",
           "published": "2026-06-08",
-          "comment": "金利が高まると利息を生まない金の魅力が薄れるため、利上げ転換観測は金相場の重しとなる",
-          "source": "USAGOLD / tradingeconomics.com",
-          "tier": 3,
+          "comment": "利上げ懸念で売られる一方、地政学リスクで買われる綱引き状態が続く",
+          "source": "Yahoo Finance / Fortune",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["CNBC", "Fortune"],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://fortune.com/article/current-price-of-gold-06-05-2026/"
+        },
+        {
+          "headline": "イスラエル・イランが攻撃の相互停止で合意、安全資産需要が一服",
+          "published": "2026-06-07",
+          "comment": "停戦期待で安全資産需要が一服したが、情勢の不安定さから完全に売れない",
+          "source": "CNBC / Gold price data",
+          "tier": 2,
           "credibility": "MID",
-          "corroborated_by": ["tradingeconomics.com"],
-          "materiality": "high",
+          "corroborated_by": [],
+          "materiality": "mid",
           "direction": "bearish",
-          "url": "https://www.usagold.com/daily-precious-metals-market-report-june-8-2026/"
+          "url": "https://www.cnbc.com/select/the-price-of-gold-today-june-4-2026/"
         }
       ]
     },
@@ -157,101 +192,125 @@
       "name": "原油",
       "ticker": "CL=F",
       "bias": "BULLISH",
-      "conviction": "HIGH",
-      "rationale": "ホルムズ海峡がイラン軍により事実上封鎖され、世界の海上石油貿易の約25%が影響を受けている。フィッチは7月末まで再開は見込みにくいと予測。原油は96ドル前後で推移しており、供給制約が継続する限り高水準が維持されると見られる。インフレへの波及でFRBの利上げ観測をも下支えしており、二重の意味で市場にとってリスク要因。",
+      "conviction": "MID",
+      "rationale": "イスラエル・イランのミサイル応酬でWTIが$94台まで4%超急騰。ホルムズ海峡がほぼ閉鎖状態でIEAが「歴史上最大の供給途絶」と警告。停戦合意後に$91.30まで落ち着いたが中東緊張継続で高止まりしやすい。OPEC+は7月に18.8万B/D増産決議したが地政学リスクが相殺し下落幅は限定的。",
       "catalysts": [
-        "ホルムズ海峡の再開交渉または更なる封鎖継続",
-        "米国・イラン間の外交的解決の有無",
-        "IEA・OPECによる代替供給増産対応"
+        "ホルムズ海峡の閉鎖・輸送途絶の長期化",
+        "米EIA在庫の大幅減少継続",
+        "OPEC+の増産加速（需給緩和→価格下押しリスク）"
       ],
       "top_news": [
         {
-          "headline": "ホルムズ海峡が事実上封鎖、世界の海上石油貿易の25%に影響し7月末まで再開困難との見方",
-          "published": "2026-03-04",
-          "comment": "世界のエネルギー輸送の要衝が封鎖されており、原油高とインフレ長期化につながるリスクがある",
-          "source": "Reuters / IEA / Wikipedia",
+          "headline": "イスラエル・イランがミサイル応酬、WTI原油が4%超急騰して$94台へ",
+          "published": "2026-06-08",
+          "comment": "中東の軍事エスカレーションが供給途絶懸念を直接刺激、原油に強い上昇圧力",
+          "source": "CNBC / Reuters",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Wikipedia（2026 Strait of Hormuz crisis）", "IEA", "Britannica", "House of Commons Library"],
+          "corroborated_by": ["Reuters", "Bloomberg"],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.cnbc.com/2026/06/08/oil-prices-today-us-iran-missile-middle-east-israel-opec.html"
+        },
+        {
+          "headline": "ホルムズ海峡がほぼ閉鎖状態、IEAが「歴史上最大の供給途絶」と警告",
+          "published": "2026-06-05",
+          "comment": "世界の原油輸送の要衝が遮断されれば供給不足が長期化し価格を押し上げる",
+          "source": "Wikipedia / IEA",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["Britannica"],
           "materiality": "high",
           "direction": "bullish",
           "url": "https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis"
         },
         {
-          "headline": "原油が96ドル近辺、イスラエル・イランのミサイル交換が続き供給不安が継続",
-          "published": "2026-06-05",
-          "comment": "紛争が続く間は供給リスクが価格に織り込まれやすく、反落には停戦などの具体的進展が必要",
-          "source": "Fortune / tradingkey.com",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["Fortune"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://fortune.com/article/price-of-oil-06-05-2026/"
+          "headline": "OPEC+が7月生産を18.8万B/D増産決議、UAE脱退後の結束力が問われる",
+          "published": "2026-05-03",
+          "comment": "増産は原油価格への下押し要因だが、地政学リスクが相殺して効果は限定的",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Reuters"],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/05/03/opec-announces-188000-barrels-per-day-output-increase-.html"
         }
       ]
     },
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "6月8日に160.2円前後で推移、3日連続で同水準での介入警戒。日本政府は4月28日〜5月27日に約730億ドルの実弾介入を実施済みで口頭介入も継続。一方で日銀は6月16日会合で追加利上げが濃厚で円高シフトのカタリストになりうる。米側でもFRBの利上げ観測が強まり金利差縮小が期待しにくい中、160円前後でのせめぎ合いが続く。",
+      "bias": "BULLISH",
+      "conviction": "MID",
+      "rationale": "USD/JPYは6月9日に160.15円、6月6日高値160.32円と34年ぶりの円安圏で高止まり。5月の強い米雇用統計でドルが全面高、米2年利回りが13bp急騰。日銀が6月6日に1.24兆円の緊急介入を実施したが効果は限定的。Fed（3.50〜3.75%）と日銀（0.75%）の金利差が円キャリー需要を支続けている。",
       "catalysts": [
-        "日銀6月16日会合での利上げ決定（円高圧力）",
-        "日本政府・財務省の為替実弾介入の実施",
-        "米10年金利の上昇継続（ドル高・円安方向）"
+        "FRBの追加利上げ決定（ドル高加速）",
+        "日銀の積極的な政策金利引き上げ（円高反転リスク）",
+        "中東緊張激化によるリスクオフ（円高方向の逆張りリスク）"
       ],
       "top_news": [
         {
-          "headline": "ドル円が160.2円、3日連続で日本当局が口頭介入を実施",
-          "published": "2026-06-08",
-          "comment": "160円台は日本が防衛ラインとみているとされ、超えると実弾介入のリスクが一段と高まりやすい",
-          "source": "tradingeconomics.com / Reuters",
+          "headline": "ドル円が160.32円に上昇、日銀が1兆2400億円の緊急介入も効果は限定的",
+          "published": "2026-06-06",
+          "comment": "政府・日銀が介入しても円安の勢いを止められず、さらなる介入警戒が続く",
+          "source": "CNBC / Bloomberg",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["tradingeconomics.com", "Reuters"],
+          "corroborated_by": ["Bloomberg", "Reuters"],
           "materiality": "high",
-          "direction": "neutral",
-          "url": "https://tradingeconomics.com/japan/currency"
+          "direction": "bullish",
+          "url": "https://www.cnbc.com/2026/05/07/japan-yen-intervention-boj-rate-gap-currency-pressure.html"
         },
         {
-          "headline": "日本の4月賃金上昇率が前年比3.5%に加速、日銀追加利上げを後押し",
-          "published": "2026-06-07",
-          "comment": "賃金上昇が続けば日銀はインフレ持続と判断し、利上げを正当化しやすくなる",
-          "source": "Reuters",
+          "headline": "5月米雇用統計でドルが急伸、米2年国債利回りが13bp上昇し4.17%に",
+          "published": "2026-06-05",
+          "comment": "雇用が強いほど利上げ期待が高まりドル高・円安が進みやすい構造",
+          "source": "Bloomberg",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Reuters"],
+          "corroborated_by": ["Reuters", "FRB"],
           "materiality": "high",
-          "direction": "bearish",
-          "url": "https://tradingeconomics.com/japan/currency"
+          "direction": "bullish",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-05/traders-fully-price-in-fed-rate-hike-this-year-after-jobs-data"
         }
       ]
     },
     {
       "name": "ユーロドル",
       "ticker": "EURUSD",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "6月8日に1.1536で推移、4月3日以来の安値水準近辺。中東紛争によるインフレ懸念と成長減速を受けてユーロ圏の先行きも不透明。ECBは6月11日に最初の追加利上げが見込まれるが、米国の強いNFPでドル高圧力も強く、ユーロの方向感は定まらない。材料出尽くしによる一時的な下落にも注意。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "EUR/USDは6月9日に1.1537と4月3日以来の安値圏。米雇用統計後のドル急伸で週間高値1.1651から1.1508まで約1.2%下落。中東紛争によるエネルギー価格上昇がユーロ圏のインフレ圧力と成長見通しを悪化させており、相対的なドル優位が続く見通し。",
       "catalysts": [
-        "ECB6月11日会合（利上げ予想で相当程度織り込み済みの可能性）",
-        "米国の景気指標（FRBの利上げ観測の強弱）",
-        "中東情勢によるユーロ圏成長への影響度"
+        "FRBの利上げ実施によるドル高継続",
+        "欧州エネルギーコスト上昇（インフレ再加速とECBの政策ジレンマ）",
+        "ECBの利下げ期待が剥落することによるユーロの持ち直し（上方リスク）"
       ],
       "top_news": [
         {
-          "headline": "ユーロドルが1.1536に、ECBが6月11日会合での利上げを予想されるも上値は重い",
+          "headline": "ユーロドルが1.1508と4月3日以来の安値を付け、米雇用統計後のドル高に押される",
           "published": "2026-06-08",
-          "comment": "ECB利上げ期待はある程度織り込み済みで、実際の決定後に売り材料になる可能性もある",
-          "source": "tradingeconomics.com / Reuters",
+          "comment": "米利上げ期待でドルが全面高となり、ユーロの相対的な弱さが際立っている",
+          "source": "Trading Economics / Federal Reserve",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Reuters", "Bloomberg", "ECB"],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://tradingeconomics.com/euro-area/currency"
+        },
+        {
+          "headline": "原油急騰でユーロ圏のインフレ懸念が再燃、成長見通しにも影を落とす",
+          "published": "2026-06-08",
+          "comment": "エネルギー輸入国のユーロ圏にとって原油高は物価と景気の両方に悪影響",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "MID",
-          "corroborated_by": ["tradingeconomics.com"],
+          "corroborated_by": [],
           "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://www.exchangerates.org.uk/EUR-USD-spot-exchange-rates-history-2026.html"
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/06/08/oil-prices-today-us-iran-missile-middle-east-israel-opec.html"
         }
       ]
     },
@@ -260,56 +319,56 @@
       "ticker": "BTC-USD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "6月8日に$63,563と前日比+2.18%で小幅反発。6月2日の$69,256から、MicroStrategyの配当捻出目的のBTC売却や利上げ観測を受けて下落していたが、$60,000台の支持帯からの自律反発の様相。暗号資産市場全体の時価総額は昨年ピーク比▲48%の2.18兆ドルと低迷が続く。",
+      "rationale": "6月8日時点で$63,563と一定の回復。6月5日の株式崩落時には$61,929まで下落したが大幅な連鎖売りには至らず。2025年10月の高値から約30%低い水準で推移。機関投資家の継続的な需要が下値を支えるが、FRB利上げ再燃によるドル高・リスクオフ環境では上値追いが難しい。",
       "catalysts": [
-        "米FRBの利上げ観測（リスク資産全般への逆風）",
-        "機関投資家ETF経由の需給動向",
-        "MicroStrategyなど大口保有者の売買動向"
+        "リスクオフ深化による株安連動の売り",
+        "FRB利上げによるドル高加速（BTC逆風）",
+        "機関投資家の継続的な買い需要（下値支持）"
       ],
       "top_news": [
         {
-          "headline": "ビットコインが$63,563に小幅回復、月初71,000ドル台からの下落が一服",
+          "headline": "ビットコインが$63,563に部分回復、株式崩落時の最安値$61,929から反発",
           "published": "2026-06-08",
-          "comment": "FRBの利上げ観測と大口売りが重なり下落していたが、技術的な支持帯で買い戻しが入っている",
-          "source": "Fortune",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["Fortune", "buyucoin.com"],
+          "comment": "株と連動して売られたが急落には至らず、機関需要が下支えとなった",
+          "source": "Fortune / CoinDesk",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Fortune", "Yahoo Finance"],
           "materiality": "mid",
           "direction": "neutral",
           "url": "https://fortune.com/article/price-of-bitcoin-06-08-2026/"
         },
         {
-          "headline": "MicroStrategyが月次配当支払いのためビットコイン32枚を売却、投資家心理が一時悪化",
-          "published": "2026-06-03",
-          "comment": "大口保有者の売却は市場に供給圧力をかけ、価格の急反落につながることがある",
-          "source": "tradingkey.com",
+          "headline": "BTCは2025年10月の高値から約30%下落した水準で推移、上値が重い状態",
+          "published": "2026-06-05",
+          "comment": "ATHからの下落幅が大きく、強気に転じるには相場環境の改善が必要",
+          "source": "Fortune",
           "tier": 3,
-          "credibility": "LOW",
+          "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "mid",
+          "materiality": "low",
           "direction": "bearish",
-          "url": "https://www.tradingkey.com/analysis/cryptocurrencies/btc/261945885-crypto-bitcoin-btc-price-crashing-usd-strategy-fed-tradingkey"
+          "url": "https://fortune.com/article/price-of-bitcoin-06-05-2026/"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "野村證券が2026年末の日経平均見通しを7万500円（上振れ）〜5万3,000円（下振れ）に設定",
-      "reason": "年間見通しは中長期参考値。直近の相場動向には直接影響しないため除外"
+      "headline": "英国5月の新車販売が7.1%増、BEV登録が34.2%増",
+      "reason": "監視8資産への直接的影響が限定的"
     },
     {
-      "headline": "Goldman Sachs「強い雇用統計でも利上げは依然として可能性低い」との見解",
-      "reason": "単一証券会社のアウトルック。市場コンセンサスと乖離があり、単独では信頼度MID以下のため補足情報として採用せず"
+      "headline": "インドネシア株式が週間で4年ぶりの安値を記録",
+      "reason": "エマージング市場の動向で監視対象資産への直接影響が薄い"
     },
     {
-      "headline": "各種アナリストによる年末USDJPY予測（150〜180円の幅）",
-      "reason": "予測レンジが広すぎ根拠が分散しており、短期の方向性判断に使えないため除外"
+      "headline": "ゴールドマン・サックスは現時点で米利上げを基本シナリオとしていない",
+      "reason": "NFPニュースとFRB利上げ見通しは他のニュースで十分に織り込み済み、繰り返し情報"
     },
     {
-      "headline": "暗号資産市場全体の時価総額がピーク比48%減の2.18兆ドルに",
-      "reason": "単一ソース（tradingkey.com、tier3）でピークの基準日が不明確。BTCのコメントに統合済みのため独立ニュースとして除外"
+      "headline": "2026年6月の株式市場は「夏枯れ」季節性が見られるか——StoneX分析",
+      "reason": "定性的なアウトルック記事であり、直近の価格変動ニュースと比較して材料性が低い"
     }
   ]
 }
