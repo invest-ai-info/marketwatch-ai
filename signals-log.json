@@ -98644,7 +98644,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.982,
-    "max_adverse_excursion_pct": -0.795,
+    "max_adverse_excursion_pct": -0.803,
     "email_sent": true,
     "whipsaw_check": {
       "is_reversal": false,
@@ -99261,7 +99261,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.499,
-    "max_adverse_excursion_pct": 0.238,
+    "max_adverse_excursion_pct": -0.112,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -99460,7 +99460,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.841,
-    "max_adverse_excursion_pct": 0.344,
+    "max_adverse_excursion_pct": -0.223,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -99790,6 +99790,579 @@
         "弱いタイプ(macd_golden)",
         "環境C(警戒)"
       ]
+    }
+  },
+  {
+    "id": "USDJPY=X_1h_20260610_0427",
+    "fired_at": "2026-06-10T04:27:07+09:00",
+    "timeframe": "1h",
+    "ticker": "USDJPY=X",
+    "asset_name": "ドル円",
+    "signal_types": [
+      "bb_upper_break"
+    ],
+    "primary_signal": "bb_upper_break",
+    "primary_signal_label": "🟡 ボリンジャー +2σ 突破（過熱注意）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 160.40499877929688,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.09928208045524138,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 66.4,
+      "macd": 0.0522,
+      "macd_sig": 0.0305,
+      "ma25": 160.2165,
+      "ma75": 160.1358,
+      "bb_low": 160.0697,
+      "bb_up": 160.3924,
+      "recent_high": 160.449,
+      "recent_low": 160.045,
+      "adx": 18.41,
+      "chop": 44.02,
+      "ma_dev_pct": 0.0504,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "sr_runway": null,
+    "selection": null,
+    "news_count": 2,
+    "news_titles": [
+      "ドル安がリリーフラリーに乗れていない理由",
+      "トランプ氏のイラン投稿に市場はどう反応したか：チャートで見る"
+    ],
+    "ai_narrative": "ドル円はボリンジャーバンド+2σを上抜け、過熱感を示唆しています。RSIも60台後半と強気ですが、MACDはデッドクロス寸前で、明確な上昇トレンドとは言えません。直近のニュースではトランプ氏の発言が市場の反応を促す可能性があり、ドル円の変動要因となり得ます。通貨強弱ではドルが微増、円が微減と、ややドル優位ですが、決定打には欠けます。このまま+2σを大きく上回る展開となれば、シナリオは崩れるでしょう。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-06-10T04:27:24+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": 0.013,
+      "EUR": 0.242,
+      "GBP": 0.479,
+      "JPY": -0.198,
+      "AUD": -0.356
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.72 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +1.2pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "neutral",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-09T15:08:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "MID",
+      "signal_direction": "neutral",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)"
+      ],
+      "edge_tier": null,
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "方向感なし（warn のみのシグナル）",
+      "score": null,
+      "entry_vs_ma25_signed": null,
+      "range_pos": null,
+      "ma_ratio_pct": null
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 重要指標まで 17.0h: 米 CPI 5 月"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 17.0,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 40.8,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 41.0,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.72,
+        "avg_30d": 17.37,
+        "change_24h_pct": 4.23
+      },
+      "atr_regime": {
+        "current_atr": 0.0993,
+        "avg_atr_30d": 0.1156,
+        "ratio": 0.86,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "GBPUSD=X_1h_20260610_0427",
+    "fired_at": "2026-06-10T04:27:07+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 1.3381506204605103,
+    "stop_loss": 1.3402258149255906,
+    "take_profit_1": 1.33538369450707,
+    "take_profit_2": 1.3340002315303499,
+    "atr": 0.0013834629767201477,
+    "sl_pct": 0.15507928878485036,
+    "tp1_pct": -0.20677238504646714,
+    "tp2_pct": -0.3101585775697007,
+    "indicators_at_signal": {
+      "rsi": 54.12,
+      "macd": 0.0009,
+      "macd_sig": 0.0009,
+      "ma25": 1.3369,
+      "ma75": 1.3378,
+      "bb_low": 1.3335,
+      "bb_up": 1.3416,
+      "recent_high": 1.341,
+      "recent_low": 1.3332,
+      "adx": 22.66,
+      "chop": 53.9,
+      "ma_dev_pct": 0.0681,
+      "ma_dir": "down",
+      "regime": "range"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": 3.559,
+      "d_res_atr": 2.075
+    },
+    "selection": {
+      "tier": "elite",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "range"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "円が160円台に、イラン協議のさなかドルは2ヶ月ぶり高値から下落",
+      "米国のイラン攻撃で停戦への楽観論が後退、ドルは上昇",
+      "ホルムズ海峡合意への楽観論で原油価格が下落、ドルは軟調",
+      "ドイツ銀行、ユーロ/ポンドのさらなる上昇余地を見込む",
+      "バーナム氏によるスターマー氏への挑戦を前に、ギルツ（英国債）は急落"
+    ],
+    "ai_narrative": "MACDのデッドクロスは短期的な下降転換を示唆し、ボリンジャーバンドの-2σ近辺への接近と直近安値への下落期待からショートを推奨します。  ファンダメンタルズでは、イラン情勢を巡る不確実性からドルは一時的に上昇しましたが、停戦への楽観論後退はドル高要因であり、GBP/USDのショートシナリオとは逆方向です。  通貨強弱ではGBPがUSDより若干強いですが、複合逆張りとして注意が必要です。  このショートシナリオは、ポンドドルが直近高値である1.34を明確に超えて上昇した場合、崩れると判断します。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 10.8,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "GBPUSD=X_1h_20260609_1739"
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "4H",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 4H 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.013,
+      "EUR": 0.242,
+      "GBP": 0.479,
+      "JPY": -0.198,
+      "AUD": -0.356
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.72 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +1.2pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-09T15:08:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ GBP 強（+0.48%）× USD 強（+0.01%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": 0.466,
+      "base_strength": 0.479,
+      "quote_strength": 0.013
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 0,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 D (-2)",
+        "上位足トレンド順張り (+2)",
+        "反転検知あり (-2)",
+        "FX 強弱逆張り (-1)",
+        "選別ティア: 精鋭(runwayクリア×レンジ) (+2)"
+      ],
+      "edge_tier": "elite",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.16, entry_vs_ma25=-0.10%)",
+      "score": -0.16,
+      "entry_vs_ma25_signed": -0.097,
+      "range_pos": 0.632,
+      "ma_ratio_pct": -0.068
+    },
+    "environment": {
+      "env_score": "D",
+      "score_label": "🚫 取引禁止",
+      "size_factor": 0.0,
+      "size_label": "取引非推奨",
+      "warnings": [
+        "🟡 重要指標まで 17.0h: 米 CPI 5 月",
+        "🚫 危機キーワード 3 件: 急落,攻撃,ホルムズ海峡"
+      ],
+      "danger_count": 3,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 17.0,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 40.8,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 41.0,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.72,
+        "avg_30d": 17.37,
+        "change_24h_pct": 4.23
+      },
+      "atr_regime": {
+        "current_atr": 0.0014,
+        "avg_atr_30d": 0.0013,
+        "ratio": 1.03,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 3,
+        "matched_keywords": [
+          "急落",
+          "攻撃",
+          "ホルムズ海峡"
+        ],
+        "matched_titles": [
+          "米国のイラン攻撃で停戦への楽観論が後退、ドルは上昇",
+          "ホルムズ海峡合意への楽観論で原油価格が下落、ドルは軟調",
+          "バーナム氏によるスターマー氏への挑戦を前に、ギルツ（英国債）は急落"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "red",
+      "score": -2,
+      "reasons": [
+        "環境D(指標直前/危機)"
+      ]
+    }
+  },
+  {
+    "id": "GBPAUD=X_1h_20260610_0427",
+    "fired_at": "2026-06-10T04:27:07+09:00",
+    "timeframe": "1h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "rsi_overbought"
+    ],
+    "primary_signal": "rsi_overbought",
+    "primary_signal_label": "🟡 RSI 過買い（利確検討）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 1.9050400257110596,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 0.0025146799369400396,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 72.03,
+      "macd": 0.0033,
+      "macd_sig": 0.0027,
+      "ma25": 1.8973,
+      "ma75": 1.8913,
+      "bb_low": 1.8889,
+      "bb_up": 1.9076,
+      "recent_high": 1.9071,
+      "recent_low": 1.891,
+      "adx": 38.23,
+      "chop": 31.92,
+      "ma_dev_pct": 0.3128,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": null,
+    "selection": null,
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドルはRSIが72.0と過熱気味であり、テクニカル的には調整の可能性を示唆しています。MACDもクロス寸前であり、一旦の上値の重さが予想されます。ファンダメンタルズでは、香港ハンセン指数が下落しており、中国経済の不透明感がAUDの重石となる可能性があります。通貨強弱ではGBPがAUDを上回っていることも、ポンド優位を示唆しています。しかし、中国のテック株回復期待が一時的にAUDを支える可能性もあり、油断は禁物です。このシナリオが崩れるとすれば、中国経済の更なる悪化が観測された場合です。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-06-10T04:27:24+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": 0.013,
+      "EUR": 0.242,
+      "GBP": 0.479,
+      "JPY": -0.198,
+      "AUD": -0.356
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.72 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +1.2pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "neutral",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-09T15:08:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "neutral",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": NaN,
+          "change_pct": NaN
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 24657.06,
+          "change_pct": -1.22
+        }
+      },
+      "news": [
+        "テック株回復、アジア株式市場を押し上げ",
+        "テック株急落、アジア株式市場を襲う",
+        "テック株後退とペルシャ湾地域の景況感悪化、アジア株式市場を鈍化させる",
+        "ペルシャ湾地域の暗雲、アジア株式市場を覆う",
+        "AIへの楽観論、アジア株式市場を高値に導く"
+      ]
+    },
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)"
+      ],
+      "edge_tier": null,
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "方向感なし（warn のみのシグナル）",
+      "score": null,
+      "entry_vs_ma25_signed": null,
+      "range_pos": null,
+      "ma_ratio_pct": null
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 重要指標まで 17.0h: 米 CPI 5 月"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 17.0,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 40.8,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 41.0,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.67,
+        "avg_30d": 17.37,
+        "change_24h_pct": 3.96
+      },
+      "atr_regime": {
+        "current_atr": 0.0025,
+        "avg_atr_30d": 0.0024,
+        "ratio": 1.06,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
     }
   }
 ]
