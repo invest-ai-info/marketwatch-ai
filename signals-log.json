@@ -101391,8 +101391,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.068,
+    "max_adverse_excursion_pct": -0.021,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -101543,6 +101543,191 @@
         "売られすぎ/逆張り系の勝ち筋",
         "落ちるナイフ(下降中のロング)"
       ]
+    }
+  },
+  {
+    "id": "NKD=F_4h_20260610_0703",
+    "fired_at": "2026-06-10T07:03:10+09:00",
+    "timeframe": "4h",
+    "ticker": "NKD=F",
+    "asset_name": "日経 225 先物 (CME)",
+    "signal_types": [
+      "ma_dead"
+    ],
+    "primary_signal": "ma_dead",
+    "primary_signal_label": "🔴 移動平均デッドクロス（中期下降入り）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 64435.0,
+    "stop_loss": 65740.05092394732,
+    "take_profit_1": 62694.93210140358,
+    "take_profit_2": 61824.89815210537,
+    "atr": 870.0339492982088,
+    "sl_pct": 2.0253758422399524,
+    "tp1_pct": -2.7005011229866027,
+    "tp2_pct": -4.050751684479905,
+    "indicators_at_signal": {
+      "rsi": 39.51,
+      "macd": -482.3896,
+      "macd_sig": -455.201,
+      "ma25": 65639.4,
+      "ma75": 65777.2667,
+      "bb_low": 63203.8072,
+      "bb_up": 67149.1928,
+      "recent_high": 67905.0,
+      "recent_low": 63135.0,
+      "adx": 28.97,
+      "chop": 54.97,
+      "ma_dev_pct": 0.2096,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": true,
+      "block_frac": 0.747,
+      "aligned": false,
+      "d_sup_atr": 1.494,
+      "d_res_atr": 3.988
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": true,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "日経 225 先物は、25MA が 75MA を下抜けるデッドクロスが発生し、中期的な下降トレンド入りを示唆しています。RSI も 39.5 と売られすぎの領域に近く、MACD もデッドクロスから下落しています。これらのテクニカルシグナルは、ショートエントリーを支持しています。  ファンダメンタルズ面では、足元のニュース材料は限定的ですが、円安への警戒感や世界経済の減速懸念が下落圧力となり得ます。  通貨強弱では、円が最弱となっていることから、円安進行と連動した下落の可能性も考えられます。  このショートシナリオが崩れるのは、65740.05 のストップロスを明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 日足 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.0,
+      "EUR": 0.192,
+      "GBP": 0.389,
+      "JPY": -0.149,
+      "AUD": -0.286
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.87 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +1.5pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-10T06:05:52+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": "NEUTRAL",
+      "asset_conviction": "MID",
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": -1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "上位足トレンド逆張り (-1)",
+        "選別ティア: 回避(飛びつき/ma_goldenロング/runway阻害) (-2)"
+      ],
+      "edge_tier": "avoid",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 2.272,
+      "entry_vs_ma25_signed": 1.835,
+      "range_pos": 0.273,
+      "ma_ratio_pct": -0.21
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 重要指標まで 14.4h: 米 CPI 5 月"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 14.4,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 38.2,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 38.4,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.87,
+        "avg_30d": 17.38,
+        "change_24h_pct": 5.02
+      },
+      "atr_regime": {
+        "current_atr": 870.0339,
+        "avg_atr_30d": 686.5817,
+        "ratio": 1.27,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
     }
   }
 ]
