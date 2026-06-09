@@ -102,7 +102,7 @@ NEWSLETTER_FORM = '''
       <div class="ml-form-successBody row-success" style="display:none">
         <div class="ml-form-successContent">
           <h4>✅ 登録ありがとうございます！</h4>
-          <p>確認メールをお送りしました。メール内のリンクをクリックすると登録が完了します。</p>
+          <p>次回のメルマガ配信をお楽しみに。</p>
         </div>
       </div>
     </div>
