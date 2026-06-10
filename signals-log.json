@@ -94452,7 +94452,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 3.357,
+    "max_favorable_excursion_pct": 3.638,
     "max_adverse_excursion_pct": 0.068,
     "email_sent": true,
     "whipsaw_check": {
@@ -98592,7 +98592,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.803,
-    "max_adverse_excursion_pct": -2.515,
+    "max_adverse_excursion_pct": -2.798,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -99175,7 +99175,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.071,
+    "max_favorable_excursion_pct": 0.089,
     "max_adverse_excursion_pct": -0.253,
     "email_sent": true,
     "whipsaw_check": {
@@ -100562,12 +100562,12 @@
       "（速報）ドル下落にもかかわらず、金価格は6ヶ月ぶりの安値に下落"
     ],
     "ai_narrative": "ゴールド先物は、直近20本安値割れで下落シグナルが点灯しています。RSIは31と売られすぎ圏に近く、MACDもデッドクロスを示唆しており、テクニカル的にショート優位な状況です。  ファンダメンタルズでは、「インフレ報告を控え金価格は下落傾向」「ドル下落にもかかわらず金価格は6ヶ月ぶりの安値に下落」といったニュースが、価格下落を支持しています。  このショートシナリオは、金価格がボリンジャーバンドの-2σを上抜けた場合に崩れると考えられます。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-06-10T00:00:00-04:00",
+    "hit_tp1_at": "2026-06-10T00:00:00-04:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 1.954,
+    "max_favorable_excursion_pct": 1.984,
     "max_adverse_excursion_pct": -0.164,
     "email_sent": true,
     "whipsaw_check": {
@@ -100691,6 +100691,31 @@
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 19.87,
+        "end": 19.87,
+        "change_pct": 0.0
+      },
+      "news_during_holding": [
+        "米国とイランの敵対関係再燃で原油高、金は下落",
+        "タイタン・ミネラルズ、セロ・ベルデ鉱化帯のトレンチング延長でダイナスティ掘削を再開",
+        "SSRマイニング株が本日値を下げた理由",
+        "IAMGOLD（IAG）、コテ金鉱の鉱物資源推定値を12％増加",
+        "ヘクラ・マイニング株が本日下落した理由",
+        "S&P500、ナスダックは下落、投資家はAIとチップから休憩 — AAPL、ASTS、APLD、RIVN、ZVRAに注目",
+        "TSX（トロント証券取引所）終値：BOC（カナダ銀行）の金利決定を前に原油安がエネルギー株に重しとなり指数は下落",
+        "ベテランアナリスト、金価格の重要水準を特定"
+      ],
+      "ai_result": {
+        "primary_category": "テクニカル順当",
+        "primary_cause": "売られすぎ圏からの反発とトレンド継続",
+        "ai_diagnosis": "RSI31は売られすぎを示唆するものの、25MAと75MAのデッドクロス、MACDのマイナス領域での推移がショート優位の環境を作り出していました。直近安値割れで下落シグナルが点灯し、ファンダメンタルズも下落を支持したため、テクニカルとファンダメンタルズの複合要因で成功しました。",
+        "lesson": "RSI売られすぎでも、MAやMACDが下落支持ならショートを検討。AI解説の崩壊条件を注視。",
+        "category_tag": "テクニカル順当",
+        "repeatable": "medium"
+      }
     }
   },
   {
@@ -101509,7 +101534,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.165,
-    "max_adverse_excursion_pct": -0.064,
+    "max_adverse_excursion_pct": -0.085,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -101722,7 +101747,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.737,
+    "max_favorable_excursion_pct": 0.947,
     "max_adverse_excursion_pct": -1.017,
     "email_sent": true,
     "whipsaw_check": {
@@ -102841,6 +102866,597 @@
       "score": -2,
       "reasons": [
         "弱いタイプ(macd_golden)"
+      ]
+    }
+  },
+  {
+    "id": "SI=F_4h_20260610_1355",
+    "fired_at": "2026-06-10T13:55:58+09:00",
+    "timeframe": "4h",
+    "ticker": "SI=F",
+    "asset_name": "銀 先物",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 63.630001068115234,
+    "stop_loss": 65.70545903920346,
+    "take_profit_1": 60.862723773330934,
+    "take_profit_2": 59.47908512593879,
+    "atr": 1.3836386473921485,
+    "sl_pct": 3.2617600758272305,
+    "tp1_pct": -4.349013434436307,
+    "tp2_pct": -6.523520151654461,
+    "indicators_at_signal": {
+      "rsi": 22.84,
+      "macd": -2.2128,
+      "macd_sig": -1.9066,
+      "ma25": 69.1161,
+      "ma75": 73.3321,
+      "bb_low": 63.026,
+      "bb_up": 72.7408,
+      "recent_high": 74.06,
+      "recent_low": 63.76,
+      "adx": 47.36,
+      "chop": 46.12,
+      "ma_dev_pct": 5.7492,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 7.538
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "本日の銀価格（6月9日火曜日）：週明け、下落基調で推移",
+      "Titan Minerals、Cerro Verde鉱化帯のトレンチング延長を受けてDynasty掘削を再開",
+      "SSR Mining株が本日急落した理由",
+      "Hecla Mining株が本日急落した理由",
+      "S&P 500、Nasdaqは下落終了 AI・半導体から投資家が一息、AAPL、ASTS、APLD、RIVN、ZVRAに注目"
+    ],
+    "ai_narrative": "銀先物は、直近 20 本安値割れ、RSI 低水準、MACD デッドクロスとテクニカルに強い売りシグナルが出ています。直近ニュースでも銀価格の下落基調が報じられており、ファンダメンタルズとも整合的です。通貨強弱でも GBP が優位な中、銀のショートは一時的な下落に留まる可能性も示唆されます。シナリオが崩れるのは、ボリンジャーバンド+2σを明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.131,
+      "EUR": 0.243,
+      "GBP": 0.377,
+      "JPY": -0.036,
+      "AUD": -0.56
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.87 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +2.6pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "other",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-10T06:05:52+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "上位足トレンド順張り (+2)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 14.199,
+      "entry_vs_ma25_signed": 7.938,
+      "range_pos": -0.013,
+      "ma_ratio_pct": -5.749
+    },
+    "environment": {
+      "env_score": "C",
+      "score_label": "🔴 非推奨",
+      "size_factor": 0.5,
+      "size_label": "サイズ縮小推奨",
+      "warnings": [
+        "🟡 重要指標まで 7.6h: 米 CPI 5 月",
+        "🟡 危機キーワード 2 件: 急落"
+      ],
+      "danger_count": 2,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 7.6,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 31.3,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 31.6,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.87,
+        "avg_30d": 17.38,
+        "change_24h_pct": 5.02
+      },
+      "atr_regime": {
+        "current_atr": 1.3836,
+        "avg_atr_30d": 1.2924,
+        "ratio": 1.07,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 2,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "SSR Mining株が本日急落した理由",
+          "Hecla Mining株が本日急落した理由"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋",
+        "環境C(警戒)"
+      ]
+    }
+  },
+  {
+    "id": "BTC-USD_4h_20260610_1355",
+    "fired_at": "2026-06-10T13:55:58+09:00",
+    "timeframe": "4h",
+    "ticker": "BTC-USD",
+    "asset_name": "ビットコイン",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 61194.48046875,
+    "stop_loss": 62807.985229252125,
+    "take_profit_1": 59043.1407880805,
+    "take_profit_2": 57967.47094774575,
+    "atr": 1075.6698403347496,
+    "sl_pct": 2.636683485410237,
+    "tp1_pct": -3.5155779805469827,
+    "tp2_pct": -5.273366970820474,
+    "indicators_at_signal": {
+      "rsi": 39.63,
+      "macd": -499.3221,
+      "macd_sig": -460.0839,
+      "ma25": 62132.2055,
+      "ma75": 66689.3298,
+      "bb_low": 60785.1628,
+      "bb_up": 64154.0129,
+      "recent_high": 64184.2812,
+      "recent_low": 60400.0195,
+      "adx": 34.34,
+      "chop": 51.27,
+      "ma_dev_pct": 6.8334,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": true,
+      "block_frac": 0.369,
+      "aligned": false,
+      "d_sup_atr": 0.739,
+      "d_res_atr": 2.779
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": true,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "ビットコインとイーサリアム、6月9日火曜日の価格：投資家が代替案を模索する中、値動きが安定",
+      "戦略、ビットコインへの投資を継続：優先株式のリスクに引き続き注目",
+      "米国、イランへの「比例配分」攻撃開始でビットコイン、イーサリアム、XRPが下落、ドージコインは横ばい：アナリストはBTCの74,000ドルへの早期の力強い反発を見込む",
+      "FTX破綻以来、ビットコインにとって最悪の1週間、さらなる下落を示唆",
+      "トランプ氏、イランを攻撃：停戦交渉が不安定な中、ビットコイン、金、原油が反応"
+    ],
+    "ai_narrative": "MACDのデッドクロスとRSIの低迷から、ビットコインは短期的な下降トレンド入りを示唆しています。直近のニュースでは、地政学リスクの高まりやFTX破綻の影響がビットコイン価格の下落要因として挙げられており、今回のショート方向感と整合します。短期的な円安傾向とは逆行しますが、地政学リスクはビットコインにとって安全資産としての魅力も否定できないため、注視が必要です。シナリオが崩れるのは、MACDがシグナル線を上抜け、さらなる上昇を示唆する場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.131,
+      "EUR": 0.243,
+      "GBP": 0.377,
+      "JPY": -0.036,
+      "AUD": -0.56
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.87 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +2.6pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-10T06:05:52+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": "NEUTRAL",
+      "asset_conviction": "LOW",
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": -1,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 D (-2)",
+        "上位足トレンド順張り (+2)",
+        "選別ティア: 回避(飛びつき/ma_goldenロング/runway阻害) (-2)"
+      ],
+      "edge_tier": "avoid",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": true,
+      "reason": "通過",
+      "score": 8.633,
+      "entry_vs_ma25_signed": 1.509,
+      "range_pos": 0.21,
+      "ma_ratio_pct": -6.833
+    },
+    "environment": {
+      "env_score": "D",
+      "score_label": "🚫 取引禁止",
+      "size_factor": 0.0,
+      "size_label": "取引非推奨",
+      "warnings": [
+        "🟡 重要指標まで 7.6h: 米 CPI 5 月",
+        "🚫 危機キーワード 3 件: 攻撃,破綻"
+      ],
+      "danger_count": 3,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 7.6,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 31.3,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 31.6,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.87,
+        "avg_30d": 17.38,
+        "change_24h_pct": 5.02
+      },
+      "atr_regime": {
+        "current_atr": 1075.6698,
+        "avg_atr_30d": 1150.1662,
+        "ratio": 0.94,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 3,
+        "matched_keywords": [
+          "攻撃",
+          "破綻"
+        ],
+        "matched_titles": [
+          "米国、イランへの「比例配分」攻撃開始でビットコイン、イーサリアム、XRPが下落、ドージコインは横ばい：アナリストはBTCの74,000ドルへの早期の力強い反発を",
+          "FTX破綻以来、ビットコインにとって最悪の1週間、さらなる下落を示唆",
+          "トランプ氏、イランを攻撃：停戦交渉が不安定な中、ビットコイン、金、原油が反応"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "red",
+      "score": -2,
+      "reasons": [
+        "環境D(指標直前/危機)"
+      ]
+    }
+  },
+  {
+    "id": "^FTSE_4h_20260610_1355",
+    "fired_at": "2026-06-10T13:55:58+09:00",
+    "timeframe": "4h",
+    "ticker": "^FTSE",
+    "asset_name": "UK100 (FTSE 100)",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 10241.0302734375,
+    "stop_loss": 10155.0737720268,
+    "take_profit_1": 10355.638941985098,
+    "take_profit_2": 10412.943276258899,
+    "atr": 57.304334273799476,
+    "sl_pct": -0.839334511427502,
+    "tp1_pct": 1.119112681903336,
+    "tp2_pct": 1.678669022855004,
+    "indicators_at_signal": {
+      "rsi": 35.23,
+      "macd": -21.7037,
+      "macd_sig": -13.1025,
+      "ma25": 10359.8005,
+      "ma75": 10351.8425,
+      "bb_low": 10252.8388,
+      "bb_up": 10431.8115,
+      "recent_high": 10415.6904,
+      "recent_low": 10238.6201,
+      "adx": 25.84,
+      "chop": 57.85,
+      "ma_dev_pct": 0.0769,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.042,
+      "d_res_atr": 3.048
+    },
+    "selection": {
+      "tier": "elite",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "range"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "欧州株式、火曜取引はまちまちで終了、原油価格は下落",
+      "BP新CEO、事業簡素化へ組織再編",
+      "2026年6月に注目すべき英国ペニーストック",
+      "2026年6月、割安と推定される英国株式",
+      "利回り最大6.1%！2026年6月注目すべき英国配当株3選"
+    ],
+    "ai_narrative": "【UK100（FTSE 100）テクニカル＋ファンダメンタル分析】  ボリンジャーバンドの-2σタッチは、短期的な過売を示唆し、反発の期待からロングを推奨します。RSIも35台と売られすぎ水準にあり、テクニカル的には買い場と判断できます。英国ポンドは主要通貨に対し堅調で、通貨強弱の観点からもGBP買いを支持しています。2026年に関する割安株や配当株への言及は、中長期的な英国株への関心を示唆しており、足元のニュース材料は限定的ですが、欧州株がまちまちであったことは、目先の方向感にやや不透明感をもたらします。このシナリオは、市場が再び下落圧力を強め、直近安値を明確に更新する展開となれば崩れる可能性があります。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": 0.131,
+      "EUR": 0.243,
+      "GBP": 0.377,
+      "JPY": -0.036,
+      "AUD": -0.56
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 19.87 中立 (0)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +2.6pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-06-10T06:05:52+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "選別ティア: 精鋭(runwayクリア×レンジ) (+2)"
+      ],
+      "edge_tier": "elite",
+      "chasing_downgrade": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-1.56, entry_vs_ma25=-1.15%)",
+      "score": -1.556,
+      "entry_vs_ma25_signed": -1.146,
+      "range_pos": 0.014,
+      "ma_ratio_pct": 0.077
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 重要指標まで 7.6h: 米 CPI 5 月"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "米 CPI 5 月",
+          "hours_until": 7.6,
+          "impact": "critical",
+          "datetime": "2026-06-10T21:30:00+09:00"
+        },
+        {
+          "name": "ECB 政策金利発表（6月）",
+          "hours_until": 31.3,
+          "impact": "high",
+          "datetime": "2026-06-11T21:15:00+09:00"
+        },
+        {
+          "name": "米 PPI 5 月",
+          "hours_until": 31.6,
+          "impact": "high",
+          "datetime": "2026-06-11T21:30:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.87,
+        "avg_30d": 17.38,
+        "change_24h_pct": 5.02
+      },
+      "atr_regime": {
+        "current_atr": 57.3043,
+        "avg_atr_30d": 61.3815,
+        "ratio": 0.93,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "green",
+      "score": 1,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋"
       ]
     }
   }
