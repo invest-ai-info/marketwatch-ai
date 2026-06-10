@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIシグナル研究日誌 #1｜新フィルタを実データ534件で検証したら「不採用」になった話 - MarketWatch AI</title>
+  <meta name="description" content="「ファンダメンタルズで方向を決めてからエントリーすれば勝率が上がる」という仮説を、自動シグナル534件の実データで検証。結果は仮説の棄却。検証期間・対象銘柄・使ったシグナル・統計の根拠・判断理由まで、勝ち負け関係なくすべて公開する研究日誌の第1回。">
+  <meta name="keywords" content="AIシグナル,検証,バックテスト,勝率,期待値,信頼区間,過適合,リスクオン,リスクオフ,逆張り,順張り,トレード改善,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-001.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #1｜新フィルタを実データ534件で検証したら「不採用」になった話">
+  <meta property="og:description" content="新フィルタ仮説を実データ534件で検証→棄却。検証方法・数字・判断根拠をすべて公開する研究日誌、第1回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-001.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #1｜新フィルタを実データ534件で検証したら「不採用」になった話",
+    "description": "「ファンダで方向を決めてから入る」仮説を自動シグナル534件の実データで検証し、棄却するまでの全過程を公開。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-10",
+    "dateModified": "2026-06-10",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-001.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #1
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #1<br><small style="font-size:.65em;color:#57606a;font-weight:400">新フィルタを実データ534件で検証したら「不採用」になった話</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月10日 &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>この連載は、当サイトの自動シグナルシステムを<strong>毎週ガチで検証して、その過程を勝ち負け関係なくすべて公開する研究日誌</strong>です。</p>
+    <p>投資の情報発信では「勝った話」ばかりが目立ちます。でも実際の研究開発は、<strong>うまくいかなかった検証の山</strong>の上に成り立っています。私たちは「うまくいった話」だけでなく、<strong>「期待して作った仕組みがデータに否定された話」もそのまま公開</strong>します。第1回は、さっそくその「否定された話」です。</p>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#premise">前提：このシグナルシステムとは</a></li>
+        <li><a href="#hypothesis">今回の仮説：「ファンダで方向を決めてから入れば勝てるはず」</a></li>
+        <li><a href="#method">検証方法：期間・対象・使ったシグナル・合格ライン</a></li>
+        <li><a href="#result">結果：仮説は棄却された（しかも逆だった）</a></li>
+        <li><a href="#why">なぜ逆だったのか：エッジとフィルタの「向き」が真逆だった</a></li>
+        <li><a href="#trap">「じゃあ逆に張れば勝てるのでは？」→ それもやらない理由</a></li>
+        <li><a href="#decision">今回の決定事項</a></li>
+        <li><a href="#lessons">この検証から学べる4つのこと</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="premise">① 前提：このシグナルシステムとは</h2>
+
+    <p>当サイトでは、<strong>18銘柄</strong>（日経CME・S&amp;P500・ナスダック・ダウ・FTSE・金・銀・原油・ビットコイン・主要FX9ペア）を<strong>4時間ごとに自動分析</strong>し、テクニカル条件が揃ったときに「シグナル」として検出・記録しています。</p>
+    <p>重要なのは、<strong>発火したシグナルは勝っても負けてもすべて記録している</strong>ことです。エントリー価格・損切りライン（SL）・利確ライン（TP）・その後どちらに先に到達したか——全件をログに残し、<a href="track-record.html">シグナル成績ページ</a>で公開しています。この「全件記録」が、今回のような検証を可能にする土台です。</p>
+
+    <div class="info-box">
+      <strong>ポジションプランの仕組み（共通ルール）</strong><br>
+      損切り（SL）＝エントリーから ATR（平均的な値動き幅）×1.5、利確第1目標（TP1）＝ATR×2.0。つまり「負けたら −1 の損、勝ったら約 +1.33 の利益」という比率（リスクリワード 1:1.33）です。この比率では、<strong>勝率が約43%を超えないとトータルで赤字</strong>になります。この「43%」が本記事全体の合格ラインです。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="hypothesis">② 今回の仮説：「ファンダで方向を決めてから入れば勝てるはず」</h2>
+
+    <p>5月末、私たちはシステムの大幅な作り直しを設計しました。発想はこうです。</p>
+
+    <ul>
+      <li>今のシステムは<strong>テクニカル指標の条件が揃っただけで発火</strong>する。方向（買いか売りか）もテクニカル任せ</li>
+      <li>それなら、まず<strong>市場全体が「リスクオン（強気）」か「リスクオフ（弱気）」かを判定</strong>し（VIX・通貨の強弱・金と株の力関係などから算出）、</li>
+      <li><strong>その方向と同じ向きのシグナルだけを通せば</strong>、地合いに逆らう負けトレードが減って勝率が上がるはず</li>
+    </ul>
+
+    <p>直感的には筋が良さそうに聞こえます。「上昇相場では買いだけ、下落相場では売りだけ」——投資の教科書にも書いてありそうな話です。</p>
+    <p>ただし私たちは、この新フィルタを<strong>いきなり本番に入れませんでした</strong>。まず約2週間、フィルタの判定結果を<strong>「記録するだけ」</strong>にして（発火やメール配信は一切変えない）、答え合わせのためのデータを貯めました。今回の検証は、その答え合わせです。</p>
+
+    <!-- ====================================== -->
+    <h2 id="method">③ 検証方法：期間・対象・使ったシグナル・合格ライン</h2>
+
+    <h3>検証の枠組み</h3>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>自動シグナルの全発火記録 642件のうち、勝敗が確定した <strong>534件</strong>（TP1到達=勝ち 215件／SL到達=負け 319件）</td></tr>
+      <tr><td>期間</td><td><strong>2026年5月20日〜6月10日</strong>（約3週間）。うち新フィルタの判定が記録されているのは5月29日以降の294件</td></tr>
+      <tr><td>対象銘柄</td><td>18銘柄（指数5・コモディティ3・BTC・FX9ペア）</td></tr>
+      <tr><td>時間足</td><td>1時間足 306件／4時間足 228件</td></tr>
+      <tr><td>方法</td><td><strong>反実仮想テスト</strong>＝「もしこのフィルタを使っていたら、過去の成績はどうなっていたか」を全件で集計</td></tr>
+      <tr><td>合格ライン</td><td>フィルタ通過後の勝率が<strong>43%（損益分岐）を明確に超える</strong>こと</td></tr>
+    </table>
+
+    <h3>検証対象になった主なシグナル</h3>
+    <p>このシステムが使っているテクニカルシグナルは、大きく「逆張り系（行き過ぎの反発を狙う）」と「順張り系（勢いに乗る）」に分かれます。</p>
+    <table>
+      <tr><th>シグナル</th><th>意味</th><th>タイプ</th><th>件数</th></tr>
+      <tr><td>bb_lower_touch</td><td>ボリンジャーバンド下限タッチ（売られすぎの反発狙い）</td><td>逆張り</td><td>134</td></tr>
+      <tr><td>rsi_oversold_bounce</td><td>RSI売られすぎ圏からの反発</td><td>逆張り</td><td>114</td></tr>
+      <tr><td>macd_dead</td><td>MACDデッドクロス（下方向への転換）</td><td>順張り(売)</td><td>81</td></tr>
+      <tr><td>macd_golden</td><td>MACDゴールデンクロス（上方向への転換）</td><td>順張り(買)</td><td>72</td></tr>
+      <tr><td>high_break / low_break</td><td>直近高値／安値のブレイク</td><td>順張り</td><td>59</td></tr>
+      <tr><td>ma_golden</td><td>移動平均線のゴールデンクロス</td><td>順張り(買)</td><td>30</td></tr>
+      <tr><td>その他</td><td>RSI買われすぎ、バンド上抜け 等</td><td>—</td><td>44</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>「95%信頼区間」を一緒に見る理由</strong><br>
+      勝率は件数が少ないと「たまたま」で大きくブレます。コインを6回投げて6回表が出ても、そのコインが特別とは言えないのと同じです。そこで本記事では、勝率の数字に必ず<strong>「統計的に見てこの範囲に本当の勝率がありそう」という幅（95%信頼区間）</strong>を添えます。この幅の下限が43%を超えて初めて「偶然ではなさそう」と判断します。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="result">④ 結果：仮説は棄却された（しかも逆だった）</h2>
+
+    <p>結論の表からどうぞ。「バイアス一致」＝ファンダ判定の方向とシグナルの方向が同じ（＝新フィルタが<strong>通す</strong>はずだったトレード）、「バイアス不一致」＝逆向き（＝新フィルタが<strong>弾く</strong>はずだったトレード）です。</p>
+
+    <table>
+      <tr><th>区分</th><th>件数</th><th>勝率</th><th>95%信頼区間</th><th>判定</th></tr>
+      <tr><td>全体（参考）</td><td>534</td><td>40.3%</td><td>36〜44%</td><td>❌ 分岐未満</td></tr>
+      <tr><td><strong>バイアス一致（通すはずだった）</strong></td><td>17</td><td><strong>11.8%</strong></td><td>3〜34%</td><td>❌ 大幅未達</td></tr>
+      <tr><td><strong>バイアス不一致（弾くはずだった）</strong></td><td>53</td><td><strong>56.6%</strong></td><td>43〜69%</td><td>✅ 分岐超え</td></tr>
+      <tr><td>ファンダ文脈一致（別判定方式）</td><td>46</td><td>34.8%</td><td>23〜49%</td><td>❌ 未達</td></tr>
+      <tr><td>ファンダ文脈不一致</td><td>68</td><td>48.5%</td><td>37〜60%</td><td>🟡 分岐超え（幅あり）</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="バイアス一致・不一致の勝率比較グラフ">
+        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">「フィルタが通すはずだった側」が大負けしていた</text>
+        <!-- axis -->
+        <line x1="150" y1="60" x2="150" y2="270" class="s-axis"/>
+        <line x1="150" y1="270" x2="660" y2="270" class="s-axis"/>
+        <!-- break-even line at 43% : x = 150 + 43*7 = 451 -->
+        <line x1="451" y1="55" x2="451" y2="270" class="s-guide"/>
+        <text x="451" y="295" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- bar1: 全体 40.3% width 282 -->
+        <rect x="150" y="75" width="282" height="38" class="s-fill-b" stroke="#0969da" stroke-width="1.5" rx="4"/>
+        <text x="20" y="99" class="s-label">全体 (534件)</text>
+        <text x="440" y="99" class="s-label-b">40.3%</text>
+        <!-- bar2: 一致 11.8% width 83 -->
+        <rect x="150" y="140" width="83" height="38" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="20" y="158" class="s-label">バイアス一致</text>
+        <text x="20" y="174" class="s-label-sm">通すはずだった (17件)</text>
+        <text x="241" y="164" class="s-label-r">11.8%</text>
+        <!-- bar3: 不一致 56.6% width 396 -->
+        <rect x="150" y="205" width="396" height="38" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="20" y="223" class="s-label">バイアス不一致</text>
+        <text x="20" y="239" class="s-label-sm">弾くはずだった (53件)</text>
+        <text x="554" y="229" class="s-label-g">56.6%</text>
+        <!-- x labels -->
+        <text x="150" y="295" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="640" y="295" text-anchor="middle" class="s-label-sm">70%</text>
+        <text x="350" y="318" text-anchor="middle" class="s-label-sm">※ 件数が少ないため幅をもって見る必要があります（本文の信頼区間を参照）</text>
+      </svg>
+      <div class="chart-caption">図1：新フィルタが「通す」はずだった一致側の勝率は11.8%、「弾く」はずだった不一致側は56.6%。設計の意図と正反対の結果になった。</div>
+    </div>
+
+    <p>つまりこのフィルタを本番投入していたら、<strong>勝っていたトレードを弾き、負けていたトレードだけを通す</strong>——意図と正反対の働きをしていたことになります。2つのグループの信頼区間（3〜34% と 43〜69%）は重なっておらず、「たまたま」では説明しにくい差です。さらに、別の判定方式（ファンダ文脈）でも同じ向きの逆転が出ており、実は<strong>1週間前の別の分析でも同じ傾向</strong>（一致17% vs なし45%）が確認されていました。独立した2回の検証で同じ向きの結果——ここまで揃えば、設計を引っ込めるのに十分です。</p>
+
+    <div class="negative-box">
+      <strong>判定：仮説は棄却。新フィルタ（ファンダ先行ゲート）は本番投入しない。</strong>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="why">⑤ なぜ逆だったのか：エッジとフィルタの「向き」が真逆だった</h2>
+
+    <p>結果だけ見ると不思議ですが、理由を掘ると構造的でした。</p>
+    <p>過去の検証（決済済み数百件・別途実施）で、このシステムの<strong>本当の勝ち筋（エッジ）は「売られすぎ＝みんながパニックで投げたところを逆張りで拾う」型</strong>だと分かっています。実際、今回の期間でも主力シグナルの上位2つ（バンド下限タッチ・RSI売られすぎ反発）はどちらも逆張り型でした。</p>
+    <p>ここに「市場の方向と同じ向きだけ通す」フィルタを重ねるとどうなるか。</p>
+
+    <ul>
+      <li>パニック売りの場面では、ファンダ判定も当然「弱気」になります</li>
+      <li>そこで勝ち筋の「逆張り買い」が出ても、方向が逆なので<strong>フィルタに弾かれる</strong></li>
+      <li>逆に「弱気方向への売り」は通りますが、それは<strong>すでに下げきった所への飛び乗り</strong>になりがちで、負けやすい</li>
+    </ul>
+
+    <p>つまり、<strong>順張りのフィルタと逆張りのエッジは、構造的に相性が最悪</strong>だったのです。「教科書的に正しそうな改良」が、自分のシステムの勝ち筋を理解していないと逆効果になる——手痛いですが、これが今回いちばん大きな学びでした。</p>
+
+    <!-- ====================================== -->
+    <h2 id="trap">⑥ 「じゃあ逆に張れば勝てるのでは？」→ それもやらない理由</h2>
+
+    <p>表を見て、こう思った方もいるはずです。「不一致側が勝率56.6%なら、<strong>フィルタを逆向きに使えば勝てる</strong>じゃないか」と。</p>
+    <p>私たちはこれも<strong>やりません</strong>。理由は3つあります。</p>
+
+    <ol>
+      <li><strong>件数が少ない（53件）</strong>：コインを53回投げれば、偏った結果はそれなりの確率で出ます。この程度のサンプルで戦略を反転させるのは、過去のデータに合わせて作り込みすぎる「過適合（オーバーフィッティング）」の典型パターンです</li>
+      <li><strong>たった3週間・1つの相場環境でしか検証していない</strong>：この期間に効いたものが、別の相場で効く保証はありません</li>
+      <li><strong>実例がすぐ足元にある</strong>：実は今回の検証で、<strong>ショート（売り）の勝率が50.4%</strong>と出ました。ところが約3週間前の分析では、ショートは<strong>勝率24.1%で「最悪の負け筋」</strong>でした。同じシステムでも、相場環境が変わるだけで勝ち負けがここまで入れ替わります。3週間の好成績に飛びつく危うさを、データ自身が教えてくれています</li>
+    </ol>
+
+    <div class="warning-box">
+      <strong>本記事の数字の扱いについて</strong>：本記事に出てくる勝率・期待値はすべて「当サイトの特定のシステムの、特定の期間における過去の集計」です。読者のみなさんの売買にそのまま当てはまるものではなく、将来の成績を示唆・保証するものでもありません。「逆に張れば勝てる」等の解釈で実際の売買をすることは推奨しません。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="decision">⑦ 今回の決定事項</h2>
+
+    <table>
+      <tr><th>項目</th><th>決定</th><th>根拠</th></tr>
+      <tr><td>ファンダ先行フィルタ</td><td><strong>本番投入しない</strong></td><td>一致側11.8% vs 不一致側56.6%の逆転（信頼区間が非重複）</td></tr>
+      <tr><td>フィルタの「逆張り採用」</td><td><strong>しない</strong></td><td>53件・単一相場環境では過適合リスクが高すぎる</td></tr>
+      <tr><td>判定の記録</td><td><strong>継続する</strong></td><td>別の相場環境のデータが貯まったら再検証するため</td></tr>
+      <tr><td>成績不振シグナルの扱い</td><td><strong>リストを更新</strong></td><td>ma_golden（移動平均GC）は勝率23.3%・信頼区間の上限でも41%と、統計的にも分岐未達が確定的。一方、以前「停止候補」だったmacd_deadは件数が増えたら49.4%まで回復——<strong>少ない件数で出した「死刑判決」も間違うことがある</strong>と分かったため、こちらは復権</td></tr>
+    </table>
+
+    <!-- ====================================== -->
+    <h2 id="lessons">⑧ この検証から学べる4つのこと</h2>
+
+    <p>今回の検証は当サイトのシステムの話ですが、個人投資家のみなさんの「手法づくり」にも通じる一般論として、4つの学びを整理します。</p>
+
+    <h3>1. 「正しそうな改良」ほど、入れる前に検証する</h3>
+    <p>「地合いに合わせて方向を絞る」は誰が聞いても筋が良さそうなアイデアでした。それでも実データは「逆効果」と答えました。<strong>もっともらしさと有効性は別物</strong>です。私たちは新しい仕組みを必ず「記録だけ→答え合わせ→合格なら本番」の順で入れています。</p>
+
+    <h3>2. 自分の手法の「勝ち筋」を先に知る</h3>
+    <p>同じフィルタでも、順張り型の手法に付ければ機能したかもしれません。改良が効くかどうかは、<strong>その手法がどこで利益を出しているか</strong>に依存します。勝ちトレードの共通点を知らないまま部品を足すのは、車のエンジンを知らずに改造するのと同じでした。</p>
+
+    <h3>3. 少ない件数の好成績・悪成績を信じすぎない</h3>
+    <p>ショートの勝率が3週間で24%→50%に入れ替わった例、件数が増えたら「死に筋」判定が覆ったmacd_deadの例。どちらも<strong>小サンプルの結論は平気で裏切る</strong>ことを示しています。これは「N回連続で勝った手法」を信じたくなる心理（<a href="guide-cognitive-biases.html">認知バイアス</a>）への、データからの警告でもあります。</p>
+
+    <h3>4. 負けを削るほうが、勝ちを足すより確実</h3>
+    <p>今回唯一はっきり確定したのは「ma_goldenが統計的にも負け筋」という事実でした。華々しい新フィルタは棄却され、地味な「負け筋の除去」だけが残る——改善とは大抵こういうものだと考えています。</p>
+
+    <!-- ====================================== -->
+    <h2 id="next">⑨ 次回に向けて</h2>
+
+    <p>この研究日誌は続きます。現在進行中の検証テーマは：</p>
+    <ul>
+      <li><strong>記録の継続</strong>：今回棄却したフィルタも記録は続け、別の相場環境で再検証します（結果が同じなら正式にお蔵入り、覆れば再考）</li>
+      <li><strong>選別タグの前向き検証</strong>：シグナルを質で4段階に分類するタグを記録中。「事前の格付けどおりに成績が並ぶか」を数週間かけて確認しています</li>
+      <li><strong>「落ち着いてから入る」エントリー方式</strong>：急落への飛びつきを避け、反発の確認を待ってから入る方式の設計・検証</li>
+    </ul>
+    <p>うまくいってもいかなくても、ここで報告します。最新のシグナル成績は<a href="track-record.html">シグナル成績ページ</a>でいつでも確認できます（こちらは毎日自動更新・全件公開です）。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 検証の土台になっている解説記事</div>
+      <div class="cta-box-desc">本記事に出てきた考え方・指標をくわしく知りたい方へ</div>
+      <div class="related-grid">
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+        <a class="related-card" href="guide-bollinger-bands.html">
+          <div class="related-card-title">📈 ボリンジャーバンドの見方</div>
+          <div class="related-card-desc">主力シグナル「バンド下限タッチ」の元になる指標</div>
+        </a>
+        <a class="related-card" href="guide-cognitive-biases.html">
+          <div class="related-card-title">🧠 投資の認知バイアス</div>
+          <div class="related-card-desc">「少ない勝ちを信じすぎる」心理の正体</div>
+        </a>
+        <a class="related-card" href="guide-loss-cut.html">
+          <div class="related-card-title">🛡️ 損切りの規律</div>
+          <div class="related-card-desc">「負けを削る」を実践に落とすための考え方</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
