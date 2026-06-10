@@ -2,6 +2,51 @@
 
 ---
 
+## 2026-06-11 | dollar-cost-averaging
+
+- **基準日（JST）**: 2026-06-11（UTC 2026-06-10T20:33:11Z）
+- **Topic**: ドルコスト平均法とは（積立の時間分散・メリットと限界）
+- **Key**: `dollar-cost-averaging`
+- **生成ファイル**: `drafts/draft-dollar-cost-averaging.html`
+- **シリーズ**: 💰 投資の基礎知識（guides.html 既存カテゴリ）
+
+### 参照出典 URL
+| 項目 | 出典 |
+|---|---|
+| ドルコスト平均法の仕組み・計算（ソニー生命） | https://www.sonylife.co.jp/land/shisan-keisei/article/dollar-cost-averaging/ |
+| 調和平均・定額購入の数学的根拠（Wikipedia） | https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%AB%E3%83%BB%E3%82%B3%E3%82%B9%E3%83%88%E5%B9%B3%E5%9D%87%E6%B3%95 |
+| 平均購入単価の考え方（松井証券） | https://www.matsui.co.jp/fund/column/dollar-cost-2025/ |
+| Vanguard 2012 研究（一括 vs DCA）| https://pwlcapital.com/wp-content/uploads/2024/08/Dollar-Cost-Averaging-vs-Lump-Sum-Investing.pdf |
+| Northwestern Mutual 一括 vs DCA データ | https://www.northwesternmutual.com/life-and-money/is-dollar-cost-averaging-better-than-lump-sum-investing/ |
+| Morgan Stanley 一括 vs DCA 分析 | https://www.morganstanley.com/articles/dollar-cost-averaging-lump-sum-investing |
+| ドルコスト平均法 出口戦略・やめ時（楽天証券） | https://www.rakuten-sec.co.jp/web/rfund/followup/newsletter/20220824.html |
+| 下落相場でやめてしまう罠（三菱UFJ銀行） | https://www.bk.mufg.jp/column/shisan_unyo/0022.html |
+
+### 自己コンプライアンスチェック結果
+| チェック項目 | 結果 |
+|---|---|
+| 個別銘柄の売買推奨なし | ✅ 教育・一般論のみ。「今 ○○ を買え」等の表現なし |
+| 断定・利益保証表現なし | ✅「絶対」「必ず」「100%」「保証」「儲かる」「一択」使用なし。「約67%」「約2.3ポイント」はVanguard研究から引用し出典明記。「かもしれません」「ことがあります」「見込まれます」「整理」等の慎重表現を使用 |
+| kinsho-v1 免責（冒頭バナー＋本文末＋footer）あり | ✅ 3箇所に data-disclaimer="kinsho-v1" または同等の文言を配置 |
+| noindex,nofollow あり | ✅ `<meta name="robots" content="noindex,nofollow">` を head に配置済み |
+| 出典の妥当性 | ✅ 調和平均の数学的定理（相加平均≧調和平均）は確立された数学の事実。Vanguard 2012研究は実在する研究で複数の金融機関が引用する信頼性の高いデータ。計算例（100口/200口/50口の例）は算術的に正確で自己計算値として明示。不確実な具体的数値（「積立すると○%必ず増える」等）は使用していない |
+| SVG 概念図に「※ 概念を示すイメージ図です」の注記 | ✅ 実装した 2 点の figcaption に注記あり |
+
+### SVG 図の構成
+1. **購入口数と価格変動の関係図**（3カ月の価格バー・口数棒グラフ・DCA平均単価線 vs 単純平均線の対比）— 実装済み
+2. **一括投資 vs ドルコスト平均法の資産成長イメージ**（右肩上がり相場での2本の曲線比較）— 実装済み
+3. `<!-- TODO(SVG): 「下落相場でやめる vs 継続する」の資産回復パターン比較図（やめた場合の固定含み損ライン vs 継続して平均単価が改善し回復する場合の資産ライン）を要追加・要ライト/ダーク実機確認 -->`
+
+### 人間の残作業
+- [ ] **SVG の実機ライト/ダーク確認**：追加クラス `.s-curve-b`・`.s-bar-dca`・`.s-bar-lump`・`.s-avg-line`・`.s-avg-line-dca`・`.s-fill-b`・`.s-fill-g`・`.s-fill-r`・`.s-dot-b`・`.s-qty-bar` をライト・ダークモードで目視確認。特にDCA棒グラフ（青）と平均単価のオレンジ破線がダークモードで視認できるか確認
+- [ ] **「下落相場でやめる vs 継続」SVGの追加**（HTML内 `TODO(SVG)` コメントを参照）：Section 6 のやめ時の罠を視覚的に示す最重要図として追加を推奨
+- [ ] **Opus compliance-reviewer 監査**：公開前に `compliance-reviewer` エージェント（Opus）に下書き全文を渡してレビューを依頼。特に「Vanguard 研究の数値引用の表現」「出口戦略の書き方」が投資助言にならないか確認
+- [ ] **タイトル微調整**：現タイトルは長め。「ドルコスト平均法とは｜仕組み・一括投資比較・やめ時の罠」等への短縮を検討
+- [ ] **関連記事リンクの確認**：`guide-loss-cut.html`・`guide-position-sizing.html`・`guide-compounding-drawdown.html` はすべて公開済みのため、本文内リンクは有効 ✓
+- [ ] **積立NISA・iDeCoへの言及確認**：本文中で「積立NISA・iDeCoの普及」と書いているが、制度の説明は最小限に留めた。公開時に読者の多くがNISA文脈で読むことを想定し、イントロの表現を調整することを検討
+
+---
+
 ## 2026-06-09 | leverage
 
 - **基準日（JST）**: 2026-06-09（UTC 2026-06-09）
