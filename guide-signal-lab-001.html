@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIシグナル研究日誌 #1｜新フィルタを実データ534件で検証したら「不採用」になった話 - MarketWatch AI</title>
-  <meta name="description" content="「ファンダメンタルズで方向を決めてからエントリーすれば勝率が上がる」という仮説を、自動シグナル534件の実データで検証。結果は仮説の棄却。検証期間・対象銘柄・使ったシグナル・統計の根拠・判断理由まで、勝ち負け関係なくすべて公開する研究日誌の第1回。">
+  <meta name="description" content="「相場のムードと同じ方向だけに絞れば勝率が上がるはず」——そんな新機能を、自動シグナル534件の実データで検証したら結果は真逆だった。検証期間・使ったシグナル・図解4枚・判断理由まで、勝ち負け関係なくすべて公開する研究日誌の第1回。">
   <meta name="keywords" content="AIシグナル,検証,バックテスト,勝率,期待値,信頼区間,過適合,リスクオン,リスクオフ,逆張り,順張り,トレード改善,研究日誌">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-001.html">
   <meta property="og:type" content="article">
@@ -21,7 +21,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "AIシグナル研究日誌 #1｜新フィルタを実データ534件で検証したら「不採用」になった話",
-    "description": "「ファンダで方向を決めてから入る」仮説を自動シグナル534件の実データで検証し、棄却するまでの全過程を公開。",
+    "description": "「相場のムードと同じ方向だけに絞る」新機能を実データ534件で検証し、不採用にするまでの全過程を図解つきで公開。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-06-10",
@@ -211,14 +211,22 @@
     <p>この連載は、当サイトの自動シグナルシステムを<strong>毎週ガチで検証して、その過程を勝ち負け関係なくすべて公開する研究日誌</strong>です。</p>
     <p>投資の情報発信では「勝った話」ばかりが目立ちます。でも実際の研究開発は、<strong>うまくいかなかった検証の山</strong>の上に成り立っています。私たちは「うまくいった話」だけでなく、<strong>「期待して作った仕組みがデータに否定された話」もそのまま公開</strong>します。第1回は、さっそくその「否定された話」です。</p>
 
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 「相場のムード（強気/弱気）と同じ方向のシグナルだけ通せば勝率が上がるはず」という新機能（門番フィルタ）を作った<br>
+      ② いきなり本番に入れず、過去のシグナル<strong>534件</strong>で「もし使っていたら？」を答え合わせした<br>
+      ③ 結果は<strong>真逆</strong>。門番が「通す」はずだった側の勝率は<strong>12%</strong>、「弾く」はずだった側は<strong>57%</strong>だった<br>
+      ④ よってこの新機能は<strong>お蔵入り</strong>。その判断理由と教訓を、この記事で全部公開します
+    </div>
+
     <div class="toc">
       <div class="toc-title">📋 目次</div>
       <ol>
         <li><a href="#premise">前提：このシグナルシステムとは</a></li>
-        <li><a href="#hypothesis">今回の仮説：「ファンダで方向を決めてから入れば勝てるはず」</a></li>
+        <li><a href="#hypothesis">試したアイデア：「相場のムードと同じ方向だけに絞る」</a></li>
         <li><a href="#method">検証方法：期間・対象・使ったシグナル・合格ライン</a></li>
-        <li><a href="#result">結果：仮説は棄却された（しかも逆だった）</a></li>
-        <li><a href="#why">なぜ逆だったのか：エッジとフィルタの「向き」が真逆だった</a></li>
+        <li><a href="#result">結果：アイデアは不合格（しかも逆だった）</a></li>
+        <li><a href="#why">なぜ逆だったのか：「勝ちパターン」と門番の相性が最悪だった</a></li>
         <li><a href="#trap">「じゃあ逆に張れば勝てるのでは？」→ それもやらない理由</a></li>
         <li><a href="#decision">今回の決定事項</a></li>
         <li><a href="#lessons">この検証から学べる4つのこと</a></li>
@@ -238,21 +246,51 @@
     </div>
 
     <!-- ====================================== -->
-    <h2 id="hypothesis">② 今回の仮説：「ファンダで方向を決めてから入れば勝てるはず」</h2>
+    <h2 id="hypothesis">② 試したアイデア：「相場のムードと同じ方向だけに絞れば勝てるはず」</h2>
 
-    <p>5月末、私たちはシステムの大幅な作り直しを設計しました。発想はこうです。</p>
+    <p>5月末、私たちはひとつの改良を思いつきました。発想はシンプルです。</p>
 
     <ul>
-      <li>今のシステムは<strong>テクニカル指標の条件が揃っただけで発火</strong>する。方向（買いか売りか）もテクニカル任せ</li>
-      <li>それなら、まず<strong>市場全体が「リスクオン（強気）」か「リスクオフ（弱気）」かを判定</strong>し（VIX・通貨の強弱・金と株の力関係などから算出）、</li>
-      <li><strong>その方向と同じ向きのシグナルだけを通せば</strong>、地合いに逆らう負けトレードが減って勝率が上がるはず</li>
+      <li>VIX（恐怖指数）や通貨の強さなどから、いまの相場が<strong>「強気モード」か「弱気モード」か</strong>を自動で判定する</li>
+      <li>強気モードのときは<strong>買いシグナルだけ</strong>を通し、弱気モードのときは<strong>売りシグナルだけ</strong>を通す</li>
+      <li>こうすれば「相場の流れに逆らった負けトレード」が減って、勝率が上がるはず</li>
     </ul>
 
-    <p>直感的には筋が良さそうに聞こえます。「上昇相場では買いだけ、下落相場では売りだけ」——投資の教科書にも書いてありそうな話です。</p>
-    <p>ただし私たちは、この新フィルタを<strong>いきなり本番に入れませんでした</strong>。まず約2週間、フィルタの判定結果を<strong>「記録するだけ」</strong>にして（発火やメール配信は一切変えない）、答え合わせのためのデータを貯めました。今回の検証は、その答え合わせです。</p>
+    <p>いわば、シグナルの出口に<strong>「門番」を立てる</strong>イメージです。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="門番フィルタの仕組み図">
+        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">例：相場が「強気モード」と判定されたとき</text>
+        <!-- gate -->
+        <text x="350" y="62" text-anchor="middle" class="s-label-y">門番（フィルタ）</text>
+        <rect x="330" y="72" width="40" height="180" rx="6" class="s-fill-y" stroke="#9a6700" stroke-width="1.5"/>
+        <!-- row1: buy passes -->
+        <rect x="40" y="92" width="200" height="50" rx="8" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="140" y="123" text-anchor="middle" class="s-label-g">買いシグナル</text>
+        <line x1="240" y1="117" x2="322" y2="117" class="s-axis"/>
+        <polygon points="322,111 322,123 334,117" fill="#8b949e"/>
+        <line x1="370" y1="117" x2="470" y2="117" class="s-curve-g"/>
+        <polygon points="470,111 470,123 482,117" fill="#1a7f37"/>
+        <text x="492" y="122" class="s-label-g">✅ 通す（配信する）</text>
+        <!-- row2: sell blocked -->
+        <rect x="40" y="182" width="200" height="50" rx="8" class="s-fill-r" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="140" y="213" text-anchor="middle" class="s-label-r">売りシグナル</text>
+        <line x1="240" y1="207" x2="322" y2="207" class="s-axis"/>
+        <polygon points="322,201 322,213 334,207" fill="#8b949e"/>
+        <text x="350" y="214" text-anchor="middle" class="s-label-r" style="font-size:17px">✕</text>
+        <text x="492" y="212" class="s-label-r">❌ 弾く（配信しない）</text>
+        <text x="350" y="290" text-anchor="middle" class="s-label-sm">「弱気モード」のときはこの逆（売りを通し、買いを弾く）</text>
+      </svg>
+      <div class="chart-caption">図1：試した「門番」の仕組み。相場のムードを判定し、同じ方向のシグナルだけを通す——はずだった。</div>
+    </div>
+
+    <p>「上昇相場では買いだけ、下落相場では売りだけ」。投資の教科書にも書いてありそうな、誰が聞いても筋の良さそうな話です。</p>
+    <p>ただし私たちは、これを<strong>いきなり本番に入れませんでした</strong>。まず約2週間、門番の判定結果を<strong>「記録するだけ」</strong>にして（配信するシグナルは一切変えない）、答え合わせ用のデータを貯めました。今回はその答え合わせです。</p>
 
     <!-- ====================================== -->
     <h2 id="method">③ 検証方法：期間・対象・使ったシグナル・合格ライン</h2>
+
+    <p>使ったのは、いわば<strong>「もしも検証」</strong>です。過去に出たシグナルには「買いか売りか」「勝ったか負けたか」がすべて記録されています。そこに門番の判定を重ねれば、<strong>「もし門番を使っていたら、どのトレードが通って、勝率は何%だったか」</strong>を、タイムマシンのように答え合わせできます。</p>
 
     <h3>検証の枠組み</h3>
     <table>
@@ -261,7 +299,7 @@
       <tr><td>期間</td><td><strong>2026年5月20日〜6月10日</strong>（約3週間）。うち新フィルタの判定が記録されているのは5月29日以降の294件</td></tr>
       <tr><td>対象銘柄</td><td>18銘柄（指数5・コモディティ3・BTC・FX9ペア）</td></tr>
       <tr><td>時間足</td><td>1時間足 306件／4時間足 228件</td></tr>
-      <tr><td>方法</td><td><strong>反実仮想テスト</strong>＝「もしこのフィルタを使っていたら、過去の成績はどうなっていたか」を全件で集計</td></tr>
+      <tr><td>方法</td><td><strong>「もしも検証」</strong>（専門用語で反実仮想テスト）＝「もし門番を使っていたら成績はどうだったか」を全件で集計</td></tr>
       <tr><td>合格ライン</td><td>フィルタ通過後の勝率が<strong>43%（損益分岐）を明確に超える</strong>こと</td></tr>
     </table>
 
@@ -279,27 +317,27 @@
     </table>
 
     <div class="info-box">
-      <strong>「95%信頼区間」を一緒に見る理由</strong><br>
-      勝率は件数が少ないと「たまたま」で大きくブレます。コインを6回投げて6回表が出ても、そのコインが特別とは言えないのと同じです。そこで本記事では、勝率の数字に必ず<strong>「統計的に見てこの範囲に本当の勝率がありそう」という幅（95%信頼区間）</strong>を添えます。この幅の下限が43%を超えて初めて「偶然ではなさそう」と判断します。
+      <strong>🔰 勝率には「ブレ幅」を添えます</strong><br>
+      勝率は件数が少ないと「たまたま」で大きく動きます。コインを6回投げて6回表が出ても、そのコインが特別とは言えないのと同じです。そこで本記事では、勝率に必ず<strong>「本当の実力はだいたいこの範囲」というブレ幅</strong>（統計用語で95%信頼区間）を添えます。<strong>ブレ幅ごと43%を超えて、はじめて合格</strong>と判定します。
     </div>
 
     <!-- ====================================== -->
-    <h2 id="result">④ 結果：仮説は棄却された（しかも逆だった）</h2>
+    <h2 id="result">④ 結果：アイデアは不合格（しかも逆だった）</h2>
 
-    <p>結論の表からどうぞ。「バイアス一致」＝ファンダ判定の方向とシグナルの方向が同じ（＝新フィルタが<strong>通す</strong>はずだったトレード）、「バイアス不一致」＝逆向き（＝新フィルタが<strong>弾く</strong>はずだったトレード）です。</p>
+    <p>結論の表からどうぞ。見方は簡単で、注目は太字の2行だけ。<strong>「ムードと同じ向き」＝門番が通すはずだった側</strong>、<strong>「ムードと逆向き」＝門番が弾くはずだった側</strong>です。門番がちゃんと働くなら、「同じ向き」の勝率が高くなっているはずです。</p>
 
     <table>
-      <tr><th>区分</th><th>件数</th><th>勝率</th><th>95%信頼区間</th><th>判定</th></tr>
-      <tr><td>全体（参考）</td><td>534</td><td>40.3%</td><td>36〜44%</td><td>❌ 分岐未満</td></tr>
-      <tr><td><strong>バイアス一致（通すはずだった）</strong></td><td>17</td><td><strong>11.8%</strong></td><td>3〜34%</td><td>❌ 大幅未達</td></tr>
-      <tr><td><strong>バイアス不一致（弾くはずだった）</strong></td><td>53</td><td><strong>56.6%</strong></td><td>43〜69%</td><td>✅ 分岐超え</td></tr>
-      <tr><td>ファンダ文脈一致（別判定方式）</td><td>46</td><td>34.8%</td><td>23〜49%</td><td>❌ 未達</td></tr>
-      <tr><td>ファンダ文脈不一致</td><td>68</td><td>48.5%</td><td>37〜60%</td><td>🟡 分岐超え（幅あり）</td></tr>
+      <tr><th>区分</th><th>件数</th><th>勝率</th><th>ブレ幅</th><th>判定</th></tr>
+      <tr><td>全体（参考）</td><td>534</td><td>40.3%</td><td>36〜44%</td><td>❌ 43%未満</td></tr>
+      <tr><td><strong>ムードと同じ向き（通すはず）</strong></td><td>17</td><td><strong>11.8%</strong></td><td>3〜34%</td><td>❌ 大幅未達</td></tr>
+      <tr><td><strong>ムードと逆向き（弾くはず）</strong></td><td>53</td><td><strong>56.6%</strong></td><td>43〜69%</td><td>✅ 43%超え</td></tr>
+      <tr><td>別方式の判定で同じ向き</td><td>46</td><td>34.8%</td><td>23〜49%</td><td>❌ 未達</td></tr>
+      <tr><td>別方式の判定で逆向き</td><td>68</td><td>48.5%</td><td>37〜60%</td><td>🟡 超えるが幅あり</td></tr>
     </table>
 
     <div class="chart-figure">
-      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="バイアス一致・不一致の勝率比較グラフ">
-        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">「フィルタが通すはずだった側」が大負けしていた</text>
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ムードと同じ向き・逆向きの勝率比較グラフ">
+        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">「門番が通すはずだった側」が大負けしていた</text>
         <!-- axis -->
         <line x1="150" y1="60" x2="150" y2="270" class="s-axis"/>
         <line x1="150" y1="270" x2="660" y2="270" class="s-axis"/>
@@ -312,12 +350,12 @@
         <text x="440" y="99" class="s-label-b">40.3%</text>
         <!-- bar2: 一致 11.8% width 83 -->
         <rect x="150" y="140" width="83" height="38" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
-        <text x="20" y="158" class="s-label">バイアス一致</text>
+        <text x="20" y="158" class="s-label">ムードと同じ向き</text>
         <text x="20" y="174" class="s-label-sm">通すはずだった (17件)</text>
         <text x="241" y="164" class="s-label-r">11.8%</text>
         <!-- bar3: 不一致 56.6% width 396 -->
         <rect x="150" y="205" width="396" height="38" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
-        <text x="20" y="223" class="s-label">バイアス不一致</text>
+        <text x="20" y="223" class="s-label">ムードと逆向き</text>
         <text x="20" y="239" class="s-label-sm">弾くはずだった (53件)</text>
         <text x="554" y="229" class="s-label-g">56.6%</text>
         <!-- x labels -->
@@ -325,41 +363,88 @@
         <text x="640" y="295" text-anchor="middle" class="s-label-sm">70%</text>
         <text x="350" y="318" text-anchor="middle" class="s-label-sm">※ 件数が少ないため幅をもって見る必要があります（本文の信頼区間を参照）</text>
       </svg>
-      <div class="chart-caption">図1：新フィルタが「通す」はずだった一致側の勝率は11.8%、「弾く」はずだった不一致側は56.6%。設計の意図と正反対の結果になった。</div>
+      <div class="chart-caption">図2：門番が「通す」はずだった側の勝率は11.8%、「弾く」はずだった側は56.6%。設計の意図と正反対の結果になった。</div>
     </div>
 
-    <p>つまりこのフィルタを本番投入していたら、<strong>勝っていたトレードを弾き、負けていたトレードだけを通す</strong>——意図と正反対の働きをしていたことになります。2つのグループの信頼区間（3〜34% と 43〜69%）は重なっておらず、「たまたま」では説明しにくい差です。さらに、別の判定方式（ファンダ文脈）でも同じ向きの逆転が出ており、実は<strong>1週間前の別の分析でも同じ傾向</strong>（一致17% vs なし45%）が確認されていました。独立した2回の検証で同じ向きの結果——ここまで揃えば、設計を引っ込めるのに十分です。</p>
+    <p>門番が<strong>通すはずだった側が大負け（12%）、弾くはずだった側がよく勝っていた（57%）</strong>。本番に入れていたら、勝ちトレードを捨てて、負けトレードだけを残すところでした。</p>
+    <p>しかも、2つのブレ幅（3〜34%と43〜69%）は<strong>重なっていません</strong>＝「たまたま」では説明しにくい差です。さらに1週間前に行った別の分析でも、同じ向きの逆転が出ていました。<strong>独立した2回の検証で同じ結果</strong>——ここまで揃えば、引っ込める判断に十分です。</p>
 
     <div class="negative-box">
-      <strong>判定：仮説は棄却。新フィルタ（ファンダ先行ゲート）は本番投入しない。</strong>
+      <strong>判定：不合格。門番フィルタは本番投入しない。</strong>
     </div>
 
     <!-- ====================================== -->
-    <h2 id="why">⑤ なぜ逆だったのか：エッジとフィルタの「向き」が真逆だった</h2>
+    <h2 id="why">⑤ なぜ逆だったのか：「勝ちパターン」と門番の相性が最悪だった</h2>
 
-    <p>結果だけ見ると不思議ですが、理由を掘ると構造的でした。</p>
-    <p>過去の検証（決済済み数百件・別途実施）で、このシステムの<strong>本当の勝ち筋（エッジ）は「売られすぎ＝みんながパニックで投げたところを逆張りで拾う」型</strong>だと分かっています。実際、今回の期間でも主力シグナルの上位2つ（バンド下限タッチ・RSI売られすぎ反発）はどちらも逆張り型でした。</p>
-    <p>ここに「市場の方向と同じ向きだけ通す」フィルタを重ねるとどうなるか。</p>
+    <p>結果だけ見ると不思議ですが、理由を掘るとシンプルでした。</p>
+    <p>過去の検証から、このシステムの<strong>勝ちパターンは「みんながパニックで投げ売りした所を、反発狙いで拾う」型</strong>（いわゆる逆張り）だと分かっています。実際、シグナル件数の上位2つ（バンド下限タッチ・RSI売られすぎ反発）は、どちらもこの型です。</p>
+    <p>ここに今回の門番を重ねると何が起きるか——下の図がすべてです。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="パニック売りの場面で門番が勝ちパターンを弾く仕組みの図解">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">パニック売り→反発の場面で、門番は何をしてしまうか</text>
+        <!-- mood badge -->
+        <rect x="478" y="44" width="192" height="34" rx="6" class="s-fill-y" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="574" y="66" text-anchor="middle" class="s-label-y">ムード判定＝「弱気」</text>
+        <!-- price curve: crash then bounce -->
+        <polyline points="50,90 130,130 210,180 280,225 340,252 390,260 430,250 480,228 540,196 600,165 660,140" class="s-curve-b"/>
+        <text x="150" y="105" class="s-label">急落（パニック売り）</text>
+        <!-- sell arrow passed by gate (near bottom) -->
+        <line x1="330" y1="180" x2="330" y2="225" stroke="#cf222e" stroke-width="2.6"/>
+        <polygon points="324,222 336,222 330,236" fill="#cf222e"/>
+        <text x="330" y="168" text-anchor="middle" class="s-label-r">門番が通す＝「売り」</text>
+        <!-- bounce loses the sell -->
+        <line x1="560" y1="130" x2="560" y2="190" class="s-guide"/>
+        <text x="560" y="118" text-anchor="middle" class="s-label-sm">→ 反発に踏まれて負けやすい</text>
+        <!-- buy arrow blocked (at trough) -->
+        <line x1="395" y1="320" x2="395" y2="276" stroke="#1a7f37" stroke-width="2.6"/>
+        <polygon points="389,278 401,278 395,264" fill="#1a7f37"/>
+        <text x="395" y="344" text-anchor="middle"><tspan class="s-label-g">勝ちパターン「反発狙いの買い」</tspan><tspan class="s-label-r"> → ❌ 門番に弾かれる</tspan></text>
+      </svg>
+      <div class="chart-caption">図3：急落の場面ではムード判定は当然「弱気」になる。すると門番は、勝ちパターンである「反発狙いの買い」を弾き、下げきった所への「売り」だけを通してしまう。</div>
+    </div>
 
     <ul>
-      <li>パニック売りの場面では、ファンダ判定も当然「弱気」になります</li>
-      <li>そこで勝ち筋の「逆張り買い」が出ても、方向が逆なので<strong>フィルタに弾かれる</strong></li>
-      <li>逆に「弱気方向への売り」は通りますが、それは<strong>すでに下げきった所への飛び乗り</strong>になりがちで、負けやすい</li>
+      <li>急落の場面では、ムード判定は当然<strong>「弱気モード」</strong>になる</li>
+      <li>そこにこのシステムの得意技「反発狙いの買い」が出ても、方向が逆なので<strong>門番に弾かれる</strong></li>
+      <li>かわりに通るのは「下げきった所への売り」——<strong>一番おいしい場面を逃した飛び乗り</strong>で、負けやすい</li>
     </ul>
 
-    <p>つまり、<strong>順張りのフィルタと逆張りのエッジは、構造的に相性が最悪</strong>だったのです。「教科書的に正しそうな改良」が、自分のシステムの勝ち筋を理解していないと逆効果になる——手痛いですが、これが今回いちばん大きな学びでした。</p>
+    <p>つまり、<strong>「流れに乗る」タイプの門番と、「流れに逆らって拾う」タイプの勝ちパターンは、根本的に食い合わせが悪かった</strong>のです。教科書的に正しそうな改良でも、自分のシステムが<strong>どこで勝っているか</strong>を知らずに足すと逆効果になる——手痛いですが、これが今回いちばん大きな学びでした。</p>
 
     <!-- ====================================== -->
     <h2 id="trap">⑥ 「じゃあ逆に張れば勝てるのでは？」→ それもやらない理由</h2>
 
-    <p>表を見て、こう思った方もいるはずです。「不一致側が勝率56.6%なら、<strong>フィルタを逆向きに使えば勝てる</strong>じゃないか」と。</p>
+    <p>図2を見て、こう思った方もいるはずです。「逆向き側が57%勝つなら、<strong>門番を逆向きに使えば勝てる</strong>じゃないか」と。</p>
     <p>私たちはこれも<strong>やりません</strong>。理由は3つあります。</p>
 
     <ol>
-      <li><strong>件数が少ない（53件）</strong>：コインを53回投げれば、偏った結果はそれなりの確率で出ます。この程度のサンプルで戦略を反転させるのは、過去のデータに合わせて作り込みすぎる「過適合（オーバーフィッティング）」の典型パターンです</li>
-      <li><strong>たった3週間・1つの相場環境でしか検証していない</strong>：この期間に効いたものが、別の相場で効く保証はありません</li>
-      <li><strong>実例がすぐ足元にある</strong>：実は今回の検証で、<strong>ショート（売り）の勝率が50.4%</strong>と出ました。ところが約3週間前の分析では、ショートは<strong>勝率24.1%で「最悪の負け筋」</strong>でした。同じシステムでも、相場環境が変わるだけで勝ち負けがここまで入れ替わります。3週間の好成績に飛びつく危うさを、データ自身が教えてくれています</li>
+      <li><strong>件数が少ない（53件）</strong>：コインを53回投げれば、偏った結果はそれなりの確率で出ます。この程度の件数で戦略をひっくり返すのは、過去のデータに合わせて作り込みすぎる<strong>「過適合（オーバーフィッティング）」</strong>の典型パターンです</li>
+      <li><strong>たった3週間・1つの相場環境でしか確かめていない</strong>：この期間に効いたものが、別の相場でも効く保証はありません</li>
+      <li><strong>「短期間の成績は裏切る」実例が、すぐ足元にある</strong>：下の図を見てください</li>
     </ol>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="売りシグナルの勝率が時期によって反転した比較グラフ">
+        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">同じシステムの「売りシグナル」勝率——時期でここまで変わる</text>
+        <!-- axes -->
+        <line x1="100" y1="260" x2="640" y2="260" class="s-axis"/>
+        <!-- break-even 43% : y = 260 - 43*4 = 88 -->
+        <line x1="100" y1="88" x2="640" y2="88" class="s-guide"/>
+        <text x="95" y="92" text-anchor="end" class="s-label-y">43%</text>
+        <!-- bar1: 24.1% h=96 -->
+        <rect x="170" y="164" width="120" height="96" rx="4" class="s-fill-r" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="230" y="152" text-anchor="middle" class="s-label-r">24%（29件）</text>
+        <text x="230" y="285" text-anchor="middle" class="s-label">約3週間前の分析</text>
+        <text x="230" y="304" text-anchor="middle" class="s-label-sm">「最悪の負け筋」だった</text>
+        <!-- bar2: 50.4% h=200 -->
+        <rect x="410" y="60" width="120" height="200" rx="4" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="470" y="48" text-anchor="middle" class="s-label-g">50%（115件）</text>
+        <text x="470" y="285" text-anchor="middle" class="s-label">今回の検証</text>
+        <text x="470" y="304" text-anchor="middle" class="s-label-sm">一転して勝ち越し</text>
+      </svg>
+      <div class="chart-caption">図4：同じシステムの売りシグナルでも、相場環境が変わると勝率24%→50%へ反転した。短期間の成績だけを見て戦略を決める危うさを、データ自身が教えてくれている。</div>
+    </div>
 
     <div class="warning-box">
       <strong>本記事の数字の扱いについて</strong>：本記事に出てくる勝率・期待値はすべて「当サイトの特定のシステムの、特定の期間における過去の集計」です。読者のみなさんの売買にそのまま当てはまるものではなく、将来の成績を示唆・保証するものでもありません。「逆に張れば勝てる」等の解釈で実際の売買をすることは推奨しません。
@@ -370,8 +455,8 @@
 
     <table>
       <tr><th>項目</th><th>決定</th><th>根拠</th></tr>
-      <tr><td>ファンダ先行フィルタ</td><td><strong>本番投入しない</strong></td><td>一致側11.8% vs 不一致側56.6%の逆転（信頼区間が非重複）</td></tr>
-      <tr><td>フィルタの「逆張り採用」</td><td><strong>しない</strong></td><td>53件・単一相場環境では過適合リスクが高すぎる</td></tr>
+      <tr><td>門番フィルタ（今回の新機能）</td><td><strong>本番投入しない</strong></td><td>通すはず側11.8% vs 弾くはず側56.6%の逆転（ブレ幅が重ならない）</td></tr>
+      <tr><td>門番の「逆向き採用」</td><td><strong>しない</strong></td><td>53件・1つの相場環境だけでは「たまたま」の可能性を消せない</td></tr>
       <tr><td>判定の記録</td><td><strong>継続する</strong></td><td>別の相場環境のデータが貯まったら再検証するため</td></tr>
       <tr><td>成績不振シグナルの扱い</td><td><strong>リストを更新</strong></td><td>ma_golden（移動平均GC）は勝率23.3%・信頼区間の上限でも41%と、統計的にも分岐未達が確定的。一方、以前「停止候補」だったmacd_deadは件数が増えたら49.4%まで回復——<strong>少ない件数で出した「死刑判決」も間違うことがある</strong>と分かったため、こちらは復権</td></tr>
     </table>
