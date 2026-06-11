@@ -79,8 +79,16 @@ ECONOMIC_EVENTS_FILE = "economic-events.json"  # 重要指標カレンダー
 # 価格データ取得（timeframe で 1h or 4h 切替）
 # ─────────────────────────────────────────────
 def fetch_data(symbol, timeframe="4h", days=30):
-    """yfinance で 1h 足を取得。timeframe='4h' の場合はリサンプル、'1h' はそのまま。"""
+    """yfinance で価格データを取得。'4h'=1h足をリサンプル、'1h'=そのまま、'1d'=日足を直接取得。"""
     try:
+        if timeframe == "1d":
+            # 🆕 2026-06-11: 日足は直接取得（MA75・各指標の計算に十分な約450日≒300本超）
+            df = yf.download(symbol, period="450d", interval="1d", progress=False, auto_adjust=True)
+            if df.empty:
+                return None
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+            return df
         df = yf.download(symbol, period=f"{days}d", interval="1h", progress=False, auto_adjust=True)
         if df.empty:
             return None
@@ -393,7 +401,7 @@ def detect_first_pullback(highs, lows, closes, signals_log_recent, ticker, timef
     if not signals_log_recent:
         return None
     target_break_type = "high_break" if direction == "long" else "low_break"
-    timeframe_hours = 4 if timeframe == "4h" else 1
+    timeframe_hours = 24 if timeframe == "1d" else (4 if timeframe == "4h" else 1)
     window_hours = pullback_window * timeframe_hours
 
     breakout_signal = None
@@ -1409,6 +1417,9 @@ def check_trend_alignment(ticker, current_direction, current_timeframe):
         higher_tf, higher_interval, days = "4H", "1h", 40  # 4H = 1h を resample
     elif current_timeframe == "4h":
         higher_tf, higher_interval, days = "日足", "1d", 200
+    elif current_timeframe == "1d":
+        # 🆕 2026-06-11: 日足シグナルの上位足＝週足（MA75 用に約170週分）
+        higher_tf, higher_interval, days = "週足", "1wk", 1200
     else:
         return {"aligned": None, "higher_tf": None, "higher_tf_trend": None, "explanation": ""}
 
@@ -2049,6 +2060,9 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
     if timeframe == "1h":
         tf_label = "1H 足"
         hold_label = "短期スキャル〜デイトレ（数時間〜1 日保有）"
+    elif timeframe == "1d":
+        tf_label = "日足"
+        hold_label = "日足ポジション（数日〜数週間保有）"
     else:
         tf_label = "4H 足"
         hold_label = "4H スイング（1〜5 日保有）"
@@ -2555,8 +2569,8 @@ def main():
     # CLI 引数パース（簡易）
     import argparse
     parser = argparse.ArgumentParser(description="Technical signal alert generator")
-    parser.add_argument("--timeframe", choices=["1h", "4h"], default="4h",
-                        help="分析する時間軸（1h or 4h、デフォルト 4h）")
+    parser.add_argument("--timeframe", choices=["1h", "4h", "1d"], default="4h",
+                        help="分析する時間軸（1h / 4h / 1d、デフォルト 4h）")
     parser.add_argument("--no-email", action="store_true",
                         help="メール送信を無効化（データ収集のみ）")
     args = parser.parse_args()
@@ -2574,8 +2588,8 @@ def main():
 
     # timeframe ごとに別ファイルでクールダウン管理
     history_file = "technical-alerts-history.json" if timeframe == "4h" else f"technical-alerts-history-{timeframe}.json"
-    # 1H はクールダウンを短く（4H の 12h → 1H なら 4h）
-    cooldown_hours = ALERT_COOLDOWN_HOURS if timeframe == "4h" else 4
+    # クールダウン: 1H は短く(4h)、日足は長く(72h)。4H は銘柄別（ループ内で適用）
+    cooldown_hours = {"4h": ALERT_COOLDOWN_HOURS, "1h": 4, "1d": 72}[timeframe]
 
     print(f"📡 {len(SYMBOLS)} 銘柄の {timeframe.upper()} 足チャート分析を開始 "
           f"(email={'OFF' if no_email else 'ON'}, cooldown={cooldown_hours}h)")
@@ -2626,7 +2640,7 @@ def main():
             continue
         # 🆕 2026-05-28: 同 ticker/timeframe の直近シグナルを抽出して detect_signals に渡す（初押し検出用）
         # pullback_window=15 本 × timeframe + バッファ
-        recent_lookback_hours = 15 * (4 if timeframe == "4h" else 1) + 12
+        recent_lookback_hours = 15 * (24 if timeframe == "1d" else (4 if timeframe == "4h" else 1)) + 12
         signals_log_recent = []
         for s in signals_log:
             if s.get("ticker") != ticker or s.get("timeframe") != timeframe:
@@ -2781,6 +2795,9 @@ def main():
         if timeframe == "1h":
             tf_label_display = "1H"
             hold_label_display = "数時間〜1 日（短期）"
+        elif timeframe == "1d":
+            tf_label_display = "日足"
+            hold_label_display = "数日〜数週間（ポジション）"
         else:
             tf_label_display = "4H"
             hold_label_display = "1〜5 日（スイング）"
