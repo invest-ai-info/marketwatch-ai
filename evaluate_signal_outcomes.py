@@ -32,6 +32,7 @@ if hasattr(sys.stderr, "reconfigure"):
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 EXPIRY_DAYS = 7  # シグナル発火から 7 日経って未到達なら expired
+EXPIRY_DAYS_1D = 21  # 🆕 2026-06-11: 日足シグナルは TP/SL が広く決着に時間がかかるため 3 週間
 
 
 # ─────────────────────────────────────────────
@@ -476,7 +477,7 @@ def evaluate_one(entry, now_jst):
         candidates.sort(key=lambda x: (x[1], 0 if x[0] == "sl" else 1))
         outcome, resolved_at_ts = candidates[0]
         resolved_at = resolved_at_ts.isoformat()
-    elif age_hours >= EXPIRY_DAYS * 24:
+    elif age_hours >= (EXPIRY_DAYS_1D if entry.get("timeframe") == "1d" else EXPIRY_DAYS) * 24:
         outcome = "expired"
         resolved_at = now_jst.isoformat(timespec="seconds")
 
