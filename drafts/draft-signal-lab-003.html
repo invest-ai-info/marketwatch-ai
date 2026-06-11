@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #3｜切り番フィルタは空振り——でも掘り下げたら「方向の交絡」という別鉱脈が見えた - MarketWatch AI</title>
+  <meta name="description" content="金（ゴールド）の逆張りシグナルで「切り番近傍だと勝率が上がる」仮説を検証。空振りだったが、掘り下げるとGC=Fロング12.8%vsショート61.1%という驚きの差が浮かんだ。研究日誌第3回。">
+  <meta name="keywords" content="AIシグナル,検証,切り番,ゴールド,金,グループ別,勝率,研究日誌,逆張り,トレンド方向">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-003.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #3｜切り番フィルタは空振り——でも掘り下げたら「方向の交絡」という別鉱脈が見えた">
+  <meta property="og:description" content="GC=Fの切り番効果を実データ628件で検証。主仮説は空振りだったが、ロング12.8%vsショート61.1%という方向の差が浮上。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-003.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #3｜切り番フィルタは空振り——でも掘り下げたら「方向の交絡」という別鉱脈が見えた",
+    "description": "GC=Fの切り番効果を実データで検証。主仮説は空振り、しかしGC=Fロング12.8%vsショート61.1%の方向差から前回仮説との接続が見えた。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-003.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #3
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #3<br><small style="font-size:.65em;color:#57606a;font-weight:400">切り番フィルタは空振り——でも掘り下げたら「方向の交絡」という別鉱脈が見えた</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月12日 &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第3回です。<a href="guide-signal-lab-002.html">前回（#2）</a>では「上昇トレンド中の逆張りロング＝押し目買い」が4時間足で76.5%という有望な数字を示しました。ただし件数が少なく、<strong>銘柄の偏り（指数に集中）</strong>という宿題が残りました。</p>
+    <p>今回はその宿題に正面から向き合います。「銘柄グループによって勝率は違うのか」「金（ゴールド）では切り番（50ドル刻みの節目）の近くで逆張りが有効なのか」——という2層の仮説を628件のデータで掘り下げました。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 主仮説「金（GC=F）は切り番近傍で逆張り勝率が上がる」→ <strong>空振り</strong>。切り番近傍でも16.7%、遠くても5.9%。どちらも損益分岐43%に届かなかった<br>
+      ② しかし切り番の近い・遠いより<strong>もっと大きな差</strong>が見つかった——GC=Fの<strong>ロングは12.8%、ショートは61.1%</strong>という方向差<br>
+      ③ これは<a href="guide-signal-lab-002.html">#2</a>で見つけた「下降トレンドで逆張りロングは落ちるナイフ」と完全に一致する構造だった<br>
+      ④ グループ別では<strong>指数×逆張りが52.3%（CI下限40.4%）</strong>、<strong>他FX×逆張りが54.2%（CI下限41.7%）</strong>と継続観察に値する数字。どちらもCI下限はまだ43%未満で「確定」ではない
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——「金は切り番が節目になる」</a></li>
+        <li><a href="#method">検証方法（「もしも計算」と事前宣言）</a></li>
+        <li><a href="#result-round">結果①：切り番効果は空振りだった</a></li>
+        <li><a href="#result-group">結果②（副産物）：グループ差という大きな発見</a></li>
+        <li><a href="#result-direction">結果③：GC=Fを方向別に割ったら驚きの数字が出た</a></li>
+        <li><a href="#connect">#2との接続——「交絡」という言葉で整理する</a></li>
+        <li><a href="#decision">今回の決定事項</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——「金は切り番が節目になる」</h2>
+
+    <p>前回の検証で見えた「銘柄の偏り」から、今回の仮説が生まれました。前回の「押し目買い53件」は株価指数が中心で、金（GC=F）や銀（SI=F）は「落ちるナイフ」の下降グループに集まっていました。</p>
+    <p>そこで立てた仮説がこれです。<strong>「金・銀のような商品（コモディティ）は、4,400ドル・4,500ドル・4,550ドルといった50ドル刻みの切り番（節目）で機関投資家の大口指値が集まりやすく、そこで反発シグナルが出た場合、切り番から離れた場所より勝率が高いはずだ」</strong>。</p>
+
+    <div class="info-box">
+      <strong>💡 切り番（キリ番）とは</strong><br>
+      価格チャート上の「心理的な節目」のこと。金なら$4,500、$4,550のように50や100の倍数になる価格。買い注文や売り注文が集中しやすく、相場が反応しやすいと言われます（ただし必ず反応するわけではありません）。
+    </div>
+
+    <p>同時に、<strong>「指数（日経・S&amp;P500など）は切り番よりトレンドの文脈が重要」</strong>という比較仮説も合わせて検証しました。</p>
+
+    <table>
+      <tr><th>仮説</th><th>合格基準（事前宣言）</th></tr>
+      <tr><td>金銀の切り番効果</td><td>切り番近傍（0.5%以内）の勝率が遠い場合より+10%pt以上高く、かつ近傍の勝率が43%超え、かつN≥15</td></tr>
+      <tr><td>指数では切り番効果が弱い</td><td>指数の切り番近傍 vs 遠いの差が、金銀の差より小さい</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（「もしも計算」と事前宣言）</h2>
+
+    <p>前回と同じ「もしも検証」の手順です。過去データを見て「<em>もしこの条件だったら、勝率はどうだったか？</em>」を計算します。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>勝敗確定済みの<strong>628件</strong>（tp1またはslに到達済み）</td></tr>
+      <tr><td>期間</td><td>2026年5月20日〜6月12日（約3週間）</td></tr>
+      <tr><td>切り番の定義</td><td>GC=F（金先物）→50ドル刻み（4,350・4,400・4,450…）。SI=F（銀先物）→0.5ドル刻み。エントリー価格が最寄りの切り番まで0.5%以内なら「近傍」</td></tr>
+      <tr><td>損益分岐</td><td>43%（これを下回るとTP1:SL=1.33のR:Rでも期待値がマイナス）</td></tr>
+      <tr><td>ブレ幅の表示</td><td>Wilson法による95%信頼区間（ブレ幅）を全数字に併記</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="result-round">③ 結果①：切り番効果は空振りだった</h2>
+
+    <p>金・銀の逆張りシグナル53件を「切り番近傍（36件）」と「切り番から遠い（17件）」に分けて比較した結果です。</p>
+
+    <table>
+      <tr><th>区分</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>判定</th></tr>
+      <tr><td>切り番近傍（0.5%以内）</td><td>36</td><td><strong>16.7%</strong></td><td>7.9〜31.9%</td><td>❌ 大幅未達</td></tr>
+      <tr><td>切り番から遠い（0.5%超）</td><td>17</td><td><strong>5.9%</strong></td><td>1.0〜27.0%</td><td>❌ さらに低い</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図1: 切り番効果 バーチャート -->
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="メタル逆張り：切り番近傍vs遠い勝率比較">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">金・銀の逆張りシグナル：切り番の効果は？</text>
+        <line x1="160" y1="50" x2="160" y2="220" class="s-axis"/>
+        <line x1="160" y1="220" x2="660" y2="220" class="s-axis"/>
+        <!-- 損益分岐43% @ 160 + 43*5=375 -->
+        <line x1="375" y1="45" x2="375" y2="220" class="s-guide"/>
+        <text x="375" y="242" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- bar1 切り番近傍 16.7% = 160+16.7*5=243.5 width=83.5 -->
+        <rect x="160" y="65" width="83" height="42" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="30" y="83" class="s-label">切り番</text>
+        <text x="30" y="99" class="s-label-sm">近傍(36件)</text>
+        <text x="251" y="91" class="s-label-r">16.7%</text>
+        <!-- bar2 切り番遠い 5.9% = 29.5 -->
+        <rect x="160" y="140" width="29" height="42" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="30" y="158" class="s-label">切り番</text>
+        <text x="30" y="174" class="s-label-sm">遠い(17件)</text>
+        <text x="197" y="166" class="s-label-r">5.9%</text>
+        <text x="350" y="268" text-anchor="middle" class="s-label-sm">※ ブレ幅（CI）は重なっており、どちらも損益分岐43%に大きく届かない</text>
+      </svg>
+      <div class="chart-caption">図1：切り番近傍（0.5%以内）vs 遠いで分けた勝率。近傍の方が11pt高いが、どちらも43%に全く届かず「合格」の条件を満たさない。メタルの切り番効果は確認できなかった。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>切り番近傍の方が遠いより約11ポイント高い（16.7% vs 5.9%）ことはわかります。ただし<strong>両方とも43%に全く届いておらず</strong>、かつ「N≥15かつ43%超え」という合格基準の半分（43%超え）をどちらも達成できていません。</p>
+
+    <div class="negative-box">
+      <strong>今回の主仮説：棄却</strong><br>
+      切り番効果は確認できませんでした。近傍でも遠くても、金銀の逆張りシグナルはこの期間の損益分岐を大きく下回り続けました。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-group">④ 結果②（副産物）：グループ差という大きな発見</h2>
+
+    <p>主仮説が空振りだったとわかったとき、「そもそもメタル（金銀）はなぜこんなに低いのか」という疑問が生まれました。比較のために<strong>全6グループ × 逆張り/順張りの成績表</strong>を計算してみたところ、見過ごせない差が浮かんできました。</p>
+
+    <table>
+      <tr><th>グループ×シグナル種別</th><th>件数</th><th>勝率</th><th>ブレ幅</th><th>判定</th></tr>
+      <tr><td>メタル（金銀）× 逆張り</td><td>53</td><td>13.2%</td><td>6.5〜24.8%</td><td>❌ 最低グループ</td></tr>
+      <tr><td>メタル（金銀）× 順張り</td><td>38</td><td>36.8%</td><td>23.4〜52.7%</td><td>❌ 未達</td></tr>
+      <tr><td><strong>指数（日経・S&amp;P等）× 逆張り</strong></td><td>65</td><td><strong>52.3%</strong></td><td>40.4〜64.0%</td><td>🟡 CI下限40.4%（基準未達だが有望）</td></tr>
+      <tr><td>指数 × 順張り</td><td>72</td><td>38.9%</td><td>28.5〜50.4%</td><td>❌ 未達</td></tr>
+      <tr><td><strong>他FX（ドル円以外）× 逆張り</strong></td><td>59</td><td><strong>54.2%</strong></td><td>41.7〜66.3%</td><td>🟡 CI下限41.7%（基準未達だが有望）</td></tr>
+      <tr><td>他FX × 順張り</td><td>107</td><td>43.0%</td><td>34.0〜52.5%</td><td>❌ ぎりぎり未達</td></tr>
+      <tr><td>原油 × 逆張り</td><td>14</td><td>71.4%</td><td>45.4〜88.3%</td><td>✅ N=14と少ない</td></tr>
+      <tr><td>BTC × 逆張り</td><td>30</td><td>20.0%</td><td>9.5〜37.3%</td><td>❌ 低い</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図2: グループ×シグナル種別 バーチャート（主要なもの） -->
+      <svg viewBox="0 0 700 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="グループ別逆張り勝率比較">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">「逆張り」シグナルの勝率はグループによって大きく違う</text>
+        <line x1="155" y1="50" x2="155" y2="315" class="s-axis"/>
+        <line x1="155" y1="315" x2="660" y2="315" class="s-axis"/>
+        <!-- 43% line: 155 + 43*5=370 -->
+        <line x1="370" y1="45" x2="370" y2="315" class="s-guide"/>
+        <text x="370" y="338" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- 原油 71.4% = 155+71.4*5=512 w=357 -->
+        <rect x="155" y="58" width="357" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="72" class="s-label">原油逆張り</text>
+        <text x="10" y="88" class="s-label-sm">(14件)</text>
+        <text x="520" y="81" class="s-label-g">71.4%</text>
+        <!-- 他FX 54.2% = 155+54.2*5=426 w=271 -->
+        <rect x="155" y="108" width="271" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="122" class="s-label">他FX逆張り</text>
+        <text x="10" y="138" class="s-label-sm">(59件)</text>
+        <text x="434" y="131" class="s-label-g">54.2%</text>
+        <!-- 指数 52.3% = 155+52.3*5=416.5 w=261.5 -->
+        <rect x="155" y="158" width="261" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="172" class="s-label">指数逆張り</text>
+        <text x="10" y="188" class="s-label-sm">(65件)</text>
+        <text x="424" y="181" class="s-label-g">52.3%</text>
+        <!-- BTC 20.0% = 155+100=255 w=100 -->
+        <rect x="155" y="208" width="100" height="36" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="10" y="222" class="s-label">BTC逆張り</text>
+        <text x="10" y="238" class="s-label-sm">(30件)</text>
+        <text x="263" y="231" class="s-label-r">20.0%</text>
+        <!-- メタル 13.2% = 155+66=221 w=66 -->
+        <rect x="155" y="258" width="66" height="36" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="10" y="272" class="s-label">メタル逆張り</text>
+        <text x="10" y="288" class="s-label-sm">(53件)</text>
+        <text x="229" y="281" class="s-label-r">13.2%</text>
+        <text x="350" y="358" text-anchor="middle" class="s-label-sm">※ 原油14件はブレ幅大（45〜88%）。指数・他FXはCI下限がまだ43%未満。詳細は本文の表を参照</text>
+      </svg>
+      <div class="chart-caption">図2：「逆張り」シグナルだけを取り出してグループ別に比べると、最高（原油71.4%）から最低（メタル13.2%）まで約60ポイントの差がある。同じシグナルでも「何に使うか」で成績が真逆になる。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>ここで目立つ構造があります——<strong>逆張りが有望なのは指数と他FX、逆に順張りよりも逆張りの方が成績が良い</strong>。一方、メタルとBTCは逆張りが壊滅的です。この差の正体を次のセクションで掘り下げます。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-direction">⑤ 結果③：GC=Fを方向別に割ったら驚きの数字が出た</h2>
+
+    <p>金（GC=F）の逆張りだけで13.2%という低さに違和感を覚えて、「ロング（買い）とショート（売り）を分けたらどうなるか」を確かめてみました。</p>
+
+    <table>
+      <tr><th>方向</th><th>件数</th><th>勝率</th><th>ブレ幅</th><th>判定</th></tr>
+      <tr><td>GC=F ロング（買い）</td><td>47</td><td><strong>12.8%</strong></td><td>6.0〜25.2%</td><td>❌ 壊滅的</td></tr>
+      <tr><td>GC=F ショート（売り）</td><td>18</td><td><strong>61.1%</strong></td><td>38.6〜79.7%</td><td>🟡 有望</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図3: GC=F ロング vs ショート -->
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GC=Fロングvsショートの勝率差">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">GC=F（ゴールド）：同じ銘柄でも方向で勝率が逆転</text>
+        <line x1="160" y1="50" x2="160" y2="220" class="s-axis"/>
+        <line x1="160" y1="220" x2="660" y2="220" class="s-axis"/>
+        <!-- 43% line -->
+        <line x1="375" y1="45" x2="375" y2="220" class="s-guide"/>
+        <text x="375" y="242" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- ロング 12.8% w=64 -->
+        <rect x="160" y="65" width="64" height="44" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="30" y="85" class="s-label">ロング（買い）</text>
+        <text x="30" y="101" class="s-label-sm">47件</text>
+        <text x="232" y="92" class="s-label-r">12.8%</text>
+        <!-- ショート 61.1% w=305.5 -->
+        <rect x="160" y="145" width="305" height="44" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="30" y="165" class="s-label">ショート（売り）</text>
+        <text x="30" y="181" class="s-label-sm">18件</text>
+        <text x="473" y="172" class="s-label-g">61.1%</text>
+        <text x="350" y="268" text-anchor="middle" class="s-label-sm">差は約48ポイント。ロングとショートで全く別の銘柄のような成績差になった</text>
+      </svg>
+      <div class="chart-caption">図3：ゴールド先物（GC=F）の全シグナルを「買い（ロング）」と「売り（ショート）」に分けた。同じ銘柄・同じ検出ロジックでも約48ポイントの差がある。この差はどこから来るのか？ ※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>ロング12.8%、ショート61.1%——<strong>同じ銘柄、同じシグナルの仕組みなのに約48ポイントの差</strong>。これを見て「なんだ、答えは方向だったのか」と感じるかもしれません。でも少し立ち止まって考えます。「なぜ方向でこんな差が出るのか？」</p>
+
+    <!-- =============================== -->
+    <h2 id="connect">⑥ #2との接続——「交絡」という言葉で整理する</h2>
+
+    <p>ここで<a href="guide-signal-lab-002.html">第2回</a>の話が戻ってきます。前回の結論は「<strong>上位足（より長い時間軸のトレンド）が下降しているとき、逆張りのロング（買い）は"落ちるナイフ"になりやすい</strong>」でした。</p>
+    <p>今回の結果もそれと同じ構造です。この3週間、<strong>金（GC=F）は下降トレンド</strong>にありました。その環境でシステムが出した逆張りのロング（「売られすぎ反発」「バンド下限タッチ」）は、ことごとく下げ続ける相場に飲み込まれました。逆に、下降トレンドに乗った逆張りのショートは「流れに沿った順張り」として機能したのです。</p>
+
+    <div class="chart-figure">
+      <!-- 図4: 交絡の概念図 -->
+      <svg viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="交絡の概念図：トレンド方向と逆張り成績の関係">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">「逆張りシグナル」でも、トレンドの方向で全然違う</text>
+        <!-- Panel A: 下降トレンドでロング（= 落ちるナイフ） -->
+        <text x="185" y="58" text-anchor="middle" class="s-label-r">GC=F：下降トレンド中にロング</text>
+        <polyline points="50,90 90,140 120,115 165,170 200,145 250,200 290,175 340,240" class="s-curve-r"/>
+        <!-- 逆張りロングの矢印（失敗） -->
+        <line x1="200" y1="175" x2="200" y2="135" stroke="#cf222e" stroke-width="2.5"/>
+        <polygon points="194,139 206,139 200,125" fill="#cf222e"/>
+        <text x="185" y="270" text-anchor="middle" class="s-label-r">「売られすぎ」でロング</text>
+        <text x="185" y="288" text-anchor="middle" class="s-label-sm">→ 下げ継続で損切り (12.8%)</text>
+        <!-- Divider -->
+        <line x1="350" y1="45" x2="350" y2="300" class="s-guide"/>
+        <!-- Panel B: 下降トレンドでショート（= 順風） -->
+        <text x="525" y="58" text-anchor="middle" class="s-label-g">GC=F：下降トレンドでショート</text>
+        <polyline points="370,90 410,140 440,115 485,170 520,145 570,200 610,175 660,240" class="s-curve-r"/>
+        <!-- ショートの矢印（成功） -->
+        <line x1="520" y1="135" x2="520" y2="175" stroke="#1a7f37" stroke-width="2.5"/>
+        <polygon points="514,171 526,171 520,185" fill="#1a7f37"/>
+        <text x="525" y="270" text-anchor="middle" class="s-label-g">「買われすぎ」でショート</text>
+        <text x="525" y="288" text-anchor="middle" class="s-label-sm">→ 下落継続でTP1到達 (61.1%)</text>
+      </svg>
+      <div class="chart-caption">図4：同じ「逆張りシグナル」でも、下降トレンド中のロングは"落ちるナイフ"（損切り連発）、下降トレンドに沿ったショートは"順張りの形"として機能する。切り番の近い・遠いより、この構造の方が成績を決めていた。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>これを統計の言葉で「<strong>交絡（こうらく）</strong>」と呼びます。「切り番の効果を見たかった」のに、実は「トレンド方向」という別の要因が大きく影響していた——切り番近傍かどうかよりも、トレンドに逆らっているかどうかの方がはるかに大きな差を生んでいたのです。</p>
+
+    <div class="warning-box">
+      「切り番近傍の逆張りロングが16.7%で、遠い逆張りロングが5.9%だった」——しかし切り番効果を測りたいなら、<strong>トレンド方向が同じ条件同士で比べる必要があります</strong>。今回のデータでは、近傍の方がたまたま「下降トレンド中のショート」を多く含んでいた可能性があります。この点の切り分けは次回以降の課題です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑦ 今回の決定事項</h2>
+
+    <table>
+      <tr><th>項目</th><th>決定</th><th>理由</th></tr>
+      <tr><td>メタル切り番効果（主仮説）</td><td><strong>棄却</strong></td><td>切り番近傍でも16.7%・遠くても5.9%。どちらも43%に届かず。方向の交絡が大きい</td></tr>
+      <tr><td>指数×逆張り（52.3%）</td><td><strong>継続観察</strong>（前向きトラッカー登録）</td><td>CI下限40.4%（43%未満）。有望だが「トレンドが上昇だったから」の交絡を切り分けるデータが必要</td></tr>
+      <tr><td>他FX×逆張り（54.2%）</td><td><strong>継続観察</strong>（前向きトラッカー登録）</td><td>同上。CI下限41.7%（43%未満）</td></tr>
+      <tr><td>GC=F ショート（61.1%）</td><td><strong>優先バックログへ昇格</strong></td><td>N=18と少ないが、ロング12.8%との対比が鮮明。次回主検証の候補に</td></tr>
+      <tr><td>sr_runway.blocked効果</td><td><strong>バックログへ追加</strong></td><td>blocked=37件で51.4%。unblocked(265件)の39.2%と差あり。N不足のため次回以降</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>これまでの連載で宣言した「将来のデータで確認する基準」の現在値です。</p>
+
+    <table>
+      <tr><th>ID</th><th>仮説・指標</th><th>宣言基準</th><th>現在値（2026-06-12）</th><th>状態</th></tr>
+      <tr>
+        <td>a</td>
+        <td>押し目買い4h<br>（#2の主仮説）</td>
+        <td>2026-06-11以降の新規決済でN≥30かつ勝率50%超</td>
+        <td>N=0（upper_tf_trendフィールドが未記録のため計測開始待ち）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>b〜e</td>
+        <td>regime/chasing_downgrade/discipline_filter/edge_tier</td>
+        <td>各基準は台帳参照</td>
+        <td>フィールド未記録（全N=0）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>f</td>
+        <td>もみあい中の逆張りL<br>（#2の基準34.3%）</td>
+        <td>新規データ蓄積後に34.3%から改善/悪化を確認</td>
+        <td>直接計測不能。代理値：全逆張りL 40.8% N=277（#2比較+6.5pp）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>g</td>
+        <td>指数×逆張り<br>（今回新設）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td><strong>52.3% N=65 CI[40.4〜64.0%]</strong><br>CI下限40.4%（43%未達）</td>
+        <td>🟡 蓄積中</td>
+      </tr>
+      <tr>
+        <td>h</td>
+        <td>他FX×逆張り<br>（今回新設）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td><strong>54.2% N=59 CI[41.7〜66.3%]</strong><br>CI下限41.7%（43%未達）</td>
+        <td>🟡 蓄積中</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📝 upper_tf_trendフィールドについて</strong><br>
+      第2回で「上位足トレンド」の前向き検証を宣言しましたが、現在のシグナルログにはこのフィールドが記録されていないため、トラッカー(a)〜(f)の一部は直接追跡できない状態です。今後のシステム側での記録追加を待つか、代替計算方法を検討します。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <ul>
+      <li><strong>GC=Fのロング/ショート差の深掘り</strong>：ロング12.8% vs ショート61.1%の差は「たまたまこの期間が下降トレンドだったから」か、「構造的にメタルのショートに優位性があるのか」。SI=F（銀）も同様の傾向があるか。上位足トレンドを絡めた交絡の切り分けが次回の主検証候補です</li>
+      <li><strong>sr_runwayフィールドの本格分析</strong>：S/R（サポレジ）近接データを使ったブロック効果（blocked=True: 51.4%）の追試</li>
+      <li>最新のシグナル成績は<a href="track-record.html">シグナル成績ページ</a>でいつでも確認できます（毎日自動更新）</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 この連載の前の回と関連ページ</div>
+      <div class="cta-box-desc">第2回から読むと今回の「交絡」の意味がよくわかります</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-002.html">
+          <div class="related-card-title">🧪 研究日誌 #2</div>
+          <div class="related-card-desc">上位足トレンド門番を検証——押し目買い4hで76.5%。今回の交絡解説の起点</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+        <a class="related-card" href="guide-moving-average.html">
+          <div class="related-card-title">📈 移動平均線とは</div>
+          <div class="related-card-desc">トレンド判定に使う指標の基礎知識</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 研究日誌 #1</div>
+          <div class="related-card-desc">連載の出発点。ムード門番が完全に失敗した第1回</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
