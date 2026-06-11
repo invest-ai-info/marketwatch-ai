@@ -1,0 +1,79 @@
+name: Technical Alerts (1D Data Only)
+
+# 目的: 18 銘柄の日足チャートをテクニカル分析し、signals-log.json にデータ記録のみ。
+#       メール送信なし（記録ファースト＝勝率検証が済むまで配信しない）。
+#       時間足の勾配仮説（1h 27-39% < 4h 41-53% < 1d ?）の検証用。2026-06-11 新設。
+
+on:
+  schedule:
+    # 毎日 21:20 UTC = 06:20 JST（NY クローズ後＝日足確定直後）
+    - cron: '20 21 * * *'
+  workflow_dispatch:
+
+# 🆕 signal 系 workflow 同時実行禁止（git 競合回避）
+# technical-alerts.yml / -1h.yml と共通グループ → 順番待ち実行
+concurrency:
+  group: signal-workflows
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      # メール送信なしなので GMAIL 系は使わないが、スクリプト要件で空でも置く
+      GMAIL_USER:         ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_RECIPIENT:    ${{ secrets.ALERT_RECIPIENT }}
+      GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+      MY_TRADES_CSV_URL:  ${{ secrets.MY_TRADES_CSV_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy google-generativeai
+
+      - name: Run 1D signal collection (no email)
+        run: python generate_technical_alerts.py --timeframe 1d --no-email
+
+      - name: Evaluate signal outcomes
+        run: python evaluate_signal_outcomes.py
+
+      - name: Import my real trades
+        run: python import_my_trades.py
+
+      - name: Generate track-record.html
+        run: python generate_track_record_page.py
+
+      - name: Export to CSV (signals-log.csv / my-trades.csv)
+        run: python export_to_csv.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add technical-alerts-history-1d.json signals-log.json signals-log.csv my-trades.json my-trades.csv track-record.html 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: 1D signal collection $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 🆕 push リトライ（最大 3 回）+ コンフリクト時はリモート優先 (-X theirs)
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then
+                echo "✅ Push success on attempt $i"
+                break
+              fi
+              echo "⚠️ Push failed (attempt $i), retrying..."
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+          fi
