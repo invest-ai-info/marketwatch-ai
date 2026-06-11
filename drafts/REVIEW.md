@@ -2,6 +2,50 @@
 
 ---
 
+## 2026-06-12 | swap-points
+
+- **基準日（JST）**: 2026-06-12（UTC 2026-06-11T20:32:45Z）
+- **Topic**: スワップポイント（スワップ金利）の仕組み（FXの金利差収益）
+- **Key**: `swap-points`
+- **生成ファイル**: `drafts/draft-swap-points.html`
+- **シリーズ**: 💰 投資の基礎知識（guides.html 既存カテゴリ）
+
+### 参照出典 URL
+| 項目 | 出典 |
+|---|---|
+| スワップポイントの仕組み・付与タイミング（外為どっとコム） | https://www.gaitame.com/beginner/fx/swap.html |
+| スワップポイントとは（みんなのFX） | https://min-fx.jp/start/aboutswap/ |
+| スワップポイントの仕組み・計算方法（松井証券） | https://www.matsui.co.jp/fx/study/article/glossary/swap/ |
+| FXマイナススワップとは（インヴァストNAVI） | https://www.invast.jp/blogs/fx-negative-swap/ |
+| スワップポイントの仕組み（DMM FX） | https://fx.dmm.com/fx/aboutfx/swappoint/ |
+| スワップポイントの魅力と活用方法（三菱UFJ eスマート証券） | https://kabu.com/company/lp/fx/swap.html |
+| スワップ金利生活のリスク（SMBC日興証券） | https://www.smbcnikko.co.jp/products/fx/knowledge/006.html |
+| スワップポイント・キャリートレード（OANDA Japan） | https://www.oanda.jp/lab-education/beginners/aboutfx/swap/ |
+
+### 自己コンプライアンスチェック結果
+| チェック項目 | 結果 |
+|---|---|
+| 個別銘柄の売買推奨なし | ✅ 教育・一般論のみ。「今 AUD/JPY を買え」等の売買推奨表現なし。通貨ペアは例示・説明目的のみ |
+| 断定・利益保証表現なし | ✅「絶対」「必ず」「100%」「保証」「儲かる」「一択」使用なし。「〜になりえます」「〜する可能性があります」「〜が大切です」等の慎重な表現を使用 |
+| kinsho-v1 免責（冒頭バナー＋本文末＋footer）あり | ✅ 3箇所に `data-disclaimer="kinsho-v1"` または同等の文言を配置 |
+| noindex,nofollow あり | ✅ `<meta name="robots" content="noindex,nofollow">` を head に配置済み |
+| 出典の妥当性 | ✅ スワップポイントの仕組み（政策金利差・三倍デー・マイナススワップ）は複数の国内FX会社の公開コンテンツで確認。三倍デーが「水曜が一般的」と説明しつつ「FX会社によって異なる」と明記。新興国通貨のリスクの高さは複数の金融機関が説明する一般的知識として言及し、断定を避けた表現を使用。不確実な具体的数値（「〇%のリターン」等）は使用していない |
+| SVG 概念図に「※ 概念を示すイメージ図です」の注記 | ✅ 全 3 点の figcaption に注記あり |
+
+### SVG 図の構成
+1. **政策金利差とスワップポイントの仕組み概念図**（高金利国バー・低金利国バー・差額→スワップ受け取り矢印）— 実装済み
+2. **三倍デー（水曜）のカレンダー概念図**（月〜金の曜日セル、水曜のみ×3強調）— 実装済み
+3. **スワップ収益積み上がりと為替差損の対比折れ線図**（緑=スワップ収益ゆるやか上昇、赤=為替差損急落）— 実装済み
+
+### 人間の残作業
+- [ ] **SVG の実機ライト/ダーク確認**：追加クラス `.s-bar-h`（高金利バー緑）・`.s-bar-l`（低金利バー青）・`.s-bar-diff`（差額黄）・`.s-bar-neg`（支払い赤）・`.s-swap-line`（スワップ収益緑線）・`.s-fx-line`（為替差損赤線）・`.s-cal-box`（カレンダー通常セル）・`.s-cal-3x`（三倍デーセル黄）をライト・ダークモードで目視確認。特に三倍デーの黄色ボックスがダークモードで背景に埋まらないか確認
+- [ ] **Opus compliance-reviewer 監査**：公開前に `compliance-reviewer` エージェント（Opus）に下書き全文を渡してレビューを依頼。特に「為替差損がスワップを食い潰す」セクションの表現（特定通貨ペアへの言及・強制ロスカットの説明）が問題ないか確認
+- [ ] **タイトル微調整**：現タイトルは適切。「スワップポイントとは」でも流入可能。公開時に head titleと h1 の文字数バランスを調整
+- [ ] **関連記事リンクの確認**：`guide-yen-carry-trade.html`（公開準備中と本文に明記済み）・`guide-position-sizing.html`（公開済み ✓）・`guide-loss-cut.html`（公開済み ✓）。`guide-yen-carry-trade.html` は公開時に有効なリンクになっているか確認
+- [ ] **三倍デー水曜説の最終確認**：「多くのFX会社では水曜」と記載。公開前に代表的なFX会社（外為どっとコム・DMM FX等）の最新情報で確認し、変化があれば表現を調整
+
+---
+
 ## 2026-06-11 | dollar-cost-averaging
 
 - **基準日（JST）**: 2026-06-11（UTC 2026-06-10T20:33:11Z）

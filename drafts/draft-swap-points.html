@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説 - MarketWatch AI</title>
+  <meta name="description" content="スワップポイントは2国間の政策金利差から生まれるFXの金利収益。毎日の付与・三倍デー・計算イメージをやさしく図解。後半ではスワップ狙いの3大リスク（為替差損・マイナス転換・政策転換）を中上級者向けに詳解します。">
+  <meta name="keywords" content="スワップポイント,スワップ金利,FX,金利差,政策金利,三倍デー,マイナススワップ,キャリートレード,為替差損,投資初心者,FX初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-swap-points.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説">
+  <meta property="og:description" content="2国間の政策金利差で生まれるスワップ収益の仕組みを図解。三倍デー・計算イメージ・為替差損の3大リスクまで初心者〜中上級者まで網羅。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-swap-points.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説",
+    "description": "2国間の政策金利差で生まれるスワップ収益の仕組みを図解。三倍デー・計算イメージ・為替差損の3大リスクまで初心者〜中上級者まで網羅。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-swap-points.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* スワップ専用クラス */
+    .s-bar-h{fill:#1a7f37}
+    .s-bar-l{fill:#0969da}
+    .s-bar-diff{fill:#d4a017}
+    .s-bar-neg{fill:#cf222e}
+    .s-swap-line{stroke:#1a7f37;stroke-width:2.5;fill:none;stroke-linejoin:round}
+    .s-fx-line{stroke:#cf222e;stroke-width:2.5;fill:none;stroke-linejoin:round}
+    .s-cal-box{fill:#f6f8fa;stroke:#d0d7de;stroke-width:1}
+    .s-cal-3x{fill:#fff8c5;stroke:#d4a017;stroke-width:1.5}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-h{fill:#3fb950}
+    body.dark .s-bar-l{fill:#79c0ff}
+    body.dark .s-bar-diff{fill:#d4a017}
+    body.dark .s-bar-neg{fill:#f85149}
+    body.dark .s-swap-line{stroke:#3fb950}
+    body.dark .s-fx-line{stroke:#f85149}
+    body.dark .s-cal-box{fill:#161b22;stroke:#30363d}
+    body.dark .s-cal-3x{fill:#2a1f0e;stroke:#d4a017}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; スワップポイントの仕組みとリスク
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はスワップポイント（FXの金利差収益）の仕組みを情報提供として解説したものであり、特定の通貨ペアの売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💱 スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説</h1>
+    <div class="meta-line">公開日：2026 年 6 月 12 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「FXでコツコツ金利収入を得られる」——スワップポイントは、<strong>ポジションを保有し続けるだけで毎日少しずつ入ってくる</strong>ように見えるため、特に長期保有型の投資家に人気があります。しかし、その仕組みを正確に理解している人は思いのほか少なく、「気づいたら為替差損でスワップ収益が吹き飛んだ」という経験をする人が後を絶ちません。</p>
+    <p>本記事では、まず<strong>スワップポイントがどうやって生まれるか</strong>（政策金利差・付与の仕組み・三倍デー）を初心者向けに図解で整理し、後半では<strong>スワップ狙いが陥りやすい3つの罠</strong>（為替差損・マイナス転換・政策転換リスク）を中上級者向けに掘り下げます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>スワップポイントは<strong>2国間の政策金利差</strong>から生まれる。高金利通貨を買い・低金利通貨を売るとポジションを保有した日数分の「金利差の恩恵」を受け取れる（逆なら支払い）。</li>
+      <li>仕組みは単純だが、<strong>為替が逆に動くと短期間でスワップ収益を超える損失が発生する</strong>。特に高金利新興国通貨は政治・経済リスクが大きく、金利の高さは「リスクの大きさ」と表裏一体。</li>
+      <li>スワップ収益は「<strong>ポジションを長く持つほど積み上がる</strong>」が、<strong>政策金利が変わればレートが逆転し、収益がコストに変わる</strong>こともある。出口戦略と為替リスクの管理をセットで考えることが肝要。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">スワップポイントとは？（基本の仕組み）</a></li>
+        <li><a href="#section-2">政策金利差から付与/支払いが決まる仕組み</a></li>
+        <li><a href="#section-3">三倍デー（水曜）とは？</a></li>
+        <li><a href="#section-4">マイナススワップ：支払いになるケース</a></li>
+        <li><a href="#section-5">スワップ狙いの罠①：為替差損がスワップを食い潰す</a></li>
+        <li><a href="#section-6">スワップ狙いの罠②：政策転換で金利差が逆転する</a></li>
+        <li><a href="#section-7">スワップ狙いの罠③：レバレッジと強制ロスカット</a></li>
+        <li><a href="#section-8">当サイトでの活かし方（円キャリーとの接続）</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ スワップポイントとは？（基本の仕組み）</h2>
+    <p>FX（外国為替証拠金取引）では、ある通貨を売って別の通貨を買うポジションを保有します。このとき、<strong>「売った通貨の金利を支払い、買った通貨の金利を受け取る」</strong>という取引が、ポジションを翌日に持ち越すたびに自動的に発生します。この金利の受け渡し差額が<strong>スワップポイント</strong>（スワップ金利・金利差調整額とも呼ばれます）です。</p>
+    <p>ポイントを整理すると次の通りです。</p>
+    <ul>
+      <li>FXのポジションは、毎日決まった時刻（ロールオーバー）に翌営業日へ持ち越される</li>
+      <li>持ち越しのたびに「高い金利を払う通貨 → 受け取り」「低い金利を払う通貨 → 支払い」という形で精算される</li>
+      <li>2通貨の<strong>金利差が大きいほどスワップポイントは大きくなる</strong></li>
+      <li>スワップポイントは<strong>FX会社が独自に設定</strong>するため、同じ通貨ペアでも業者によって金額が異なる</li>
+    </ul>
+    <div class="info-box">
+      <strong>💡 「スワップ」の語源</strong>：swap は英語で「交換」の意味。ここでは「異なる金利の通貨を交換することで生まれる損益の精算」をイメージすると理解しやすいです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 政策金利差から付与/支払いが決まる仕組み</h2>
+    <p>スワップポイントの大きさの根幹にあるのが<strong>各国の政策金利（中央銀行が設定する基準金利）の差</strong>です。金利が高い国の通貨を買えば恩恵を受け取り、金利が低い国の通貨を買えば差額を支払います。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="rate-title">
+        <title id="rate-title">2国間の政策金利差とスワップポイント受け取りの概念図</title>
+        <text class="s-panel-label" x="40" y="24">政策金利差がスワップポイントの源泉（概念図）</text>
+
+        <!-- 高金利国の棒 -->
+        <rect class="s-bar-h" x="100" y="80" width="120" height="140" rx="4"/>
+        <text class="s-note-g" x="160" y="70" text-anchor="middle">高金利国</text>
+        <text class="s-note-g" x="160" y="58" text-anchor="middle">（例：豪ドル）</text>
+        <text class="s-note-g" x="160" y="232" text-anchor="middle">高い金利</text>
+
+        <!-- 低金利国の棒 -->
+        <rect class="s-bar-l" x="280" y="180" width="120" height="40" rx="4"/>
+        <text class="s-note" x="340" y="170" text-anchor="middle">低金利国</text>
+        <text class="s-note" x="340" y="158" text-anchor="middle">（例：日本円）</text>
+        <text class="s-note" x="340" y="232" text-anchor="middle">低い金利</text>
+
+        <!-- 差分の矢印・ブレース -->
+        <line class="s-guide" x1="220" y1="80" x2="280" y2="80"/>
+        <line class="s-guide" x1="220" y1="180" x2="280" y2="180"/>
+        <line class="s-guide" x1="252" y1="80" x2="252" y2="180"/>
+        <text class="s-note" x="262" y="137">←差額</text>
+
+        <!-- 差分強調ブロック -->
+        <rect class="s-bar-diff" x="440" y="110" width="100" height="80" rx="4" fill-opacity="0.85"/>
+        <text class="s-panel-label" x="490" y="102" text-anchor="middle">スワップポイント</text>
+        <text class="s-note-g" x="490" y="152" text-anchor="middle" font-size="13">受け取り ✅</text>
+        <text class="s-label-sm" x="490" y="172" text-anchor="middle">（高金利通貨を</text>
+        <text class="s-label-sm" x="490" y="186" text-anchor="middle">買ったとき）</text>
+
+        <!-- 矢印（差額→スワップ） -->
+        <line x1="280" y1="137" x2="430" y2="150" stroke="#d4a017" stroke-width="2" marker-end="url(#arr)"/>
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#d4a017"/>
+          </marker>
+        </defs>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="80" y1="220" x2="580" y2="220"/>
+        <text class="s-label-sm" x="80" y="260">高金利通貨を「買い」＋低金利通貨を「売り」→ スワップ受け取り</text>
+        <text class="s-label-sm" x="80" y="276">逆（高金利通貨を「売り」＋低金利通貨を「買い」）→ スワップ支払い</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 2国間の政策金利差（緑＝高金利国、青＝低金利国）の差額がスワップポイントの源泉。高金利通貨を「買い」で保有するとその差額を受け取れる（黄色）。逆に売り保有なら支払い。<strong>金利差が大きいほどスワップも大きい</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>例として、豪ドル/円（AUD/JPY）のポジションを考えます。オーストラリアの政策金利が日本より高い状態で豪ドルを買い・円を売ると、毎日その金利差の一部がスワップポイントとして受け取れます。逆に豪ドルを売り・円を買うポジションでは、金利差を支払うことになります。</p>
+
+    <table>
+      <tr><th>ポジション</th><th>高金利通貨</th><th>低金利通貨</th><th>スワップ</th></tr>
+      <tr><td>AUD/JPY 買い</td><td>AUD（豪ドル）を買い</td><td>JPY（円）を売り</td><td>✅ 受け取り</td></tr>
+      <tr><td>AUD/JPY 売り</td><td>AUD（豪ドル）を売り</td><td>JPY（円）を買い</td><td>❌ 支払い</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 FX会社ごとに金額が異なる</strong>：スワップポイントの金額は、政策金利差をそのまま反映するわけではなく、各FX会社が<strong>業者のコスト・為替需給・ヘッジコスト</strong>などを勘案して独自に設定します。同じ通貨ペアでも業者によって大きく差があることがあるため、スワップ収益を重視する場合は事前に各社の条件を比較することをおすすめします（各社公式サイトで確認できます）。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 三倍デー（水曜）とは？</h2>
+    <p>FXの決済は一般に「約定日から2営業日後（T+2）」に行われます。これは土日を含まないため、<strong>水曜日に約定したポジションを翌営業日（木曜）に持ち越すと、決済日が金曜→月曜へジャンプする</strong>（土日の2日分をまたぐ）ことになります。この「土日分（2日分）の金利」を補填するため、<strong>水曜日のロールオーバー時に通常の3日分のスワップポイントが付与（または請求）される</strong>ことが一般的です。これが<strong>三倍デー</strong>と呼ばれる理由です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 200" role="img" aria-labelledby="cal-title">
+        <title id="cal-title">三倍デー（水曜）のスワップポイント付与タイムライン概念図</title>
+        <text class="s-panel-label" x="40" y="24">三倍デー（水曜）のスワップ付与タイムライン</text>
+
+        <!-- 曜日セル -->
+        <rect class="s-cal-box" x="30"  y="50" width="90" height="60" rx="4"/>
+        <rect class="s-cal-box" x="130" y="50" width="90" height="60" rx="4"/>
+        <rect class="s-cal-3x"  x="230" y="40" width="90" height="80" rx="4"/>
+        <rect class="s-cal-box" x="330" y="50" width="90" height="60" rx="4"/>
+        <rect class="s-cal-box" x="430" y="50" width="90" height="60" rx="4"/>
+
+        <!-- 曜日ラベル -->
+        <text class="s-legend" x="75"  y="76" text-anchor="middle">月</text>
+        <text class="s-legend" x="175" y="76" text-anchor="middle">火</text>
+        <text class="s-legend" x="275" y="72" text-anchor="middle" font-weight="700">水</text>
+        <text class="s-legend" x="375" y="76" text-anchor="middle">木</text>
+        <text class="s-legend" x="475" y="76" text-anchor="middle">金</text>
+
+        <!-- スワップ量ラベル -->
+        <text class="s-note-g" x="75"  y="100" text-anchor="middle" font-size="13">×1</text>
+        <text class="s-note-g" x="175" y="100" text-anchor="middle" font-size="13">×1</text>
+        <text class="s-note"   x="275" y="96"  text-anchor="middle" font-size="16" font-weight="700">×3 🎯</text>
+        <text class="s-note-g" x="375" y="100" text-anchor="middle" font-size="13">×1</text>
+        <text class="s-note-g" x="475" y="100" text-anchor="middle" font-size="13">×1</text>
+
+        <!-- 注釈 -->
+        <text class="s-label-sm" x="275" y="136" text-anchor="middle">土日分の2日分が上乗せ</text>
+        <text class="s-label-sm" x="40"  y="170">※ FX会社によっては金曜が三倍デーになる場合もあります。各社の公式情報を確認してください。</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 一般的なFX会社では水曜のロールオーバー時に3日分（月〜金の通常1日分＋土日の2日分相当）のスワップが付与または請求される。金曜が三倍デーとなる会社もあり、業者ごとに異なる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>三倍デーは「3倍のスワップポイントをもらえる特別な日」ではなく、<strong>土日の2日分を先取りしてまとめて受け取る（または支払う）だけ</strong>で、週計では1日分×5営業日＝5日分と変わりません。「水曜だけポジションを持てば3倍もらえる」という誤解が生じやすいため、注意が必要です。なお、水曜と金曜どちらが三倍デーになるかはFX会社によって異なるため、利用する業者の公式サイトで確認してください。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ マイナススワップ：支払いになるケース</h2>
+    <p>スワップポイントは受け取れるだけではありません。<strong>金利の高い通貨を売り、低い通貨を買うポジション（逆方向）では、毎日スワップを支払う</strong>ことになります。これを<strong>マイナススワップ</strong>（支払いスワップ）といいます。</p>
+    <div class="negative-box">
+      <strong>📉 マイナススワップが発生する典型例</strong>：ドル円（USD/JPY）で円を買い（円高に賭ける）ポジション、または豪ドル円（AUD/JPY）で豪ドルを売るポジションなど。FXで「下落方向（売り）に賭けたい」と思っても、高金利通貨を売る形になる場合はスワップを毎日支払い続けることになります。長期保有では無視できないコストになりえます。
+    </div>
+    <p>また、同じ通貨ペアでも<strong>FX会社の設定によっては、買いも売りも両方マイナス</strong>になるケースがあります（業者がコストを上乗せしているため）。スワップ収益を目的にトレードする場合は、事前に利用するFX会社のスワップポイント一覧を確認し、プラスになっているかどうか必ずチェックしましょう。</p>
+
+    <!-- ======== 後半（中上級・実践） ======== -->
+
+    <h2 id="section-5">5️⃣ 【後半・中上級】スワップ狙いの罠①：為替差損がスワップを食い潰す</h2>
+    <p>ここからは、スワップポイント運用で多くの人が直面する<strong>現実的なリスク</strong>を掘り下げます。最大の落とし穴が<strong>「為替差損がスワップ収益を簡単に上回る」</strong>という現象です。</p>
+    <p>たとえば、豪ドル円でスワップを受け取りながら長期保有している場合を考えます。仮に1日あたりのスワップが数十円分だとすると、1万通貨単位で年間数万円のスワップが積み上がる可能性があります。しかし<strong>為替レートが1円動くだけで1万通貨のポジションは1万円分の評価損益が変わる</strong>ため、豪ドル円が数円下落すれば、数ヶ月分のスワップ収益があっという間に消えます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="swap-risk-title">
+        <title id="swap-risk-title">スワップ収益の積み上がりと為替差損の対比概念図</title>
+        <text class="s-panel-label" x="40" y="24">スワップ収益（緑）と為替差損（赤）の対比</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="260" x2="600" y2="260"/>
+        <line class="s-axis" x1="60" y1="60"  x2="60"  y2="260"/>
+        <text class="s-label-sm" x="65" y="276">時間 →</text>
+        <text class="s-label-sm" x="62" y="56" text-anchor="end">損益</text>
+
+        <!-- ゼロライン -->
+        <line class="s-guide" x1="60" y1="200" x2="600" y2="200"/>
+        <text class="s-label-sm" x="610" y="204">±0</text>
+
+        <!-- スワップ積み上がり（緑・ゆるやかに上昇） -->
+        <polyline class="s-swap-line" points="60,200 140,192 220,184 300,176 380,168 460,160 540,152 590,148"/>
+        <text class="s-note-g" x="540" y="144">スワップ収益</text>
+
+        <!-- 為替差損（赤・急落） -->
+        <polyline class="s-fx-line" points="60,200 140,198 220,196 300,194 380,192 430,188 470,220 510,268 540,280"/>
+        <text class="s-note-r" x="490" y="296">為替差損（突然の下落）</text>
+
+        <!-- 交差点 -->
+        <circle cx="460" cy="168" r="5" fill="#1a7f37"/>
+        <circle cx="470" cy="220" r="7" fill="#cf222e"/>
+        <text class="s-note-r" x="480" y="214">ここで急落</text>
+
+        <!-- 注釈 -->
+        <text class="s-label-sm" x="72" y="100">スワップが積み上がっても…</text>
+        <text class="s-label-sm" x="72" y="116">為替が数円動くだけで一瞬で消える</text>
+      </svg>
+      <figcaption class="chart-caption">▲ スワップ収益（緑）はゆるやかに積み上がるが、為替が大きく逆方向に動くと（赤）その評価損が一瞬でスワップ累積を上回りうる。高金利通貨は政治・経済リスクも大きい傾向があり、急落しやすい面がある。<strong>スワップ利益と為替差損は必ずセットで考える必要がある</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>特に<strong>新興国通貨</strong>（トルコリラ、南アフリカランド、メキシコペソなど）は政策金利が高い傾向にあり、スワップポイントも大きくなりますが、その分<strong>通貨価値が大きく下落するリスク</strong>も高いとされています（出典：各FX会社の教育コンテンツ、インヴァストNAVI等）。「金利が高い＝リスクが高い」という関係は分離できません。金利の高さはそのまま「リスクプレミアム」であることを念頭に置く必要があります。</p>
+
+    <div class="warning-box">
+      スワップポイントの累積と為替差損の比較は、<strong>円換算のトータル損益</strong>で確認することが重要です。ポジションを開いたまま「スワップは増えている」と思っていても、評価損を含めた合計では損失になっているケースは珍しくありません。FX会社の取引ツールで<strong>評価損益＋スワップ収益の合算</strong>を定期的に確認しましょう。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ スワップ狙いの罠②：政策転換で金利差が逆転する</h2>
+    <p>スワップポイントの大きさは<strong>各国の政策金利に依存する</strong>ため、中央銀行の方針が変わると大きく変動します。これが二つ目の罠です。</p>
+    <ul>
+      <li><strong>高金利国が利下げに転じる</strong>と、スワップポイントが縮小する（または消える）</li>
+      <li><strong>低金利国が利上げする</strong>と、金利差が縮まり同様にスワップが減少する</li>
+      <li>極端な場合、<strong>受け取りだったスワップが支払いに逆転する</strong>こともある</li>
+    </ul>
+    <p>近年の例として、各国中央銀行は経済情勢に応じてインフレ対応・景気減速対応などで政策金利を大幅に変更することがあります。長期保有を前提にスワップを積み上げていても、<strong>その土台となる金利差が変われば収益環境が一変する</strong>ことは歴史的に繰り返されてきました。</p>
+    <div class="info-box">
+      <strong>📅 当サイトの経済カレンダーとの接続</strong>：FOMC（米連邦公開市場委員会）・日銀会合・RBA（オーストラリア準備銀行）などの<strong>政策金利決定会合</strong>の日程は、<a href="calendar.html">経済カレンダー</a>で確認できます。スワップ狙いの長期保有中は、金利決定会合の前後に通貨が大きく動く可能性があるため、方針転換のサインを早めにつかんでおくことが大切です。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ スワップ狙いの罠③：レバレッジと強制ロスカット</h2>
+    <p>FXはレバレッジ取引が基本です。スワップポイント狙いの長期保有では、<strong>為替が逆方向に動いたとき、レバレッジが損失を何倍にも拡大させる</strong>という危険が伴います。</p>
+    <div class="negative-box">
+      <strong>⚠️ 強制ロスカットのリスク</strong>：証拠金が不足すると、自分の意思に関係なくポジションが強制決済（ロスカット）されます。「長期保有でスワップを積み上げる」という戦略でも、<strong>為替レートが不利な方向に動き、維持証拠金を下回れば即座に強制決済</strong>されます。積み上げたスワップはもちろん、元本まで失うリスクがあります。
+    </div>
+    <p>よくある失敗パターンは次の通りです。</p>
+    <ul>
+      <li>高レバレッジで大きなポジションを保有し、為替が少し動くだけで強制ロスカットされる</li>
+      <li>「長期保有だから大丈夫」と思い、含み損が膨らんでも追加証拠金を入れ続け、最終的に損失が拡大する</li>
+      <li>スワップ目的で保有していたのに、為替差損の恐怖から損切りが遅れる（<a href="guide-loss-cut.html">損切りの心理</a>と同じ罠）</li>
+    </ul>
+    <p>スワップ狙いの長期保有を行う場合、<strong>低レバレッジ（余裕のある証拠金維持率）で保有し、為替が一定以上動いたら撤退するルールを事前に決める</strong>ことが重要です。また、<a href="guide-position-sizing.html">ポジションサイジング</a>の観点から、全資金に対して1ポジションの比率を抑えることもリスク管理の基本です。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方（円キャリーとの接続）</h2>
+    <p>スワップポイントの仕組みを最も大規模に使った戦略が<strong>円キャリートレード</strong>です。超低金利の円を借りて（円を売り）、高金利の他通貨資産に投資し、その金利差を利益として得るという国際的な投資行動です。本サイトでは<a href="guide-yen-carry-trade.html">円キャリートレードの仕組みと巻き戻しリスク</a>を別記事で解説しています（公開準備中）。</p>
+    <p>スワップポイントが積み上がる通貨ペア（AUD/JPY、USD/JPYなど）は、当サイトが監視する18銘柄と重なる部分があります。FX関連ページで参考にできる情報として、次のものを活用できます。</p>
+    <ul>
+      <li><a href="calendar.html">経済カレンダー</a>：各国中央銀行の政策金利決定会合の日程を確認できます（スワップ収益の変化を事前に予測する手がかりになります）</li>
+      <li><a href="track-record.html">シグナル成績ダッシュボード</a>：USD/JPY・AUD/JPY などの過去のシグナルと結果を確認できます（参考値。売買推奨ではありません）</li>
+      <li><a href="market-health.html">市場健康度</a>：VIX（恐怖指数）が急騰するリスクオフ局面では、円キャリーの巻き戻しで円高が急進しやすく、スワップ保有ポジションに大きな打撃が出ることがあります</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 FX・為替シグナルの実績を確認する</div>
+      <div class="cta-box-desc">USD/JPY・AUD/JPY などのシグナルが実際にどう機能しているか、勝ちも負けも含めて公開しています。スワップ保有を検討している方の参考情報として。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>スワップポイントについて、仕組みからリスクまで整理してきました。最後にポイントを簡潔にまとめます。</p>
+    <ul>
+      <li>スワップポイントは<strong>2国間の政策金利差</strong>から生まれる。高金利通貨を買い、低金利通貨を売ると毎日受け取れる（逆なら支払い）。</li>
+      <li><strong>三倍デー</strong>（多くの場合は水曜）は、土日分の金利をまとめて受け取る日。「3倍の収益日」ではなく週計では同じ。</li>
+      <li><strong>3つの罠</strong>に注意。①為替差損（為替が少し動くだけでスワップ収益を超える損失が出うる）、②政策転換（金利差が縮小・逆転するリスク）、③レバレッジ（強制ロスカットで損失が拡大するリスク）。</li>
+      <li>特に<strong>高金利新興国通貨</strong>は「金利の高さ＝リスクの高さ」。スワップが魅力的な通貨ほど為替の変動も大きい傾向があります。</li>
+      <li>スワップ狙いの長期保有は、<strong>低レバレッジ・撤退ルールの事前設定・評価損を含めたトータル損益の定期確認</strong>の3点を組み合わせることが基本です。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-yen-carry-trade.html">
+        <div class="related-card-title">💴 円キャリートレードの仕組みと巻き戻しリスク</div>
+        <div class="related-card-desc">スワップを大規模に使った国際投資戦略。リスクオフ時の円高急進（巻き戻し）のメカニズムを解説。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">📐 ポジションサイジング・資金管理の基本</div>
+        <div class="related-card-desc">スワップ保有ポジションのレバレッジをどう設定するか。2%ルールと損切り幅からの逆算計算法。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">✂️ 損切りができない本当の理由</div>
+        <div class="related-card-desc">「ここまで含み損を抱えたから戻るまで待つ」——スワップ保有でも同じ心理の罠が起きる。損切りの仕組み化を解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はスワップポイントの仕組みに関する情報提供として解説したものであり、特定の通貨ペアの売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
