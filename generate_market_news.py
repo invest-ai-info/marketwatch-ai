@@ -4085,6 +4085,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-11", "line": '・<b>2026-06-11</b>: 📓 解説「<a href="guide-trading-journal.html" style="color:#0969da"><b>売買日誌で「自分だけのエッジ」を見つける技術</b></a>」公開'},
         {"date": "2026-06-10", "line": '・<b>2026-06-10</b>: 🧪 研究日誌「<a href="guide-signal-lab-002.html" style="color:#0969da"><b>#2：「上げトレンド中の下げは押し目では？」を検証したら希望が見えた</b></a>」公開'},
         {"date": "2026-06-10", "line": '・<b>2026-06-10</b>: 🧪 連載開始「<a href="guide-signal-lab-001.html" style="color:#0969da"><b>AIシグナル研究日誌 #1：新フィルタ、534件検証の結果は「不採用」</b></a>」公開'},
         {"date": "2026-06-08", "line": '・<b>2026-06-08</b>: 💹 解説「<a href="guide-margin-balance.html" style="color:#0969da"><b>信用残の見方</b></a>」公開'},
