@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>売買日誌で「自分だけのエッジ」を見つける技術｜メタ認知・振り返りの型 - MarketWatch AI</title>
+  <meta name="description" content="売買日誌（トレードジャーナル）をつけると投資成績が改善する理由とその仕組みを解説。記録すべき5項目・続けるコツ・データ集計で自分の勝ち筋と負け筋を発見する方法まで、初心者〜中上級者向けに図解で網羅します。">
+  <meta name="keywords" content="売買日誌,トレードジャーナル,エッジ,勝ち筋,メタ認知,振り返り,期待値,勝率,投資記録,心理状態,トレード分析,投資改善">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-trading-journal.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="売買日誌で「自分だけのエッジ」を見つける技術｜メタ認知・振り返りの型">
+  <meta property="og:description" content="売買日誌をつけると投資成績が改善する理由、記録すべき5項目・続けるコツ・データ分析で自分の勝ち筋と負け筋を発見する方法を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-trading-journal.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "売買日誌で「自分だけのエッジ」を見つける技術｜メタ認知・振り返りの型",
+    "description": "売買日誌（トレードジャーナル）をつけると投資成績が改善する理由とその仕組みを解説。記録すべき5項目・続けるコツ・データ集計で自分の勝ち筋と負け筋を発見する方法まで。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-trading-journal.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    /* 基本SVGクラス（guide-loss-cut.html と同一） */
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 売買日誌記事 追加SVGクラス */
+    .s-box-fill-b{fill:#ddf4ff}
+    .s-box-fill-g{fill:#e6ffed}
+    .s-box-fill-y{fill:#fff8c5}
+    .s-box-fill-r{fill:#ffebe9}
+    .s-box-stroke-b{stroke:#0969da;stroke-width:1.8;fill:none}
+    .s-box-stroke-g{stroke:#1a7f37;stroke-width:1.8;fill:none}
+    .s-box-stroke-y{stroke:#9a6700;stroke-width:1.8;fill:none}
+    .s-box-stroke-r{stroke:#cf222e;stroke-width:1.8;fill:none}
+    .s-box-text{fill:#0969da;font-size:13.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-box-text-g{fill:#1a7f37;font-size:13.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-box-subtext{fill:#57606a;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-arr-fill-b{fill:#0969da}
+    .s-bar-high{fill:#1a7f37;opacity:.85}
+    .s-bar-mid{fill:#9a6700;opacity:.85}
+    .s-bar-low{fill:#cf222e;opacity:.85}
+    .s-center-text{fill:#57606a;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    /* ダークモード 追加SVGクラス */
+    body.dark .s-box-fill-b{fill:#1a2030}
+    body.dark .s-box-fill-g{fill:#162416}
+    body.dark .s-box-fill-y{fill:#2a1f0e}
+    body.dark .s-box-fill-r{fill:#2a1010}
+    body.dark .s-box-stroke-b{stroke:#58a6ff}
+    body.dark .s-box-stroke-g{stroke:#3fb950}
+    body.dark .s-box-stroke-y{stroke:#d4a017}
+    body.dark .s-box-stroke-r{stroke:#f85149}
+    body.dark .s-box-text{fill:#79c0ff}
+    body.dark .s-box-text-g{fill:#7ee787}
+    body.dark .s-box-subtext{fill:#8b949e}
+    body.dark .s-arr-fill-b{fill:#58a6ff}
+    body.dark .s-bar-high{fill:#3fb950}
+    body.dark .s-bar-mid{fill:#d4a017}
+    body.dark .s-bar-low{fill:#f85149}
+    body.dark .s-center-text{fill:#8b949e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 売買日誌で「自分だけのエッジ」を見つける技術
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>📓 売買日誌で「自分だけのエッジ」を見つける技術</h1>
+    <div class="meta-line">
+      カテゴリ：🧠 投資の心理・メンタル &nbsp;|&nbsp; 公開：2026年6月11日 &nbsp;|&nbsp; 読了：約13分
+    </div>
+
+    <p>「今回は上手くいった気がする」——そう感じても、<strong>次回再現できるかどうかは別の話</strong>です。記憶は都合よく書き換わり、感覚的な振り返りは「なんとなく」で終わりがちです。その「なんとなく」を<strong>データで置き換えるのが売買日誌</strong>です。</p>
+    <p>熟練したトレーダーと初心者のもっとも大きな差の一つは、技術でも資金量でもなく、<strong>「自分のパフォーマンスを客観的に記録・分析し、改善し続けているかどうか」</strong>だと言われます。売買日誌は、そのための最もシンプルで強力なツールです。この記事では<strong>記録の始め方から、データで自分の勝ち筋・負け筋を発見する方法（エッジの特定）まで</strong>、二段階で解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>感覚だけの振り返りは「後知恵バイアス」によって歪む。<strong>記録があってはじめて、事実に基づいた改善が始まる</strong>。</li>
+      <li>記録すべき最低限の項目は5つ（日時・銘柄・方向・根拠・心理状態）。<strong>「完璧な日誌」より「続く日誌」</strong>が価値を生む。</li>
+      <li>20〜30件溜まったらデータ集計を開始。<strong>「勝ちやすい条件」と「負けが集中する条件」を数字で見つけること</strong>が、自分だけのエッジの発見につながる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">なぜ「感覚の振り返り」は機能しないか</a></li>
+        <li><a href="#section-2">まず始める──記録すべき5つの項目</a></li>
+        <li><a href="#section-3">三日坊主にならないための続け方</a></li>
+        <li><a href="#section-4">20〜30件から始めるデータ集計</a></li>
+        <li><a href="#section-5">エッジを数字で捉える──自分の期待値を計算する</a></li>
+        <li><a href="#section-6">「やってはいけない条件」を洗い出す</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ なぜ「感覚の振り返り」は機能しないか</h2>
+    <p>多くの投資家が日常的にやっている振り返りは、大体こんな感じです。</p>
+    <ul>
+      <li>「今週は3勝1敗だったな。まあまあかな」</li>
+      <li>「あの負けトレードはマクロが読めなかったから仕方ない」</li>
+      <li>「あの勝ちは自分の判断が冴えていた」</li>
+    </ul>
+    <p>これらはすべて<strong>感覚のみの振り返り</strong>です。なぜこれが機能しにくいか。人間の記憶には、少なくとも2つのバイアスが自動的に働くからです。</p>
+
+    <h3>① 後知恵バイアス（hindsight bias）</h3>
+    <p>結果を知った後に「あのときこうなるとわかっていた」と感じる傾向です。負けトレードを振り返るとき、<strong>「あのとき失敗するのは明らかだった」と後から当然に感じられてしまう</strong>ため、「なぜそのトレードに入ったのか」という判断プロセスの問題が見えにくくなります。</p>
+
+    <h3>② 確証バイアス</h3>
+    <p>自分の判断・信念を後押しする情報を集めてしまう傾向です。感覚的に振り返ると、うまくいったトレードの理由は鮮明に思い出し、うまくいかなかったトレードは「偶然」「運が悪かった」で片づけがちです。<a href="guide-cognitive-biases.html">認知バイアスの記事</a>でも詳しく解説していますが、<strong>これら2つのバイアスがある限り、感覚だけの振り返りでは同じ失敗を繰り返す</strong>リスクが高くなります。</p>
+
+    <div class="info-box">
+      <strong>💡 記録があると何が変わるか</strong>：「あのときこう感じていた」ではなく「そのときエントリー根拠はこれだった、心理状態は焦りだった、損益は−Xだった」という<strong>事実</strong>が残ります。事実はバイアスで書き換えられません。記録こそが「正直なコーチ」として機能するのです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ まず始める──記録すべき5つの項目</h2>
+    <p>売買日誌と聞くと「複雑そう」「続かなそう」と感じる人が多いですが、<strong>始めるのに複雑なフォーマットは不要</strong>です。まずは以下の5つだけを記録してみてください。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>記録項目</th>
+          <th>内容</th>
+          <th>なぜ重要か</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>① 日時・銘柄・方向</td>
+          <td>エントリー日時、銘柄名、ロング/ショート</td>
+          <td>「いつ・何を・どちらに」の基本情報。時間帯別分析の基礎になる</td>
+        </tr>
+        <tr>
+          <td>② SL・TP・エントリー価格</td>
+          <td>エントリー時点で決めた損切り・利確ライン</td>
+          <td><a href="guide-loss-cut.html">エントリー前の事前ルール化</a>が実践できているか確認できる</td>
+        </tr>
+        <tr>
+          <td>③ 実決済・損益</td>
+          <td>実際に決済した価格と最終的な損益（金額またはRで）</td>
+          <td>計画（SL/TP）と実際（決済）のズレを発見できる</td>
+        </tr>
+        <tr>
+          <td>④ エントリー根拠</td>
+          <td>なぜエントリーしたか（RSI過売り、ブレイク、MA反発など）</td>
+          <td>セットアップ種別ごとの勝率を後で集計できる</td>
+        </tr>
+        <tr>
+          <td>⑤ 心理状態</td>
+          <td>エントリー時の感情（平常心/焦り/FOMO/退屈/自信過剰 等）</td>
+          <td>心理状態と成績の相関を発見できる。最も見落とされやすい項目</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>⑤の心理状態は特に重要です。多くの人が省略しますが、<strong>「焦っているときのトレード」「FOMOに駆られたエントリー」「退屈しのぎのトレード」が成績に与えるインパクト</strong>は、後で集計したとき驚くほど明確に出ることがあります（詳しくは<a href="#section-6">第6章</a>）。</p>
+
+    <div class="positive-box">
+      <strong>📌 プラスα の記録（余裕ができたら）</strong>：①〜⑤に慣れてきたら、「チャートのスクリーンショット（エントリー時とエグジット時の2枚）」「市場の環境（トレンド/レンジ）」「ルール通りだったか（Y/N）」を追加すると分析の質が大きく上がります。ただし最初から完璧を目指すと続きません。まずは5項目から。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 三日坊主にならないための続け方</h2>
+    <p>売買日誌が続かない最大の理由は<strong>完璧主義</strong>です。毎回チャートを貼って詳細なコメントを書いて、という高いハードルを設けると、少し疲れている日に記録が抜け始め、そのまま途絶えます。</p>
+
+    <h3>「続く仕組み」の3原則</h3>
+    <ul>
+      <li><strong>最小版で始める</strong>：最低限は5項目＋5分以内で書ける量。完璧な記録より、毎回続けることの方が価値がある。</li>
+      <li><strong>記録のタイミングを固定する</strong>：「決済した直後に書く」と決める。時間が経つと記憶が薄れ、後知恵バイアスも強まる。決済直後に書くほど、事実に近い記録になる。</li>
+      <li><strong>スクリーンショットを活用する</strong>：テキストで説明するより、チャート画面のスクショを1枚貼る方が速い。トレード終了時点の画面を保存する習慣だけでも、振り返りの質が大きく上がる。</li>
+    </ul>
+
+    <div class="warning-box">
+      「記録しなかったトレード」は分析に使えません。飛ばした記録があると、都合のいいトレードだけが残り、データが歪みます。<strong>負けたときほど、正直に・詳しく書く</strong>——これが長期的に最も学習効率の高い使い方です。
+    </div>
+
+    <!-- SVG 1: PDCA サイクル -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 370" role="img" aria-labelledby="pdca-title">
+        <title id="pdca-title">売買日誌で回すPDCAサイクルの概念図</title>
+        <text class="s-panel-label" x="40" y="24">売買日誌のPDCAサイクル（4ステップで手法を磨く）</text>
+
+        <!-- PLAN box（左上） -->
+        <rect class="s-box-fill-b" x="60" y="50" width="220" height="115" rx="10"/>
+        <rect class="s-box-stroke-b" x="60" y="50" width="220" height="115" rx="10"/>
+        <text class="s-box-text" x="170" y="85" text-anchor="middle">① PLAN</text>
+        <text class="s-box-subtext" x="170" y="106" text-anchor="middle">エントリー前にルールを決める</text>
+        <text class="s-box-subtext" x="170" y="121" text-anchor="middle">SL・TP・根拠・許容損失</text>
+        <text class="s-note" x="170" y="154" text-anchor="middle">（感情がニュートラルなうちに）</text>
+
+        <!-- DO box（右上） -->
+        <rect class="s-box-fill-g" x="360" y="50" width="220" height="115" rx="10"/>
+        <rect class="s-box-stroke-g" x="360" y="50" width="220" height="115" rx="10"/>
+        <text class="s-box-text-g" x="470" y="85" text-anchor="middle">② DO</text>
+        <text class="s-box-subtext" x="470" y="106" text-anchor="middle">トレード実行 + 売買日誌に記録</text>
+        <text class="s-box-subtext" x="470" y="121" text-anchor="middle">心理状態・根拠・損益を即記録</text>
+        <text class="s-note-g" x="470" y="154" text-anchor="middle">（決済の直後に書く）</text>
+
+        <!-- CHECK box（右下） -->
+        <rect class="s-box-fill-y" x="360" y="215" width="220" height="115" rx="10"/>
+        <rect class="s-box-stroke-y" x="360" y="215" width="220" height="115" rx="10"/>
+        <text x="470" y="250" text-anchor="middle" style="fill:#9a6700;font-size:13.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif">③ CHECK</text>
+        <text class="s-box-subtext" x="470" y="271" text-anchor="middle">定期集計・パターン分析</text>
+        <text class="s-box-subtext" x="470" y="286" text-anchor="middle">勝ち筋・負け筋を数字で確認</text>
+        <text x="470" y="319" text-anchor="middle" style="fill:#9a6700;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif">（20〜30件溜まったら）</text>
+
+        <!-- ACT box（左下） -->
+        <rect class="s-box-fill-r" x="60" y="215" width="220" height="115" rx="10"/>
+        <rect class="s-box-stroke-r" x="60" y="215" width="220" height="115" rx="10"/>
+        <text class="s-note-r" x="170" y="250" text-anchor="middle" style="font-size:13.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif">④ ACT</text>
+        <text class="s-box-subtext" x="170" y="271" text-anchor="middle">ルール・戦略の改善</text>
+        <text class="s-box-subtext" x="170" y="286" text-anchor="middle">勝ち条件を強化・負け条件を除外</text>
+        <text class="s-note-r" x="170" y="319" text-anchor="middle">（次のPLANへ反映）</text>
+
+        <!-- 矢印: PLAN→DO（右向き） -->
+        <line class="s-axis" x1="280" y1="107" x2="352" y2="107"/>
+        <polygon class="s-arr-fill-b" points="352,101 364,107 352,113"/>
+
+        <!-- 矢印: DO→CHECK（下向き） -->
+        <line class="s-axis" x1="470" y1="165" x2="470" y2="208"/>
+        <polygon class="s-arr-fill-b" points="464,208 470,220 476,208"/>
+
+        <!-- 矢印: CHECK→ACT（左向き） -->
+        <line class="s-axis" x1="352" y1="272" x2="288" y2="272"/>
+        <polygon class="s-arr-fill-b" points="288,266 276,272 288,278"/>
+
+        <!-- 矢印: ACT→PLAN（上向き） -->
+        <line class="s-axis" x1="170" y1="215" x2="170" y2="172"/>
+        <polygon class="s-arr-fill-b" points="164,172 170,160 176,172"/>
+
+        <!-- 中央テキスト（ギャップ領域 x=280-360, y=165-215 の中心=320,190） -->
+        <text class="s-center-text" x="320" y="183" text-anchor="middle">売買日誌</text>
+        <text class="s-center-text" x="320" y="203" text-anchor="middle">が回す</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 売買日誌が機能する仕組みはPDCAサイクルそのもの。PLANで事前にルールを決め、DOで実行+記録、CHECKでデータ集計、ACTでルールを改善する。このサイクルを回す回数が増えるほど、自分の手法の精度が上がっていく。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 20〜30件から始めるデータ集計</h2>
+    <p>5件・10件では統計的に何も見えません。サンプルが少なすぎると、<strong>偶然の勝ちや偶然の負けが「パターン」に見えてしまう</strong>（小サンプルの罠）。まずは<strong>20〜30件を目標に記録を続け、それを超えたら分析を始める</strong>のが現実的です。</p>
+
+    <h3>分析軸 1：セットアップ種別別の成績</h3>
+    <p>「<code>RSI過売りからの反発</code>」「<code>レジスタンスブレイク</code>」「<code>MA反発</code>」など、エントリー根拠を数種類に分類して集計します。<strong>勝率と平均損益（R値）がセットアップによって大きく異なる</strong>ことが多く、「自分に合っているセットアップ」と「相性が悪いセットアップ」が明確に見えてきます。</p>
+
+    <h3>分析軸 2：心理状態別の成績</h3>
+    <p>「平常心」「少し焦り」「FOMO/狼狽」の3段階に分けて集計するだけで、心理状態がパフォーマンスに与える影響がデータとして現れます。多くの場合、<strong>「焦り」や「FOMO」状態でのエントリーは、平常心でのエントリーと比べて損益が悪化するパターン</strong>が見えます。</p>
+
+    <h3>分析軸 3：時間帯別の成績</h3>
+    <p>東京時間・ロンドン時間・NY時間など、相場の時間帯によって値動きの性質が異なります。自分が最も集中できる時間帯と、流動性・ボラティリティが噛み合う時間帯を把握することで、<strong>「この時間帯だけトレードする」という絞り込み</strong>が可能になります。</p>
+
+    <h3>分析軸 4：ルール通りに実行できたかどうか</h3>
+    <p>「ルール通りのトレード」と「ルールを外れたトレード（SLを動かした、根拠なしに入ったなど）」を分けて集計します。多くの場合、<strong>ルール逸脱トレードは成績が著しく悪い</strong>ことが数字で明確になります。これが見えると、「なぜルールを守ることが大事か」が精神論ではなく自分のデータで証明されます。</p>
+
+    <!-- SVG 2: 心理状態別勝率の棒グラフ（概念図） -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="psych-title">
+        <title id="psych-title">心理状態別の勝率概念図（平常心が高く、焦り・FOMOで低下するイメージ）</title>
+        <text class="s-panel-label" x="40" y="24">心理状態別の勝率（概念図）</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="50" y1="40" x2="50" y2="300"/>
+        <line class="s-axis" x1="50" y1="300" x2="620" y2="300"/>
+        <text class="s-label-sm" x="44" y="60" text-anchor="end">高</text>
+        <text class="s-label-sm" x="44" y="180" text-anchor="end">中</text>
+        <text class="s-label-sm" x="44" y="300" text-anchor="end">低</text>
+        <text class="s-label-sm" x="330" y="320" text-anchor="middle">← 心理状態（概念） →</text>
+
+        <!-- ガイドライン -->
+        <line class="s-guide" x1="50" y1="60" x2="620" y2="60"/>
+        <line class="s-guide" x1="50" y1="180" x2="620" y2="180"/>
+
+        <!-- 平常心バー -->
+        <rect class="s-bar-high" x="80" y="81" width="140" height="219" rx="4"/>
+        <text class="s-legend" x="150" y="318" text-anchor="middle">平常心</text>
+        <text class="s-note-g" x="150" y="73" text-anchor="middle">◎ 高い勝率</text>
+
+        <!-- 少し焦りバー -->
+        <rect class="s-bar-mid" x="250" y="142" width="140" height="158" rx="4"/>
+        <text class="s-legend" x="320" y="318" text-anchor="middle">少し焦り</text>
+        <text x="320" y="134" text-anchor="middle" style="fill:#9a6700;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif">△ やや低下</text>
+
+        <!-- FOMO・狼狽バー -->
+        <rect class="s-bar-low" x="420" y="206" width="140" height="94" rx="4"/>
+        <text class="s-legend" x="490" y="318" text-anchor="middle">FOMO・狼狽</text>
+        <text class="s-note-r" x="490" y="198" text-anchor="middle">✕ 大幅に低下</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 心理状態と勝率の関係の概念図。平常心で行うトレードに比べ、「焦り」「FOMO（乗り遅れ恐怖）」「狼狽」の状態ではパフォーマンスが低下するパターンが見られることがあります。実際のデータは個人・戦略によって大きく異なります。<strong>自分の売買日誌で集計することで初めて自分のパターンが見えます</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ エッジを数字で捉える──自分の期待値を計算する</h2>
+    <p>分析が一定の深さに達したら、<strong>「エッジ（優位性）」を数字で定義</strong>できるようになります。エッジとは、<strong>「特定の条件下でのトレードにおいて、期待値がプラスになる状態」</strong>です。</p>
+
+    <h3>期待値の計算式</h3>
+    <p>基本的な期待値の式は次の通りです（<a href="guide-risk-reward.html">リスクリワード記事</a>でも詳しく解説しています）。</p>
+    <div class="info-box">
+      <strong>期待値 E = （勝率 × 平均利益）－（負率 × 平均損失）</strong>
+      <br><br>
+      計算例（概念の説明用）：勝率55%・平均利益1.5R・平均損失1.0R の場合<br>
+      E = 0.55 × 1.5 − 0.45 × 1.0 = 0.825 − 0.45 = <strong>+0.375R</strong><br>
+      ＝ 1トレードあたり、リスク（1R）の0.375倍のプラスが期待できる計算になる<br><br>
+      ※ Rとは「1回の最大損失額（1R）を基準にした損益の倍数」。<a href="guide-position-sizing.html">ポジションサイジングの記事</a>参照。
+    </div>
+
+    <h3>「全体の期待値」より「条件別の期待値」が重要</h3>
+    <p>ここが売買日誌の醍醐味です。<strong>全トレードを合算した期待値がゼロ付近でも、特定の条件に絞った期待値は大きくプラスになることがあります</strong>。例えば「RSI過売り＋平常心でのエントリー」の期待値が高く、「FOMO状態でのブレイクトレード」の期待値が大きくマイナス、といった形です。</p>
+    <p>この「条件別の期待値のマップ」こそが、<strong>あなた自身のエッジ（優位性）の地図</strong>です。エッジがある条件ではトレードし、エッジがない条件（むしろマイナス期待値の条件）ではトレードしない——これが<strong>セレクティブ・トレーディング（選択的なトレード）</strong>という発想です。</p>
+
+    <div class="positive-box">
+      <strong>📊 サンプル数と信頼性</strong>：各条件カテゴリで信頼できる分析をするには、<strong>そのカテゴリだけで最低20〜30件以上</strong>欲しいところです。サンプルが少ない段階での「パターン」は偶然である可能性が高いため、<strong>数値には幅を持たせて解釈する</strong>のが健全です。数が増えるほど、見えるパターンの信頼度が上がります。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 「やってはいけない条件」を洗い出す</h2>
+    <p>エッジを探すのと同じくらい重要なのが、<strong>「自分の成績を著しく下げる条件を発見して除外すること」</strong>です。プラスのエッジを積み上げるより、大きなマイナスを削る方が資産への影響が大きいことが多くあります。</p>
+
+    <h3>「Don't Trade List（トレードしない条件リスト）」</h3>
+    <p>売買日誌を分析していると、多くの場合<strong>「いくつかのパターンに負けが集中している」</strong>ことが見えてきます。典型的なものとしては：</p>
+    <ul>
+      <li><strong>FOMO エントリー</strong>：「乗り遅れそう」「みんなが話している銘柄」への衝動的なエントリー。心理状態「焦り/FOMO」と記録されているトレードの成績を集計すると、平常心トレードと比べて悪化しているパターンが見えることが多いです。</li>
+      <li><strong>特定の時間帯</strong>：指標発表直後など、ボラティリティが不安定な時間帯での成績が著しく悪い場合。</li>
+      <li><strong>「感覚」「雰囲気」でのエントリー</strong>：根拠欄に「なんとなく」と書いているトレードの成績は、多くのケースで期待値マイナスになりがちです。</li>
+      <li><strong>複数ポジション保有中の追加エントリー</strong>：すでにポジションを持っている状態での追加エントリーが成績を悪化させるパターン。</li>
+    </ul>
+    <p>これらを「Don't Trade List」として明示的に書き出しておくと、<strong>次回そのシチュエーションが来たときに「これは自分のデータでNGと判明している条件だ」と立ち止まる根拠</strong>になります。感情での「やめとこう」ではなく、<strong>データに裏打ちされた「やめる」</strong>は、はるかに守りやすい。</p>
+
+    <div class="negative-box">
+      <strong>📉 よくある落とし穴</strong>：Don't Trade List に書いた条件でも「今回は違う」と例外を作り始めることがあります。例外を許した時点でデータの積み上げが崩壊します。リストの意味は「このルールを守り続けた場合の期待値」を前提にしているため、例外を増やせばリストの価値は薄れます。例外を作りたくなったときこそ、<a href="guide-loss-cut.html">損切り記事で解説したサンクコスト効果と確証バイアス</a>を思い出してください。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI は、売買日誌の「記録→分析→改善」のサイクルをサイトの仕組みとしてサポートしています。</p>
+    <ul>
+      <li><strong>シグナル成績ダッシュボード（track-record.html）</strong>：このサイト自身が、シグナルの発火・損益・環境スコアを全て記録・公開しています。これはサイト運営側の「売買日誌」とも言えます。<strong>勝ちも負けも隠さず数字で開示する姿勢</strong>が、再現性の担保につながると考えているためです。自分の日誌と照らし合わせることで「シグナル通りに動いたときと、自分の判断で動いたときの差」を分析できます。</li>
+      <li><strong>自分の実取引記録との連携</strong>：`my-trades.json`（実取引ログ）と照合することで、シグナル受信から実際のエントリーまでのタイムラグや、SL・TPの実際の配置との差を振り返ることができます。</li>
+      <li><strong>心理管理のヒントとして</strong>：<a href="guide-trading-psychology-calm.html">感情のコントロール記事</a>で解説した「平常心の仕組み化」と売買日誌を組み合わせると、<strong>自分の心理状態がどのシチュエーションで崩れやすいかが具体的に見えてきます</strong>。問題の"見える化"は解決の第一歩です。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 サイト自身の「売買日誌」をのぞいてみる</div>
+      <div class="cta-box-desc">シグナルの発火履歴・損益・環境スコア・勝因/敗因まで全データを公開。自分の記録との比較にも使えます。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>売買日誌について、ここまでの内容を整理します。</p>
+    <ul>
+      <li>感覚だけの振り返りは<strong>後知恵バイアス・確証バイアス</strong>によって歪む。<strong>記録だけが「正直なコーチ」</strong>になれる。</li>
+      <li>最初に記録すべき5項目：<strong>①日時・銘柄・方向 ②SL/TP/エントリー価格 ③実決済・損益 ④エントリー根拠 ⑤心理状態</strong>。完璧より継続を優先する。</li>
+      <li>20〜30件から分析を開始。<strong>セットアップ種別・心理状態・時間帯・ルール遵守</strong>の4軸で集計すると、パターンが見えてくる。</li>
+      <li>「条件別の期待値マップ」が自分の<strong>エッジ（優位性）の地図</strong>。エッジがある条件に絞り、ない条件は<strong>Don't Trade List</strong>として明示する。</li>
+      <li>売買日誌は<strong>PDCAサイクル</strong>として機能する。回す回数が増えるほど、手法の精度と自己理解が深まる。</li>
+    </ul>
+    <p>「今日のトレードを5分で記録する」——それだけで、1年後の自分の理解度は今とは大きく変わっているかもしれません。<strong>記録は面倒ではなく、上達への最短ルート</strong>です。次の記事では、レバレッジとナンピンの仕組みとリスクについて取り上げる予定です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">✂️ 損切りができない本当の理由</div>
+        <div class="related-card-desc">売買日誌で記録すべき「損切り遵守率」の元になる考え方。仕組み化・自動化による感情の排除を解説。</div>
+      </a>
+      <a class="related-card" href="guide-trading-psychology-calm.html">
+        <div class="related-card-title">🧘 感情のコントロール・平常心の作り方</div>
+        <div class="related-card-desc">日誌の集計で見えてくる「感情崩れパターン」に対処するための平常心の仕組み化を図解で解説。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 AIシグナル研究日誌 #1</div>
+          <div class="related-card-desc">「記録→検証」を当サイトのシステムで実践する連載。日誌の考え方の実例</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">当サイト自身の「売買日誌」。勝ち・負け・環境スコア・敗因分析を全公開。自己記録との比較に。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は売買日誌の活用方法と投資のメタ認知に関する考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な教育目的の解説であり、特定の手法や戦略による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
