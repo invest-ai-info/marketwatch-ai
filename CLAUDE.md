@@ -45,6 +45,7 @@
 | **update-market-news.yml** | 朝 7 / 夕 16（30-90 分遅延） | 6 コアページ + 解説生成 |
 | **technical-alerts.yml** | 4 時間ごと（6 回/日、3 重 cron） | 13 銘柄テクニカル分析 → メール |
 | **technical-alerts-1h.yml** | 1 時間ごと | 1H 足データ収集（メールなし） |
+| **technical-alerts-1d.yml** 🆕 | 毎朝 06:20（NY引け後） | 日足データ収集（メールなし・記録のみ。上位足=週足・クールダウン72h・expired 21日。2026-06-11新設＝時間足勾配 1h<4h<1d? の検証用） |
 | **political-alerts.yml** | 30 分ごと | 政治発言フィード + HIGH 速報メール |
 | **weekly-strategy.yml** | 日曜 18:13 | 来週投資戦略の自動生成 |
 | **weekly-review.yml** ⭐ | 月曜 07:13 | 先週シグナル振り返り (C1) |
