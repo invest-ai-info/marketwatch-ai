@@ -1,10 +1,56 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-08）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-11）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
 
 ---
 
-## 🆕 2026-06-08 セッションの続き（最新・まずここを読む）
+## 🆕 2026-06-09〜11 セッション（最新・まずここを読む）
+
+**テーマ＝収益化の土台一式が完成した3日間**：メアド回収→アフィリ→研究日誌シリーズ創設→日次自動研究会→日足シグナル→YouTube自動化。
+
+#### ✅ メルマガ（メアド回収）— MailerLite 稼働中
+- アカウント=MailerLite（account `2419467` / form `189793597614196622`、無料1,000人枠、**シングルオプトイン**）
+- 6コアページ=`generate_market_news.py` の `NEWSLETTER_FORM` 定数を `safe_write()` が `<footer>` 直前に自動注入（永続）
+- 静的ページ（guide全部+guides）=`inject_newsletter.py`（冪等・SYNC入り）で注入済み。**フォーム文言変更時は6コア自動+このスクリプト再実行**
+- 実地テストで購読者1件（本人）。一斉送信はMailerLite承認+送信元住所が必要（集めるのは可）
+
+#### ✅ アフィリ（A8.net・DMM提携）— 15ページ稼働
+- DMM株→nisa系・個別銘柄系11ページ / DMM CFD→日経・指数系4ページ。「広告」ラベル必須（ステマ規制）
+- **新アフィリ追加=`inject_ads.py` の `ADS`（商品ブロック）と `PAGES`（商品→関連ページ）に追記して再実行**（冪等・SYNC入り）
+- 商品→ページ対応の原則: FX→為替系 / Bitcoin→暗号資産系 / 株→株・NISA系 / CFD→指数系
+
+#### ✅ 🧪AIシグナル研究日誌シリーズ創設（公開2本+自動化）
+- `guide-signal-lab-001.html`=Phase2検証→**ムード門番を棄却**（一致11.8% vs 不一致56.6%の逆転）。SIGNAL_REDESIGN.md §9 に正式記録
+- `guide-signal-lab-002.html`=ユーザーの押し目仮説→**上位足トレンド門番は「逆張り買い限定」で有望**（押し目買い54.7% n53 / 4h限定76.5% n17✅）。一律はまた逆転。**昇格基準を事前宣言済み＝新データで4h押し目買い n≥30・勝率50%超→配信信頼度反映を検討**
+- 文体ルール＝噛み砕き統一（門番/ブレ幅(95%CI)/もしも検証/押し目・落ちるナイフ、30秒まとめ、SVG図解、kinsho-v1×3）
+- guides.html に新カテゴリ「🧪 AIシグナル研究日誌」新設済み
+- **routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57、毎朝06:10 JST）**=3視点で仮説1本/日を検証→`drafts/draft-signal-lab-NNN.html`+`drafts/labnotes/`(数字照合用生ログ)+`signal-lab-ledger.md`(台帳)を生成・コミット。**無人公開しない**（人間がlabnotes照合→公開）。番号は#3から続番
+- 検証ツールはローカル `research/` フォルダ（SYNC外）: phase2_backtest.py / trend_gate_backtest.py / inspect_log.py（リモートraw取得）
+
+#### ✅ 日足（1d）シグナル追加 — 記録のみで稼働
+- `technical-alerts-1d.yml`（毎朝06:20 JST=NY引け後・`--timeframe 1d --no-email`）。初回手動実行で12本発火✅
+- エンジン変更: fetch=日足450d直接 / クールダウン72h / **上位足=週足判定** / narrative対応。`evaluate_signal_outcomes.py`に**EXPIRY_DAYS_1D=21**
+- 狙い=時間足勾配仮説（1h 27-39% < 4h 41-53% < 1d?）。数週間でnが貯まる→研究日誌ネタ
+- ⚠️ローカルはyfinance不安定→**エンジンの実走テストは必ずActions（workflow_dispatch）で**
+
+#### ✅ 記事公開4本＋キュー
+- `guide-trading-journal.html`（売買日誌・心理シリーズ8本目）＝autodraft下書きを仕上げて公開（routineの下書きは冒頭免責がkinsho-v1タグ無しのことがある→要チェック）
+- `guide-ai-investing-4types.html`（AIに上がる銘柄を聞くな・4類型）＝雑談から直接執筆・公開。研究日誌への導線
+- **未公開の下書きが残り3本**: `drafts/draft-leverage.html`（心理シリーズ最終）/ `draft-dollar-cost-averaging.html` / 明朝 `swap-points` 生成見込み。仕上げ手順の参考=`research/_finalize_trading_journal.py`（noindex除去・kinsho標準化・meta-line公開形式化・公開は `mw.py publish`）
+- topicキュー追加済み: 10=ドルコスト平均法 / 11=スワップポイント（ユーザー発案）
+
+#### ✅ YouTube自動化 — 完成・毎朝06:45
+- タスクスケジューラ `MarketWatch_YT_Shorts`（06:45・StartWhenAvailable・テスト発火成功 LastTaskResult=0）
+- ランチャー=`yt_auto/run_all.py`。**⚠️重要教訓: ノートン360が「自動生成された.bat」を削除＆再作成ブロックする→この環境の自動化ランチャーは必ず.py**
+- synth.py に `initialize_speaker`+リトライ（VOICEVOXコールドスタート対策）。fetch の日付ハードコード除去済み
+- 成果物=`yt_auto/out/YYYY-MM-DD/`（mp4+title.txt+**description.txt=サイト→研究日誌→メルマガ導線+免責入り**）
+- **残作業（ユーザー）＝チャンネル開設+毎朝の手動アップロード（2分）**。API自動化はリズム安定後
+
+#### 📋 次セッションのタスク候補（優先順）
+1. **朝の自動生成物レビュー**: signal-lab #3下書き（routine初回・おそらく切り番/銘柄相性検証）→labnotes数字照合→公開／leverage・DCA下書きの仕上げ公開
+2. **YouTubeチャンネル開設＋初アップロード**（out/フォルダに毎朝届く）
+3. 前向きトラッカー監視: 押し目買い4h（n≥30・勝率50%超で昇格検討）/ 日足シグナルのn蓄積
+4. 朝の自動化ラッシュ: 05:30記事下書き → 06:10研究日誌 → 06:20日足スキャン → 06:45YouTube動画
 
 #### ✅ 2026-06-08：guides.html モバイルUX改善（アコーディオン実装）
 - **`guides.html`（SYNC済・commit 3020a87）**
