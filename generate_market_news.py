@@ -3985,6 +3985,111 @@ def build_indicator_preview_banner(now_jst):
         return ""
 
 
+def build_morning_digest_banner(now_jst, data, sentiment_label):
+    """🌅 今朝の3行ダイジェスト＋重要イベントカウントダウン（2026-06-11 新設）。
+    ①直近の主な値動き（前日比の大きい順）②今日の経済イベント ③市場の温度（VIX）を
+    既に取得済みのデータから毎回自動生成する。事実とデータの表示のみ（方向観・売買示唆は出さない）。
+    カウントダウンは CPI/FOMC/日銀会合/雇用統計 の「次回」までの日数。失敗時は空文字（自動で消える）。"""
+    try:
+        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
+        today = now_jst.date()
+
+        # ── ① 直近の主な値動き（前日比の絶対値が大きい順に3つ）──
+        names = {"nikkei": "日経平均", "sp500": "S&P500", "usdjpy": "ドル円",
+                 "eurjpy": "ユーロ円", "oil": "原油", "gold": "金",
+                 "btc": "BTC", "eth": "ETH"}
+        movers = []
+        for k, nm in names.items():
+            _, _, chg = data.get(k, (None, None, None))
+            if chg is not None:
+                movers.append((nm, chg))
+        movers.sort(key=lambda x: abs(x[1]), reverse=True)
+        if movers:
+            parts = []
+            for nm, chg in movers[:3]:
+                cls = "md-up" if chg >= 0 else "md-down"
+                arrow = "▲" if chg >= 0 else "▼"
+                parts.append(f'{nm} <span class="{cls}">{arrow}{abs(chg):.1f}%</span>')
+            line1 = "値動きが大きい順：" + "・".join(parts) + "（前日比）"
+        else:
+            line1 = "価格データを取得中です"
+
+        # ── ② 今日の経済イベント（無ければ次の high を案内）──
+        ups = find_upcoming_events(now_jst, days_ahead=7)
+        todays = [e for e in ups if e["date"] == today]
+        if todays:
+            ev = "・".join(f'{"🚨" if e["importance"] == "high" else "📌"}{flag.get(e["country"], "")} {e["name"]}'
+                           for e in todays[:3])
+            more = f"　ほか{len(todays) - 3}件" if len(todays) > 3 else ""
+            line2 = f"本日：{ev}{more}"
+        else:
+            nxt = next((e for e in ups if e["importance"] == "high"), None)
+            if nxt:
+                d = (nxt["date"] - today).days
+                line2 = (f'本日の重要指標はなし。次は {flag.get(nxt["country"], "")} {nxt["name"]}'
+                         f'（{nxt["date"].month}/{nxt["date"].day}・あと{d}日）')
+            else:
+                line2 = "直近1週間に主要な経済指標の予定はありません"
+
+        # ── ③ 市場の温度（VIX＋センチメント）──
+        vix_txt = ""
+        try:
+            vix_val, _, _ = get_price("^VIX")
+            if vix_val is not None:
+                if vix_val < 13:
+                    lv = "きわめて落ち着いた水準"
+                elif vix_val < 17:
+                    lv = "落ち着いた水準"
+                elif vix_val < 22:
+                    lv = "やや神経質な水準"
+                elif vix_val < 30:
+                    lv = "警戒水準"
+                else:
+                    lv = "強い警戒水準"
+                vix_txt = f'恐怖指数VIX <b>{vix_val:.1f}</b>（{lv}）・'
+        except Exception:
+            pass
+        line3 = f'市場の温度：{vix_txt}センチメント判定は「<b>{sentiment_label}</b>」'
+
+        # ── 重要イベントカウントダウン（次回の CPI / FOMC / 日銀 / 雇用統計）──
+        keys = [("米CPI", "🇺🇸 米CPI"), ("FOMC（結果発表）", "🇺🇸 FOMC"),
+                ("日銀会合（結果発表）", "🇯🇵 日銀会合"), ("米雇用統計", "🇺🇸 雇用統計")]
+        chips = []
+        for sub, lbl in keys:
+            nxt_date = None
+            for m, d, c, imp, n, desc in ECONOMIC_EVENTS_2026:
+                if sub not in n:
+                    continue
+                try:
+                    ed = datetime(now_jst.year, m, d).date()
+                except ValueError:
+                    continue
+                if ed >= today and (nxt_date is None or ed < nxt_date):
+                    nxt_date = ed
+            if nxt_date:
+                dd = (nxt_date - today).days
+                when = "<b>本日</b>" if dd == 0 else (f"<b>あと{dd}日</b>" if dd <= 3 else f"あと{dd}日")
+                chips.append((dd, f'<span class="md-chip">{lbl} {when}（{nxt_date.month}/{nxt_date.day}）</span>'))
+        chips.sort(key=lambda x: x[0])
+        chips_html = ""
+        if chips:
+            chips_html = ('\n    <div class="md-chips">' + "".join(c for _, c in chips)
+                          + '<a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div>')
+
+        title = "🌅 今朝の3行" if now_jst.hour < 12 else "🌇 今日の3行"
+        upd = now_jst.strftime("%H:%M")
+        return f'''  <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
+  <div class="morning-digest">
+    <div class="md-title">{title} <span class="md-sub">忙しい人のための30秒まとめ（{upd} JST 更新）</span></div>
+    <div class="md-line">📈 {line1}</div>
+    <div class="md-line">📅 {line2}</div>
+    <div class="md-line">🌡️ {line3}</div>{chips_html}
+  </div>'''
+    except Exception as e:
+        print(f"  ⚠️ morning digest 生成スキップ: {e}")
+        return ""
+
+
 def build_weekly_history_item(now_jst):
     """📰 更新履歴 に載せる「今週の投資戦略」エントリを {date, line} で返す（日付降順ソート用）。
     最新の guide-weekly を自動検出。記事が無ければ None。line は先頭スペース・末尾<br>なし。"""
@@ -4081,6 +4186,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
     # 🆕 注目の経済指標バナー（発表3日前〜当日まで常時表示・更新履歴とは別枠）
     indicator_preview_banner = build_indicator_preview_banner(now_jst)
+    # 🆕 今朝の3行ダイジェスト＋重要イベントカウントダウン（2026-06-11）
+    morning_digest = build_morning_digest_banner(now_jst, data, label)
     # 🆕 📰 更新履歴：手動エントリ＋週次自動エントリを「日付降順」に並べ、最新5件のみ表示。
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
@@ -4146,6 +4253,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .sentiment-label-small{{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}}
     .sentiment-badge{{color:{badge_color};font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}}
     .sentiment-text{{color:#424a53;font-size:.92rem;line-height:1.6}}
+    .morning-digest{{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:32px}}
+    .md-title{{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}}
+    .md-sub{{font-size:.72rem;color:#6e7781;font-weight:500;margin-left:6px}}
+    .md-line{{font-size:.9rem;color:#424a53;line-height:2.0}}
+    .md-line b{{color:#1f2328}}
+    .md-up{{color:#1a7f37;font-weight:700}}
+    .md-down{{color:#cf222e;font-weight:700}}
+    .md-chips{{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:12px;border-top:1px dashed #d0d7de}}
+    .md-chip{{display:inline-block;padding:4px 12px;border-radius:999px;background:#f6f8fa;border:1px solid #d0d7de;font-size:.78rem;color:#424a53;font-weight:600}}
+    .md-chip b{{color:#cf222e}}
     .section-title{{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
     .cards-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}}
     .card{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px;transition:border-color .2s}}
@@ -4240,6 +4357,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark .sentiment-banner{{background:linear-gradient(135deg,#0d2616,#0d1f2a)!important;border-color:#2ea043}}
     body.dark .sentiment-label-small{{color:#8b949e}}
     body.dark .sentiment-text{{color:#c9d1d9}}
+    body.dark .morning-digest{{background:#161b22;border-color:#30363d;border-left-color:#d4a017}}
+    body.dark .md-title{{color:#d4a017}}
+    body.dark .md-sub{{color:#8b949e}}
+    body.dark .md-line{{color:#c9d1d9}}
+    body.dark .md-line b{{color:#e6edf3}}
+    body.dark .md-up{{color:#3fb950}}
+    body.dark .md-down{{color:#ff8080}}
+    body.dark .md-chips{{border-top-color:#30363d}}
+    body.dark .md-chip{{background:#0d1117;border-color:#30363d;color:#c9d1d9}}
+    body.dark .md-chip b{{color:#ff8080}}
     body.dark .section-title{{color:#8b949e}}
     body.dark .card{{background:#161b22!important;border-color:#30363d}}
     body.dark .card:hover{{border-color:#58a6ff}}
@@ -4326,6 +4453,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       </div>
     </div>
   </div>
+
+{morning_digest}
 
   <!-- 更新履歴 -->
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
