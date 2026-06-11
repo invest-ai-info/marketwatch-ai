@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味 - MarketWatch AI</title>
+  <meta name="description" content="レバレッジは少ない資金で大きく動かす仕組みだが、証拠金維持率が閾値を割ると強制ロスカット（強制決済）が発動する。ナンピンは平均コストを下げる一方でポジション量とリスク量が増え、下落が続くと損失は非線形に拡大する。「下手なナンピン、スカンピン」の本当の意味と、ポジションサイジングによる防ぎ方を図解で解説。">
+  <meta name="keywords" content="レバレッジ,ナンピン,強制ロスカット,証拠金維持率,難平,FX,信用取引,破産確率,ポジションサイジング,リスク管理,投資心理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-leverage.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味">
+  <meta property="og:description" content="レバレッジ・ナンピンがなぜ資産を溶かすのか。証拠金維持率・強制ロスカット・損失の非線形性を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-leverage.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味",
+    "description": "レバレッジ・ナンピンがなぜ資産を溶かすのか。証拠金維持率・強制ロスカット・損失の非線形性を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-leverage.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* leverage記事追加クラス */
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-warn{fill:#fff8c5;stroke:#9a6700;stroke-width:1}
+    .s-dot-r{fill:#cf222e}
+    .s-dot-g{fill:#1a7f37}
+    .s-dot-b{fill:#0969da}
+    .s-bar-lev{fill:#0969da;opacity:.75}
+    .s-bar-lev-hi{fill:#cf222e;opacity:.85}
+    .s-avg-line{stroke:#9a6700;stroke-width:2;stroke-dasharray:6 3}
+    .s-add-point{fill:#cf222e;stroke:#ffffff;stroke-width:1.5}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-fill-warn{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-bar-lev{fill:#388bfd;opacity:.75}
+    body.dark .s-bar-lev-hi{fill:#f85149;opacity:.85}
+    body.dark .s-avg-line{stroke:#d4a017}
+    body.dark .s-add-point{fill:#f85149;stroke:#161b22}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; レバレッジとナンピンの正体
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>💣 レバレッジとナンピンの正体——なぜ資産が溶けるのか</h1>
+    <div class="meta-line">
+      カテゴリ：🛡️ リスク管理・資金管理 &nbsp;|&nbsp; 公開：2026年6月11日 &nbsp;|&nbsp; 読了：約14分
+    </div>
+
+    <p>「レバレッジを効かせれば、少ない資金で大きく稼げる」——FX・株式信用取引・先物などで耳にする言葉です。<strong>確かにその通りではあるのですが、「大きく稼げる」と「大きく失う」は、まったく同じ意味の裏表</strong>です。そしてレバレッジのある市場で含み損が膨らんだとき、人は「ナンピン（難平）」——つまり買い増して平均コストを下げる——という行動を取りがちです。</p>
+    <p>この二つの組み合わせが、投資で「口座が吹き飛ぶ」という最悪の結末を引き起こす最も典型的なパターンです。古くから「<strong>下手なナンピン、スカンピン</strong>」という言葉があるほど、この罠にははまりやすい。本記事では、前半でレバレッジと強制ロスカットの仕組みを初心者向けに図解し、後半でナンピンが期待値と心理の両面からなぜ危険なのかを中上級者向けに深掘りします。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>レバレッジは「少ない証拠金で大きなポジションを持つ」仕組み。倍率が高いほど<strong>わずかな逆行で証拠金維持率が閾値を割り込み、強制ロスカット（強制決済）が発動</strong>する。レバレッジ25倍なら理論上4%の逆行だけで全証拠金が吹き飛ぶ計算になる。</li>
+      <li>ナンピンは平均取得コストを下げられるが、<strong>同時にポジション全体のリスク量が増える</strong>。相場がさらに逆行した場合の損失は倍増以上に膨らみ、「回復に必要な上昇率」は非線形に大きくなる。</li>
+      <li>「いつかは戻るはず」という感情がレバレッジとナンピンを組み合わせた最悪の行動を生む。<strong>事前にポジションサイジングで1トレードの損失上限を決め、強制ロスカットより先に自分でルールに従って損切りすること</strong>が唯一の防衛策。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">レバレッジとは何か——少ない資金で大きく動かす仕組み</a></li>
+        <li><a href="#section-2">証拠金維持率と強制ロスカットのメカニズム</a></li>
+        <li><a href="#section-3">レバレッジ倍率と「逆行できる幅」の反比例関係</a></li>
+        <li><a href="#section-4">ナンピンとは何か——平均コストを下げる手法の正体</a></li>
+        <li><a href="#section-5">なぜナンピンが資産を溶かすのか——損失の非線形性と心理の罠</a></li>
+        <li><a href="#section-6">レバレッジ×ナンピンの組み合わせが最も危険な理由</a></li>
+        <li><a href="#section-7">安全なレバレッジの使い方——ポジションサイジングとの接続</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ レバレッジとは何か——少ない資金で大きく動かす仕組み</h2>
+    <p>レバレッジ（leverage）とは、元々は「てこの原理」という意味です。投資の世界では<strong>「自分が実際に持っている資金（証拠金）の何倍もの金額の取引をする仕組み」</strong>を指します。</p>
+    <p>例えば、10万円の証拠金を使ってレバレッジ10倍の取引をすると、<strong>100万円分のポジション</strong>を持てます。これが利益方向に動けば利益も10倍。しかし逆方向に動けば損失も10倍です。重要なのは、<strong>利益と損失は常に対称に増幅される</strong>という事実です。</p>
+    <p>FX（外国為替証拠金取引）では、日本国内の個人投資家は金融商品取引法の規制により<strong>最大25倍</strong>というレバレッジ上限が設けられています（2010年8月に50倍、2011年8月に現行の25倍規制が施行）。株式信用取引では一般に約3.3倍が上限です。先物取引はそれぞれの商品ごとに証拠金が定められ、倍率は商品によって異なります。</p>
+
+    <div class="info-box">
+      <strong>💡 レバレッジは「両刃の剣」</strong>：少ない資金で大きなリターンを狙えるのがレバレッジの魅力です。ただし、利益が増幅されると同時に損失も同じ比率で増幅されます。「夢が広がる道具」ではなく、<strong>使い方を誤れば元本を超えた損失（追証）にもなりうる、高度な金融手段</strong>と理解するのが重要です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 証拠金維持率と強制ロスカットのメカニズム</h2>
+    <p>レバレッジ取引で最も重要な概念が<strong>証拠金維持率</strong>です。</p>
+    <p><strong>証拠金維持率（%）＝ 純資産（口座残高＋含み損益）÷ 必要証拠金 × 100</strong></p>
+    <p>証拠金維持率は、ポジションを維持するのに必要な証拠金に対して、今の口座にどのくらい余裕があるかを示す指標です。口座残高が増えれば維持率は上がり、含み損が膨らむと維持率は下がります。</p>
+    <p>この維持率が証券会社・FX会社の定める<strong>ロスカット水準（例：50%〜100%）を下回ると、強制ロスカット（強制決済）が自動で執行</strong>されます。これはシステムが自動で行うもので、投資家の意志とは関係なく発動します。口座に残った資金を完全に失う前に強制的にポジションを閉じる、<strong>一種のセーフティネット</strong>でもありますが、「発動する前に自分で損切りする」のが正しい使い方です。</p>
+
+    <div class="negative-box">
+      <strong>📉 強制ロスカットの「怖い側面」</strong>：相場が急変（ギャップダウン・フラッシュクラッシュ）すると、価格が飛んで想定よりずっと不利な価格で決済されることがあります（スリッページ）。また、相場の最悪な局面でポジションを強制的に手放すことになるため、感情的に割り切りにくい状況で損失が確定されます。強制ロスカットをセーフティネットと思って高レバレッジを使い続けることは非常に危険です。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ レバレッジ倍率と「逆行できる幅」の反比例関係</h2>
+    <p>レバレッジの本質的なリスクは、倍率と逆行できる幅が<strong>反比例の関係</strong>にあることです。下の概念図で確認してみましょう。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="lev-title">
+        <title id="lev-title">レバレッジ倍率と逆行できる幅の反比例関係の概念図</title>
+        <text class="s-panel-label" x="40" y="24">レバレッジ倍率と「逆行できる幅（証拠金が消える目安）」</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="70" y1="290" x2="610" y2="290"/>
+        <line class="s-axis" x1="70" y1="290" x2="70" y2="40"/>
+        <text class="s-label-sm" x="330" y="330" text-anchor="middle">レバレッジ倍率 →</text>
+        <text class="s-label-sm" x="4" y="168" writing-mode="vertical-lr" transform="rotate(180,10,168)">逆行できる幅（%）↑</text>
+        <!-- X軸ラベル (倍率) -->
+        <text class="s-label-sm" x="106" y="308" text-anchor="middle">1倍</text>
+        <text class="s-label-sm" x="196" y="308" text-anchor="middle">2倍</text>
+        <text class="s-label-sm" x="316" y="308" text-anchor="middle">5倍</text>
+        <text class="s-label-sm" x="436" y="308" text-anchor="middle">10倍</text>
+        <text class="s-label-sm" x="556" y="308" text-anchor="middle">25倍</text>
+        <!-- Y軸目盛 -->
+        <line class="s-guide" x1="66" y1="57" x2="72" y2="57"/>
+        <text class="s-label-sm" x="58" y="61" text-anchor="end">100%</text>
+        <line class="s-guide" x1="66" y1="107" x2="72" y2="107"/>
+        <text class="s-label-sm" x="58" y="111" text-anchor="end">50%</text>
+        <line class="s-guide" x1="66" y1="157" x2="72" y2="157"/>
+        <text class="s-label-sm" x="58" y="161" text-anchor="end">20%</text>
+        <line class="s-guide" x1="66" y1="207" x2="72" y2="207"/>
+        <text class="s-label-sm" x="58" y="211" text-anchor="end">10%</text>
+        <line class="s-guide" x1="66" y1="257" x2="72" y2="257"/>
+        <text class="s-label-sm" x="58" y="261" text-anchor="end">4%</text>
+        <!-- 反比例曲線: y = 100/x, xの範囲は1~25、yをpx変換 -->
+        <!-- 変換式: svg_x = 70 + (x_lev-1)/24*540, svg_y = 290 - (y_pct/100)*230 -->
+        <!-- 主要点: (1,100)→(70,57), (2,50)→(157,107), (5,20)→(340,157), (10,10)→(540,207), (25,4)→(556,257) -->
+        <path class="s-curve-b" d="M106,57 C 130,65 160,90 196,107 C 250,130 290,145 316,157 C 360,170 410,190 436,207 C 490,228 520,245 556,257"/>
+        <!-- 主要点マーカー -->
+        <circle class="s-dot-b" cx="106" cy="57" r="5"/>
+        <circle class="s-dot-b" cx="196" cy="107" r="5"/>
+        <circle class="s-dot-b" cx="316" cy="157" r="5"/>
+        <circle class="s-dot-b" cx="436" cy="207" r="5"/>
+        <circle class="s-dot-r" cx="556" cy="257" r="6"/>
+        <!-- 注釈 -->
+        <text class="s-note" x="118" y="50">1倍 → 100%逆行でも</text>
+        <text class="s-note" x="118" y="64">ようやく全損（現物）</text>
+        <text class="s-note-r" x="430" y="252">25倍 → わずか4%の</text>
+        <text class="s-note-r" x="430" y="266">逆行で全証拠金消滅</text>
+        <!-- 水平ガイド線（25倍のY） -->
+        <line class="s-guide" x1="70" y1="257" x2="556" y2="257"/>
+      </svg>
+      <figcaption class="chart-caption">▲ レバレッジ倍率と「証拠金が消えるまでに逆行できる幅」の反比例の概念図。レバレッジ1倍（現物）なら価格が100%下落して初めて全損だが、25倍では4%程度の逆行で理論上の証拠金がゼロになる計算。実際にはロスカット水準の設定により発動タイミングは各社異なる。<strong>倍率が上がるほど、市場の「普通の揺れ」が命取りになる</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>日本の株式市場でも、1日で数%の値動きは珍しくありません。FXでは主要通貨ペアでも1日1〜2%の動きはよくあります。<strong>25倍レバレッジを使うということは、「普通の1日の値動き程度」で口座が危機に陥るリスクを取っている</strong>ということです。</p>
+    <p>レバレッジそのものが悪いわけではありません。問題は「倍率」と「ポジションの大きさ」の掛け合わせです。レバレッジが高くても、ポジションを小さく保ち（<a href="guide-position-sizing.html">ポジションサイジング</a>）、資金全体のわずかな割合しかリスクにさらさなければ、その組み合わせは安全になります。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ ナンピンとは何か——平均コストを下げる手法の正体</h2>
+    <p><strong>ナンピン（難平）</strong>とは、保有しているポジションが含み損を抱えている状態で、同じ方向に追加のポジションを取ることで<strong>平均取得コストを改善する手法</strong>です。</p>
+    <p>例えばこういうケースです。</p>
+
+    <table>
+      <thead>
+        <tr><th>タイミング</th><th>価格</th><th>購入数量</th><th>累計数量</th><th>平均取得コスト</th><th>累計投資額</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1回目の購入</td><td>1,000円</td><td>100株</td><td>100株</td><td>1,000円</td><td>10万円</td></tr>
+        <tr><td>ナンピン①</td><td>800円</td><td>100株</td><td>200株</td><td>900円</td><td>18万円</td></tr>
+        <tr><td>ナンピン②</td><td>600円</td><td>100株</td><td>300株</td><td>800円</td><td>24万円</td></tr>
+      </tbody>
+    </table>
+
+    <p>ナンピンを2回行うことで、当初1,000円だった平均取得コストが800円まで下がりました。これにより、<strong>価格が1,000円に戻らなくても800円に戻れば損益ゼロ</strong>になります。「一見すると賢い手法」に見えますが、重要な事実が隠れています。</p>
+    <p>注目してほしいのは<strong>「累計投資額」</strong>の列です。最初の10万円が18万円、さらに24万円と膨らんでいます。<strong>平均コストが下がる代わりに、ポジション全体のリスク量（エクスポージャー）は増え続けている</strong>のです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ なぜナンピンが資産を溶かすのか——損失の非線形性と心理の罠</h2>
+    <p>ナンピンが危険な理由は大きく2つあります。<strong>①損失の非線形的拡大</strong>と、<strong>②判断を鈍らせる心理メカニズム</strong>です。</p>
+
+    <h3>① 損失の非線形的拡大</h3>
+    <p>上の表の例を続けましょう。ナンピン②を終えた後（平均コスト800円、累計300株・投資額24万円）で、さらに価格が500円まで下落したとします。</p>
+    <ul>
+      <li>ナンピンなしで最初の100株だけ保有なら損失：<strong>5万円</strong>（1,000円→500円、100株）</li>
+      <li>ナンピン2回後の300株保有なら損失：<strong>9万円</strong>（800円→500円、300株）</li>
+    </ul>
+    <p>ナンピンをした結果、損失額は<strong>5万円から9万円へ、1.8倍に膨らみました</strong>。さらに下落が続くほどこの差は広がります。<strong>「平均コストを下げた」のに、総損失額は急速に拡大する</strong>——これがナンピンの本質的な矛盾です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="nanpin-title">
+        <title id="nanpin-title">ナンピンと価格下落時の損失拡大パターンの概念図</title>
+        <text class="s-panel-label" x="40" y="24">ナンピンを繰り返すほど「回復に必要な幅」と「さらなる下落時の損失」が拡大する</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="70" y1="290" x2="610" y2="290"/>
+        <line class="s-axis" x1="70" y1="290" x2="70" y2="40"/>
+        <text class="s-label-sm" x="340" y="314" text-anchor="middle">時間（価格下落の経過） →</text>
+        <text class="s-label-sm" x="32" y="168" writing-mode="vertical-lr" transform="rotate(180,44,168)">価格 / ラインの水準 ↑</text>
+
+        <!-- 価格の下落ライン -->
+        <polyline class="s-price" points="100,80 190,100 280,160 370,210 460,250 560,260"/>
+
+        <!-- 1回目買い -->
+        <circle class="s-dot-b" cx="100" cy="80" r="6"/>
+        <text class="s-label-sm" x="96" y="108">①最初の購入</text>
+
+        <!-- ナンピン① -->
+        <circle class="s-add-point" cx="280" cy="160" r="7"/>
+        <text class="s-note-r" x="288" y="154">ナンピン① 800円</text>
+
+        <!-- ナンピン② -->
+        <circle class="s-add-point" cx="420" cy="232" r="7"/>
+        <text class="s-note-r" x="428" y="226">ナンピン② 600円</text>
+
+        <!-- 平均コスト線（変化） -->
+        <!-- 当初の平均1000円 -->
+        <line class="s-avg-line" x1="100" y1="80" x2="280" y2="80"/>
+        <text class="s-label-sm" x="190" y="74" text-anchor="middle">平均コスト 1,000円</text>
+        <!-- ナンピン①後の平均900円 -->
+        <line class="s-avg-line" x1="280" y1="120" x2="420" y2="120"/>
+        <text class="s-label-sm" x="350" y="114" text-anchor="middle">平均コスト 900円</text>
+        <!-- ナンピン②後の平均800円 -->
+        <line class="s-avg-line" x1="420" y1="153" x2="590" y2="153"/>
+        <text class="s-label-sm" x="500" y="147" text-anchor="middle">平均コスト 800円</text>
+
+        <!-- 損失増大のコメント -->
+        <text class="s-note-r" x="478" y="180">500円まで下落した場合</text>
+        <text class="s-note-r" x="478" y="194">ナンピンなし:5万円損</text>
+        <text class="s-note-r" x="478" y="208">ナンピン2回:9万円損</text>
+      </svg>
+      <figcaption class="chart-caption">▲ ナンピン（難平）のパターン概念図。買い増すたびに平均コスト（オレンジ破線）は下がるが、同時にポジション量が増えるため、さらに下落したときの総損失額は大きくなる。<strong>「平均コストが下がった」と安心している間に、リスク量は着実に膨らんでいる</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>② 判断を鈍らせる心理メカニズム</h3>
+    <p>ナンピンには、<a href="guide-loss-cut.html">損切りを妨げる心理</a>と同じメカニズムが絡みます。</p>
+    <ul>
+      <li><strong>サンクコスト効果</strong>：「ここまで持ったんだから、今さら損切りできない」という心理がナンピンを正当化する。</li>
+      <li><strong>アンカリング</strong>：最初の買値（または平均コスト）が頭に焼きつき、「そこまで戻れば回収できる」という思考から抜けられない。</li>
+      <li><strong>過信バイアス</strong>：「自分の最初の見立ては間違っていない、相場が戻るはずだ」という強い信念。価格下落という事実よりも、自分の仮説を優先してしまう。</li>
+    </ul>
+    <p>さらに厄介なのは、<strong>ナンピンが「一時的に功を奏する」ことがある</strong>点です。買い増した後に価格が戻れば、ナンピンをしなかった場合より素早く損失を回収できます。この「成功体験」が学習強化となり、<strong>次の大きな損失につながる行動パターン</strong>を固めてしまうのです。</p>
+
+    <div class="warning-box">
+      ナンピンには「ドルコスト平均法」との混同も注意が必要です。ドルコスト平均法は<strong>「定期的・定額で積み立てる」</strong>手法であり、価格が下がったときに意図的に集中投資するナンピンとは本質的に異なります。ナンピンはそのトレードの損失を取り返そうとする行動であり、ドルコスト平均法は長期分散投資の計画的手法です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ レバレッジ×ナンピンの組み合わせが最も危険な理由</h2>
+    <p>ここが最も重要な話です。レバレッジとナンピンを<strong>組み合わせると</strong>、どうなるか。</p>
+    <p>レバレッジを使っているということは、証拠金維持率という「タイムリミット」が存在します。価格が逆行するほど維持率が下がり、強制ロスカット水準に近づきます。ここでナンピン（買い増し）をすると何が起きるか。</p>
+    <ul>
+      <li><strong>必要証拠金が増える</strong>：ポジション量が増えるため、維持に必要な証拠金も増加。</li>
+      <li><strong>維持率がさらに低下する</strong>：必要証拠金が増える一方で、含み損は膨らんでいるため、純資産は減っている。維持率の分子が減り、分母が増える——つまり<strong>ダブルで維持率が悪化する</strong>。</li>
+      <li><strong>強制ロスカットのトリガーが近づく</strong>：結果として、ナンピンをしたことで逆にロスカット発動までの「距離」が縮まってしまう。</li>
+    </ul>
+
+    <div class="negative-box">
+      <strong>📉 最悪のシナリオ</strong>：含み損で苦しいときに「平均コストを下げよう」とナンピンを繰り返すと、証拠金維持率が急低下し、想定外のタイミングで強制ロスカットが発動。元本の大部分を失う——これがFX・先物取引で最もよく見られる「口座が吹き飛ぶ」パターンです。当初10万円の証拠金でスタートした取引が、ナンピンと含み損の連鎖で口座残高ゼロになったり、追証（追加の証拠金請求）が発生したりする場合もあります。
+    </div>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="margin-title">
+        <title id="margin-title">レバレッジ取引でナンピンしたときの証拠金維持率推移の概念図</title>
+        <text class="s-panel-label" x="40" y="24">レバレッジ×ナンピン：証拠金維持率の推移（同じ値動きでの比較）</text>
+        <!-- ロスカット水準より下の警戒ゾーン -->
+        <rect class="s-fill-warn" x="70" y="252" width="540" height="38" opacity=".45"/>
+        <!-- 軸 -->
+        <line class="s-axis" x1="70" y1="290" x2="610" y2="290"/>
+        <line class="s-axis" x1="70" y1="290" x2="70" y2="40"/>
+        <text class="s-label-sm" x="340" y="314" text-anchor="middle">時間（価格下落の経過） →</text>
+        <text class="s-label-sm" x="4" y="168" writing-mode="vertical-lr" transform="rotate(180,10,168)">証拠金維持率（%）↑</text>
+        <!-- Y軸目盛 -->
+        <line class="s-guide" x1="66" y1="60" x2="72" y2="60"/>
+        <text class="s-label-sm" x="58" y="64" text-anchor="end">300%</text>
+        <line class="s-guide" x1="66" y1="137" x2="72" y2="137"/>
+        <text class="s-label-sm" x="58" y="141" text-anchor="end">200%</text>
+        <line class="s-guide" x1="66" y1="213" x2="610" y2="213"/>
+        <text class="s-label-sm" x="58" y="217" text-anchor="end">100%</text>
+        <!-- ロスカット水準ライン -->
+        <line class="s-brk" x1="70" y1="252" x2="610" y2="252"/>
+        <text class="s-note-r" x="76" y="247">ロスカット水準（例：50%）</text>
+        <!-- ナンピンなし（最初のポジションのみ）: 緩やかな低下 -->
+        <polyline class="s-curve-b" stroke-dasharray="7 5" points="100,60 235,125 560,205"/>
+        <text class="s-note" x="460" y="176">ナンピンなし→まだ余裕</text>
+        <!-- ナンピンあり: 買い増しのたびに段差状に急落 -->
+        <polyline class="s-curve-l" points="100,60 235,125 248,168 385,212 398,243 455,252"/>
+        <!-- ナンピン点 -->
+        <circle class="s-add-point" cx="241" cy="146" r="7"/>
+        <text class="s-note-r" x="252" y="150">ナンピン①</text>
+        <circle class="s-add-point" cx="391" cy="227" r="7"/>
+        <text class="s-note-r" x="402" y="228">ナンピン②</text>
+        <!-- 強制ロスカット -->
+        <circle class="s-rev" cx="455" cy="252" r="7"/>
+        <text class="s-note-r" x="462" y="272">強制ロスカット発動</text>
+        <!-- スタート注釈 -->
+        <text class="s-note" x="106" y="52">維持率300%でスタート</text>
+        <!-- 凡例 -->
+        <line class="s-curve-l" x1="380" y1="46" x2="408" y2="46"/>
+        <text class="s-legend" x="414" y="50">ナンピンあり（買い増し2回）</text>
+        <line class="s-curve-b" stroke-dasharray="7 5" x1="380" y1="66" x2="408" y2="66"/>
+        <text class="s-legend" x="414" y="70">ナンピンなし</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 同じ値動きでも、ナンピン（買い増し）をすると含み損の拡大（分子の減少）と必要証拠金の増加（分母の増加）が同時に進み、証拠金維持率の低下が<strong>段差状に加速</strong>する概念図。ナンピンなしなら耐えられた下落でも、買い増しによってロスカット水準への到達が早まる。※ 数値・形状は概念を示すイメージ図です。</figcaption>
+    </figure>
+
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 安全なレバレッジの使い方——ポジションサイジングとの接続</h2>
+    <p>「レバレッジは使うな」「ナンピンは禁止」——そう言いたいわけではありません。重要なのは<strong>「リスクを先に計算して、それが許容範囲内であることを確認してからポジションを持つ」</strong>という順序です。</p>
+
+    <h3>① 許容損失から逆算してポジションを決める</h3>
+    <p>まず「このトレードで最大いくらまで損していいか」を決めます。多くのプロトレーダーが参考にする考え方として、<strong>口座総資産の1〜2%を1トレードの最大損失とする</strong>という考え方（2%ルール）があります（詳細は<a href="guide-position-sizing.html">ポジションサイジングの記事</a>を参照）。</p>
+    <p>その後、損切りラインまでの価格幅（例：ATRの1.5倍）と許容損失額から、ポジションサイズを逆算します。この逆算の結果として有効レバレッジが決まるのが正しい順序です。<strong>「何倍のレバレッジをかけるか」から出発するのではなく、「どのくらいの損失リスクを取るか」から出発する</strong>のが、安全なレバレッジ活用の本質です。</p>
+
+    <h3>② 強制ロスカットより前に自分の損切りを置く</h3>
+    <p>最も重要なルールの一つが、<strong>強制ロスカット水準より"十分手前"に自分の損切り（ストップロス）を置くこと</strong>です。強制ロスカットは最後の砦であって、普段はそこに至る前に自分の判断でポジションを閉じるのが理想です。</p>
+    <ul>
+      <li>損切りラインをエントリー前に決め、逆指値で入れておく</li>
+      <li>ポジションサイジングで、そのラインまでの距離が許容損失額と合っているか確認</li>
+      <li>証拠金維持率に余裕を持たせる（証拠金の2〜3倍は常に口座に保持するなど）</li>
+    </ul>
+
+    <h3>③ ナンピンをするなら「計画的に」</h3>
+    <p>全てのナンピンが悪いわけではありません。ドルコスト平均法的な積み立てや、株式の長期投資で押し目を拾う行為は、<strong>事前に計画された範囲内での買い増し</strong>であれば合理的な場合もあります。問題なのは<strong>「損失を取り返したい」という感情から事前計画なしに行うナンピン</strong>です。</p>
+    <p>もし買い増しを検討するなら、<strong>最初のポジションを持つ前に「どの価格水準で、いくら追加するか」を決めておき、それに従う</strong>ことが原則です。感情が高ぶったタイミングで判断するのではなく、ルールに従って機械的に行うものです。そして、追加後のポジション全体のリスク量が許容範囲に収まっているかを必ず確認します。</p>
+
+    <div class="positive-box">
+      <strong>✅ まとめ：安全なレバレッジ活用の3原則</strong><br>
+      1. <strong>許容損失からポジションを逆算する</strong>（有効レバレッジは結果として決まる）<br>
+      2. <strong>強制ロスカットより手前に自分の損切りを置く</strong>（強制決済に頼らない）<br>
+      3. <strong>ナンピンは感情からではなく事前計画から</strong>（追加後も許容リスク内か確認）
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI のテクニカルシグナルは、この章で述べた考え方を組み込んで設計されています。</p>
+    <ul>
+      <li><strong>SL（ストップロス）の目安がシグナルに含まれる</strong>：メール通知には、エントリーの目安だけでなく<strong>ATRをベースにしたSLの目安</strong>が必ず記載されます。強制ロスカットに頼るのではなく、ルールに従って自分で損切りラインを置くための参考値です。<span style="font-size:.9em">（※ あくまで機械的に算出した参考値。売買推奨ではありません）</span></li>
+      <li><strong>ポジションプランの計算ロジック</strong>：シグナルメールには口座資金額に対するリスク割合（2%ルール準拠）でのロットサイズの目安も掲載されます。「いくら入れるか」より「いくら失うか」を先に決めるための仕組みです。</li>
+      <li><strong>往復ビンタ防止ルール</strong>：SLがヒットした直後に逆方向でリエントリーする（感情的なリベンジトレード）を防ぐため、銘柄ごとのクールダウン期間が設けられています。ナンピンと同様に、直前の損失を「すぐ取り返そう」とする行動を構造的に抑制しています。</li>
+    </ul>
+    <p>シグナルの実際の勝ち負けのパターン、SLやTPのヒット率は<a href="track-record.html">シグナル成績ダッシュボード</a>で公開しています。レバレッジやナンピンへの誘惑が強くなるのは「連敗が続いたとき」です。そんなときこそ、成績データを客観的に振り返り、感情ではなくルールに従う材料にしてください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 SL・TPの実際の機能を確認する</div>
+      <div class="cta-box-desc">ATRベースのSL設定で、強制ロスカットより手前の計画的な損切りをどう運用しているか——勝ち・負けを含めた実績を公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>レバレッジとナンピンについて、ここまで学んできた内容を整理します。</p>
+    <ul>
+      <li>レバレッジは利益と損失を同じ倍率で増幅する。倍率が高いほど<strong>わずかな逆行で証拠金維持率が閾値を割り込み、強制ロスカットが発動</strong>するリスクが上がる。</li>
+      <li>強制ロスカットは最後の砦であり、セーフティネットではない。<strong>強制決済より手前に自分の損切りを置く</strong>のが正しい使い方。</li>
+      <li>ナンピンは平均コストを下げるが、同時にポジション量とリスク量を増やす。さらに下落した場合の<strong>損失額は非線形に拡大</strong>する。</li>
+      <li><strong>レバレッジ×ナンピンの組み合わせ</strong>は、維持率の分子（純資産）を減らしながら分母（必要証拠金）を増やし、強制ロスカット発動を加速させる最悪のパターン。</li>
+      <li>「下手なナンピン、スカンピン」——この言葉は感情から行うナンピンの危険性を端的に表している。ナンピンをするなら<strong>事前計画と許容リスクの確認が必須</strong>。</li>
+      <li>安全なレバレッジ活用は「<a href="guide-position-sizing.html">いくら失うかを先に決め、そこから逆算してポジションサイズを決める</a>」という順序が出発点。</li>
+    </ul>
+    <p>レバレッジは投資の「スピードアップ装置」です。目的地に向かうスピードが上がる一方、誤った方向に進んでいれば壁への到達も速くなります。まず目的地（損切り・TP）と車のブレーキ（ポジションサイジング）を正確に整えてから、アクセルを踏む——その順番を守ることが、相場で長く生き残る投資家への道です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・処分効果・サンクコストが損切りを妨げるメカニズムと、感情に頼らず淡々と切る技術。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジング・資金管理</div>
+        <div class="related-card-desc">許容リスク%・2%ルール・ATRを使ったロット計算。レバレッジを使うときに最初に決めるべきこと。</div>
+      </a>
+      <a class="related-card" href="guide-risk-reward.html">
+        <div class="related-card-title">⚖️ リスクリワードと期待値</div>
+        <div class="related-card-desc">勝率より大事な「勝ち負けの大きさのバランス」。損益分岐勝率の計算式と期待値の考え方。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はレバレッジ・ナンピン・強制ロスカットにまつわる仕組みとリスクを情報提供として解説したものであり、特定銘柄・特定商品の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
