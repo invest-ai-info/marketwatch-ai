@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIに「上がる銘柄」を聞いてはいけない理由｜AI×投資の正しい付き合い方・4つの型 - MarketWatch AI</title>
+  <meta name="description" content="ChatGPTやClaudeに「明日上がる銘柄」を聞くのは、実はいちばん意味のないAIの使い方。世の中のAI×投資の使い方を「お告げ型・読書アシスタント型・壁打ち型・研究パートナー型」の4類型に整理し、なぜ予言者として使うと失敗し、検証マシン＋規律の番人として使うと効くのかを図解で解説。">
+  <meta name="keywords" content="AI投資,ChatGPT 投資,生成AI 株,AI 銘柄予想,AI トレード,投資 使い方,バックテスト,規律,壁打ち">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-ai-investing-4types.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIに「上がる銘柄」を聞いてはいけない理由｜AI×投資の正しい付き合い方・4つの型">
+  <meta property="og:description" content="AIを「予言者」として使うと壊滅し、「検証マシン＋規律の番人」として使うと効く。4類型で整理する図解ガイド。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-ai-investing-4types.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/12_feature_market_health.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIに「上がる銘柄」を聞いてはいけない理由｜AI×投資の正しい付き合い方・4つの型",
+    "description": "AI×投資の使い方を4類型に整理。予言者として使うと失敗し、検証マシン＋規律の番人として使うと効く理由を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-11",
+    "dateModified": "2026-06-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-ai-investing-4types.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AI×投資の正しい付き合い方
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🤖 AIに「上がる銘柄」を聞いてはいけない理由<br><small style="font-size:.65em;color:#57606a;font-weight:400">AI×投資の正しい付き合い方・4つの型</small></h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年6月11日 &nbsp;|&nbsp; 読了：約9分
+    </div>
+
+    <p>ChatGPTやClaudeのようなAIが身近になって、「AIを投資に使ってみよう」と考える人が急増しています。そして、その多くが最初にやるのがこれです——<strong>「明日上がる銘柄を教えて」</strong>。</p>
+    <p>結論から言うと、これは<strong>AIのいちばん意味のない使い方</strong>です。でも、AIが投資に役立たないという意味ではありません。むしろ逆で、<strong>使い方の「型」を変えるだけで、AIは個人投資家の強力な味方になります</strong>。本記事では、世の中のAI×投資の使い方を4つの型に整理して、どこで失敗し、どこで効くのかを解説します。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる本記事のまとめ</strong><br><br>
+      ① AIに「上がる銘柄」を聞く（お告げ型）は最多数派だが、ほぼ機能しない<br>
+      ② AIは未来の価格を知らないのに、<strong>自信ありげな文章</strong>を返してしまうから<br>
+      ③ 効く使い方は「情報処理の外注」「自分への反論役」「検証の自動化」<br>
+      ④ プロのクオンツファンドでさえAIに売買判断は任せない——<strong>AIは予言者ではなく、検証マシン＋規律の番人</strong>として使う
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#why">なぜ「上がる銘柄を教えて」はダメなのか</a></li>
+        <li><a href="#types">AI×投資の4つの型（全体図）</a></li>
+        <li><a href="#type1">型①：お告げ型——最多数派にして最も危険</a></li>
+        <li><a href="#type2">型②：読書アシスタント型——今日からできる堅実な使い方</a></li>
+        <li><a href="#type3">型③：壁打ち・規律型——感情のブレーキ役</a></li>
+        <li><a href="#type4">型④：研究パートナー型——検証を自動化する</a></li>
+        <li><a href="#pro">プロはどう使っているか</a></li>
+        <li><a href="#start">どこから始めればいいか</a></li>
+      </ol>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="why">① なぜ「上がる銘柄を教えて」はダメなのか</h2>
+
+    <p>理由はシンプルで、<strong>AIは未来の価格を知らない</strong>からです。AIが学習しているのは過去の文章であって、明日の市場ではありません。これは当たり前に聞こえますが、本当の問題はその先にあります。</p>
+    <p>AIは「知らない」と答える代わりに、<strong>それっぽい根拠のついた、自信ありげな文章を返してしまう</strong>ことがあるのです。「半導体需要の回復が見込まれ、◯◯社は注目です」——もっともらしい。でもこれは分析ではなく、<strong>過去の文章のパターンから生成された「それっぽさ」</strong>です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="お告げ型と道具型の構造の違いの図解">
+        <text x="350" y="30" text-anchor="middle" class="s-label-b" style="font-size:15px">同じAIでも「聞き方の構造」で価値がまったく変わる</text>
+        <!-- left: oracle -->
+        <text x="180" y="62" text-anchor="middle" class="s-label-r">❌ 予言者として使う</text>
+        <rect x="60" y="80" width="240" height="44" rx="8" class="s-fill-r" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="180" y="107" text-anchor="middle" class="s-label">「明日上がる銘柄は？」</text>
+        <line x1="180" y1="124" x2="180" y2="152" class="s-axis"/>
+        <polygon points="174,150 186,150 180,162" fill="#8b949e"/>
+        <rect x="60" y="164" width="240" height="44" rx="8" class="s-fill-r" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="180" y="185" text-anchor="middle" class="s-label-sm">AIは未来を知らないまま</text>
+        <text x="180" y="202" text-anchor="middle" class="s-label-sm">「それっぽい答え」を生成</text>
+        <text x="180" y="245" text-anchor="middle" class="s-label-r">→ 根拠のない自信だけが残る</text>
+        <!-- divider -->
+        <line x1="350" y1="55" x2="350" y2="270" class="s-guide"/>
+        <!-- right: tool -->
+        <text x="520" y="62" text-anchor="middle" class="s-label-g">✅ 道具として使う</text>
+        <rect x="400" y="80" width="240" height="44" rx="8" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="520" y="100" text-anchor="middle" class="s-label" style="font-size:12.5px">「この決算を要約して」</text>
+        <text x="520" y="117" text-anchor="middle" class="s-label" style="font-size:12.5px">「私の判断に反論して」「検証して」</text>
+        <line x1="520" y1="124" x2="520" y2="152" class="s-axis"/>
+        <polygon points="514,150 526,150 520,162" fill="#8b949e"/>
+        <rect x="400" y="164" width="240" height="44" rx="8" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="520" y="185" text-anchor="middle" class="s-label-sm">AIが得意な仕事</text>
+        <text x="520" y="202" text-anchor="middle" class="s-label-sm">（要約・計算・指摘・記録）に限定</text>
+        <text x="520" y="245" text-anchor="middle" class="s-label-g">→ 判断の質と規律が上がる</text>
+        <text x="350" y="288" text-anchor="middle" class="s-label-sm">判断の主体はどちらも人間。違いは「AIに何を任せるか」</text>
+      </svg>
+      <div class="chart-caption">図1：左は「未来を聞く」構造＝AIの苦手なことを任せている。右は「処理を任せて判断は自分」構造＝AIの得意なことだけを使っている。</div>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="types">② AI×投資の4つの型（全体図）</h2>
+
+    <p>AIを投資に使っている人たちを観察すると、だいたい次の4つの型に分かれます。下に行くほど手間はかかりますが、効果も大きくなります。</p>
+
+    <table>
+      <tr><th>型</th><th>使い方</th><th>人口</th><th>効果</th></tr>
+      <tr><td>① お告げ型</td><td>「上がる銘柄を教えて」と直接聞く</td><td>最多</td><td>❌ ほぼ逆効果</td></tr>
+      <tr><td>② 読書アシスタント型</td><td>決算・ニュース・英語情報の要約と整理</td><td>多い</td><td>🟢 堅実に効く</td></tr>
+      <tr><td>③ 壁打ち・規律型</td><td>自分の判断への反論役・感情のブレーキ</td><td>少ない</td><td>🟢🟢 効果大</td></tr>
+      <tr><td>④ 研究パートナー型</td><td>検証コードを書かせ、手法をデータで検証</td><td>ごく少数</td><td>🟢🟢🟢 プロの手法</td></tr>
+    </table>
+
+    <!-- ====================================== -->
+    <h2 id="type1">③ 型①：お告げ型——最多数派にして最も危険</h2>
+
+    <p>ダメな理由は3つあります。</p>
+    <ul>
+      <li><strong>予測できないものを聞いている</strong>：明日の価格は、AIどころか世界中のプロでも当てられない領域です</li>
+      <li><strong>自信ありげな間違いが返ってくる</strong>：AIの文章は流暢なので、当てずっぽうでも「分析っぽく」見えてしまう</li>
+      <li><strong>判断の責任を外注してしまう</strong>：「AIが言ったから買った」は、負けたときに何も学べません。手法も規律も育たない——これが一番の害です</li>
+    </ul>
+
+    <div class="negative-box">
+      この型の人の典型的な末路は「数ヶ月試して、負けて、『AIは投資に使えない』と結論づけて去る」。<strong>使えなかったのはAIではなく、使い方</strong>なのですが。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="type2">④ 型②：読書アシスタント型——今日からできる堅実な使い方</h2>
+
+    <p>個人投資家がプロに対して不利なのは、知能ではなく<strong>時間と情報処理量</strong>です。ここをAIに外注するのが型②。地味ですが確実に機能します。</p>
+    <ul>
+      <li><strong>決算資料の要約</strong>：「この決算短信の要点を5つ、悪いニュースも隠さず挙げて」</li>
+      <li><strong>ニュースの背景解説</strong>：「この利上げ観測が円相場に効く仕組みを初心者向けに」</li>
+      <li><strong>英語の一次情報</strong>：FOMC声明文やFRB議事要旨を翻訳・要約させて原文に当たる</li>
+      <li><strong>知らない用語の即席解説</strong>：調べ物の時間が数分の一になる</li>
+    </ul>
+
+    <div class="warning-box">
+      <strong>この型の注意点</strong>：要約の数字は時々間違えます（読み取りミスや古い情報）。金額・日付・決算数値など<strong>判断に直結する数字は必ず原典で確認</strong>するのがルールです。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="type3">⑤ 型③：壁打ち・規律型——感情のブレーキ役</h2>
+
+    <p>投資でいちばん高くつくのは、知識不足ではなく<strong>感情による判断ミス</strong>です。損切りできない、急騰に飛び乗る、負けを取り返そうとする——<a href="guide-cognitive-biases.html">認知バイアス</a>の仕業です。</p>
+    <p>AIはポジションを持たず、感情も持ちません。だから<strong>「自分を疑うための相手」</strong>として理想的です。聞き方を変えるだけです：</p>
+
+    <ul>
+      <li>「このエントリー根拠に、<strong>全力で反論して</strong>」</li>
+      <li>「いまの私の主張は、ポジショントークになっていないか指摘して」</li>
+      <li>「この銘柄を買いたい理由を3つ書いた。<strong>確証バイアスが混ざってないか</strong>チェックして」</li>
+      <li>「直近3連敗している。いまの自分が陥りやすい心理状態を挙げて」</li>
+    </ul>
+
+    <div class="positive-box">
+      ポイントは、AIに「賛成してもらう」のではなく<strong>「反対させる」</strong>こと。人間の友人には頼みにくい「容赦ない反論役」を、AIは何度でも無料で引き受けてくれます。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="type4">⑥ 型④：研究パートナー型——検証を自動化する</h2>
+
+    <p>最後が、AIにコードを書かせて<strong>「アイデア→検証→採用/棄却」の研究サイクル</strong>を回す型です。「移動平均のゴールデンクロスで買ったら、過去のデータでは勝てていたのか？」——こうした疑問を、思い込みではなく<strong>データで答え合わせ</strong>します。</p>
+    <p>かつてこれはプログラマーの特権でしたが、いまはAIがコードを書いてくれるので、<strong>「何を検証したいか」を言葉にできれば誰でも入口に立てます</strong>。</p>
+    <p>実はこの型には生きた実例があります。当サイトの<a href="guide-signal-lab-001.html">AIシグナル研究日誌</a>がそれで、自動シグナルの改善仮説を毎回データで検証し、<strong>うまくいかなかった結果も含めて</strong>全部公開しています。第1回では「正しそうに見えた新機能」がデータに棄却される過程を、第2回では改良仮説に希望が見えるまでを記録しました。型④が実際どう回るのか、雰囲気を掴むのに役立つはずです。</p>
+
+    <div class="warning-box">
+      <strong>この型の罠＝「過去に合わせすぎ」</strong>：過去データで好成績の手法ほど、偶然への過剰適合（オーバーフィッティング）を疑う必要があります。検証回数が増えるほど「偶然の好成績」は必ず出ます。合格基準を先に決める・別の期間で再検証する、という規律とセットで初めて機能します。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="pro">⑦ プロはどう使っているか</h2>
+
+    <p>ヘッジファンドのクオンツ（数理分析）部門は、機械学習を何十年も前から使っています。その彼らの使い方が示唆的です。</p>
+    <ul>
+      <li>AI・機械学習が担当するのは：データ処理、パターンの検証、ニュースの定量化、リサーチの自動化</li>
+      <li><strong>最終的なリスク管理は、人間が設計したルールが握る</strong>。AIチャットに「買うか売るか」を委ねる運用は、プロの世界でも主流ではありません</li>
+    </ul>
+
+    <p>つまり、最先端のプロが出している結論はこうまとめられます：</p>
+
+    <div class="info-box">
+      <strong>AIは「予言者」として使うと壊滅し、「検証マシン＋規律の番人」として使うと効く。</strong><br>
+      判断の主体はあくまで人間。AIの仕事は、人間の判断の「材料」と「ブレーキ」を強化することです。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="start">⑧ どこから始めればいいか</h2>
+
+    <p>4つの型は「階段」です。おすすめの登り方：</p>
+    <ol>
+      <li><strong>まず型②から</strong>：今日からできます。決算やニュースの要約・解説をAIに任せて、浮いた時間で考える</li>
+      <li><strong>次に型③を習慣化</strong>：エントリー前に1回だけ「この判断に反論して」と聞く。これだけで衝動的なトレードがかなり減ります</li>
+      <li><strong>興味が湧いたら型④へ</strong>：最初は「自分がよく使うサイン、過去データだと勝率どれくらい？」のような小さな検証から</li>
+      <li><strong>型①にだけは戻らない</strong>：「上がる銘柄教えて」と聞きたくなったら、それは分析ではなく占いを求めているサインです</li>
+    </ol>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 「型④」の実例をのぞいてみる</div>
+      <div class="cta-box-desc">AIと一緒に手法をデータ検証する過程を、失敗も含めて全公開している連載です</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 AIシグナル研究日誌 #1</div>
+          <div class="related-card-desc">「正しそうな新機能」がデータに棄却されるまでの全過程</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-002.html">
+          <div class="related-card-title">🧪 AIシグナル研究日誌 #2</div>
+          <div class="related-card-desc">改良仮説「押し目買い」に希望が見えた回</div>
+        </a>
+        <a class="related-card" href="guide-cognitive-biases.html">
+          <div class="related-card-title">🧠 投資の認知バイアス</div>
+          <div class="related-card-desc">型③で対処する「感情の判断ミス」の正体</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">当サイトの全シグナル勝敗を毎日自動更新で公開</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買やAIツールの利用成果を推奨・保証するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。AIの出力には誤りが含まれることがあり、その正確性は保証されません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
