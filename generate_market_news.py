@@ -4192,6 +4192,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-12", "line": '・<b>2026-06-12</b>: 💱 解説「<a href="guide-swap-points.html" style="color:#0969da"><b>スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説</b></a>」公開'},
         {"date": "2026-06-12", "line": '・<b>2026-06-12</b>: 🧪 解説「<a href="guide-signal-lab-003.html" style="color:#0969da"><b>AIシグナル研究日誌 #3：切り番フィルタは空振り——でも「方向の交絡」という別鉱脈が見えた</b></a>」公開'},
         {"date": "2026-06-12", "line": '・<b>2026-06-12</b>: 💰 解説「<a href="guide-dollar-cost-averaging.html" style="color:#0969da"><b>ドルコスト平均法とは？仕組み・一括投資との比較・やめ時の罠</b></a>」公開'},
         {"date": "2026-06-11", "line": '・<b>2026-06-11</b>: 💣 解説「<a href="guide-leverage.html" style="color:#0969da"><b>レバレッジとナンピンの正体——なぜ資産が溶けるのか</b></a>」公開'},
