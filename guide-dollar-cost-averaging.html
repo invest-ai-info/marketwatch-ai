@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドルコスト平均法とは｜積立の仕組み・一括投資との比較・やめ時の罠まで徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="ドルコスト平均法の仕組み（調和平均で平均単価が下がる理由）をやさしく図解。一括投資との期待値比較（Vanguard研究など）、向く人・向かない人の整理、「下落相場でやめてしまう」罠と出口戦略まで、投資初心者から中級者向けに網羅します。">
+  <meta name="keywords" content="ドルコスト平均法,積立投資,一括投資,時間分散,平均購入単価,調和平均,NISA,積立NISA,出口戦略,やめ時,投資初心者,長期投資">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-dollar-cost-averaging.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ドルコスト平均法とは｜積立の仕組み・一括投資との比較・やめ時の罠まで徹底解説">
+  <meta property="og:description" content="定額積立がなぜ平均単価を抑えるか（調和平均）を図解。一括投資との比較・向く人・やめ時の罠まで初心者〜中級者向けに解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-dollar-cost-averaging.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ドルコスト平均法とは｜積立の仕組み・一括投資との比較・やめ時の罠まで徹底解説",
+    "description": "定額積立がなぜ平均単価を抑えるか（調和平均）を図解。一括投資との比較・向く人・やめ時の罠まで初心者〜中級者向けに解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-dollar-cost-averaging.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* DCA 専用クラス */
+    .s-curve-b{stroke:#0969da;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-bar-dca{fill:#0969da;opacity:.75}
+    .s-bar-lump{fill:#1a7f37;opacity:.75}
+    .s-avg-line{stroke:#9a6700;stroke-width:2;stroke-dasharray:6 3}
+    .s-avg-line-dca{stroke:#0969da;stroke-width:2;stroke-dasharray:6 3}
+    .s-fill-b{fill:#ddf4ff}
+    .s-fill-g{fill:#e6ffed}
+    .s-fill-r{fill:#ffebe9}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:1.5}
+    .s-qty-bar{fill:#0969da;opacity:.6}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-bar-dca{fill:#388bfd}
+    body.dark .s-bar-lump{fill:#3fb950}
+    body.dark .s-avg-line{stroke:#d4a017}
+    body.dark .s-avg-line-dca{stroke:#58a6ff}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-qty-bar{fill:#388bfd}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ドルコスト平均法とは
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>💰 ドルコスト平均法とは｜積立の仕組み・一括投資との比較・やめ時の罠を徹底解説</h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年6月12日 &nbsp;|&nbsp; 読了：約15分
+    </div>
+
+    <p>「毎月一定額を積み立てるだけで、高値づかみのリスクが下がる」——そう聞いてドルコスト平均法を始めた人は多いでしょう。積立NISAや iDeCo の普及で、多くの日本人がこの方法を実践するようになりました。しかし、<strong>「なぜ平均単価が下がるのか」の仕組みを正確に理解している人は、意外に少ない</strong>のが実態です。</p>
+    <p>この記事では、前半でドルコスト平均法の仕組みを数字と図で丁寧に解きほぐし、後半では<strong>一括投資との期待値比較・向く人と向かない人・「下落相場でやめてしまう」やめ時の罠</strong>まで踏み込みます。「積立すれば安心」という思い込みから一歩進んで、自分に合った使い方を見つけましょう。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ドルコスト平均法は<strong>「毎回定額を購入」</strong>するので、価格が安いときに自動的に多い口数を買う。この仕組みで<strong>平均購入単価が、単純な価格平均（相加平均）より下がる</strong>（調和平均の効果）。</li>
+      <li>統計的には<strong>一括投資の方が期待リターンは高い</strong>（Vanguard の研究では約 3 分の 2 の期間で一括が上回る）。ドルコスト平均法の強みは<strong>「機械的に継続できる心理的安定」</strong>にあり、数学的な優位性ではない。</li>
+      <li><strong>最大の罠は「下落相場でやめること」</strong>。価格が下がった局面こそ口数を多く積み増せるチャンスで、そこで止めると「安値で買い増せる期間」を逃す。やめ時は感情ではなく<strong>あらかじめ決めた計画（ライフイベント・目標額）</strong>で決める。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">ドルコスト平均法とは何か（基本の仕組み）</a></li>
+        <li><a href="#section-2">なぜ平均単価が下がるのか（調和平均のしくみ）</a></li>
+        <li><a href="#section-3">ドルコスト平均法のメリット：心理的安定と自動化</a></li>
+        <li><a href="#section-4">一括投資との期待値比較（データで見る）</a></li>
+        <li><a href="#section-5">向く人・向かない人の整理</a></li>
+        <li><a href="#section-6">最大の罠：下落相場でやめてしまう問題</a></li>
+        <li><a href="#section-7">出口戦略：いつ、どうやって終わらせるか</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ドルコスト平均法とは何か（基本の仕組み）</h2>
+    <p>ドルコスト平均法（Dollar-Cost Averaging、略して DCA）は、<strong>価格が変動する金融商品を「毎回一定金額」で、「定期的（毎月など）」に買い続ける投資方法</strong>です。「定額購入法」とも呼ばれます。</p>
+    <p>ポイントは「一定金額」という点です。毎月「1万円分」を買うと決めると、</p>
+    <ul>
+      <li>価格が<strong>高い月</strong>：1 万円 ÷ 高い価格 ＝ 購入口数が<strong>少ない</strong></li>
+      <li>価格が<strong>安い月</strong>：1 万円 ÷ 安い価格 ＝ 購入口数が<strong>多い</strong></li>
+    </ul>
+    <p>毎回「定口数（例：100 口）」を買う方法では、価格に関係なく同じ量しか買えません。しかしドルコスト平均法では、<strong>価格が下がると自動的により多くの口数が手に入る</strong>ようになっています。この自動的な調整こそが、ドルコスト平均法の核心です。</p>
+    <div class="info-box">
+      <strong>💡 言葉の由来</strong>：「ドル（Dollar）」は通貨単位を指し、「コスト平均（Cost Averaging）」は購入コストを平均化するという意味。米国発の概念が日本に伝わり、そのままカタカナで定着しました。「積立投資」や「定額購入」とほぼ同じ意味で使われます。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ なぜ平均単価が下がるのか（調和平均のしくみ）</h2>
+    <p>「定額購入をすると、平均購入単価が単純な価格平均より低くなる」——これは数学的な事実です。仕組みを理解するために、具体的な例で見てみましょう。</p>
+
+    <h3>具体例：3 カ月間、毎月 1 万円ずつ積み立てる</h3>
+    <table>
+      <tr><th>月</th><th>価格（1 口あたり）</th><th>定額購入（1 万円）の口数</th><th>定口購入（100 口）の購入額</th></tr>
+      <tr><td>1 月</td><td>100 円</td><td>100 口</td><td>1 万円</td></tr>
+      <tr><td>2 月</td><td>50 円</td><td>200 口</td><td>5,000 円</td></tr>
+      <tr><td>3 月</td><td>200 円</td><td>50 口</td><td>2 万円</td></tr>
+      <tr><td>合計</td><td>—</td><td>350 口 / 3 万円投資</td><td>300 口 / 3 万 5,000 円投資</td></tr>
+    </table>
+
+    <p>定額購入（DCA）の平均購入単価を計算すると：</p>
+    <p style="text-align:center;padding:10px;background:#ffffff;border-radius:6px;border:1px solid #d0d7de"><code>3 万円 ÷ 350 口 ≈ 85.7 円</code></p>
+    <p>一方、3 カ月の価格の単純平均（相加平均）は：</p>
+    <p style="text-align:center;padding:10px;background:#ffffff;border-radius:6px;border:1px solid #d0d7de"><code>（100 + 50 + 200）÷ 3 ≈ 116.7 円</code></p>
+    <p>定額購入の平均単価（約 85.7 円）は、単純な価格平均（約 116.7 円）を<strong>大幅に下回っています</strong>。これは偶然ではなく、<strong>「調和平均は相加平均以下になる」という数学の定理</strong>から導かれる必然的な結果です。価格が安い月に口数を多く積み増せる仕組みが、平均単価を自動的に引き下げているのです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="dca-mech-title">
+        <title id="dca-mech-title">ドルコスト平均法の仕組み：価格変動と購入口数の関係を示す概念図</title>
+        <text class="s-panel-label" x="40" y="24">同じ「1 万円」でも、価格が安いときほど多く買える</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="260" x2="600" y2="260"/>
+        <line class="s-axis" x1="60" y1="260" x2="60" y2="40"/>
+        <text class="s-label-sm" x="68" y="54">口数 ↑</text>
+        <text class="s-label-sm" x="610" y="264" text-anchor="end">月 →</text>
+
+        <!-- 価格ライン（右軸イメージ） -->
+        <text class="s-label-sm" x="160" y="290">1 月（100 円）</text>
+        <text class="s-label-sm" x="330" y="290">2 月（50 円）</text>
+        <text class="s-label-sm" x="490" y="290">3 月（200 円）</text>
+
+        <!-- 口数バー（高さ：口数比例 100/200/50） -->
+        <!-- 1月: 100口 → 高さ 100px -->
+        <rect class="s-qty-bar" x="130" y="160" width="70" height="100"/>
+        <text class="s-note" x="165" y="152" text-anchor="middle">100 口</text>
+
+        <!-- 2月: 200口 → 高さ 200px（多い！） -->
+        <rect class="s-bar-dca" x="300" y="60" width="70" height="200"/>
+        <text class="s-note" x="335" y="52" text-anchor="middle">200 口</text>
+        <text class="s-note-g" x="335" y="72" text-anchor="middle">← 安いので多く買える</text>
+
+        <!-- 3月: 50口 → 高さ 50px -->
+        <rect class="s-qty-bar" x="460" y="210" width="70" height="50"/>
+        <text class="s-note-r" x="495" y="202" text-anchor="middle">50 口</text>
+
+        <!-- 平均単価ライン（≈85.7円イメージ、価格軸のスケールを合わせずあくまで概念） -->
+        <line class="s-avg-line-dca" x1="80" y1="185" x2="590" y2="185"/>
+        <text class="s-note" x="586" y="178" text-anchor="end">平均単価≈85.7円</text>
+
+        <!-- 価格の単純平均ライン -->
+        <line class="s-avg-line" x1="80" y1="137" x2="590" y2="137"/>
+        <text class="s-note-r" x="586" y="130" text-anchor="end">単純平均≈116.7円</text>
+
+      </svg>
+      <figcaption class="chart-caption">▲ 毎月 1 万円ずつ買うと、価格が安い月（2 月・50 円）に口数が最も多くなる（青い背景の大きいバー）。これにより<strong>実際の平均購入単価（青破線）は単純な価格平均（オレンジ破線）より低くなる</strong>。これが調和平均の効果。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      注意：この効果が発揮されるのは<strong>「価格が上下に変動する」場合</strong>です。価格が一方向にしか動かない（ずっと上がり続ける、または下がり続ける）場合、調和平均の恩恵は薄れます。また、最終的な損益は<strong>売却時の価格次第</strong>であり、平均単価が下がっても売値が購入単価を下回れば損失が出ます。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ドルコスト平均法のメリット：心理的安定と自動化</h2>
+    <p>ドルコスト平均法の最大の強みは、数学的な優位性（後述するように一括投資が統計的に優位な場合も多い）よりも、<strong>「継続できる仕組みにある」</strong>という点を先に理解しておくことが重要です。</p>
+    <ul>
+      <li><strong>市場タイミングの悩みから解放される</strong>：「今が高すぎるかも」「もう少し待った方がいいか」という判断を毎回しなくて済む。自動積立を設定すれば、考える必要すらありません。</li>
+      <li><strong>高値づかみへの心理的不安が和らぐ</strong>：「全財産を一番高い時に投入してしまった」という最悪のシナリオを回避しやすい。特に大きな資金を一度に投資する心理的ハードルが下がります。</li>
+      <li><strong>相場の下落が「バーゲンセール」に見える</strong>：定額積立を続けていると、価格が下がった局面でより多くの口数を積み増せます。「下落＝チャンス」という発想の転換が、投資を継続するうえで精神的な支えになります。</li>
+      <li><strong>感情を排した自動執行</strong>：積立設定をしておけば、毎月機械的に購入が実行される。<a href="guide-loss-cut.html">損切り</a>や <a href="guide-trading-psychology-calm.html">FOMO・狼狽売り</a>と同様、<strong>感情を判断から排除する「仕組み」</strong>として機能します。</li>
+    </ul>
+    <div class="positive-box">
+      <strong>✅ 最大のメリット</strong>：自動積立を一度設定すれば、忙しい毎日の中で「投資のことを考えなくていい」状態を作れる。投資に多くの時間を割けない人にとって、<strong>「継続できる」こと自体が最も大きな優位性</strong>です。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 一括投資との期待値比較（データで見る）</h2>
+    <p>「ドルコスト平均法と一括投資、どちらが得か」——これは多くの投資家が気になる問いです。複数の大規模な研究がこの問いに答えています。</p>
+
+    <h3>Vanguard の研究（2012 年）</h3>
+    <p>米国の投資運用会社 Vanguard が 2012 年に発表した研究では、米国・英国・オーストラリアの過去データを使って、「一括投資 vs. 12 カ月かけてドルコスト平均法で投資」を比較しました。結果は：</p>
+    <div class="info-box">
+      <strong>📊 Vanguard (2012) の主な結論</strong>：一括投資は、比較した全 3 市場において、<strong>約 3 分の 2（≈67%）の期間でドルコスト平均法を上回る</strong>リターンを示した。典型的なバランス型ポートフォリオ（株 60%・債券 40%）の米国データでは、12 カ月かけて投資する DCA と比較して最終資産で平均約 2.3% の差があった。<br>（出典：Vanguard "Dollar-cost averaging just means taking risk later", 2012）
+    </div>
+    <p>なぜ一括投資が有利になりやすいのか、理由はシンプルです。<strong>株式市場は長期的に「上がる日の方が多い」</strong>からです。早く投資するほど、資産が価格上昇の恩恵を受ける時間が長くなります。DCA は資金を段階的に投入するため、全額が市場に出回るまでの間、市場の上昇に乗れない部分が生じます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="dca-vs-lump-title">
+        <title id="dca-vs-lump-title">一括投資とドルコスト平均法の資産成長イメージ比較図</title>
+        <text class="s-panel-label" x="40" y="24">右肩上がりの相場では一括投資が有利になりやすい（概念図）</text>
+        <line class="s-axis" x1="60" y1="250" x2="590" y2="250"/>
+        <line class="s-axis" x1="60" y1="250" x2="60" y2="40"/>
+        <text class="s-label-sm" x="68" y="54">資産額 ↑</text>
+        <text class="s-label-sm" x="588" y="268" text-anchor="end">時間 →</text>
+
+        <!-- 元本ライン -->
+        <line class="s-guide" x1="60" y1="200" x2="590" y2="200"/>
+        <text class="s-label-sm" x="62" y="196">投資元本</text>
+
+        <!-- 一括投資ライン（早く上昇） -->
+        <path class="s-curve-g" d="M60,200 C120,185 180,160 240,135 C310,106 390,82 500,60 C540,52 570,48 590,44"/>
+        <text class="s-note-g" x="490" y="42">一括投資（早期フル投資）</text>
+
+        <!-- DCA ライン（遅れて上昇、積立中は資産が少ない） -->
+        <path class="s-curve-b" d="M60,200 C80,198 120,195 180,188 C240,178 300,158 360,132 C430,100 490,74 590,58"/>
+        <text class="s-note" x="395" y="126">ドルコスト平均法（段階投資）</text>
+
+        <!-- 差のイメージ矢印 -->
+        <line class="s-brk" x1="500" y1="60" x2="500" y2="74"/>
+        <text class="s-label-sm" x="508" y="70">差</text>
+
+      </svg>
+      <figcaption class="chart-caption">▲ 右肩上がりの相場（長期的な株式市場の典型）では、資金をすぐに全額投入する<strong>一括投資（緑）</strong>の方が、段階的に投入する<strong>ドルコスト平均法（青）</strong>より早く・大きく資産が増えやすい。Vanguard 研究では約 67% の期間で一括が有利という結果が出ている。ただし市場が下落傾向の約 33% の期間では DCA が有利になる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>では、ドルコスト平均法はムダなのか？</h3>
+    <p>そうではありません。上記の研究は「すでに全額を持っている場合」の比較です。現実には、<strong>まとまった資金を一度に用意できる人の方が少ない</strong>のです。毎月の収入から積み立てる人にとっては、「一括 vs DCA」の比較自体が成り立ちません。あるのは「積み立てる vs 積み立てない」の選択です。</p>
+    <p>また、一括投資が統計的に有利であっても、<strong>市場が大きく下落するタイミングに全額を投入してしまうリスクも実在します</strong>。心理的な安定や継続性を重視する場合は、DCA の方が実際に「続けられる」という意味で優れているケースもあります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 向く人・向かない人の整理</h2>
+    <table>
+      <tr><th></th><th>ドルコスト平均法が向く人</th><th>一括投資が向く可能性がある人</th></tr>
+      <tr><td>資金状況</td><td>毎月の収入から積み立てる（まとまった資金がない）</td><td>すでにまとまった資金がある</td></tr>
+      <tr><td>心理的特性</td><td>一度に大きく投資することへの不安が強い</td><td>市場変動に対して比較的冷静でいられる</td></tr>
+      <tr><td>時間・手間</td><td>日々の市場を監視せず、自動で積み立てたい</td><td>市場の状況を継続的に把握できる</td></tr>
+      <tr><td>投資経験</td><td>初心者・投資に慣れていない</td><td>ある程度の経験があり、自分の判断に自信がある</td></tr>
+      <tr><td>目的・期間</td><td>老後・教育費など長期の目標（10 年〜）</td><td>中期〜長期（ただし短期では下落リスクも高い）</td></tr>
+    </table>
+    <div class="warning-box">
+      「向く・向かない」は一概には言えず、個人の財務状況・リスク許容度・投資目的によって異なります。これはあくまで一般的な傾向の整理であり、特定の方法を推奨するものではありません。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 最大の罠：下落相場でやめてしまう問題</h2>
+    <p>ドルコスト平均法を実践する投資家が陥りがちな、最も致命的な罠が<strong>「下落相場でやめてしまうこと」</strong>です。</p>
+    <p>価格が大きく下がると、多くの人は「このまま積み立て続けても損が増えるだけでは？」と感じて積立を止めたくなります。しかしこれは、ドルコスト平均法の恩恵を最も受けられるタイミングで自らその機会を手放すことを意味します。</p>
+
+    <div class="negative-box">
+      <strong>📉 なぜ下落相場でやめると損なのか</strong>：ドルコスト平均法の平均単価引き下げ効果は、<strong>「安いときに多く買える」ことで生まれます</strong>。価格が下がっている局面こそ、1 万円で最も多くの口数を積み増せる「バーゲンセール」の期間。ここで止めてしまうと、高かった時の高い口数が平均単価を押し上げたまま、回復局面で買い続ける機会を逃します。
+    </div>
+
+    <p>さらに、投資をやめるタイミングとして「下落後」が多い背景には、<a href="guide-loss-cut.html">損失回避（プロスペクト理論）</a>という心理が働いています。含み損が大きくなるほど痛みが強まり、「これ以上悪化するのが怖い」という感情がやめる決断を後押しします。しかし、この感情主導の判断がまさに<strong>「高くなってから買い、安くなってからやめる」という最悪のパターン</strong>を生み出します。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="dca-quit-title">
+        <title id="dca-quit-title">下落相場で積立をやめた場合と続けた場合の資産推移を比較する概念図</title>
+        <text class="s-panel-label" x="40" y="24">下落相場で「やめる」と「続ける」——その後の資産推移の違い（概念図）</text>
+        <line class="s-axis" x1="60" y1="250" x2="590" y2="250"/>
+        <line class="s-axis" x1="60" y1="250" x2="60" y2="40"/>
+        <text class="s-label-sm" x="68" y="54">資産額 ↑</text>
+        <text class="s-label-sm" x="588" y="268" text-anchor="end">時間 →</text>
+        <!-- 相場の底 -->
+        <line class="s-divv" x1="300" y1="60" x2="300" y2="250"/>
+        <text class="s-label-sm" x="300" y="290" text-anchor="middle">相場の底（同じ1万円で最も多く買える時期）</text>
+        <!-- 下落区間（共通） -->
+        <path class="s-price" d="M60,160 C120,165 200,185 300,218"/>
+        <!-- 継続した場合 -->
+        <path class="s-curve-g" d="M300,218 C370,205 450,140 560,75"/>
+        <text class="s-note-g" x="330" y="92">続けた場合：安く積んだ口数が</text>
+        <text class="s-note-g" x="330" y="108">回復局面で資産を押し上げる</text>
+        <!-- やめた場合 -->
+        <path class="s-curve-l" d="M300,218 C370,215 450,190 560,160"/>
+        <text class="s-note-r" x="430" y="224">やめた場合：回復の恩恵が小さい</text>
+        <!-- 分岐点 -->
+        <circle class="s-rev" cx="300" cy="218" r="7"/>
+        <text class="s-note-r" x="96" y="238">ここでやめたくなる（含み損のピーク）</text>
+        <!-- 凡例 -->
+        <line class="s-curve-g" x1="380" y1="46" x2="408" y2="46"/>
+        <text class="s-legend" x="414" y="50">積立を継続</text>
+        <line class="s-curve-l" x1="380" y1="66" x2="408" y2="66"/>
+        <text class="s-legend" x="414" y="70">下落で積立停止</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 下落相場で積立をやめた場合（赤）と続けた場合（緑）の、その後の資産推移の概念図。下落局面は同じ金額で最も多くの口数を買える時期にあたるため、ここで止めると回復局面の恩恵が小さくなりやすい。※ 将来の値動きや損益を保証するものではない概念イメージ図です。</figcaption>
+    </figure>
+
+
+    <h3>「積立が効きにくい」局面も知っておく</h3>
+    <p>一方で、ドルコスト平均法が有効に機能しにくいケースも存在します。</p>
+    <ul>
+      <li><strong>長期的な一方向の下落（右肩下がりの資産）</strong>：買い続けるほど損が膨らむ。投資対象の選択が重要で、長期的な成長が見込めない資産への積み立ては注意が必要です。</li>
+      <li><strong>超短期（数カ月）での比較</strong>：期間が短いほど、調和平均の効果が表れにくい。長期（最低でも数年〜10 年以上）を前提とした手法です。</li>
+      <li><strong>積立額が大きく変わる場合</strong>：毎回の積立額を感情で変えると（下落したら積立を増やし、上昇したら減らすなど）、ドルコスト平均法の規律が崩れます。</li>
+    </ul>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 出口戦略：いつ、どうやって終わらせるか</h2>
+    <p>ドルコスト平均法は「始め方」より「終わり方」の方が難しいと言われます。感情に任せてやめると、Section 6 で説明した罠にはまります。では、正しい出口はどこにあるのでしょうか。</p>
+
+    <h3>① ライフイベントに合わせる（最もシンプル）</h3>
+    <p>住宅購入の頭金、子どもの教育費、老後資金など、<strong>あらかじめ「いつ、いくら必要か」を決めておき、そのタイミングで積立を終了・資産を取り崩す</strong>のが最も合理的な出口です。「感情が揺れた時」ではなく、「計画したライフイベントが来た時」に動くことで、感情主導の判断を防げます。</p>
+
+    <h3>② 目標額達成でフィニッシュ</h3>
+    <p>「老後資金として ○○○ 万円を目標に積み立てる」と決め、目標額に達したら積立を終了・リバランスする方法。市場が好調で予定より早く達成した場合も、<strong>「目標に到達した」という客観的な事実で判断できるため、感情に左右されにくい</strong>という利点があります。</p>
+
+    <h3>③ 積立期間を先に決める</h3>
+    <p>「60 歳まで積み立てる」「20 年間積み立てる」と期間を最初に決め、その期間が満了したら新規積立を終了する方法。シンプルで継続しやすい反面、市場の状況に関係なく一律に終了するため、<strong>取り崩し開始後は現金や債券へのリバランスで価格変動リスクを下げていく</strong>ことが一般的です。</p>
+
+    <div class="info-box">
+      <strong>💡 取り崩しもドルコスト平均法で</strong>：積み立てた資産を取り崩す際も、「毎月一定額を売却する」定額取り崩しが選択肢の一つです。一度に全額売却するより、売却タイミングのリスクが分散されます。ただし取り崩し自体の設計は積立と異なる考慮事項が多いため、詳しくは別途ご確認ください。
+    </div>
+
+    <div class="warning-box">
+      出口のタイミングを「相場が上がっているから今が売り時」「下がっているから怖いからやめよう」という感情で判断すると、積み立てた成果を最大限生かせないことがあります。できる限り<strong>あらかじめ計画した条件（期間・目標額・ライフイベント）</strong>に従うことが、感情主導の判断を避けるうえで重要です。
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI は、短期的なシグナルや市場動向の把握を支援するサイトですが、ドルコスト平均法とは目的が異なります。両者を組み合わせる場合の考え方を整理しておきます。</p>
+    <ul>
+      <li><strong>長期の積立（コア）＋短期シグナルの活用（サテライト）</strong>：資産のメインは積立 NISA・iDeCo などの長期積立（コア）に置き、余裕資金で当サイトのシグナルを参考にした短期取引（サテライト）を試みる、という分け方が考えられます。コアが自動化されていると、サテライト部分での判断ミスが全体に致命的な影響を与えにくい構造になります。</li>
+      <li><strong>市場の健康状態を確認する</strong>：<a href="market-health.html">市場健康度ページ</a>や <a href="guide-fear-greed.html">恐怖と強欲指数</a>は、「今が市場全体として過熱しているか、悲観的すぎるか」の目安になります。積立を続ける自信が揺らいでいる時期に参照すると、感情ではなくデータに基づいて判断する助けになるかもしれません。</li>
+      <li><strong>資金管理との組み合わせ</strong>：積立とは別の資金で短期取引をする場合、<a href="guide-position-sizing.html">ポジションサイジング（1 トレードの許容リスク）</a>と組み合わせて、1 回の取引で大きく損しない設計を心がけると、積立という長期の軸を維持しやすくなります。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの勝ち負けをすべて公開しています</div>
+      <div class="cta-box-desc">長期の積立と短期シグナルは目的が違います。短期売買の参考にする場合は、過去の成績（勝率・損益比）をご自身で確認してから判断してください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>ドルコスト平均法について学んできた内容を最後に整理します。</p>
+    <ul>
+      <li><strong>仕組みの本質</strong>：毎回定額購入することで、安い時に自動的に多く買える。調和平均の効果で平均購入単価が価格の単純平均より下がる（数学的必然）。</li>
+      <li><strong>一括投資との比較</strong>：統計的には一括投資の方が期待リターンが高いケースが多い（Vanguard 研究で約 67% の期間で一括が優位）。DCA の強みは「継続できる心理的安定」と「市場タイミングへの依存排除」にある。</li>
+      <li><strong>最大の罠</strong>：下落相場でやめることが、DCA の恩恵を最も失わせる。出口は感情ではなく<strong>あらかじめ決めた計画（ライフイベント・目標額・積立期間）</strong>に従う。</li>
+      <li><strong>向く人</strong>：毎月収入から積み立てる人・市場タイミングを考えたくない人・長期（10 年以上）視点の人。</li>
+      <li><strong>限界も理解する</strong>：長期右肩下がりの資産、極端に短い期間、積立額を感情で変えるケースでは、DCA の効果が十分に発揮されない。</li>
+    </ul>
+    <p>「積み立てれば安心」という漠然とした安心感より、<strong>「なぜ安くなるのか」「どういう場合に向かないのか」「いつ終わらせるか」</strong>を理解したうえで実践することが、長期投資の質を高めます。投資の基礎知識に関する記事は今後も増やしていきます。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">損失回避・プロスペクト理論・処分効果など、投資家の判断を歪める心理の正体と克服法。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジング・資金管理</div>
+        <div class="related-card-desc">1 トレードの許容リスク（2% ルール）と、損切り幅から逆算するロットの計算法。</div>
+      </a>
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">📈 複利と最大ドローダウン・破産確率</div>
+        <div class="related-card-desc">複利の力と怖さ。連敗しても退場しない資金設計の考え方。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はドルコスト平均法の仕組みと特性について情報提供として解説したものであり、特定の投資商品・手法の売買推奨や投資助言ではありません。掲載した計算例・研究データは一般的な説明目的のものであり、将来の投資成果を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
