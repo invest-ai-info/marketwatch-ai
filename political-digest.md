@@ -1,95 +1,86 @@
-# 🚨 政治発言ダイジェスト（基準日 2026-06-11 JST 22:04）
+# 🚨 政治発言ダイジェスト（基準日 2026-06-12 JST 22:04）
 
-> 対象期間：2026-06-09〜06-11（直近48h優先）＋市場影響大の重要案件は過去5日まで遡及収録  
-> ソース：WhiteHouse 公式 RSS（political-feed.json、30分更新）  
-> 生成日時：2026-06-11 22:04 JST
+> 対象期間：2026-06-10〜06-12（直近48h）＋市場影響大の重要案件は過去5日まで遡及収録  
+> ソース：WhiteHouse 公式 RSS（political-feed.json、30分更新）+ WebSearch 補足  
+> 生成日時：2026-06-12 22:04 JST
 
 ---
 
 ## 📊 全体トーン
 
-2026年6月11日時点、昨日から最大の新展開は**安全アメリカ法（S.2）のトランプ大統領署名成立**（6/10）。議会通過が前日既報だったが、$700億（約10兆円）の規模で正式成立し、移民取締・国境警備への大規模財政支出が確定した。インフレ持続懸念・米国債需給悪化リスク・防衛技術セクターへの受注期待が引き続き焦点。その他の直近24h発言はルーティン案件が中心で新規の市場インパクトは限定的。
+直近48時間のホワイトハウス発信は、儀式的・記念行事系の発表が中心で、即時の高インパクトシグナルは限定的。ただし、フィード外の周辺情報として **FRB次期議長 Kevin Warsh の指名手続きが進展** しており、金融政策の方向性に関する市場の注目度が高い。また、6月5日署名の「AI国家安全保障大統領令」や6月2日の「鉄鋼・アルミ・銅関税更新」が引き続き市場心理に影響を与えている可能性がある。全体としては「新たな急騰・急落シグナルは少ないが、既存テーマの地続き展開」のトーン。
 
 ---
 
-## 🔍 トップ発言（重要度順）
+## 🔺 トップ発言・政策アクション
+
+### 1. FRB次期議長 Kevin Warsh 指名、上院銀行委員会を通過（金融政策・最重要）
+
+- **発言者/アクション**: トランプ大統領 → 米上院銀行委員会
+- **関連日時**: 2026年6月上旬〜中旬
+- **要旨**: パウエル FRB 議長の任期が2026年5月15日に終了。トランプ大統領が指名した Kevin Warsh の後継指名が上院銀行委員会を通過し、本会議採決待ちの状況。Warsh 氏はインフレ抑制に積極的なタカ派と見られる一方で、「金利を引き下げろ」と圧力をかけ続けるトランプ大統領との関係に市場は注目。現行 FF レートは 3.5〜3.75%。
+- **想定される市場影響**（可能性のみ）:
+  - **USDJPY・EURUSD**: Warsh 確認後に利下げ期待が後退すればドル高・円安方向に振れる可能性
+  - **米国債・金利**: 金融政策の不確実性からボラティリティが高まる可能性
+  - **ES=F, NQ=F（株式先物）**: タカ派路線の継続観測は株式バリュエーションに下押し圧力となりうる可能性
+- **元ソース**: [CNBC: Fed recap – Warsh/Powell](https://www.cnbc.com/2026/04/29/fed-meeting-today-live-updates-warsh-powell.html) / [NPR: Trump vs Federal Reserve](https://www.npr.org/2026/01/13/nx-s1-5674777/trump-federal-reserve-jerome-powell)
 
 ---
 
-### 1️⃣ 安全アメリカ法（S.2）署名成立 — $700億規模の国境・ICE予算確定 🔴HIGH
+### 2. AI を国家安全保障に統合する大統領令署名（NSPM-11）
 
-- **発言者/発令者**: ドナルド・J・トランプ大統領（WhiteHouse 公式）
-- **発言日時**: 2026-06-10 16:25 UTC（JST 06-11 01:25）
-- **要旨**: $700億（$70B）規模の「Secure America Act（S.2）」が署名成立。ICEに約$385億（FY2029まで）、CBPに約$226億を配分。生体認証入出国管理システム、自律型監視タワー、薬物密輸対策を含む大規模インフラ整備が進む。下院214-212・上院52-47の僅差通過（概ね党派ライン）。前日の「Secure America Act Ends Democrat Obstruction」声明が今回の法律成立で公式確定した形。
-- **想定される市場影響**:
-  - **防衛・警備技術関連株**: ICE・CBP向け監視技術・生体認証・自律型システムメーカーへの大型受注期待が高まる可能性
-  - **米国債（利回り）**: 大規模財政支出の確定は国債増発懸念につながり、利回り上昇圧力となる可能性（GC=F 金に上昇サポートの可能性）
-  - **インフレ・FRB政策**: 移民制限による労働供給制約が賃金上昇・インフレ持続につながり、Fed の利下げ慎重化リスクとなる可能性
-  - **ドル円（USDJPY）**: 米インフレ継続期待はドル高・円安方向の圧力となる可能性
-- **元ソース**: [WhiteHouse（署名声明）](https://www.whitehouse.gov/briefings-statements/2026/06/s-2-signed-into-law/) / [WhiteHouse Releases（通過声明）](https://www.whitehouse.gov/releases/2026/06/the-secure-america-act-ends-democrat-obstruction-fully-funds-cbp-ice-and-president-trumps-border-security-agenda/)
+- **発言者/アクション**: トランプ大統領
+- **発言日時**: 2026-06-05 18:22 UTC（フィード内 HIGH 重要度）
+- **要旨**: 「国家安全保障大統領覚書 NSPM-11」に署名。AI 技術を安全保障分野へ積極統合する方針を明記した歴史的指令。ファクトシートでは「先端 AI 革新と安全保障の推進」が強調された。防衛・AI 関連企業への政府調達拡大の可能性を示唆。
+- **想定される市場影響**（可能性のみ）:
+  - **AI・防衛セクター株**: 政府需要拡大期待から上昇圧力の可能性
+  - **NQ=F（Nasdaq 先物）**: AI 関連銘柄への追い風となりうる可能性
+- **元ソース**: [WhiteHouse Fact Sheet: AI National Security Directive](https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-signs-historic-directive-on-ai-in-the-national-security-enterprise/)
 
 ---
 
-### 2️⃣ 鉄鋼・アルミニウム・銅の輸入関税更新（既報・引続き注目） ⚠️HIGH
+### 3. 太平洋商業漁業回復・大統領令発令（直近48時間）
 
-- **発言者/発令者**: ドナルド・J・トランプ大統領（WhiteHouse 公式）
-- **発言日時**: 2026-06-02 01:10 UTC（JST 10:10）
-- **要旨**: 鉄鋼・アルミニウム・銅の輸入に対する関税制度を改定。制度の「更なる調整」として行政令発令。具体的な税率改定幅や対象国の詳細はファクトシート参照。
-- **想定される市場影響**:
-  - 鉄鋼・アルミ・銅などコモディティへの価格変動圧力となる可能性
-  - 製造業コスト増・貿易摩擦再燃懸念から日経225（NKD=F）・FTSE など輸出依存指数への下方圧力となる可能性
-  - 米国内鉄鋼株（国内生産者）への恩恵となる可能性
-- **元ソース**: [Fact Sheet](https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-updates-tariffs-on-steel-aluminum-and-copper-imports/) / [大統領令本文](https://www.whitehouse.gov/presidential-actions/2026/06/further-adjusting-the-tariff-regimes-for-imports-of-aluminum-steel-and-copper-into-the-united-states/)
+- **発言者/アクション**: トランプ大統領
+- **発言日時**: 2026-06-11 20:25 UTC（直近24時間以内）
+- **要旨**: 「太平洋におけるアメリカ商業漁業の回復」を命じる大統領令に署名。バイデン政権期に設けられた太平洋漁業区域の規制を一部撤廃し、米国漁業者の操業範囲を拡大する措置。
+- **想定される市場影響**（可能性のみ）:
+  - **食品・水産関連株**: 規制緩和ニュースとして小幅プラスの可能性があるが、影響は限定的
+- **元ソース**: [WhiteHouse: Restoring American Commercial Fishing in the Pacific](https://www.whitehouse.gov/presidential-actions/2026/06/restoring-american-commercial-fishing-in-the-pacific/)
 
 ---
 
-### 3️⃣ AI国家安全保障大統領令・NSPM-11署名（既報・引続き注目） ⚠️HIGH
+### 4. 鉄鋼・アルミニウム・銅の輸入関税をさらに調整（大統領令）
 
-- **発言者/発令者**: ドナルド・J・トランプ大統領（WhiteHouse 公式）
-- **発言日時**: 2026-06-05 18:24 UTC（JST 06-06 03:24）
-- **要旨**: 「国家安全保障領域におけるAI活用を推進する歴史的大統領令」に署名（NSPM-11）。先端AI技術の国家安全保障への組み込みを公式指示。6/2の「高度なAIイノベーションとセキュリティ推進」行政令とあわせ、AI政策が集中的に打ち出されている。
-- **想定される市場影響**:
-  - 防衛・AI・半導体関連株への上方圧力となる可能性
-  - データセンター・クラウドインフラ需要の長期拡大期待が高まる可能性
-  - 中国系AIベンダーや外資系競合への規制強化リスクが生じる可能性
-- **元ソース**: [Fact Sheet（AI/Security）](https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-signs-historic-directive-on-ai-in-the-national-security-enterprise/) / [NSPM-11本文](https://www.whitehouse.gov/presidential-actions/2026/06/national-security-presidential-memorandum-nspm-11/)
-
----
-
-### 4️⃣ 税関執行強化の大統領令（既報） ▶MID
-
-- **発言者/発令者**: ドナルド・J・トランプ大統領
-- **発言日時**: 2026-06-03 20:35 UTC（JST 06-04 05:35）
-- **要旨**: 輸入品の申告義務・違反取締りの厳格化を命じる大統領令を発令。関税の適正徴収体制を整備する内容。
-- **想定される市場影響**:
-  - 輸入コスト上昇→消費財価格上昇→インフレ長期化の可能性
-  - アジア系輸出企業を通じて日本株（NKD=F）に下方圧力となる可能性
-- **元ソース**: [大統領令](https://www.whitehouse.gov/presidential-actions/2026/06/strengthening-customs-enforcement/) / [Fact Sheet](https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-strengthens-customs-enforcement/)
+- **発言者/アクション**: トランプ大統領
+- **発言日時**: 2026-06-02 01:09 UTC（フィード内 HIGH 重要度）
+- **要旨**: 米国への鉄鋼・アルミニウム・銅の輸入に適用する関税制度をさらに調整する大統領令に署名。具体的な税率変更が発令。貿易摩擦の継続・再燃への市場懸念が続いている。
+- **想定される市場影響**（可能性のみ）:
+  - **SI=F（銀先物）・銅・アルミ関連商品**: 輸入コスト上昇→国内調達価格への波及で上昇圧力の可能性
+  - **製造業・自動車セクター**: 原材料コスト増による利益率圧迫の可能性
+  - **AUD（豪ドル）**: 豪州は主要金属輸出国であり、需要観測次第で上下の可能性
+- **元ソース**: [WhiteHouse: Further Adjusting the Tariff Regimes for Aluminum, Steel, and Copper](https://www.whitehouse.gov/presidential-actions/2026/06/further-adjusting-the-tariff-regimes-for-imports-of-aluminum-steel-and-copper-into-the-united-states/)
 
 ---
 
-### 5️⃣ 連邦職員の説明責任強化（既報） ▶HIGH
+### 5. Secure America Act 成立・国境警備予算の全額措置
 
-- **発言者/発令者**: ドナルド・J・トランプ大統領
-- **発言日時**: 2026-06-03 20:30 UTC（JST 06-04 05:30）
-- **要旨**: 連邦職員に対する説明責任強化を定めた措置を発表。官僚組織の効率化・人員縮小方針と整合しており、DOGE路線の継続を示唆。
-- **想定される市場影響**:
-  - 政府支出削減期待から長期国債利回り低下方向への影響となる可能性
-  - 政府関連IT請負企業への歳出削減影響が生じる可能性
-- **元ソース**: [Fact Sheet](https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-increases-accountability-in-the-federal-workforce/)
-
----
-
-## 📝 直近24h以内のその他発言（市場影響 限定的）
-
-| 発言日時(JST) | 概要 | 重要度 |
-|---|---|---|
-| 2026-06-11 04:41 | 上院への人事指名送付（ルーティン） | MID |
-| 2026-06-11 02:34 | 「1勝ずつアメリカを再び偉大に」広報リリース（新材料なし） | MID |
-| 2026-06-10 05:01 | H.R.3490 / S.2393 署名成立（詳細不明） | MID |
-| 2026-06-10 00:51 | メラニア夫人、AIチャレンジ表彰式登壇（儀式的） | MID |
+- **発言者/アクション**: トランプ大統領（署名）
+- **発言日時**: 2026-06-09 20:26 UTC（フィード内 MID 重要度）
+- **要旨**: 「安全なアメリカ法（Secure America Act）」が成立。CBP（税関国境警備局）・ICE の予算を全額措置し、国境警備強化を法律に明記。財政支出の増加要因として国債市場への波及が懸念される。
+- **想定される市場影響**（可能性のみ）:
+  - **米国債（長期金利）**: 財政拡大要因として長期金利上昇圧力の可能性
+  - **USDJPY**: ドル金利上昇観測からドル買い・円売りに傾く可能性
+- **元ソース**: [WhiteHouse: The Secure America Act](https://www.whitehouse.gov/releases/2026/06/the-secure-america-act-ends-democrat-obstruction-fully-funds-cbp-ice-and-president-trumps-border-security-agenda/)
 
 ---
 
-> ⚠️ **本資料は発言の整理であり投資助言ではありません。市場影響は不確実です。**  
-> 各発言の解釈・売買判断は必ず自己責任で行ってください。数値・日時は political-feed.json および WhiteHouse 公式サイトをご確認ください。
+## 📋 注意事項
+
+- 直近48時間のフィード内エントリはすべて MID 重要度。高インパクト発言なし。
+- #1（FRB人事）・#4（関税）は WebSearch 補足情報を含み、フィードの主データと異なる。情報の鮮度・正確性に限界がある。
+- 個別発言の市場影響は実際の発現前に変化しうる不確実な推計。
+
+---
+
+⚠️ 本資料は発言の整理であり投資助言ではありません。市場影響は不確実です。
