@@ -125,7 +125,6 @@ for tk,name in ASSETS:
     C=np.array([x if x is not None else np.nan for x in C],float)
     V=np.array([x if x is not None else np.nan for x in V],float)
     ok=~(np.isnan(C)|np.isnan(H)|np.isnan(L)); H,L,C=H[ok],L[ok],C[ok]
-    Vv=V[~np.isnan(C)] if len(V)==len(ok) else V
     if len(C)<40: print(f"{name:<12}  データ不足"); continue
     rsi=rsi_wilder(C); pb=pctb(C)
     volz=None
