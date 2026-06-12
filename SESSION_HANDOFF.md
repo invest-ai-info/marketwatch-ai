@@ -6,6 +6,11 @@
 
 ## 🆕 2026-06-11（夜）セッション（最新・まずここを読む）
 
+#### ✅ 2026-06-12（昼休み追記）：guide-dollar-cost-averaging.html 公開（topicキュー⑩消化）
+- 💰投資の基礎知識・読了15分。仕上げ＝`research/_finalize_dca.py`（SVG1の右端ラベル viewBoxはみ出しクリップを修正＝**新パターンの重なりバグ**／SVG3点目「下落でやめるvs続ける」新規作成／Vanguard「年率2.3pt」→「最終資産で約2.3%差」に正確化）
+- compliance(Opus)=🟢白「そのままOK」（調和平均の計算・Vanguard 2012 をWeb照合済み）。コミット 7ba4e71(記事)/fe50d2a(guides)/98508cc(履歴)
+- 今朝の自動化ラッシュ全成功を確認済み（signal-lab #3下書き・swap-points下書き・日足スキャン・🌅今朝の3行）。**今夜の残り＝バックログ3点（X投稿/メルマガ/GSC/鮮度）＋トップUX残り＋signal-lab #3照合公開＋swap-points仕上げ＋YouTubeアップ**
+
 **テーマ＝心理&リスク管理シリーズ第一期完結＋トップページUX第1弾**
 
 #### ✅ guide-leverage.html 公開 — autodraft topicキュー①〜⑨完走（シリーズ計10本）
