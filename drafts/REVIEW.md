@@ -12,9 +12,9 @@
 - **生成ファイル**: draft-signal-lab-005.html / lab-005-analysis.md / lab-005-claims.json / ledger更新 / verify.py blocked拡張
 
 ### 自動公開ゲート結果
-- [ ] 8-2 verify EXIT=? → 実行待ち
-- [ ] 8-3 Opus compliance → 実行待ち
-- [ ] 8-4 公開判断 → 上記による
+- [x] 8-2 verify EXIT=0 ✅ — 全7件緑、要約ボックス完全、SVGはみ出しなし
+- [x] 8-3 Opus compliance 🟢 白（グレー指摘ゼロ）✅
+- [x] 8-4 **✅自動公開済み（検証緑・Opus白）** → guide-signal-lab-005.html push済み（2026-06-13）
 
 ---
 
