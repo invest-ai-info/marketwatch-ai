@@ -79,9 +79,9 @@ NEWSLETTER_FORM = '''
     <div class="ml-form-embedWrapper embedForm">
       <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
         <div class="ml-form-embedContent">
-          <span class="mw-nl-badge">📩 無料メルマガ</span>
-          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
-          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
         </div>
         <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
           <div class="ml-form-formContent">
@@ -102,7 +102,8 @@ NEWSLETTER_FORM = '''
       <div class="ml-form-successBody row-success" style="display:none">
         <div class="ml-form-successContent">
           <h4>✅ 登録ありがとうございます！</h4>
-          <p>次回のメルマガ配信をお楽しみに。</p>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
         </div>
       </div>
     </div>
@@ -4192,7 +4193,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🧪 解説「<a href="guide-signal-lab-006.html" style="color:#0969da"><b>研究日誌 #6 「壁あり」シグナルの秘密はトレンド環境にあった——blocked×相場環境の交絡解析</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🧪 解説「<a href="guide-signal-lab-005.html" style="color:#0969da"><b>研究日誌 #5 壁ありシグナルが勝つ逆転現象——「避けろ」判定の中身を解剖</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🧪 解説「<a href="guide-signal-lab-004.html" style="color:#0969da"><b>研究日誌 #4 ゴールドはロングだと9割負ける——方向性の罠を解剖</b></a>」公開'},
         {"date": "2026-06-12", "line": '・<b>2026-06-12</b>: 💱 解説「<a href="guide-swap-points.html" style="color:#0969da"><b>スワップポイントの仕組みとリスク｜FXの金利差収益を図解で解説</b></a>」公開'},
