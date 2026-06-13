@@ -12,9 +12,11 @@
 - **生成ファイル**: drafts/draft-signal-lab-007.html / drafts/labnotes/lab-007-analysis.md / drafts/labnotes/lab-007-claims.json / signal-lab-ledger.md（次番号008、トラッカー[k]追加）
 
 ### 自動公開ゲート結果
-- [ ] 8-2 verify — 実行待ち
-- [ ] 8-3 Opus compliance — 実行待ち
-- [ ] 8-4 公開判定 — 実行待ち
+- [x] 8-2 verify EXIT=0 ✅ — 全10件緑（blocked/group/trend三次元クリア）、要約ボックス完全（0件未検証）、SVGはみ出しなし
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→🟢白（適用修正: ⑥positive-box内「強いシグナルだが」→「過去データ上は目立つ数字だが、将来の再現を示すものではないため過信は禁物。特定売買の推奨ではなく過去統計の傾向観察」に軟化＋非推奨明示）✅
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正で数値・要約ボックス無変化を確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（断定表現なし・免責完備・小サンプル留保適切）
+- [x] 8-4-iii **✅自動公開済み（検証緑・Opus修正適用＋独立確認白）** → guide-signal-lab-007.html push済み（2026-06-14）
 
 ---
 
