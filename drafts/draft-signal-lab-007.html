@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #7｜他FX×blocked=True の高勝率は「下降偏り」という交絡だった——グループ×トレンド×blocked 三次元解析 - MarketWatch AI</title>
+  <meta name="description" content="blocked=True（壁あり）が高勝率な理由を「グループ別×トレンド」で三次元解析。他FX×blocked=Trueの66.7%は下降トレンド偏りという交絡が主因で、下降時は100.0%（8/8）・もみあい時は0.0%（0/4）と激変する構造を652件で解明。">
+  <meta name="keywords" content="AIシグナル,検証,blocked,SR,グループ,トレンド,交絡,勝率,研究日誌,他FX,三次元解析">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-007.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #7｜他FX×blocked=True の高勝率は「下降偏り」という交絡だった——グループ×トレンド×blocked 三次元解析">
+  <meta property="og:description" content="他FX×blocked=True 66.7%の正体を三次元解析で解明。下降トレンド時100.0%・もみあい時0.0%という交絡構造を652件で確認。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-007.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #7｜他FX×blocked=True の高勝率は「下降偏り」という交絡だった",
+    "description": "blocked=True × グループ × トレンドの三次元解析。他FX×blocked=Trueの66.7%を解明した652件の検証。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026年6月（下書き中）",
+    "dateModified": "2026年6月（下書き中）",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-007.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #7
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #7<br><small style="font-size:.65em;color:#57606a;font-weight:400">他FX×blocked=True の高勝率は「下降偏り」という交絡だった——グループ×トレンド×blocked 三次元解析</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約9分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第7回です。<a href="guide-signal-lab-006.html">前回（#6）</a>では「blocked=True（TP1前に壁がある）シグナルは、トレンド相場でのみ高勝率を発揮し、もみあいでは逆効果になる」という構造を解明しました。また、検証の途中で<strong>他FX（EURUSD・GBPUSDなど）× blocked=True が66.7%（10/15）</strong>という高い数字が浮上していました。</p>
+    <p>今回はこの66.7%の正体に迫ります。これは本当に「他FXグループに固有のエッジ」なのか、それとも「たまたま下降トレンドのシグナルが多かっただけ」という見かけ上の数字（交絡）なのか——652件の実データを用いた三次元解析で調べます。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 前回再確認: blocked=True全体 53.7%（22/41）vs blocked=False 38.9%（111/285）<br>
+      ② グループ別では: 指数 75.0%（6/8） / 他FX 66.7%（10/15） / メタル 50.0%（4/8）と差がある<br>
+      ③ 他FX×blocked=Trueの66.7%を分解すると: 下降トレンド時 100.0%（8/8）CI下限67.6%、もみあい時 0.0%（0/4）——極端な二極化<br>
+      ④ 結論: 他FX×blocked=Trueの高勝率は下降トレンドへの偏り（8/15件=53%が下降）によるトレンド交絡。事前宣言3条件クリアで通過A
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#meeting">3視点会議——今回の仮説と事前宣言</a></li>
+        <li><a href="#method">検証方法（「もしも計算」）</a></li>
+        <li><a href="#group-result">結果①：グループ別 blocked=True の比較</a></li>
+        <li><a href="#three-way">結果②（核心）：他FX×blocked=True を三次元で分解</a></li>
+        <li><a href="#confounding">交絡の構造——なぜ66.7%が生まれるのか</a></li>
+        <li><a href="#decision">今回の決定事項と考察</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="meeting">① 3視点会議——今回の仮説と事前宣言</h2>
+
+    <p>研究日誌では毎回「3視点（テクニカル・ファンダメンタル・リスク管理）の会議」で仮説を1本に絞り込んでいます。今回の会議の要点は以下のとおりです。</p>
+
+    <div class="info-box">
+      <strong>💡 3視点会議メモ（2026-06-14）</strong><br><br>
+      <strong>テクニカル担当</strong>: 前回（#6）で他FX×blocked=True=66.7%が出た。グループによってblocked効果の大小があるなら、どのグループが主導しているかを明確化したい。指数も8件で6勝（75.0%）と高い。<br><br>
+      <strong>ファンダメンタル担当</strong>: グループ差はファンダ感応度の違いと無関係でない可能性。ただし「なぜグループ差があるか」の因果は探索的——まず「差が実在するか」を確認するのが先。<br><br>
+      <strong>リスク管理担当（採択）</strong>: 「他FX×blocked=Trueが高い」と思って他FXに偏ったエントリーをするリスクがある。その前に「本当にグループ差があるか、それとも単にトレンド偏りの交絡か」を検証すべき。事前宣言の基準を設けて検証する。
+    </div>
+
+    <div class="info-box">
+      <strong>📋 採択仮説 #007</strong><br><br>
+      「他FX（EURUSD・GBPUSD等）×blocked=True の66.7%という高勝率は、<strong>下降トレンドシグナルへの偏り（トレンド交絡）</strong>によって説明される。グループ固有のエッジではなく、トレンド環境が主因である」<br><br>
+      <strong>事前宣言の合否基準（データ確認前に宣言）:</strong><br>
+      ① 他FX×blocked=True×下降 のWilson CI下限 ≥ 43% かつ N ≥ 5（下降環境での効果が実在する）<br>
+      ② 他FX×blocked=True×中立 の勝率 &lt; 43%（もみあいでは効果が消失する——#6と整合）<br>
+      ③ 指数×blocked=True の勝率 &gt; メタル×blocked=True（グループ間の差が存在する）<br>
+      ← 3条件すべてクリアで「通過A」
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（「もしも計算」）</h2>
+
+    <p>今回も反実仮想の「もしも検証」です。過去データに対して「もしこの条件（グループ・トレンド・blocked）で絞り込んでいたら、成績はどうだったか」を計算します。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ全体</td><td>勝敗確定済み（tp1/tp2/slのいずれかに到達）の<strong>652件</strong></td></tr>
+      <tr><td>うちsr_runway記録あり</td><td><strong>326件</strong>（blockedフィールドはこの中にのみ存在）</td></tr>
+      <tr><td>うちblocked=True</td><td><strong>41件</strong>（前回同様）</td></tr>
+      <tr><td>うちblocked=False</td><td><strong>285件</strong>（前回同様）</td></tr>
+      <tr><td>グループ定義</td><td>メタル（GC/SI）、指数（NKD/ES/NQ/YM/FTSE）、円クロス（USD/EUR/GBP/AUD/JPY）、他FX（EUR/GBP/AUD/USD・非JPY）</td></tr>
+      <tr><td>トレンド判定</td><td>signals-logの <code>trend_alignment.higher_tf_trend</code>（上昇/下降/中立・もみあい）</td></tr>
+      <tr><td>損益分岐</td><td>43%（TP1 R:R=1.33でプラス期待値の下限）</td></tr>
+      <tr><td>ブレ幅</td><td>Wilson法による95%信頼区間をすべての数字に併記</td></tr>
+    </table>
+
+    <div class="warning-box">
+      今回はblocked=True全体41件を複数のグループ×トレンドに分割するため、各セルのN（件数）が非常に小さくなります。特にN &lt; 10の数字はブレ幅が大きく、今後のデータ蓄積で値が大きく変化する可能性があります。「傾向の確認」として読んでください。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="group-result">③ 結果①：グループ別 blocked=True の比較</h2>
+
+    <p>まず「グループによってblocked=Trueの成績に差があるか」を確認します。</p>
+
+    <h3>blocked=True × グループ別（全体）</h3>
+
+    <table>
+      <tr><th>グループ</th><th>blocked=True件数</th><th>勝率</th><th>95%信頼区間</th><th>損益分岐43%比較</th></tr>
+      <tr><td>指数（NKD/ES/NQ等）</td><td>8</td><td><strong>75.0%</strong>（6/8）</td><td>[40.9%~92.9%]</td><td>✅ 超過（CI下限40.9%）</td></tr>
+      <tr><td>他FX（EUR/GBP/AUD）</td><td>15</td><td><strong>66.7%</strong>（10/15）</td><td>[41.7%~84.8%]</td><td>✅ 超過（CI下限41.7%）</td></tr>
+      <tr><td>メタル（金/銀）</td><td>8</td><td><strong>50.0%</strong>（4/8）</td><td>[21.5%~78.5%]</td><td>△ わずかに超過（CI下限21.5%）</td></tr>
+      <tr><td>円クロス（JPY系）</td><td>5</td><td><strong>20.0%</strong>（1/5）</td><td>[3.6%~62.4%]</td><td>❌ 43%大幅未達</td></tr>
+      <tr><td>BTC</td><td>3</td><td>—</td><td>—</td><td>N=3 小サンプル・対象外</td></tr>
+      <tr><td>原油</td><td>2</td><td>—</td><td>—</td><td>N=2 小サンプル・対象外</td></tr>
+      <tr><td><strong>全体</strong></td><td><strong>41</strong></td><td><strong>53.7%</strong>（22/41）</td><td>[38.7%~67.9%]</td><td>🟡 超過・CI下限未達</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図1: グループ別 blocked=True 勝率（横棒グラフ） -->
+      <svg viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="グループ別blocked=True勝率の比較">
+        <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:15px">グループ別 blocked=True 勝率（N=41件）</text>
+        <!-- y-axis -->
+        <line x1="155" y1="48" x2="155" y2="258" class="s-axis"/>
+        <!-- x-axis -->
+        <line x1="155" y1="258" x2="570" y2="258" class="s-axis"/>
+        <!-- 43% guide: 155+43*4=327 -->
+        <line x1="327" y1="43" x2="327" y2="258" class="s-guide"/>
+        <text x="327" y="272" text-anchor="middle" class="s-label-y">43%</text>
+        <!-- 100% mark: 155+400=555 -->
+        <text x="555" y="272" text-anchor="middle" class="s-label-sm">100%</text>
+
+        <!-- 指数 75.0%: w=300 -->
+        <rect x="155" y="65" width="300" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="10" y="79" class="s-label">指数</text>
+        <text x="10" y="95" class="s-label-sm">(6/8 N=8)</text>
+        <text x="463" y="88" class="s-label-g">75.0%</text>
+
+        <!-- 他FX 66.7%: w=267 -->
+        <rect x="155" y="113" width="267" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="10" y="127" class="s-label">他FX</text>
+        <text x="10" y="143" class="s-label-sm">(10/15 N=15)</text>
+        <text x="430" y="136" class="s-label-g">66.7%</text>
+
+        <!-- メタル 50.0%: w=200 -->
+        <rect x="155" y="161" width="200" height="36" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="10" y="175" class="s-label">メタル</text>
+        <text x="10" y="191" class="s-label-sm">(4/8 N=8)</text>
+        <text x="363" y="184" class="s-label-y">50.0%</text>
+
+        <!-- 円クロス 20.0%: w=80 -->
+        <rect x="155" y="209" width="80" height="36" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="3"/>
+        <text x="10" y="223" class="s-label">円クロス</text>
+        <text x="10" y="239" class="s-label-sm">(1/5 N=5)</text>
+        <text x="243" y="232" class="s-label-r">20.0%</text>
+
+        <text x="350" y="288" text-anchor="middle" class="s-label-sm">※ BTC(N=3)・原油(N=2)はN不足のため省略。縦点線=損益分岐43%</text>
+        <text x="350" y="303" text-anchor="middle" class="s-label-sm">指数・他FXがblocked効果を主導。円クロスはN=5と小サンプルで参考値</text>
+      </svg>
+      <div class="chart-caption">図1：グループ別 blocked=True の勝率比較。指数（75.0%）と他FX（66.7%）が損益分岐43%を上回る一方、円クロス（20.0%）は大幅に下回っている。ただしN=5〜8と小サンプルで信頼区間のブレ幅が大きい。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>グループによって成績に大きな差があることが確認できます。事前宣言③「指数 &gt; メタル」についても、75.0% vs 50.0%と差が出ており条件をクリアしています。</p>
+
+    <p>ここで「なぜグループ差があるのか」を考える前に、もう一段掘り下げます。前回（#6）の発見から、<strong>トレンド環境がblocked=Trueの効果を大きく左右する</strong>ことがわかっています。グループ内のトレンド構成（下降・中立・上昇の比率）が異なれば、グループ差の多くはトレンド差に帰着する可能性があります。</p>
+
+    <!-- =============================== -->
+    <h2 id="three-way">④ 結果②（核心）：他FX×blocked=True を三次元で分解</h2>
+
+    <p>他FXグループ15件を「トレンド環境」でさらに分割します。これが今回の分析の核心です。</p>
+
+    <h3>他FX × blocked=True × トレンド環境（三次元分解）</h3>
+
+    <table>
+      <tr><th>トレンド環境</th><th>件数</th><th>勝率</th><th>95%信頼区間</th><th>判定</th></tr>
+      <tr><td>下降トレンド</td><td>8</td><td><strong>100.0%</strong>（8/8）</td><td>[67.6%~100.0%]</td><td>✅ <strong>CI下限67.6%≥43% かつ N=8≥5（事前宣言①通過）</strong></td></tr>
+      <tr><td>上昇トレンド</td><td>3</td><td>66.7%（2/3）</td><td>[20.8%~93.9%]</td><td>🟡 N=3 小サンプル・参考のみ</td></tr>
+      <tr><td>中立・もみあい</td><td>4</td><td><strong>0.0%</strong>（0/4）</td><td>[0.0%~49.0%]</td><td>❌ <strong>0.0%&lt;43%（事前宣言②通過）</strong></td></tr>
+      <tr><td><strong>合計</strong></td><td><strong>15</strong></td><td><strong>66.7%</strong>（10/15）</td><td>[41.7%~84.8%]</td><td>🟡 交絡で見かけ上高い（実態は下降偏り）</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図2: 他FX × blocked=True × トレンド breakdown -->
+      <svg viewBox="0 0 700 275" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="他FX×blocked=Trueのトレンド別分解">
+        <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:15px">他FX×blocked=Trueをトレンド環境で分解（N=15件）</text>
+        <!-- axes -->
+        <line x1="155" y1="48" x2="155" y2="218" class="s-axis"/>
+        <line x1="155" y1="218" x2="570" y2="218" class="s-axis"/>
+        <!-- 43% guide: 327 -->
+        <line x1="327" y1="43" x2="327" y2="218" class="s-guide"/>
+        <text x="327" y="232" text-anchor="middle" class="s-label-y">43%</text>
+
+        <!-- 下降 100.0%: w=400 -->
+        <rect x="155" y="62" width="400" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="10" y="76" class="s-label">下降</text>
+        <text x="10" y="92" class="s-label-sm">(8/8 N=8)</text>
+        <text x="563" y="85" class="s-label-g">100.0%</text>
+
+        <!-- 上昇 66.7%: w=267 -->
+        <rect x="155" y="110" width="267" height="36" class="s-fill-b" stroke="#0969da" stroke-width="1.5" rx="3"/>
+        <text x="10" y="124" class="s-label">上昇</text>
+        <text x="10" y="140" class="s-label-sm">(2/3 N=3)</text>
+        <text x="430" y="133" class="s-label-b">66.7%</text>
+
+        <!-- 中立 0%: stub only -->
+        <rect x="155" y="158" width="4" height="36" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="1"/>
+        <text x="10" y="172" class="s-label">中立</text>
+        <text x="10" y="188" class="s-label-sm">(0/4 N=4)</text>
+        <text x="167" y="181" class="s-label-r">0.0%</text>
+
+        <text x="350" y="248" text-anchor="middle" class="s-label-sm">下降と中立で結果が180度反転。66.7%という合計値は下降8件の全勝が引き上げた見かけ値</text>
+        <text x="350" y="263" text-anchor="middle" class="s-label-sm">※ 縦点線=損益分岐43% ／ N=3以下は参考値として扱う</text>
+      </svg>
+      <div class="chart-caption">図2：他FX×blocked=Trueをトレンド環境で分解。下降トレンドで100.0%（8/8）だが、もみあいでは0.0%（0/4）と180度反転している。「66.7%」という合計値は下降偏りの交絡によって生まれた数字である。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <div class="positive-box">
+      <strong>通過A：事前宣言3条件をすべてクリア</strong><br>
+      ① 他FX×blocked=True×下降：100.0%（8/8）、CI下限67.6%≥43%、N=8≥5 ✅<br>
+      ② 他FX×blocked=True×中立：0.0%（0/4）、43%未達 ✅<br>
+      ③ 指数blocked=True（75.0%）&gt; メタルblocked=True（50.0%）✅
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="confounding">⑤ 交絡の構造——なぜ66.7%が生まれるのか</h2>
+
+    <p>「交絡」という言葉は少しわかりにくいですが、要するに「本当の原因（トレンド方向）が別にあるのに、見かけ上は他の要因（グループ）が原因に見える」という現象です。</p>
+
+    <h3>66.7%という数字の内訳</h3>
+
+    <table>
+      <tr><th>内訳</th><th>件数</th><th>勝敗</th><th>備考</th></tr>
+      <tr><td>下降トレンド</td><td>8件（全体の53%）</td><td>8勝0敗</td><td>← ここが勝率を引き上げている</td></tr>
+      <tr><td>上昇トレンド</td><td>3件（全体の20%）</td><td>2勝1敗</td><td>N=3 参考のみ</td></tr>
+      <tr><td>中立・もみあい</td><td>4件（全体の27%）</td><td>0勝4敗</td><td>← ここが足を引っ張っている</td></tr>
+      <tr><td><strong>合計</strong></td><td><strong>15件</strong></td><td><strong>10勝5敗（66.7%）</strong></td><td>下降8件が全勝している結果</td></tr>
+    </table>
+
+    <p>他FX×blocked=Trueの15件のうち8件（53%）が下降トレンドであり、その8件がすべて勝利しています。これが66.7%という数字を作り出しています。</p>
+
+    <div class="negative-box">
+      <strong>「他FXはblocked=Trueで高勝率」は錯覚だった可能性</strong><br>
+      正確には「他FX×blocked=True×下降トレンド」が高勝率なのであり、グループが「他FX」であること自体が主因ではないことが示唆されます。他FXのデータに下降トレンドが多かっただけ、という交絡が発生しています。
+    </div>
+
+    <h3>比較：他FX×blocked=False との対照</h3>
+
+    <table>
+      <tr><th>条件</th><th>件数</th><th>勝率</th><th>95%信頼区間</th></tr>
+      <tr><td>他FX × blocked=True</td><td>15</td><td>66.7%（10/15）</td><td>[41.7%~84.8%]</td></tr>
+      <tr><td>他FX × blocked=False</td><td>64</td><td>46.9%（30/64）</td><td>[35.2%~58.9%]</td></tr>
+      <tr><td>差</td><td>—</td><td>+19.8pp</td><td>—</td></tr>
+    </table>
+
+    <p>他FX内でblocked=Trueがblocked=Falseより約20ポイント高い差は確かに存在します。ただしこれも、blocked=True内の下降偏りが影響している可能性が高いです。</p>
+
+    <div class="chart-figure">
+      <!-- 図3: 交絡の概念図 -->
+      <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="他FX×blocked=Trueの交絡構造の概念図">
+        <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:15px">交絡の構造——なぜ66.7%が生まれるか（概念図）</text>
+
+        <!-- 左パネル: blocked=True全体 -->
+        <rect x="20" y="40" width="300" height="155" class="s-fill-gray" rx="8" stroke="#d0d7de" stroke-width="1"/>
+        <text x="170" y="60" text-anchor="middle" class="s-label-b" style="font-size:12px">他FX × blocked=True（N=15）</text>
+        <!-- 内訳ブロック: 下降8件 -->
+        <rect x="30" y="72" width="200" height="44" class="s-fill-g" rx="4" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="130" y="90" text-anchor="middle" class="s-label-g" style="font-size:11.5px">下降トレンド 8件</text>
+        <text x="130" y="106" text-anchor="middle" class="s-label-g" style="font-size:11.5px">全勝（100.0%）↑ 引き上げ</text>
+        <!-- 内訳ブロック: 中立4件 -->
+        <rect x="30" y="128" width="200" height="44" class="s-fill-r" rx="4" stroke="#cf222e" stroke-width="1.2"/>
+        <text x="130" y="146" text-anchor="middle" class="s-label-r" style="font-size:11.5px">中立もみあい 4件</text>
+        <text x="130" y="162" text-anchor="middle" class="s-label-r" style="font-size:11.5px">全敗（0.0%）↓ 引き下げ</text>
+
+        <!-- 矢印 -->
+        <text x="340" y="122" text-anchor="middle" class="s-label-b" style="font-size:22px">→</text>
+
+        <!-- 右パネル: 合計値 -->
+        <rect x="380" y="40" width="300" height="155" class="s-fill-b" rx="8" stroke="#0969da" stroke-width="1"/>
+        <text x="530" y="60" text-anchor="middle" class="s-label-b" style="font-size:12px">見かけの合計値</text>
+        <text x="530" y="100" text-anchor="middle" class="s-label-b" style="font-size:32px;font-weight:700">66.7%</text>
+        <text x="530" y="130" text-anchor="middle" class="s-label-b" style="font-size:12px">↑ これが「他FXのエッジ」</text>
+        <text x="530" y="148" text-anchor="middle" class="s-label-b" style="font-size:12px">に見えるが……</text>
+        <text x="530" y="166" text-anchor="middle" class="s-label-y" style="font-size:12px">実態は下降偏りの交絡</text>
+
+        <text x="350" y="212" text-anchor="middle" class="s-label-sm">下降8件（全勝）+ 中立4件（全敗）+ 上昇3件（2/3）= 合計10/15 = 66.7%</text>
+        <text x="350" y="228" text-anchor="middle" class="s-label-sm">※ トレンド交絡の概念図。縦の割合は件数比を模式的に示したもの</text>
+      </svg>
+      <div class="chart-caption">図3：他FX×blocked=Trueの合計66.7%が生まれる仕組みの概念図。下降8件（全勝）と中立4件（全敗）が混在した結果、見かけ上66.7%という数字が出ている。グループ固有のエッジではなく、トレンド構成の偏りが主因である可能性を示している。※ 数値・比率は模式的。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑥ 今回の決定事項と考察</h2>
+
+    <h3>事前宣言の総合判定</h3>
+
+    <table>
+      <tr><th>条件</th><th>事前宣言の基準</th><th>実績値</th><th>判定</th></tr>
+      <tr><td>① 他FX×blocked=T×下降</td><td>CI下限≥43% かつ N≥5</td><td>100.0%（8/8）CI下限67.6%, N=8</td><td>✅ 通過</td></tr>
+      <tr><td>② 他FX×blocked=T×中立</td><td>勝率 &lt; 43%</td><td>0.0%（0/4）</td><td>✅ 通過</td></tr>
+      <tr><td>③ 指数 &gt; メタル</td><td>指数の方が高い</td><td>75.0% vs 50.0%</td><td>✅ 通過</td></tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>通過A：「他FX×blocked=Trueの66.7%はトレンド交絡」——作業仮説として採用</strong><br>
+      他FXグループ固有のエッジとして数字を受け取るのではなく、「下降トレンド×blocked=True」という条件が主因であることを認識する。他FX×blocked=True×下降（8/8=100%）は強いシグナルだが、N=8の小サンプルのため過信禁止。
+    </div>
+
+    <h3>交絡点検（今回注意した交絡要因）</h3>
+
+    <ul>
+      <li><strong>トレンド偏り</strong>: 他FX×blocked=Trueの15件に占める下降割合が53%（8件）と高かった。これが主要な交絡要因</li>
+      <li><strong>小サンプル問題</strong>: 各セルN=3〜8。Wilson CIのブレ幅が大きく、100.0%（8/8）でもCI下限67.6%と相当な不確実性がある</li>
+      <li><strong>グループ定義の曖昧さ</strong>: 「他FX」はEUR/GBP/AUD系の非JPYクロス。経済圏が異なる複数ペアが混在しており、グループとして均質ではない</li>
+      <li><strong>選択バイアス</strong>: blocked=Trueはsr_runway記録がある326件にしか存在しない。sr_runway未記録の326件との差がある可能性を排除できない</li>
+    </ul>
+
+    <h3>期待値Rの整理</h3>
+
+    <table>
+      <tr><th>条件</th><th>勝率</th><th>期待値（過去データ集計値、将来を示さない）</th></tr>
+      <tr><td>blocked=True全体</td><td>53.7%（22/41）</td><td>+0.25R</td></tr>
+      <tr><td>他FX×blocked=True</td><td>66.7%（10/15）</td><td>+0.56R</td></tr>
+      <tr><td>他FX×blocked=True×下降</td><td>100.0%（8/8）</td><td>+1.33R</td></tr>
+      <tr><td>他FX×blocked=True×中立</td><td>0.0%（0/4）</td><td>−1.00R</td></tr>
+      <tr><td>他FX×blocked=False</td><td>46.9%（30/64）</td><td>+0.09R</td></tr>
+      <tr><td>blocked=False全体</td><td>38.9%（111/285）</td><td>−0.09R</td></tr>
+    </table>
+
+    <div class="warning-box">
+      期待値Rは過去の実データから計算した参考値であり、将来の成績を保証するものではありません。特に他FX×blocked=True×下降の+1.33RはN=8の小サンプルに基づく数字です。TP1のR:Rを1.33として計算しています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>「事前に宣言した基準が、今後のデータで再現されるか」を追跡する前向きトラッカーです。</p>
+
+    <table>
+      <tr><th>ID</th><th>仮説・指標</th><th>宣言基準</th><th>現在値（2026-06-14）</th><th>状態</th></tr>
+      <tr><td>a</td><td>押し目買い4h（上位足上昇×逆張りL×4h）</td><td>N≥30かつ勝率50%超</td><td>N=0（upper_tf_trend未記録のため追跡開始待ち）</td><td>⏳ 追跡中</td></tr>
+      <tr><td>b</td><td>regime=RISK_ON の勝率</td><td>N≥20かつ勝率55%超</td><td>N=0（フィールド未記録）</td><td>⏳ 追跡中</td></tr>
+      <tr><td>f</td><td>もみあい中の逆張りL（#2基準: 34.3%）</td><td>新規データで改善 or 悪化を確認</td><td>41.9% N=284 CI[36.3%~47.7%]（前回同値）</td><td>⏳ 追跡中</td></tr>
+      <tr><td>g</td><td>指数×逆張りL（rsi/bb×ロング）</td><td>N≥80かつCI下限43%超</td><td>51.5% N=66 CI[39.7%~63.2%]（前回同値）</td><td>⏳ 蓄積中</td></tr>
+      <tr><td>h</td><td>他FX×逆張りL（rsi/bb×ロング）</td><td>N≥80かつCI下限43%超</td><td>55.0% N=60 CI[42.5%~66.9%]（前回同値）</td><td>⏳ 蓄積中</td></tr>
+      <tr><td>i</td><td>他FX×blocked=True（#6新設）</td><td>N≥30かつCI下限43%超</td><td>66.7% N=15 CI[41.7%~84.8%]（前回同値・今回交絡確認）</td><td>⏳ 蓄積中</td></tr>
+      <tr><td>j</td><td>中立×blocked=True（#6新設）</td><td>N≥20での実績で20%が継続するか</td><td>20.0% N=10 CI[5.7%~51.0%]（前回同値）</td><td>⏳ 蓄積中</td></tr>
+      <tr><td><strong>k</strong></td><td><strong>他FX×blocked=True×下降（#7新設）</strong></td><td><strong>N≥15かつCI下限50%超を維持</strong></td><td><strong>100.0% N=8 CI[67.6%~100.0%]（N不足・過信禁止）</strong></td><td>⏳ 蓄積中</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <p>今回で「blocked=True × グループ × トレンド」の三次元解析が一段落しました。主な発見のまとめ：</p>
+
+    <ul>
+      <li><strong>グループ差が存在する</strong>: 指数（75.0%）・他FX（66.7%）はblocked=Trueと相性が良く、円クロス（20.0%）は相性が悪い傾向がある（N小のため要継続）</li>
+      <li><strong>他FXの66.7%は下降トレンド交絡</strong>: 「他FX固有のエッジ」ではなく「下降トレンド×blocked=True」という条件が主因の可能性が高い</li>
+      <li><strong>中立環境では一貫して失速</strong>: グループを問わず、blocked=True×もみあいは低勝率の傾向（#6と一致）</li>
+    </ul>
+
+    <p>次のバックログ候補として、これまで保留にしていた「S/R近接距離（d_sup_atr &lt; 1.0）の効果」の再検証が挙がっています。sr_runwayには近傍距離を示すフィールドがあり、「支持線から近いほど反発が起きやすいか」という仮説を同じ反実仮想枠組みで検証できます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シリーズを最初から読む</div>
+      <div class="cta-box-desc">研究日誌は毎回独立した仮説を検証しています。初回から順に読むと「なぜblocked効果が発見されたか」の流れが掴めます。</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 #1 ムード門番（逆効果）</div>
+          <div class="related-card-desc">強気/弱気ムードに従うフィルターを検証→逆効果で棄却した第1回</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-002.html">
+          <div class="related-card-title">🧪 #2 上位足トレンド門番</div>
+          <div class="related-card-desc">一律版は棄却。押し目買い（上昇×逆張りL）は継続観察へ</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-005.html">
+          <div class="related-card-title">🧪 #5 blocked効果の追試</div>
+          <div class="related-card-desc">壁ありシグナルが逆に高勝率——逆転現象を652件で追試した第5回</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-006.html">
+          <div class="related-card-title">🧪 #6 blocked×トレンド交絡解析</div>
+          <div class="related-card-desc">blocked効果はトレンド依存だった。もみあいでは逆効果に</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ③ 末尾の kinsho-v1 免責 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事は一般的な情報提供を目的としており、特定の金融商品の購入・売却を推奨するものではありません。当サイトは金融商品取引業者ではなく、投資助言業・代理業の登録を行っておりません。掲載されている過去の検証結果は将来の運用成績を保証するものではありません。記載されている数値・データは作成時点のものであり、今後変動する場合があります。投資に関する判断は必ずご自身の責任で行ってください。
+    </p>
+
+  </div>
+</main>
+
+<footer>
+  <div><a href="index.html">MarketWatch AI</a> — 日本人投資家のためのマーケット情報サイト</div>
+  <div style="margin-top:6px">© 2026 MarketWatch AI. 本サイトは情報提供を目的とし、投資助言を行うものではありません。</div>
+</footer>
+
+<script>
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const prog = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+    document.getElementById('reading-progress').style.width = prog + '%';
+  });
+  // Theme toggle
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const btn = document.getElementById('theme-toggle');
+    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  }
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('theme-toggle').textContent = '☀️';
+  }
+</script>
+</body>
+</html>

@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-06-14 | 🧪 signal-lab #007
+
+- **基準日（JST）**: 2026-06-14
+- **採択仮説**: 「他FX×blocked=Trueの66.7%高勝率は下降トレンド偏りという交絡である——グループ×トレンド×blocked三次元解析」（3視点会議でリスク管理担当採択）
+- **事前宣言**: ①他FX×blocked=T×下降 CI下限≥43% かつN≥5 AND ②他FX×blocked=T×中立<43% AND ③指数>メタル の3条件クリアで「通過A」
+- **検証データ**: 全決済済み652件（blocked=T:41件 / blocked=F:285件。他FX×blocked=T=15件の内訳: 下降8/上昇3/中立4）
+- **結果**: 他FX×blocked=T×下降 8/8=100.0% CI[67.6%~100.0%]、他FX×blocked=T×中立 0/4=0.0%、指数blocked=T=75.0%(6/8) vs メタル50.0%(4/8)。**事前宣言3条件クリア→通過A**。66.7%は下降偏り交絡と解明。
+- **生成ファイル**: drafts/draft-signal-lab-007.html / drafts/labnotes/lab-007-analysis.md / drafts/labnotes/lab-007-claims.json / signal-lab-ledger.md（次番号008、トラッカー[k]追加）
+
+### 自動公開ゲート結果
+- [ ] 8-2 verify — 実行待ち
+- [ ] 8-3 Opus compliance — 実行待ち
+- [ ] 8-4 公開判定 — 実行待ち
+
+---
+
 ## 2026-06-13 | 🧪 signal-lab #006
 
 - **基準日（JST）**: 2026-06-13
