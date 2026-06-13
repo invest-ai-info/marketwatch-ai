@@ -53,6 +53,7 @@
 | **monthly-calendar-reminder.yml** | 毎月 25 日 09:13 | 翌月指標リマインダー + 休場補充 |
 | **monthly-backup.yml** | 毎月 1 日 09:10 | signals-log の GitHub Release |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新日付チェック |
+| **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 
 ### 環境変数 / GitHub Secrets
