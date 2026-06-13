@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #4｜ゴールドはロングだと9割負ける——方向性の罠を解剖する - MarketWatch AI</title>
+  <meta name="description" content="第3回で見つかった謎「ゴールドのロング勝率12.8%」の正体を、65件のデータで解剖。ショートは61.1%なのになぜ？根本原因は「下降トレンド中の逆張りロング大量発火」だった。事前宣言した仮説の検証結果を正直にすべて公開。">
+  <meta name="keywords" content="AIシグナル,ゴールド,GC=F,方向性,ロング,ショート,検証,研究日誌,逆張り,トレンド方向">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-004.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #4｜ゴールドはロングだと9割負ける——方向性の罠を解剖する">
+  <meta property="og:description" content="GC=Fロング12.8%vsショート61.1%の謎を実データ65件で解剖。根本原因は下降トレンド中の逆張りロング大量発火だった。研究日誌第4回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-004.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #4｜ゴールドはロングだと9割負ける——方向性の罠を解剖する",
+    "description": "GC=Fロング12.8%vsショート61.1%の謎を実データ65件で解剖。根本原因は下降トレンド中の逆張りロング大量発火だった。研究日誌第4回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-13",
+    "dateModified": "2026-06-13",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-004.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #4
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #4<br><small style="font-size:.65em;color:#57606a;font-weight:400">ゴールドはロングだと9割負ける——方向性の罠を解剖する</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月13日 &nbsp;|&nbsp; 読了：約8分
+    </div>
+
+    <p><a href="guide-signal-lab-003.html">第3回</a>でメタルグループ（金・銀）の勝率が13.2%と壊滅的に低く、しかもその中でGC=F（ゴールド先物）に<strong>ロング12.8% vs ショート61.1%</strong>という巨大な方向性ギャップがあることが発覚しました。</p>
+    <p>今回はこの謎を解きます。「なぜロングだと負け続けるのか」「ショートの高勝率はトレンドで説明できるか」「銀（SI=F）でも同じことが起きているか」——事前に宣言した仮説を、65件のデータで検証します。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① GC=F ロング12.8% vs ショート61.1%（47件 vs 18件）の差は本物。期待値は<strong>ロング -0.7R、ショート +0.4R</strong><br>
+      ② 根本原因は「相場の一方向性」——当期間ほぼ全体が下降トレンドで、逆張りロングが<strong>42件も下降中に発火し続けた</strong>（11.9%しか勝てない）<br>
+      ③ 事前宣言した「ショートは下降トレンド環境でブレ幅（95%信頼区間）の下限が43%超」→ <strong>57.1%は出たが件数14件でブレ幅が大きく、下限32.6%で未達</strong><br>
+      ④ SI=F（銀）でも同じ方向性。ただしGC=Fより差は小さい（ロング7.7% vs ショート40.0%）<br>
+      ⑤ 今回もまだ採用しません。「相場環境が変わっても再現するか」の検証が必要
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#recap">前回のおさらいと、今回の疑問</a></li>
+        <li><a href="#hypothesis">事前宣言した仮説と検証条件</a></li>
+        <li><a href="#method">検証方法</a></li>
+        <li><a href="#result1">結果その1：ロング vs ショートの差を確認</a></li>
+        <li><a href="#result2">結果その2：謎の正体——下降トレンド中の逆張りロング大量発火</a></li>
+        <li><a href="#result3">結果その3：事前宣言仮説の採点</a></li>
+        <li><a href="#si">補足：SI=F（銀）でも同じか？</a></li>
+        <li><a href="#decision">今回の決定事項</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+        <li><a href="#lessons">この検証から学べること</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="recap">① 前回のおさらいと、今回の疑問</h2>
+
+    <p><a href="guide-signal-lab-003.html">第3回</a>では「銘柄グループ別の成績差」を検証し、2つのことがわかりました。</p>
+    <ul>
+      <li><strong>指数グループ・他FXグループ</strong>の逆張りは「継続観察」レベルの有望株（52%・54%台）</li>
+      <li><strong>メタルグループ（金・銀）の逆張り</strong>は13.2%という壊滅的な成績で、交絡（原因の混入）を疑った</li>
+    </ul>
+    <p>その交絡の正体として浮上したのが<strong>「方向性の偏り」</strong>です。GC=F だけで見ると、ロング（買い方向）12.8%（6/47件）・ショート（売り方向）61.1%（11/18件）という、ほとんど別の銘柄かと思えるほどの差がありました。</p>
+    <p>今回の疑問は2つです。<br>
+    ① なぜロングばかりが負けるのか？<br>
+    ② ショートの高勝率は「下降トレンドのおかげ」と言えるのか、それとも本当に有望なのか？</p>
+
+    <!-- ====================================== -->
+    <h2 id="hypothesis">② 事前宣言した仮説と検証条件</h2>
+
+    <p>第3回の台帳に、今回の仮説を先に書きました。——「<strong>GC=Fのショートは下降トレンド環境でブレ幅（95%信頼区間）の下限が43%（損益分岐）を超える</strong>」。採用・不採用の決断はデータを見る前に宣言しておかないと、どんな結果でも「合格」にできてしまうからです。</p>
+
+    <div class="info-box">
+      <strong>🔰 用語の確認</strong><br>
+      「ブレ幅（95%信頼区間）」——観測した勝率が「たまたま」のバラつきでどの範囲にあるか、を示す目安です。たとえば N=14 で57%でも、真の値は32%〜79%のどこかかもしれない、という「不確かさの幅」です。勝率の数字が良くても<strong>ブレ幅が大きい＝件数が少ない</strong>うちは判断を急がない、というのがこの連載のルールです。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="method">③ 検証方法</h2>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>GC=F の決済済みシグナル全 <strong>65件</strong>（tp1/tp2=勝ち、sl=負け）</td></tr>
+      <tr><td>期間</td><td>2026年5月20日〜6月12日（約3週間半）</td></tr>
+      <tr><td>方法</td><td>「もしも検証」——過去データをそのまま使い、条件別に勝率を集計</td></tr>
+      <tr><td>合格ライン</td><td>勝率43%（損益分岐点。これを下回るとトータルで赤字）</td></tr>
+      <tr><td>方向の分類</td><td>シグナルの <code>direction</code> フィールド（ロング/ショート）と、<code>trend_alignment.higher_tf_trend</code>（上位足トレンド）を使用</td></tr>
+    </table>
+
+    <!-- ====================================== -->
+    <h2 id="result1">④ 結果その1：ロング vs ショートの差を確認</h2>
+
+    <p>まず第3回の数字を今回の全データで再確認します。</p>
+
+    <table>
+      <tr><th>方向</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>期待値</th><th>判定</th></tr>
+      <tr><td><strong>ロング（買い）</strong></td><td>47</td><td><strong>12.8%</strong></td><td>[6.0%〜25.2%]</td><td>-0.7R</td><td>❌ 壊滅的</td></tr>
+      <tr><td><strong>ショート（売り）</strong></td><td>18</td><td><strong>61.1%</strong></td><td>[38.6%〜79.7%]</td><td>+0.4R</td><td>🟡 有望</td></tr>
+    </table>
+
+    <p>期待値の計算は「TP1達成=+1.33R、SL損切り=-1.0R（R:Rの比率は実際に同一）」で算出しています。ロングの-0.7Rは「トレードするたびに0.7R失う」という厳しい計算、ショートの+0.4Rは逆に利益期待です。</p>
+
+    <div class="chart-figure">
+      <!-- 図1: ロング vs ショートの勝率比較 -->
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GC=F ロング vs ショートの勝率比較棒グラフ">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:15px">GC=F：ロングとショートで成績がまったく違う</text>
+        <!-- axes -->
+        <line x1="170" y1="55" x2="170" y2="230" class="s-axis"/>
+        <line x1="170" y1="230" x2="680" y2="230" class="s-axis"/>
+        <!-- 損益分岐 43% -->
+        <!-- 横軸スケール: 0%=170, 100%=170+510=680 → 43%=170+43*5.1=389.3 -->
+        <line x1="389" y1="50" x2="389" y2="230" class="s-guide"/>
+        <text x="389" y="252" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- bar1: ロング 12.8% w=65 -->
+        <rect x="170" y="75" width="65" height="44" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="30" y="95" class="s-label">ロング</text>
+        <text x="30" y="111" class="s-label-sm">47件</text>
+        <text x="243" y="102" class="s-label-r">12.8%</text>
+        <!-- bar2: ショート 61.1% w=312 -->
+        <rect x="170" y="155" width="312" height="44" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="30" y="175" class="s-label">ショート</text>
+        <text x="30" y="191" class="s-label-sm">18件</text>
+        <text x="490" y="182" class="s-label-g">61.1%</text>
+        <!-- annotation: 差48pp -->
+        <text x="580" y="130" text-anchor="middle" class="s-label-b" style="font-size:12px">差 48.3pp</text>
+        <text x="350" y="272" text-anchor="middle" class="s-label-sm">※ブレ幅はロング[6.0%〜25.2%]、ショート[38.6%〜79.7%]。R:Rは両方向とも1.33で同一</text>
+      </svg>
+      <div class="chart-caption">図1：GC=F のロングとショートの勝率差。約48ppの差は統計的に見ても偶然では説明しにくい（ブレ幅が重なっていない）。ただし件数が少ない点は注意。</div>
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="result2">⑤ 結果その2：謎の正体——下降トレンド中の逆張りロング大量発火</h2>
+
+    <p>ではなぜロングが勝てないのか。ロング47件を「そのときの上位足トレンド」で分類すると、答えが見えました。</p>
+
+    <table>
+      <tr><th>ロング発火時の上位足トレンド</th><th>件数</th><th>勝率</th><th>ブレ幅</th></tr>
+      <tr><td>⬇️ 下降トレンド（下げの途中に買い）</td><td>42</td><td><strong>11.9%</strong></td><td>[5.2%〜25.0%]</td></tr>
+      <tr><td>➡️ もみあい</td><td>3</td><td>0.0%</td><td>—（件数少）</td></tr>
+      <tr><td>⬆️ 上昇トレンド（押し目買い）</td><td>0</td><td>—</td><td>記録なし</td></tr>
+    </table>
+
+    <p><strong>47件中42件が「下降トレンド中の逆張りロング」</strong>でした。研究日誌 #2で「落ちるナイフ」と呼んでいた形です。当期間のGC=Fがほぼ一方的に下落し続けたため、逆張りのロングシグナルが延々と下降の途中に打ち込まれた——これが12.8%という数字の正体です。</p>
+
+    <div class="chart-figure">
+      <!-- 図2: 下降トレンド中にロングが積み重なるイメージ図 -->
+      <svg viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="下降トレンド中に逆張りロングシグナルが積み重なる構造の説明図">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" style="font-size:14px">当期間のGC=F：一方的な下降トレンドに逆張りロングが積み重なった</text>
+        <!-- 下降トレンドライン -->
+        <polyline points="80,60 160,90 200,75 280,115 340,100 420,145 490,130 570,175 630,165 680,200" class="s-curve-r" stroke-width="2.8"/>
+        <!-- ロングエントリー矢印 (複数) -->
+        <line x1="160" y1="115" x2="160" y2="96" stroke="#0969da" stroke-width="2"/>
+        <polygon points="155,100 165,100 160,88" fill="#0969da"/>
+        <line x1="260" y1="138" x2="260" y2="122" stroke="#0969da" stroke-width="2"/>
+        <polygon points="255,126 265,126 260,114" fill="#0969da"/>
+        <line x1="370" y1="128" x2="370" y2="112" stroke="#0969da" stroke-width="2"/>
+        <polygon points="365,116 375,116 370,104" fill="#0969da"/>
+        <line x1="460" y1="162" x2="460" y2="146" stroke="#0969da" stroke-width="2"/>
+        <polygon points="455,150 465,150 460,138" fill="#0969da"/>
+        <line x1="560" y1="186" x2="560" y2="170" stroke="#0969da" stroke-width="2"/>
+        <polygon points="555,174 565,174 560,162" fill="#0969da"/>
+        <!-- labels -->
+        <text x="150" y="138" text-anchor="middle" class="s-label-b" style="font-size:11px">ロング①</text>
+        <text x="260" y="160" text-anchor="middle" class="s-label-b" style="font-size:11px">ロング②</text>
+        <text x="370" y="150" text-anchor="middle" class="s-label-b" style="font-size:11px">ロング③</text>
+        <text x="460" y="184" text-anchor="middle" class="s-label-b" style="font-size:11px">ロング④</text>
+        <text x="560" y="208" text-anchor="middle" class="s-label-b" style="font-size:11px">ロング⑤</text>
+        <!-- 「全部落ちるナイフ」テキスト -->
+        <text x="400" y="265" text-anchor="middle" class="s-label-r" style="font-size:13px">全部「落ちるナイフ」→ 42件中11.9%しか勝てない</text>
+        <text x="350" y="295" text-anchor="middle" class="s-label-sm">逆張りシステムはこの「押し目」を拾おうとするが、トレンドが一方向の場合は勝率が大幅に低下する</text>
+      </svg>
+      <div class="chart-caption">図2：イメージ図。下降トレンドが続く中で、逆張りロングシグナルが何度も発火した構造。「押し目」のつもりが「落ちるナイフ」——これが12.8%の勝率の正体。実価格チャートではなくコンセプト図。</div>
+    </div>
+
+    <p>逆に、時間足別に見ると小さいが意味のある差が現れました。</p>
+
+    <table>
+      <tr><th>時間足</th><th>件数</th><th>勝率</th><th>ブレ幅</th></tr>
+      <tr><td>1時間足（短期）</td><td>28</td><td><strong>3.6%</strong></td><td>[0.6%〜17.7%]</td></tr>
+      <tr><td>4時間足（スイング）</td><td>19</td><td><strong>26.3%</strong></td><td>[11.8%〜48.8%]</td></tr>
+    </table>
+
+    <p>4時間足のロングは1時間足の約7倍の勝率ですが、それでも損益分岐43%には届いていません。「下降中でも4hなら少しマシ」ではありますが、採用には程遠い水準です。</p>
+
+    <!-- ====================================== -->
+    <h2 id="result3">⑥ 結果その3：事前宣言仮説の採点</h2>
+
+    <p>さて、本命の仮説——「<strong>GC=Fのショートは下降トレンド環境でブレ幅の下限が43%超</strong>」——の答え合わせです。</p>
+
+    <table>
+      <tr><th>ショートの発火環境</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>判定</th></tr>
+      <tr><td>⬇️ 下降トレンド中</td><td>14</td><td><strong>57.1%</strong></td><td>[32.6%〜78.6%]</td><td>⏳ CI下限32.6%＜43%</td></tr>
+      <tr><td>➡️ もみあい中</td><td>4</td><td>75.0%</td><td>[30.1%〜95.4%]</td><td>（件数少すぎ）</td></tr>
+    </table>
+
+    <p>勝率57.1%は期待値+0.3R超で<strong>数字としては申し分ない</strong>のですが、N=14ではブレ幅が[32.6%〜78.6%]と広く、<strong>「真の値が43%以下の可能性も否定できない」</strong>状態です。仮説を合格させるには件数不足——これが今回の正直な結論です。</p>
+
+    <div class="negative-box">
+      事前宣言の判定：<strong>未達</strong>（CI下限32.6% ＜ 43%）。件数が増えれば答えが変わる可能性があるため、引き続き追跡します。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="si">⑦ 補足：SI=F（銀）でも同じか？</h2>
+
+    <p>金と銀は似たような動きをすることが多いため、GC=Fの方向性ギャップがSI=F（銀先物）でも再現するかを確認しました。</p>
+
+    <table>
+      <tr><th>銘柄・方向</th><th>件数</th><th>勝率</th><th>ブレ幅</th></tr>
+      <tr><td>SI=F ロング</td><td>26</td><td><strong>7.7%</strong></td><td>[2.1%〜24.1%]</td></tr>
+      <tr><td>SI=F ショート</td><td>15</td><td><strong>40.0%</strong></td><td>[19.8%〜64.3%]</td></tr>
+    </table>
+
+    <p>同じ方向性がありますが、GC=Fほど極端ではありませんでした（ロング7.7% vs ショート40.0%、差32pp）。GC=Fのショートが61.1%だったのに対し、SI=Fのショートは40.0%で損益分岐を下回っています。「金と銀は似ているが、金のほうがトレンドに素直」という印象です。</p>
+
+    <!-- ====================================== -->
+    <h2 id="decision">⑧ 今回の決定事項</h2>
+
+    <table>
+      <tr><th>項目</th><th>決定</th><th>理由</th></tr>
+      <tr><td>GC=F ロングのシグナル</td><td><strong>引き続き記録のみ</strong></td><td>下降トレンド中は12%の勝率。採用条件には到達していない</td></tr>
+      <tr><td>GC=F ショートの有望性</td><td><strong>継続観察</strong>（まだ採用しない）</td><td>CI下限43%未達（N=14）。件数が増えれば答えが変わる可能性あり</td></tr>
+      <tr><td>方向性フィルタの検討</td><td><strong>バックログに追加</strong></td><td>「下降トレンド中のGC=Fロングを抑制する門番」は有望な方向性だが、追試が必要</td></tr>
+      <tr><td>SI=F の扱い</td><td><strong>引き続き記録のみ</strong></td><td>ショートも損益分岐未達（40%）。件数も少ない</td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>本記事の数字の扱いについて</strong>：本記事の勝率・期待値はすべて当サイトの特定システムの、特定の期間（約3週間半・下落相場が中心の環境）における過去の集計です。読者のみなさんの売買にそのまま当てはまるものではなく、将来の成績を示唆・保証するものでもありません。
+    </div>
+
+    <!-- ====================================== -->
+    <h2 id="tracker">⑨ 前向きトラッカー定点観測</h2>
+
+    <p>毎回、事前宣言した観測指標の現在値を報告します。</p>
+
+    <table>
+      <tr><th>ID</th><th>仮説</th><th>宣言基準</th><th>今回の値</th><th>状態</th></tr>
+      <tr>
+        <td>a</td>
+        <td>押し目買い4h（上位足上昇×逆張りロング）</td>
+        <td>2026-06-11以降の新規決済N≥30かつ勝率50%超</td>
+        <td>N≈5（upper_tf_trend未記録のため近似）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+      <tr>
+        <td>f</td>
+        <td>全逆張りL（RSI過売り＋BB下限タッチ）</td>
+        <td>N積み重ねで「34.3%より改善 or 悪化」確認</td>
+        <td>41.9%（N=284）CI[36.3%〜47.7%]</td>
+        <td>⏳ 蓄積中（前回40.8% N=277から微改善）</td>
+      </tr>
+      <tr>
+        <td>g</td>
+        <td>指数×逆張りL</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td>51.5%（N=66）CI[39.7%〜63.2%]（下限39.7%＜43%）</td>
+        <td>⏳ 蓄積中（N+1、勝率ほぼ横ばい）</td>
+      </tr>
+      <tr>
+        <td>h</td>
+        <td>他FX×逆張りL</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td>55.0%（N=60）CI[42.5%〜66.9%]（下限42.5%＜43%）</td>
+        <td>⏳ 蓄積中（CI下限が43%に迫ってきた）</td>
+      </tr>
+    </table>
+
+    <p>特筆点：トラッカー [h] 他FX×逆張りLのCI下限が42.5%となり、宣言基準の43%まであと0.5ppに迫っています。N=80達成と合わせて、次の2〜3回で答えが出そうです。</p>
+
+    <!-- ====================================== -->
+    <h2 id="lessons">⑩ この検証から学べること</h2>
+
+    <h3>1. 方向性の交絡は成績を大きく歪める</h3>
+    <p>「メタルの逆張りが弱い」と一言で片付けるのは早計でした。正確には「<strong>下降トレンド中の逆張りロングが弱い</strong>」でした。相場が上昇トレンドに転換すれば、まったく違う数字が出る可能性があります。「何の数字か」だけでなく、<strong>「どんな環境の数字か」</strong>を常に確認することが大切です。</p>
+
+    <h3>2. 件数が少ないと「いい数字」は信用できない</h3>
+    <p>ショートの57.1%はとても魅力的です。でも N=14 ではブレ幅が[32.6%〜78.6%]——下限が損益分岐を下回る可能性が十分あります。「勝率の数字が良い」と「統計的に有望と言える」の間には、件数という壁があります。</p>
+
+    <h3>3. 「覚えやすいシンプルなルール」の落とし穴</h3>
+    <p>「GC=Fはショートだけやれ」という結論を出したくなりますが、それは現在の相場環境が一方向（下降）だった結果かもしれません。相場がレンジや上昇に転じたとき、同じルールが有効かどうかはデータが足りません。<strong>シンプルなルールほど、相場環境の変化で壊れやすい</strong>ことを忘れずに。</p>
+
+    <!-- ====================================== -->
+    <h2 id="next">⑪ 次回に向けて</h2>
+
+    <ul>
+      <li><strong>GC=F ショートの追試</strong>：ショート×下降のN=14が積み重なってCI下限43%を超えるか、引き続き追跡します</li>
+      <li><strong>sr_runway（S/R近傍）効果の再検証</strong>：バックログにある「S/R近傍ロング≤1ATR」の6/3時点59.6%は再現するか（2項目目の優先候補）</li>
+      <li><strong>blocked=True効果</strong>（差+12pp / N=37）：件数少ないが注目の発見として継続観察</li>
+      <li>最新のシグナル成績は<a href="track-record.html">シグナル成績ページ</a>でいつでも確認できます（毎日自動更新・全件公開）</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 この連載と、関連記事</div>
+      <div class="cta-box-desc">第1回から読むと、今回の「方向性の罠」にたどり着くまでの道筋がわかります</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-003.html">
+          <div class="related-card-title">🧪 研究日誌 #3</div>
+          <div class="related-card-desc">銘柄グループ別の相性を検証——メタル壊滅・指数有望の原点</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
