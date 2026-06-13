@@ -1,10 +1,47 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-11）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-13）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
 
 ---
 
-## 🆕 2026-06-12（夜）セッション（最新・まずここを読む）
+## 🆕 2026-06-13 セッション（最新・まずここを読む）
+
+**テーマ＝研究日誌の全自動公開システム完成＋運用ツール一式（超ロングセッション）**。すべて sync 済み・ライブ反映済み。
+
+#### 🤖 研究日誌を「全自動公開」に移行（本日の主役・オーナー承認）
+- 動機＝ユーザー「レビューに時間がかかりすぎると本末転倒」。**時間の9割は決定論で自動化でき、人の判断が要るのはコンプラ(法務)1点だけ**という設計。
+- **新ツール（SYNC入り）**：`signal_lab_verify.py`（固定の独立オラクル。claims.json の全 k/n を signals-log から独立再計算して突合＝**捏造は原理的に通らない**＋『30秒まとめ』%完全性＋SVGはみ出し＋**未対応フィルタキーは即赤**。exit 0/1）／`finalize_signal_lab.py`（下書き→公開HTML。head拡張・noindex除去・meta-line日付化・任意号対応）。
+- **routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57）を全面改修**＝下書き＋labnotes＋**claims.json**生成→自動公開ゲート。**公開方針（ユーザー決定）＝検証緑かつOpusコンプラが「黒でなく要協議でもない」なら自動公開。🟡グレー(軽微修正でOK)は「コンプラ担当Opus自身が修正適用→数値再検証→別の独立Opusが白を確認」してから公開。🔴黒・要協議・検証赤・未対応次元・opus不可はエスカレ**（REVIEW.mdに🚩）。⚠️publish の `--category` はバッジ文字「AIシグナル研究日誌」＝**絵文字なし**（🧪は--emoji）。
+- **🛡️ 監督付きテストで穴2つを公開前に発見・修正**：(a)routineがゲートを編集してしまう→プロンプトで編集禁止＋実行前に `git checkout` で確定版に戻す、(b)未知フィルタキーを黙って無視→即赤ガード。`blocked`(sr_runway)フィルタも私が追加。
+- **公開した研究日誌3本**：#4(金ロング方向交絡・手動全工程レビュー)／#5(壁ありblocked逆転・グレー軽微修正後・私が手動仕上げ)／**#6(完全自動＝新グレーフルフロー実証・独立再検証10/10緑)**。**次回06:10から無人運用（#7〜）**。人間の役割はエスカレ回のレビューのみ。
+
+#### 🚑 panic-scan 復旧（5日間停止していた）
+- `panic_bounce_scan.py` の死にコード変数 `Vv` が、価格にNaN行が混ざる日だけ配列長不一致(190 vs 189)で IndexError→main全体クラッシュ。**該当行を削除して修正**・実走success確認。
+
+#### 🩺 自動化の見張り番を新設
+- `automation-health.yml`（09:30 JST）＋`check_automation_health.py`（SYNC入り）。**裏方の自動化（Actions5本＋routine3本）の沈黙の失敗を検知**。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。health-check.yml(公開6ページ)の死角を埋める。GitHub実走success確認済。
+
+#### 🐦 X投稿＝手動コピペに確定／📺 YouTube API試作
+- **X**：2026-02にX API無料枠廃止＝従量課金のみ→ユーザー判断で**手動コピペ継続**。routine `sns-post-daily`（trig_01VkDY4djA8WAAZavhgu3j4M、07:00/19:00 JST）が朝晩のコピペ下書きを `drafts/sns/` に生成。自動化したいなら**Threads(無料)** が代替。
+- **YouTube**：API自動アップロードを試作（`yt_auto/get_youtube_token.py`・`upload_youtube.py`・成功＝video id 1FTRZd4pNIY）。ただし**未審査アプリは非公開固定**で、ユーザーが**審査申請を中止**＝アップロードは手動継続。スクリプトは休眠で残置。⚠️ハマり=Norton SSL→`truststore`、cp932絵文字→`sys.stdout.reconfigure`、二重拡張子`client_secret.json.json`。`client_secret.json`/`token.json`はローカル秘密(SYNC外)。
+
+#### 🎁 リードマグネット（メアド獲得）
+- `investing-checklist.pdf`（「投資をはじめる前の基礎チェックリスト」12項目・Yu Gothic埋め込み・コンプラ安全）を作成し**メルマガ登録特典**に。`research/make_lead_magnet.py`で生成。NEWSLETTER_FORM文言を「🎁無料PDFプレゼント」に更新＋成功画面にDLボタン。`inject_newsletter.py` に**`--update`モード**追加（既存71ページの文言を一括置換）。全ライブ。
+
+#### 🏦 市場健康度に金利パネル＋スワップマトリクスを追加（最後の依頼）
+- `generate_market_news.py` の `build_market_health_html` に「④ 金融環境」セクション新設。`fetch_jp_10y`(財務省CSV・和暦変換)＋`fetch_rate_panel`(米=Yahoo ^TNX)で**日米10年債比較＋金利差を2回/日ライブ更新**。さらに**主要4円ペアのスワップ金利差マトリクス**(%と向きのみ・**金額なし**・Opus監査で🟡→軟化修正適用済＝向き中立色・為替リスク注記)。政策金利は `POLICY` dict で**手動メンテ**（会合時のみ）。
+- ⚠️**今週レート更新どき＝6/16日銀・6/18 FOMC**。会合後に `generate_market_news.py` の `POLICY`（日0.75/米3.75等）を更新する必要あり。
+
+#### 📋 次セッションの宿題
+1. **🔴 政治金利の更新（6/16日銀・6/18 FOMC後）**＝`POLICY` dict を実際の決定値に更新（market-healthのスワップ%が古くなる）
+2. **#2 GA+Search Console週次ダイジェスト＝保留中**（Google API設定が要・ユーザーが今回見送り）。やるなら私がスクリプト用意＋ユーザーが権限付与10分
+3. **autodraft topicキュー枯渇**（⑫以降の補充。候補=金利と債券/単利と複利/ETFと投信/注文方法/PER・PBR）
+4. 研究日誌の自動公開・エスカレ回の監視（REVIEW.md の🚩）
+5. （任意）金利差を index のドル円付近に1行／推移グラフを charts に
+
+---
+
+## 2026-06-12（夜）セッション
 
 **テーマ＝集客導線3本（サイト/YouTube/X）が全部開通した夜**
 
