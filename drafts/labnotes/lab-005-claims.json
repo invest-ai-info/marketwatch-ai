@@ -1,0 +1,12 @@
+{
+  "article_id": "005",
+  "claims": [
+    {"label": "blocked=True（壁あり）全体勝率", "filter": {"blocked": true}, "k": 22, "n": 41},
+    {"label": "blocked=False（壁なし）全体勝率", "filter": {"blocked": false}, "k": 111, "n": 285},
+    {"label": "blocked=True ロング勝率", "filter": {"blocked": true, "direction": "long"}, "k": 10, "n": 18},
+    {"label": "blocked=True ショート勝率", "filter": {"blocked": true, "direction": "short"}, "k": 12, "n": 23},
+    {"label": "[f] 全逆張りL（tracker）", "filter": {"reversal_long": true}, "k": 119, "n": 284},
+    {"label": "[g] 指数×逆張りL（tracker）", "filter": {"group": "index", "reversal_long": true}, "k": 34, "n": 66},
+    {"label": "[h] 他FX×逆張りL（tracker）", "filter": {"group": "other_fx", "reversal_long": true}, "k": 33, "n": 60}
+  ]
+}

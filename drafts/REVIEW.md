@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-06-13 | 🧪 signal-lab #005
+
+- **基準日（JST）**: 2026-06-13
+- **採択仮説**: 「veto_runway_blocked効果の追試——TP1前の壁ありシグナルは本当に不利か」（3視点会議でリスクマネージャー採択）
+- **事前宣言**: 通過A=blocked=True 勝率≥43% かつ CI下限≥30% かつ N≥30 / 通過B=差≥10pp かつ blocked=F N≥100 / 棄却=その他
+- **検証データ**: 全決済済み652件（sr_runwayあり326件、blocked=T:41件 / blocked=F:285件）
+- **結果**: blocked=True 22/41=53.7% CI[38.7%〜67.9%] / blocked=False 111/285=38.9%。**通過A達成**。ALL blocked=TがavoidティアでもE(R)=+0.252R。CI下限38.7%<43%で統計確定不足→継続観察
+- **生成ファイル**: draft-signal-lab-005.html / lab-005-analysis.md / lab-005-claims.json / ledger更新 / verify.py blocked拡張
+
+### 自動公開ゲート結果
+- [ ] 8-2 verify EXIT=? → 実行待ち
+- [ ] 8-3 Opus compliance → 実行待ち
+- [ ] 8-4 公開判断 → 上記による
+
+---
+
 ## 2026-06-12 | 🧪 signal-lab #004
 
 - **基準日（JST）**: 2026-06-12（UTC 2026-06-12T22:59）

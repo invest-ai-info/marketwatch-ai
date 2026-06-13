@@ -25,6 +25,7 @@ filter のキー（全てAND・省略可）:
   tf         : 1h / 4h / 1d
   signal     : primary_signal の完全一致（例 "bb_lower_touch"）
   reversal_long : true なら direction=long かつ primary_signal∈{rsi_oversold_bounce,bb_lower_touch}
+  blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway なし は除外）
 
 終了コード: 0=全緑（自動公開可）, 1=赤（要人間レビュー）。
 """
@@ -91,6 +92,10 @@ def match(d, f):
         return False
     if "signal" in f and d.get("primary_signal") != f["signal"]:
         return False
+    if "blocked" in f:
+        sr = d.get("sr_runway")
+        if sr is None or sr.get("blocked") != f["blocked"]:
+            return False
     return True
 
 
