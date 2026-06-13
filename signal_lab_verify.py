@@ -25,7 +25,11 @@ filter のキー（全てAND・省略可）:
   tf         : 1h / 4h / 1d
   signal     : primary_signal の完全一致（例 "bb_lower_touch"）
   reversal_long : true なら direction=long かつ primary_signal∈{rsi_oversold_bounce,bb_lower_touch}
-  blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway なし は除外）
+  blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway 無しは除外）
+
+⚠️ このスクリプトは「固定の独立オラクル」。routine/エージェントが書き換えてはならない。
+   対応していないフィルタ次元が必要な仮説は、人間がここを拡張するまで自動公開せずエスカレする。
+   未対応のフィルタキーが claims に現れたら即RED（黙って無視しない）。
 
 終了コード: 0=全緑（自動公開可）, 1=赤（要人間レビュー）。
 """
@@ -42,6 +46,7 @@ GROUPS = {
     "oil":      {"CL=F"},
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
+ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "reversal_long", "blocked"}
 
 
 def wilson(k, n, z=1.96):
@@ -94,7 +99,7 @@ def match(d, f):
         return False
     if "blocked" in f:
         sr = d.get("sr_runway")
-        if sr is None or sr.get("blocked") != f["blocked"]:
+        if not isinstance(sr, dict) or sr.get("blocked") != f["blocked"]:
             return False
     return True
 
@@ -125,12 +130,18 @@ def main():
     allowed_pcts = set()  # 要約ボックス完全性チェック用：claim の勝率＋CI境界
     print(f"=== signal_lab_verify: article #{claims.get('article_id','?')} / signals N={len(data)} ===")
     for cl in claims["claims"]:
+        label = cl["label"]
+        # 未対応のフィルタキーは黙って無視せず即RED（独立オラクルの穴を塞ぐ）
+        bad_keys = set(cl.get("filter", {})) - ALLOWED_FILTER_KEYS
+        if bad_keys:
+            fails.append(f"[{label}] 未対応フィルタキー {sorted(bad_keys)}＝検証不能。verify.pyを人間が拡張するまでエスカレ")
+            print(f"  ❌ {label}: 未対応フィルタキー {sorted(bad_keys)}（黙って無視せず赤）")
+            continue
         k, n = compute(data, cl["filter"])
         lo, hi = wilson(k, n)
         pct = (100 * k / n) if n else 0
         for v in (pct, lo, hi):
             allowed_pcts.add(round(v, 1))
-        label = cl["label"]
         # 1) k/n の独立再計算一致
         if k != cl["k"] or n != cl["n"]:
             fails.append(f"[{label}] k/n不一致: 再計算 {k}/{n} ≠ 主張 {cl['k']}/{cl['n']}")
