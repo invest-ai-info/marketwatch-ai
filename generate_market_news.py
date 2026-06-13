@@ -3021,6 +3021,60 @@ def build_preview_html(now_jst):
 </html>"""
 
 
+def fetch_jp_10y(timeout=15):
+    """財務省「国債金利情報」CSV から日本10年国債利回り(%)と基準日(YYYY-MM-DD)を返す。失敗時 (None, None)。"""
+    import urllib.request
+    url = "https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        txt = urllib.request.urlopen(req, timeout=timeout).read().decode("shift_jis", errors="replace")
+    except Exception:
+        return None, None
+    rows = []
+    for line in txt.splitlines():
+        cells = line.split(",")
+        # 基準日が和暦（R8.6.11 等）で、10年カラム(index10)まである行のみ
+        if cells and cells[0][:1] in ("R", "H", "S") and "." in cells[0] and len(cells) > 10:
+            rows.append(cells)
+    if not rows:
+        return None, None
+    last = rows[-1]
+    try:
+        y10 = round(float(last[10]), 3)   # ヘッダ: 基準日,1年,2年,…,10年(=index10)
+    except Exception:
+        return None, None
+    gdate = None
+    try:
+        era = last[0][0]
+        y, m, d = (int(x) for x in last[0][1:].split("."))
+        base = {"R": 2018, "H": 1988, "S": 1925}.get(era, 2018)  # 和暦→西暦
+        gdate = f"{base + y:04d}-{m:02d}-{d:02d}"
+    except Exception:
+        pass
+    return y10, gdate
+
+
+def fetch_rate_panel(timeout=15):
+    """日米10年国債利回りと金利差を返す。{us10, jp10, jp_date, diff} or None（安全フォールバック）。"""
+    import urllib.request
+    import json as _json
+    us10 = None
+    try:
+        u = "https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?interval=1d&range=5d"
+        req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+        d = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())
+        cl = [x for x in d["chart"]["result"][0]["indicators"]["quote"][0]["close"] if x is not None]
+        us10 = round(cl[-1], 3) if cl else None
+    except Exception:
+        us10 = None
+    jp10, jp_date = fetch_jp_10y(timeout)
+    if us10 is None or jp10 is None:
+        return None
+    # 差は表示と同じ「小数2桁」同士で計算（4.49−2.68=1.81 と読者の暗算が一致するように）
+    diff = round(round(us10, 2) - round(jp10, 2), 2)
+    return {"us10": us10, "jp10": jp10, "jp_date": jp_date, "diff": diff}
+
+
 def build_market_health_html(data, vix_val, touraku, now_jst):
     """市場健康度ダッシュボード（market-health.html）を生成。
     動的に取れるもの: 米VIX, 騰落レシオ, 日経/S&P500終値
@@ -3128,6 +3182,29 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         tr_disp, tr_tag, tr_color, tr_pos = f"{touraku}%", _tag("#da3633", "過熱"), "#da3633", 95
 
     date_str = now_jst.strftime('%Y年%m月%d日 %H:%M JST')
+
+    # ④ 金融環境（日米10年債）— 取得失敗時はセクションごと消える安全設計
+    _rp = fetch_rate_panel()
+    if _rp:
+        rate_section = f'''  <section class="section">
+    <div class="section-title">④ 金融環境 ― 日米10年国債の利回り</div>
+    <div class="cards">
+      <article class="card" style="grid-column:1 / -1">
+        <div class="card-header"><div class="card-title">🏦 日米10年国債 利回り比較</div><div class="card-sub">為替（ドル円）を動かす最大の要因</div></div>
+        <table style="width:100%;border-collapse:collapse;margin:8px 0 4px">
+          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f!important">🇺🇸 米10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f!important">{_rp['us10']:.2f}%</td></tr>
+          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f!important">🇯🇵 日本10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f!important">{_rp['jp10']:.2f}%</td></tr>
+          <tr><td style="padding:13px 12px;font-weight:700;color:#0969da!important;font-size:1.05rem">📊 日米金利差</td><td style="padding:13px 12px;text-align:right;font-weight:800;color:#0969da!important;font-size:1.5rem">{_rp['diff']:.2f}%</td></tr>
+        </table>
+        <p class="comment">一般に <b>金利差が開く＝円安</b>、<b>縮む＝円高</b> に傾きやすい（金利の高いドルを持つほど利息を多く得られるため）。ただし日銀・FRBの政策や市場心理でも為替は動きます。</p>
+        <div class="beginner">出典: 米＝Yahoo Finance（米10年債利回り ^TNX・当日）／ 日＝財務省「国債金利情報」（{_rp['jp_date']} 基準）。差 ＝ 米 − 日。これは情報提供であり投資助言ではありません。</div>
+      </article>
+    </div>
+  </section>
+
+'''
+    else:
+        rate_section = ""
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -3309,7 +3386,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     </div>
   </section>
 
-  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#0969da">
+{rate_section}  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#0969da">
     <h2 style="color:#0969da">📋 投資判断のヒント</h2>
     <p>
       <b>短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
