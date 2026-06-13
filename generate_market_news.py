@@ -3183,13 +3183,29 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 
     date_str = now_jst.strftime('%Y年%m月%d日 %H:%M JST')
 
-    # ④ 金融環境（日米10年債）— 取得失敗時はセクションごと消える安全設計
+    # ④ 金融環境（金利）— 10年債は取得失敗時に当該カードのみ消える。スワップ用の政策金利は手動メンテ。
     _rp = fetch_rate_panel()
+
+    # 政策金利（手動メンテ：中央銀行の会合時のみ更新。出典: investing.com 等）
+    POLICY = {"updated": "2026-06-13", "USD": 3.75, "EUR": 2.40, "GBP": 3.75, "AUD": 4.35, "JPY": 0.75}
+    _swtd = "padding:10px 12px;border-bottom:1px solid #d0d7de;color:#24292f!important"
+    swap_rows = ""
+    for _name, _cur in [("米ドル/円", "USD"), ("ユーロ/円", "EUR"), ("ポンド/円", "GBP"), ("豪ドル/円", "AUD")]:
+        _d = round(POLICY[_cur] - POLICY["JPY"], 2)
+        if _d > 0:
+            _dir, _sg = "ロングで受取 / ショートで支払", "+"
+        elif _d < 0:
+            _dir, _sg = "ロングで支払 / ショートで受取", ""
+        else:
+            _dir, _sg = "ほぼ中立", ""
+        _dc = "#57606a"   # 損益を連想させない中立色（コンプラ: 利益示唆の回避）
+        swap_rows += (f'<tr><td style="{_swtd};font-size:1rem">{_name}</td>'
+                      f'<td style="{_swtd};text-align:right;font-weight:700;font-size:1.05rem">{_sg}{_d:.2f}%</td>'
+                      f'<td style="{_swtd};font-weight:600;color:{_dc}!important;font-size:.92rem">{_dir}</td></tr>')
+
+    bond_card = ""
     if _rp:
-        rate_section = f'''  <section class="section">
-    <div class="section-title">④ 金融環境 ― 日米10年国債の利回り</div>
-    <div class="cards">
-      <article class="card" style="grid-column:1 / -1">
+        bond_card = f'''      <article class="card" style="grid-column:1 / -1">
         <div class="card-header"><div class="card-title">🏦 日米10年国債 利回り比較</div><div class="card-sub">為替（ドル円）を動かす最大の要因</div></div>
         <table style="width:100%;border-collapse:collapse;margin:8px 0 4px">
           <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f!important">🇺🇸 米10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f!important">{_rp['us10']:.2f}%</td></tr>
@@ -3199,12 +3215,25 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <p class="comment">一般に <b>金利差が開く＝円安</b>、<b>縮む＝円高</b> に傾きやすい（金利の高いドルを持つほど利息を多く得られるため）。ただし日銀・FRBの政策や市場心理でも為替は動きます。</p>
         <div class="beginner">出典: 米＝Yahoo Finance（米10年債利回り ^TNX・当日）／ 日＝財務省「国債金利情報」（{_rp['jp_date']} 基準）。差 ＝ 米 − 日。これは情報提供であり投資助言ではありません。</div>
       </article>
-    </div>
+'''
+    swap_card = f'''      <article class="card" style="grid-column:1 / -1">
+        <div class="card-header"><div class="card-title">💱 主要通貨ペアの金利差（スワップの向き）</div><div class="card-sub">各国の政策金利の差 ＝ FXのスワップに効く短期金利</div></div>
+        <table style="width:100%;border-collapse:collapse;margin:8px 0 4px">
+          <tr><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a!important;font-size:.84rem;font-weight:600">通貨ペア</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;text-align:right;color:#57606a!important;font-size:.84rem;font-weight:600">政策金利差</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a!important;font-size:.84rem;font-weight:600">スワップの向き</td></tr>
+          {swap_rows}
+        </table>
+        <div style="font-size:.8rem;color:#57606a;margin:8px 2px 0">参考・各国政策金利（{POLICY['updated']}時点）：米 {POLICY['USD']:.2f}％／欧 {POLICY['EUR']:.2f}％／英 {POLICY['GBP']:.2f}％／豪 {POLICY['AUD']:.2f}％／日 {POLICY['JPY']:.2f}％</div>
+        <p class="comment">金利の<b>高い通貨を買って（ロング）</b>低い円を売ると、その金利差ぶんのスワップを受け取れる一方、<b>反対向きでは支払い</b>になります。目安として差が大きいほどスワップも大きくなる傾向がありますが、<b>為替が逆に動けばスワップ以上の評価損が出ることもあり、スワップだけで利益が出るわけではありません</b>。</p>
+        <div class="beginner">⚠️ これは各国<b>政策金利の差</b>であり、実際に付与されるスワップポイントの<b>金額はFX会社ごとに異なります</b>（手数料ぶん目減りし、ロングとショートで非対称）。政策金利は中央銀行の会合時のみ更新。これは情報提供であり投資助言ではありません。</div>
+      </article>
+'''
+    rate_section = f'''  <section class="section">
+    <div class="section-title">④ 金融環境 ― 金利（10年債とスワップ）</div>
+    <div class="cards">
+{bond_card}{swap_card}    </div>
   </section>
 
 '''
-    else:
-        rate_section = ""
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
