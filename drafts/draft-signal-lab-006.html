@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #6｜「壁あり」シグナルの秘密はトレンド環境にあった——blocked × 相場環境の交絡解析 - MarketWatch AI</title>
+  <meta name="description" content="「TP1の前に壁がある」blocked=Trueシグナルが実は高勝率——その理由をトレンド環境で分解。上昇・下降相場で63〜65%の一方、もみあいでは20%に急落。環境依存の構造を652件で解明した研究日誌第6回。">
+  <meta name="keywords" content="AIシグナル,検証,blocked,SR,サポレジ,トレンド,勝率,研究日誌,相場環境,もみあい">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-006.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #6｜「壁あり」シグナルの秘密はトレンド環境にあった——blocked × 相場環境の交絡解析">
+  <meta property="og:description" content="blocked=True（壁あり）の高勝率は相場環境次第だった。上昇・下降トレンドで65%、もみあいで20%。652件で解明した環境依存の構造。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-006.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #6｜「壁あり」シグナルの秘密はトレンド環境にあった——blocked × 相場環境の交絡解析",
+    "description": "blocked=Trueシグナルの高勝率はトレンド環境依存だった。652件の実データで解明。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026年6月（下書き中）",
+    "dateModified": "2026年6月（下書き中）",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-006.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #6
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #6<br><small style="font-size:.65em;color:#57606a;font-weight:400">「壁あり」シグナルの秘密はトレンド環境にあった——blocked × 相場環境の交絡解析</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第6回です。<a href="guide-signal-lab-005.html">前回（#5）</a>では「TP1の前に壁（S/R）がある」と判定されるシグナル（blocked=True）が、直感に反して53.7%という高勝率を示しました。壁がないシグナルの38.9%を大きく上回る逆転現象でした。</p>
+    <p>「なぜそうなるのか」——今回はその謎に迫ります。鍵になると考えたのは<strong>「相場環境（トレンドかもみあいか）」</strong>です。トレンドが強い相場では価格が勢いよく動いてS/Rの壁も突き抜けやすく、もみあいの相場では壁が本当の「壁」として機能するのではないか、という仮説を検証します。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① blocked=True全体は53.7%（N=41）、blocked=False全体は38.9%（N=285）——前回の再確認<br>
+      ② 仮説通り: 上昇トレンドのblocked=Trueは<strong>63.6%</strong>、下降トレンドでも<strong>65.0%</strong>（下降でも高い、CI下限43%超）<br>
+      ③ もみあい（中立）のblocked=Trueは<strong>20.0%</strong>（N=10）——損益分岐43%を大幅に下回る逆転<br>
+      ④ 「blocked=Trueはトレンド相場の質フィルター」——もみあいで使うと逆効果になる可能性がある
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——相場環境がblockedの成否を分けるか</a></li>
+        <li><a href="#method">検証方法（「もしも計算」と事前宣言）</a></li>
+        <li><a href="#reconfirm">結果①：前回の再確認（全体blocked効果）</a></li>
+        <li><a href="#trend-split">結果②（核心）：トレンド×blocked で成績が激変</a></li>
+        <li><a href="#why">なぜトレンドで「壁」が突き破られるのか</a></li>
+        <li><a href="#group">補足：グループ別での傾向（他FXが鮮明）</a></li>
+        <li><a href="#decision">今回の決定事項</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——相場環境がblockedの成否を分けるか</h2>
+
+    <p>前回の結果を簡単に復習します。AIシグナルシステムには「S/Rランウェイ」という機構があり、エントリーからTP1の間にサポート・レジスタンス（S/R）の壁があると判定された場合、そのシグナルを「blocked（壁あり）」と記録します。本来は「壁があると利益確定しにくい」と考えてフィルタリングのために設計されたものですが、実際の成績を見ると<strong>壁ありの方が成績が良い</strong>という逆転が起きていました（53.7% vs 38.9%）。</p>
+
+    <p>今回立てた仮説はこれです：</p>
+
+    <div class="info-box">
+      <strong>💡 仮説 #006</strong><br>
+      「blocked=True（壁あり）の優位性は<strong>トレンド相場（上昇・下降）に限定</strong>され、もみあい（中立）相場では失われる——あるいは逆転する」<br><br>
+      <strong>事前合否基準（事前宣言・後から変えない）</strong><br>
+      ① 下降トレンド×blocked=True のWilson CI（95%信頼区間）下限 ≥ 43%（下降でも効果が確認できる）<br>
+      ② 中立・もみあい×blocked=True の勝率 &lt; 43%（もみあいでは効果が消失または逆転する）<br>
+      ← 両方の条件を満たして初めて「通過A：トレンド依存フィルターとして有効」
+    </div>
+
+    <p>なぜ「下降でも」が重要な条件なのか。もしblocked=True効果が「上昇トレンドだから」だけの理由なら、それは単なる「上昇トレンドで成績が良くなる」という当たり前の話であって、blocked=Trueに独立した意味はないからです。上昇でも下降でも効果があることを確かめてはじめて、「トレンド状態×blocked=Trueに独自の意味がある」と言えます。</p>
+
+    <table>
+      <tr><th>条件</th><th>合格基準（事前宣言）</th></tr>
+      <tr><td>下降×blocked=True</td><td>Wilson CI下限 ≥ 43%（トレンドが下降でも壁が保護として機能）</td></tr>
+      <tr><td>中立×blocked=True</td><td>勝率 &lt; 43%（もみあいでは効果消失 or 逆転）</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（「もしも計算」と事前宣言）</h2>
+
+    <p>今回も「もしも検証」の手順です。過去データを見て「もしこの条件で絞り込んでいたら勝率はどうだったか」を計算します。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ全体</td><td>勝敗確定済み（tp1/tp2/slのいずれかに到達）の<strong>652件</strong></td></tr>
+      <tr><td>うちsr_runway有り</td><td><strong>326件</strong>（sr_runwayフィールドが記録されているもの。blockedはこの中にしか存在しない）</td></tr>
+      <tr><td>うちblocked=True</td><td>41件（上昇11件・下降20件・中立10件）</td></tr>
+      <tr><td>うちblocked=False</td><td>285件</td></tr>
+      <tr><td>トレンド判定方法</td><td>signals-logの <code>trend_alignment.higher_tf_trend</code> フィールド（上昇/下降/中立・もみあいの3区分）</td></tr>
+      <tr><td>損益分岐</td><td>43%（これを下回るとTP1:SL=1.33のR:Rで期待値がマイナス）</td></tr>
+      <tr><td>ブレ幅</td><td>Wilson法による95%信頼区間を全数字に併記</td></tr>
+    </table>
+
+    <div class="warning-box">
+      中立×blocked=Trueは今回N=10と少なめです。Wilson CI[5.7〜51.0%]とブレ幅が大きく、将来のデータで値が変化する可能性があります。今回の結果は「傾向の確認」として読んでください。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="reconfirm">③ 結果①：前回の再確認（全体blocked効果）</h2>
+
+    <p>まず、前回（#5）の結果が変わっていないかを確認します。データは少し増えている可能性がありますが、基本構造は変わっていません。</p>
+
+    <table>
+      <tr><th>区分</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>判定</th></tr>
+      <tr><td>blocked=True（壁あり）</td><td>41</td><td><strong>53.7%</strong></td><td>38.7〜67.9%</td><td>🟡 損益分岐43%超 / CI下限38.7%</td></tr>
+      <tr><td>blocked=False（壁なし）</td><td>285</td><td><strong>38.9%</strong></td><td>33.5〜44.7%</td><td>❌ 損益分岐43%未達</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図1: blocked=True vs False 全体比較 -->
+      <svg viewBox="0 0 700 265" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="blocked=TrueとFalseの勝率全体比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">前回再確認：「壁あり」 vs「壁なし」の全体勝率</text>
+        <line x1="155" y1="50" x2="155" y2="220" class="s-axis"/>
+        <line x1="155" y1="220" x2="660" y2="220" class="s-axis"/>
+        <!-- 43% guide: 155 + 43*5 = 370 -->
+        <line x1="370" y1="45" x2="370" y2="220" class="s-guide"/>
+        <text x="370" y="240" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- blocked=True 53.7%: 155+53.7*5=423.5 w=268 -->
+        <rect x="155" y="64" width="268" height="38" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="80" class="s-label">壁あり</text>
+        <text x="10" y="96" class="s-label-sm">(41件)</text>
+        <text x="430" y="88" class="s-label-g">53.7%</text>
+        <!-- blocked=False 38.9%: 155+38.9*5=349.5 w=194 -->
+        <rect x="155" y="140" width="194" height="38" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="10" y="156" class="s-label">壁なし</text>
+        <text x="10" y="172" class="s-label-sm">(285件)</text>
+        <text x="356" y="164" class="s-label-r">38.9%</text>
+        <text x="350" y="258" text-anchor="middle" class="s-label-sm">※ 前回（#5）と同じデータ。blocked=True（壁あり）が勝率で+14.8pp上回っている</text>
+      </svg>
+      <div class="chart-caption">図1：「壁あり」シグナルは53.7%、「壁なし」は38.9%。前回の逆転現象を改めて確認。今回はこの差の構造（なぜ?）を解明する。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>前回と同じ結果が確認できました。次にこの差が「トレンド環境」で説明できるかを掘り下げます。</p>
+
+    <!-- =============================== -->
+    <h2 id="trend-split">④ 結果②（核心）：トレンド×blocked で成績が激変</h2>
+
+    <p>blocked=Trueの41件を「上位足トレンド（上昇・下降・中立）」で分割してみます。これが今回最大の発見です。</p>
+
+    <h3>blocked=True × トレンド環境</h3>
+
+    <table>
+      <tr><th>トレンド環境</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>判定</th></tr>
+      <tr><td>上昇トレンド</td><td>11</td><td><strong>63.6%</strong></td><td>35.4〜84.8%</td><td>🟡 N少ないが有望</td></tr>
+      <tr><td>下降トレンド</td><td>20</td><td><strong>65.0%</strong></td><td>43.3〜81.9%</td><td>✅ <strong>CI下限43.3% ≥ 43%（事前基準①通過）</strong></td></tr>
+      <tr><td>中立・もみあい</td><td>10</td><td><strong>20.0%</strong></td><td>5.7〜51.0%</td><td>❌ <strong>43%大幅未達（事前基準②通過）</strong></td></tr>
+    </table>
+
+    <p><strong>事前宣言した両条件がともにクリア</strong>されました：</p>
+    <ul>
+      <li>①下降×blocked=True：65.0%、CI下限43.3% ≥ 43% ✅</li>
+      <li>②中立×blocked=True：20.0% &lt; 43% ✅</li>
+    </ul>
+
+    <div class="positive-box">
+      <strong>通過A：「blocked=True はトレンド依存フィルター」</strong><br>
+      トレンド相場（上昇・下降いずれも）では blocked=True の優位性が鮮明になる。もみあいでは逆効果になる傾向がある。
+    </div>
+
+    <h3>比較：blocked=False × トレンド環境</h3>
+
+    <table>
+      <tr><th>トレンド環境</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>blocked=Trueとの差</th></tr>
+      <tr><td>上昇トレンド</td><td>68</td><td>39.7%</td><td>28.9〜51.6%</td><td>blocked=T 63.6% → <strong>+23.9pp</strong></td></tr>
+      <tr><td>下降トレンド</td><td>115</td><td>41.7%</td><td>33.1〜50.9%</td><td>blocked=T 65.0% → <strong>+23.3pp</strong></td></tr>
+      <tr><td>中立・もみあい</td><td>102</td><td>35.3%</td><td>26.7〜44.9%</td><td>blocked=T 20.0% → <strong>−15.3pp（逆転）</strong></td></tr>
+    </table>
+
+    <p>この表から浮かび上がるパターンがあります。トレンド相場（上昇・下降）では blocked=True が blocked=False より約23〜24ポイント上回っています。しかしもみあい（中立）では逆転し、blocked=True の方が15ポイントも低くなっています。</p>
+
+    <div class="chart-figure">
+      <!-- 図2: blocked=True × トレンド breakdown -->
+      <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="blocked=True×トレンド環境別勝率">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">blocked=True の勝率はトレンド環境で激変する</text>
+        <line x1="155" y1="50" x2="155" y2="235" class="s-axis"/>
+        <line x1="155" y1="235" x2="660" y2="235" class="s-axis"/>
+        <!-- 43% guide: 155+43*5=370 -->
+        <line x1="370" y1="45" x2="370" y2="235" class="s-guide"/>
+        <text x="370" y="252" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- 上昇 63.6%: 155+63.6*5=473 w=318 -->
+        <rect x="155" y="62" width="318" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="75" class="s-label">上昇</text>
+        <text x="10" y="91" class="s-label-sm">(N=11)</text>
+        <text x="480" y="85" class="s-label-g">63.6%</text>
+        <!-- 下降 65.0%: 155+65.0*5=480 w=325 -->
+        <rect x="155" y="120" width="325" height="36" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="4"/>
+        <text x="10" y="133" class="s-label">下降</text>
+        <text x="10" y="149" class="s-label-sm">(N=20)</text>
+        <text x="487" y="143" class="s-label-g">65.0%</text>
+        <!-- 中立 20.0%: 155+20.0*5=255 w=100 -->
+        <rect x="155" y="178" width="100" height="36" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="4"/>
+        <text x="10" y="191" class="s-label">中立</text>
+        <text x="10" y="207" class="s-label-sm">(N=10)</text>
+        <text x="262" y="201" class="s-label-r">20.0%</text>
+        <text x="350" y="276" text-anchor="middle" class="s-label-sm">※ 壁ありシグナルのみ。トレンド環境で45ポイント以上の開きがある。N=10は小サンプル</text>
+      </svg>
+      <div class="chart-caption">図2：blocked=True（壁あり）シグナルを相場環境（上昇/下降/中立）で分割。上昇・下降トレンドでは63〜65%と高いが、もみあい（中立）では20%に急落する。トレンドの有無が成績の主因だった可能性が高い。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>驚くべきことに、<strong>上昇トレンドと下降トレンドで勝率に大きな差がない</strong>（63.6% vs 65.0%）ことも重要な発見です。つまり「上昇相場だから壁を突き抜ける」という単純な話ではなく、<strong>相場に方向感がある（トレンドしている）こと自体</strong>がblocked=Trueを活かす条件である、という解釈が支持されます。</p>
+
+    <!-- =============================== -->
+    <h2 id="why">⑤ なぜトレンドで「壁」が突き破られるのか</h2>
+
+    <p>今回の結果から、次のような解釈が考えられます（統計から推測できる仮説です。因果関係の証明ではありません）。</p>
+
+    <div class="chart-figure">
+      <!-- 図3: 概念図——トレンド vs もみあい×blocked -->
+      <svg viewBox="0 0 700 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="トレンド相場ともみあい相場でのblockedシグナルの概念図">
+        <text x="350" y="24" text-anchor="middle" class="s-label-b" style="font-size:15px">「壁」の意味が相場環境で変わる（概念図）</text>
+        <!-- 左パネル: トレンド相場 -->
+        <rect x="20" y="40" width="300" height="180" class="s-fill-g" rx="8"/>
+        <text x="170" y="62" text-anchor="middle" class="s-label-g" style="font-size:13px">【トレンド相場】</text>
+        <!-- 価格ライン（上昇） -->
+        <polyline points="40,210 80,190 120,165 160,145 200,120 240,100 280,82" class="s-curve-g" stroke-width="2.5"/>
+        <!-- S/R ゾーン（レジスタンス） -->
+        <rect x="30" y="132" width="290" height="12" class="s-fill-y" rx="2"/>
+        <text x="170" y="128" text-anchor="middle" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
+        <!-- 矢印：突破 -->
+        <line x1="200" y1="145" x2="200" y2="108" stroke="#1a7f37" stroke-width="2.5"/>
+        <polygon points="194,112 206,112 200,98" fill="#1a7f37"/>
+        <text x="225" y="102" class="s-label-g" style="font-size:11px">突破→TP1</text>
+        <text x="170" y="238" text-anchor="middle" class="s-label-sm">モメンタムが強く壁を突き抜ける</text>
+        <text x="170" y="252" text-anchor="middle" class="s-label-g" style="font-size:12px;font-weight:700">→ blocked=True 65%</text>
+        <!-- 右パネル: もみあい相場 -->
+        <rect x="380" y="40" width="300" height="180" class="s-fill-r" rx="8"/>
+        <text x="530" y="62" text-anchor="middle" class="s-label-r" style="font-size:13px">【もみあい相場】</text>
+        <!-- 価格ライン（上下動） -->
+        <polyline points="400,165 440,130 480,155 520,125 560,148 600,120 640,145" class="s-curve-r" stroke-width="2.5"/>
+        <!-- S/R ゾーン -->
+        <rect x="390" y="112" width="290" height="12" class="s-fill-y" rx="2"/>
+        <text x="530" y="108" text-anchor="middle" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
+        <!-- 矢印：跳ね返り -->
+        <line x1="520" y1="125" x2="520" y2="105" stroke="#cf222e" stroke-width="2" stroke-dasharray="4 3"/>
+        <line x1="520" y1="105" x2="520" y2="130" stroke="#cf222e" stroke-width="2.5"/>
+        <polygon points="514,126 526,126 520,140" fill="#cf222e"/>
+        <text x="555" y="100" class="s-label-r" style="font-size:11px">跳ね返り→SL</text>
+        <text x="530" y="238" text-anchor="middle" class="s-label-sm">壁が本物の障壁として機能する</text>
+        <text x="530" y="252" text-anchor="middle" class="s-label-r" style="font-size:12px;font-weight:700">→ blocked=True 20%</text>
+      </svg>
+      <div class="chart-caption">図3：「壁」の意味はトレンドで変わる。トレンド相場では価格に勢いがあってS/Rを突き抜けやすく、もみあいでは壁が本物の障壁になる。blocked=Trueの有利不利は、こうした相場環境に依存すると考えられる。※ 概念を示すイメージ図です（実価格ではありません）。</div>
+    </div>
+
+    <p>言葉で整理すると次のようになります。<strong>トレンド相場では</strong>、相場に強い一方向の勢い（モメンタム）があります。TP1の前にS/Rの壁があっても、このモメンタムが壁を突き抜けてTP1まで到達するケースが増えます。むしろ「S/R近くにエントリー価格がある」ことは、「価格が既にそのレベルを試している＝勢いが本物」という証左でもあるかもしれません。</p>
+    <p><strong>もみあい（中立）相場では</strong>、相場の方向感が定まらず、価格が狭いレンジで上下動します。この状況でS/Rの壁に差し掛かると、今度こそ壁が本当の天井や床として機能し、価格が反転してSLに向かいやすくなります。</p>
+
+    <div class="warning-box">
+      これは「相関」の観察であり、因果関係の証明ではありません。blocked=Trueがトレンドを示すシグナルと偶然一緒に発火しやすいだけかもしれず、トレンドこそが主因でblockedは無関係かもしれません。この点の切り分けは今後の課題です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="group">⑥ 補足：グループ別での傾向（他FXが鮮明）</h2>
+
+    <p>blocked=True効果をグループ別に見ると、「他FX（ドル円以外のFXペア）」で特に鮮明なパターンが出ました。</p>
+
+    <table>
+      <tr><th>グループ</th><th>件数</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>メモ</th></tr>
+      <tr><td>他FX × blocked=True</td><td>15</td><td><strong>66.7%</strong></td><td>41.7〜84.8%</td><td>CI下限41.7%（43%まであと1.3pp）</td></tr>
+      <tr><td>他FX × blocked=False</td><td>64</td><td>46.9%</td><td>35.2〜58.9%</td><td>参考：壁なしでも46.9%</td></tr>
+    </table>
+
+    <p>他FXのblocked=Trueは66.7%（10/15）でCI下限41.7%——43%まであと1.3ポイントと肉薄しています。N=15は少ないためまだ「確定」とは言えませんが、前向きトラッカーに登録して継続観察する価値はあります。</p>
+
+    <!-- 期待値比較表 -->
+    <h3>期待値（E(R)）で見た比較</h3>
+    <p>TP1:SL = 1.33:1.00 のR:Rで期待値（E(R)）を計算すると、相場環境ごとの差がよりくっきり見えます。</p>
+
+    <table>
+      <tr><th>区分</th><th>勝率</th><th>期待値 E(R)</th><th>意味</th></tr>
+      <tr><td>blocked=True × 下降（N=20）</td><td>65.0%</td><td><strong>+0.515R</strong></td><td>1取引で平均0.5R以上の期待</td></tr>
+      <tr><td>blocked=True × 上昇（N=11）</td><td>63.6%</td><td><strong>+0.483R</strong></td><td>同等に有望</td></tr>
+      <tr><td>blocked=True 全体（N=41）</td><td>53.7%</td><td><strong>+0.250R</strong></td><td>まずまず有望</td></tr>
+      <tr><td>blocked=False 全体（N=285）</td><td>38.9%</td><td>−0.093R</td><td>僅かに期待値マイナス</td></tr>
+      <tr><td>blocked=True × 中立（N=10）</td><td>20.0%</td><td><strong>−0.534R</strong></td><td>期待値が大きくマイナス</td></tr>
+    </table>
+
+    <div class="negative-box">
+      <strong>もみあい×blocked=Trueの期待値は −0.534R</strong><br>
+      10トレードすると平均5.34Rの損失になる計算です（N=10と小サンプルなので確定的ではありませんが、傾向として注視に値します）。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑦ 今回の決定事項</h2>
+
+    <table>
+      <tr><th>項目</th><th>決定</th><th>理由</th></tr>
+      <tr><td>仮説 #006 主判定</td><td><strong>通過A：継続観察</strong></td><td>事前宣言2条件がともに通過（CI下限43.3%≥43%、中立20.0%&lt;43%）。ただし中立N=10と少なく要追加データ</td></tr>
+      <tr><td>blocked=True の使い方指針</td><td><strong>「トレンド相場限定」という作業仮説を追加</strong></td><td>もみあいでblocked=Trueは逆効果の可能性。トレンド確認後のblocked評価が推奨候補</td></tr>
+      <tr><td>他FX×blocked=True（66.7%）</td><td><strong>前向きトラッカーへ登録</strong></td><td>CI下限41.7%で43%まで1.3pp。N=15→N≥30まで蓄積</td></tr>
+      <tr><td>次の検証候補</td><td>blocked=True × trend × group の三次元分析 or blocked=True × reversal_long の交絡</td><td>トレンドと銘柄グループの同時制御で効果の独立性を確認</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>これまでの連載で宣言した「将来のデータで確認する基準」の現在値です（2026-06-13 時点）。</p>
+
+    <table>
+      <tr><th>ID</th><th>仮説・指標</th><th>宣言基準</th><th>現在値（2026-06-13）</th><th>状態</th></tr>
+      <tr>
+        <td>a</td>
+        <td>押し目買い4h（#2の主仮説）</td>
+        <td>2026-06-11以降の新規決済でN≥30かつ勝率50%超</td>
+        <td>N=0（upper_tf_trendフィールド未記録のため追跡開始待ち）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>b〜e</td>
+        <td>regime/chasing_downgrade/discipline_filter/edge_tier</td>
+        <td>各基準は台帳参照</td>
+        <td>フィールド未記録（全N=0）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>f</td>
+        <td>もみあい中の逆張りL（#2基準34.3%）</td>
+        <td>新規データ蓄積後に34.3%から改善/悪化を確認</td>
+        <td>全逆張りL: 41.9% N=284 CI[36.3〜47.7%]（前回と同値）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>g</td>
+        <td>指数×逆張りL（今回も継続）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td>51.5% N=66 CI[39.7〜63.2%]（CI下限39.7%、43%未達）</td>
+        <td>🟡 蓄積中</td>
+      </tr>
+      <tr>
+        <td>h</td>
+        <td>他FX×逆張りL（今回も継続）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td>55.0% N=60 CI[42.5〜66.9%]（CI下限42.5%、43%まで0.5pp）</td>
+        <td>🟡 蓄積中（基準に肉薄）</td>
+      </tr>
+      <tr>
+        <td>i <span style="font-size:.78em;color:#1a7f37">🆕</span></td>
+        <td>他FX × blocked=True（#6新設）</td>
+        <td>N≥30かつCI下限43%超を維持</td>
+        <td><strong>66.7% N=15 CI[41.7〜84.8%]</strong>（CI下限41.7%、N不足）</td>
+        <td>🟡 蓄積中</td>
+      </tr>
+      <tr>
+        <td>j <span style="font-size:.78em;color:#1a7f37">🆕</span></td>
+        <td>中立×blocked=True の実績（#6新設）</td>
+        <td>N≥20での実績で20%が継続するか追跡</td>
+        <td><strong>20.0% N=10 CI[5.7〜51.0%]</strong>（ブレ幅大・追跡中）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <ul>
+      <li><strong>blocked=True × trend × グループの三次元解析</strong>：トレンド環境とグループを同時に制御して、どの組み合わせが最も安定して高勝率かを特定する</li>
+      <li><strong>blocked=True × 逆張りロングとの交絡</strong>：逆張りロング（rsi_oversold_bounce/bb_lower_touch）に絞ったとき、blocked=Trueが持つ意味は変わるか</li>
+      <li><strong>S/R近接度（d_res_atr）の連続変数分析</strong>：blocked=Trueは定性的なフラグだが、壁までの距離（0.37〜5.71ATR）で成績がさらに変わるか</li>
+      <li>最新のシグナル成績は<a href="track-record.html">シグナル成績ページ</a>でいつでも確認できます（毎日自動更新）</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 この連載の前の回と関連ページ</div>
+      <div class="cta-box-desc">第5回を読むと今回の「blocked効果の謎」の文脈がよくわかります</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-005.html">
+          <div class="related-card-title">🧪 研究日誌 #5</div>
+          <div class="related-card-desc">「壁あり」が高勝率——veto_runway_blocked の逆転現象を最初に発見した回</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-004.html">
+          <div class="related-card-title">🧪 研究日誌 #4</div>
+          <div class="related-card-desc">GC=F ロング12.8% vs ショート61.1%——方向と交絡の解明</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-002.html">
+          <div class="related-card-title">🧪 研究日誌 #2</div>
+          <div class="related-card-desc">トレンドと逆張りの関係を最初に分析した第2回</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">📩 無料メルマガ</span>
+          <h4>毎週の相場の振り返りと注目ポイントをメールで</h4>
+          <p>登録は無料・いつでも1クリックで解除OK。投資助言ではなく、市場データと振り返りをお届けします。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>次回のメルマガ配信をお楽しみに。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>

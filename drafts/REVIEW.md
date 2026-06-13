@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-06-13 | 🧪 signal-lab #006
+
+- **基準日（JST）**: 2026-06-13
+- **採択仮説**: 「blocked=True の優位性はトレンド相場（上昇・下降）に限定され、中立・もみあいでは失われる」（3視点会議でrisk-manager採択）
+- **事前宣言**: ①下降×blocked=True の Wilson CI下限 ≥ 43% AND ②中立×blocked=True の勝率 < 43% の両条件で「通過A」
+- **検証データ**: 全決済済み652件（sr_runwayあり326件、blocked=T:41件＝上昇11/下降20/中立10、blocked=F:285件）
+- **結果**: blocked=T 上昇63.6% / 下降65.0% CI[43.3〜81.9%] / 中立20.0%。**事前宣言2条件ともクリア→通過A**。他FX×blocked=T 66.7%(N=15)も有望。
+- **生成ファイル**: drafts/draft-signal-lab-006.html / drafts/labnotes/lab-006-analysis.md / drafts/labnotes/lab-006-claims.json / signal-lab-ledger.md（次番号007、トラッカーi/j追加）
+
+### 自動公開ゲート結果
+- [x] 8-2 verify EXIT=0 ✅ — 全10件緑、要約ボックス完全（0件未検証）、SVGはみ出しなし
+- [ ] 8-3 Opus compliance — 実施中
+- [ ] 8-4 公開判定 — 実施中
+
+---
+
 ## 2026-06-13 | 🧪 signal-lab #005
 
 - **基準日（JST）**: 2026-06-13
