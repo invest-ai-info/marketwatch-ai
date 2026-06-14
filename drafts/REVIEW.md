@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-06-15 | 🧪 signal-lab #008 ✅自動公開済み
+
+- **基準日（JST）**: 2026-06-15
+- **採択仮説**: 「ma_golden（MA25×MA75 ゴールデンクロス）の実勝率はCI上限が43%未満であることを確認する」（3視点会議でリスクマネージャー採択。元候補 d_sup_atr は verify.py 非対応次元のため回避）
+- **事前宣言**: N≥20 かつ CI上限 < 43% → 棄却確認として通過A
+- **検証データ**: 全決済済み654件（signals-log.json）。シグナル種別11種をprimary_signalフィールドで集計
+- **結果**: ma_golden 7/30=23.3% CI[11.8%~40.9%] CI上限40.9%<43%・N=30≥20 → **通過A（棄却確認）**。全種別中最低・E(R)=-0.683R（最悪）。副次確認：macd_dead 45.6%(CI下限36.3%)、bb_lower_touch 43.3%。全CI下限43%超は現時点でゼロ。
+- **生成ファイル**: drafts/draft-signal-lab-008.html / guide-signal-lab-008.html / drafts/labnotes/lab-008-analysis.md / drafts/labnotes/lab-008-claims.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅
+- [x] 8-2 verify EXIT=0 ✅ — 全10クレーム緑、要約未検証0件、SVG警告0件
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→🟢白（適用修正: 「逆張り戦略は現データでは機能していない」→「過去の記録では損益分岐を満たせていなかった（将来の成績を示すものではない旨を併記）」に軟化。「有望な数字/有望な水準」→「相対的に高い」へ表現中立化。数値・統計・SVG・30秒まとめ不変）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正で数値・要約ボックス無変化を確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（kinsho-v1三点完備・noindex確認・断定表現なし・将来非保証明示・過信抑制記述適切）
+- [x] 8-4-iii 公開実行 ✅ — finalize/publish_article（guides.html・更新履歴）/check_site_consistency(EXIT=0)/commit+push
+
+---
+
 ## 2026-06-15 | 🔚 全topic下書き済み
 
 - **基準日（JST）**: 2026-06-15
