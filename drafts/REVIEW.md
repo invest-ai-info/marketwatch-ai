@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-06-15 | 🔚 全topic下書き済み
+
+- **基準日（JST）**: 2026-06-15
+- **結果**: topicキュー全11件を確認。全て下書き済みまたは公開済みのため、新規下書きは生成しない。
+- **内訳**:
+  - 下書き済み（未公開→公開待ち）: なし（全て公開済み）
+  - 下書き済み＋公開済み: position-sizing / trading-psychology-calm / risk-reward / trading-journal / leverage / dollar-cost-averaging / swap-points（7件）
+  - 下書きなし＋公開済み: profit-taking / compounding-drawdown / cognitive-biases / diversification（4件）
+- **次のアクション**: AUTODRAFT_GUIDE.md のtopicキューに新しいtopicを追加すること（人間による）。
+
+---
+
 ## 2026-06-14 | 🧪 signal-lab #007
 
 - **基準日（JST）**: 2026-06-14
