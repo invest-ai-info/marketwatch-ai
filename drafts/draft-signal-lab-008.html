@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #8｜ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ - MarketWatch AI</title>
+  <meta name="description" content="移動平均ゴールデンクロス(ma_golden)の実勝率は23.3%(N=30、CI上限40.9%)で損益分岐43%を下回り確認。654件の全シグナル種別を横断集計し、種別ごとの期待値格差を明らかにした研究日誌第8回。">
+  <meta name="keywords" content="ゴールデンクロス,移動平均,シグナル勝率,AIシグナル,検証,MACD,ボリンジャー,期待値,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-008.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #8｜ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ">
+  <meta property="og:description" content="ma_golden(ゴールデンクロス)の実勝率は23.3%でCI上限が43%未満。全シグナル種別654件を横断集計。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-008.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #8｜ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ",
+    "description": "移動平均ゴールデンクロス(ma_golden)の実勝率は23.3%でCI上限40.9%。654件全シグナル種別を横断集計した研究日誌第8回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-008.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #8
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #8<br><small style="font-size:.65em;color:#57606a;font-weight:400">ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第8回です。<a href="guide-signal-lab-007.html">前回（#7）</a>では「blocked=True（S/R壁あり）× グループ × トレンド」という三次元解析を行い、他FX×blocked=True×下降が8/8=100%というN不足ながら注目すべき数字を出しました。</p>
+    <p>今回は視点を変えて、「<strong>どのシグナル種別が実際に勝てているのか</strong>」という横断的な問いに答えます。当サイトのシグナルエンジンは7種の基本パターン（RSI・MACD・移動平均クロス・ボリンジャー・高安値ブレイク）を検出します。654件のクローズドデータを種別ごとに集計すると、最高57.1%から最低23.3%まで約34ポイントの勝率格差があることがわかりました。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 全654件を種別横断集計——<strong>「CI下限が43%超え」を達成したシグナル種別は現時点でゼロ</strong>（損益分岐を安定的に超えた種別なし）<br>
+      ② ゴールデンクロス(ma_golden)は<strong>23.3%（7/30件、CI上限40.9%）</strong>——全種別中最低でCI上限が43%未満を確認（主仮説通過A）<br>
+      ③ 最有望はMACDデッドクロス(macd_dead)：<strong>45.6%（47/103件、CI下限36.3%）</strong>——ただしCI下限はまだ43%未達<br>
+      ④ 全体平均は<strong>40.1%（262/654件）</strong>——どの種別も損益分岐を安定的に超えていない現状が浮かぶ
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——「ゴールデンクロスは損益分岐を安定的に下回るか」</a></li>
+        <li><a href="#method">検証方法（654件反実仮想集計・事前合否基準）</a></li>
+        <li><a href="#result-map">結果①：シグナル種別勝率マップ（全11種）</a></li>
+        <li><a href="#result-golden">結果②：ma_golden の詳細——「いつ・どこで発火するか」</a></li>
+        <li><a href="#result-er">結果③：期待値E(R)で見たシグナル種別の損益格差</a></li>
+        <li><a href="#confound">交絡の点検——グループ偏り・時期バイアス</a></li>
+        <li><a href="#decision">今回の決定事項</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——「ゴールデンクロスは損益分岐を安定的に下回るか」</h2>
+
+    <p>当サイトの技術的アラートエンジンが検出するシグナルは大きく7カテゴリに分類できます。これまでの研究日誌では「グループ別（メタル・指数・FX）」「方向別（ロング・ショート）」「環境別（トレンド・blocked）」で掘り下げてきましたが、<strong>シグナル種別そのものを正面から比較したことはありませんでした</strong>。</p>
+    <p>今回の起点は、探索的に集計してみたところ出てきた衝撃的な数字です——「移動平均ゴールデンクロス（ma_golden：MA25がMA75を上抜け）」の勝率は<strong>23.3%（N=30）</strong>でした。多くの投資家が「信頼できる買いシグナル」と認識しているゴールデンクロスが、損益分岐43%をここまで大きく下回っているとしたら、それは検証する価値のある重要な発見です。</p>
+
+    <div class="info-box">
+      <strong>💡 損益分岐（ブレイクイーブン）43%とは</strong><br>
+      本システムのTP1:SL比は約1.33（TP1=ATR×2.0、SL=ATR×1.5）。この比率で期待値がゼロになる最低勝率が43%。それを下回ると毎回エントリーするほど期待値がマイナスになる（記録としての計算であり、実運用推奨ではない）。
+    </div>
+
+    <table>
+      <tr><th>仮説</th><th>事前合否基準</th></tr>
+      <tr><td>ma_goldenの勝率は損益分岐43%を安定的に下回る</td><td><strong>N≥20 かつ CI上限 &lt; 43%</strong>→ 棄却確認として通過A</td></tr>
+      <tr><td>種別によって勝率に有意な差がある</td><td>最高勝率と最低勝率の差が20pp以上（副次的確認）</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（654件反実仮想集計・事前合否基準）</h2>
+
+    <p>前回と同様の「もしも計算」の手順です。signals-log.json に記録された全シグナルのうち、<strong>勝敗が確定済みのもの（tp1/tp2/sl到達済み、654件）</strong>のみを対象に、primary_signal（主シグナル種別）フィールドで集計しました。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>勝敗確定済みの<strong>654件</strong>（2026年5月20日〜6月15日）</td></tr>
+      <tr><td>集計単位</td><td>primary_signal（主シグナル種別）ごとに独立集計</td></tr>
+      <tr><td>勝ち定義</td><td>TP1またはTP2到達（SL到達は負け）</td></tr>
+      <tr><td>損益分岐</td><td>43%（TP1:SL=1.33の期待値ゼロ点）</td></tr>
+      <tr><td>ブレ幅表示</td><td>Wilson法による95%信頼区間（ブレ幅）を全数値に明記</td></tr>
+      <tr><td>期待値</td><td>E(R) = 勝率×2.0R + (1-勝率)×(-1.5R)で計算</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="result-map">③ 結果①：シグナル種別勝率マップ（全11種）</h2>
+
+    <p>N≥5のシグナル種別を全て集計した結果が下表です。勝率降順で並べると、最高57.1%（ma_dead、ただしN=14と小サンプル）から最低20.0%（fib_pullback_long、N=10）まで37ポイントの格差がありました。</p>
+
+    <table>
+      <tr><th>シグナル種別</th><th>件数(N)</th><th>勝ち(k)</th><th>勝率</th><th>ブレ幅（95%CI）</th><th>判定</th></tr>
+      <tr><td>ma_dead（MAデッドクロス）</td><td>14</td><td>8</td><td><strong>57.1%</strong></td><td>32.6〜78.6%</td><td>⚠️ N小・継続観察</td></tr>
+      <tr><td>macd_dead（MACDデッドクロス）</td><td>103</td><td>47</td><td><strong>45.6%</strong></td><td>36.3〜55.2%</td><td>🟡 有望・CI下限未達</td></tr>
+      <tr><td>bb_lower_touch（バンド下限タッチ）</td><td>157</td><td>68</td><td><strong>43.3%</strong></td><td>35.8〜51.1%</td><td>🟡 境界・CI下限未達</td></tr>
+      <tr><td>rsi_oversold_bounce（RSI過売反発）</td><td>128</td><td>51</td><td>39.8%</td><td>31.8〜48.5%</td><td>❌ 未達</td></tr>
+      <tr><td>macd_golden（MACDゴールデン）</td><td>88</td><td>34</td><td>38.6%</td><td>29.1〜49.1%</td><td>❌ 未達</td></tr>
+      <tr><td>low_break（直近安値ブレイク）</td><td>42</td><td>16</td><td>38.1%</td><td>25.0〜53.2%</td><td>❌ 未達</td></tr>
+      <tr><td>high_break（直近高値ブレイク）</td><td>45</td><td>15</td><td>33.3%</td><td>21.4〜47.9%</td><td>❌ 低め</td></tr>
+      <tr><td><strong>ma_golden（MAゴールデンクロス）</strong></td><td><strong>30</strong></td><td><strong>7</strong></td><td><strong>23.3%</strong></td><td>11.8〜40.9%</td><td><strong>❌ 最低・CI上限43%未満確認</strong></td></tr>
+      <tr><td>全体平均</td><td>654</td><td>262</td><td>40.1%</td><td>36.4〜43.9%</td><td>— ベースライン</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図1: シグナル種別勝率バーチャート（N≥20, 7種） -->
+      <svg viewBox="0 0 700 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別別勝率比較（N20以上）">
+        <text x="350" y="24" text-anchor="middle" class="s-label-b" style="font-size:15px">シグナル種別の勝率（N≥20・7種）</text>
+        <!-- 縦軸 -->
+        <line x1="175" y1="38" x2="175" y2="386" class="s-axis"/>
+        <!-- 横軸 -->
+        <line x1="175" y1="386" x2="660" y2="386" class="s-axis"/>
+        <!-- 43%損益分岐ガイド: x=175+43*4=347 -->
+        <line x1="347" y1="34" x2="347" y2="386" class="s-guide"/>
+        <text x="347" y="402" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <!-- X軸目盛 -->
+        <text x="175" y="402" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="255" y="402" text-anchor="middle" class="s-label-sm">20%</text>
+        <text x="335" y="402" text-anchor="middle" class="s-label-sm">40%</text>
+        <text x="415" y="402" text-anchor="middle" class="s-label-sm">60%</text>
+
+        <!-- Row 0: macd_dead 45.6% → width=182 → GREEN -->
+        <rect x="175" y="47" width="182" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="8" y="63" class="s-label">MACDデッド</text>
+        <text x="8" y="75" class="s-label-sm">macd_dead (N=103)</text>
+        <text x="362" y="69" class="s-label-g">45.6%</text>
+
+        <!-- Row 1: bb_lower_touch 43.3% → width=173 → GREEN (borderline) -->
+        <rect x="175" y="97" width="173" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="8" y="113" class="s-label">バンド下限</text>
+        <text x="8" y="125" class="s-label-sm">bb_lower_touch (N=157)</text>
+        <text x="352" y="119" class="s-label-g">43.3%</text>
+
+        <!-- Row 2: rsi_oversold_bounce 39.8% → width=159 → YELLOW -->
+        <rect x="175" y="147" width="159" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="8" y="163" class="s-label">RSI過売反発</text>
+        <text x="8" y="175" class="s-label-sm">rsi_oversold_bounce (N=128)</text>
+        <text x="338" y="169" class="s-label-y">39.8%</text>
+
+        <!-- Row 3: macd_golden 38.6% → width=154 → YELLOW -->
+        <rect x="175" y="197" width="154" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="8" y="213" class="s-label">MACDゴールデン</text>
+        <text x="8" y="225" class="s-label-sm">macd_golden (N=88)</text>
+        <text x="333" y="219" class="s-label-y">38.6%</text>
+
+        <!-- Row 4: low_break 38.1% → width=152 → YELLOW -->
+        <rect x="175" y="247" width="152" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="8" y="263" class="s-label">安値ブレイク</text>
+        <text x="8" y="275" class="s-label-sm">low_break (N=42)</text>
+        <text x="331" y="269" class="s-label-y">38.1%</text>
+
+        <!-- Row 5: high_break 33.3% → width=133 → RED -->
+        <rect x="175" y="297" width="133" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="3"/>
+        <text x="8" y="313" class="s-label">高値ブレイク</text>
+        <text x="8" y="325" class="s-label-sm">high_break (N=45)</text>
+        <text x="312" y="319" class="s-label-r">33.3%</text>
+
+        <!-- Row 6: ma_golden 23.3% → width=93 → RED (highlighted) -->
+        <rect x="175" y="347" width="93" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="2.5" rx="3"/>
+        <text x="8" y="363" class="s-label-r">MAゴールデン★</text>
+        <text x="8" y="375" class="s-label-sm">ma_golden (N=30)</text>
+        <text x="272" y="369" class="s-label-r">23.3%</text>
+
+        <text x="350" y="418" text-anchor="middle" class="s-label-sm">★ 主仮説対象。CI上限40.9%&lt;43%を確認。赤バーはCI上限が43%未満または勝率が大きく下回るグループ</text>
+        <text x="350" y="428" text-anchor="middle" class="s-label-sm">※ N=14のma_deadと N=10以下のシグナルは除外（小サンプルのため）。概念を示すイメージ図です。</text>
+      </svg>
+      <div class="chart-caption">図1：N≥20のシグナル種別を勝率降順で比較。MACDデッドクロスが最有望（45.6%）だが、CI下限はまだ43%未達。MAゴールデンクロス（赤★）は23.3%で全種別中最低、かつCI上限（40.9%）が43%を下回ることを確認した。</div>
+    </div>
+
+    <div class="negative-box">
+      <strong>主仮説の結果：通過A（棄却確認）</strong><br>
+      ma_golden（MAゴールデンクロス）の実勝率は<strong>23.3%（7/30件）、CI[11.8〜40.9%]</strong>。<br>
+      事前合否基準「N≥20（✅）かつCI上限&lt;43%（✅ 40.9%）」を両方クリア。<br>
+      損益分岐43%を安定的に下回ることが確認された——ゴールデンクロス単独での逆張り戦略は現データでは機能していない。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-golden">④ 結果②：ma_golden の詳細——「いつ・どこで発火するか」</h2>
+
+    <p>ma_golden の30件はすべてロング（買い）シグナルでした（ゴールデンクロスは定義上、上昇転換シグナルのためショートは発火しません）。次に、どの銘柄グループで多く発火しているかを確認しました。</p>
+
+    <table>
+      <tr><th>グループ</th><th>件数(N)</th><th>勝ち(k)</th><th>勝率</th><th>ブレ幅（95%CI）</th></tr>
+      <tr><td>他FX（EURUSD等）</td><td>22</td><td>6</td><td><strong>27.3%</strong></td><td>13.2〜48.2%</td></tr>
+      <tr><td>JPYクロス</td><td>3</td><td>1</td><td>33.3%</td><td>6.1〜79.2%（N小）</td></tr>
+      <tr><td>指数</td><td>3</td><td>0</td><td>0.0%</td><td>0.0〜56.2%（N小）</td></tr>
+      <tr><td>BTC</td><td>2</td><td>0</td><td>0.0%</td><td>0.0〜65.8%（N小）</td></tr>
+    </table>
+
+    <p>30件中22件が他FX（EUR/USD、GBP/USD、AUD/USDなど）での発火でした。興味深いのは、<strong>他FX全体の逆張りロングは55.0%（33/60件）と有望な数字なのに、その中でma_goldenだけを取り出すと27.3%と著しく低い</strong>点です。同じ「他FX×ロング」でも、シグナルの種別が違うだけでここまで成績が変わります。</p>
+
+    <div class="chart-figure">
+      <!-- 図2: ゴールデンクロス概念図 -->
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ゴールデンクロスが機能しない場面の概念図">
+        <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">ゴールデンクロス（MA25↑交差MA75）が機能しない典型パターン</text>
+        <!-- 仕切り線 -->
+        <line x1="345" y1="32" x2="345" y2="280" class="s-guide"/>
+        <!-- 左パネル: 成功ケース（約2割） -->
+        <text x="175" y="46" text-anchor="middle" class="s-label-g">✅ 成功ケース（約2割）</text>
+        <!-- 価格: ゆっくり上昇して継続 -->
+        <polyline points="40,230 110,170 190,120 280,90 320,80" class="s-curve-g" stroke-width="2.5"/>
+        <!-- MA25 (lags slightly) -->
+        <polyline points="40,240 130,180 210,130 300,98" stroke="#0969da" stroke-width="2" fill="none" stroke-dasharray="none"/>
+        <!-- MA75 (lags more) -->
+        <polyline points="40,248 155,196 240,148 315,112" stroke="#8b949e" stroke-width="1.8" fill="none"/>
+        <!-- Cross marker at ~x=130 -->
+        <circle cx="128" cy="183" r="7" fill="#0969da" opacity="0.8"/>
+        <line x1="128" y1="176" x2="128" y2="250" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <text x="86" y="263" class="s-label-b" style="font-size:11.5px">クロス発生</text>
+        <!-- After cross, price goes up to TP -->
+        <text x="260" y="74" class="s-label-g" style="font-size:11.5px">価格継続↑TP到達</text>
+        <!-- Legends -->
+        <line x1="42" y1="275" x2="65" y2="275" class="s-curve-g" stroke-width="2"/>
+        <text x="68" y="279" class="s-label-sm">価格</text>
+        <line x1="105" y1="275" x2="128" y2="275" stroke="#0969da" stroke-width="2" fill="none"/>
+        <text x="131" y="279" class="s-label-sm">MA25</text>
+        <line x1="170" y1="275" x2="193" y2="275" stroke="#8b949e" stroke-width="1.8" fill="none"/>
+        <text x="196" y="279" class="s-label-sm">MA75</text>
+
+        <!-- 右パネル: 失敗ケース（約8割） -->
+        <text x="525" y="46" text-anchor="middle" class="s-label-r">❌ 失敗ケース（約8割）</text>
+        <!-- 価格: 急上昇してピーク、反転 -->
+        <polyline points="365,230 420,130 475,90 520,130 580,200 640,250" class="s-curve-r" stroke-width="2.5"/>
+        <!-- Price peak marker -->
+        <circle cx="475" cy="90" r="5" fill="#cf222e"/>
+        <text x="450" y="80" class="s-label-r" style="font-size:11.5px">価格ピーク</text>
+        <!-- MA25 (crosses MA75 after peak) -->
+        <polyline points="365,235 440,140 500,97 545,132 595,195 640,248" stroke="#0969da" stroke-width="2" fill="none"/>
+        <!-- MA75 (most lagging) -->
+        <polyline points="365,242 455,155 515,110 558,138 600,198 640,250" stroke="#8b949e" stroke-width="1.8" fill="none"/>
+        <!-- Cross marker (after price peak, around x=530) -->
+        <circle cx="531" cy="121" r="7" fill="#0969da" opacity="0.8"/>
+        <line x1="531" y1="114" x2="531" y2="250" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <text x="482" y="263" class="s-label-b" style="font-size:11.5px">クロス発生（ピーク後）</text>
+        <!-- After cross, price continues down = SL -->
+        <text x="610" y="255" class="s-label-r" style="font-size:11.5px">→SL</text>
+        <!-- Lag annotation -->
+        <line x1="475" y1="95" x2="531" y2="110" stroke="#9a6700" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="488" y="108" class="s-label-y" style="font-size:10.5px">遅れ発火</text>
+      </svg>
+      <div class="chart-caption">図2：ゴールデンクロスは移動平均の「遅行指標」の特性上、価格が既にピークを過ぎてから発火することが多い（右パネル）。上昇継続中に正確にクロスが出る成功ケース（左パネル）は少数。この「発火の遅れ」が23.3%という低勝率の構造的な原因と考えられる。※ 概念を示すイメージ図です。</div>
+    </div>
+
+    <p>移動平均は「遅行指標（ラギング指標）」と呼ばれます。MA25（25期間平均）がMA75（75期間平均）を上抜けるには、価格が上昇し始めてから<strong>相当な時間と価格変動が必要</strong>です。多くの場合、クロスが完成するころには「上昇の旨み」は既に消化されており、その後の余地が乏しい状態でシグナルが出ます。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-er">⑤ 結果③：期待値E(R)で見たシグナル種別の損益格差</h2>
+
+    <p>勝率だけでなく、実際の「1トレードあたりの期待損益」を計算します。TP1=+2.0R、SL=-1.5Rという設計（R:R=1.33）の場合、<strong>E(R)=勝率×2.0 + (1-勝率)×(-1.5)</strong> です。</p>
+
+    <table>
+      <tr><th>シグナル種別</th><th>勝率</th><th>E(R)</th><th>判定</th></tr>
+      <tr><td>macd_dead（MACDデッドクロス）</td><td>45.6%</td><td><strong>+0.097R</strong></td><td>🟡 わずかにプラス</td></tr>
+      <tr><td>bb_lower_touch（バンド下限タッチ）</td><td>43.3%</td><td>+0.016R</td><td>🟡 ほぼ損益分岐</td></tr>
+      <tr><td>rsi_oversold_bounce（RSI過売反発）</td><td>39.8%</td><td>-0.105R</td><td>❌ マイナス</td></tr>
+      <tr><td>macd_golden（MACDゴールデンクロス）</td><td>38.6%</td><td>-0.148R</td><td>❌ マイナス</td></tr>
+      <tr><td>low_break（安値ブレイク）</td><td>38.1%</td><td>-0.167R</td><td>❌ マイナス</td></tr>
+      <tr><td>high_break（高値ブレイク）</td><td>33.3%</td><td>-0.333R</td><td>❌ 明確にマイナス</td></tr>
+      <tr><td><strong>ma_golden（MAゴールデンクロス）</strong></td><td><strong>23.3%</strong></td><td><strong>-0.683R</strong></td><td>❌ 全種別中最悪</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図3: E(R) 双方向バーチャート（0R=損益分岐, 左=マイナス, 右=プラス） -->
+      <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別の期待値E(R)比較">
+        <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">シグナル種別の期待値 E(R) — 左がマイナス、右がプラス</text>
+        <!-- 0R軸 (break-even): x=440, scale: 250px/R -->
+        <line x1="440" y1="34" x2="440" y2="345" class="s-axis"/>
+        <!-- 下軸 -->
+        <line x1="175" y1="345" x2="640" y2="345" class="s-axis"/>
+        <!-- 0R ラベル -->
+        <text x="440" y="360" text-anchor="middle" class="s-label-y">0R（損益分岐）</text>
+        <!-- -0.5R mark: x=440-0.5*250=315 -->
+        <line x1="315" y1="340" x2="315" y2="348" class="s-axis"/>
+        <text x="315" y="362" text-anchor="middle" class="s-label-sm">-0.5R</text>
+        <!-- +0.1R mark: x=440+0.1*250=465 -->
+        <line x1="465" y1="340" x2="465" y2="348" class="s-axis"/>
+        <text x="465" y="362" text-anchor="middle" class="s-label-sm">+0.1R</text>
+
+        <!-- Row 0: macd_dead +0.097R → width=24 RIGHT, y_top=42 -->
+        <rect x="440" y="44" width="24" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="8" y="60" class="s-label">MACDデッドクロス</text>
+        <text x="8" y="72" class="s-label-sm">macd_dead</text>
+        <text x="468" y="66" class="s-label-g">+0.097R</text>
+
+        <!-- Row 1: bb_lower_touch +0.016R → width=4 RIGHT, y_top=90 -->
+        <rect x="440" y="94" width="4" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="8" y="110" class="s-label">バンド下限タッチ</text>
+        <text x="8" y="122" class="s-label-sm">bb_lower_touch</text>
+        <text x="448" y="116" class="s-label-g">+0.016R</text>
+
+        <!-- Row 2: rsi_oversold_bounce -0.105R → width=26 LEFT, y_top=138 -->
+        <rect x="414" y="142" width="26" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="8" y="158" class="s-label">RSI過売り反発</text>
+        <text x="8" y="170" class="s-label-sm">rsi_oversold_bounce</text>
+        <text x="382" y="164" class="s-label-y">-0.105R</text>
+
+        <!-- Row 3: macd_golden -0.148R → width=37 LEFT, y_top=186 -->
+        <rect x="403" y="190" width="37" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="8" y="206" class="s-label">MACDゴールデン</text>
+        <text x="8" y="218" class="s-label-sm">macd_golden</text>
+        <text x="367" y="212" class="s-label-y">-0.148R</text>
+
+        <!-- Row 4: high_break -0.333R → width=83 LEFT, y_top=234 -->
+        <rect x="357" y="238" width="83" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="3"/>
+        <text x="8" y="254" class="s-label">高値ブレイク</text>
+        <text x="8" y="266" class="s-label-sm">high_break</text>
+        <text x="319" y="260" class="s-label-r">-0.333R</text>
+
+        <!-- Row 5: ma_golden -0.683R → width=171 LEFT, y_top=282 -->
+        <rect x="269" y="286" width="171" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="2.5" rx="3"/>
+        <text x="8" y="302" class="s-label-r">MAゴールデン★（今回）</text>
+        <text x="8" y="314" class="s-label-sm">ma_golden</text>
+        <text x="200" y="308" class="s-label-r">-0.683R（全種別最悪）</text>
+
+        <text x="350" y="370" text-anchor="middle" class="s-label-sm">★ ma_golden は1トレードあたり平均-0.683R の損失期待値。100回エントリーすると理論上-68.3R相当。</text>
+        <text x="350" y="379" text-anchor="middle" class="s-label-sm">※ 概念を示すイメージ図です。将来の運用成績を保証するものではありません。</text>
+      </svg>
+      <div class="chart-caption">図3：期待値E(R)で見ると、ma_goldenは-0.683Rで全種別中最悪。E(R)がプラスなのはmacd_dead (+0.097R)とbb_lower_touch (+0.016R)だが、ともにブレ幅が大きく確定的ではない。</div>
+    </div>
+
+    <p>E(R)=-0.683Rという数字が意味することを具体的に言うと——「もし仮にma_goldenシグナルを機械的に全件エントリーしていたとしたら、過去のデータでは<strong>1トレードごとに平均0.683R分の損失期待値</strong>があった計算になる」ということです。これは情報提供としての試算であり、将来の成績を示すものではありません。</p>
+
+    <!-- =============================== -->
+    <h2 id="confound">⑥ 交絡の点検——グループ偏り・時期バイアス</h2>
+
+    <p>「ゴールデンクロスが23.3%」という数字をそのまま信じる前に、いくつかの交絡を点検します。</p>
+
+    <h3>1. グループ偏り</h3>
+    <p>ma_golden 30件のうち22件（73%）が他FX（EURUSD・GBPUSD等）での発火でした。他FXの逆張りロング全体の勝率は55.0%（33/60件）と有望な水準なのに、<strong>ma_goldenだけでは他FXで27.3%</strong>（6/22）に留まります。つまり「他FXという銘柄グループ」の問題ではなく、「ゴールデンクロスというシグナル種別」の問題である可能性が高いです。</p>
+
+    <h3>2. 時期バイアス</h3>
+    <p>このデータは2026年5月20日〜6月15日（約4週間）の記録です。この期間のFX相場は全体的に横ばい〜小幅なトレンドが入り乱れる環境でした。ゴールデンクロスは「上昇トレンドへの転換サイン」として設計されているため、<strong>明確な上昇トレンドが少なかった時期には不利</strong>になります。長期的に見れば改善する可能性はあります。</p>
+
+    <h3>3. ma_golden は全件ロング</h3>
+    <p>ma_golden の30件はすべてロング（買い）でした。<a href="guide-signal-lab-004.html">#4</a>で確認したように「下降トレンド中のロングは落ちるナイフ」の傾向があり、もしこの30件の多くが下降トレンド環境で発火していたとすれば、トレンド環境が主因の交絡があります。この切り分けは次回以降の課題です。</p>
+
+    <div class="warning-box">
+      N=30のため、ブレ幅は[11.8〜40.9%]と約29ポイントあります。「CI上限が43%未満」という事実は上振れ方向の余地がほぼないことを示しますが、今後シグナルが積み重なるにつれて数値は変動します。現時点での「棄却確認」は小サンプルでの傾向であることを念頭に置いてください。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑦ 今回の決定事項</h2>
+
+    <table>
+      <tr><th>項目</th><th>決定</th><th>理由</th></tr>
+      <tr><td>主仮説（ma_golden 棄却確認）</td><td><strong>通過A（棄却確認）</strong></td><td>N=30≥20、CI上限40.9%&lt;43%。事前合否基準の両条件をクリア</td></tr>
+      <tr><td>macd_dead（45.6%、N=103）</td><td><strong>継続観察</strong>（トラッカー新設）</td><td>有望だがCI下限36.3%（43%未達）。N=103でのCI下限確認が次の基準</td></tr>
+      <tr><td>bb_lower_touch（43.3%、N=157）</td><td><strong>継続観察</strong></td><td>損益分岐ぎりぎり超え。CI下限35.8%でまだ統計的確認できず</td></tr>
+      <tr><td>副次的確認（種別差の存在）</td><td><strong>確認（最高57.1%〜最低23.3%、差34pp）</strong></td><td>20pp以上という基準を大きく超えた種別差を確認</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>これまでの連載で宣言した「将来データで確認する基準」の現在値です。</p>
+
+    <table>
+      <tr><th>ID</th><th>仮説・指標</th><th>宣言基準</th><th>現在値（2026-06-15）</th><th>状態</th></tr>
+      <tr>
+        <td>a</td>
+        <td>押し目買い4h（上位足上昇×逆張りロング×4h）</td>
+        <td>新規決済N≥30かつ勝率50%超</td>
+        <td>N=0（upper_tf_trend未記録）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>b〜e</td>
+        <td>regime/chasing/discipline/edge_tier</td>
+        <td>各基準は台帳参照</td>
+        <td>フィールド未記録（全N=0）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>f</td>
+        <td>全逆張りロング（#2基準）</td>
+        <td>34.3%より改善or悪化を追跡</td>
+        <td><strong>41.8% N=285 CI[36.2〜47.6%]</strong>（前回41.9% N=284から微変）</td>
+        <td>⏳</td>
+      </tr>
+      <tr>
+        <td>g</td>
+        <td>指数×逆張りロング（今回更新）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td><strong>51.5% N=66 CI[39.7〜63.2%]</strong>（前回と同値）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+      <tr>
+        <td>h</td>
+        <td>他FX×逆張りロング（今回更新）</td>
+        <td>累計N≥80かつCI下限43%超を維持</td>
+        <td><strong>55.0% N=60 CI[42.5〜66.9%]</strong>（前回と同値、CI下限43%まであと0.5pp）</td>
+        <td>⏳ 蓄積中（基準に肉薄）</td>
+      </tr>
+      <tr>
+        <td>i</td>
+        <td>他FX×blocked=True（#5新設）</td>
+        <td>N≥30かつCI下限43%超</td>
+        <td><strong>66.7% N=15 CI[41.7〜84.8%]</strong>（N不足継続）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+      <tr>
+        <td>j</td>
+        <td>中立×blocked=True（#6新設）</td>
+        <td>N≥20での実績追跡</td>
+        <td><strong>20.0% N=10 CI[5.7〜51.0%]</strong>（ブレ幅大）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+      <tr>
+        <td>k</td>
+        <td>他FX×blocked=True×下降（#7新設）</td>
+        <td>N≥15かつCI下限50%超</td>
+        <td><strong>100.0% N=8 CI[67.6〜100.0%]</strong>（N不足・過信禁止）</td>
+        <td>⏳ 蓄積中</td>
+      </tr>
+      <tr>
+        <td>l</td>
+        <td>macd_dead 継続観察（今回新設）</td>
+        <td>N≥150かつCI下限43%超を維持</td>
+        <td><strong>45.6% N=103 CI[36.3〜55.2%]</strong>（CI下限未達）</td>
+        <td>⏳ 新設・蓄積中</td>
+      </tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <ul>
+      <li><strong>ma_golden × トレンド環境の交絡切り分け</strong>：今回の23.3%は「下降トレンド中のロング多数」という交絡の可能性がある。上昇トレンド中のma_golden vs 下降トレンド中では成績が違うか？ 台帳バックログに追加</li>
+      <li><strong>ma_dead（57.1%、N=14）の追試</strong>：デッドクロスが高勝率を示しているが小サンプル。N≥30で検証基準（CI下限43%超）クリアを確認するまで「継続観察」</li>
+      <li><strong>d_sup_atr（S/R近接距離）の検証</strong>：探索的に見るとd_sup_atr&lt;0.5でCI下限が43%超に近づく可能性がある（参考値）が、verify.pyの非対応次元のため本連載での自動公開ゲートを通せない。人間が verify.py を拡張するまで保留（「要verify.py拡張（キー:d_sup_atr）」として台帳に記録）</li>
+      <li>最新のシグナル成績は<a href="track-record.html">シグナル成績ページ</a>でいつでも確認できます（4時間ごと自動更新）</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 この連載の他の回と関連ページ</div>
+      <div class="cta-box-desc">研究日誌#1から読むと仮説の累積的な深まりがわかります</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-007.html">
+          <div class="related-card-title">🧪 研究日誌 #7</div>
+          <div class="related-card-desc">blocked×グループ×トレンドの三次元解析。他FX×下降×blocked=100%(N=8)</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-005.html">
+          <div class="related-card-title">🧪 研究日誌 #5</div>
+          <div class="related-card-desc">S/Rブロック効果の追試。blocked=True 53.7%で通過A</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 研究日誌 #1</div>
+          <div class="related-card-desc">連載の出発点。ムード門番が完全に失敗した第1回</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<!-- ③ フッター kinsho-v1 -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>

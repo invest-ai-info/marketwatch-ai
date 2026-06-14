@@ -1,0 +1,65 @@
+{
+  "article_id": "008",
+  "claims": [
+    {
+      "label": "全体baseline（closed 654件）",
+      "filter": {"group": "all"},
+      "k": 262,
+      "n": 654
+    },
+    {
+      "label": "ma_golden（移動平均ゴールデンクロス）",
+      "filter": {"signal": "ma_golden"},
+      "k": 7,
+      "n": 30
+    },
+    {
+      "label": "ma_dead（移動平均デッドクロス）",
+      "filter": {"signal": "ma_dead"},
+      "k": 8,
+      "n": 14
+    },
+    {
+      "label": "macd_dead（MACDデッドクロス）",
+      "filter": {"signal": "macd_dead"},
+      "k": 47,
+      "n": 103
+    },
+    {
+      "label": "bb_lower_touch（バンド下限タッチ）",
+      "filter": {"signal": "bb_lower_touch"},
+      "k": 68,
+      "n": 157
+    },
+    {
+      "label": "rsi_oversold_bounce（RSI過売り反発）",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 51,
+      "n": 128
+    },
+    {
+      "label": "macd_golden（MACDゴールデンクロス）",
+      "filter": {"signal": "macd_golden"},
+      "k": 34,
+      "n": 88
+    },
+    {
+      "label": "high_break（直近高値ブレイク）",
+      "filter": {"signal": "high_break"},
+      "k": 15,
+      "n": 45
+    },
+    {
+      "label": "low_break（直近安値ブレイク）",
+      "filter": {"signal": "low_break"},
+      "k": 16,
+      "n": 42
+    },
+    {
+      "label": "ma_golden × other_fx（他FX限定）",
+      "filter": {"signal": "ma_golden", "group": "other_fx"},
+      "k": 6,
+      "n": 22
+    }
+  ]
+}
