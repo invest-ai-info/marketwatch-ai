@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-06-16 | 🧪 signal-lab #009 ⏳ゲート実行中
+
+- **基準日（JST）**: 2026-06-16
+- **採択仮説**: 「jpy_fx（円クロスFX）ショートシグナルの勝率は損益分岐43%を安定的に下回るか」（3視点会議でリスクマネージャー採択。GC=F方向性交絡#004の拡張版）
+- **事前宣言**: N≥20 かつ CI上限 < 43% → 棄却確認として通過A
+- **検証データ**: 全決済済み722件（signals-log.json）。jpy_fx（USD/EUR/GBP/AUD × JPY）の方向別集計
+- **結果**: jpy_fx ショート 8/34=23.5% CI[12.4%~40.0%] CI上限40.0%<43%・N=34≥20 → **通過A（棄却確認）**。macd_dead×jpy_fxが76.5%(26/34件)を占め主因。下降×ショートでも8.3%(1/12)という逆説。ロング42.3%(N=104)はトラッカー[m]新設・蓄積中。
+- **生成ファイル**: drafts/draft-signal-lab-009.html / drafts/labnotes/lab-009-analysis.md / drafts/labnotes/lab-009-claims.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push ⏳
+- [ ] 8-2 verify EXIT=0 ⏳
+- [ ] 8-3 Opus compliance ⏳
+- [ ] 8-4-i 数値再検証 ⏳
+- [ ] 8-4-ii 独立確認Opus ⏳
+- [ ] 8-4-iii 公開実行 ⏳
+
+---
+
 ## 2026-06-15 | 🧪 signal-lab #008 ✅自動公開済み
 
 - **基準日（JST）**: 2026-06-15
