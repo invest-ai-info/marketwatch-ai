@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-06-16 | 🧪 signal-lab #009 ⏳ゲート実行中
+## 2026-06-16 | 🧪 signal-lab #009 ✅自動公開済み
 
 - **基準日（JST）**: 2026-06-16
 - **採択仮説**: 「jpy_fx（円クロスFX）ショートシグナルの勝率は損益分岐43%を安定的に下回るか」（3視点会議でリスクマネージャー採択。GC=F方向性交絡#004の拡張版）
@@ -12,12 +12,12 @@
 - **生成ファイル**: drafts/draft-signal-lab-009.html / drafts/labnotes/lab-009-analysis.md / drafts/labnotes/lab-009-claims.json / signal-lab-ledger.md
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push ⏳
-- [ ] 8-2 verify EXIT=0 ⏳
-- [ ] 8-3 Opus compliance ⏳
-- [ ] 8-4-i 数値再検証 ⏳
-- [ ] 8-4-ii 独立確認Opus ⏳
-- [ ] 8-4-iii 公開実行 ⏳
+- [x] 8-1 git commit/push ✅（cherry-pick after rebase）
+- [x] 8-2 verify EXIT=0 ✅ — 9/9クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟢白（修正なし。kinsho-v1×3確認、断定表現なし、将来非保証明示、探索的観察として記録）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正なし＝不変確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（6チェックポイント全通過。markup typo指摘→手動修正後verify再実行）
+- [x] 8-4-iii 公開実行 ✅ — finalize（kinsho=6,svg=3,41KB）/guides.htmlカード追加/generate_market_news.py更新/check_site_consistency(EXIT=0,警告3件は既存問題)/commit+push
 
 ---
 
