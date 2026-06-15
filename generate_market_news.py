@@ -4299,8 +4299,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 🧪 解説「<a href="guide-signal-lab-008.html" style="color:#0969da"><b>研究日誌 #8 ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ</b></a>」公開'},
-        {"date": "2026-06-14", "line": '・<b>2026-06-14</b>: 🧪 解説「<a href="guide-signal-lab-007.html" style="color:#0969da"><b>研究日誌 #7 他FX×blocked=Trueの高勝率は「下降偏り」交絡——グループ×トレンド三次元解析</b></a>」公開'},
+        {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 📚 解説「<a href="guide-learning-roadmap.html" style="color:#0969da"><b>投資の学習ロードマップ — 何から学ぶ？「順番」で迷わない地図</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🏦 解説「<a href="guide-private-credit.html" style="color:#0969da"><b>プライベートクレジットとは？ リーマンショック級なのか — 仕組みと5つの危険性をフラットに整理</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🧪 解説「<a href="guide-signal-lab-005.html" style="color:#0969da"><b>研究日誌 #5 壁ありシグナルが勝つ逆転現象——「避けろ」判定の中身を解剖</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🧪 解説「<a href="guide-signal-lab-004.html" style="color:#0969da"><b>研究日誌 #4 ゴールドはロングだと9割負ける——方向性の罠を解剖</b></a>」公開'},
