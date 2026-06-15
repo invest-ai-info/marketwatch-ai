@@ -1,6 +1,38 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-13）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-15）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
+
+---
+
+## 🔝🆕 次セッション最優先タスク：学びコンテンツ強化（オーナー決定 2026-06-15／C案・**Workflowで一気に**）
+
+オーナーが「投資本ガイドを探しやすくしたい」→ **C案＝ナビに10個目のボタン追加**＋**投資本の説明文を各〜10行に拡充**に決定。**ダイナミックワークフロー（Workflowツール＝多エージェント）で一括改修**してほしいと明示（重い作業なので新セッションでまとめて実施）。Workflowのopt-inはこの指示で成立済み。
+
+> 💡 設計メモ：CLAUDE.mdは「ナビ9ボタン維持（10で崩れる）」だが、**モバイルは2列グリッド＝10ボタンは5行×2でむしろ綺麗**（9だと1個あぶれる）。崩れ懸念は薄い。真のコストは「全ページのナビ差し替え」だけ＝Workflowの得意分野。
+
+### タスク1：ナビに10個目のボタン（全ページ一括）
+- 追加：**`📖 投資本` → `guide-investment-books.html`**（絵文字/ラベル/挿入位置はオーナー最終確認。推奨＝`📚 解説記事`の直後、または末尾`📺 YouTube要約`の後）。※`📚`は解説記事で使用中なので本は`📖`等で差別化。
+- ⚠️ナビは**全ページに在る**＝一括更新対象：
+  - **生成スクリプト**：`generate_market_news.py`（6コアページ）/`generate_youtube_summary.py`/`generate_track_record_page.py`/`build_political_feed_page.py`/`auto_weekly_strategy.py`/`auto_weekly_review.py`/`generate_monthly_report.py`
+  - `guides.html`（静的）
+  - **既存 `guide-*.html` 約65本**（各自のnavブロック）
+- ⚠️各ページで`nav-btn current`の位置が違う＝**ブラインドsed不可**。Workflowの`pipeline`で**1ファイル=1エージェント**が読んで「`youtube-summary.html`のボタン行の直後（or解説記事の直後）」に新ボタンを挿入。`isolation:'worktree'`推奨（並列編集の衝突回避）。
+- 検証：`grep -L "guide-investment-books.html" guide-*.html` 等で**漏れ0件**を確認。生成スクリプトもgrepで確認。preview実機（375px幅）でモバイルのライト/ダークのグリッド崩れ無しを確認。
+- 完了後 `CLAUDE.md` のナビ記述（9→10ボタン・対象ファイル数）も更新。
+
+### タスク2：投資本ガイドの説明文を各〜10行に拡充（`guide-investment-books.html`）
+- 現状＝9系統・**約30冊・各説明1-2行**。→ **各 約8-10行**に拡充（オーナー「二行では魅力が伝わらない、せめて十行」）。**タイトル・著者・系統・難易度は確定済み＝変更しない**。
+- 各本に書く（自分の言葉で）：①どんなアプローチ/系統の本か ②誰向け・どんな悩みに効くか ③難易度・読みやすさ・ボリューム ④なぜ定番か/歴史的位置づけ ⑤当サイトのどの無料記事と相性が良いか（内部リンク）。
+- 🚨**コンプラ最重要＝著作権**：本の**中身の詳細要約・長い引用・章立て転載は絶対しない**。「どんな本か」の紹介に徹する。断定・効果保証（必ず儲かる等）・銘柄/手法推奨は禁止。冒頭disclaimer-banner＋末尾`data-disclaimer="kinsho-v1"`維持。
+- Workflowで30冊の拡充文を並列生成→1ファイルに統合。**公開前にOpusコンプラ監査（著作権=要約しすぎを特に重点）**。🟢でなければ修正。
+
+### タスク3：公開・検証
+- `python mw.py check` → `python sync_to_github.py` → `python mw.py trigger update-market-news.yml` → ライブHTTP200確認。ナビ全ページ反映＆モバイルグリッドをpreview実機確認。
+
+### 参考（現状・このセッションで作成済み）
+- `guide-investment-books.html`（公開済・32.9KB・確定書籍リスト30冊＝拡充の土台）。`guide-learning-roadmap.html`（学習ロードマップ）と相互リンク済み。
+- 現ナビ9ボタン順：🏠index→🚨political-feed→📊track-record→📅calendar→📚guides→🩺market-health→🔥hot-assets→📈charts→📺youtube-summary。
+- ⚠️FOMC議長は**ケビン・ウォーシュ**（2026-05-22就任）。旧記事`guide-fomc-2026-04.html`（パウエル続投）と`sns-post-daily`が古い→別途要修正。
 
 ---
 
