@@ -4299,6 +4299,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 📚 解説「<a href="guide-investment-books.html" style="color:#0969da"><b>投資本の系統別ガイド｜デイトレ・ファンダ・テクニカル・偉人…「どれを読む？」を系統で選ぶ</b></a>」公開'},
         {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 📰 解説「<a href="guide-news-2026-06-15-nikkei-69k.html" style="color:#0969da"><b>【6/15】日経平均が+5%急騰・史上初の6万9000円台はなぜ？ 米イラン緊張緩和を中立整理</b></a>」公開'},
         {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 📚 解説「<a href="guide-learning-roadmap.html" style="color:#0969da"><b>投資の学習ロードマップ — 何から学ぶ？「順番」で迷わない地図</b></a>」公開'},
         {"date": "2026-06-13", "line": '・<b>2026-06-13</b>: 🏦 解説「<a href="guide-private-credit.html" style="color:#0969da"><b>プライベートクレジットとは？ リーマンショック級なのか — 仕組みと5つの危険性をフラットに整理</b></a>」公開'},
