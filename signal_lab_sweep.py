@@ -23,7 +23,7 @@ import itertools
 import json
 import os
 import sys
-from math import comb
+from math import comb, erf, sqrt
 
 # 固定オラクルの部品を再利用（編集しない・import のみ）
 from signal_lab_verify import (
@@ -37,12 +37,15 @@ DIRECTIONS = ("long", "short")
 TRENDS = ("上昇", "下降", "中立・もみあい")
 
 
-def load_log():
-    p = os.path.join(ROOT, "signals-log.json")
-    if not os.path.exists(p):
-        alt = os.path.join(ROOT, "_signals_live.json")
-        if os.path.exists(alt):
-            p = alt
+def load_log(path=None):
+    if path:
+        p = path if os.path.isabs(path) else os.path.join(ROOT, path)
+    else:
+        p = os.path.join(ROOT, "signals-log.json")
+        if not os.path.exists(p):
+            alt = os.path.join(ROOT, "_signals_live.json")
+            if os.path.exists(alt):
+                p = alt
     return json.load(open(p, encoding="utf-8-sig"))
 
 
@@ -56,11 +59,22 @@ def binom_p_le(k, n, p):
     return sum(comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(0, k + 1))
 
 
+def _norm_cdf(x):
+    return 0.5 * (1 + erf(x / sqrt(2)))
+
+
 def two_sided_p(k, n, p0=BREAKEVEN):
-    """損益分岐 p0 と有意に異なるかの両側 p 値（方向は別途 pct で判定）。"""
-    up = binom_p_ge(k, n, p0)
-    down = binom_p_le(k, n, p0)
-    return min(1.0, 2.0 * min(up, down))
+    """損益分岐 p0 と有意に異なるかの両側 p 値（方向は別途 pct で判定）。
+    n≤1000 は厳密二項、それ超は正規近似（厳密だと comb が桁あふれ＋近似で十分）。"""
+    if n <= 1000:
+        up = binom_p_ge(k, n, p0)
+        down = binom_p_le(k, n, p0)
+        return min(1.0, 2.0 * min(up, down))
+    se = sqrt(p0 * (1 - p0) / n)
+    if se == 0:
+        return 1.0
+    z = (k / n - p0) / se
+    return max(0.0, min(1.0, 2.0 * (1 - _norm_cdf(abs(z)))))
 
 
 def signal_types(data):
@@ -172,9 +186,10 @@ def main():
     ap.add_argument("--min-n", type=int, default=20, help="最小サンプル数（既定20）")
     ap.add_argument("--alpha", type=float, default=0.10, help="FDRのα（既定0.10）")
     ap.add_argument("--json", help="候補をJSON出力するパス")
+    ap.add_argument("--log", help="検証する signals-log のパス（既定=signals-log.json。バックテストは signals-log-backtest.json）")
     args = ap.parse_args()
 
-    data = load_log()
+    data = load_log(args.log)
     resolved = [d for d in data if closed(d)]
     rows, m = sweep(data, args.min_n, args.alpha)
 
