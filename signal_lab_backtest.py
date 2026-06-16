@@ -152,6 +152,7 @@ def replay_ticker(ticker, timeframe, years):
 
         plan = gta.calc_entry_sl_tp(ind["price"], ind["atr"], direction)
         sr = gta.compute_sr_runway(plan, ind) or {"blocked": False}
+        sel = gta.compute_selection_tier(plan, ind, sr, primary) or {}
         outcome, resolved_at = resolve_outcome(df, i, plan, cfg["expiry_days"])
         out.append({
             "id": f"{ticker}_{timeframe}_{df.index[i].strftime('%Y%m%d_%H%M')}",
@@ -166,7 +167,7 @@ def replay_ticker(ticker, timeframe, years):
                                      "ma75": ind.get("ma75"), "recent_high": ind.get("recent_high"),
                                      "recent_low": ind.get("recent_low"), "regime": ind.get("regime")},
             "trend_alignment": {"higher_tf": cfg["higher_label"], "higher_tf_trend": trend_at(df.index[i])},
-            "sr_runway": sr,
+            "sr_runway": sr, "selection": sel,
             "outcome": outcome, "outcome_resolved_at": resolved_at,
             "source": f"backtest_{timeframe}",
         })
