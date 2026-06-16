@@ -44,6 +44,7 @@ SYNC_FORBIDDEN = {
     "article-ideas.md", "daily-preview.md", "political-digest.md",
     "compliance-scan.md", "weekly-strategy-context.json",
     "signal-lab-tracker.json",  # 前向きトラッカー状態（routineがGitHub側でupdate/commit。SEEDはsignal_lab_tracker.py内）
+    "signals-log-backtest.json",  # 日足リプレイ出力（ローカル/週次再生成の派生データ・大容量。ローカルpush禁止）
 }
 
 errors = []
