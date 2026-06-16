@@ -4,6 +4,20 @@
 
 ---
 
+## 🆕🔬 2026-06-16 signal-lab を「多数仮説スイープ＋前向きトラッカー自動昇格」に拡張（実装・同期済／残り＝routine差し替え）
+
+オーナー相談「検証の回数・幅を増やしてライバルに差をつけたい・記事は朝1回でよい」への回答＝**回数より“構造”で勝つ二段構え**を実装。
+
+- **`signal_lab_sweep.py`**（新・SYNC済）＝仮説グリッドを全数検証（in-sample 候補出し）。**最小N＋BH-FDR多重検定補正**で“偶然の勝てそう”を除外。**LLM不使用＝ほぼ無料で好きなだけ回せる**。`--json` で候補出力。
+- **`signal_lab_tracker.py`**（新・SYNC済）＝登録日以降の **out-of-sample** だけでN蓄積→**方向対応の自動昇格**（edge=前向きCI下限>43%／gate=前向きCI上限<43%／N≥80）。サブコマンド `update`/`register`/`table`。SEEDは本体内。
+- **`signal-lab-tracker.json`**＝状態ファイル＝🚫**SYNC禁忌**（routineがGitHub側でupdate/commit。SEEDから初回自動生成）。リンターの SYNC_FORBIDDEN にも追加済。
+- いずれも固定オラクル **`signal_lab_verify.py` を import**（単一ソース・編集不要）。運用手順書＝**`SIGNAL_LAB_SOP.md`**（SYNC済）。
+- **2026-06-16 実データ(894件/決済済723)初回スイープ**：FDR通過5本＝**指数×ロング55%（✅本物のエッジ候補・CI下限47%）**／メタル全体27%・メタル×ロング18%・メタル×逆張り18%・下降×ショート27%（回避ゲート候補）。lab#5の blocked=True 56.9% は **FDR非有意(q=0.25)＝過大主張を正しく抑制**。
+- **🟡 残り1手＝cloud routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57）のプロンプトを SIGNAL_LAB_SOP.md の流れに差し替え**（毎日: `tracker update`→`sweep --json`→`tracker register`→朝1記事化。既存の `signal_lab_verify`＋Opusコンプラ自動公開ゲートはそのまま）。⚠️ライブ自動公開の挙動を変えるので**適用は要オーナー確認**。スクリプトは手動でも実行可（今すぐ使える）。
+- 🚨 不変の鉄則＝昇格は「ライブ配信フィルタ/信頼度へ反映する“候補”の旗立て」のみ。**発火エンジン・配信条件には自動で触れない**（人間が最終反映）。
+
+---
+
 ## ✅ 完了タスク：学びコンテンツ強化（実装＋公開とも完了・2026-06-16）
 
 > **【2026-06-16 完了】Workflowで実装→公開まで完了。api.github.com 復帰後に同期165/0・update-market-news 起動成功（run 04:27Z success）・ライブ反映確認済み。次セッションはこのタスクは対応不要。**
