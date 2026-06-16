@@ -4,7 +4,27 @@
 
 ---
 
-## 🔝🆕 次セッション最優先タスク：学びコンテンツ強化（オーナー決定 2026-06-15／C案・**Workflowで一気に**）
+## 🔝🆕 次セッション最優先タスク：学びコンテンツ強化 → ✅ローカル完了・**公開のみ保留**（2026-06-15夜更新）
+
+> **【2026-06-15夜 進捗】Workflowで実装完了。残るは GitHub 公開の最終ステップのみ（api.github.com 不通でブロック中）。**
+>
+> **✅ 完了（ローカル・検証済み）**
+> - **タスク1 ナビ10ボタン化**：`📚解説記事`の直後に `📖 投資本`→`guide-investment-books.html` を追加。反映＝guide-*.html **75本**＋生成スクリプト8本（generate_market_news 等の nav 15ブロック）＋guides.html＋about/contact/privacy。投資本ページは自身が current。ツール更新＝`unify_navbar.py`（10ボタン標準）／新規 `apply_books_nav_scripts.py`（冪等）／`check_site_consistency.py`（NAV_LINKS 10件化）。モバイル375px＝2列×5行で崩れ無し（preview確認済）。
+> - **タスク2 投資本28冊の説明文を各〜10行に拡充**：`guide-investment-books.html`（32.9→59.6KB）。Workflow（28執筆＋本別Opus法務監査）で 白27／グレー1(軟化適用)／黒0、統合28件・免責(disclaimer-banner＋kinsho-v1)存置、全文Opus監査＝**白**、内部リンク切れ0。タイトル/著者/難易度は不変。
+>
+> **🟡 残り＝公開のみ（api.github.com 復帰後に実行）**
+> 1. `python sync_to_github.py`（**保留7ファイルだけ再試行**＝guide-investment-books.html／guides.html／guide-private-credit.html／guide-learning-roadmap.html／guide-news-2026-06-15-nikkei-69k.html／generate_youtube_summary.py／check_site_consistency.py。他81件はpush済・キャッシュ）
+> 2. `python mw.py trigger update-market-news.yml`（6コアページを新navで再生成。generate_market_news.py は同期済）
+> 3. ライブHTTP200確認（PowerShell Invoke-WebRequest／curlはCDN古キャッシュ注意）→ 投資本ページが拡充版に・全ページ10ボタンに
+> 4. `CLAUDE.md` のナビ記述を **9→10ボタン**・対象ファイル数に更新
+> 5. track-record／youtube-summary／political-feed／weekly／monthly は各workflowの次回実行でnav反映（待てばよい）
+>
+> **🚧 ブロック理由＝api.github.com だけ TCP不通**（DNSは解決=20.27.177.116／web github.com・ライブサイト・一般ネットは正常）。急速push約81件後の **GitHub abuse/二次レート制限** か **Norton による api ホスト遮断**が継続。切り分け＝Nortonのスマートファイアウォールを数分オフ→再試行で通ればNorton確定（python.exe を恒久「許可」に）。通らなければGitHub側＝10〜15分待って再試行。⚠️`sync_to_github.py` の GET timeout は 15→60秒に延長済。⚠️`git push` は禁忌（SYNC禁忌ファイル巻き戻し事故）＝必ず sync_to_github.py。
+>
+> ---
+> 以下は元の実装計画（参考・実行済み）：
+
+## 旧・次セッション最優先タスク：学びコンテンツ強化（オーナー決定 2026-06-15／C案・**Workflowで一気に**）
 
 オーナーが「投資本ガイドを探しやすくしたい」→ **C案＝ナビに10個目のボタン追加**＋**投資本の説明文を各〜10行に拡充**に決定。**ダイナミックワークフロー（Workflowツール＝多エージェント）で一括改修**してほしいと明示（重い作業なので新セッションでまとめて実施）。Workflowのopt-inはこの指示で成立済み。
 
