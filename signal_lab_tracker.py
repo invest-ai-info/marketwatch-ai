@@ -38,22 +38,28 @@ BE_PCT = BREAKEVEN * 100    # 43.0
 # 初期登録（トラッカー未作成時のシード）。
 # registered_at: 既に過去記事で宣言済みの仮説はその宣言日、新規発見は今日。
 SEED = [
-    # 既存の前向きトラッカー宣言（lab#3前後で宣言済み＝backdate）
-    {"id": "index_long", "label": "指数×ロング", "filter": {"group": "index", "direction": "long"},
+    # ── 20年バックテスト(日足)で FDR 通過した頑健な順エッジ＝tf=1d で前向き登録 ──
+    #    （ライブの日足ストリームで out-of-sample に検証。()内は20年backtest勝率）
+    {"id": "index_long_1d", "label": "指数×ロング(日足)", "filter": {"group": "index", "direction": "long", "tf": "1d"},
+     "kind": "edge", "registered_at": "2026-06-16"},          # 44.7% N3699
+    {"id": "metal_long_1d", "label": "メタル×ロング(日足)", "filter": {"group": "metal", "direction": "long", "tf": "1d"},
+     "kind": "edge", "registered_at": "2026-06-16"},          # 52.9% N1557
+    {"id": "btc_long_1d", "label": "BTC×ロング(日足)", "filter": {"group": "btc", "direction": "long", "tf": "1d"},
+     "kind": "edge", "registered_at": "2026-06-16"},          # 52.1% N589
+    {"id": "index_revL_1d", "label": "指数×逆張り買い(日足)", "filter": {"group": "index", "reversal_long": True, "tf": "1d"},
+     "kind": "edge", "registered_at": "2026-06-16"},          # 47.6% N1127
+    # ── 20年で頑健な回避ゲート（tf=1d） ──
+    {"id": "other_fx_1d", "label": "other_fxクロス(日足・回避)", "filter": {"group": "other_fx", "tf": "1d"},
+     "kind": "gate", "registered_at": "2026-06-16"},          # 38.0% N4032
+    {"id": "short_1d", "label": "ショート全般(日足・回避)", "filter": {"direction": "short", "tf": "1d"},
+     "kind": "gate", "registered_at": "2026-06-16"},          # 39.3% N4085
+    {"id": "dntrend_1d", "label": "下降トレンド発火(日足・回避)", "filter": {"trend": "下降", "tf": "1d"},
+     "kind": "gate", "registered_at": "2026-06-16"},          # 40.5% N4088
+    # ── ライブ1か月でも20年でも一貫して強い（足を絞らない＝全足ライブ） ──
+    {"id": "index_long_live", "label": "指数×ロング(全足ライブ)", "filter": {"group": "index", "direction": "long"},
      "kind": "edge", "registered_at": "2026-06-12"},
-    {"id": "index_revL", "label": "指数×逆張り買い", "filter": {"group": "index", "reversal_long": True},
-     "kind": "edge", "registered_at": "2026-06-12"},
-    {"id": "all_revL", "label": "全逆張り買い", "filter": {"reversal_long": True},
-     "kind": "edge", "registered_at": "2026-06-12"},
-    {"id": "blocked_true", "label": "runway阻害(blocked=True)", "filter": {"blocked": True},
-     "kind": "edge", "registered_at": "2026-06-13"},
-    # 2026-06-16 のスイープで FDR 通過した回避ゲート候補（新規）
-    {"id": "metal_all", "label": "メタル全体（回避ゲート）", "filter": {"group": "metal"},
-     "kind": "gate", "registered_at": "2026-06-16"},
-    {"id": "metal_long", "label": "メタル×ロング（回避）", "filter": {"group": "metal", "direction": "long"},
-     "kind": "gate", "registered_at": "2026-06-16"},
-    {"id": "dn_short", "label": "下降トレンド×ショート（回避）", "filter": {"trend": "下降", "direction": "short"},
-     "kind": "gate", "registered_at": "2026-06-16"},
+    # 注: 旧SEEDの「メタル＝回避ゲート」「全逆張り買い」はライブ1か月(主に時間足・極小N)由来で
+    #     20年日足エビデンス(メタル×ロング勝ち/逆張りは指数限定)と矛盾するため不採用。
 ]
 
 
