@@ -43,6 +43,7 @@ SYNC_FORBIDDEN = {
     "fundamental-context.json", "weekly-levels.json", "weekly-zone-plan.md",
     "article-ideas.md", "daily-preview.md", "political-digest.md",
     "compliance-scan.md", "weekly-strategy-context.json",
+    "signal-lab-tracker.json",  # 前向きトラッカー状態（routineがGitHub側でupdate/commit。SEEDはsignal_lab_tracker.py内）
 }
 
 errors = []
