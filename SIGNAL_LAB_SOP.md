@@ -55,3 +55,17 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
 ## 拡張の仕方（ルールが増えても破綻させない）
 - 新しいフィルタ次元 → `signal_lab_verify.py` の `match()` と `ALLOWED_FILTER_KEYS` に**人間が**追加（オラクルは単一ソース）。
 - スイープの仮説グリッド → `signal_lab_sweep.py` の `build_grid()` に追記。組合せ爆発に注意（FDRが効くよう本数は数十〜百程度に抑える）。
+
+## 🕰️ 検証データ拡張：日足リプレイ・バックテスト（2026-06-16 追加）
+ライブ signals-log は約1か月＝“今の相場”に過学習しがち。`signal_lab_backtest.py` がライブ発火エンジン（`generate_technical_alerts.py` の `detect_signals` 等を **import**）を**過去20年の日足にリプレイ**して検証データを桁違いに増やす（2026-06-16初回＝**19,103発火/16,222決済・2006〜**＝ライブの約18倍・全レジーム）。
+- 実行：`python signal_lab_backtest.py --years 20`（→ `signals-log-backtest.json`／週次・月次に再生成すれば良い・毎日は不要）。
+- 発見スイープ：`python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50`。
+- **限界（必読）**：シミュレーション＝実約定でない／同バーTP・SL両達は保守的にSL（負け）／スプレッド無視／first_pullback無効／**source=backtest_1dでライブと混ぜない**。
+- **使い分け（最重要）**：バックテストは **in-sample の“発見＋レジーム頑健性チェック”** に使う。**昇格判定はあくまでライブの前向きトラッカー（真のout-of-sample）が主役**。流れ＝バックテストで頑健な候補を見つける → `tracker register` で前向きに登録 → ライブで N が貯まって基準を満たせば昇格。
+- 時間足(1h/4h)はYahooで約2年が上限。2年超の intraday が要るなら Dukascopy(無料FX/CFD・2007頃〜) 等を別途。
+- データ運用：`signals-log-backtest.json` は派生・大容量＝**SYNC禁忌**（ローカル/週次再生成。リンターの SYNC_FORBIDDEN 済）。
+
+### 2026-06-16 初回バックテスト（日足20年・参考所見）
+- ✅順エッジ：メタル×ロング52.9%(N1557)・BTC×ロング52.1%・指数×逆張り47.6%・指数×ロング44.7%(N3699)・RSI過熱→ショート47.5%。
+- ⛔逆エッジ：other_fxクロス38%・jpy_fxクロス40%・ショート全般39%・下降局面40.5%・double_top34%・**「逆張り買い」全般39.8%（指数限定でのみ有効）**。
+- 教訓：ライブ1か月の「逆張り買い有望」は **20年では平均負け**＝レジーム/時間足で激変。バックテストが過度な楽観を冷ます。
