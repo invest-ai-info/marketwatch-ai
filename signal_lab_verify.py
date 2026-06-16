@@ -26,6 +26,7 @@ filter のキー（全てAND・省略可）:
   signal     : primary_signal の完全一致（例 "bb_lower_touch"）
   reversal_long : true なら direction=long かつ primary_signal∈{rsi_oversold_bounce,bb_lower_touch}
   blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway 無しは除外）
+  tier       : elite/good/neutral/avoid — selection.tier（選別タグ）でフィルタ（selection 無しは除外）
 
 ⚠️ このスクリプトは「固定の独立オラクル」。routine/エージェントが書き換えてはならない。
    対応していないフィルタ次元が必要な仮説は、人間がここを拡張するまで自動公開せずエスカレする。
@@ -46,7 +47,7 @@ GROUPS = {
     "oil":      {"CL=F"},
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
-ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "reversal_long", "blocked"}
+ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "reversal_long", "blocked", "tier"}
 
 
 def wilson(k, n, z=1.96):
@@ -100,6 +101,10 @@ def match(d, f):
     if "blocked" in f:
         sr = d.get("sr_runway")
         if not isinstance(sr, dict) or sr.get("blocked") != f["blocked"]:
+            return False
+    if "tier" in f:
+        sel = d.get("selection")
+        if not isinstance(sel, dict) or sel.get("tier") != f["tier"]:
             return False
     return True
 
