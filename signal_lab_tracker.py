@@ -28,7 +28,7 @@ import os
 import sys
 
 from signal_lab_verify import wilson, closed, win, match
-from signal_lab_sweep import BREAKEVEN, load_log
+from signal_lab_sweep import BREAKEVEN, load_log, r_of, _mean_std
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TRACKER = os.path.join(ROOT, "signal-lab-tracker.json")
@@ -76,22 +76,26 @@ def stats(data, f, since=None):
     k = sum(1 for d in rows if win(d))
     lo, hi = wilson(k, n)
     pct = (100 * k / n) if n else 0.0
-    return {"k": k, "n": n, "pct": round(pct, 1), "ci_lo": round(lo, 1), "ci_hi": round(hi, 1)}
+    Rs = [r_of(d) for d in rows if r_of(d) is not None]
+    meanR, sdR = _mean_std(Rs)
+    seR = sdR / (len(Rs) ** 0.5) if len(Rs) > 1 else 0.0
+    return {"k": k, "n": n, "pct": round(pct, 1), "ci_lo": round(lo, 1), "ci_hi": round(hi, 1),
+            "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3)}
 
 
 def judge(kind, fwd):
-    """方向対応の昇格判定。"""
+    """方向対応の昇格判定（期待値ベース：前向き平均R の95%CIが0を跨がないか）。"""
     if fwd["n"] < PROMOTE_MIN_N:
         return "tracking"
     if kind == "edge":
-        if fwd["ci_lo"] > BE_PCT:
+        if fwd["rci_lo"] > 0:   # 期待値プラスが有意＝本物のエッジ確認
             return "promoted"
-        if fwd["ci_hi"] < BE_PCT:
+        if fwd["rci_hi"] < 0:
             return "rejected"
     else:  # gate（回避）
-        if fwd["ci_hi"] < BE_PCT:
+        if fwd["rci_hi"] < 0:   # 期待値マイナスが有意＝回避確定
             return "promoted"
-        if fwd["ci_lo"] > BE_PCT:
+        if fwd["rci_lo"] > 0:
             return "rejected"
     return "tracking"
 
@@ -123,28 +127,28 @@ def cmd_update(args, data, today):
             newly.append((h, st))
         h["forward"], h["alltime"], h["status"] = fwd, allt, st
         h.setdefault("history", [])
-        h["history"].append({"date": today, "fwd_n": fwd["n"], "fwd_pct": fwd["pct"], "fwd_ci_lo": fwd["ci_lo"]})
+        h["history"].append({"date": today, "fwd_n": fwd["n"], "fwd_avgR": fwd["avgR"], "fwd_rci_lo": fwd["rci_lo"]})
         h["history"] = h["history"][-30:]  # 直近30点キープ
     t["updated_at"] = today
     save_tracker(t)
 
     print(f"=== 前向きトラッカー update（基準日 {today} / signals決済済 {sum(1 for d in data if closed(d))}件） ===")
-    print(f"昇格基準: forward N≥{PROMOTE_MIN_N} ／ edge=CI下限>{BE_PCT:.0f}% ／ gate=CI上限<{BE_PCT:.0f}%")
-    print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'前向き勝率':>9}{'  前向き95%CI':>17}  状態")
-    print("-" * 100)
+    print(f"昇格基準（期待値ベース）: forward N≥{PROMOTE_MIN_N} ／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0")
+    print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
+    print("-" * 108)
     order = {"promoted": 0, "tracking": 1, "rejected": 2}
     for h in sorted(t["hypotheses"], key=lambda x: (order.get(x["status"], 9), -x["forward"]["n"])):
         fwd = h["forward"]
-        ci = f"[{fwd['ci_lo']:.1f}~{fwd['ci_hi']:.1f}]"
+        rci = f"[{fwd['rci_lo']:+.2f}~{fwd['rci_hi']:+.2f}]"
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}[h["status"]]
         print(f"{h['label']:<26}{h['kind']:>5}{h['registered_at']:>12}"
-              f"{str(fwd['k'])+'/'+str(fwd['n']):>11}{fwd['pct']:>8.1f}%{ci:>17}  {icon}"
-              f"  (全期間 {h['alltime']['k']}/{h['alltime']['n']}={h['alltime']['pct']:.0f}%)")
+              f"{str(fwd['k'])+'/'+str(fwd['n']):>11}{fwd['pct']:>5.0f}%{fwd['avgR']:>+8.3f}{rci:>17}  {icon}"
+              f"  (全期間R {h['alltime']['avgR']:+.2f})")
     if newly:
-        print("-" * 100)
+        print("-" * 108)
         print("🚩 今回ステータス変化（人間レビュー＝ライブ配信/信頼度への反映を検討）:")
         for h, st in newly:
-            print(f"   - {h['label']}: {st}（前向き {h['forward']['k']}/{h['forward']['n']} = {h['forward']['pct']:.1f}%）")
+            print(f"   - {h['label']}: {st}（前向き 平均R {h['forward']['avgR']:+.3f} / N={h['forward']['n']}）")
     print("\n※ 昇格＝ライブ配信フィルタ/信頼度へ反映する“候補”の旗立てのみ。発火エンジンには自動で触れない（人間が最終反映）。")
 
 
@@ -157,7 +161,9 @@ def cmd_register(args, data, today):
         key = tuple(sorted(c["filter"].items()))
         if key in existing:
             continue
-        kind = "edge" if c.get("pct", 0) >= BE_PCT else "gate"
+        # 期待値ベース：avgR>0 なら edge、<0 なら gate（avgR無しは勝率で代替）
+        metric = c["avgR"] if c.get("avgR") is not None else (c.get("pct", 0) - BE_PCT)
+        kind = "edge" if metric > 0 else "gate"
         hid = "auto_" + "_".join(f"{k}-{v}" for k, v in sorted(c["filter"].items()))
         t["hypotheses"].append({
             "id": hid[:60], "label": c["label"], "filter": c["filter"], "kind": kind,
@@ -174,14 +180,14 @@ def cmd_table(args, data, today):
     t = load_tracker()
     rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
     if args.html:
-        out = ['<h2 id="tracker">📡 前向きトラッカー定点観測</h2>',
-               f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}・損益分岐{BE_PCT:.0f}%をCIで突破</p>',
-               '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値</th><th>状態</th></tr>']
-        crit = {"edge": f"前向きN≥{PROMOTE_MIN_N}かつCI下限>{BE_PCT:.0f}%", "gate": f"前向きN≥{PROMOTE_MIN_N}かつCI上限<{BE_PCT:.0f}%"}
+        out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
+               f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}・平均R(期待値)の95%CIが0を跨がない</p>',
+               '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
+        crit = {"edge": f"前向きN≥{PROMOTE_MIN_N}かつ平均RのCI下限>0", "gate": f"前向きN≥{PROMOTE_MIN_N}かつ平均RのCI上限<0"}
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}
         for h in rows:
-            fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "ci_lo": 0, "ci_hi": 0})
-            val = f"{fwd['k']}/{fwd['n']} = {fwd['pct']:.1f}% CI[{fwd['ci_lo']:.1f}~{fwd['ci_hi']:.1f}]"
+            fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
+            val = f"平均R {fwd.get('avgR',0):+.2f} CI[{fwd.get('rci_lo',0):+.2f}~{fwd.get('rci_hi',0):+.2f}]（{fwd['k']}/{fwd['n']}・勝率{fwd['pct']:.0f}%）"
             out.append(f'<tr><td>{h["label"]}</td><td>{h["kind"]}</td><td>{crit[h["kind"]]}</td>'
                        f'<td>{val}</td><td>{icon[h.get("status","tracking")]}</td></tr>')
         out.append("</table>")
@@ -189,8 +195,8 @@ def cmd_table(args, data, today):
     else:
         print(f"# 前向きトラッカー（基準日 {t.get('updated_at', today)}）")
         for h in rows:
-            fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0})
-            print(f"- [{h.get('status','tracking')}] {h['label']}（{h['kind']}）: 前向き {fwd['k']}/{fwd['n']} = {fwd['pct']:.1f}%")
+            fwd = h.get("forward", {"k": 0, "n": 0, "avgR": 0})
+            print(f"- [{h.get('status','tracking')}] {h['label']}（{h['kind']}）: 前向き 平均R {fwd.get('avgR',0):+.3f} / N={fwd['n']}")
 
 
 def main():
