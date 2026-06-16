@@ -140,39 +140,58 @@ def build_grid(data):
     return uniq
 
 
+def r_of(rec):
+    """outcome → 実現Rマルチプル（SL=1.5ATR=-1R / TP1=2.0ATR=+1.33R / TP2=3.0ATR=+2R）。"""
+    return {"tp2": 2.0, "tp1": 4.0 / 3.0, "sl": -1.0}.get(rec.get("outcome"))
+
+
+def _mean_std(xs):
+    n = len(xs)
+    if n == 0:
+        return 0.0, 0.0
+    m = sum(xs) / n
+    if n < 2:
+        return m, 0.0
+    return m, (sum((x - m) ** 2 for x in xs) / (n - 1)) ** 0.5
+
+
 def sweep(data, min_n, alpha):
+    """各仮説の勝率＋【期待値(平均R)】を集計し、「期待値≠0」でBH-FDR判定（＝本当に黒字か）。"""
     rows = []
     for label, f in build_grid(data):
-        k, n = compute(data, f)
+        matched = [d for d in data if closed(d) and match(d, f)]
+        n = len(matched)
         if n < min_n:
             continue
+        k = sum(1 for d in matched if win(d))
         pct = 100 * k / n
         lo, hi = wilson(k, n)
-        p = two_sided_p(k, n)
-        edge = "順" if pct >= BREAKEVEN * 100 else "逆"
+        Rs = [r_of(d) for d in matched if r_of(d) is not None]
+        meanR, sdR = _mean_std(Rs)
+        seR = sdR / (len(Rs) ** 0.5) if len(Rs) > 1 else 0.0
+        if seR > 0:
+            pR = max(0.0, min(1.0, 2 * (1 - _norm_cdf(abs(meanR / seR)))))  # 期待値≠0 の両側p
+        else:
+            pR = 1.0
         rows.append({
             "label": label, "filter": f, "k": k, "n": n, "pct": round(pct, 1),
-            "ci_lo": round(lo, 1), "ci_hi": round(hi, 1), "p": p, "edge": edge,
+            "ci_lo": round(lo, 1), "ci_hi": round(hi, 1),
+            "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3),
+            "rci_hi": round(meanR + 1.96 * seR, 3), "p": pR, "profitable": meanR > 0,
         })
 
-    # Benjamini-Hochberg FDR（テストした m 本に対して）
+    # Benjamini-Hochberg FDR（期待値検定の p に対して）
     m = len(rows)
-    for r in sorted(rows, key=lambda x: x["p"]):
-        pass
     ordered = sorted(range(m), key=lambda i: rows[i]["p"])
-    # q値（BH）を単調化して付与
     qvals = [0.0] * m
     prev = 1.0
     for rank in range(m, 0, -1):
         i = ordered[rank - 1]
-        q = rows[i]["p"] * m / rank
-        prev = min(prev, q)
+        prev = min(prev, rows[i]["p"] * m / rank)
         qvals[i] = min(1.0, prev)
-    # 棄却閾値（最大の rank で p<= rank/m*alpha）
     thresh_rank = 0
     for rank in range(1, m + 1):
-        i = ordered[rank - 1]
-        if rows[i]["p"] <= (rank / m) * alpha:
+        if rows[ordered[rank - 1]]["p"] <= (rank / m) * alpha:
             thresh_rank = rank
     reject = set(ordered[:thresh_rank])
     for i, r in enumerate(rows):
@@ -185,7 +204,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--min-n", type=int, default=20, help="最小サンプル数（既定20）")
     ap.add_argument("--alpha", type=float, default=0.10, help="FDRのα（既定0.10）")
-    ap.add_argument("--json", help="候補をJSON出力するパス")
+    ap.add_argument("--json", help="候補をJSON出力するパス（トラッカー登録用）")
     ap.add_argument("--log", help="検証する signals-log のパス（既定=signals-log.json。バックテストは signals-log-backtest.json）")
     args = ap.parse_args()
 
@@ -193,24 +212,32 @@ def main():
     resolved = [d for d in data if closed(d)]
     rows, m = sweep(data, args.min_n, args.alpha)
 
-    print(f"=== signal-lab スイープ ===")
+    print("=== signal-lab スイープ（期待値R）===")
     print(f"signals-log {len(data)}件（決済済 {len(resolved)}件） / 検証仮説 {m}本（N≥{args.min_n}） / "
-          f"損益分岐 {BREAKEVEN*100:.0f}% / FDR α={args.alpha}")
-    print(f"{'仮説':<34}{'k/n':>9}{'勝率':>7}{'  95%CI':>16}{'  p':>8}{'  q':>8}  判定")
-    print("-" * 104)
-    # FDR通過を上に、その中は勝率の極端さ順
-    rows.sort(key=lambda r: (not r["fdr_pass"], r["q"], -abs(r["pct"] - BREAKEVEN * 100)))
+          f"R: SL=-1.0 / TP1=+1.33 / TP2=+2.0 / FDR α={args.alpha}（期待値≠0を検定）")
+    print(f"{'仮説':<34}{'k/n':>9}{'勝率':>7}{'  平均R':>9}{'  R 95%CI':>18}{'  q':>8}  判定")
+    print("-" * 110)
+    rows.sort(key=lambda r: (not r["fdr_pass"], r["q"], -r["avgR"]))
     for r in rows:
-        flag = ("✅FDR" if r["fdr_pass"] else "  ") + ("順" if r["edge"] == "順" else "逆")
-        ci = f"[{r['ci_lo']:.1f}~{r['ci_hi']:.1f}]"
-        print(f"{r['label']:<34}{str(r['k'])+'/'+str(r['n']):>9}{r['pct']:>6.1f}%{ci:>16}"
-              f"{r['p']:>8.3f}{r['q']:>8.3f}  {flag}")
+        flag = ("✅FDR" if r["fdr_pass"] else "  ") + ("黒字" if r["profitable"] else "赤字")
+        rci = f"[{r['rci_lo']:+.2f}~{r['rci_hi']:+.2f}]"
+        print(f"{r['label']:<34}{str(r['k'])+'/'+str(r['n']):>9}{r['pct']:>6.1f}%{r['avgR']:>+9.3f}{rci:>18}{r['q']:>8.3f}  {flag}")
 
-    passed = [r for r in rows if r["fdr_pass"]]
-    print("-" * 104)
-    print(f"FDR通過（偶然では説明しにくい）: {len(passed)}本"
-          + ("＝" + "、".join(f"{r['label']}({r['pct']:.0f}%)" for r in passed) if passed else "（なし）"))
-    print("※ これは in-sample（過去データ）の候補出し。採否は前向きトラッカーで out-of-sample 確認してから。")
+    winners = [r for r in rows if r["fdr_pass"] and r["profitable"]]
+    losers = [r for r in rows if r["fdr_pass"] and not r["profitable"]]
+    print("-" * 110)
+    print(f"✅黒字エッジ（期待値プラスが有意・FDR通過）: {len(winners)}本"
+          + ("＝" + "、".join(f"{r['label']}(R{r['avgR']:+.2f})" for r in winners) if winners else "（なし）"))
+    print(f"⛔赤字（期待値マイナスが有意・回避）: {len(losers)}本"
+          + ("＝" + "、".join(f"{r['label']}(R{r['avgR']:+.2f})" for r in losers) if losers else "（なし）"))
+    print("※ in-sample の候補出し。採否はライブ前向きトラッカーで out-of-sample 確認。")
+
+    if args.json:
+        out = {"min_n": args.min_n, "alpha": args.alpha,
+               "candidates": [r for r in rows if r["fdr_pass"]]}  # winners/losers両方＝tracker登録用
+        with open(args.json, "w", encoding="utf-8") as f:
+            json.dump(out, f, ensure_ascii=False, indent=2)
+        print(f"→ FDR通過 {len(out['candidates'])}本を {args.json} に出力（トラッカー登録用）。")
 
     if args.json:
         out = {"min_n": args.min_n, "alpha": args.alpha, "breakeven_pct": BREAKEVEN * 100,
