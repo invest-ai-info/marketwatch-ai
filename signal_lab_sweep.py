@@ -108,6 +108,11 @@ def build_grid(data):
     add("blocked=False", {"blocked": False})
     for s in sigs:
         add(f"signal={s}", {"signal": s})
+    # 選別タグ（エンジン既存・elite/good/neutral/avoid が期待値で分かれるか）
+    for tier in ("elite", "good", "neutral", "avoid"):
+        add(f"tier={tier}", {"tier": tier})
+    for tier in ("elite", "good"):
+        add(f"tier={tier}×dir=long", {"tier": tier, "direction": "long"})
 
     # --- 2次元（意味のある組合せのみ） ---
     for g in GROUPS.keys():
