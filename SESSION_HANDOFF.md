@@ -13,8 +13,10 @@
 - **`signal-lab-tracker.json`**＝状態ファイル＝🚫**SYNC禁忌**（routineがGitHub側でupdate/commit。SEEDから初回自動生成）。リンターの SYNC_FORBIDDEN にも追加済。
 - いずれも固定オラクル **`signal_lab_verify.py` を import**（単一ソース・編集不要）。運用手順書＝**`SIGNAL_LAB_SOP.md`**（SYNC済）。
 - **2026-06-16 実データ(894件/決済済723)初回スイープ**：FDR通過5本＝**指数×ロング55%（✅本物のエッジ候補・CI下限47%）**／メタル全体27%・メタル×ロング18%・メタル×逆張り18%・下降×ショート27%（回避ゲート候補）。lab#5の blocked=True 56.9% は **FDR非有意(q=0.25)＝過大主張を正しく抑制**。
-- **🟡 残り1手＝cloud routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57）のプロンプトを SIGNAL_LAB_SOP.md の流れに差し替え**（毎日: `tracker update`→`sweep --json`→`tracker register`→朝1記事化。既存の `signal_lab_verify`＋Opusコンプラ自動公開ゲートはそのまま）。⚠️ライブ自動公開の挙動を変えるので**適用は要オーナー確認**。スクリプトは手動でも実行可（今すぐ使える）。
+- **✅ cloud routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57）差し替え済み**（2026-06-16・Chrome経由でプロンプト更新・検証済）。既存の公開ゲート（verify＋Opusコンプラ＋エスカレ）は**一字も触らず**末尾に「tracker update→sweep→register→題材選定」を追記マージ。毎朝6:10から新フローで稼働。
 - 🚨 不変の鉄則＝昇格は「ライブ配信フィルタ/信頼度へ反映する“候補”の旗立て」のみ。**発火エンジン・配信条件には自動で触れない**（人間が最終反映）。
+- **🕰️ 検証データ拡張＝日足リプレイ・バックテスト（実装/実証済）**：`signal_lab_backtest.py`（新・SYNC済）がライブ発火エンジン（`detect_signals` 等を import）を**過去20年の日足にリプレイ**。初回＝**19,103発火/16,222決済（2006〜・ライブの約18倍・全レジーム）**。`signal_lab_sweep.py` に `--log` 追加。`signals-log-backtest.json` は派生・大容量＝**SYNC禁忌**（ローカル/週次再生成）。**使い分け＝バックテストはin-sampleの発見＋レジーム頑健性チェック、昇格はライブ前向きトラッカーが主役**。詳細＝`SIGNAL_LAB_SOP.md`。
+  - 20年所見：✅メタル×ロング52.9%・BTC×ロング52.1%・指数×逆張り47.6%・指数×ロング44.7%／⛔other_fxクロス38%・ショート全般39%・**逆張り買い全般39.8%（指数限定で有効）**。ライブ1か月の「逆張り買い有望」は20年では平均負け＝**過度な楽観をバックテストが冷ました**。intraday は Yahoo 約2年が上限（日足10〜30年）。2年超の時間足は Dukascopy(無料) 等を別途。
 
 ---
 
