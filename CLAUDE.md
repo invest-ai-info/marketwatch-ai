@@ -25,16 +25,18 @@
 
 解説記事は `guide-*.html` として個別公開（25+ 件、最新は guides.html 最上段）。
 
-### ナビバー（9 ボタン、利用頻度順、2026-05-25 最適化）
+### ナビバー（10 ボタン、利用頻度順、2026-06-15 に 📖 投資本 を追加）
 
 ```
-🏠 index → 🚨 political-feed → 📊 track-record → 📅 calendar → 📚 guides
+🏠 index → 🚨 political-feed → 📊 track-record → 📅 calendar → 📚 guides → 📖 投資本(guide-investment-books)
 → 🩺 market-health → 🔥 hot-assets → 📈 charts → 📺 youtube-summary
 ```
 
-- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達。10 ボタンになるとモバイル 2×N グリッドが崩れる設計判断）
-- ナビバー変更時は **ソース 13 ファイルを一括更新**（`generate_market_news.py`、`generate_youtube_summary.py`、`generate_track_record_page.py`、`build_political_feed_page.py`、`auto_weekly_*.py`、`generate_monthly_report.py`、`guides.html` + 後発 guide-*.html）
-- 確認: `grep -l "political-feed.html.*政治発言ライブ" *.py *.html` で 13 件出れば OK
+- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）。2026-06-15 に 📖 投資本 を追加して **10 ボタン**化＝モバイルは 2 列×5 行でむしろ整然（375px で崩れ無しを preview 確認済）
+- ナビバー変更時は **決定論ツールで一括更新**：
+  - **guide-*.html（約75本）＝ `python unify_navbar.py --apply`**（10ボタン標準を内蔵。投資本ページのみ自身を current、他は guides.html を current）
+  - **生成スクリプト8本＋guides.html＋about/contact/privacy ＝ `python apply_books_nav_scripts.py --apply`**（各 `guides.html` の nav 行直後に挿入・冪等）。対象スクリプト＝`generate_market_news.py`（nav 7ブロック）／`generate_youtube_summary.py`／`generate_track_record_page.py`／`build_political_feed_page.py`／`auto_weekly_strategy.py`／`auto_weekly_review.py`／`generate_monthly_report.py`／`auto_indicator_preview.py`
+- 確認: `python mw.py check`（`check_site_consistency.py` の `NAV_LINKS` は10件＝nav保持ファイルに `guide-investment-books.html` 欠落があれば warning）
 
 ---
 
