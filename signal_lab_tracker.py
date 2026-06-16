@@ -58,6 +58,9 @@ SEED = [
     # ── ライブ1か月でも20年でも一貫して強い（足を絞らない＝全足ライブ） ──
     {"id": "index_long_live", "label": "指数×ロング(全足ライブ)", "filter": {"group": "index", "direction": "long"},
      "kind": "edge", "registered_at": "2026-06-12"},
+    # ── FX2年intradayで唯一FDRを生き残ったエッジ＝コア仮説「売られすぎの逆張り買い」を前向き検証 ──
+    {"id": "rsi_oversold_edge", "label": "売られすぎ逆張り買い(rsi_oversold_bounce・全足)", "filter": {"signal": "rsi_oversold_bounce"},
+     "kind": "edge", "registered_at": "2026-06-16"},   # FX intraday 47.4%（q=0.06）
     # 注: 旧SEEDの「メタル＝回避ゲート」「全逆張り買い」はライブ1か月(主に時間足・極小N)由来で
     #     20年日足エビデンス(メタル×ロング勝ち/逆張りは指数限定)と矛盾するため不採用。
 ]
