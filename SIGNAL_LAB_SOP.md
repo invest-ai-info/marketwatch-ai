@@ -41,11 +41,13 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
   `signal_lab_verify.py draft.html claims.json`（exit0＝緑）→ Opusコンプラ → 公開（`finalize_signal_lab.py`）。
 - ⚠️ claims の filter は `signal_lab_verify.py` の `ALLOWED_FILTER_KEYS` の範囲のみ。新次元が要る仮説は**verify.pyを人間が拡張するまでエスカレ**（勝手に増やさない）。
 
-## 昇格基準（コード化済み・`signal_lab_tracker.py`）
-- 共通: 前向き **N≥80**（PROMOTE_MIN_N）。損益分岐 **43%**（R:R 1:1.33）。
-- **edge（順＝勝ち筋）**: 前向き **CI下限 > 43%** → ✅昇格／CI上限<43% → ⛔反証。
-- **gate（逆＝回避筋）**: 前向き **CI上限 < 43%** → ✅昇格（回避確定）／CI下限>43% → ⛔反証。
+## 昇格基準（コード化済み・`signal_lab_tracker.py`／2026-06-16 **期待値ベース**に更新）
+- 指標＝**期待値（1トレード平均R）**。**SL=-1R / TP1=+1.33R / TP2=+2R**。勝率でなく「実際に儲かるか」で判定（勝率45%でも期待値プラスはあり得る）。
+- 共通: 前向き **N≥80**（PROMOTE_MIN_N）。
+- **edge（勝ち筋）**: 前向き **平均RのCI下限 > 0**（期待値プラスが有意）→ ✅昇格／CI上限<0 → ⛔反証。
+- **gate（回避筋）**: 前向き **平均RのCI上限 < 0**（期待値マイナスが有意）→ ✅昇格（回避確定）／CI下限>0 → ⛔反証。
 - promoted/rejected は確定後ロック（戻さない）。
+- 発見スイープも同様に期待値でFDR：`signal_lab_sweep.py` は各仮説の平均Rと「期待値≠0」のBH-FDRを出す（黒字/赤字判定）。
 
 ## 2026-06-16 ブートストラップ時点の登録仮説（20年バックテスト基準・足一致）
 - edge(tf=1d)：指数×ロング(44.7%)・メタル×ロング(52.9%)・BTC×ロング(52.1%)・指数×逆張り買い(47.6%)
