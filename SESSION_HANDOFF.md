@@ -49,6 +49,12 @@
 - **原因2つ**：①クラウド公開(news/signal-lab)は git push のみで index 再生成ワークフローを起動しない→次の定時(朝7/夕16/23:43)まで更新履歴に出ない（news 17:40公開は最大~6h遅延）。②私が #10/#11 を**ローカルから**公開・syncした際、ローカルの古い `generate_market_news.py`(クラウドが追記した #6-9 を含まない版)で上書き＝**#6-9 の履歴を巻き戻し**（local-drift事故。#6-9は最新5件外なので表示は不変）。
 - **恒久対策（実装済 commit d151ca82）**：`.github/workflows/update-market-news.yml` の `on:` に **`push: paths: ['generate_market_news.py']`** を追加。**`publish_article.py` は全記事公開時に必ず generate_market_news.py を更新する**一方、**当ワークフローは generate_market_news.py を commit しない**ので、あらゆる公開(news/研究日誌/手動sync)で index が即再生成され、**自己再起動ループは原理的に起きない**。cron遅延を待たず遅延ゼロで更新履歴反映。skill `github-actions-cron-best-practice` 準拠（cron `:00`回避・workflow_dispatch併設は既存）。
 - ⚠️残課題：(a)クラウドルーティンの push 認証がGITHUB_TOKEN以外なら on:push が発火する（次回6/18の routine 実行で要確認。GITHUB_TOKENだと再帰抑制で発火しない＝その場合は routine に dispatch を追加）。(b)ローカルの generate_market_news.py / guides.html は今 GitHub より古い＝**次のローカル公開前に reconcile 必須**（巻き戻し再発防止・SESSION冒頭で対応）。(c)#6-9 履歴の復元は任意（表示外）。
+
+### ✅ 2026-06-17 経済指標「結果速報」を複数指標対応（FOMC＋日銀が同時/連続でも両方表示）
+- **問題**：`indicator-result.json` が単一オブジェクト＝`indicator-result` ルーティンが毎回上書き→重要指標が2つ以上（今日FOMC・明日日銀）あると古い方が消える。`generate_market_news.py` の `_load_indicator_result`/バナー/preview本体も1件しか描画しない設計だった。
+- **修正①（generate_market_news.py・commit 660eee→デプロイ済）**：`_load_indicator_results()`（複数版・`{"results":[...]}`/旧単一/配列を後方互換で読む・verified＆当日〜翌日のみ・新しい順）を追加。バナーは1件=従来/2件以上=「🇺🇸FOMC ＋ 🇯🇵日銀 の結果速報（N件）」、preview本体は結果セクションを**複数ループ描画**。py_compile＋2件モックの実地テスト合格。**on:push で本番再生成が success 実証**（index生成エラーなし）。
+- **修正②（indicator-result ルーティン trig_0183wxDTjBRPNzWBtEM1MfsM・更新済）**：上書き→**マージ保存**。既存resultsを読む→当日発表の重要指標を各々オブジェクト化（同日FOMC＋日銀なら2件作る）→(基準日-1)より古い・同key同dateを除去→今日の分を追加→`{"updated_at":..,"results":[..]}` で保存。**別日連続も同日複数も両方並ぶ**。次回6/18 23:13 JST から有効（FOMC/日銀の実結果で発動）。
+- ⚠️ ローカル `generate_market_news.py` は今回 GitHub から取り込んで編集したので reconcile 済み。ただし guides.html 等は依然ローカルが古い＝ローカル公開前の reconcile は引き続き必要。
 4. ✅完了（2026-06-17）：Track 1を研究日誌**#10「『当てる』より『飛ばさない』——ケリー基準と破産確率」**として公開（`guide-signal-lab-010.html`・図解6枚・独立Opusコンプラ判定=白・HTTP200確認）。⚠️ledgerは routine管理(SYNC禁忌)なので**GitHub現行版を直接APIで編集し次番号010→011にbump**（明朝6:10 routineの#010上書きを回避）。`gh`未インストールのため `market-news-config.json.json` のtoken流用でPUT。
 
 ---
