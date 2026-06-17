@@ -4305,6 +4305,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-17", "line": '・<b>2026-06-17</b>: 📰 解説「<a href="guide-news-2026-06-17-nikkei-70k.html" style="color:#0969da"><b>【6/16】日経平均が史上初の7万円台タッチ・連日最高値更新</b></a>」公開'},
         {"date": "2026-06-17", "line": '・<b>2026-06-17</b>: 🧪 解説「<a href="guide-signal-lab-011.html" style="color:#0969da"><b>「当てる」より「避ける・飛ばさない」——守りが効く2つの理由（例題編）</b></a>」公開'},
         {"date": "2026-06-17", "line": '・<b>2026-06-17</b>: 🧪 解説「<a href="guide-signal-lab-010.html" style="color:#0969da"><b>「当てる」より「飛ばさない」——ケリー基準と破産確率（リスク管理編）</b></a>」公開'},
         {"date": "2026-06-15", "line": '・<b>2026-06-15</b>: 📚 解説「<a href="guide-investment-books.html" style="color:#0969da"><b>投資本の系統別ガイド｜デイトレ・ファンダ・テクニカル・偉人…「どれを読む？」を系統で選ぶ</b></a>」公開'},
