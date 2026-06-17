@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-06-18 | ✅ 全topic下書き済み（新規生成なし）
+
+- **基準日（JST）**: 2026-06-18（UTC 2026-06-17T20:32Z）
+- **状況**: AUTODRAFT_GUIDE.md のtopicキュー全11件を確認。「draft無し・未公開」の topic が0件のため新規生成なし。
+- **キュー完了状況**:
+  - 公開済み（8件）: position-sizing / risk-reward / profit-taking / compounding-drawdown / cognitive-biases / diversification / leverage / dollar-cost-averaging
+  - 下書き存在・未公開（3件）: trading-psychology-calm / trading-journal / swap-points
+- **人間の残作業**: 上記3件の未公開ドラフトを compliance-reviewer(Opus)監査 → `mw publish` で公開
+
+---
+
 ## 2026-06-16 | 🧪 signal-lab #009 ✅自動公開済み
 
 - **基準日（JST）**: 2026-06-16
