@@ -44,6 +44,11 @@
 - **動作確認＝✅成功（実証済み）**：作成直後に `RemoteTrigger run` で1回手動実行→**`guide-news-2026-06-17-nikkei-70k.html` を完全自動で公開（ライブHTTP200・guides.htmlカード反映）**。トピック「日経平均 史上初の7万円台タッチ」スコア14/15。**コンプラ・ゲート完全動作＝初期🟡グレー（"ほぼ確実視"を検知）→Opusが「市場で広く織り込まれているとみられますが」に自己修正→別Opus独立確認🟢白→公開**（公開版から該当語が消えていることも確認）。免責3層・check_site_consistency exit=0。→ WebSearch→採点→記事化→Opus二段監査→自動公開 が人手ゼロで貫通することを実証。⚠️ファイル名はトピックslug付き（guide-news-<date>-<slug>.html）。
 - ⚠️ 既存クラウド一覧（RemoteTrigger list で全12本確認）：signal-lab-daily(trig_01V4A37...・cron `10 21 * * *`=06:10JST・enabled・last_fired 6/17 06:10=**発火はした**)。6/17朝に新番号記事が出なかったのは「定点観測 or エスカレ or 一過性」＝要 routines 画面確認。研究日誌は設計上すでに完全自動。
 - 📌 RemoteTrigger でクラウドルーティンを list/get/run/create/update できると判明＝今後の自動化整備が以前より直接的に可能。
+
+### ✅✅✅ 2026-06-17 「公開しても更新履歴に載らない」を恒久解決＝update-market-news に on:push 追加
+- **原因2つ**：①クラウド公開(news/signal-lab)は git push のみで index 再生成ワークフローを起動しない→次の定時(朝7/夕16/23:43)まで更新履歴に出ない（news 17:40公開は最大~6h遅延）。②私が #10/#11 を**ローカルから**公開・syncした際、ローカルの古い `generate_market_news.py`(クラウドが追記した #6-9 を含まない版)で上書き＝**#6-9 の履歴を巻き戻し**（local-drift事故。#6-9は最新5件外なので表示は不変）。
+- **恒久対策（実装済 commit d151ca82）**：`.github/workflows/update-market-news.yml` の `on:` に **`push: paths: ['generate_market_news.py']`** を追加。**`publish_article.py` は全記事公開時に必ず generate_market_news.py を更新する**一方、**当ワークフローは generate_market_news.py を commit しない**ので、あらゆる公開(news/研究日誌/手動sync)で index が即再生成され、**自己再起動ループは原理的に起きない**。cron遅延を待たず遅延ゼロで更新履歴反映。skill `github-actions-cron-best-practice` 準拠（cron `:00`回避・workflow_dispatch併設は既存）。
+- ⚠️残課題：(a)クラウドルーティンの push 認証がGITHUB_TOKEN以外なら on:push が発火する（次回6/18の routine 実行で要確認。GITHUB_TOKENだと再帰抑制で発火しない＝その場合は routine に dispatch を追加）。(b)ローカルの generate_market_news.py / guides.html は今 GitHub より古い＝**次のローカル公開前に reconcile 必須**（巻き戻し再発防止・SESSION冒頭で対応）。(c)#6-9 履歴の復元は任意（表示外）。
 4. ✅完了（2026-06-17）：Track 1を研究日誌**#10「『当てる』より『飛ばさない』——ケリー基準と破産確率」**として公開（`guide-signal-lab-010.html`・図解6枚・独立Opusコンプラ判定=白・HTTP200確認）。⚠️ledgerは routine管理(SYNC禁忌)なので**GitHub現行版を直接APIで編集し次番号010→011にbump**（明朝6:10 routineの#010上書きを回避）。`gh`未インストールのため `market-news-config.json.json` のtoken流用でPUT。
 
 ---
