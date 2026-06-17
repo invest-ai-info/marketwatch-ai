@@ -55,6 +55,11 @@
 - **修正①（generate_market_news.py・commit 660eee→デプロイ済）**：`_load_indicator_results()`（複数版・`{"results":[...]}`/旧単一/配列を後方互換で読む・verified＆当日〜翌日のみ・新しい順）を追加。バナーは1件=従来/2件以上=「🇺🇸FOMC ＋ 🇯🇵日銀 の結果速報（N件）」、preview本体は結果セクションを**複数ループ描画**。py_compile＋2件モックの実地テスト合格。**on:push で本番再生成が success 実証**（index生成エラーなし）。
 - **修正②（indicator-result ルーティン trig_0183wxDTjBRPNzWBtEM1MfsM・更新済）**：上書き→**マージ保存**。既存resultsを読む→当日発表の重要指標を各々オブジェクト化（同日FOMC＋日銀なら2件作る）→(基準日-1)より古い・同key同dateを除去→今日の分を追加→`{"updated_at":..,"results":[..]}` で保存。**別日連続も同日複数も両方並ぶ**。次回6/18 23:13 JST から有効（FOMC/日銀の実結果で発動）。
 - ⚠️ ローカル `generate_market_news.py` は今回 GitHub から取り込んで編集したので reconcile 済み。ただし guides.html 等は依然ローカルが古い＝ローカル公開前の reconcile は引き続き必要。
+
+### ✅ 2026-06-18 早朝 「日銀がトップから消えた」を修正＋表示窓拡張（＋🚩FOMC要検証＝明日の宿題）
+- **原因**：日銀決定会合(6/16・利上げ1.0%)の結果が出ていたが、今夜23:13の indicator-result routine が**マージ修正の適用前（旧・上書きlogic）に走り FOMC(6/17) で上書き**→日銀消滅。加えて表示窓が「当日+前日」で 6/16 は 6/18 には古すぎた。
+- **対応（全てデプロイ済）**：(1)**日銀(6/16)を git(241f112b02)から復元**し FOMC とマージ→`indicator-result.json = {"results":[FOMC 6/17, 日銀 6/16]}`（commit cf52fe92）。(2)`generate_market_news.py` の `_load_indicator_results` 表示窓を **delta<=1→<=3（4日間）**に拡張（commit 34c15c4e・on:push再生成success・バナーに「FOMC ＋ 日銀 の結果速報(2件)」＋preview本体に結果2セクション 確認済）。(3)`indicator-result` routine(trig_0183wxDTjBRPNzWBtEM1MfsM)の**剪定窓も基準日-3に統一**＋**「発表前の指標を結果として書かない」ガード＋一次/通信社ソース必須**を追加。
+- **🚩 明日の宿題（最優先・未解決）＝FOMC結果の信頼性検証**：現行 `indicator-result.json` の FOMC(event_date 6/17・headline「政策金利3.50〜3.75%据え置き・タカ派」)は、**今夜23:13に出典＝個人ブログ系(unboxfuture/stocktitan等)で書かれた＝発表前の見込みの疑い**（economic-events.json では FOMC は 6/18・米時間6/17 14:00発表＝日本時間6/18未明）。**6/18の実際のFOMC結果をWebSearchで検証し、現行の数値が違えば訂正、正しければ出典を一次(Reuters/Bloomberg/Fed)に差し替える**。indicator-result.json を直接APIでPUT（SYNC禁忌・GitHub側）すれば即反映可（generate_market_news.py を触ればon:pushで再生成）。日銀(6/16・1.0%利上げ)は verified 済みで信頼OK。
 4. ✅完了（2026-06-17）：Track 1を研究日誌**#10「『当てる』より『飛ばさない』——ケリー基準と破産確率」**として公開（`guide-signal-lab-010.html`・図解6枚・独立Opusコンプラ判定=白・HTTP200確認）。⚠️ledgerは routine管理(SYNC禁忌)なので**GitHub現行版を直接APIで編集し次番号010→011にbump**（明朝6:10 routineの#010上書きを回避）。`gh`未インストールのため `market-news-config.json.json` のtoken流用でPUT。
 
 ---
