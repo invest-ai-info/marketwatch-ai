@@ -2840,9 +2840,8 @@ def build_preview_html(now_jst):
     # index トップのバナーが結果速報へ刷り替わるのと同一条件（verified・発表当日〜翌日）で、
     # preview.html 本体の先頭にも結果（実数値・市場反応・要約・出典）を表示する。
     # ※ これまで preview 本体は upcoming（発表前）しか描画せず、バナーから飛んでも中身が空だった不具合の修正。
-    res = _load_indicator_result(now_jst)
     result_html = ""
-    if res:
+    for res in _load_indicator_results(now_jst):
         r_name = res.get("name", "経済指標")
         r_flag = country_flag(res.get("country", "us"))
         r_head = res.get("headline", "")
@@ -2872,7 +2871,7 @@ def build_preview_html(now_jst):
                             f'{links}</div>')
         else:
             sources_html = ""
-        result_html = f'''
+        result_html += f'''
 <section style="background:linear-gradient(135deg,#e6ffed,#ffffff);border:1px solid #1a7f37;border-radius:14px;padding:22px 26px;margin-bottom:28px">
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
     <span style="background:#1a7f37;color:#fff;font-weight:700;font-size:.82rem;padding:4px 12px;border-radius:999px">📊 結果速報</span>
@@ -4055,6 +4054,42 @@ def _load_indicator_result(now_jst):
         return None
 
 
+def _load_indicator_results(now_jst):
+    """複数の結果速報に対応。verified かつ発表当日〜翌日のものを新しい順で返す（リスト）。
+    indicator-result.json は {"results":[...]} / 旧来の単一オブジェクト / リスト のいずれでも可。"""
+    try:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "indicator-result.json")
+        if not os.path.exists(p):
+            return []
+        with open(p, encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict) and isinstance(data.get("results"), list):
+            items = data["results"]
+        elif isinstance(data, list):
+            items = data
+        elif isinstance(data, dict):
+            items = [data]
+        else:
+            items = []
+        out = []
+        for r in items:
+            if not isinstance(r, dict):
+                continue
+            ed = r.get("event_date")
+            if not (r.get("verified") and ed):
+                continue
+            try:
+                edate = datetime.strptime(ed, "%Y-%m-%d").date()
+            except Exception:
+                continue
+            if 0 <= (now_jst.date() - edate).days <= 1:
+                out.append((edate, r))
+        out.sort(key=lambda x: x[0], reverse=True)
+        return [r for _, r in out]
+    except Exception:
+        return []
+
+
 def build_indicator_preview_banner(now_jst):
     """発表前＝プレビュー、発表後（routineが結果JSONを書いたら）＝結果速報、に自動で刷り替わる
     トップの注目指標バナー HTML を返す。📰更新履歴とは別枠。対象が無ければ空文字（自動で消える）。
@@ -4062,15 +4097,21 @@ def build_indicator_preview_banner(now_jst):
     try:
         flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
         # ── ① 発表後：当日の結果速報があれば「結果」バナーへ刷り替え ──
-        res = _load_indicator_result(now_jst)
-        if res:
-            nm = res.get("name", "経済指標")
-            head = res.get("headline", "結果が出ました")
-            fl = flag.get(res.get("country", "us"), "")
-            return f'''  <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。preview.html へ）-->
+        _results = _load_indicator_results(now_jst)
+        if _results:
+            if len(_results) == 1:
+                _r0 = _results[0]
+                _fl = flag.get(_r0.get("country", "us"), "")
+                _nm = _r0.get("name", "経済指標")
+                _hd = _r0.get("headline", "結果が出ました")
+                _inner = f"✅ {_fl} {_nm}：{_hd} — 結果と市場反応を見る →"
+            else:
+                _labels = " ＋ ".join(flag.get(_r.get("country", "us"), "") + " " + _r.get("name", "指標") for _r in _results[:3])
+                _inner = f"✅ {_labels} の結果速報（{len(_results)}件）— 各結果と市場反応を見る →"
+            return f'''  <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。複数指標対応。preview.html へ）-->
   <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#1a7f37,#0969da);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
     <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📊 経済指標の結果速報</div>
-    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">✅ {fl} {nm}：{head} — 結果と市場反応を見る →</div>
+    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">{_inner}</div>
   </a>'''
         # ── ② 発表前：3日以内（当日含む）の high 重要度指標プレビュー ──
         ups = find_upcoming_events(now_jst, days_ahead=3)
