@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #10｜「当てる」より「飛ばさない」——期待値・ケリー基準・破産確率で“複利で生き残る”を図解する - MarketWatch AI</title>
+  <meta name="description" content="勝てるシグナルを持っていても、賭け方（ロット）を間違えると資産は溶ける。当サイトの20年バックテストを題材に、期待値R・ケリー基準・最大ドローダウン・破産確率を6枚の図で噛み砕く研究日誌第10回。テーマは『飛ばさず複利』。">
+  <meta name="keywords" content="リスク管理,ロット,ケリー基準,分数ケリー,破産確率,ドローダウン,期待値,複利,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-010.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #10｜「当てる」より「飛ばさない」——期待値・ケリー基準・破産確率で“複利で生き残る”を図解する">
+  <meta property="og:description" content="勝てるシグナルでも賭け方を間違えると資産は溶ける。当サイトの20年バックテストを題材に、期待値R・ケリー基準・ドローダウン・破産確率を6枚の図で噛み砕く研究日誌第10回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-010.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #10｜「当てる」より「飛ばさない」——期待値・ケリー基準・破産確率で複利で生き残るを図解する",
+    "description": "勝てるシグナルでも賭け方を間違えると資産は溶ける。当サイトの20年バックテストを題材に、期待値R・ケリー基準・ドローダウン・破産確率を6枚の図で噛み砕く研究日誌第10回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-17",
+    "dateModified": "2026-06-17",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-010.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #10
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供・教育を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。特定の銘柄・特定の賭け方（ロット）を推奨するものではなく、投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #10<br><small style="font-size:.62em;color:#57606a;font-weight:400">「当てる」より「飛ばさない」——期待値・ケリー基準・破産確率で“複利で生き残る”を図解する</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月17日 &nbsp;|&nbsp; 読了：約13分
+    </div>
+
+    <p>この連載はこれまで「どのシグナルが当たりやすいか／外れやすいか」を検証してきました。今回は<strong>趣向を変えて、シグナルそのものではなく「シグナルをどう使うか＝賭け方（ロット）の決め方」</strong>を扱います。</p>
+    <p>なぜなら——<strong>勝てる手法を持っていても、賭け方を間違えると資産はあっさり溶ける</strong>からです。逆に言えば、平凡な手法でも賭け方を守れば長く生き残れる。「<strong>当てること</strong>」より「<strong>飛ばさないこと</strong>」のほうが、長期の複利では効きます。これは初心者ほど見落としがちな、しかし一番大事な部分です。</p>
+    <p>今回は当サイトのシグナルを<strong>過去20年ぶんの日足に当てはめてシミュレーションした記録（バックテスト）</strong>を題材に、①期待値、②ケリー基準、③ドローダウン（資産の落ち込み）と破産確率、という3つの道具を、なるべく数式を使わず<strong>図で</strong>噛み砕きます。難しく感じる用語も、絵で見れば「なるほど」となるはずです。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① <strong>選別が期待値を一桁変える</strong>——何でも乗る無選別だと1トレードの平均は +0.016R（ほぼトントン）。当サイトの過去データで分が良かったグループに絞ると +0.30R 前後まで上がる<br>
+      ② <strong>「最適」とされるフルケリーは破産級</strong>——例として平均+0.30Rのグループにフルケリーで賭け続けると、3年で<strong>約44%が“破産級”（資産が半分まで減る状態）に陥る</strong>シミュレーション結果。半分（½ケリー）で約10%、4分の1（¼ケリー）で約0.7%まで下がる<br>
+      ③ <strong>期待値が高い手法ほどドローダウンが凶暴</strong>——半分に抑えても、高期待値グループは最悪期に資産が<strong>8割超</strong>へこむ計算<br>
+      ④ だから順序は「<strong>選別で期待値を上げる → ケリーで“賭けすぎの境界”を知る → その一部（分数ケリー）に抑えて生き残る</strong>」。これが“飛ばさず複利”<br>
+      ⑤ ⚠️ すべて過去データのシミュレーションで、将来を保証しません。特定銘柄・特定の賭け方の推奨でもありません
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#why">なぜ「当てる」より「飛ばさない」なのか</a></li>
+        <li><a href="#r">1トレードを「R」で測る——期待値という共通言語</a></li>
+        <li><a href="#selection">選別が期待値を“一桁”変える</a></li>
+        <li><a href="#kelly">ケリー基準＝「賭けすぎの境界線」</a></li>
+        <li><a href="#fraction">同じ手法でも、賭け方で資金曲線はこんなに違う</a></li>
+        <li><a href="#tradeoff">高期待値ほど“崖”が深い——リターンとリスクの交換</a></li>
+        <li><a href="#conclusion">結論：飛ばさず複利の3原則</a></li>
+        <li><a href="#limits">この検証の限界（必読）</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="why">① なぜ「当てる」より「飛ばさない」なのか</h2>
+
+    <p>投資で一番こわいのは「大きく負けること」です。理由はシンプル——<strong>大きく減ると、元に戻すのが指数関数的に難しくなる</strong>から。</p>
+    <p>10%減ったら、元に戻すのに必要なのは +11%。25%減なら +33%。ところが<strong>50%減ると、取り戻すには +100%（つまり倍）</strong>が必要です。80%まで減ったら +400%——5倍にしないと元に戻りません。穴は深くなるほど、這い上がるのが急激にきつくなります。</p>
+
+    <div class="chart-figure">
+      <!-- 図1: ドローダウンの非対称性 -->
+      <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="損失と、それを取り戻すのに必要な上昇率">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">深く減るほど「取り戻す」のは急に難しくなる</text>
+        <text x="20" y="52" class="s-label-sm">下げた割合 → 元に戻すのに必要な上昇率</text>
+        <!-- rows -->
+        <text x="20" y="86" class="s-label">−10%</text>
+        <rect x="150" y="72" width="22" height="22" class="s-fill-b" stroke="#0969da" stroke-width="1.2" rx="3"/>
+        <text x="182" y="88" class="s-label-b">必要 +11%</text>
+        <text x="20" y="126" class="s-label">−25%</text>
+        <rect x="150" y="112" width="66" height="22" class="s-fill-b" stroke="#0969da" stroke-width="1.2" rx="3"/>
+        <text x="226" y="128" class="s-label-b">必要 +33%</text>
+        <text x="20" y="166" class="s-label">−50%</text>
+        <rect x="150" y="152" width="200" height="22" class="s-fill-y" stroke="#9a6700" stroke-width="1.3" rx="3"/>
+        <text x="360" y="168" class="s-label-y">必要 +100%（倍にしないと戻らない）</text>
+        <text x="20" y="206" class="s-label">−80%</text>
+        <rect x="150" y="192" width="500" height="22" class="s-fill-r" stroke="#cf222e" stroke-width="1.4" rx="3"/>
+        <text x="356" y="208" class="s-label-r" style="font-size:12px">必要 +400%（5倍）</text>
+        <text x="350" y="238" text-anchor="middle" class="s-label-sm">※ 棒の長さ＝元の資産に戻すのに必要な上昇率。深い損ほど回復の壁が跳ね上がる（概念図）</text>
+      </svg>
+      <div class="chart-caption">図1：ドローダウン（資産の落ち込み）の非対称性。−50%は+100%、−80%は+400%でやっと元通り。「大きく負けない」ことが複利の土台になる理由です。</div>
+    </div>
+
+    <p>だから本記事の問いはこうです。<strong>「勝てる見込み（期待値）がある手法を、いくらずつ賭ければ、飛ばずに複利で増やせるのか？」</strong>。まず“期待値”をはっきり測るところから始めます。</p>
+
+    <!-- =============================== -->
+    <h2 id="r">② 1トレードを「R」で測る——期待値という共通言語</h2>
+
+    <p>当サイトのシグナルは、エントリー（仕掛け）と同時に<strong>損切り（SL）・利確（TP）の値段</strong>が決まります。このとき「最初に決めた損切りまでの幅」を<strong>1R（リスク1単位）</strong>と呼びます。すべての勝ち負けを、この「R」で測ると、銘柄や値段の違いを超えて比べられます。</p>
+
+    <div class="chart-figure">
+      <!-- 図2: R:R の数直線 -->
+      <svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="1トレードの損益をRで表した数直線">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">勝ち負けを「R」で測る（1R＝最初に決めた損切り幅）</text>
+        <!-- number line -->
+        <line x1="120" y1="95" x2="620" y2="95" class="s-axis"/>
+        <!-- SL -1R at x=120 -->
+        <line x1="120" y1="86" x2="120" y2="104" stroke="#cf222e" stroke-width="2.4"/>
+        <text x="120" y="76" text-anchor="middle" class="s-label-r">−1R</text>
+        <text x="120" y="124" text-anchor="middle" class="s-label-sm">損切り（SL）</text>
+        <!-- entry 0 at x=286.7 -->
+        <line x1="287" y1="88" x2="287" y2="102" class="s-axis"/>
+        <text x="287" y="76" text-anchor="middle" class="s-label">0</text>
+        <text x="287" y="124" text-anchor="middle" class="s-label-sm">エントリー</text>
+        <!-- TP1 +1.33R at x=509 -->
+        <line x1="509" y1="86" x2="509" y2="104" stroke="#1a7f37" stroke-width="2.4"/>
+        <text x="509" y="76" text-anchor="middle" class="s-label-g">+1.33R</text>
+        <text x="509" y="124" text-anchor="middle" class="s-label-sm">利確1（TP1）</text>
+        <!-- TP2 +2R at x=620 -->
+        <line x1="620" y1="86" x2="620" y2="104" stroke="#1a7f37" stroke-width="2.4"/>
+        <text x="620" y="76" text-anchor="middle" class="s-label-g">+2R</text>
+        <text x="620" y="124" text-anchor="middle" class="s-label-sm">利確2（TP2）</text>
+        <text x="350" y="158" text-anchor="middle" class="s-label-sm">負けは −1R、利確は +1.33R か +2R。勝率43%でちょうどトントン（損益分岐）になる設計</text>
+      </svg>
+      <div class="chart-caption">図2：当サイトのシグナルの損益の形。損切り −1R に対し、利確が +1.33R／+2R。だから「勝率が43%あればトントン」という設計です。</div>
+    </div>
+
+    <p>そして<strong>期待値R＝「1トレードあたり平均して何R儲かる（or損する）か」</strong>。これがプラスなら、回数を重ねるほど理屈の上では増えていきます。<strong>勝率が50%を切っていても、利確が損切りより大きいので期待値はプラスになり得る</strong>——ここが「勝率より期待値で見る」理由です。</p>
+
+    <div class="info-box">
+      <strong>💡 用語ミニ辞典</strong><br>
+      ・<strong>R</strong>：最初に決めた損切り幅＝リスク1単位。<br>
+      ・<strong>期待値R</strong>：1トレードの平均損益（R単位）。プラスが“勝てる見込みあり”。<br>
+      ・<strong>ドローダウン（DD）</strong>：資産が直近の山からどれだけ落ち込んだか（％）。<br>
+      ・<strong>破産</strong>：本記事では「資産が元手の半分（−50%）まで減った状態」を“破産級”と定義して数えます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="selection">③ 選別が期待値を“一桁”変える</h2>
+
+    <p>まず、当サイトの全シグナルを過去20年の日足に当てはめ、<strong>「何でも乗る（無選別）」</strong>場合の期待値を見ると、1トレード平均は <strong>+0.016R</strong>。ほぼトントンです。ところが、過去データで分が良かった<strong>資産グループに絞る</strong>と、期待値は大きく変わります。</p>
+
+    <div class="chart-figure">
+      <!-- 図3: 選別による期待値の差 -->
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="無選別と選別後の1トレード平均期待値の比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">「何でも乗る」と「選んで乗る」で1トレードの期待値が一桁違う</text>
+        <line x1="180" y1="48" x2="180" y2="262" class="s-axis"/>
+        <line x1="180" y1="262" x2="660" y2="262" class="s-axis"/>
+        <!-- bars: width = R * 760 -->
+        <!-- BTC +0.317 -> 241 -->
+        <rect x="180" y="58" width="241" height="30" class="s-fill-g" stroke="#1a7f37" stroke-width="1.4" rx="3"/>
+        <text x="14" y="78" class="s-label-sm">BTC×ロング</text>
+        <text x="429" y="79" class="s-label-g">+0.317R</text>
+        <!-- metal +0.296 -> 225 -->
+        <rect x="180" y="98" width="225" height="30" class="s-fill-g" stroke="#1a7f37" stroke-width="1.4" rx="3"/>
+        <text x="14" y="118" class="s-label-sm">メタル×ロング</text>
+        <text x="413" y="119" class="s-label-g">+0.296R</text>
+        <!-- index revL +0.124 -> 94 -->
+        <rect x="180" y="138" width="94" height="30" class="s-fill-b" stroke="#0969da" stroke-width="1.4" rx="3"/>
+        <text x="14" y="158" class="s-label-sm">指数×逆張り買い</text>
+        <text x="282" y="159" class="s-label-b">+0.124R</text>
+        <!-- index long +0.053 -> 40 -->
+        <rect x="180" y="178" width="40" height="30" class="s-fill-b" stroke="#0969da" stroke-width="1.2" rx="3"/>
+        <text x="14" y="198" class="s-label-sm">指数×ロング</text>
+        <text x="228" y="199" class="s-label-b">+0.053R</text>
+        <!-- baseline +0.016 -> 12 -->
+        <rect x="180" y="218" width="12" height="30" class="s-fill-gray" stroke="#8b949e" stroke-width="1.2" rx="3"/>
+        <text x="14" y="238" class="s-label-sm">無選別（全部乗る）</text>
+        <text x="200" y="239" class="s-label">+0.016R</text>
+        <text x="350" y="286" text-anchor="middle" class="s-label-sm">※ 当サイトの過去20年バックテストを資産グループ別に集計した分類。特定銘柄の売買推奨ではありません</text>
+      </svg>
+      <div class="chart-caption">図3：1トレードあたり平均期待値（R）。何でも乗ると +0.016R（ほぼゼロ）だが、過去データで分が良かったグループに絞ると +0.1〜0.3R へ。「選別」こそが最初のレバーです。</div>
+    </div>
+
+    <p>この差はとても大きい。なぜなら、後で見るように<strong>「賭けられる量」は期待値の大きさで決まる</strong>からです。期待値がほぼゼロの無選別では、理論上ほとんど賭けられず、資産はほぼ増えません。まず選別で期待値の土俵を把握する——これが第一歩です（ただし後述のとおり、期待値が高い分類ほど落ち込みは激しくなります）。</p>
+
+    <div class="warning-box">
+      ここで挙げたグループ名（メタル／BTC／指数 など）は、<strong>当サイトのシグナルを過去データで集計した「分類」</strong>であって、「これを買え」という推奨ではありません。後述のとおり、期待値が高いグループほど落ち込み（ドローダウン）も激しく、扱いはむしろ難しくなります。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="kelly">④ ケリー基準＝「賭けすぎの境界線」</h2>
+
+    <p>期待値がプラスだとわかったら、次の問いは「<strong>毎回いくらずつ賭けるか</strong>」です。少なすぎると増えない。多すぎると——<strong>勝てる手法でも破産します</strong>。この「ちょうどいい上限」を理論的に示すのが<strong>ケリー基準</strong>です。</p>
+    <p>イメージは下の“山”。横軸は「資金の何％を1回に賭けるか」、縦軸は「長期で資産がどれだけ伸びるか」。賭ける量を増やすと最初は伸びますが、<strong>ある一点（フルケリー）で頭打ち</strong>になり、それを超えると<strong>急降下して、やがてマイナス（賭けるほど資産が減る）</strong>になります。</p>
+
+    <div class="chart-figure">
+      <!-- 図4: ケリー曲線 -->
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="賭ける比率と長期成長率の関係（ケリー曲線）">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">賭けすぎると、勝てる手法でも資産は増えなくなる</text>
+        <!-- danger zone shading (right of 2x full) -->
+        <rect x="564" y="58" width="96" height="177" class="s-fill-r" opacity="0.35"/>
+        <!-- axes -->
+        <line x1="180" y1="58" x2="180" y2="235" class="s-axis"/>
+        <line x1="180" y1="235" x2="660" y2="235" class="s-axis"/>
+        <!-- curve -->
+        <polyline points="180,235 228,158 276,104 324,71 372,60 420,71 468,104 516,158 564,235 593,291" class="s-curve-b"/>
+        <!-- guide verticals -->
+        <line x1="228" y1="158" x2="228" y2="235" class="s-guide"/>
+        <line x1="276" y1="104" x2="276" y2="235" class="s-guide"/>
+        <line x1="372" y1="60" x2="372" y2="235" class="s-guide"/>
+        <!-- dots -->
+        <circle cx="228" cy="158" r="5.5" fill="#1a7f37"/>
+        <circle cx="276" cy="104" r="5.5" fill="#0969da"/>
+        <circle cx="372" cy="60" r="5.5" fill="#9a6700"/>
+        <!-- labels -->
+        <text x="228" y="252" text-anchor="middle" class="s-label-g" style="font-size:12px">¼ケリー</text>
+        <text x="276" y="270" text-anchor="middle" class="s-label-b" style="font-size:12px">½ケリー</text>
+        <text x="372" y="50" text-anchor="middle" class="s-label-y" style="font-size:12px">フルケリー（理論上の最大）</text>
+        <text x="612" y="150" text-anchor="middle" class="s-label-r" style="font-size:12px">賭けすぎ</text>
+        <text x="612" y="168" text-anchor="middle" class="s-label-r" style="font-size:12px">ゾーン</text>
+        <text x="640" y="228" text-anchor="end" class="s-label-sm">成長ゼロ</text>
+        <!-- axis labels -->
+        <text x="420" y="312" text-anchor="middle" class="s-label-sm">→ 1回に賭ける資金の割合（ロット）が大きいほど右</text>
+        <text x="172" y="150" text-anchor="end" class="s-label-sm" transform="rotate(-90 172 150)" style="text-anchor:middle">長期での資産の伸び</text>
+        <text x="350" y="326" text-anchor="middle" class="s-label-sm">※ 形を示す概念図。山の頂点（フルケリー）を越えると伸びは急降下し、やがてマイナスになる</text>
+      </svg>
+      <div class="chart-caption">図4：ケリー曲線（イメージ）。賭ける量を増やすほど伸びるのは“頂点”まで。それを超えると伸びは落ち、ある点から先は「賭けるほど減る」領域に入ります。フルケリーは“限界”であって“おすすめ”ではありません。</div>
+    </div>
+
+    <p>大事なのは、<strong>フルケリー（山の頂点）は「理論上の最大成長点」であって「推奨点」ではない</strong>ということ。理由は2つあります。</p>
+    <ul>
+      <li><strong>期待値の見積もりには誤差がある</strong>——過去データで測った+0.30Rが、将来も続く保証はない。少しでも過大評価していると、頂点を越えて“賭けすぎ”側に落ちる。</li>
+      <li><strong>相場は変わる（非定常）</strong>——過去に効いた条件が、別の局面では効かない。だから理論値どおりに張るのは危険。</li>
+    </ul>
+    <p>そこで実務では、頂点の<strong>半分（½ケリー）や4分の1（¼ケリー）</strong>に抑えます。伸びは少し落ちますが、<strong>落ち込みと破産確率が劇的に下がる</strong>。その効果を次に見ます。</p>
+
+    <!-- =============================== -->
+    <h2 id="fraction">⑤ 同じ手法でも、賭け方で資金曲線はこんなに違う</h2>
+
+    <p>同じ「メタル×ロング（過去BTで平均+0.30R）」を題材に、フル／½／¼ケリーで3年ぶん（複利）をそれぞれ1万通りシミュレーションしました。結果が下の表です。</p>
+
+    <table>
+      <tr><th>賭け方（メタル・3年・1万回試行）</th><th>破産（−50%到達）の確率</th><th>最悪期DD&gt;50%になる確率</th><th>資産倍率（中央値）</th></tr>
+      <tr><td>フルケリー（約20%）</td><td><strong>44.5%</strong></td><td>100%</td><td>939倍</td></tr>
+      <tr><td>½ケリー（約10%）</td><td>10.4%</td><td>89%</td><td>192倍</td></tr>
+      <tr><td>¼ケリー（約5%）</td><td><strong>0.7%</strong></td><td>10%</td><td>22倍</td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>「倍率」の数字に目を奪われないでください。</strong>中央値939倍・192倍・22倍はいずれも<strong>「運よく飛ばずに済んだ経路」の真ん中</strong>の話です。フルケリーでは同時に<strong>約2回に1回（44.5%）が破産級</strong>まで落ちています。これは過去データのシミュレーションで、将来の運用成績ではありません。
+    </div>
+
+    <p>イメージにすると、こうです——<strong>¼ケリーは緩やかで安定した登り、½ケリーは高く登るが揺れが大きい、フルケリーは一気に跳ね上がってから崩れ落ちる</strong>。</p>
+
+    <div class="chart-figure">
+      <!-- 図5: 資金曲線イメージ -->
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="賭け方による資金曲線のイメージ">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">賭け方で資金曲線の“形”が変わる（イメージ）</text>
+        <line x1="120" y1="50" x2="120" y2="270" class="s-axis"/>
+        <line x1="120" y1="270" x2="660" y2="270" class="s-axis"/>
+        <!-- full kelly: rockets then crashes (red) -->
+        <polyline points="120,250 190,150 250,80 310,62 370,110 440,195 520,255 600,266 660,264" class="s-curve-r"/>
+        <text x="250" y="70" class="s-label-r" style="font-size:12px">フルケリー：急騰→暴落</text>
+        <!-- half kelly: high but bumpy (blue) -->
+        <polyline points="120,250 200,210 270,232 340,180 420,205 510,150 590,120 660,100" class="s-curve-b"/>
+        <text x="556" y="92" class="s-label-b" style="font-size:12px">½ケリー</text>
+        <!-- quarter kelly: gentle steady (green) -->
+        <polyline points="120,250 220,240 320,228 420,214 520,202 660,182" class="s-curve-g"/>
+        <text x="556" y="200" class="s-label-g" style="font-size:12px">¼ケリー：緩やか・安定</text>
+        <text x="120" y="290" text-anchor="middle" class="s-label-sm">開始</text>
+        <text x="660" y="290" text-anchor="middle" class="s-label-sm">3年後</text>
+        <text x="350" y="308" text-anchor="middle" class="s-label-sm">※ 形のイメージ図。フルケリーは大きく伸びることもあるが、深く崩れて戻れなくなる経路が多い</text>
+      </svg>
+      <div class="chart-caption">図5：賭け方による資金曲線の違い（概念図）。フルケリーの“急騰”は魅力的に見えますが、その裏で破産経路が大量に発生します。生き残って複利を効かせるのは、緩やかな¼ケリー側です。</div>
+    </div>
+
+    <p>つまり「いくら賭けるか」は、リターンの大きさだけでなく<strong>「生き残れるか」を決める一番のレバー</strong>。同じ手法でも、フルケリーは博打、¼ケリーは事業——別物になります。</p>
+
+    <!-- =============================== -->
+    <h2 id="tradeoff">⑥ 高期待値ほど“崖”が深い——リターンとリスクの交換</h2>
+
+    <p>「じゃあ一番期待値の高いグループを½ケリーで回せばいい」と思うかもしれません。ところが、ここに落とし穴があります。<strong>期待値が高いグループほど、1トレードのブレ（ばらつき）も大きく、最悪期の落ち込みが深い</strong>のです。</p>
+    <p>下は各グループを<strong>½ケリー</strong>で3年回したときの「最悪期の落ち込み（95%タイルの最大DD）」と「破産確率」です。期待値が上がるにつれ、崖が深くなっていくのが見えます。</p>
+
+    <div class="chart-figure">
+      <!-- 図6: 戦略別の最大DD(95%タイル)と破産確率 -->
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="戦略グループ別の最悪期ドローダウンと破産確率（半ケリー・3年）">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">期待値が高いグループほど、最悪期の落ち込みが深い（½ケリー・3年）</text>
+        <line x1="210" y1="46" x2="210" y2="262" class="s-axis"/>
+        <line x1="210" y1="262" x2="660" y2="262" class="s-axis"/>
+        <!-- width = DD% * 4.6 -->
+        <!-- baseline 45.8 -> 211 -->
+        <rect x="210" y="56" width="211" height="30" class="s-fill-g" stroke="#1a7f37" stroke-width="1.3" rx="3"/>
+        <text x="10" y="70" class="s-label-sm">無選別(+0.016R)</text>
+        <text x="10" y="84" class="s-label-sm">破産1.0%</text>
+        <text x="429" y="77" class="s-label-g">46%</text>
+        <!-- index long 59.7 -> 275 -->
+        <rect x="210" y="96" width="275" height="30" class="s-fill-g" stroke="#1a7f37" stroke-width="1.3" rx="3"/>
+        <text x="10" y="110" class="s-label-sm">指数ロング(+0.053R)</text>
+        <text x="10" y="124" class="s-label-sm">破産5.5%</text>
+        <text x="493" y="117" class="s-label-g">60%</text>
+        <!-- index revL 65.6 -> 302 -->
+        <rect x="210" y="136" width="302" height="30" class="s-fill-y" stroke="#9a6700" stroke-width="1.3" rx="3"/>
+        <text x="10" y="150" class="s-label-sm">指数逆張り(+0.124R)</text>
+        <text x="10" y="164" class="s-label-sm">破産7.9%</text>
+        <text x="520" y="157" class="s-label-y">66%</text>
+        <!-- BTC 80.1 -> 369 -->
+        <rect x="210" y="176" width="369" height="30" class="s-fill-r" stroke="#cf222e" stroke-width="1.3" rx="3"/>
+        <text x="10" y="190" class="s-label-sm">BTCロング(+0.317R)</text>
+        <text x="10" y="204" class="s-label-sm">破産10.5%</text>
+        <text x="587" y="197" class="s-label-r">80%</text>
+        <!-- metal 82.9 -> 381 -->
+        <rect x="210" y="216" width="381" height="30" class="s-fill-r" stroke="#cf222e" stroke-width="1.4" rx="3"/>
+        <text x="10" y="230" class="s-label-sm">メタルロング(+0.296R)</text>
+        <text x="10" y="244" class="s-label-sm">破産10.4%</text>
+        <text x="599" y="237" class="s-label-r">83%</text>
+        <text x="350" y="286" text-anchor="middle" class="s-label-sm">※ 棒＝最悪期（95%タイル）の最大ドローダウン。期待値が上がるほど深くなる（½ケリー・3年シミュレーション）</text>
+      </svg>
+      <div class="chart-caption">図6：½ケリーでも、期待値が高いグループ（BTC・メタル）は最悪期に資産が8割超へこむ計算。リターンとリスクは交換関係で、「一番おいしい手法」は「一番荒れる手法」でもあります。</div>
+    </div>
+
+    <p>これが<strong>「期待値とリスクのトレードオフ」</strong>です。だからこそ、高期待値グループほど賭け方を<strong>もっと保守的に（¼以下に）</strong>する必要があります。実際、メタルを¼ケリーに落とすと破産確率は0.7%まで下がり、それでも過去BTでは中央22倍——「飛ばさず、それでも複利」が成立する領域です（ただし後述の限界つき）。</p>
+
+    <h3>まとめ表（½ケリー・3年・過去20年BTの分類）</h3>
+    <table>
+      <tr><th>グループ（過去BTの分類）</th><th>平均R</th><th>フルケリー</th><th>½ケリー</th><th>最大DD中央</th><th>最悪期DD(95%)</th><th>破産確率</th></tr>
+      <tr><td>無選別ベースライン</td><td>+0.016</td><td>1.1%</td><td>0.6%</td><td>27%</td><td>46%</td><td>1.0%</td></tr>
+      <tr><td>指数×ロング</td><td>+0.053</td><td>3.9%</td><td>1.9%</td><td>37%</td><td>60%</td><td>5.5%</td></tr>
+      <tr><td>指数×逆張り買い</td><td>+0.124</td><td>9.1%</td><td>4.6%</td><td>42%</td><td>66%</td><td>7.9%</td></tr>
+      <tr><td>BTC×ロング</td><td>+0.317</td><td>20.5%</td><td>10.2%</td><td>58%</td><td>80%</td><td>10.5%</td></tr>
+      <tr><td>メタル×ロング</td><td>+0.296</td><td>20.2%</td><td>10.1%</td><td>63%</td><td>83%</td><td>10.4%</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="conclusion">⑦ 結論：飛ばさず複利の3原則</h2>
+
+    <div class="positive-box">
+      <strong>① 選別で期待値を上げる</strong>——何でも乗る（+0.016R）のではなく、分の良い土俵を選ぶ（図3）。賭けられる量は期待値で決まるので、ここが出発点。<br><br>
+      <strong>② ケリーで“賭けすぎの境界”を知る</strong>——フルケリーは「ここから先は危険」という上限であって目標ではない（図4）。<br><br>
+      <strong>③ その一部（分数ケリー）に抑えて生き残る</strong>——½や¼に落とすと伸びは少し減るが、破産確率と落ち込みが激減する（図5・図6）。高期待値で荒い手法ほど保守的に。
+    </div>
+
+    <p>「当てる」精度を上げるのも大事ですが、長期で効くのは<strong>「期待値で測り、賭け方で生き残る」</strong>という規律です。派手なリターンの裏には必ず深いドローダウンがあり、<strong>飛ばしてしまえば複利は止まる</strong>。だから本連載は、勝率ではなく期待値で測り、そのうえでリスク管理を最優先にしています。</p>
+
+    <div class="info-box">
+      <strong>📌 この記事の位置づけ</strong><br>
+      今回の数字は、当サイトのシグナルを過去20年の日足でシミュレーションした<strong>研究の記録</strong>です。実際の配信ロジックやロット指示に自動で反映するものではなく、<strong>「リスク管理の考え方を可視化した教材」</strong>として読んでください。最新のシグナル成績は<a href="track-record.html">シグナル成績ダッシュボード</a>で毎日公開しています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑧ この検証の限界（必読）</h2>
+
+    <ul>
+      <li><strong>過去のシミュレーション（バックテスト）である</strong>：将来も同じ期待値が続く保証はありません。むしろ相場は変わるので、実運用の期待値は低めに出ると考えるべきです。</li>
+      <li><strong>バックテストは現実より甘い面がある</strong>：同じ足で損切りと利確の両方に触れた場合は「負け」扱い（保守的）にしていますが、スプレッドや約定のズレ、急変時の滑りは織り込んでいません。</li>
+      <li><strong>破産・ドローダウンの数字はむしろ楽観的</strong>：シミュレーションは過去の勝ち負けをシャッフルして作っており、連敗が固まる“地合い”の効果を十分に表せていません。つまり実際の最悪期は、ここで出た数字より厳しいことがあり得ます。</li>
+      <li><strong>ケリー％・倍率は推奨値ではない</strong>：フルケリーは危険な上限です。本記事は特定の賭け方を勧めるものではありません。</li>
+      <li><strong>1つの戦略単体の話</strong>：複数戦略を同時に持つ場合の相関や、取引コストの感度は今回は扱っていません（次回以降の課題）。</li>
+    </ul>
+
+    <div class="warning-box">
+      数字の派手さ（倍率）ではなく、<strong>破産確率とドローダウンの深さ</strong>に注目するのが本記事の主旨です。「いくら増えるか」より「飛ばさずに居続けられるか」。それが複利の前提条件です。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 関連する記事・ページ</div>
+      <div class="cta-box-desc">リスク管理と複利を、別の角度からも</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-position-sizing.html">
+          <div class="related-card-title">📏 ポジションサイジング入門</div>
+          <div class="related-card-desc">1回にいくら賭けるか——リスク許容度から考える基礎</div>
+        </a>
+        <a class="related-card" href="guide-compounding-drawdown.html">
+          <div class="related-card-title">📈 複利とドローダウン</div>
+          <div class="related-card-desc">なぜ「大きく負けない」ことが複利の土台になるのか</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-001.html">
+          <div class="related-card-title">🧪 研究日誌 #1</div>
+          <div class="related-card-desc">この連載の出発点。検証で大事にしている考え方</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供・教育を目的としており、特定の金融商品の売買や、特定の資金管理手法（ロットの大きさ等）を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の期待値・ケリー基準・ドローダウン・破産確率・資産倍率はすべて当サイトの特定システムにおける過去データのシミュレーション結果であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
