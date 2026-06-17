@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #11｜「当てる」より「避ける・飛ばさない」——守りが効く2つの理由を例題で - MarketWatch AI</title>
+  <meta name="description" content="勝てる手法でも賭けすぎれば連敗で退場し、上がる株を当てるより危ない株を避けるほうが確実に効く。今週の検証結果を、誰でも追える2つの例題（数字つき）で噛み砕く研究日誌第11回。テーマは『当てるより、飛ばさない・避ける』。">
+  <meta name="keywords" content="リスク管理,ロット,ケリー基準,危険回避,仕手,期待値,複利,研究日誌,例題">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-011.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #11｜「当てる」より「避ける・飛ばさない」——守りが効く2つの理由を例題で">
+  <meta property="og:description" content="勝てる手法でも賭けすぎれば連敗で退場し、上がる株を当てるより危ない株を避けるほうが確実。今週の検証を2つの例題で噛み砕く研究日誌第11回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-011.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #11｜「当てる」より「避ける・飛ばさない」——守りが効く2つの理由を例題で",
+    "description": "勝てる手法でも賭けすぎれば連敗で退場し、上がる株を当てるより危ない株を避けるほうが確実。今週の検証を2つの例題で噛み砕く研究日誌第11回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-17",
+    "dateModified": "2026-06-17",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-011.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #11
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供・教育を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。特定の銘柄・特定の賭け方（ロット）を推奨するものではなく、投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #11<br><small style="font-size:.62em;color:#57606a;font-weight:400">「当てる」より「避ける・飛ばさない」——守りが効く2つの理由を例題で</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月17日 &nbsp;|&nbsp; 読了：約11分
+    </div>
+
+    <p><a href="guide-signal-lab-010.html">前回（#10）</a>では、勝てる手法でも「賭け方（ロット）」を間違えると資産が溶けることを図解しました。今回はそれを一歩進めて、今週の検証で見えてきた<strong>「“当てる”より“避ける・飛ばさない”ほうが、相場が変わっても効き続ける」</strong>を、<strong>誰でも追える2つの例題（数字つき）</strong>で確かめます。難しい統計は出てきません。電卓ひとつで追えます。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① <strong>例題1（賭け方）</strong>：同じ“勝てる手法”でも、フルに賭けた人は10連敗で資金が <strong>約11万円（−89%）</strong>に。¼に抑えた人は <strong>約60万円</strong>で生き残る<br>
+      ② <strong>例題2（銘柄選び）</strong>：同じ「前日大幅高」でも、大型×売られすぎ反発の株は勝率約60%・大暴落6%弱、超小型×過熱の株は勝率34%・大暴落40%<br>
+      ③ ただし「上がる株を当てる」作戦は <strong>2021〜2025は効いたのに2026は不発</strong>（年で変わる）。一方「危ない株を避ける」作戦は <strong>6年間ずっと正解</strong><br>
+      ④ 結論＝<strong>「当てる」より「飛ばさない（ロット）＋避ける（危険株）」</strong>。守りだけが、相場が変わっても前向きに効いた<br>
+      ⑤ ⚠️ すべて過去データのシミュレーションで、将来を保証しません。特定銘柄・特定の賭け方の推奨でもありません
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#ex1">例題1：賭け方で運命が変わる（リスク管理）</a></li>
+        <li><a href="#ex2">例題2：当てるより、危ない株を避ける（銘柄選び）</a></li>
+        <li><a href="#regime">「当てる」は年でブレる／「避ける」は毎年効く</a></li>
+        <li><a href="#why">なぜ“守り”のほうが頑健なのか</a></li>
+        <li><a href="#conclusion">結論：守りの2点セット</a></li>
+        <li><a href="#limits">この検証の限界（必読）</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="ex1">📘 例題1：賭け方で運命が変わる（リスク管理）</h2>
+
+    <div class="info-box">
+      <strong>問題</strong>：資金 <strong>100万円</strong>。検証で期待値プラスだった“勝てる手法”（当サイトの過去データ分類の一例。1トレード平均 +0.30R）を、3人が<strong>違うロット（1回に資金の何%をリスクにさらすか）</strong>で回した。相場では<strong>10連敗</strong>がふつうに起こりうる。10連敗したら3人の資金は？
+    </div>
+
+    <p>計算はシンプルです。1回の負けで「賭けた%」を失うので、10連敗なら「(1−賭け%)を10回かける」だけ。</p>
+
+    <table>
+      <tr><th>人</th><th>1回のリスク</th><th>10連敗後の資金（計算）</th><th>結果</th></tr>
+      <tr><td>Aさん（フルに賭ける）</td><td>20%</td><td>100万 × 0.80¹⁰ ＝ <strong>約11万円</strong>（−89%）</td><td>💀 ほぼ再起不能</td></tr>
+      <tr><td>Bさん（半分に抑える）</td><td>10%</td><td>100万 × 0.90¹⁰ ＝ <strong>約35万円</strong>（−65%）</td><td>🩹 瀕死</td></tr>
+      <tr><td>Cさん（4分の1に抑える）</td><td>5%</td><td>100万 × 0.95¹⁰ ＝ <strong>約60万円</strong>（−40%）</td><td>✅ 痛いが生き残る</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図1: 10連敗後に残った資金 -->
+      <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="10連敗後に残った資金の比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">同じ手法でも「賭ける大きさ」で10連敗後の運命が分かれる</text>
+        <line x1="160" y1="48" x2="160" y2="248" class="s-axis"/>
+        <line x1="160" y1="248" x2="660" y2="248" class="s-axis"/>
+        <!-- 元手100万 ref (4px/万 → 400px) -->
+        <line x1="560" y1="44" x2="560" y2="248" class="s-guide"/>
+        <text x="560" y="40" text-anchor="middle" class="s-label-sm">元手 100万円</text>
+        <!-- A full 11万 -> 44 -->
+        <rect x="160" y="64" width="44" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="3"/>
+        <text x="12" y="78" class="s-label" style="font-size:12px">Aさん</text>
+        <text x="12" y="94" class="s-label-sm">フル(20%)</text>
+        <text x="214" y="86" class="s-label-r">約11万円（−89%）💀</text>
+        <!-- B half 35万 -> 140 -->
+        <rect x="160" y="124" width="140" height="34" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="12" y="138" class="s-label" style="font-size:12px">Bさん</text>
+        <text x="12" y="154" class="s-label-sm">½(10%)</text>
+        <text x="310" y="146" class="s-label-y">約35万円（−65%）🩹</text>
+        <!-- C quarter 60万 -> 240 -->
+        <rect x="160" y="184" width="240" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="12" y="198" class="s-label" style="font-size:12px">Cさん</text>
+        <text x="12" y="214" class="s-label-sm">¼(5%)</text>
+        <text x="410" y="206" class="s-label-g">約60万円（−40%）✅生存</text>
+        <text x="350" y="276" text-anchor="middle" class="s-label-sm">棒＝10連敗後に残った資金。賭けすぎたAさんは元手の1割しか残らず、戻すには+835%が必要</text>
+      </svg>
+      <div class="chart-caption">図1：3人とも「同じ勝てる手法」。違いは賭ける大きさだけ。なのにAさんは退場、Cさんは生存。期待値がプラスでも、賭けすぎると複利が始まる前に飛びます。</div>
+    </div>
+
+    <div class="positive-box">
+      <strong>例題1の学び</strong>：<strong>当てる前に「飛ばない大きさ」</strong>。同じ手法でも、ロットを抑えたCさんだけが連敗を生き延び、次のチャンスで複利を回せます。今週の検証でも、連敗の固まりまで考慮すると、勝てる手法ですら“フル”だと破産確率が跳ね上がる一方、<strong>賭ける割合を小さくするほど連敗を生き延びやすくなる</strong>、という過去データ上の傾向が見えました。具体的にどの程度に抑えるかは各自のリスク許容度しだいで、本記事が特定のロットを推奨するものではありません（詳しくは<a href="guide-signal-lab-010.html">#10</a>）。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="ex2">📗 例題2：当てるより、危ない株を避ける（銘柄選び）</h2>
+
+    <div class="info-box">
+      <strong>問題</strong>：昨日、2銘柄がどちらも<strong>「前日 +15%・売買代金が大きい」</strong>で目に留まった（＝大きく動いて出来高も多い、注目の動き）。翌朝、どちらを選ぶ？
+    </div>
+
+    <table>
+      <tr><th>　</th><th>銘柄X</th><th>銘柄Y</th></tr>
+      <tr><td>規模</td><td><strong>大型株</strong></td><td><strong>超小型株</strong></td></tr>
+      <tr><td>直前の形</td><td>20日で −12% 下げた後の反発・移動平均より下（<strong>過熱していない</strong>）</td><td>すでに4日連騰・移動平均から +25%（<strong>過熱</strong>）</td></tr>
+      <tr><td>型</td><td>売られすぎ反発 × 大型 × 非過熱</td><td>超小型 × 過熱（＝仕手っぽい）</td></tr>
+      <tr><td>その後10日（過去データ）</td><td>勝率 <strong>約60%</strong>／大暴落(−15%超)は <strong>6%弱</strong></td><td>勝率 <strong>34%</strong>／大暴落 <strong>40%</strong>／最悪 −34%（10回に1回）</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <!-- 図2: X vs Y 勝率と暴落率 -->
+      <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="銘柄Xと銘柄Yの勝率と大暴落率の比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">同じ「前日大幅高」でも、型が違えばその後はこんなに違う</text>
+        <line x1="170" y1="44" x2="170" y2="252" class="s-axis"/>
+        <!-- 勝率 group (scale %*4.5) -->
+        <text x="12" y="62" class="s-label-sm">勝率</text>
+        <rect x="170" y="50" width="273" height="26" class="s-fill-g" stroke="#1a7f37" stroke-width="1.4" rx="3"/>
+        <text x="14" y="74" class="s-label-sm">X(大型反発)</text>
+        <text x="451" y="69" class="s-label-g">60%</text>
+        <rect x="170" y="84" width="155" height="26" class="s-fill-r" stroke="#cf222e" stroke-width="1.4" rx="3"/>
+        <text x="14" y="108" class="s-label-sm">Y(超小型過熱)</text>
+        <text x="333" y="103" class="s-label-r">34%</text>
+        <!-- 大暴落率 group -->
+        <text x="12" y="160" class="s-label-sm">大暴落率</text>
+        <text x="12" y="174" class="s-label-sm">(−15%超)</text>
+        <rect x="170" y="150" width="26" height="26" class="s-fill-g" stroke="#1a7f37" stroke-width="1.4" rx="3"/>
+        <text x="14" y="196" class="s-label-sm">X</text>
+        <text x="204" y="169" class="s-label-g">6%</text>
+        <rect x="170" y="184" width="182" height="26" class="s-fill-r" stroke="#cf222e" stroke-width="1.6" rx="3"/>
+        <text x="14" y="230" class="s-label-sm">Y</text>
+        <text x="360" y="203" class="s-label-r">40%（10回に4回 吹き飛ぶ）</text>
+        <text x="350" y="270" text-anchor="middle" class="s-label-sm">緑＝大型×売られすぎ反発(X)、赤＝超小型×過熱(Y)。Yは勝率も低く、大暴落の頻度が桁違い</text>
+      </svg>
+      <div class="chart-caption">図2：同じ「前日大幅高×大商い」でも、X（大型・売られすぎからの反発・過熱なし）とY（超小型・すでに過熱）では、その後10日の勝率も大暴落の頻度もまるで違います。危険は「平均」より「負けたときの深さ」に出ます。</div>
+    </div>
+
+    <div class="warning-box">
+      ここでのX・Yは<strong>「型（タイプ）」の例</strong>であって、特定の銘柄を指すものでも、売買を推奨するものでもありません。数字は当サイトが過去データを型ごとに集計した結果です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="regime">📊 「当てる」は年でブレる／「避ける」は毎年効く</h2>
+
+    <p>「じゃあXのような“当たり型”を狙えばいい」と思いますよね。ところが、ここに今回いちばん大事な発見があります。<strong>Xのような“続伸の当たり型”は、年によって効いたり効かなかったりした</strong>のです。</p>
+
+    <div class="chart-figure">
+      <!-- 図3: 年別 当てる vs 避ける -->
+      <svg viewBox="0 0 700 315" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="年別の当てる作戦と避ける作戦の効きめ">
+        <text x="350" y="24" text-anchor="middle" class="s-label-b" style="font-size:15px">年別の効きめ（プラス＝その年に効いた）</text>
+        <!-- legend -->
+        <rect x="150" y="36" width="13" height="13" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <text x="168" y="47" class="s-label-sm">続伸を「当てる」</text>
+        <rect x="320" y="36" width="13" height="13" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="338" y="47" class="s-label-sm">危険株を「避ける」</text>
+        <!-- zero line -->
+        <line x1="110" y1="190" x2="655" y2="190" class="s-axis"/>
+        <text x="660" y="194" text-anchor="end" class="s-label-sm" style="font-size:10.5px"> </text>
+        <text x="95" y="194" text-anchor="end" class="s-label-sm">0</text>
+        <!-- 2021 center150 -->
+        <rect x="124" y="163" width="22" height="27" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <rect x="154" y="185" width="22" height="5" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="150" y="282" text-anchor="middle" class="s-label-sm">2021</text>
+        <!-- 2022 center235 -->
+        <rect x="209" y="140" width="22" height="50" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <rect x="239" y="178" width="22" height="12" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="235" y="282" text-anchor="middle" class="s-label-sm">2022</text>
+        <!-- 2023 center320 -->
+        <rect x="294" y="147" width="22" height="43" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <rect x="324" y="184" width="22" height="6" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="320" y="282" text-anchor="middle" class="s-label-sm">2023</text>
+        <!-- 2024 center405 -->
+        <rect x="379" y="161" width="22" height="29" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <rect x="409" y="187" width="22" height="3" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="405" y="282" text-anchor="middle" class="s-label-sm">2024</text>
+        <!-- 2025 center490 -->
+        <rect x="464" y="106" width="22" height="84" class="s-fill-b" stroke="#0969da" stroke-width="1.2"/>
+        <rect x="494" y="167" width="22" height="23" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="490" y="282" text-anchor="middle" class="s-label-sm">2025</text>
+        <!-- 2026 center575: 続伸 negative! -->
+        <rect x="549" y="190" width="22" height="64" class="s-fill-r" stroke="#cf222e" stroke-width="1.6"/>
+        <rect x="579" y="172" width="22" height="18" class="s-fill-g" stroke="#1a7f37" stroke-width="1.2"/>
+        <text x="575" y="282" text-anchor="middle" class="s-label-sm">2026</text>
+        <text x="560" y="248" text-anchor="middle" class="s-label-r" style="font-size:11px">不発↓</text>
+        <text x="350" y="305" text-anchor="middle" class="s-label-sm">青(当てる)は年でバラつき2026はマイナス。緑(避ける)は毎年プラスで安定</text>
+      </svg>
+      <div class="chart-caption">図3：「続伸を当てる」（青）は2021〜2025は効いたのに2026はマイナス＝年によってブレる。一方「危険株を避ける」（緑）は6年すべてプラスで安定。守りのほうが頼れる、と数字が言っています。</div>
+    </div>
+
+    <p>青い棒（＝Xのような続伸を“当てる”作戦）は、年によって大きかったり、2026年はついにマイナスになったり、<strong>当たり外れがあります</strong>。これは「相場の地合い（レジーム）が変わると、効く型も変わる」ためです。</p>
+    <p>ところが緑の棒（＝Yのような危険株を“避ける”作戦）は、<strong>6年間ずっとプラス</strong>。地合いが変わっても、「吹いて落ちる株を避ける」ことは一貫して得でした。</p>
+
+    <!-- =============================== -->
+    <h2 id="why">🔍 なぜ“守り”のほうが頑健なのか</h2>
+
+    <p>直感的にはこう考えると腑に落ちます。</p>
+    <ul>
+      <li><strong>「当てる」は相場の機嫌しだい</strong>：どの型が上がりやすいかは、金利・テーマ・人気で年ごとに移ろいます。去年の勝ちパターンが今年も勝つ保証はありません。</li>
+      <li><strong>「避ける」は人間の性（さが）が相手</strong>：過熱した超小型に飛びついて高値づかみする——この“やられ方”は、相場が変わっても人間が繰り返します。だから「避ける」ことの効きめは時代を超えて安定します。</li>
+    </ul>
+    <p>これは当サイトのこれまでの検証（<a href="guide-signal-lab-001.html">#1</a>以降）でも繰り返し出てきたパターンです。<strong>「勝てる型（攻め）」は移ろいやすく、「負けを減らす規律（守り）」は頑健</strong>。為替・指数でも、日本株でも、同じでした。</p>
+
+    <!-- =============================== -->
+    <h2 id="conclusion">🎯 結論：守りの2点セット</h2>
+
+    <div class="positive-box">
+      <strong>① 飛ばさない（ロット）</strong>＝例題1。期待値がプラスでも、賭けすぎると連敗で退場する。だから1回のリスクは小さく（フルではなく¼以下）。<br><br>
+      <strong>② 避ける（危険株）</strong>＝例題2・図3。過熱した超小型のような「吹いて落ちる型」を避ける。これは年を問わず効く、いちばん頼れる規律。
+    </div>
+
+    <p>派手に「当てる」ことより、この2つの“守り”を淡々と守るほうが、相場が変わっても生き残れる——それが今週の検証の結論です。<strong>生き残ってさえいれば、複利は時間が味方してくれます。</strong></p>
+
+    <div class="info-box">
+      <strong>📌 この記事の位置づけ</strong><br>
+      数字は当サイトのシグナル／日本株を過去データでシミュレーション・集計した<strong>研究の記録</strong>です。配信ロジックやロット指示に自動で反映するものではなく、<strong>「考え方を例題で可視化した教材」</strong>として読んでください。最新のシグナル成績は<a href="track-record.html">シグナル成績ダッシュボード</a>で毎日公開しています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="limits">⚠️ この検証の限界（必読）</h2>
+
+    <ul>
+      <li><strong>過去のシミュレーションである</strong>：将来も同じ数字が続く保証はありません。例題1の「10連敗」「+0.30R」、例題2の勝率・暴落率はいずれも過去データに基づく一例です。</li>
+      <li><strong>「当てる」側は特にあてにならない</strong>：図3のとおり、続伸の当たり型は年でブレ、2026は不発でした。今が一時的な不調か、恒久的な変化かは、これから前向きに観察して見極めます。</li>
+      <li><strong>銘柄X・Yは「型」の例</strong>：特定銘柄ではなく、特定の売買・賭け方を推奨するものでもありません。</li>
+      <li><strong>現在も上場している銘柄だけのデータ</strong>：倒産・上場廃止で消えた銘柄は含まれず、危険株の実際の怖さは本記事よりさらに悪い可能性があります（＝「避ける」結論はむしろ安全側）。</li>
+      <li><strong>取引コスト・約定のズレは未考慮</strong>。薄い手法ほどコストで利益が消えやすい点も注意。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 あわせて読みたい</div>
+      <div class="cta-box-desc">前回（#10）でリスク管理の図解、基礎は各解説で</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-010.html">
+          <div class="related-card-title">🧪 研究日誌 #10</div>
+          <div class="related-card-desc">「当てる」より「飛ばさない」——ケリー基準と破産確率を6枚の図で</div>
+        </a>
+        <a class="related-card" href="guide-position-sizing.html">
+          <div class="related-card-title">📏 ポジションサイジング入門</div>
+          <div class="related-card-desc">1回にいくら賭けるか——リスク許容度から考える基礎</div>
+        </a>
+        <a class="related-card" href="guide-compounding-drawdown.html">
+          <div class="related-card-title">📈 複利とドローダウン</div>
+          <div class="related-card-desc">なぜ「大きく負けない」ことが複利の土台になるのか</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供・教育を目的としており、特定の金融商品の売買や、特定の資金管理手法（ロットの大きさ等）を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の例題の数値・勝率・暴落率・期待値はすべて当サイトの特定システムにおける過去データのシミュレーション・集計結果であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
