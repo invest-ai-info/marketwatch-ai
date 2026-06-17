@@ -1,6 +1,11 @@
 name: Update Market News
 
 on:
+  # 記事公開で generate_market_news.py が更新されたら即 index 再生成（更新履歴の即反映・遅延ゼロ）。
+  # ※このワークフローは generate_market_news.py を commit しないので自己再起動ループは起きない。
+  push:
+    paths:
+      - 'generate_market_news.py'
   schedule:
     # ─── 朝の更新（米国市場クローズ後）─── 4回試行でスキップ対策
     - cron: '27 22 * * *'   # 7:27 JST 本命
