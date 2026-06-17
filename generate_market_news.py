@@ -4055,7 +4055,8 @@ def _load_indicator_result(now_jst):
 
 
 def _load_indicator_results(now_jst):
-    """複数の結果速報に対応。verified かつ発表当日〜翌日のものを新しい順で返す（リスト）。
+    """複数の結果速報に対応。verified かつ発表当日〜3日後のものを新しい順で返す（リスト）。
+    中銀ウィーク（FOMC＋日銀が数日に渡る）でも両方を並べて残せるよう表示窓は4日。
     indicator-result.json は {"results":[...]} / 旧来の単一オブジェクト / リスト のいずれでも可。"""
     try:
         p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "indicator-result.json")
@@ -4082,7 +4083,7 @@ def _load_indicator_results(now_jst):
                 edate = datetime.strptime(ed, "%Y-%m-%d").date()
             except Exception:
                 continue
-            if 0 <= (now_jst.date() - edate).days <= 1:
+            if 0 <= (now_jst.date() - edate).days <= 3:
                 out.append((edate, r))
         out.sort(key=lambda x: x[0], reverse=True)
         return [r for _, r in out]
