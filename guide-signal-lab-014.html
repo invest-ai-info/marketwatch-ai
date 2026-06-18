@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
   <title>AIシグナル研究日誌 #14｜円クロスの「-2σタッチ買い」は本当に稼げるか——同じ逆張りでも bb と RSI で成績が真逆になった謎 - MarketWatch AI</title>
   <meta name="description" content="円クロス4通貨ペアで「ボリンジャー-2σタッチ（bb_lower_touch）×ロング」の勝率を過去データで検証。60.0%（27/45）CI下限45.5%と損益分岐43%を上回った。一方、同じ逆張りシグナルRSIは14.3%と真逆。時間足（1h vs 4h）でも大差が出た経緯を噛み砕く研究日誌第14回。">
   <meta name="keywords" content="bb_lower_touch,ボリンジャーバンド,円クロス,jpy_fx,逆張り,ロング,勝率,期待値,研究日誌,RSI,時間足,FX">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-014.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #14｜円クロスの「-2σタッチ買い」は本当に稼げるか——同じ逆張りでも bb と RSI で成績が真逆になった謎">
-  <meta property="og:description" content="円クロス4通貨ペアで「ボリンジャー-2σタッチ×ロング」の勝率を検証。60.0%と損益分岐を上回った一方、同じ逆張りのRSIは14.3%と真逆。研究日誌第14回。">
+  <meta property="og:description" content="円クロス4通貨ペアで「ボリンジャー-2σタッチ（bb_lower_touch）×ロング」の勝率を過去データで検証。60.0%（27/45）CI下限45.5%と損益分岐43%を上回った。一方、同じ逆張りシグナルRSIは14">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-014.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -22,7 +21,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "AIシグナル研究日誌 #14｜円クロスの「-2σタッチ買い」は本当に稼げるか——同じ逆張りでも bb と RSI で成績が真逆になった謎",
-    "description": "円クロス4通貨ペアで「ボリンジャー-2σタッチ×ロング」の勝率を検証。60.0%と損益分岐を上回った一方、同じ逆張りのRSIは14.3%と真逆。研究日誌第14回。",
+    "description": "円クロス4通貨ペアで「ボリンジャー-2σタッチ（bb_lower_touch）×ロング」の勝率を過去データで検証。60.0%（27/45）CI下限45.5%と損益分岐43%を上回った。一方、同じ逆張りシグナルRSIは14",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-06-19",
@@ -203,7 +202,7 @@
 
     <h1>🧪 AIシグナル研究日誌 #14<br><small style="font-size:.62em;color:#57606a;font-weight:400">円クロスの「−2σタッチ買い」は本当に稼げるか——同じ逆張りでも bb と RSI で成績が真逆になった謎</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約9分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月19日 &nbsp;|&nbsp; 読了：約9分
     </div>
 
     <p>「同じ逆張り系シグナルなのに、なぜこれほど差がつく？」——そんな疑問が今回の出発点です。前回（<a href="guide-signal-lab-009.html">#9</a>）の研究で、<strong>円クロス（ドル円・ユーロ円・ポンド円・豪ドル円）のロングシグナルでは、ボリンジャー−2σタッチが探索的に65%と高い勝率を示した</strong>と記録しました。ただ、そのときはサンプルN=40の「気になるメモ」止まりで、正式な仮説検証ではありませんでした。今回はN=45に積み上がったところで<strong>正式に仮説を立て、事前宣言した基準に照らして合否を判定</strong>します。</p>
