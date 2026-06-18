@@ -12,10 +12,13 @@
 - **生成ファイル**: drafts/draft-signal-lab-014.html / drafts/labnotes/lab-014-analysis.md / drafts/labnotes/lab-014-claims.json / drafts/labnotes/sweep-2026-06-19.json / signal-lab-ledger.md
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push（実行中）
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance 判定
-- [ ] 8-4 公開 or エスカレ
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 014 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 8/8クレーム緑（ticker claimsをGBPJPY/USDJPY分追加後）・要約未検証0件・SVG警告0件。重複h2構造ミスを修正後 EXIT=0 確認
+- [x] 8-3 Opus compliance 🟢 白（修正なし）— 禁止語・推奨なし・kinsho-v1×3箇所・統計限界明示・将来非保証。修正不要
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正なし・h2重複修正で数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢 白 ✅（kinsho-v1×3・断定表現なし・将来非保証・売買推奨なし 全確認）
+- [x] 公開完了 ✅自動公開済み（検証緑・Opus=白・独立確認白）
+  - 適用修正: なし（Opusは白判定で修正不要。構造ミスはオーケストレーター修正=重複h2を統合）
 
 ---
 
