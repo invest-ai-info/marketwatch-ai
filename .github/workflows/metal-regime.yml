@@ -1,0 +1,50 @@
+name: Metal Regime Monitor
+
+# 金属(等)ロングの「レジーム状態」を毎日前向きに監視する。
+# 背景(2026-06-18 検証 / memory: project_signal_edge_research):
+#   metal×long は20年BTで +0.296R(最良級)だが直近ライブで機能不全(-0.55R)＝非定常。
+#   トレンド条件付けでも説明できない(BTは下降でも+0.205R)。→ 一律vetoはせず「正常化したか」を
+#   直近N件の実現Rで前向き監視し metal-regime.md / metal-regime.json に記録する。
+# 出力は前向き監視用の非公開メモ(SYNC外)。実トレードのサイズ/確信判断の材料。
+# ⚠️ エンジン・発火条件・メール配信・ロットには一切触れない（監視・記録専用）。
+
+on:
+  schedule:
+    - cron: '35 22 * * *'   # 07:35 JST 狙い（1D収集06:20・panic-scan07:27 の後＝日足が確定してから）
+    - cron: '55 22 * * *'   # 07:55 JST 狙い（cron遅延対策のバックアップ）
+  workflow_dispatch:        # 手動実行も可能
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy
+
+      - name: Run metal/btc regime monitor (writes metal-regime.md/.json)
+        run: |
+          python metal_regime_monitor.py --group metal --direction long --json metal-regime.json > metal-regime.md
+          { echo ""; python metal_regime_monitor.py --group btc --direction long --window 25; } >> metal-regime.md
+
+      - name: Commit metal-regime outputs if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add metal-regime.md metal-regime.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: metal regime monitor $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
