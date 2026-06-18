@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-06-19 | 🧪 signal-lab #014 ゲート実行中
+
+- **基準日（JST）**: 2026-06-19
+- **採択仮説**: 「bb_lower_touch × jpy_fx ロング の正式検証（#9探索記録の後継）」（バックログ最優先候補・verify.py対応済み）
+- **事前宣言**: N≥60かつCI下限>43% → 通過A（エッジ確認）
+- **検証データ**: 全決済済み866件（signals-log.json）。group=jpy_fx / direction=long / signal=bb_lower_touch
+- **結果**: 60.0%(27/45) CI[45.5%~73.0%] E(R)=+0.398 CI[+0.061,+0.735]・CI下限45.5%>43% → **通過A方向（N=45<60のため途中経過）**。bb vs rsi逆転（14.3% N=21）・1h 73.3% vs 4h 33.3%の時間足差を発見。スイープ4本新候補登録
+- **生成ファイル**: drafts/draft-signal-lab-014.html / drafts/labnotes/lab-014-analysis.md / drafts/labnotes/lab-014-claims.json / drafts/labnotes/sweep-2026-06-19.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push（実行中）
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance 判定
+- [ ] 8-4 公開 or エスカレ
+
+---
+
 ## 2026-06-17 | 🧪 signal-lab #012 ゲート実行中
 
 - **基準日（JST）**: 2026-06-17
