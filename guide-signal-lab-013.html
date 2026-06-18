@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #13｜20年で最強だった「金属の押し目買い」が、いまは最悪？——レジーム反転の罠を金と銀の例題で - MarketWatch AI</title>
+  <meta name="description" content="20年の長期データで最も勝てたはずの『金属（金銀）の押し目買い』が、直近は勝率19.3%と最悪に沈んだ。同じ条件でなぜ正反対に？相場の地合い（レジーム）が変わるとエッジも変わる罠を、金と銀の例題で噛み砕く研究日誌第13回。">
+  <meta name="keywords" content="レジーム,非定常,金,銀,押し目買い,平均回帰,期待値,研究日誌,例題,指数,リスク管理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-013.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #13｜20年で最強だった「金属の押し目買い」が、いまは最悪？——レジーム反転の罠を金と銀の例題で">
+  <meta property="og:description" content="20年の長期データで最も勝てたはずの『金属（金銀）の押し目買い』が、直近は勝率19.3%と最悪に沈んだ。同じ条件でなぜ正反対に？相場の地合い（レジーム）が変わるとエッジも変わる罠を、金と銀の例題で噛み砕く研究日誌第13回">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-013.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #13｜20年で最強だった「金属の押し目買い」が、いまは最悪？——レジーム反転の罠を金と銀の例題で",
+    "description": "20年の長期データで最も勝てたはずの『金属（金銀）の押し目買い』が、直近は勝率19.3%と最悪に沈んだ。同じ条件でなぜ正反対に？相場の地合い（レジーム）が変わるとエッジも変わる罠を、金と銀の例題で噛み砕く研究日誌第13回",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-18",
+    "dateModified": "2026-06-18",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-013.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #13
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供・教育を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。特定の銘柄の売買を推奨するものではなく、投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #13<br><small style="font-size:.62em;color:#57606a;font-weight:400">20年で最強だった「金属の押し目買い」が、いまは最悪？——レジーム反転の罠を金と銀の例題で</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月18日 &nbsp;|&nbsp; 読了：約9分
+    </div>
+
+    <p>今回は、ちょっと背筋が寒くなる発見の話です。当サイトのシグナルを過去データで点検していて、<strong>「20年間でいちばん勝てたはずの手法が、直近ではいちばん負けている」</strong>という、まるで正反対の結果に出くわしました。しかも、それは多くの個人投資家が大好きな<strong>「金（ゴールド）・銀（シルバー）の押し目買い」</strong>です。なぜ同じ手法が真逆になるのか。むずかしい統計は使わず、<strong>3つの例題</strong>で噛み砕きます。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① <strong>同じ「金属（金銀）の押し目買い」</strong>が、20年の長期データでは勝てる側だったのに、直近のライブ記録では勝率 <strong>19.3%</strong>（17/88）と、損益分岐の <strong>43%</strong> を大きく下回って沈んだ＝これが<strong>「レジーム（地合い）反転」</strong><br>
+      ② 犯人は下降相場の“落ちるナイフ”だけではない：金属ロングは下降トレンドで <strong>16.2%</strong>（12/74）と特に弱いが、20年データでは同じ下降でもプラスだった＝<strong>平均回帰（下げたら戻る）という性質そのものが最近“効かなくなった”</strong><br>
+      ③ 同じ「金属」でも金と銀は別人：直近、金（GC=F）ロングが <strong>23.2%</strong>（13/56）に対し、銀（SI=F）ロングは <strong>12.5%</strong>（4/32）と一段と弱い<br>
+      ④ 一方で、<strong>指数（株価指数）ロング</strong>は <strong>54.1%</strong>（86/159）と、地合いが変わっても過去データ上は崩れにくかった頑健なプラス＝相対的に頼りやすかったのはこちら<br>
+      ⑤ 結論＝<strong>レジームで正反対になるエッジは鵜呑みにしない</strong>。頑健な指数ロングに寄せ、壊れた金属ロングは「一律禁止」にせず<strong>“正常化したか”を毎日監視</strong>する（20年の最良エッジを殺さないため）<br>
+      ⑥ ⚠️ すべて過去データの集計であり、将来を保証しません。特定銘柄の売買を推奨するものでもありません
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#flip">同じ手法、正反対の結果——何が起きた？</a></li>
+        <li><a href="#ex1">例題1：同じ釣り場、20年と今月</a></li>
+        <li><a href="#trend">犯人はトレンドだけじゃない（だから厄介）</a></li>
+        <li><a href="#ex2">例題2：金と銀、同じ「金属」だけど別人</a></li>
+        <li><a href="#robust">頑健なエッジはどれ？——指数ロングは崩れない</a></li>
+        <li><a href="#ex3">例題3：直近だけ見て「禁止」にしたら？</a></li>
+        <li><a href="#do">今回の打ち手（監視という選択）</a></li>
+        <li><a href="#limits">この検証の限界（必読）</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="flip">🔄 同じ手法、正反対の結果——何が起きた？</h2>
+
+    <p>当サイトのシグナルは「金や銀が下げたところを買う（押し目買い・逆張り）」を含みます。これを2つの“ものさし”で点検しました。<strong>20年ぶんの長期データ</strong>と、<strong>ここ最近のライブ記録</strong>です。結果はこうでした。</p>
+
+    <table>
+      <tr><th>金属（金銀）の押し目買い</th><th>勝率</th><th>1回あたりの平均損益（R）</th><th>評価</th></tr>
+      <tr><td>20年の長期データ（1,557回）</td><td>52.9%</td><td><strong>+0.30R</strong>（勝てる側）</td><td>✅ 最良級のエッジ</td></tr>
+      <tr><td>直近のライブ記録（88回）</td><td><strong>19.3%</strong>（17/88）</td><td><strong>−0.55R</strong>（大負け）</td><td>💀 最悪</td></tr>
+    </table>
+
+    <p>「R」は1回の負けを −1 とした“ものさし”です（勝てば +1.33、伸びれば +2）。<strong>+0.30R なら過去の集計上は回すほど積み上がりやすく、−0.55R なら逆に目減りしやすい傾向</strong>（あくまで過去データ上の話で、将来を約束するものではありません）。同じルールなのに、長期と直近で<strong>プラスとマイナスが真逆</strong>になっています。これが「レジーム（相場の地合い）が変わると、効くはずのエッジも変わる」という現象です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="金属の押し目買いの勝率、20年と直近の比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">同じ「金属の押し目買い」——20年と直近で正反対</text>
+        <line x1="170" y1="46" x2="170" y2="200" class="s-axis"/>
+        <line x1="170" y1="200" x2="660" y2="200" class="s-axis"/>
+        <line x1="342" y1="46" x2="342" y2="200" class="s-guide"/>
+        <text x="342" y="42" text-anchor="middle" class="s-label-sm">損益分岐 43%</text>
+        <rect x="170" y="74" width="212" height="34" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
+        <text x="16" y="88" class="s-label-sm">20年データ</text>
+        <text x="16" y="104" class="s-label-sm">(金属ロング)</text>
+        <text x="390" y="96" class="s-label-g">52.9%（勝てた・+0.30R）</text>
+        <rect x="170" y="132" width="77" height="34" class="s-fill-r" stroke="#cf222e" stroke-width="1.6" rx="3"/>
+        <text x="16" y="146" class="s-label-sm">直近ライブ</text>
+        <text x="16" y="162" class="s-label-sm">(金属ロング)</text>
+        <text x="255" y="154" class="s-label-r">19.3%（17/88・−0.55R）💀</text>
+        <text x="350" y="232" text-anchor="middle" class="s-label-sm">同じ条件なのに、長期は勝てて直近は最悪。これが「レジーム反転」</text>
+      </svg>
+      <div class="chart-caption">図1：緑＝20年の長期データ、赤＝直近のライブ記録。同じ「金属の押し目買い」が、損益分岐43%の線をはさんで真逆に。長期で稼げたからといって、今この瞬間も稼げるとは限りません。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="ex1">📘 例題1：同じ釣り場、20年と今月</h2>
+
+    <div class="info-box">
+      <strong>問題</strong>：ある釣り場に20年通い、<strong>10回行けば平均5〜6匹</strong>釣れていました（よく釣れる名所）。ところが<strong>今月は10回行って2匹弱</strong>。さて、この釣り場は「もう死んだ」のでしょうか？それとも「今月がたまたま不漁」なだけ？
+    </div>
+
+    <p>答えを出す前に確認すべきは、たった1つ。<strong>「仕掛け（条件）は同じか？」</strong>です。竿も餌も潮の読み方も20年と同じなのに釣れない——なら、<strong>釣り場そのものの状態（＝レジーム）が変わった</strong>可能性を疑います。逆に、今月だけ嵐続きだったなら、ただの不漁かもしれません。</p>
+
+    <p>これは金属ロングと同じ構図です。押し目買いの<strong>ルール（仕掛け）は20年も今も同じ</strong>。なのに釣果（勝率）が 52.9% → 19.3% へ激変した。つまり<strong>「金相場の状態が変わった疑い」</strong>が濃いわけです。</p>
+
+    <div class="positive-box">
+      <strong>例題1の学び</strong>：成績が急に悪化したとき、すぐ「手法が壊れた」と決めつけない。<strong>「条件は同じか？ なら“場”が変わったのでは？」</strong>と問う。これが、あわてて良い手法を捨てたり、ダメな相場でナンピンを続けたりする事故を防ぎます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="trend">🧭 犯人はトレンドだけじゃない（だから厄介）</h2>
+
+    <p>「直近の金属が弱いのは、ただ“下げ相場で逆張りした＝落ちるナイフを掴んだ”からでは？」——もっともな疑いです。たしかに直近の金属ロングは、<strong>下降トレンドでの勝率が 16.2%</strong>（12/74）とさらに低い。下げ相場での押し目買いは鬼門、というのは過去の研究（<a href="guide-signal-lab-002.html">#2</a>）とも一致します。</p>
+
+    <p>ところが、ここが今回いちばん厄介な点です。<strong>20年データでは、同じ「下降トレンドでの金属の押し目買い」でもプラスでした</strong>（下げても結局は戻ってくる＝平均回帰が効いていた）。つまり、今回の不調はトレンドのせいだけでは説明できません。<strong>「下げたら戻る」という金属そのもののクセが、最近だけ効かなくなっている</strong>——これが本当の犯人です。</p>
+
+    <div class="warning-box">
+      「下げ相場だから逆張りが負けた」だけなら話は簡単（トレンドを見れば避けられる）。でも今回は<strong>トレンドで条件をそろえても、20年と直近で結果が逆</strong>。だから「トレンドさえ見れば大丈夫」という単純な対策では防げない、やっかいな“非定常（性質そのものの変化）”です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="ex2">📗 例題2：金と銀、同じ「金属」だけど別人</h2>
+
+    <div class="info-box">
+      <strong>問題</strong>：「金属ロングが全部ダメ」と一括りにしてよい？——直近のライブ記録を、金（GC=F）と銀（SI=F）に分けてみます。
+    </div>
+
+    <table>
+      <tr><th>　</th><th>金（GC=F）の押し目買い</th><th>銀（SI=F）の押し目買い</th></tr>
+      <tr><td>直近の勝率</td><td><strong>23.2%</strong>（13/56）</td><td><strong>12.5%</strong>（4/32）</td></tr>
+      <tr><td>損益分岐43%との距離</td><td>下回るが、銀ほどではない</td><td>大きく下回る（一段と弱い）</td></tr>
+      <tr><td>最新30件の傾向（参考）</td><td>持ち直しつつある</td><td>まだ弱い</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="金と銀の押し目買いの勝率比較">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" style="font-size:15px">同じ「金属一家」でも、いま金と銀は別人</text>
+        <line x1="160" y1="44" x2="160" y2="178" class="s-axis"/>
+        <line x1="160" y1="178" x2="660" y2="178" class="s-axis"/>
+        <line x1="332" y1="44" x2="332" y2="178" class="s-guide"/>
+        <text x="332" y="40" text-anchor="middle" class="s-label-sm">損益分岐 43%</text>
+        <rect x="160" y="66" width="93" height="30" class="s-fill-y" stroke="#9a6700" stroke-width="1.5" rx="3"/>
+        <text x="20" y="86" class="s-label-sm">金 GC=F</text>
+        <text x="261" y="86" class="s-label-y">23.2%（13/56）</text>
+        <rect x="160" y="116" width="50" height="30" class="s-fill-r" stroke="#cf222e" stroke-width="1.6" rx="3"/>
+        <text x="20" y="136" class="s-label-sm">銀 SI=F</text>
+        <text x="218" y="136" class="s-label-r">12.5%（4/32・一段と弱い）</text>
+        <text x="350" y="206" text-anchor="middle" class="s-label-sm">どちらも損益分岐43%割れだが、銀が特に深い。「金属」と一括りにできない</text>
+      </svg>
+      <div class="chart-caption">図2：黄＝金、赤＝銀。同じ「金属の押し目買い」でも、いまは銀のほうが一段と弱い。さらに直近30件だけで見ると金は持ち直しつつあり、銀はまだ弱いまま——“金属”でひとまとめにすると、この違いを見落とします。</div>
+    </div>
+
+    <div class="positive-box">
+      <strong>例題2の学び</strong>：「金属がダメ」ではなく<strong>「いま銀が特に弱い／金は持ち直し始め」</strong>。雑なくくりは判断を誤らせます。だから私たちは“金属一律”ではなく、銘柄ごと・時期ごとに状態を見ます（後述の監視ツールはこのために作りました）。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="robust">📊 頑健なエッジはどれ？——指数ロングは崩れない</h2>
+
+    <p>「じゃあ何を信じればいいの？」という疑問に、今回の点検はひとつ答えをくれました。<strong>株価指数（日経・S&amp;P500・ナスダックなど）のロングは、地合いが変わっても崩れなかった</strong>のです。直近ライブの勝率は <strong>54.1%</strong>（86/159）。20年データでもプラスで、しかも<strong>下げ相場での指数ロングですら 72.2%</strong>（13/18）と、金属とは対照的に踏ん張っていました。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="指数ロングと金属ロングの頑健性の比較">
+        <text x="350" y="24" text-anchor="middle" class="s-label-b" style="font-size:15px">頑健なエッジ vs レジーム依存のエッジ（勝率）</text>
+        <line x1="190" y1="42" x2="190" y2="212" class="s-axis"/>
+        <line x1="362" y1="42" x2="362" y2="212" class="s-guide"/>
+        <text x="362" y="38" text-anchor="middle" class="s-label-sm">損益分岐43%</text>
+        <text x="16" y="60" class="s-label-b">指数ロング（頑健）</text>
+        <rect x="190" y="66" width="179" height="24" class="s-fill-b" stroke="#0969da" stroke-width="1.3" rx="3"/>
+        <text x="375" y="84" class="s-label-sm">20年 44.7%</text>
+        <rect x="190" y="96" width="216" height="24" class="s-fill-g" stroke="#1a7f37" stroke-width="1.4" rx="3"/>
+        <text x="412" y="114" class="s-label-g">直近 54.1%（ずっと勝てる側）</text>
+        <text x="16" y="144" class="s-label-r">金属ロング（反転）</text>
+        <rect x="190" y="150" width="212" height="24" class="s-fill-g" stroke="#1a7f37" stroke-width="1.3" rx="3"/>
+        <text x="408" y="168" class="s-label-g">20年 52.9%</text>
+        <rect x="190" y="180" width="77" height="24" class="s-fill-r" stroke="#cf222e" stroke-width="1.6" rx="3"/>
+        <text x="273" y="198" class="s-label-r">直近 19.3%（暴落）</text>
+        <text x="350" y="238" text-anchor="middle" class="s-label-sm">指数は両時期とも損益分岐の近く以上で安定。金属は勝てる側から大きく転落</text>
+      </svg>
+      <div class="chart-caption">図3：指数ロング（上段）は20年も直近も損益分岐の近く以上で安定＝頼れる。金属ロング（下段）は勝てる側（緑）から大きく転落（赤）＝地合い次第。「頑健なエッジ」と「レジーム依存のエッジ」は、こうやって見分けます。</div>
+    </div>
+
+    <p>これは過去の研究（<a href="guide-signal-lab-001.html">#1</a>以降）で繰り返し出てきたテーマと一致します。<strong>派手に当たる型は移ろいやすく、地味でも崩れない型こそ頼れる</strong>。今回でいえば、その「崩れない型」は指数ロングでした。</p>
+
+    <!-- =============================== -->
+    <h2 id="ex3">📕 例題3：直近だけ見て「禁止」にしたら？</h2>
+
+    <div class="info-box">
+      <strong>問題</strong>：直近の金属ロングが −0.55R と最悪です。「もう二度と金属ロングはしない」と<strong>永久禁止</strong>にするのは正解でしょうか？
+    </div>
+
+    <p>答えは<strong>ノー</strong>です。なぜなら、その金属ロングは<strong>20年でいちばん稼いだエッジ（+0.30R）</strong>でもあるから。直近の不調“だけ”を見て永久禁止にすると、相場が正常化したときに<strong>最良の武器を二度と使えなくなります</strong>。これは「今月不漁だった名所を、埋め立ててしまう」ようなもったいなさです。</p>
+
+    <p>かといって、壊れている今を無視してフルサイズで買い続けるのも危険。<strong>正しいのは「禁止」でも「全力」でもなく、その間の「監視」</strong>です。</p>
+
+    <div class="positive-box">
+      <strong>例題3の学び</strong>：レジームで反転するエッジは、<strong>①壊れている間はサイズ・確信を落とす ②“正常化したか”を測り続ける ③戻ったら徐々に復帰</strong>——この「信号機」運用が正解。永久禁止（赤固定）も全力（青固定）も、どちらも事故のもとです。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="do">🛠️ 今回の打ち手（監視という選択）</h2>
+
+    <p>この発見をうけて、今週やったことは2つです。どちらも<strong>「シグナルの鳴り方」や「メール配信」は一切変えていません</strong>（表示・記録のうえでの調整と、観測のしくみだけ）。</p>
+
+    <ul>
+      <li><strong>頑健な指数ロングを少しだけ“格上げ”</strong>：両方のものさし（20年・直近）と前向きの記録で崩れなかった指数ロングに、信頼度スコアでわずかな加点をしました（あくまで表示・記録のうえでの扱いで、発火やメール配信は不変）。</li>
+      <li><strong>金属の“信号機”を新設</strong>：金属ロングが正常化したかを、直近の成績から毎朝自動で 🔴機能不全 / 🟡移行期 / 🟢正常化 と判定する監視を作りました。判定の基準は<strong>先に宣言</strong>してあり（後から都合よく動かさない）、🟢に戻ったと確認できるまでは“様子見”の材料にします。金属を<strong>一律禁止にはしません</strong>（例題3のとおり、最良エッジを殺さないため）。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>📌 この記事の位置づけ</strong><br>
+      数字は当サイトのシグナルを過去データで集計した<strong>研究の記録</strong>です。配信ロジックやロット指示に自動で反映するものではなく、<strong>「考え方を例題で可視化した教材」</strong>として読んでください。最新のシグナル成績は<a href="track-record.html">シグナル成績ダッシュボード</a>で毎日公開しています。
+    </div>
+
+    <h3>📡 今回の発見（前向きに観察を続けるもの）</h3>
+    <table>
+      <tr><th>テーマ</th><th>直近ライブ</th><th>これからの見方</th></tr>
+      <tr><td>金属ロング</td><td>19.3%（17/88）🔴</td><td>“正常化したか”を毎朝監視。🟢まではサイズ控えめ</td></tr>
+      <tr><td>うち 金 GC=F</td><td>23.2%（13/56）</td><td>持ち直しの兆し。継続観察</td></tr>
+      <tr><td>うち 銀 SI=F</td><td>12.5%（4/32）</td><td>一段と弱い。回復を待つ</td></tr>
+      <tr><td>指数ロング</td><td>54.1%（86/159）✅</td><td>頑健。引き続き信頼度を寄せる</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="limits">⚠️ この検証の限界（必読）</h2>
+
+    <ul>
+      <li><strong>過去のデータ集計である</strong>：将来も同じ数字が続く保証はありません。19.3%・54.1% などは、ある期間のライブ記録のスナップショットです。</li>
+      <li><strong>直近サンプルは少なめ</strong>：金属ロング88回、銀にいたっては32回。少ない数字は大きくブレます（だから単発の数字でなく“向き”と監視を重視します）。</li>
+      <li><strong>「正常化したか」の判定はラグがある</strong>：直近の実績を見る以上、見極めは後追いになります。予測ではありません。</li>
+      <li><strong>勝率は損益分岐43%が基準</strong>（当サイトの利益確定2.0ATR・損切り1.5ATRの設定）。この設定が変われば基準も変わります。</li>
+      <li><strong>特定銘柄の売買・特定のロットを推奨するものではありません</strong>。金・銀・指数はあくまで分析対象の“型”の例です。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🧪 あわせて読みたい</div>
+      <div class="cta-box-desc">「当てる」より「飛ばさない・避ける」——研究日誌シリーズ</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-012.html">
+          <div class="related-card-title">🧪 研究日誌 #12</div>
+          <div class="related-card-desc">もみあい相場のショートが輝く——相場環境で集計結果が変わる例</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-011.html">
+          <div class="related-card-title">🧪 研究日誌 #11</div>
+          <div class="related-card-desc">「当てる」より「避ける・飛ばさない」——守りが効く2つの理由を例題で</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-002.html">
+          <div class="related-card-title">🧪 研究日誌 #2</div>
+          <div class="related-card-desc">押し目買い vs 落ちるナイフ——上位足トレンドで何が変わるか</div>
+        </a>
+        <a class="related-card" href="track-record.html">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">全シグナルの勝敗を毎日自動更新で全件公開</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供・教育を目的としており、特定の金融商品（金・銀・株価指数を含む）の売買や、特定の資金管理手法（ロットの大きさ等）を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値（R）はすべて当サイトの特定システムにおける過去データの集計結果であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+</body>
+</html>
