@@ -2178,7 +2178,7 @@ def load_history():
 # 🆕 信頼度スコア（B2）— 複数シグナル × 環境 × 整合性を統合
 # ─────────────────────────────────────────────
 def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment,
-                          position_plan=None, indicators=None):
+                          position_plan=None, indicators=None, ticker=None):
     """シグナル発火時の信頼度を 3 段階（HIGH/MID/LOW）で算出
 
     スコアリング:
@@ -2191,6 +2191,7 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
           avoid=-2 / neutral=0 / good=0 / elite=+2（position_plan/indicators がある時のみ）
           （good は 2026-06-07 に +1→0 へ縮小＝前向き検証で再現せず）
       + 🆕 2026-06-07: 飛びつき順張り(macd_golden/ma_golden/high_break のロング)を -2（前向き負け筋）
+      + 🆕 2026-06-18: 指数(株価指数)ロングを +1（両サンプル＋前向きで確認された頑健な +EV エッジ）
 
     閾値:
       score >= 5  → ⭐⭐⭐ HIGH（強）
@@ -2274,6 +2275,19 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         chasing_downgrade = True
         factors.append("飛びつき順張り (前向き負け筋・-2)")
 
+    # 🆕 2026-06-18: 指数(株価指数)ロングの加点（両サンプル＋前向きで確認された唯一のレジーム安定 +EV エッジ）
+    # 根拠＝ライブ838件で group=index×long +0.262R(54.1%,q=.060) / 20年BT16,222件で +0.053R(q=.019)＝
+    #       両サンプルで符号一致のプラス。BTの下降相場でも +0.004 と崩れず（金属/BTCロングが
+    #       BT+0.30→ライブ−0.55 と符号反転＝レジーム依存だったのと対照的）。前向きトラッカー
+    #       index_long_live は n=139 / +0.293R / R下限+0.099>0 と OOS でも生存。
+    # ⚠️ 表示・記録のみ＝件名⭐と本文信頼度を上げるだけ。発火・メール送信可否・ロットには一切影響しない
+    #    （送信可否は filter_send_email が独立制御）。可逆。index_long_bonus を記録して前向き検証を継続。
+    index_long_bonus = False
+    if ticker in INDEX_TICKERS and (fresh_signals or [{}])[0].get("severity") == "buy":
+        score += 1
+        index_long_bonus = True
+        factors.append("指数ロング (両サンプル+前向きで確認・+1)")
+
     # ラベル判定
     if score >= 5:
         label = "HIGH"
@@ -2292,6 +2306,7 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         "factors": factors,
         "edge_tier": edge_tier,  # 🆕 2026-06-05 B案: 適用された選別ティア（前向き検証用に記録）
         "chasing_downgrade": chasing_downgrade,  # 🆕 2026-06-07: 飛びつき順張りで格下げしたか（前向き検証用に記録）
+        "index_long_bonus": index_long_bonus,  # 🆕 2026-06-18: 指数ロング加点を適用したか（前向き検証用に記録）
     }
 
 
@@ -2822,7 +2837,7 @@ def main():
         # 🆕 B2: 信頼度スコア算出（body / subject で参照するため事前に計算）
         # 🆕 2026-06-05 B案: position_plan / indicators を渡して選別ティア補正を有効化（表示・記録のみ）
         confidence = calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment,
-                                           position_plan=position_plan, indicators=indicators)
+                                           position_plan=position_plan, indicators=indicators, ticker=ticker)
 
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
