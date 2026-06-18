@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AIシグナル研究日誌 #12｜もみあい相場のショートが輝く——67.3%・R+0.57の統計的エッジを発見 - MarketWatch AI</title>
+  <meta name="description" content="「もみあい（レンジ）相場でのショートシグナルは損益分岐43%を有意に超えるか」を実データ806件で検証。67.3%（N=49）CI下限53.4%という強い結果が出た。主体はMACDデッドクロスと安値ブレイク。研究日誌第12回。">
+  <meta name="keywords" content="AIシグナル,研究日誌,もみあい,レンジ相場,ショート,MACD,勝率,期待値,検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-012.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #12｜もみあい相場のショートが輝く——67.3%・R+0.57の統計的エッジを発見">
+  <meta property="og:description" content="もみあい相場でのショートが67.3%（N=49）。損益分岐43%をCI下限53.4%で超えるエッジを発見。macd_deadと安値ブレイクが主体。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-012.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #12｜もみあい相場のショートが輝く——67.3%・R+0.57の統計的エッジを発見",
+    "description": "もみあい（中立）相場でのショートシグナルは損益分岐43%を有意に超えるか。806件の実データでFDR補正多重検定を通過した新発見。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-17",
+    "dateModified": "2026-06-17",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-012.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #12
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #12<br><small style="font-size:.65em;color:#57606a;font-weight:400">もみあい相場のショートが輝く——806件の実データが示す67.3%・R+0.57の統計的エッジ</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第12回です。<a href="guide-signal-lab-009.html">前回（#9）</a>では「円クロス（jpy_fx）のショートは損益分岐43%を下回るか」を検証し、23.5%（N=34・CI上限40.0%）で棄却確認（通過A）となりました。</p>
+    <p>今回の起点は、仮説グリッドの全数スイープ（66本同時検証・BH-FDR多重検定補正）の結果です。<strong>FDR補正後q値0.005</strong>という最上位の有意水準で浮かび上がったのが、<strong>「もみあい（中立・もみあい）相場でのショートシグナル」</strong>という新しい切り口でした。全体のショート勝率46.2%と比べて20ポイント以上高い67.3%（N=49）を記録しています。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① もみあい相場×ショート：<strong>67.3%（33/49件、95%CI＝53.4%〜78.8%、期待値R＝+0.57）</strong>——CI下限53.4%が損益分岐43%を大きく上回る（通過A）<br>
+      ② 主体はMACDデッドクロス：<strong>macd_dead×もみあい×ショート＝63.3%（19/30件、CI＝45.5%〜78.1%）</strong><br>
+      ③ 対照群（もみあい×ロング）は<strong>34.5%（77/223件）</strong>——方向を変えるだけで真逆の結果<br>
+      ④ 反面教師：下降環境では<strong>macd_dead×ショートが21.2%（11/52件）</strong>に急落——相場環境によって集計結果が大きく変わった点が興味深い
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">仮説——「もみあい相場のショートは損益分岐43%を有意に上回るか」</a></li>
+        <li><a href="#method">検証方法（806件反実仮想集計・FDRスイープ・事前合否基準）</a></li>
+        <li><a href="#result-main">結果①：もみあい×ショートの全体像（通過A確認）</a></li>
+        <li><a href="#result-signal">結果②：シグナル別の内訳——macd_deadが61%を占める</a></li>
+        <li><a href="#result-env">結果③：macd_deadの環境依存——もみあい/上昇vs下降の落差</a></li>
+        <li><a href="#confound">交絡の点検——シグナル偏り・期間バイアス・グループ構成</a></li>
+        <li><a href="#decision">今回の決定事項と作業仮説</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 仮説——「もみあい相場のショートは損益分岐43%を有意に上回るか」</h2>
+
+    <p>当サイトのシグナルエンジンは発火時に「上位足のトレンド方向」を記録しており、それを「上昇」「下降」「中立・もみあい」の3区分で分類しています。これまでの研究日誌では主に「方向別（ロング/ショート）」「グループ別（指数/FX/金属）」「シグナル種別」などを分析してきましたが、<strong>相場環境（トレンド状態）そのものと方向の掛け合わせ</strong>を正面から検討したことはありませんでした。</p>
+
+    <p>今回は、仮説グリッドスイープが期待値ベースの多重検定（BH-FDR補正α=0.10）を通過した「<strong>もみあい相場×ショート</strong>」に焦点を当てます。「もみあい中にショートしても効果がないのでは？」という直感とは逆の結果が出た理由を読み解きます。</p>
+
+    <div class="info-box">
+      <strong>💡 損益分岐（ブレイクイーブン）43%とは</strong><br>
+      本システムのTP1:SL比は約1.33（TP1=ATR×2.0、SL=ATR×1.5）。この比率で期待値がゼロになる最低勝率が43%。43%を下回ると毎回エントリーするほど期待値がマイナスになります（記録としての計算であり、実運用推奨ではありません）。
+    </div>
+
+    <table>
+      <tr><th>仮説</th><th>事前合否基準</th></tr>
+      <tr><td>もみあい相場×ショートの勝率は損益分岐43%を有意に上回る</td><td><strong>N≥20 かつ CI下限 &gt; 43%</strong> → 通過A（エッジ確認）</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（806件反実仮想集計・FDRスイープ・事前合否基準）</h2>
+
+    <p>signals-log.json に記録された全シグナルのうち、<strong>勝敗が確定済みのもの（tp1/sl到達済み、806件）</strong>のみを対象としました。「もみあい（中立・もみあい）」はシグナル発火時に上位足のトレンドが「中立・もみあい」と記録されていることを指します。</p>
+
+    <p>今回の仮説採択には、仮説グリッドスイープ（signal_lab_sweep.py）を使いました。66本の候補仮説を同時に期待値ベースで検定し、Benjamini-Hochberg（BH）法でFDR補正を適用することで「多重検定による偶然の発見」を排除します。もみあい×ショートはFDR補正後のq値が<strong>0.005</strong>で、66本中最上位の有意水準を記録しました。</p>
+
+    <div class="warning-box">
+      検証はすべてin-sample（過去データ全体）での集計です。前向き（out-of-sample）での確認は本日より前向きトラッカーに登録しました。過去の結果が将来を保証するものではなく、N=49は統計的に頑健なサンプルサイズとは言えません（継続観察が必要）。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-main">③ 結果①：もみあい×ショートの全体像（通過A確認）</h2>
+
+    <p>806件の決済済みシグナルから、「もみあい相場でのショートシグナル」に絞ると49件が該当しました。</p>
+
+    <table>
+      <tr><th>条件</th><th>k/N</th><th>勝率</th><th>95%CI</th><th>期待値R</th></tr>
+      <tr><td>もみあい×ショート（主仮説）</td><td>33/49</td><td><strong>67.3%</strong></td><td>[53.4%〜78.8%]</td><td><strong>+0.57</strong></td></tr>
+      <tr><td>上昇×ショート（対照群）</td><td>43/81</td><td>53.1%</td><td>[42.3%〜63.6%]</td><td>+0.24</td></tr>
+      <tr><td>全ショート（基準値）</td><td>98/212</td><td>46.2%</td><td>[39.6%〜52.9%]</td><td>+0.08</td></tr>
+      <tr><td>下降×ショート（対照群）</td><td>21/78</td><td>26.9%</td><td>[18.3%〜37.7%]</td><td>−0.37</td></tr>
+      <tr><td>もみあい×ロング（対照群）</td><td>77/223</td><td>34.5%</td><td>[28.6%〜41.0%]</td><td>−0.20</td></tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>✅ 通過A確認</strong>：もみあい×ショートのCI下限53.4%が損益分岐43%を超え、N=49≥20もクリア。FDR補正（q=0.005）でも多重検定の壁を突破。
+    </div>
+
+    <p>同じもみあい相場でも、<strong>ロングでは34.5%（損益分岐を大きく下回る）</strong>であるのに対し、<strong>ショートでは67.3%（損益分岐を大きく上回る）</strong>という、方向によって真逆の結果が出ています。これは「もみあいは上も下も難しい」という一般的な直感とは異なります。</p>
+
+    <!-- SVG 1: 環境×方向 勝率比較棒グラフ -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 620 300" role="img" aria-label="相場環境と方向別の勝率比較">
+        <!-- 背景ガイドライン -->
+        <!-- x軸ラベル(0%, 25%, 50%, 75%, 100%) -->
+        <!-- x_bar_start=145, scale=4.25 per % -->
+        <!-- 0%=145, 25%=251, 50%=358, 75%=464, 100%=570 -->
+        <line x1="145" y1="270" x2="570" y2="270" class="s-axis"/>
+        <!-- グリッドライン -->
+        <line x1="251" y1="12" x2="251" y2="270" class="s-guide"/>
+        <line x1="358" y1="12" x2="358" y2="270" class="s-guide"/>
+        <line x1="464" y1="12" x2="464" y2="270" class="s-guide"/>
+        <!-- 損益分岐ライン(43%): x=145+43*4.25=328 -->
+        <line x1="328" y1="5" x2="328" y2="270" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <text x="330" y="10" class="s-label-y" font-size="11">43%ライン</text>
+
+        <!-- Row 1: もみあい×short 67.3% → width=67.3*4.25=286 → x2=431 -->
+        <rect x="145" y="18" width="286" height="42" class="s-fill-g" rx="3"/>
+        <text x="137" y="44" class="s-label-g" text-anchor="end">もみあい×S</text>
+        <text x="436" y="44" class="s-label-g">67.3%</text>
+
+        <!-- Row 2: 上昇×short 53.1% → width=225 → x2=370 -->
+        <rect x="145" y="72" width="225" height="42" class="s-fill-b" rx="3"/>
+        <text x="137" y="98" class="s-label-b" text-anchor="end">上昇×S</text>
+        <text x="375" y="98" class="s-label-b">53.1%</text>
+
+        <!-- Row 3: 全ショート 46.2% → width=196 → x2=341 -->
+        <rect x="145" y="126" width="196" height="42" class="s-fill-gray" rx="3"/>
+        <text x="137" y="152" class="s-label" text-anchor="end">全ショート</text>
+        <text x="346" y="152" class="s-label">46.2%</text>
+
+        <!-- Row 4: もみあい×long 34.5% → width=147 → x2=292 -->
+        <rect x="145" y="180" width="147" height="42" class="s-fill-r" rx="3"/>
+        <text x="137" y="206" class="s-label-r" text-anchor="end">もみあい×L</text>
+        <text x="297" y="206" class="s-label-r">34.5%</text>
+
+        <!-- Row 5: 下降×short 26.9% → width=114 → x2=259 -->
+        <rect x="145" y="234" width="114" height="42" class="s-fill-r" rx="3"/>
+        <text x="137" y="260" class="s-label-r" text-anchor="end">下降×S</text>
+        <text x="264" y="260" class="s-label-r">26.9%</text>
+
+        <!-- X軸ラベル -->
+        <text x="145" y="290" class="s-label-sm" text-anchor="middle">0%</text>
+        <text x="251" y="290" class="s-label-sm" text-anchor="middle">25%</text>
+        <text x="358" y="290" class="s-label-sm" text-anchor="middle">50%</text>
+        <text x="464" y="290" class="s-label-sm" text-anchor="middle">75%</text>
+        <text x="570" y="290" class="s-label-sm" text-anchor="middle">100%</text>
+      </svg>
+      <p class="chart-caption">【図1】相場環境×方向別の勝率比較（概念図・実価格なし）。もみあい×ショートが67.3%でトップ。同じもみあい相場でもロングは34.5%と低迷。損益分岐43%ライン（橙破線）との位置関係に注目。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-signal">④ 結果②：シグナル別の内訳——macd_deadが61%を占める</h2>
+
+    <p>49件のもみあい×ショートをシグナル別に分解すると、実態が見えてきます。</p>
+
+    <table>
+      <tr><th>シグナル種別</th><th>k/N</th><th>勝率</th><th>95%CI</th><th>件数比率</th></tr>
+      <tr><td>macd_dead（MACDデッドクロス）</td><td>19/30</td><td>63.3%</td><td>[45.5%〜78.1%]</td><td>61%</td></tr>
+      <tr><td>low_break（安値ブレイク）</td><td>9/13</td><td>69.2%</td><td>[42.4%〜87.3%]</td><td>27%</td></tr>
+      <tr><td>その他</td><td>5/6</td><td>83.3%</td><td>—</td><td>12%</td></tr>
+    </table>
+
+    <p>全49件のうち、<strong>macd_dead（MACDデッドクロス）が30件（61%）</strong>を占めています。低値ブレイク（low_break）の13件（27%）と合わせると88%を2シグナルが占める偏りがあります。「もみあい×ショート」の優位性は、<strong>実質的にはmacd_dead×もみあい×ショートの優位性</strong>と読み解くことができます。</p>
+
+    <h3>時間足別の内訳</h3>
+    <table>
+      <tr><th>時間足</th><th>k/N</th><th>勝率</th><th>95%CI</th></tr>
+      <tr><td>1時間足（1h）</td><td>15/20</td><td>75.0%</td><td>[53.1%〜88.8%]</td></tr>
+      <tr><td>4時間足（4h）</td><td>18/29</td><td>62.1%</td><td>[44.0%〜77.3%]</td></tr>
+    </table>
+    <p>1時間足が75.0%と若干高いですが、N=20と小さく、CIが重なるため現時点では「同程度」と解釈が妥当です。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-env">⑤ 結果③：macd_deadの環境依存——もみあい/上昇 vs 下降の落差</h2>
+
+    <p>最も驚くべき発見は、<strong>macd_dead（MACDデッドクロス×ショート）のパフォーマンスが相場環境によって極端に変わる</strong>ことです。</p>
+
+    <table>
+      <tr><th>相場環境</th><th>k/N</th><th>勝率</th><th>95%CI</th><th>期待値R</th></tr>
+      <tr><td>上昇×macd_dead×ショート</td><td>30/49</td><td>61.2%</td><td>[47.2%〜73.6%]</td><td>+0.43</td></tr>
+      <tr><td>もみあい×macd_dead×ショート</td><td>19/30</td><td>63.3%</td><td>[45.5%〜78.1%]</td><td>+0.48</td></tr>
+      <tr><td><strong>下降×macd_dead×ショート</strong></td><td>11/52</td><td><strong>21.2%</strong></td><td>[12.2%〜34.0%]</td><td>−0.51</td></tr>
+    </table>
+
+    <div class="negative-box">
+      <strong>⚠️ 下降トレンドでのmacd_deadショートは21.2%（CI下限12.2%）</strong>——過去の集計上は損益分岐43%を大幅に下回る「大敗パターン」となった。上昇・もみあいでは60%超えているのに、下降ではなぜ逆転するのか？（あくまで過去データの傾向であり、将来を示すものではありません）
+    </div>
+
+    <p>「下降トレンドでMACDデッドクロス→ショート」は直感的には順当に思えます。しかし実データでは大敗しています。考えられる理由は、<strong>下降トレンド中のMACDデッドクロスは「すでに売られた後」に出やすく、反発局面（ショートカバー）を引きつけてしまう</strong>という可能性です。これは「下降×blocked=True×ショート」の高勝率（過去の研究日誌#6/#7）とは別のメカニズムで、今後の探索課題です。</p>
+
+    <!-- SVG 2: macd_dead × 相場環境 比較 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 580 210" role="img" aria-label="macd_deadのショート勝率と相場環境の関係">
+        <!-- x_bar_start=155, scale=4.0 per %, 100%=155+400=555 -->
+        <!-- x_43=155+43*4=327 -->
+        <line x1="155" y1="190" x2="555" y2="190" class="s-axis"/>
+        <!-- 損益分岐ライン(43%): x=327 -->
+        <line x1="327" y1="5" x2="327" y2="190" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <text x="329" y="12" class="s-label-y" font-size="11">43%</text>
+        <!-- グリッド -->
+        <line x1="255" y1="12" x2="255" y2="190" class="s-guide"/>
+        <line x1="355" y1="12" x2="355" y2="190" class="s-guide"/>
+        <line x1="455" y1="12" x2="455" y2="190" class="s-guide"/>
+
+        <!-- Row 1: 上昇 61.2% → width=61.2*4=245 → x2=400 -->
+        <rect x="155" y="15" width="245" height="46" class="s-fill-b" rx="3"/>
+        <text x="147" y="43" class="s-label-b" text-anchor="end">上昇×macd_dead×S</text>
+        <text x="405" y="43" class="s-label-b">61.2% (N=49)</text>
+
+        <!-- Row 2: もみあい 63.3% → width=63.3*4=253 → x2=408 -->
+        <rect x="155" y="75" width="253" height="46" class="s-fill-g" rx="3"/>
+        <text x="147" y="103" class="s-label-g" text-anchor="end">もみあい×macd_dead×S</text>
+        <text x="413" y="103" class="s-label-g">63.3% (N=30)</text>
+
+        <!-- Row 3: 下降 21.2% → width=21.2*4=85 → x2=240 -->
+        <rect x="155" y="135" width="85" height="46" class="s-fill-r" rx="3"/>
+        <text x="147" y="163" class="s-label-r" text-anchor="end">下降×macd_dead×S</text>
+        <text x="245" y="163" class="s-label-r">21.2% (N=52)</text>
+
+        <!-- X軸ラベル -->
+        <text x="155" y="205" class="s-label-sm" text-anchor="middle">0%</text>
+        <text x="255" y="205" class="s-label-sm" text-anchor="middle">25%</text>
+        <text x="355" y="205" class="s-label-sm" text-anchor="middle">50%</text>
+        <text x="455" y="205" class="s-label-sm" text-anchor="middle">75%</text>
+        <text x="555" y="205" class="s-label-sm" text-anchor="middle">100%</text>
+      </svg>
+      <p class="chart-caption">【図2】macd_dead（MACDデッドクロス×ショート）の勝率と相場環境の関係（概念図）。上昇・もみあいでは60%超、下降では21%という極端な差。下降×ショートが「逆効果」になるのがこのシグナルの特徴。</p>
+    </div>
+
+    <h3>low_break（安値ブレイク）も同じ環境依存を示す</h3>
+    <p>安値ブレイクショート（low_break）でも同様のパターンが確認されています。もみあい×low_break×ショートは69.2%（N=13）ですが、上昇×low_break×ショートは33.3%（N=18）、下降×low_break×ショートは35.0%（N=20）といずれも損益分岐を下回ります。「ブレイクシグナル全般がもみあい環境で有効」という傾向があるかもしれません（N不足のため要継続観察）。</p>
+
+    <!-- =============================== -->
+    <h2 id="confound">⑥ 交絡の点検</h2>
+
+    <h3>シグナル偏り</h3>
+    <p>もみあい×ショート49件の88%がmacd_dead（61%）とlow_break（27%）の2シグナルに集中しています。「もみあい×ショート」として集計しているものの、実態はこれら2種のシグナルのパフォーマンスを見ていることになります。</p>
+
+    <h3>期間バイアス</h3>
+    <p>データは2026年5〜6月の2ヶ月分（2026-05: 60.0%・N=15、2026-06: 70.6%・N=34）と期間が短く、特定の相場環境に偏っている可能性があります。6月が高い原因は、もみあい相場が多かった期間だった可能性も考えられます。</p>
+
+    <h3>グループ・銘柄構成</h3>
+    <p>グループ別ではBTC（85.7%・N=7）と金属（85.7%・N=7）が高いですが、両者ともN=7と極めて小さいサンプルです。other_fx（他FX）が19件（68.4%）と最多で比較的信頼できる数字を出しています。</p>
+
+    <div class="warning-box">
+      N=49は統計的に頑健とは言えません。CI幅が約25ポイント（53.4%〜78.8%）と広く、現時点での「67.3%」という点推定は変動する余地が十分あります。前向きトラッカー（登録日：本日）でN≥80に達してから本当の評価ができます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑦ 今回の決定事項と作業仮説</h2>
+
+    <div class="positive-box">
+      <strong>✅ 通過A（仮説確認）</strong>：もみあい×ショート 67.3%（N=49）・CI下限53.4%>43%・FDR q=0.005<br>
+      ただしin-sampleのみ。前向きトラッカーで out-of-sample確認を継続。
+    </div>
+
+    <p>今回得られた<strong>作業仮説（Working Hypothesis）</strong>として以下を記録します：</p>
+    <ul>
+      <li><strong>もみあい×ショートには統計的エッジがある可能性</strong>（CI下限53.4%>43%）</li>
+      <li><strong>macd_deadは相場環境に強く依存する</strong>——上昇・もみあいでは有効、下降では逆効果</li>
+      <li><strong>low_breakも同様に環境依存</strong>——もみあい中の安値ブレイクは「フェイクブレイク反転」として機能している可能性</li>
+      <li><strong>下降×ショートのmacd_deadは回避候補</strong>——21.2%（N=52）は有意に低い（CI上限34.0%<43%）</li>
+    </ul>
+
+    <p>これらはあくまでin-sampleでの発見です。前向きトラッカーがN≥80に達した段階で「作業仮説」から「採用・棄却」の判断を行います。現時点で実運用への反映を行うものではありません（エンジン・発火条件は変更しません）。</p>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-06-17／昇格＝前向きN≥80・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.73 CI[+0.37~+1.10]（23/31・勝率74%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.42 CI[-1.17~+0.33]（2/8・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +1.33 CI[+1.33~+1.33]（6/6・勝率100%）</td><td>🟡蓄積中（今回登録）</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.42 CI[-1.56~+0.73]（1/4・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.22 CI[-1.75~+1.30]（1/3・勝率33%）</td><td>🟡蓄積中（今回登録）</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.17 CI[-2.12~+2.45]（1/2・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-2.12~+2.45]（1/2・勝率50%）</td><td>🟡蓄積中（今回登録）</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.42 CI[-1.17~+0.33]（2/8・勝率25%）</td><td>🟡蓄積中（今回登録）</td></tr>
+</table>
+
+    <p>本日の研究日誌で「trend=中立・もみあい×dir=short」を前向きトラッカーに新規登録しました。今日以降に発火・決済されるもみあい相場×ショートシグナルが自動的に集計されます。前向きN≥80に達してからが本当の評価です（N=6の100%は過信禁止）。</p>
+
+    <div class="warning-box">
+      前向きトラッカーはin-sampleとは完全に分離した「まだ見ていないデータ」で評価します。過去データで良い結果が出ても、未来を保証するものではありません。新規シグナル発火のたびに自動更新されますが、N≥80に達するまでは判断保留です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <p>今回の発見から、次の探索課題が浮かび上がりました：</p>
+    <ul>
+      <li><strong>macd_dead×下降×ショートの「なぜ大敗するか」解明</strong>——下降中のデッドクロスが逆効果になるメカニズムの仮説検証</li>
+      <li><strong>もみあい×ショート × blocked=True の組み合わせ</strong>——#5〜#7で見つけたS/R壁フィルターとの重複効果</li>
+      <li><strong>bb_lower_touch × jpy_fx × ロング（#9で記録した65.0%・N=40）</strong>——前回バックログ入りの正式検証</li>
+    </ul>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📡 研究日誌シリーズ</div>
+      <div class="cta-box-desc">勝っても負けても全公開。毎回ひとつの仮説だけを実データで検証します。</div>
+    </div>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-lab-009.html">
+        <div class="related-card-title">🧪 研究日誌 #9</div>
+        <div class="related-card-desc">jpy_fxショートは損益分岐を下回るか。23.5%（N=34・通過A）。macd_deadが主体。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-008.html">
+        <div class="related-card-title">🧪 研究日誌 #8</div>
+        <div class="related-card-desc">シグナル種別の勝率マップ。ma_golden 23.3%（CI上限<43%）で棄却確認。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-006.html">
+        <div class="related-card-title">🧪 研究日誌 #6</div>
+        <div class="related-card-desc">blocked=True×トレンド環境の交絡解析。下降65.0%/中立20.0%。</div>
+      </a>
+      <a class="related-card" href="guides.html">
+        <div class="related-card-title">📚 解説記事一覧</div>
+        <div class="related-card-desc">全ての研究日誌と投資解説記事はこちら。</div>
+      </a>
+    </div>
+
+    <!-- ② 本文末 kinsho-v1 -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っていません。本記事の情報は投資助言に当たらず、投資判断および売買はご自身の判断と責任のもとで行ってください。記事中の勝率・期待値・検証結果はすべて当サイトの特定システムにおける過去の集計であり、将来の相場結果や運用成績を示唆または保証するものではありません。
+    </p>
+
+  </div><!-- /.article -->
+</main>
+
+<!-- ③ フッター kinsho-v1 -->
+<footer>
+  <p>© 2025–2026 MarketWatch AI &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="about.html">このサイトについて</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  const btn=document.getElementById('theme-toggle');
+  btn.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    const btn=document.getElementById('theme-toggle');
+    if(btn)btn.textContent='☀️';
+  }
+})();
+window.addEventListener('scroll',function(){
+  const prog=document.getElementById('reading-progress');
+  if(!prog)return;
+  const scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+  const scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  prog.style.width=(scrollHeight>0?(scrollTop/scrollHeight*100):0)+'%';
+});
+</script>
+</body>
+</html>
