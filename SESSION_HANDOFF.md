@@ -1,9 +1,30 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-18）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-19）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
 
 ---
 
+## 🟢 2026-06-19 まとめ（朝→夜・盛りだくさん）
+
+### ① 研究日誌 #014 自動公開＝PUSH-MAIN修正の実証
+今朝06:10の signal-lab-daily が #014「円クロスの-2σタッチ買い」を取り残しゼロで自動着地（昨日のrebase+retry修正が効いた・branchも残らず）。「アップされてない」はキャッシュ体感差で実際は公開済み。
+
+### ② AdSense「有用性の低いコンテンツ」却下への対応（完了・ライブ）
+薄い自動テンプレ/日付ページ（週次×7・振り返り×4・月次×1・preview・期限切れ指標フラッシュ）を noindex＋sitemap除外（commit d2c5fb3b）。generate_market_news.py に is_noindex_slug() 単一ソース／auto_weekly_strategy.py も将来noindex化。sitemap 105→85・主要記事はindex維持。次＝2026-06-26頃にGoogle de-index確認後に「審査をリクエスト」（Search Consoleで除外確認）。
+
+### ③ JP日次自動パイプライン（クラウド・非公開）構築・稼働
+private repo invest-ai-info/jp-momentum-research ＋ jp-daily.yml（毎朝06:40 JST）＝増分取得→観測再生成→前向きトラッカー更新(OOS蓄積)→レジーム→危険スコア→サイジング→watchlist HTML/PDF＋DAILY_SUMMARY.md をコミット。価格cacheはActions cache（リポ軽量）。検証run success。閲覧＝スマホGitHubアプリで private repo の DAILY_SUMMARY.md / PDF。
+
+### ④ ファンダ・リスク層 検証（J-Quants Light導入）
+J-Quants V2（鍵はconfig jquants_api_key・x-api-key）で /fins/summary を399銘柄キャッシュ。点in time結合97.1%で検証＝🟢「赤字(NP<0)回避」が頑健なリスク削減エッジ（OOSブローアップ 赤字27%→黒字11%＝約半減）。低自己資本/カタリストは棄却（カタリストはOOSで符号反転＝非定常）。
+
+### 🔜 次セッションの最優先＝赤字回避の統合
+1. observations に akaji(NP<0・点in time) 列を追加（_jp_momentum_edge.py に _jq_fins_cache をjoin、or別step）
+2. 危険スコア/前向きトラッカーに「赤字回避ゲート」追加（400母集団向け。watchlist48は黒字選別済で無風）
+3. （任意）jp-daily.yml に J-Quants取得を組込み（Actions secret JQUANTS_API_KEY・レート制限0.35s+backoff）
+詳細は memory project_jp_doublebagger / project_signal_edge_research / project_adsense_review。
+
+---
 ## 🔧 2026-06-18 研究日誌が朝更新されない事故 → 原因特定＋#012救出＋ルーティン恒久修正
 
 **症状**：6/18朝、研究日誌が更新されていない（オーナー報告）。
