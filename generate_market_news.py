@@ -163,6 +163,21 @@ SITE_TAGLINE = "日本人投資家のためのマーケット情報サイト"
 BASE_URL = "https://marketwatch-jp.com/"
 OG_IMAGE = BASE_URL + "og-image.png"  # 後で画像設置可。当面は無くても致命傷ではない
 
+# 🆕 2026-06-19: 薄い自動テンプレ/日付つきページの noindex 判定（AdSense「低価値コンテンツ」対策・単一ソース）。
+#   週次戦略/週次振り返り(guide-weekly-)/月次レポート(guide-monthly-report-)/指標プレビュー(preview,guide-auto-)/
+#   期限切れの日付フラッシュ を非索引にし sitemap からも除外。Google には良質な“常設”記事だけを評価させる。
+NOINDEX_SLUGS = {
+    "preview.html",
+    "guide-jpy-intervention-2026-04.html", "guide-fomc-2026-04.html", "guide-boj-2026-04.html",
+    "guide-gw-gap-2026-05.html", "guide-jpy-intervention-2026-05-06.html",
+    "guide-us-cpi-2026-05.html", "guide-us-jobs-2026-05.html",
+}
+def is_noindex_slug(slug: str) -> bool:
+    s = slug or ""
+    return (s in NOINDEX_SLUGS or s.startswith("guide-weekly-")
+            or s.startswith("guide-monthly-report-") or s.startswith("guide-auto-"))
+
+
 def seo_head(slug: str, title: str, description: str, og_type: str = "website") -> str:
     """ページごとの SEO 用 <head> 要素を返す。
 
@@ -187,7 +202,7 @@ def seo_head(slug: str, title: str, description: str, og_type: str = "website") 
     )
     return f"""<title>{full_title}</title>
   <meta name="description" content="{desc}">
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="{'noindex,follow' if is_noindex_slug(slug) else 'index,follow'}">
   <meta name="author" content="{SITE_NAME}">
   <link rel="canonical" href="{canonical}">
   <meta property="og:type" content="{og_type}">
@@ -235,19 +250,21 @@ def build_sitemap_xml(now_jst) -> str:
     ]
     # 🆕 ハードコード漏れ防止：リポジト内の全 guide-*.html を自動追加（重複は除外）。
     # これで sitemap は常に「完全」になり、手作業での追加が不要（＝sitemapの二重管理を解消）。
+    # 🆕 2026-06-19: noindex 対象（週次/月次/preview/guide-auto-/日付フラッシュ）は sitemap からも除外。
+    #   判定は is_noindex_slug() に単一ソース化（seo_head の noindex メタと同じ規則）。
     _listed = {slug for slug, _, _ in pages}
     _sd = os.path.dirname(os.path.abspath(__file__))
     try:
         for _name in sorted(os.listdir(_sd)):
-            # 🆕 2026-06-06: guide-auto-*（自動生成の指標プレビュー＝noindex）は sitemap から除外。
-            #   noindex のページを sitemap に載せると「索引して/するな」の矛盾になり AdSense/SEO 上もマイナス。
-            if _name.startswith("guide-auto-"):
+            if is_noindex_slug(_name):  # noindex ページは sitemap に載せない（「index して/するな」の矛盾回避）
                 continue
             if _name.startswith("guide-") and _name.endswith(".html") and _name not in _listed:
                 pages.append((_name, "0.8", "monthly"))
                 _listed.add(_name)
     except Exception as _e:
         print(f"  ⚠️ sitemap: guide自動収集スキップ: {_e}")
+    # ハードコード一覧の中の noindex 対象も最終除外（preview/週次/旧フラッシュ）
+    pages = [(s, p, c) for (s, p, c) in pages if not is_noindex_slug(s)]
     urls = "\n".join(
         f"  <url>\n"
         f"    <loc>{BASE_URL}{slug}</loc>\n"
@@ -4347,7 +4364,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-06-19", "line": '・<b>2026-06-19</b>: 🧪 解説「<a href="guide-signal-lab-014.html" style="color:#0969da"><b>研究日誌 #14 円クロス-2σタッチ買いは稼げるか——bb vs RSI で成績が真逆になった謎</b></a>」公開'},
         {"date": "2026-06-18", "line": '・<b>2026-06-18</b>: 🧪 解説「<a href="guide-signal-lab-013.html" style="color:#0969da"><b>レジーム反転の罠——金属ロングが20年最良から最悪へ</b></a>」公開'},
         {"date": "2026-06-18", "line": '・<b>2026-06-18</b>: 📰 解説「<a href="guide-news-2026-06-18-fomc-nikkei-71k.html" style="color:#0969da"><b>【6/18】FOMCタカ派転換でも日経が71,053円へ最高値更新 — 日米逆行の背景</b></a>」公開'},
         {"date": "2026-06-17", "line": '・<b>2026-06-17</b>: 🧪 解説「<a href="guide-signal-lab-012.html" style="color:#0969da"><b>研究日誌 #12 もみあい×ショートが67%——FDR通過の新エッジ発見、環境依存も解明</b></a>」公開'},

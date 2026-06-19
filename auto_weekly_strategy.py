@@ -375,6 +375,7 @@ def build_weekly_html(week_start, week_end, today_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow"><!-- 自動生成の週次戦略：薄ページのためインデックス除外（AdSense低価値対策） -->
   <title>{title} - MarketWatch AI</title>
   <meta name="description" content="{week_start_str}〜{week_end_str}週の投資戦略。注目指標{len(events)}本、重要度高{high_count}件。米ドル円・日経・米国株のシナリオ別展望を解説。">
   <meta name="keywords" content="今週の投資戦略,週間展望,{week_start.strftime('%Y年%-m月') if os.name != 'nt' else week_start.strftime('%Y年%#m月')},ドル円,日経平均,米国株,FOMC,日銀">
