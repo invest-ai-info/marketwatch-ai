@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-06-20 | 全topic下書き済み（新規生成なし）
+
+- **基準日（JST）**: 2026-06-20 05:32 JST
+- **判定**: AUTODRAFT_GUIDE.md の全11 topicが「下書き済み or 公開済み」のため、本日の新規生成はなし
+- **内訳**:
+  - 下書きあり（drafts/draft-*.html 存在）: position-sizing / trading-psychology-calm / risk-reward / trading-journal / leverage / dollar-cost-averaging / swap-points（7件）
+  - 公開済みで下書き不要: profit-taking / compounding-drawdown / cognitive-biases / diversification（4件、guides.html に guide-<key>.html が掲載済み）
+- **次のアクション**: AUTODRAFT_GUIDE.md に新 topic を追加すれば次回から再稼働。人間が topicキューを拡張してください。
+
+---
+
 ## 2026-06-19 | 🧪 signal-lab #014 ゲート実行中
 
 - **基準日（JST）**: 2026-06-19
