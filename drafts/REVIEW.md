@@ -11,13 +11,13 @@
 - **結果**: 4H×L=35.2%(96/273) CI[29.7%,41.0%]・CI上限41.0%<43% → **棄却確定（通過A）**。金属比率差1.3pp（交絡否定）。jpy_fx×4H=29.8%(14/47) vs 1H=48.7%(37/76)が主因（18.9pp差）。4H×S=50.0%の方向非対称。tf=4h×dir=long gate新規登録
 - **生成ファイル**: drafts/draft-signal-lab-015.html / drafts/labnotes/lab-015-analysis.md / drafts/labnotes/lab-015-claims.json / drafts/labnotes/sweep-2026-06-20.json / signal-lab-ledger.md
 
-### 自動公開ゲート進捗
-- [ ] 8-1 git commit/push（chore: signal-lab draft 015 + claims）
-- [ ] 8-2 signal_lab_verify.py EXIT=0
-- [ ] 8-3 Opus compliance 判定
-- [ ] 8-4-i 数値再検証
-- [ ] 8-4-ii 独立確認Opus
-- [ ] 8-4-iii 公開 or エスカレ
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 015 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 10/10クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟢 白（修正なし）— 断定表現なし・kinsho-v1×2箇所・統計限界明示・将来非保証。修正不要
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正なし・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢 白 ✅（kinsho-v1×2・断定表現なし・将来非保証・投資助言・推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・Opus=白・修正なし・独立確認=白）| guide-signal-lab-015.html
 
 ---
 
