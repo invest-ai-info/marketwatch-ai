@@ -4364,6 +4364,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-19", "line": '・<b>2026-06-19</b>: 📰 解説「<a href="guide-news-2026-06-19-fujikura-ai-rally.html" style="color:#0969da"><b>【6/19】フジクラが営業利益予想47%上方修正でストップ高・AIラリー再加速</b></a>」公開'},
         {"date": "2026-06-18", "line": '・<b>2026-06-18</b>: 🧪 解説「<a href="guide-signal-lab-013.html" style="color:#0969da"><b>レジーム反転の罠——金属ロングが20年最良から最悪へ</b></a>」公開'},
         {"date": "2026-06-18", "line": '・<b>2026-06-18</b>: 📰 解説「<a href="guide-news-2026-06-18-fomc-nikkei-71k.html" style="color:#0969da"><b>【6/18】FOMCタカ派転換でも日経が71,053円へ最高値更新 — 日米逆行の背景</b></a>」公開'},
         {"date": "2026-06-17", "line": '・<b>2026-06-17</b>: 🧪 解説「<a href="guide-signal-lab-012.html" style="color:#0969da"><b>研究日誌 #12 もみあい×ショートが67%——FDR通過の新エッジ発見、環境依存も解明</b></a>」公開'},
