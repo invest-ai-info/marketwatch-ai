@@ -3,6 +3,26 @@
 
 ---
 
+## 2026-06-19
+- 判定: ✅ 公開済み
+- 選定トピック: フジクラ（5803）が通期営業利益予想47%上方修正・ストップ高+15.69%、AIデータセンター光ファイバー需要急拡大で日経平均71,250円続伸（カテゴリ: 個別銘柄・日本株・AIラリー）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4 （合計 13/15）
+- 出典:
+  - Bloomberg「Fujikura Shares Surge on Profit Outlook Hike, AI Demand Boosts Guidance」（2026-06-19）
+  - 日本経済新聞「日経平均、終値196円高 フジクラ『逆サプライズ』でAIラリー再加速」
+  - TipRanks「Fujikura to Build New Optical Fiber Plant and Launch U.S. Subsidiary for AI Infrastructure Demand」
+  - Yahoo!ファイナンス（フジクラ5803・古河電工5801株価データ）
+  - Yahoo Finance「Is the stock market open on Juneteenth 2026?」（米国休場確認）
+- コンプラ監査:
+  - 初期判定: 🟢白（Opus監査エージェント1）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（問題なし・kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典5系統）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-19-fujikura-ai-rally.html
+- 追記: check_site_consistency.py exit=0 確認済み（既知警告8件=signal-lab古記事の既存問題、本記事と無関係）
+
+---
+
 ## 2026-06-18
 - 判定: ✅ 公開済み
 - 選定トピック: FOMC6月会合がタカ派に転換・年内利上げ示唆、それでも日経平均は71,053円へ最高値更新（カテゴリ: マクロ・金融政策・日本株）
