@@ -1,55 +1,9 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-06-19）
+# 🔖 セッション引き継ぎ（最終更新: 2026-06-17）
 
 新セッションはこのファイル＋ CLAUDE.md ＋ `memory/03_initiatives.md`＋`ROADMAP_10M.md` を読めば文脈を復元できます。
 
 ---
 
-## 🟢 2026-06-19 まとめ（朝→夜・盛りだくさん）
-
-### ① 研究日誌 #014 自動公開＝PUSH-MAIN修正の実証
-今朝06:10の signal-lab-daily が #014「円クロスの-2σタッチ買い」を取り残しゼロで自動着地（昨日のrebase+retry修正が効いた・branchも残らず）。「アップされてない」はキャッシュ体感差で実際は公開済み。
-
-### ② AdSense「有用性の低いコンテンツ」却下への対応（完了・ライブ）
-薄い自動テンプレ/日付ページ（週次×7・振り返り×4・月次×1・preview・期限切れ指標フラッシュ）を noindex＋sitemap除外（commit d2c5fb3b）。generate_market_news.py に is_noindex_slug() 単一ソース／auto_weekly_strategy.py も将来noindex化。sitemap 105→85・主要記事はindex維持。次＝2026-06-26頃にGoogle de-index確認後に「審査をリクエスト」（Search Consoleで除外確認）。
-
-### ③ JP日次自動パイプライン（クラウド・非公開）構築・稼働
-private repo invest-ai-info/jp-momentum-research ＋ jp-daily.yml（毎朝06:40 JST）＝増分取得→観測再生成→前向きトラッカー更新(OOS蓄積)→レジーム→危険スコア→サイジング→watchlist HTML/PDF＋DAILY_SUMMARY.md をコミット。価格cacheはActions cache（リポ軽量）。検証run success。閲覧＝スマホGitHubアプリで private repo の DAILY_SUMMARY.md / PDF。
-
-### ④ ファンダ・リスク層 検証（J-Quants Light導入）
-J-Quants V2（鍵はconfig jquants_api_key・x-api-key）で /fins/summary を399銘柄キャッシュ。点in time結合97.1%で検証＝🟢「赤字(NP<0)回避」が頑健なリスク削減エッジ（OOSブローアップ 赤字27%→黒字11%＝約半減）。低自己資本/カタリストは棄却（カタリストはOOSで符号反転＝非定常）。
-
-### 🔜 次セッションの最優先＝赤字回避の統合
-1. observations に akaji(NP<0・点in time) 列を追加（_jp_momentum_edge.py に _jq_fins_cache をjoin、or別step）
-2. 危険スコア/前向きトラッカーに「赤字回避ゲート」追加（400母集団向け。watchlist48は黒字選別済で無風）
-3. （任意）jp-daily.yml に J-Quants取得を組込み（Actions secret JQUANTS_API_KEY・レート制限0.35s+backoff）
-詳細は memory project_jp_doublebagger / project_signal_edge_research / project_adsense_review。
-
----
-## 🔧 2026-06-18 研究日誌が朝更新されない事故 → 原因特定＋#012救出＋ルーティン恒久修正
-
-**症状**：6/18朝、研究日誌が更新されていない（オーナー報告）。
-
-**原因（確定）**：routine `signal-lab-daily`（trig_01V4A37Xow1vx2QAAvYwzR57）は今朝06:10 JSTに正常発火し、ゲート全緑で #012「もみあい相場のショート 67.3%・R+0.57」を“自動公開完了”までやり切っていた。だが成果物がCCRサンドボックスのブランチ `claude/stoic-euler-vgmp5v` に取り残され main に未着地（main比 ahead3/behind24）。**根本原因＝signal-labは3コミット・実行に約13分かかり、その間にmainが他ワークフロー(political-feed等30分毎)で前進→最後の `git push origin main` が non-fast-forward で弾かれ、リベース/リトライせず終了→サンドボックスがブランチ化**。速い他routine(fundamental-briefing/autodraft/SNS)は1コミット短時間でレースに勝つのでmainに乗る＝signal-labだけ遅くて負ける構図。**#010/#011が「手動公開・番号スキップ」だったのも同現象**。
-
-**対応①：#012をmainに救出（ライブ確認済み）**
-- main側の共有ファイル(guides.html/generate_market_news.py/signal-lab-ledger.md/signal-lab-tracker.json/drafts/REVIEW.md)が merge_base以降 未変更なのを検証 → ブランチの10ファイルを Git Data API で現行mainに**1コミット原子移植**（diverge/巻き戻しゼロ・新HEAD 1320ca5a）。
-- 台帳を**次番号013**へ前進（→明朝の#012再生成を防止）。
-- ライブ：guide-signal-lab-012.html / guides.htmlカード / index.html更新履歴 すべてHTTP200・#12反映。
-- ⚠️手動 workflow_dispatch（Update Market News）は1回 failure だったが、直後のpush起因の同workflowが成功しindex.html再生成済み（site最新）。
-
-**対応②：ルーティン恒久修正（root cause）— オーナー選択「ルーティンpush修正」**
-- RemoteTrigger update で `signal-lab-daily` のプロンプト冒頭に **PUSH-MAIN規約**を追加：`git push origin main` を全て『`git fetch origin main && git rebase origin/main && git push origin HEAD:main` を最大5回リトライ（毎回fetch→rebase・間15秒sleep・衝突時 `git rebase --abort`）、5回失敗時のみ `signal-lab-pending-<UTC>` に退避＋8-5エスカレ』に読み替え。本文の各push箇所(8-1/8-4-d/8-4-e/8-5)も同手順へ置換。
-- get で model=claude-sonnet-4-6 / allowed_tools / environment_id / cron `10 21 * * *` / enabled 無傷を確認。next_run=2026-06-19 06:10 JST から修正版稼働。
-
-**対応③：stale枝削除**＝`claude/stoic-euler-pkck05`(#010済)・`claude/stoic-euler-vgmp5v`(#012済) を削除。残りは main のみ。
-
-**運用メモ**：GitHub操作は `market-news-config.json` のtokenをコマンド文字列に出さず、実行時に読み込んでAPI呼び出し。
-
-### 🔜 次セッションの確認ポイント
-1. **最優先**：6/19朝（または最新）の `signal-lab-daily` 実行で #013 が **PUSH-MAIN経由で main に着地したか**を確認（branches に `signal-lab-pending-*` や `claude/stoic-euler-*` が残っていれば、まだ着地失敗＝要再診）。着地していれば恒久対策が効いた実証。
-2. 同型のpushレース事故は他のクラウドルーティンでもレース次第で起こり得る。頻発するなら保険Action `signal-lab-reconcile.yml`（取り残し枝を許可リスト検査つきで毎朝自動マージ＋枝掃除・想定外はIssue化）の追加を検討（今回は見送り）。
-
----
 ## ✅ 2026-06-17 完了：2トラックを多エージェントWorkflowで並行構築＋敵対的検証（オーナー「両方をWorkflowで」選択）
 
 `mw-two-track-research` Workflow（4エージェント・build→adversarial verify・約20分）で下記を一気に構築・実走・検証。**全成果物ローカルのみ・未SYNC・push無し・発火エンジン/固定オラクル不可触（import のみ）・自動公開なし**。詳細数値は memory `project_signal_edge_research`／`project_jp_doublebagger`。
