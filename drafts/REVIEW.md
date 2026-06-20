@@ -12,12 +12,12 @@
 - **生成ファイル**: drafts/draft-signal-lab-016.html / drafts/labnotes/lab-016-analysis.md / drafts/labnotes/lab-016-claims.json / drafts/labnotes/sweep-2026-06-21.json / signal-lab-ledger.md
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance
-- [ ] 8-4-i 数値再検証
-- [ ] 8-4-ii 独立確認Opus
-- [ ] 公開判定
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 016 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 10/10クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡 グレー → 修正適用 → 最終判定=白 — 「30秒まとめ③: 損益分岐を超える可能性」を「過去データ上はロングとショートで優位性が真逆に分かれていた（将来非保証）」に軟化。数値・SVG不変
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も全10クレーム緑・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢 白 ✅（kinsho-v1×3箇所・断定表現なし・将来非保証・投資助言・推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・初期グレー→Opus修正適用→修正後白・独立確認=白）| guide-signal-lab-016.html
 
 ---
 
