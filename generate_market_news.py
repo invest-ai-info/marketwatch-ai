@@ -4364,6 +4364,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 📰 解説「<a href="guide-news-2026-06-20-iran-oil-hormuz.html" style="color:#0969da"><b>【6/20】米イラン核協議がスイスで延期・原油$77〜80台で乱高下</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 🚨 解説「<a href="guide-jpy-intervention-2026-06.html" style="color:#0969da"><b>ドル円161円突破、為替介入はあるのか？「いくらで介入」を中立整理</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: ⚖️ 解説「<a href="guide-risk-by-account-size.html" style="color:#0969da"><b>資産額でリスクの取り方は変えるべき？ 変える「攻めの量」と変えてはいけない「守りの床」</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 📊 解説「<a href="guide-jp-value-vs-zombie.html" style="color:#0969da"><b>「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株</b></a>」公開'},
