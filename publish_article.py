@@ -30,6 +30,7 @@ import os
 import re
 import sys
 import argparse
+import urllib.request
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -50,6 +51,55 @@ def _write(p, s):
 def _jp_date(d):
     y, mo, da = d.split("-")
     return f"{int(y)}年{int(mo)}月{int(da)}日"
+
+
+# 🔒 2026-06-20 local-drift（巻き戻し）事故の根絶＝公開前に main最新を自動取り込み（ルールをコードで強制）。
+#   guides.html / generate_market_news.py はクラウドのルーティンも毎朝編集する＝私のローカルが古いまま
+#   公開すると当日分のカード・更新履歴を巻き戻す。→ 編集の前に必ず main から取り込む。
+#   公開リポの raw URL から取得＝トークン不要・ローカル/クラウド両方で安全（クラウドはmain上ゆえ実質no-op）。
+RECONCILE_FILES = ["guides.html", "generate_market_news.py"]
+
+
+def _repo_branch():
+    """非秘密の owner/repo/branch（公開リポ）。config があれば使い、無ければ既定。"""
+    try:
+        import json
+        c = json.load(open(os.path.join(SCRIPT_DIR, "market-news-config.json"), encoding="utf-8-sig"))
+        return (c.get("github_owner") or "invest-ai-info", c.get("github_repo") or "marketwatch-ai",
+                c.get("github_branch") or "main")
+    except Exception:
+        return "invest-ai-info", "marketwatch-ai", "main"
+
+
+def reconcile_from_main():
+    """公開前に main 最新の guides.html / generate_market_news.py をローカルへ取り込む（巻き戻し事故の根絶）。"""
+    # クラウド・ルーティンは git チェックアウト＝既に main HEAD 上なので reconcile 不要（raw CDN で逆に古くするのを防ぐ）。
+    # 私のローカル作業フォルダは git 管理外（.git 無し）＝drift が起きる側なので reconcile する。
+    if os.path.isdir(os.path.join(SCRIPT_DIR, ".git")):
+        print("  ✓ reconcile: git チェックアウト環境（クラウド・ルーティン＝既に main 上）ゆえスキップ")
+        return True
+    owner, repo, branch = _repo_branch()
+    ok = True
+    print("🔄 reconcile: 公開前に main 最新を取り込み（local-drift巻き戻し防止）")
+    for fn in RECONCILE_FILES:
+        url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{fn}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "publish-reconcile", "Cache-Control": "no-cache"})
+            new = urllib.request.urlopen(req, timeout=30).read().decode("utf-8")
+            p = os.path.join(SCRIPT_DIR, fn)
+            old = _read(fn) if os.path.exists(p) else ""
+            if new != old:
+                with open(p, "w", encoding="utf-8", newline="") as f:
+                    f.write(new)
+                print(f"  🔄 {fn} を main 最新に同期（{len(old):,}→{len(new):,}B）")
+            else:
+                print(f"  ✓ {fn} は既に最新")
+        except Exception as e:
+            ok = False
+            print(f"  ⚠️⚠️ reconcile 失敗: {fn} ({e})")
+    if not ok:
+        print("  ⚠️⚠️ main と同期できないファイルあり＝巻き戻しの危険。sync前に guides.html を要確認（--no-reconcile で無効化）。")
+    return ok
 
 
 def extract_from_html(html):
@@ -182,6 +232,8 @@ def main():
     ap.add_argument("--readmin", default=None, help="読了分（省略時は記事HTMLから/既定10）")
     ap.add_argument("--badge", default="badge-news", help="バッジCSSクラス（既定: badge-news）")
     ap.add_argument("--dry-run", action="store_true", dest="dry", help="書き込まず変更内容のみ表示")
+    ap.add_argument("--no-reconcile", action="store_true", dest="no_reconcile",
+                    help="公開前の main 自動取り込みを無効化（非常時のみ・巻き戻し事故の危険）")
     a = ap.parse_args()
 
     if not os.path.exists(os.path.join(SCRIPT_DIR, a.file)):
@@ -200,6 +252,8 @@ def main():
     print(f"   カテゴリ={a.category} / 日付={date} / 読了={readmin}分"
           + ("   [DRY-RUN: 書き込みなし]" if a.dry else ""))
     print("────────────────────────────")
+    if not a.dry and not a.no_reconcile:
+        reconcile_from_main()   # 🔒 編集の前に必ず main 最新を取り込む（巻き戻し事故をコードで防止）
     add_to_guides(a.file, a.category, a.emoji, a.card_title, a.desc, date, readmin, a.badge, a.dry)
     add_to_sync(a.file, a.dry)
     add_to_history(a.file, a.emoji, a.card_title, date, a.dry)
