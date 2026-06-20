@@ -56,7 +56,7 @@
 | **monthly-backup.yml** | 毎月 1 日 09:10 | signals-log の GitHub Release |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新日付チェック |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
-| **jp-rankings.yml** 🆕 | 朝 06:50 / 07:20 | 日本株 値上がり/値下がりトップ20＋売買代金2日＋決算赤字黒字＋業種を Yahoo価格だけで生成（`build_jp_rankings.py`→`jp-rankings.json`）。hot-assets.html 最上段が読む。赤字黒字/名前/業種は静的 `jp-stock-info.json`（四半期 `make_jp_stock_info.py`） |
+| **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株 値上がり/値下がりトップ20＋売買代金2日＋決算赤字黒字＋業種を Yahoo価格だけで生成（`build_jp_rankings.py`→`jp-rankings.json`）。commit すると update-market-news の on:push が hot-assets を即再描画。赤字黒字/名前/業種は静的 `jp-stock-info.json`（四半期 `make_jp_stock_info.py`）。※朝実行はcron遅延で場中更新になるため不可 |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 
 ### 環境変数 / GitHub Secrets
