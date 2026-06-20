@@ -1125,11 +1125,12 @@ def build_html(signals, trades):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
     signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
+    signals_1d = [s for s in signals if s.get("timeframe") == "1d"]
 
     # 4 タブそれぞれのダッシュボード
     pane_all = build_dashboard_section(
         signals, "all", "全体", "equityChartAll",
-        note="ℹ️ この「全体」には、メール配信していない<strong>1H 足の実験的シグナル（データ収集用）</strong>も含まれます。"
+        note="ℹ️ この「全体」には、メール配信していない<strong>1H 足・日足の実験的シグナル（データ収集用）</strong>も含まれます。"
              "実際に配信しているシグナルの成績は <strong>「🕓 4H 足」タブ</strong>をご覧ください。",
     )
     pane_4h = build_dashboard_section(
@@ -1140,6 +1141,11 @@ def build_html(signals, trades):
         signals_1h, "1h", "1H 足のみ", "equityChart1h",
         note="⚠️ 1H 足は<strong>実験的なデータ収集用</strong>で、メール配信はしていません。"
              "ノイズが多く成績は参考値です（本番は 4H 足）。",
+    )
+    pane_1d = build_dashboard_section(
+        signals_1d, "1d", "日足のみ", "equityChart1d",
+        note="📆 日足は<strong>記録のみ（メール配信なし）</strong>のデータ収集用です（2026-06-11 開始・上位足＝週足で整合をみる検証段階）。"
+             "勝率が確認できるまで配信はしません。サンプルはまだ少なめ＝参考値としてご覧ください。",
     )
     pane_analytics = build_analytics_section(signals)
     pane_quality = build_quality_analysis_section(signals)
@@ -1177,12 +1183,14 @@ def build_html(signals, trades):
     eq_all_labels, eq_all_values = render_equity_curve_data(signals)
     eq_4h_labels, eq_4h_values = render_equity_curve_data(signals_4h)
     eq_1h_labels, eq_1h_values = render_equity_curve_data(signals_1h)
+    eq_1d_labels, eq_1d_values = render_equity_curve_data(signals_1d)
 
     my_trades_html = render_my_trades_section(trades)
     last_updated = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     count_all = len(signals)
     count_4h = len(signals_4h)
     count_1h = len(signals_1h)
+    count_1d = len(signals_1d)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -1341,6 +1349,7 @@ def build_html(signals, trades):
     <button class="tab-btn" data-tab="all">🌐 全体（{count_all}）</button>
     <button class="tab-btn active" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
+    <button class="tab-btn" data-tab="1d">📆 日足（{count_1d}）</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
     <button class="tab-btn" data-tab="loss">🔬 勝因・敗因分析</button>
@@ -1350,6 +1359,7 @@ def build_html(signals, trades):
   {pane_all}
   {pane_4h}
   {pane_1h}
+  {pane_1d}
   {pane_analytics}
   {pane_quality}
   {pane_loss}
@@ -1466,6 +1476,7 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
   makeEquityChart('equityChartAll', {json.dumps(eq_all_labels, ensure_ascii=False)}, {json.dumps(eq_all_values)}, '#0969da');
   makeEquityChart('equityChart4h',  {json.dumps(eq_4h_labels, ensure_ascii=False)},  {json.dumps(eq_4h_values)},  '#1a7f37');
   makeEquityChart('equityChart1h',  {json.dumps(eq_1h_labels, ensure_ascii=False)},  {json.dumps(eq_1h_values)},  '#9a6700');
+  makeEquityChart('equityChart1d',  {json.dumps(eq_1d_labels, ensure_ascii=False)},  {json.dumps(eq_1d_values)},  '#8250df');
 
   // 敗因カテゴリチャート
   (function() {{
