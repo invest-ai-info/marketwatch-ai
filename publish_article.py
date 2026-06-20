@@ -71,6 +71,24 @@ def _repo_branch():
         return "invest-ai-info", "marketwatch-ai", "main"
 
 
+def _reset_sync_baseline(files):
+    """reconcile したファイルは『現在のmainに基づく』ので、sync_to_github.py の staleness ガードが
+    古い baseline で誤ブロックしないよう .sync-cache.json の該当エントリを削除する（次syncで正しく再記録）。
+    ＝2026-06-20 に追加した staleガードと reconcile の干渉を解消（reconcile済なのに誤ブロックする問題）。"""
+    import json as _json
+    cpath = os.path.join(SCRIPT_DIR, ".sync-cache.json")
+    if not os.path.exists(cpath):
+        return
+    try:
+        cache = _json.load(open(cpath, encoding="utf-8"))
+        removed = [f for f in files if cache.pop(f, None) is not None]
+        if removed:
+            _json.dump(cache, open(cpath, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+            print(f"  ✓ staleガード基準をリセット: {', '.join(removed)}（reconcile済＝次sync誤ブロック防止）")
+    except Exception as e:
+        print(f"  ⚠️ syncキャッシュのリセット失敗（無害・--forceで回避可）: {e}")
+
+
 def reconcile_from_main():
     """公開前に main 最新の guides.html / generate_market_news.py をローカルへ取り込む（巻き戻し事故の根絶）。"""
     # クラウド・ルーティンは git チェックアウト＝既に main HEAD 上なので reconcile 不要（raw CDN で逆に古くするのを防ぐ）。
@@ -99,6 +117,7 @@ def reconcile_from_main():
             print(f"  ⚠️⚠️ reconcile 失敗: {fn} ({e})")
     if not ok:
         print("  ⚠️⚠️ main と同期できないファイルあり＝巻き戻しの危険。sync前に guides.html を要確認（--no-reconcile で無効化）。")
+    _reset_sync_baseline(RECONCILE_FILES)   # staleガードとの干渉回避（reconcile済ファイルの誤ブロック防止）
     return ok
 
 
