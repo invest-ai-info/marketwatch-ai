@@ -17,6 +17,7 @@
 | 公開前に main を取り込む（reconcile） | `publish_article.py` 内蔵 reconcile | ローカル公開での巻き戻しを防止 |
 | **ローカルが古い状態での sync 巻き戻し防止** 🆕 | `sync_to_github.py` の staleness ガード（remote_sha baseline 比較） | 前回 sync 後に GitHub 側が更新されたファイルの push を **🚫中止**（意図的なら `--force`） |
 | **公開記事が guides.html カードから消えていないか** 🆕 | `check_automation_health.py` §③（`automation-health.yml` 毎朝09:30 JST） | 巻き戻し（local-drift）を **翌朝 Issue で即検知** |
+| **同一 workflow の同時実行レース防止** 🆕 | `update-market-news.yml` の `concurrency`（cancel-in-progress: true） | push(on:push)＋手動trigger の二重起動を新しい方に一本化＝失敗run・誤アラートを根絶 |
 | kinsho-v1 免責 / 10ボタンナビ / リンク切れ / SYNC_FILES登録 | `check_site_consistency.py`（`mw check`／土曜 `site-qa-lint`） | 不変条件を push 前に検査・exit 1 |
 | 研究日誌の数値捏造防止 | `signal_lab_verify.py`（固定オラクル・編集禁止） | claims.json を signals-log から独立再計算して突合 |
 | 更新履歴の整列・最新5件 | `generate_market_news.py` の `_history_items` | 手で削らない（日付降順・自動整列） |
@@ -38,7 +39,13 @@
 - **B＝カバレッジ番人 ✅実装・デプロイ済**：`check_automation_health.py` に §③を追加。リポの全 `guide-signal-lab-*`／`guide-news-*` が guides.html にカードとして在るかを GitHub API で**毎朝照合**し、欠落＝巻き戻しを 🟡 で Issue 化。現状 **19件すべて掲載 OK**。今朝 #015 を巻き戻した類の事故を、この番人なら翌朝検知できる（commit 790963a・automation-health.yml が実行）。
 - **C＝棚卸し ✅**：
   - **rules-as-code**＝`sync_to_github.py` に **staleness ガード**を追加（上表）。「公開前 reconcile」は `publish_article.py` では強制済みだったが、**生 sync 経路に穴**が残っていた（local-drift の第2の入口）。今回その穴を塞いだ。モック単体テストで stale=ブロック／`--force`=バイパス／baseline無=fail-open を確認。※`sync_to_github.py` はローカル専用（GitHub 未追跡）＝デプロイ不要・即有効。
-  - **文書スリム化**＝本ファイルを 788行 → 約150行へ圧縮。2026-06-17 以前は `SESSION_ARCHIVE.md` へ退避（SYNC_FILES 入り）。
+  - **文書スリム化**＝本ファイルを 788行 → 約80行へ圧縮。2026-06-17 以前は `SESSION_ARCHIVE.md` へ退避（SYNC_FILES 入り）。
+
+### 午後（続き）：機能追加＋信頼性修正
+- **🚨 ドル円161円・為替介入の解説記事を公開**（`guide-jpy-intervention-2026-06.html`・独立Opus監査=白・ライブHTTP200）。介入の決定=財務省/実施=日銀、当局は水準を明言しない、2026GW介入実績(4〜5兆円)を断定せず中立整理。**公開は手動trigger を打たず on:push 1本に任せレース回避**（#670 push のみ success）。
+- **🚀 JP新高値ブレイク機能を追加**（オーナー要望）：`_jp_breakout_scanner.py`（新）＝流動性400から52週高値更新を抽出、**レジーム risk_on のときだけ表示**＋危険スコア(過熱/連騰/超小型/負業種)で"宝くじ"を降格。`jp_daily.py` ⑥.5 に組込・`_jp_make_dashboard.py` に🚀タブ。**private repo `jp-momentum-research` にも push 済**（cloud run #8 success・スマホ表示OK）。
+- **📆 track-record に日足タブを追加**：`generate_track_record_page.py` に1d足ダッシュボード（4H/1Hと同型・記録のみ/配信なしの注記）。日足シグナルは記録のみ(--no-email)で発火済(ライブ38件)＝**メールしない方針は維持しデータだけ可視化**。`technical-alerts-1d.yml` で再生成・ライブ反映確認。
+- **🔧 信頼性修正2件**：(1)`update-market-news.yml` に concurrency 追加＝同時実行レース根絶(上表・commit 14cfa77)。(2)**staleガード↔reconcile の干渉を解消**＝`publish_article.py` が reconcile 後に `.sync-cache.json` の該当 baseline を消す（朝入れた staleガードが reconcile 済ファイルを誤ブロックする副作用を除去）。
 
 ---
 
@@ -55,7 +62,7 @@
 
 ## 📌 アクティブな宿題
 
-- 🚨 **update-market-news.yml の直近実行が失敗**（2026-06-20 にヘルスチェックが検知）。index 再生成パイプライン＝最優先で原因確認（`mw status update-market-news.yml` → Actions ログ）。
+- ✅ **update-market-news.yml の失敗は解決済**（2026-06-20 午後・concurrency追加）。原因＝push+dispatch の同時実行レース。今後 `mw publish` を素で使ってもOK。
 - 🚩 **FOMC結果の信頼性検証（6/18 起票・未確認）**：`indicator-result.json` の FOMC（据え置き 3.50–3.75%）は出典が個人ブログ系の疑い。一次（Reuters/Bloomberg/Fed）で数値を確認し、違えば訂正・正しければ出典差し替え。日銀（6/16・1.0%利上げ）は verified。
 - 🔴 **POLICY dict 更新**：`generate_market_news.py` の `POLICY`（日銀→1.0%／FOMC据え置き）を会合結果へ。未更新だと market-health のスワップ金利差%が陳腐化。
 - 📉 **AdSense 再審査準備**（auto-memory `project_adsense_review`／2026-06-18 却下＝「有用性の低いコンテンツ」）：薄い自動ページの noindex／編集コンテンツの価値強化を監査してから再申請。
