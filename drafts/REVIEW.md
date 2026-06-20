@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-06-21 | 🧪 signal-lab #016 ゲート実行中
+
+- **基準日（JST）**: 2026-06-21
+- **採択仮説**: 「ドル建てFXクロス（other_fx）のロングは損益分岐点43%を系統的に下回るか」（スイープFDR通過候補 q=0.046）
+- **事前宣言**: CI上限<43%かつN≥100 で「棄却確認（通過A）」
+- **検証データ**: 全決済済み883件（signals-log.json）。other_fx×long/short × トレンド別クロス集計
+- **結果**: other_fx×L=33.0%(63/191) CI[26.7%,39.9%]・CI上限39.9%<43% → **棄却確定（通過A）**。上昇×ロング9.8%(N=41)の逆説。ショート54.1%(N=74)との方向非対称。jpy_fxとの優位性逆転。E(R)=-0.231 CI[-0.387〜-0.076]
+- **生成ファイル**: drafts/draft-signal-lab-016.html / drafts/labnotes/lab-016-analysis.md / drafts/labnotes/lab-016-claims.json / drafts/labnotes/sweep-2026-06-21.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance
+- [ ] 8-4-i 数値再検証
+- [ ] 8-4-ii 独立確認Opus
+- [ ] 公開判定
+
+---
+
 ## 2026-06-20 | 🧪 signal-lab #015 ゲート実行中
 
 - **基準日（JST）**: 2026-06-20
