@@ -91,6 +91,10 @@ def main():
     guide_files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html")))
     # 自動生成記事（テンプレは generate_*.py 側で管理。個別の登録チェック対象外）
     AUTO_PREFIXES = ("guide-weekly-", "guide-auto-", "guide-monthly-report-")
+    # クラウド routine が GitHub 側で公開・管理する記事シリーズ。ローカルに無い／SYNC_FILES 非登録が
+    # 正常なので、ローカル publish 向けの検査（SYNC_FILES登録・リンク切れ・ナビ）は誤検知になる→除外。
+    # カードの巻き戻し検知は check_automation_health.py §③（毎朝の番人）が別途担保する。
+    CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-")
     checked = 0
     for gf in guide_files:
         if gf.startswith(AUTO_PREFIXES):
@@ -99,7 +103,7 @@ def main():
         html = _read(gf)
         if 'data-disclaimer="kinsho-v1"' not in html:
             errors.append(f"{gf}: kinsho-v1 免責が無い")
-        if sync_known and gf not in sync_files:
+        if sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES):
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
         # 個別チェック不要（漏れない設計）。ここでは検査しない。
@@ -109,7 +113,7 @@ def main():
     # 3. guides.html のリンク切れ（指している guide が実在するか）
     #    ※ guide-weekly-* / guide-auto-* は GitHub 側で自動生成されローカルに無いのが正常 → 除外
     for ref in sorted(set(re.findall(r'href="(guide-[^"]+\.html)"', guides_html))):
-        if ref.startswith("guide-weekly-") or ref.startswith("guide-auto-"):
+        if ref.startswith(("guide-weekly-", "guide-auto-") + CLOUD_PREFIXES):
             continue
         if not _exists(ref):
             errors.append(f"guides.html のリンク切れ: {ref} が存在しない")
@@ -122,7 +126,7 @@ def main():
                  "hot-assets.html", "charts.html", "youtube-summary.html"]
     for src in sorted(glob.glob(os.path.join(SD, "*.py")) + glob.glob(os.path.join(SD, "*.html"))):
         name = os.path.basename(src)
-        if name.startswith(("guide-weekly-", "guide-monthly-report-", "guide-auto-")):
+        if name.startswith(("guide-weekly-", "guide-monthly-report-", "guide-auto-") + CLOUD_PREFIXES):
             continue
         # 機械生成HTML出力（index等＝SYNC禁忌・preview）はローカルが陳腐化するので除外。
         # ナビの正は生成スクリプト(.py)側で担保→そちらを検査することで根元のドリフトを捕まえる。
