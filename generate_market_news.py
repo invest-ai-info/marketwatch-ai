@@ -2252,9 +2252,67 @@ def _build_hot_rows(rows, show_volume=True):
     return html
 
 
+def build_jp_rankings_section(now_jst):
+    """日本株 値上がり率/値下がり率 トップ20（jp-rankings.json）を hot-assets 最上段に描画。
+    事実の市場データの中立提示＋教育注記（飛びつき注意）。買い/売り推奨ではない。データ無ければ空文字。"""
+    import json as _json
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jp-rankings.json")
+    if not os.path.exists(p):
+        return ""
+    try:
+        d = _json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return ""
+
+    def _fin(a):
+        if a is True:
+            return '<span title="直近開示の決算が赤字" aria-label="赤字">🔴</span>'
+        if a is False:
+            return '<span title="直近開示の決算が黒字" aria-label="黒字">🟢</span>'
+        return '<span title="決算情報なし" style="color:#8b949e">—</span>'
+
+    def _rows(items, ud):
+        out = ""
+        for r in items:
+            pct = (r.get("pct") or 0) * 100
+            sign = "+" if pct >= 0 else ""
+            nm = str(r.get("name", ""))[:14]
+            sec = str(r.get("sector", ""))[:6]
+            t1 = r.get("turnover_d1") or 0
+            t2 = r.get("turnover_d2") or 0
+            out += (f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
+                    f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
+                    f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
+                    f'<td class="jpr-to">{t1:,.0f}<br><span class="jpr-to2">{t2:,.0f}</span></td>'
+                    f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>')
+        return out or '<tr><td colspan="5" style="text-align:center;color:#6e7781;padding:16px">データ取得中…</td></tr>'
+
+    head = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">騰落率</th>'
+            '<th style="text-align:right">代金億<br><span style="font-weight:400;font-size:.62rem">前/前々</span></th>'
+            '<th style="text-align:center">決算</th></tr>')
+    asof = d.get("asof", "")
+    up = _rows(d.get("gainers", []), "up")
+    down = _rows(d.get("losers", []), "down")
+    return f"""
+  <section class="jprank">
+    <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
+    <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（{asof} 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。決算アイコン＝直近開示が🟢黒字／🔴赤字。
+    <b>⚠️ 大きく動いた銘柄＝良い投資対象ではありません</b>（素の値上がり率上位は飛びつき高値づかみ・落ちるナイフになりやすい）。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <div class="jprank-grid">
+      <div class="jprank-col up"><h3>📈 値上がり率 TOP20</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{head}</thead><tbody>{up}</tbody></table></div></div>
+      <div class="jprank-col down"><h3>📉 値下がり率 TOP20</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{head}</thead><tbody>{down}</tbody></table></div></div>
+    </div>
+    <div class="jprank-foot">💡 売買代金の「前/前々」2日分で、出来高を伴う本物の動きか・ストップ高で薄商いかが分かります。値上がり率＋大きな売買代金は市場の注目が集まりやすい局面（＝買い推奨ではない）。
+    ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
+  </section>"""
+
+
 def build_hot_assets_html(hot_data, now_jst):
-    """hot-assets.html を生成 — 4カテゴリの出来高急増ランキング"""
+    """hot-assets.html を生成 — 最上段に日本株 値上がり/値下がりランキング、続いて4カテゴリの出来高急増ランキング"""
     time_str = now_jst.strftime("%Y年%m月%d日 %H:%M JST")
+    jp_rank_html = build_jp_rankings_section(now_jst)
 
     sections_html = ""
     category_order = [
@@ -2343,6 +2401,29 @@ def build_hot_assets_html(hot_data, now_jst):
     .badge-calm{{background:#ddf4ff;color:#57606a;border:1px solid #d0d7de}}
     .badge-na{{background:#ddf4ff;color:#6e7781;border:1px solid #d0d7de}}
 
+    .jprank{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px 24px;margin-bottom:24px}}
+    .jprank-h{{font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:4px}}
+    .jprank-sub{{font-size:.76rem;color:#57606a;margin-bottom:14px;line-height:1.65}}
+    .jprank-sub b{{color:#bf3989}}
+    .jprank-grid{{display:grid;grid-template-columns:1fr 1fr;gap:20px}}
+    .jprank-col h3{{font-size:1rem;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #d0d7de}}
+    .jprank-col.up h3{{color:#1a7f37}}
+    .jprank-col.down h3{{color:#cf222e}}
+    .jprank-table{{width:100%;border-collapse:collapse;font-size:.82rem}}
+    .jprank-table th{{font-size:.66rem;color:#57606a;text-align:left;padding:6px 5px;border-bottom:2px solid #d0d7de;font-weight:600;white-space:nowrap}}
+    .jprank-table td{{padding:7px 5px;border-bottom:1px solid #e1e6eb;vertical-align:top}}
+    .jpr-rk{{font-weight:700;color:#6e7781;text-align:center;width:22px}}
+    .jpr-nm{{font-weight:600;color:#1f2328;line-height:1.25}}
+    .jpr-meta{{font-size:.66rem;color:#6e7781}}
+    .jpr-pct{{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}}
+    .jpr-pct.up{{color:#1a7f37}}
+    .jpr-pct.down{{color:#cf222e}}
+    .jpr-to{{font-variant-numeric:tabular-nums;text-align:right;font-size:.74rem;color:#1f2328;white-space:nowrap;line-height:1.2}}
+    .jpr-to2{{color:#8b949e;font-size:.68rem}}
+    .jpr-fin{{text-align:center}}
+    .jprank-foot{{margin-top:14px;font-size:.76rem;color:#57606a;line-height:1.6;border-top:1px dashed #d0d7de;padding-top:10px}}
+    @media(max-width:760px){{.jprank-grid{{grid-template-columns:1fr;gap:18px}}}}
+
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
@@ -2380,7 +2461,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
-
+{jp_rank_html}
   <!-- 説明 -->
   <div class="intro">
     <b>🔰 急増率（Volume Surge Ratio）</b>とは、<b>本日の出来高 ÷ 直近20営業日の平均出来高</b>のことです。
@@ -4364,7 +4445,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 📰 解説「<a href="guide-news-2026-06-20-iran-oil-hormuz.html" style="color:#0969da"><b>【6/20】米イラン核協議がスイスで延期・原油$77〜80台で乱高下</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 🚨 解説「<a href="guide-jpy-intervention-2026-06.html" style="color:#0969da"><b>ドル円161円突破、為替介入はあるのか？「いくらで介入」を中立整理</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: ⚖️ 解説「<a href="guide-risk-by-account-size.html" style="color:#0969da"><b>資産額でリスクの取り方は変えるべき？ 変える「攻めの量」と変えてはいけない「守りの床」</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 📊 解説「<a href="guide-jp-value-vs-zombie.html" style="color:#0969da"><b>「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株</b></a>」公開'},
