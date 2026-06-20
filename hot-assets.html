@@ -68,6 +68,29 @@
     .badge-calm{background:#ddf4ff;color:#57606a;border:1px solid #d0d7de}
     .badge-na{background:#ddf4ff;color:#6e7781;border:1px solid #d0d7de}
 
+    .jprank{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+    .jprank-h{font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:4px}
+    .jprank-sub{font-size:.76rem;color:#57606a;margin-bottom:14px;line-height:1.65}
+    .jprank-sub b{color:#bf3989}
+    .jprank-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .jprank-col h3{font-size:1rem;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #d0d7de}
+    .jprank-col.up h3{color:#1a7f37}
+    .jprank-col.down h3{color:#cf222e}
+    .jprank-table{width:100%;border-collapse:collapse;font-size:.82rem}
+    .jprank-table th{font-size:.66rem;color:#57606a;text-align:left;padding:6px 5px;border-bottom:2px solid #d0d7de;font-weight:600;white-space:nowrap}
+    .jprank-table td{padding:7px 5px;border-bottom:1px solid #e1e6eb;vertical-align:top}
+    .jpr-rk{font-weight:700;color:#6e7781;text-align:center;width:22px}
+    .jpr-nm{font-weight:600;color:#1f2328;line-height:1.25}
+    .jpr-meta{font-size:.66rem;color:#6e7781}
+    .jpr-pct{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+    .jpr-pct.up{color:#1a7f37}
+    .jpr-pct.down{color:#cf222e}
+    .jpr-to{font-variant-numeric:tabular-nums;text-align:right;font-size:.74rem;color:#1f2328;white-space:nowrap;line-height:1.2}
+    .jpr-to2{color:#8b949e;font-size:.68rem}
+    .jpr-fin{text-align:center}
+    .jprank-foot{margin-top:14px;font-size:.76rem;color:#57606a;line-height:1.6;border-top:1px dashed #d0d7de;padding-top:10px}
+    @media(max-width:760px){.jprank-grid{grid-template-columns:1fr;gap:18px}}
+
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}
     footer a{color:#0969da;text-decoration:none}
     @media(max-width:600px){.header-inner{flex-direction:column}.hot-section{padding:16px}.hot-table{font-size:.78rem}.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
@@ -85,7 +108,7 @@
   <div class="header-inner">
     <div>
       <div class="header-title">🔥 出来高急増ランキング</div>
-      <div class="header-meta">最終更新: <span>2026年06月20日 20:01 JST</span></div>
+      <div class="header-meta">最終更新: <span>2026年06月20日 23:27 JST</span></div>
     </div>
     <div class="header-meta">本日出来高 ÷ 20日平均</div>
   </div>
@@ -106,6 +129,19 @@
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
+  <section class="jprank">
+    <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
+    <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（2026-06-19 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。決算アイコン＝直近開示が🟢黒字／🔴赤字。
+    <b>⚠️ 大きく動いた銘柄＝良い投資対象ではありません</b>（素の値上がり率上位は飛びつき高値づかみ・落ちるナイフになりやすい）。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <div class="jprank-grid">
+      <div class="jprank-col up"><h3>📈 値上がり率 TOP20</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead><tr><th>#</th><th>銘柄</th><th style="text-align:right">騰落率</th><th style="text-align:right">代金億<br><span style="font-weight:400;font-size:.62rem">前/前々</span></th><th style="text-align:center">決算</th></tr></thead><tbody><tr><td class="jpr-rk">1</td><td><div class="jpr-nm">フジクラ</div><div class="jpr-meta">5803・非鉄金属</div></td><td class="jpr-pct up">+15.7%</td><td class="jpr-to">162<br><span class="jpr-to2">2,180</span></td><td class="jpr-fin"><span title="決算情報なし" style="color:#8b949e">—</span></td></tr><tr><td class="jpr-rk">2</td><td><div class="jpr-nm">古河電気工業</div><div class="jpr-meta">5801・非鉄金属</div></td><td class="jpr-pct up">+15.1%</td><td class="jpr-to">776<br><span class="jpr-to2">1,252</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">3</td><td><div class="jpr-nm">キオクシアホールディングス</div><div class="jpr-meta">285A・電気機器</div></td><td class="jpr-pct up">+12.1%</td><td class="jpr-to">37,870<br><span class="jpr-to2">29,755</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">4</td><td><div class="jpr-nm">メイコー</div><div class="jpr-meta">6787・電気機器</div></td><td class="jpr-pct up">+11.3%</td><td class="jpr-to">366<br><span class="jpr-to2">158</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">5</td><td><div class="jpr-nm">住友電気工業</div><div class="jpr-meta">5802・非鉄金属</div></td><td class="jpr-pct up">+10.5%</td><td class="jpr-to">1,744<br><span class="jpr-to2">624</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">6</td><td><div class="jpr-nm">ジャパンディスプレイ</div><div class="jpr-meta">6740・電気機器</div></td><td class="jpr-pct up">+10.0%</td><td class="jpr-to">52<br><span class="jpr-to2">44</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">7</td><td><div class="jpr-nm">ＪＸ金属</div><div class="jpr-meta">5016・非鉄金属</div></td><td class="jpr-pct up">+8.6%</td><td class="jpr-to">2,667<br><span class="jpr-to2">1,316</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">8</td><td><div class="jpr-nm">アンリツ</div><div class="jpr-meta">6754・電気機器</div></td><td class="jpr-pct up">+7.7%</td><td class="jpr-to">114<br><span class="jpr-to2">62</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">9</td><td><div class="jpr-nm">Ａｉロボティクス</div><div class="jpr-meta">247A・化学</div></td><td class="jpr-pct up">+7.0%</td><td class="jpr-to">17<br><span class="jpr-to2">6</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">10</td><td><div class="jpr-nm">ローム</div><div class="jpr-meta">6963・電気機器</div></td><td class="jpr-pct up">+5.9%</td><td class="jpr-to">428<br><span class="jpr-to2">229</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">11</td><td><div class="jpr-nm">オムロン</div><div class="jpr-meta">6645・電気機器</div></td><td class="jpr-pct up">+5.2%</td><td class="jpr-to">157<br><span class="jpr-to2">83</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">12</td><td><div class="jpr-nm">ＫＯＫＵＳＡＩ　ＥＬＥＣＴＲ</div><div class="jpr-meta">6525・電気機器</div></td><td class="jpr-pct up">+5.0%</td><td class="jpr-to">709<br><span class="jpr-to2">568</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">13</td><td><div class="jpr-nm">さくらインターネット</div><div class="jpr-meta">3778・情報・通信業</div></td><td class="jpr-pct up">+4.8%</td><td class="jpr-to">60<br><span class="jpr-to2">26</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">14</td><td><div class="jpr-nm">アドバンテスト</div><div class="jpr-meta">6857・電気機器</div></td><td class="jpr-pct up">+4.8%</td><td class="jpr-to">3,138<br><span class="jpr-to2">2,273</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">15</td><td><div class="jpr-nm">ジーエス・ユアサ　コーポレー</div><div class="jpr-meta">6674・電気機器</div></td><td class="jpr-pct up">+4.5%</td><td class="jpr-to">85<br><span class="jpr-to2">42</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">16</td><td><div class="jpr-nm">ＭＡＲＵＷＡ</div><div class="jpr-meta">5344・ガラス・土石</div></td><td class="jpr-pct up">+4.3%</td><td class="jpr-to">164<br><span class="jpr-to2">130</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">17</td><td><div class="jpr-nm">東京計器</div><div class="jpr-meta">7721・精密機器</div></td><td class="jpr-pct up">+4.3%</td><td class="jpr-to">66<br><span class="jpr-to2">62</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">18</td><td><div class="jpr-nm">伊勢化学工業</div><div class="jpr-meta">4107・化学</div></td><td class="jpr-pct up">+4.1%</td><td class="jpr-to">18<br><span class="jpr-to2">8</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">19</td><td><div class="jpr-nm">いすゞ自動車</div><div class="jpr-meta">7202・輸送用機器</div></td><td class="jpr-pct up">+4.1%</td><td class="jpr-to">99<br><span class="jpr-to2">55</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">20</td><td><div class="jpr-nm">ルネサスエレクトロニクス</div><div class="jpr-meta">6723・電気機器</div></td><td class="jpr-pct up">+4.0%</td><td class="jpr-to">1,008<br><span class="jpr-to2">639</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr></tbody></table></div></div>
+      <div class="jprank-col down"><h3>📉 値下がり率 TOP20</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead><tr><th>#</th><th>銘柄</th><th style="text-align:right">騰落率</th><th style="text-align:right">代金億<br><span style="font-weight:400;font-size:.62rem">前/前々</span></th><th style="text-align:center">決算</th></tr></thead><tbody><tr><td class="jpr-rk">1</td><td><div class="jpr-nm">パワーエックス</div><div class="jpr-meta">485A・電気機器</div></td><td class="jpr-pct down">-10.7%</td><td class="jpr-to">210<br><span class="jpr-to2">207</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">2</td><td><div class="jpr-nm">アストロスケールホールディン</div><div class="jpr-meta">186A・サービス業</div></td><td class="jpr-pct down">-10.0%</td><td class="jpr-to">155<br><span class="jpr-to2">116</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">3</td><td><div class="jpr-nm">カバー</div><div class="jpr-meta">5253・情報・通信業</div></td><td class="jpr-pct down">-9.7%</td><td class="jpr-to">34<br><span class="jpr-to2">8</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">4</td><td><div class="jpr-nm">霞ヶ関キャピタル</div><div class="jpr-meta">3498・不動産業</div></td><td class="jpr-pct down">-8.9%</td><td class="jpr-to">51<br><span class="jpr-to2">64</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">5</td><td><div class="jpr-nm">ＡＮＹＣＯＬＯＲ</div><div class="jpr-meta">5032・情報・通信業</div></td><td class="jpr-pct down">-7.7%</td><td class="jpr-to">46<br><span class="jpr-to2">26</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">6</td><td><div class="jpr-nm">サンバイオ</div><div class="jpr-meta">4592・医薬品</div></td><td class="jpr-pct down">-7.3%</td><td class="jpr-to">13<br><span class="jpr-to2">25</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">7</td><td><div class="jpr-nm">住友金属鉱山</div><div class="jpr-meta">5713・非鉄金属</div></td><td class="jpr-pct down">-7.2%</td><td class="jpr-to">343<br><span class="jpr-to2">240</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">8</td><td><div class="jpr-nm">オンコリスバイオファーマ</div><div class="jpr-meta">4588・医薬品</div></td><td class="jpr-pct down">-6.9%</td><td class="jpr-to">22<br><span class="jpr-to2">31</span></td><td class="jpr-fin"><span title="直近開示の決算が赤字" aria-label="赤字">🔴</span></td></tr><tr><td class="jpr-rk">9</td><td><div class="jpr-nm">野村総合研究所</div><div class="jpr-meta">4307・情報・通信業</div></td><td class="jpr-pct down">-6.4%</td><td class="jpr-to">184<br><span class="jpr-to2">110</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">10</td><td><div class="jpr-nm">第一三共</div><div class="jpr-meta">4568・医薬品</div></td><td class="jpr-pct down">-6.1%</td><td class="jpr-to">330<br><span class="jpr-to2">243</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">11</td><td><div class="jpr-nm">ビジョナル</div><div class="jpr-meta">4194・情報・通信業</div></td><td class="jpr-pct down">-6.1%</td><td class="jpr-to">37<br><span class="jpr-to2">31</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">12</td><td><div class="jpr-nm">ディー・エヌ・エー</div><div class="jpr-meta">2432・情報・通信業</div></td><td class="jpr-pct down">-6.0%</td><td class="jpr-to">102<br><span class="jpr-to2">85</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">13</td><td><div class="jpr-nm">ベイカレント</div><div class="jpr-meta">6532・サービス業</div></td><td class="jpr-pct down">-5.9%</td><td class="jpr-to">152<br><span class="jpr-to2">62</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">14</td><td><div class="jpr-nm">日本取引所グループ</div><div class="jpr-meta">8697・その他金融業</div></td><td class="jpr-pct down">-5.9%</td><td class="jpr-to">157<br><span class="jpr-to2">87</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">15</td><td><div class="jpr-nm">日本マイクロニクス</div><div class="jpr-meta">6871・電気機器</div></td><td class="jpr-pct down">-5.6%</td><td class="jpr-to">207<br><span class="jpr-to2">178</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">16</td><td><div class="jpr-nm">芝浦メカトロニクス</div><div class="jpr-meta">6590・電気機器</div></td><td class="jpr-pct down">-5.6%</td><td class="jpr-to">108<br><span class="jpr-to2">81</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">17</td><td><div class="jpr-nm">電通グループ</div><div class="jpr-meta">4324・サービス業</div></td><td class="jpr-pct down">-5.6%</td><td class="jpr-to">54<br><span class="jpr-to2">45</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">18</td><td><div class="jpr-nm">日本電気</div><div class="jpr-meta">6701・電気機器</div></td><td class="jpr-pct down">-5.5%</td><td class="jpr-to">495<br><span class="jpr-to2">286</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">19</td><td><div class="jpr-nm">ＳＵＢＡＲＵ</div><div class="jpr-meta">7270・輸送用機器</div></td><td class="jpr-pct down">-5.3%</td><td class="jpr-to">207<br><span class="jpr-to2">103</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr><tr><td class="jpr-rk">20</td><td><div class="jpr-nm">野村マイクロ・サイエンス</div><div class="jpr-meta">6254・機械</div></td><td class="jpr-pct down">-5.2%</td><td class="jpr-to">46<br><span class="jpr-to2">60</span></td><td class="jpr-fin"><span title="直近開示の決算が黒字" aria-label="黒字">🟢</span></td></tr></tbody></table></div></div>
+    </div>
+    <div class="jprank-foot">💡 売買代金の「前/前々」2日分で、出来高を伴う本物の動きか・ストップ高で薄商いかが分かります。値上がり率＋大きな売買代金は市場の注目が集まりやすい局面（＝買い推奨ではない）。
+    ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
+  </section>
   <!-- 説明 -->
   <div class="intro">
     <b>🔰 急増率（Volume Surge Ratio）</b>とは、<b>本日の出来高 ÷ 直近20営業日の平均出来高</b>のことです。
@@ -419,16 +455,16 @@
         <tbody>
         <tr>
           <td class="rank" style="color:#bf3989">1</td>
-          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
-          <td class="price-cell">71.67</td>
-          <td><span style="color:#1a7f37;font-weight:600">+2.80%</span></td>
+          <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
+          <td class="price-cell">64.91</td>
+          <td><span style="color:#cf222e;font-weight:600">-2.03%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">2</td>
-          <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
-          <td class="price-cell">64.91</td>
-          <td><span style="color:#cf222e;font-weight:600">-2.03%</span></td>
+          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
+          <td class="price-cell">70.69</td>
+          <td><span style="color:#1a7f37;font-weight:600">+1.39%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
@@ -440,51 +476,51 @@
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">4</td>
-          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
-          <td class="price-cell">1.15</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.09%</span></td>
-          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#57606a">5</td>
-          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
-          <td class="price-cell">1,726.86</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.93%</span></td>
-          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#57606a">6</td>
           <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
           <td class="price-cell">6.34</td>
           <td><span style="color:#cf222e;font-weight:600">-0.59%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">7</td>
+          <td class="rank" style="color:#57606a">5</td>
+          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
+          <td class="price-cell">63,291.76</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.39%</span></td>
+          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">6</td>
           <td class="asset-name">GBP/JPY<br><span class="asset-sym">GBPJPY=X</span></td>
           <td class="price-cell">213.46</td>
           <td><span style="color:#1a7f37;font-weight:600">+0.25%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">8</td>
-          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
-          <td class="price-cell">63,633.81</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.15%</span></td>
-          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#57606a">9</td>
+          <td class="rank" style="color:#57606a">7</td>
           <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
           <td class="price-cell">185.00</td>
           <td><span style="color:#1a7f37;font-weight:600">+0.10%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">10</td>
+          <td class="rank" style="color:#57606a">8</td>
+          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
+          <td class="price-cell">1.14</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.10%</span></td>
+          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">9</td>
           <td class="asset-name">WTI原油<br><span class="asset-sym">CL=F</span></td>
           <td class="price-cell">76.54</td>
           <td><span style="color:#cf222e;font-weight:600">-0.08%</span></td>
+          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">10</td>
+          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
+          <td class="price-cell">1,710.68</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.02%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
