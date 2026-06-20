@@ -46,6 +46,7 @@
 - **🚀 JP新高値ブレイク機能を追加**（オーナー要望）：`_jp_breakout_scanner.py`（新）＝流動性400から52週高値更新を抽出、**レジーム risk_on のときだけ表示**＋危険スコア(過熱/連騰/超小型/負業種)で"宝くじ"を降格。`jp_daily.py` ⑥.5 に組込・`_jp_make_dashboard.py` に🚀タブ。**private repo `jp-momentum-research` にも push 済**（cloud run #8 success・スマホ表示OK）。
 - **📆 track-record に日足タブを追加**：`generate_track_record_page.py` に1d足ダッシュボード（4H/1Hと同型・記録のみ/配信なしの注記）。日足シグナルは記録のみ(--no-email)で発火済(ライブ38件)＝**メールしない方針は維持しデータだけ可視化**。`technical-alerts-1d.yml` で再生成・ライブ反映確認。
 - **🔧 信頼性修正2件**：(1)`update-market-news.yml` に concurrency 追加＝同時実行レース根絶(上表・commit 14cfa77)。(2)**staleガード↔reconcile の干渉を解消**＝`publish_article.py` が reconcile 後に `.sync-cache.json` の該当 baseline を消す（朝入れた staleガードが reconcile 済ファイルを誤ブロックする副作用を除去）。
+- **📊 日本株 値上がり率/値下がり率ランキングを公開サイトに実装**（オーナー要望・`hot-assets.html` 最上段・スマホ最適化2列→1列・独立Opus監査=白・ライブ反映 run #676 success 各20件）。流動性上位400で 値上がり/値下がりトップ20＋**売買代金2日分**（前日/前々日＝ストップ高/本物の大商いを判別）＋**決算🟢黒字/🔴赤字**＋業種。**自己完結（公開リポ内・キー不要）**＝静的 `jp-stock-info.json`（`make_jp_stock_info.py` がローカルのJ-Quantsから四半期更新＝赤字黒字/名前/業種）＋毎朝 **`jp-rankings.yml`(06:50/07:20 JST)** が `build_jp_rankings.py` で **Yahoo価格だけ**から `jp-rankings.json` を生成 → `generate_market_news.build_jp_rankings_section` が描画。`jp-rankings.json`=SYNC禁忌(workflow生成)。コンプラ要点＝事実データ・売買推奨でない・「大きく動いた≠良い投資対象」注記・免責二層。
 
 ---
 
@@ -66,6 +67,7 @@
 - 🚩 **FOMC結果の信頼性検証（6/18 起票・未確認）**：`indicator-result.json` の FOMC（据え置き 3.50–3.75%）は出典が個人ブログ系の疑い。一次（Reuters/Bloomberg/Fed）で数値を確認し、違えば訂正・正しければ出典差し替え。日銀（6/16・1.0%利上げ）は verified。
 - 🔴 **POLICY dict 更新**：`generate_market_news.py` の `POLICY`（日銀→1.0%／FOMC据え置き）を会合結果へ。未更新だと market-health のスワップ金利差%が陳腐化。
 - 📉 **AdSense 再審査準備**（auto-memory `project_adsense_review`／2026-06-18 却下＝「有用性の低いコンテンツ」）：薄い自動ページの noindex／編集コンテンツの価値強化を監査してから再申請。
+- 🗓️ **`jp-stock-info.json` の四半期更新**（決算シーズン後に `python make_jp_stock_info.py` 再実行→`mw sync`。赤字/黒字フラグを最新決算へ。日次の値上がり率/売買代金は `jp-rankings.yml` が自動）。
 - ✍️ autodraft topicキュー ⑫以降の補充（候補＝金利と債券／単利と複利／ETFと投信／注文方法／PER・PBR）。
 - 📊 弁護士相談アジェンダ（track-record 統計開示／確信度ラベル／個別銘柄記事の言及）。
 - 🟡 保留＝**J-Quants Standard（¥3,300・1回）** で「risk_off 転換→守り」を 2018/2020 実暴落でバックテスト（オーナー課金判断時）。
