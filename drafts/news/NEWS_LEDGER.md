@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-06-20
+- 判定: ✅ 公開済み
+- 選定トピック: 米イラン核協議がスイスで延期（バンス副大統領の訪問取り止め）・原油WTI約$77〜78/ブレント約$79〜80で乱高下 — ホルムズ海峡危機3.5ヶ月の全経緯と日本投資家への影響（カテゴリ: マクロ・地政学・エネルギー）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - NBC News「U.S. and Iran reach framework deal to end war and reopen the Strait of Hormuz」
+  - NPR「U.S. and Iran announce an initial deal to end the war and reopen the Strait of Hormuz」（2026-06-15）
+  - Bloomberg「Vance Postpones Switzerland Trip as US-Iran Nuclear Talks Await Final Details」（2026-06-19）
+  - CBS News「U.S.-Iran deal signing sets stage for nuclear negotiations, but initial talks in Switzerland postponed」
+  - CNBC「Oil prices mixed as postponed U.S.-Iran talks temper optimism over ceasefire progress」（2026-06-19）
+  - Wikipedia「2026 Strait of Hormuz crisis」
+  - CSIS「What Are the Implications of the Iran Conflict for Japan?」
+  - Carbon Brief「Japan's 'vulnerability' to Iran crisis」（2026-03-13）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟡グレー（チェックポイント内の「〜をお勧めする」が助言トーン）
+  - Opus適用修正: 「〜することをお勧めする」→「〜しておくと状況を把握しやすい」等の中立観察トーンに軟化（事実/数値/構造不変）
+  - 独立Opus確認: 🟢白（kinsho-v1×3確認・禁止語なし・売買推奨なし・出典多数・noindexなし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-20-iran-oil-hormuz.html
+- 追記: check_site_consistency.py exit=0 確認済み。JAXA誤記（電力）→電力料金に修正後公開。
+
+---
+
 ## 2026-06-19
 - 判定: ✅ 公開済み
 - 選定トピック: フジクラ（5803）が通期営業利益予想47%上方修正・ストップ高+15.69%、AIデータセンター光ファイバー需要急拡大で日経平均71,250円続伸（カテゴリ: 個別銘柄・日本株・AIラリー）
