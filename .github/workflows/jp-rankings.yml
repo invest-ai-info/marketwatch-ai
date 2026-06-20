@@ -1,0 +1,41 @@
+name: JP Stock Rankings
+
+# 日本株 値上がり率/値下がり率 トップ20 を毎朝（前営業日の確定値）計算して jp-rankings.json を更新。
+# Yahoo の価格のみ使用（APIキー不要）。赤字/黒字・銘柄名・業種は静的 jp-stock-info.json から join。
+# hot-assets.html の最上段が jp-rankings.json を読む（描画は update-market-news 側）。
+
+on:
+  schedule:
+    - cron: '50 21 * * *'   # 06:50 JST（前営業日の出来高が確定した後）
+    - cron: '20 22 * * *'   # 07:20 JST バックアップ（cronスキップ対策）
+  workflow_dispatch:
+
+# 自分自身の二重起動だけ直列化（jp-rankings.json のみ触る＝他workflowとはファイルが別）
+concurrency:
+  group: jp-rankings
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build JP rankings (Yahoo prices only, no key)
+        run: python build_jp_rankings.py
+      - name: Commit jp-rankings.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add jp-rankings.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: jp rankings $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase -X ours origin main || true
+            git push
+          fi
