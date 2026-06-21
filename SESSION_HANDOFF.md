@@ -5,14 +5,14 @@
 
 ---
 
-## ⏳ デプロイ待ち（最優先・2026-06-21）— api.github.com が throttle（WinError 10060）で push できず溜まった分
+## ⏳ デプロイ待ち（2026-06-21 夜更新）— sync 完了。残りは item #2 のみ
 
-⚠️ 大量push後に **api.github.com への接続がタイムアウト**（過去にもあった一時throttle・時間で自然回復）。下記は**ローカルで完成・検証済みだが GitHub 未反映**。このSESSION_HANDOFF自体も未sync。接続が戻ったら順に流す：
+✅ **2026-06-21 夜：`python sync_to_github.py` 完了（182件・成功182/失敗0）**。api.github.com の throttle（WinError 10060）は自然回復済。下記すべて GitHub 反映済 → `mw check`＝エラー0：
+- スマホ横はみ出し修正の残り：記事3（`guide-news-2026-06-15-nikkei-69k`／`guide-risk-by-account-size`／`guide-jpy-intervention-2026-06`）＋ツール3（`publish_article.py`／`fix_mobile_overflow.py`／`check_site_consistency.py`）。
+- ゴールド土日連投の修正（`generate_technical_alerts.py` の市場休止ガード）＝**次回 technical-alerts 実行分から土日メール停止**。
+- 本 SESSION_HANDOFF 自体も sync 済。
 
-1. **`python sync_to_github.py`** を実行（成功済みはキャッシュでスキップ・残り＝下記だけ通る）：
-   - **スマホ横はみ出し修正**の残り：記事3（`guide-news-2026-06-15-nikkei-69k`／`guide-risk-by-account-size`／`guide-jpy-intervention-2026-06`）＋ツール3（`publish_article.py`／`fix_mobile_overflow.py`／`check_site_consistency.py`）。※他95記事は反映済み。
-   - **ゴールド土日連投の修正**（`generate_technical_alerts.py` の市場休止ガード）。**未反映の間はゴールドの土日メールが続く**。
-2. **クラウド公開記事のスマホ修正**（ローカルに無い `guide-signal-lab-016`・`guide-news-*`）＝**GitHub上の全 guide-*.html を直接見て**、`id="mw-mobile-fit"` 未注入のものだけ `</head>` 直前に `fix_mobile_overflow.py` の `BLOCK` を注入してPUT（contents API）。`raw.githubusercontent.com` は throttle外なので取得は可。
+🔲 **残り＝item #2：クラウド公開記事のスマホ修正**（ローカルに無い `guide-signal-lab-016`・`guide-news-*`）＝**GitHub上の全 guide-*.html を直接見て**、`id="mw-mobile-fit"` 未注入のものだけ `</head>` 直前に `fix_mobile_overflow.py` の `BLOCK` を注入してPUT（contents API）。`raw.githubusercontent.com` は throttle外なので取得は可。
 → 完了後 `python mw.py check` がエラー0なら正常。
 
 ---
