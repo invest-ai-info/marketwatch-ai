@@ -12,10 +12,12 @@
 - **生成ファイル**: drafts/draft-signal-lab-017.html / drafts/labnotes/lab-017-analysis.md / drafts/labnotes/lab-017-claims.json / drafts/labnotes/sweep-2026-06-22.json / signal-lab-ledger.md
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push
-- [ ] 8-2 verify
-- [ ] 8-3 Opus compliance
-- [ ] 8-4 公開 or エスカレ
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 017 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 8/8クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡 グレー → 修正適用 → 最終判定=白 — H1見出しの「稼いで」→「勝率が高め」に軟化＋過去データ・将来非保証注記追記。数値・SVG・30秒まとめ不変
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も8/8クレーム緑・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢 白 ✅（kinsho-v1×2箇所・断定表現なし・将来非保証・投資助言・推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・初期グレー→Opus修正適用→修正後白・独立確認=白）| guide-signal-lab-017.html
 
 ---
 
