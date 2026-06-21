@@ -4445,6 +4445,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-22", "line": '・<b>2026-06-22</b>: 🧪 解説「<a href="guide-signal-lab-017.html" style="color:#0969da"><b>研究日誌 #17 blocked=True方向性分解——壁ありショートは勝率が高め・ロングは中立</b></a>」公開'},
         {"date": "2026-06-21", "line": '・<b>2026-06-21</b>: 📰 解説「<a href="guide-news-2026-06-21-intel-apple-chip.html" style="color:#0969da"><b>【6/21】トランプ発表でIntel+10.6%急騰—Apple×Intel半導体協業の背景と日本株への影響</b></a>」公開'},
         {"date": "2026-06-21", "line": '・<b>2026-06-21</b>: 🧪 解説「<a href="guide-signal-lab-016.html" style="color:#0969da"><b>研究日誌 #16 ドル建てFXクロスのロングは逆効果だった——other_fx 全191件の方向性検証</b></a>」公開'},
         {"date": "2026-06-20", "line": '・<b>2026-06-20</b>: 🚨 解説「<a href="guide-jpy-intervention-2026-06.html" style="color:#0969da"><b>ドル円161円突破、為替介入はあるのか？「いくらで介入」を中立整理</b></a>」公開'},
