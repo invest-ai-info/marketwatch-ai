@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-06-21
+- 判定: ✅ 公開済み
+- 選定トピック: トランプTruth Social発表によるApple×Intel半導体チップ協業観測—Intel+10.64%急騰・SOX+6.42%・米S&P500+1.08%（カテゴリ: マクロ・半導体・テック）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - Bloomberg「Intel INTC Share Price Soars After Trump Says It Struck Apple Chip Deal」（2026-06-18）
+  - CNBC「Intel surges 9% after Trump says company will partner with Apple on U.S. chip design」（2026-06-18）
+  - CBS News「Intel shares leap after Trump says it's working with Apple to make chips in the U.S.」
+  - Tom's Hardware「Trump says Apple agreed to 'build' chips with Intel — neither company confirms deal」（2026-06-18）
+  - Bloomberg「US Stock Futures Climb as Intel Leads Semiconductor Rally on Apple Deal」（2026-06-18）
+  - Yahoo Finance「Intel stock soars on reported Apple deal as turnaround continues to pay off」
+  - CryptoBriefing「Apple partners with Intel for $600B domestic semiconductor initiative」
+  - NineScrolls「Intel Stock Jumps 14% as Foundry Validation Hits the Equipment Supply Chain」
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（禁止語なし・kinsho-v1×3箇所確認・銘柄推奨なし・出典多数・noindexなし・公式未確認の事実を断定していない）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（全チェックポイント合格）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-21-intel-apple-chip.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。
+
+---
+
 ## 2026-06-20
 - 判定: ✅ 公開済み
 - 選定トピック: 米イラン核協議がスイスで延期（バンス副大統領の訪問取り止め）・原油WTI約$77〜78/ブレント約$79〜80で乱高下 — ホルムズ海峡危機3.5ヶ月の全経緯と日本投資家への影響（カテゴリ: マクロ・地政学・エネルギー）
