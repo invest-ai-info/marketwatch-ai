@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-06-22 | 🧪 signal-lab #017 ゲート実行中
+
+- **基準日（JST）**: 2026-06-22
+- **採択仮説**: 「blocked=True（壁あり）シグナルはロングとショートで異なる勝率を示す（方向性分解）」（#5以降の継続研究・スイープ昇格/反証なし→シリーズ継続）
+- **事前宣言**: blocked=True×Short の勝率が blocked=True×Long より 10pp 以上高い
+- **検証データ**: 全決済済み883件（signals-log.json）。blocked×direction クロス集計＋signal種別探索的分析
+- **結果**: blocked=True×Short=55.9%(19/34) CI[39.5%,71.1%] vs blocked=True×Long=40.9%(18/44)。差=15.0pp（宣言条件10pp超クリア）。CI下限39.5%<43%・FDR未通過（q=0.331）→ **通過A方向（確定打なし・継続観察）**。探索的: ma_dead×short×blocked=True=90.9%(10/11)はN小さすぎ
+- **生成ファイル**: drafts/draft-signal-lab-017.html / drafts/labnotes/lab-017-analysis.md / drafts/labnotes/lab-017-claims.json / drafts/labnotes/sweep-2026-06-22.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push
+- [ ] 8-2 verify
+- [ ] 8-3 Opus compliance
+- [ ] 8-4 公開 or エスカレ
+
+---
+
 ## 2026-06-21 | 🧪 signal-lab #016 ゲート実行中
 
 - **基準日（JST）**: 2026-06-21

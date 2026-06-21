@@ -1,0 +1,13 @@
+{
+  "article_id": "017",
+  "claims": [
+    {"label": "blocked=True 全体",         "filter": {"blocked": true},                              "k": 37, "n": 78},
+    {"label": "blocked=True × ロング",      "filter": {"blocked": true, "direction": "long"},          "k": 18, "n": 44},
+    {"label": "blocked=True × ショート",    "filter": {"blocked": true, "direction": "short"},         "k": 19, "n": 34},
+    {"label": "blocked=False 全体",         "filter": {"blocked": false},                             "k": 189,"n": 479},
+    {"label": "blocked=False × ロング",     "filter": {"blocked": false, "direction": "long"},         "k": 145,"n": 365},
+    {"label": "blocked=False × ショート",   "filter": {"blocked": false, "direction": "short"},        "k": 44, "n": 114},
+    {"label": "ma_dead × short × blocked=True (探索的)", "filter": {"signal": "ma_dead", "direction": "short", "blocked": true}, "k": 10, "n": 11},
+    {"label": "全体（決済済）",              "filter": {},                                             "k": 354,"n": 883}
+  ]
+}
