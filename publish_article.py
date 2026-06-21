@@ -37,6 +37,12 @@ if hasattr(sys.stdout, "reconfigure"):
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# 🆕 2026-06-20 公開する記事に「スマホ横はみ出し防止」CSSを必ず注入（local/cloud両方の公開経路で担保）
+try:
+    from fix_mobile_overflow import BLOCK as _MF_BLOCK, MARKER as _MF_MARKER
+except Exception:
+    _MF_BLOCK = _MF_MARKER = None
+
 
 def _read(p):
     with open(os.path.join(SCRIPT_DIR, p), encoding="utf-8") as f:
@@ -273,6 +279,10 @@ def main():
     print("────────────────────────────")
     if not a.dry and not a.no_reconcile:
         reconcile_from_main()   # 🔒 編集の前に必ず main 最新を取り込む（巻き戻し事故をコードで防止）
+    # 🆕 スマホ横はみ出し防止CSSを注入（未注入なら）＝公開記事は必ずモバイル最適化
+    if not a.dry and _MF_BLOCK and _MF_MARKER not in html and "</head>" in html:
+        _write(a.file, html.replace("</head>", _MF_BLOCK + "</head>", 1))
+        print("  ✅ モバイル最適化CSSを注入（スマホ横はみ出し防止）")
     add_to_guides(a.file, a.category, a.emoji, a.card_title, a.desc, date, readmin, a.badge, a.dry)
     add_to_sync(a.file, a.dry)
     add_to_history(a.file, a.emoji, a.card_title, date, a.dry)
