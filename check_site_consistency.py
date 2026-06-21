@@ -104,6 +104,8 @@ def main():
         html = _read(gf)
         if 'data-disclaimer="kinsho-v1"' not in html:
             errors.append(f"{gf}: kinsho-v1 免責が無い")
+        if 'id="mw-mobile-fit"' not in html:
+            warnings.append(f"{gf}: スマホ横はみ出し防止CSS(mw-mobile-fit)が無い → `python fix_mobile_overflow.py`")
         if sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES):
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
