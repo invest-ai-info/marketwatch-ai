@@ -2653,6 +2653,21 @@ def main():
         if df is None or len(df) < 30:
             print(f"    ⏭️ データ不足、スキップ")
             continue
+        # 🆕 2026-06-21 市場休止ガード: 最終バーが古すぎる＝土日/祝日/休場で市場が閉じ、データが金曜終値で
+        #   塩漬けになっている → 発火させない。これが無いと、金曜に立ったシグナルが土日に同じデータで
+        #   クールダウン（4H=12h）ごとに再発火しメール連投する事故が起きる（実例: ゴールドが土日に再送）。
+        #   24h市場（BTC等）や日曜夜オープン後は最終バーが新しいので従来通り発火する。
+        try:
+            _last = df.index[-1]
+            _last = _last.tz_localize("UTC") if _last.tzinfo is None else _last.tz_convert("UTC")
+            _age_h = (pd.Timestamp.now(tz="UTC") - _last).total_seconds() / 3600.0
+            _max_age = {"1h": 6, "4h": 12, "1d": 110}.get(timeframe, 12)
+            if _age_h > _max_age:
+                print(f"    ⏸️ 市場休止中（最終バー {_age_h:.0f}h 前 > {_max_age}h）→ 発火スキップ"
+                      f"（土日/祝日の塩漬けデータ連投を防止）")
+                continue
+        except Exception as _e:
+            print(f"    ⚠️ 鮮度判定スキップ（{type(_e).__name__}）= 従来通り処理")
         # 🆕 2026-05-28: 同 ticker/timeframe の直近シグナルを抽出して detect_signals に渡す（初押し検出用）
         # pullback_window=15 本 × timeframe + バッファ
         recent_lookback_hours = 15 * (24 if timeframe == "1d" else (4 if timeframe == "4h" else 1)) + 12
