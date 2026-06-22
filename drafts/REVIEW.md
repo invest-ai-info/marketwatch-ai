@@ -12,10 +12,12 @@
 - **生成ファイル**: drafts/draft-signal-lab-018.html / drafts/labnotes/lab-018-analysis.md / drafts/labnotes/lab-018-claims.json / drafts/labnotes/sweep-2026-06-22.json / signal-lab-ledger.md / signal-lab-tracker.json（6新規登録）
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push（chore: signal-lab draft 018 + claims）
-- [ ] 8-2 verify EXIT=? — signal_lab_verify.py 実行待ち
-- [ ] 8-3 Opus compliance 監査待ち
-- [ ] 8-4 公開判定・数値再検証・独立確認Opus
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 018 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 11/11クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡 グレー → 修正適用 → 最終判定=白 — 「指数ロング全般にエッジがある」→「過去データ上は指数ロング全般が相対的に良好な傾向」へ軟化（1箇所のみ・数値/SVG/30秒まとめ不変）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も11/11クレーム緑・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢 白 ✅（kinsho-v1×3か所・断定表現なし・将来非保証・投資助言・推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・初期グレー→Opus修正適用→修正後白・独立確認=白）| guide-signal-lab-018.html
 
 ---
 
