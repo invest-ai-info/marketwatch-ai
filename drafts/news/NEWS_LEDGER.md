@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-06-22
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均が終値で史上初の7万2000円台（72,353.96円）を突破・8日続伸（2023年9月以来）— AI・半導体主導、東京エレクトロン＋アドバンテストが840pt超貢献（カテゴリ: マクロ・日本株・AI半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - Bloomberg/Bloomingbit「Nikkei 225 Closes at Record 72,353.96; Kospi Ends Higher」（2026-06-22）
+  - 日本経済新聞「東証大引け 日経平均、初の7万2000円台 23年9月以来の8連騰」（2026-06-22）
+  - 日本経済新聞「東証前引け 日経平均続伸、初の7万2000円台 米イランの協議進展を期待」（2026-06-22）
+  - KuCoin News「Japan's Nikkei Surges on Momentum in AI Semiconductor Supply Chain」（2026-06-22）
+  - Finimize「Japan's Nikkei Breaks 72,000 As AI Stocks Lead」（2026-06-22）
+  - MarketScreener「Japan's Nikkei rises past 72,000 mark for first time as AI euphoria persists」（2026-06-22）
+  - NHKニュース「2040年度までの17分野の官民投資額 370兆円規模を想定」
+  - newsbytesapp.com「Japan's Nikkei 225 tops 72,000 as AI investments surge」（2026-06-22）
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for June 22」（米国市場動向）
+  - Schwab「Markets Try to Recover Early After Fed Selloff」（Juneteenth休場明け）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（全7項目クリア・禁止語なし・kinsho-v1×3箇所確認・銘柄推奨なし・出典多数・noindexなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（全チェックポイント合格・問題なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-22-nikkei-72k.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。
+
+---
+
 ## 2026-06-21
 - 判定: ✅ 公開済み
 - 選定トピック: トランプTruth Social発表によるApple×Intel半導体チップ協業観測—Intel+10.64%急騰・SOX+6.42%・米S&P500+1.08%（カテゴリ: マクロ・半導体・テック）
