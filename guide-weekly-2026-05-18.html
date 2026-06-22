@@ -102,21 +102,23 @@
     @media(max-width:600px){.a8-pc{display:none}.a8-mobile{display:inline-block}}
   </style>
 <style id="mw-mobile-fit">
-/* 📱 スマホ最適化 v2（fix_mobile_overflow.py が注入）: 長い英単語/URLのみ折返し・数字は桁割れさせない・広い表は表内スクロール・左右余白を圧縮 */
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
 html,body{overflow-x:hidden}
 .article,main,section,header,footer{max-width:100%}
 *{overflow-wrap:break-word;word-break:normal}
 img,svg,iframe,video{max-width:100%!important;height:auto}
 pre,code{white-space:pre-wrap;overflow-wrap:break-word}
 td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
 @media(max-width:600px){
   body{font-size:.9rem;line-height:1.7}
   .article{padding:14px 11px}
   h1{font-size:1.26rem;line-height:1.4}
   h2{font-size:1.08rem}
-  /* 広い表はスマホ時だけ「表の中だけ」横スクロール（PC表示は変えない） */
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
   table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
-  th,td{padding-left:6px;padding-right:6px}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
   .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
 }
 @media(max-width:380px){
@@ -125,6 +127,27 @@ td strong,td b,th strong{white-space:nowrap}
   table{font-size:.76rem}
 }
 </style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
 </head>
 <body>
 <div id="reading-progress"></div>
