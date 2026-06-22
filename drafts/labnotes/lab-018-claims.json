@@ -1,0 +1,71 @@
+{
+  "article_id": "018",
+  "claims": [
+    {
+      "label": "指数×reversal_long 全体（主仮説）",
+      "filter": {"group": "index", "reversal_long": true},
+      "k": 52,
+      "n": 88
+    },
+    {
+      "label": "全グループ×reversal_long（全体平均参照値）",
+      "filter": {"reversal_long": true},
+      "k": 158,
+      "n": 374
+    },
+    {
+      "label": "指数×reversal_long×トレンド=上昇",
+      "filter": {"group": "index", "reversal_long": true, "trend": "上昇"},
+      "k": 36,
+      "n": 52
+    },
+    {
+      "label": "指数×reversal_long×トレンド=中立・もみあい",
+      "filter": {"group": "index", "reversal_long": true, "trend": "中立・もみあい"},
+      "k": 11,
+      "n": 29
+    },
+    {
+      "label": "指数×reversal_long×トレンド=下降（小サンプル参考）",
+      "filter": {"group": "index", "reversal_long": true, "trend": "下降"},
+      "k": 5,
+      "n": 7
+    },
+    {
+      "label": "メタル×reversal_long",
+      "filter": {"group": "metal", "reversal_long": true},
+      "k": 13,
+      "n": 62
+    },
+    {
+      "label": "円FX×reversal_long",
+      "filter": {"group": "jpy_fx", "reversal_long": true},
+      "k": 32,
+      "n": 68
+    },
+    {
+      "label": "ドル建てFX×reversal_long",
+      "filter": {"group": "other_fx", "reversal_long": true},
+      "k": 40,
+      "n": 101
+    },
+    {
+      "label": "BTC×reversal_long",
+      "filter": {"group": "btc", "reversal_long": true},
+      "k": 9,
+      "n": 36
+    },
+    {
+      "label": "原油×reversal_long（N=19 小サンプル参考）",
+      "filter": {"group": "oil", "reversal_long": true},
+      "k": 12,
+      "n": 19
+    },
+    {
+      "label": "指数×ロング全体（逆張り含む総合）",
+      "filter": {"group": "index", "direction": "long"},
+      "k": 102,
+      "n": 181
+    }
+  ]
+}

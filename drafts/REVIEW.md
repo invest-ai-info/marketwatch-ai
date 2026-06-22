@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-06-22 | 🧪 signal-lab #018 ゲート実行中
+
+- **基準日（JST）**: 2026-06-22
+- **採択仮説**: 「指数グループ（日経/SP500/ナスダック等）の逆張りロング（reversal_long=True）は、非指数グループより有意に高い過去勝率を示すか」（スイープFDR q=0.023の新規候補）
+- **事前宣言**: 主仮説 CI下限≥43% かつ N≥20 で「通過A」。補仮説 上昇×指数×revL CI下限≥50%
+- **検証データ**: 全決済済み944件（signals-log.json）。グループ×reversal_long クロス集計＋トレンド別・銘柄別内訳
+- **結果**: 指数×revL=59.1%(52/88) CI[48.6%〜68.8%] E(R)=+0.377 → **通過A（主仮説・補仮説双方クリア）**。全体42.2%(158/374)はグループ構成偏りの集計の罠。非指数は全グループ損益分岐割れ（メタル21%・BTC25%・他FX39.6%・円FX47%CI未達）。上昇×指数×revL=69.2%(36/52) CI下限55.7%≥50%（補仮説クリア）
+- **生成ファイル**: drafts/draft-signal-lab-018.html / drafts/labnotes/lab-018-analysis.md / drafts/labnotes/lab-018-claims.json / drafts/labnotes/sweep-2026-06-22.json / signal-lab-ledger.md / signal-lab-tracker.json（6新規登録）
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push（chore: signal-lab draft 018 + claims）
+- [ ] 8-2 verify EXIT=? — signal_lab_verify.py 実行待ち
+- [ ] 8-3 Opus compliance 監査待ち
+- [ ] 8-4 公開判定・数値再検証・独立確認Opus
+
+---
+
 ## 2026-06-23 | 📋 autodraft-article ルーティン実行 — 全topic下書き済み
 
 - **基準日（JST）**: 2026-06-23（UTC 2026-06-22 20:32）
