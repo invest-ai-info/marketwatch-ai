@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-06-23 | 📋 autodraft-article ルーティン実行 — 全topic下書き済み
+
+- **基準日（JST）**: 2026-06-23（UTC 2026-06-22 20:32）
+- **結果**: キュー全11トピックが「ドラフト済みまたは公開済み」のため新規下書き生成なし
+- **下書き済み（drafts/draft-\<key\>.html 存在）**: position-sizing / trading-psychology-calm / risk-reward / trading-journal / leverage / dollar-cost-averaging / swap-points（7件）
+- **公開済み（guides.html 掲載）**: 上記7件 + profit-taking / compounding-drawdown / cognitive-biases / diversification（計11件全て公開）
+- **空コミットなし**: REVIEW.md 更新のみコミット
+- **人間の残作業**: topicキューに新テーマを追加するか、既存下書きの公開作業を継続
+
+---
+
 ## 2026-06-22 | 🧪 signal-lab #017 ゲート実行中
 
 - **基準日（JST）**: 2026-06-22
