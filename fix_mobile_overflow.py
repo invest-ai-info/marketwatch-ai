@@ -62,7 +62,11 @@ def apply_block(html):
     返り値 (new_html, action)。action= 'update'|'inject'|'same'|'nohead'。"""
     if MARKER in html:
         new = STYLE_RE.sub(lambda m: BLOCK.strip(), html, count=1)
-        return (html, "same") if new == html else (new, "update")
+        # CRLF/LF だけの差は同一扱い（Windows の text-write 由来の改行差で
+        # local(CRLF)↔cloud(LF) が無限に再 PUT し合う ping-pong を防ぐ）
+        if new.replace("\r\n", "\n") == html.replace("\r\n", "\n"):
+            return (html, "same")
+        return (new, "update")
     if "</head>" not in html:
         return (html, "nohead")
     return (html.replace("</head>", BLOCK + "</head>", 1), "inject")
