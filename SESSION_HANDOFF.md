@@ -12,6 +12,9 @@
 ✅ **2026-06-22：item #2 完了** — クラウド公開記事のスマホ修正。GitHub上の guide-*.html 111件を走査し、`id="mw-mobile-fit"` 未注入の **26件**（`guide-auto-*`／`guide-news-2026-06-19〜21`／`guide-signal-lab-006〜009・014〜016`／`guide-weekly-*`／`guide-weekly-review-*`／`guide-monthly-report-2026-05`）に注入PUT（失敗0）。contents API で代表3件 marker=True を確認・`mw check`＝エラー0。
 - 今後の新規クラウド記事は `publish_article.py` が公開時に mobile-fit を自動適用するため、この backfill は一度きり。再発時用に `_fix_cloud_mobile.py`（ローカルscratch・SYNC対象外）を残置。
 
+✅ **2026-06-22：スマホCSS v2（数字の桁割れ修正）** — 旧 `*{overflow-wrap:anywhere}` が狭い表で価格を1桁ずつ縦に折る不具合（例＝intel記事の `+10.64%（終値$133.99）`）。`fix_mobile_overflow.py` の BLOCK を v2 化（`break-word`＋表の太字数値 `white-space:nowrap`＋左右余白圧縮 `.article` 14/12px・セル6px＋360px段＋本文小型化）。同ツールを「**既存ブロックを差し替え**」方式に変更（`apply_block`）。ローカル98件→sync、クラウド専用27件→`_fix_cloud_mobile.py`。**GitHub guide 111件すべて v2**（contents API で確認・`mw check`エラー0）。
+- ⚠️ **学び（次回ハマり防止）**：① Windows の text-write で BLOCK が CRLF 化し sync はバイナリ push → クラウド側は LF 比較で「常に差分」に見え無限再PUTの罠。`apply_block` の同一判定を**改行正規化**で回避。② `_fix_cloud_mobile.py` は **ディレクトリ listing の sha が約60秒キャッシュ**で古い／**raw.githubusercontent は5分キャッシュ**。内容・sha は必ず**パス指定 contents API**（`contents/{name}?ref`）で取り直すこと。
+
 ---
 
 ## 🛡️ コードが強制しているルール一覧（"覚える"でなく"コードで強制"）
