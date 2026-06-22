@@ -5,15 +5,12 @@
 
 ---
 
-## ⏳ デプロイ待ち（2026-06-21 夜更新）— sync 完了。残りは item #2 のみ
+## ✅ デプロイ待ち — 全件完了（2026-06-22）
 
-✅ **2026-06-21 夜：`python sync_to_github.py` 完了（182件・成功182/失敗0）**。api.github.com の throttle（WinError 10060）は自然回復済。下記すべて GitHub 反映済 → `mw check`＝エラー0：
-- スマホ横はみ出し修正の残り：記事3（`guide-news-2026-06-15-nikkei-69k`／`guide-risk-by-account-size`／`guide-jpy-intervention-2026-06`）＋ツール3（`publish_article.py`／`fix_mobile_overflow.py`／`check_site_consistency.py`）。
-- ゴールド土日連投の修正（`generate_technical_alerts.py` の市場休止ガード）＝**次回 technical-alerts 実行分から土日メール停止**。
-- 本 SESSION_HANDOFF 自体も sync 済。
+✅ **2026-06-21 夜：`python sync_to_github.py`（182件・失敗0）** — スマホ修正の残り記事3＋ツール3、ゴールド土日連投の修正（`generate_technical_alerts.py` の市場休止ガード＝**次回 technical-alerts 実行分から土日メール停止**）、本ハンドオフ自体まで反映。api.github.com の throttle（WinError 10060）は自然回復済。
 
-🔲 **残り＝item #2：クラウド公開記事のスマホ修正**（ローカルに無い `guide-signal-lab-016`・`guide-news-*`）＝**GitHub上の全 guide-*.html を直接見て**、`id="mw-mobile-fit"` 未注入のものだけ `</head>` 直前に `fix_mobile_overflow.py` の `BLOCK` を注入してPUT（contents API）。`raw.githubusercontent.com` は throttle外なので取得は可。
-→ 完了後 `python mw.py check` がエラー0なら正常。
+✅ **2026-06-22：item #2 完了** — クラウド公開記事のスマホ修正。GitHub上の guide-*.html 111件を走査し、`id="mw-mobile-fit"` 未注入の **26件**（`guide-auto-*`／`guide-news-2026-06-19〜21`／`guide-signal-lab-006〜009・014〜016`／`guide-weekly-*`／`guide-weekly-review-*`／`guide-monthly-report-2026-05`）に注入PUT（失敗0）。contents API で代表3件 marker=True を確認・`mw check`＝エラー0。
+- 今後の新規クラウド記事は `publish_article.py` が公開時に mobile-fit を自動適用するため、この backfill は一度きり。再発時用に `_fix_cloud_mobile.py`（ローカルscratch・SYNC対象外）を残置。
 
 ---
 
