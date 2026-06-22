@@ -18,6 +18,7 @@
 """
 import os
 import sys
+import re
 import glob
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -25,50 +26,76 @@ if hasattr(sys.stdout, "reconfigure"):
 
 SD = os.path.dirname(os.path.abspath(__file__))
 MARKER = 'id="mw-mobile-fit"'
+# 既存ブロックを丸ごと差し替えるための正規表現（v1→v2 更新を冪等に行う）
+STYLE_RE = re.compile(r'<style id="mw-mobile-fit">.*?</style>', re.S)
 
 BLOCK = """<style id="mw-mobile-fit">
-/* 📱 スマホ横はみ出し防止（fix_mobile_overflow.py が注入）: 長い語の折り返し・広い表は表内スクロール・媒体縮小・ページ横スクロール停止 */
+/* 📱 スマホ最適化 v2（fix_mobile_overflow.py が注入）: 長い英単語/URLのみ折返し・数字は桁割れさせない・広い表は表内スクロール・左右余白を圧縮 */
 html,body{overflow-x:hidden}
 .article,main,section,header,footer{max-width:100%}
-*{overflow-wrap:anywhere}
+*{overflow-wrap:break-word;word-break:normal}
 img,svg,iframe,video{max-width:100%!important;height:auto}
-pre,code{white-space:pre-wrap;overflow-wrap:anywhere}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
 @media(max-width:600px){
-  body{font-size:.92rem;line-height:1.8}
-  .article{padding:18px 14px}
-  h1{font-size:1.3rem;line-height:1.42}
-  h2{font-size:1.12rem}
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
   /* 広い表はスマホ時だけ「表の中だけ」横スクロール（PC表示は変えない） */
-  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.82rem}
-  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.76rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
 }
 </style>
 """
 
 
+def apply_block(html):
+    """html に mobile-fit ブロックを反映した新 html を返す。
+    既存ブロックがあれば差し替え、無ければ </head> 直前に注入。
+    返り値 (new_html, action)。action= 'update'|'inject'|'same'|'nohead'。"""
+    if MARKER in html:
+        new = STYLE_RE.sub(lambda m: BLOCK.strip(), html, count=1)
+        return (html, "same") if new == html else (new, "update")
+    if "</head>" not in html:
+        return (html, "nohead")
+    return (html.replace("</head>", BLOCK + "</head>", 1), "inject")
+
+
 def main():
     dry = "--dry-run" in sys.argv
     files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html")))
-    done = skip = nohead = 0
+    updated = injected = same = nohead = 0
     for fn in files:
         p = os.path.join(SD, fn)
         with open(p, encoding="utf-8") as f:
             html = f.read()
-        if MARKER in html:
-            skip += 1
-            continue
-        if "</head>" not in html:
+        new, action = apply_block(html)
+        if action == "nohead":
             nohead += 1
             print(f"  ⚠️ {fn}: </head> が無い、スキップ")
             continue
-        new = html.replace("</head>", BLOCK + "</head>", 1)
+        if action == "same":
+            same += 1
+            continue
         if not dry:
             with open(p, "w", encoding="utf-8") as f:
                 f.write(new)
-        done += 1
-        if done <= 3 or dry:
-            print(f"  {'[DRY] ' if dry else '✅ '}{fn}: モバイル最適化CSSを注入")
-    print(f"\n{'[DRY-RUN] ' if dry else ''}対象 guide記事 {len(files)} / 注入 {done} / 既に有り {skip}"
+        if action == "update":
+            updated += 1
+        else:
+            injected += 1
+        if (updated + injected) <= 5 or dry:
+            verb = "差し替え" if action == "update" else "注入"
+            print(f"  {'[DRY] ' if dry else '✅ '}{fn}: モバイルCSSを{verb}")
+    print(f"\n{'[DRY-RUN] ' if dry else ''}対象 guide記事 {len(files)} / 差し替え {updated} "
+          f"/ 新規注入 {injected} / 変更なし {same}"
           + (f" / head無し {nohead}" if nohead else ""))
     if dry:
         print("→ 問題なければ --dry-run を外して再実行。")
