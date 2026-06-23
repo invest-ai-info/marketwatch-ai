@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-06-24 | 🧪 signal-lab #019 自動公開済み
+
+- **基準日（JST）**: 2026-06-24
+- **採択仮説**: 「もみあい×ショートのエッジ解剖——#12発見(67.3%)が追加26件(19.2%)で急落した原因を信号別・資産別に解剖」（優先度②：前向きトラッカーで大きく動いた仮説）
+- **事前宣言**: 解剖記録・棄却確認ではなく原因分析。low_break×metal交絡特定が主目的
+- **検証データ**: 全決済済み993件（signals-log.json）。もみあい×S全75件のsignal別・group別・交差集計
+- **結果**: もみあい×S全体50.7%(38/75) CI[39.6%〜61.7%]（#12の67.3%から軟化）。主因=low_break×金属 0/10=0.0% が全体の足を引く。macd_deadは57.1%(20/35)で健在。追加26件5/26=19.2%急落はlow_break偏り疑い
+- **生成ファイル**: drafts/draft-signal-lab-019.html / drafts/labnotes/lab-019-analysis.md / drafts/labnotes/lab-019-claims.json / drafts/labnotes/sweep-2026-06-24.json / signal-lab-ledger.md / signal-lab-tracker.json
+
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 019 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 8/8クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟢 白 ✅ — 修正なし（免責kinsho-v1×2箇所確認・断定語なし・将来非保証・個別推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・Opus白・修正なし直接公開）| guide-signal-lab-019.html
+
+---
+
 ## 2026-06-22 | 🧪 signal-lab #018 ゲート実行中
 
 - **基準日（JST）**: 2026-06-22
