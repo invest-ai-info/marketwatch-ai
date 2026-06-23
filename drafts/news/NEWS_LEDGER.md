@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-06-23
+- 判定: ✅ 公開済み
+- 選定トピック: AlphabetのAI主力2人（Noam Shazeer→OpenAI / John Jumper→Anthropic）が相次いで離脱、Alphabet株-5〜7%・時価総額約2,500億ドル消失・Nasdaq-1.32%・日経平均7万1,000円台に調整（カテゴリ: マクロ・テック・AI人材）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - Bloomberg「Alphabet Shares Drop After Second AI Star Departs for a Rival」（2026-06-22）
+  - CNBC「Alphabet paces for worst day in a year after AI talent exits」（2026-06-22）
+  - CNBC「Google Gemini co-lead Noam Shazeer leaves for OpenAI」（2026-06-18）
+  - Bloomberg「Nobel Winner John Jumper to Leave Google DeepMind for Anthropic」（2026-06-19）
+  - TechCrunch「Nobel laureate John Jumper is leaving DeepMind for rival Anthropic」（2026-06-20）
+  - Benzinga「Google Gemini Co-Lead Noam Shazeer Joins OpenAI」
+  - TechTimes「Transformer Architect Behind Gemini Jumps to OpenAI After Google Spent $2.7B」（2026-06-18）
+  - interactivecrypto.com「Alphabet's Stock Plunges 6.5% Amid AI Talent Exodus and Soaring Infrastructure Costs」（2026-06-22）
+  - MarketScreener「Stocks in South Korea, Japan Fall Amid Tech-Heavy Selloff」
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・数値は報道ベース明記・noindexなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（5項目全クリア・問題なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-23-alphabet-ai-talent.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。
+
+---
+
 ## 2026-06-22
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均が終値で史上初の7万2000円台（72,353.96円）を突破・8日続伸（2023年9月以来）— AI・半導体主導、東京エレクトロン＋アドバンテストが840pt超貢献（カテゴリ: マクロ・日本株・AI半導体）
