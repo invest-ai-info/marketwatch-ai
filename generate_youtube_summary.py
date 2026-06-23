@@ -673,7 +673,14 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     .channels-info{{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:14px 20px;margin-bottom:24px;font-size:.85rem;color:#424a53}}
     .channels-info strong{{color:#0969da}}
     .day-section{{margin-bottom:36px}}
+    .day-section.hidden{{display:none}}
     .day-title{{font-size:1.15rem;color:#0969da;border-bottom:2px solid #d0d7de;padding-bottom:8px;margin-bottom:16px}}
+    .day-tabs{{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}}
+    .day-tab{{flex:1;min-width:96px;padding:10px 12px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;font-size:.98rem;font-weight:600;cursor:pointer;font-family:inherit;line-height:1.25;text-align:center;transition:all .15s}}
+    .day-tab span{{display:block;font-size:.72rem;font-weight:400;color:#8b949e;margin-top:3px}}
+    .day-tab:hover{{border-color:#0969da;color:#0969da}}
+    .day-tab.active{{background:#0969da;border-color:#0969da;color:#fff}}
+    .day-tab.active span{{color:#cfe3ff}}
     .video-card{{display:grid;grid-template-columns:340px 1fr;gap:24px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 6px rgba(0,0,0,.04)}}
     .video-thumb-wrap{{position:relative;border-radius:10px;overflow:hidden;height:fit-content}}
     .video-thumb-wrap img{{width:100%;height:auto;display:block;border-radius:10px}}
@@ -775,7 +782,17 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </footer>
 
 <script>
-(function(){{var hasExplicit=false;try{{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){{try{{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){{if(r[j].selectorText&&/body\\.dark[^-]/.test(r[j].selectorText+' ')){{hasExplicit=true;break}}}}}}catch(e){{}}if(hasExplicit)break}}}}catch(e){{}}if(!hasExplicit){{var s=document.createElement('style');s.textContent='body.dark{{background:#0d1117!important;color:#e6edf3!important}}body.dark header,body.dark footer,body.dark nav.nav-bar{{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}}body.dark .nav-btn{{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}}body.dark .nav-btn:hover{{border-color:#58a6ff!important;color:#58a6ff!important}}body.dark .nav-btn.current{{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}}body.dark .header-title,body.dark .header-meta,body.dark .page-header h1{{color:#e6edf3!important}}body.dark a{{color:#79c0ff!important}}body.dark .video-card,body.dark .channels-info,body.dark .page-header{{background:#161b22!important;border-color:#30363d!important}}body.dark .video-title a{{color:#e6edf3!important}}body.dark .summary-section{{background:#0d1117!important;border-color:#30363d!important}}body.dark .summary-section.summary-impl{{background:#1c1810!important}}body.dark .summary-section ul,body.dark .summary-section p,body.dark .channels-info,body.dark .video-pub,body.dark .page-meta{{color:#c9d1d9!important}}body.dark #theme-toggle{{background:#161b22!important;border-color:#30363d!important;color:#fff!important}}';document.head.appendChild(s)}}function setTheme(t){{document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{{localStorage.setItem('theme',t)}}catch(e){{}}}}window.toggleTheme=function(){{setTheme(document.body.classList.contains('dark')?'light':'dark')}};var t='light';try{{t=localStorage.getItem('theme')||'light'}}catch(e){{}}setTheme(t);}})();
+function mwDay(btn,id){{
+var s=document.querySelectorAll('.day-section');
+for(var i=0;i<s.length;i++){{s[i].classList.add('hidden');}}
+var t=document.getElementById(id);if(t)t.classList.remove('hidden');
+var b=document.querySelectorAll('.day-tab');
+for(var j=0;j<b.length;j++){{b[j].classList.remove('active');}}
+btn.classList.add('active');
+}}
+</script>
+<script>
+(function(){{var hasExplicit=false;try{{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){{try{{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){{if(r[j].selectorText&&/body\\.dark[^-]/.test(r[j].selectorText+' ')){{hasExplicit=true;break}}}}}}catch(e){{}}if(hasExplicit)break}}}}catch(e){{}}if(!hasExplicit){{var s=document.createElement('style');s.textContent='body.dark{{background:#0d1117!important;color:#e6edf3!important}}body.dark header,body.dark footer,body.dark nav.nav-bar{{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}}body.dark .nav-btn{{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}}body.dark .nav-btn:hover{{border-color:#58a6ff!important;color:#58a6ff!important}}body.dark .nav-btn.current{{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}}body.dark .header-title,body.dark .header-meta,body.dark .page-header h1{{color:#e6edf3!important}}body.dark a{{color:#79c0ff!important}}body.dark .video-card,body.dark .channels-info,body.dark .page-header{{background:#161b22!important;border-color:#30363d!important}}body.dark .video-title a{{color:#e6edf3!important}}body.dark .summary-section{{background:#0d1117!important;border-color:#30363d!important}}body.dark .summary-section.summary-impl{{background:#1c1810!important}}body.dark .summary-section ul,body.dark .summary-section p,body.dark .channels-info,body.dark .video-pub,body.dark .page-meta{{color:#c9d1d9!important}}body.dark #theme-toggle{{background:#161b22!important;border-color:#30363d!important;color:#fff!important}}body.dark .day-tab{{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}}body.dark .day-tab.active{{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}}';document.head.appendChild(s)}}function setTheme(t){{document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{{localStorage.setItem('theme',t)}}catch(e){{}}}}window.toggleTheme=function(){{setTheme(document.body.classList.contains('dark')?'light':'dark')}};var t='light';try{{t=localStorage.getItem('theme')||'light'}}catch(e){{}}setTheme(t);}})();
 </script>
 </body>
 </html>
@@ -790,7 +807,7 @@ def build_html(summaries):
     if not summaries:
         videos_html = '<div class="empty-msg">直近の対象チャンネルから新着動画がなかったか、要約に失敗しました。次回更新をお待ちください。</div>'
     else:
-        # generated_at の YYYY-MM-DD でグループ化
+        # generated_at の YYYY-MM-DD でグループ化（＝生成日ごとのスナップショット）
         groups = {}
         for v in summaries:
             gen_at = v.get("generated_at", "")
@@ -802,23 +819,43 @@ def build_html(summaries):
             except Exception:
                 day = "unknown"
             groups.setdefault(day, []).append(v)
-        # 日付の新しい順
-        sorted_days = sorted(groups.keys(), reverse=True)
-        parts = []
-        for day in sorted_days:
+        # 日付の新しい順。最新3日分を「今日 / 昨日 / 一昨日」タブにして切り替え表示
+        named = [d for d in sorted(groups.keys(), reverse=True) if d != "unknown"]
+        sorted_days = named[:3]
+        if "unknown" in groups and len(sorted_days) < 3:
+            sorted_days.append("unknown")
+        today_d = datetime.now(JST).date()
+        rel = {
+            today_d.strftime("%Y-%m-%d"): "今日",
+            (today_d - timedelta(days=1)).strftime("%Y-%m-%d"): "昨日",
+            (today_d - timedelta(days=2)).strftime("%Y-%m-%d"): "一昨日",
+        }
+        tabs, sections = [], []
+        for idx, day in enumerate(sorted_days):
             vids = groups[day]
             # 各日内でも公開日の新しい順
             vids.sort(key=lambda v: v.get("published", ""), reverse=True)
+            sec_id = f"mwday{idx}"
             if day == "unknown":
-                label = "📅 日付不明"
-            elif day == today_str:
-                label = f"🆕 本日（{day}）追加 — {len(vids)} 本"
+                tab_label, sub = "日付不明", f"{len(vids)}本"
             else:
-                label = f"📅 {day} 追加 — {len(vids)} 本"
-            parts.append(f'<div class="day-section"><h2 class="day-title">{label}</h2>')
-            parts.extend(build_video_card(v) for v in vids)
-            parts.append("</div>")
-        videos_html = "\n".join(parts)
+                md = day[5:].replace("-", "/")          # MM/DD
+                tab_label = rel.get(day, md)            # 今日/昨日/一昨日 か MM/DD
+                sub = f"{md}・{len(vids)}本"
+            active = " active" if idx == 0 else ""
+            hidden = "" if idx == 0 else " hidden"      # 既定は最新日のみ表示
+            tabs.append(
+                f'<button class="day-tab{active}" type="button" '
+                f'onclick="mwDay(this,\'{sec_id}\')">{tab_label}<span>{sub}</span></button>'
+            )
+            sec = [f'<div class="day-section{hidden}" id="{sec_id}">']
+            sec.extend(build_video_card(v) for v in vids)
+            sec.append("</div>")
+            sections.append("\n".join(sec))
+        # タブは2日分以上あるときだけ出す（1日分のときは単独表示）
+        tabbar = (f'<div class="day-tabs" role="tablist">{"".join(tabs)}</div>'
+                  if len(tabs) > 1 else "")
+        videos_html = tabbar + "\n" + "\n".join(sections)
     return PAGE_TEMPLATE.format(
         updated_at=now_jst,
         n_channels=len(CHANNELS),
