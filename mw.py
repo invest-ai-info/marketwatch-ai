@@ -264,16 +264,20 @@ def cmd_issues(argv):
 
 def cmd_audit(argv):
     """guide-*.html の改善候補をスコア化（決定論・記事改善ループの土台）。
-    弱点シグナル: meta description 無/短・本文が短い・内部guideリンクが少ない・JSON-LD無。score高=要改善。"""
+    弱点シグナル: meta description 無/短・本文が短い・内部guideリンクが少ない・JSON-LD無。score高=要改善。
+    🆕 noindex ページは「意図的に薄く隠した自動生成」＝改善対象でないので別枠カウントし、
+       本当に直すべき"インデックス対象の薄ページ"だけを候補に出す（false positive 排除）。"""
     import glob
     import re
     rows = []
+    noindex_thin = 0
     for p in sorted(glob.glob(os.path.join(SD, "guide-*.html"))):
         fn = os.path.basename(p)
         try:
             html = open(p, encoding="utf-8").read()
         except Exception:
             continue
+        noindex = bool(re.search(r'<meta\s+name="robots"[^>]*noindex', html))
         m = re.search(r'<meta name="description" content="([^"]*)"', html)
         desc_len = len(m.group(1)) if m else 0
         body = re.sub(r'(?is)<(script|style)[^>]*>.*?</\1>', ' ', html)
@@ -282,15 +286,22 @@ def cmd_audit(argv):
         has_jsonld = 'application/ld+json' in html
         score = (2 if desc_len < 60 else 0) + (2 if text_len < 2500 else 0) \
             + (1 if guide_links < 3 else 0) + (0 if has_jsonld else 1)
-        rows.append((score, fn, desc_len, text_len, guide_links, has_jsonld))
+        if score >= 2 and noindex:
+            noindex_thin += 1   # 意図的に隠した薄ページ＝AdSense対策済み＝対象外
+            continue
+        if not noindex:
+            rows.append((score, fn, desc_len, text_len, guide_links, has_jsonld))
     rows.sort(reverse=True)
     weak = [r for r in rows if r[0] >= 2]
-    print(f"🔎 guide記事 {len(rows)} 件中 改善候補(score≥2) {len(weak)} 件（score高=要改善）")
-    print(f"  {'score':>5} {'desc':>4} {'本文':>6} {'内部L':>5} {'jsonld':>6}  file")
-    for score, fn, dl, tl, gl, jl in weak[:15]:
-        print(f"  {score:>5} {dl:>4} {tl:>6} {gl:>5} {'有' if jl else '無':>6}  {fn}")
-    if not weak:
-        print("  ✅ 目立つ弱点記事なし")
+    total_indexed = len(rows)
+    print(f"🔎 インデックス対象 guide {total_indexed} 件中 改善候補(score≥2) {len(weak)} 件（score高=要改善）")
+    print(f"   ＋ noindex の薄ページ {noindex_thin} 件は意図的除外済み＝対象外（AdSense対策済み）")
+    if weak:
+        print(f"  {'score':>5} {'desc':>4} {'本文':>6} {'内部L':>5} {'jsonld':>6}  file")
+        for score, fn, dl, tl, gl, jl in weak[:15]:
+            print(f"  {score:>5} {dl:>4} {tl:>6} {gl:>5} {'有' if jl else '無':>6}  {fn}")
+    else:
+        print("  ✅ インデックス対象に目立つ弱点記事なし（公開コンテンツは健全）")
     return 0
 
 
