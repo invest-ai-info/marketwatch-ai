@@ -56,6 +56,7 @@
 - **個人用（非公開・SYNC除外）**：`_MY_CORRECTION_WATCHLIST.md`＝「大調整が来たら買う」候補リスト。土台＝`_jp_doublebagger_owner.csv`(48銘柄)＋`MY_TRADING_RULES` の「続伸＝risk_off で点火する条件付きエッジ」。中核8(中型〜大型・流動性)／サテライト7(小型高スコア)／ディフェンシブ2＋発注前5問。点火サイン＝日経/TOPIX が60日線割れ。**平常時(risk_on)は寝かせ、落ちてる最中に飛びつかない**。
 - **公開記事②（続編）**：`guide-correction-playbook.html`「株の急落・調整局面での立ち回り方｜“落ちるナイフ”の見分け方」公開。コンプラ独立監査=🟢白（「教育コンテンツの理想形に近い」評価・特定銘柄なし・下げ止まり指標[RSI/サポート/VIX]は教育目的の注記付き・分割エントリーvsナンピンの違い）。ライブ200・guidesカード反映。夏枯れ記事と相互リンク。
 - 続編候補（後日）：セクター別の備え／記事キュー（金利と債券・単複利・ETF×投信・注文方法・PER/PBR）。
+- 🆕 **YouTube要約ページに「今日/昨日/一昨日」切替タブを実装（`generate_youtube_summary.py`）**：以前「3日分保存したい」がトラブルで止まっていた件。元々 KEEP_DAYS=3 で3日分保持＋`generated_at` 日付グループ化まではできていて、**タブUIだけ欠けていた**のが正体。`build_html` を「最新3生成日→今日/昨日/一昨日タブ＋既定は最新日のみ表示・他は hidden」に改修＋`.day-tab` CSS＋`mwDay()` 切替JS＋ダークモード対応。raw実データで検証＝3タブ/3セクション/hidden2/JS・CSS有を確認。⚠️`youtube-summary.html`/`youtube-summary-data.json` はSYNC禁忌＝直すのは生成スクリプトのみ→反映は cron(朝10/11)か `mw trigger update-youtube-summary.yml`。タブは2生成日以上あるとき表示（蓄積で1→3タブに育つ）。
 
 ---
 
