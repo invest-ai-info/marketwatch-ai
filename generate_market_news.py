@@ -4445,6 +4445,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-23", "line": '・<b>2026-06-23</b>: 🌻 解説「<a href="guide-summer-doldrums.html" style="color:#0969da"><b>夏枯れ相場とは？薄商いの夏の備え方</b></a>」公開'},
         {"date": "2026-06-22", "line": '・<b>2026-06-22</b>: 🧪 解説「<a href="guide-signal-lab-018.html" style="color:#0969da"><b>研究日誌 #18 逆張りロングは"舞台"を選ぶ——指数専有59%エッジと全体42%の罠</b></a>」公開'},
         {"date": "2026-06-22", "line": '・<b>2026-06-22</b>: 📰 解説「<a href="guide-news-2026-06-22-nikkei-72k.html" style="color:#0969da"><b>【6/22】日経平均が史上初の7万2000円台突破・8日続伸</b></a>」公開'},
         {"date": "2026-06-22", "line": '・<b>2026-06-22</b>: 🧪 解説「<a href="guide-signal-lab-017.html" style="color:#0969da"><b>研究日誌 #17 blocked=True方向性分解——壁ありショートは勝率が高め・ロングは中立</b></a>」公開'},
