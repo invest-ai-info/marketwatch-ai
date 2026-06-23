@@ -5,6 +5,17 @@
 
 ---
 
+## ✅ スマホCSS v3 — 全 guide 112件に反映完了（2026-06-22）
+
+スマホの表が横スクロールする件（オーナー要望）＝**v3 対応完了**：表のセルは折り返さず1行（数字も説明も縦に割れない）＋**はみ出す表だけに「→ 横にスクロールできます」誘導**（スクロールで消える小 script）。`fix_mobile_overflow.py` の BLOCK を v3 化（style＋`<script id="mw-mobile-fit-js">`）、置換 regex も style＋script 対応に拡張。
+
+- ✅ **guide 112件すべて v3**（ローカル sync 分＋クラウド専用＋当日新着 `guide-news-2026-06-22-nikkei-72k`。`_fix_cloud_mobile.py` 最終実行＝差し替え31/変更なし81/失敗0）。
+- ✅ 今後の新規記事は `publish_article.py` が公開時に v3 を自動注入（`fix_mobile_overflow.py` v3 は GitHub 反映済）。
+- ⚠️ api.github.com は throttle が断続的に出た（WinError 10060。書きは api のみ／raw は throttle外）。大量PUT後に起きやすい。混雑時は per-path の `_fix_cloud_mobile.py`（GET+PUT・0.4s間隔）が sync より通りやすい。
+- ⚠️ SYNC3件（`guide-jp-value-vs-zombie`／`guide-risk-by-account-size`／`guide-jpy-intervention-2026-06`）は cloud 経路で v3 化したため local(CRLF)↔GitHub で次回 sync が staleガードに 🚫 することがある＝意図確認のうえ `--force` か通常 sync で再反映すれば綺麗（中身は同一 v3）。
+
+---
+
 ## ✅ デプロイ待ち — 全件完了（2026-06-22）
 
 ✅ **2026-06-21 夜：`python sync_to_github.py`（182件・失敗0）** — スマホ修正の残り記事3＋ツール3、ゴールド土日連投の修正（`generate_technical_alerts.py` の市場休止ガード＝**次回 technical-alerts 実行分から土日メール停止**）、本ハンドオフ自体まで反映。api.github.com の throttle（WinError 10060）は自然回復済。
