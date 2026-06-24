@@ -196,10 +196,10 @@ def brand_header(page_emoji, page_title, updated="", extra=""):
         meta += f'<div class="header-meta" style="margin-top:1px;font-size:.78rem">{extra}</div>'
     return (
         '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
-        '<div style="font-size:1.5rem;font-weight:700;line-height:1.3;'
+        '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
         'background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;'
         '-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div>'
-        '<div class="header-meta">日本人投資家のためのマーケット情報サイト</div>'
+        '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
         '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
         f'<div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">{page_emoji} {page_title}</div>'
         f'{meta}'
@@ -1489,7 +1489,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
@@ -2392,7 +2392,7 @@ def build_hot_assets_html(hot_data, now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#bf3989;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#bf3989;color:#bf3989}}
     .nav-btn.current{{background:#3a1f0f;border-color:#bf3989;color:#fff}}
@@ -2674,7 +2674,7 @@ def build_calendar_html(now_jst):
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
@@ -3008,7 +3008,7 @@ def build_preview_html(now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#1a7f37;font-weight:600}}
     main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#1a7f37;color:#1a7f37}}
     .nav-btn.current{{background:#dafbe1;border-color:#1a7f37;color:#1a7f37}}
@@ -3350,7 +3350,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .header-title{{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#0969da,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}}
   .header-meta{{font-size:1rem;color:#57606a}}
   main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
@@ -3700,7 +3700,7 @@ def build_charts_html(hist, now_jst):
     .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
@@ -4599,7 +4599,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .card-news .news-meta{{font-size:.68rem}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
