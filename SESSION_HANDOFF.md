@@ -107,6 +107,15 @@
 - **⚠️ ハマり＝generate_market_news.py の contents-API reconcile で `{jp_margin_html}` 差込が CRLF/LF アンカー不一致で不発**（関数・呼出は入ったが差込だけ失敗→セクション計算されるが捨てられる）。スクリプトが no-op を「成功」と誤報告したのも一因。**教訓＝contents-API の文字列置換は改行(CRLF/LF)非依存にし、PUT後に raw でなく実HEADで適用結果を必ず検証**（raw.githubusercontentは5分キャッシュで誤判定する）。`_fix_gmn_template.py` で改行非依存に差込し解決。
 - 実機検証＝hot-assets にセクション/2ランキング/実データ/免責/asof 反映確認済。今後は毎夕 jp-rankings.yml が自動更新。
 
+## ✅ 金利・クレジットのレジーム＋解説記事2本（2026-06-24）
+
+market-health の「④ 金融環境」に **米イールドカーブ（10年−3か月）card** と **クレジットの体温（HY債）card** を追加・ライブ。＋解説記事 **クレジットスプレッド**（`guide-credit-spread.html`・💳）と **イールドカーブ・逆イールド**（`guide-yield-curve.html`・📐）を公開。
+- **データ＝Yahoo chart API（無料・FRED不可のため）**：`fetch_curve_credit()`（generate_market_news.py）が ^IRX(3M)/^FVX(5Y)/^TNX(10Y)/^TYX(30Y)/HYG/IEF を取得。カーブ＝10年−3か月で順/逆イールド判定。クレジット＝**HYG÷IEF の1か月相対＝OASの代理指標**（精密なOASはFRED/有料なので代理と明記）。取得失敗時は当該カードのみ消える設計。
+- **🔑 FREDはこの環境から取得不可**（fredgraph.csv が truststore有無・リトライとも全タイムアウト）。Yahoo は全系列OK。詳細は memory `reference_price_data_fetch`。
+- **コンプラ＝記事2本とも独立Opus🟢白**（HY OAS水準/HY・IG区分/NY連銀10年-3か月モデル/逆イールド非断定/タイムラグ＝全検証。クレジット記事のHYG言及は「体感の手段」で推奨でない）。market-health のカードも同じ非断定表現＋代理指標明記＋免責。
+- **⚠️ ハマり3点**：①`publish_article` の `--card-title` に**スマートクォート `“”` を入れると PowerShell が `"` に正規化して引数が分断**→失敗。`「」`を使う（記事HTML内の`“”`はOK）。②**相互リンクする2記事は、両方の②〜⑤を先に済ませてから `mw check`→sync**（1本目だけだとリンク先がSYNC未登録でcheck失敗）。2本目は `publish_article.py --no-reconcile` で1本目のローカル追加を保持。③FRED不可。
+- 実機検証＝記事2本ライブ200＋market-health に両card・記事リンク反映を確認。market-health は毎朝夕の update-market-news で自動更新。
+
 ## ⚠️ 絶対遵守（事故防止）
 
 - **SYNC禁忌**（ローカルから絶対 push しない＝routine/cron/generate が GitHub 側で生成）。**正は CLAUDE.md の SYNC禁忌リスト**。代表例：
