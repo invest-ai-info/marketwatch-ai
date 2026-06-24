@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-06-24
+- 判定: ✅ 公開済み
+- 選定トピック: 世界的AI半導体株急落・SOXX-7.88%・韓国KOSPIサーキットブレーカー2度発動（Samsung/SK Hynix各-10%超）—BofA利上げ示唆・SK Hynix HBM拡張鈍化・AI ROI懸念の3つの引き金、日経平均続落（カテゴリ: マクロ・半導体・AI）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - Bloomberg「Kospi Index Slides 4.6% With Samsung, SK Hynix Falling on Chip Concerns」（2026-06-23）
+  - TradingKey「Korean Stocks Trigger Circuit Breakers Twice in a Single Day; SK Hynix and Samsung Electronics Both Plunge 12%」
+  - TheStreet「Stock Market Today June 23, 2026: Nasdaq, S&P 500 fall as BoFA rate hike note, Asian market tumble sends semis sinking」（2026-06-23）
+  - StartupHub.ai「ARM Holdings and chip-equipment stocks lead global semiconductor rout on South Korea market crash and rate fears, SOXX -7.88%」（2026-06-23）
+  - 247WallSt.「Micron Drops 7% as Broadcom's Disappointing AI Outlook Triggers a Semiconductor Selloff」（背景）
+  - Yahoo Finance「MU, INTC, AMD And Other AI Stocks Get Crushed — But Dan Ives Downplays Selloff」
+  - Alphastreet「Micron Technology Q3 2026 Earnings Preview — June 24, Street Expects $19.72 EPS」
+  - 楽天証券トウシル「セクターレポート：半導体製造装置（日本の半導体製造装置メーカー4社の目標株価を引き上げる）」
+  - Yahoo!ファイナンス「＜マーケット日報＞2026年6月24日」
+  - 日本経済新聞「日経平均株価、続落」
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・断定なし・noindexなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（6項目全クリア・問題なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-24-soxx-global-semis-rout.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。
+
+---
+
 ## 2026-06-23
 - 判定: ✅ 公開済み
 - 選定トピック: AlphabetのAI主力2人（Noam Shazeer→OpenAI / John Jumper→Anthropic）が相次いで離脱、Alphabet株-5〜7%・時価総額約2,500億ドル消失・Nasdaq-1.32%・日経平均7万1,000円台に調整（カテゴリ: マクロ・テック・AI人材）
