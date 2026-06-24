@@ -27,13 +27,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install deps (pandas/xlrd for JPX Excel)
+        run: pip install pandas xlrd
       - name: Build JP rankings (Yahoo prices only, no key)
         run: python build_jp_rankings.py
-      - name: Commit jp-rankings.json
+      - name: Build JP margin balance (JPX official daily Excel, no key)
+        run: python build_jp_margin.py || echo "margin build failed (non-fatal)"
+      - name: Commit jp-rankings.json / jp-margin.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add jp-rankings.json
+          git add jp-rankings.json jp-margin.json
           if git diff --cached --quiet; then
             echo "No changes."
           else
