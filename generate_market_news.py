@@ -2536,6 +2536,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 {jp_rank_html}
+{jp_margin_html}
   <!-- 説明 -->
   <div class="intro">
     <b>🔰 急増率（Volume Surge Ratio）</b>とは、<b>本日の出来高 ÷ 直近20営業日の平均出来高</b>のことです。
