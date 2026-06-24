@@ -4496,6 +4496,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 📐 解説「<a href="guide-yield-curve.html" style="color:#0969da"><b>イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の「形」を図解</b></a>」公開'},
+        {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 💳 解説「<a href="guide-credit-spread.html" style="color:#0969da"><b>クレジットスプレッドとは？「市場の不安」を先に映す金利差を図解</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 🧺 解説「<a href="guide-etf-vs-mutual-fund.html" style="color:#0969da"><b>ETFと投資信託の違いとは？仕組み・コスト・使い分けを図解</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 📈 解説「<a href="guide-simple-vs-compound-interest.html" style="color:#0969da"><b>単利と複利とは？「利息に利息がつく」複利の力を図解（72の法則も）</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 💴 解説「<a href="guide-interest-rates-bonds.html" style="color:#0969da"><b>金利と債券とは？金利が上がると債券価格が下がる理由を図解</b></a>」公開'},
