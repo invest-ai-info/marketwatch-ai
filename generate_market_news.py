@@ -2331,10 +2331,70 @@ def build_jp_rankings_section(now_jst):
   </section>"""
 
 
+def build_jp_margin_section(now_jst):
+    """信用残ウォッチ（jp-margin.json＝JPX「個別銘柄信用取引残高・日々公表銘柄」日次）を hot-assets に描画。
+    事実データの中立提示＋見方注記。買い/売り推奨ではない。データ無ければ空文字。jprank-* のCSSを流用。"""
+    import json as _json
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jp-margin.json")
+    if not os.path.exists(p):
+        return ""
+    try:
+        d = _json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return ""
+    rows = d.get("rows", [])
+    if not rows:
+        return ""
+
+    def _ratio(r):
+        rt = r.get("ratio")
+        if rt is None or rt >= 100:   # 売残が僅少だと倍率が極端に大きく算出されるため注記付きで省略表示
+            return '<span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span>'
+        return f'{rt:g}倍'
+
+    def _mrows(items, side):
+        clr = "#cf222e" if side == "buy" else "#1a7f37"
+        plk = "buy_pl" if side == "buy" else "sell_pl"
+        chgk = "buy_chg" if side == "buy" else "sell_chg"
+        out = ""
+        for i, r in enumerate(items, 1):
+            nm = str(r.get("name", ""))[:13]
+            pl = r.get(plk) or 0
+            chg = r.get(chgk) or 0
+            csign = "+" if chg >= 0 else ""
+            out += (f'<tr><td class="jpr-rk">{i}</td>'
+                    f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{str(r.get("mkt",""))[:4]}</div></td>'
+                    f'<td class="jpr-pct" style="color:{clr};text-align:right">{pl:.1f}%</td>'
+                    f'<td style="text-align:right;white-space:nowrap">{_ratio(r)}</td>'
+                    f'<td class="jpr-to" style="text-align:right">{csign}{chg:,}</td></tr>')
+        return out or '<tr><td colspan="5" style="text-align:center;color:#6e7781;padding:16px">データ取得中…</td></tr>'
+
+    buy = sorted([r for r in rows if r.get("buy_pl")], key=lambda r: -(r.get("buy_pl") or 0))[:10]
+    sell = sorted([r for r in rows if r.get("sell_pl")], key=lambda r: -(r.get("sell_pl") or 0))[:10]
+    head_b = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">買い残/上場</th>'
+              '<th style="text-align:right">倍率</th><th style="text-align:right">前日比(株)</th></tr>')
+    head_s = head_b.replace("買い残/上場", "売り残/上場")
+    asof = d.get("asof", "")
+    return f"""
+  <section class="jprank">
+    <div class="jprank-h">💳 信用残ウォッチ（信用買い残・売り残）</div>
+    <div class="jprank-sub">JPX「個別銘柄信用取引残高（日々公表銘柄）」より（{asof} 申込み現在・日次／無保証）。<b>日々公表銘柄＝信用取引が過度に利用される可能性があるとして、取引所が投資家への注意喚起のため信用残高を毎日公表する銘柄</b>（規制措置の対象という意味ではありません）。「買い残/上場」「売り残/上場」＝信用残が上場株数に占める割合。<b>信用倍率＝買い残÷売り残（高い＝買い長／1未満＝売り長）</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <div class="jprank-grid">
+      <div class="jprank-col"><h3 style="color:#cf222e">🔴 信用買い残が多い（上場比）</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{head_b}</thead><tbody>{_mrows(buy, "buy")}</tbody></table></div></div>
+      <div class="jprank-col"><h3 style="color:#1a7f37">🟢 信用売り残が多い（上場比）</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{head_s}</thead><tbody>{_mrows(sell, "sell")}</tbody></table></div></div>
+    </div>
+    <div class="jprank-foot">💡 信用買い残（上場比）が大きいほど、いずれ反対売買（売り）の対象となりうるため、戻り売り圧力として意識されやすい（上値の重しの目安）。逆に売り残が大きいと、買い戻し（踏み上げ）が起きやすいとされる。いずれも需給の一般的な目安であり、将来の値動きを示すものでも、買い/売り推奨でもありません。
+    ▶ <a href="guide-margin-balance.html">信用残・取組の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
+  </section>"""
+
+
 def build_hot_assets_html(hot_data, now_jst):
     """hot-assets.html を生成 — 最上段に日本株 値上がり/値下がりランキング、続いて4カテゴリの出来高急増ランキング"""
     time_str = now_jst.strftime("%Y年%m月%d日 %H:%M JST")
     jp_rank_html = build_jp_rankings_section(now_jst)
+    jp_margin_html = build_jp_margin_section(now_jst)
 
     sections_html = ""
     category_order = [
