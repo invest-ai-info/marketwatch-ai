@@ -104,7 +104,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🔥 出来高急増ランキング</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月24日 20:41 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">本日出来高 ÷ 20日平均</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🔥 出来高急増ランキング</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月24日 20:48 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">本日出来高 ÷ 20日平均</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -133,6 +133,19 @@
     </div>
     <div class="jprank-foot">💡 売買代金の「前/前々」2日分で、出来高を伴う本物の動きか・ストップ高で薄商いかが分かります。値上がり率＋大きな売買代金は市場の注目が集まりやすい局面（＝買い推奨ではない）。
     ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
+  </section>
+
+  <section class="jprank">
+    <div class="jprank-h">💳 信用残ウォッチ（信用買い残・売り残）</div>
+    <div class="jprank-sub">JPX「個別銘柄信用取引残高（日々公表銘柄）」より（2026-06-23 申込み現在・日次／無保証）。<b>日々公表銘柄＝信用取引が過度に利用される可能性があるとして、取引所が投資家への注意喚起のため信用残高を毎日公表する銘柄</b>（規制措置の対象という意味ではありません）。「買い残/上場」「売り残/上場」＝信用残が上場株数に占める割合。<b>信用倍率＝買い残÷売り残（高い＝買い長／1未満＝売り長）</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <div class="jprank-grid">
+      <div class="jprank-col"><h3 style="color:#cf222e">🔴 信用買い残が多い（上場比）</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead><tr><th>#</th><th>銘柄</th><th style="text-align:right">買い残/上場</th><th style="text-align:right">倍率</th><th style="text-align:right">前日比(株)</th></tr></thead><tbody><tr><td class="jpr-rk">1</td><td><div class="jpr-nm">アールビバン</div><div class="jpr-meta">7523・スタンダ</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">40.3%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">+900</td></tr><tr><td class="jpr-rk">2</td><td><div class="jpr-nm">ベースフード</div><div class="jpr-meta">2936・グロース</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">33.7%</td><td style="text-align:right;white-space:nowrap">25.7倍</td><td class="jpr-to" style="text-align:right">-3,900</td></tr><tr><td class="jpr-rk">3</td><td><div class="jpr-nm">スターシーズ</div><div class="jpr-meta">3083・スタンダ</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">32.8%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">+56,300</td></tr><tr><td class="jpr-rk">4</td><td><div class="jpr-nm">Ｓｈｉｎｗａ Ｗｉｓｅ Ｈ</div><div class="jpr-meta">2437・スタンダ</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">28.2%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">-100</td></tr><tr><td class="jpr-rk">5</td><td><div class="jpr-nm">地盤ネットホールディングス</div><div class="jpr-meta">6072・スタンダ</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">23.6%</td><td style="text-align:right;white-space:nowrap">5.3倍</td><td class="jpr-to" style="text-align:right">+136,400</td></tr><tr><td class="jpr-rk">6</td><td><div class="jpr-nm">ＢＡＳＥ</div><div class="jpr-meta">4477・グロース</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">21.9%</td><td style="text-align:right;white-space:nowrap">48.9倍</td><td class="jpr-to" style="text-align:right">+258,100</td></tr><tr><td class="jpr-rk">7</td><td><div class="jpr-nm">イオレ</div><div class="jpr-meta">2334・グロース</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">21.7%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">+431,000</td></tr><tr><td class="jpr-rk">8</td><td><div class="jpr-nm">ＨＳホールディングス</div><div class="jpr-meta">8699・スタンダ</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">21.5%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">-12,700</td></tr><tr><td class="jpr-rk">9</td><td><div class="jpr-nm">ＹＣＰホールディングス（グ</div><div class="jpr-meta">9257・グロース</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">21.5%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">+0</td></tr><tr><td class="jpr-rk">10</td><td><div class="jpr-nm">ＢＣＣ</div><div class="jpr-meta">7376・グロース</div></td><td class="jpr-pct" style="color:#cf222e;text-align:right">21.4%</td><td style="text-align:right;white-space:nowrap"><span style="color:#8b949e" title="売り残が僅少なため倍率は省略（ほぼ買いのみ）">—</span></td><td class="jpr-to" style="text-align:right">-200</td></tr></tbody></table></div></div>
+      <div class="jprank-col"><h3 style="color:#1a7f37">🟢 信用売り残が多い（上場比）</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead><tr><th>#</th><th>銘柄</th><th style="text-align:right">売り残/上場</th><th style="text-align:right">倍率</th><th style="text-align:right">前日比(株)</th></tr></thead><tbody><tr><td class="jpr-rk">1</td><td><div class="jpr-nm">イメージ ワン</div><div class="jpr-meta">2667・スタンダ</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">9.6%</td><td style="text-align:right;white-space:nowrap">1.5倍</td><td class="jpr-to" style="text-align:right">-600</td></tr><tr><td class="jpr-rk">2</td><td><div class="jpr-nm">アズジェント</div><div class="jpr-meta">4288・スタンダ</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">7.3%</td><td style="text-align:right;white-space:nowrap">1.8倍</td><td class="jpr-to" style="text-align:right">-2,800</td></tr><tr><td class="jpr-rk">3</td><td><div class="jpr-nm">ビューティカダンホールディ</div><div class="jpr-meta">3041・スタンダ</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">6.4%</td><td style="text-align:right;white-space:nowrap">0.5倍</td><td class="jpr-to" style="text-align:right">+17,700</td></tr><tr><td class="jpr-rk">4</td><td><div class="jpr-nm">ＫＬａｂ</div><div class="jpr-meta">3656・プライム</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">6.1%</td><td style="text-align:right;white-space:nowrap">2.9倍</td><td class="jpr-to" style="text-align:right">-241,500</td></tr><tr><td class="jpr-rk">5</td><td><div class="jpr-nm">マイクロ波化学</div><div class="jpr-meta">9227・グロース</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">5.4%</td><td style="text-align:right;white-space:nowrap">1.3倍</td><td class="jpr-to" style="text-align:right">-11,300</td></tr><tr><td class="jpr-rk">6</td><td><div class="jpr-nm">ＦＦＲＩセキュリティ</div><div class="jpr-meta">3692・グロース</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">5.0%</td><td style="text-align:right;white-space:nowrap">1.3倍</td><td class="jpr-to" style="text-align:right">+2,700</td></tr><tr><td class="jpr-rk">7</td><td><div class="jpr-nm">ｒａｋｕｍｏ</div><div class="jpr-meta">4060・グロース</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">4.6%</td><td style="text-align:right;white-space:nowrap">2.3倍</td><td class="jpr-to" style="text-align:right">+14,200</td></tr><tr><td class="jpr-rk">8</td><td><div class="jpr-nm">岡本硝子</div><div class="jpr-meta">7746・スタンダ</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">4.5%</td><td style="text-align:right;white-space:nowrap">1.7倍</td><td class="jpr-to" style="text-align:right">-19,300</td></tr><tr><td class="jpr-rk">9</td><td><div class="jpr-nm">データセクション</div><div class="jpr-meta">3905・グロース</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">4.5%</td><td style="text-align:right;white-space:nowrap">3.8倍</td><td class="jpr-to" style="text-align:right">-7,300</td></tr><tr><td class="jpr-rk">10</td><td><div class="jpr-nm">地盤ネットホールディングス</div><div class="jpr-meta">6072・スタンダ</div></td><td class="jpr-pct" style="color:#1a7f37;text-align:right">4.4%</td><td style="text-align:right;white-space:nowrap">5.3倍</td><td class="jpr-to" style="text-align:right">+18,000</td></tr></tbody></table></div></div>
+    </div>
+    <div class="jprank-foot">💡 信用買い残（上場比）が大きいほど、いずれ反対売買（売り）の対象となりうるため、戻り売り圧力として意識されやすい（上値の重しの目安）。逆に売り残が大きいと、買い戻し（踏み上げ）が起きやすいとされる。いずれも需給の一般的な目安であり、将来の値動きを示すものでも、買い/売り推奨でもありません。
+    ▶ <a href="guide-margin-balance.html">信用残・取組の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>
   <!-- 説明 -->
   <div class="intro">
@@ -401,15 +414,15 @@
         <tr>
           <td class="rank" style="color:#57606a">5</td>
           <td class="asset-name">独DAX<br><span class="asset-sym">^GDAXI</span></td>
-          <td class="price-cell">24,631.86</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.05%</span></td>
+          <td class="price-cell">24,647.77</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.99%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">6</td>
           <td class="asset-name">英FTSE<br><span class="asset-sym">^FTSE</span></td>
-          <td class="price-cell">10,431.67</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.03%</span></td>
+          <td class="price-cell">10,436.75</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.08%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         <tr>
@@ -422,8 +435,8 @@
         <tr>
           <td class="rank" style="color:#57606a">8</td>
           <td class="asset-name">欧州Stoxx50<br><span class="asset-sym">^STOXX50E</span></td>
-          <td class="price-cell">6,210.50</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.32%</span></td>
+          <td class="price-cell">6,213.94</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.27%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         </tbody>
@@ -448,85 +461,85 @@
         <tr>
           <td class="rank" style="color:#bf3989">1</td>
           <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
-          <td class="price-cell">59.96</td>
-          <td><span style="color:#cf222e;font-weight:600">-3.32%</span></td>
+          <td class="price-cell">60.09</td>
+          <td><span style="color:#cf222e;font-weight:600">-3.11%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">2</td>
           <td class="asset-name">WTI原油<br><span class="asset-sym">CL=F</span></td>
-          <td class="price-cell">71.53</td>
-          <td><span style="color:#cf222e;font-weight:600">-2.29%</span></td>
+          <td class="price-cell">71.49</td>
+          <td><span style="color:#cf222e;font-weight:600">-2.35%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">3</td>
-          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
-          <td class="price-cell">1.09</td>
-          <td><span style="color:#cf222e;font-weight:600">-2.01%</span></td>
+          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
+          <td class="price-cell">4,066.60</td>
+          <td><span style="color:#cf222e;font-weight:600">-1.53%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">4</td>
-          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
-          <td class="price-cell">4,062.40</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.63%</span></td>
+          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
+          <td class="price-cell">111.47</td>
+          <td><span style="color:#cf222e;font-weight:600">-1.36%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">5</td>
-          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
-          <td class="price-cell">111.48</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.35%</span></td>
+          <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
+          <td class="price-cell">6.06</td>
+          <td><span style="color:#cf222e;font-weight:600">-1.25%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">6</td>
-          <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
-          <td class="price-cell">6.06</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.34%</span></td>
+          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
+          <td class="price-cell">1,685.85</td>
+          <td><span style="color:#1a7f37;font-weight:600">+1.23%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">7</td>
-          <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
-          <td class="price-cell">183.41</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.66%</span></td>
+          <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
+          <td class="price-cell">1.10</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.96%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">8</td>
+          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
+          <td class="price-cell">70.18</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.77%</span></td>
+          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">9</td>
+          <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
+          <td class="price-cell">183.37</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.68%</span></td>
+          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
+        </tr>
+        <tr>
+          <td class="rank" style="color:#57606a">10</td>
           <td class="asset-name">GBP/JPY<br><span class="asset-sym">GBPJPY=X</span></td>
           <td class="price-cell">212.81</td>
           <td><span style="color:#cf222e;font-weight:600">-0.57%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
-          <td class="rank" style="color:#57606a">9</td>
-          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
-          <td class="price-cell">69.27</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.54%</span></td>
-          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
-        </tr>
-        <tr>
-          <td class="rank" style="color:#57606a">10</td>
-          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
-          <td class="price-cell">62,574.60</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.15%</span></td>
-          <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
-        </tr>
-        <tr>
           <td class="rank" style="color:#57606a">11</td>
-          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
-          <td class="price-cell">161.67</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.06%</span></td>
+          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
+          <td class="price-cell">62,992.55</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.52%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">12</td>
-          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
-          <td class="price-cell">1,665.27</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.01%</span></td>
+          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
+          <td class="price-cell">161.65</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.05%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         </tbody>
