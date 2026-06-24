@@ -1,0 +1,472 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "candidates": [
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 43,
+      "n": 171,
+      "pct": 25.1,
+      "ci_lo": 19.2,
+      "ci_hi": 32.1,
+      "avgR": -0.413,
+      "rci_lo": -0.565,
+      "rci_hi": -0.261,
+      "p": 1.0229976066256086e-07,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×reversalL",
+      "filter": {
+        "group": "metal",
+        "reversal_long": true
+      },
+      "k": 13,
+      "n": 80,
+      "pct": 16.2,
+      "ci_lo": 9.7,
+      "ci_hi": 25.8,
+      "avgR": -0.621,
+      "rci_lo": -0.811,
+      "rci_hi": -0.431,
+      "p": 1.45031986420463e-10,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 17,
+      "n": 112,
+      "pct": 15.2,
+      "ci_lo": 9.7,
+      "ci_hi": 23.0,
+      "avgR": -0.646,
+      "rci_lo": -0.802,
+      "rci_hi": -0.49,
+      "p": 4.440892098500626e-16,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×reversalL",
+      "filter": {
+        "trend": "下降",
+        "reversal_long": true
+      },
+      "k": 50,
+      "n": 167,
+      "pct": 29.9,
+      "ci_lo": 23.5,
+      "ci_hi": 37.3,
+      "avgR": -0.301,
+      "rci_lo": -0.464,
+      "rci_hi": -0.139,
+      "p": 0.0002793317712153076,
+      "profitable": false,
+      "q": 0.005,
+      "fdr_pass": true
+    },
+    {
+      "label": "dir=long",
+      "filter": {
+        "direction": "long"
+      },
+      "k": 286,
+      "n": 771,
+      "pct": 37.1,
+      "ci_lo": 33.8,
+      "ci_hi": 40.6,
+      "avgR": -0.134,
+      "rci_lo": -0.214,
+      "rci_hi": -0.055,
+      "p": 0.0009323036793720263,
+      "profitable": false,
+      "q": 0.0118,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降",
+      "filter": {
+        "trend": "下降"
+      },
+      "k": 128,
+      "n": 369,
+      "pct": 34.7,
+      "ci_lo": 30.0,
+      "ci_hi": 39.7,
+      "avgR": -0.191,
+      "rci_lo": -0.304,
+      "rci_hi": -0.077,
+      "p": 0.0009938382748253538,
+      "profitable": false,
+      "q": 0.0118,
+      "fdr_pass": true
+    },
+    {
+      "label": "tf=4h×dir=long",
+      "filter": {
+        "tf": "4h",
+        "direction": "long"
+      },
+      "k": 111,
+      "n": 322,
+      "pct": 34.5,
+      "ci_lo": 29.5,
+      "ci_hi": 39.8,
+      "avgR": -0.196,
+      "rci_lo": -0.317,
+      "rci_hi": -0.074,
+      "p": 0.0015727145524528918,
+      "profitable": false,
+      "q": 0.0133,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×dir=long",
+      "filter": {
+        "trend": "下降",
+        "direction": "long"
+      },
+      "k": 86,
+      "n": 256,
+      "pct": 33.6,
+      "ci_lo": 28.1,
+      "ci_hi": 39.6,
+      "avgR": -0.216,
+      "rci_lo": -0.351,
+      "rci_hi": -0.081,
+      "p": 0.001736851414700702,
+      "profitable": false,
+      "q": 0.0133,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=other_fx×dir=long",
+      "filter": {
+        "group": "other_fx",
+        "direction": "long"
+      },
+      "k": 74,
+      "n": 225,
+      "pct": 32.9,
+      "ci_lo": 27.1,
+      "ci_hi": 39.3,
+      "avgR": -0.233,
+      "rci_lo": -0.376,
+      "rci_hi": -0.089,
+      "p": 0.0014954395375952334,
+      "profitable": false,
+      "q": 0.0133,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=good×dir=long",
+      "filter": {
+        "tier": "good",
+        "direction": "long"
+      },
+      "k": 58,
+      "n": 181,
+      "pct": 32.0,
+      "ci_lo": 25.7,
+      "ci_hi": 39.2,
+      "avgR": -0.252,
+      "rci_lo": -0.411,
+      "rci_hi": -0.093,
+      "p": 0.0018785136068419916,
+      "profitable": false,
+      "q": 0.0133,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=long",
+      "filter": {
+        "group": "index",
+        "direction": "long"
+      },
+      "k": 105,
+      "n": 196,
+      "pct": 53.6,
+      "ci_lo": 46.6,
+      "ci_hi": 60.4,
+      "avgR": 0.25,
+      "rci_lo": 0.087,
+      "rci_hi": 0.413,
+      "p": 0.002699796063260207,
+      "profitable": true,
+      "q": 0.0174,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×reversalL",
+      "filter": {
+        "group": "btc",
+        "reversal_long": true
+      },
+      "k": 9,
+      "n": 39,
+      "pct": 23.1,
+      "ci_lo": 12.6,
+      "ci_hi": 38.3,
+      "avgR": -0.462,
+      "rci_lo": -0.774,
+      "rci_hi": -0.149,
+      "p": 0.003803107777550885,
+      "profitable": false,
+      "q": 0.0225,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 54,
+      "n": 95,
+      "pct": 56.8,
+      "ci_lo": 46.8,
+      "ci_hi": 66.3,
+      "avgR": 0.326,
+      "rci_lo": 0.093,
+      "rci_hi": 0.56,
+      "p": 0.006190112158645178,
+      "profitable": true,
+      "q": 0.0333,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=False",
+      "filter": {
+        "blocked": false
+      },
+      "k": 238,
+      "n": 632,
+      "pct": 37.7,
+      "ci_lo": 34.0,
+      "ci_hi": 41.5,
+      "avgR": -0.121,
+      "rci_lo": -0.21,
+      "rci_hi": -0.033,
+      "p": 0.00703242669468418,
+      "profitable": false,
+      "q": 0.0333,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=good",
+      "filter": {
+        "tier": "good"
+      },
+      "k": 63,
+      "n": 188,
+      "pct": 33.5,
+      "ci_lo": 27.2,
+      "ci_hi": 40.5,
+      "avgR": -0.218,
+      "rci_lo": -0.376,
+      "rci_hi": -0.06,
+      "p": 0.006774862784913349,
+      "profitable": false,
+      "q": 0.0333,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=neutral",
+      "filter": {
+        "tier": "neutral"
+      },
+      "k": 87,
+      "n": 250,
+      "pct": 34.8,
+      "ci_lo": 29.2,
+      "ci_hi": 40.9,
+      "avgR": -0.188,
+      "rci_lo": -0.326,
+      "rci_hi": -0.05,
+      "p": 0.007605136199702489,
+      "profitable": false,
+      "q": 0.0337,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=True×dir=short",
+      "filter": {
+        "blocked": true,
+        "direction": "short"
+      },
+      "k": 31,
+      "n": 51,
+      "pct": 60.8,
+      "ci_lo": 47.1,
+      "ci_hi": 73.0,
+      "avgR": 0.418,
+      "rci_lo": 0.103,
+      "rci_hi": 0.734,
+      "p": 0.009420715791512269,
+      "profitable": true,
+      "q": 0.0393,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=all",
+      "filter": {
+        "group": "all"
+      },
+      "k": 418,
+      "n": 1064,
+      "pct": 39.3,
+      "ci_lo": 36.4,
+      "ci_hi": 42.3,
+      "avgR": -0.083,
+      "rci_lo": -0.152,
+      "rci_hi": -0.015,
+      "p": 0.01711549413040503,
+      "profitable": false,
+      "q": 0.0675,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=False×dir=long",
+      "filter": {
+        "blocked": false,
+        "direction": "long"
+      },
+      "k": 178,
+      "n": 473,
+      "pct": 37.6,
+      "ci_lo": 33.4,
+      "ci_hi": 42.1,
+      "avgR": -0.122,
+      "rci_lo": -0.224,
+      "rci_hi": -0.02,
+      "p": 0.019122257306297685,
+      "profitable": false,
+      "q": 0.0715,
+      "fdr_pass": true
+    },
+    {
+      "label": "signal=ma_dead",
+      "filter": {
+        "signal": "ma_dead"
+      },
+      "k": 20,
+      "n": 32,
+      "pct": 62.5,
+      "ci_lo": 45.3,
+      "ci_hi": 77.1,
+      "avgR": 0.458,
+      "rci_lo": 0.061,
+      "rci_hi": 0.856,
+      "p": 0.023878974544021325,
+      "profitable": true,
+      "q": 0.0771,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=中立・もみあい×dir=long",
+      "filter": {
+        "trend": "中立・もみあい",
+        "direction": "long"
+      },
+      "k": 99,
+      "n": 273,
+      "pct": 36.3,
+      "ci_lo": 30.8,
+      "ci_hi": 42.1,
+      "avgR": -0.154,
+      "rci_lo": -0.287,
+      "rci_hi": -0.021,
+      "p": 0.023706371351032374,
+      "profitable": false,
+      "q": 0.0771,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×dir=long",
+      "filter": {
+        "group": "btc",
+        "direction": "long"
+      },
+      "k": 18,
+      "n": 61,
+      "pct": 29.5,
+      "ci_lo": 19.6,
+      "ci_hi": 41.9,
+      "avgR": -0.311,
+      "rci_lo": -0.581,
+      "rci_hi": -0.042,
+      "p": 0.023380520351646172,
+      "profitable": false,
+      "q": 0.0771,
+      "fdr_pass": true
+    },
+    {
+      "label": "reversalL（逆張り買い）",
+      "filter": {
+        "reversal_long": true
+      },
+      "k": 165,
+      "n": 437,
+      "pct": 37.8,
+      "ci_lo": 33.3,
+      "ci_hi": 42.4,
+      "avgR": -0.119,
+      "rci_lo": -0.225,
+      "rci_hi": -0.013,
+      "p": 0.02805177420408267,
+      "profitable": false,
+      "q": 0.083,
+      "fdr_pass": true
+    },
+    {
+      "label": "signal=rsi_oversold_bounce",
+      "filter": {
+        "signal": "rsi_oversold_bounce"
+      },
+      "k": 63,
+      "n": 180,
+      "pct": 35.0,
+      "ci_lo": 28.4,
+      "ci_hi": 42.2,
+      "avgR": -0.183,
+      "rci_lo": -0.346,
+      "rci_hi": -0.02,
+      "p": 0.02752831507403153,
+      "profitable": false,
+      "q": 0.083,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 56,
+      "n": 105,
+      "pct": 53.3,
+      "ci_lo": 43.8,
+      "ci_hi": 62.6,
+      "avgR": 0.244,
+      "rci_lo": 0.021,
+      "rci_hi": 0.468,
+      "p": 0.03223404729936119,
+      "profitable": true,
+      "q": 0.0915,
+      "fdr_pass": true
+    }
+  ]
+}

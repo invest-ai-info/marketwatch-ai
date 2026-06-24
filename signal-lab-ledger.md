@@ -7,7 +7,7 @@
 
 ## 📌 次番号
 
-**020**（2026-06-24 更新・#19公開済み）
+**021**（2026-06-25 更新・#020下書き生成済み）
 
 ---
 
@@ -33,6 +33,7 @@
 | 16 | ドル建てFXクロス（other_fx）ロングの方向性検証。EURUSD/GBPUSD/AUDUSD/EURAUD/GBPAUD×ロング全件・トレンド別・ショートとの対比・jpy_fxとの比較 | ロング:191 / 上昇:41 / 下降:54 / 中立:96 / ショート:74 | ロング全体33.0%(63/191) / 上昇9.8%(4/41) / 下降55.6%(30/54) / 中立30.2%(29/96) / ショート54.1%(40/74) | 95%CI ロング[26.7%〜39.9%] | 🟡 通過A（棄却確認・CI上限39.9%<43%・N=191≥100）。上昇×ロング9.8%の逆説。ショートとの21.1pp方向非対称。jpy_fxとの方向優位逆転（jpy_fx:L>S、other_fx:S>L）。FDR q=0.046。E(R)=-0.231 CI[-0.387〜-0.076]。ゲート実行中 | drafts/draft-signal-lab-016.html（下書き中）|
 | 17 | blocked=True（壁あり）シグナルの方向性分解（ロング vs ショート）。#5以降の継続研究。N=41→78に倍増後の再解析 | blocked=True:78（Long:44 / Short:34） / blocked=False:479 | blocked=True全体47.4%(37/78) / Long40.9%(18/44) / Short55.9%(19/34) / blocked=False Long39.7%(145/365) / blocked=False Short38.6%(44/114) | 95%CI blocked=True×Short[39.5%〜71.1%] | 🟡 通過A方向（CI下限39.5%<43%・N=34未達・FDR q=0.331）。方向非対称15.0pp（宣言条件10pp超クリア）。探索的: ma_dead×short×blocked=True=90.9%(10/11)はN=11小サンプル。次回: blocked=True×Short × group×trend 三次元解析 | guide-signal-lab-017.html |
 | 18 | 指数グループ専有の逆張りロングエッジ（reversal_long=True × group=index）。スイープFDR q=0.023の新規候補。全体42.2%（罠）vs 指数59.1%の対比。 | 指数×revL:88（bb_lower:50 / rsi_oversold:38） / 全体×revL:374 / 非指数×revL:286 | 指数×revL全体59.1%(52/88) / 上昇69.2%(36/52) / 中立37.9%(11/29) / 下降71.4%(5/7 N小) / メタル21.0%(13/62) / BTC25.0%(9/36) / 他FX39.6%(40/101) | 95%CI 指数×revL[48.6%〜68.8%] / 上昇×指数×revL[55.7%〜80.1%] | 🟡 通過A（CI下限48.6%≥43%・N=88≥20・FDR q=0.023）。全体42.2%は「グループ構成偏り」が原因の集計の罠。非指数は全グループ損益分岐割れ。上昇中はCI下限55.7%で最安定。前向きトラッカー `group=index×reversalL` 本日新規登録 | drafts/draft-signal-lab-018.html（下書き中）|
+| 20 | MA デッドクロス（signal=ma_dead）× ショートの非対称性検証（#8 ma_golden×L 棄却確認の裏面）。全体エッジと blocked=True 交絡を解析 | ショート:32（FX中心: jpy_fx:10/other_fx:14）/ blocked=True:17 / blocked=False:15 | ショート全体62.5% / blocked=True82.4% / blocked=False40.0% | 全体95%CI[45.3%〜77.1%] / blocked=True[59.0%〜93.8%] | 🟡 通過A（CI下限45.3%≥43%・N=32≥20）。ma_golden×L（29.5%）との33pp非対称を確認。blocked=True（53%偏在）が主ドライバーの可能性——blocked=F単独は40.0%で損益分岐割れ。トラッカー signal=ma_dead / blocked=True×dir=short 本日新規登録 | drafts/draft-signal-lab-020.html（下書き中）|
 | 19 | もみあい×ショートのエッジ解剖（#12・26件増データによる追跡再検証）。前向き32%vs in-sample 67.3%の大乖離を信号別・資産別に解剖 | もみあい×S全件:75（macd_dead:35 / low_break:28 / ma_dead:9） / もみあい×L対照:265 | もみあい×S全体50.7%(38/75) / macd_dead57.1%(20/35) / low_break35.7%(10/28) / other_fx54.8%(17/31) / metal35.3%(6/17) / jpy_fx38.5%(5/13) / low_break×metal0.0%(0/10) | 95%CI もみあい×S[39.6%〜61.7%] / macd_dead[40.9%〜72.0%] / low_break×metal[0.0%〜27.8%] | 🟢 公開済み（検証緑8/8・コンプラOpus白）。主因＝low_break×金属貴金属0/10=0.0%が全体を下引き。macd_deadは57%で健在。追加26件5/26=19.2%の急落はlow_break偏り疑い。#12エッジは「macd_dead限定」で引き続き観察継続 | guide-signal-lab-019.html |
 
 ---
@@ -115,3 +116,4 @@
 | 2026-06-22 | #017 検証完了・下書き生成（blocked=True方向性分解）。blocked=True×Short=55.9%(19/34) CI下限39.5%<43% → 通過A方向（確定打なし）。blocked=True×Long=40.9%(18/44)は中立。探索的: ma_dead×short×blocked=True=90.9%(10/11)はN=11小サンプル。次番号を018に更新 |
 | 2026-06-22 | #018 検証完了・下書き生成（指数×reversal_long専有エッジ）。59.1%(52/88) CI下限48.6%≥43% → 通過A（FDR q=0.023）。全体42.2%は集計の罠（グループ偏り）。上昇×指数×revL=69.2%（CI下限55.7%）。メタル21%・BTC25%・他FX39.6%。前向きトラッカー `group=index×reversalL` / `group=index` / `trend=上昇×reversalL` 新規登録。次番号を019に更新 |
 | 2026-06-24 | #019 検証完了・公開（もみあい×Sエッジ解剖）。50.7%(38/75) CI[39.6%〜61.7%]（#12の67.3%から軟化）。主因＝low_break×金属0/10=0.0%。macd_dead 57.1%(20/35)は健在。検証緑8/8・コンプラOpus白・自動公開済み。トラッカー[n]更新（前向き10/31=32%、in-sample更新）。次番号を020に更新 |
+| 2026-06-25 | #020 下書き生成（MA デッドクロス×ショート非対称性検証）。62.5%(20/32)CI[45.3%〜77.1%]→通過A。ma_golden×L（29.5%）との33pp非対称確認。blocked=True（82.4%・N=17）vs blocked=False（40.0%・N=15）に42pp差。スイープFDR通過12本登録（blocked=True×dir=short / signal=ma_dead等）。ゲート実行中。次番号を021に更新 |

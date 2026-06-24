@@ -1,0 +1,10 @@
+{
+  "article_id": "020",
+  "claims": [
+    {"label": "ma_dead × ショート 全体勝率", "filter": {"signal": "ma_dead", "direction": "short"}, "k": 20, "n": 32},
+    {"label": "ma_golden × ロング 全体勝率（対照群）", "filter": {"signal": "ma_golden", "direction": "long"}, "k": 13, "n": 44},
+    {"label": "ma_dead × blocked=True 勝率", "filter": {"signal": "ma_dead", "direction": "short", "blocked": true}, "k": 14, "n": 17},
+    {"label": "ma_dead × blocked=False 勝率", "filter": {"signal": "ma_dead", "direction": "short", "blocked": false}, "k": 6, "n": 15},
+    {"label": "全シグナル ベースライン勝率", "filter": {"group": "all"}, "k": 418, "n": 1287}
+  ]
+}
