@@ -184,6 +184,29 @@ def is_noindex_slug(slug: str) -> bool:
             or s.startswith("guide-monthly-report-") or s.startswith("guide-auto-"))
 
 
+# 🆕 2026-06-24: 全コア/データページ共通の2段ヘッダー（①ブランドバー ②ページ名＋最終更新）。
+#   狙い＝トップのタイトルを全ページで統一（旧来は各ページが我流の大見出しでブランド名が無かった）。
+#   ブランド名の色は固定の青グラデで統一。背景・ダーク対応は base の header{} と各ページの dark スクリプトに委譲
+#   （インラインで色を固定しない＝ダークモードを壊さない）。.header-inner の flex は使わず自前 block で2段組み。
+def brand_header(page_emoji, page_title, updated="", extra=""):
+    meta = ""
+    if updated:
+        meta += f'<div class="header-meta" style="margin-top:2px">最終更新: {updated}</div>'
+    if extra:
+        meta += f'<div class="header-meta" style="margin-top:1px;font-size:.78rem">{extra}</div>'
+    return (
+        '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
+        '<div style="font-size:1.5rem;font-weight:700;line-height:1.3;'
+        'background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;'
+        '-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div>'
+        '<div class="header-meta">日本人投資家のためのマーケット情報サイト</div>'
+        '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
+        f'<div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">{page_emoji} {page_title}</div>'
+        f'{meta}'
+        '</div></div></header>'
+    )
+
+
 def seo_head(slug: str, title: str, description: str, og_type: str = "website") -> str:
     """ページごとの SEO 用 <head> 要素を返す。
 
@@ -1481,14 +1504,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">😱 恐怖指数（VIX）</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-  </div>
-</header>
+{brand_header("😱", "恐怖指数（VIX）", time_str)}
 <main>
 
 <nav class="nav-bar">
@@ -2443,15 +2459,7 @@ def build_hot_assets_html(hot_data, now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">🔥 出来高急増ランキング</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-    <div class="header-meta">本日出来高 ÷ 20日平均</div>
-  </div>
-</header>
+{brand_header("🔥", "出来高急増ランキング", time_str, "本日出来高 ÷ 20日平均")}
 <main>
 
   <!-- ナビゲーション -->
@@ -2689,14 +2697,7 @@ def build_calendar_html(now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">📅 マクロ経済カレンダー</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-  </div>
-</header>
+{brand_header("📅", "マクロ経済カレンダー", time_str)}
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -3080,14 +3081,7 @@ def build_preview_html(now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">📰 明日の経済指標プレビュー</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-  </div>
-</header>
+{brand_header("📰", "明日の経済指標プレビュー", time_str)}
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -3396,10 +3390,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-title">🩺 市場健康度ダッシュボード</div>
-  <div class="header-meta">最終更新: {date_str} ／ 投資家心理・バリュエーション・ボラティリティを総合診断</div>
-</header>
+{brand_header("🩺", "市場健康度ダッシュボード", date_str, "投資家心理・バリュエーション・ボラティリティを総合診断")}
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -3724,14 +3715,7 @@ def build_charts_html(hist, now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">📈 50年価格チャート</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-  </div>
-</header>
+{brand_header("📈", "50年価格チャート", time_str)}
 <main>
 
 <nav class="nav-bar">
@@ -4698,15 +4682,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header>
-  <div class="header-inner">
-    <div>
-      <div class="header-title">📊 マーケットニュース</div>
-      <div class="header-meta">最終更新: <span>{time_str}</span></div>
-    </div>
-    <div class="header-meta">GitHub Actions 自動更新</div>
-  </div>
-</header>
+{brand_header("📰", "マーケットニュース", time_str, "GitHub Actions 自動更新")}
 <main>
 
   <!-- ナビゲーション -->
