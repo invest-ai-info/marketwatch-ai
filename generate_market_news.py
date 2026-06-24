@@ -3237,6 +3237,38 @@ def fetch_rate_panel(timeout=15):
     return {"us10": us10, "jp10": jp10, "jp_date": jp_date, "diff": diff}
 
 
+def fetch_curve_credit(timeout=15):
+    """米イールドカーブ(3M/5Y/10Y/30Y)とクレジットの体温(HY債ETF)を Yahoo から取得（無料）。失敗時 None。"""
+    import urllib.request
+    import json as _json
+
+    def _y(t):
+        try:
+            u = f"https://query1.finance.yahoo.com/v8/finance/chart/{t}?interval=1d&range=3mo"
+            req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+            d = _json.loads(urllib.request.urlopen(req, timeout=timeout).read())["chart"]["result"][0]
+            cl = [x for x in d["indicators"]["quote"][0]["close"] if x is not None]
+            mp = d["meta"].get("regularMarketPrice")
+            last = mp if mp is not None else (cl[-1] if cl else None)
+            ago = cl[-22] if len(cl) >= 22 else (cl[0] if cl else None)
+            return last, ago
+        except Exception:
+            return None, None
+
+    t3m, _ = _y("%5EIRX"); t5, _ = _y("%5EFVX"); t10, t10a = _y("%5ETNX"); t30, _ = _y("%5ETYX")
+    hyg, hyga = _y("HYG"); ief, iefa = _y("IEF")
+    if t10 is None or t3m is None or hyg is None or ief is None:
+        return None
+    out = {"t3m": round(t3m, 2), "t5": round(t5, 2) if t5 else None,
+           "t10": round(t10, 2), "t30": round(t30, 2) if t30 else None,
+           "curve": round(t10 - t3m, 2),
+           "t10_chg": round(t10 - t10a, 2) if t10a else None}
+    ratio_ago = (hyga / iefa) if (hyga and iefa) else None
+    out["credit_chg"] = round(((hyg / ief) / ratio_ago - 1) * 100, 2) if ratio_ago else None
+    out["hyg_chg"] = round((hyg / hyga - 1) * 100, 2) if hyga else None
+    return out
+
+
 def build_market_health_html(data, vix_val, touraku, now_jst):
     """市場健康度ダッシュボード（market-health.html）を生成。
     動的に取れるもの: 米VIX, 騰落レシオ, 日経/S&P500終値
@@ -3389,10 +3421,53 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         <div class="beginner">⚠️ これは各国<b>政策金利の差</b>であり、実際に付与されるスワップポイントの<b>金額はFX会社ごとに異なります</b>（手数料ぶん目減りし、ロングとショートで非対称）。政策金利は中央銀行の会合時のみ更新。これは情報提供であり投資助言ではありません。</div>
       </article>
 '''
+    # イールドカーブ＋クレジットの体温（Yahoo・無料。取得失敗時は当該カードのみ消える）
+    _cc = fetch_curve_credit()
+    curve_card = credit_card = ""
+    if _cc:
+        _cv = _cc["curve"]
+        if _cv <= -0.05:
+            cv_color, cv_label = "#da3633", "逆イールド"
+        elif _cv <= 0.5:
+            cv_color, cv_label = "#9a6700", "フラット気味"
+        else:
+            cv_color, cv_label = "#1a7f37", "順イールド（正常）"
+        _t10c = _cc.get("t10_chg")
+        _t10s = (f"（1か月 {'+' if _t10c >= 0 else ''}{_t10c:.2f}pt）" if _t10c is not None else "")
+        _t5s = f"{_cc['t5']:.2f}％" if _cc['t5'] else "—"
+        _t30s = f"{_cc['t30']:.2f}％" if _cc['t30'] else "—"
+        curve_card = f'''      <article class="card">
+        <div class="card-header"><div class="card-title">📐 米イールドカーブ（10年−3か月）</div><div class="card-sub">長短逆転＝景気後退の前兆とされる</div></div>
+        <div class="big-num" style="color:{cv_color}">{_cc['curve']:+.2f}% {_tag(cv_color, cv_label)}</div>
+        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">3か月 {_cc['t3m']:.2f}％ ／ 5年 {_t5s} ／ 10年 {_cc['t10']:.2f}％{_t10s} ／ 30年 {_t30s}</div>
+        <p class="comment">長期(10年)が短期(3か月)より高い＝<b>順イールド（正常）</b>。長短が逆転（逆イールド）すると、過去は景気後退の前に現れることが多かった指標です（必ず当たるわけではありません）。米NY連銀の景気後退モデルも10年−3か月を使用。</p>
+        <div class="beginner">出典: Yahoo Finance（^IRX/^FVX/^TNX/^TYX・当日）。くわしくは <a href="guide-yield-curve.html" style="color:#1f6feb">イールドカーブ・逆イールドとは</a>。情報提供であり投資助言ではありません。</div>
+      </article>
+'''
+        _crc = _cc.get("credit_chg")
+        if _crc is None:
+            cr_color, cr_label = "#57606a", "データ取得中"
+        elif _crc <= -1.5:
+            cr_color, cr_label = "#da3633", "警戒（クレジット悪化）"
+        elif _crc < 0.5:
+            cr_color, cr_label = "#9a6700", "中立"
+        else:
+            cr_color, cr_label = "#1a7f37", "良好（リスクオン）"
+        _hc = _cc.get("hyg_chg")
+        _hcs = f"{'+' if _hc >= 0 else ''}{_hc:.1f}％" if _hc is not None else "—"
+        _crcs = f"{'+' if _crc >= 0 else ''}{_crc:.1f}％" if _crc is not None else "—"
+        credit_card = f'''      <article class="card">
+        <div class="card-header"><div class="card-title">💳 クレジットの体温（ハイイールド債）</div><div class="card-sub">スプレッド拡大＝リスクオフの早期サイン</div></div>
+        <div class="big-num" style="color:{cr_color}">{_tag(cr_color, cr_label)}</div>
+        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">HY債ETF(HYG) 1か月 {_hcs} ／ 対米国債(HYG÷IEF) {_crcs}</div>
+        <p class="comment">クレジットスプレッド（低格付け債と国債の利回り差）が広がると、ハイイールド債(HYG)が安全な国債(IEF)に対して値下がりします。その相対の動きで“信用の体温”を見ます。株価より先に悪化することがある早期警報です。</p>
+        <div class="beginner">出典: Yahoo Finance（HYG・IEF）。精密なスプレッド(OAS)ではなくETF相対による代理指標。くわしくは <a href="guide-credit-spread.html" style="color:#1f6feb">クレジットスプレッドとは</a>。情報提供であり投資助言ではありません。</div>
+      </article>
+'''
     rate_section = f'''  <section class="section">
-    <div class="section-title">④ 金融環境 ― 金利（10年債とスワップ）</div>
+    <div class="section-title">④ 金融環境 ― 金利・イールドカーブ・クレジット</div>
     <div class="cards">
-{bond_card}{swap_card}    </div>
+{bond_card}{curve_card}{credit_card}{swap_card}    </div>
   </section>
 
 '''
