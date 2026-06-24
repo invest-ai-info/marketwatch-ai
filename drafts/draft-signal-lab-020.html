@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
   <title>AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態 - MarketWatch AI</title>
-  <meta name="description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（40%）に42pp差。エッジの主ドライバーはS/R壁か。第20回。">
+  <meta name="description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（46%）に37pp差。エッジの主ドライバーはS/R壁か。第20回。">
   <meta name="keywords" content="AIシグナル,移動平均,デッドクロス,ゴールデンクロス,ma_dead,ma_golden,ショート,勝率,研究日誌,blocked">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-020.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態">
-  <meta property="og:description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（40%）に42pp差。エッジの主ドライバーはS/R壁か。第20回。">
+  <meta property="og:description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（46%）に37pp差。エッジの主ドライバーはS/R壁か。第20回。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-020.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -258,9 +258,9 @@ window.addEventListener('resize',mark);
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
       ① MA デッドクロス（signal=ma_dead）× ショート: <strong>62.5%（20/32）CI 下限 45.3%</strong> ——損益分岐 43% を超え・通過A確認<br>
       ② 同ゴールデンクロス（ma_golden）× ロング: <strong>29.5%（13/44）</strong>——両者の差は <strong>33.0pp</strong>。クロスシグナルは方向で真逆の結果<br>
-      ③ 最重要分解: blocked=True（S/R 壁あり）→ <strong>82.4%（14/17）</strong> / blocked=False → <strong>40.0%（6/15）</strong>——42pp 差<br>
-      ④ ma_dead 発火時の blocked=True 比率は全体の 53%——全シグナル平均の約 4 倍。エッジの主ドライバーは「blocked=True × デッドクロス」の可能性が高い（N=17 小サンプル・継続観察）<br>
-      ⑤ ⚠️ 全シグナル中のベースライン勝率は <strong>32.5%（418/1287）</strong>。すべて過去データの集計であり、将来の成績を保証するものではありません
+      ③ 最重要分解: blocked=True（S/R 壁あり）→ <strong>82.4%（14/17）</strong> / blocked=False → <strong>45.5%（5/11）</strong>——36.9pp 差<br>
+      ④ blocked=False は N=11 で不確定（CI が 43% をまたぐ）。エッジの実体が blocked=True に依存しているかは継続観察が必要（小サンプル）<br>
+      ⑤ ⚠️ 全シグナル中のベースライン勝率は <strong>39.3%（418/1064）</strong>。すべて過去データの集計であり、将来の成績を保証するものではありません
     </div>
 
     <div class="toc">
@@ -308,7 +308,7 @@ window.addEventListener('resize',mark);
     <!-- =============================== -->
     <h2 id="result">📊 検証結果——主仮説と対照群</h2>
 
-    <p>決済済みシグナル 1,287 件から ma_dead × ショート を抽出し、Wilson CI（95%）と期待値 R（tp1=+1.33R、tp2=+2.0R、sl/expired=−1.0R）で集計しました。</p>
+    <p>tp1/tp2/sl 決済済みシグナル 1,064 件から ma_dead × ショート を抽出し、Wilson CI（95%）と期待値 R（tp1=+1.33R、tp2=+2.0R、sl=−1.0R）で集計しました。</p>
 
     <h3>主仮説と対照群の比較</h3>
     <table>
@@ -338,11 +338,11 @@ window.addEventListener('resize',mark);
       </tr>
       <tr style="background:#f0f3f6">
         <td>全シグナル ベースライン</td>
-        <td>418 / 1,287</td>
-        <td>32.5%</td>
-        <td>[30.0%〜35.1%]</td>
+        <td>418 / 1,064</td>
+        <td>39.3%</td>
+        <td>[36.4%〜42.3%]</td>
         <td>—</td>
-        <td>参照値</td>
+        <td>参照値（tp1/tp2/sl クローズのみ）</td>
       </tr>
     </table>
 
@@ -434,14 +434,14 @@ window.addEventListener('resize',mark);
         <text x="285" y="260" text-anchor="middle" class="s-label" font-size="11">ma_golden</text>
         <text x="285" y="273" text-anchor="middle" class="s-label-sm">× ロング</text>
 
-        <!-- バー3: 全体ベースライン 32.5%  y=242-32.5*2.025=242-65.8=176, h=66 -->
-        <rect x="380" y="176" width="90" height="66" rx="4" fill="#8b949e" opacity="0.7"/>
-        <text x="425" y="168" text-anchor="middle" class="s-label" font-size="14">32.5%</text>
-        <text x="425" y="182" text-anchor="middle" class="s-label-sm" font-size="10">(418/1287)</text>
+        <!-- バー3: 全体ベースライン 39.3%  y=242-39.3*2.025=242-79.6=162, h=80 -->
+        <rect x="380" y="162" width="90" height="80" rx="4" fill="#8b949e" opacity="0.7"/>
+        <text x="425" y="154" text-anchor="middle" class="s-label" font-size="14">39.3%</text>
+        <text x="425" y="175" text-anchor="middle" class="s-label-sm" font-size="10">(418/1064)</text>
         <text x="425" y="260" text-anchor="middle" class="s-label" font-size="11">全シグナル</text>
         <text x="425" y="273" text-anchor="middle" class="s-label-sm">ベースライン</text>
       </svg>
-      <p class="chart-caption">スケール: 0%〜80%（Y軸）。赤点線=損益分岐43%。ma_dead×ショート（緑・62.5%）は損益分岐を超え、ma_golden×ロング（赤・29.5%）は損益分岐を大幅に下回る。全シグナルベースライン（灰・32.5%）も参照。いずれも過去データの集計であり、将来の成績を保証しません。</p>
+      <p class="chart-caption">スケール: 0%〜80%（Y軸）。赤点線=損益分岐43%。ma_dead×ショート（緑・62.5%）は損益分岐を超え、ma_golden×ロング（赤・29.5%）は損益分岐を大幅に下回る。全シグナルベースライン（灰・39.3%、tp1/tp2/sl クローズのみ）も参照。いずれも過去データの集計であり、将来の成績を保証しません。</p>
     </div>
 
     <!-- =============================== -->
@@ -466,13 +466,13 @@ window.addEventListener('resize',mark);
         <td>+0.919 R</td>
         <td>✅ CI下限59%・N=17小</td>
       </tr>
-      <tr style="background:#ffebe9">
+      <tr style="background:#fff8c5">
         <td>ma_dead × ショート × blocked=False</td>
-        <td>6 / 15</td>
-        <td>40.0%</td>
-        <td>[19.8%〜64.3%]</td>
-        <td>−0.068 R</td>
-        <td>🔴 損益分岐割れ・期待値マイナス</td>
+        <td>5 / 11</td>
+        <td>45.5%</td>
+        <td>[21.3%〜72.0%]</td>
+        <td>+0.059 R</td>
+        <td>🟡 不確定（N=11・CI が 43% をまたぐ）</td>
       </tr>
       <tr style="background:#e6ffed">
         <td>ma_dead × ショート 全体</td>
@@ -484,10 +484,10 @@ window.addEventListener('resize',mark);
       </tr>
     </table>
 
-    <p>blocked=True（S/R 壁あり）では 82.4%（14/17）、blocked=False では 40.0%（6/15）と、<strong>差は 42.4pp</strong> にのぼります。ma_dead × ショート 全体の 32 件中 17 件（53%）が blocked=True であり、これは全シグナル平均（約 14%）の約 4 倍の比率です。</p>
+    <p>blocked=True（S/R 壁あり）では 82.4%（14/17）、blocked=False では 45.5%（5/11）と、<strong>差は 36.9pp</strong> にのぼります。ma_dead × ショート 全体の 32 件中 17 件が blocked=True であり、これは全シグナル平均（約 14%）の約 4 倍の比率です。</p>
 
     <div class="warning-box">
-      全体の 62.5% というエッジは、半数以上を占める blocked=True（82.4%）の存在によって押し上げられている可能性があります。blocked=False 単独では 40.0%（損益分岐割れ）です。「ma_dead エッジ」は実態として「<strong>ma_dead × blocked=True の複合エッジ</strong>」かもしれません。
+      全体の 62.5% というエッジは、半数以上を占める blocked=True（82.4%）の存在によって押し上げられている可能性があります。blocked=False 単独では 45.5%（5/11）ですが CI[21.3%〜72.0%] が 43% をまたいでおり不確定（N=11）です。「ma_dead エッジ」は実態として「<strong>ma_dead × blocked=True の複合エッジ</strong>」かもしれません。
     </div>
 
     <h3>なぜ ma_dead 発火時に blocked=True が多いのか</h3>
@@ -533,10 +533,10 @@ window.addEventListener('resize',mark);
         <text x="140" y="272" text-anchor="middle" class="s-label" font-size="11">blocked=True</text>
         <text x="140" y="285" text-anchor="middle" class="s-label-sm">（S/R 壁あり）</text>
 
-        <!-- バー2: blocked=False 40.0%  y=252-40*2.333=252-93.3=159, h=93 -->
-        <rect x="240" y="159" width="100" height="93" rx="4" fill="#cf222e" opacity="0.75"/>
-        <text x="290" y="151" text-anchor="middle" class="s-label-r" font-size="15">40.0%</text>
-        <text x="290" y="185" text-anchor="middle" class="s-label-sm" fill="#ffffff" font-size="11">6/15</text>
+        <!-- バー2: blocked=False 45.5%  y=252-45.5*2.333=252-106.2=146, h=106 -->
+        <rect x="240" y="146" width="100" height="106" rx="4" fill="#9a6700" opacity="0.75"/>
+        <text x="290" y="138" text-anchor="middle" class="s-label-y" font-size="15">45.5%</text>
+        <text x="290" y="172" text-anchor="middle" class="s-label-sm" fill="#ffffff" font-size="11">5/11</text>
         <text x="290" y="272" text-anchor="middle" class="s-label" font-size="11">blocked=False</text>
         <text x="290" y="285" text-anchor="middle" class="s-label-sm">（S/R 壁なし）</text>
 
@@ -547,11 +547,11 @@ window.addEventListener('resize',mark);
         <text x="440" y="272" text-anchor="middle" class="s-label" font-size="11">ma_dead×S</text>
         <text x="440" y="285" text-anchor="middle" class="s-label-sm">（全体）</text>
 
-        <!-- 矢印と注釈: 42pp差 -->
-        <line x1="200" y1="110" x2="230" y2="155" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="4 2"/>
-        <text x="215" y="108" text-anchor="middle" class="s-label-y" font-size="11">42pp差</text>
+        <!-- 矢印と注釈: 36.9pp差 -->
+        <line x1="200" y1="100" x2="230" y2="142" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <text x="215" y="98" text-anchor="middle" class="s-label-y" font-size="11">36.9pp差</text>
       </svg>
-      <p class="chart-caption">ma_dead × ショートを blocked=True（S/R 壁あり、N=17）と blocked=False（N=15）に分解。赤点線=損益分岐43%。blocked=False では 40.0%（損益分岐割れ）であり、全体62.5%のエッジは blocked=True の高勝率（82.4%）が押し上げている構造。N が小さく、out-of-sample 確認が必要です。</p>
+      <p class="chart-caption">ma_dead × ショートを blocked=True（S/R 壁あり、N=17）と blocked=False（N=11）に分解。赤点線=損益分岐43%。blocked=False は 45.5%（5/11）だが CI[21.3%〜72.0%] が 43% をまたぐため不確定（N 小）。全体62.5%のエッジは blocked=True の高勝率（82.4%）が押し上げている可能性があります。</p>
     </div>
 
     <!-- =============================== -->
@@ -559,7 +559,7 @@ window.addEventListener('resize',mark);
 
     <ul>
       <li><strong>N=32（全体）・N=17（blocked=True）は小サンプル</strong>: Wilson CI 幅は広く（全体 45.3%〜77.1%）、真の勝率は幅広い範囲に収まる可能性があります。特に blocked=True の N=17 は非常に小サンプルです。</li>
-      <li><strong>blocked=True 交絡が主要因の可能性</strong>: blocked=False の単独結果（40.0%）は損益分岐を割っており、ma_dead シグナル自体のエッジではなく、blocked=True との複合条件がエッジの正体かもしれません。</li>
+      <li><strong>blocked=True 交絡が主要因の可能性</strong>: blocked=False の単独結果（45.5%、N=11）は CI が 43% をまたいで不確定であり、ma_dead シグナル自体のエッジではなく、blocked=True との複合条件がエッジの正体かもしれません。</li>
       <li><strong>in-sample（過去データ）のみ</strong>: 今回の集計はすべて過去シグナルの決済結果です。out-of-sample（前向きトラッカー）での検証が必要であり、現在は本日 2026-06-25 に新規登録し、N=0（蓄積開始直後）です。</li>
       <li><strong>FX 偏りの可能性</strong>: 発火件数の 75% が FX（jpy_fx + other_fx）に集中しており、他資産クラスへの一般化は慎重であるべきです。</li>
       <li><strong>トレンド分布の偏り</strong>: トレンド別では「中立・もみあい」が N=0（ma_dead はもみあい相場では発火しにくい構造）であり、下降・上昇トレンドのみのデータです。</li>
@@ -567,7 +567,7 @@ window.addEventListener('resize',mark);
     </ul>
 
     <div class="warning-box">
-      今回の「通過A（全体 CI 下限 45.3%）」はエッジの存在を示唆しますが、blocked=True 交絡の解消が課題です。次のステップは① blocked=True × ma_dead の前向きN が 30 を超えた段階での再評価、② blocked=False × ma_dead 単独でのエッジ追試、です。
+      今回の「通過A（全体 CI 下限 45.3%）」はエッジの存在を示唆しますが、blocked=True 交絡の解消が課題です。次のステップは① blocked=True × ma_dead の前向きN が 30 を超えた段階での再評価、② blocked=False × ma_dead（現在 N=11・不確定）のサンプル蓄積後追試、です。
     </div>
 
     <!-- =============================== -->
@@ -599,7 +599,7 @@ window.addEventListener('resize',mark);
       <li><strong>blocked=True × ma_dead × ショートの独立検証</strong>（最優先）: 前向き N が 30 を超えた段階で、blocked=True 交絡の影響を out-of-sample で評価する</li>
       <li><strong>blocked=True × dir=short の単独検証</strong>: 今回スイープで blocked=True × dir=short が FDR R=+0.42 で通過（edge 新規登録）。ma_dead との組み合わせと単独の差を比較する</li>
       <li><strong>ma_dead × トレンド別精緻化</strong>: 下降トレンド中の ma_dead（7/8=87.5%）は N=8 と小さい。N が積み上がれば「下降×デッドクロス」の精度を確認できる</li>
-      <li><strong>signal=ma_dead × blocked=False の追試</strong>: blocked なしで 40.0%（損益分岐割れ）だったが、N=15 のため CI 幅が大きい。独立した検証で棄却か継続観察かを判定する</li>
+      <li><strong>signal=ma_dead × blocked=False の追試</strong>: 45.5%（5/11）だが CI[21.3%〜72.0%] が 43% をまたいで不確定（N=11）。サンプルが積み上がったタイミングで棄却か継続観察かを判定する</li>
     </ul>
 
     <!-- CTA -->

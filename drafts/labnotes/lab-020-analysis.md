@@ -53,10 +53,11 @@ MA デッドクロス（signal=ma_dead）× ショートは、同ゴールデン
 
 ### blocked別（sr_runway.blocked）
 ```
-  blocked=True: N=17, blocked=False: N=15
+  blocked=True: N=17, blocked=False: N=11 (sr_runway=None の4件は両方から除外)
   blocked=True: 14/17 = 82.4% | CI[59.0%~93.8%] | R=+0.919
-  blocked=False: 6/15 = 40.0% | CI[19.8%~64.3%] | R=-0.068
+  blocked=False: 5/11 = 45.5% | CI[21.3%~72.0%] | R=+0.059
 ```
+※ verify.py の blocked フィルタ = strict equality (sr_runway=None は excluded)
 
 ### reversal別（whipsaw_check.is_reversal）
 ```
@@ -66,10 +67,11 @@ MA デッドクロス（signal=ma_dead）× ショートは、同ゴールデン
 
 ### ベースライン比較
 ```
-  全シグナル: 418/1287 = 32.5% CI[30.0%~35.1%]
+  全シグナル (tp1/tp2/sl のみ): 418/1064 = 39.3% CI[36.4%~42.3%]
   ma_golden×ロング (対照群): 13/44 = 29.5% | CI[18.2%~44.2%] | R=-0.312
   macd_dead (参考): 73/171 = 42.7% | CI[35.5%~50.2%] | R=+0.077
 ```
+※ verify.py の closed() 定義 = outcome in ('tp1','tp2','sl') のみ（expired/no_plan 除外）
 
 ## 解釈・交絡点検
 
@@ -83,12 +85,12 @@ MA デッドクロス（signal=ma_dead）× ショートは、同ゴールデン
 - 全closed中の blocked=True 推定比率 ≈ 78/557 ≈ 14%（#17台帳より）
 - → ma_dead はblocked=Trueを選択的に多く含む（偏りあり）
 - 解釈仮説: MA25がMA75を下抜けた時点で価格は移動平均以下 → 直近のサポートが「壁（blocked）」になりやすい
-- → **blocked=False の ma_dead×S は 40.0% CI[19.8%~64.3%]** → 損益分岐割れ
-- → 「ma_deadエッジの主ドライバーはblocked=True」の可能性が高い
+- → **blocked=False の ma_dead×S は 45.5% CI[21.3%~72.0%]** → N=11・CI が 43% をまたぐ（不確定）
+- → 「ma_deadエッジの主ドライバーはblocked=True」の可能性があるが、blocked=False の棄却は確定しない
 
 ### 判定
 - 全体: 通過A（N=32, CI下限45.3%≥43%）
-- 但しblocked=True交絡の影響大。blocked=False単独では損益分岐割れ
+- 但しblocked=True交絡の影響大。blocked=False 単独（N=11）は不確定
 - **解釈**: ma_dead × blocked=True が複合フィルターとして有効な可能性
 - N=17（blocked=True）は小サンプル → 継続観察・独立検証要
 
