@@ -75,7 +75,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月24日 22:16 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月24日 22:26 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -100,7 +100,7 @@
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
       センチメント・ボラティリティ・割高割安を総合判定。
-      <b>米VIX 19.0</b> ／ <b>騰落レシオ 84.6%</b> はリアルタイム更新。
+      <b>米VIX 19.2</b> ／ <b>騰落レシオ 84.6%</b> はリアルタイム更新。
       その他の指標は <b>2026-04-20 時点の参考値</b>（月次手動更新）。
       <br>● 青=適正／割安　● 橙=やや割高・過熱　● 赤=危険水準
     </p>
@@ -111,7 +111,7 @@
     <div class="cards">
       <article class="card">
         <div class="card-header"><div class="card-title">😱 米国 VIX</div><div class="card-sub">S&amp;P500 オプションIV</div></div>
-        <div class="big-num" style="color:#1a7f37">19.0 <span class="tag" style="background:#1a7f37;color:#fff">通常</span></div>
+        <div class="big-num" style="color:#1a7f37">19.2 <span class="tag" style="background:#1a7f37;color:#fff">通常</span></div>
         <div class="gauge vol"><div class="gauge-pin" style="left:25%"></div></div>
         <div class="gauge-labels"><span>10</span><span>20</span><span>30</span><span>40</span><span>50+</span></div>
         <p class="comment">20〜25は通常モード。30超は調整警戒、40超はパニック領域。リアルタイム値。</p>
@@ -200,7 +200,7 @@
   </section>
 
   <section class="section">
-    <div class="section-title">④ 金融環境 ― 金利（10年債とスワップ）</div>
+    <div class="section-title">④ 金融環境 ― 金利・イールドカーブ・クレジット</div>
     <div class="cards">
       <article class="card" style="grid-column:1 / -1">
         <div class="card-header"><div class="card-title">🏦 日米10年国債 利回り比較</div><div class="card-sub">為替（ドル円）を動かす最大の要因</div></div>
@@ -211,6 +211,20 @@
         </table>
         <p class="comment">一般に <b>金利差が開く＝円安</b>、<b>縮む＝円高</b> に傾きやすい（金利の高いドルを持つほど利息を多く得られるため）。ただし日銀・FRBの政策や市場心理でも為替は動きます。</p>
         <div class="beginner">出典: 米＝Yahoo Finance（米10年債利回り ^TNX・当日）／ 日＝財務省「国債金利情報」（2026-06-23 基準）。差 ＝ 米 − 日。これは情報提供であり投資助言ではありません。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">📐 米イールドカーブ（10年−3か月）</div><div class="card-sub">長短逆転＝景気後退の前兆とされる</div></div>
+        <div class="big-num" style="color:#1a7f37">+0.74% <span class="tag" style="background:#1a7f37;color:#fff">順イールド（正常）</span></div>
+        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">3か月 3.69％ ／ 5年 4.21％ ／ 10年 4.43％（1か月 -0.14pt） ／ 30年 4.88％</div>
+        <p class="comment">長期(10年)が短期(3か月)より高い＝<b>順イールド（正常）</b>。長短が逆転（逆イールド）すると、過去は景気後退の前に現れることが多かった指標です（必ず当たるわけではありません）。米NY連銀の景気後退モデルも10年−3か月を使用。</p>
+        <div class="beginner">出典: Yahoo Finance（^IRX/^FVX/^TNX/^TYX・当日）。くわしくは <a href="guide-yield-curve.html" style="color:#1f6feb">イールドカーブ・逆イールドとは</a>。情報提供であり投資助言ではありません。</div>
+      </article>
+      <article class="card">
+        <div class="card-header"><div class="card-title">💳 クレジットの体温（ハイイールド債）</div><div class="card-sub">スプレッド拡大＝リスクオフの早期サイン</div></div>
+        <div class="big-num" style="color:#9a6700"><span class="tag" style="background:#9a6700;color:#fff">中立</span></div>
+        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">HY債ETF(HYG) 1か月 -0.0％ ／ 対米国債(HYG÷IEF) -0.4％</div>
+        <p class="comment">クレジットスプレッド（低格付け債と国債の利回り差）が広がると、ハイイールド債(HYG)が安全な国債(IEF)に対して値下がりします。その相対の動きで“信用の体温”を見ます。株価より先に悪化することがある早期警報です。</p>
+        <div class="beginner">出典: Yahoo Finance（HYG・IEF）。精密なスプレッド(OAS)ではなくETF相対による代理指標。くわしくは <a href="guide-credit-spread.html" style="color:#1f6feb">クレジットスプレッドとは</a>。情報提供であり投資助言ではありません。</div>
       </article>
       <article class="card" style="grid-column:1 / -1">
         <div class="card-header"><div class="card-title">💱 主要通貨ペアの金利差（スワップの向き）</div><div class="card-sub">各国の政策金利の差 ＝ FXのスワップに効く短期金利</div></div>
