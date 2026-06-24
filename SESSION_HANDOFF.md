@@ -98,6 +98,15 @@
 
 ---
 
+## ✅ 信用残ウォッチを hot-assets に実装（2026-06-24）
+
+出来高急増ページに **信用買い残・売り残（信用残ウォッチ）** を追加・ライブ稼働。「🔴 信用買い残が多い（上場比）」「🟢 信用売り残が多い（上場比）」の2ランキング＋信用倍率＋前日比＋見方注記＋免責。
+- **データ源＝JPX公式「個別銘柄信用取引残高（日々公表銘柄）」日次Excel**（mtdailyk*.xls・キー不要・無料・ToS安全）。`build_jp_margin.py`（SYNC_FILES）が index.html から最新Excelを取得→pandas/xlrd解析→`jp-margin.json`(243銘柄・SYNC禁忌)。`jp-rankings.yml` に pandas/xlrd install＋build_jp_margin.py 実行(非致命 `|| echo`)＋jp-margin.json commit を追加。`update-market-news` の on:push に `jp-margin.json` 追加＝コミットで hot-assets 即再描画。描画＝`generate_market_news.build_jp_margin_section`（jprank-* CSS流用）。
+- **🔑 J-Quants調査結果＝Lightプランは `/markets/*`(信用残/株価/空売り) が全て403「プラン外」、`/fins/*`(財務)のみ**。だから株価はYahoo・信用残はJPX公式Excelで取得（信用残をJ-Quantsで取るには Standard ¥3,300/月が必要・オーナー保留）。
+- **コンプラ＝独立Opus監査で🟡グレー→軽微修正→別の独立Opusが🟢白確認**。修正＝①「日々公表銘柄」定義を正確化（「信用残が基準超＝投機的」→「注意喚起のため毎日残高を公表／規制措置ではない」）②列見出しの「＝上値の重し/＝踏み上げ余地」断定を外し事実見出しに③脚注を可能性表現④極端倍率(売残僅少)は「—」＋注記。事実データ・売買推奨でない旨の免責二重。内部リンク=guide-margin-balance。
+- **⚠️ ハマり＝generate_market_news.py の contents-API reconcile で `{jp_margin_html}` 差込が CRLF/LF アンカー不一致で不発**（関数・呼出は入ったが差込だけ失敗→セクション計算されるが捨てられる）。スクリプトが no-op を「成功」と誤報告したのも一因。**教訓＝contents-API の文字列置換は改行(CRLF/LF)非依存にし、PUT後に raw でなく実HEADで適用結果を必ず検証**（raw.githubusercontentは5分キャッシュで誤判定する）。`_fix_gmn_template.py` で改行非依存に差込し解決。
+- 実機検証＝hot-assets にセクション/2ランキング/実データ/免責/asof 反映確認済。今後は毎夕 jp-rankings.yml が自動更新。
+
 ## ⚠️ 絶対遵守（事故防止）
 
 - **SYNC禁忌**（ローカルから絶対 push しない＝routine/cron/generate が GitHub 側で生成）。**正は CLAUDE.md の SYNC禁忌リスト**。代表例：
