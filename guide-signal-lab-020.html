@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
   <title>AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態 - MarketWatch AI</title>
   <meta name="description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（46%）に37pp差。エッジの主ドライバーはS/R壁か。第20回。">
   <meta name="keywords" content="AIシグナル,移動平均,デッドクロス,ゴールデンクロス,ma_dead,ma_golden,ショート,勝率,研究日誌,blocked">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-020.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態">
-  <meta property="og:description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）とblocked=False（46%）に37pp差。エッジの主ドライバーはS/R壁か。第20回。">
+  <meta property="og:description" content="#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）と">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-020.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -22,7 +21,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態",
-    "description": "#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。",
+    "description": "#8でMA ゴールデンクロス（ロング）29.5%を棄却確認済み。その裏側のデッドクロス（ショート）を正式検証——62.5%（20/32）CI下限45.3%で損益分岐43%超。分解するとblocked=True（82%）と",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-06-25",
@@ -248,7 +247,7 @@ window.addEventListener('resize',mark);
 
     <h1>🧪 AIシグナル研究日誌 #20<br><small style="font-size:.62em;color:#57606a;font-weight:400">MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と、blocked=True 交絡の実態（過去データの集計・将来を保証しません）</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約7分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月25日 &nbsp;|&nbsp; 読了：約7分
     </div>
 
     <p>第8回の研究（2026年6月15日）で「<strong>移動平均ゴールデンクロス（ma_golden）のロングシグナルは損益分岐43%を大幅に下回る23.3%——棄却確認</strong>」と発見しました。では、その裏側はどうでしょうか。MA が逆向きに交差する<strong>デッドクロス（ma_dead）のショートシグナル</strong>は、同じように損益分岐を割るのか、それとも全く逆の結果になるのか。今回はその「裏面」を正面から検証します。結果は予想外に明確でした——ただし、重要な交絡が潜んでいました。</p>
