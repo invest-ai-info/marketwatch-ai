@@ -178,7 +178,7 @@ header{{background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid 
 .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
 .header-meta{{font-size:.85rem;color:#57606a;margin-top:4px}}
 main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
-.nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}}
+.nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}}
 .nav-btn{{padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}}
 .nav-btn:hover{{border-color:#0969da;color:#0969da}}
 .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
@@ -246,7 +246,7 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div class="header-inner"><div class="header-title">📊 MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div></div></header>
+<header><div class="header-inner"><div class="header-title">📊 MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">🚨 政治発言ライブ</div></div></div></header>
 
 <main>
 <nav class="nav-bar">
