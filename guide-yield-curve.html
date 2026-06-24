@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の“形”を図解 - MarketWatch AI</title>
+  <meta name="description" content="イールドカーブとは、満期の異なる国債利回りを結んだ曲線のこと。長期が短期より高い「順イールド（右上がり）」が正常で、短期が長期を上回る「逆イールド（長短逆転）」は景気後退の前兆として知られます。なぜ逆イールドが注目されるのか、2年-10年や3か月-10年の見方、タイムラグの注意点、個人投資家の活用法までやさしく図解で解説します。">
+  <meta name="keywords" content="イールドカーブ,逆イールド,順イールド,長短金利差,景気後退,リセッション,2年10年,国債利回り,金利,初心者,図解">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-yield-curve.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の“形”を図解">
+  <meta property="og:description" content="満期の異なる国債利回りを結んだ曲線＝イールドカーブ。逆イールド（長短逆転）が景気後退の前兆とされる理由と見方・注意点を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-yield-curve.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の“形”を図解",
+    "description": "満期の異なる国債利回りを結んだ曲線＝イールドカーブ。逆イールド（長短逆転）が景気後退の前兆とされる理由と見方・注意点を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-06-24",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-yield-curve.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .summary-box{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #1a7f37;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .summary-box-title{font-size:1rem;font-weight:700;color:#1a7f37;margin-bottom:10px}
+    .visual-card{background:#ffffff;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin:18px 0;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+    .visual-card-title{font-size:1.05rem;font-weight:700;color:#0969da;margin-bottom:14px}
+    .order-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+    .order-cell{padding:18px;border-radius:10px;text-align:center;border:1px solid #d0d7de;background:#fff}
+    .order-cell .oc-emoji{font-size:2rem;display:block;margin-bottom:6px}
+    .order-cell .oc-name{font-size:1rem;font-weight:700;color:#0969da;margin-bottom:4px}
+    .order-cell .oc-sub{font-size:.8rem;color:#57606a;line-height:1.6}
+    .reason-card{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:20px 24px;margin:14px 0;border-left:4px solid #1f6feb}
+    .reason-num{font-size:.78rem;color:#1f6feb;font-weight:700;letter-spacing:.05em}
+    .reason-title{font-size:1.05rem;font-weight:700;color:#1f2328;margin:4px 0 8px}
+    .highlight-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .highlight-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .info-box{background:#dafbe1;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#1a7f37}
+    .info-box::before{content:"💡 ";font-weight:700}
+    .svg-figure{text-align:center;margin:8px 0 4px}
+    .svg-figure svg{max-width:100%;height:auto}
+    .svg-cap{font-size:.82rem;color:#57606a;text-align:center;margin-top:6px}
+    .level-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    .level-table th,.level-table td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left;vertical-align:top}
+    .level-table th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    .level-table td:first-child{font-weight:700;white-space:nowrap}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    @media(max-width:600px){
+      .article{padding:24px 20px}h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+      .order-grid{grid-template-columns:1fr}
+      .level-table{font-size:.78rem}
+      .level-table th,.level-table td{padding:8px 6px;white-space:normal}
+    }
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+<div id="reading-progress"></div>
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ イールドカーブ・逆イールドとは</div>
+
+  <article class="article">
+    <h1>📐 イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の“形”を図解</h1>
+    <div class="meta-line">公開日：2026年6月24日 ／ 読了時間：約9分 ／ カテゴリ：投資の基礎知識</div>
+
+    <div class="summary-box">
+      <div class="summary-box-title">⚡ この記事を30秒でわかるサマリー</div>
+      <p style="font-size:.92rem;color:#424a53;margin-bottom:14px">イールドカーブは<strong>「満期ごとの金利を結んだ線」</strong>。その<strong>形（傾き）</strong>で景気の先行きを読みます。</p>
+      <div class="order-grid">
+        <div class="order-cell">
+          <span class="oc-emoji">📈</span>
+          <div class="oc-name">順イールド</div>
+          <div class="oc-sub">右上がり（長期＞短期）<br><strong>＝正常な状態</strong></div>
+        </div>
+        <div class="order-cell" style="border-color:#cf222e">
+          <span class="oc-emoji">📉</span>
+          <div class="oc-name">逆イールド</div>
+          <div class="oc-sub">長短が逆転（短期＞長期）<br><strong>＝景気後退の前兆とされる</strong></div>
+        </div>
+        <div class="order-cell" style="border-color:#9a6700">
+          <span class="oc-emoji">⏳</span>
+          <div class="oc-name">タイムラグ注意</div>
+          <div class="oc-sub">サイン後すぐではなく<br><strong>1〜2年遅れて来やすい</strong></div>
+        </div>
+      </div>
+      <p style="margin-top:6px;font-size:.88rem;color:#424a53">ざっくり：<strong>線が右上がり＝正常／右下がり（逆イールド）＝景気後退の前兆として警戒される</strong>。</p>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#what">イールドカーブとは（満期ごとの金利の線）</a></li>
+        <li><a href="#shape">順イールドと逆イールド（線の形）</a></li>
+        <li><a href="#why">なぜ逆イールドが「景気後退の前兆」とされるのか</a></li>
+        <li><a href="#which">どの長短を見る？（2年-10年・3か月-10年）</a></li>
+        <li><a href="#caution">注意点（タイムラグ・必ず当たらない）</a></li>
+        <li><a href="#use">個人投資家の使い方</a></li>
+        <li><a href="#summary">まとめ</a></li>
+      </ol>
+    </div>
+
+    <h2 id="what">1. イールドカーブとは（満期ごとの金利の線）</h2>
+
+    <p><strong>イールドカーブ（利回り曲線）</strong>とは、<strong>同じ発行体（ふつうは国）の、満期の違う国債の利回り</strong>を、<strong>横軸＝満期（3か月・2年・10年・30年…）、縦軸＝利回り</strong>として並べて結んだ線のことです。</p>
+
+    <p>ふつうは「<strong>お金を長く貸すほど（満期が長いほど）高い利回り</strong>」が要求されるので、線は<strong>右上がり</strong>になります。これが正常な状態です。</p>
+
+    <h2 id="shape">2. 順イールドと逆イールド（線の形）</h2>
+
+    <div class="visual-card">
+      <div class="visual-card-title">📐 線の形で景気の温度が変わる</div>
+      <div class="svg-figure">
+        <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="順イールドは右上がり、逆イールドは右下がりに長短が逆転する2つの曲線を表した概念図">
+          <!-- 軸 -->
+          <line x1="70" y1="44" x2="70" y2="244" stroke="#8b949e" stroke-width="1.5"/>
+          <line x1="70" y1="244" x2="600" y2="244" stroke="#8b949e" stroke-width="1.5"/>
+          <text x="62" y="42" text-anchor="end" font-size="12" fill="#57606a">利回り</text>
+          <text x="600" y="266" text-anchor="end" font-size="12" fill="#57606a">満期 →</text>
+          <text x="110" y="262" text-anchor="middle" font-size="10.5" fill="#57606a">短期</text>
+          <text x="555" y="262" text-anchor="middle" font-size="10.5" fill="#57606a">長期</text>
+          <!-- 順イールド（右上がり・緑） -->
+          <path d="M100,210 Q300,150 560,95" fill="none" stroke="#1a7f37" stroke-width="3"/>
+          <text x="470" y="120" font-size="13" font-weight="700" fill="#1a7f37">順イールド（正常）</text>
+          <!-- 逆イールド（右下がり・赤） -->
+          <path d="M100,110 Q300,150 560,200" fill="none" stroke="#cf222e" stroke-width="3" stroke-dasharray="6 4"/>
+          <text x="430" y="210" font-size="13" font-weight="700" fill="#cf222e">逆イールド（長短逆転）</text>
+          <!-- 注記 -->
+          <text x="320" y="34" text-anchor="middle" font-size="12.5" fill="#57606a">右上がり＝正常／右下がり＝逆イールド（景気後退の前兆とされる）</text>
+        </svg>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>順イールド（右上がり）</strong>：長期金利＞短期金利。<strong>正常・景気拡大期に多い形</strong>。</li>
+      <li><strong>逆イールド（長短逆転・右下がり）</strong>：<strong>短期金利＞長期金利</strong>という、ふつうと逆の状態。歴史的に<strong>景気後退の前に現れることが多かった</strong>ことで知られます。</li>
+      <li><strong>フラット</strong>：長短の差がほぼ無い。順→逆、または逆→順への移行期によく見られます。</li>
+    </ul>
+
+    <h2 id="why">3. なぜ逆イールドが「景気後退の前兆」とされるのか</h2>
+
+    <p>逆イールド（短期＞長期）が起きるのには、ざっくり2つの力が働きます。</p>
+
+    <div class="reason-card">
+      <div class="reason-num">CAUSE 1</div>
+      <div class="reason-title">① 短期金利が上がる（中央銀行の利上げ）</div>
+      <p>インフレ抑制などで中央銀行が<strong>政策金利を引き上げる</strong>と、それに連動する<strong>短期金利が上昇</strong>します。</p>
+    </div>
+    <div class="reason-card" style="border-left-color:#cf222e">
+      <div class="reason-num" style="color:#cf222e">CAUSE 2</div>
+      <div class="reason-title">② 長期金利が下がる（将来の景気悪化・利下げの織り込み）</div>
+      <p>市場が「<strong>引き締めで景気が冷える→いずれ利下げになる</strong>」と先読みすると、<strong>長期金利が低下</strong>します。短期＞長期となり、線が逆転します。</p>
+    </div>
+
+    <div class="highlight-box">
+      つまり逆イールドは、<strong>「今は金融が引き締まっていて、市場は将来の景気悪化を織り込み始めている」</strong>という状態の表れ。だから「景気後退の前兆」として注目されます。
+    </div>
+
+    <h2 id="which">4. どの長短を見る？（2年-10年・3か月-10年）</h2>
+
+    <div class="visual-card">
+      <div class="visual-card-title">⚖️ よく使われる2つの組み合わせ</div>
+      <table class="level-table">
+        <thead><tr><th>組み合わせ</th><th>特徴</th></tr></thead>
+        <tbody>
+          <tr><td>10年 − 2年</td><td>最もよくニュースで使われる。マイナス＝逆イールド</td></tr>
+          <tr><td>10年 − 3か月</td><td>米FRB（NY連銀）の景気後退確率モデルが使う組み合わせ。実務で重視されることも多い</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>どちらも<strong>「長期 − 短期」がマイナス＝逆イールド</strong>。当サイトの <a href="market-health.html">市場健康度</a> では、米国債の<strong>10年−3か月</strong>を使って順/逆イールドの状態を表示しています。</p>
+
+    <h2 id="caution">5. 注意点（タイムラグ・必ず当たらない）</h2>
+
+    <ul>
+      <li><strong>すぐには来ない</strong>：逆イールドが出てから実際の景気後退まで、過去は<strong>おおむね1〜2年のタイムラグ</strong>がありました。サイン＝即暴落、ではありません。</li>
+      <li><strong>必ず当たるわけではない</strong>：あくまで「過去はそうだったことが多い」という<strong>経験則</strong>。外れた例もあります。</li>
+      <li><strong>逆イールドの“解消”にも注目</strong>：逆イールドが正常（順イールド）に戻る局面で景気後退が来た例もあり、「解消＝安心」と単純には言えません。</li>
+      <li>1つの指標だけで判断せず、<a href="guide-credit-spread.html">クレジットスプレッド</a> や <a href="guide-vix.html">VIX</a> など複数で見るのが実践的です。</li>
+    </ul>
+
+    <h2 id="use">6. 個人投資家の使い方</h2>
+
+    <p>個人がカーブを毎日計算する必要はありません。<strong>「今は順イールドか、逆イールドか」</strong>というざっくりした地合い認識で十分役立ちます。</p>
+
+    <ul>
+      <li><strong>逆イールドが続いている局面</strong>＝景気サイクルの後半の可能性。<strong>過度なリスクを取りすぎない・現金や守りも意識</strong>する材料に。</li>
+      <li><strong>長期の積立投資家</strong>は、こうしたサインで右往左往せず<strong>淡々と続ける</strong>のが基本（タイミングを当て続けるのは難しいため）。地合いは<strong>レバレッジやスポット投資の強弱を調整する</strong>くらいの使い方が現実的です。</li>
+      <li>金利そのものの仕組みは <a href="guide-interest-rates-bonds.html">金利と債券</a> もあわせてどうぞ。</li>
+    </ul>
+
+    <h2 id="summary">7. まとめ</h2>
+
+    <ul>
+      <li><strong>イールドカーブ</strong>＝満期ごとの国債利回りを結んだ線。<strong>形（傾き）</strong>で景気を読む。</li>
+      <li><strong>順イールド（右上がり）＝正常／逆イールド（長短逆転）＝景気後退の前兆</strong>として知られる。</li>
+      <li>逆イールドの正体＝<strong>短期金利の上昇（利上げ）＋長期金利の低下（将来の景気悪化の織り込み）</strong>。</li>
+      <li>見るのは<strong>10年−2年</strong>や<strong>10年−3か月</strong>。マイナス＝逆イールド。</li>
+      <li><strong>タイムラグ（1〜2年）があり、必ず当たるわけではない</strong>。複数の指標と合わせて地合い判断に使う。</li>
+    </ul>
+
+    <div class="related-section">
+      <h3>関連記事</h3>
+      <div class="related-grid">
+        <a class="related-card" href="guide-credit-spread.html">
+          <div class="related-card-title">💳 クレジットスプレッド</div>
+          <div class="related-card-desc">もう一つの先行サイン（信用の体温）</div>
+        </a>
+        <a class="related-card" href="guide-interest-rates-bonds.html">
+          <div class="related-card-title">💴 金利と債券とは</div>
+          <div class="related-card-desc">金利と債券価格の基礎</div>
+        </a>
+        <a class="related-card" href="market-health.html">
+          <div class="related-card-title">🩺 市場健康度</div>
+          <div class="related-card-desc">順/逆イールドの状態を確認</div>
+        </a>
+        <a class="related-card" href="guide-fomc.html">
+          <div class="related-card-title">🏛️ FOMCとは</div>
+          <div class="related-card-desc">短期金利を動かす金融政策</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      本記事は情報提供を目的とした一般的な教育コンテンツであり、投資助言や特定の銘柄・商品の売買推奨ではありません。逆イールドは景気後退を保証する指標ではなく、タイムラグや例外があります。投資判断はご自身の責任で行ってください。
+    </div>
+
+  </article>
+</main>
+<footer>
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a>
+<p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+<script>
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+</body>
+</html>
