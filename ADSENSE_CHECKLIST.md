@@ -43,3 +43,22 @@
 - **privacy.html 強化**：「利用予定→利用しています」／Google広告設定（adssettings.google.com）・aboutads.info のオプトアウトリンク追加／最終更新2026-06-06。
 - **sitemap.xml**：`build_sitemap_xml` で noindex の `guide-auto-*` を除外（索引矛盾を解消）。
 - **データページ enrich**：vix / hot-assets / calendar に各オリジナル「📘 見方・活用法」セクション（独自解説＋関連guide内部リンク＋免責）を追加。
+
+---
+
+## 📝 2026-06-24 再監査＆second-tier 実施（実機検証済み）
+
+**監査結論＝再申請レディ（6/19時点より強化）**。実機チェック結果：
+- sitemap：noindexルール違反の混入 **0**。6/19の85→105へ増えたが、+20は本日の基礎5本（金利と債券/単利と複利/ETF×投信/PER・PBR/注文方法）・signal-lab・news 等の**正当な編集記事増**。
+- 薄い自動/日付ページ（週次/週次振り返り/月次/preview/旧フラッシュ）＝**全て noindex 維持**。主要記事（基礎/テクニカル/研究日誌/ニュース）＝**全て index 維持**。
+- 6コアデータページ（index/calendar/charts/vix/market-health/hot-assets）＝**独自解説セクション全て生存**。
+- 必須：ads.txt(pub一致)・about・contact・privacy・sitemap = **全て200**／robots.txt **オープン**（/drafts/のみDisallow）。
+- `mw audit`＝index対象86本中 改善候補(score≥2) **0**。
+
+**second-tier（オーナー承認のうえ実施）**＝index のまま残っていた「消えても良い日付つきイベント速報フラッシュ **7本**」を `noindex,follow`＋sitemap除外：
+`guide-btc-crash-2026-05-19` / `guide-btc-crash-2026-06` / `guide-nikkei-60k-break-2026-05-20` / `guide-nikkei-65k-break-2026-05-25` / `guide-us-china-summit-2026-05` / `guide-us-china-summit-result-2026-05-14` / `guide-us-china-summit-result-2026-05-15`。
+- 手順＝`generate_market_news.py` の `NOINDEX_SLUGS` に7本追加（単一ソース）→ `apply_noindex.py`（patched 7/already 19/skipped 0）→ sync(189/0)→ `mw trigger update-market-news.yml`（sitemap再生成）。
+- **深掘り個別銘柄（NVIDIA/TSMC/トヨタ/SBG/AMD/OLC/Kioxia）・`bank-stocks-2026-05`・`japan-strategy-2026-05`・`jpy-intervention-2026-06` は価値があるので index 維持**（実機で確認）。
+- 実機検証＝7本すべて live で noindex／上記 index 維持を確認。sitemap は再生成後 **98** へ落ちる見込み（数分ラグ）。
+
+**🗓 ユーザー操作（再申請の gating）**＝Google 再クロール待ち。Search Console「ページ」で薄ページ＋7本が「除外（noindexタグにより）」へ移ったか、または `site:marketwatch-jp.com` で消えたかを確認 → AdSense で「問題を修正しました」→「審査をリクエスト」。再申請目安は **2026-06-26 頃**（オーナー判断）。
