@@ -46,6 +46,7 @@ SYNC_FORBIDDEN = {
     "signal-lab-tracker.json",  # 前向きトラッカー状態（routineがGitHub側でupdate/commit。SEEDはsignal_lab_tracker.py内）
     "signals-log-backtest.json",  # 日足リプレイ出力（ローカル/週次再生成の派生データ・大容量。ローカルpush禁止）
     "jp-rankings.json",  # 値上がり/値下がりランキング（jp-rankings.yml が GitHub 側で毎朝生成・コミット。ローカルpush禁止）
+    "jp-margin.json",  # 信用残ウォッチ（jp-rankings.yml が build_jp_margin.py で生成・コミット。ローカルpush禁止）
 }
 
 errors = []
