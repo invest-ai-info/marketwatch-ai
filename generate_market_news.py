@@ -4445,6 +4445,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 📊 解説「<a href="guide-per-pbr.html" style="color:#0969da"><b>PERとPBRとは？割安・割高を見分ける2大指標</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 🧪 解説「<a href="guide-signal-lab-019.html" style="color:#0969da"><b>研究日誌 #19 もみあい×Sのエッジ解剖——low_break×金属 0/10 が主犯</b></a>」公開'},
         {"date": "2026-06-23", "line": '・<b>2026-06-23</b>: 🛟 解説「<a href="guide-correction-playbook.html" style="color:#0969da"><b>株の急落・調整局面での立ち回り方</b></a>」公開'},
         {"date": "2026-06-23", "line": '・<b>2026-06-23</b>: 📰 解説「<a href="guide-news-2026-06-23-alphabet-ai-talent.html" style="color:#0969da"><b>【6/23】Alphabet AI人材2人離脱・株価-5〜7%・時価総額約37兆円消失</b></a>」公開'},
