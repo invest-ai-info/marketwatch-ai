@@ -7,6 +7,7 @@ on:
     paths:
       - 'generate_market_news.py'
       - 'jp-rankings.json'        # 日本株ランキング更新時に hot-assets を即再描画（夕方更新を遅延ゼロで反映）
+      - 'jp-margin.json'          # 信用残ウォッチ更新時にも hot-assets を即再描画
   schedule:
     # ─── 朝の更新（米国市場クローズ後）─── 4回試行でスキップ対策
     - cron: '27 22 * * *'   # 7:27 JST 本命
