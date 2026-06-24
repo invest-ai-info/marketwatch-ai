@@ -171,6 +171,12 @@ NOINDEX_SLUGS = {
     "guide-jpy-intervention-2026-04.html", "guide-fomc-2026-04.html", "guide-boj-2026-04.html",
     "guide-gw-gap-2026-05.html", "guide-jpy-intervention-2026-05-06.html",
     "guide-us-cpi-2026-05.html", "guide-us-jobs-2026-05.html",
+    # 🆕 2026-06-24 second-tier（AdSense再申請前）: 消えても良い日付つきイベント速報フラッシュを noindex+sitemap除外。
+    #   深掘り個別銘柄(NVIDIA/TSMC等)・bank-stocks・jpy-intervention-2026-06 は価値があるので index 維持。
+    "guide-btc-crash-2026-05-19.html", "guide-btc-crash-2026-06.html",
+    "guide-nikkei-60k-break-2026-05-20.html", "guide-nikkei-65k-break-2026-05-25.html",
+    "guide-us-china-summit-2026-05.html",
+    "guide-us-china-summit-result-2026-05-14.html", "guide-us-china-summit-result-2026-05-15.html",
 }
 def is_noindex_slug(slug: str) -> bool:
     s = slug or ""
