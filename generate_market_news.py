@@ -3651,11 +3651,11 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   </section>
 
 {rate_section}  <section class="summary" style="background:linear-gradient(135deg,#0e1d2f,#0a1420);border-color:#0969da">
-    <h2 style="color:#0969da">📋 投資判断のヒント</h2>
-    <p>
-      <b>短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
-      <b>中期（3〜12ヶ月）</b>: バフェット指数・CAPEが歴史的高水準なら <b>新規資金一括投入は避け、段階投資＋分散</b> が鉄則。<br>
-      <b>長期（1年以上）</b>: 日本株・新興国・金・債券などへの分散で米国一極集中リスクを下げる戦略が有効。
+    <h2 style="color:#58a6ff">📋 投資判断のヒント</h2>
+    <p style="color:#cdd9e5">
+      <b style="color:#79c0ff">短期（〜3ヶ月）</b>: VIX・騰落レシオの極端な値（VIX 30超 or 騰落120超/70未満）は転換点シグナル。<br>
+      <b style="color:#79c0ff">中期（3〜12ヶ月）</b>: バフェット指数・CAPEが歴史的高水準なら <b style="color:#e6edf3">新規資金一括投入は避け、段階投資＋分散</b> が鉄則。<br>
+      <b style="color:#79c0ff">長期（1年以上）</b>: 日本株・新興国・金・債券などへの分散で米国一極集中リスクを下げる戦略が有効。
     </p>
   </section>
 
