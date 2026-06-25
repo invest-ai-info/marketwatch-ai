@@ -81,6 +81,28 @@
     body.dark .cat-more-btn{background:#161b22;border-color:#30363d;color:#79c0ff}
     body.dark .cat-more-btn:hover{background:#1c2128;border-color:#58a6ff}
     @media(max-width:700px){.cat-hidden{display:none}.cat-more-btn{display:block}}
+    /* --- 記事検索（クライアントサイド・フィルタ） --- */
+    .guide-search{margin:0 0 26px}
+    .guide-search-box{position:relative}
+    .guide-search .search-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:1.05rem;pointer-events:none;opacity:.6}
+    .guide-search input{width:100%;box-sizing:border-box;padding:13px 16px 13px 44px;font-size:1rem;font-family:inherit;border:1px solid #d0d7de;border-radius:10px;background:#fff;color:#1f2328;transition:border-color .2s,box-shadow .2s}
+    .guide-search input::placeholder{color:#8b949e}
+    .guide-search input:focus{outline:none;border-color:#1f6feb;box-shadow:0 0 0 3px rgba(31,111,235,.15)}
+    .search-count{margin-top:9px;font-size:.85rem;color:#57606a;min-height:1.1em}
+    .search-count b{color:#0969da}
+    .search-no-results{display:none;padding:30px 20px;text-align:center;color:#57606a;background:#f6f8fa;border:1px dashed #d0d7de;border-radius:10px;margin-bottom:24px}
+    body.dark .guide-search input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+    body.dark .guide-search input::placeholder{color:#6e7681}
+    body.dark .guide-search input:focus{border-color:#58a6ff;box-shadow:0 0 0 3px rgba(88,166,255,.2)}
+    body.dark .search-count{color:#8b949e}
+    body.dark .search-count b{color:#79c0ff}
+    body.dark .search-no-results{background:#161b22;border-color:#30363d;color:#8b949e}
+    /* 検索中の表示制御（特異度で .cat-hidden / モバイル表示を上書き） */
+    body.searching #roadmap-banner{display:none!important}
+    body.searching .article-card{display:none}
+    body.searching .article-card.search-match{display:block}
+    body.searching .cat-more-btn{display:none}
+    body.searching .category-section.search-empty{display:none}
   </style>
 </head>
 <body>
@@ -114,11 +136,20 @@
     <div class="page-desc">投資判断に役立つ解説記事や緊急速報をカテゴリ別にまとめています。</div>
   </div>
 
-  <a href="guide-learning-roadmap.html" style="display:block;margin:0 0 26px;padding:18px 22px;background:linear-gradient(135deg,#0969da,#1f6feb);border-radius:12px;text-decoration:none;color:#fff;box-shadow:0 2px 8px rgba(9,105,218,.25)">
+  <a id="roadmap-banner" href="guide-learning-roadmap.html" style="display:block;margin:0 0 26px;padding:18px 22px;background:linear-gradient(135deg,#0969da,#1f6feb);border-radius:12px;text-decoration:none;color:#fff;box-shadow:0 2px 8px rgba(9,105,218,.25)">
     <div style="font-size:.8rem;font-weight:700;opacity:.92;letter-spacing:.04em">🧭 はじめての方へ</div>
     <div style="font-size:1.15rem;font-weight:700;margin-top:5px;line-height:1.45">📚 投資の学習ロードマップ — 何から学ぶ？「順番」で迷わない地図</div>
     <div style="font-size:.85rem;opacity:.93;margin-top:7px;line-height:1.6">当サイトの解説記事を初心者→中級の“学ぶ順番”で6ステップに整理。30本超をまとめてナビゲートします。</div>
   </a>
+
+  <div class="guide-search">
+    <div class="guide-search-box">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="guide-search-input" placeholder="記事を検索（キーワード・カテゴリ名／スペース区切りで絞り込み）" aria-label="記事を検索" autocomplete="off">
+    </div>
+    <div class="search-count" id="search-count" aria-live="polite"></div>
+  </div>
+  <div class="search-no-results" id="search-no-results">🔍 該当する記事が見つかりませんでした。別のキーワードでお試しください。</div>
 
   <!-- 速報・タイムリー記事 -->
   <div class="category-section">
@@ -1251,6 +1282,41 @@ function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-
 (function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
 window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
 (function(){document.querySelectorAll('.article-list').forEach(function(list){var cards=list.querySelectorAll('.article-card');var total=cards.length;if(total<=3)return;var hidden=total-3;for(var i=3;i<total;i++)cards[i].classList.add('cat-hidden');var btn=document.createElement('button');btn.className='cat-more-btn';btn.textContent='もっと見る（'+hidden+'件）';btn.onclick=function(){var expanded=btn.classList.contains('expanded');if(expanded){for(var i=3;i<total;i++)cards[i].classList.add('cat-hidden');btn.classList.remove('expanded');btn.textContent='もっと見る（'+hidden+'件）';list.closest('.category-section').scrollIntoView({behavior:'smooth',block:'start'});}else{for(var i=3;i<total;i++)cards[i].classList.remove('cat-hidden');btn.classList.add('expanded');btn.textContent='折りたたむ ↑';}};list.parentNode.insertBefore(btn,list.nextSibling);});})();
+(function(){
+  var input=document.getElementById('guide-search-input');
+  if(!input)return;
+  var countEl=document.getElementById('search-count');
+  var noRes=document.getElementById('search-no-results');
+  var sections=Array.prototype.slice.call(document.querySelectorAll('.category-section'));
+  var data=Array.prototype.slice.call(document.querySelectorAll('.article-card')).map(function(card){
+    var pick=function(sel){var el=card.querySelector(sel);return el?el.textContent:'';};
+    return {card:card,hay:(pick('.article-title')+' '+pick('.article-desc')+' '+pick('.article-badge')).toLowerCase()};
+  });
+  function run(){
+    var q=input.value.toLowerCase().trim();
+    if(!q){
+      document.body.classList.remove('searching');
+      data.forEach(function(d){d.card.classList.remove('search-match');});
+      sections.forEach(function(s){s.classList.remove('search-empty');});
+      countEl.innerHTML='';noRes.style.display='none';return;
+    }
+    document.body.classList.add('searching');
+    var terms=q.split(/\s+/).filter(Boolean);
+    var hits=0;
+    data.forEach(function(d){
+      var ok=terms.every(function(t){return d.hay.indexOf(t)!==-1;});
+      d.card.classList.toggle('search-match',ok);
+      if(ok)hits++;
+    });
+    sections.forEach(function(s){
+      s.classList.toggle('search-empty',!s.querySelector('.article-card.search-match'));
+    });
+    countEl.innerHTML='<b>'+hits+'</b> 件ヒット';
+    noRes.style.display=hits===0?'block':'none';
+  }
+  input.addEventListener('input',run);
+  input.addEventListener('keydown',function(e){if(e.key==='Escape'){input.value='';run();}});
+})();
 </script>
 
 </body>
