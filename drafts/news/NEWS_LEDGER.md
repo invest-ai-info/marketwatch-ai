@@ -3,6 +3,27 @@
 
 ---
 
+## 2026-06-25
+- 判定: ✅ 公開済み
+- 選定トピック: Micron Technology Q3 FY2026 過去最高決算（売上$41.46B・前年比+340%、非GAAP EPS $25.11・予想比+24%、粗利率84.6%）— AIメモリ(HBM)需要が「構造的」と確認、日経平均+4.61%・KOSPI+5.4%急反発（カテゴリ: マクロ・個別銘柄・AI半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5 （合計 15/15）
+- 出典:
+  - GlobeNewsWire「Micron Technology Reports Record Results for the Third Quarter of Fiscal 2026」（2026-06-24）
+  - Investing.com「Earnings Call Transcript: Micron tops Q3 2026 estimates, shares jump」（2026-06-24）
+  - 247wallst.com「Micron Technology Earnings Report Q3 2026」
+  - CNBC「Micron earnings report Q3 2026」（2026-06-24）
+  - Bloomberg「US Stock Futures Surge on Micron's Strong Forecast, Markets Wrap」（2026-06-24）
+  - SEC EDGAR「Micron Form 8-K FY2026 Q3 Press Release」（2026-06-24）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典5系統・断定なし・noindexなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（5項目全クリア・問題なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-25-micron-q3-record.html
+- 追記: check_site_consistency.py exit=0 確認済み（2回）。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。git push origin main 完了。
+
+---
+
 ## 2026-06-24
 - 判定: ✅ 公開済み
 - 選定トピック: 世界的AI半導体株急落・SOXX-7.88%・韓国KOSPIサーキットブレーカー2度発動（Samsung/SK Hynix各-10%超）—BofA利上げ示唆・SK Hynix HBM拡張鈍化・AI ROI懸念の3つの引き金、日経平均続落（カテゴリ: マクロ・半導体・AI）
