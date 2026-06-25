@@ -325,6 +325,7 @@ if (localStorage.getItem('theme') === 'dark') {{
 }}
 </script>
 
+<script src="site-search.js" defer></script>
 </body>
 </html>
 """
