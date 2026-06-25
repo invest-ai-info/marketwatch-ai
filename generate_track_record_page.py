@@ -1558,6 +1558,7 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
     document.getElementById('theme-toggle').textContent = '☀️';
   }}
 </script>
+<script src="site-search.js" defer></script>
 </body>
 </html>
 """
