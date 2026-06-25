@@ -4571,6 +4571,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-25", "line": '・<b>2026-06-25</b>: 📰 解説「<a href="guide-news-2026-06-25-micron-q3-record.html" style="color:#0969da"><b>【6/25】Micron Q3過去最高決算・売上$41.5B 前年比+340% — AIメモリ需要が構造的と確認</b></a>」公開'},
         {"date": "2026-06-25", "line": '・<b>2026-06-25</b>: 🧪 解説「<a href="guide-signal-lab-020.html" style="color:#0969da"><b>研究日誌 #20 MA デッドクロス×ショート 62.5%——ゴールデンクロス(ロング)との33pp非対称</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 📐 解説「<a href="guide-yield-curve.html" style="color:#0969da"><b>イールドカーブ・逆イールドとは？景気後退の前兆とされる金利の「形」を図解</b></a>」公開'},
         {"date": "2026-06-24", "line": '・<b>2026-06-24</b>: 💳 解説「<a href="guide-credit-spread.html" style="color:#0969da"><b>クレジットスプレッドとは？「市場の不安」を先に映す金利差を図解</b></a>」公開'},
