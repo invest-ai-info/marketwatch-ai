@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-06-27 | 📝 autodraft 下書き：profit-taking（利益確定の心理）
+
+- **基準日（JST）**: 2026-06-27
+- **topic**: 利益確定の心理（チキン利食い・処分効果の裏面）
+- **key**: `profit-taking`
+- **生成ファイル**: `drafts/draft-profit-taking.html`
+- **シリーズ**: 投資心理 → 公開カテゴリ「🧠 投資の心理・メンタル」
+- **参照出典**:
+  - Shefrin & Statman (1985), "The Disposition to Sell Winners Too Early and Ride Losers Too Long", *Journal of Finance*, Vol.40, pp.777-790
+  - Odean (1998), "Are Investors Reluctant to Realize Their Losses?", *Journal of Finance*, 53(5), pp.1775-1798（PGR 14.8% vs PLR 9.8%）
+  - Kahneman & Tversky (1979), Prospect Theory, *Econometrica* 47(2)（損失回避・価値関数）
+  - behavioraleconomics.com / Wikipedia（disposition effect）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・教育コンテンツのみ）
+  - ✅ 断定・利益保証なし（「絶対」「保証」「儲かる」等未使用）
+  - ✅ kinsho-v1 免責 3点セット（冒頭バナー・本文末・footer）あり
+  - ✅ noindex,nofollow 設定あり（下書きのため検索除外）
+  - ✅ 期待値の計算例に「保証するものではありません」の注記あり
+  - ✅ 出典は学術論文（Shefrin & Statman 1985 / Odean 1998）で根拠あり
+- **SVG構成**:
+  - SVG 1: 処分効果の対比図（利益銘柄=早売り / 損失銘柄=長保有）→ ✅ライト/ダーク両対応
+  - SVG 2: チキン利食いvs利を伸ばす累積損益曲線 → ✅ライト/ダーク両対応
+  - SVG 3: トレーリングストップ概念図 → ✅ライト/ダーク両対応
+  - **SVG実機確認 TODO**: ライト/ダーク両テーマでの実機表示確認が必要
+- **人間の残作業**:
+  1. SVG の実機ライト/ダーク確認（特に `.s-note-*` クラスのテキスト可視性）
+  2. Opus compliance-reviewer 監査
+  3. タイトル・メタ description の微調整（必要であれば）
+  4. 公開時は `python mw.py publish --file guide-profit-taking.html --category "投資の心理・メンタル" --emoji 💰 --card-title "利益確定の心理・チキン利食い" --desc "なぜ利確を急ぐのか。処分効果・期待値の考え方から、トレーリングストップ・部分利確まで図解で解説"` を実行
+
+---
+
 ## 2026-06-26 | 🧪 signal-lab #021 自動公開済み
 
 - **基準日（JST）**: 2026-06-26
