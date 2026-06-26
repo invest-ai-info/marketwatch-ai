@@ -2575,6 +2575,63 @@ def build_hot_assets_html(hot_data, now_jst):
 </html>"""
 
 
+def build_earnings_section():
+    """earnings-calendar.json を読んで「主要企業の決算予定」セクションHTMLを返す（無ければ空文字）。
+    米国=Nasdaq自動取得 / 日本=キュレーション。生成は build_earnings_calendar.py 側。ここは描画のみ。"""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "earnings-calendar.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return ""
+    us = data.get("us") or []
+    jp = data.get("jp") or []
+    if not us and not jp:
+        return ""
+    _dow = ["月", "火", "水", "木", "金", "土", "日"]
+
+    def _fmt(ds):
+        try:
+            d = datetime.strptime(ds, "%Y-%m-%d")
+            return f"{d.month}/{d.day}（{_dow[d.weekday()]}）"
+        except Exception:
+            return "未定"
+
+    def _rows(items, is_jp):
+        parts = []
+        for e in items:
+            ds = e.get("date")
+            dtxt = _fmt(ds) if ds else "未定"
+            name = e.get("name", "")
+            code = (e.get("code") if is_jp else e.get("ticker")) or ""
+            tm = e.get("time", "") or ""
+            tent = ('<span style="color:#9a6700;font-size:.74rem">（予定）</span>'
+                    if e.get("tentative") else "")
+            parts.append(
+                '<div style="display:flex;gap:8px;align-items:baseline;padding:7px 2px;border-bottom:1px solid #eaeef2">'
+                f'<span style="flex:none;width:80px;font-weight:700;color:#1f6feb;font-size:.88rem">{dtxt}</span>'
+                f'<span style="flex:1;color:#1f2328;font-size:.9rem;line-height:1.4">{name} '
+                f'<span style="color:#6e7781;font-size:.78rem">{code}</span> {tent}</span>'
+                f'<span style="flex:none;color:#57606a;font-size:.76rem;white-space:nowrap">{tm}</span>'
+                "</div>")
+        return "".join(parts) or '<p style="color:#6e7781;font-size:.85rem;padding:8px 2px">準備中</p>'
+
+    updated = data.get("updated", "")
+    return (
+        '<div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:22px 26px;margin-top:24px">'
+        '<h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 6px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📊 主要企業の決算予定</h2>'
+        f'<p style="font-size:.82rem;color:#6e7781;margin:0 0 14px;line-height:1.6">米国はNasdaqより自動取得／日本は発表予定日（各社IRで確定・日程は変更の場合あり）｜更新: {updated}</p>'
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px 26px">'
+        '<div><div style="font-weight:700;color:#1f2328;margin-bottom:4px;font-size:.98rem">🇺🇸 米国</div>'
+        + _rows(us, False) + "</div>"
+        '<div><div style="font-weight:700;color:#1f2328;margin-bottom:4px;font-size:.98rem">🇯🇵 日本</div>'
+        + _rows(jp, True) + "</div>"
+        "</div>"
+        '<p style="font-size:.78rem;color:#6e7781;margin:14px 0 0;line-height:1.6">※ 決算日は予告なく変更される場合があります。最新は各社公式IRでご確認ください。本欄は情報提供であり、特定銘柄の売買推奨や投資助言ではありません。</p>'
+        "</div>"
+    )
+
+
 def build_calendar_html(now_jst):
     """マクロ経済カレンダーページを生成（現在月＋翌月）"""
     time_str = now_jst.strftime("%Y年%m月%d日 %H:%M JST")
@@ -2677,6 +2734,7 @@ def build_calendar_html(now_jst):
     grid_next = build_month_grid(next_year, next_month, ev_next, False)
     list_cur = build_event_list(ev_cur, cur_month)
     list_next = build_event_list(ev_next, next_month)
+    earnings_section = build_earnings_section()
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -2806,6 +2864,8 @@ def build_calendar_html(now_jst):
   <div class="beginner-box">
     経済指標は発表の瞬間に株価・為替が大きく動くことがあります。特に「⭐最重要」マークの指標発表前後は値動きが荒くなりやすいため、初心者はこの時間帯の売買を避けるのが無難です。「予想値」と「実績値」の差（サプライズ）が大きいほど相場が動きます。長期投資なら日々の指標に一喜一憂せず、トレンドを確認する程度でOKです。
   </div>
+
+  {earnings_section}
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
     <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 経済カレンダーの見方・活用法</h2>
