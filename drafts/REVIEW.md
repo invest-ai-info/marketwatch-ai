@@ -12,13 +12,13 @@
 - **判定**: 🟡 通過A（両仮説同時クリア・継続観察）
 - **生成ファイル**: drafts/draft-signal-lab-022.html / drafts/labnotes/lab-022-analysis.md / drafts/labnotes/lab-022-claims.json / signal-lab-ledger.md
 
-### 自動公開ゲート進捗
-- [ ] 8-1 git commit/push
-- [ ] 8-2 verify EXIT=0
-- [ ] 8-3 Opus compliance
-- [ ] 8-4-i 数値再検証
-- [ ] 8-4-ii 独立確認Opus
-- [ ] 公開実行
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 022 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 9/9クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→🟢白 — line 473「上昇トレンド中では機能が確認できます」→「上昇トレンド中の過去データでは損益分岐を上回る傾向が見られました」＋将来非保証注記追加（数値・SVG・30秒まとめ不変）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も9/9緑・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（kinsho-v1×3箇所・断定表現なし・将来非保証・投資助言・推奨なし 全確認）
+- [x] ✅ 自動公開済み（検証緑・初期グレー→Opus修正適用→修正後白・独立確認白）| guide-signal-lab-022.html
 
 ---
 
