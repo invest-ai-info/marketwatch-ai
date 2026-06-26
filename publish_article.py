@@ -281,8 +281,14 @@ def main():
         reconcile_from_main()   # 🔒 編集の前に必ず main 最新を取り込む（巻き戻し事故をコードで防止）
     # 🆕 スマホ横はみ出し防止CSSを注入（未注入なら）＝公開記事は必ずモバイル最適化
     if not a.dry and _MF_BLOCK and _MF_MARKER not in html and "</head>" in html:
-        _write(a.file, html.replace("</head>", _MF_BLOCK + "</head>", 1))
+        html = html.replace("</head>", _MF_BLOCK + "</head>", 1)
+        _write(a.file, html)
         print("  ✅ モバイル最適化CSSを注入（スマホ横はみ出し防止）")
+    # 🆕 全ページ横断検索タグを注入（未注入なら）＝公開記事は必ず右上🔍を持つ
+    if not a.dry and "site-search.js" not in html and "</body>" in html:
+        html = html.replace("</body>", '<script src="site-search.js" defer></script>\n</body>', 1)
+        _write(a.file, html)
+        print("  ✅ サイト内検索タグを注入（site-search.js）")
     add_to_guides(a.file, a.category, a.emoji, a.card_title, a.desc, date, readmin, a.badge, a.dry)
     add_to_sync(a.file, a.dry)
     add_to_history(a.file, a.emoji, a.card_title, date, a.dry)
