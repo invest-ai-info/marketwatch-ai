@@ -1,0 +1,59 @@
+{
+  "article_id": "022",
+  "claims": [
+    {
+      "label": "全revL（逆張り買い）ベースライン",
+      "filter": {"reversal_long": true},
+      "k": 185,
+      "n": 467
+    },
+    {
+      "label": "上昇トレンド×逆張り買い（主仮説H1）",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 60,
+      "n": 111
+    },
+    {
+      "label": "下降トレンド×逆張り買い（主仮説H2・危険確認）",
+      "filter": {"trend": "下降", "reversal_long": true},
+      "k": 62,
+      "n": 184
+    },
+    {
+      "label": "中立・もみあいトレンド×逆張り買い",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true},
+      "k": 62,
+      "n": 168
+    },
+    {
+      "label": "上昇×逆張り買い×指数グループ",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "index"},
+      "k": 36,
+      "n": 56
+    },
+    {
+      "label": "上昇×逆張り買い×円クロスFX",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "jpy_fx"},
+      "k": 18,
+      "n": 29
+    },
+    {
+      "label": "上昇×逆張り買い×ドル建てFX",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "other_fx"},
+      "k": 3,
+      "n": 18
+    },
+    {
+      "label": "上昇×逆張り買い×BB下限タッチ",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch"},
+      "k": 47,
+      "n": 86
+    },
+    {
+      "label": "上昇×逆張り買い×RSI売られすぎ反発",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce"},
+      "k": 13,
+      "n": 25
+    }
+  ]
+}

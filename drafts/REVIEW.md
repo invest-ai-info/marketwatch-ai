@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-06-27 | 🧪 signal-lab #022 ゲート実行中
+
+- **基準日（JST）**: 2026-06-27
+- **採択仮説**: 「逆張り買い（reversal_long）は上昇トレンド中のみエッジを持ち、下降中は落ちるナイフになる——トレンド依存性の系統的解析」（スイープFDR通過 in-sample R+0.26・#018/#014の探索的後継・前向きトラッカー trend=上昇×reversalL edge登録済み N=10）
+- **事前宣言**: H1（上昇×revL CI下限≥43% かつ N≥50）/ H2（下降×revL CI上限≤43% かつ N≥50）
+- **検証データ**: 全決済済み1,157件（signals-log.json）。trend×reversal_long クロス集計＋グループ別・シグナル別内訳
+- **結果**: 上昇×revL=54.1%(60/111) CI[44.8%,63.0%] E(R)=+0.261 CI[+0.044,+0.478] → **H1 PASS ✅**。下降×revL=33.7%(62/184) CI[27.3%,40.8%] E(R)=-0.214 → **H2 PASS ✅**。グループ交絡: 指数64.3%(36/56)・jpy_fx62.1%(18/29)が主因、other_fx16.7%(3/18)は逆効果。前向き N=10 CI広く確定打なし
+- **判定**: 🟡 通過A（両仮説同時クリア・継続観察）
+- **生成ファイル**: drafts/draft-signal-lab-022.html / drafts/labnotes/lab-022-analysis.md / drafts/labnotes/lab-022-claims.json / signal-lab-ledger.md
+
+### 自動公開ゲート進捗
+- [ ] 8-1 git commit/push
+- [ ] 8-2 verify EXIT=0
+- [ ] 8-3 Opus compliance
+- [ ] 8-4-i 数値再検証
+- [ ] 8-4-ii 独立確認Opus
+- [ ] 公開実行
+
+---
+
 ## 2026-06-27 | 📝 autodraft 下書き：profit-taking（利益確定の心理）
 
 - **基準日（JST）**: 2026-06-27
