@@ -175,8 +175,8 @@ def main():
     else:
         summary_unexplained.append("（30秒まとめボックスが見つからない＝構造異常）")
 
-    # SVG座標はみ出しチェック（text/rect の y が viewBox 高さ内か）
-    svg_warn = svg_bounds_check(html)
+    # SVGチェック：①縦はみ出し(text/rectのy) ②text同士の重なり・横はみ出し
+    svg_warn = svg_bounds_check(html) + text_overlap_check(html)
     for w in svg_warn:
         print(f"  ⚠️ SVG: {w}")
     for u in summary_unexplained:
@@ -211,6 +211,71 @@ def svg_bounds_check(html):
             y, h = float(rm.group(1)), float(rm.group(2))
             if y + h > H + 0.5:
                 warns.append(f"rect y+height={y+h} が viewBox高さ {H} 超")
+    return warns
+
+
+def _est_text_width(text, fs):
+    """文字数×em係数で text の概算幅を返す（和文/全角≒1em・英数記号≒0.55em）。"""
+    w = 0.0
+    for ch in text:
+        o = ord(ch)
+        if (0x3040 <= o <= 0x30ff) or (0x3000 <= o <= 0x33ff) or (0x4e00 <= o <= 0x9fff) or (0xff00 <= o <= 0xffef):
+            w += fs            # ひらがな/カタカナ/CJK/全角記号 ≒ 1em
+        else:
+            w += fs * 0.55     # 英数・半角記号 ≒ 0.55em
+    return w
+
+
+def _svg_text_boxes(body):
+    """SVG body 内の <text> を概算バウンディングボックス (x0,y0,x1,y1,text) のリストに変換。
+    y は baseline なので上に約0.9em・下に約0.15em 伸ばす。"""
+    boxes = []
+    for m in re.finditer(r'<text\b([^>]*)>(.*?)</text>', body, re.S):
+        attrs, raw = m.group(1), m.group(2)
+        xm = re.search(r'\bx="(-?[\d.]+)"', attrs)
+        ym = re.search(r'\by="(-?[\d.]+)"', attrs)
+        if not xm or not ym:
+            continue
+        x, y = float(xm.group(1)), float(ym.group(1))
+        fsm = re.search(r'font-size="([\d.]+)"', attrs)
+        fs = float(fsm.group(1)) if fsm else 12.0
+        am = re.search(r'text-anchor="(start|middle|end)"', attrs)
+        anchor = am.group(1) if am else "start"
+        text = re.sub(r'<[^>]+>', '', raw).strip()
+        if not text:
+            continue
+        w = _est_text_width(text, fs)
+        if anchor == "middle":
+            x0 = x - w / 2
+        elif anchor == "end":
+            x0 = x - w
+        else:
+            x0 = x
+        boxes.append((x0, y - fs * 0.9, x0 + w, y + fs * 0.15, text))
+    return boxes
+
+
+def text_overlap_check(html):
+    """同一 SVG 内で <text> 同士が重なっていないか／横にはみ出していないかを概算チェック。
+    フォント実寸はレンダリングしないと測れないため、文字数×em係数で近似する。
+    過検出しても『RED→人間レビュー』に回るだけ＝自動公開を止める安全側の判定。"""
+    warns = []
+    for m in re.finditer(r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', html, re.S):
+        W = float(m.group(1))
+        boxes = _svg_text_boxes(m.group(3))
+        # 横はみ出し（ボックス右端が幅を超える / 左端がマイナス）
+        for (x0, y0, x1, y1, t) in boxes:
+            if x1 > W + 2 or x0 < -2:
+                warns.append(f"text「{t[:16]}」が左右にはみ出し（x {x0:.0f}〜{x1:.0f} / 幅 {W:.0f}）")
+        # text 同士の重なり（両軸で tol px 超の重複）
+        tol = 3.0
+        for i in range(len(boxes)):
+            for j in range(i + 1, len(boxes)):
+                a, b = boxes[i], boxes[j]
+                ox = min(a[2], b[2]) - max(a[0], b[0])
+                oy = min(a[3], b[3]) - max(a[1], b[1])
+                if ox > tol and oy > tol:
+                    warns.append(f"text「{a[4][:14]}」と「{b[4][:14]}」が重なり（重複 {ox:.0f}x{oy:.0f}px）")
     return warns
 
 
