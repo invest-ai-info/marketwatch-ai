@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-06-26
+- 判定: ✅ 公開済み
+- 選定トピック: OpenAI IPO 2027年延期検討報道（NYT・Bloomberg 2026-06-25）でSoftBank Group（9984）が一時12〜14%急落、日経平均終値69,360円・下落幅▲3,005円（-4.15%）は歴代3位の下げ幅（カテゴリ: マクロ・AI・テック）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - Bloomberg「OpenAI Leans Toward Waiting Until 2027 for IPO, NYT Says」（2026-06-25）
+  - Bloomberg「SoftBank's Shares Tumble After Report of OpenAI's IPO Delay」（2026-06-26）
+  - 日本経済新聞「ソフトバンクG株価急落 『オープンAIがIPO延期検討』と伝わる」（2026-06-26）
+  - 日本経済新聞「日経平均終値3005円安の6万9360円 過去3番目の下げ幅」（2026-06-26）
+  - SoftBank Group公式プレスリリース「Follow-on Investments in OpenAI」（2026-02-27）
+  - CNBC「SpaceX stock falls 16%, continuing selloff after blockbuster IPO」（2026-06-22）
+  - PYMNTS「OpenAI Weighs Delay of IPO as Tech Stock Volatility Rattles Advisers」（2026-06-26）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典7系統・断定なし・noindexなし・「延期検討」と「延期決定」の混同なし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（5項目全クリア・問題なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-26-openai-ipo-delay-softbank.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。git push origin main 完了。
+
+---
+
 ## 2026-06-25
 - 判定: ✅ 公開済み
 - 選定トピック: Micron Technology Q3 FY2026 過去最高決算（売上$41.46B・前年比+340%、非GAAP EPS $25.11・予想比+24%、粗利率84.6%）— AIメモリ(HBM)需要が「構造的」と確認、日経平均+4.61%・KOSPI+5.4%急反発（カテゴリ: マクロ・個別銘柄・AI半導体）
