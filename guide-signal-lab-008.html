@@ -343,7 +343,7 @@ window.addEventListener('resize',mark);
         <line x1="175" y1="386" x2="660" y2="386" class="s-axis"/>
         <!-- 43%損益分岐ガイド: x=175+43*4=347 -->
         <line x1="347" y1="34" x2="347" y2="386" class="s-guide"/>
-        <text x="347" y="402" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <text x="347" y="90" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
         <!-- X軸目盛 -->
         <text x="175" y="402" text-anchor="middle" class="s-label-sm">0%</text>
         <text x="255" y="402" text-anchor="middle" class="s-label-sm">20%</text>
@@ -464,7 +464,7 @@ window.addEventListener('resize',mark);
         <line x1="531" y1="114" x2="531" y2="250" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 2"/>
         <text x="482" y="263" class="s-label-b" style="font-size:11.5px">クロス発生（ピーク後）</text>
         <!-- After cross, price continues down = SL -->
-        <text x="610" y="255" class="s-label-r" style="font-size:11.5px">→SL</text>
+        <text x="610" y="244" class="s-label-r" style="font-size:11.5px">→SL</text>
         <!-- Lag annotation -->
         <line x1="475" y1="95" x2="531" y2="110" stroke="#9a6700" stroke-width="1.5" marker-end="url(#arrow)"/>
         <text x="488" y="108" class="s-label-y" style="font-size:10.5px">遅れ発火</text>
@@ -492,14 +492,14 @@ window.addEventListener('resize',mark);
 
     <div class="chart-figure">
       <!-- 図3: E(R) 双方向バーチャート（0R=損益分岐, 左=マイナス, 右=プラス） -->
-      <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別の期待値E(R)比較">
+      <svg viewBox="0 0 700 396" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別の期待値E(R)比較">
         <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">シグナル種別の期待値 E(R) — 左がマイナス、右がプラス</text>
         <!-- 0R軸 (break-even): x=440, scale: 250px/R -->
         <line x1="440" y1="34" x2="440" y2="345" class="s-axis"/>
         <!-- 下軸 -->
         <line x1="175" y1="345" x2="640" y2="345" class="s-axis"/>
         <!-- 0R ラベル -->
-        <text x="440" y="360" text-anchor="middle" class="s-label-y">0R（損益分岐）</text>
+        <text x="433" y="360" text-anchor="end" class="s-label-y">0R（損益分岐）</text>
         <!-- -0.5R mark: x=440-0.5*250=315 -->
         <line x1="315" y1="340" x2="315" y2="348" class="s-axis"/>
         <text x="315" y="362" text-anchor="middle" class="s-label-sm">-0.5R</text>
@@ -543,8 +543,8 @@ window.addEventListener('resize',mark);
         <text x="8" y="314" class="s-label-sm">ma_golden</text>
         <text x="200" y="308" class="s-label-r">-0.683R（全種別最悪）</text>
 
-        <text x="350" y="370" text-anchor="middle" class="s-label-sm">★ ma_golden は1トレードあたり平均-0.683R の損失期待値。100回エントリーすると理論上-68.3R相当。</text>
-        <text x="350" y="379" text-anchor="middle" class="s-label-sm">※ 概念を示すイメージ図です。将来の運用成績を保証するものではありません。</text>
+        <text x="350" y="378" text-anchor="middle" class="s-label-sm">★ ma_golden は1トレードあたり平均-0.683R の損失期待値。100回エントリーすると理論上-68.3R相当。</text>
+        <text x="350" y="390" text-anchor="middle" class="s-label-sm">※ 概念を示すイメージ図です。将来の運用成績を保証するものではありません。</text>
       </svg>
       <div class="chart-caption">図3：期待値E(R)で見ると、ma_goldenは-0.683Rで全種別中最悪。E(R)がプラスなのはmacd_dead (+0.097R)とbb_lower_touch (+0.016R)だが、ともにブレ幅が大きく確定的ではない。</div>
     </div>
