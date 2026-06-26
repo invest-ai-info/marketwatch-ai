@@ -5,6 +5,19 @@
 
 ---
 
+## ✅ 経済カレンダーに「主要企業の決算予定」追加（2026-06-26）
+
+calendar.html に 📊 決算セクションを新設（マクロ指標グリッドの下・見方セクションの上）。**米国20社＋日本20社**の決算発表日を表示。ライブ反映済み。情報提供であり投資助言ではない旨の免責付き。
+
+- **データ＝`earnings-calendar.json`**（SYNC_FILES入り・ローカル生成→commit方式）。生成は **`build_earnings_calendar.py`**：
+  - **US=Nasdaq API自動取得**（`api.nasdaq.com/api/calendar/earnings?date=` を今日から約95営業日走査し主要20銘柄を収集。要 User-Agent）。**Nasdaq未掲載の遠い銘柄(NVDA/AVGO/WMT)は `US_FALLBACK` の前年実績ベース暫定日**で補完（確定して Nasdaq に載れば自動取得が優先）。
+  - **JP=`JP_CURATED` のキュレーション20社**（無料の自動ソースが無いため）。確定3社=任天堂/NTT/ファストリテ、他17社は前年同期実績ベースの推定（`tentative:True`→画面に「（予定）」表示）。
+  - `generate_market_news.py` の **`build_earnings_section()`** が JSON を読んで描画するだけ（取得はしない＝重い fetch と頻繁な描画を分離）。⚠️ Nasdaq は GitHub Actions で弾かれ得るため**ローカル生成**にしている。
+- **更新 cadence（重要・年4回の決算期ごと）**：① `JP_CURATED` を各社IR/株探の確定日に更新（特に**7月入り後**：今は予定が多い）② `python build_earnings_calendar.py` ③ `python mw.py sync`（earnings-calendar.json と builder を push）④ `python mw.py trigger update-market-news.yml`（calendar 再生成）。確定したら `tentative` を外す。
+- 銘柄を増減したい時は build_earnings_calendar.py の `US_TICKERS` / `JP_CURATED` を編集。
+
+---
+
 ## ✅ サイト全体・記事横断検索（site-search.js）— 全ページ完了（2026-06-26）
 
 ナビバーではなく **右上フローティング🔍**（`/`・Ctrl+K でも開く）。検索データは **guides.html を単一ソースに初回 fetch＋解析**＝索引ファイル/ビルド改修ゼロ・新記事は自動で検索対象。guides.html 自身は既存の「ページ内フィルタ」を持つため floating は**除外**（二重回避）。なぜフローティングか＝ナビ11ボタン化でモバイル2×5グリッドが崩れる＋110ページのナビ手術回避。
