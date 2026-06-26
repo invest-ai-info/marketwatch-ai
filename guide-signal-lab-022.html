@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
   <title>AIシグナル研究日誌 #22｜逆張り買いはトレンド次第で真逆——上昇中54%・下降中34%の系統的非対称 - MarketWatch AI</title>
   <meta name="description" content="逆張り買いシグナル（revL）をトレンド別に分割。上昇中54.1%（N=111・CI下限44.8%・E(R)+0.26）、下降中33.7%（N=184・CI上限40.8%）という両仮説同時通過。指数64%・jpy_fx62%・other_fx17%のグループ交絡も解析。研究日誌第22回。">
   <meta name="keywords" content="AIシグナル,逆張り,reversal,トレンド,上昇,下降,bb_lower,rsi_oversold,勝率,研究日誌">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-022.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #22｜逆張り買いはトレンド次第で真逆——上昇中54%・下降中34%の系統的非対称">
-  <meta property="og:description" content="逆張り買い(revL)全体は39.6%と損益分岐割れ。上昇トレンドに絞ると54.1%（CI下限44.8%>43%）、下降トレンドは33.7%（CI上限40.8%<43%）——両仮説同時通過。指数64.3%・円クロス62.1%・ドル建てFX16.7%のグループ差も判明。">
+  <meta property="og:description" content="逆張り買いシグナル（revL）をトレンド別に分割。上昇中54.1%（N=111・CI下限44.8%・E(R)+0.26）、下降中33.7%（N=184・CI上限40.8%）という両仮説同時通過。指数64%・jpy_fx6">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-022.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -22,7 +21,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "AIシグナル研究日誌 #22｜逆張り買いはトレンド次第で真逆——上昇中54%・下降中34%の系統的非対称",
-    "description": "逆張り買い(revL)全体39.6%から上昇限定54.1%への変化と、グループ別交絡解析の結果。",
+    "description": "逆張り買いシグナル（revL）をトレンド別に分割。上昇中54.1%（N=111・CI下限44.8%・E(R)+0.26）、下降中33.7%（N=184・CI上限40.8%）という両仮説同時通過。指数64%・jpy_fx6",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-06-27",
@@ -137,6 +136,53 @@
     #reading-progress{position:fixed;top:0;left:0;height:3px;background:#0969da;z-index:9999;transition:width .1s}
     #theme-toggle{position:fixed;bottom:20px;right:20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:50%;width:42px;height:42px;cursor:pointer;font-size:1.1rem;z-index:999}
   </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
 </head>
 <body>
 <div id="reading-progress"></div>
@@ -176,7 +222,7 @@
 
     <h1>🧪 AIシグナル研究日誌 #22<br><small style="font-size:.65em;color:#57606a;font-weight:400">逆張り買いはトレンド次第で真逆——上昇中54%・下降中34%の系統的非対称とグループ交絡</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約10分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月27日 &nbsp;|&nbsp; 読了：約10分
     </div>
 
     <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第22回です。<a href="guide-signal-lab-018.html">第18回（#18）</a>では「指数グループ×逆張り買いが59.1%（CI下限48.6%）」と判明し、<a href="guide-signal-lab-014.html">第14回（#14）</a>では「円クロスFX×bb_lower_touch×ロングが60%（途中経過）」という発見がありました。両結果に共通するのが「<strong>上昇トレンド中</strong>」というコンテキストです。</p>
