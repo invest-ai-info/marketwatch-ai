@@ -2721,11 +2721,18 @@ def main():
             print(f"    🚫 フィルタ: {filter_block_reason}")
 
         # 🆕 2026-05-28: 全シグナルが email_silent（初押し等の蓄積期間中シグナル）ならメール送信スキップ
+        # 🆕 2026-06-26 A実装（#21昇格の配信反映・オーナー判断）: 検証済み+EVエッジ「指数×ロング」だけは
+        #    email_silent でも取りこぼさず配信する（見逃し防止）。⚠️ 上の ma_golden単独ブロック(0勝N=11)
+        #    は対象外＝維持。可逆＝この exempt 分岐を消せば従来挙動に戻る。
         if filter_send_email and all(s.get("email_silent") for s in fresh_signals):
-            filter_send_email = False
-            silent_types = [s["type"] for s in fresh_signals]
-            filter_block_reason = f"全シグナルが内部ログ専用 (email_silent): {silent_types}"
-            print(f"    🔕 フィルタ: {filter_block_reason}")
+            _idx_long_edge = ticker in INDEX_TICKERS and any(s.get("severity") == "buy" for s in fresh_signals)
+            if _idx_long_edge:
+                print(f"    📬 指数×ロング(検証済みエッジ #21): email_silent だが取りこぼし防止のため配信")
+            else:
+                filter_send_email = False
+                silent_types = [s["type"] for s in fresh_signals]
+                filter_block_reason = f"全シグナルが内部ログ専用 (email_silent): {silent_types}"
+                print(f"    🔕 フィルタ: {filter_block_reason}")
 
         # ファンダメンタル：ティッカー関連ニュースを取得 → 日本語に翻訳
         news_titles_en = fetch_ticker_news(ticker, max_items=5)
