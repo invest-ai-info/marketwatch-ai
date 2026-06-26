@@ -559,6 +559,7 @@ def build_weekly_html(week_start, week_end, today_jst):
 window.addEventListener('scroll',function(){{var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'}});
 </script>
 
+<script src="site-search.js" defer></script>
 </body>
 </html>
 """
