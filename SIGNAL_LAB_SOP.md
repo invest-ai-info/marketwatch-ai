@@ -38,7 +38,8 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
 優先度: **①新たに🟢昇格 or ⛔反証が出た** ＞ ②前向きで大きく動いた仮説 ＞ ③スイープでFDR通過した新候補 ＞ ④動きが薄い日は「定点観測のみ（30秒まとめ＋トラッカー表）」で軽く。
 - 記事には必ず**前向きトラッカー表**（`table --html`）と「30秒まとめ」を載せる。
 - 主張する数値は claims.json に入れ、**既存の自動公開ゲート**を通す：
-  `signal_lab_verify.py draft.html claims.json`（exit0＝緑）→ Opusコンプラ → 公開（`finalize_signal_lab.py`）。
+  `signal_lab_verify.py draft.html claims.json`（exit0＝緑）→ Opusコンプラ（黒/グレー/白）→ **品質レーン（`QUALITY_RUBRIC.md` の5観点・白の後に実行）** → 公開（`finalize_signal_lab.py`）。
+  - 品質レーン＝機械チェック/コンプラで拾えない「中身の読みやすさ・明快さ」だけを採点。⚠️要改善は**表現・構成・補足1文のみ**で自己修正→再採点（**数値・SVG・claims.json・主張は絶対に不変**）。❌（直すと中身が変わる）は公開せず `drafts/REVIEW.md` に「🚩要人間レビュー（品質：観点#）」でエスカレ。観点①「30秒まとめ」の存在は `signal_lab_verify.py` が既に強制済＝重複チェックしない。詳細は `QUALITY_RUBRIC.md`。
 - ⚠️ claims の filter は `signal_lab_verify.py` の `ALLOWED_FILTER_KEYS` の範囲のみ。新次元が要る仮説は**verify.pyを人間が拡張するまでエスカレ**（勝手に増やさない）。
 
 ## 昇格基準（コード化済み・`signal_lab_tracker.py`／2026-06-16 **期待値ベース**に更新）
