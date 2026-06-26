@@ -2275,18 +2275,21 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
         chasing_downgrade = True
         factors.append("飛びつき順張り (前向き負け筋・-2)")
 
-    # 🆕 2026-06-18: 指数(株価指数)ロングの加点（両サンプル＋前向きで確認された唯一のレジーム安定 +EV エッジ）
+    # 🆕 2026-06-18 → ✅本採用 2026-06-26: 指数(株価指数)ロングの加点（唯一のレジーム安定 +EV エッジ）
     # 根拠＝ライブ838件で group=index×long +0.262R(54.1%,q=.060) / 20年BT16,222件で +0.053R(q=.019)＝
     #       両サンプルで符号一致のプラス。BTの下降相場でも +0.004 と崩れず（金属/BTCロングが
-    #       BT+0.30→ライブ−0.55 と符号反転＝レジーム依存だったのと対照的）。前向きトラッカー
-    #       index_long_live は n=139 / +0.293R / R下限+0.099>0 と OOS でも生存。
-    # ⚠️ 表示・記録のみ＝件名⭐と本文信頼度を上げるだけ。発火・メール送信可否・ロットには一切影響しない
-    #    （送信可否は filter_send_email が独立制御）。可逆。index_long_bonus を記録して前向き検証を継続。
+    #       BT+0.30→ライブ−0.55 と符号反転＝レジーム依存だったのと対照的）。
+    # ✅ 2026-06-26 研究日誌#21で前向きトラッカー index_long_live が正式昇格（60.0% 54/90・+0.40R・
+    #    平均RのCI下限+0.16>0 で OOS 生存）。「前向き検証段階」を終え、信頼度要素として【本採用】。
+    # ⚠️ 効果範囲は信頼度（件名⭐・本文・signals-log記録）まで。発火・メール送信可否・ロットには
+    #    【今回は】影響させない（オーナー判断 2026-06-26＝最小・ノーリスク実装。配信/ロットへの昇格は
+    #    追加のライブ確認を経て別途人間が判断。送信可否は filter_send_email が独立制御）。
+    #    可逆＝この score += 1 を消せば完全に元へ戻る。
     index_long_bonus = False
     if ticker in INDEX_TICKERS and (fresh_signals or [{}])[0].get("severity") == "buy":
         score += 1
         index_long_bonus = True
-        factors.append("指数ロング (両サンプル+前向きで確認・+1)")
+        factors.append("指数ロング (検証済み+EVエッジ・#21昇格・本採用・+1)")
 
     # ラベル判定
     if score >= 5:
