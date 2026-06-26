@@ -5,14 +5,16 @@
 
 ---
 
-## 🔍 サイト全体・記事横断検索（site-search.js）— コア＋静的記事 完了 / 残り12記事は明日（2026-06-25）
+## ✅ サイト全体・記事横断検索（site-search.js）— 全ページ完了（2026-06-26）
 
 ナビバーではなく **右上フローティング🔍**（`/`・Ctrl+K でも開く）。検索データは **guides.html を単一ソースに初回 fetch＋解析**＝索引ファイル/ビルド改修ゼロ・新記事は自動で検索対象。guides.html 自身は既存の「ページ内フィルタ」を持つため floating は**除外**（二重回避）。なぜフローティングか＝ナビ11ボタン化でモバイル2×5グリッドが崩れる＋110ページのナビ手術回避。
 
 - ✅ **ライブ反映・検証済み**：`site-search.js`（HTTP200・10KB）／6コアページ（index/calendar/charts/vix/market-health/hot-assets＝update-market-news 再生成済み）／静的記事 約120本＋about/contact/privacy。検証＝全ページのタグ存在＋アセット配信＋ローカル実機での完全動作（絞り込み/遷移/キー操作/ライト・ダーク・モバイル）。
 - ✅ 生成元にタグ注入済み：`generate_market_news.py`(×7) `generate_youtube_summary.py` `generate_track_record_page.py` `build_political_feed_page.py`。`site-search.js`＋保守ツール `inject_site_search.py`（静的HTMLへ冪等注入・guidesと生成9ページは除外）は **SYNC_FILES 入り**。
-- ⏳ **生成3ページ**（youtube-summary/track-record/political-feed）は各 workflow 次回実行で自動反映（放置可。急ぐなら trigger）。
-- 🚩 **明日やる（task #7）**：**GitHub限定のルーティン記事12本にタグ未付与**＝`guide-signal-lab-016..020`＋`guide-news-2026-06-19..06-25`（ローカルに無いので injector が届かない）。カード検索では既に発見可能。**手順＝12本を raw から取得→`</body>`直前に `<script src="site-search.js" defer></script>` 注入→sync**。恒久化案＝`publish_article.py` にタグ自動注入を追加（未対応・検討事項）。
+- ✅ **生成3ページ**（youtube-summary/track-record/political-feed）＝全て🔍ライブ反映済み（生成元にタグ済み→各 workflow 再生成で反映。youtube は 2026-06-26 に手動 trigger）。
+- ✅ **task #7 完了（2026-06-26）**：GitHub 上の全 guide-*.html **129本**にタグ注入済み。ローカルに無いクラウド記事36本は **`_inject_cloud_search.py`**（scratch・SYNC外＝`_fix_cloud_mobile.py` 同型の GET→`</body>`前にタグ注入→PUT・冪等）で自己修復。再発時はこれを再実行すれば未注入分だけ埋まる。
+- ✅ **恒久化（将来の新記事に自動付与）**：`publish_article.py` が公開時に🔍タグを `</body>` 前へ自動注入（mobile-fit 注入の直後・冪等。news/signal-lab/手動 guide をカバー）。週次/月次は `auto_weekly_strategy.py`／`auto_weekly_review.py`／`generate_monthly_report.py` のテンプレにタグ追加済み。
+- ⚠️ guides.html は floating 検索を**載せない**（独自のページ内フィルタを持つため）。`inject_site_search.py` の EXCLUDE に `guides.html` を追加済み＝再 apply でも二重化しない。
 - ⚠️ デプロイ中に api.github.com が WinError 10060 を反復（既知）。`--force` は**ローカル変更ファイルのみ PUT・未変更は⚡スキップで保護**と実証済（auto-memory [[feedback-sync-force-utf8]]）。直接実行時は `PYTHONUTF8=1` 必須（cp932で絵文字クラッシュ）。
 
 ---
