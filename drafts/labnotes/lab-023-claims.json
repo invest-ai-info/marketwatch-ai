@@ -1,0 +1,23 @@
+{
+  "article_id": "023",
+  "claims": [
+    {"label": "rsi_oversold_bounce 全体",           "filter": {"signal": "rsi_oversold_bounce"},                           "k": 70,  "n": 192},
+    {"label": "bb_lower_touch 全体",                "filter": {"signal": "bb_lower_touch"},                                "k": 115, "n": 275},
+    {"label": "rsi × jpy_fx",                      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},        "k": 6,   "n": 31},
+    {"label": "bb × jpy_fx",                       "filter": {"signal": "bb_lower_touch",      "group": "jpy_fx"},        "k": 32,  "n": 55},
+    {"label": "rsi × index",                       "filter": {"signal": "rsi_oversold_bounce", "group": "index"},         "k": 24,  "n": 40},
+    {"label": "bb × index",                        "filter": {"signal": "bb_lower_touch",      "group": "index"},         "k": 32,  "n": 60},
+    {"label": "rsi × other_fx",                    "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},      "k": 19,  "n": 50},
+    {"label": "bb × other_fx",                     "filter": {"signal": "bb_lower_touch",      "group": "other_fx"},      "k": 31,  "n": 79},
+    {"label": "rsi × metal",                       "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},         "k": 6,   "n": 38},
+    {"label": "bb × metal",                        "filter": {"signal": "bb_lower_touch",      "group": "metal"},         "k": 11,  "n": 46},
+    {"label": "rsi × 上昇トレンド",                  "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},           "k": 13,  "n": 25},
+    {"label": "rsi × 下降トレンド",                  "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},           "k": 32,  "n": 94},
+    {"label": "rsi × 中立もみあい",                  "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},   "k": 24,  "n": 71},
+    {"label": "bb × 上昇トレンド",                   "filter": {"signal": "bb_lower_touch",      "trend": "上昇"},           "k": 47,  "n": 86},
+    {"label": "bb × 下降トレンド",                   "filter": {"signal": "bb_lower_touch",      "trend": "下降"},           "k": 30,  "n": 90},
+    {"label": "bb × 中立もみあい",                   "filter": {"signal": "bb_lower_touch",      "trend": "中立・もみあい"},   "k": 38,  "n": 97},
+    {"label": "rsi × 1h足",                        "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},               "k": 44,  "n": 121},
+    {"label": "bb × 1h足",                         "filter": {"signal": "bb_lower_touch",      "tf": "1h"},               "k": 70,  "n": 157}
+  ]
+}

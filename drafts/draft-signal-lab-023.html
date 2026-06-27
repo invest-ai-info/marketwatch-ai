@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #23｜RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較 - MarketWatch AI</title>
+  <meta name="description" content="RSI売られすぎ逆張り(rsi_oversold_bounce)36.5%(N=192)とBB下限タッチ(bb_lower_touch)41.8%(N=275)を全467件で比較。主仮説は両方未達だが、jpy_fxで19.4%対58.2%という38.8pp差という決定的な資産クラス依存性を発見。研究日誌第23回。">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-023.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #23｜RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較">
+  <meta property="og:description" content="RSI売られすぎ逆張りとBB下限タッチを全467件で比較。jpy_fxでは19.4%対58.2%という38.8pp差が判明。資産クラスによって信号品質が逆転するという重要な発見。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-023.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #23｜RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較",
+    "description": "RSI売られすぎ逆張りとBB下限タッチを全467件で比較。jpy_fxでは19.4%対58.2%という38.8pp差が判明。資産クラスによって信号品質が逆転するという重要な発見。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-06-28",
+    "dateModified": "2026-06-28",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-023.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-o{fill:#bc5400;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-o{fill:#fff3e0;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-o{fill:#ffb74d}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-o{fill:#2a1a08}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-caption,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #23
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #23<br><small style="font-size:.65em;color:#57606a;font-weight:400">RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第23回です。<a href="guide-signal-lab-022.html">前回（#22）</a>では逆張り買い（reversal_long）とトレンド方向の依存性を解析し、上昇中は54.1%・下降中は33.7%という系統的な非対称を確認しました。</p>
+    <p>今回は「<strong>逆張り買いシグナルの種類によって性能は変わるか</strong>」という問いに答えます。当サイトのシグナルエンジンが発火する逆張りロングには大きく2種類があります——RSI売られすぎ（rsi_oversold_bounce）とボリンジャーバンド下限タッチ（bb_lower_touch）です。1160件のクローズドデータで比較すると、全体では5.4ppの差にとどまりましたが、<strong>円建てFX（jpy_fx）グループだけで38.8ppという決定的な差</strong>が出ていることがわかりました。</p>
+
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 全体比較：<strong>RSI 36.5%（70/192件）</strong> vs <strong>BB 41.8%（115/275件）</strong>——差5.4pp、事前宣言H1・H2ともに未達<br>
+      ② jpy_fx（円建てFX）で決定的な差：<strong>RSI 19.4%（6/31件）</strong> vs <strong>BB 58.2%（32/55件）</strong>——差38.8pp<br>
+      ③ 指数では逆転：<strong>RSI 60.0%（24/40件）</strong> vs <strong>BB 53.3%（32/60件）</strong>——RSIがBBを上回る<br>
+      ④ シロ判定：主仮説H1（CI上限43.5%＞43%・0.5pp未達）・H2（差5.4pp＜10pp）いずれも<strong>未達</strong>——ただし資産クラス×シグナル種別の交叉効果は次回正式検証候補
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説と事前宣言基準</a></li>
+        <li><a href="#method">検証方法（1160件反実仮想集計）</a></li>
+        <li><a href="#result-overall">結果①：全体比較——5.4ppの差でH2未達</a></li>
+        <li><a href="#result-group">結果②：グループ別——jpy_fxの38.8pp分岐</a></li>
+        <li><a href="#result-trend">結果③：トレンド別の比較</a></li>
+        <li><a href="#confound">交絡の点検と解釈——なぜjpy_fxだけ違うのか</a></li>
+        <li><a href="#decision">今回の決定事項と次回候補</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説と事前宣言基準</h2>
+
+    <p>研究の起点となったのは、前向きトラッカーの「売られすぎ逆張り買い（rsi_oversold_bounce）」が前向きN=59・勝率30%・期待値R=-0.29という低迷ぶりでした。一方で#14の研究ではbb_lower_touch×jpy_fx×ロングが60.0%（N=45）と好成績を出していました。この対比が「シグナル種別そのものに性能差があるのでは」という仮説の出発点です。</p>
+
+    <div class="info-box">
+      <strong>💡 2種類の逆張り買いシグナルの違い</strong><br><br>
+      <strong>rsi_oversold_bounce（RSI売られすぎ）</strong>：RSIが30以下に低下した後に反転した際に発火。モメンタム（価格変化率）の過熱冷却を測る。<br><br>
+      <strong>bb_lower_touch（BB下限タッチ）</strong>：価格がボリンジャーバンド（-2σ）に達した際に発火。最近の価格変動の幅（ボラティリティ）に対する相対的な安値を測る。<br><br>
+      両者はどちらも「買われすぎ・売られすぎ」を捉えようとするが、基準が根本的に異なる。RSIは「価格変化の速度」、BBは「変動幅に対する現在位置」を見る。
+    </div>
+
+    <table>
+      <tr><th>仮説</th><th>事前合否基準</th></tr>
+      <tr><td>H1: rsi_oversold_bounceの全体勝率は損益分岐43%を安定的に下回る</td><td><strong>N≥100 かつ CI上限 &lt; 43%</strong>→ 棄却確認として通過A</td></tr>
+      <tr><td>H2: bb_lower_touchの勝率はrsi_oversold_bounceより10pp以上高い</td><td><strong>bb勝率 - rsi勝率 ≥ 10pp</strong></td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（1160件反実仮想集計）</h2>
+
+    <p>signals-log.jsonに記録された全シグナルのうち、TP1またはSL到達で結果が確定済みのもの1160件を対象としました。primary_signalフィールドが「rsi_oversold_bounce」または「bb_lower_touch」に一致するものだけを抽出し、グループ別・トレンド別に集計します。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ期間</td><td>signals-log.json内、2025年後半〜2026年6月27日</td></tr>
+      <tr><td>対象件数</td><td>rsi_oversold_bounce: <strong>192件</strong>、bb_lower_touch: <strong>275件</strong>（合計467件）</td></tr>
+      <tr><td>勝ち定義</td><td>TP1またはTP2到達（SL到達は負け）</td></tr>
+      <tr><td>損益分岐</td><td>43%（TP1:SL=1.33の期待値ゼロ点）</td></tr>
+      <tr><td>期待値E(R)</td><td>2.33 × 勝率 − 1（TP1=2×ATR・SL=1.5×ATR比より）</td></tr>
+      <tr><td>ブレ幅</td><td>Wilson法95%信頼区間を全数値に明記</td></tr>
+    </table>
+
+    <div class="warning-box">
+      両シグナルはともに<strong>ロング（買い）専用</strong>です。ショート件数はどちらもゼロ。ロング方向の逆張り性能のみを比較します。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-overall">③ 結果①：全体比較——5.4ppの差でH2未達</h2>
+
+    <table>
+      <tr><th>シグナル種別</th><th>k/n</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>rsi_oversold_bounce</td><td>70 / 192</td><td>36.5%</td><td>[30.0%〜43.5%]</td><td>−0.15R</td></tr>
+      <tr><td>bb_lower_touch</td><td>115 / 275</td><td>41.8%</td><td>[36.1%〜47.7%]</td><td>−0.03R</td></tr>
+      <tr><td>差（bb − rsi）</td><td>—</td><td>+5.4pp</td><td>—</td><td>+0.12R</td></tr>
+    </table>
+
+    <div class="negative-box">
+      <strong>H1未達：</strong>rsi_oversold_bounceの全体勝率CI上限 = <strong>43.5%</strong>。43%を0.5ppだけ超えており、「安定的に下回る」とは言えず。<br>
+      <strong>H2未達：</strong>差5.4ppは宣言した10ppに届かず。
+    </div>
+
+    <p>全体ではBBがRSIを5.4pp上回るものの、ともに損益分岐43%付近で迷走しています。この「似たような成績」だけを見ると、シグナル種別の差は小さいように思えます。しかし次のグループ別分析で、まったく異なる姿が浮かび上がります。</p>
+
+    <!-- SVG1: 全体比較（シンプルな2本の棒グラフ） -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="400" height="200" class="s-fill-gray"/>
+        <!-- グリッド -->
+        <line x1="70" y1="20" x2="370" y2="20" class="s-axis" stroke-dasharray="3 3" opacity="0.4"/>
+        <line x1="70" y1="70" x2="370" y2="70" class="s-axis" stroke-dasharray="3 3" opacity="0.4"/>
+        <line x1="70" y1="120" x2="370" y2="120" class="s-axis" stroke-dasharray="3 3" opacity="0.4"/>
+        <line x1="70" y1="170" x2="370" y2="170" class="s-axis" stroke-dasharray="3 3" opacity="0.4"/>
+        <!-- 43%ライン -->
+        <line x1="70" y1="87" x2="370" y2="87" class="s-guide"/>
+        <text x="375" y="91" class="s-label-y" font-size="10">43%</text>
+        <!-- 軸 -->
+        <line x1="70" y1="170" x2="370" y2="170" class="s-axis"/>
+        <line x1="70" y1="20" x2="70" y2="170" class="s-axis"/>
+        <!-- Y軸ラベル -->
+        <text x="62" y="24" class="s-label-sm" text-anchor="end">70%</text>
+        <text x="62" y="74" class="s-label-sm" text-anchor="end">50%</text>
+        <text x="62" y="124" class="s-label-sm" text-anchor="end">30%</text>
+        <text x="62" y="174" class="s-label-sm" text-anchor="end">10%</text>
+        <!-- RSI棒 -->
+        <rect x="110" y="96" width="60" height="74" fill="#e57c00" opacity="0.85" rx="3"/>
+        <text x="140" y="91" class="s-label-o" text-anchor="middle" font-size="12">36.5%</text>
+        <text x="140" y="184" class="s-label" text-anchor="middle" font-size="11">RSI</text>
+        <!-- BB棒 -->
+        <rect x="230" y="80" width="60" height="90" fill="#0969da" opacity="0.85" rx="3"/>
+        <text x="260" y="75" class="s-label-b" text-anchor="middle" font-size="12">41.8%</text>
+        <text x="260" y="184" class="s-label" text-anchor="middle" font-size="11">BB</text>
+        <!-- タイトル -->
+        <text x="200" y="13" class="s-label" text-anchor="middle" font-size="11">全体比較（損益分岐43%点線）</text>
+      </svg>
+      <div class="chart-caption">全体ではBBがRSIより5.4pp高いが、ともに損益分岐43%付近。この差はH2宣言基準（10pp以上）に届かない。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-group">④ 結果②：グループ別——jpy_fxの38.8pp分岐</h2>
+
+    <p>グループ（資産クラス）別に見ると、全体数字の背後に隠れていた劇的な分岐が見えてきます。</p>
+
+    <table>
+      <tr><th>グループ</th><th>RSI k/n</th><th>RSI 勝率</th><th>BB k/n</th><th>BB 勝率</th><th>差（BB−RSI）</th></tr>
+      <tr><td>jpy_fx（円建てFX）</td><td>6 / 31</td><td style="color:#cf222e;font-weight:700">19.4%</td><td>32 / 55</td><td style="color:#1a7f37;font-weight:700">58.2%</td><td style="color:#0969da;font-weight:700">+38.8pp</td></tr>
+      <tr><td>index（株価指数）</td><td>24 / 40</td><td style="color:#1a7f37;font-weight:700">60.0%</td><td>32 / 60</td><td>53.3%</td><td>−6.7pp（RSI優位）</td></tr>
+      <tr><td>other_fx（ドル建てFX）</td><td>19 / 50</td><td>38.0%</td><td>31 / 79</td><td>39.2%</td><td>+1.2pp（ほぼ同等）</td></tr>
+      <tr><td>metal（貴金属）</td><td>6 / 38</td><td style="color:#cf222e">15.8%</td><td>11 / 46</td><td style="color:#cf222e">23.9%</td><td>+8.1pp（共に低迷）</td></tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>決定的な発見：jpy_fxでRSI=19.4% vs BB=58.2%（38.8pp差）</strong><br>
+      95%CI: RSI [9.2%〜36.3%] / BB [45.0%〜70.3%]。CI同士が完全に分離しており、両者は明らかに異なる挙動をしている。jpy_fxにおいてRSIは期待値−0.55R、BBは+0.36R。差は+0.91Rに達する。
+    </div>
+
+    <div class="info-box">
+      <strong>注目：指数ではRSIがBBを上回る（逆転）</strong><br>
+      指数（index）グループではRSI 60.0%（24/40件）がBB 53.3%（32/60件）を6.7pp上回っています。N=40のため確定的ではありませんが、資産クラスによってRSIとBBの有効性が逆転するという仮説が示唆されます。
+    </div>
+
+    <!-- SVG2: グループ別比較棒グラフ -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 580 290" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="580" height="290" class="s-fill-gray"/>
+        <!-- グリッド -->
+        <line x1="60" y1="30" x2="540" y2="30" class="s-axis" stroke-dasharray="3 3" opacity="0.3"/>
+        <line x1="60" y1="80" x2="540" y2="80" class="s-axis" stroke-dasharray="3 3" opacity="0.3"/>
+        <line x1="60" y1="130" x2="540" y2="130" class="s-axis" stroke-dasharray="3 3" opacity="0.3"/>
+        <line x1="60" y1="180" x2="540" y2="180" class="s-axis" stroke-dasharray="3 3" opacity="0.3"/>
+        <!-- 43%ライン（y= 230 - 43*2.5 = 122.5 → 123） -->
+        <line x1="60" y1="123" x2="540" y2="123" class="s-guide"/>
+        <text x="544" y="127" class="s-label-y" font-size="10">43%</text>
+        <!-- 軸 -->
+        <line x1="60" y1="230" x2="540" y2="230" class="s-axis"/>
+        <line x1="60" y1="30" x2="60" y2="230" class="s-axis"/>
+        <!-- Y軸ラベル -->
+        <text x="53" y="34" class="s-label-sm" text-anchor="end">80%</text>
+        <text x="53" y="84" class="s-label-sm" text-anchor="end">60%</text>
+        <text x="53" y="134" class="s-label-sm" text-anchor="end">40%</text>
+        <text x="53" y="184" class="s-label-sm" text-anchor="end">20%</text>
+        <text x="53" y="234" class="s-label-sm" text-anchor="end">0%</text>
+        <!-- === jpy_fx（x中心=120） ===
+             RSI 19.4% → h=48.5 → y=181.5
+             BB  58.2% → h=145.5 → y=84.5
+             bar width=22, rsi x=94, bb x=122 -->
+        <rect x="94"  y="182" width="22" height="48" fill="#e57c00" rx="2"/>
+        <rect x="122" y="85"  width="22" height="145" fill="#0969da" rx="2"/>
+        <text x="94"  y="178" class="s-label-r" font-size="10" text-anchor="start">19.4%</text>
+        <text x="116" y="80"  class="s-label-b" font-size="10" text-anchor="start">58.2%</text>
+        <text x="119" y="248" class="s-label" font-size="10" text-anchor="middle">jpy_fx</text>
+        <!-- === index（x中心=230） ===
+             RSI 60.0% → h=150 → y=80
+             BB  53.3% → h=133 → y=97 -->
+        <rect x="204" y="80"  width="22" height="150" fill="#e57c00" rx="2"/>
+        <rect x="232" y="97"  width="22" height="133" fill="#0969da" rx="2"/>
+        <text x="204" y="75"  class="s-label-g" font-size="10" text-anchor="start">60.0%</text>
+        <text x="226" y="92"  class="s-label-b" font-size="10" text-anchor="start">53.3%</text>
+        <text x="229" y="248" class="s-label" font-size="10" text-anchor="middle">index</text>
+        <!-- === other_fx（x中心=340） ===
+             RSI 38.0% → h=95 → y=135
+             BB  39.2% → h=98 → y=132 -->
+        <rect x="314" y="135" width="22" height="95" fill="#e57c00" rx="2"/>
+        <rect x="342" y="132" width="22" height="98" fill="#0969da" rx="2"/>
+        <text x="314" y="130" class="s-label" font-size="10" text-anchor="start">38.0%</text>
+        <text x="336" y="127" class="s-label" font-size="10" text-anchor="start">39.2%</text>
+        <text x="339" y="248" class="s-label" font-size="10" text-anchor="middle">other_fx</text>
+        <!-- === metal（x中心=450） ===
+             RSI 15.8% → h=39.5 → y=190.5
+             BB  23.9% → h=59.75 → y=170.25 -->
+        <rect x="424" y="191" width="22" height="39" fill="#e57c00" rx="2"/>
+        <rect x="452" y="170" width="22" height="60" fill="#0969da" rx="2"/>
+        <text x="424" y="187" class="s-label-r" font-size="10" text-anchor="start">15.8%</text>
+        <text x="446" y="166" class="s-label-r" font-size="10" text-anchor="start">23.9%</text>
+        <text x="449" y="248" class="s-label" font-size="10" text-anchor="middle">metal</text>
+        <!-- 凡例 -->
+        <rect x="150" y="265" width="12" height="12" fill="#e57c00" rx="2"/>
+        <text x="167" y="275" class="s-label" font-size="11">RSI売られすぎ</text>
+        <rect x="290" y="265" width="12" height="12" fill="#0969da" rx="2"/>
+        <text x="307" y="275" class="s-label" font-size="11">BB下限タッチ</text>
+        <!-- タイトル -->
+        <text x="295" y="22" class="s-label" text-anchor="middle" font-size="11">グループ別 勝率比較（43%破線）</text>
+      </svg>
+      <div class="chart-caption">jpy_fx（円建てFX）でRSIとBBの差が38.8ppと突出。指数では逆にRSIがBBを6.7pp上回る逆転現象が見られる。金属は両者ともに低迷（15〜24%）。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-trend">⑤ 結果③：トレンド別の比較</h2>
+
+    <p>トレンド方向（上昇・下降・中立もみあい）別に見ると、両シグナルで共通したパターンが確認できます。</p>
+
+    <table>
+      <tr><th>トレンド</th><th>RSI k/n</th><th>RSI 勝率</th><th>BB k/n</th><th>BB 勝率</th></tr>
+      <tr><td>上昇中</td><td>13 / 25</td><td style="color:#1a7f37;font-weight:700">52.0%</td><td>47 / 86</td><td style="color:#1a7f37;font-weight:700">54.7%</td></tr>
+      <tr><td>下降中</td><td>32 / 94</td><td style="color:#cf222e">34.0%</td><td>30 / 90</td><td style="color:#cf222e">33.3%</td></tr>
+      <tr><td>中立もみあい</td><td>24 / 71</td><td>33.8%</td><td>38 / 97</td><td>39.2%</td></tr>
+    </table>
+
+    <p>トレンド別では、RSIとBBで<strong>ほぼ同じパターン</strong>が見られます。上昇中は両者とも52〜55%と損益分岐をわずかに超え、下降中・もみあいでは共に損益分岐以下です。これは#22で発見した「逆張りロングはトレンド方向に依存する」という知見と一致しています。</p>
+    <p>つまり、トレンド方向についてはRSI・BBで大きな差はなく、<strong>グループ（資産クラス）こそが両者を分ける主要因</strong>である可能性が高いです。</p>
+
+    <table>
+      <tr><th>時間足</th><th>RSI k/n</th><th>RSI 勝率</th><th>BB k/n</th><th>BB 勝率</th></tr>
+      <tr><td>1h足</td><td>44 / 121</td><td>36.4%</td><td>70 / 157</td><td style="color:#1a7f37">44.6%</td></tr>
+      <tr><td>4h足</td><td>26 / 68</td><td>38.2%</td><td>40 / 111</td><td>36.0%</td></tr>
+    </table>
+    <p>時間足別ではBBが1h足で44.6%（RSI 36.4%）と差をつけますが、4h足ではほぼ同等（RSI 38.2% vs BB 36.0%）です。</p>
+
+    <!-- =============================== -->
+    <h2 id="confound">⑥ 交絡の点検と解釈——なぜjpy_fxだけ違うのか</h2>
+
+    <h3>交絡点検</h3>
+    <ul>
+      <li><strong>サンプルサイズ懸念</strong>：jpy_fx×RSIはN=31（うち6勝）と小サンプル。CI[9.2%〜36.3%]は上限も36%台にとどまり、統計的には確定打まではもう一段のデータ蓄積が必要</li>
+      <li><strong>時期バイアス</strong>：FXシグナルが特定の時期（円高・円安相場）に偏っている可能性はあるが、signals-log全体の期間は共通</li>
+      <li><strong>btc/oilはN不足で除外</strong>：btcはrsi N=17・bb N=25でいずれも小サンプルのため今回の比較から外す</li>
+    </ul>
+
+    <h3>解釈仮説：なぜjpy_fxでRSIが失敗し、BBが成功するのか</h3>
+
+    <div class="info-box">
+      <strong>仮説A：RSIは円相場のキャリートレード・モメンタムを「売られすぎ」と誤認しやすい</strong><br>
+      円建てFXペア（USDJPY・EURJPY等）はキャリートレード（高金利通貨買い・低金利円売り）の影響で方向性トレンドが長続きしやすい。RSIが30以下になっても、円安トレンドが継続中なら「下げ止まり」ではなく「下げ途中」である可能性がある。この場合、RSIの逆張りシグナルは早まりすぎた買いを示唆する。
+    </div>
+
+    <div class="info-box">
+      <strong>仮説B：BBは同じ円相場で「ボラティリティ膨張時の下限」を捉えている</strong><br>
+      BB下限（−2σ）は直近の価格変動幅（ATR）を加味した相対的な安値を測る。急落によってボラティリティが上がると、BB下限は価格より下に「逃げる」性質がある。つまり、BB下限タッチは本当に「最近の価格レンジに対して大きく外れた水準」を示している可能性が高く、そのまま反転しやすい。
+    </div>
+
+    <h3>指数でRSIが有効な理由</h3>
+    <p>株価指数はキャリートレードのような一方向トレンドよりも、経済サイクル・企業業績への反応で動くことが多い傾向があります。RSI 30以下への低下は「売りが出尽くした可能性がある水準」を示す場合があり、bb_lower_touchと比べてむしろ有効な可能性があります（指数×RSI 60.0%、N=40）。ただし、N=40という小サンプルのため確定的ではありません。</p>
+
+    <!-- =============================== -->
+    <h2 id="decision">⑦ 今回の決定事項と次回候補</h2>
+
+    <h3>今回の結論</h3>
+    <ul>
+      <li>H1（rsi CI上限&lt;43%）：<strong>未達</strong>（43.5%、0.5ppで逃した）</li>
+      <li>H2（差≥10pp）：<strong>未達</strong>（5.4pp）</li>
+      <li>記事判定：<strong>🟡 事前宣言未達（探索的発見あり）</strong></li>
+    </ul>
+
+    <h3>次回正式検証候補（事前登録）</h3>
+    <table>
+      <tr><th>候補</th><th>現在値</th><th>宣言基準（次回）</th></tr>
+      <tr><td>signal=rsi_oversold_bounce × group=jpy_fx</td><td>6/31 = 19.4%（CI[9.2%〜36.3%]）</td><td>N≥60かつCI上限&lt;43%</td></tr>
+      <tr><td>signal=bb_lower_touch × group=jpy_fx</td><td>32/55 = 58.2%（CI[45.0%〜70.3%]）</td><td>N≥80かつCI下限&gt;43%を維持</td></tr>
+    </table>
+
+    <div class="warning-box">
+      前向きトラッカー「売られすぎ逆張り買い(rsi_oversold_bounce)」は前向きN=59・勝率30%・期待値R=-0.29。前向きCI上限が-0.01Rとわずかに0を下回っており、さらにデータが積み上がれば「⛔反証（gate確定）」の方向に向かっている可能性があります。ただしN=59は昇格基準N=80に届いておらず、現時点では蓄積中の判定が継続します。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="tracker">⑧ 📡 前向きトラッカー定点観測</h2>
+
+    <p>毎回のデータ蓄積で変化した点を記録します（基準日 2026-06-28）。</p>
+
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-06-28／昇格＝前向きN≥80・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.31 CI[+0.08~+0.55]（54/96・勝率56%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.35~+0.17]（30/77・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[-0.20~+0.34]（34/74・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.26 CI[-0.51~+0.00]（22/69・勝率32%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.15 CI[-0.42~+0.12]（24/66・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.34 CI[-0.61~-0.07]（17/60・勝率28%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.29 CI[-0.56~-0.01]（18/59・勝率30%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.42 CI[-0.77~-0.06]（8/32・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.48 CI[+0.01~+0.96]（14/22・勝率64%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.40 CI[-0.35~+1.15]（6/10・勝率60%）</td><td>🟡蓄積中</td></tr>
+</table>
+
+    <div class="info-box">
+      <strong>今回の前向きトラッカー注目点</strong><br><br>
+      ・<strong>指数×ロング（全足ライブ）</strong>：N=96（前回90から6件増）、56%、R+0.31 CI[+0.08~+0.55]で✅昇格を継続。シリーズ初昇格（#21）からのライブ継続確認<br>
+      ・<strong>RSI売られすぎ（rsi_oversold_bounce）</strong>：前向きN=59・30%・R CI[-0.56~-0.01]、CI上限が0をわずかに下回り始めている（N≥80で⛔反証の可能性）<br>
+      ・<strong>group=metal</strong>：前向きN=60・28%・R CI[-0.61~-0.07]、CI上限がマイナス。N=80到達でゲート確定か
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 このシリーズの関連記事</div>
+      <div class="cta-box-desc">過去の研究日誌でこの発見につながる布石を辿る</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-009.html">
+          <div class="related-card-title">🧪 #9 jpy_fx方向性非対称</div>
+          <div class="related-card-desc">円建てFXのショート勝率が23.5%(N=34)で損益分岐を下回ることを確認。ロング42%との非対称性</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-014.html">
+          <div class="related-card-title">🧪 #14 bb_lower_touch×jpy_fx検証</div>
+          <div class="related-card-desc">BB×jpy_fx×ロングが60%(N=45)と通過A方向。1h足73% vs 4h足33%の時間足差も発見</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-022.html">
+          <div class="related-card-title">🧪 #22 逆張り×トレンド依存性</div>
+          <div class="related-card-desc">上昇中54.1%・下降中33.7%という系統的非対称。グループ交絡（指数64%・jpy_fx62%）を解析</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-021.html">
+          <div class="related-card-title">🧪 #21 指数ロング 前向きトラッカー初昇格</div>
+          <div class="related-card-desc">前向きN=90 60%、E(R)+0.40でシリーズ初の✅昇格を達成</div>
+        </a>
+      </div>
+    </div>
+
+    <p class="disclaimer">
+      ※ 本記事はMarketWatch AIの自動シグナルシステムが過去に発射したシグナルの統計を「もしも計算（反実仮想集計）」したものです。過去の成績は将来の成果を保証するものではありません。本記事は情報提供を目的としており、投資助言・売買推奨ではありません。当サイトは金融商品取引業者ではなく、投資助言業・投資顧問業の登録もしていません。投資判断はご自身の責任で行い、必要に応じて専門家にご相談ください。※ 本分析は弁護士助言の代替ではありません。
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="index.html">MarketWatch AI</a> &copy; 2026 &nbsp;|&nbsp; <a href="about.html">このサイトについて</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシー</a>
+</footer>
+
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+(function(){if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');})();
+window.addEventListener('scroll',function(){var p=document.getElementById('reading-progress');if(p){var s=document.documentElement.scrollTop||document.body.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;p.style.width=h>0?(s/h*100)+'%':'0';}});
+</script>
+
+</body>
+</html>
