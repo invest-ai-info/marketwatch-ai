@@ -40,6 +40,7 @@
 - **✅施策6完了（2026-06-27）＝続伸=risk_off条件付きトラッカー＋点火アラート**（ローカルSYNC外）：`_jp_momentum_tracker.py` に `tag_regime()`(market_regime.csv join)＋mask `m_cont_riskoff`(続伸×risk_off)＋SEED `continuation_riskoff`(promote_n80)。検証＝holdout 続伸×risk_off meanR+0.367/blowup0%（無条件版+0.023＝レジーム依存裏付け）・perm_p0.524＝OOS薄n~22で前向きN蓄積待ち。`jp_daily.py` カードに risk_off時の🔥点火窓アラート。
 - 🎉 **JP_EV_ROADMAP 全6施策 完了（1ネットR/2分数ケリー/3赤字回避統合/4外国人フロー/5発注規律カード/6 risk_off点火）**。共通＝「新エッジ探しでなく既存エッジをコスト/サイズ/規律/需給確認で実トレードに変換」。詳細は非公開 `JP_EV_ROADMAP.md`。
 - **残＝時間が律速**：前向きトラッカー各仮説のforward Nが貯まる→🟢昇格→人間が実装(#21の道)。index_long_bonus/外国人フロー/続伸×risk_off は決定算入への昇格を前向き検証後に判断。任意フォロー＝取引コストの実約定ログ更新(cost_r精緻化)/カードのスマホ最適化。
+- ✅ **発注規律カードの自動生成をスケジュール化（2026-06-27）**：Windowsタスク **`MarketWatch_JP_Daily`**＝**平日7:00**に `python -X utf8 jp_daily.py` を自動実行（WorkingDir=作業フォルダ）。堅牢設定＝**電池でも起動**(DisallowStartIfOnBatteries=False/StopIfGoingOnBatteries=False)・**取りこぼし遅れ実行**(StartWhenAvailable)・30分上限・ユーザー権限(非管理者)。`-X utf8`でcp932絵文字クラッシュ回避。既存`MarketWatch_YT_Shorts`(夜)と同方式。スケジューラ起動・手動実行とも検証済。⚠️**アプリ非依存だがPCが起動(ログオン)している必要**（寝てて逃したら起動後に自動で遅れ実行）。出力=`DAILY_SUMMARY.md`(ローカル・個別銘柄含むためpublic🔴黒・SYNC外)。毎朝の運用＝カードを上から読む→絞って判断→自分で発注+損切り。時刻変更は `Set-ScheduledTask`/タスクスケジューラGUIで。
 - 全レンズ一致のアンチパターン：派手なBT数字/レバ100倍狙い（破産確率の崖）/HFT速度勝負＝やらない。**生き残って複利が1億への唯一解**。
 
 ---
