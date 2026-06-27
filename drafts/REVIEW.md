@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-06-28 | 🧪 signal-lab #023 ✅ 自動公開済み
+
+- **基準日（JST）**: 2026-06-28
+- **採択仮説**: 「RSI売られすぎ逆張り（rsi_oversold_bounce）vs BB下限タッチ（bb_lower_touch）の系統的性能差——全467件・グループ別・トレンド別・時間足別の比較」
+- **事前宣言**: H1（rsi全体CI上限 < 43%）/ H2（bb-rsi差 ≥ 10pp）
+- **検証データ**: 全決済済み1,160件（signals-log.json）。rsi=192件 / bb=275件。signal×group×trend×tf クロス集計
+- **結果**: rsi全体36.5%(70/192) CI[30.0%~43.5%] → **H1 FAIL**（CI上限43.5%>43% 0.5pp差）。bb-rsi差5.4pp → **H2 FAIL**（4.6pp不足）。探索的発見: jpy_fx×rsi=19.4%(6/31) vs bb=58.2%(32/55)=38.8pp差・E(R)差+0.91R。index×rsi=60.0%(24/40)がbb=53.3%(32/60)を逆転（next候補）
+- **判定**: 🟡 通過A（事前宣言未達・探索的発見あり。正直に公開）
+
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 023 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 18/18クレーム緑・要約未検証0件・SVG警告0件（修正後）
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→「決定的な差」→「大きな差」等5箇所表現軟化（数値・SVG・30秒まとめ不変）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（修正後も18/18緑・SVG0件確認）
+- [x] 8-4-ii 独立確認Opus 🟢**白確認済み** ✅（禁止語なし・kinsho-v1×3・noindex・探索的発見留保・H1H2未達正直報告 全確認）
+- [x] 8-4-iii finalize_signal_lab.py 023 → guide-signal-lab-023.html 生成（size=34KB・svg=2・kinsho=3）
+- [x] 8-4-iv publish_article.py → guides.html カード追加・generate_market_news.py 履歴追加
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: 公開 guide-signal-lab-023.html）
+
+---
+
 ## 2026-06-27 | 🧪 signal-lab #022 ゲート実行中
 
 - **基準日（JST）**: 2026-06-27
