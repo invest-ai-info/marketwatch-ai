@@ -17,6 +17,15 @@
 
 ---
 
+## ✅ ニュース精度低下の原因究明＆修正（2026-06-28）
+
+オーナー「サイトのニュースの精度が落ちてきている」→ 調査で原因特定・修正。
+- **原因＝RSSフィードのサイレント失敗**：実測したら **ロイター日本（`assets.wor.jp/rss/rdf/reuters/top.rdf`）が0件＝死亡**（他3本は20件）。yfinanceニュースも空（既知の不安定・本番でも空になりやすい）。→ ニュースプールが英語ソース（要翻訳）に偏り源の多様性が痩せ「精度が落ちた」印象に。誰も気づけなかったのはサイレント失敗だから。
+- **修正**：`generate_market_news.py` の `RSS_FEEDS` のロイター日本を **Google News経由 `site:jp.reuters.com`** に差し替え（日本語のロイター記事が100件・翻訳不要で復活）。＋`fetch_news` に **0件フィード検知の警告**（`dead_feeds`→`🚨RSSフィードが0件＝要確認`）を追加＝再発時に気づける（ルールはコードで強制）。
+- **デプロイ＝reconcile必須だった**：local の generate_market_news.py が GitHub より古く（6/26〜28の自動公開記事の `_history_items` がGitHubにしか無い）、staleガードがsyncをブロック（正しく機能）。→ **GitHub最新版に私のRSS修正だけを当てて現shaでcontents-API PUT**（commit 121339b1・履歴は保持・巻き戻し無し）→ update-market-news を trigger（30〜90分で反映）。`.sync-cache` の generate_market_news.py 基準も新shaへ整合済（次回sync誤ブロック防止）。
+- ⚠️ **別件の未解決TODO（精度関連）**：`indicator-result.json`（注目指標バナー）のFOMC等の数値が個人ブログ系出典の疑い（6/18起票・未検証）。一次ソースで要確認＝次の精度改善候補。
+- ⚠️ RSS差し替えは Google News 依存（titleに" - Reuters"付く・linkはGoogleNews redirect）。将来 Google News RSS仕様変更時は `dead_feeds` 警告で検知できる。
+
 ## ✅ 研究日誌#21の昇格エッジ「指数×ロング」を発火エンジンに本採用（2026-06-26）
 
 研究日誌は **昇格＝候補の旗立てのみ・発火/配信エンジンには自動反映しない**ファイアウォール設計（`generate_technical_alerts.py` は signal-lab tracker を読まない＝grep確認済）。#21 で **指数×ロング（NKD/ES/NQ/YM/^FTSE × 買い）が前向きトラッカーで正式昇格**（60.0% 54/90・+0.40R・平均RのCI下限+0.16>0・OOS生存）したのを受け、人間判断で実エンジンへ反映。
