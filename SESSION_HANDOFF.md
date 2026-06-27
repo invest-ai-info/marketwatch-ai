@@ -37,7 +37,9 @@
 - **✅施策3完了（2026-06-27）＝赤字回避ゲートを検証段に統合**（`_jp_momentum_validate.py`・ローカルSYNC外）：観測✅→検証❌→トラッカー✅ の穴（validate）を塞ぐ。fundamental akaji（点in-time財務・直近開示赤字）を技術ゲートと直交する軸として追加。net実測＝黒字netR+0.073/blowup7.6% vs 赤字netR+0.000/blowup15.9%(2倍・perm_p0.006有意)。統合ゲートKEEP_ALL=netR+0.105/blowup5.5%(プール8.2%→最小)。サイジング側は対応不要（ウォッチリストは黒字選別済）。
 - **✅施策4完了（2026-06-27）＝投資部門別フローをレジーム判定に統合**（ローカルSYNC外）：`build_jp_investor_flow.py`(新規)がJPX無料週次Excel`stock_val_1_*.xls`から海外投資家・個人の当週ネット(買い−売り)を取得・マージ蓄積→`_jp_investor_flow.json`。`_jp_regime_cockpit.py`に4つ目の確認シグナル（外国人フロー4週累計・confirm/diverge）を追加＝**コア合議の閾値は不変・判定には未算入**（昇格は前向き検証後）。`jp_daily.py`④.3に組込。検証＝外国人+10,681億/4週+1,581億→買い越し基調・risk_on✅確認。build_jp_investor_flowは非公開JP（public build_jp_margin/rankingsとは別）。
 - **✅施策5完了（2026-06-27）＝発注規律カード化**（`jp_daily.py`→`DAILY_SUMMARY.md`・ローカルSYNC外＝個別銘柄含むためpublic🔴黒）：サイジング×入口タイミングをcodeマージ→「◎今すぐ妙味(サイズ十分×入口OK)／○監視(入口待ち)／✕見送り(危険≥2)」に整理＋レジーム最上段に外国人フロー＋🛡️撤退規律ライン。**施策2のf≥0.10抽出が0件になるバグも是正**。検証＝◎33/○15出力OK。DAILY_SUMMARY/jp_dailyともSYNC外確認。
-- **次の推奨**＝施策6＝最後（続伸=risk_off条件付きトラッカー＋点火アラート・工数M）。これで JP_EV_ROADMAP 6施策完了。
+- **✅施策6完了（2026-06-27）＝続伸=risk_off条件付きトラッカー＋点火アラート**（ローカルSYNC外）：`_jp_momentum_tracker.py` に `tag_regime()`(market_regime.csv join)＋mask `m_cont_riskoff`(続伸×risk_off)＋SEED `continuation_riskoff`(promote_n80)。検証＝holdout 続伸×risk_off meanR+0.367/blowup0%（無条件版+0.023＝レジーム依存裏付け）・perm_p0.524＝OOS薄n~22で前向きN蓄積待ち。`jp_daily.py` カードに risk_off時の🔥点火窓アラート。
+- 🎉 **JP_EV_ROADMAP 全6施策 完了（1ネットR/2分数ケリー/3赤字回避統合/4外国人フロー/5発注規律カード/6 risk_off点火）**。共通＝「新エッジ探しでなく既存エッジをコスト/サイズ/規律/需給確認で実トレードに変換」。詳細は非公開 `JP_EV_ROADMAP.md`。
+- **残＝時間が律速**：前向きトラッカー各仮説のforward Nが貯まる→🟢昇格→人間が実装(#21の道)。index_long_bonus/外国人フロー/続伸×risk_off は決定算入への昇格を前向き検証後に判断。任意フォロー＝取引コストの実約定ログ更新(cost_r精緻化)/カードのスマホ最適化。
 - 全レンズ一致のアンチパターン：派手なBT数字/レバ100倍狙い（破産確率の崖）/HFT速度勝負＝やらない。**生き残って複利が1億への唯一解**。
 
 ---
