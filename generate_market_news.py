@@ -4637,6 +4637,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-28", "line": '・<b>2026-06-28</b>: 🧪 解説「<a href="guide-signal-lab-023.html" style="color:#0969da"><b>研究日誌 #23 RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較</b></a>」公開'},
         {"date": "2026-06-27", "line": '・<b>2026-06-27</b>: 📰 解説「<a href="guide-news-2026-06-27-alphabet-dow.html" style="color:#0969da"><b>【6/27】AlphabetがダウJones産業平均に週明け6/29採用・Verizon除外</b></a>」公開'},
         {"date": "2026-06-27", "line": '・<b>2026-06-27</b>: 🧪 解説「<a href="guide-signal-lab-022.html" style="color:#0969da"><b>研究日誌 #22 逆張り買いはトレンド次第で真逆——上昇中54%・下降中34%の非対称とグループ交絡</b></a>」公開'},
         {"date": "2026-06-26", "line": '・<b>2026-06-26</b>: 📰 解説「<a href="guide-news-2026-06-26-openai-ipo-delay-softbank.html" style="color:#0969da"><b>【6/26】OpenAI IPO延期報道でSoftBank一時14%急落・日経歴代3位▲3,005円</b></a>」公開'},
