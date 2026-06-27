@@ -574,7 +574,9 @@ _LIST_TITLE_RE = _re_for_impact.compile(r"[,、，]")
 # ─────────────────────────────────────────
 RSS_FEEDS = [
     ("Bloomberg Markets", "https://feeds.bloomberg.com/markets/news.rss"),
-    ("ロイター日本",       "https://assets.wor.jp/rss/rdf/reuters/top.rdf"),
+    # 2026-06-28 旧 assets.wor.jp のロイターRSFが死亡(0件・サイレント)→ Google News経由で jp.reuters.com を
+    #   直接狙い、日本語のロイター記事を復活（翻訳不要・質の高い日本語ソース）。
+    ("ロイター日本",       "https://news.google.com/rss/search?q=site:jp.reuters.com+when:3d&hl=ja&gl=JP&ceid=JP:ja"),
     ("NHK経済",            "https://www3.nhk.or.jp/rss/news/cat5.xml"),
     ("東洋経済オンライン",  "https://toyokeizai.net/list/feed/rss"),
 ]
@@ -1057,8 +1059,12 @@ def fetch_news(api_key):
     # RSS フィードから（環境変数 USE_RSS_FEEDS=false で OFF にできる）
     if os.environ.get("USE_RSS_FEEDS", "true").lower() in ("1", "true", "yes"):
         rss_count = 0
+        dead_feeds = []   # 2026-06-28 サイレント失敗の検知: 0件のフィードを記録（精度低下の主因だった）
         for name, url in RSS_FEEDS:
-            for a in fetch_rss_articles(name, url):
+            raw_f = fetch_rss_articles(name, url)
+            if not raw_f:
+                dead_feeds.append(name)
+            for a in raw_f:
                 key = a.get("url") or a.get("title")
                 if not key or key in all_seen:
                     continue
@@ -1073,6 +1079,8 @@ def fetch_news(api_key):
                 pool.append(a)
                 rss_count += 1
         print(f"  📡 RSS: {rss_count}件追加（候補プール合計 {len(pool)}件）")
+        if dead_feeds:
+            print(f"  🚨 RSSフィードが0件＝要確認(切れ/URL変更の可能性): {', '.join(dead_feeds)}")
 
     # 減衰後スコア降順 → 同点は新しい順
     pool.sort(key=lambda x: (x.get("_score", 0.0), x.get("publishedAt", "")), reverse=True)
