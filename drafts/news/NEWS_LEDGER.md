@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-06-27
+- 判定: ✅ 公開済み
+- 選定トピック: S&PダウJones指数がAlphabet(GOOGL)をDJIAに新規採用・Verizon(VZ)を除外（6/23発表、6/29取引開始前から適用）— 5大テック全社がダウ入り、ダウの価格加重平均の仕組みと日本投資家への影響を中立整理（カテゴリ: マクロ・インデックス・テック）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4 （合計 12/15）
+- 出典:
+  - CNBC「Alphabet added to Dow Jones Industrial Average, replacing Verizon」（2026-06-23）
+  - Bloomberg「Alphabet Joins Dow Jones, Highlighting Tech's Growing Role in Index Makeup」（2026-06-24）
+  - Yahoo Finance「Alphabet replacing Verizon in Dow Jones Industrial Average index」（2026-06-23）
+  - GuruFocus「Alphabet(GOOGL) to Replace Verizon(VZ) in Dow Jones Industrial Average」（2026-06-23）
+  - Cryptopolitan「Why did Alphabet-Google join the Dow and what does it mean for the markets?」（2026-06-23）
+  - 日本経済新聞「米ダウ平均にアルファベット採用、ベライゾンを除外」（2026-06-24）
+  - BigGo Finance「アルファベットがダウ平均入り、ベライゾンと交代へ 29日から適用」
+  - IndexBox「US Consumer Sentiment Rises in June 2026 on Lower Gas Prices」（2026-06-27）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典8系統・断定なし・noindexなし・個別銘柄セクションに売買推奨なし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（5項目全クリア・問題なし・前のOpus判定に同意）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-27-alphabet-dow.html
+- 追記: check_site_consistency.py exit=0 確認済み。guides.html カード追加済み。generate_market_news.py 更新履歴追加済み。git push origin main 完了。
+
+---
+
 ## 2026-06-26
 - 判定: ✅ 公開済み
 - 選定トピック: OpenAI IPO 2027年延期検討報道（NYT・Bloomberg 2026-06-25）でSoftBank Group（9984）が一時12〜14%急落、日経平均終値69,360円・下落幅▲3,005円（-4.15%）は歴代3位の下げ幅（カテゴリ: マクロ・AI・テック）
