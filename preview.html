@@ -110,7 +110,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 明日の経済指標プレビュー</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月27日 19:35 JST</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 明日の経済指標プレビュー</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年06月28日 00:51 JST</div></div></div></header>
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -160,17 +160,79 @@
 
 
   
-
-  
-<div class="empty-state">
-  <div class="empty-icon">🌙</div>
-  <div class="empty-title">直近3日間に重要指標の予定はありません</div>
-  <div class="empty-msg">
-    <p>今は相場が静かに推移しやすい時期です。<br>
-    長期投資のポートフォリオを見直すのに適した時間かもしれません。</p>
-    <p style="margin-top:12px"><a href="calendar.html" style="color:#0969da">📅 経済カレンダー</a> で今月・来月のスケジュールを確認できます。</p>
+<div class="summary-box">
+  <div class="summary-num">1件の経済指標</div>
+  <div class="summary-detail">
+    今後3日間に発表予定 — <span class="high-count">⭐最重要 1件</span> ｜ <span class="mid-count">●重要 0件</span>
   </div>
 </div>
+
+
+  
+<article class="indicator-card">
+  <div class="card-header">
+    <div class="card-date-block">
+      <div class="card-until">3日後</div>
+      <div class="card-date">7/1（水）</div>
+    </div>
+    <div class="card-title-block">
+      <div class="card-tags">
+        <span class="event-tag tag-jp">🇯🇵 日本</span>
+        <span class="event-tag tag-high">⭐最重要</span>
+      </div>
+      <h2 class="card-title">📊 日銀短観（全国企業短期経済観測調査）</h2>
+      <div class="card-event-name">該当イベント: 日銀短観（7月調査）</div>
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">⏰ 発表タイミング</div>
+    <div class="section-body">年4回（4月・7月・10月・12月）・日本時間 8:50</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">📖 どんな指標？</div>
+    <div class="section-body">日銀が約1万社の企業に景況感を聞き取る調査。『業況判断DI』（良い-悪いの差）が代表指標。大企業製造業のDIが最注目。</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">💡 なぜ相場を動かす？</div>
+    <div class="section-body">日本経済の実態を最も正確に反映する指標。日銀の利上げ判断材料となり、日経平均・ドル円に影響。</div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">📊 結果別シナリオ</div>
+    <div class="scenarios">
+      <div class="scenario">
+  <div class="scenario-label">▸ 予想を大幅に上回る</div>
+  <div class="scenario-impact">円高・日経上昇／日銀の利上げ前倒し観測</div>
+</div>
+<div class="scenario">
+  <div class="scenario-label">▸ 予想通り</div>
+  <div class="scenario-impact">小動き</div>
+</div>
+<div class="scenario">
+  <div class="scenario-label">▸ 予想を大幅に下回る</div>
+  <div class="scenario-impact">円安・日経下落（一時的）／日銀の利上げ後ろ倒し観測</div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="section-label">🔍 注目ポイント</div>
+    <ul class="watch-list">
+      <li>大企業製造業 業況判断DI</li><li>大企業非製造業 業況判断DI</li><li>中小企業のDI</li><li>設備投資計画（前年度比）</li><li>想定為替レート</li>
+    </ul>
+  </div>
+
+  <div class="card-tip">
+    <strong>💼 投資家の心得</strong>
+    朝8:50発表のため、日経の寄付き（9:00）に影響大。前日にポジション調整しておくと安心。
+  </div>
+
+  
+</article>
 
 
   <div class="disclaimer">
