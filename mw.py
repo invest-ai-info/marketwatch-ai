@@ -305,10 +305,16 @@ def cmd_audit(argv):
     return 0
 
 
+def cmd_declutter(argv):
+    """整理係: ルール/文書/コードの重さ・腐りを洗い出す（決定論・読取専用・候補提示のみ／自動削除なし）。"""
+    return _run(["declutter_audit.py"] + argv)
+
+
 CMDS = {
     "check": cmd_check, "publish": cmd_publish, "sync": cmd_sync,
     "trigger": cmd_trigger, "status": cmd_status, "routines": cmd_routines,
     "deploy": cmd_deploy, "issues": cmd_issues, "audit": cmd_audit,
+    "declutter": cmd_declutter,
 }
 
 
