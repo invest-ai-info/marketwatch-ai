@@ -4645,6 +4645,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-29", "line": '・<b>2026-06-29</b>: 🧪 解説「<a href="guide-signal-lab-024.html" style="color:#0969da"><b>円クロスFXでRSI逆張りが機能しない理由</b></a>」公開'},
         {"date": "2026-06-28", "line": '・<b>2026-06-28</b>: 📰 解説「<a href="guide-news-2026-06-28-iran-us-escalation.html" style="color:#0969da"><b>【6/28】米イラン停戦が瀬戸際、それでも原油急落した理由</b></a>」公開'},
         {"date": "2026-06-28", "line": '・<b>2026-06-28</b>: 🧪 解説「<a href="guide-signal-lab-023.html" style="color:#0969da"><b>研究日誌 #23 RSI売られすぎとBB下限タッチはなぜ正反対になるか——467件の資産クラス別比較</b></a>」公開'},
         {"date": "2026-06-27", "line": '・<b>2026-06-27</b>: 📰 解説「<a href="guide-news-2026-06-27-alphabet-dow.html" style="color:#0969da"><b>【6/27】AlphabetがダウJones産業平均に週明け6/29採用・Verizon除外</b></a>」公開'},
