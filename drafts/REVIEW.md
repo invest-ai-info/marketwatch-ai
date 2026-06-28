@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-06-29 | 🧪 signal-lab #024 ゲート実行中
+## 2026-06-29 | 🧪 signal-lab #024 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-06-29
 - **採択仮説**: 「円クロスFX（jpy_fx）×RSI売られすぎ逆張り買い（rsi_oversold_bounce）は損益分岐43%を有意に下回るか——#023探索的発見の正式検証」
@@ -12,15 +12,15 @@
 - **判定**: ✅ 通過A（棄却確認）
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance
-- [ ] 8-4-i 数値再検証
-- [ ] 8-4-ii 独立確認Opus
-- [ ] 8-4-iii finalize_signal_lab.py
-- [ ] 8-4-iv publish_article.py
-- [ ] 8-4-v check_site_consistency.py
-- [ ] 8-4-vi git commit → PUSH-MAIN
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 024 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 10/10クレーム緑・30秒でわかる確認済み・SVG警告なし
+- [x] 8-3 Opus compliance 🟢白 ✅（修正不要・即次フェーズへ）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅
+- [x] 8-4-ii 独立確認Opus 🟢白確認済み ✅
+- [x] 8-4-iii finalize_signal_lab.py 024 → guide-signal-lab-024.html 生成（size=35KB・svg=2・kinsho=4）
+- [x] 8-4-iv publish_article.py → guides.html カード追加・generate_market_news.py 履歴追加（sync_to_github.py はクラウド環境非存在のためスキップ・整合性チェックは正常）
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅（114記事・エラーなし）
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 024 verified+compliance）
 
 ---
 
