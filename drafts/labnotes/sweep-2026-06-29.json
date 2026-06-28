@@ -1,0 +1,361 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "candidates": [
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 48,
+      "n": 179,
+      "pct": 26.8,
+      "ci_lo": 20.9,
+      "ci_hi": 33.7,
+      "avgR": -0.374,
+      "rci_lo": -0.526,
+      "rci_hi": -0.222,
+      "p": 1.3573735118121988e-06,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×reversalL",
+      "filter": {
+        "group": "metal",
+        "reversal_long": true
+      },
+      "k": 17,
+      "n": 84,
+      "pct": 20.2,
+      "ci_lo": 13.0,
+      "ci_hi": 30.0,
+      "avgR": -0.528,
+      "rci_lo": -0.729,
+      "rci_hi": -0.326,
+      "p": 2.9132031587053575e-07,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 22,
+      "n": 118,
+      "pct": 18.6,
+      "ci_lo": 12.6,
+      "ci_hi": 26.6,
+      "avgR": -0.565,
+      "rci_lo": -0.73,
+      "rci_hi": -0.4,
+      "p": 1.758593271006248e-11,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=neutral",
+      "filter": {
+        "tier": "neutral"
+      },
+      "k": 96,
+      "n": 287,
+      "pct": 33.4,
+      "ci_lo": 28.2,
+      "ci_hi": 39.1,
+      "avgR": -0.22,
+      "rci_lo": -0.347,
+      "rci_hi": -0.092,
+      "p": 0.0007460990289285263,
+      "profitable": false,
+      "q": 0.0134,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降",
+      "filter": {
+        "trend": "下降"
+      },
+      "k": 149,
+      "n": 418,
+      "pct": 35.6,
+      "ci_lo": 31.2,
+      "ci_hi": 40.3,
+      "avgR": -0.168,
+      "rci_lo": -0.276,
+      "rci_hi": -0.061,
+      "p": 0.0021081233274689026,
+      "profitable": false,
+      "q": 0.0304,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=long",
+      "filter": {
+        "group": "index",
+        "direction": "long"
+      },
+      "k": 113,
+      "n": 217,
+      "pct": 52.1,
+      "ci_lo": 45.4,
+      "ci_hi": 58.6,
+      "avgR": 0.215,
+      "rci_lo": 0.06,
+      "rci_hi": 0.371,
+      "p": 0.006699042616186146,
+      "profitable": true,
+      "q": 0.0548,
+      "fdr_pass": true
+    },
+    {
+      "label": "dir=long",
+      "filter": {
+        "direction": "long"
+      },
+      "k": 323,
+      "n": 847,
+      "pct": 38.1,
+      "ci_lo": 34.9,
+      "ci_hi": 41.5,
+      "avgR": -0.11,
+      "rci_lo": -0.187,
+      "rci_hi": -0.034,
+      "p": 0.004684088976823375,
+      "profitable": false,
+      "q": 0.0548,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×dir=long",
+      "filter": {
+        "trend": "下降",
+        "direction": "long"
+      },
+      "k": 103,
+      "n": 293,
+      "pct": 35.2,
+      "ci_lo": 29.9,
+      "ci_hi": 40.8,
+      "avgR": -0.18,
+      "rci_lo": -0.308,
+      "rci_hi": -0.052,
+      "p": 0.005831363639837939,
+      "profitable": false,
+      "q": 0.0548,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×reversalL",
+      "filter": {
+        "group": "btc",
+        "reversal_long": true
+      },
+      "k": 11,
+      "n": 44,
+      "pct": 25.0,
+      "ci_lo": 14.6,
+      "ci_hi": 39.4,
+      "avgR": -0.417,
+      "rci_lo": -0.719,
+      "rci_hi": -0.115,
+      "p": 0.006846039604504028,
+      "profitable": false,
+      "q": 0.0548,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 56,
+      "n": 100,
+      "pct": 56.0,
+      "ci_lo": 46.2,
+      "ci_hi": 65.3,
+      "avgR": 0.307,
+      "rci_lo": 0.079,
+      "rci_hi": 0.535,
+      "p": 0.008427812323742456,
+      "profitable": true,
+      "q": 0.0586,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=False",
+      "filter": {
+        "blocked": false
+      },
+      "k": 274,
+      "n": 717,
+      "pct": 38.2,
+      "ci_lo": 34.7,
+      "ci_hi": 41.8,
+      "avgR": -0.108,
+      "rci_lo": -0.191,
+      "rci_hi": -0.025,
+      "p": 0.010574636624772538,
+      "profitable": false,
+      "q": 0.0586,
+      "fdr_pass": true
+    },
+    {
+      "label": "tf=4h×dir=long",
+      "filter": {
+        "tf": "4h",
+        "direction": "long"
+      },
+      "k": 127,
+      "n": 351,
+      "pct": 36.2,
+      "ci_lo": 31.3,
+      "ci_hi": 41.3,
+      "avgR": -0.156,
+      "rci_lo": -0.273,
+      "rci_hi": -0.038,
+      "p": 0.009358108035821822,
+      "profitable": false,
+      "q": 0.0586,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×reversalL",
+      "filter": {
+        "trend": "下降",
+        "reversal_long": true
+      },
+      "k": 63,
+      "n": 186,
+      "pct": 33.9,
+      "ci_lo": 27.5,
+      "ci_hi": 40.9,
+      "avgR": -0.21,
+      "rci_lo": -0.369,
+      "rci_hi": -0.051,
+      "p": 0.009806957206623501,
+      "profitable": false,
+      "q": 0.0586,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×dir=long",
+      "filter": {
+        "group": "btc",
+        "direction": "long"
+      },
+      "k": 20,
+      "n": 69,
+      "pct": 29.0,
+      "ci_lo": 19.6,
+      "ci_hi": 40.6,
+      "avgR": -0.324,
+      "rci_lo": -0.575,
+      "rci_hi": -0.072,
+      "p": 0.01169343578740989,
+      "profitable": false,
+      "q": 0.0601,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=other_fx×dir=long",
+      "filter": {
+        "group": "other_fx",
+        "direction": "long"
+      },
+      "k": 88,
+      "n": 248,
+      "pct": 35.5,
+      "ci_lo": 29.8,
+      "ci_hi": 41.6,
+      "avgR": -0.172,
+      "rci_lo": -0.311,
+      "rci_hi": -0.033,
+      "p": 0.015438918224385034,
+      "profitable": false,
+      "q": 0.0741,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 60,
+      "n": 111,
+      "pct": 54.1,
+      "ci_lo": 44.8,
+      "ci_hi": 63.0,
+      "avgR": 0.261,
+      "rci_lo": 0.044,
+      "rci_hi": 0.479,
+      "p": 0.01845092525529557,
+      "profitable": true,
+      "q": 0.083,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=True×dir=short",
+      "filter": {
+        "blocked": true,
+        "direction": "short"
+      },
+      "k": 31,
+      "n": 53,
+      "pct": 58.5,
+      "ci_lo": 45.1,
+      "ci_hi": 70.7,
+      "avgR": 0.365,
+      "rci_lo": 0.052,
+      "rci_hi": 0.677,
+      "p": 0.022142608945878273,
+      "profitable": true,
+      "q": 0.0886,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=all",
+      "filter": {
+        "group": "all"
+      },
+      "k": 460,
+      "n": 1163,
+      "pct": 39.6,
+      "ci_lo": 36.8,
+      "ci_hi": 42.4,
+      "avgR": -0.077,
+      "rci_lo": -0.143,
+      "rci_hi": -0.011,
+      "p": 0.021246998654437466,
+      "profitable": false,
+      "q": 0.0886,
+      "fdr_pass": true
+    },
+    {
+      "label": "signal=ma_dead",
+      "filter": {
+        "signal": "ma_dead"
+      },
+      "k": 20,
+      "n": 32,
+      "pct": 62.5,
+      "ci_lo": 45.3,
+      "ci_hi": 77.1,
+      "avgR": 0.458,
+      "rci_lo": 0.061,
+      "rci_hi": 0.856,
+      "p": 0.023878974544021325,
+      "profitable": true,
+      "q": 0.0905,
+      "fdr_pass": true
+    }
+  ]
+}

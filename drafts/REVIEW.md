@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-06-29 | 🧪 signal-lab #024 ゲート実行中
+
+- **基準日（JST）**: 2026-06-29
+- **採択仮説**: 「円クロスFX（jpy_fx）×RSI売られすぎ逆張り買い（rsi_oversold_bounce）は損益分岐43%を有意に下回るか——#023探索的発見の正式検証」
+- **事前宣言**: H1（jpy_fx×rsi CI上限 < 43%）/ H2（N ≥ 20）
+- **検証データ**: 決済済み1,163件。jpy_fx×rsi=31件 / 対照: jpy_fx×bb=55件 / index×rsi=40件
+- **結果**: jpy_fx×rsi 19.4%（6/31）CI[9.2%~36.3%] CI上限36.3%<43% → **H1 PASS** ✅ / N=31≥20 → **H2 PASS** ✅。E(R)=−0.549R。jpy_fx×BB=58.2%（差38.8pp）、index×rsi=60.0%（差40.6pp）。全31件ロング。trend=中立・もみあい主体(22/31=71%)、tf=1h主体(24/31=77%)
+- **判定**: ✅ 通過A（棄却確認）
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance
+- [ ] 8-4-i 数値再検証
+- [ ] 8-4-ii 独立確認Opus
+- [ ] 8-4-iii finalize_signal_lab.py
+- [ ] 8-4-iv publish_article.py
+- [ ] 8-4-v check_site_consistency.py
+- [ ] 8-4-vi git commit → PUSH-MAIN
+
+---
+
 ## 2026-06-28 | 🧪 signal-lab #023 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-06-28
