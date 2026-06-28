@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-06-28
+- 判定: ✅ 公開済み
+- 選定トピック: 米軍（CENTCOM）とイランIRGCが6月26〜27日に相互報復攻撃——コンテナ船Ever Lovely・油タンカーKiku被弾、米軍がイランのミサイル/ドローン施設と海岸レーダーを2夜連続攻撃、イランがクウェート・バーレーン米軍関連施設を攻撃——にもかかわらずWTI原油が約68.86ドルへ週間約4%下落した逆説と日本への影響を中立整理（カテゴリ: 地政学・マクロ・エネルギー）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4 （合計 13/15）
+- 出典:
+  - NPR「US and Iran each announce retaliatory strikes in Iran, Kuwait and Bahrain」（2026-06-27）
+  - Al Jazeera「US launches second night of strikes on Iran after ship hit by drone」（2026-06-27）
+  - CNBC「U.S. strikes Iran after Trump accuses Tehran of ceasefire violation in Strait of Hormuz」（2026-06-26）
+  - CBS News「U.S.-Iran Latest: U.S. and Iran trade more strikes; Trump accuses Tehran of ceasefire violation」（2026-06-27）
+  - The Hill「Trump says Iran violated ceasefire with drone strike on ship in Strait of Hormuz」（2026-06-27）
+  - RFERL「US Hits Iran Again As Trump Threatens To Complete The Job; IRGC Retaliates」
+  - Fox News「US strikes Iran after Strait of Hormuz cargo ship attack as ceasefire tensions escalate」（2026-06-26）
+  - CNBC/Trading Economics「WTI crude oil $68.86/barrel、Brent $72/barrel（2026-06-27終値）」
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（断定表現なし・kinsho-v1×3箇所確認・銘柄推奨なし・出典8系統・noindexなし・両論併記・各警戒シナリオに「断定・予測でも投資助言でもない」明記）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（全6チェック項目クリア・問題なし・地政学免責表現も適切）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-28-iran-us-escalation.html
+- 追記: check_site_consistency.py exit=0確認済み。guides.htmlカード追加済み。generate_market_news.py更新履歴追加済み。git push origin main完了。
+
+---
+
 ## 2026-06-27
 - 判定: ✅ 公開済み
 - 選定トピック: S&PダウJones指数がAlphabet(GOOGL)をDJIAに新規採用・Verizon(VZ)を除外（6/23発表、6/29取引開始前から適用）— 5大テック全社がダウ入り、ダウの価格加重平均の仕組みと日本投資家への影響を中立整理（カテゴリ: マクロ・インデックス・テック）
