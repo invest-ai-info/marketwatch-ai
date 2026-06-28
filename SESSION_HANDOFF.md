@@ -26,6 +26,14 @@
 - ⚠️ **別件の未解決TODO（精度関連）**：`indicator-result.json`（注目指標バナー）のFOMC等の数値が個人ブログ系出典の疑い（6/18起票・未検証）。一次ソースで要確認＝次の精度改善候補。
 - ⚠️ RSS差し替えは Google News 依存（titleに" - Reuters"付く・linkはGoogleNews redirect）。将来 Google News RSS仕様変更時は `dead_feeds` 警告で検知できる。
 
+## ✅ 「整理係」＝ルールの重さ・腐りを定期的に洗い出す仕組み（2026-06-28）
+
+オーナー提案「ルールが増えて重くなったら整理する係がいた方がいい」→ 記憶頼みの"係"は忘れられる罠（＝サイレント故障と同型）なので、**決定論で定期スキャンし候補を提示する仕組み**として実装（自動削除しない＝判断は人間・[[feedback_rules_as_code]]）。
+- **`declutter_audit.py`（新規・SYNC入り・読取専用）**：①毎回読む文書の肥大（SESSION_HANDOFF>45KB等）②ハンドオフの✅完了古セクション数 ③SYNC_FILES死に登録 ④使い捨てscript堆積(>30) ⑤記憶件数(>30) を検出→`DECLUTTER_REPORT.md`（OneDriveで見える）に出力。`mw declutter` で実行（mw.pyに追加）。
+- **月次自動化**：Windowsタスク **`MarketWatch_Declutter`（4週ごと日曜6:30・電池OK・StartWhenAvailable）**＝放置でレポートが出る。
+- **初回B（手動棚卸し）の検出3件**：①SESSION_HANDOFF 54KB（✅完了13セクション）＝**古い完了セクションをSESSION_ARCHIVEへ退避してスリム化が次のアクション** ②使い捨てscript43本＝`_scratch_archive/`へ移動候補（稼働系_jp_*33本は対象外）③SYNC死に登録1件（`guide-auto-us_cpi-2026-05-14.html`）＝**本セッションで除去済**。
+- 🔜 **次の整理アクション（候補・要承認）**：(a)この引き継ぎの古い完了セクション（6/20〜6/24等）をSESSION_ARCHIVEへ移してスリム化 (b)使い捨て43本を`_scratch_archive/`へ移動。どちらも判断はオーナー、洗い出し済み。
+
 ## ✅ 研究日誌#21の昇格エッジ「指数×ロング」を発火エンジンに本採用（2026-06-26）
 
 研究日誌は **昇格＝候補の旗立てのみ・発火/配信エンジンには自動反映しない**ファイアウォール設計（`generate_technical_alerts.py` は signal-lab tracker を読まない＝grep確認済）。#21 で **指数×ロング（NKD/ES/NQ/YM/^FTSE × 買い）が前向きトラッカーで正式昇格**（60.0% 54/90・+0.40R・平均RのCI下限+0.16>0・OOS生存）したのを受け、人間判断で実エンジンへ反映。
