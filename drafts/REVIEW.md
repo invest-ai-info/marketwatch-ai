@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-06-30 | 📋 autodraft-article — 全topic下書き済み／生成スキップ
+
+- **基準日（JST）**: 2026-06-30（UTC 2026-06-29T20:32Z）
+- **確認結果**: topicキュー全11件を照合した結果、以下の通り全件対応済み
+  - draft存在（8件）: position-sizing / trading-psychology-calm / risk-reward / profit-taking / trading-journal / leverage / dollar-cost-averaging / swap-points
+  - 公開済み（3件）: compounding-drawdown / cognitive-biases / diversification（guides.html確認済み）
+- **新規生成**: なし（空コミット回避）
+- **人間の次アクション**: topicキューに新たなテーマを追記すれば翌日ルーティンが自動ピック
+
+---
+
 ## 2026-06-29 | 🧪 signal-lab #024 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-06-29
