@@ -102,10 +102,16 @@
 
 ## 📌 アクティブな宿題
 
+### 🔜 次セッションで最初に確認（在flight）
+- **ニュースRSS修正のライブ反映確認**：6/28に死んだロイターRSSを差し替え＋update-market-news を trigger 済。**live の index.html ニュースにロイター日本（日本語）が戻っているか**を確認（WebFetch等）。
+- **AdSense 再審査の結果**：6/27 申請済（[[project_adsense_review]]）。承認/却下を確認。却下ならニュース記事もnoindex等の next step。
+- **JP朝カードの初稼働**：月曜6:00に `MarketWatch_JP_Daily` が初の自動実行→`DAILY_SUMMARY.md` が当日日付で更新されているか（番人 `MarketWatch_JP_Health` 8:00 も）。
+- **整理係**：`mw declutter` は現在0件。月次 `MarketWatch_Declutter` が `DECLUTTER_REPORT.md` を出したら確認。
+
 - ✅ **update-market-news.yml の失敗は解決済**（2026-06-20 午後・concurrency追加）。原因＝push+dispatch の同時実行レース。今後 `mw publish` を素で使ってもOK。
 - 🚩 **FOMC結果の信頼性検証（6/18 起票・未確認）**：`indicator-result.json` の FOMC（据え置き 3.50–3.75%）は出典が個人ブログ系の疑い。一次（Reuters/Bloomberg/Fed）で数値を確認し、違えば訂正・正しければ出典差し替え。日銀（6/16・1.0%利上げ）は verified。
 - 🔴 **POLICY dict 更新**：`generate_market_news.py` の `POLICY`（日銀→1.0%／FOMC据え置き）を会合結果へ。未更新だと market-health のスワップ金利差%が陳腐化。
-- 📉 **AdSense 再審査準備**（auto-memory `project_adsense_review`／2026-06-18 却下＝「有用性の低いコンテンツ」）：薄い自動ページの noindex／編集コンテンツの価値強化を監査してから再申請。
+- 📉 **AdSense ＝2026-06-27 再申請済・結果待ち**（[[project_adsense_review]]）。次セッションで結果確認（上の在flight参照）。
 - 🗓️ **`jp-stock-info.json` の四半期更新**（決算シーズン後に `python make_jp_stock_info.py` 再実行→`mw sync`。赤字/黒字フラグを最新決算へ。日次の値上がり率/売買代金は `jp-rankings.yml` が自動）。
 - ✍️ autodraft topicキュー ⑫以降の補充（候補＝金利と債券／単利と複利／ETFと投信／注文方法／PER・PBR）。
 - 📊 弁護士相談アジェンダ（track-record 統計開示／確信度ラベル／個別銘柄記事の言及）。
