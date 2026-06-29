@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-06-30 | 🧪 signal-lab #025 ゲート実行中
+
+- **基準日（JST）**: 2026-06-30
+- **採択仮説**: 「指数グループ（NKD=F/ES=F/NQ=F/YM=F/^FTSE）のショートシグナルは損益分岐43%を有意に下回るか——#021探索的発見（17/56=30.4%）の正式検証」
+- **事前宣言**: H1（指数×ショート CI上限 < 43%）/ H2（方向非対称 ≥ 10pp）/ N ≥ 20
+- **検証データ**: 決済済み1,188件。指数×S=62件 / 指数×L=220件（対照）/ signal別・ticker別・trend別・グループ間比較
+- **結果**: 指数×S 17/62=27.4% CI[17.9%〜39.6%] E(R)=−0.540 CI[−0.932〜−0.148] → **H1 PASS ✅** / 方向非対称25.3pp → **H2 PASS ✅** / N=62≥20 ✅。指数×L=52.7%(116/220) E(R)=+0.345。低勝率の主体：low_break 11.1%(2/18)・macd_dead 33.3%(12/36)。62件の80.6%が上昇中の逆張りショート（構造的交絡）
+- **判定**: ✅ 通過A（棄却確認）
+- **生成ファイル**: drafts/draft-signal-lab-025.html / drafts/labnotes/lab-025-analysis.md / drafts/labnotes/lab-025-claims.json / drafts/labnotes/sweep-2026-06-30.json / signal-lab-ledger.md / signal-lab-tracker.json（トラッカー[o]新設）
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push（chore: signal-lab draft 025 + claims）
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance ?
+- [ ] 8-4 公開 or エスカレ
+
+---
+
 ## 2026-06-30 | 📋 autodraft-article — 全topic下書き済み／生成スキップ
 
 - **基準日（JST）**: 2026-06-30（UTC 2026-06-29T20:32Z）

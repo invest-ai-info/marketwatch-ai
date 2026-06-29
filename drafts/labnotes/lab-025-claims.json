@@ -1,0 +1,19 @@
+{
+  "article_id": "025",
+  "claims": [
+    {"label": "指数×ショート全体 勝率（主仮説H1）", "filter": {"group": "index", "direction": "short"}, "k": 17, "n": 62},
+    {"label": "指数×ロング全体 勝率（方向対照H2）", "filter": {"group": "index", "direction": "long"}, "k": 116, "n": 220},
+    {"label": "指数×ショート×上昇トレンド（交叉・構造的交絡）", "filter": {"group": "index", "direction": "short", "trend": "上昇"}, "k": 14, "n": 50},
+    {"label": "指数×ショート×MACDデッドクロス", "filter": {"group": "index", "direction": "short", "signal": "macd_dead"}, "k": 12, "n": 36},
+    {"label": "指数×ショート×安値ブレイク（最低勝率シグナル）", "filter": {"group": "index", "direction": "short", "signal": "low_break"}, "k": 2, "n": 18},
+    {"label": "金属グループ×ショート（グループ比較）", "filter": {"group": "metal", "direction": "short"}, "k": 26, "n": 61},
+    {"label": "円クロスFX×ショート（グループ比較）", "filter": {"group": "jpy_fx", "direction": "short"}, "k": 22, "n": 61},
+    {"label": "ドル建てFX×ショート（グループ比較）", "filter": {"group": "other_fx", "direction": "short"}, "k": 49, "n": 98},
+    {"label": "BTC×ショート（グループ比較）", "filter": {"group": "btc", "direction": "short"}, "k": 13, "n": 23},
+    {"label": "原油×ショート（グループ比較）", "filter": {"group": "oil", "direction": "short"}, "k": 11, "n": 21},
+    {"label": "NKD=F（日経CME先物）×ショート（銘柄別）", "filter": {"ticker": "NKD=F", "direction": "short"}, "k": 6, "n": 19},
+    {"label": "NQ=F（ナスダック先物）×ショート（銘柄別）", "filter": {"ticker": "NQ=F", "direction": "short"}, "k": 2, "n": 15},
+    {"label": "ES=F（S&P500先物）×ショート（銘柄別）", "filter": {"ticker": "ES=F", "direction": "short"}, "k": 6, "n": 14},
+    {"label": "YM=F（ダウ先物）×ショート（銘柄別）", "filter": {"ticker": "YM=F", "direction": "short"}, "k": 2, "n": 10}
+  ]
+}

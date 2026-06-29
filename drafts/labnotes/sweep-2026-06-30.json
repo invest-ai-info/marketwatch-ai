@@ -1,0 +1,306 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "candidates": [
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 48,
+      "n": 181,
+      "pct": 26.5,
+      "ci_lo": 20.6,
+      "ci_hi": 33.4,
+      "avgR": -0.381,
+      "rci_lo": -0.532,
+      "rci_hi": -0.231,
+      "p": 6.852779512733775e-07,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×reversalL",
+      "filter": {
+        "group": "metal",
+        "reversal_long": true
+      },
+      "k": 17,
+      "n": 85,
+      "pct": 20.0,
+      "ci_lo": 12.9,
+      "ci_hi": 29.7,
+      "avgR": -0.533,
+      "rci_lo": -0.733,
+      "rci_hi": -0.334,
+      "p": 1.630050687762008e-07,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 22,
+      "n": 120,
+      "pct": 18.3,
+      "ci_lo": 12.4,
+      "ci_hi": 26.2,
+      "avgR": -0.572,
+      "rci_lo": -0.734,
+      "rci_hi": -0.41,
+      "p": 4.717559676237215e-12,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=neutral",
+      "filter": {
+        "tier": "neutral"
+      },
+      "k": 98,
+      "n": 293,
+      "pct": 33.4,
+      "ci_lo": 28.3,
+      "ci_hi": 39.0,
+      "avgR": -0.22,
+      "rci_lo": -0.346,
+      "rci_hi": -0.093,
+      "p": 0.0006540182588277155,
+      "profitable": false,
+      "q": 0.0118,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降",
+      "filter": {
+        "trend": "下降"
+      },
+      "k": 153,
+      "n": 430,
+      "pct": 35.6,
+      "ci_lo": 31.2,
+      "ci_hi": 40.2,
+      "avgR": -0.17,
+      "rci_lo": -0.275,
+      "rci_hi": -0.064,
+      "p": 0.0016457767751936192,
+      "profitable": false,
+      "q": 0.0237,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 58,
+      "n": 102,
+      "pct": 56.9,
+      "ci_lo": 47.2,
+      "ci_hi": 66.1,
+      "avgR": 0.327,
+      "rci_lo": 0.101,
+      "rci_hi": 0.552,
+      "p": 0.0044833112784097295,
+      "profitable": true,
+      "q": 0.0404,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=long",
+      "filter": {
+        "group": "index",
+        "direction": "long"
+      },
+      "k": 116,
+      "n": 220,
+      "pct": 52.7,
+      "ci_lo": 46.1,
+      "ci_hi": 59.2,
+      "avgR": 0.23,
+      "rci_lo": 0.076,
+      "rci_hi": 0.385,
+      "p": 0.0034374060868045397,
+      "profitable": true,
+      "q": 0.0404,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×reversalL",
+      "filter": {
+        "group": "btc",
+        "reversal_long": true
+      },
+      "k": 11,
+      "n": 45,
+      "pct": 24.4,
+      "ci_lo": 14.2,
+      "ci_hi": 38.7,
+      "avgR": -0.43,
+      "rci_lo": -0.726,
+      "rci_hi": -0.133,
+      "p": 0.004483478871697866,
+      "profitable": false,
+      "q": 0.0404,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×dir=long",
+      "filter": {
+        "trend": "下降",
+        "direction": "long"
+      },
+      "k": 106,
+      "n": 301,
+      "pct": 35.2,
+      "ci_lo": 30.0,
+      "ci_hi": 40.8,
+      "avgR": -0.178,
+      "rci_lo": -0.304,
+      "rci_hi": -0.052,
+      "p": 0.005590447011623478,
+      "profitable": false,
+      "q": 0.0447,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×reversalL",
+      "filter": {
+        "trend": "下降",
+        "reversal_long": true
+      },
+      "k": 63,
+      "n": 188,
+      "pct": 33.5,
+      "ci_lo": 27.2,
+      "ci_hi": 40.5,
+      "avgR": -0.218,
+      "rci_lo": -0.376,
+      "rci_hi": -0.06,
+      "p": 0.006774862784913349,
+      "profitable": false,
+      "q": 0.045,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=short",
+      "filter": {
+        "group": "index",
+        "direction": "short"
+      },
+      "k": 17,
+      "n": 62,
+      "pct": 27.4,
+      "ci_lo": 17.9,
+      "ci_hi": 39.6,
+      "avgR": -0.36,
+      "rci_lo": -0.621,
+      "rci_hi": -0.099,
+      "p": 0.006876189941326771,
+      "profitable": false,
+      "q": 0.045,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×dir=long",
+      "filter": {
+        "group": "btc",
+        "direction": "long"
+      },
+      "k": 20,
+      "n": 70,
+      "pct": 28.6,
+      "ci_lo": 19.3,
+      "ci_hi": 40.1,
+      "avgR": -0.333,
+      "rci_lo": -0.582,
+      "rci_hi": -0.085,
+      "p": 0.008619574960601728,
+      "profitable": false,
+      "q": 0.0517,
+      "fdr_pass": true
+    },
+    {
+      "label": "dir=long",
+      "filter": {
+        "direction": "long"
+      },
+      "k": 333,
+      "n": 862,
+      "pct": 38.6,
+      "ci_lo": 35.4,
+      "ci_hi": 41.9,
+      "avgR": -0.099,
+      "rci_lo": -0.174,
+      "rci_hi": -0.023,
+      "p": 0.010871768970238671,
+      "profitable": false,
+      "q": 0.0602,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 61,
+      "n": 112,
+      "pct": 54.5,
+      "ci_lo": 45.2,
+      "ci_hi": 63.4,
+      "avgR": 0.271,
+      "rci_lo": 0.055,
+      "rci_hi": 0.487,
+      "p": 0.014065578481789576,
+      "profitable": true,
+      "q": 0.0723,
+      "fdr_pass": true
+    },
+    {
+      "label": "blocked=False",
+      "filter": {
+        "blocked": false
+      },
+      "k": 283,
+      "n": 734,
+      "pct": 38.6,
+      "ci_lo": 35.1,
+      "ci_hi": 42.1,
+      "avgR": -0.1,
+      "rci_lo": -0.183,
+      "rci_hi": -0.018,
+      "p": 0.016730816329476372,
+      "profitable": false,
+      "q": 0.0803,
+      "fdr_pass": true
+    },
+    {
+      "label": "tf=4h×dir=long",
+      "filter": {
+        "tf": "4h",
+        "direction": "long"
+      },
+      "k": 131,
+      "n": 355,
+      "pct": 36.9,
+      "ci_lo": 32.0,
+      "ci_hi": 42.0,
+      "avgR": -0.139,
+      "rci_lo": -0.256,
+      "rci_hi": -0.022,
+      "p": 0.020220434102518947,
+      "profitable": false,
+      "q": 0.091,
+      "fdr_pass": true
+    }
+  ]
+}
