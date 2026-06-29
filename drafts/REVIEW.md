@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-06-30 | 🧪 signal-lab #025 ゲート実行中
+## 2026-06-30 | 🧪 signal-lab #025 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-06-30
 - **採択仮説**: 「指数グループ（NKD=F/ES=F/NQ=F/YM=F/^FTSE）のショートシグナルは損益分岐43%を有意に下回るか——#021探索的発見（17/56=30.4%）の正式検証」
@@ -13,10 +13,15 @@
 - **生成ファイル**: drafts/draft-signal-lab-025.html / drafts/labnotes/lab-025-analysis.md / drafts/labnotes/lab-025-claims.json / drafts/labnotes/sweep-2026-06-30.json / signal-lab-ledger.md / signal-lab-tracker.json（トラッカー[o]新設）
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push（chore: signal-lab draft 025 + claims）
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance ?
-- [ ] 8-4 公開 or エスカレ
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 025 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 14/14クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→🟢白 — タイトル「危ない」→「検証」に4箇所軟化（title/og:title/ld+json/h1）。数値・SVG・30秒まとめ不変
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も14/14緑・数値変化なし確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（断定語なし・個別推奨なし・kinsho-v1×3箇所・noindex・将来非保証 全確認）
+- [x] 8-4-iii finalize_signal_lab.py 025 → guide-signal-lab-025.html 生成（size=38KB・svg=3・kinsho=6）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（最上段）・generate_market_news.py 履歴追加
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅（116記事・エラーなし）
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 025 verified+compliance）
 
 ---
 
