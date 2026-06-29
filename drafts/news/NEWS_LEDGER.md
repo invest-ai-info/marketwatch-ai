@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-06-29
+- 判定: ✅ 公開済み
+- 選定トピック: 東京区部2026年6月CPI速報値でコアCPI（生鮮食品除く）が前年比+1.6%と8ヶ月ぶり加速・コア・コアCPI（生鮮食品・エネルギー除く）+1.9%が日銀2%目標に接近。日銀は6月16日に政策金利を1.0%（1995年以来最高）に引き上げ済み。USDJPY 161.7円付近（40年ぶり円安）で発表後ほぼ無反応。次の焦点は7月31日日銀会合と7月2日（木）前倒しNFP（カテゴリ: マクロ・金融政策・為替）
+- スコア: 話題性 4 / 影響 5 / 付加価値 5 （合計 14/15）
+- 出典:
+  - Bloomberg JP「東京消費者物価は8カ月ぶりに伸び拡大、日銀年内利上げ観測の支えに」（2026-06-26）
+  - Japan Times「Tokyo inflation picks up, keeping BOJ on track for further hike」（2026-06-26）
+  - Gurufocus「Tokyo Inflation Picks Up, Keeping BOJ Rate-Hike Path Alive」（2026-06-26）
+  - FXStreet「Japan's Tokyo CPI inflation rises in June: What 1.7% means for Japanese Yen」（2026-06-26）
+  - FXStreet「Japanese Yen consolidates near 40-year low vs USD after Tokyo CPI」（2026-06-26）
+  - CNBC「Bank of Japan hikes rates to 1%, highest since 1995」（2026-06-16）
+  - Trading Economics（Tokyo CPI、USDJPY データ）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典7系統・断定なし・noindexなし・各ボックスに売買推奨でない旨の留保を逐次明記）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認: 🟢白（6項目全クリア・問題なし・先行エージェントの判定を独立に支持）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-06-29-tokyo-cpi-boj.html
+- 追記: check_site_consistency.py exit=0確認済み。guides.htmlカード追加済み。generate_market_news.py更新履歴追加済み。git push origin main完了。
+
+---
+
 ## 2026-06-28
 - 判定: ✅ 公開済み
 - 選定トピック: 米軍（CENTCOM）とイランIRGCが6月26〜27日に相互報復攻撃——コンテナ船Ever Lovely・油タンカーKiku被弾、米軍がイランのミサイル/ドローン施設と海岸レーダーを2夜連続攻撃、イランがクウェート・バーレーン米軍関連施設を攻撃——にもかかわらずWTI原油が約68.86ドルへ週間約4%下落した逆説と日本への影響を中立整理（カテゴリ: 地政学・マクロ・エネルギー）
