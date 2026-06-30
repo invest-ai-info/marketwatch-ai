@@ -4666,6 +4666,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-06-30", "line": '・<b>2026-06-30</b>: 💴 解説「<a href="guide-news-2026-06-30-jpy-intervention.html" style="color:#0969da"><b>片山財務相「断固たる措置」発言を整理</b></a>」公開'},
         {"date": "2026-06-30", "line": '・<b>2026-06-30</b>: 📰 解説「<a href="guide-news-2026-06-30-gold-q2-crash.html" style="color:#0969da"><b>【6/30】金（ゴールド）Q2急落・$3,986</b></a>」公開'},
         {"date": "2026-06-30", "line": '・<b>2026-06-30</b>: 🐟 解説「<a href="guide-proverb-atama-shippo.html" style="color:#0969da"><b>頭と尻尾はくれてやれ</b></a>」公開'},
         {"date": "2026-06-30", "line": '・<b>2026-06-30</b>: 🧪 解説「<a href="guide-signal-lab-025.html" style="color:#0969da"><b>研究日誌 #25 指数の売りの27%という現実——ショート勝率と方向非対称の解剖</b></a>」公開'},
