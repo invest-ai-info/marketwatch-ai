@@ -4142,6 +4142,23 @@ def load_fundamental_context_for_site():
         return None
 
 
+# 🆕 関連ニュース／検証済みニュースの鮮度カットオフ（古い記事の混入防止・2026-06-30）。
+# TOP3 は別途 48h 減衰で制御。ブリーフィング(fundamental-context.json)由来はここで一括カット＝唯一の調整点。
+BRIEFING_NEWS_MAX_AGE_DAYS = 10
+
+
+def _briefing_news_too_old(n):
+    """published(YYYY-MM-DD)が MAX_AGE 日より古ければ True。日付不明(空/解析不可)は除外しない（False）。"""
+    pub = (n.get("published") or "").strip()
+    if not pub:
+        return False
+    try:
+        d = datetime.fromisoformat(pub[:10]).date()
+    except Exception:
+        return False
+    return (datetime.now(JST).date() - d).days > BRIEFING_NEWS_MAX_AGE_DAYS
+
+
 def build_trust_news_html(ctx, max_items=10):
     """信頼性検証済みニュースのセクションHTML。
     ⚠️ bias / conviction / direction / risk_regime は一切読まない・出さない（投資助言回避）。
@@ -4153,6 +4170,8 @@ def build_trust_news_html(ctx, max_items=10):
         for n in (a.get("top_news") or []):
             cred = (n.get("credibility") or "").upper()
             if cred not in ("HIGH", "MID"):  # LOW・未検証は公開しない
+                continue
+            if _briefing_news_too_old(n):  # 🆕 鮮度カットオフ（古い記事の混入防止）
                 continue
             # 資産間の重複除去: まず URL（同一記事）、無ければ見出し先頭で判定
             url = (n.get("url") or "").strip()
@@ -4248,6 +4267,8 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
         for n in (a.get("top_news") or []):
             cred = (n.get("credibility") or "").upper()
             if cred not in ("HIGH", "MID"):
+                continue
+            if _briefing_news_too_old(n):  # 🆕 鮮度カットオフ（古い記事の混入防止）
                 continue
             key = (n.get("headline") or "").strip()[:24]
             if not key or key in seen:
