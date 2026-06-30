@@ -1,0 +1,213 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "candidates": [
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 26,
+      "n": 129,
+      "pct": 20.2,
+      "ci_lo": 14.1,
+      "ci_hi": 27.9,
+      "avgR": -0.53,
+      "rci_lo": -0.692,
+      "rci_hi": -0.368,
+      "p": 1.5276557796539691e-10,
+      "profitable": false,
+      "q": 0.0,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 55,
+      "n": 193,
+      "pct": 28.5,
+      "ci_lo": 22.6,
+      "ci_hi": 35.2,
+      "avgR": -0.335,
+      "rci_lo": -0.484,
+      "rci_hi": -0.186,
+      "p": 1.043694843305687e-05,
+      "profitable": false,
+      "q": 0.0003,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×reversalL",
+      "filter": {
+        "group": "metal",
+        "reversal_long": true
+      },
+      "k": 21,
+      "n": 91,
+      "pct": 23.1,
+      "ci_lo": 15.6,
+      "ci_hi": 32.7,
+      "avgR": -0.462,
+      "rci_lo": -0.665,
+      "rci_hi": -0.258,
+      "p": 8.434602770446276e-06,
+      "profitable": false,
+      "q": 0.0003,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=long",
+      "filter": {
+        "group": "index",
+        "direction": "long"
+      },
+      "k": 121,
+      "n": 225,
+      "pct": 53.8,
+      "ci_lo": 47.3,
+      "ci_hi": 60.2,
+      "avgR": 0.255,
+      "rci_lo": 0.102,
+      "rci_hi": 0.407,
+      "p": 0.0010444448620408053,
+      "profitable": true,
+      "q": 0.0188,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 59,
+      "n": 103,
+      "pct": 57.3,
+      "ci_lo": 47.6,
+      "ci_hi": 66.4,
+      "avgR": 0.337,
+      "rci_lo": 0.113,
+      "rci_hi": 0.561,
+      "p": 0.003229706457270165,
+      "profitable": true,
+      "q": 0.0332,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=neutral",
+      "filter": {
+        "tier": "neutral"
+      },
+      "k": 107,
+      "n": 308,
+      "pct": 34.7,
+      "ci_lo": 29.6,
+      "ci_hi": 40.2,
+      "avgR": -0.189,
+      "rci_lo": -0.314,
+      "rci_hi": -0.065,
+      "p": 0.002818307919539631,
+      "profitable": false,
+      "q": 0.0332,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×reversalL",
+      "filter": {
+        "group": "btc",
+        "reversal_long": true
+      },
+      "k": 11,
+      "n": 46,
+      "pct": 23.9,
+      "ci_lo": 13.9,
+      "ci_hi": 37.9,
+      "avgR": -0.442,
+      "rci_lo": -0.733,
+      "rci_hi": -0.151,
+      "p": 0.0028895013453817953,
+      "profitable": false,
+      "q": 0.0332,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=btc×dir=long",
+      "filter": {
+        "group": "btc",
+        "direction": "long"
+      },
+      "k": 20,
+      "n": 72,
+      "pct": 27.8,
+      "ci_lo": 18.8,
+      "ci_hi": 39.0,
+      "avgR": -0.352,
+      "rci_lo": -0.595,
+      "rci_hi": -0.109,
+      "p": 0.004556876284476541,
+      "profitable": false,
+      "q": 0.0389,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×dir=short",
+      "filter": {
+        "group": "index",
+        "direction": "short"
+      },
+      "k": 17,
+      "n": 63,
+      "pct": 27.0,
+      "ci_lo": 17.6,
+      "ci_hi": 39.0,
+      "avgR": -0.37,
+      "rci_lo": -0.628,
+      "rci_hi": -0.113,
+      "p": 0.004866511382001892,
+      "profitable": false,
+      "q": 0.0389,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降",
+      "filter": {
+        "trend": "下降"
+      },
+      "k": 165,
+      "n": 450,
+      "pct": 36.7,
+      "ci_lo": 32.3,
+      "ci_hi": 41.2,
+      "avgR": -0.144,
+      "rci_lo": -0.248,
+      "rci_hi": -0.04,
+      "p": 0.006487925895757307,
+      "profitable": false,
+      "q": 0.0467,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=下降×dir=long",
+      "filter": {
+        "trend": "下降",
+        "direction": "long"
+      },
+      "k": 115,
+      "n": 318,
+      "pct": 36.2,
+      "ci_lo": 31.1,
+      "ci_hi": 41.6,
+      "avgR": -0.156,
+      "rci_lo": -0.28,
+      "rci_hi": -0.033,
+      "p": 0.013123675603258445,
+      "profitable": false,
+      "q": 0.0859,
+      "fdr_pass": true
+    }
+  ]
+}

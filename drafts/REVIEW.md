@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-07-01 | 🧪 signal-lab #026 ゲート実行中
+
+- **基準日（JST）**: 2026-07-01
+- **採択仮説**: 「指数グループ（NKD=F/ES=F/NQ=F/YM=F/^FTSE）のロングシグナルは、前向き N≥80 かつ平均R の 95%CI 下限 > 0 という昇格条件を満たすか」（優先度①：前向きトラッカー✅昇格確認）
+- **事前宣言（昇格基準）**: 前向きN≥80 AND 平均RのCI下限 > 0（edgeクラス）
+- **トラッカー更新結果**: 指数×ロング(全足ライブ) 62/104=59.6%, E(R)+0.391, CI[+0.17~+0.61] → ✅昇格（N=104≥80・CI下限+0.17>0）
+- **スイープ結果**: sweep-2026-07-01.json 出力。FDR通過11本（全て既登録・新規候補なし）
+- **検証データ**: 全決済済み1,236件（signals-log.json）。指数×L全225件 + 銘柄別/シグナル別/時間足別/方向別クロス集計
+- **結果**: in-sample 53.8%(121/225) CI[47.3%~60.2%] E(R)=+0.255。前向き 59.6%(62/104) CI[50.0%~68.5%] E(R)=+0.391 CI[+0.17~+0.61]。NKD=F 65.3%(32/49)・ES=F 50.8%(32/63)・NQ=F 56.0%(28/50)・YM=F 47.6%(20/42)・^FTSE 42.9%(9/21)。指数×S 27.0%(17/63) 方向非対称26.8pp
+- **判定**: ✅昇格確認（前向きN≥80・E(R)CI下限>0の昇格基準クリア）
+- **生成ファイル**: drafts/draft-signal-lab-026.html / drafts/labnotes/lab-026-analysis.md / drafts/labnotes/lab-026-claims.json / drafts/labnotes/sweep-2026-07-01.json / signal-lab-ledger.md / signal-lab-tracker.json
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push ⬜
+- [ ] 8-2 verify ⬜
+- [ ] 8-3 Opus compliance ⬜
+- [ ] 8-4-i 数値再検証 ⬜
+- [ ] 8-4-ii 独立確認Opus ⬜
+- [ ] 8-4-iii finalize_signal_lab.py ⬜
+- [ ] 8-4-iv publish_article.py ⬜
+- [ ] 8-4-v check_site_consistency.py ⬜
+- [ ] 8-4-vi git commit → PUSH-MAIN ⬜
+
+---
+
 ## 2026-06-30 | 🧪 signal-lab #025 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-06-30
