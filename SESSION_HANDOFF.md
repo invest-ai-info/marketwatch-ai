@@ -103,6 +103,7 @@
 ## 📌 アクティブな宿題
 
 ### 🔜 次セッションで最初に確認（在flight）
+- **🆕 投資格言シリーズ 初の自動公開を確認（2026-07-01）**：新シリーズ「投資格言から学ぼう」を構築（[[project_proverb_series]]）。#1 `guide-proverb-atama-shippo.html`（頭と尻尾はくれてやれ）は2026-06-30に手動公開済（独立Opus監査=白）。cloud routine **`proverb-daily-auto`（`trig_01P8Jjut79fHWoiALk4mfuJQ`、毎日10:12 JST）** が `drafts/PROVERB_GUIDE.md`(SOP+15キュー)を読んで自動公開。**初回=7/1 10:12 JST→#2「買いは家まで売りは命まで」が公開 or エスカレされたか**を確認（`drafts/proverb/PROVERB_LEDGER.md`／guides.html「投資格言から学ぶ」カード／`RemoteTrigger get trig_01P8Jjut79fHWoiALk4mfuJQ` の last_fired_at）。エスカレ(🚩)なら人レビュー。薄コンテンツ回避が前提（AdSense）。
 - ✅ **ニュース鮮度カットオフ＝解決済（2026-06-30 ライブ確認）**：オーナー「古いニュースが表示される」→原因＝各カテゴリ「関連ニュース」と「🔍信頼性検証済みニュース」は `fundamental-context.json` ブリーフィング由来で、描画コード（`build_card_news_from_briefing`/`build_trust_news_html`）に**鮮度カットオフが無く**、新鮮な記事が少ないカテゴリ（特に暗号資産）で古いHIGH/MID記事（5/14 CLARITY法案等）が3枠埋めに生き残っていた（TOP3の48h除外とは別系統）。**修正＝`BRIEFING_NEWS_MAX_AGE_DAYS=10` カットオフ追加**（>10日除外・日付なしは残しフォールバック温存）。GitHubが`_history_items`で先行＋**CRLF**だったため**GitHub最新に差分だけPUT**（commit `a89e693854`）→ローカルも最新へ同期→update-market-news #829 success。**ライブ確認＝最古6/25・5/14と6/17は消失**。調整は定数1つ（`generate_market_news.py`）。再発時はブリーフィング生成側の日付誤りを疑う。
 - **ニュースRSS修正のライブ反映確認**：6/28に死んだロイターRSSを差し替え＋update-market-news を trigger 済。**live の index.html ニュースにロイター日本（日本語）が戻っているか**を確認（WebFetch等）。
 - **AdSense 再審査の結果**：6/27 申請済（[[project_adsense_review]]）。承認/却下を確認。却下ならニュース記事もnoindex等の next step。
