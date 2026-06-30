@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-07-01 | 🧪 signal-lab #026 ゲート実行中
+## 2026-07-01 | 🧪 signal-lab #026 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-07-01
 - **採択仮説**: 「指数グループ（NKD=F/ES=F/NQ=F/YM=F/^FTSE）のロングシグナルは、前向き N≥80 かつ平均R の 95%CI 下限 > 0 という昇格条件を満たすか」（優先度①：前向きトラッカー✅昇格確認）
@@ -12,18 +12,18 @@
 - **検証データ**: 全決済済み1,236件（signals-log.json）。指数×L全225件 + 銘柄別/シグナル別/時間足別/方向別クロス集計
 - **結果**: in-sample 53.8%(121/225) CI[47.3%~60.2%] E(R)=+0.255。前向き 59.6%(62/104) CI[50.0%~68.5%] E(R)=+0.391 CI[+0.17~+0.61]。NKD=F 65.3%(32/49)・ES=F 50.8%(32/63)・NQ=F 56.0%(28/50)・YM=F 47.6%(20/42)・^FTSE 42.9%(9/21)。指数×S 27.0%(17/63) 方向非対称26.8pp
 - **判定**: ✅昇格確認（前向きN≥80・E(R)CI下限>0の昇格基準クリア）
-- **生成ファイル**: drafts/draft-signal-lab-026.html / drafts/labnotes/lab-026-analysis.md / drafts/labnotes/lab-026-claims.json / drafts/labnotes/sweep-2026-07-01.json / signal-lab-ledger.md / signal-lab-tracker.json
+- **生成ファイル**: drafts/draft-signal-lab-026.html / drafts/labnotes/lab-026-analysis.md / drafts/labnotes/lab-026-claims.json / drafts/labnotes/sweep-2026-07-01.json / signal-lab-ledger.md / signal-lab-tracker.json / guide-signal-lab-026.html
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push ⬜
-- [ ] 8-2 verify ⬜
-- [ ] 8-3 Opus compliance ⬜
-- [ ] 8-4-i 数値再検証 ⬜
-- [ ] 8-4-ii 独立確認Opus ⬜
-- [ ] 8-4-iii finalize_signal_lab.py ⬜
-- [ ] 8-4-iv publish_article.py ⬜
-- [ ] 8-4-v check_site_consistency.py ⬜
-- [ ] 8-4-vi git commit → PUSH-MAIN ⬜
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 026 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 13/13クレーム緑・要約未検証0件・SVG警告0件（x座標修正後）
+- [x] 8-3 Opus compliance 🟡グレー→修正適用→🟢白 — title/og/h1「NKD=F最強」→「NKD=Fが過去勝率トップ」に軟化 + kinsho-v1 data属性を本文末・footerに付与（数値・SVG・30秒まとめ不変）
+- [x] 8-4-i 数値再検証 EXIT=0 ✅（Opus修正後も13/13緑・h2重複修正後も全緑確認）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（noindex・kinsho-v1×3箇所・断定語なし・将来非保証・推奨なし・過去データ明示 全確認）
+- [x] 8-4-iii finalize_signal_lab.py 026 → guide-signal-lab-026.html 生成（size=35KB・svg=2・kinsho=5）
+- [x] 8-4-iv guides.html カード追加（最上段）・generate_market_news.py 履歴追加（sync_to_github.py はクラウド環境非存在のためスキップ）
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅（120記事・エラーなし）
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 026 verified+compliance）
 
 ---
 
