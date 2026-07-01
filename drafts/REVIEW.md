@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-07-02 | 🧪 signal-lab #027 ゲート実行中
+
+- **基準日（JST）**: 2026-07-02
+- **採択仮説**: 「逆張り買い（reversal_long=True）は指数グループで57.3%・メタル/BTCで25%前後という三峰構造を持つか——グループ別成績マップ」（優先度②：前向きトラッカー 中立×revL N=28 64.3% E(R)+0.50 CI[+0.08~+0.92]が正値化）
+- **事前宣言**: H1（指数×revL CI下限≥43% かつN≥50）/ H2（メタル×revL CI上限≤43% かつN≥20）/ H3（BTC×revL CI上限≤43% かつN≥20）
+- **検証データ**: 全決済済み1,249件（signals-log.json）。reversal_long=True全499件のグループ別・トレンド別クロス集計
+- **結果**: 全体40.9%(204/499) CI[36.7%~45.2%]。指数57.3%(59/103) CI[47.6%~66.4%] → **H1 PASS ✅**。メタル24.7%(23/93) CI[17.1%~34.4%] → **H2 PASS ✅**。BTC25.0%(12/48) CI[14.9%~38.8%] → **H3 PASS ✅**。探索的: 指数×上昇64.9%(37/57) vs ドルFX×上昇26.1%(6/23)の27pp逆転発見
+- **判定**: 🟡 通過A（H1・H2・H3三条件クリア）
+- **生成ファイル**: drafts/draft-signal-lab-027.html / drafts/labnotes/lab-027-analysis.md / drafts/labnotes/lab-027-claims.json / drafts/labnotes/sweep-2026-07-02.json / signal-lab-ledger.md / signal-lab-tracker.json
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push（chore: signal-lab draft 027 + claims）
+- [ ] 8-2 verify.py ゲート
+- [ ] 8-3 Opus compliance
+- [ ] 8-4 再検証 + 独立Opus + 公開
+- [ ] または 8-5 エスカレ
+
+---
+
 ## 2026-07-01 | 🧪 signal-lab #026 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-07-01
