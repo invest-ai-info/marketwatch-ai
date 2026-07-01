@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-07-02 | 🧪 signal-lab #027 ゲート実行中
+## 2026-07-02 | 🧪 signal-lab #027 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-07-02
 - **採択仮説**: 「逆張り買い（reversal_long=True）は指数グループで57.3%・メタル/BTCで25%前後という三峰構造を持つか——グループ別成績マップ」（優先度②：前向きトラッカー 中立×revL N=28 64.3% E(R)+0.50 CI[+0.08~+0.92]が正値化）
@@ -13,11 +13,14 @@
 - **生成ファイル**: drafts/draft-signal-lab-027.html / drafts/labnotes/lab-027-analysis.md / drafts/labnotes/lab-027-claims.json / drafts/labnotes/sweep-2026-07-02.json / signal-lab-ledger.md / signal-lab-tracker.json
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push（chore: signal-lab draft 027 + claims）
-- [ ] 8-2 verify.py ゲート
-- [ ] 8-3 Opus compliance
-- [ ] 8-4 再検証 + 独立Opus + 公開
-- [ ] または 8-5 エスカレ
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 027 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 14/14クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟢白 — 修正不要（断定語なし・kinsho-v1×3確認済み）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（noindex・kinsho-v1×3箇所・断定語なし・将来非保証・推奨なし・過去データ明示 全確認）
+- [x] 8-4-iii finalize_signal_lab.py 027 → guide-signal-lab-027.html 生成（size=38KB・svg=2・kinsho=5）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（最上段）・generate_market_news.py 履歴追加・sync_to_github.py に登録
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 027 verified+compliance）
 
 ---
 
