@@ -106,9 +106,28 @@ def summarize_signals(signals, month_start, month_end):
         elif s.get("outcome") == "sl":
             by_ticker[tk]["sl"] += 1
 
+    # 時間足別 勝率（4H=メール配信の実運用商品 / 1H=メール送信なしの実験・データ収集）
+    # ＝月間勝率(見出し)は両者の混在値。実運用の実力は 4H 行で分けて見る（2026-07 レビューで追加）。
+    by_tf_wr = defaultdict(lambda: {"total": 0, "wins": 0, "sl": 0, "_tp1": 0, "_tp2": 0})
+    for s in closed:
+        tf = (s.get("timeframe") or "?").lower()
+        d = by_tf_wr[tf]
+        d["total"] += 1
+        oc = s.get("outcome")
+        if oc == "tp1":
+            d["wins"] += 1; d["_tp1"] += 1
+        elif oc == "tp2":
+            d["wins"] += 1; d["_tp2"] += 1
+        elif oc == "sl":
+            d["sl"] += 1
+    for _tf, d in by_tf_wr.items():
+        d["win_rate"] = round(d["wins"] / d["total"] * 100, 1) if d["total"] else 0
+        d["expected_r"] = round((d["_tp1"] * 1.33 + d["_tp2"] * 2.0 + d["sl"] * -1.0) / d["total"], 2) if d["total"] else 0
+
     return {
         "total": len(in_month),
         "by_tf": {k: len(v) for k, v in by_tf.items()},
+        "by_tf_wr": dict(by_tf_wr),
         "closed": len(closed),
         "tp1": tp1, "tp2": tp2, "sl": sl, "expired": exp,
         "win_rate": round(win_rate, 1),
@@ -164,6 +183,12 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
     by_t = sig_stats.get("by_ticker", {})
     top_winner = max(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
     top_loser = min(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
+    # 時間足別 勝率（4H=配信商品 / 1H=実験）を総評へ渡す
+    tfw = sig_stats.get("by_tf_wr", {})
+    tf_wr_str = " / ".join(
+        f"{k.upper()} {v['win_rate']:.1f}%(期待{v['expected_r']:+.2f}R, n={v['total']})"
+        for k, v in sorted(tfw.items()) if v.get("total")
+    ) or "データなし"
 
     prompt = f"""あなたは日本人個人投資家（サラリーマン × 4H スイング × MT4）向けの投資メディア編集長です。
 {year}年{month}月の AI シグナルと実取引データから、月次成績レポートの中核セクションを執筆してください。
@@ -171,7 +196,8 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
 【シグナル統計】
 - 発火数: {sig_stats['total']} 件（4H {sig_stats['by_tf'].get('4h', 0)} / 1H {sig_stats['by_tf'].get('1h', 0)}）
 - 確定: {sig_stats['closed']} 件（TP1 {sig_stats['tp1']} / TP2 {sig_stats['tp2']} / SL {sig_stats['sl']} / 期限切れ {sig_stats['expired']}）
-- 月間勝率: {sig_stats['win_rate']}% / 期待 R: {sig_stats['expected_r']}
+- 月間勝率: {sig_stats['win_rate']}% / 期待 R: {sig_stats['expected_r']}（※4H+1Hの混在値）
+- 時間足別 勝率: {tf_wr_str}　※4H=メール配信の実運用商品／1H=実験データ収集。総評では月間勝率が混在値である点に必ず触れ、4Hの実力を分けて評価する
 - 信頼度別 勝率: {conf_wr}
 - 環境スコア別 勝率: {env_wr}
 - ベスト銘柄: {top_winner[0] if top_winner[0] else "なし"}（勝-負 = {(top_winner[1] or {{}}).get("wins", 0) - (top_winner[1] or {{}}).get("sl", 0) if top_winner[1] else 0}）
@@ -243,6 +269,22 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
                             f'<td style="text-align:right">{d["sl"]}</td>'
                             f'<td style="text-align:right;color:{color};font-weight:700">{wr:.1f}%</td></tr>')
     env_html = "\n".join(env_rows) or '<tr><td colspan="5" style="text-align:center;color:#6e7781">データなし</td></tr>'
+
+    # 時間足別（4H=配信商品 / 1H=実験データ収集）＝見出しの混在勝率を分解
+    tf_label = {"4h": "4H（メール配信＝実運用商品）", "1h": "1H（送信なし＝実験・データ収集）"}
+    tf_rows = []
+    for key in ("4h", "1h"):
+        d = sig_stats.get("by_tf_wr", {}).get(key)
+        if d and d["total"]:
+            wr = d["win_rate"]
+            color = "#1a7f37" if wr >= 60 else "#9a6700" if wr >= 45 else "#cf222e"
+            rcolor = "#1a7f37" if d["expected_r"] >= 0 else "#cf222e"
+            tf_rows.append(f'<tr><td><b>{tf_label.get(key, key)}</b></td><td style="text-align:right">{d["total"]}</td>'
+                           f'<td style="text-align:right">{d["wins"]}</td>'
+                           f'<td style="text-align:right">{d["sl"]}</td>'
+                           f'<td style="text-align:right;color:{color};font-weight:700">{wr:.1f}%</td>'
+                           f'<td style="text-align:right;color:{rcolor};font-weight:700">{d["expected_r"]:+.2f}R</td></tr>')
+    tf_html = "\n".join(tf_rows) or '<tr><td colspan="6" style="text-align:center;color:#6e7781">データなし</td></tr>'
 
     # 銘柄ランキング
     ticker_rows = []
@@ -384,6 +426,13 @@ footer a{{color:#0969da;text-decoration:none}}
   <div class="kpi"><div class="kpi-num" style="color:{pnl_color}">{trade_stats['total_pnl_pct']:+.2f}%</div><div class="kpi-label">通算 P&L</div></div>
 </div>
 <p>🥇 ベスト取引: {best_html}　／　🥶 ワースト取引: {worst_html}</p>
+
+<h2>⏱️ 時間足別 勝率（月間勝率の内訳）</h2>
+<p style="font-size:.9rem;color:#57606a">上部の月間勝率は <b>4H（メール配信＝実運用の商品）</b> と <b>1H（メール送信なし＝実験・データ収集）</b> の<b>混在値</b>です。実運用の実力は下表の <b>4H の行</b>でご確認ください。</p>
+<table>
+  <thead><tr><th>時間足</th><th style="text-align:right">確定数</th><th style="text-align:right">勝ち</th><th style="text-align:right">SL</th><th style="text-align:right">勝率</th><th style="text-align:right">期待R</th></tr></thead>
+  <tbody>{tf_html}</tbody>
+</table>
 
 <h2>💯 信頼度スコア別 勝率</h2>
 <table>
