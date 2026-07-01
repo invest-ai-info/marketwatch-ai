@@ -15,6 +15,11 @@ on:
     #      既にレポートがあれば git diff 空でコミットされない＝多重発火は無害）。
     - cron: '23 0 1-3 * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: '既存の月次レポートを上書き再生成する（復旧・再集計用）'
+        type: boolean
+        default: false
 
 jobs:
   monthly-report:
@@ -25,6 +30,7 @@ jobs:
     env:
       GEMINI_API_KEY:       ${{ secrets.GEMINI_API_KEY }}
       GITHUB_ACTIONS_RUN:   "true"
+      FORCE_MONTHLY_REPORT: ${{ inputs.force }}
 
     steps:
       - name: Checkout repository
