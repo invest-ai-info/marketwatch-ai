@@ -40,6 +40,14 @@ WORKFLOW_CHECKS = [
     ("政治発言フィード",        "political-alerts.yml",    3,  "critical"),
     ("市況ニュース生成",        "update-market-news.yml",  15, "warn"),
     ("パニック反発スキャン",    "panic-scan.yml",          27, "warn"),
+    # 🆕 低頻度ジョブ（2026-07 追加）。7/1 に monthly-report が取りこぼされ6月レポート未生成の事故で、
+    #    週次/月次が監視対象外＝盲点と判明。正常運用で誤検知しないよう余裕を持たせた閾値。
+    #    max_h は「1回まるごとスキップされたら検知」水準：週次=10日 / 月次=35日。
+    ("週次振り返り",            "weekly-review.yml",       24 * 10, "warn"),
+    ("週次投資戦略",            "weekly-strategy.yml",     24 * 10, "warn"),
+    ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
+    ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
+    ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),
 ]
 
 # ② クラウド routine: (ラベル, 毎回再生成される出力ファイル, 許容経過[時間], 重大度)
