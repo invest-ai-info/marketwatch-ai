@@ -2,6 +2,14 @@
 
 ---
 
+## 2026-07-03 | autodraft-article — 全topic下書き済み・スキップ
+
+- **基準日（JST）**: 2026-07-03（UTC: 2026-07-02T20:30:56Z）
+- **判定**: AUTODRAFT_GUIDE.md のキュー全11件（position-sizing / trading-psychology-calm / risk-reward / profit-taking / compounding-drawdown / cognitive-biases / diversification / trading-journal / leverage / dollar-cost-averaging / swap-points）がすべてドラフト作成済みまたは guides.html に公開済みのため、新規生成なし。
+- **アクション**: 空コミットなし。キュー拡張（新topicの追加）が必要な場合は AUTODRAFT_GUIDE.md の topic キュー表を人間が編集してください。
+
+---
+
 ## 2026-07-02 | 🧪 signal-lab #027 ✅ 自動公開済み
 
 - **基準日（JST）**: 2026-07-02
