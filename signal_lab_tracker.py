@@ -33,7 +33,17 @@ from signal_lab_sweep import BREAKEVEN, load_log, r_of, _mean_std
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TRACKER = os.path.join(ROOT, "signal-lab-tracker.json")
 PROMOTE_MIN_N = 80          # 昇格に必要な前向きN（既存基準 N≥80）
+# 🕰️ 事前登録ルール（2026-07-02 宣言・以後変更しない）:
+#   時間分割ホールドアウト（sweep --split。発見に一切使っていない直近数年で同方向に有意）を
+#   合格した仮説は、擬似out-of-sampleを既に数百〜数千件通過しているため、ライブ前向きNの
+#   要求を 80→30 に緩和する。ホールドアウト情報が無い仮説は従来どおり N≥80。
+PROMOTE_MIN_N_HOLDOUT = 30
 BE_PCT = BREAKEVEN * 100    # 43.0
+
+
+def min_n_of(h):
+    """仮説ごとの昇格に必要な前向きN（ホールドアウト合格なら緩和）。"""
+    return PROMOTE_MIN_N_HOLDOUT if h.get("holdout_pass") else PROMOTE_MIN_N
 
 # 初期登録（トラッカー未作成時のシード）。
 # registered_at: 既に過去記事で宣言済みの仮説はその宣言日、新規発見は今日。
@@ -66,6 +76,60 @@ SEED = [
 ]
 
 
+# 🕰️ 2026-07-02 時間分割ホールドアウト検証の確定結果（コードが単一ソース・以後変更しない）。
+#   実行: python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50 --split 2021-01-01
+#   発見=2006〜2020（決済済11,754件）／ホールドアウト=2021〜2026-06（決済済4,468件・探索に未使用）。
+#   in-sample FDR通過26本 → ホールドアウト合格11本（15本は直近5年で有意性消失＝過学習を検出）。
+#   tracker.json は GitHub 側で routine が更新するため、結果をここに固定し cmd_update が冪等に適用する。
+#   annotate: 既存仮説への注記（pass=True なら昇格N基準 80→30）。register: 新規に前向き登録する合格仮説。
+#   ※ index_long_live と dir=long 系は日足バックテスト由来の証拠（時間足は未検証）である点に留意。
+HOLDOUT_2026_07_02 = {
+    "annotate": {
+        "metal_long_1d":   {"pass": True,  "holdout": {"k": 228, "n": 416,  "pct": 54.8, "avgR": 0.345,  "rci_lo": 0.226,  "rci_hi": 0.463}},
+        "btc_long_1d":     {"pass": True,  "holdout": {"k": 128, "n": 272,  "pct": 47.1, "avgR": 0.164,  "rci_lo": 0.016,  "rci_hi": 0.313}},
+        "index_revL_1d":   {"pass": True,  "holdout": {"k": 151, "n": 312,  "pct": 48.4, "avgR": 0.142,  "rci_lo": 0.011,  "rci_hi": 0.274}},
+        "other_fx_1d":     {"pass": True,  "holdout": {"k": 390, "n": 1041, "pct": 37.5, "avgR": -0.113, "rci_lo": -0.183, "rci_hi": -0.043}},
+        "index_long_1d":   {"pass": False, "holdout": {"k": 457, "n": 1028, "pct": 44.5, "avgR": 0.05,   "rci_lo": -0.022, "rci_hi": 0.122}},
+        "index_long_live": {"pass": False, "holdout": {"k": 457, "n": 1028, "pct": 44.5, "avgR": 0.05,   "rci_lo": -0.022, "rci_hi": 0.122}},
+        # short_1d / dntrend_1d / rsi_oversold_edge は 2020年以前だけの発見スイープでは FDR を通らず＝注記なし（N≥80のまま）
+    },
+    "register": [
+        {"id": "btc_all_1d", "label": "BTC全方向(日足)", "filter": {"group": "btc"}, "kind": "edge", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 166, "n": 363, "pct": 45.7, "avgR": 0.137, "rci_lo": 0.008, "rci_hi": 0.266}},
+        {"id": "metal_all_1d", "label": "メタル全方向(日足)", "filter": {"group": "metal"}, "kind": "edge", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 290, "n": 591, "pct": 49.1, "avgR": 0.201, "rci_lo": 0.102, "rci_hi": 0.301}},
+        {"id": "other_fx_revL", "label": "other_fx×逆張り買い(回避)", "filter": {"group": "other_fx", "reversal_long": True}, "kind": "gate", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 148, "n": 427, "pct": 34.7, "avgR": -0.183, "rci_lo": -0.29, "rci_hi": -0.077}},
+        {"id": "other_fx_long", "label": "other_fx×ロング(回避)", "filter": {"group": "other_fx", "direction": "long"}, "kind": "gate", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 293, "n": 796, "pct": 36.8, "avgR": -0.126, "rci_lo": -0.206, "rci_hi": -0.046}},
+        {"id": "unblocked_long", "label": "runway非阻害×ロング", "filter": {"blocked": False, "direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 1150, "n": 2611, "pct": 44.0, "avgR": 0.053, "rci_lo": 0.007, "rci_hi": 0.099}},
+        {"id": "long_all", "label": "ロング全般(全足)", "filter": {"direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
+        {"id": "long_1d", "label": "ロング全般(日足)", "filter": {"tf": "1d", "direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
+         "holdout_pass": True, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
+    ],
+}
+
+
+def apply_holdout_bootstrap(t):
+    """HOLDOUT_2026_07_02 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
+    changed = 0
+    for h in t["hypotheses"]:
+        ann = HOLDOUT_2026_07_02["annotate"].get(h.get("id"))
+        if ann and "holdout_pass" not in h:
+            h["holdout_pass"], h["holdout"] = ann["pass"], ann["holdout"]
+            changed += 1
+    existing = {tuple(sorted(h["filter"].items())) for h in t["hypotheses"]}
+    for s in HOLDOUT_2026_07_02["register"]:
+        if tuple(sorted(s["filter"].items())) in existing:
+            continue
+        t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
+        existing.add(tuple(sorted(s["filter"].items())))
+        changed += 1
+    return changed
+
+
 def fired_date(d):
     return (d.get("fired_at") or "")[:10]
 
@@ -83,9 +147,9 @@ def stats(data, f, since=None):
             "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3)}
 
 
-def judge(kind, fwd):
+def judge(kind, fwd, min_n=PROMOTE_MIN_N):
     """方向対応の昇格判定（期待値ベース：前向き平均R の95%CIが0を跨がないか）。"""
-    if fwd["n"] < PROMOTE_MIN_N:
+    if fwd["n"] < min_n:
         return "tracking"
     if kind == "edge":
         if fwd["rci_lo"] > 0:   # 期待値プラスが有意＝本物のエッジ確認
@@ -114,12 +178,15 @@ def save_tracker(t):
 
 def cmd_update(args, data, today):
     t = load_tracker()
+    boot = apply_holdout_bootstrap(t)
+    if boot:
+        print(f"🕰️ ホールドアウト検証(2026-07-02)を適用: 注記/新規登録 {boot}件")
     newly = []
     for h in t["hypotheses"]:
         fwd = stats(data, h["filter"], since=h["registered_at"])
         allt = stats(data, h["filter"])
         prev = h.get("status", "tracking")
-        st = judge(h["kind"], fwd)
+        st = judge(h["kind"], fwd, min_n_of(h))
         # rejected は維持（戻さない）。promoted も維持。
         if prev in ("promoted", "rejected"):
             st = prev
@@ -133,7 +200,8 @@ def cmd_update(args, data, today):
     save_tracker(t)
 
     print(f"=== 前向きトラッカー update（基準日 {today} / signals決済済 {sum(1 for d in data if closed(d))}件） ===")
-    print(f"昇格基準（期待値ベース）: forward N≥{PROMOTE_MIN_N} ／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0")
+    print(f"昇格基準（期待値ベース）: forward N≥{PROMOTE_MIN_N}（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}） "
+          f"／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0")
     print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
     print("-" * 108)
     order = {"promoted": 0, "tracking": 1, "rejected": 2}
@@ -141,9 +209,10 @@ def cmd_update(args, data, today):
         fwd = h["forward"]
         rci = f"[{fwd['rci_lo']:+.2f}~{fwd['rci_hi']:+.2f}]"
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}[h["status"]]
+        ho = f" 🏁N≥{PROMOTE_MIN_N_HOLDOUT}" if h.get("holdout_pass") else ""
         print(f"{h['label']:<26}{h['kind']:>5}{h['registered_at']:>12}"
               f"{str(fwd['k'])+'/'+str(fwd['n']):>11}{fwd['pct']:>5.0f}%{fwd['avgR']:>+8.3f}{rci:>17}  {icon}"
-              f"  (全期間R {h['alltime']['avgR']:+.2f})")
+              f"  (全期間R {h['alltime']['avgR']:+.2f}){ho}")
     if newly:
         print("-" * 108)
         print("🚩 今回ステータス変化（人間レビュー＝ライブ配信/信頼度への反映を検討）:")
@@ -154,26 +223,43 @@ def cmd_update(args, data, today):
 
 def cmd_register(args, data, today):
     t = load_tracker()
-    existing = {tuple(sorted(h["filter"].items())) for h in t["hypotheses"]}
+    by_key = {tuple(sorted(h["filter"].items())): h for h in t["hypotheses"]}
     src = json.load(open(args.src, encoding="utf-8-sig"))
-    added = 0
+    uniform_tf = src.get("uniform_tf")  # 例: 日足バックテスト由来なら "1d"
+    added = annotated = 0
     for c in src.get("candidates", []):
-        key = tuple(sorted(c["filter"].items()))
-        if key in existing:
+        # 単一時間足ログ由来の候補は tf 付き登録済み仮説（例 SEED の tf=1d）とも同一視する
+        keys = [tuple(sorted(c["filter"].items()))]
+        if uniform_tf and "tf" not in c["filter"]:
+            keys.append(tuple(sorted(list(c["filter"].items()) + [("tf", uniform_tf)])))
+        hit = next((by_key[k] for k in keys if k in by_key), None)
+        if hit is not None:
+            # 既存仮説＝登録はスキップ。ただしホールドアウト結果があれば注記（昇格基準の緩和に使う）
+            if "holdout" in c:
+                hit["holdout"], hit["holdout_pass"] = c["holdout"], bool(c.get("holdout_pass"))
+                annotated += 1
+                mark = "🏁合格" if hit["holdout_pass"] else "❌不合格"
+                print(f"  ~ ホールドアウト注記: {hit['label']} {mark}"
+                      f"（holdout R{c['holdout']['avgR']:+.2f} N={c['holdout']['n']}・前向きN基準 {min_n_of(hit)}）")
             continue
         # 期待値ベース：avgR>0 なら edge、<0 なら gate（avgR無しは勝率で代替）
         metric = c["avgR"] if c.get("avgR") is not None else (c.get("pct", 0) - BE_PCT)
         kind = "edge" if metric > 0 else "gate"
         hid = "auto_" + "_".join(f"{k}-{v}" for k, v in sorted(c["filter"].items()))
-        t["hypotheses"].append({
+        h = {
             "id": hid[:60], "label": c["label"], "filter": c["filter"], "kind": kind,
             "registered_at": today,
-        })
-        existing.add(key)
+        }
+        if "holdout" in c:
+            h["holdout"], h["holdout_pass"] = c["holdout"], bool(c.get("holdout_pass"))
+        t["hypotheses"].append(h)
+        by_key[keys[0]] = h
         added += 1
-        print(f"  + 登録: {c['label']}（{kind}・registered_at={today}）")
+        ho = "・🏁ホールドアウト合格" if h.get("holdout_pass") else ""
+        print(f"  + 登録: {c['label']}（{kind}・registered_at={today}{ho}）")
     save_tracker(t)
-    print(f"登録 {added}本（重複スキップ {len(src.get('candidates', [])) - added}本）。次に update で前向き計測。")
+    print(f"登録 {added}本／ホールドアウト注記 {annotated}本"
+          f"（重複スキップ {len(src.get('candidates', [])) - added - annotated}本）。次に update で前向き計測。")
 
 
 def cmd_table(args, data, today):
@@ -181,14 +267,18 @@ def cmd_table(args, data, today):
     rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
     if args.html:
         out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
-               f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}・平均R(期待値)の95%CIが0を跨がない</p>',
+               f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
+               f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない</p>',
                '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
-        crit = {"edge": f"前向きN≥{PROMOTE_MIN_N}かつ平均RのCI下限>0", "gate": f"前向きN≥{PROMOTE_MIN_N}かつ平均RのCI上限<0"}
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}
         for h in rows:
             fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
+            mn = min_n_of(h)
+            ho = "🏁" if h.get("holdout_pass") else ""
+            crit = (f"前向きN≥{mn}かつ平均RのCI下限>0" if h["kind"] == "edge"
+                    else f"前向きN≥{mn}かつ平均RのCI上限<0") + ho
             val = f"平均R {fwd.get('avgR',0):+.2f} CI[{fwd.get('rci_lo',0):+.2f}~{fwd.get('rci_hi',0):+.2f}]（{fwd['k']}/{fwd['n']}・勝率{fwd['pct']:.0f}%）"
-            out.append(f'<tr><td>{h["label"]}</td><td>{h["kind"]}</td><td>{crit[h["kind"]]}</td>'
+            out.append(f'<tr><td>{h["label"]}</td><td>{h["kind"]}</td><td>{crit}</td>'
                        f'<td>{val}</td><td>{icon[h.get("status","tracking")]}</td></tr>')
         out.append("</table>")
         print("\n".join(out))
