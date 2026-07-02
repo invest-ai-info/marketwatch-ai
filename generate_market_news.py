@@ -4666,6 +4666,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🔪 解説「<a href="guide-proverb-ochiru-knife.html" style="color:#0969da"><b>落ちてくるナイフはつかむな</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🧪 解説「<a href="guide-signal-lab-027.html" style="color:#0969da"><b>研究日誌 #27 逆張り買いグループ別成績マップ——指数57%・メタル25%・BTC25%の三峰構造</b></a>」公開'},
         {"date": "2026-07-01", "line": '・<b>2026-07-01</b>: 📰 解説「<a href="guide-news-2026-07-01-tankan-q2-2026.html" style="color:#0969da"><b>【7/1】日銀短観6月 非製造業DI+37・35年ぶり最高水準</b></a>」公開'},
         {"date": "2026-07-01", "line": '・<b>2026-07-01</b>: 🧪 解説「<a href="guide-signal-lab-026.html" style="color:#0969da"><b>研究日誌 #26 指数×ロング前向きN=104昇格確認——NKD=Fが過去勝率トップ・NQ=F注意の銘柄格差</b></a>」公開'},
