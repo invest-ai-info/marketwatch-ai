@@ -38,6 +38,7 @@ CHANNELS = [
     ("@rakumachi",           "UCPMJKbrxtpARoTd1b49iUvA", "楽待 不動産投資"),
     ("@mabuchi-mariko",      "UCXhiUvJK_0uyLY1YvaSa0AQ", "馬渕磨理子"),
     ("@saki_kaigaihudousan", "UCpv0oCYCHywaOIsqh48MEVw", "Saki 海外不動産"),
+    ("@FXismOIKAWA",         "UCA2McdYJLbD4IAQo0wLWOUQ", "FXism 及川圭哉"),  # FXデイトレ(fxism.jp)・2026-07-02追加
 ]
 
 MAX_VIDEOS = 5        # 1日に新規要約する本数（既要約はスキップ、これに含まない）
