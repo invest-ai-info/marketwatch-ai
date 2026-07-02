@@ -96,7 +96,7 @@ def main():
     # クラウド routine が GitHub 側で公開・管理する記事シリーズ。ローカルに無い／SYNC_FILES 非登録が
     # 正常なので、ローカル publish 向けの検査（SYNC_FILES登録・リンク切れ・ナビ）は誤検知になる→除外。
     # カードの巻き戻し検知は check_automation_health.py §③（毎朝の番人）が別途担保する。
-    CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-")
+    CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-", "guide-proverb-")
     checked = 0
     for gf in guide_files:
         if gf.startswith(AUTO_PREFIXES):
