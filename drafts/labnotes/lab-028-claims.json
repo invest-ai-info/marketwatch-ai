@@ -1,0 +1,50 @@
+{
+  "article_id": "028",
+  "claims": [
+    {
+      "label": "blocked=True×short 全体 IS",
+      "filter": {"blocked": true, "direction": "short"},
+      "k": 33, "n": 69
+    },
+    {
+      "label": "blocked=True×long IS（対照）",
+      "filter": {"blocked": true, "direction": "long"},
+      "k": 43, "n": 89
+    },
+    {
+      "label": "blocked=False×short IS（対照）",
+      "filter": {"blocked": false, "direction": "short"},
+      "k": 81, "n": 207
+    },
+    {
+      "label": "macd_dead×blocked=True×short IS",
+      "filter": {"signal": "macd_dead", "blocked": true, "direction": "short"},
+      "k": 15, "n": 43
+    },
+    {
+      "label": "ma_dead×blocked=True×short IS",
+      "filter": {"signal": "ma_dead", "blocked": true, "direction": "short"},
+      "k": 14, "n": 20
+    },
+    {
+      "label": "group=metal×blocked=True×short IS",
+      "filter": {"group": "metal", "blocked": true, "direction": "short"},
+      "k": 8, "n": 9
+    },
+    {
+      "label": "group=index×blocked=True×short IS",
+      "filter": {"group": "index", "blocked": true, "direction": "short"},
+      "k": 4, "n": 14
+    },
+    {
+      "label": "group=jpy_fx×blocked=True×short IS",
+      "filter": {"group": "jpy_fx", "blocked": true, "direction": "short"},
+      "k": 7, "n": 16
+    },
+    {
+      "label": "group=other_fx×blocked=True×short IS",
+      "filter": {"group": "other_fx", "blocked": true, "direction": "short"},
+      "k": 11, "n": 22
+    }
+  ]
+}

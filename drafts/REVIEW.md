@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-07-02 | 🧪 signal-lab #028 — 下書き生成・ゲート実行中
+
+- **基準日（JST）**: 2026-07-02
+- **採択仮説**: 「blocked=True×dir=short は前向きで IS の47.8%が再現しないか（p=0.003・CI完全非重複）——in-sampleエッジはメタル交絡とmacd_dead偏りの人工産物か」（優先度②：前向きトラッカー blocked=True×short 2/16=12.5%）
+- **事前宣言**: p<0.05（片側バイノミアル検定）AND IS 95%CI vs 前向き 95%CI の完全非重複
+- **検証データ**: 全決済済み1,328件（signals-log.json）。blocked=True×short 全69件 + シグナル別・グループ別クロス集計
+- **結果**: blocked=T×short IS 33/69=47.8% CI[36.5%~59.4%]。前向き 2/16=12.5% CI[5.9%~36.8%] → p=0.003・CI完全非重複。交絡因子①: metal 88.9%(8/9)が前向き未発火。交絡因子②: macd_dead 34.9%(15/43)が前向き75%占有。metal除外後IS=41.7%(25/60)。対照: blocked=T×long 前向き19/31=61.3%は健全
+- **判定**: 🟡 通過A（事前宣言2条件クリア）
+- **生成ファイル**: drafts/draft-signal-lab-028.html / drafts/labnotes/lab-028-analysis.md / drafts/labnotes/lab-028-claims.json / drafts/labnotes/sweep-2026-07-03.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push — 実行中
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance —
+- [ ] 8-4 独立確認Opus —
+- [ ] 8-5 finalize/publish or escalate —
+
+---
+
 ## 2026-07-03 | autodraft-article — 全topic下書き済み・スキップ
 
 - **基準日（JST）**: 2026-07-03（UTC: 2026-07-02T20:30:56Z）

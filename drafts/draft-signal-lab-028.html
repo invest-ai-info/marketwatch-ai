@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #28｜blocked=True×ショート 前向き反証開始（p=0.003）— in-sampleエッジはメタル交絡とmacd_dead偏りの人工産物 - MarketWatch AI</title>
+  <meta name="description" content="blocked=True（S/R壁あり）×ショートのin-sample勝率47.8%は、前向きデータ2/16=12.5%で二項検定p=0.003の有意差。95%CIが完全分離し、メタル交絡とmacd_dead偏りが主因と判明。第28回。">
+  <meta name="keywords" content="blocked,ショート,S/R,サポレジ,反証,前向きトラッカー,macd_dead,ma_dead,AIシグナル研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-028.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #28｜blocked=True×ショート 前向き反証（p=0.003）">
+  <meta property="og:description" content="blocked=True×ショートのin-sample 47.8%は前向き2/16=12.5%で崩壊。メタル交絡とmacd_dead偏りの人工産物と判明。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-028.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #28｜blocked=True×ショート 前向き反証開始（p=0.003）— in-sampleエッジはメタル交絡とmacd_dead偏りの人工産物",
+    "description": "blocked=True（S/R壁あり）×ショートのin-sample勝率47.8%は前向き2/16=12.5%で崩壊。メタル交絡とmacd_dead偏りが主因と判明。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-03",
+    "dateModified": "2026-07-03",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-028.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #28
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供・教育を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。特定の銘柄の売買を推奨するものではなく、投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #28<br><small style="font-size:.62em;color:#57606a;font-weight:400">blocked=True×ショート 前向き反証開始（p=0.003）——in-sampleの47.8%はメタル交絡とmacd_dead偏りの人工産物か（過去データの集計・将来を保証しません）</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約9分
+    </div>
+
+    <p>第5回（2026年6月13日）の研究で「<strong>blocked=True（S/R壁あり）のシグナルは全体 53.7%</strong>」という初期エッジを確認しました。第17回（2026年6月22日）では方向別に分解し「blocked=True×ショートが 55.9%（19/34）」と報告。そのまま前向きトラッカーに登録し、出来事を待ちました。今回（2026年7月3日）、前向きデータが 16 件に達したタイミングで集計すると、<strong>2/16 件しか勝っていない</strong>という急落が判明しました。この乖離が統計的ノイズなのか、それとも in-sample エッジの崩壊なのかを解剖します。</p>
+
+    <!-- ② 30秒まとめ（info-box） -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① blocked=True×ショート in-sample（全期間）: <strong>47.8%</strong>（33/69）95%CI [36.5%〜59.4%] E(R)=+0.116——損益分岐43.0%は超えるが幅広いCI<br>
+      ② 主ドライバー解剖: メタル(GC/SI)×blocked×ショート <strong>88.9%</strong>（8/9）が全体を引き上げ。ma_dead×blocked×ショート <strong>70.0%</strong>（14/20）が第二の高値要因<br>
+      ③ 主ドラッグ要因: macd_dead×blocked×ショート <strong>34.9%</strong>（15/43）——このシグナルが発火件数の62%（43/69件）を占め全体を引き下げる<br>
+      ④ 前向きトラッカー（signal_lab_tracker.py 出力・verify対象外）: 2/16件。二項検定 p=0.003——in-sample CI[36.5%〜59.4%]と95%CIが完全分離<br>
+      ⑤ 対照群: blocked=True×<em>ロング</em>の前向きは19/31件で健在。blocked効果はロング方向に限定される可能性<br>
+      ⑥ ⚠️ すべて過去データの集計。将来の成績を保証するものではなく、売買推奨でもありません
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">なぜ今回この仮説を選んだか</a></li>
+        <li><a href="#hypothesis">仮説と事前宣言</a></li>
+        <li><a href="#result-overview">検証結果①：in-sample 全体</a></li>
+        <li><a href="#result-signal">検証結果②：シグナル別分解——macd_dead とma_dead の乖離</a></li>
+        <li><a href="#svg-chart">可視化：blocked×ショート IS 成績の分解</a></li>
+        <li><a href="#result-group">検証結果③：グループ別——メタル交絡の正体</a></li>
+        <li><a href="#result-forward">検証結果④：前向きデータ（tracker.py 出力）</a></li>
+        <li><a href="#binom-test">統計的分離：二項検定と CI</a></li>
+        <li><a href="#control">対照群：blocked=True×ロング</a></li>
+        <li><a href="#interpretation">解釈と今後の方針</a></li>
+        <li><a href="#limits">この検証の限界（必読）</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="background">🔍 なぜ今回この仮説を選んだか</h2>
+
+    <p>毎朝 <code>signal_lab_tracker.py update</code> を実行し、前向きトラッカーの状態を確認しています。2026年7月3日の今朝の更新で、<strong>「blocked=True×dir=short」</strong>の欄が目を引きました——前向き平均R が <strong>−0.71、95%CI[−1.10〜−0.32]</strong>（全域マイナス）となっており、これは前向き N=16 件のうち <strong>2/16 件</strong>しか勝っていないことを意味します。</p>
+
+    <p>in-sample の 47.8%（33/69）と前向きの 12.5%（2/16）という差は、「何かが変わったのか、それとも単なる小サンプルのノイズか」という問いを生みます。この問いに答えるため、今回は <strong>in-sample の構成要素を解剖</strong>し、前向き期間の外れ値の原因を探ります。これは優先度②（前向きで大きく動いた仮説）に該当する今日の研究テーマです。</p>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">📋 仮説と事前宣言</h2>
+
+    <p>今回の仮説と、その合否を事前に判定するための基準を宣言します。</p>
+
+    <p><strong>主仮説（H1）</strong>：blocked=True×ショート の in-sample エッジは、前向きデータと統計的に有意差がある（CIが分離する）。</p>
+    <p><strong>交絡仮説（H2）</strong>：in-sample の 47.8% は、特定のシグナル種別またはグループの高成績によって人工的に引き上げられている。</p>
+
+    <p><strong>事前宣言した合否基準</strong>：</p>
+    <ul>
+      <li>H1 通過: 前向き k/n の Wilson 95%CI が in-sample CI[36.5%〜59.4%] と重複しない（完全分離）かつ 二項検定 p &lt; 0.05</li>
+      <li>H2 通過: メタルまたは特定シグナルを除外した in-sample 値が 43% を下回る</li>
+    </ul>
+
+    <!-- =============================== -->
+    <h2 id="result-overview">📊 検証結果①：in-sample 全体</h2>
+
+    <p>決済済みシグナル 1,328 件のうち、blocked=True（S/R 壁あり）×ショート方向の全件を集計しました。</p>
+
+    <table>
+      <tr>
+        <th>条件</th>
+        <th>k / n</th>
+        <th>勝率</th>
+        <th>95% CI（Wilson）</th>
+        <th>期待値 E(R)</th>
+        <th>備考</th>
+      </tr>
+      <tr>
+        <td>blocked=True×ショート（主仮説）</td>
+        <td>33 / 69</td>
+        <td><strong>47.8%</strong></td>
+        <td>[36.5%〜59.4%]</td>
+        <td>+0.116</td>
+        <td>CI 幅 23pp——安定エッジなし</td>
+      </tr>
+      <tr>
+        <td>blocked=True×ロング（対照）</td>
+        <td>43 / 89</td>
+        <td><strong>48.3%</strong></td>
+        <td>[38.2%〜58.5%]</td>
+        <td>+0.127</td>
+        <td>方向差わずか 0.5pp</td>
+      </tr>
+      <tr>
+        <td>blocked=False×ショート（対照）</td>
+        <td>81 / 207</td>
+        <td><strong>39.1%</strong></td>
+        <td>[32.7%〜45.9%]</td>
+        <td>−0.087</td>
+        <td>壁なしは損益分岐43%割れ</td>
+      </tr>
+    </table>
+
+    <div class="warning-box">
+      in-sample では blocked=True×ショートが 47.8% で損益分岐 43.0% を超えているように見えますが、CI 幅が 23pp（36.5%〜59.4%）と非常に広く、エッジとして確定するには N が不足しています（第17回でも同様の懸念を記録）。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-signal">📊 検証結果②：シグナル別分解</h2>
+
+    <p>blocked=True×ショートの 69 件は、どのシグナルで構成されているでしょうか。</p>
+
+    <table>
+      <tr>
+        <th>primary_signal</th>
+        <th>k / n（IS全体）</th>
+        <th>勝率</th>
+        <th>95% CI</th>
+        <th>前向き件数（参考）</th>
+      </tr>
+      <tr>
+        <td>macd_dead（MACDデッドクロス）</td>
+        <td>15 / 43</td>
+        <td><strong>34.9%</strong></td>
+        <td>[22.4%〜49.8%]</td>
+        <td>前向き 1/12（tracker値）</td>
+      </tr>
+      <tr>
+        <td>ma_dead（MAデッドクロス）</td>
+        <td>14 / 20</td>
+        <td><strong>70.0%</strong></td>
+        <td>[48.1%〜85.5%]</td>
+        <td>前向き 0/3（tracker値）</td>
+      </tr>
+      <tr>
+        <td>first_pullback_short 他</td>
+        <td>4 / 6</td>
+        <td>66.7%</td>
+        <td>—</td>
+        <td>前向き 1/1</td>
+      </tr>
+    </table>
+
+    <p>最も注目すべき点が二つあります。</p>
+
+    <p>第一に、<strong>macd_dead が 43 件（62%）を占める主力シグナルでありながら、34.9% と損益分岐以下</strong>です。ma_dead の 70.0% が全体平均を引き上げていますが、その件数は 20 件に過ぎません。</p>
+
+    <p>第二に、<strong>前向き16件のうち 12 件が macd_dead（75%）</strong>です。in-sample での主力シグナルが前向き期間にも偏って出現し、かつ in-sample 34.9% だったものが前向きでさらに落ちて 1/12=8.3% になっています。前向きの「惨状」は macd_dead の偏在が最大の説明変数です。</p>
+
+    <!-- =============================== -->
+    <h2 id="svg-chart">📈 可視化：blocked×ショート IS 成績の分解</h2>
+
+    <div class="chart-figure">
+      <!-- 横棒グラフ: blocked=True×short の IS 成績分解 -->
+      <!-- viewBox: 0 0 560 210 -->
+      <!-- バー開始x=165, 幅310px, 100%=310px -->
+      <!-- 43%線: x=165+310*0.43=298 -->
+      <svg viewBox="0 0 560 210" role="img" aria-label="blocked=True×ショート IS 成績分解棒グラフ">
+        <!-- 背景 -->
+        <rect x="165" y="8" width="310" height="170" class="s-fill-gray"/>
+
+        <!-- 43%ガイドライン -->
+        <line x1="298" y1="8" x2="298" y2="178" class="s-guide"/>
+
+        <!-- バー 1: 全体 47.8% = 310*0.478 = 148px -->
+        <rect x="165" y="20" width="148" height="22" fill="#0969da" opacity="0.75"/>
+        <!-- バー 2: macd_dead 34.9% = 310*0.349 = 108px -->
+        <rect x="165" y="55" width="108" height="22" fill="#cf222e" opacity="0.75"/>
+        <!-- バー 3: ma_dead 70.0% = 310*0.700 = 217px -->
+        <rect x="165" y="90" width="217" height="22" fill="#1a7f37" opacity="0.75"/>
+        <!-- バー 4: metal 88.9% = 310*0.889 = 276px -->
+        <rect x="165" y="125" width="276" height="22" fill="#1a7f37" opacity="0.9"/>
+        <!-- バー 5: index 28.6% = 310*0.286 = 89px -->
+        <rect x="165" y="160" width="89" height="22" fill="#cf222e" opacity="0.65"/>
+
+        <!-- ラベル（左） -->
+        <text x="160" y="35" text-anchor="end" class="s-label-b">blocked×S 全体</text>
+        <text x="160" y="70" text-anchor="end" class="s-label-r">macd_dead</text>
+        <text x="160" y="105" text-anchor="end" class="s-label-g">ma_dead</text>
+        <text x="160" y="140" text-anchor="end" class="s-label-g">メタル(GC/SI)</text>
+        <text x="160" y="175" text-anchor="end" class="s-label-r">指数グループ</text>
+
+        <!-- 値ラベル（右） -->
+        <text x="319" y="35" class="s-label-b">47.8%</text>
+        <text x="279" y="70" class="s-label-r">34.9%</text>
+        <text x="388" y="105" class="s-label-g">70.0%</text>
+        <text x="447" y="140" class="s-label-g">88.9%</text>
+        <text x="260" y="175" class="s-label-r">28.6%</text>
+
+        <!-- 軸ライン -->
+        <line x1="165" y1="178" x2="480" y2="178" class="s-axis"/>
+
+        <!-- X軸ラベル -->
+        <text x="165" y="195" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="298" y="195" text-anchor="middle" class="s-label-y">43%（損益分岐）</text>
+        <text x="480" y="195" text-anchor="end" class="s-label-sm">100%</text>
+      </svg>
+      <p class="chart-caption">図1：blocked=True×ショートの in-sample 成績分解。損益分岐43%（黄破線）に対し、全体47.8%のうち macd_dead（62%を占める）は34.9%と分岐以下、メタルグループ（13%）の88.9%が全体を引き上げている。過去データの集計であり将来を保証しない。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-group">📊 検証結果③：グループ別——メタル交絡の正体</h2>
+
+    <p>次にグループ別（資産クラス別）に分解します。</p>
+
+    <table>
+      <tr>
+        <th>グループ</th>
+        <th>k / n（IS全体）</th>
+        <th>勝率</th>
+        <th>95% CI</th>
+        <th>前向き件数（参考）</th>
+      </tr>
+      <tr>
+        <td>メタル（GC=F / SI=F）</td>
+        <td>8 / 9</td>
+        <td><strong>88.9%</strong></td>
+        <td>[56.5%〜98.0%]</td>
+        <td>前向き 1/1（tracker値）</td>
+      </tr>
+      <tr>
+        <td>他FXクロス（EURUSD など）</td>
+        <td>11 / 22</td>
+        <td><strong>50.0%</strong></td>
+        <td>[30.7%〜69.3%]</td>
+        <td>前向き 0/3</td>
+      </tr>
+      <tr>
+        <td>円クロスFX（USDJPY など）</td>
+        <td>7 / 16</td>
+        <td><strong>43.8%</strong></td>
+        <td>[23.1%〜66.8%]</td>
+        <td>前向き 0/3</td>
+      </tr>
+      <tr>
+        <td>指数（日経 / S&amp;P500 など）</td>
+        <td>4 / 14</td>
+        <td><strong>28.6%</strong></td>
+        <td>[11.7%〜54.6%]</td>
+        <td>前向き 1/8</td>
+      </tr>
+    </table>
+
+    <p>最重要発見：<strong>メタルグループ（GC=F・SI=F）×blocked×ショートの in-sample 成績が 8/9=88.9%</strong> と際立って高い。全69件のうち9件（13%）を占めるこのグループが、全体平均を大幅に引き上げていました。</p>
+
+    <p>逆に指数グループ（日経先物・S&amp;P500・Nasdaq・ダウ・FTSE）は 4/14=28.6% と損益分岐を大きく下回っています。指数でのショートエッジの低さは、第25回（指数×ショート 27.4%）でも確認済みの構造的特性です。</p>
+
+    <div class="negative-box">
+      <strong>メタル除外後の in-sample</strong>：group=metal の 9 件を除いた 60 件での集計は 25/60=41.7%（CI: [30.1%〜54.3%]）——損益分岐 43% を既に割り込んでいます。つまり、「blocked=True×ショートに全体的なエッジがある」という見立て自体が、メタルの 88.9% に依存した集計の罠でした。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-forward">📊 検証結果④：前向きデータ（signal_lab_tracker.py 出力）</h2>
+
+    <p>以下は <code>signal_lab_tracker.py update --date 2026-07-03</code> の出力です。この値は verify.py の照合対象外（日付フィルターは verify.py が非対応）であり、参考値として掲載します。</p>
+
+    <table>
+      <tr>
+        <th>条件</th>
+        <th>前向き k/n（登録日以降）</th>
+        <th>前向き平均 R</th>
+        <th>95%CI（R）</th>
+        <th>状態</th>
+      </tr>
+      <tr>
+        <td>blocked=True×ショート（主仮説）</td>
+        <td>2/16（登録日: 2026-06-25）</td>
+        <td>−0.708</td>
+        <td>[−1.10〜−0.32]</td>
+        <td>🟡蓄積中</td>
+      </tr>
+      <tr>
+        <td>blocked=True×ロング（対照）</td>
+        <td>19/31</td>
+        <td>+0.430</td>
+        <td>[+0.02〜+0.84]</td>
+        <td>🟡蓄積中</td>
+      </tr>
+    </table>
+
+    <h3>前向き 16 件の内訳</h3>
+
+    <p>tracker 登録日（2026年6月25日）以降に決済された blocked=True×ショートの全件：</p>
+    <ul>
+      <li>勝ち（TP1）: 2件——GC=F（first_pullback_short×下降中）、NKD=F（macd_dead×上昇中）</li>
+      <li>負け（SL）: 14件——macd_dead が 12 件（指数×上昇中5件・円クロス2件・他FX3件・BTC1件）、ma_dead 3件</li>
+      <li>シグナル別: macd_dead 12件（75%）、ma_dead 3件（19%）、first_pullback_short 1件</li>
+      <li>トレンド別: 上昇中 7件（1勝6敗）、下降中 6件（1勝5敗）、中立 3件（0勝3敗）</li>
+    </ul>
+
+    <p>前向き期間の特徴として、<strong>metak グループの発火がほぼゼロ</strong>（1件のみ）であった点が目立ちます。in-sample で 88.9% を叩き出したメタルショートが沈黙し、代わりに in-sample でも低パフォーマンスだった指数・FX の macd_dead が多発した結果です。</p>
+
+    <!-- =============================== -->
+    <h2 id="binom-test">🔢 統計的分離：二項検定と CI</h2>
+
+    <p>「前向き 2/16 という結果は、in-sample 勝率 47.8% が本当の勝率だとしたら、どれくらい珍しいか？」を計算します。</p>
+
+    <ul>
+      <li><strong>帰無仮説</strong>：真の勝率 = 47.8%（in-sample 推定値）</li>
+      <li><strong>観測値</strong>：n=16 中 k=2 勝</li>
+      <li><strong>P(X≤2 | n=16, p=0.478)</strong> ≈ <strong>0.003</strong></li>
+      <li><strong>判定</strong>：p=0.003 &lt; 0.05 → 統計的に有意な差あり（帰無仮説を棄却）</li>
+    </ul>
+
+    <p>Wilson 95%CI を並べると：</p>
+    <ul>
+      <li>in-sample 33/69: CI [36.5%〜59.4%]</li>
+      <li>前向き 2/16: CI [3.5%〜36.0%]（tracker 集計結果）</li>
+    </ul>
+
+    <div class="negative-box">
+      <strong>H1 通過（反証確認）</strong>：前向き CI 上限（36.0%）が in-sample CI 下限（36.5%）を下回っており、二つの CI は完全に分離しています。これは統計的に「前向きデータが in-sample の推定値と異なる」ことを示しています。N=16 という小サンプルでの結論のため、今後も継続観察は必要ですが、「エッジなし」の方向性は明確です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="control">📊 対照群：blocked=True×ロング</h2>
+
+    <p>比較のために、同じ「壁あり」でもロング方向の前向き成績を確認します。</p>
+
+    <table>
+      <tr>
+        <th>方向</th>
+        <th>in-sample k/n</th>
+        <th>IS 勝率</th>
+        <th>前向き k/n（参考）</th>
+        <th>前向き E(R)（参考）</th>
+      </tr>
+      <tr>
+        <td>blocked=True×<strong>ショート</strong></td>
+        <td>33 / 69</td>
+        <td>47.8%</td>
+        <td>2/16</td>
+        <td>−0.708 CI[−1.10〜−0.32]</td>
+      </tr>
+      <tr>
+        <td>blocked=True×<strong>ロング</strong></td>
+        <td>43 / 89</td>
+        <td>48.3%</td>
+        <td>19/31</td>
+        <td>+0.430 CI[+0.02〜+0.84]</td>
+      </tr>
+    </table>
+
+    <p>in-sample ではロング（48.3%）とショート（47.8%）の差がわずか 0.5pp なのに、<strong>前向きでは ロングが堅調（期待値+0.43）なのに対し、ショートが急落（期待値−0.71）</strong>という真逆の動きをしています。</p>
+
+    <p>この対比は「blocked=True というフィルターは、ロング方向には有効だが、ショート方向には機能しない（あるいは逆効果）」という可能性を示唆しています。S/R 壁は「価格の行く手を阻む障害」ですが、ショートの場合は「壁がある = 下抜けしにくい = ショートが失敗しやすい」という逆の論理も成り立ちます。</p>
+
+    <!-- =============================== -->
+    <h2 id="interpretation">🎯 解釈と今後の方針</h2>
+
+    <h3>in-sample エッジの正体</h3>
+
+    <p>blocked=True×ショートの in-sample 47.8%（33/69）は、3つの構造的要因が組み合わさっていました：</p>
+    <ol>
+      <li><strong>メタル交絡</strong>：GC=F・SI=F の blocked=True×ショートが 8/9=88.9% と異常高成績。わずか 9 件が全体平均を大きく引き上げていた。メタル除外後の in-sample は 25/60=41.7% で損益分岐割れ。</li>
+      <li><strong>ma_dead 高成績（小N）</strong>：ma_dead×blocked×ショートが 14/20=70.0% と高いが、N=20 は CI 幅が大きく（48.1%〜85.5%）、前向きでは 0/3 と沈黙。</li>
+      <li><strong>macd_dead が過半数かつ低成績</strong>：全件の 62% を占める macd_dead が 34.9% と既に損益分岐以下。在 in-sample でも引き下げ要因だったものが、前向きではさらに低い 1/12=8.3% になった。</li>
+    </ol>
+
+    <h3>今後の方針</h3>
+
+    <ul>
+      <li><strong>blocked=True×ショート</strong>：前向きトラッカーは「蓄積中」のまま継続観察。ただし、現時点で「エッジなし・むしろ逆効果」という方向性を記録。N=50 まで待って再判断する。</li>
+      <li><strong>メタル×blocked×ショート</strong>：N=9 では in-sample の 88.9% を信頼できない。メタルがショート方向に発火する機会を前向きで蓄積し、独立検証する。</li>
+      <li><strong>ma_dead×blocked×ショート（70.0%、N=20）</strong>：N が小さく前向き 0/3 と矛盾。N=30 まで前向き観察を継続。</li>
+      <li><strong>blocked=True の活用はロング方向に限定する（候補）</strong>：前向きデータが揃い次第、正式に判断する。</li>
+    </ul>
+
+    <!-- =============================== -->
+    <h2 id="limits">⚠️ この検証の限界（必読）</h2>
+
+    <ul>
+      <li><strong>前向き N=16 は小サンプル</strong>：2/16 という結果は、真の勝率が 47.8% であっても確率 0.3% で起こりえます（二項 p=0.003）。方向性は明確ですが、絶対的な結論ではありません。</li>
+      <li><strong>メタル交絡はサンプル数が少ない</strong>：in-sample の 88.9%（8/9）も N=9 という非常に小さなサンプルです。金・銀のショートに特有の条件（例：高ボラ局面）が偶然集まった可能性があります。</li>
+      <li><strong>前向き期間のレジーム</strong>：2026年6月25日〜7月3日は特定の市場環境（例：指数が強い上昇局面）が続いていた可能性があり、その期間限定の結果かもしれません。</li>
+      <li><strong>過去データへの注意</strong>：すべての分析は過去データの集計であり、将来の成績を保証するものではありません。</li>
+    </ul>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>基準日 2026-07-03 時点のトラッカー全体（<code>signal_lab_tracker.py table --html</code> 出力）を掲載します。</p>
+
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-07-03／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.33 CI[+0.12~+0.54]（68/119・勝率57%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.10~+0.20]（108/240・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.11~+0.22]（87/193・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.07~+0.27]（86/182・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.15~+0.22]（67/151・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.18 CI[-0.04~+0.39]（57/113・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.32~+0.10]（43/113・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.13~+0.30]（52/112・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.21~+0.24]（44/101・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.07~+0.40]（49/98・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.12 CI[-0.36~+0.12]（32/85・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.11 CI[-0.36~+0.14]（31/81・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.22~+0.29]（35/79・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.09 CI[-0.36~+0.17]（28/72・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[+0.01~+0.57]（37/67・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.15 CI[-0.14~+0.43]（32/65・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.15 CI[-0.14~+0.44]（31/63・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.15 CI[-0.46~+0.16]（19/52・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.19 CI[-0.51~+0.12]（17/49・勝率35%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.23 CI[-0.15~+0.62]（19/36・勝率53%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.13 CI[-0.51~+0.25]（13/35・勝率37%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.67 CI[+0.31~+1.02]（25/35・勝率71%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.51 CI[+0.13~+0.89]（22/34・勝率65%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.68 CI[+0.31~+1.05]（23/32・勝率72%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=low_break</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.26~+0.59]（15/30・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.16 CI[-0.61~+0.29]（9/25・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.22 CI[-0.27~+0.70]（12/23・勝率52%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.23 CI[-0.31~+0.77]（10/19・勝率53%）</td><td>🟡蓄積中</td></tr>
+<tr><td><strong>blocked=True×dir=short（今回テーマ）</strong></td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.71 CI[-1.10~-0.32]（2/16・勝率12%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.17 CI[-0.77~+0.44]（5/14・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.30 CI[-0.51~+1.10]（5/9・勝率56%）</td><td>🟡蓄積中</td></tr>
+</table>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🔗 関連記事</div>
+      <div class="cta-box-desc">blocked=True 研究の流れと、方向別・グループ別の先行研究を読む</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-005.html">
+          <div class="related-card-title">#05 blocked=True 初確認</div>
+          <div class="related-card-desc">壁あり 53.7% vs 壁なし 38.9%——初回の追試で逆転を確認</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-017.html">
+          <div class="related-card-title">#17 blocked×方向性分解</div>
+          <div class="related-card-desc">blocked=True×ショート 55.9%（N=34）——今回の前向き研究の出発点</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-025.html">
+          <div class="related-card-title">#25 指数×ショート棄却確認</div>
+          <div class="related-card-desc">指数×ショート 27.4%——グループ別ショートの危険性を確認</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-026.html">
+          <div class="related-card-title">#26 指数×ロング昇格確認</div>
+          <div class="related-card-desc">前向き N=104 で昇格を維持——blocked×ロングの健全性と対比</div>
+        </a>
+      </div>
+    </div>
+
+    <p class="disclaimer">本研究は signals-log.json の過去データを Python スクリプト（signal_lab_verify.py・signal_lab_sweep.py・signal_lab_tracker.py）で決定論的に集計したものです。すべての数値は過去の集計値であり、将来の投資成果を約束するものではありません。Wilson 95%CI は統計的な幅の参考値です。本コンテンツは金融商品取引法に基づく投資助言ではなく、当サイトは無登録投資助言業者ではありません。投資判断はご自身の責任において行ってください。掲載データに誤りがある場合はお知らせください。</p>
+
+  </div><!-- /.article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="about.html">サイトについて</a></p>
+</footer>
+
+<script>
+(function(){
+  var p=document.getElementById('reading-progress');
+  if(!p)return;
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var pct=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    p.style.width=Math.min(100,pct)+'%';
+  },{passive:true});
+})();
+
+function toggleTheme(){
+  var b=document.body;
+  var btn=document.getElementById('theme-toggle');
+  b.classList.toggle('dark');
+  btn.textContent=b.classList.contains('dark')?'☀️':'🌙';
+  try{localStorage.setItem('mw-theme',b.classList.contains('dark')?'dark':'light');}catch(e){}
+}
+(function(){
+  try{if(localStorage.getItem('mw-theme')==='dark'){document.body.classList.add('dark');var btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}}catch(e){}
+})();
+</script>
+
+</body>
+</html>
