@@ -13,11 +13,17 @@
 - **生成ファイル**: drafts/draft-signal-lab-028.html / drafts/labnotes/lab-028-analysis.md / drafts/labnotes/lab-028-claims.json / drafts/labnotes/sweep-2026-07-03.json / signal-lab-ledger.md
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push — 実行中
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance —
-- [ ] 8-4 独立確認Opus —
-- [ ] 8-5 finalize/publish or escalate —
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 028 + claims + fix 62% summary box）
+- [x] 8-2 verify EXIT=0 ✅ — 9/9クレーム緑・要約未検証0件・SVG警告0件（62%→「大半（43/69件）」修正後）
+- [x] 8-3 Opus compliance 🟡グレー→修正3点→数値再verify EXIT=0 ✅ — ①disclaimer kinsho-v1属性追加+文言補強 ②footer kinsho-v1追加 ③「活用」→「研究方針・推奨非該当」軟化 / タイポ2件(metak→metal・衍字「在」)修正
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（noindex/kinsho-v1×3箇所/断定語否定文/将来非保証/推奨なし/過去データ明示 全確認・数値SVG不変）
+- [x] 8-4-iii finalize_signal_lab.py 028 2026-07-02 → guide-signal-lab-028.html 生成（size=36KB・svg=1・kinsho=4）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（AIシグナル研究日誌 最上段）・generate_market_news.py 履歴追加・sync_to_github.py に登録
+- [x] 8-4-v check_site_consistency.py EXIT=1 ⚠️ — 78件エラー（SYNC_FILES未登録）は**前セッションのsignal-lab/ochiru-knifeルーティンによるSYNC_FILES縮小の既存問題**（commit 3b474e4でnews-daily-autoが既にエスカレ済み）。signal-lab固有ゲート（verify+compliance）は全通過済み。
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 028 verified+compliance）
+
+### 🚩 既存問題エスカレ継続（人間対応待ち）
+- **SYNC_FILES縮小問題**: sync_to_github.pyのSYNC_FILESが自動ルーティンにより5件に縮小。本来127件のguide-*.htmlが登録されているはず。check_site_consistency.pyが恒常的にEXIT=1。**news-daily-autoが2026-07-02 commit 3b474e4で既にエスカレ済み。ローカルから正しいSYNC_FILESを持つsync_to_github.pyをpushして修復が必要**
 
 ---
 

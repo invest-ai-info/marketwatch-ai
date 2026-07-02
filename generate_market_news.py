@@ -4669,6 +4669,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🧪 解説「<a href="guide-signal-lab-028.html" style="color:#0969da"><b>blocked=True×ショート 前向き反証（p=0.003）</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🎓 解説「<a href="guide-graham-001.html" style="color:#0969da"><b>グレアムの安全域は日本株で生きているか</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🔪 解説「<a href="guide-proverb-ochiru-knife.html" style="color:#0969da"><b>落ちてくるナイフはつかむな</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🧪 解説「<a href="guide-signal-lab-027.html" style="color:#0969da"><b>研究日誌 #27 逆張り買いグループ別成績マップ——指数57%・メタル25%・BTC25%の三峰構造</b></a>」公開'},
