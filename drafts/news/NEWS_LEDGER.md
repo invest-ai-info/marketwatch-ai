@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-07-02
+- 判定: 🚩要人間レビュー（check_site_consistency.py exit=1 による自動公開停止）
+- 選定トピック: 日経平均-1,741円(-2.47%)・キオクシア日中-12.06%急落を軸とした「AI半導体セルオフ」（カテゴリ: 個別銘柄・指数・テクニカル）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4 （合計 12/15）
+- 選定理由: 2026-07-02の主要ニュース。日経平均68,733円(-1,741円)・キオクシア77,500円(-12.06%)・SOXXセクター-6%。MetaのAI需要シフト（ブルームバーグ7/1報道）+AppleのCXMT/YMTC中国メモリ評価という2つの新トリガーにより、6月24日の前回AI半導体セルオフ記事と差別化可能。NFP（米6月雇用統計）は21:30 JSTに発表予定＝ルーティン実行時刻17:40 JSTには未発表のため選外。
+- 出典:
+  - 日本経済新聞「東証大引け」（2026-07-02）
+  - Bloomberg Japan「Metaのクラウドビジネス拡大報道」（2026-07-01）
+  - Yahoo Finance / Investing.com（SOXX, SanDisk, Micron, WD 各1日終値）
+  - 247WallSt「SanDisk drops 10.62%」（2026-07-01）
+  - TechRadar / TechPowerUp「Apple CXMT/YMTC評価報道」
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・断定表現なし・売買推奨なし・出典複数・修正不要）
+  - 適用修正: なし
+  - 独立Opus確認（エージェント2）: ✅白（コンプラ6チェックポイント全通過・品質ルーブリック5観点全✅・公開可）
+  - 最終コンプラ判定: 🟢白 / 記事品質・法務は問題なし
+- 下書き相当ファイル: guide-news-2026-07-02-nikkei-kioxia-ai-selloff.html（GitHubにpush済み・noindexなし・guidesカード未追加）
+- エスカレ理由: `python check_site_consistency.py` が exit=1 を返した（79エラー）。エラー内容はすべて「SYNC_FILES に未登録」で、sync_to_github.py の SYNC_FILES が直近の signal-lab/ochiru-knife 自動公開ルーティンにより約4件に縮小されている既存問題（git log: `4fade61 feat: 投資格言 auto-publish ochiru-knife` / `2965f35 feat: auto-publish signal-lab 027 verified+compliance`）。本記事自体のコンプラ・ファクト・品質はすべて🟢白。
+- 再公開手順:
+  1. `sync_to_github.py` の SYNC_FILES を全ガイド記事で復元
+  2. `python mw.py check` で exit=0 を確認
+  3. `python publish_article.py --file guide-news-2026-07-02-nikkei-kioxia-ai-selloff.html --category "今日のニュース" --emoji 📰 --card-title "日経-1741円・キオクシア急落 AIセルオフの構造を読む" --desc "MetaのAI需要シフトとAppleの中国メモリ評価が火付け役。7月2日の半導体セルオフを中立整理。"` で guides.html / generate_market_news.py 更新
+  4. git push → Actions trigger → ライブ確認
+
+---
+
 ## 2026-07-01
 - 判定: ✅ 公開済み
 - 選定トピック: 日本銀行が7月1日に発表した6月短観（第209回）。大企業製造業DI+22（予想+16を大幅上回り、2018年以来8年ぶり高水準）・大企業非製造業DI+37（1991年8月以来35年ぶり最高水準）と5四半期連続改善。改善要因はAI・半導体需要（製造業）・インバウンド消費・価格転嫁進展（非製造業）。設備投資計画+6.8%増。先行き見通しは製造業+17・非製造業+28と慎重。（カテゴリ: マクロ・金融政策・日本株）
