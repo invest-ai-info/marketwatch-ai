@@ -44,7 +44,7 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
 
 ## 昇格基準（コード化済み・`signal_lab_tracker.py`／2026-06-16 **期待値ベース**に更新）
 - 指標＝**期待値（1トレード平均R）**。**SL=-1R / TP1=+1.33R / TP2=+2R**。勝率でなく「実際に儲かるか」で判定（勝率45%でも期待値プラスはあり得る）。
-- 共通: 前向き **N≥80**（PROMOTE_MIN_N）。
+- 共通: 前向き **N≥80**（PROMOTE_MIN_N）。**🕰️ 2026-07-02〜: 時間分割ホールドアウト合格仮説は N≥30**（PROMOTE_MIN_N_HOLDOUT・事前登録ルール）。
 - **edge（勝ち筋）**: 前向き **平均RのCI下限 > 0**（期待値プラスが有意）→ ✅昇格／CI上限<0 → ⛔反証。
 - **gate（回避筋）**: 前向き **平均RのCI上限 < 0**（期待値マイナスが有意）→ ✅昇格（回避確定）／CI下限>0 → ⛔反証。
 - promoted/rejected は確定後ロック（戻さない）。
@@ -64,7 +64,19 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
 ## 🕰️ 検証データ拡張：日足リプレイ・バックテスト（2026-06-16 追加）
 ライブ signals-log は約1か月＝“今の相場”に過学習しがち。`signal_lab_backtest.py` がライブ発火エンジン（`generate_technical_alerts.py` の `detect_signals` 等を **import**）を**過去20年の日足にリプレイ**して検証データを桁違いに増やす（2026-06-16初回＝**19,103発火/16,222決済・2006〜**＝ライブの約18倍・全レジーム）。
 - 実行：`python signal_lab_backtest.py --years 20`（→ `signals-log-backtest.json`／週次・月次に再生成すれば良い・毎日は不要）。
-- 発見スイープ：`python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50`。
+- 発見スイープ：`python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50 --split 2021-01-01`。
+
+### 🕰️ 時間分割ホールドアウト（2026-07-02 導入・「待ち時間を歴史で買う」）
+- `--split 2021-01-01` で **発見(グリッド＋FDR)は2020年以前のみ**、**2021年以降は探索に一切触れない検証専用**に分割。
+  ホールドアウトでも同方向に有意（edge=R CI下限>0／gate=R CI上限<0、N≥30）なら **holdout_pass**。
+- **事前登録ルール（`signal_lab_tracker.py` PROMOTE_MIN_N_HOLDOUT・以後変更しない）**: ホールドアウト合格仮説は
+  擬似out-of-sampleを数百〜数千件通過済みのため、ライブ前向きNの要求を **80→30 に緩和**。不合格・未検証は N≥80 のまま。
+- **2026-07-02 初回結果（結果はコード内 `HOLDOUT_2026_07_02` に固定＝tracker update が冪等適用）**:
+  in-sample FDR通過 **26本 → 合格11本／不合格15本**。全期間in-sampleだけでは15本の「勝てそう」を掴んでいた＝過学習検出の実証。
+  - 🏁合格（昇格N≥30）: メタル×ロング(holdout R+0.35)・メタル全方向(+0.20)・BTC×ロング(+0.16)・BTC全方向(+0.14)・
+    指数×逆張り買い(+0.14)・ロング全般(+0.06)・runway非阻害×ロング(+0.05)／回避=other_fxクロス(-0.11)・other_fx×ロング(-0.13)・other_fx×逆張り買い(-0.18)
+  - ❌不合格（N≥80のまま）: **指数×ロング(holdout R+0.05・CIが0を跨ぐ)**・tier=avoid・high_break・rsi_overbought など
+- 運用: バックテスト再生成のたびに split 付きスイープ→`tracker register --from`（既存仮説にはホールドアウト注記だけ付く・単一時間足ログは tf=1d 登録済み仮説と自動突合）。
 - **限界（必読）**：シミュレーション＝実約定でない／同バーTP・SL両達は保守的にSL（負け）／スプレッド無視／first_pullback無効／**source=backtest_1dでライブと混ぜない**。
 - **使い分け（最重要）**：バックテストは **in-sample の“発見＋レジーム頑健性チェック”** に使う。**昇格判定はあくまでライブの前向きトラッカー（真のout-of-sample）が主役**。流れ＝バックテストで頑健な候補を見つける → `tracker register` で前向きに登録 → ライブで N が貯まって基準を満たせば昇格。
 - 時間足(1h/4h)はYahooで約2年が上限。2年超の intraday が要るなら Dukascopy(無料FX/CFD・2007頃〜) 等を別途。
