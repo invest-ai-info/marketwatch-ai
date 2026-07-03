@@ -87,7 +87,8 @@ HOLDOUT_2026_07_02 = {
     "annotate": {
         "metal_long_1d":   {"pass": True,  "holdout": {"k": 228, "n": 416,  "pct": 54.8, "avgR": 0.345,  "rci_lo": 0.226,  "rci_hi": 0.463}},
         "btc_long_1d":     {"pass": True,  "holdout": {"k": 128, "n": 272,  "pct": 47.1, "avgR": 0.164,  "rci_lo": 0.016,  "rci_hi": 0.313}},
-        "index_revL_1d":   {"pass": True,  "holdout": {"k": 151, "n": 312,  "pct": 48.4, "avgR": 0.142,  "rci_lo": 0.011,  "rci_hi": 0.274}},
+        # index_revL_1d: 2026-07-03 クラスタ補正SEで再検定→FDR段階で脱落＝pass取消（旧CIは独立扱いの過小SE）
+        "index_revL_1d":   {"pass": False, "holdout": {"k": 151, "n": 312,  "pct": 48.4, "avgR": 0.142,  "rci_lo": 0.011,  "rci_hi": 0.274}},
         "other_fx_1d":     {"pass": True,  "holdout": {"k": 390, "n": 1041, "pct": 37.5, "avgR": -0.113, "rci_lo": -0.183, "rci_hi": -0.043}},
         "index_long_1d":   {"pass": False, "holdout": {"k": 457, "n": 1028, "pct": 44.5, "avgR": 0.05,   "rci_lo": -0.022, "rci_hi": 0.122}},
         "index_long_live": {"pass": False, "holdout": {"k": 457, "n": 1028, "pct": 44.5, "avgR": 0.05,   "rci_lo": -0.022, "rci_hi": 0.122}},
@@ -102,14 +103,20 @@ HOLDOUT_2026_07_02 = {
          "holdout_pass": True, "holdout": {"k": 148, "n": 427, "pct": 34.7, "avgR": -0.183, "rci_lo": -0.29, "rci_hi": -0.077}},
         {"id": "other_fx_long", "label": "other_fx×ロング(回避)", "filter": {"group": "other_fx", "direction": "long"}, "kind": "gate", "registered_at": "2026-07-02",
          "holdout_pass": True, "holdout": {"k": 293, "n": 796, "pct": 36.8, "avgR": -0.126, "rci_lo": -0.206, "rci_hi": -0.046}},
+        # ↓3本: 2026-07-03 クラスタ補正SEで holdout 不合格に転落＝holdout_pass=False（登録は維持・N=80の通常仮説として前向き蓄積）
         {"id": "unblocked_long", "label": "runway非阻害×ロング", "filter": {"blocked": False, "direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
-         "holdout_pass": True, "holdout": {"k": 1150, "n": 2611, "pct": 44.0, "avgR": 0.053, "rci_lo": 0.007, "rci_hi": 0.099}},
+         "holdout_pass": False, "holdout": {"k": 1150, "n": 2611, "pct": 44.0, "avgR": 0.053, "rci_lo": 0.007, "rci_hi": 0.099}},
         {"id": "long_all", "label": "ロング全般(全足)", "filter": {"direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
-         "holdout_pass": True, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
+         "holdout_pass": False, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
         {"id": "long_1d", "label": "ロング全般(日足)", "filter": {"tf": "1d", "direction": "long"}, "kind": "edge", "registered_at": "2026-07-02",
-         "holdout_pass": True, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
+         "holdout_pass": False, "holdout": {"k": 1467, "n": 3324, "pct": 44.1, "avgR": 0.056, "rci_lo": 0.015, "rci_hi": 0.096}},
     ],
 }
+
+# 2026-07-03 方法論監査（クラスタ補正SE）による再スイープ＝FDR通過26→20・holdout合格11→7。
+# 不合格に転じた4仮説の「N=30緩和」を剥奪し N=80 に戻す（オーナー決定 2026-07-03・冪等）。
+# 旧合格は独立扱いの過小SEによる見せかけ＝剥奪はエッジに不利方向の保守化なので事前登録の精神に反しない。
+HOLDOUT_REVOKE_2026_07_03 = ("index_revL_1d", "unblocked_long", "long_all", "long_1d")
 
 
 def apply_holdout_bootstrap(t):
@@ -127,6 +134,12 @@ def apply_holdout_bootstrap(t):
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
         existing.add(tuple(sorted(s["filter"].items())))
         changed += 1
+    # 2026-07-03 剥奪の冪等適用（GitHub側 tracker.json には旧 pass=True が既に書かれているため）
+    for h in t["hypotheses"]:
+        if h.get("id") in HOLDOUT_REVOKE_2026_07_03 and h.get("holdout_pass"):
+            h["holdout_pass"] = False
+            h["holdout_note"] = "2026-07-03 クラスタ補正SEで再検定→不合格＝N30緩和を剥奪（N80に復帰）"
+            changed += 1
     return changed
 
 
