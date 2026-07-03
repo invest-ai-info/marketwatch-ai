@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #29｜もみあい×ショート 前向き54件で31.5%——low_breakはE(R)CI全域マイナス確認 - MarketWatch AI</title>
+  <meta name="description" content="もみあい相場のショートエッジ（#012で67%・#019で50.7%確認）を前向きN=54件で追跡。全体31.5%に崩落。シグナル別ではmacd_dead 40%（確定打なし）・low_break 15%（E(R)CI全域マイナス確認）。AIシグナル研究日誌第29回。">
+  <meta name="keywords" content="AIシグナル,もみあい,ショート,検証,勝率,macd_dead,low_break,前向きトラッカー,研究日誌,期待値">
+</head>
+<body>
+
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+  header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+  .header-inner{max-width:1200px;margin:0 auto}
+  .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+  main{max-width:1200px;margin:0 auto;padding:32px 24px}
+  .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+  .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+  .nav-btn:hover{border-color:#0969da;color:#0969da}
+  .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+  .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+  .breadcrumb a{color:#0969da;text-decoration:none}
+  .breadcrumb a:hover{text-decoration:underline}
+  .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+  h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+  .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+  h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+  h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+  p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+  ul,ol{margin:10px 0 18px 28px;color:#424a53}
+  li{margin-bottom:8px;font-size:.95rem}
+  strong{color:#0969da;font-weight:700}
+  a{color:#0969da;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+  .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+  .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+  .toc ol{margin:0 0 0 22px;font-size:.92rem}
+  .toc li{margin-bottom:6px}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+  th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+  th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+  td:first-child{font-weight:700;white-space:nowrap}
+  .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+  .info-box strong{color:#0969da}
+  .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+  .warning-box::before{content:"⚠️ ";font-weight:700}
+  .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+  .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+  .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+  .related-card:hover{border-color:#0969da;text-decoration:none}
+  .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+  .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+  p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+  footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+  footer a{color:#0969da;text-decoration:none}
+  .chart-figure{margin:22px 0}
+  .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+  .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+  .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+  .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+  .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+  .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+  .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+  .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+  .s-axis{stroke:#8b949e;stroke-width:1.3}
+  .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+  .s-guide-r{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 3}
+  .s-fill-b{fill:#ddf4ff;stroke:none}
+  .s-fill-g{fill:#e6ffed;stroke:none}
+  .s-fill-r{fill:#ffebe9;stroke:none}
+  .s-fill-y{fill:#fff8c5;stroke:none}
+  @media(max-width:700px){
+    .article{padding:24px 20px}
+    h1{font-size:1.45rem}
+    .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+  }
+  #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+  body.dark{background:#0d1117;color:#e6edf3}
+  body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+  body.dark .article{background:#161b22;border-color:#30363d}
+  body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+  body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+  body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+  body.dark .breadcrumb{color:#8b949e}
+  body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+  body.dark p,body.dark li{color:#c9d1d9}
+  body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+  body.dark h3{color:#e6edf3}
+  body.dark strong{color:#79c0ff}
+  body.dark a{color:#79c0ff}
+  body.dark .toc{background:#0d1117;border-color:#1f6feb}
+  body.dark .toc-title{color:#79c0ff}
+  body.dark th{background:#0d1117;color:#79c0ff}
+  body.dark td,body.dark th{border-bottom-color:#30363d}
+  body.dark .related-card{background:#0d1117;border-color:#30363d}
+  body.dark .related-card-title{color:#79c0ff}
+  body.dark .related-card-desc{color:#8b949e}
+  body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+  body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+  body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+  body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+  body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+  body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+  body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+  body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+  body.dark .s-label{fill:#c9d1d9}
+  body.dark .s-label-sm{fill:#8b949e}
+  body.dark .s-label-b{fill:#79c0ff}
+  body.dark .s-label-r{fill:#f85149}
+</style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+}
+</style>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #29
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #29<br><small style="font-size:.65em;color:#57606a;font-weight:400">もみあい×ショート 前向き54件で31.5%——low_breakはE(R)CI全域マイナス確認</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第29回です。<a href="guide-signal-lab-019.html">前回のもみあい特集（#19）</a>では、累計75件で勝率50.7%、macd_deadシグナルが57.1%という「限定的エッジ」が見えていました。今回はそのエッジが<strong>前向き3週間・54件でどう動いたかを検証</strong>します。</p>
+    <p>先に結論を言うと、全体は31.5%に崩落し、macd_dead例外仮説も40.0%に軟化、そして<strong>low_breakシグナルは期待値CIが全域マイナスを記録</strong>しました。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① もみあい×ショート 累計（N=98）勝率 <strong>45.9%</strong>（45/98）、95%CI[36.4%〜55.8%]<br>
+      &nbsp;&nbsp;&nbsp;→ CI下限36.4%でIS期より不安定。累積でも43%に肉薄するが前向き急落（詳細本文）<br><br>
+      ② macd_deadシグナル（N=50）勝率 <strong>48.0%</strong>（24/50）、CI[34.8%〜61.5%]<br>
+      &nbsp;&nbsp;&nbsp;→ IS期より急落・CI上限61.5%で棄却できないが CI下限も43%割れ。確定打なし<br><br>
+      ③ low_breakシグナル（N=33）勝率 <strong>36.4%</strong>（12/33）、CI[22.2%〜53.4%]<br>
+      &nbsp;&nbsp;&nbsp;→ 累積でも43%以下が続く。前向き追跡ではE(R)が95%CI全域マイナス確認（詳細本文）
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">背景——3回シリーズで何を確認してきたか</a></li>
+        <li><a href="#method">検証方法と前向きトラッカーの見方</a></li>
+        <li><a href="#overall">前向き全体結果: 31.5%への崩落</a></li>
+        <li><a href="#signal-breakdown">シグナル別分解: macd_dead vs low_break</a></li>
+        <li><a href="#low-break-ci">low_breakのE(R)CI——95%信頼区間が全域マイナス</a></li>
+        <li><a href="#group">グループ別と交絡確認</a></li>
+        <li><a href="#verdict">判定と次の観察ポイント</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <!-- ② 免責（本文中・投資助言でない旨） -->
+    <p style="font-size:.82rem;color:#6e7781;border-left:3px solid #d0d7de;padding-left:12px;margin:16px 0;">
+      本記事の数値はすべて過去の実行シグナルデータによる反実仮想集計です。将来のパフォーマンスを保証するものではなく、投資判断の参考情報にとどまります。
+    </p>
+
+    <h2 id="background">1. 背景——3回シリーズで何を確認してきたか</h2>
+
+    <p>もみあい×ショートのエッジは、このシリーズで3回にわたって追跡してきました。</p>
+
+    <table>
+      <tr><th>回</th><th>時点</th><th>対象N</th><th>勝率</th><th>主な発見</th></tr>
+      <tr><td>#12（IS）</td><td>2026-06-17以前</td><td>49件</td><td>67.3%</td><td>FDR q=0.005通過・macd_dead中心</td></tr>
+      <tr><td>#19（IS拡張）</td><td>2026-06-24時点</td><td>75件</td><td>50.7%</td><td>low_break×metal=0/10が足を引く</td></tr>
+      <tr><td>#29（前向き）</td><td>2026-06-17〜7-3</td><td>54件</td><td>31.5%</td><td>全シグナルで大幅低下</td></tr>
+    </table>
+
+    <p>in-sample（過去全体）でエッジを確認した後、<strong>前向きデータ（登録日以降の新規シグナル）で検証するのがこの研究日誌のルール</strong>です。in-sampleは過去への当てはめを含む可能性があるため、前向きデータが唯一の客観的な評価基準になります。</p>
+
+    <div class="warning-box">
+      in-sample の勝率が高くても、前向きデータで再現されなければ「過去への過剰適合」の疑いが残ります。今回の67%→31%の落差はそれを示唆している可能性があります。
+    </div>
+
+    <h2 id="method">2. 検証方法と前向きトラッカーの見方</h2>
+
+    <p>使用するデータは当サイトのシグナルログ（全1,347件クローズ済み）です。フィルタ条件は以下のとおりです。</p>
+
+    <ul>
+      <li><strong>もみあい相場</strong>: 上位足トレンド判定が「中立・もみあい」</li>
+      <li><strong>ショート方向</strong>: direction=ショート（売り）</li>
+      <li><strong>クローズ済み</strong>: TP1/SL到達済みのみ（未決済・期限切れ除外）</li>
+    </ul>
+
+    <p>期待値R（E(R)）の計算基準: TP1到達=+1.333R（ATR×2.0÷ATR×1.5）、SL到達=−1.0R。</p>
+
+    <p>前向きトラッカーは<strong>2026-06-17を登録日</strong>として、それ以降に発火したシグナルを in-sample とは独立に集計します。</p>
+
+    <h2 id="overall">3. 前向き全体結果: 31.5%への崩落</h2>
+
+    <p>前向き期間（2026-06-17〜2026-07-03）の集計結果は以下のとおりです。</p>
+
+    <table>
+      <tr><th>区分</th><th>N</th><th>勝率</th><th>E(R)</th><th>E(R) 95%CI</th></tr>
+      <tr><td>in-sample（〜6/17前）</td><td>44件</td><td>63.6%</td><td>+0.485</td><td>—</td></tr>
+      <tr><td>前向き（6/17〜7/3）</td><td>54件</td><td>31.5%</td><td>−0.266</td><td>[−0.557〜+0.026]</td></tr>
+      <tr><td>累計（全期間・N=98）</td><td>98件</td><td>45.9%</td><td>+0.071</td><td>[−0.160〜+0.303]</td></tr>
+    </table>
+
+    <p>前向き54件の勝率31.5%は、損益分岐43%を<strong>11.5pp下回り</strong>ます。E(R)= −0.266で、95%CIが[−0.557〜+0.026]とほぼ0に接しています。CIが0を含むため「有意にマイナス」という確定には至りませんが、方向性は明確に反証を示しています。</p>
+
+    <!-- SVG 1: IS vs Forward bar chart -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 620 270" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="620" height="270" fill="#fafafa" rx="6"/>
+        <!-- グリッド線 -->
+        <line x1="75" y1="30" x2="600" y2="30" class="s-guide"/>
+        <line x1="75" y1="80" x2="600" y2="80" class="s-guide"/>
+        <line x1="75" y1="130" x2="600" y2="130" class="s-guide"/>
+        <line x1="75" y1="180" x2="600" y2="180" class="s-guide"/>
+        <line x1="75" y1="230" x2="600" y2="230" class="s-guide"/>
+        <!-- 損益分岐ライン 43% -->
+        <line x1="75" y1="123" x2="600" y2="123" class="s-guide-r"/>
+        <text x="603" y="127" fill="#cf222e" font-size="11" font-family="'Noto Sans JP',sans-serif">43%</text>
+        <!-- Y軸ラベル -->
+        <text x="70" y="34" class="s-label-sm" text-anchor="end">80%</text>
+        <text x="70" y="84" class="s-label-sm" text-anchor="end">60%</text>
+        <text x="70" y="134" class="s-label-sm" text-anchor="end">40%</text>
+        <text x="70" y="184" class="s-label-sm" text-anchor="end">20%</text>
+        <text x="70" y="234" class="s-label-sm" text-anchor="end">0%</text>
+        <!-- Y軸 -->
+        <line x1="75" y1="25" x2="75" y2="232" class="s-axis"/>
+
+        <!-- Group 1: 全体 cx=145 -->
+        <!-- IS bar: 63.6% → y=230-(63.6/80)*200=71, h=159 -->
+        <rect x="95" y="71" width="32" height="159" fill="#0969da" rx="3" opacity="0.85"/>
+        <text x="111" y="68" class="s-label-b" text-anchor="middle" font-size="11">63.6%</text>
+        <!-- FWD bar: 31.5% → y=230-(31.5/80)*200=151, h=79 -->
+        <rect x="133" y="151" width="32" height="79" fill="#cf222e" rx="3" opacity="0.85"/>
+        <text x="149" y="148" class="s-label-r" text-anchor="middle" font-size="11">31.5%</text>
+        <!-- Group label -->
+        <text x="142" y="252" class="s-label" text-anchor="middle" font-size="12">全体</text>
+
+        <!-- Group 2: macd_dead cx=320 -->
+        <!-- IS 60.0% → y=80, h=150 -->
+        <rect x="275" y="80" width="32" height="150" fill="#0969da" rx="3" opacity="0.85"/>
+        <text x="291" y="77" class="s-label-b" text-anchor="middle" font-size="11">60.0%</text>
+        <!-- FWD 40.0% → y=130, h=100 -->
+        <rect x="313" y="130" width="32" height="100" fill="#cf222e" rx="3" opacity="0.85"/>
+        <text x="329" y="127" class="s-label-r" text-anchor="middle" font-size="11">40.0%</text>
+        <!-- Group label -->
+        <text x="312" y="252" class="s-label" text-anchor="middle" font-size="12">macd_dead</text>
+
+        <!-- Group 3: low_break cx=500 -->
+        <!-- IS 37.9% → y=230-(37.9/80)*200=135, h=95 -->
+        <rect x="456" y="135" width="32" height="95" fill="#0969da" rx="3" opacity="0.85"/>
+        <text x="472" y="132" class="s-label-b" text-anchor="middle" font-size="11">37.9%</text>
+        <!-- FWD 15.0% → y=230-(15/80)*200=193, h=37 -->
+        <rect x="494" y="193" width="32" height="37" fill="#cf222e" rx="3" opacity="0.85"/>
+        <text x="510" y="190" class="s-label-r" text-anchor="middle" font-size="11">15.0%</text>
+        <!-- Group label -->
+        <text x="490" y="252" class="s-label" text-anchor="middle" font-size="12">low_break</text>
+
+        <!-- 凡例 -->
+        <rect x="90" y="10" width="14" height="14" fill="#0969da" rx="2" opacity="0.85"/>
+        <text x="108" y="22" class="s-label" font-size="12">in-sample</text>
+        <rect x="195" y="10" width="14" height="14" fill="#cf222e" rx="2" opacity="0.85"/>
+        <text x="213" y="22" class="s-label" font-size="12">前向き（6/17以降）</text>
+      </svg>
+      <div class="chart-caption">図1: もみあい×ショートのシグナル別 in-sample（青）vs 前向き（赤）勝率比較。赤点線は損益分岐43%。全シグナルで前向き値が低下し、low_breakは15.0%に急落。</div>
+    </div>
+
+    <h2 id="signal-breakdown">4. シグナル別分解: macd_dead vs low_break</h2>
+
+    <p>もみあい×ショートの内訳はシグナル種別によって明確に異なります。前向き期間の分解を見てみましょう。</p>
+
+    <table>
+      <tr><th>シグナル</th><th>全期間N</th><th>全期間勝率</th><th>前向きN</th><th>前向き勝率</th><th>前向きE(R)</th></tr>
+      <tr><td>macd_dead</td><td>50件</td><td>48.0%（24/50）</td><td>25件</td><td>40.0%（10/25）</td><td>−0.067</td></tr>
+      <tr><td>low_break</td><td>33件</td><td>36.4%（12/33）</td><td>20件</td><td>15.0%（3/20）</td><td>−0.650</td></tr>
+      <tr><td>ma_dead</td><td>12件</td><td>50.0%（6/12）</td><td>9件</td><td>44.4%（4/9）</td><td>−0.074</td></tr>
+    </table>
+
+    <div class="negative-box">
+      low_breakの前向き勝率15.0%（3/20）は、損益分岐43%を28pp下回ります。これはランダム以下の水準です。macd_deadも40.0%に軟化しており、「macd_dead限定のエッジ」仮説も前向きでは確認できていません。
+    </div>
+
+    <p>#19での分析では「macd_deadは57.1%で例外的に有望」という仮説を立てていました。しかし前向き25件では40.0%（10/25）となり、IS期からの22pp低下が確認されました。95%CI[23.4%〜59.3%]はまだ43%をまたいでいるため、確定的な棄却には至りませんが、楽観的な見通しは修正が必要です。</p>
+
+    <h2 id="low-break-ci">5. low_breakのE(R)CI——95%信頼区間が全域マイナス</h2>
+
+    <p>最も強い発見は low_break シグナルの期待値分析です。</p>
+
+    <div class="negative-box">
+      <strong>low_break × もみあい × ショート（前向きN=20）</strong><br>
+      勝率 15.0%（3/20）　95%CI[5.2%〜36.0%]（CI上限 &lt; 43%）<br>
+      <strong>E(R) = −0.650 　95%CI[−1.025〜−0.275]</strong><br>
+      → CIの全域がマイナス = 統計的に有意な損失を示唆
+    </div>
+
+    <p>E(R)のCI全域がマイナスになるというのは、「このフィルターを使い続けると、ほぼ確実に期待値マイナスになる」という強いシグナルです。N=20と小さいため解釈には慎重さが必要ですが、IS期（37.9%）→ 前向き（15.0%）という急落と合わせて、<strong>low_break × もみあい × ショートの組み合わせは回避候補</strong>として扱うのが妥当と判断します。</p>
+
+    <!-- SVG 2: 勝率崩落タイムライン -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" fill="#fafafa" rx="6"/>
+        <!-- ガイドライン 43% -->
+        <!-- y=170-(43/80)*150=170-80.6=89.4≈89 -->
+        <line x1="60" y1="89" x2="560" y2="89" class="s-guide-r"/>
+        <text x="565" y="93" fill="#cf222e" font-size="11" font-family="'Noto Sans JP',sans-serif">43%</text>
+        <!-- Y軸ラベル -->
+        <text x="55" y="24" class="s-label-sm" text-anchor="end">80%</text>
+        <text x="55" y="64" class="s-label-sm" text-anchor="end">60%</text>
+        <text x="55" y="89" class="s-label-sm" text-anchor="end"> </text>
+        <text x="55" y="114" class="s-label-sm" text-anchor="end">40%</text>
+        <text x="55" y="154" class="s-label-sm" text-anchor="end">20%</text>
+        <text x="55" y="174" class="s-label-sm" text-anchor="end">0%</text>
+        <line x1="60" y1="20" x2="60" y2="175" class="s-axis"/>
+        <!-- X axis -->
+        <line x1="60" y1="175" x2="555" y2="175" class="s-axis"/>
+
+        <!-- points -->
+        <!-- y=170-(pct/80)*150 -->
+        <!-- #12 IS 67.3% → y=170-(67.3/80)*150=170-126.2=43.8≈44 -->
+        <!-- #19 IS 50.7% → y=170-(50.7/80)*150=170-95.1=74.9≈75 -->
+        <!-- FWD 31.5% → y=170-(31.5/80)*150=170-59.1=110.9≈111 -->
+        <circle cx="130" cy="44" r="7" fill="#0969da"/>
+        <circle cx="315" cy="75" r="7" fill="#9a6700"/>
+        <circle cx="500" cy="111" r="7" fill="#cf222e"/>
+
+        <!-- trend line -->
+        <polyline points="130,44 315,75 500,111" stroke="#8b949e" stroke-width="2" fill="none" stroke-dasharray="6 3"/>
+
+        <!-- point labels -->
+        <text x="130" y="36" class="s-label-b" text-anchor="middle" font-size="13">67.3%</text>
+        <text x="130" y="162" class="s-label-sm" text-anchor="middle" font-size="11">#12 IS</text>
+        <text x="315" y="67" class="s-label-y" text-anchor="middle" font-size="13">50.7%</text>
+        <text x="315" y="162" class="s-label-sm" text-anchor="middle" font-size="11">#19 IS</text>
+        <text x="500" y="103" class="s-label-r" text-anchor="middle" font-size="13">31.5%</text>
+        <text x="500" y="162" class="s-label-sm" text-anchor="middle" font-size="11">#29 前向き</text>
+      </svg>
+      <div class="chart-caption">図2: もみあい×ショート 勝率の推移概念図。#12 IS期 67.3%→#19 IS拡張 50.7%→#29 前向き 31.5% と段階的に崩落。赤点線は損益分岐43%ライン。</div>
+    </div>
+
+    <h2 id="group">6. グループ別と交絡確認</h2>
+
+    <p>前向き54件のグループ内訳を確認します。</p>
+
+    <table>
+      <tr><th>グループ</th><th>前向きN</th><th>勝率</th><th>95%CI（Wilson）</th></tr>
+      <tr><td>指数（index）</td><td>4件</td><td>0.0%</td><td>[0.0%〜49.0%]（N小・参考）</td></tr>
+      <tr><td>金属（metal）</td><td>16件</td><td>18.8%</td><td>[6.6%〜43.0%]</td></tr>
+      <tr><td>円クロス（jpy_fx）</td><td>13件</td><td>46.2%</td><td>[23.2%〜70.9%]</td></tr>
+      <tr><td>ドルFX（other_fx）</td><td>19件</td><td>42.1%</td><td>[23.1%〜63.7%]</td></tr>
+      <tr><td>BTC</td><td>2件</td><td>0.0%</td><td>（N小・参考）</td></tr>
+    </table>
+
+    <p>前向きで足を引いているのは<strong>金属（18.8%、N=16）</strong>と<strong>指数（0.0%、N=4）</strong>です。一方、円クロス（jpy_fx）と他FX（other_fx）は各46%・42%とほぼ損益分岐近辺に留まっています。</p>
+
+    <p>金属グループの内訳を見ると、low_break × 金属がIS期ですでに問題でした（#19で0/10=0.0%を確認）。前向きでも金属16件中低迷が続いており、<strong>gold/silver のショートに low_break シグナルが発火した場合は特に注意が必要</strong>です。</p>
+
+    <div class="info-box">
+      jpy_fx（円クロス）は前向き46.2%（6/13）と最も健闘しています。ただし N=13 では統計的に安定した判断はできません。今後 N=30 に到達した時点で再評価します。
+    </div>
+
+    <h2 id="verdict">7. 判定と次の観察ポイント</h2>
+
+    <h3>今回の事前宣言への照合</h3>
+
+    <table>
+      <tr><th>仮説</th><th>事前基準</th><th>結果</th><th>判定</th></tr>
+      <tr><td>全体エッジ持続</td><td>E(R)CI が 0 を含む → 確定打なし</td><td>R=-0.266 CI[-0.557〜+0.026]・0含む</td><td>🟡 エッジ崩落方向・確定打なし</td></tr>
+      <tr><td>H1: macd_dead &gt; 43%</td><td>前向きCI が 43% をまたぐ → 確定打なし</td><td>40.0% CI[23.4%〜59.3%]・43%またぐ</td><td>🟡 急落・確定打なし</td></tr>
+      <tr><td>H2: low_break E(R)CI全域マイナス</td><td>前向きE(R)CI が全てマイナス → 反証確認</td><td>R=-0.650 CI[-1.025〜-0.275]</td><td>⛔ 反証確認</td></tr>
+    </table>
+
+    <div class="negative-box">
+      <strong>⛔ low_break × もみあい × ショート: 前向き反証確認</strong><br>
+      E(R)=-0.650 CI[-1.025〜-0.275]（前向きN=20）。95%CIが全域マイナス。回避対象として監視継続。
+    </div>
+
+    <h3>次の観察ポイント</h3>
+
+    <ul>
+      <li><strong>macd_dead × もみあい × ショート</strong>: 前向きN=25→目標N=50。現在40.0%。IS期57%から急落中だが、まだCI内に43%を含む。N=50到達時に再検証。</li>
+      <li><strong>jpy_fx × もみあい × ショート</strong>: 前向きN=13・46.2%。損益分岐近辺で健闘。N=30到達後に個別分析の価値あり。</li>
+      <li><strong>低_break × metal</strong>: #19でIS 0/10=0.0%、前向きでも継続的に低迷。この組み合わせは発火した際の注意情報として管理。</li>
+    </ul>
+
+    <h2 id="tracker">8. 前向きトラッカー定点観測</h2>
+
+    <p>全前向き仮説の現在値を確認します（基準日 2026-07-04）。</p>
+
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-07-04／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.35 CI[+0.06~+0.65]（70/121・勝率58%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.08~+0.17]（116/259・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.10~+0.19]（94/210・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[-0.00~+0.29]（94/192・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.12~+0.28]（74/160・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.12 CI[-0.34~+0.10]（48/127・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.09~+0.42]（58/116・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.07~+0.33]（56/116・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.21~+0.32]（48/106・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.00~+0.34]（49/98・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.41~+0.20]（34/89・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.09 CI[-0.30~+0.11]（33/85・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.12~+0.32]（39/83・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.07 CI[-0.40~+0.26]（29/73・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.37~+0.41]（32/73・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.35 CI[-0.01~+0.71]（41/71・勝率58%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.30~+0.56]（31/64・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.58~+0.40]（21/54・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.27 CI[-0.70~+0.17]（17/54・勝率32%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[-0.26~+0.84]（21/38・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.76~+0.57]（14/36・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.69 CI[+0.30~+1.07]（26/36・勝率72%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.53 CI[+0.04~+1.02]（23/35・勝率66%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.70 CI[+0.25~+1.14]（24/33・勝率73%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.72 CI[-0.91~-0.54]（2/17・勝率12%）</td><td>🟡蓄積中</td></tr>
+</table>
+
+    <!-- ③ 末尾免責（kinsho 補足） -->
+    <p class="disclaimer">
+      ※ 本記事に掲載された過去シグナルの勝率・期待値は、設定された利確（TP1=ATR×2.0）・損切り（SL=ATR×1.5）条件下での反実仮想計算です。スリッページ・スワップコスト・市場インパクトは考慮していません。過去のパフォーマンスは将来の結果を保証するものではありません。本記事は情報提供のみを目的とし、特定の有価証券・デリバティブ等の売買を勧誘するものではありません。投資に関する最終判断はご自身の責任と判断のもと行ってください。
+    </p>
+
+    <h2 style="margin-top:36px">関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-lab-012.html">
+        <div class="related-card-title">🧪 #12 もみあい×ショートの優位性</div>
+        <div class="related-card-desc">67.3%・FDR q=0.005 通過。最初にエッジを確認した回。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-019.html">
+        <div class="related-card-title">🧪 #19 もみあい×Sエッジの解剖</div>
+        <div class="related-card-desc">累計75件・50.7%。low_break×金属が足を引く構造を発見。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-028.html">
+        <div class="related-card-title">🧪 #28 blocked×ショート前向き反証</div>
+        <div class="related-card-desc">IS 47.8%→前向き12.5%。同様の前向き崩落パターンを確認。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-026.html">
+        <div class="related-card-title">🧪 #26 指数×ロング 前向き昇格</div>
+        <div class="related-card-desc">前向きN=104で59.6%・E(R)+0.39。昇格確認。</div>
+      </a>
+    </div>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>© 2026 <a href="index.html">MarketWatch AI</a> |
+  <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> |
+  <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+(function(){
+  var prog = document.getElementById('reading-progress');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement, b = document.body;
+    var st = h.scrollTop || b.scrollTop;
+    var sh = h.scrollHeight - h.clientHeight;
+    if(sh>0 && prog) prog.style.width = (st/sh*100) + '%';
+  }, {passive:true});
+})();
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+</script>
+</body>
+</html>
