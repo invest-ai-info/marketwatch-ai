@@ -17,7 +17,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 
 # 閾値（超えたら「軽くする候補」）。毎セッション読む文書を重く保たないため。
-DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 45, "CLAUDE.md": 35}
+# 2026-07-02 トークン効率化＝閾値を実測ベースに厳格化（毎セッションの固定オーバーヘッド予算）。
+DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32}
+MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
                         r"martingale|overshoot|panic|selection|strategy|trendfollow|volume|money|"
@@ -37,6 +39,8 @@ def main():
         size = kb(p(f))
         if size > lim:
             findings.append(("🟡", f"{f} が {size:.0f}KB（目安{lim}KB超）＝古い完了セクションを SESSION_ARCHIVE.md へ退避してスリム化"))
+    if kb(MEM) > MEMORY_LIMIT_KB:
+        findings.append(("🟡", f"MEMORY.md が {kb(MEM):.0f}KB（目安{MEMORY_LIMIT_KB}KB超）＝索引行を短く・詳細は各memoryファイルへ（毎セッション自動注入されるため）"))
 
     # ②（参考）ハンドオフ内の「✅完了」古セクション数（アーカイブ候補の目安）
     hp = p("SESSION_HANDOFF.md")
