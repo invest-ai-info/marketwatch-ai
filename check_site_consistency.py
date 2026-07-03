@@ -76,6 +76,45 @@ def get_sync_files():
     return set(re.findall(r'"([^"]+)"', m.group(1)))
 
 
+def check_economic_events():
+    """経済カレンダーの決定論検査（2026-07-02 の日付誤り事故=CPI 7/10等の再発防止）。
+    誤りやすいのは「パターン外挿で足した未来の日付」。機械で検査できる不変条件だけ見る:
+      雇用統計=金曜 / high・mid指標が土日は疑わしい / FOMC結果=公式2026日程±1日 / ECB=木曜が通例。"""
+    import datetime as dt
+    if not _exists("generate_market_news.py"):
+        return
+    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", _read("generate_market_news.py"), re.S)
+    if not m:
+        warnings.append("ECONOMIC_EVENTS_2026 が解析できない → カレンダー日付検査をスキップ")
+        return
+    rows = re.findall(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1))
+    # 2026年のFOMC決定日（federalreserve.gov 公式・ET基準）。年替わりでここを更新する
+    fomc_official = {(1, 28), (3, 18), (4, 29), (6, 17), (7, 29), (9, 16), (10, 28), (12, 9)}
+    today = dt.date.today()
+    for mo_s, dy_s, region, imp, name in rows:
+        mo, dy = int(mo_s), int(dy_s)
+        try:
+            d = dt.date(2026, mo, dy)
+            wd = d.weekday()
+        except ValueError:
+            warnings.append(f"カレンダー: {mo}/{dy}「{name}」＝存在しない日付")
+            continue
+        if d < today:
+            continue  # 過去分は表示済み＝修正不能。検査は未来の日付のみ（警告ノイズ防止）
+        if "中国" in name and "PMI" in name:
+            continue  # 中国国家統計局PMIは月末公表＝土日もあり得る（正当な例外）
+        if "雇用統計" in name and wd != 4:
+            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が金曜でない（米雇用統計は原則金曜）＝要確認")
+        elif wd >= 5 and "休場" not in name:
+            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が{'土日'[wd - 5]}曜＝日付要確認")
+        if "FOMC" in name and "結果" in name:
+            near = any(abs((dt.date(2026, mo, dy) - dt.date(2026, om, od)).days) <= 1 for om, od in fomc_official)
+            if not near:
+                warnings.append(f"カレンダー: {mo}/{dy}「{name}」が公式FOMC日程(±1日)と不一致＝要確認")
+        if "ECB" in name and wd != 3:
+            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が木曜でない（ECB理事会は木曜が通例）＝要確認")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -142,6 +181,9 @@ def main():
         missing = [l for l in NAV_LINKS if l not in navhrefs]
         if missing:
             warnings.append(f"{name}: ナビに不足リンク {missing}（10ボタン未満）")
+
+    # 5. 経済カレンダーの日付検査（2026-07-02 新設）
+    check_economic_events()
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
