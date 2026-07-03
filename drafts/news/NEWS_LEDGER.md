@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-07-03
+- 判定: ✅ 公開済み
+- 選定トピック: 米6月NFP+57,000人（予想+110,000人を大幅下回り）、7月FOMC利上げ観測が急後退（カテゴリ: マクロ・金融政策・為替・コモディティ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5 （合計 15/15）
+- 選定理由: 独立記念日前倒し発表・予想比▲53K（約半分）・ダウ52,900ドル史上最高値・ドル円160円台・金+2.2%・FOMC利上げ観測消滅・7/30FOMC+7/31BOJ「同日週」への示唆が豊富。事前プレビュー記事（guide-auto-us_jobs-2026-07-03.html）は存在するが「実結果の中立整理」記事として差別化。
+- 出典:
+  - 米労働統計局「The Employment Situation — June 2026」BLS.gov（2026-07-02）
+  - FXStreet「Nonfarm Payrolls rise by 57K in June vs. 110K expected」（2026-07-02）
+  - ActionForex「Dollar Falls on Disappointing US June NFP Numbers」（2026-07-02）
+  - Bloomberg「Bonds Rally as Weak Jobs Report Dims Fed Rate-Hike Expectations」（2026-07-02）
+  - TheStreet「Stock Market Today July 2, 2026」
+  - Kiplinger「Weak June Jobs Report Quiets Rate-Hike Conversation」（2026-07-02）
+  - 日本経済新聞「円相場一時162円台 39年半ぶり水準」（2026-06-30）
+  - gaitame.com「7月3日ドル円見通し」（2026-07-03）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・断定表現なし・売買推奨なし・出典8系統・3シナリオ両論併記・positive-boxの「追い風」表現も3並列提示＋「行動を推奨するものでもない」で全体中立整理）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（kinsho-v1×3箇所・禁止語なし・銘柄推奨なし・出典2系統以上・免責適切・公開OK）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典2系統以上 ✅
+- check_site_consistency.py: EXIT=0（SYNC_FILES警告は既存問題、本記事と無関係）
+- 公開ファイル: guide-news-2026-07-03-nfp-june-2026.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了。
+
+---
+
 ## 2026-07-02
 - 判定: 🚩要人間レビュー（check_site_consistency.py exit=1 による自動公開停止）
 - 選定トピック: 日経平均-1,741円(-2.47%)・キオクシア日中-12.06%急落を軸とした「AI半導体セルオフ」（カテゴリ: 個別銘柄・指数・テクニカル）
