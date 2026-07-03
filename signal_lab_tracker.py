@@ -140,9 +140,20 @@ def stats(data, f, since=None):
     k = sum(1 for d in rows if win(d))
     lo, hi = wilson(k, n)
     pct = (100 * k / n) if n else 0.0
-    Rs = [r_of(d) for d in rows if r_of(d) is not None]
-    meanR, sdR = _mean_std(Rs)
-    seR = sdR / (len(Rs) ** 0.5) if len(Rs) > 1 else 0.0
+    # 2026-07-03: R の SE を日付クラスタ補正に変更（同日発火の相関＝実効N過大を是正。
+    # CR0×G/(G-1)・決定論。各日1件なら従来の sd/√n に一致）
+    groups = {}
+    for d in rows:
+        r = r_of(d)
+        if r is not None:
+            groups.setdefault(fired_date(d), []).append(r)
+    Rs = [x for g in groups.values() for x in g]
+    nR, G = len(Rs), len(groups)
+    meanR = sum(Rs) / nR if nR else 0.0
+    if G >= 2:
+        seR = (sum((sum(g) - len(g) * meanR) ** 2 for g in groups.values()) * G / (G - 1)) ** 0.5 / nR
+    else:
+        seR = 0.0
     return {"k": k, "n": n, "pct": round(pct, 1), "ci_lo": round(lo, 1), "ci_hi": round(hi, 1),
             "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3)}
 
@@ -186,12 +197,20 @@ def cmd_update(args, data, today):
         fwd = stats(data, h["filter"], since=h["registered_at"])
         allt = stats(data, h["filter"])
         prev = h.get("status", "tracking")
-        st = judge(h["kind"], fwd, min_n_of(h))
-        # rejected は維持（戻さない）。promoted も維持。
+        # 🆕 2026-07-03 チェックポイント検定: 毎日CIを覗く逐次検定は「たまたま越えた日」に
+        #    昇格が確定してしまい実質αが膨張する。判定は前向きNが min_n の倍数
+        #    （例 30/60/90…）を新たに越えたときだけ実施（look回数を日次→数回に削減）。
+        mn = min_n_of(h)
+        next_cp = ((h.get("last_eval_n", 0) // mn) + 1) * mn
         if prev in ("promoted", "rejected"):
-            st = prev
-        elif st in ("promoted", "rejected"):
-            newly.append((h, st))
+            st = prev                       # ラチェット維持（従来仕様）
+        elif fwd["n"] >= next_cp:
+            st = judge(h["kind"], fwd, mn)
+            h["last_eval_n"] = fwd["n"]
+            if st in ("promoted", "rejected"):
+                newly.append((h, st))
+        else:
+            st = "tracking"                 # チェックポイント未到達＝判定しない（蓄積のみ）
         h["forward"], h["alltime"], h["status"] = fwd, allt, st
         h.setdefault("history", [])
         h["history"].append({"date": today, "fwd_n": fwd["n"], "fwd_avgR": fwd["avgR"], "fwd_rci_lo": fwd["rci_lo"]})
@@ -201,7 +220,8 @@ def cmd_update(args, data, today):
 
     print(f"=== 前向きトラッカー update（基準日 {today} / signals決済済 {sum(1 for d in data if closed(d))}件） ===")
     print(f"昇格基準（期待値ベース）: forward N≥{PROMOTE_MIN_N}（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}） "
-          f"／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0")
+          f"／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0"
+          f"\n判定方式（2026-07-03〜）: 日付クラスタ補正SE＋チェックポイント検定（Nがmin_nの倍数を越えた時のみ判定＝覗き見バイアス抑制）")
     print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
     print("-" * 108)
     order = {"promoted": 0, "tracking": 1, "rejected": 2}
