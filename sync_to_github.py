@@ -7,4 +7,5 @@ SYNC_FILES = [
     "guide-signal-lab-028.html",
     "guide-proverb-tamago-kago.html",
     "guide-news-2026-07-03-nfp-june-2026.html",
+    "guide-signal-lab-029.html",
 ]
