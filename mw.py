@@ -57,8 +57,10 @@ def _run(args):
 
 
 def _run_capture(args):
-    """同梱スクリプトを実行し (exit code, stdout) を返す（deploy の 🚫/❌ 判別用）。"""
-    r = subprocess.run([PY] + args, cwd=SD, env=_env(), capture_output=True, text=True)
+    """同梱スクリプトを実行し (exit code, stdout) を返す（deploy の 🚫/❌ 判別用）。
+    encoding明示＝cp932コンソールでも子のUTF-8出力（🚫等）が化けず、stale判定を誤らない。"""
+    r = subprocess.run([PY] + args, cwd=SD, env=_env(), capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     return r.returncode, (r.stdout or "")
 
 
