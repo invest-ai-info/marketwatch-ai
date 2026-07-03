@@ -1,7 +1,18 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-02）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-03 未明）
 
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
 2026-06-17 以前の詳細履歴は **SESSION_ARCHIVE.md**（保管庫・後から辿る検索用）へ退避した。
+
+---
+
+## ✅ 7/2夜〜7/3未明の追加作業まとめ（詳細は auto-memory 各ファイル）
+
+- **巨匠仮説キュー始動**（[[project_masters_queue]]）：**#1グレアム6基準＝4.5万観測で検証・スコア単調・暴落確率24%→4%の防御実証**→`guide-graham-001.html` 公開済（コンプラ白・品質レーン通過・新カテゴリ「巨匠の教え検証」）。🛡グレアム列を個人ダッシュボードに搭載（`_jp_graham_now.py`→dashboard）。**#2ラリー・ウィリアムズ＝4本全滅**（ボラブレイク両期間-0.08%一貫・記事化は未・良ネタ）。次=#3オニール/ミネルヴィニ。
+- **ギャップ法則研究 確定**（[[project_jp_open_edge]]）：再現則は**ストップ高引け(+3.7/+3.3%)とストップ安引け(-5.1/-3.5%)の2つだけ**。髭特徴は組合せでも不再現＝終了。
+- **及川圭哉(FXism)調査・検証**（非公開・`research/oikawa_fxism_methods.md`）：手法4本柱を体系化。検証可能な外形3仮説(シリーズ揃い/欧州時間/FX押し目)は**当エンジンデータで不支持**＝エッジは裁量部分。オーナーの実取引23件分析＝**勝率47.8%×ペイオフ3.15×PF2.89の損小利大型**（メンターと逆の型で+EV。勝率追いは期待値を壊すリスク）。**MT4過去履歴は消失＝7割実績は検証不能。ロンドン時間トレードは退職後に再開予定**。YouTube要約に11ch目「FXism 及川圭哉」追加済。
+- **経済カレンダー精度**（[[project_marketwatch_calendar_bug]]）：7月分の誤り修正（CPI 7/14・ECB 7/23・日銀7/30-31・雇用統計8/7）＋json7月分12件追記＋**決定論バリデータ新設**（check_site_consistency＝雇用統計金曜/土日検出/FOMC公式照合/ECB木曜・未来日付のみ）→即9/4・12/17の誤り2件検出・修正済。
+- **⚡トークン効率ルール新設**：CLAUDE.md に6箇条＋文書予算（CLAUDE≤32KB/HANDOFF≤30KB/MEMORY≤4KB）＋declutter監視で強制。MEMORY.md 7→3KB・本ファイル31→22KBにスリム化済。
+- **自動化の精度点検（7/3未明）**：①no_plan 282件＝warn系のみ発火の**設計仕様と判明（バグでない）** ②**signal-lab-daily routineを更新＝tierフィルタ解禁**（selection.tier がclaims/研究日誌で使用可に）・手本015化・nav10・🏁N30注記 ③**indicator-result routineを厳格化**＝アグリゲーター(tradingeconomics/investing/forexfactory/fxstreet)と個人ブログは裏取りに数えない・満たなければverified=false ④寄り付きロガー欠測検知を `_jp_health_check.py` に追加（前営業日照合・祝日除外・アラートファイル） ⑤generate_market_news はstaleガード作動→reconcile PUTで反映（commit 199bfa80・.sync-cache baseline整合済）。
 
 ---
 
@@ -86,7 +97,7 @@
 - **整理係**：`mw declutter` は現在0件。月次 `MarketWatch_Declutter` が `DECLUTTER_REPORT.md` を出したら確認。
 
 - ✅ **update-market-news.yml の失敗は解決済**（2026-06-20 午後・concurrency追加）。原因＝push+dispatch の同時実行レース。今後 `mw publish` を素で使ってもOK。
-- 🚩 **FOMC結果の信頼性検証（6/18 起票・未確認）**：`indicator-result.json` の FOMC（据え置き 3.50–3.75%）は出典が個人ブログ系の疑い。一次（Reuters/Bloomberg/Fed）で数値を確認し、違えば訂正・正しければ出典差し替え。日銀（6/16・1.0%利上げ）は verified。
+- ✅ **FOMC結果の信頼性検証＝対応済（2026-07-03）**：現行 results の出典は概ね公式/大手化済み（米雇用統計=BLS+CNBC/CNN等）。残っていた緩さ（investing.com単独でverified=true・substack混入）は routine プロンプト厳格化で対処（アグリゲーター裏取り禁止）。**今晩23時台の実行で新基準が守られるか確認**。
 - 🔴 **POLICY dict 更新**：`generate_market_news.py` の `POLICY`（日銀→1.0%／FOMC据え置き）を会合結果へ。未更新だと market-health のスワップ金利差%が陳腐化。
 - 📉 **AdSense ＝2026-06-27 再申請済・結果待ち**（[[project_adsense_review]]）。次セッションで結果確認（上の在flight参照）。
 - 🗓️ **`jp-stock-info.json` の四半期更新**（決算シーズン後に `python make_jp_stock_info.py` 再実行→`mw sync`。赤字/黒字フラグを最新決算へ。日次の値上がり率/売買代金は `jp-rankings.yml` が自動）。
