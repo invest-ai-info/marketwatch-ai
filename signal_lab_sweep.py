@@ -157,6 +157,50 @@ def r_of(rec):
     return {"tp2": 2.0, "tp1": 4.0 / 3.0, "sl": -1.0}.get(rec.get("outcome"))
 
 
+# ─────────────────────────────────────────
+# 取引コスト（2026-07-03 方法論監査で導入）
+# 往復スプレッドの概算。⚠️ブローカー実約定で要更新（規律ループの実スリッページ実測と接続予定）。
+# R換算 = spread × mult ÷ |entry−SL|（mult=1.5 はスプレッド＋滑り分の保守係数）。
+# ⚠️設計注意: 20年で価格が数十倍動く資産（BTC/金/指数）に現在基準の絶対額スプレッドを適用すると
+#   過去年代のコストが数R相当に化ける（例: 2015年BTC$300に$35は約10%）→ FX以外は【価格比%】で持つ。
+#   FXはpip絶対額が市場慣行として安定（レンジ相場・桁ドリフトなし）なので絶対額のまま。
+# 表に無い ticker はコスト0（グロス扱い）＝過大控除より過小控除を選ぶ（不明分は正直にグロス）。
+# ─────────────────────────────────────────
+SPREAD_PCT = {                       # entry価格に対する往復スプレッド比率
+    "GC=F": 0.00015, "SI=F": 0.0008, "CL=F": 0.0005,
+    "NKD=F": 0.0002, "ES=F": 0.0001, "NQ=F": 0.00008, "YM=F": 0.00008, "^FTSE": 0.0002,
+    "BTC-USD": 0.0004,
+}
+
+
+def cost_r_of(d, mult=1.5):
+    """1取引の往復コストをR単位で返す（SL幅=1.5ATRを1Rとして換算）。不明は0＝グロス扱い。"""
+    entry, sl = d.get("entry"), d.get("stop_loss")
+    if not entry or not sl or entry == sl:
+        return 0.0
+    t = (d.get("ticker") or "")
+    if t in SPREAD_PCT:
+        sp = entry * SPREAD_PCT[t]            # 価格比＝年代をまたいでもコスト規模が自然
+    elif t.endswith("=X"):                    # FX: JPYクロス=0.8pip / その他=1.2pip 相当（絶対額）
+        sp = 0.008 if "JPY" in t.upper() else 0.00012
+    else:
+        return 0.0
+    return sp * mult / abs(entry - sl)
+
+
+def r_used(d, net=False, cost_mult=1.5, itt=False):
+    """検定に使うR。itt=True なら expired を 0R（満了フラット決済の近似）で算入＝
+    「解決した取引だけの条件付き期待値」バイアス（expired≈15%除外）を是正する intent-to-treat。
+    net=True なら往復コストを控除（expired もスプレッドは払っている＝控除対象）。"""
+    r = r_of(d)
+    if r is None:
+        if itt and d.get("outcome") == "expired":
+            r = 0.0
+        else:
+            return None
+    return r - cost_r_of(d, cost_mult) if net else r
+
+
 def _mean_std(xs):
     n = len(xs)
     if n == 0:
@@ -171,7 +215,7 @@ def fired_date(d):
     return (d.get("fired_at") or "")[:10]
 
 
-def cluster_stats(matched):
+def cluster_stats(matched, **mode):
     """期待値Rの平均と【日付クラスタ・ロバストSE】を返す（2026-07-03 方法論監査で導入）。
 
     従来の SE=sd/√n は全シグナルを独立扱いだが、実際は18銘柄が同じ日に束で発火する
@@ -180,7 +224,7 @@ def cluster_stats(matched):
     各日1件なら従来の sd/√n に一致する（後方互換）。"""
     groups = {}
     for d in matched:
-        r = r_of(d)
+        r = r_used(d, **mode)
         if r is None:
             continue
         groups.setdefault(fired_date(d), []).append(r)
@@ -195,43 +239,51 @@ def cluster_stats(matched):
     return m, var ** 0.5, G
 
 
-def eval_stats(data, f):
+def eval_stats(data, f, **mode):
     """1仮説を与えられたデータで評価（勝率＋期待値R＋95%CI）。ホールドアウト再評価用。
     R の SE は日付クラスタ補正（cluster_stats）。勝率の Wilson CI は表示用の参考値
-    （独立仮定のまま＝判定には期待値R側を使う）。"""
-    matched = [d for d in data if closed(d) and match(d, f)]
+    （独立仮定のまま＝判定には期待値R側を使う）。mode: net/cost_mult/itt（r_used参照）。"""
+    m_res = [d for d in data if closed(d) and match(d, f)]
+    m_exp = [d for d in data if d.get("outcome") == "expired" and match(d, f)]
+    matched = m_res + m_exp if mode.get("itt") else m_res
     n = len(matched)
-    k = sum(1 for d in matched if win(d))
+    k = sum(1 for d in m_res if win(d))
     lo, hi = wilson(k, n)
-    meanR, seR, n_days = cluster_stats(matched)
+    meanR, seR, n_days = cluster_stats(matched, **mode)
+    exp_pct = round(100 * len(m_exp) / (len(m_res) + len(m_exp)), 1) if (m_res or m_exp) else 0.0
     return {"k": k, "n": n, "pct": round(100 * k / n, 1) if n else 0.0,
             "ci_lo": round(lo, 1), "ci_hi": round(hi, 1), "avgR": round(meanR, 3),
             "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3),
-            "n_days": n_days}
+            "n_days": n_days, "exp_pct": exp_pct}
 
 
-def sweep(data, min_n, alpha):
-    """各仮説の勝率＋【期待値(平均R)】を集計し、「期待値≠0」でBH-FDR判定（＝本当に黒字か）。"""
+def sweep(data, min_n, alpha, **mode):
+    """各仮説の勝率＋【期待値(平均R)】を集計し、「期待値≠0」でBH-FDR判定（＝本当に黒字か）。
+    mode: net=コスト控除 / itt=expiredを0R算入（r_used参照）。exp%はどのモードでも常時表示。"""
     rows = []
     for label, f in build_grid(data):
-        matched = [d for d in data if closed(d) and match(d, f)]
+        m_res = [d for d in data if closed(d) and match(d, f)]
+        m_exp = [d for d in data if d.get("outcome") == "expired" and match(d, f)]
+        matched = m_res + m_exp if mode.get("itt") else m_res
         n = len(matched)
         if n < min_n:
             continue
-        k = sum(1 for d in matched if win(d))
+        k = sum(1 for d in m_res if win(d))
         pct = 100 * k / n
         lo, hi = wilson(k, n)
         # 2026-07-03: SE を日付クラスタ補正に変更（同日相関の独立扱い＝実効N過大を是正）
-        meanR, seR, n_days = cluster_stats(matched)
+        meanR, seR, n_days = cluster_stats(matched, **mode)
         if seR > 0:
             pR = max(0.0, min(1.0, 2 * (1 - _norm_cdf(abs(meanR / seR)))))  # 期待値≠0 の両側p
         else:
             pR = 1.0
+        exp_pct = round(100 * len(m_exp) / (len(m_res) + len(m_exp)), 1) if (m_res or m_exp) else 0.0
         rows.append({
             "label": label, "filter": f, "k": k, "n": n, "n_days": n_days, "pct": round(pct, 1),
             "ci_lo": round(lo, 1), "ci_hi": round(hi, 1),
             "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3),
             "rci_hi": round(meanR + 1.96 * seR, 3), "p": pR, "profitable": meanR > 0,
+            "exp_pct": exp_pct,
         })
 
     # Benjamini-Hochberg FDR（期待値検定の p に対して）
@@ -262,21 +314,26 @@ def main():
     ap.add_argument("--log", help="検証する signals-log のパス（既定=signals-log.json。バックテストは signals-log-backtest.json）")
     ap.add_argument("--split", help="時間分割ホールドアウト: この日付より前だけで発見(FDR)し、以降は未接触の検証専用（例 2021-01-01）")
     ap.add_argument("--holdout-min-n", type=int, default=30, help="ホールドアウト合格に必要な最小N（既定30）")
+    ap.add_argument("--net", action="store_true", help="往復スプレッドをR換算で控除（SPREADS表・概算）")
+    ap.add_argument("--cost-mult", type=float, default=1.5, help="コスト係数（スプレッド×この値。滑り込みの保守既定1.5）")
+    ap.add_argument("--itt", action="store_true", help="expired を 0R で算入（intent-to-treat＝解決分だけの条件付き期待値バイアスを是正）")
     args = ap.parse_args()
+    mode = {"net": args.net, "cost_mult": args.cost_mult, "itt": args.itt}
 
     data = load_log(args.log)
     resolved = [d for d in data if closed(d)]
+    n_expired = sum(1 for d in data if d.get("outcome") == "expired")
 
     if args.split:
         train = [d for d in data if fired_date(d) < args.split]
         hold = [d for d in data if fired_date(d) >= args.split]
-        rows, m = sweep(train, args.min_n, args.alpha)
+        rows, m = sweep(train, args.min_n, args.alpha, **mode)
         n_hold = sum(1 for d in hold if closed(d))
         # FDR通過候補だけをホールドアウトで再評価（探索に使っていないデータ＝擬似out-of-sample）
         for r in rows:
             if not r["fdr_pass"]:
                 continue
-            ho = eval_stats(hold, r["filter"])
+            ho = eval_stats(hold, r["filter"], **mode)
             # 合格条件（事前登録）: ホールドアウトN≥最小N かつ train と同方向に有意
             if r["profitable"]:
                 ok = ho["n"] >= args.holdout_min_n and ho["rci_lo"] > 0
@@ -285,21 +342,26 @@ def main():
             r["holdout"], r["holdout_pass"] = ho, ok
     else:
         train, hold, n_hold = data, [], 0
-        rows, m = sweep(data, args.min_n, args.alpha)
+        rows, m = sweep(data, args.min_n, args.alpha, **mode)
 
     print("=== signal-lab スイープ（期待値R）===")
     if args.split:
         print(f"🕰️ 時間分割: 発見={args.split}より前（決済済 {sum(1 for d in train if closed(d))}件）／"
               f"ホールドアウト={args.split}以降（決済済 {n_hold}件・探索未接触）")
-    print(f"signals-log {len(data)}件（決済済 {len(resolved)}件） / 検証仮説 {m}本（N≥{args.min_n}） / "
+    print(f"signals-log {len(data)}件（決済済 {len(resolved)}件・expired {n_expired}件"
+          f"={100 * n_expired / max(len(resolved) + n_expired, 1):.0f}%） / 検証仮説 {m}本（N≥{args.min_n}） / "
           f"R: SL=-1.0 / TP1=+1.33 / TP2=+2.0 / FDR α={args.alpha}（期待値≠0を検定・SE=日付クラスタ補正）")
-    print(f"{'仮説':<34}{'k/n':>9}{'勝率':>7}{'  平均R':>9}{'  R 95%CI':>18}{'  q':>8}  判定")
-    print("-" * 110)
+    print(f"モード: R={'ネット（スプレッド×' + str(args.cost_mult) + ' 控除）' if args.net else 'グロス（コスト未控除）'} / "
+          f"expired={'0Rで算入（ITT）' if args.itt else '除外（解決分のみ＝条件付き期待値・exp%列で規模を明示）'}")
+    print(f"{'仮説':<34}{'k/n':>9}{'勝率':>7}{'  平均R':>9}{'  R 95%CI':>18}{'  q':>8}{'exp%':>7}  判定")
+    print("-" * 117)
     rows.sort(key=lambda r: (not r["fdr_pass"], r["q"], -r["avgR"]))
     for r in rows:
         flag = ("✅FDR" if r["fdr_pass"] else "  ") + ("黒字" if r["profitable"] else "赤字")
+        if r["exp_pct"] > 20 and not args.itt:
+            flag += "⚠exp"        # expired比率が高い＝除外バイアス大の警告（--itt で確認推奨）
         rci = f"[{r['rci_lo']:+.2f}~{r['rci_hi']:+.2f}]"
-        print(f"{r['label']:<34}{str(r['k'])+'/'+str(r['n']):>9}{r['pct']:>6.1f}%{r['avgR']:>+9.3f}{rci:>18}{r['q']:>8.3f}  {flag}")
+        print(f"{r['label']:<34}{str(r['k'])+'/'+str(r['n']):>9}{r['pct']:>6.1f}%{r['avgR']:>+9.3f}{rci:>18}{r['q']:>8.3f}{r['exp_pct']:>6.1f}%  {flag}")
 
     winners = [r for r in rows if r["fdr_pass"] and r["profitable"]]
     losers = [r for r in rows if r["fdr_pass"] and not r["profitable"]]
@@ -327,6 +389,7 @@ def main():
 
     if args.json:
         out = {"min_n": args.min_n, "alpha": args.alpha, "breakeven_pct": BREAKEVEN * 100,
+               "mode": mode,
                "candidates": [r for r in rows if r["fdr_pass"]]}  # winners/losers両方＝tracker登録用
         if args.split:
             out["split"] = args.split
