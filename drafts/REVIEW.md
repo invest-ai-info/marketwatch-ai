@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-07-04 | 🧪 signal-lab #029 — 自動公開完了 ✅
+
+- **基準日（JST）**: 2026-07-04
+- **採択仮説**: 「もみあい×ショートエッジ（#012/#019確認）は前向き追跡（2026-06-17以降 N=54）でも持続するか」（優先度②：前向き大変動・IS63.6%→前向き31.5%の崩落）
+- **事前宣言**: 全体勝率または E(R)CI が43%・0を含む→確定打なし。H1:macd_dead前向き CI[23.4%~59.3%]が43%またぎ→確定打なし。H2:low_break E(R)CI全域マイナス→⛔反証確認
+- **検証データ**: 全決済済み1,347件（signals-log.json 1711件）。もみあい×S合計 98件（IS 44件・前向き 54件）
+- **結果**: IS 28/44=63.6% R=+0.485。前向き 17/54=31.5% R=-0.266 RCI[-0.557~+0.026]。macd_dead前向き 10/25=40.0% CI[23.4%~59.3%]。low_break前向き 3/20=15.0% E(R)=-0.650 CI[-1.025~-0.275]（CI全域マイナス確認）。sweep FDR通過0本（新規なし）
+- **判定**: 🟡 H1確定打なし・H2✅確認（low_break CI全域マイナス）
+- **生成ファイル**: drafts/draft-signal-lab-029.html / drafts/labnotes/lab-029-analysis.md / drafts/labnotes/lab-029-claims.json / signal-lab-ledger.md → **guide-signal-lab-029.html 公開済み**
+
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 029 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 4/4クレーム緑・要約未検証0件・SVG警告0件
+- [x] 8-3 Opus compliance 🟡グレー→修正1点→数値再verify EXIT=0 ✅ — ①「ほぼ確実」→「期待値がマイナスに偏りやすい」に軟化（344行・景表法断定語解消）
+- [x] 8-4-ii 独立確認Opus 🟢白 ✅（kinsho-v1×3箇所/断定語なし/IS・前向き・合計区別誠実/投資助言なし 全確認）
+- [x] 8-4-iii finalize_signal_lab.py 029 2026-07-04 → guide-signal-lab-029.html 生成（size=31KB・svg=2・kinsho=3）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（AIシグナル研究日誌 最上段）・generate_market_news.py 履歴追加・sync_to_github.py に登録
+- [x] 8-4-v check_site_consistency.py EXIT=1 ⚠️ — 78件エラーは**SYNC_FILES縮小の既存問題**（前回同様・signal-lab固有ゲートは全通過済み）
+- [x] 8-4-vi git commit → PUSH-MAIN ✅（feat: auto-publish signal-lab 029 verified+compliance）
+
+### 🚩 既存問題エスカレ継続（人間対応待ち）
+- **SYNC_FILES縮小問題**: 78件の guide-*.html が SYNC_FILES 未登録。check_site_consistency.py が恒常的にEXIT=1。ローカルから正しい SYNC_FILES を持つ sync_to_github.py をpushして修復が必要
+
+---
+
 ## 2026-07-02 | 🧪 signal-lab #028 — 下書き生成・ゲート実行中
 
 - **基準日（JST）**: 2026-07-02
