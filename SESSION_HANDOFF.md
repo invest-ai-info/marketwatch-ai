@@ -12,6 +12,7 @@
 - **及川圭哉(FXism)調査・検証**（非公開・`research/oikawa_fxism_methods.md`）：手法4本柱を体系化。検証可能な外形3仮説(シリーズ揃い/欧州時間/FX押し目)は**当エンジンデータで不支持**＝エッジは裁量部分。オーナーの実取引23件分析＝**勝率47.8%×ペイオフ3.15×PF2.89の損小利大型**（メンターと逆の型で+EV。勝率追いは期待値を壊すリスク）。**MT4過去履歴は消失＝7割実績は検証不能。ロンドン時間トレードは退職後に再開予定**。YouTube要約に11ch目「FXism 及川圭哉」追加済。
 - **経済カレンダー精度**（[[project_marketwatch_calendar_bug]]）：7月分の誤り修正（CPI 7/14・ECB 7/23・日銀7/30-31・雇用統計8/7）＋json7月分12件追記＋**決定論バリデータ新設**（check_site_consistency＝雇用統計金曜/土日検出/FOMC公式照合/ECB木曜・未来日付のみ）→即9/4・12/17の誤り2件検出・修正済。
 - **⚡トークン効率ルール新設**：CLAUDE.md に6箇条＋文書予算（CLAUDE≤32KB/HANDOFF≤30KB/MEMORY≤4KB）＋declutter監視で強制。MEMORY.md 7→3KB・本ファイル31→22KBにスリム化済。
+- **🆕 規律ギャップ・ループ新設（7/3）**：`mw discipline`（`_trade_discipline_check.py`・SYNC外）＝my-trades.json×ルール5項目（R2指標持ち越し/R3指数重ね張り/R5 SL未設定/R-L損切りずらし>1.3R/JP✕エントリー）×JPカード履歴を決定論突合→`_discipline_report.md`（EVダメージ順）。`jp_daily.py` が毎朝◎○✕を `_jp_card_history.jsonl` に追記（同日置換＝冪等）。**初回実測＝R3株指数重ね張り8件(-2.2%pt)・SL未設定2件・FOMC持ち越し2件・直近10件は勝率30%/PF0.36と型崩れ**。週次 /loop レシピ＝「mw discipline→逸脱トップ3診断→STOP」（発注・ルール変更は自動でしない）。測定不能3点（¼Kelly上限/建値ストップ/実スリッページ）はGoogleフォームに口座残高・予定価格欄を足せば解消。**→オーナー判断で前向き検証は保留＝休眠アーム済み**：①事前登録済み仮説「遵守取引＞逸脱取引」（FORWARD_REG_DATE=2026-07-03・N≥30∧両群≥8で自動判定表示・checker はGitHub側my-trades優先読み）②`_jp_health_check.py`（平日8:00番人）が取引件数の増加を検知したら `規律ループ_取引再開_検知.txt` をOneDriveに作成＝**取引再開したら自動で起こしてくれる**（基準=`_discipline_state.json`・発火テスト済み）。それまで人間もClaudeも何もしなくてよい。
 - **自動化の精度点検（7/3未明）**：①no_plan 282件＝warn系のみ発火の**設計仕様と判明（バグでない）** ②**signal-lab-daily routineを更新＝tierフィルタ解禁**（selection.tier がclaims/研究日誌で使用可に）・手本015化・nav10・🏁N30注記 ③**indicator-result routineを厳格化**＝アグリゲーター(tradingeconomics/investing/forexfactory/fxstreet)と個人ブログは裏取りに数えない・満たなければverified=false ④寄り付きロガー欠測検知を `_jp_health_check.py` に追加（前営業日照合・祝日除外・アラートファイル） ⑤generate_market_news はstaleガード作動→reconcile PUTで反映（commit 199bfa80・.sync-cache baseline整合済）。
 
 ---
@@ -69,6 +70,7 @@
 | kinsho-v1 免責 / 10ボタンナビ / リンク切れ / SYNC_FILES登録 | `check_site_consistency.py`（`mw check`／土曜 `site-qa-lint`） | 不変条件を push 前に検査・exit 1 |
 | 研究日誌の数値捏造防止 | `signal_lab_verify.py`（固定オラクル・編集禁止） | claims.json を signals-log から独立再計算して突合 |
 | 更新履歴の整列・最新5件 | `generate_market_news.py` の `_history_items` | 手で削らない（日付降順・自動整列） |
+| **発注前ルールの遵守を数値監視** 🆕 | `_trade_discipline_check.py`（`mw discipline`・週次 /loop） | 指標持ち越し/指数重ね張り/SL未設定/損切りずらし/JP✕を **EVダメージ順に可視化** |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
