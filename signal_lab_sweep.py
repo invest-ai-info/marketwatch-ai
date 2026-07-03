@@ -171,18 +171,43 @@ def fired_date(d):
     return (d.get("fired_at") or "")[:10]
 
 
+def cluster_stats(matched):
+    """期待値Rの平均と【日付クラスタ・ロバストSE】を返す（2026-07-03 方法論監査で導入）。
+
+    従来の SE=sd/√n は全シグナルを独立扱いだが、実際は18銘柄が同じ日に束で発火する
+    （同日複数発火≈25%）＝実効Nが見かけより小さく、p値が過小＝FDRを通りすぎていた。
+    同じ発火日を1クラスタとして誤差を測る（CR0×G/(G-1)小標本補正・決定論＝乱数不使用）。
+    各日1件なら従来の sd/√n に一致する（後方互換）。"""
+    groups = {}
+    for d in matched:
+        r = r_of(d)
+        if r is None:
+            continue
+        groups.setdefault(fired_date(d), []).append(r)
+    xs = [x for g in groups.values() for x in g]
+    n, G = len(xs), len(groups)
+    if n == 0:
+        return 0.0, 0.0, 0
+    m = sum(xs) / n
+    if G < 2:
+        return m, 0.0, G
+    var = sum((sum(g) - len(g) * m) ** 2 for g in groups.values()) * G / (G - 1) / (n * n)
+    return m, var ** 0.5, G
+
+
 def eval_stats(data, f):
-    """1仮説を与えられたデータで評価（勝率＋期待値R＋95%CI）。ホールドアウト再評価用。"""
+    """1仮説を与えられたデータで評価（勝率＋期待値R＋95%CI）。ホールドアウト再評価用。
+    R の SE は日付クラスタ補正（cluster_stats）。勝率の Wilson CI は表示用の参考値
+    （独立仮定のまま＝判定には期待値R側を使う）。"""
     matched = [d for d in data if closed(d) and match(d, f)]
     n = len(matched)
     k = sum(1 for d in matched if win(d))
     lo, hi = wilson(k, n)
-    Rs = [r_of(d) for d in matched if r_of(d) is not None]
-    meanR, sdR = _mean_std(Rs)
-    seR = sdR / (len(Rs) ** 0.5) if len(Rs) > 1 else 0.0
+    meanR, seR, n_days = cluster_stats(matched)
     return {"k": k, "n": n, "pct": round(100 * k / n, 1) if n else 0.0,
             "ci_lo": round(lo, 1), "ci_hi": round(hi, 1), "avgR": round(meanR, 3),
-            "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3)}
+            "rci_lo": round(meanR - 1.96 * seR, 3), "rci_hi": round(meanR + 1.96 * seR, 3),
+            "n_days": n_days}
 
 
 def sweep(data, min_n, alpha):
@@ -196,15 +221,14 @@ def sweep(data, min_n, alpha):
         k = sum(1 for d in matched if win(d))
         pct = 100 * k / n
         lo, hi = wilson(k, n)
-        Rs = [r_of(d) for d in matched if r_of(d) is not None]
-        meanR, sdR = _mean_std(Rs)
-        seR = sdR / (len(Rs) ** 0.5) if len(Rs) > 1 else 0.0
+        # 2026-07-03: SE を日付クラスタ補正に変更（同日相関の独立扱い＝実効N過大を是正）
+        meanR, seR, n_days = cluster_stats(matched)
         if seR > 0:
             pR = max(0.0, min(1.0, 2 * (1 - _norm_cdf(abs(meanR / seR)))))  # 期待値≠0 の両側p
         else:
             pR = 1.0
         rows.append({
-            "label": label, "filter": f, "k": k, "n": n, "pct": round(pct, 1),
+            "label": label, "filter": f, "k": k, "n": n, "n_days": n_days, "pct": round(pct, 1),
             "ci_lo": round(lo, 1), "ci_hi": round(hi, 1),
             "avgR": round(meanR, 3), "rci_lo": round(meanR - 1.96 * seR, 3),
             "rci_hi": round(meanR + 1.96 * seR, 3), "p": pR, "profitable": meanR > 0,
@@ -268,7 +292,7 @@ def main():
         print(f"🕰️ 時間分割: 発見={args.split}より前（決済済 {sum(1 for d in train if closed(d))}件）／"
               f"ホールドアウト={args.split}以降（決済済 {n_hold}件・探索未接触）")
     print(f"signals-log {len(data)}件（決済済 {len(resolved)}件） / 検証仮説 {m}本（N≥{args.min_n}） / "
-          f"R: SL=-1.0 / TP1=+1.33 / TP2=+2.0 / FDR α={args.alpha}（期待値≠0を検定）")
+          f"R: SL=-1.0 / TP1=+1.33 / TP2=+2.0 / FDR α={args.alpha}（期待値≠0を検定・SE=日付クラスタ補正）")
     print(f"{'仮説':<34}{'k/n':>9}{'勝率':>7}{'  平均R':>9}{'  R 95%CI':>18}{'  q':>8}  判定")
     print("-" * 110)
     rows.sort(key=lambda r: (not r["fdr_pass"], r["q"], -r["avgR"]))
