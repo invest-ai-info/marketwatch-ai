@@ -55,7 +55,7 @@
 直近の速報記事テンプレを**そのまま踏襲**：
 - head（title/description/keywords/canonical/OGP/JSON-LD/GA/fonts）。**`<meta name="robots" content="noindex,nofollow">` を必ず入れる**（下書きは検索除外）。
 - `<style>` はテンプレ記事をコピー（ライト基調・`.info-box`/`.warning-box`/`.disclaimer-banner` 等）。
-- nav 9ボタン（順序厳守）・breadcrumb・**冒頭 disclaimer-banner**・h1・meta-line（カテゴリ＝「今日のニュース」）。
+- nav 10ボタン（順序厳守・2026-06-15に📖投資本を追加）・breadcrumb・**冒頭 disclaimer-banner**・h1・meta-line（カテゴリ＝「今日のニュース」）。
 - 構成：**「結論3行サマリ」→ 何が起きたか → なぜ起きたか（背景）→ マーケットへの影響の考え方（🟢中立/🟡留保/🔴警戒の3視点）→ 投資家のチェックポイント → 関連記事 → kinsho-v1免責 → footer**。
 - 断定を避け、複数の見方を併置。将来の値動きは予測しない（「こう動きうる/こういう論点」まで）。
 - 出典は「（出典: ○○）」形式で明記。SVG概念図は任意（実価格を断定的に図にしない）。
