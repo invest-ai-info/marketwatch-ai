@@ -76,6 +76,15 @@ def main():
             print(f"  ...{i+1}/{len(codes)} fail={fail}", flush=True)
         time.sleep(0.07)
 
+    # 🆕 2026-07-03 部分失敗ガード: Yahoo throttle 等で大量失敗した回は、偏った部分集合の
+    #   ランキングを「最新」として公開しない（書き込み前に検査・未達は非ゼロexitでcommitさせない）。
+    MIN_COVERAGE = 0.8
+    coverage = len(rows) / max(len(codes), 1)
+    if coverage < MIN_COVERAGE:
+        print(f"🚨 取得成功 {len(rows)}/{len(codes)} 銘柄（{coverage:.0%} < {MIN_COVERAGE:.0%}）＝"
+              f"ユニバース不足。偏ったランキングになるため jp-rankings.json を更新せず終了（前回分を温存）")
+        sys.exit(1)
+
     up = sorted(rows, key=lambda r: r["pct"], reverse=True)[:TOP_N]
     down = sorted(rows, key=lambda r: r["pct"])[:TOP_N]
     for i, r in enumerate(up):
