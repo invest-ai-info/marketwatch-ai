@@ -26,7 +26,7 @@
 `guide-loss-cut.html` の構造を**そのまま踏襲**：
 - head（title/description/keywords/canonical/OGP/JSON-LD/GA/AdSense/fonts）。**ただし `<meta name="robots" content="noindex,nofollow">` を必ず入れる**（下書きは検索除外）。
 - `<style>` は guide-loss-cut.html をコピー（ライト/ダーク両対応・SVGクラス `.s-*` 一式）。新しい図に必要なら `.s-*` クラスを追記。
-- nav 9ボタン（順序厳守）・breadcrumb・disclaimer-banner・h1・meta-line（カテゴリ＝該当シリーズ名）。
+- nav 10ボタン（順序厳守・2026-06-15に📖投資本を追加）・breadcrumb・disclaimer-banner・h1・meta-line（カテゴリ＝該当シリーズ名）。
 - **「この記事の結論（3行サマリ）」→ 目次(toc)→ 本文セクション→ CTA→ 関連記事→ kinsho-v1免責→ footer**。
 - **二層構造**：前半セクション＝初心者向けの入口（用語・なぜ大事か）、後半セクション＝中上級向け（実践・数式・期待値・当サイトのデータ/思想との接続）。
 - **SVG概念図を2〜3点**入れる（実価格は使わず概念図＋キャプション＋「※概念を示すイメージ図です」）。
