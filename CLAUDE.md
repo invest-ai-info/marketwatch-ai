@@ -51,9 +51,9 @@
 | **political-alerts.yml** | 30 分ごと | 政治発言フィード + HIGH 速報メール |
 | **weekly-strategy.yml** | 日曜 18:13 | 来週投資戦略の自動生成 |
 | **weekly-review.yml** ⭐ | 月曜 07:13 | 先週シグナル振り返り (C1) |
-| **monthly-report.yml** ⭐ | 毎月 1 日 09:23 | 先月成績レポート (C3) |
+| **monthly-report.yml** ⭐ | 毎月 1〜3 日 09:23（取りこぼし対策で1-3日に拡張・冪等） | 先月成績レポート (C3) |
 | **monthly-calendar-reminder.yml** | 毎月 25 日 09:13 | 翌月指標リマインダー + 休場補充 |
-| **monthly-backup.yml** | 毎月 1 日 09:10 | signals-log の GitHub Release |
+| **monthly-backup.yml** | 毎月 1〜3 日 09:10（同上・冪等） | signals-log の GitHub Release |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新日付チェック |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株 値上がり/値下がりトップ20＋売買代金2日＋決算赤字黒字＋業種を Yahoo価格だけで生成（`build_jp_rankings.py`→`jp-rankings.json`）。commit すると update-market-news の on:push が hot-assets を即再描画。赤字黒字/名前/業種は静的 `jp-stock-info.json`（四半期 `make_jp_stock_info.py`）。※朝実行はcron遅延で場中更新になるため不可 |
