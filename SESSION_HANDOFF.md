@@ -20,46 +20,6 @@
 
 ---
 
-## ✅ ④ 記事の「中身」レビュー強化＝品質レーンを公開ゲートに実装（2026-06-26）
-
-機械的な不具合（SVG重なり・免責漏れ・数値とclaim不一致）は決定論で自動ブロック済み。残る「内容品質」をLLMレビューで底上げ。**オーナー判断＝Opusゲートに1レーン統合（独立スコアにしない）**。
-- **`QUALITY_RUBRIC.md`（新設・SYNC入り＝品質基準の単一ソース）**：5観点（①リードで結論30秒 ②専門用語の初出説明 ③主張に根拠/数値 ④中立トーン ⑤見出しと中身一致）を ✅/⚠️/❌ で採点。順序＝**決定論コード緑→(a)コンプラ白→(b)品質ルーブリック→公開**。⚠️は表現・構成・補足1文だけで自己修正→再採点（**数値・SVG・claims・主張・免責は不変**）、❌（直すと中身が変わる）はエスカレ。やりすぎ防止＝止めるのは「読者を誤解/理解不能にする欠陥」だけ。
-- **両自動ゲートに配線**：news＝`drafts/NEWS_DAILY_GUIDE.md` §8.5＋paste台本 `NEWS_AUTOPUBLISH_ROUTINE.md` 手順5.5／signal-lab＝`SIGNAL_LAB_SOP.md` ゲート節。**cloud routine は実行時にこれらSYNC文書を読む＝sync すれば次回実行から自動適用**（再paste不要・ただし台本も同期済）。`signal_lab_verify.py`（固定オラクル）は不触。
-- **効果確認（1記事試行）**＝`guide-signal-lab-015`：①③④⑤✅・②⚠️1件（「BH-FDR多重検定補正」が平易説明なしで登場）。強い記事でも真の指摘1件＝機能・ノイズでないと確認。**数値オラクルが無い news 記事ほど価値大**。
-- ⚠️ **未デプロイ**：`mw sync`（QUALITY_RUBRIC.md＋sync_to_github.py＋NEWS_DAILY_GUIDE.md＋SIGNAL_LAB_SOP.md＋本ハンドオフ）が必要。デプロイ後の次の signal-lab/news 自動公開が初の実戦。
-- 🔜 **次（任意のフォロー）**：①数本の既存 news/basics 記事に手動でルーブリックを当てて"⚠️→自己修正"を実証（手動 `mw publish` 前のチェックにも使える）②運用後に誤エスカレ/見逃しが出たら `QUALITY_RUBRIC.md` の1ファイルだけ調整。
-- 関連：[[feedback_rules_as_code]]（機械=コード／中身=LLMレビュー の住み分け）。
-
----
-
-## ✅ ニュース精度低下の原因究明＆修正（2026-06-28）
-
-オーナー「サイトのニュースの精度が落ちてきている」→ 調査で原因特定・修正。
-- **原因＝RSSフィードのサイレント失敗**：実測したら **ロイター日本（`assets.wor.jp/rss/rdf/reuters/top.rdf`）が0件＝死亡**（他3本は20件）。yfinanceニュースも空（既知の不安定・本番でも空になりやすい）。→ ニュースプールが英語ソース（要翻訳）に偏り源の多様性が痩せ「精度が落ちた」印象に。誰も気づけなかったのはサイレント失敗だから。
-- **修正**：`generate_market_news.py` の `RSS_FEEDS` のロイター日本を **Google News経由 `site:jp.reuters.com`** に差し替え（日本語のロイター記事が100件・翻訳不要で復活）。＋`fetch_news` に **0件フィード検知の警告**（`dead_feeds`→`🚨RSSフィードが0件＝要確認`）を追加＝再発時に気づける（ルールはコードで強制）。
-- **デプロイ＝reconcile必須だった**：local の generate_market_news.py が GitHub より古く（6/26〜28の自動公開記事の `_history_items` がGitHubにしか無い）、staleガードがsyncをブロック（正しく機能）。→ **GitHub最新版に私のRSS修正だけを当てて現shaでcontents-API PUT**（commit 121339b1・履歴は保持・巻き戻し無し）→ update-market-news を trigger（30〜90分で反映）。`.sync-cache` の generate_market_news.py 基準も新shaへ整合済（次回sync誤ブロック防止）。
-- ⚠️ **別件の未解決TODO（精度関連）**：`indicator-result.json`（注目指標バナー）のFOMC等の数値が個人ブログ系出典の疑い（6/18起票・未検証）。一次ソースで要確認＝次の精度改善候補。
-- ⚠️ RSS差し替えは Google News 依存（titleに" - Reuters"付く・linkはGoogleNews redirect）。将来 Google News RSS仕様変更時は `dead_feeds` 警告で検知できる。
-
-## ✅ 「整理係」＝ルールの重さ・腐りを定期的に洗い出す仕組み（2026-06-28）
-
-オーナー提案「ルールが増えて重くなったら整理する係がいた方がいい」→ 記憶頼みの"係"は忘れられる罠（＝サイレント故障と同型）なので、**決定論で定期スキャンし候補を提示する仕組み**として実装（自動削除しない＝判断は人間・[[feedback_rules_as_code]]）。
-- **`declutter_audit.py`（新規・SYNC入り・読取専用）**：①毎回読む文書の肥大（SESSION_HANDOFF>45KB等）②ハンドオフの✅完了古セクション数 ③SYNC_FILES死に登録 ④使い捨てscript堆積(>30) ⑤記憶件数(>30) を検出→`DECLUTTER_REPORT.md`（OneDriveで見える）に出力。`mw declutter` で実行（mw.pyに追加）。
-- **月次自動化**：Windowsタスク **`MarketWatch_Declutter`（4週ごと日曜6:30・電池OK・StartWhenAvailable）**＝放置でレポートが出る。
-- **初回B（手動棚卸し）の検出3件**：①SESSION_HANDOFF 54KB（✅完了13セクション）＝**古い完了セクションをSESSION_ARCHIVEへ退避してスリム化が次のアクション** ②使い捨てscript43本＝`_scratch_archive/`へ移動候補（稼働系_jp_*33本は対象外）③SYNC死に登録1件（`guide-auto-us_cpi-2026-05-14.html`）＝**本セッションで除去済**。
-- ✅ **整理実施済（2026-06-28）**：(a)古い完了セクション10個をSESSION_ARCHIVEへ退避＝ハンドオフ **55.8KB→25.3KB**にスリム化。(b)使い捨てscript41本を **`_scratch_archive/`** へ移動（active参照ありの`_overshoot_depth`/`_panic_cross`は残置・READMEで可逆と明記・全てSYNC外）。検証＝`mw check`エラー0・主要オーケストレータcompile OK・**`mw declutter`＝検出0件「十分スリム」**。フォルダの.py 133→93本。再発時は月次`MarketWatch_Declutter`が`DECLUTTER_REPORT.md`で気づかせる。
-
-## ✅ 研究日誌#21の昇格エッジ「指数×ロング」を発火エンジンに本採用（2026-06-26）
-
-研究日誌は **昇格＝候補の旗立てのみ・発火/配信エンジンには自動反映しない**ファイアウォール設計（`generate_technical_alerts.py` は signal-lab tracker を読まない＝grep確認済）。#21 で **指数×ロング（NKD/ES/NQ/YM/^FTSE × 買い）が前向きトラッカーで正式昇格**（60.0% 54/90・+0.40R・平均RのCI下限+0.16>0・OOS生存）したのを受け、人間判断で実エンジンへ反映。
-- **オーナーのデータ品質チェック（重要・解消済）**：「TP1/TP2 のどちらで利確するかで成績が変わる／後出しで選ぶと不正確では？」→ 調査の結果、`evaluate_signal_outcomes.py` は**最初に当たったレベルを採用（同バーはSL優先＝最悪ケース）**。TP1はTP2より必ず手前なので**勝ちは常にTP1で利確扱い**＝実データ分布も **tp1:341 / sl:497 / tp2:0**。つまり「TP1単一エグジット」を最初からモデル化（look-ahead無し）。#21の+0.40R＝0.6×(+1.33R)+0.4×(−1R) と一致。**TP2は現状ただの飾り**（伸ばす/分割決済を測るなら別エグジットモデルで要再検証）。
-- **実装＝最小・ノーリスク（オーナー選択）**：`index_long_bonus`（指数×買いに信頼度 **+1**）は 2026-06-18 から「表示・記録のみ」で前向き検証中だった。これを **#21昇格を受けて【本採用】にステータス格上げ**（コメント＋factorラベル更新、`score += 1` は据え置き＝既に件名⭐に反映済）。**発火・メール送信可否・ロットには今回は影響させない**（配信/ロットへの昇格は追加ライブ確認のうえ別途・将来の選択肢）。可逆＝`score += 1` を消せば元通り。
-- 検証＝`py_compile` OK・`mw check` エラー0。**次回 technical-alerts 実行（4hごと）から有効**（手動triggerはメール副作用があるので打たない）。
-- ✅ **②配信の取りこぼし防止＝実装済（2026-06-26）**：`generate_technical_alerts.py` の email_silent ブロックに exempt 追加＝検証済み「指数×ロング」は蓄積期(email_silent)でも配信（ma_golden単独ブロック0勝N=11は維持）。commit b4271d3・次回 technical-alerts から有効・可逆。
-- 🔜 残る昇格候補：**③ロット推奨に反映**（+EVを実弾サイズへ・リスクサイジングに触るので要慎重）。
-
----
-
 ## 🇯🇵 日本株：EV最速化ロードマップ＋施策1（ネットR）実装（2026-06-26）
 
 「検証を日本株に切替・期待値を最速で上げる」依頼に対し、4独立レンズ（クオンツ/リスク執行/データ優位/競争戦略）で検討→収束。**詳細は非公開ローカル `JP_EV_ROADMAP.md`**（JP個別戦略は🔴黒＝public SYNCしない）。
