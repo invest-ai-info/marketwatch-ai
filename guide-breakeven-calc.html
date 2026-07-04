@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>損益分岐勝率計算機｜その勝率と利幅でトントンを超えられるか - MarketWatch AI</title>
+  <meta name="description" content="リスクリワード比から「損益トントンに必要な勝率」を、勝率と比率から期待値（R単位）を計算。勝率だけでは成績を評価できない理由が10秒でわかる計算機。計算はすべて端末内で完結します。">
+  <meta name="keywords" content="損益分岐,勝率,リスクリワード,期待値,ペイオフレシオ,損小利大,トレード,計算機,投資の基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-breakeven-calc.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="損益分岐勝率計算機｜その勝率と利幅でトントンを超えられるか">
+  <meta property="og:description" content="リスクリワード比⇄必要勝率⇄期待値を相互計算。「勝率7割」の広告を自分で検算できる教育ツール。端末内計算。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-breakeven-calc.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "損益分岐勝率計算機｜その勝率と利幅でトントンを超えられるか",
+    "description": "リスクリワード比⇄必要勝率⇄期待値を相互計算。「勝率7割」の広告を自分で検算できる教育ツール。端末内計算。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-breakeven-calc.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+  <style id="sim-css">
+    .s-curve-y{stroke:#9a6700;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    body.dark .s-curve-y{stroke:#d4a017}
+    .sim-panel{background:#ffffff;border:2px solid #0969da;border-radius:12px;padding:24px 26px;margin:26px 0}
+    .sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .sim-field label{display:block;font-size:.85rem;font-weight:700;color:#1f6feb;margin-bottom:6px}
+    .sim-field input[type=number]{width:100%;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:1.05rem;font-weight:600;color:#1f2328;background:#f6f8fa}
+    .sim-field input[type=number]:focus{outline:2px solid #0969da;border-color:#0969da}
+    .sim-presets{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .sim-presets button{padding:4px 12px;border:1px solid #d0d7de;border-radius:14px;background:#f6f8fa;color:#57606a;font-size:.82rem;font-weight:600;cursor:pointer}
+    .sim-presets button:hover{border-color:#0969da;color:#0969da}
+    .sim-presets-note{font-size:.72rem;color:#8b949e}
+    .sim-check{display:block;font-size:.85rem;color:#424a53;margin:16px 0 4px;line-height:1.6}
+    .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 6px}
+    .result-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:14px 16px}
+    .result-card.result-main{background:#ddf4ff;border-color:#0969da}
+    .result-label{font-size:.78rem;color:#57606a;font-weight:600;margin-bottom:6px}
+    .result-big{font-size:1.7rem;font-weight:700;color:#0969da;line-height:1.2}
+    .result-num{font-size:1.15rem;font-weight:700;color:#1f2328}
+    .sim-details{margin:14px 0 4px}
+    .sim-details summary{cursor:pointer;font-size:.9rem;font-weight:700;color:#0969da;padding:8px 0}
+    .sim-table-wrap{max-height:340px;overflow-y:auto;border:1px solid #d0d7de;border-radius:8px}
+    .sim-table-wrap table{margin:0}
+    .sim-table-wrap thead th{position:sticky;top:0;background:#f6f8fa}
+    body.dark .sim-panel{background:#0d1117;border-color:#1f6feb}
+    body.dark .sim-field input[type=number]{background:#161b22;border-color:#30363d;color:#e6edf3}
+    body.dark .sim-presets button{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .sim-check{color:#c9d1d9}
+    body.dark .result-card{background:#161b22;border-color:#30363d}
+    body.dark .result-card.result-main{background:#1a2030;border-color:#1f6feb}
+    body.dark .result-big{color:#79c0ff}
+    body.dark .result-num{color:#e6edf3}
+    body.dark .sim-table-wrap{border-color:#30363d}
+    body.dark .sim-table-wrap thead th{background:#161b22}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 損益分岐勝率計算機
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>⚖️ 損益分岐勝率計算機<br><small style="font-size:.65em;color:#57606a;font-weight:400">「その勝率、その利幅で、トントンを超えられるか」を10秒で確認</small></h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約4分（計算機は何度でも）
+    </div>
+
+    <p>トレードの成績は「勝率」だけでは決まりません。<strong>1回の負けでいくら失い、1回の勝ちでいくら取るか（リスクリワード比）</strong>とセットで初めて意味を持ちます。この計算機は、リスクリワード比から<strong>「損益トントンに必要な勝率（損益分岐勝率）」</strong>を、また勝率とリスクリワード比から<strong>期待値</strong>を計算します。</p>
+
+    <div class="info-box">
+      <strong>💡 用語ミニ解説</strong><br>
+      <strong>リスクリワード比（RR）</strong>＝利確幅（リワード）÷損切り幅（リスク）。損切り-1万円・利確+2万円ならRR=2.0。<br>
+      <strong>損益分岐勝率</strong>＝その比率で損益がトントンになる勝率。式は <strong>1 ÷（1＋RR）</strong>。<br>
+      <strong>期待値（R単位）</strong>＝1回のトレードで平均していくら増減するかを「リスク1単位＝1R」で表したもの。<strong>勝率×RR −（1−勝率）</strong>で計算します。
+    </div>
+
+    <!-- ============ 計算機本体 ============ -->
+    <div class="sim-panel" id="calculator">
+      <div class="sim-grid">
+        <div class="sim-field">
+          <label for="be-rr">リスクリワード比（利確幅÷損切り幅）</label>
+          <input type="number" id="be-rr" value="1.33" min="0.05" max="20" step="0.01" inputmode="decimal">
+          <div class="sim-presets">
+            <button type="button" data-rr="0.5">0.5</button>
+            <button type="button" data-rr="1">1.0</button>
+            <button type="button" data-rr="1.33">1.33</button>
+            <button type="button" data-rr="2">2.0</button>
+            <button type="button" data-rr="3">3.0</button>
+            <span class="sim-presets-note">※1.33は当サイトのシグナル（TP1）と同じ比率の計算例です</span>
+          </div>
+        </div>
+        <div class="sim-field">
+          <label for="be-wr">あなたの想定勝率（%）</label>
+          <input type="number" id="be-wr" value="50" min="1" max="99" step="0.5" inputmode="decimal">
+        </div>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card result-main">
+          <div class="result-label">損益トントンに必要な勝率</div>
+          <div class="result-big" id="be-breakeven">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">期待値（1トレードあたり・R単位）</div>
+          <div class="result-num" id="be-ev">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">判定（想定勝率 vs 分岐勝率）</div>
+          <div class="result-num" id="be-verdict">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">その勝率でトントンに必要なRR</div>
+          <div class="result-num" id="be-needrr">—</div>
+        </div>
+      </div>
+
+      <div class="chart-figure">
+        <svg id="be-chart" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="リスクリワード比と損益分岐勝率の関係カーブ"></svg>
+        <p class="chart-caption">リスクリワード比（横軸）が大きいほど、トントンに必要な勝率（縦軸）は下がる。<span style="color:#0969da"><strong>●</strong></span>＝いまの入力値の位置。曲線より上の勝率なら期待値プラス圏、下ならマイナス圏（コスト考慮前）。</p>
+      </div>
+
+      <table>
+        <tr><th>リスクリワード比</th><th>損益分岐勝率</th><th>イメージ</th></tr>
+        <tr><td>0.5（利小損大）</td><td>66.7%</td><td>3回に2回勝ってやっとトントン</td></tr>
+        <tr><td>1.0</td><td>50.0%</td><td>コイントスと同じ勝率が必要</td></tr>
+        <tr><td>1.33</td><td>42.9%</td><td>当サイトのシグナル（TP1）と同じ比率</td></tr>
+        <tr><td>2.0</td><td>33.3%</td><td>3回に1回勝てばトントン</td></tr>
+        <tr><td>3.0（損小利大）</td><td>25.0%</td><td>4回に1回勝てばトントン</td></tr>
+      </table>
+    </div>
+
+    <div class="warning-box">
+      この計算は<strong>売買コスト（スプレッド・手数料・スリッページ）と税金を含みません</strong>。実際の損益分岐勝率は表示より高くなります。また、想定勝率はあくまで入力した仮定であり、実際の勝率は事前には分かりません。計算結果は将来の成果を予測・保証するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="why">「勝率7割」に飛びつく前に——期待値の算数</h2>
+
+    <p>広告や SNS では「勝率◯割」という数字だけが強調されがちです。しかし上の計算機で試すと分かるとおり、<strong>勝率70%でもリスクリワード比が0.3（利小損大）なら期待値は −0.09R とマイナス</strong>です。逆に、<strong>勝率40%でもリスクリワード比2.0なら期待値は +0.20R とプラス</strong>。勝率と利幅はいつも交換関係にあり、<strong>片方だけを示した成績は評価できない</strong>——これがこの算数のいちばん大事な教訓です。</p>
+
+    <p>当サイトの<a href="track-record.html">シグナル成績ダッシュボード</a>や<a href="guides.html">AIシグナル研究日誌</a>で繰り返し登場する「損益分岐43%」も、TP1のリスクリワード比1.33をこの式に入れた数字（1÷2.33≒42.9%）です。検証記事を読むときの物差しとして、この計算機を手元に置いてもらえたらと思います。</p>
+
+    <div class="info-box">
+      <strong>💡 レコードの読み方のコツ</strong>：誰かの成績を見るときは「勝率」「平均利益と平均損失の比」「回数（N）」の3点セットで。どれか1つでも欠けていたら、期待値は計算できません。
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい・使いたい</div>
+      <div class="cta-box-desc">数字で確かめる系のツールと記事</div>
+      <div class="related-grid">
+        <a href="guide-compound-sim.html" class="related-card">
+          <div class="related-card-title">💰 複利シミュレーター</div>
+          <div class="related-card-desc">積立×複利の力を自分の数字で計算。単利との差・課税概算つき。</div>
+        </a>
+        <a href="track-record.html" class="related-card">
+          <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+          <div class="related-card-desc">当サイトの全シグナルの勝率・期待値を包み隠さず公開。損益分岐43%の実例。</div>
+        </a>
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言・投資勧誘ではありません。計算結果は入力された仮定に基づく机上の計算例であり、将来の運用成果を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+
+<script>
+/* ===== 損益分岐勝率計算機（端末内計算・外部送信なし） =====
+   損益分岐勝率 p* = 1/(1+RR)。期待値(R単位) EV = p×RR − (1−p)。コスト・税は含まない。 */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function clamp(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); }
+
+  function draw(RR, p){
+    var svg = $('be-chart');
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=660, H=300, L=64, R=20, T=16, B=44;
+    var pw=W-L-R, ph=H-T-B, maxRR=5;
+    function X(rr){ return L + pw*(rr/maxRR); }
+    function Y(pct){ return T + ph*(1 - pct/100); }
+    function el(name, attrs, text){
+      var e = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for(var k in attrs) e.setAttribute(k, attrs[k]);
+      if(text) e.textContent = text;
+      svg.appendChild(e); return e;
+    }
+    for(var g=0; g<=4; g++){
+      var pct=g*25, yy=Y(pct);
+      el('line', {x1:L, y1:yy, x2:W-R, y2:yy, 'class': g===0 ? 's-axis' : 's-guide'});
+      el('text', {x:L-8, y:yy+4, 'text-anchor':'end', 'class':'s-label-sm'}, pct+'%');
+    }
+    for(var rr=0; rr<=maxRR; rr++){
+      el('text', {x:X(rr), y:H-B+18, 'text-anchor':'middle', 'class':'s-label-sm'}, rr.toFixed(0));
+    }
+    el('text', {x:L+pw/2, y:H-B+36, 'text-anchor':'middle', 'class':'s-label-sm'}, 'リスクリワード比（利確幅÷損切り幅）');
+    var d='';
+    for(var i=0; i<=200; i++){
+      var rr = 0.1 + (maxRR-0.1)*i/200;
+      var pct = 100/(1+rr);
+      d += (i ? ' L' : 'M') + X(rr) + ',' + Y(pct);
+    }
+    el('path', {d:d, 'class':'s-curve-b'});
+    el('text', {x:X(3.6), y:Y(100/(1+3.6))-10, 'text-anchor':'middle', 'class':'s-label-b'}, '損益分岐カーブ');
+    if(RR <= maxRR){
+      var cy = Y(clamp(p, 0, 100));
+      el('circle', {cx:X(RR), cy:Y(100/(1+RR)), r:6, 'class':'s-curve-b', style:'fill:#0969da'});
+      el('circle', {cx:X(RR), cy:cy, r:5, style:'fill:none;stroke:#9a6700;stroke-width:2.4'});
+      el('text', {x:X(RR)+10, y:cy-8, 'class':'s-label-y'}, '想定勝率');
+    }
+  }
+
+  function recalc(){
+    var RR = clamp(parseFloat($('be-rr').value) || 1, 0.05, 20);
+    var p = clamp(parseFloat($('be-wr').value) || 50, 1, 99);
+    var be = 100/(1+RR);
+    var ev = (p/100)*RR - (1-p/100);
+    var needrr = (100-p)/p;
+    $('be-breakeven').textContent = be.toFixed(1) + '%';
+    $('be-ev').textContent = (ev>=0?'+':'') + ev.toFixed(2) + 'R';
+    $('be-needrr').textContent = needrr.toFixed(2) + ' 以上';
+    var v = $('be-verdict');
+    if(p > be + 0.05){ v.textContent = 'プラス圏（コスト考慮前）'; v.style.color = '#1a7f37'; }
+    else if(p < be - 0.05){ v.textContent = 'マイナス圏'; v.style.color = '#cf222e'; }
+    else { v.textContent = 'ほぼトントン'; v.style.color = ''; }
+    draw(RR, p);
+  }
+
+  ['be-rr','be-wr'].forEach(function(id){ $(id).addEventListener('input', recalc); });
+  Array.prototype.forEach.call(document.querySelectorAll('.sim-presets button'), function(b){
+    b.addEventListener('click', function(){ $('be-rr').value = b.getAttribute('data-rr'); recalc(); });
+  });
+  recalc();
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
