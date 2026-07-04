@@ -198,7 +198,7 @@ def brand_header(page_emoji, page_title, updated="", extra=""):
         '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
         '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
         'background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;'
-        '-webkit-text-fill-color:transparent;background-clip:text">📊 MarketWatch AI</div>'
+        '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>'
         '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
         '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
         f'<div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">{page_emoji} {page_title}</div>'
@@ -1459,6 +1459,9 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("vix.html", "恐怖指数（VIX）分析", "VIX指数（恐怖指数）の最新値・90日チャート・AIコメントを毎日更新。市場心理を読み解き、暴落の予兆や買い場のヒントを日本人投資家向けに分かりやすく解説します。")}
   {GA4_TAG}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -2453,6 +2456,9 @@ def build_hot_assets_html(hot_data, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("hot-assets.html", "出来高急増ランキング", "米国セクター・日本株・世界指数・FX/コモディティ/暗号資産の出来高急増銘柄を毎日ランキング更新。資金が集まっている市場をひと目で確認できます。")}
   {GA4_TAG}
   <style>
@@ -2752,6 +2758,9 @@ def build_calendar_html(now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("calendar.html", f"マクロ経済カレンダー {cur_year}年{cur_month}月〜{next_month}月", "米雇用統計・FOMC・CPI・日銀金融政策決定会合・ECB理事会・中国主要指標など、相場を動かす重要イベントを月間カレンダーで一覧表示。日本人投資家向けに重要度ランク付き。")}
   {GA4_TAG}
   <style>
@@ -3132,6 +3141,9 @@ def build_preview_html(now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("preview.html", "明日の重要経済指標プレビュー", "米CPI・FOMC・雇用統計・日銀金融政策決定会合・ECB理事会など、明日〜数日先に発表される重要経済指標の事前解説。結果別の市場影響シナリオを日本人投資家向けに簡潔に解説。")}
   {GA4_TAG}
   <style>
@@ -3554,6 +3566,9 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 {seo_head("market-health.html", "市場健康度ダッシュボード", "VIX・恐怖&強欲指数・バフェット指数・CAPEレシオ・騰落レシオを一画面で可視化。割高/割安/過熱/底値圏を色分け表示し、相場全体の温度感を瞬時に判断できます。")}
 {GA4_TAG}
 <style>
@@ -3882,6 +3897,9 @@ def build_charts_html(hist, now_jst):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("charts.html", "50年価格チャート＆歴史的イベント", "日経平均・S&P500・ドル円・金の50年長期チャートを、ニクソンショック/プラザ合意/リーマン/コロナショックなど主要イベントと重ねて表示。歴史的視点で相場を読み解けます。")}
   {GA4_TAG}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -4779,6 +4797,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("", f"マーケットニュース {date_str}", "日経平均・ダウ・S&P500・ドル円・原油・金・ビットコインの最新価格と日本語ニュースを毎日2回更新。AIが市場センチメントを判定し、日本人投資家にとっての注目ポイントを解説します。")}
   {GA4_TAG}
   <style>
