@@ -5004,6 +5004,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </div>
   </div>
 
+  <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
+  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 22px;margin-bottom:32px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span style="color:#0969da;font-weight:700;white-space:nowrap">🧮 複利シミュレーター</span>
+    <span style="color:#424a53;font-size:.84rem;flex:1;min-width:200px">積立×複利の力を自分の数字で計算（単利比較・課税概算つき・端末内で完結）</span>
+    <a href="guide-compound-sim.html" style="color:#ffffff;background:#0969da;padding:6px 16px;border-radius:8px;font-size:.84rem;font-weight:600;text-decoration:none;white-space:nowrap">計算してみる →</a>
+  </div>
+
   {indicator_preview_banner}
   {weekly_strategy_banner}
 
