@@ -3455,8 +3455,10 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     # ④ 金融環境（金利）— 10年債は取得失敗時に当該カードのみ消える。スワップ用の政策金利は手動メンテ。
     _rp = fetch_rate_panel()
 
-    # 政策金利（手動メンテ：中央銀行の会合時のみ更新。出典: investing.com 等）
-    POLICY = {"updated": "2026-06-13", "USD": 3.75, "EUR": 2.40, "GBP": 3.75, "AUD": 4.35, "JPY": 0.75}
+    # 政策金利（手動メンテ：中央銀行の会合時のみ更新。出典: 各中銀公式）
+    # 2026-07-04 6月会合結果を反映: 日銀6/16利上げ0.75→1.00 ／ FRB6/17据え置き3.5-3.75 ／
+    #   ECB6/11利上げ(預金2.25=refi2.40・反映済) ／ BOE6/17据え置き ／ RBA6/16据え置き。次回=FOMC7/28-29・日銀7/30-31
+    POLICY = {"updated": "2026-07-04", "USD": 3.75, "EUR": 2.40, "GBP": 3.75, "AUD": 4.35, "JPY": 1.00}
     _swtd = "padding:10px 12px;border-bottom:1px solid #d0d7de;color:#24292f!important"
     swap_rows = ""
     for _name, _cur in [("米ドル/円", "USD"), ("ユーロ/円", "EUR"), ("ポンド/円", "GBP"), ("豪ドル/円", "AUD")]:
