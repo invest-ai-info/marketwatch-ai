@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>複利シミュレーター｜積立×複利の力を自分の数字で計算 - MarketWatch AI</title>
+  <meta name="description" content="初期投資額・毎月の積立額・想定年利・期間を入れるだけで、資産の推移をグラフと年次表で確認できる複利シミュレーター。単利との差や課税の概算も表示。月次複利方式で計算し、すべて端末内で完結します。">
+  <meta name="keywords" content="複利,シミュレーター,複利計算,積立投資,単利,72の法則,資産運用,長期投資,NISA,投資の基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-compound-sim.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="複利シミュレーター｜積立×複利の力を自分の数字で計算">
+  <meta property="og:description" content="4つの数字を入れるだけで資産推移をグラフ表示。単利との差・課税概算つき。月次複利方式で端末内計算。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-compound-sim.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "複利シミュレーター｜積立×複利の力を自分の数字で計算",
+    "description": "4つの数字を入れるだけで資産推移をグラフ表示。単利との差・課税概算つき。月次複利方式で端末内計算。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-compound-sim.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+  <style id="sim-css">
+    .s-curve-y{stroke:#9a6700;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    body.dark .s-curve-y{stroke:#d4a017}
+    .sim-panel{background:#ffffff;border:2px solid #0969da;border-radius:12px;padding:24px 26px;margin:26px 0}
+    .sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .sim-field label{display:block;font-size:.85rem;font-weight:700;color:#1f6feb;margin-bottom:6px}
+    .sim-field input[type=number]{width:100%;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:1.05rem;font-weight:600;color:#1f2328;background:#f6f8fa}
+    .sim-field input[type=number]:focus{outline:2px solid #0969da;border-color:#0969da}
+    .sim-presets{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .sim-presets button{padding:4px 12px;border:1px solid #d0d7de;border-radius:14px;background:#f6f8fa;color:#57606a;font-size:.82rem;font-weight:600;cursor:pointer}
+    .sim-presets button:hover{border-color:#0969da;color:#0969da}
+    .sim-presets-note{font-size:.72rem;color:#8b949e}
+    .sim-check{display:block;font-size:.85rem;color:#424a53;margin:16px 0 4px;line-height:1.6}
+    .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 6px}
+    .result-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:14px 16px}
+    .result-card.result-main{background:#ddf4ff;border-color:#0969da}
+    .result-label{font-size:.78rem;color:#57606a;font-weight:600;margin-bottom:6px}
+    .result-big{font-size:1.7rem;font-weight:700;color:#0969da;line-height:1.2}
+    .result-num{font-size:1.15rem;font-weight:700;color:#1f2328}
+    .sim-details{margin:14px 0 4px}
+    .sim-details summary{cursor:pointer;font-size:.9rem;font-weight:700;color:#0969da;padding:8px 0}
+    .sim-table-wrap{max-height:340px;overflow-y:auto;border:1px solid #d0d7de;border-radius:8px}
+    .sim-table-wrap table{margin:0}
+    .sim-table-wrap thead th{position:sticky;top:0;background:#f6f8fa}
+    body.dark .sim-panel{background:#0d1117;border-color:#1f6feb}
+    body.dark .sim-field input[type=number]{background:#161b22;border-color:#30363d;color:#e6edf3}
+    body.dark .sim-presets button{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .sim-check{color:#c9d1d9}
+    body.dark .result-card{background:#161b22;border-color:#30363d}
+    body.dark .result-card.result-main{background:#1a2030;border-color:#1f6feb}
+    body.dark .result-big{color:#79c0ff}
+    body.dark .result-num{color:#e6edf3}
+    body.dark .sim-table-wrap{border-color:#30363d}
+    body.dark .sim-table-wrap thead th{background:#161b22}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 複利シミュレーター
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>💰 複利シミュレーター<br><small style="font-size:.65em;color:#57606a;font-weight:400">積立×複利の力を、自分の数字で計算してみよう</small></h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約5分（シミュレーターは何度でも）
+    </div>
+
+    <p>「複利はすごい」とよく言われますが、実感するいちばんの近道は<strong>自分の数字で計算してみること</strong>です。初期投資額・毎月の積立額・想定する年利・期間の4つを入れるだけで、資産の推移をグラフと表で確認できます。<strong>単利（利益を再投資しない場合）との差</strong>も同時に表示されるので、「複利の力」がどこから生まれるのかが目で見てわかります。</p>
+
+    <div class="info-box">
+      <strong>💡 このシミュレーターの計算方式</strong>：<strong>月次複利（年利を複利ベースで月利に換算＝(1＋年利)<sup>1/12</sup>−1 を毎月適用・積立は毎月末）</strong>で計算します。金融庁の「つみたてシミュレーター」（2025年9月改修後）も採用している月利換算の考え方です。単利の線は、年利を12等分して元本にのみ利息を付けた場合です。税金・手数料は原則含みません（概算の課税オプションあり）。計算はすべてお使いの端末内で行われ、入力値が送信されることはありません。
+    </div>
+
+    <!-- ============ シミュレーター本体 ============ -->
+    <div class="sim-panel" id="simulator">
+      <div class="sim-grid">
+        <div class="sim-field">
+          <label for="sim-p">初期投資額（万円）</label>
+          <input type="number" id="sim-p" value="100" min="0" max="1000000" step="10" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="sim-a">毎月の積立額（万円）</label>
+          <input type="number" id="sim-a" value="3" min="0" max="10000" step="0.5" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="sim-r">想定年利（%）</label>
+          <input type="number" id="sim-r" value="5" min="0" max="30" step="0.1" inputmode="decimal">
+          <div class="sim-presets">
+            <button type="button" data-r="1">1%</button>
+            <button type="button" data-r="3">3%</button>
+            <button type="button" data-r="5">5%</button>
+            <button type="button" data-r="7">7%</button>
+            <span class="sim-presets-note">※あくまで計算例です</span>
+          </div>
+        </div>
+        <div class="sim-field">
+          <label for="sim-y">運用期間（年）</label>
+          <input type="number" id="sim-y" value="20" min="1" max="60" step="1" inputmode="numeric">
+        </div>
+      </div>
+      <label class="sim-check"><input type="checkbox" id="sim-tax"> 運用益への課税を概算で反映する（税率20.315%を最終利益に一括適用。NISA口座の非課税枠内では課税されません）</label>
+
+      <div class="result-grid">
+        <div class="result-card result-main">
+          <div class="result-label" id="res-final-label">最終資産額（複利）</div>
+          <div class="result-big" id="res-final">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">投資した元本の合計</div>
+          <div class="result-num" id="res-invested">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label" id="res-gain-label">運用収益（複利）</div>
+          <div class="result-num" id="res-gain">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">単利だった場合との差</div>
+          <div class="result-num" id="res-diff">—</div>
+        </div>
+      </div>
+
+      <div class="chart-figure">
+        <svg id="sim-chart" viewBox="0 0 660 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="資産推移グラフ（元本・単利・複利）"></svg>
+        <p class="chart-caption">資産推移のイメージ：<span style="color:#8b949e">■ 元本累計</span> ／ <span style="color:#9a6700">— 単利（利益を再投資しない）</span> ／ <span style="color:#0969da"><strong>— 複利（利益も運用に回す）</strong></span>。想定年利が毎年一定という仮定の計算例です。</p>
+      </div>
+
+      <details class="sim-details">
+        <summary>📋 年ごとの推移表を開く</summary>
+        <div class="sim-table-wrap">
+          <table id="sim-table">
+            <thead><tr><th>年末</th><th>元本累計</th><th>単利</th><th>複利</th><th>複利の運用収益</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="warning-box">
+      この計算は「<strong>想定した年利が毎年ぴったり実現し続ける</strong>」という単純化した仮定に基づく<strong>計算例</strong>です。実際の運用ではリターンは年ごとに大きく変動し（マイナスの年もあります）、手数料・信託報酬・税制の詳細によって結果は変わります。表示される金額は将来の運用成果を予測・保証するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="what">複利とは——「利益が利益を生む」仕組み</h2>
+
+    <p><strong>単利</strong>は、最初に投資した元本にだけ利息が付く方式です。100万円を年利5%で運用すると、毎年5万円ずつ増えます。<strong>複利</strong>は、ついた利益も翌年の元本に組み入れて運用する方式です。1年目の5万円が2年目には自分も利息を生み、その利息がまた利息を生み……と、<strong>雪だるま式</strong>に増えていきます。</p>
+
+    <p>最初の数年は両者の差はわずかです。上のシミュレーターで確認できるとおり、差が目に見えて開くのは<strong>10年を超えたあたりから</strong>。複利の力の正体は利率そのものではなく、<strong>「時間」との掛け算</strong>にあります。だからこそ「早く始めて長く続ける」ことが、金額の大小より効くのです。</p>
+
+    <div class="info-box">
+      <strong>💡 72の法則</strong>：資産が2倍になるおおよその年数は「<strong>72 ÷ 年利（%）</strong>」で概算できます。年利3%なら約24年、6%なら約12年。複利の効き方を暗算するのに便利な経験則です（あくまで近似値です）。
+    </div>
+
+    <h2 id="three">結果を動かす3つの変数——いちばん効くのは「時間」</h2>
+
+    <ul>
+      <li><strong>利回り（率）</strong>：効果は大きいものの、自分ではコントロールできません。高い利回りの想定は取らぬ狸の皮算用になりがちです。シミュレーションは<strong>控えめの利回りで</strong>試すことをおすすめします。</li>
+      <li><strong>期間（時間）</strong>：複利の主役。同じ積立額でも、期間を10年→20年→30年と延ばして比べると、後半ほど伸びが加速することがグラフで確認できます。</li>
+      <li><strong>積立額</strong>：唯一、自分で完全にコントロールできる変数です。無理のない金額で長く続けられることが、率の追求より大切です。</li>
+    </ul>
+
+    <div class="warning-box">
+      シミュレーターは「毎年同じ利回り」という前提ですが、現実のリターンは<strong>順番がバラバラ</strong>にやってきます（好調な10年の後に急落が来ることも、その逆も）。特に取り崩し期に大きな下落が重なると、平均利回りが同じでも結果は大きく変わります。この「リターンの順番」の問題は、シミュレーションの数字には表れないことを覚えておいてください。
+    </div>
+
+    <h2 id="howto">使い方のヒント</h2>
+
+    <ol>
+      <li><strong>まず現実の自分の数字で</strong>：いま用意できる初期額と、無理なく続けられる月額を入れてみる。</li>
+      <li><strong>利回りを1%刻みで変えてみる</strong>：3%と5%でどれくらい違うか。高利回り前提の計画がいかに「賭け」かも見えてきます。</li>
+      <li><strong>期間を延ばしてみる</strong>：同じ条件で10年と30年を比べると、複利と時間の関係が実感できます。</li>
+      <li><strong>課税オプションを付けて比べる</strong>：課税口座とNISAのような非課税口座で、同じ運用でも手取りがどれだけ変わるかの目安になります（あくまで概算です）。</li>
+    </ol>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">投資の基礎を順番に学べるコンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理した学習ハブ。</div>
+        </a>
+        <a href="guide-investment-books.html" class="related-card">
+          <div class="related-card-title">📖 投資本の紹介</div>
+          <div class="related-card-desc">投資の考え方を作る名著をまとめて紹介。長期投資の原典もこちらから。</div>
+        </a>
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🏛️ 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を日本株4.5万件で検証。守りの効果を数字で確認。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言・投資勧誘ではありません。シミュレーターの計算結果は入力された仮定に基づく机上の計算例であり、将来の運用成果を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+
+<script>
+/* ===== 複利シミュレーター（端末内計算・外部送信なし） =====
+   計算方式: 月次複利。月利 = (1+年利)^(1/12) - 1（金融庁つみたてシミュレーターの2025年9月改修後と同じ月利換算）・積立は毎月末。
+   単利: 年利を12等分し、その時点までの元本にのみ利息を付ける（再投資なし）。 */
+(function(){
+  var TAX = 0.20315;
+  function $(id){ return document.getElementById(id); }
+  function clamp(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); }
+
+  function series(P, A, r, years){
+    var i = Math.pow(1+r, 1/12) - 1, si = r/12, months = Math.round(years*12);
+    var v = P, principal = P, accrued = 0;
+    var out = [{y:0, invested:P, simple:P, compound:P}];
+    for(var m=1; m<=months; m++){
+      v = v*(1+i) + A;                 // 複利: 利息→月末積立
+      accrued += principal * si;       // 単利: 年利÷12を元本にのみ（再投資なし）
+      principal += A;
+      if(m % 12 === 0){
+        out.push({y:m/12, invested:principal, simple:principal+accrued, compound:v});
+      }
+    }
+    return out;
+  }
+
+  function fmt(man){ // 万円 → 「X億Y万円」/「X万円」
+    if(!isFinite(man)) return '—';
+    var v = Math.round(man);
+    if(Math.abs(v) >= 10000){
+      var oku = Math.floor(Math.abs(v)/10000)*(v<0?-1:1);
+      var man2 = Math.abs(v)%10000;
+      return oku.toLocaleString('ja-JP') + '億' + (man2 ? man2.toLocaleString('ja-JP') + '万円' : '円');
+    }
+    return v.toLocaleString('ja-JP') + '万円';
+  }
+
+  function draw(data){
+    var svg = $('sim-chart');
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=660, H=330, L=86, R=16, T=18, B=44;
+    var pw = W-L-R, ph = H-T-B;
+    var maxV = 0, maxY = data[data.length-1].y;
+    data.forEach(function(d){ maxV = Math.max(maxV, d.compound, d.simple, d.invested); });
+    if(maxV <= 0) maxV = 1;
+    // きりのいい上限
+    var pow = Math.pow(10, Math.floor(Math.log(maxV)/Math.LN10));
+    var top = Math.ceil(maxV/pow)*pow;
+    function X(y){ return L + pw*(y/maxY); }
+    function Y(v){ return T + ph*(1 - v/top); }
+    function el(name, attrs, text){
+      var e = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for(var k in attrs) e.setAttribute(k, attrs[k]);
+      if(text) e.textContent = text;
+      svg.appendChild(e); return e;
+    }
+    // 目盛り（縦4本）
+    for(var g=0; g<=4; g++){
+      var vv = top*g/4, yy = Y(vv);
+      el('line', {x1:L, y1:yy, x2:W-R, y2:yy, 'class': g===0 ? 's-axis' : 's-guide'});
+      el('text', {x:L-8, y:yy+4, 'text-anchor':'end', 'class':'s-label-sm'}, fmt(vv));
+    }
+    // X目盛り（約6本）
+    var step = Math.max(1, Math.ceil(maxY/6));
+    for(var yr=0; yr<=maxY; yr+=step){
+      el('text', {x:X(yr), y:H-B+18, 'text-anchor':'middle', 'class':'s-label-sm'}, yr + '年');
+    }
+    el('text', {x:X(maxY), y:H-B+18, 'text-anchor':'middle', 'class':'s-label-sm'}, maxY + '年');
+    // 元本エリア
+    var area = 'M' + X(0) + ',' + Y(0);
+    data.forEach(function(d){ area += ' L' + X(d.y) + ',' + Y(d.invested); });
+    area += ' L' + X(maxY) + ',' + Y(0) + ' Z';
+    el('path', {d:area, 'class':'s-fill-gray'});
+    // 単利・複利ライン
+    function line(key, cls){
+      var p = '';
+      data.forEach(function(d, idx){ p += (idx ? ' L' : 'M') + X(d.y) + ',' + Y(d[key]); });
+      el('path', {d:p, 'class':cls});
+    }
+    line('simple', 's-curve-y');
+    line('compound', 's-curve-b');
+    var last = data[data.length-1];
+    el('text', {x:W-R-4, y:Y(last.compound)-8, 'text-anchor':'end', 'class':'s-label-b'}, '複利 ' + fmt(last.compound));
+    el('text', {x:W-R-4, y:Y(last.simple)+18, 'text-anchor':'end', 'class':'s-label-y'}, '単利 ' + fmt(last.simple));
+  }
+
+  function recalc(){
+    var P = clamp(parseFloat($('sim-p').value) || 0, 0, 1000000);
+    var A = clamp(parseFloat($('sim-a').value) || 0, 0, 10000);
+    var rPct = clamp(parseFloat($('sim-r').value) || 0, 0, 30);
+    var Yrs = clamp(Math.round(parseFloat($('sim-y').value) || 1), 1, 60);
+    var withTax = $('sim-tax').checked;
+    var data = series(P, A, rPct/100, Yrs);
+    var last = data[data.length-1];
+    var invested = last.invested;
+    var fv = last.compound;
+    var gain = fv - invested;
+    var fvTax = invested + gain*(1-TAX);
+    var shown = withTax ? fvTax : fv;
+    var shownGain = withTax ? gain*(1-TAX) : gain;
+    $('res-final-label').textContent = withTax ? '最終資産額（複利・課税概算後）' : '最終資産額（複利）';
+    $('res-gain-label').textContent = withTax ? '運用収益（課税概算後）' : '運用収益（複利）';
+    $('res-final').textContent = fmt(shown);
+    $('res-invested').textContent = fmt(invested);
+    $('res-gain').textContent = (shownGain>=0?'+':'') + fmt(shownGain);
+    $('res-diff').textContent = '+' + fmt(last.compound - last.simple);
+    draw(data);
+    var tb = $('sim-table').getElementsByTagName('tbody')[0];
+    tb.innerHTML = '';
+    data.slice(1).forEach(function(d){
+      var tr = document.createElement('tr');
+      [d.y + '年', fmt(d.invested), fmt(d.simple), fmt(d.compound), '+' + fmt(d.compound - d.invested)]
+        .forEach(function(cell){ var td = document.createElement('td'); td.textContent = cell; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  }
+
+  ['sim-p','sim-a','sim-r','sim-y'].forEach(function(id){
+    $(id).addEventListener('input', recalc);
+  });
+  $('sim-tax').addEventListener('change', recalc);
+  Array.prototype.forEach.call(document.querySelectorAll('.sim-presets button'), function(b){
+    b.addEventListener('click', function(){ $('sim-r').value = b.getAttribute('data-r'); recalc(); });
+  });
+  recalc();
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
