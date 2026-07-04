@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手数料インパクト計算機｜信託報酬の差が長期の複利でいくらになるか - MarketWatch AI</title>
+  <meta name="description" content="信託報酬（年率）の異なる2つの水準で同じ積立をした場合の最終資産額の差を計算。「わずか1%台の差」が残高の成長とともに膨らむ様子をグラフと年次表で確認できます。計算はすべて端末内で完結します。">
+  <meta name="keywords" content="信託報酬,手数料,運用管理費用,投資信託,インデックスファンド,複利,コスト,計算機,投資の基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-fee-impact.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="手数料インパクト計算機｜信託報酬の差が長期の複利でいくらになるか">
+  <meta property="og:description" content="信託報酬A/Bの2水準で積立を比較。残高が育つほど膨らむコストの複利負担をグラフで確認。端末内計算。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-fee-impact.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "手数料インパクト計算機｜信託報酬の差が長期の複利でいくらになるか",
+    "description": "信託報酬A/Bの2水準で積立を比較。残高が育つほど膨らむコストの複利負担をグラフで確認。端末内計算。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-fee-impact.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+  <style id="sim-css">
+    .s-curve-y{stroke:#9a6700;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    body.dark .s-curve-y{stroke:#d4a017}
+    .sim-panel{background:#ffffff;border:2px solid #0969da;border-radius:12px;padding:24px 26px;margin:26px 0}
+    .sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .sim-field label{display:block;font-size:.85rem;font-weight:700;color:#1f6feb;margin-bottom:6px}
+    .sim-field input[type=number]{width:100%;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:1.05rem;font-weight:600;color:#1f2328;background:#f6f8fa}
+    .sim-field input[type=number]:focus{outline:2px solid #0969da;border-color:#0969da}
+    .sim-presets{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .sim-presets button{padding:4px 12px;border:1px solid #d0d7de;border-radius:14px;background:#f6f8fa;color:#57606a;font-size:.82rem;font-weight:600;cursor:pointer}
+    .sim-presets button:hover{border-color:#0969da;color:#0969da}
+    .sim-presets-note{font-size:.72rem;color:#8b949e}
+    .sim-check{display:block;font-size:.85rem;color:#424a53;margin:16px 0 4px;line-height:1.6}
+    .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 6px}
+    .result-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:14px 16px}
+    .result-card.result-main{background:#ddf4ff;border-color:#0969da}
+    .result-label{font-size:.78rem;color:#57606a;font-weight:600;margin-bottom:6px}
+    .result-big{font-size:1.7rem;font-weight:700;color:#0969da;line-height:1.2}
+    .result-num{font-size:1.15rem;font-weight:700;color:#1f2328}
+    .sim-details{margin:14px 0 4px}
+    .sim-details summary{cursor:pointer;font-size:.9rem;font-weight:700;color:#0969da;padding:8px 0}
+    .sim-table-wrap{max-height:340px;overflow-y:auto;border:1px solid #d0d7de;border-radius:8px}
+    .sim-table-wrap table{margin:0}
+    .sim-table-wrap thead th{position:sticky;top:0;background:#f6f8fa}
+    body.dark .sim-panel{background:#0d1117;border-color:#1f6feb}
+    body.dark .sim-field input[type=number]{background:#161b22;border-color:#30363d;color:#e6edf3}
+    body.dark .sim-presets button{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .sim-check{color:#c9d1d9}
+    body.dark .result-card{background:#161b22;border-color:#30363d}
+    body.dark .result-card.result-main{background:#1a2030;border-color:#1f6feb}
+    body.dark .result-big{color:#79c0ff}
+    body.dark .result-num{color:#e6edf3}
+    body.dark .sim-table-wrap{border-color:#30363d}
+    body.dark .sim-table-wrap thead th{background:#161b22}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 手数料インパクト計算機
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧾 手数料インパクト計算機<br><small style="font-size:.65em;color:#57606a;font-weight:400">信託報酬の「わずかな差」が、長期の複利でいくらになるか</small></h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約4分（計算機は何度でも）
+    </div>
+
+    <p>投資信託の<strong>信託報酬（運用管理費用）</strong>は「年0.1%」「年1.5%」のように小さな数字で表示されるため、差が実感しにくい費用です。しかし信託報酬は<strong>資産残高に対して毎日かかり続ける</strong>ため、積立が育つほど金額が膨らみ、複利の伸びを内側から削ります。この計算機は、<strong>2つの信託報酬水準で同じ積立をした場合の差額</strong>を計算します。</p>
+
+    <!-- ============ 計算機本体 ============ -->
+    <div class="sim-panel" id="calculator">
+      <div class="sim-grid">
+        <div class="sim-field">
+          <label for="fee-p">初期投資額（万円）</label>
+          <input type="number" id="fee-p" value="0" min="0" max="1000000" step="10" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="fee-a">毎月の積立額（万円）</label>
+          <input type="number" id="fee-a" value="3" min="0" max="10000" step="0.5" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="fee-r">想定年利（%・費用控除前）</label>
+          <input type="number" id="fee-r" value="5" min="0" max="30" step="0.1" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="fee-y">運用期間（年）</label>
+          <input type="number" id="fee-y" value="20" min="1" max="60" step="1" inputmode="numeric">
+        </div>
+        <div class="sim-field">
+          <label for="fee-a1">信託報酬A（%／年）</label>
+          <input type="number" id="fee-a1" value="0.1" min="0" max="5" step="0.01" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="fee-b1">信託報酬B（%／年）</label>
+          <input type="number" id="fee-b1" value="1.5" min="0" max="5" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="sim-presets" style="margin-top:10px">
+        <span class="sim-presets-note">※年利・信託報酬の数値はあくまで計算例です。特定の商品を示すものではありません</span>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card result-main">
+          <div class="result-label">最終資産額の差（A − B）</div>
+          <div class="result-big" id="fee-diff">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label" id="fee-la">信託報酬Aの最終資産額</div>
+          <div class="result-num" id="fee-va">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label" id="fee-lb">信託報酬Bの最終資産額</div>
+          <div class="result-num" id="fee-vb">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">投資した元本の合計</div>
+          <div class="result-num" id="fee-inv">—</div>
+        </div>
+      </div>
+
+      <div class="chart-figure">
+        <svg id="fee-chart" viewBox="0 0 660 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="信託報酬A・Bそれぞれの資産推移グラフ"></svg>
+        <p class="chart-caption">資産推移のイメージ：<span style="color:#0969da"><strong>— 信託報酬A</strong></span> ／ <span style="color:#9a6700">— 信託報酬B</span> ／ <span style="color:#8b949e">■ 元本累計</span>。差は最初の数年ではわずかでも、残高が育つ後半に加速的に開きます。</p>
+      </div>
+
+      <details class="sim-details">
+        <summary>📋 年ごとの推移表を開く</summary>
+        <div class="sim-table-wrap">
+          <table id="fee-table">
+            <thead><tr><th>年末</th><th>元本累計</th><th>信託報酬A</th><th>信託報酬B</th><th>差（A−B）</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="warning-box">
+      この計算は「<strong>費用控除前のリターンが毎年一定</strong>」という単純化した仮定に基づく<strong>計算例</strong>です。信託報酬は毎月末に年率の12分の1を控除する近似で計算しています（実際は日々控除）。購入時手数料・売却時費用・税金・分配金の扱いは含みません。表示される金額は将来の運用成果を予測・保証するものではなく、特定の商品の優劣を示すものでもありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="why">なぜ「たった1.4%の差」がこんなに膨らむのか</h2>
+
+    <p>初期値（毎月3万円・年利5%・20年）で計算すると、信託報酬0.1%と1.5%の差は<strong>約176万円</strong>——毎月の積立額の約59か月分に相当します。ポイントは、信託報酬が<strong>「掛け金」ではなく「残高」にかかる</strong>ことです。積立の序盤は残高が小さいので費用も小さいのですが、残高が1,000万円に育つと年1.5%は毎年約15万円。複利で増えるはずだったお金が毎年削られ、<strong>削られた分が生むはずだった利益も消える</strong>——マイナス方向の複利が効いてしまうのです。</p>
+
+    <div class="info-box">
+      <strong>💡 コストは「確実なマイナスリターン」</strong>：将来の利回りは不確実ですが、信託報酬は<strong>相場が上がっても下がっても確実にかかる</strong>数少ない「確定した数字」です。だからこそ、リターンの予想より先にコストを確認する価値があります。なお、同じ指数に連動するインデックスファンドでも信託報酬は商品によって異なります。
+    </div>
+
+    <!-- 関連 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい・使いたい</div>
+      <div class="cta-box-desc">数字で確かめる系のツールと記事</div>
+      <div class="related-grid">
+        <a href="guide-compound-sim.html" class="related-card">
+          <div class="related-card-title">💰 複利シミュレーター</div>
+          <div class="related-card-desc">積立×複利の力を自分の数字で計算。単利との差・課税概算つき。</div>
+        </a>
+        <a href="guide-goal-calc.html" class="related-card">
+          <div class="related-card-title">🎯 積立目標逆算ツール</div>
+          <div class="related-card-desc">「◯年後に◯万円」から必要な月額・年利を逆算。</div>
+        </a>
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言・投資勧誘ではありません。計算結果は入力された仮定に基づく机上の計算例であり、将来の運用成果を予測または保証するものではなく、特定の金融商品の推奨でもありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+
+<script>
+/* ===== 手数料インパクト計算機（端末内計算・外部送信なし） =====
+   月次: 幾何月利 (1+年利)^(1/12)−1 で成長 → 信託報酬 年率/12 を残高から控除 → 月末積立。
+   実際の投信は日次控除のためこれは近似。購入時手数料・税・分配金は含まない。 */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function clamp(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); }
+
+  function series(P, A, r, f, years){
+    var gi = Math.pow(1+r, 1/12) - 1, months = Math.round(years*12);
+    var v = P, principal = P;
+    var out = [{y:0, invested:P, v:P}];
+    for(var m=1; m<=months; m++){
+      v = v*(1+gi);
+      v -= v*(f/12);
+      v += A;
+      principal += A;
+      if(m % 12 === 0) out.push({y:m/12, invested:principal, v:v});
+    }
+    return out;
+  }
+
+  function fmt(man){
+    if(!isFinite(man)) return '—';
+    var v = Math.round(man);
+    if(Math.abs(v) >= 10000){
+      var oku = Math.floor(Math.abs(v)/10000)*(v<0?-1:1);
+      var man2 = Math.abs(v)%10000;
+      return oku.toLocaleString('ja-JP') + '億' + (man2 ? man2.toLocaleString('ja-JP') + '万円' : '円');
+    }
+    return v.toLocaleString('ja-JP') + '万円';
+  }
+
+  function draw(sa, sb){
+    var svg = $('fee-chart');
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=660, H=330, L=86, R=16, T=18, B=44;
+    var pw=W-L-R, ph=H-T-B;
+    var maxY = sa[sa.length-1].y, maxV = 1;
+    sa.forEach(function(d){ maxV = Math.max(maxV, d.v, d.invested); });
+    var pow = Math.pow(10, Math.floor(Math.log(maxV)/Math.LN10));
+    var top = Math.ceil(maxV/pow)*pow;
+    function X(y){ return L + pw*(y/maxY); }
+    function Y(v){ return T + ph*(1 - v/top); }
+    function el(name, attrs, text){
+      var e = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for(var k in attrs) e.setAttribute(k, attrs[k]);
+      if(text) e.textContent = text;
+      svg.appendChild(e); return e;
+    }
+    for(var g=0; g<=4; g++){
+      var vv=top*g/4, yy=Y(vv);
+      el('line', {x1:L, y1:yy, x2:W-R, y2:yy, 'class': g===0 ? 's-axis' : 's-guide'});
+      el('text', {x:L-8, y:yy+4, 'text-anchor':'end', 'class':'s-label-sm'}, fmt(vv));
+    }
+    var step = Math.max(1, Math.ceil(maxY/6));
+    for(var yr=0; yr<=maxY; yr+=step){
+      el('text', {x:X(yr), y:H-B+18, 'text-anchor':'middle', 'class':'s-label-sm'}, yr+'年');
+    }
+    var area = 'M'+X(0)+','+Y(0);
+    sa.forEach(function(d){ area += ' L'+X(d.y)+','+Y(d.invested); });
+    area += ' L'+X(maxY)+','+Y(0)+' Z';
+    el('path', {d:area, 'class':'s-fill-gray'});
+    function line(s, key, cls){
+      var p='';
+      s.forEach(function(d, i){ p += (i?' L':'M')+X(d.y)+','+Y(d[key]); });
+      el('path', {d:p, 'class':cls});
+    }
+    line(sb, 'v', 's-curve-y');
+    line(sa, 'v', 's-curve-b');
+    el('text', {x:W-R-4, y:Y(sa[sa.length-1].v)-8, 'text-anchor':'end', 'class':'s-label-b'}, 'A ' + fmt(sa[sa.length-1].v));
+    el('text', {x:W-R-4, y:Y(sb[sb.length-1].v)+18, 'text-anchor':'end', 'class':'s-label-y'}, 'B ' + fmt(sb[sb.length-1].v));
+  }
+
+  function recalc(){
+    var P = clamp(parseFloat($('fee-p').value) || 0, 0, 1000000);
+    var A = clamp(parseFloat($('fee-a').value) || 0, 0, 10000);
+    var r = clamp(parseFloat($('fee-r').value) || 0, 0, 30)/100;
+    var Yrs = clamp(Math.round(parseFloat($('fee-y').value) || 1), 1, 60);
+    var fa = clamp(parseFloat($('fee-a1').value) || 0, 0, 5)/100;
+    var fb = clamp(parseFloat($('fee-b1').value) || 0, 0, 5)/100;
+    var sa = series(P, A, r, fa, Yrs), sb = series(P, A, r, fb, Yrs);
+    var la = sa[sa.length-1], lb = sb[sb.length-1];
+    $('fee-la').textContent = '信託報酬A（年' + (fa*100).toFixed(2).replace(/\.?0+$/,'') + '%）の最終資産額';
+    $('fee-lb').textContent = '信託報酬B（年' + (fb*100).toFixed(2).replace(/\.?0+$/,'') + '%）の最終資産額';
+    $('fee-va').textContent = fmt(la.v);
+    $('fee-vb').textContent = fmt(lb.v);
+    $('fee-inv').textContent = fmt(la.invested);
+    $('fee-diff').textContent = (la.v-lb.v>=0?'+':'') + fmt(la.v - lb.v);
+    draw(sa, sb);
+    var tb = $('fee-table').getElementsByTagName('tbody')[0];
+    tb.innerHTML = '';
+    sa.slice(1).forEach(function(d, i){
+      var db = sb[i+1];
+      var tr = document.createElement('tr');
+      [d.y+'年', fmt(d.invested), fmt(d.v), fmt(db.v), '+'+fmt(d.v-db.v)]
+        .forEach(function(cell){ var td=document.createElement('td'); td.textContent=cell; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  }
+
+  ['fee-p','fee-a','fee-r','fee-y','fee-a1','fee-b1'].forEach(function(id){
+    $(id).addEventListener('input', recalc);
+  });
+  recalc();
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
