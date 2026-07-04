@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>巨匠の教えをデータで検証 #2｜「順張りの教科書」は日本株で通用するか——3人の巨匠・8仮説で検証 - MarketWatch AI</title>
+  <meta name="description" content="ラリー・ウィリアムズ、オニール（CAN-SLIM）、ミネルヴィニ（VCP）の順張り手法を日本株データ（約506万行・生存バイアスフリー）で検証。8仮説のうち前半・後半の両期間で一貫して機能したものは0本。ウィリアムズ4本は両期間マイナス、オニール/ミネルヴィニ4本は2025年以降だけ有効という「レジーム依存」の型が浮かび上がった。">
+  <meta name="keywords" content="オニール,CAN-SLIM,ミネルヴィニ,VCP,ラリー・ウィリアムズ,順張り,モメンタム投資,新高値,トレンドテンプレート,日本株,データ検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-002-trend.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #2｜「順張りの教科書」は日本株で通用するか——3人の巨匠・8仮説で検証">
+  <meta property="og:description" content="ウィリアムズ・オニール・ミネルヴィニの順張り手法8仮説を日本株で検証。両期間一貫の合格は0本。オニール/ミネルヴィニは2025年以降だけ全勝という「レジーム依存」の型が観察された。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-002-trend.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #2｜「順張りの教科書」は日本株で通用するか——3人の巨匠・8仮説で検証",
+    "description": "ラリー・ウィリアムズ、オニール、ミネルヴィニの順張り手法8仮説を日本株データで検証。両期間一貫で機能した仮説は0本。オニール/ミネルヴィニ系は2025年以降だけ有効というレジーム依存の型が観察された。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-002-trend.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #2
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🏛️ 巨匠の教えをデータで検証 #2<br><small style="font-size:.65em;color:#57606a;font-weight:400">「順張りの教科書」は日本株で通用するか——3人の巨匠・8仮説で検証</small></h1>
+    <div class="meta-line">
+      カテゴリ：🏛️ 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約13分
+    </div>
+
+    <p><a href="guide-graham-001.html">第1回のグレアム検証</a>では、「安全域」の防御力が2020年代の日本株でも観察されるという結果になりました。第2回のテーマは、グレアムとは正反対の系譜——<strong>「上がっている株を買う」順張り（トレンドフォロー／モメンタム）の教科書</strong>です。</p>
+    <p>取り上げるのは3人。短期売買の伝説ラリー・ウィリアムズ、成長株投資の体系「CAN-SLIM」を作ったウィリアム・オニール、その系譜を現代化したマーク・ミネルヴィニ。彼らの教えを機械的に判定できる<strong>8つの仮説に翻訳し、日本株の約5年・のべ506万行のデータ</strong>（上場廃止銘柄も含む、生存バイアスのないデータ）で採点しました。勝っても負けてもそのまま公開する、いつもの流儀です。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 事前に決めた合格基準（前半・後半の両期間で一貫してプラス）を満たした仮説は、<strong>8本中0本</strong><br>
+      ② ラリー・ウィリアムズ系の4仮説（ブレイクアウト・ギャップ逆張り・曜日・月替わり）は<strong>両期間ともマイナス</strong>という結果<br>
+      ③ オニール／ミネルヴィニ系の4仮説は<strong>前半（〜2024年）は効果が確認できず、後半（2025年以降）だけ4本全部がプラス</strong>——「いまの上げ相場でだけ効いて見える」レジーム（相場の地合い）依存の型<br>
+      ④ 第1回グレアムの「守り」が両期間で一貫したのと対照的に、<strong>「攻め（順張り）」は地合い次第</strong>という姿がデータに現れた
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#who">3人の巨匠——「順張り」の系譜</a></li>
+        <li><a href="#method">検証設計——8仮説への翻訳と、事前登録という約束</a></li>
+        <li><a href="#result-lw">結果①：ウィリアムズ系4仮説は両期間マイナス</a></li>
+        <li><a href="#result-onmv">結果②：オニール／ミネルヴィニ系は「後半だけ全勝」</a></li>
+        <li><a href="#lesson">この検証から得られる3つの学び</a></li>
+        <li><a href="#limits">この検証の限界</a></li>
+        <li><a href="#summary">まとめ——シリーズ2回で見えてきたこと</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="who">① 3人の巨匠——「順張り」の系譜</h2>
+
+    <p><strong>ラリー・ウィリアムズ</strong>は、1987年の全米先物取引選手権（ロビンス・ワールドカップ）で1年間に口座を約114倍にした記録で知られる短期トレーダーです。前日の値幅を使った<strong>ボラティリティ・ブレイクアウト</strong>（勢いが出た方向に飛び乗る）や、寄り付きのギャップを逆手に取る<strong>「ウップス（OOPS）」</strong>、曜日や月替わりの<strong>カレンダー効果</strong>など、機械的に検証しやすいルールを多数公開してきました。</p>
+
+    <p><strong>ウィリアム・オニール</strong>（1933-2023）は投資新聞 Investor's Business Daily の創業者で、成長株投資の体系<strong>「CAN-SLIM」</strong>の考案者。「安く買って高く売るな、<strong>高く買ってもっと高く売れ</strong>」——つまり<strong>新高値を付けた主導株を買う</strong>という、多くの人の直感に反する教えで有名です。銘柄の相対的な強さを測る<strong>レラティブストレングス（RS）</strong>という考え方を広めたのも彼の功績です。</p>
+
+    <p><strong>マーク・ミネルヴィニ</strong>は1997年の全米投資選手権を年率155%で優勝したトレーダーで、オニールの系譜を現代化した人物。上昇トレンドの条件を機械的に定義した<strong>「トレンドテンプレート」</strong>と、ブレイク前に値動きが静かに収縮していく<strong>「VCP（ボラティリティ収縮パターン）」</strong>で知られます。</p>
+
+    <div class="info-box">
+      <strong>💡 用語ミニ解説</strong><br>
+      <strong>レラティブストレングス（RS）</strong>＝市場全体の中で「その銘柄がどれだけ強いか」の相対順位。ここでは過去126営業日（約半年）のリターンが全銘柄の上位何%かで測ります。<br>
+      <strong>VCP</strong>＝ブレイクアウトの前に、値動きの振れ幅（ボラティリティ）がだんだん小さくなっていく形。ミネルヴィニは「静かになってからの上放れ」を狙います。
+    </div>
+
+    <p>3人に共通するのは「<strong>強いものに乗る</strong>」という思想です。グレアムの「安く買う」とは正反対のこの教えは、日本株のデータで再現されるのでしょうか。</p>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証設計——8仮説への翻訳と、事前登録という約束</h2>
+
+    <p>本や講演の言葉のままでは検証できないため、教えを<strong>機械的に判定できる8つの仮説</strong>に翻訳しました。ウィリアムズ系4本は2026年7月2日、オニール／ミネルヴィニ系4本は7月4日に、<strong>検証を走らせる前にルールと合格基準を確定（事前登録）</strong>しています。結果を見てからルールをいじる「後出し」を封じるためです。</p>
+
+    <h3>ウィリアムズ系（検証済み・流動性上位400銘柄×約5年）</h3>
+    <ul>
+      <li><strong>LW1 ボラティリティ・ブレイクアウト</strong>：寄り付きから「前日の値幅×0.7」上に動いたら買い</li>
+      <li><strong>LW2 ウップス（OOPS）</strong>：ギャップダウンで始まった株が前日安値を回復したら買い</li>
+      <li><strong>LW3 曜日効果</strong>：特定の曜日に買うと有利か</li>
+      <li><strong>LW4 月替わり効果</strong>：月末に買って月初に売ると有利か（米国市場の古典的な定説）</li>
+    </ul>
+
+    <h3>オニール／ミネルヴィニ系（今回検証・全上場銘柄×約5年＝のべ506万行）</h3>
+    <ul>
+      <li><strong>ON1 新高値×出来高</strong>：終値が252日ぶり高値を更新し、出来高が50日平均の1.5倍以上の日に買い</li>
+      <li><strong>ON2 RS上位</strong>：半年リターンが全銘柄の上位20%に入っている銘柄を毎月初に買い</li>
+      <li><strong>MV1 トレンドテンプレート</strong>：株価＞50日線＞150日線＞200日線、200日線が上向き、安値から+30%以上、高値から-25%以内——を全部満たす銘柄を毎月初に買い</li>
+      <li><strong>MV2 VCPブレイク</strong>：値動きが収縮した高値圏の銘柄が、出来高を伴って50日高値を上抜けた日に買い</li>
+    </ul>
+
+    <h3>共通ルール（タイムマシン原則）</h3>
+    <ul>
+      <li><strong>先読みなし</strong>：判定はその日の引けまでの情報だけ。買いは<strong>翌営業日の寄り付き</strong></li>
+      <li><strong>流動性フィルタ</strong>：売買代金が細い銘柄（1日1億円未満）は除外</li>
+      <li><strong>測定</strong>：買いから60営業日後のリターンを、<strong>同じ期間・同じ条件の市場全体（対照群）と比較</strong>した差で評価</li>
+      <li><strong>再現性の確認</strong>：2024年末までを「前半（train）」、2025年以降を「後半（holdout）」に分け、<strong>両期間で一貫してプラスなら合格</strong></li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 「p値」と「日付クラスタ」——今回の統計の読み方</strong><br>
+      表に出てくる<strong>p値</strong>は「実力ゼロだったとしても、偶然でこれくらいの差が出てしまう確率」です。小さいほど偶然では説明しにくい（本記事では5%未満を目安にしています）。また株式市場では<strong>同じ日の銘柄は束になって動く</strong>ため、観測件数をそのまま信じると確からしさを過大評価します。本検証は「日付」を単位にばらつきを測る方法（日付クラスタ・ブートストラップ）で、この水増しを補正しています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-lw">③ 結果①：ウィリアムズ系4仮説は両期間マイナス</h2>
+
+    <p>まずウィリアムズ系。結果は明快でした——<strong>4仮説すべて、前半・後半の両期間で市場平均を下回りました</strong>。</p>
+
+    <table>
+      <tr><th>仮説</th><th>対照比（前半）</th><th>対照比（後半）</th><th>判定</th></tr>
+      <tr><td>LW1 ボラティリティ・ブレイクアウト</td><td style="color:#cf222e">-0.081%</td><td style="color:#cf222e">-0.080%</td><td>❌ 両期間マイナス</td></tr>
+      <tr><td>LW2 ウップス（ギャップ逆張り）</td><td style="color:#cf222e">-0.047%</td><td style="color:#cf222e">-0.134%</td><td>❌ 両期間マイナス</td></tr>
+      <tr><td>LW3 曜日効果</td><td colspan="2">火曜のみ両期間プラスだが効果は微小</td><td>❌ 事前特定でなく不採用</td></tr>
+      <tr><td>LW4 月替わり効果</td><td style="color:#cf222e">-0.092%</td><td style="color:#cf222e">-0.171%</td><td>❌ 両期間マイナス</td></tr>
+    </table>
+
+    <p style="font-size:.85rem;color:#57606a">（数値＝1トレードあたりの対市場平均差。検証日2026年7月2日、対象＝流動性上位400銘柄×約5年。LW1/LW2の日中の仕掛けは日足データで近似しており、実際の成績はこれより悪くなる方向です）</p>
+
+    <p>特筆すべきはLW1です。ブレイクアウトの仕掛けを<strong>成績が良く見える方向に甘めに近似したにもかかわらず</strong>、前半-0.081%・後半-0.080%と、気味が悪いほど一貫したマイナスでした。1980〜90年代の米国先物市場で磨かれた「勢いに飛び乗る」手法は、少なくともこの5年の日本株の日足では、<strong>逆風が一貫して吹いている</strong>という結果です。LW4の月替わり効果も、学術研究で有名な定説とは逆に両期間マイナスでした。</p>
+
+    <div class="negative-box">
+      <strong>「飛びつき買い」への逆風は、当サイトの他の検証とも一致</strong><br>
+      当サイトの<a href="guide-signal-lab-015.html" style="color:inherit;text-decoration:underline">AIシグナル研究日誌</a>でも、FX・CFDの20年データで「高値ブレイクへの飛びつき買い」系シグナルの不振が繰り返し観察されています。市場も年代も違うデータで同じ向きの結果が出ていることは、偶然ではない可能性を高めます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-onmv">④ 結果②：オニール／ミネルヴィニ系は「後半だけ全勝」</h2>
+
+    <p>次にオニール／ミネルヴィニ系。こちらはウィリアムズ系と違い、<strong>奇妙なほど揃ったパターン</strong>が現れました。</p>
+
+    <table>
+      <tr><th>仮説</th><th>前半：対照比（p値）</th><th>後半：対照比（p値）</th><th>判定</th></tr>
+      <tr>
+        <td>ON1 新高値×出来高</td>
+        <td>+0.31% <span style="color:#9a6700">(p=0.34)</span></td>
+        <td style="color:#1a7f37"><strong>+1.59%</strong> (p=0.002)</td>
+        <td>❌ 前半で確認できず</td>
+      </tr>
+      <tr>
+        <td>ON2 RS上位20%</td>
+        <td>+0.65% <span style="color:#9a6700">(p=0.25)</span></td>
+        <td style="color:#1a7f37"><strong>+3.28%</strong> (p=0.001)</td>
+        <td>❌ 前半で確認できず</td>
+      </tr>
+      <tr>
+        <td>MV1 トレンドテンプレート</td>
+        <td>+1.23% <span style="color:#9a6700">(p=0.12)</span></td>
+        <td style="color:#1a7f37"><strong>+3.09%</strong> (p=0.003)</td>
+        <td>❌ 前半で確認できず</td>
+      </tr>
+      <tr>
+        <td>MV2 VCPブレイク</td>
+        <td>+0.30% <span style="color:#9a6700">(p=0.50)</span></td>
+        <td style="color:#1a7f37"><strong>+2.01%</strong> (p=0.003)</td>
+        <td>❌ 前半で確認できず</td>
+      </tr>
+    </table>
+
+    <p style="font-size:.85rem;color:#57606a">（数値＝買い後60営業日リターンの対市場差。前半=2022年7月〜2024年12月、後半=2025年1月以降。観測数は各仮説2,069〜14,411件。検証日2026年7月4日）</p>
+
+    <!-- SVG 図1 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-label="オニール／ミネルヴィニ系4仮説の前半・後半の対市場差。前半は小さく統計的に確認できず、後半は4本とも大きくプラス">
+        <!-- ガイド線 -->
+        <line class="s-guide" x1="66" y1="190" x2="620" y2="190"/>
+        <line class="s-guide" x1="66" y1="150" x2="620" y2="150"/>
+        <line class="s-guide" x1="66" y1="110" x2="620" y2="110"/>
+        <text class="s-label-sm" x="58" y="194" text-anchor="end">+1%</text>
+        <text class="s-label-sm" x="58" y="154" text-anchor="end">+2%</text>
+        <text class="s-label-sm" x="58" y="114" text-anchor="end">+3%</text>
+        <text class="s-label-sm" x="58" y="234" text-anchor="end">0</text>
+        <!-- ゼロ線 -->
+        <line class="s-axis" x1="66" y1="230" x2="620" y2="230"/>
+        <!-- 凡例 -->
+        <rect class="s-fill-gray" x="70" y="28" width="18" height="13" rx="2"/>
+        <text class="s-label-sm" x="94" y="39">前半（〜2024年）＝統計的に確認できず</text>
+        <rect class="s-fill-g" x="70" y="50" width="18" height="13" rx="2"/>
+        <text class="s-label-sm" x="94" y="61">後半（2025年〜）＝4本ともプラス</text>
+        <text class="s-label-g" x="470" y="45" text-anchor="middle">後半だけ、きれいに効いている</text>
+        <!-- ON1: train +0.31 (h=12,y=218) / holdout +1.59 (h=64,y=166) -->
+        <rect class="s-fill-gray" x="96" y="218" width="40" height="12" rx="2"/>
+        <rect class="s-fill-g" x="144" y="166" width="40" height="64" rx="2"/>
+        <text class="s-label-sm" x="116" y="212" text-anchor="middle">+0.31</text>
+        <text class="s-label-g" x="164" y="160" text-anchor="middle">+1.59</text>
+        <text class="s-label" x="140" y="252" text-anchor="middle">ON1 新高値</text>
+        <text class="s-label-sm" x="140" y="270" text-anchor="middle">×出来高</text>
+        <!-- ON2: +0.65 (h=26,y=204) / +3.28 (h=131,y=99) -->
+        <rect class="s-fill-gray" x="231" y="204" width="40" height="26" rx="2"/>
+        <rect class="s-fill-g" x="279" y="99" width="40" height="131" rx="2"/>
+        <text class="s-label-sm" x="251" y="198" text-anchor="middle">+0.65</text>
+        <text class="s-label-g" x="299" y="93" text-anchor="middle">+3.28</text>
+        <text class="s-label" x="275" y="252" text-anchor="middle">ON2 RS上位</text>
+        <text class="s-label-sm" x="275" y="270" text-anchor="middle">20%</text>
+        <!-- MV1: +1.23 (h=49,y=181) / +3.09 (h=124,y=106) -->
+        <rect class="s-fill-gray" x="366" y="181" width="40" height="49" rx="2"/>
+        <rect class="s-fill-g" x="414" y="106" width="40" height="124" rx="2"/>
+        <text class="s-label-sm" x="386" y="175" text-anchor="middle">+1.23</text>
+        <text class="s-label-g" x="434" y="100" text-anchor="middle">+3.09</text>
+        <text class="s-label" x="410" y="252" text-anchor="middle">MV1 トレンド</text>
+        <text class="s-label-sm" x="410" y="270" text-anchor="middle">テンプレート</text>
+        <!-- MV2: +0.30 (h=12,y=218) / +2.01 (h=80,y=150) -->
+        <rect class="s-fill-gray" x="501" y="218" width="40" height="12" rx="2"/>
+        <rect class="s-fill-g" x="549" y="150" width="40" height="80" rx="2"/>
+        <text class="s-label-sm" x="521" y="212" text-anchor="middle">+0.30</text>
+        <text class="s-label-g" x="569" y="144" text-anchor="middle">+2.01</text>
+        <text class="s-label" x="545" y="252" text-anchor="middle">MV2 VCP</text>
+        <text class="s-label-sm" x="545" y="270" text-anchor="middle">ブレイク</text>
+      </svg>
+      <p class="chart-caption">図1：オニール／ミネルヴィニ系4仮説の「買い後60営業日の対市場差」（%ポイント）。灰＝前半（2022年7月〜2024年12月・いずれもp値が大きく偶然と区別できない）、緑＝後半（2025年1月以降・4本ともp≦0.003）。概念図であり実際の価格チャートではありません。</p>
+    </div>
+
+    <h3>4本が同時に「片翼だけ」になる意味</h3>
+    <p>もし1本だけこのパターンなら、その仮説の個性かもしれません。しかし<strong>設計の違う4本（イベント型2本・状態型2本）が、そろって「前半×・後半◎」</strong>になりました。これが示唆するのは、個々のルールの優劣ではなく、<strong>土台の地合い（レジーム）が変わった</strong>ということです。</p>
+    <p>2025年以降の日本株は、日経平均が史上高値圏を更新していく強いトレンド相場でした。上げトレンドの中では「強い株を買う」戦略は定義上勝ちやすくなります。問題は、いま見えているプラスが<strong>「順張りの実力」なのか「上げ相場の追い風」なのか、このデータからは区別できない</strong>ことです。前半（2022年の下落局面や2023〜24年のもみ合いを含む期間）で効果が確認できなかった以上、区別がつくまでは「実力」と断定できない——これが事前登録した基準で8本全部を❌にした理由です。</p>
+
+    <div class="positive-box">
+      <strong>おまけの発見：トレンドテンプレートは後半、暴落回避にも寄与</strong><br>
+      MV1（トレンドテンプレート）を満たす銘柄群は、後半の期間中に「60営業日以内に-20%以上下落した割合」が16.8%と、市場全体（19.1%）より低い結果でした。「秩序だった上昇トレンドにある銘柄は事故りにくい」という緩やかな防御効果の示唆で、これは順張りの教科書が語る効能の中では比較的まっとうに観察された部分です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="lesson">⑤ この検証から得られる3つの学び</h2>
+
+    <h3>学び1：「いま効いている」と「いつでも効く」は別物</h3>
+    <p>オニール／ミネルヴィニ系の後半の数字（対市場+1.6〜+3.3%）だけを見れば、順張りは魅力的に見えます。しかし同じルールが前半には機能していませんでした。<strong>直近の好成績だけを見て手法を信じ込むのは、たまたま追い風だった期間を実力と取り違えるリスク</strong>を伴います。手法の検証は、地合いの違う複数の期間で行う必要がある——今回の8仮説は、その教材のような結果になりました。</p>
+
+    <h3>学び2：「守り」は一貫し、「攻め」は地合い次第だった</h3>
+    <p>シリーズ第1回のグレアム（守り）は、リターンの序列こそ期間で揺らいだものの、<strong>暴落回避の効果は前半・後半の両方で崩れませんでした</strong>。今回の順張り（攻め）は、良いときは大きくプラス・悪いときは確認できず、と<strong>地合いに大きく依存</strong>しました。「大負けを避ける技術は環境が変わっても持ち越しやすく、大勝ちを狙う技術は環境に左右されやすい」——2回の検証を並べると、そんな非対称性が浮かび上がります。</p>
+
+    <h3>学び3：同じ「教科書」でも、市場と時代で答えが変わる</h3>
+    <p>ウィリアムズの手法は1980〜90年代の米国先物で実績を築いたものですが、2020年代の日本株の日足では4本とも逆風でした。一方オニール／ミネルヴィニの外形は、いまの日本株のトレンド局面では機能して見えます。<strong>教えそのものの真偽ではなく、「どの市場の・どの時代の・どんな地合いで検証された教えなのか」を問う</strong>——巨匠の本を読むときに一番大切な問いかもしれません。</p>
+
+    <!-- SVG 図2: 概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-label="守り型エッジとレジーム依存型エッジの概念図。守り型は前半後半とも効き、レジーム依存型は後半だけ効く">
+        <!-- 左パネル: 守り型 -->
+        <rect class="s-fill-b" x="30" y="30" width="270" height="200" rx="10"/>
+        <text class="s-label-b" x="165" y="58" text-anchor="middle">守り型（#1 グレアム）</text>
+        <text class="s-label-sm" x="165" y="78" text-anchor="middle">暴落回避の効果が両期間で再現</text>
+        <rect class="s-fill-g" x="80" y="120" width="55" height="70" rx="3"/>
+        <rect class="s-fill-g" x="175" y="112" width="55" height="78" rx="3"/>
+        <text class="s-label-g" x="107" y="113" text-anchor="middle">効く</text>
+        <text class="s-label-g" x="202" y="105" text-anchor="middle">効く</text>
+        <text class="s-label-sm" x="107" y="207" text-anchor="middle">前半</text>
+        <text class="s-label-sm" x="202" y="207" text-anchor="middle">後半</text>
+        <!-- 右パネル: レジーム依存型 -->
+        <rect class="s-fill-y" x="340" y="30" width="270" height="200" rx="10"/>
+        <text class="s-label-y" x="475" y="58" text-anchor="middle">レジーム依存型（#2 順張り）</text>
+        <text class="s-label-sm" x="475" y="78" text-anchor="middle">上げ相場の期間だけ効いて見える</text>
+        <rect class="s-fill-gray" x="390" y="172" width="55" height="18" rx="3"/>
+        <rect class="s-fill-g" x="485" y="100" width="55" height="90" rx="3"/>
+        <text class="s-label-sm" x="417" y="165" text-anchor="middle">確認できず</text>
+        <text class="s-label-g" x="512" y="93" text-anchor="middle">効く</text>
+        <text class="s-label-sm" x="417" y="207" text-anchor="middle">前半</text>
+        <text class="s-label-sm" x="512" y="207" text-anchor="middle">後半</text>
+      </svg>
+      <p class="chart-caption">図2：2回の検証で見えた対比の概念図。守り型（暴落回避）の効果は期間をまたいで再現された一方、順張り型は後半（上げ相場）だけで観察された。概念図であり実際の数値・チャートではありません。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑥ この検証の限界</h2>
+
+    <ol>
+      <li><strong>「外形」だけの検証</strong>：オニールのCAN-SLIMは本来、四半期利益の伸び（C）や機関投資家の動向（I）などファンダメンタルズの条件を含む総合体系です。今回検証したのは価格と出来高から機械判定できる「外形」部分のみで、<strong>教えの全部を検証したわけではありません</strong>。</li>
+      <li><strong>コスト・税は未控除</strong>：数値はすべて売買コスト・税金の控除前です。また新高値ブレイク銘柄はストップ高で買えない日があり、翌日寄り付きで買えた前提の数値は<strong>実際より良く見える方向</strong>の近似です。</li>
+      <li><strong>後半の期間が短い</strong>：後半（2025年以降）は約1年半で、上げトレンドという単一の地合いに偏っています。次の調整局面を含むデータで答えが変わる可能性があります。</li>
+      <li><strong>観測は独立でない</strong>：月次の状態型仮説は同じ銘柄が繰り返し登場し、60営業日の測定窓も重なり合います。p値は日付単位の補正を行っていますが、それでも数値は「傾向の目安」としてご覧ください。</li>
+      <li><strong>特定銘柄の推奨ではない</strong>：本記事はルール（基準）の統計的な性質を調べたものであり、個別銘柄の言及・推奨は一切行っていません。</li>
+    </ol>
+
+    <!-- =============================== -->
+    <h2 id="summary">⑦ まとめ——シリーズ2回で見えてきたこと</h2>
+
+    <table>
+      <tr><th>検証</th><th>教えの型</th><th>結果</th></tr>
+      <tr>
+        <td><a href="guide-graham-001.html">#1 グレアム</a></td>
+        <td>守り（安く買い、暴落を避ける）</td>
+        <td style="color:#1a7f37"><strong>暴落回避の効果が両期間で一貫</strong></td>
+      </tr>
+      <tr>
+        <td>#2 ウィリアムズ</td>
+        <td>攻め（短期の勢いに乗る）</td>
+        <td style="color:#cf222e">4仮説とも両期間マイナス</td>
+      </tr>
+      <tr>
+        <td>#2 オニール／ミネルヴィニ</td>
+        <td>攻め（強い株・新高値を買う）</td>
+        <td style="color:#9a6700">後半（2025年〜）だけ4本全勝＝<strong>レジーム依存</strong></td>
+      </tr>
+    </table>
+
+    <ul>
+      <li>事前登録した合格基準（両期間一貫）を満たした順張り仮説は<strong>8本中0本</strong></li>
+      <li>ただし「全部ダメ」ではない——オニール／ミネルヴィニ系は<strong>いまの上げ相場では明確にプラス</strong>。それが実力か追い風かは、次の調整局面を含むデータが答えを出す</li>
+      <li>2回の検証を通じた最大の対比は、<strong>「守りは持ち越せる、攻めは地合い次第」</strong>という非対称性</li>
+      <li>権威で信じず、データで確かめる——本シリーズは今後も同じ流儀で続けます</li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📖 巨匠たちの本をもっと知りたい方へ</div>
+      <div class="cta-box-desc">オニール、ミネルヴィニをはじめ、投資の名著の紹介は投資本ページにまとめています</div>
+      <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🏛️ 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が6分の1になる防御が両期間で再現。</div>
+        </a>
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理した学習ハブ。</div>
+        </a>
+        <a href="guide-investment-books.html" class="related-card">
+          <div class="related-card-title">📖 投資本の紹介</div>
+          <div class="related-card-desc">投資の考え方を作る名著をまとめて紹介。巨匠たちの原典はこちらから。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
