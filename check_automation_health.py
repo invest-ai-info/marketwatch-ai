@@ -55,6 +55,10 @@ ROUTINE_FILE_CHECKS = [
     ("市況ファンダ・ブリーフィング", "fundamental-context.json", 15, "warn"),
     ("研究日誌・日次研究会",        "drafts/REVIEW.md",         28, "info"),
     ("記事ネタ発掘",                "article-ideas.md",         28, "info"),
+    # 🆕 2026-07-04: signal-lab-daily が draft は公開するのに tracker.json のコミットだけ漏らす事故が
+    #    7/3・7/4 に連続発生（REVIEW.md は更新されるため上の監視では見えない盲点）。毎朝 06:10 の
+    #    routine が毎回 commit する前提＝26h で「1回漏れ」を当日の本チェック(09:30)で検知できる。
+    ("シグナル前向きトラッカー",    "signal-lab-tracker.json",  26, "warn"),
 ]
 
 SEV = {"critical": "🔴", "warn": "🟡", "info": "⚪"}
