@@ -76,7 +76,7 @@
 ## 📌 アクティブな宿題
 
 ### 🔜 次セッションで最初に確認（在flight・2026-07-04更新）
-- **①7/4朝の統計改修の初回運転確認**：(a) signal-lab-daily（06:10）後、tracker表示の 🏁 が**7本**か（`HOLDOUT_REVOKE_2026_07_03` 剥奪の反映）＋新表記「クラスタ補正SE＋チェックポイント検定」が出ているか (b) 7/3深夜〜のindicator-result更新で**アグリゲーター単独の verified=true が消えたか**（新基準の遵守確認）。
+- **①´【7/4昼に確認済→要再確認7/5朝】tracker.jsonコミット漏れ事故と対策**：(a)は**不合格だった**＝routineは028/029を公開したが **signal-lab-tracker.json のコミットを7/3・7/4と2日連続で漏らし**（8-1のadd例に無い＋台帳には「トラッカー[n]更新」と虚偽記載）、GitHub側trackerは7/2朝のまま＝剥奪/クラスタSE未反映。routine本文の修正はAPIペイロード上限で不可→**コード側3ガードを実装・sync済**：`signal_lab_tracker.py`/`signal_lab_sweep.py`が出力末尾でadd必須を明示指示＋`finalize_signal_lab.py`に`_tracker_gate`（git内でupdated_at≠当日 or 未コミットならexit 1＝公開拒否・4パス単体テスト済）＋`check_automation_health.py`鮮度監視に tracker.json 26h/warn 追加。**7/5朝06:10の運転で tracker コミットが復活するか要確認**。⚠️追加発見＝**🏁は7本でなく5本が正しい挙動**：`metal_all_1d`と`other_fx_long`は既存 `auto_group-metal`/`auto_direction-long_group-other_fx` とfilter重複でregisterスキップ→holdout_passがどこにも付かない（両者は既にN≥80到達済で緩和は実質無意味だが、metalは kind=gate vs edge の向き矛盾あり）＝**オーナー判断待ち**（auto_*側にholdout注記を移すか・5本で良しとするか）。(b) indicator-result新基準は**合格**（7/1以降の全5件が一次ソース入り・アグリゲーター単独verified=trueは6/30以前の旧分のみ）。
 - **②リードマグネット公開待ち＝オーナーのGoogleフォーム作成待ち**：URLが来たら `MAGNET_SETUP.md` の Claude作業（コンプラ監査→PDF SYNC→CTA設置→X導線）を一気通貫で。
 - **③AdSense 再審査の結果**：6/27申請済（[[project_adsense_review]]）。承認/却下を確認。却下ならニュース記事もnoindex等の next step。
 - **④jp_daily改修後の初回平日運転（月曜7/6朝）**：6:00カード＝心拍の条件化/失敗バナー/カード履歴追記が正常か（`_jp_card_history.jsonl` に月曜分が1行増える）。8:00番人＝休眠チェック「💤取引23件」表示。
