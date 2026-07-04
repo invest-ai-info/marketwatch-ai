@@ -6,6 +6,7 @@
 | 2 | ✅公開済み | 買いは家まで、売りは命まで | kai-ie-uri-inochi | 2026-07-01 | 🟢白（初期）→ 修正なし → 🟢白（独立確認） | 江戸時代の相場格言（由来諸説あり）。損失の非対称性・ショートスクイーズ・GameStop/VW事例を含む。自動公開ルーティン proverb-daily-auto による。 |
 | 3 | ✅公開済み | 落ちてくるナイフはつかむな | ochiru-knife | 2026-07-02 | 🟢白（初期）→ ⚠️VIX用語説明を軽微追加→🟢白（独立確認） | 英語圏Wall Street発の格言（初出1919年文献、投資用語として1980年代に定着・諸説あり）。急落途中の逆張りリスク・底打ち確認3手法・FvS社28%/39%統計を含む。自動公開ルーティン proverb-daily-auto による。check_site_consistency.py EXIT=1だが既存79記事のSYNC_FILES未登録（クラウド環境偽陽性）＝今回記事は正常登録済み。 |
 | 4 | ✅公開済み | 卵は一つの籠に盛るな | tamago-kago | 2026-07-03 | 🟢白（初期）→ 修正なし → 🟢白（独立Opus確認） | セルバンテス『ドン・キホーテ』第2部（1615年）初出・農民知恵由来（諸説あり）。相関係数・見えない同じ籠の落とし穴・3軸分散（資産クラス・地理・時間）・リバランスを含む。Opus×2コンプラ白・品質5観点全✅。check_site_consistency.py EXIT=1は既存78記事のSYNC_FILES未登録（クラウド環境偽陽性）＝今回記事は正常登録済み。自動公開ルーティン proverb-daily-auto による。 |
+| 5 | ✅公開済み | 噂で買って事実で売る | uwasa-jijitsu | 2026-07-04 | 🟢白（初期・修正なし）→ 品質②ETF/FOMC初出説明軽微追記 → 🟢白（独立Opus確認） | Wall Street格言 "Buy the rumor, sell the news"（1935年頃〜・諸説あり）の翻訳。期待の織り込み・材料出尽くし・BTC ETF承認2024年1月・Fed利下げ2024年9月・Cornell/JFQA研究を含む。Opus×2コンプラ白・品質5観点全✅。check_site_consistency.py EXIT=0（クラウド環境偽陽性は既存記事のみ）。自動公開ルーティン proverb-daily-auto による。 |
 
 ---
 
@@ -17,4 +18,4 @@
 | 6 | 人の行く裏に道あり花の山 | hito-no-iku-ura | 中 |
 | 7 | 見切り千両、損切り万両 | mikiri-senryo | 高 |
 
-最終更新：2026-07-03（proverb-daily-auto ルーティン）
+最終更新：2026-07-04（proverb-daily-auto ルーティン）
