@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>巨匠の教えをデータで検証 #3｜バフェットの「質」は日本株で報われたか——4.5万件の検証で出た意外な答え - MarketWatch AI</title>
+  <meta name="description" content="バフェットの「素晴らしい会社を適正な価格で」を5つの基準に翻訳し、日本株4.5万観測（ポイントインタイム財務・生存バイアスフリー）で検証。質の高い会社の株は低スコア群に両期間で有意に負け、割安株の中でも「質」の上乗せは確認できなかった。効いたのは「安さ」だけ——第1回グレアムの防御と対照的な結果に。">
+  <meta name="keywords" content="バフェット,ウォーレン・バフェット,クオリティ投資,ROE,FCF利回り,バリュー投資,グレアム,質と価格,日本株,データ検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-003-quality.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #3｜バフェットの「質」は日本株で報われたか——4.5万件の検証で出た意外な答え">
+  <meta property="og:description" content="バフェットの「質×適正価格」5基準を日本株4.5万観測で検証。高スコア群は両期間で有意に劣後し、割安の中でも質の上乗せなし。効いたのは「安さ」だけだった。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-003-quality.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #3｜バフェットの「質」は日本株で報われたか——4.5万件の検証で出た意外な答え",
+    "description": "バフェットの「質×適正価格」5基準を日本株4.5万観測で検証。高スコア群は両期間で有意に劣後し、割安の中でも質の上乗せなし。効いたのは「安さ」だけだった。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-003-quality.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #3
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🏛️ 巨匠の教えをデータで検証 #3<br><small style="font-size:.65em;color:#57606a;font-weight:400">バフェットの「質」は日本株で報われたか——4.5万件の検証で出た意外な答え</small></h1>
+    <div class="meta-line">
+      カテゴリ：🏛️ 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約12分
+    </div>
+
+    <p><a href="guide-graham-001.html">第1回</a>ではグレアムの「安全域」が暴落回避という形で機能していることを確認し、<a href="guide-masters-002-trend.html">第2回</a>では順張りの教科書が「地合い次第」であることを見ました。第3回は、いよいよこの人です——<strong>ウォーレン・バフェット</strong>。</p>
+    <p>「割安なら何でも買う」師グレアムの教えから離れ、「<strong>素晴らしい会社を適正な価格で買う</strong>」へと進化したバフェットの投資哲学。その核心である<strong>「質への支払いは報われる」という主張を5つの基準に翻訳し、日本株の約5年・45,347観測</strong>（上場廃止銘柄も含む生存バイアスフリーのデータ、開示日ベースのポイントインタイム財務）で検証しました。今回も、結果がどうであれそのまま公開します。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① バフェット5基準のスコアが高い（＝質が高い）銘柄群は、低い群に<strong>前半-5.7%・後半-6.0%</strong>と両期間で統計的に有意に<strong>負けた</strong><br>
+      ② 割安株の中で比べても、「質の高い割安株」は「質の低い割安株」に<strong>前半-7.8%・後半-13.2%</strong>と完敗——この5年の日本株は<strong>グレアム流の「とにかく安い株」が圧勝</strong><br>
+      ③ グレアム検証で見られた暴落回避の防御力も、バフェット基準には<strong>確認できなかった</strong><br>
+      ④ 5基準のうちプラスに働いたのは「割安さ（FCF利回り）」だけ。<strong>ROE・利益率・自己資本・キャッシュフローの「質」4基準はすべてマイナス</strong>——ただしこれは「この5年の日本株」という特殊な地合いの記録であり、「質に意味がない」という結論ではない
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#who">バフェットという巨匠——「シケモク」から「質」への転向</a></li>
+        <li><a href="#method">検証設計——5基準への翻訳と事前登録</a></li>
+        <li><a href="#result1">結果①：スコアが高いほど、株価は負けた</a></li>
+        <li><a href="#result2">結果②：割安株の中でも「質」の上乗せはなかった</a></li>
+        <li><a href="#result3">結果③：グレアムにあった「防御」も見られなかった</a></li>
+        <li><a href="#criteria">基準別の成績——効いたのは「安さ」だけ</a></li>
+        <li><a href="#interpret">どう読むか——「質がダメ」ではなく「この5年が質に冷たかった」</a></li>
+        <li><a href="#limits">この検証の限界</a></li>
+        <li><a href="#summary">まとめ——シリーズ3回の対比</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="who">① バフェットという巨匠——「シケモク」から「質」への転向</h2>
+
+    <p><strong>ウォーレン・バフェット</strong>（1930-）は、投資会社バークシャー・ハサウェイを半世紀以上率いてきた、史上最も著名な投資家の一人です。コロンビア大学でベンジャミン・グレアム（<a href="guide-graham-001.html">第1回</a>で検証）に直接学んだ愛弟子でもあります。</p>
+
+    <p>若い頃のバフェットは師の教えに忠実で、「タダ同然に安ければ、多少問題のある会社でも買う」——道端に落ちた吸いさしの葉巻でも一服ぶんは無料で吸える、という比喩から<strong>「シケモク（cigar butt）投資」</strong>と呼ばれるスタイルでした。それを変えたのが盟友チャーリー・マンガーの影響とされます。バフェット自身、1989年の株主への手紙でこう書いています——</p>
+
+    <div class="info-box">
+      <strong>「そこそこの会社を素晴らしい価格で買うより、素晴らしい会社を適正な価格で買うほうがはるかに良い」</strong><br>
+      （It's far better to buy a wonderful company at a fair price than a fair company at a wonderful price.）
+    </div>
+
+    <p>つまりバフェットの核心は、<strong>「安さ」だけでなく「質」——高い資本収益力、厚い利益率、健全な財務、現金を生み続ける力——に対価を払う価値がある</strong>、という主張です。師グレアムの「安全域（とにかく安く買う）」との違いがここにあります。では、この教えは2020年代の日本株で確認できるのでしょうか。</p>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証設計——5基準への翻訳と事前登録</h2>
+
+    <p>「素晴らしい会社を適正な価格で」を、財務データで機械的に判定できる<strong>5つの基準</strong>に翻訳しました。閾値はバフェット自身や関連書籍でよく言及される水準をそのまま使い、日本市場に合わせた調整は<strong>していません</strong>（後出しの調整を封じるため）。基準と合格ラインは<strong>検証を走らせる前に確定（事前登録）</strong>しています。</p>
+
+    <table>
+      <tr><th>基準</th><th>内容</th><th>バフェットの言葉で言うと</th></tr>
+      <tr><td>B1 高ROE</td><td>直近本決算のROE（自己資本利益率）15%以上</td><td>株主のお金を高い利回りで働かせる力</td></tr>
+      <tr><td>B2 収益力</td><td>営業利益率10%以上、かつ入手できる全決算期で営業黒字</td><td>競争優位（堀）が生む厚く安定した利益</td></tr>
+      <tr><td>B3 財務保守</td><td>自己資本比率50%以上</td><td>借金に頼らずに稼ぐ</td></tr>
+      <tr><td>B4 現金製造</td><td>全期で営業キャッシュフロー黒字、かつ直近のフリーキャッシュフロー（FCF）がプラス</td><td>会計上の利益でなく、現金を生む機械</td></tr>
+      <tr><td>B5 適正価格</td><td>FCF利回り（1株FCF÷株価）5%以上</td><td>素晴らしい会社「を、適正な価格で」</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 用語ミニ解説</strong><br>
+      <strong>ROE（自己資本利益率）</strong>＝純利益÷自己資本。株主が出したお金1円が1年でいくら利益を生んだか。バフェットが最も重視する指標の一つで、15%は彼がよく引き合いに出す水準です。<br>
+      <strong>FCF（フリーキャッシュフロー）</strong>＝本業で稼いだ現金から投資に使った現金を引いた残り。ここでは営業キャッシュフロー＋投資キャッシュフローで近似しています。<br>
+      <strong>FCF利回り</strong>＝1株あたりFCF÷株価。「その値段で会社を丸ごと買ったら、現金ベースで年何%のリターンか」。5%は「割安」の目安としてよく使われる水準です。
+    </div>
+
+    <h3>検証のルール（第1回グレアムと同一の土俵）</h3>
+    <ul>
+      <li><strong>データ</strong>：全上場銘柄×約5年の株価（上場廃止銘柄も含む＝生存バイアスなし）×決算開示データ。<strong>45,347観測・財務データのある3,684銘柄</strong></li>
+      <li><strong>先読みなし（タイムマシン原則）</strong>：各判定日に使うのは「その日までに開示済み」の本決算だけ。発表前の決算を使うズルはできない設計</li>
+      <li><strong>判定は毎月初</strong>：2022年7月〜2025年6月の36回、各銘柄を5基準で採点（0〜5点）し、<strong>12ヶ月後のリターン</strong>を測定</li>
+      <li><strong>流動性フィルタ</strong>：売買代金が1日1億円未満の銘柄は除外（買えない銘柄で勝っても意味がないため）</li>
+      <li><strong>再現性の確認</strong>：2024年より前を「前半（train）」、以降を「後半（holdout＝事前に取り置いた検証専用データ）」に分け、両期間で確認</li>
+      <li><strong>統計処理</strong>：同じ月の銘柄は束になって動くため、観測件数を鵜呑みにせず「判定月」を単位にばらつきを測る方法（クラスタ・ブートストラップ）でp値を計算</li>
+    </ul>
+
+    <p>事前に決めた合否基準は3つです。<strong>H1</strong>：高スコア群（4-5点）が低スコア群（0-1点）に両期間で有意に勝つか。<strong>H2</strong>：割安（B5合格）の中で比べたとき、質の高い会社（B1〜B4のうち3つ以上合格）が質の低い会社（1つ以下）に勝つか——これが「シケモク vs バフェット」の直接対決です。<strong>H3</strong>：高スコア群は暴落（1年で-30%以下）に遭いにくいか。</p>
+
+    <!-- =============================== -->
+    <h2 id="result1">③ 結果①：スコアが高いほど、株価は負けた</h2>
+
+    <p>まずスコア別の成績です。バフェットの教えが正しければ、スコアが高いほどリターンが高くなるはず——結果は逆でした。</p>
+
+    <table>
+      <tr><th>スコア</th><th>12Mリターン（前半）</th><th>12Mリターン（後半）</th><th>観測数（前半/後半）</th></tr>
+      <tr><td>0-1点（質が低い）</td><td>+12.6%</td><td>+20.5%</td><td>11,389 / 8,908</td></tr>
+      <tr><td>2-3点</td><td>+14.6%</td><td>+18.6%</td><td>8,733 / 10,990</td></tr>
+      <tr><td>4-5点（質が高い）</td><td style="color:#cf222e"><strong>+6.9%</strong></td><td style="color:#cf222e"><strong>+14.4%</strong></td><td>1,851 / 3,476</td></tr>
+      <tr><td>市場全体（対象銘柄）</td><td>+13.4%</td><td>+18.7%</td><td>21,973 / 23,374</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="バフェット・スコア別の12ヶ月リターン棒グラフ（前半・後半）">
+        <text class="s-label-b" x="170" y="28" text-anchor="middle">前半（〜2023年末）</text>
+        <text class="s-label-b" x="490" y="28" text-anchor="middle">後半（2024年〜）</text>
+        <!-- 前半パネル -->
+        <line class="s-axis" x1="50" y1="240" x2="300" y2="240"/>
+        <rect class="s-fill-gray" x="70" y="164.4" width="55" height="75.6"/>
+        <rect class="s-fill-gray" x="150" y="152.4" width="55" height="87.6"/>
+        <rect class="s-fill-r" x="230" y="198.6" width="55" height="41.4"/>
+        <text class="s-label" x="97" y="156" text-anchor="middle">+12.6%</text>
+        <text class="s-label" x="177" y="144" text-anchor="middle">+14.6%</text>
+        <text class="s-label-r" x="257" y="190" text-anchor="middle">+6.9%</text>
+        <text class="s-label-sm" x="97" y="260" text-anchor="middle">0-1点</text>
+        <text class="s-label-sm" x="177" y="260" text-anchor="middle">2-3点</text>
+        <text class="s-label-sm" x="257" y="260" text-anchor="middle">4-5点</text>
+        <text class="s-label-sm" x="97" y="278" text-anchor="middle">質低</text>
+        <text class="s-label-sm" x="257" y="278" text-anchor="middle">質高</text>
+        <!-- 後半パネル -->
+        <line class="s-axis" x1="370" y1="240" x2="620" y2="240"/>
+        <rect class="s-fill-gray" x="390" y="117" width="55" height="123"/>
+        <rect class="s-fill-gray" x="470" y="128.4" width="55" height="111.6"/>
+        <rect class="s-fill-r" x="550" y="153.6" width="55" height="86.4"/>
+        <text class="s-label" x="417" y="109" text-anchor="middle">+20.5%</text>
+        <text class="s-label" x="497" y="120" text-anchor="middle">+18.6%</text>
+        <text class="s-label-r" x="577" y="145" text-anchor="middle">+14.4%</text>
+        <text class="s-label-sm" x="417" y="260" text-anchor="middle">0-1点</text>
+        <text class="s-label-sm" x="497" y="260" text-anchor="middle">2-3点</text>
+        <text class="s-label-sm" x="577" y="260" text-anchor="middle">4-5点</text>
+        <text class="s-label-sm" x="417" y="278" text-anchor="middle">質低</text>
+        <text class="s-label-sm" x="577" y="278" text-anchor="middle">質高</text>
+      </svg>
+      <p class="chart-caption">図1：バフェット・スコア別の12ヶ月リターン（判定月クラスタ平均）。前半・後半とも、スコアが高い（質が高い）群のほうがリターンが低い。</p>
+    </div>
+
+    <p>高スコア群（4-5点）と低スコア群（0-1点）の差は、<strong>前半-5.7%（p=0.0065）、後半-6.0%（p=0.0050）</strong>。どちらの期間でも「偶然でこうなる確率は1%未満」の水準で、<strong>質の高い会社の株のほうが負けていました</strong>。事前基準H1（高スコアが勝つ）は不合格——それも「差が出なかった」のではなく、<strong>有意に逆方向</strong>という結果です。</p>
+
+    <!-- =============================== -->
+    <h2 id="result2">④ 結果②：割安株の中でも「質」の上乗せはなかった</h2>
+
+    <p>「それは高スコア銘柄が割高に買われているからでは？」——当然の疑問です。バフェットも「質にはある程度の対価を払ってよい」と言っているのだから、質の高い株が割高で負けるのは織り込み済みかもしれません。</p>
+
+    <p>そこで事前基準H2では、<strong>割安（B5合格＝FCF利回り5%以上）の銘柄だけに絞って</strong>、質の高い会社（B1〜B4のうち3つ以上）と質の低い会社（1つ以下）を直接対決させました。「同じくらい安いなら、質が高いほうが良いはずだ」——これがバフェット説の核心部分です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="質と価格の4象限マトリクス。12ヶ月リターンの実測値">
+        <text class="s-label" x="390" y="30" text-anchor="middle">12Mリターン（左＝前半 / 右＝後半）</text>
+        <!-- 軸ラベル -->
+        <text class="s-label-sm" x="245" y="58" text-anchor="middle">割安（FCF利回り5%以上）</text>
+        <text class="s-label-sm" x="535" y="58" text-anchor="middle">非割安</text>
+        <text class="s-label-sm" x="80" y="135" text-anchor="middle">質 高</text>
+        <text class="s-label-sm" x="80" y="152" text-anchor="middle">(B1-B4</text>
+        <text class="s-label-sm" x="80" y="169" text-anchor="middle">3つ以上)</text>
+        <text class="s-label-sm" x="80" y="265" text-anchor="middle">質 低</text>
+        <text class="s-label-sm" x="80" y="282" text-anchor="middle">(1つ以下)</text>
+        <!-- セル: 上段=質高 -->
+        <rect class="s-fill-b" x="120" y="70" width="250" height="130" rx="8"/>
+        <text class="s-label-b" x="245" y="110" text-anchor="middle">バフェット型</text>
+        <text class="s-label" x="245" y="140" text-anchor="middle">+14.2% / +18.2%</text>
+        <text class="s-label-sm" x="245" y="165" text-anchor="middle">N=1,375 / 2,618</text>
+        <rect class="s-fill-r" x="390" y="70" width="250" height="130" rx="8"/>
+        <text class="s-label-r" x="515" y="110" text-anchor="middle">質は高いが割高</text>
+        <text class="s-label" x="515" y="140" text-anchor="middle">-8.2% / +7.6%</text>
+        <text class="s-label-sm" x="515" y="165" text-anchor="middle">4区分で最下位</text>
+        <!-- セル: 下段=質低 -->
+        <rect class="s-fill-g" x="120" y="210" width="250" height="130" rx="8"/>
+        <text class="s-label-g" x="245" y="250" text-anchor="middle">シケモク型（この5年で最高）</text>
+        <text class="s-label" x="245" y="280" text-anchor="middle">+22.0% / +31.4%</text>
+        <text class="s-label-sm" x="245" y="305" text-anchor="middle">N=5,921 / 4,046</text>
+        <rect class="s-fill-gray" x="390" y="210" width="250" height="130" rx="8"/>
+        <text class="s-label" x="515" y="250" text-anchor="middle">質低×非割安</text>
+        <text class="s-label" x="515" y="280" text-anchor="middle">+10.1% / +18.4%</text>
+      </svg>
+      <p class="chart-caption">図2：「質」×「価格」の4象限と12ヶ月リターンの実測値（判定月クラスタ平均、左が前半・右が後半）。この5年の勝者は「質を問わずとにかく安い」シケモク型だった。</p>
+    </div>
+
+    <p>結果は上の図のとおりです。<strong>質の高い割安株（バフェット型）は前半+14.2%・後半+18.2%。質の低い割安株（シケモク型）は前半+22.0%・後半+31.4%</strong>。差は<strong>前半-7.8%、後半-13.2%（ともにp=0.0003）</strong>——割安株の中で比べても、「質」はリターンを上乗せするどころか、<strong>両期間で有意に足を引っ張っていました</strong>。この5年の日本株では、師グレアムの「シケモク」が弟子バフェットの「質」に圧勝した、ということになります。</p>
+
+    <div class="warning-box">
+      この結果を「質の低い割安株を買えば良い」と読まないでください。本検証は特定の投資行動を推奨するものではなく、後述するとおり、この5年は東証の資本効率改革を背景に低PBR株が一斉に買われた<strong>特殊な地合い</strong>です。地合いが変われば結果も変わり得ます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result3">⑤ 結果③：グレアムにあった「防御」も見られなかった</h2>
+
+    <p><a href="guide-graham-001.html">第1回</a>で最も印象的だったのは、グレアム・スコアが高い銘柄は<strong>1年で-30%以下の暴落に遭う確率が約5分の1に下がる</strong>という防御力でした。リターンではなく「大負けしない力」こそ安全域の本質だ、という発見です。バフェット基準にも同じ防御力があるでしょうか。</p>
+
+    <table>
+      <tr><th>検証</th><th>暴落確率 P(-30%)：低スコア群</th><th>暴落確率 P(-30%)：高スコア群</th><th>防御効果</th></tr>
+      <tr><td>グレアム（前半）</td><td>24.9%</td><td style="color:#1a7f37"><strong>4.9%</strong></td><td style="color:#1a7f37">約5分の1に低下</td></tr>
+      <tr><td>グレアム（後半）</td><td>24.1%</td><td style="color:#1a7f37"><strong>4.3%</strong></td><td style="color:#1a7f37">約5分の1に低下</td></tr>
+      <tr><td>バフェット（前半）</td><td>11.0%</td><td style="color:#cf222e">14.5%</td><td style="color:#cf222e">むしろ悪化（+3.5pt, p=0.0060）</td></tr>
+      <tr><td>バフェット（後半）</td><td>10.7%</td><td>9.8%</td><td>ほぼ差なし（-0.9pt, p=0.1135）</td></tr>
+    </table>
+
+    <p>結果は表のとおり、<strong>バフェット・スコアに暴落回避の効果は確認できませんでした</strong>。前半はむしろ高スコア群のほうが暴落率が高く（統計的にも有意）、後半は差なし。事前基準H3も不合格です。グレアムの6基準とバフェットの5基準はどちらも「良い会社を選ぶ」基準に見えますが、<strong>防御力という点では中身がまったく違う</strong>ことがデータに出ました。グレアム基準の防御の源泉は「質」ではなく「安さ＋既に絶望されていること」にある、という解釈と整合的です。</p>
+
+    <!-- =============================== -->
+    <h2 id="criteria">⑥ 基準別の成績——効いたのは「安さ」だけ</h2>
+
+    <p>5基準を1つずつ、「合格した銘柄 vs しなかった銘柄」の12ヶ月リターン差で見てみます（探索的な参考値です）。</p>
+
+    <table>
+      <tr><th>基準</th><th>差（前半）</th><th>差（後半）</th><th>読み方</th></tr>
+      <tr><td>B1 高ROE（15%以上）</td><td style="color:#cf222e">-8.5%</td><td style="color:#cf222e">-7.8%</td><td>高ROE銘柄のほうが負けた</td></tr>
+      <tr><td>B2 収益力（営業利益率10%以上）</td><td style="color:#cf222e">-9.9%</td><td style="color:#cf222e">-7.9%</td><td>高マージン銘柄のほうが負けた</td></tr>
+      <tr><td>B3 財務保守（自己資本比率50%以上）</td><td style="color:#cf222e">-5.3%</td><td style="color:#cf222e">-7.6%</td><td>無借金型のほうが負けた</td></tr>
+      <tr><td>B4 現金製造（CF黒字）</td><td style="color:#cf222e">-3.4%</td><td style="color:#cf222e">-3.6%</td><td>現金を生む会社のほうが負けた</td></tr>
+      <tr><td>B5 適正価格（FCF利回り5%以上）</td><td style="color:#1a7f37"><strong>+12.8%</strong></td><td style="color:#1a7f37"><strong>+8.6%</strong></td><td><strong>唯一の一貫したプラス</strong></td></tr>
+    </table>
+
+    <p>きれいに割れました。<strong>「質」を測る4基準（B1〜B4）はすべて両期間マイナス、「安さ」を測るB5だけが両期間プラス</strong>。実は第1回グレアム検証でも、6基準のうち「自己資本比率50%以上」だけが両期間マイナスという結果が出ていて、当時は意外な脇役の不振に見えました。今回の結果はその発見の拡張です——<strong>この5年の日本株で報われなかったのは、財務の健全性を含む「質」というカテゴリ全体</strong>だったのです。</p>
+
+    <!-- =============================== -->
+    <h2 id="interpret">⑦ どう読むか——「質がダメ」ではなく「この5年が質に冷たかった」</h2>
+
+    <p>ここで結論を急がないことが大切です。「バフェットは日本株に通用しない」と読むのは、2つの理由で行き過ぎです。</p>
+
+    <h3>理由1：この5年は「安さ」が総取りした特殊な地合い</h3>
+    <p>検証期間（2022〜2026年）の日本株は、<strong>東証が上場企業に資本効率の改善を迫った改革（いわゆる低PBR改革）</strong>——PBR（株価純資産倍率＝株価が1株あたり純資産の何倍かを示す指標）が1倍を割るような「解散価値より安い」会社に改善を促した動き——を背景に、「安く放置された株」が一斉に見直された時期です。低PBR・低収益の銘柄ほど改善催促の恩恵が大きく、逆に既に高収益・高評価の「質」銘柄には見直し余地が少ない。<strong>「質」が構造的にダメなのではなく、「安さ」への追い風が強すぎた</strong>——という解釈が自然です。実際、質の各基準が悪いのではなく「安さ以外はすべて負けた」という一様なパターンは、個別基準の欠陥よりも地合い（ファクター・レジーム）を示唆します。</p>
+
+    <h3>理由2：バフェットの時間軸は12ヶ月ではない</h3>
+    <p>本検証の測定窓は12ヶ月ですが、バフェットの保有期間は「できれば永遠に」。バークシャー・ハサウェイの株主への手紙に掲載される実績表では、1965年からの複利成長は年約20%——<strong>数十年単位の複利</strong>で真価を発揮する哲学を、12ヶ月の窓で測るのは弱い近似でしかありません。質の高い会社が10年後にどうなっているかは、この検証では答えが出ません。</p>
+
+    <div class="info-box">
+      <strong>💡 シリーズを通じた学び</strong>：同じ「巨匠の教え」でも、データでの現れ方は三者三様でした。<strong>グレアムの防御は期間をまたいで再現</strong>し、<strong>順張りは地合い次第</strong>で、<strong>バフェットの「質」はこの5年では逆風</strong>。大事なのは「どれが正解か」ではなく、<strong>いま自分が乗っている追い風・向かい風がどのファクターに吹いているかを自覚すること</strong>だと考えています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑧ この検証の限界</h2>
+
+    <ol>
+      <li><strong>5年＝ほぼ単一の地合い</strong>：検証期間は株高・インフレ・低PBR改革という一つのレジームに収まっています。前半/後半で分けても「地合いの中の前後半」であり、質ファクターに追い風が吹く局面（例：景気後退・信用収縮）を含みません。</li>
+      <li><strong>12ヶ月リターンはバフェットの弱い代理</strong>：上述のとおり、数十年の複利を測る設計にはなっていません。</li>
+      <li><strong>配当を含まない価格リターン</strong>：測定は株価のみで、配当は含みません。</li>
+      <li><strong>基準の翻訳は一つの解釈</strong>：「経済的な堀」「経営者の質」など、財務数値に翻訳しきれない教えは検証に含まれていません。今回の5基準はバフェットの教えの<strong>機械判定できる外形</strong>にすぎません。</li>
+      <li><strong>コスト・税は未控除</strong>：数値はすべて売買コスト・税金の控除前です。株式分割銘柄では調整後株価と開示時点の1株あたり数値の間に歪みが生じ得ます。</li>
+      <li><strong>観測は独立でない</strong>：同じ銘柄が毎月繰り返し登場し、12ヶ月の測定窓は重なります。p値は判定月クラスタで補正していますが、数値は「傾向の目安」としてご覧ください。</li>
+      <li><strong>特定銘柄の推奨ではない</strong>：本記事は基準（ルール）の統計的性質を調べたものであり、個別銘柄の言及・推奨は一切行っていません。</li>
+    </ol>
+
+    <!-- =============================== -->
+    <h2 id="summary">⑨ まとめ——シリーズ3回の対比</h2>
+
+    <table>
+      <tr><th>検証</th><th>教えの型</th><th>この5年の日本株での結果</th></tr>
+      <tr>
+        <td><a href="guide-graham-001.html">#1 グレアム</a></td>
+        <td>守り（安く買い、暴落を避ける）</td>
+        <td style="color:#1a7f37"><strong>暴落回避の防御が両期間で一貫</strong></td>
+      </tr>
+      <tr>
+        <td><a href="guide-masters-002-trend.html">#2 順張りの教科書</a></td>
+        <td>攻め（強い株・新高値を買う）</td>
+        <td style="color:#9a6700">後半の上げ相場だけ有効＝レジーム依存</td>
+      </tr>
+      <tr>
+        <td>#3 バフェット</td>
+        <td>質（素晴らしい会社に対価を払う）</td>
+        <td style="color:#cf222e"><strong>両期間で有意に逆風——報われたのは「安さ」だけ</strong></td>
+      </tr>
+    </table>
+
+    <ul>
+      <li>事前登録した3つの合否基準（H1 スコア優位・H2 割安内での質の上乗せ・H3 暴落防御）は<strong>3つとも不合格</strong>。しかも H1・H2 は「差が出ない」ではなく<strong>統計的に有意な逆方向</strong></li>
+      <li>この5年の日本株で一貫して報われたのは<strong>「安さ」</strong>（B5 FCF利回り、グレアムの割安基準）であり、<strong>「質」への支払いは報われなかった</strong></li>
+      <li>ただしこれは「質の敗北」の証明ではなく、<strong>低PBR改革という追い風が「安さ」側に吹いた5年の記録</strong>。ファクターの風向きは変わるもの——だからこそ、権威ではなくデータで、定期的に確かめ続けます</li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📖 バフェットとグレアムをもっと知りたい方へ</div>
+      <div class="cta-box-desc">投資の名著の紹介は投資本ページにまとめています。シリーズの原点『賢明なる投資家』もこちらから</div>
+      <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🏛️ 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が約5分の1になる防御が両期間で再現。</div>
+        </a>
+        <a href="guide-masters-002-trend.html" class="related-card">
+          <div class="related-card-title">🏛️ 巨匠の教えをデータで検証 #2</div>
+          <div class="related-card-desc">ウィリアムズ・オニール・ミネルヴィニの順張り8仮説。両期間一貫の合格は0本だった。</div>
+        </a>
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理した学習ハブ。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
