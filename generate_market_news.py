@@ -1313,7 +1313,7 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
 
     return f'''
   <!-- AI 投資判断（Gemini） -->
-  <section class="ai-analysis-section">
+  <section class="ai-analysis-section" id="ai">
     <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が分析。投資判断は自己責任で）</span></p>
     <div class="ai-analysis-grid">
       {''.join(cards)}
@@ -4543,8 +4543,10 @@ def build_morning_digest_banner(now_jst, data, sentiment_label):
         chips.sort(key=lambda x: x[0])
         chips_html = ""
         if chips:
-            chips_html = ('\n    <div class="md-chips">' + "".join(c for _, c in chips)
-                          + '<a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div>')
+            # 2026-07-04 トップ整理第2弾: カウントダウンは <details> に畳む（スマホの縦圧縮・開けば従来どおり）
+            chips_html = ('\n    <details class="md-fold"><summary>📅 次の重要イベントまでのカウントダウンを見る</summary>'
+                          '<div class="md-chips">' + "".join(c for _, c in chips)
+                          + '<a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div></details>')
 
         title = "🌅 今朝の3行" if now_jst.hour < 12 else "🌇 今日の3行"
         upd = now_jst.strftime("%H:%M")
@@ -4788,13 +4790,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#0969da;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .sentiment-banner{{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid {badge_color};border-radius:16px;padding:32px 36px;margin-bottom:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}}
+    .sentiment-banner{{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid {badge_color};border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}}
     .sentiment-icon{{font-size:4rem;line-height:1;flex-shrink:0}}
     .sentiment-body{{flex:1;min-width:200px}}
     .sentiment-label-small{{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}}
     .sentiment-badge{{color:{badge_color};font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}}
     .sentiment-text{{color:#424a53;font-size:.92rem;line-height:1.6}}
-    .morning-digest{{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:32px}}
+    .morning-digest{{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}}
     .md-title{{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}}
     .md-sub{{font-size:.72rem;color:#6e7781;font-weight:500;margin-left:6px}}
     .md-line{{font-size:.9rem;color:#424a53;line-height:2.0}}
@@ -4803,6 +4805,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .md-down{{color:#cf222e;font-weight:700}}
     .md-chips{{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:12px;border-top:1px dashed #d0d7de}}
     .md-chip{{display:inline-block;padding:4px 12px;border-radius:999px;background:#f6f8fa;border:1px solid #d0d7de;font-size:.78rem;color:#424a53;font-weight:600}}
+    .md-fold summary{{cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;margin-top:8px;list-style-position:inside}}
+    .jump-bar{{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:-6px 0 18px}}
+    .jump-bar a{{padding:4px 12px;border:1px solid #d0d7de;border-radius:999px;background:#f6f8fa;color:#57606a;font-size:.78rem;font-weight:600;text-decoration:none}}
+    .jump-bar a:hover{{border-color:#0969da;color:#0969da}}
     .md-chip b{{color:#cf222e}}
     .section-title{{font-size:1.1rem;font-weight:600;color:#57606a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}}
     .cards-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:40px}}
@@ -4868,7 +4874,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
     .market-card-img{{width:100%;height:120px;object-fit:cover;object-position:top;display:block}}
     .a8-pc{{display:inline-block}}.a8-mobile{{display:none}}
-    .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
+    .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
     .hero-img{{width:100%;height:auto;display:block;max-height:280px;object-fit:cover}}
     .hero-overlay{{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 100%);display:flex;align-items:center;padding:0 36px}}
     .hero-title{{font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)}}
@@ -4907,6 +4913,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark .md-down{{color:#ff8080}}
     body.dark .md-chips{{border-top-color:#30363d}}
     body.dark .md-chip{{background:#0d1117;border-color:#30363d;color:#c9d1d9}}
+    body.dark .md-fold summary{{color:#79c0ff}}
+    body.dark .jump-bar a{{background:#161b22;border-color:#30363d;color:#8b949e}}
+    body.dark .jump-bar a:hover{{border-color:#58a6ff;color:#58a6ff}}
     body.dark .md-chip b{{color:#ff8080}}
     body.dark .section-title{{color:#8b949e}}
     body.dark .card{{background:#161b22!important;border-color:#30363d}}
@@ -4963,6 +4972,14 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
+  <!-- 🧭 ページ内ジャンプ（2026-07-04 トップ整理・案C） -->
+  <div class="jump-bar">
+    <a href="#market">💹 本日のマーケット</a>
+    <a href="#ai">🤖 AI判断</a>
+    <a href="#tools">🧮 計算ツール</a>
+    <a href="calendar.html">📅 今週の予定</a>
+  </div>
+
   <!-- ヒーロー画像 -->
   <div class="hero-banner">
     <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
@@ -5005,7 +5022,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
-  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+  <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
     <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
     <a href="guide-compound-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">💰 複利シミュレーター</a>
     <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
@@ -5032,7 +5049,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {ai_analysis_html}
 
   <!-- 今日のカード -->
-  <p class="section-title">本日のマーケット</p>
+  <p class="section-title" id="market">本日のマーケット</p>
   <div class="cards-grid">
     <div class="card" style="overflow:hidden;padding:0">
       <img src="08_market_stock.png" alt="株式市場" class="market-card-img">
