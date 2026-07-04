@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>積立目標逆算ツール｜「◯年後に◯万円」に必要な月額・年利を計算 - MarketWatch AI</title>
+  <meta name="description" content="目標額と期間から、必要な毎月の積立額または必要な年利を逆算。必要年利が高すぎる計画には注意書きを表示し、無理のない計画づくりを助けるツール。計算はすべて端末内で完結します。">
+  <meta name="keywords" content="積立,目標,逆算,必要積立額,必要利回り,資産形成,シミュレーション,計算機,投資の基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-goal-calc.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="積立目標逆算ツール｜「◯年後に◯万円」に必要な月額・年利を計算">
+  <meta property="og:description" content="目標額→必要月額 or 必要年利を逆算。高すぎる利回り前提には注意書き。端末内計算。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-goal-calc.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "積立目標逆算ツール｜「◯年後に◯万円」に必要な月額・年利を計算",
+    "description": "目標額→必要月額 or 必要年利を逆算。高すぎる利回り前提には注意書き。端末内計算。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-04",
+    "dateModified": "2026-07-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-goal-calc.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+  <style id="sim-css">
+    .s-curve-y{stroke:#9a6700;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    body.dark .s-curve-y{stroke:#d4a017}
+    .sim-panel{background:#ffffff;border:2px solid #0969da;border-radius:12px;padding:24px 26px;margin:26px 0}
+    .sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .sim-field label{display:block;font-size:.85rem;font-weight:700;color:#1f6feb;margin-bottom:6px}
+    .sim-field input[type=number]{width:100%;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:1.05rem;font-weight:600;color:#1f2328;background:#f6f8fa}
+    .sim-field input[type=number]:focus{outline:2px solid #0969da;border-color:#0969da}
+    .sim-presets{margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .sim-presets button{padding:4px 12px;border:1px solid #d0d7de;border-radius:14px;background:#f6f8fa;color:#57606a;font-size:.82rem;font-weight:600;cursor:pointer}
+    .sim-presets button:hover{border-color:#0969da;color:#0969da}
+    .sim-presets-note{font-size:.72rem;color:#8b949e}
+    .sim-check{display:block;font-size:.85rem;color:#424a53;margin:16px 0 4px;line-height:1.6}
+    .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 6px}
+    .result-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:14px 16px}
+    .result-card.result-main{background:#ddf4ff;border-color:#0969da}
+    .result-label{font-size:.78rem;color:#57606a;font-weight:600;margin-bottom:6px}
+    .result-big{font-size:1.7rem;font-weight:700;color:#0969da;line-height:1.2}
+    .result-num{font-size:1.15rem;font-weight:700;color:#1f2328}
+    .sim-details{margin:14px 0 4px}
+    .sim-details summary{cursor:pointer;font-size:.9rem;font-weight:700;color:#0969da;padding:8px 0}
+    .sim-table-wrap{max-height:340px;overflow-y:auto;border:1px solid #d0d7de;border-radius:8px}
+    .sim-table-wrap table{margin:0}
+    .sim-table-wrap thead th{position:sticky;top:0;background:#f6f8fa}
+    body.dark .sim-panel{background:#0d1117;border-color:#1f6feb}
+    body.dark .sim-field input[type=number]{background:#161b22;border-color:#30363d;color:#e6edf3}
+    body.dark .sim-presets button{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .sim-check{color:#c9d1d9}
+    body.dark .result-card{background:#161b22;border-color:#30363d}
+    body.dark .result-card.result-main{background:#1a2030;border-color:#1f6feb}
+    body.dark .result-big{color:#79c0ff}
+    body.dark .result-num{color:#e6edf3}
+    body.dark .sim-table-wrap{border-color:#30363d}
+    body.dark .sim-table-wrap thead th{background:#161b22}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 積立目標逆算ツール
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🎯 積立目標逆算ツール<br><small style="font-size:.65em;color:#57606a;font-weight:400">「◯年後に◯万円」に必要な毎月の積立額・年利を逆算</small></h1>
+    <div class="meta-line">
+      カテゴリ：💰 投資の基礎知識 &nbsp;|&nbsp; 公開：2026年7月4日 &nbsp;|&nbsp; 読了：約4分（ツールは何度でも）
+    </div>
+
+    <p><a href="guide-compound-sim.html">複利シミュレーター</a>が「この積立でいくらになるか」を計算する順方向のツールなら、こちらは<strong>逆方向</strong>——「目標額から出発して、毎月いくら必要か・何%の利回りが必要か」を逆算します。目標を数字に落とすと、計画が現実的かどうかが見えてきます。</p>
+
+    <!-- ============ ツール本体 ============ -->
+    <div class="sim-panel" id="calculator">
+      <div class="sim-grid">
+        <div class="sim-field">
+          <label for="gc-goal">目標額（万円）</label>
+          <input type="number" id="gc-goal" value="3000" min="1" max="10000000" step="100" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label for="gc-y">期間（年）</label>
+          <input type="number" id="gc-y" value="20" min="1" max="60" step="1" inputmode="numeric">
+        </div>
+        <div class="sim-field">
+          <label for="gc-p">初期投資額（万円）</label>
+          <input type="number" id="gc-p" value="0" min="0" max="1000000" step="10" inputmode="decimal">
+        </div>
+        <div class="sim-field">
+          <label>逆算するもの</label>
+          <div class="sim-presets" style="margin-top:4px">
+            <label style="font-size:.9rem;font-weight:600;color:#424a53;cursor:pointer"><input type="radio" name="gc-mode" value="amount" checked> 必要な月額</label>
+            <label style="font-size:.9rem;font-weight:600;color:#424a53;cursor:pointer"><input type="radio" name="gc-mode" value="rate"> 必要な年利</label>
+          </div>
+        </div>
+        <div class="sim-field" id="gc-field-r">
+          <label for="gc-r">想定年利（%）</label>
+          <input type="number" id="gc-r" value="5" min="0" max="30" step="0.1" inputmode="decimal">
+          <div class="sim-presets"><span class="sim-presets-note">※あくまで計算例です</span></div>
+        </div>
+        <div class="sim-field" id="gc-field-a" style="display:none">
+          <label for="gc-a">毎月の積立額（万円）</label>
+          <input type="number" id="gc-a" value="5" min="0.1" max="10000" step="0.5" inputmode="decimal">
+        </div>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card result-main">
+          <div class="result-label" id="gc-main-label">必要な毎月の積立額</div>
+          <div class="result-big" id="gc-main">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">投資する元本の合計</div>
+          <div class="result-num" id="gc-inv">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">運用で増える分（目標−元本）</div>
+          <div class="result-num" id="gc-gain">—</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">検算（その条件での最終額）</div>
+          <div class="result-num" id="gc-check">—</div>
+        </div>
+      </div>
+
+      <div class="warning-box" id="gc-warn" style="display:none"></div>
+
+      <details class="sim-details">
+        <summary>📋 5年ごとの通過点を開く</summary>
+        <div class="sim-table-wrap">
+          <table id="gc-table">
+            <thead><tr><th>年末</th><th>元本累計</th><th>資産額</th><th>目標への進捗</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="warning-box">
+      この計算は「<strong>想定した年利が毎年ぴったり実現し続ける</strong>」という単純化した仮定に基づく<strong>計算例</strong>です（月次複利・積立は毎月末・税金手数料は含みません）。実際のリターンは年ごとに大きく変動し、マイナスの年もあります。逆算された数字は将来の達成を予測・保証するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="howto">逆算ツールの健全な使い方</h2>
+
+    <ul>
+      <li><strong>「必要な月額」モードを基本に</strong>：積立額は自分でコントロールできる変数です。まず現実的な利回り想定（控えめに）で必要月額を出し、それが無理な金額なら<strong>目標か期間を調整</strong>するのが健全な順番です。</li>
+      <li><strong>「必要な年利」が高く出たら黄色信号</strong>：必要年利が高い計画は、それだけ「相場頼み」の計画だということです。このツールは必要年利が7%を超えると注意書きを表示します。利回りを上げる前提ではなく、<strong>期間を延ばす・月額を増やす・目標を見直す</strong>の3つで吸収できないか考えるきっかけにしてください。</li>
+      <li><strong>逆算→順算で往復する</strong>：ここで出た月額を<a href="guide-compound-sim.html">複利シミュレーター</a>に入れて、単利との差や課税の概算も確認すると、計画の解像度が上がります。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 なぜ「利回りを上げる」で解決しようとしないほうがいいのか</strong>：利回りの想定を1%上げるのは入力欄では一瞬ですが、現実には<strong>より大きな価格変動（下落）に耐える</strong>ことと引き換えです。積立計画の失敗の多くは、利回り不足ではなく<strong>途中の下落で積立をやめてしまう</strong>ことから起きる——という視点も、計画づくりでは大切です。
+    </div>
+
+    <!-- 関連 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい・使いたい</div>
+      <div class="cta-box-desc">数字で確かめる系のツールと記事</div>
+      <div class="related-grid">
+        <a href="guide-compound-sim.html" class="related-card">
+          <div class="related-card-title">💰 複利シミュレーター</div>
+          <div class="related-card-desc">積立×複利の力を自分の数字で計算。単利との差・課税概算つき。</div>
+        </a>
+        <a href="guide-fee-impact.html" class="related-card">
+          <div class="related-card-title">🧾 手数料インパクト計算機</div>
+          <div class="related-card-desc">信託報酬の「わずかな差」が長期の複利でいくらになるかを比較。</div>
+        </a>
+        <a href="guide-learning-roadmap.html" class="related-card">
+          <div class="related-card-title">📍 投資学習ロードマップ</div>
+          <div class="related-card-desc">30本超の解説記事を、初心者から順番に読める6ステップに整理。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本ページは情報提供を目的としており、投資助言・投資勧誘ではありません。計算結果は入力された仮定に基づく机上の計算例であり、将来の運用成果や目標の達成を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+
+<script>
+/* ===== 積立目標逆算（端末内計算・外部送信なし） =====
+   順方向: 幾何月利 (1+年利)^(1/12)−1・毎月末積立（複利シミュレーターと同一）。
+   必要月額: A = (目標 − P×(1+i)^n) × i ÷ ((1+i)^n − 1)。
+   必要年利: 0〜30%の範囲で二分法（60回）。30%でも届かなければ「達成不可」表示。 */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function clamp(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); }
+
+  function fv(P, A, r, years){
+    var i = Math.pow(1+r, 1/12) - 1, v = P;
+    for(var m=0; m<Math.round(years*12); m++) v = v*(1+i) + A;
+    return v;
+  }
+  function needA(goal, P, r, years){
+    var i = Math.pow(1+r, 1/12) - 1, n = Math.round(years*12);
+    if(i === 0) return (goal - P)/n;
+    var g = Math.pow(1+i, n);
+    return (goal - P*g) * i / (g - 1);
+  }
+  function needR(goal, P, A, years){
+    if(fv(P, A, 0, years) >= goal) return 0;
+    if(fv(P, A, 0.30, years) < goal) return null;
+    var lo = 0, hi = 0.30;
+    for(var k=0; k<60; k++){
+      var mid = (lo+hi)/2;
+      if(fv(P, A, mid, years) >= goal) hi = mid; else lo = mid;
+    }
+    return hi;
+  }
+  function fmt(man){
+    if(!isFinite(man)) return '—';
+    var v = Math.round(man);
+    if(Math.abs(v) >= 10000){
+      var oku = Math.floor(Math.abs(v)/10000)*(v<0?-1:1);
+      var man2 = Math.abs(v)%10000;
+      return oku.toLocaleString('ja-JP') + '億' + (man2 ? man2.toLocaleString('ja-JP') + '万円' : '円');
+    }
+    return v.toLocaleString('ja-JP') + '万円';
+  }
+
+  function recalc(){
+    var mode = document.querySelector('input[name="gc-mode"]:checked').value;
+    var goal = clamp(parseFloat($('gc-goal').value) || 1, 1, 10000000);
+    var Yrs = clamp(Math.round(parseFloat($('gc-y').value) || 1), 1, 60);
+    var P = clamp(parseFloat($('gc-p').value) || 0, 0, 1000000);
+    $('gc-field-r').style.display = mode === 'amount' ? '' : 'none';
+    $('gc-field-a').style.display = mode === 'rate' ? '' : 'none';
+    var warn = $('gc-warn'); warn.style.display = 'none'; warn.textContent = '';
+    var A, r;
+    if(mode === 'amount'){
+      r = clamp(parseFloat($('gc-r').value) || 0, 0, 30)/100;
+      A = needA(goal, P, r, Yrs);
+      $('gc-main-label').textContent = '必要な毎月の積立額';
+      if(A <= 0){
+        $('gc-main').textContent = '積立なしで到達見込み';
+        A = 0;
+      } else {
+        $('gc-main').textContent = (Math.round(A*100)/100).toLocaleString('ja-JP') + '万円';
+      }
+    } else {
+      A = clamp(parseFloat($('gc-a').value) || 0.1, 0.1, 10000);
+      r = needR(goal, P, A, Yrs);
+      $('gc-main-label').textContent = '必要な年利（費用控除後ベース）';
+      if(r === null){
+        $('gc-main').textContent = '達成不可（年30%でも不足）';
+        warn.textContent = 'この条件は年利30%でも届きません。目標額を下げる・期間を延ばす・月額や初期額を増やす、のいずれかで前提を見直すことをおすすめします。';
+        warn.style.display = '';
+        ['gc-inv','gc-gain','gc-check'].forEach(function(id){ $(id).textContent = '—'; });
+        $('gc-table').getElementsByTagName('tbody')[0].innerHTML = '';
+        return;
+      }
+      $('gc-main').textContent = (r*100).toFixed(2) + '%';
+      if(r > 0.07){
+        warn.textContent = '必要年利が7%を超えています。先進国株式インデックスの歴史的平均に近い〜それ以上の高い前提であり（その平均自体、将来も続く保証はありません）、大きな下落に耐えることとセットの計画になります。期間を延ばす・月額を増やす・目標を見直す、で吸収できないかもご検討ください。';
+        warn.style.display = '';
+      }
+    }
+    var inv = P + A*Yrs*12;
+    var check = fv(P, A, r, Yrs);
+    $('gc-inv').textContent = fmt(inv);
+    $('gc-gain').textContent = (goal-inv>=0?'+':'') + fmt(goal - inv);
+    $('gc-check').textContent = fmt(check);
+    var tb = $('gc-table').getElementsByTagName('tbody')[0];
+    tb.innerHTML = '';
+    var i = Math.pow(1+r, 1/12) - 1, v = P, principal = P;
+    for(var m=1; m<=Yrs*12; m++){
+      v = v*(1+i) + A; principal += A;
+      if(m % 60 === 0 || m === Yrs*12){
+        var tr = document.createElement('tr');
+        [Math.round(m/12*10)/10+'年', fmt(principal), fmt(v), Math.min(999, Math.round(100*v/goal))+'%']
+          .forEach(function(cell){ var td=document.createElement('td'); td.textContent=cell; tr.appendChild(td); });
+        tb.appendChild(tr);
+      }
+    }
+  }
+
+  ['gc-goal','gc-y','gc-p','gc-r','gc-a'].forEach(function(id){
+    $(id).addEventListener('input', recalc);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="gc-mode"]'), function(rb){
+    rb.addEventListener('change', recalc);
+  });
+  recalc();
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
