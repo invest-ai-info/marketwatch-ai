@@ -4682,6 +4682,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 🧪 解説「<a href="guide-signal-lab-030.html" style="color:#0969da"><b>ロング全般gate前向き反証——金属レジーム転換が法則を覆す</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🏖️ 解説「<a href="guide-withdrawal-sim.html" style="color:#0969da"><b>取り崩しシミュレーター（資産は何年持つか・定額と定率で計算）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎯 解説「<a href="guide-goal-calc.html" style="color:#0969da"><b>積立目標逆算ツール（目標額から必要な月額・年利を計算）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🧾 解説「<a href="guide-fee-impact.html" style="color:#0969da"><b>手数料インパクト計算機（信託報酬の差を長期複利で比較）</b></a>」公開'},
