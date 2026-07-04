@@ -4347,11 +4347,8 @@ def build_weekly_strategy_banner(now_jst):
         if not latest_file:
             return ""
         rng = _weekly_range_label(latest_date)
-        return f'''  <!-- 今週の投資戦略（最新の guide-weekly へ自動リンク。手動編集不要）-->
-  <a href="{latest_file}" style="display:block;text-decoration:none;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
-    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📅 今週の投資戦略（{rng}）</div>
-    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">注目指標と3シナリオ別マーケット展望を読む →</div>
-  </a>'''
+        return f'''  <!-- 今週の投資戦略（最新の guide-weekly へ自動リンク。手動編集不要。2026-07-04 薄型化）-->
+  <a href="{latest_file}" style="display:block;text-decoration:none;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">📅 今週の投資戦略（{rng}）— 注目指標と3シナリオ別展望を読む →</a>'''
     except Exception as e:
         print(f"  ⚠️ weekly strategy banner 生成スキップ: {e}")
         return ""
@@ -4433,11 +4430,8 @@ def build_indicator_preview_banner(now_jst):
             else:
                 _labels = " ＋ ".join(flag.get(_r.get("country", "us"), "") + " " + _r.get("name", "指標") for _r in _results[:3])
                 _inner = f"✅ {_labels} の結果速報（{len(_results)}件）— 各結果と市場反応を見る →"
-            return f'''  <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。複数指標対応。preview.html へ）-->
-  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#1a7f37,#0969da);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
-    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📊 経済指標の結果速報</div>
-    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">{_inner}</div>
-  </a>'''
+            return f'''  <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。複数指標対応。preview.html へ。2026-07-04 薄型化）-->
+  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#1a7f37,#0969da);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">📊 {_inner}</a>'''
         # ── ② 発表前：3日以内（当日含む）の high 重要度指標プレビュー ──
         ups = find_upcoming_events(now_jst, days_ahead=3)
         highs = [e for e in ups if e.get("importance") == "high"]
@@ -4454,11 +4448,8 @@ def build_indicator_preview_banner(now_jst):
         when0 = _lbl(e0["date"])
         date0 = f"{e0['date'].month}/{e0['date'].day}"
         more = f"　ほか{len(highs) - 1}件" if len(highs) > 1 else ""
-        return f'''  <!-- 注目の経済指標バナー（発表3日前〜当日まで常時表示・📰更新履歴とは別枠。preview.html へ自動リンク）-->
-  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#cf222e,#bc4c00);color:#fff;border-radius:10px;padding:16px 22px;margin-bottom:32px">
-    <div style="font-size:.72rem;letter-spacing:.1em;opacity:.92;margin-bottom:4px">📅 注目の経済指標プレビュー</div>
-    <div style="font-size:1.02rem;font-weight:700;line-height:1.5">{emoji} <span style="background:rgba(255,255,255,.22);border-radius:6px;padding:1px 8px">{when0}</span> {flag.get(e0["country"], "")} {e0["name"]}（{date0}）{more} — 結果別シナリオを見る →</div>
-  </a>'''
+        return f'''  <!-- 注目の経済指標バナー（発表3日前〜当日まで常時表示・📰更新履歴とは別枠。preview.html へ自動リンク。2026-07-04 薄型化）-->
+  <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#cf222e,#bc4c00);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">{emoji} <span style="background:rgba(255,255,255,.22);border-radius:6px;padding:1px 8px">{when0}</span> {flag.get(e0["country"], "")} {e0["name"]}（{date0}）{more} — 結果別シナリオを見る →</a>'''
     except Exception as e:
         print(f"  ⚠️ indicator preview banner 生成スキップ: {e}")
         return ""
@@ -4775,7 +4766,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     if _wk_item:
         _history_items.append(_wk_item)
     _history_items.sort(key=lambda x: x["date"], reverse=True)  # 日付降順（安定ソート＝同日は手動を先に）
-    update_history_html = "<br>\n".join("      " + it["line"] for it in _history_items[:5])
+    # 🆕 2026-07-04 トップ整理: 最新1件だけ常時表示し、残りは <details> に畳む（スマホの縦圧縮）
+    update_history_first = ("      " + _history_items[0]["line"]) if _history_items else ""
+    update_history_rest = "<br>\n".join("      " + it["line"] for it in _history_items[1:5])
     # 🆕 注目の解説記事（独自コンテンツを前面に）
     featured_guides = build_featured_guides()
 
@@ -4998,18 +4991,21 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 {morning_digest}
 
   <!-- 更新履歴 -->
-  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:32px;font-size:.88rem;line-height:1.9">
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
       <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-{update_history_html}
+{update_history_first}
+      <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+{update_history_rest}
+      </div></details>
     </div>
   </div>
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
-  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 22px;margin-bottom:32px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
     <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
     <a href="guide-compound-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">💰 複利シミュレーター</a>
     <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
@@ -5021,8 +5017,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {indicator_preview_banner}
   {weekly_strategy_banner}
 
-  <!-- 騰落レシオ -->
-  {_build_touraku_section(touraku)}
+  <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
+  <div style="font-size:.82rem;color:#57606a;margin:0 4px 12px">📊 騰落レシオ（東証プライム）は <a href="market-health.html" style="color:#0969da;font-weight:600">市場健康度ページ</a> でご覧ください →</div>
 
   <!-- A8広告枠①（トップページ・ニュース上）-->
   <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
