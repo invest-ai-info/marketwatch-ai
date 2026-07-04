@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-07-05 | 🧪 signal-lab #030 — 自動公開完了 ✅
+
+- **基準日（JST）**: 2026-07-05
+- **採択仮説**: 「dir=long gate（ロング全般回避ゲート）は前向きデータで反証されるか」（優先度①：tracker昇格/反証変化）
+- **事前宣言**: 反証条件＝前向きN≥80かつ平均RのCI上限<0。CI上限≥0で反証成立
+- **検証データ**: 全決済済み1,647件ベース（signals-log.json 1,718件）。ロング全体 IS 789件・FWD 195件
+- **結果**: IS 301/789=38.1% E(R)=-0.161 RCI[-0.280~-0.042]。FWD 96/195=49.2% E(R)=+0.231 RCI[-0.016~+0.478]。N=195≥80かつCI上限+0.478>>0→反証成立。主因：金属IS E(R)=-0.964→FWD+0.672（+1.636R）のレジーム転換。構成シフト寄与=-0.027R≒ゼロ（性能シフトが本質）。sweep FDR通過0本（新規なし）
+- **判定**: ⛔反証（claims.json verify.py再計算値で n修正 981/242）
+- **生成ファイル**: drafts/draft-signal-lab-030.html / drafts/labnotes/lab-030-analysis.md / drafts/labnotes/lab-030-claims.json / signal-lab-ledger.md → **guide-signal-lab-030.html 公開済み**
+
+### 自動公開ゲート結果
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 030 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 6/6クレーム緑・要約未検証0件・SVG警告0件（n修正後）
+- [x] 8-3 Opus compliance 🟢白 ✅（kinsho-v1×3箇所/断定語なし/研究フレーミング一貫/投資助言なし 全確認・修正不要）
+- [x] 8-4-ii 独立Opus 🟢白 ✅（同上・修正者自己承認回避確認済）
+- [x] 8-4-iii finalize_signal_lab.py 030 2026-07-05 → guide-signal-lab-030.html 生成（size=35KB・svg=2・kinsho=3）
+- [x] 8-4-iv publish_article.py → guides.html カード追加・SYNC_FILES・更新履歴 完了
+- [x] 8-4-v check_site_consistency.py ✅（guide-signal-lab-030.html SYNC登録確認・既存85件の未登録は旧来の事前確認済み問題）
+- [x] 8-4-vi git commit + PUSH-MAIN ✅
+
+---
+
 ## 2026-07-04 | 🧪 signal-lab #029 — 自動公開完了 ✅
 
 - **基準日（JST）**: 2026-07-04
