@@ -152,6 +152,9 @@ def build_html(items):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>🚨 政治発言ライブフィード｜MarketWatch AI</title>
 <meta name="description" content="トランプ Truth Social・WhiteHouse 公式声明・主要中銀発言を 30 分ごとに自動収集。重要度別ランク付け、影響銘柄推定、Gemini による日本語化と一言コメント。">
 <link rel="canonical" href="https://marketwatch-jp.com/political-feed.html">
@@ -246,7 +249,7 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div class="header-inner"><div class="header-title">📊 MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">🚨 政治発言ライブ</div></div></div></header>
+<header><div class="header-inner"><div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">🚨 政治発言ライブ</div></div></div></header>
 
 <main>
 <nav class="nav-bar">
