@@ -13,12 +13,44 @@ finalize_signal_lab.py — drafts/draft-signal-lab-NNN.html(簡素head・noindex
   - <style> 以降（CSS+本文）は下書きのまま保持
 出力: guide-signal-lab-NNN.html
 """
-import os, re, sys
+import json
+import os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 GA_ID = "G-FMVFEV7Q2E"
 ADSENSE = "ca-pub-2552122294306014"
 OG_IMAGE = "https://marketwatch-jp.com/08_market_stock.png"
+
+
+def _tracker_gate(date):
+    """2026-07-04 新設: routine 実行時（git リポジトリ内）のみ、公開前に
+    「前向きトラッカーが当日更新済み ＋ コミット済み」を強制する。
+    背景＝2026-07-03/04 に signal-lab-tracker.json のコミット漏れが2日連続で発生し、
+    ホールドアウト剥奪などの統計改修が GitHub 側 tracker に反映されなかった。
+    git リポジトリ外（ローカル手動実行）では何もしない。"""
+    try:
+        r = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
+                           cwd=ROOT, capture_output=True, text=True, timeout=30)
+        if r.returncode != 0 or r.stdout.strip() != "true":
+            return
+    except Exception:
+        return
+    tp = os.path.join(ROOT, "signal-lab-tracker.json")
+    try:
+        with open(tp, encoding="utf-8-sig") as f:
+            up = json.load(f).get("updated_at")
+    except Exception:
+        up = None
+    if up != date:
+        print(f"❌ signal-lab-tracker.json の updated_at={up} が基準日 {date} と不一致。"
+              f"`python signal_lab_tracker.py update --date {date}` を実行してから再試行")
+        sys.exit(1)
+    r = subprocess.run(["git", "status", "--porcelain", "--", "signal-lab-tracker.json"],
+                       cwd=ROOT, capture_output=True, text=True, timeout=30)
+    if r.returncode == 0 and r.stdout.strip():
+        print("❌ signal-lab-tracker.json が未コミット。8-1 の "
+              "`git add signal-lab-tracker.json` → commit を済ませてから再試行")
+        sys.exit(1)
 
 
 def _meta(html, name, prop=False):
@@ -37,6 +69,7 @@ def main():
         print(f"❌ 日付不正: {date}")
         sys.exit(2)
     y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    _tracker_gate(date)
 
     src = os.path.join(ROOT, "drafts", f"draft-signal-lab-{nnn}.html")
     dst = os.path.join(ROOT, f"guide-signal-lab-{nnn}.html")
