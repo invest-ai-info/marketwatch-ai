@@ -23,6 +23,7 @@ publish の流れ（--dry-run で②〜⑤の確認のみ）:
   → ⑧確認は `python mw.py status update-market-news.yml`
 """
 import os
+import re
 import sys
 import json
 import time
@@ -210,8 +211,11 @@ def cmd_deploy(argv):
             print(f"  ✅ sync 成功（{attempt} 回目）")
             synced = True
             break
-        if "🚫" in out:
-            print("  🚫 staleガード検知（GitHub側が新しい）＝リトライ無効 → 即エスカレ停止")
+        # 2026-07-04 fix: sync失敗サマリの凡例「🚫=ローカルが古い疑い…」に絵文字が含まれ、
+        # 通信エラーだけの部分失敗でも stale と誤検知していた。実ファイル行（"🚫 "＝直後がスペース）
+        # のみを stale 扱いにする（凡例は "🚫=" なので除外される）。
+        if re.search(r"🚫(?!=)", out):
+            print("  🚫 staleガード検知（GitHub側が新しい/ローカル欠落）＝リトライ無効 → 即エスカレ停止")
             print("     対応: 先に最新を取り込む（reconcile）か、意図的なら sync --force")
             return 2
         if attempt < DEPLOY_MAX_ATTEMPTS:
