@@ -401,6 +401,7 @@ def main():
         with open(args.json, "w", encoding="utf-8") as f:
             json.dump(out, f, ensure_ascii=False, indent=2)
         print(f"→ FDR通過 {len(out['candidates'])}本を {args.json} に出力（トラッカー登録用）。")
+        print(f"⚠️ 必須（routine向け）: {args.json} を 8-1 のコミットに必ず含めること（git show --stat HEAD で確認）。")
 
 
 if __name__ == "__main__":
