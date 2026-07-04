@@ -903,3 +903,31 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 - **コンプラ＝記事2本とも独立Opus🟢白**（HY OAS水準/HY・IG区分/NY連銀10年-3か月モデル/逆イールド非断定/タイムラグ＝全検証。クレジット記事のHYG言及は「体感の手段」で推奨でない）。market-health のカードも同じ非断定表現＋代理指標明記＋免責。
 - **⚠️ ハマり3点**：①`publish_article` の `--card-title` に**スマートクォート `“”` を入れると PowerShell が `"` に正規化して引数が分断**→失敗。`「」`を使う（記事HTML内の`“”`はOK）。②**相互リンクする2記事は、両方の②〜⑤を先に済ませてから `mw check`→sync**（1本目だけだとリンク先がSYNC未登録でcheck失敗）。2本目は `publish_article.py --no-reconcile` で1本目のローカル追加を保持。③FRED不可。
 - 実機検証＝記事2本ライブ200＋market-health に両card・記事リンク反映を確認。market-health は毎朝夕の update-market-news で自動更新。
+
+
+---
+
+# 📦 2026-07-04 退避（SESSION_HANDOFF スリム化・サイズ予算超過のため）
+
+## 🇯🇵 日本株：EV最速化ロードマップ＋施策1（ネットR）実装（2026-06-26）
+
+「検証を日本株に切替・期待値を最速で上げる」依頼に対し、4独立レンズ（クオンツ/リスク執行/データ優位/競争戦略）で検討→収束。**詳細は非公開ローカル `JP_EV_ROADMAP.md`**（JP個別戦略は🔴黒＝public SYNCしない）。
+- **総意**：研究はもう十分深い。EV漏れは"新エッジ探し"でなく①研究→現実(コスト未計上)②研究→行動(実行規律)③未活用の無料データ(主体別フロー)。新シグナル追加は多重比較で精度低下＝逆効果。
+- **✅施策1完了＝全エッジをネットRで再計算**：`_jp_momentum_edge.py` に `cost_r(size_class)`（単一ソース・往復コスト表）→ `netR5/10/20` 列生成。`_jp_momentum_validate.py --net` でネット検証（既定グロス＝daily非破壊・既存R列不変）。**結果**＝厚いエッジ（続伸合成・厳格+0.300/KEEP∩続伸+0.248）はコスト耐性あり、**超小型・規模外・連騰過熱はnetで負に転落**。diffR(対プール差)はコスト相殺で不変＝netで効くのは「絶対meanRが0超か＝実際に儲かるか」。OOSでは攻め減衰・守り持続（コストよりOOS減衰が大リスク）。⚠️JPファイルはpublic SYNC外（private repo `jp-momentum-research` 反映は別途）。
+- **✅施策2完了（2026-06-27）＝危険スコア→分数ケリーのサイジング**（`_jp_sizing_engine.py`・ローカルSYNC外）：①危険スコア倍率を手置き`{0:1.0,1:0.5}`→ネットR由来の分数ケリー`{0:1.0,1:0.37}`（20k観測のnetR10からKelly実測。score≥2はnetで負→0）。②モードbase_fをフルケリー(0.122)分数で再定義＝**オーナー判断でハーフケリー**へ（growth0.12→0.06/balanced0.08→0.04/preserve0.04→0.03、CAP_F0.16→0.08）。clean×受益 15%→7.5%（レバ1.88x→0.94x）。ハーフ＝成長率フルの約75%を変動半分で・推定エッジのブレ/OOS減衰に強い。反映は"推奨"（発注はオーナー）・可逆。
+- **✅施策3完了（2026-06-27）＝赤字回避ゲートを検証段に統合**（`_jp_momentum_validate.py`・ローカルSYNC外）：観測✅→検証❌→トラッカー✅ の穴（validate）を塞ぐ。fundamental akaji（点in-time財務・直近開示赤字）を技術ゲートと直交する軸として追加。net実測＝黒字netR+0.073/blowup7.6% vs 赤字netR+0.000/blowup15.9%(2倍・perm_p0.006有意)。統合ゲートKEEP_ALL=netR+0.105/blowup5.5%(プール8.2%→最小)。サイジング側は対応不要（ウォッチリストは黒字選別済）。
+- **✅施策4完了（2026-06-27）＝投資部門別フローをレジーム判定に統合**（ローカルSYNC外）：`build_jp_investor_flow.py`(新規)がJPX無料週次Excel`stock_val_1_*.xls`から海外投資家・個人の当週ネット(買い−売り)を取得・マージ蓄積→`_jp_investor_flow.json`。`_jp_regime_cockpit.py`に4つ目の確認シグナル（外国人フロー4週累計・confirm/diverge）を追加＝**コア合議の閾値は不変・判定には未算入**（昇格は前向き検証後）。`jp_daily.py`④.3に組込。検証＝外国人+10,681億/4週+1,581億→買い越し基調・risk_on✅確認。build_jp_investor_flowは非公開JP（public build_jp_margin/rankingsとは別）。
+- **✅施策5完了（2026-06-27）＝発注規律カード化**（`jp_daily.py`→`DAILY_SUMMARY.md`・ローカルSYNC外＝個別銘柄含むためpublic🔴黒）：サイジング×入口タイミングをcodeマージ→「◎今すぐ妙味(サイズ十分×入口OK)／○監視(入口待ち)／✕見送り(危険≥2)」に整理＋レジーム最上段に外国人フロー＋🛡️撤退規律ライン。**施策2のf≥0.10抽出が0件になるバグも是正**。検証＝◎33/○15出力OK。DAILY_SUMMARY/jp_dailyともSYNC外確認。
+- **✅施策6完了（2026-06-27）＝続伸=risk_off条件付きトラッカー＋点火アラート**（ローカルSYNC外）：`_jp_momentum_tracker.py` に `tag_regime()`(market_regime.csv join)＋mask `m_cont_riskoff`(続伸×risk_off)＋SEED `continuation_riskoff`(promote_n80)。検証＝holdout 続伸×risk_off meanR+0.367/blowup0%（無条件版+0.023＝レジーム依存裏付け）・perm_p0.524＝OOS薄n~22で前向きN蓄積待ち。`jp_daily.py` カードに risk_off時の🔥点火窓アラート。
+- 🎉 **JP_EV_ROADMAP 全6施策 完了（1ネットR/2分数ケリー/3赤字回避統合/4外国人フロー/5発注規律カード/6 risk_off点火）**。共通＝「新エッジ探しでなく既存エッジをコスト/サイズ/規律/需給確認で実トレードに変換」。詳細は非公開 `JP_EV_ROADMAP.md`。
+- **残＝時間が律速**：前向きトラッカー各仮説のforward Nが貯まる→🟢昇格→人間が実装(#21の道)。index_long_bonus/外国人フロー/続伸×risk_off は決定算入への昇格を前向き検証後に判断。任意フォロー＝取引コストの実約定ログ更新(cost_r精緻化)/カードのスマホ最適化。
+- ✅ **発注規律カードの自動生成をスケジュール化（2026-06-27）**：Windowsタスク **`MarketWatch_JP_Daily`**＝**平日7:00**に `python -X utf8 jp_daily.py` を自動実行（WorkingDir=作業フォルダ）。堅牢設定＝**電池でも起動**(DisallowStartIfOnBatteries=False/StopIfGoingOnBatteries=False)・**取りこぼし遅れ実行**(StartWhenAvailable)・30分上限・ユーザー権限(非管理者)。`-X utf8`でcp932絵文字クラッシュ回避。既存`MarketWatch_YT_Shorts`(夜)と同方式。スケジューラ起動・手動実行とも検証済。⚠️**アプリ非依存だがPCが起動(ログオン)している必要**（寝てて逃したら起動後に自動で遅れ実行）。出力=`DAILY_SUMMARY.md`(ローカル・個別銘柄含むためpublic🔴黒・SYNC外)。毎朝の運用＝カードを上から読む→絞って判断→自分で発注+損切り。時刻変更は `Set-ScheduledTask`/タスクスケジューラGUIで。
+- ✅ **実行時刻 7:00→6:00 に変更（2026-06-27）**。
+- ✅ **🥇健全性監視（沈黙の失敗の番人・2026-06-27）**：①カード冒頭に「🕖カード生成: 日時」バナー（今日でなければ自動更新停止＝開いた瞬間に分かる）＋ jp_daily が成功時に `_jp_heartbeat.txt`(今日の日付)を書く。②Windowsタスク **`MarketWatch_JP_Health`（平日8:00・電池OK・StartWhenAvailable）**が `_jp_health_check.py` を実行＝心拍≠今日なら `JP_カード未更新_要確認.txt` をOneDriveフォルダに作成（スマホで気づける／次回正常更新で自動消去・週末はスキップ）。サイトの automation-health と同思想をローカルJPにも。
+- ✅ **🥈昇格アラート（2026-06-27）**：`jp_daily.py` カード上段に、前向きトラッカーで🟢昇格/⛔反証が出た仮説を「🎯要対応」表示（手でtracker見なくてよい）。未昇格の間は「🎯昇格まで N=x/y（あとz）」の進捗表示。
+- 🥉 **取引ログ（推奨・新規コード不要）**：既存 `Googleフォーム→スプレッドシート→my-trades.json` 導線（`MY_TRADES_SETUP.md`）でJP実取引を記録すれば、(a)本物の前向き勝率/期待値、(b)実約定スリッページから施策1の `cost_r` を実測更新、が将来できる。スマホ入力が最も続く＝オーナーの習慣化待ち。
+- ⚠️ 新スクリプト `_jp_health_check.py` もローカル/SYNC外（JP研究）。
+- 全レンズ一致のアンチパターン：派手なBT数字/レバ100倍狙い（破産確率の崖）/HFT速度勝負＝やらない。**生き残って複利が1億への唯一解**。
+
+---
+
