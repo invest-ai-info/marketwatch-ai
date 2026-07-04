@@ -4671,6 +4671,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🏖️ 解説「<a href="guide-withdrawal-sim.html" style="color:#0969da"><b>取り崩しシミュレーター（資産は何年持つか・定額と定率で計算）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎯 解説「<a href="guide-goal-calc.html" style="color:#0969da"><b>積立目標逆算ツール（目標額から必要な月額・年利を計算）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🧾 解説「<a href="guide-fee-impact.html" style="color:#0969da"><b>手数料インパクト計算機（信託報酬の差を長期複利で比較）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: ⚖️ 解説「<a href="guide-breakeven-calc.html" style="color:#0969da"><b>損益分岐勝率計算機（その勝率と利幅でトントンを超えられるか）</b></a>」公開'},
@@ -5014,6 +5015,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
     <a href="guide-fee-impact.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧾 手数料インパクト</a>
     <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
+    <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
   </div>
 
   {indicator_preview_banner}
