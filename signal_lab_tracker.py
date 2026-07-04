@@ -252,6 +252,11 @@ def cmd_update(args, data, today):
         for h, st in newly:
             print(f"   - {h['label']}: {st}（前向き 平均R {h['forward']['avgR']:+.3f} / N={h['forward']['n']}）")
     print("\n※ 昇格＝ライブ配信フィルタ/信頼度へ反映する“候補”の旗立てのみ。発火エンジンには自動で触れない（人間が最終反映）。")
+    # 2026-07-04: 7/3・7/4 に routine が tracker.json のコミットを2日連続で漏らした（8-1 の add 例に
+    # 本ファイルが無く、注記が見落とされた）。実行主体への明示リマインドをコード側から出す。
+    print("⚠️ 必須（routine向け）: signal-lab-tracker.json を更新した。8-1 のコミットに必ず含めること："
+          "`git add drafts/ signal-lab-ledger.md signal-lab-tracker.json` → `git show --stat HEAD` で本ファイルが"
+          "入ったことを確認。未コミットのままだと finalize_signal_lab.py が公開を拒否する。")
 
 
 def cmd_register(args, data, today):
