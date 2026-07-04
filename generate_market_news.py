@@ -4671,6 +4671,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎯 解説「<a href="guide-goal-calc.html" style="color:#0969da"><b>積立目標逆算ツール（目標額から必要な月額・年利を計算）</b></a>」公開'},
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🧾 解説「<a href="guide-fee-impact.html" style="color:#0969da"><b>手数料インパクト計算機（信託報酬の差を長期複利で比較）</b></a>」公開'},
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: ⚖️ 解説「<a href="guide-breakeven-calc.html" style="color:#0969da"><b>損益分岐勝率計算機（その勝率と利幅でトントンを超えられるか）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 💰 解説「<a href="guide-compound-sim.html" style="color:#0969da"><b>複利シミュレーター（積立×複利を自分の数字で計算）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-003-quality.html" style="color:#0969da"><b>巨匠検証#3 バフェットの「質」は日本株で報われたか</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-002-trend.html" style="color:#0969da"><b>巨匠の教え検証 #2｜「順張りの教科書」は日本株で通用するか</b></a>」公開'},
@@ -5005,10 +5008,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
-  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 22px;margin-bottom:32px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-    <span style="color:#0969da;font-weight:700;white-space:nowrap">🧮 複利シミュレーター</span>
-    <span style="color:#424a53;font-size:.84rem;flex:1;min-width:200px">積立×複利の力を自分の数字で計算（単利比較・課税概算つき・端末内で完結）</span>
-    <a href="guide-compound-sim.html" style="color:#ffffff;background:#0969da;padding:6px 16px;border-radius:8px;font-size:.84rem;font-weight:600;text-decoration:none;white-space:nowrap">計算してみる →</a>
+  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:12px 22px;margin-bottom:32px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+    <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
+    <a href="guide-compound-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">💰 複利シミュレーター</a>
+    <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
+    <a href="guide-fee-impact.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧾 手数料インパクト</a>
+    <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
   </div>
 
   {indicator_preview_banner}
