@@ -36,8 +36,11 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # ① Actions ワークフロー: (ラベル, ワークフローyml, 直近実行の許容経過[時間], 重大度)
 WORKFLOW_CHECKS = [
     ("テクニカルアラート(4H)",  "technical-alerts.yml",    6,  "critical"),
-    ("1Hシグナル収集",          "technical-alerts-1h.yml", 3,  "warn"),
-    ("政治発言フィード",        "political-alerts.yml",    3,  "critical"),
+    # 2026-07-05: 3h→5h/4h に緩和。GitHub cron混雑で1H/30分ジョブが3〜4.5h滑るのは日常で、
+    # 3h閾値だと毎日誤検知メール（6月末〜7月に連日発火した実績）。5h=1Hジョブが4回連続で
+    # 消えたら検知＝本物の停止は引き続き当日中に捕まえる。
+    ("1Hシグナル収集",          "technical-alerts-1h.yml", 5,  "warn"),
+    ("政治発言フィード",        "political-alerts.yml",    4,  "critical"),
     ("市況ニュース生成",        "update-market-news.yml",  15, "warn"),
     ("パニック反発スキャン",    "panic-scan.yml",          27, "warn"),
     # 🆕 低頻度ジョブ（2026-07 追加）。7/1 に monthly-report が取りこぼされ6月レポート未生成の事故で、
