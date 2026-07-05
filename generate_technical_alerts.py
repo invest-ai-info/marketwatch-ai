@@ -2579,6 +2579,42 @@ def should_alert(history, symbol, signal_type, cooldown_hours=ALERT_COOLDOWN_HOU
 
 
 # ─────────────────────────────────────────────
+# 🆕 2026-07-05: 昇格エッジ限定メール（オーナー要望＝勝率が確認されたものだけ受信）
+#   signal-lab-tracker.json の status=="promoted" 仮説にマッチしたシグナルだけメール送信。
+#   他は従来どおり signals-log に記録（前向き検証は全シグナル継続＝将来の昇格で自動的に配信対象へ）。
+#   無効化は環境変数 EMAIL_PROMOTED_ONLY=0（コード変更不要のキルスイッチ）。
+# ─────────────────────────────────────────────
+EMAIL_PROMOTED_ONLY = os.environ.get("EMAIL_PROMOTED_ONLY", "1") != "0"
+
+
+def load_promoted_hypotheses():
+    """signal-lab-tracker.json から status=='promoted' の仮説だけ読む。
+    読めないとき（checkout 欠落・壊れた JSON 等）は None＝ゲート無効（fail-open＝従来どおり全送信）。"""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
+    try:
+        data = json.load(open(path, encoding="utf-8-sig"))
+        hyps = data.get("hypotheses", [])
+        return [h for h in hyps if h.get("status") == "promoted" and isinstance(h.get("filter"), dict)]
+    except Exception as e:
+        print(f"⚠️ 昇格ゲート: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 従来どおり全送信")
+        return None
+
+
+def match_promoted_hypothesis(promoted_hyps, probe):
+    """probe（signals-log 相当の属性 dict）が昇格仮説のいずれかに合致すればその仮説を返す。
+    照合は固定オラクル signal_lab_verify.match をそのまま使う（判定意味の二重実装を避ける）。"""
+    try:
+        import signal_lab_verify as _slv
+        for h in promoted_hyps:
+            if _slv.match(probe, h["filter"]):
+                return h
+        return None
+    except Exception as e:
+        print(f"⚠️ 昇格ゲート: 照合エラー ({type(e).__name__}) → このシグナルは送信許可 (fail-open)")
+        return {"id": "_gate_error", "label": "照合エラーのため暫定送信"}
+
+
+# ─────────────────────────────────────────────
 # メイン
 # ─────────────────────────────────────────────
 def main():
@@ -2611,6 +2647,14 @@ def main():
 
     print(f"📡 {len(SYMBOLS)} 銘柄の {timeframe.upper()} 足チャート分析を開始 "
           f"(email={'OFF' if no_email else 'ON'}, cooldown={cooldown_hours}h)")
+
+    # 🆕 2026-07-05: 昇格エッジ限定メール（EMAIL_PROMOTED_ONLY=0 で無効化）
+    promoted_hyps = load_promoted_hypotheses() if EMAIL_PROMOTED_ONLY else None
+    if EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
+        _labels = ", ".join(f"{h.get('label')}({h.get('id')})" for h in promoted_hyps) or "なし"
+        print(f"🏅 昇格エッジ限定メール: ON — promoted {len(promoted_hyps)} 件: {_labels}")
+        if not promoted_hyps:
+            print("   （昇格仮説 0 件＝今回 run はメール送信なし・データ収集のみ）")
 
     # 履歴ロード（timeframe ごとに別ファイル）
     _orig_history_file = ALERT_HISTORY_FILE
@@ -2940,6 +2984,30 @@ MarketWatch AI Alerts
                     short_name = short_name[:12]
                 subject += f" /{short_name} {nearest['hours_until']:.0f}h"
 
+        # 🆕 2026-07-05: 昇格エッジ限定ゲート＝トラッカーで勝率が確認された(promoted)仮説に
+        #    マッチしたシグナルだけメール送信。signals-log への記録・前向き検証は全シグナル継続。
+        #    照合属性は build_signal_log_entry と同じ計算（固定オラクル match が読むキーのみ）。
+        promoted_match = None
+        if filter_send_email and EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
+            _sr_probe = compute_sr_runway(position_plan, indicators)
+            _gate_probe = {
+                "ticker": ticker,
+                "direction": position_plan["direction"] if position_plan else None,
+                "primary_signal": fresh_signals[0]["type"],
+                "timeframe": timeframe,
+                "trend_alignment": {"higher_tf_trend": (trend_align or {}).get("higher_tf_trend")},
+                "sr_runway": _sr_probe,
+                "selection": compute_selection_tier(position_plan, indicators, _sr_probe, fresh_signals[0]["type"]),
+            }
+            promoted_match = match_promoted_hypothesis(promoted_hyps, _gate_probe)
+            if promoted_match:
+                print(f"    🏅 昇格ゲート通過: {promoted_match.get('label')} ({promoted_match.get('id')})")
+                body = f"🏅 検証済みエッジ該当: {promoted_match.get('label')}\n\n" + body
+            else:
+                filter_send_email = False
+                filter_block_reason = f"昇格エッジ非該当（promoted {len(promoted_hyps)} 件に不一致）"
+                print(f"    🔇 昇格ゲート: {filter_block_reason} → 記録のみ")
+
         # 送信（--no-email 時は完全スキップ、フィルタで弾かれた場合もスキップ）
         # 🆕 2026-05-28: filter_send_email が False なら記録のみでメール送信せず
         email_sent = False
@@ -3025,6 +3093,12 @@ MarketWatch AI Alerts
             "entry_vs_ma25_signed": momentum_info["entry_vs_ma25_signed"] if momentum_info else None,
             "range_pos": momentum_info["range_pos"] if momentum_info else None,
             "ma_ratio_pct": momentum_info["ma_ratio_pct"] if momentum_info else None,
+        }
+        # 🆕 2026-07-05: 昇格ゲート判定を記録（配信監査・前向き検証用）
+        log_entry["promoted_gate"] = {
+            "enabled": bool(EMAIL_PROMOTED_ONLY and promoted_hyps is not None),
+            "matched": promoted_match.get("id") if promoted_match else None,
+            "n_promoted": len(promoted_hyps) if promoted_hyps is not None else None,
         }
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
