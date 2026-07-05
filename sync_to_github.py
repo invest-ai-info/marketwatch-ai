@@ -11,4 +11,5 @@ SYNC_FILES = [
     "guide-proverb-uwasa-jijitsu.html",
     "guide-signal-lab-030.html",
     "guide-proverb-hito-no-iku-ura.html",
+    "guide-news-2026-07-05-tariff-august-deadline.html",
 ]

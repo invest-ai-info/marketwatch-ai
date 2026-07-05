@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-05
+- 判定: ✅ 公開済み
+- 選定トピック: ベッセント米財務長官「8月1日までに合意しない国の関税は4月2日（リベレーション・デイ）水準に逆戻り」── 7月9日に迫っていた90日猶予期限を実質8月1日に延長、約100か国にレター発送。合意は英・中・越・インドネシアの4件のみ。日本は参院選後の政治的制約で交渉停滞（カテゴリ: マクロ・通商政策・日本株・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5 （合計 15/15）
+- 選定理由: 今日（日曜7/5）ベッセント財務長官が直接発言した当日ニュース。月曜7/7の米国・日本市場開幕前の最重要材料。関税問題は日経平均・ドル円・輸出企業・FOMC/BOJ政策経路の全てに波及しうる。既存記事は未カバー（guide-*tariff*.html は存在しない）。
+- 出典:
+  - NBC News「Treasury secretary says countries without trade deals will see tariffs 'boomerang' to April rates by Aug. 1」（2026-07-05）
+  - Fox Business「Tariffs will revert to April levels if countries don't make a deal by August 1, Bessent says」（2026-07-05）
+  - Axios「Tariffs return to April rates on August 1 without deals, Bessent says」（2026-07-05）
+  - CBS News「Tariffs could surge on July 9 with 90-day pause set to end」（2026年7月前後）
+  - CNBC「Trump administration teases trade deals before tariff deadline」（2026年7月前後）
+  - Nikkei Asia「Stalled US tariff talks hinge on Japan's upper house election」（2026年7月）
+  - CFR「Tracking Trump's Trade Deals」（2026年7月）
+  - Congress.gov「U.S.-Japan Trade Agreements and Tariff Negotiations」
+  - Council on Foreign Relations「A U.S.-Japan Trade Impasse」
+  - Newsweek「Trump's Shifting Tariff Deadline」
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典10系統・将来断定なし・noindexなし・金商法リスクなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（5項目全クリア・問題なし・前エージェント判断を独立に支持・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典2系統以上（10系統）✅
+- check_site_consistency.py: EXIT=0（SYNC_FILES警告は既存問題・2026-07-02台帳記録済み、本記事と無関係）
+- 公開ファイル: guide-news-2026-07-05-tariff-august-deadline.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了。
+
+---
+
 ## 2026-07-04
 - 判定: 見送り
 - 理由: 本日（土曜日）は東証・NYSE・Nasdaq・CME先物すべて休場で今日固有の「確定した新事実」なし。今週の最重要ニュース（米6月NFP +57K）は guide-news-2026-07-03-nfp-june-2026.html で既報。AI半導体セルオフは guide-news-2026-07-02-nikkei-kioxia-ai-selloff.html で既報。ドル円/円安・介入リスクは guide-news-2026-06-30-jpy-intervention.html + 6/29・7/3記事で複数回扱い済み。残る候補はすべて観測・憶測ベースまたはスコア境界値でSOP「事実未確定・観測記事は見送り」に合致。
