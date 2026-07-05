@@ -2,25 +2,25 @@
 
 ---
 
-## 2026-07-05 | 🧪 signal-lab #031 — ゲート実行中
+## 2026-07-05 | 🧪 signal-lab #031 — 自動公開完了 ✅
 
 - **基準日（JST）**: 2026-07-05
 - **採択仮説**: 「selection.tier 4段階（elite/good/neutral/avoid）の損益序列検証——neutralは損益分岐43%を割るか」（優先度②：前向きトラッカー大変動）
 - **事前宣言**: H1: tier=neutral CI上限 < 43%。H2（探索的）: tier=avoid > tier=good
-- **検証データ**: 全決済済み1,356件ベース（tier付き1,028件）。tier=neutral N=350・good N=232・elite N=126・avoid N=320
-- **結果**: neutral 35.7%(125/350) CI[30.9%~40.9%] E(R)=-0.161 RCI[-0.278~-0.044]→H1通過A。avoid 45.9% > good 40.5%（5.4pp逆転・CIは重複）。逆転主因: good×metal=26.5%(N=34)/good×oil=23.1%(N=13)が足引き・avoid×index=53.8%(N=91)が押し上げ。sweep FDR通過0本（新規なし）。前向き: good gate 26/36=72% E(R)=+0.685・neutral gate 51/130=39% E(R)=-0.085
-- **判定**: 🔄 ゲート実行中
-- **生成ファイル**: drafts/draft-signal-lab-031.html / drafts/labnotes/lab-031-analysis.md / drafts/labnotes/lab-031-claims.json / signal-lab-ledger.md
+- **検証データ**: 全決済済み1,720件ベース（verify.py: tp1/tp2/sl のみ）。tier=neutral N=348・good N=232・elite N=126・avoid N=320
+- **結果**: neutral 35.9%(125/348) CI[31.1%~41.1%] E(R)=-0.161 RCI[-0.278~-0.044]→H1通過A（CI上限41.1%<43%）。avoid 45.9% > good 40.5%（5.4pp逆転・CIは重複）。逆転主因: good×metal=26.5%(N=34)/good×oil=23.1%(N=13)が足引き・avoid×index=53.8%(N=91)が押し上げ。前向き: good gate 26/36=72% E(R)=+0.685・neutral gate 51/130=39% E(R)=-0.085
+- **判定**: ✅ 自動公開完了
+- **生成ファイル**: drafts/draft-signal-lab-031.html / drafts/labnotes/lab-031-analysis.md / drafts/labnotes/lab-031-claims.json / signal-lab-ledger.md → **guide-signal-lab-031.html 公開済み**
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance
-- [ ] 8-4-ii 独立Opus
-- [ ] 8-4-iii finalize_signal_lab.py
-- [ ] 8-4-iv publish_article.py
-- [ ] 8-4-v check_site_consistency.py
-- [ ] 8-4-vi git commit + PUSH-MAIN
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 031 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 9/9クレーム緑・要約未検証0件・SVG警告0件（n修正350→348後）
+- [x] 8-3 Opus compliance 🟢白 ✅（kinsho-v1×3箇所/断定語なし/研究フレーミング一貫/投資助言なし・グレー→kinsho-v1 footer修正適用→白）
+- [x] 8-4-ii 独立Opus 🟢白 ✅（同上・修正者自己承認回避確認済）
+- [x] 8-4-iii finalize_signal_lab.py 031 2026-07-05 → guide-signal-lab-031.html 生成（size=37KB・svg=1・kinsho=4）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（AIシグナル研究日誌 最上段）・SYNC_FILES・更新履歴 完了
+- [x] 8-4-v check_site_consistency.py ✅（guide-signal-lab-031.html SYNC登録確認・既存85件の未登録は旧来の事前確認済み問題）
+- [x] 8-4-vi git commit + PUSH-MAIN ✅
 
 ---
 
