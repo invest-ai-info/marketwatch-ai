@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-07-06 | 💰 基礎知識 #13 — 単利と複利の違い（simple-vs-compound）下書き生成
+
+- **基準日（JST）**: 2026-07-06
+- **topic**: 基礎知識 / key: `simple-vs-compound`
+- **仮タイトル**: 単利と複利の違い｜雪だるまはなぜ増えるか・72の法則と複利が効く3条件
+- **生成ファイル**: `drafts/draft-simple-vs-compound.html`
+- **参照出典**:
+  - 東証マネ部！「72の法則と126の法則」: https://money-bu-jpx.com/news/article041217/
+  - 知るぽると「72の法則」: https://www.shiruporuto.jp/public/document/container/yogo/n/72_no_hosoku.html
+  - 野村証券 用語集「72の法則」: https://www.nomura.co.jp/terms/english/other/A02081.html
+  - 複利・単利の計算式: 標準的な金融数学（FV = P×(1+r)^n / P×(1+r×n)）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄・特定商品の売買推奨なし（一般的な教育情報として整理）
+  - ✅ 断定語（絶対・必ず・保証・儲かる・一択）なし。「+100%が必要」は数学的事実の説明であり利益保証ではない
+  - ✅ kinsho-v1 免責：記事冒頭バナー・本文末 p.disclaimer・footer の3箇所に記載
+  - ✅ 72の法則は「近似値」と明記・単利が使われる場面も中立的に記載
+  - ✅ 計算例は「概念理解のための例示」と本文および免責に明記
+  - ✅ noindex/nofollow 設定あり（下書き段階）
+- **SVG概念図**:
+  - SVG1: 単利 vs 複利の30年成長グラフ（年利6%比較）→ 実機ライト/ダーク確認要
+  - SVG2: ドローダウン非対称性（−50%→+100%必要）の直感図 → 実機ライト/ダーク確認要
+- **人間の残作業**:
+  - SVG の実機ライト/ダーク確認（2点）
+  - タイトル微調整（検索流入を意識する場合）
+  - 公開カテゴリ確定（💰 投資の基礎知識）
+  - 公開は毎朝 08:40 の `autodraft-publish` がゲート付きで自動実行
+
+---
+
 2026-07-05 / bonds-interest-rates / 決定論ゲート緑・Opus白（コンベクシティ用語補足軽微修正→独立Opus白確認） / https://marketwatch-jp.com/guide-bonds-interest-rates.html
 
 ---
