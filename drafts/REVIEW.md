@@ -2,6 +2,10 @@
 
 ---
 
+2026-07-05 / bonds-interest-rates / 決定論ゲート緑・Opus白（コンベクシティ用語補足軽微修正→独立Opus白確認） / https://marketwatch-jp.com/guide-bonds-interest-rates.html
+
+---
+
 ## 2026-07-05 | 💰 基礎知識 #12 — 金利と債券の関係（bonds-interest-rates）下書き生成
 
 - **基準日（JST）**: 2026-07-05
