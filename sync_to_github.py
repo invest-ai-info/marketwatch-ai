@@ -14,4 +14,5 @@ SYNC_FILES = [
     "guide-news-2026-07-05-tariff-august-deadline.html",
     "guide-bonds-interest-rates.html",
     "guide-signal-lab-031.html",
+    "guide-simple-vs-compound.html",
 ]

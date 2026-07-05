@@ -4682,6 +4682,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 💰 解説「<a href="guide-simple-vs-compound.html" style="color:#0969da"><b>単利と複利の違い｜72の法則と複利が効く3条件</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 🧪 解説「<a href="guide-signal-lab-031.html" style="color:#0969da"><b>選択ティア4段階の損益序列——neutral(35.9%)の損益分岐割れ確定</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 💰 解説「<a href="guide-bonds-interest-rates.html" style="color:#0969da"><b>金利と債券の関係｜なぜ金利が上がると価格は下がるのか</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 📰 解説「<a href="guide-news-2026-07-05-tariff-august-deadline.html" style="color:#0969da"><b>【7/5】ベッセント「8月1日に関税逆戻り」90日猶予延長を中立整理</b></a>」公開'},

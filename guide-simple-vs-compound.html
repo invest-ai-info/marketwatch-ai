@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>単利と複利の違い｜雪だるまはなぜ増えるか・72の法則と複利が効く3条件 - MarketWatch AI</title>
+  <meta name="description" content="単利と複利の違いを直感図解で解説。72の法則で「何年で2倍」を暗算する方法、複利が効く3条件（時間・再投資・退場しない）、ドローダウンが複利を壊す算数まで、初心者〜中上級者に向けて体系的に整理します。">
+  <meta name="keywords" content="単利,複利,複利効果,72の法則,雪だるま,ドローダウン,複利の力,長期投資,NISA,資産運用,複利計算,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-simple-vs-compound.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="単利と複利の違い｜雪だるまはなぜ増えるか・72の法則と複利が効く3条件">
+  <meta property="og:description" content="単利と複利の違いを直感図解で解説。72の法則・複利が効く3条件・ドローダウンが複利を壊す算数まで初心者〜中上級者向けに体系整理。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-simple-vs-compound.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "単利と複利の違い｜雪だるまはなぜ増えるか・72の法則と複利が効く3条件",
+    "description": "単利と複利の違いを直感図解で解説。72の法則・複利が効く3条件・ドローダウンが複利を壊す算数まで初心者〜中上級者向けに体系整理。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-06",
+    "dateModified": "2026-07-06",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-simple-vs-compound.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 追加SVGクラス：複利グロース */
+    .s-curve-b{stroke:#0969da;stroke-width:2.2;fill:none;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:6 3}
+    .s-fill-g{fill:#e6ffed;opacity:.35}
+    .s-fill-b{fill:#ddf4ff;opacity:.35}
+    .s-bar-g{fill:#1a7f37}
+    .s-bar-b{fill:#0969da;opacity:.55}
+    .s-bar-r{fill:#cf222e}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-fill-g{fill:#162416;opacity:.4}
+    body.dark .s-fill-b{fill:#1a2030;opacity:.4}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-b{fill:#388bfd}
+    body.dark .s-bar-r{fill:#f85149}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 単利と複利の違い
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は単利・複利・72の法則に関する金融の基礎知識を整理した「情報提供」であり、特定銘柄・特定商品の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 単利と複利の違い——雪だるまはなぜ増えるか</h1>
+    <div class="meta-line">公開日：2026 年 7 月 6 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「複利は人類最大の発明の一つ」と広く語られます（出典諸説あり）。NISAや iDeCo の長期積立で「複利効果」という言葉をよく目にするわりに、<strong>単利と複利が具体的にどう違うのか、なぜ差が生まれるのか</strong>を図解で理解している人は意外と少ないものです。</p>
+    <p>この記事では、<strong>「単利と複利の違い」を直感グラフで体感する</strong>ところから始め、後半では<strong>複利が本当に効く3つの条件</strong>（時間・再投資・退場しない）と、<strong>ドローダウンが複利の力を壊す算数</strong>まで踏み込みます。「長期投資で複利の恩恵を受けたい」すべての人に読んでほしい基礎知識です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>単利は「元本だけに利息がつく」、複利は「<strong>利息にも利息がつく</strong>」。時間が長くなるほど差は指数的に広がる——これが「雪だるま」のイメージ。</li>
+      <li>複利が効く条件は <strong>①時間（長期）② 利益の再投資 ③ 退場しないこと</strong>。3つ揃って初めてフルパワーが出る。どれか1つでも欠ければ複利の力は大幅に削がれる。</li>
+      <li><strong>ドローダウン（損失）は複利の最大の敵</strong>。−50%の損失を取り戻すには+100%の利益が必要——この非対称性を知らずに大きなリスクを取ると、長い時間と複利の恩恵がまとめて消える。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">単利と複利——定義と計算式</a></li>
+        <li><a href="#section-2">30年グラフで見る「雪だるま」の正体</a></li>
+        <li><a href="#section-3">72の法則——「何年で2倍」を暗算する</a></li>
+        <li><a href="#section-4">複利が本当に効く3つの条件（中上級）</a></li>
+        <li><a href="#section-5">ドローダウンが複利を壊す算数</a></li>
+        <li><a href="#section-6">単利が使われる場面</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 単利と複利——定義と計算式</h2>
+    <p>まず用語を整理します。</p>
+
+    <h3>単利（Simple Interest）</h3>
+    <p><strong>最初の元本だけ</strong>に、毎年同じ金額の利息がつく計算方法です。</p>
+    <div class="info-box">
+      <strong>単利の計算式：</strong><br>
+      元本 × (1 + 年利率 × 年数)<br><br>
+      例：100万円を年利3%で20年<br>
+      100 × (1 + 0.03 × 20) = 100 × 1.6 = <strong>160万円</strong>（元本込み）
+    </div>
+    <p>年3%なら毎年3万円の利息が発生します。20年後も30年後も、利息は「元本100万円の3%＝3万円」のまま一定。増え方は<strong>直線（一次関数）</strong>です。</p>
+
+    <h3>複利（Compound Interest）</h3>
+    <p><strong>前の期間に発生した利息も元本に組み込んで</strong>、次の利息を計算する方法です。</p>
+    <div class="positive-box">
+      <strong>複利の計算式：</strong><br>
+      元本 × (1 + 年利率)^年数<br><br>
+      例：100万円を年利3%で20年<br>
+      100 × (1.03)^20 = 100 × 1.8061 ≈ <strong>180.6万円</strong>（元本込み）<br><br>
+      ※同条件の単利（160万円）より約20万円多い
+    </div>
+    <p>「利息が利息を生む」という連鎖が年を重ねるほど加速します。増え方は<strong>指数関数（曲線）</strong>で、時間が長いほど単利との差が大きく開いていきます。</p>
+
+    <div class="info-box">
+      <strong>💡 「再投資」が複利の鍵</strong>：株の配当を受け取って使ってしまうのではなく、<strong>また投資に回す（再投資）</strong>ことで初めて複利が働きます。投資信託の「分配金再投資コース」やNISAの積立は、この仕組みを自動化したものです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 30年グラフで見る「雪だるま」の正体</h2>
+    <p>同じ年利6%で30年間、単利と複利を比較したグラフです。<strong>30年後の倍率の差</strong>に注目してください。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="cg-title">
+        <title id="cg-title">単利と複利の成長比較（年利6%・30年）の概念グラフ</title>
+        <text class="s-panel-label" x="40" y="24">年利6%で運用した場合の資産倍率（元本=1として）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="298" x2="620" y2="298"/>
+        <line class="s-axis" x1="60" y1="50" x2="60" y2="298"/>
+        <!-- X軸ラベル（年） -->
+        <text class="s-label-sm" x="60" y="316" text-anchor="middle">0年</text>
+        <text class="s-label-sm" x="243" y="316" text-anchor="middle">10年</text>
+        <text class="s-label-sm" x="427" y="316" text-anchor="middle">20年</text>
+        <text class="s-label-sm" x="610" y="316" text-anchor="middle">30年</text>
+        <!-- Y軸ラベル（倍率） -->
+        <text class="s-label-sm" x="52" y="253" text-anchor="end">1×</text>
+        <text class="s-label-sm" x="52" y="213" text-anchor="end">2×</text>
+        <text class="s-label-sm" x="52" y="173" text-anchor="end">3×</text>
+        <text class="s-label-sm" x="52" y="133" text-anchor="end">4×</text>
+        <text class="s-label-sm" x="52" y="93" text-anchor="end">5×</text>
+        <!-- Y軸グリッド -->
+        <line class="s-divv" x1="60" y1="253" x2="620" y2="253"/>
+        <line class="s-divv" x1="60" y1="213" x2="620" y2="213"/>
+        <line class="s-divv" x1="60" y1="173" x2="620" y2="173"/>
+        <line class="s-divv" x1="60" y1="133" x2="620" y2="133"/>
+        <line class="s-divv" x1="60" y1="93" x2="620" y2="93"/>
+        <!-- 単利ライン（青・破線）：1 + 0.06t。t=30: 2.8×
+             y = 298 - (v-1)*40
+             t=0: v=1, y=258  t=10: v=1.6, y=234  t=20: v=2.2, y=210  t=30: v=2.8, y=186 -->
+        <polyline class="s-curve-b" points="60,258 243,234 427,210 610,186"/>
+        <!-- 複利ライン（緑）：(1.06)^t
+             t=0: 1.000 y=258   t=5: 1.338 y=244.5  t=10: 1.791 y=226.4
+             t=15: 2.397 y=202.1  t=20: 3.207 y=169.7  t=25: 4.292 y=126.3  t=30: 5.743 y=68.3 -->
+        <polyline class="s-curve-g" points="60,258 152,244 243,226 335,202 427,170 518,126 610,68"/>
+        <!-- 凡例 -->
+        <line class="s-curve-b" x1="80" y1="45" x2="120" y2="45"/>
+        <text class="s-legend" x="128" y="49">単利（直線的に増える）</text>
+        <line class="s-curve-g" x1="320" y1="45" x2="360" y2="45"/>
+        <text class="s-legend" x="368" y="49">複利（加速しながら増える）</text>
+        <!-- 30年後の差を強調 -->
+        <line class="s-guide" x1="610" y1="68" x2="610" y2="186"/>
+        <text class="s-note-g" x="604" y="128" text-anchor="end">30年後</text>
+        <text class="s-note-g" x="604" y="141" text-anchor="end">複利：5.7×</text>
+        <text class="s-note" x="604" y="196" text-anchor="end">単利：2.8×</text>
+        <!-- 10年時点の差 -->
+        <circle class="s-hl" cx="243" cy="226" r="5"/>
+        <text class="s-note-g" x="250" y="218">10年後</text>
+        <text class="s-note-g" x="250" y="231">複利1.8×</text>
+        <text class="s-note" x="250" y="244">単利1.6×</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 年利6%で運用した場合の「元本が何倍になるか」を単利（青・破線）と複利（緑・実線）で比較。10年時点では差は小さいが、20年を超えると複利の曲線が急カーブを描き、<strong>30年後には単利2.8倍に対して複利は約5.7倍</strong>と倍近い差がつく。これが「雪だるま」が転がるほど大きくなる理由。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この差は「時間が長いほど広がる」という重要な性質があります。10年なら1.8倍 vs 1.6倍で差は0.2倍ですが、30年では5.7倍 vs 2.8倍で差は約2.9倍。<strong>時間こそが複利の最大の原動力</strong>です。逆に言えば、投資の開始を先延ばしにするほど、この恩恵を受けられる時間が短くなります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 72の法則——「何年で2倍」を暗算する</h2>
+    <p>複利の力をざっくり把握するための便利な暗算法が <strong>「72の法則」</strong> です。</p>
+    <div class="positive-box">
+      <strong>72の法則：72 ÷ 年利率(%) ≈ 元本が2倍になる年数</strong><br><br>
+      例：年利6%で運用 → 72 ÷ 6 = <strong>12年</strong>で元本が約2倍
+    </div>
+    <p>この簡便法は、複利の正確な計算式 <code>(1 + r)^n = 2</code> の近似解です。実際に計算すると年利6%の場合 <code>n ≈ 11.9年</code> で、72の法則との誤差は1%以内。日常的な暗算には十分な精度です。</p>
+
+    <table>
+      <thead>
+        <tr><th>年利率</th><th>72の法則（暗算）</th><th>実際の2倍年数</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1%</td><td>72年</td><td>69.7年</td></tr>
+        <tr><td>2%</td><td>36年</td><td>35.0年</td></tr>
+        <tr><td>3%</td><td>24年</td><td>23.4年</td></tr>
+        <tr><td>4%</td><td>18年</td><td>17.7年</td></tr>
+        <tr><td>6%</td><td>12年</td><td>11.9年</td></tr>
+        <tr><td>8%</td><td>9年</td><td>9.0年</td></tr>
+        <tr><td>10%</td><td>7.2年</td><td>7.3年</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>逆引きも便利</strong>：「10年で2倍にしたければ 72 ÷ 10 = <strong>年利7.2%</strong> 必要」という使い方もできます。目標から逆算して必要利回りを見積もるのに役立ちます。
+    </div>
+
+    <div class="warning-box">
+      72の法則はあくまで「複利を前提とした」近似値です。単利では当てはまりません。また、実際の金融商品は手数料・税金・インフレを考慮する必要があり、計算通りに進むとは限りません。あくまで「おおよそのイメージをつかむ」ための補助ツールとして使ってください。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 複利が本当に効く3つの条件（中上級）</h2>
+    <p>「複利で運用」と言葉でいうのは簡単ですが、実際に複利の力をフルに引き出すには<strong>3つの条件が同時に揃う必要</strong>があります。どれかが欠けると、複利の恩恵は大きく削がれます。</p>
+
+    <h3>条件① 時間——「早く始めて長く続ける」</h3>
+    <p>前節のグラフが示すように、複利は<strong>時間が長くなるほど指数的に効果が大きくなります</strong>。言い換えると、<strong>投資の開始を10年遅らせると、複利曲線の「急上昇フェーズ」に乗れる時間が10年分失われます</strong>。</p>
+    <p>例えば20歳から年利5%で30年運用した場合と、30歳から20年運用した場合を比べると：</p>
+    <ul>
+      <li>20歳スタート・30年：元本の約4.3倍</li>
+      <li>30歳スタート・20年：元本の約2.7倍</li>
+    </ul>
+    <p>同じ年利でも、<strong>10年早く始めた効果は30年複利曲線の「尖り部分」そのもの</strong>です。「早く始める」ことが最もコストのかからない複利戦略です。</p>
+
+    <h3>条件② 再投資——「利益を使わず回し続ける」</h3>
+    <p>複利は「利益を再び元本に加えて」次の利息計算に使って初めて成立します。<strong>配当や利益を都度使ってしまうと、単利と変わらなくなります</strong>。</p>
+    <p>NISA の成長投資枠で配当を受け取って消費する場合と、同じ資金を「配当再投資型」の投資信託に置く場合では、長期では大きな差が生まれます。<strong>「使わずに回す」規律が、複利の仕組みを稼働させる燃料</strong>です。</p>
+
+    <h3>条件③ 退場しない——「複利を壊さない」</h3>
+    <p>複利計算の美しい式 <code>元本 × (1+r)^n</code> は、<strong>途中で退場（破産・強制ロスカット・解約）しないことを前提</strong>にしています。途中で大きな損失を出して市場から退場すれば、<strong>積み上げてきた複利の連鎖がゼロにリセット</strong>されます。</p>
+    <p>次のセクションで詳しく扱いますが、<strong>ドローダウン（資産の目減り）は複利の最大の敵</strong>です。これは単に「損が出た」という話ではなく、複利の計算式の根幹を崩す問題です。</p>
+
+    <div class="negative-box">
+      <strong>❌ よくある誤解</strong>：「長期でさえあれば何でも複利の恩恵を受けられる」——これは正しくありません。年利がマイナスになる局面（資産が下落し続ける）、リスクを取りすぎて退場する、利益を全額引き出して再投資しない、いずれの場合も複利の効果は出ません。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ ドローダウンが複利を壊す算数</h2>
+    <p>投資において最も見落とされがちなのが<strong>「損失と利益の非対称性」</strong>です。同じ割合でも、<strong>損失のダメージは利益の回復より数学的に大きい</strong>。</p>
+    <p>具体的に数字で見てみましょう。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="dd-title">
+        <title id="dd-title">損失と利益の非対称性：−50%の損失を取り戻すには+100%が必要</title>
+        <text class="s-panel-label" x="40" y="24">損失と利益の非対称性（同じ「%」でも回復に必要な力は違う）</text>
+        <!-- バー1: 100万円 (開始) -->
+        <rect class="s-bar-g" x="60" y="50" width="90" height="190" rx="4"/>
+        <text class="s-label-sm" x="105" y="258" text-anchor="middle">スタート</text>
+        <text class="s-note-g" x="105" y="44" text-anchor="middle">100</text>
+        <!-- 矢印 −50% -->
+        <line style="stroke:#cf222e;stroke-width:2;stroke-dasharray:4 3" x1="155" y1="145" x2="215" y2="175"/>
+        <text class="s-note-r" x="158" y="140" text-anchor="start">−50%</text>
+        <polygon points="213,165 215,178 204,172" fill="#cf222e"/>
+        <!-- バー2: 50万円 (-50%) -->
+        <rect class="s-bar-r" x="235" y="145" width="90" height="95" rx="4"/>
+        <text class="s-label-sm" x="280" y="258" text-anchor="middle">−50%後</text>
+        <text class="s-note-r" x="280" y="139" text-anchor="middle">50</text>
+        <!-- 矢印 +100% (大きな矢印で強調) -->
+        <line style="stroke:#1a7f37;stroke-width:2.5" x1="330" y1="155" x2="395" y2="95"/>
+        <text class="s-note-g" x="330" y="150" text-anchor="start">+100%</text>
+        <text class="s-note-g" x="330" y="164" text-anchor="start">が必要！</text>
+        <polygon points="393,104 395,92 385,98" fill="#1a7f37"/>
+        <!-- バー3: 100万円 (回復) -->
+        <rect class="s-bar-g" x="410" y="50" width="90" height="190" rx="4"/>
+        <text class="s-label-sm" x="455" y="258" text-anchor="middle">回　復</text>
+        <text class="s-note-g" x="455" y="44" text-anchor="middle">100</text>
+        <!-- 強調テキスト -->
+        <text class="s-label-sm" x="240" y="34" text-anchor="start" style="font-size:11px">（+50%では75にしか戻らない）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 100から−50%で50になった資産は、+50%では75にしか戻らない。元に戻すには<strong>+100%が必要</strong>。損失の割合と回復に必要な利益の割合は非対称で、損失が大きいほど回復に必要な利益率は急増する。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この非対称性を表にまとめます。</p>
+
+    <table>
+      <thead>
+        <tr><th>被った損失</th><th>回復に必要な利益率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>−10%</td><td>+11.1%</td></tr>
+        <tr><td>−20%</td><td>+25.0%</td></tr>
+        <tr><td>−33%</td><td>+49.3%</td></tr>
+        <tr><td>−50%</td><td><strong>+100%</strong></td></tr>
+        <tr><td>−75%</td><td><strong>+300%</strong></td></tr>
+        <tr><td>−90%</td><td><strong>+900%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>−50%の損失の後に+50%の利益が出ても、<code>50 × 1.5 = 75</code> で元本には戻りません。元本回復には+100%——<strong>つまり2倍に増やす</strong>必要があります。そして+100%を達成する間、年利6%の複利で計算すると約12年（72÷6）かかります。<strong>1回の大きな損失が、長年積み上げてきた複利の恩恵を一気に消し去ることができる</strong>わけです。</p>
+
+    <div class="warning-box">
+      複利の真の恩恵は「大きく勝つこと」より「<strong>大きく負けないこと</strong>」にあります。損失を最小に抑え、市場に居続けることが、複利曲線の「指数加速フェーズ」を享受するための最重要条件です。
+    </div>
+
+    <p>ドローダウンと複利の関係をより深く理解したい方は、<a href="guide-compounding-drawdown.html">複利と最大ドローダウン・破産確率</a>の解説記事もあわせてご覧ください。連敗しても退場しない資金設計（ポジションサイジング）まで踏み込んで解説しています。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 単利が使われる場面</h2>
+    <p>複利の話が多い中、<strong>単利が実務で使われる場面</strong>も押さえておきましょう。</p>
+    <ul>
+      <li><strong>短期の借入・ローン</strong>：日数計算が明快なため、消費者金融の日割り利息や手形割引など短期融資に使われます。</li>
+      <li><strong>国債・社債の利回り表示</strong>：日本の個人向け国債の表面利率は単利表示が基本です（実際の運用は複利でも表示は単利ベース）。</li>
+      <li><strong>株式投資の「利回り」表示</strong>：配当利回りは「年間配当 ÷ 株価 × 100%」という単利的な計算であり、再投資を前提としません。</li>
+    </ul>
+    <p><strong>どちらが「正しい」ということではなく、期間と目的によって使い分けられています</strong>。長期の資産形成を語るときは複利を前提に考える、短期の借入コストを計算するときは単利ベースで概算する——という使い分けが自然です。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI の設計思想と、単利・複利の考え方は深くつながっています。</p>
+    <ul>
+      <li><strong>「退場しない」ことを優先した設計</strong>：当サイトのテクニカルシグナルには損切り（SL）の目安が必ずセットで表示されます。これは「大きく負けないこと」＝<strong>複利曲線を崩さないこと</strong>を第一に置く考え方の表れです。</li>
+      <li><strong>シグナル成績の透明公開</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a>では勝ちも負けも公開しています。ドローダウン期間にどれだけ損失が膨らんだかも含めて見ることで、「この戦略で複利の恩恵を受けられるか」を判断する材料になります。</li>
+      <li><strong>長期視点のコンテンツ</strong>：<a href="guide-compound-sim.html">複利シミュレーター</a>では具体的な金額・利率・期間を入力して、複利成長を計算できます。72の法則の暗算値と合わせて確認してみてください。</li>
+    </ul>
+    <p>複利の力を最大限に引き出すには<strong>長期間、市場に居続けること</strong>が前提です。短期的な損益に過度に反応せず、ルールに基づいて資産を守りながら居続ける——その助けになる情報を提供するのが当サイトの役割です。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの実績を確認する</div>
+      <div class="cta-box-desc">勝ちも負けも公開中。ドローダウンの実際と、複利に乗るための「退場しない規律」の参考に。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>単利と複利の違いについて、整理します。</p>
+    <ul>
+      <li><strong>単利</strong>は元本だけに利息がつく（線形）。<strong>複利</strong>は利息にも利息がつく（指数関数的）。時間が長くなるほど差は加速的に広がる。</li>
+      <li><strong>72の法則</strong>（72 ÷ 年利率 ≈ 2倍になる年数）で、複利の威力を暗算できる。逆引きで「2倍にするための必要利回り」も出せる。</li>
+      <li>複利が効く条件は <strong>①時間（早く長く）② 再投資（利益を使わない）③ 退場しない</strong>。3つ揃って初めてフルパワー。</li>
+      <li><strong>ドローダウンは複利の天敵</strong>。−50%の損失を取り戻すには+100%必要という非対称性を知り、大きなリスクを避けることが複利の恩恵を守る最善策。</li>
+      <li>複利の真の恩恵は「大きく勝つ」ことより「<strong>市場に居続ける</strong>」ことにある。損失管理と規律が複利曲線の急成長フェーズを生き残る鍵。</li>
+    </ul>
+    <p>「長期投資で複利の恩恵を」という目標は正しい方向です。ただし「ただ長く持てばよい」という単純な話ではありません。再投資の規律・リスク管理・退場しない資金設計——これらが揃って初めて、雪だるまは転がりながら大きくなります。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">📉 複利と最大ドローダウン・破産確率</div>
+        <div class="related-card-desc">連敗しても退場しない資金設計。複利を壊さないためのポジションサイジングの考え方。</div>
+      </a>
+      <a class="related-card" href="guide-compound-sim.html">
+        <div class="related-card-title">🧮 複利シミュレーター</div>
+        <div class="related-card-desc">元本・利率・期間を入力して複利成長を計算。72の法則の暗算値と合わせて確認できる。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">ドローダウンを防ぐための損切り技術。複利を守るための「退場しない」設計の実践編。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は単利・複利・72の法則に関する投資の基礎知識を情報提供として解説したものであり、特定銘柄・特定商品の売買推奨や投資助言ではありません。記載の計算例はあくまで概念理解のための例示であり、特定の利回りや成果を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
