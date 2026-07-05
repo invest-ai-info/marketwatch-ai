@@ -159,8 +159,10 @@ def main():
     for ref in sorted(set(re.findall(r'href="(guide-[^"]+\.html)"', guides_html))):
         if ref.startswith(("guide-weekly-", "guide-auto-") + CLOUD_PREFIXES):
             continue
+        if ref in SYNC_FORBIDDEN:
+            continue  # routine管理ページ（guide-new-books.html 等）＝ローカルに無いのが正常
         if not _exists(ref):
-            errors.append(f"guides.html のリンク切れ: {ref} が存在しない")
+            errors.append(f"guides.html のリンク切れ: {ref} が存在しない（autopublish公開記事ならリモートから取り込み＝reconcile）")
 
     # 4. ナビ10ボタン整合性：nav を持つ生成スクリプト(.py)・静的/手動HTMLが10リンク全部を含むか。
     #    自動生成済みの過去記事(guide-weekly-*/guide-monthly-report-*/guide-auto-*)は出力なので除外。
