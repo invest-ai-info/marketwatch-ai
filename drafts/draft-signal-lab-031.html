@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #31｜選択ティア4段階の損益序列——neutral(35.7%)の損益分岐割れ確定・avoidがgoodを逆転する逆説 - MarketWatch AI</title>
+  <meta name="description" content="AIシグナルの選択ティア（elite/good/neutral/avoid）4段階を全数比較。tier=neutralは勝率35.7%・CI上限40.9%で損益分岐43%を下回ることを確認（H1通過）。さらにtier=avoidが45.9%でtier=goodの40.5%を上回る「逆転の逆説」を発見。研究日誌第31回。">
+  <meta name="keywords" content="AIシグナル,検証,選択ティア,tier,elite,good,neutral,avoid,勝率,研究日誌,損益分岐">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-031.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #31｜選択ティア4段階の損益序列——neutralの損益分岐割れ確定・avoidがgoodを逆転">
+  <meta property="og:description" content="tier=neutral(35.7%)は損益分岐43%を下回ることを確定。さらにtier=avoid(45.9%)がtier=good(40.5%)を逆転する逆説を発見。研究日誌第31回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-031.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #31｜選択ティア4段階の損益序列——neutralの損益分岐割れ確定・avoidがgoodを逆転する逆説",
+    "description": "tier=neutral(35.7%)は損益分岐43%を下回ることを確定。tier=avoid(45.9%)がtier=good(40.5%)を逆転する逆説を発見。研究日誌第31回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-05",
+    "dateModified": "2026-07-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-031.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #31
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #31<br><small style="font-size:.65em;color:#57606a;font-weight:400">選択ティア4段階の損益序列——neutral(35.7%)の損益分岐割れ確定・avoidがgoodを逆転する逆説</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第31回です。<a href="guide-signal-lab-030.html">前回（#30）</a>では「ロング全般gate」の前向き反証（⛔）を確認しました——過去の in-sample 赤字だったロング全般が、前向きデータ N=195 で E(R)=+0.231 とプラス転換した話です。</p>
+    <p>今回は視点を変えて、<strong>AIシグナルシステムが付与する「選択ティア」の4段階（elite / good / neutral / avoid）が、実際の勝率を単調に分離しているか</strong>を全数比較します。ティア設計の意図は「elite → good → neutral → avoid の順に弱くなる」はずです。2026年7月5日のトラッカー更新で <strong>tier=good の前向き前向き勝率が 26/36=72%（E(R)=+0.685）</strong>という目立つ数字を示したことが採択の起点です。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① tier=neutral（N=350）勝率<strong>35.7%</strong>・95%CI上限<strong>40.9%</strong>で損益分岐43%を下回る → <strong>H1通過（損益分岐割れ確定）</strong><br>
+      ② tier=neutral E(R)=<strong>−0.161</strong>・R 95%CI[−0.278〜−0.044]：期待値も全域マイナス確認<br>
+      ③ tier=avoid（N=320）勝率<strong>45.9%</strong> は tier=good（N=232）勝率<strong>40.5%</strong>を上回る → 「回避」のはずが「良」より強い逆転（探索的）<br>
+      ④ 逆転の主因：good×金属（9/34=<strong>26.5%</strong>）が足を引く・avoid×指数（49/91=<strong>53.8%</strong>）が押し上げる
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——ティア4段階の序列は成立しているか</a></li>
+        <li><a href="#method">検証方法（事前合否基準の宣言）</a></li>
+        <li><a href="#result-main">結果①：4段階の全体比較——neutralが最低、avoidが逆転</a></li>
+        <li><a href="#result-neutral">結果②：tier=neutralのE(R)は全域マイナス</a></li>
+        <li><a href="#result-paradox">結果③：avoid > good の逆転とその原因</a></li>
+        <li><a href="#confound">交絡点検——グループ構成差では説明できない</a></li>
+        <li><a href="#verdict">事前基準の評価——H1通過・H2は探索的</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——ティア4段階の序列は成立しているか</h2>
+
+    <p>AIシグナルシステムは各シグナル発火時に「選択ティア（selection.tier）」を付与します。これは信頼度スコア・veto条件（飛びつき / MA×ゴールデンクロスのロング / S/R壁阻害）・トレンド整合性などを総合した「シグナルの質」を表すラベルです。</p>
+
+    <ul>
+      <li><strong>elite（精鋭）</strong>：全条件クリア、veto なし、かつ環境スコア・トレンド整合が優れている</li>
+      <li><strong>good（良）</strong>：veto なし かつ trend_alignment.aligned=True（順張り）</li>
+      <li><strong>neutral（中立）</strong>：veto なし だが aligned=False（トレンドと方向が一致しない）</li>
+      <li><strong>avoid（回避）</strong>：veto が 1 件以上ある（veto_chasing / veto_ma_golden / veto_runway_blocked）</li>
+    </ul>
+
+    <p>設計の意図は <strong>elite ＞ good ＞ neutral ＞ avoid の順に期待値が高い</strong>という単調な序列です。今回はこの「意図どおりの序列になっているか」を全 N=1028（selection.tier が記録されている決済済みシグナル）で横断的に検証します。</p>
+
+    <div class="info-box">
+      <strong>💡 「損益分岐43%」とは</strong><br>
+      本システムは SL=−1.0R・TP1=+1.33R・TP2=+2.0R の固定リスクリワードです。収支ゼロ（損益分岐）には約43%の勝率が必要で、43%を下回る条件は「長期的にマイナス収支」を意味します。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（事前合否基準の宣言）</h2>
+
+    <p>今回の検証は事前に合否基準を宣言し、その後データを見て判定します（後から基準を変えない）。</p>
+
+    <table>
+      <tr><th>仮説</th><th>内容</th><th>合格条件</th></tr>
+      <tr>
+        <td>H1（主仮説）</td>
+        <td>tier=neutral の WR は損益分岐 43% を下回る</td>
+        <td>N≥100 かつ 95%CI 上限 &lt; 43%</td>
+      </tr>
+      <tr>
+        <td>H2（探索的）</td>
+        <td>tier=avoid の WR は tier=good の WR を上回る</td>
+        <td>点推定で avoid &gt; good（CI は参考値）</td>
+      </tr>
+    </table>
+
+    <p>データソース：signals-log.json の決済済みシグナル（outcome=tp1/sl/expired）のうち selection.tier が記録されている N=1028 件。旧シグナル（selection フィールド未記録）328 件は除外。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-main">③ 結果①：4段階の全体比較——neutralが最低、avoidが逆転</h2>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 520 220" role="img" aria-label="選択ティア別勝率棒グラフ">
+        <!-- Y軸ガイドライン -->
+        <line class="s-guide" x1="65" y1="37" x2="460" y2="37"/>
+        <line class="s-guide" x1="65" y1="70" x2="460" y2="70"/>
+        <line class="s-guide" x1="65" y1="103" x2="460" y2="103"/>
+        <line class="s-guide" x1="65" y1="136" x2="460" y2="136"/>
+        <line class="s-guide" x1="65" y1="169" x2="460" y2="169"/>
+        <!-- 損益分岐 43% ライン (y=93) -->
+        <line x1="65" y1="93" x2="460" y2="93" stroke="#cf222e" stroke-width="2" stroke-dasharray="6 3"/>
+        <text x="462" y="97" class="s-label-r" font-size="11">損益分岐43%</text>
+        <!-- Y軸ラベル -->
+        <text x="58" y="41" class="s-label-sm" text-anchor="end">60%</text>
+        <text x="58" y="74" class="s-label-sm" text-anchor="end">55%</text>
+        <text x="58" y="107" class="s-label-sm" text-anchor="end">50%</text>
+        <text x="58" y="140" class="s-label-sm" text-anchor="end">45%</text>
+        <text x="58" y="173" class="s-label-sm" text-anchor="end">40%</text>
+        <!-- Y軸 -->
+        <line class="s-axis" x1="65" y1="20" x2="65" y2="185"/>
+        <!-- X軸 -->
+        <line class="s-axis" x1="65" y1="185" x2="460" y2="185"/>
+        <!-- elite バー (47.6% → y=77, h=108) -->
+        <rect class="s-fill-b" x="78" y="77" width="72" height="108" rx="3"/>
+        <rect x="78" y="77" width="72" height="108" rx="3" fill="none" stroke="#0969da" stroke-width="1.5"/>
+        <text x="114" y="70" class="s-label-b" text-anchor="middle">47.6%</text>
+        <text x="114" y="200" class="s-label" text-anchor="middle" font-size="12">elite</text>
+        <!-- good バー (40.5% → y=107, h=78) -->
+        <rect class="s-fill-y" x="172" y="101" width="72" height="84" rx="3"/>
+        <rect x="172" y="101" width="72" height="84" rx="3" fill="none" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="208" y="94" class="s-label-y" text-anchor="middle">40.5%</text>
+        <text x="208" y="200" class="s-label" text-anchor="middle" font-size="12">good</text>
+        <!-- neutral バー (35.7% → y=117, h=68) -->
+        <rect class="s-fill-r" x="266" y="120" width="72" height="65" rx="3"/>
+        <rect x="266" y="120" width="72" height="65" rx="3" fill="none" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="302" y="113" class="s-label-r" text-anchor="middle">35.7%</text>
+        <text x="302" y="200" class="s-label" text-anchor="middle" font-size="12">neutral</text>
+        <!-- avoid バー (45.9% → y=83, h=102) -->
+        <rect class="s-fill-g" x="360" y="83" width="72" height="102" rx="3"/>
+        <rect x="360" y="83" width="72" height="102" rx="3" fill="none" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="396" y="76" class="s-label-g" text-anchor="middle">45.9%</text>
+        <text x="396" y="200" class="s-label" text-anchor="middle" font-size="12">avoid</text>
+        <!-- 注釈矢印: avoid > good 逆転 -->
+        <text x="260" y="15" class="s-label-g" text-anchor="middle" font-size="11">avoid &gt; good !</text>
+      </svg>
+      <p class="chart-caption">図1：選択ティア別の全体勝率（N=1028）。赤破線＝損益分岐43%。avoidがgoodを上回る「逆転」が生じており、設計意図（elite&gt;good&gt;neutral&gt;avoid）とは一致しない。</p>
+    </div>
+
+    <table>
+      <tr>
+        <th>ティア</th><th>N</th><th>勝ち</th><th>勝率</th><th>95%CI</th><th>E(R)</th><th>R 95%CI</th>
+      </tr>
+      <tr>
+        <td>elite（精鋭）</td><td>126</td><td>60</td><td><strong>47.6%</strong></td><td>[39.1%〜56.3%]</td><td>+0.111</td><td>[−0.093〜+0.315]</td>
+      </tr>
+      <tr>
+        <td>good（良）</td><td>232</td><td>94</td><td>40.5%</td><td>[34.4%〜46.9%]</td><td>−0.055</td><td>[−0.202〜+0.093]</td>
+      </tr>
+      <tr style="background:#fff0f0;">
+        <td>neutral（中立）</td><td>350</td><td>125</td><td><strong style="color:#cf222e">35.7%</strong></td><td>[30.9%〜40.9%]</td><td>−0.161</td><td>[−0.278〜−0.044]</td>
+      </tr>
+      <tr style="background:#f0fff0;">
+        <td>avoid（回避）</td><td>320</td><td>147</td><td><strong style="color:#1a7f37">45.9%</strong></td><td>[40.6%〜51.4%]</td><td>+0.072</td><td>[−0.056〜+0.199]</td>
+      </tr>
+    </table>
+
+    <p>実際の序列は <strong>elite(47.6%) ＞ avoid(45.9%) ＞ good(40.5%) ＞ neutral(35.7%)</strong> となっており、設計意図の「elite ＞ good ＞ neutral ＞ avoid」と比べると <strong>avoid と good の順位が入れ替わっています</strong>。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-neutral">④ 結果②：tier=neutralのE(R)は全域マイナス</h2>
+
+    <div class="negative-box">
+      tier=neutral：勝率35.7%（125/350）・95%CI[30.9%〜40.9%]。<br>
+      CI上限 <strong>40.9% &lt; 43%</strong>（損益分岐割れ確定）。<br>
+      E(R)=−0.161、RCI[−0.278〜−0.044]：期待値の95%CIが全域マイナス。
+    </div>
+
+    <p>tier=neutral とは「veto なし・ただし上位足トレンドとの方向が一致しない（逆張り気味）」シグナルです。N=350 という最大サンプルで、勝率・期待値の両面から損益分岐割れが統計的に確認されました。</p>
+
+    <h3>neutral の中でも特に弱い組み合わせ</h3>
+    <table>
+      <tr><th>組み合わせ</th><th>N</th><th>勝率</th><th>E(R)</th><th>コメント</th></tr>
+      <tr><td>neutral × jpy_fx（円クロス）</td><td>59</td><td>23.7%</td><td>−0.446</td><td>最弱組合せ。jpy_fxは方向整合が重要なグループ</td></tr>
+      <tr><td>neutral × other_fx（ドルFX）</td><td>77</td><td>33.8%</td><td>−0.212</td><td>CI 確実マイナス圏</td></tr>
+      <tr><td>neutral × 金属（metal）</td><td>82</td><td>32.9%</td><td>−0.232</td><td>#013/#030で指摘した金属不振と重複</td></tr>
+      <tr><td>neutral × 指数（index）</td><td>73</td><td>42.5%</td><td>−0.009</td><td>唯一の「損益分岐付近」——それでも E(R) はほぼゼロ</td></tr>
+    </table>
+
+    <p>neutral の全 350 件のうち最多 N=82 を占める金属グループで 32.9%、最多 N=77 のドル FX で 33.8% と、主力グループで軒並み悪い数字が出ています。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-paradox">⑤ 結果③：avoid &gt; good の逆転とその原因</h2>
+
+    <p><strong>avoid ティア（45.9%）が good ティア（40.5%）より高い</strong>という結果は、直感に反します。「回避すべき」ラベルを付けたシグナルの方が「良い」ラベルのシグナルより強い、という逆転です。</p>
+
+    <div class="warning-box">
+      avoid ＞ good の差は 5.4pp で、95%CI は重複しているため統計的確定打ではありません。探索的な発見として記録し、前向きトラッカーで継続観察します。
+    </div>
+
+    <h3>good が低い理由：金属・原油の足引き</h3>
+    <p>good ティアの大半（222/232=95.7%）はロングシグナルです。そのうち特に dragging するのが：</p>
+    <table>
+      <tr><th>good × グループ</th><th>N</th><th>勝率</th><th>E(R)</th></tr>
+      <tr><td>指数（index）</td><td>69</td><td>46.4%</td><td>+0.082</td></tr>
+      <tr><td>jpy_fx（円クロス）</td><td>39</td><td>41.0%</td><td>−0.043</td></tr>
+      <tr><td>other_fx（ドルFX）</td><td>66</td><td>40.9%</td><td>−0.045</td></tr>
+      <tr style="background:#fff0f0;"><td>金属（metal）</td><td>34</td><td><strong style="color:#cf222e">26.5%</strong></td><td>−0.382</td></tr>
+      <tr><td>BTC</td><td>11</td><td>63.6%</td><td>+0.485</td></tr>
+      <tr style="background:#fff0f0;"><td>原油（oil）</td><td>13</td><td><strong style="color:#cf222e">23.1%</strong></td><td>−0.462</td></tr>
+    </table>
+
+    <p>good×金属（26.5%・E(R)=−0.382）と good×原油（23.1%・E(R)=−0.462）が全体の足を引いています。これは <a href="guide-signal-lab-013.html">#013（金属ロングのレジーム反転）</a>・<a href="guide-signal-lab-030.html">#030（ロング全般gate反証）</a>で指摘した「金属の非定常性」と整合します。</p>
+
+    <h3>avoid が高い理由：指数シグナルの組み込み</h3>
+    <p>avoid ティアに veto_runway_blocked（S/R 壁あり）条件で入った指数シグナルが高勝率を示しています：</p>
+    <table>
+      <tr><th>avoid × グループ</th><th>N</th><th>勝率</th><th>E(R)</th><th>そのうちロング</th></tr>
+      <tr style="background:#f0fff0;"><td>指数（index）</td><td>91</td><td><strong style="color:#1a7f37">53.8%</strong></td><td>+0.256</td><td>45/77=58.4%</td></tr>
+      <tr><td>金属（metal）</td><td>31</td><td>51.6%</td><td>+0.204</td><td>—</td></tr>
+      <tr><td>other_fx（ドルFX）</td><td>90</td><td>44.4%</td><td>+0.037</td><td>—</td></tr>
+      <tr><td>jpy_fx（円クロス）</td><td>76</td><td>38.2%</td><td>−0.110</td><td>—</td></tr>
+    </table>
+
+    <p>avoid×指数が N=91 で 53.8% というのは、<a href="guide-signal-lab-021.html">#021</a>・<a href="guide-signal-lab-026.html">#026</a>で確認した「指数ロング昇格」と整合します。指数シグナルは veto 条件（S/R 壁が近い等）があっても強い傾向があり、「avoid」ラベルが必ずしも低パフォーマンスを意味しないケースが存在します。</p>
+
+    <div class="positive-box">
+      仮説の解釈：avoid ＞ good の逆転は「good の金属・原油負け」＋「avoid の指数混入」という二つの要因の合成。ティア設計でいう「avoid = 回避」は、veto 条件を反映しているが、グループ性能の非対称性（指数は veto があっても強い）までは吸収できていない可能性を示唆しています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="confound">⑥ 交絡点検——グループ構成差では説明できない</h2>
+
+    <p>「avoid に指数が多く含まれているだけでは？」という交絡を点検します。</p>
+
+    <table>
+      <tr><th>グループ</th><th>avoid N</th><th>avoid 比率</th><th>good N</th><th>good 比率</th></tr>
+      <tr><td>指数</td><td>91</td><td>28.4%</td><td>69</td><td>29.7%</td></tr>
+      <tr><td>jpy_fx</td><td>76</td><td>23.8%</td><td>39</td><td>16.8%</td></tr>
+      <tr><td>other_fx</td><td>90</td><td>28.1%</td><td>66</td><td>28.4%</td></tr>
+      <tr><td>金属</td><td>31</td><td>9.7%</td><td>34</td><td>14.7%</td></tr>
+    </table>
+
+    <p>指数比率は avoid=28.4% vs good=29.7% でほぼ同等。金属比率は good の方が高い（14.7% vs 9.7%）です。つまり <strong>好成績の指数が「avoid に多い」わけではなく、むしろ悪成績の金属が「good に多い」</strong>ことが逆転の主因と考えられます。</p>
+
+    <!-- =============================== -->
+    <h2 id="verdict">⑦ 事前基準の評価——H1通過・H2は探索的</h2>
+
+    <table>
+      <tr><th>仮説</th><th>合格条件</th><th>結果</th><th>判定</th></tr>
+      <tr>
+        <td>H1：tier=neutral の WR &lt; 43%</td>
+        <td>N≥100 かつ CI 上限 &lt; 43%</td>
+        <td>N=350・CI上限40.9%&lt;43% ✅<br>さらに E(R) RCI 上限=−0.044&lt;0 ✅</td>
+        <td><strong>✅ 通過A（損益分岐割れ確定）</strong></td>
+      </tr>
+      <tr>
+        <td>H2：tier=avoid &gt; tier=good（逆転）</td>
+        <td>点推定で avoid &gt; good</td>
+        <td>45.9% &gt; 40.5%（5.4pp差）✅<br>ただし CI 重複のため確定打なし</td>
+        <td><strong>🟡 探索的確認（CI確定打なし）</strong></td>
+      </tr>
+    </table>
+
+    <p>H1 は N=350 という十分なサンプルで、95%CI 上限が損益分岐43%を下回り、かつ E(R) も RCI 全域マイナスという二重の確認が取れました。<strong>tier=neutral は現状「使うべきでないティア」として統計的に確認されています</strong>。</p>
+
+    <p>H2 の逆転は点推定で確認されましたが、CI が重複しており偶然の可能性も残ります。現在前向きトラッカーで tier=good (前向き 26/36=72%) と tier=neutral (前向き 51/130=39%) の観測を継続中です。in-sample と前向きで方向が逆転していないかを注視します。</p>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-07-05／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.35 CI[+0.06〜+0.65]（70/121・勝率58%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[−0.06〜+0.18]（120/264・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[−0.08〜+0.21]（98/214・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[−0.09〜+0.28]（76/162・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.09 CI[−0.32〜+0.15]（51/130・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.18 CI[−0.08〜+0.43]（59/117・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[−0.07〜+0.34]（57/117・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[−0.22〜+0.34]（49/108・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[−0.00〜+0.34]（49/98・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.11 CI[−0.41〜+0.20]（34/89・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.09 CI[−0.30〜+0.11]（33/85・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.11 CI[−0.12〜+0.34]（40/84・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[−0.33〜+0.45]（34/75・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.07 CI[−0.40〜+0.26]（29/73・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.35 CI[−0.01〜+0.71]（41/71・勝率58%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.11 CI[−0.32〜+0.55]（31/65・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.24 CI[−0.66〜+0.19]（18/55・勝率33%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.09 CI[−0.58〜+0.40]（21/54・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[−0.26〜+0.84]（21/38・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.09 CI[−0.76〜+0.57]（14/36・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.69 CI[+0.30〜+1.07]（26/36・勝率72%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.53 CI[+0.04〜+1.02]（23/35・勝率66%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.70 CI[+0.25〜+1.14]（24/33・勝率73%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=low_break</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.09 CI[−0.37〜+0.56]（15/32・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.00 CI[−0.44〜+0.44]（12/28・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.26 CI[−0.24〜+0.77]（13/24・勝率54%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.28 CI[−0.23〜+0.80]（11/20・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.74 CI[−0.93〜−0.55]（2/18・勝率11%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.17 CI[−0.80〜+0.47]（5/14・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[−0.67〜+0.79]（5/11・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>BTC全方向(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.46 CI[−0.50〜+1.41]（5/8・勝率62%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ショート全般(日足・回避)</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.00 CI[−0.79〜+0.79]（3/7・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>other_fxクロス(日足・回避)</td><td>gate</td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.17 CI[−0.69〜+1.02]（3/6・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×ロング(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.42 CI[−1.27〜+0.44]（1/4・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド発火(日足・回避)</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R −0.42 CI[−1.56〜+0.73]（1/4・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=ma_dead</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.42 CI[−1.73〜+0.89]（1/4・勝率25%）</td><td>🟡蓄積中</td></tr>
+<tr><td>メタル×ロング(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +1.33 CI[+1.33〜+1.33]（1/1・勝率100%）</td><td>🟡蓄積中</td></tr>
+<tr><td>BTC×ロング(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.00 CI[+0.00〜+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×逆張り買い(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.00 CI[+0.00〜+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>other_fx×逆張り買い(回避)</td><td>gate</td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.00 CI[+0.00〜+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ロング全般(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.00 CI[+0.00〜+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.15 CI[+0.01〜+0.30]（96/194・勝率50%）</td><td>⛔反証</td></tr>
+</table>
+
+    <p>今回のトラッカーで特に目立つのは <strong>tier=good（前向き 26/36=72%・E(R)=+0.685・CI[+0.30〜+1.07]）</strong>の高い数字です。in-sample の 40.5% から大幅に改善しており、good ティアが前向きで回復している可能性を示唆しています。N=36 はまだ昇格基準（N≥80）に届かないため引き続き観察を続けます。</p>
+
+    <!-- =============================== -->
+    <h2 id="next">⑨ 次回に向けて</h2>
+
+    <p>今回の検証から導かれる次の研究候補です：</p>
+    <ul>
+      <li><strong>tier=neutral × 円クロス（23.7%）の追跡</strong>：jpy_fx の neutral シグナルは in-sample で最弱組合せ。前向き N が蓄積したら正式検証。</li>
+      <li><strong>tier=good の前向き改善の解剖</strong>：in-sample=40.5% が前向き=72%（N=36）に上振れしている原因——金属シグナルの発火減少か、グループ構成変化か。</li>
+      <li><strong>avoid × veto 種別の分解</strong>：veto_runway_blocked（blocked=True）の avoid は過去の#005〜#007研究と同様に強い可能性。veto_chasing のみ vs veto_runway のみ を正式に比較。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 AIシグナルの成績記録</div>
+      <div class="cta-box-desc">全シグナルの発火・決済・勝率を公開記録中</div>
+      <a href="track-record.html" class="nav-btn" style="display:inline-flex;margin:0 auto;">📊 成績ダッシュボードへ</a>
+    </div>
+
+    <h2>関連記事</h2>
+    <div class="related-grid">
+      <a href="guide-signal-lab-030.html" class="related-card">
+        <div class="related-card-title">🧪 #30：ロング全般gate前向き反証</div>
+        <div class="related-card-desc">IS E(R)=-0.161 が FWD+0.231 に転換。金属レジーム転換が主因。</div>
+      </a>
+      <a href="guide-signal-lab-026.html" class="related-card">
+        <div class="related-card-title">🧪 #26：指数×ロング前向きN=104昇格確認</div>
+        <div class="related-card-desc">前向き59.6%(62/104)・E(R)+0.391でシリーズ初昇格。</div>
+      </a>
+      <a href="guide-signal-lab-013.html" class="related-card">
+        <div class="related-card-title">🧪 #13：金属ロングのレジーム反転</div>
+        <div class="related-card-desc">20年バックテスト最良→直近最悪の符号反転。非定常性の実証。</div>
+      </a>
+      <a href="guide-signal-lab-021.html" class="related-card">
+        <div class="related-card-title">🧪 #21：指数×ロング前向き初昇格</div>
+        <div class="related-card-desc">シリーズ初の昇格事例。前向きN=90・勝率60%。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer">
+      本記事はデータ分析の過程を記録した教育的コンテンツです。過去の勝率・期待値は将来の成果を保証しません。本データは実際の取引で使用するための投資助言ではなく、当サイトは金融商品取引業の登録を受けていません。紹介するシグナルや検証結果は参考情報であり、すべての投資判断・損失について当サイトは責任を負いません。金融商品への投資はリスクを伴い、元本を下回ることがあります。
+    </p>
+
+  </div><!-- /.article -->
+
+</main>
+
+<footer>
+  <p><a href="index.html">トップページ</a> | <a href="guides.html">解説記事一覧</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="about.html">サイトについて</a></p>
+  <p style="margin-top:8px">© 2026 MarketWatch AI</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll', function() {
+    var p = document.getElementById('reading-progress');
+    var h = document.documentElement;
+    var b = document.body;
+    var st = 'scrollTop';
+    var sh = 'scrollHeight';
+    var scrolled = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+    if (p) p.style.width = scrolled + '%';
+  });
+  function toggleTheme() {
+    var b = document.body;
+    var t = document.getElementById('theme-toggle');
+    b.classList.toggle('dark');
+    if (t) t.textContent = b.classList.contains('dark') ? '☀️' : '🌙';
+  }
+</script>
+
+</body>
+</html>
