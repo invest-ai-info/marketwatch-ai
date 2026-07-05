@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-07-06 | autodraft-publish: guide-simple-vs-compound.html — 公開完了 ✅
+
+- **対象key**: `simple-vs-compound` / カテゴリ: 投資の基礎知識 / 公開日: 2026-07-06
+- **決定論ゲート**: ✅ GREEN（check_guide_draft.py EXIT=0 / SVGはみ出し3件を自己修正→再GREEN）
+- **Opus初期判定**: 🟢白（修正なし）
+- **品質ルーブリック**: 全5観点✅（コンプラ担当Opusが同時評価）
+- **独立確認**: 不要（Opus初期判定が修正なしの🟢白のため、2段構えの独立確認ステップはスキップ）
+- **公開URL**: https://marketwatch-jp.com/guide-simple-vs-compound.html
+- **push**: 成功（5036078、JST 2026-07-06 08:41頃）
+
+---
+
 ## 2026-07-05 | 🧪 signal-lab #031 — 自動公開完了 ✅
 
 - **基準日（JST）**: 2026-07-05
