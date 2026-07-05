@@ -13,4 +13,5 @@ SYNC_FILES = [
     "guide-proverb-hito-no-iku-ura.html",
     "guide-news-2026-07-05-tariff-august-deadline.html",
     "guide-bonds-interest-rates.html",
+    "guide-signal-lab-031.html",
 ]
