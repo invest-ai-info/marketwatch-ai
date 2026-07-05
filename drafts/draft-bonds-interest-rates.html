@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>金利と債券の関係｜なぜ金利が上がると債券価格は下がるのか？シーソーで理解する仕組み - MarketWatch AI</title>
+  <meta name="description" content="金利が上がると債券価格はなぜ下がるのか。既発債と新発債の利回り競争をシーソーで直感図解。デュレーション・逆イールドカーブ・株との綱引きまで、投資初心者から中上級者まで体系的に解説します。">
+  <meta name="keywords" content="金利,債券,債券価格,逆相関,デュレーション,逆イールド,イールドカーブ,長短金利差,国債,利回り,投資基礎,金融知識">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-bonds-interest-rates.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="金利と債券の関係｜なぜ金利が上がると債券価格は下がるのか？シーソーで理解する仕組み">
+  <meta property="og:description" content="金利↑→債券価格↓の逆相関をシーソーで直感図解。デュレーション・逆イールド・株との綱引きまで、投資の基礎知識として体系的に解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-bonds-interest-rates.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "金利と債券の関係｜なぜ金利が上がると債券価格は下がるのか？シーソーで理解する仕組み",
+    "description": "金利が上がると債券価格はなぜ下がるのか。既発債と新発債の利回り競争をシーソーで直感図解。デュレーション・逆イールドカーブ・株との綱引きまで体系的に解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-05",
+    "dateModified": "2026-07-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-bonds-interest-rates.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 追加SVGクラス（債券・金利概念図用） */
+    .s-bar-b{fill:#0969da;opacity:.8}
+    .s-bar-r{fill:#cf222e;opacity:.8}
+    .s-bar-g{fill:#1a7f37;opacity:.8}
+    .s-fill-light{fill:#ddf4ff}
+    .s-fill-warn{fill:#fff8c5}
+    .s-fill-neg{fill:#ffebe9}
+    .s-text-center{font-family:'Noto Sans JP',sans-serif;font-size:13px;fill:#1f2328;text-anchor:middle}
+    .s-text-sm{font-family:'Noto Sans JP',sans-serif;font-size:11px;fill:#57606a;text-anchor:middle}
+    .s-text-bold{font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;fill:#0969da;text-anchor:middle}
+    .s-arrow{stroke:#0969da;stroke-width:2;fill:none;marker-end:url(#arrowB)}
+    .s-arrow-r{stroke:#cf222e;stroke-width:2;fill:none;marker-end:url(#arrowR)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-text-center{fill:#c9d1d9}
+    body.dark .s-text-sm{fill:#8b949e}
+    body.dark .s-text-bold{fill:#79c0ff}
+    body.dark .s-fill-light{fill:#1a2030}
+    body.dark .s-fill-warn{fill:#2a1f0e}
+    body.dark .s-fill-neg{fill:#2a1010}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-caption,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 金利と債券の関係
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は金利・債券の仕組みに関する一般的な教育情報の提供を目的としており、特定銘柄・特定債券の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💹 金利と債券の関係｜なぜ金利が上がると価格は下がるのか？</h1>
+    <div class="meta-line">公開日：2026 年 7 月 5 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「金利が上がったのに、持っていた債券ファンドが値下がりした」——こんな経験や話を聞いて、首をかしげたことはありませんか。<strong>金利と債券価格は逆に動く</strong>という性質は、投資の世界で最も重要な基礎のひとつでありながら、直感に反するため多くの人が混乱します。</p>
+    <p>この記事では、まず「なぜ金利が上がると債券価格が下がるのか」をシーソーのイメージで直感的に理解し、次にデュレーション（金利感応度）・逆イールドカーブ・株との綱引きまで踏み込みます。債券の仕組みを知ることで、市場のニュースを読む目が格段に変わるはずです。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>金利と債券価格は<strong>必ず逆向きに動く</strong>。金利が上がれば既発債の魅力が下がり価格は下落、金利が下がれば価格は上昇する。これは数学的な必然で例外はない。</li>
+      <li>その感応度が<strong>「デュレーション」</strong>。満期が長い・クーポンが低いほど金利変動の影響を大きく受ける。長期国債ファンドが短期債より値動きが大きいのはこのため。</li>
+      <li><strong>逆イールド（短期金利 &gt; 長期金利）</strong>は市場の景気後退懸念を反映するシグナルとして歴史的に注目されてきた。株・債券・金利の三者関係を理解することで、マクロの地合いが読みやすくなる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">金利と債券の基本：シーソーで直感理解</a></li>
+        <li><a href="#section-2">既発債 vs 新発債：なぜ価格が動くのか</a></li>
+        <li><a href="#section-3">デュレーション：金利感応度を測る尺度</a></li>
+        <li><a href="#section-4">イールドカーブと逆イールドの読み方</a></li>
+        <li><a href="#section-5">株との綱引き：金利上昇が株式に与える3つの圧力</a></li>
+        <li><a href="#section-6">当サイトでの活かし方</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 金利と債券の基本：シーソーで直感理解</h2>
+    <p>まず、債券の仕組みをごく簡単に整理します。債券とは、<strong>発行体（国や企業）が「○年後に元本を返すから、その間は毎年○%の利息（クーポン）を払います」と約束した借用証書</strong>です。国が発行するのが国債、企業が発行するのが社債です。</p>
+    <p>ここで重要なのが、<strong>クーポン率は発行時に固定される</strong>という点です。例えば、利率2%・満期10年の国債を100万円で購入すると、毎年2万円の利息が約束されます。この利息の額は、その後市場の金利がどう変わろうと変わりません。</p>
+
+    <div class="info-box">
+      <strong>💡 シーソーのイメージ</strong>：シーソーの左側に「市場金利」、右側に「既発債の価格」を置くと、片方が上がればもう片方は必ず下がります。この逆相関は数学的な必然であり、例外はありません。
+    </div>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="seesaw-title">
+        <title id="seesaw-title">金利と債券価格のシーソー関係の概念図</title>
+        <defs>
+          <marker id="arrowB" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#0969da"/></marker>
+          <marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#cf222e"/></marker>
+          <marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a7f37"/></marker>
+        </defs>
+        <text class="s-panel-label" x="20" y="22">金利と債券価格の関係（概念）</text>
+
+        <!-- === パターン1: 金利上昇 === -->
+        <!-- 台座 -->
+        <polygon points="200,210 240,210 220,190" fill="#8b949e"/>
+        <rect x="190" y="210" width="60" height="8" rx="3" fill="#8b949e"/>
+        <!-- シーソー板（左下がり） -->
+        <line x1="100" y1="205" x2="340" y2="175" stroke="#57606a" stroke-width="6" stroke-linecap="round"/>
+        <!-- 左側（金利↑ = 重い） -->
+        <rect x="72" y="176" width="60" height="32" rx="6" class="s-fill-neg"/>
+        <text class="s-text-sm" x="102" y="190" fill="#cf222e" font-weight="700">市場金利</text>
+        <text class="s-text-sm" x="102" y="204" fill="#cf222e">↑ 上昇</text>
+        <!-- 右側（債券価格↓ = 軽い） -->
+        <rect x="298" y="148" width="60" height="32" rx="6" class="s-fill-light"/>
+        <text class="s-text-sm" x="328" y="162" fill="#0969da" font-weight="700">既発債価格</text>
+        <text class="s-text-sm" x="328" y="176" fill="#0969da">↓ 下落</text>
+        <!-- タイトル -->
+        <text class="s-text-bold" x="220" y="250" font-size="13">【金利上昇局面】</text>
+
+        <!-- === パターン2: 金利低下 === -->
+        <!-- 台座 -->
+        <polygon points="480,210 520,210 500,190" fill="#8b949e"/>
+        <rect x="470" y="210" width="60" height="8" rx="3" fill="#8b949e"/>
+        <!-- シーソー板（右下がり） -->
+        <line x1="380" y1="175" x2="620" y2="205" stroke="#57606a" stroke-width="6" stroke-linecap="round"/>
+        <!-- 左側（金利↓ = 軽い） -->
+        <rect x="352" y="148" width="60" height="32" rx="6" class="s-fill-light"/>
+        <text class="s-text-sm" x="382" y="162" fill="#0969da" font-weight="700">市場金利</text>
+        <text class="s-text-sm" x="382" y="176" fill="#0969da">↓ 低下</text>
+        <!-- 右側（債券価格↑ = 重い） -->
+        <rect x="578" y="178" width="60" height="32" rx="6" class="s-fill-neg" style="fill:#e6ffed"/>
+        <text class="s-text-sm" x="608" y="192" fill="#1a7f37" font-weight="700">既発債価格</text>
+        <text class="s-text-sm" x="608" y="206" fill="#1a7f37">↑ 上昇</text>
+        <!-- タイトル -->
+        <text class="s-text-bold" x="500" y="250" font-size="13" fill="#1a7f37">【金利低下局面】</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 金利と既発債価格はシーソーの関係。市場金利が上がれば既発債の魅力が薄れて価格が下落し、金利が下がれば既発債の相対価値が高まって価格が上昇する。この逆相関は数学的な必然。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 既発債 vs 新発債：なぜ価格が動くのか</h2>
+    <p>「金利が上がると価格が下がる」という感覚を、もう少し具体的に掘り下げてみましょう。</p>
+
+    <h3>具体例で考える</h3>
+    <p>あなたが利率2%の国債（100万円、10年満期）を持っているとします。この債券は毎年2万円の利息をくれます。ここで市場金利が3%に上昇し、新しい国債（新発債）が利率3%で発行されました。</p>
+    <ul>
+      <li>新しい投資家は<strong>利率3%の新発債を買えばいい</strong>。100万円で毎年3万円もらえる。</li>
+      <li>あなたの<strong>利率2%の既発債は、毎年2万円しかくれない</strong>。新発債より1万円も少ない。</li>
+      <li>誰かに既発債を売ろうとすると、「新発債より劣る分」だけ<strong>値引きしないと買ってもらえない</strong>。</li>
+    </ul>
+    <p>この「値引き」こそが<strong>債券価格の下落</strong>です。逆に金利が下がれば、古い高利率の既発債は新発債より有利になるため、プレミアム（上乗せ価格）がついて値上がりします。</p>
+
+    <div class="info-box">
+      <strong>💡 最終利回り（YTM）という考え方</strong>：市場では、どの債券も「今の価格で買った場合の実質的な利回り（最終利回り・YTM: Yield to Maturity）」が市場金利と一致するように価格が調整されます。これが「金利と価格の逆相関」のメカニズムです。価格が下がれば実質利回りが上がり、市場金利の水準に追いつくわけです。
+    </div>
+
+    <table>
+      <tr><th>状況</th><th>既発債（利率2%）の評価</th><th>価格の動き</th></tr>
+      <tr><td>市場金利 2%（発行時）</td><td>新発債と同等</td><td>100万円（額面通り）</td></tr>
+      <tr><td>市場金利が3%に上昇</td><td>新発債より不利（毎年1万円少ない）</td><td>100万円 → 値下がり</td></tr>
+      <tr><td>市場金利が1%に低下</td><td>新発債より有利（毎年1万円多い）</td><td>100万円 → 値上がり</td></tr>
+    </table>
+    <p style="font-size:.8rem;color:#6e7781">※ 上表は仕組みを直感的に示すための単純化した例示です。実際の債券価格は満期・クーポン・信用力など多くの要因で決まります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ デュレーション：金利感応度を測る尺度（中上級）</h2>
+    <p>「金利が動いたとき、手持ちの債券はどれくらい価格が変わるのか？」——これを数値化したのが<strong>デュレーション（Duration）</strong>です。</p>
+
+    <h3>デュレーションとは何か</h3>
+    <p>デュレーションには、大きく2種類あります。</p>
+    <ul>
+      <li><strong>マコーレー・デュレーション</strong>：将来受け取るすべてのキャッシュフロー（利息＋元本）を現在価値で加重平均した「実質的な回収期間」（単位：年）。ゼロクーポン債なら満期年数とイコールになる。</li>
+      <li><strong>修正デュレーション（Modified Duration）</strong>：「金利が1%動いたとき、債券価格が何%変わるか」の近似値として使われる実用的な指標。<br>
+      <code>修正デュレーション ≒ マコーレー・デュレーション ÷ (1 + 利回り)</code></li>
+    </ul>
+
+    <div class="warning-box">
+      修正デュレーションが5の債券は、金利が1%上昇すると価格がおよそ5%下落すると見積もられます（逆に金利1%低下で約5%上昇）。これはあくまで近似であり、金利の変動幅が大きい場合や凸性（コンベクシティ）を考慮する局面では誤差が出ます。
+    </div>
+
+    <h3>デュレーションを決める3つの要因</h3>
+    <table>
+      <tr><th>要因</th><th>デュレーションへの影響</th><th>直感的な理由</th></tr>
+      <tr><td>満期（残存年数）</td><td>長いほど大きい</td><td>元本回収まで時間がかかるほどリスクが長引く</td></tr>
+      <tr><td>クーポン率</td><td>低いほど大きい</td><td>途中の利息が少ないほど、元本への依存度が高まる</td></tr>
+      <tr><td>市場金利の水準</td><td>低いほどやや大きい</td><td>将来CF割引率が低いほど長期分の現在価値が大きくなる</td></tr>
+    </table>
+
+    <p>これが「<strong>長期国債ファンドは短期債ファンドより値動きが大きい</strong>」理由です。たとえば20年満期のゼロクーポン国債と1年満期の国債では、金利感応度がまったく異なります。</p>
+
+    <!-- SVG: デュレーション概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="dur-title">
+        <title id="dur-title">デュレーション（金利感応度）の概念図：満期が長いほど価格変動が大きい</title>
+        <text class="s-panel-label" x="20" y="22">デュレーションと価格変動（概念）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="220" x2="610" y2="220"/>
+        <line class="s-axis" x1="60" y1="220" x2="60" y2="40"/>
+        <text class="s-label-sm" x="320" y="240" text-anchor="middle">残存年数（満期まで）→</text>
+        <text class="s-label-sm" x="50" y="130" text-anchor="middle" transform="rotate(-90,50,130)">金利1%変動時の価格変動幅（%）→</text>
+        <!-- 折れ線: 低クーポン（感応度大） -->
+        <polyline class="s-curve-l" points="60,215 150,195 250,172 350,148 450,120 560,88"/>
+        <text class="s-note-r" x="570" y="84">低クーポン</text>
+        <!-- 折れ線: 高クーポン（感応度小） -->
+        <polyline class="s-curve-g" points="60,215 150,205 250,192 350,178 450,162 560,144"/>
+        <text class="s-note-g" x="570" y="140">高クーポン</text>
+        <!-- 目盛りイメージ -->
+        <text class="s-label-sm" x="60" y="235">0年</text>
+        <text class="s-label-sm" x="145" y="235">5年</text>
+        <text class="s-label-sm" x="245" y="235">10年</text>
+        <text class="s-label-sm" x="345" y="235">15年</text>
+        <text class="s-label-sm" x="445" y="235">20年</text>
+        <text class="s-label-sm" x="545" y="235">30年</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 満期が長いほど・クーポンが低いほど金利変動に対する価格の振れ幅が大きくなる（デュレーションが高い）。長期国債ファンドが値動きが大きい理由はここにある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ イールドカーブと逆イールドの読み方（中上級）</h2>
+    <p><strong>イールドカーブ（利回り曲線）</strong>とは、同じ国の債券について、満期の短いものから長いものまでの利回りを並べてグラフにしたものです。横軸に満期（年数）、縦軸に利回りを取ります。</p>
+
+    <h3>通常のイールドカーブ（右肩上がり）</h3>
+    <p>一般的に、長期債は短期債より利回りが高くなります（右肩上がり）。理由は、長期間お金を貸すほど将来の不確実性が高まるため、その分だけ高い利息が必要だからです。</p>
+
+    <h3>逆イールド（右肩下がり）</h3>
+    <p>中央銀行が急速に利上げすると、短期金利が急上昇して長期金利を上回る「<strong>逆イールド（inverted yield curve）</strong>」が発生することがあります。代表的な指標は<strong>「2年物国債と10年物国債の利回り差（2s10sスプレッド）」</strong>や「3ヶ月物と10年物の差」です。</p>
+
+    <div class="negative-box">
+      <strong>📉 逆イールドが注目される理由</strong>：歴史的に、米国では1970年代以降のほぼすべての景気後退の前に逆イールドが観測されてきました。一般的に逆転から景気後退入りまでには12〜18ヶ月程度のラグがあるとされています（ニューヨーク連邦準備銀行など）。ただし「逆イールド = 必ず景気後退」ではなく、あくまでシグナルの一つとして参照されます。
+    </div>
+
+    <figure class="chart-figure">
+      <!-- TODO(SVG): 通常イールドカーブ（右肩上がり）vs 逆イールド（右肩下がり）の比較図を要追加・要ライト/ダーク実機確認 -->
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="yield-title">
+        <title id="yield-title">通常のイールドカーブと逆イールドカーブの概念比較図</title>
+        <text class="s-panel-label" x="20" y="22">イールドカーブ（概念）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="230" x2="600" y2="230"/>
+        <line class="s-axis" x1="60" y1="230" x2="60" y2="50"/>
+        <text class="s-label-sm" x="330" y="250" text-anchor="middle">満期（年数）→</text>
+        <text class="s-label-sm" x="35" y="230">低</text>
+        <text class="s-label-sm" x="35" y="60">高</text>
+        <text class="s-label-sm" x="80" y="246">短期</text>
+        <text class="s-label-sm" x="550" y="246">長期</text>
+        <!-- 通常カーブ（右肩上がり・緑） -->
+        <path class="s-curve-g" d="M80,195 C 200,185 350,140 560,90"/>
+        <text class="s-note-g" x="560" y="80">通常（右肩上がり）</text>
+        <!-- 逆イールドカーブ（右肩下がり・赤） -->
+        <path class="s-curve-l" d="M80,100 C 200,110 350,155 560,190"/>
+        <text class="s-note-r" x="410" y="205">逆イールド（右肩下がり）</text>
+        <!-- 注釈 -->
+        <text class="s-label-sm" x="80" y="84" fill="#1a7f37">▲ 長期金利が高い（通常）</text>
+        <text class="s-label-sm" x="80" y="115" fill="#cf222e">▼ 短期金利が高い（逆転）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 通常のイールドカーブは長期金利 &gt; 短期金利（右肩上がり・緑）。中央銀行の急激な利上げ時などに短期金利が長期を上回る逆イールド（赤）が発生することがある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>逆イールドが発生する仕組み</h3>
+    <p>逆イールドが起きるのは、市場参加者が「将来的に景気が悪化し、中央銀行が利下げに転じる」と予想しているためとよく説明されます。長期金利は将来の短期金利予測の平均とも考えられるため、「将来は利下げ」という期待が長期金利を押し下げる結果、短期金利が長期金利を上回る状況が生まれるわけです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 株との綱引き：金利上昇が株式に与える3つの圧力</h2>
+    <p>金利の動きは株式市場にも直接影響します。特に<strong>金利上昇局面では株式に下押し圧力がかかりやすい</strong>とされています。その理由は大きく3つあります。</p>
+
+    <h3>① 割引率の上昇</h3>
+    <p>株価は「将来の利益をどれだけ現在価値に割り引くか」で評価されます（DCF: ディスカウント・キャッシュフロー法）。金利が上がると<strong>割引率が高まり、将来の利益の現在価値が小さくなる</strong>ため、理論的な株価水準が下がります。特に遠い将来の利益に依存する成長株（ハイPER銘柄）ほどこの影響を受けやすい、とされています。</p>
+
+    <h3>② 資産代替効果</h3>
+    <p>国債の利回りが上昇すると、<strong>リスクを取らなくても相応のリターンが得られる</strong>ようになります。そうなると、わざわざ株式のリスクを取る理由が相対的に薄れ、資金が株から債券へ向かいやすくなる、というのが「資産代替効果」の考え方です。</p>
+
+    <h3>③ 企業の借入コスト上昇</h3>
+    <p>金利が上がれば、企業の借入コストも増加します。設備投資の収益性が低下し、利益率や配当余力が圧迫されます。<strong>負債が多い企業（レバレッジが高い企業）ほど、業績への打撃が大きくなりやすい</strong>とされています。</p>
+
+    <div class="info-box">
+      <strong>💡 ただし「金利上昇 = 必ず株安」ではない</strong>：景気が力強く拡大している局面での緩やかな利上げは、企業業績の改善を伴うため、株価が金利と共に上昇することも歴史的には見られます。上の3つはあくまで下押し圧力のメカニズムであり、実際の株価は多くの要因が絡み合って決まります。
+    </div>
+
+    <h3>株・債券・金利の三角関係</h3>
+    <table>
+      <tr><th>局面</th><th>金利</th><th>債券価格</th><th>株式への傾向</th></tr>
+      <tr><td>景気拡大・利上げ</td><td>↑ 上昇</td><td>↓ 下落</td><td>混在（業績↑ vs 割引率↑）</td></tr>
+      <tr><td>景気後退懸念・利下げ</td><td>↓ 低下</td><td>↑ 上昇</td><td>下落圧力（業績悪化を懸念）</td></tr>
+      <tr><td>急激な利上げ局面</td><td>↑↑ 急上昇</td><td>↓↓ 急落</td><td>下落圧力が強まりやすい</td></tr>
+      <tr><td>インフレ鎮静・利下げ転換</td><td>↓ 低下</td><td>↑ 上昇</td><td>上昇しやすい（割引率↓・業績改善期待）</td></tr>
+    </table>
+    <p style="font-size:.8rem;color:#6e7781">※ 上表は一般的な傾向を整理した概念的なものです。実際の市場は複合的な要因で動きます。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 当サイトでの活かし方</h2>
+    <p>金利・債券の知識は、当サイトで提供する情報と次のように結びつきます。</p>
+    <ul>
+      <li><strong><a href="market-health.html">🩺 市場健康度ページ</a></strong>では、米国の「恐怖と強欲指数」やバフェット指標とあわせて、金融環境の大局を確認できます。金利動向を理解しておくと、市場健康度の変化をより深く読み取れます。</li>
+      <li><strong><a href="calendar.html">📅 経済カレンダー</a></strong>では、FOMCや日銀政策決定会合などの金融政策イベントを確認できます。これらの発表が市場金利に影響を与え、債券・株式の値動きにつながります。</li>
+      <li><strong>金利関連の基礎知識シリーズ</strong>として、<a href="guide-swap-points.html">スワップポイントの仕組み</a>（外貨建て資産での金利差収益）や<a href="guide-yen-carry-trade.html">円キャリートレード</a>の解説も参照ください。</li>
+    </ul>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>金利と債券について学んできた内容を整理します。</p>
+    <ul>
+      <li><strong>金利と債券価格は必ず逆に動く</strong>。金利が上昇すると既発債の魅力が相対的に下がり価格は下落、金利が低下すれば価格は上昇する。これは最終利回り（YTM）が市場金利と一致するように調整される数学的な必然。</li>
+      <li><strong>デュレーション</strong>は金利感応度の尺度。満期が長い・クーポンが低いほど大きく、金利1%変動時の価格変動（%）の目安を与えてくれる。長期債ファンドが値動きが大きいのはこのため。</li>
+      <li><strong>逆イールド</strong>は短期金利が長期金利を上回る状態。歴史的に景気後退の先行シグナルとして注目されてきたが、それだけで将来を断定できるものではなく、あくまで参考のひとつ。</li>
+      <li><strong>株と金利の綱引き</strong>は「割引率・資産代替・借入コスト」の3つが主な経路。ただし景気局面や利上げのペースによって実際の市場の反応は異なる。</li>
+    </ul>
+    <p>金利・債券の基本を押さえておくと、市場のニュースを読む視点が大きく広がります。「中央銀行が利上げを発表した」「逆イールドが発生した」といった情報が、単なる見出し以上の意味を持って見えてくるようになるはずです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を見る</div>
+      <div class="cta-box-desc">金利環境を踏まえたマルチタイムフレームのテクニカルシグナル。勝ちも負けも含めた全成績をダッシュボードで公開中。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボード →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-swap-points.html">
+        <div class="related-card-title">💱 スワップポイントの仕組み</div>
+        <div class="related-card-desc">2国の政策金利差から生まれるFXの金利差収益。金利と為替の関係を深掘りしたい方に。</div>
+      </a>
+      <a class="related-card" href="guide-simple-vs-compound-interest.html">
+        <div class="related-card-title">📈 単利と複利の違い</div>
+        <div class="related-card-desc">債券のクーポン再投資と複利の仕組みを理解することで、長期投資の威力がよりよくわかる。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">金利・マクロ環境を踏まえて発火する複合シグナルの実際の成績を公開中。勝ちも負けも全開示。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は金利・債券の仕組みに関する一般的な教育情報の提供を目的としており、特定銘柄・特定債券の売買推奨や投資助言ではありません。記載の内容は一般的な解説であり、特定の投資成果を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
