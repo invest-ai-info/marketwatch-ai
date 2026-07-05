@@ -94,6 +94,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 - **B2 信頼度スコア**（HIGH/MID/LOW、HIGH のみ参照）
 - **AI 敗因分析 + R4 勝因分析**（SL/TP ヒット時 Gemini 5 カテゴリ）
 - **銘柄別クールダウン**（原油 24h / ドル円 18h / その他 12h、1H は一律 4h）
+- **昇格エッジ限定メール**（2026-07-05）: `signal-lab-tracker.json` の status=promoted 仮説にマッチしたシグナルだけメール送信（照合=固定オラクル `signal_lab_verify.match`）。他は signals-log 記録のみ＝前向き検証は全量継続。無効化は env `EMAIL_PROMOTED_ONLY=0`
 
 ---
 
