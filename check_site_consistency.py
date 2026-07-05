@@ -53,6 +53,17 @@ SYNC_FORBIDDEN = {
 errors = []
 warnings = []
 
+# 🛡️ 2026-07-05: sync_to_github.py スタブ上書き事故の再発防止。
+# GitHub側の sync_to_github.py は publish_article のクラウド用「616バイトのスタブ」＝本物ではない。
+# リモートから取り込むと本物（全SYNC_FILESリスト+staleガード）が消える（実際に起きた→OneDrive版履歴で復旧）。
+# ここでサイズと中身を検査し、スタブ化していたら即エラーで気づけるようにする。
+_stg = os.path.join(SD, "sync_to_github.py")
+if os.path.exists(_stg):
+    _stg_src = open(_stg, encoding="utf-8", errors="replace").read()
+    if os.path.getsize(_stg) < 20000 or "staleness" not in _stg_src:
+        errors.append("🚨 sync_to_github.py がスタブ/破損の疑い（<20KB or staleガード無し）"
+                      "→ リモートの616Bスタブで上書きした可能性。OneDriveバージョン履歴から復元すること")
+
 
 def _read(p):
     with open(os.path.join(SD, p), encoding="utf-8") as f:
