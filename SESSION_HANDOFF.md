@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-04 深夜）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-05 夜）
 
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
 2026-06-17 以前の詳細履歴は **SESSION_ARCHIVE.md**（保管庫・後から辿る検索用）へ退避した。
@@ -73,7 +73,9 @@
 ## 📌 アクティブな宿題
 
 ### 🔜 次セッションで最初に確認（在flight・2026-07-05向け）
-- **⓪昇格エッジ限定メールの初回運転（7/5 sync後の次回 technical-alerts 4h run）**：Actionsログに「🏅 昇格エッジ限定メール: ON — promoted 1 件: 指数×ロング(全足ライブ)(index_long_live)」が出るか。指数ロング以外の発火が「🔇 昇格ゲート: 昇格エッジ非該当 → 記録のみ」になり signals-log には残るか（`promoted_gate` キー）。
+- **⓪7/6(月)朝の無人運転チェーンを順に確認**：(1)05:30 autodraft=⑬simple-vs-compound下書き生成（PUSH-MAIN修正後の初定時＝コミット着地必須） (2)08:40 autopublish=ゲート通過なら自動公開 (3)09:30 automation-health=**閾値緩和後の初回＝誤検知ゼロ・guides欠落0/50になるか** (4)12:00 health-check=**success継続か（6/25からの慢性失敗の終息確認・手動1回はsuccess済）** (5)06:00 jp_daily改修後の初平日運転（心拍条件化・カード履歴1行追記）＋08:00番人「💤取引23件」。
+- **①昇格エッジ限定メール＝月曜の実発火で初観測**：土曜は市場休止で発火ゼロ＝ゲートON表示のみ確認済。実発火で「🏅通過（指数ロングのみ配信）/🔇非該当（記録のみ）」が出るか technical-alerts ログで確認。signals-log の `promoted_gate` キーも見る。
+- **②番人EA MW_Guardian＝月曜に実弾テスト**：オーナーがデモ口座で試し発注→スマホPush・仮SL自動装着・重ね張り警告の実挙動を一緒に確認（EAはPC MT4起動中のみ稼働）。
 - ✅済（7/5朝確認）**①7/5朝06:10 signal-lab-daily＝tracker.jsonコミット復活を確認**（06:27 JST commit・🏁5本=仕様どおり・新規Issueなし）。旧記述→（7/3・7/4と2日連続コミット漏れ→コード3ガード導入済み：tracker/sweepの出力末尾リマインド＋`finalize_signal_lab.py`の`_tracker_gate`公開拒否＋番人26h監視。詳細は上の7/4節と[[project_signal_edge_research]]）。**🏁は5本が仕様**（7本でない＝metal_all_1d/other_fx_longのfilter重複はオーナー判断待ち）。万一まだ漏れるなら09:30のautomation-healthがIssue化する。
 - **②リードマグネット公開待ち＝オーナーのGoogleフォーム作成待ち**：URLが来たら `MAGNET_SETUP.md` の Claude作業（コンプラ監査→PDF SYNC→CTA設置→X導線）を一気通貫で。
 - **③AdSense 再審査の結果**：6/27申請済（[[project_adsense_review]]）。承認/却下を確認。却下ならニュース記事もnoindex等の next step。
