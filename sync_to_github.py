@@ -10,4 +10,5 @@ SYNC_FILES = [
     "guide-signal-lab-029.html",
     "guide-proverb-uwasa-jijitsu.html",
     "guide-signal-lab-030.html",
+    "guide-proverb-hito-no-iku-ura.html",
 ]
