@@ -85,7 +85,7 @@ def convert_rows(rows):
         lot = to_float(r.get("ロット") or r.get("数量"))
         sl = to_float(r.get("SL") or r.get("ストップロス"))
         tp = to_float(r.get("TP") or r.get("利確"))
-        kind = (r.get("取引種別") or r.get("根拠") or "").strip()
+        kind = (r.get("取引種別") or r.get("取引種類") or r.get("根拠") or "").strip()
         note = (r.get("メモ") or r.get("コメント") or "").strip()
 
         exit_price = to_float(r.get("決済価格") or r.get("Exit"))
