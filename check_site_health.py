@@ -55,7 +55,9 @@ def check_page(path: str) -> list[str]:
 
     if path == "index.html":
         # 例: 最終更新: <span>2026年5月6日 22:28 JST</span>
-        m = re.search(r"最終更新[:：]\s*<span[^>]*>(\d{4})年(\d{1,2})月(\d{1,2})日", body)
+        # 2026-07-05: 7/4のトップページ整理でタグ構造が変わったため、日付の前に任意個のタグ/空白を許容
+        #（更新履歴<details>化でspan直包みでなくなった。日付鮮度の検査意図は不変）
+        m = re.search(r"最終更新[:：]\s*(?:<[^>]+>\s*)*(\d{4})年(\d{1,2})月(\d{1,2})日", body)
         if not m:
             errors.append("⚠️ `index.html` 「最終更新」の日付要素が見つからない")
         else:
