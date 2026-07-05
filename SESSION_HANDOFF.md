@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-04 未明）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-04 深夜）
 
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
 2026-06-17 以前の詳細履歴は **SESSION_ARCHIVE.md**（保管庫・後から辿る検索用）へ退避した。
@@ -76,12 +76,14 @@
 
 ## 📌 アクティブな宿題
 
-### 🔜 次セッションで最初に確認（在flight・2026-07-04更新）
-- **①´【7/4昼に確認済→要再確認7/5朝】tracker.jsonコミット漏れ事故と対策**：(a)は**不合格だった**＝routineは028/029を公開したが **signal-lab-tracker.json のコミットを7/3・7/4と2日連続で漏らし**（8-1のadd例に無い＋台帳には「トラッカー[n]更新」と虚偽記載）、GitHub側trackerは7/2朝のまま＝剥奪/クラスタSE未反映。routine本文の修正はAPIペイロード上限で不可→**コード側3ガードを実装・sync済**：`signal_lab_tracker.py`/`signal_lab_sweep.py`が出力末尾でadd必須を明示指示＋`finalize_signal_lab.py`に`_tracker_gate`（git内でupdated_at≠当日 or 未コミットならexit 1＝公開拒否・4パス単体テスト済）＋`check_automation_health.py`鮮度監視に tracker.json 26h/warn 追加。**7/5朝06:10の運転で tracker コミットが復活するか要確認**。⚠️追加発見＝**🏁は7本でなく5本が正しい挙動**：`metal_all_1d`と`other_fx_long`は既存 `auto_group-metal`/`auto_direction-long_group-other_fx` とfilter重複でregisterスキップ→holdout_passがどこにも付かない（両者は既にN≥80到達済で緩和は実質無意味だが、metalは kind=gate vs edge の向き矛盾あり）＝**オーナー判断待ち**（auto_*側にholdout注記を移すか・5本で良しとするか）。(b) indicator-result新基準は**合格**（7/1以降の全5件が一次ソース入り・アグリゲーター単独verified=trueは6/30以前の旧分のみ）。
+### 🔜 次セッションで最初に確認（在flight・2026-07-05向け）
+- **①7/5朝06:10 signal-lab-daily＝tracker.jsonコミットが復活したか**（7/3・7/4と2日連続コミット漏れ→コード3ガード導入済み：tracker/sweepの出力末尾リマインド＋`finalize_signal_lab.py`の`_tracker_gate`公開拒否＋番人26h監視。詳細は上の7/4節と[[project_signal_edge_research]]）。**🏁は5本が仕様**（7本でない＝metal_all_1d/other_fx_longのfilter重複はオーナー判断待ち）。万一まだ漏れるなら09:30のautomation-healthがIssue化する。
 - **②リードマグネット公開待ち＝オーナーのGoogleフォーム作成待ち**：URLが来たら `MAGNET_SETUP.md` の Claude作業（コンプラ監査→PDF SYNC→CTA設置→X導線）を一気通貫で。
 - **③AdSense 再審査の結果**：6/27申請済（[[project_adsense_review]]）。承認/却下を確認。却下ならニュース記事もnoindex等の next step。
 - **④jp_daily改修後の初回平日運転（月曜7/6朝）**：6:00カード＝心拍の条件化/失敗バナー/カード履歴追記が正常か（`_jp_card_history.jsonl` に月曜分が1行増える）。8:00番人＝休眠チェック「💤取引23件」表示。
-- **⑤´✅済（7/4昼）巨匠#4バフェット＝検証完了・3仮説とも❌で両期間有意に逆**：`_jp_buffett_screen.py`（事前登録つき・45,347観測・クラスタboot）。score4-5はscore0-1に **train -5.7%(p=.007)/holdout -6.0%(p=.005) で負け**、割安∧質高は割安∧質低に **-7.8%/-13.2%(p=.0003)で完敗＝シケモク優位の5年**。防御効果もなし。効いたのはB5割安(FCF利回り≥5%)だけ。質4基準は全部マイナス＝グレアムG3の発見の拡張。採用せず・レジーム記録。**→同日夕に記事化・公開済み＝`guide-masters-003-quality.html`**（数値照合57項目GREEN→コンプラOpusグレー1点修正→品質公開可→独立白→publish→HTTP200/カード確認。詳細は auto-memory [[project_masters_queue]]）。残キュー=リバモアのみ（#3と同型の公算大・優先度低）。
+- **⑤オーナー手動タスク2件**：(a) **X用アイコン `mw-logo-512.png`**（作業フォルダ直下・ローカルのみ）を @rx009898 のプロフィール画像に手動アップロード (b) 実機スマホでトップページ整理後の見え方＋タブのロゴを一度確認（気になる箇所は次セッションで微調整）。
+- **⑥相談したら進む事項**：(a) OGP画像のロゴ入り差し替え（現状=汎用の08_market_stock.png・PILで生成可能） (b) ツール次候補＝DCA比較/NISA枠/ポジションサイズ（後2者はコンプラ設計繊細） (c) `btc_all_1d`のN30緩和＝コスト込みで脆弱の扱い (d) 🏁5本問題のauto_*注記移設 (e) 巨匠残キュー=リバモア（レジーム依存に終わる公算大・優先度低）。
+- ✅済（7/4・詳細は上の各節）：巨匠#4バフェット検証→記事#3公開（3仮説❌両期間逆＝シケモク優位・[[project_masters_queue]]）／計算ツール5本公開＋常設導線／トップページ整理A+B+C+D／サイトロゴ導入（案C・favicon+全ヘッダー・apply_logo.py）／tracker事故のコード3ガード／mw deploy誤検知バグ修正。
 - **整理係**：`mw declutter` は7/3時点0件。月次 `MarketWatch_Declutter` が `DECLUTTER_REPORT.md` を出したら確認。
 
 - ✅ 済（詳細は上の7/3まとめ・アーカイブ参照）：格言シリーズ無人化実証（7/1）／ニュース鮮度カットオフ（6/30）／ロイターRSS復活確認（7/3＝フィード健在・TOP3選外は正常）／JP朝カード初稼働＋番人（7/3）／FOMC結果の信頼性厳格化（7/3）／update-market-news concurrency（6/20）。
