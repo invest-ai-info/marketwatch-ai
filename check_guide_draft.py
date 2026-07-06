@@ -17,6 +17,10 @@ REVIEW.md に🚩エスカレ）。
   5. 禁止表現（売買推奨の断定）が無い — 最小限のハードNGのみ。表現ニュアンスはOpus担当
   6. SVG検査 = signal_lab_verify.py（固定オラクル）の bounds/text-overlap を流用
      過検出しても RED→人間レビューに回るだけ＝安全側
+  7. スラッグ重複検査 — 既存 guide-*.html とトークン集合が同一/包含なら RED
+     （2026-07-06 追加。実例: bonds-interest-rates vs interest-rates-bonds=語順違い、
+      simple-vs-compound vs simple-vs-compound-interest=部分一致 の2本が重複公開された。
+      キュー選定の完全一致スキップをすり抜ける「似スラッグの同一主題」を機械で止める）
 
 usage: python check_guide_draft.py <guide-xxx.html>
 """
@@ -39,6 +43,39 @@ NAV_LINKS = ["index.html", "political-feed.html", "track-record.html", "calendar
 BANNED_HARD = ["買い推奨", "売り推奨", "購入を推奨", "エントリー推奨", "買うべきです", "売るべきです"]
 
 TODO_MARKERS = ["TODO(SVG)", "TODO（SVG）", "<!-- TODO"]
+
+
+def slug_tokens(filename):
+    """guide-xxx-yyy.html → {'xxx','yyy'}（日付・番号だけのトークンは除く）"""
+    base = os.path.basename(filename)
+    m = re.match(r"(?:guide-|draft-)?(.+?)\.html$", base)
+    if not m:
+        return set()
+    return {t for t in m.group(1).split("-") if t and not t.isdigit()}
+
+
+def slug_duplicate_check(path):
+    """既存 guide-*.html とスラッグのトークン集合が同一 or 包含関係なら重複疑いを返す。
+    完全一致スラッグはキュー選定側でスキップされるため、ここは「似て非なるスラッグ」担当。"""
+    fails = []
+    mine = slug_tokens(path)
+    if not mine:
+        return fails
+    my_base = os.path.basename(path)
+    # 日付つき速報(news)・連番シリーズ(signal-lab等)は毎回似るので対象外
+    if re.search(r"\d{4}-\d{2}", my_base) or "signal-lab" in my_base or "proverb" in my_base:
+        return fails
+    import glob
+    for g in glob.glob(os.path.join(ROOT, "guide-*.html")):
+        gb = os.path.basename(g)
+        if gb == my_base or gb == my_base.replace("draft-", "guide-"):
+            continue
+        theirs = slug_tokens(g)
+        if not theirs or re.search(r"\d{4}-\d{2}", gb):
+            continue
+        if mine == theirs or (len(mine & theirs) >= 2 and (mine <= theirs or theirs <= mine)):
+            fails.append(f"スラッグ重複疑い: {gb} と主題が重なる可能性（トークン {sorted(mine & theirs)} 共通）")
+    return fails
 
 
 def main():
@@ -72,6 +109,9 @@ def main():
     for w in BANNED_HARD:
         if w in html:
             fails.append(f"禁止表現: 「{w}」")
+
+    # 7. スラッグ重複（似スラッグの同一主題＝重複コンテンツ防止）
+    fails.extend(slug_duplicate_check(path))
 
     # 6. SVG検査（固定オラクルの関数を流用＝判定基準の単一ソース化）
     try:
