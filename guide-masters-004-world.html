@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>巨匠の教えをデータで検証 #4｜一目均衡表・タートルズ・BNF——世界の有名手法12仮説を日本株5年で一斉検証 - MarketWatch AI</title>
+  <meta name="description" content="一目均衡表の三役好転、タートルズのドンチャン・ブレイク、BNFの25日移動平均乖離率逆張り、52週高値・低ボラティリティ・モメンタムの学術アノマリー——世界の有名手法を12の事前登録仮説に翻訳し、日本株5年・約500万行（生存バイアスフリー）で一斉検証。合格は1本だけだった。">
+  <meta name="keywords" content="一目均衡表,三役好転,タートルズ,ドンチャン,BNF,移動平均乖離率,逆張り,52週高値,低ボラティリティ,モメンタム,日本株,データ検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-004-world.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #4｜一目均衡表・タートルズ・BNF——世界の有名手法12仮説を日本株5年で一斉検証">
+  <meta property="og:description" content="三役好転はほぼゼロ、素のブレイク買いは逆風、生き残ったのはトレンドフィルタ付きブレイクだけ。低ボラは「稼がないが守る」——12仮説の一斉検証の記録。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-004-world.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #4｜一目均衡表・タートルズ・BNF——世界の有名手法12仮説を日本株5年で一斉検証",
+    "description": "三役好転はほぼゼロ、素のブレイク買いは逆風、生き残ったのはトレンドフィルタ付きブレイクだけ。低ボラは「稼がないが守る」——12仮説の一斉検証の記録。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-06",
+    "dateModified": "2026-07-06",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-004-world.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .bar-b{fill:#0969da}
+    .bar-g{fill:#1a7f37}
+    .bar-r{fill:#cf222e}
+    .bar-gray{fill:#8b949e}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    body.dark .bar-b{fill:#58a6ff}
+    body.dark .bar-g{fill:#3fb950}
+    body.dark .bar-r{fill:#f85149}
+    body.dark .bar-gray{fill:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #4
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🎓 巨匠の教えをデータで検証 #4<br><small style="font-size:.65em;color:#57606a;font-weight:400">一目均衡表・タートルズ・BNF——世界の有名手法12仮説を日本株5年で一斉検証</small></h1>
+    <div class="meta-line">
+      カテゴリ：🎓 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月6日 &nbsp;|&nbsp; 読了：約13分
+    </div>
+
+    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>検証できる形のルールに翻訳して、データで確かめる</strong>連載です。<a href="guide-graham-001.html">第1回</a>はグレアムの安全域（防御が再現）、<a href="guide-masters-002-trend.html">第2回</a>は順張りの教科書（8仮説すべて不合格）、<a href="guide-masters-003-quality.html">第3回</a>はバフェットの「質」（安さだけが報われた）を見てきました。</p>
+    <p>第4回は視野を世界に広げます。日本が世界に誇るテクニカル分析<strong>「一目均衡表」</strong>、伝説の実験として知られる<strong>「タートルズ」</strong>のブレイクアウト、日本の個人投資家の伝説<strong>BNF氏</strong>が語った乖離率の逆張り、そして学術研究で報告されてきた<strong>3つのアノマリー</strong>（52週高値・低ボラティリティ・モメンタム）。あわせて<strong>12の仮説を事前登録し、日本株の約5年・約507万行のデータ（上場廃止銘柄も含む生存バイアスフリー）</strong>で一斉に検証しました。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 12仮説のうち、前半・後半の両期間で合格したのは<strong>たった1本</strong>——「20日高値ブレイク×長期上昇トレンド中」だけ<br>
+      ② 一目均衡表の「三役好転」は、何もしない対照群との差が<strong>前半+0.01%・後半+0.23%＝ほぼゼロ</strong>だった<br>
+      ③ 素のブレイクアウト買い（タートルズ流）は前半で<strong>有意にマイナス</strong>。ただし「長期トレンドが上向きのときだけ」に絞ると両期間プラスで合格に変わった<br>
+      ④ BNF氏の乖離率逆張りは方向こそ両期間プラスだったが統計的に有意でなく、10日以内に15%以上下がる確率が<strong>約4回に1回</strong>——「落ちるナイフ」のリスクは本物<br>
+      ⑤ 低ボラティリティ株はリターンでは負けたが、<strong>暴落確率が対照の18〜19%に対して1〜3%</strong>——「稼がないが守る」がここでも確認された
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#method">検証の共通ルール——事前登録・2期間・同日クラスタ補正</a></li>
+        <li><a href="#bnf">BNF——「J-Comの男」の乖離率逆張り</a></li>
+        <li><a href="#ichimoku">一目均衡表——「三役好転」はほぼゼロだった</a></li>
+        <li><a href="#turtle">タートルズ——素のブレイクは負け、フィルタ付きだけ生き残った</a></li>
+        <li><a href="#anomaly">学術アノマリー——52週高値・低ボラ・モメンタム</a></li>
+        <li><a href="#interpret">全体をどう読むか——5年間の日本株が語る構図</a></li>
+        <li><a href="#limits">この検証の限界</a></li>
+        <li><a href="#summary">まとめ——シリーズ4回の対比</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">① 検証の共通ルール——事前登録・2期間・同日クラスタ補正</h2>
+
+    <p>今回の12仮説は、すべて同じ土俵・同じ判定基準で検証しています。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>日本株ほぼ全銘柄の日足 約5年（2021年7月〜2026年7月・約507万行・4,987銘柄）。上場廃止になった銘柄も含む＝生き残った銘柄だけを見る「生存バイアス」を排除</td></tr>
+      <tr><td>事前登録</td><td>各手法のルール（数値の閾値まで）を検証を走らせる<strong>前に</strong>確定。結果を見てからの調整はしない</td></tr>
+      <tr><td>エントリー</td><td>シグナルは終値で判定し、買うのは<strong>翌営業日の寄り付き</strong>（未来の情報を使うズルを排除）</td></tr>
+      <tr><td>測定</td><td>BNFのみ5営業日後（短期手法のため）、他は60営業日後のリターンを、同時期の「流動性基準を満たす全銘柄」（対照群）と比較</td></tr>
+      <tr><td>2期間判定</td><td>前半（〜2024年末）と後半（2025年〜）に分け、<strong>両方で差がプラスかつ統計的に有意（p&lt;0.05）なら合格</strong>。片方だけなら「地合い依存」として不合格</td></tr>
+      <tr><td>同日クラスタ補正</td><td>暴落日には何百銘柄も同時にシグナルが出るため、それを「独立したたくさんの証拠」と数えないよう、日付単位のブートストラップ法で統計を補正</td></tr>
+    </table>
+
+    <div class="warning-box">
+      数字はすべて<strong>売買コスト・税金を引く前</strong>のもので、実際に得られる差はこれより小さくなります。また同じ日に12本の仮説を検証しているため、偶然どれかが合格する可能性（多重比較の問題）にも触れながら読み進めます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="bnf">② BNF——「J-Comの男」の乖離率逆張り</h2>
+
+    <p><strong>BNF（小手川隆）氏</strong>は、2005年のジェイコム株誤発注事件でわずか10分あまりの取引により約20億円の利益を上げたことで「J-Comの男」として知られる、日本の個人トレーダーの伝説的存在です。160万円ほどの元手を数年で100億円台に増やしたとされ、その手法の核として本人がインタビューで語ったのが——</p>
+
+    <div class="info-box">
+      <strong>「流動性の高い株が25日移動平均線から20〜35%下に乖離したところを買い、リバウンドが鈍ったら数日で出る」</strong>——短期の平均回帰（急落の行き過ぎの反発）を取る逆張りです。
+    </div>
+
+    <p>これを3つの仮説に翻訳しました。乖離率とは、株価が25日移動平均線から何%離れているかを表す数字で、マイナスが大きいほど「平均より大きく下げている＝売られすぎ」を意味します。<strong>BNF1</strong>＝乖離率-20%以下で買う、<strong>BNF2</strong>＝本人の言うレンジ「-35%〜-20%」で買う、<strong>BNF3</strong>＝深い乖離（-35〜-20%）は浅い押し（-20〜-10%）より強く戻るか。流動性は本人のこだわりを反映し「売買代金の20日中央値10億円以上」としました。</p>
+
+    <table>
+      <tr><th>仮説</th><th>期間</th><th>件数</th><th>5日後</th><th>対照</th><th>差</th><th>p値</th><th>判定</th></tr>
+      <tr><td rowspan="2">BNF1 乖離≤-20%</td><td>前半</td><td>2,601</td><td>+1.79%</td><td>+0.13%</td><td><strong>+1.66%</strong></td><td>0.093</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>1,525</td><td>+1.88%</td><td>+0.57%</td><td><strong>+1.31%</strong></td><td>0.088</td></tr>
+      <tr><td rowspan="2">BNF2 乖離-35〜-20%</td><td>前半</td><td>2,252</td><td>+1.88%</td><td>+0.13%</td><td><strong>+1.75%</strong></td><td>0.068</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>1,327</td><td>+2.26%</td><td>+0.57%</td><td><strong>+1.69%</strong></td><td>0.033</td></tr>
+      <tr><td rowspan="2">BNF3 深い乖離 vs 浅い押し</td><td>前半</td><td>2,252</td><td>+1.88%</td><td>+0.79%</td><td>+1.08%</td><td>0.199</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>1,327</td><td>+2.26%</td><td>+1.53%</td><td>+0.73%</td><td>0.315</td></tr>
+    </table>
+
+    <p>結果は<strong>3仮説とも不合格</strong>——ただし内容は興味深いものでした。差の方向は<strong>両期間とも一貫してプラス</strong>（BNF1で+1.66%と+1.31%）で、大きさも安定しています。有意判定に届かなかった主因は、シグナルが暴落日に集中するため「実質的な証拠の数」がクラスタ補正で大きく目減りすることです。BNF2の後半だけはp=0.033と有意でした。</p>
+
+    <p>もう1つの発見は<strong>流動性へのこだわりがデータと整合した</strong>ことです。基準を「売買代金1億円以上」に緩めると、前半は+1.71%（p=0.021）と有意なのに、後半は+0.46%（p=0.637）と効果が消えました。大型で流動性の高い銘柄に絞ったときのほうが、両期間で安定していたのです。</p>
+
+    <div class="negative-box">
+      <strong>「落ちるナイフ」のリスクは本物</strong>——乖離-20%以下で買った場合、その後10営業日以内にさらに15%以上下落する確率は<strong>前半24.7%・後半27.7%</strong>。約4回に1回は「まだ落ちるナイフ」をつかんでいます。5日後の勝率も51〜54%とほぼコイン投げ。平均がプラスなのは「当たったときのリバウンドが大きい」からで、これを裁量なしで取り続けるのは容易ではありません。
+    </div>
+
+    <p>まとめると——<strong>方向は本人の言うとおり、しかし日足の機械的ルールでは統計的に確信できる水準に届かない</strong>。BNF氏の桁外れの成績の本体は、乖離率という「入口の目印」そのものではなく、板読み・分足での出入りという<strong>再現不能な裁量部分</strong>にあった可能性が高い、というのが今回の読みです。</p>
+
+    <!-- =============================== -->
+    <h2 id="ichimoku">③ 一目均衡表——「三役好転」はほぼゼロだった</h2>
+
+    <p><strong>一目均衡表</strong>は、昭和初期に細田悟一（ペンネーム：一目山人）が考案した日本発のチャート分析で、いまや海外でも「Ichimoku」の名で使われる世界的な指標です。転換線・基準線・雲（先行スパン）・遅行スパンから成り、中でも<strong>①転換線が基準線の上、②価格が雲の上、③遅行スパンが好転</strong>の3条件が揃う<strong>「三役好転」は最強の買いシグナル</strong>とされています。</p>
+
+    <p>パラメータは教科書標準（9・26・52）のまま一切調整せず、3仮説を検証しました。<strong>IC1</strong>＝三役好転が新規に成立した日に買う、<strong>IC2</strong>＝雲を上に抜けた日に買う、<strong>IC3</strong>＝三役好転が成立中の銘柄を毎月初に買う。</p>
+
+    <table>
+      <tr><th>仮説</th><th>期間</th><th>件数</th><th>60日後</th><th>対照</th><th>差</th><th>p値</th><th>判定</th></tr>
+      <tr><td rowspan="2">IC1 三役好転・新規成立</td><td>前半</td><td>30,746</td><td>+1.13%</td><td>+1.12%</td><td><strong>+0.01%</strong></td><td>0.881</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>13,097</td><td>+6.55%</td><td>+6.32%</td><td><strong>+0.23%</strong></td><td>0.595</td></tr>
+      <tr><td rowspan="2">IC2 雲上抜け</td><td>前半</td><td>30,815</td><td>+1.68%</td><td>+1.12%</td><td>+0.56%</td><td>0.006</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>12,322</td><td>+6.40%</td><td>+6.32%</td><td>+0.08%</td><td>0.881</td></tr>
+      <tr><td rowspan="2">IC3 三役好転・成立中（月次）</td><td>前半</td><td>19,833</td><td>+1.48%</td><td>+1.04%</td><td>+0.45%</td><td>0.309</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>10,855</td><td>+6.50%</td><td>+4.95%</td><td>+1.55%</td><td>0.027</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="三役好転と対照群の60日後リターン比較">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" font-size="15">「三役好転で買った群」と「何もしない対照群」——ほぼ同じ高さ</text>
+        <line x1="60" y1="250" x2="660" y2="250" class="s-axis"/>
+        <!-- train group -->
+        <rect x="120" y="218" width="70" height="32" class="bar-b"/>
+        <rect x="205" y="219" width="70" height="31" class="bar-gray"/>
+        <text x="155" y="210" text-anchor="middle" class="s-label-b">+1.13%</text>
+        <text x="240" y="210" text-anchor="middle" class="s-label-sm">+1.12%</text>
+        <text x="155" y="268" text-anchor="middle" class="s-label-sm">三役好転</text>
+        <text x="240" y="268" text-anchor="middle" class="s-label-sm">対照</text>
+        <text x="197" y="290" text-anchor="middle" class="s-label">前半（〜2024年末）</text>
+        <!-- holdout group -->
+        <rect x="430" y="67" width="70" height="183" class="bar-b"/>
+        <rect x="515" y="74" width="70" height="176" class="bar-gray"/>
+        <text x="465" y="59" text-anchor="middle" class="s-label-b">+6.55%</text>
+        <text x="550" y="66" text-anchor="middle" class="s-label-sm">+6.32%</text>
+        <text x="465" y="268" text-anchor="middle" class="s-label-sm">三役好転</text>
+        <text x="550" y="268" text-anchor="middle" class="s-label-sm">対照</text>
+        <text x="507" y="290" text-anchor="middle" class="s-label">後半（2025年〜）</text>
+      </svg>
+      <div class="chart-caption">図1：三役好転が新規成立した銘柄（青）とただの全銘柄平均（灰）の60営業日後リターン。差は前半+0.01%・後半+0.23%——「最強の買いシグナル」の上乗せは、ほぼゼロだった。</div>
+    </div>
+
+    <p>約44,000件の三役好転を集計した結論はシンプルです——<strong>三役好転で買った銘柄の成績は、そのとき市場にあった銘柄を適当に買ったのとほぼ同じ</strong>。後半の数字（+6.55%）だけ見ると「効いている」ように錯覚しますが、対照群も+6.32%——つまりそれは三役好転の力ではなく、<strong>2025年以降の上げ相場そのもの</strong>です。雲上抜け（IC2）は前半だけ、三役好転の成立中銘柄（IC3）は後半だけ有意で、どちらも再現しませんでした。</p>
+
+    <div class="info-box">
+      誤解のないように——これは「一目均衡表が無意味」という証明ではありません。検証したのは<strong>三役好転・雲抜けを単独の買いシグナルとして使った場合</strong>の話で、時間論・値幅観測など数値化できない要素は検証の対象外です。ただ、「三役好転だから買い」という<strong>単独使いに上乗せがないことは、この5年のデータでははっきりしていた</strong>——そういう記録です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="turtle">④ タートルズ——素のブレイクは負け、フィルタ付きだけ生き残った</h2>
+
+    <p>1983年、シカゴの伝説的トレーダー<strong>リチャード・デニス</strong>は「優れたトレーダーは育成できるか」を賭けで確かめるため、未経験者を集めて自らのルールを教え込みました。彼ら<strong>「タートルズ」</strong>は数年で通算1億ドル超を稼いだとされ、「ルールに従えば誰でも勝てる」システムトレードの原点として語り継がれています。その中核が<strong>ドンチャン・ブレイクアウト</strong>——過去20日（または55日）の高値を抜けたら買う、というルールです。</p>
+
+    <p>これを3仮説に翻訳しました。<strong>TT1</strong>＝20日高値ブレイクで買う、<strong>TT2</strong>＝55日高値ブレイクで買う、<strong>TT3</strong>＝20日ブレイクのうち<strong>長期トレンドが上向き（50日移動平均＞200日移動平均）のときだけ</strong>買う。タートルズは本来1980年代の先物のシステムであり、これは「2020年代の日本株に移植したら」という検証です（<a href="guide-masters-002-trend.html">第2回</a>のラリー・ウィリアムズと同じ立場）。</p>
+
+    <table>
+      <tr><th>仮説</th><th>期間</th><th>件数</th><th>60日後</th><th>対照</th><th>差</th><th>p値</th><th>判定</th></tr>
+      <tr><td rowspan="2">TT1 20日高値ブレイク</td><td>前半</td><td>80,320</td><td>+0.17%</td><td>+1.12%</td><td style="color:#cf222e"><strong>-0.95%</strong></td><td>0.000</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>38,134</td><td>+6.96%</td><td>+6.32%</td><td>+0.64%</td><td>0.051</td></tr>
+      <tr><td rowspan="2">TT2 55日高値ブレイク</td><td>前半</td><td>45,837</td><td>+0.60%</td><td>+1.12%</td><td style="color:#cf222e"><strong>-0.52%</strong></td><td>0.009</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>27,740</td><td>+7.03%</td><td>+6.32%</td><td>+0.71%</td><td>0.055</td></tr>
+      <tr><td rowspan="2">TT3 20日ブレイク×長期上昇中</td><td>前半</td><td>40,614</td><td>+1.78%</td><td>+1.12%</td><td style="color:#1a7f37"><strong>+0.67%</strong></td><td>0.009</td><td rowspan="2" style="color:#1a7f37"><strong>✅ 両期間合格</strong></td></tr>
+      <tr><td>後半</td><td>27,141</td><td>+7.71%</td><td>+6.32%</td><td style="color:#1a7f37"><strong>+1.39%</strong></td><td>0.000</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="素のブレイクとトレンドフィルタ付きブレイクの対照群との差">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" font-size="15">対照群との差（60日後）——同じ「20日ブレイク」でもフィルタで別物に</text>
+        <line x1="60" y1="170" x2="660" y2="170" class="s-axis"/>
+        <text x="52" y="174" text-anchor="end" class="s-label-sm">0%</text>
+        <!-- TT1 train -0.95 -->
+        <rect x="110" y="170" width="60" height="57" class="bar-r"/>
+        <text x="140" y="243" text-anchor="middle" class="s-label-r">-0.95%</text>
+        <text x="140" y="262" text-anchor="middle" class="s-label-sm">素・前半</text>
+        <!-- TT1 holdout +0.64 -->
+        <rect x="200" y="132" width="60" height="38" class="bar-gray"/>
+        <text x="230" y="124" text-anchor="middle" class="s-label-sm">+0.64%</text>
+        <text x="230" y="262" text-anchor="middle" class="s-label-sm">素・後半</text>
+        <!-- separator -->
+        <line x1="330" y1="60" x2="330" y2="280" class="s-guide"/>
+        <!-- TT3 train +0.67 -->
+        <rect x="400" y="130" width="60" height="40" class="bar-g"/>
+        <text x="430" y="122" text-anchor="middle" class="s-label-g">+0.67%</text>
+        <text x="430" y="262" text-anchor="middle" class="s-label-sm">フィルタ付・前半</text>
+        <!-- TT3 holdout +1.39 -->
+        <rect x="500" y="87" width="60" height="83" class="bar-g"/>
+        <text x="530" y="79" text-anchor="middle" class="s-label-g">+1.39%</text>
+        <text x="530" y="262" text-anchor="middle" class="s-label-sm">フィルタ付・後半</text>
+        <text x="195" y="300" text-anchor="middle" class="s-label">TT1 素の20日ブレイク ❌</text>
+        <text x="495" y="300" text-anchor="middle" class="s-label-g">TT3 ×長期上昇中のみ ✅</text>
+      </svg>
+      <div class="chart-caption">図2：素の20日高値ブレイク（左）は前半で有意なマイナス。「50日線＞200日線」の長期上昇中に限定する（右）と、両期間プラス・有意に変わった。</div>
+    </div>
+
+    <p>まず目を引くのは、<strong>素の高値ブレイク買いが前半で有意にマイナス</strong>（-0.95%・p=0.000）だったこと。これは当サイトのシグナル研究で繰り返し出てきた<strong>「高値への飛びつき買いは負け筋」</strong>という発見と完全に一致します。タートルズのルールを「高値を抜けたら買う」の部分だけ切り取って日本株で使うと、逆風だったのです。</p>
+
+    <p>ところが<strong>「長期トレンドが上向きのときだけ」というフィルタを1枚足すと、景色が変わりました</strong>。TT3は前半+0.67%（p=0.009）・後半+1.39%（p=0.000）と両期間で有意なプラス。しかも60日以内に20%超下落する確率も対照より低い（前半16.0% vs 17.7%、後半14.6% vs 17.2%）。<strong>このシリーズを通じて、順張り系の仮説が両期間合格したのはこれが初めて</strong>です。</p>
+
+    <div class="warning-box">
+      浮かれる前に釘を刺しておくと——今回は同日に12仮説を検証しており、その中の1本だけの合格です。両期間同時に有意になる偶然は起きにくいとはいえ、<strong>この1本にすぐ資金を投じる判断はしません</strong>。当サイトの流儀どおり、今後の新しいデータ（前向き検証）で再現するかを確かめるのが先です。また差は+0.67〜+1.39%（コスト控除前）と、売買コストを考えると薄い水準です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="anomaly">⑤ 学術アノマリー——52週高値・低ボラ・モメンタム</h2>
+
+    <p>最後は巨匠個人ではなく、金融の学術研究で報告されてきた「アノマリー」（理屈どおりでない価格の癖）3本です。<strong>QA1</strong>＝52週高値の95%以内にいる銘柄を毎月初に買う（George &amp; Hwang, 2004）、<strong>QA2</strong>＝値動きの穏やかな下位20%を買う（低ボラティリティ・アノマリー）、<strong>QA3</strong>＝直近1ヶ月を除く12ヶ月リターン上位20%を買う（モメンタム、Jegadeesh &amp; Titman, 1993）。</p>
+
+    <table>
+      <tr><th>仮説</th><th>期間</th><th>件数</th><th>差（60日後）</th><th>p値</th><th>暴落確率</th><th>対照</th><th>判定</th></tr>
+      <tr><td rowspan="2">QA1 52週高値近接</td><td>前半</td><td>10,871</td><td>+1.54%</td><td>0.019</td><td>11.9%</td><td>17.9%</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格（惜敗）</strong></td></tr>
+      <tr><td>後半</td><td>7,519</td><td>+1.66%</td><td>0.113</td><td>11.8%</td><td>19.1%</td></tr>
+      <tr><td rowspan="2">QA2 低ボラ下位20%</td><td>前半</td><td>6,582</td><td>+0.74%</td><td>0.128</td><td><strong>1.2%</strong></td><td>17.9%</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格（防御は別）</strong></td></tr>
+      <tr><td>後半</td><td>3,338</td><td style="color:#cf222e">-2.68%</td><td>0.015</td><td><strong>2.8%</strong></td><td>19.1%</td></tr>
+      <tr><td rowspan="2">QA3 モメンタム12-1</td><td>前半</td><td>12,255</td><td>+1.29%</td><td>0.075</td><td>22.2%</td><td>17.9%</td><td rowspan="2" style="color:#cf222e"><strong>❌ 不合格</strong></td></tr>
+      <tr><td>後半</td><td>7,290</td><td>+1.18%</td><td>0.207</td><td>27.1%</td><td>19.1%</td></tr>
+    </table>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="低ボラ株と対照群の暴落確率比較">
+        <text x="350" y="28" text-anchor="middle" class="s-label-b" font-size="15">60日以内に-20%超の下落を食らう確率——低ボラ株は「守り」が別格</text>
+        <line x1="60" y1="250" x2="660" y2="250" class="s-axis"/>
+        <!-- train -->
+        <rect x="120" y="239" width="70" height="11" class="bar-g"/>
+        <rect x="205" y="89" width="70" height="161" class="bar-gray"/>
+        <text x="155" y="231" text-anchor="middle" class="s-label-g">1.2%</text>
+        <text x="240" y="81" text-anchor="middle" class="s-label-sm">17.9%</text>
+        <text x="155" y="268" text-anchor="middle" class="s-label-sm">低ボラ</text>
+        <text x="240" y="268" text-anchor="middle" class="s-label-sm">対照</text>
+        <text x="197" y="290" text-anchor="middle" class="s-label">前半（〜2024年末）</text>
+        <!-- holdout -->
+        <rect x="430" y="225" width="70" height="25" class="bar-g"/>
+        <rect x="515" y="78" width="70" height="172" class="bar-gray"/>
+        <text x="465" y="217" text-anchor="middle" class="s-label-g">2.8%</text>
+        <text x="550" y="70" text-anchor="middle" class="s-label-sm">19.1%</text>
+        <text x="465" y="268" text-anchor="middle" class="s-label-sm">低ボラ</text>
+        <text x="550" y="268" text-anchor="middle" class="s-label-sm">対照</text>
+        <text x="507" y="290" text-anchor="middle" class="s-label">後半（2025年〜）</text>
+      </svg>
+      <div class="chart-caption">図3：低ボラティリティ下位20%の銘柄（緑）が60営業日以内にエントリー比-20%超の下落を経験した割合。対照の18〜19%に対して1〜3%——リターンでは負けても、暴落の食らいにくさは桁違いだった。</div>
+    </div>
+
+    <p><strong>52週高値近接</strong>は今回の「惜しい1本」です。前半は合格水準（+1.54%・p=0.019）、後半も差はほぼ同じ大きさ（+1.66%）なのにp=0.113で基準に届かず。暴落確率は両期間で対照より大きく低く（約12% vs 18〜19%）、方向・大きさとも安定していたので、今後のデータで再判定する価値があります。</p>
+
+    <p><strong>低ボラティリティ</strong>は事前登録どおりの分裂した結果になりました。リターンの差では負け（特に後半は上げ相場に置いていかれて-2.68%）。しかし<strong>暴落確率は前半1.2%・後半2.8%と、対照（17.9%・19.1%）の10分の1前後</strong>。学術研究がもともと主張していたのも「リスクあたりで見れば優位」であり、リスクを揃えた参考値（リターン÷ばらつき）では両期間とも対照を上回っていました。<a href="guide-graham-001.html">第1回</a>のグレアム、<a href="guide-masters-003-quality.html">第3回</a>の「安さ」に続き、<strong>この5年の日本株で一貫して確認できるのは「稼ぐ力」より「守る力」</strong>——そんな構図がまた1つ増えた形です。</p>
+
+    <p><strong>モメンタム</strong>は「学術研究の帝王」と呼ばれるわりに、方向はプラスながら両期間とも有意にならず、しかも<strong>暴落確率は対照より高い</strong>（22〜27% vs 18〜19%）。買った瞬間から荒れやすい高リスク群であることは、第2回で見たオニール系の順張り（RS上位）が不合格だった結果とも整合します。</p>
+
+    <!-- =============================== -->
+    <h2 id="interpret">⑥ 全体をどう読むか——5年間の日本株が語る構図</h2>
+
+    <p>12仮説を並べると、バラバラの結果に見えて、実は同じ構図を何度も描いています。</p>
+
+    <ul>
+      <li><strong>「高くなったから買う」単独は逆風</strong>——素の20日/55日ブレイクは前半で有意マイナス。モメンタムも暴落確率が高い。当サイトの実シグナルデータの「飛びつき買いは負け筋」と一致</li>
+      <li><strong>「安くなったから買う」単独は有意に届かない</strong>——BNFの乖離逆張りは方向こそ一貫プラスだが、4回に1回はさらに落ちるナイフ</li>
+      <li><strong>有名なシグナルの「単独使い」に上乗せはほぼない</strong>——三役好転が代表例。44,000件でほぼゼロ</li>
+      <li><strong>生き残ったのは「条件を重ねた」1本だけ</strong>——ブレイク買い×長期上昇トレンド。エントリーの形そのものより、<strong>「今がどういう地合いか」を確かめるフィルタのほうが仕事をしている</strong>可能性</li>
+      <li><strong>「守り」は今回も再現した</strong>——低ボラの暴落確率1〜3%、52週高値近接の約12%。リターンの上乗せより、致命傷の回避のほうがデータは素直</li>
+    </ul>
+
+    <div class="positive-box">
+      シリーズ4回を通じた最大の教訓はこれです——<strong>有名な手法の「名前」は何の保証にもならない。世界最古でも、伝説のトレーダーでも、学術論文でも、この市場・この期間で確かめると大半は再現しない。だからこそ、権威ではなくデータで確かめ続ける</strong>。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑦ この検証の限界</h2>
+
+    <ul>
+      <li><strong>コスト・税金を引く前の数字</strong>。特にTT3の+0.67〜+1.39%は、売買コストを引くとかなり薄くなる</li>
+      <li><strong>約5年・単一の市場</strong>。2021〜2026年の日本株はPBR改革と2025年以降の上昇相場という特殊な地合いを含む。他の期間・他の市場では別の結果になり得る</li>
+      <li><strong>同日に12仮説＝多重比較</strong>。偶然の合格が混ざる余地はゼロではない。TT3も前向き（今後の新データでの）確認までは「有望な候補」止まり</li>
+      <li><strong>裁量は再現できない</strong>。BNF氏の板読み・タートルズの2%ルールやピラミッディングなど、資金管理・執行の技術は日足の固定保有では近似しきれない</li>
+      <li><strong>ストップ高・ストップ安</strong>で実際には約定できない日も「翌日の寄りで買えた」ことにしている（楽観側の近似）</li>
+    </ul>
+
+    <!-- =============================== -->
+    <h2 id="summary">⑧ まとめ——シリーズ4回の対比</h2>
+
+    <table>
+      <tr><th>回</th><th>検証した教え</th><th>結果</th></tr>
+      <tr>
+        <td><a href="guide-graham-001.html">#1 グレアム</a></td>
+        <td>安全域（安く買えば守られる）</td>
+        <td style="color:#1a7f37"><strong>防御が両期間で再現（暴落確率が約5分の1）</strong></td>
+      </tr>
+      <tr>
+        <td><a href="guide-masters-002-trend.html">#2 順張りの教科書</a></td>
+        <td>ウィリアムズ・オニール・ミネルヴィニの8仮説</td>
+        <td style="color:#cf222e"><strong>両期間合格は0本——地合い依存</strong></td>
+      </tr>
+      <tr>
+        <td><a href="guide-masters-003-quality.html">#3 バフェット</a></td>
+        <td>質（素晴らしい会社に対価を払う）</td>
+        <td style="color:#cf222e"><strong>両期間で有意に逆風——報われたのは「安さ」だけ</strong></td>
+      </tr>
+      <tr>
+        <td>#4 世界の手法（本記事）</td>
+        <td>一目均衡表・タートルズ・BNF・学術アノマリーの12仮説</td>
+        <td><strong style="color:#1a7f37">合格1本（ブレイク×長期上昇）</strong>——<span style="color:#cf222e">三役好転はゼロ</span>、低ボラは「守り」のみ再現</td>
+      </tr>
+    </table>
+
+    <ul>
+      <li>12の事前登録仮説のうち、両期間一貫で合格したのは<strong>TT3（20日ブレイク×長期上昇トレンド）の1本だけ</strong>。それも前向き確認までは採用しない</li>
+      <li>有名手法の単独使いは、<strong>ほぼゼロ（三役好転）か、方向は合っても有意に届かない（BNF）か、前半マイナス（素のブレイク）</strong>のいずれかだった</li>
+      <li>一貫して再現するのは今回も<strong>「守り」側</strong>（低ボラ・52週高値近接の暴落確率の低さ）——シリーズを貫く「稼ぐ話より守る話のほうがデータは素直」がまた確認された</li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📖 タートルズやリバモアをもっと知りたい方へ</div>
+      <div class="cta-box-desc">投資の名著・古典の紹介は投資本ページにまとめています</div>
+      <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が約5分の1になる防御が両期間で再現。</div>
+        </a>
+        <a href="guide-masters-002-trend.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #2</div>
+          <div class="related-card-desc">ウィリアムズ・オニール・ミネルヴィニの順張り8仮説。両期間一貫の合格は0本だった。</div>
+        </a>
+        <a href="guide-masters-003-quality.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #3</div>
+          <div class="related-card-desc">バフェットの「質×適正価格」5基準。質の高い会社は有意に劣後し、報われたのは安さだけ。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
