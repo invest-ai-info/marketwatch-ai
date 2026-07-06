@@ -34,6 +34,7 @@ filter のキー（全てAND・省略可）:
 
 終了コード: 0=全緑（自動公開可）, 1=赤（要人間レビュー）。
 """
+import datetime as _dt
 import json, math, os, re, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -116,6 +117,26 @@ def compute(data, f):
     return k, n
 
 
+def date_check(html):
+    """公開日メタ（datePublished／公開：表記）が JST の今日と一致するか。
+    クラウド routine は UTC 環境で朝 06:1x JST に走るため、モデルが UTC 日付（=前日）を
+    書いてしまう事故がある（実例: 2026-07-06 #031 が 7/5 付けで公開）。決定論で検出する。
+    過去記事の再監査時は環境変数 SIGNAL_LAB_SKIP_DATE_CHECK=1 で免除。"""
+    if os.environ.get("SIGNAL_LAB_SKIP_DATE_CHECK") == "1":
+        return []
+    jst = _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=9)))
+    today = jst.strftime("%Y-%m-%d")
+    today_jp = f"{jst.year}年{jst.month}月{jst.day}日"
+    fails = []
+    m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})"', html)
+    if m and m.group(1) != today:
+        fails.append(f"datePublished {m.group(1)} ≠ JST今日 {today}（UTC日付ミスの疑い。再監査なら SIGNAL_LAB_SKIP_DATE_CHECK=1）")
+    m2 = re.search(r'公開：\s*(\d{4}年\d{1,2}月\d{1,2}日)', html)
+    if m2 and m2.group(1) != today_jp:
+        fails.append(f"公開日表記 {m2.group(1)} ≠ JST今日 {today_jp}（UTC日付ミスの疑い）")
+    return fails
+
+
 def main():
     if len(sys.argv) < 3:
         print("usage: python signal_lab_verify.py <draft.html> <claims.json>")
@@ -134,6 +155,9 @@ def main():
     oks = 0
     allowed_pcts = set()  # 要約ボックス完全性チェック用：claim の勝率＋CI境界
     print(f"=== signal_lab_verify: article #{claims.get('article_id','?')} / signals N={len(data)} ===")
+    for df in date_check(html):
+        fails.append(df)
+        print(f"  ❌ 日付: {df}")
     for cl in claims["claims"]:
         label = cl["label"]
         # 未対応のフィルタキーは黙って無視せず即RED（独立オラクルの穴を塞ぐ）
