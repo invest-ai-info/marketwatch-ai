@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-07-06
+- 判定: 🚩要人間レビュー（check_site_consistency.py exit=1 による自動公開停止）
+- 選定トピック: ホルムズ海峡が予想外の早期再開──原油$67台急落と「過剰供給」リスクを中立整理（カテゴリ: マクロ・地政学・エネルギー）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4 （合計 13/15）
+- 選定理由: 6/20・6/28記事は「封鎖・攻撃・逆説」を扱ったが、本記事は「ホルムズ再開→過剰供給リスク浮上」という新展開（7/2〜）。NFP（7/3既報・15/15）・関税延長（7/5既報）以外の候補として選定。日本は原油の99%超を輸入依存のためエネルギー安全保障上の重要材料。
+- 出典:
+  - Al Jazeera「With Hormuz reopened, has the oil shortage turned into a glut?」（2026-07-02）
+  - Trading Economics WTI・Brent価格データ（2026-07-02：WTI $67.74・Brent $70.78）
+  - NBC News（米・イラン停戦協議進展報道）
+  - Wikipedia「2026 Strait of Hormuz crisis」
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・断定表現なし・売買推奨なし・出典4系統・noindexなし・金商法リスクなし）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（5項目全クリア・問題なし・前エージェント判断を独立に支持・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK（記事本体は問題なし）
+- check_site_consistency.py: EXIT=1（SYNC_FILES未登録エラー多数）
+- エスカレ理由: `python check_site_consistency.py` が exit=1 を返した。エラー内容はすべて「SYNC_FILES に未登録」（他のguide-*.html多数）で、sync_to_github.py の SYNC_FILES が自動公開ルーティンにより縮小されている2026-07-02台帳記録済みの pre-existing 問題。本記事自体のコンプラ・ファクト・品質はすべて🟢白。
+- 公開準備ファイル: guide-news-2026-07-06-hormuz-oil-glut.html（GitHub push済み・noindexなし・guidesカード未追加）
+- 再公開手順（人間が実施）:
+  1. `sync_to_github.py` の SYNC_FILES を全ガイド記事で復元（または `check_site_consistency.py` が exit=0 になるまで修正）
+  2. `python mw.py check` で exit=0 を確認
+  3. `python publish_article.py --file guide-news-2026-07-06-hormuz-oil-glut.html --category "今日のニュース" --emoji 📰 --card-title "ホルムズ再開・原油$67急落 「過剰供給」リスクを整理" --desc "米・イラン衝突で封鎖されたホルムズ海峡が予想外の早期再開。WTI原油は$67台に急落、過剰供給リスクと日本への影響を中立整理。"`
+  4. `python mw.py sync` → git push → GitHub Actions「Update Market News」→「Run workflow」→ ライブ確認
+
+---
+
 ## 2026-07-05
 - 判定: ✅ 公開済み
 - 選定トピック: ベッセント米財務長官「8月1日までに合意しない国の関税は4月2日（リベレーション・デイ）水準に逆戻り」── 7月9日に迫っていた90日猶予期限を実質8月1日に延長、約100か国にレター発送。合意は英・中・越・インドネシアの4件のみ。日本は参院選後の政治的制約で交渉停滞（カテゴリ: マクロ・通商政策・日本株・為替）
