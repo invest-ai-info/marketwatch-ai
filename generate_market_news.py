@@ -177,6 +177,8 @@ NOINDEX_SLUGS = {
     "guide-nikkei-60k-break-2026-05-20.html", "guide-nikkei-65k-break-2026-05-25.html",
     "guide-us-china-summit-2026-05.html",
     "guide-us-china-summit-result-2026-05-14.html", "guide-us-china-summit-result-2026-05-15.html",
+    # 🆕 2026-07-06: autopublish キュー⑬が既存記事と主題重複→旧版を noindex 統合（新版=guide-simple-vs-compound.html）
+    "guide-simple-vs-compound-interest.html",
 }
 def is_noindex_slug(slug: str) -> bool:
     s = slug or ""
