@@ -4684,7 +4684,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     _history_items = [
         {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: ✂️ 解説「<a href="guide-proverb-mikiri-senryo.html" style="color:#0969da"><b>見切り千両、損切り万両</b></a>」公開'},
         {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 💰 解説「<a href="guide-simple-vs-compound.html" style="color:#0969da"><b>単利と複利の違い｜72の法則と複利が効く3条件</b></a>」公開'},
-        {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 🧪 解説「<a href="guide-signal-lab-031.html" style="color:#0969da"><b>選択ティア4段階の損益序列——neutral(35.9%)の損益分岐割れ確定</b></a>」公開'},
+        {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 🧪 解説「<a href="guide-signal-lab-031.html" style="color:#0969da"><b>選択ティア4段階の損益序列——neutral(35.9%)の損益分岐割れ確定</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 💰 解説「<a href="guide-bonds-interest-rates.html" style="color:#0969da"><b>金利と債券の関係｜なぜ金利が上がると価格は下がるのか</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 📰 解説「<a href="guide-news-2026-07-05-tariff-august-deadline.html" style="color:#0969da"><b>【7/5】ベッセント「8月1日に関税逆戻り」90日猶予延長を中立整理</b></a>」公開'},
         {"date": "2026-07-05", "line": '・<b>2026-07-05</b>: 🌸 解説「<a href="guide-proverb-hito-no-iku-ura.html" style="color:#0969da"><b>人の行く裏に道あり花の山</b></a>」公開'},
