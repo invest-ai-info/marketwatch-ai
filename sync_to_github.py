@@ -15,4 +15,5 @@ SYNC_FILES = [
     "guide-bonds-interest-rates.html",
     "guide-signal-lab-031.html",
     "guide-simple-vs-compound.html",
+    "guide-proverb-mikiri-senryo.html",
 ]
