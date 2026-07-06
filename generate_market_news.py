@@ -179,6 +179,7 @@ NOINDEX_SLUGS = {
     "guide-us-china-summit-result-2026-05-14.html", "guide-us-china-summit-result-2026-05-15.html",
     # 🆕 2026-07-06: autopublish キュー⑬が既存記事と主題重複→旧版を noindex 統合（新版=guide-simple-vs-compound.html）
     "guide-simple-vs-compound-interest.html",
+    "guide-interest-rates-bonds.html",             # 旧版（6/24）。7/5に主題重複の新版が出たため noindex 統合（2026-07-06）
 }
 def is_noindex_slug(slug: str) -> bool:
     s = slug or ""
