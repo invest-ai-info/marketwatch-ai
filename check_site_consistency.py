@@ -163,7 +163,9 @@ def main():
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
         # 個別チェック不要（漏れない設計）。ここでは検査しない。
         if f'href="{gf}"' not in guides_html:
-            warnings.append(f"{gf}: guides.html にカードが無い（一覧から辿れない）")
+            # noindex ページ（重複統合などで意図的に一覧から外した旧版）はカード不要
+            if '<meta name="robots" content="noindex' not in html:
+                warnings.append(f"{gf}: guides.html にカードが無い（一覧から辿れない）")
 
     # 3. guides.html のリンク切れ（指している guide が実在するか）
     #    ※ guide-weekly-* / guide-auto-* は GitHub 側で自動生成されローカルに無いのが正常 → 除外
