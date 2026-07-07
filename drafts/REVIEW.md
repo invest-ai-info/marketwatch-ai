@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-07 | 🧪 signal-lab #032 — 下書き生成・ゲート実行中
+
+- **基準日（JST）**: 2026-07-07
+- **採択仮説**: 「reversalL（逆張り買い）gate は前向きデータで反証されるか（IS E(R)=-0.093 RCI[-0.198~+0.012]で設立・2026-06-25登録）」（優先度①：tracker ⛔反証変化）
+- **事前宣言**: gate条件=前向きN≥80かつ平均RのCI上限<0。CI上限≥0で反証成立
+- **検証データ**: 全決済済み1,394件（signals-log.json）。reversalL全528件（IS:447件・FWD:81件）
+- **結果**: IS 174/447=38.9% E(R)=-0.093 RCI[-0.198~+0.012]。FWD 48/81=59.3% E(R)=+0.381 RCI[+0.130~+0.632]。N=81≥80かつRCI下限+0.130>>0→⛔反証成立。主因：金属IS16.5%→FWD73.3%のレジーム転換（#030と同根）。非金属IS43.8%→FWD56.1%(+12.3pp)も改善
+- **判定**: ⛔反証（claims.json k=222/n=528 全期間統合値）
+- **生成ファイル**: drafts/draft-signal-lab-032.html / drafts/labnotes/lab-032-analysis.md / drafts/labnotes/lab-032-claims.json / signal-lab-ledger.md
+
+### 自動公開ゲート結果
+- [ ] 8-1 git commit/push（ゲート実行中）
+- [ ] 8-2 verify EXIT=?
+- [ ] 8-3 Opus compliance 判定=?
+- [ ] 8-4 独立確認 or エスカレ
+
+---
+
 ## 2026-07-07 | 💰 基礎知識 #17 — インフレと実質リターン（inflation-real-return）下書き生成
 
 - **基準日（JST）**: 2026-07-07

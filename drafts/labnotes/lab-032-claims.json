@@ -1,0 +1,53 @@
+{
+  "article_id": "032",
+  "claims": [
+    {
+      "label": "reversalL 全期間（IS+FWD合計）勝率",
+      "filter": {"reversal_long": true},
+      "k": 222,
+      "n": 528
+    },
+    {
+      "label": "reversalL × 金属グループ 全期間勝率",
+      "filter": {"reversal_long": true, "group": "metal"},
+      "k": 24,
+      "n": 94
+    },
+    {
+      "label": "reversalL × 指数グループ 全期間勝率",
+      "filter": {"reversal_long": true, "group": "index"},
+      "k": 64,
+      "n": 109
+    },
+    {
+      "label": "reversalL × 円クロスFX 全期間勝率",
+      "filter": {"reversal_long": true, "group": "jpy_fx"},
+      "k": 46,
+      "n": 101
+    },
+    {
+      "label": "reversalL × ドルクロスFX 全期間勝率",
+      "filter": {"reversal_long": true, "group": "other_fx"},
+      "k": 59,
+      "n": 145
+    },
+    {
+      "label": "reversalL × BTC 全期間勝率",
+      "filter": {"reversal_long": true, "group": "btc"},
+      "k": 14,
+      "n": 50
+    },
+    {
+      "label": "reversalL × RSI売られすぎ（rsi_oversold_bounce）全期間勝率",
+      "filter": {"reversal_long": true, "signal": "rsi_oversold_bounce"},
+      "k": 85,
+      "n": 210
+    },
+    {
+      "label": "reversalL × BBバンド下限タッチ（bb_lower_touch）全期間勝率",
+      "filter": {"reversal_long": true, "signal": "bb_lower_touch"},
+      "k": 137,
+      "n": 318
+    }
+  ]
+}
