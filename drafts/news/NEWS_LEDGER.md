@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-07-07
+- 判定: ✅ 公開済み
+- 選定トピック: サムスン電子Q2「19倍増益・過去最高益」なのになぜ株が急落？ 日経平均-1480円を引き起こした「好決算の逆説」を中立整理（カテゴリ: マクロ・個別銘柄・AI半導体・韓国株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5 （合計 15/15）
+- 選定理由: 7/7の日経平均-1480円（-2.12%）の直接原因。「記録決算でも株が売られる理由」は読者が最も知りたい情報で速報性と教育性を両立。6/24AI半導体セルオフ（SOXX主導）とは切り口（韓国CB・外国人大規模売り越し・Buy the Rumour Sell the Fact）が異なり差別化明確。
+- 出典:
+  - Samsung Global Newsroom「Samsung Electronics Announces Earnings Guidance for Second Quarter 2026」（2026-07-07）
+  - Reuters/Investing.com「Samsung estimates 19-fold rise in Q2 operating profit」（2026-07-07）
+  - Bloomberg JP「韓国株急落、AI相場警戒で半導体株売り」（2026-07-07）
+  - Korea Times「Samsung projects record Q2 earnings」（2026-07-07）
+  - 株式新聞Web「日経平均終値 1480円73銭安の6万8256円96銭」（2026-07-07）
+  - The Asia Business Daily（KOSPI終値7,656.31、-4.91%）（2026-07-07）
+  - StarNews Korea「Q2 Sales Hit 171 Trillion Won」（2026-07-07）
+  - Invezz「Kospi tumbles as Asian markets ask if Samsung's AI boom is priced in」（2026-07-07）
+  - TheStreet / CNBC（米国株7/6終値 ダウ53,055.91・S&P500 7,537.43・Nasdaq 26,121.16）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・全6チェックポイント○）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（5項目全クリア・前エージェント判断を独立に支持・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典2系統以上（9系統）✅
+- check_site_consistency.py: EXIT=0（SYNC_FILES警告は既存問題・先行エントリ記録済み）
+- 公開ファイル: guide-news-2026-07-07-samsung-nikkei-selloff.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了。
+
+---
+
 ## 2026-07-06
 - 判定: 🚩要人間レビュー（check_site_consistency.py exit=1 による自動公開停止）
 - 選定トピック: ホルムズ海峡が予想外の早期再開──原油$67台急落と「過剰供給」リスクを中立整理（カテゴリ: マクロ・地政学・エネルギー）
