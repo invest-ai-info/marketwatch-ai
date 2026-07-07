@@ -19,4 +19,5 @@ SYNC_FILES = [
     "guide-signal-lab-032.html",
     "guide-proverb-mou-mada.html",
     "guide-news-2026-07-07-samsung-nikkei-selloff.html",
+    "guide-signal-lab-033.html",
 ]
