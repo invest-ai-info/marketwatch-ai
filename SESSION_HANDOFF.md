@@ -72,6 +72,18 @@
   無登録助言リスクで弁護士相談後の別設計（銘柄名を出さない基準チェッカー等）。
 - 残タスク（任意）：ETF/ETNの除外フラグ（masterのProdCat活用）・ウォッチリストダッシュボードへの防御列追加・
   赤字判定の全銘柄化（要J-Quants財務join）。
+- **レイク自動補充を新設（オーナー依頼）**：タスクスケジューラ `MarketWatch_JQ_Lake`（毎朝05:30・
+  `python -X utf8 _jp_jquants_daily_lake.py`＝差分のみ数十秒・既存JP_Dailyと同一流儀・StartWhenAvailable）。
+  **番人 `_jp_health_check.py` に check_lake() 追加**（毎朝8:00・レイク最終日<前営業日なら
+  `JPレイク未更新_要確認.txt`・GREEN動作確認済）。
+- **⚠️副産物で本物の異常を発見・根本修正済＝7/7朝のjp_daily未完走**：6:40起動→30分制限(PT30M)で強制終了
+  （Last Result 267014＝SCHED_S_TASK_TERMINATED）。**真因特定**＝手動実行は299秒(5分)で完走＝肥大ではない。
+  ノートPCだがバッテリー/アイドル停止は既にOFF＝**時間制限に本当に達した**。根本＝`incremental_fetch()`が
+  約400銘柄をループ・各Yahoo呼出は`timeout=20`だが**ループ全体の上限が無く、朝の起動直後(WiFi未接続)に連続
+  タイムアウトすると最悪133分**→30分killで心拍も残らず。**修正**=①`jp_daily.py`のフェッチループに壁時計
+  バジェット`FETCH_BUDGET_SEC=720`（超過で残り銘柄スキップ→下流はキャッシュ続行＝総killより安全・syntax/wiring
+  テスト緑）②両タスクのExecutionTimeLimit PT30M→**PT45M**（フェッチ上限12分+下流3分に余裕）。当日カードは手動
+  再生成で心拍7/7・番人全✅復帰済。**明朝6:00が修正後の初運転**（万一またコケても番人が8:00にアラートtxt）。
 
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
 セッション冒頭は `python mw.py evolve`。2026-06-17 以前＋7/2〜7/3＋7/6の詳細履歴は **SESSION_ARCHIVE.md** へ退避した。
