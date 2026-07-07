@@ -19,7 +19,8 @@
   - FWD(≥2026-06-25)×Short: 4/22=18.2% E(R)=-0.576 RCI[-0.952,-0.200]
   - FWD×Long: 26/44=59.1% E(R)=+0.379 RCI[+0.040,+0.718]
   - 主因: metal×blocked=T×S=9/10=90%(IS8件・FWD2件) / macd_dead FWD 3/17=17.6%
-- **ゲート状態**: 実行待ち（signal_lab_verify.py → Opus compliance → 公開）
+- **ゲート状態**: ✅ 公開済み（2026-07-08）
+  - verify: 6/6緑 EXIT=0 / Opus: 🟡→修正→独立Opus🟢白 / finalize✅ / guide-signal-lab-033.html公開済み
 - **トラッカー**: [t]新設（blocked=True×Long昇格候補）
 
 ---
