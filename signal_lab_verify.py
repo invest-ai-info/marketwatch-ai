@@ -134,6 +134,9 @@ def date_check(html):
     m2 = re.search(r'公開：\s*(\d{4}年\d{1,2}月\d{1,2}日)', html)
     if m2 and m2.group(1) != today_jp:
         fails.append(f"公開日表記 {m2.group(1)} ≠ JST今日 {today_jp}（UTC日付ミスの疑い）")
+    # 🆕 2026-07-07: 下書き状態の残骸検査（実例: #032 が「公開：2026年7月7日（下書き中）」のまま公開された）
+    if "下書き中" in html:
+        fails.append("本文に「下書き中」が残っている（下書きテンプレの消し忘れ＝仕上げ工程のミス）")
     return fails
 
 
