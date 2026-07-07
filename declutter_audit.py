@@ -20,7 +20,7 @@ MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 # 2026-07-02 トークン効率化＝閾値を実測ベースに厳格化（毎セッションの固定オーバーヘッド予算）。
 DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32,
                  # 🆕 2026-07-07 進化ループ文書（一次ガードは _doctrine_check.py 側＝ここは月次の二重チェック）
-                 "research/DOCTRINE.md": 24, "research/hypothesis_queue.md": 8}
+                 "research/DOCTRINE.md": 24, "research/hypothesis_queue.md": 14}
 MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
