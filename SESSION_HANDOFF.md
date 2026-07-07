@@ -72,10 +72,11 @@
   無登録助言リスクで弁護士相談後の別設計（銘柄名を出さない基準チェッカー等）。
 - 残タスク（任意）：ETF/ETNの除外フラグ（masterのProdCat活用）・ウォッチリストダッシュボードへの防御列追加・
   赤字判定の全銘柄化（要J-Quants財務join）。
-- **レイク自動補充を新設（オーナー依頼）**：タスクスケジューラ `MarketWatch_JQ_Lake`（毎朝05:30・
-  `python -X utf8 _jp_jquants_daily_lake.py`＝差分のみ数十秒・既存JP_Dailyと同一流儀・StartWhenAvailable）。
-  **番人 `_jp_health_check.py` に check_lake() 追加**（毎朝8:00・レイク最終日<前営業日なら
-  `JPレイク未更新_要確認.txt`・GREEN動作確認済）。
+- **レイク自動補充＋スクリーナーCSV自動生成を新設（オーナー依頼）＝朝は何も打たずCSVを開くだけ**：
+  ①`MarketWatch_JQ_Lake`（毎朝05:30・`_jp_jquants_daily_lake.py`＝差分数十秒）②`MarketWatch_JQ_Screen`
+  （毎朝05:45＝レイク補充直後・`_jp_screen_daily.py`ラッパー→`_jp_screener.py --top 30`→`_jp_screen_latest.csv`）。
+  両タスクとも StartWhenAvailable・PT30M/45M。**番人 `_jp_health_check.py` に check_lake()＋check_screen() 追加**
+  （毎朝8:00・鮮度不足なら `JPレイク未更新_要確認.txt`/`JPスクリーナー未更新_要確認.txt`・番人4項目GREEN確認済）。
 - **⚠️副産物で本物の異常を発見・根本修正済＝7/7朝のjp_daily未完走**：6:40起動→30分制限(PT30M)で強制終了
   （Last Result 267014＝SCHED_S_TASK_TERMINATED）。**真因特定**＝手動実行は299秒(5分)で完走＝肥大ではない。
   ノートPCだがバッテリー/アイドル停止は既にOFF＝**時間制限に本当に達した**。根本＝`incremental_fetch()`が
