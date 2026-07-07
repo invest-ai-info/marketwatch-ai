@@ -2,7 +2,7 @@
 
 ---
 
-## 2026-07-07 | 🧪 signal-lab #032 — 下書き生成・ゲート実行中
+## 2026-07-07 | 🧪 signal-lab #032 — 自動公開完了 ✅
 
 - **基準日（JST）**: 2026-07-07
 - **採択仮説**: 「reversalL（逆張り買い）gate は前向きデータで反証されるか（IS E(R)=-0.093 RCI[-0.198~+0.012]で設立・2026-06-25登録）」（優先度①：tracker ⛔反証変化）
@@ -10,13 +10,16 @@
 - **検証データ**: 全決済済み1,394件（signals-log.json）。reversalL全528件（IS:447件・FWD:81件）
 - **結果**: IS 174/447=38.9% E(R)=-0.093 RCI[-0.198~+0.012]。FWD 48/81=59.3% E(R)=+0.381 RCI[+0.130~+0.632]。N=81≥80かつRCI下限+0.130>>0→⛔反証成立。主因：金属IS16.5%→FWD73.3%のレジーム転換（#030と同根）。非金属IS43.8%→FWD56.1%(+12.3pp)も改善
 - **判定**: ⛔反証（claims.json k=222/n=528 全期間統合値）
-- **生成ファイル**: drafts/draft-signal-lab-032.html / drafts/labnotes/lab-032-analysis.md / drafts/labnotes/lab-032-claims.json / signal-lab-ledger.md
+- **生成ファイル**: drafts/draft-signal-lab-032.html / drafts/labnotes/lab-032-analysis.md / drafts/labnotes/lab-032-claims.json / signal-lab-ledger.md → **guide-signal-lab-032.html 公開済み**
 
 ### 自動公開ゲート結果
-- [ ] 8-1 git commit/push（ゲート実行中）
-- [ ] 8-2 verify EXIT=?
-- [ ] 8-3 Opus compliance 判定=?
-- [ ] 8-4 独立確認 or エスカレ
+- [x] 8-1 git commit/push ✅（chore: signal-lab draft 032 + claims）
+- [x] 8-2 verify EXIT=0 ✅ — 8/8クレーム緑・要約未検証0件・SVG警告0件（30秒まとめの73.3%/43.8%/56.1%をラベルレスから削除＋グループ全期間合計注釈行追加後）
+- [x] 8-3 Opus compliance 🟢白 ✅（kinsho-v1×3箇所/断定語なし/研究フレーミング一貫/投資助言なし・修正不要）
+- [x] 8-4-iii finalize_signal_lab.py 032 2026-07-07 → guide-signal-lab-032.html 生成（size=37KB・svg=3・kinsho=3）
+- [x] 8-4-iv publish_article.py → guides.html カード追加（AIシグナル研究日誌 最上段）・SYNC_FILES・更新履歴 完了
+- [x] 8-4-v check_site_consistency.py EXIT=0 ✅（guide-signal-lab-032.html SYNC登録確認・既存85件の未登録は旧来の事前確認済み問題）
+- [x] 8-4-vi git commit + PUSH-MAIN ✅（feat: auto-publish signal-lab 032 verified+compliance）
 
 ---
 
