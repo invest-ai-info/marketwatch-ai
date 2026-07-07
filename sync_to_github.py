@@ -16,4 +16,5 @@ SYNC_FILES = [
     "guide-signal-lab-031.html",
     "guide-simple-vs-compound.html",
     "guide-proverb-mikiri-senryo.html",
+    "guide-signal-lab-032.html",
 ]
