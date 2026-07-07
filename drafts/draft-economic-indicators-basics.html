@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>経済指標の読み方入門｜雇用統計・CPI・FOMCが市場を動かす仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="雇用統計（NFP）・CPI・FOMCの3大経済指標が、なぜ為替・株・金利を動かすのかを図解で解説。「実数ではなく予想との差が相場を動かす」という核心と、発表前後のボラティリティ・持ち越しリスクまで初心者〜中級者向けに丁寧に説明します。">
+  <meta name="keywords" content="経済指標,雇用統計,NFP,CPI,消費者物価指数,FOMC,金利,為替,投資入門,マクロ経済,予想との差,サプライズ,ボラティリティ,発表前後,初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-economic-indicators-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="経済指標の読み方入門｜雇用統計・CPI・FOMCが市場を動かす仕組みを図解">
+  <meta property="og:description" content="雇用統計・CPI・FOMCの3大指標と金利の連動を図解。「予想との差が相場を動かす」核心と発表前後のボラティリティリスクまで。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-economic-indicators-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "経済指標の読み方入門｜雇用統計・CPI・FOMCが市場を動かす仕組みを図解",
+    "description": "雇用統計・CPI・FOMCの3大経済指標が金利を通じて相場を動かす仕組みを図解。「予想との差が市場を動かす」核心と発表前後のボラティリティリスクまで解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-07",
+    "dateModified": "2026-07-07",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-economic-indicators-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-flow-box{fill:#ddf4ff;stroke:#0969da;stroke-width:1.5;rx:8}
+    .s-flow-text{fill:#1f6feb;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;text-anchor:middle}
+    .s-flow-sub{fill:#424a53;font-size:10.5px;font-family:'Noto Sans JP',sans-serif;text-anchor:middle}
+    .s-arrow{stroke:#0969da;stroke-width:2;marker-end:url(#arrowhead)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-flow-box{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-flow-text{fill:#79c0ff}
+    body.dark .s-flow-sub{fill:#8b949e}
+    body.dark .s-arrow{stroke:#58a6ff}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 経済指標の読み方入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は経済指標の仕組みと市場への影響を解説した「情報提供」であり、特定の投資行動の推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📅 経済指標の読み方入門——雇用統計・CPI・FOMCは何を見ている？</h1>
+    <div class="meta-line">公開日：2026 年 7 月 7 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>投資を始めてしばらくすると、「雇用統計の発表で相場が急変した」「CPIが予想より高くてドルが上がった」「FOMC後に株が急落した」といったニュースに出くわします。これらすべての正体が<strong>経済指標</strong>です。何を測っているのか、なぜ相場が動くのか——この記事では、<strong>投資家が必ず知っておくべき3大指標の仕組み</strong>と、<strong>「動かすのは数字そのものではなく、予想との差だ」</strong>という相場の核心を、図解でやさしく解説します。</p>
+    <p>後半では、指標発表前後の<strong>ボラティリティ急増・スプレッド拡大・持ち越しリスク</strong>という、少し経験を積んだ人が必ずぶつかる壁も取り上げます。当サイトの<a href="../calendar.html">経済カレンダー</a>とあわせて活用することで、指標を「なんとなく怖いもの」から「読めるもの」に変えていきましょう。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>経済指標は「<strong>雇用・物価・金融政策</strong>」の3軸を測り、その結果が<strong>金利→為替・株・債券</strong>のチェーンで相場を動かす。</li>
+      <li>相場が大きく動くのは「良い数字が出たから」ではなく、<strong>「市場の事前予想を大きく上回った（下回った）から」</strong>。この「予想との差（サプライズ）」が最も重要なポイント。</li>
+      <li>指標発表の直前・直後は<strong>ボラティリティが急増</strong>し、スプレッドが拡大する。初心者ほど「発表をまたぐポジションの持ち越しリスク」を知っておく必要がある。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">なぜ経済指標を知る必要があるのか</a></li>
+        <li><a href="#section-2">3大指標①：雇用統計（NFP）——毎月第1金曜日の"市場の試験"</a></li>
+        <li><a href="#section-3">3大指標②：CPI（消費者物価指数）——インフレの温度計</a></li>
+        <li><a href="#section-4">3大指標③：FOMC——年8回の金融政策決定</a></li>
+        <li><a href="#section-5">「金利→為替・株・債券」の連動チェーン</a></li>
+        <li><a href="#section-6">★核心★ 動かすのは「実数」ではなく「予想との差」</a></li>
+        <li><a href="#section-7">発表前後のボラティリティ・持ち越しリスク（中上級）</a></li>
+        <li><a href="#section-8">当サイトの経済カレンダーでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ なぜ経済指標を知る必要があるのか</h2>
+    <p>株・FX・仮想通貨を問わず、<strong>相場は「将来の金利」に対する期待値で動く</strong>側面が非常に大きいです。なぜなら、金利が上がれば借入コストが増え企業収益が圧迫され株価が下がりやすく、逆に金利が下がれば成長株には追い風になる——というように、<strong>金利はほぼすべての資産の「割引率」</strong>として機能するからです。</p>
+    <p>そして中央銀行（米国なら連邦準備制度＝Fed）は<strong>経済指標を見ながら金利を決めます</strong>。つまり、<strong>経済指標→金利見通し→全市場</strong>という連鎖が存在するのです。指標の読み方を知ることは、「なぜ今相場が動いているのか」を理解するための地図を手に入れることでもあります。</p>
+    <div class="info-box">
+      <strong>💡 全部を追う必要はない</strong>：経済指標は毎週数十件発表されますが、市場に最も影響を与えるのはごく一部です。この記事では<strong>NFP（雇用統計）・CPI・FOMC</strong>の3大指標に絞って解説します。まずこの3つを理解するだけで、ニュースの文脈が大きく変わります。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 3大指標①：雇用統計（NFP）——毎月第1金曜日の"市場の試験"</h2>
+    <p>雇用統計（正式名称：Employment Situation）は、<strong>米国労働統計局（BLS）が毎月第1金曜日の午前8時30分（米国東部時間）に発表</strong>する経済指標です（日本時間では夏時間なら21:30、冬時間なら22:30）。</p>
+
+    <h3>何を測っているのか</h3>
+    <p>主に2つの調査から構成されます。</p>
+    <ul>
+      <li><strong>非農業部門雇用者数（NFP）</strong>：農業を除く米国の雇用者数の前月比増減。約14万1,000の企業・政府機関を調査した数字です（出典：米BLS）。</li>
+      <li><strong>失業率</strong>：労働力人口に占める失業者の割合（家計調査から算出）。</li>
+      <li><strong>平均時給（AHE）</strong>：賃金インフレの先行指標として市場が注目します。</li>
+    </ul>
+
+    <h3>なぜ特別に重視されるのか</h3>
+    <p>雇用は消費の源泉であり、消費はGDPの最大の構成要素です。雇用が強ければ消費→物価→インフレ→金利上昇への圧力が高まり、弱ければその逆。毎月最初に発表される「米国経済のヘルスチェック」として、<strong>月の中で最もボラティリティを生みやすい1時間</strong>とも言えます。</p>
+
+    <div class="warning-box">
+      NFP発表直後は、為替・株・債券が同時に大きく動くことがあります。この時間帯に建玉を持っている場合はリスク管理に注意が必要です（詳しくは第7節）。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 3大指標②：CPI（消費者物価指数）——インフレの温度計</h2>
+    <p>CPI（Consumer Price Index、消費者物価指数）も<strong>米BLSが毎月発表</strong>し、前月分のデータが<strong>翌月の第2〜3週の午前8:30（東部時間）に公表</strong>されます。</p>
+
+    <h3>何を測っているのか</h3>
+    <p>都市部の消費者が購入する財・サービスの価格変動を追跡します。食料・住居費・医療・輸送・衣料品など、一定の「バスケット」の値段がどれだけ変わったかを示します。</p>
+    <ul>
+      <li><strong>ヘッドラインCPI</strong>：食料とエネルギーを含む全項目。月次の変動が大きい。</li>
+      <li><strong>コアCPI</strong>：食料とエネルギーを除いたもの。変動が少なく中央銀行が政策判断に使う。</li>
+    </ul>
+
+    <h3>FedはCPIを直接ターゲットにしていないが…</h3>
+    <p>正確には、Fedが公式にターゲットとしているのは<strong>PCE（個人消費支出デフレーター）</strong>ですが、CPIはPCEより早く発表され市場のインフレ期待を形成するため、<strong>実質的に最もマーケットインパクトが大きいインフレ指標</strong>として扱われています。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 3大指標③：FOMC——年8回の金融政策決定</h2>
+    <p>FOMC（Federal Open Market Committee、連邦公開市場委員会）は<strong>年8回（約6〜8週間ごと）、2日間の会合を開き、政策金利（フェデラルファンズレート）の目標レンジを決定</strong>します（出典：米連邦準備制度）。</p>
+
+    <h3>発表のタイムライン</h3>
+    <ul>
+      <li><strong>2:00 PM ET（東部時間）</strong>：政策声明文の発表（金利の据え置き・引き上げ・引き下げの決定）。</li>
+      <li><strong>2:30 PM ET</strong>：パウエル議長（現職）による記者会見——声明よりもこちらの言葉が市場を動かすことが多い。</li>
+      <li><strong>約3週間後</strong>：詳細な議事録（minutes）の公開。</li>
+      <li><strong>3・6・9・12月の会合</strong>：「ドット・プロット」（各委員の将来の金利予測）も公表され、特に大きな値動きを生む。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 FOMCを「結果」より「言葉」で読む</strong>：金利決定自体はしばしば事前にほぼ折り込み済みです。「次の会合でどう動くか」を示唆する議長の発言や、ドット・プロットの変化が、より大きなマーケットインパクトを持ちます。「<strong>利上げサイクルの終わり</strong>」「<strong>利下げのタイミング</strong>」というテーマは、こうした言葉の分析から始まります。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 「金利→為替・株・債券」の連動チェーン</h2>
+    <p>3大指標がなぜ多くの資産を同時に動かすのか——その理由は、すべて<strong>「金利見通しの変化」を媒介とする連鎖</strong>で説明できます。</p>
+
+    <!-- SVG図1: 経済指標→金利→市場連動フロー -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 680 280" role="img" aria-labelledby="flow-title">
+        <title id="flow-title">経済指標から金利を経由して各市場へ伝播する連動チェーンの概念図</title>
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#0969da"/>
+          </marker>
+          <marker id="arrowhead-d" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+          </marker>
+        </defs>
+        <!-- ボックス1: 経済指標 -->
+        <rect class="s-flow-box" x="20" y="100" width="130" height="80" rx="8"/>
+        <text class="s-flow-text" x="85" y="132">経済指標</text>
+        <text class="s-flow-sub" x="85" y="150">NFP / CPI</text>
+        <text class="s-flow-sub" x="85" y="166">FOMC</text>
+        <!-- 矢印1 -->
+        <line class="s-arrow" x1="150" y1="140" x2="190" y2="140" marker-end="url(#arrowhead)"/>
+        <!-- ボックス2: 金利見通し -->
+        <rect class="s-flow-box" x="192" y="100" width="140" height="80" rx="8"/>
+        <text class="s-flow-text" x="262" y="130">金利見通し</text>
+        <text class="s-flow-sub" x="262" y="150">Fedが利上げ？</text>
+        <text class="s-flow-sub" x="262" y="166">利下げ？ 据え置き？</text>
+        <!-- 矢印2（右へ） -->
+        <line class="s-arrow" x1="332" y1="140" x2="372" y2="140" marker-end="url(#arrowhead)"/>
+        <!-- 右側: 3つの市場へ分岐 -->
+        <rect class="s-flow-box" x="374" y="30" width="130" height="60" rx="8"/>
+        <text class="s-flow-text" x="439" y="55">為替（FX）</text>
+        <text class="s-flow-sub" x="439" y="74">高金利通貨が買われる</text>
+        <rect class="s-flow-box" x="374" y="110" width="130" height="60" rx="8"/>
+        <text class="s-flow-text" x="439" y="135">株式</text>
+        <text class="s-flow-sub" x="439" y="154">割引率が上がると下落へ</text>
+        <rect class="s-flow-box" x="374" y="190" width="130" height="60" rx="8"/>
+        <text class="s-flow-text" x="439" y="215">債券</text>
+        <text class="s-flow-sub" x="439" y="234">金利↑→債券価格↓</text>
+        <!-- 分岐ライン -->
+        <line class="s-axis" x1="370" y1="60" x2="374" y2="60"/>
+        <line class="s-axis" x1="370" y1="140" x2="374" y2="140"/>
+        <line class="s-axis" x1="370" y1="220" x2="374" y2="220"/>
+        <line class="s-axis" x1="370" y1="60" x2="370" y2="220"/>
+        <line class="s-axis" x1="332" y1="140" x2="370" y2="140"/>
+        <!-- ラベル -->
+        <text class="s-panel-label" x="30" y="24">経済指標が市場を動かす連動チェーン（概念）</text>
+        <text class="s-note-g" x="520" y="63">📈 / 📉</text>
+        <text class="s-note-g" x="520" y="143">📈 / 📉</text>
+        <text class="s-note-g" x="520" y="223">📈 / 📉</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 経済指標（NFP・CPI・FOMC）→金利見通しの変化→為替・株・債券すべてが同時に動く連鎖の概念図。金利は全資産の「割引率」として機能するため、金利見通しが変わると広範囲の相場が連動します。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>たとえば、雇用統計で予想を大幅に上回る雇用者数が発表された場合のシナリオを追ってみます。</p>
+    <ul>
+      <li>雇用が強い → 賃金が上がりやすい → インフレ圧力が持続 → Fedは利下げを急がない（あるいはさらに利上げするかも）</li>
+      <li><strong>金利見通し：高止まり</strong> → 米ドル買い（高金利通貨として魅力）→ ドル高、円安</li>
+      <li><strong>金利見通し：高止まり</strong> → 債券価格は下落（既存の低利回り債の魅力が薄れる）</li>
+      <li><strong>金利見通し：高止まり</strong> → 将来の企業利益の「割引率」が上がる → 特に高バリュエーションの成長株に売り圧力</li>
+    </ul>
+    <p>逆に、雇用が予想を大きく下回れば、このチェーンが反転します。一つの指標が複数の市場を同時に動かすのは、すべてこの<strong>「金利見通し」という共通の媒介</strong>を通じているからです。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ ★核心★ 動かすのは「実数」ではなく「予想との差」</h2>
+    <p>ここが最も重要なポイントです。<strong>「良い数字が出れば相場が上がる」——この直感は半分しか正しくありません</strong>。</p>
+    <p>大手金融機関・シンクタンクのエコノミストは、各指標の発表前に予測値を公表します。メディア（ブルームバーグ・ロイター等）はこれらを集計して<strong>コンセンサス予想（市場予想）</strong>を算出します。市場参加者はこの予想を織り込んで、あらかじめポジションを取っています。</p>
+
+    <div class="negative-box">
+      <strong>相場を動かすのは「実際の数字 − 予想値（コンセンサス）」</strong>——このサプライズの大きさと方向が、発表後の値動きをほぼ決定します。予想通りの数字が出ても、相場はほとんど動きません。なぜなら、<strong>予想値はすでに価格に織り込まれているから</strong>です。
+    </div>
+
+    <!-- SVG図2: サプライズの仕組み -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 310" role="img" aria-labelledby="surprise-title">
+        <title id="surprise-title">市場予想（コンセンサス）と実際の数値の関係が相場インパクトを決める概念図</title>
+        <text class="s-panel-label" x="30" y="24">「予想との差（サプライズ）」が相場インパクトを決める</text>
+        <!-- 縦軸：相場インパクト -->
+        <line class="s-axis" x1="60" y1="40" x2="60" y2="280"/>
+        <!-- 横軸：発表値 -->
+        <line class="s-axis" x1="40" y1="160" x2="610" y2="160"/>
+        <!-- ゼロライン＝コンセンサス予想 -->
+        <text class="s-label-sm" x="66" y="164">← コンセンサス予想（ゼロ点）</text>
+        <text class="s-label-sm" x="50" y="50">上昇 ↑</text>
+        <text class="s-label-sm" x="50" y="275">下落 ↓</text>
+        <!-- ポジティブ・サプライズ領域 -->
+        <rect fill="#e6ffed" opacity=".6" x="60" y="40" width="275" height="120"/>
+        <text class="s-note-g" x="80" y="65">ポジティブ・サプライズ</text>
+        <text class="s-note-g" x="80" y="82">（実数 ＞ 予想）</text>
+        <!-- ネガティブ・サプライズ領域 -->
+        <rect fill="#ffebe9" opacity=".6" x="60" y="160" width="275" height="120"/>
+        <text class="s-note-r" x="80" y="200">ネガティブ・サプライズ</text>
+        <text class="s-note-r" x="80" y="217">（実数 ＜ 予想）</text>
+        <!-- 「予想通り」領域 -->
+        <rect fill="#f6f8fa" opacity=".8" x="335" y="40" width="275" height="240"/>
+        <text class="s-panel-label" x="440" y="100" text-anchor="middle">予想通り</text>
+        <text class="s-flow-sub" x="440" y="120" text-anchor="middle">（サプライズなし）</text>
+        <text class="s-flow-sub" x="440" y="140" text-anchor="middle">→ 相場は大きく動かない</text>
+        <text class="s-flow-sub" x="440" y="158" text-anchor="middle">（すでに織り込み済み）</text>
+        <!-- 縦分割線 -->
+        <line class="s-divv" x1="335" y1="40" x2="335" y2="280"/>
+        <!-- 例：NFPの実例 -->
+        <circle class="s-hl" cx="130" cy="100" r="8"/>
+        <text class="s-note" x="145" y="96">例：NFP +300K（予想+200K）</text>
+        <text class="s-note-g" x="145" y="113">→ ドル急騰、株下落（利上げ懸念）</text>
+        <circle class="s-rev" cx="130" cy="220" r="8"/>
+        <text class="s-note" x="145" y="215">例：NFP +100K（予想+200K）</text>
+        <text class="s-note-r" x="145" y="232">→ ドル急落、株上昇（利下げ期待）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 横軸は「予想からの乖離」、縦軸は「相場インパクト」の概念図。予想通りの数値（右側）はすでに価格に織り込まれているため、発表後の値動きはほとんど生まれない。市場を動かすのは「予想よりどれだけ良かった（悪かった）か」のサプライズ。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この仕組みが分かると、一見奇妙な相場の動きが理解できます。</p>
+    <ul>
+      <li><strong>雇用者数が大幅増加なのに株が下落</strong>：雇用が強すぎてFedが利上げを続けると判断された場合、「金利高→株のバリュエーション圧縮」が勝る。</li>
+      <li><strong>CPI低下でドルが売られ、株が大幅上昇</strong>：インフレが鈍化＝Fedが利下げに動けるという期待から、グロース株に買いが集まる。</li>
+      <li><strong>予想通りの利下げ決定でも株が下落</strong>：「0.25%の引き下げを織り込んでいたが、0.5%を期待していた層の失望」や、声明文の「タカ派（利下げに慎重）」な表現が嫌われた場合など。</li>
+    </ul>
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：指標発表の前に「市場予想は何か」を確認する習慣をつけましょう。当サイトの<a href="../calendar.html">経済カレンダー</a>では主要指標の発表予定と市場予想を確認できます。予想と実際のギャップを意識するだけで、発表後の値動きの文脈が読みやすくなります。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 発表前後のボラティリティ・持ち越しリスク（中上級）</h2>
+    <p>ここからは、少し経験を積んだ人が必ず直面する「発表前後の難しさ」を掘り下げます。</p>
+
+    <h3>発表前：ボラティリティは上がっている</h3>
+    <p>市場参加者は発表前から不確実性に備えてオプションを買いヘッジします。この需要が<strong>インプライドボラティリティ（IV）を押し上げ</strong>、市場全体が「構えた状態」になります。研究では、FOMC開催日の実現ボラティリティは非開催日に比べ約15〜20%高いとされています（出典：NY連邦準備銀行・学術研究）。</p>
+
+    <h3>発表直後：スプレッドが拡大しスリッページが増える</h3>
+    <p>発表の瞬間は、マーケットメーカー（値付け業者）が急激な値動きに備えてビッド・アスクのスプレッドを広げます。通常0.1〜0.5pipsのスプレッドが、発表直後の数秒間は数pips〜それ以上に広がることがあります。また<strong>指値注文が思った価格で成立しない（スリッページ）</strong>リスクも高まります。</p>
+
+    <!-- SVG図3: 発表前後のボラティリティ概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="vol-title">
+        <title id="vol-title">経済指標発表前後のボラティリティとスプレッドの変化を示す概念図</title>
+        <text class="s-panel-label" x="30" y="24">発表前後のボラティリティ推移（概念）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="250" x2="600" y2="250"/>
+        <line class="s-axis" x1="60" y1="40" x2="60" y2="250"/>
+        <text class="s-label-sm" x="68" y="48">ボラ・スプレッド ↑</text>
+        <text class="s-label-sm" x="72" y="264">時間 →</text>
+        <!-- 発表時刻の縦線 -->
+        <line stroke="#cf222e" stroke-width="2" stroke-dasharray="5 4" x1="310" y1="40" x2="310" y2="250"/>
+        <text class="s-note-r" x="314" y="58">発表</text>
+        <!-- ボラティリティ曲線（発表前から上昇、発表後急騰→収束） -->
+        <path class="s-curve-l" d="M80,220 C120,215 160,208 200,198 C240,186 280,170 310,155 C330,90 340,72 360,80 C390,95 420,140 460,185 C500,215 550,228 590,232"/>
+        <text class="s-note-r" x="300" y="80" text-anchor="middle">急騰</text>
+        <!-- スプレッド帯（発表直後） -->
+        <rect fill="#ffebe9" opacity=".5" x="308" y="72" width="60" height="178"/>
+        <text class="s-label-sm" x="340" y="270" text-anchor="middle">スプレッド拡大ゾーン</text>
+        <!-- 前半エリアラベル -->
+        <text class="s-note" x="180" y="196">前：IVが上昇</text>
+        <!-- 後半収束ラベル -->
+        <text class="s-note-g" x="480" y="196">後：収束（ボルクラッシュ）</text>
+        <!-- ガイドライン（通常時） -->
+        <line class="s-guide" x1="60" y1="230" x2="600" y2="230"/>
+        <text class="s-label-sm" x="64" y="242">通常時のボラ水準</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 経済指標発表前から徐々にボラティリティ（赤線）が上昇し、発表直後に急騰した後、不確実性の解消とともに急速に収束（ボルクラッシュ）する概念図。発表直後の赤いゾーンではスプレッドも拡大し、思った価格での約定が難しくなります。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>持ち越しリスクとの向き合い方</h3>
+    <p>「指標発表をまたいでポジションを持ち続けること（持ち越し）」には、<strong>予想外のサプライズで大きなギャップが生じるリスク</strong>があります。一般的な対応として以下のアプローチが知られています。</p>
+    <ul>
+      <li><strong>発表前にポジションを縮小（または一時決済）する</strong>：不確実性のある時間帯にリスクを減らし、発表後の方向感が明確になってから再エントリーする。</li>
+      <li><strong>ポジションサイズを小さくする</strong>：持ち越す場合でも、平常時より小さいサイズにとどめ、サプライズが来ても資産全体へのダメージを限定する。</li>
+      <li><strong>逆指値（ストップロス）を必ず置く</strong>：急変動時のスリッページはありますが、持ち越す場合は損切りラインを必ず設定しておく（<a href="guide-loss-cut.html">損切りの技術</a>を参照）。</li>
+    </ul>
+    <div class="warning-box">
+      「どう動くか予想してポジションを取る」という"指標トレード"は、プロのトレーダーでも難しい領域です。予想が当たっても「サプライズ」がない（予想通りの数字で相場が動かない）場合もあり、方向が合っていても思ったように利益が出ないことがあります。初心者のうちは「大きな指標の発表をまたいでポジションを持ちすぎない」という習慣から始めることをおすすめします。
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトの経済カレンダーでの活かし方</h2>
+    <p>MarketWatch AI の<a href="../calendar.html"><strong>経済カレンダー</strong></a>では、今後の主要指標の発表日程・市場予想を一覧で確認できます。以下のように活用してみてください。</p>
+    <ul>
+      <li><strong>週の初めに確認する</strong>：NFP・CPI・FOMCのある週は、発表前後に予期せぬ大きな値動きが起きやすいと頭に入れておく。</li>
+      <li><strong>「高インパクト」イベントに注目する</strong>：カレンダーには重要度が示されています。特にNFP・CPI・FOMCは最重要として把握しておく。</li>
+      <li><strong>発表時刻を日本時間で確認する</strong>：夏時間（3月〜11月）と冬時間（11月〜3月）でずれが発生します。NFP・CPIは東部時間8:30発表＝夏なら日本21:30、冬なら22:30。FOMCは東部時間14:00発表＝夏なら日本27:00（翌3:00）、冬なら28:00（翌4:00）。</li>
+    </ul>
+    <p>こうして日程を把握しておくだけで、「なぜ今相場がこんなに荒れているのか」が分かり、焦らずに自分の判断ができるようになります。情報収集の自動化については、<a href="../index.html">トップページ</a>で最新の相場状況も確認できます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📅 経済カレンダーで次の指標発表を確認する</div>
+      <div class="cta-box-desc">NFP・CPI・FOMCの日程は、毎回マーケットに大きな影響を与えます。当サイトのカレンダーで発表予定と市場予想を事前に把握しておきましょう。</div>
+      <a class="cta-btn" href="../calendar.html">経済カレンダーを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>経済指標について学んできた内容を整理します。</p>
+    <ul>
+      <li><strong>NFP（雇用統計）</strong>：毎月第1金曜日、米BLS発表。雇用者数・失業率・平均時給の3セット。雇用の強さがインフレ・金利へ直結する。</li>
+      <li><strong>CPI</strong>：毎月第2〜3週、米BLS発表。消費者物価の変動。特にコアCPIがFedの政策判断に影響。</li>
+      <li><strong>FOMC</strong>：年8回、政策金利を決定。声明文とパウエル議長発言・ドット・プロットが市場を動かす。</li>
+      <li><strong>連動チェーン</strong>：経済指標→金利見通しの変化→為替・株・債券が同時に動く。金利はすべての資産の割引率。</li>
+      <li><strong>核心は「予想との差」</strong>：実数の善し悪しではなく、コンセンサス予想との乖離（サプライズ）が値動きの大きさと方向を決める。</li>
+      <li><strong>発表前後のリスク</strong>：ボラティリティ急増・スプレッド拡大・スリッページ。持ち越しは小ポジション＋逆指値で備える。</li>
+    </ul>
+    <p>経済指標を「なんとなく怖いもの」から「仕組みが分かるもの」に変えるだけで、相場への向き合い方が変わります。まずは<a href="../calendar.html">経済カレンダー</a>で今週の予定を確認することから始めてみてください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="../guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../calendar.html">
+        <div class="related-card-title">📅 経済カレンダー</div>
+        <div class="related-card-desc">NFP・CPI・FOMCなど主要指標の発表日程と市場予想を一覧で確認。指標前後の相場を把握するための必須ツール。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">指標発表で急変動した際に「持ち続けてしまう」心理（損失回避・プロスペクト理論）とその対処法を図解で解説。</div>
+      </a>
+      <a class="related-card" href="guide-bonds-interest-rates.html">
+        <div class="related-card-title">📊 金利と債券の関係</div>
+        <div class="related-card-desc">「金利が上がると債券価格が下がる」仕組みをシーソーの図解で解説。経済指標と連動する金利の動きをより深く理解できる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は経済指標の仕組みと市場への影響を情報提供として解説したものであり、特定の銘柄・通貨・資産の売買推奨や投資助言ではありません。記載の内容は一般的な解説であり、特定の投資手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="../about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="../site-search.js" defer></script>
+</body>
+</html>

@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-07-07 | 💰 基礎知識 #18 — 経済指標の読み方入門（economic-indicators-basics）下書き生成
+
+- **基準日（JST）**: 2026-07-07（UTC 20:30 = JST 2026-07-08 05:30）
+- **選択topic**: `economic-indicators-basics`（キュー#18 / 投資の基礎知識シリーズ）
+- **生成ファイル**: `drafts/draft-economic-indicators-basics.html`
+- **記事タイトル（仮）**: 経済指標の読み方入門——雇用統計・CPI・FOMCは何を見ている？
+- **二層構造**:
+  - 前半（初心者）: 3大指標（NFP・CPI・FOMC）の仕組みと「金利→為替・株・債券」連動チェーンを図解
+  - 後半（中上級）: 「動かすのは予想との差（サプライズ）」という核心 + 発表前後のボラティリティ・スプレッド拡大・持ち越しリスク
+- **参照出典**:
+  - 米BLS 雇用統計: https://www.bls.gov/schedule/news_release/empsit.htm
+  - 米BLS CPI: https://www.bls.gov/schedule/news_release/cpi.htm
+  - 連邦準備制度 FOMCカレンダー: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+  - NY連邦準備銀行「Pre-FOMC Announcement Drift」: https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr512.pdf
+  - EBC Financial Group「予想との差」解説: https://www.ebc.com/forex/why-expectations-not-mere-facts-trigger-market-reactions
+- **SVG概念図**: 3点（連動チェーン / サプライズの仕組み / 発表前後ボラティリティ）— ライト/ダーク実機確認要
+- **コンプラ自己チェック**:
+  - [x] 個別銘柄・通貨ペアの売買推奨なし（一般論・教育コンテンツのみ）
+  - [x] 断定語（絶対/必ず/100%/保証/儲かる/一択）なし
+  - [x] kinsho-v1 免責：冒頭バナー・本文末・footer の3箇所に記載
+  - [x] 出典：BLS・FRB・NY連邦準備銀行等の公的機関・学術文献を参照
+  - [x] noindex,nofollow メタタグ：head に設置済み（下書き扱い）
+- **人間の残作業**:
+  - [ ] SVG図3点のライト/ダーク実機確認（スマホ表示含む）
+  - [ ] タイトル・description のSEO微調整（公開前）
+  - [ ] 関連記事リンク先の「guide-loss-cut.html」「guide-bonds-interest-rates.html」のURLを本番パス（../なし）に修正（publish_article.py実行時に自動）
+  - [ ] 公開は毎朝 08:40 の autodraft-publish ルーティンが Opus ゲート付きで自動実行
+
+---
+
 ## 2026-07-07 | 🧪 signal-lab #032 — 自動公開完了 ✅
 
 - **基準日（JST）**: 2026-07-07
