@@ -1,4 +1,31 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-06 夜）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-07 昼）
+
+## 🧬 7/7 進化ループ構築（オーナー依頼「投資スペシャリストとして日々自律進化するシステム」）
+
+- **進化ループ6段**＝①INTAKE(idea-scout-weekly) ②QUEUE(事前登録) ③VALIDATE(既存エンジン) ④CONSOLIDATE(DOCTRINE)
+  ⑤APPLY(昇格メール/朝カード/discipline/相談) ⑥REFLECT(mw evolve/月次監査)。**単一ソース＝`research/DOCTRINE.md` 冒頭**。
+- **新設（ローカル専用・SYNC外）**: `research/DOCTRINE.md`（検証済み知識台帳・エビデンス2軸格付け・全数値出典付き）／
+  `research/hypothesis_queue.md`（事前登録キュー Q1〜Q10・登録簿SHA256で改竄検出）／`_doctrine_check.py`
+  （番人=アンカー21件突合+登録簿+サイズ予算+§1構造検査。**固定オラクル扱い**）／`mw evolve`（決定論ダイジェスト・トークン0）。
+- **新設（クラウド）**: routine `idea-scout-weekly`（`trig_01DtET4sXeLYkRbyX7jKzpYb`・毎週日曜14:00 JST=cron `0 5 * * 0`）＝
+  WebSearchで検証可能な新手法を最大3件→`drafts/idea-inbox.md`へ**追記のみ**（SYNC禁忌登録済・automation-health監視行追加済）。
+  重複回避=`drafts/idea-tested-slugs.txt`（SYNC入り・手法名のみ）。在庫ゲート=未消化10件でスキップ。
+- **品質保証**: 棚卸し5エージェント→DOCTRINE起草→敵対的検証5+設計クリティーク3（自動化事故/トークン/科学的厳密性）→
+  指摘20件を全て反映（数値転記ミス0件・出典タグずれと文脈落ちを修正）。SYNC_FORBIDDENに「_プレフィックス=ローカル専用」規約を追加（REDテスト済）。
+- **運用**: セッション冒頭は `mw evolve` だけ（DOCTRINE全文Readしない＝読み方プロトコルがDOCTRINE冒頭に）。
+  検証完了→DOCTRINE更新→`_doctrine_check.py`緑が儀式。公開翻訳規則（✅/合格を記事に書かない）はDOCTRINE冒頭。
+- **⚠️訂正**: mw.py は **SYNC対象**（GitHubに存在。従来メモの「未追跡」は誤り）。cmd_evolve にクラウド実行ガード実装済み。
+- **未実装バックログ（次回以降・優先度順）**: (a) publish_article.py に check_guide_draft のハードNG検査を共通化（手動公開レーンの
+  コンプラ穴＝rigor監査のcritical） (b) アンカーの name-key参照（rows.4→rows[hyp=TT3]） (c) 鮮度検査のcontent-hash化
+  (d) §1b新規エントリの3点アンカー必須規則 (e) idea-inbox削除行のdiff検査 (f) CLAUDE.md 32KB超のトリム。
+
+## ✅ 7/7朝の無人運転確認（旧宿題⓪）
+
+- **autodraft**: ⑭⑮⑯を正しくスキップし**⑰インフレ（draft-inflation-real-return.html）を下書き✅**＝スラッグ重複ゲート実戦初勝利。
+  ただし着地が09:11 JST（定時05:30から大幅遅延=cron混雑か）→このため**08:40のautopublishは「対象なし」の正常空振り**
+  （last_fired_at 23:40:45Z=定時実行は確認済）。**⑰の公開は明朝08:40**＝明日確認。
+- **signal-lab #032**: **日付ゲート初運転を通過し7/7付けで自動公開✅**（datePublished/表記とも正しい）。
+  ⚠️ただし公開表記に「（下書き中）」残骸→**ライブ修正済（commit afb35376）＋`signal_lab_verify.py` date_check に残骸検査を追加**（sync済）。
 
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
 2026-06-17 以前＋7/2〜7/3の詳細履歴は **SESSION_ARCHIVE.md**（保管庫・後から辿る検索用）へ退避した。
@@ -54,6 +81,9 @@
 | **相関ポジ合算リスク2%・実スリッページ** 🆕7/5 | 同上 R6/SLP（フォーム任意3欄=口座残高/リスク額/予定価格の入力分から自動判定） | 同テーマ×同方向の同時保有を横断検出し合算%で2%判定（金銀・FXも対象＝指数限定R3の一般化）。前向き検証の群割当は登録時5ルール固定＝R6は参考枠 |
 | **公開日のUTC日付ミス防止** 🆕7/6 | `signal_lab_verify.py` の `date_check()`（再監査は `SIGNAL_LAB_SKIP_DATE_CHECK=1`） | datePublished/公開表記≠JST今日なら**赤=公開ブロック**（#031が7/5付けで公開された事故の再発防止） |
 | **似スラッグの重複記事防止** 🆕7/6 | `check_guide_draft.py` 検査7 スラッグ重複検査（トークン集合の同一/包含） | ⑫⑬型の「語順違い/部分一致スラッグの同一主題」自動公開を**RED=人間エスカレ**（82記事総当たりで誤検知ゼロ） |
+| **研究台帳の数値転記ミス・改竄・肥大化防止** 🆕7/7 | `_doctrine_check.py`（`mw evolve`・固定オラクル扱い） | DOCTRINEのアンカー21件を出典JSON/mdと突合＋事前登録簿SHA256＋サイズ予算＋§1構造検査で**error停止** |
+| **非公開研究ファイルの公開リポ流出防止** 🆕7/7 | `check_site_consistency.py`＝SYNC_FORBIDDEN追加＋**`_`プレフィックス=ローカル専用規約** | DOCTRINE/queue/`_jp_*`等が SYNC_FILES に混入したら**error停止**（REDテスト7ケース済） |
+| **公開記事への下書き残骸混入防止** 🆕7/7 | `signal_lab_verify.py` date_check の残骸検査 | 「下書き中」が本文に残っていたら**赤=公開ブロック**（#032実例の再発防止） |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
@@ -65,7 +95,7 @@
 - **SYNC禁忌**（ローカルから絶対 push しない＝routine/cron/generate が GitHub 側で生成）。**正は CLAUDE.md の SYNC禁忌リスト**。代表例：
   6コアHTML（index/calendar/charts/vix/market-health/hot-assets）／`signals-log.json`／`technical-alerts-history*.json`／`track-record.html`／political系／youtube系／`fundamental-context.json`／`weekly-levels.json`／`weekly-zone-plan.md`／`sitemap.xml`／`weekly-strategy-context.json`／`indicator-result.json`／`signal-lab-tracker.json`／`signals-log-backtest.json`／`article-ideas.md`／`daily-preview.md`／`political-digest.md`／`compliance-scan.md`／`site-qa-report.md`／`panic-scan.md`／`drafts/draft-*`・`drafts/news/*`・`drafts/sns/*`
   → `mw check`（`check_site_consistency.py`）が SYNC_FILES への誤混入を、sync の staleガードが「古いローカルでの上書き」を、それぞれ自動で止める。
-- **SYNC対象（OK）**：`*.py`（※`sync_to_github.py`・`mw.py` 等のローカル専用ツールは GitHub 未追跡）／`.github/workflows/*.yml`／個別 `guide-*.html`／`guides.html`／`robots.txt`／`my-trades.json`／`memory/*.md`／各 docs。
+- **SYNC対象（OK）**：`*.py`（※`sync_to_github.py` はローカル専用＝GitHub側は616Bスタブ。**`mw.py` はSYNC対象**＝7/7訂正。`_`プレフィックスのファイルは全てローカル専用＝SYNC禁止をコードで強制済）／`.github/workflows/*.yml`／個別 `guide-*.html`／`guides.html`／`robots.txt`／`my-trades.json`／`memory/*.md`／各 docs。
 - 記事追加は **`python mw.py publish ...` → sync → workflow → ライブ確認**。公開前に compliance-reviewer(Opus)監査・教育トーン・特定銘柄の買い推奨は書かない・kinsho-v1 免責・10ボタンナビ。手動時も `mw check` で push 前点検。
 - ネット不調時は無限リトライせず、ブラウザで手動 trigger を依頼（最大3〜5回）。
 
@@ -73,8 +103,10 @@
 
 ## 📌 アクティブな宿題
 
-### 🔜 次セッションで最初に確認（在flight・2026-07-07向け）
-- **⓪7/7(火)朝の無人運転を確認**：(1)05:30 autodraft=**⑭⑮⑯を自動スキップして⑰インフレ(inflation-real-return)を下書きするか**（スキップ実運転の初確認。⑭ETF等を下書きしたら重複ゲートが08:40で止めるはず=スラッグ重複検査の初実戦） (2)06:10 signal-lab #032=**日付ゲート付き初運転**（公開日が7/7付けになるか。REDでエスカレなら日付ミス再発の証拠=REVIEW.md確認） (3)08:40 autopublish正常公開。
+### 🔜 次セッションで最初に確認（在flight・2026-07-08向け）
+- **⓪セッション冒頭の新ルーチン＝`python mw.py evolve`**（DOCTRINE突合+キュー+トラッカー鮮度・トークン0）。
+- **⓪'7/8(水)朝**：(1)08:40 autopublish が**⑰インフレ(inflation-real-return)を公開するか**（7/7は下書き遅延09:11着地のため空振り=正常） (2)autodraft 05:30の遅延が再発するか（7/7は3.5h遅延） (3)⑱以降のキュー消化継続。
+- **⓪''idea-scout-weekly**：初回手動E2Eは7/7実施済み（結果はこのセッション末尾参照）。**初の定時運転=7/12(日)14:00 JST**→翌セッションで drafts/idea-inbox.md を確認しキュー転記（転記したslugは drafts/idea-tested-slugs.txt へ追記+sync）。
 - **①巨匠シリーズ続行（オーナー合意済み=カタログ順に検証→記事化）**：次候補=ダーバス箱/ワインスタイン ステージ2（ブレイク系第2弾・TT3との整合が見どころ）/酒田五法/グランビル/ズールー原則(要財務join)/デュアルモメンタム。カタログ=`research/world_methods_catalog.md`（結果追記済）。スクリプトは`_jp_turtle_screen.py`が雛形。
 - **②TT3の前向き検証登録（相談→実装）**：唯一の合格「20日ブレイク×MA50>200」を今日以降の新データで機械監視する仕組み（JPトラッカー流用 or 月次スクリプト）。**合格したが採用しない・前向き再現が本採用条件**の原則どおり。
 - **③防御スクリーン列の追加（相談）**：低ボラ×52週高値近接（暴落確率1-3% vs 18-19%）を個人ダッシュボードの🛡グレアム列の隣に「防御列」として追加する案。リターン予測でなく保有銘柄の暴落耐性の可視化。
