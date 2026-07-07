@@ -62,6 +62,9 @@ ROUTINE_FILE_CHECKS = [
     #    7/3・7/4 に連続発生（REVIEW.md は更新されるため上の監視では見えない盲点）。毎朝 06:10 の
     #    routine が毎回 commit する前提＝26h で「1回漏れ」を当日の本チェック(09:30)で検知できる。
     ("シグナル前向きトラッカー",    "signal-lab-tracker.json",  26, "warn"),
+    # 🆕 2026-07-07: 進化ループ①INTAKE（idea-scout-weekly・毎週日曜14:00）。週次＝閾値10日で「1回漏れ」検知。
+    #    autodraft-articleのpushレース沈黙が鮮度監視をすり抜けた前例（7/4-7/5）への横展開＝専用行で監視。
+    ("週次アイデアスカウト",        "drafts/idea-inbox.md",     240, "info"),
 ]
 
 SEV = {"critical": "🔴", "warn": "🟡", "info": "⚪"}
