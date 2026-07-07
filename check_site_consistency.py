@@ -48,6 +48,9 @@ SYNC_FORBIDDEN = {
     "jp-rankings.json",  # 値上がり/値下がりランキング（jp-rankings.yml が GitHub 側で毎朝生成・コミット。ローカルpush禁止）
     "jp-margin.json",  # 信用残ウォッチ（jp-rankings.yml が build_jp_margin.py で生成・コミット。ローカルpush禁止）
     "guide-new-books.html",  # 投資本新刊ウォッチ（routine book-watch-weekly が毎週土曜GitHub側で更新。ローカルpush禁止）
+    "idea-inbox.md",  # 研究アイデア受信箱 drafts/idea-inbox.md（routine idea-scout-weekly が毎週日曜GitHub側で追記。照合はbasename）
+    # 🆕 2026-07-07 進化ループのローカル専用ファイル（非公開研究＝公開リポへ流出させない）
+    "DOCTRINE.md", "hypothesis_queue.md", "_doctrine_check.py", "_hypothesis_registry.json",
 }
 
 errors = []
@@ -136,8 +139,11 @@ def main():
     if sync_known:
         for f in sorted(sync_files):
             base = os.path.basename(f)
-            if base in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
+            if base in SYNC_FORBIDDEN or f in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
                 errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
+            elif base.startswith("_"):
+                # 🆕 2026-07-07: 「_プレフィックス＝ローカル専用（非公開研究/個人データ）」規約をコードで強制
+                errors.append(f"🚨 ローカル専用（_プレフィックス）ファイルが SYNC_FILES に混入: {f}（非公開研究の流出防止）")
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""
