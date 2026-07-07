@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-07-08 | AIシグナル研究日誌 #033 — blocked=True×ショート 前向き崩落（ゲート実行中）
+
+- **研究番号**: #033
+- **基準日**: 2026-07-08
+- **仮説**: blocked=True×ショート 前向き崩落（IS 58.5%→FWD 18.2%）とロング方向非対称逆転
+- **優先度**: ② 前向きトラッカー大変動
+- **生成ファイル**:
+  - `drafts/draft-signal-lab-033.html`（下書き・noindex,nofollow）
+  - `drafts/labnotes/lab-033-analysis.md`
+  - `drafts/labnotes/lab-033-claims.json`（6 claims）
+- **主要数値**:
+  - blocked=T×Short全体: k=35/N=75 (46.7%) CI[35.8%,57.8%]
+  - blocked=T×Long全体: k=51/N=103 (49.5%) CI[40.1%,59.0%]
+  - IS(~2026-06-24)×Short: 31/53=58.5% E(R)=+0.365
+  - FWD(≥2026-06-25)×Short: 4/22=18.2% E(R)=-0.576 RCI[-0.952,-0.200]
+  - FWD×Long: 26/44=59.1% E(R)=+0.379 RCI[+0.040,+0.718]
+  - 主因: metal×blocked=T×S=9/10=90%(IS8件・FWD2件) / macd_dead FWD 3/17=17.6%
+- **ゲート状態**: 実行待ち（signal_lab_verify.py → Opus compliance → 公開）
+- **トラッカー**: [t]新設（blocked=True×Long昇格候補）
+
+---
+
 ## 2026-07-07 | 💰 基礎知識 #18 — 経済指標の読み方入門（economic-indicators-basics）下書き生成
 
 - **基準日（JST）**: 2026-07-07（UTC 20:30 = JST 2026-07-08 05:30）

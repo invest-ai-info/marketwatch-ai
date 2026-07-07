@@ -1,0 +1,41 @@
+{
+  "article_id": "033",
+  "claims": [
+    {
+      "label": "blocked=True×Short 全体（claims対象：全期間）",
+      "filter": {"blocked": true, "direction": "short"},
+      "k": 35,
+      "n": 75
+    },
+    {
+      "label": "blocked=True×Long 全体（claims対象：全期間）",
+      "filter": {"blocked": true, "direction": "long"},
+      "k": 51,
+      "n": 103
+    },
+    {
+      "label": "blocked=True×Short×macd_dead",
+      "filter": {"blocked": true, "direction": "short", "signal": "macd_dead"},
+      "k": 17,
+      "n": 48
+    },
+    {
+      "label": "blocked=True×Short×ma_dead",
+      "filter": {"blocked": true, "direction": "short", "signal": "ma_dead"},
+      "k": 14,
+      "n": 20
+    },
+    {
+      "label": "blocked=True×Short×group=metal",
+      "filter": {"blocked": true, "direction": "short", "group": "metal"},
+      "k": 9,
+      "n": 10
+    },
+    {
+      "label": "blocked=True×Short×group=index",
+      "filter": {"blocked": true, "direction": "short", "group": "index"},
+      "k": 4,
+      "n": 14
+    }
+  ]
+}
