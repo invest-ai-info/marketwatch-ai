@@ -42,33 +42,24 @@
 - **signal-lab #032**: **日付ゲート初運転を通過し7/7付けで自動公開✅**（datePublished/表記とも正しい）。
   ⚠️ただし公開表記に「（下書き中）」残骸→**ライブ修正済（commit afb35376）＋`signal_lab_verify.py` date_check に残骸検査を追加**（sync済）。
 
+## 🌙 7/7夜 進化ループ初の自動検証サイクル（Q1 ダーバス・ボックス）
+
+- **③VALIDATE→④CONSOLIDATE を初めて実走**（キューの次候補Q1を検証・`_jp_darvas_screen.py`ローカル/SYNC外）。
+  結果=**リターン棄却・防御は再現・TT3の部分集合**の三点。4変種（N20/X10%・N30/X15% × 出来高1.5x有無）とも
+  **train diff60+（q<0.10）→holdout diff60負**（N20/X10%: -1.22%）で方向反転＝BH-FDR不合格。だがblowup
+  4.5-5.8% vs対照17-18%で両期間防御を再現。**TT3と96.5%重複＝ほぼ部分集合**＝箱＋高値近接フィルタがTT3の
+  リターン(holdout+1.39%)を防御に変換（§0-1「守りだけ再現」の再確認）。DOCTRINE §3へ結晶化・採用せず。
+- キューQ1を❌棄却に更新（状態行のみ＝登録簿は本文凍結を維持）・idea-tested-slugs更新・カタログに結果追記。
+- **番人の衛生改善**＝アンカーJSONを `research/_doctrine_anchors.json` に外出し（DOCTRINE 24.4→21.4KB・
+  機械データと人間台帳を分離）。SESSION_HANDOFF 33.6→21KBに減量（7/6分をARCHIVEへ退避）。25アンカー突合・warning0。
+- **次候補=Q2 ワインスタイン ステージ2**（30週MA上抜け×勾配>0）＝順張り第3弾・TT3族か検証。
+
 新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
-2026-06-17 以前＋7/2〜7/3の詳細履歴は **SESSION_ARCHIVE.md**（保管庫・後から辿る検索用）へ退避した。
+セッション冒頭は `python mw.py evolve`。2026-06-17 以前＋7/2〜7/3＋7/6の詳細履歴は **SESSION_ARCHIVE.md** へ退避した。
 
 ---
 
-## ✅ 7/6の作業まとめ（詳細は auto-memory 各ファイル）
-
-- **研究日誌#031 公開日誤記事故→修正+日付ゲート新設**（[[project_signal_edge_research]]）：routine（UTC環境・06:1x JST実行時はまだUTC前日）が#031を7/5付けで公開→「今日の日誌が無い」ように見えた。日付4箇所（記事datePublished/公開表記・guides.htmlカード・generate_market_news履歴行）をAPI修正+ローカルreconcile+ライブ確認済。**恒久対策＝`signal_lab_verify.py`に`date_check()`**（公開日≠JST今日なら赤=公開ブロック・再監査は`SIGNAL_LAB_SKIP_DATE_CHECK=1`・単体テスト済）。**明朝06:10の#032が日付ゲート付きの初運転**。
-- **⚠️autopublish重複記事問題＝発見・統合・再発防止**（[[project_content_psychology_strategy]]）：7/4キュー補充⑫⑬が6/24既存記事と主題重複のまま自動公開されていた（スラッグ語順違い/部分一致でキューの完全一致スキップをすり抜け）。**⑬単複利・⑫金利債券の2ペアとも統合済**＝旧6/24版（-interest / interest-rates-bonds）をnoindex+canonical→新版+誘導ボックス・guidesカード撤去・内部リンク付替え（ETF/credit-spread/yield-curve）・NOINDEX_SLUGS登録（sitemap除外）・全ライブ確認済。**⑭⑮⑯（ETF/注文方法/PER・PBR）は既存とスラッグ完全一致＝routineが自動スキップするので安全**。㉒税金はキュー行に差別化注記（口座・通算に限定+guide-investment-taxと相互リンク）。**再発防止＝`check_guide_draft.py`に検査7:スラッグ重複検査**（トークン集合の同一/包含でRED・82記事ペア総当たりで誤検知ゼロ確認済）＋リンターにnoindexページのカード必須免除。**明朝05:30 autodraftが⑭〜⑯を正しくスキップして⑰インフレを下書きするか＝スキップ実運転の初確認**。
-- **🌍 世界手法カタログ+巨匠#5〜#7+QA+複合＝計17仮説を1日で検証**（[[project_masters_queue]]・全て事前登録→train/holdout→日付クラスタboot・レイク506万行）：カタログ=`research/world_methods_catalog.md`（35手法×検証可能性タグ・結果も追記済）。**①#5 BNF乖離逆張り=❌**（方向は両期間一貫+だがp≈0.09・blowup23-28%・エッジ本体は板裁量）**②#6 一目均衡表=❌**（三役好転=対照比+0.01/+0.23%＝ほぼゼロ・n4.4万）**③#7 タートルズ=TT3のみ✅シリーズ初の順張り両期間合格**（素の20/55日ブレイクはtrain有意マイナス=飛びつき負け筋再確認。**20日ブレイク×MA50>200 = train+0.67%(p.009)/holdout+1.39%(p.000)**・blowupも低下）**④QA=❌**（52週高値=惜敗・**低ボラ=暴落確率1.2-2.8% vs 対照18-19%＝防御だけ劇的に再現**・モメンタム12-1=非有意）**⑤複合C1/C2=❌**（オーナー発案「組み合わせ」→C1押し目vsナイフ=**期間で反転**・C1のblowup32-36%はBNF素より悪化=「MA200上なのに-20%乖離」は個別災害選別だった／C2低ボラ×52週高値=holdoutで負け・防御のみ再現）。**総括＝リターン複合は全て地合い依存・安定再現は「守り」だけ**。スクリプト=`_jp_bnf/_jp_ichimoku/_jp_turtle/_jp_anomaly/_jp_combo_screen.py`+各summary.json（全ローカル/SYNC外）。
-- **📰 巨匠記事#4公開済**（`guide-masters-004-world.html`・12仮説を1本化）：ゲート全通過＝決定論数値照合`_verify_masters004.py`197項目一致→check_guide_draft GREEN→品質Opus公開可（軽微1件適用→再照合緑）→コンプラOpus🟢白（人物事実WebSearch裏取り済）→publish→ライブ200/カード/index履歴/sitemap確認済。
-- **✅裏方2件が正常化**：automation-health=7/6から**success**（閾値緩和後初回・7/1〜7/5の連続failureが終息）／health-check=7/6 12:00 schedule**success**（6/25からの慢性失敗が終息）。openなIssueゼロ。
-- **朝チェーン確認（7/6）**：autodraft 05:39コミット着地（PUSH-MAIN修正後初定時○）／jp_daily 06:17カード履歴1行追記○／signal-lab 06:29 draft031+claims○／番人の取引再開アラートなし（休眠継続=正常）。
-
-- **7/4完了分＝SESSION_ARCHIVE.mdへ退避**（計算ツール5本公開🧮⚖️🧾🎯🏖️+常設導線／トップページ整理A+B+C+D=中段1,070→517px／サイトロゴ導入 案C+`apply_logo.py`全130ファイル／mw deploy誤検知バグ修正。要点はauto-memory側に反映済み。X用アイコン`mw-logo-512.png`は手動アップ待ち・OGP差し替え未実施）
-- **自動化の精度点検（7/3未明）**：①no_plan 282件＝warn系のみ発火の**設計仕様と判明（バグでない）** ②**signal-lab-daily routineを更新＝tierフィルタ解禁**（selection.tier がclaims/研究日誌で使用可に）・手本015化・nav10・🏁N30注記 ③**indicator-result routineを厳格化**＝アグリゲーター(tradingeconomics/investing/forexfactory/fxstreet)と個人ブログは裏取りに数えない・満たなければverified=false ④寄り付きロガー欠測検知を `_jp_health_check.py` に追加（前営業日照合・祝日除外・アラートファイル） ⑤generate_market_news はstaleガード作動→reconcile PUTで反映（commit 199bfa80・.sync-cache baseline整合済）。
-
-- **🆕 記事自動化2本を新設（7/5・オーナー依頼）**：①**基礎知識シリーズの完全無人公開**＝routine `autodraft-publish`（`trig_01GHZ2KG9H74H27ku2CWS8Up`・毎日08:40 JST=cron `40 23 * * *` UTC）が最古の未公開下書きを仕上げ→**決定論ゲート `check_guide_draft.py`**（新設・SYNC入り・固定ゲート＝noindex残り/kinsho-v1/ナビ10/TODO/売買推奨ハードNG/SVGはみ出し重なり=オラクル関数流用。GREEN/RED単体テスト済）→Opusコンプラ+品質白（🟡軽微=Opus修正→再ゲート→独立Opus白）→publish_article→PUSH-MAIN→HTTP200。ダメならREVIEW.mdに🚩。手順書=`drafts/AUTOPUBLISH_GUIDE.md`（SYNC入り）。②**投資本新刊ウォッチ**＝routine `book-watch-weekly`（`trig_01FN4sPxjKgGR8FFL1ezyDSS`・毎週土曜11:00 JST=cron `0 2 * * 6` UTC）＝WebSearchで直近30日の新刊1〜3冊→2ソース照合→`guide-new-books.html` に中立紹介を積み上げ（最大40冊・アフィリンクなし・評価/推薦しない・初回はページ新規作成+guides.htmlカード）。手順書=`drafts/BOOKWATCH_GUIDE.md`（SYNC入り）。**guide-new-books.html はSYNC禁忌登録済**（CLAUDE.md+check_site_consistency）。キュー⑰〜㉔も同日補充（インフレ/経済指標/日経TOPIX/為替リスク/配当/税金/投資詐欺/ローソク足）＝残13本。**→同日E2E実証完了**：新刊ウォッチ=初回公開ライブ200✅／autopublish=guide-bonds-interest-rates（キュー⑫金利債券）を決定論緑→Opus白→公開ライブ200✅。**副収穫＝autodraft-articleが7/4-7/5にpushレース負けで2日無音だったのを発見→プロンプトにPUSH-MAIN規約を移植修正（RemoteTrigger update成功・7KB制限内）**。⚠️残課題=このレース型の沈黙はautomation-healthの鮮度監視をすり抜けた（REVIEW.md/draft-*がsignal-labの書込みで新鮮に見える）＝autodraft専用の鮮度チェック（draft-signal-lab-*除外）は未実装・次回検討。明朝の定時運転確認=05:30 autodraft(⑬単複利の下書き)→08:40 autopublish(公開)。
-- **🆕 番人EA「MW_Guardian」v1作成（7/5・オーナー依頼＝ローカル専用/SYNC外）**：`mt4/MW_Guardian.mq4`＋導入手順`mt4/MW_GUARDIAN_SETUP.md`。監視型（発注ブロックなし=オーナー要望で5分足の速度優先）＝約定3秒検知→R5仮SL自動装着(H1 ATR×1.5)/2%(相関合算)/重ね張り/指標接近(economic-events.json WebRequest)/損切りずらし/建値+1R通知/決済CSV記録→Alert+スマホPush。デモ/本番同一。強制クローズは意図的に未実装。**→同日夜に導入完了（デモ口座GOLD_USD H4チャート・ニコニコ☺確認・カレンダー取得OK「次=中国CPI 7/9」・スマホPushテスト着信確認済み）**。1週間デモ運転→問題なければ本番口座へ同手順で移行。旧ProCon-Max EAは置き換えで停止（検証済み「資産増えず」のため問題なし）。仕様メモ=「CPI」文字列マッチのため中国CPIも警告対象（mw disciplineと同基準・絞る場合は EventNameMatch を1行調整）。
-- **🆕 規律チェック拡張＝R6相関合算リスク+スリッページ実測（7/5・アドバイス採用）**：`_trade_discipline_check.py`（SYNC外）に **R6=同テーマ×同方向の同時保有クラスタを横断検出→リスク額合算で2%判定**（テーマ=株指数(JP株込)/貴金属(金銀)/原油/BTC/円FX/クロスFX。classify_symbolに銀追加）＋**SLP=予定価格vs実約定のスリッページ実測**（--netコスト較正用）。`import_my_trades.py` はフォーム任意3欄（**口座残高（円）/リスク額（円）/予定価格**・部分一致認識・旧回答は空欄互換）を `account_balance`/`risk_jpy`/`planned_price` として取込。手順は `MY_TRADES_SETUP.md` 1-3 に追記済＝**オーナーがフォームに質問3つ足せば次の取引から自動判定開始**。⚠️前向き検証(7/3事前登録)の遵守/逸脱タグは登録時5ルールに固定＝R6は登録外・参考（プロトコル保護）。実データ試走で**旧R3に映らなかった金の重ね張り2ポジ（GOLD_USD_28375278/280）を新検出**。単体テスト全緑。**→同日夕: 取引記録フォームの接続が完了（初接続＝今まで23件は手動転記だった）**：オーナーがフォーム作成（14項目・「取引種類」表記はコード側で両対応 commit 565212a）→CSV公開→Secret `MY_TRADES_CSV_URL` をAPI登録（PyNaCl暗号化）→E2Eテスト＝TESTレコードが新3欄付きでmy-trades.jsonに着地確認→CSV行+GitHub json両方からTEST削除済（bba2130・23件に復帰＝番人誤検知なし）。**決済の記録は「送信済み回答の編集」で追記する運用**（設定「回答の編集を許可」ON推奨）。
-- **🆕 メールノイズ根絶+セキュリティ点検（7/5夜・オーナー依頼）**：Gmail実査14日=約55通の内訳①pages build失敗=無害ノイズ（高頻度コミットでビルド追い越し・オーナーにGmailフィルタ案内済）②Health Check毎日失敗（6/25〜）＝**index「最終更新」regex乖離が慢性原因→check_site_health.py修正済（タグ許容形・ライブ検証済）**③automation-health毎日発火＝cron遅延誤検知→**閾値緩和（1H 3→5h/政治3→4h・41995e7）**。実害1件=7/2ニュースカード消失（7/3から検知されていた）→guides.htmlへ復旧済（dbdc80d）。セキュリティ=リポにトークン混入なし・SecretScanning+PushProtection有効・PAT はclassic repo+workflow 期限8/31（**次回更新時にfine-grained移行推奨**）・オーナーTODO=GitHub 2FA確認/Gemini予算アラート/Gmailフィルタ。**→同夜 PAT を fine-grained へ切替完了**（marketwatch-ai 限定・Contents/Workflows/Actions/Secrets/Issues=RW・Pages=RO・期限1年・全権限の実測テスト通過・旧classicトークンはオーナーが削除）。
-- **⚠️ 事故と再発防止（7/5夜）＝sync_to_github.py スタブ上書き**：GitHub側のsync_to_github.pyは**publish_articleクラウド用の616Bスタブ（本物ではない・意図的設計）**。Claudeがreconcile中に誤ってローカル本物（35KB・SYNC_FILES 217件+staleガード）へ上書き→**OneDriveバージョン履歴で復元済**。再発防止=check_site_consistencyに**スタブ検知ガード**（<20KB or staleガード無しで即エラー・c248148）。教訓=**sync_to_github.py/mw.py等ローカル専用ツールは絶対にリモートから取り込まない**。autopublish公開記事はローカルへreconcile+SYNC_FILES登録が必要（bonds登録済・217件）。
-- **🆕 昇格エッジ限定メール（7/5・オーナー要望）**：`generate_technical_alerts.py` に昇格ゲート新設＝**signal-lab-tracker.json の status=promoted 仮説にマッチしたシグナルだけメール送信**（現時点=index_long_live「指数×ロング」1本のみ）。他は従来どおり signals-log 記録＋クールダウン更新＝前向き検証は全量継続→**今後の研究で昇格すれば自動的に配信対象へ**（トラッカー連動・コード変更不要）。照合は固定オラクル `signal_lab_verify.match` を import（二重実装なし）。tracker読込/照合失敗は fail-open＝従来全送信（checkout欠落で沈黙しない）。キルスイッチ=環境変数 `EMAIL_PROMOTED_ONLY=0`。判定は `log_entry["promoted_gate"]` に記録。単体テスト7ケース緑。旧 #21 email_silent 例外は維持（昇格ゲートと整合）。
-
----
-
-> 2026-07-02の「研究の高速化3点（holdout/J-Quantsレイク/事前登録）」「ルール文書棚卸し」はSESSION_ARCHIVE.mdへ退避（要点はauto-memory側に反映済み）。
+> 2026-07-02の「研究の高速化3点」「ルール文書棚卸し」もSESSION_ARCHIVE.mdへ退避（要点はauto-memory側に反映済み）。
 
 ## 🇯🇵 日本株：EV最速化ロードマップ＝全6施策 完了（2026-06-26/27）
 
