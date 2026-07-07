@@ -1,0 +1,54 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "mode": {
+    "net": false,
+    "cost_mult": 1.5,
+    "itt": false
+  },
+  "candidates": [
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 66,
+      "n": 113,
+      "n_days": 25,
+      "pct": 58.4,
+      "ci_lo": 49.2,
+      "ci_hi": 67.1,
+      "avgR": 0.363,
+      "rci_lo": 0.152,
+      "rci_hi": 0.574,
+      "p": 0.0007544791529068284,
+      "profitable": true,
+      "exp_pct": 1.7,
+      "q": 0.0543,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 36,
+      "n": 146,
+      "n_days": 40,
+      "pct": 24.7,
+      "ci_lo": 18.4,
+      "ci_hi": 32.2,
+      "avgR": -0.425,
+      "rci_lo": -0.696,
+      "rci_hi": -0.154,
+      "p": 0.0021186849993299894,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0763,
+      "fdr_pass": true
+    }
+  ]
+}
