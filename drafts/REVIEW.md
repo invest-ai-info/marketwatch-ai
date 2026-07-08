@@ -2,6 +2,15 @@
 
 ---
 
+## 2026-07-08 | autopublish: ✅ 解決 — guide-inflation-real-return.html 公開済み
+
+- 下記エスカレ（check_site_consistency EXIT=1）は**インフラ起因**＝クラウド環境でsyncスタブを本物と誤認する構造欠陥。
+- 対応: check_site_consistency.py をクラウド判定対応に修正（スタブ=想定どおり・SYNC_FILES系スキップ・ローカルガードは維持）→ sync済み。
+- 記事は `autopublish-pending-2026-07-08-inflation-real-return` を main へマージし公開（全ゲート通過済みのため）。merge sha dd8f15e4。
+- 併せて routine プロンプト/AUTOPUBLISH_GUIDE.md を修正: 「1日1本」判定を本レーン限定に明確化＋スキップ時も REVIEW.md 記録必須（沈黙禁止）。
+
+---
+
 ## 2026-07-08 | autopublish: 🚩要人間レビュー — guide-inflation-real-return.html（check_site_consistency EXIT=1）
 
 - **対象**: `guide-inflation-real-return.html`（インフレと実質リターン｜現金はなぜ目減りするのか）
