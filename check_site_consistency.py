@@ -60,12 +60,23 @@ warnings = []
 # GitHub側の sync_to_github.py は publish_article のクラウド用「616バイトのスタブ」＝本物ではない。
 # リモートから取り込むと本物（全SYNC_FILESリスト+staleガード）が消える（実際に起きた→OneDrive版履歴で復旧）。
 # ここでサイズと中身を検査し、スタブ化していたら即エラーで気づけるようにする。
+# 🆕 2026-07-08: クラウド（routine/Actions のチェックアウト）ではスタブが「正」＝エラーにしない。
+#   ローカル判定＝market-news-config.json の存在 or パスに OneDrive（クラウド側にはどちらも無い）。
+#   スタブ検知時は SYNC_FILES 系チェックを全てスキップ＝「本物のリスト不在」と同じ扱い（get_sync_files）。
+#   （7/8: autopublish の公開ゲートがこのエラー88件で構造的に永久エスカレする欠陥が発覚→環境分岐に修正。
+#     ローカルでの上書き事故ガードは従来どおり error）
 _stg = os.path.join(SD, "sync_to_github.py")
+_stg_is_stub = False
 if os.path.exists(_stg):
     _stg_src = open(_stg, encoding="utf-8", errors="replace").read()
-    if os.path.getsize(_stg) < 20000 or "staleness" not in _stg_src:
+    _stg_is_stub = os.path.getsize(_stg) < 20000 or "staleness" not in _stg_src
+_IS_LOCAL = os.path.exists(os.path.join(SD, "market-news-config.json")) or "OneDrive" in SD
+if _stg_is_stub:
+    if _IS_LOCAL:
         errors.append("🚨 sync_to_github.py がスタブ/破損の疑い（<20KB or staleガード無し）"
                       "→ リモートの616Bスタブで上書きした可能性。OneDriveバージョン履歴から復元すること")
+    else:
+        print("ℹ️ クラウド環境: sync_to_github.py はスタブ＝想定どおり（SYNC_FILES系チェックはスキップ）")
 
 
 def _read(p):
@@ -79,9 +90,10 @@ def _exists(p):
 
 def get_sync_files():
     """sync_to_github.py の SYNC_FILES を正規表現で抽出（importせず安全に）。
-    sync_to_github.py はローカル専用（GitHub 未追跡）なので、リモート(routine)実行時は不在。
-    その場合は None を返し、呼び出し側で SYNC_FILES 系チェックをスキップする（偽陽性防止）。"""
-    if not _exists("sync_to_github.py"):
+    sync_to_github.py はローカル専用（GitHub側は616Bスタブ）なので、リモート(routine)実行時は
+    不在またはスタブ。その場合は None を返し、呼び出し側で SYNC_FILES 系チェックを
+    スキップする（偽陽性防止。スタブの短いリストを「本物」と誤認して87件未登録などと騒がない）。"""
+    if not _exists("sync_to_github.py") or _stg_is_stub:
         return None
     s = _read("sync_to_github.py")
     m = re.search(r"SYNC_FILES\s*=\s*\[(.*?)\n\]", s, re.S)
