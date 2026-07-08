@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた - MarketWatch AI</title>
+  <meta name="description" content="ダーバス・ボックス、ワインスタインのステージ分析、酒田五法、グランビルの法則、デュアルモメンタム——教科書の売買パターン5手法を日本株4,987銘柄・5年・約506万行（生存バイアスフリー）で検証。同日対照とブロック・ブートストラップで検定を厳格化した結果、基準を満たした手法はゼロ。さらに前回「唯一残った」タートルズ改の判定を取り下げる訂正報告も掲載。">
+  <meta name="keywords" content="ダーバスボックス,酒田五法,三空叩き込み,赤三兵,グランビルの法則,ステージ分析,ワインスタイン,デュアルモメンタム,ブロックブートストラップ,同日対照,バックテスト,日本株,データ検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-005-pattern-audit.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた">
+  <meta property="og:description" content="教科書の売買パターン5手法を日本株5年・約506万行で検証したら、基準を満たした手法はゼロ。しかも検定方法そのものを監査した結果、前回「唯一残った」タートルズ改も統計的に有意とは言えなかった——訂正報告を含む検証の記録。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-005-pattern-audit.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた",
+    "description": "教科書の売買パターン5手法を日本株5年・約506万行で検証したら、基準を満たした手法はゼロ。しかも検定方法そのものを監査した結果、前回「唯一残った」タートルズ改も統計的に有意とは言えなかった——訂正報告を含む検証の記録。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-08",
+    "dateModified": "2026-07-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-005-pattern-audit.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .bar-b{fill:#0969da}
+    .bar-g{fill:#1a7f37}
+    .bar-r{fill:#cf222e}
+    .bar-gray{fill:#8b949e}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    body.dark .bar-b{fill:#58a6ff}
+    body.dark .bar-g{fill:#3fb950}
+    body.dark .bar-r{fill:#f85149}
+    body.dark .bar-gray{fill:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #5
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🎓 巨匠の教えをデータで検証 #5<br><small style="font-size:.65em;color:#57606a;font-weight:400">ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、そして前回の「唯一の生き残り」も消えた</small></h1>
+    <div class="meta-line">
+      カテゴリ：🎓 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月8日 &nbsp;|&nbsp; 読了：約14分
+    </div>
+
+    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>検証できる形のルールに翻訳して、データで確かめる</strong>連載です。<a href="guide-graham-001.html">第1回</a>はグレアムの安全域（防御が再現）、<a href="guide-masters-002-trend.html">第2回</a>は順張りの教科書（8仮説すべて基準を満たさず）、<a href="guide-masters-003-quality.html">第3回</a>はバフェットの「質」（報われたのは安さだけ）、<a href="guide-masters-004-world.html">前回・第4回</a>は世界の有名手法12仮説（残ったのは1本だけ）を見てきました。</p>
+    <p>第5回の前半は、チャートの教科書でおなじみの<strong>売買パターン5手法</strong>——ダンサーから投資家になった<strong>ダーバスの「ボックス」</strong>、<strong>ワインスタインの「ステージ分析」</strong>、江戸時代から伝わる<strong>「酒田五法」</strong>、移動平均線売買の原点<strong>「グランビルの法則」</strong>、そして学術寄りの<strong>「デュアルモメンタム」</strong>の検証です。そして後半は、この検証の途中で見つかった<strong>「自分たちの検証の穴」</strong>の話。前回「唯一、両期間で差が残った」と紹介したタートルズ改は、検定方法そのものを監査した結果、<strong>統計的に有意とは言えない</strong>ことが分かりました。本記事はその訂正報告を含みます。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 教科書の売買パターン5手法を日本株4,987銘柄・5年・約506万行で検証——<strong>両期間で基準を満たした手法はゼロ（全滅）</strong>だった<br>
+      ② 今回から検定を2段階厳しくした（「同じ日の他銘柄」との比較＋評価期間の重なりの補正）。<strong>「暴落した日に買えば何でも戻る」型の見せかけの上乗せ</strong>が次々に消えた<br>
+      ③ グランビルの押し目買いは前半+0.6〜0.7%→後半-2.64%/-2.44%と<strong>符号が反転</strong>——「前半だけ見て採用したら後半に裏切られた」教科書例<br>
+      ④ <strong>訂正：</strong>前回#4で「唯一残った」と紹介したタートルズ改も、新しい検定に掛け直すと有意とは言えなかった（p値0.005→0.59）。本記事の④で正直に報告する<br>
+      ⑤ 繰り返し再現したのは今回も<strong>「守り」だけ</strong>（ダーバス系の暴落率4.5〜5.8% vs 対照17〜18%）。なお本記事の数字はすべて<strong>過去データの観察（コスト控除前）であり、将来の成果を保証するものではない</strong>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#masters">今回の5手法——「値動きの形」の教科書と、その作者たち</a></li>
+        <li><a href="#method">検証の土俵——共通ルールと、今回厳しくした2つの検定</a></li>
+        <li><a href="#results">結果——5手法すべてが基準を満たさなかった</a></li>
+        <li><a href="#correction">検証の検証——前回の「唯一の生き残り」について訂正します</a></li>
+        <li><a href="#lessons">学び——「形」だけの買いルールと、バックテストの3点チェック</a></li>
+        <li><a href="#limits">この検証の限界</a></li>
+        <li><a href="#site">当サイトでの活かし方</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="masters">① 今回の5手法——「値動きの形」の教科書と、その作者たち</h2>
+
+    <p>今回の5手法に共通するのは、<strong>財務や業績を見ず、「値動きの形」だけから買い場・売り場を決める</strong>ことです。まずはそれぞれがなぜ有名なのか、簡単に紹介します。</p>
+
+    <h3>ダーバス・ボックス——踊りながら200万ドル</h3>
+    <p><strong>ニコラス・ダーバス（1920-1977）</strong>はハンガリー生まれのプロダンサー。世界を巡業しながら電報と週刊誌だけで株を売買し、1950年代後半の強気相場で<strong>約200万ドル</strong>を築いたとされます。1960年の著書『How I Made $2,000,000 in the Stock Market』で紹介した手法が「ボックス理論」——株価が高値圏で狭い箱（ボックス）の中に収まって揉み合い、その<strong>上限を抜けた瞬間に買う</strong>、というものです。今回は「52週高値圏で狭い箱を作り、上抜けたら買う」を4つの変種（箱の狭さ・期間の定義違い）に翻訳して検証しました。</p>
+
+    <h3>ワインスタインのステージ分析——「ステージ2」だけを買え</h3>
+    <p><strong>スタン・ワインスタイン</strong>は米国の株式アナリストで、1988年の著書『Secrets for Profiting in Bull and Bear Markets』が今もテクニカル分析の定番教科書です。株価サイクルを底固め（ステージ1）→上昇（ステージ2）→天井圏（ステージ3）→下落（ステージ4）の4段階に分け、<strong>30週移動平均線（日足ではおよそ150日線）を上抜け、かつ線が上向きのとき＝ステージ2入りだけを買う</strong>と説きました。今回は「150日移動平均線の上抜け×線の上向き」を2変種で検証しました。</p>
+
+    <div class="info-box">
+      💡 <strong>移動平均線</strong>とは、過去N日分の終値の平均をつないだ線のこと。日々の細かい値動きをならして、大きな流れ（トレンド）を見るための道具です。この後もMA150（150日移動平均線）のように略記します。
+    </div>
+
+    <h3>酒田五法——江戸時代から伝わるローソク足の型</h3>
+    <p><strong>本間宗久（1724-1803）</strong>は出羽国・酒田（現在の山形県酒田市）の米商人で、江戸時代の米相場で莫大な富を築き「相場の神様」とも呼ばれた人物です。ローソク足や酒田五法の考案者と伝えられますが、本人が考案したことを示す確かな記録は残っておらず、後世の仮託とする説もあります。いずれにせよ「酒田五法」の名で伝わるローソク足の組み合わせパターンは、いまも日本のチャート教科書の定番です。今回はそのうち4つを検証しました——<strong>三空叩き込み</strong>（下落中に窓＝前日と値が重ならない隙間を3回連続で空けたら売られすぎとして買い）、<strong>赤三兵</strong>（陽線3本連続の切り上がりで上昇開始として買い）、<strong>三川明けの明星</strong>（大陰線→小さな足→大陽線の底打ち反転。今回は近似定義）、<strong>上放れ三空</strong>（上昇中に窓を3回空けたら過熱として売り警戒）です。</p>
+
+    <h3>グランビルの法則——移動平均線売買の原点</h3>
+    <p><strong>ジョセフ・グランビル（1923-2013）</strong>は米国の金融ライターで、出来高指標OBV（オン・バランス・ボリューム）の考案者として知られ、1963年から続けた相場ニュースレターの強気・弱気の宣言が市場を動かしたと言われるほどの影響力を持ちました。彼の名を冠した「グランビルの法則」は、<strong>株価と移動平均線（本場の米国では伝統的に200日線）の位置関係から買い4パターン・売り4パターンの計8つの売買タイミングを判断する</strong>もので、日本の証券会社の入門講座にもほぼ例外なく登場します。今回は買い4パターンをMA200基準で検証しました——<strong>G1</strong>（横ばい〜上向きの線を株価が新規に上抜け）、<strong>G2</strong>（上昇中の線への押し目タッチ）、<strong>G3</strong>（線の上で線に接近して反発＝買い増し）、<strong>G4</strong>（線から大きく下に離れたときの逆張り。今回は-20%乖離＝株価が線より20%下にあるとき）です。</p>
+
+    <h3>デュアルモメンタム——学術研究発の「二段構えの順張り」</h3>
+    <p><strong>ゲイリー・アントナッチ</strong>は米国の投資研究家で、2014年の著書『Dual Momentum Investing』（邦題『ウォール街のモメンタムウォーカー』）で知られます。<strong>相対モメンタム</strong>（他と比べて直近リターンが強いものを買う）と<strong>「絶対モメンタム」</strong>（その資産自身の過去12ヶ月リターンがプラスであることを条件にする）を組み合わせる二段構えで、原典は株価指数や債券など資産クラスの乗り換え戦略です。今回はこれを個別株に翻訳し、「<strong>12ヶ月リターンが上位20%、かつ12ヶ月リターンがプラスの銘柄を毎月初に買う</strong>」として検証しました（原典と土俵が違う点は当方の翻訳責任です）。</p>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証の土俵——共通ルールと、今回厳しくした2つの検定</h2>
+
+    <p>5手法はすべて同じ土俵・同じ判定基準で検証しています。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>データ</td><td>日本株ほぼ全銘柄（<strong>4,987銘柄</strong>・上場廃止銘柄も含む）の日足5年分（<strong>2021年7月〜2026年7月・約506万行</strong>）。上場廃止も含めるのは、生き残った銘柄だけを見ると成績が良く見えてしまう「生存バイアス」を避けるため</td></tr>
+      <tr><td>流動性フィルタ</td><td>売買代金の20日中央値が<strong>1億円/日以上</strong>の銘柄のみ（実際に売買しにくい銘柄を除外）</td></tr>
+      <tr><td>エントリー</td><td>シグナルは終値で判定し、買うのは<strong>翌営業日の寄り付き</strong>（未来の情報を使うズルを排除）</td></tr>
+      <tr><td>測定</td><td>主に<strong>60営業日後</strong>のリターン（ローソク足パターン系は短期の型なので<strong>20営業日後</strong>）を対照群と比較</td></tr>
+      <tr><td>2期間判定</td><td>前半（〜2024年末）と後半（2025年〜）に分け、<strong>両方の期間で対照群より統計的に有意に良い場合だけ「差があった」と数える</strong>。片方だけなら地合い依存</td></tr>
+      <tr><td>コスト</td><td>すべて<strong>売買コスト・税金を引く前（グロス）</strong>の数字</td></tr>
+    </table>
+
+    <div class="info-box">
+      💡 <strong>統計的に有意</strong>とは、観測された差が「偶然でもこのくらい出る」とは考えにくい、という意味です。目安に使う<strong>p値</strong>は「差がゼロでも偶然にこれ以上の差が出る確率」で、慣例では0.05未満を有意とします。本文に出てくる<strong>q値</strong>は、たくさんの仮説を同時に検定するとき偶然の当たりが混ざりやすくなる分を補正した、p値の親戚だと思ってください。
+    </div>
+
+    <p>そして今回の最大の変更点——<strong>検定そのものを2段階厳しくしました</strong>。これは後半の訂正報告（<a href="#correction">④</a>）につながる本記事の裏テーマです。</p>
+
+    <ul>
+      <li><strong>厳格化①「同日対照」</strong>——従来は「シグナルが出た銘柄」を「全期間の平均的な銘柄・平均的な日」（プール対照）と比べていました。しかしこれだと、上昇相場に多く発火する手法は中身がなくても勝って見えます。そこで「<strong>同じ日に発火した銘柄を、同じ日の他の銘柄と比べる</strong>」比較を導入しました。買うタイミングの運と、銘柄を選ぶ力を分けて測るためです</li>
+      <li><strong>厳格化②「ブロック・ブートストラップ」</strong>——60営業日リターンを毎日評価すると、隣り合う日の観測はほとんど同じ期間を測っています（60日中59日が共通）。これを独立な証拠として数えると、証拠の数を大幅に水増ししてしまう。そこで<strong>評価期間の重なりを考慮して「実質的な証拠の数」を正しく数え直す検定</strong>（日付のかたまり＝ブロック単位でデータを引き直して差のばらつきを見積もる方法）に切り替えました</li>
+    </ul>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="プール対照と同日対照の違いを示す概念図">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">同じ手法でも「何と比べるか」で結論が変わる</text>
+        <polyline points="60,150 140,146 220,140 300,132 380,118 460,98 540,78 620,60" fill="none" class="s-axis"/>
+        <circle cx="140" cy="146" r="4" class="bar-b"/>
+        <circle cx="300" cy="132" r="4" class="bar-b"/>
+        <circle cx="460" cy="98" r="4" class="bar-b"/>
+        <circle cx="500" cy="88" r="4" class="bar-b"/>
+        <circle cx="540" cy="78" r="4" class="bar-b"/>
+        <circle cx="580" cy="69" r="4" class="bar-b"/>
+        <circle cx="620" cy="60" r="4" class="bar-b"/>
+        <text x="150" y="172" class="s-label-sm">平時：発火はまばら</text>
+        <text x="480" y="130" class="s-label-sm">上げ相場：発火（●）が集中</text>
+        <line x1="60" y1="182" x2="660" y2="182" class="s-guide"/>
+        <text x="660" y="177" text-anchor="end" class="s-label-sm">時間 →</text>
+        <rect x="60" y="200" width="280" height="130" rx="10" class="s-fill-gray"/>
+        <text x="200" y="222" text-anchor="middle" class="s-label-b">A. プール対照（従来）</text>
+        <rect x="110" y="255" width="45" height="55" class="bar-b"/>
+        <rect x="185" y="285" width="45" height="25" class="bar-gray"/>
+        <text x="132" y="324" text-anchor="middle" class="s-label-sm">手法</text>
+        <text x="207" y="324" text-anchor="middle" class="s-label-sm">全期間平均</text>
+        <text x="200" y="350" text-anchor="middle" class="s-label-sm">上げ相場の追い風込みで「勝って見える」</text>
+        <rect x="370" y="200" width="280" height="130" rx="10" class="s-fill-gray"/>
+        <text x="510" y="222" text-anchor="middle" class="s-label-b">B. 同日対照（今回）</text>
+        <rect x="420" y="272" width="45" height="38" class="bar-b"/>
+        <rect x="495" y="270" width="45" height="40" class="bar-gray"/>
+        <text x="442" y="324" text-anchor="middle" class="s-label-sm">手法</text>
+        <text x="517" y="324" text-anchor="middle" class="s-label-sm">同じ日の他銘柄</text>
+        <text x="510" y="350" text-anchor="middle" class="s-label-sm">時期の運を除くと差がほぼ消える</text>
+      </svg>
+      <div class="chart-caption">図1：発火が上げ相場に偏る手法は、全期間の平均（プール対照）と比べると勝って見えるが、「同じ日の他銘柄」（同日対照）と比べると上乗せが消えることがある。※概念を示すイメージ図です（実データの縮尺ではありません）。</div>
+    </div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="隣接する評価日の60日リターン窓がほぼ同じ期間を測っていることを示す概念図">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">毎日評価すると、隣り合う観測は「ほぼ同じ60日」を測っている</text>
+        <rect x="90" y="56" width="380" height="26" class="s-fill-b"/>
+        <rect x="104" y="100" width="380" height="26" class="s-fill-b"/>
+        <rect x="118" y="144" width="380" height="26" class="s-fill-b"/>
+        <rect x="132" y="188" width="380" height="26" class="s-fill-b"/>
+        <rect x="146" y="232" width="380" height="26" class="s-fill-b"/>
+        <text x="84" y="74" text-anchor="end" class="s-label-sm">1日目の窓</text>
+        <text x="98" y="118" text-anchor="end" class="s-label-sm">2日目の窓</text>
+        <text x="112" y="162" text-anchor="end" class="s-label-sm">3日目の窓</text>
+        <text x="126" y="206" text-anchor="end" class="s-label-sm">4日目の窓</text>
+        <text x="140" y="250" text-anchor="end" class="s-label-sm">5日目の窓</text>
+        <rect x="146" y="50" width="324" height="214" class="s-fill-y" fill-opacity=".45"/>
+        <text x="560" y="130" class="s-label-sm">同じ値動きを</text>
+        <text x="560" y="150" class="s-label-sm">何度も数えると</text>
+        <text x="560" y="170" class="s-label-sm">偶然の差でも</text>
+        <text x="560" y="190" class="s-label-sm">「有意」に見えやすい</text>
+        <line x1="60" y1="272" x2="660" y2="272" class="s-axis"/>
+        <text x="660" y="266" text-anchor="end" class="s-label-sm">カレンダー（営業日）→</text>
+        <text x="330" y="296" text-anchor="middle" class="s-label-y" style="font-size:12px">色の帯＝5つの窓すべてに共通する期間。隣り合う窓は60日中59日が同じ</text>
+      </svg>
+      <div class="chart-caption">図2：60営業日リターンを毎日評価すると、隣接する観測の窓は59/60日が重なる＝ほとんど同じデータを繰り返し数えている。ブロック・ブートストラップはこの重なりを考慮して検定する。※概念を示すイメージ図です。</div>
+    </div>
+
+    <div class="warning-box">
+      繰り返しになりますが、以下の数字はすべて<strong>売買コスト控除前</strong>で、<strong>過去データの観察であり将来の成果を保証しません</strong>。また本記事は特定の手法の採用や個別銘柄の売買を推奨するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="results">③ 結果——5手法すべてが基準を満たさなかった</h2>
+
+    <p>結論から言うと、<strong>5手法とも「両期間で対照群より有意に良い」という基準を満たしませんでした</strong>。ただし、崩れ方はそれぞれ違い、その違いにこそ学びがあります。</p>
+
+    <h3>1. ダーバス・ボックス——攻めは反転、守りだけ残った</h3>
+
+    <table>
+      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
+      <tr><td>対照との差（60日後）</td><td style="color:#1a7f37">プラス（4変種とも）</td><td style="color:#cf222e"><strong>全変種マイナス（代表変種 -1.22%）</strong></td></tr>
+      <tr><td>-20%暴落率</td><td colspan="2"><strong>4.5〜5.8%</strong> vs 対照17〜18%——両期間で大幅に低い</td></tr>
+      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>方向反転＝基準を満たさず</strong>（守りのみ再現）</td></tr>
+    </table>
+
+    <p>52週高値圏の狭い箱の上抜け買いは、前半は対照比プラスだったのに、<strong>後半は4変種すべてマイナス</strong>（代表変種で-1.22%）——方向が反転しました。前半だけ見て「使える」と判断していたら、後半に裏切られていた形です。一方で興味深いのは<strong>「守り」</strong>——買った後60営業日以内に20%超下落する確率は<strong>4.5〜5.8%と、対照の17〜18%より大幅に低く、これは両期間で再現</strong>しました。52週高値圏で値動きが締まっている銘柄は、少なくとも「いきなり2割落ちる」ことは少なかった、という観察です。</p>
+
+    <h3>2. ワインスタイン ステージ2——前半の+2%が消滅</h3>
+
+    <table>
+      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
+      <tr><td>対照との差（60日後）</td><td style="color:#1a7f37"><strong>+2.05%</strong></td><td><strong>-0.05%</strong></td></tr>
+      <tr><td>-20%暴落率</td><td colspan="2">対照並み（守りの効果も確認できず）</td></tr>
+      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>後半に差が消滅＝基準を満たさず</strong></td></tr>
+    </table>
+
+    <p>150日移動平均線の上抜け×線の上向き（ステージ2入り）は、前半こそ<strong>+2.05%</strong>と目を引く差でしたが、後半は<strong>-0.05%</strong>——きれいに消えました。しかもダーバスと違って<strong>暴落率も対照並み</strong>で、守りの取り柄も確認できませんでした。「前半の数字だけ見せられたら誰でも欲しくなる。でも後半が本番だった」——2期間判定の意義を象徴する結果です。</p>
+
+    <h3>3. 酒田五法——「三空で買えば戻る」はタイミングの錯覚だった</h3>
+
+    <p>ローソク足パターンは短期の型なので、評価だけ20営業日後で行いました。</p>
+
+    <table>
+      <tr><th>パターン</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th><th>読み</th></tr>
+      <tr><td>三空叩き込み（買い）</td><td>単純比較 +1.44%</td><td>単純比較 +8.88%（ただし有意でない）<br><strong style="color:#cf222e">同日対照では -3.27%（有意にマイナス）</strong></td><td>タイミング効果の錯覚</td></tr>
+      <tr><td>赤三兵（買い）</td><td style="color:#cf222e"><strong>対照比 -0.70%（有意に逆行）</strong>・同日対照でも -0.42%</td><td>有意差なし</td><td>3日連騰後はむしろ劣る</td></tr>
+      <tr><td>三川明けの明星（近似）</td><td colspan="2">差がほぼゼロ</td><td>上乗せなし</td></tr>
+      <tr><td>上放れ三空（売り警戒）</td><td colspan="2">符号は警戒方向に一貫するが有意でない</td><td>判定保留</td></tr>
+    </table>
+
+    <p>いちばんの見どころは<strong>三空叩き込み</strong>です。単純比較では前半+1.44%・後半+8.88%と「さすが江戸時代からの知恵」に見えます。しかし後半の+8.88%は統計的に有意でなく、さらに<strong>同日対照——同じ日に買えた他の銘柄と比べる——に切り替えると、後半は-3.27%の有意なマイナス</strong>でした。つまり三空叩き込みが出るような日は市場全体が暴落しており、<strong>その日に買えば何を買っても戻りやすかった</strong>。三空が出た銘柄自体は、同じ日の他の銘柄より<strong>劣って</strong>いたのです。「型が銘柄を選んでいた」のではなく「暴落日というタイミングが戻りを作っていた」——図1で示した錯覚の実例です。</p>
+
+    <p><strong>赤三兵</strong>は逆方向の発見でした。陽線3本の切り上がりは上昇開始のサインとされますが、前半は対照比<strong>-0.70%と有意に逆行</strong>（同日対照でも-0.42%）。3日続けて上げた直後の銘柄は、むしろ同じ日の他の銘柄より劣っていました。第2回・第4回で繰り返し見た「上がったものへの飛びつき買いは逆風」という構図と整合します。</p>
+
+    <h3>4. グランビルの法則 買い4パターン——押し目買いの符号反転</h3>
+
+    <table>
+      <tr><th>パターン</th><th>前半（同日対照）</th><th>後半（同日対照）</th><th>結果</th></tr>
+      <tr><td>G1 新規上抜け</td><td>—</td><td>有意差なし</td><td style="color:#cf222e">基準を満たさず</td></tr>
+      <tr><td>G2 押し目タッチ</td><td style="color:#1a7f37"><strong>+0.6〜0.7%（有意）</strong></td><td style="color:#cf222e"><strong>-2.64%（有意にマイナス・q=0.001）</strong></td><td style="color:#cf222e">符号反転</td></tr>
+      <tr><td>G3 MA上の反発</td><td style="color:#1a7f37"><strong>+0.6〜0.7%（有意）</strong></td><td style="color:#cf222e"><strong>-2.44%（有意にマイナス・q=0.001）</strong></td><td style="color:#cf222e">符号反転</td></tr>
+      <tr><td>G4 -20%乖離の逆張り</td><td style="color:#cf222e">マイナス</td><td style="color:#cf222e">マイナス（暴落率22〜28%）</td><td style="color:#cf222e">両期間マイナス</td></tr>
+    </table>
+
+    <p>今回もっとも「教科書的な罠」を体現したのがグランビルでした。<strong>G2（上昇中のMA200への押し目タッチ）とG3（MAの上での反発）は、前半は同日対照で+0.6〜0.7%の有意なプラス</strong>——つまり同じ日の他銘柄より本当に良かった。ところが<strong>後半は-2.64%/-2.44%と有意なマイナスに符号が反転</strong>しました（多重比較を補正したq値でも0.001）。前半のデータだけ見て「押し目買いは統計的にも正しい」と採用していた人は、後半にそのまま裏切られた計算です。どちらの期間も単体では「統計的に確か」に見えるのに、符号が逆——<strong>レジーム（相場の体質）依存の教科書例</strong>と言えます。</p>
+
+    <p><strong>G4（MAから-20%下への乖離での逆張り）は両期間マイナス</strong>で、しかも買った後の暴落率が<strong>22〜28%</strong>。移動平均線から大きく離れて落ちている銘柄を拾うのは、この5年の日本株では「落ちるナイフ」を素手でつかむ行為に近い結果でした。G1（新規上抜け）は後半に有意差がなく、これも基準を満たしませんでした。</p>
+
+    <h3>5. デュアルモメンタム——リターンは増えず、リスクだけ2倍</h3>
+
+    <table>
+      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
+      <tr><td>対照との差（60日後）</td><td>有意差なし</td><td>有意差なし</td></tr>
+      <tr><td>-20%暴落率</td><td colspan="2"><strong style="color:#cf222e">28%</strong> vs 対照14%——約2倍</td></tr>
+      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>基準を満たさず（リスクだけ増えた）</strong></td></tr>
+    </table>
+
+    <p>12ヶ月リターン上位20%×12ヶ月リターンがプラス、を毎月初に買う戦略は、リターンでは両期間とも対照と有意差なし。一方で<strong>-20%暴落率は28%と対照（14%）の約2倍</strong>——上乗せがないままリスクだけ増えました。第4回のモメンタム検証（暴落率22〜27%）とも整合する、「勢いのある銘柄は買った瞬間から荒れやすい」という結果です。</p>
+
+    <div class="info-box">
+      <strong>副産物の発見</strong>——検証の過程で、月次リバランス時点の「12ヶ月リターン上位20%」に入る銘柄は、<strong>12ヶ月リターンが常にプラス</strong>であることが分かりました。つまり「絶対モメンタム」（リターンがプラスであること）という第2の条件は、<strong>個別株ユニバースでは一度も絞り込みとして働かなかった</strong>のです。原典が資産クラス（指数）の乗り換えを想定した設計であることを考えると、個別株の上位20%への翻訳では、二段構えのうち一段が最初から空回りしていた——翻訳の限界も含めての記録です。
+    </div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5手法と訂正1件の前半・後半の結果マップ">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">5手法×前半／後半の見取り図——「攻め」で両期間そろってプラスはゼロ</text>
+        <text x="45" y="54" class="s-label">手法</text>
+        <text x="352" y="54" text-anchor="middle" class="s-label">前半（〜2024年末）</text>
+        <text x="557" y="54" text-anchor="middle" class="s-label">後半（2025年〜）</text>
+        <!-- row 1 -->
+        <text x="45" y="90" class="s-label">ダーバス・ボックス</text>
+        <rect x="255" y="66" width="195" height="38" rx="6" class="s-fill-g"/>
+        <text x="352" y="90" text-anchor="middle" class="s-label-g" style="font-size:12px">対照比プラス</text>
+        <rect x="460" y="66" width="195" height="38" rx="6" class="s-fill-r"/>
+        <text x="557" y="90" text-anchor="middle" class="s-label-r" style="font-size:12px">全変種マイナス（-1.22%）</text>
+        <!-- row 2 -->
+        <text x="45" y="142" class="s-label">ワインスタイン ステージ2</text>
+        <rect x="255" y="118" width="195" height="38" rx="6" class="s-fill-g"/>
+        <text x="352" y="142" text-anchor="middle" class="s-label-g" style="font-size:12px">+2.05%</text>
+        <rect x="460" y="118" width="195" height="38" rx="6" class="s-fill-gray"/>
+        <text x="557" y="142" text-anchor="middle" class="s-label-sm" style="font-size:12px">-0.05%（差が消滅）</text>
+        <!-- row 3 -->
+        <text x="45" y="194" class="s-label">酒田五法（4パターン）</text>
+        <rect x="255" y="170" width="195" height="38" rx="6" class="s-fill-gray"/>
+        <text x="352" y="194" text-anchor="middle" class="s-label-sm" style="font-size:12px">上乗せなし（赤三兵は逆行）</text>
+        <rect x="460" y="170" width="195" height="38" rx="6" class="s-fill-r"/>
+        <text x="557" y="194" text-anchor="middle" class="s-label-r" style="font-size:12px">三空は同日対照 -3.27%</text>
+        <!-- row 4 -->
+        <text x="45" y="246" class="s-label">グランビル G2・G3</text>
+        <rect x="255" y="222" width="195" height="38" rx="6" class="s-fill-g"/>
+        <text x="352" y="246" text-anchor="middle" class="s-label-g" style="font-size:12px">+0.6〜0.7%（有意）</text>
+        <rect x="460" y="222" width="195" height="38" rx="6" class="s-fill-r"/>
+        <text x="557" y="246" text-anchor="middle" class="s-label-r" style="font-size:12px">-2.64%／-2.44%（反転）</text>
+        <!-- row 5 -->
+        <text x="45" y="298" class="s-label">デュアルモメンタム</text>
+        <rect x="255" y="274" width="195" height="38" rx="6" class="s-fill-gray"/>
+        <text x="352" y="298" text-anchor="middle" class="s-label-sm" style="font-size:12px">有意差なし</text>
+        <rect x="460" y="274" width="195" height="38" rx="6" class="s-fill-gray"/>
+        <text x="557" y="298" text-anchor="middle" class="s-label-sm" style="font-size:12px">有意差なし（暴落率は約2倍）</text>
+        <!-- row 6 -->
+        <text x="45" y="350" class="s-label">タートルズ改（④で訂正）</text>
+        <rect x="255" y="326" width="195" height="38" rx="6" class="s-fill-r"/>
+        <text x="352" y="350" text-anchor="middle" class="s-label-r" style="font-size:12px">同日対照 -0.54%</text>
+        <rect x="460" y="326" width="195" height="38" rx="6" class="s-fill-gray"/>
+        <text x="557" y="350" text-anchor="middle" class="s-label-sm" style="font-size:12px">+0.56%（有意でない）</text>
+        <text x="350" y="394" text-anchor="middle" class="s-label-sm">両期間で再現したのは「守り」だけ（ダーバス系の暴落率 4.5〜5.8% vs 対照 17〜18%）</text>
+      </svg>
+      <div class="chart-caption">図3：5手法＋訂正1件の前半／後半の結果見取り図。緑＝対照よりプラス、赤＝マイナスまたは逆行、灰＝有意な差なし。詳細な数値は本文の各表を参照。※概念を示すイメージ図です（セルの色は判定の向きを示すもので、大きさは縮尺ではありません）。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="correction">④ 検証の検証——前回の「唯一の生き残り」について訂正します</h2>
+
+    <p>ここからが本記事でいちばん大事なセクションです。<a href="guide-masters-004-world.html">前回#4</a>で私たちは、12仮説のうち<strong>タートルズ改（20日高値ブレイク×MA50＞MA200）だけが両期間で差を残した</strong>と書きました。今回、5手法の検証に先立って<strong>検定方法そのものを監査</strong>した結果——<strong>この判定は取り下げます。タートルズ改の差は、統計的に有意とは言えませんでした</strong>。前回の記事の統計処理が甘かった、ということです。言い訳をせず、何がどう甘かったかを具体的に報告します。</p>
+
+    <h3>罠①：評価期間の重なりを、独立な証拠として数えていた</h3>
+    <p>前回の検定は、60営業日リターンの観測を毎日積み上げていました。しかし図2で見たとおり、<strong>隣り合う日の観測は60日中59日が同じ期間</strong>——ほとんど同じ値動きを、何万回も「別々の証拠」として数えていたのです。日付のかたまり単位で重なりを考慮するブロック・ブートストラップに掛け直すと、タートルズ改のp値は<strong>前半0.005→0.59、後半0.003→0.30</strong>に跳ね上がりました。0.05を大きく超える——つまり<strong>偶然と区別できない</strong>水準です。</p>
+
+    <h3>罠②：「いつ買うか」の運と「何を買うか」の力を混同していた</h3>
+    <p>前回の比較は「全期間の平均的な日」との比較（プール対照）でした。図1で見たとおり、上昇相場に多く発火する手法は、中身がなくても勝って見えます。<strong>「同じ日の他銘柄」と比べる同日対照に切り替えると、タートルズ改は前半むしろ-0.54%、後半+0.56%でどちらも有意差なし</strong>。つまりこの手法は<strong>強い相場に乗っていただけで、同じ日の他の銘柄より良いものを選ぶ力は確認できませんでした</strong>。</p>
+
+    <div class="negative-box">
+      <strong>訂正のまとめ</strong>——#4で「唯一、両期間で差が残った」としたタートルズ改の判定は、①評価期間の重なりの無視、②タイミングと銘柄選択の混同、という2つの統計処理の甘さによる見せかけでした。厳格化した検定のもとでは<strong>統計的に有意とは言えません</strong>。#4の該当箇所の結論は、本記事の内容で上書きしてお読みください。
+    </div>
+
+    <p>この失敗から一般化できる教訓は3つあります。</p>
+    <ol>
+      <li><strong>「いつ買うか」の運と「何を買うか」の実力は分けて測る</strong>——上げ相場に発火が偏る手法は、プール対照ではほぼ自動的に勝って見える</li>
+      <li><strong>重なったデータを独立に数えると、どんな手法でも有意に見えやすい</strong>——p値が小さいこと自体は、検定の設計が正しいことを何も裏付けない</li>
+      <li><strong>自分の検証こそ疑う</strong>——当サイトは他人の手法だけでなく、自分たちの検証手法も監査の対象にする。間違いが見つかれば、今回のように訂正する</li>
+    </ol>
+
+    <p>なお、タートルズ改の<strong>前向き観察</strong>（判定を確定した後に入ってくる新しいデータでの追試）は#4の方針どおり継続しています。今回の訂正は「過去データ上の有意性は主張できない」というものであり、この手法の将来については、将来のデータが結論を出します。</p>
+
+    <!-- =============================== -->
+    <h2 id="lessons">⑤ 学び——「形」だけの買いルールと、バックテストの3点チェック</h2>
+
+    <p>5手法＋訂正1件を貫く構造は、一言でまとめられます——<strong>「値動きの形」だけから作った買いルールは、この5年の日本株では、「いつの相場か」の影響を取り除くと生き残らなかった</strong>。ダーバスの箱も、ステージ2も、江戸時代の三空も、グランビルの押し目も、モメンタムも、前半か後半のどちらかで消えるか、そもそも同じ日の他銘柄に負けていました。</p>
+
+    <p>そして、繰り返し再現したのは今回も<strong>「守り」</strong>です。ダーバス系の暴落率4.5〜5.8%（対照17〜18%）は両期間で再現しました。<a href="guide-graham-001.html">第1回</a>のグレアムの安全域、<a href="guide-masters-004-world.html">第4回</a>の低ボラティリティに続き、「稼ぐ力より守る力のほうがデータは素直」という構図がまた1つ積み上がりました。</p>
+
+    <p>個人投資家への示唆を、一般論として（特定の行動の推奨ではなく）まとめます。世の中のバックテスト——書籍でも、SNSでも、当サイトの記事でも——を見るときの<strong>3点チェック</strong>です。</p>
+
+    <div class="positive-box">
+      <strong>バックテストを見るときの3点チェック</strong><br>
+      ① <strong>対照群は何か</strong>——「全期間の平均」との比較なら、上げ相場に乗っただけの可能性がある。「同じ日の他銘柄」と比べているか<br>
+      ② <strong>期間を分けても再現するか</strong>——前半だけ・後半だけの好成績は地合い依存の疑いが濃い。グランビルG2/G3のように符号ごと反転する例さえある<br>
+      ③ <strong>観測は独立か</strong>——長期リターンを毎日評価した「N=数万」は、実質的な証拠の数がずっと少ないことがある。重なりを考慮した検定か
+    </div>
+
+    <p>この3点は、まさに今回私たち自身が①と③でつまずいた項目です。他人の検証に向ける疑いの目は、自分の検証にも向ける必要がある——それが第5回のいちばんの学びでした。</p>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑥ この検証の限界</h2>
+
+    <ul>
+      <li><strong>コスト・税金を引く前の数字</strong>。実際に得られる差は、掲載の数字より小さくなる</li>
+      <li><strong>約5年・単一の市場</strong>。2021〜2026年の日本株という特殊な地合いを含む。他の期間・他の市場では別の結果になり得る</li>
+      <li><strong>ルールへの翻訳は当方の責任</strong>。ダーバスの箱の定義、三川明けの明星の近似、デュアルモメンタムの個別株への移植など、原典の意図を完全には再現できていない。「この翻訳では差が確認できなかった」以上のことは言えない</li>
+      <li><strong>裁量・資金管理は再現できない</strong>。ダーバスの損切り規律、タートルズのピラミッディングなど、執行の技術は日足の固定保有では近似しきれない</li>
+      <li><strong>ストップ高・ストップ安</strong>で実際には約定できない日も「翌日の寄りで買えた」ことにしている（楽観側の近似）</li>
+      <li><strong>検定の厳格化にも終わりはない</strong>。今回の同日対照＋ブロック・ブートストラップも完全ではなく、今後さらに穴が見つかれば、また訂正する</li>
+    </ul>
+
+    <p>本記事の数値はすべて過去データの検証であり、<strong>将来の成果を保証するものではありません</strong>。</p>
+
+    <!-- =============================== -->
+    <h2 id="site">⑦ 当サイトでの活かし方</h2>
+
+    <p>今回の「検証を検証する」姿勢は、この記事だけの一回きりではなく、当サイトの他のコンテンツにも同じ流儀で適用しています。</p>
+
+    <ul>
+      <li><strong><a href="track-record.html">シグナル成績ダッシュボード</a></strong>——当サイトが実際に配信しているテクニカルシグナルの成績を、勝ち負け含めて全件公開しています。今回の3点チェック（対照群・期間分割・独立性）を意識しながら眺めると、数字の読み方が変わるはずです</li>
+      <li><strong><a href="guide-signal-lab-001.html">AIシグナル研究日誌</a></strong>——毎朝1本、実際のシグナルデータで仮説を検証する連載。検定手法の見直し（今回のようなクラスタ補正やチェックポイント検定）はこちらの研究にも同時に適用しています</li>
+      <li><strong><a href="guide-masters-004-world.html">前回#4の記事</a></strong>——今回訂正したタートルズ改の初出です。訂正の経緯を本記事の④と読み比べると、「同じデータでも検定の設計で結論が変わる」ことを追体験できます</li>
+    </ul>
+
+    <p>シリーズ第6回以降も、世界の手法カタログの残り（未検証の型はまだあります）を同じ土俵——今回の厳格化した検定——で確かめていく予定です。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📖 ダーバスやタートルズの原典に触れたい方へ</div>
+      <div class="cta-box-desc">投資の名著・古典の紹介は投資本ページにまとめています</div>
+      <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-masters-004-world.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #4</div>
+          <div class="related-card-desc">一目均衡表・タートルズ・BNFの12仮説を一斉検証。本記事で訂正したタートルズ改の初出回。</div>
+        </a>
+        <a href="guide-masters-003-quality.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #3</div>
+          <div class="related-card-desc">バフェットの「質×適正価格」5基準。質の高い会社は有意に劣後し、報われたのは安さだけ。</div>
+        </a>
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が約5分の1になる防御が両期間で再現。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px" data-disclaimer="kinsho-v1">※ 本記事は情報提供・教育目的であり、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
