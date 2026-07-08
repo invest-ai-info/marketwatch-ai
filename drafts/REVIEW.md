@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-07-08 | autopublish: 🚩要人間レビュー — guide-inflation-real-return.html（check_site_consistency EXIT=1）
+
+- **対象**: `guide-inflation-real-return.html`（インフレと実質リターン｜現金はなぜ目減りするのか）
+- **シリーズ**: 基礎知識 #17（topic queue #17 = inflation-real-return）
+- **カテゴリ**: 投資の基礎知識 💰
+- **エスカレ理由**: `check_site_consistency.py` EXIT=1（88件エラー）により、SOP「赤なら中止→手順8」に従い公開中止。
+  - **エラー①**: `sync_to_github.py` がクラウド環境スタブ（1016B）で「<20KB / stale-guard なし」エラーを検出
+  - **エラー②**: スタブの SYNC_FILES に既存87件の未登録（旧来の既知問題）
+  - ⚠️ 記事自体に問題はない（下記ゲート全通過）。インフラ側の問題。
+- **記事ゲート結果（全通過）**:
+  - ✅ 決定論ゲート `check_guide_draft.py`: EXIT=0 GREEN（SVG3回修正済み）
+  - ✅ Opus コンプラ+品質: 🟢白（軽微修正: CPI初出に「（消費者物価指数）」グロス追加のみ → 決定論再緑）
+  - ✅ 独立Opus白確認: 🟢白 / 品質5観点全✅ / noindex除去✅ / kinsho-v1 3箇所✅
+  - ✅ `publish_article.py`: EXIT=0（guides.html カード追加・SYNC_FILES 更新・更新履歴 追加）
+  - ❌ `check_site_consistency.py`: EXIT=1（88件 → スタブ問題 + 既存未登録）
+- **保存ブランチ**: `autopublish-pending-2026-07-08-inflation-real-return`（記事・guides.html・generate_market_news.py 含む）
+- **オーナー対応オプション**:
+  - **(A) ブランチをそのまま main へマージ**: `git merge autopublish-pending-2026-07-08-inflation-real-return` → 即公開（記事品質問題なし。check_site_consistency の sync スタブ問題は別途修正）
+  - **(B) sync_to_github.py を本物に戻してから再実行**: スタブをフル版に差し替え → consistency 緑 → ブランチの記事を main へ merge して公開
+- **データ確認済み**: 日本CPI（2022: +2.5%・2023: +3.3%・2024: +2.7% 総務省統計局） / メガバンク金利（0.001%→0.1% 2024年7月・0.3% 2026年2月 日経）
+
+---
+
 ## 2026-07-08 | AIシグナル研究日誌 #033 — blocked=True×ショート 前向き崩落（ゲート実行中）
 
 - **研究番号**: #033
