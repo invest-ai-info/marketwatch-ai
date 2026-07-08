@@ -22,4 +22,5 @@ SYNC_FILES = [
     "guide-signal-lab-033.html",
     "guide-proverb-soba-ni-kike.html",
     "guide-news-2026-07-08-fomc-minutes-warsh.html",
+    "guide-inflation-real-return.html",
 ]
