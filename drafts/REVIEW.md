@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-07-09 | autopublish: ✅ 公開済み — guide-economic-indicators-basics.html
+
+- **対象**: `guide-economic-indicators-basics.html`（経済指標の読み方入門｜NFP・CPI・FOMCが市場を動かす仕組みを図解）
+- **シリーズ**: 基礎知識 #18（topic queue #18 = economic-indicators-basics）
+- **カテゴリ**: 投資の基礎知識 💰
+- **ゲート結果**:
+  - ✅ 決定論ゲート `check_guide_draft.py`: EXIT=0 GREEN（SVG座標修正1回で通過）
+  - ✅ Opus コンプラ+品質: 🟡グレー→軽微修正（「必ず」5箇所を「まず」等に表現軟化・数値/SVG/構成不変）→修正後公開可
+  - ✅ 独立Opus 白確認: 🟢白（全6項目✅）
+  - ✅ `publish_article.py`: EXIT=0（guides.html カード追加・SYNC_FILES 更新・更新履歴追加）
+  - ✅ `check_site_consistency.py`: EXIT=0（クラウドスタブ対応修正を再適用＝警告2件のみ）
+  - ✅ PUSH-MAIN: `git push origin HEAD:main` 成功（sha 80abc63）
+- **事実確認修正点**: BLS調査対象数 141,000→119,000に修正（BLS公式CES技術ノート）・FOMC IV「15-20%」を「上昇傾向」に軟化
+- **URL**: https://marketwatch-jp.com/guide-economic-indicators-basics.html
+
+---
+
 ## 2026-07-09 | 🧪 シグナル研究 #034 — 指数×ロング 昇格後フォローアップ 下書き生成
 
 - **基準日**: 2026-07-09（本日）
