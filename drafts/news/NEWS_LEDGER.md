@@ -3,6 +3,35 @@
 
 ---
 
+## 2026-07-08
+- 判定: 🚩要人間レビュー（check_site_consistency.py exit=1 による自動公開停止）
+- 選定トピック: FRBが本日「6月FOMC議事録」を公開 ── ウォーシュ議長「前例なきドット不提出」×タカ派9対8分裂の背景と日本株・ドル円への影響を整理（カテゴリ: マクロ・金融政策・米国）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 選定理由: 2026年7月8日 米東部時間14時（日本時間7/9 3時）にFOMC議事録公開。ウォーシュ議長の「ドット不提出」は2012年のドットプロット導入以来初、9対8のタカ派分裂・フォワードガイダンス削除という確定済み事実に加え、NFP+5.7万人でレートパス変動（9月利上げ確率66%→50%）など付加価値あり。日銀7/31同週・ドル円162円・介入警戒を絡めて日本人投資家向けの中立整理が可能。
+- 出典（2系統以上確認済み）:
+  - Federal Reserve公式「FOMC Calendars, Statements, and Minutes」（federalreserve.gov）
+  - TechTimes「Federal Reserve Chair Warsh Made History By Not Submitting Dot Plot」（2026-07-08）
+  - GoldSilver.com「FOMC Minutes July 8 Preview」（2026-07-08）
+  - CNBC/Fox Business（6月FOMC会合結果 3.50〜3.75%据え置き報道、2026-06-17）
+  - Mitrade「日本の財務当局の介入警戒発言」（2026-06-26）
+  - Crux Investor / GoldenArkReserve（金$4,100前後のFOMC×コモディティ分析、2026年7月）
+  - StockTitan / Kiplinger / Chase(JP Morgan)（NFP+5.7万人・利上げ確率変化報道）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし）＋品質指摘1件：L277「鈍化問かたやまさつき財務相」の固有名詞破損→「日本の財務当局」に即修正済み
+  - 適用修正: L277の固有名詞文字化けを「日本の財務当局」に修正（事実/数値/構造は変更なし）
+  - 独立Opus確認（エージェント2）: ✅白（7項目全クリア・公開適格・事実表記も正常確認）
+  - 最終コンプラ判定: 🟢白 / 公開適格
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典10系統 ✅
+- check_site_consistency.py: EXIT=1（原因: sync_to_github.pyがクラウド環境スタブ<20KB判定でエラー＋既存guide 87件のSYNC_FILES未登録。いずれも本記事とは無関係の既存インフラ問題。7/6も同理由でエスカレ）
+- エスカレ理由: check_site_consistency.py exit=1 → 指示通り安全側でエスカレ。記事品質・コンプラは問題なし
+- 下書き: drafts/news/draft-news-2026-07-08.html（noindex,nofollow付き）
+- 人間向け早期公開手順（コンプラ白・決定論チェック全通過済みのため、以下を実行するだけで公開可能）:
+  1. `python publish_article.py --file guide-news-2026-07-08-fomc-minutes-warsh.html --category "今日のニュース" --emoji 📰 --card-title "6月FOMC議事録7/8公開 ウォーシュ「ドットなし」×タカ派9対8を整理" --desc "新議長ウォーシュが前例なき「ドット不提出」を選択した6月FOMC。本日公開の議事録の意味と、ドル円162・BOJ7/31への影響を中立整理。"`
+  2. `git add guide-news-2026-07-08-fomc-minutes-warsh.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m 'feat: auto-publish news 2026-07-08' && git push origin main`
+  3. （publish_article.pyのguides.html・generate_market_news.py更新は本セッションで実施済みだが、クラウド環境のためコミットなしで消える。再実行が冪等なので再度実行で問題なし）
+
+---
+
 ## 2026-07-07
 - 判定: ✅ 公開済み
 - 選定トピック: サムスン電子Q2「19倍増益・過去最高益」なのになぜ株が急落？ 日経平均-1480円を引き起こした「好決算の逆説」を中立整理（カテゴリ: マクロ・個別銘柄・AI半導体・韓国株）
