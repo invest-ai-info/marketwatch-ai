@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-07-09 | 💰 基礎知識 #19 — 日経平均とTOPIXの違い（nikkei-vs-topix）下書き生成
+
+- **基準日**: 2026-07-09（UTC 2026-07-08T20:30Z → JST 05:30）
+- **シリーズ**: 投資の基礎知識 #19（topic queue #19 = nikkei-vs-topix）
+- **仮タイトル**: 日経平均とTOPIXの違いを図解で解説｜株価指数の仕組みを正しく理解する
+- **生成ファイル**: `drafts/draft-nikkei-vs-topix.html`
+- **参照出典（WebSearch 確認済み）**:
+  - 日経平均算出要領（日本経済新聞社 公式PDF）: https://indexes.nikkei.co.jp/nkave/archives/file/nikkei_stock_average_guidebook_jp.pdf
+  - TOPIX公式（JPX）: https://www.jpx.co.jp/markets/indices/topix/
+  - NT倍率過去最高（日本経済新聞）: https://www.nikkei.com/article/DGXZQOUB015X00R00C26A6000000/
+  - NT倍率解説（マネックス証券）: https://info.monex.co.jp/news/2026/20260702_02.html
+  - 3社で今年の上げ7割（日本経済新聞）: https://www.nikkei.com/article/DGXZQOUB296P30Z21C25A0000000/
+  - 主要指数の分類（SMBC日興証券）: https://www.smbcnikko.co.jp/products/stock/foreign/usa/knowledge/005.html
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（ファーストリテイリング等は「値がさ株の例」として教育的に言及）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」等不使用）
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末・footer の3箇所確認
+  - ✅ noindex,nofollow 入り（下書きのみ、検索除外）
+  - ✅ SVG 3点あり（値がさ株比較図・NT倍率概念図・指数分類図）
+  - ✅ 出典妥当（WebSearch で複数ソース照合済み）
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク確認（特にdark mode時のテキスト色）
+  - NT倍率の数値（約18倍台・2026年6月）は出典URLを入れたままにしているが、公開前に出典リンクを本文に追加するか確認
+  - 公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-07-08 | autopublish: ✅ 解決 — guide-inflation-real-return.html 公開済み
 
 - 下記エスカレ（check_site_consistency EXIT=1）は**インフラ起因**＝クラウド環境でsyncスタブを本物と誤認する構造欠陥。
