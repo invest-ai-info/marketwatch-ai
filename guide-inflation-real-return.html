@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>インフレと実質リターン｜現金はなぜ目減りするのか - MarketWatch AI</title>
+  <meta name="description" content="インフレが進む時代に現金を持ち続けるとなぜ損をするのか。名目リターンと実質リターンの違い、実質利回りの計算方法、「元本保証なのに実質マイナス」の仕組みを図解で解説。">
+  <meta name="keywords" content="インフレ,実質リターン,実質利回り,名目利回り,フィッシャー方程式,購買力,インフレリスク,現金目減り,投資基礎知識">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-inflation-real-return.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="インフレと実質リターン｜現金はなぜ目減りするのか">
+  <meta property="og:description" content="インフレが進む時代に現金を持ち続けるとなぜ損をするのか。名目と実質の違い、実質利回りの計算、「元本保証なのに実質マイナス」の罠を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-inflation-real-return.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "インフレと実質リターン｜現金はなぜ目減りするのか",
+    "description": "インフレが進む時代に現金を持ち続けるとなぜ損をするのか。名目と実質の違い、実質利回りの計算、「元本保証なのに実質マイナス」の罠を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-08",
+    "dateModified": "2026-07-08",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-inflation-real-return.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* インフレ記事固有：購買力曲線の塗り */
+    .s-fill-r{fill:#ffebe9;opacity:.5}
+    .s-fill-g{fill:#e6ffed;opacity:.5}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-r{fill:#3a1010;opacity:.5}
+    body.dark .s-fill-g{fill:#162416;opacity:.5}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; インフレと実質リターン
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はインフレと実質リターンに関する基礎知識を情報提供するものであり、特定の金融商品の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</div>
+
+    <h1>💰 インフレと実質リターン｜現金はなぜ目減りするのか</h1>
+    <div class="meta-line">公開日：2026 年 7 月 8 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「元本保証だから安心」——銀行預金にそう感じている方は多いでしょう。確かに、銀行預金の名目上の元本は減りません。しかし、<strong>インフレが続く環境では、現金を置いておくだけで購買力（お金で実際に買えるモノの量）は年々目減りしていきます</strong>。インフレ率が銀行の預金金利を上回っている間、「元本保証＝実質的な損失」という状況が静かに進行するのです。</p>
+    <p>この記事では、<strong>名目リターンと実質リターンの違い</strong>を図解でわかりやすく解説し、後半では<strong>実質利回りの計算式・「元本保証なのに実質マイナス」のメカニズム・雪だるまが逆回転するとはどういうことか</strong>を、中上級者向けに掘り下げます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>実質リターン ≈ 名目リターン − インフレ率</strong>。名目0.1%でインフレ2%なら、実質は約−1.9%。「元本保証」でも<strong>購買力は毎年削られ続ける</strong>。</li>
+      <li>インフレ率が銀行金利を上回る環境では、<strong>現金を持ち続けることにもリスクがある</strong>。「何もしないこと」は中立ではない。</li>
+      <li>複利と掛け合わさると効果は加速する。<strong>「72の法則」</strong>でインフレが購買力を半分にするまでの年数を直感的に把握でき、長期計画の出発点になる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「名目」と「実質」の違い——直感図解</a></li>
+        <li><a href="#section-2">現金100万円の購買力は30年後にいくらになるか</a></li>
+        <li><a href="#section-3">「元本保証なのに実質マイナス」が起きる仕組み</a></li>
+        <li><a href="#section-4">実質利回りの計算式（フィッシャー方程式）</a></li>
+        <li><a href="#section-5">72の法則：インフレが購買力を半分にするまでの年数</a></li>
+        <li><a href="#section-6">インフレと資産クラス——一般的な傾向</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 「名目」と「実質」の違い——直感図解</h2>
+    <p>まず、最も重要な概念の区別から始めましょう。</p>
+    <ul>
+      <li><strong>名目リターン（nominal return）</strong>：金額の数字上の増減率。銀行が「年0.1%」と表示する金利がこれ。100万円が1年で100万1,000円になれば、名目+0.1%。</li>
+      <li><strong>実質リターン（real return）</strong>：インフレで物価が上がった分を差し引いた、<strong>実際の購買力の変化率</strong>。金額が増えても、物価がそれ以上に上がれば、買えるモノの量は減っている。</li>
+    </ul>
+
+    <p>ここで大切なのが<strong>「購買力」</strong>という考え方です。1万円で買えたものが、翌年は物価上昇で1万200円になっていたとしたら、手元に1万円しかなければ同じものが買えなくなる。<strong>お金の"価値"は、数字ではなく「どれだけのモノと交換できるか」で決まります</strong>。</p>
+
+    <figure class="chart-figure">
+      <!-- SVG図1: 名目 vs 実質の「シーソー」概念図 -->
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="seesaw-title">
+        <title id="seesaw-title">名目リターンからインフレを差し引くと実質リターンになる概念図</title>
+        <text class="s-panel-label" x="40" y="26">名目リターン − インフレ率 ＝ 実質リターン</text>
+
+        <!-- 左ブロック：名目 -->
+        <rect x="40" y="60" width="140" height="160" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text class="s-note" x="110" y="90" text-anchor="middle">名目リターン</text>
+        <text x="110" y="120" text-anchor="middle" fill="#0969da" font-size="28" font-weight="700" font-family="'Noto Sans JP',sans-serif">＋2.0%</text>
+        <text class="s-label-sm" x="110" y="148" text-anchor="middle">（例：株式の年間利回り）</text>
+
+        <!-- マイナス記号 -->
+        <text x="208" y="148" text-anchor="middle" fill="#cf222e" font-size="30" font-weight="700" font-family="'Noto Sans JP',sans-serif">−</text>
+
+        <!-- 中央ブロック：インフレ -->
+        <rect x="236" y="60" width="140" height="160" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text class="s-note-r" x="306" y="90" text-anchor="middle">インフレ率</text>
+        <text x="306" y="120" text-anchor="middle" fill="#cf222e" font-size="28" font-weight="700" font-family="'Noto Sans JP',sans-serif">２.0%</text>
+        <text class="s-label-sm" x="306" y="148" text-anchor="middle">（例：消費者物価上昇率）</text>
+
+        <!-- イコール記号 -->
+        <text x="404" y="148" text-anchor="middle" fill="#57606a" font-size="30" font-weight="700" font-family="'Noto Sans JP',sans-serif">＝</text>
+
+        <!-- 右ブロック：実質 -->
+        <rect x="432" y="60" width="168" height="160" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="2"/>
+        <text class="s-note-g" x="516" y="90" text-anchor="middle">実質リターン</text>
+        <text x="516" y="120" text-anchor="middle" fill="#1a7f37" font-size="28" font-weight="700" font-family="'Noto Sans JP',sans-serif">≈ ０%</text>
+        <text class="s-label-sm" x="516" y="148" text-anchor="middle">（購買力の増減）</text>
+        <text class="s-label-sm" x="516" y="168" text-anchor="middle">名目2%でも物価2%上がれば</text>
+        <text class="s-label-sm" x="516" y="184" text-anchor="middle">実質ゼロ＝買えるモノは不変</text>
+
+        <!-- 注釈 -->
+        <text class="s-label-sm" x="320" y="260" text-anchor="middle">名目0.1%でインフレ2%なら → 実質 ≈ −1.9%（買えるモノが約1.9%分減る）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 名目リターンから物価上昇分（インフレ率）を引いたものが実質リターン。名目で増えていても、インフレがそれを超えれば購買力は減る。<strong>数字上のプラスが実質マイナスになりうる</strong>のが最大のポイント。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>日常の例で考えてみましょう。1年前に100万円で10台買えた家電があったとします。インフレで価格が2%上昇し、その家電が1台10万2,000円になった。一方、銀行に預けた100万円は年0.1%の金利で100万1,000円になった。<strong>名目では増えているのに、同じ家電は9台とわずかしか買えなくなっています</strong>。これが「実質的な目減り」の正体です。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 現金100万円の購買力は30年後にいくらになるか</h2>
+    <p>インフレの効果は1年だけ見ると小さく感じます。しかし複利で積み重なると、30年後の差は驚くほど大きくなります。</p>
+
+    <figure class="chart-figure">
+      <!-- SVG図2: 購買力の推移（インフレ率別・30年概念図） -->
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="power-title">
+        <title id="power-title">インフレ率2%・3%での購買力推移（30年）の概念図</title>
+        <text class="s-panel-label" x="40" y="26">100万円の購買力がインフレで減っていくイメージ（30年間）</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="260" x2="560" y2="260"/>
+        <line class="s-axis" x1="60" y1="50" x2="60" y2="260"/>
+
+        <!-- Y軸ラベル -->
+        <text class="s-label-sm" x="50" y="80" text-anchor="end">100万円</text>
+        <line class="s-guide" x1="60" y1="75" x2="550" y2="75"/>
+        <text class="s-label-sm" x="50" y="150" text-anchor="end">約74万円</text>
+        <line class="s-guide" x1="60" y1="145" x2="330" y2="145"/>
+        <text class="s-label-sm" x="50" y="190" text-anchor="end">約55万円</text>
+        <line class="s-guide" x1="60" y1="185" x2="550" y2="185"/>
+
+        <!-- X軸ラベル -->
+        <text class="s-label-sm" x="60" y="278" text-anchor="middle">0年</text>
+        <text class="s-label-sm" x="220" y="278" text-anchor="middle">10年</text>
+        <text class="s-label-sm" x="390" y="278" text-anchor="middle">20年</text>
+        <text class="s-label-sm" x="550" y="278" text-anchor="middle">30年</text>
+
+        <!-- インフレ0%（参考線・グレー） -->
+        <line x1="60" y1="75" x2="550" y2="75" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <text class="s-label-sm" x="556" y="79" text-anchor="start">インフレ0%</text>
+
+        <!-- インフレ2%（赤系曲線） -->
+        <!-- 0年=75, 10年≈145(0.98^10=0.817→75+0.817×(75-260+260)...簡易計算), 30年≈185 -->
+        <!-- 実際: 100×(1-0.02)^n: n=0→100, n=10→81.7, n=20→66.8, n=30→54.6 -->
+        <!-- Y座標: 基準75(100%),260(0%). 範囲185px. 100%→y=75, 0%→y=260. y=260-1.85×value -->
+        <!-- n=0: y=260-185=75; n=10: 81.7→y=260-151=109; n=20: 66.8→y=260-123=137; n=30: 54.6→y=260-101=159 -->
+        <polyline class="s-curve-l" points="60,75 220,109 390,137 550,159"/>
+        <text class="s-note-r" x="556" y="156" text-anchor="start">インフレ2%</text>
+        <text class="s-label-sm" x="633" y="169" text-anchor="end">30年後≈55万円相当</text>
+
+        <!-- インフレ3%（より急な赤） -->
+        <!-- 100×(0.97)^n: n=10→73.7→y=260-136=124; n=20→54.4→y=260-100=160; n=30→40.1→y=260-74=186 -->
+        <polyline points="60,75 220,124 390,160 550,183" fill="none" stroke="#9a3700" stroke-width="2" stroke-dasharray="8 3" stroke-linejoin="round" stroke-linecap="round"/>
+        <text x="556" y="193" text-anchor="start" fill="#9a3700" font-size="11.5" font-weight="700" font-family="'Noto Sans JP',sans-serif">インフレ3%</text>
+        <text class="s-label-sm" x="633" y="206" text-anchor="end">30年後≈40万円相当</text>
+
+        <!-- 矢印で目減りを強調 -->
+        <line x1="90" y1="80" x2="90" y2="154" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arr)"/>
+        <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 Z" fill="#cf222e"/></marker></defs>
+        <text class="s-note-r" x="96" y="122">10年で</text>
+        <text class="s-note-r" x="96" y="136">約18%目減り</text>
+      </svg>
+      <figcaption class="chart-caption">▲ インフレ率2%が30年続くと、100万円の購買力は名目上の金額はそのままでも「約55万円分のモノしか買えない」水準まで低下する（概念図）。インフレ3%では約40万円相当になる。<strong>時間がたつほど差が広がるのは、複利で購買力が削られるため</strong>。※ 概念を示すイメージ図です（実際の将来物価を予測するものではありません）。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      このグラフは「銀行金利が0%のまま」の場合の購買力推移です。実際には預金金利があるため完全に0ではありませんが、<strong>金利がインフレ率を下回る期間が長く続く場合、実質購買力は徐々に失われていきます</strong>。数字はあくまで概念を示すものです。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 「元本保証なのに実質マイナス」が起きる仕組み</h2>
+    <p>「元本保証」という言葉は、名目上の金額が保証されるという意味です。預けた100万円は、何年後も名目上100万円（と利息分）であり続ける——それは事実です。</p>
+    <p>しかし、そのお金で「何が買えるか」は保証されていません。物価が上昇すれば、同じ100万円で買えるモノの量は減ります。<strong>名目の保証と実質の購買力は、まったく別物</strong>なのです。</p>
+
+    <div class="negative-box">
+      <strong>具体例（2023年頃の日本・概念計算）</strong>：当時のメガバンク普通預金金利が年0.001%、日本のCPI（消費者物価指数）上昇率が年3.3%程度だったとすると、<br>
+      ・1年後の名目残高：100万円 × (1 + 0.00001) ≈ 100万10円（利息わずか10円）<br>
+      ・1年後の物価水準：基準年比 1.033倍（3.3%インフレ）<br>
+      ・1年後の実質購買力：約100万10円 ÷ 1.033 ≈ 96万8,000円相当<br>
+      <strong>→ 名目残高はほぼ変わらないのに、実質購買力は約3.2万円分目減りした計算になります。</strong>
+    </div>
+
+    <p>「利息がついているから大丈夫」ではなく、<strong>利息率がインフレ率を超えているかどうか</strong>が重要です。</p>
+
+    <div class="info-box">
+      <strong>💡 日本の実績データ（参考）：</strong>総務省統計局の消費者物価指数（2020年基準）によると、日本のCPIは2022年に前年比+2.5%、2023年に同+3.3%、2024年に同+2.7%と推移しました。一方、主要メガバンクの普通預金金利は2024年半ばまで年0.001%が続き、2024年7月の日銀利上げ後に0.1%前後、2026年2月時点では0.3%程度に引き上げられています（各行の公表金利より）。物価の上昇幅と比較すると、<strong>2020年代を通じて普通預金の実質金利はマイナスで推移してきた</strong>ことになります。なお日本銀行は物価の安定目標として「2%」を掲げており（日本銀行公表資料より）、インフレ率が預金金利を継続的に上回る局面では実質的な資産の目減りが続きます。これは特定の将来予測ではなく、算数上の帰結です。
+      <br><span style="font-size:.82rem;display:block;margin-top:6px">出典：総務省統計局「消費者物価指数」 / 各メガバンク公表金利 / 日本銀行「物価安定の目標」</span>
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 実質利回りの計算式（フィッシャー方程式）</h2>
+    <p>実質リターンの計算には、<strong>フィッシャー方程式（Fisher Equation）</strong>が使われます。経済学者アーヴィング・フィッシャーが提唱した考え方で、名目金利・実質金利・インフレ率の関係を表します。</p>
+
+    <h3>簡易計算式（近似式）</h3>
+    <p>多くの入門書で紹介される近似式：</p>
+    <div class="info-box">
+      <strong>実質利回り ≈ 名目利回り − インフレ率</strong><br>
+      <span style="font-size:.88rem;display:block;margin-top:6px">例：名目5%、インフレ3% → 実質 ≈ 2%</span>
+      <span style="font-size:.88rem;display:block">例：名目0.1%、インフレ2% → 実質 ≈ −1.9%</span>
+    </div>
+
+    <h3>正確な計算式</h3>
+    <p>正確には次の式が使われます：</p>
+    <div class="info-box">
+      <strong>（1 + 実質利回り）＝ （1 + 名目利回り）÷ （1 + インフレ率）</strong><br>
+      <span style="font-size:.88rem;display:block;margin-top:6px">例：名目5%、インフレ3%の場合</span>
+      <span style="font-size:.88rem;display:block">（1 + 実質）＝ 1.05 ÷ 1.03 ≈ 1.0194 → 実質利回り ≈ 1.94%</span>
+    </div>
+
+    <p>インフレ率・名目利回りがともに小さい数字（数%以内）のときは、近似式でも大きな誤差は生じません。ただし、<strong>インフレ率が高い局面（年10%超など）では正確な式を使う方が適切</strong>です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>名目利回り</th>
+          <th>インフレ率</th>
+          <th>実質利回り（近似）</th>
+          <th>実際の購買力変化</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0.1%</td>
+          <td>2.0%</td>
+          <td><strong style="color:#cf222e">約 −1.9%</strong></td>
+          <td>購買力が毎年約1.9%減少</td>
+        </tr>
+        <tr>
+          <td>1.0%</td>
+          <td>2.0%</td>
+          <td><strong style="color:#cf222e">約 −1.0%</strong></td>
+          <td>購買力が毎年約1.0%減少</td>
+        </tr>
+        <tr>
+          <td>2.0%</td>
+          <td>2.0%</td>
+          <td><strong>約 0.0%</strong></td>
+          <td>購買力は維持（トントン）</td>
+        </tr>
+        <tr>
+          <td>4.0%</td>
+          <td>2.0%</td>
+          <td><strong style="color:#1a7f37">約 +2.0%</strong></td>
+          <td>購買力が毎年約2.0%増加</td>
+        </tr>
+        <tr>
+          <td>6.0%</td>
+          <td>3.0%</td>
+          <td><strong style="color:#1a7f37">約 +3.0%</strong></td>
+          <td>購買力が毎年約3.0%増加</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>この表を見ると、<strong>「インフレ率を超える利回りを出せなければ、実質的には資産が目減りしている」</strong>という事実が明確になります。名目リターンだけを見ていると、本当の意味での資産の増減が見えてきません。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 72の法則：インフレが購買力を半分にするまでの年数</h2>
+    <p>複利成長（あるいは複利での減少）を直感的につかむための便利なツールが<strong>「72の法則（Rule of 72）」</strong>です。元々は「何年で2倍になるか」の計算に使われますが、インフレにも応用できます。</p>
+
+    <div class="info-box">
+      <strong>72の法則（インフレ応用版）</strong><br>
+      購買力が半分になるまでの年数 ≈ <strong>72 ÷ インフレ率（%）</strong><br>
+      <span style="font-size:.88rem;display:block;margin-top:8px">
+        インフレ年2% → 72 ÷ 2 = <strong>約36年で購買力が半減</strong><br>
+        インフレ年3% → 72 ÷ 3 = <strong>約24年で購買力が半減</strong><br>
+        インフレ年4% → 72 ÷ 4 = <strong>約18年で購買力が半減</strong>
+      </span>
+    </div>
+
+    <p>36年というと遠い先のように聞こえますが、<strong>20代で資産形成を始めると定年前後がその時期に当たります</strong>。「老後のために貯蓄している現金」が、実質価値で半分近くになっている可能性を考慮することは、長期的な視点では重要なことといえます。</p>
+
+    <div class="warning-box">
+      72の法則はあくまで「目安」であり、将来のインフレ率を予測するものではありません。インフレ率は経済情勢によって変動し、マイナスになること（デフレ）もあります。これはシナリオの例示であり、「必ずこうなる」という予測や投資推奨ではありません。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ インフレと資産クラス——一般的な傾向</h2>
+    <p>インフレ局面での各資産クラスの一般的な特性について、教科書的な整理を示します（これは過去の傾向の概観であり、将来の運用成果を保証するものではありません）。</p>
+
+    <h3>前半まとめ：インフレと現金の関係</h3>
+    <p>ここまでの内容を一言でまとめると：<strong>「現金を保有し続けることは、インフレ率を超える運用をしない限り、実質的なリスクを伴う」</strong>。「何もしない＝中立」ではなく、インフレによって購買力が静かに削られていくという一種のリスクがそこにあります。</p>
+
+    <figure class="chart-figure">
+      <!-- SVG図3: 資産クラス×インフレ 概念マトリクス -->
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="asset-title">
+        <title id="asset-title">インフレ局面での資産クラスの一般的な傾向の概念図</title>
+        <text class="s-panel-label" x="40" y="26">インフレ局面での各資産の一般的な傾向（教科書的整理）</text>
+
+        <!-- ヘッダー行 -->
+        <rect x="40" y="44" width="200" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note" x="140" y="67" text-anchor="middle">資産クラス</text>
+        <rect x="240" y="44" width="180" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note" x="330" y="67" text-anchor="middle">インフレへの一般傾向</text>
+        <rect x="420" y="44" width="180" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note" x="510" y="67" text-anchor="middle">主な理由（概念）</text>
+
+        <!-- 行1: 現金・預金 -->
+        <rect x="40" y="80" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="140" y="104" text-anchor="middle">現金・預金</text>
+        <rect x="240" y="80" width="180" height="40" fill="#ffebe9" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note-r" x="330" y="104" text-anchor="middle">❌ 実質価値が目減り</text>
+        <rect x="420" y="80" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="510" y="104" text-anchor="middle">金利＜インフレ率なら実質マイナス</text>
+
+        <!-- 行2: 債券（固定利付） -->
+        <rect x="40" y="120" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="140" y="144" text-anchor="middle">債券（固定利付）</text>
+        <rect x="240" y="120" width="180" height="40" fill="#ffebe9" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note-r" x="330" y="144" text-anchor="middle">❌ 実質価値が目減りしやすい</text>
+        <rect x="420" y="120" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="510" y="144" text-anchor="middle">固定利率がインフレを下回ると損</text>
+
+        <!-- 行3: 株式 -->
+        <rect x="40" y="160" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="140" y="184" text-anchor="middle">株式</text>
+        <rect x="240" y="160" width="180" height="40" fill="#e6ffed" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note-g" x="330" y="184" text-anchor="middle">△ 企業が値上げ転嫁できれば</text>
+        <rect x="420" y="160" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="510" y="184" text-anchor="middle">利益・配当が増える企業もある</text>
+
+        <!-- 行4: 不動産・実物資産 -->
+        <rect x="40" y="200" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="140" y="224" text-anchor="middle">不動産・実物資産</text>
+        <rect x="240" y="200" width="180" height="40" fill="#e6ffed" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note-g" x="330" y="224" text-anchor="middle">△ 資産価値が追随する傾向</text>
+        <rect x="420" y="200" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="510" y="224" text-anchor="middle">物価に連動する資産としての性格</text>
+
+        <!-- 行5: 金 -->
+        <rect x="40" y="240" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="140" y="264" text-anchor="middle">金（ゴールド）</text>
+        <rect x="240" y="240" width="180" height="40" fill="#fff8c5" stroke="#d0d7de" stroke-width="1"/>
+        <text x="330" y="264" text-anchor="middle" fill="#9a6700" font-size="11.5" font-weight="700" font-family="'Noto Sans JP',sans-serif">△ インフレヘッジとして言及多い</text>
+        <rect x="420" y="240" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="510" y="264" text-anchor="middle">相関は時期により変動する</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 各資産クラスとインフレの一般的な関係を教科書的に整理したもの。<strong>実際のパフォーマンスは経済状況・金利環境・個別要因によって大きく異なります</strong>。これは特定の商品を推奨するものではなく、概念的な整理です。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>ここで重要なのは、<strong>「インフレに強い資産が必ずしも全員に最適ではない」</strong>という点です。リスク許容度・投資期間・流動性ニーズによって、どのような資産配分が自分に合うかは個人差があります。インフレを意識することは、単に「現金以外に分散すればよい」という話ではなく、<strong>「自分の購買力を守るための目標利回りを設定する際の基準線」を知る</strong>ことが出発点になります。</p>
+
+    <div class="info-box">
+      <strong>ℹ️ 複利と組み合わせると：</strong>実質リターンがプラスの資産に複利で長期投資すると、購買力は雪だるまのように増える一方で、実質リターンがマイナスの運用（または現金保有）では複利が逆方向に働き、購買力が加速度的に失われます。複利の仕組みと長期資産形成については、<a href="guide-compound-sim.html">複利シミュレーター</a>や<a href="guide-simple-vs-compound.html">単利と複利の違い</a>の記事もあわせてご覧ください。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、インフレに関連する指標を複数の角度から可視化しています。</p>
+    <ul>
+      <li><strong>市場健康度ページ</strong>：バフェット指標・VIX などの市場指標に加え、<a href="market-health.html">市場健康度</a>では各種マクロ指標の状況を確認できます。インフレ局面での市場全体の状況把握に役立ちます。</li>
+      <li><strong>経済カレンダー</strong>：<a href="calendar.html">経済カレンダー</a>では米国CPI・日本CPI・PCEデフレーター（インフレ指標）の発表日程を事前に確認できます。インフレ指標が発表されると市場が大きく動くことがあるため、主要イベントの把握に。</li>
+      <li><strong>シグナル成績ダッシュボード</strong>：インフレ・金利環境の変化は、各資産クラスのトレンドにも影響します。<a href="track-record.html">シグナル成績</a>では、GC=F（金）・FX各ペアなど、インフレと連動しやすい資産を含む18銘柄のシグナル実績を公開しています。</li>
+    </ul>
+
+    <p>「インフレを意識する」という視点は、<strong>短期トレードよりも長期の資産形成計画を考える際に特に重要</strong>です。自分のお金を置いておくことの実質的なコストを知ることで、どこを目指して運用するかの<strong>「基準線」</strong>が初めて引けるようになります。目標利回りの設定や、長期積立のペースを考えるうえで、今回の記事の内容を活用してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 インフレに連動しやすい資産のシグナルを見る</div>
+      <div class="cta-box-desc">GC=F（金）・CL=F（原油）・FXペアなど、インフレ・金利環境と関わりの深い18銘柄のテクニカルシグナル実績を公開中。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>インフレと実質リターンについて学んできた内容を整理します。</p>
+    <ul>
+      <li><strong>名目リターンと実質リターンは別物</strong>。実質リターン ≈ 名目リターン − インフレ率。名目でプラスでも実質マイナスになりうる。</li>
+      <li><strong>「元本保証」は名目の金額の保証</strong>であり、購買力（実質価値）の保証ではない。インフレが続く環境では、現金を保有し続けることにも実質的なリスクがある。</li>
+      <li><strong>フィッシャー方程式</strong>で実質利回りを計算できる（簡易式：実質 ≈ 名目 − インフレ）。インフレ率を超える利回りが「資産を守るための基準線」になる。</li>
+      <li><strong>72の法則</strong>でインフレが購買力を半減させるまでの年数を概算できる（年2%なら約36年・年3%なら約24年）。</li>
+      <li>これは特定の資産を推奨するものではなく、<strong>「目標とすべき実質利回りの水準を知る」ための出発点</strong>。自分のリスク許容度と投資期間にあわせて判断を。</li>
+    </ul>
+    <p>「現金は安全」という認識を、<strong>「名目は安全・実質はリスクがある」</strong>という、より正確な理解にアップデートすることが、長期的な資産形成の第一歩です。次は<a href="guide-compound-sim.html">複利シミュレーター</a>で、実際に実質リターンと時間の効果を試算してみましょう。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-compound-sim.html">
+        <div class="related-card-title">📈 複利シミュレーター</div>
+        <div class="related-card-desc">実質リターンと時間の効果を数字で確認できるシミュレーター。インフレ率を加味した試算も可能。</div>
+      </a>
+      <a class="related-card" href="guide-simple-vs-compound.html">
+        <div class="related-card-title">💰 単利と複利の違い</div>
+        <div class="related-card-desc">複利の仕組みと「雪だるま効果」。インフレとの掛け合わせが長期資産形成の核心。72の法則も解説。</div>
+      </a>
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">🛡️ 複利と最大ドローダウン</div>
+        <div class="related-card-desc">複利が効く3条件の一つは「退場しないこと」。ドローダウンが複利を壊す仕組みも解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はインフレと実質リターンに関する基礎的な考え方を情報提供として解説したものであり、特定の金融商品の売買推奨や投資助言ではありません。記載の計算例や数値はすべて概念を示すものであり、将来の運用成果・物価水準等を保証・予測するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
