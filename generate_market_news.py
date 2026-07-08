@@ -4685,6 +4685,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-09", "line": '・<b>2026-07-09</b>: 🧪 解説「<a href="guide-signal-lab-034.html" style="color:#0969da"><b>指数×ロング 昇格後フォローアップ——後半54件でE(R)急落</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 🎓 解説「<a href="guide-masters-005-pattern-audit.html" style="color:#0969da"><b>巨匠検証#5｜パターン5手法の一斉検証と『検証の検証』</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 💰 解説「<a href="guide-inflation-real-return.html" style="color:#0969da"><b>インフレと実質リターン｜現金はなぜ目減りするのか</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 📰 解説「<a href="guide-news-2026-07-08-fomc-minutes-warsh.html" style="color:#0969da"><b>6月FOMC議事録7/8公開 ウォーシュ「ドットなし」×タカ派9対8を整理</b></a>」公開'},
