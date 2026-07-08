@@ -994,3 +994,58 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 | 金ショート全フィルタ / 金IBS×RSI / 金季節性 | ショート=期待値なし・IBS=holdout消失・季節性=方法論棄却 | (memory: project_gold_backtest.md) |
 
 ---
+
+## 📦 SESSION_HANDOFF 7/7セクション退避（2026-07-08）
+
+## 🧬 7/7 進化ループ構築（オーナー依頼「投資スペシャリストとして日々自律進化するシステム」）
+
+- **進化ループ6段**＝①INTAKE(idea-scout-weekly) ②QUEUE(事前登録) ③VALIDATE(既存エンジン) ④CONSOLIDATE(DOCTRINE)
+  ⑤APPLY(昇格メール/朝カード/discipline/相談) ⑥REFLECT(mw evolve/月次監査)。**単一ソース＝`research/DOCTRINE.md` 冒頭**。
+- **新設（ローカル専用・SYNC外）**: `research/DOCTRINE.md`（検証済み知識台帳・エビデンス2軸格付け・全数値出典付き）／
+  `research/hypothesis_queue.md`（事前登録キュー Q1〜Q10・登録簿SHA256で改竄検出）／`_doctrine_check.py`
+  （番人=アンカー21件突合+登録簿+サイズ予算+§1構造検査。**固定オラクル扱い**）／`mw evolve`（決定論ダイジェスト・トークン0）。
+- **新設（クラウド）**: routine `idea-scout-weekly`（`trig_01DtET4sXeLYkRbyX7jKzpYb`・毎週日曜14:00 JST=cron `0 5 * * 0`）＝
+  WebSearchで検証可能な新手法を最大3件→`drafts/idea-inbox.md`へ**追記のみ**（SYNC禁忌登録済・automation-health監視行追加済）。
+  重複回避=`drafts/idea-tested-slugs.txt`（SYNC入り・手法名のみ）。在庫ゲート=未消化10件でスキップ。
+- **品質保証**: 棚卸し5エージェント→DOCTRINE起草→敵対的検証5+設計クリティーク3（自動化事故/トークン/科学的厳密性）→
+  指摘20件を全て反映（数値転記ミス0件・出典タグずれと文脈落ちを修正）。SYNC_FORBIDDENに「_プレフィックス=ローカル専用」規約を追加（REDテスト済）。
+- **運用**: セッション冒頭は `mw evolve` だけ（DOCTRINE全文Readしない＝読み方プロトコルがDOCTRINE冒頭に）。
+  検証完了→DOCTRINE更新→`_doctrine_check.py`緑が儀式。公開翻訳規則（✅/合格を記事に書かない）はDOCTRINE冒頭。
+- **⚠️訂正**: mw.py は **SYNC対象**（GitHubに存在。従来メモの「未追跡」は誤り）。cmd_evolve にクラウド実行ガード実装済み。
+- **未実装バックログ（次回以降・優先度順）**: (a) publish_article.py に check_guide_draft のハードNG検査を共通化（手動公開レーンの
+  コンプラ穴＝rigor監査のcritical） (b) アンカーの name-key参照（rows.4→rows[hyp=TT3]） (c) 鮮度検査のcontent-hash化
+  (d) §1b新規エントリの3点アンカー必須規則 (e) idea-inbox削除行のdiff検査 (f) CLAUDE.md 32KB超のトリム。
+
+## 🐢 7/7 TT3前向き検証を事前登録・稼働（オーナー承認「推奨通り」）
+
+- **新設 `_jp_turtle_tracker.py`（ローカル/SYNC外・`_`で自動ブロック）**＝TT3専用の前向きトラッカー。
+  発火ルール（liquid×20日高値ブレイク×MA50>MA200）とfwd60・日付クラスタboot(B3000/seed42)を
+  **`_jp_turtle_screen.py`から1バイト変えず流用**（参考train diff+0.67%p0.003・holdout+1.39%p0.000が
+  screen値と点推定完全一致＝忠実さ確認）。状態=`_jp_turtle_tracker.json`。
+- **事前登録（2026-07-07ロック・以後不変）**: 登録日以降に発火しfwd60解決した観測のみ計上。
+  昇格=前向きN≥300 かつ diff60の95%CI下限>0 かつ blowup≤対照（**チェックポイント検定**=Nが300倍数越え時のみ判定＝逐次覗きのα膨張抑制）。反証=CI上限<0。**昇格しても旗立てのみ＝発注/配信に触れない**。
+- **現況 N=0/300**＝レイク末(7/1)＜登録日(7/7)＋fwd60は60営業日後に解決＝正常。**初判定は約3か月後**
+  （TT3は1日約90銘柄発火＝解決さえ進めばN300は数営業日ぶんで到達）。R枠でなくfwd60専用枠＝検証時の指標に忠実。
+- キューQ7を💬→📊前向き観察に更新。DOCTRINE §1b/§5＋アンカー2件追加（計23件突合）。**番人修正**＝
+  登録簿ハッシュから「状態/履歴/補遺/備考」を除外（状態遷移は許し、合格基準/ルール/検証設計を凍結）。
+- **次回チェック**=セッションでたまに `python _jp_turtle_tracker.py`（レイク要・約1分）。クラウドroutine不可
+  （レイクはローカルのみ）＝月1回ペースで十分（fwd60は月次でしか意味的に動かない）。
+
+## 🌙 7/7夜 進化ループ初の自動検証サイクル（Q1 ダーバス・ボックス）
+
+- **③VALIDATE→④CONSOLIDATE を初めて実走**（キューの次候補Q1を検証・`_jp_darvas_screen.py`ローカル/SYNC外）。
+  結果=**リターン棄却・防御は再現・TT3の部分集合**の三点。4変種（N20/X10%・N30/X15% × 出来高1.5x有無）とも
+  **train diff60+（q<0.10）→holdout diff60負**（N20/X10%: -1.22%）で方向反転＝BH-FDR不合格。だがblowup
+  4.5-5.8% vs対照17-18%で両期間防御を再現。**TT3と96.5%重複＝ほぼ部分集合**＝箱＋高値近接フィルタがTT3の
+  リターン(holdout+1.39%)を防御に変換（§0-1「守りだけ再現」の再確認）。DOCTRINE §3へ結晶化・採用せず。
+- キューQ1を❌棄却に更新（状態行のみ＝登録簿は本文凍結を維持）・idea-tested-slugs更新・カタログに結果追記。
+- **番人の衛生改善**＝アンカーJSONを `research/_doctrine_anchors.json` に外出し（DOCTRINE 24.4→21.4KB・
+  機械データと人間台帳を分離）。SESSION_HANDOFF 33.6→21KBに減量（7/6分をARCHIVEへ退避）。25アンカー突合・warning0。
+- **Q2 ワインスタイン ステージ2も検証＝❌棄却**（`_jp_weinstein_screen.py`）：150日MA上抜け×勾配>0の2変種とも
+  train +2.05%(q<0.10)→**holdout -0.05%**で崩壊・防御も弱い。**TT3とわずか5.7%重複＝独立した順張りなのに崩れる**
+  ＝TT3の特異性を逆に補強（トレンド確認付き順張り一般は効かず、TT3の特定組合せだけ生存）。DOCTRINE §3結晶化。
+  → ダーバス(TT3の部分集合)とワインスタイン(TT3と独立)の両方が崩れ、**順張りで生き残るのはTT3の1点のみ**が固まった。
+- **次候補=Q3 酒田五法**（客観化可能な三空/赤三兵等）＝パターン系第1弾。以降 Q4グランビル/Q5デュアルモメンタム/Q6ズールー。
+
+
+---
