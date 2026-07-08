@@ -5,7 +5,9 @@ routine `autodraft-publish`（毎日 08:40 JST）が読む手順書。**autodraf
 方式は news-daily-auto / signal-lab-daily と同じ「決定論緑 → Opus白 → 公開／ダメならエスカレ」。
 
 ## 原則（違反したら公開しない）
-- 公開は **1日1本まで**。当日すでに guide を公開済みなら何もしない。
+- 公開は **本レーン（autodraft topicキュー）1日1本まで**。判定は「当日の `drafts/REVIEW.md` に本ルーティン（autopublish）の公開記録があるか」で行う。
+  **⚠️ signal-lab／ニュース／格言／新刊など他レーンの当日公開はカウントしない**（各レーンは独立。2026-07-08 に signal-lab の朝公開を「当日公開済み」と誤判定して無言スキップした実例あり）。
+- **スキップ・対象なしで終了する場合も、`drafts/REVIEW.md` 先頭に「YYYY-MM-DD autopublish: スキップ（理由）」を1行追記してコミットする（沈黙禁止）**。無言終了は失敗と区別できないため禁止。
 - **編集禁止ファイル**: `check_guide_draft.py`／`signal_lab_verify.py`（固定ゲート。実行前に `git checkout` で確定版に戻す）／6コアHTML・political・track-record 等の SYNC禁忌（CLAUDE.md参照）。
 - 迷ったら公開せず `drafts/REVIEW.md` に「🚩要人間レビュー」でエスカレ（理由と対象を明記）。
 
