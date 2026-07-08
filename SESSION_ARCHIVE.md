@@ -978,3 +978,10 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 - **🆕 昇格エッジ限定メール（7/5・オーナー要望）**：`generate_technical_alerts.py` に昇格ゲート新設＝**signal-lab-tracker.json の status=promoted 仮説にマッチしたシグナルだけメール送信**（現時点=index_long_live「指数×ロング」1本のみ）。他は従来どおり signals-log 記録＋クールダウン更新＝前向き検証は全量継続→**今後の研究で昇格すれば自動的に配信対象へ**（トラッカー連動・コード変更不要）。照合は固定オラクル `signal_lab_verify.match` を import（二重実装なし）。tracker読込/照合失敗は fail-open＝従来全送信（checkout欠落で沈黙しない）。キルスイッチ=環境変数 `EMAIL_PROMOTED_ONLY=0`。判定は `log_entry["promoted_gate"]` に記録。単体テスト7ケース緑。旧 #21 email_silent 例外は維持（昇格ゲートと整合）。
 
 ---
+
+## ✅ 7/7朝の無人運転確認（2026-07-08退避・原文はSESSION_HANDOFF 7/7版）
+
+- **autodraft**: ⑭⑮⑯を正しくスキップし⑰インフレ（draft-inflation-real-return.html）を下書き✅＝スラッグ重複ゲート実戦初勝利。着地09:11 JST（cron遅延）→08:40のautopublishは「対象なし」の正常空振り。
+- **signal-lab #032**: 日付ゲート初運転を通過し7/7付けで自動公開✅。公開表記に「（下書き中）」残骸→ライブ修正済（commit afb35376）＋`signal_lab_verify.py` date_check に残骸検査を追加（sync済）。
+
+---
