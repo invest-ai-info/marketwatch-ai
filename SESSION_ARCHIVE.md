@@ -985,3 +985,12 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 - **signal-lab #032**: 日付ゲート初運転を通過し7/7付けで自動公開✅。公開表記に「（下書き中）」残骸→ライブ修正済（commit afb35376）＋`signal_lab_verify.py` date_check に残骸検査を追加（sync済）。
 
 ---
+
+## 📦 DOCTRINE §3 スタブ化退避（2026-07-08・原文の行）
+
+| ラリーW 4仮説（ボラブレイク/ウップス/月替わり） | 全て両期間マイナス（曜日効果のみ微小プラスで不採用） | [src: guide-masters-002-trend.html] |
+| セリング・クライマックスSC1-SC3 | 全6行非有意（SC3はn=30/15で判定不能寄り） | [src: _jp_climax_summary.json] |
+| 及川外形3仮説 | H-O1揃い=不支持・H-O3押し目=両期間マイナス。**H-O2欧州時間は棄却でなく保留**（tf間矛盾・N小） | [src: research/oikawa_fxism_methods.md] |
+| 金ショート全フィルタ / 金IBS×RSI / 金季節性 | ショート=期待値なし・IBS=holdout消失・季節性=方法論棄却 | (memory: project_gold_backtest.md) |
+
+---
