@@ -1,0 +1,115 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "mode": {
+    "net": false,
+    "cost_mult": 1.5,
+    "itt": false
+  },
+  "candidates": [
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 71,
+      "n": 124,
+      "n_days": 25,
+      "pct": 57.3,
+      "ci_lo": 48.5,
+      "ci_hi": 65.6,
+      "avgR": 0.336,
+      "rci_lo": 0.148,
+      "rci_hi": 0.524,
+      "p": 0.00045096488489004827,
+      "profitable": true,
+      "exp_pct": 1.6,
+      "q": 0.0162,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 37,
+      "n": 157,
+      "n_days": 42,
+      "pct": 23.6,
+      "ci_lo": 17.6,
+      "ci_hi": 30.8,
+      "avgR": -0.45,
+      "rci_lo": -0.7,
+      "rci_hi": -0.2,
+      "p": 0.000422906343438445,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0162,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 70,
+      "n": 229,
+      "n_days": 45,
+      "pct": 30.6,
+      "ci_lo": 25.0,
+      "ci_hi": 36.8,
+      "avgR": -0.287,
+      "rci_lo": -0.467,
+      "rci_hi": -0.107,
+      "p": 0.0018121343358894482,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0435,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 81,
+      "n": 148,
+      "n_days": 35,
+      "pct": 54.7,
+      "ci_lo": 46.7,
+      "ci_hi": 62.5,
+      "avgR": 0.277,
+      "rci_lo": 0.092,
+      "rci_hi": 0.462,
+      "p": 0.0032803949000110855,
+      "profitable": true,
+      "exp_pct": 0.0,
+      "q": 0.0524,
+      "fdr_pass": true
+    },
+    {
+      "label": "tier=neutral",
+      "filter": {
+        "tier": "neutral"
+      },
+      "k": 139,
+      "n": 389,
+      "n_days": 35,
+      "pct": 35.7,
+      "ci_lo": 31.1,
+      "ci_hi": 40.6,
+      "avgR": -0.166,
+      "rci_lo": -0.278,
+      "rci_hi": -0.054,
+      "p": 0.003641755346825315,
+      "profitable": false,
+      "exp_pct": 0.5,
+      "q": 0.0524,
+      "fdr_pass": true
+    }
+  ]
+}
