@@ -69,6 +69,19 @@ ROUTINE_FILE_CHECKS = [
     ("週次アイデアスカウト",        "drafts/idea-inbox.md",     240, "info"),
 ]
 
+# ④ 固定ゲートの不変条件: ゲート/リンターを routine が書き換えて通過する「自己承認」を検知する。
+#    2026-07-09 に autopublish が check_site_consistency.py のクラウドスタブ分岐を独自実装へ
+#    書き換えて commit した実例（routine プロンプトの編集禁止指示だけでは防げなかった）への対策。
+#    オーナー決定（2026-07-09）＝routine によるゲート編集は等価修正でも完全禁止・赤はエスカレのみ。
+#    許可 author はオーナー（ローカル sync）と github-actions[bot] のみ。それ以外は warn（Issue化）。
+GATE_FILES = [
+    "check_site_consistency.py",
+    "check_guide_draft.py",
+    "signal_lab_verify.py",
+    "publish_article.py",
+]
+GATE_WINDOW_H = 26  # 毎日09:30実行＋cron滑りをカバー（>24h。稀に同じ違反を2日連続報告するのは許容）
+
 SEV = {"critical": "🔴", "warn": "🟡", "info": "⚪"}
 
 
@@ -166,6 +179,26 @@ def check_card_coverage(owner, repo, token):
     return targets, missing
 
 
+def check_gate_immutability(owner, repo, token, now):
+    """直近 GATE_WINDOW_H 時間に GATE_FILES を「オーナー／github-actions[bot] 以外」の author が
+    変更した commit を列挙する（routine のゲート自己改変検知）。
+    戻り値: [(path, sha7, author表示, 経過h), ...]（空＝違反なし）"""
+    since = (now - dt.timedelta(hours=GATE_WINDOW_H)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    allowed = {owner.lower(), "github-actions[bot]", "web-flow"}  # web-flow=GitHub Web UI編集の committer
+    hits = []
+    for path in GATE_FILES:
+        data = api(f"https://api.github.com/repos/{owner}/{repo}/commits?path={path}"
+                   f"&since={since}&per_page=10", token)
+        for cm in data:
+            login = ((cm.get("author") or {}).get("login") or "").lower()
+            name = cm.get("commit", {}).get("author", {}).get("name", "?")
+            if login in allowed:
+                continue
+            a = age_hours(cm["commit"]["author"]["date"], now)
+            hits.append((path, cm.get("sha", "")[:7], f"{name}(login={login or '不明'})", a))
+    return hits
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -213,6 +246,24 @@ def main():
     except Exception as e:
         # API一時エラーで毎朝Issueを立てないよう、確認失敗自体は info 扱い（記録のみ・誤検知回避）
         body.append(f"- 🚨 ⚪ カバレッジ確認失敗: {e}")
+
+    body.append("")
+    body.append("### ④ 固定ゲートの不変条件（routineによるゲート編集＝自己承認の検知）")
+    try:
+        hits = check_gate_immutability(owner, repo, token, now)
+        if hits:
+            for path, sha, who, a in hits:
+                agetxt = f"{a:.1f}h前" if a < 48 else f"{a/24:.1f}日前"
+                body.append(f"- 🚨 🟡 {path} が {who} により変更されている（{sha}・{agetxt}）"
+                            f"＝routineのゲート編集は完全禁止（オーナー決定 2026-07-09）。差分を確認し、"
+                            f"正なら人間がローカルから採用、不正なら revert")
+            bad.append(("固定ゲートのroutine改変", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 直近{GATE_WINDOW_H}hのゲート変更はオーナー/Actionsのみ"
+                        f"（対象{len(GATE_FILES)}本）")
+    except Exception as e:
+        # ③と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ ゲート不変条件の確認失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
