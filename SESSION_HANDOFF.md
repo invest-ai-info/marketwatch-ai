@@ -1,4 +1,15 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-09 昼）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-09 夜）
+
+## ⚡ 7/9夜 最新ニュース・ライブフィード新設（オーナー要望「夕方でも昨日のニュース」への対策・毎時更新・AI不使用・コスト0）
+
+- **診断**: TOP3は48h窓×半減期36hの「インパクト優先」設計＝仕様どおり昨日の大ニュースが残留＋日本語フレッシュ記事のプールが薄い＋更新1日3回。
+- **新設（既存TOP3/カード関連ニュースはそのまま）**:
+  ①`build_news_ticker.py`＝日本語RSS/Google News 9本（ロイター/Bloomberg/日経/時事/株探/みんかぶ/NHK/Yahoo!/東洋経済）→時刻降順・類似dedup・ソース上限6・最新24件→`news-ticker.json`。センチメント絵文字はキーワード判定（generate側と同語彙の複製）。取得<5件なら既存JSON保持（フェイルセーフ）。日本語3文字未満の見出しは除外（銘柄ページのゴミ対策）。
+  ②`news-ticker.yml`＝毎時:37・news-ticker.jsonのみcommit・concurrency有・update-market-newsのon:pushには**非**該当（連鎖起動なし）。
+  ③index.htmlに「⚡最新マーケットニュース」枠＝`build_news_ticker_section()`（generate_market_news.py・非f-string関数）。**JSが閲覧時にJSONをfetch**（cache-buster付き・DOM APIでXSS安全・◯分前表示・8件+さらに表示・免責一文）＝HTML再生成なしで常に最新。
+  ④ガード: news-ticker.json=SYNC_FORBIDDEN登録・automation-healthのWORKFLOW_CHECKSに5h/warnで登録・CLAUDE.md反映。
+- **⚠️運用の学び=reconcile手順**: sync時に`generate_market_news.py`と`check_site_consistency.py`がstaleガード🚫→原因はクラウド公開（news-daily-auto 17:40等）がGitHub側で両ファイルを更新していたため。**リモートdiff確認→リモート版に自分の編集を乗せ直し→意図的`--force`**で解決（未変更ファイルはキャッシュskipなのでforceの影響は変更分のみ）。
+- **🚩要オーナー認知**: 今朝の autopublish routine が `check_site_consistency.py` のクラウドスタブ分岐を**独自実装で書き換えてcommit**していた（7/8ローカル実装の`_IS_LOCAL`→routine版`_is_cloud_stub`）。動作は等価でクラウド実証済みのためリモート版を正として採用したが、**「ゲート/リンターをroutineが編集して通過」は自己承認と同型のリスク**＝AUTOPUBLISH_GUIDEに「リンター編集禁止・エスカレ」明文化の検討を⓪-Gに積んだ。
 
 ## 🗡 7/9 Q13深押しナイフ防御ゲート＝H1採用・🔪列実装＋寄り付きロガー自己修復化（今日のメイン）
 
@@ -154,7 +165,9 @@
   **A**=資産クラス版デュアルモメンタム（日経/S&P500/金/米債の月次乗り換え・原典回帰・Yahooで20年・記事#6有力候補）／
   **C**=ズールー前向き実装（=Q11+screener参考列）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
   ※「すでに生きているアレンジ」の整理も記事ネタ（赤三兵→連騰≥4危険ゲート・タートル資金管理→ATRベースSL/2%ルール・**G4逆張り→🔪回避フラグ（Q13）**＝原型のエントリーは死んでも部品は生きる）。
-- **⓪-F DOCTRINE 25.6KB（予算24）＝次回 declutter でスリム化**（§3の古い棄却詳細をアーカイブ側へ）。
+- **⓪-F DOCTRINE 25.6KB（予算24）＝次回 declutter でスリム化**（§3の古い棄却詳細をアーカイブ側へ）。CLAUDE.mdも35KB（予算32）＝同時に。
+- **⓪-G 🚩routineによるリンター編集の再発防止を相談**: 7/9朝 autopublish が check_site_consistency.py を書き換えて通過（内容は等価・採用済み）。AUTOPUBLISH_GUIDE/routineプロンプトに「ゲート・リンターは編集禁止＝赤ならエスカレ」を明文化するか（signal-lab の固定オラクル方式の横展開）。
+- **⓪-H ⚡news-ticker 初日の定時運転確認**: 毎時:37。翌朝、Actions履歴で夜間の毎時実行が回っているか＋live JSONのupdatedが新しいか（automation-healthにも登録済=5h/warn）。
 - **①巨匠シリーズ**：記事#5公開済み（7/8夜・Q1〜Q5+TT3訂正を1本化）。次記事候補=「#6 割安成長（ズールー）×グレアム再訪」＝Q11前向き設計・Q12再監査の後が筋。
 - **②TT3の前向き検証＝📊稼働中**（`_jp_turtle_tracker.py`・検定はブロックboot版に7/8改定・月1回チェック・初判定は10月頃）。
 - **③防御スクリーン列＝✅適用済み**（`mw screen`の🛡防御列・7/7）。
