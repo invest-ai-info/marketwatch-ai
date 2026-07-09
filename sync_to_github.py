@@ -25,4 +25,5 @@ SYNC_FILES = [
     "guide-inflation-real-return.html",
     "guide-signal-lab-034.html",
     "guide-proverb-matsu-mo-soba.html",
+    "guide-news-2026-07-09-trump-ceasefire-over-oil-surge.html",
 ]
