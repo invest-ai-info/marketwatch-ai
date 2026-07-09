@@ -4630,43 +4630,78 @@ def build_featured_guides():
 
 
 def build_news_ticker_section():
-    """⚡最新ニュース・ライブフィード枠（2026-07-09 新設）。
+    """⚡最新ニュース・ライブフィード枠（2026-07-09 新設・同日夜に市場タグ/絞り込み/カード内ミニ一覧を追加）。
     news-ticker.json（GitHub Actions news-ticker.yml が毎時生成・SYNC禁忌）を閲覧時に JS で fetch して
-    描画する＝index.html を再生成しなくても常に最新の見出しが出る。AI不使用・描画は DOM API（XSS安全）。
+    描画する＝index.html を再生成しなくても常に最新の見出しが出る。
+    市場タグ（c=stocks/fx/commodity/crypto/macro/biz）は build_news_ticker.py のキーワード照合＝AI不使用・コスト0。
+    同じ JS が各マーケットカード内の <div class="mw-ticker-mini" data-mwcat="…"> にも該当市場の最新3件を流し込む。
     ※この関数は f-string ではない（JS の中括弧をそのまま書くため）。"""
-    return '''  <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新） -->
+    return '''  <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新・AI不使用） -->
   <div style="background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #fb8500;border-radius:8px;padding:14px 22px;margin-bottom:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px">
       <span style="color:#fb8500;font-weight:700">⚡ 最新マーケットニュース <span style="font-size:.72rem;color:#57606a;font-weight:500">（各社見出しを自動収集・毎時更新）</span></span>
       <span id="mwTickerMeta" style="font-size:.74rem;color:#57606a">読み込み中…</span>
     </div>
+    <div id="mwTickerFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px"></div>
     <div id="mwTickerList" style="font-size:.86rem;line-height:1.6"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px">
-      <span style="font-size:.7rem;color:#6e7781">見出しリンク先は各社の外部サイト。掲載は情報提供のみを目的とし、投資助言ではありません。</span>
+      <span style="font-size:.7rem;color:#6e7781">見出しリンク先は各社の外部サイト。市場タグは機械判定の参考情報です。掲載は情報提供のみを目的とし、投資助言ではありません。</span>
       <a id="mwTickerMore" href="javascript:void(0)" style="display:none;color:#0969da;font-size:.78rem;font-weight:600;text-decoration:none">さらに表示 ▼</a>
     </div>
   </div>
   <script>
   (function(){
-    var list=document.getElementById('mwTickerList'),meta=document.getElementById('mwTickerMeta'),more=document.getElementById('mwTickerMore');
+    var CAT={stocks:['📈株式','#0969da'],fx:['💱為替','#8250df'],commodity:['🛢商品','#bc4c00'],
+             crypto:['🪙暗号','#9a6700'],macro:['🏛マクロ','#1a7f37'],biz:['📰経済','#6e7781']};
+    var list=document.getElementById('mwTickerList'),meta=document.getElementById('mwTickerMeta'),
+        more=document.getElementById('mwTickerMore'),fbar=document.getElementById('mwTickerFilters');
+    var all=[],filter='',shown=8;
+    function cat(n){return CAT[n.c]?n.c:'biz';}
     function rel(iso){var m=(Date.now()-new Date(iso).getTime())/60000;if(!isFinite(m)||m<0)return'';
       if(m<1)return'たった今';if(m<60)return Math.floor(m)+'分前';if(m<1440)return Math.floor(m/60)+'時間前';return Math.floor(m/1440)+'日前';}
+    function badge(n){var c=CAT[cat(n)];var b=document.createElement('span');
+      b.style.cssText='font-size:.68rem;font-weight:700;color:#ffffff;background:'+c[1]+';border-radius:9px;padding:1px 7px;white-space:nowrap';
+      b.textContent=c[0];return b;}
     function row(n){var d=document.createElement('div');d.style.cssText='padding:5px 0;border-bottom:1px dashed #d8dee4;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap';
       var tm=document.createElement('span');tm.style.cssText='color:#57606a;font-size:.74rem;white-space:nowrap;min-width:56px';tm.textContent=rel(n.dt);
-      var em=document.createElement('span');em.textContent=n.e||'😐';
       var a=document.createElement('a');a.href=n.u;a.target='_blank';a.rel='noopener nofollow';
-      a.style.cssText='color:#0969da;text-decoration:none;font-weight:600;flex:1;min-width:200px';a.textContent=n.t;
+      a.style.cssText='color:#0969da;text-decoration:none;font-weight:600;flex:1;min-width:200px';a.textContent=(n.e||'😐')+' '+n.t;
       var s=document.createElement('span');s.style.cssText='color:#6e7781;font-size:.72rem;white-space:nowrap';s.textContent=n.s;
-      d.appendChild(tm);d.appendChild(em);d.appendChild(a);d.appendChild(s);return d;}
-    fetch('news-ticker.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-      var items=(d.items||[]).filter(function(n){return /^https?:\\/\\//.test(n.u||'')&&n.t;});
-      if(!items.length)throw 0;
+      d.appendChild(tm);d.appendChild(badge(n));d.appendChild(a);d.appendChild(s);return d;}
+    function render(){
+      var items=filter?all.filter(function(n){return cat(n)===filter;}):all;
       list.textContent='';
-      items.slice(0,8).forEach(function(n){list.appendChild(row(n));});
-      if(items.length>8){more.style.display='inline';
-        more.onclick=function(){items.slice(8).forEach(function(n){list.appendChild(row(n));});more.style.display='none';};}
+      if(!items.length){list.innerHTML='<span style="color:#6e7781;font-size:.82rem">この市場の直近の見出しはいまのところありません。</span>';more.style.display='none';return;}
+      items.slice(0,shown).forEach(function(n){list.appendChild(row(n));});
+      more.style.display=items.length>shown?'inline':'none';}
+    function mkbtn(key,label,color){var b=document.createElement('button');
+      b.style.cssText='font-size:.74rem;font-weight:700;border-radius:14px;padding:3px 11px;cursor:pointer;border:1px solid #d0d7de;background:#f6f8fa;color:#57606a';
+      b.textContent=label;
+      b.onclick=function(){filter=key;shown=8;
+        Array.prototype.forEach.call(fbar.children,function(x){x.style.background='#f6f8fa';x.style.color='#57606a';x.style.borderColor='#d0d7de';});
+        b.style.background=color;b.style.color='#ffffff';b.style.borderColor=color;render();};
+      fbar.appendChild(b);return b;}
+    var btnAll=mkbtn('','すべて','#fb8500');
+    Object.keys(CAT).forEach(function(k){mkbtn(k,CAT[k][0],CAT[k][1]);});
+    more.onclick=function(){shown=24;render();};
+    fetch('news-ticker.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      all=(d.items||[]).filter(function(n){return /^https?:\\/\\//.test(n.u||'')&&n.t;});
+      if(!all.length)throw 0;
+      btnAll.onclick();
       var u=new Date(d.updated);
       meta.textContent='最終取得 '+(u.getMonth()+1)+'/'+u.getDate()+' '+('0'+u.getHours()).slice(-2)+':'+('0'+u.getMinutes()).slice(-2)+' JST';
+      // 各マーケットカード内のミニ一覧（該当市場の最新3件・見出しのみ＝AI解説なし）
+      Array.prototype.forEach.call(document.querySelectorAll('.mw-ticker-mini'),function(el){
+        var mc=el.getAttribute('data-mwcat');
+        var xs=all.filter(function(n){return cat(n)===mc;}).slice(0,3);
+        if(!xs.length){return;}
+        var h=document.createElement('div');h.style.cssText='font-size:.76rem;font-weight:700;color:#fb8500;margin:10px 0 2px';
+        h.textContent='⚡ 最新の見出し（毎時自動更新）';el.appendChild(h);
+        xs.forEach(function(n){var r2=document.createElement('div');r2.style.cssText='font-size:.78rem;padding:2px 0;display:flex;gap:6px;align-items:baseline';
+          var t2=document.createElement('span');t2.style.cssText='color:#57606a;font-size:.7rem;white-space:nowrap';t2.textContent=rel(n.dt);
+          var a2=document.createElement('a');a2.href=n.u;a2.target='_blank';a2.rel='noopener nofollow';
+          a2.style.cssText='color:#0969da;text-decoration:none';a2.textContent=n.t;
+          r2.appendChild(t2);r2.appendChild(a2);el.appendChild(r2);});});
     }).catch(function(){meta.textContent='';
       list.innerHTML='<span style="color:#6e7781;font-size:.82rem">最新ニュースを読み込めませんでした（時間をおいて再読み込みしてください）。</span>';});
   })();
@@ -5155,7 +5190,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">{fmt_price(nk, 0, suffix='円')} {fmt_change(nk_chg)}</span></div>
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">{fmt_price(sp, 2)} {fmt_change(sp_chg)}</span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{stocks_news_html}</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{stocks_news_html}<div class="mw-ticker-mini" data-mwcat="stocks"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -5168,7 +5203,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='円')} {fmt_change(fx_chg)}</span></div>
         <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='円')} {fmt_change(efx_chg)}</span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{fx_news_html}</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{fx_news_html}<div class="mw-ticker-mini" data-mwcat="fx"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -5181,7 +5216,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
         <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{cmd_news_html}</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{cmd_news_html}<div class="mw-ticker-mini" data-mwcat="commodity"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -5194,7 +5229,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">{fmt_price(btc, 0, prefix='$')} {fmt_change(btc_chg)}</span></div>
         <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">{fmt_price(eth, 2, prefix='$')} {fmt_change(eth_chg)}</span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}</div>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}<div class="mw-ticker-mini" data-mwcat="crypto"></div></div>
       </div>
     </div>
   </div>
