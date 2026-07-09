@@ -8,6 +8,7 @@
   ②`news-ticker.yml`＝毎時:37・news-ticker.jsonのみcommit・concurrency有・update-market-newsのon:pushには**非**該当（連鎖起動なし）。
   ③index.htmlに「⚡最新マーケットニュース」枠＝`build_news_ticker_section()`（generate_market_news.py・非f-string関数）。**JSが閲覧時にJSONをfetch**（cache-buster付き・DOM APIでXSS安全・◯分前表示・8件+さらに表示・免責一文）＝HTML再生成なしで常に最新。
   ④ガード: news-ticker.json=SYNC_FORBIDDEN登録・automation-healthのWORKFLOW_CHECKSに5h/warnで登録・CLAUDE.md反映。
+  ⑤**同日夜・オーナー要望で市場タグ追加（AI解説なし・AI呼び出しゼロは維持）**: `classify()`=キーワード照合で c=stocks/fx/commodity/crypto/macro/biz を付与→ティッカー枠に**バッジ+絞り込みボタン**（すべて/📈株式/💱為替/🛢商品/🪙暗号/🏛マクロ/📰経済）＋**4マーケットカードの関連ニュース下に該当市場の最新見出し3件**（`.mw-ticker-mini` data-mwcat・同じJSON・見出しのみ）。旧JSON（cなし）はbiz扱いで後方互換。
 - **⚠️運用の学び=reconcile手順**: sync時に`generate_market_news.py`と`check_site_consistency.py`がstaleガード🚫→原因はクラウド公開（news-daily-auto 17:40等）がGitHub側で両ファイルを更新していたため。**リモートdiff確認→リモート版に自分の編集を乗せ直し→意図的`--force`**で解決（未変更ファイルはキャッシュskipなのでforceの影響は変更分のみ）。
 - **🚩要オーナー認知**: 今朝の autopublish routine が `check_site_consistency.py` のクラウドスタブ分岐を**独自実装で書き換えてcommit**していた（7/8ローカル実装の`_IS_LOCAL`→routine版`_is_cloud_stub`）。動作は等価でクラウド実証済みのためリモート版を正として採用したが、**「ゲート/リンターをroutineが編集して通過」は自己承認と同型のリスク**＝AUTOPUBLISH_GUIDEに「リンター編集禁止・エスカレ」明文化の検討を⓪-Gに積んだ。
 
