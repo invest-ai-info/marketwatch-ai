@@ -84,6 +84,24 @@ def sentiment_emoji(title):
     return "😊" if pos > neg else ("😢" if neg > pos else "😐")
 
 
+# 市場タグ判定（キーワード照合のみ・AI不使用＝コスト0）。上から順に最初に一致したタグ1個。
+# 意図: 「どの市場に効くニュースか」をひと目で分かるようにする（index.htmlのバッジ/絞り込み/カード内ミニ一覧が使う）
+_CAT_RULES = [
+    ("crypto",    ("ビットコイン", "BTC", "イーサリアム", "イーサ", "暗号資産", "仮想通貨", "ステーブルコイン", "アルトコイン", "コインベース")),
+    ("commodity", ("原油", "WTI", "ブレント", "OPEC", "金価格", "金相場", "金先物", "ゴールド", "銀価格", "プラチナ", "銅価格", "天然ガス", "LNG", "商品市況", "穀物", "小麦", "レアアース")),
+    ("fx",        ("円相場", "ドル円", "円安", "円高", "為替", "介入", "ユーロ円", "ユーロドル", "ポンド", "人民元", "通貨")),
+    ("stocks",    ("日経", "TOPIX", "株価", "株式", "ダウ", "ナスダック", "NASDAQ", "S&P", "半導体", "決算", "上場", "KOSPI", "株")),
+    ("macro",     ("日銀", "FRB", "FOMC", "ECB", "利上げ", "利下げ", "金利", "雇用統計", "CPI", "GDP", "インフレ", "関税", "景気", "財政", "国債", "経済対策")),
+]
+
+
+def classify(title):
+    for key, kws in _CAT_RULES:
+        if any(k in title for k in kws):
+            return key
+    return "biz"  # その他の経済ニュース
+
+
 _TAG_RE = re.compile(r"<[^>]+>")
 
 
@@ -130,7 +148,7 @@ def fetch_all():
                     continue
                 items.append({"t": title, "u": link, "s": source,
                               "dt": dt.astimezone(JST).isoformat(timespec="minutes"),
-                              "e": sentiment_emoji(title)})
+                              "e": sentiment_emoji(title), "c": classify(title)})
                 n += 1
             print(f"  {source:<10} {n}件")
         except Exception as ex:
