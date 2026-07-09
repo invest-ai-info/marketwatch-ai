@@ -253,13 +253,19 @@ def cmd_deploy(argv):
 def cmd_issues(argv):
     """open な health-check / automation-health Issue を一覧（決定論・トリアージの土台）。
     判断（原因診断・修正提案）は上限付き /loop でモデルに渡す。これは"データ収集"だけ＝トークン0。"""
-    labels = "health-check,automation-health"
-    try:
-        _, data = _gh("GET", f"/issues?state=open&labels={labels}&per_page=30")
-    except Exception as e:
-        print(f"❌ 取得失敗: {e}")
-        return 1
-    issues = [it for it in data if "pull_request" not in it]
+    # ⚠️ GitHub API の labels= はカンマ区切り＝AND条件（全ラベルを持つIssueだけ一致）。
+    #    2026-07-09: Issue #2（bug,automation-health）が3週間見えなかった実害→ラベルごとにOR取得へ修正。
+    seen = {}
+    for label in ("health-check", "automation-health"):
+        try:
+            _, data = _gh("GET", f"/issues?state=open&labels={label}&per_page=30")
+        except Exception as e:
+            print(f"❌ 取得失敗 ({label}): {e}")
+            return 1
+        for it in data:
+            if "pull_request" not in it:
+                seen[it.get("number")] = it
+    issues = [seen[n] for n in sorted(seen)]
     if not issues:
         print("✅ open な health-check / automation-health Issue は無し（裏方は健全）")
         return 0
