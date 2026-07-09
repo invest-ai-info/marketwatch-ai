@@ -1,0 +1,48 @@
+name: News Ticker
+
+# ⚡最新ニュース・ライブフィード（AI不使用・毎時）。news-ticker.json だけを commit する軽量レーン。
+# index.html は JS が閲覧時に JSON を fetch するため、このワークフローで HTML 再生成は不要。
+# ※update-market-news.yml の on:push paths に news-ticker.json は含まれない＝連鎖起動しない設計。
+
+on:
+  schedule:
+    - cron: '37 * * * *'   # 毎時37分（:00 混雑回避。遅延・スキップは仕様＝次の時間帯で追いつく）
+  workflow_dispatch:
+
+concurrency:
+  group: news-ticker
+  cancel-in-progress: true
+
+jobs:
+  ticker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install feedparser
+
+      - name: Build news ticker JSON
+        run: python build_news_ticker.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add news-ticker.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: news ticker $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
