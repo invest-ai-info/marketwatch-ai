@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-07-10 autopublish: ✅ 公開済み — guide-nikkei-vs-topix.html（基礎知識 #19）
+
+- **対象key**: nikkei-vs-topix（topic queue #19 / 基礎知識）
+- **仮タイトル**: 日経平均とTOPIXの違いを図解で解説｜株価指数の仕組みを正しく理解する
+- **決定論ゲート**: ✅ GREEN (EXIT=0)
+- **Opusコンプラ+品質判定**: 🟢白（全観点クリア・修正不要）
+- **整合性チェック**: ✅ EXIT=0
+- **push**: ✅ PUSH-MAIN 成功（rebase→push、1回で成功）
+- **HTTP確認**: クラウド環境からは Cloudflare により既存ページも含め 403 — 同環境での確認不可（push 成功のため公開済みと判断）
+- **公開URL**: https://marketwatch-jp.com/guide-nikkei-vs-topix.html
+- **仕上げ時の主な修正**: noindex削除・パス修正（../favicon→favicon）・公開日2026-07-10更新・SVG2 x=620はみ出しラベル修正・NT倍率数値修正（18倍台→約16倍台/16.06倍、WebSearch確認）
+
+---
+
 ## 2026-07-10 | 🧪 シグナル研究日誌 #035 ✅ 公開済み
 
 - **基準日**: 2026-07-10
