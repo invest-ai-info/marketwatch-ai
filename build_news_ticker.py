@@ -88,12 +88,16 @@ _TAG_RE = re.compile(r"<[^>]+>")
 
 
 def clean_title(title):
-    """Google News 形式の末尾『 - 媒体名』を除去（表示は別途ソースバッジで出す）。"""
+    """末尾の媒体名サフィックスを除去（Google News=『 - 媒体名』・東洋経済=『 | ビジネス | 媒体名』等。
+    表示は別途ソースバッジで出す）。末尾セグメントが短い（≤22字）ときだけ媒体名とみなす。"""
     t = _TAG_RE.sub("", title or "").strip()
-    if " - " in t:
-        head, tail = t.rsplit(" - ", 1)
-        if 0 < len(tail) <= 22 and len(head) >= 10:  # 末尾が短い＝媒体名の可能性が高い
-            t = head.strip()
+    for sep in (" - ", " | ", "｜"):
+        while sep in t:
+            head, tail = t.rsplit(sep, 1)
+            if 0 < len(tail) <= 22 and len(head) >= 10:
+                t = head.strip()
+            else:
+                break
     return t
 
 
