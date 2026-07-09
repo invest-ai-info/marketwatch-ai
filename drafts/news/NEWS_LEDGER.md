@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-07-09
+- 判定: ✅ 公開済み
+- 選定トピック: トランプ「停戦終了」発言で原油+6%・ダウ-577ドル ── ホルムズ海峡再緊張を中立整理（カテゴリ: マクロ・地政学・エネルギー・米国・中東）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: Trump大統領がNATOサミット（トルコ）でイランとの停戦を「終わった」と宣言。WTI+4.4%（$73.52）・ブレント+5.2%（$78.02）に急騰、ダウ-576.76ドル(-1.09%)。日本の原油輸入95%超を担うホルムズ海峡リスク再燃で話題性・影響・付加価値が全て最高点。7/6記事（ホルムズ再開→油安）とは逆方向の新事実で重複なし。
+- 出典（2系統以上確認済み）:
+  - CNBC「Oil prices today: Brent, WTI rise as U.S. targets Iran」（2026-07-08）
+  - CBS News「Live Updates: US, Iran trade more strikes」（2026-07-08）
+  - NBC News「Live updates: U.S. military completes latest strikes on Iran」（2026-07-08）
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates」（2026-07-08）
+  - OANDA Japan「S&P500の振り返りと見通し：トランプ大統領が「停戦終了」発言」（2026-07-09）
+  - 日本経済新聞「日経平均終値924円高」（2026-07-09）
+  - 内閣府「中東情勢の緊迫化を受けて」（2026年3月、構造的背景）
+  - Forbes「Rate Hike May Come Soon On Market Estimates」（2026-07-07）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・noindexなし・将来断定なし・出典多系統）
+  - 適用修正: なし
+  - 独立Opus確認（エージェント2）: ✅白（7項目全クリア・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典8系統以上 ✅
+- check_site_consistency.py: EXIT=0（警告2件は既存インフラ問題・今回記事と無関係）
+- 公開ファイル: guide-news-2026-07-09-trump-ceasefire-over-oil-surge.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了（5d7622d→e374509）
+
+---
+
 ## 2026-07-08
 - 判定: ✅ 公開済み（stopフック検出→全ファイルをコミット・プッシュして公開完了）
 - 選定トピック: FRBが本日「6月FOMC議事録」を公開 ── ウォーシュ議長「前例なきドット不提出」×タカ派9対8分裂の背景と日本株・ドル円への影響を整理（カテゴリ: マクロ・金融政策・米国）
