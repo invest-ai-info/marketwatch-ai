@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>日経平均とTOPIXの違いを図解で解説｜株価指数の仕組みを正しく理解する - MarketWatch AI</title>
+  <meta name="description" content="日経平均株価とTOPIXはどう違うのか。225銘柄の株価平均型と東証プライム全体の時価総額加重型の仕組みを図解で比較。値がさ株の影響、NT倍率、S&P500・ダウ・ナスダックとの対応まで初心者〜中級者向けに解説します。">
+  <meta name="keywords" content="日経平均,TOPIX,株価指数,時価総額加重型,株価平均型,NT倍率,値がさ株,S&P500,ダウ平均,ナスダック,投資初心者,株式指数の仕組み">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-nikkei-vs-topix.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="日経平均とTOPIXの違いを図解で解説｜株価指数の仕組みを正しく理解する">
+  <meta property="og:description" content="日経平均（225銘柄・株価平均型）とTOPIX（東証プライム全体・時価総額加重型）の仕組みの違いを図解。NT倍率・値がさ株・世界の主要指数との対応まで解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-nikkei-vs-topix.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "日経平均とTOPIXの違いを図解で解説｜株価指数の仕組みを正しく理解する",
+    "description": "日経平均株価とTOPIXの仕組みの違い（株価平均型 vs 時価総額加重型）を図解で比較。NT倍率・値がさ株・世界主要指数の分類まで初心者〜中級者向けに解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-10",
+    "dateModified": "2026-07-10",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-nikkei-vs-topix.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVG概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 追加SVGクラス: 指数比較図用 */
+    .s-box-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1.5;rx:6}
+    .s-box-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5}
+    .s-box-bg{fill:#f6f8fa;stroke:#d0d7de;stroke-width:1.2}
+    .s-txt-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-txt-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-txt-h{fill:#1f2328;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-txt-sm{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-bar-b{fill:#0969da}
+    .s-bar-g{fill:#1a7f37}
+    .s-bar-r{fill:#cf222e}
+    .s-bar-y{fill:#d4a017}
+    .s-curve-b{stroke:#0969da;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-box-b{fill:#1a2030;stroke:#58a6ff}
+    body.dark .s-box-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-box-bg{fill:#161b22;stroke:#30363d}
+    body.dark .s-txt-b{fill:#79c0ff}
+    body.dark .s-txt-g{fill:#7ee787}
+    body.dark .s-txt-h{fill:#e6edf3}
+    body.dark .s-txt-sm{fill:#8b949e}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-g{fill:#2ea043}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-y{fill:#d4a017}
+    body.dark .s-curve-b{stroke:#79c0ff}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 日経平均とTOPIXの違い
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は株価指数の仕組みに関する「情報提供」であり、特定銘柄・特定ETF・特定指数連動商品の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📈 日経平均とTOPIXの違いを図解で解説</h1>
+    <div class="meta-line">公開日：2026 年 7 月 10 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「今日は日経平均が上がった」「TOPIXは小幅高」——毎日ニュースで耳にする言葉でも、<strong>「2つはどう違うのか」「どちらが"日本株全体"を表しているのか」</strong>を正確に説明できる人は意外と少ないものです。実は、この2つの指数は<strong>算出の方法がまったく異なり</strong>、同じ日に片方が大きく動いてもう片方が小動きで終わる、ということがしばしば起きます。</p>
+    <p>指数の仕組みを知らないまま「日経平均が上がった＝日本株全体が上がった」と思い込むと、<strong>市場の実態を誤読するリスク</strong>があります。本記事では、日経平均とTOPIXの構造を図解でひもとき、値がさ株の影響・NT倍率・世界の主要指数との対応まで、<strong>初心者の「入口」から中上級の「使い方」まで</strong>を解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>日経平均は<strong>225銘柄の「株価平均型」</strong>——株価が高い銘柄ほど指数に大きく影響する。ダウ平均（米）と同じ方式。</li>
+      <li>TOPIXは<strong>東証プライム全銘柄の「時価総額加重型」</strong>——企業の大きさ（時価総額）に比例して指数に反映される。S&P500（米）と同じ方式。</li>
+      <li>「日経平均が上がった＝日本株全体が上がった」は<strong>必ずしも正確ではない</strong>。両者の乖離（NT倍率）を知ることで、相場の質を見分けるヒントになる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「株価指数」とはそもそも何を測るもの？</a></li>
+        <li><a href="#section-2">日経平均株価の仕組み：225銘柄の株価平均型</a></li>
+        <li><a href="#section-3">値がさ株が日経平均を動かす（概念図）</a></li>
+        <li><a href="#section-4">TOPIXの仕組み：東証プライム全体の時価総額加重型</a></li>
+        <li><a href="#section-5">日経平均 vs TOPIX 比較表</a></li>
+        <li><a href="#section-6">NT倍率：2つの指数の「ズレ」を読む</a></li>
+        <li><a href="#section-7">世界の主要指数を同じ分類で整理</a></li>
+        <li><a href="#section-8">「日本株全体が上がった」という誤解の罠</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ============================================================
+         前半：初心者向け入口
+    ============================================================= -->
+
+    <h2 id="section-1">1️⃣ 「株価指数」とはそもそも何を測るもの？</h2>
+    <p>株式市場には何百・何千もの銘柄が上場しています。そのすべての動きを一目で把握するのは不可能なので、<strong>代表的な銘柄の価格を組み合わせて「市場全体の値動きを1つの数字で表したもの」</strong>が株価指数です。</p>
+    <p>株価指数を計算する方法は大きく2種類あります。</p>
+    <ul>
+      <li><strong>株価平均型</strong>：選ばれた銘柄の株価を単純に合計（または平均）して指数を算出する。株価が高い銘柄（値がさ株）ほど指数に大きく影響する。</li>
+      <li><strong>時価総額加重型</strong>：各銘柄の「株価 × 発行済み株数（＝時価総額）」の合計をもとに指数を算出する。企業の大きさ（時価総額）が大きいほど指数に強く反映される。</li>
+    </ul>
+    <p>日経平均は前者、TOPIXは後者です。この違いが、日々の値動きの差を生みます。</p>
+
+    <h2 id="section-2">2️⃣ 日経平均株価の仕組み：225銘柄の株価平均型</h2>
+    <p><strong>日経平均株価</strong>（正式名称：日経225）は、東京証券取引所プライム市場に上場する銘柄の中から、<strong>業種バランスを考慮して選ばれた225銘柄</strong>を対象に算出する株価指数です。日本経済新聞社が算出・公表を行っています。</p>
+    <p>算出の基本的な考え方は、<strong>225銘柄の株価の合計 ÷ 除数（divisor）</strong>です。除数は株式分割や銘柄入れ替えのたびに調整され、指数の連続性が保たれます。</p>
+
+    <div class="info-box">
+      <strong>💡 「修正平均」とは？</strong>：株式分割や銘柄変更があると、計算上の数値が飛んでしまいます。そのたびに「除数」を調整して連続性を保つ方式を<strong>「修正平均（修正株価平均）」</strong>と呼びます。日経平均はこの方式を採用しており、アメリカの<strong>ダウ平均（DJIA・30銘柄）</strong>と同じ考え方です。
+    </div>
+
+    <h2 id="section-3">3️⃣ 値がさ株が日経平均を動かす（概念図）</h2>
+    <p>株価平均型の最大の特徴であり、注意点でもあるのが<strong>「値がさ株（ねがさかぶ）」の影響力</strong>です。「値がさ株」とは、株価の絶対値が高い銘柄のことです。</p>
+    <p>例えば、株価が1万円の銘柄と株価が100円の銘柄が同じ割合で「10%上昇」しても、指数への貢献はまったく異なります。株価1万円の銘柄は1,000円分動き、株価100円の銘柄はわずか10円分しか動きません。つまり、<strong>株価平均型では「時価総額が小さくても株価が高い銘柄」が、時価総額の大きな企業よりも指数を動かす力を持つ</strong>場合があります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="neagasa-title">
+        <title id="neagasa-title">値がさ株と低株価銘柄の日経平均への影響力の違いを示す概念図</title>
+        <text class="s-panel-label" x="40" y="24">株価平均型：株価が高いほど指数への影響力が大きい（概念図）</text>
+
+        <!-- 左エリア：値がさ株A（株価高） -->
+        <rect class="s-box-b" x="50" y="50" width="230" height="190" rx="8" ry="8"/>
+        <text class="s-txt-b" x="165" y="80" text-anchor="middle">銘柄 A</text>
+        <text class="s-txt-sm" x="165" y="98" text-anchor="middle">株価：10,000 円</text>
+        <!-- 棒グラフ：大きな影響 -->
+        <rect class="s-bar-b" x="130" y="116" width="70" height="90" rx="4"/>
+        <text class="s-txt-b" x="165" y="144" text-anchor="middle" style="fill:#ffffff;font-size:14px">+10%</text>
+        <text class="s-txt-b" x="165" y="162" text-anchor="middle" style="fill:#ffffff;font-size:12px">= +1,000円</text>
+        <text class="s-txt-sm" x="165" y="225" text-anchor="middle">↑ 日経平均へ</text>
+        <text class="s-note" x="165" y="242" text-anchor="middle">大きく貢献</text>
+
+        <!-- 矢印 -->
+        <text class="s-label-sm" x="310" y="148" text-anchor="middle" style="font-size:20px">VS</text>
+
+        <!-- 右エリア：低株価銘柄B -->
+        <rect class="s-box-g" x="360" y="50" width="230" height="190" rx="8" ry="8"/>
+        <text class="s-txt-g" x="475" y="80" text-anchor="middle">銘柄 B</text>
+        <text class="s-txt-sm" x="475" y="98" text-anchor="middle">株価：100 円</text>
+        <!-- 棒グラフ：小さな影響 -->
+        <rect class="s-bar-g" x="440" y="196" width="70" height="10" rx="4"/>
+        <text class="s-txt-sm" x="475" y="192" text-anchor="middle">+10% = +10円</text>
+        <text class="s-txt-sm" x="475" y="225" text-anchor="middle">↑ 日経平均へ</text>
+        <text class="s-note-g" x="475" y="242" text-anchor="middle">わずかな貢献</text>
+
+        <!-- 下注記 -->
+        <text class="s-label-sm" x="320" y="300" text-anchor="middle">同じ「+10%上昇」でも、株価の高低で指数への貢献がまったく異なる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 株価平均型（日経平均方式）の概念図。株価が高い銘柄A（青）は10%上昇で1,000円分貢献するが、株価の低い銘柄B（緑）は同じ10%上昇でも10円分しか貢献しない。<strong>値がさ株が動くと、日経平均全体が大きく振れる</strong>のはこのため。※ 概念を示すイメージ図です。実際の銘柄・数値を示すものではありません。</figcaption>
+    </figure>
+
+    <p>実際、2020年代の日経平均では<strong>ファーストリテイリング（ユニクロ）</strong>が株価の絶対値が非常に高い値がさ株として知られており、一社の影響が大きくなりすぎることを防ぐために<strong>構成比率の上限（約10%）</strong>が設けられています。また<strong>ソフトバンクグループ・アドバンテスト・東京エレクトロン</strong>などのAI・ハイテク関連の値がさ株も日経平均を大きく動かすことがあります。例えば2025年の特定期間では、上位3銘柄だけで日経平均の上昇幅の約71%を占めたと報道されたこともあります（日本経済新聞）。ニュースで「今日の日経平均上昇の主な要因は〇〇株の急騰」という解説が出るのは、このためです。</p>
+
+    <h2 id="section-4">4️⃣ TOPIXの仕組み：東証プライム全体の時価総額加重型</h2>
+    <p><strong>TOPIX（Tokyo Stock Price Index、東証株価指数）</strong>は、東京証券取引所プライム市場に上場する<strong>全銘柄</strong>を対象とした株価指数です。東京証券取引所グループが算出・公表します。</p>
+    <p>算出方法は<strong>時価総額加重型</strong>です。各銘柄の「株価 × 浮動株（市場で売買可能な株数）」をすべて合計し、基準時点（1968年1月4日を100）との比率として算出されます。時価総額が大きい企業ほど、TOPIXへの影響が強くなります。なお、TOPIXは2020年代後半に段階的な構成銘柄の見直しが進んでいます（2026年4月末時点で約1,650銘柄）。</p>
+
+    <div class="positive-box">
+      <strong>✅ TOPIXが「広場の体温計」と呼ばれる理由</strong>：プライム市場の全銘柄を対象とするため、225銘柄だけを見る日経平均より<strong>「東証プライム市場全体の値動き」を幅広く反映</strong>します。特定の値がさ株に左右されにくいため、「市場の空気感」をより広く捉えたいときに参照する投資家が多い指数です。
+    </div>
+
+    <h2 id="section-5">5️⃣ 日経平均 vs TOPIX 比較表</h2>
+    <p>2つの指数の特徴をまとめます。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>日経平均株価</th>
+          <th>TOPIX</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>正式名称</td>
+          <td>日経225</td>
+          <td>東証株価指数（Tokyo Stock Price Index）</td>
+        </tr>
+        <tr>
+          <td>算出主体</td>
+          <td>日本経済新聞社</td>
+          <td>東京証券取引所グループ</td>
+        </tr>
+        <tr>
+          <td>対象銘柄</td>
+          <td>プライム上場から選定した225銘柄</td>
+          <td>東証プライム市場の銘柄（2026年4月末時点で約1,650銘柄、見直し進行中）</td>
+        </tr>
+        <tr>
+          <td>算出方式</td>
+          <td>株価平均型（修正平均）</td>
+          <td>時価総額加重型（浮動株調整）</td>
+        </tr>
+        <tr>
+          <td>株価の影響</td>
+          <td>株価が高い銘柄ほど影響大（値がさ株問題）</td>
+          <td>時価総額が大きい企業ほど影響大</td>
+        </tr>
+        <tr>
+          <td>基準値</td>
+          <td>起点の価格から継続算出（修正除数で連続性を確保）</td>
+          <td>1968年1月4日 ＝ 100ポイント</td>
+        </tr>
+        <tr>
+          <td>同じ方式の海外指数</td>
+          <td>ダウ平均（DJIA、米30銘柄）</td>
+          <td>S&P500（米500銘柄）、ナスダック総合</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ============================================================
+         後半：中上級向け実践・深掘り
+    ============================================================= -->
+
+    <h2 id="section-6">6️⃣ NT倍率：2つの指数の「ズレ」を読む</h2>
+    <p>ここからは中上級向けの深掘りです。<strong>NT倍率（エヌティーばいりつ）</strong>とは、<strong>日経平均 ÷ TOPIX</strong>で算出される比率のことです。</p>
+    <p>この数値が示すのは、<strong>日経平均とTOPIXがどれくらい乖離しているか</strong>です。歴史的には10〜13倍程度で推移することが多かったとされますが、2020年代後半からAI・ハイテク関連の値がさ株が日経平均を押し上げる局面が続き、<strong>2026年春には過去最高水準の約16倍台（16.06倍）まで上昇した</strong>と複数メディアが報道しています（松井証券・マネーワールド等）。これは「日経平均は上昇しているが、プライム市場の多くの銘柄は動いていない」という局面が続いたことを示す一例です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="nt-title">
+        <title id="nt-title">NT倍率の概念図。日経平均がTOPIXより強い局面と弱い局面</title>
+        <text class="s-panel-label" x="40" y="24">NT倍率（日経平均 ÷ TOPIX）の概念図</text>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="250" x2="610" y2="250"/>
+        <line class="s-axis" x1="60" y1="50" x2="60" y2="250"/>
+        <text class="s-label-sm" x="600" y="268">時間 →</text>
+        <text class="s-label-sm" x="64" y="42">NT倍率 ↑</text>
+
+        <!-- 水平ライン（平均水準の概念） -->
+        <line class="s-guide" x1="60" y1="150" x2="610" y2="150"/>
+        <text class="s-txt-sm" x="432" y="144" text-anchor="middle">平均水準（概念）</text>
+
+        <!-- NT倍率の波形（概念） -->
+        <polyline class="s-curve-b" points="60,160 100,155 150,140 200,130 250,120 290,135 330,148 370,142 420,128 470,118 520,130 560,145 600,155"/>
+
+        <!-- 上昇局面の注記 -->
+        <line class="s-guide" x1="250" y1="120" x2="250" y2="80"/>
+        <text class="s-note" x="252" y="76">NT倍率 上昇</text>
+        <text class="s-txt-sm" x="252" y="92">（日経 &gt; TOPIX）</text>
+        <text class="s-txt-sm" x="252" y="108">値がさ株主導の上昇</text>
+
+        <!-- 下降局面の注記 -->
+        <line class="s-guide" x1="330" y1="148" x2="330" y2="200"/>
+        <text class="s-note-g" x="270" y="214">NT倍率 低下</text>
+        <text class="s-txt-sm" x="270" y="230">（TOPIX &gt; 日経）</text>
+        <text class="s-txt-sm" x="270" y="246">中小型・内需株主導の上昇</text>
+
+      </svg>
+      <figcaption class="chart-caption">▲ NT倍率の概念図。上昇局面は「値がさ株（外需・ハイテク系）が主導する日経優位の相場」、低下局面は「広範な銘柄・中小型・内需株が強いTOPIX優位の相場」のシグナルになることがある。※ 概念を示すイメージ図であり、実際のNT倍率の推移を示すものではありません。</figcaption>
+    </figure>
+
+    <h3>NT倍率が「上がる」とき</h3>
+    <p>NT倍率が上昇する場合、日経平均がTOPIXより強く動いています。<strong>値がさ株（外需系・ハイテク系など株価絶対値の高い銘柄）が主導する相場</strong>のときに起こりやすい傾向があります。「日経平均は大幅高でも、中小型株や内需株は動いていない」というケースです。</p>
+
+    <h3>NT倍率が「下がる」とき</h3>
+    <p>NT倍率が低下する場合、TOPIXが日経平均より強く動いています。<strong>広範な銘柄が買われる「業種分散型の上昇」や、中小型・内需株が主導する相場</strong>のときに起こりやすい傾向があります。「個別株は動いているのに日経平均の上昇が鈍い」と感じる局面がこれです。</p>
+
+    <div class="warning-box">
+      NT倍率はあくまで「2つの指数の相対的な強弱」を示す参考指標です。単独で相場の方向性を判断するものではなく、<strong>「日経平均だけ見ていると市場全体を誤読するリスクがある」という事実を確認するツール</strong>として活用するものです。個別銘柄の売買判断に直結させるのは適切ではありません。
+    </div>
+
+    <h2 id="section-7">7️⃣ 世界の主要指数を同じ分類で整理</h2>
+    <p>日経平均とTOPIXの違いが分かると、海外の主要指数も同じ分類で整理できます。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>指数名</th>
+          <th>国・市場</th>
+          <th>算出方式</th>
+          <th>銘柄数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>日経平均株価（Nikkei 225）</td>
+          <td>日本・東証プライム</td>
+          <td>株価平均型</td>
+          <td>225銘柄</td>
+        </tr>
+        <tr>
+          <td>TOPIX</td>
+          <td>日本・東証プライム</td>
+          <td>時価総額加重型</td>
+          <td>プライム全銘柄</td>
+        </tr>
+        <tr>
+          <td>ダウ平均（DJIA）</td>
+          <td>米国・NYSE/NASDAQ</td>
+          <td>株価平均型（日経平均と同方式）</td>
+          <td>30銘柄</td>
+        </tr>
+        <tr>
+          <td>S&P500</td>
+          <td>米国・NYSE/NASDAQ</td>
+          <td>時価総額加重型（TOPIXと同方式）</td>
+          <td>500銘柄</td>
+        </tr>
+        <tr>
+          <td>ナスダック総合指数</td>
+          <td>米国・NASDAQ</td>
+          <td>時価総額加重型</td>
+          <td>NASDAQ全上場銘柄</td>
+        </tr>
+        <tr>
+          <td>ナスダック100</td>
+          <td>米国・NASDAQ</td>
+          <td>時価総額加重型</td>
+          <td>100銘柄（時価総額上位）</td>
+        </tr>
+        <tr>
+          <td>FTSE100</td>
+          <td>英国・ロンドン証券取引所</td>
+          <td>時価総額加重型</td>
+          <td>100銘柄</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="classify-title">
+        <title id="classify-title">世界の主要指数を株価平均型・時価総額加重型に分類した図</title>
+        <text class="s-panel-label" x="40" y="24">主要指数の分類図（算出方式 × 銘柄数）</text>
+
+        <!-- 左：株価平均型 -->
+        <rect class="s-box-b" x="40" y="44" width="260" height="190" rx="8" ry="8"/>
+        <text class="s-txt-b" x="170" y="68" text-anchor="middle">株価平均型</text>
+        <text class="s-txt-sm" x="170" y="86" text-anchor="middle">（株価の高い銘柄が影響大）</text>
+
+        <rect class="s-box-bg" x="60" y="100" width="220" height="50" rx="6" ry="6"/>
+        <text class="s-txt-b" x="170" y="122" text-anchor="middle">日経平均株価</text>
+        <text class="s-txt-sm" x="170" y="140" text-anchor="middle">日本・225銘柄</text>
+
+        <rect class="s-box-bg" x="60" y="162" width="220" height="50" rx="6" ry="6"/>
+        <text class="s-txt-b" x="170" y="184" text-anchor="middle">ダウ平均（DJIA）</text>
+        <text class="s-txt-sm" x="170" y="202" text-anchor="middle">米国・30銘柄</text>
+
+        <!-- 右：時価総額加重型 -->
+        <rect class="s-box-g" x="340" y="44" width="260" height="190" rx="8" ry="8"/>
+        <text class="s-txt-g" x="470" y="68" text-anchor="middle">時価総額加重型</text>
+        <text class="s-txt-sm" x="470" y="86" text-anchor="middle">（大企業ほど影響大）</text>
+
+        <rect class="s-box-bg" x="358" y="100" width="220" height="50" rx="6" ry="6"/>
+        <text class="s-txt-g" x="468" y="122" text-anchor="middle">TOPIX</text>
+        <text class="s-txt-sm" x="468" y="140" text-anchor="middle">日本・東証プライム全体</text>
+
+        <rect class="s-box-bg" x="358" y="162" width="220" height="50" rx="6" ry="6"/>
+        <text class="s-txt-g" x="468" y="184" text-anchor="middle">S&amp;P500・ナスダック・FTSE100</text>
+        <text class="s-txt-sm" x="468" y="202" text-anchor="middle">米国・英国など</text>
+
+      </svg>
+      <figcaption class="chart-caption">▲ 世界の主要指数を算出方式で分類すると、「株価平均型（日経平均・ダウ）」と「時価総額加重型（TOPIX・S&P500・ナスダック等）」の2種類に大別できる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この対応関係を知っていると、「米国ではS&P500がより広い市場を反映し、ダウは30銘柄の株価平均に過ぎない」という点も同じ文脈で理解できます。<strong>ニュースで「ダウが下がった」「S&P500は上昇」という日は、米国市場でも"値がさ株主導でダウが下がった可能性"や"広範な銘柄高でS&P500が上昇した可能性"といった読み方ができます</strong>（あくまで一つの視点として）。</p>
+
+    <h2 id="section-8">8️⃣ 「日本株全体が上がった」という誤解の罠</h2>
+    <p>日経平均の知名度は圧倒的です。テレビ・ラジオ・新聞の見出しは「日経平均○○円高」を使うことがほとんどで、多くの人が「日経平均＝日本株市場全体の動き」と認識しています。しかしここまで読んできたとおり、<strong>日経平均は225銘柄の株価平均であり、値がさ株の動きに大きく左右されます</strong>。</p>
+    <p>具体的にどんな誤読が起きるか、例えば次のようなケースです。</p>
+
+    <ul>
+      <li>ある値がさ株が好決算で急騰 → 日経平均が大幅高 → 「日本株は強い相場だ」という印象になる</li>
+      <li>しかし同日、中小型株や内需銘柄の多くは下落 → TOPIXは小幅安</li>
+      <li>実態は「一部の大型株だけが動いた相場」だったが、ニュースの見出しからは読み取れない</li>
+    </ul>
+
+    <p>このミスリードを避けるために有効なのが、<strong>日経平均とTOPIXを並べて見る習慣</strong>です。2つが同じ方向に動いているときは、市場全体に買い（または売り）が波及している可能性が高い。片方だけが強く動いているときは、「一部の銘柄・セクターが動いているだけかもしれない」と疑うことが大切です。</p>
+
+    <div class="info-box">
+      <strong>💡 投資初心者へのアドバイス</strong>：どちらが「正しい」指数かという話ではありません。目的に応じて使い分けるのが賢明です。「東証プライム全体の体温を知りたい」なら TOPIX、「値がさ大型株やデリバティブ（先物）の目安にしたい」なら日経平均、という使い分けが一般的です。
+    </div>
+
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、日経平均に連動するCME先物である<strong>NKD=F（日経225先物・CME上場）</strong>を18銘柄の監視対象に含めています。米国市場の取引時間（日本の深夜〜早朝）でも日経平均の先行きを確認でき、翌日の東京市場を予測する手がかりになります。</p>
+    <p>このサイトの<a href="charts.html">50年チャート</a>では、日経平均（^N225）を含む長期チャートで歴史的な価格帯を確認できます。「現在の水準は長期で見てどこか」を知ることは、日経平均をより広い文脈で捉える助けになります。</p>
+    <ul>
+      <li><strong><a href="charts.html">📈 50年チャート</a></strong>：日経平均を含む長期チャートで歴史的な水準を確認</li>
+      <li><strong><a href="market-health.html">🩺 市場健康度</a></strong>：VIX（恐怖指数）・バフェット指数・CAPE等と合わせて相場の温度感を把握</li>
+      <li><strong><a href="track-record.html">📊 シグナル成績</a></strong>：NKD=Fを含む18銘柄のテクニカルシグナルと成績記録</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 日経225先物（NKD=F）のシグナル成績を見る</div>
+      <div class="cta-box-desc">当サイトが監視する18銘柄の中には日経225先物も含まれます。テクニカルシグナルが実際にどう機能したか——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <h2 id="section-10">🔟 まとめ</h2>
+    <p>日経平均とTOPIXの違いを整理します。</p>
+    <ul>
+      <li>日経平均は<strong>225銘柄の株価平均型</strong>。値がさ株（株価絶対値の高い銘柄）が動くと指数全体が大きく振れる。ダウ平均（米30銘柄）と同じ方式。</li>
+      <li>TOPIXは<strong>東証プライム全銘柄の時価総額加重型</strong>。企業の大きさに比例して指数に反映される。S&P500・ナスダック（米）と同じ方式。</li>
+      <li><strong>NT倍率（日経÷TOPIX）</strong>が上昇するときは値がさ株主導の相場、低下するときは広範な銘柄高の相場というシグナルになる場合がある。</li>
+      <li><strong>「日経平均が上がった＝日本株全体が上がった」は必ずしも正確ではない</strong>。日経とTOPIXを並べて見ることで、市場の実態をより正確に読める。</li>
+      <li>海外指数も同じ分類で整理できる：ダウ＝株価平均型、S&P500・ナスダック＝時価総額加重型。</li>
+    </ul>
+    <p>指数の仕組みを知ることは、ニュースの見出しに踊らされず、<strong>市場を自分の目で読み解くための出発点</strong>です。次に「日本株が上がった・下がった」というニュースを見たとき、ぜひ「日経平均とTOPIX、両方を確認しよう」という習慣を加えてみてください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="charts.html">
+        <div class="related-card-title">📈 50年チャート</div>
+        <div class="related-card-desc">日経平均を含む主要銘柄の長期チャートで、現在の水準が歴史的にどこに位置するかを確認できます。</div>
+      </a>
+      <a class="related-card" href="guide-per-pbr.html">
+        <div class="related-card-title">📊 PERとPBRの読み方</div>
+        <div class="related-card-desc">株価水準を測るものさし。割安・割高の基準を理解することで、指数構成銘柄の評価も深まります。</div>
+      </a>
+      <a class="related-card" href="guide-diversification.html">
+        <div class="related-card-title">🗂️ 分散とポートフォリオ</div>
+        <div class="related-card-desc">複数の指数に分散投資するとき、「どの指数がどの市場を代表しているか」を知ることが最初の一歩です。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は株価指数の仕組みに関する情報提供として解説したものであり、特定の銘柄・指数連動商品・ETF等の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の投資成果を保証するものではありません。投資判断はご自身の責任で行ってください。個別の税務・法律に関するご相談は、税務署・税理士・弁護士等の専門家にお問い合わせください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
