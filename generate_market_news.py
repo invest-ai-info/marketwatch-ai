@@ -4629,6 +4629,51 @@ def build_featured_guides():
 '''
 
 
+def build_news_ticker_section():
+    """⚡最新ニュース・ライブフィード枠（2026-07-09 新設）。
+    news-ticker.json（GitHub Actions news-ticker.yml が毎時生成・SYNC禁忌）を閲覧時に JS で fetch して
+    描画する＝index.html を再生成しなくても常に最新の見出しが出る。AI不使用・描画は DOM API（XSS安全）。
+    ※この関数は f-string ではない（JS の中括弧をそのまま書くため）。"""
+    return '''  <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新） -->
+  <div style="background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #fb8500;border-radius:8px;padding:14px 22px;margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+      <span style="color:#fb8500;font-weight:700">⚡ 最新マーケットニュース <span style="font-size:.72rem;color:#57606a;font-weight:500">（各社見出しを自動収集・毎時更新）</span></span>
+      <span id="mwTickerMeta" style="font-size:.74rem;color:#57606a">読み込み中…</span>
+    </div>
+    <div id="mwTickerList" style="font-size:.86rem;line-height:1.6"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px">
+      <span style="font-size:.7rem;color:#6e7781">見出しリンク先は各社の外部サイト。掲載は情報提供のみを目的とし、投資助言ではありません。</span>
+      <a id="mwTickerMore" href="javascript:void(0)" style="display:none;color:#0969da;font-size:.78rem;font-weight:600;text-decoration:none">さらに表示 ▼</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var list=document.getElementById('mwTickerList'),meta=document.getElementById('mwTickerMeta'),more=document.getElementById('mwTickerMore');
+    function rel(iso){var m=(Date.now()-new Date(iso).getTime())/60000;if(!isFinite(m)||m<0)return'';
+      if(m<1)return'たった今';if(m<60)return Math.floor(m)+'分前';if(m<1440)return Math.floor(m/60)+'時間前';return Math.floor(m/1440)+'日前';}
+    function row(n){var d=document.createElement('div');d.style.cssText='padding:5px 0;border-bottom:1px dashed #d8dee4;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap';
+      var tm=document.createElement('span');tm.style.cssText='color:#57606a;font-size:.74rem;white-space:nowrap;min-width:56px';tm.textContent=rel(n.dt);
+      var em=document.createElement('span');em.textContent=n.e||'😐';
+      var a=document.createElement('a');a.href=n.u;a.target='_blank';a.rel='noopener nofollow';
+      a.style.cssText='color:#0969da;text-decoration:none;font-weight:600;flex:1;min-width:200px';a.textContent=n.t;
+      var s=document.createElement('span');s.style.cssText='color:#6e7781;font-size:.72rem;white-space:nowrap';s.textContent=n.s;
+      d.appendChild(tm);d.appendChild(em);d.appendChild(a);d.appendChild(s);return d;}
+    fetch('news-ticker.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      var items=(d.items||[]).filter(function(n){return /^https?:\\/\\//.test(n.u||'')&&n.t;});
+      if(!items.length)throw 0;
+      list.textContent='';
+      items.slice(0,8).forEach(function(n){list.appendChild(row(n));});
+      if(items.length>8){more.style.display='inline';
+        more.onclick=function(){items.slice(8).forEach(function(n){list.appendChild(row(n));});more.style.display='none';};}
+      var u=new Date(d.updated);
+      meta.textContent='最終取得 '+(u.getMonth()+1)+'/'+u.getDate()+' '+('0'+u.getHours()).slice(-2)+':'+('0'+u.getMinutes()).slice(-2)+' JST';
+    }).catch(function(){meta.textContent='';
+      list.innerHTML='<span style="color:#6e7781;font-size:.82rem">最新ニュースを読み込めませんでした（時間をおいて再読み込みしてください）。</span>';});
+  })();
+  </script>
+'''
+
+
 def build_html(data, hist, now_jst, news=None, touraku=None):
     date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
@@ -4681,6 +4726,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     indicator_preview_banner = build_indicator_preview_banner(now_jst)
     # 🆕 今朝の3行ダイジェスト＋重要イベントカウントダウン（2026-06-11）
     morning_digest = build_morning_digest_banner(now_jst, data, label)
+    # 🆕 ⚡最新ニュース・ライブフィード（2026-07-09・news-ticker.json を閲覧時にJSで取得＝常に最新）
+    news_ticker_section = build_news_ticker_section()
     # 🆕 📰 更新履歴：手動エントリ＋週次自動エントリを「日付降順」に並べ、最新5件のみ表示。
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
@@ -5050,6 +5097,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
 {morning_digest}
+
+{news_ticker_section}
 
   <!-- 更新履歴 -->
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
