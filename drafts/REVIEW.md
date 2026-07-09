@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-07-10 | 🛡️ リスク管理 #20 — 為替リスクの基本（currency-risk）下書き生成
+
+- **基準日**: 2026-07-10（UTC 2026-07-09T20:31Z → JST 05:31）
+- **シリーズ**: リスク管理・資金管理 #20（topic queue #20 = currency-risk）
+- **仮タイトル**: 為替リスクの基本｜外貨資産は「価格×為替」の二階建て
+- **生成ファイル**: `drafts/draft-currency-risk.html`
+- **参照出典（WebSearch 確認済み）**:
+  - 野村証券 証券用語解説集「為替リスク」: https://www.nomura.co.jp/terms/japan/ka/kawrisk.html
+  - 三井住友銀行「為替ヘッジとは？あり・なしの違い」: https://www.smbc.co.jp/kojin/money-viva/toushi-ippo/0012/
+  - 野村AM「為替ヘッジにはコストがかかる？」: https://www.nomura-am.co.jp/sodateru/stepup/foreign-investment/foreign-investment04.html
+  - ピクテ「環境変化確認編⑧ 為替ヘッジコスト」: https://www.pictet.co.jp/basics-of-asset-management/new-generation/environmental-changes-confirmation/20250710.html
+  - 大和AM「為替ヘッジコストについて（2024年1月）」: https://www.daiwa-am.co.jp/specialreport/market_letter/20240115_01.pdf
+  - PIMCO「ヘッジコストとフォワードレートの決まり方」: https://www.pimco.com/jp/ja/resources/education/bond-basic/fixed-income-2/hedge-cost-and-forward-rate
+  - ニッセイ基礎研「為替スワップ取引を用いた時のヘッジコストの考え方」: https://www.nli-research.co.jp/report/detail/id=52632?site=nli
+  - 野村AM「為替リスクはなくならないの？」: https://www.nomura-am.co.jp/sodateru/stepup/foreign-investment/foreign-investment03.html
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（教育・一般論のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」等不使用）
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末（p.disclaimer）・footer の3箇所確認
+  - ✅ noindex,nofollow 入り（下書きのみ、検索除外）
+  - ✅ SVG 3点あり（二階建て4象限マトリクス・ヘッジあり/なし比較図・ヘッジコストと金利差の概念図）
+  - ✅ 出典妥当（WebSearch で複数ソース照合済み）
+  - ✅ 数値は「概念説明のための例示」と明記、「実際の市場状況とは異なります」と免責
+  - ✅ nav 10ボタン・順序正（guide-loss-cut.html と同一）
+  - ✅ ヘッジコスト歴史的水準（年率5〜6%ピーク・平均約2〜2.5%）を出典付きで言及・幅を持たせた表現で記載
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク確認（特に.s-fill-g/.s-fill-r/.s-fill-b/.s-fill-y の4象限図はdark mode時の視認性要確認）
+  - 二階建て表の数値（+21%/-19%等）は「複利計算の概算」と表記済みだが、公開前に再確認を推奨
+  - 公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-07-09 | autopublish: ✅ 公開済み — guide-economic-indicators-basics.html
 
 - **対象**: `guide-economic-indicators-basics.html`（経済指標の読み方入門｜NFP・CPI・FOMCが市場を動かす仕組みを図解）
