@@ -42,6 +42,8 @@ WORKFLOW_CHECKS = [
     ("1Hシグナル収集",          "technical-alerts-1h.yml", 5,  "warn"),
     ("政治発言フィード",        "political-alerts.yml",    4,  "critical"),
     ("市況ニュース生成",        "update-market-news.yml",  15, "warn"),
+    # 🆕 2026-07-09 ⚡最新ニュース・ライブフィード（毎時）。cron滑りは日常なので5h=4〜5回連続消失で検知。
+    ("最新ニュース・ティッカー", "news-ticker.yml",         5,  "warn"),
     ("パニック反発スキャン",    "panic-scan.yml",          27, "warn"),
     # 🆕 低頻度ジョブ（2026-07 追加）。7/1 に monthly-report が取りこぼされ6月レポート未生成の事故で、
     #    週次/月次が監視対象外＝盲点と判明。正常運用で誤検知しないよう余裕を持たせた閾値。
