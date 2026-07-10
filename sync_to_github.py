@@ -28,4 +28,5 @@ SYNC_FILES = [
     "guide-news-2026-07-09-trump-ceasefire-over-oil-surge.html",
     "guide-signal-lab-035.html",
     "guide-nikkei-vs-topix.html",
+    "guide-proverb-yasumu-mo-soba.html",
 ]
