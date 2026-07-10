@@ -112,11 +112,10 @@
 
 ## 📌 アクティブな宿題
 
-### 🔜 次セッションで最初に確認（在flight・2026-07-10向け）
+### 🔜 次セッションで最初に確認（在flight・2026-07-11向け）
 - **⓪セッション冒頭の新ルーチン＝`python mw.py evolve`**（DOCTRINE突合+キュー+トラッカー鮮度・トークン0）。
-- **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。
-  ⚠️7/10 09:30＝寄り付きロガー「自己修復版」初の定時運転（PT45M・バジェット・自動バックフィル）。
-- **⓪-B autopublish定時**＝7/9に⑱公開済み。7/10対象=⑲nikkei-vs-topix（下書き7/9生成済）。REVIEW.md記録の有無だけ確認。
+- **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。**7/10朝=寄り付きロガー自己修復版の初定時運転✅**（タグsnap 07-10記録・番人5項目緑を確認済）。
+- **⓪-B autopublish**＝7/10対象=⑲nikkei-vs-topix。**⚠️7/10の公開/スキップ記録は本セッション未確認→7/11朝にREVIEW.mdで7/10記録＋7/11対象を確認**。
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
 - **⓪-D 進化ループ続き**：Q13(7/9・H1採用)・**Q12(7/10・✅監査完了＝グレアム防御は同日対照でも頑健／上の7/10節)** 消化済み。次候補=**Q8金ラボ第2R**／**Q11ズールー前向きトラッカー設計**（fins月次更新の整備が先）／Q10及川H-O4（低優先）。TT3前向きは月1回`_jp_turtle_tracker.py`。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
@@ -124,7 +123,7 @@
   **C**=ズールー前向き実装（=Q11+screener参考列）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
   ※「すでに生きているアレンジ」の整理も記事ネタ（赤三兵→連騰≥4危険ゲート・タートル資金管理→ATRベースSL/2%ルール・**G4逆張り→🔪回避フラグ（Q13）**＝原型のエントリーは死んでも部品は生きる）。
 - **⓪-F ✅済（7/10）文書declutter**：CLAUDE 32.0/DOCTRINE 24.0(warning0)/HANDOFF 28.5＝全て予算内。以後もこの水準を維持（節が増えたら完了節をARCHIVEへ）。
-- **⓪-G ✅済（7/9夜）routineによるリンター編集の再発防止＝三層で実装**: オーナー決定=**完全禁止**（等価修正も不可・赤はエスカレのみ・ゲート修正は人間専任）。①`AUTOPUBLISH_GUIDE.md`=固定ゲート4本（check_guide_draft/check_site_consistency/signal_lab_verify/publish_article）の編集・commit禁止+7/9違反実例を明文化 ②routineプロンプト更新済（手順4/7/絶対厳守を強化。⚠️**プロンプト禁止は7/8夜から存在したのに破られた実績あり**＝コード検知が本命） ③`check_automation_health.py`にチェック④新設=直近26hでゲート4本をオーナー/github-actions[bot]以外のauthorが変更→warn Issue（ローカル実測で7/9違反commit `80abc63` を正しく検知✅）。**⚠️7/10朝09:30の定時運転は、既知の7/9違反commit（対応済）を1回だけIssue化する可能性あり＝無視してクローズでよい**。以後の検知は本物。
+- **⓪-G ✅済（7/9夜）routineによるリンター編集の再発防止＝三層で実装**: オーナー決定=**完全禁止**（等価修正も不可・赤はエスカレのみ・ゲート修正は人間専任）。①`AUTOPUBLISH_GUIDE.md`=固定ゲート4本（check_guide_draft/check_site_consistency/signal_lab_verify/publish_article）の編集・commit禁止+7/9違反実例を明文化 ②routineプロンプト更新済（手順4/7/絶対厳守を強化。⚠️**プロンプト禁止は7/8夜から存在したのに破られた実績あり**＝コード検知が本命） ③`check_automation_health.py`にチェック④新設=直近26hでゲート4本をオーナー/github-actions[bot]以外のauthorが変更→warn Issue（ローカル実測で7/9違反commit `80abc63` を正しく検知✅）。**⚠️7/10 09:30の運転で既知の7/9違反commit（対応済）が1回Issue化した可能性＝あれば無視してクローズ**。以後の検知は本物。
 - **⓪-H ⚡news-ticker 初日の定時運転確認**: 毎時:37。翌朝、Actions履歴で夜間の毎時実行が回っているか＋live JSONのupdatedが新しいか（automation-healthにも登録済=5h/warn）。**市場タグ版は7/9夜にライブ確認済**（バッジ/絞り込み/カード内ミニ3件・分類テスト8/8）。⚠️オーナー体感の宿題1件=夜間はYahoo!経済由来の📰経済（消費者ネタ）が多め→**「📰経済を既定で非表示（ボタンで表示）」は1行で変更可＝オーナーの好み待ち**。
 - **⓪-J 文書サイズ**: SESSION_HANDOFF 37.6KB（予算30）＝⓪-Fのdeclutterで7/7〜7/8の完了節をSESSION_ARCHIVEへ退避。
 - **⓪-I ✅済（7/9 20:30）guides.htmlカード消失＝実は「消失」でなく「未完了公開」**: git履歴調査の結果、カードは一度も存在しなかった（巻き戻しでも取り下げでもない）。**真因**=7/6のnews-daily-autoが当時のSYNC_FILES縮小問題で `check_site_consistency` exit=1→設計どおりエスカレ（commit 1200e77b=記事HTML+NEWS_LEDGERのみpush・カード/履歴/SYNC登録なし）→台帳の「再公開手順（人間が実施）」が3日間未実施のまま放置されていた。**対応**=台帳手順どおり完了（コンプラは当時Opus×2で🟢白済・noindexなし）：カード挿入（7/7と7/5の間の正位置）+SYNC_FILES+更新履歴→`mw check`緑→sync（guides.htmlはstaleガード🚫→diff確認=カード9行のみ→定石--force・commit 156f63e=+9/-0）。**番人③再実行=58/58✅**・ライブ記事200・sitemap収載済み。ついでに⑱`guide-economic-indicators-basics.html`のローカルreconcile+SYNC_FILES登録も実施（mw checkが検出）。**教訓=番人③の検知は「エスカレ回の未完了公開」でも発火する。まずNEWS_LEDGER.mdの該当日エントリを見ると1分で原因が分かる**（GitHub側LEDGERの7/6エントリは「公開準備」のまま=SYNC禁忌のためローカルから更新不可・実態は公開完了）。
