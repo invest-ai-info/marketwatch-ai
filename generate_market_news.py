@@ -4767,6 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-11", "line": '・<b>2026-07-11</b>: 🧪 解説「<a href="guide-signal-lab-036.html" style="color:#0969da"><b>#36 上昇×reversalL グループ逆転の正体</b></a>」公開'},
         {"date": "2026-07-10", "line": '・<b>2026-07-10</b>: 📰 解説「<a href="guide-news-2026-07-10-gpif-domestic-investment.html" style="color:#0969da"><b>片山財務相「GPIF国内投資後押し」でトリプル高 背景を整理</b></a>」公開'},
         {"date": "2026-07-10", "line": '・<b>2026-07-10</b>: 🛌 解説「<a href="guide-proverb-yasumu-mo-soba.html" style="color:#0969da"><b>「休むも相場」</b></a>」公開'},
         {"date": "2026-07-10", "line": '・<b>2026-07-10</b>: 💰 解説「<a href="guide-nikkei-vs-topix.html" style="color:#0969da"><b>日経平均とTOPIXの違い｜株価指数の仕組みを図解で理解する</b></a>」公開'},
