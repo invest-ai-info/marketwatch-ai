@@ -13,6 +13,7 @@
 
 | 9 | ✅公開済み | 相場は相場に聞け | soba-ni-kike | 2026-07-08 | 🟢白（初期・修正なし）→ 品質②ATR用語補足1文追加 → 品質5観点全✅ → 🟢白（独立Opus確認） | 江戸時代の米先物相場が起源の最有力説（由来諸説あり・日証協確認）。ダウ理論（Charles Dow、1851-1902年、WSJ 1889年創刊後に体系化）・Jegadeesh & Titman 1993モメンタム研究・"The trend is your friend"（Martin Zweig）・確証バイアス・過信バイアス・アンカリングを含む。Opus×2コンプラ白・品質5観点全✅。check_site_consistency.py EXIT=0（偽陽性は既存記事のSYNC未登録）。自動公開ルーティン proverb-daily-auto による。 |
 | 10 | ✅公開済み | 待つも相場 | matsu-mo-soba | 2026-07-09 | 🟢白（初期・修正なし）→ 品質②ゴールデンクロス用語説明1文追加 → 品質5観点全✅ → 🟢白（独立Opus確認） | 江戸時代の大坂・堂島米先物相場に端を発する格言群の一つ、本間宗久「心がはやるとき三日待つべし」が原型の有力説（由来諸説あり）。英語圏の"Cash is a position"と対応。Barber & Odean 2000「Trading Is Hazardous to Your Wealth」（Journal of Finance、約66,000口座・高回転層が年率3〜5ポイント低リターン傾向）・Odean 1998「Do Investors Trade Too Much?」（American Economic Review）・FOMO・過信バイアス・退屈への耐性欠如・「休むも相場」との違い（待機vs休息）・エントリー条件の文字化・待機ルール・点検リストを含む。Opus×2コンプラ白・品質5観点全✅。check_site_consistency.py EXIT=0。自動公開ルーティン proverb-daily-auto による。 |
+| 11 | ✅公開済み | 休むも相場 | yasumu-mo-soba | 2026-07-10 | 🟢白（初期・修正なし）→ 品質5観点全✅ → 🟢白（独立Opus確認） | 本間宗久（1724-1803）「少し相場を離れじっくり観察する時を持て」が由来の一説（諸説あり）。「売るべし・買うべし・休むべし」（日証協格言コラム収録）の第三の柱。メンタル資本・リベンジトレードの罠・7つの警戒サイン・判断疲れの概念・疲弊継続vs休憩回復の仮数字例・SVG概念図（消耗と回復の2ルート）・3つの休み方の技術（事前ルール化・完全遮断・復帰チェックリスト）・「待つも相場」との使い分け比較表・よくある誤解3点を含む。Opus×2コンプラ白・品質5観点全✅。check_site_consistency.py EXIT=0。自動公開ルーティン proverb-daily-auto による。 |
 
 ---
 
@@ -20,8 +21,8 @@
 
 | # | 格言候補 | slug候補 | 優先度 |
 |---|---|---|---|
-| 10 | 待つも相場 | matsu-mo-soba | 高 |
-| 11 | 休むも相場 | yasumu-mo-soba | 中 |
 | 12 | 二度に買うべし二度に売るべし | nido-ni-kau | 中 |
+| 13 | 強気相場は悲観の中に生まれる | kyoki-hikan | 中 |
+| 14 | 麦わら帽子は冬に買え | mugiwara-fuyu | 中 |
 
-最終更新：2026-07-09（proverb-daily-auto ルーティン）
+最終更新：2026-07-10（proverb-daily-auto ルーティン）
