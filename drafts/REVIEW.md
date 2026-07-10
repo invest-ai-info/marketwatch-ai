@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-07-11 autopublish: ✅ 公開済み — guide-currency-risk.html（リスク管理 #20）
+
+- **対象key**: currency-risk（topic queue #20 / リスク管理・資金管理）
+- **タイトル**: 為替リスクの基本｜外貨資産は「価格×為替」の二階建て
+- **決定論ゲート**: ✅ GREEN (EXIT=0)
+- **Opusコンプラ+品質判定**: 🟢白（全観点✅・修正不要）
+- **整合性チェック**: ✅ EXIT=0（警告1件=クラウドスタブ・想定内）
+- **push**: ✅ PUSH-MAIN 成功（fetch/rebase/push 1回で成功）
+- **HTTP確認**: クラウド環境からはCloudflareにより000/NETWORK_ERROR — push成功のため公開済みと判断
+- **公開URL**: https://marketwatch-jp.com/guide-currency-risk.html
+- **仕上げ時の主な修正**: noindex削除・favicon/nav/footer パスの`../`→ルート相対修正・公開日2026-07-11更新・stroke-width:2.5→stroke-width="2.5"のSVG属性修正
+
+---
+
 ## 2026-07-11 | 🧪 AIシグナル研究日誌 #036 — trend=上昇×reversal_long グループ逆転の解析（下書き生成）
 
 - **基準日**: 2026-07-11（JST）
