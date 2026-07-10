@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>注文方法の基本｜成行・指値・逆指値の使い分けを図解で解説 - MarketWatch AI</title>
+  <meta name="description" content="株・FX・先物で使う「成行・指値・逆指値」3種の注文方法の仕組みと使い分けを図解でやさしく解説。スリッページのリスク・寄付/引け注文の癖、そして逆指値で損切りを自動化する方法まで、初心者〜中級者向けに網羅します。">
+  <meta name="keywords" content="成行注文,指値注文,逆指値注文,注文方法,ストップ注文,スリッページ,損切り自動化,寄付注文,引け注文,株の注文,FX注文,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-order-types.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="注文方法の基本｜成行・指値・逆指値の使い分けを図解で解説">
+  <meta property="og:description" content="成行・指値・逆指値の仕組みを板のイメージで直感的に理解。スリッページと逆指値による損切り自動化まで図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-order-types.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "注文方法の基本｜成行・指値・逆指値の使い分けを図解で解説",
+    "description": "成行・指値・逆指値3種の仕組みと使い分けを板イメージで図解。スリッページ・寄付/引け注文の癖・逆指値による損切り自動化まで網羅。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-11",
+    "dateModified": "2026-07-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-order-types.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 板用スタイル */
+    .s-ask{fill:#ffebe9}
+    .s-bid{fill:#e6ffed}
+    .s-ask-border{fill:none;stroke:#cf222e;stroke-width:1}
+    .s-bid-border{fill:none;stroke:#1a7f37;stroke-width:1}
+    .s-ask-text{fill:#cf222e;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-bid-text{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-price-text{fill:#1f2328;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-spread-box{fill:#fff8c5}
+    .s-spread-text{fill:#9a6700;font-size:11px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-ask{fill:#2a1010}
+    body.dark .s-bid{fill:#162416}
+    body.dark .s-ask-text{fill:#ff8080}
+    body.dark .s-bid-text{fill:#7ee787}
+    body.dark .s-price-text{fill:#e6edf3}
+    body.dark .s-spread-box{fill:#2a1f0e}
+    body.dark .s-spread-text{fill:#d4a017}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 注文方法の基本（成行・指値・逆指値）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は株式・FX・先物などの注文方法の仕組みを解説した「情報提供」であり、特定商品の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📋 注文方法の基本｜成行・指値・逆指値の使い分けを図解で解説</h1>
+    <div class="meta-line">公開日：2026 年 7 月 11 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>投資を始めるとき、最初にぶつかる壁のひとつが<strong>「注文方法がわからない」</strong>という問題です。証券口座の注文画面には「成行」「指値」「逆指値」などのボタンが並んでいますが、違いがよくわからないまま「とりあえず成行」で注文してしまう方も少なくないでしょう。</p>
+    <p>実は、<strong>注文方法を正しく使い分けるだけで、意図しない価格での約定を防いだり、感情に頼らず自動で損切りを執行させたりすることができます</strong>。逆に、仕組みを知らないままだと「思ったより高い/安い価格で買ってしまった」「急落したのに損切りできなかった」といった事故が起きます。この記事では、3種の注文方法の仕組みを<strong>板（気配）のイメージで直感的に</strong>解説し、後半では中上級者向けに<strong>逆指値による損切りの自動化・スリッページ・寄付/引けの癖</strong>まで踏み込みます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>成行注文</strong>は「すぐ約定させたい」とき。代わりに<strong>価格の保証がなく、スリッページ（意図した価格とのズレ）が生じる</strong>リスクがある。</li>
+      <li><strong>指値注文</strong>は「この価格で買いたい/売りたい」と決めているとき。価格は守られるが、<strong>相手が現れなければ約定しない</strong>（機会損失のリスク）。</li>
+      <li><strong>逆指値注文</strong>は「ある価格を超えたら自動で売買する」注文で、<strong>損切りを機械化・自動化する最も重要なツール</strong>。感情に頼らず、ルール通りの撤退を実現する。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">市場の「板（気配）」とは何か：注文が積み上がる場所</a></li>
+        <li><a href="#section-2">成行注文：スピード最優先、価格は市場に委ねる</a></li>
+        <li><a href="#section-3">指値注文：価格を自分で指定する</a></li>
+        <li><a href="#section-4">3種の注文、どう使い分けるか（比較表）</a></li>
+        <li><a href="#section-5">逆指値注文：損切りを自動化する最重要ツール</a></li>
+        <li><a href="#section-6">スリッページ：成行注文のもうひとつの落とし穴</a></li>
+        <li><a href="#section-7">寄付・引け注文の癖と注意点</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 市場の「板（気配）」とは何か：注文が積み上がる場所</h2>
+    <p>注文方法を理解するために、まず<strong>「板（気配値）」</strong>のイメージを掴みましょう。株式市場では、売りたい人・買いたい人がそれぞれの「希望価格」を出し合い、それが一覧表のように並んでいます。これを<strong>板（気配）</strong>と呼びます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 540 360" role="img" aria-labelledby="ita-title">
+        <title id="ita-title">株の板（気配値）の構造イメージ。売り注文（赤）が上に、買い注文（緑）が下に積み上がる</title>
+        <text class="s-panel-label" x="30" y="24">板（気配値）のイメージ図</text>
+        <!-- 列ヘッダー -->
+        <rect x="30" y="34" width="480" height="26" fill="#f6f8fa" rx="4"/>
+        <text class="s-price-text" x="120" y="51" text-anchor="middle" font-size="11">売数量</text>
+        <text class="s-price-text" x="270" y="51" text-anchor="middle" font-size="11">価格</text>
+        <text class="s-price-text" x="410" y="51" text-anchor="middle" font-size="11">買数量</text>
+        <!-- 売り注文（上：赤） -->
+        <rect class="s-ask" x="30" y="62" width="480" height="28" rx="2"/>
+        <text class="s-ask-text" x="120" y="80" text-anchor="middle">500</text>
+        <text class="s-price-text" x="270" y="80" text-anchor="middle">1,530</text>
+        <rect class="s-ask" x="30" y="92" width="480" height="28" rx="2"/>
+        <text class="s-ask-text" x="120" y="110" text-anchor="middle">1,200</text>
+        <text class="s-price-text" x="270" y="110" text-anchor="middle">1,520</text>
+        <rect class="s-ask" x="30" y="122" width="480" height="28" rx="2"/>
+        <text class="s-ask-text" x="120" y="140" text-anchor="middle">800</text>
+        <text class="s-price-text" x="270" y="140" text-anchor="middle">1,515</text>
+        <rect class="s-ask" x="30" y="152" width="480" height="28" rx="2"/>
+        <text class="s-ask-text" x="120" y="170" text-anchor="middle">2,000</text>
+        <text class="s-price-text" x="270" y="170" text-anchor="middle">1,510</text>
+        <!-- スプレッド帯 -->
+        <rect class="s-spread-box" x="30" y="183" width="480" height="26" rx="3"/>
+        <text class="s-spread-text" x="270" y="200" text-anchor="middle">← スプレッド（売値と買値の差） →</text>
+        <!-- 買い注文（下：緑） -->
+        <rect class="s-bid" x="30" y="212" width="480" height="28" rx="2"/>
+        <text class="s-bid-text" x="410" y="230" text-anchor="middle">3,000</text>
+        <text class="s-price-text" x="270" y="230" text-anchor="middle">1,500</text>
+        <rect class="s-bid" x="30" y="242" width="480" height="28" rx="2"/>
+        <text class="s-bid-text" x="410" y="260" text-anchor="middle">1,500</text>
+        <text class="s-price-text" x="270" y="260" text-anchor="middle">1,495</text>
+        <rect class="s-bid" x="30" y="272" width="480" height="28" rx="2"/>
+        <text class="s-bid-text" x="410" y="290" text-anchor="middle">700</text>
+        <text class="s-price-text" x="270" y="290" text-anchor="middle">1,490</text>
+        <rect class="s-bid" x="30" y="302" width="480" height="28" rx="2"/>
+        <text class="s-bid-text" x="410" y="320" text-anchor="middle">900</text>
+        <text class="s-price-text" x="270" y="320" text-anchor="middle">1,480</text>
+        <!-- 注釈 -->
+        <text class="s-ask-text" x="38" y="130" font-size="10">売り</text>
+        <text class="s-bid-text" x="38" y="260" font-size="10">買い</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 板（気配値）のイメージ。上段（赤）に売り注文、下段（緑）に買い注文が価格ごとに積み上がっている。最も安い売値（1,510）と最も高い買値（1,500）の差が「スプレッド」。<strong>成行注文を出すと、相手側の最良気配から順番に約定していく</strong>。数量・価格は概念的な例示であり、実際の銘柄とは無関係。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>板の仕組みを理解すると、「成行で大量に注文を出したらどうなるか」「指値を入れた価格に注文が来なかったら」といった疑問が自然と解けていきます。以下の3種の注文は、すべてこの板との関係で説明できます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 成行注文：スピード最優先、価格は市場に委ねる</h2>
+    <p><strong>成行注文（なりゆきちゅうもん）</strong>とは、「価格を問わず、今すぐ買いたい（売りたい）」という注文です。指定するのは<strong>数量だけ</strong>で、価格は市場の相手（板の売り/買い注文）に委ねます。</p>
+    <ul>
+      <li><strong>買いの成行注文</strong>：板の「売り注文」の中で、最も安い価格から順に約定していく。</li>
+      <li><strong>売りの成行注文</strong>：板の「買い注文」の中で、最も高い価格から順に約定していく。</li>
+    </ul>
+    <div class="positive-box">
+      <strong>✅ 成行注文のメリット</strong>：約定優先度が最高で、<strong>原則として確実に・素早く約定できる</strong>。「今すぐポジションを持ちたい」「今すぐ手仕舞いしたい」場面で威力を発揮する。
+    </div>
+    <div class="negative-box">
+      <strong>📉 成行注文のデメリット</strong>：<strong>約定価格を事前に確定できない</strong>。板に薄い（注文が少ない）銘柄や、相場が急変している局面では、思った価格と大きくずれる（スリッページ）可能性がある。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 指値注文：価格を自分で指定する</h2>
+    <p><strong>指値注文（さしねちゅうもん）</strong>は、「この価格以下で買いたい」「この価格以上で売りたい」と<strong>自分で価格を指定する</strong>注文です。</p>
+    <ul>
+      <li><strong>買いの指値注文</strong>：指定した価格以下になったときに約定する（「1,490円で買いたい」→1,490円以下になれば約定）。</li>
+      <li><strong>売りの指値注文</strong>：指定した価格以上になったときに約定する（「1,550円で売りたい」→1,550円以上になれば約定）。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="sashine-title">
+        <title id="sashine-title">指値注文と逆指値注文が約定する価格の位置関係の概念図</title>
+        <text class="s-panel-label" x="30" y="24">3種の注文が「どの価格で動くか」</text>
+        <!-- 縦軸：価格 -->
+        <line class="s-axis" x1="100" y1="50" x2="100" y2="260"/>
+        <text class="s-label-sm" x="108" y="54">高</text>
+        <text class="s-label-sm" x="108" y="258">安</text>
+        <!-- 現在価格ライン -->
+        <line class="s-guide" x1="100" y1="155" x2="600" y2="155"/>
+        <text class="s-note" x="110" y="148">現在の市場価格</text>
+        <circle fill="#0969da" cx="100" cy="155" r="6"/>
+        <!-- 指値・買い（現在より安い） -->
+        <line class="s-guide" x1="100" y1="210" x2="430" y2="210"/>
+        <rect fill="#e6ffed" x="200" y="196" width="200" height="26" rx="4"/>
+        <text class="s-note-g" x="300" y="213" text-anchor="middle">指値（買い）：この価格以下で買う</text>
+        <text class="s-label-sm" x="104" y="213">低い価格</text>
+        <!-- 逆指値・売り（損切り）（現在より安い） -->
+        <line class="s-brk" x1="100" y1="235" x2="430" y2="235"/>
+        <rect fill="#ffebe9" x="200" y="221" width="220" height="26" rx="4"/>
+        <text class="s-note-r" x="310" y="238" text-anchor="middle">逆指値（売り）：この価格以下になったら売る</text>
+        <!-- 指値・売り（現在より高い） -->
+        <line class="s-guide" x1="100" y1="100" x2="430" y2="100"/>
+        <rect fill="#e6ffed" x="200" y="86" width="200" height="26" rx="4"/>
+        <text class="s-note-g" x="300" y="103" text-anchor="middle">指値（売り）：この価格以上で売る</text>
+        <text class="s-label-sm" x="104" y="103">高い価格</text>
+        <!-- 逆指値・買い（ブレイクアウト）（現在より高い） -->
+        <line class="s-brk" x1="100" y1="76" x2="430" y2="76"/>
+        <rect fill="#ffebe9" x="200" y="62" width="220" height="26" rx="4"/>
+        <text class="s-note-r" x="310" y="79" text-anchor="middle">逆指値（買い）：この価格以上になったら買う</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 現在の市場価格（青）を基準に、各注文が発動する位置。<strong>緑＝指値注文</strong>は「現在より有利な価格」に置く。<strong>赤点線＝逆指値注文</strong>は「ある価格を超えたら（下回ったら）発動」するトリガー型。買いの逆指値はブレイクアウト戦略に、売りの逆指値は損切りの自動化に使う。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="positive-box">
+      <strong>✅ 指値注文のメリット</strong>：<strong>希望価格で約定できる</strong>（それより不利な価格では約定しない）。予算管理がしやすく、板の売り注文や買い注文の中に自分の注文を積み込む形になる。
+    </div>
+    <div class="negative-box">
+      <strong>📉 指値注文のデメリット</strong>：相場が指定価格に到達しなければ<strong>約定しない（機会損失）</strong>。相場が急騰/急落して一気に通り過ぎた場合も、タイミング次第では約定を逃すことがある。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 3種の注文、どう使い分けるか（比較表）</h2>
+    <p>3種を整理した比較表です。</p>
+    <div class="mw-scroll-hint">→ 横にスクロールできます</div>
+    <table>
+      <thead>
+        <tr>
+          <th>注文種別</th>
+          <th>仕組みの一言</th>
+          <th>価格の確実性</th>
+          <th>約定の確実性</th>
+          <th>主な使いどころ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>成行注文</td>
+          <td>相場の言い値で即取引</td>
+          <td>❌ 不確か</td>
+          <td>✅ 高い</td>
+          <td>今すぐポジションを動かしたいとき</td>
+        </tr>
+        <tr>
+          <td>指値注文</td>
+          <td>希望価格を指定して待つ</td>
+          <td>✅ 確実</td>
+          <td>❌ 達しなければ非約定</td>
+          <td>「この価格で買いたい/売りたい」が明確なとき</td>
+        </tr>
+        <tr>
+          <td>逆指値注文</td>
+          <td>ある価格を超えたら自動発動</td>
+          <td>△ 発動後は成行/指値の選択による</td>
+          <td>△ トリガー後に決まる</td>
+          <td>損切りの自動化、ブレイクアウト戦略</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>一般的には、<strong>エントリーは指値で有利な価格を狙い、損切り（撤退）は逆指値で機械化する</strong>という組み合わせが、感情に振り回されない基本パターンとして知られています。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 逆指値注文：損切りを自動化する最重要ツール</h2>
+    <p>ここから後半です。<strong>逆指値注文（ぎゃくさしねちゅうもん）</strong>は、多くの初心者が後回しにしますが、実は<strong>投資のリスク管理において最も重要な注文方法</strong>です。指値注文と逆に動く、という意味で「逆指値」と呼ばれます。</p>
+    <ul>
+      <li><strong>売りの逆指値</strong>：「1,480円以下になったら自動で売る」——ポジションを持っているとき、相場が一定価格まで下落したら自動的に売って損切りを実行する。</li>
+      <li><strong>買いの逆指値</strong>：「1,550円以上になったら自動で買う」——ブレイクアウト（抵抗線を上抜け）を狙い、値上がりが確認されてから自動参入する。</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 310" role="img" aria-labelledby="stop-title">
+        <title id="stop-title">逆指値（ストップ注文）で損切りを自動化する概念図。SLに価格が触れた瞬間に自動で決済される。</title>
+        <text class="s-panel-label" x="30" y="24">逆指値（ストップロス）で損切りを自動化する</text>
+        <!-- 価格軸 -->
+        <line class="s-axis" x1="60" y1="50" x2="60" y2="280"/>
+        <text class="s-label-sm" x="68" y="54">高</text>
+        <text class="s-label-sm" x="68" y="278">安</text>
+        <!-- 時間軸 -->
+        <line class="s-axis" x1="60" y1="280" x2="600" y2="280"/>
+        <text class="s-label-sm" x="590" y="296">時間 →</text>
+        <!-- エントリー価格 -->
+        <line class="s-guide" x1="60" y1="120" x2="600" y2="120"/>
+        <text class="s-note" x="70" y="113">エントリー価格（ここでポジションを持つ）</text>
+        <circle fill="#0969da" cx="120" cy="120" r="6"/>
+        <!-- SL（逆指値）ライン -->
+        <line class="s-brk" x1="60" y1="200" x2="600" y2="200"/>
+        <text class="s-note-r" x="70" y="193">損切りライン SL（逆指値を置く価格）</text>
+        <!-- 価格推移：下落してSLに触れる -->
+        <polyline class="s-price" points="120,120 180,108 240,130 300,150 360,170 420,196"/>
+        <circle class="s-rev" cx="424" cy="200" r="8"/>
+        <text class="s-note-r" x="438" y="204">ここで逆指値が発動 → 自動決済！</text>
+        <!-- SL以降は薄く続く（仮に持ち続けた場合） -->
+        <polyline class="s-price" points="424,200 480,230 540,255 590,268" style="opacity:.2;stroke-dasharray:6 4"/>
+        <text class="s-label-sm" x="430" y="268">（もし逆指値がなければ…さらに損拡大）</text>
+        <!-- 損失幅の矢印 -->
+        <line stroke="#cf222e" stroke-width="1.5" x1="80" y1="120" x2="80" y2="200" marker-end="url(#arr-r)"/>
+        <text class="s-note-r" x="88" y="162">許容損失幅</text>
+      </svg>
+      <figcaption class="chart-caption">▲ エントリーと同時に損切りライン（SL）に逆指値を置く。価格が下落してSLに触れた瞬間、<strong>自分が何もしなくても自動で決済される</strong>。逆指値がなければ（薄い点線）、そのまま損失が膨らみ続ける。<strong>差は仕組みがあるかどうかだけ</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>なぜ逆指値が「最重要」なのか</h3>
+    <p>損切りが重要な理由は<a href="../guide-loss-cut.html">損切りの心理を解説した記事</a>で詳しく取り上げましたが、核心は<strong>「人間は感情的になると損切りができない」</strong>という事実です。含み損を抱えた瞬間、脳は「もう少し待てば戻るかも」という言い訳を作り出します（損失回避・プロスペクト理論）。逆指値注文は、<strong>冷静なエントリー前に損切り価格を機械に委ね、感情が介在する余地を物理的に断つ</strong>ための最も実践的な手段です。</p>
+    <div class="info-box">
+      <strong>💡 実践のポイント</strong>：「エントリーと逆指値（SL）をワンセットで置く」を習慣にする。「入る」ことだけ決めてSLを後で決めようとすると、含み損が出た後に「もう少し下でいいか」と安易に動かしてしまいます（SLの切り下げ＝損切りの回避に直結）。エントリーボタンを押す前に、SLの価格まで決めておくことが大原則です。
+    </div>
+
+    <h3>逆指値の注文形式：「逆指値成行」と「逆指値指値」</h3>
+    <p>多くの証券会社では、逆指値が発動したときの注文を選べます。</p>
+    <ul>
+      <li><strong>逆指値成行（ストップ成行）</strong>：トリガー価格に達したら成行で即約定。確実に撤退できるが、スリッページが生じる可能性がある。急落局面でも約定を優先したい場合はこちら。</li>
+      <li><strong>逆指値指値（ストップ指値）</strong>：トリガー後に指定価格での指値注文になる。約定価格を制限できるが、相場が一気に飛び越えた場合は約定しないリスクがある。</li>
+    </ul>
+    <p>損切りでは、<strong>「確実に撤退する」ことを優先するため、一般的に逆指値成行が使われる場面が多い</strong>とされています。ただし、証券会社・商品によって仕様が異なるため、利用するサービスの説明をよく確認してください。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ スリッページ：成行注文のもうひとつの落とし穴</h2>
+    <p><strong>スリッページ（slippage）</strong>とは、注文を出した瞬間に画面に表示されていた価格と、<strong>実際に約定した価格との差</strong>のことです。成行注文（および逆指値成行）を出すと、板の相手注文を「価格順に喰っていく」ため、注文数量が大きかったり、板が薄かったりすると、1枚目と10枚目では約定価格が変わることがあります。</p>
+    <div class="warning-box">
+      特に注意が必要な場面：<br>
+      <strong>①発表直後の経済指標や要人発言</strong>（雇用統計・FOMC・日銀会合など）は価格が一瞬で数十〜数百pips/円動くことがある。このときに成行注文を出すと、思わぬ不利な価格で約定することがある。<br>
+      <strong>②流動性の低い時間帯</strong>（早朝・週明け直後）や<strong>板が薄い銘柄</strong>では、小さな注文でもスリッページが大きくなる。<br>
+      <strong>③逆指値が発動したタイミングで相場が「飛んだ」場合</strong>（ギャップダウン等）、逆指値成行でも想定より大幅に不利な価格で約定することがある（ギャップリスク）。
+    </div>
+    <p>スリッページ自体は完全には避けられない市場の仕組みです。対策として有効なのは、<strong>①過去の流動性が高い時間帯に取引する ②ポジションサイズを板の厚さに対して過大にしない ③重要指標の発表前後はポジションを持たない</strong>といった工夫です。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 寄付・引け注文の癖と注意点</h2>
+    <p>日本の株式市場（東証など）には、「板のザラバ（通常取引時間）」以外に、<strong>相場の「寄り付き」（始値）と「引け」（終値）に特化した注文方法</strong>があります。</p>
+
+    <h3>① 寄付注文（よりつきちゅうもん）</h3>
+    <p>前場（午前）・後場（午後）の<strong>寄り付き（始値）にのみ約定させる</strong>条件を指定した注文です。寄付きはその日の最初の取引が決まる場面で、夜間の出来事やニュースを受けた価格が反映されます。</p>
+    <div class="warning-box">
+      ザラバ（通常取引時間）中に寄付注文を出すと、<strong>その場で「出来ず」となり失効</strong>します（次の寄付きには繰越しされない）。発注タイミングに注意。
+    </div>
+
+    <h3>② 引け注文（ひけちゅうもん）</h3>
+    <p>前場・後場の<strong>引け（終値）にのみ約定させる</strong>注文です。その日の立会い終了時に形成される引け値で約定します。</p>
+    <div class="warning-box">
+      引け注文は前場・後場それぞれの引けが対象となり、<strong>約定しなかった場合は次の立会いに繰り越されない</strong>（その場で失効）。また、板の売り買いが合わず「ザラバ引け」（引け値が形成されない）となった場合も執行されません。
+    </div>
+
+    <p>寄付・引けは証券会社によって仕様の細部（受付時間・繰越ルール等）が異なります。<strong>利用する前に必ず自分が使っている証券会社の説明を確認する</strong>ことをおすすめします。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI のシグナルシステムは、この記事で解説した注文の考え方と密接につながっています。</p>
+    <ul>
+      <li><strong>シグナルメールに SL（ストップロス）の目安が載る</strong>：テクニカル分析に基づいてATR（平均真値幅）を使い、機械的にSLの目安価格を算出しています。これはまさに「逆指値を置く価格の参考値」です。<span style="font-size:.9em">（※ あくまで機械算出の参考値であり、売買を推奨するものではありません）</span></li>
+      <li><strong>エントリーと撤退ラインのワンセット</strong>：シグナルには常にエントリーの目安とSLが一緒に出てきます。「入る」と「撤退ラインを決める」を切り離さないという、この記事のメッセージと同じ考え方です。</li>
+      <li><strong>成績を透明に公開</strong>：シグナルがどのくらいの確率でSL/TP（損切り/利確）に到達したかを<a href="../track-record.html">シグナル成績ダッシュボード</a>で公開しています。「逆指値を使うと、実際どうなるか」を数字で確認できます。</li>
+    </ul>
+    <div class="info-box">
+      <strong>ℹ️ 関連知識</strong>：SLをどこに置くかは注文方法だけでなく<strong>ポジションサイジング（資金管理）</strong>とセットで考える必要があります。「1回の取引でどれだけのリスクを取るか」を先に決め、そこから逆算してSLの幅とロット数を決める——この考え方は<a href="../guide-position-sizing.html">ポジションサイジングの記事</a>で詳しく解説しています（公開予定）。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの SL・TP がどう機能しているか見る</div>
+      <div class="cta-box-desc">逆指値のSLと利確目標（TP）をセットで算出するシグナルの、実際の成績を勝ち負け両方とも公開しています。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>3種の注文方法と、関連する重要概念を整理します。</p>
+    <ul>
+      <li><strong>成行注文</strong>：価格を問わず即約定。スリッページのリスクあり。「今すぐ動かしたい」場面で使う。</li>
+      <li><strong>指値注文</strong>：希望価格を自分で指定。価格は守られるが、達しなければ約定しない（機会損失）。「この価格で入りたい」場面で使う。</li>
+      <li><strong>逆指値注文</strong>：ある価格を下回った（または上回った）ときに自動で発動する。損切りの自動化・ブレイクアウト戦略に使う。<strong>エントリーと同時にセットで置くのが基本</strong>。</li>
+      <li><strong>スリッページ</strong>：成行注文や逆指値成行では、発注価格と約定価格がずれることがある。流動性の高い時間帯・銘柄での取引やポジションサイズのコントロールで軽減できる。</li>
+      <li><strong>寄付・引け注文</strong>：特定の場面（始値・終値）に限定した注文。ザラバ中の発注は失効するなど癖があるため、証券会社の仕様を確認する。</li>
+    </ul>
+    <p>注文方法の知識は、<strong>「何を買うか」より先に知っておくべき投資の"インフラ"</strong>です。特に逆指値注文は、損切りを感情に頼らず機械化するための最も現実的な手段。<a href="../guide-loss-cut.html">損切りの心理を理解した記事</a>と合わせて読むと、「なぜ逆指値が必要か」がより深く腹落ちするはずです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="../guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・処分効果など、損切りを妨げる心理の正体を解説。逆指値が"なぜ必要か"の理由がここにある。</div>
+      </a>
+      <a class="related-card" href="../guide-risk-reward.html">
+        <div class="related-card-title">📐 リスクリワードと期待値</div>
+        <div class="related-card-desc">SLとTPの幅から計算するリスクリワード比。損切り幅と利確幅をどう設定するかを期待値から解説。</div>
+      </a>
+      <a class="related-card" href="../track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">SL・TPをセットで算出するシグナルの実際の成績を公開。逆指値がどう機能するか数字で確認できる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は株式・FX・先物などの注文方法の仕組みについて情報提供として解説したものであり、特定銘柄・商品の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益・損失回避を保証するものではありません。また、証券会社や取引所によって注文の仕様・ルールが異なる場合があります。最新の仕様は各社の公式情報をご確認ください。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="../about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="../site-search.js" defer></script>
+</body>
+</html>

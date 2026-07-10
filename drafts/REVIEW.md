@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-07-11 | 💰 基礎知識 #15 — 注文方法の基本（order-types）下書き生成
+
+- **基準日**: 2026-07-11（UTC 2026-07-10T20:30）
+- **topic key**: `order-types`（topicキュー #15 / 基礎知識）
+- **仮タイトル**: 注文方法の基本｜成行・指値・逆指値の使い分けを図解で解説
+- **生成ファイル**: `drafts/draft-order-types.html`
+- **参照出典（WebSearch確認）**:
+  - 成行・指値・逆指値の仕組み: https://kabutan.jp/hikaku/kabu_beginner_how-to-order/ / https://kabu.com/kabuyomu/beginner/594.html
+  - スリッページ: https://www.xs.com/jp/blog/%E6%A0%AA%E5%BC%8F%E6%B3%A8%E6%96%87/ / https://www.ffaj.or.jp/learning/?p=13
+  - 寄付・引け注文: https://info.monex.co.jp/help/stock/japan-trading/conditional/yorihike.html / https://aibashiro.jp/contents/yg00073/
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（板のイメージ価格はすべて概念的例示）
+  - ✅ 断定・利益保証なし（「一般的に」「とされています」等、断定を避けた表現）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer）
+  - ✅ 出典妥当（WebSearchで仕組みの事実確認済み）
+  - ✅ noindex,nofollow 設定済み
+- **SVG TODO**: 
+  - 板（気配値）図はライト/ダーク両対応CSSで制御済み。実機での表示確認を推奨
+  - 3種の注文位置関係図・逆指値SL図も同様に実機確認を推奨
+- **人間の残作業**:
+  1. ブラウザでライト/ダークモードのSVG表示を実機確認（特に板の色分け）
+  2. guide-risk-reward.html（関連記事リンク先）が未公開のため公開後にリンク確認
+  3. guide-position-sizing.html（本文内リンク）が未公開のため公開後にリンク確認
+  4. 公開は毎朝08:40の autodraft-publish が Opus ゲート付きで自動実行
+
+---
+
 ## 2026-07-10 autopublish: ✅ 公開済み — guide-nikkei-vs-topix.html（基礎知識 #19）
 
 - **対象key**: nikkei-vs-topix（topic queue #19 / 基礎知識）
