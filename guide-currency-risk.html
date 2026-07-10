@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>為替リスクの基本｜外貨資産は「価格×為替」の二階建て - MarketWatch AI</title>
+  <meta name="description" content="外貨資産の損益は「外貨価格の変動」と「為替レートの変動」という2つの要因で決まります。円高10%なら外国株+10%でも±0。為替ヘッジあり/なしの仕組みとヘッジコスト、長期積立での一般的な考え方まで、初心者〜中上級者向けに図解で解説します。">
+  <meta name="keywords" content="為替リスク,外貨資産,為替ヘッジ,ヘッジコスト,為替差損,円高,円安,外国株,為替リスク管理,リスク管理,投資基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-currency-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="為替リスクの基本｜外貨資産は「価格×為替」の二階建て">
+  <meta property="og:description" content="外貨資産の損益は株価変化と為替変化の掛け算。円高10%で外国株+10%の利益は消える。為替ヘッジの仕組みとコストを図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-currency-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "為替リスクの基本｜外貨資産は「価格×為替」の二階建て",
+    "description": "外貨資産の損益は「外貨価格の変動」と「為替レートの変動」という2つの要因で決まる。為替ヘッジあり/なしの仕組みとヘッジコスト、長期積立での考え方を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-11",
+    "dateModified": "2026-07-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-currency-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width="2.5"}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-o{fill:#9a6700;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1}
+    .s-fill-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1}
+    .s-fill-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1}
+    .s-fill-y{fill:#fff8c5;stroke:#9a6700;stroke-width:1}
+    .s-text-b{fill:#1f6feb;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-sm{fill:#424a53;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-note-o{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-fill-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030;stroke:#58a6ff}
+    body.dark .s-fill-y{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-sm{fill:#c9d1d9}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 為替リスクの基本
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は為替リスクにまつわる基礎知識を整理した「情報提供」であり、特定通貨や金融商品の売買推奨・投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🌐 為替リスクの基本｜外貨資産は「価格×為替」の二階建て</h1>
+    <div class="meta-line">公開日：2026 年 7 月 11 日 ／ 読了時間：約 13 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <p>「米国株に投資した。株価は上がっているのに、円換算でなぜか利益が少ない——」という経験をしたことはないでしょうか。外貨建て資産を持つと、<strong>株価（外貨）の動きとは別に、為替レートの動きという"もう一つの変数"が損益に直撃します</strong>。これを<strong>為替リスク</strong>と呼びます。</p>
+    <p>このリスクを知らずに外国株や外国投資信託を持つのは、<strong>目隠しをして2つのコインを同時に投げるようなもの</strong>。両方が自分に有利に転べば大きな利益ですが、片方が不利に転んだだけで全部消える可能性があります。この記事では、まず<strong>「価格×為替」の二階建て構造</strong>を直感的に理解し、後半で<strong>為替ヘッジの仕組みとコスト・長期投資での一般的な考え方</strong>まで踏み込みます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>外貨資産の円換算評価額は <strong>「外貨価格の変化率 + 為替変化率（概算）」</strong> の掛け合わせで決まる。外国株+10%でも円高10%なら、円建てリターンはほぼゼロになる。</li>
+      <li>為替リスクを抑える「ヘッジ」には<strong>コストがかかる。そのコストは2国間の金利差に近似</strong>する（カバー付き金利平価説）。金利差が大きいほどヘッジコストは高くなる。</li>
+      <li>長期の積立投資では「ヘッジなし」が一般的だが、それは「為替リスクを受け入れ、時間をかけて分散する」という選択。短期〜中期や資産の大きな一括投入では<strong>為替リスクを意識した分散が重要</strong>。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">外貨資産の損益は「価格×為替」の掛け算</a></li>
+        <li><a href="#section-2">直感図解：+10%の株高が円高で消える仕組み</a></li>
+        <li><a href="#section-3">どんな資産が為替リスクを持つか</a></li>
+        <li><a href="#section-4">円高・円安の「方向感」を知る</a></li>
+        <li><a href="#section-5">為替ヘッジとは何か（仕組みと概念）</a></li>
+        <li><a href="#section-6">ヘッジコストの正体：金利差が価格になる</a></li>
+        <li><a href="#section-7">ヘッジあり/なしの使い分け</a></li>
+        <li><a href="#section-8">長期積立での一般的な考え方</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ========= Section 1 ========= -->
+    <h2 id="section-1">1️⃣ 外貨資産の損益は「価格×為替」の掛け算</h2>
+    <p>最初に、外貨資産の円建て評価額がどう決まるかを整理します。計算式はシンプルです。</p>
+    <div class="info-box">
+      <strong>円建て評価額 ＝ 外貨建て価格 × 円/外貨レート</strong><br>
+      <span style="font-size:.9em">（例：米国株が100ドル、為替が150円/ドルなら　→　円建て評価額＝15,000円）</span>
+    </div>
+    <p>これが外貨資産の本質です。<strong>損益を左右する要因が「外貨価格」と「為替レート」の2つある</strong>——これが「二階建て」と表現される理由です。国内株式（円建て）は1階建て（株価だけ）ですが、外貨資産は2階建てになります。</p>
+    <p>この2つの変数が<strong>独立して動く</strong>点が、外貨投資の難しさです。外国株が値上がりしても、同時に円が大きく上がれば（円高）、円建てで見た利益は小さくなります。逆に外国株が値下がりしていても、円安が進めば円建てでは損失が小さくなったり、プラスになることさえあります。</p>
+
+    <!-- ========= Section 2 ========= -->
+    <h2 id="section-2">2️⃣ 直感図解：+10%の株高が円高で消える仕組み</h2>
+    <p>具体的なシナリオで二階建て構造を体感してみましょう。10万円を米国株式に投資したとします（購入時の為替：150円/ドルと仮定）。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>シナリオ</th>
+          <th>株価変化（ドル）</th>
+          <th>為替変化（円/ドル）</th>
+          <th>円建てリターン（概算）</th>
+          <th>結果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A：両方プラス</td>
+          <td>+10%</td>
+          <td>円安 +10%（165円）</td>
+          <td>約 +21%</td>
+          <td style="color:#1a7f37;font-weight:700">大きな利益</td>
+        </tr>
+        <tr>
+          <td>B：株高・円高</td>
+          <td>+10%</td>
+          <td>円高 −10%（135円）</td>
+          <td>約 −1%</td>
+          <td style="color:#cf222e;font-weight:700">ほぼ±0（利益消滅）</td>
+        </tr>
+        <tr>
+          <td>C：株安・円安</td>
+          <td>−10%</td>
+          <td>円安 +10%（165円）</td>
+          <td>約 −1%</td>
+          <td style="color:#9a6700;font-weight:700">ほぼ±0（損失が軽減）</td>
+        </tr>
+        <tr>
+          <td>D：両方マイナス</td>
+          <td>−10%</td>
+          <td>円高 −10%（135円）</td>
+          <td>約 −19%</td>
+          <td style="color:#cf222e;font-weight:700">大きな損失</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:.82rem;color:#6e7781;margin-top:-10px">※ 複利計算による概算。実際は (1+株価変化率)×(1+為替変化率)−1 で計算。手数料・税金は考慮外。概念説明のための仮定の数値例です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 360" role="img" aria-labelledby="twolayer-title">
+        <title id="twolayer-title">外貨資産の「価格×為替」二階建て構造の概念図：4つのシナリオ</title>
+        <text class="s-panel-label" x="40" y="24">外貨資産の損益：4つのシナリオ（「価格変化」×「為替変化」）</text>
+        <!-- 縦線・横線で4象限 -->
+        <line class="s-axis" x1="320" y1="44" x2="320" y2="320"/>
+        <line class="s-axis" x1="40" y1="182" x2="620" y2="182"/>
+        <!-- 軸ラベル -->
+        <text class="s-label-sm" x="620" y="178" text-anchor="end">株価：上昇 →</text>
+        <text class="s-label-sm" x="50" y="178">← 株価：下落</text>
+        <text class="s-label-sm" x="322" y="44">円安（外貨高）↑</text>
+        <text class="s-label-sm" x="322" y="316">↓ 円高（外貨安）</text>
+        <!-- A象限（右上）：両方プラス＝大きな利益 -->
+        <rect class="s-fill-g" x="324" y="48" width="292" height="130" rx="6"/>
+        <text class="s-note-g" x="470" y="110" text-anchor="middle">A：株高＋円安</text>
+        <text class="s-text-sm" x="470" y="128" text-anchor="middle">✅ 円建てで大きな利益</text>
+        <!-- B象限（右下）：株高・円高 -->
+        <rect class="s-fill-y" x="324" y="186" width="292" height="130" rx="6"/>
+        <text class="s-note-o" x="470" y="248" text-anchor="middle">B：株高＋円高</text>
+        <text class="s-text-sm" x="470" y="266" text-anchor="middle">⚠️ 円高が株高を相殺（利益消滅）</text>
+        <!-- C象限（左上）：株安・円安 -->
+        <rect class="s-fill-y" x="44" y="48" width="272" height="130" rx="6"/>
+        <text class="s-note-o" x="180" y="110" text-anchor="middle">C：株安＋円安</text>
+        <text class="s-text-sm" x="180" y="128" text-anchor="middle">⚠️ 円安が株安を相殺（損失軽減）</text>
+        <!-- D象限（左下）：両方マイナス -->
+        <rect class="s-fill-r" x="44" y="186" width="272" height="130" rx="6"/>
+        <text class="s-note-r" x="180" y="248" text-anchor="middle">D：株安＋円高</text>
+        <text class="s-text-sm" x="180" y="266" text-anchor="middle">❌ 円建てで大きな損失</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 外貨資産の損益は「株価変化」と「為替変化」の2つの軸が組み合わさって決まる。B象限（株高・円高）では、せっかく株が上がっても円高がそれを打ち消す。外貨投資では、株の見通しだけでなく<strong>為替の方向性も無視できない</strong>ことが分かる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>特に注意が必要なのは<strong>B象限（株高・円高）</strong>です。「外国株に投資して株価は上がっているのに、なぜか円換算で儲かっていない」という感覚は、多くの場合このシナリオに当たります。外国株の上昇幅と円高の幅がほぼ等しければ、円建てリターンはほぼゼロになります。</p>
+
+    <!-- ========= Section 3 ========= -->
+    <h2 id="section-3">3️⃣ どんな資産が為替リスクを持つか</h2>
+    <p>為替リスクは、外貨建て資産を持つ場合に必ず発生します。代表例を整理します。</p>
+
+    <h3>為替リスクがある資産</h3>
+    <ul>
+      <li><strong>外国株式・外国ETF</strong>：米国株（S&P500連動型など）、欧州株、新興国株など、外貨建てで取引されるもの。</li>
+      <li><strong>外国投資信託（ヘッジなし）</strong>：「為替ヘッジなし」と明記されている外国籍ファンド・外国債券ファンド。</li>
+      <li><strong>FX（外国為替証拠金取引）</strong>：通貨ペアを直接売買するため、為替変動が損益に直結する。</li>
+      <li><strong>外貨建て債券・外貨預金</strong>：利回りが高く見えても、為替差損で元本割れするリスクがある。</li>
+      <li><strong>グローバル株式・バランス型ファンド</strong>：「ヘッジなし」タイプは外国資産部分に為替リスクがある。</li>
+    </ul>
+
+    <h3>為替リスクが（基本的に）ない資産</h3>
+    <ul>
+      <li><strong>国内株式・国内ETF</strong>：円建てで取引されるため、直接の為替リスクはない（ただし企業の収益は為替の影響を受けることがある）。</li>
+      <li><strong>日本国債・円預金</strong>：円建て資産のため、為替リスクは生じない。</li>
+      <li><strong>外国投資信託（為替ヘッジあり）</strong>：ヘッジにより、ファンドレベルで為替変動の影響を抑えている（ただしヘッジコストがかかる）。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 NISAで人気の「全世界株式・米国株式ファンド」は？</strong><br>
+      多くの人気インデックスファンド（全世界株式・米国株式など）は<strong>「為替ヘッジなし」</strong>です。外貨建て資産を円換算して基準価額が決まるため、円高局面では株価が上がっていても基準価額が伸びにくくなります。「長期・積立・分散」の文脈でこれが選ばれる理由は後半のSection 8で解説します。
+    </div>
+
+    <!-- ========= Section 4 ========= -->
+    <h2 id="section-4">4️⃣ 円高・円安の「方向感」を知る</h2>
+    <p>為替リスクを意識するには、円高・円安がどう動くかの大まかな要因を知っておくと役立ちます。ただし為替は多くの要因が複雑に絡み合い、<strong>短期の動きを正確に予測することは専門家でも非常に難しい</strong>と言われています。ここでは代表的な要因を整理するにとどめます。</p>
+
+    <h3>円高方向に動きやすい代表的な要因</h3>
+    <ul>
+      <li><strong>日米金利差の縮小</strong>：日本の金利が上がる、または米国の金利が下がると、円建て資産の相対的な魅力が増し、円買いにつながりやすい。</li>
+      <li><strong>リスクオフ（投資家の安全志向）</strong>：世界的な株安や不安心理が高まると、かつては「安全通貨」と見られる円が買われる場面があった（ただしこの傾向は変化しつつある）。</li>
+      <li><strong>貿易黒字の拡大・国際収支の改善</strong>：輸出代金の円転などで円買い需要が増える。</li>
+    </ul>
+
+    <h3>円安方向に動きやすい代表的な要因</h3>
+    <ul>
+      <li><strong>日米金利差の拡大</strong>：米国の金利が日本より大幅に高い状態が続くと、円を売って高金利通貨を買う動きが出やすい（<a href="guide-yen-carry-trade.html">円キャリートレード</a>）。</li>
+      <li><strong>日本の経常赤字・資本流出</strong>：輸入代金の支払いや海外投資の増加で円売り需要が生じる。</li>
+      <li><strong>日銀の金融緩和継続</strong>：低金利政策が続くと円の相対的な魅力が低下しやすい。</li>
+    </ul>
+
+    <div class="warning-box">
+      為替の動きは経済・政治・市場心理など多様な要因が影響し、<strong>「金利差が縮まれば必ず円高」といった単純な法則は成立しません</strong>。当サイトの<a href="political-feed.html">政治発言ライブフィード</a>や<a href="calendar.html">経済カレンダー</a>で最新の情報を確認しながら、大局的なリスク管理に役立ててください。
+    </div>
+
+    <!-- ======== 中上級セクション区切り ======== -->
+    <div class="info-box" style="margin-top:32px">
+      <strong>📖 ここから中上級編へ</strong>：前半（Section 1〜4）で「外貨資産の損益は価格×為替で決まる」という基礎を理解しました。後半（Section 5〜）では<strong>為替ヘッジの仕組みとコスト、長期投資での考え方</strong>など、より実践的な内容に踏み込みます。
+    </div>
+
+    <!-- ========= Section 5 ========= -->
+    <h2 id="section-5">5️⃣ 為替ヘッジとは何か（仕組みと概念）</h2>
+    <p>「為替リスクが怖いなら、なくせばいいのでは？」——そのために使われる手段が<strong>為替ヘッジ（currency hedge）</strong>です。ヘッジとは英語で「リスクを低減するための保険的な操作」を意味します。</p>
+    <p>代表的な手法は<strong>通貨の先物取引や為替予約</strong>を使う方法です。仕組みを簡単に言うと、「<strong>今の為替レートで、将来の一定時点に外貨を円に換える契約をあらかじめ結んでおく</strong>」ことです。たとえば、1ドル＝150円の時点で「3ヶ月後に保有ドルを150円で円に換える」と約束しておけば、実際の為替がどう動いても、その資産については150円で換えられます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="hedge-title">
+        <title id="hedge-title">為替ヘッジなし vs ヘッジありの概念図</title>
+        <text class="s-panel-label" x="40" y="24">為替ヘッジなし vs ヘッジあり（概念図）</text>
+        <!-- 左側：ヘッジなし -->
+        <line class="s-divv" x1="330" y1="44" x2="330" y2="270"/>
+        <text class="s-note-r" x="180" y="52" text-anchor="middle">❌ ヘッジなし（為替変動をそのまま受ける）</text>
+        <!-- 価格の動き -->
+        <polyline class="s-curve-g" points="50,200 110,190 170,175 230,165"/>
+        <text class="s-note-g" x="240" y="160">外貨価格 ↗</text>
+        <!-- 円高で押し下げ -->
+        <polyline class="s-curve-l" points="50,210 110,220 170,230 230,248"/>
+        <text class="s-note-r" x="240" y="253">円高による押下げ ↘</text>
+        <!-- 合計（微増） -->
+        <polyline points="50,205 110,205 170,200 230,200" fill="none" stroke="#9a6700" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <text class="s-note-o" x="80" y="192">円建て評価（ほぼ横ばい）</text>
+
+        <!-- 右側：ヘッジあり -->
+        <text class="s-note-g" x="490" y="52" text-anchor="middle">✅ ヘッジあり（為替変動を「固定」）</text>
+        <!-- 外貨価格の動き -->
+        <polyline class="s-curve-g" points="360,200 420,190 480,175 540,165"/>
+        <text class="s-note-g" x="548" y="160">外貨価格 ↗</text>
+        <!-- ヘッジにより為替変動を相殺 -->
+        <line x1="360" y1="210" x2="540" y2="210" stroke="#0969da" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text class="s-note" x="450" y="226" text-anchor="middle">為替は先物で固定済（コスト控除後）</text>
+        <!-- 合計（外貨上昇分だけ増加） -->
+        <polyline points="360,205 420,196 480,184 540,172" fill="none" stroke="#1a7f37" stroke-width="2.5"/>
+        <text class="s-note-g" x="390" y="174">円建て評価＝外貨価格変化に近い</text>
+        <!-- ヘッジコストの矢印 -->
+        <line x1="450" y1="210" x2="450" y2="228" stroke="#9a6700" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="s-note-o" x="452" y="242">ヘッジコスト（年率）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 左（ヘッジなし）：外貨価格が上がっても円高で押し下げられ、円建てリターンが縮む。右（ヘッジあり）：為替変動を先物で固定するため、円建てリターンが外貨価格の変化に近くなる——ただし<strong>ヘッジコスト（年率）が差し引かれる</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>投資信託では、「<strong>為替ヘッジあり</strong>」と「<strong>為替ヘッジなし</strong>」のクラスが別々に設定されていることがよくあります。ヘッジありを選ぶと、ファンドレベルで為替リスクが抑えられますが、そのぶん<strong>ヘッジコスト</strong>が発生し、純粋な運用成績からそのコストが引かれます。</p>
+
+    <!-- ========= Section 6 ========= -->
+    <h2 id="section-6">6️⃣ ヘッジコストの正体：金利差が価格になる</h2>
+    <p>では「ヘッジコスト」はどう決まるのでしょうか。その答えは<strong>2国間の金利差</strong>にあります。これを説明する理論が<strong>カバー付き金利平価説（Covered Interest Rate Parity）</strong>です。</p>
+    <p>理論の直感は次の通りです。</p>
+    <div class="info-box">
+      <strong>もし「円を売ってドルを買い、高い米国金利を受け取りながら、将来の為替レートを先物で固定する」という取引で無リスクの超過収益が得られるなら、誰もがそれをする。</strong><br>
+      その結果、先物レートは現在のスポットレートとの差（＝フォワードプレミアム）が金利差に等しくなるよう裁定が働く。
+    </div>
+    <p>つまり、<strong>先物で為替を固定するコスト（ヘッジコスト）は、おおよそ2国の金利差に近似する</strong>ということです。低金利の円で高金利の外貨に投資し、為替を固定してしまうと、その金利差が「ヘッジコスト」として控除されます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="hedgecost-title">
+        <title id="hedgecost-title">ヘッジコストと金利差の関係の概念図</title>
+        <text class="s-panel-label" x="40" y="24">ヘッジコスト ≈ 外国金利 − 国内金利（金利差の概念図）</text>
+        <!-- 左：高金利国（A国） -->
+        <rect class="s-fill-b" x="60" y="50" width="200" height="180" rx="8"/>
+        <text class="s-text-b" x="160" y="90" text-anchor="middle">A国（高金利）</text>
+        <text class="s-text-sm" x="160" y="112" text-anchor="middle">政策金利：例 5%</text>
+        <text class="s-text-sm" x="160" y="132" text-anchor="middle">→ 資金を引き寄せやすい</text>
+        <!-- 右：低金利国（B国） -->
+        <rect class="s-fill-y" x="380" y="50" width="200" height="180" rx="8"/>
+        <text class="s-note-o" x="480" y="90" text-anchor="middle">B国（低金利）</text>
+        <text class="s-text-sm" x="480" y="112" text-anchor="middle">政策金利：例 0〜0.5%</text>
+        <text class="s-text-sm" x="480" y="132" text-anchor="middle">→ 外貨投資が増えやすい</text>
+        <!-- 矢印（B国民がA国に投資） -->
+        <line x1="380" y1="150" x2="264" y2="150" stroke="#9a6700" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <text class="s-note-o" x="320" y="144" text-anchor="middle">B国民がA国へ投資</text>
+        <!-- ヘッジコスト表示 -->
+        <rect x="220" y="198" width="200" height="36" rx="6" fill="#fff8c5" stroke="#9a6700" stroke-width="1"/>
+        <text class="s-note-o" x="320" y="220" text-anchor="middle">ヘッジコスト ≈ 5% − 0.25% ＝ 約4.75%/年</text>
+        <text class="s-text-sm" x="320" y="240" text-anchor="middle">※あくまで概念的な近似値・実際は市場のスプレッドも加わる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 低金利国（B国）から高金利国（A国）へ投資し、為替を先物でヘッジする場合、ヘッジコストはおおよそ「A国金利 − B国金利」に近似する。金利差が大きいほどヘッジコストは高くなる（カバー付き金利平価説）。数値は概念説明のための例であり、実際の金利や市場レートを指すものではありません。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この仕組みから、いくつかの重要な帰結が導けます。</p>
+    <ul>
+      <li><strong>金利差が大きい時期</strong>ほど、外国資産の為替ヘッジには高いコストがかかる。たとえば2国間の金利差が大きい局面では、年率数パーセントのコストが生じることがある。</li>
+      <li><strong>ヘッジコストが高い状況</strong>では、「ヘッジあり」ファンドの実質リターンが「ヘッジなし」より大幅に低くなる可能性がある。</li>
+      <li>逆に<strong>金利差が小さい時期</strong>（例：2国の政策金利が近い場合）は、ヘッジコストが低く、ヘッジのメリットが相対的に大きい。</li>
+    </ul>
+    <div class="info-box">
+      <strong>📊 ヘッジコストの歴史的な水準（参考）</strong><br>
+      ドル円の為替ヘッジコストは時代によって大きく変わります。日米の金利差が小さかった2020〜2021年はほぼ0〜0.5%程度でした。その後、米国が急速に利上げした局面では年率5〜6%程度と、約20年以上ぶりの高水準に達したとされます（各種資産運用会社のレポートより）。長期平均（1991〜2024年6月）はおよそ年率2〜2.5%前後という推計もあります。<br>
+      <span style="font-size:.88em">※具体的な数値は市場環境・計算方法・出典により異なります。最新の水準は各金融機関のレポートや市場データで確認してください。</span>
+    </div>
+    <p>スワップポイント（FX取引での金利収益・支払い）もこの金利差の概念と密接に関連しています。詳しくは<a href="guide-swap-points.html">スワップポイントの仕組み</a>の記事も参照してください。</p>
+
+    <!-- ========= Section 7 ========= -->
+    <h2 id="section-7">7️⃣ ヘッジあり/なしの使い分け</h2>
+    <p>実際には、どちらを選ぶべきでしょうか。絶対的な正解はありませんが、判断の材料となる考え方を整理します。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>観点</th>
+          <th>為替ヘッジあり</th>
+          <th>為替ヘッジなし</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>為替変動の影響</td>
+          <td>ほぼ受けない（固定）</td>
+          <td>そのまま受ける</td>
+        </tr>
+        <tr>
+          <td>ヘッジコスト</td>
+          <td>発生する（金利差に近似）</td>
+          <td>なし</td>
+        </tr>
+        <tr>
+          <td>金利差が大きい局面</td>
+          <td>コスト高・不利になりやすい</td>
+          <td>コスト不要で有利になりやすい</td>
+        </tr>
+        <tr>
+          <td>円高局面</td>
+          <td>円建てリターンが守られやすい</td>
+          <td>円建てリターンが目減りしやすい</td>
+        </tr>
+        <tr>
+          <td>円安局面</td>
+          <td>円安の恩恵を受けにくい</td>
+          <td>円安の恩恵も受けやすい</td>
+        </tr>
+        <tr>
+          <td>向いている場面</td>
+          <td>短〜中期・為替変動を抑えたい・金利差が小さい局面</td>
+          <td>長期積立・金利差が大きい局面・コストを抑えたい</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:.82rem;color:#6e7781;margin-top:-10px">※ 一般的な傾向を示すものであり、個々の状況・商品設計・市場環境により異なります。</p>
+
+    <div class="warning-box">
+      「ヘッジありだから安全、ヘッジなしはリスクが高い」という単純な話ではありません。<strong>ヘッジにもコストというリスクがあり</strong>、金利差が大きい局面でヘッジありを選ぶとコスト分だけ不利になります。どちらが良いかは、投資期間・金利環境・目的によって変わります。
+    </div>
+
+    <!-- ========= Section 8 ========= -->
+    <h2 id="section-8">8️⃣ 長期積立での一般的な考え方</h2>
+    <p>長期の積立投資（特にNISAを使った全世界株式・米国株式など）で「為替ヘッジなし」が一般的に選ばれる理由を解説します。</p>
+
+    <h3>① 時間分散による為替リスクの緩和</h3>
+    <p>毎月一定額を積み立てる場合、円安の月・円高の月をまたいで購入し続けます。円安のときは購入口数が少なく、円高のときは購入口数が多くなるため、<strong>為替レートの影響が時間的に分散される</strong>傾向があります。一括投資と比べて、特定の為替タイミングのリスクが薄まるのが積立の特性です。</p>
+
+    <h3>② 超長期では為替の影響が相対的に小さくなる可能性</h3>
+    <p>20〜30年といった超長期で見ると、資産価格そのものの成長が為替変動より大きくなる可能性があります。ただし、これは必ずしもそうなるという保証はなく、<strong>長期でも為替リスクはゼロにはならない</strong>点に注意が必要です。</p>
+
+    <h3>③ ヘッジコストを払い続けるコスト</h3>
+    <p>長期積立でヘッジありを選ぶと、<strong>数十年にわたって毎年ヘッジコストを支払い続ける</strong>ことになります。そのコストが長期では複利的に効いてくる可能性があるため、超長期の積立では「コストを抑えたヘッジなし」を選ぶ人が多い傾向があります。</p>
+
+    <div class="positive-box">
+      <strong>✅ 整理すると</strong>：長期積立でヘッジなしを選ぶことは「為替リスクをゼロにする」のではなく、<strong>「為替リスクを受け入れ、時間分散と長期成長でそれを乗り越えようとする」という選択</strong>です。一方、短〜中期の運用や大きな資産を一括投入する場面では、為替リスクをより慎重に管理することが重要です。
+    </div>
+
+    <p>大切なのは、<strong>自分が取っている為替リスクを認識したうえで、意識的にその選択をしていること</strong>です。「為替リスクがあることを知らずに外国株に投資している」と「為替リスクを理解して、長期分散で受け入れると決めて外国株に投資している」では、同じ行動でも大きく異なります。リスクを知ることがリスク管理の第一歩です。</p>
+
+    <!-- ========= Section 9 ========= -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、FXを含む為替関連の資産も監視対象です。為替リスクの観点から、いくつかのツールが役立ちます。</p>
+    <ul>
+      <li><strong><a href="political-feed.html">政治発言ライブフィード</a></strong>：為替に大きく影響する政策発言（中央銀行総裁・財務省関係者・政治家）をリアルタイムで追えます。急な為替変動の背景を把握するのに役立ちます。</li>
+      <li><strong><a href="calendar.html">経済カレンダー</a></strong>：FOMC・日銀政策会合・雇用統計・CPIなど、為替を大きく動かす可能性がある指標の発表予定を確認できます。<strong>指標発表前後は為替が急変するリスクが高まる</strong>ため、外貨ポジションを持っている場合は特に注目してください。</li>
+      <li><strong><a href="track-record.html">シグナル成績ダッシュボード</a></strong>：当サイトの監視銘柄18種にはドル円・ユーロ円などFXペアも含まれます。テクニカル分析に基づくシグナルの実績を公開しており、為替の動きを多角的に見る参考情報として活用できます。<span style="font-size:.9em">（※あくまで参考情報であり、売買推奨ではありません）</span></li>
+    </ul>
+
+    <div class="info-box">
+      <strong>ℹ️ 関連記事</strong>：為替と金利差の関係をより深く理解するには、<a href="guide-yen-carry-trade.html">円キャリートレードの仕組み</a>と<a href="guide-swap-points.html">スワップポイントの仕組み</a>も合わせてご覧ください。特に「金利差が大きい局面で何が起きるか」をより具体的に理解できます。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 FXシグナルの成績もチェック</div>
+      <div class="cta-box-desc">ドル円・ユーロ円・ポンド円など、当サイトが監視するFXペアのテクニカルシグナル成績を勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- ========= Section 10 ========= -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <p>為替リスクについて学んできた内容を整理します。</p>
+    <ul>
+      <li>外貨資産の円建て評価額は<strong>「外貨価格 × 為替レート」</strong>で決まる。株価が上がっても円高で相殺される「二階建てリスク」を常に意識する。</li>
+      <li>為替ヘッジで変動を抑えることはできるが、<strong>ヘッジコストがかかり、その水準は2国間の金利差に近似</strong>する（カバー付き金利平価説）。金利差が大きい局面ではコストも高くなる。</li>
+      <li>ヘッジあり/なしに絶対的な正解はない。<strong>短〜中期・大額投入はヘッジを検討、長期積立は時間分散を活かしてヘッジなしが一般的</strong>——ただしどちらもリスクとコストのトレードオフ。</li>
+      <li>最重要なのは<strong>「自分が取っている為替リスクを認識する」</strong>こと。知らずに取るリスクと、知って受け入れるリスクでは意味がまったく異なる。</li>
+      <li>為替リスクを管理する道具として<strong>時間分散（積立）・資産分散・ヘッジ・ポジションサイズ管理</strong>を組み合わせることが大切。</li>
+    </ul>
+    <p>外貨資産は「価格が上がれば儲かる」という1次元の話ではなく、「価格も為替も見る」という2次元の問題です。この視点を持つだけで、外貨投資における驚きや誤解は大幅に減らせます。<strong>リスクを知ることが、賢い投資の第一歩</strong>です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-yen-carry-trade.html">
+        <div class="related-card-title">💴 円キャリートレードの仕組み</div>
+        <div class="related-card-desc">低金利の円を借りて高金利通貨に投資するキャリートレードの仕組みとリスク。為替リスクと金利差の深い関係を解説。</div>
+      </a>
+      <a class="related-card" href="guide-swap-points.html">
+        <div class="related-card-title">💱 スワップポイントの仕組み</div>
+        <div class="related-card-desc">FXで毎日付与・徴収されるスワップポイント（金利差収益）の仕組みと罠。ヘッジコストと同じ金利差の概念がベース。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">為替の急変で含み損を抱えたとき、なぜ損切りできないのか。プロスペクト理論と「淡々と切る技術」を解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は為替リスクにまつわる基礎知識・一般的な考え方を情報提供として解説したものであり、特定通貨・金融商品の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。為替・金利の数値は概念説明のための例示であり、実際の市場状況とは異なります。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
