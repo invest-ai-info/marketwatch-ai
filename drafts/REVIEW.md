@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-11 | 🧪 AIシグナル研究日誌 #036 — trend=上昇×reversal_long グループ逆転の解析（下書き生成）
+
+- **基準日**: 2026-07-11（JST）
+- **テーマ**: `trend=上昇×reversal_long` 前向きN=49追跡——指数急落・other-FX劇的改善というグループ逆転の正体
+- **生成ファイル**: `drafts/draft-signal-lab-036.html`
+- **labnotes**: `drafts/labnotes/lab-036-analysis.md` / `drafts/labnotes/lab-036-claims.json`
+- **signal_lab_verify**: ✅ GREEN（7/7 claims緑・要約未検証0件・SVG警告0件）
+- **主要数値**:
+  - revL全体: 246/571=43.1% CI[39.1~47.2]
+  - 上昇×revL: 82/150=54.7% CI[46.7~62.4] / FWD 28/49=57.1% E(R)=+0.333
+  - 指数 IS68.6%→FWD38.5%（急落）
+  - jpy_fx IS57.7%→FWD61.5%（安定）
+  - other_fx IS6.2%→FWD66.7%（劇的逆転）
+- **Opusコンプラ**: ⏳ 実行待ち
+- **人間の残作業**: なし（自動公開ゲートに委ねる）
+
+---
+
 ## 2026-07-11 | 💰 基礎知識 #15 — 注文方法の基本（order-types）下書き生成
 
 - **基準日**: 2026-07-11（UTC 2026-07-10T20:30）
