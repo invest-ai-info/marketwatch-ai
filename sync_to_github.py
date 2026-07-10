@@ -29,4 +29,5 @@ SYNC_FILES = [
     "guide-signal-lab-035.html",
     "guide-nikkei-vs-topix.html",
     "guide-proverb-yasumu-mo-soba.html",
+    "guide-news-2026-07-10-gpif-domestic-investment.html",
 ]
