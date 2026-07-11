@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AIシグナル研究日誌 #37｜もみあい相場の逆張り買い再評価——IS 32.9%からFWD 58%への急改善 - MarketWatch AI</title>
+  <meta name="description" content="もみあい（中立）相場での逆張り買い（reversal_long）はIS登録前32.9%の損失候補だったが、前向き(2026-06-19以降)で58.3%に急改善。ドルFX(other_fx)IS34.6%→FWD70.6%が主ドライバー。指数×RSI=66.7% vs BB=25.0%の41.7pp逆転も発見。研究日誌第37回。">
+  <meta name="keywords" content="AIシグナル,もみあい,逆張り,reversal_long,勝率,研究日誌,other_fx,指数,RSI,bb_lower_touch">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-037.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #37｜もみあい相場の逆張り買い再評価——IS 32.9%からFWD 58%への急改善">
+  <meta property="og:description" content="もみあい×逆張り買いはIS登録前32.9%の損失候補だったが前向き58%に急改善。ドルFX主導・指数RSI66.7% vs BB25.0%の逆転を解析。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-037.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #37｜もみあい相場の逆張り買い再評価——IS 32.9%からFWD 58%への急改善",
+    "description": "もみあい×逆張り買いはIS登録前32.9%の損失候補だったが前向き58%に急改善。ドルFX主導・指数RSI66.7% vs BB25.0%の逆転を解析。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-12",
+    "dateModified": "2026-07-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-037.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#e0e4e8;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #37
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #37<br><small style="font-size:.65em;color:#57606a;font-weight:400">もみあい相場の逆張り買い再評価——IS 32.9% からFWD 58% への急改善、ドルFXが主ドライバー</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月12日 &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第37回です。<a href="guide-signal-lab-036.html">前回（#36）</a>では「上昇トレンド×逆張り買い」の前向き追跡を行い、グループ間で逆転（指数急落・ドルFX劇的改善）が起きていることを解析しました。</p>
+    <p>今回は視点を「もみあい（中立）相場×逆張り買い」に移します。このパターンは2026年6月19日に前向きトラッカーに登録した際、IS（登録前）のデータでは<strong>48/146=32.9%</strong>と損益分岐43%を明確に下回る「回避候補」でした。ところが前向き追跡では現時点で<strong>28/48=58.3%</strong>に急改善しています。この急改善の正体を解析します。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① もみあい×逆張り買い IS（全期間）：<strong>76/194=39.2%</strong> CI[32.6%〜46.2%]——損益分岐割れ<br>
+      ② 前向き（2026-06-19〜、トラッカー値）：<strong>28/48=58.3%</strong> E(R)=+0.361 CI[−0.04〜+0.76]——急改善中<br>
+      ③ 主ドライバーはドルFX(other_fx)：IS<strong>34.6%</strong> → FWD<strong>70.6%</strong>（+36pp）<br>
+      ④ 指数内シグナル逆転：RSI=<strong>66.7%</strong>（14/21）vs BB=<strong>25.0%</strong>（6/24）——41.7pp差<br>
+      ⑤ 判定：前向き改善確認中・⛔反証接近。CI下限が−0.04でわずかにマイナス——N=80到達で最終判定
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——もみあい×逆張り買いの前向き急改善を解析</a></li>
+        <li><a href="#method">検証方法（「もしも計算」と前向きトラッカー）</a></li>
+        <li><a href="#result-basic">結果①：IS32.9% → FWD58.3%への急改善の確認</a></li>
+        <li><a href="#result-group">結果②：グループ別解析——ドルFXが主ドライバー</a></li>
+        <li><a href="#result-signal">結果③：シグナル種別——RSI vs BB の明暗</a></li>
+        <li><a href="#result-tf">結果④：時間足効果——4h足の弱さが継続</a></li>
+        <li><a href="#verdict">判定——⛔反証接近、CI下限があと一歩</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——もみあい×逆張り買いの前向き急改善を解析</h2>
+
+    <p>「もみあい（中立）相場での逆張り買い」とは、上位足のトレンドが横ばいまたは方向性のない時期に、RSI売られすぎ（rsi_oversold_bounce）またはボリンジャー下限タッチ（bb_lower_touch）によるロングシグナルが出たものです。</p>
+
+    <p>2026年6月19日のトラッカー登録時点では、IS（それ以前の全履歴）データで<strong>48/146=32.9%</strong>という低勝率が観測されており、「もみあいでの逆張りは危険」として回避候補（gate）に登録しました。</p>
+
+    <div class="negative-box">
+      <strong>登録時の観察事実（IS）：</strong> もみあい×逆張り買い = 48/146 = 32.9%。損益分岐43%を10pp以上下回る。「もみあい中の逆張り買いは損失が出やすい」との作業仮説でgate登録。
+    </div>
+
+    <p>ところが2026-07-12時点の前向きトラッカーは<strong>28/48=58.3%</strong>を記録しており、IS値からの急改善が顕著です。この急改善の原因は何か、今後もこの水準は維持されるのかを解析します。</p>
+
+    <p>なお前回までの研究（#030/#032/#035）で金属（金・銀）グループのIS→FWD劇的改善が確認されています。今回も同様のレジーム転換が交絡しているかを含めて解析します。</p>
+
+    <div class="info-box">
+      <strong>💡 「損益分岐43%」とは</strong><br>
+      本システムのリスクリワードはSL=−1.5R、TP1=+2.0R（部分利確）、TP2=+3.0R。TP1到達を「勝ち」と定義した場合、期待値ゼロに必要な勝率は約43%です。43%を下回るパターンは「長期的にマイナス期待値」と考えられます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法（「もしも計算」と前向きトラッカー）</h2>
+
+    <p>signals-log.json（決済済みシグナルのみ）をPythonで集計します。</p>
+    <ul>
+      <li><strong>対象</strong>：結果が確定したもの（tp1=TP1到達・sl=SL到達）。未決済・no_plan・expiredは除外</li>
+      <li><strong>勝ち</strong>：tp1またはtp2に到達したもの（+2.0Rまたは+3.0R）</li>
+      <li><strong>負け</strong>：slに到達したもの（−1.5R）</li>
+      <li><strong>IS（全期間）</strong>：signals-log.json全体での集計値（IS+FWD込み）</li>
+      <li><strong>前向き（FWD）</strong>：前向きトラッカー（2026-06-19登録以降）の出力値を引用</li>
+      <li><strong>信頼区間</strong>：ウィルソン95%CI（小サンプルでも安定）</li>
+    </ul>
+
+    <div class="warning-box">
+      これは過去の自システムデータ内での反実仮想集計です。将来の相場への適用可能性を保証するものではありません。また、学術的な検定とは異なる参考値です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-basic">③ 結果①——IS32.9% → FWD58.3%への急改善の確認</h2>
+
+    <p>まずトレンド3分類×逆張り買いの全期間比較を確認します。</p>
+
+    <table>
+      <tr><th>分類</th><th>N（全期間）</th><th>勝率（全期間）</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr style="background:#e6ffed">
+        <td><strong>上昇×逆張り買い</strong></td>
+        <td>151</td>
+        <td style="color:#1a7f37"><strong>54.3%</strong>（82/151）</td>
+        <td>[46.4%〜62.0%]</td>
+        <td style="color:#1a7f37">+0.401</td>
+      </tr>
+      <tr>
+        <td>下降×逆張り買い</td>
+        <td>224</td>
+        <td>38.8%（87/224）</td>
+        <td>[32.7%〜45.4%]</td>
+        <td style="color:#cf222e">−0.141</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td><strong>もみあい×逆張り買い</strong></td>
+        <td><strong>194</strong></td>
+        <td style="color:#cf222e"><strong>39.2%</strong>（76/194）</td>
+        <td>[32.6%〜46.2%]</td>
+        <td style="color:#cf222e">−0.129</td>
+      </tr>
+    </table>
+
+    <p>全期間（IS+FWD込み）では76/194=39.2%と、損益分岐43%をまだ下回っています。しかし全期間値にはFWD期間（28/48=58.3%）が加算されており、IS登録前の数値はさらに低い<strong>48/146=32.9%</strong>でした。</p>
+
+    <p>前向きトラッカーの現在値を加えて比較すると、改善幅が明確です。</p>
+
+    <table>
+      <tr><th>期間</th><th>N</th><th>勝率</th><th>E(R)</th><th>CI</th></tr>
+      <tr style="background:#fff8f8">
+        <td>IS（登録前、〜2026-06-18）</td>
+        <td>146</td>
+        <td style="color:#cf222e"><strong>32.9%</strong>（48/146）</td>
+        <td style="color:#cf222e">−（マイナス）</td>
+        <td>—</td>
+      </tr>
+      <tr style="background:#e6ffed">
+        <td>前向き（2026-06-19〜、tracker値）</td>
+        <td>48</td>
+        <td style="color:#1a7f37"><strong>58.3%</strong>（28/48）</td>
+        <td style="color:#1a7f37">+0.361</td>
+        <td>[−0.04〜+0.76]</td>
+      </tr>
+      <tr>
+        <td>全期間（IS+FWD）</td>
+        <td>194</td>
+        <td>39.2%（76/194）</td>
+        <td>−0.129</td>
+        <td>[32.6%〜46.2%]</td>
+      </tr>
+    </table>
+
+    <p>IS32.9%からFWD58.3%への+25.4ppの改善は偶然誤差の範囲を超える可能性があります（ただしCI下限が−0.04とわずかにマイナス、確定打ではない）。この改善の主因をグループ別・シグナル別に分解します。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-group">④ 結果②——グループ別解析、ドルFXが主ドライバー</h2>
+
+    <p>もみあい×逆張り買いを銘柄グループ（index/jpy_fx/other_fx/metal/btc）別に分解します。</p>
+
+    <table>
+      <tr><th>グループ</th><th>全期間N</th><th>全期間勝率</th><th>95%CI</th><th>IS→FWD（参考）</th></tr>
+      <tr>
+        <td>指数（index）</td>
+        <td>45</td>
+        <td>44.4%（20/45）</td>
+        <td>[30.9%〜58.8%]</td>
+        <td>IS37.9% → FWD56.2% (+18pp)</td>
+      </tr>
+      <tr>
+        <td>円クロス（jpy_fx）</td>
+        <td>49</td>
+        <td>36.7%（18/49）</td>
+        <td>[24.7%〜50.7%]</td>
+        <td>IS35.9% → FWD40.0% (+4pp、最小)</td>
+      </tr>
+      <tr style="background:#e6ffed">
+        <td><strong>ドルFX（other_fx）</strong></td>
+        <td><strong>69</strong></td>
+        <td style="color:#1a7f37"><strong>43.5%</strong>（30/69）</td>
+        <td>[32.4%〜55.2%]</td>
+        <td style="color:#1a7f37"><strong>IS34.6% → FWD70.6% (+36pp）🔑主ドライバー</strong></td>
+      </tr>
+      <tr>
+        <td>金属（metal）</td>
+        <td>9</td>
+        <td>44.4%（4/9）</td>
+        <td>[18.9%〜73.3%]</td>
+        <td>IS40.0% → FWD50.0%（N小）</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td>BTC</td>
+        <td>17</td>
+        <td style="color:#cf222e">11.8%（2/17）</td>
+        <td>[3.3%〜34.3%]</td>
+        <td>IS6.2% → FWD100%（N=1、無意味）</td>
+      </tr>
+    </table>
+
+    <p>最大の改善を見せているのは<strong>ドルFX（other_fx）</strong>です。EURUSD・GBPUSD・AUDUSDなどのドル建て通貨ペアで、IS34.6%（18/52）からFWD70.6%（12/17）へ+36ppの急改善を示しています。</p>
+
+    <p>一方で<strong>円クロス（jpy_fx）</strong>の改善は+4pp（35.9%→40.0%）と最小で、jpy_fxにおける逆張り買いの弱さは継続しています。これはシリーズ#9（jpy_fx×RSI棄却確認）や#24（jpy_fx×rsi正式棄却）の発見と整合的です。</p>
+
+    <p><strong>BTC</strong>のIS11.8%は全グループ中最低です。FWD値はN=1で統計的意味はありませんが、BTCでの逆張り買いが苦手なことはIS期間で確認されています。</p>
+
+    <!-- SVG 概念図：グループ別 IS→FWD 比較 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 560 280" role="img" aria-label="もみあい×逆張り買い：グループ別IS対FWD比較棒グラフ（概念図）">
+        <!-- タイトル -->
+        <text x="280" y="17" text-anchor="middle" class="s-label-b" font-size="12">もみあい×逆張り買い　グループ別 IS（登録前）vs 前向き（FWD）勝率</text>
+
+        <!-- 軸 -->
+        <line x1="68" y1="25" x2="68" y2="210" class="s-axis"/>
+        <line x1="68" y1="210" x2="525" y2="210" class="s-axis"/>
+
+        <!-- Y軸ラベル (scale: 80% max, plot height=185px, 1%=2.3125px) -->
+        <!-- 0%=y210, 20%=y164, 40%=y118, 60%=y71, 80%=y25 -->
+        <text x="62" y="214" text-anchor="end" class="s-label-sm">0%</text>
+        <text x="62" y="167" text-anchor="end" class="s-label-sm">20%</text>
+        <text x="62" y="120" text-anchor="end" class="s-label-sm">40%</text>
+        <text x="62" y="74" text-anchor="end" class="s-label-sm">60%</text>
+        <text x="62" y="28" text-anchor="end" class="s-label-sm">80%</text>
+
+        <!-- グリッド -->
+        <line x1="68" y1="164" x2="525" y2="164" class="s-guide"/>
+        <line x1="68" y1="118" x2="525" y2="118" class="s-guide"/>
+        <line x1="68" y1="71" x2="525" y2="71" class="s-guide"/>
+        <line x1="68" y1="25" x2="525" y2="25" class="s-guide"/>
+
+        <!-- 43%基準線 (y=210-43*2.3125=110.6→111) -->
+        <line x1="68" y1="111" x2="525" y2="111" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <text x="527" y="115" class="s-label-r" font-size="10">43%</text>
+
+        <!-- ドルFX (other_fx), center x=145 -->
+        <!-- IS 34.6% → h=80px, top=130 -->
+        <rect x="114" y="130" width="25" height="80" class="s-fill-gray" stroke="#8b949e" stroke-width="1"/>
+        <!-- FWD 70.6% → h=163px, top=47 -->
+        <rect x="146" y="47" width="25" height="163" fill="#0969da" fill-opacity="0.25" stroke="#0969da" stroke-width="1.5"/>
+        <text x="126" y="126" text-anchor="middle" class="s-label-sm" font-size="10.5">34.6%</text>
+        <text x="159" y="43" text-anchor="middle" class="s-label-b" font-size="11.5">70.6%</text>
+        <text x="144" y="226" text-anchor="middle" class="s-label" font-size="11">ドルFX</text>
+        <text x="144" y="238" text-anchor="middle" class="s-label-sm" font-size="9.5">(other_fx)</text>
+
+        <!-- 矢印：IS→FWD ドルFX -->
+        <line x1="126" y1="130" x2="159" y2="53" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+
+        <!-- 指数 (index), center x=270 -->
+        <!-- IS 37.9% → h=88px, top=122 -->
+        <rect x="240" y="122" width="25" height="88" class="s-fill-gray" stroke="#8b949e" stroke-width="1"/>
+        <!-- FWD 56.2% → h=130px, top=80 -->
+        <rect x="272" y="80" width="25" height="130" fill="#1a7f37" fill-opacity="0.2" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="252" y="118" text-anchor="middle" class="s-label-sm" font-size="10.5">37.9%</text>
+        <text x="285" y="76" text-anchor="middle" class="s-label-g" font-size="11.5">56.2%</text>
+        <text x="268" y="226" text-anchor="middle" class="s-label" font-size="11">指数</text>
+        <text x="268" y="238" text-anchor="middle" class="s-label-sm" font-size="9.5">(index)</text>
+
+        <!-- 円クロス (jpy_fx), center x=398 -->
+        <!-- IS 35.9% → h=83px, top=127 -->
+        <rect x="368" y="127" width="25" height="83" class="s-fill-gray" stroke="#8b949e" stroke-width="1"/>
+        <!-- FWD 40.0% → h=93px, top=117 -->
+        <rect x="400" y="117" width="25" height="93" class="s-fill-y" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="380" y="123" text-anchor="middle" class="s-label-sm" font-size="10.5">35.9%</text>
+        <text x="413" y="113" text-anchor="middle" class="s-label-y" font-size="11.5">40.0%</text>
+        <text x="396" y="226" text-anchor="middle" class="s-label" font-size="11">円クロス</text>
+        <text x="396" y="238" text-anchor="middle" class="s-label-sm" font-size="9.5">(jpy_fx)</text>
+
+        <!-- 凡例 -->
+        <rect x="90" y="252" width="14" height="10" class="s-fill-gray" stroke="#8b949e" stroke-width="1"/>
+        <text x="108" y="261" class="s-label-sm">IS（登録前）</text>
+        <rect x="210" y="252" width="14" height="10" fill="#0969da" fill-opacity="0.25" stroke="#0969da" stroke-width="1.5"/>
+        <text x="228" y="261" class="s-label-b">前向き（FWD）</text>
+        <line x1="350" y1="257" x2="375" y2="257" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 2"/>
+        <text x="380" y="261" class="s-label-r" font-size="11.5">損益分岐43%</text>
+      </svg>
+      <p class="chart-caption">図：もみあい×逆張り買いのグループ別IS（登録前）vs 前向き（FWD）勝率比較（概念図・実価格ではありません）。ドルFX(other_fx)のみFWDで大幅改善。円クロス(jpy_fx)の改善は限定的。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-signal">⑤ 結果③——シグナル種別「RSI vs BB」の明暗</h2>
+
+    <p>逆張り買い（reversal_long）は「RSI売られすぎ（rsi_oversold_bounce）」と「ボリンジャー下限タッチ（bb_lower_touch）」の2シグナルで構成されます。もみあい期間中、この2つはどう違うでしょうか。</p>
+
+    <table>
+      <tr><th>シグナル</th><th>全期間N</th><th>全期間勝率</th><th>95%CI</th><th>FWD勝率（参考）</th></tr>
+      <tr>
+        <td>rsi_oversold_bounce（RSI売られすぎ）</td>
+        <td>76</td>
+        <td>38.2%（29/76）</td>
+        <td>[28.1%〜49.4%]</td>
+        <td><strong>81.8%</strong>（9/11）※N小</td>
+      </tr>
+      <tr>
+        <td>bb_lower_touch（BB下限タッチ）</td>
+        <td>118</td>
+        <td>39.8%（47/118）</td>
+        <td>[31.5%〜48.8%]</td>
+        <td><strong>51.4%</strong>（19/37）</td>
+      </tr>
+    </table>
+
+    <p>全期間ではrsi=38.2% vs bb=39.8%でほぼ同水準です。しかし前向き（FWD）では<strong>rsi=81.8%（N=11）</strong>と<strong>bb=51.4%（N=37）</strong>に大きな差が生まれています。ただしrsiのN=11は非常に小さく、過信は禁物です。</p>
+
+    <h3>指数グループ内でのRSI vs BB逆転</h3>
+    <p>特に注目されるのが、<strong>指数（index）グループ内でのシグナル種別の逆転</strong>です。</p>
+
+    <table>
+      <tr><th>条件</th><th>全期間N</th><th>全期間勝率</th><th>95%CI</th></tr>
+      <tr style="background:#e6ffed">
+        <td><strong>指数×もみあい×RSI売られすぎ</strong></td>
+        <td>21</td>
+        <td style="color:#1a7f37"><strong>66.7%</strong>（14/21）</td>
+        <td>[45.4%〜82.8%]</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td><strong>指数×もみあい×BB下限タッチ</strong></td>
+        <td>24</td>
+        <td style="color:#cf222e"><strong>25.0%</strong>（6/24）</td>
+        <td>[12.0%〜44.9%]</td>
+      </tr>
+    </table>
+
+    <div class="warning-box">
+      同じ「指数×もみあい×逆張り買い」でも、シグナル種別によって<strong>66.7% vs 25.0%（41.7pp差）</strong>という真逆の結果が出ています。同一グループ・同一トレンドでの比較のため交絡の影響は限定的です。もみあい期間中の指数逆張りは「どのシグナルか」が決定的に重要かもしれません。
+    </div>
+
+    <p>これはシリーズ#23（RSI vs BB全般比較）や#14（bb_lower_touch×jpy_fx特性）の発見とも整合的で、シグナル種別の資産クラスとの相性は一律ではないことを示しています。なお指数×もみあい×RSI（N=21）は探索的発見であり、正式な仮説検定ではありません。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-tf">⑥ 結果④——時間足効果、4h足の弱さが継続</h2>
+
+    <p>もみあい×逆張り買いを時間足別に分けると、シリーズ#15（4H足ロング系統的アンダーパフォーム）と整合的なパターンが確認されます。</p>
+
+    <table>
+      <tr><th>時間足</th><th>全期間N</th><th>全期間勝率</th><th>95%CI</th></tr>
+      <tr>
+        <td>1H足</td>
+        <td>111</td>
+        <td>42.3%（47/111）</td>
+        <td>[33.6%〜51.6%]</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td><strong>4H足</strong></td>
+        <td><strong>79</strong></td>
+        <td style="color:#cf222e"><strong>32.9%</strong>（26/79）</td>
+        <td>[23.6%〜43.9%]</td>
+      </tr>
+    </table>
+
+    <p>1H足（42.3%）と4H足（32.9%）で9.4ppの差があります。4H足ロングは全般的に弱い（#15で確認）傾向と一致しています。もみあい期間中の逆張り買いを検討する場合、4H足シグナルには特に慎重になる必要があるかもしれません（参考情報）。</p>
+
+    <!-- =============================== -->
+    <h2 id="verdict">⑦ 判定——⛔反証接近、CI下限があと一歩</h2>
+
+    <p>前向きトラッカーの昇格/反証基準（gate設定のため「反証」＝gate崩壊）の観点から現状を整理します。</p>
+
+    <div class="info-box">
+      <strong>事前登録の基準（trend=中立・もみあい×reversalL gate）</strong><br>
+      「前向きN≥80かつ平均RのCI上限 &lt; 0」を満たしたときに反証（gate崩壊）と判定。現在N=48。E(R)=+0.361 CI[−0.04〜+0.76]（tracker値）
+    </div>
+
+    <p>現状の評価は次の通りです。</p>
+
+    <table>
+      <tr><th>確認項目</th><th>結果</th><th>判定</th></tr>
+      <tr>
+        <td>前向きN ≥ 80（確定判定の最低条件）</td>
+        <td>N = 48（必要数まで残り32件）</td>
+        <td>❌ 未達</td>
+      </tr>
+      <tr>
+        <td>前向きE(R) CI下限 > 0（⛔反証方向の基準）</td>
+        <td>CI[−0.04〜+0.76]（下限がわずかにマイナス）</td>
+        <td>🟡 あと一歩</td>
+      </tr>
+      <tr>
+        <td>前向き勝率 &gt; 43%（損益分岐超え）</td>
+        <td>58.3%——明確に上回っている</td>
+        <td>✅ 達成</td>
+      </tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>解釈：</strong> 前向き58.3%でgateの期待（損益分岐未満）を大幅に超えているため、⛔反証（gate崩壊）に向かっている可能性が高い状況です。ただし確定にはN=80到達が必要で、現在N=48。主ドライバーのドルFX改善が今後も続くかどうかが鍵となります。
+    </div>
+
+    <h3>まとめ：主な発見</h3>
+    <ul>
+      <li><strong>IS（登録前）32.9% → FWD58.3%への急改善</strong>——+25.4ppの大幅改善</li>
+      <li><strong>ドルFX（other_fx）が主ドライバー</strong>——IS34.6% → FWD70.6%（+36pp、17件中12件勝利）</li>
+      <li><strong>円クロス（jpy_fx）は最小改善</strong>——IS35.9% → FWD40.0%（+4pp）、逆張り買いの弱さ継続</li>
+      <li><strong>指数内でRSI vs BBが逆転</strong>——もみあい×指数×RSI=66.7% vs BB=25.0%（41.7pp差）</li>
+      <li><strong>4H足が1H足より弱い</strong>——32.9% vs 42.3%（#15の発見と整合）</li>
+      <li><strong>BTC逆張り買いが壊滅的</strong>——IS全期間2/17=11.8%</li>
+      <li><strong>⛔反証接近</strong>——CI下限がE(R)=−0.04でわずかにマイナス、N=80到達で最終判定</li>
+    </ul>
+
+    <p>なお#030/#032で確認された「金属の急改善」は、今回のもみあい×revLでは限定的（IS40%→FWD50%、N=4）で確定的な結論を出せる水準ではありません。全体の改善はドルFXと指数の改善が主因と考えられます。</p>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+
+    <p>以下は本日（2026-07-12）時点の前向きトラッカー全仮説の定点観測です。</p>
+
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-07-12／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.26 CI[+0.00~+0.52]（88/163・勝率54%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.09~+0.12]（207/477・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.10~+0.13]（166/382・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.17~+0.20]（125/288・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.10 CI[-0.25~+0.04]（72/187・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.19~+0.23]（79/181・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.21~+0.23]（71/164・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[-0.07~+0.36]（76/155・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.05 CI[-0.22~+0.12]（58/143・勝率41%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.12 CI[-0.04~+0.29]（68/141・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.24~+0.30]（56/127・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.24~+0.35]（53/117・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.20 CI[-0.44~+0.05]（40/116・勝率34%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.08 CI[-0.31~+0.48]（39/84・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.11 CI[-0.28~+0.50]（37/78・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.27 CI[-0.64~+0.09]（24/77・勝率31%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.19 CI[-0.54~+0.17]（24/69・勝率35%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.60 CI[+0.38~+0.82]（46/67・勝率69%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.58 CI[+0.32~+0.84]（42/62・勝率68%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.38 CI[-0.12~+0.89]（32/54・勝率59%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.31 CI[+0.10~+0.52]（28/50・勝率56%）</td><td>🟡蓄積中</td></tr>
+<tr style="background:#e6ffed"><td><strong>trend=中立・もみあい×reversalL（今回）</strong></td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.36 CI[-0.04~+0.76]（28/48・勝率58%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=low_break</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.07 CI[-0.46~+0.33]（18/45・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.68~+0.46]（16/42・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.02 CI[-0.38~+0.34]（16/38・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.26 CI[-0.03~+0.56]（20/37・勝率54%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.34 CI[-0.69~+0.01]（9/32・勝率28%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.46~+0.63]（13/28・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>other_fx×逆張り買い(回避)</td><td>gate</td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.22 CI[-0.60~+1.03]（12/23・勝率52%）</td><td>🟡蓄積中</td></tr>
+<tr><td>BTC全方向(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.06 CI[-0.39~+0.51]（10/22・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.63~+0.68]（7/16・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ショート全般(日足・回避)</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.36 CI[-0.98~+0.25]（3/11・勝率27%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=ma_dead</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.22 CI[-1.05~+0.61]（3/9・勝率33%）</td><td>🟡蓄積中</td></tr>
+<tr><td>other_fxクロス(日足・回避)</td><td>gate</td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R -0.12 CI[-0.86~+0.61]（3/8・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×ロング(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.33 CI[-1.06~+0.39]（2/7・勝率29%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ロング全般(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -1.00 CI[-1.00~-1.00]（0/6・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>メタル×ロング(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R -0.53 CI[-1.52~+0.46]（1/5・勝率20%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド発火(日足・回避)</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.53 CI[-1.45~+0.38]（1/5・勝率20%）</td><td>🟡蓄積中</td></tr>
+<tr><td>BTC×ロング(日足)</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.00 CI[+0.00~+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×逆張り買い(日足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.00 CI[+0.00~+0.00]（0/0・勝率0%）</td><td>🟡蓄積中</td></tr>
+<tr style="background:#fff8f8"><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.13~+0.22]（157/351・勝率45%）</td><td>⛔反証</td></tr>
+<tr style="background:#fff8f8"><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.33 CI[+0.11~+0.56]（72/126・勝率57%）</td><td>⛔反証</td></tr>
+</table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑧ 次回に向けて</h2>
+
+    <p>今回の発見から、次回以降の候補仮説を整理します。</p>
+
+    <ul>
+      <li><strong>ドルFX（other_fx）×もみあい×RSI vs BB</strong>：N=19 vs N=50でFWD詳細分解が可能になった時点で正式検証</li>
+      <li><strong>blocked=True×dir=short 反証確認</strong>：CI上限=+0.01でほぼ⛔反証状態。N追加で確定判定へ</li>
+      <li><strong>tier=good gate 昇格接近</strong>：N=67（残り13件で判定）、69%維持なら昇格判定</li>
+      <li><strong>下降×revL gate 状況</strong>：FWD59.3%で同様の急改善中（N=54）——#038候補</li>
+    </ul>
+
+    <p>もみあい×逆張り買いの前向き改善は確認中ですが、CI下限がまだわずかにマイナスです。次の10〜20件の決済結果がCI下限を正値化するかどうかが、⛔反証（gate崩壊）確定の分岐点になります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績をリアルタイムで確認</div>
+      <div class="cta-box-desc">本研究日誌の元データとなるシグナル成績ダッシュボード（7タブ）は無料で公開中です。</div>
+      <a href="track-record.html" style="display:inline-block;background:#0969da;color:#fff;padding:10px 22px;border-radius:8px;font-weight:700;font-size:.92rem">成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">🔗 シリーズ関連記事</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-036.html">
+          <div class="related-card-title">🧪 #36 上昇×逆張り買い 前向き追跡</div>
+          <div class="related-card-desc">IS→FWD57%。指数急落・ドルFX逆転を解析</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-022.html">
+          <div class="related-card-title">🧪 #22 逆張り買い×トレンド依存性</div>
+          <div class="related-card-desc">上昇54.1% vs 下降33.7%の非対称。今回の前提データ</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-030.html">
+          <div class="related-card-title">🧪 #30 ロング全般 gate反証</div>
+          <div class="related-card-desc">金属レジーム転換が全体改善の主因</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-015.html">
+          <div class="related-card-title">🧪 #15 4H足ロングの系統的弱さ</div>
+          <div class="related-card-desc">4H×ロング35.2%——今回の時間足結果と整合</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ③ 末尾免責（kinsho-v1） -->
+    <p class="disclaimer">
+      ⚠️ 免責事項：本記事は過去の自システムデータを用いた情報提供を目的とした分析です。投資助言・売買推奨ではありません。当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言・代理業の登録を行っておりません。本記事を参考にした投資判断はご自身の責任において行ってください。過去のシグナル成績は将来の成果を保証するものではありません。
+    </p>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 MarketWatch AI | <a href="privacy.html">プライバシーポリシー</a> | <a href="about.html">このサイトについて</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+(function(){
+  var s=document.getElementById('reading-progress');
+  if(!s)return;
+  function u(){var d=document.documentElement,b=document.body,h=Math.max(d.scrollHeight,b.scrollHeight)-window.innerHeight;s.style.width=h>0?(window.scrollY/h*100)+'%':'0';}
+  window.addEventListener('scroll',u,{passive:true});
+  u();
+})();
+function toggleTheme(){
+  var b=document.body,d=b.classList.toggle('dark'),t=document.getElementById('theme-toggle');
+  if(t)t.textContent=d?'☀️':'🌙';
+  try{localStorage.setItem('theme',d?'dark':'light');}catch(e){}
+}
+(function(){
+  try{if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark');var t=document.getElementById('theme-toggle');if(t)t.textContent='☀️';}}catch(e){}
+})();
+</script>
+</body>
+</html>

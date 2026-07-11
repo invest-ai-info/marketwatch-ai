@@ -1,0 +1,89 @@
+{
+  "article_id": "037",
+  "claims": [
+    {
+      "label": "中立×revL 全期間（主仮説）",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true},
+      "k": 76,
+      "n": 194
+    },
+    {
+      "label": "上昇×revL 全期間（対照群）",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 82,
+      "n": 151
+    },
+    {
+      "label": "下降×revL 全期間（対照群）",
+      "filter": {"trend": "下降", "reversal_long": true},
+      "k": 87,
+      "n": 224
+    },
+    {
+      "label": "中立×revL group=index",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "group": "index"},
+      "k": 20,
+      "n": 45
+    },
+    {
+      "label": "中立×revL group=jpy_fx",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "group": "jpy_fx"},
+      "k": 18,
+      "n": 49
+    },
+    {
+      "label": "中立×revL group=other_fx",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "group": "other_fx"},
+      "k": 30,
+      "n": 69
+    },
+    {
+      "label": "中立×revL group=metal",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "group": "metal"},
+      "k": 4,
+      "n": 9
+    },
+    {
+      "label": "中立×revL group=btc",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "group": "btc"},
+      "k": 2,
+      "n": 17
+    },
+    {
+      "label": "中立×rsi_oversold_bounce long（シグナル別）",
+      "filter": {"trend": "中立・もみあい", "signal": "rsi_oversold_bounce", "direction": "long"},
+      "k": 29,
+      "n": 76
+    },
+    {
+      "label": "中立×bb_lower_touch long（シグナル別）",
+      "filter": {"trend": "中立・もみあい", "signal": "bb_lower_touch", "direction": "long"},
+      "k": 47,
+      "n": 118
+    },
+    {
+      "label": "中立×revL tf=1h",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "tf": "1h"},
+      "k": 47,
+      "n": 111
+    },
+    {
+      "label": "中立×revL tf=4h",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true, "tf": "4h"},
+      "k": 26,
+      "n": 79
+    },
+    {
+      "label": "index×中立×rsi long（指数内シグナル分解）",
+      "filter": {"group": "index", "trend": "中立・もみあい", "signal": "rsi_oversold_bounce", "direction": "long"},
+      "k": 14,
+      "n": 21
+    },
+    {
+      "label": "index×中立×bb long（指数内シグナル分解）",
+      "filter": {"group": "index", "trend": "中立・もみあい", "signal": "bb_lower_touch", "direction": "long"},
+      "k": 6,
+      "n": 24
+    }
+  ]
+}
