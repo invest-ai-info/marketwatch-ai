@@ -32,4 +32,5 @@ SYNC_FILES = [
     "guide-news-2026-07-10-gpif-domestic-investment.html",
     "guide-signal-lab-036.html",
     "guide-currency-risk.html",
+    "guide-proverb-nido-ni-kau.html",
 ]
