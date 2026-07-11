@@ -33,6 +33,22 @@ OUTPUT_FILE = "track-record.html"
 WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 
 
+def is_weekend_closed_fire(sig):
+    """週末閉場中（土07:00〜月06:00 JST）に発火したシグナルか（BTC=24h市場は対象外）。
+    非24h市場の閉場中は塩漬けデータでの発火＝古いレートでエントリー記録→週明けギャップでSL直撃
+    という測定アーティファクト（実測: 該当214件の勝率33% vs 全体41.6%）。
+    2026-07-11 オーナー指示により勝率集計から除外。生ログ signals-log.json は不変（除外は集計側のみ）。
+    ※同じ関数を auto_weekly_review.py / generate_monthly_report.py にも複製（定義を変える時は3か所同時に）"""
+    if "BTC" in (sig.get("ticker") or ""):
+        return False
+    try:
+        t = datetime.fromisoformat(sig.get("fired_at", ""))
+    except (ValueError, TypeError):
+        return False
+    wd, hr = t.weekday(), t.hour
+    return (wd == 5 and hr >= 7) or wd == 6 or (wd == 0 and hr < 6)
+
+
 def get_time_session(hour):
     """JST 時刻 → 市場セッション"""
     if 0 <= hour < 6:
@@ -1334,6 +1350,7 @@ def build_html(signals, trades):
     <div style="font-weight:700;color:#cf222e;font-size:1rem;margin-bottom:8px">⚠️ 本ページに関する重要なお知らせ</div>
     <ul style="margin:6px 0 6px 22px;padding:0">
       <li>本ページの数値は過去シグナルを機械的に集計した <b>記録</b> であり、<b>将来の取引成績を保証するものではありません</b>。</li>
+      <li>市場閉場中（土 07:00〜月 06:00 JST・24時間市場の暗号資産を除く）に発火したシグナルは、<b>古いレートに基づく記録のため集計から除外</b>しています（2026-07-11 導入・除外前の生データはページ下部のダウンロードに全件含まれます）。</li>
       <li>銘柄別・曜日別・時間帯別の勝率は <b>サンプル数（N）が少ないとブレが大きく、統計的信頼性は限定的</b> です（特に N&lt;10）。「勝率 100%」のような表示も同様です。</li>
       <li>本ページの「⭐⭐⭐ HIGH」「🟢 推奨」等の表現は過去統計に基づく分類であり、<b>特定銘柄・時間帯への投資勧誘ではありません</b>。</li>
       <li>本ページは情報提供を目的としており、<b>投資助言ではありません</b>。<b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません</b>。投資判断はご自身の責任で行ってください。</li>
@@ -1571,7 +1588,9 @@ def main():
     print("📊 track-record.html を生成中...")
     signals = load_json(SIGNALS_LOG_FILE)
     trades = load_json(TRADES_LOG_FILE)
-    print(f"  シグナル: {len(signals)} 件、実取引: {len(trades)} 件")
+    n_all = len(signals)
+    signals = [s for s in signals if not is_weekend_closed_fire(s)]
+    print(f"  シグナル: {len(signals)} 件（週末閉場中の発火 {n_all - len(signals)} 件を集計から除外）、実取引: {len(trades)} 件")
 
     html = build_html(signals, trades)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
