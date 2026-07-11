@@ -41,6 +41,20 @@ def load_json(path, default):
         return default
 
 
+def is_weekend_closed_fire(sig):
+    """週末閉場中（土07:00〜月06:00 JST）に発火したシグナルか（BTC=24h市場は対象外）。
+    塩漬けデータ発火＝測定アーティファクトのため勝率集計から除外（2026-07-11 オーナー指示）。
+    ※generate_track_record_page.py と同一定義（定義を変える時は3か所同時に）"""
+    if "BTC" in (sig.get("ticker") or ""):
+        return False
+    try:
+        t = datetime.fromisoformat(sig.get("fired_at", ""))
+    except (ValueError, TypeError):
+        return False
+    wd, hr = t.weekday(), t.hour
+    return (wd == 5 and hr >= 7) or wd == 6 or (wd == 0 and hr < 6)
+
+
 def _parse_iso(s):
     try:
         return datetime.fromisoformat(s) if s else None
@@ -372,7 +386,7 @@ footer a{{color:#0969da;text-decoration:none}}
   <div class="kpi"><div class="kpi-num loss">{sig_stats['sl']}</div><div class="kpi-label">負け (SL)</div></div>
   <div class="kpi"><div class="kpi-num {'win' if sig_stats['win_rate'] >= 50 else 'loss'}">{sig_stats['win_rate']:.1f}%</div><div class="kpi-label">勝率</div></div>
 </div>
-<p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 上記の勝率は過去 1 週間の機械的なシグナル集計結果であり、将来の取引成績を保証するものではありません。本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
+<p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 上記の勝率は過去 1 週間の機械的なシグナル集計結果であり、将来の取引成績を保証するものではありません。市場閉場中（土07:00〜月06:00 JST・暗号資産を除く）に発火した記録は古いレートに基づくため集計対象外です。本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
 
 <h2>💯 信頼度別 勝率</h2>
 <p>シグナル発火時の「信頼度スコア」（複数シグナル × 環境 × トレンド整合）別の的中率を集計。理想は HIGH > MID > LOW の順序。</p>
@@ -446,7 +460,9 @@ def main():
     signals = load_json(SIGNALS_LOG_FILE, [])
     trades = load_json(TRADES_FILE, [])
     events_data = load_json(EVENTS_FILE, {"events": []})
-    print(f"  📒 signals: {len(signals)} / trades: {len(trades)} / events: {len(events_data.get('events') or [])}")
+    n_all = len(signals)
+    signals = [s for s in signals if not is_weekend_closed_fire(s)]
+    print(f"  📒 signals: {len(signals)}（週末閉場中 {n_all - len(signals)} 件除外） / trades: {len(trades)} / events: {len(events_data.get('events') or [])}")
 
     sig_stats = summarize_signals(signals, last_monday, this_monday)
     trade_stats = summarize_trades(trades, last_monday, this_monday)
