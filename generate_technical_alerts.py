@@ -2302,8 +2302,12 @@ def calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignmen
     #    【今回は】影響させない（オーナー判断 2026-06-26＝最小・ノーリスク実装。配信/ロットへの昇格は
     #    追加のライブ確認を経て別途人間が判断。送信可否は filter_send_email が独立制御）。
     #    可逆＝この score += 1 を消せば完全に元へ戻る。
+    # 🔧 2026-07-11 監査#9修正: 判定を「先頭シグナルのseverity」→「総合方向（多数決＝ポジションプラン）」へ。
+    #    旧判定は buy が先頭・sell 多数決の併発時にショートプランへ +1 が混入するバグ（⭐水増し＋ログ汚染）。
+    #    signals-log の index_long_bonus は本日以降この定義（プランがロングの時のみ）。
     index_long_bonus = False
-    if ticker in INDEX_TICKERS and (fresh_signals or [{}])[0].get("severity") == "buy":
+    _plan_is_long = bool(position_plan) and str(position_plan.get("direction", "")).startswith("ロング")
+    if ticker in INDEX_TICKERS and _plan_is_long:
         score += 1
         index_long_bonus = True
         factors.append("指数ロング (検証済み+EVエッジ・#21昇格・本採用・+1)")
@@ -2786,7 +2790,9 @@ def main():
         #    email_silent でも取りこぼさず配信する（見逃し防止）。⚠️ 上の ma_golden単独ブロック(0勝N=11)
         #    は対象外＝維持。可逆＝この exempt 分岐を消せば従来挙動に戻る。
         if filter_send_email and all(s.get("email_silent") for s in fresh_signals):
-            _idx_long_edge = ticker in INDEX_TICKERS and any(s.get("severity") == "buy" for s in fresh_signals)
+            # 🔧 2026-07-11 監査#9修正: 免除条件も「総合方向=ロングのプラン」に統一（buy混在ショートの誤配信防止）
+            _idx_long_edge = (ticker in INDEX_TICKERS and position_plan
+                              and str(position_plan.get("direction", "")).startswith("ロング"))
             if _idx_long_edge:
                 print(f"    📬 指数×ロング(検証済みエッジ #21): email_silent だが取りこぼし防止のため配信")
             else:
@@ -2918,8 +2924,10 @@ def main():
 - 利確 ①: {currency}{position_plan['take_profit_1']:.{decimals}f}（{position_plan['tp1_pct']:+.2f}% / 幅 {tp1_w} / R:R 1:1.3）
 - 利確 ②: {currency}{position_plan['take_profit_2']:.{decimals}f}（{position_plan['tp2_pct']:+.2f}% / 幅 {tp2_w} / R:R 1:2.0）
 
-📐 MT4 で使う場合: エントリー = MT4 の現在値、SL/TP は現在値から上の「幅」で設定
-   （上の価格は Yahoo 基準のため、先物 vs 現物 CFD・配信元の違いでブローカー表示とはズレます。幅は共通）
+📐 MT4 で使う場合: エントリー = MT4 の現在値、SL/TP は現在値から上記の「幅」で設定
+   （ロング: SL=現在値−幅・TP=現在値＋幅／ショートは逆。pips入力のUIでは 1 pip = 10 points に注意）
+   ⚠️ 上の絶対価格は Yahoo 基準＝MT4 へそのまま転記しない（先物 vs 現物 CFD・配信元差でズレるため幅だけ使う）
+   ⚠️ MT4 の現在値が上のエントリーから SL 幅の半分以上ズレていたら見送り（プラン失効の目安）
 
 📊 SL 根拠: ATR(14) = {currency}{position_plan['atr']:.{decimals}f} × 1.5
         （{tf_label_display} 足 1 本の自然な値動きの 1.5 倍 = 通常のヒゲでは刈られない幅）
