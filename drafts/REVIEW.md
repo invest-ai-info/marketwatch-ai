@@ -53,7 +53,7 @@
 - **テーマ**: `trend=中立・もみあい × reversal_long` IS期間32.9%（損益分岐割れ）→前向き58.3% E(R)=+0.361の急改善解析
 - **生成ファイル**: `drafts/draft-signal-lab-037.html`
 - **labnotes**: `drafts/labnotes/lab-037-analysis.md` / `drafts/labnotes/lab-037-claims.json`
-- **signal_lab_verify**: ⏳ 実行待ち
+- **signal_lab_verify**: ✅ GREEN（14/14 claims緑・要約未検証0件・SVG警告0件）
 - **主要数値**:
   - 中立×revL 全期間: 76/194=39.2% CI[32.6%〜46.2%]
   - FWD（tracker）28/48=58.3% E(R)=+0.361 CI[-0.04〜+0.76]
@@ -62,8 +62,11 @@
   - index×rsi 66.7% vs index×bb 25.0%（41.7pp逆転）
   - 4h=32.9% vs 1h=42.3%（#015継続）
   - btc 2/17=11.8%（壊滅継続）
-- **Opusコンプラ**: ⏳ 実行待ち
-- **人間の残作業**: なし（自動公開ゲートに委ねる）
+- **Opusコンプラ**: 🟢白（Opus×2独立審査・修正なし）
+- **整合性チェック**: ✅ EXIT=0（警告1件=クラウドスタブ・想定内）
+- **push**: ✅ PUSH-MAIN 成功
+- **公開URL**: https://marketwatch-jp.com/guide-signal-lab-037.html
+- **補足**: 初回verify.py EXIT=1（30秒まとめ内FWD値3件）→分数表記に変換（数値不変・表現のみ）→GREEN
 
 ---
 
