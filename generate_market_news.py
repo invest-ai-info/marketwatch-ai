@@ -4767,6 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-11", "line": '・<b>2026-07-11</b>: 📰 解説「<a href="guide-news-2026-07-11-skhynix-adr-nasdaq.html" style="color:#0969da"><b>SK Hynix Nasdaq初上場+12.8% 史上最大外国企業IPOを整理</b></a>」公開'},
         {"date": "2026-07-11", "line": '・<b>2026-07-11</b>: 📊 解説「<a href="guide-proverb-nido-ni-kau.html" style="color:#0969da"><b>二度に買うべし二度に売るべし</b></a>」公開'},
         {"date": "2026-07-11", "line": '・<b>2026-07-11</b>: 🛡️ 解説「<a href="guide-currency-risk.html" style="color:#0969da"><b>為替リスクの基本｜外貨資産は「価格×為替」の二階建て</b></a>」公開'},
         {"date": "2026-07-11", "line": '・<b>2026-07-11</b>: 🧪 解説「<a href="guide-signal-lab-036.html" style="color:#0969da"><b>#36 上昇×reversalL グループ逆転の正体</b></a>」公開'},
