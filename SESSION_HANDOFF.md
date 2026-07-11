@@ -6,6 +6,14 @@
 
 **③Q11ズールー前向きトラッカー=📊アーム完了（fins月次自動更新も整備）**: **(a)** `_jp_fins_monthly.py`＝毎月1〜3日05:50タスク`MarketWatch_JQ_Fins`(PT2H)で全3717銘柄の財務キャッシュを再取得（実測1.5s/銘柄≈93分・バジェット6600s・mtime再開・完走時のみ`_jq_fins_cache_meta.json`にrefreshed_at記録）。**(b)** `_jp_zulu_tracker.py`＝Q6シグナルをzulu_flags importで1バイト不変流用・**参照再現がsummaryと完全一致**(train+2.39% p0.0067/holdout+3.05% p0.0003)・**凍結ガード=fins refreshed_at≥formation**（PITで更新遅延は無害・凍結メンバーはstate固定）・チェックポイント=formation12の倍数・合格=formation≥12∧N≥500∧CI下限>0。**(c)** 番人=`_jp_health_check.py`にcheck_fins新設（毎月5日までに完走なければアラートtxt）・`mw evolve`アジェンダにQ11行。**初formation=7/31→8/1タスクが自動凍結**・初判定≒2027年夏。⚠️初回フル取得はセッション中に裏で実行（完走でmeta記録）。
 
+**④Q14防御カタログ第1弾=🛡4/6合格（成長レバー会議②・6仮説を1バッチ事前登録→同日検証）**: **H5短期爆騰(5日+30%新規)＝同日blowup60差+47.50/+48.56pp・blow65%＝過去最強の回避フラグ（🔪重複11%=独立）**／H4ナイフ窓延長=61-120日も+14.16/+12.63pp＝**🔪窓120日化**／H1決算またぎ+3.37/+4.71pp（準PIT注記）／H2高ボラ突破+7.78/+7.54pp。❌H3業種過熱(400ユニバース制約ns)・H6 52週安値(train ns)。`_jp_defense_catalog_screen.py`・DOCTRINE §2結晶化・**適用宿題=mw screenに⚡爆騰列+🔪窓120日化+決算前列**。
+
+**⑤Q15資産クラスDM=❌不合格（アレンジ枠A・GEM円換算・正直な結果）**: train Sharpe0.391<IEF単独0.619／holdout1.330<金単独1.450＝**切替は単一資産を超えない**。対株式DDは半減(-35%vs-60%)＝守りの部分効果のみ・記事#6素材（「原典どおりでも円建てでは単一資産に勝てなかった」は教育価値あり）。`_dm_asset_class_screen.py`・DOCTRINE §3。
+
+**⑥実行系レッドチーム監査=🔴3/🟡12/🔵4の19件発見（Fableサブエージェント・研究系7/8監査の実行系版）**: 🔴①EAのR2警告は建玉時のみ=持ち越し盲目 ②仮SL装着失敗が完全沈黙+無限リトライ ③保有中のSL削除が全系で無検知＝最大の抜け道。**数学(SL/TP・pips換算)は誤りなし**。Python側4件は同日修正済（#9信頼度の指数ロング+1がショートに混入するバグ=多数決方向に統一・メール幅併記の鮮度ガード/転記禁止/方向注記=commit f2cc7e3）。**EA側8件は宿題⑤と同時修正→コンパイル→デモの段取り**。全文=`research/execution_audit_2026-07-11.md`（対応ログを単一の真実に）。
+
+**⑦軽量2本**: `_goal_math.py`=1億への算数（必要資本=1億÷CAGR・到達年数・ルーイン近似・例:500万+月20万でCAGR15%なら24.6年＝資本供給側の重要性が一目）／mw evolveに**系KPI**（前向きトラッカー2本表示+仮説生存率50%=6/12）。成長レバー台帳=`research/growth_levers_2026-07-11.md`（残: ①規律実弾化・②b国外OOS・④promise audit・⑤プレイブック）。
+
 **②Q8金ラボ第2R=✅完了（🔓holdout解錠2026-07-11・この1回限り・再解錠禁止）**: 第1R有望2本のparamsが未記録→**valid数値の記録一致で特定**（volfilter=デフォルト0.681≒記録0.68／vol_scaled=tv0.10で0.626完全一致・照合5回・成績での選び直しなし）→合否基準を解錠前宣言(Sharpe≥0.6∧PF≥1.25)→**2本とも合格**: ①複合トレンド×低ボラ`{}`=Sharpe0.63/PF1.93(コスト2x=0.599ボーダー) ②多数決モメンタム×ボラ目標10%=Sharpe1.023/PF6.06(コスト2x頑健・valid→holdout改善)。ただし生SharpeはBH(1.114)未満＝**ラボ合格3本すべて「価値は防御」＝DOCTRINE §0-1を金でも再確認**。台帳`research/gold_backtest/RESULTS.md`新設（第1R教訓の是正）・DOCTRINE §2改稿・anchors50件・完了Q8/Q9/Q12をqueue_archiveへ退避・**DOCTRINE/queue/HANDOFF全て予算内warning 0**。金ラボは新素材が出るまで休眠。
 
 ## 🧹 7/10 declutter＋Q12再監査
@@ -16,19 +24,7 @@
 - **🔴核心=§0-1を強く確証**: グレアム防御（暴落率差 高≥4 vs 低≤1）は train-22.4pp/holdout-19.5pp・**block bootでも同日対照でも両期間p0.0003**＝TT3リターン主張が同日対照で消えたのと対照的に守りは真の横断エッジ。効果量24%→4-5%(≈-20pp)完全維持。グレアム・リターン差も同日対照で両期間有意(+24.3/+11.8%)。
 - **バフェット**: 「質は逆」方向は堅持(H1 -5.73/-6.05)だが**同日対照でtrain減衰(p0.094)/holdout堅持**。質は暴落防御にならず(H3 train+6.4pp)。割安内も質高いほど劣後(H2両期間有意)＝「安さが報われる」を強化。
 
-## ⚡ 7/9夜 最新ニュース・ライブフィード新設（オーナー要望「夕方でも昨日のニュース」への対策・毎時更新・AI不使用・コスト0）
-
-- **診断**: TOP3は48h窓×半減期36hの「インパクト優先」設計＝仕様どおり昨日の大ニュースが残留＋日本語フレッシュ記事のプールが薄い＋更新1日3回。
-- **新設（既存TOP3/カード関連ニュースはそのまま）**:
-  ①`build_news_ticker.py`＝日本語RSS/Google News 9本（ロイター/Bloomberg/日経/時事/株探/みんかぶ/NHK/Yahoo!/東洋経済）→時刻降順・類似dedup・ソース上限6・最新24件→`news-ticker.json`。センチメント絵文字はキーワード判定（generate側と同語彙の複製）。取得<5件なら既存JSON保持（フェイルセーフ）。日本語3文字未満の見出しは除外（銘柄ページのゴミ対策）。
-  ②`news-ticker.yml`＝毎時:37・news-ticker.jsonのみcommit・concurrency有・update-market-newsのon:pushには**非**該当（連鎖起動なし）。
-  ③index.htmlに「⚡最新マーケットニュース」枠＝`build_news_ticker_section()`（generate_market_news.py・非f-string関数）。**JSが閲覧時にJSONをfetch**（cache-buster付き・DOM APIでXSS安全・◯分前表示・8件+さらに表示・免責一文）＝HTML再生成なしで常に最新。
-  ④ガード: news-ticker.json=SYNC_FORBIDDEN登録・automation-healthのWORKFLOW_CHECKSに5h/warnで登録・CLAUDE.md反映。
-  ⑤**同日夜・オーナー要望で市場タグ追加（AI解説なし・AI呼び出しゼロは維持）**: `classify()`=キーワード照合で c=stocks/fx/commodity/crypto/macro/biz を付与→ティッカー枠に**バッジ+絞り込みボタン**（すべて/📈株式/💱為替/🛢商品/🪙暗号/🏛マクロ/📰経済）＋**4マーケットカードの関連ニュース下に該当市場の最新見出し3件**（`.mw-ticker-mini` data-mwcat・同じJSON・見出しのみ）。旧JSON（cなし）はbiz扱いで後方互換。
-- **⚠️運用の学び=reconcile手順**: sync時に`generate_market_news.py`と`check_site_consistency.py`がstaleガード🚫→原因はクラウド公開（news-daily-auto 17:40等）がGitHub側で両ファイルを更新していたため。**リモートdiff確認→リモート版に自分の編集を乗せ直し→意図的`--force`**で解決（未変更ファイルはキャッシュskipなのでforceの影響は変更分のみ）。
-- **🚩要オーナー認知**: 今朝の autopublish routine が `check_site_consistency.py` のクラウドスタブ分岐を**独自実装で書き換えてcommit**していた（7/8ローカル実装の`_IS_LOCAL`→routine版`_is_cloud_stub`）。動作は等価でクラウド実証済みのためリモート版を正として採用したが、**「ゲート/リンターをroutineが編集して通過」は自己承認と同型のリスク**＝AUTOPUBLISH_GUIDEに「リンター編集禁止・エスカレ」明文化の検討を⓪-Gに積んだ。
-
-<!-- 7/9 2節（automation-health可視化バグ2件修理・Q13ナイフゲートH1採用+ロガー自己修復）は 2026-07-11 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_masters_queue]]/[[project_jp_open_edge]]/[[project_news_lane_escalation]]・DOCTRINE §2🔪。 -->
+<!-- 7/9夜 news-ticker新設の詳細節は 2026-07-11 に SESSION_ARCHIVE.md へ退避（7/11朝に定時運転確認済＝運用安定）。仕様=CLAUDE.md news-ticker.yml 節・残タスク=⓪-H（📰経済の既定非表示はオーナー好み待ち）。 -->
 
 ## 🧬 7/7 進化ループ構築（詳細=SESSION_ARCHIVE 7/8退避・運用=auto-memory project_evolution_loop）
 
@@ -106,7 +102,7 @@
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
 - **⓪-D 進化ループ続き**：Q13(7/9)・Q12(7/10)・**Q8+Q11アーム(7/11＝上の7/11節)** 消化済み。残=Q10及川H-O4（低優先・エンジン実装が先）のみ＝**キューの検証仕事は一旦完了**。次はアレンジ枠A（資産クラスDM・記事#6有力）が有力。TT3前向きは月1回`_jp_turtle_tracker.py`・ズールーQ11は毎月1日タスクが自動。**8/1朝: MarketWatch_JQ_Finsの初定時運転→7/31 formation凍結を次セッションで確認**。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
-  **A**=資産クラス版デュアルモメンタム（日経/S&P500/金/米債の月次乗り換え・原典回帰・Yahooで20年・記事#6有力候補）／
+  **A**=❌7/11検証済み（Q15・単一資産超えず=記事#6素材）／
   **C**=✅Q11で7/11実装済（screener参考列だけ任意で未）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
   ※「すでに生きているアレンジ」の整理も記事ネタ（赤三兵→連騰≥4危険ゲート・タートル資金管理→ATRベースSL/2%ルール・**G4逆張り→🔪回避フラグ（Q13）**＝原型のエントリーは死んでも部品は生きる）。
 - **⓪-F ✅済（7/10）文書declutter**：CLAUDE 32.0/DOCTRINE 24.0(warning0)/HANDOFF 28.5＝全て予算内。以後もこの水準を維持（節が増えたら完了節をARCHIVEへ）。
@@ -116,7 +112,7 @@
 - **①巨匠シリーズ**：記事#5公開済み（7/8夜・Q1〜Q5+TT3訂正を1本化）。次記事候補=「#6 割安成長（ズールー）×グレアム再訪」＝Q11前向き設計・Q12再監査の後が筋。
 - **②TT3の前向き検証＝📊稼働中**（`_jp_turtle_tracker.py`・検定はブロックboot版に7/8改定・月1回チェック・初判定は10月頃）。
 - **③防御スクリーン列＝✅適用済み**（`mw screen`の🛡防御列・7/7）。
-- **⑤番人EA MW_Guardian＝実弾テスト未実施**：オーナーがデモ口座で試し発注→スマホPush・仮SL自動装着・重ね張り警告の実挙動を一緒に確認（EAはPC MT4起動中のみ稼働）。
+- **⑤番人EA MW_Guardian＝実弾テスト未実施＋7/11監査で要修正8件**：次のEAセッションで（a)監査🔴3件+🟡5件を修正（`research/execution_audit_2026-07-11.md`対応ログ参照・R2持ち越し盲目/仮SL沈黙/SL削除無検知/magic無差別/AutoSL_TF=240等）→(b)MetaEditorコンパイル→(c)オーナーがデモ口座で試し発注→実挙動を一緒に確認＋表示リスク%vs手計算の1回照合。
 - **⑥リードマグネット公開待ち＝オーナーのGoogleフォーム作成待ち**：URLが来たら `MAGNET_SETUP.md` の Claude作業（コンプラ監査→PDF SYNC→CTA設置→X導線）を一気通貫で。
 - **⑦AdSense＝7/6再却下（確定）**：🔴**オーナー作業＝AdSenseコンソール[サイト]ページで却下理由の詳細を確認**→理由を見てから対応方針を相談（候補: ニュース/自動生成記事の追加noindex・コンテンツ拡充・再申請時期）。むやみにnoindexを増やすのは理由確認後。
 - **⑧オーナー手動タスク2件**：(a) **X用アイコン `mw-logo-512.png`**（作業フォルダ直下・ローカルのみ）を @rx009898 のプロフィール画像に手動アップロード (b) 実機スマホでトップページ整理後の見え方＋タブのロゴを確認。
