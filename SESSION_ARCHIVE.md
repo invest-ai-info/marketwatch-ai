@@ -1122,3 +1122,20 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 - 残: アレンジ候補A（資産クラス版デュアルモメンタム・記事#6有力）/C（=Q11）/D（複合）は未着手のままキュー外。
 
 <!-- 7/8 全3節（Fable5方法論監査=TT3格下げ・autopublish二重欠陥根治+⑰公開・Q3酒田五法❌）は 2026-07-10 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_evolution_loop]]/[[project_masters_queue]]/[[project_jp_screener]]。TT3格下げの帰結（§1b・§0-4）はDOCTRINE反映済。残課題Q12は下記⓪-Dに継続。 -->
+
+
+# 📦 2026-07-11 退避（7/9 news-ticker新設節）
+
+## ⚡ 7/9夜 最新ニュース・ライブフィード新設（オーナー要望「夕方でも昨日のニュース」への対策・毎時更新・AI不使用・コスト0）
+
+- **診断**: TOP3は48h窓×半減期36hの「インパクト優先」設計＝仕様どおり昨日の大ニュースが残留＋日本語フレッシュ記事のプールが薄い＋更新1日3回。
+- **新設（既存TOP3/カード関連ニュースはそのまま）**:
+  ①`build_news_ticker.py`＝日本語RSS/Google News 9本（ロイター/Bloomberg/日経/時事/株探/みんかぶ/NHK/Yahoo!/東洋経済）→時刻降順・類似dedup・ソース上限6・最新24件→`news-ticker.json`。センチメント絵文字はキーワード判定（generate側と同語彙の複製）。取得<5件なら既存JSON保持（フェイルセーフ）。日本語3文字未満の見出しは除外（銘柄ページのゴミ対策）。
+  ②`news-ticker.yml`＝毎時:37・news-ticker.jsonのみcommit・concurrency有・update-market-newsのon:pushには**非**該当（連鎖起動なし）。
+  ③index.htmlに「⚡最新マーケットニュース」枠＝`build_news_ticker_section()`（generate_market_news.py・非f-string関数）。**JSが閲覧時にJSONをfetch**（cache-buster付き・DOM APIでXSS安全・◯分前表示・8件+さらに表示・免責一文）＝HTML再生成なしで常に最新。
+  ④ガード: news-ticker.json=SYNC_FORBIDDEN登録・automation-healthのWORKFLOW_CHECKSに5h/warnで登録・CLAUDE.md反映。
+  ⑤**同日夜・オーナー要望で市場タグ追加（AI解説なし・AI呼び出しゼロは維持）**: `classify()`=キーワード照合で c=stocks/fx/commodity/crypto/macro/biz を付与→ティッカー枠に**バッジ+絞り込みボタン**（すべて/📈株式/💱為替/🛢商品/🪙暗号/🏛マクロ/📰経済）＋**4マーケットカードの関連ニュース下に該当市場の最新見出し3件**（`.mw-ticker-mini` data-mwcat・同じJSON・見出しのみ）。旧JSON（cなし）はbiz扱いで後方互換。
+- **⚠️運用の学び=reconcile手順**: sync時に`generate_market_news.py`と`check_site_consistency.py`がstaleガード🚫→原因はクラウド公開（news-daily-auto 17:40等）がGitHub側で両ファイルを更新していたため。**リモートdiff確認→リモート版に自分の編集を乗せ直し→意図的`--force`**で解決（未変更ファイルはキャッシュskipなのでforceの影響は変更分のみ）。
+- **🚩要オーナー認知**: 今朝の autopublish routine が `check_site_consistency.py` のクラウドスタブ分岐を**独自実装で書き換えてcommit**していた（7/8ローカル実装の`_IS_LOCAL`→routine版`_is_cloud_stub`）。動作は等価でクラウド実証済みのためリモート版を正として採用したが、**「ゲート/リンターをroutineが編集して通過」は自己承認と同型のリスク**＝AUTOPUBLISH_GUIDEに「リンター編集禁止・エスカレ」明文化の検討を⓪-Gに積んだ。
+
+<!-- 7/9 2節（automation-health可視化バグ2件修理・Q13ナイフゲートH1採用+ロガー自己修復）は 2026-07-11 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_masters_queue]]/[[project_jp_open_edge]]/[[project_news_lane_escalation]]・DOCTRINE §2🔪。 -->
