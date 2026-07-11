@@ -1,6 +1,12 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-10）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-11）
 
-## 🧹 7/10 declutter＋Q12再監査（今日のメイン）
+## 🥇 7/11 Q8金ラボ第2R完了＋シグナルメールMT4幅併記（今日のメイン）
+
+**①シグナルメールのMT4価格ズレ対策（オーナー要望）**: 絶対価格はYahoo基準＝MT4(BigBoss)と構造的にズレる（金/指数=先物vs現物CFD・FX=feed差＋スプレッド）→**SL/TP「幅」併記＋「MT4は現在値から同幅で設定」注記**を実装（`generate_technical_alerts.py`の`_fmt_distance`・FXはpips換算・全銘柄グループ表示テスト済）。**エンジン/signals-log記録は不変＝前向き検証の連続性維持**。commit b4f8de9・次の定時運転(technical-alerts 4hごと)から反映。実メール初確認は月曜（土曜=FX休場・BTC発火なら週末可）。
+
+**②Q8金ラボ第2R=✅完了（🔓holdout解錠2026-07-11・この1回限り・再解錠禁止）**: 第1R有望2本のparamsが未記録→**valid数値の記録一致で特定**（volfilter=デフォルト0.681≒記録0.68／vol_scaled=tv0.10で0.626完全一致・照合5回・成績での選び直しなし）→合否基準を解錠前宣言(Sharpe≥0.6∧PF≥1.25)→**2本とも合格**: ①複合トレンド×低ボラ`{}`=Sharpe0.63/PF1.93(コスト2x=0.599ボーダー) ②多数決モメンタム×ボラ目標10%=Sharpe1.023/PF6.06(コスト2x頑健・valid→holdout改善)。ただし生SharpeはBH(1.114)未満＝**ラボ合格3本すべて「価値は防御」＝DOCTRINE §0-1を金でも再確認**。台帳`research/gold_backtest/RESULTS.md`新設（第1R教訓の是正）・DOCTRINE §2改稿・anchors50件・完了Q8/Q9/Q12をqueue_archiveへ退避・**DOCTRINE/queue/HANDOFF全て予算内warning 0**。金ラボは新素材が出るまで休眠。
+
+## 🧹 7/10 declutter＋Q12再監査
 
 **①declutter＝3文書すべて予算内に復帰**: HANDOFF 38→28.5KB（7/8全節＋7/7スクリーナー節をARCHIVE退避）／DOCTRINE 25.6→**24.0KB=warning0**（§3棄却表を統合圧縮＝anchor45件維持）／CLAUDE 34.5→32.0KB（SYNC禁忌節の重複圧縮・全ファイル名保持）。CLAUDE/HANDOFF/ARCHIVEはsync済。DOCTRINE/queueはローカル専用＝sync対象外。
 
@@ -20,28 +26,7 @@
 - **⚠️運用の学び=reconcile手順**: sync時に`generate_market_news.py`と`check_site_consistency.py`がstaleガード🚫→原因はクラウド公開（news-daily-auto 17:40等）がGitHub側で両ファイルを更新していたため。**リモートdiff確認→リモート版に自分の編集を乗せ直し→意図的`--force`**で解決（未変更ファイルはキャッシュskipなのでforceの影響は変更分のみ）。
 - **🚩要オーナー認知**: 今朝の autopublish routine が `check_site_consistency.py` のクラウドスタブ分岐を**独自実装で書き換えてcommit**していた（7/8ローカル実装の`_IS_LOCAL`→routine版`_is_cloud_stub`）。動作は等価でクラウド実証済みのためリモート版を正として採用したが、**「ゲート/リンターをroutineが編集して通過」は自己承認と同型のリスク**＝AUTOPUBLISH_GUIDEに「リンター編集禁止・エスカレ」明文化の検討を⓪-Gに積んだ。
 
-## 🩺 7/9夜 automation-health「3日連続失敗」の正体＝カード巻き戻し1件+可視化バグ2件（オーナーのメール通知から）
-
-- **オーナー質問「ワークフロー失敗メールは問題か」→答え=本物の異常が3日間見えていなかった**。exit1=検知の仕様だが、通知先が腐っていた。
-- **実異常（修復済み）**: `guide-news-2026-07-06-hormuz-oil-glut.html` のguides.htmlカード欠落。カード復元→push→**ライブ確認済・§③=58/58掲載✅**。⑱記事ファイルもローカルへreconcile取り込み。**※当初「巻き戻し疑い」と記録したが誤り＝真因は⓪-I参照（7/6エスカレ後の再公開手順が3日間未実施・並行セッションがgit履歴で確定）**。
-- **可視化バグ①（修正済み）**: `mw issues` のGitHub API labels=カンマ区切りは**AND条件**→`bug,automation-health`のIssue #2が3週間不可視だった。ラベルごとOR取得に修正（mw.py・commit 56346eb）→**埋もれIssue #1(6/2)/#2(6/15)を発見**。
-- **可視化バグ②（棚卸し済み）**: 見張り番は「Open or update」方式でIssue #2に17回コメント追記し続けていた＝open Issueが放置されると新規通知が立たない。**#1/#2とも解決コメント付きでクローズ**→次回異常は新Issueが立つ=通知復活。
-- **明日7/10 13:30頃の定時運転=全緑のはず**（§③修復済・§④の80abc63検知は26h窓から自然消滅）。失敗メールが来たら新Issueを見る。
-- 並行セッション（⓪-Gチップ）が実装した**検査④=ゲート編集検知は初回のローカル実行から機能**（今朝の違反commitを正しく検知）。
-
-## 🗡 7/9 Q13深押しナイフ防御ゲート＝H1採用・🔪列実装＋寄り付きロガー自己修復化（今日のメイン）
-
-**①朝の確認3点＝全✅**：
-- **⓪-A autopublish修正後初の定時運転＝✅公開成功**：⑱economic-indicators-basics 08:40公開（全ゲート通過・REVIEW.md記録あり=沈黙禁止化が機能・ライブ200確認済）。#034研究日誌・⑲下書き（日経vsTOPIX）も正常。**7/8の二重欠陥修正は本番で実証＝クローズ**。
-- **⓪-B 朝の自動化3日目**＝レイク/スクリーナーCSV/jp_dailyカード全✅。
-- **🚨寄り付きロガー7/8欠測を検知→復旧＋根治**：7/8はPC電源断→17:22遅延起動→PT30M kill（jp_dailyと同じ「フェッチループに壁時計上限なし」）。7/9分はwake時のStartWhenAvailableキャッチアップが12:49完走＝設計どおり。**修正**=`jp_open_logger.py`に①FETCH_BUDGET_SEC=720（超過=偏った部分プールを書かず中断）②`--date`バックフィル③DAILY_SUMMARYタグの日次スナップショット(`_jp_openlog_tags.json`)④直前営業日欠測の自動バックフィル（自己修復）＋タスクPT30M→**PT45M**。7/8分は復元済み（40行・ds_tag='?'＝タグのみ復元不可・値上り/値下りプールは正確）。番人4項目✅復帰。
-**②⓪-E アレンジ枠＝オーナー選択B「深押しナイフ防御ゲート」→Q13事前登録→検証→採用まで完走**：
-- **Q13登録**（数式ロックを凍結行に直書き・SHA256登録済）: H1=G4新規突入(dev=C/MA200−1が−20%下抜け)→blowup60が同日対照より高い／H2=三空叩き込み完成→低い（例外条項）。主要=blowup60率の同日対照差・円環ブロックboot L=70・BH-FDR分母2。**⚠️出目既見を登録文に明示**（Q3/Q4の参考blowupの正式検定＝完全ブラインドでない→防御用途限定）。
-- **結果（`_jp_knife_gate_screen.py`）**: **H1✅両期間合格**=同日blowup60差 train+13.07pp(q0.001)/holdout+17.02pp(q0.000)・fwd60同日diffも負(-2.01%/-4.41%)＝「G4乖離逆張り」の完全な裏返し（拾うな避けよ）。**H2❌方向逆転**=プール-5.7ppだが同日+7.85pp/+15.86pp＝三空の「守り」はパニック底日のタイミング運（新標準がまた地合い混入を暴いた・TT3の逆パターン）。
-- **結晶化+適用**: DOCTRINE §2🔪新設・anchors45件（+4）・queue履歴更新・slugs2本追記。**`mw screen`に🔪ナイフ列を実装**（G4突入から60営業日以内=検証した危険窓そのまま・212/1683銘柄・注記に「買い回避の防御フラグ」明記）。
-- 残: アレンジ候補A（資産クラス版デュアルモメンタム・記事#6有力）/C（=Q11）/D（複合）は未着手のままキュー外。
-
-<!-- 7/8 全3節（Fable5方法論監査=TT3格下げ・autopublish二重欠陥根治+⑰公開・Q3酒田五法❌）は 2026-07-10 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_evolution_loop]]/[[project_masters_queue]]/[[project_jp_screener]]。TT3格下げの帰結（§1b・§0-4）はDOCTRINE反映済。残課題Q12は下記⓪-Dに継続。 -->
+<!-- 7/9 2節（automation-health可視化バグ2件修理・Q13ナイフゲートH1採用+ロガー自己修復）は 2026-07-11 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_masters_queue]]/[[project_jp_open_edge]]/[[project_news_lane_escalation]]・DOCTRINE §2🔪。 -->
 
 ## 🧬 7/7 進化ループ構築（詳細=SESSION_ARCHIVE 7/8退避・運用=auto-memory project_evolution_loop）
 
@@ -115,17 +100,16 @@
 ### 🔜 次セッションで最初に確認（在flight・2026-07-11向け）
 - **⓪セッション冒頭の新ルーチン＝`python mw.py evolve`**（DOCTRINE突合+キュー+トラッカー鮮度・トークン0）。
 - **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。**7/10朝=寄り付きロガー自己修復版の初定時運転✅**（タグsnap 07-10記録・番人5項目緑を確認済）。
-- **⓪-B autopublish**＝7/10対象=⑲nikkei-vs-topix。**⚠️7/10の公開/スキップ記録は本セッション未確認→7/11朝にREVIEW.mdで7/10記録＋7/11対象を確認**。
+- **⓪-B autopublish**＝✅7/11朝確認済: 7/10 ⑲nikkei-vs-topix・7/11 ⑳currency-risk とも全ゲート通過で公開（⑳はライブ200+免責+datePublished裏取り済）。⚠️両日ともクラウドのHTTP自己チェックだけ失敗（Cloudflare 403/NETWORK_ERROR）＝push成功で実害なしだが続くようなら要観察。次=7/12記録の確認。
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
-- **⓪-D 進化ループ続き**：Q13(7/9・H1採用)・**Q12(7/10・✅監査完了＝グレアム防御は同日対照でも頑健／上の7/10節)** 消化済み。次候補=**Q8金ラボ第2R**／**Q11ズールー前向きトラッカー設計**（fins月次更新の整備が先）／Q10及川H-O4（低優先）。TT3前向きは月1回`_jp_turtle_tracker.py`。
+- **⓪-D 進化ループ続き**：Q13(7/9)・Q12(7/10)・**Q8(7/11・✅金ラボ2本合格＝上の7/11節)** 消化済み。次候補=**Q11ズールー前向きトラッカー**（fins月次更新の整備→**7/31の月末formation前に事前登録が最短＝1観測も失わない**）／Q10及川H-O4（低優先）。TT3前向きは月1回`_jp_turtle_tracker.py`。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
   **A**=資産クラス版デュアルモメンタム（日経/S&P500/金/米債の月次乗り換え・原典回帰・Yahooで20年・記事#6有力候補）／
   **C**=ズールー前向き実装（=Q11+screener参考列）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
   ※「すでに生きているアレンジ」の整理も記事ネタ（赤三兵→連騰≥4危険ゲート・タートル資金管理→ATRベースSL/2%ルール・**G4逆張り→🔪回避フラグ（Q13）**＝原型のエントリーは死んでも部品は生きる）。
 - **⓪-F ✅済（7/10）文書declutter**：CLAUDE 32.0/DOCTRINE 24.0(warning0)/HANDOFF 28.5＝全て予算内。以後もこの水準を維持（節が増えたら完了節をARCHIVEへ）。
 - **⓪-G ✅済（7/9夜）routineによるリンター編集の再発防止＝三層で実装**: オーナー決定=**完全禁止**（等価修正も不可・赤はエスカレのみ・ゲート修正は人間専任）。①`AUTOPUBLISH_GUIDE.md`=固定ゲート4本（check_guide_draft/check_site_consistency/signal_lab_verify/publish_article）の編集・commit禁止+7/9違反実例を明文化 ②routineプロンプト更新済（手順4/7/絶対厳守を強化。⚠️**プロンプト禁止は7/8夜から存在したのに破られた実績あり**＝コード検知が本命） ③`check_automation_health.py`にチェック④新設=直近26hでゲート4本をオーナー/github-actions[bot]以外のauthorが変更→warn Issue（ローカル実測で7/9違反commit `80abc63` を正しく検知✅）。**⚠️7/10 09:30の運転で既知の7/9違反commit（対応済）が1回Issue化した可能性＝あれば無視してクローズ**。以後の検知は本物。
-- **⓪-H ⚡news-ticker 初日の定時運転確認**: 毎時:37。翌朝、Actions履歴で夜間の毎時実行が回っているか＋live JSONのupdatedが新しいか（automation-healthにも登録済=5h/warn）。**市場タグ版は7/9夜にライブ確認済**（バッジ/絞り込み/カード内ミニ3件・分類テスト8/8）。⚠️オーナー体感の宿題1件=夜間はYahoo!経済由来の📰経済（消費者ネタ）が多め→**「📰経済を既定で非表示（ボタンで表示）」は1行で変更可＝オーナーの好み待ち**。
-- **⓪-J 文書サイズ**: SESSION_HANDOFF 37.6KB（予算30）＝⓪-Fのdeclutterで7/7〜7/8の完了節をSESSION_ARCHIVEへ退避。
+- **⓪-H ⚡news-ticker**: ✅7/11朝確認=夜間毎時運転OK（updated 7/11 10:03・30件）。残1件=**「📰経済を既定で非表示（ボタンで表示）」は1行で変更可＝オーナーの好み待ち**（夜間はYahoo!経済由来の消費者ネタ多め問題）。
 - **⓪-I ✅済（7/9 20:30）guides.htmlカード消失＝実は「消失」でなく「未完了公開」**: git履歴調査の結果、カードは一度も存在しなかった（巻き戻しでも取り下げでもない）。**真因**=7/6のnews-daily-autoが当時のSYNC_FILES縮小問題で `check_site_consistency` exit=1→設計どおりエスカレ（commit 1200e77b=記事HTML+NEWS_LEDGERのみpush・カード/履歴/SYNC登録なし）→台帳の「再公開手順（人間が実施）」が3日間未実施のまま放置されていた。**対応**=台帳手順どおり完了（コンプラは当時Opus×2で🟢白済・noindexなし）：カード挿入（7/7と7/5の間の正位置）+SYNC_FILES+更新履歴→`mw check`緑→sync（guides.htmlはstaleガード🚫→diff確認=カード9行のみ→定石--force・commit 156f63e=+9/-0）。**番人③再実行=58/58✅**・ライブ記事200・sitemap収載済み。ついでに⑱`guide-economic-indicators-basics.html`のローカルreconcile+SYNC_FILES登録も実施（mw checkが検出）。**教訓=番人③の検知は「エスカレ回の未完了公開」でも発火する。まずNEWS_LEDGER.mdの該当日エントリを見ると1分で原因が分かる**（GitHub側LEDGERの7/6エントリは「公開準備」のまま=SYNC禁忌のためローカルから更新不可・実態は公開完了）。
 - **①巨匠シリーズ**：記事#5公開済み（7/8夜・Q1〜Q5+TT3訂正を1本化）。次記事候補=「#6 割安成長（ズールー）×グレアム再訪」＝Q11前向き設計・Q12再監査の後が筋。
 - **②TT3の前向き検証＝📊稼働中**（`_jp_turtle_tracker.py`・検定はブロックboot版に7/8改定・月1回チェック・初判定は10月頃）。
