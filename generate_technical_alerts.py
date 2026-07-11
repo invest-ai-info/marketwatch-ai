@@ -2717,6 +2717,17 @@ def main():
         # 銘柄別クールダウン: 4H ワークフローは銘柄ごと、1H ワークフローは一律 4h
         effective_cooldown = asset_cooldown_4h if timeframe == "4h" else cooldown_hours
         print(f"\n  📊 {name} ({ticker})")
+        # 🆕 2026-07-11 週末閉場ガード（オーナー指示）: 非24h市場は土07:00〜月06:00 JST 閉場中。
+        #   金曜クローズ直後〜土曜夕方は最終バーが12h未満のため下の鮮度ガードをすり抜け、
+        #   塩漬けデータで発火が記録される（実測: 週末発火214件の勝率33% vs 全体41.6%
+        #   ＝古いレートでエントリー記録→週明けギャップでSL直撃の測定アーティファクト）。
+        #   BTC-USD は 24h 市場なので対象外。集計側の除外（track-record/週次/月次の
+        #   is_weekend_closed_fire）と同一の窓定義＝変える時は同時に。
+        if ticker != "BTC-USD":
+            _wd, _hr = now_jst.weekday(), now_jst.hour
+            if (_wd == 5 and _hr >= 7) or _wd == 6 or (_wd == 0 and _hr < 6):
+                print("    ⏸️ 週末閉場中（土07:00〜月06:00 JST）→ 発火スキップ")
+                continue
         df = fetch_data(ticker, timeframe=timeframe)
         if df is None or len(df) < 30:
             print(f"    ⏭️ データ不足、スキップ")
