@@ -46,6 +46,20 @@ def _parse_iso(s):
         return None
 
 
+def is_weekend_closed_fire(sig):
+    """週末閉場中（土07:00〜月06:00 JST）に発火したシグナルか（BTC=24h市場は対象外）。
+    塩漬けデータ発火＝測定アーティファクトのため勝率集計から除外（2026-07-11 オーナー指示）。
+    ※generate_track_record_page.py と同一定義（定義を変える時は3か所同時に）"""
+    if "BTC" in (sig.get("ticker") or ""):
+        return False
+    try:
+        t = datetime.fromisoformat(sig.get("fired_at", ""))
+    except (ValueError, TypeError):
+        return False
+    wd, hr = t.weekday(), t.hour
+    return (wd == 5 and hr >= 7) or wd == 6 or (wd == 0 and hr < 6)
+
+
 def month_range(target_year, target_month):
     """指定年月の (開始日時, 翌月初日時) を JST で返す"""
     start = datetime(target_year, target_month, 1, tzinfo=JST)
@@ -506,6 +520,9 @@ def main():
 
     signals = load_json(SIGNALS_LOG_FILE, [])
     trades = load_json(TRADES_FILE, [])
+    n_all = len(signals)
+    signals = [s for s in signals if not is_weekend_closed_fire(s)]
+    print(f"  📒 週末閉場中の発火 {n_all - len(signals)} 件を集計から除外")
 
     sig_stats = summarize_signals(signals, month_start, month_end)
     trade_stats = summarize_trades(trades, month_start, month_end)
