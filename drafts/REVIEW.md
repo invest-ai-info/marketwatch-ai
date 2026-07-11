@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-07-12 | 💰 基礎知識 #21 — 配当の仕組み（dividend-basics）下書き生成
+
+- **基準日**: 2026-07-12（JST / UTC 2026-07-11T20:31）
+- **topic key**: `dividend-basics`（topicキュー #21 / 基礎知識）
+- **仮タイトル**: 配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠
+- **生成ファイル**: `drafts/draft-dividend-basics.html`
+- **参照出典（WebSearch確認）**:
+  - 権利付き最終日・権利確定日・権利落ち日: https://faq.sbisec.co.jp/ / https://support.matsui.co.jp/faq/show/123 / https://www.j-flec.go.jp/
+  - 配当利回り計算: https://www.nomura.co.jp/terms/japan/ha/haitourimawari.html
+  - タコ足配当・配当性向: https://www.smbcnikko.co.jp/terms/japan/ta/J0546.html / https://matsui.co.jp/stock/study/article/dividend-ratio
+  - 配当と自社株買いの比較: https://nextfunds.jp/semi/article_highdividend4.html
+  - 配当再投資（DRIP）: https://www.nomura.co.jp/terms/japan/ha/A03230.html
+- **事実確認済みの数値**:
+  - 権利付き最終日 = 権利確定日の2営業日前（T+2決済）✅
+  - 東証の権利確定月：3月末が最多（800社超）、9月末が2位（400社超）✅
+  - 配当利回り = 年間配当金 ÷ 株価 × 100 ✅
+  - タコ足配当 = 配当性向100%超 ✅
+  - 高配当の目安 = 4%以上 ✅
+  - 日本株DRIP = サクソバンク証券のみ対応・大手3社未対応（2026年時点）✅
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（すべて概念・一般論）
+  - ✅ 断定・利益保証なし（「一般的に」「とされています」「理論上」等の表現を使用）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer）
+  - ✅ 税務相談を誘発しない表現（DRIPのNISA記載はご確認ください、で逃げ）
+  - ✅ noindex,nofollow あり
+- **SVG概念図**: 3点作成（権利日タイムライン・配当落ちシーソー・配当性向バー）
+- **SVG TODO**: 要ライト/ダーク実機確認（タイムライン図のドット色・バー図の色出し）
+- **人間の残作業**: SVGの実機ライト/ダーク確認・タイトル微調整。公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-07-11 autopublish: ✅ 公開済み — guide-currency-risk.html（リスク管理 #20）
 
 - **対象key**: currency-risk（topic queue #20 / リスク管理・資金管理）

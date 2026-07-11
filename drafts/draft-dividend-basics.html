@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠 - MarketWatch AI</title>
+  <meta name="description" content="配当を受け取る仕組み（権利確定日・権利付き最終日・権利落ち）をわかりやすく図解。配当利回りの計算方法から、タコ足配当・減配という高配当の罠、配当と自社株買いの違い、再投資と複利まで初心者〜中上級者向けに網羅。">
+  <meta name="keywords" content="配当,配当金,権利確定日,権利付き最終日,権利落ち日,配当利回り,配当性向,タコ足配当,減配,自社株買い,配当再投資,高配当,株主還元,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-dividend-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠">
+  <meta property="og:description" content="権利確定日・権利付き最終日・配当落ちの仕組みを図解。高配当利回りの罠（タコ足配当・減配）と自社株買いの違いまで解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-dividend-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠",
+    "description": "配当を受け取る仕組み（権利確定日・権利付き最終日・権利落ち）から、配当利回り・タコ足配当・自社株買い・再投資と複利まで図解で網羅。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-12",
+    "dateModified": "2026-07-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-dividend-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVG概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 配当記事用追加SVGクラス */
+    .s-timeline-line{stroke:#0969da;stroke-width:2;fill:none}
+    .s-timeline-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-timeline-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-timeline-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-b{fill:#0969da;opacity:.75}
+    .s-bar-gray{fill:#d0d7de;opacity:.9}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-timeline-line{stroke:#58a6ff}
+    body.dark .s-timeline-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-timeline-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-timeline-dot-r{fill:#f85149;stroke:#161b22}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-b{fill:#58a6ff}
+    body.dark .s-bar-gray{fill:#30363d}
+  </style>
+  <style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 配当の仕組み
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は配当に関する仕組みや考え方を整理した「情報提供」であり、特定銘柄の購入推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠</h1>
+    <div class="meta-line">公開日：2026 年 7 月 12 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「高配当株に投資すれば、ほったらかしでも毎年お金が入ってくる」——そんなイメージを持っている方は多いでしょう。配当投資は確かに魅力的な戦略ですが、<strong>「権利確定日に買えばいい」「利回りが高いほど良い」という思い込みが、初心者の大きな落とし穴になっています</strong>。</p>
+    <p>この記事では、配当を受け取るための仕組み（権利付き最終日・権利確定日・権利落ち）を図解でやさしく解き、後半では<strong>高配当利回りの罠（タコ足配当・減配）</strong>、配当と自社株買いの違い、再投資と複利の関係まで、初心者から中上級者向けに網羅します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>配当を受け取るには<strong>「権利付き最終日」（権利確定日の2営業日前）の大引けまでに株を保有</strong>する必要がある。「権利確定日当日に買えばいい」は間違いで、その前日以前に買っても権利は取れない（権利落ち日）。</li>
+      <li>権利落ち日には<strong>理論上、配当分だけ株価が下落する</strong>。「配当利回り4%の高配当株」でも、権利落ちで4%分の株価下落が起きれば手取りは差し引き±0に近い。高い利回りだけを追いかけるのは危険。</li>
+      <li>高配当利回りが継続する銘柄には<strong>タコ足配当（利益を超えた配当）</strong>や<strong>減配・業績悪化</strong>のリスクが潜む。配当性向・業績トレンド・財務健全性を必ずセットで確認する。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">配当とは何か？仕組みをざっくり理解する</a></li>
+        <li><a href="#section-2">権利確定日・権利付き最終日・権利落ち日の関係（図解）</a></li>
+        <li><a href="#section-3">権利落ち日に株価が下がる理由</a></li>
+        <li><a href="#section-4">配当利回りの読み方と計算式</a></li>
+        <li><a href="#section-5">高配当の罠①：タコ足配当と配当性向</a></li>
+        <li><a href="#section-6">高配当の罠②：減配・業績悪化・利回り上昇の逆説</a></li>
+        <li><a href="#section-7">配当と自社株買い：2つの株主還元の違い</a></li>
+        <li><a href="#section-8">配当再投資と複利：長期投資での活かし方</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 配当とは何か？仕組みをざっくり理解する</h2>
+    <p>配当（配当金）とは、<strong>企業が稼いだ利益の一部を株主に現金で還元する仕組み</strong>です。株式を保有しているだけで、決算のたびに会社から「お礼」として現金が振り込まれます。日本企業の多くは<strong>年2回（中間・期末）の配当</strong>を行いますが、年1回・年4回（四半期）の企業もあります。</p>
+    <p>ただし、<strong>配当を受け取るためには「権利確定日」に株主名簿に載っている必要</strong>があります。「いつ買えばいいか」が非常に重要で、次の章から詳しく図解します。</p>
+
+    <div class="info-box">
+      <strong>💡 すべての企業が配当を出すわけではない</strong>：成長投資を優先するグロース企業（特に新興企業）は、利益を配当に回さず設備投資や研究開発に使うことが多いです。配当がないこと＝悪い会社、というわけではありません。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 権利確定日・権利付き最終日・権利落ち日の関係（図解）</h2>
+    <p>ここが配当の仕組みの中で最も誤解されやすいポイントです。<strong>「権利確定日に株を買えば配当がもらえる」という誤解が非常に多い</strong>ですが、正しくありません。</p>
+
+    <h3>3つの重要な日付</h3>
+    <table>
+      <thead><tr><th>日付</th><th>意味</th><th>やること</th></tr></thead>
+      <tbody>
+        <tr><td>権利付き最終日</td><td>この日の大引（15:30）までに買えば権利を取れる<strong>最後の日</strong>。権利確定日の<strong>2営業日前</strong></td><td>⬅️ この日までに買う</td></tr>
+        <tr><td>権利落ち日</td><td>権利付き最終日の翌営業日。この日以降に買っても権利を取れない。理論上、配当分だけ株価が下がる</td><td>権利落ちが起きる</td></tr>
+        <tr><td>権利確定日</td><td>株主名簿を確定する日。日本企業では<strong>3月末が最多</strong>（800社超）、次いで9月末（400社超）</td><td>名義が確定する日</td></tr>
+      </tbody>
+    </table>
+
+    <p>なぜ2営業日前なのか。日本の株式取引では、株を買ってから実際に決済（株主名簿への反映）されるまで<strong>買付日を含めて3営業日（T+2）</strong>かかります。権利確定日に名義を登録してもらうためには、2営業日前までに購入を完了させる必要があるのです。</p>
+
+    <!-- SVG図1：権利確定日タイムライン -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 680 220" role="img" aria-labelledby="timeline-title">
+        <title id="timeline-title">権利付き最終日・権利落ち日・権利確定日のタイムライン概念図</title>
+        <text class="s-panel-label" x="24" y="24">権利確定日までのタイムライン（概念図）</text>
+        <!-- 横軸ライン -->
+        <line class="s-timeline-line" x1="60" y1="110" x2="620" y2="110"/>
+        <!-- 矢印 -->
+        <polygon points="620,104 636,110 620,116" fill="#0969da"/>
+        <!-- ドット -->
+        <circle class="s-timeline-dot-g" cx="160" cy="110" r="12"/>
+        <circle class="s-timeline-dot-r" cx="340" cy="110" r="12"/>
+        <circle class="s-timeline-dot-b" cx="520" cy="110" r="12"/>
+        <!-- ラベル上 -->
+        <text class="s-note-g" x="160" y="82" text-anchor="middle">権利付き最終日</text>
+        <text class="s-note-g" x="160" y="97" text-anchor="middle">（この日までに買う）</text>
+        <text class="s-note-r" x="340" y="82" text-anchor="middle">権利落ち日</text>
+        <text class="s-note-r" x="340" y="97" text-anchor="middle">（翌日・株価が下がる）</text>
+        <text class="s-note" x="520" y="82" text-anchor="middle">権利確定日</text>
+        <text class="s-note" x="520" y="97" text-anchor="middle">（株主名簿確定）</text>
+        <!-- ラベル下 -->
+        <text class="s-label-sm" x="160" y="136" text-anchor="middle">ここまでに購入</text>
+        <text class="s-label-sm" x="160" y="150" text-anchor="middle">→ 配当もらえる ✅</text>
+        <text class="s-label-sm" x="340" y="136" text-anchor="middle">ここ以降に購入</text>
+        <text class="s-label-sm" x="340" y="150" text-anchor="middle">→ 配当もらえない ❌</text>
+        <text class="s-label-sm" x="520" y="136" text-anchor="middle">T+2決済</text>
+        <text class="s-label-sm" x="520" y="150" text-anchor="middle">3月末が最多</text>
+        <!-- 間隔ラベル -->
+        <text class="s-label-sm" x="250" y="174" text-anchor="middle">← 1営業日 →</text>
+        <text class="s-label-sm" x="430" y="174" text-anchor="middle">← 1営業日 →</text>
+        <text class="s-label-sm" x="340" y="196" text-anchor="middle">（権利確定日の2営業日前＝権利付き最終日）</text>
+        <!-- 区切り点線 -->
+        <line class="s-divv" x1="250" y1="80" x2="250" y2="160"/>
+        <line class="s-divv" x1="430" y1="80" x2="430" y2="160"/>
+      </svg>
+      <figcaption class="chart-caption">▲ タイムラインの概念図。権利確定日は3月末・9月末が多いが、権利付き最終日はその2営業日前（土日や祝日を挟む場合は要注意）。権利落ち日以降に買っても当期の配当は受け取れない。※概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="warning-box">権利確定日が3月31日（月）の場合、権利付き最終日は3月27日（木）になることが多い。3月28日（金）や29日（土）に買っても間に合わない。カレンダーを必ず確認すること。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 権利落ち日に株価が下がる理由</h2>
+    <p>権利落ち日には、<strong>理論上、株価が配当金の額だけ下落します</strong>。これを「配当落ち」と呼びます。なぜでしょうか。</p>
+    <p>権利付き最終日まで保有していた株主は「配当を受け取る権利」を持っています。権利落ち日を迎えると、その権利が確定して株から分離します。つまり<strong>「配当分の価値が株から切り出されて現金化される」</strong>ため、株そのものの理論価値が下がるのです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 230" role="img" aria-labelledby="drop-title">
+        <title id="drop-title">配当落ちで株価が下がる仕組みのシーソー概念図</title>
+        <text class="s-panel-label" x="24" y="24">配当落ちのイメージ（シーソー）</text>
+        <!-- 左側：権利付き最終日 -->
+        <text class="s-note" x="155" y="52" text-anchor="middle">【権利付き最終日】</text>
+        <rect class="s-bar-b" x="90" y="60" width="130" height="60" rx="6"/>
+        <text class="s-legend" x="155" y="85" text-anchor="middle" fill="#ffffff" font-size="13">株価 1,000円</text>
+        <text class="s-legend" x="155" y="105" text-anchor="middle" fill="#ffffff" font-size="11">（配当権利込み）</text>
+        <text class="s-label-sm" x="155" y="140" text-anchor="middle">配当 30円 → 権利確定</text>
+
+        <!-- 矢印 -->
+        <text x="305" y="105" text-anchor="middle" font-size="26" fill="#6e7781">→</text>
+
+        <!-- 右側：権利落ち日 -->
+        <text class="s-note-r" x="465" y="52" text-anchor="middle">【権利落ち日】</text>
+        <rect class="s-bar-b" x="400" y="78" width="130" height="44" rx="6"/>
+        <text class="s-legend" x="465" y="98" text-anchor="middle" fill="#ffffff" font-size="13">株価 970円</text>
+        <text class="s-legend" x="465" y="115" text-anchor="middle" fill="#ffffff" font-size="11">（理論上△30円）</text>
+        <rect x="400" y="123" width="130" height="20" rx="4" fill="#1a7f37" opacity=".85"/>
+        <text class="s-legend" x="465" y="138" text-anchor="middle" fill="#ffffff" font-size="11">配当 30円（別で受取）</text>
+        <text class="s-label-sm" x="465" y="162" text-anchor="middle">合計はほぼ同じ 1,000円</text>
+
+        <!-- 注記 -->
+        <text class="s-label-sm" x="310" y="192" text-anchor="middle">※実際は市場の需給で変動。税引後の手取り配当は30円より少ない（約20%課税）</text>
+        <text class="s-label-sm" x="310" y="210" text-anchor="middle">※概念を示すイメージ図です</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 株価1,000円・配当30円の例。権利落ち日の始値は理論上970円に下落する。「配当が得」ではなく、「株価の一部を先にもらった」ようなイメージ。配当には約20%の税金がかかるため、実質的な手取りは30円より少ない。</figcaption>
+    </figure>
+
+    <div class="info-box">
+      <strong>💡 配当取りは儲かるか？</strong>：権利付き最終日に買って権利落ち日に売る「配当取り」は、配当金分を株価下落が相殺するため、<strong>税引き前ではほぼ±0</strong>です。手数料・税金コストを考えると実質マイナスになることが多く、単純な「配当取り」は利益が出にくい取引です。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 配当利回りの読み方と計算式</h2>
+    <p>配当の魅力を測る指標が<strong>配当利回り</strong>です。計算式はシンプルです。</p>
+
+    <div class="info-box" style="font-size:1.05rem;text-align:center">
+      <strong>配当利回り（%）＝ 1株あたり年間配当金 ÷ 株価 × 100</strong>
+    </div>
+
+    <p>たとえば、年間配当が50円の株が株価1,000円で取引されているなら、配当利回りは<strong>5.0%</strong>です。定期預金の金利と比較しやすい指標として、多くの投資家が参考にしています。</p>
+
+    <h3>利回りは「株価の裏返し」</h3>
+    <p>重要なポイントは、<strong>配当金額が同じでも株価が動けば利回りが変化する</strong>ことです。</p>
+    <ul>
+      <li>株価が上がる → 配当利回りは低下</li>
+      <li>株価が下がる → 配当利回りは上昇</li>
+    </ul>
+    <p>「利回りが急に高くなった」ときは、配当が増えたのではなく<strong>株価が大きく下落した</strong>サインである場合が多く、次章で述べる罠につながります。一般的に利回り<strong>4%以上</strong>が「高配当銘柄」と認識されますが、その水準になった理由を必ず確認してください。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 高配当の罠①：タコ足配当と配当性向</h2>
+    <p>配当に関する最大の罠のひとつが<strong>タコ足配当</strong>です。タコが自分の足を食べて生き延びようとするように、企業が<strong>利益を超えた配当を出し続けること</strong>を指します。</p>
+
+    <h3>配当性向とは</h3>
+    <div class="info-box" style="font-size:1.02rem;text-align:center">
+      <strong>配当性向（%）＝ 配当金支払総額 ÷ 当期純利益 × 100</strong>
+    </div>
+    <p>配当性向は「利益のうち何%を配当に回しているか」を示します。配当性向が<strong>100%を超えると</strong>、その期の利益をすべて配当に充てても足りない状態——つまり内部留保の取り崩しや借入で配当を賄っていることを意味します。</p>
+
+    <!-- SVG図3：配当性向バー -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 230" role="img" aria-labelledby="payout-title">
+        <title id="payout-title">配当性向の比較概念図（健全・警戒・タコ足）</title>
+        <text class="s-panel-label" x="24" y="24">配当性向のイメージ比較（概念図）</text>
+        <!-- Y軸ラベル -->
+        <text class="s-label-sm" x="30" y="48">100%</text>
+        <line class="s-guide" x1="60" y1="44" x2="580" y2="44"/>
+        <text class="s-label-sm" x="30" y="108">50%</text>
+        <line class="s-divv" x1="60" y1="104" x2="580" y2="104"/>
+        <text class="s-label-sm" x="30" y="168">0%</text>
+
+        <!-- バー1：健全（40%） -->
+        <rect class="s-bar-g" x="90" y="88" width="100" height="76" rx="5"/>
+        <text class="s-note-g" x="140" y="176" text-anchor="middle">40%</text>
+        <text class="s-label-sm" x="140" y="194" text-anchor="middle">健全</text>
+        <text class="s-label-sm" x="140" y="210" text-anchor="middle">（成長投資余地あり）</text>
+
+        <!-- バー2：注意（70%） -->
+        <rect class="s-bar-b" x="250" y="57" width="100" height="107" rx="5"/>
+        <text class="s-note" x="300" y="176" text-anchor="middle">70%</text>
+        <text class="s-label-sm" x="300" y="194" text-anchor="middle">やや注意</text>
+        <text class="s-label-sm" x="300" y="210" text-anchor="middle">（業種・段階による）</text>
+
+        <!-- バー3：タコ足（120%） -->
+        <rect class="s-bar-r" x="410" y="14" width="100" height="150" rx="5"/>
+        <text x="460" y="18" text-anchor="middle" fill="#cf222e" font-size="11" font-weight="700">↑ 100%超</text>
+        <text class="s-note-r" x="460" y="176" text-anchor="middle">120%</text>
+        <text class="s-label-sm" x="460" y="194" text-anchor="middle">⚠️ タコ足</text>
+        <text class="s-label-sm" x="460" y="210" text-anchor="middle">（内部留保を食いつぶし）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 配当性向の比較イメージ。一般的に40〜60%程度が安定的とされるが、成熟産業（電力・通信等）では70〜80%以上でも維持できる場合がある。配当性向100%超が続く場合は財務健全性の確認が必要。※概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="negative-box">
+      <strong>📉 タコ足配当が続くとどうなるか</strong>：内部留保が底をつくと、設備投資・成長投資の資金が不足し、業績がさらに悪化。最終的に減配・無配となりやすい。高い配当利回りが「減配前の最後の輝き」だった——という事例は少なくありません。
+    </div>
+
+    <div class="info-box">
+      <strong>💡 投資信託の「タコ足分配」とは別概念</strong>：投資信託の世界では「タコ足分配（特別分配金）」として元本を取り崩して分配金を出す行為を指します。株式のタコ足配当（利益を超えた配当）とは別の話なので混同しないよう注意が必要です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 高配当の罠②：減配・業績悪化・利回り上昇の逆説</h2>
+    <p>もうひとつの罠は<strong>「利回りが高い＝株価が下落した」</strong>という逆説です。</p>
+    <p>たとえば、年間配当40円の株が株価1,000円なら利回り4%。これが業績悪化の観測で株価が800円に下落すると、利回りは<strong>5%に上昇</strong>します。スクリーニングで「高配当5%超」を検索すると、こうした<strong>業績悪化が原因で株価が下落した銘柄が大量にヒットする</strong>可能性があります。</p>
+
+    <ul>
+      <li><strong>業績が悪化した</strong> → 株価が下落 → 利回りが高く見える</li>
+      <li><strong>次の決算で減配が発表された</strong> → 株価がさらに下落 → 配当利回りも実は下がる</li>
+      <li><strong>最悪の場合は無配へ</strong> → 配当は消え、株価も大幅安</li>
+    </ul>
+
+    <h3>確認すべき3つのポイント</h3>
+    <ol>
+      <li><strong>配当性向</strong>：100%に近い・超えている場合は要注意</li>
+      <li><strong>業績トレンド</strong>：売上・利益が増加傾向か、悪化傾向か</li>
+      <li><strong>配当の継続性</strong>：連続増配の実績があるか、過去に減配履歴はないか</li>
+    </ol>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 配当と自社株買い：2つの株主還元の違い</h2>
+    <p>企業が株主に利益を還元する方法は配当だけではありません。<strong>自社株買い（自己株式取得）</strong>も主要な還元手段です。</p>
+
+    <table>
+      <thead>
+        <tr><th>項目</th><th>配当</th><th>自社株買い</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>還元方法</td><td>現金を株主に直接支払い</td><td>市場から自社株を買い戻す</td></tr>
+        <tr><td>株主への影響</td><td>現金収入（税引後約80%が手取り）</td><td>発行済株数減少→EPS改善→株価支援</td></tr>
+        <tr><td>課税タイミング</td><td>受取時に即座に約20%課税</td><td>売却するまで課税なし（繰り延べ）</td></tr>
+        <tr><td>柔軟性</td><td>一度増配すると下げにくい（継続プレッシャー）</td><td>経営者が自由にタイミングを選べる</td></tr>
+        <tr><td>財務指標への影響</td><td>純資産が直接減少</td><td>ROE・EPS・BPSが改善しやすい</td></tr>
+      </tbody>
+    </table>
+
+    <p>日本企業は伝統的に配当中心の還元を行ってきましたが、近年は自社株買いを積極活用する企業も増えています。どちらが「良い」かは業種・成長ステージ・株主構成によって異なります。配当利回りだけでなく、<strong>総還元利回り（配当＋自社株買いを合算）</strong>で企業の還元姿勢を見る視点も重要です。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 配当再投資と複利：長期投資での活かし方</h2>
+    <p>受け取った配当金を同じ株に再投資し続けると、<strong>配当金が新たな配当を生む複利効果</strong>が働きます。長期間では、この再投資分の積み上がりが総リターンを大きく押し上げます。</p>
+
+    <div class="info-box">
+      <strong>💡 日本株の配当再投資は基本「手動」</strong>：米国では DRIP（Dividend Reinvestment Plan）という自動再投資制度が普及していますが、2026年時点で日本の主要証券会社（SBI・楽天・マネックス）は日本株のDRIPに対応していないことが多く、受け取った配当金を手動で買い付けるのが現実的です。外国株・ETFでは一部証券会社が対応しています。
+    </div>
+
+    <h3>再投資で複利効果を得る3つの条件</h3>
+    <ol>
+      <li><strong>時間</strong>：再投資の複利は20〜30年単位で威力を発揮する。短期では効果は限定的</li>
+      <li><strong>再投資の継続</strong>：配当を使ってしまわず、株式に回し続けること</li>
+      <li><strong>退場しないこと</strong>：大きなドローダウンでパニック売りすると複利の連鎖が断ち切られる（<a href="../guide-compounding-drawdown.html">複利とドローダウンの詳細はこちら</a>）</li>
+    </ol>
+
+    <div class="warning-box">NISA口座の配当は再投資しても「成長投資枠の非課税枠を使う」ため、再投資ルールは口座タイプによって扱いが変わります。詳細はご利用の証券会社・税務署にご確認ください。</div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、主に<strong>FX・コモディティ・指数先物（18銘柄）</strong>を対象としたテクニカルシグナルを提供しています。個別株の配当情報を直接掲載してはいませんが、配当の仕組みを理解することは次の場面で役立ちます。</p>
+    <ul>
+      <li><strong>権利落ちの株価下落</strong>：3月末・9月末前後は多くの銘柄で配当落ちによる下落が起きやすい。日経平均（NKD=F）などの指数先物ポジションを持つ際はこの時期の特性を意識する</li>
+      <li><strong>配当方針の変化</strong>：企業の増配・減配発表は株価の大きな動因になる。ニュースや決算記事（当サイト「今日のニュース」カテゴリ）と合わせて確認することで市場の動きを深く読める</li>
+      <li><strong>長期視点の資産形成</strong>：テクニカルトレードと並行して、配当再投資による長期積立を組み合わせる投資家も多い</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を確認する</div>
+      <div class="cta-box-desc">テクニカルシグナルの過去成績（勝率・リスクリワード・期待値）を7タブで公開中。シグナルの実力を数値で確かめてから活用できます。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 10 -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <ul>
+      <li>配当を受け取るには<strong>権利確定日の2営業日前（権利付き最終日）</strong>の大引けまでに株を保有する必要がある。権利落ち日以降の購入では権利は取れない。</li>
+      <li>権利落ち日には<strong>理論上、配当分だけ株価が下落</strong>する（配当落ち）。配当取り目的のトレードは税金・手数料コストを差し引くと利益が出にくい。</li>
+      <li><strong>配当利回りの高さだけを追いかけると危険</strong>。利回り上昇の原因が株価下落・業績悪化・タコ足配当（配当性向100%超）にあるケースがある。配当性向・業績トレンド・財務健全性をセットで確認する。</li>
+      <li>配当と自社株買いは企業の2つの株主還元策。<strong>総還元利回り（配当＋自社株買い）</strong>で企業の還元姿勢を総合的に評価する視点も持つ。</li>
+      <li>配当再投資による<strong>複利効果は長期投資で威力を発揮</strong>するが、日本株では手動再投資が現実的。大きなドローダウンで売却しないことが複利を守る最大の鍵。</li>
+    </ul>
+
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-compounding-drawdown.html">
+        <div class="related-card-title">複利と最大ドローダウン・破産確率</div>
+        <div class="related-card-desc">複利の力と怖さ。連敗しても退場しない資金設計のポイントを解説</div>
+      </a>
+      <a class="related-card" href="../guide-simple-vs-compound.html">
+        <div class="related-card-title">単利と複利の違い</div>
+        <div class="related-card-desc">72の法則・複利が効く3条件・ドローダウンが複利を壊す算数を図解</div>
+      </a>
+      <a class="related-card" href="../guide-per-pbr.html">
+        <div class="related-card-title">PERとPBRの読み方</div>
+        <div class="related-card-desc">配当利回りと並んで使われる割安・割高の指標を、低PERの罠を含めて解説</div>
+      </a>
+    </div>
+
+    <p class="disclaimer">【免責事項 kinsho-v1】本記事は金融商品取引法に基づく投資助言ではありません。掲載している情報は教育・情報提供を目的とした一般論であり、特定の金融商品・銘柄の売買を推奨・勧誘するものではありません。投資にはリスクが伴い、元本割れの可能性があります。投資判断はご自身の責任において行ってください。特定の税務・法律上のアドバイスについては、税理士・弁護士等の専門家にご相談ください。過去の運用成績は将来の結果を保証するものではありません。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2025 MarketWatch AI — 日本人投資家のためのマーケット情報サイト</p>
+  <p style="margin-top:6px"><a href="../index.html">トップ</a> | <a href="../guides.html">解説記事</a> | <a href="../track-record.html">シグナル成績</a> | <a href="../market-health.html">市場健康度</a></p>
+  <p style="margin-top:6px;font-size:.72rem;color:#8b949e">本サイトは情報提供を目的としており、投資助言を行うものではありません。</p>
+</footer>
+
+<script>
+  // 読書進捗バー
+  window.addEventListener('scroll',function(){
+    var el=document.getElementById('reading-progress');
+    if(!el)return;
+    var h=document.documentElement;
+    var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    el.style.width=Math.min(p,100)+'%';
+  });
+  // テーマ切替
+  function toggleTheme(){
+    var b=document.body,btn=document.getElementById('theme-toggle');
+    if(b.classList.contains('dark')){b.classList.remove('dark');btn.textContent='🌙';localStorage.setItem('theme','light');}
+    else{b.classList.add('dark');btn.textContent='☀️';localStorage.setItem('theme','dark');}
+  }
+  (function(){
+    var t=localStorage.getItem('theme');
+    if(t==='dark'){document.body.classList.add('dark');var btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}
+  })();
+</script>
+</body>
+</html>
