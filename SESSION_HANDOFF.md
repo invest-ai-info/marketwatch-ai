@@ -4,7 +4,7 @@
 
 **①シグナルメールのMT4価格ズレ対策（オーナー要望）**: 絶対価格はYahoo基準＝MT4(BigBoss)と構造的にズレる（金/指数=先物vs現物CFD・FX=feed差＋スプレッド）→**SL/TP「幅」併記＋「MT4は現在値から同幅で設定」注記**を実装（`generate_technical_alerts.py`の`_fmt_distance`・FXはpips換算・全銘柄グループ表示テスト済）。**エンジン/signals-log記録は不変＝前向き検証の連続性維持**。commit b4f8de9・次の定時運転(technical-alerts 4hごと)から反映。実メール初確認は月曜（土曜=FX休場・BTC発火なら週末可）。
 
-**③Q11ズールー前向きトラッカー=📊アーム完了（fins月次自動更新も整備）**: **(a)** `_jp_fins_monthly.py`＝毎月1〜3日05:50タスク`MarketWatch_JQ_Fins`(PT2H)で全3717銘柄の財務キャッシュを再取得（実測1.5s/銘柄≈93分・バジェット6600s・mtime再開・完走時のみ`_jq_fins_cache_meta.json`にrefreshed_at記録）。**(b)** `_jp_zulu_tracker.py`＝Q6シグナルをzulu_flags importで1バイト不変流用・**参照再現がsummaryと完全一致**(train+2.39% p0.0067/holdout+3.05% p0.0003)・**凍結ガード=fins refreshed_at≥formation**（PITで更新遅延は無害・凍結メンバーはstate固定）・チェックポイント=formation12の倍数・合格=formation≥12∧N≥500∧CI下限>0。**(c)** 番人=`_jp_health_check.py`にcheck_fins新設（毎月5日までに完走なければアラートtxt）・`mw evolve`アジェンダにQ11行。**初formation=7/31→8/1タスクが自動凍結**・初判定≒2027年夏。⚠️初回フル取得はセッション中に裏で実行（完走でmeta記録）。
+**③Q11ズールー前向きトラッカー=📊アーム完了（fins月次自動更新も整備）**: **(a)** `_jp_fins_monthly.py`＝毎月1〜3日05:50タスク`MarketWatch_JQ_Fins`(PT2H)で全3717銘柄の財務キャッシュを再取得（実測1.5s/銘柄≈93分・バジェット6600s・mtime再開・完走時のみ`_jq_fins_cache_meta.json`にrefreshed_at記録）。**(b)** `_jp_zulu_tracker.py`＝Q6シグナルをzulu_flags importで1バイト不変流用・**参照再現がsummaryと完全一致**(train+2.39% p0.0067/holdout+3.05% p0.0003)・**凍結ガード=fins refreshed_at≥formation**（PITで更新遅延は無害・凍結メンバーはstate固定）・チェックポイント=formation12の倍数・合格=formation≥12∧N≥500∧CI下限>0。**(c)** 番人=`_jp_health_check.py`にcheck_fins新設（毎月5日までに完走なければアラートtxt）・`mw evolve`アジェンダにQ11行。**初formation=7/31→8/1タスクが自動凍結**・初判定≒2027年夏。**初回フル取得=✅同日完走（3716/3717・1件timeout除外・meta refreshed_at=2026-07-11）＝fetch→バジェット中断→mtime再開→meta→トラッカー起動の全経路を3回の実行で実証済み**。
 
 **④Q14防御カタログ第1弾=🛡4/6合格（成長レバー会議②・6仮説を1バッチ事前登録→同日検証）**: **H5短期爆騰(5日+30%新規)＝同日blowup60差+47.50/+48.56pp・blow65%＝過去最強の回避フラグ（🔪重複11%=独立）**／H4ナイフ窓延長=61-120日も+14.16/+12.63pp＝**🔪窓120日化**／H1決算またぎ+3.37/+4.71pp（準PIT注記）／H2高ボラ突破+7.78/+7.54pp。❌H3業種過熱(400ユニバース制約ns)・H6 52週安値(train ns)。`_jp_defense_catalog_screen.py`・DOCTRINE §2結晶化・**適用宿題=mw screenに⚡爆騰列+🔪窓120日化+決算前列**。
 
@@ -100,7 +100,7 @@
 - **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。**7/10朝=寄り付きロガー自己修復版の初定時運転✅**（タグsnap 07-10記録・番人5項目緑を確認済）。
 - **⓪-B autopublish**＝✅7/11朝確認済: 7/10 ⑲nikkei-vs-topix・7/11 ⑳currency-risk とも全ゲート通過で公開（⑳はライブ200+免責+datePublished裏取り済）。⚠️両日ともクラウドのHTTP自己チェックだけ失敗（Cloudflare 403/NETWORK_ERROR）＝push成功で実害なしだが続くようなら要観察。次=7/12記録の確認。
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
-- **⓪-D 進化ループ続き**：Q13(7/9)・Q12(7/10)・**Q8+Q11アーム(7/11＝上の7/11節)** 消化済み。残=Q10及川H-O4（低優先・エンジン実装が先）のみ＝**キューの検証仕事は一旦完了**。次はアレンジ枠A（資産クラスDM・記事#6有力）が有力。TT3前向きは月1回`_jp_turtle_tracker.py`・ズールーQ11は毎月1日タスクが自動。**8/1朝: MarketWatch_JQ_Finsの初定時運転→7/31 formation凍結を次セッションで確認**。
+- **⓪-D 進化ループ続き**：7/11にQ8✅・Q11アーム・Q14🛡4/6・Q15❌まで消化＝**キュー残はQ10（低優先）とアレンジD複合のみ**。**次セッションの筆頭候補=Q14適用（mw screenに🔪窓120日化+⚡爆騰列+決算前列の3本・検証済み知見の⑤APPLY・列プラグイン式で軽い）**。次点=growth_levers残（②b国外OOS／④promise audit／⑤プレイブック）・記事#6（Q15の正直な❌+DD半減が素材）。TT3=月1回・Q11=毎月1-3日タスク自動。**8/1以降の最初のセッションで7/31 formation凍結を確認**（`mw evolve`のQ11行がformation 1/12になっているはず）。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
   **A**=❌7/11検証済み（Q15・単一資産超えず=記事#6素材）／
   **C**=✅Q11で7/11実装済（screener参考列だけ任意で未）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
