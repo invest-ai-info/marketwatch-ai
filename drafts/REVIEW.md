@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-07-12 autopublish: ✅ 公開済み — guide-dividend-basics.html（基礎知識 #21）
+
+- **対象key**: dividend-basics（topic queue #21 / 投資の基礎知識）
+- **タイトル**: 配当の仕組み｜権利確定日・配当利回りの読み方と高配当の罠
+- **決定論ゲート**: ✅ GREEN（kinsho-v1属性付与後）
+- **Opus初回判定**: 🟢コンプラ白・品質🟡（②EPS/ROE/BPS説明なし）→ 軽微修正（info-box追加）
+- **決定論ゲート再実行**: ✅ GREEN
+- **独立Opus確認**: 🟢白確認（②解消・数値/構造不変確認済）
+- **整合性チェック**: ✅ OK（エラー0件）
+- **公開URL**: https://marketwatch-jp.com/guide-dividend-basics.html
+- **commit**: 98c1ec2
+
+---
+
 ## 2026-07-12 | 💰 基礎知識 #21 — 配当の仕組み（dividend-basics）下書き生成
 
 - **基準日**: 2026-07-12（JST / UTC 2026-07-11T20:31）
