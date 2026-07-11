@@ -4,6 +4,8 @@
 
 **①シグナルメールのMT4価格ズレ対策（オーナー要望）**: 絶対価格はYahoo基準＝MT4(BigBoss)と構造的にズレる（金/指数=先物vs現物CFD・FX=feed差＋スプレッド）→**SL/TP「幅」併記＋「MT4は現在値から同幅で設定」注記**を実装（`generate_technical_alerts.py`の`_fmt_distance`・FXはpips換算・全銘柄グループ表示テスト済）。**エンジン/signals-log記録は不変＝前向き検証の連続性維持**。commit b4f8de9・次の定時運転(technical-alerts 4hごと)から反映。実メール初確認は月曜（土曜=FX休場・BTC発火なら週末可）。
 
+**③Q11ズールー前向きトラッカー=📊アーム完了（fins月次自動更新も整備）**: **(a)** `_jp_fins_monthly.py`＝毎月1〜3日05:50タスク`MarketWatch_JQ_Fins`(PT2H)で全3717銘柄の財務キャッシュを再取得（実測1.5s/銘柄≈93分・バジェット6600s・mtime再開・完走時のみ`_jq_fins_cache_meta.json`にrefreshed_at記録）。**(b)** `_jp_zulu_tracker.py`＝Q6シグナルをzulu_flags importで1バイト不変流用・**参照再現がsummaryと完全一致**(train+2.39% p0.0067/holdout+3.05% p0.0003)・**凍結ガード=fins refreshed_at≥formation**（PITで更新遅延は無害・凍結メンバーはstate固定）・チェックポイント=formation12の倍数・合格=formation≥12∧N≥500∧CI下限>0。**(c)** 番人=`_jp_health_check.py`にcheck_fins新設（毎月5日までに完走なければアラートtxt）・`mw evolve`アジェンダにQ11行。**初formation=7/31→8/1タスクが自動凍結**・初判定≒2027年夏。⚠️初回フル取得はセッション中に裏で実行（完走でmeta記録）。
+
 **②Q8金ラボ第2R=✅完了（🔓holdout解錠2026-07-11・この1回限り・再解錠禁止）**: 第1R有望2本のparamsが未記録→**valid数値の記録一致で特定**（volfilter=デフォルト0.681≒記録0.68／vol_scaled=tv0.10で0.626完全一致・照合5回・成績での選び直しなし）→合否基準を解錠前宣言(Sharpe≥0.6∧PF≥1.25)→**2本とも合格**: ①複合トレンド×低ボラ`{}`=Sharpe0.63/PF1.93(コスト2x=0.599ボーダー) ②多数決モメンタム×ボラ目標10%=Sharpe1.023/PF6.06(コスト2x頑健・valid→holdout改善)。ただし生SharpeはBH(1.114)未満＝**ラボ合格3本すべて「価値は防御」＝DOCTRINE §0-1を金でも再確認**。台帳`research/gold_backtest/RESULTS.md`新設（第1R教訓の是正）・DOCTRINE §2改稿・anchors50件・完了Q8/Q9/Q12をqueue_archiveへ退避・**DOCTRINE/queue/HANDOFF全て予算内warning 0**。金ラボは新素材が出るまで休眠。
 
 ## 🧹 7/10 declutter＋Q12再監査
@@ -102,10 +104,10 @@
 - **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。**7/10朝=寄り付きロガー自己修復版の初定時運転✅**（タグsnap 07-10記録・番人5項目緑を確認済）。
 - **⓪-B autopublish**＝✅7/11朝確認済: 7/10 ⑲nikkei-vs-topix・7/11 ⑳currency-risk とも全ゲート通過で公開（⑳はライブ200+免責+datePublished裏取り済）。⚠️両日ともクラウドのHTTP自己チェックだけ失敗（Cloudflare 403/NETWORK_ERROR）＝push成功で実害なしだが続くようなら要観察。次=7/12記録の確認。
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
-- **⓪-D 進化ループ続き**：Q13(7/9)・Q12(7/10)・**Q8(7/11・✅金ラボ2本合格＝上の7/11節)** 消化済み。次候補=**Q11ズールー前向きトラッカー**（fins月次更新の整備→**7/31の月末formation前に事前登録が最短＝1観測も失わない**）／Q10及川H-O4（低優先）。TT3前向きは月1回`_jp_turtle_tracker.py`。
+- **⓪-D 進化ループ続き**：Q13(7/9)・Q12(7/10)・**Q8+Q11アーム(7/11＝上の7/11節)** 消化済み。残=Q10及川H-O4（低優先・エンジン実装が先）のみ＝**キューの検証仕事は一旦完了**。次はアレンジ枠A（資産クラスDM・記事#6有力）が有力。TT3前向きは月1回`_jp_turtle_tracker.py`・ズールーQ11は毎月1日タスクが自動。**8/1朝: MarketWatch_JQ_Finsの初定時運転→7/31 formation凍結を次セッションで確認**。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
   **A**=資産クラス版デュアルモメンタム（日経/S&P500/金/米債の月次乗り換え・原典回帰・Yahooで20年・記事#6有力候補）／
-  **C**=ズールー前向き実装（=Q11+screener参考列）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
+  **C**=✅Q11で7/11実装済（screener参考列だけ任意で未）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
   ※「すでに生きているアレンジ」の整理も記事ネタ（赤三兵→連騰≥4危険ゲート・タートル資金管理→ATRベースSL/2%ルール・**G4逆張り→🔪回避フラグ（Q13）**＝原型のエントリーは死んでも部品は生きる）。
 - **⓪-F ✅済（7/10）文書declutter**：CLAUDE 32.0/DOCTRINE 24.0(warning0)/HANDOFF 28.5＝全て予算内。以後もこの水準を維持（節が増えたら完了節をARCHIVEへ）。
 - **⓪-G ✅済（7/9夜）routineによるリンター編集の再発防止＝三層で実装**: オーナー決定=**完全禁止**（等価修正も不可・赤はエスカレのみ・ゲート修正は人間専任）。①`AUTOPUBLISH_GUIDE.md`=固定ゲート4本（check_guide_draft/check_site_consistency/signal_lab_verify/publish_article）の編集・commit禁止+7/9違反実例を明文化 ②routineプロンプト更新済（手順4/7/絶対厳守を強化。⚠️**プロンプト禁止は7/8夜から存在したのに破られた実績あり**＝コード検知が本命） ③`check_automation_health.py`にチェック④新設=直近26hでゲート4本をオーナー/github-actions[bot]以外のauthorが変更→warn Issue（ローカル実測で7/9違反commit `80abc63` を正しく検知✅）。**⚠️7/10 09:30の運転で既知の7/9違反commit（対応済）が1回Issue化した可能性＝あれば無視してクローズ**。以後の検知は本物。
