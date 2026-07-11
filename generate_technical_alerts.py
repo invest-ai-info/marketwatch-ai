@@ -598,6 +598,23 @@ def calc_entry_sl_tp(current_price, atr_value, direction):
         }
 
 
+def _pip_size(ticker):
+    """FX ペアの 1 pip サイズ（JPY クロス = 0.01、それ以外 = 0.0001）。FX 以外は None。"""
+    if ticker not in FX_PAIR_MAP:
+        return None
+    return 0.01 if FX_PAIR_MAP[ticker][1] == "JPY" else 0.0001
+
+
+def _fmt_distance(dist, ticker, currency, decimals):
+    """SL/TP の「幅（エントリーからの距離）」を表示用に整形。FX は pips 併記。
+    絶対価格は Yahoo 基準＝MT4 等ブローカー表示とズレる（先物 vs 現物 CFD・配信元の差）が、
+    ATR 由来の距離は feed 間でほぼ共通なので、別チャートには「幅」で再現する（2026-07-11）。"""
+    pip = _pip_size(ticker)
+    if pip:
+        return f"{currency}{dist:.{decimals}f} = {dist / pip:.1f} pips"
+    return f"{currency}{dist:.{decimals}f}"
+
+
 def determine_direction(signals):
     """発火シグナル群から総合的にロング/ショート/中立を判定。
     buy 多数 → long、sell 多数 → short、その他 → None"""
@@ -2887,13 +2904,22 @@ def main():
             hold_label_display = "1〜5 日（スイング）"
 
         # ポジションプラン表示ブロック
+        # 🆕 2026-07-11: SL/TP の「幅」を併記（MT4 等ブローカーチャートへの再現用。
+        #    絶対価格は Yahoo 基準＝先物 vs 現物 CFD・配信元差でズレるが、距離は共通）
         if position_plan:
+            _entry = position_plan["entry"]
+            sl_w = _fmt_distance(abs(position_plan["stop_loss"] - _entry), ticker, currency, decimals)
+            tp1_w = _fmt_distance(abs(position_plan["take_profit_1"] - _entry), ticker, currency, decimals)
+            tp2_w = _fmt_distance(abs(position_plan["take_profit_2"] - _entry), ticker, currency, decimals)
             plan_block = f"""【参考ポジションプラン】（{tf_label_display} 想定 / 保有 {hold_label_display}）
 - 方向: {position_plan['direction']}
 - エントリー: {currency}{position_plan['entry']:.{decimals}f}
-- ストップロス: {currency}{position_plan['stop_loss']:.{decimals}f}（{position_plan['sl_pct']:+.2f}%）
-- 利確 ①: {currency}{position_plan['take_profit_1']:.{decimals}f}（{position_plan['tp1_pct']:+.2f}% / R:R 1:1.3）
-- 利確 ②: {currency}{position_plan['take_profit_2']:.{decimals}f}（{position_plan['tp2_pct']:+.2f}% / R:R 1:2.0）
+- ストップロス: {currency}{position_plan['stop_loss']:.{decimals}f}（{position_plan['sl_pct']:+.2f}% / 幅 {sl_w}）
+- 利確 ①: {currency}{position_plan['take_profit_1']:.{decimals}f}（{position_plan['tp1_pct']:+.2f}% / 幅 {tp1_w} / R:R 1:1.3）
+- 利確 ②: {currency}{position_plan['take_profit_2']:.{decimals}f}（{position_plan['tp2_pct']:+.2f}% / 幅 {tp2_w} / R:R 1:2.0）
+
+📐 MT4 で使う場合: エントリー = MT4 の現在値、SL/TP は現在値から上の「幅」で設定
+   （上の価格は Yahoo 基準のため、先物 vs 現物 CFD・配信元の違いでブローカー表示とはズレます。幅は共通）
 
 📊 SL 根拠: ATR(14) = {currency}{position_plan['atr']:.{decimals}f} × 1.5
         （{tf_label_display} 足 1 本の自然な値動きの 1.5 倍 = 通常のヒゲでは刈られない幅）
