@@ -34,4 +34,5 @@ SYNC_FILES = [
     "guide-currency-risk.html",
     "guide-proverb-nido-ni-kau.html",
     "guide-news-2026-07-11-skhynix-adr-nasdaq.html",
+    "guide-signal-lab-037.html",
 ]
