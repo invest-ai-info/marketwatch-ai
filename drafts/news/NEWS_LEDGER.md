@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-07-11
+- 判定: ✅ 公開済み
+- 選定トピック: SK Hynix、Nasdaq ADR初上場（SKHYV）── IPO価格$149→初日終値$168.01（+12.8%）・調達$26.5Bは外国企業の米国上場史上最大・HBM56.4%シェアとAIメモリ覇権を中立整理（カテゴリ: AI半導体・個別銘柄・マクロ・IPO）
+- スコア: 話題性 5 / 影響 4 / 付加価値 5（合計 14/15）
+- 選定理由: 2026年7月10日（金）Nasdaq初上場・$26.5B調達（Alibaba 2014年$25B超え・外国企業米国上場史上最大）・7倍超応募・HBM世界シェア56.4%・日経225先物+550に即日波及。7/7サムスン記事との重複なし（IPOデビュー成功 vs 好決算×株価急落は別テーマ）。ADR仕組み解説・日本投資家向け実務情報・HBM技術背景で付加価値最高点。
+- 出典（2系統以上確認済み）:
+  - Bloomberg「SK Hynix ADR Stock (SKHYV) Rises After $26.5 Billion US Listing」（2026-07-10）
+  - BigGo Finance「SK Hynix ADR Surges Over 15% on Debut; $26.5 Billion IPO Shatters Record for Foreign Company US Listing」（2026-07-10）
+  - Shacknews「SK Hynix (SKHYV) ADR closes first day of American trading up 13%」（2026-07-10）
+  - CNBC「Stock market next week: Outlook for July 13–17, 2026」（2026-07-10）
+  - Investing.com「SK Hynix Inc Stock Price NASDAQ: SKHYV」（終値$168.01）
+  - Counterpoint Research via Silicon Analysts「HBM Pricing & Market Share 2026」（HBM56.4%シェア）
+  - Notebookcheck「SK Hynix sells out DRAM/NAND/HBM supply to Nvidia through 2026」
+  - 株探「日経225先物テクニカルポイント（11日夜間取引終了時点）」（2026-07-11・夕間取り69,360円+550）
+  - TrendForce「Samsung, SK Hynix plan 20% HBM3E price hike for 2026」
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（A〜E全項目クリア・個別銘柄言及箇所ごとに非推奨否認文あり・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典9系統以上 ✅
+- check_site_consistency.py: EXIT=0（警告1件はクラウドスタブ・通常動作）
+- 公開ファイル: guide-news-2026-07-11-skhynix-adr-nasdaq.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了
+
+---
+
 ## 2026-07-10
 - 判定: ✅ 公開済み
 - 選定トピック: 片山財務相「GPIFなど年金基金の国内投資を後押し」発言で円高・国債高・株高「トリプル高」（カテゴリ: マクロ・金融政策・日本株・為替）
