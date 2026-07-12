@@ -3,6 +3,41 @@
 
 ---
 
+## 2026-07-12
+- 判定: ✅ 公開済み
+- 選定トピック: 今週火曜（7/14）三重同時発火──米6月CPI×JPMorgan/Goldman Sachs等5大銀行Q2決算×ウォーシュ初議会証言が同日集中、3シナリオで中立整理（カテゴリ: マクロ・金融政策・銀行決算・インフレ・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7月14日（火）にCPI発表（8:30ET）・5大銀行決算（市場開場前）・ウォーシュ初議会証言（10:00ET＝CPI90分後）が同日集中する異例構造。S&P500がATH比-0.45%・日本PPI+7.1%・BOJ7/31会合を控えるタイミングで、今週の相場方向を一気に決定づける可能性が高い。週間プレビュー形式で3シナリオを中立整理し付加価値最高点。7/8FOMC議事録記事との重複なし（議事録の内容vs初の議会証言＋CPI＋銀行決算は別テーマ）。
+- 出典（2系統以上確認済み）:
+  - Bloomberg「Warsh and US Inflation Will Set Tone for July Fed Decision」（2026-07-11）
+  - ActionForex「Week Ahead – US CPI and Warsh Testimony to Take Centre Stage, BoC Eyed Too」（2026-07-11）
+  - FXStreet「Forecasting the upcoming week: US CPI and Warsh testimony to test the Dollar's recovery」（2026-07-11）
+  - Kiplinger「June CPI Preview: Don't Let a Negative Headline Fool You」（2026-07-11）
+  - Motley Fool「Jamie Dimon's JPMorgan Kicks Off Bank Earnings July 14」（2026-07-10）
+  - Motley Fool「Goldman Sachs Reports Earnings on July 14」（2026-07-10）
+  - Earnings-Edge「Setups for JPMorgan, Bank of America, Goldman Sachs, Wells Fargo, Citigroup」（2026-07-11）
+  - Intellectia.ai「Q2 2026 Bank Earnings Preview: JPMorgan, Goldman」
+  - CNBC「Stock market next week: Outlook for July 13-17, 2026」（2026-07-10）
+  - Japan Times「Japan's producer prices rise at fastest pace since early 2023」（2026-07-10）
+  - congress.net「Fed Chair Warsh Faces Lawmakers In Debut Congressional Testimony」
+  - cryptobriefing「Federal Reserve Chair Kevin Warsh to testify on monetary policy July 15」
+  - BigGo Finance「BOJ to Raise Growth Outlook, Cut Inflation Forecast; July Rate Hike Likely on Hold」
+  - TradingEconomics「Japan Interest Rate / Japanese Yen」（2026-07-10）
+  - Cleveland Fed Inflation Nowcasting（3.92%）/ Octagon AI Prediction Markets（3.9%）
+  - BLS発表スケジュール（July 14 CPI release確認）
+  - CNN「Fed leaves interest rates unchanged but signals higher rates are ahead」（2026-06-17）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所・禁止語なし・銘柄推奨なし・出典26箇所・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（A〜G全項目クリア・銘柄推奨否定文2箇所・3シナリオ条件付き並列化・出典多系統・公開適格）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典26箇所 ✅
+- check_site_consistency.py: EXIT=0（警告1件はクラウドスタブ・通常動作）
+- 公開ファイル: guide-news-2026-07-12-triple-event-july14.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了（631745b→7cfe578）
+
+---
+
 ## 2026-07-11
 - 判定: ✅ 公開済み
 - 選定トピック: SK Hynix、Nasdaq ADR初上場（SKHYV）── IPO価格$149→初日終値$168.01（+12.8%）・調達$26.5Bは外国企業の米国上場史上最大・HBM56.4%シェアとAIメモリ覇権を中立整理（カテゴリ: AI半導体・個別銘柄・マクロ・IPO）
