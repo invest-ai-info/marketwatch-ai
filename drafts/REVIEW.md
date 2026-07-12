@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-07-13 | 💰 基礎知識 #22 — 株・投信の税金入門（stock-tax-basics）下書き生成
+
+- **基準日**: 2026-07-13（JST / UTC 2026-07-12T20:30Z）
+- **topic key**: `stock-tax-basics`（topicキュー #22 / 基礎知識）
+- **仮タイトル**: 株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組みを図解
+- **生成ファイル**: `drafts/draft-stock-tax-basics.html`
+- **参照出典（WebSearch確認）**:
+  - 税率20.315%・申告分離課税: https://www.nta.go.jp/publication/pamph/koho/kurashi/html/04_5.htm / https://www.jw-advisers.co.jp/monelead/column/no-0032/
+  - 特定口座制度（国税庁）: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1476.htm
+  - 特定口座・損益通算: https://money-voyage.mizuho-sc.com/articles/112 / https://biz.moneyforward.com/tax_return/basic/2400/
+  - 繰越控除: https://shisanplus.dai-ichi-life.co.jp/keisei/3819/ / https://faq.sbisec.co.jp/answer/5ef99c79d46ae80016c2b123/
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般的な税の仕組み解説のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「一択」「保証」「儲かる」使用なし）
+  - ✅ kinsho-v1免責：冒頭バナー＋本文末p.disclaimer＋footerの計2箇所にdata-disclaimer="kinsho-v1"属性付き
+  - ✅ noindex,nofollow meta tag 挿入済み
+  - ✅ 「個別の税務は税務署・税理士へ」の一文あり（disclaimer-bannerと本文末まとめ両方）
+  - ✅ guide-investment-tax.html（商品別税率比較）との重複回避・冒頭で相互リンク誘導あり
+  - ✅ 税率数値はWebSearch照合済み（国税庁等公的ソース）
+  - ✅ 出典に不確実な固有名詞・推測数値なし
+- **人間の残作業**:
+  - SVG概念図2点（口座比較マップ・損益通算図）の実機ライト/ダーク表示確認
+  - Section 6 に <!-- TODO(SVG): 繰越控除3年間の繰り越しイメージ図 --> あり（追加または省略を判断）
+  - タイトル微調整（公開時）
+  - 公開は毎朝 08:40 の autodraft-publish が QUALITY_RUBRIC ゲート付きで自動実行
+
+---
+
 ## 2026-07-12 autopublish: ✅ 公開済み — guide-dividend-basics.html（基礎知識 #21）
 
 - **対象key**: dividend-basics（topic queue #21 / 投資の基礎知識）
