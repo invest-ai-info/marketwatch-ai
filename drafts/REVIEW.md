@@ -10,7 +10,12 @@
 - **検証結果**: 全期間 114/263=43.3%(good) / 146/405=36.0%(neutral) / 177/415=42.7%(avoid) / 77/158=47.7%(elite)
 - **前向きトラッカー**: tier=good FWD 46/67=68.7% E(R)=+0.603 CI[+0.38~+0.82]（N=67<80・蓄積中）
 - **主因**: 金属IS13.8%（IS不毛期）→FWD63.6%（レジーム転換）が全体IS34.7%を作った主因。全グループFWD改善で構成シフト≒0（性能シフト確認）。jpy_fx/other_fxはtier=goodに出現しない（FXはneutral/avoid分類）
-- **ゲート状況**: signal_lab_verify.py・コンプラOpus・独立Opus確認 実行中
+- **ゲート状況**: ✅ 全通過・自動公開済み
+  - verify.py: 緑（12/12クレーム一致・SVG警告0・要約未検証0）
+  - Opus初回コンプラ: 🟢 白（修正なし）
+  - 独立Opus確認: 🟢 白
+  - finalize→publish→check_site: 全EXIT=0
+  - 公開ファイル: `guide-signal-lab-038.html`
 
 ---
 
