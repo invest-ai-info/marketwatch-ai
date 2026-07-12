@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="株や投資信託の利益にかかる税率20.315%の仕組み、特定口座（源泉徴収あり・なし）と一般口座の違い、複数口座をまたぐ損益通算の方法、3年間繰り越せる繰越控除の基本を図解でやさしく解説します。">
+  <meta name="keywords" content="株 税金,投資信託 税金,20.315%,特定口座,源泉徴収あり,源泉徴収なし,損益通算,繰越控除,確定申告,申告分離課税,NISA,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-stock-tax-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組みを図解">
+  <meta property="og:description" content="株・投信の利益にかかる税率20.315%・特定口座の仕組み・損益通算・3年繰越控除まで図解でやさしく解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-stock-tax-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組みを図解",
+    "description": "株や投資信託の利益にかかる税率20.315%の仕組み、特定口座（源泉徴収あり・なし）と一般口座の違い、損益通算・繰越控除の基本を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-13",
+    "dateModified": "2026-07-13",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-stock-tax-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス体系 */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:#54aeff;stroke-width:1}
+    .s-fill-g{fill:#e6ffed;stroke:#2ea043;stroke-width:1}
+    .s-fill-y{fill:#fff8c5;stroke:#d4a017;stroke-width:1}
+    .s-fill-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1}
+    .s-text-b{fill:#0969da;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-g{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-r{fill:#cf222e;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-d{fill:#424a53;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-arrow{fill:#57606a}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-b{fill:#162030;stroke:#1f6feb}
+    body.dark .s-fill-g{fill:#162416;stroke:#2ea043}
+    body.dark .s-fill-y{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-fill-r{fill:#2a1010;stroke:#cf222e}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-g{fill:#7ee787}
+    body.dark .s-text-r{fill:#f85149}
+    body.dark .s-text-d{fill:#c9d1d9}
+    body.dark .s-arrow{fill:#8b949e}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 株・投信の税金入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は株・投資信託の税金に関する一般的な仕組みを情報提供として解説するものであり、投資助言・税務相談ではありません。税制は改正されることがあります。個別の税務に関するご判断は、国税庁のウェブサイトや税務署、税理士にご確認ください。</div>
+
+    <h1>💰 株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組み</h1>
+    <div class="meta-line">公開日：2026 年 7 月 13 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <div class="info-box">
+      <strong>📌 商品別の税率（FX・金・ビットコイン等の比較）はこちら</strong>：本記事は「<strong>口座の仕組み・損益通算・繰越控除</strong>」に絞って解説します。「株とFXで税率はどう違う？」「ビットコインの税金は？」といった商品ごとの税率比較は、<a href="guide-investment-tax.html">👉 投資の税金完全ガイド（商品別税率比較）</a> をご覧ください。
+    </div>
+
+    <p>「利益が出たから税金を払わないといけない」——なんとなく分かっていても、<strong>仕組みをきちんと理解している人は意外に少ない</strong>ものです。どの口座を使うかで確定申告が必要かどうかが変わる、複数の口座をまたいで損益を合算できる、損失は3年先まで繰り越せる——こういった知識は、資産形成の効率を大きく左右します。この記事では、<strong>初心者でも迷わないように図解で整理</strong>します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>上場株式・株式投資信託の利益（売却益・分配金・配当）には原則<strong>20.315%（所得税15.315%＋住民税5%）</strong>の税率がかかる（申告分離課税）。</li>
+      <li>口座の種類で確定申告の必要性が変わる。<strong>特定口座（源泉徴収あり）</strong>なら原則不要、<strong>源泉徴収なし・一般口座</strong>なら自分で申告が必要。</li>
+      <li>確定申告をすれば<strong>複数口座の損益通算</strong>と<strong>3年間の繰越控除</strong>が使え、税負担を合法的に減らせる。源泉徴収ありの口座でも損失がある年は申告する価値がある。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">そもそも何に税金がかかるのか</a></li>
+        <li><a href="#section-2">税率20.315%の内訳と「申告分離課税」</a></li>
+        <li><a href="#section-3">口座の3種類：特定口座（源泉徴収あり）・特定口座（源泉徴収なし）・一般口座</a></li>
+        <li><a href="#section-4">概念図①：口座別「確定申告の必要性」マップ</a></li>
+        <li><a href="#section-5">損益通算とは？複数口座の損益を合算する</a></li>
+        <li><a href="#section-6">繰越控除：損失を3年先まで繰り越す</a></li>
+        <li><a href="#section-7">NISAとの関係（非課税枠の考え方）</a></li>
+        <li><a href="#section-8">「源泉徴収あり」でも確定申告が有利になる場面</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ そもそも何に税金がかかるのか</h2>
+    <p>株や投資信託への投資で生じる「お金の動き」のうち、課税対象になるのは主に次の2種類です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>種類</th>
+          <th>内容</th>
+          <th>具体例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>①譲渡益（売却益）</td>
+          <td>買った値段より高く売れたときの差額</td>
+          <td>100万円で買った株を130万円で売る → 30万円が課税対象</td>
+        </tr>
+        <tr>
+          <td>②配当・分配金</td>
+          <td>保有中に受け取る配当金や投資信託の分配金</td>
+          <td>株の配当1万円 → そのまま課税対象</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>逆に、<strong>「まだ売っていない含み益（評価益）」は課税されません</strong>。売って利益を確定したとき（＝決済時）に初めて課税されます。また、<strong>FX・金・ビットコインなどは税率や計算方法が異なります</strong>——本記事では上場株式・株式投資信託に絞って解説します。</p>
+
+    <div class="info-box">
+      <strong>💡 基本の区別</strong>：「売るまで税金はかからない」というのは株の大きな特徴です。ただし<strong>配当・分配金は受け取った時点で課税</strong>されます（源泉徴収ありの場合は自動的に引かれた後で受け取ります）。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 税率20.315%の内訳と「申告分離課税」</h2>
+    <p>上場株式等の売却益や配当にかかる税率は<strong>20.315%</strong>です。内訳はこうなっています。</p>
+
+    <table>
+      <thead>
+        <tr><th>区分</th><th>税率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>所得税（復興特別所得税を含む）</td><td>15.315%</td></tr>
+        <tr><td>住民税</td><td>5%</td></tr>
+        <tr><td><strong>合計（源泉徴収率）</strong></td><td><strong>20.315%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>この税率は<strong>「申告分離課税」</strong>と呼ばれる方式が適用されます。給与など他の所得とは<strong>切り離して別々に税金を計算する</strong>仕組みです。給与が高くても株の利益の税率は一律20.315%——これが申告分離課税の最大の特徴であり、「利益が増えても税率が上がらない（総合課税のような累進性がない）」という点で、投資家にとっては理解しておく価値のある仕組みです。</p>
+
+    <div class="warning-box">
+      税率・税制の内容は法改正により変わることがあります。本記事の情報は執筆時点（2026年7月）のものを参考として記載しています。最新の情報は<a href="https://www.nta.go.jp/" target="_blank" rel="noopener">国税庁ウェブサイト</a>でご確認ください。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 口座の3種類：どの口座を使うかで手続きが変わる</h2>
+    <p>日本では株式等を保有する「口座」の種類が3つあり、<strong>どれを選ぶかによって確定申告の必要性が変わります</strong>。</p>
+
+    <h3>① 特定口座（源泉徴収あり）</h3>
+    <p>証券会社が年間の損益を計算して、<strong>利益に対する税金（20.315%）を自動的に差し引いて（源泉徴収）</strong>くれます。原則として<strong>確定申告は不要</strong>です。投資初心者や「手間をかけたくない」人に向いています。</p>
+
+    <h3>② 特定口座（源泉徴収なし）</h3>
+    <p>証券会社が年間損益を計算した「特定口座年間取引報告書」を発行してくれますが、税金の自動引き落としはありません。<strong>自分で確定申告を行い、納税する必要があります</strong>。</p>
+
+    <h3>③ 一般口座</h3>
+    <p>年間損益の計算も自分で行い、確定申告も自分でします。管理の手間が最も多く、現在は特定口座が普及しているため、初めて口座を開く人が選ぶケースは少なくなっています。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 概念図①：口座別「確定申告の必要性」マップ</h2>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 320" role="img" aria-labelledby="acct-title">
+        <title id="acct-title">3種類の口座と確定申告の必要性の比較概念図</title>
+        <text class="s-panel-label" x="24" y="22">口座の種類と確定申告の必要性</text>
+
+        <!-- 特定口座(源泉あり) -->
+        <rect class="s-fill-g" x="20" y="38" width="192" height="240" rx="10"/>
+        <text class="s-text-g" x="116" y="62" text-anchor="middle">特定口座</text>
+        <text class="s-text-g" x="116" y="80" text-anchor="middle">（源泉徴収あり）</text>
+        <text class="s-text-d" x="116" y="108" text-anchor="middle">税金の計算・徴収</text>
+        <text class="s-text-d" x="116" y="126" text-anchor="middle">▼</text>
+        <text class="s-text-d" x="116" y="146" text-anchor="middle">証券会社が代行</text>
+        <text class="s-text-d" x="116" y="172" text-anchor="middle">（自動引き落とし）</text>
+        <text class="s-text-g" x="116" y="210" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">確定申告</text>
+        <text class="s-text-g" x="116" y="230" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">原則 不要 ✅</text>
+        <text class="s-label-sm" x="116" y="258" text-anchor="middle">※損失繰越には要申告</text>
+
+        <!-- 特定口座(源泉なし) -->
+        <rect class="s-fill-y" x="234" y="38" width="192" height="240" rx="10"/>
+        <text x="330" y="62" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">特定口座</text>
+        <text x="330" y="80" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">（源泉徴収なし）</text>
+        <text class="s-text-d" x="330" y="108" text-anchor="middle">損益計算は証券会社</text>
+        <text class="s-text-d" x="330" y="126" text-anchor="middle">▼</text>
+        <text class="s-text-d" x="330" y="146" text-anchor="middle">納税は自分で</text>
+        <text class="s-text-d" x="330" y="172" text-anchor="middle">（報告書あり）</text>
+        <text x="330" y="210" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">確定申告</text>
+        <text x="330" y="230" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">必要 ⚠️</text>
+        <text class="s-label-sm" x="330" y="258" text-anchor="middle">報告書で手続きは楽</text>
+
+        <!-- 一般口座 -->
+        <rect class="s-fill-r" x="448" y="38" width="192" height="240" rx="10"/>
+        <text class="s-text-r" x="544" y="62" text-anchor="middle">一般口座</text>
+        <text class="s-text-d" x="544" y="90" text-anchor="middle">計算も納税も</text>
+        <text class="s-text-d" x="544" y="110" text-anchor="middle">すべて自分で</text>
+        <text class="s-text-d" x="544" y="146" text-anchor="middle">（報告書なし）</text>
+        <text class="s-text-r" x="544" y="210" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">確定申告</text>
+        <text class="s-text-r" x="544" y="230" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">必要 ❌</text>
+        <text class="s-label-sm" x="544" y="258" text-anchor="middle">計算の手間が最大</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 3種類の口座の特徴比較（概念図）。緑＝特定口座（源泉徴収あり）は税金の計算・徴収を証券会社が代行するため原則確定申告不要。黄＝源泉徴収なしは確定申告が必要だが損益計算書あり。赤＝一般口座はすべて自己管理。<strong>損失の繰越控除・他口座との損益通算には、源泉ありでも確定申告が必要</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 損益通算とは？複数口座の損益を合算する</h2>
+    <p><strong>損益通算</strong>とは、同じ年（1月1日〜12月31日）に生じた利益と損失を合算して、課税所得を減らす仕組みです。たとえば次のようなケースを考えてみます。</p>
+
+    <div class="positive-box">
+      <strong>例：A証券で株を20万円の利益</strong>、B証券で投資信託を<strong>8万円の損失</strong>。<br>
+      損益通算をすると：20万円 − 8万円＝<strong>12万円</strong>が課税対象に。<br>
+      20万円に税金をかけるより、<strong>8万円分の節税効果</strong>がある。
+    </div>
+
+    <p>ポイントは「<strong>複数の証券会社の口座をまたいで合算できる</strong>」という点です。ただし、自動的に行われるわけではなく、<strong>確定申告を通じて自分で申告</strong>する必要があります。特定口座（源泉徴収あり）の口座同士でも、複数の口座間の通算は確定申告が必要です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 300" role="img" aria-labelledby="soneki-title">
+        <title id="soneki-title">損益通算の仕組み（複数口座の損益を合算する概念図）</title>
+        <text class="s-panel-label" x="24" y="22">損益通算のイメージ（概念図）</text>
+
+        <!-- A口座：利益 -->
+        <rect class="s-fill-g" x="20" y="44" width="160" height="80" rx="8"/>
+        <text class="s-text-g" x="100" y="72" text-anchor="middle">A口座</text>
+        <text class="s-text-g" x="100" y="96" text-anchor="middle" font-size="15" font-weight="700" font-family="'Noto Sans JP',sans-serif">＋20万円（利益）</text>
+
+        <!-- B口座：損失 -->
+        <rect class="s-fill-r" x="20" y="148" width="160" height="80" rx="8"/>
+        <text class="s-text-r" x="100" y="176" text-anchor="middle">B口座</text>
+        <text class="s-text-r" x="100" y="200" text-anchor="middle" font-size="15" font-weight="700" font-family="'Noto Sans JP',sans-serif">−8万円（損失）</text>
+
+        <!-- 矢印と合算 -->
+        <path d="M185,84 C 240,84 240,148 240,188" fill="none" stroke="#57606a" stroke-width="1.8" stroke-dasharray="5 3"/>
+        <polygon class="s-arrow" points="236,185 244,185 240,194"/>
+        <rect class="s-fill-b" x="260" y="100" width="160" height="80" rx="8"/>
+        <text class="s-text-b" x="340" y="128" text-anchor="middle">損益通算</text>
+        <text class="s-text-b" x="340" y="150" text-anchor="middle">20−8＝</text>
+        <text class="s-text-b" x="340" y="170" text-anchor="middle" font-size="16" font-weight="700" font-family="'Noto Sans JP',sans-serif">12万円 課税</text>
+
+        <!-- 矢印 -->
+        <line x1="424" y1="140" x2="460" y2="140" stroke="#57606a" stroke-width="1.8"/>
+        <polygon class="s-arrow" points="458,136 466,140 458,144"/>
+
+        <!-- 節税効果 -->
+        <rect class="s-fill-y" x="468" y="100" width="160" height="80" rx="8"/>
+        <text x="548" y="128" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">節税効果</text>
+        <text x="548" y="152" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">8万円×20.315%</text>
+        <text x="548" y="170" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">≈ 1.6万円 軽減</text>
+
+        <text class="s-label-sm" x="330" y="270" text-anchor="middle">※ 確定申告が必要。複数口座をまたぐ場合も申告で合算可</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 損益通算の概念図。A口座の＋20万円とB口座の−8万円を確定申告で合算すると、12万円に対する課税になり、差額8万円分の税負担が軽くなる（概算1.6万円程度）。<strong>「なんとなく損をした年」も確定申告することで節税の可能性がある</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      損益通算できる範囲には制限があります。上場株式等の損失は、上場株式等の配当・利益との通算は可能ですが、給与所得・不動産所得など他の所得とは通算できません。また、一般株式等（非上場株式等）とも別扱いです。詳細は国税庁の案内をご参照ください。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 繰越控除：損失を3年先まで繰り越す</h2>
+    <p>その年に損益通算しても引ききれなかった損失は、<strong>翌年以降3年間にわたって繰り越すことができます</strong>。これが「繰越控除」（上場株式等の譲渡損失の繰越控除）です。</p>
+
+    <div class="info-box">
+      <strong>例</strong>：2024年に30万円の損失。損益通算でも控除しきれない場合、2025年・2026年・2027年の利益からそれぞれ差し引ける。2025年に20万円の利益が出た場合、30−20＝10万円が2026年に繰り越せる。
+    </div>
+
+    <p>繰越控除を使うための<strong>2つの重要ポイント</strong>があります。</p>
+    <ul>
+      <li><strong>損失が出た年に確定申告が必要</strong>：特定口座（源泉徴収あり）でも、損失を繰り越すためには<strong>損失の年に申告</strong>しなければなりません。申告しないと、その損失は「なかったこと」になります。</li>
+      <li><strong>翌年以降も毎年確定申告が必要</strong>：繰越控除を継続して使うには、損失を使い切るまで毎年申告が必要です（利益がない年でも申告が必要）。</li>
+    </ul>
+
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 290" role="img" aria-labelledby="kurikoshi-title">
+        <title id="kurikoshi-title">繰越控除：損失を3年間繰り越す仕組みの概念図</title>
+        <text class="s-panel-label" x="24" y="22">繰越控除の3年間イメージ（概念図）</text>
+
+        <!-- 年ラベル -->
+        <text class="s-text-r"   x="100" y="52" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">2024年（損失）</text>
+        <text class="s-text-g"   x="280" y="52" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">2025年（利益）</text>
+        <text class="s-text-g"   x="460" y="52" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">2026年（利益）</text>
+        <text class="s-text-d"   x="600" y="52" text-anchor="middle" font-size="12" font-family="'Noto Sans JP',sans-serif">2027年まで</text>
+
+        <!-- 2024年：損失ボックス -->
+        <rect class="s-fill-r" x="20" y="62" width="160" height="66" rx="8"/>
+        <text class="s-text-r" x="100" y="88" text-anchor="middle" font-size="15" font-weight="700" font-family="'Noto Sans JP',sans-serif">−30万円 損失</text>
+        <text class="s-text-d" x="100" y="112" text-anchor="middle" font-size="12" font-family="'Noto Sans JP',sans-serif">確定申告で繰越へ</text>
+
+        <!-- 矢印 2024→2025 -->
+        <line x1="185" y1="95" x2="218" y2="95" stroke="#57606a" stroke-width="1.8"/>
+        <polygon class="s-arrow" points="216,91 224,95 216,99"/>
+
+        <!-- 2025年：利益20万、控除後10万が残る -->
+        <rect class="s-fill-g" x="228" y="62" width="104" height="66" rx="8"/>
+        <text class="s-text-g" x="280" y="87" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">＋20万円</text>
+        <text class="s-text-g" x="280" y="106" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">→ 控除で課税0</text>
+        <text class="s-label-sm" x="280" y="122" text-anchor="middle">残損失10万→翌年</text>
+
+        <!-- 矢印 2025→2026 -->
+        <line x1="336" y1="95" x2="369" y2="95" stroke="#57606a" stroke-width="1.8"/>
+        <polygon class="s-arrow" points="367,91 375,95 367,99"/>
+
+        <!-- 2026年：利益15万、残10万を控除、5万に課税 -->
+        <rect class="s-fill-g" x="379" y="62" width="104" height="66" rx="8"/>
+        <text class="s-text-g" x="431" y="87" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif">＋15万円</text>
+        <text class="s-text-g" x="431" y="106" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">→ 控除10万適用</text>
+        <text class="s-label-sm" x="431" y="122" text-anchor="middle">課税対象5万円</text>
+
+        <!-- 矢印 2026→2027 -->
+        <line x1="487" y1="95" x2="521" y2="95" stroke="#6e7781" stroke-width="1.4" stroke-dasharray="5 3"/>
+        <polygon class="s-arrow" points="519,91 527,95 519,99"/>
+        <text class="s-label-sm" x="570" y="92" text-anchor="middle">残損失0</text>
+        <text class="s-label-sm" x="570" y="110" text-anchor="middle">（繰越終了）</text>
+
+        <!-- 繰越損失の流れ -->
+        <text class="s-text-r" x="100" y="156" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif">繰越損失 −30万</text>
+        <path d="M100,162 Q190,180 270,168" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-dasharray="6 3"/>
+        <polygon fill="#cf222e" points="269,164 277,168 269,172"/>
+        <text fill="#cf222e" x="190" y="195" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">繰越</text>
+
+        <text class="s-text-r" x="280" y="210" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif">残 −10万（2025申告で控除）</text>
+        <path d="M280,217 Q360,234 420,222" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-dasharray="6 3"/>
+        <polygon fill="#cf222e" points="419,218 427,222 419,226"/>
+        <text fill="#cf222e" x="358" y="248" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">繰越</text>
+
+        <text class="s-label-sm" x="330" y="272" text-anchor="middle">※ 損失の年に確定申告が必要。翌年以降も毎年申告継続が繰越控除の条件。概念を示すイメージ図です。</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 繰越控除の3年間イメージ（概念図）。2024年に30万円の損失 → 2025年に20万円の利益を控除（課税0、残10万繰越） → 2026年に15万円の利益から残10万を控除（課税5万円）。損失が3年以内に消化されれば繰越終了。<strong>各年の確定申告が条件</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ NISAとの関係（非課税枠の考え方）</h2>
+    <p>2024年から始まった「新NISA」では、年間の投資上限内であれば、<strong>売却益・配当・分配金がすべて非課税</strong>になります。20.315%の税率が0%になる強力な優遇です。</p>
+
+    <table>
+      <thead>
+        <tr><th>口座タイプ</th><th>売却益の税率</th><th>配当・分配金の税率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>特定口座（課税）</td><td>20.315%</td><td>20.315%</td></tr>
+        <tr><td>NISA口座（非課税）</td><td><strong>0%</strong></td><td><strong>0%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      ただし、<strong>NISA口座の損失は損益通算や繰越控除の対象になりません</strong>。NISA口座で生じた損失は課税口座の利益と相殺できないため、値下がりリスクがあることを前提に利用することが大切です。NISAの制度詳細（投資上限額・つみたて枠・成長投資枠の仕組みなど）は金融庁の公式サイトや各証券会社の案内をご参照ください。
+    </div>
+
+    <p>税の観点では「NISA口座で長期保有・課税口座で短期売買の損益通算を活用する」という組み合わせを考える人もいますが、<strong>どの口座をどう使うかは個々の投資目的・運用期間・税務状況によって異なります</strong>。個別の税務戦略については税務署や税理士にご相談ください。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣「源泉徴収あり」でも確定申告が有利になる場面</h2>
+    <p>特定口座（源泉徴収あり）を使っていれば「確定申告不要」というのが原則ですが、<strong>あえて申告したほうが得をする場面</strong>があります。</p>
+    <ul>
+      <li><strong>複数の証券会社に口座がある</strong>：A社で利益・B社で損失のような場合、申告で損益通算ができます。</li>
+      <li><strong>年間を通じて損失になった</strong>：損失を翌年以降3年間繰り越すための申告が必要です（これが最も重要な場面のひとつ）。</li>
+      <li><strong>配当を損益通算したい</strong>：申告分離課税を選択することで、売却損と配当を通算できます（総合課税の選択は別途考慮が必要）。</li>
+      <li><strong>所得が少ない年</strong>：所得税率が低い場合に申告方法を選ぶことで税負担が軽くなる可能性があります（ただし住民税にも影響するため要確認）。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 損失の年ほど確定申告の価値がある</strong>：「今年は損ばかりだから確定申告したくない」と思うかもしれませんが、<strong>損失が大きい年こそ申告することで3年間の繰越控除が使えます</strong>。申告しないとその損失は消えてしまいます。
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI は、より長く・賢く市場に参加するための情報提供を目的としています。税金の知識はその一部です。</p>
+    <ul>
+      <li><strong>シグナル成績を参考にする際の視点として</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a>では、発火したシグナルの結果を公開しています。実際に売買する場合、口座の種類や売買タイミングによって税の扱いが変わります。損切りの記録を残しておくことは、繰越控除の申告にも役立ちます。</li>
+      <li><strong>コストを意識した投資判断</strong>：手数料の影響を解説した <a href="guide-fee-impact.html">👉 手数料が長期リターンに与える影響</a>と同様に、税金もリターンを削るコストのひとつです。「税引き後のリターン」を意識することが長期投資では重要になります。</li>
+      <li><strong>商品別の税率の違いも把握する</strong>：株以外に FX・金・ビットコインへの投資も検討している方は、<a href="guide-investment-tax.html">👉 投資の税金完全ガイド（商品別税率比較）</a>で各商品の税率の違いをご確認ください。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの勝率・成績をチェック</div>
+      <div class="cta-box-desc">当サイトのルールベースシグナルが、実際にどう機能しているか——勝ちも負けも含めて公開しています。売買記録と税務管理を一緒に考えたい方にも参考になります。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 10 -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <p>株・投資信託の税金について学んできた内容を整理します。</p>
+    <ul>
+      <li>上場株式等の利益（売却益・配当）には<strong>20.315%（所得税15.315%＋住民税5%）</strong>の申告分離課税が適用される。</li>
+      <li>口座は3種類：<strong>特定口座（源泉徴収あり）</strong>は確定申告原則不要・<strong>源泉徴収なし</strong>と<strong>一般口座</strong>は要申告。</li>
+      <li><strong>損益通算</strong>：同年内の複数口座の損益を確定申告で合算でき、課税対象を減らせる。</li>
+      <li><strong>繰越控除</strong>：損失を翌年以降3年間繰り越せる。ただし損失の年の申告が必須で、翌年以降も毎年申告を続ける必要がある。</li>
+      <li><strong>NISA</strong>は非課税だが、NISA内の損失は損益通算・繰越控除に使えない。</li>
+      <li>「源泉徴収あり」でも、損失年・複数口座がある場合は<strong>確定申告が節税につながる可能性がある</strong>。</li>
+      <li>個別の税務相談・最新の税制は<strong>税務署・税理士・国税庁ウェブサイト</strong>に確認を。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-investment-tax.html">
+        <div class="related-card-title">📊 投資の税金完全ガイド（商品別税率比較）</div>
+        <div class="related-card-desc">株・FX・金・ビットコインの税率を徹底比較。FXの雑所得（総合課税）との違いも図解。</div>
+      </a>
+      <a class="related-card" href="guide-fee-impact.html">
+        <div class="related-card-title">💸 手数料が長期リターンに与える影響</div>
+        <div class="related-card-desc">税金と同様にリターンを削るコストである手数料。複利と組み合わせて理解したい。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">ルールで発火し損切り目安も併記する複合シグナルの、勝ちも負けも含めた実際の成績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は株・投資信託にかかる税金の一般的な仕組みを情報提供として解説したものであり、特定銘柄の売買推奨・投資助言・税務相談ではありません。税制は改正される場合があります。個別の税務については必ず税務署・税理士にご確認ください。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
