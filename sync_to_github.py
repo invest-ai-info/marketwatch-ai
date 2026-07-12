@@ -37,4 +37,5 @@ SYNC_FILES = [
     "guide-signal-lab-037.html",
     "guide-dividend-basics.html",
     "guide-proverb-kyoki-hikan.html",
+    "guide-news-2026-07-12-triple-event-july14.html",
 ]
