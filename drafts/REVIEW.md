@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-07-13 | 🧪 シグナル研究 #038 — tier=good gate「前向き69%」の正体 下書き生成
+
+- **基準日**: 2026-07-13（JST / UTC 2026-07-12T21:00Z）
+- **仮説**: tier=good gate の IS/FWD 乖離解析（IS34.7%→FWD68.7%、+34pp急改善の主因を特定）
+- **生成ファイル**: `drafts/draft-signal-lab-038.html` / `drafts/labnotes/lab-038-analysis.md` / `drafts/labnotes/lab-038-claims.json`
+- **検証結果**: 全期間 114/263=43.3%(good) / 146/405=36.0%(neutral) / 177/415=42.7%(avoid) / 77/158=47.7%(elite)
+- **前向きトラッカー**: tier=good FWD 46/67=68.7% E(R)=+0.603 CI[+0.38~+0.82]（N=67<80・蓄積中）
+- **主因**: 金属IS13.8%（IS不毛期）→FWD63.6%（レジーム転換）が全体IS34.7%を作った主因。全グループFWD改善で構成シフト≒0（性能シフト確認）。jpy_fx/other_fxはtier=goodに出現しない（FXはneutral/avoid分類）
+- **ゲート状況**: signal_lab_verify.py・コンプラOpus・独立Opus確認 実行中
+
+---
+
 ## 2026-07-13 | 💰 基礎知識 #22 — 株・投信の税金入門（stock-tax-basics）下書き生成
 
 - **基準日**: 2026-07-13（JST / UTC 2026-07-12T20:30Z）
