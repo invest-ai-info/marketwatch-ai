@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-07-13 autopublish: ✅ 公開済み — guide-stock-tax-basics.html（基礎知識 #22）
+
+- **対象key**: stock-tax-basics（topic queue #22 / 投資の基礎知識）
+- **タイトル**: 株・投信の税金入門｜20.315%・特定口座・損益通算・繰越控除の仕組みを図解
+- **決定論ゲート**: ✅ GREEN
+- **Opus初回判定**: 🟢 コンプラ白・品質白（全A1-A8/①-⑤ ✅・修正なし）
+- **独立Opus確認**: 不要（初回白・修正なし）
+- **整合性チェック**: ✅ OK（エラー0件）
+- **commit**: 003ef75
+- **公開URL**: https://marketwatch-jp.com/guide-stock-tax-basics.html
+
+---
+
 ## 2026-07-13 | 🧪 シグナル研究 #038 — tier=good gate「前向き69%」の正体 下書き生成
 
 - **基準日**: 2026-07-13（JST / UTC 2026-07-12T21:00Z）
