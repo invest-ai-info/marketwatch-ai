@@ -36,4 +36,5 @@ SYNC_FILES = [
     "guide-news-2026-07-11-skhynix-adr-nasdaq.html",
     "guide-signal-lab-037.html",
     "guide-dividend-basics.html",
+    "guide-proverb-kyoki-hikan.html",
 ]
