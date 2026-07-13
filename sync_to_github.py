@@ -42,4 +42,5 @@ SYNC_FILES = [
     "guide-stock-tax-basics.html",
     "guide-proverb-mugiwara-fuyu.html",
     "guide-news-2026-07-13-kospi-black-monday.html",
+    "guide-signal-lab-039.html",
 ]
