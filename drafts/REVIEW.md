@@ -2,6 +2,44 @@
 
 ---
 
+## 2026-07-14 | 🛡️ リスク管理 #23 — 投資詐欺の見分け方（investment-scams）下書き生成
+
+- **基準日**: 2026-07-14（JST / UTC 2026-07-13T20:31Z）
+- **topic key**: `investment-scams`（topicキュー #23 / 🛡️ リスク管理・資金管理）
+- **仮タイトル**: 投資詐欺の見分け方｜「必ず儲かる」は全部ウソ〜典型パターンと6つの危険サインを徹底解説
+- **生成ファイル**: `drafts/draft-investment-scams.html`
+- **参照出典（WebSearch確認済み）**:
+  - 警察庁「令和6年における特殊詐欺及びSNS型投資・ロマンス詐欺の認知・検挙状況等について（確定値）」: https://www.npa.go.jp/bureau/criminal/souni/tokusyusagi/hurikomesagi_toukei2024.pdf
+  - 警察庁「令和7年における特殊詐欺及びSNS型投資・ロマンス詐欺の認知・検挙状況等について（確定値）」: https://www.npa.go.jp/bureau/criminal/souni/tokusyusagi/sagi_keihatsu2025.pdf
+  - 国民生活センター「情報商材（各種相談の件数や傾向）」: https://www.kokusen.go.jp/pdf/n-20240529_1.pdf
+  - 金融庁「免許・許可・登録等を受けている業者一覧」: https://www.fsa.go.jp/menkyo/menkyo.html
+  - 金融庁「詐欺的な投資に関する相談ダイヤルの開設について」（2024年6月）: https://www.fsa.go.jp/news/r5/sonota/20240619/toshisagi.html
+  - 金融庁「SNS・マッチングアプリ等で知り合った者や著名人を騙る者からの投資勧誘等にご注意ください！」: https://www.fsa.go.jp/ordinary/chuui/sns.html
+- **統計確認事項**:
+  - 2024年 SNS型投資・ロマンス詐欺合計 約1,272億円（SNS型871億円 + ロマンス詐欺401億円）: ✅ 警察庁PDF確認済
+  - 2025年 SNS型投資・ロマンス詐欺 約1,834億円: ✅ 警察庁確定値
+  - 2025年 特殊詐欺 約1,423億円: ✅ 警察庁確定値
+  - 2025年 合計被害額 約3,257億円: ✅ 共同通信・複数ソース確認済
+  - 1件平均被害額 約1,360万円（2024年SNS型投資詐欺）: ✅ 警察庁資料
+  - 情報商材相談 2023年度1,629件・前年比9.6倍・平均687万円: ✅ 国民生活センター公式PDF
+  - 月利5%=年利約80%（複利計算）: ✅ 独立算数で確認（1.05^12≈1.796）
+  - 金融庁 詐欺専用相談ダイヤル 0570-016812: ✅ 金融庁プレスリリース2024年6月確認
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（詐欺の手口・見分け方の情報提供のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「一択」「保証」「儲かる」使用なし）
+  - ✅ kinsho-v1免責：冒頭バナー（disclaimer-banner）＋本文末p.disclaimer（data-disclaimer="kinsho-v1"）＋footerのdata-disclaimer="kinsho-v1"の計3箇所に免責あり
+  - ✅ noindex,nofollow meta tag 挿入済み
+  - ✅ 出典付き統計のみ使用（未確認の数値は掲載せず）
+  - ✅ 投資詐欺保護的方向の記事→コンプラ白評価の見込み高
+- **SVGについて**: 2点（ポンジスキーム資金フロー概念図・年率比較棒グラフ概念図）を実装。ライト/ダーク切替クラス（.s-box-red/.s-box-grn/.s-text-red/.s-text-grn）追加済み。**実機でのライト/ダーク確認を要請**
+- **人間の残作業**:
+  - [ ] SVGの実機ライト/ダーク切替確認（defs>marker の arrowhead がダーク時に正しく表示されるか要確認）
+  - [ ] タイトル・メタ description の微調整（SEO観点）
+  - [ ] 公開カテゴリ「🛡️ リスク管理・資金管理」が guides.html 上で未設置の場合、初回公開時に人間が新設が必要（AUTODRAFT_GUIDE.md の指示通り）
+  - [ ] 公開は毎朝08:40の autodraft-publish ルーティンが自動ゲート付きで実行
+
+---
+
 ## 2026-07-13 autopublish: ✅ 公開済み — guide-stock-tax-basics.html（基礎知識 #22）
 
 - **対象key**: stock-tax-basics（topic queue #22 / 投資の基礎知識）
