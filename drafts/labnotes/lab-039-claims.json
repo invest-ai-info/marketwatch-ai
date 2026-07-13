@@ -1,0 +1,59 @@
+{
+  "article_id": "039",
+  "claims": [
+    {
+      "label": "metal×long 全期間勝率（メイン仮説）",
+      "filter": {"group": "metal", "direction": "long"},
+      "k": 38,
+      "n": 172
+    },
+    {
+      "label": "metal×long×bb_lower_touch 全期間",
+      "filter": {"group": "metal", "direction": "long", "signal": "bb_lower_touch"},
+      "k": 14,
+      "n": 58
+    },
+    {
+      "label": "metal×long×rsi_oversold_bounce 全期間",
+      "filter": {"group": "metal", "direction": "long", "signal": "rsi_oversold_bounce"},
+      "k": 12,
+      "n": 47
+    },
+    {
+      "label": "metal×long×macd_golden 全期間",
+      "filter": {"group": "metal", "direction": "long", "signal": "macd_golden"},
+      "k": 5,
+      "n": 32
+    },
+    {
+      "label": "GC=F×long 全期間（金）",
+      "filter": {"ticker": "GC=F", "direction": "long"},
+      "k": 25,
+      "n": 99
+    },
+    {
+      "label": "SI=F×long 全期間（銀）",
+      "filter": {"ticker": "SI=F", "direction": "long"},
+      "k": 13,
+      "n": 73
+    },
+    {
+      "label": "tf=1h×metal×long 全期間",
+      "filter": {"group": "metal", "direction": "long", "tf": "1h"},
+      "k": 18,
+      "n": 89
+    },
+    {
+      "label": "tf=4h×metal×long 全期間",
+      "filter": {"group": "metal", "direction": "long", "tf": "4h"},
+      "k": 17,
+      "n": 73
+    },
+    {
+      "label": "metal×short 全期間（対照・ショート）",
+      "filter": {"group": "metal", "direction": "short"},
+      "k": 34,
+      "n": 73
+    }
+  ]
+}

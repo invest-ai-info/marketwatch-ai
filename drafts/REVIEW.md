@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-07-14 | 🧪 AIシグナル研究日誌 #039 — group=metal×dir=long gate N=86昇格確認
+
+- **基準日**: 2026-07-14（JST / UTC 2026-07-13T）
+- **優先度**: ①（tracker昇格変化: group=metal×dir=long ✅昇格）
+- **生成ファイル**: `drafts/draft-signal-lab-039.html`
+- **仮タイトル**: AIシグナル研究日誌 #39 金属ロングgate N=86昇格確認——「前向き改善」は統計ノイズだった
+- **メイン仮説結果**: 全期間 N=172, k=38, 22.1% CI[16.5%,28.9%] E(R)=-0.727 RCI[-0.944,-0.509]
+- **H1〜H4全4条件**: ✅クリア（CI上限28.9%<43%・N=172≥80・RCI上限-0.509<0・FWD N=86 gate昇格）
+- **claims.json**: 9件（group/ticker/direction/signal/tf のみ使用）
+- **ゲート状態**: 実行中（verify.py → Opus コンプラ → 独立Opus → publish の順）
+
+---
+
 ## 2026-07-14 | 🛡️ リスク管理 #23 — 投資詐欺の見分け方（investment-scams）下書き生成
 
 - **基準日**: 2026-07-14（JST / UTC 2026-07-13T20:31Z）

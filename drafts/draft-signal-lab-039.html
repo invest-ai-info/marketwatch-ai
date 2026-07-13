@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIシグナル研究日誌 #39｜金属ロングgate N=86昇格確認——「前向き改善」は統計ノイズだった - MarketWatch AI</title>
+  <meta name="description" content="金属ロング（GC=F/SI=F）の前向きトラッカーが N=86 で gate昇格。全期間 N=172 の勝率 22.1%・CI上限 28.9%・E(R)=-0.727R で損益分岐 43% を大きく下回ることを確認。#030 で見えた「前向き改善 E(R)=+0.30」は N=35 の統計ノイズと解明。シグナル別（bb_lower_touch/rsi_oversold_bounce/macd_golden）・銘柄別（GC=F/SI=F）・TF別の損失マップも全公開。">
+  <meta name="keywords" content="AIシグナル,検証,金属,ゴールド,シルバー,GCF,SIF,ロング,勝率,研究日誌,gate,損失">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-039.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #39｜金属ロングgate N=86昇格確認——「前向き改善」は統計ノイズだった">
+  <meta property="og:description" content="金属ロング（GC=F/SI=F）前向きトラッカーが N=86 で gate昇格。全期間 N=172、勝率 22.1%・E(R)=-0.727R で損益分岐 43% を大きく下回る。#030 の「前向き E(R)=+0.30」は N=35 の短期ノイズと確認。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-039.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="robots" content="noindex,nofollow">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #39｜金属ロングgate N=86昇格確認——「前向き改善」は統計ノイズだった",
+    "description": "金属ロング（GC=F/SI=F）前向きトラッカーが N=86 で gate昇格。全期間 N=172、勝率 22.1%・E(R)=-0.727R で損益分岐 43% を大きく下回る。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-14",
+    "dateModified": "2026-07-14",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-039.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #39
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #39<br><small style="font-size:.65em;color:#57606a;font-weight:400">金属ロントgate N=86昇格確認——「前向き改善」は統計ノイズだった</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第39回です。<a href="guide-signal-lab-038.html">前回（#38）</a>では tier=good の前向き急上昇（IS34.7%→FWD68.7%）の正体を解剖し、金属レジーム転換が主因と確認しました。</p>
+    <p>今回はその金属ロングに直接焦点を当てます。本日のトラッカー更新で <strong>group=metal×dir=long（金・銀ロング）が前向き N=86 に達し、gate 昇格</strong>（損失確定）が記録されました。なぜこれが重要かというと、<a href="guide-signal-lab-030.html">#30</a>では「金属の前向き期待値が IS=-0.964R→FWD+0.672R に劇的改善した」と報告しており、一見矛盾するからです。この記事では N=172 件の全期間データを解剖し、その矛盾を解消します。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 金属ロング全期間（38/172）の勝率は<strong>22.1%</strong>、95%CI上限<strong>28.9%</strong>で損益分岐43%を大きく下回る → <strong>gate確定</strong><br>
+      ② 前向きトラッカー（N=86, 24/86=28%）が E(R) 95%CI 全域マイナス（上限 −0.01R）に達し <strong>✅昇格</strong><br>
+      ③ #30 で見えた「前向き E(R)=+0.30R」は <strong>N=35・10日間の短期ノイズ</strong>（RCI[−0.29, +0.89]、CI が 0 を含む）<br>
+      ④ シグナル種別・TF・銘柄を問わず<strong>全条件で損益分岐割れ</strong>——金ロング25.3%、銀ロング17.8%、macd_golden最悪15.6%
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">今回の題材——tracker昇格とは何か</a></li>
+        <li><a href="#method">検証方法と事前宣言基準</a></li>
+        <li><a href="#alltime">全期間データ：N=172、22.1%</a></li>
+        <li><a href="#noise">「前向き改善」は統計ノイズだった——#30との矛盾を解消</a></li>
+        <li><a href="#signal-map">シグナル別損失マップ</a></li>
+        <li><a href="#ticker">銘柄別：金（GC=F）vs 銀（SI=F）</a></li>
+        <li><a href="#direction">方向非対称：ロング22.1% vs ショート46.6%</a></li>
+        <li><a href="#verdict">事前基準の評価——4条件クリア</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="background">① 今回の題材——tracker昇格とは何か</h2>
+
+    <p>研究日誌では毎日、前向きトラッカー（リアルタイムで積み上がるライブデータ）を更新しています。トラッカーには各仮説が「gate（回避候補）」か「edge（有望候補）」かを事前宣言しておき、一定のサンプルが集まったときに判定が下ります。</p>
+
+    <p>本日 2026年7月14日の更新で、<strong>group=metal×dir=long（金属グループ・ロング方向）</strong>のトラッカーが次のステータス変化を記録しました。</p>
+
+    <div class="negative-box">
+      🚩 <strong>ステータス変化（本日）</strong><br>
+      group=metal×dir=long: <strong>promoted（✅昇格）</strong><br>
+      前向き N=86、平均R = −0.349R、95%CI [−0.69R, −0.01R]<br>
+      → CI 上限 −0.01R &lt; 0 → <strong>gate確認（長期的に損失）</strong>
+    </div>
+
+    <p>「gate」とは、統計的に損失が確定したフィルタを指します。このシグナルを発火するたびに、長期的には平均して損をする可能性が高いことを意味します。金属ロングが gate として確認されたことで、本日の検証テーマが決まりました。</p>
+
+    <div class="info-box">
+      <strong>💡 「損益分岐43%」とは</strong><br>
+      本システムのリスクリワードは SL=−1.0R、TP1=+1.33R、TP2=+2.0R です（ATR × 1.5 / 2.0 / 3.0 設定）。損益がゼロになる勝率の下限は約43%です。これを下回ると長期的にマイナスになります。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証方法と事前宣言基準</h2>
+
+    <p>本研究では「もしも計算（反実仮想）」を用います。実際に行った取引とは別に、条件を決めて「もしこのルールで全シグナルをトレードしていたら？」という勝率を signals-log（自動記録された全シグナル履歴）から集計します。</p>
+
+    <p><strong>今回の事前宣言基準：</strong></p>
+    <ul>
+      <li>H1: 全期間 metal×long の 95%CI 上限 &lt; 43%（損益分岐割れ確定）</li>
+      <li>H2: N ≥ 80（統計的信頼性）</li>
+      <li>H3: 期待値 E(R) の 95%CI が全域マイナス（RCI 上限 &lt; 0）</li>
+      <li>H4: 前向きトラッカーが N≥80 かつ gate昇格（CI 上限 &lt; 0）</li>
+    </ul>
+
+    <p>4条件を全てクリアした場合に「gate 確認」と判定します。</p>
+
+    <!-- =============================== -->
+    <h2 id="alltime">③ 全期間データ：N=172、勝率22.1%</h2>
+
+    <p>signals-log に記録されている全クローズ済みシグナルのうち、金（GC=F）・銀（SI=F）のロング方向のものを集計しました。</p>
+
+    <table>
+      <tr><th>条件</th><th>N（件数）</th><th>k（勝利）</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>metal×long 全期間</td><td>172</td><td>38</td><td>22.1%</td><td>[16.5%, 28.9%]</td><td>−0.727R</td></tr>
+      <tr><td>GC=F（金）×long</td><td>99</td><td>25</td><td>25.3%</td><td>[17.7%, 34.6%]</td><td>−0.616R</td></tr>
+      <tr><td>SI=F（銀）×long</td><td>73</td><td>13</td><td>17.8%</td><td>[10.7%, 28.1%]</td><td>−0.877R</td></tr>
+    </table>
+
+    <p>損益分岐の 43% に対して、全期間 CI 上限は <strong>28.9%</strong> です。これは損益分岐を 14.1pp も下回ります。E(R)=−0.727R という数字は、1回のトレードで平均して ATR の 0.727 倍を失うことを意味します。</p>
+
+    <div class="negative-box">
+      全期間 95%CI 上限 = 28.9% &lt; 43%（損益分岐） → <strong>H1クリア</strong><br>
+      N = 172 ≥ 80 → <strong>H2クリア</strong><br>
+      E(R) = −0.727R、95%RCI[−0.944R, −0.509R]、上限 −0.509 &lt; 0 → <strong>H3クリア</strong>
+    </div>
+
+    <!-- SVG 概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="560" height="220" rx="6" class="s-fill-gray"/>
+        <!-- タイトル -->
+        <text x="280" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">金属ロング シグナル別勝率（全期間）</text>
+        <!-- 損益分岐ライン（43%）-->
+        <!-- Y軸: 0%=200, 60%=40 → 1%=2.67px, 43%=200-43*2.67=200-114.8=85.2 -->
+        <line x1="60" y1="85" x2="540" y2="85" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="545" y="89" class="s-label-r" style="font-size:11px">43%</text>
+        <!-- 軸 -->
+        <line x1="60" y1="40" x2="60" y2="205" class="s-axis"/>
+        <line x1="60" y1="205" x2="540" y2="205" class="s-axis"/>
+        <!-- Y軸ラベル -->
+        <text x="54" y="209" text-anchor="end" class="s-label-sm">0%</text>
+        <text x="54" y="44" text-anchor="end" class="s-label-sm">60%</text>
+        <text x="54" y="125" text-anchor="end" class="s-label-sm">30%</text>
+        <line x1="58" y1="125" x2="62" y2="125" class="s-axis"/>
+        <!-- ガイドライン30% -->
+        <line x1="60" y1="125" x2="540" y2="125" class="s-guide"/>
+
+        <!-- バー定義: x=80+i*90, w=65 -->
+        <!-- 全体22.1%: y=200-22.1*2.67=200-59=141, h=59 -->
+        <rect x="70" y="141" width="65" height="59" class="s-fill-r"/>
+        <text x="102" y="137" text-anchor="middle" class="s-label-r">22.1%</text>
+        <text x="102" y="215" text-anchor="middle" class="s-label-sm">全体</text>
+
+        <!-- GC=F 25.3%: y=200-25.3*2.67=200-67.5=132.5, h=67.5 -->
+        <rect x="155" y="132" width="65" height="68" class="s-fill-r"/>
+        <text x="187" y="128" text-anchor="middle" class="s-label-r">25.3%</text>
+        <text x="187" y="215" text-anchor="middle" class="s-label-sm">GC=F（金）</text>
+
+        <!-- SI=F 17.8%: y=200-17.8*2.67=200-47.5=152.5, h=47.5 -->
+        <rect x="240" y="153" width="65" height="47" class="s-fill-r"/>
+        <text x="272" y="149" text-anchor="middle" class="s-label-r">17.8%</text>
+        <text x="272" y="215" text-anchor="middle" class="s-label-sm">SI=F（銀）</text>
+
+        <!-- bb_lower_touch 24.1%: y=200-24.1*2.67=200-64.4=135.6, h=64.4 -->
+        <rect x="325" y="136" width="65" height="64" class="s-fill-r"/>
+        <text x="357" y="132" text-anchor="middle" class="s-label-r">24.1%</text>
+        <text x="357" y="215" text-anchor="middle" class="s-label-sm">BB下限</text>
+
+        <!-- rsi_oversold 25.5%: y=200-25.5*2.67=200-68=132, h=68 -->
+        <rect x="410" y="132" width="65" height="68" class="s-fill-r"/>
+        <text x="442" y="128" text-anchor="middle" class="s-label-r">25.5%</text>
+        <text x="442" y="215" text-anchor="middle" class="s-label-sm">RSI売られすぎ</text>
+
+        <!-- macd_golden 15.6%: y=200-15.6*2.67=200-41.7=158.3, h=41.7 -->
+        <rect x="493" y="158" width="42" height="42" class="s-fill-r"/>
+        <text x="514" y="154" text-anchor="middle" class="s-label-r">15.6%</text>
+        <text x="514" y="215" text-anchor="middle" class="s-label-sm">MACD</text>
+      </svg>
+      <p class="chart-caption">図：金属ロング シグナル別勝率（全期間）。赤線（43%）が損益分岐。全シグナルで大きく下回る。数値は全期間の集計（反実仮想）。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="noise">④ 「前向き改善」は統計ノイズだった——#30との矛盾を解消</h2>
+
+    <p><a href="guide-signal-lab-030.html">#30（2026-07-05）</a>では、ロング全般 gate の前向き追跡の中で「金属 IS E(R)=−0.964R → FWD +0.672R に改善」と記録しました。これは事実ですが、<strong>その窓は非常に狭く、統計的に確定していませんでした</strong>。</p>
+
+    <p>具体的に計算すると、#30が参照した金属ロング前向きデータは次の通りです。</p>
+
+    <table>
+      <tr><th>期間</th><th>N</th><th>勝率</th><th>E(R)</th><th>RCI</th><th>状態</th></tr>
+      <tr><td>IS（〜2026-06-17）</td><td>86</td><td>16.3%</td><td>−0.930R</td><td>[−1.205, −0.656]</td><td>全域マイナス</td></tr>
+      <tr><td>#30 参照窓（〜07-04）</td><td>35</td><td>51.4%</td><td>+0.300R</td><td>[−0.288, +0.888]</td><td><strong>CI が 0 を含む（非有意）</strong></td></tr>
+      <tr><td>2026年7月（直近）</td><td>37</td><td>18.9%</td><td>−0.838R</td><td>[−1.286, −0.390]</td><td>全域マイナス（再確認）</td></tr>
+      <tr><td>前向き累計（〜07-14）</td><td>86</td><td>27.9%</td><td>−0.523R</td><td>[−0.857, −0.190]</td><td><strong>全域マイナス確定</strong></td></tr>
+    </table>
+
+    <p>#30 が「改善した」と見えた 35 件（2026-06-25〜07-04の10日間）は、信頼区間が [−0.29R, +0.89R] と 0 を含んでいます。つまり、<strong>その時点では改善とも悪化とも確定できないほどサンプルが少なかった</strong>ということです。</p>
+
+    <div class="warning-box">
+      N=35 の短期データでは統計的に何も言えない。「改善した」という印象は、<strong>少ないサンプルによるランダムな揺れ</strong>（統計ノイズ）でした。その後7月に入ると18.9%・E(R)=−0.838R に急落し、累計 N=86 でも前向き E(R)=−0.523R（全域マイナス）と確認されました。
+    </div>
+
+    <p>これは研究日誌が繰り返し強調してきた重要な教訓です。<strong>短い前向き窓で見えた「改善」を、長期的なエッジとして過信してはいけません</strong>。N=80〜100 程度のデータが累積し、CI が 0 を跨がなくなって初めて、有意な変化と言えます。</p>
+
+    <!-- =============================== -->
+    <h2 id="signal-map">⑤ シグナル別損失マップ</h2>
+
+    <p>金属ロングはどのシグナルで発火しても損益分岐に届いていません。主要シグナルを全件集計すると次のようになります。</p>
+
+    <table>
+      <tr><th>シグナル種別</th><th>N</th><th>k（勝利）</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>bb_lower_touch（BB下限タッチ）</td><td>58</td><td>14</td><td>24.1%</td><td>[15.0%, 36.5%]</td><td>−0.655R</td></tr>
+      <tr><td>rsi_oversold_bounce（RSI売られすぎ）</td><td>47</td><td>12</td><td>25.5%</td><td>[15.3%, 39.5%]</td><td>−0.606R</td></tr>
+      <tr><td>macd_golden（MACDゴールデンクロス）</td><td>32</td><td>5</td><td>15.6%</td><td>[6.9%, 31.8%]</td><td>−0.953R</td></tr>
+      <tr><td>high_break（高値ブレイク）</td><td>11</td><td>1</td><td>9.1%</td><td>[1.6%, 37.7%]</td><td>−1.182R</td></tr>
+      <tr><td>bb_upper_break（BB上限ブレイク）</td><td>9</td><td>3</td><td>33.3%</td><td>[12.1%, 64.6%]</td><td>−0.333R</td></tr>
+      <tr><td>ma_golden（MA ゴールデンクロス）</td><td>6</td><td>1</td><td>16.7%</td><td>[3.0%, 56.4%]</td><td>−0.917R</td></tr>
+    </table>
+
+    <p>もっとも多いシグナルは bb_lower_touch（58件）と rsi_oversold_bounce（47件）で、合わせて全体の 61% を占めます。しかしどちらも勝率は 24〜26% にとどまります。最悪は macd_golden（15.6%）で、E(R)=−0.953R という深刻な損失を記録しています。</p>
+
+    <div class="negative-box">
+      注目：<strong>逆張り買い（BB下限/RSI売られすぎ）が金属では機能しない</strong><br>
+      <a href="guide-signal-lab-014.html">#14</a>では jpy_fx（円クロス）の bb_lower_touch ロングが 60%（N=45）を達成し、<a href="guide-signal-lab-026.html">#26</a>では index（株価指数）ロングが 59.6%（N=104）で昇格しました。しかし金属に同じシグナルを使っても 24〜26% にしかなりません。<strong>「逆張り買い」の有効性は資産クラスによって大きく異なります</strong>。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="ticker">⑥ 銘柄別：金（GC=F）vs 銀（SI=F）</h2>
+
+    <p>金属グループは金（GC=F）と銀（SI=F）の2銘柄から成ります。</p>
+
+    <table>
+      <tr><th>銘柄</th><th>N</th><th>k</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>GC=F（金）</td><td>99</td><td>25</td><td>25.3%</td><td>[17.7%, 34.6%]</td><td>−0.616R</td></tr>
+      <tr><td>SI=F（銀）</td><td>73</td><td>13</td><td>17.8%</td><td>[10.7%, 28.1%]</td><td>−0.877R</td></tr>
+    </table>
+
+    <p>金（25.3%）でも銀（17.8%）でも、損益分岐の 43% には遠く届きません。銀の方が E(R)=−0.877R とさらに深刻です。時間足別でも傾向は変わりません。</p>
+
+    <table>
+      <tr><th>時間足</th><th>N</th><th>k</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>1H足</td><td>89</td><td>18</td><td>20.2%</td><td>[13.2%, 29.7%]</td><td>−0.792R</td></tr>
+      <tr><td>4H足</td><td>73</td><td>17</td><td>23.3%</td><td>[15.1%, 34.2%]</td><td>−0.685R</td></tr>
+    </table>
+
+    <p>1H足（20.2%）も 4H足（23.3%）もほぼ同水準で損益分岐を大きく割っています。<a href="guide-signal-lab-015.html">#15</a>で発見した「4H足ロングの弱さ」は金属では特に顕著ですが、1H足に変えても改善しません。</p>
+
+    <!-- =============================== -->
+    <h2 id="direction">⑦ 方向非対称：ロング22.1% vs ショート46.6%</h2>
+
+    <p>金属グループのロングとショートの間には、際立った非対称があります。</p>
+
+    <table>
+      <tr><th>方向</th><th>N</th><th>k</th><th>勝率</th><th>95%CI</th><th>E(R)</th></tr>
+      <tr><td>ロング</td><td>172</td><td>38</td><td>22.1%</td><td>[16.5%, 28.9%]</td><td>−0.727R</td></tr>
+      <tr><td>ショート</td><td>73</td><td>34</td><td>46.6%</td><td>[35.6%, 57.9%]</td><td>+0.130R</td></tr>
+    </table>
+
+    <p>ショートは 46.6%（N=73）で損益分岐付近、E(R)=+0.130R と若干プラスです。ロングとは <strong>24.5pp の方向非対称</strong>があります。</p>
+
+    <p>この非対称の背景として、本シリーズで確認してきた「金属ロング → 20年データでは良かったが直近は不振（#13）」「#030で一時改善に見えたが統計ノイズ」という流れがあります。金属コモディティのロングは、本システムの設定（ATR×1.5 SL）と相性が悪く、ショートの方が市場の振る舞いに合っている可能性があります。</p>
+
+    <div class="info-box">
+      <strong>📌 重要な注意</strong><br>
+      この結果は「金属はショートだけすれば良い」ということを示しているわけではありません。ショートも CI[35.6%, 57.9%] と幅があり、N=73 でまだ中規模です。「ロングは回避候補」という gate の確認にとどめ、ショートについては引き続き前向きデータを積み上げて観察します。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="verdict">⑧ 事前基準の評価——4条件クリア</h2>
+
+    <table>
+      <tr><th>条件</th><th>宣言内容</th><th>結果</th><th>判定</th></tr>
+      <tr><td>H1</td><td>全期間 metal×long の 95%CI 上限 &lt; 43%</td><td>CI上限 28.9% &lt; 43%</td><td>✅ クリア</td></tr>
+      <tr><td>H2</td><td>N ≥ 80（統計的信頼性）</td><td>N = 172</td><td>✅ クリア</td></tr>
+      <tr><td>H3</td><td>E(R) の 95%CI が全域マイナス（RCI 上限 &lt; 0）</td><td>RCI 上限 = −0.509R &lt; 0</td><td>✅ クリア</td></tr>
+      <tr><td>H4</td><td>前向きトラッカー N≥80 かつ gate昇格</td><td>FWD N=86、CI[-0.69,−0.01]、上限 &lt; 0 → 昇格</td><td>✅ クリア</td></tr>
+    </table>
+
+    <p>4条件すべてクリアし、<strong>gate 確認（金属ロングは回避候補）</strong>と判定します。</p>
+
+    <p>ただし、gate はシステム全体の発火を止めるものではありません。研究日誌の結論はあくまで「参考情報」として、最終的な判断は必ずご自身で行ってください。</p>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
+    <p class="meta-line">基準日 2026-07-14／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.19 CI[-0.07~+0.45]（88/173・勝率51%）</td><td>✅昇格</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.35 CI[-0.69~-0.01]（24/86・勝率28%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.00 CI[-0.10~+0.10]（232/542・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.00 CI[-0.11~+0.12]（184/429・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.10 CI[-0.23~+0.04]（78/201・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.52 CI[+0.23~+0.80]（50/77・勝率65%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.31 CI[+0.09~+0.53]（32/57・勝率56%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.24 CI[-0.48~-0.00]（41/126・勝率32%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.15~+0.18]（173/397・勝率44%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[+0.07~+0.52]（82/148・勝率55%）</td><td>⛔反証</td></tr>
+</table>
+
+    <p>本日の注目点はトラッカー上段 2 行です。「指数×ロング」（✅昇格・edge）と「metal×long」（✅昇格・gate）が並んでいます。<strong>同じ「ロング」でも、資産クラスによって正反対の性格を持つ</strong>ことが、積み上がったデータによって確認されました。</p>
+
+    <!-- =============================== -->
+    <h2 id="next">⑨ 次回に向けて</h2>
+
+    <p>今回の検証で gold/silver のロングが系統的な回避候補であることが確認されました。次の注目ポイントは以下の通りです。</p>
+
+    <ul>
+      <li><strong>blocked=True×Long 昇格候補</strong>（tracker ID: t）：FWD N=44、平均R+0.379R、CI下限+0.040 > 0。N=80 到達まであと36件。昇格すれば金属・指数・FX問わずの「壁なし環境でのロング回避」と組み合わせる価値あり</li>
+      <li><strong>tier=good FWD</strong>：N=77 で N=80 まであと3件。FWD 65%・平均R+0.52R と強いが、確定打はまだ先</li>
+      <li><strong>金属ショート（N=73, 46.6%）</strong>：損益分岐付近だが、個別に正式検証する価値あり</li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">🔬 他のシグナル研究日誌も読む</div>
+      <div class="cta-box-desc">勝っても負けても全データを公開する研究シリーズです</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-lab-038.html">
+          <div class="related-card-title">🧪 #38 tier=good「前向き69%」の正体</div>
+          <div class="related-card-desc">IS34.7%→FWD68.7%の主因は金属不毛期が作った偽の低評価</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-030.html">
+          <div class="related-card-title">🧪 #30 ロング全般gate⛔反証</div>
+          <div class="related-card-desc">金属レジーム転換が「買い禁」の法則を覆した事例</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-026.html">
+          <div class="related-card-title">🧪 #26 指数×ロング 昇格確認</div>
+          <div class="related-card-desc">FWD N=104 で E(R)+0.391R・CI下限+0.17>0 達成</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-013.html">
+          <div class="related-card-title">🧪 #13 金属ロングのレジーム反転</div>
+          <div class="related-card-desc">20年BT最良→直近ライブ最悪の符号反転を初めて記録</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 末尾免責（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事に掲載されている情報・データはすべて過去の実績および反実仮想シミュレーションに基づくものです。将来の運用成果を保証するものではなく、また投資の勧誘を目的とするものでもありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録を受けていません。掲載内容はあくまで情報提供を目的としており、投資判断・売買の決定はご自身の責任において行ってください。金融商品取引に伴うリスクを十分に理解された上でご利用ください。
+    </p>
+
+  </div><!-- /.article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+document.addEventListener('scroll',function(){
+  var e=document.getElementById('reading-progress');
+  var s=document.documentElement;
+  var t=s.scrollTop||document.body.scrollTop;
+  var h=s.scrollHeight-s.clientHeight;
+  e.style.width=(h>0?Math.round(t/h*100):0)+'%';
+});
+function toggleTheme(){
+  var b=document.body;
+  var btn=document.getElementById('theme-toggle');
+  b.classList.toggle('dark');
+  btn.textContent=b.classList.contains('dark')?'☀️':'🌙';
+}
+</script>
+</body>
+</html>
