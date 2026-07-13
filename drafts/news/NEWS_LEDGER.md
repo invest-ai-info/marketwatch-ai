@@ -3,6 +3,36 @@
 
 ---
 
+## 2026-07-13
+- 判定: ✅ 公開済み
+- 選定トピック: KOSPI「暗黒の月曜日」── -8.95%急落・7,000割れ・サーキットブレーカー7回目、SKハイニックス上場翌週に急落、日経平均-1,315円（67,242.73円）への波及（カテゴリ: AI半導体・韓国株・個別銘柄・日本株・地政学）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7月13日（月）KOSPIが今年最大の1日下落率-8.95%で7,000ポイント割れ。サーキットブレーカー年7回目。SKハイニックスがNasdaq ADR上場（7/10）翌週に韓国本国株で-13〜15%急落する「噂で買い、事実で売り」現象、J.P. MorganのAI/HBM需要懐疑論、ホルムズ再封鎖の3背景が重なる複合事象。日経-1,315円への波及も含み日本人投資家に直結。7/7サムスン記事（-1480円、決算逆説）・7/11SKハイニックスADR記事（上場成功）とは切り口が異なる（本国株崩落・KOSPI7千割れ・CB7回目）。
+- 出典（2系統以上確認済み）:
+  - Korea Times「KOSPI tumbles below 7,000 in 'Black Monday' sell-off」（2026-07-13）
+  - Investing.com「KOSPI triggers circuit breaker as AI-driven tech selloff deepens across Asia」（2026-07-13）
+  - BigGo Finance「Kospi Plunges 8%, Triggering Circuit Breaker; Semiconductor Giants Lead the Rout」（2026-07-13）
+  - Yahoo Finance「South Korea's Stock Market KOSPI Just Flashed a Global AI Warning」（2026-07-13）
+  - 日本経済新聞「東証大引け 日経平均は3日ぶり反落 韓国株安でAI・半導体に売り、一時1900円安」（2026-07-13）
+  - 財経新聞「東証前引け 日経平均が反落 一時1300円安、韓国株下落で下げ加速」（2026-07-13）
+  - 日本経済新聞「日経平均1315円安 AI相場買い疲れ、メガバンク株にマネー流入」（2026-07-13）
+  - Al Jazeera「Iran attacks five Gulf nations, shuts Hormuz after US bombing」（2026-07-12）
+  - Reuters/Investing.com「Iran's IRGC navy says Strait of Hormuz closed until further notice」（2026-07-12）
+  - Bloomberg「Latest Oil Market News and Analysis for July 13」（2026-07-12）
+  - 外為どっとコム「ドル円見通し」（2026-07-13）
+  - Invezz「Kospi tumbles as Asian markets ask if Samsung's AI boom is priced in」（2026-07-13）
+- コンプラ監査:
+  - 初期判定（Opusエージェント1）: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 独立Opus確認（エージェント2）: ✅白（A〜G全7項目○・公開適格・独立判断一致）
+  - 最終コンプラ判定: 🟢白 / 公開OK
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12系統以上 ✅
+- check_site_consistency.py: EXIT=0（警告1件はクラウドスタブ・通常動作）
+- 公開ファイル: guide-news-2026-07-13-kospi-black-monday.html
+- 追記: publish_article.py guides.htmlカード追加済み・generate_market_news.py更新履歴追加済み・sync_to_github.py SYNC_FILES追加済み・git push origin main完了（06d128c→2ab31ee）
+
+---
+
 ## 2026-07-12
 - 判定: ✅ 公開済み
 - 選定トピック: 今週火曜（7/14）三重同時発火──米6月CPI×JPMorgan/Goldman Sachs等5大銀行Q2決算×ウォーシュ初議会証言が同日集中、3シナリオで中立整理（カテゴリ: マクロ・金融政策・銀行決算・インフレ・為替）
