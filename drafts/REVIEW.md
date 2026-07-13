@@ -11,7 +11,17 @@
 - **メイン仮説結果**: 全期間 N=172, k=38, 22.1% CI[16.5%,28.9%] E(R)=-0.727 RCI[-0.944,-0.509]
 - **H1〜H4全4条件**: ✅クリア（CI上限28.9%<43%・N=172≥80・RCI上限-0.509<0・FWD N=86 gate昇格）
 - **claims.json**: 9件（group/ticker/direction/signal/tf のみ使用）
-- **ゲート状態**: 実行中（verify.py → Opus コンプラ → 独立Opus → publish の順）
+- **ゲート状態**: ✅ 完了・公開済み
+- **ゲート通過記録**:
+  - verify.py: 9/9 緑・要約未検証0件・SVG警告0件 → GREEN EXIT=0
+  - Opus コンプラ（一次）: グレー→白（表現軟化2箇所: h1誤字修正・293行将来断定軟化）
+  - verify.py 再実行（修正後）: GREEN EXIT=0（数値不変確認）
+  - 独立Opus（二次）: 白・✅ 公開可
+  - finalize_signal_lab.py: EXIT=0
+  - publish_article.py: EXIT=0（guides.html/sync/generate_market_news 更新済み）
+  - check_site_consistency.py: EXIT=0（エラーなし）
+  - 公開ファイル: `guide-signal-lab-039.html`
+  - PUSH-MAIN: ✅ 成功（2026-07-14）
 
 ---
 
