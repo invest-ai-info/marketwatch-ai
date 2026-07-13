@@ -40,4 +40,5 @@ SYNC_FILES = [
     "guide-news-2026-07-12-triple-event-july14.html",
     "guide-signal-lab-038.html",
     "guide-stock-tax-basics.html",
+    "guide-proverb-mugiwara-fuyu.html",
 ]
