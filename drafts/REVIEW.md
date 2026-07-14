@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-07-15 | 🧪 AIシグナル研究日誌 #040 — tier=good gate ⛔反証確定
+
+- **基準日**: 2026-07-15 (JST)
+- **優先度**: ①（tracker ⛔反証変化: tier=good N=89 E(R)=+0.60 CI[+0.31~+0.89] / tier=good×dir=long N=83）
+- **生成ファイル**: `drafts/draft-signal-lab-040.html`
+- **claims.json**: `drafts/labnotes/lab-040-claims.json`（11件・tier/group/directionフィルタのみ）
+- **仮説結果**: 宣言条件「FWD N≥80かつCI上限<0」を満たせず。実際のCI下限+0.31>>0 → ⛔反証確定
+- **tracker変化**: tier=good ⛔反証 / tier=good×dir=long ⛔反証（本日新規）
+- **主因**: 金属レジーム転換（IS metal31.9% E(R)=-0.256 → FWD全グループ性能シフト・#030/#038と同根）
+- **ゲート状態**: ゲート実行中
+
+---
+
 ## 2026-07-14 autopublish: ✅ 公開済み — guide-investment-scams.html（リスク管理・資金管理 #23）
 
 - **対象key**: investment-scams（topic queue #23 / 🛡️ リスク管理・資金管理）
