@@ -4767,6 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 📰 解説「<a href="guide-news-2026-07-14-nikkei-kospi-v-recovery.html" style="color:#0969da"><b>「暗黒の月曜日」翌日のV字回復──日経+501円・KOSPI逆転を整理</b></a>」公開'},
         {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 💰 解説「<a href="guide-proverb-rigui-sennin.html" style="color:#0969da"><b>利食い千人力</b></a>」公開'},
         {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 🛡️ 解説「<a href="guide-investment-scams.html" style="color:#0969da"><b>🚫 投資詐欺の見分け方｜「必ず儲かる」は全部ウソ</b></a>」公開'},
         {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 🧪 解説「<a href="guide-signal-lab-039.html" style="color:#0969da"><b>金属ロングgate N=86昇格——「前向き改善」は統計ノイズだった</b></a>」公開'},
