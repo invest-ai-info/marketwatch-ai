@@ -46,4 +46,5 @@ SYNC_FILES = [
     "guide-investment-scams.html",
     "guide-proverb-rigui-sennin.html",
     "guide-news-2026-07-14-nikkei-kospi-v-recovery.html",
+    "guide-signal-lab-040.html",
 ]
