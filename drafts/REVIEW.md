@@ -11,7 +11,8 @@
 - **仮説結果**: 宣言条件「FWD N≥80かつCI上限<0」を満たせず。実際のCI下限+0.31>>0 → ⛔反証確定
 - **tracker変化**: tier=good ⛔反証 / tier=good×dir=long ⛔反証（本日新規）
 - **主因**: 金属レジーム転換（IS metal31.9% E(R)=-0.256 → FWD全グループ性能シフト・#030/#038と同根）
-- **ゲート状態**: ゲート実行中
+- **ゲート状態**: ✅自動公開済み — guide-signal-lab-040.html（2026-07-15）
+  - verify: 11/11 GREEN / compliance: GREY(fixed)+INDEPENDENT WHITE / finalize: OK / publish: OK
 
 ---
 
