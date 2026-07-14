@@ -2,6 +2,10 @@
 
 ---
 
+## 2026-07-14 autopublish: スキップ（当日公開済み: guide-investment-scams.html）
+
+---
+
 ## 2026-07-15 | 🧪 AIシグナル研究日誌 #040 — tier=good gate ⛔反証確定
 
 - **基準日**: 2026-07-15 (JST)
