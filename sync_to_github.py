@@ -44,4 +44,5 @@ SYNC_FILES = [
     "guide-news-2026-07-13-kospi-black-monday.html",
     "guide-signal-lab-039.html",
     "guide-investment-scams.html",
+    "guide-proverb-rigui-sennin.html",
 ]
