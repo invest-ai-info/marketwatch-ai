@@ -48,4 +48,5 @@ SYNC_FILES = [
     "guide-news-2026-07-14-nikkei-kospi-v-recovery.html",
     "guide-signal-lab-040.html",
     "guide-signal-lab-041.html",
+    "guide-candlestick-basics.html",
 ]
