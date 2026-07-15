@@ -6,6 +6,8 @@
 
 **⚠️同日=公開日付事故（#031と同型の新変種・即日修正済）**: セッションが7/12(日)朝に開始→中断→7/15(水)夜に再開されたが、**冒頭で取ったGet-Date(7/12)を再開後も信じて7/12付けで公開**（記事datePublished/カード/更新履歴の3ヶ所）。GitHubのworkflowタイムスタンプとautopublish記事が「3日分余分」な違和感から発覚→サーバー時刻突合で確定→3ヶ所とも7/15へ修正・再デプロイ済み。**教訓=①日付を書く直前に必ずGet-Dateを取り直す（セッション冒頭の値を使い回さない）②harness注入のcurrentDateとローカル時計の不一致は中断・再開のサイン**。**🔴オーナー提案**: `publish_article.py` に signal-lab同様の日付ゲート（記事の公開日≠今日JSTなら停止・`--allow-backdate`で免除）を追加したい＝ゲート4本は人間専任のためオーナー承認/実施待ち。
 
+**③Q18価格アノマリー2本=❌同日検証完了（idea-scout転記→即検証の初サイクル）**: `_jp_q18_price_anomalies_screen.py`＝P1高MAX月次(Bali MAXロッタリー)=train -0.56%ns→**holdout +0.81%方向反転**（2025+上げ相場で高MAX優位=オニール系と同型のレジーム依存・⚡H5爆騰フラグとの重複8.6-11.1%=別物）／P2週次ルーザー(Jegadeesh)=**+0.08/-0.03%≒完全ヌル**（古典逆張りは週次粒度で消滅）。実装前に補遺でL単位換算を明記（月次L=2・週次L=3）＝出目未見のまま数式確定の手順を維持。DOCTRINE §3結晶化+anchors 60件・Q18はqueue_archiveへ退避(registry archived)・slugs=tested更新。**⚠️DOCTRINE 24.2KB=warning 1（+0.2KB超過）＝次のdeclutterで§3スタブ化（Q17完了後は15行超え）**。**キュー残=Q10・Q17（会計アノマリー2本=次candidate）・アレンジD**。
+
 **②publish時のmw checkでリンク切れ5件検出→reconcile完了**: autopublish公開済みでローカル未取込の5記事（nikkei-vs-topix⑲7/10/currency-risk⑳7/11/dividend-basics/investment-scams 7/14/stock-tax-basics=7/12〜14分）をGitHub mainから取り込み＋SYNC_FILES登録（⑱と同じ定石）。**autopublishが動くたびローカルに孤児リンクが溜まる構造**＝カード付きguides.htmlはreconcileで来るが記事本体が来ない。頻発するようならreconcile自動化を検討。
 
 ## 🥇 7/11 Q8金ラボ第2R完了＋シグナルメールMT4幅併記
