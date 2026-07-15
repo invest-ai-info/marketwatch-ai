@@ -1,10 +1,12 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-12）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-15）
 
-## 📰 7/12 記事#6公開（Q15素材消化）＋autopublish 5記事のローカルreconcile
+## 📰 7/15 記事#6公開（Q15素材消化）＋autopublish 5記事のローカルreconcile＋⚠️日付事故（修正済）
 
-**①巨匠記事#6=✅公開済み**: `guide-masters-006-dual-momentum.html`（Q15資産クラスDM=GEM原典回帰の正直な❌＋対株式DD半減）。ゲート3本=数値36項目を`_dm_asset_class_summary.json`と機械突合（scratchpadの使い捨てスクリプト・金trainDDの丸め-30.1→-30.0%を1件修正）→SVG3枚/ナビ10/kinsho-v1×3をブラウザJS検証→**Opusコンプラ監査🟢白（修正なし）**→`mw publish`→`mw deploy --trigger`（sync232成功・workflow 204・ライブ200・カード掲載確認）。カテゴリ=巨匠の教え検証。**公開翻訳規則遵守**（金の強さは歴史的観察と明記・将来非保証・直近の選択資産は非掲載）。
+**①巨匠記事#6=✅公開済み（2026-07-15）**: `guide-masters-006-dual-momentum.html`（Q15資産クラスDM=GEM原典回帰の正直な❌＋対株式DD半減）。ゲート3本=数値36項目を`_dm_asset_class_summary.json`と機械突合（scratchpadの使い捨てスクリプト・金trainDDの丸め-30.1→-30.0%を1件修正）→SVG3枚/ナビ10/kinsho-v1×3をブラウザJS検証→**Opusコンプラ監査🟢白（修正なし）**→`mw publish`→`mw deploy --trigger`（sync232成功・workflow 204・ライブ200・カード掲載確認）。カテゴリ=巨匠の教え検証。**公開翻訳規則遵守**（金の強さは歴史的観察と明記・将来非保証・直近の選択資産は非掲載）。
 
-**②publish時のmw checkでリンク切れ5件検出→reconcile完了**: autopublish公開済みでローカル未取込の5記事（nikkei-vs-topix⑲/currency-risk⑳/dividend-basics/investment-scams/stock-tax-basics）をGitHub mainから取り込み＋SYNC_FILES登録（⑱と同じ定石）。**autopublishが動くたびローカルに孤児リンクが溜まる構造**＝カード付きguides.htmlはreconcileで来るが記事本体が来ない。頻発するようならreconcile自動化を検討。
+**⚠️同日=公開日付事故（#031と同型の新変種・即日修正済）**: セッションが7/12(日)朝に開始→中断→7/15(水)夜に再開されたが、**冒頭で取ったGet-Date(7/12)を再開後も信じて7/12付けで公開**（記事datePublished/カード/更新履歴の3ヶ所）。GitHubのworkflowタイムスタンプとautopublish記事が「3日分余分」な違和感から発覚→サーバー時刻突合で確定→3ヶ所とも7/15へ修正・再デプロイ済み。**教訓=①日付を書く直前に必ずGet-Dateを取り直す（セッション冒頭の値を使い回さない）②harness注入のcurrentDateとローカル時計の不一致は中断・再開のサイン**。**🔴オーナー提案**: `publish_article.py` に signal-lab同様の日付ゲート（記事の公開日≠今日JSTなら停止・`--allow-backdate`で免除）を追加したい＝ゲート4本は人間専任のためオーナー承認/実施待ち。
+
+**②publish時のmw checkでリンク切れ5件検出→reconcile完了**: autopublish公開済みでローカル未取込の5記事（nikkei-vs-topix⑲7/10/currency-risk⑳7/11/dividend-basics/investment-scams 7/14/stock-tax-basics=7/12〜14分）をGitHub mainから取り込み＋SYNC_FILES登録（⑱と同じ定石）。**autopublishが動くたびローカルに孤児リンクが溜まる構造**＝カード付きguides.htmlはreconcileで来るが記事本体が来ない。頻発するようならreconcile自動化を検討。
 
 ## 🥇 7/11 Q8金ラボ第2R完了＋シグナルメールMT4幅併記
 
@@ -107,7 +109,7 @@
 - **⓪-A 朝の自動化継続確認**＝`python -X utf8 _jp_health_check.py`（5項目✅）＋`JP*_要確認.txt`無し。**7/10朝=寄り付きロガー自己修復版の初定時運転✅**（タグsnap 07-10記録・番人5項目緑を確認済）。
 - **⓪-B autopublish**＝✅7/11朝確認済: 7/10 ⑲nikkei-vs-topix・7/11 ⑳currency-risk とも全ゲート通過で公開（⑳はライブ200+免責+datePublished裏取り済）。⚠️両日ともクラウドのHTTP自己チェックだけ失敗（Cloudflare 403/NETWORK_ERROR）＝push成功で実害なしだが続くようなら要観察。次=7/12記録の確認。
 - **⓪-C idea-scout-weekly**：初回手動E2Eは7/7済。**初の定時運転=7/12(日)14:00 JST**→翌セッションで転記（転記slugは idea-tested-slugs.txt へ）。
-- **⓪-D 進化ループ続き**：7/11にQ8✅・Q11アーム・Q14🛡4/6・Q15❌まで消化＝**キュー残はQ10（低優先）とアレンジD複合のみ**。**✅Q14適用完了（7/11・mw screenに🔪窓120日化+⚡爆騰列+📅決算前列の3本）**＝📅の元データはJ-Quants v2 `equities/earnings-calendar`（Light可・スナップショット型=3月期/9月期会社の翌営業日分のみ→Date>基準日で絞る・同日キャッシュ`_jp_earnings_calendar.json`）。実測7/10基準=🔪15.9%/⚡10.4%/📅0件（スナップ5/20付の空白期で正常・Q1シーズン7月末〜8月に発火見込み＝**8月に📅列の初発火を確認**）。次候補=growth_levers残（②b国外OOS／④promise audit／⑤プレイブック）。**✅記事#6=7/12公開済み（Q15素材消化）**。TT3=月1回・Q11=毎月1-3日タスク自動。**8/1以降の最初のセッションで7/31 formation凍結を確認**（`mw evolve`のQ11行がformation 1/12になっているはず）。
+- **⓪-D 進化ループ続き**：7/11にQ8✅・Q11アーム・Q14🛡4/6・Q15❌まで消化＝**キュー残はQ10（低優先）とアレンジD複合のみ**。**✅Q14適用完了（7/11・mw screenに🔪窓120日化+⚡爆騰列+📅決算前列の3本）**＝📅の元データはJ-Quants v2 `equities/earnings-calendar`（Light可・スナップショット型=3月期/9月期会社の翌営業日分のみ→Date>基準日で絞る・同日キャッシュ`_jp_earnings_calendar.json`）。実測7/10基準=🔪15.9%/⚡10.4%/📅0件（スナップ5/20付の空白期で正常・Q1シーズン7月末〜8月に発火見込み＝**8月に📅列の初発火を確認**）。次候補=growth_levers残（②b国外OOS／④promise audit／⑤プレイブック）。**✅記事#6=7/15公開済み（Q15素材消化）**。TT3=月1回・Q11=毎月1-3日タスク自動。**8/1以降の最初のセッションで7/31 formation凍結を確認**（`mw evolve`のQ11行がformation 1/12になっているはず）。
 - **⓪-E 巨匠アレンジ枠の残り候補（B=Q13は7/9完了）**：
   **A**=❌7/11検証済み（Q15・単一資産超えず=記事#6素材）／
   **C**=✅Q11で7/11実装済（screener参考列だけ任意で未）／**D**=グレアム防御×PEG成長の複合1本（複合は前科あり=期待控えめ明記）。
@@ -116,7 +118,7 @@
 - **⓪-G ✅済（7/9夜）routineによるリンター編集の再発防止＝三層で実装**: オーナー決定=**完全禁止**（等価修正も不可・赤はエスカレのみ・ゲート修正は人間専任）。①`AUTOPUBLISH_GUIDE.md`=固定ゲート4本（check_guide_draft/check_site_consistency/signal_lab_verify/publish_article）の編集・commit禁止+7/9違反実例を明文化 ②routineプロンプト更新済（手順4/7/絶対厳守を強化。⚠️**プロンプト禁止は7/8夜から存在したのに破られた実績あり**＝コード検知が本命） ③`check_automation_health.py`にチェック④新設=直近26hでゲート4本をオーナー/github-actions[bot]以外のauthorが変更→warn Issue（ローカル実測で7/9違反commit `80abc63` を正しく検知✅）。**⚠️7/10 09:30の運転で既知の7/9違反commit（対応済）が1回Issue化した可能性＝あれば無視してクローズ**。以後の検知は本物。
 - **⓪-H ⚡news-ticker**: ✅7/11朝確認=夜間毎時運転OK（updated 7/11 10:03・30件）。残1件=**「📰経済を既定で非表示（ボタンで表示）」は1行で変更可＝オーナーの好み待ち**（夜間はYahoo!経済由来の消費者ネタ多め問題）。
 - **⓪-I ✅済（7/9 20:30）guides.htmlカード消失＝実は「消失」でなく「未完了公開」**: git履歴調査の結果、カードは一度も存在しなかった（巻き戻しでも取り下げでもない）。**真因**=7/6のnews-daily-autoが当時のSYNC_FILES縮小問題で `check_site_consistency` exit=1→設計どおりエスカレ（commit 1200e77b=記事HTML+NEWS_LEDGERのみpush・カード/履歴/SYNC登録なし）→台帳の「再公開手順（人間が実施）」が3日間未実施のまま放置されていた。**対応**=台帳手順どおり完了（コンプラは当時Opus×2で🟢白済・noindexなし）：カード挿入（7/7と7/5の間の正位置）+SYNC_FILES+更新履歴→`mw check`緑→sync（guides.htmlはstaleガード🚫→diff確認=カード9行のみ→定石--force・commit 156f63e=+9/-0）。**番人③再実行=58/58✅**・ライブ記事200・sitemap収載済み。ついでに⑱`guide-economic-indicators-basics.html`のローカルreconcile+SYNC_FILES登録も実施（mw checkが検出）。**教訓=番人③の検知は「エスカレ回の未完了公開」でも発火する。まずNEWS_LEDGER.mdの該当日エントリを見ると1分で原因が分かる**（GitHub側LEDGERの7/6エントリは「公開準備」のまま=SYNC禁忌のためローカルから更新不可・実態は公開完了）。
-- **①巨匠シリーズ**：#6=7/12公開済み（Q15資産クラスDMの正直な❌）。次記事候補=「#7 割安成長（ズールー）×グレアム再訪」＝Q11前向き設計・Q12再監査が素材（両方完了済みでいつでも書ける）。
+- **①巨匠シリーズ**：#6=7/15公開済み（Q15資産クラスDMの正直な❌）。次記事候補=「#7 割安成長（ズールー）×グレアム再訪」＝Q11前向き設計・Q12再監査が素材（両方完了済みでいつでも書ける）。
 - **②TT3の前向き検証＝📊稼働中**（`_jp_turtle_tracker.py`・検定はブロックboot版に7/8改定・月1回チェック・初判定は10月頃）。
 - **③防御スクリーン列＝✅適用済み**（`mw screen`の🛡防御列・7/7）。
 - **⑤番人EA MW_Guardian＝実弾テスト未実施＋7/11監査で要修正8件**：次のEAセッションで（a)監査🔴3件+🟡5件を修正（`research/execution_audit_2026-07-11.md`対応ログ参照・R2持ち越し盲目/仮SL沈黙/SL削除無検知/magic無差別/AutoSL_TF=240等）→(b)MetaEditorコンパイル→(c)オーナーがデモ口座で試し発注→実挙動を一緒に確認＋表示リスク%vs手計算の1回照合。
