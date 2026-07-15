@@ -3,6 +3,39 @@
 
 ---
 
+## 2026-07-15
+- 判定: 🚩要人間レビュー（エスカレ: Opusコンプラゲートが数値不整合を検出。自動修正適用済み・最終確認待ち）
+- 選定トピック: IBM「AIへの支出シフト」で史上最悪-25%──エンタープライズIT支出の大転換と日経+1,008円「AIで進む優勝劣敗」を中立整理（カテゴリ: 個別銘柄・AI・エンタープライズIT・日本株・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: IBM Q2業績警告で史上最悪の1日下落-25%（1987年ブラックマンデー当日を超える）。CEO「6月末に企業の設備投資がサーバー・メモリへシフト」。Microsoft・Salesforce・ServiceNow・Intuitへ売り波及。日本市場では「AI優勝劣敗」テーマとして消化、アドバンテスト・キオクシア主導で日経+1,008円。ASML好決算（€9.3B・ガイダンス上振れ）も追い風。CPI +3.5%（予想+3.8%下振れ）も全体を支えた。7/14記事（KOSPI/日経V字）・7/12記事（CPI/銀行決算プレビュー）とは切り口が異なり重複なし。
+- 出典（2系統以上確認済み）:
+  - CNBC「IBM stock craters 25%, the worst day on record, after company issues second-quarter earnings warning」（2026-07-14）
+  - Yahoo Finance「IBM stock closes down more than 25%, as customers turn focus toward AI spending」（2026-07-14）
+  - Yahoo Finance「IBM warns AI boom squeezing software budgets; shares sink in sector rout」（2026-07-14）
+  - 日本経済新聞「日経平均終値1008円高、AIで進む優勝劣敗 米IBMショック波及」（2026-07-15）
+  - 日本経済新聞「東証大引け 日経平均が続伸 蘭ASML決算でAI半導体に買い」（2026-07-15）
+  - みんかぶ「日経平均は続伸、買い優勢で終日プラス圏で推移」（2026-07-15）
+  - StockTitan「ASML reports 9.3 billion total net sales and 2.9 billion net income」（2026-07-15）
+  - Investing.com「Earnings call transcript: ASML Q2 2026 beats guidance as AI demand lifts outlook」（2026-07-15）
+  - CNBC「Consumer price index inflation report June 2026: CPI rose 3.5% annualized」（2026-07-14）
+  - CBS News「Inflation eased more than expected in June as gas prices fell」（2026-07-14）
+  - CNN「Latest improvement on inflation isn't 'mission accomplished,' Fed Chairman Warsh says」（2026-07-14）
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟡グレー（数値の単位不整合：IBM売上未達を「約66億円」と表記、正しくは「約6億6千万ドル（660百万ドル）」。桁・通貨が不整合）
+  - 適用修正（エージェント）: なし（数値変更は許可範囲外のためエスカレ）
+  - 最終判定（エージェント）: エスカレ
+  - 主エージェント補足: 出典CNBC「about $660 million below the $17.86 billion FactSet consensus」を確認済み。article内の「約66億円」を「約6億6千万ドル（660百万ドル）」に訂正済み（drafts/news/draft-news-2026-07-15.htmlに反映）。金商法・景表法・kinsho-v1×3・禁止語・銘柄推奨・noindex不在はすべてクリア済み（チェックリスト7項目全✅）。数値訂正の事実確認のみ人間レビューで確認後、即日公開可能な状態。
+- 下書き: drafts/news/draft-news-2026-07-15.html（noindex付き・数値訂正済み）
+- 公開スラッグ候補: guide-news-2026-07-15-ibm-ai-shift-enterprise-spending.html
+- 公開コマンド（人間レビュー後）:
+  ```
+  cp drafts/news/draft-news-2026-07-15.html guide-news-2026-07-15-ibm-ai-shift-enterprise-spending.html
+  # headのnoindexを削除してから:
+  python mw.py publish --file guide-news-2026-07-15-ibm-ai-shift-enterprise-spending.html --category "今日のニュース" --emoji 📰 --card-title "IBM史上最悪-25%、AIへの支出シフトで優勝劣敗──日経+1,008円を整理" --desc "IBM Q2業績警告で株価史上最悪-25%。CEO「6月末にエンタープライズの設備投資がサーバー・メモリへ急シフト」。日経は半導体株主導+1,008円と「AI優勝劣敗」を中立整理。"
+  ```
+
+---
+
 ## 2026-07-14
 - 判定: ✅ 公開済み
 - 選定トピック: 「暗黒の月曜日」翌日のV字回復──KOSPI一時-5%から+0.76%逆転、日経平均は1,475円の乱高下を経て+501円着地、機関投資家3兆ウォン超の大量買いを中立整理（カテゴリ: マクロ・日本株・韓国株・AI半導体）
