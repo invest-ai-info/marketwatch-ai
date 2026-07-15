@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>巨匠の教えをデータで検証 #6｜デュアルモメンタム原典回帰——資産クラス乗り換えを円建て21年で検証、単一資産の最良に届かず。ただし暴落は株の半分だった - MarketWatch AI</title>
+  <meta name="description" content="ゲイリー・アントナッチのデュアルモメンタム（GEM）を原典どおりの資産クラス乗り換え（日経225・S&P500・金＋退避先の米中期債）に戻し、円建て月次・約21年（前半2005〜2018／後半2019〜2026年6月）・コスト込みで検証。両期間ともシャープレシオは単一資産の最良（前半：米中期債0.619・後半：金1.450）に届かず、事前登録した基準を満たさなかった。一方で最大下落は株式の約半分（-35% vs -58〜-62%）。判定基準・数値・限界まですべて公開する検証記録。">
+  <meta name="keywords" content="デュアルモメンタム,GEM,アントナッチ,資産クラス,モメンタム投資,アセットアロケーション,円建て,バックテスト,シャープレシオ,最大ドローダウン,乗り換え戦略,データ検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-006-dual-momentum.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #6｜デュアルモメンタム原典回帰——資産クラス乗り換えを円建て21年で検証、単一資産の最良に届かず。ただし暴落は株の半分だった">
+  <meta property="og:description" content="前回「個別株への翻訳が悪かったのでは」という宿題に、原典の土俵で答える回。資産クラス乗り換えを円建て21年・コスト込みで検証したら、両期間とも単一資産の最良に届かなかった。ただし最大下落は株式の約半分——「守りの部分効果」だけが残った検証記録。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-006-dual-momentum.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #6｜デュアルモメンタム原典回帰——資産クラス乗り換えを円建て21年で検証、単一資産の最良に届かず。ただし暴落は株の半分だった",
+    "description": "前回「個別株への翻訳が悪かったのでは」という宿題に、原典の土俵で答える回。資産クラス乗り換えを円建て21年・コスト込みで検証したら、両期間とも単一資産の最良に届かなかった。ただし最大下落は株式の約半分——「守りの部分効果」だけが残った検証記録。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-12",
+    "dateModified": "2026-07-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-006-dual-momentum.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .bar-b{fill:#0969da}
+    .bar-g{fill:#1a7f37}
+    .bar-r{fill:#cf222e}
+    .bar-gray{fill:#8b949e}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    body.dark .bar-b{fill:#58a6ff}
+    body.dark .bar-g{fill:#3fb950}
+    body.dark .bar-r{fill:#f85149}
+    body.dark .bar-gray{fill:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #6
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🎓 巨匠の教えをデータで検証 #6<br><small style="font-size:.65em;color:#57606a;font-weight:400">デュアルモメンタム原典回帰——「資産クラス乗り換え」を円建て21年で検証したら、単一資産の最良に届かなかった。ただし暴落の深さは株の半分だった</small></h1>
+    <div class="meta-line">
+      カテゴリ：🎓 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月12日 &nbsp;|&nbsp; 読了：約11分
+    </div>
+
+    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>検証できる形のルールに翻訳して、データで確かめる</strong>連載です。<a href="guide-graham-001.html">第1回</a>はグレアムの安全域（防御が再現）、<a href="guide-masters-002-trend.html">第2回</a>は順張りの教科書、<a href="guide-masters-003-quality.html">第3回</a>はバフェットの「質」、<a href="guide-masters-004-world.html">第4回</a>は世界の有名手法12仮説、<a href="guide-masters-005-pattern-audit.html">前回・第5回</a>は売買パターン5手法と「検証の検証」（訂正報告）を見てきました。</p>
+
+    <p>第5回で検証した<strong>デュアルモメンタム</strong>には、宿題が残っていました。前回は原典の設計（資産クラスの乗り換え）を<strong>個別株に翻訳して</strong>検証し、基準を満たさなかったのですが、記事中でこう書いています——「原典が資産クラス（指数）の乗り換えを想定した設計であることを考えると、個別株への翻訳では二段構えのうち一段が最初から空回りしていた」。つまり、<strong>「翻訳が悪かっただけで、原典どおりなら通用するのでは？」</strong>という反論が可能でした。今回はその宿題に正面から答えます。<strong>原典の土俵——資産クラスの乗り換え——に戻し、日本の投資家の実感に合わせて全資産を円建てに換算し、約21年の月次データで確かめました</strong>。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 前回#5で個別株翻訳が基準を満たさなかったデュアルモメンタムを、今回は<strong>原典どおり資産クラス乗り換え</strong>（日経225・S&amp;P500・金＋退避先の米中期債）・<strong>円建て・約21年</strong>で再検証した<br>
+      ② 判定基準は検証前に登録——両期間で「シャープレシオ0.6以上」「最大下落25%以内」「単一資産の最良超え」の3条件。結果は<strong>両期間とも基準を満たさなかった</strong>（前半はシャープレシオ0.391で3条件とも未達、後半は1.330と健闘したが金の1.450に届かず）<br>
+      ③ ただし株式と比べると<strong>最大下落は約半分</strong>（前半-35.4% vs 日米株-58〜-62%）——シリーズで繰り返し見てきた「守りの部分効果」は今回も観察された<br>
+      ④ 前半の最良は<strong>米中期債</strong>、後半の最良は<strong>金</strong>——期間ごとに最良の単一資産が入れ替わった。「乗り換え」も難しいが「最初から当てる」のも難しい<br>
+      ⑤ 数字はすべて<strong>乗り換えコスト込み・税引前・過去データの観察であり、将来の成果を保証するものではない</strong>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#gem">デュアルモメンタムとは——今度は原典の土俵で</a></li>
+        <li><a href="#method">検証の土俵——ルール・データ・事前に決めた合格基準</a></li>
+        <li><a href="#results">結果——両期間とも「単一資産の最良」に届かなかった</a></li>
+        <li><a href="#why">読み解き——乗り換えの価値はどこで消えたのか</a></li>
+        <li><a href="#lessons">学び——「何と比べるか」で切替戦略の評価は一変する</a></li>
+        <li><a href="#limits">この検証の限界</a></li>
+        <li><a href="#site">当サイトでの活かし方</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="gem">① デュアルモメンタムとは——今度は原典の土俵で</h2>
+
+    <p><strong>ゲイリー・アントナッチ</strong>は米国の投資研究家で、2014年の著書『Dual Momentum Investing』（邦題『ウォール街のモメンタムウォーカー』）でデュアルモメンタムを広めました。名前のとおり、2種類のモメンタム（勢い）を組み合わせる二段構えです。</p>
+
+    <ul>
+      <li><strong>相対モメンタム</strong>——複数の資産を比べて、直近リターンが最も強いものを選ぶ（「どれを持つか」）</li>
+      <li><strong>絶対モメンタム</strong>——選んだ資産自身の直近リターンがプラスであることを条件にし、マイナスなら安全資産（債券など）へ退避する（「そもそも持つか」）</li>
+    </ul>
+
+    <p>原典の代表形は<strong>GEM（Global Equities Momentum）</strong>と呼ばれ、米国株・米国外株・債券という「資産クラス」を月次で乗り換えます。攻めるときは最も勢いのある株式市場に乗り、市場全体が下り坂なら債券に逃げる——攻守を1つのルールで自動化する発想で、米国の個人投資家に広く知られています。</p>
+
+    <p>前回#5では、これを日本の個別株ユニバースに翻訳して検証し、基準を満たしませんでした。しかも検証の過程で「個別株の12ヶ月リターン上位20%は常にプラス＝絶対モメンタムのレッグが一度も働かない」という設計上の空回りも見つかりました。<strong>今回は翻訳をやめ、原典の設計思想そのまま——資産クラスの月次乗り換け——を検証します</strong>。日本の投資家の実感に合わせて、すべての資産を円建てに換算しました。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="デュアルモメンタム（GEM型）の毎月の判定フロー図">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">毎月末の判定フロー（今回検証したルール）</text>
+        <rect x="40" y="60" width="200" height="86" rx="10" class="s-fill-b"/>
+        <text x="140" y="88" text-anchor="middle" class="s-label-b" style="font-size:12.5px">毎月末に円建てで</text>
+        <text x="140" y="108" text-anchor="middle" class="s-label" style="font-size:12px">12ヶ月リターンを計測</text>
+        <text x="140" y="128" text-anchor="middle" class="s-label-sm" style="font-size:11px">日経225・S&amp;P500・金</text>
+        <line x1="240" y1="103" x2="268" y2="103" class="s-axis"/>
+        <polygon points="268,98 278,103 268,108" class="bar-gray"/>
+        <rect x="280" y="60" width="180" height="86" rx="10" class="s-fill-b"/>
+        <text x="370" y="88" text-anchor="middle" class="s-label-b" style="font-size:12.5px">相対モメンタム</text>
+        <text x="370" y="108" text-anchor="middle" class="s-label" style="font-size:12px">3資産のうち12ヶ月</text>
+        <text x="370" y="126" text-anchor="middle" class="s-label" style="font-size:12px">リターン最大を選ぶ</text>
+        <line x1="460" y1="103" x2="488" y2="103" class="s-axis"/>
+        <polygon points="488,98 498,103 488,108" class="bar-gray"/>
+        <rect x="500" y="60" width="170" height="86" rx="10" class="s-fill-y"/>
+        <text x="585" y="88" text-anchor="middle" class="s-label-y" style="font-size:12.5px">絶対モメンタム</text>
+        <text x="585" y="108" text-anchor="middle" class="s-label" style="font-size:12px">その資産の12ヶ月</text>
+        <text x="585" y="126" text-anchor="middle" class="s-label" style="font-size:12px">リターンは 0%超？</text>
+        <line x1="540" y1="146" x2="480" y2="204" class="s-axis"/>
+        <polygon points="478,198 474,210 486,206" class="bar-gray"/>
+        <text x="486" y="176" text-anchor="end" class="s-label-g" style="font-size:11.5px">0%超</text>
+        <line x1="625" y1="146" x2="625" y2="204" class="s-axis"/>
+        <polygon points="620,202 625,212 630,202" class="bar-gray"/>
+        <text x="634" y="180" class="s-label-r" style="font-size:11.5px">0%以下</text>
+        <rect x="380" y="210" width="160" height="66" rx="10" class="s-fill-g"/>
+        <text x="460" y="238" text-anchor="middle" class="s-label-g" style="font-size:12.5px">その資産を</text>
+        <text x="460" y="258" text-anchor="middle" class="s-label-g" style="font-size:12.5px">翌月1ヶ月保有</text>
+        <rect x="555" y="210" width="130" height="66" rx="10" class="s-fill-r"/>
+        <text x="620" y="238" text-anchor="middle" class="s-label-r" style="font-size:12.5px">米中期債へ</text>
+        <text x="620" y="258" text-anchor="middle" class="s-label-r" style="font-size:12.5px">退避</text>
+        <text x="350" y="308" text-anchor="middle" class="s-label-sm">翌月末に同じ判定を繰り返す。保有資産が替わる月は乗り換えコスト0.2%を控除（約21年で57回）</text>
+      </svg>
+      <div class="chart-caption">図1：今回検証したデュアルモメンタム（GEM型・円建て）の毎月の判定フロー。相対モメンタムで「どれを持つか」、絶対モメンタムで「そもそもリスク資産を持つか」を決める。※ルールの構造を示す概念図です。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 検証の土俵——ルール・データ・事前に決めた合格基準</h2>
+
+    <p>ルールと合格基準は、<strong>結果を見る前に登録して固定</strong>しました。検証しながら基準を動かすと、どんな手法でも「合格」に見せられてしまうからです。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>リスク資産</td><td>日経225・S&amp;P500・金（3本）。退避先＝米中期国債ETF（IEF・分配金込みで評価）</td></tr>
+      <tr><td>円建て換算</td><td>米ドル建て資産はドル円レートを掛けて<strong>すべて円建てに統一</strong>（日本の投資家の損益実感に合わせる）</td></tr>
+      <tr><td>ルール</td><td>毎月末、12ヶ月リターン最大のリスク資産を選ぶ（相対）→ その12ヶ月リターンが0%以下なら米中期債へ退避（絶対）→ 翌月1ヶ月保有。物差しは<strong>12ヶ月のみ・パラメータ探索なし</strong></td></tr>
+      <tr><td>データ</td><td>月末値・2003年〜2026年6月（円換算の共通期間<strong>282ヶ月</strong>）。判定対象は前半<strong>2005〜2018年（168ヶ月）</strong>／後半<strong>2019〜2026年6月（90ヶ月）</strong></td></tr>
+      <tr><td>コスト</td><td>乗り換え1回につき<strong>0.2%控除</strong>（売り0.1%＋買い0.1%）。乗り換えは全期間で<strong>57回</strong>発生（リスク資産間と退避先への乗り換えの合計）。<strong>税金は未控除</strong></td></tr>
+      <tr><td>合格基準（事前登録）</td><td>前半・後半の<strong>両期間</strong>で①シャープレシオ0.6以上 ②最大下落25%以内 ③シャープレシオが<strong>単一資産B&amp;H（4資産・円建て）の最大値を上回る</strong>——の3条件すべて</td></tr>
+    </table>
+
+    <div class="info-box">
+      💡 <strong>シャープレシオ</strong>は「リターン÷値動きの荒さ」で、同じリターンなら揺れが小さいほど高くなる効率の指標です（本記事では月次リターンから年率換算）。<strong>最大下落（最大ドローダウン）</strong>は、期間中の高値から最も深く沈んだときの下落率。<strong>B&amp;H</strong>はBuy&amp;Hold＝最初に買ってずっと持ち続けることです。
+    </div>
+
+    <p>基準③——「単一資産の最良超え」——がこの検証の背骨です。乗り換え戦略は、コストと手間と（実際の運用では）乗り換えのたびの課税という複雑さを受け入れる道具です。<strong>その複雑さの対価が「構成資産のどれか1本をただ持ち続ける」に勝てないなら、この道具を選ぶ積極的な理由がない</strong>——という考え方を、結果を見る前に基準として固定しました。</p>
+
+    <div class="warning-box">
+      以下の数字はすべて乗り換えコスト控除後・<strong>税引前</strong>で、<strong>過去データの観察であり将来の成果を保証しません</strong>。また本記事は特定の手法の採用や特定の資産の売買を推奨するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="results">③ 結果——両期間とも「単一資産の最良」に届かなかった</h2>
+
+    <p>結論から言うと、<strong>前半・後半とも基準を満たしませんでした</strong>。ただし2つの期間で「落ち方」はまったく違います。</p>
+
+    <h3>前半（2005〜2018年・168ヶ月）——3条件すべて未達</h3>
+
+    <table>
+      <tr><th>指標</th><th>戦略（乗り換え）</th><th>日経225</th><th>S&amp;P500</th><th>金</th><th>米中期債</th></tr>
+      <tr><td>シャープレシオ</td><td><strong>0.391</strong></td><td>0.305</td><td>0.410</td><td>0.578</td><td style="color:#1a7f37"><strong>0.619（最良）</strong></td></tr>
+      <tr><td>最大下落</td><td><strong style="color:#cf222e">-35.4%</strong></td><td style="color:#cf222e">-58.3%</td><td style="color:#cf222e">-61.6%</td><td>-30.0%</td><td>-14.5%</td></tr>
+      <tr><td>年率リターン</td><td>+5.4%</td><td>+4.0%</td><td>+5.9%</td><td>+8.5%</td><td>+4.9%</td></tr>
+    </table>
+
+    <p>前半はリーマン・ショック（2008年）を含む14年です。戦略のシャープレシオ0.391は、合格ラインの0.6に届かず、S&amp;P500（0.410）にも僅差で及ばず、金（0.578）・米中期債（0.619）には明確に届きませんでした。最大下落-35.4%も「25%以内」の基準を超過——<strong>毎月の判定と12ヶ月という長い物差しでは、急落のすべては避けきれなかった</strong>ことを意味します。3条件すべて未達でした。</p>
+
+    <h3>後半（2019〜2026年6月・90ヶ月）——健闘したが、金に届かず</h3>
+
+    <table>
+      <tr><th>指標</th><th>戦略（乗り換え）</th><th>日経225</th><th>S&amp;P500</th><th>金</th><th>米中期債</th></tr>
+      <tr><td>シャープレシオ</td><td><strong>1.330</strong></td><td>0.986</td><td>1.243</td><td style="color:#1a7f37"><strong>1.450（最良）</strong></td><td>0.958</td></tr>
+      <tr><td>最大下落</td><td><strong>-14.2%</strong></td><td>-20.0%</td><td>-21.0%</td><td>-19.8%</td><td>-8.6%</td></tr>
+      <tr><td>年率リターン</td><td>+21.3%</td><td>+18.2%</td><td>+21.9%</td><td>+22.7%</td><td>+6.5%</td></tr>
+    </table>
+
+    <p>後半の戦略は、数字だけ見れば健闘しています。シャープレシオ1.330・最大下落-14.2%で、基準①②はクリア。<strong>4資産のうち3本（日経225・S&amp;P500・米中期債）を上回りました</strong>。しかし、この期間の最良だった<strong>金（1.450）には届かず</strong>、基準③が未達——事前登録した「両期間で3条件」は成立しませんでした。なお後半は日米株も金も年率2割前後という<strong>歴史的に見て非常に強い地合い</strong>で、この水準のリターンが今後も続くことを示すものではありません。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="前半・後半それぞれの戦略と単一資産4本のシャープレシオ比較棒グラフ">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">シャープレシオ比較——どちらの期間も「単一資産の最良」が上にいた</text>
+        <text x="184" y="52" text-anchor="middle" class="s-label">前半 2005〜2018</text>
+        <text x="516" y="52" text-anchor="middle" class="s-label">後半 2019〜2026/6</text>
+        <line x1="40" y1="226" x2="660" y2="226" class="s-guide"/>
+        <text x="656" y="220" text-anchor="end" class="s-label-sm">合格ラインの1つ＝0.6</text>
+        <!-- train -->
+        <rect x="60" y="262" width="40" height="68" class="bar-b"/>
+        <rect x="112" y="277" width="40" height="53" class="bar-gray"/>
+        <rect x="164" y="259" width="40" height="71" class="bar-gray"/>
+        <rect x="216" y="230" width="40" height="100" class="bar-gray"/>
+        <rect x="268" y="223" width="40" height="107" class="bar-g"/>
+        <text x="80" y="256" text-anchor="middle" class="s-label-b" style="font-size:11px">0.391</text>
+        <text x="132" y="271" text-anchor="middle" class="s-label-sm" style="font-size:11px">0.305</text>
+        <text x="184" y="253" text-anchor="middle" class="s-label-sm" style="font-size:11px">0.410</text>
+        <text x="236" y="224" text-anchor="middle" class="s-label-sm" style="font-size:11px">0.578</text>
+        <text x="288" y="217" text-anchor="middle" class="s-label-g" style="font-size:11px">0.619</text>
+        <!-- holdout -->
+        <rect x="392" y="99" width="40" height="231" class="bar-b"/>
+        <rect x="444" y="159" width="40" height="171" class="bar-gray"/>
+        <rect x="496" y="115" width="40" height="215" class="bar-gray"/>
+        <rect x="548" y="79" width="40" height="251" class="bar-g"/>
+        <rect x="600" y="164" width="40" height="166" class="bar-gray"/>
+        <text x="412" y="93" text-anchor="middle" class="s-label-b" style="font-size:11px">1.330</text>
+        <text x="464" y="153" text-anchor="middle" class="s-label-sm" style="font-size:11px">0.986</text>
+        <text x="516" y="109" text-anchor="middle" class="s-label-sm" style="font-size:11px">1.243</text>
+        <text x="568" y="73" text-anchor="middle" class="s-label-g" style="font-size:11px">1.450</text>
+        <text x="620" y="158" text-anchor="middle" class="s-label-sm" style="font-size:11px">0.958</text>
+        <line x1="40" y1="330" x2="660" y2="330" class="s-axis"/>
+        <text x="80" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">戦略</text>
+        <text x="132" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">日経</text>
+        <text x="184" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">S&amp;P</text>
+        <text x="236" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">金</text>
+        <text x="288" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">中期債</text>
+        <text x="412" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">戦略</text>
+        <text x="464" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">日経</text>
+        <text x="516" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">S&amp;P</text>
+        <text x="568" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">金</text>
+        <text x="620" y="350" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">中期債</text>
+        <text x="350" y="382" text-anchor="middle" class="s-label-sm">青＝乗り換え戦略／緑＝その期間の最良の単一資産（前半＝米中期債・後半＝金）。円建て・コスト込み・税引前</text>
+      </svg>
+      <div class="chart-caption">図2：シャープレシオの比較。前半の最良は米中期債（0.619）、後半の最良は金（1.450）で、乗り換え戦略（青）はどちらの期間も最良の単一資産（緑）に届かなかった。数値は本文の表と同じ。※過去データの観察であり将来の成果を保証しません。</div>
+    </div>
+
+    <h3>それでも残ったもの——株式に対しては最大下落が約半分</h3>
+
+    <p>基準は満たしませんでしたが、記録しておくべき観察が1つあります。<strong>前半の戦略の最大下落は-35.4%で、日経225（-58.3%）・S&amp;P500（-61.6%）のおよそ半分</strong>でした。後半も-14.2%と、株式2本（-20〜-21%）より浅い。絶対モメンタムによる退避は、リーマン級の暴落を「無傷」にはできなかったものの、<strong>株式を持ちっぱなしにするよりは傷を浅くした</strong>——という部分効果です。ただし公平のために言えば、金（-30.0%／-19.8%）や米中期債（-14.5%／-8.6%）の最大下落は、戦略と同等かさらに浅い水準でした。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="前半・後半それぞれの戦略と単一資産4本の最大下落比較棒グラフ">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">最大下落の比較——株式より浅いが、「25%以内」には前半届かず</text>
+        <text x="184" y="48" text-anchor="middle" class="s-label">前半 2005〜2018</text>
+        <text x="516" y="48" text-anchor="middle" class="s-label">後半 2019〜2026/6</text>
+        <line x1="40" y1="70" x2="660" y2="70" class="s-axis"/>
+        <line x1="40" y1="166" x2="660" y2="166" class="s-guide"/>
+        <text x="656" y="182" text-anchor="end" class="s-label-sm">合格ラインの1つ＝-25%以内</text>
+        <!-- train (downward bars) -->
+        <rect x="60" y="70" width="40" height="136" class="bar-b"/>
+        <rect x="112" y="70" width="40" height="224" class="bar-r"/>
+        <rect x="164" y="70" width="40" height="237" class="bar-r"/>
+        <rect x="216" y="70" width="40" height="116" class="bar-gray"/>
+        <rect x="268" y="70" width="40" height="56" class="bar-gray"/>
+        <text x="80" y="222" text-anchor="middle" class="s-label-b" style="font-size:11px">-35.4%</text>
+        <text x="132" y="310" text-anchor="middle" class="s-label-r" style="font-size:11px">-58.3%</text>
+        <text x="184" y="323" text-anchor="middle" class="s-label-r" style="font-size:11px">-61.6%</text>
+        <text x="236" y="202" text-anchor="middle" class="s-label-sm" style="font-size:11px">-30.0%</text>
+        <text x="288" y="142" text-anchor="middle" class="s-label-sm" style="font-size:11px">-14.5%</text>
+        <!-- holdout -->
+        <rect x="392" y="70" width="40" height="55" class="bar-b"/>
+        <rect x="444" y="70" width="40" height="77" class="bar-r"/>
+        <rect x="496" y="70" width="40" height="81" class="bar-r"/>
+        <rect x="548" y="70" width="40" height="76" class="bar-gray"/>
+        <rect x="600" y="70" width="40" height="33" class="bar-gray"/>
+        <text x="412" y="141" text-anchor="middle" class="s-label-b" style="font-size:11px">-14.2%</text>
+        <text x="464" y="163" text-anchor="middle" class="s-label-r" style="font-size:11px">-20.0%</text>
+        <text x="516" y="167" text-anchor="middle" class="s-label-r" style="font-size:11px">-21.0%</text>
+        <text x="568" y="162" text-anchor="middle" class="s-label-sm" style="font-size:11px">-19.8%</text>
+        <text x="620" y="119" text-anchor="middle" class="s-label-sm" style="font-size:11px">-8.6%</text>
+        <text x="80" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">戦略</text>
+        <text x="132" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">日経</text>
+        <text x="184" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">S&amp;P</text>
+        <text x="236" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">金</text>
+        <text x="288" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">中期債</text>
+        <text x="412" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">戦略</text>
+        <text x="464" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">日経</text>
+        <text x="516" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">S&amp;P</text>
+        <text x="568" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">金</text>
+        <text x="620" y="62" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">中期債</text>
+        <text x="350" y="382" text-anchor="middle" class="s-label-sm">下に伸びるほど下落が深い。青＝乗り換え戦略／赤＝株式。前半の戦略は株式の約半分の深さだが、-25%ラインは超過</text>
+      </svg>
+      <div class="chart-caption">図3：最大下落の比較。前半（リーマン・ショックを含む）の戦略は-35.4%と株式（-58〜-62%）の約半分に収まったが、事前基準の「-25%以内」には届かなかった。※過去データの観察であり将来の成果を保証しません。</div>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="why">④ 読み解き——乗り換えの価値はどこで消えたのか</h2>
+
+    <h3>「12ヶ月×月次」は遅い物差し</h3>
+    <p>前半の最大下落-35.4%が示すのは、<strong>逃げ遅れと乗り遅れ</strong>です。12ヶ月リターンという長い物差しは、急落の初動ではまだプラス圏にあり（＝逃げるのが遅れる）、底からの反発の初動ではまだマイナス圏にあります（＝戻りに乗るのが遅れる）。さらに判定は月1回なので、月の途中の急変には無反応です。急落を丸ごと避けて反発を丸ごと取る——という理想図とは、構造的に距離があります。これは一般に指摘されるモメンタム戦略の弱点で、今回の結果もそれと整合的でした。</p>
+
+    <h3>「単一資産の最良超え」は厳しすぎる基準か</h3>
+    <p>そう感じた読者もいるはずです。実際、後半の戦略は4資産中3本に勝っており、決して出来の悪い数字ではありません。それでもこの基準を事前に置いたのは、②で述べたとおり<strong>乗り換えという複雑さ（コスト・手間・実運用では乗り換えのたびの課税）の対価を測るため</strong>です。そして公平に言えば、この基準は「後出しなら簡単」でも「事前には難しい」ものです——<strong>前半の最良は米中期債、後半の最良は金と、期間ごとに顔ぶれが入れ替わりました</strong>。「最初から金だけ持てばよかった」は後知恵であり、2005年の時点でそれを当てる方法はこの検証の外側にあります。乗り換え戦略は「事前にどれが最良か分からない」問題への1つの答えではある。ただ、<strong>この21年・この設計・円建てでは、その保険料（リターンの目減り）が最良資産との差として残った</strong>——というのが今回の観察です。</p>
+
+    <h3>#5の宿題への答え</h3>
+    <p>前回の個別株翻訳では、絶対モメンタムのレッグが一度も働かないという空回りがありました。今回の原典の土俵では、退避先を含む乗り換えが約21年で57回発生し、ルールは設計どおり作動しています。<strong>それでも事前基準には届かなかった</strong>——つまり「#5の結果は翻訳が悪かっただけ」という説明は、少なくとも円建て・この設計・この期間では支持されませんでした。個別株翻訳（#5）と原典回帰（#6）の両方で基準未達、というのが2回分を合わせた記録です。</p>
+
+    <!-- =============================== -->
+    <h2 id="lessons">⑤ 学び——「何と比べるか」で切替戦略の評価は一変する</h2>
+
+    <p>今回の検証から、一般論として（特定の行動の推奨ではなく）持ち帰れるものを3つにまとめます。</p>
+
+    <div class="positive-box">
+      <strong>切替・配分系の戦略を見るときのチェック</strong><br>
+      ① <strong>比較相手は誰か</strong>——切替戦略の紹介は「対株式」の比較が定番で、それなら今回も最大下落半減で立派に見える。だが<strong>「構成資産の中で最良だった1本」と比べると景色が変わる</strong>ことがある。前回#5の3点チェック（対照群・期間分割・独立性）に、この1問を加えたい<br>
+      ② <strong>何建てで計算されているか</strong>——米ドル建ての教科書の数字は、為替を挟んで円建てに直すと変わり得る。円で暮らす投資家にとって実感に近いのは円建ての数字<br>
+      ③ <strong>コストと税金は入っているか</strong>——乗り換え戦略は回転が多いぶん、コスト・税の影響を構造的に受けやすい。今回はコスト0.2%/回は入れたが税は入れていない。<strong>実際の手取りは掲載の数字よりさらに目減りし得る</strong>
+    </div>
+
+    <p>そしてシリーズを通した構図が、今回もまた繰り返されました。<strong>リターンの上乗せ主張は基準を満たさず、下落の浅さ（対株式）だけが観察として残る</strong>——<a href="guide-graham-001.html">第1回</a>のグレアムの安全域、<a href="guide-masters-004-world.html">第4回</a>の低ボラティリティ、<a href="guide-masters-005-pattern-audit.html">第5回</a>のダーバス系の暴落率に続き、6回分のデータが同じ方向を向いています。「稼ぐ力より守る力のほうがデータは素直」。この連載の暫定的な結論は、今回も変わりませんでした。</p>
+
+    <!-- =============================== -->
+    <h2 id="limits">⑥ この検証の限界</h2>
+
+    <ul>
+      <li><strong>税金を引く前の数字</strong>。実際の運用では乗り換えのたびに売却益へ課税され得るため、切替戦略の手取りは掲載の数字より不利になり得る（持ちっぱなしのB&amp;Hは課税繰り延べの利点がある）</li>
+      <li><strong>コスト0.2%/回は仮定</strong>。使う商品（ETF・投信・先物）や時代によって実際のコストは異なる</li>
+      <li><strong>金は先物価格・退避先は米上場ETFで近似</strong>。現物・国内投信とは値動きやコストが乖離し得るし、2005年当時の日本の個人が同じ商品に同じ条件でアクセスできたとは限らない</li>
+      <li><strong>円換算は月末レートによる近似</strong>。為替ヘッジの有無という設計の分岐は今回試していない</li>
+      <li><strong>構成は1本だけ</strong>。資産の顔ぶれ・物差し（12ヶ月）・退避先は事前登録の1構成のみで、パラメータをいじり回して「最良の見せ方」を探すことはしていない。裏を返せば、別の構成なら別の結果になり得る</li>
+      <li><strong>統計的検定はしていない</strong>。戦略1本の月次成績評価であり、個別銘柄検証（#1〜#5）のような対照群との有意性検定の土俵ではない。判定は事前登録した基準への適合のみ</li>
+      <li><strong>期間の特殊性</strong>。この約21年は円建ての金が際立って強かった期間を含む。将来どの資産が最良かは、この検証からは何も言えない</li>
+    </ul>
+
+    <p>本記事の数値はすべて過去データの検証であり、<strong>将来の成果を保証するものではありません</strong>。</p>
+
+    <!-- =============================== -->
+    <h2 id="site">⑦ 当サイトでの活かし方</h2>
+
+    <p>「事前に基準を決めてから確かめる」「基準に届かなければ届かなかったと書く」という今回の流儀は、当サイトの他のコンテンツと共通です。</p>
+
+    <ul>
+      <li><strong><a href="track-record.html">シグナル成績ダッシュボード</a></strong>——当サイトが配信しているテクニカルシグナルの成績を、勝ち負け含めて全件公開しています。今回の「比較相手は誰か」を意識して眺めると、数字の読み方が深まります</li>
+      <li><strong><a href="guide-signal-lab-001.html">AIシグナル研究日誌</a></strong>——毎朝1本、実際のシグナルデータで仮説を検証する連載。事前登録→検証→正直に報告、の同じサイクルで回しています</li>
+      <li><strong><a href="guide-masters-005-pattern-audit.html">前回#5の記事</a></strong>——今回の宿題の出どころ。個別株翻訳版デュアルモメンタムの検証と、「検証の検証」（訂正報告）はこちら</li>
+    </ul>
+
+    <p>シリーズは今後も、世界の手法カタログの残りと、検証済みの部品の組み合わせを、同じ流儀——事前登録と正直な報告——で確かめていく予定です。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📖 アントナッチの原典や投資の古典に触れたい方へ</div>
+      <div class="cta-box-desc">投資の名著・古典の紹介は投資本ページにまとめています</div>
+      <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="related-grid">
+        <a href="guide-masters-005-pattern-audit.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #5</div>
+          <div class="related-card-desc">売買パターン5手法の一斉検証と「検証の検証」。個別株翻訳版デュアルモメンタムの初出回。</div>
+        </a>
+        <a href="guide-masters-004-world.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #4</div>
+          <div class="related-card-desc">一目均衡表・タートルズ・BNFなど世界の有名手法12仮説を一斉検証した回。</div>
+        </a>
+        <a href="guide-graham-001.html" class="related-card">
+          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #1</div>
+          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が約5分の1になる防御が両期間で再現。</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px" data-disclaimer="kinsho-v1">※ 本記事は情報提供・教育目的であり、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
