@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-07-16 | 💰 autopublish: guide-candlestick-basics.html（投資の基礎知識 #24）
+
+- **基準日**: 2026-07-16 (JST)
+- **topic / key**: 基礎知識 / candlestick-basics
+- **決定論ゲート**: ✅ GREEN（check_guide_draft.py EXIT=0）
+- **Opus コンプラ**: 🟢 白（無登録投資助言業リスクなし・断定表現なし・kinsho-v1 2箇所確認）
+- **品質ルーブリック**: ✅ 全5観点合格（軽微修正なし）
+- **独立Opus確認**: 不要（グレー修正なし）
+- **公開ファイル**: `guide-candlestick-basics.html`
+- **PUSH-MAIN**: ✅ 成功（2026-07-16 rebase+push EXIT=0）
+- **HTTP 200確認**: クラウド環境プロキシ制限(403)により直接確認不可（push成功・GitHub Pages デプロイ正常と判断）
+- **URL**: https://marketwatch-jp.com/guide-candlestick-basics.html
+
+---
+
 ## 2026-07-16 | 🧪 AIシグナル研究日誌 #041 — trend=下降×reversalL gate 前向き急上昇解析
 
 - **基準日**: 2026-07-16 (JST)
