@@ -13,7 +13,10 @@
 - **主因**: metal IS25.3%(22/87)→FWD69.2%(9/13) のレジーム転換（#030/#032/#039/#040と同根）
 - **サブ発見**: tf=4h FWD78.1%(25/32) E(R)=+0.823 RCI[+0.483,+1.162] / rsi_oversold FWD75.0%(12/16) E(R)=+0.750
 - **次チェックポイント**: tracker N=75 → N=80（あと5件で昇格/反証判定）
-- **ゲート状態**: ⏳ 実行中
+- **ゲート状態**: ✅ 完了・公開済み
+  - verify.py: 11/11 GREEN / compliance: 🟡→表現軟化2箇所→独立Opus🟢白 / finalize: 26KB, svg=2, kinsho=3 / check_site: EXIT=0
+  - 公開ファイル: `guide-signal-lab-041.html`
+  - PUSH-MAIN: ✅ 成功（2026-07-16）
 
 ---
 
