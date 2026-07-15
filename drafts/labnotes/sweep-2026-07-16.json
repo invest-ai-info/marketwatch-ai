@@ -1,0 +1,116 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "mode": {
+    "net": false,
+    "cost_mult": 1.5,
+    "itt": false
+  },
+  "candidates": [
+    {
+      "label": "tf=1d×reversalL",
+      "filter": {
+        "tf": "1d",
+        "reversal_long": true
+      },
+      "k": 18,
+      "n": 23,
+      "n_days": 12,
+      "pct": 78.3,
+      "ci_lo": 58.1,
+      "ci_hi": 90.3,
+      "avgR": 0.826,
+      "rci_lo": 0.43,
+      "rci_hi": 1.223,
+      "p": 4.431881611166588e-05,
+      "profitable": true,
+      "exp_pct": 0.0,
+      "q": 0.0032,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal×dir=long",
+      "filter": {
+        "group": "metal",
+        "direction": "long"
+      },
+      "k": 44,
+      "n": 179,
+      "n_days": 48,
+      "pct": 24.6,
+      "ci_lo": 18.9,
+      "ci_hi": 31.4,
+      "avgR": -0.426,
+      "rci_lo": -0.668,
+      "rci_hi": -0.185,
+      "p": 0.0005496426406921273,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0201,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=index×reversalL",
+      "filter": {
+        "group": "index",
+        "reversal_long": true
+      },
+      "k": 74,
+      "n": 133,
+      "n_days": 29,
+      "pct": 55.6,
+      "ci_lo": 47.2,
+      "ci_hi": 63.8,
+      "avgR": 0.298,
+      "rci_lo": 0.115,
+      "rci_hi": 0.482,
+      "p": 0.0014311216024984752,
+      "profitable": true,
+      "exp_pct": 1.5,
+      "q": 0.0261,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 94,
+      "n": 171,
+      "n_days": 43,
+      "pct": 55.0,
+      "ci_lo": 47.5,
+      "ci_hi": 62.2,
+      "avgR": 0.283,
+      "rci_lo": 0.111,
+      "rci_hi": 0.454,
+      "p": 0.0012112896881182333,
+      "profitable": true,
+      "exp_pct": 0.0,
+      "q": 0.0261,
+      "fdr_pass": true
+    },
+    {
+      "label": "group=metal",
+      "filter": {
+        "group": "metal"
+      },
+      "k": 79,
+      "n": 254,
+      "n_days": 50,
+      "pct": 31.1,
+      "ci_lo": 25.7,
+      "ci_hi": 37.0,
+      "avgR": -0.274,
+      "rci_lo": -0.447,
+      "rci_hi": -0.102,
+      "p": 0.001816302380826862,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0265,
+      "fdr_pass": true
+    }
+  ]
+}
