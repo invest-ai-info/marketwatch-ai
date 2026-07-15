@@ -4767,7 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-07-12", "line": '・<b>2026-07-12</b>: 🎓 解説「<a href="guide-masters-006-dual-momentum.html" style="color:#0969da"><b>巨匠検証#6｜デュアルモメンタム原典回帰——切替は単一資産に勝てるか</b></a>」公開'},
+        {"date": "2026-07-15", "line": '・<b>2026-07-15</b>: 🎓 解説「<a href="guide-masters-006-dual-momentum.html" style="color:#0969da"><b>巨匠検証#6｜デュアルモメンタム原典回帰——切替は単一資産に勝てるか</b></a>」公開'},
         {"date": "2026-07-15", "line": '・<b>2026-07-15</b>: 🧪 解説「<a href="guide-signal-lab-040.html" style="color:#0969da"><b>tier=good gate反証確定——不毛期の遺物が転換</b></a>」公開'},
         {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 📰 解説「<a href="guide-news-2026-07-14-nikkei-kospi-v-recovery.html" style="color:#0969da"><b>「暗黒の月曜日」翌日のV字回復──日経+501円・KOSPI逆転を整理</b></a>」公開'},
         {"date": "2026-07-14", "line": '・<b>2026-07-14</b>: 💰 解説「<a href="guide-proverb-rigui-sennin.html" style="color:#0969da"><b>利食い千人力</b></a>」公開'},
