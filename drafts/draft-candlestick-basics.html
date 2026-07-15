@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>ローソク足の読み方入門｜4本値・ヒゲ・実体が語ること - MarketWatch AI</title>
+  <meta name="description" content="ローソク足の構造（始値・高値・安値・終値・陽線・陰線・上ヒゲ・下ヒゲ）を図解で入門解説。時間軸で意味が変わる話や「形だけで売買判断しない」注意点まで、投資初心者〜中級者向けにわかりやすく解説します。">
+  <meta name="keywords" content="ローソク足,チャート,陽線,陰線,四本値,ヒゲ,上ヒゲ,下ヒゲ,実体,十字線,ドージ,ハンマー,テクニカル分析,投資初心者,株,FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-candlestick-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ローソク足の読み方入門｜4本値・ヒゲ・実体が語ること">
+  <meta property="og:description" content="ローソク足の構造（陽線・陰線・4本値・ヒゲ）を図解で解説。時間軸の使い分けや「形だけで判断しない」注意点まで、投資初心者〜中級者向け。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-candlestick-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ローソク足の読み方入門｜4本値・ヒゲ・実体が語ること",
+    "description": "ローソク足の構造（陽線・陰線・4本値・ヒゲ）を図解で入門解説。時間軸で意味が変わる話や「形だけで売買判断しない」注意点まで。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-15",
+    "dateModified": "2026-07-15",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-candlestick-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-md{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* ローソク足専用クラス */
+    .s-candle-y{fill:#d4edda;stroke:#1a7f37;stroke-width:2}
+    .s-candle-i{fill:#ffdce0;stroke:#cf222e;stroke-width:2}
+    .s-candle-doji{fill:#f6f8fa;stroke:#57606a;stroke-width:2}
+    .s-wick{stroke:#424a53;stroke-width:2;stroke-linecap:round}
+    .s-title-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-title-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-md{fill:#c9d1d9}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-candle-y{fill:#1a3a20;stroke:#3fb950}
+    body.dark .s-candle-i{fill:#3a1020;stroke:#f85149}
+    body.dark .s-candle-doji{fill:#1c2128;stroke:#8b949e}
+    body.dark .s-wick{stroke:#c9d1d9}
+    body.dark .s-title-g{fill:#3fb950}
+    body.dark .s-title-r{fill:#f85149}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ローソク足の読み方入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はローソク足の仕組みと読み方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 ローソク足の読み方入門｜4本値・ヒゲ・実体が語ること</h1>
+    <div class="meta-line">公開日：2026 年 7 月 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>株価や為替のチャートを開くと、赤と緑（または赤と白）の棒が無数に並んでいます。これが<strong>ローソク足</strong>です。その形が和ろうそくに似ているからこの名前があります。チャートの基礎中の基礎ですが、「なんとなく見ている」「陽線と陰線の区別くらいしかわからない」という方は意外と多いものです。</p>
+    <p>ローソク足の面白いところは、<strong>1本の棒がその時間帯の「相場の攻防」を丸ごと記録している</strong>点です。実体の大きさは勢いを、ヒゲの長さは押し返された痕跡を教えてくれます。この記事では、まずローソク足1本の構造（4本値・陽線陰線・ヒゲ）を図解でていねいに解説し、後半では時間軸による使い方の違いや「形だけで売買判断してはいけない理由」まで踏み込みます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ローソク足1本は<strong>「始値・高値・安値・終値」の4本値</strong>を1つの図形に凝縮している。終値が始値より高ければ陽線（緑/白）、低ければ陰線（赤/黒）。</li>
+      <li>実体は<strong>買い手と売り手の本戦（始値→終値）</strong>を示し、ヒゲは<strong>その時間帯に伸びたが押し戻された部分</strong>＝売り圧力・買い圧力の痕跡を示す。</li>
+      <li>ローソク足のパターンは参考情報のひとつ。<strong>形だけで売買判断するとダマシにあう</strong>リスクがあるため、移動平均線やRSIなど他の指標と組み合わせて使うのが基本とされている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">ローソク足の起源——江戸時代の米相場から世界へ</a></li>
+        <li><a href="#section-2">1本の解剖図——陽線・陰線・4本値・ヒゲ</a></li>
+        <li><a href="#section-3">ヒゲが語ること——売り圧力と買い圧力の痕跡</a></li>
+        <li><a href="#section-4">代表的な単体パターン——十字線・ハンマー・大陽線</a></li>
+        <li><a href="#section-5">【中上級】時間軸でローソク足の「重み」は変わる</a></li>
+        <li><a href="#section-6">【中上級】「形だけで売買判断しない」——ダマシと組み合わせの重要性</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ローソク足の起源——江戸時代の米相場から世界へ</h2>
+    <p>ローソク足チャートは、今から約300年前の日本で生まれたとされています。江戸時代、現在の大阪・堂島に開設された<strong>堂島米市場</strong>は、世界最初の組織的な先物取引市場と言われており、ここで価格の動きを視覚化する手法が発展しました。</p>
+    <p>特に有名なのが<strong>本間宗久（ほんまそうきゅう、1724〜1803年）</strong>です。山形・酒田の豪商で、堂島米市場での活躍から「相場の神様」とも呼ばれるようになりました。酒田五法と呼ばれるパターン分析の基礎を築いたとされ、ローソク足の源流との関係が多くの文献で言及されています（※ 一次史料に基づく確定的な歴史証明よりも、通説として広く流通している経緯があります）。</p>
+    <p>その後、ローソク足が欧米に本格的に紹介されたのは1990年代初頭です。米国人アナリストの<strong>スティーブ・ニーソン</strong>が著書でこの手法を解説し、「<strong>Candlestick（キャンドルスティック）</strong>」の名で世界中に広まりました。今では株・FX・仮想通貨・商品先物を問わず、あらゆる金融市場で使われるチャートの世界標準となっています。</p>
+    <div class="info-box">
+      <strong>💡 なぜ300年後も使われているのか</strong>：ローソク足が普及し続けている理由は、<strong>価格の「攻防の記録」を直感的に視覚化できる</strong>点にあります。棒グラフや折れ線チャートが1〜2つの情報しか示せないのに対し、ローソク足は4本値（始値・高値・安値・終値）と買い勢い・売り勢いの優劣を、1本の図形で伝えます。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 1本の解剖図——陽線・陰線・4本値・ヒゲ</h2>
+    <p>ローソク足1本が表すのは、ある<strong>一定の時間帯</strong>（例：1日、4時間、1時間）の価格の動きです。その時間帯を代表する4つの価格、いわゆる<strong>「四本値（よんほんね）」</strong>が、1本のローソク足に凝縮されています。</p>
+
+    <table>
+      <tr><th>用語</th><th>読み方</th><th>意味</th></tr>
+      <tr><td>始値</td><td>はじめね</td><td>その期間の最初の取引価格</td></tr>
+      <tr><td>高値</td><td>たかね</td><td>その期間中の最高取引価格</td></tr>
+      <tr><td>安値</td><td>やすね</td><td>その期間中の最低取引価格</td></tr>
+      <tr><td>終値</td><td>おわりね</td><td>その期間の最後の取引価格</td></tr>
+    </table>
+
+    <p>この4つの価格が、以下の構造で1本のローソク足に描かれます。</p>
+
+    <!-- Figure 1: ローソク足の構造 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 680 380" role="img" aria-labelledby="candle-anatomy-title">
+        <title id="candle-anatomy-title">ローソク足の構造——陽線と陰線の解剖図</title>
+        <!-- パネルタイトル -->
+        <text class="s-title-g" x="60" y="28">陽線（ようせん）</text>
+        <text class="s-label-sm" x="60" y="46">終値 ＞ 始値</text>
+        <text class="s-title-r" x="400" y="28">陰線（いんせん）</text>
+        <text class="s-label-sm" x="400" y="46">終値 ＜ 始値</text>
+        <!-- 中央分割線 -->
+        <line class="s-divv" x1="340" y1="38" x2="340" y2="355"/>
+
+        <!-- 陽線（左、中心x=150） -->
+        <!-- 上ヒゲ: 高値(y=60)→終値(y=120) -->
+        <line class="s-wick" x1="150" y1="62" x2="150" y2="118"/>
+        <!-- 実体: 終値(y=120)〜始値(y=250) -->
+        <rect class="s-candle-y" x="118" y="118" width="64" height="134" rx="2"/>
+        <!-- 下ヒゲ: 始値(y=252)→安値(y=318) -->
+        <line class="s-wick" x1="150" y1="252" x2="150" y2="318"/>
+        <!-- 陽線ラベル（右側） -->
+        <line class="s-guide" x1="156" y1="62" x2="220" y2="62"/>
+        <text class="s-label-md" x="224" y="66">高値</text>
+        <line class="s-guide" x1="156" y1="90" x2="220" y2="90"/>
+        <text class="s-label-sm" x="224" y="94">上ヒゲ</text>
+        <line class="s-guide" x1="182" y1="120" x2="220" y2="120"/>
+        <text class="s-note-g" x="224" y="124">終値（上=終値）</text>
+        <!-- 実体ブレース -->
+        <text class="s-label-sm" x="72" y="190">実体</text>
+        <line class="s-guide" x1="110" y1="120" x2="88" y2="120"/>
+        <line class="s-guide" x1="88" y1="120" x2="88" y2="250"/>
+        <line class="s-guide" x1="88" y1="250" x2="110" y2="250"/>
+        <line class="s-guide" x1="182" y1="250" x2="220" y2="250"/>
+        <text class="s-note-r" x="224" y="254">始値（下=始値）</text>
+        <line class="s-guide" x1="156" y1="286" x2="220" y2="286"/>
+        <text class="s-label-sm" x="224" y="290">下ヒゲ</text>
+        <line class="s-guide" x1="156" y1="318" x2="220" y2="318"/>
+        <text class="s-label-md" x="224" y="322">安値</text>
+
+        <!-- 陰線（右、中心x=490） -->
+        <!-- 上ヒゲ: 高値(y=60)→始値(y=120) -->
+        <line class="s-wick" x1="490" y1="62" x2="490" y2="118"/>
+        <!-- 実体: 始値(y=120)〜終値(y=250) -->
+        <rect class="s-candle-i" x="458" y="118" width="64" height="134" rx="2"/>
+        <!-- 下ヒゲ: 終値(y=252)→安値(y=318) -->
+        <line class="s-wick" x1="490" y1="252" x2="490" y2="318"/>
+        <!-- 陰線ラベル（右側） -->
+        <line class="s-guide" x1="496" y1="62" x2="556" y2="62"/>
+        <text class="s-label-md" x="560" y="66">高値</text>
+        <line class="s-guide" x1="496" y1="90" x2="556" y2="90"/>
+        <text class="s-label-sm" x="560" y="94">上ヒゲ</text>
+        <line class="s-guide" x1="522" y1="120" x2="556" y2="120"/>
+        <text class="s-note-r" x="560" y="124">始値（上=始値）</text>
+        <line class="s-guide" x1="522" y1="250" x2="556" y2="250"/>
+        <text class="s-note-g" x="560" y="254">終値（下=終値）</text>
+        <line class="s-guide" x1="496" y1="286" x2="556" y2="286"/>
+        <text class="s-label-sm" x="560" y="290">下ヒゲ</text>
+        <line class="s-guide" x1="496" y1="318" x2="556" y2="318"/>
+        <text class="s-label-md" x="560" y="322">安値</text>
+
+        <!-- 注釈: 実体の説明 -->
+        <text class="s-note" x="340" y="360" text-anchor="middle">実体＝始値と終値の差（大きいほど買い・売りの勢いが強い）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ ローソク足1本の構造。<strong>緑（陽線）＝終値が始値より高い</strong>（買い優勢で終了）。<strong>赤（陰線）＝終値が始値より低い</strong>（売り優勢で終了）。実体の上下に飛び出した線が「ヒゲ」で、その時間帯の最高値（高値）・最低値（安値）を示す。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>陽線と陰線</h3>
+    <p><strong>陽線（ようせん）</strong>は「終値が始値より高い」ローソク足で、その時間帯を買い手が支配して引けたことを意味します。一般に緑または白で表示されます。<strong>陰線（いんせん）</strong>は逆で「終値が始値より低い」もの。赤または黒で表示されます。</p>
+    <p>実体（ボディ）の長さは勢いを示します。<strong>実体が長い陽線（大陽線）</strong>は強い買い圧力を、<strong>実体が長い陰線（大陰線）</strong>は強い売り圧力を示す、とされています。逆に実体が非常に短い場合は、その時間帯で買いと売りが拮抗していたことを意味します。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ヒゲが語ること——売り圧力と買い圧力の痕跡</h2>
+    <p>ローソク足の魅力はヒゲにあると言っても過言ではありません。ヒゲは、その時間帯に<strong>「一方が攻め込んだが、もう一方に押し返された」という攻防の痕跡</strong>です。</p>
+
+    <!-- Figure 2: ヒゲの意味 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 310" role="img" aria-labelledby="wick-meaning-title">
+        <title id="wick-meaning-title">上ヒゲと下ヒゲが示す売買圧力の痕跡</title>
+        <!-- 左パネル: 上ヒゲ -->
+        <text class="s-note-r" x="60" y="26">長い上ヒゲ → 上値に売り圧力の痕跡</text>
+        <!-- 上ヒゲが長いローソク足（陰線気味） -->
+        <line class="s-wick" x1="160" y1="46" x2="160" y2="148"/>
+        <rect class="s-candle-i" x="134" y="148" width="52" height="32" rx="2"/>
+        <line class="s-wick" x1="160" y1="180" x2="160" y2="200"/>
+        <!-- ヒゲの矢印・注釈 -->
+        <line class="s-brk" x1="46" y1="46" x2="190" y2="46"/>
+        <text class="s-label-sm" x="50" y="40">高値（一時的に到達）</text>
+        <line class="s-brk" x1="46" y1="148" x2="190" y2="148"/>
+        <text class="s-label-sm" x="50" y="162">始値/終値（押し戻された）</text>
+        <!-- 矢印: 上への伸び -->
+        <text class="s-note-r" x="200" y="98">← 売り手が</text>
+        <text class="s-note-r" x="200" y="114">   押し戻した</text>
+        <!-- 説明文 -->
+        <text class="s-label-sm" x="40" y="240">「高値まで上昇したが、</text>
+        <text class="s-label-sm" x="40" y="258">　そこで強い売り圧力が入り</text>
+        <text class="s-label-sm" x="40" y="276">　終値は押し戻された」</text>
+        <text class="s-note-r" x="40" y="298">上昇の勢いに疑問符がつくサイン</text>
+        <!-- 分割線 -->
+        <line class="s-divv" x1="320" y1="20" x2="320" y2="300"/>
+        <!-- 右パネル: 下ヒゲ -->
+        <text class="s-note-g" x="350" y="26">長い下ヒゲ → 下値に買い圧力の痕跡</text>
+        <!-- 下ヒゲが長いローソク足（陽線気味） -->
+        <line class="s-wick" x1="490" y1="82" x2="490" y2="106"/>
+        <rect class="s-candle-y" x="464" y="106" width="52" height="28" rx="2"/>
+        <line class="s-wick" x1="490" y1="134" x2="490" y2="258"/>
+        <!-- ヒゲの注釈 -->
+        <line class="s-brk" x1="346" y1="106" x2="524" y2="106"/>
+        <text class="s-label-sm" x="350" y="100">始値/終値（値を戻した）</text>
+        <line class="s-brk" x1="346" y1="258" x2="524" y2="258"/>
+        <text class="s-label-sm" x="350" y="276">安値（一時的に到達）</text>
+        <text class="s-note-g" x="335" y="196">← 買い手が</text>
+        <text class="s-note-g" x="335" y="212">   値を戻した</text>
+        <!-- 説明文 -->
+        <text class="s-label-sm" x="346" y="240" display="none">dummy</text>
+        <text class="s-label-sm" x="348" y="300">下へ押されたが買いが入り値を戻した</text>
+      </svg>
+      <figcaption class="chart-caption">▲ <strong>上ヒゲ（左）</strong>：高値まで上昇したが売り手に押し返され、終値はヒゲの付け根付近に収まった。これは「上値に売り圧力が存在する痕跡」と解説されることが多い。<strong>下ヒゲ（右）</strong>：安値まで下押されたが買い手が押し返し、値を戻した。「下値での買い意欲の痕跡」とされる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>ヒゲの長さが示すもの</h3>
+    <p><strong>上ヒゲが長い</strong>ローソク足は、その時間帯に上昇を試みたものの売り圧力に阻まれたことを示します。とりわけ上昇トレンドの高値圏で長い上ヒゲが出た場合、「上値抵抗の存在」や「上昇の勢いの衰え」として警戒材料になることがあります。</p>
+    <p>逆に<strong>下ヒゲが長い</strong>ローソク足は、下落を試みたものの買い手が引きつけて値を戻した痕跡です。下落トレンドの安値圏で長い下ヒゲが出ると「下値支持の存在」として反転サインの候補として議論されることがあります。ただし、これらはあくまで「可能性を示す材料」であり、必ずそのように動くわけではありません（後述するダマシの問題）。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 代表的な単体パターン——十字線・ハンマー・大陽線</h2>
+    <p>ヒゲと実体の組み合わせで、特定の形を持つローソク足には名前がついており、しばしば相場の転換点のサインとして話題になります。以下は代表的なパターンです。</p>
+
+    <!-- Figure 3: 代表パターン -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="candle-patterns-title">
+        <title id="candle-patterns-title">代表的なローソク足の単体パターン4種</title>
+
+        <!-- 1. 十字線（ドージ）x=80 -->
+        <text class="s-panel-label" x="80" y="28" text-anchor="middle">十字線（ドージ）</text>
+        <line class="s-wick" x1="80" y1="56" x2="80" y2="130"/>
+        <rect class="s-candle-doji" x="62" y="130" width="36" height="4" rx="1"/>
+        <line class="s-wick" x1="80" y1="134" x2="80" y2="208"/>
+        <text class="s-label-sm" x="80" y="228" text-anchor="middle">始値≈終値</text>
+        <text class="s-label-sm" x="80" y="244" text-anchor="middle">売買が拮抗</text>
+
+        <!-- 2. ハンマー（カラカサ）x=240 -->
+        <text class="s-panel-label" x="240" y="28" text-anchor="middle">ハンマー</text>
+        <text class="s-label-sm" x="240" y="42" text-anchor="middle">（カラカサ）</text>
+        <rect class="s-candle-y" x="222" y="86" width="36" height="24" rx="2"/>
+        <line class="s-wick" x1="240" y1="110" x2="240" y2="210"/>
+        <text class="s-label-sm" x="240" y="230" text-anchor="middle">長い下ヒゲ</text>
+        <text class="s-label-sm" x="240" y="246" text-anchor="middle">下落後の反転候補</text>
+
+        <!-- 3. 首吊り線 x=400 -->
+        <text class="s-panel-label" x="400" y="28" text-anchor="middle">首吊り線</text>
+        <text class="s-label-sm" x="400" y="42" text-anchor="middle">（くびつりせん）</text>
+        <rect class="s-candle-i" x="382" y="86" width="36" height="24" rx="2"/>
+        <line class="s-wick" x1="400" y1="110" x2="400" y2="210"/>
+        <text class="s-label-sm" x="400" y="230" text-anchor="middle">形はハンマーと同じ</text>
+        <text class="s-label-sm" x="400" y="246" text-anchor="middle">上昇後→下落転換候補</text>
+
+        <!-- 4. 大陽線 x=560 -->
+        <text class="s-panel-label" x="560" y="28" text-anchor="middle">大陽線</text>
+        <line class="s-wick" x1="560" y1="56" x2="560" y2="72"/>
+        <rect class="s-candle-y" x="538" y="72" width="44" height="160" rx="2"/>
+        <line class="s-wick" x1="560" y1="232" x2="560" y2="248"/>
+        <text class="s-label-sm" x="560" y="264" text-anchor="middle">大きな実体</text>
+
+        <!-- 縦区切り線 -->
+        <line class="s-divv" x1="160" y1="20" x2="160" y2="260"/>
+        <line class="s-divv" x1="320" y1="20" x2="320" y2="260"/>
+        <line class="s-divv" x1="480" y1="20" x2="480" y2="260"/>
+      </svg>
+      <figcaption class="chart-caption">▲ 代表的な4パターン。<strong>十字線</strong>＝始値と終値がほぼ同じで売買が拮抗、トレンド転換サインとして語られることがある。<strong>ハンマー</strong>＝下落後の安値圏で長い下ヒゲ、反転候補とされる。<strong>首吊り線</strong>＝ハンマーと形が同じでも、上昇トレンドの高値圏で出ると下落転換サインと呼ばれる（コンテキストが逆）。<strong>大陽線</strong>＝実体が大きく強い買い圧力を示す。いずれも「必ずこう動く」保証はなく、他の情報と合わせて判断することが基本とされる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      ハンマーと首吊り線は形が全く同じです。どちらとして解釈するかは、<strong>その前後の相場の流れ（コンテキスト）</strong>で決まります。形だけを見て「これはハンマーだ」と決めつけるのは危険です。後のセクションで詳しく触れますが、これがローソク足パターンの難しさでもあります。
+    </div>
+
+    <!-- Section 5 (中上級) -->
+    <h2 id="section-5">5️⃣【中上級】時間軸でローソク足の「重み」は変わる</h2>
+    <p>ローソク足1本が表す「一定期間」は、チャートの時間足によって変わります。<strong>1分足</strong>なら1本が1分間の動き、<strong>日足</strong>なら1本が1日の動き（株式市場なら9時〜15時）、<strong>週足</strong>なら1週間の動きを示します。</p>
+
+    <table>
+      <tr><th>時間足</th><th>ローソク足1本の期間</th><th>主な用途</th></tr>
+      <tr><td>1分足・5分足</td><td>1分・5分</td><td>超短期（スキャルピング）。ノイズが多い</td></tr>
+      <tr><td>1時間足・4時間足</td><td>1時間・4時間</td><td>短期〜中期トレード。当サイトのシグナル分析でも使用</td></tr>
+      <tr><td>日足</td><td>1日</td><td>中期トレード・スイングの基本</td></tr>
+      <tr><td>週足・月足</td><td>1週間・1カ月</td><td>大局のトレンド把握・長期投資</td></tr>
+    </table>
+
+    <p>重要なのは、<strong>時間軸が長いほどローソク足の「重み」が増す</strong>点です。日足で長い陽線が出た場合と、1分足で長い陽線が出た場合では、意味の強さが全く異なります。多くのトレーダーは<strong>マルチタイムフレーム（複数時間軸での確認）</strong>を実践します。例えば「日足の大局トレンドを確認してから、4時間足でエントリータイミングを探る」といった形です。</p>
+
+    <div class="info-box">
+      <strong>💡 時間軸が短いとノイズが多い理由</strong>：1分足のローソク足には、大口投資家の注文タイミングや市場の薄い時間帯の偶発的な動きが反映されやすく、同じパターンが出ても意味を持たないことが多くなります。一般に、時間軸が長いほどパターンの信頼性が高まるとされています。
+    </div>
+
+    <!-- Section 6 (中上級) -->
+    <h2 id="section-6">6️⃣【中上級】「形だけで売買判断しない」——ダマシとの戦い</h2>
+    <p>ここが最も大切なセクションです。<strong>ローソク足のパターンは、形が出たからといって毎回その通りに動くわけではありません</strong>。「ハンマーが出たから買い」と機械的に判断すると、予測と逆に動く<strong>「ダマシ」</strong>に遭遇するリスクがあります。</p>
+    <p>松井証券・外為どっとコムなど複数の金融機関がウェブサイトで明示しているように、ローソク足パターンは<strong>「他の指標と組み合わせて使うのが基本」</strong>とされています。組み合わせる代表的な指標としては次のようなものがあります。</p>
+    <ul>
+      <li><strong><a href="guide-moving-average.html">移動平均線（MA）</a></strong>：トレンドの方向を確認する。ローソク足パターンがトレンドと同方向なら信頼性が高まる。</li>
+      <li><strong><a href="guide-rsi.html">RSI（相対力指数）</a></strong>：買われすぎ・売られすぎを確認する。ハンマーが売られすぎゾーンで出ればより注目度が高い。</li>
+      <li><strong><a href="guide-macd.html">MACD</a></strong>：トレンドの転換・加速を確認する補助的な指標。</li>
+      <li><strong><a href="guide-bollinger-bands.html">ボリンジャーバンド</a></strong>：価格のボラティリティと位置を示す。バンド外でのパターンは注目度が高い。</li>
+    </ul>
+    <div class="negative-box">
+      <strong>「形だけ」判断の落とし穴</strong>：ローソク足パターンは過去の値動きをまとめたものです。将来の価格動向を保証するものでも、そのパターンが高確率で特定の動きを予測できるという根拠を示すものでもありません。判断材料のひとつとして利用し、<a href="guide-risk-reward.html">リスクリワード</a>や<a href="guide-loss-cut.html">損切りライン</a>をあらかじめ決めてからエントリーすることが基本とされています。
+    </div>
+    <p>当サイトの<a href="guide-signal-lab-001.html">AIシグナル研究日誌</a>では、ローソク足の形状を含む単独指標や組み合わせ指標が、過去の当サイトのシグナル履歴でどの程度の結果を示しているかを前向きに検証し、公開しています。「パターンが本当に機能するか」を数字で確かめていく試みです。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI のテクニカルシグナルは、ローソク足を含む複数の指標を組み合わせて動いています。</p>
+    <ul>
+      <li><strong>シグナルメールには時間足の明示がある</strong>：「4H足」「1H足」といった時間軸が明示されており、どの時間帯の攻防を見ているかを確認できます。同じパターンでも時間軸が異なれば重みが違います。</li>
+      <li><strong>ローソク足の形は複数指標の一要素</strong>：RSI・MACD・移動平均線との整合性を見た上でシグナルが発火します。形単体で結論を出す設計ではありません。</li>
+      <li><strong>成績を隠さず公開</strong>：どのシグナルが勝ち・負けを含め<a href="track-record.html">シグナル成績ダッシュボード</a>で確認できます。ローソク足パターンの信頼性も、蓄積データで検証し続けています。</li>
+    </ul>
+    <p>また、<a href="guide-order-types.html">逆指値注文</a>を使ってローソク足の安値・高値付近に損切りラインを置く方法は、多くのトレーダーが実践する基本技術です。ローソク足を読めるようになると、<a href="guide-loss-cut.html">損切りラインの設定</a>も自然と論理的になります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルがどう機能しているか見てみる</div>
+      <div class="cta-box-desc">ローソク足パターンを含む複合テクニカルシグナルの実際の成績——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>ローソク足について学んだことを整理します。</p>
+    <ul>
+      <li>ローソク足1本は<strong>4本値（始値・高値・安値・終値）</strong>を凝縮した図形。江戸時代の日本で生まれ、世界標準の相場図となっている。</li>
+      <li><strong>陽線（終値＞始値）</strong>は買い優勢、<strong>陰線（終値＜始値）</strong>は売り優勢を示す。実体が大きいほど勢いが強い。</li>
+      <li><strong>上ヒゲ</strong>は上値での売り圧力の痕跡、<strong>下ヒゲ</strong>は下値での買い圧力の痕跡。ヒゲが長いほどその方向への抵抗が強かったことを示す。</li>
+      <li>十字線・ハンマー・首吊り線などのパターンは転換サインとして語られることがあるが、<strong>コンテキスト（前後の流れ）と他指標との組み合わせ</strong>が必須。形だけの判断はダマシリスクがある。</li>
+      <li><strong>時間軸が長いほど重み大</strong>。マルチタイムフレームで大局→エントリー順に確認するのが基本的なアプローチとされている。</li>
+    </ul>
+    <p>チャートに並ぶ無数のローソク足は、すべて投資家たちの「その瞬間の攻防」の記録です。形を覚えることだけを目的にするより、<strong>「この形が出たということは、この時間帯に何が起きたのか」を想像しながら読む習慣</strong>のほうが、長期的に力になるはずです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">📋 注文方法の基本（成行・指値・逆指値）</div>
+        <div class="related-card-desc">ローソク足で損切りラインを決めたら、逆指値でその価格に注文を置く。注文の仕組みと使い分けを解説。</div>
+      </a>
+      <a class="related-card" href="guide-moving-average.html">
+        <div class="related-card-title">📈 移動平均線の使い方</div>
+        <div class="related-card-desc">ローソク足と組み合わせる定番指標。トレンドの方向を確認することでパターンの信頼性が変わる。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">ローソク足のヒゲや安値を根拠に損切りラインを設定する。損切りの心理と技術を行動経済学で解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はローソク足の仕組みと読み方に関する情報提供であり、特定銘柄の売買推奨や投資助言ではありません。記載内容は一般的な解説であり、特定の方法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
