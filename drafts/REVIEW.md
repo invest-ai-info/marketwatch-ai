@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-07-17 | 🧪 AIシグナル研究日誌 #042 — trend=上昇×reversalL ✅昇格確認
+
+- **基準日**: 2026-07-17 (JST)
+- **優先度**: ①（tracker昇格変化: trend=上昇×reversalL FWD N=81 E(R)=+0.239 CI[+0.03~+0.44] → ✅昇格）
+- **生成ファイル**: `drafts/draft-signal-lab-042.html`
+- **claims.json**: `drafts/labnotes/lab-042-claims.json`（10件）
+- **仮説結果**: IS 97/182=53.3% CI[46.1%,60.4%] E(R)=+0.242 → FWD N=81 E(R)=+0.239 CI[+0.03~+0.44]（✅昇格）
+- **グループ別**: index 42/72=58.3%・jpy_fx 26/43=60.5%・other_fx 18/47=38.3%（逆効果）
+- **シグナル別**: RSI 27/44=61.4%・BB 70/138=50.7%
+- **対照群**: 上昇×非revL 162/437=37.1% E(R)=-0.136（逆張りの比較優位を傍証）
+- **ゲート状態**: ✅ 完了・公開済み
+  - verify.py 初回EXIT=1（「下書き中」日付・summary box構造異常）→ 修正後EXIT=0（10/10 GREEN）
+  - compliance Opus: 🟢白（修正なし）
+  - finalize: 32KB, svg=2, kinsho=3 / check_site: EXIT=0
+  - 公開ファイル: `guide-signal-lab-042.html`
+  - PUSH-MAIN: ✅ 成功（2026-07-17）
+
+---
+
 ## 2026-07-16 | 💰 autopublish: guide-candlestick-basics.html（投資の基礎知識 #24）
 
 - **基準日**: 2026-07-16 (JST)
