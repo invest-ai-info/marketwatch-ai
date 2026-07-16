@@ -49,4 +49,5 @@ SYNC_FILES = [
     "guide-signal-lab-040.html",
     "guide-signal-lab-041.html",
     "guide-candlestick-basics.html",
+    "guide-news-2026-07-16-nikkei-drop-semiconductor-tsmc.html",
 ]

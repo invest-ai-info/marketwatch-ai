@@ -4767,6 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-16", "line": '・<b>2026-07-16</b>: 📰 解説「<a href="guide-news-2026-07-16-nikkei-drop-semiconductor-tsmc.html" style="color:#0969da"><b>日経-1,915円・半導体株急落とTSMC+77%の逆説──中国CXMT台頭を整理</b></a>」公開'},
         {"date": "2026-07-16", "line": '・<b>2026-07-16</b>: 💰 解説「<a href="guide-candlestick-basics.html" style="color:#0969da"><b>ローソク足の読み方入門</b></a>」公開'},
         {"date": "2026-07-16", "line": '・<b>2026-07-16</b>: 🧪 解説「<a href="guide-signal-lab-041.html" style="color:#0969da"><b>下降×reversalL gate——IS 34%から前向き65%へ劇的逆転</b></a>」公開'},
         {"date": "2026-07-15", "line": '・<b>2026-07-15</b>: 🎓 解説「<a href="guide-masters-006-dual-momentum.html" style="color:#0969da"><b>巨匠検証#6｜デュアルモメンタム原典回帰——切替は単一資産に勝てるか</b></a>」公開'},
