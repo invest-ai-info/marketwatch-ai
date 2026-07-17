@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-07-18 | ✅ 🧪 AIシグナル研究日誌 #043 — trend=下降×reversalL gate ⛔反証 【公開完了】
+
+- **基準日**: 2026-07-18 (JST)
+- **優先度**: ①（tracker ⛔反証変化: N=80チェックポイント E(R)=+0.863 CI[+0.501,+1.224]・全域プラス確定）
+- **生成ファイル**: `drafts/draft-signal-lab-043.html` → `guide-signal-lab-043.html`
+- **claims.json**: `drafts/labnotes/lab-043-claims.json`（12件）
+- **仮説結果**: 全期間 107/260=41.2% CI[35.3%,47.2%] / IS≈30.2% E(R)=-0.530 / FWD tracker 52/90=58% E(R)=+0.348 CI[-0.06,+0.76]（⛔反証）
+- **グループ別**: metal 23/92=25.0%（IS主因）/ other_fx 34/68=50.0% / index 12/25=48.0% / jpy_fx 10/19=52.6% / oil 14/23=60.9%
+- **主因**: metal IS25%→FWD73%の劇的転換（#030/#032/#039/#040/#041と同根）
+- **ゲート**: ✅ 完了・公開済み
+  - verify.py: 12/12 GREEN EXIT=0（初回・Opus修正後ともに通過）
+  - Opus コンプラ: 🟡グレー（kinsho-v1が2→3箇所に修正）→ 修正後🟢白
+  - 独立Opus確認: 🟢白（全6項目⭕）
+  - finalize_signal_lab.py: EXIT=0 (meta_line_fixed=0, svg=1, kinsho=3)
+  - publish_article.py: EXIT=0
+  - check_site_consistency.py: EXIT=0（警告1件=スタブ想定）
+
+---
+
 ## 2026-07-17 autopublish: スキップ（topicキュー24本すべて公開済み・対象なし）
 
 ---
