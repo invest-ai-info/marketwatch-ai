@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-17
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均-2,694円・歴代5位の下げ幅──キオクシア特許訴訟ストップ安（$229M評決）とTSMC Capex急増「AI投資の功罪」を中立整理（カテゴリ: マクロ・半導体・日本株・個別銘柄・訴訟）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 日経平均が終値-2,694円（-4.03%）・歴代5位の1日下げ幅、週間下げ幅4,416円が過去最大。キオクシアHDがテキサス陪審のViasat特許侵害評決（$229M）でストップ安・時価総額30兆円消失という全く新しい引き金。TSMCのCapex$60-64Bへ急増もAI投資コスト懸念として重なった。7/16記事（TSMC好決算・CXMTのIPO計画）とは切り口が異なり重複なし。
+- 出典（2系統以上確認済み）:
+  - 日本経済新聞「東証大引け 日経平均は大幅続落 週間の下げ幅過去最大 AI半導体が全面安」（2026-07-17）
+  - 日本経済新聞「日経平均下げ幅歴代5位 キオクシア半値割れ、AI成長に疑念の連鎖」（2026-07-17）
+  - NHK「株価 一時4100円超下落 取引時間中の下落幅 過去3番目の大きさ」（2026-07-17）
+  - Bloomberg「キオクシアHD株、最高値から1カ月弱で半値－時価総額30兆円消失」（2026-07-17）
+  - Bloomberg Law「Kioxia Owes $229 Million After Jury Finds Patent Infringement」（2026-07-16）
+  - Law360「Kioxia Hit With $229M Verdict In Viasat Memory Patent Suit」（2026-07-16）
+  - Yahoo Finance「TSMC raises capex and revenue forecast, highlighting growing AI chip demand」（2026-07-16）
+  - BigGo Finance「TSMC Lifts 2026 Capex to $64 Billion, But Margin Caution Sends Mixed Signals」（2026-07-16）
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for July 17」（2026-07-17）
+  - ZeroHedge「UBS: TSMC's 'Surprise CapEx Hike' Reinforces Confidence In AI Supply Chain」（2026-07-16）
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（7項目全クリア・公開適格・断定回避/免責三層/出典多系統・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし（CSS内100%は本文非該当確認済み）✅ ③銘柄推奨なし ✅ ④出典10系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（エラーなし）✅
+- 公開ファイル: guide-news-2026-07-17-nikkei-drop-kioxia-ai-capex.html
+- commit: feat: auto-publish news 2026-07-17（main へ push 済み）
+
+---
+
 ## 2026-07-16
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均-1,915円・半導体株急落とTSMC大幅増益+77.4%の逆説──中国CXMT（$8.5B IPO計画）台頭が招いた嵐を中立整理（カテゴリ: マクロ・半導体・日本株・韓国株・個別銘柄）
