@@ -2796,6 +2796,22 @@ def main():
             filter_block_reason = "ma_golden 単独は過去 N=11 で 0 勝のため送信スキップ"
             print(f"    🚫 フィルタ: {filter_block_reason}")
 
+        # ポジションプラン算出（ATR ベース、4H スイング想定）
+        # 🔧 2026-07-18: email_silent 判定より前へ移動。7/11監査#9修正が下の免除判定で
+        #    position_plan を参照するようになったが、算出が判定より後にあり
+        #    「その回の最初の新規シグナル銘柄が全email_silent」だと未代入クラッシュ
+        #    （7/17 23:28 の4H全落ち＝NQ first_pullback_short が実例）。落ちない場合も
+        #    前銘柄の古いプランを誤参照していた。算出を先へ出して両方を根治。
+        direction = determine_direction(fresh_signals)
+        atr_val = indicators.get("atr", 0.0)
+        position_plan = None
+        if direction and atr_val > 0:
+            position_plan = calc_entry_sl_tp(indicators["price"], atr_val, direction)
+            print(f"    📐 ポジションプラン: {position_plan['direction']} "
+                  f"SL={position_plan['stop_loss']:.{decimals}f} "
+                  f"TP1={position_plan['take_profit_1']:.{decimals}f} "
+                  f"(ATR={atr_val:.{decimals}f})")
+
         # 🆕 2026-05-28: 全シグナルが email_silent（初押し等の蓄積期間中シグナル）ならメール送信スキップ
         # 🆕 2026-06-26 A実装（#21昇格の配信反映・オーナー判断）: 検証済み+EVエッジ「指数×ロング」だけは
         #    email_silent でも取りこぼさず配信する（見逃し防止）。⚠️ 上の ma_golden単独ブロック(0勝N=11)
@@ -2830,16 +2846,7 @@ def main():
         for w in env["warnings"]:
             print(f"       {w}")
 
-        # ポジションプラン算出（ATR ベース、4H スイング想定）
-        direction = determine_direction(fresh_signals)
-        atr_val = indicators.get("atr", 0.0)
-        position_plan = None
-        if direction and atr_val > 0:
-            position_plan = calc_entry_sl_tp(indicators["price"], atr_val, direction)
-            print(f"    📐 ポジションプラン: {position_plan['direction']} "
-                  f"SL={position_plan['stop_loss']:.{decimals}f} "
-                  f"TP1={position_plan['take_profit_1']:.{decimals}f} "
-                  f"(ATR={atr_val:.{decimals}f})")
+        # （ポジションプラン算出は 2026-07-18 に email_silent 判定より前へ移動済み）
 
         # 🆕 2026-05-28: Step A - モメンタムフィルタ（新案F）
         # entry_vs_ma25 × dsign > 0.5 OR momentum_score >= 1.0 でメール送信
