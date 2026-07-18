@@ -215,8 +215,26 @@ def cmd_update(args, data, today):
         #    （例 30/60/90…）を新たに越えたときだけ実施（look回数を日次→数回に削減）。
         mn = min_n_of(h)
         next_cp = ((h.get("last_eval_n", 0) // mn) + 1) * mn
-        if prev in ("promoted", "rejected"):
-            st = prev                       # ラチェット維持（従来仕様）
+        if prev == "rejected":
+            st = prev                       # 反証はラチェット維持（終了扱い）
+        elif prev == "promoted":
+            # 🆕 2026-07-18 降格ルール（事前登録・オーナー承認＝案A）: 昇格後もチェック
+            #    ポイントごとに再判定し、昇格基準を満たさない判定が【2回連続】したら
+            #    tracking へ降格（＝昇格限定メールも自動停止。基準を再び満たせば再昇格可）。
+            #    1回のCI揺れでは往復しないヒステリシス。従来の永久ラチェットは
+            #    「期待値が減衰しても昇格が残る」非対称（7/18に3本とも基準割れで発覚）のため廃止。
+            st = prev
+            if fwd["n"] >= next_cp:
+                h["last_eval_n"] = fwd["n"]
+                if judge(h["kind"], fwd, mn) == "promoted":
+                    h["demote_strikes"] = 0
+                else:
+                    h["demote_strikes"] = h.get("demote_strikes", 0) + 1
+                    if h["demote_strikes"] >= 2:
+                        st = "tracking"
+                        h["demote_strikes"] = 0
+                        h["demoted_at"] = today
+                        newly.append((h, "demoted（降格＝基準割れ2回連続）"))
         elif fwd["n"] >= next_cp:
             st = judge(h["kind"], fwd, mn)
             h["last_eval_n"] = fwd["n"]
@@ -234,7 +252,8 @@ def cmd_update(args, data, today):
     print(f"=== 前向きトラッカー update（基準日 {today} / signals決済済 {sum(1 for d in data if closed(d))}件） ===")
     print(f"昇格基準（期待値ベース）: forward N≥{PROMOTE_MIN_N}（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}） "
           f"／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0"
-          f"\n判定方式（2026-07-03〜）: 日付クラスタ補正SE＋チェックポイント検定（Nがmin_nの倍数を越えた時のみ判定＝覗き見バイアス抑制）")
+          f"\n判定方式（2026-07-03〜）: 日付クラスタ補正SE＋チェックポイント検定（Nがmin_nの倍数を越えた時のみ判定＝覗き見バイアス抑制）"
+          f"\n降格（2026-07-18〜）: 昇格後もチェックポイントごとに再判定し、基準割れ2回連続で tracking へ降格（再昇格可・反証⛔のみラチェット）")
     print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
     print("-" * 108)
     order = {"promoted": 0, "tracking": 1, "rejected": 2}
@@ -306,7 +325,8 @@ def cmd_table(args, data, today):
     if args.html:
         out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
                f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
-               f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない</p>',
+               f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない'
+               f'／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>',
                '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}
         for h in rows:
