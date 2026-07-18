@@ -2,15 +2,21 @@
 
 ---
 
-## 2026-07-19 | 🟡 🧪 AIシグナル研究日誌 #044 — 指数×ロング 前向き後半崩落と降格ルール初日棚卸し 【ゲート実行中】
+## 2026-07-19 | ✅ 🧪 AIシグナル研究日誌 #044 — 指数×ロング 前向き後半崩落と降格ルール初日棚卸し 【公開完了】
 
 - **基準日**: 2026-07-19 (JST)
 - **優先度**: ②（前向きトラッカー大変動: FWD後半N=57 19.3% E(R)=-0.825崩落・全銘柄横断）
-- **生成ファイル**: `drafts/draft-signal-lab-044.html`
+- **生成ファイル**: `drafts/draft-signal-lab-044.html` → `guide-signal-lab-044.html`
 - **claims.json**: `drafts/labnotes/lab-044-claims.json`（12件）
 - **主要数値**: 指数×ロング全期間 154/333=46.2% CI[41.0%,51.6%] / FWD前半 84/155=54.2% E(R)=+0.397 / FWD後半 11/57=19.3% E(R)=-0.825 CI[-1.186,-0.463]
 - **降格ルール初日チェック**: 指数×ロングFWD CI[-0.22~+0.31]・trend=上昇×revL FWD CI[-0.07~+0.40]・metal×long gate FWD CI[-0.63~+0.02]（いずれも1回目基準割れ候補）
-- **ゲート**: 実行中（verify.py → Opusコンプラ → 独立確認 → 公開/エスカレ）
+- **ゲート**: ✅ 完了・公開済み
+  - verify.py: 12/12 GREEN EXIT=0
+  - Opus コンプラ: 🟡グレー（NKD=F「運用選択肢はデータから支持される」→中立表現に修正）→ 修正後🟢白
+  - 独立Opus確認: 🟢白（全6項目⭕）
+  - finalize_signal_lab.py: EXIT=0 (meta_line_fixed=0, svg=3, kinsho=3, 34KB)
+  - publish_article.py: EXIT=0
+  - check_site_consistency.py: EXIT=0（警告1件=スタブ想定）
 
 ---
 
