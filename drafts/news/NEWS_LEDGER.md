@@ -3,6 +3,35 @@
 
 ---
 
+## 2026-07-18
+- 判定: ✅ 公開済み
+- 選定トピック: 「第2のDeepSeekショック」──中国Moonshot AIのKimi K3（2.8兆パラメータ）登場でSOXが6月高値から-20.2%・ベア相場入り確認、Nasdaq週間-2.9%、来週7/21火曜の日経平均を中立整理（カテゴリ: マクロ・AI・半導体・個別銘柄・中国テック競争）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 中国MoonshotのKimi K3（2.8兆パラメータ・世界最大オープンウェイトAIモデル）がDeepSeek比較で市場を揺さぶり、SOX週間-11%（1年超ぶり最大週間下落）・6月高値から-20.2%でベア相場入り。Nasdaq週間-2.9%、S&P 500 -1.6%。7/17記事（Kioxia特許訴訟・TSMC Capex）は東京市場の話だったが、本記事はKimi K3起因の米国市場のさらなる下落と週間サマリー・来週7/21火曜（海の日翌日）の展望に焦点。重複なし。
+- 出典（2系統以上確認済み）:
+  - Bloomberg「Moonshot Unveils Kimi K3 AI Model, Narrowing Gap With US Rivals」（2026-07-17）
+  - CNBC「China's Moonshot AI unveils Kimi K3 that rivals OpenAI, Anthropic」（2026-07-17）
+  - Fortune「Markets experience new DeepSeek shock after MoonShot AI releases Kimi K3」（2026-07-17）
+  - Yahoo Finance「Nvidia, AMD, Mircon, TSMC Shares Sink as China Unveils Powerful New AI Model」（2026-07-17）
+  - Yahoo Finance「Stock market today: Dow, S&P 500, Nasdaq post weekly losses as semiconductors get smoked」（2026-07-17）
+  - CryptoBriefing「Chip stocks tumble into bear market as AI rally unravels」（2026-07-17）
+  - CryptoBriefing「Moonshot's Kimi K3 sends AI and semiconductor stocks into a tailspin」（2026-07-17）
+  - MLQ.ai「Moonshot AI Releases Kimi K3, a 2.8-Trillion-Parameter Open-Weight Model Rivaling Top U.S. Systems」（2026-07-17）
+  - Decrypt「Kimi K3 Just Triggered DeepSeek Flashbacks for the Stock Market」（2026-07-17）
+  - EconoTimes「Wall Street Ends Lower as AI Selloff, Iran Tensions Weigh on Tech Stocks」（2026-07-17）
+  - Diamond.jp「来週（7/21～7/24）の日経平均株価の予想レンジは6万～6万8000円」（2026-07-18）
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典10系統以上・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: Diamond.za → Diamond.jp 表記ゆれ修正のみ（表現の軟化・事実/数値/構造は変更なし）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・noindex不在・免責三層・禁止語なし・銘柄推奨なし・出典多系統・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典11系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告1件はクラウドスタブ・通常動作）✅
+- 公開ファイル: guide-news-2026-07-18-kimi-k3-deepseek-sox-bear-market.html
+- commit: feat: auto-publish news 2026-07-18（main へ push 済み・178ba64）
+
+---
+
 ## 2026-07-17
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均-2,694円・歴代5位の下げ幅──キオクシア特許訴訟ストップ安（$229M評決）とTSMC Capex急増「AI投資の功罪」を中立整理（カテゴリ: マクロ・半導体・日本株・個別銘柄・訴訟）
