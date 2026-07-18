@@ -54,4 +54,5 @@ SYNC_FILES = [
     "guide-news-2026-07-17-nikkei-drop-kioxia-ai-capex.html",
     "guide-signal-lab-043.html",
     "guide-news-2026-07-18-kimi-k3-deepseek-sox-bear-market.html",
+    "guide-signal-lab-044.html",
 ]
