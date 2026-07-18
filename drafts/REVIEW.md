@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-07-19 autodraft: 全topic下書き済み（新規生成なし）
+
+- **基準日**: 2026-07-19 (JST) / 2026-07-18 20:30 UTC
+- **結果**: topicキュー全24本について「draft-<key>.html が存在する」または「guides.html に guide-<key>.html が存在する」ことを確認。未着手topicなし
+- **確認済みdraft（未公開）**: position-sizing / trading-psychology-calm / risk-reward / profit-taking / trading-journal / swap-points / simple-vs-compound / order-types / nikkei-vs-topix / stock-tax-basics
+- **確認済み公開済み**: compounding-drawdown / cognitive-biases / diversification / leverage / dollar-cost-averaging / bonds-interest-rates / etf-vs-mutual-fund / per-pbr / inflation-real-return / economic-indicators-basics / currency-risk / dividend-basics / investment-scams / candlestick-basics
+- **次のアクション**: topicキューへの新規追加、または既存draftの公開を人間が実施すること
+
+---
+
 ## 2026-07-18 autopublish: スキップ（topicキュー24本すべて公開済み・対象なし）
 
 ---
