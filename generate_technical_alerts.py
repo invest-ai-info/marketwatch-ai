@@ -2601,7 +2601,7 @@ def should_alert(history, symbol, signal_type, cooldown_hours=ALERT_COOLDOWN_HOU
 
 # ─────────────────────────────────────────────
 # 🆕 2026-07-05: 昇格エッジ限定メール（オーナー要望＝勝率が確認されたものだけ受信）
-#   signal-lab-tracker.json の status=="promoted" 仮説にマッチしたシグナルだけメール送信。
+#   signal-lab-tracker.json の status=="promoted" かつ kind=="edge" 仮説にマッチしたシグナルだけメール送信。
 #   他は従来どおり signals-log に記録（前向き検証は全シグナル継続＝将来の昇格で自動的に配信対象へ）。
 #   無効化は環境変数 EMAIL_PROMOTED_ONLY=0（コード変更不要のキルスイッチ）。
 # ─────────────────────────────────────────────
@@ -2609,13 +2609,17 @@ EMAIL_PROMOTED_ONLY = os.environ.get("EMAIL_PROMOTED_ONLY", "1") != "0"
 
 
 def load_promoted_hypotheses():
-    """signal-lab-tracker.json から status=='promoted' の仮説だけ読む。
+    """signal-lab-tracker.json から status=='promoted' かつ kind=='edge' の仮説だけ読む。
+    ⚠️ kind=='gate' の promoted は「回避が確認された負けパターン」＝メール通行証にしてはいけない
+    （2026-07-19 修正: metal×ロング gate が昇格した際、status だけ見る旧実装だと
+    　最悪パターンが「検証済みエッジ🏅」として配信される穴があった）。
     読めないとき（checkout 欠落・壊れた JSON 等）は None＝ゲート無効（fail-open＝従来どおり全送信）。"""
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
     try:
         data = json.load(open(path, encoding="utf-8-sig"))
         hyps = data.get("hypotheses", [])
-        return [h for h in hyps if h.get("status") == "promoted" and isinstance(h.get("filter"), dict)]
+        return [h for h in hyps if h.get("status") == "promoted" and h.get("kind") == "edge"
+                and isinstance(h.get("filter"), dict)]
     except Exception as e:
         print(f"⚠️ 昇格ゲート: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 従来どおり全送信")
         return None
