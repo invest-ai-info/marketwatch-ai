@@ -3085,6 +3085,8 @@ MarketWatch AI Alerts
                 "ticker": ticker,
                 "direction": position_plan["direction"] if position_plan else None,
                 "primary_signal": fresh_signals[0]["type"],
+                # 🆕 2026-07-19: コンフルエンス仮説(signals_all)の照合用＝同時発火の全タイプ
+                "signal_types": [s["type"] for s in fresh_signals],
                 "timeframe": timeframe,
                 "trend_alignment": {"higher_tf_trend": (trend_align or {}).get("higher_tf_trend")},
                 "sr_runway": _sr_probe,
