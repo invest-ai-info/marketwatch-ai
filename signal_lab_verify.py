@@ -30,6 +30,8 @@ filter のキー（全てAND・省略可）:
   reversal_long : true なら direction=long かつ primary_signal∈{rsi_oversold_bounce,bb_lower_touch}
   blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway 無しは除外）
   tier       : elite/good/neutral/avoid — selection.tier（選別タグ）でフィルタ（selection 無しは除外）
+  env        : A/B/C/D — environment.env_score（環境警戒）でフィルタ（🆕 2026-07-19 ファンダ次元・記録済みデータのみ・無しは除外）
+  regime     : RISK_ON/RISK_OFF/NEUTRAL — risk_regime.regime でフィルタ（🆕 同上）
 
 ⚠️ このスクリプトは「固定の独立オラクル」。routine/エージェントが書き換えてはならない。
    対応していないフィルタ次元が必要な仮説は、人間がここを拡張するまで自動公開せずエスカレする。
@@ -51,7 +53,8 @@ GROUPS = {
     "oil":      {"CL=F"},
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
-ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all", "reversal_long", "blocked", "tier"}
+ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all",
+                       "reversal_long", "blocked", "tier", "env", "regime"}
 
 
 def wilson(k, n, z=1.96):
@@ -114,6 +117,15 @@ def match(d, f):
     if "tier" in f:
         sel = d.get("selection")
         if not isinstance(sel, dict) or sel.get("tier") != f["tier"]:
+            return False
+    if "env" in f:
+        # 🆕 2026-07-19 ファンダ次元: 環境警戒スコア（記録が無いレコードは除外＝blocked/tierと同じ意味論）
+        envd = d.get("environment")
+        if not isinstance(envd, dict) or envd.get("env_score") != f["env"]:
+            return False
+    if "regime" in f:
+        rr = d.get("risk_regime")
+        if not isinstance(rr, dict) or rr.get("regime") != f["regime"]:
             return False
     return True
 
