@@ -3,6 +3,36 @@
 
 ---
 
+## 2026-07-19
+- 判定: ✅ 公開済み
+- 選定トピック: 7月22日（水）Alphabet・Tesla Q2決算──SOXが6月高値から-20.2%ベア相場入りした後の「AIハードウェア投資継続か後退か」を中立整理（カテゴリ: マクロ・AI・テクノロジー決算・半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: SOXが6月高値から-20.2%・ベア相場入り（7/18記事で確認済み）の翌週、最初の「答え合わせ」となるAlphabet・Tesla Q2決算（7/22引け後）をプレビュー。7/14IBM Q2警告・7/17Kimi K3と3週連続で「AIハードウェア需要懐疑」材料が続いた今、Alphabet（Capex $180-190B維持か）とGoogle Cloud（+63-67% YoY予想）が最初の確認データポイント。日本は7/20海の日休場→7/21始動で決算との時差も重要。7/18記事でワンライン言及のみ＝「十分扱った」ではなく差別化あり。7/12の三重同時発火プレビュー記事と同じフォーマットで先例あり。
+- 出典（2系統以上確認済み）:
+  - CNBC「Stock market next week: Outlook for July 20-24, 2026」（2026-07-17）
+  - Yahoo Finance 決算カレンダー / TipRanks（EPS・売上コンセンサス確認）
+  - IG International「GOOGL Q2 2026 earnings preview: 63% cloud growth eyed」（2026-07）
+  - InsiderFinance「Alphabet Q2 2026 Earnings Preview」（2026-07）
+  - Alphabet IR / SEC Form FWP（Capex $180-190B目標）
+  - TradingView「Key facts: Tesla Q2 July 22; Optimus, robotaxi H1 miss」（2026-07）
+  - Blockonomi「Tesla TSLA Earnings Preview: 7% Swing Expected」（2026-07）
+  - BofA via TheStreet（Tesla EPS$0.51予想）
+  - CNBC「Anthropic in early talks with Meta to acquire compute power」（2026-07-17）
+  - Yahoo Finance「Meta, Anthropic in talks for potential $10 billion compute lease deal」（2026-07-17）
+  - CryptoBriefing「Chip stocks tumble into bear market as AI rally unravels」（2026-07-17）
+  - Diamond.jp「来週（7/21～7/24）の日経平均株価の予想レンジは6万～6万8000円」（2026-07-18）
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告1件はクラウドスタブ・通常動作）✅
+- 公開ファイル: guide-news-2026-07-19-alphabet-tesla-earnings-preview.html
+- commit: feat: auto-publish news 2026-07-19（main へ push 済み・e9495eb）
+
+---
+
 ## 2026-07-18
 - 判定: ✅ 公開済み
 - 選定トピック: 「第2のDeepSeekショック」──中国Moonshot AIのKimi K3（2.8兆パラメータ）登場でSOXが6月高値から-20.2%・ベア相場入り確認、Nasdaq週間-2.9%、来週7/21火曜の日経平均を中立整理（カテゴリ: マクロ・AI・半導体・個別銘柄・中国テック競争）
