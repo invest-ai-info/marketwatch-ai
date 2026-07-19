@@ -4767,6 +4767,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-19", "line": '・<b>2026-07-19</b>: 📰 解説「<a href="guide-news-2026-07-19-alphabet-tesla-earnings-preview.html" style="color:#0969da"><b>7/22 Alphabet・Tesla決算──AI投資継続か後退か、SOXベア相場後の答え合わせ</b></a>」公開'},
         {"date": "2026-07-19", "line": '・<b>2026-07-19</b>: 🚨 解説「<a href="guide-proverb-jiken-uri-jiko-kai.html" style="color:#0969da"><b>事件は売り、事故は買い</b></a>」公開'},
         {"date": "2026-07-19", "line": '・<b>2026-07-19</b>: 🧪 解説「<a href="guide-signal-lab-044.html" style="color:#0969da"><b>指数×ロング 前向き後半崩落と降格ルール初日棚卸し #044</b></a>」公開'},
         {"date": "2026-07-18", "line": '・<b>2026-07-18</b>: 📰 解説「<a href="guide-news-2026-07-18-kimi-k3-deepseek-sox-bear-market.html" style="color:#0969da"><b>第2のDeepSeekショック──Kimi K3登場でSOX -20%・ベア相場入り</b></a>」公開'},
