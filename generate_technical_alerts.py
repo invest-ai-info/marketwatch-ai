@@ -705,6 +705,16 @@ def detect_fib_pullback(high, low, close, atr_cur, fundamental_bias,
     }
 
 
+# 🆕 2026-07-19: シグナルタイプの退役（オーナー方針「長期無発火・明確に悪い指標は削除」）。
+#   判定は signal_type_lifecycle.py の事前宣言ポリシー（ローカル保守ツール）で行い、ここは適用先。
+#   フラグ方式＝可逆（FIB_PULLBACK_ENABLED と同じ流儀）。過去ログ・検証データはそのまま残る。
+#   - double_top:          直近60日発火1回＋20年バックテスト R-0.173(N=181・マイナス) ＝ 死に筋かつ休眠
+#   - first_pullback_long: 発火2回/2ヶ月＝事前登録の評価N(20-30)に到達不能ペース（short側は継続蓄積）
+#   ⚠️ ライブ成績が悪くてもバックテストがプラスの型（high_break/rsi_overbought/ma_golden等）は
+#      退役させない＝「今だけ機能不全」をレジーム罠として監視する（metalの教訓）。
+RETIRED_SIGNAL_TYPES = {"double_top", "first_pullback_long"}
+
+
 def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", now_jst=None,
                    fundamental_bias=None):
     """
@@ -837,6 +847,22 @@ def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", 
             "detail": f"直近安値 {recent_low:.2f} を下抜け",
         })
 
+    # 🆕 2026-07-19: サポート反発（オーナー依頼の新指標第1弾・record-only＝昇格するまでメール対象外）
+    #   根拠＝2026-06-03 の look-ahead 排除済み検証: fire時点 recent_low へのサポ近接ロング
+    #   n57/59.6%/+0.485R ✅安定（このサイトで最も検証済みなのに未実装だったエッジ）。
+    #   事前登録: 期待=ロングエッジ。定義=当バー安値が直近20本安値の +0.5ATR 以内まで接近
+    #   （割らずに下げ止まり）かつ陽線方向へ反発。評価は通常パイプライン（sweep/tracker N≥80）。
+    _atr_cur = float(atr.iloc[-1]) if not pd.isna(atr.iloc[-1]) else 0.0
+    if (_atr_cur > 0 and low.iloc[-1] >= recent_low
+            and (low.iloc[-1] - recent_low) <= 0.5 * _atr_cur and cur > prev):
+        signals.append({
+            "type": "support_bounce",
+            "severity": "buy",
+            "label": "🟢 サポート反発（直近安値ゾーンで下げ止まり）",
+            "detail": (f"直近20本安値 {recent_low:.2f} の +0.5ATR 以内まで接近後に反発"
+                       f"（安値 {low.iloc[-1]:.2f}・ATR {_atr_cur:.2f}）"),
+        })
+
     # 🆕 2026-05-28: チャートパターン認識 P1（ダブルトップ / ダブルボトム / 三角持ち合い）
     # ダブルトップ/ボトムは反転型シグナル → メイン側でモメンタムフィルタをバイパス
     dt = detect_double_top(high, close, lookback=40)
@@ -941,6 +967,9 @@ def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", 
     ma_dev_pct = abs(ma25_cur - ma75_cur) / ma75_cur * 100 if ma75_cur else 0.0
     ma_dir = "up" if ma25_cur > ma75_cur else "down"
     regime = classify_regime(adx_cur, chop_cur, ma_dev_pct, ma_dir)
+
+    # 🆕 2026-07-19: 退役タイプを一括除去（発火・ログ・クールダウン全て停止＝データを増やさない）
+    signals = [s for s in signals if s["type"] not in RETIRED_SIGNAL_TYPES]
 
     return signals, {
         "price": cur,
@@ -3087,6 +3116,9 @@ MarketWatch AI Alerts
                 "primary_signal": fresh_signals[0]["type"],
                 # 🆕 2026-07-19: コンフルエンス仮説(signals_all)の照合用＝同時発火の全タイプ
                 "signal_types": [s["type"] for s in fresh_signals],
+                # 🆕 2026-07-19: ファンダ次元(env/regime)仮説の照合用
+                "environment": {"env_score": env["env_score"]},
+                "risk_regime": {"regime": risk_regime.get("regime") if isinstance(risk_regime, dict) else None},
                 "timeframe": timeframe,
                 "trend_alignment": {"higher_tf_trend": (trend_align or {}).get("higher_tf_trend")},
                 "sr_runway": _sr_probe,
