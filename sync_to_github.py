@@ -57,4 +57,5 @@ SYNC_FILES = [
     "guide-signal-lab-044.html",
     "guide-proverb-jiken-uri-jiko-kai.html",
     "guide-news-2026-07-19-alphabet-tesla-earnings-preview.html",
+    "guide-signal-lab-045.html",
 ]
