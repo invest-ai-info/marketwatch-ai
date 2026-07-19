@@ -205,6 +205,9 @@ def main():
     args = ap.parse_args()
     tfs = [t.strip() for t in args.timeframes.split(",")]
     tickers = [t.strip() for t in args.tickers.split(",")] if args.tickers else ALL_TICKERS
+    # 🆕 2026-07-19: 研究ログは全タイプ収録が正しい（退役タイプの復活判断の根拠にもなる）ため、
+    #   バックテスト生成時はライブの退役フィルタを無効化する（ライブ発火には影響しない）。
+    gta.RETIRED_SIGNAL_TYPES = set()
     print(f"=== リプレイ・バックテスト（{args.years}年・{tfs}・{len(tickers)}銘柄）===")
     all_recs = []
     for tf in tfs:
