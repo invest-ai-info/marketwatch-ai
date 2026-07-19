@@ -1160,3 +1160,69 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 
 **②Q8金ラボ第2R=✅完了（🔓holdout解錠2026-07-11・この1回限り・再解錠禁止）**: 第1R有望2本のparamsが未記録→**valid数値の記録一致で特定**（volfilter=デフォルト0.681≒記録0.68／vol_scaled=tv0.10で0.626完全一致・照合5回・成績での選び直しなし）→合否基準を解錠前宣言(Sharpe≥0.6∧PF≥1.25)→**2本とも合格**: ①複合トレンド×低ボラ`{}`=Sharpe0.63/PF1.93(コスト2x=0.599ボーダー) ②多数決モメンタム×ボラ目標10%=Sharpe1.023/PF6.06(コスト2x頑健・valid→holdout改善)。ただし生SharpeはBH(1.114)未満＝**ラボ合格3本すべて「価値は防御」＝DOCTRINE §0-1を金でも再確認**。台帳`research/gold_backtest/RESULTS.md`新設（第1R教訓の是正）・DOCTRINE §2改稿・anchors50件・完了Q8/Q9/Q12をqueue_archiveへ退避・**DOCTRINE/queue/HANDOFF全て予算内warning 0**。金ラボは新素材が出るまで休眠。
 
+
+
+---
+
+# 📦 2026-07-19 退避分（HANDOFFスリム化）
+
+## 🛠️ 7/16 JP朝タスク全滅→根治（Modern Standby起因・コードのバグではない）
+
+**事象**: 7/16朝、ローカル4タスク（JQ_Lake 5:30/JQ_Screen 5:45/JP_Daily 6:00/JP_Health 8:00）が全滅＝DAILY_SUMMARY.mdが7/15のまま。**原因**=PCがModern Standbyで定刻に走れず→7:20復帰で3本同時起動→直後に再スリープ→壁時計換算の実行上限45分を超過し次の復帰(12:01)で0x41306強制終了。**番人JP_Health自身も同型で死亡**（12:01の短い復帰で起動→再スリープ→5分上限）＝アラートtxtが出ず沈黙。GitHub Actions側（update-market-news/autopublish/signal-lab 041）は全て正常。
+**復旧✅**: 4本を順に手動再実行（レイク7/15分補充→スクリーナー→カード7/16 20:44生成→ヘルス5項目✅・全exit 0）。
+**恒久対策✅（Set-ScheduledTaskで設定変更のみ・bat/py無変更）**: ①4タスクの実行上限を45m/30m/5m→**PT8H**（スリープ中プロセスは休止→復帰後に完走できる。0x41306はS系コードで「失敗時再起動」の対象外＝上限延長が本命）②失敗時10分間隔×3回再起動（本物の失敗=ネット断等向けの保険）③**番人を平日8:00+12:30の2回に増発**（朝の1回が死んでも昼に検知）。次回トリガー7/17で平常運転を確認。
+
+
+## 📰 7/15 記事#6公開（Q15素材消化）＋autopublish 5記事のローカルreconcile＋⚠️日付事故（修正済）
+
+**①巨匠記事#6=✅公開済み（2026-07-15）**: `guide-masters-006-dual-momentum.html`（Q15資産クラスDM=GEM原典回帰の正直な❌＋対株式DD半減）。ゲート3本=数値36項目を`_dm_asset_class_summary.json`と機械突合（scratchpadの使い捨てスクリプト・金trainDDの丸め-30.1→-30.0%を1件修正）→SVG3枚/ナビ10/kinsho-v1×3をブラウザJS検証→**Opusコンプラ監査🟢白（修正なし）**→`mw publish`→`mw deploy --trigger`（sync232成功・workflow 204・ライブ200・カード掲載確認）。カテゴリ=巨匠の教え検証。**公開翻訳規則遵守**（金の強さは歴史的観察と明記・将来非保証・直近の選択資産は非掲載）。
+
+**⚠️同日=公開日付事故（#031と同型の新変種・即日修正済）**: セッションが7/12(日)朝に開始→中断→7/15(水)夜に再開されたが、**冒頭で取ったGet-Date(7/12)を再開後も信じて7/12付けで公開**（記事datePublished/カード/更新履歴の3ヶ所）。GitHubのworkflowタイムスタンプとautopublish記事が「3日分余分」な違和感から発覚→サーバー時刻突合で確定→3ヶ所とも7/15へ修正・再デプロイ済み。**教訓=①日付を書く直前に必ずGet-Dateを取り直す（セッション冒頭の値を使い回さない）②harness注入のcurrentDateとローカル時計の不一致は中断・再開のサイン**。**🔴オーナー提案**: `publish_article.py` に signal-lab同様の日付ゲート（記事の公開日≠今日JSTなら停止・`--allow-backdate`で免除）を追加したい＝ゲート4本は人間専任のためオーナー承認/実施待ち。
+
+**③Q18価格アノマリー2本=❌同日検証完了（idea-scout転記→即検証の初サイクル）**: `_jp_q18_price_anomalies_screen.py`＝P1高MAX月次(Bali MAXロッタリー)=train -0.56%ns→**holdout +0.81%方向反転**（2025+上げ相場で高MAX優位=オニール系と同型のレジーム依存・⚡H5爆騰フラグとの重複8.6-11.1%=別物）／P2週次ルーザー(Jegadeesh)=**+0.08/-0.03%≒完全ヌル**（古典逆張りは週次粒度で消滅）。実装前に補遺でL単位換算を明記（月次L=2・週次L=3）＝出目未見のまま数式確定の手順を維持。DOCTRINE §3結晶化+anchors 60件・Q18はqueue_archiveへ退避(registry archived)・slugs=tested更新。**⚠️DOCTRINE 24.2KB=warning 1（+0.2KB超過）＝次のdeclutterで§3スタブ化（Q17完了後は15行超え）**。**キュー残=Q10・Q17（会計アノマリー2本=次candidate）・アレンジD**。
+
+**②publish時のmw checkでリンク切れ5件検出→reconcile完了**: autopublish公開済みでローカル未取込の5記事（nikkei-vs-topix⑲7/10/currency-risk⑳7/11/dividend-basics/investment-scams 7/14/stock-tax-basics=7/12〜14分）をGitHub mainから取り込み＋SYNC_FILES登録（⑱と同じ定石）。**autopublishが動くたびローカルに孤児リンクが溜まる構造**＝カード付きguides.htmlはreconcileで来るが記事本体が来ない。頻発するようならreconcile自動化を検討。
+
+<!-- 7/11の詳細節（Q8金ラボ2R=合格2本とも防御価値で休眠／シグナルメールMT4幅併記+週末閉場ガード／Q16 NYランチ回避アーム／Q11ズールー前向きアーム+fins月次タスク／Q14防御カタログ🛡4/6=適用済／Q15資産クラスDM❌／実行系レッドチーム監査19件=EA側8件が宿題⑤／_goal_math+growth_levers台帳）は 2026-07-15 に SESSION_ARCHIVE.md へ退避。要点はauto-memory各ファイルとDOCTRINE/queue_archiveに反映済み。 -->
+
+
+## 🧹 7/10 declutter＋Q12再監査
+
+**①declutter＝3文書すべて予算内に復帰**: HANDOFF 38→28.5KB（7/8全節＋7/7スクリーナー節をARCHIVE退避）／DOCTRINE 25.6→**24.0KB=warning0**（§3棄却表を統合圧縮＝anchor45件維持）／CLAUDE 34.5→32.0KB（SYNC禁忌節の重複圧縮・全ファイル名保持）。CLAUDE/HANDOFF/ARCHIVEはsync済。DOCTRINE/queueはローカル専用＝sync対象外。
+
+**②Q12 グレアム/バフェット p値再監査＝✅完了（DOCTRINE §2/§3/§6注記済・`_jp_q12_audit.py`／`_jp_q12_summary.json`）**: 7/8監査 発見4（月次formation×fwd12M=12倍重なり→SE過小の疑い）を、各主張で **旧p(iid cluster)／新p(block boot L=13)／同日クロスセクション対照** で再計算（監査＝新合否なし）。
+- **🔴核心=§0-1を強く確証**: グレアム防御（暴落率差 高≥4 vs 低≤1）は train-22.4pp/holdout-19.5pp・**block bootでも同日対照でも両期間p0.0003**＝TT3リターン主張が同日対照で消えたのと対照的に守りは真の横断エッジ。効果量24%→4-5%(≈-20pp)完全維持。グレアム・リターン差も同日対照で両期間有意(+24.3/+11.8%)。
+- **バフェット**: 「質は逆」方向は堅持(H1 -5.73/-6.05)だが**同日対照でtrain減衰(p0.094)/holdout堅持**。質は暴落防御にならず(H3 train+6.4pp)。割安内も質高いほど劣後(H2両期間有意)＝「安さが報われる」を強化。
+
+<!-- 7/9夜 news-ticker新設の詳細節は 2026-07-11 に SESSION_ARCHIVE.md へ退避（7/11朝に定時運転確認済＝運用安定）。仕様=CLAUDE.md news-ticker.yml 節・残タスク=⓪-H（📰経済の既定非表示はオーナー好み待ち）。 -->
+
+
+## 🧬 7/7 進化ループ構築（詳細=SESSION_ARCHIVE 7/8退避・運用=auto-memory project_evolution_loop）
+
+- 6段ループ・DOCTRINE/番人/mw evolve/idea-scout-weekly。セッション冒頭は `mw evolve`。mw.pyはSYNC対象。未実装バックログ(a)〜(f)はARCHIVE参照。
+
+
+## 🐢 7/7 TT3前向き（詳細=SESSION_ARCHIVE 7/8退避・queue Q7）
+
+- `_jp_turtle_tracker.py` N=0/300・チェックポイント検定・**7/8にブロックboot改定**・月1回チェック。
+
+
+## 🌙 7/7夜 Q1ダーバス/Q2ワインスタイン=❌棄却（詳細=SESSION_ARCHIVE 7/8退避・DOCTRINE §3）
+
+- 両方崩れ「順張りはTT3のみ」と当時整理→**7/8監査でTT3自体も非頑健と判明**（上の7/8夜セクション参照）。
+
+<!-- 7/7深夜 日本株スクリーナー新設（`mw screen`=`_jp_screener.py`ローカル専用・列プラグイン登録制・防御列で宿題Q9適用）＋レイク/スクリーナーCSV自動補充タスク新設＋jp_dailyフェッチバジェット根治は 2026-07-10 に SESSION_ARCHIVE.md へ退避。要点=auto-memory [[project_jp_screener]]。運用CLIは `mw screen --help`。 -->
+
+新セッションは **このファイル＋ CLAUDE.md ＋ auto-memory（MEMORY.md 経由）** を読めば文脈を復元できる。
+セッション冒頭は `python mw.py evolve`。2026-06-17 以前＋7/2〜7/3＋7/6の詳細履歴は **SESSION_ARCHIVE.md** へ退避した。
+
+---
+
+> 2026-07-02の「研究の高速化3点」「ルール文書棚卸し」もSESSION_ARCHIVE.mdへ退避（要点はauto-memory側に反映済み）。
+
+
+## 🇯🇵 日本株：EV最速化ロードマップ＝全6施策 完了（2026-06-26/27）
+
+ネットR／分数ケリー／赤字回避統合／外国人フロー／発注規律カード（平日6:00自動+番人8:00）／続伸×risk_offトラッカー——**詳細は非公開 `JP_EV_ROADMAP.md`・SESSION_ARCHIVE.md（2026-07-04退避）・auto-memory [[project_jp_doublebagger]]**。残＝前向きN蓄積が律速（昇格アラートはカード上段に自動表示）。
+
+---
