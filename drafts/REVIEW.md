@@ -2,16 +2,17 @@
 
 ---
 
-## 2026-07-20 | 🧪 AIシグナル研究日誌 #045 — 指数×ショートgate 前向き52.8%への逆転 【ゲート実行中】
+## 2026-07-20 | ✅ 🧪 AIシグナル研究日誌 #045 — 指数×ショートgate 前向き52.8%への逆転 【公開完了】
 
 - **基準日**: 2026-07-20 (JST)
 - **優先度**: ②（前向きトラッカー[o] 大変動: IS28.1%→FWD52.8%の完全方向非対称逆転・#044指数×ロング崩落と同時進行）
-- **生成ファイル**: `drafts/draft-signal-lab-045.html`
+- **生成ファイル**: `drafts/draft-signal-lab-045.html` → `guide-signal-lab-045.html`
 - **claims.json**: `drafts/labnotes/lab-045-claims.json`（14件）
 - **主要数値**: 全期間 46/117=39.3% CI[30.9%,48.4%] / macd_dead 31/69=44.9% / low_break 8/32=25.0% CI上限42.1%<43% / NKD=F 19/37=51.4% / tracker[o] FWD N=53 52.8% E(R)=+0.233 CI[-0.10~+0.56]
-- **ゲート**: ⏳ 実行中
-  - verify.py: 未実行
-  - Opus コンプラ: 未実行
+- **ゲート**: ✅ 完了・公開済み
+  - verify.py: 14/14緑・SVG警告0・EXIT=0
+  - Opus コンプラ: 🟢白（全項目クリア）
+  - publish: guide-signal-lab-045.html / push済み
 
 ---
 
