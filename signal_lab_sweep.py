@@ -141,6 +141,17 @@ def build_grid(data):
         for di in DIRECTIONS:
             add(f"tf={tf}×dir={di}", {"tf": tf, "direction": di})
 
+    # --- 🆕 2026-07-19 ファンダ次元（オーナー依頼・既に全件記録済みの environment/risk_regime を解禁） ---
+    #   ⚠️ 過去の教訓: ファンダの「方向一致ゲート」は逆転して棄却済（Layer1 11.8% vs 不一致56.6%）。
+    #   ここで検証するのは方向でなく「地合い条件付け」（RISK_ON 72.7%/n11 の監視項目を大Nで正式検定）。
+    #   バックテストログには無い次元＝ライブログ実行時のみセルが立つ（N不足はmin_nで自然に落ちる）。
+    for e in ("A", "B", "C", "D"):
+        add(f"env={e}", {"env": e})
+        add(f"env={e}×dir=long", {"env": e, "direction": "long"})
+    for rg in ("RISK_ON", "RISK_OFF", "NEUTRAL"):
+        add(f"regime={rg}", {"regime": rg})
+        add(f"regime={rg}×dir=long", {"regime": rg, "direction": "long"})
+
     # --- 🆕 2026-07-19 コンフルエンス（2指標の同時発火・オーナー依頼「最低2つの組み合わせ」） ---
     #   事前宣言: ペアは渡されたデータ（--split時はtrainのみ＝holdout非接触）内の共起 support≥40 だけを
     #   列挙（希薄セルの検定濫発を防ぐ）。3指標以上は列挙しない。多重性はFDRが補正。
