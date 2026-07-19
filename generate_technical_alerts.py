@@ -863,6 +863,22 @@ def detect_signals(df_4h, signals_log_recent=None, ticker=None, timeframe="4h", 
                        f"（安値 {low.iloc[-1]:.2f}・ATR {_atr_cur:.2f}）"),
         })
 
+    # 🆕 2026-07-19: 出来高クライマックス反発（record-only・非FX限定＝FXの出来高は信頼できない）
+    #   根拠=2026-06-03 非FX9資産×日足検証: RSI≤30の前向き5日+0.92σ/78%・「出来高急増は上乗せ」。
+    #   事前登録: 期待=ロングエッジ（セリングクライマックス→反発）。定義=RSI≤30 かつ
+    #   当バー出来高≥直前20本平均の2倍 かつ 陽線方向反発。評価は通常パイプライン（昇格までメール外）。
+    if ticker and not str(ticker).endswith("=X") and "Volume" in df_4h.columns:
+        _vol = df_4h["Volume"]
+        _v_cur = float(_vol.iloc[-1]) if not pd.isna(_vol.iloc[-1]) else 0.0
+        _v_base = _vol.iloc[-21:-1].mean()
+        if _v_base and _v_base > 0 and _v_cur >= 2.0 * _v_base and rsi_cur <= 30 and cur > prev:
+            signals.append({
+                "type": "volume_climax_bounce",
+                "severity": "buy",
+                "label": "🟢 出来高クライマックス反発（セリクラ候補）",
+                "detail": f"出来高が直前20本平均の {_v_cur / _v_base:.1f} 倍・RSI {rsi_cur:.1f} の売られすぎ圏で反発",
+            })
+
     # 🆕 2026-05-28: チャートパターン認識 P1（ダブルトップ / ダブルボトム / 三角持ち合い）
     # ダブルトップ/ボトムは反転型シグナル → メイン側でモメンタムフィルタをバイパス
     dt = detect_double_top(high, close, lookback=40)
