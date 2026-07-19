@@ -8,7 +8,9 @@
 **D✅ メールへ回避情報併載**（表示のみ・送信可否不変・可逆）: 本文に🛡規律フィルタブロック（disciplineの算出をbody前へ前倒し=ログ記録と同一値を再利用）＋エッジ×回避gate同時該当時の⚠️警告最上部表示＋`promoted_gate.avoid_matched`記録。
 **E❌ TP幾何=正直なヌル**（`research/_tp_geometry_counterfactual.py`・事前登録→1回だけ実行）: MFE近似はSL後反発混入（evaluate側は確定後再評価しない=MFE凍結が検知run窓）で不採用→**Yahoo 1hバー再取得のパス歩行シミュレーション**（同一バー両該当SL優先=評価器と同規約）。妥当性=シミュvs実ログ一致率**99.9%**(700/701)。4h train最良α=1.0×ATRでもペアΔ+0.030 CI[-0.053,+0.112]=0跨ぎ→**事前ルールで不合格＝TP短縮は改善しない**（holdout参考値は符号反転Δ-0.017でヌル補強・1hは全α悪化）。出力=`research/_tp_cf_summary.json`。
 **sync済**: `generate_technical_alerts.py`/`signal_lab_tracker.py`＝local==main照合✅。research/*はローカル専用。
-**👁次回確認**: ①次の4H定時=🛡ブロック表示+Technical Alerts失敗メールが来ないこと ②明朝06:10=新昇格ルールでtracker更新正常（promote_strikes/promote_blockフィールド出現）③≈1週間後N=240で指数×ロングstrike2→降格→メール自動停止 ④降格後は昇格edge 0本=メール無音期間に入る（メール資格の次の候補はトラッカー任せ＝手動介入しない）。
+**👁次回確認**: ①次の4H定時=🛡ブロック表示+Technical Alerts失敗メールが来ないこと ②明朝06:10=新昇格ルールでtracker更新正常（promote_strikes/promote_blockフィールド出現＋**コンボ3本のブートストラップ登録が現れる**）③≈1週間後N=240で指数×ロングstrike2→降格→メール自動停止 ④降格後は昇格edge 0本=メール無音期間に入る（メール資格の次の候補はトラッカー任せ＝手動介入しない）。
+
+**同日② コンフルエンス検証パイプライン新設（オーナー依頼「最低2指標の組み合わせ」・4ファイルsync済）**: 固定オラクルに新filterキー**`signals_all`**（全シグナル同時発火・人間による正式拡張）＋sweepペア次元（train共起support≥40）＋trackerの`_filter_key`JSON化（リスト値filterのunhashableクラッシュを先回り根治）＋`COMBO_2026_07_19`冪等登録＋メールprobeに`signal_types`。**初回スイープ（20年1d・train/holdout・クラスタSE）＝ペア14本→train-FDR3本→全てholdoutで有意性消失**（高値ブレイク×RSI買われすぎ等の過熱モメンタム系・方向は維持だがCI 0跨ぎ・ITT/netはtrain頑健）→**holdout_pass=Falseで前向き登録**（Cルールでライブ運昇格は不可＝定点観測のみ）。「2つ以上なら良い」はライブで否定（count別avgRほぼ同一）・ダブル売られすぎはtrain赤字（R-0.15）。単体テストT1-T5✅。
 
 ## 👁 7/18 キオクシア監視＋格言キュー補充（枯渇解消）
 
