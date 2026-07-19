@@ -1813,6 +1813,25 @@ def _build_confidence_block(confidence):
     return "\n".join(lines) + "\n\n"
 
 
+def _build_discipline_block(disc):
+    """🆕 2026-07-19: メール本文用の規律フィルタブロック（表示のみ・送信可否には不使用）。
+    検証の一貫した結論＝リターン側エッジは減衰しやすく守り側は頑健（DOCTRINE §0-1）を
+    受信箱にも反映する＝「乗る理由」より「避ける理由」を明示する。"""
+    if not disc:
+        return ""
+    icon = {"green": "🟢", "yellow": "🟡", "red": "🔴"}.get(disc.get("verdict"), "")
+    lines = [f"【🛡 規律フィルタ: {icon} {disc.get('verdict', '?').upper()} (スコア {disc.get('score', 0):+d})】"]
+    for r in disc.get("reasons") or []:
+        lines.append(f"  ・{r}")
+    if disc.get("verdict") == "red":
+        lines.append("  → 回避条件に該当。過去実績では見送りが優位（このメールは記録として配信）。")
+    elif disc.get("verdict") == "yellow":
+        lines.append("  → 中立。加点要因なし＝積極的に乗る根拠は薄い。")
+    else:
+        lines.append("  → 規律条件クリア（売られすぎ逆張り系の勝ち筋を含む）。")
+    return "\n".join(lines) + "\n\n"
+
+
 def _build_environment_block(env, currency="", decimals=2):
     """メール本文用の環境警戒ブロックを構築"""
     lines = []
@@ -2608,17 +2627,18 @@ def should_alert(history, symbol, signal_type, cooldown_hours=ALERT_COOLDOWN_HOU
 EMAIL_PROMOTED_ONLY = os.environ.get("EMAIL_PROMOTED_ONLY", "1") != "0"
 
 
-def load_promoted_hypotheses():
-    """signal-lab-tracker.json から status=='promoted' かつ kind=='edge' の仮説だけ読む。
+def load_promoted_hypotheses(kind="edge"):
+    """signal-lab-tracker.json から status=='promoted' かつ指定 kind の仮説だけ読む。
     ⚠️ kind=='gate' の promoted は「回避が確認された負けパターン」＝メール通行証にしてはいけない
     （2026-07-19 修正: metal×ロング gate が昇格した際、status だけ見る旧実装だと
     　最悪パターンが「検証済みエッジ🏅」として配信される穴があった）。
+    kind='gate' 指定は本文への⚠️回避警告表示にのみ使う（送信可否には使わない）。
     読めないとき（checkout 欠落・壊れた JSON 等）は None＝ゲート無効（fail-open＝従来どおり全送信）。"""
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
     try:
         data = json.load(open(path, encoding="utf-8-sig"))
         hyps = data.get("hypotheses", [])
-        return [h for h in hyps if h.get("status") == "promoted" and h.get("kind") == "edge"
+        return [h for h in hyps if h.get("status") == "promoted" and h.get("kind") == kind
                 and isinstance(h.get("filter"), dict)]
     except Exception as e:
         print(f"⚠️ 昇格ゲート: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 従来どおり全送信")
@@ -2675,11 +2695,14 @@ def main():
 
     # 🆕 2026-07-05: 昇格エッジ限定メール（EMAIL_PROMOTED_ONLY=0 で無効化）
     promoted_hyps = load_promoted_hypotheses() if EMAIL_PROMOTED_ONLY else None
+    # 🆕 2026-07-19: 回避確定(gate昇格)仮説＝本文の⚠️警告表示にのみ使用（送信可否には不使用）
+    promoted_gate_hyps = load_promoted_hypotheses("gate") if EMAIL_PROMOTED_ONLY else None
     if EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
         _labels = ", ".join(f"{h.get('label')}({h.get('id')})" for h in promoted_hyps) or "なし"
-        print(f"🏅 昇格エッジ限定メール: ON — promoted {len(promoted_hyps)} 件: {_labels}")
+        print(f"🏅 昇格エッジ限定メール: ON — promoted edge {len(promoted_hyps)} 件: {_labels}"
+              f" ／ 回避gate {len(promoted_gate_hyps or [])} 件（警告表示用）")
         if not promoted_hyps:
-            print("   （昇格仮説 0 件＝今回 run はメール送信なし・データ収集のみ）")
+            print("   （昇格エッジ 0 件＝今回 run はメール送信なし・データ収集のみ）")
 
     # 履歴ロード（timeframe ごとに別ファイル）
     _orig_history_file = ALERT_HISTORY_FILE
@@ -2964,6 +2987,17 @@ def main():
         confidence = calc_confidence_score(fresh_signals, env, trend_align, reversal, fx_alignment,
                                            position_plan=position_plan, indicators=indicators, ticker=ticker)
 
+        # 🆕 2026-07-19 D: 規律フィルタを本文表示用にここで算出（従来はログ記録時のみ）。
+        #    ログには同じ値を再利用＝二重計算・値のズレなし。判定内容・送信可否は不変。
+        #    sigdir/prior判定はログ記録時と同一の導出（direction=position_plan由来・
+        #    _index_fired_dirs への追加はログ記録時なので同一イテレーション内で状態は不変）。
+        _disc_dir = (position_plan.get("direction") if position_plan else None) or ""
+        _disc_sigdir = "long" if "ロング" in _disc_dir else ("short" if "ショート" in _disc_dir else "neutral")
+        _disc_is_index = ticker in INDEX_TICKERS
+        _disc_prior_idx = _disc_is_index and any(_d == _disc_sigdir for _d in _index_fired_dirs)
+        discipline = compute_discipline_filter(fresh_signals[0]["type"], _disc_sigdir, indicators,
+                                               env["env_score"], _disc_is_index, _disc_prior_idx)
+
         body = f"""━━━━━━━━━━━━━━━━━━━━━
 {name}（{ticker}）
 現在価格: {price_str}
@@ -2974,7 +3008,7 @@ def main():
 【発火シグナル】
 {signal_block}
 
-{_build_currency_strength_block(currency_strength, fx_alignment) if ticker in FX_PAIR_MAP else ''}{_build_china_block(china_ctx)}{_build_whipsaw_block(reversal, trend_align)}{_build_confidence_block(confidence)}{_build_environment_block(env, currency, decimals)}
+{_build_currency_strength_block(currency_strength, fx_alignment) if ticker in FX_PAIR_MAP else ''}{_build_china_block(china_ctx)}{_build_whipsaw_block(reversal, trend_align)}{_build_confidence_block(confidence)}{_build_discipline_block(discipline)}{_build_environment_block(env, currency, decimals)}
 {plan_block}
 【AI 解説（テクニカル + ファンダメンタル）】
 {narrative or '（解説の生成に失敗）'}
@@ -3044,6 +3078,7 @@ MarketWatch AI Alerts
         #    マッチしたシグナルだけメール送信。signals-log への記録・前向き検証は全シグナル継続。
         #    照合属性は build_signal_log_entry と同じ計算（固定オラクル match が読むキーのみ）。
         promoted_match = None
+        gate_hit = None
         if filter_send_email and EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
             _sr_probe = compute_sr_runway(position_plan, indicators)
             _gate_probe = {
@@ -3059,6 +3094,18 @@ MarketWatch AI Alerts
             if promoted_match:
                 print(f"    🏅 昇格ゲート通過: {promoted_match.get('label')} ({promoted_match.get('id')})")
                 body = f"🏅 検証済みエッジ該当: {promoted_match.get('label')}\n\n" + body
+                # 🆕 2026-07-19 D: 検証済み回避パターン(gate昇格)にも該当していたら警告を最上部へ
+                #    （表示のみ・送信可否は不変。エッジと回避が同時該当＝矛盾シグナルの明示）
+                if promoted_gate_hyps:
+                    gate_hit = match_promoted_hypothesis(promoted_gate_hyps, _gate_probe)
+                    if gate_hit and gate_hit.get("id") == "_gate_error":
+                        gate_hit = None     # 照合エラーの暫定値は警告として表示しない
+                    if gate_hit:
+                        _g_fwd = gate_hit.get("forward") or {}
+                        body = (f"⚠️ 検証済み回避パターンにも該当: {gate_hit.get('label')}"
+                                f"（前向き平均R {_g_fwd.get('avgR', 0):+.2f}・N={_g_fwd.get('n', 0)}）"
+                                f"＝エッジと回避の重複時は見送り優先\n" + body)
+                        print(f"    ⚠️ 回避パターン重複: {gate_hit.get('id')}")
             else:
                 filter_send_email = False
                 filter_block_reason = f"昇格エッジ非該当（promoted {len(promoted_hyps)} 件に不一致）"
@@ -3155,6 +3202,8 @@ MarketWatch AI Alerts
             "enabled": bool(EMAIL_PROMOTED_ONLY and promoted_hyps is not None),
             "matched": promoted_match.get("id") if promoted_match else None,
             "n_promoted": len(promoted_hyps) if promoted_hyps is not None else None,
+            # 🆕 2026-07-19: 送信メールが回避gate仮説にも該当した場合のID（警告表示の監査用）
+            "avoid_matched": gate_hit.get("id") if gate_hit else None,
         }
         # 🆕 環境警戒データを記録（明日の集計タブ用）
         log_entry["environment"] = {
@@ -3169,12 +3218,10 @@ MarketWatch AI Alerts
             "atr_regime": env["atr_regime"],
             "crisis_news": env["crisis_news"],
         }
-        # 🆕 2026-06-06: ルールベース規律フィルタ（記録のみ・発火/メール/信頼度は不変）
-        _is_index = ticker in INDEX_TICKERS
-        _prior_idx_same = _is_index and any(_d == _sigdir for _d in _index_fired_dirs)
-        log_entry["discipline_filter"] = compute_discipline_filter(
-            primary["type"], _sigdir, indicators, env["env_score"], _is_index, _prior_idx_same)
-        if _is_index and _sigdir in ("long", "short"):
+        # 🆕 2026-06-06: ルールベース規律フィルタ（発火/メール送信可否/信頼度は不変）
+        # 🆕 2026-07-19 D: 算出は body 構築前（_build_discipline_block 表示用）に前倒し済み＝同じ値を記録
+        log_entry["discipline_filter"] = discipline
+        if _disc_is_index and _sigdir in ("long", "short"):
             _index_fired_dirs.append(_sigdir)
         signals_log.append(log_entry)
         print(f"    📒 シグナルログに記録: id={log_entry['id']} env={env['env_score']}")
