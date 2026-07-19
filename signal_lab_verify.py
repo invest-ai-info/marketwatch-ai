@@ -24,6 +24,9 @@ filter のキー（全てAND・省略可）:
   trend      : 下降 / 中立・もみあい / 上昇 / unknown
   tf         : 1h / 4h / 1d
   signal     : primary_signal の完全一致（例 "bb_lower_touch"）
+  signals_all: リスト指定＝全シグナルが signal_types に同時発火していること（🆕 2026-07-19
+               コンフルエンス次元・オーナー依頼「最低2つのテクニカル組み合わせ」。
+               signal_types 欠落レコードは primary_signal 単独集合として照合＝コンボは不一致側に倒れる）
   reversal_long : true なら direction=long かつ primary_signal∈{rsi_oversold_bounce,bb_lower_touch}
   blocked    : true/false — sr_runway.blocked の値でフィルタ（sr_runway 無しは除外）
   tier       : elite/good/neutral/avoid — selection.tier（選別タグ）でフィルタ（selection 無しは除外）
@@ -48,7 +51,7 @@ GROUPS = {
     "oil":      {"CL=F"},
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
-ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "reversal_long", "blocked", "tier"}
+ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all", "reversal_long", "blocked", "tier"}
 
 
 def wilson(k, n, z=1.96):
@@ -99,6 +102,11 @@ def match(d, f):
         return False
     if "signal" in f and d.get("primary_signal") != f["signal"]:
         return False
+    if "signals_all" in f:
+        # 🆕 2026-07-19 コンフルエンス: 指定シグナル全てが同時発火していること
+        have = set(d.get("signal_types") or ([d["primary_signal"]] if d.get("primary_signal") else []))
+        if not set(f["signals_all"]).issubset(have):
+            return False
     if "blocked" in f:
         sr = d.get("sr_runway")
         if not isinstance(sr, dict) or sr.get("blocked") != f["blocked"]:
