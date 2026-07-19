@@ -125,21 +125,49 @@ HOLDOUT_2026_07_02 = {
 # 旧合格は独立扱いの過小SEによる見せかけ＝剥奪はエッジに不利方向の保守化なので事前登録の精神に反しない。
 HOLDOUT_REVOKE_2026_07_03 = ("index_revL_1d", "unblocked_long", "long_all", "long_1d")
 
+# 🆕 2026-07-19 コンフルエンス（2指標同時発火）発見スイープの確定結果（オーナー依頼・確定後は変更しない）。
+#   実行: python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50 --split 2021-01-01
+#   ペア次元 signals_all（train内共起 support≥40）。tracker.json はGitHub側でroutine更新のため冪等適用。
+#   ⚠️ 1dバックテスト由来の証拠で全足ライブを前向き追跡する点は index_long_live 等と同じ留意。
+#   結果: ペア14本中 train-FDR通過3本（ITT/ITT+netでも上位2本は頑健）→ 3本とも holdout(2021+)で
+#   有意性消失＝holdout_pass=False で登録（2026-07-19昇格ルールにより live CI のみでの昇格は不可＝
+#   前向き蓄積と定点観測のみ。ライブ現在値も high_break+rsi_overbought は R-0.26/n44 と逆向き）。
+#   なお直感に反し「ダブル売られすぎ」bb_lower_touch+rsi_oversold_bounce は train R-0.153（q=0.15・FDR落ち）。
+COMBO_2026_07_19 = {"register": [
+    {"id": "combo_hb_rsiob", "label": "コンボ 高値ブレイク×RSI買われすぎ", "kind": "edge",
+     "filter": {"signals_all": ["high_break", "rsi_overbought"]}, "registered_at": "2026-07-19",
+     "holdout_pass": False,
+     "holdout": {"k": 107, "n": 233, "pct": 45.9, "avgR": 0.112, "rci_lo": -0.05, "rci_hi": 0.27}},
+    {"id": "combo_bbub_rsiob", "label": "コンボ +2σ突破×RSI買われすぎ", "kind": "edge",
+     "filter": {"signals_all": ["bb_upper_break", "rsi_overbought"]}, "registered_at": "2026-07-19",
+     "holdout_pass": False,
+     "holdout": {"k": 66, "n": 141, "pct": 46.8, "avgR": 0.139, "rci_lo": -0.07, "rci_hi": 0.35}},
+    {"id": "combo_db_hb", "label": "コンボ ダブルボトム×高値ブレイク", "kind": "edge",
+     "filter": {"signals_all": ["double_bottom", "high_break"]}, "registered_at": "2026-07-19",
+     "holdout_pass": False,
+     "holdout": {"k": 14, "n": 31, "pct": 45.2, "avgR": 0.097, "rci_lo": -0.34, "rci_hi": 0.53}},
+]}
+
+
+def _filter_key(f):
+    """filter dict の同一性キー。🆕 2026-07-19: signals_all のリスト値でも壊れないよう JSON 化。"""
+    return json.dumps(f, sort_keys=True, ensure_ascii=False)
+
 
 def apply_holdout_bootstrap(t):
-    """HOLDOUT_2026_07_02 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
+    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
     changed = 0
     for h in t["hypotheses"]:
         ann = HOLDOUT_2026_07_02["annotate"].get(h.get("id"))
         if ann and "holdout_pass" not in h:
             h["holdout_pass"], h["holdout"] = ann["pass"], ann["holdout"]
             changed += 1
-    existing = {tuple(sorted(h["filter"].items())) for h in t["hypotheses"]}
-    for s in HOLDOUT_2026_07_02["register"]:
-        if tuple(sorted(s["filter"].items())) in existing:
+    existing = {_filter_key(h["filter"]) for h in t["hypotheses"]}
+    for s in HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]:
+        if _filter_key(s["filter"]) in existing:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
-        existing.add(tuple(sorted(s["filter"].items())))
+        existing.add(_filter_key(s["filter"]))
         changed += 1
     # 2026-07-03 剥奪の冪等適用（GitHub側 tracker.json には旧 pass=True が既に書かれているため）
     for h in t["hypotheses"]:
@@ -305,15 +333,15 @@ def cmd_update(args, data, today):
 
 def cmd_register(args, data, today):
     t = load_tracker()
-    by_key = {tuple(sorted(h["filter"].items())): h for h in t["hypotheses"]}
+    by_key = {_filter_key(h["filter"]): h for h in t["hypotheses"]}
     src = json.load(open(args.src, encoding="utf-8-sig"))
     uniform_tf = src.get("uniform_tf")  # 例: 日足バックテスト由来なら "1d"
     added = annotated = 0
     for c in src.get("candidates", []):
         # 単一時間足ログ由来の候補は tf 付き登録済み仮説（例 SEED の tf=1d）とも同一視する
-        keys = [tuple(sorted(c["filter"].items()))]
+        keys = [_filter_key(c["filter"])]
         if uniform_tf and "tf" not in c["filter"]:
-            keys.append(tuple(sorted(list(c["filter"].items()) + [("tf", uniform_tf)])))
+            keys.append(_filter_key(dict(c["filter"], tf=uniform_tf)))
         hit = next((by_key[k] for k in keys if k in by_key), None)
         if hit is not None:
             # 既存仮説＝登録はスキップ。ただしホールドアウト結果があれば注記（昇格基準の緩和に使う）
@@ -327,7 +355,8 @@ def cmd_register(args, data, today):
         # 期待値ベース：avgR>0 なら edge、<0 なら gate（avgR無しは勝率で代替）
         metric = c["avgR"] if c.get("avgR") is not None else (c.get("pct", 0) - BE_PCT)
         kind = "edge" if metric > 0 else "gate"
-        hid = "auto_" + "_".join(f"{k}-{v}" for k, v in sorted(c["filter"].items()))
+        hid = "auto_" + "_".join(
+            f"{k}-{'+'.join(map(str, v)) if isinstance(v, list) else v}" for k, v in sorted(c["filter"].items()))
         h = {
             "id": hid[:60], "label": c["label"], "filter": c["filter"], "kind": kind,
             "registered_at": today,
