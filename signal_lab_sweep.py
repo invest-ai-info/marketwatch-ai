@@ -141,10 +141,23 @@ def build_grid(data):
         for di in DIRECTIONS:
             add(f"tf={tf}×dir={di}", {"tf": tf, "direction": di})
 
-    # filter の重複（同一 dict）を除去
+    # --- 🆕 2026-07-19 コンフルエンス（2指標の同時発火・オーナー依頼「最低2つの組み合わせ」） ---
+    #   事前宣言: ペアは渡されたデータ（--split時はtrainのみ＝holdout非接触）内の共起 support≥40 だけを
+    #   列挙（希薄セルの検定濫発を防ぐ）。3指標以上は列挙しない。多重性はFDRが補正。
+    pair_cnt = {}
+    for d in data:
+        ts = sorted(set(d.get("signal_types") or []))
+        for i in range(len(ts)):
+            for j in range(i + 1, len(ts)):
+                pair_cnt[(ts[i], ts[j])] = pair_cnt.get((ts[i], ts[j]), 0) + 1
+    for (a, b), c in sorted(pair_cnt.items()):
+        if c >= 40:
+            add(f"combo={a}+{b}", {"signals_all": [a, b]})
+
+    # filter の重複（同一 dict）を除去（signals_all のリスト値も扱えるよう JSON キー化）
     seen, uniq = set(), []
     for label, f in grid:
-        key = tuple(sorted(f.items()))
+        key = json.dumps(f, sort_keys=True, ensure_ascii=False)
         if key in seen:
             continue
         seen.add(key)
