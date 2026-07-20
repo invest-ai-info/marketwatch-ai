@@ -54,7 +54,54 @@ GROUPS = {
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
 ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all",
-                       "reversal_long", "blocked", "tier", "env", "regime"}
+                       "reversal_long", "blocked", "tier", "env", "regime",
+                       "rsi_band", "ma_pos", "macd_side"}  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
+
+
+# 🆕 2026-07-20 指標ステート導出（オーナー依頼「指標の組み合わせ研究」・数式ロック）
+#   発火時点の indicators_at_signal / entry から決定論で導出。記録が無い・数値でない場合は None＝マッチしない
+#   （blocked/tier/env と同じ意味論）。バンド境界は事前宣言＝以後変更しない。
+def rsi_band_of(d):
+    """RSI水準: os(≤30) / low(30<r≤45) / mid(45<r≤55) / high(55<r<70) / ob(≥70)。"""
+    ind = d.get("indicators_at_signal")
+    r = ind.get("rsi") if isinstance(ind, dict) else None
+    if not isinstance(r, (int, float)):
+        return None
+    if r <= 30:
+        return "os"
+    if r <= 45:
+        return "low"
+    if r <= 55:
+        return "mid"
+    if r < 70:
+        return "high"
+    return "ob"
+
+
+def ma_pos_of(d):
+    """エントリー価格とMA25/MA75の位置関係: above_both / below_both / above25_only / above75_only。"""
+    ind = d.get("indicators_at_signal")
+    e = d.get("entry")
+    if not isinstance(ind, dict) or not isinstance(e, (int, float)):
+        return None
+    m25, m75 = ind.get("ma25"), ind.get("ma75")
+    if not isinstance(m25, (int, float)) or not isinstance(m75, (int, float)):
+        return None
+    a25, a75 = e > m25, e > m75
+    if a25 and a75:
+        return "above_both"
+    if not a25 and not a75:
+        return "below_both"
+    return "above25_only" if a25 else "above75_only"
+
+
+def macd_side_of(d):
+    """MACD本線の0ライン上下: pos(>0) / neg(≤0)。バックテストログには記録なし＝ライブ専用次元。"""
+    ind = d.get("indicators_at_signal")
+    m = ind.get("macd") if isinstance(ind, dict) else None
+    if not isinstance(m, (int, float)):
+        return None
+    return "pos" if m > 0 else "neg"
 
 
 def wilson(k, n, z=1.96):
@@ -127,6 +174,13 @@ def match(d, f):
         rr = d.get("risk_regime")
         if not isinstance(rr, dict) or rr.get("regime") != f["regime"]:
             return False
+    # 🆕 2026-07-20 指標ステート（記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
+    if "rsi_band" in f and rsi_band_of(d) != f["rsi_band"]:
+        return False
+    if "ma_pos" in f and ma_pos_of(d) != f["ma_pos"]:
+        return False
+    if "macd_side" in f and macd_side_of(d) != f["macd_side"]:
+        return False
     return True
 
 
