@@ -106,6 +106,12 @@
     body.searching .article-card.search-match{display:block}
     body.searching .cat-more-btn{display:none}
     body.searching .category-section.search-empty{display:none}
+      .cat-jump{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px auto 4px;max-width:1100px}
+    .cat-jump a{padding:4px 12px;border:1px solid #d0d7de;border-radius:999px;background:#f6f8fa;color:#57606a;font-size:.78rem;font-weight:600;text-decoration:none}
+    .cat-jump a:hover{border-color:#0969da;color:#0969da}
+    body.dark .cat-jump a{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .cat-jump a:hover{border-color:#58a6ff;color:#58a6ff}
+    .category-section{scroll-margin-top:14px}
   </style>
 </head>
 <body>
@@ -155,7 +161,20 @@
   <div class="search-no-results" id="search-no-results">🔍 該当する記事が見つかりませんでした。別のキーワードでお試しください。</div>
 
   <!-- 🧮 計算ツール（常設・2026-07-04 新設） -->
-  <div class="category-section">
+  <!-- カテゴリジャンプ（2026-07-20 UX改善: 目的のカテゴリへ1タップ） -->
+  <div class="cat-jump" aria-label="カテゴリへ移動">
+    <a href="#cat-tools">🧮 ツール</a>
+    <a href="#cat-flash">🔥 速報</a>
+    <a href="#cat-lab">🧪 研究日誌</a>
+    <a href="#cat-econ">📰 経済指標</a>
+    <a href="#cat-psych">🧠 心理</a>
+    <a href="#cat-risk">🛡️ リスク管理</a>
+    <a href="#cat-basics">💰 基礎知識</a>
+    <a href="#cat-metrics">📖 投資指標</a>
+    <a href="#cat-tech">📈 テクニカル</a>
+  </div>
+
+  <div class="category-section" id="cat-tools">
     <div class="category-title">🧮 計算ツール（常設）</div>
     <div class="article-list">
       <a class="article-card" href="guide-compound-sim.html">
@@ -207,7 +226,7 @@
   </div>
 
   <!-- 速報・タイムリー記事 -->
-  <div class="category-section">
+  <div class="category-section" id="cat-flash">
     <div class="category-title">🔥 速報・タイムリー記事</div>
     <div class="article-list">
       <a class="article-card" href="guide-masters-006-dual-momentum.html">
@@ -1339,7 +1358,7 @@
   </div>
 
   <!-- AIシグナル研究日誌 -->
-  <div class="category-section">
+  <div class="category-section" id="cat-lab">
     <div class="category-title">🧪 AIシグナル研究日誌</div>
     <div class="article-list">
       <a class="article-card" href="guide-signal-lab-045.html">
@@ -1751,7 +1770,7 @@
   </div>
 
   <!-- 経済指標解説 -->
-  <div class="category-section">
+  <div class="category-section" id="cat-econ">
     <div class="category-title">📰 経済指標解説</div>
     <div class="article-list">
       <a class="article-card" href="guide-us-cpi.html">
@@ -1786,7 +1805,7 @@
 
   <!-- 投資の基礎知識 -->
   <!-- 投資の心理・メンタル -->
-  <div class="category-section">
+  <div class="category-section" id="cat-psych">
     <div class="category-title">🧠 投資の心理・メンタル</div>
     <div class="article-list">
       <a class="article-card" href="guide-trading-psychology-calm.html">
@@ -1811,7 +1830,7 @@
   </div>
 
   <!-- リスク管理・資金管理 -->
-  <div class="category-section">
+  <div class="category-section" id="cat-risk">
     <div class="category-title">🛡️ リスク管理・資金管理</div>
     <div class="article-list">
       <a class="article-card" href="guide-position-sizing.html">
@@ -1826,7 +1845,7 @@
     </div>
   </div>
 
-  <div class="category-section">
+  <div class="category-section" id="cat-basics">
     <div class="category-title">💰 投資の基礎知識</div>
     <div class="article-list">
       <a class="article-card" href="guide-sell-in-may.html">
@@ -1878,7 +1897,7 @@
   </div>
 
   <!-- 投資指標解説 -->
-  <div class="category-section">
+  <div class="category-section" id="cat-metrics">
     <div class="category-title">📖 投資指標の解説記事</div>
     <div class="article-list">
       <a class="article-card" href="guide-clarity-act.html">
@@ -1930,7 +1949,7 @@
   </div>
 
   <!-- チャートの読み方（テクニカル分析） -->
-  <div class="category-section">
+  <div class="category-section" id="cat-tech">
     <div class="category-title">📈 チャートの読み方（テクニカル分析）</div>
     <div class="article-list">
       <a class="article-card" href="guide-dow-theory.html">
@@ -2157,5 +2176,22 @@ window.addEventListener('scroll',function(){var s=window.scrollY,d=document.docu
 })();
 </script>
 
+
+<!-- ===== ↑上に戻る（2026-07-20 UX改善・コアページはsafe_write注入と同一スニペット） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
 </body>
 </html>
