@@ -40,11 +40,11 @@
     .header-meta{font-size:.85rem;color:#57606a}
     .header-meta span{color:#0969da;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #9e6a03;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #da3633;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .sentiment-icon{font-size:4rem;line-height:1;flex-shrink:0}
     .sentiment-body{flex:1;min-width:200px}
     .sentiment-label-small{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}
-    .sentiment-badge{color:#9e6a03;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
+    .sentiment-badge{color:#da3633;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
     .sentiment-text{color:#424a53;font-size:.92rem;line-height:1.6}
     .morning-digest{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}
     .md-title{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}
@@ -205,7 +205,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年7月20日 10:25 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年7月20日 17:53 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -243,24 +243,24 @@
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-icon">😐</div>
+    <div class="sentiment-icon">😢</div>
     <div class="sentiment-body">
       <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">中立</span>
+      <span class="sentiment-badge">やや弱気</span>
       <div class="sentiment-text">
         日経 64,141円 ／ S&amp;P500 7,457.69 ／
-        USD/JPY 162.37円 ／ BTC $64,827 ／
-        金 $4,013.60/oz
+        USD/JPY 162.36円 ／ BTC $63,987 ／
+        金 $4,026.50/oz
       </div>
     </div>
   </div>
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（10:25 JST 更新）</span></div>
-    <div class="md-line">📈 値動きが大きい順：日経平均 <span class="md-down">▼4.0%</span>・原油 <span class="md-up">▲1.3%</span>・S&P500 <span class="md-down">▼1.0%</span>（前日比）</div>
+    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（17:53 JST 更新）</span></div>
+    <div class="md-line">📈 値動きが大きい順：日経平均 <span class="md-down">▼4.0%</span>・BTC <span class="md-down">▼1.1%</span>・原油 <span class="md-down">▼1.1%</span>（前日比）</div>
     <div class="md-line">📅 本日の重要指標はなし。次は 🇪🇺 ECB理事会（金利決定）（7/23・あと3日）</div>
-    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>18.8</b>（やや神経質な水準）・センチメント判定は「<b>中立</b>」</div>
+    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>18.5</b>（やや神経質な水準）・センチメント判定は「<b>やや弱気</b>」</div>
     <details class="md-fold"><summary>📅 次の重要イベントまでのカウントダウンを見る</summary><div class="md-chips"><span class="md-chip">🇺🇸 FOMC あと9日（7/29）</span><span class="md-chip">🇯🇵 日銀会合 あと11日（7/31）</span><span class="md-chip">🇺🇸 雇用統計 あと18日（8/7）</span><span class="md-chip">🇺🇸 米CPI あと23日（8/12）</span><a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div></details>
   </div>
 
@@ -343,12 +343,12 @@
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-07-20</b>: 🏔 解説「<a href="guide-proverb-yama-takakereba-tani-fukashi.html" style="color:#0969da"><b>山高ければ谷深し</b></a>」公開
+      ・<b>2026-07-20</b>: 📰 解説「<a href="guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html" style="color:#0969da"><b>ブレント0突破──米・イラン複数夜衝突とホルムズ依存94%の日本を整理</b></a>」公開
       <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+      ・<b>2026-07-20</b>: 🏔 解説「<a href="guide-proverb-yama-takakereba-tani-fukashi.html" style="color:#0969da"><b>山高ければ谷深し</b></a>」公開<br>
       ・<b>2026-07-20</b>: 🧪 解説「<a href="guide-signal-lab-045.html" style="color:#0969da"><b>指数×ショートgate 前向き52.8%への逆転</b></a>」公開<br>
       ・<b>2026-07-19</b>: 📰 解説「<a href="guide-news-2026-07-19-alphabet-tesla-earnings-preview.html" style="color:#0969da"><b>7/22 Alphabet・Tesla決算──AI投資継続か後退か、SOXベア相場後の答え合わせ</b></a>」公開<br>
-      ・<b>2026-07-19</b>: 🚨 解説「<a href="guide-proverb-jiken-uri-jiko-kai.html" style="color:#0969da"><b>事件は売り、事故は買い</b></a>」公開<br>
-      ・<b>2026-07-19</b>: 🧪 解説「<a href="guide-signal-lab-044.html" style="color:#0969da"><b>指数×ロング 前向き後半崩落と降格ルール初日棚卸し #044</b></a>」公開
+      ・<b>2026-07-19</b>: 🚨 解説「<a href="guide-proverb-jiken-uri-jiko-kai.html" style="color:#0969da"><b>事件は売り、事故は買い</b></a>」公開
       </div></details>
     </div>
   </div>
@@ -393,6 +393,60 @@
               <div class="ai-asset-name">日本株（日経平均）</div>
               <div class="ai-asset-price">64,141円</div>
             </div>
+            <span class="ai-asset-sentiment" style="background:#cf222e;color:#fff">弱気</span>
+          </div>
+          <div class="ai-meter">
+            <div class="ai-meter-track">
+              <div class="ai-meter-dot" style="left:30%;background:#cf222e"></div>
+            </div>
+            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
+          </div>
+          <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> FRBのインフレ予測や米国株式市場の動向は、日本株にも下落圧力をかける可能性を示唆しています。現時点では、より安全な投資スタンスを維持することが賢明と考えられます。</div>
+        </div>
+        <div class="ai-asset-card">
+          <div class="ai-asset-header">
+            <span class="ai-asset-icon">🇺🇸</span>
+            <div class="ai-asset-name-wrap">
+              <div class="ai-asset-name">米国株（S&P500）</div>
+              <div class="ai-asset-price">7,457.69</div>
+            </div>
+            <span class="ai-asset-sentiment" style="background:#cf222e;color:#fff">やや弱気</span>
+          </div>
+          <div class="ai-meter">
+            <div class="ai-meter-track">
+              <div class="ai-meter-dot" style="left:35%;background:#cf222e"></div>
+            </div>
+            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
+          </div>
+          <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> FRBのインフレ予測に危険信号が出ていること、住宅市場の冷え込みによるS&P500先物の下落が示唆されており、短期的な下落リスクを考慮する必要がある。Nvidia関連のニュースは個別銘柄の動向ではあるが、市場全体のセンチメントに影響を与える可能性もあるため、現時点では様子見が賢明である。</div>
+        </div>
+        <div class="ai-asset-card">
+          <div class="ai-asset-header">
+            <span class="ai-asset-icon">🥇</span>
+            <div class="ai-asset-name-wrap">
+              <div class="ai-asset-name">ゴールド</div>
+              <div class="ai-asset-price">$4,026/oz</div>
+            </div>
+            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
+          </div>
+          <div class="ai-meter">
+            <div class="ai-meter-track">
+              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
+            </div>
+            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
+          </div>
+          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 地政学リスクの高まりによる原油価格上昇は、インフレ懸念を通じて金価格を押し上げる要因となる。ただし、イランと米国間の対話継続の可能性も示唆されており、急激な価格変動には注意が必要。</div>
+        </div>
+        <div class="ai-asset-card">
+          <div class="ai-asset-header">
+            <span class="ai-asset-icon">🪙</span>
+            <div class="ai-asset-name-wrap">
+              <div class="ai-asset-name">ビットコイン</div>
+              <div class="ai-asset-price">$63,987</div>
+            </div>
             <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
           </div>
           <div class="ai-meter">
@@ -402,61 +456,7 @@
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均の現在価格64,141円は、提示されたニュース内容からは直接的な投資判断材料が乏しく、グローバル市場の動向や個別企業への影響も明確ではありません。そのため、更なる情報収集と市場の動向を注視する「様子見」のスタンスが適切です。</div>
-        </div>
-        <div class="ai-asset-card">
-          <div class="ai-asset-header">
-            <span class="ai-asset-icon">🇺🇸</span>
-            <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">米国株（S&P500）</div>
-              <div class="ai-asset-price">7,457.69</div>
-            </div>
-            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
-          </div>
-          <div class="ai-meter">
-            <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
-            </div>
-            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
-          </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> ハイテク株や原油価格の上昇を示すニュースがあり、市場全体へのポジティブな影響が期待されます。現時点での価格帯は、今後の上昇余地を考慮すると押し目買いの好機となる可能性があります。</div>
-        </div>
-        <div class="ai-asset-card">
-          <div class="ai-asset-header">
-            <span class="ai-asset-icon">🥇</span>
-            <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">ゴールド</div>
-              <div class="ai-asset-price">$4,014/oz</div>
-            </div>
-            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
-          </div>
-          <div class="ai-meter">
-            <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
-            </div>
-            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
-          </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 中東情勢の緊迫化と原油価格の上昇は、地政学リスクの高まりから安全資産としての金への需要を押し上げる可能性があります。ただし、ハイテク株の上昇やアジア株の躊躇など、他の市場の動きも考慮し、慎重な姿勢で臨みます。</div>
-        </div>
-        <div class="ai-asset-card">
-          <div class="ai-asset-header">
-            <span class="ai-asset-icon">🪙</span>
-            <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$64,827</div>
-            </div>
-            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
-          </div>
-          <div class="ai-meter">
-            <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
-            </div>
-            <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
-          </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> MicroStrategyのビットコインへの関与とウォール街の競争激化は、ビットコインへの機関投資家の関心継続を示唆している。ただし、サトシのビジョンとの乖離は、中長期的な技術的発展への懸念材料となりうる。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> Coinbase CEOはマイニングに関する懸念を否定していますが、XRPの動向など他のニュースは限定的です。6月のインフレ率低下は仮想通貨市場全体にポジティブな影響を与えうるものの、現時点ではビットコイン価格への明確な方向性を示すには至っていません。</div>
         </div>
     </div>
   </section>
@@ -475,18 +475,18 @@
         <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">64,141円 <span class="down price-change">😢▼4.03%</span></span></div>
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,457.69 <span class="down price-change">😢▼1.01%</span></span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/markets/article/semiconductor-stocks-keep-falling-as-investors-go-risk-off-chinese-startup-releases-powerful-new-ai-model-130920103.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ ナスダック週間−2.9%、VanEck半導体ETF（SMH）は直近1週で約9%の損失</span>
-          <span class="news-ai">💡 半導体ETFの大幅下落はセクター全体のセンチメント悪化を示している</span>
-          <span class="news-meta">Yahoo Finance · 2026-07-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://news.livedoor.com/topics/detail/31851295/" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 日経平均、2営業日で4,610円急落——7月17日終値64,141円、一時4,100円超の下げ</span>
-          <span class="news-ai">💡 AI・半導体株が下落幅の6割超を占め、指数集中リスクが顕在化した</span>
-          <span class="news-meta">Livedoor News · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://media.rakuten-sec.net/articles/-/52974" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 半導体・AI関連株が日経下落幅の63%を占める——ワースト5銘柄で1,708円押し下げ</span>
-          <span class="news-ai">💡 特定セクターへの集中が逆に指数リスクを高めていることを示す事例</span>
-          <span class="news-meta">楽天証券トウシル · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="#" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 7月20日は海の日（祝日）、東京市場は休場でNKD=F先物は薄商い</span>
+          <span class="news-ai">💡 本日は日本の祝日で東京市場は休場、CME先物はスプレッド拡大リスクに注意</span>
+          <span class="news-meta">economic-events.json · 2026-07-20 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        </a><a class="news-item" href="https://www.bloomberg.com/news/articles/2026-07-17/japan-s-stocks-dive-as-investors-worry-about-ai-rally-s-run-mro83xih" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 日経平均が修正局面入り、AI相場失速と中東緊張で週間-6.4%の急落</span>
+          <span class="news-ai">💡 AI・半導体株崩落と地政学リスクが重なり日経225が6月高値から11%超下落</span>
+          <span class="news-meta">Bloomberg · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        </a><a class="news-item" href="https://fortune.com/2026/07/17/tech-stocks-global-selloff-as-investors-ai-semiconductor-chips/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ キオクシア-16%・SUMCO-15%など半導体株が急落、SOXは6月高値から-20%</span>
+          <span class="news-ai">💡 AI・半導体銘柄の崩落が日経指数の最大の重石、短期回復の材料が見えにくい</span>
+          <span class="news-meta">Fortune · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
         </a><div class="mw-ticker-mini" data-mwcat="stocks"></div></div>
       </div>
     </div>
@@ -497,17 +497,21 @@
           <div class="card-icon icon-fx">💱</div>
           <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
         </div>
-        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">162.37円 <span class="down price-change">😢▼0.00%</span></span></div>
-        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">185.65円 <span class="down price-change">😢▼0.10%</span></span></div>
+        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">162.36円 <span class="down price-change">😢▼0.01%</span></span></div>
+        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">185.73円 <span class="down price-change">😢▼0.05%</span></span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.piptheory.com/research/ecb-meeting-july-2026-preview-euro-eur" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ ECB7月23日会合、88%の確率でホールド予想——ラガルド総裁の9月ガイダンスが焦点</span>
-          <span class="news-ai">💡 今週のEURにとって最大のイベントリスク。会見の一言でレートが大きく動く可能性がある</span>
-          <span class="news-meta">PIPTHEORY · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.lazardassetmanagement.com/us/en_us/research-insights/market-insights/beyond-the-numbers/july-2026" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 財務省が4〜5月に11.7兆円の為替介入、ドル円が155円台へ急落も1ヶ月後に162円台に復帰</span>
-          <span class="news-ai">💡 介入は一時的な効果にとどまることが多く、再介入リスクは常に念頭に置く必要がある</span>
-          <span class="news-meta">Lazard Asset Management · 2026-07-15 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.dailyforex.com/forex-technical-analysis/2026/07/eurusd-weekly-forex-forecast-19th-to-24th-july-2026/247748" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ ユーロドルは1.1350〜1.1475のレンジで膠着、ECBとFOMCを前に方向感に欠ける</span>
+          <span class="news-ai">💡 2大イベント（ECB・FOMC）前に動きにくく、どちらかの結果で方向が決まりやすい</span>
+          <span class="news-meta">DailyForex · 2026-07-19 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
+        </a><a class="news-item" href="https://www.japantimes.co.jp/business/2026/07/18/yen-verbal-intervention-threat-weakness/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 財務省が口頭介入も効果薄、ドル円162.44近辺で高止まりが続く</span>
+          <span class="news-ai">💡 言葉だけの介入は信頼を失いつつあり、実弾なしでは円安が止まりにくい</span>
+          <span class="news-meta">Japan Times · 2026-07-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        </a><a class="news-item" href="https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/index.htm" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 日銀は7月31日の会合で政策金利1.00%据え置きがコンセンサス、次の利上げは2026年末以降</span>
+          <span class="news-ai">💡 日銀が動かなければ日米金利差が続き、円安維持のシナリオが基本線となる</span>
+          <span class="news-meta">BOJ · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
         </a><div class="mw-ticker-mini" data-mwcat="fx"></div></div>
       </div>
     </div>
@@ -518,21 +522,21 @@
           <div class="card-icon icon-cmd">🛢️</div>
           <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
         </div>
-        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$83.56/bbl <span class="up price-change">😊▲1.30%</span></span></div>
-        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,013.60/oz <span class="up price-change">😊▲0.02%</span></span></div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$81.62/bbl <span class="down price-change">😢▼1.05%</span></span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,026.50/oz <span class="up price-change">😊▲0.34%</span></span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.usagold.com/daily-precious-metals-market-report-july-17-2026/" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 金価格が$4,000割れ——$3,978まで下落、1月高値$5,598から27%の調整</span>
-          <span class="news-ai">💡 心理的節目の$4,000割れは追加の売りを引き寄せやすく、下落が加速するリスクがある</span>
-          <span class="news-meta">USAGOLD · 2026-07-17 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.ssga.com/library-content/products/fund-docs/etfs/us/insights-investment-ideas/monthly-gold-monitor.pdf" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 中国人民銀行が6月に14.93トン購入——20ヶ月連続買い増し、2023年以来最大の単月購入量</span>
-          <span class="news-ai">💡 中央銀行の継続購入が長期の下値を支えているが、短期の反発力としては不十分</span>
-          <span class="news-meta">State Street SPDR · 2026-07-15 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ EIA週次在庫（7月10日週）：米商業原油在庫が170万バレル減、5年平均比6%低水準</span>
-          <span class="news-ai">💡 在庫の減少は需給のひっ迫を示しており、価格の上昇圧力を後押しする材料</span>
-          <span class="news-meta">EIA · 2026-07-15 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://fortune.com/2026/07/19/global-oil-market-post-iran-export-offsets-hormuz-new-pipline-catalog/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 石油市場がホルムズ迂回パイプラインの整備を計画、完成は早くとも2027年初め</span>
+          <span class="news-ai">💡 迂回策はあるが整備に時間がかかり、当面の供給不足は解消されにくい</span>
+          <span class="news-meta">Fortune · 2026-07-19 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
+        </a><a class="news-item" href="https://www.interactivecrypto.com/gold-holds-steady-at-4-010-amid-fed-rate-concerns-and-geopolitical-tensions-jul-2026" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 金が$4,000〜4,020でもみ合い、高金利と地政学リスクが綱引きを演じる</span>
+          <span class="news-ai">💡 米金利の高止まりがゴールドの上値を抑え、中東紛争が$4,000割れを防ぐ構図</span>
+          <span class="news-meta">Interactive Crypto · 2026-07-19 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
+        </a><a class="news-item" href="https://www.aljazeera.com/economy/2026/7/18/what-to-expect-after-the-us-reimposes-naval-blockade-on-irans-ports" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ 米・イラン軍事衝突激化、安全資産需要でゴールドの$4,000サポートが意識される</span>
+          <span class="news-ai">💡 地政学的緊張が高まると金への逃避需要が生まれ、下値を支えやすい</span>
+          <span class="news-meta">Al Jazeera · 2026-07-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
         </a><div class="mw-ticker-mini" data-mwcat="commodity"></div></div>
       </div>
     </div>
@@ -543,21 +547,21 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$64,827 <span class="up price-change">😊▲0.05%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,879.95 <span class="up price-change">😊▲1.00%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$63,987 <span class="down price-change">😢▼1.09%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,859.52 <span class="down price-change">😢▼0.64%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://beincrypto.com/strategy-strc-mispriced-13-percent/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> 元ゴールドマン・クレジットのベテラン氏、市場はMicroStrategyのSTRCを13％誤って価格設定している可能性があると語る</span>
-          <span class="news-ai">💡 MicroStrategyの株価、アナリスト見解に乖離。暗号資産関連銘柄は値動き注意。</span>
-          <span class="news-meta">BeInCrypto · 2026-07-19</span>
-        </a><a class="news-item" href="https://beincrypto.com/banks-race-second-bitcoin-adoption-index/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> MicroStrategy CEO: ウォール街の最大手銀行は熾烈なビットコイン競争に巻き込まれている</span>
-          <span class="news-ai">💡 大手銀行がビットコイン競争。企業戦略と仮想通貨市場の動向を注視。</span>
-          <span class="news-meta">BeInCrypto · 2026-07-19</span>
-        </a><a class="news-item" href="https://beincrypto.com/bitcoin-satoshi-vision-armstrong-stablecoins/" target="_blank" rel="noopener">
-          <span class="news-title"><span class="news-sent sent-neu">😐</span> ブライアン・アームストロング氏、ビットコインはサトシのビジョンを実現せず、他の何かが実現したと認める</span>
-          <span class="news-ai">💡 ビットコイン、実用性に課題。ステーブルコインが決済手段か。</span>
-          <span class="news-meta">BeInCrypto · 2026-07-19</span>
+        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://crypto.news/bitcoin-price-prediction-july-2026-fed-decides/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ FOMC（7月29日発表）がBTCの夏相場を決定するカタリスト、利下げなら$70,000シナリオも</span>
+          <span class="news-ai">💡 Fed政策がBTCの次の方向を決める最大のイベントとして市場が注目している</span>
+          <span class="news-meta">crypto.news · 2026-07-17 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
+        </a><a class="news-item" href="https://crypto.news/bitcoin-price-prediction-july-2026-fed-decides/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ BTCが50か月指数移動平均（$65,150）を割り込み、中長期トレンドが弱転</span>
+          <span class="news-ai">💡 重要な長期テクニカル水準を割ると長期投資家の売り圧力が強まりやすい</span>
+          <span class="news-meta">crypto.news · 2026-07-15 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
+        </a><a class="news-item" href="https://crypto.news/bitcoin-price-prediction-july-2026-fed-decides/" target="_blank" rel="noopener nofollow">
+          <span class="news-title">✔ BTCスポットETFが6月に$45億ドルの純流出、月次最悪記録を更新</span>
+          <span class="news-ai">💡 機関資金がBTCから流出しており、需給面から下落圧力が続きやすい状況</span>
+          <span class="news-meta">crypto.news · 2026-07-10 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
         </a><div class="mw-ticker-mini" data-mwcat="crypto"></div></div>
       </div>
     </div>
