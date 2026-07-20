@@ -96,6 +96,12 @@
 
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}
     footer a{color:#0969da;text-decoration:none}
+    .jump-bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px auto 2px;max-width:1100px}
+    .jump-bar a{padding:4px 12px;border:1px solid #d0d7de;border-radius:999px;background:#f6f8fa;color:#57606a;font-size:.78rem;font-weight:600;text-decoration:none}
+    .jump-bar a:hover{border-color:#0969da;color:#0969da}
+    body.dark .jump-bar a{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .jump-bar a:hover{border-color:#58a6ff;color:#58a6ff}
+    .hot-section,#sec-jp-rank,#sec-jp-margin,#sec-guide{scroll-margin-top:14px}
     @media(max-width:600px){.header-inner{flex-direction:column}.hot-section{padding:16px}.hot-table{font-size:.78rem}.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
@@ -107,7 +113,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🔥 出来高急増ランキング</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年07月20日 20:26 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">本日出来高 ÷ 20日平均</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">🔥 出来高急増ランキング</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年07月20日 20:31 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">本日出来高 ÷ 20日平均</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -124,6 +130,18 @@
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
+  <!-- ページ内ジャンプ（2026-07-20 UX改善: 約12,000pxの縦長ページ用の目次） -->
+  <div class="jump-bar">
+    <a href="#sec-jp-rank">🇯🇵 値上がり/値下がり</a>
+    <a href="#sec-jp-margin">🔴 信用残</a>
+    <a href="#sec-sectors">🇺🇸 米国セクター</a>
+    <a href="#sec-japan">🇯🇵 主要銘柄</a>
+    <a href="#sec-indices">🌐 世界指数</a>
+    <a href="#sec-others">💱 FX・コモ・暗号</a>
+    <a href="#sec-guide">📘 見方・活用法</a>
+  </div>
+<div id="sec-jp-rank">
+
   <section class="jprank">
     <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
     <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（2026-07-17 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。決算アイコン＝直近開示が🟢黒字／🔴赤字。
@@ -137,6 +155,8 @@
     <div class="jprank-foot">💡 売買代金の「前/前々」2日分で、出来高を伴う本物の動きか・ストップ高で薄商いかが分かります。値上がり率＋大きな売買代金は市場の注目が集まりやすい局面（＝買い推奨ではない）。
     ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>
+</div>
+<div id="sec-jp-margin">
 
   <section class="jprank">
     <div class="jprank-h">💳 信用残ウォッチ（信用買い残・売り残）</div>
@@ -150,6 +170,7 @@
     <div class="jprank-foot">💡 信用買い残（上場比）が大きいほど、いずれ反対売買（売り）の対象となりうるため、戻り売り圧力として意識されやすい（上値の重しの目安）。逆に売り残が大きいと、買い戻し（踏み上げ）が起きやすいとされる。いずれも需給の一般的な目安であり、将来の値動きを示すものでも、買い/売り推奨でもありません。
     ▶ <a href="guide-margin-balance.html">信用残・取組の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>
+</div>
   <!-- 説明 -->
   <div class="intro">
     <b>🔰 急増率（Volume Surge Ratio）</b>とは、<b>本日の出来高 ÷ 直近20営業日の平均出来高</b>のことです。
@@ -158,7 +179,7 @@
     出来高のないFX・コモディティ・暗号資産は「値動き率」でランキングしています。
   </div>
 
-  <section class="hot-section">
+  <section class="hot-section" id="sec-sectors">
     <h2 class="hot-title">🇺🇸 米国株セクター</h2>
     <p class="hot-subtitle">SPDR セクターETF（11業種）— どの業種に資金が流れているか <span class="sort-note">／ 出来高急増率が高い順</span></p>
     <div class="table-wrap">
@@ -254,7 +275,7 @@
       </table>
     </div>
   </section>
-  <section class="hot-section">
+  <section class="hot-section" id="sec-japan">
     <h2 class="hot-title">🇯🇵 日本株 主要銘柄</h2>
     <p class="hot-subtitle">TOPIX Core30級の代表銘柄 — 国内資金の動きを見る <span class="sort-note">／ 出来高急増率が高い順</span></p>
     <div class="table-wrap">
@@ -371,7 +392,7 @@
       </table>
     </div>
   </section>
-  <section class="hot-section">
+  <section class="hot-section" id="sec-indices">
     <h2 class="hot-title">🌐 世界 主要市場</h2>
     <p class="hot-subtitle">主要インデックス — どこの市場が活況か <span class="sort-note">／ 出来高急増率が高い順</span></p>
     <div class="table-wrap">
@@ -417,14 +438,14 @@
         <tr>
           <td class="rank" style="color:#57606a">5</td>
           <td class="asset-name">独DAX<br><span class="asset-sym">^GDAXI</span></td>
-          <td class="price-cell">24,872.74</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.17%</span></td>
+          <td class="price-cell">24,867.03</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.15%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">6</td>
           <td class="asset-name">英FTSE<br><span class="asset-sym">^FTSE</span></td>
-          <td class="price-cell">10,560.93</td>
+          <td class="price-cell">10,561.60</td>
           <td><span style="color:#cf222e;font-weight:600">-0.37%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
@@ -438,15 +459,15 @@
         <tr>
           <td class="rank" style="color:#57606a">8</td>
           <td class="asset-name">欧州Stoxx50<br><span class="asset-sym">^STOXX50E</span></td>
-          <td class="price-cell">6,236.76</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.09%</span></td>
+          <td class="price-cell">6,237.10</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.10%</span></td>
           <td class="vol-cell">—</td><td><span class="badge-vol badge-na">—</span></td>
         </tr>
         </tbody>
       </table>
     </div>
   </section>
-  <section class="hot-section">
+  <section class="hot-section" id="sec-others">
     <h2 class="hot-title">💱 FX・コモディティ・暗号資産</h2>
     <p class="hot-subtitle">値動き率ベースのホット資産（出来高データなしの銘柄含む） <span class="sort-note">／ 値動き率（絶対値）が大きい順</span></p>
     <div class="table-wrap">
@@ -464,85 +485,85 @@
         <tr>
           <td class="rank" style="color:#bf3989">1</td>
           <td class="asset-name">銀<br><span class="asset-sym">SI=F</span></td>
-          <td class="price-cell">57.16</td>
-          <td><span style="color:#1a7f37;font-weight:600">+2.00%</span></td>
+          <td class="price-cell">57.15</td>
+          <td><span style="color:#1a7f37;font-weight:600">+1.98%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">2</td>
           <td class="asset-name">銅<br><span class="asset-sym">HG=F</span></td>
           <td class="price-cell">6.32</td>
-          <td><span style="color:#1a7f37;font-weight:600">+1.64%</span></td>
+          <td><span style="color:#1a7f37;font-weight:600">+1.61%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#bf3989">3</td>
           <td class="asset-name">WTI原油<br><span class="asset-sym">CL=F</span></td>
-          <td class="price-cell">81.65</td>
-          <td><span style="color:#cf222e;font-weight:600">-1.02%</span></td>
+          <td class="price-cell">81.57</td>
+          <td><span style="color:#cf222e;font-weight:600">-1.12%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">4</td>
-          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
-          <td class="price-cell">64,290.05</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.62%</span></td>
+          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
+          <td class="price-cell">1,885.55</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.75%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">5</td>
-          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
-          <td class="price-cell">4,026.50</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.34%</span></td>
+          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
+          <td class="price-cell">76.75</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.52%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">6</td>
           <td class="asset-name">リップル<br><span class="asset-sym">XRP-USD</span></td>
-          <td class="price-cell">1.09</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.23%</span></td>
+          <td class="price-cell">1.10</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.36%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">7</td>
-          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
-          <td class="price-cell">113.80</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.16%</span></td>
+          <td class="asset-name">金<br><span class="asset-sym">GC=F</span></td>
+          <td class="price-cell">4,025.80</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.33%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">8</td>
-          <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
-          <td class="price-cell">185.66</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.09%</span></td>
+          <td class="asset-name">AUD/JPY<br><span class="asset-sym">AUDJPY=X</span></td>
+          <td class="price-cell">113.81</td>
+          <td><span style="color:#1a7f37;font-weight:600">+0.17%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">9</td>
-          <td class="asset-name">イーサリアム<br><span class="asset-sym">ETH-USD</span></td>
-          <td class="price-cell">1,872.30</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.04%</span></td>
+          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
+          <td class="price-cell">162.26</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.07%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">10</td>
           <td class="asset-name">GBP/JPY<br><span class="asset-sym">GBPJPY=X</span></td>
-          <td class="price-cell">218.74</td>
-          <td><span style="color:#cf222e;font-weight:600">-0.04%</span></td>
+          <td class="price-cell">218.71</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.05%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">11</td>
-          <td class="asset-name">USD/JPY<br><span class="asset-sym">JPY=X</span></td>
-          <td class="price-cell">162.40</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.02%</span></td>
+          <td class="asset-name">EUR/JPY<br><span class="asset-sym">EURJPY=X</span></td>
+          <td class="price-cell">185.83</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.03%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         <tr>
           <td class="rank" style="color:#57606a">12</td>
-          <td class="asset-name">ソラナ<br><span class="asset-sym">SOL-USD</span></td>
-          <td class="price-cell">76.36</td>
-          <td><span style="color:#1a7f37;font-weight:600">+0.01%</span></td>
+          <td class="asset-name">ビットコイン<br><span class="asset-sym">BTC-USD</span></td>
+          <td class="price-cell">64,682.16</td>
+          <td><span style="color:#cf222e;font-weight:600">-0.01%</span></td>
           <td colspan="2" style="text-align:center;color:#6e7781;font-size:.75rem">（出来高非対象）</td>
         </tr>
         </tbody>
@@ -550,7 +571,7 @@
     </div>
   </section>
 
-  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
+  <div id="sec-guide" style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
     <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 出来高急増ランキングの見方・活用法</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">出来高は「その銘柄にどれだけ資金と関心が集まっているか」を示す、価格と並んで重要な情報です。このランキングは<strong>本日の出来高が直近20営業日の平均の何倍か（急増率）</strong>で並べており、ニュース・決算・思惑などで<strong>市場の注目が一気に集まった銘柄</strong>がひと目で分かります。「相場のどこに今、資金が向かっているか」を把握する地図として使えます。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">ただし大切な注意点があります。<strong>出来高が急増している＝上がる、ではありません</strong>。急増は「注目された」という事実にすぎず、買いで急増することも、投げ売り（パニック）で急増することもあります。急騰して話題になっている銘柄に勢いで<strong>飛びつくと高値づかみ</strong>になりやすいのは、出来高急増の典型的な落とし穴です。</p>
@@ -654,5 +675,22 @@ function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-
 </footer>
 <script>(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark .header-title,body.dark .header-meta,body.dark .header-meta span{color:#e6edf3!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark hr{border-color:#30363d!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}body.dark *[style*="background:#fff"]:not(img),body.dark *[style*="background:#ffffff"]:not(img),body.dark *[style*="background-color:#fff"]:not(img),body.dark *[style*="background-color:#ffffff"]:not(img),body.dark *[style*="background:#f6f8fa"]:not(img),body.dark *[style*="background-color:#f6f8fa"]:not(img){background:#161b22!important}body.dark *[style*="border:1px solid #d0d7de"],body.dark *[style*="border-color:#d0d7de"]{border-color:#30363d!important}body.dark *[style*="color:#1f2328"],body.dark *[style*="color:#57606a"],body.dark *[style*="color:#6e7781"],body.dark *[style*="color:#424a53"]{color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();</script>
 <script src="site-search.js" defer></script>
+
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
 </body>
 </html>
