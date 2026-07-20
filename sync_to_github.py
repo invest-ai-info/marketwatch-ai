@@ -59,4 +59,5 @@ SYNC_FILES = [
     "guide-news-2026-07-19-alphabet-tesla-earnings-preview.html",
     "guide-signal-lab-045.html",
     "guide-proverb-yama-takakereba-tani-fukashi.html",
+    "guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html",
 ]
