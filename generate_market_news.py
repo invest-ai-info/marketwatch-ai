@@ -4816,6 +4816,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-21", "line": '・<b>2026-07-21</b>: 🧪 解説「<a href="guide-signal-lab-046.html" style="color:#0969da"><b>昇格3仮説の降格ルール追跡 全N=342</b></a>」公開'},
         {"date": "2026-07-20", "line": '・<b>2026-07-20</b>: 🌊 解説「<a href="guide-silicon-cycle.html" style="color:#0969da"><b>シリコンサイクル入門——半導体はなぜ好況と不況を繰り返す？</b></a>」公開'},
         {"date": "2026-07-20", "line": '・<b>2026-07-20</b>: 📰 解説「<a href="guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html" style="color:#0969da"><b>ブレント0突破──米・イラン複数夜衝突とホルムズ依存94%の日本を整理</b></a>」公開'},
         {"date": "2026-07-20", "line": '・<b>2026-07-20</b>: 🏔 解説「<a href="guide-proverb-yama-takakereba-tani-fukashi.html" style="color:#0969da"><b>山高ければ谷深し</b></a>」公開'},

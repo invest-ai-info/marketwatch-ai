@@ -60,4 +60,5 @@ SYNC_FILES = [
     "guide-signal-lab-045.html",
     "guide-proverb-yama-takakereba-tani-fukashi.html",
     "guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html",
+    "guide-signal-lab-046.html",
 ]
