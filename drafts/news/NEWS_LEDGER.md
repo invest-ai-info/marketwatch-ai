@@ -3,6 +3,36 @@
 
 ---
 
+## 2026-07-20
+- 判定: ✅ 公開済み
+- 選定トピック: ブレント原油$90突破──米・イラン複数夜連続の軍事衝突とホルムズ海峡タンカー攻撃、中東への原油輸入依存度94%の日本への影響を中立整理（カテゴリ: マクロ・地政学・エネルギー・日本株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7月20日時点でブレント原油$90前後（7/9記事$78.02から+15%）。7月7〜8日イランがホルムズ周辺でカタール籍LNGタンカー「アル・レカイヤット」とキプロス籍「MV GFS Galaxy」を攻撃し停戦合意崩壊。米軍CENTCOM複数夜連続攻撃で応酬継続。日本は中東原油依存94%・ホルムズ経由93%と主要経済圏で最高水準。7/9記事（$78初回スパイク）とは価格水準・具体的タンカー攻撃の詳細・日本の依存度データで完全に差別化。
+- 出典（2系統以上確認済み）:
+  - CNBC「Brent breaches $90 as Middle East risks mount with U.S.-Iran tensions on the rise」（2026-07-20）
+  - barchart.com Brent先物7月20日始値 $90.26
+  - Al Jazeera「Oil surges as US strikes Iran, reversing return to pre-war prices」（2026-07-08）
+  - CNBC「Oil prices rise after attacks on tankers in Strait of Hormuz」（2026-07-07）
+  - Al Jazeera「Oil prices jump as US and Iran trade attacks over Strait of Hormuz」（2026-07-13）
+  - NPR「US fires new wave of strikes on Iran」（2026-07-15）
+  - investinglive.com「Japan's 94% Middle East oil dependence leaves firms deeply exposed」（2026-06-17）
+  - Hormuz Strait Monitor「Japan Oil Dependency — Hormuz Strait Impact」
+  - Japan Times「Oil bypassing Strait of Hormuz set to arrive in Japan from May」（2026-04-04）
+  - Yahoo Finance（米国株週次クローズ：S&P500 7,457.69 / Nasdaq 25,520.24 / Dow 52,146.42、2026-07-17）
+  - FXStreet「Japanese Yen struggles as higher oil prices and a wide US-Japan rate gap weigh」（2026-07-17）
+  - IEA「Strait of Hormuz」概要（ホルムズ通過量・世界の石油貿易の約20%）
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: シナリオB・C見出しの括弧ゆれ（主エージェントが指摘、不一致の閉じ括弧を削除）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（5項目全クリア・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告1件はクラウドスタブ・通常動作）✅
+- 公開ファイル: guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html
+- commit: feat: auto-publish news 2026-07-20（main へ push 済み・866ed63）
+
+---
+
 ## 2026-07-19
 - 判定: ✅ 公開済み
 - 選定トピック: 7月22日（水）Alphabet・Tesla Q2決算──SOXが6月高値から-20.2%ベア相場入りした後の「AIハードウェア投資継続か後退か」を中立整理（カテゴリ: マクロ・AI・テクノロジー決算・半導体）
