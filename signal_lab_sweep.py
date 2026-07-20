@@ -165,6 +165,44 @@ def build_grid(data):
         if c >= 40:
             add(f"combo={a}+{b}", {"signals_all": [a, b]})
 
+    # --- 🆕 2026-07-20 指標ステート次元（オーナー依頼「指標の組み合わせ研究」・人間による正式拡張） ---
+    #   事前宣言: バンド境界は verify.py の rsi_band_of/ma_pos_of/macd_side_of（数式ロック）。
+    #   クロスは {direction, trend, reversal_long, signal} × {rsi_band, ma_pos, macd_side} に限定し、
+    #   signal×ステートは渡されたデータ（--split時はtrainのみ＝holdout非接触）内の support≥40 だけ列挙
+    #   （コンフルエンスのペア列挙と同じルール）。3重クロスは列挙しない。多重性はFDRが補正。
+    #   macd/bb はバックテストログに記録なし＝ライブ実行時のみセルが立つ（N不足はmin_nで自然に落ちる）。
+    from signal_lab_verify import rsi_band_of, ma_pos_of, macd_side_of
+    RSI_BANDS = ("os", "low", "mid", "high", "ob")
+    MA_POSES = ("above_both", "below_both", "above25_only", "above75_only")
+    MACD_SIDES = ("pos", "neg")
+    for b in RSI_BANDS:
+        add(f"rsi={b}", {"rsi_band": b})
+        for di in DIRECTIONS:
+            add(f"rsi={b}×dir={di}", {"rsi_band": b, "direction": di})
+        for tr in TRENDS:
+            add(f"rsi={b}×trend={tr}", {"rsi_band": b, "trend": tr})
+    for mp in MA_POSES:
+        add(f"ma={mp}", {"ma_pos": mp})
+        for di in DIRECTIONS:
+            add(f"ma={mp}×dir={di}", {"ma_pos": mp, "direction": di})
+        add(f"ma={mp}×reversalL", {"ma_pos": mp, "reversal_long": True})
+    for ms in MACD_SIDES:
+        add(f"macd={ms}", {"macd_side": ms})
+        for di in DIRECTIONS:
+            add(f"macd={ms}×dir={di}", {"macd_side": ms, "direction": di})
+    state_cnt = {}
+    for d in data:
+        s = d.get("primary_signal")
+        if not s:
+            continue
+        for dim, val in (("rsi_band", rsi_band_of(d)), ("ma_pos", ma_pos_of(d)), ("macd_side", macd_side_of(d))):
+            if val is not None:
+                state_cnt[(s, dim, val)] = state_cnt.get((s, dim, val), 0) + 1
+    for (s, dim, val), c in sorted(state_cnt.items()):
+        if c >= 40:
+            short = {"rsi_band": "rsi", "ma_pos": "ma", "macd_side": "macd"}[dim]
+            add(f"signal={s}×{short}={val}", {"signal": s, dim: val})
+
     # filter の重複（同一 dict）を除去（signals_all のリスト値も扱えるよう JSON キー化）
     seen, uniq = set(), []
     for label, f in grid:
