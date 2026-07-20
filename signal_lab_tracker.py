@@ -148,6 +148,36 @@ COMBO_2026_07_19 = {"register": [
      "holdout": {"k": 14, "n": 31, "pct": 45.2, "avgR": 0.097, "rci_lo": -0.34, "rci_hi": 0.53}},
 ]}
 
+# 🆕 2026-07-20 指標ステート組み合わせ発見スイープの確定結果（オーナー依頼「指標の組み合わせ研究」・確定後は変更しない）。
+#   実行: python signal_lab_sweep.py --log signals-log-backtest.json --split 2021-01-01
+#   新filterキー rsi_band/ma_pos（verify.py 2026-07-20拡張・数式ロック）。1dバックテスト由来の留意は COMBO と同じ。
+#   結果: 新ステート族から holdout(2021+)合格4本（ma=above_both単体は above_both×long の上位集合のため登録は3本に絞る）＋
+#   「RSI中立での逆張り」2本は train-FDR有意赤字→holdout方向維持だがCI 0跨ぎ＝holdout_pass=False の gate 定点観測。
+#   ⚠️ ライブ直近窓(5/20-7/20)では過熱系合格2本（rsi=ob×上昇・above_both×long）が逆向き＝metal_longと同じ
+#   「20年は本物・今は機能不全」パターンの可能性＝前向きトラッカーが最終法廷（昇格は2CP連続ルール）。
+STATE_2026_07_20 = {"register": [
+    {"id": "state_macdg_below", "label": "ステート MACDゴールデン×両MA下（底値圏転換）", "kind": "edge",
+     "filter": {"signal": "macd_golden", "ma_pos": "below_both"}, "registered_at": "2026-07-20",
+     "holdout_pass": True,
+     "holdout": {"k": 125, "n": 254, "pct": 49.2, "avgR": 0.167, "rci_lo": 0.01, "rci_hi": 0.323}},
+    {"id": "state_rsiob_uptrend", "label": "ステート RSI≥70×上昇トレンド（強さは続く）", "kind": "edge",
+     "filter": {"rsi_band": "ob", "trend": "上昇"}, "registered_at": "2026-07-20",
+     "holdout_pass": True,
+     "holdout": {"k": 189, "n": 405, "pct": 46.7, "avgR": 0.151, "rci_lo": 0.017, "rci_hi": 0.286}},
+    {"id": "state_maup_long", "label": "ステート 上昇配置（>MA25&75）×ロング", "kind": "edge",
+     "filter": {"ma_pos": "above_both", "direction": "long"}, "registered_at": "2026-07-20",
+     "holdout_pass": True,
+     "holdout": {"k": 791, "n": 1747, "pct": 45.3, "avgR": 0.092, "rci_lo": 0.028, "rci_hi": 0.157}},
+    {"id": "state_bblt_rsimid", "label": "ステート BB下限タッチ×RSI中立（弱い逆張り＝回避）", "kind": "gate",
+     "filter": {"signal": "bb_lower_touch", "rsi_band": "mid"}, "registered_at": "2026-07-20",
+     "holdout_pass": False,
+     "holdout": {"k": 66, "n": 181, "pct": 36.5, "avgR": -0.134, "rci_lo": -0.308, "rci_hi": 0.039}},
+    {"id": "state_sb_rsimid", "label": "ステート サポート反発×RSI中立（弱い逆張り＝回避）", "kind": "gate",
+     "filter": {"signal": "support_bounce", "rsi_band": "mid"}, "registered_at": "2026-07-20",
+     "holdout_pass": False,
+     "holdout": {"k": 81, "n": 215, "pct": 37.7, "avgR": -0.096, "rci_lo": -0.265, "rci_hi": 0.072}},
+]}
+
 
 def _filter_key(f):
     """filter dict の同一性キー。🆕 2026-07-19: signals_all のリスト値でも壊れないよう JSON 化。"""
@@ -155,7 +185,7 @@ def _filter_key(f):
 
 
 def apply_holdout_bootstrap(t):
-    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
+    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 / STATE_2026_07_20 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
     changed = 0
     for h in t["hypotheses"]:
         ann = HOLDOUT_2026_07_02["annotate"].get(h.get("id"))
@@ -163,7 +193,7 @@ def apply_holdout_bootstrap(t):
             h["holdout_pass"], h["holdout"] = ann["pass"], ann["holdout"]
             changed += 1
     existing = {_filter_key(h["filter"]) for h in t["hypotheses"]}
-    for s in HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]:
+    for s in HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"] + STATE_2026_07_20["register"]:
         if _filter_key(s["filter"]) in existing:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
