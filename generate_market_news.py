@@ -154,6 +154,31 @@ function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-
 '''
 
 # ─────────────────────────────────────────
+# ↑上に戻るボタン（2026-07-20 UX改善）
+#   safe_write() が全 .html の </body> 直前に一括注入する（冪等）。
+#   長大ページ（hot-assets 約12,000px / index 約6,000px）のスクロール帰還用。
+#   ※ プレーン文字列（f-string ではない）。波括弧は CSS/JS の literal。
+# ─────────────────────────────────────────
+BACK_TO_TOP = '''
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+'''
+
+# ─────────────────────────────────────────
 # SEO 共通定数 / ヘルパー
 #   - 各ページの <head> に title/description/canonical/OGP/Twitter/JSON-LD を出力
 #   - GitHub Pages の URL 構造に合わせる
@@ -2434,7 +2459,7 @@ def build_hot_assets_html(hot_data, now_jst):
         sort_note = "出来高急増率が高い順" if show_vol else "値動き率（絶対値）が大きい順"
 
         sections_html += f"""
-  <section class="hot-section">
+  <section class="hot-section" id="sec-{cat}">
     <h2 class="hot-title">{info["title"]}</h2>
     <p class="hot-subtitle">{info["subtitle"]} <span class="sort-note">／ {sort_note}</span></p>
     <div class="table-wrap">
@@ -2529,6 +2554,12 @@ def build_hot_assets_html(hot_data, now_jst):
 
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#0969da;text-decoration:none}}
+    .jump-bar{{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px auto 2px;max-width:1100px}}
+    .jump-bar a{{padding:4px 12px;border:1px solid #d0d7de;border-radius:999px;background:#f6f8fa;color:#57606a;font-size:.78rem;font-weight:600;text-decoration:none}}
+    .jump-bar a:hover{{border-color:#0969da;color:#0969da}}
+    body.dark .jump-bar a{{background:#161b22;border-color:#30363d;color:#8b949e}}
+    body.dark .jump-bar a:hover{{border-color:#58a6ff;color:#58a6ff}}
+    .hot-section,#sec-jp-rank,#sec-jp-margin,#sec-guide{{scroll-margin-top:14px}}
     @media(max-width:600px){{.header-inner{{flex-direction:column}}.hot-section{{padding:16px}}.hot-table{{font-size:.78rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
@@ -2556,8 +2587,23 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="charts.html">📈 50年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
+
+  <!-- ページ内ジャンプ（2026-07-20 UX改善: 約12,000pxの縦長ページ用の目次） -->
+  <div class="jump-bar">
+    <a href="#sec-jp-rank">🇯🇵 値上がり/値下がり</a>
+    <a href="#sec-jp-margin">🔴 信用残</a>
+    <a href="#sec-sectors">🇺🇸 米国セクター</a>
+    <a href="#sec-japan">🇯🇵 主要銘柄</a>
+    <a href="#sec-indices">🌐 世界指数</a>
+    <a href="#sec-others">💱 FX・コモ・暗号</a>
+    <a href="#sec-guide">📘 見方・活用法</a>
+  </div>
+<div id="sec-jp-rank">
 {jp_rank_html}
+</div>
+<div id="sec-jp-margin">
 {jp_margin_html}
+</div>
   <!-- 説明 -->
   <div class="intro">
     <b>🔰 急増率（Volume Surge Ratio）</b>とは、<b>本日の出来高 ÷ 直近20営業日の平均出来高</b>のことです。
@@ -2567,7 +2613,7 @@ def build_hot_assets_html(hot_data, now_jst):
   </div>
 {sections_html}
 
-  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
+  <div id="sec-guide" style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
     <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 出来高急増ランキングの見方・活用法</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">出来高は「その銘柄にどれだけ資金と関心が集まっているか」を示す、価格と並んで重要な情報です。このランキングは<strong>本日の出来高が直近20営業日の平均の何倍か（急増率）</strong>で並べており、ニュース・決算・思惑などで<strong>市場の注目が一気に集まった銘柄</strong>がひと目で分かります。「相場のどこに今、資金が向かっているか」を把握する地図として使えます。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">ただし大切な注意点があります。<strong>出来高が急増している＝上がる、ではありません</strong>。急増は「注目された」という事実にすぎず、買いで急増することも、投げ売り（パニック）で急増することもあります。急騰して話題になっている銘柄に勢いで<strong>飛びつくと高値づかみ</strong>になりやすいのは、出来高急増の典型的な落とし穴です。</p>
@@ -3809,6 +3855,9 @@ def safe_write(path, content):
     # 0.4) 無料メルマガ登録フォームを全 .html の <footer> 直前に一括注入（冪等）
     if path.endswith(".html") and "mw-newsletter" not in content and "<footer" in content:
         content = content.replace("<footer", NEWSLETTER_FORM + "<footer", 1)
+    # 0.5) ↑上に戻るボタンを全 .html の </body> 直前に一括注入（冪等・2026-07-20 UX改善）
+    if path.endswith(".html") and "mw-back-to-top" not in content and "</body>" in content:
+        content = content.replace("</body>", BACK_TO_TOP + "</body>", 1)
     content_len = len(content)
     if content_len < 1000:
         print(f"❌ 書き込み拒否 ({path}): コンテンツが短すぎる ({content_len}文字)")
