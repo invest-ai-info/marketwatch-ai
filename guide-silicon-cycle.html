@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>シリコンサイクル入門｜半導体はなぜ好況と不況を繰り返すのか - MarketWatch AI</title>
+  <meta name="description" content="半導体業界の景気循環「シリコンサイクル」を図解で入門解説。約3〜4年周期といわれる波はなぜ生まれるのか（工場建設2〜3年の時間差）、好況→ピーク→調整→底の4局面、メモリ市況の振れ幅、そして2026年の「史上最大の好況予測と株価急落の同居」まで中立に整理します。">
+  <meta name="keywords" content="シリコンサイクル,半導体,景気循環,メモリ,DRAM,NAND,ファウンドリ,SOX指数,WSTS,設備投資,AIブーム,投資初心者,株">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-silicon-cycle.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="シリコンサイクル入門｜半導体はなぜ好況と不況を繰り返すのか">
+  <meta property="og:description" content="半導体の景気循環「シリコンサイクル」を図解で解説。約3〜4年の波が生まれる仕組み、4つの局面、メモリの振れ幅、2026年の現在地まで中立に整理。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-silicon-cycle.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "シリコンサイクル入門｜半導体はなぜ好況と不況を繰り返すのか",
+    "description": "半導体業界の景気循環「シリコンサイクル」を図解で入門解説。約3〜4年の波が生まれる仕組み、4つの局面、メモリの振れ幅、2026年の現在地まで中立に整理。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-20",
+    "dateModified": "2026-07-20",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-silicon-cycle.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-md{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-arrow{stroke:#57606a;stroke-width:1.6;fill:none;stroke-linecap:round}
+    .s-arrowhead{fill:#57606a}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-md{fill:#c9d1d9}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-arrow{stroke:#c9d1d9}
+    body.dark .s-arrowhead{fill:#c9d1d9}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; シリコンサイクル入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は半導体業界の景気循環「シリコンサイクル」の仕組みを整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🌊 シリコンサイクル入門｜半導体はなぜ好況と不況を繰り返すのか</h1>
+    <div class="meta-line">公開日：2026 年 7 月 20 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>2026年7月、半導体を取り巻くニュースは不思議な光景になっています。業界団体は「<strong>史上最大の伸び率</strong>」という市場予測を発表しているのに、半導体株の代表的な指数は高値から20%超下げて「ベア相場（弱気相場）入り」と報じられました。<strong>絶好調の予測と、急落する株価。</strong>この一見矛盾した状況を理解するカギが、今回のテーマ「<strong>シリコンサイクル</strong>」です。</p>
+    <p>シリコンサイクルは半導体業界に何十年も繰り返されてきた「好況と不況の波」のこと。仕組みを知っておくと、半導体関連のニュースや株価の動きが「なぜそうなるのか」の背景ごと読めるようになります。この記事では、波が生まれる構造から、4つの局面、メモリ市況の特殊性、そして2026年のいまがどう議論されているかまで、図解でやさしく整理します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>シリコンサイクルとは<strong>半導体市場が約3〜4年周期で好況と不況を繰り返す</strong>とされる景気循環のこと。名前は半導体の主材料シリコン（ケイ素）に由来する。</li>
+      <li>波が生まれる最大の理由は<strong>「需要は一瞬で増えるが、工場の建設には2〜3年かかる」という時間差</strong>。品不足→各社一斉に増産投資→数年後に工場が一斉完成→供給過剰→価格下落、を構造的に繰り返しやすい。</li>
+      <li>株価はサイクルの実態より<strong>先回りして動く傾向</strong>があるとされ、「業績や予測は絶好調なのに株価が下がり始める」ことはサイクルの歴史で繰り返し観察されてきた。天井と底をピンポイントで当てるのは極めて難しく、<strong>高値追いのリスク管理がまず先</strong>というのが当サイトの検証結果とも整合する。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">シリコンサイクルとは——半導体の「約3〜4年」の波</a></li>
+        <li><a href="#section-2">なぜ起きる——「需要は一瞬、工場は2〜3年」の時間差</a></li>
+        <li><a href="#section-3">サイクルの4つの局面——好況・ピーク・調整・底</a></li>
+        <li><a href="#section-4">歴史に見るシリコンサイクル——繰り返されてきた波</a></li>
+        <li><a href="#section-5">メモリは「振れ幅の王様」——同じ半導体でも別物</a></li>
+        <li><a href="#section-6">【2026年のいま】史上最大の好況予測と株価急落の同居</a></li>
+        <li><a href="#section-7">投資家はどう向き合うか——当サイトの検証知見から</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ シリコンサイクルとは——半導体の「約3〜4年」の波</h2>
+    <p><strong>シリコンサイクル</strong>とは、半導体市場が数年おきに好況（品不足・価格上昇）と不況（供給過剰・価格下落）を繰り返す現象を指す言葉です。半導体の主材料である<strong>シリコン（ケイ素）</strong>にちなんでこう呼ばれます。周期はおおむね<strong>3〜4年（平均40〜45ヶ月程度）</strong>といわれ、かつては「オリンピックの年に山が来る」と語られたこともあるほど、業界では古くから知られた経験則です。</p>
+    <p>ただし大事な注意点として、これは<strong>物理法則のような正確な周期ではありません</strong>。スマホ・クラウド・AIといった需要の主役が交代するたびに波の形も長さも変わってきましたし、「今回は構造が変わったからサイクルは死んだ」という議論と「やっぱり戻ってきた」という結末も、歴史の中で何度も繰り返されています。<strong>「正確な時計」ではなく「繰り返しやすい構造」</strong>として理解するのが実態に近いところです。</p>
+
+    <table>
+      <tr><th>用語</th><th>意味</th></tr>
+      <tr><td>シリコンサイクル</td><td>半導体市場の好況・不況の循環。約3〜4年周期とされる経験則</td></tr>
+      <tr><td>WSTS</td><td>世界半導体市場統計。業界団体による市場実績・予測の定番ソース</td></tr>
+      <tr><td>SOX指数</td><td>フィラデルフィア半導体株指数。米国上場の主要半導体株で構成される、半導体株全体の体温計</td></tr>
+      <tr><td>メモリ / ロジック</td><td>メモリ＝データを記憶する半導体（DRAM・NAND）。ロジック＝計算する半導体（CPU・GPUなど）</td></tr>
+      <tr><td>ファウンドリ</td><td>他社が設計したロジック半導体の製造を受託する企業・業態</td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ なぜ起きる——「需要は一瞬、工場は2〜3年」の時間差</h2>
+    <p>シリコンサイクルが生まれる最大の理由は、<strong>需要と供給のスピードがまったく違う</strong>ことです。</p>
+    <ul>
+      <li><strong>需要は一瞬で増える</strong>：新しいゲーム機、スマホ、クラウド、そしてAI。ヒット商品や技術トレンドが生まれると、半導体の注文は一気に膨らみます。</li>
+      <li><strong>供給は2〜3年遅れる</strong>：半導体工場（ファブ）は建設に<strong>2〜3年</strong>と巨額の投資（最先端では数兆円規模）がかかります。「作ろう」と決めてから実際に供給が増えるまで、長いタイムラグがあるのです。</li>
+    </ul>
+    <p>この時間差が、次のような「追いかけっこ」を生みます。品不足で価格が上がると、各社は「今が投資のチャンス」と<strong>一斉に</strong>工場建設を決めます。ところが工場は2〜3年後に<strong>一斉に</strong>完成する。その頃には需要の伸びが一巡していることが多く、市場は一転して<strong>供給過剰・価格下落</strong>へ——。個々の会社は合理的に動いているのに、全体では波が増幅されてしまう。これがシリコンサイクルの骨格です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 270" role="img" aria-label="需要と供給の時間差がシリコンサイクルを生む仕組みの概念図">
+        <line x1="60" y1="225" x2="720" y2="225" class="s-axis"/>
+        <line x1="60" y1="225" x2="60" y2="40" class="s-axis"/>
+        <text x="26" y="60" class="s-label-sm">量</text>
+        <text x="700" y="248" class="s-label-sm">時間</text>
+        <path d="M60,205 C170,190 250,120 360,102 C470,86 580,80 715,78" class="s-curve-g"/>
+        <path d="M60,215 C200,213 320,209 420,200 C500,192 560,130 640,84 C670,68 695,60 715,55" class="s-curve-l"/>
+        <line x1="255" y1="225" x2="255" y2="55" class="s-divv"/>
+        <line x1="600" y1="225" x2="600" y2="55" class="s-divv"/>
+        <text x="70" y="60" class="s-note-g">需要（例：AIブームで急増）</text>
+        <text x="70" y="78" class="s-note-r">供給（工場完成までは増やせない）</text>
+        <text x="180" y="250" class="s-label-md">① 品不足 → 各社が増産投資を決定</text>
+        <text x="475" y="250" class="s-label-md">② 2〜3年後、工場が一斉完成</text>
+        <text x="608" y="105" class="s-note-r">③ 供給が需要を追い越す</text>
+        <text x="608" y="122" class="s-note-r">　＝ 供給過剰・価格下落へ</text>
+      </svg>
+      <div class="chart-caption">図1：シリコンサイクルの構造（概念図・数値は仮のイメージ）。需要は一瞬で立ち上がるが、供給（工場）は2〜3年遅れて一斉に増える。この時間差が「品不足→過剰投資→供給過剰」の波を繰り返し生むとされる。</div>
+    </div>
+
+    <div class="info-box">
+      <strong>💡 経済学では昔からある型</strong>：この「価格を見てから増産を決める→届く頃には手遅れ」という構造は、豚や農作物の市場で古くから知られる循環（いわゆる<strong>コブウェブ（クモの巣）理論</strong>）と同じ型です。加えて、川下の在庫積み増し・取り崩しが川上の注文を実態以上に増幅する<strong>ブルウィップ（鞭）効果</strong>も波を大きくする要因とされます。半導体は「工場の建設期間が特に長く、投資額が特に大きい」ため、この型が極端に出やすい産業なのです。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ サイクルの4つの局面——好況・ピーク・調整・底</h2>
+    <p>シリコンサイクルは、大きく4つの局面に分けて整理すると分かりやすくなります。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 300" role="img" aria-label="シリコンサイクルの4局面（好況・ピーク・調整・底）の波の概念図">
+        <line x1="45" y1="252" x2="725" y2="252" class="s-axis"/>
+        <line x1="45" y1="252" x2="45" y2="45" class="s-axis"/>
+        <text x="16" y="64" class="s-label-sm">市況</text>
+        <text x="700" y="274" class="s-label-sm">時間</text>
+        <path d="M55,225 C130,212 190,95 262,88 C300,85 320,100 355,135 C400,182 450,222 512,231 C560,238 580,232 600,222 C650,198 680,120 718,95" class="s-curve-b"/>
+        <line x1="200" y1="252" x2="200" y2="60" class="s-divv"/>
+        <line x1="322" y1="252" x2="322" y2="60" class="s-divv"/>
+        <line x1="560" y1="252" x2="560" y2="60" class="s-divv"/>
+        <text x="80" y="80" class="s-note-g">① 好況</text>
+        <text x="228" y="80" class="s-note">② ピーク圏</text>
+        <text x="400" y="80" class="s-note-r">③ 調整</text>
+        <text x="588" y="80" class="s-note-g">④ 底 → 次の好況へ</text>
+        <text x="72" y="278" class="s-label-sm">品不足・値上がり・増産投資</text>
+        <text x="235" y="278" class="s-label-sm">過剰投資の種まき</text>
+        <text x="375" y="278" class="s-label-sm">在庫調整・価格下落・減産</text>
+        <text x="580" y="278" class="s-label-sm">投資凍結が次の品不足の種に</text>
+      </svg>
+      <div class="chart-caption">図2：シリコンサイクルの4局面（概念図）。皮肉なことに「好況の最中の一斉投資」が次の供給過剰の種になり、「底での投資凍結」が次の品不足の種になる。波は約3〜4年周期とされるが、長さも振れ幅も毎回異なる。</div>
+    </div>
+
+    <table>
+      <tr><th>局面</th><th>市況で起きること</th><th>ニュースの論調（典型）</th></tr>
+      <tr><td>① 好況</td><td>品不足・価格上昇・工場フル稼働・増産投資ラッシュ</td><td>「半導体が足りない」「空前の設備投資」</td></tr>
+      <tr><td>② ピーク圏</td><td>業績は絶好調。だが投資の種は撒かれ、川下の在庫は膨らみ始める</td><td>「今回は違う」「スーパーサイクル論」</td></tr>
+      <tr><td>③ 調整</td><td>在庫調整・価格下落・減産・投資延期</td><td>「半導体不況」「メモリ暴落」</td></tr>
+      <tr><td>④ 底</td><td>減産が効き需給が締まり始める。投資凍結が次の品不足の種に</td><td>「業界再編」「最悪期は過ぎたか」</td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <div class="warning-box"><strong>株価はサイクルより先に動くとされる</strong>：株式市場は「いまの業績」ではなく「半年〜1年先の市況」を織り込みに行く傾向があるとされます。そのため<strong>業績や市場予測が最高潮のタイミングで株価が先に下がり始める</strong>（逆に、業績最悪の底で株価が先に上がり始める）ことは、サイクル産業でたびたび観察されてきました。「良いニュースなのに下がる」は、サイクル株ではしばしば起きる現象です。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 歴史に見るシリコンサイクル——繰り返されてきた波</h2>
+    <p>細かい年表よりも「どんな波があったか」の流れをつかむのが目的なので、代表的な局面をざっくり並べます。</p>
+    <ul>
+      <li><strong>2000年前後：ITバブルと崩壊</strong>——インターネット・PC需要への熱狂で半導体投資が急拡大した後、2001年にかけて市場は歴史的な落ち込みを経験。</li>
+      <li><strong>2008〜09年：金融危機</strong>——需要蒸発で業界全体が深い調整に。メモリ各社の淘汰・再編が進んだ時期。</li>
+      <li><strong>2017〜19年：データセンターブームとメモリ調整</strong>——クラウド向け需要でメモリ価格が高騰した後、2018年後半〜19年にかけて価格が大きく下落。</li>
+      <li><strong>2020〜21年：コロナ特需と半導体不足</strong>——巣ごもり需要と供給網の混乱で世界的な「半導体不足」に。自動車工場が停まるほどの品不足が話題になった。</li>
+      <li><strong>2022〜23年：その反動</strong>——PC・スマホ需要の一巡で在庫調整へ。メモリ市況は大幅に悪化し、各社が減産に踏み切った。</li>
+      <li><strong>2024年〜：AIブーム</strong>——生成AI向けのGPU・高性能メモリ（HBM）需要が爆発し、データセンター投資が空前の規模に。今回の波の主役。</li>
+    </ul>
+    <p>こうして並べると、<strong>「主役（需要の牽引役）は毎回変わるのに、品不足→一斉投資→調整という型は繰り返している」</strong>ことが見えてきます。これがシリコンサイクルを「構造」として理解する意味です。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ メモリは「振れ幅の王様」——同じ半導体でも別物</h2>
+    <p>ひとくちに半導体といっても、サイクルの振れ幅は分野によって大きく異なります。特に重要なのが<strong>メモリ（DRAM・NAND）とそれ以外の違い</strong>です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 250" role="img" aria-label="メモリとロジックの市況の振れ幅の違いの概念図">
+        <line x1="50" y1="210" x2="720" y2="210" class="s-axis"/>
+        <line x1="50" y1="210" x2="50" y2="40" class="s-axis"/>
+        <text x="20" y="58" class="s-label-sm">市況</text>
+        <text x="698" y="232" class="s-label-sm">時間</text>
+        <path d="M55,170 C110,160 150,62 210,58 C255,55 285,150 340,175 C390,196 420,190 460,120 C500,60 540,58 585,80 C640,108 660,180 715,190" class="s-curve-l"/>
+        <path d="M55,140 C150,133 240,112 340,118 C440,124 540,110 715,104" class="s-curve-g"/>
+        <text x="66" y="60" class="s-note-r">メモリ（DRAM・NAND）＝価格が市況で乱高下</text>
+        <text x="66" y="78" class="s-note-g">ロジック / 受託製造＝相対的にゆるやか（傾向）</text>
+      </svg>
+      <div class="chart-caption">図3：分野別の振れ幅の違い（概念図・仮のイメージ）。メモリは規格品を市況価格で売る「コモディティ」に近く、需給がそのまま価格を直撃する。設計や受託製造は差別化・長期契約の度合いが相対的に高く、波が緩やかになりやすいとされる（あくまで一般的傾向で、例外もある）。</div>
+    </div>
+
+    <ul>
+      <li><strong>メモリ＝市況品</strong>：DRAM・NANDは規格が共通の「コモディティ」に近く、<strong>需給バランスがそのまま価格に直撃</strong>します。好況では利益が爆発し、不況では赤字転落もあり得る——シリコンサイクルが最も激しく出る分野です。ちょうど2026年7月には、国内メモリ大手の株価が特許訴訟のニュースをきっかけにストップ安まで売られる場面もあり、メモリ関連株のボラティリティ（変動の激しさ）を象徴する出来事として話題になりました（<a href="guide-news-2026-07-17-nikkei-drop-kioxia-ai-capex.html">当時のニュース整理はこちら</a>）。</li>
+      <li><strong>ロジック・受託製造＝相対的に緩やか</strong>：設計力やプロセス技術で差別化しやすく、長期契約の比率も高いため、メモリほど極端な波にはなりにくいとされます（ただし無縁ではなく、調整局面では稼働率低下や投資延期が起きます）。</li>
+      <li><strong>製造装置・素材＝さらに先に動きやすい</strong>：半導体メーカーの「投資計画」に業績が連動するため、市況の変化が<strong>増幅されて先に</strong>伝わりやすい分野とされます。</li>
+    </ul>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 【2026年のいま】史上最大の好況予測と株価急落の同居</h2>
+    <p>ここまでの枠組みを持って、2026年7月の現在地を眺めてみましょう。矛盾して見える2つの事実が同居しています。</p>
+
+    <div class="positive-box"><strong>絶好調側の事実</strong>：業界団体WSTSが2026年6月に発表した春季予測では、2026年の世界半導体市場は<strong>前年比+89.9%の約1兆5,112億ドル</strong>と、統計を比較できる1987年以降で最大の伸び率が見込まれています。牽引役はAIデータセンター向けで、特に<strong>メモリは前年比+249.5%</strong>という異例の予測。半年前の予測（+26.3%）から大幅な上方修正でした。</div>
+
+    <div class="negative-box"><strong>急落側の事実</strong>：一方で株式市場では、2026年7月に半導体株指数SOXが6月の高値から<strong>20%超下落し「ベア相場（弱気相場）入り」</strong>と報じられました。この週は、中国発の効率型AIモデルの登場で「AIへの巨額投資は本当に回収できるのか」という<strong>AI設備投資の持続性への疑問</strong>が再燃したこと、中国メモリ勢の増産による供給懸念、大手製造受託の「増益なのに株安」という反応などが重なっています（<a href="guide-news-2026-07-16-nikkei-drop-semiconductor-tsmc.html">7/16</a>・<a href="guide-news-2026-07-18-kimi-k3-deepseek-sox-bear-market.html">7/18のニュース整理</a>）。</div>
+
+    <p>この2つは、シリコンサイクルの枠組みで見ると矛盾ではありません。<strong>「業績・予測が最高潮」と「株価が先に調整を始める」は、ピーク圏の議論が始まるときの典型的な組み合わせ</strong>だからです。ただし、ここで正直に強調したいことがあります。</p>
+    <ul>
+      <li>いまが「ピーク圏」なのか「好況の途中の一時的な調整（押し目）」なのかは、<strong>後になってみないと分かりません</strong>。過去にも「サイクルの天井」と騒がれてから市場がさらに拡大した例は複数あります。</li>
+      <li>AIという需要の主役が過去のサイクルとどう違うのか（データセンター投資の持続性・電力制約・効率化技術の影響）は、専門家の間でも<strong>見解が割れている論点</strong>です。業界予測の中でも、2027年のメモリ市場には下振れリスクを指摘する分析があります。</li>
+      <li>したがって本記事は「今が天井だ」とも「まだ上がる」とも主張しません。<strong>どちらのシナリオもあり得る前提で、次章のリスク管理を考えるのが実務的</strong>です。</li>
+    </ul>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 投資家はどう向き合うか——当サイトの検証知見から</h2>
+    <p>「サイクルが分かるなら、底で買って天井で売ればいいのでは？」——理屈はその通りですが、実践は簡単ではありません。当サイトが過去データで検証してきた範囲から、一般論として言えることを挙げます。</p>
+    <ul>
+      <li><strong>天井・底の「当て」は再現が難しい</strong>：当サイトでは投資の古典手法を日本株の過去データで多数検証してきましたが、<strong>「上がる銘柄を当てる」系の手法は検証期間を変えると成績が消えるものが大半</strong>でした（<a href="guide-masters-002-trend.html">順張り8手法の検証</a>）。サイクルの転換点をリアルタイムで当て続けるのは、プロでも至難とされます。</li>
+      <li><strong>一方「避ける」系は比較的頑健だった</strong>：急騰直後の高値追い・連騰銘柄への飛びつきが不利になりやすい傾向は、検証期間を変えても比較的よく再現しました。<strong>「好況の熱狂の中で慌てて買う」ことのリスク管理</strong>は、サイクル投資でまず優先する価値があります。</li>
+      <li><strong>「山高ければ谷深し」</strong>：大きく上がった相場ほど調整も深くなりやすい、という相場格言はシリコンサイクルの歴史と重なります（<a href="guide-proverb-yama-takakereba-tani-fukashi.html">格言解説はこちら</a>）。ポジションの大きさ（1回の損失を口座の1〜2%程度に抑える等）と分散は、どのシナリオでも効く守りです。</li>
+      <li><strong>「落ちるナイフ」にも注意</strong>：調整局面の急落を「底だ」と拾う逆張りも、当サイトの検証では単純なルール化で優位性を出すのが難しい分野でした。下げ止まりの確認を待つ・分割で入る・損切りラインを事前に決める、といった基本が推奨されるのはこのためです。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🔥 いま資金がどこに集まっているかを見る</div>
+      <div class="cta-box-desc">半導体を含む各市場の出来高急増ランキングを毎日自動更新しています。市況の「体温」の確認にどうぞ。</div>
+      <a class="cta-btn" href="hot-assets.html">出来高急増ランキングを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li>シリコンサイクルは<strong>約3〜4年周期とされる半導体の景気循環</strong>。正確な時計ではなく「繰り返しやすい構造」として理解する。</li>
+      <li>波の正体は<strong>「需要は一瞬・供給は2〜3年」の時間差</strong>。好況の一斉投資が次の供給過剰の種になり、底の投資凍結が次の品不足の種になる。</li>
+      <li>メモリは市況が価格を直撃する<strong>「振れ幅の王様」</strong>。同じ半導体でも分野によって波の激しさは大きく異なる。</li>
+      <li>2026年7月のいまは、<strong>史上最大級の市場予測と株価のベア相場入りが同居</strong>する局面。ピーク圏か押し目かは事後にしか確定しない——だからこそ、当てにいく前に<strong>高値追いの抑制・ポジションサイズ・分散という「守り」</strong>を整えるのが実務的。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-news-2026-07-18-kimi-k3-deepseek-sox-bear-market.html">
+        <div class="related-card-title">📰 SOXベア相場入り——第2のDeepSeekショック</div>
+        <div class="related-card-desc">2026年7月、SOX指数が高値から20%超下落。中国発AIモデルが再燃させた「AI投資の持続性」議論を中立整理。</div>
+      </a>
+      <a class="related-card" href="guide-news-2026-07-17-nikkei-drop-kioxia-ai-capex.html">
+        <div class="related-card-title">📰 歴代5位の下げと「AI投資の功罪」</div>
+        <div class="related-card-desc">日経平均-2,694円の日に起きたこと。メモリ株のストップ安と設備投資急増の光と影を整理。</div>
+      </a>
+      <a class="related-card" href="guide-proverb-yama-takakereba-tani-fukashi.html">
+        <div class="related-card-title">🏔 格言「山高ければ谷深し」</div>
+        <div class="related-card-desc">大きく上がった相場ほど調整も深い。シリコンサイクルの歴史とも重なる相場格言を解説。</div>
+      </a>
+      <a class="related-card" href="guide-masters-002-trend.html">
+        <div class="related-card-title">🎓 巨匠検証｜順張りの教科書8手法</div>
+        <div class="related-card-desc">ブレイクアウトやトレンドフォローは日本株で再現するか。過去データで正直に検証した結果。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はシリコンサイクル（半導体の景気循環）の仕組みに関する情報提供であり、特定銘柄の売買推奨や投資助言ではありません。記事中の市場予測は業界団体等の公表値の紹介であり、将来の実績を保証するものではありません。記載内容は一般的な解説であり、特定の方法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
