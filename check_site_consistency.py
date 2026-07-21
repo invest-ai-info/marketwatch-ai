@@ -220,6 +220,18 @@ def main():
         if missing:
             warnings.append(f"{name}: ナビに不足リンク {missing}（10ボタン未満）")
 
+    # 4b. ナビCSSの標準形検査（2026-07-21 新設）：guide-*.html の .nav-bar に max-width が
+    #     無いと広い画面でボタンが 8+2 に崩れる（旧クラウドテンプレの自己増殖事故）。
+    #     修正は python apply_nav_css.py／公開経路は publish_article.py が自動正規化。
+    for src in sorted(glob.glob(os.path.join(SD, "guide-*.html"))):
+        name = os.path.basename(src)
+        if name in SYNC_FORBIDDEN:
+            continue
+        h = _read(name)
+        m = re.search(r"\.nav-bar\{display:flex[^}]*\}", h)
+        if m and "max-width" not in m.group(0):
+            warnings.append(f"{name}: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py")
+
     # 5. 経済カレンダーの日付検査（2026-07-02 新設）
     check_economic_events()
 
