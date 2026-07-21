@@ -43,6 +43,13 @@ try:
 except Exception:
     _MF_BLOCK = _MF_MARKER = None
 
+# 🆕 2026-07-21 ナビCSSを標準形へ正規化（max-width:1000px 欠落で広い画面の8+2崩れ防止。
+# クラウド公開レーンのテンプレ自己増殖対策＝公開経路のここで必ず標準化。単一ソース=apply_nav_css.py）
+try:
+    from apply_nav_css import normalize_nav_css as _nav_normalize
+except Exception:
+    _nav_normalize = None
+
 
 def _read(p):
     with open(os.path.join(SCRIPT_DIR, p), encoding="utf-8") as f:
@@ -289,6 +296,12 @@ def main():
         html = html.replace("</body>", '<script src="site-search.js" defer></script>\n</body>', 1)
         _write(a.file, html)
         print("  ✅ サイト内検索タグを注入（site-search.js）")
+    # 🆕 ナビCSSを標準形へ正規化（旧テンプレの max-width 欠落＝広い画面で8+2崩れの再発防止）
+    if not a.dry and _nav_normalize:
+        html, _nav_fixes = _nav_normalize(html)
+        if _nav_fixes:
+            _write(a.file, html)
+            print(f"  ✅ ナビCSSを標準形へ正規化（{'+'.join(_nav_fixes)}）")
     add_to_guides(a.file, a.category, a.emoji, a.card_title, a.desc, date, readmin, a.badge, a.dry)
     add_to_sync(a.file, a.dry)
     add_to_history(a.file, a.emoji, a.card_title, date, a.dry)
