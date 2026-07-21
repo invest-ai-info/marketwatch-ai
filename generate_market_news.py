@@ -2358,6 +2358,40 @@ def build_jp_rankings_section(now_jst):
     asof = d.get("asof", "")
     up = _rows(d.get("gainers", []), "up")
     down = _rows(d.get("losers", []), "down")
+
+    # 🆕 2026-07-21 人気急上昇（相対出来高）＝「注目の計測」の中立提示。推奨ではない。
+    #   罠フラグ（仕手的形状の判定）は公開しない方針（オーナー決定 2026-07-21）＝検証は非公開の Q22 で。
+    def _hot_rows(items):
+        out = ""
+        for r in items:
+            pct = (r.get("pct") or 0) * 100
+            sign = "+" if pct >= 0 else ""
+            ud = "up" if pct >= 0 else "down"
+            nm = str(r.get("name", ""))[:14]
+            sec = str(r.get("sector", ""))[:6]
+            out += (f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
+                    f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
+                    f'<td class="jpr-pct" style="text-align:right">×{r.get("relvol","")}</td>'
+                    f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
+                    f'<td class="jpr-to">{(r.get("turnover_d1") or 0):,.0f}</td>'
+                    f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>')
+        return out
+
+    hot_items = d.get("hot", [])
+    hot_block = ""
+    if hot_items:
+        hot_head = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">出来高<br>'
+                    '<span style="font-weight:400;font-size:.62rem">平常比(倍)</span></th>'
+                    '<th style="text-align:right">騰落率</th><th style="text-align:right">代金億</th>'
+                    '<th style="text-align:center">決算</th></tr>')
+        hot_block = f"""
+    <div class="jprank-col" style="margin-top:18px"><h3>🔥 人気急上昇 TOP20（お金の集まり方が平常時の何倍か）</h3>
+      <div class="table-wrap"><table class="jprank-table"><thead>{hot_head}</thead><tbody>{_hot_rows(hot_items)}</tbody></table></div>
+      <div class="jprank-foot" style="margin-top:8px">「出来高 平常比」＝当日の出来高が直前20営業日平均の何倍か（売買代金10億円未満の薄商い銘柄は掲載対象外）。
+      <b>⚠️ 人気＝注目が集まっているという事実の計測であり、良い投資対象という意味ではありません。</b>急騰・人気化した銘柄への飛びつきは、当サイトの過去データ検証でも繰り返し不利側でした（高値づかみ・その後の急反落）。出来高の異常な急増には、材料への正当な反応の場合も、短期資金の過熱や不自然な値動きの場合もあり、この表だけでは区別できません。
+      ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-indicator-combos.html">指標の組み合わせ検証</a> ／ <a href="guide-position-sizing.html">ポジションサイズの考え方</a></div>
+    </div>"""
+
     return f"""
   <section class="jprank">
     <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
@@ -2368,7 +2402,7 @@ def build_jp_rankings_section(now_jst):
         <div class="table-wrap"><table class="jprank-table"><thead>{head}</thead><tbody>{up}</tbody></table></div></div>
       <div class="jprank-col down"><h3>📉 値下がり率 TOP20</h3>
         <div class="table-wrap"><table class="jprank-table"><thead>{head}</thead><tbody>{down}</tbody></table></div></div>
-    </div>
+    </div>{hot_block}
     <div class="jprank-foot">💡 売買代金の「前/前々」2日分で、出来高を伴う本物の動きか・ストップ高で薄商いかが分かります。値上がり率＋大きな売買代金は市場の注目が集まりやすい局面（＝買い推奨ではない）。
     ▶ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>"""
