@@ -2,14 +2,14 @@
 
 ---
 
-## 2026-07-22 | ⏳ 🧪 AIシグナル研究日誌 #047 — 上昇×reversalL 昇格確認 【ゲート実行中】
+## 2026-07-22 | ✅ 🧪 AIシグナル研究日誌 #047 — 上昇×reversalL 昇格確認 【公開済み】
 
 - **基準日**: 2026-07-22 (JST)
 - **優先度**: ①（tracker✅昇格：trend=上昇×reversalL FWD N=102 E(R)=+0.21 CI[+0.02,+0.40]）
-- **生成ファイル**: `drafts/draft-signal-lab-047.html`
+- **公開ファイル**: `guide-signal-lab-047.html`
 - **claims.json**: `drafts/labnotes/lab-047-claims.json`（8件）
 - **主要数値**: 全期間52.7%(107/203) CI=[45.9%,59.5%] E(R)=+0.230 / RSI全期間63.8%(30/47) / BB全期間49.4%(77/156) / jpy_fx全58.0%(29/50) / 指数全57.0%だがFWD35.7%崩落 / FWD後半41.2% E(R)=-0.039
-- **ゲート**: 実行中
+- **ゲート**: verify 8/8緑・finalize EXIT=0・Opusコンプラ🟢白・独立Opus🟢白 → 自動公開完了
 
 ---
 
