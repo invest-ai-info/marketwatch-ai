@@ -40,6 +40,27 @@ from signal_lab_sweep import BREAKEVEN, load_log, r_of, _mean_std
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TRACKER = os.path.join(ROOT, "signal-lab-tracker.json")
 PROMOTE_MIN_N = 80          # 昇格に必要な前向きN（既存基準 N≥80）
+
+# 🆕 2026-07-21 ユニバース凍結（1d拡張と同時導入・オーナー承認）:
+#   generate_technical_alerts.py の SYMBOLS_1D_EXTRA（銅/プラチナ/天然ガス/米10年債/ETH/DAX/HSI/SOX）は
+#   記録専用レーン。既存仮説は「18銘柄ユニバース」を前提に事前登録されているため、拡張銘柄が
+#   direction/state 等の group 無しフィルタ経由で前向きNに混入すると母集団が途中で変わる＝前向き検証の汚染。
+#   → トラッカーの全集計はこの凍結ユニバースに限定する（生ログ signals-log は全銘柄を記録し続ける）。
+#   拡張銘柄を含む仮説を検証したくなったら、人間が GROUPS 正式拡張＋新Q事前登録をしてから。
+LEGACY_UNIVERSE = frozenset({
+    "GC=F", "SI=F", "CL=F", "NKD=F", "ES=F", "NQ=F", "YM=F", "^FTSE", "BTC-USD",
+    "USDJPY=X", "EURJPY=X", "GBPJPY=X", "AUDJPY=X",
+    "EURUSD=X", "GBPUSD=X", "AUDUSD=X", "EURAUD=X", "GBPAUD=X",
+})
+
+
+def freeze_universe(data):
+    """トラッカー集計用に凍結ユニバース（18銘柄）へ絞る。除外件数を表示（沈黙の欠落防止）。"""
+    kept = [d for d in data if d.get("ticker") in LEGACY_UNIVERSE]
+    dropped = len(data) - len(kept)
+    if dropped:
+        print(f"🧊 ユニバース凍結: 1d拡張銘柄の {dropped} 件を集計から除外（記録は signals-log に残存）")
+    return kept
 # 🕰️ 事前登録ルール（2026-07-02 宣言・以後変更しない）:
 #   時間分割ホールドアウト（sweep --split。発見に一切使っていない直近数年で同方向に有意）を
 #   合格した仮説は、擬似out-of-sampleを既に数百〜数千件通過しているため、ライブ前向きNの
@@ -440,7 +461,7 @@ def main():
     ap.add_argument("--html", action="store_true", help="table: HTMLで出力")
     args = ap.parse_args()
     today = args.date or datetime.date.today().isoformat()
-    data = load_log()
+    data = freeze_universe(load_log())
     if args.cmd == "update":
         cmd_update(args, data, today)
     elif args.cmd == "register":
