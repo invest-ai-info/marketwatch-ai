@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-21
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均+2,091円（+3.26%）海の日明け大幅反発──キオクシア+17.18%・アドバンテスト265円寄与、7/22 Alphabet・Tesla Q2決算への道筋を中立整理（カテゴリ: 日本株・半導体・AI・決算プレビュー）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7/17歴代5位下げ幅（当サイト既報）から3日ぶり大幅反発（+2,091円）。キオクシアが前週末ストップ安から一転+17.18%、アドバンテスト265円寄与、KOSPI+3%超とアジア半導体株同時急反発。7/18記事で「7/21火曜の日経注目」とプレビューしたが実際の数値・背景3因・今後7/22決算との関係は完全に新規。7/19のAlphabet/Teslaプレビューとは「決算前夜の市場ポジション」として差別化。
+- 出典（2系統以上確認済み）:
+  - 日本経済新聞「東証大引け 日経平均は反発 2091円高、キオクシアが大幅高」（2026-07-21）https://www.nikkei.com/article/DGXZQOFL2154S0R20C26A7000000/
+  - ゴールドオンライン「〈キオクシア〉前週末ストップ安から一転、8,950円高で東証プライム上昇率1位…日経平均は66,232.19円と2,091.07円高」（2026-07-21）https://gentosha-go.com/articles/-/80268
+  - 株探「日経平均寄与度ランキング（大引け）アドバンテストが約265円分押し上げ」（2026-07-21）https://s.kabutan.jp/news/n202607211055/
+  - 財経新聞「日経平均は大幅に3日ぶり反発、アドバンテストが1銘柄で約265円分押し上げ」（2026-07-21）https://www.zaikei.co.jp/article/20260721/862070.html
+  - 日本経済新聞「キオクシア株急騰 韓国株高波及、強制買い戻しも（21日の株式市場）」（2026-07-21）https://www.nikkei.com/article/DGXZQOUB210SS0R20C26A7000000/
+  - BigGo Finance「Japan and South Korea Stocks Rebound Strongly: Nikkei and Kospi Rise Over 3%」（2026-07-21）https://finance.biggo.com/news/d1b214b5-0f8a-4c45-8926-87a2839df6e5
+  - TradingKey「Japan and South Korea Stocks Rebound After Slump: Kioxia Leads Gains」（2026-07-21）https://www.tradingkey.com/analysis/stocks/more/262043532-kospi-nekki-kioxia-samsung-skhynix-ai-softbank-adr-skhy-etf-goog-tsla-tradingkey
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for July 21」（2026-07-20/21）https://www.bloomberg.com/news/articles/2026-07-20/stock-market-today-dow-s-p-live-updates
+  - TechTimes「Alphabet, Tesla, and Intel Earnings Are the First Real Test of AI Capex at Scale」（2026-07-20）https://www.techtimes.com/articles/321101/20260720/alphabet-tesla-intel-earnings-are-first-real-test-ai-capex-scale.htm
+  - Athens Times「Oil prices edge lower amid hopes for US-Iran ceasefire but Brent stays near $90」（2026-07-21）https://athens-times.com/oil-prices-edge-lower-amid-hopes-for-us-iran-ceasefire-but-brent-stays-near-90/
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: 「GoogAlphabet」→「Alphabet」誤字修正・「optimus」→「Optimus」表記統一（表現・誤字のみ、数値・構造不変）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典10系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告2件はクラウドスタブ・別ファイル既知問題・通常動作）✅
+- 公開ファイル: guide-news-2026-07-21-nikkei-rebound-2091-kioxia-advantest.html
+- commit: feat: auto-publish news 2026-07-21（main へ push 済み・8af7f3e）
+
+---
+
 ## 2026-07-20
 - 判定: ✅ 公開済み
 - 選定トピック: ブレント原油$90突破──米・イラン複数夜連続の軍事衝突とホルムズ海峡タンカー攻撃、中東への原油輸入依存度94%の日本への影響を中立整理（カテゴリ: マクロ・地政学・エネルギー・日本株）
