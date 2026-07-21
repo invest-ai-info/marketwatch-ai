@@ -176,6 +176,10 @@ def main():
             errors.append(f"{gf}: kinsho-v1 免責が無い")
         if 'id="mw-mobile-fit"' not in html:
             warnings.append(f"{gf}: スマホ横はみ出し防止CSS(mw-mobile-fit)が無い → `python fix_mobile_overflow.py`")
+        # ↑上に戻るボタン（2026-07-21）: 静的記事は apply_back_to_top.py で注入。
+        # クラウド生成記事はテンプレが GitHub 側管理＝ローカル検査すると誤検知になるため対象外。
+        if not gf.startswith(CLOUD_PREFIXES) and 'id="mw-back-to-top"' not in html:
+            warnings.append(f"{gf}: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`")
         if sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES):
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
