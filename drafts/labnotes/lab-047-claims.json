@@ -1,0 +1,53 @@
+{
+  "article_id": "047",
+  "claims": [
+    {
+      "label": "trend=上昇×reversalL 全期間勝率（主仮説）",
+      "filter": {"reversal_long": true, "trend": "上昇"},
+      "k": 107,
+      "n": 203
+    },
+    {
+      "label": "trend=上昇×reversalL×RSI売られすぎ逆張り（全期間）",
+      "filter": {"reversal_long": true, "trend": "上昇", "signal": "rsi_oversold_bounce"},
+      "k": 30,
+      "n": 47
+    },
+    {
+      "label": "trend=上昇×reversalL×BB下限タッチ（全期間）",
+      "filter": {"reversal_long": true, "trend": "上昇", "signal": "bb_lower_touch"},
+      "k": 77,
+      "n": 156
+    },
+    {
+      "label": "trend=上昇×reversalL×指数グループ（全期間）",
+      "filter": {"reversal_long": true, "trend": "上昇", "group": "index"},
+      "k": 45,
+      "n": 79
+    },
+    {
+      "label": "trend=上昇×reversalL×円クロスFX（全期間）",
+      "filter": {"reversal_long": true, "trend": "上昇", "group": "jpy_fx"},
+      "k": 29,
+      "n": 50
+    },
+    {
+      "label": "trend=上昇×reversalL×ドルクロスFX（全期間）",
+      "filter": {"reversal_long": true, "trend": "上昇", "group": "other_fx"},
+      "k": 21,
+      "n": 52
+    },
+    {
+      "label": "比較：trend=下降×reversalL（全期間）",
+      "filter": {"reversal_long": true, "trend": "下降"},
+      "k": 117,
+      "n": 271
+    },
+    {
+      "label": "比較：trend=中立・もみあい×reversalL（全期間）",
+      "filter": {"reversal_long": true, "trend": "中立・もみあい"},
+      "k": 89,
+      "n": 222
+    }
+  ]
+}
