@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>指標の組み合わせ大全｜死んだ指標は場所で蘇り、弱い逆張りは静かに死ぬ - MarketWatch AI</title>
+  <meta name="description" content="RSI・MACD・移動平均・ボリンジャーバンドの「組み合わせ」を約20年×18銘柄×1万8千件の実データで体系検証。単体では期待値マイナスのMACDゴールデンクロスが底値圏で蘇り、RSI極値の裏付けがない逆張りが静かに期待値を削る——検証で見えた期待値の高い組み合わせと危険な組み合わせを、正直な注意点つきで大全化しました。">
+  <meta name="keywords" content="テクニカル指標,組み合わせ,RSI,MACD,ゴールデンクロス,移動平均,ボリンジャーバンド,バックテスト,勝率,期待値,逆張り,順張り,検証,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-indicator-combos.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="指標の組み合わせ大全｜死んだ指標は場所で蘇り、弱い逆張りは静かに死ぬ">
+  <meta property="og:description" content="約20年×18銘柄×1万8千件の実データで「指標×指標」を体系検証。蘇る組み合わせと静かに死ぬ組み合わせ、そして正直な注意点。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-indicator-combos.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "指標の組み合わせ大全｜死んだ指標は場所で蘇り、弱い逆張りは静かに死ぬ",
+    "description": "RSI・MACD・移動平均・ボリンジャーバンドの組み合わせを約20年×18銘柄×1万8千件の実データで体系検証。期待値の高い組み合わせと危険な組み合わせの大全。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-07-21",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-indicator-combos.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-md{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-n{fill:#8b949e;opacity:.6}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-md{fill:#c9d1d9}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-n{fill:#8b949e}
+    body.dark .s-guide{stroke:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 指標の組み合わせ大全
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は当サイトの過去データ検証（バックテスト）とライブ実測の結果を共有する「情報提供」であり、特定の金融商品の売買推奨や投資助言ではありません。過去の検証成績は将来の成果を保証しません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧪 指標の組み合わせ大全——死んだ指標は場所で蘇り、弱い逆張りは静かに死ぬ</h1>
+    <div class="meta-line">公開日：2026 年 7 月 21 日 ／ 読了時間：約 13 分 ／ カテゴリ：AIシグナル研究日誌</div>
+
+    <p>「<a href="guide-rsi.html">RSI</a>が30を切ったら買い」「<a href="guide-macd.html">MACD</a>がゴールデンクロスしたら買い」——テクニカルの教科書ルールを単体で過去データに当てると、<strong>多くは期待値ゼロかマイナス</strong>。これが当ラボ（AIシグナル研究日誌）の検証で繰り返し出てきた正直な現実です。では、指標はもう役に立たないのでしょうか。</p>
+    <p>今回、当サイトのシグナル検証基盤を使って「<strong>指標×指標の組み合わせ</strong>」を体系的に総当たりしました。素材は<strong>約20年（2006年11月〜2026年7月）×監視18銘柄×クローズ済み18,099回</strong>の日足シグナルです。見えてきた結論を一言でいうと——<strong>指標は単体では死んでいても「場所」（他の指標が示す文脈）とセットにすると蘇るものがあり、逆に一見無難な組み合わせが静かに期待値を削っている</strong>。この記事は、その「蘇る組み合わせ」と「静かに死ぬ組み合わせ」の大全です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>単体では期待値マイナスのMACDゴールデンクロスが、「価格が移動平均2本の下＝底値圏」という場所に限ると訓練・検証の両期間でプラス</strong>に転じた（+0.140R→+0.167R）。指標の価値は「どこで使うか」で別物になる。</li>
+      <li><strong>RSI70以上の「買われすぎ」は、上昇トレンド中ならむしろ買い側に有利</strong>だった（+0.176R→+0.151R）。「買われすぎ＝売り」という単純化は約20年のデータでは支持されない。</li>
+      <li>最悪だったのは<strong>「RSIがどっちつかず（45〜55）のときの逆張り買い」</strong>。ボリンジャーバンド下限タッチ×RSI中立は訓練期間で-0.260R（統計的に有意）。同じBB下限タッチでも<strong>RSI30以下の「極値」の裏付けがあるライブ実測では勝率56.9%・+0.33R</strong>——弱い根拠の逆張りだけが静かに死ぬ。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どう調べたか——約20年×18銘柄×18,099回＋ライブ2,400回</a></li>
+        <li><a href="#section-2">発見① 死んだ指標は「場所」で蘇る——MACDゴールデン×底値圏</a></li>
+        <li><a href="#section-3">発見② 「買われすぎ」は売りではない——強さは続く</a></li>
+        <li><a href="#section-4">発見③ 弱い逆張りは静かに死ぬ——RSI極値の裏付けという分水嶺</a></li>
+        <li><a href="#section-5">発見④ シグナルの同時発火（コンボ）は「まだ証明中」</a></li>
+        <li><a href="#section-6">発見⑤ 「失敗の逆」も対称ではない——売り失敗だけが強さの示唆</a></li>
+        <li><a href="#section-7">正直な注意——20年で本物でも「いま」効くとは限らない</a></li>
+        <li><a href="#section-8">実務への落とし込み——この大全の使い方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どう調べたか——約20年×18銘柄×18,099回＋ライブ2,400回</h2>
+    <p>先に検証の枠組みを簡単に。当サイトは金・銀・原油・日経CME・S&amp;P500・ナスダック・ダウ・FTSE・ビットコイン・主要FX9ペアの<strong>18銘柄</strong>を実際のシグナルエンジンで監視しています。今回はそのエンジンと同じ発火条件を約20年の日足に遡って適用し、決着（利確または損切り）がついた<strong>18,099回</strong>のシグナルを分析しました。</p>
+    <ul>
+      <li><strong>期間の分割</strong>：2020年末までの<strong>訓練期間13,044回</strong>で仮説を探し、2021年以降の<strong>検証期間5,055回</strong>で「その後も通用したか」を確認する二段構え。訓練期間だけで良く見える組み合わせは偶然の可能性が高いため、<strong>両期間で通ったものだけを「合格」</strong>と数えます。</li>
+      <li><strong>多重検定の補正</strong>：たくさんの組み合わせを試すと偶然の当たりが必ず混ざるため、FDR補正（偽発見率10%）で統計的にふるいにかけました。</li>
+      <li><strong>成績の単位</strong>：勝率のほかに<strong>平均R</strong>（1回の損切り幅を1としたときの平均損益。+0.10Rなら「1回あたり損切り幅の10%分のプラス」）を使います。</li>
+      <li><strong>「場所」の定義</strong>：発火した瞬間の<strong>RSIの水準（5段階の帯）</strong>と、<strong>価格と移動平均MA25/MA75の位置関係（4象限）</strong>を機械的に記録し、「シグナル×場所」のクロスを総当たりしました。判定条件は検証前に固定し、後から動かしていません。</li>
+      <li><strong>ライブ実測との突き合わせ</strong>：バックテストとは別に、2026年に実際に配信・記録してきた<strong>ライブシグナル2,417回</strong>（うち決着分）でも同じ組み合わせを照合しました。</li>
+    </ul>
+    <div class="info-box"><strong>なぜここまで面倒な手順を踏むのか</strong>：過去データは「探せば何かしら光って見える」ものだからです。当ラボでは訓練→検証→ライブの三重チェックを通ったものだけを知見として台帳に載せ、通らなかったものは通らなかったと正直に書きます（この記事の後半にも「不合格」がたくさん出てきます）。</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 発見① 死んだ指標は「場所」で蘇る——MACDゴールデン×底値圏</h2>
+    <p>最初の主役はMACDのゴールデンクロス（買い転換のサインとされる定番シグナル）です。実はこのシグナル、当サイトの<strong>ライブ実測では単体だと勝率39.0%・平均-0.09R（282回）</strong>と、期待値マイナスの「要注意リスト」に入っていました。教科書の定番が実データでは働かない——よくある残念な結末に見えます。</p>
+    <p>ところが「場所」で切ると景色が変わりました。<strong>価格がMA25とMA75の両方より下＝下げ切った底値圏</strong>で出たゴールデンクロスに限ると：</p>
+
+    <table>
+      <tr><th>MACDゴールデンクロス</th><th>件数</th><th>勝率</th><th>平均R</th><th>備考</th></tr>
+      <tr><td>単体（ライブ実測）</td><td>282回</td><td>39.0%</td><td><strong>-0.09R</strong></td><td>期待値マイナスの要注意シグナル</td></tr>
+      <tr><td>×両MA下（訓練 2006-2020）</td><td>655回</td><td>47.6%</td><td><strong>+0.140R</strong></td><td>FDR補正を通過（q=0.063）</td></tr>
+      <tr><td>×両MA下（検証 2021-2026）</td><td>254回</td><td>49.2%</td><td><strong>+0.167R</strong></td><td>信頼区間の下限もプラス＝<strong>両期間合格</strong></td></tr>
+      <tr><td>×両MA下（ライブ実測・参考）</td><td>108回</td><td>41.7%</td><td>-0.03R</td><td>直近窓ではまだ横ばい。前向き検証で追跡中</td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 300" role="img" aria-label="MACDゴールデンクロスの平均Rを単体と両MA下条件で比較した棒グラフ">
+        <line x1="55" y1="160" x2="725" y2="160" class="s-axis"/>
+        <text x="14" y="70" class="s-label-sm">平均R</text>
+        <text x="14" y="164" class="s-label-sm">±0</text>
+        <rect x="95" y="160" width="90" height="25" class="s-bar-r"/>
+        <text x="98" y="200" class="s-note-r">-0.09R</text>
+        <text x="80" y="230" class="s-label-md">単体（ライブ282回）</text>
+        <text x="96" y="248" class="s-label-sm">＝死んでいる</text>
+        <rect x="300" y="121" width="90" height="39" class="s-bar-g"/>
+        <text x="308" y="112" class="s-note-g">+0.140R</text>
+        <text x="278" y="230" class="s-label-md">×両MA下（訓練655回）</text>
+        <rect x="475" y="113" width="90" height="47" class="s-bar-g"/>
+        <text x="483" y="104" class="s-note-g">+0.167R</text>
+        <text x="453" y="230" class="s-label-md">×両MA下（検証254回）</text>
+        <text x="440" y="252" class="s-note-g">「底値圏」という場所に限ると両期間プラス＝蘇る</text>
+        <line x1="240" y1="60" x2="240" y2="270" class="s-divv"/>
+      </svg>
+      <div class="chart-caption">図1：MACDゴールデンクロスの平均R比較（当サイト検証基盤・日足）。単体のライブ実測は期待値マイナスだが、「価格がMA25・MA75の両方より下」という底値圏の条件を重ねると、訓練・検証の両期間でプラスに転じた。同じサインでも「どこで出たか」で別物になる。</div>
+    </div>
+
+    <p>解釈はシンプルです。ゴールデンクロスは「勢いの転換」を示す道具なので、<strong>すでに上がり切った場所で出るクロスはただの騒音</strong>になりやすい。一方、<strong>売られ切った底値圏で出るクロスだけが「転換の初動」を捉えている</strong>可能性がある——約20年のデータはそう示唆しています。<a href="guide-moving-average.html">移動平均線の解説記事</a>で紹介した「位置関係で相場の局面を読む」考え方が、別の指標の生死を分けた形です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 発見② 「買われすぎ」は売りではない——強さは続く</h2>
+    <p>次はRSIの「買われすぎ」の常識について。RSI70以上は買われすぎ＝そろそろ下がる、と説明されることが多い水準です。ところが約20年のデータでは逆でした。</p>
+
+    <table>
+      <tr><th>組み合わせ</th><th>訓練（〜2020）</th><th>検証（2021〜）</th><th>判定</th></tr>
+      <tr><td>RSI70以上 × 上昇トレンド</td><td>+0.176R（753回・q=0.007）</td><td>+0.151R（405回・CI下限+0.02）</td><td><strong>✅ 両期間合格</strong></td></tr>
+      <tr><td>上昇配置（価格&gt;MA25&amp;75）× 買いシグナル</td><td>+0.081R（4,321回・q=0.007）</td><td>+0.092R（1,747回・CI下限+0.03）</td><td><strong>✅ 両期間合格</strong></td></tr>
+      <tr><td>RSI70以上（単体・条件なし）</td><td>+0.136R（1,365回）</td><td>+0.111R（549回・CI下限-0.003）</td><td>△ 検証期間はわずかに基準未達</td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <p>ポイントは2つあります。第一に、<strong>「買われすぎ」サインが出るほど強い相場は、少なくとも数日〜数週間の時間軸では続きやすかった</strong>こと。モメンタム（勢い）の持続と呼ばれる現象で、世界中の市場研究で繰り返し報告されてきた傾向と整合します。第二に、RSI70以上「単体」では検証期間の信頼区間下限がわずかにゼロを割り込んだのに対し、<strong>「上昇トレンド中」という文脈を重ねると両期間で基準を通過</strong>したこと。ここでも「指標×場所」の掛け算が効いています。</p>
+    <div class="warning-box"><strong>誤読しないでください</strong>：これは「買われすぎで飛び乗れ」という意味ではありません。統計が言っているのは「買われすぎ＝即・売り」という単純な逆張りが約20年のデータでは不利だった、ということまでです。高値圏の追撃はそれ自体の高値掴みリスクを伴います（当サイトの日本株検証でも「急騰直後の飛びつき」は繰り返し不利側でした）。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 発見③ 弱い逆張りは静かに死ぬ——RSI極値の裏付けという分水嶺</h2>
+    <p>今回の検証でもっとも実用価値が高いのは、たぶんこの「避けるべき組み合わせ」です。ボリンジャーバンド下限タッチやサポートライン反発は、逆張り買いの定番サインとして人気があります。しかし<strong>「そのときRSIがどっちつかず（45〜55の中立帯）だったら」</strong>という条件を重ねると：</p>
+
+    <table>
+      <tr><th>組み合わせ</th><th>訓練（〜2020）</th><th>検証（2021〜）</th><th>判定</th></tr>
+      <tr><td>BB下限タッチ × RSI中立(45-55)</td><td><strong>-0.260R</strong>（370回・勝率31.1%・q=0.001）</td><td>-0.134R（181回・勝率36.5%）</td><td><strong>🚫 危険。両期間ともマイナス方向</strong></td></tr>
+      <tr><td>サポート反発 × RSI中立(45-55)</td><td><strong>-0.194R</strong>（465回・勝率34.2%・q=0.007）</td><td>-0.096R（215回・勝率37.7%）</td><td><strong>🚫 危険。両期間ともマイナス方向</strong></td></tr>
+      <tr><td>【対照】BB下限タッチ × RSI30以下（ライブ実測）</td><td colspan="2">勝率<strong>56.9%</strong>・<strong>+0.33R</strong>（65回・勝率CI 44.8〜68.2%）</td><td><strong>✅ 極値の裏付けがあれば生きる</strong></td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 310" role="img" aria-label="ボリンジャーバンド下限タッチの成績をRSIの水準別に比較した棒グラフ">
+        <line x1="55" y1="150" x2="725" y2="150" class="s-axis"/>
+        <text x="14" y="66" class="s-label-sm">平均R</text>
+        <text x="14" y="154" class="s-label-sm">±0</text>
+        <rect x="90" y="150" width="85" height="73" class="s-bar-r"/>
+        <text x="94" y="240" class="s-note-r">-0.260R</text>
+        <text x="72" y="262" class="s-label-md">×RSI中立・訓練370回</text>
+        <rect x="255" y="150" width="85" height="38" class="s-bar-r"/>
+        <text x="259" y="205" class="s-note-r">-0.134R</text>
+        <text x="237" y="262" class="s-label-md">×RSI中立・検証181回</text>
+        <rect x="420" y="150" width="85" height="45" class="s-bar-r"/>
+        <text x="424" y="212" class="s-note-r">-0.160R</text>
+        <text x="402" y="262" class="s-label-md">×RSI中立・ライブ75回</text>
+        <rect x="595" y="58" width="85" height="92" class="s-bar-g"/>
+        <text x="599" y="48" class="s-note-g">+0.328R</text>
+        <text x="573" y="262" class="s-label-md">×RSI30以下・ライブ65回</text>
+        <text x="520" y="284" class="s-note-g">同じ「BB下限タッチ」でもRSI極値なら別物</text>
+        <line x1="562" y1="40" x2="562" y2="272" class="s-divv"/>
+        <text x="90" y="52" class="s-panel-label">RSIが中立のままの逆張り＝訓練・検証・ライブの三面で全部マイナス</text>
+      </svg>
+      <div class="chart-caption">図2：ボリンジャーバンド下限タッチ（逆張り買いの定番サイン）の平均Rを、発火時のRSI水準で分けたもの。RSIが45〜55の「どっちつかず」のままの逆張りは訓練・検証・ライブすべてでマイナス。RSI30以下という「売られすぎの極値」の裏付けがあるライブ実測だけがプラスだった。件数が少ない区分は誤差幅が大きい点に注意。</div>
+    </div>
+
+    <p>なぜこうなるのか。バンド下限やサポートに触れたのにRSIが中立のまま、というのは<strong>「値段は下がったが、勢いとしては売られ切っていない」</strong>状態です。つまり反発の根拠が価格の位置だけで、勢いの面の裏付けがない。こうした「弱い根拠の逆張り」は、派手に崩れるというより<strong>ジワジワと期待値を削る形で静かに死んでいく</strong>——訓練期間で統計的に有意なマイナス、検証期間・ライブでも同じ向き、という三面一致がそれを物語ります。</p>
+    <p>当ラボはこの2つの組み合わせを、実運用では「<strong>回避ゲート</strong>」（該当したら見送りを検討する条件）として前向き検証に登録しました。<a href="guide-bollinger-bands.html">ボリンジャーバンドの解説記事</a>にも書いたとおり、バンドタッチは「自動で買うサイン」ではなく「注目する場所」——その注目に値するかどうかを、RSIの極値が仕分けてくれるわけです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 発見④ シグナルの同時発火（コンボ）は「まだ証明中」</h2>
+    <p>「複数のサインが同時に出たら強いのでは？」——直感的にはそう思えます。当ラボは7月19日に「同時発火コンボ」を体系的に洗い、有望そうな3本を前向き検証に登録しました。現時点の成績は次のとおり、<strong>期待は持てるがまだ証明されていない</strong>段階です。</p>
+
+    <table>
+      <tr><th>同時発火コンボ</th><th>訓練（〜2020）</th><th>検証（2021〜）</th><th>現状</th></tr>
+      <tr><td>高値ブレイク × RSI買われすぎ</td><td>+0.19R（553回・q=0.01）</td><td>+0.107R（234回・CI下限-0.05）</td><td>📊 検証期間単独では基準未達＝前向き検証中</td></tr>
+      <tr><td>+2σ突破 × RSI買われすぎ</td><td>+0.205R（294回）</td><td>+0.131R（142回・CI下限-0.07）</td><td>📊 同上</td></tr>
+      <tr><td>ダブルボトム × 高値ブレイク</td><td colspan="2">検証31回・+0.097R（件数不足）</td><td>📊 同上</td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <p>3本とも方向はプラスで、特に「順張りブレイク×勢いの確認」という組み合わせの筋は発見②と整合的です。ただし<strong>検証期間単独で信頼区間の下限がプラスに届いたものはゼロ</strong>。さらに正直に書くと、高値ブレイク×RSI買われすぎのライブ実測は45回・勝率31.1%・-0.27Rと、直近の窓ではむしろ逆向きに出ています。当ラボの規律では、この状態で「使える」とは言いません。<strong>結論はこれからのライブデータが出します</strong>（進捗は日次の研究日誌と<a href="track-record.html">シグナル成績ページ</a>で自動更新されます）。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 発見⑤ 「失敗の逆」も対称ではない——売り失敗だけが強さの示唆</h2>
+    <p>おまけとして、オーナー発案のユニークな仮説も検証しました。「<strong>行くはずが行かないのは、逆に強い</strong>」——つまりシグナルが損切りで失敗したら、その瞬間に反対方向へ入れば勝てるのでは？という発想です（ストップ・アンド・リバース）。約20年の日足で転換イベント10,497件を機械的に評価しました。</p>
+
+    <table>
+      <tr><th>失敗からの転換</th><th>訓練（〜2020）</th><th>検証（2021〜）</th><th>判定</th></tr>
+      <tr><td>買い失敗 → ショート転換</td><td>-0.020R（5,180回）</td><td>-0.015R（1,960回）</td><td><strong>❌ 完全にヌル</strong>（期待値ほぼゼロ）</td></tr>
+      <tr><td>売り失敗 → ロング転換</td><td>+0.066R（1,512回・CI下限-0.003）</td><td>+0.149R（590回・CI[+0.03, +0.27]）</td><td><strong>△ 惜しい。ただし採用基準には未達</strong></td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 290" role="img" aria-label="失敗シグナル転換の平均Rの非対称性を示す棒グラフ">
+        <line x1="55" y1="150" x2="725" y2="150" class="s-axis"/>
+        <text x="14" y="66" class="s-label-sm">平均R</text>
+        <text x="14" y="154" class="s-label-sm">±0</text>
+        <rect x="100" y="150" width="80" height="12" class="s-bar-n"/>
+        <text x="104" y="180" class="s-label-sm">-0.020R</text>
+        <text x="76" y="235" class="s-label-md">買い失敗→ショート</text>
+        <text x="103" y="253" class="s-label-sm">（訓練5,180回）</text>
+        <rect x="245" y="150" width="80" height="9" class="s-bar-n"/>
+        <text x="249" y="177" class="s-label-sm">-0.015R</text>
+        <text x="228" y="235" class="s-label-md">同・検証1,960回</text>
+        <text x="118" y="80" class="s-panel-label">「上がるはずが上がらない→売り」はただのノイズ</text>
+        <rect x="435" y="110" width="80" height="40" class="s-bar-g"/>
+        <text x="439" y="101" class="s-note-g">+0.066R</text>
+        <text x="411" y="235" class="s-label-md">売り失敗→ロング</text>
+        <text x="438" y="253" class="s-label-sm">（訓練1,512回）</text>
+        <rect x="580" y="61" width="80" height="89" class="s-bar-g"/>
+        <text x="584" y="52" class="s-note-g">+0.149R</text>
+        <text x="563" y="235" class="s-label-md">同・検証590回</text>
+        <text x="500" y="278" class="s-note">「下がるはずが下がらない」だけが強さの示唆</text>
+        <line x1="390" y1="40" x2="390" y2="262" class="s-divv"/>
+      </svg>
+      <div class="chart-caption">図3：損切りで失敗したシグナルを翌日に反対方向へ転換した場合の平均R（縦のスケールは図1・図2と異なる）。買い失敗の転換は期待値ほぼゼロのノイズ。売り失敗（＝下がるはずが下がらなかった）の転換だけがプラス方向で、検証期間は信頼区間の下限もプラスだった。ただし検証期間（2021年以降）はおおむね上昇相場であり、その追い風を拾っただけの可能性が残るため採用は見送り。</div>
+    </div>
+
+    <p>面白いのは<strong>綺麗な非対称性</strong>です。「上がるはずが上がらない→売り」は完全なノイズ。「下がるはずが下がらない→買い」だけがプラス方向——「売り物をこなして下がらない相場は強い」という古い相場観と符合します。ただし、プラスが立った検証期間はほぼ上昇相場だったため、<strong>時代の追い風と区別がつかない</strong>というのが統計的に正直な評価です。当ラボはこの仮説を採用せず、「気づき」として台帳に記録するに留めました。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 正直な注意——20年で本物でも「いま」効くとは限らない</h2>
+    <p>ここまで「合格」と書いてきた3本の組み合わせにも、隠さず書いておくべきことがあります。<strong>2026年のライブ実測の直近窓では、3本とも未確認またはむしろ逆向き</strong>なのです。</p>
+
+    <table>
+      <tr><th>両期間合格の3本</th><th>約20年のバックテスト</th><th>ライブ実測（直近窓）</th></tr>
+      <tr><td>MACDゴールデン × 両MA下</td><td>+0.140R → +0.167R</td><td>-0.03R（108回）＝ほぼ横ばい</td></tr>
+      <tr><td>RSI70以上 × 上昇トレンド</td><td>+0.176R → +0.151R</td><td><strong>-0.34R（60回）＝逆向き</strong></td></tr>
+      <tr><td>上昇配置 × 買いシグナル</td><td>+0.081R → +0.092R</td><td><strong>-0.16R（479回）＝逆向き</strong></td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <p>これをどう読むか。可能性は2つあります。（a）直近の相場が高値圏の乱高下でモメンタム系に逆風だっただけで、いずれ20年の平均に回帰する。（b）市場の構造が変わり、20年で本物だった優位性が本当に消えた。<strong>どちらかは現時点で誰にも分かりません</strong>。当ラボは過去にも「20年のデータでは本物、直近では機能不全」という組み合わせ（金属市場の逆張り系）を観察しており、答え合わせは<strong>5本すべてを前向き検証（これから発火するライブデータでの追試）に登録して、データに出させる</strong>ことにしています。</p>
+    <div class="negative-box"><strong>逆に、「避ける」側の知見は三面一致でした</strong>：発見③の「RSI中立の逆張り回避」は訓練・検証・ライブのすべてで同じ向き。当サイトの検証全体を通じて繰り返し出てくるパターンですが、<strong>「儲かる組み合わせ」より「避けるべき組み合わせ」のほうが実戦で頑健</strong>です。攻めの聖杯より守りのチェックリスト——これが実データの正直な教えです。</div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 実務への落とし込み——この大全の使い方</h2>
+    <p>最後に、この検証結果を一般論としてどう活かせるかを整理します（繰り返しですが、特定の売買の推奨ではありません）。</p>
+    <ul>
+      <li><strong>単体のサインで飛びつかない</strong>：教科書の定番シグナルも、単体では期待値ゼロ〜マイナスのものが多い。サインを見たら「どこで出たか」（トレンド・移動平均との位置・RSIの水準）を必ずセットで確認する習慣が、統計的にはもっとも割に合う一手間でした。</li>
+      <li><strong>逆張りは「極値の裏付け」を要求する</strong>：バンド下限・サポート反発だけを根拠にした逆張りのうち、RSIがどっちつかずのものは約20年のデータで一貫して不利。逆張りをするなら「売られ切った証拠」が揃っている場面に絞る、が守りの目安です。</li>
+      <li><strong>「買われすぎ＝売り」を疑う</strong>：強い相場に安易に逆らう売りは、データ上は分の悪い賭けでした。ただし高値圏の追撃買いにも高値掴みのリスクがあり、どちらにしても<strong>ポジションサイズ（1回の損失を口座の1〜2%程度に）と損切りルールが前提</strong>です。</li>
+      <li><strong>検証されていない直感を実弾で試さない</strong>：「サインが重なれば強い」「失敗の逆は強い」——どちらも直感的には魅力的で、どちらもまだ証明されていません。当ラボが実際にやっているように、<strong>先に過去データとデモで検証し、基準を決めてから判断する</strong>順序をおすすめします。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 この検証の「その後」は毎日自動更新されます</div>
+      <div class="cta-box-desc">今回登録した組み合わせを含む全仮説の前向き検証は、シグナル成績ダッシュボードと日次の研究日誌で追跡できます。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <ul>
+      <li>指標の価値は<strong>「何のサインか」より「どこで出たか」</strong>。単体で期待値マイナスのMACDゴールデンクロスは、底値圏（両MA下）という場所に限ると訓練・検証の両期間でプラスに蘇った。</li>
+      <li><strong>「買われすぎ」は約20年のデータでは売りサインではなかった</strong>。上昇トレンド×RSI70以上はむしろ買い側に有利で、強さは（数日〜数週間の時間軸では）続きやすい。</li>
+      <li>最も避けるべきは<strong>RSI中立のままの逆張り買い</strong>。訓練・検証・ライブの三面で一貫してマイナスで、「弱い根拠の逆張りは静かに死ぬ」が今回の検証で最も頑健な知見。</li>
+      <li>同時発火コンボと「失敗の逆」仮説は<strong>方向は面白いが未証明</strong>。そして両期間合格の3本ですらライブ直近窓では未確認——<strong>過去に本物だった優位性が今も生きているかは、前向き検証だけが答えを出せる</strong>。当ラボは5本を登録済みで、結果は正直に報告します。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-rsi.html">
+        <div class="related-card-title">📈 RSIの見方・使い方</div>
+        <div class="related-card-desc">「買われすぎ・売られすぎ」の定番指標RSIの基本。本記事の「RSI帯」の前提知識はこちら。</div>
+      </a>
+      <a class="related-card" href="guide-macd.html">
+        <div class="related-card-title">📈 MACDの見方・使い方</div>
+        <div class="related-card-desc">ゴールデンクロス／デッドクロスの仕組みと注意点。単体で使うとどうなるかは本記事の通り。</div>
+      </a>
+      <a class="related-card" href="guide-bollinger-bands.html">
+        <div class="related-card-title">📈 ボリンジャーバンドの見方</div>
+        <div class="related-card-desc">±2σタッチは「自動で買うサイン」ではない。バンドの正しい読み方を解説。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-045.html">
+        <div class="related-card-title">🧪 研究日誌 #045</div>
+        <div class="related-card-desc">指数×ショートgateの前向き逆転を解析。本記事と同じ検証基盤による日次研究の最新回。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトの検証基盤による過去データ検証（バックテスト）およびライブ実測の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。掲載した統計値は当サイトが監視する先物・FX・暗号資産18銘柄の特定条件下での過去の集計値であり、あらゆる市場・時期・銘柄で再現することを保証するものではありません。過去の検証成績は将来の成果を保証しません。投資判断はご自身の責任で行ってください。</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
