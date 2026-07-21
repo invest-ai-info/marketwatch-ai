@@ -63,4 +63,5 @@ SYNC_FILES = [
     "guide-signal-lab-046.html",
     "guide-proverb-tenjo-mikka-soko-hyakunichi.html",
     "guide-news-2026-07-21-nikkei-rebound-2091-kioxia-advantest.html",
+    "guide-signal-lab-047.html",
 ]
