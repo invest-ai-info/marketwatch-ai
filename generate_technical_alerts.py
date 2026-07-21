@@ -69,6 +69,26 @@ SYMBOLS = [
     ("GBPAUD=X", "ポンド/豪ドル（ポンドオージー）", "",  5, 12),
 ]
 
+# 🆕 2026-07-21 1d 専用の拡張ユニバース（オーナー承認）＝前向き検証のN蓄積を加速する記録専用レーン。
+#   ・--timeframe 1d のときだけ SYMBOLS に連結（4H メールレーン / 1H は従来の18銘柄のまま不変）
+#   ・technical-alerts-1d.yml は --no-email ＝メール増減ゼロ。signals-log への記録のみ
+#   ・既存仮説の前向き検証は signal_lab_tracker.py の LEGACY_UNIVERSE（18銘柄凍結）で集計
+#     ＝拡張銘柄は既存仮説の母集団に混入しない（前向きテストの汚染防止）。将来、拡張銘柄を含む
+#     新仮説を立てるときは新しい group 定義を人間が signal_lab_verify.GROUPS に正式拡張してから
+#   ・ETH-USD は 24h 市場だが週末閉場ガード（BTC-USD のみ免除）をあえて変えない＝日曜 06:20 の
+#     1回だけスキャン外（集計側 is_weekend_closed_fire 3複製に触れないための意図的な保守選択）
+#   ・^SOX は出来高データ無し＝出来高系検出器は自然に不発（Volume欠落はテスト済みの正常系）
+SYMBOLS_1D_EXTRA = [
+    ("HG=F",    "銅先物",                 "$", 3, 12),   # 産業金属（貴金属groupには入れない）
+    ("PL=F",    "プラチナ先物",           "$", 1, 12),
+    ("NG=F",    "天然ガス先物",           "$", 3, 12),
+    ("ZN=F",    "米10年国債先物",         "$", 3, 12),   # 金利系＝新アセットクラス
+    ("ETH-USD", "イーサリアム",           "$", 0, 12),
+    ("^GDAXI",  "独DAX指数",              "",  0, 12),
+    ("^HSI",    "香港ハンセン指数",       "",  0, 12),
+    ("^SOX",    "米半導体SOX指数",        "",  0, 12),
+]
+
 ALERT_HISTORY_FILE = "technical-alerts-history.json"
 ALERT_COOLDOWN_HOURS = 12  # 同じ銘柄・同じシグナルは 12 時間連投しない
 SIGNALS_LOG_FILE = "signals-log.json"  # 全シグナル発火記録（track-record 用）
@@ -2735,8 +2755,11 @@ def main():
     # クールダウン: 1H は短く(4h)、日足は長く(72h)。4H は銘柄別（ループ内で適用）
     cooldown_hours = {"4h": ALERT_COOLDOWN_HOURS, "1h": 4, "1d": 72}[timeframe]
 
-    print(f"📡 {len(SYMBOLS)} 銘柄の {timeframe.upper()} 足チャート分析を開始 "
-          f"(email={'OFF' if no_email else 'ON'}, cooldown={cooldown_hours}h)")
+    # 🆕 2026-07-21: 1d は拡張ユニバースを連結（記録のみレーン）。4h/1h は従来18銘柄で不変
+    scan_symbols = SYMBOLS + (SYMBOLS_1D_EXTRA if timeframe == "1d" else [])
+    print(f"📡 {len(scan_symbols)} 銘柄の {timeframe.upper()} 足チャート分析を開始 "
+          f"(email={'OFF' if no_email else 'ON'}, cooldown={cooldown_hours}h"
+          + (f", 1d拡張+{len(SYMBOLS_1D_EXTRA)}銘柄" if timeframe == "1d" else "") + ")")
 
     # 🆕 2026-07-05: 昇格エッジ限定メール（EMAIL_PROMOTED_ONLY=0 で無効化）
     promoted_hyps = load_promoted_hypotheses() if EMAIL_PROMOTED_ONLY else None
@@ -2785,7 +2808,7 @@ def main():
     now_iso = now_jst.isoformat(timespec="seconds")
     _index_fired_dirs = []  # 🆕 2026-06-06: この run で発火した指数シグナルの方向（相関集中チェック用）
 
-    for ticker, name, currency, decimals, asset_cooldown_4h in SYMBOLS:
+    for ticker, name, currency, decimals, asset_cooldown_4h in scan_symbols:
         # 銘柄別クールダウン: 4H ワークフローは銘柄ごと、1H ワークフローは一律 4h
         effective_cooldown = asset_cooldown_4h if timeframe == "4h" else cooldown_hours
         print(f"\n  📊 {name} ({ticker})")
