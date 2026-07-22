@@ -66,6 +66,21 @@ def _jp_date(d):
     return f"{int(y)}年{int(mo)}月{int(da)}日"
 
 
+# 🔒 2026-07-22 日付ゲート（7/15 日付事故の恒久対策・signal_lab_verify.date_check と同型）。
+#   記事の公開日 ≠ JST の今日なら公開を停止する。過去記事の再公開など意図的な場合のみ
+#   --allow-backdate で免除。UTC環境や日付の使い回しで前日付のまま公開する事故を決定論で遮断。
+def check_date_gate(date, allow_backdate=False):
+    """date(YYYY-MM-DD) が JST の今日と一致しなければエラーメッセージを返す。一致/免除なら None。"""
+    if allow_backdate:
+        return None
+    import datetime as _dt
+    today = _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=9))).strftime("%Y-%m-%d")
+    if date != today:
+        return (f"公開日 {date} ≠ JST今日 {today}。記事HTMLの datePublished/公開表記を今日に直すか、"
+                f"意図的な過去日付公開なら --allow-backdate を付けてください")
+    return None
+
+
 # 🔒 2026-06-20 local-drift（巻き戻し）事故の根絶＝公開前に main最新を自動取り込み（ルールをコードで強制）。
 #   guides.html / generate_market_news.py はクラウドのルーティンも毎朝編集する＝私のローカルが古いまま
 #   公開すると当日分のカード・更新履歴を巻き戻す。→ 編集の前に必ず main から取り込む。
@@ -263,6 +278,8 @@ def main():
     ap.add_argument("--date", default=None, help="YYYY-MM-DD（省略時は記事HTMLのdatePublishedから）")
     ap.add_argument("--readmin", default=None, help="読了分（省略時は記事HTMLから/既定10）")
     ap.add_argument("--badge", default="badge-news", help="バッジCSSクラス（既定: badge-news）")
+    ap.add_argument("--allow-backdate", action="store_true", dest="allow_backdate",
+                    help="日付ゲート免除（公開日≠JST今日でも公開する。過去記事の再公開など意図的な場合のみ）")
     ap.add_argument("--dry-run", action="store_true", dest="dry", help="書き込まず変更内容のみ表示")
     ap.add_argument("--no-reconcile", action="store_true", dest="no_reconcile",
                     help="公開前の main 自動取り込みを無効化（非常時のみ・巻き戻し事故の危険）")
@@ -278,6 +295,10 @@ def main():
     readmin = a.readmin or auto_readmin or "10"
     if not date or not re.match(r'^\d{4}-\d{2}-\d{2}$', date):
         print(f"❌ 日付が不正/未取得: {date}（--date YYYY-MM-DD を指定してください）")
+        sys.exit(1)
+    _gate_err = check_date_gate(date, allow_backdate=a.allow_backdate)
+    if _gate_err:
+        print(f"🚫 日付ゲート: {_gate_err}")
         sys.exit(1)
 
     print(f"📝 記事公開の準備: {a.file}")
