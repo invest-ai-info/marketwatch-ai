@@ -1265,3 +1265,22 @@ market-health の「④ 金融環境」に **米イールドカーブ（10年−
 - **⓪-失敗転換 7/20深夜 「行くはずが行かないのは逆に強い」検証✅=半分だけ支持（オーナー仮説・事前登録→1回実行）**: `research/_failure_reversal_study.py`→`_failure_reversal_summary.json`。操作化=SL到達を「行かなかった」の確定とみなし翌バーOpenで反対方向へ転換（stop-and-reverse・BT評価器と同規約・20年1d・転換1万497件）。**H1 買い失敗→ショート=❌完全ヌル**（train-0.020/holdout-0.015＝上がるはずが上がらない→売り、に期待値なし）。**H2 売り失敗→ロング=❌だが方向一貫の惜敗**（train+0.066 CI[-0.0025,+0.136]＝下限が0.0025だけ届かず／holdout+0.149 CI[+0.033,+0.266]=有意プラス）。⚠️解釈=holdout(2021+)はほぼ上昇相場＝時代ドリフト交絡の疑い・trainの弱さがそれを示唆。副次=逆張り系失敗の転換はholdout-0.093（ナイフの続落側）・即失敗(≤3日)がやや良い。**結晶化=「失敗の逆張り」は対称ではない——買いの失敗はノイズ・売りの失敗（下がるはずが下がらない）だけが強さの示唆（ただし基準未達＝採用なし・記事の「気づき」素材としては優良）**。トラッカー登録なし（失敗イベントはライブ照合不能な事後条件のため）。
 - **⓪-記事 7/20 シリコンサイクル入門 公開✅（オーナー依頼）**: `guide-silicon-cycle.html`（投資の基礎知識・🌊・SVG図解3枚・読了12分）。独立Opusコンプラ監査=**🟢白・修正ゼロ**（三層免責・個別銘柄売買推奨なし・WSTS予測は「見込み」ヘッジ・Sec7の「当サイト検証」表現は弁護士アジェンダ①の監視対象として記録）。内容=約3〜4年の波の構造（工場2〜3年の時間差）×4局面×メモリ振れ幅×**2026年の「史上最大の好況予測(+89.9%)とSOXベア入りの同居」**を中立整理。7/16-18ニュース3本+山高ければ谷深し+巨匠#2へ内部リンク。mw publish→sync→workflow success→**ライブ200/guidesカード/index更新履歴/sitemap全確認済み**（ライブ=ローカル45,440Bバイト一致）。
 - **⓪-B 7/20昼 ローカルタスク電池ブロック根治✅**: スリープ復帰後、JQ_Lake/JQ_Screenだけ`DisallowStartIfOnBatteries=True`（7/16対策の漏れ＝バッテリー駆動時はwake発火もブロック）と判明→**両タスク電池OK化**（他設定不変・他3タスクと整合）。7/20は海の日=休場で実害なし・真の欠測=金曜7/17の寄り付きロガー分は`jp_open_logger.py`自動バックフィルで回復（45行・DS◎○タグ付き）＋心拍7/17へ前進。screen/card/openlogの番人アラート3件は日次スクリプト手動実行で全解消・番人オールグリーン確認済み。
+
+## 2026-07-22 DOCTRINE §3スタブ化退避（棄却11行の全文）
+
+| 仮説 | 結果の要点 | 出典 |
+|---|---|---|
+| バフェット5基準の「質」 | 有意に逆: train -5.73(p 0.0065)/holdout -6.05(p 0.005)。FCF利回りのみ両期間+。**Q12=同日対照でtrain減衰(p0.094)/holdout堅持・質は暴落防御にならず(H3 train+6.4pp)** | [src: _jp_buffett_summary.json, _jp_q12_summary.json] |
+| BNF乖離逆張り／一目均衡表 | BNF2=holdout p5 0.0327(n=1,327)のみ・blowup23-28%＝本体は板裁量／三役好転=train +0.0147≒0・雲上抜けholdout消滅・IC3=holdoutのみ | [src: _jp_bnf_summary.json, _jp_ichimoku_summary.json] |
+| 素ドンチャンTT1/TT2・QA3 | 両期間一貫なし棄却（TT1/TT2=train有意マイナス／QA3=ns+blowup増） | [src: _jp_turtle_summary.json, _jp_anomaly_summary.json] |
+| ダーバス箱／ワインスタインS2（Q1/Q2） | 両者holdout反転で棄却（**-1.22%**／**-0.05%**）。ダーバス=TT3と**96.5%重複**・防御のみ／ワインスタイン=重複**5.7%**でも崩壊・防御弱 | [src: _jp_darvas_summary.json, _jp_weinstein_summary.json] |
+| 酒田五法4パターン（Q3） | 全棄却。①三空叩き込み=train +1.44→holdout +8.88だが同日対照 -3.27(p0.0003)＝暴落日産物。②赤三兵=train **-0.70**(p 0.0003・同日 -0.42)＝連騰後劣後。③明星=ヌル④上放れ=ns | [src: _jp_sakata_summary.json, _jp_method_audit_summary.json] |
+| グランビル買い4パターン（Q4） | 4本棄却。G2/G3=train同日+→holdout同日 **-2.64**/**-2.44**(q0.001)反転。G4乖離逆張り=blowup22-28%ナイフ。G1=ns | [src: _jp_granville_summary.json] |
+| デュアルモメンタム(Q5) | ns＋blowup **28.08%** vs14%・上位20%内r12>0常時成立=DM_A≡DM_B | [src: _jp_dualmom_summary.json] |
+| 複合C1/C2 | C1=期間反転・blowup32-36%。C2=train **+1.9737**→holdout **-2.43**符号反転（防御のみ→§2） | [src: _jp_combo_summary.json] |
+| オニール/ミネルヴィニ4仮説 | train非有意・holdout(2025+)のみ有意（ON2 p60 0.0007）＝レジーム依存 | [src: _jp_masters3_summary.json] |
+| 資産クラスDM(Q15・GEM円換算) | ❌=train **0.391**<IEF単独0.619／holdout **1.330**<金1.450＝単一資産超えず・対株DD半減のみ | [src: _dm_asset_class_summary.json] |
+| MAXロッタリー／週次リバーサル(Q18) | P1高MAX=同form **-0.5589**ns→holdout **+0.8066**反転（⚡H5重複8.6-11.1%=別物）／P2週次ルーザー=**+0.0759**／**-0.0291**≒ゼロ | [src: _jp_q18_summary.json] |
+| 門番系2種（Layer0/1ファンダ・一律上位足トレンド） | 両者「一致側が劣後」で反転（ファンダ11.8 vs 56.6／トレンド37.1 vs 44.3）＝**フィルタ反転は過適合＝禁止** | [src: SIGNAL_REDESIGN.md, research/trend_gate_report.md] |
+| signal-lab前向き棄却（もみあい/blocked×short・続伸合成・ロング一律回避gate） | 全てIS→前向きで反証（blocked p0.003・続伸→§1b risk_off条件付き・ロング回避=唯一rejected） | (remote: ledger #028-030) |
+
