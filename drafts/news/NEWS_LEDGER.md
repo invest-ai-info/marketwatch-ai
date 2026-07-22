@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-22
+- 判定: ✅ 公開済み
+- 選定トピック: TSMC 2027年ウェーハ価格を最大10%引き上げへ──NVIDIA・Apple・AMD・Qualcomm等主要顧客への影響とAI半導体コスト構造の転換を3シナリオで中立整理（カテゴリ: マクロ・半導体・AI・テクノロジー）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 日経新聞（Nikkei Asia）が2026-07-21に独自報道、Bloombergが確認した。基本値上げ5〜10%（先端ノード3/5/7nm + 成熟ノード12/16/28nm）・HPC向け追加割増10〜15%・ウェーハ収入74%超をカバー・2027年1月発効。7/16・7/17記事がTSMC Capex急増を扱ったが「製造価格引き上げ」という観点は未掲載。日経平均が7/22前引け+1,278円から終値-116円に急失速した背景の一つとして、TSMC値上げ報道後の利食い売りへの言及も含め差別化明確。重複なし。
+- 出典（2系統以上確認済み）:
+  - 日本経済新聞「TSMC、生産受託の価格を最大10%引き上げへ 27年に」（2026-07-21）https://www.nikkei.com/article/DGXZQOGM213QA0R20C26A7000000/
+  - Bloomberg「TSMC in Talks to Raise Prices by Up to 10% in 2027, Nikkei Says」（2026-07-21）https://www.bloomberg.com/news/articles/2026-07-21/tsmc-in-talks-to-raise-prices-by-up-to-10-in-2027-nikkei-says
+  - TradingKey「TSMC Rises Nearly 4% Premarket, Plans to Raise Wafer Prices 5%-10% in 2027」（2026-07-21）https://www.tradingkey.com/analysis/stocks/us-stocks/262044413-tsm-tsml-nvda-samsung-skhynix-dram-sndk-tradingkey
+  - WCCFtech「TSMC Plans To Raise Semiconductor Prices By 10% In 2027」（2026-07-21）https://wccftech.com/tsmc-to-raise-semiconductor-prices-by-10-percent-in-2027/
+  - Tom's Hardware「TSMC eyes price hikes of up to 25% on chip production services in 2027」（2026-07-21）https://www.tomshardware.com/tech-industry/semiconductors/tsmc-eyes-price-hikes-of-up-to-25-percent-on-chip-production-services-in-2027-report-claims
+  - BigGo Finance「TSMC Reportedly Set for Up to 10% Chip Price Hike Across the Board in 2027」（2026-07-21）https://finance.biggo.com/news/d4cb264f-73b7-4803-bf7c-c6dcb715fba0
+  - Investing.com「TSMC to raise chipmaking prices by 10% next year」（2026-07-21）https://www.investing.com/news/company-news/tsmc-to-raise-chipmaking-prices-by-10-next-year-nikkei-reports-4802332
+  - AndroidHeadlines「A 10% price increase on TSMC chips could trickle down to the consumer」（2026-07-21）https://www.androidheadlines.com/2026/07/a-10-price-increase-on-tsmc-chips-could-trickle-down-to-the-consumer.html
+  - 日本経済新聞「日経平均株価終値116円安 急失速、半導体株買いの勢い続かず」（2026-07-22）https://www.nikkei.com/article/DGXZQOUB2192HTR20C26A7000000/
+  - 株式新聞Web「日経平均は１１６円安と反落、戻り待ちの売りに押される＝２２日後場 速報」（2026-07-22）https://kabushiki.jp/news/758738
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・全7項目クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典10系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告31件は既存他ファイルのCSS問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-07-22-tsmc-price-hike-2027-ai-cost.html
+- commit: feat: auto-publish news 2026-07-22（main へ push 済み・a7630fa）
+
+---
+
 ## 2026-07-21
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均+2,091円（+3.26%）海の日明け大幅反発──キオクシア+17.18%・アドバンテスト265円寄与、7/22 Alphabet・Tesla Q2決算への道筋を中立整理（カテゴリ: 日本株・半導体・AI・決算プレビュー）
