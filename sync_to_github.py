@@ -66,4 +66,5 @@ SYNC_FILES = [
     "guide-signal-lab-047.html",
     "guide-proverb-oshime-machi-ni-oshime-nashi.html",
     "guide-news-2026-07-22-tsmc-price-hike-2027-ai-cost.html",
+    "guide-signal-lab-048.html",
 ]
