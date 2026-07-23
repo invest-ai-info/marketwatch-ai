@@ -48,6 +48,8 @@
 
 ### 🔜 次セッションで最初に確認（在flight・2026-07-23夜更新）
 
+- **⓪-Q25Q26 7/23深夜✅（オーナー発案の出来高研究2本）**: **Q25=出来高バンド前向き**（非FX9ライブ・relvol3バンド=Q21同一・遡及計算型でロガー不要・初判定=前向きN≥600&両端各n≥150・登録のみ=queueに📊で待機）。**Q26=セリングクライマックス実行済み**（`_jp_q26_selling_climax.py`→`_jp_q26_summary.json`・JPレイク5年）＝**A「大商いの投げ」(5日−20%∧relvol≥5)は✅両期間有意だが方向は事前予想と逆＝劣後**（train−2.10% q0.046／holdout−4.10% q0.0005・勝ち越し64.6%なのに平均負け=左裾破滅的・クラッシュ率5〜7倍。**日本個別株のセリクラ翌日は買い場でない**=指数商品のRSI≤30反発と対照的）／**B「閑散の下げ」(∧relvol≤0.6)=❌棄却**（train ns p0.639=「閑散に売りなし(底)」の定量支持なし・クラッシュ13倍で防御面は同族）。DOCTRINE §2/§3結晶化・アンカー6件(計64)・Q26退役済み。**記事ネタ一級**（格言#3ナイフ/#28閑散に売りなしの定量素材・Q22急騰と合わせ「極端な出来高は両方向危険」の三部作）。⚠️**DOCTRINE 25.5KB=warning 1**＝次declutterで§3スタブ化第3弾（アンカー剪定込み）。
+
 - **⓪-成果戦略 7/23夜✅（オーナー発案「signal-labの成果が見えないと読者が離れる」→方針=攻めのエッジ・両輪）**:
   **A見せ方=🏆エッジ番付タブ 公開済み**（track-record.html 新タブ・`generate_track_record_page.py` の `build_banzuke_section`＝signal-lab-tracker.json を幕内(昇格2)/十両(holdout通過8)/幕下(36)/引退(5)の4段で自動描画・エッジ⚔️/ゲート🛡の型区別・「検証であり推奨でない」免責・テスト`_test_banzuke_tab.py`9件PASS・**ライブ確認済み**）。
   **B発掘=Q23/Q24事前登録＋実装**（SHA凍結済み）: Q23=拡張ユニバース正式組入れ（verify GROUPSにx-group5キー=metal_x/energy_x/rates/crypto_x/index_x・既存group不変＝汚染なし・tracker `pick_data`で拡張group仮説のみ凍結迂回・テスト9件PASS。sweepはGROUPS importで自動追随）／Q24=注目度エッジ（オラクルに`news`キー+`news_band_of`(0/1-2/3+固定)・sweepグリッドにnews×dir 9セル追加・テスト10件PASS。Q21 H-V2の攻め転用・前向きはゼロから）。CLAUDE.mdのfilterキー一覧も現行化（state系7/20+news/x-group7/23）。
