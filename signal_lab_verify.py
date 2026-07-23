@@ -51,11 +51,30 @@ GROUPS = {
     "other_fx": {"EURUSD=X", "GBPUSD=X", "AUDUSD=X", "EURAUD=X", "GBPAUD=X"},
     "btc":      {"BTC-USD"},
     "oil":      {"CL=F"},
+    # 🆕 2026-07-23 拡張ユニバース group（Q23・人間による正式拡張）。既存 group の定義は不変＝
+    #   旧仮説の再計算を汚染しない。SYMBOLS_1D_EXTRA の8銘柄（1dレーン限定・2026-07-21〜記録）を新キーで層別。
+    "metal_x":  {"HG=F", "PL=F"},
+    "energy_x": {"NG=F"},
+    "rates":    {"ZN=F"},
+    "crypto_x": {"ETH-USD"},
+    "index_x":  {"^GDAXI", "^HSI", "^SOX"},
 }
 REV = {"rsi_oversold_bounce", "bb_lower_touch"}
 ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all",
                        "reversal_long", "blocked", "tier", "env", "regime",
-                       "rsi_band", "ma_pos", "macd_side"}  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
+                       "rsi_band", "ma_pos", "macd_side",  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
+                       "news"}  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
+
+
+# 🆕 2026-07-23 注目度バンド（Q24・バンド境界は事前宣言＝以後変更しない。Q21 H-V2 と同じ 0 / 1-2 / 3+）
+def news_band_of(d):
+    """発火時点のニュース件数バンド: "0" / "1-2" / "3+"。記録が無い・数値でない場合は None＝マッチしない。"""
+    nc = d.get("news_count")
+    if isinstance(nc, bool) or not isinstance(nc, (int, float)):
+        return None
+    if nc <= 0:
+        return "0"
+    return "1-2" if nc <= 2 else "3+"
 
 
 # 🆕 2026-07-20 指標ステート導出（オーナー依頼「指標の組み合わせ研究」・数式ロック）
@@ -180,6 +199,9 @@ def match(d, f):
     if "ma_pos" in f and ma_pos_of(d) != f["ma_pos"]:
         return False
     if "macd_side" in f and macd_side_of(d) != f["macd_side"]:
+        return False
+    if "news" in f and news_band_of(d) != f["news"]:
+        # 🆕 2026-07-23 注目度次元（記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
         return False
     return True
 
