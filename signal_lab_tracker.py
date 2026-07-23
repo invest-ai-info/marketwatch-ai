@@ -61,6 +61,17 @@ def freeze_universe(data):
     if dropped:
         print(f"🧊 ユニバース凍結: 1d拡張銘柄の {dropped} 件を集計から除外（記録は signals-log に残存）")
     return kept
+
+
+# 🆕 2026-07-23 Q23 拡張ユニバース正式組入れ（人間による正式拡張・事前登録済み）:
+#   signal_lab_verify.GROUPS に新設した拡張 group（既存 group と非重複）を filter に持つ仮説だけ、
+#   凍結を迂回して全量データで集計する。既存仮説（group 無し含む）は従来どおり18銘柄凍結＝汚染なし。
+EXTENDED_GROUPS = frozenset({"metal_x", "energy_x", "rates", "crypto_x", "index_x"})
+
+
+def pick_data(h, frozen, full):
+    """仮説ごとの集計データ選択: 拡張group仮説=全量 / それ以外=凍結ユニバース。"""
+    return full if (h.get("filter") or {}).get("group") in EXTENDED_GROUPS else frozen
 # 🕰️ 事前登録ルール（2026-07-02 宣言・以後変更しない）:
 #   時間分割ホールドアウト（sweep --split。発見に一切使っていない直近数年で同方向に有意）を
 #   合格した仮説は、擬似out-of-sampleを既に数百〜数千件通過しているため、ライブ前向きNの
@@ -286,15 +297,16 @@ def save_tracker(t):
         json.dump(t, f, ensure_ascii=False, indent=2)
 
 
-def cmd_update(args, data, today):
+def cmd_update(args, data, today, data_full=None):
     t = load_tracker()
     boot = apply_holdout_bootstrap(t)
     if boot:
         print(f"🕰️ ホールドアウト検証(2026-07-02)を適用: 注記/新規登録 {boot}件")
     newly = []
     for h in t["hypotheses"]:
-        fwd = stats(data, h["filter"], since=h["registered_at"])
-        allt = stats(data, h["filter"])
+        dat = pick_data(h, data, data_full if data_full is not None else data)  # Q23: 拡張group仮説のみ全量
+        fwd = stats(dat, h["filter"], since=h["registered_at"])
+        allt = stats(dat, h["filter"])
         prev = h.get("status", "tracking")
         # 🆕 2026-07-03 チェックポイント検定: 毎日CIを覗く逐次検定は「たまたま越えた日」に
         #    昇格が確定してしまい実質αが膨張する。判定は前向きNが min_n の倍数
@@ -461,9 +473,10 @@ def main():
     ap.add_argument("--html", action="store_true", help="table: HTMLで出力")
     args = ap.parse_args()
     today = args.date or datetime.date.today().isoformat()
-    data = freeze_universe(load_log())
+    data_full = load_log()
+    data = freeze_universe(data_full)
     if args.cmd == "update":
-        cmd_update(args, data, today)
+        cmd_update(args, data, today, data_full)
     elif args.cmd == "register":
         if not args.src:
             print("register には --from sweep.json が必要"); sys.exit(2)
