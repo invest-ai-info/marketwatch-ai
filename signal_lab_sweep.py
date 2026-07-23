@@ -152,6 +152,14 @@ def build_grid(data):
         add(f"regime={rg}", {"regime": rg})
         add(f"regime={rg}×dir=long", {"regime": rg, "direction": "long"})
 
+    # --- 🆕 2026-07-23 注目度次元（Q24事前登録・Q21 H-V2「ニュース過熱時のシグナル劣後」の攻め転用） ---
+    #   バンド境界は verify.news_band_of の数式ロック（0 / 1-2 / 3+・以後変更しない）。
+    #   news_count はライブログ全件に記録済み。多重性はFDRが補正。
+    for b in ("0", "1-2", "3+"):
+        add(f"news={b}", {"news": b})
+        add(f"news={b}×dir=long", {"news": b, "direction": "long"})
+        add(f"news={b}×dir=short", {"news": b, "direction": "short"})
+
     # --- 🆕 2026-07-19 コンフルエンス（2指標の同時発火・オーナー依頼「最低2つの組み合わせ」） ---
     #   事前宣言: ペアは渡されたデータ（--split時はtrainのみ＝holdout非接触）内の共起 support≥40 だけを
     #   列挙（希薄セルの検定濫発を防ぐ）。3指標以上は列挙しない。多重性はFDRが補正。
