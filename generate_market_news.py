@@ -4850,6 +4850,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🎢 解説「<a href="guide-proverb-ikisugi-mo-soba.html" style="color:#0969da"><b>行き過ぎもまた相場</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-signal-lab-048.html" style="color:#0969da"><b>指数×ロング 降格確定——CI下限マイナス2回連続・tracking（再昇格待ち）</b></a>」公開'},
         {"date": "2026-07-22", "line": '・<b>2026-07-22</b>: 📰 解説「<a href="guide-news-2026-07-22-tsmc-price-hike-2027-ai-cost.html" style="color:#0969da"><b>TSMC 2027年ウェーハ価格最大10%引き上げ──NVIDIA・Apple・AMDへの影響を整理</b></a>」公開'},
         {"date": "2026-07-22", "line": '・<b>2026-07-22</b>: 🚏 解説「<a href="guide-proverb-oshime-machi-ni-oshime-nashi.html" style="color:#0969da"><b>押し目待ちに押し目なし</b></a>」公開'},
