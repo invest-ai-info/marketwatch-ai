@@ -27,6 +27,7 @@ if hasattr(sys.stderr, "reconfigure"):
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 TRADES_LOG_FILE = "my-trades.json"  # P3.5 用、なくても OK
+TRACKER_FILE = "signal-lab-tracker.json"  # 🏆エッジ番付タブ用（なくても OK＝タブは案内文のみ）
 OUTPUT_FILE = "track-record.html"
 
 # 曜日マッピング
@@ -1137,7 +1138,113 @@ def build_outcome_analysis_section(signals):
 </div>"""
 
 
-def build_html(signals, trades):
+#=== 🏆 エッジ番付（signal-lab 前向き検証のリーダーボード） ================
+def _bz_esc(s):
+    return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _bz_filter_str(f):
+    return " × ".join(f"{k}={v}" for k, v in (f or {}).items())
+
+
+def _bz_kind(h):
+    if h.get("kind") == "gate":
+        return '<span style="color:#cf222e;font-weight:600">🛡ゲート（避ける側）</span>'
+    return '<span style="color:#1a7f37;font-weight:600">⚔️エッジ（乗る側）</span>'
+
+
+def _bz_fwd_cells(h):
+    fwd = h.get("forward") or {}
+    n = fwd.get("n") or 0
+    if n <= 0:
+        return "<td>まだ発火なし</td><td>—</td>"
+    pct = fwd.get("pct")
+    avg = fwd.get("avgR")
+    lo, hi = fwd.get("rci_lo"), fwd.get("rci_hi")
+    pct_s = "—" if pct is None else f"{pct:.1f}%"
+    if avg is None:
+        avg_s = "—"
+    else:
+        ci = "" if lo is None or hi is None else f' <span style="font-size:.78rem;color:#8b949e">[{lo:+.2f}, {hi:+.2f}]</span>'
+        color = "#1a7f37" if (lo is not None and lo > 0) else ("#cf222e" if (hi is not None and hi < 0) else "#57606a")
+        avg_s = f'<span style="color:{color}">{avg:+.3f}R</span>{ci}'
+    return f"<td>{fwd.get('k', 0)}/{n}（{pct_s}）</td><td>{avg_s}</td>"
+
+
+def build_banzuke_section(tracker):
+    """signal-lab-tracker.json の全仮説を番付形式で公開するタブ。
+    幕内=昇格中 / 十両=ホールドアウト通過（昇格候補） / 幕下=前向き追跡中 / 引退=棄却・降格。
+    評価は「事前登録した日より後のデータ」だけ＝後出しの当てはめができない前向き検証。"""
+    hyps = (tracker or {}).get("hypotheses") or []
+    if not hyps:
+        return ('<div class="tab-pane" id="pane-banzuke"><h2>🏆 エッジ番付</h2>'
+                "<p>番付データ（signal-lab-tracker.json）がまだありません。次回のワークフロー実行で表示されます。</p></div>")
+
+    makuuchi = [h for h in hyps if h.get("status") == "promoted"]
+    juryo = [h for h in hyps if h.get("status") == "tracking" and h.get("holdout_pass")]
+    makushita = [h for h in hyps if h.get("status") == "tracking" and not h.get("holdout_pass")]
+    intai = [h for h in hyps if h.get("status") not in ("promoted", "tracking")]
+    _n = lambda h: (h.get("forward") or {}).get("n") or 0
+    makuuchi.sort(key=lambda h: -((h.get("forward") or {}).get("avgR") or -9))
+    juryo.sort(key=lambda h: -_n(h))
+    makushita.sort(key=lambda h: -_n(h))
+    intai.sort(key=lambda h: h.get("demoted_at") or h.get("registered_at") or "", reverse=True)
+
+    def _rows(hs, extra_fn=None):
+        out = []
+        for h in hs:
+            extra = extra_fn(h) if extra_fn else ""
+            out.append(
+                "<tr>"
+                f"<td><strong>{_bz_esc(h.get('label') or h.get('id'))}</strong>"
+                f'<br><span style="font-size:.78rem;color:#8b949e">{_bz_esc(_bz_filter_str(h.get("filter")))}</span></td>'
+                f"<td>{_bz_kind(h)}</td>"
+                + _bz_fwd_cells(h)
+                + extra
+                + f"<td>{_bz_esc(h.get('registered_at') or '—')}</td>"
+                "</tr>")
+        return "\n".join(out) if out else '<tr><td colspan="6" style="color:#8b949e">該当なし</td></tr>'
+
+    def _makuuchi_extra(h):
+        st = h.get("demote_strikes") or 0
+        return f'<td>{"⚠️" * st + f" {st}/2" if st else "—"}</td>'
+
+    def _strike_extra(h):
+        st = h.get("promote_strikes") or 0
+        return f'<td>{"⚠️" * st if st else "—"}</td>'
+
+    head = ("<tr><th>仮説（発火条件）</th><th>型</th><th>前向き 勝敗</th><th>前向き avgR [95%CI]</th>"
+            "<th>警告</th><th>登録日</th></tr>")
+
+    upd = _bz_esc((tracker or {}).get("updated_at") or "")
+    return f"""
+<div class="tab-pane" id="pane-banzuke">
+  <h2>🏆 エッジ番付 — 仮説{len(hyps)}本の公開リーグ戦</h2>
+  <div style="background:#ddf4ff;border:1px solid #54aeff66;border-radius:8px;padding:14px 16px;font-size:.9rem;margin-bottom:18px">
+    ここに並ぶのは AI シグナル研究日誌が<strong>事前登録した仮説の「その後」</strong>です。
+    評価に使うのは登録日より後に発火したシグナルだけ＝<strong>後出しの当てはめ（カンニング）が構造的にできない</strong>前向き検証。
+    昇格も陥落も、すべて自動判定で毎日更新されます（最終更新: {upd}）。<br>
+    <span style="color:#57606a">⚔️エッジ＝その条件のシグナルに乗る価値を検証中。🛡ゲート＝その条件を<strong>避ける</strong>価値を検証中（負けやすい条件の特定も立派なエッジです）。
+    R＝リスク1単位あたりの損益。avgRの95%CIが0をまたぐ間は「まだ偶然と区別できない」が正直な読み方です。</span>
+  </div>
+  <h3>🏆 幕内（昇格中 {len(makuuchi)}本）— 検証を勝ち抜いた現役</h3>
+  <p style="font-size:.85rem;color:#57606a">ホールドアウト検証を通過し、前向き成績でも生き残っている仮説。チェックポイント2連続失格（⚠️2/2）で自動的に陥落します。</p>
+  <div class="scroll-x"><table>{head}{_rows(makuuchi, _makuuchi_extra)}</table></div>
+  <h3 style="margin-top:26px">🌟 十両（昇格候補 {len(juryo)}本）— ホールドアウト通過・昇格待ち</h3>
+  <div class="scroll-x"><table>{head}{_rows(juryo, _strike_extra)}</table></div>
+  <h3 style="margin-top:26px">🌱 幕下（前向き追跡中 {len(makushita)}本）</h3>
+  <p style="font-size:.85rem;color:#57606a">登録済みでデータ蓄積中の仮説。大半はここで消えます＝それが検証の正常な姿です。</p>
+  <div class="scroll-x"><table>{head}{_rows(makushita, _strike_extra)}</table></div>
+  <h3 style="margin-top:26px">⚰️ 引退（{len(intai)}本）— 棄却・陥落の記録</h3>
+  <details><summary style="cursor:pointer;font-size:.9rem;color:#57606a">負けの記録も消さずに公開しています（クリックで展開）</summary>
+  <div class="scroll-x" style="margin-top:10px"><table>{head}{_rows(intai, _makuuchi_extra)}</table></div></details>
+  <p style="font-size:.82rem;color:#8b949e;margin-top:18px">
+    ※ この番付は検証結果の記録であり、特定の取引や銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。
+  </p>
+</div>"""
+
+
+def build_html(signals, trades, tracker=None):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
     signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
@@ -1166,6 +1273,7 @@ def build_html(signals, trades):
     pane_analytics = build_analytics_section(signals)
     pane_quality = build_quality_analysis_section(signals)
     pane_loss = build_outcome_analysis_section(signals)
+    pane_banzuke = build_banzuke_section(tracker)
 
     # 敗因カテゴリチャート用データ
     loss_cat_counts = defaultdict(int)
@@ -1370,6 +1478,7 @@ def build_html(signals, trades):
     <button class="tab-btn active" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="1d">📆 日足（{count_1d}）</button>
+    <button class="tab-btn" data-tab="banzuke">🏆 エッジ番付</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
     <button class="tab-btn" data-tab="loss">🔬 勝因・敗因分析</button>
@@ -1380,6 +1489,7 @@ def build_html(signals, trades):
   {pane_4h}
   {pane_1h}
   {pane_1d}
+  {pane_banzuke}
   {pane_analytics}
   {pane_quality}
   {pane_loss}
@@ -1588,11 +1698,12 @@ def main():
     print("📊 track-record.html を生成中...")
     signals = load_json(SIGNALS_LOG_FILE)
     trades = load_json(TRADES_LOG_FILE)
+    tracker = load_json(TRACKER_FILE) or None   # 🏆番付タブ用（Actions実行時はリポジトリ直下に必ずある）
     n_all = len(signals)
     signals = [s for s in signals if not is_weekend_closed_fire(s)]
     print(f"  シグナル: {len(signals)} 件（週末閉場中の発火 {n_all - len(signals)} 件を集計から除外）、実取引: {len(trades)} 件")
 
-    html = build_html(signals, trades)
+    html = build_html(signals, trades, tracker)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     size_kb = os.path.getsize(OUTPUT_FILE) / 1024
