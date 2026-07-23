@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-07-23
+- 判定: ✅ 公開済み
+- 選定トピック: Alphabet Q2 2026決算──Google Cloud前年比+82%・capex年間最大2,050億ドルへ上方修正でGOOGL株は時間外-約5%、一方で東京市場ではアドバンテストが日経平均を1銘柄で+307円押し上げた「AI好決算でもGOOGL下落・日本半導体上昇」の逆説を中立整理（カテゴリ: AI・テクノロジー決算・半導体・日本株・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: AlphabetのQ2決算（7/22米引け後）は売上+24%・Cloud+82%と過去最高クラスの好決算。しかしcapexを1,950〜2,050億ドルへ引き上げ（前回1,800〜1,900億ドルから+7.5%超）・FCF-59億ドルと「現金がどんどん出ていく」状態で、GOOGL株が時間外-約5%。翌日7/23の東京市場ではアドバンテストが「AIインフラ需要継続」として日経全上昇（+307円）を1銘柄で担うという逆説構造。7/19プレビュー記事とは完全に差別化（実結果数値・逆説構造が新規）。重複なし。
+- 出典（2系統以上確認済み）:
+  - CNBC「Alphabet earnings takeaways: Q2 revenue beats, GOOGL stock sinks on 2026 capex hike」（2026-07-22）https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html
+  - Yahoo Finance「GOOGL Drops Nearly 5% After-Hours — Alphabet Hikes 2026 Capex Spending To $205B」（2026-07-22）https://finance.yahoo.com/markets/stocks/articles/googl-drops-nearly-5-hours-212540090.html
+  - Seeking Alpha「Alphabet delivers Q2 beat with cloud revenue surging, capex disappoints」（2026-07-22）https://seekingalpha.com/news/4616900-alphabet-delivers-q2-beat-with-cloud-revenue-surging-82-capex-disappoints
+  - BigGo Finance「GOOGL Q2 2026 Earnings Call: Alphabet Revenue Soars 24% as Cloud Growth Explodes 82%, But Record $45B Capex Sinks Cash Flow」（2026-07-22）https://finance.biggo.com/news/US_GOOGL_2026-07-22
+  - StockTitan「Alphabet Q2 2026 revenue hits $119.8B」（2026-07-22）https://www.stocktitan.net/sec-filings/GOOG/8-k-alphabet-inc-reports-material-event-c600716f9a4d.html
+  - TradingKey「Google Q2 Cloud Revenue Surges 82%: Net Profit Soars 298% YoY」（2026-07-22）https://www.tradingkey.com/analysis/stocks/us-stocks/262048041-google-earnings-report-q2-2026-goog-googl-services-cloud-search-capital-expenditures-tradingkey
+  - 財経新聞「日経平均は反発、アドバンテストが1銘柄で約307円分押し上げ」（2026-07-23）https://www.zaikei.co.jp/article/20260723/862465.html
+  - 日本経済新聞「日経平均株価、一時800円高 米半導体や韓国株高で」（2026-07-23）https://www.nikkei.com/article/DGXZQOFL230J90T20C26A7000000/
+- コンプラ監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: 比喩文中「儲かる」をliteralフラグ（軽微修正推奨）→主エージェントが「道具を売る側に商機が集まりやすいという比喩」へ修正適用→修正後は5項目全クリア・公開適格
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典8系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告21件はすべて既存他ファイルのCSS/ナビ問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html
+- commit: feat: auto-publish news 2026-07-23（main へ push 済み・37f87f1）
+
+---
+
 ## 2026-07-22
 - 判定: ✅ 公開済み
 - 選定トピック: TSMC 2027年ウェーハ価格を最大10%引き上げへ──NVIDIA・Apple・AMD・Qualcomm等主要顧客への影響とAI半導体コスト構造の転換を3シナリオで中立整理（カテゴリ: マクロ・半導体・AI・テクノロジー）
