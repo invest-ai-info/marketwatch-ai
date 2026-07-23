@@ -4850,6 +4850,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-selling-climax.html" style="color:#0969da"><b>投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 📰 解説「<a href="guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html" style="color:#0969da"><b>Alphabet Q2 Cloud+82%・capex 2,050億ドルでGOOGL急落、日経+307円の逆説を整理</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🎢 解説「<a href="guide-proverb-ikisugi-mo-soba.html" style="color:#0969da"><b>行き過ぎもまた相場</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-signal-lab-048.html" style="color:#0969da"><b>指数×ロング 降格確定——CI下限マイナス2回連続・tracking（再昇格待ち）</b></a>」公開'},
