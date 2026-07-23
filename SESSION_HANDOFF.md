@@ -46,7 +46,12 @@
 
 ## 📌 アクティブな宿題
 
-### 🔜 次セッションで最初に確認（在flight・2026-07-22向け）
+### 🔜 次セッションで最初に確認（在flight・2026-07-23夜更新）
+
+- **⓪-成果戦略 7/23夜✅（オーナー発案「signal-labの成果が見えないと読者が離れる」→方針=攻めのエッジ・両輪）**:
+  **A見せ方=🏆エッジ番付タブ 公開済み**（track-record.html 新タブ・`generate_track_record_page.py` の `build_banzuke_section`＝signal-lab-tracker.json を幕内(昇格2)/十両(holdout通過8)/幕下(36)/引退(5)の4段で自動描画・エッジ⚔️/ゲート🛡の型区別・「検証であり推奨でない」免責・テスト`_test_banzuke_tab.py`9件PASS・**ライブ確認済み**）。
+  **B発掘=Q23/Q24事前登録＋実装**（SHA凍結済み）: Q23=拡張ユニバース正式組入れ（verify GROUPSにx-group5キー=metal_x/energy_x/rates/crypto_x/index_x・既存group不変＝汚染なし・tracker `pick_data`で拡張group仮説のみ凍結迂回・テスト9件PASS。sweepはGROUPS importで自動追随）／Q24=注目度エッジ（オラクルに`news`キー+`news_band_of`(0/1-2/3+固定)・sweepグリッドにnews×dir 9セル追加・テスト10件PASS。Q21 H-V2の攻め転用・前向きはゼロから）。CLAUDE.mdのfilterキー一覧も現行化（state系7/20+news/x-group7/23）。
+  **残タスク**: (i)`auto_weekly_review.py`に「番付の変動」節（次セッション） (ii)sns-post-daily手順書に番付1行（次セッション） (iii)**弁護士相談アジェンダに番付タブを追記済み→相談時に一緒に見てもらう** (iv)signal-lab-daily routineプロンプトのキー列挙が古い（7/19以前のまま。運用実績上sweep出力駆動で非ブロッキング＝env/regime仮説は流れている。次に触るとき更新） (v)Q17は10月のA1再実行までqueue_archiveで休眠（サイズ予算・判定不変）。
 - **⓪-7/21完了✅（7/20夜計画①〜④を全消化）**: ①06:10確認=tracker51仮説・`state_*`5本出現（edge3=holdout_pass True/gate2=False・正直記録どおり）・コンボ3本tracking・index_long_live=promoted N221（CP240接近＝今週strike2→降格見込みの想定内） ②**特別記事公開=`guide-indicator-combos.html`**（🧪AIシグナル研究日誌・独立Opus監査🟢白/黒ゼロ・数値は全部コード突合＝BT18,099件13,044/5,055・SVG3枚・ライブ200/index履歴/guidesカード確認済み） ③**「↑上に戻る」一括適用完了=`apply_back_to_top.py`新設**（単一ソース=generate_market_news.pyのBACK_TO_TOP定数をregex抽出・SYNC入り静的HTML104本へ冪等注入・番人に欠落warning追加・クラウド生成記事はテンプレGitHub側のため対象外。guide-investment-booksはbook-watch更新でstale→reconcile→--force定石で解決・ライブ確認済み） ④**Q21事前登録=出来高/人気×シグナル成否**（queueにSHA凍結・出目未見。H-V1=相対出来高3バンド×非FX9銘柄BT／H-V2=news_count 0 vs ≥3ライブ。可用性確認済み=news_countフィールド有・Yahoo日足出来高は非FX9で取得可）。
 - **⓪-人気度 7/21午後✅（オーナー発案「人気銘柄の見分け方」→実装決定）**: **公開=🔥人気急上昇TOP20**（`build_jp_rankings.py`=Yahoo取得7d→3moに拡張・relvol=当日出来高÷直前20営業日平均・売買代金10億円フロア＝薄商い/軽い玉を公開面から排除・`hot`キー追加）＋`generate_market_news.py`の`build_jp_rankings_section`に全幅ブロック描画（「計測であり推奨でない」注記・過熱飛びつき不利の教育文・罠フラグは掲載しない=オーナー決定）。ローカル実走✅（人気1位リコー2.3倍・60行描画・モバイルCSS流用）。**✅ライブ初回確認済み（7/21夜）**＝定時2回(19:09/19:33 JST=cron遅延)がsync(19:45)より先に走り旧コード実行→大引け後20:30に手動trigger(jp-rankings→update-market-news)で解決・ライブ69,916字/hot20件/1位リコー2.3倍=ローカル実走と一致/注記・教育文表示確認。**📝発見=jp-rankingsのcommitはon:pushを発火しない**（GITHUB_TOKEN pushはon:push非発火の仕様・従来は遅延した夕方定時runが偶然カバー＝CLAUDE.mdの「即再描画」記述と実挙動がズレ。実害=反映が定時run待ちになる程度・対処要否はオーナー相談）。**非公開=Q22事前登録**（罠フラグ=(F1出来高スパイク≥5∨F5回転異常≥8)∧F2急騰≥25%/5日・F4軽い玉層別・F6ブームバスト前科・fwd20同日クロスセクション差・SHA凍結済み出目未見。「仕手の断定」は板/ティック無しで不能＝「仕手的形状の劣後」を検証。ロガー不要と判断=全フラグがレイクから遡及計算可能・材料なき急騰のニュース条件だけ将来のライブ蓄積で別Q。合格したらmw screen非公開列→サイト公開は弁護士後）。
 - **⓪-EVアップ 7/21夕✅（オーナー承認「お薦め順で」＝①1d拡大②mw size実装済み・③EA修正は次のEAセッション）**: ①**1dスキャン8銘柄拡大**（`SYMBOLS_1D_EXTRA`=HG銅/PLプラチナ/NG天然ガス/ZN米10年債/ETH/DAX/HSI/SOX・Yahoo日足可用性確認済み・^SOXは出来高無し=出来高系検出器は自然不発）。**1dレーン限定**（4h/1hメールは18銘柄のまま）＋**tracker側`LEGACY_UNIVERSE`凍結**（既存仮説の前向きNは18銘柄固定＝direction/state系フィルタへの母集団混入を遮断・🧊除外件数print付き）。ETHは週末ガード非変更=日曜06:20の1回のみスキャン外（集計5複製に触れない保守選択）。⚠️sweep探索は全量を見るため、拡張銘柄の新仮説はGROUPS正式拡張+新Q登録後に（tracker凍結中はN=0のまま＝コメント記載済）。**✅7/22確認済み=07:13 run success・HG=F初発火2件で拡張レーン実証**。②**`mw size`新設**（`_position_size.py`=ローカル専用SYNC外+mw.pyディスパッチ）＝検証済み枠組みのCLI化: 既定1%/取引・R6相関合算2%ハードキャップ（THEMEはR6のRISK_THEME整合・ETH=BTCと同テーマ等の保守拡張）・全体5%目安（λ0.10）・戦略別参考上限（貴金属L2.0/株指数L0.4/暗号L2.0=λ0.10・楽観バイアス注記込み）。テスト5ケース✅（🟢/R6🔴/上限🟡/境界2.0%OK/入力エラーexit2）。例: `mw size --balance 3000000 --pos "GC=F,long,2650,2635" --mult "GC=F:100"`。
@@ -75,7 +80,7 @@
 
 - ✅ **POLICY dict 更新＝完了（2026-07-04未明）**：日銀 0.75→**1.00%**（6/16利上げ）。米3.75/欧2.40/英3.75/豪4.35は6月会合すべて据え置き＝変更なし（FRB6/17・BOE6/17・RBA6/16をWebSearch＋fundamental-contextで裏取り）。次回会合=FOMC 7/28-29・日銀 7/30-31。朝7時の update-market-news から反映。
 - 🗓️ **`jp-stock-info.json` の四半期更新**（決算シーズン後に `python make_jp_stock_info.py` 再実行→`mw sync`。赤字/黒字フラグを最新決算へ。日次の値上がり率/売買代金は `jp-rankings.yml` が自動）。
-- 📊 弁護士相談アジェンダ（track-record 統計開示／確信度ラベル／個別銘柄記事の言及）。
+- 📊 弁護士相談アジェンダ（track-record 統計開示／**🏆エッジ番付タブ（7/23新設・仮説成績の公開リーグ）**／確信度ラベル／個別銘柄記事の言及）。
 - 🟡 保留＝**J-Quants Standard（¥3,300・1回）** で「risk_off 転換→守り」を 2018/2020 実暴落でバックテスト（オーナー課金判断時）。
 - 研究日誌の自動公開はエスカレ回のみ人間レビュー（`drafts/REVIEW.md` の🚩）。
 
