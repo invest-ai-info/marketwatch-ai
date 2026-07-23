@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>投げ売りの翌日に買っていいのか｜日本株1,285回の急落で検証したセリングクライマックスの正直な統計 - MarketWatch AI</title>
+  <meta name="description" content="「セリングクライマックスは買い場」は本当か。5日で20%超の急落を「大商いの投げ」と「閑散の下げ」に分け、日本株ほぼ全銘柄×約5年（急落イベント1,285回＋1,873回）でその後20日を検証。6割は反発するのに平均では市場に負ける——投げ売り拾いの落とし穴を、統計の正直な読み方つきで解説します。">
+  <meta name="keywords" content="セリングクライマックス,投げ売り,急落,出来高,逆張り,落ちてくるナイフ,閑散に売りなし,日本株,バックテスト,検証,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-selling-climax.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証した">
+  <meta property="og:description" content="6割は反発するのに、平均では市場に負ける。「大商いの投げ」と「閑散の下げ」のその後20日を、日本株ほぼ全銘柄×約5年で検証した正直な統計。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-selling-climax.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証したセリングクライマックスの正直な統計",
+    "description": "5日で20%超の急落を「大商いの投げ」と「閑散の下げ」に分け、日本株ほぼ全銘柄×約5年でその後20日を検証。6割は反発するのに平均では市場に負ける理由。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-selling-climax.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-md{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-n{fill:#8b949e;opacity:.6}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-md{fill:#c9d1d9}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-n{fill:#8b949e}
+    body.dark .s-guide{stroke:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 投げ売りの翌日に買っていいのか
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は当サイトの過去データ検証（バックテスト）の結果を共有する「情報提供」であり、特定の金融商品の売買推奨や投資助言ではありません。過去の検証成績は将来の成果を保証しません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧪 投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証したセリングクライマックスの正直な統計</h1>
+    <div class="meta-line">公開日：2026 年 7 月 23 日 ／ 読了時間：約 11 分 ／ カテゴリ：AIシグナル研究日誌</div>
+
+    <p>「<strong>セリングクライマックス</strong>（投げ売りの最終局面）は絶好の買い場」——相場の古い教えのひとつです。恐怖で全員が投げた瞬間こそ底、大出来高を伴う急落は売り尽くしのサイン。物語としてはとても魅力的で、実際に「あのとき拾っていれば」という成功譚も後を絶ちません。</p>
+    <p>本当にそうなのか。当ラボ（AIシグナル研究日誌）は今回、<strong>日本株のほぼ全上場銘柄×約5年の日足データ</strong>を使い、「5営業日で20%超の急落」を<strong>出来高で2種類に分けて</strong>——大出来高を伴う「<strong>大商いの投げ</strong>」と、商いが枯れたまま下げる「<strong>閑散の下げ</strong>」——その後20営業日に何が起きたかを機械的に集計しました。検証ルールと合否基準は<strong>結果を見る前に登録して固定</strong>しています（後出しの解釈変更ができない手順）。</p>
+    <p>結論を先に言うと、データは物語の逆を示しました。<strong>投げ売りの翌日は、統計的には買い場ではありませんでした</strong>。しかも面白いことに——<strong>6割は反発する</strong>のに、です。この「6割戻るのに平均では負ける」という逆説こそ、今回の検証で一番持ち帰ってほしい発見です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>大商いの投げ（5日で−20%超＋出来高が平常の5倍以上）の後20日は、同じ日の市場平均に有意に負けた</strong>。訓練期間で−2.10%、検証期間では−4.10%の劣後（どちらも統計的に有意）。</li>
+      <li>逆説の正体は<strong>左裾（大負けの尾）</strong>。20日後にプラスの銘柄は訓練期間で<strong>64.6%</strong>もあるのに、さらに−30%超崩れる「二段目の崩壊」が市場平均の<strong>約5〜7倍</strong>の頻度で起き、平均を破壊していた。</li>
+      <li>「<strong>閑散に売りなし</strong>（商いが枯れたらそろそろ底）」の定量的な裏付けも<strong>得られなかった</strong>。閑散の下げは訓練期間で市場平均と有意差なし、しかも−30%超のクラッシュ率は市場平均の約13倍——枯れた下げも危険だった。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どう調べたか——全銘柄×約5年×急落3,158回</a></li>
+        <li><a href="#section-2">発見① 大商いの投げは「まだ落ちるナイフ」だった</a></li>
+        <li><a href="#section-3">発見② 6割戻るのに平均で負ける——左裾の破壊力</a></li>
+        <li><a href="#section-4">発見③ 「閑散に売りなし」も支持されず</a></li>
+        <li><a href="#section-5">なぜ個別株ではダメなのか——指数・商品との決定的な違い</a></li>
+        <li><a href="#section-6">実務への落とし込み——急落銘柄との付き合い方</a></li>
+        <li><a href="#section-7">正直な注意——この検証が言えないこと</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どう調べたか——全銘柄×約5年×急落3,158回</h2>
+    <p>先に検証の枠組みです。使ったのは<strong>日本株約5,000銘柄（上場廃止銘柄も含む＝生き残った銘柄だけを見る偏りを排除）×約5年（2021年7月〜2026年7月・1,235営業日）</strong>の日足データ、約512万行です。</p>
+    <ul>
+      <li><strong>急落の定義</strong>：直近5営業日の下落率が<strong>−20%以下</strong>。これを出来高で2種類に分けます。
+        <ul>
+          <li><strong>A「大商いの投げ」</strong>＝急落 ＋ 当日出来高が直前20営業日平均の<strong>5倍以上</strong>（＝セリングクライマックスの候補）</li>
+          <li><strong>B「閑散の下げ」</strong>＝急落 ＋ 当日出来高が平常の<strong>0.6倍以下</strong>（＝商いが枯れたままの下げ）</li>
+        </ul>
+      </li>
+      <li><strong>イベント数</strong>：Aは<strong>1,285回</strong>（訓練974＋検証311）、Bは<strong>1,873回</strong>（訓練1,201＋検証672）。同じ銘柄が連日成立する場合は最初の1回だけを数えます（20営業日のクールダウン）。</li>
+      <li><strong>評価方法</strong>：イベント翌営業日の寄り付きで観測を始め、<strong>20営業日後のリターン</strong>を「同じ日の市場全体（イベント非該当の全銘柄）」と比較します。市場全体と比べるのは、地合いの上げ下げ（急落が起きやすい荒れ相場そのもの）の影響を差し引くためです。</li>
+      <li><strong>統計の規律</strong>：期間を訓練（〜2024年末）と検証（2025年〜）に分け、<strong>両期間で同じ向き・かつ統計的に有意</strong>なものだけを結論として扱います。同じ日に急落が集中する相関はブロック・ブートストラップ法で補正し、2仮説を同時に試すことによる偶然の当たりも補正済み（FDR補正）です。</li>
+    </ul>
+    <div class="info-box"><strong>大事な前提</strong>：この検証は「急落した株を翌日拾って20日持ったら、市場平均と比べてどうだったか」という<strong>イベント研究</strong>です。個別の銘柄名は扱いませんし、特定の銘柄の売買を勧めるものでもありません。また合否の基準は集計前に登録・固定しており、結果を見てから都合よく変えることはできない手順にしています。</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 発見① 大商いの投げは「まだ落ちるナイフ」だった</h2>
+    <p>本命の「大商いの投げ」＝セリングクライマックス候補1,285回の結果がこちらです。</p>
+
+    <table>
+      <tr><th>A：大商いの投げ（−20%超＋出来高5倍）</th><th>件数</th><th>その後20日の対市場差</th><th>統計判定</th></tr>
+      <tr><td>訓練期間（2021〜2024）</td><td>974回</td><td><strong>−2.10%</strong>（95%信頼区間 −3.86〜−0.31%）</td><td>有意（q=0.046）</td></tr>
+      <tr><td>検証期間（2025〜）</td><td>311回</td><td><strong>−4.10%</strong>（95%信頼区間 −7.10〜−1.67%）</td><td><strong>有意（q=0.0005）</strong></td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <p>訓練・検証の両期間で、<strong>投げ売り銘柄はその後20日、同じ日の市場平均に統計的に有意に負けました</strong>。しかも直近の検証期間のほうが劣後幅が大きい（−4.10%）。「大出来高の投げは売り尽くし＝底」という物語が正しければプラスに出るはずの検証で、<strong>符号が逆</strong>だったわけです。</p>
+    <p>正直に書くと、この検証を設計したとき当ラボが事前に予想していた方向も「反発（プラス）」でした。<strong>データが予想を裏切った</strong>——だからこそ、この結果は書く価値があると考えています。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 300" role="img" aria-label="急落イベント後20営業日の対市場超過リターンを示す棒グラフ。大商いの投げと閑散の下げの4本すべてがマイナス側">
+        <line x1="60" y1="90" x2="725" y2="90" class="s-axis"/>
+        <text x="14" y="60" class="s-label-sm">対市場差</text>
+        <text x="20" y="94" class="s-label-sm">±0%</text>
+        <text x="66" y="52" class="s-panel-label">A：大商いの投げ（出来高5倍以上）</text>
+        <rect x="95" y="90" width="90" height="42" class="s-bar-r"/>
+        <text x="103" y="150" class="s-note-r">−2.10%</text>
+        <text x="88" y="238" class="s-label-md">訓練 974回</text>
+        <text x="90" y="256" class="s-label-sm">（q=0.046 有意）</text>
+        <rect x="240" y="90" width="90" height="82" class="s-bar-r"/>
+        <text x="248" y="190" class="s-note-r">−4.10%</text>
+        <text x="233" y="238" class="s-label-md">検証 311回</text>
+        <text x="230" y="256" class="s-label-sm">（q=0.0005 有意）</text>
+        <line x1="390" y1="40" x2="390" y2="270" class="s-divv"/>
+        <text x="420" y="52" class="s-panel-label">B：閑散の下げ（出来高0.6倍以下）</text>
+        <rect x="440" y="90" width="90" height="11" class="s-bar-n"/>
+        <text x="448" y="120" class="s-label-sm">−0.57%</text>
+        <text x="430" y="238" class="s-label-md">訓練 1,201回</text>
+        <text x="428" y="256" class="s-label-sm">（p=0.639 有意差なし）</text>
+        <rect x="590" y="90" width="90" height="60" class="s-bar-r"/>
+        <text x="598" y="168" class="s-note-r">−3.00%</text>
+        <text x="585" y="238" class="s-label-md">検証 672回</text>
+        <text x="575" y="256" class="s-label-sm">（検証期間のみ・確認扱いせず）</text>
+      </svg>
+      <div class="chart-caption">図1：5営業日で−20%超の急落イベント後、20営業日の「同じ日の市場平均に対する超過リターン」。大商いの投げ（A）は訓練・検証の両期間で有意にマイナス＝投げ売り翌日の買いは統計的に不利だった。閑散の下げ（B）は訓練期間で有意差なし。棒が下に伸びるほど市場平均に負けたことを示す概念図（当サイト検証基盤・日本株日足）。</div>
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 発見② 6割戻るのに平均で負ける——左裾の破壊力</h2>
+    <p>ここからが今回いちばん面白いところです。「投げ売り拾いは不利」と聞くと、「ほとんど反発しないんでしょ？」と思うかもしれません。ところが実際は逆で——<strong>訓練期間の大商いの投げ974回のうち、20日後にプラスだったのは64.6%</strong>。検証期間でも53.1%。つまり<strong>半分以上はちゃんと反発している</strong>のです。</p>
+    <p>では、なぜ平均では市場に負けるのか。答えは<strong>左裾</strong>——つまり「反発しなかった残りの銘柄が、どれだけ深く崩れるか」にあります。</p>
+
+    <table>
+      <tr><th>20日後の姿</th><th>大商いの投げ（訓練/検証）</th><th>同じ日の市場平均</th></tr>
+      <tr><td>プラスで終えた比率</td><td>64.6% ／ 53.1%</td><td>—（多数派の体感どおり）</td></tr>
+      <tr><td>さらに−30%超のクラッシュ率</td><td><strong>2.05% ／ 3.22%</strong></td><td><strong>0.43% ／ 0.45%</strong></td></tr>
+      <tr><td>クラッシュ率の倍率</td><td colspan="2"><strong>市場平均の約5〜7倍</strong></td></tr>
+    </table>
+    <div class="mw-scroll-hint">→ 表は横にスクロールできます</div>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 760 310" role="img" aria-label="勝ち越し率は高いのに平均が負ける逆説を、クラッシュ率の比較で示した図">
+        <text x="66" y="40" class="s-panel-label">体感：6割は反発する（訓練期間）</text>
+        <line x1="60" y1="200" x2="330" y2="200" class="s-axis"/>
+        <rect x="95" y="71" width="80" height="129" class="s-bar-g"/>
+        <text x="103" y="62" class="s-note-g">64.6%</text>
+        <text x="76" y="222" class="s-label-md">20日後プラスの比率</text>
+        <text x="96" y="240" class="s-label-sm">（974回中）</text>
+        <text x="66" y="278" class="s-note-g">「拾えば戻る」の体感は間違いではない</text>
+        <line x1="390" y1="30" x2="390" y2="285" class="s-divv"/>
+        <text x="420" y="40" class="s-panel-label">現実：−30%超クラッシュ率は市場の約5〜7倍</text>
+        <line x1="420" y1="200" x2="725" y2="200" class="s-axis"/>
+        <rect x="450" y="118" width="60" height="82" class="s-bar-r"/>
+        <text x="452" y="109" class="s-note-r">2.05%</text>
+        <text x="443" y="222" class="s-label-md">投げ・訓練</text>
+        <rect x="540" y="71" width="60" height="129" class="s-bar-r"/>
+        <text x="542" y="62" class="s-note-r">3.22%</text>
+        <text x="533" y="222" class="s-label-md">投げ・検証</text>
+        <rect x="630" y="183" width="60" height="17" class="s-bar-n"/>
+        <text x="632" y="174" class="s-label-sm">0.43%</text>
+        <text x="623" y="222" class="s-label-md">市場平均</text>
+        <text x="420" y="252" class="s-note-r">この「たまに来る二段目の崩壊」が平均を破壊する</text>
+        <text x="400" y="272" class="s-label-sm">※縦軸は左右で異なる（左=勝ち越し率・右=クラッシュ率）</text>
+      </svg>
+      <div class="chart-caption">図2：「6割戻るのに平均で負ける」逆説の分解（概念図）。左：大商いの投げの後20日でプラスに戻った比率は64.6%（訓練期間）と高い。右：しかし同じ20日でさらに−30%超崩れる確率は2.05〜3.22%と、市場平均（0.43〜0.45%）の約5〜7倍。反発の小さな勝ちを、少数の破滅的な大負けが上回る構造。</div>
+    </div>
+
+    <p>これは投資心理として、かなり<strong>タチの悪い構造</strong>です。投げ売り拾いを10回やれば6回は勝てる——だから体感では「セリクラ買いは効く」と学習してしまう。ところが残り4回の中に、倒産・上場廃止・希薄化・悪材料の第二弾といった<strong>取り返しのつかない下げ</strong>が市場平均の約5〜7倍の頻度で混ざっていて、口座残高は平均としては削られていく。<strong>体感（勝率）と収支（期待値）が逆を向く</strong>典型例です。</p>
+    <div class="warning-box"><strong>「勝率6割」に安心しないでください</strong>：当サイトの検証全体を通じて繰り返し出てくる教訓ですが、勝率と期待値は別物です。勝率の高さは「よくある小さな結果」しか教えてくれません。口座を決めるのは「まれな大きな結果」＝裾の分布です。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 発見③ 「閑散に売りなし」も支持されず</h2>
+    <p>もうひとつの仮説、「<strong>閑散の下げ</strong>」はどうだったでしょうか。相場格言の「閑散に売りなし」は、「商いが枯れた（＝もう売る人がいない）相場は、それ以上下がりにくく、そろそろ底」という含意で使われることがあります。</p>
+    <p>結果：<strong>訓練期間では市場平均との差は−0.57%で、統計的に有意差なし（p=0.639）</strong>。検証期間では−3.00%と劣後側に出ましたが、訓練期間で支持がない以上、当ラボの基準では「確認された」とは扱いません。少なくとも、<strong>「閑散の下げ＝そろそろ底＝反発が期待できる」という優位性は、このデータからは見つかりませんでした</strong>。</p>
+    <p>むしろ見逃せないのは防御面です。閑散の下げの後に−30%超のクラッシュが起きる確率は<strong>訓練期間で5.33%——市場平均（0.42%）の約13倍</strong>。出来高を伴う投げ（2.05%）より高いのです。商いが枯れたまま下げ続ける銘柄は、「売り尽くした」のではなく<strong>「買い手が誰もいない」</strong>状態である可能性——流動性の消失は、それ自体が危険信号でした。</p>
+    <div class="negative-box"><strong>格言の読み方に注意</strong>：「閑散に売りなし」は本来、市場全体の閑散な地合いについての格言です。それを「個別銘柄の出来高が枯れたら底」と読み替えて急落株の逆張り根拠にするのは、今回のデータでは危険な拡大解釈でした。近日公開予定の格言解説シリーズでも、この検証結果を踏まえて扱う予定です。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ なぜ個別株ではダメなのか——指数・商品との決定的な違い</h2>
+    <p>「あれ？」と思った読者もいるはずです。当サイトのシグナル検証（金・銀・株価指数・FXなど18銘柄）では、<strong>「売られすぎの逆張り」はむしろ数少ない生き残りエッジ</strong>として繰り返し確認されてきました。たとえば<a href="guide-indicator-combos.html">指標の組み合わせ大全</a>で報告したとおり、ボリンジャーバンド下限×RSI30以下のライブ実測は勝率56.9%・平均+0.33R（65回）です。矛盾しているのでしょうか。</p>
+    <p>矛盾ではなく、<strong>対象の性質がまったく違う</strong>のだと当ラボは解釈しています。</p>
+    <ul>
+      <li><strong>指数や商品（金・原油など）は「消えない」</strong>：日経平均やS&amp;P500がパニックで投げ売られても、ゼロにはなりません。だから「行き過ぎた恐怖」は高い確率で修正され、売られすぎの逆張りが機能する余地があります。</li>
+      <li><strong>個別株は「消えることがある」</strong>：個別銘柄の−20%急落の背後には、業績崩壊・不祥事・希薄化・資金繰り不安といった<strong>固有の悪材料</strong>が潜んでいることがあります。この場合の急落は「行き過ぎた恐怖」ではなく「正しい織り込みの途中」であり、投げの翌日はまだ落ちるナイフの途中です。左裾のクラッシュ約5〜7倍という数字が、その混入率を物語っています。</li>
+    </ul>
+    <p>さらに、この結果は当ラボの過去の検証とも綺麗につながります。急騰側の検証では、<strong>「急騰＋出来高スパイク」銘柄はその後20日で市場平均に−4.32%（訓練）／−4.04%（検証）劣後し、−20%超のクラッシュ率は21.71%と対照（1.82%）の約12倍</strong>でした。つまり——</p>
+    <div class="info-box"><strong>統一的な結論：極端な出来高を伴う極端な値動きは、上方向でも下方向でも、その後20日は「危険地帯」</strong>。大出来高は「みんなが注目した」ことしか意味せず、注目の的になった直後の個別株は、方向を問わず荒れやすい。当サイトが人気急上昇ランキングに「計測であり推奨ではない」と添えているのは、まさにこのためです。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 実務への落とし込み——急落銘柄との付き合い方</h2>
+    <p>この検証結果を一般論として整理します（特定の売買の推奨ではありません）。</p>
+    <ul>
+      <li><strong>「大出来高の投げ＝底」を単独の買い根拠にしない</strong>：セリクラ買いの物語は、6割の反発体験によって強化されやすい分だけ危険です。統計は「翌日の飛びつき拾いは平均で市場に負け、破滅的な二段目が約5〜7倍混ざる」と言っています。</li>
+      <li><strong>急落直後の20営業日は「観察期間」と考える</strong>：今回の検証ホライズンで一貫して劣後が確認された以上、少なくともこの期間は、急いで拾う統計的な理由がありません。底は逃げません——本当に底なら、20日後にも買えます。</li>
+      <li><strong>どうしても拾うなら「消えない資産」との区別を</strong>：売られすぎの逆張りに統計的な生存余地が確認されているのは、当サイトの検証では指数・商品側です。個別株の急落拾いは、固有の悪材料リスク（＝左裾）を背負う別のゲームだと認識してください。</li>
+      <li><strong>ポジションサイズが最後の砦</strong>：それでも急落株に踏み込む場合、1回の損失を口座の1〜2%に抑えるサイズ管理と、事前に決めた損切りが前提です。クラッシュ率が約5〜7倍の世界では、「まさか」は必ず訪れる側に賭けて資金設計をするべきです。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトの検証は「その後」も自動で追跡されます</div>
+      <div class="cta-box-desc">シグナル検証の全仮説の前向き成績は、シグナル成績ダッシュボードの「🏆エッジ番付」タブで毎日自動更新中です。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 正直な注意——この検証が言えないこと</h2>
+    <ul>
+      <li><strong>売買コストを引いていません</strong>：集計はグロス（手数料・スプレッド・すべりを含まない）です。ただし今回の結論は「劣後」側なので、コストを引くと不利がさらに拡大する方向です。</li>
+      <li><strong>日本市場・約5年のデータです</strong>：他の市場や他の時代で同じ結果になる保証はありません。特に検証期間（2025年〜）はイベント数が311回と訓練期間より少なく、信頼区間も広めです。</li>
+      <li><strong>「セリクラは絶対に買うな」とは言っていません</strong>：統計が言えるのは「急落＋大出来高という条件<em>だけ</em>で翌日に拾う戦略は、平均として市場に負けてきた」ことまでです。財務や材料の精査を伴う個別判断はこの検証の外側にあります。</li>
+      <li><strong>ザラ場の値動きは見えていません</strong>：日足データによる検証のため、当日中の反発を取る短期売買の巧拙は評価できません。</li>
+      <li><strong>予想が外れたことも含めて事前登録どおり報告しています</strong>：当ラボの事前予想（A=反発）は外れました。検証ルールを先に固定しているため、こうした「都合の悪い結果」も選別せずそのまま公開しています。</li>
+    </ul>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li><strong>大商いの投げ（−20%超＋出来高5倍）の翌日買いは、その後20日で市場平均に有意に劣後した</strong>（訓練−2.10%／検証−4.10%・1,285イベント）。セリングクライマックス＝買い場の物語は、日本の個別株の日足統計では支持されなかった。</li>
+      <li><strong>6割は反発するのに平均で負ける</strong>。正体は市場平均の約5〜7倍のクラッシュ率＝左裾。勝率の体感は当てにならず、口座を決めるのは裾の分布。</li>
+      <li><strong>「閑散に売りなし」の個別株への適用も支持されず</strong>。閑散の下げはクラッシュ率が市場平均の約13倍で、流動性の消失はそれ自体が危険信号だった。</li>
+      <li>急騰側の検証（急騰×出来高スパイク＝劣後・クラッシュ12倍）と合わせると、<strong>「極端な出来高を伴う極端な値動きは、上も下も危険地帯」</strong>という一貫した絵になる。売られすぎの逆張りに生存余地があるのは、消えない資産（指数・商品）の側だった。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-proverb-ochiru-knife.html">
+        <div class="related-card-title">🔪 落ちてくるナイフはつかむな</div>
+        <div class="related-card-desc">急落の途中で逆張りしない、という相場格言の解説。本記事はその定量版。</div>
+      </a>
+      <a class="related-card" href="guide-indicator-combos.html">
+        <div class="related-card-title">🧪 指標の組み合わせ大全</div>
+        <div class="related-card-desc">売られすぎの逆張りが「生きる場所」と「死ぬ場所」。指数・商品側の検証はこちら。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">✂️ 損切りの考え方</div>
+        <div class="related-card-desc">左裾（破滅的な大負け）から口座を守る、最後の砦としての損切りルール。</div>
+      </a>
+      <a class="related-card" href="hot-assets.html">
+        <div class="related-card-title">🔥 出来高急増ランキング</div>
+        <div class="related-card-desc">出来高の急増は「注目の計測」であり推奨ではない——本記事の統計がその理由。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトの検証基盤による過去データ検証（バックテスト）の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。掲載した統計値は日本株の日足データ（約5年・上場廃止銘柄を含む）の特定条件下での過去の集計値であり、売買コストを含まず、あらゆる市場・時期・銘柄で再現することを保証するものではありません。過去の検証成績は将来の成果を保証しません。投資判断はご自身の責任で行ってください。</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
