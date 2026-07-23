@@ -68,4 +68,5 @@ SYNC_FILES = [
     "guide-news-2026-07-22-tsmc-price-hike-2027-ai-cost.html",
     "guide-signal-lab-048.html",
     "guide-proverb-ikisugi-mo-soba.html",
+    "guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html",
 ]
