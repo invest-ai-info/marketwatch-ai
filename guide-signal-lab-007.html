@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #7｜他FX×blocked=True の高勝率は「下降偏り」という交絡だった——グループ×トレンド×blocked 三次元解析 - MarketWatch AI</title>
   <meta name="description" content="blocked=True（壁あり）が高勝率な理由を「グループ別×トレンド」で三次元解析。他FX×blocked=Trueの66.7%は下降トレンド偏りという交絡が主因で、下降時は100.0%（8/8）・もみあい時は0.0%（0/4）と激変する構造を652件で解明。">
   <meta name="keywords" content="AIシグナル,検証,blocked,SR,グループ,トレンド,交絡,勝率,研究日誌,他FX,三次元解析">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -223,8 +226,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -256,6 +260,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月14日 &nbsp;|&nbsp; 読了：約9分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第7回です。<a href="guide-signal-lab-006.html">前回（#6）</a>では「blocked=True（TP1前に壁がある）シグナルは、トレンド相場でのみ高勝率を発揮し、もみあいでは逆効果になる」という構造を解明しました。また、検証の途中で<strong>他FX（EURUSD・GBPUSDなど）× blocked=True が66.7%（10/15）</strong>という高い数字が浮上していました。</p>
     <p>今回はこの66.7%の正体に迫ります。これは本当に「他FXグループに固有のエッジ」なのか、それとも「たまたま下降トレンドのシグナルが多かっただけ」という見かけ上の数字（交絡）なのか——652件の実データを用いた三次元解析で調べます。</p>
