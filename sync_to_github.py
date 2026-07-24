@@ -70,4 +70,5 @@ SYNC_FILES = [
     "guide-proverb-ikisugi-mo-soba.html",
     "guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html",
     "guide-signal-lab-049.html",
+    "guide-proverb-inochigane-ni-te-wo-tsukeru-na.html",
 ]
