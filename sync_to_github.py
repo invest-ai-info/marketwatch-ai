@@ -72,4 +72,5 @@ SYNC_FILES = [
     "guide-signal-lab-049.html",
     "guide-proverb-inochigane-ni-te-wo-tsukeru-na.html",
     "guide-news-2026-07-24-brent-100-houthi-red-sea.html",
+    "guide-signal-lab-050.html",
 ]
