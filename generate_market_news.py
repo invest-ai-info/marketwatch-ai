@@ -4850,6 +4850,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 📰 解説「<a href="guide-news-2026-07-24-brent-100-houthi-red-sea.html" style="color:#0969da"><b>ブレント100ドル突破──フーシ派サウジタンカー攻撃・3週間+49%急騰と円安の二重苦</b></a>」公開'},
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 🛑 解説「<a href="guide-proverb-inochigane-ni-te-wo-tsukeru-na.html" style="color:#0969da"><b>命金には手をつけるな</b></a>」公開'},
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 🧪 解説「<a href="guide-signal-lab-049.html" style="color:#0969da"><b>上昇トレンド×逆張り買い：RSI売られすぎ vs BB下限タッチ、シグナルで明暗が分かれるか</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-selling-climax.html" style="color:#0969da"><b>投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証</b></a>」公開'},

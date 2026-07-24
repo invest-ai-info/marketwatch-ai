@@ -71,4 +71,5 @@ SYNC_FILES = [
     "guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html",
     "guide-signal-lab-049.html",
     "guide-proverb-inochigane-ni-te-wo-tsukeru-na.html",
+    "guide-news-2026-07-24-brent-100-houthi-red-sea.html",
 ]
