@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #6｜「壁あり」シグナルの秘密はトレンド環境にあった——blocked × 相場環境の交絡解析 - MarketWatch AI</title>
   <meta name="description" content="「TP1の前に壁がある」blocked=Trueシグナルが実は高勝率——その理由をトレンド環境で分解。上昇・下降相場で63〜65%の一方、もみあいでは20%に急落。環境依存の構造を652件で解明した研究日誌第6回。">
   <meta name="keywords" content="AIシグナル,検証,blocked,SR,サポレジ,トレンド,勝率,研究日誌,相場環境,もみあい">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -223,8 +226,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -256,6 +260,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月13日 &nbsp;|&nbsp; 読了：約10分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第6回です。<a href="guide-signal-lab-005.html">前回（#5）</a>では「TP1の前に壁（S/R）がある」と判定されるシグナル（blocked=True）が、直感に反して53.7%という高勝率を示しました。壁がないシグナルの38.9%を大きく上回る逆転現象でした。</p>
     <p>「なぜそうなるのか」——今回はその謎に迫ります。鍵になると考えたのは<strong>「相場環境（トレンドかもみあいか）」</strong>です。トレンドが強い相場では価格が勢いよく動いてS/Rの壁も突き抜けやすく、もみあいの相場では壁が本当の「壁」として機能するのではないか、という仮説を検証します。</p>
@@ -466,7 +471,7 @@ window.addEventListener('resize',mark);
         <line x1="520" y1="125" x2="520" y2="105" stroke="#cf222e" stroke-width="2" stroke-dasharray="4 3"/>
         <line x1="520" y1="105" x2="520" y2="130" stroke="#cf222e" stroke-width="2.5"/>
         <polygon points="514,126 526,126 520,140" fill="#cf222e"/>
-        <text x="555" y="90" class="s-label-r" style="font-size:11px">跳ね返り→SL</text>
+        <text x="555" y="100" class="s-label-r" style="font-size:11px">跳ね返り→SL</text>
         <text x="530" y="238" text-anchor="middle" class="s-label-sm">壁が本物の障壁として機能する</text>
         <text x="530" y="252" text-anchor="middle" class="s-label-r" style="font-size:12px;font-weight:700">→ blocked=True 20%</text>
       </svg>
