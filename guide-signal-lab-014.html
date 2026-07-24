@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #14｜円クロスの「-2σタッチ買い」は本当に稼げるか——同じ逆張りでも bb と RSI で成績が真逆になった謎 - MarketWatch AI</title>
   <meta name="description" content="円クロス4通貨ペアで「ボリンジャー-2σタッチ（bb_lower_touch）×ロング」の勝率を過去データで検証。60.0%（27/45）CI下限45.5%と損益分岐43%を上回った。一方、同じ逆張りシグナルRSIは14.3%と真逆。時間足（1h vs 4h）でも大差が出た経緯を噛み砕く研究日誌第14回。">
   <meta name="keywords" content="bb_lower_touch,ボリンジャーバンド,円クロス,jpy_fx,逆張り,ロング,勝率,期待値,研究日誌,RSI,時間足,FX">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -217,8 +220,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -251,6 +255,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月19日 &nbsp;|&nbsp; 読了：約9分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>「同じ逆張り系シグナルなのに、なぜこれほど差がつく？」——そんな疑問が今回の出発点です。前回（<a href="guide-signal-lab-009.html">#9</a>）の研究で、<strong>円クロス（ドル円・ユーロ円・ポンド円・豪ドル円）のロングシグナルでは、ボリンジャー−2σタッチが探索的に65%と高い勝率を示した</strong>と記録しました。ただ、そのときはサンプルN=40の「気になるメモ」止まりで、正式な仮説検証ではありませんでした。今回はN=45に積み上がったところで<strong>正式に仮説を立て、事前宣言した基準に照らして合否を判定</strong>します。</p>
 
