@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>AIはどんな瞬間にシグナルを出すのか｜発火条件をチャートで解剖する図解カタログ - MarketWatch AI</title>
+  <meta name="description" content="当サイトのAIシグナルは、どんなチャートの形・どんな状況で「発火」するのか。RSI過売り反発・ボリンジャー−2σタッチ・サポート反発などの逆張り系から、高値ブレイク・ゴールデンクロスなどの順張り系まで、全シグナルの発火条件を手描きチャート図解で解説。発火からメール通知までの仕組みも公開します。">
+  <meta name="keywords" content="テクニカルシグナル,発火条件,RSI,MACD,ボリンジャーバンド,移動平均,ゴールデンクロス,高値ブレイク,サポートライン,図解,AIシグナル,チャート分析">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-anatomy.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIはどんな瞬間にシグナルを出すのか——発火条件をチャートで解剖する">
+  <meta property="og:description" content="RSI過売り反発・−2σタッチ・サポート反発・高値ブレイク——全シグナルの発火条件を手描きチャート図解で。発火からメール通知までの仕組みも公開。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-anatomy.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIはどんな瞬間にシグナルを出すのか——発火条件をチャートで解剖する図解カタログ",
+    "description": "当サイトのAIシグナル全種の発火条件を手描きチャート図解で解説。逆張り系・順張り系・警戒系の分類と、発火からメール通知までの仕組み。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-24",
+    "dateModified": "2026-07-24",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-anatomy.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVGクラス（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-md{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-a{fill:#9a6700;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-candle-up rect{fill:#1a7f37}
+    .s-candle-up line{stroke:#1a7f37;stroke-width:1.2}
+    .s-candle-dn rect{fill:#cf222e}
+    .s-candle-dn line{stroke:#cf222e;stroke-width:1.2}
+    .s-bb{stroke:#8b949e;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+    .s-support{stroke:#1a7f37;stroke-width:1.4;stroke-dasharray:6 4}
+    .s-zone{fill:#1a7f37;opacity:.10}
+    .s-resist{stroke:#8b949e;stroke-width:1.4;stroke-dasharray:6 4}
+    .s-fire{stroke:#d4a017;stroke-width:2;fill:none}
+    .s-firedot{fill:#d4a017}
+    .s-rsi{stroke:#0969da;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .s-ma25{stroke:#0969da;stroke-width:2;fill:none;stroke-linecap:round}
+    .s-ma75{stroke:#8b949e;stroke-width:2;fill:none;stroke-linecap:round}
+    .s-grid{stroke:#d0d7de;stroke-width:1;stroke-dasharray:2 3}
+    .s-leader{stroke:#8b949e;stroke-width:1;stroke-dasharray:3 3}
+    .s-panelbox{fill:#ffffff;stroke:#d0d7de;stroke-width:1}
+    .s-flowbox{fill:#ffffff;stroke:#d0d7de;stroke-width:1.4}
+    .s-flow-b{stroke:#0969da}
+    .s-flow-a{stroke:#d4a017}
+    .s-flow-g{stroke:#1a7f37}
+    .s-arrow{stroke:#8b949e;stroke-width:1.5;fill:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-md{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-note-a{fill:#e3b341}
+    body.dark .s-candle-up rect{fill:#3fb950}
+    body.dark .s-candle-up line{stroke:#3fb950}
+    body.dark .s-candle-dn rect{fill:#f85149}
+    body.dark .s-candle-dn line{stroke:#f85149}
+    body.dark .s-bb{stroke:#6e7781}
+    body.dark .s-support{stroke:#3fb950}
+    body.dark .s-zone{fill:#3fb950;opacity:.14}
+    body.dark .s-resist{stroke:#6e7781}
+    body.dark .s-fire{stroke:#e3b341}
+    body.dark .s-firedot{fill:#e3b341}
+    body.dark .s-rsi{stroke:#58a6ff}
+    body.dark .s-ma25{stroke:#58a6ff}
+    body.dark .s-ma75{stroke:#6e7781}
+    body.dark .s-grid{stroke:#30363d}
+    body.dark .s-leader{stroke:#6e7781}
+    body.dark .s-panelbox{fill:#0d1117;stroke:#30363d}
+    body.dark .s-flowbox{fill:#0d1117;stroke:#30363d}
+    body.dark .s-flow-b{stroke:#58a6ff}
+    body.dark .s-flow-a{stroke:#e3b341}
+    body.dark .s-flow-g{stroke:#3fb950}
+    body.dark .s-arrow{stroke:#6e7781}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; AIはどんな瞬間にシグナルを出すのか
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は当サイトのAIシグナルの仕組みを解説する「情報提供」であり、特定の金融商品の売買推奨や投資助言ではありません。掲載する過去の検証成績は将来の成果を保証しません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧪 AIはどんな瞬間にシグナルを出すのか——発火条件をチャートで解剖する図解カタログ</h1>
+    <div class="meta-line">公開日：2026 年 7 月 24 日 ／ 読了時間：約 10 分 ／ カテゴリ：AIシグナル研究日誌</div>
+
+    <p>当サイトの<a href="track-record.html">シグナル成績ダッシュボード</a>や「AIシグナル研究日誌」には、「発火」という言葉が繰り返し出てきます。<code>rsi_oversold_bounce</code> が発火した、<code>high_break</code> が何勝何敗だった——でも、それが<strong>チャートのどの瞬間</strong>を指しているのかは、これまで文字でしか説明してきませんでした。</p>
+    <p>この記事では、AIが監視しているすべてのシグナルについて、<strong>「どんな形のチャートで」「どの1本のローソク足で」発火するのか</strong>を手描きの図解で解説します。大事な前提をひとつ：発火条件はすべてコードに固定されていて、<strong>人間の裁量は一切入りません</strong>。同じ形が来たら必ず発火し、必ず記録されます。だからこそ後から成績を正直に検証できます。</p>
+
+    <div class="toc">
+      <div class="toc-title">📖 目次</div>
+      <ol>
+        <li><a href="#section-1">全体像——18銘柄を機械が定時監視</a></li>
+        <li><a href="#section-2">図解①：逆張り系シグナル（売られすぎで発火）</a></li>
+        <li><a href="#section-3">図解②：順張り系シグナル（上昇の勢いで発火）</a></li>
+        <li><a href="#section-4">発火条件カタログ（全シグナル一覧表）</a></li>
+        <li><a href="#section-5">図解③：発火してから通知されるまで</a></li>
+        <li><a href="#section-6">正直な注意——この図解が言えないこと</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <h2 id="section-1">1️⃣ 全体像——18銘柄を機械が定時監視</h2>
+    <p>監視対象は金・銀・原油・日経225先物・S&amp;P500先物・ビットコイン・主要FXペアなど<strong>18銘柄</strong>。それぞれ<strong>4時間足・1時間足・日足</strong>の3つの時間軸で、決まった時刻にプログラムが最新のチャートを取得し、これから紹介する条件に当てはまるかを機械的に判定します。</p>
+    <p>シグナルは大きく3つのグループに分かれます。</p>
+    <ul>
+      <li><strong>逆張り系（売られすぎ狙い）</strong>——下げ切った場所での反発開始を捉える。当サイトの検証で<strong>繰り返し勝ち側</strong>に出ているグループ</li>
+      <li><strong>順張り系（勢い乗り）</strong>——上昇の勢いに乗る教科書的な買いサイン。ところが当サイトの前向き実測では<strong>負け側</strong>に出ており、買い方向は門番機能がブロックする</li>
+      <li><strong>警戒系</strong>——過熱や下方向への転換を知らせる注意喚起。売買の合図ではなく状況ラベル</li>
+    </ul>
+
+    <h2 id="section-2">2️⃣ 図解①：逆張り系シグナル（売られすぎで発火）</h2>
+    <p>まずは検証成績が良い方から。逆張り系の3シグナルは、いずれも「<strong>下落が続いたあと、下げ止まって上を向いた最初の1本</strong>」で発火します。下の図は同じ場面に3つの条件が重なった例です（オレンジの枠が発火バー）。</p>
+
+    <div class="chart-figure">
+    <svg viewBox="0 0 680 460" role="img" aria-label="逆張り系シグナルの発火場面を示す概念チャート"><title>逆張り系シグナルの発火場面</title>
+      <text class="s-panel-label" x="44" y="52">価格（ローソク足）</text>
+      <rect class="s-zone" x="54" y="254" width="420" height="18"/>
+      <line class="s-support" x1="54" y1="272" x2="474" y2="272"/>
+      <path class="s-bb" d="M60 46 C 180 95, 300 155, 480 205"/>
+      <path class="s-bb" d="M60 122 C 180 170, 300 230, 480 278"/>
+      <g class="s-candle-dn"><line x1="60" y1="66" x2="60" y2="100"/><rect x="53" y="72" width="14" height="24" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="82" y1="86" x2="82" y2="112"/><rect x="75" y="92" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-up"><line x1="104" y1="94" x2="104" y2="116"/><rect x="97" y="100" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="126" y1="100" x2="126" y2="132"/><rect x="119" y="104" width="14" height="22" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="148" y1="118" x2="148" y2="146"/><rect x="141" y="122" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-up"><line x1="170" y1="130" x2="170" y2="154"/><rect x="163" y="136" width="14" height="14" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="192" y1="138" x2="192" y2="172"/><rect x="185" y="142" width="14" height="24" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="214" y1="156" x2="214" y2="188"/><rect x="207" y="162" width="14" height="20" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="236" y1="172" x2="236" y2="200"/><rect x="229" y="178" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="258" y1="184" x2="258" y2="214"/><rect x="251" y="190" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="280" y1="198" x2="280" y2="226"/><rect x="273" y="204" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="302" y1="208" x2="302" y2="240"/><rect x="295" y="214" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="324" y1="222" x2="324" y2="252"/><rect x="317" y="228" width="14" height="14" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="346" y1="232" x2="346" y2="262"/><rect x="339" y="238" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="368" y1="240" x2="368" y2="272"/><rect x="361" y="246" width="14" height="14" rx="2"/></g>
+      <g class="s-candle-up"><line x1="390" y1="228" x2="390" y2="270"/><rect x="383" y="234" width="14" height="20" rx="2"/></g>
+      <rect class="s-fire" x="379" y="222" width="22" height="54" rx="6"/>
+      <line class="s-leader" x1="462" y1="270" x2="500" y2="214"/><text class="s-note" x="504" y="218">ボリンジャー −2σ</text>
+      <line class="s-leader" x1="476" y1="263" x2="500" y2="258"/><text class="s-note-g" x="504" y="262">サポート帯（+0.5ATR）</text>
+      <line class="s-leader" x1="402" y1="232" x2="500" y2="168"/><text class="s-note-a" x="504" y="172">発火バー＝反発開始</text>
+      <text class="s-panel-label" x="44" y="312">RSI（14）</text>
+      <rect class="s-panelbox" x="40" y="320" width="440" height="110" rx="8"/>
+      <line class="s-grid" x1="56" y1="336" x2="470" y2="336"/>
+      <line class="s-grid" x1="56" y1="364" x2="470" y2="364"/>
+      <line class="s-grid" x1="56" y1="392" x2="470" y2="392"/>
+      <text class="s-label-sm" x="470" y="333" text-anchor="end">70</text>
+      <text class="s-label-sm" x="470" y="361" text-anchor="end">50</text>
+      <text class="s-label-sm" x="470" y="389" text-anchor="end">30</text>
+      <polyline class="s-rsi" points="60,332 104,344 148,356 192,368 236,378 280,386 324,396 368,404"/>
+      <line x1="368" y1="404" x2="390" y2="382" class="s-fire" stroke-linecap="round"/>
+      <circle class="s-firedot" cx="390" cy="382" r="4"/>
+      <line class="s-leader" x1="396" y1="380" x2="500" y2="384"/><text class="s-note" x="504" y="388">RSI 30割れ → 反発</text>
+    </svg>
+    <div class="chart-caption">図1：逆張り系3シグナルが重なる「売られすぎゾーン」の例。※ 概念を示すイメージ図です（実際の値動き・数値ではありません）</div>
+    </div>
+
+    <h3>🟢 RSI過売り反発（<code>rsi_oversold_bounce</code>）</h3>
+    <p>前のローソク足でRSIが<strong>30を下回り</strong>、今のローソク足でRSIが<strong>前より上昇</strong>（ただしまだ50未満）——つまり「落ち切って、上を向いた最初の1本」だけを拾います。RSIが30を割っている間ずっと鳴り続けるのではなく、<strong>反転の瞬間に1回だけ</strong>発火するのがポイントです。</p>
+
+    <h3>🟢 ボリンジャー−2σタッチ（<code>bb_lower_touch</code>）</h3>
+    <p>ローソク足の<strong>安値が−2σバンドに接触</strong>し、終値が安値より上（＝下ヒゲで戻した形）で発火します。さらに「終値がバンド幅の<strong>下から3割以内</strong>にあること」という追加条件付き。これは過去の検証で「バンド上半分にいるのに発火するケースが35%あり、その勝率がわずか13%だった」という<strong>不具合を発見して塞いだ</strong>名残です。条件は一度決めたら終わりではなく、検証で欠陥が見つかれば直します（直したことも公開します）。</p>
+
+    <h3>🟢 サポート反発（<code>support_bounce</code>）</h3>
+    <p>直近20本の安値を<strong>割らずに</strong>、その安値から<strong>ATR（平均的な値幅）の半分以内</strong>まで接近して下げ止まり、陽線方向へ反発したら発火。「サポートラインでの下げ止まり」を機械の言葉に翻訳した条件です。過去データの検証（57回・勝率59.6%・平均+0.485R）で最も有望だった型のひとつですが、<strong>現在は記録のみの試用期間中</strong>で、前向き検証を通るまで通知には使いません。</p>
+
+    <div class="positive-box"><strong>なぜ逆張り系が「勝ち筋」なのか</strong>：当サイトの20年バックテストとライブ前向き実測の両方で、指数や商品（コモディティ）の「売られすぎからの反発」は繰り返しプラス側に出ています。ただしこれは<strong>消えない資産（指数・商品）に限った話</strong>。日本の個別株で同じことをやると逆に危険——という検証結果は<a href="guide-selling-climax.html">セリングクライマックスの検証記事</a>で公開しています。</div>
+
+    <h2 id="section-3">3️⃣ 図解②：順張り系シグナル（上昇の勢いで発火）</h2>
+    <p>次は教科書で「買いサイン」とされる順張り系。<strong>上昇が伸びた場所</strong>で発火します。</p>
+
+    <div class="chart-figure">
+    <svg viewBox="0 0 680 460" role="img" aria-label="順張り系シグナルの発火場面を示す概念チャート"><title>順張り系シグナルの発火場面</title>
+      <text class="s-panel-label" x="44" y="52">価格（ローソク足）</text>
+      <line class="s-resist" x1="54" y1="118" x2="474" y2="118"/>
+      <path class="s-ma75" d="M60 244 C 180 232, 300 204, 470 152"/>
+      <path class="s-ma25" d="M60 256 C 150 244, 210 224, 250 206 C 330 178, 400 148, 470 112"/>
+      <g class="s-candle-up"><line x1="60" y1="232" x2="60" y2="258"/><rect x="53" y="238" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="82" y1="238" x2="82" y2="256"/><rect x="75" y="242" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-up"><line x1="104" y1="218" x2="104" y2="248"/><rect x="97" y="224" width="14" height="20" rx="2"/></g>
+      <g class="s-candle-up"><line x1="126" y1="202" x2="126" y2="230"/><rect x="119" y="208" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="148" y1="206" x2="148" y2="226"/><rect x="141" y="212" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-up"><line x1="170" y1="186" x2="170" y2="218"/><rect x="163" y="192" width="14" height="22" rx="2"/></g>
+      <g class="s-candle-up"><line x1="192" y1="170" x2="192" y2="198"/><rect x="185" y="176" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="214" y1="174" x2="214" y2="194"/><rect x="207" y="180" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-up"><line x1="236" y1="154" x2="236" y2="186"/><rect x="229" y="160" width="14" height="22" rx="2"/></g>
+      <g class="s-candle-up"><line x1="258" y1="140" x2="258" y2="166"/><rect x="251" y="146" width="14" height="16" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="280" y1="144" x2="280" y2="164"/><rect x="273" y="150" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-up"><line x1="302" y1="128" x2="302" y2="156"/><rect x="295" y="134" width="14" height="18" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="324" y1="132" x2="324" y2="154"/><rect x="317" y="138" width="14" height="12" rx="2"/></g>
+      <g class="s-candle-up"><line x1="346" y1="118" x2="346" y2="144"/><rect x="339" y="126" width="14" height="14" rx="2"/></g>
+      <g class="s-candle-dn"><line x1="368" y1="124" x2="368" y2="144"/><rect x="361" y="130" width="14" height="10" rx="2"/></g>
+      <g class="s-candle-up"><line x1="390" y1="96" x2="390" y2="130"/><rect x="383" y="100" width="14" height="26" rx="2"/></g>
+      <rect class="s-fire" x="379" y="94" width="22" height="40" rx="6"/>
+      <circle class="s-firedot" cx="238" cy="212" r="4"/>
+      <line class="s-leader" x1="476" y1="118" x2="500" y2="120"/><text class="s-note" x="504" y="124">直近20本の高値</text>
+      <line class="s-leader" x1="403" y1="100" x2="500" y2="86"/><text class="s-note-a" x="504" y="90">ブレイク発火バー</text>
+      <line class="s-leader" x1="242" y1="214" x2="500" y2="248"/><text class="s-note" x="504" y="252">MAゴールデンクロス</text>
+      <text class="s-panel-label" x="44" y="312">MACD</text>
+      <rect class="s-panelbox" x="40" y="320" width="440" height="110" rx="8"/>
+      <path class="s-ma75" d="M60 402 C 200 398, 340 382, 470 352"/>
+      <path class="s-ma25" d="M60 414 C 200 406, 300 388, 470 338"/>
+      <circle class="s-firedot" cx="315" cy="385" r="4"/>
+      <line class="s-leader" x1="321" y1="388" x2="500" y2="388"/><text class="s-note" x="504" y="392">MACD線がシグナル線を上抜け</text>
+    </svg>
+    <div class="chart-caption">図2：順張り系3シグナルの発火場面。青線＝25期間移動平均／グレー線＝75期間移動平均。※ 概念を示すイメージ図です（実際の値動き・数値ではありません）</div>
+    </div>
+
+    <h3>発火の瞬間はどれもシンプル</h3>
+    <ul>
+      <li><strong>高値ブレイク（<code>high_break</code>）</strong>：終値が<strong>直近20本の最高値</strong>を上抜けた瞬間</li>
+      <li><strong>MAゴールデンクロス（<code>ma_golden</code>）</strong>：25期間移動平均が75期間移動平均を<strong>上抜けた</strong>瞬間（下抜けは <code>ma_dead</code>）</li>
+      <li><strong>MACDゴールデンクロス（<code>macd_golden</code>）</strong>：MACD線がシグナル線を<strong>上抜けた</strong>瞬間（下抜けは <code>macd_dead</code>）</li>
+    </ul>
+
+    <div class="negative-box"><strong>ところが、当サイトの実測では「負け筋」でした</strong>。ライブ前向き実測で、MAゴールデンクロスは30回中勝率23.3%（統計的にも「たまたま」では説明しづらい低さ）、MACDゴールデンクロスの買いは直近の前向き集計で0勝7敗。教科書的な「買いサイン」が、少なくとも当サイトの監視銘柄×時間軸では<strong>高値づかみの合図</strong>になっていたのです。だから現在、これら順張り系の買いシグナルは検出・記録はしますが、<strong>門番機能が通知を自動ブロック</strong>します。検出をやめないのは、成績の記録を続けて「本当に負け筋のままか」を監視し続けるためです。</div>
+
+    <h2 id="section-4">4️⃣ 発火条件カタログ（全シグナル一覧表）</h2>
+    <p>主要シグナルの発火条件を一覧にまとめます。「向き」は発火時にAIが付けるラベルで、売買の推奨ではありません。</p>
+
+    <table>
+      <thead><tr><th>シグナル</th><th>発火の瞬間（チャート上の条件）</th><th>向き</th><th>グループ</th></tr></thead>
+      <tbody>
+        <tr><td>🟢 RSI過売り反発</td><td>前の足でRSIが30を割り、今の足で反発開始（RSIはまだ50未満）</td><td>買い候補</td><td>逆張り（勝ち筋）</td></tr>
+        <tr><td>🟢 BB −2σタッチ</td><td>安値が−2σに接触し下ヒゲで戻す（終値がバンド下方3割以内）</td><td>買い候補</td><td>逆張り（勝ち筋）</td></tr>
+        <tr><td>🟢 サポート反発</td><td>直近20本安値を割らず+0.5ATR以内で下げ止まり、陽線反発</td><td>買い候補</td><td>逆張り（試用中）</td></tr>
+        <tr><td>🟢 出来高反発</td><td>RSI30以下＋出来高が平常の2倍以上＋陽線反発（株・商品のみ）</td><td>買い候補</td><td>逆張り（試用中）</td></tr>
+        <tr><td>🔴 安値割れ</td><td>終値が直近20本の最安値を下抜け</td><td>売り警告</td><td>転換・警戒</td></tr>
+        <tr><td>🟡 RSI過買い</td><td>RSIが70を上抜けた瞬間</td><td>警戒</td><td>過熱の注意喚起</td></tr>
+        <tr><td>🟡 BB +2σ突破</td><td>終値が+2σを上抜け（バンド上方3割以内が条件）</td><td>警戒</td><td>過熱の注意喚起</td></tr>
+        <tr><td>🟢 高値ブレイク</td><td>終値が直近20本の最高値を上抜け</td><td>買い候補</td><td>順張り（負け筋＝買いは門番ブロック）</td></tr>
+        <tr><td>🟢 MAゴールデンクロス</td><td>25期間MAが75期間MAを上抜け</td><td>買い候補</td><td>順張り（負け筋＝買いは門番ブロック）</td></tr>
+        <tr><td>🔴 MAデッドクロス</td><td>25期間MAが75期間MAを下抜け</td><td>売り転換</td><td>転換</td></tr>
+        <tr><td>🟢 MACDゴールデン</td><td>MACD線がシグナル線を上抜け</td><td>買い候補</td><td>順張り（負け筋＝買いは門番ブロック）</td></tr>
+        <tr><td>🔴 MACDデッド</td><td>MACD線がシグナル線を下抜け</td><td>売り転換</td><td>転換</td></tr>
+      </tbody>
+    </table>
+    <p>このほか、ダブルトップ／ダブルボトム・三角保ち合い・ブレイク後の初押しなど、形状を検出する補助シグナルもいくつか記録専用で動いています。</p>
+
+    <div class="info-box"><strong>発火＝ポジションプランの自動付与</strong>：発火すると、その時点のATR（平均的な値幅）から損切りライン（±1.5ATR）と利益目標（±2ATR／±3ATR）が機械的に計算され、後日「どちらに先に到達したか」で勝敗が自動確定します。ここにも裁量は入りません。この勝敗記録の蓄積が<a href="track-record.html">シグナル成績ダッシュボード</a>のすべての数字の源泉です。</div>
+
+    <h2 id="section-5">5️⃣ 図解③：発火してから通知されるまで</h2>
+    <p>大事なことなので強調します——<strong>発火はイコール通知ではありません</strong>。発火から通知までは、次の5段階のパイプラインになっています。</p>
+
+    <div class="chart-figure">
+    <svg viewBox="0 0 680 460" role="img" aria-label="シグナル発火から通知までの5段階パイプライン図"><title>発火から通知までの流れ</title>
+      <defs><marker id="arrowP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <rect class="s-flowbox" x="150" y="40" width="380" height="56" rx="8"/>
+      <text class="s-label-md" x="340" y="62" text-anchor="middle" style="font-weight:700">定時スキャン</text>
+      <text class="s-label-sm" x="340" y="82" text-anchor="middle">18銘柄 × 4時間足・1時間足・日足</text>
+      <line class="s-arrow" x1="340" y1="96" x2="340" y2="120" marker-end="url(#arrowP)"/>
+      <rect class="s-flowbox s-flow-b" x="150" y="124" width="380" height="56" rx="8"/>
+      <text class="s-label-md" x="340" y="146" text-anchor="middle" style="font-weight:700">シグナル発火</text>
+      <text class="s-label-sm" x="340" y="166" text-anchor="middle">この記事の発火条件にヒットした瞬間だけ</text>
+      <line class="s-arrow" x1="340" y1="180" x2="340" y2="204" marker-end="url(#arrowP)"/>
+      <rect class="s-flowbox s-flow-a" x="150" y="208" width="380" height="56" rx="8"/>
+      <text class="s-label-md" x="340" y="230" text-anchor="middle" style="font-weight:700">門番チェック</text>
+      <text class="s-label-sm" x="340" y="250" text-anchor="middle">負け筋の買い封じ・環境警戒・連続発火の抑制</text>
+      <line class="s-arrow" x1="340" y1="264" x2="340" y2="288" marker-end="url(#arrowP)"/>
+      <rect class="s-flowbox" x="150" y="292" width="380" height="56" rx="8"/>
+      <text class="s-label-md" x="340" y="314" text-anchor="middle" style="font-weight:700">全量を成績ログに記録</text>
+      <text class="s-label-sm" x="340" y="334" text-anchor="middle">損切り／利益目標への到達で勝敗を自動確定</text>
+      <line class="s-arrow" x1="340" y1="348" x2="340" y2="372" marker-end="url(#arrowP)"/>
+      <rect class="s-flowbox s-flow-g" x="150" y="376" width="380" height="56" rx="8"/>
+      <text class="s-label-md" x="340" y="398" text-anchor="middle" style="font-weight:700">昇格した型だけ通知</text>
+      <text class="s-label-sm" x="340" y="418" text-anchor="middle">前向き検証の統計基準を通過した型のみ</text>
+    </svg>
+    <div class="chart-caption">図3：発火から通知までの5段階。※ 概念を示すイメージ図です</div>
+    </div>
+
+    <p>ポイントは最後の段です。発火したシグナルは<strong>すべて</strong>成績ログに記録されますが、通知（メール）になるのは、<strong>発火後の実際の成績＝前向き検証</strong>で統計基準を通過して「昇格」した型にマッチした発火だけ。どの型がいま昇格しているか・過去にどの型が降格したかは、<a href="track-record.html">シグナル成績ダッシュボード</a>の「🏆 エッジ番付」タブでリアルタイムに公開しています。昇格も降格も事前に決めた統計ルールの自動判定で、人間の期待や愛着で延命することはできません。</p>
+    <p>毎朝の「AIシグナル研究日誌」は、この成績ログを材料に「どの発火条件が・どんな状況で・どれくらい勝てているか」を1日1テーマずつ検証しているシリーズです。日誌に出てくる <code>rsi_oversold_bounce</code> や <code>high_break</code> がチャートのどの瞬間なのか、この記事を索引代わりに使ってください。</p>
+
+    <h2 id="section-6">6️⃣ 正直な注意——この図解が言えないこと</h2>
+    <ul>
+      <li><strong>図はすべて概念図です</strong>：実在の銘柄・日付・価格ではありません。発火条件を視覚的に理解するための描き下ろしです。</li>
+      <li><strong>「勝ち筋」「負け筋」は過去の実測の分類です</strong>：将来も同じである保証はありません。実際、当サイトでは「勝ち筋」だった型が成績悪化で降格した実例があります（その経緯も研究日誌で公開しています）。</li>
+      <li><strong>発火条件は検証に基づいて改定されることがあります</strong>：−2σタッチの「下方3割以内」条件のように、検証で欠陥が見つかれば直します。改定の履歴と理由は研究日誌に残します。</li>
+      <li><strong>シグナルは売買の推奨ではありません</strong>：「買い候補」「売り警告」はAIが機械的に付ける状況ラベルであり、読者のみなさんに特定の売買を勧めるものではありません。</li>
+    </ul>
+
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <ul>
+      <li>AIシグナルは<strong>18銘柄×3時間軸</strong>を定時監視し、<strong>コードに固定された条件</strong>だけで発火する（裁量ゼロ・全量記録）。</li>
+      <li><strong>逆張り系</strong>（RSI過売り反発・−2σタッチ・サポート反発）は「下げ切って上を向いた最初の1本」で発火し、当サイトの検証では勝ち側。</li>
+      <li><strong>順張り系</strong>（高値ブレイク・ゴールデンクロス）は「上昇が伸びた場所」で発火するが、前向き実測では負け側＝買い方向は門番がブロック。</li>
+      <li><strong>発火＝通知ではない</strong>。前向き検証で昇格した型だけが通知され、その顔ぶれは「🏆 エッジ番付」でいつでも確認できる。</li>
+    </ul>
+
+    <div class="cta-box" style="background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center">
+      <div style="font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px">📊 いま昇格中のシグナルは？</div>
+      <div style="font-size:.88rem;color:#57606a;margin-bottom:14px">全発火の成績と「🏆 エッジ番付」はダッシュボードでリアルタイム公開中</div>
+      <a href="track-record.html" style="display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem">シグナル成績を見る →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-indicator-combos.html">
+        <div class="related-card-title">🧪 指標の組み合わせ大全</div>
+        <div class="related-card-desc">RSI×トレンドなど「状態の組み合わせ」で勝率がどう変わるかの検証。本記事の発火条件の応用編。</div>
+      </a>
+      <a class="related-card" href="guide-selling-climax.html">
+        <div class="related-card-title">🧪 投げ売りの翌日に買っていいのか</div>
+        <div class="related-card-desc">逆張りが「生きる資産」と「危険な資産」の違い。日本株1,285回の急落で検証。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">本記事のシグナルたちの全発火履歴と勝敗。エッジ番付タブで昇格・降格も公開。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">✂️ 損切りの考え方</div>
+        <div class="related-card-desc">発火時に自動付与される±1.5ATRの損切りライン。その背景にある考え方。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトのAIシグナルの仕組みと過去データ検証の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。記事中の図はすべて概念を示すイメージ図であり、実在の値動きではありません。掲載した検証成績は特定条件下での過去の集計値であり、将来の成果を保証しません。投資判断はご自身の責任で行ってください。</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
