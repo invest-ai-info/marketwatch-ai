@@ -26,6 +26,7 @@ JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 TRADES_FILE = "my-trades.json"
 EVENTS_FILE = "economic-events.json"
+TRACKER_FILE = "signal-lab-tracker.json"  # エッジ番付の元データ（Actions実行時はrepo内に存在）
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -140,6 +141,63 @@ def summarize_trades(trades, week_start, week_end):
     }
 
 
+def summarize_banzuke(tracker, week_start, week_end):
+    """エッジ番付（signal-lab-tracker.json）の現況と直近1週間の昇進・降格を集計。
+    昇降の判定はトラッカーの promoted_at / demoted_at（事前宣言ルールの自動執行）を読むだけで、
+    ここでは一切再判定しない。tracker が無い/壊れている場合は None（節ごと非表示）。"""
+    hyps = (tracker or {}).get("hypotheses") or []
+    if not hyps:
+        return None
+    ws, we = week_start.date(), week_end.date()
+
+    def _in_week(d):
+        try:
+            dd = datetime.fromisoformat(d).date() if d else None
+        except (ValueError, TypeError):
+            return False
+        return dd is not None and ws <= dd < we
+
+    makuuchi = [h for h in hyps if h.get("status") == "promoted"]
+    juryo = [h for h in hyps if h.get("status") == "tracking" and h.get("holdout_pass")]
+    ups = [h for h in hyps if _in_week(h.get("promoted_at"))]
+    downs = [h for h in hyps if _in_week(h.get("demoted_at"))]
+    return {"n_makuuchi": len(makuuchi), "n_juryo": len(juryo), "n_total": len(hyps),
+            "ups": ups, "downs": downs}
+
+
+def render_banzuke_section(banzuke):
+    """「🏆 エッジ番付の変動」節の HTML（banzuke が None なら空文字＝節ごと省略）"""
+    if banzuke is None:
+        return ""
+
+    def _row(mark, h, date_key):
+        kind = "🛡回避ゲート" if h.get("kind") == "gate" else "⚔️エッジ"
+        fwd = h.get("forward") or {}
+        n = fwd.get("n", "—")
+        label = h.get("label") or h.get("id", "?")
+        return (f'<tr><td>{mark}</td><td><b>{label}</b></td><td>{kind}</td>'
+                f'<td style="white-space:nowrap">{h.get(date_key, "")}</td>'
+                f'<td style="text-align:right">{n}</td></tr>')
+
+    rows = [_row("⬆️ 昇進", h, "promoted_at") for h in banzuke["ups"]]
+    rows += [_row("⬇️ 降格", h, "demoted_at") for h in banzuke["downs"]]
+    if rows:
+        table = ('<table><thead><tr><th>変動</th><th>仮説</th><th>型</th><th>判定日</th>'
+                 '<th style="text-align:right">前向きN</th></tr></thead>'
+                 f'<tbody>{"".join(rows)}</tbody></table>')
+    else:
+        table = '<p>先週は番付の昇進・降格はありませんでした。</p>'
+    return f"""
+<h2>🏆 エッジ番付の変動</h2>
+<p>検証中の仮説を力士に見立てた公開リーグ「エッジ番付」の先週の動きです。昇進・降格は事前に宣言した統計ルール
+（前向き成績の信頼区間チェック）による自動判定で、人間の裁量は入りません。現在の番付は
+<a href="track-record.html">📊 シグナル成績</a> の「🏆 エッジ番付」タブで確認できます。</p>
+{table}
+<div class="info-box">現在の勢力図：幕内（昇格中）{banzuke['n_makuuchi']} 本 ／ 十両（昇格候補）{banzuke['n_juryo']} 本 ／ 全 {banzuke['n_total']} 仮説を追跡中</div>
+<p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 番付は過去データの検証結果を整理したものであり、将来の成績を保証するものではありません。特定の売買を推奨するものでもありません。</p>
+"""
+
+
 def next_week_events(events_data, week_end):
     """来週（週末から 7 日）の重要指標を抽出"""
     end = week_end + timedelta(days=7)
@@ -229,7 +287,7 @@ def _fallback_lessons(sig_stats, trade_stats):
 信頼度スコア HIGH のシグナルがどれだけ勝てているか、引き続き観察していきます。"""
 
 
-def render_html(today, week_start, week_end, sig_stats, trade_stats, events, lessons_text):
+def render_html(today, week_start, week_end, sig_stats, trade_stats, events, lessons_text, banzuke=None):
     """振り返り記事 HTML を組み立て"""
     week_start_str = week_start.strftime("%Y-%m-%d")
     week_end_str = (week_end - timedelta(days=1)).strftime("%Y-%m-%d")
@@ -400,6 +458,7 @@ footer a{{color:#0969da;text-decoration:none}}
   <thead><tr><th>銘柄</th><th style="text-align:right">勝ち</th><th style="text-align:right">SL</th><th style="text-align:right">差し引き</th></tr></thead>
   <tbody>{ticker_html}</tbody>
 </table>
+{render_banzuke_section(banzuke)}
 
 <h2>💼 先週の実取引</h2>
 <table>
@@ -467,12 +526,14 @@ def main():
     sig_stats = summarize_signals(signals, last_monday, this_monday)
     trade_stats = summarize_trades(trades, last_monday, this_monday)
     events = next_week_events(events_data, this_monday)
-    print(f"  📊 先週シグナル {sig_stats['total']} / 確定 {sig_stats['closed']} / 勝率 {sig_stats['win_rate']}%")
+    banzuke = summarize_banzuke(load_json(TRACKER_FILE, {}), last_monday, this_monday)
+    print(f"  📊 先週シグナル {sig_stats['total']} / 確定 {sig_stats['closed']} / 勝率 {sig_stats['win_rate']}%"
+          + (f" / 番付 幕内{banzuke['n_makuuchi']}・昇降 {len(banzuke['ups'])+len(banzuke['downs'])}件" if banzuke else " / 番付データなし"))
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
     lessons_text = ai_lessons(sig_stats, trade_stats, api_key)
 
-    html = render_html(today, last_monday, this_monday, sig_stats, trade_stats, events, lessons_text)
+    html = render_html(today, last_monday, this_monday, sig_stats, trade_stats, events, lessons_text, banzuke)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  ✅ {filename}: 生成完了 ({os.path.getsize(filepath) / 1024:.1f} KB)")
