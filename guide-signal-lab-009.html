@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #9｜円クロスFXショートの罠——722件が示す方向性非対称と損益分岐未達 - MarketWatch AI</title>
   <meta name="description" content="jpy_fx（円クロスFX）のショートシグナルの勝率は23.5%（N=34、CI上限40.0%）で損益分岐43%を下回ることを確認。macd_deadが76.5%を占め、下降トレンドでも8.3%という逆説的低勝率を示す。722件の反実仮想検証。研究日誌第9回。">
   <meta name="keywords" content="円クロスFX,ショート,方向性,勝率,AIシグナル,macd_dead,ドル円,ユーロ円,研究日誌,検証">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -223,8 +226,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -256,6 +260,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月16日 &nbsp;|&nbsp; 読了：約10分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第9回です。<a href="guide-signal-lab-008.html">前回（#8）</a>ではシグナル種別ごとの勝率マップを作成し、MAゴールデンクロスの23.3%（CI上限40.9%）が損益分岐43%を下回ることを確認しました。</p>
     <p>今回は「<strong>円クロスFX（jpy_fx）には、ロングとショートで勝率に大きな差があるか</strong>」という方向性の問いに取り組みます。前号の#4では金（GC=F）でロング12.8%・ショート61.1%という激しい方向性非対称を確認しました。同様の構造が円クロスFXにも潜んでいるか——722件の閉済データで反実仮想検証を行います。</p>
@@ -349,7 +354,7 @@ window.addEventListener('resize',mark);
         <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:15px">jpy_fx（円クロスFX）方向別勝率</text>
         <!-- 43%損益分岐ガイド: x=498 -->
         <line x1="498" y1="34" x2="498" y2="185" class="s-guide"/>
-        <text x="501" y="200" class="s-label-y">損益分岐 43%</text>
+        <text x="498" y="200" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
         <!-- X軸 -->
         <line x1="140" y1="185" x2="640" y2="185" class="s-axis"/>
         <!-- X軸目盛 -->
@@ -418,7 +423,7 @@ window.addEventListener('resize',mark);
         <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">jpy_fx ショートのトレンド別勝率（逆説——下降でも最低）</text>
         <!-- 43% guide: x=498 -->
         <line x1="498" y1="34" x2="498" y2="210" class="s-guide"/>
-        <text x="501" y="226" class="s-label-y">損益分岐 43%</text>
+        <text x="498" y="226" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
         <!-- X軸 -->
         <line x1="140" y1="210" x2="640" y2="210" class="s-axis"/>
         <!-- X軸目盛 -->
@@ -478,7 +483,7 @@ window.addEventListener('resize',mark);
         <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">jpy_fx ロング内の種別比較（bb_lower vs rsi_oversold）</text>
         <!-- 43% guide: x=409 -->
         <line x1="409" y1="34" x2="409" y2="168" class="s-guide"/>
-        <text x="407" y="182" text-anchor="end" class="s-label-y">損益分岐 43%</text>
+        <text x="409" y="182" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
         <!-- X軸 -->
         <line x1="140" y1="168" x2="640" y2="168" class="s-axis"/>
         <!-- X軸目盛 -->
