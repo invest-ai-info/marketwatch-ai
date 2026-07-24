@@ -351,6 +351,13 @@ def build_robots_txt() -> str:
 # 歴史的イベントデータ（1971〜）
 # ─────────────────────────────────────────
 HISTORICAL_EVENTS = [
+    {"date": "1907-10", "label": "1907年恐慌",             "desc": "米国で銀行取り付け騒ぎが連鎖。J.P.モルガンが私財を投じて市場を救済し、後のFRB設立（1913年）につながった。",   "assets": ["sp500"]},
+    {"date": "1914-07", "label": "第一次世界大戦",         "desc": "開戦でパニック売りが殺到しニューヨーク証券取引所は約4ヶ月半閉鎖。金融の中心が欧州から米国へ移る転機となった。", "assets": ["sp500", "gold"]},
+    {"date": "1929-10", "label": "ウォール街大暴落",       "desc": "暗黒の木曜日から世界恐慌へ。米株はピークから約9割下落し、1929年の高値回復には四半世紀を要した。",             "assets": ["sp500"]},
+    {"date": "1934-01", "label": "米ドル切下げ・金$35へ",  "desc": "金準備法で金の公定価格を$20.67から$35へ引き上げ（ドルの大幅切下げ）。金本位制の実質的な終わりの始まり。",     "assets": ["gold"]},
+    {"date": "1944-07", "label": "ブレトンウッズ協定",     "desc": "金1オンス=35ドルの米ドルを基軸とする固定相場体制が発足。1971年のニクソンショックまで続いた。",               "assets": ["gold", "sp500"]},
+    {"date": "1949-05", "label": "東証再開・日経平均誕生", "desc": "戦後閉鎖されていた東京証券取引所が再開し、日経平均の算出が始まった。1ドル=360円の固定相場も同年に設定された。", "assets": ["nikkei", "usdjpy"]},
+    {"date": "1950-06", "label": "朝鮮戦争・特需景気",     "desc": "朝鮮戦争の特需で日本経済が急回復。日本株の戦後の本格的な上昇が始まった。",                                   "assets": ["nikkei"]},
     {"date": "1971-08", "label": "ニクソンショック",       "desc": "米ドルと金の兌換停止。変動相場制へ移行。ドル円が急落し360円台から100円台への長期円高が始まった。",           "assets": ["usdjpy", "gold"]},
     {"date": "1973-11", "label": "第一次オイルショック",   "desc": "OAPEC原油禁輸。原油価格が約4倍に急騰。世界的インフレと株安を引き起こした。",                            "assets": ["nikkei", "sp500", "gold"]},
     {"date": "1979-02", "label": "第二次オイルショック",   "desc": "イラン革命で原油供給が激減。原油価格が再び急騰し世界経済を直撃した。",                                   "assets": ["nikkei", "sp500", "gold"]},
@@ -420,6 +427,40 @@ def get_historical_monthly(ticker, start="1975-01-01"):
         return dates, prices
     except Exception:
         return [], []
+
+
+def load_historical_long(path):
+    """150年チャート用の静的過去データ（historical-long.json）を読む。
+    build_historical_long.py がローカルで一度だけ焼き込んだもの。無ければ None
+    （その場合は従来どおり Yahoo 1975〜のみで描画＝後方互換）"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        if data.get("series") and data.get("asof_year"):
+            return data
+    except Exception as e:
+        print(f"  ⚠️ historical-long.json 読込失敗: {e}")
+    return None
+
+
+def merge_historical(long_data, key, recent_dates, recent_prices):
+    """焼き込み済み過去データに Yahoo の直近年を接ぎ足す。
+    asof_year 以前は焼き込みが真実（毎日再取得しない）。それより後の年だけ追加"""
+    series = long_data["series"].get(key)
+    if not series:
+        return recent_dates, recent_prices
+    asof = long_data["asof_year"]
+    dates = list(series["dates"])
+    prices = list(series["prices"])
+    for d, p in zip(recent_dates, recent_prices):
+        try:
+            year = int(d)
+        except (TypeError, ValueError):
+            continue
+        if year > asof:
+            dates.append(d)
+            prices.append(p)
+    return dates, prices
 
 def get_touraku_ratio():
     """騰落レシオ（25日）を取得する
@@ -3960,7 +4001,8 @@ def build_event_rows():
 
 
 def build_charts_html(hist, now_jst):
-    """50年チャート＋歴史的イベント一覧を別ページ（charts.html）として生成"""
+    """150年チャート＋投資史年表＋歴史的イベント一覧を別ページ（charts.html）として生成
+    （データ=historical-long.json 焼き込み＋Yahoo直近接ぎ足し。対数スケール・時代背景帯つき）"""
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
 
     nk_dates,  nk_prices  = hist.get("nikkei", ([], []))
@@ -3986,7 +4028,7 @@ def build_charts_html(hist, now_jst):
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  {seo_head("charts.html", "50年価格チャート＆歴史的イベント", "日経平均・S&P500・ドル円・金の50年長期チャートを、ニクソンショック/プラザ合意/リーマン/コロナショックなど主要イベントと重ねて表示。歴史的視点で相場を読み解けます。")}
+  {seo_head("charts.html", "150年価格チャート＆投資史年表", "S&P500は1871年から、日経平均・ドル円は1949年から、金は1871年から——150年スケールの超長期チャート（対数）を世界恐慌・ニクソンショック・リーマンショックなど歴史的イベントと時代背景（金本位制→ブレトンウッズ→変動相場制）付きで表示。1602年チューリップバブルからの投資史年表も。")}
   {GA4_TAG}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
@@ -4033,7 +4075,7 @@ def build_charts_html(hist, now_jst):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-{brand_header("📈", "50年価格チャート", time_str)}
+{brand_header("📈", "150年価格チャート", time_str)}
 <main>
 
 <nav class="nav-bar">
@@ -4051,27 +4093,62 @@ def build_charts_html(hist, now_jst):
 
   {no_data_msg}
 
-  <p class="section-title">📈 歴史的価格チャート（イベント付き）</p>
+  <p class="section-title">📈 超長期150年チャート（対数スケール・時代背景つき）</p>
+
+  <div style="background:#ddf4ff;border:1px solid #54aeff;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:.82rem;color:#1f6feb;line-height:1.7">
+    <b>🔰 対数スケールとは　</b>縦軸の同じ幅が、同じ「変化率」を表す描き方です。100円→200円も1万円→2万円も同じ高さの動きとして描かれるため、150年の複利成長や暴落の深さを歪みなく比べられます。色帯は時代背景（<span style="color:#9a6700">金本位制</span>→<span style="color:#cf222e">大戦・恐慌</span>→<span style="color:#0969da">ブレトンウッズ</span>→<span style="color:#1a7f37">変動相場制</span>）、縦の点線は歴史的イベントです。
+  </div>
 
   <div class="chart-section">
-    <div class="chart-title">株式市場 — 日経平均 / S&amp;P500</div>
-    <div class="chart-subtitle">年次終値（左軸: 日経平均円、右軸: S&amp;P500ポイント）</div>
+    <div class="chart-title">株式市場 — S&amp;P500（1871年〜） / 日経平均（1949年〜）</div>
+    <div class="chart-subtitle">年次終値・対数スケール（左軸: 日経平均 円、右軸: S&amp;P500 ポイント）※S&amp;P500の1871〜1984年は月中平均ベース（シラー教授公開データ）</div>
     <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
     <div class="chart-wrap"><canvas id="chartStocks"></canvas></div>
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">為替 — USD/JPY（ドル円）</div>
-    <div class="chart-subtitle">年次終値（円/ドル）</div>
+    <div class="chart-title">為替 — USD/JPY（ドル円・1949年〜）</div>
+    <div class="chart-subtitle">年次終値・対数スケール（円/ドル）※1949〜1970年は1ドル=360円の固定相場（史実の公定レート）</div>
     <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
     <div class="chart-wrap"><canvas id="chartFX"></canvas></div>
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">ゴールド — 金価格（スポット/先物）</div>
-    <div class="chart-subtitle">年次終値（USD/oz）</div>
+    <div class="chart-title">ゴールド — 金価格（1871年〜）</div>
+    <div class="chart-subtitle">年次終値・対数スケール（USD/oz）※1933年までは米公定価格$20.67、1934〜1967年は$35（史実定数）、1968年以降はLBMA市場価格</div>
     <div class="chart-hint">💡 点線マーカーにカーソルを当てるとイベント名が表示されます</div>
     <div class="chart-wrap"><canvas id="chartGold"></canvas></div>
+  </div>
+
+  <p class="section-title">📜 チャート以前の投資史（1602〜1871年）</p>
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-bottom:32px">
+    <p style="font-size:.88rem;color:#57606a;line-height:1.8;margin-bottom:18px">連続した価格データが残るのは1871年から。しかし株式市場そのものの歴史はさらに270年さかのぼります。データが無い時代は、正直に「年表」で語ります。</p>
+    <div style="border-left:3px solid #0969da;margin-left:8px;padding-left:0">
+      <div style="position:relative;padding:0 0 18px 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#0969da;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#0969da;font-size:.95rem">1602年　世界初の株式会社</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">オランダ東インド会社（VOC）が設立され、アムステルダムに世界初の証券取引所が誕生。「株式を売買する」という仕組みがここから始まった。</div>
+      </div>
+      <div style="position:relative;padding:0 0 18px 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#bf3989;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#bf3989;font-size:.95rem">1637年　チューリップ・バブル崩壊</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">オランダでチューリップ球根1個に家1軒分もの値がついたと伝えられる投機熱が崩壊。記録に残る世界最初の投機バブルとされる。</div>
+      </div>
+      <div style="position:relative;padding:0 0 18px 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#cf222e;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#cf222e;font-size:.95rem">1720年　南海泡沫事件／ミシシッピ計画</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">英仏で同時に株式バブルが崩壊。「バブル」という言葉の語源になった事件で、物理学者ニュートンも大損したという逸話が残る。</div>
+      </div>
+      <div style="position:relative;padding:0 0 18px 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#1a7f37;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#1a7f37;font-size:.95rem">1792年　ボタンウッド協定</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">ウォール街のスズカケの木の下で仲買人24人が売買ルールを取り決めた。これがニューヨーク証券取引所（NYSE）の起源となった。</div>
+      </div>
+      <div style="position:relative;padding:0 0 18px 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#9a6700;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#9a6700;font-size:.95rem">1848年　カリフォルニア・ゴールドラッシュ</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">金を求めて約30万人が殺到。金が世界のマネーの土台（金本位制）だった時代を象徴する出来事。</div>
+      </div>
+      <div style="position:relative;padding:0 0 0 24px"><span style="position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:#57606a;border:2px solid #ffffff"></span>
+        <div style="font-weight:700;color:#57606a;font-size:.95rem">1871年　ここから上のチャートへ</div>
+        <div style="font-size:.85rem;color:#424a53;line-height:1.7">S&amp;P系の株価データの連続記録が始まる（シラー教授公開データ）。日本では1878年に東京株式取引所（現・東京証券取引所）が誕生した。</div>
+      </div>
+    </div>
   </div>
 
   <p class="section-title">📋 歴史的イベント一覧</p>
@@ -4083,8 +4160,8 @@ def build_charts_html(hist, now_jst):
   </div>
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 50年チャートの活かし方</h2>
-    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">日々のニュースを追っていると、目先の上げ下げに心が振り回されがちです。このページの<strong>数十年スケールの長期チャート</strong>は、いま起きている値動きを<strong>“歴史の文脈”の中で見る</strong>ための地図です。長い目で見れば、株価はオイルショック・ブラックマンデー・ITバブル崩壊・リーマンショック・コロナショックといった<strong>暴落を何度もはさみながら、それでも長期では上昇</strong>してきました。下の年表は、その節目となった出来事をまとめたものです。</p>
+    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 150年チャートの活かし方</h2>
+    <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">日々のニュースを追っていると、目先の上げ下げに心が振り回されがちです。このページの<strong>150年スケールの超長期チャート</strong>は、いま起きている値動きを<strong>“歴史の文脈”の中で見る</strong>ための地図です。長い目で見れば、株価は世界恐慌・オイルショック・ブラックマンデー・ITバブル崩壊・リーマンショック・コロナショックといった<strong>暴落を何度もはさみながら、それでも長期では上昇</strong>してきました。対数スケールで見ると、1929年の世界恐慌（約9割下落）がいかに別格だったかも一目でわかります。上の年表は、その節目となった出来事をまとめたものです。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このページの一番の使いどころは、<strong>暴落の渦中で冷静さを保つ</strong>ことです。渦中では「もう終わりだ」と感じても、後から長期チャートで振り返ると、多くの危機は<strong>一時的な急落</strong>として刻まれています。ただし——<strong>「いつか戻る」と“どこが底か”は別問題</strong>。回復まで何年もかかった局面もあり、底は誰にも当てられません。だからこそ、長期では強気でも、<strong>一度に動かず分割で・損切りラインを決めて</strong>臨むのが現実的です。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
       <li><strong>長期投資の視点</strong>：短期の急落を“割安に買えるバーゲン”と捉えられるかは、長期チャートで歴史を知っているかどうかで変わります。</li>
@@ -4096,7 +4173,9 @@ def build_charts_html(hist, now_jst):
 
 </main>
 <footer>
-  <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
+  <p>データソース: Robert Shiller公開データ(Yale大学) / FRED(米セントルイス連銀・日経平均の原データ=日本経済新聞社) / LBMA / Yahoo Finance<br>
+  ※1971年以前の一部は公定価格・月中平均（詳細は各チャートの注記）。直近年はYahoo Financeで毎日更新。</p>
+  <p style="margin-top:8px">
   <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   <a href="calendar.html">📅 経済カレンダー</a> &nbsp;|&nbsp;
   <a href="charts.html">📈 50年チャート</a> &nbsp;|&nbsp;
@@ -4123,45 +4202,88 @@ const SP_ANN  = {sp_ann};
 const FX_ANN  = {fx_ann};
 const GLD_ANN = {gld_ann};
 
-const gridColor  = 'rgba(48,54,61,0.8)';
+// 時代背景帯（金本位制→大戦・恐慌→ブレトンウッズ→変動相場制）
+const ERA_BANDS = [
+  {{ from: 1871, to: 1914, label: '金本位制',       color: 'rgba(154,103,0,0.07)', text: '#9a6700' }},
+  {{ from: 1914, to: 1944, label: '大戦・恐慌',     color: 'rgba(207,34,46,0.06)', text: '#cf222e' }},
+  {{ from: 1944, to: 1971, label: 'ブレトンウッズ', color: 'rgba(9,105,218,0.06)', text: '#0969da' }},
+  {{ from: 1971, to: 2100, label: '変動相場制',     color: 'rgba(26,127,55,0.05)', text: '#1a7f37' }},
+];
+
+const gridColor  = 'rgba(48,54,61,0.25)';
 const labelColor = '#57606a';
 
-function makeChart(id, datasets, annotations, yLabels) {{
+function eraBands(labels) {{
+  const first = +labels[0], last = +labels[labels.length - 1];
+  const out = {{}};
+  ERA_BANDS.forEach((b, i) => {{
+    const x0 = Math.max(b.from, first), x1 = Math.min(b.to, last);
+    if (x1 - x0 < 3) return;
+    out['era' + i] = {{
+      type: 'box', xMin: String(x0), xMax: String(x1),
+      backgroundColor: b.color, borderWidth: 0, drawTime: 'beforeDatasetsDraw',
+      label: {{ display: true, content: b.label, position: {{ x: 'center', y: 'start' }},
+               color: b.text, font: {{ size: 9 }}, padding: 2 }},
+    }};
+  }});
+  return out;
+}}
+
+function makeChart(id, datasets, annotations, yLabels, tickFilter, tickMod) {{
   const canvas = document.getElementById(id);
-  if (!canvas || datasets.every(ds => !ds.data || ds.data.length === 0)) return;
+  if (!canvas || datasets.every(ds => !ds.dates || ds.dates.length === 0)) return;
+  // 系列の最小年〜最大年で共通の年ラベルを作り、各系列を null 埋めで整列（開始年が違っても重ねられる）
+  let minY = Infinity, maxY = -Infinity;
+  datasets.forEach(ds => {{
+    if (ds.dates && ds.dates.length) {{
+      minY = Math.min(minY, +ds.dates[0]);
+      maxY = Math.max(maxY, +ds.dates[ds.dates.length - 1]);
+    }}
+  }});
+  const labels = [];
+  for (let y = minY; y <= maxY; y++) labels.push(String(y));
+  datasets.forEach(ds => {{
+    const m = {{}};
+    ds.dates.forEach((d, i) => {{ m[d] = ds.data[i]; }});
+    ds.data = labels.map(l => (m[l] !== undefined ? m[l] : null));
+  }});
   const ctx = canvas.getContext('2d');
   const scales = {{}};
   datasets.forEach((ds, i) => {{
     const axId = 'y' + i;
     ds.yAxisID = axId;
     scales[axId] = {{
+      type: 'logarithmic',
       position: i === 0 ? 'left' : 'right',
       grid: {{ color: i === 0 ? gridColor : 'transparent', drawBorder: false }},
-      ticks: {{ color: labelColor, font: {{ size: 10 }}, maxTicksLimit: 6,
-        callback: v => yLabels[i] ? yLabels[i](v) : v }},
-      title: {{ display: false }},
+      ticks: {{ color: labelColor, font: {{ size: 10 }},
+        callback: v => {{
+          const m = v / Math.pow(10, Math.floor(Math.log10(v) + 1e-9));
+          const r = Math.round(m * 100) / 100;
+          return tickFilter.includes(r) ? (yLabels[i] ? yLabels[i](v) : v) : null;
+        }} }},
     }};
   }});
   scales['x'] = {{
-    ticks: {{ color: labelColor, font: {{ size: 10 }}, maxTicksLimit: 12,
-      callback: function(val, idx) {{
+    ticks: {{ color: labelColor, font: {{ size: 10 }}, autoSkip: false, maxRotation: 0,
+      callback: function(val) {{
         const lbl = this.getLabelForValue(val);
-        return lbl && lbl.endsWith('-01') ? lbl.substring(0,4) : '';
-      }}
-    }},
-    grid: {{ color: gridColor, drawBorder: false }},
+        return (+lbl % tickMod === 0) ? lbl : null;
+      }} }},
+    grid: {{ color: 'transparent', drawBorder: false }},
   }};
   return new Chart(ctx, {{
     type: 'line',
-    data: {{ labels: datasets[0].dates, datasets }},
+    data: {{ labels, datasets }},
     options: {{
       responsive: true, maintainAspectRatio: false,
       interaction: {{ mode: 'index', intersect: false }},
       plugins: {{
         legend: {{ labels: {{ color: '#1f2328', font: {{ size: 12 }} }} }},
-        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#0969da',
-                    bodyColor: '#1f2328', borderColor: '#d0d7de', borderWidth: 1 }},
-        annotation: {{ annotations }},
+        tooltip: {{ backgroundColor: 'rgba(22,27,34,0.95)', titleColor: '#58a6ff',
+                    bodyColor: '#e6edf3', borderColor: '#30363d', borderWidth: 1,
+                    callbacks: {{ label: c => c.dataset.label + ': ' + (c.parsed.y === null ? '-' : c.parsed.y.toLocaleString()) }} }},
+        annotation: {{ annotations: Object.assign({{}}, eraBands(labels), annotations) }},
       }},
       scales,
       elements: {{ point: {{ radius: 0, hoverRadius: 4 }}, line: {{ tension: 0.2 }} }},
@@ -4170,26 +4292,26 @@ function makeChart(id, datasets, annotations, yLabels) {{
 }}
 
 makeChart('chartStocks', [
-  {{ label: '日経平均（円）', dates: NK_DATES, data: NK_PRICES,
+  {{ label: '日経平均（円・1949年〜）', dates: NK_DATES, data: NK_PRICES,
      borderColor: '#0969da', backgroundColor: 'rgba(88,166,255,0.08)',
      borderWidth: 1.5, fill: true }},
-  {{ label: 'S&P500', dates: SP_DATES, data: SP_PRICES,
+  {{ label: 'S&P500（1871年〜）', dates: SP_DATES, data: SP_PRICES,
      borderColor: '#1a7f37', backgroundColor: 'rgba(63,185,80,0.06)',
      borderWidth: 1.5, fill: true }},
 ], Object.assign({{}}, NK_ANN, SP_ANN),
-[v => v.toLocaleString()+'円', v => v.toLocaleString()]);
+[v => v.toLocaleString()+'円', v => v.toLocaleString()], [1, 2, 5], 20);
 
 makeChart('chartFX', [
   {{ label: 'USD/JPY（円）', dates: FX_DATES, data: FX_PRICES,
      borderColor: '#bf3989', backgroundColor: 'rgba(240,136,62,0.08)',
      borderWidth: 1.5, fill: true }},
-], FX_ANN, [v => v.toFixed(1)+'円']);
+], FX_ANN, [v => v.toLocaleString()+'円'], [1, 1.5, 2, 3, 5, 7], 10);
 
 makeChart('chartGold', [
   {{ label: '金価格（USD/oz）', dates: GLD_DATES, data: GLD_PRICES,
      borderColor: '#9a6700', backgroundColor: 'rgba(255,215,0,0.08)',
      borderWidth: 1.5, fill: true }},
-], GLD_ANN, [v => '$'+v.toLocaleString()]);
+], GLD_ANN, [v => '$'+v.toLocaleString()], [1, 2, 5], 20);
 </script>
 <script>(function(){{var hasExplicit=false;try{{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){{try{{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){{if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){{hasExplicit=true;break}}}}}}catch(e){{}}if(hasExplicit)break}}}}catch(e){{}}if(!hasExplicit){{var s=document.createElement('style');s.textContent='body.dark{{background:#0d1117!important;color:#e6edf3!important}}body.dark header,body.dark footer,body.dark nav.nav-bar{{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}}body.dark .nav-btn{{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}}body.dark .nav-btn:hover{{border-color:#58a6ff!important;color:#58a6ff!important}}body.dark .nav-btn.current{{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}}body.dark .header-title,body.dark .header-meta,body.dark .header-meta span{{color:#e6edf3!important}}body.dark a{{color:#79c0ff!important}}body.dark h1,body.dark h2,body.dark h3,body.dark h4{{color:#e6edf3!important}}body.dark p,body.dark li,body.dark td{{color:#c9d1d9!important}}body.dark hr{{border-color:#30363d!important}}body.dark th{{background:#0d1117!important;color:#79c0ff!important}}body.dark #theme-toggle{{background:#161b22!important;border-color:#30363d!important;color:#fff!important}}body.dark *[style*="background:#fff"]:not(img),body.dark *[style*="background:#ffffff"]:not(img),body.dark *[style*="background-color:#fff"]:not(img),body.dark *[style*="background-color:#ffffff"]:not(img),body.dark *[style*="background:#f6f8fa"]:not(img),body.dark *[style*="background-color:#f6f8fa"]:not(img){{background:#161b22!important}}body.dark *[style*="border:1px solid #d0d7de"],body.dark *[style*="border-color:#d0d7de"]{{border-color:#30363d!important}}body.dark *[style*="color:#1f2328"],body.dark *[style*="color:#57606a"],body.dark *[style*="color:#6e7781"],body.dark *[style*="color:#424a53"]{{color:#e6edf3!important}}';document.head.appendChild(s)}}function setTheme(t){{document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{{localStorage.setItem('theme',t)}}catch(e){{}}}}window.toggleTheme=function(){{setTheme(document.body.classList.contains('dark')?'light':'dark')}};var t='light';try{{t=localStorage.getItem('theme')||'light'}}catch(e){{}}setTheme(t);}})();</script>
 <script src="site-search.js" defer></script>
@@ -5396,10 +5518,10 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         </div>
       </a>
       <a href="charts.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
-        <img src="15_feature_50year_chart.png" alt="50年チャート" style="width:100%;height:140px;object-fit:cover;display:block">
+        <img src="15_feature_50year_chart.png" alt="150年チャート" style="width:100%;height:140px;object-fit:cover;display:block">
         <div style="padding:18px 22px">
-          <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">📈 50年価格チャート</div>
-          <div style="font-size:.78rem;color:#57606a;line-height:1.6">日経・S&amp;P500・ドル円・金の超長期トレンドと歴史的イベント一覧</div>
+          <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">📈 150年価格チャート</div>
+          <div style="font-size:.78rem;color:#57606a;line-height:1.6">S&amp;P500は1871年から——超長期150年トレンドと投資史年表・歴史的イベント一覧</div>
         </div>
       </a>
       <a href="market-health.html#vix" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
@@ -5574,8 +5696,12 @@ def main():
             status = f"ERROR: {e}"
         print(f"  {key}: {status}")
 
-    # ── 歴史的価格データ取得 ──
-    print("📊 歴史的価格データを取得中（50年分）...")
+    # ── 歴史的価格データ取得（150年分＝焼き込み historical-long.json ＋ Yahoo 直近接ぎ足し）──
+    print("📊 歴史的価格データを取得中（150年分）...")
+    long_data = load_historical_long(os.path.join(script_dir, "historical-long.json"))
+    fetch_start = f"{long_data['asof_year'] + 1}-01-01" if long_data else "1975-01-01"
+    if long_data:
+        print(f"  焼き込みデータ: asof {long_data['asof_year']} 年まで（Yahoo は {fetch_start} 以降のみ取得）")
     hist_tickers = {
         "nikkei": "^N225", "sp500": "^GSPC",
         "usdjpy": "JPY=X", "gold": "GC=F",
@@ -5583,12 +5709,11 @@ def main():
     hist = {}
     for key, sym in hist_tickers.items():
         try:
-            hist[key] = get_historical_monthly(sym, "1975-01-01")
-            count = len(hist[key][0])
-        except Exception as e:
-            hist[key] = ([], [])
-            count = 0
-        print(f"  {key}: {count}件")
+            recent = get_historical_monthly(sym, fetch_start)
+        except Exception:
+            recent = ([], [])
+        hist[key] = merge_historical(long_data, key, recent[0], recent[1]) if long_data else recent
+        print(f"  {key}: {len(hist[key][0])}件（直近接ぎ足し {len(recent[0])}件）")
 
     # ── 騰落レシオ取得 ──
     print("📊 騰落レシオ取得中...")
