@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #8｜ゴールデンクロスは信頼できないのか——654件の実データが示すシグナル種別の勝率マップ - MarketWatch AI</title>
   <meta name="description" content="移動平均ゴールデンクロス(ma_golden)の実勝率は23.3%(N=30、CI上限40.9%)で損益分岐43%を下回り確認。654件の全シグナル種別を横断集計し、種別ごとの期待値格差を明らかにした研究日誌第8回。">
   <meta name="keywords" content="ゴールデンクロス,移動平均,シグナル勝率,AIシグナル,検証,MACD,ボリンジャー,期待値,研究日誌">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -223,8 +226,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -256,6 +260,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月15日 &nbsp;|&nbsp; 読了：約10分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説だけを実データで検証し、勝っても負けても全公開する研究日誌の第8回です。<a href="guide-signal-lab-007.html">前回（#7）</a>では「blocked=True（S/R壁あり）× グループ × トレンド」という三次元解析を行い、他FX×blocked=True×下降が8/8=100%というN不足ながら注目すべき数字を出しました。</p>
     <p>今回は視点を変えて、「<strong>どのシグナル種別が実際に勝てているのか</strong>」という横断的な問いに答えます。当サイトのシグナルエンジンは7種の基本パターン（RSI・MACD・移動平均クロス・ボリンジャー・高安値ブレイク）を検出します。654件のクローズドデータを種別ごとに集計すると、最高57.1%から最低23.3%まで約34ポイントの勝率格差があることがわかりました。</p>
@@ -343,7 +348,7 @@ window.addEventListener('resize',mark);
         <line x1="175" y1="386" x2="660" y2="386" class="s-axis"/>
         <!-- 43%損益分岐ガイド: x=175+43*4=347 -->
         <line x1="347" y1="34" x2="347" y2="386" class="s-guide"/>
-        <text x="347" y="90" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
+        <text x="347" y="402" text-anchor="middle" class="s-label-y">損益分岐 43%</text>
         <!-- X軸目盛 -->
         <text x="175" y="402" text-anchor="middle" class="s-label-sm">0%</text>
         <text x="255" y="402" text-anchor="middle" class="s-label-sm">20%</text>
@@ -464,7 +469,7 @@ window.addEventListener('resize',mark);
         <line x1="531" y1="114" x2="531" y2="250" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 2"/>
         <text x="482" y="263" class="s-label-b" style="font-size:11.5px">クロス発生（ピーク後）</text>
         <!-- After cross, price continues down = SL -->
-        <text x="610" y="244" class="s-label-r" style="font-size:11.5px">→SL</text>
+        <text x="610" y="255" class="s-label-r" style="font-size:11.5px">→SL</text>
         <!-- Lag annotation -->
         <line x1="475" y1="95" x2="531" y2="110" stroke="#9a6700" stroke-width="1.5" marker-end="url(#arrow)"/>
         <text x="488" y="108" class="s-label-y" style="font-size:10.5px">遅れ発火</text>
@@ -492,14 +497,14 @@ window.addEventListener('resize',mark);
 
     <div class="chart-figure">
       <!-- 図3: E(R) 双方向バーチャート（0R=損益分岐, 左=マイナス, 右=プラス） -->
-      <svg viewBox="0 0 700 396" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別の期待値E(R)比較">
+      <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シグナル種別の期待値E(R)比較">
         <text x="350" y="22" text-anchor="middle" class="s-label-b" style="font-size:14px">シグナル種別の期待値 E(R) — 左がマイナス、右がプラス</text>
         <!-- 0R軸 (break-even): x=440, scale: 250px/R -->
         <line x1="440" y1="34" x2="440" y2="345" class="s-axis"/>
         <!-- 下軸 -->
         <line x1="175" y1="345" x2="640" y2="345" class="s-axis"/>
         <!-- 0R ラベル -->
-        <text x="433" y="360" text-anchor="end" class="s-label-y">0R（損益分岐）</text>
+        <text x="440" y="360" text-anchor="middle" class="s-label-y">0R（損益分岐）</text>
         <!-- -0.5R mark: x=440-0.5*250=315 -->
         <line x1="315" y1="340" x2="315" y2="348" class="s-axis"/>
         <text x="315" y="362" text-anchor="middle" class="s-label-sm">-0.5R</text>
@@ -543,8 +548,8 @@ window.addEventListener('resize',mark);
         <text x="8" y="314" class="s-label-sm">ma_golden</text>
         <text x="200" y="308" class="s-label-r">-0.683R（全種別最悪）</text>
 
-        <text x="350" y="378" text-anchor="middle" class="s-label-sm">★ ma_golden は1トレードあたり平均-0.683R の損失期待値。100回エントリーすると理論上-68.3R相当。</text>
-        <text x="350" y="390" text-anchor="middle" class="s-label-sm">※ 概念を示すイメージ図です。将来の運用成績を保証するものではありません。</text>
+        <text x="350" y="370" text-anchor="middle" class="s-label-sm">★ ma_golden は1トレードあたり平均-0.683R の損失期待値。100回エントリーすると理論上-68.3R相当。</text>
+        <text x="350" y="379" text-anchor="middle" class="s-label-sm">※ 概念を示すイメージ図です。将来の運用成績を保証するものではありません。</text>
       </svg>
       <div class="chart-caption">図3：期待値E(R)で見ると、ma_goldenは-0.683Rで全種別中最悪。E(R)がプラスなのはmacd_dead (+0.097R)とbb_lower_touch (+0.016R)だが、ともにブレ幅が大きく確定的ではない。</div>
     </div>
