@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #15｜4H足ロングは系統的に弱い——時間足で勝率はどう変わるか - MarketWatch AI</title>
   <meta name="description" content="4H足ロングシグナル（N=273）の勝率35.2%・CI上限41.0%で損益分岐43%を下回ることを確認。1H足ロング40.3%との差の主因はjpy_fx（4H=29.8% vs 1H=48.7%）。金属比率の差は1.3ppで交絡否定。研究日誌第15回。">
   <meta name="keywords" content="AIシグナル,検証,時間足,4H,1H,勝率,研究日誌,jpy_fx,円クロス,時間足効果">
@@ -49,7 +52,7 @@
     .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
@@ -223,8 +226,9 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title">📊 MarketWatch AI</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
   </div>
 </header>
 
@@ -257,6 +261,7 @@ window.addEventListener('resize',mark);
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年6月20日 &nbsp;|&nbsp; 読了：約10分
     </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第15回です。<a href="guide-signal-lab-014.html">前回（#14）</a>では bb_lower_touch（ボリンジャー下限タッチ）×jpy_fx ロングが 60.0%（27/45）と有望な数字を示しました。</p>
     <p>今回は視点を変えて「そもそも時間足（1H足 vs 4H足）によって勝率は変わるのか」を全銘柄・全シグナルタイプで横断的に検証します。きっかけは、本日のスイープ解析で <strong>4H足ロングが FDR 統計検定を通過する形で赤字（期待値マイナス）を示した</strong>ことです。</p>
@@ -382,7 +387,7 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="46" y="111" text-anchor="end">32%</text>
         <!-- 43% reference line: y = 190 - (43/65)*170 = 190 - 112.5 = 77.5 -->
         <line class="s-guide" x1="55" y1="78" x2="500" y2="78"/>
-        <text class="s-label-y" x="57" y="40">損益分岐 43%</text>
+        <text class="s-label-y" x="57" y="74">損益分岐 43%</text>
         <!-- Bar 1: 1H×Long 40.3% yellow
              height = (40.3/65)*170 = 105.4, y_top = 190-105.4 = 84.6 ≈ 85 -->
         <rect class="s-fill-y" x="65" y="85" width="70" height="105" rx="3"/>
