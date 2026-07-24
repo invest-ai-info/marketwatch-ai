@@ -3,6 +3,37 @@
 
 ---
 
+## 2026-07-24
+- 判定: ✅ 公開済み
+- 選定トピック: ブレント原油100ドル突破──フーシ派がサウジ石油タンカー2隻（Encelia・Layla）を紅海でドローン・ミサイル攻撃し心理的節目$100.65まで急騰・3週間で+49%。バブ・エル・マンデブ海峡（紅海南端）という新戦線と、ドル円163.99円（1986年11月以来の円安）が重なる日本の「二重苦」を中立整理（カテゴリ: マクロ・地政学・エネルギー・日本株・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7/20記事（ブレント$90・ホルムズ/米イラン）と地理・アクター・価格水準の全3点で差別化。今回は紅海・フーシ派・サウジタンカー攻撃・バブ・エル・マンデブ海峡封鎖宣言という完全に異なる新局面。$100という心理的節目突破・ドル円163.99円（1986年11月以来）・日経-1811円・BOJ7/31への影響で日本人投資家の関心が最高点。Tesla Q2（FCF-$10.9B・-14%）も候補だったが7/23記事（Alphabet/Tesla同日決算整理）との重複リスクを考慮し本記事を優先。重複なし。
+- 出典（2系統以上確認済み）:
+  - Yahoo Finance「Oil hits $100 after Houthi attack on Saudi tankers worsens oil supply disruption」（2026-07-23）
+  - Seeking Alpha「Brent crude crosses $100/bbl as Houthi attack on Saudi tankers amplifies oil supply risks」（2026-07-23）
+  - CNN「July 23, 2026 — Oil tops $100 a barrel, Houthi attack in Red Sea marks new escalation」（2026-07-23）
+  - CNBC「Houthis deploy missiles and drones to attack ships in southern Red Sea, naval group says」（2026-07-22）
+  - CNBC「Trump says U.S. will hold Iran responsible for Houthi attacks after oil tankers targeted in Red Sea」（2026-07-23）
+  - Washington Post「Oil prices leap after Houthi attacks in Red Sea」（2026-07-23）
+  - NBC News「Oil surges to $100 per barrel after Red Sea attacks」（2026-07-23）
+  - TradingEconomics「Brent Holds Above $100」（2026-07-24）
+  - 外為どっとコム「FX/為替 ドル/円今日の見通し│164円間近 介入を警戒しつつ上値を模索」（2026-07-24）
+  - 日本経済新聞「日経平均終値1811円安 イビデン4%安が映す『AI特需』の持続懸念」（2026-07-24）
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for July 24」（2026-07-23）
+  - 株式新聞Web「日経平均２０８０円安、マイナス寄与上位はアドバンテス、東エレク、ソフバンＧなど」（2026-07-24）
+  - EIA「The Bab el-Mandeb Strait is a strategic route for oil and natural gas shipments」
+- コンプライアンス監査（Opusエージェント1）:
+  - 初期判定: 🟢白（kinsho-v1×3箇所確認・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・将来断定なし・7項目全クリア）
+  - 適用修正: なし（初期白のため不要）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所 ✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告21件はすべて既存他ファイルのCSS問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-07-24-brent-100-houthi-red-sea.html
+- commit: feat: auto-publish news 2026-07-24（main へ push 済み・cfc7664）
+
+---
+
 ## 2026-07-23
 - 判定: ✅ 公開済み
 - 選定トピック: Alphabet Q2 2026決算──Google Cloud前年比+82%・capex年間最大2,050億ドルへ上方修正でGOOGL株は時間外-約5%、一方で東京市場ではアドバンテストが日経平均を1銘柄で+307円押し上げた「AI好決算でもGOOGL下落・日本半導体上昇」の逆説を中立整理（カテゴリ: AI・テクノロジー決算・半導体・日本株・マクロ）
