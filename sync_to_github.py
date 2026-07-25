@@ -74,4 +74,5 @@ SYNC_FILES = [
     "guide-news-2026-07-24-brent-100-houthi-red-sea.html",
     "guide-signal-lab-050.html",
     "guide-proverb-mannin-kyoki-tawake.html",
+    "guide-news-2026-07-25-fomc-boj-bigtech-superweek.html",
 ]

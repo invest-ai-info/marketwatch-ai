@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-25", "line": '・<b>2026-07-25</b>: 📰 解説「<a href="guide-news-2026-07-25-fomc-boj-bigtech-superweek.html" style="color:#0969da"><b>来週7/28〜31「5重発火週」──FOMC×日銀×Big Tech決算×GDP×PCE同一週集中</b></a>」公開'},
         {"date": "2026-07-25", "line": '・<b>2026-07-25</b>: 🌾 解説「<a href="guide-proverb-mannin-kyoki-tawake.html" style="color:#0969da"><b>万人が万人ながら強気なら、たわけになりて米を売るべし</b></a>」公開'},
         {"date": "2026-07-25", "line": '・<b>2026-07-25</b>: 🧪 解説「<a href="guide-signal-lab-050.html" style="color:#0969da"><b>#50 上昇×revL FWD後半失速——RSI73% vs BB44%二極化</b></a>」公開'},
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 📈 <a href="charts.html" style="color:#0969da"><b>50年チャートを「150年チャート＋投資史年表」へ大幅拡張</b></a>（S&amp;P500は1871年から・対数スケール・時代背景つき）'},
