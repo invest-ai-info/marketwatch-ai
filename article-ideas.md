@@ -1,135 +1,120 @@
-# 💡 記事ネタ候補（基準日 2026-07-25 JST）
+# 💡 記事ネタ候補（基準日 2026-07-26 JST）
 
-生成日時: 2026-07-25T07:39 JST（UTC 2026-07-24T22:39Z）  
-調査対象期間: 2026-07-20〜24（直近5日）
+生成日時: 2026-07-26T07:39 JST（UTC 2026-07-25T22:39Z）  
+調査対象期間: 2026-07-21〜25（直近5日）
 
 ---
 
 ## 📰 今週のトレンド要約（3行）
 
-AIビッグテック決算シーズン開幕。Alphabet が売上+24%の好業績も設備投資2,050億ドル計画でアフターマーケット急落し、日経を7/24に−1,811円（−2.73%）へ引き込んだ。一方、ドル円が163円台と40年ぶり安値圏へ突入・財務相が口先介入、Fed の9月利上げ確率が80%まで急伸するなど、金融政策と為替の見通しが激変している週となった。
+来週（7/28〜8/1）はFOMC（7/29）・日銀（7/31）・マイクロソフト/メタ（7/29）・アップル/アマゾン（7/30）が一斉に決まる「スーパーウィーク」。日経225先物は金曜夜間取引で6万4290円（前日比▲270円）と軟調を示しており、週明けは下方ギャップスタートの可能性が高い。ドル円163円台・金$4,052・原油WTI$90台という「トリプル高」とFed利上げ再開懸念が同時進行し、日本人投資家の資産配分見直し需要が急増している。
 
 ---
 
 ## 候補一覧
 
-### 1. 円が163円台・40年ぶり安値——介入ラインを超えたら何が変わる？
+### 1. トヨタ「北米利益ゼロ」の衝撃——関税1.4兆円直撃で日本自動車産業の転換点
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「円安163円、1986年以来の水準——財務省が『断固たる措置』示唆、次の介入はあるか」 |
-| **概要（30字）** | ドル円40年ぶり安値の背景と介入リスクを日本人投資家向けに解説 |
-| **なぜ今** | 7/22に163.24円超、7/24は165円接近と過去最大規模の介入が"含み損"になる水準まで下落 |
-| **検索意図** | 「ドル円 介入 いつ」「為替 円安 どこまで」「USDJPY 2026 見通し」 |
-| **カテゴリ** | 速報 / マーケット戦略 |
-| **難易度** | 小〜中 |
-| **信頼度** | HIGH（Japan Times・Bloomberg・Investing.com・Business Recorder 複数一致） |
-| **ソース** | [Japan Times 7/22](https://www.japantimes.co.jp/business/2026/07/22/markets/yen-163-cross/) / [Bloomberg 7/24](https://www.bloomberg.com/news/articles/2026-07-24/yen-s-worst-week-since-may-brings-it-close-to-165-versus-dollar) / [Investing.com 7/24](https://www.investing.com/news/economy-news/japan-ready-to-take-decisive-currency-action-as-yen-hits-40year-low-4804628) |
+| **仮タイトル案** | 「トヨタが北米で赤字？——関税1.4兆円が日本最大の輸出企業を直撃した理由と投資家への示唆」 |
+| **概要（30字）** | 米関税で北米事業が19億ドル赤字、日本自動車株への中長期的影響を解説 |
+| **なぜ今** | FY2026決算で北米営業利益が完全消失（▲1.9 billion USD）。日系自動車株は7月下旬も軟調継続中 |
+| **検索意図** | 「トヨタ 決算 関税 影響」「日本車 関税 株価」「自動車株 2026 見通し」 |
+| **カテゴリ** | 個別銘柄解説 / マーケット戦略 |
+| **難易度** | 中 |
+| **信頼度** | HIGH（CNBC・WardsAuto・Investing.com 複数一致） |
+| **ソース** | [CNBC 2026/05/08](https://www.cnbc.com/2026/05/08/toyota-1q-2026-earnings.html) / [WardsAuto](https://www.wardsauto.com/news/us-tariffs-erase-all-of-toyotas-north-america-profits-in-fy2026/819825/) / [Investing.com](https://www.investing.com/news/company-news/toyota-fy2026-slides-tariffs-drive-profit-decline-despite-volume-gains-93CH-4671170) |
 
 ---
 
-### 2. Fed「9月利上げ」確率80%に急上昇——2026年の金融政策シナリオが大転換
+### 2. ソニー過去最高益1.16兆円——PS5×アニメ×映画で日本エンタメ株の底力を読む
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「利下げではなく利上げ？Fed 9月ミーティングで8割の確率が示すもの」 |
-| **概要（30字）** | 市場のFed利下げ期待が完全崩壊し利上げ優勢になった経緯を整理 |
-| **なぜ今** | FOMC議事録でPCE年末見通しが3.6%に上方修正、ウォーシュ議長「物価が高すぎる」発言と原油100ドル復帰が背景 |
-| **検索意図** | 「FOMC 9月 利上げ 可能性」「Fed 2026 金利 予想」「インフレ 再加速」 |
+| **仮タイトル案** | 「ソニーがゲーム・アニメで最高益1.16兆円——トヨタが沈む中、"エンタメ輸出"が日本株の新しい柱になるか」 |
+| **概要（30字）** | ゲーム・映画・イメージセンサーで過去最高益を見込むソニーの事業構造を解説 |
+| **なぜ今** | 7月末に向けて決算発表前後の注目度が高まる。PS5累計9,300万台、スパイダーマン映画公開（7月）も追い風 |
+| **検索意図** | 「ソニー 株価 2026」「ソニー 決算 予想」「日本株 エンタメ 成長」 |
+| **カテゴリ** | 個別銘柄解説 |
+| **難易度** | 中 |
+| **信頼度** | HIGH（Nippon.com・Yahoo Finance決算資料・GuruFocus・Gulf News 複数一致） |
+| **ソース** | [Nippon.com 2026/05/08](https://www.nippon.com/en/news/yjj2026050800569/) / [Gulf News](https://gulfnews.com/technology/sony-hikes-profit-forecasts-on-strong-gaming-anime-sales-1.500341277) / [Yahoo Finance 決算資料](https://finance.yahoo.com/quote/6758.T/earnings/6758.T-Q4-2026-earnings_call-538181.html) |
+
+---
+
+### 3. 日銀7月31日会合プレビュー——「1%維持＋成長見通し上方修正」が示す日本経済の現在地
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「日銀は7月31日に何を決めるか——1%据え置き確率96%、それでも成長見通し引き上げが意味すること」 |
+| **概要（30字）** | 31年ぶり高水準の1%を維持しながら成長・インフレ予測を更新する日銀の意図を解説 |
+| **なぜ今** | 会合は7/30〜31（結果31日午後）。バークレイズ/BofAは「次の利上げは年末1.25%」と予想。円安163円との連動で注目度最高 |
+| **検索意図** | 「日銀 7月 会合 金利」「BOJ 2026 利上げ いつ」「円安 日銀 対策」 |
 | **カテゴリ** | 投資指標解説 / マーケット戦略 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（CBS News・Forbes・FX Leaders・Polymarket データ複数一致） |
-| **ソース** | [CBS News 7/24](https://www.cbsnews.com/news/fed-interest-rate-decision-july-meeting/) / [FX Leaders 7/24](https://www.fxleaders.com/news/2026/07/24/gold-price-forecast-july-24-2026-dollar4028-defends-dollar4000-as-brent-hits-dollar100-and-september-hike-odds-jump-to-80/) / [Forbes](https://www.forbes.com/sites/investor-hub/article/fed-meeting-tracker-interest-rate-strategy/) |
+| **信頼度** | HIGH（Bloomberg・Japan Times・InvestingLive・BigGo 複数一致） |
+| **ソース** | [Bloomberg 2026/07/17](https://www.bloomberg.com/news/articles/2026-07-17/boj-is-said-likely-to-raise-growth-forecast-stand-pat-on-rates) / [Japan Times 2026/07/18](https://www.japantimes.co.jp/business/2026/07/18/economy/boj-july-meeting-assessment/) / [InvestingLive](https://investinglive.com/central-banks/boj-may-raise-2026-growth-forecast-set-to-hold-rates-steady-as-inflation-risks-stay-in-focus) |
 
 ---
 
-### 3. Meta・Apple・Amazon 7月29〜30日決算プレビュー——NISA保有者が注目すべき3点
+### 4. AI設備投資730億ドルの審判——マイクロソフト・メタ・アップル・アマゾン決算に込められた問い
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「来週は米ビッグテック最終章——Meta・Apple・Amazon 決算、何を見ればいいか」 |
-| **概要（30字）** | 7/29Meta・7/30Apple&Amazon発表前に確認すべきポイントを先回り解説 |
-| **なぜ今** | Alphabet 決算後の「AI設備投資 vs 株価」議論が続く中、3社の発表が7/29〜30に集中 |
-| **検索意図** | 「メタ 決算 2026 7月」「アップル 決算 日程」「Amazon 決算 予想」 |
-| **カテゴリ** | マーケット戦略 / 速報 |
-| **難易度** | 小〜中 |
-| **信頼度** | HIGH（Motley Fool・TradingKey・Finance Calendar・24/7 Wall St 複数一致） |
-| **ソース** | [Motley Fool 7/23](https://www.fool.com/investing/2026/07/23/mark-zuckerbergs-meta-is-expected-to-report-60-bil/) / [TradingKey](https://www.tradingkey.com/analysis/stocks/us-stocks/262053170-apple-stock-all-time-high-q3-earnings-july-30-foldable-iphone-price-prediction-tradingkey) / [24/7 Wall St 7/20](https://247wallst.com/investing/2026/07/20/prediction-amazon-is-a-buy-before-july-30-with-30-upside/) |
-
----
-
-### 4. ゴールド4,000ドル防衛戦——原油100ドル超・9月利上げ警戒が揺さぶる
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「金（ゴールド）は4,000ドルを守れるか——Goldman・JPMが目標を下げた理由と個人投資家の見方」 |
-| **概要（30字）** | 金の心理的節目4,000ドルを巡る攻防とGS/JPM目標下方修正の背景 |
-| **なぜ今** | 7/24に$4,028、Brent原油が$100回帰・9月利上げ確率80%が同時進行。GS→$4,900・JPM→$4,500へ目標切り下げ（7月初旬） |
-| **検索意図** | 「金 価格 予想 2026」「ゴールド 4000ドル」「XAU/USD 見通し」 |
-| **カテゴリ** | マーケット戦略 / 投資指標解説 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（FX Leaders・GoldSilver.com・Yahoo Finance・InteractiveCrypto 複数一致） |
-| **ソース** | [FX Leaders 7/20](https://www.fxleaders.com/news/2026/07/20/gold-price-forecast-xau-usd-defends-4000-as-oil-surge-and-fed-bets-trigger-tug-of-war/) / [GoldSilver.com](https://goldsilver.com/industry-news/article/gold-price-outlook-july-2026/) / [Yahoo Finance](https://finance.yahoo.com/markets/commodities/articles/gold-price-outlook-july-2026-191408891.html) |
-
----
-
-### 5. Section 301新関税、7月24日発動——日本製品・輸出企業への影響を整理
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「米国が新たなSection 301関税を本日発動——60ヵ国・日本は10〜12.5%、輸出株への影響は」 |
-| **概要（30字）** | 7/24発効の米新関税と日本企業・サプライチェーンへの意味を解説 |
-| **なぜ今** | 7/24正式発動。Section 122（期限切れ）の後継で法的根拠が強固、平均輸入関税が7.7%→12.4%へ再上昇 |
-| **検索意図** | 「Section 301 関税 2026」「米関税 日本 影響」「貿易摩擦 輸出株」 |
+| **仮タイトル案** | 「AI設備投資730億ドルは報われているか——7/29〜30のビッグテック決算4社が答えを出す週」 |
+| **概要（30字）** | Alphabet急落後にMSFT・Meta・Apple・Amazonが連続発表する決算週の注目点を整理 |
+| **なぜ今** | 7/29（MSFT・Meta）、7/30（Apple・Amazon）と集中。Alphabetは+24%増収でも設備投資超過でフリーキャッシュフロー▲59億ドルとなり株が7%急落。同じ構図になるか |
+| **検索意図** | 「マイクロソフト 決算 7月」「メタ 決算 予想」「アップル 決算 結果」「AI 設備投資 株価」 |
 | **カテゴリ** | 速報 / マーケット戦略 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Mayer Brown・SCMP・Dorsey & Whitney・Dimerco 複数一致） |
-| **ソース** | [Mayer Brown 7/2026](https://www.mayerbrown.com/en/insights/publications/2026/07/us-china-trade-monthly-july-2026) / [SCMP](https://www.scmp.com/news/us/diplomacy/article/3361650/us-slaps-fresh-tariffs-china-50-plus-countries-latest-wave) / [Dorsey & Whitney](https://www.dorsey.com/newsresources/publications/client-alerts/2026/6/new-section-301-tariffs) |
+| **信頼度** | HIGH（S&P Global・IG UK・TS2.tech・Yahoo Finance 複数一致） |
+| **ソース** | [S&P Global 大手IT決算プレビュー](https://www.spglobal.com/market-intelligence/en/news-insights/research/big-tech-earnings-preview-microsoft-meta-amazon-n-apple) / [IG UK 2026/07/16](https://www.ig.com/uk/trading-strategies/big-tech-q2-2026-earnings---the-ai-capex-question-and-what-uk-in-260716) / [Yahoo Finance](https://finance.yahoo.com/technology/article/big-tech-earnings-will-put-focus-on-ai-spending-165004022.html) |
 
 ---
 
-### 6. 日経高配当株50指数、2026年は「オルカン超え」——NISAで見直す国内株戦略
+### 5. 野村が年末7万円を示唆——日経平均の「3つのシナリオ」と週明け6万4290円スタートの意味
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「"とりあえずオルカン"を超えた先——日経高配当株50インデックスがNISAで注目される理由」 |
-| **概要（30字）** | 2026年にオルカンやS&P500を上回る日経高配当50指数の仕組みと活用法 |
-| **なぜ今** | 2026年上半期、円安恩恵で輸出企業業績好調。7月NISAランキングで高配当ETF（VYM・HDV等）と国内高配当ファンドが台頭中 |
-| **検索意図** | 「NISA 高配当 日本株」「日経高配当50 投資信託」「オルカン 比較 2026」 |
-| **カテゴリ** | NISA / 投資指標解説 |
-| **難易度** | 中 |
-| **信頼度** | MID（ダイヤモンドZAi・behavior.co.jp データあり。公式指数パフォーマンスの独立確認を追加推奨） |
-| **ソース** | [ダイヤモンドZAi](https://diamond.jp/zai/articles/-/1060967) / [behavior.co.jp](https://www.behavior.co.jp/blog/high-dividend-etf-nisa-guide) / [楽天NISA人気ランキング 7月](https://diamond.jp/zai/articles/-/1069577) |
-
----
-
-### 7. ビットコイン6.5万ドルの攻防——FOMC前夜、分岐点をどう読む
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「BTCは65,000ドルで踏ん張れるか——FOMC待ちの暗号市場、鍵となるシナリオ2つ」 |
-| **概要（30字）** | 2025年高値12.6万ドルから下落したBTCがFOMCを前に迎える分岐点を解説 |
-| **なぜ今** | 7/20〜24に$65k前後で推移、10月高値$126kから21ヶ月安値を経て7月に10%反発。月末FOMCが最大のカタリスト |
-| **検索意図** | 「ビットコイン 予想 2026 7月」「BTC FOMC 影響」「暗号資産 下落 見通し」 |
-| **カテゴリ** | マーケット戦略 / 速報 |
+| **仮タイトル案** | 「日経が週明け軟調スタートか——野村『年末7万円』強気シナリオが生きる条件と3つの分岐点」 |
+| **概要（30字）** | 野村証券の年末7万円見通しと現在の調整局面の関係をシナリオ分析で解説 |
+| **なぜ今** | 金曜先物6万4290円（▲270円）、日経は6月高値7万2000円台から約11%の調整中。野村が強気シナリオを維持したタイミングで記事化 |
+| **検索意図** | 「日経平均 見通し 2026 下半期」「日経 7万円 いつ」「来週 株 予想」 |
+| **カテゴリ** | マーケット戦略 |
 | **難易度** | 小〜中 |
-| **信頼度** | MID（Fortune・Crypto.news・Forbes・CoinDesk 複数確認。見通しは投機的な点を注記要） |
-| **ソース** | [Fortune 7/22](https://fortune.com/article/price-of-bitcoin-07-22-2026/) / [Crypto.news](https://crypto.news/bitcoin-price-prediction-july-2026-fed-decides/) / [Forbes 7/6](https://www.forbes.com/sites/digital-assets/2026/07/06/bitcoin-has-rallied-10-in-july-as-stronger-sentiment-fuels-gains/) |
+| **信頼度** | MID（野村ウェルスタイル記事・株探ニュース。独立二次ソースの定量確認を追加推奨） |
+| **ソース** | [野村ウェルスタイル 2026/07/24](https://www.nomura.co.jp/wealthstyle/article/0724/) / [株探 日経225先物 7/25](https://s.kabutan.jp/news/n202607250106/) |
 
 ---
 
-### 8. Q2 2026決算シーズン概観：S&P500は2期連続+20%成長——AI投資「回収フェーズ」入りは本物か
+### 6. NISA7月ランキング最新版——「オルカン一強」の牙城に高配当・国内株がどこまで迫ったか
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「AI設備投資2,200億ドルは報われているか——Q2決算が示す米株の『次のステージ』」 |
-| **概要（30字）** | Q2決算でAIクラウド収益が急拡大、しかし追加設備投資が株価の重しになる構図を解説 |
-| **なぜ今** | FactSet予測でS&P500 Q2利益成長率22%と強い一方、Alphabetの設備投資$205Bショックが波紋。Meta/Apple/Amazon が7/29〜30に続く |
-| **検索意図** | 「米国株 決算 2026 Q2」「AI 設備投資 株価 影響」「S&P500 利益 成長率」 |
+| **仮タイトル案** | 「2026年7月NISA人気ランキング——eMAXIS Slimオルカンが首位を守る中、高配当・国内株ETFが急浮上した背景」 |
+| **概要（30字）** | 毎月更新のNISA人気ランキングを分析し、円安163円時代の資産配分変化を解説 |
+| **なぜ今** | 7月はSBI証券・楽天証券が月次ランキングを更新。ドル円163円の円安環境で外貨建て資産の評価損が続くなか、国内高配当株・金ETFへのシフトが観察されている |
+| **検索意図** | 「NISA 7月 人気 投資信託」「オルカン vs 高配当 どっち」「NISA 2026 おすすめ 変化」 |
+| **カテゴリ** | NISA / 投資指標解説 |
+| **難易度** | 小 |
+| **信頼度** | MID（Diamond ZAi 複数記事あり。高配当シフトの定量エビデンスを追加推奨） |
+| **ソース** | [ダイヤモンドZAi SBIランキング](https://www.diamond.co.jp/zai/articles/-/305) / [ダイヤモンドZAi 楽天日本株ランキング](https://diamond.jp/zai/articles/-/1069577) / [ダイヤモンドZAi 楽天ファンドランキング7/13〜17](https://diamond.jp/zai/articles/-/1070334) |
+
+---
+
+### 7. 「円安163円×インフレ再燃」時代のポートフォリオ設計——外貨建て資産・国内株・金の最適比率を考える
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「円安163円・物価高・金利上昇の三重苦——2026年後半の日本人投資家が考えるべきポートフォリオ調整とは」 |
+| **概要（30字）** | 特殊なマクロ環境下での資産配分見直しポイントをやさしく解説 |
+| **なぜ今** | ドル円163円・米CPI4.2%・Brent原油98ドルが同時進行。NISAで海外株を長期保有している層の為替リスクへの不安が急増 |
+| **検索意図** | 「ポートフォリオ 円安 対策」「インフレ 投資 2026」「NISA 外貨建て リスク」 |
 | **カテゴリ** | マーケット戦略 / 投資指標解説 |
-| **難易度** | 中〜大 |
-| **信頼度** | HIGH（FactSet・Plus500・StocksAnalyzer・GeekWire 複数一致） |
-| **ソース** | [Plus500](https://us.plus500.com/en/newsandmarketinsights/q2-2026-earnings-season) / [StocksAnalyzer](https://www.stocksanalyzer.app/blog/q2-2026-earnings-season-preview) / [GeekWire](https://www.geekwire.com/2026/microsoft-tops-wall-street-expectations-reports-accelerating-azure-growth-and-37b-ai-run-rate/) |
+| **難易度** | 中 |
+| **信頼度** | MID（マクロデータは複数ソース一致。資産配分の「正解」は投資助言に近づかない切り口で中立記述が必須） |
+| **ソース** | [Fed H.10 USD/JPY](https://www.federalreserve.gov/releases/h10/hist/dat00_ja.htm) / [Fortune 金価格 7/24](https://fortune.com/article/current-price-of-gold-07-24-2026/) / [Intellectia 原油見通し](https://intellectia.ai/blog/crude-oil-price-forecast-july-2026) |
 
 ---
 
@@ -137,23 +122,22 @@ AIビッグテック決算シーズン開幕。Alphabet が売上+24%の好業�
 
 | 優先度 | 候補 | 理由 |
 |---|---|---|
-| ★★★ | 候補1（円163円・介入） | 本日進行中の事象、影響大、検索急増が予想される |
-| ★★★ | 候補5（Section 301本日発動） | 本日0時発動の新テーマ、既存記事との重複なし |
-| ★★★ | 候補3（Meta/Apple/Amazon決算プレビュー） | 7/29〜30に向けた"先回り"需要、鮮度確実 |
-| ★★ | 候補2（9月利上げ確率80%） | 大きな相場観転換、解説需要高い |
-| ★★ | 候補4（金4000ドル） | NISAで金ETF保有者多い、GS/JPMコメント具体的 |
-| ★★ | 候補8（Q2決算シーズン概観） | 候補3の補完として深掘り版。週末記事向き |
-| ★ | 候補6（日経高配当50） | MID信頼度、独立確認追加後に公開推奨 |
-| ★ | 候補7（BTC65k） | MID信頼度、見通し系は断定避け注意 |
+| ★★★ | 候補3（日銀7/31プレビュー） | 会合が5日後。速報性と教育性の両立。ドル円163円との連動が必読動機 |
+| ★★★ | 候補4（AI設備投資730億ドル審判） | 7/29〜30に結果が出るため、公開タイミングは月〜火が最適 |
+| ★★★ | 候補1（トヨタ北米赤字） | 重大ファクト（北米利益ゼロ）が独立記事化されていない。耐久性あり |
+| ★★ | 候補2（ソニー過去最高益） | 日本企業のポジティブ事例。決算発表前後どちらでも成立 |
+| ★★ | 候補5（日経週明けシナリオ） | 週末〜週明けのタイミングで検索需要が発生しやすい |
+| ★ | 候補6（NISA7月ランキング） | 定番コンテンツ。月1ランキング更新の解説記事として安定需要 |
+| ★ | 候補7（ポートフォリオ設計） | 教育系・常緑コンテンツ。断定を避けた設計が難しい分、難易度中〜大 |
 
 ---
 
 ## 既存記事との重複確認メモ
 
-- `guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html` → Alphabet Q2本体は**掲載済み**。候補8は「Q2シーズン全体」の切り口で差別化可能
-- `guide-news-2026-06-30-jpy-intervention.html` → 6月末の旧介入記事。候補1は「163円台・40年ぶり安値」の新局面で差別化可能
-- `guide-news-2026-07-05-tariff-august-deadline.html` → 旧関税記事。候補5はSection 301（別法律）の新発動で差別化可能
-- `guide-btc-crash-2026-06.html` → 6月の暴落記事。候補7は7月FOMC前回復局面で差別化可能
+- `guide-news-2026-07-25-fomc-boj-bigtech-superweek.html` → 週の大まかな概観。候補3は**日銀のみ深掘り**・候補4は**AI設備投資の定量比較**で差別化可能
+- `guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html` → Alphabet個別。候補4は**4社合計730億ドルの意味**という切り口で差別化
+- `guide-news-2026-07-20-brent-90-iran-hormuz-japan-oil.html` → 原油ショック。候補7は為替・インフレ・資産配分の統合解説で差別化
+- `guide-jpy-intervention-2026-06.html` → 6月介入記事。現在163円台で新局面だが昨日の ideas に掲載済みのため今日は外した
 
 ---
 
