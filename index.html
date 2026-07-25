@@ -40,11 +40,11 @@
     .header-meta{font-size:.85rem;color:#57606a}
     .header-meta span{color:#0969da;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #238636;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #9e6a03;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .sentiment-icon{font-size:4rem;line-height:1;flex-shrink:0}
     .sentiment-body{flex:1;min-width:200px}
     .sentiment-label-small{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}
-    .sentiment-badge{color:#238636;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
+    .sentiment-badge{color:#9e6a03;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
     .sentiment-text{color:#424a53;font-size:.92rem;line-height:1.6}
     .morning-digest{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}
     .md-title{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}
@@ -205,7 +205,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年7月25日 10:15 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年7月25日 10:28 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -243,13 +243,13 @@
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-icon">😊</div>
+    <div class="sentiment-icon">😐</div>
     <div class="sentiment-body">
       <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">やや強気</span>
+      <span class="sentiment-badge">中立</span>
       <div class="sentiment-text">
-        日経 66,423円 ／ S&amp;P500 7,411.98 ／
-        USD/JPY 163.79円 ／ BTC $63,968 ／
+        日経 64,611円 ／ S&amp;P500 7,411.98 ／
+        USD/JPY 163.79円 ／ BTC $63,982 ／
         金 $4,055.70/oz
       </div>
     </div>
@@ -257,10 +257,10 @@
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（10:15 JST 更新）</span></div>
-    <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼1.9%</span>・BTC <span class="md-down">▼1.7%</span>・ETH <span class="md-down">▼1.0%</span>（前日比）</div>
+    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（10:28 JST 更新）</span></div>
+    <div class="md-line">📈 値動きが大きい順：日経平均 <span class="md-down">▼2.7%</span>・原油 <span class="md-down">▼1.9%</span>・BTC <span class="md-down">▼1.6%</span>（前日比）</div>
     <div class="md-line">📅 本日の重要指標はなし。次は 🇺🇸 FOMC（1日目）（7/28・あと3日）</div>
-    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>18.6</b>（やや神経質な水準）・センチメント判定は「<b>やや強気</b>」</div>
+    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>18.6</b>（やや神経質な水準）・センチメント判定は「<b>中立</b>」</div>
     <details class="md-fold"><summary>📅 次の重要イベントまでのカウントダウンを見る</summary><div class="md-chips"><span class="md-chip">🇺🇸 FOMC あと4日（7/29）</span><span class="md-chip">🇯🇵 日銀会合 あと6日（7/31）</span><span class="md-chip">🇺🇸 雇用統計 あと13日（8/7）</span><span class="md-chip">🇺🇸 米CPI あと18日（8/12）</span><a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div></details>
   </div>
 
@@ -343,12 +343,12 @@
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-07-25</b>: 🧪 解説「<a href="guide-signal-lab-050.html" style="color:#0969da"><b>#50 上昇×revL FWD後半失速——RSI73% vs BB44%二極化</b></a>」公開
+      ・<b>2026-07-25</b>: 🌾 解説「<a href="guide-proverb-mannin-kyoki-tawake.html" style="color:#0969da"><b>万人が万人ながら強気なら、たわけになりて米を売るべし</b></a>」公開
       <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+      ・<b>2026-07-25</b>: 🧪 解説「<a href="guide-signal-lab-050.html" style="color:#0969da"><b>#50 上昇×revL FWD後半失速——RSI73% vs BB44%二極化</b></a>」公開<br>
       ・<b>2026-07-24</b>: 📈 <a href="charts.html" style="color:#0969da"><b>50年チャートを「150年チャート＋投資史年表」へ大幅拡張</b></a>（S&amp;P500は1871年から・対数スケール・時代背景つき）<br>
       ・<b>2026-07-24</b>: 🧪 解説「<a href="guide-signal-anatomy.html" style="color:#0969da"><b>AIはどんな瞬間にシグナルを出すのか——発火条件の図解カタログ</b></a>」公開<br>
-      ・<b>2026-07-24</b>: 📰 解説「<a href="guide-news-2026-07-24-brent-100-houthi-red-sea.html" style="color:#0969da"><b>ブレント100ドル突破──フーシ派サウジタンカー攻撃・3週間+49%急騰と円安の二重苦</b></a>」公開<br>
-      ・<b>2026-07-24</b>: 🛑 解説「<a href="guide-proverb-inochigane-ni-te-wo-tsukeru-na.html" style="color:#0969da"><b>命金には手をつけるな</b></a>」公開
+      ・<b>2026-07-24</b>: 📰 解説「<a href="guide-news-2026-07-24-brent-100-houthi-red-sea.html" style="color:#0969da"><b>ブレント100ドル突破──フーシ派サウジタンカー攻撃・3週間+49%急騰と円安の二重苦</b></a>」公開
       </div></details>
     </div>
   </div>
@@ -391,18 +391,18 @@
             <span class="ai-asset-icon">🇯🇵</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">日本株（日経平均）</div>
-              <div class="ai-asset-price">66,423円</div>
+              <div class="ai-asset-price">64,611円</div>
             </div>
-            <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
+            <span class="ai-asset-sentiment" style="background:#cf222e;color:#fff">弱気</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:25%;background:#cf222e"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均株価は66,000円台と高水準にあるものの、直近のニュースは米中貿易摩擦やメタ社のエネルギー政策など、海外の個別企業や政策動向に偏っており、日本株全体への直接的な影響は限定的と判断される。高値圏での推移が続く中、追加の材料待ちといった状況である。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均株価が64,000円超えという高値圏にある一方、直近ニュースからは米中対立やメタ社のクリーンエネルギー方針転換といった、世界経済の先行き不透明感を示唆する材料が確認できる。この状況下では、さらなる上昇は期待しにくく、慎重な姿勢が求められる。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -415,12 +415,12 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:20%;background:#cf222e"></div>
+              <div class="ai-meter-dot" style="left:35%;background:#cf222e"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 直近ニュースは、主要テクノロジー企業への逆風や、エネルギー政策の転換を示唆しており、S&P500へのマイナス要因と判断される。現在価格7,411.98は、これらのネガティブな材料を十分に織り込んでいるとは考えにくく、さらなる下落リスクを警戒すべき局面である。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 主要なニュースは、地政学リスク（米中貿易摩擦）、インフレ懸念（社会保障）、そして企業による環境方針変更（メタ）など、市場全体にネガティブな影響を与えうる要因を示唆しています。現在のS&P500の価格水準からのさらなる下落リスクを考慮し、慎重な姿勢で様子見するのが賢明と考えられます。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -433,30 +433,30 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:55%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 現在のゴールド価格 $4,056/oz は、提示されたニュースからは直接的な強材料・弱材料が見当たらないため、中立と判断します。ただし、エネルギー価格の上昇を示唆する「盆地リグのカウントダウン」は、インフレ懸念から間接的にゴールド価格を支える可能性も考えられます。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 現在のゴールド価格は$4,056/ozと高値圏にある。直近のニュースはインド企業の決算やリグのカウントダウンに関するもので、直接的なゴールドの需給に影響を与える情報は含まれていない。このまま様子を見て、ゴールド価格に影響を与える新たな材料が出現するか注視する必要がある。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🪙</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$63,968</div>
+              <div class="ai-asset-price">$63,982</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:58%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> マイケル・セイラー氏のビットコイン銀行指数発表は、機関投資家の関心を示すポジティブな材料となり得ますが、XRPやイーロン・マスク氏関連のニュースはビットコインの直接的な価格動向に与える影響が限定的です。現在の価格帯は、短期的な材料だけでは方向感を判断しにくいため、様子見が妥当と考えられます。</div>
+          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコイン価格は依然として過去最高値近辺で推移しており、マイケル・セイラー氏のビットコイン銀行指数発表はポジティブな材料となり得ますが、イーロン・マスク氏のニュースは暗号資産市場全体への影響が限定的と判断します。現時点では積極的な買いは控えるべきですが、押し目があれば買いを検討する余地があります。</div>
         </div>
     </div>
   </section>
@@ -472,7 +472,7 @@
           <div class="card-icon icon-stocks">🗾</div>
           <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
         </div>
-        <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">66,423円 <span class="up price-change">😊▲0.46%</span></span></div>
+        <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">64,611円 <span class="down price-change">😢▼2.73%</span></span></div>
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,411.98 <span class="up price-change">😊▲0.05%</span></span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.bloomberg.com/news/articles/2026-07-24/trump-extends-10-tariff-baseline-in-broad-use-of-trade-powers" target="_blank" rel="noopener nofollow">
@@ -547,8 +547,8 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$63,968 <span class="down price-change">😢▼1.66%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,857.98 <span class="down price-change">😢▼1.02%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$63,982 <span class="down price-change">😢▼1.63%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,858.23 <span class="down price-change">😢▼1.01%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://fortune.com/article/current-price-of-bitcoin-for-july-24-2026/" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ ビットコインは7/24時点で$65,030——50ヶ月EMA（$65,631）が重要な抵抗線として意識される</span>
