@@ -344,7 +344,32 @@ def cmd_evolve(argv):
         # クラウドで実行された場合はここで正常終了する（スタブを"親切に"再作成する事故を防ぐ）。
         print("evolve はローカル専用（_doctrine_check.py はリモートに存在しないのが正常＝再作成禁止）")
         return 0
-    return _run(["_doctrine_check.py", "--agenda"] + argv)
+    rc = _run(["_doctrine_check.py", "--agenda"] + argv)
+    # レジーム状態（未導入なら黙ってスキップ）
+    try:
+        _rp = os.path.join(SD, "research")
+        if _rp not in sys.path:
+            sys.path.insert(0, _rp)
+        import _regime_state as _rs
+        _st = _rs.load_state()
+        if _st:
+            print(f"\n🌐 レジーム: {_st['current']}（更新 {_st['last_updated']}）")
+            _summary = os.path.join(SD, "research", "_regime_retest_summary.json")
+            if os.path.exists(_summary):
+                with open(_summary, encoding="utf-8") as f:
+                    _res = json.load(f)
+                _armed = [r["name"] for r in _res.get("results", [])
+                          if r.get("verdict") == "前向き候補" and r.get("state") == _st["current"]]
+                if _armed:
+                    print(f"   ⚡ 現レジームのアーム候補 {len(_armed)}件: {', '.join(_armed)}")
+                    print("   → 前向きトラッカーへの登録可否を判断（第1段の通過は採用ではない）")
+                else:
+                    print("   アーム候補なし")
+            else:
+                print("   （Q27 第1段の再検証は着手条件待ちで未実行）")
+    except Exception as _e:
+        print(f"\n🌐 レジーム: 表示スキップ（{_e}）")
+    return rc
 
 
 def cmd_screen(argv):
