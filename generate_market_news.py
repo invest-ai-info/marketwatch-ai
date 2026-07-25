@@ -1596,7 +1596,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 
@@ -1663,7 +1663,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <p>データソース: Yahoo Finance (yfinance) &nbsp;|&nbsp;
   <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   <a href="calendar.html">📅 経済カレンダー</a> &nbsp;|&nbsp;
-  <a href="charts.html">📈 50年チャート</a> &nbsp;|&nbsp;
+  <a href="charts.html">📈 150年チャート</a> &nbsp;|&nbsp;
   <a href="vix.html">😱 VIX</a> &nbsp;|&nbsp;
   <a href="market-health.html">🩺 市場健康度</a> &nbsp;|&nbsp;
   <a href="hot-assets.html">🔥 出来高急増</a> &nbsp;|&nbsp;
@@ -2659,7 +2659,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn current" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
@@ -2973,7 +2973,7 @@ def build_calendar_html(now_jst):
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 
@@ -3028,7 +3028,7 @@ def build_calendar_html(now_jst):
 <footer>
   <p>📅 マクロ経済カレンダー ─ 日本人投資家のための経済指標ガイド</p>
   <p style="margin-top:6px">※ 日程は変更される場合があります ｜ 最新情報は各公式サイトでご確認ください</p>
-  <p style="margin-top:6px"><a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:6px"><a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 150年チャート</a> ｜ <a href="vix.html">😱 VIX恐怖指数</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
@@ -3363,7 +3363,7 @@ def build_preview_html(now_jst):
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 
@@ -3384,7 +3384,7 @@ def build_preview_html(now_jst):
 </main>
 <footer>
   <p>📰 経済指標プレビュー ─ 日本人投資家のための事前解説ページ</p>
-  <p style="margin-top:6px">毎日更新 ｜ <a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 50年チャート</a> ｜ <a href="vix.html">😱 VIX</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
+  <p style="margin-top:6px">毎日更新 ｜ <a href="index.html">🏠 トップページ</a> ｜ <a href="calendar.html">📅 経済カレンダー</a> ｜ <a href="charts.html">📈 150年チャート</a> ｜ <a href="vix.html">😱 VIX</a> ｜ <a href="market-health.html">🩺 市場健康度</a> ｜ <a href="hot-assets.html">🔥 出来高急増</a></p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
@@ -3753,7 +3753,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
@@ -3896,7 +3896,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <p style="margin-top:6px">
     <a href="index.html">🏠 トップページ</a> ｜
     <a href="calendar.html">📅 経済カレンダー</a> ｜
-    <a href="charts.html">📈 50年チャート</a> ｜
+    <a href="charts.html">📈 150年チャート</a> ｜
     <a href="vix.html">😱 VIX恐怖指数</a>
   </p>
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
@@ -4087,7 +4087,7 @@ def build_charts_html(hist, now_jst):
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-  <a class="nav-btn current" href="charts.html">📈 50年チャート</a>
+  <a class="nav-btn current" href="charts.html">📈 150年チャート</a>
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 
@@ -4178,7 +4178,7 @@ def build_charts_html(hist, now_jst):
   <p style="margin-top:8px">
   <a href="index.html">🏠 トップページ</a> &nbsp;|&nbsp;
   <a href="calendar.html">📅 経済カレンダー</a> &nbsp;|&nbsp;
-  <a href="charts.html">📈 50年チャート</a> &nbsp;|&nbsp;
+  <a href="charts.html">📈 150年チャート</a> &nbsp;|&nbsp;
   <a href="vix.html">😱 VIX</a> &nbsp;|&nbsp;
   <a href="market-health.html">🩺 市場健康度</a> &nbsp;|&nbsp;
   <a href="hot-assets.html">🔥 出来高急増</a> &nbsp;|&nbsp;
@@ -5355,7 +5355,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="charts.html">📈 50年チャート</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
