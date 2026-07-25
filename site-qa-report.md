@@ -1,49 +1,94 @@
-# 🧪 サイト整合性 QA レポート（基準日 2026-07-18 10:07 JST）
+# 🧪 サイト整合性 QA レポート（基準日 JST）
+
+**基準日時**: 2026-07-25T10:08:38+09:00（UTC: 2026-07-25T01:08:38Z）
+**実行スクリプト**: `check_site_consistency.py`
+**検査対象 guide 記事**: 212 件（自動生成記事を除く）
+
+---
 
 ## 結果サマリー
 
-| 項目 | 状態 |
+| 項目 | 件数 |
 |---|---|
-| **総合判定** | ✅ OK |
-| エラー件数 | **0 件** |
-| 警告件数 | 1 件 |
-| 検査記事数 | 188 件（自動生成記事除く） |
+| ✅ エラー | **0 件** |
+| ⚠️ 警告 | **16 件** |
+| 全体判定 | **✅ OK** |
 
 ---
 
-## ✅ エラーなし
+## ❌ エラー一覧
 
-今回の検査でエラーは検出されませんでした。SYNC禁忌混入・免責漏れ・リンク切れなど、すべての不変条件をクリアしています。
+**エラーなし。** SYNC禁忌の混入・免責漏れ・リンク切れは検出されませんでした。
 
 ---
 
-## ⚠️ 警告一覧（1 件）
+## ⚠️ 警告一覧
 
-| # | 内容 | 対応優先度 |
+### カテゴリ①：SYNC_FILES チェックスキップ（1件・正常）
+- `sync_to_github.py` はクラウド用スタブ（想定どおり）→ SYNC_FILES 系チェックをスキップ
+
+### カテゴリ②：「↑上に戻る」ボタン欠落（2件）
+対象ファイル：
+- `guide-new-books.html`
+- `guide-signal-anatomy.html`
+
+修正コマンド：`python apply_back_to_top.py`
+
+### カテゴリ③：ナビCSS `max-width` 欠落（13件・8+2ボタン崩れ可能性）
+対象ファイル：
+- `guide-auto-boj-2026-06-17.html`
+- `guide-auto-fomc-2026-06-17.html`
+- `guide-auto-us_cpi-2026-05-14.html`
+- `guide-auto-us_cpi-2026-06-10.html`
+- `guide-auto-us_jobs-2026-06-05.html`
+- `guide-auto-us_pce-2026-05-30.html`
+- `guide-auto-us_pce-2026-06-27.html`
+- `guide-weekly-2026-05-25.html`
+- `guide-weekly-2026-06-01.html`
+- `guide-weekly-2026-06-08.html`
+- `guide-weekly-2026-06-15.html`
+- `guide-weekly-2026-06-22.html`
+- `guide-weekly-review-2026-06-15.html`
+
+修正コマンド：`python apply_nav_css.py`
+
+---
+
+## 推奨対応
+
+| 優先度 | 項目 | 対応方法 |
 |---|---|---|
-| 1 | `sync_to_github.py` はクラウド用スタブ（想定どおり）→ SYNC_FILES 系チェックをスキップ | 不要（正常動作） |
+| 🟡 低（余裕で対応） | ナビCSS `max-width` 欠落 13件 | `python apply_nav_css.py` を実行して一括修正 |
+| 🟡 低（余裕で対応） | 「↑上に戻る」ボタン欠落 2件 | `python apply_back_to_top.py` を実行して一括修正 |
 
-**補足**: `sync_to_github.py` がリモート環境に存在しないのは仕様通りです。SYNC_FILES チェックはローカル環境向けのため、クラウド実行時はスキップされます。対応不要。
-
----
-
-## 📋 推奨対応
-
-- **今回対応必要な項目はありません**。
-- サイトの不変条件（SYNC禁忌・免責・ナビバー10ボタン・内部リンク）はすべて正常です。
-- 次回の定期チェック（土曜 10:00 JST）まで継続監視。
+⚠️ いずれも古い記事（guide-auto-* / guide-weekly-*）に限定されており、新記事・主要コアページへの影響なし。モバイル表示崩れの可能性があるため、余裕があるタイミングで一括修正を推奨。
 
 ---
 
-## 🔧 リンター生出力（参考）
+## リンター生出力
 
 ```
 🔍 サイト整合性チェック（check_site_consistency.py）
-  検査した guide記事: 188 件（自動生成記事を除く） / SYNC_FILES: ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）
+  検査した guide記事: 212 件（自動生成記事を除く） / SYNC_FILES: ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）
 
-⚠️  警告 1 件:
+⚠️  警告 16 件:
    - sync_to_github.py はクラウド用スタブ（想定どおり）→ SYNC_FILES 系チェックをスキップ
+   - guide-new-books.html: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`
+   - guide-signal-anatomy.html: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`
+   - guide-auto-boj-2026-06-17.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-fomc-2026-06-17.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-us_cpi-2026-05-14.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-us_cpi-2026-06-10.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-us_jobs-2026-06-05.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-us_pce-2026-05-30.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-auto-us_pce-2026-06-27.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-2026-05-25.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-2026-06-01.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-2026-06-08.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-2026-06-15.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-2026-06-22.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
+   - guide-weekly-review-2026-06-15.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
 
-結果: ✅ OK（エラーなし・警告 1 件）
+結果: ✅ OK（エラーなし・警告 16 件）
 EXIT_CODE:0
 ```
