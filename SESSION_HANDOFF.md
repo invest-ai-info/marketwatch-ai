@@ -1,4 +1,10 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-26 16:20）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-26 16:40）
+
+> **次回の入口＝`python mw.py evolve`**。最初の候補は **③資産配分系**（管理先物型TF／オールウェザー・パーマネントPF）。
+> ⚠️ **③に `samedate_diff_p`（同日クロスセクション）は使えない**＝観測が「銘柄×日」でなく「ポートフォリオ×月」＝同月の対照が1本
+> （`min_ctl=30` を満たせず無言のNaN／下げると"同日対照"の看板だけ残った別物）。7/8改定の狙い「タイミング運を除いて銘柄選択だけ残す」は、
+> タイミングと配分そのものが戦略の③では**測る対象を消す操作**。流用可は `block_boot_p`/`bh_fdr` のみ。**第一歩は検証でなく対照の選定と検出力見積もり**
+> （ブロック長Lはホライズンでなく**平均保有期間**基準＝持ち越しで系列依存が強い）。上表7/26行がこの宣言をQ登録の関門で強制する。
 
 <!-- 2026-07-24 declutter: 7/21完了節(⓪-7/21/⓪-人気度/⓪-EVアップ/⓪-ナビCSS/⓪-次の作業候補)をSESSION_ARCHIVE.mdへ退避。 -->
 
@@ -30,6 +36,7 @@
 | **休場中の発火を勝率に含めない** 🆕7/11 | エンジン=`generate_technical_alerts.py`週末閉場ガード（土07:00〜月06:00 JST・BTC除外・発火スキップ）＋集計=`is_weekend_closed_fire`（track-record/週次/月次の3本に同一定義複製） | 塩漬けデータ発火（実測214件・勝率33% vs 全体41.6%＝週明けギャップでSL直撃の測定アーティファクト）を源流と集計の両方で遮断。生ログは不変・ページに除外注記あり |
 | **ローカル公開の日付事故防止** 🆕7/22 | `publish_article.py` の `check_date_gate`（免除は `--allow-backdate`・テスト=`_test_publish_date_gate.py` 5件） | 公開日≠JST今日なら **🚫 exit 1 で公開停止**（7/15事故の恒久対策・signal-lab date_check と同型） |
 | **自動公開レーンの「静かな停止」検知** 🆕7/26 | `check_automation_health.py` §⑤（`automation-health.yml` 毎朝09:30 JST・テスト=`_test_topic_queue.py` 12件） | autodraft の未公開 topic が5件未満で **Issue**。①②は「走ったか」しか見ないのでキュー枯渇による仕様どおりの停止を捕まえられなかった（7/20〜24 に5日連続スキップを誰も検知できなかった実例）|
+| **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（テスト=scratch 10件・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
@@ -115,13 +122,15 @@
   - **番人＝`check_automation_health.py` §⑤**（`check_topic_queue`）: キュー表から key を抽出→GitHub の `guides.html` と突合し、未公開が `QUEUE_MIN_REMAIN=5` 未満なら warn＝Issue。実データで **push前 0/24（＝停止中を正しく検知）→ push後 15/39 ✅** を両方確認。テスト `_test_topic_queue.py` 12アサーション全緑（表以外のバッククォート除外・`guide-alpha-extra` での部分一致誤判定なし・表破損時の分岐 を含む）。
   - sync 242成功/0失敗。反映確認＝raw で3ファイル（`check_automation_health.py`／`drafts/AUTODRAFT_GUIDE.md`／`CLAUDE.md`）。**翌朝 05:30 の autodraft-article が #25 `emergency-fund` から再開**する見込み。
 
-- **⓪-✅ナビ文言「50年チャート」→「150年チャート」一括更新＝完了（7/25 21:55・全文は SESSION_ARCHIVE.md）**
-  - 結果: 242箇所/223ファイル反映・sync 242成功/0失敗・Contents API でクラウドレーン110本。残1の `youtube-summary.html` も 7/26 に解消を実測。
-  - **⚠️ 再利用する教訓**: ①一括置換のキーは **`📈 50年チャート` の完全一致**に限定する（`50年` の素朴なgrepは `250年`/`1950年代` に誤ヒットして `2150年`/`11950年代` に壊す） ②`generate_market_news.py` の更新履歴に残る「50年チャートを…へ拡張」は**履歴の記述なので変更禁止** ③sync の🚫staleは `--force` を直に叩かず**リモート最新に自分の編集を乗せ直す**（この日それでクラウド公開の記事カード消失を回避）。
-  - **⚠️ 環境メモ**: `api.github.com` だけが TCP443 到達不能になる時間帯がある（`github.com`/`raw`/ライブは正常）。**進捗実測は raw で行い、書き込みは窓が開いた瞬間に流す**。再利用ツール＝`_relabel_remote_push.py` / `_relabel_api_targets.json` / `_relabel_live_state.py`。
-- **⓪-🚫PEAD Q28＝検定不能でクローズ（7/26 08:58・全文は SESSION_ARCHIVE.md／仮説本体は `research/hypothesis_queue_archive.md`）**: 材料は全部手元にあった（＝「調達待ち」は誤り）。イベント表 `research/_pead_events.csv` は再利用資産。**⚠️実装の罠3つ**＝①合成データを「都合よく単純」にすると検査したいものが値として区別できない（entryタイミングが無検査で全緑になった） ②`samedate_diff_p` の戻り値は3-tuple `(est, p, 有効日数)`・判定に使うのは `est`（同ファイルの `block_boot_p` は float なので取り違える） ③blowup を期間跨ぎで比べない。続きは Q29 の設計/実行節へ。
-- **⓪-✅レジーム転換検知オラクル＝稼働（7/25・全文は SESSION_ARCHIVE.md）**: 4状態(UP/DOWN×HIGH/LOW)の日次判定が稼働し `mw evolve` に表示（現在 UP_HIGH）。テスト21件PASS・2008年秋は61日全て DOWN_HIGH で妥当性確認済み。**凍結パラメータ（ヒステリシス21営業日/ボラ窓60日/分位窓750日/MA200/split=2024-12-31）は結果を見る前に選んだもので、変更は修正でなく新Q番号での再登録**（`_doctrine_check.py` が状態JSONの `frozen_params` を検査）。Q27第1段は**着手条件待ちで未実行**＝対象が2系統のみで収穫が薄いため（条件と設計は `research/hypothesis_queue.md` の Q27 が単一の真実）。
-- **⓪-✅期限到来の確認2件＝両方クリア（7/25朝・全文は SESSION_ARCHIVE.md）**: ①#050 にチャート風図解は入った（ライブ実測でインラインSVG3本）＝**7/24夜のプロンプト改定は初適用回で機能＝調整不要** ②`drafts/REVIEW.md` の🚩は新規なし（3件はすべて7/8付の既存分）。#050は verify 6/6緑・Opusコンプラ🟢白・独立Opus🟢白で自動公開完了。
+<!-- 2026-07-26 declutter: 7/25完了節4件（ナビ文言150年／PEAD Q28クローズ／レジームオラクル稼働／期限確認2件）は
+     SESSION_ARCHIVE.md の各【完了】節に全文あり（L1378/L1427/L1401/L1392）。以下は再利用する教訓だけを残した圧縮版。 -->
+
+- **⓪-✅完了4件の要点だけ（7/25〜7/26・全文は SESSION_ARCHIVE.md）**
+  - **ナビ文言150年化**（242箇所/223ファイル・sync 242/0）: ①一括置換のキーは **`📈 50年チャート` の完全一致**に限定（`50年` の素朴なgrepは `250年`/`1950年代` を `2150年`/`11950年代` に壊す） ②`generate_market_news.py` の更新履歴中の「50年チャートを…へ拡張」は**履歴の記述＝変更禁止** ③sync の🚫staleは `--force` を直に叩かず**リモート最新に自分の編集を乗せ直す**。ツール=`_relabel_remote_push.py`/`_relabel_api_targets.json`/`_relabel_live_state.py`
+  - **⚠️環境**: `api.github.com` だけ TCP443 到達不能になる時間帯がある（`github.com`/`raw`/ライブは正常）＝**進捗実測は raw・書き込みは窓が開いた瞬間**
+  - **PEAD Q28＝🚫検定不能でクローズ**（材料は全部手元にあった＝「調達待ち」は誤り。`research/_pead_events.csv` は再利用資産）。**⚠️実装の罠3つ**＝①合成データを「都合よく単純」にすると検査したいものが値として区別できない ②`samedate_diff_p` の戻り値は3-tuple `(est, p, 有効日数)`・判定は `est`（同ファイルの `block_boot_p` は float なので取り違える） ③blowup を期間跨ぎで比べない
+  - **レジーム転換検知オラクル＝稼働**（4状態・`mw evolve` 表示・現在 UP_HIGH・テスト21件）。**凍結パラメータの変更は修正でなく新Q番号での再登録**（`_doctrine_check.py` が `frozen_params` を検査）。Q27第1段は着手条件待ちで未実行
+  - **期限到来の確認2件＝両方クリア**（#050にチャート風図解あり＝7/24のプロンプト改定は初適用回で機能／REVIEW.mdの🚩は新規なし）
 ## 📎 運用メモ
 
 - 作業フォルダ: `C:\Users\info0\OneDrive\デスクトップ\新しいフォルダー` ／ GitHub: `invest-ai-info/marketwatch-ai`(main)
