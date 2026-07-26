@@ -36,7 +36,7 @@
 | **休場中の発火を勝率に含めない** 🆕7/11 | エンジン=`generate_technical_alerts.py`週末閉場ガード（土07:00〜月06:00 JST・BTC除外・発火スキップ）＋集計=`is_weekend_closed_fire`（track-record/週次/月次の3本に同一定義複製） | 塩漬けデータ発火（実測214件・勝率33% vs 全体41.6%＝週明けギャップでSL直撃の測定アーティファクト）を源流と集計の両方で遮断。生ログは不変・ページに除外注記あり |
 | **ローカル公開の日付事故防止** 🆕7/22 | `publish_article.py` の `check_date_gate`（免除は `--allow-backdate`・テスト=`_test_publish_date_gate.py` 5件） | 公開日≠JST今日なら **🚫 exit 1 で公開停止**（7/15事故の恒久対策・signal-lab date_check と同型） |
 | **自動公開レーンの「静かな停止」検知** 🆕7/26 | `check_automation_health.py` §⑤（`automation-health.yml` 毎朝09:30 JST・テスト=`_test_topic_queue.py` 12件） | autodraft の未公開 topic が5件未満で **Issue**。①②は「走ったか」しか見ないのでキュー枯渇による仕様どおりの停止を捕まえられなかった（7/20〜24 に5日連続スキップを誰も検知できなかった実例）|
-| **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（テスト13件・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
+| **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（回帰テスト=**`_test_doctrine_registry.py` 13件**・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
