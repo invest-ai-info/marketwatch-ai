@@ -14,7 +14,7 @@
 |---|---|---|
 | index.html | メイン（価格・ニュース・AI 判断） | update-market-news.yml |
 | calendar.html | マクロ経済カレンダー | update-market-news.yml |
-| charts.html | 50年価格チャート + 歴史イベント | update-market-news.yml |
+| charts.html | 150年価格チャート + 投資史年表 + 歴史イベント | update-market-news.yml |
 | vix.html | VIX 恐怖指数 90日 | update-market-news.yml |
 | market-health.html | 市場健康度（VIX/恐怖&強欲/バフェット/CAPE） | update-market-news.yml |
 | hot-assets.html | 出来高急増ランキング | update-market-news.yml |
