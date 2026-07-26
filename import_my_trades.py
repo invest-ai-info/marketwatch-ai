@@ -152,6 +152,21 @@ def main():
     reader = csv.DictReader(StringIO(text))
     rows = list(reader)
     print(f"  CSV から {len(rows)} 行を読み込み")
+    # 2026-07-26: 0行は「取得成功・中身空」＝フォーム連携の沈黙の故障。ワークフローは緑のままなので
+    # 気づけない（autopublishキュー枯渇と同型）。既存ファイルが保持されるぶん一見無事に見えるのが厄介。
+    if not rows:
+        print("  ⚠️ CSV が 0 行＝フォーム連携が機能していない可能性が高い。"
+              "新しい取引を入力しても my-trades.json に届かない（既存分の保持だけが続く）。"
+              "確認＝①スプレッドシートの「ウェブに公開」が有効か ②公開URLが回答タブを指しているか "
+              "③MY_TRADES_CSV_URL が現行の公開URLか。テスト＝フォームに1件送信して次のrunで行数が1以上になるか見る。")
+    else:
+        cols = list(rows[0].keys())
+        opt = {"口座残高": ("口座残高", "残高"), "リスク額": ("リスク額", "許容損失"),
+               "予定価格": ("予定価格", "予定エントリー", "計画価格")}
+        miss = [k for k, ks in opt.items() if not any(c and any(x in c for x in ks) for c in cols)]
+        if miss:
+            print(f"  ⚠️ 任意3欄のうち未設置: {'／'.join(miss)}"
+                  "＝2%ルール・相関合算リスク・実スリッページが測定不能のまま（フォームに質問を追加すると自動で有効化）")
 
     csv_trades = convert_rows(rows)
 
