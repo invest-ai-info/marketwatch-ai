@@ -1,0 +1,53 @@
+{
+  "article_id": "052",
+  "claims": [
+    {
+      "label": "blocked=True×Long 全期間",
+      "filter": {"blocked": true, "direction": "long"},
+      "k": 78,
+      "n": 186
+    },
+    {
+      "label": "blocked=True×Short 全期間",
+      "filter": {"blocked": true, "direction": "short"},
+      "k": 65,
+      "n": 139
+    },
+    {
+      "label": "blocked=False×Long 全期間（対照群）",
+      "filter": {"blocked": false, "direction": "long"},
+      "k": 467,
+      "n": 1107
+    },
+    {
+      "label": "blocked=True×Long×上昇トレンド",
+      "filter": {"blocked": true, "direction": "long", "trend": "上昇"},
+      "k": 32,
+      "n": 79
+    },
+    {
+      "label": "blocked=True×Long×下降トレンド",
+      "filter": {"blocked": true, "direction": "long", "trend": "下降"},
+      "k": 28,
+      "n": 65
+    },
+    {
+      "label": "blocked=True×Long×中立・もみあい",
+      "filter": {"blocked": true, "direction": "long", "trend": "中立・もみあい"},
+      "k": 18,
+      "n": 42
+    },
+    {
+      "label": "blocked=True×Long×金属グループ",
+      "filter": {"blocked": true, "direction": "long", "group": "metal"},
+      "k": 4,
+      "n": 18
+    },
+    {
+      "label": "blocked=True×Long×指数グループ",
+      "filter": {"blocked": true, "direction": "long", "group": "index"},
+      "k": 18,
+      "n": 39
+    }
+  ]
+}
