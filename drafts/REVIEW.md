@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-07-27 | 🤖 下書き生成 | per-pbr | PERとPBRの読み方入門
+
+- **基準日**: 2026-07-27（JST）
+- **topic**: per-pbr — 「PERとPBRの読み方（割安・割高をどう測るか）」
+- **シリーズ**: 投資の基礎知識（カテゴリ：💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-per-pbr.html`
+- **参照出典**:
+  - 松井証券 PER/PBR解説 (matsui.co.jp)
+  - JPX 規模別・業種別PER・PBR (jpx.co.jp/markets/statistics-equities/misc/04.html)
+  - 楽天証券 ROE・PBR・PERの関係 (rakuten-sec.co.jp)
+  - PwC Japan 東証PBR1倍割れ改善要請の考察 (pwc.com/jp)
+  - ダイヤモンドZAI 低PERバリュートラップ (diamond.jp)
+  - 野村証券 PBR1倍割れの正しい見方 (nomura.co.jp)
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「○○を買え」等の表現なし）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「保証」「儲かる」不使用）
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer の3箇所）
+  - ✅ noindex,nofollow 設定済み
+  - ✅ 出典明記（JPX公式データの参照URLを本文中に記載）
+  - ✅ nav 10ボタン順序厳守
+  - ✅ SVG3点（PER概念図・PBR概念図・景気循環株逆転図）すべて概念図キャプション付き
+- **人間の残作業**:
+  - SVG の実機ライト/ダーク確認（特にダークモードでのバー色の視認性）
+  - タイトル・読了時間（14分）の微調整
+  - 公開は毎朝08:40の `autodraft-publish` ゲート付き自動実行
+
+---
+
 ## 2026-07-26 autopublish: スキップ（topicキュー全24本公開済み・対象なし）
 
 ---

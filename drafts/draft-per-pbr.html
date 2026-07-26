@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>PERとPBRの読み方入門｜割安・割高をどう測るか、低PERトラップとROE連動まで徹底解説 - MarketWatch AI</title>
+  <meta name="description" content="PER（株価収益率）とPBR（株価純資産倍率）の計算式から、低PERの罠（バリュートラップ）、PERが使えない赤字企業・景気循環株、PBR＝PER×ROEという関係式、業種別比較の落とし穴まで、初心者〜中級者向けに図解で徹底解説。">
+  <meta name="keywords" content="PER,PBR,株価収益率,株価純資産倍率,EPS,BPS,ROE,バリュートラップ,割安株,割高,解散価値,低PER,景気循環株,東証改革,投資指標">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-per-pbr.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PERとPBRの読み方入門｜割安・割高をどう測るか、低PERトラップとROE連動まで徹底解説">
+  <meta property="og:description" content="PER・PBRの計算式から低PERの罠、PBR＝PER×ROEの関係、業種別比較の落とし穴まで図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-per-pbr.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "PERとPBRの読み方入門｜割安・割高をどう測るか、低PERトラップとROE連動まで徹底解説",
+    "description": "PER・PBRの計算式から低PERの罠、PBR＝PER×ROEの関係、業種別比較の落とし穴まで図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-27",
+    "dateModified": "2026-07-27",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-per-pbr.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-b{fill:#0969da;opacity:.85}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-y{fill:#9a6700;opacity:.75}
+    .s-bg-light{fill:#f6f8fa}
+    .s-bg-warn{fill:#fff8c5}
+    .s-text-h{fill:#1f2328;font-size:13.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-b{fill:#0969da;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-g{fill:#1a7f37;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#388bfd}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-y{fill:#d4a017}
+    body.dark .s-bg-light{fill:#161b22}
+    body.dark .s-bg-warn{fill:#2a1f0e}
+    body.dark .s-text-h{fill:#e6edf3}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-g{fill:#7ee787}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; PERとPBRの読み方入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は PER・PBR などの株式評価指標にまつわる一般的な考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 PERとPBRの読み方入門｜割安・割高をどう測るか</h1>
+    <div class="meta-line">公開日：2026 年 7 月 27 日 ／ 読了時間：約 14 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「この株、PER が低いから割安じゃない？」——投資の世界でよく聞くフレーズですが、<strong>PER が低ければ自動的に割安</strong>というわけではありません。市場が業績の悪化を先読みして意図的に低く値付けしているケースや、そもそも PER が意味をなさない赤字企業・景気循環株など、見落としやすい落とし穴が存在します。</p>
+    <p>この記事では、まず<strong>PER・PBR の計算式と直感的なイメージ（前半・初心者向け）</strong>をやさしく解説し、後半では<strong>低 PER の罠、PER が使えないケース、PBR＝PER×ROE という関係式、業種をまたいだ比較が禁物な理由（中上級向け）</strong>まで踏み込みます。「数字の意味と限界を両方知る」ことが、指標を正しく使いこなす第一歩です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>PER は「今の利益水準で<strong>株価が何年分の利益に相当するか</strong>」、PBR は「帳簿上の純資産の<strong>何倍で株を買っているか</strong>」を表す。どちらも割安・割高を測る"ものさし"だが、単体では不完全。</li>
+      <li><strong>低 PER ＝ 割安ではない</strong>。市場は業績悪化を先読みして低い PER を付けることがある（バリュートラップ）。また赤字企業では PER が計算できず、景気循環株では逆に高 PER のときが底値になることも。</li>
+      <li><strong>PBR＝PER×ROE</strong> という関係式が示すとおり、PBR を高めるには ROE（自己資本利益率）を上げることが本質。2023 年の東証改革はこの観点から PBR 改善を求めた。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「株価が高い・安い」は何と比べているのか</a></li>
+        <li><a href="#section-2">PER の仕組み：利益の何年分で買うか</a></li>
+        <li><a href="#section-3">PBR の仕組み：解散価値の何倍で買うか</a></li>
+        <li><a href="#section-4">PER・PBR の一般的な目安と業種差</a></li>
+        <li><a href="#section-5">【中上級】低 PER の罠（バリュートラップ）</a></li>
+        <li><a href="#section-6">PER が使えないケース：赤字・一時利益・景気循環株</a></li>
+        <li><a href="#section-7">PBR＝PER×ROE という関係式</a></li>
+        <li><a href="#section-8">業種をまたいで比較してはいけない理由</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 「株価が高い・安い」は何と比べているのか</h2>
+    <p>株価の「1,000 円」「5,000 円」という数字を見ただけでは、その株が割安なのか割高なのかは判断できません。1,000 円の株でも、会社が生み出す利益や保有する資産と比べたときに「実は高い」こともあれば、5,000 円の株が「実は安い」こともあります。</p>
+    <p>そこで使われるのが<strong>評価指標（バリュエーション指標）</strong>です。中でも株式投資で最も基本的なのが、次の 2 つです。</p>
+    <ul>
+      <li><strong>PER（株価収益率 / Price-Earnings Ratio）</strong>：株価を「利益」の観点から測るものさし</li>
+      <li><strong>PBR（株価純資産倍率 / Price-to-Book Ratio）</strong>：株価を「純資産（帳簿上の財産）」の観点から測るものさし</li>
+    </ul>
+    <p>この 2 つを理解すると、「この株はどんな理由で値付けされているのか」という<strong>市場の視点</strong>が少し見えてきます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ PER の仕組み：利益の何年分で買うか</h2>
+    <h3>計算式</h3>
+    <p>PER の式は次のとおりです。</p>
+    <p style="text-align:center;font-size:1.1rem;font-weight:700;color:#0969da;padding:12px 0">
+      PER = 株価 ÷ 1 株当たり純利益（EPS）
+    </p>
+    <p>たとえば、株価が 1,000 円でその企業の EPS（1 株あたり純利益）が 100 円なら、PER は 10 倍です。これは「今の利益ペースが続くとすれば、株価は 10 年分の利益に相当する」と読めます。</p>
+    <p>PER が高いほど「利益に対して株価が高い（市場が将来の成長を先取りして評価している）」、低いほど「利益に対して株価が低い（割安とも取れるが、理由がある場合も）」と解釈されます。</p>
+
+    <!-- SVG Figure 1: PER concept -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="per-fig-title">
+        <title id="per-fig-title">PERの概念図：株価と利益の関係を棒グラフで比較するイメージ</title>
+        <rect x="0" y="0" width="640" height="300" class="s-bg-light" rx="8"/>
+        <text class="s-panel-label" x="24" y="28">PER＝株価 ÷ EPS（1株当たり純利益）の概念</text>
+
+        <!-- 株A: PER 10倍 -->
+        <text class="s-text-h" x="120" y="58" text-anchor="middle">株 A</text>
+        <!-- EPS bar (height=60) -->
+        <rect class="s-bar-g" x="60" y="200" width="60" height="60" rx="4"/>
+        <text class="s-text-g" x="90" y="192" text-anchor="middle">EPS</text>
+        <text class="s-label-sm" x="90" y="275" text-anchor="middle">（利益）</text>
+        <!-- 株価 bar (height=120 = 10x EPS/2 for display) actually PER10 -> taller -->
+        <rect class="s-bar-b" x="150" y="140" width="60" height="120" rx="4"/>
+        <text class="s-text-b" x="180" y="132" text-anchor="middle">株価</text>
+        <text class="s-label-sm" x="180" y="275" text-anchor="middle">（価格）</text>
+        <!-- PER label -->
+        <text class="s-note" x="120" y="295" text-anchor="middle">PER ＝ 10 倍</text>
+        <!-- bracket -->
+        <line x1="90" y1="260" x2="90" y2="265" stroke="#1a7f37" stroke-width="1.5"/>
+        <line x1="180" y1="260" x2="180" y2="265" stroke="#0969da" stroke-width="1.5"/>
+
+        <!-- divider -->
+        <line x1="290" y1="50" x2="290" y2="280" class="s-guide"/>
+
+        <!-- 株B: PER 30倍 -->
+        <text class="s-text-h" x="460" y="58" text-anchor="middle">株 B</text>
+        <rect class="s-bar-g" x="400" y="200" width="60" height="60" rx="4"/>
+        <text class="s-text-g" x="430" y="192" text-anchor="middle">EPS</text>
+        <text class="s-label-sm" x="430" y="275" text-anchor="middle">（利益）</text>
+        <rect class="s-bar-b" x="490" y="80" width="60" height="180" rx="4"/>
+        <text class="s-text-b" x="520" y="72" text-anchor="middle">株価</text>
+        <text class="s-label-sm" x="520" y="275" text-anchor="middle">（価格）</text>
+        <text class="s-note" x="460" y="295" text-anchor="middle">PER ＝ 30 倍</text>
+
+        <!-- note -->
+        <text class="s-label-sm" x="320" y="150" text-anchor="middle" style="font-size:10.5px">「株価が利益の何倍か」＝</text>
+        <text class="s-label-sm" x="320" y="165" text-anchor="middle" style="font-size:10.5px">PER が高いほど</text>
+        <text class="s-label-sm" x="320" y="180" text-anchor="middle" style="font-size:10.5px">成長期待が価格に</text>
+        <text class="s-label-sm" x="320" y="195" text-anchor="middle" style="font-size:10.5px">織り込まれている</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際の株価・利益ではありません。A・B は架空の例。</p>
+    </figure>
+
+    <div class="info-box">
+      <strong>💡 EPS（1 株当たり純利益）とは</strong>：企業の純利益を発行済株式数で割った数値。たとえば純利益 100 億円・発行済み株式 1 億株なら EPS＝100 円。EPS は企業の稼ぐ力を 1 株単位に換算したものです。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ PBR の仕組み：解散価値の何倍で買うか</h2>
+    <h3>計算式</h3>
+    <p style="text-align:center;font-size:1.1rem;font-weight:700;color:#0969da;padding:12px 0">
+      PBR = 株価 ÷ 1 株当たり純資産（BPS）
+    </p>
+    <p>BPS（1 株当たり純資産）は、企業の純資産（総資産－総負債）を発行済み株式数で割ったものです。これは企業を「今すぐ解散して資産を分配したとき、1 株当たりいくら返ってくるか」という<strong>帳簿上の解散価値</strong>に相当します。</p>
+    <p>PBR が 1 倍のとき、株価＝解散価値です。<strong>PBR が 1 倍を下回る</strong>と「市場での株価が帳簿上の解散価値より低い」状態で、別名<strong>「解散価値割れ」</strong>と呼ばれます。</p>
+
+    <!-- SVG Figure 2: PBR seesaw -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="pbr-fig-title">
+        <title id="pbr-fig-title">PBRの概念図：純資産（BPS）と株価の関係をシーソーで表したイメージ</title>
+        <rect x="0" y="0" width="640" height="280" class="s-bg-light" rx="8"/>
+        <text class="s-panel-label" x="24" y="28">PBR と解散価値の関係（概念図）</text>
+
+        <!-- Case 1: PBR < 1（左） -->
+        <text class="s-text-h" x="130" y="55" text-anchor="middle">PBR ＜ 1</text>
+        <text class="s-label-sm" x="130" y="72" text-anchor="middle">（解散価値割れ）</text>
+        <!-- BPS bar -->
+        <rect class="s-bar-g" x="60" y="100" width="55" height="120" rx="4"/>
+        <text class="s-text-g" x="87" y="92" text-anchor="middle">BPS</text>
+        <text class="s-label-sm" x="87" y="233" text-anchor="middle">純資産</text>
+        <!-- 株価 bar (lower) -->
+        <rect class="s-bar-b" x="135" y="150" width="55" height="70" rx="4"/>
+        <text class="s-text-b" x="162" y="142" text-anchor="middle">株価</text>
+        <text class="s-label-sm" x="162" y="233" text-anchor="middle">市場価格</text>
+        <!-- Arrow: 株価 < BPS -->
+        <text class="s-note-r" x="130" y="255" text-anchor="middle">株価 ＜ 純資産</text>
+
+        <!-- divider -->
+        <line x1="270" y1="50" x2="270" y2="265" class="s-guide"/>
+
+        <!-- Case 2: PBR = 1（中央） -->
+        <text class="s-text-h" x="370" y="55" text-anchor="middle">PBR ＝ 1</text>
+        <text class="s-label-sm" x="370" y="72" text-anchor="middle">（解散価値と等しい）</text>
+        <rect class="s-bar-g" x="310" y="100" width="55" height="120" rx="4"/>
+        <text class="s-text-g" x="337" y="92" text-anchor="middle">BPS</text>
+        <text class="s-label-sm" x="337" y="233" text-anchor="middle">純資産</text>
+        <rect class="s-bar-b" x="385" y="100" width="55" height="120" rx="4"/>
+        <text class="s-text-b" x="412" y="92" text-anchor="middle">株価</text>
+        <text class="s-label-sm" x="412" y="233" text-anchor="middle">市場価格</text>
+        <text class="s-note-g" x="370" y="255" text-anchor="middle">株価 ＝ 純資産</text>
+
+        <!-- divider -->
+        <line x1="510" y1="50" x2="510" y2="265" class="s-guide"/>
+
+        <!-- Case 3: PBR > 1（右） -->
+        <text class="s-text-h" x="575" y="55" text-anchor="middle">PBR ＞ 1</text>
+        <text class="s-label-sm" x="575" y="72" text-anchor="middle">（成長期待等）</text>
+        <rect class="s-bar-g" x="530" y="150" width="40" height="70" rx="4"/>
+        <text class="s-text-g" x="550" y="142" text-anchor="middle" style="font-size:10px">BPS</text>
+        <rect class="s-bar-b" x="580" y="100" width="40" height="120" rx="4"/>
+        <text class="s-text-b" x="600" y="92" text-anchor="middle" style="font-size:10px">株価</text>
+        <text class="s-note" x="575" y="255" text-anchor="middle">株価 ＞ 純資産</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。PBR＜1 が「必ずしも割安」というわけではありません（後述）。</p>
+    </figure>
+
+    <div class="warning-box">
+      PBR が 1 倍を下回っている＝即「買い」ではありません。低 ROE（自己資本利益率）や業績の低迷が原因で低い PBR が付いている場合、それは市場の適正評価という可能性があります（後半で詳述）。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ PER・PBR の一般的な目安と業種差</h2>
+    <p>PER や PBR に「正解の数値」はありませんが、参考になる一般的な目安として次のような水準がよく言及されます。（以下は概説であり、時期・業種・市場環境で大きく変動します。最新値は <a href="https://www.jpx.co.jp/markets/statistics-equities/misc/04.html" target="_blank" rel="noopener noreferrer">JPX の公開データ</a>でご確認ください。）</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr><th>指標</th><th>一般的な目安（東証プライム・概算）</th><th>高い ＝</th><th>低い ＝</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>PER</td><td>15〜20 倍前後が平均的水準とされることが多い</td><td>成長期待が大きい</td><td>割安 or 業績懸念</td></tr>
+        <tr><td>PBR</td><td>1.0 倍を下回ると「解散価値割れ」</td><td>将来の成長や高 ROE</td><td>低 ROE・業績不振</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>特に注意が必要なのは<strong>業種間の比較</strong>です。銀行業は構造的に PER・PBR が低めになりやすい一方、情報・通信業は成長期待から高 PER・高 PBR になりやすい傾向があります。<strong>業種が異なる企業同士を PER だけで「高い・安い」と比べるのは危険</strong>です（後半で詳述）。</p>
+
+    <div class="info-box">
+      <strong>💡 「割安株投資（バリュー投資）」の祖、ベンジャミン・グレアム</strong>は著書『賢明なる投資家』の中で、低 PER・低 PBR の株を重視する手法を提唱しました。ただし彼自身も「財務健全性を確認してから」という条件を重視しており、単に PER が低いから買う、という単純な話ではありませんでした。詳しくは <a href="guide-graham-001.html">グレアムの価値投資入門</a> もあわせてご覧ください。
+    </div>
+
+    <!-- ===== 後半: 中上級 ===== -->
+    <h2 id="section-5">5️⃣ 【中上級】低 PER の罠（バリュートラップ）</h2>
+    <p>ここからは中上級者向けの内容に入ります。「PER が低い株を買い続ければ儲かる」と考えると、しばしば<strong>バリュートラップ（割安株の罠）</strong>にはまります。</p>
+    <p>バリュートラップとは、<strong>市場がすでに業績悪化を先読みして低い値付けをしている</strong>状態です。たとえば今期の EPS に基づけば PER が 8 倍に見えても、来期の利益が大幅に減少するなら、実質的な PER は高い水準に跳ね上がります。</p>
+    <ul>
+      <li>主力事業がコモディティ化している</li>
+      <li>毎年 EPS が縮小トレンドにある</li>
+      <li>構造不況業種で業界全体の収益力が落ちている</li>
+    </ul>
+    <p>これらは「低 PER に正当な理由がある」ケースです。見分けるには、PER だけでなく<strong>業績予想の推移（EPS がどこへ向かっているか）</strong>と合わせて確認することが重要です。</p>
+
+    <div class="warning-box">
+      PEG レシオ（PER ÷ 利益成長率）を補助的に使う方法もあります。たとえば PER 20 倍でも成長率 20% なら PEG ＝ 1.0 倍、PER 10 倍でも成長率 0% なら「成長なしで 10 年回収待ち」とも読めます。ただし PEG も一つの参考指標に過ぎません。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ PER が使えないケース：赤字・一時利益・景気循環株</h2>
+    <p>PER は「利益」を分母にした指標のため、利益がゼロや赤字の場合には計算自体が成り立ちません。代表的な「PER が使えない・使いづらい」ケースを整理します。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr><th>ケース</th><th>何が起きるか</th><th>代替の見方</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>赤字企業（EPS＜0）</td><td>PER がマイナスになり比較不能</td><td>PSR（株価売上高倍率）、EV/EBITDA など</td></tr>
+        <tr><td>一時的な特損・特益（資産売却など）</td><td>EPS が一時的に膨らみ PER が実態より低く見える</td><td>経常利益ベースや EPS の平準化</td></tr>
+        <tr><td>景気循環株（海運・鉄鋼・化学）</td><td>景気ピーク時は低 PER、底では高 PER という逆転現象</td><td>PBR や過去平均との比較</td></tr>
+        <tr><td>季節性の強い事業</td><td>中間期と本決算で EPS が大きく変動し数値が不安定</td><td>通期予想ベースの数値を使う</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>特に<strong>景気循環株の「逆転現象」</strong>は有名です。海運業などは景況ピーク時に利益が最大になるため PER は低く見え、投資家が「割安だ」と飛びつきやすい。しかしその後の景況悪化で利益が消えると、今度は高 PER（または計算不能）になります。</p>
+
+    <!-- SVG Figure 3: Cyclical stock PER paradox -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="cycle-fig-title">
+        <title id="cycle-fig-title">景気循環株のPER逆転現象：景況ピーク時に低PER（利益最大）、底値圏で高PERまたは計算不能になる概念図</title>
+        <rect x="0" y="0" width="640" height="260" class="s-bg-light" rx="8"/>
+        <text class="s-panel-label" x="24" y="26">景気循環株の PER 逆転現象（概念図）</text>
+
+        <!-- X axis -->
+        <line class="s-axis" x1="60" y1="200" x2="600" y2="200"/>
+        <!-- 景気サイクル curve (EPS) -->
+        <path class="s-curve-g" d="M 80,190 C 120,190 150,80 220,70 C 290,60 310,100 330,170 C 350,200 380,200 400,200 C 430,200 460,80 530,70"/>
+        <text class="s-text-g" x="200" y="56" text-anchor="middle">EPS（景気サイクル）</text>
+        <!-- 株価 curve (relatively flatter) -->
+        <path class="s-curve-l" d="M 80,160 C 120,155 160,120 220,110 C 290,100 330,130 380,160 C 420,175 460,120 530,100"/>
+        <text class="s-note-r" x="550" y="95" text-anchor="start" style="font-size:10px">株価</text>
+
+        <!-- Labels at peak -->
+        <line x1="220" y1="68" x2="220" y2="200" class="s-guide"/>
+        <text class="s-note-r" x="225" y="215" style="font-size:10px">利益ピーク</text>
+        <text class="s-note-r" x="225" y="228" style="font-size:10px">→PER低く見える</text>
+
+        <!-- Labels at trough -->
+        <line x1="400" y1="200" x2="400" y2="200" class="s-guide"/>
+        <text class="s-note" x="370" y="215" style="font-size:10px">利益底</text>
+        <text class="s-note" x="360" y="228" style="font-size:10px">→PER高/計算不能</text>
+
+        <!-- Note -->
+        <text class="s-label-sm" x="320" y="248" text-anchor="middle" style="font-size:10px">景気循環株では「PER が低い時期＝景況ピーク（株価の天井圏）」というパラドックスが起きやすい</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際の株価・利益の推移ではありません。</p>
+    </figure>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ PBR＝PER×ROE という関係式</h2>
+    <p>PER と PBR は、<strong>ROE（自己資本利益率）</strong>を介してつながっています。以下の関係式が成り立ちます。</p>
+    <p style="text-align:center;font-size:1.1rem;font-weight:700;color:#0969da;padding:12px 0">
+      PBR ＝ PER × ROE
+    </p>
+
+    <h3>式が成り立つ理由</h3>
+    <ul>
+      <li>PBR ＝ 株価 ÷ BPS</li>
+      <li>PER ＝ 株価 ÷ EPS</li>
+      <li>ROE ＝ EPS ÷ BPS（純利益 ÷ 純資産）</li>
+      <li>∴ PER × ROE ＝ (株価/EPS) × (EPS/BPS) ＝ 株価/BPS ＝ PBR　</li>
+    </ul>
+
+    <p>この式の示唆は明快です。<strong>ROE が低い企業は、PER が高くても PBR が低い</strong>。逆に ROE を高めることができれば、同じ PER 水準でも PBR は上昇します。</p>
+
+    <div class="positive-box">
+      <strong>2023 年の東証改革</strong>（「資本コストや株価を意識した経営の実現に向けた対応等に関するお願い」）は、継続的に PBR 1 倍割れが続くプライム・スタンダード上場企業に対して改善方針の開示を求めるものでした。背景には、上場企業の半数超が PBR 1 倍割れという国際的に見劣りする状況があり、<strong>自社株買いや増配（短期施策）にとどまらず、ROE 向上・ROIC 経営（本質的改善）</strong>を求めています。出典：東証・PwC Japan レポート
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 業種をまたいで比較してはいけない理由</h2>
+    <p>PER・PBR を使う際の重要な注意点は、<strong>業種が異なる企業を直接比較しないこと</strong>です。</p>
+    <h3>なぜ銀行業の PER・PBR は低いのか</h3>
+    <ul>
+      <li>金利変動で利益が大きく変動するリスク（安定成長が見込みにくい）</li>
+      <li>規制が厳しく高成長が構造的に難しい</li>
+      <li>大量の金融資産を持ち ROE が相対的に低くなりやすい</li>
+    </ul>
+    <p>これらの理由から、銀行業は PER・PBR が概して低めになる傾向があります。これは「割安だから買い」ではなく、<strong>業種固有の特性が反映された適正評価</strong>という側面があります。</p>
+
+    <h3>なぜ情報・通信業の PER・PBR は高いのか</h3>
+    <ul>
+      <li>将来の高成長を市場が先取りして株価に織り込む</li>
+      <li>ソフトウェア・ブランド・特許などの無形資産が BPS に反映されないため PBR も高くなりやすい</li>
+    </ul>
+
+    <div class="warning-box">
+      PER・PBR の比較は<strong>「同業種内」「自社の時系列（過去との比較）」</strong>で行うのが基本です。「テックと銀行を PER で横並び比較して銀行は割安」という見方は、それぞれの業種構造を無視した誤解につながりやすいため注意が必要です。
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>PER・PBR は「株式の割安度」を測る最も基本的なツールですが、当サイトのシグナルシステムは主に先物・FX・コモディティを対象としており、個別株の PER・PBR を直接扱うものではありません。それでも、これらの指標を理解しておくことは次のような場面で役立ちます。</p>
+    <ul>
+      <li><strong>市場全体の過熱・割安感を把握する</strong>：<a href="market-health.html">市場健康度ダッシュボード</a>では CAPE（Cyclically Adjusted PE Ratio＝景気調整済み PER）やバフェット指標を参照しています。市場全体の「割高・割安感」を見るうえで PER の概念が直接つながっています。</li>
+      <li><strong>ファンダメンタルズの背景理解</strong>：日本株やグローバル株価指数を読むとき、「現在の PER 水準は歴史的に見て高いか低いか」という文脈が、トレードの環境スコア判断の補助知識になります。</li>
+      <li><strong>バリュー投資の基礎として</strong>：<a href="guide-graham-001.html">ベンジャミン・グレアムの価値投資入門</a>では、低 PBR・財務健全性を組み合わせたスクリーニング手法を紹介しています。あわせてご一読ください。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 市場の「割高・割安感」を数値で確認する</div>
+      <div class="cta-box-desc">CAPE・バフェット指標・恐怖&強欲指数など、市場全体の健康状態を複数の視点からまとめて見られます。</div>
+      <a class="cta-btn" href="market-health.html">市場健康度ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 10 -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <p>PER と PBR についての要点を整理します。</p>
+    <ul>
+      <li><strong>PER＝株価÷EPS</strong>：利益の何年分で株を買っているか。高いほど成長期待が大きく、低いほど割安の可能性もあるが業績懸念のサインでもある。</li>
+      <li><strong>PBR＝株価÷BPS</strong>：帳簿上の解散価値の何倍か。PBR＜1は「解散価値割れ」だが低ROEが原因なら妥当な評価の場合も。</li>
+      <li><strong>低 PER の罠（バリュートラップ）</strong>：市場は業績悪化を先読みして低い PER を付けることがある。EPS の方向性を確認しないと「割安に見えて実は高い」という状況に陥りやすい。</li>
+      <li><strong>PER が使えないケース</strong>：赤字企業・一時利益・景気循環株では PER が実態を正確に反映しない。代替指標（PSR・EV/EBITDA・PBR）を組み合わせる。</li>
+      <li><strong>PBR＝PER×ROE</strong>：PBR を高めるには ROE（自己資本利益率）を上げることが本質。2023 年東証改革はこの観点から PBR 改善を上場企業に求めた。</li>
+      <li><strong>業種をまたいだ比較は禁物</strong>：PER・PBR の比較は同業種内・自社の時系列で行う。</li>
+    </ul>
+    <p>PER・PBR はひとつの「ものさし」に過ぎません。<strong>EPS の方向性・財務健全性・業種特性・ROE の水準</strong>など複数の視点と組み合わせて初めて意味を持ちます。指標を「知っている」から「正しく使える」へ——それがこの記事の目指すゴールです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-graham-001.html">
+        <div class="related-card-title">📖 グレアムの価値投資入門</div>
+        <div class="related-card-desc">低 PBR・財務健全性を組み合わせたスクリーニング手法を提唱したバリュー投資の祖、ベンジャミン・グレアムの考え方を解説。</div>
+      </a>
+      <a class="related-card" href="market-health.html">
+        <div class="related-card-title">🩺 市場健康度ダッシュボード</div>
+        <div class="related-card-desc">CAPE・バフェット指標・恐怖&強欲指数など、市場全体の割高・割安感を複数の視点でリアルタイム確認。</div>
+      </a>
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">📉 複利と最大ドローダウン</div>
+        <div class="related-card-desc">ROE と連動する「複利の力」と、それを壊すドローダウン（資産の最大下落幅）の関係を解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は PER・PBR などの株式評価指標にまつわる一般的な考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載の数値・目安はあくまで概説であり、特定の手法による利益や損失回避を保証するものではありません。最新の指標水準は東証など公的機関の公開データをご確認ください。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+<script src="site-search.js" defer></script>
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</body>
+</html>
