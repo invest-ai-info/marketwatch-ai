@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>投資格言「セル・イン・メイ」の意味｜データで季節アノマリーを検証する - MarketWatch AI</title>
+  <meta name="description" content="「Sell in May and go away」の由来（英国18世紀・St. Leger Day）から統計的根拠と批判まで両論を整理。Bouman & Jacobsen(2002)論文・日本株での検証・近年の効果低下を踏まえ「格言をデータで検証する態度」を学ぶ解説記事。">
+  <meta name="keywords" content="セル・イン・メイ,Sell in May and go away,投資格言,季節アノマリー,ハロウィンインジケーター,St Leger Day,6ヶ月戦略,相場格言,株式市場,シーズナリティ">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-proverb-sell-in-may.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="投資格言「セル・イン・メイ」の意味｜データで季節アノマリーを検証する">
+  <meta property="og:description" content="「5月に売って去れ」——18世紀英国生まれのこの格言、統計は支持するのか？両論とデータ検証の態度を学ぼう。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-proverb-sell-in-may.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "投資格言「セル・イン・メイ」の意味｜データで季節アノマリーを検証する",
+    "description": "「Sell in May and go away」の由来から統計的根拠と批判まで両論を整理。格言をデータで検証する態度を学ぶ。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-26",
+    "dateModified": "2026-07-26",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-proverb-sell-in-may.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.55}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; セル・イン・メイ（Sell in May and go away）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は投資にまつわる相場格言・考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。過去の統計はあくまで参考であり、将来の相場動向を保証するものではありません。投資には元本割れリスクがあります。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🗓 「セル・イン・メイ」｜データで季節アノマリーを検証する態度を学ぶ</h1>
+    <div class="meta-line">公開日：2026 年 7 月 26 日 ／ 読了時間：約 9 分 ／ カテゴリ：投資格言から学ぶ（第23回）</div>
+
+    <p>「<strong>Sell in May and go away（セル・イン・メイ・アンド・ゴー・アウェイ）</strong>」——英語圏を発祥に世界中の投資家に語り継がれてきた格言です。「5月に株を売って市場を去れ」と訳されることが多く、日本語では単に<strong>「セル・イン・メイ」</strong>と呼ばれます。</p>
+    <p>しかし、この格言には重要な後半部分があります。<strong>「…come back on St. Leger's Day（セント・レジャー・デーに戻ってこい）」</strong>——5月から夏の間だけ市場を離れ、秋口に再参入せよ、という季節的な戦略を示しています。</p>
+    <p>この記事では、格言の由来・統計的な根拠・批判的な見方・日本株への適用可能性を整理します。この格言の真の芯は「<strong>5月に売ることを勧める</strong>」のではなく、<strong>「格言をデータで検証し、鵜呑みにしない態度を学ぶ」</strong>ことにあります。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>原文は「Sell in May and go away, come back on St. Leger's Day」。<strong>5月〜9月は相場から離れ、秋に戻る</strong>という英国発の季節戦略が起源（18世紀、諸説あり）。</li>
+      <li>長期データでは統計的傾向が確認されてきた（Bouman &amp; Jacobsen 2002年・AER論文・37カ国分析）が、<strong>近年は効果が大幅に低下</strong>しており、単純適用は危険と考えられる。</li>
+      <li>日本市場でも「11月〜4月の方が勝率が高い傾向」が過去データで見られたが、<strong>2019年以降はMay-Oct期間でも上昇した年が多かったとの報告があり</strong>、格言の有効性は薄れている可能性がある。</li>
+      <li><strong>この格言の本当の価値は、「アノマリーをデータで検証し、批判的に読み解く習慣」</strong>を学ぶ入口にあると考えられる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">格言の由来——18世紀英国から始まった夏の休暇</a></li>
+        <li><a href="#section-2">「St. Leger's Day」とは何か——格言の完全版を読む</a></li>
+        <li><a href="#section-3">統計的な根拠——5月〜10月は本当に弱いのか</a></li>
+        <li><a href="#section-4">図解：季節別リターンの傾向（概念図）</a></li>
+        <li><a href="#section-5">批判的な見方——なぜ鵜呑みにできないのか</a></li>
+        <li><a href="#section-6">日本株での検証——日経平均への適用可能性</a></li>
+        <li><a href="#section-7">格言を「検証する態度」そのものを学ぶ</a></li>
+        <li><a href="#section-8">よくある誤解</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 格言の由来——18世紀英国から始まった夏の休暇</h2>
+    <p>この格言の起源は<strong>18世紀後半の英国ロンドン金融街</strong>にあるとされます（諸説あり）。当時の裕福な貴族・銀行家・商人たちは、夏になると暑い都市を離れて地方の別荘や競馬場に出かける慣習がありました。市場の主要な参加者が夏の間ロンドンを離れることで、<strong>取引量（流動性）が落ち、相場が停滞しやすい</strong>と考えられたことが格言の背景にあったとされています。</p>
+    <p>文書記録としては、<strong>1964年にFinancial Times（英経済紙）</strong>が言及したものが確認できる早期記録の一つとして知られますが（諸説あり）、格言自体はそれ以前から市場関係者の間で流通していたとされています。現代における格言の普及には、イェール・ハーシュが1967年に創刊した<strong>「Stock Trader's Almanac（株式トレーダー年鑑）」</strong>——現在はジェフリー・ハーシュが編集——が大きく貢献しており、「<strong>ベスト6ヶ月戦略（Best Six Months Strategy）</strong>」と命名して1986年に独自開発・1987年版Almanacで初公表したとされています（諸説あり）。「<strong>ハロウィン・インジケーター</strong>」とも呼ばれ（10月31日から買い始めるという意味）、この戦略を通じて格言は世界的に広まっていきました。</p>
+
+    <div class="info-box"><strong>💡 補足：</strong>「セル・イン・メイ」は英国発祥の格言ですが、その後米国のS&amp;P 500やDJIA（ダウ工業株平均）のデータを用いた検証が盛んに行われ、世界的に議論される格言となりました。必ずしも英国だけに当てはまるものではないと考えられています。</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「St. Leger's Day」とは何か——格言の完全版を読む</h2>
+    <p>格言の完全版は <strong>「Sell in May and go away, come back on St. Leger's Day」</strong> です。後半の「St. Leger's Day（セント・レジャー・デー）」は、英国の由緒ある競馬レース「<strong>セント・レジャー・ステークス（St. Leger Stakes）</strong>」が開催される日を指します。</p>
+    <ul>
+      <li><strong>セント・レジャー・ステークスとは</strong>：1776年創設の英国最古の格式高いG1競馬レース。2000ギニー・エプソムダービーと並ぶ英国三冠の最終戦で、毎年<strong>9月中旬〜下旬にサウスヨークシャーのドンカスター競馬場</strong>で開催されます。</li>
+      <li><strong>格言が示す期間</strong>：夏の間（5月〜9月頃）は相場から離れ、セント・レジャー・デー前後に戻れ——つまり<strong>夏相場を休んで秋から再参入する</strong>という戦略です。現代では便宜上「5月〜10月を避け、11月〜4月に投資する」と解釈されることが多くなっています。</li>
+    </ul>
+    <div class="info-box"><strong>💡 季節の背景：</strong>英国では競馬シーズン（5月〜9月）が貴族の社交の場であり、主要な市場参加者がロンドンを離れる時期と重なっていたため、「市場を離れる＝St. Leger's Dayに戻る」という表現が自然に定着したとされています（諸説あり）。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 統計的な根拠——5月〜10月は本当に弱いのか</h2>
+    <p>この格言には、学術的な裏付けを試みた研究が複数存在します。最も広く引用されているのは<strong>Bouman &amp; Jacobsen（2002年、American Economic Review）</strong>の論文です。</p>
+
+    <h3>主な支持根拠</h3>
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">以下の統計数値は各研究・報告からの参照値であり、投資成果を保証するものではありません。過去の傾向が将来も継続する保証はありません。</div>
+    <table>
+      <thead><tr><th>根拠・出典</th><th>期間・対象</th><th>主な内容</th></tr></thead>
+      <tbody>
+        <tr><td>Bouman &amp; Jacobsen（2002・AER）</td><td>1970〜1998年・37カ国MSCIデータ</td><td>うち<strong>36カ国で冬期（11〜4月）リターンが夏期（5〜10月）を上回る傾向</strong>を確認。学術界で最も引用される根拠論文。</td></tr>
+        <tr><td>S&amp;P 500 長期平均（1950年〜）</td><td>約70年超の米国株</td><td>11〜4月の平均リターンは<strong>約+7%前後</strong>、5〜10月は<strong>約+1.7〜2%前後</strong>という傾向が報告されている（LPL Financial等の分析より・諸説あり）</td></tr>
+        <tr><td>Stock Trader's Almanac（ハーシュ）</td><td>1950年〜現在</td><td>「ベスト6ヶ月戦略」として定量的に検証・普及させた。DJIA・S&amp;P 500データを用いた長期分析。</td></tr>
+        <tr><td>ScienceDirect掲載論文（2020）</td><td>全114市場・月次データ</td><td>世界的・全期間的にハロウィン効果が観察されると主張する一方、反証論文も多数存在。</td></tr>
+      </tbody>
+    </table>
+
+    <h3>批判・反証の主な根拠</h3>
+    <p>同様に、この格言に疑問を呈する研究や指摘も存在します。</p>
+    <table>
+      <thead><tr><th>批判点</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>近年の効果低下</td><td>2010年代以降のS&amp;P 500の5〜10月平均は約+3.8%（LPL Financial）と改善傾向。21世紀においては「悪い戦略だった年も多い」との評価も（Yahoo Finance等）</td></tr>
+        <tr><td>Maberly &amp; Pierce（2004）反証</td><td>Bouman &amp; Jacobsenの手法に問題があり、異常値除去後は効果が消えると主張</td></tr>
+        <tr><td>Lucey &amp; Zhao（2008）反証</td><td>サンプル期間の選び方次第で結論が逆転すると指摘</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 図解：季節別リターンの傾向（概念図）</h2>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 260" role="img" aria-labelledby="sell-in-may-title">
+        <title id="sell-in-may-title">セル・イン・メイ格言が示す夏期と冬期のリターン傾向の違いを示す概念図。長期平均では冬期が高い傾向があるが近年は差が縮小しているイメージ</title>
+
+        <!-- 背景ゾーン -->
+        <rect class="s-zone-g" x="60" y="30" width="250" height="180" rx="4"/>
+        <rect class="s-zone-r" x="340" y="30" width="230" height="180" rx="4"/>
+
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="210" x2="580" y2="210"/>
+        <line class="s-axis" x1="60" y1="30" x2="60" y2="210"/>
+
+        <!-- 冬期バー（11月〜4月）-->
+        <rect x="100" y="80" width="60" height="130" fill="#1a7f37" fill-opacity="0.75" rx="4"/>
+        <text class="s-note-g" x="130" y="73" text-anchor="middle" font-size="12">冬期</text>
+        <text class="s-note-g" x="130" y="88" text-anchor="middle" font-size="10.5">（長期平均）</text>
+        <text class="s-legend" x="130" y="225" text-anchor="middle">11月〜4月</text>
+
+        <rect x="210" y="155" width="60" height="55" fill="#1a7f37" fill-opacity="0.4" rx="4"/>
+        <text class="s-note-g" x="240" y="148" text-anchor="middle" font-size="12">冬期</text>
+        <text class="s-note-g" x="240" y="161" text-anchor="middle" font-size="10.5">（近年）</text>
+        <text class="s-legend" x="240" y="225" text-anchor="middle">11月〜4月</text>
+
+        <!-- 夏期バー（5月〜10月）-->
+        <rect x="370" y="175" width="60" height="35" fill="#cf222e" fill-opacity="0.65" rx="4"/>
+        <text class="s-note-r" x="400" y="168" text-anchor="middle" font-size="12">夏期</text>
+        <text class="s-note-r" x="400" y="181" text-anchor="middle" font-size="10.5">（長期平均）</text>
+        <text class="s-legend" x="400" y="225" text-anchor="middle">5月〜10月</text>
+
+        <rect x="470" y="143" width="60" height="67" fill="#cf222e" fill-opacity="0.35" rx="4"/>
+        <text class="s-note-r" x="500" y="136" text-anchor="middle" font-size="12">夏期</text>
+        <text class="s-note-r" x="500" y="149" text-anchor="middle" font-size="10.5">（近年・改善）</text>
+        <text class="s-legend" x="500" y="225" text-anchor="middle">5月〜10月</text>
+
+        <!-- ゼロライン -->
+        <line class="s-guide" x1="60" y1="210" x2="580" y2="210"/>
+
+        <!-- 凡例テキスト -->
+        <text class="s-panel-label" x="60" y="22">「セル・イン・メイ」格言：長期傾向と近年変化のイメージ（S&amp;P 500 参考）</text>
+        <text class="s-label-sm" x="62" y="248">※ 概念を示すイメージ図です。実際の各年リターンは大きく変動します。</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 長期平均（1950年〜）では冬期（11〜4月）が夏期（5〜10月）を上回る傾向があったとされるが、近年はその差が縮小しているとの報告がある。バーの高さはイメージであり、特定の数値を示すものではない。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 批判的な見方——なぜ鵜呑みにできないのか</h2>
+    <p>統計的な傾向が確認されてきた一方で、この格言を単純に信じることには複数の問題点が指摘されています。</p>
+
+    <h3>① サバイバーシップバイアス</h3>
+    <p>過去データは生き残った企業・市場のみを反映しやすく、廃止された市場や上場廃止銘柄が除外されるため、<strong>過去の統計が楽観的に見えやすい</strong>という問題があります。</p>
+
+    <h3>② サンプル期間依存</h3>
+    <p>どの時期を切り取るかで結論が大きく変わります。Maberly &amp; Pierce（2004年）やLucey &amp; Zhao（2008年）など、複数の研究が反証を示しており、<strong>「どのデータを使うか」によって支持・不支持が逆転する</strong>ことが知られています。</p>
+
+    <h3>③ データマイニング（情報の掘り起こし）の疑い</h3>
+    <p>多数の仮説の中から都合の良い期間を事後的に選択すれば、偶然の一致を「法則」として見せることができます。アノマリー研究には本質的にこのリスクが伴います。</p>
+
+    <h3>④ 自己破壊的な性質</h3>
+    <p>格言が広く知られ多くの投資家が同じ行動を取ろうとすると、<strong>市場参加者が「先取り」してアノマリーを消してしまう</strong>可能性があります。有名なアノマリーほど、知られることで効果が薄れやすいという逆説があります。</p>
+
+    <h3>⑤ 取引コスト・税金の影響</h3>
+    <p>実際に「5月に売って10月に買い戻す」という戦略を実行すると、<strong>売買手数料・税金・タイミングのズレ</strong>が発生します。これらを差し引くと、統計上の超過リターンが消える場合があるとされています。</p>
+
+    <h3>⑥ 近年の顕著な変化</h3>
+    <p>量的緩和・グローバル化・アルゴリズム取引の普及などにより、<strong>季節パターンが弱まっているとの報告が増えています</strong>。2010年代のS&amp;P 500のMay-Oct平均は約+3.8%（LPL Financial）と改善しており、21世紀においては「悪い戦略だった年も多い」という評価も見られます（Yahoo Finance）。</p>
+
+    <div class="negative-box">
+      <strong>まとめ：</strong> 「5月に売れば儲かる」という単純な解釈は根拠が薄く、近年はとくにリスクが高まっていると考えられます。格言は「昔の傾向として興味深い」という程度の参考に留めることが適切ではないでしょうか。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 日本株での検証——日経平均への適用可能性</h2>
+    <p>この格言は米国・欧州市場を対象とした研究が中心ですが、日本市場でも検証されています。</p>
+    <table>
+      <thead><tr><th>期間・出典</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>長期データ（野村証券・マネックス証券コラム等参照）</td><td>日経平均の4月末〜10月末の勝率は約52%、11月〜4月の勝率は約72%という傾向が報告されている（各社の独自集計・諸説あり）。傾向として冬期優位は確認されてきた。</td></tr>
+        <tr><td>近年（2019年以降）</td><td>2019〜2025年の7年程度では、May-Oct期間でも日経平均が上昇した年が多いとの観察がある。<strong>近年の効果は大幅に低下している可能性</strong>がある。</td></tr>
+        <tr><td>日本固有の要因</td><td>日本市場では決算シーズン（3〜5月）・日銀の政策動向・円ドル相場などの要因が大きく、欧米の季節性とは異なる構造を持つ可能性がある。</td></tr>
+      </tbody>
+    </table>
+    <p>日本語メディア各社の見解を総合すると、「過去には傾向があったが、近年は薄れている可能性がある」という整理が多く見られます。日本株への格言の適用も、過去データを参考程度に留めることが適切ではないでしょうか。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 格言を「検証する態度」そのものを学ぶ</h2>
+    <p>この格言の最大の価値は、「5月に売ること」にあるのではなく、<strong>「投資格言・アノマリーをどう読み解くか」という態度を考えるきっかけ</strong>にあると考えられます。</p>
+
+    <h3>格言を読み解く3つの問い</h3>
+    <ul>
+      <li><strong>① その格言はいつ・どこで生まれたか？</strong><br>「セル・イン・メイ」は18世紀英国の特定の社会慣習から生まれました。現代の市場環境（24時間グローバル・アルゴリズム取引）とは大きく異なります。</li>
+      <li><strong>② 統計は支持するか・いつのデータか？</strong><br>Bouman &amp; Jacobsen(2002)は支持しますが、2000年代以降の反証論文も多く存在します。「長期平均」と「近年」は区別して評価することが重要ではないでしょうか。</li>
+      <li><strong>③ 実行可能か・コストはどうか？</strong><br>格言通りに毎年売買するには取引コスト・税金が発生します。理論上の超過リターンが実際の利益として残るかは別問題です。</li>
+    </ul>
+
+    <div class="positive-box">
+      <strong>格言から学べること：</strong> 「なぜこの格言が生まれたのか」「データは本当に支持するのか」「近年も有効なのか」を自分で問い続ける習慣こそが、長期的な投資判断力の向上につながると考えられます。格言は答えではなく、<strong>考えるための入口</strong>です。
+    </div>
+
+    <h3>他のアノマリー格言との共通点</h3>
+    <p>「三割高下に向かえ」「麦わら帽子は冬に買え」なども同じ視点——固定の数字・季節を鵜呑みにせず検証する態度——を共有しています。格言の検証的な読み方は、投資家として身につけておきたい汎用スキルです。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ よくある誤解</h2>
+
+    <h3>誤解①「5月に売れば儲かる（損しない）」</h3>
+    <p>格言は「売ることで利益が得られる」とは言っていません。統計的傾向として夏期が弱い年が多かったとされるに過ぎず、2019年〜2025年のように<strong>夏期に上昇した年も少なくないと報告されています</strong>。「売れば安全」ではありません。</p>
+
+    <h3>誤解②「これは科学的に証明された法則だ」</h3>
+    <p>Bouman &amp; Jacobsen論文は影響力がありますが、<strong>多数の反証研究も存在</strong>しており、学術的に完全に決着がついているわけではありません。アノマリーは「傾向」であり「法則」ではありません。</p>
+
+    <h3>誤解③「日本株にもそのまま当てはまる」</h3>
+    <p>この格言は英国・米国市場で発達したものです。日本市場には独自の季節性要因（決算・日銀政策・円相場等）があり、<strong>海外の格言をそのまま日本株に適用することには注意が必要</strong>と考えられます。</p>
+
+    <h3>誤解④「知っているだけで有利になる」</h3>
+    <p>格言が広く知られると、市場参加者がそれを「先読み」して動き始めます。アノマリーは<strong>広く知られた瞬間から自己破壊的に機能する</strong>可能性があります。知っているからといって有利とは言えません。</p>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>第23回「セル・イン・メイ（Sell in May and go away）」を整理します。</p>
+    <ul>
+      <li><strong>由来</strong>：18世紀英国の夏の社会慣習から生まれた格言。完全版は「…come back on St. Leger's Day」。St. Leger Stakesは1776年創設の英国競馬G1レース（9月開催）。</li>
+      <li><strong>統計的根拠</strong>：Bouman &amp; Jacobsen（2002・AER）が37カ国で支持を確認。長期S&amp;P 500データでも冬期優位の傾向。ただし<strong>近年（2010年代以降）は効果が縮小</strong>しており、反証論文も多数存在。</li>
+      <li><strong>日本株</strong>：過去データでは傾向が見られたが、2019年以降は効果が薄れている可能性がある。</li>
+      <li><strong>批判的視点</strong>：サバイバーシップバイアス・サンプル期間依存・データマイニング・自己破壊性・取引コスト——格言を単純適用することへの疑問は複数存在する。</li>
+      <li><strong>この格言の本質</strong>：「5月に売れ」という指示ではなく、<strong>格言をデータで検証し、鵜呑みにしない批判的態度を学ぶ</strong>ことが真の価値だと考えられる。</li>
+    </ul>
+    <p>「格言は考えるための入口であり、答えではない」——この姿勢がアノマリーと付き合ううえでの一つの軸になるのではないでしょうか。過去の傾向に学びながらも、それを盲目的に信じず、自分のデータと状況で検証し続ける態度が、長い投資生活の支えになると考えられます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連格言で「相場を検証する目」をさらに深く</div>
+      <div class="cta-box-desc">「麦わら帽子は冬に買え」「待つも相場」——季節性・タイミングに関する関連格言も合わせて読むと、相場観の幅が広がります。</div>
+      <a class="cta-btn" href="guides.html">格言シリーズ一覧を見る →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-proverb-mugiwara-fuyu.html">
+        <div class="related-card-title">🌾 麦わら帽子は冬に買え</div>
+        <div class="related-card-desc">人気のないとき仕込む逆張り・季節性。セル・イン・メイと対照的な季節感覚を学ぶ。</div>
+      </a>
+      <a class="related-card" href="guide-proverb-matsu-mo-soba.html">
+        <div class="related-card-title">⏳ 待つも相場</div>
+        <div class="related-card-desc">現金もポジション・休む勇気。「夏は相場を離れる」という発想との関係を考える。</div>
+      </a>
+      <a class="related-card" href="guide-proverb-tenjo-mikka-soko-hyakunichi.html">
+        <div class="related-card-title">⏱ 天井三日、底百日</div>
+        <div class="related-card-desc">天井は短く底は長い時間軸の非対称。季節と時間軸の格言を比較して読む。</div>
+      </a>
+      <a class="related-card" href="calendar.html">
+        <div class="related-card-title">📅 経済カレンダー</div>
+        <div class="related-card-desc">FOMC・雇用統計・各国指標の日程。季節性だけでなく、重要イベントを確認する習慣も大切です。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は相場格言にまつわる一般的な考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載された統計データ・研究は参考として紹介するものであり、将来の相場動向や投資成果を保証するものではありません。過去の傾向が将来も継続するとは限りません。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
