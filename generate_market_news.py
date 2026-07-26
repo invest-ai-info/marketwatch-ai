@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-26", "line": '・<b>2026-07-26</b>: 📰 解説「<a href="guide-news-2026-07-26-fomc-hike-odds.html" style="color:#0969da"><b>FOMC利上げ確率が1週間で3%→35%急騰──原油・インフレ・ウォーシュの3シナリオ</b></a>」公開'},
         {"date": "2026-07-26", "line": '・<b>2026-07-26</b>: 🧪 解説「<a href="guide-signal-lab-051.html" style="color:#0969da"><b>上昇×逆張り買い：BB77%希釈効果——RSI73%昇格基準維持</b></a>」公開'},
         {"date": "2026-07-25", "line": '・<b>2026-07-25</b>: 📰 解説「<a href="guide-news-2026-07-25-fomc-boj-bigtech-superweek.html" style="color:#0969da"><b>来週7/28〜31「5重発火週」──FOMC×日銀×Big Tech決算×GDP×PCE同一週集中</b></a>」公開'},
         {"date": "2026-07-25", "line": '・<b>2026-07-25</b>: 🌾 解説「<a href="guide-proverb-mannin-kyoki-tawake.html" style="color:#0969da"><b>万人が万人ながら強気なら、たわけになりて米を売るべし</b></a>」公開'},

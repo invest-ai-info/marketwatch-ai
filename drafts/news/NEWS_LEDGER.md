@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-26
+- 判定: ✅ 公開済み
+- 選定トピック: FOMC 7/28〜29「利上げ確率が1週間で3%→35%に急騰」──ブレント$100突破・PCE 4.1%（5年超インフレ）・ウォーシュ議長タカ派が重なる3要因と、ドル円・日本株への3シナリオを中立整理（カテゴリ: マクロ・金融政策・FRB・為替・原油）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 7/25記事（「5重発火週」カレンダー構造）との差別化明確。7/25は「5イベントが同一週に集中する」という構造・スケジュール整理であったのに対し、7/26は「FOMCの利上げ確率が1週間で3%→35%に急騰した」という具体的な確率変動の背景分析。Polymarket 3%→28%急騰・CME FedWatch hold65%/hike35%・PCE 4.1%・Brent $100.57（7/24終値）は複数系統で確認済みの確定事実。7/24の「ブレント$100突破」記事（地政学・原油市場）とも切り口が異なる（本記事はFRB政策確率への波及影響）。
+- 出典（2系統以上確認済み）:
+  - CME FedWatch via CoinGape「FOMC Meeting Next Week: Will the Fed Cut, Raise, or Hold?」（2026-07-26）
+  - Forbes「Markets Price In Rising Odds Of July Fed Rate Hike」（2026-07-23）
+  - 247wallst「Pressure Builds on Kevin Warsh to Hike Rates. Here's Why Rates Could Rise in As Little as 7 Days.」（2026-07-23）
+  - CBSニュース「Will the Federal Reserve raise interest rates? Here is what experts predict for July's meeting.」（2026-07-25）
+  - Yahoo Finance「Oil hits $100 after Houthi attack on Saudi tankers worsens oil supply disruption」（2026-07-23）
+  - Chase「Kevin Warsh: 'Prices Are Too High.'」（2026-07-25）
+  - Bloomberg「BOJ Is Said Open to Faster Rate Hike Pace as Yen Adds Price Risk」（2026-07-22）
+  - XTB「Three markets to watch next week」（2026-07-24）
+  - TradingKey「Fed July FOMC Meeting Preview: Rate Hike or No Change?」（2026-07）
+  - bitcoinworld.co.in「FOMC Preview: Fed Poised To Hold Rates Steady After June's Hawkish Turn」（2026-07）
+- コンプライアンス監査（Opusエージェント1）:
+  - 初期判定: 🟡グレー（L273「9月利上げほぼ確実」という引用表現が将来断定の形に見える→軽微修正）
+  - 適用修正: 「ほぼ確実」→「可能性が高まった」（表現軟化のみ・数値/構造/出典不変）
+  - 最終判定: 🟢白（公開適格）
+- 独立Opus確認（エージェント2）: ✅白（A〜E全5項目クリア・メルマガプレースホルダ削除対応済み・表記ゆれ「ウォーシュ」統一対応済み・公開適格・独立判断一致）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典9系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告15件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-07-26-fomc-hike-odds.html
+- commit: feat: auto-publish news 2026-07-26（main へ push 済み）
+
+---
+
 ## 2026-07-25
 - 判定: ✅ 公開済み
 - 選定トピック: 来週7/28〜31「5重発火週」──FOMC(7/28〜29)・日銀会合(7/30〜31)・Microsoft/Meta決算(7/29)・Amazon決算(7/30)・米Q2 GDP速報値+コアPCE(7/30)が同一週に集中、ドル円163.988円（約40年ぶり高値圏）の前夜を中立整理（カテゴリ: マクロ・金融政策・AI・決算プレビュー・為替）
