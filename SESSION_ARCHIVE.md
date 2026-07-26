@@ -485,6 +485,17 @@ SESSION_HANDOFF.md のスリム化（2026-06-20）で、2026-06-17 以前の履�
 - 非系統的リスク/系統的リスク/相関係数/効率的フロンティア/4種類の分散/危機時の相関上昇 カテゴリ：🛡️ リスク管理・資金管理
 - コミット：89b980d(記事) / 93549ef(guides) / ce45a6e(更新履歴)
 
+<!-- 2026-07-26 17:20 declutter: SESSION_HANDOFF が予算30KB超過のため退避。要点1行は handoff 側に残置。 -->
+## 【2026-07-26 完了】autopublish の topicキュー補充＋枯渇の番人
+
+- **⓪-✅autopublish の topicキュー補充＋枯渇の番人＝完了（7/26 13:54）**
+  - **#3 は誤検知だった**: `charts.html` の `<title>`/description/og/twitter はライブで既に「150年価格チャート＆投資史年表」。手元の `charts.html` が **5/6 生成の古い成果物**（6コアHTMLはSYNC禁忌＝ローカルは更新されない）を見ての誤判定。**生成物のローカルコピーで判断しない＝ライブか生成スクリプトを見る**。残っていたのは CLAUDE.md のサイト構成表と market-news スキルの2箇所のみ＝修正済み。7/25 の残1だった `youtube-summary.html` も bare「50年」0件で解消を実測。
+  - **#4 はバグではなく本当の枯渇**: topicキュー #1〜#24 をライブ `guides.html` と突合して **24/24 公開済み**を確認。`AUTODRAFT_GUIDE.md` が「該当が無ければ新規生成しない」と定めているので、7/20〜24 の連続スキップは**仕様どおりの停止**（＝エラーが出ないので誰も気づかない）。
+  - **補充15件（#25〜#39）**: emergency-fund / earnings-season / financial-statements / overnight-gap-risk / overconfidence / market-participants / stock-split-buyback / sns-information-literacy / margin-trading / commodity-basics / correlation-risk / ipo-basics / reit-basics / market-hours / sunk-cost。**全件を `check_guide_draft.py` 検査7（トークン集合の同一/包含）と同一ロジックで既存199記事に機械突合＝RED 0件**。主題が近い4件（margin-trading／correlation-risk／sns-information-literacy／sunk-cost）は行内に「本記事はここに限定し既存記事へ誘導」の棲み分け指示を明記。
+  - **⚠️ 見つけた落とし穴（記事系routineの指示を書くとき必読）**: クラウドの routine は **`research/` 配下や `_` プレフィックスのローカル専用ファイルを読めない**。当サイト独自の実測値（勝率・件数）を本文に書けと指示すると**出典を確認できないまま数値を書く**ことになる。→ キュー冒頭に「独自数値は公開済みページに載っている場合の引用に限る」を明記した。
+  - **番人＝`check_automation_health.py` §⑤**（`check_topic_queue`）: キュー表から key を抽出→GitHub の `guides.html` と突合し、未公開が `QUEUE_MIN_REMAIN=5` 未満なら warn＝Issue。実データで **push前 0/24（＝停止中を正しく検知）→ push後 15/39 ✅** を両方確認。テスト `_test_topic_queue.py` 12アサーション全緑（表以外のバッククォート除外・`guide-alpha-extra` での部分一致誤判定なし・表破損時の分岐 を含む）。
+  - sync 242成功/0失敗。反映確認＝raw で3ファイル（`check_automation_health.py`／`drafts/AUTODRAFT_GUIDE.md`／`CLAUDE.md`）。**翌朝 05:30 の autodraft-article が #25 `emergency-fund` から再開**する見込み。
+
 #### 🔜 次のトピックキュー
 | # | キー | テーマ |
 |---|------|--------|
