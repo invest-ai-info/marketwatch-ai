@@ -77,4 +77,5 @@ SYNC_FILES = [
     "guide-news-2026-07-25-fomc-boj-bigtech-superweek.html",
     "guide-signal-lab-051.html",
     "guide-news-2026-07-26-fomc-hike-odds.html",
+    "guide-signal-lab-052.html",
 ]
