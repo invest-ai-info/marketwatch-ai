@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-26 09:05）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-26 13:54）
 
 <!-- 2026-07-24 declutter: 7/21完了節(⓪-7/21/⓪-人気度/⓪-EVアップ/⓪-ナビCSS/⓪-次の作業候補)をSESSION_ARCHIVE.mdへ退避。 -->
 
@@ -29,6 +29,7 @@
 | **公開記事への下書き残骸混入防止** 🆕7/7 | `signal_lab_verify.py` date_check の残骸検査 | 「下書き中」が本文に残っていたら**赤=公開ブロック**（#032実例の再発防止） |
 | **休場中の発火を勝率に含めない** 🆕7/11 | エンジン=`generate_technical_alerts.py`週末閉場ガード（土07:00〜月06:00 JST・BTC除外・発火スキップ）＋集計=`is_weekend_closed_fire`（track-record/週次/月次の3本に同一定義複製） | 塩漬けデータ発火（実測214件・勝率33% vs 全体41.6%＝週明けギャップでSL直撃の測定アーティファクト）を源流と集計の両方で遮断。生ログは不変・ページに除外注記あり |
 | **ローカル公開の日付事故防止** 🆕7/22 | `publish_article.py` の `check_date_gate`（免除は `--allow-backdate`・テスト=`_test_publish_date_gate.py` 5件） | 公開日≠JST今日なら **🚫 exit 1 で公開停止**（7/15事故の恒久対策・signal-lab date_check と同型） |
+| **自動公開レーンの「静かな停止」検知** 🆕7/26 | `check_automation_health.py` §⑤（`automation-health.yml` 毎朝09:30 JST・テスト=`_test_topic_queue.py` 12件） | autodraft の未公開 topic が5件未満で **Issue**。①②は「走ったか」しか見ないのでキュー枯渇による仕様どおりの停止を捕まえられなかった（7/20〜24 に5日連続スキップを誰も検知できなかった実例）|
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
@@ -48,7 +49,7 @@
 
 ## 📌 アクティブな宿題
 
-### 🔜 次セッションの入口（2026-07-26 09:05 更新）
+### 🔜 次セッションの入口（2026-07-26 13:54 更新）
 
 > **在flight（未完了で手が止まっているもの）はゼロ。** 7/25-26 の作業は全て着地済み。
 > 以下は「次にやると良いこと」であって、途中で放置されているものではない。
@@ -57,9 +58,9 @@
 |---|---|---|
 | 1 | **Q29 の設計**（PEADの検出力を確保する再登録）＝Q28は検定不能でクローズ済み | オーナー判断待ち |
 | 2 | **`watch` 残り項目の棚卸し**（PEADは「調達待ち」が誤りだった。同じことが他でも起きている可能性） | 提案済み・未着手 |
-| 3 | `charts.html` の `<title>`/meta が「50年価格チャート」のまま（中身は150年） | オーナー判断待ち |
-| 4 | **autopublish の topicキュー枯渇**（7/20〜7/24 連続スキップ＝実質停止） | オーナー判断待ち |
-| 5 | `drafts/REVIEW.md` の #049 が【ゲート実行中】のまま（実体は公開済み） | 記録の締めのみ |
+| ~~3~~ | ~~`charts.html` の `<title>`/meta が「50年」のまま~~ | ✅ 誤検知＝実測で解消済み（7/26） |
+| ~~4~~ | ~~autopublish の topicキュー枯渇~~ | ✅ 15件補充＋番人追加（7/26） |
+| 5 | `drafts/REVIEW.md` の #049 が【ゲート実行中】のまま（実体は公開済み） | 記録の締めのみ（※ローカルに無い＝GitHub側編集） |
 | 6 | フォーム3欄（口座残高/リスク額/予定価格）未入力で R6 が待機 | オーナー作業 |
 | 7 | 規律の前向き検証が **N=0/30 の休眠アーム**（取引が6/4以降停止中） | オーナー判断 |
 
@@ -68,16 +69,18 @@
 ---
 
 
-- **⓪-✅ナビ文言「📈 50年チャート」→「📈 150年チャート」一括更新＝完了（7/25 21:55）**
-  - **結果**: リモート実測 **244ファイル中243本が反映済み**。残1＝`youtube-summary.html`（生成物）は 21:55 に `update-youtube-summary.yml` を trigger 済み＝次回生成で解消。
-  - **やったこと**: ①`unify_navbar.py` 25行目のラベルを150年へ→`--apply`（guide-*.html 215本） ②生成スクリプト8本＋静的HTML5本＝25箇所 ③`guide-nikkei-vs-topix`・`guide-us-china-summit-2026-05` の関連カード/本文リンク3箇所（navの2つ目以降＝unify対象外） ④sync 242成功/0失敗 ⑤Contents API でクラウドレーン **110本**（news32/signal-lab29/proverb21/auto9/weekly9/weekly-review7/他3）
-  - **⚠️ 誤爆の罠（次に似た一括置換をするとき必読）**: `50年` の単純grepは **`250年`（`guide-proverb-mou-mada.html` 10箇所）と `1950年代`（`guide-masters-005`）に誤ヒット**し、機械置換すると `2150年`／`11950年代` に壊れる。`generate_market_news.py` の更新履歴「50年チャートを『150年チャート＋投資史年表』へ大幅拡張」も履歴の記述なので変更禁止。→ **置換キーを `📈 50年チャート` の完全一致に限定**すれば全部回避できる（破損0件を機械検証済み）。
-  - **⚠️ reconcile が効いた実例**: sync で `generate_market_news.py`・`guides.html` が🚫staleで止まった。`--force` を直に叩かず**リモート最新を取得→その上にラベル変更を乗せ直し**てから `--force`。リモートは566B/1,445B新しく、飛ばしていたらクラウド公開の記事カードが消えていた。
-  - **副次変更（申告）**: `unify_navbar.py --apply` は仕様どおりナビ全体を標準10ボタンへ正規化するため、**ラベル以外の既存崩れ24ファイルも同時に直った**（signal-lab 035-049 が `📈 チャート` と略されていた／weekly系9本に「📖 投資本」ボタン欠落）。
-  - **実測スコープ訂正**: ナビラベルは 233箇所/233ファイルではなく **242箇所/223ファイル**。Contents API 対象は約50本ではなく **110本・7レーン**。ローカルに存在しないクラウド先行ファイルが30本あった。
-  - **再利用ツール（ローカル専用・`_`プレフィックス）**: `_relabel_remote_push.py`（リモート最新取得→置換→PUT＝ローカルを送らないので巻き戻し事故なし）／`_relabel_api_targets.json`／`_relabel_live_state.py`（raw経由でライブ反映を実測）。
-  - **⚠️ 環境メモ**: この日 `api.github.com` だけが TCP443 到達不能を繰り返した（IP 20.27.177.116・AAAA無しでIPv6迂回不可。`github.com`/`raw.githubusercontent.com`/ライブサイトは正常）。30分程度の窓が断続的に開く挙動。**raw経由の読み取りは生きているので、進捗実測は raw で行い、書き込みは窓が開いた瞬間に流す**のが有効だった。
+- **⓪-✅autopublish の topicキュー補充＋枯渇の番人＝完了（7/26 13:54）**
+  - **#3 は誤検知だった**: `charts.html` の `<title>`/description/og/twitter はライブで既に「150年価格チャート＆投資史年表」。手元の `charts.html` が **5/6 生成の古い成果物**（6コアHTMLはSYNC禁忌＝ローカルは更新されない）を見ての誤判定。**生成物のローカルコピーで判断しない＝ライブか生成スクリプトを見る**。残っていたのは CLAUDE.md のサイト構成表と market-news スキルの2箇所のみ＝修正済み。7/25 の残1だった `youtube-summary.html` も bare「50年」0件で解消を実測。
+  - **#4 はバグではなく本当の枯渇**: topicキュー #1〜#24 をライブ `guides.html` と突合して **24/24 公開済み**を確認。`AUTODRAFT_GUIDE.md` が「該当が無ければ新規生成しない」と定めているので、7/20〜24 の連続スキップは**仕様どおりの停止**（＝エラーが出ないので誰も気づかない）。
+  - **補充15件（#25〜#39）**: emergency-fund / earnings-season / financial-statements / overnight-gap-risk / overconfidence / market-participants / stock-split-buyback / sns-information-literacy / margin-trading / commodity-basics / correlation-risk / ipo-basics / reit-basics / market-hours / sunk-cost。**全件を `check_guide_draft.py` 検査7（トークン集合の同一/包含）と同一ロジックで既存199記事に機械突合＝RED 0件**。主題が近い4件（margin-trading／correlation-risk／sns-information-literacy／sunk-cost）は行内に「本記事はここに限定し既存記事へ誘導」の棲み分け指示を明記。
+  - **⚠️ 見つけた落とし穴（記事系routineの指示を書くとき必読）**: クラウドの routine は **`research/` 配下や `_` プレフィックスのローカル専用ファイルを読めない**。当サイト独自の実測値（勝率・件数）を本文に書けと指示すると**出典を確認できないまま数値を書く**ことになる。→ キュー冒頭に「独自数値は公開済みページに載っている場合の引用に限る」を明記した。
+  - **番人＝`check_automation_health.py` §⑤**（`check_topic_queue`）: キュー表から key を抽出→GitHub の `guides.html` と突合し、未公開が `QUEUE_MIN_REMAIN=5` 未満なら warn＝Issue。実データで **push前 0/24（＝停止中を正しく検知）→ push後 15/39 ✅** を両方確認。テスト `_test_topic_queue.py` 12アサーション全緑（表以外のバッククォート除外・`guide-alpha-extra` での部分一致誤判定なし・表破損時の分岐 を含む）。
+  - sync 242成功/0失敗。反映確認＝raw で3ファイル（`check_automation_health.py`／`drafts/AUTODRAFT_GUIDE.md`／`CLAUDE.md`）。**翌朝 05:30 の autodraft-article が #25 `emergency-fund` から再開**する見込み。
 
+- **⓪-✅ナビ文言「50年チャート」→「150年チャート」一括更新＝完了（7/25 21:55・全文は SESSION_ARCHIVE.md）**
+  - 結果: 242箇所/223ファイル反映・sync 242成功/0失敗・Contents API でクラウドレーン110本。残1の `youtube-summary.html` も 7/26 に解消を実測。
+  - **⚠️ 再利用する教訓**: ①一括置換のキーは **`📈 50年チャート` の完全一致**に限定する（`50年` の素朴なgrepは `250年`/`1950年代` に誤ヒットして `2150年`/`11950年代` に壊す） ②`generate_market_news.py` の更新履歴に残る「50年チャートを…へ拡張」は**履歴の記述なので変更禁止** ③sync の🚫staleは `--force` を直に叩かず**リモート最新に自分の編集を乗せ直す**（この日それでクラウド公開の記事カード消失を回避）。
+  - **⚠️ 環境メモ**: `api.github.com` だけが TCP443 到達不能になる時間帯がある（`github.com`/`raw`/ライブは正常）。**進捗実測は raw で行い、書き込みは窓が開いた瞬間に流す**。再利用ツール＝`_relabel_remote_push.py` / `_relabel_api_targets.json` / `_relabel_live_state.py`。
 - **⓪-🔬PEAD（決算後ドリフト）＝Q28検定不能でクローズ・Q29再登録が次（7/26 08:58）**
   - **最大の収穫は「調達不要だった」こと**: `drafts/idea-tested-slugs.txt` で PEAD は長く「データ調達待ち」とされていたが、実測すると**材料は全部手元にあった**（`_jq_fins_cache`=3,717銘柄・107列・`DiscDate`/`DiscTime` あり／日足レイク2021-07〜2026-07・両者とも5桁コードで直結合）。**`watch` の他の項目も同じ棚卸しをする価値がある**（真に調達が要るのは 粗利益率＝J-Quantsに売上原価なし／自社株買い＝TDnet／COT＝CFTC の3件のみ）。
   - **イベント表は完成・再利用可能な資産**: `research/_pead_events.py` → `_pead_events.csv` **69,616行**（2021-07-13〜2026-07-13）。受け入れ条件クリア＝**決算集中月が他月の約10倍**（2月13,176/5月13,593/8月12,666/11月12,603 vs 他月904〜3,694）。EAP（決算前ドリフト）も予想修正ドリフトも**同じ表の別の窓を見るだけ**で検証できる。
