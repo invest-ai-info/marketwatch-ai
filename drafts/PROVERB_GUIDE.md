@@ -36,6 +36,13 @@
    c. `git add guide-proverb-<slug>.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: 投資格言 auto-publish <slug>" && git push origin main`
    d. `drafts/proverb/PROVERB_LEDGER.md` に「✅公開済み・格言・slug・コンプラ判定・出典」を追記しコミット＆push。
 8. **エスカレ（公開しない）**：記事を `drafts/proverb/draft-<slug>.html` に `<meta name="robots" content="noindex,nofollow">` 付きで保存し、`drafts/proverb/PROVERB_LEDGER.md` に「🚩要人間レビュー（理由）」を記録して `git add drafts/proverb/ && git commit -m "chore: proverb escalate <slug>" && git push origin main`。
+
+   > 🔒 **🔴黒のときだけの例外（2026-07-26 追加）**：このリポジトリは **public** で、`raw.githubusercontent.com` から
+   > **誰でも本文を読める**（サイト側の `noindex` と robots.txt は GitHub には効かない＝2026-07-26 に HTTP 200 で実測）。
+   > よって **🔴黒（法務リスク＝無登録投資助言・断定表現・個別銘柄推奨）と判定した本文は、リポジトリにコミットしない。**
+   > 台帳には **日付・対象・理由の要約だけ**を書く（**本文・引用を含めない**）。本文は保存せず破棄する。
+   > ※🟡グレー／要協議／検証赤／薄い／重複 など**法務リスクでないエスカレは従来どおり**下書きを保存してよい
+   > （2026-07-26 時点の🚩9件はすべてこちら＝黒はゼロ）。判断に迷う場合は「コミットしない」側に倒す。
 9. 最後に日本語要約：選定した格言・コンプラ判定（初期/適用修正/独立確認 or エスカレ理由）・公開有無・ファイル名。
 
 ## 3. 絶対厳守
