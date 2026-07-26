@@ -66,3 +66,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://quantpedia.com/strategies/earnings-announcement-premium / https://quantpedia.com/pre-announcement-returns/
 - 検証案: 決算発表スケジュール（東証開示calendar等）をjoinし、対象銘柄の-10日〜-1日の累積リターンを計算。NKD=F指数版では四半期決算集中月（1/4/7/10月）の特定期間効果として粗く検証可能。データ調達・精度の限界に注意。
 - タグ: △
+
+## 2026-07-26（JST）
+### slug: jp-dow-effect
+- 名前: 日本株曜日別リターン効果（火曜プレミアム・月曜ディスカウント）
+- 主張: 日本株では曜日によるリターン偏りが存在し、火曜日がプラス（オーバーナイト含む）、月曜日がマイナスになる傾向がある【出典の主張・未検証】。Jaffe & Westerfield (1985, JFQA) が学術確認。Kato et al. (2009) によれば1984年以降は火曜正効果が顕著で先物限月前月に集中。個人バックテスト (2024) では火曜オーバーナイト保有が全規模で最強・月曜デイトレードが全規模でマイナスとの結果。2019年学術研究では「UP市場でのみ有意」という条件も示唆。larry-williams テスト (tested) は曜日を含む複合システムだが、本仮説は純粋な日本市場の曜日効果を単変量で検証する別角度。
+- 出典: https://pubsonline.informs.org/doi/10.1287/mnsc.36.9.1031 / https://ideas.repec.org/a/kap/apfinm/v26y2019i2d10.1007_s10690-018-9263-4.html
+- 検証案: NKD=F日足で「火曜始値→水曜始値」オーバーナイトリターン vs「月曜始値→終値」デイリターンを全期間・MA(200)上昇相場限定それぞれで勝率・期待値算出。価格データのみで完結。
+- タグ: ◎
+
+### slug: jp-high-dividend-yield
+- 名前: 日本株高配当利回りファクター単独効果
+- 主張: 高配当利回り銘柄（MSCI Japan平均の130%超）で構成したポートフォリオは市場全体をアウトパフォームする傾向がある【出典の主張・未検証】。MSCI Japan High Dividend Yield Indexは2024年+26.28%・2025年+23.46%（MSCI Japan全体2024年+21.15%に対し超過リターン約+5pp）。TSEプライム配当利回りが2025年5月に史上最高値2.660%を記録。Fama-Frenchデータライブラリも日本を含む22カ国で配当利回りポートフォリオを構築・公開済み。buffett-quality（複合スクリーン）とは独立した単一指標効果の検証が目的。
+- 出典: https://www.msci.com/resources/factsheets/index_fact_sheet/msci-japan-high-dividend-yield-index-jpy-gross.pdf / https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_port_form_dp.html
+- 検証案: jp-rankings.json銘柄に予想配当利回り（実績配当÷株価）をjoinし、高利回り上位三分位vs低利回り下位三分位の翌年リターン差を算出。TSEプライム限定・財務データjoin必要。
+- タグ: ○
+
+### slug: jp-size-revival
+- 名前: 日本株小型株プレミアム現代再検証（消滅→復活の検証）
+- 主張: 日本株で一時消滅したとされる小型株プレミアムが特定条件下で復活している可能性がある【出典の主張・未検証】。Kubota & Takehara (2018) は消滅を報告。Zaremba et al. "Resurrecting the size effect in Japan" (ScienceDirect 2021) では低流動性銘柄除外・値嵩株除外の条件下で効果が再現すると報告。LSEG Equity Factor Insights Q4 2024でも日本スモールキャップが注目ファクターとして言及。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S0927538X21001487 / https://link.springer.com/article/10.1007/s11156-025-01421-5
+- 検証案: jp-rankings.json銘柄を時価総額で三分位に分類し、大型vs小型の過去リターン差を算出。流動性フィルター（売買代金下位20%除外）の有無で2パターン比較し「除外が前提か」を確認。財務データjoin必要。
+- タグ: ○
