@@ -4,17 +4,21 @@ check_automation_health.py — 裏方の自動化（GitHub Actions / 予約エ�
 「ちゃんと走っているか」を点検する番人。health-check.yml は公開6ページの死活を見るが、
 こちらはその死角＝シグナル/政治フィード/ファンダ/パニックスキャン/研究日誌等の沈黙の失敗を検知する。
 
-3方式（誤検知を避けるため）:
+5方式（誤検知を避けるため）:
   ① Actions ワークフロー … Actions API で「直近の実行が成功か＋実行が新しいか」を見る
      （commit-on-change なジョブでもファイル鮮度に惑わされない）
   ② クラウド routine     … 毎回再生成する出力ファイルの最終コミット時刻で鮮度を見る
   ③ 公開記事カバレッジ   … guide-signal-lab-* / guide-news-* が guides.html にカードとして
      載っているかをリポジトリ状態で照合（local-drift 巻き戻し事故の早期検知＝B「カバレッジ番人」）
+  ④ 固定ゲートの不変条件 … ゲート/リンターを routine が書き換えて通過する自己承認を検知
+  ⑤ topicキューの残量    … autodraft の未公開 topic 本数を数える。①②は「走ったか」しか見ないので、
+     キューが尽きて仕様どおり静かに停止する枯渇（2026-07-20〜24 の実例）を捕まえられない
 
 判定: critical/warn が1件でも異常なら exit 1（workflow が Issue を立てる）。info のみ/全正常なら exit 0。
 実行: GitHub Actions（automation-health.yml）／ローカルでも可。
 """
 import os
+import re
 import sys
 import json
 import datetime as dt
@@ -199,6 +203,27 @@ def check_gate_immutability(owner, repo, token, now):
     return hits
 
 
+# ⑤ autodraft topicキューの残量。①②は「routine が走ったか」しか見ないので、キューが尽きて
+#    手順書どおり「該当なし＝生成しない」で静かに止まる枯渇を検知できない（2026-07-20〜24 の実例＝
+#    autopublish が5日連続スキップしても誰も気づかなかった）。未公開 topic の本数＝残り日数なので、
+#    尽きる前に補充の締切を通知する。
+QUEUE_GUIDE_PATH = "drafts/AUTODRAFT_GUIDE.md"
+QUEUE_MIN_REMAIN = 5  # 未公開 topic がこれ未満なら warn（1日1本なので約5日前に通知）
+
+
+def check_topic_queue(owner, repo, token):
+    """AUTODRAFT_GUIDE.md の topicキュー表から key を抽出し、guides.html に
+    guide-<key>.html のカードが無いもの＝未公開の残り本数を数える。
+    ローカルの陳腐化に惑わされないよう、どちらも GitHub 側の最新を読む（③と同方針）。
+    戻り値: (キュー総数, 未公開keyのリスト)。"""
+    md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{QUEUE_GUIDE_PATH}", token)
+    # 表の行「| 12 | 基礎知識 | `bonds-interest-rates` | …」から key だけを取る
+    keys = re.findall(r"^\|\s*\d+\s*\|[^|]*\|\s*`([a-z0-9-]+)`", md, re.M)
+    guides = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/guides.html", token)
+    remaining = [k for k in keys if f'href="guide-{k}.html"' not in guides]
+    return len(keys), remaining
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -264,6 +289,25 @@ def main():
     except Exception as e:
         # ③と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ ゲート不変条件の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑤ autodraft topicキューの残量（枯渇＝自動公開レーンの静かな停止）")
+    try:
+        total, remaining = check_topic_queue(owner, repo, token)
+        if not total:
+            body.append(f"- 🚨 ⚪ topicキューを解析できない（{QUEUE_GUIDE_PATH} の表形式を確認）")
+        elif len(remaining) < QUEUE_MIN_REMAIN:
+            nokori = ", ".join(remaining) if remaining else "なし＝レーン停止中"
+            body.append(f"- 🚨 🟡 未公開 topic が残り {len(remaining)}/{total} 件"
+                        f"（閾値 {QUEUE_MIN_REMAIN}）＝キュー補充が必要。"
+                        f"{QUEUE_GUIDE_PATH} の表に topic 行を追加する。残り: {nokori}")
+            bad.append(("topicキュー枯渇", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 未公開 topic 残り {len(remaining)}/{total} 件"
+                        f"（閾値 {QUEUE_MIN_REMAIN} 以上）")
+    except Exception as e:
+        # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ topicキュー残量の確認失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
