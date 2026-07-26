@@ -18,9 +18,17 @@ MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 
 # 閾値（超えたら「軽くする候補」）。毎セッション読む文書を重く保たないため。
 # 2026-07-02 トークン効率化＝閾値を実測ベースに厳格化（毎セッションの固定オーバーヘッド予算）。
+# ⚠️ 2026-07-26: 進化ループ文書の閾値は **`_doctrine_check.py` が単一ソース**（ここは月次の二重
+# チェック）。7/26 に一次側だけ 14→36 に直してここが取り残され、同じ警告が別経路から鳴り続けた。
+# 二度と分岐しないよう import で引く。`_doctrine_check.py` は `_`プレフィックス＝ローカル専用で
+# GitHub には無いため、クラウド実行時のフォールバックだけ数値を持つ（値は一次側と一致させること）。
+try:
+    sys.path.insert(0, HERE)
+    from _doctrine_check import DOCTRINE_WARN_KB as _DOC_KB, QUEUE_WARN_KB as _Q_KB
+except Exception:
+    _DOC_KB, _Q_KB = 24, 36
 DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32,
-                 # 🆕 2026-07-07 進化ループ文書（一次ガードは _doctrine_check.py 側＝ここは月次の二重チェック）
-                 "research/DOCTRINE.md": 24, "research/hypothesis_queue.md": 14}
+                 "research/DOCTRINE.md": _DOC_KB, "research/hypothesis_queue.md": _Q_KB}
 MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
