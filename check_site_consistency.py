@@ -213,6 +213,14 @@ def main():
         # ナビの正は生成スクリプト(.py)側で担保→そちらを検査することで根元のドリフトを捕まえる。
         if name in SYNC_FORBIDDEN or name == "preview.html":
             continue
+        # 公開ページでないものを除外（2026-07-26）＝warningが恒久的に消えず、鳴りっぱなしで
+        # 他の警告まで見なくなるのを防ぐ。①`_`プレフィックス＝ローカル専用（SYNC禁止と同じ境界）
+        # ②`apply_*.py`＝ナビ「断片」を注入する冪等ツールで、自分が10ボタンを持つ理由が無い。
+        # 実測(13件中の内訳)＝除外対象は _draft004/_draft005/_preview_health/_pub003/_pub006/
+        # apply_books_nav_scripts.py の6件。除外で失う検査は `_gmn_remote.py`/`_guides_remote.html`
+        # （リモートのローカル写し＝検査対象として意図されたものではない）だけ。
+        if name.startswith("_") or (name.startswith("apply_") and name.endswith(".py")):
+            continue
         navhrefs = set(re.findall(r'class="nav-btn[^"]*"\s+href="([^"]+)"', _read(name)))
         if not navhrefs:
             continue  # ナビを持たないファイルは対象外
