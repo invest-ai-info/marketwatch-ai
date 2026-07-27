@@ -1,0 +1,50 @@
+{
+  "article_id": "053",
+  "claims": [
+    {
+      "label": "above_both × Long 全件勝率（メイン仮説）",
+      "filter": {"ma_pos": "above_both", "direction": "long"},
+      "k": 206, "n": 549
+    },
+    {
+      "label": "below_both × Long 全件勝率（比較群）",
+      "filter": {"ma_pos": "below_both", "direction": "long"},
+      "k": 354, "n": 799
+    },
+    {
+      "label": "above_both × Short（方向逆転の確認）",
+      "filter": {"ma_pos": "above_both", "direction": "short"},
+      "k": 94, "n": 206
+    },
+    {
+      "label": "above_both × Long × 上昇トレンド",
+      "filter": {"ma_pos": "above_both", "direction": "long", "trend": "上昇"},
+      "k": 94, "n": 260
+    },
+    {
+      "label": "below_both × Long × 上昇トレンド（対照）",
+      "filter": {"ma_pos": "below_both", "direction": "long", "trend": "上昇"},
+      "k": 105, "n": 201
+    },
+    {
+      "label": "above_both × Long × signal=high_break",
+      "filter": {"ma_pos": "above_both", "direction": "long", "signal": "high_break"},
+      "k": 52, "n": 148
+    },
+    {
+      "label": "above_both × Long × signal=rsi_overbought",
+      "filter": {"ma_pos": "above_both", "direction": "long", "signal": "rsi_overbought"},
+      "k": 16, "n": 53
+    },
+    {
+      "label": "above_both × Long × group=other_fx",
+      "filter": {"ma_pos": "above_both", "direction": "long", "group": "other_fx"},
+      "k": 45, "n": 144
+    },
+    {
+      "label": "above_both × Long × group=index",
+      "filter": {"ma_pos": "above_both", "direction": "long", "group": "index"},
+      "k": 66, "n": 153
+    }
+  ]
+}

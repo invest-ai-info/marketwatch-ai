@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #53｜両MAライン上でロングは逆効果——MA配置が示す価格配置フィルターの機能 - MarketWatch AI</title>
+  <meta name="description" content="価格が移動平均MA25・MA75の両方より上（above_both）のときにロングシグナルを取ると勝率37.5%（N=549）・期待値R=-0.125で95%CI全域マイナス。逆に両MA下（below_both）ではロング44.3%（N=799）。MA配置が逆張りシグナルの適域を規定する。研究日誌第53回。">
+  <meta name="keywords" content="AIシグナル,移動平均,MA配置,勝率,検証,研究日誌,above_both,ロング,逆張り">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-053.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #53｜両MAライン上でロングは逆効果——MA配置と逆張りシグナルの生息域">
+  <meta property="og:description" content="両MAライン上でロングN=549・37.5%・R CI全域マイナス。逆に両MA下ロングは44.3%（N=799）。MA位置フィルターの統計的機能を検証。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-053.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #53｜両MAライン上でロングは逆効果——MA配置が示す価格配置フィルターの機能",
+    "description": "価格が移動平均MA25・MA75の両方より上のときロングシグナルの勝率は37.5%（N=549）・期待値R=-0.125でCI全域マイナス。逆に両MA下ではロング44.3%（N=799）。研究日誌第53回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-28",
+    "dateModified": "2026-07-28",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-053.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    nav{max-width:1000px;margin:0 auto 32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem;overflow-x:auto;display:block}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left;white-space:nowrap}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#d0d7de;stroke-width:1;stroke-dasharray:4 3}
+    .s-guide-r{stroke:#cf222e;stroke-width:1.2;stroke-dasharray:5 3}
+    .s-curve-p{stroke:#7c5cbf;stroke-width:2.5;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.2;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-o{stroke:#d97706;stroke-width:1.8;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none;opacity:.45}
+    .s-fill-g{fill:#e6ffed;stroke:none;opacity:.45}
+    .s-fill-r{fill:#ffebe9;stroke:none;opacity:.45}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    .tracker-table table{display:table;font-size:.82rem}
+    .tracker-table th,.tracker-table td{padding:7px 10px;white-space:normal}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📈 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家向けAI市場分析・シグナル研究</div>
+  </div>
+</header>
+
+<main>
+  <nav>
+    <div class="nav-bar">
+      <a class="nav-btn" href="index.html">🏠 トップページ</a>
+      <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+      <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+      <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+      <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+      <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+      <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+      <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+      <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+      <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+    </div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #53
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #53<br><small style="font-size:.65em;color:#57606a;font-weight:400">両MAライン上でロングは逆効果——MA配置と逆張りシグナルの生息域（N=549）</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">
+      📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（高値ブレイク・MA配置・RSI買われすぎ等）がチャートのどの瞬間に当たるかを図解で確認できます。
+    </div>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box" style="background:#fff8c5;border-left-color:#9a6700;color:#1f2328;padding:20px 24px;margin-bottom:24px">
+      <strong style="color:#9a6700;font-size:1rem">⏱ 30秒まとめ（全数値は決定論的に検証済み）</strong>
+      <ul style="margin:10px 0 0 18px;color:#1f2328">
+        <li>価格が MA25・MA75 の<strong>両方より上（above_both）でロング</strong>を取ると、勝率 <strong>37.5%（206/549）</strong>、95%CI [33.6%, 41.6%]、期待値 R=<strong>-0.125R</strong>（CI 全域マイナス [-0.219, -0.030]）</li>
+        <li>逆に<strong>両MA下（below_both）でロング</strong>を取ると、勝率 <strong>44.3%（354/799）</strong>、CI [40.9%, 47.8%]——MA位置が逆転すると結果も逆転</li>
+        <li>「上昇トレンドだから両MA上は有利」は当システムでは成立しない——上昇×above_both×Long は <strong>36.2%（94/260）</strong>、上昇×below_both×Long は <strong>52.2%（105/201）</strong>と 16pp 逆転</li>
+        <li>above_both × Short は 45.6%（94/206）——ロングとショートで方向が逆転（当システムは逆張り系シグナルが主体のため、「買われすぎ状態でのロング」は機能しにくい）</li>
+        <li>前向きトラッカー FWD N=70: 31/70=44%（R=+0.033 CI[-0.27, +0.33]）——IS 37.5% より改善しているが統計的有意差なし、継続観察</li>
+      </ul>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説と事前宣言</a></li>
+        <li><a href="#concept">なぜ「両MA上でロング」が問題になるのか</a></li>
+        <li><a href="#main">メイン検証：above_both × Long 全件結果</a></li>
+        <li><a href="#breakdown">グループ別・トレンド別・シグナル別の内訳</a></li>
+        <li><a href="#interpretation">解釈：逆張りシグナルの「生息域」</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+        <li><a href="#related">関連カード</a></li>
+      </ol>
+    </div>
+
+    <h2 id="hypothesis">1. 今回の仮説と事前宣言</h2>
+    <p><strong>検証テーマ</strong>: 価格がMA25・MA75の両方より上（above_both）の状態でロングシグナルが発火した場合、勝率は損益分岐43%を有意に下回るか。</p>
+    <p>前向きトラッカーに登録された「ステート 上昇配置（&gt;MA25&amp;75）×ロング」（登録 2026-07-20）は FWD N=70 に到達した。IS（全期間）の R=-0.12 という負の期待値と、FWD 44% という数字の背景を正式に検証する。</p>
+
+    <div class="info-box">
+      <strong>事前宣言</strong><br>
+      H1: above_both × Long の Wilson CI 上限 &lt; 43%（損益分岐を有意に下回ることを確認）<br>
+      H2: R の 95%CI が全域マイナス（1トレードあたり期待損失が統計的に確定）<br>
+      <em>両条件が揃えば「通過A（棄却確認）」、揃わなければ「継続観察」と判定する。</em>
+    </div>
+
+    <h2 id="concept">2. なぜ「両MA上でロング」が問題になるのか</h2>
+    <p>一般的なトレンドフォロー理論では「価格が両移動平均の上にある＝上昇トレンド確認、ロング有利」とされる。しかし当システムのシグナルスイートは性質が異なる。</p>
+    <p>当システムの主要シグナルは <strong>逆張り系</strong>——bb_lower_touch（ボリンジャー下限タッチ）・rsi_oversold_bounce（RSI売られすぎ反発）・support_bounce（サポート反発）——が勝率の核を担っている（指数×逆張りロングで59%超、#018/#022参照）。</p>
+    <p>これらの逆張りシグナルは価格が <strong>下落した位置</strong> で発火する。したがって both_above（両MA上）の状態では逆張りシグナルはほぼ発火せず（N=7のみ）、above_both での主発火シグナルはmacd_golden（MACDゴールデンクロス）・high_break（高値ブレイク）・bb_upper_break（BB上限突破）・ma_golden（MA ゴールデンクロス）となる。</p>
+    <p>言い換えると、above_both × Long とは「すでに上昇しきった局面で順張りロング」、below_both × Long とは「下落後に逆張りロング」という意味上の違いがある。</p>
+
+    <!-- 図1: チャート風概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MA配置と発火条件の概念チャート">
+        <!-- 背景ゾーン -->
+        <rect x="0" y="0" width="700" height="290" fill="#fafbfc"/>
+        <!-- above_both ゾーン（価格が両MA上）→ 赤背景帯 -->
+        <rect x="420" y="10" width="260" height="165" class="s-fill-r"/>
+        <text x="542" y="26" text-anchor="middle" fill="#cf222e" font-size="11" font-family="Noto Sans JP,sans-serif" font-weight="700">⚠️ above_both ゾーン</text>
+        <!-- below_both ゾーン（価格が両MA下）→ 緑背景帯 -->
+        <rect x="30" y="115" width="190" height="150" class="s-fill-g"/>
+        <text x="126" y="132" text-anchor="middle" fill="#1a7f37" font-size="11" font-family="Noto Sans JP,sans-serif" font-weight="700">✅ below_both ゾーン</text>
+        <!-- X軸 -->
+        <line x1="30" y1="270" x2="690" y2="270" class="s-axis"/>
+        <!-- Y軸 -->
+        <line x1="30" y1="10" x2="30" y2="270" class="s-axis"/>
+        <text x="16" y="270" text-anchor="middle" class="s-label-sm">価格</text>
+        <!-- MA75（遅い・太め・青） -->
+        <polyline class="s-curve-b" stroke-width="2.8" points="30,200 100,195 170,190 240,175 310,160 380,145 450,135 520,130 590,125 680,122"/>
+        <text x="685" y="120" class="s-label-b" font-size="11">MA75</text>
+        <!-- MA25（速い・細め・橙） -->
+        <polyline class="s-curve-o" points="30,220 80,215 130,200 180,180 230,162 280,148 330,138 380,128 430,120 480,115 540,112 610,110 680,108"/>
+        <text x="685" y="107" class="s-label-y" font-size="11">MA25</text>
+        <!-- 価格ライン（紫） -->
+        <polyline class="s-curve-p" points="30,240 60,235 90,228 120,218 155,205 190,188 220,172 250,158 280,145 310,132 340,120 370,112 400,106 440,102 480,100 520,98 560,96 600,95 640,94 680,93"/>
+
+        <!-- below_both ゾーンでの発火（緑丸＝TP成功） -->
+        <!-- 発火点1: 価格がMAsより下 -->
+        <circle cx="100" cy="228" r="10" fill="#1a7f37" opacity=".85"/>
+        <text x="100" y="232" text-anchor="middle" fill="#fff" font-size="9" font-family="Noto Sans JP,sans-serif">L</text>
+        <line x1="100" y1="218" x2="100" y2="200" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="32" y="176" width="136" height="22" rx="4" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text x="100" y="191" text-anchor="middle" fill="#1a7f37" font-size="10" font-family="Noto Sans JP,sans-serif">BB下限/RSI過売れ → TP ✅</text>
+
+        <!-- 発火点2 -->
+        <circle cx="170" cy="195" r="10" fill="#1a7f37" opacity=".85"/>
+        <text x="170" y="199" text-anchor="middle" fill="#fff" font-size="9" font-family="Noto Sans JP,sans-serif">L</text>
+        <line x1="170" y1="185" x2="195" y2="170" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="153" y="152" width="110" height="18" rx="4" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text x="208" y="164" text-anchor="middle" fill="#1a7f37" font-size="10" font-family="Noto Sans JP,sans-serif">サポート反発 → TP ✅</text>
+
+        <!-- above_both ゾーンでの発火（赤丸＝SL失敗） -->
+        <circle cx="510" cy="100" r="10" fill="#cf222e" opacity=".85"/>
+        <text x="510" y="104" text-anchor="middle" fill="#fff" font-size="9" font-family="Noto Sans JP,sans-serif">L</text>
+        <line x1="510" y1="90" x2="510" y2="72" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="438" y="52" width="148" height="20" rx="4" fill="#ffebe9" stroke="#cf222e" stroke-width="1"/>
+        <text x="512" y="66" text-anchor="middle" fill="#cf222e" font-size="10" font-family="Noto Sans JP,sans-serif">高値ブレイク → SL ❌</text>
+
+        <circle cx="600" cy="96" r="10" fill="#cf222e" opacity=".85"/>
+        <text x="600" y="100" text-anchor="middle" fill="#fff" font-size="9" font-family="Noto Sans JP,sans-serif">L</text>
+        <line x1="600" y1="86" x2="590" y2="68" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="502" y="50" width="148" height="18" rx="4" fill="#ffebe9" stroke="#cf222e" stroke-width="1" dy="0"/>
+        <text x="576" y="50" text-anchor="middle" fill="#cf222e" font-size="10" font-family="Noto Sans JP,sans-serif" dy="13">RSI過買い/MA G.C → SL ❌</text>
+
+        <!-- 凡例 -->
+        <circle cx="50" cy="270" r="7" fill="#1a7f37" opacity=".85"/>
+        <text x="62" y="274" class="s-label-g" font-size="11">TP成功（below_both）</text>
+        <circle cx="270" cy="270" r="7" fill="#cf222e" opacity=".85"/>
+        <text x="282" y="274" class="s-label-r" font-size="11">SL失敗（above_both）</text>
+
+        <!-- 注記 -->
+        <text x="700" y="285" text-anchor="end" class="s-label-sm">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">【図1】MA配置と発火結果の概念チャート。価格が両MAの下（below_both・緑帯）でロングシグナルが発火すると逆張りの本来の生息域となりTP率が高い傾向。逆に両MAの上（above_both・赤帯）での発火は過熱状態のため失敗しやすい。オレンジ=MA25（速い）、青=MA75（遅い）、紫=価格ライン。</p>
+    </div>
+
+    <h2 id="main">3. メイン検証：above_both × Long 全件結果</h2>
+    <p>決定論的集計（signals-log.json 全 closed 2,182 件 / oracle: signal_lab_verify.py）：</p>
+
+    <div class="negative-box">
+      <strong>H1 ✅ CI上限 &lt; 43% 達成</strong><br>
+      above_both × Long: N=<strong>549</strong>, 勝率=<strong>37.5%（206勝）</strong>, 95%CI=[33.6%, 41.6%]<br>
+      CI上限 41.6% &lt; 43%（損益分岐）— 有意に下回ることを確認<br><br>
+      <strong>H2 ✅ R CI 全域マイナス達成</strong><br>
+      期待値 R=<strong>-0.125R</strong>（95%CI [-0.219, -0.030]）— 下限も上限もマイナス
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>MA位置 × 方向</th><th>N</th><th>k（勝）</th><th>勝率</th><th>95%CI</th><th>期待値R</th><th>判定</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>above_both × Long 🔴</td><td>549</td><td>206</td><td>37.5%</td><td>[33.6%, 41.6%]</td><td>-0.125R</td><td>⚠️ CI全域マイナス</td></tr>
+        <tr><td>above_both × Short</td><td>206</td><td>94</td><td>45.6%</td><td>[39.0%, 52.5%]</td><td>+0.065R</td><td>—</td></tr>
+        <tr><td>below_both × Long 🟢</td><td>799</td><td>354</td><td>44.3%</td><td>[40.9%, 47.8%]</td><td>+0.034R</td><td>—</td></tr>
+        <tr><td>below_both × Short</td><td>322</td><td>125</td><td>38.8%</td><td>[33.7%, 44.2%]</td><td>-0.094R</td><td>—</td></tr>
+        <tr><td>全 Long（ベースライン）</td><td>1,593</td><td>649</td><td>40.7%</td><td>[38.4%, 43.2%]</td><td>-0.050R</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>注目点</strong>: above_both × <em>Short</em> は 45.6% と above_both × Long（37.5%）より 8.1pp 高い。方向が逆転している——両MA上に乗っている局面では、ロングではなくショートの方が成績が良い。</p>
+
+    <!-- 図2: MA位置×方向 4象限マトリクス -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MA位置と方向の4象限勝率マップ">
+        <rect x="0" y="0" width="560" height="240" fill="#fafbfc"/>
+        <!-- Title -->
+        <text x="280" y="22" text-anchor="middle" fill="#1f2328" font-size="13.5" font-weight="700" font-family="Noto Sans JP,sans-serif">MA位置 × 方向 勝率マップ</text>
+        <!-- Headers -->
+        <text x="265" y="45" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif">Long（ロング）</text>
+        <text x="440" y="45" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif">Short（ショート）</text>
+        <text x="80" y="105" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif" transform="rotate(-90,80,105)">above_both</text>
+        <text x="80" y="180" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif" transform="rotate(-90,80,180)">below_both</text>
+        <!-- above_both × Long (RED bad) -->
+        <rect x="155" y="52" width="170" height="88" rx="8" fill="#ffcdd2" stroke="#cf222e" stroke-width="2"/>
+        <text x="240" y="88" text-anchor="middle" fill="#cf222e" font-size="22" font-weight="700" font-family="Noto Sans JP,sans-serif">37.5%</text>
+        <text x="240" y="108" text-anchor="middle" fill="#cf222e" font-size="11" font-family="Noto Sans JP,sans-serif">N=549 | R=-0.13R ❌</text>
+        <text x="240" y="124" text-anchor="middle" fill="#cf222e" font-size="10" font-family="Noto Sans JP,sans-serif">CI [33.6%, 41.6%]</text>
+        <!-- above_both × Short -->
+        <rect x="340" y="52" width="170" height="88" rx="8" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="425" y="88" text-anchor="middle" fill="#9a6700" font-size="22" font-weight="700" font-family="Noto Sans JP,sans-serif">45.6%</text>
+        <text x="425" y="108" text-anchor="middle" fill="#9a6700" font-size="11" font-family="Noto Sans JP,sans-serif">N=206 | R=+0.07R</text>
+        <text x="425" y="124" text-anchor="middle" fill="#9a6700" font-size="10" font-family="Noto Sans JP,sans-serif">CI [39.0%, 52.5%]</text>
+        <!-- below_both × Long (GREEN good) -->
+        <rect x="155" y="150" width="170" height="78" rx="8" fill="#c8e6c9" stroke="#1a7f37" stroke-width="2"/>
+        <text x="240" y="185" text-anchor="middle" fill="#1a7f37" font-size="22" font-weight="700" font-family="Noto Sans JP,sans-serif">44.3%</text>
+        <text x="240" y="204" text-anchor="middle" fill="#1a7f37" font-size="11" font-family="Noto Sans JP,sans-serif">N=799 | R=+0.03R ✅</text>
+        <text x="240" y="218" text-anchor="middle" fill="#1a7f37" font-size="10" font-family="Noto Sans JP,sans-serif">CI [40.9%, 47.8%]</text>
+        <!-- below_both × Short -->
+        <rect x="340" y="150" width="170" height="78" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="425" y="185" text-anchor="middle" fill="#cf222e" font-size="22" font-weight="700" font-family="Noto Sans JP,sans-serif">38.8%</text>
+        <text x="425" y="204" text-anchor="middle" fill="#cf222e" font-size="11" font-family="Noto Sans JP,sans-serif">N=322 | R=-0.09R</text>
+        <text x="425" y="218" text-anchor="middle" fill="#cf222e" font-size="10" font-family="Noto Sans JP,sans-serif">CI [33.7%, 44.2%]</text>
+        <!-- 損益分岐ライン参考 -->
+        <text x="280" y="235" text-anchor="middle" fill="#6e7781" font-size="10" font-family="Noto Sans JP,sans-serif">損益分岐 43%（TP1=2.0ATR / SL=1.5ATR）。※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">【図2】MA位置（above_both / below_both）× 方向（Long / Short）の 4象限勝率マップ。ロングとショートで方向が完全逆転していることが分かる。above_both × Long（赤）が最も成績が悪く、below_both × Long（緑）が相対的に良い。</p>
+    </div>
+
+    <h2 id="breakdown">4. グループ別・トレンド別・シグナル別の内訳</h2>
+
+    <h3>4-1. グループ別（above_both × Long）</h3>
+    <table>
+      <thead>
+        <tr><th>グループ</th><th>N</th><th>k</th><th>勝率</th><th>95%CI</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>index（指数）</td><td>153</td><td>66</td><td>43.1%</td><td>[35.6%, 51.1%]</td><td>唯一 43% 前後（CI またぎ）</td></tr>
+        <tr><td>jpy_fx（円クロス）</td><td>147</td><td>59</td><td>40.1%</td><td>[32.6%, 48.2%]</td><td>損益分岐割れ</td></tr>
+        <tr><td>other_fx（ドル建て FX）</td><td>144</td><td>45</td><td>31.2%</td><td>[24.2%, 39.2%]</td><td>⚠️ CI全域 43% 未満</td></tr>
+        <tr><td>metal（貴金属）</td><td>40</td><td>9</td><td>22.5%</td><td>[12.3%, 37.5%]</td><td>最悪。金属ロング gate と整合</td></tr>
+        <tr><td>btc</td><td>42</td><td>11</td><td>26.2%</td><td>[15.3%, 41.1%]</td><td>CI上限 43% 未満</td></tr>
+        <tr><td>oil（原油）</td><td>22</td><td>16</td><td>72.7%</td><td>[51.8%, 86.8%]</td><td>小標本（N=22）外れ値</td></tr>
+      </tbody>
+    </table>
+    <p>other_fx（EURUSD等ドル建てFX）の CI [24.2%,39.2%] は CI 全域 43% 未満。metal の 22.5% は金属ロング gate と整合する（#039 で全域マイナス確定済み）。唯一 index が 43.1% と損益分岐近傍。</p>
+    <p>一方、below_both × Long × index は <strong>50.0%（95/190）</strong>—— index も MA 位置によって 7pp 変わる。</p>
+
+    <h3>4-2. トレンド別（above_both × Long）</h3>
+    <table>
+      <thead>
+        <tr><th>トレンド</th><th>above_both × L</th><th>below_both × L（対照）</th><th>差</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>上昇</td><td>36.2%（94/260）CI[30.6%,42.2%]</td><td>52.2%（105/201）CI[45.4%,59.0%]</td><td>+16.0pp ⬆</td></tr>
+        <tr><td>下降</td><td>34.9%（45/129）</td><td>44.1%（141/320）</td><td>+9.2pp ⬆</td></tr>
+        <tr><td>中立・もみあい</td><td>41.0%（64/156）</td><td>38.8%（107/276）</td><td>-2.2pp（逆転）</td></tr>
+      </tbody>
+    </table>
+    <p>上昇トレンドで最も大きな 16pp 逆転が生じる——「上昇トレンド確認 → 両MA上 → ロング有利」という常識が当システムでは成立しない。</p>
+    <p>中立・もみあいでは above_both（41.0%）≒ below_both（38.8%）でほぼ差なし——「両MA上」の悪影響はトレンドが明確な局面で出やすい。</p>
+
+    <!-- 図3: トレンド別棒グラフ -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="トレンド別 above_both vs below_both ロング勝率比較">
+        <rect x="0" y="0" width="560" height="270" fill="#fafbfc"/>
+        <text x="280" y="22" text-anchor="middle" fill="#1f2328" font-size="13.5" font-weight="700" font-family="Noto Sans JP,sans-serif">トレンド別 above_both vs below_both（ロング勝率）</text>
+        <!-- Y軸 -->
+        <line x1="60" y1="30" x2="60" y2="230" class="s-axis"/>
+        <line x1="60" y1="230" x2="530" y2="230" class="s-axis"/>
+        <!-- Y軸ラベル -->
+        <text x="52" y="234" text-anchor="end" class="s-label-sm">0%</text>
+        <text x="52" y="185" text-anchor="end" class="s-label-sm">20%</text>
+        <text x="52" y="140" text-anchor="end" class="s-label-sm">40%</text>
+        <text x="52" y="95" text-anchor="end" class="s-label-sm">60%</text>
+        <text x="52" y="50" text-anchor="end" class="s-label-sm">80%</text>
+        <!-- グリッド -->
+        <line x1="60" y1="185" x2="530" y2="185" class="s-guide"/>
+        <line x1="60" y1="140" x2="530" y2="140" class="s-guide"/>
+        <line x1="60" y1="95" x2="530" y2="95" class="s-guide"/>
+        <!-- 損益分岐 43% ライン -->
+        <line x1="60" y1="133" x2="530" y2="133" class="s-guide-r"/>
+        <text x="535" y="137" class="s-label-r" font-size="10">43%</text>
+
+        <!-- 上昇トレンド グループ -->
+        <text x="175" y="248" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif">上昇トレンド</text>
+        <!-- above_both × L × 上昇: 36.2% → y = 230 - 36.2/80*200 = 230-90.5=139.5 -->
+        <rect x="105" y="139" width="55" height="91" fill="#cf222e" opacity=".75" rx="3"/>
+        <text x="132" y="134" text-anchor="middle" class="s-label-r" font-size="12">36.2%</text>
+        <!-- below_both × L × 上昇: 52.2% → y = 230 - 52.2/80*200 = 230-130.5=99.5 -->
+        <rect x="195" y="99" width="55" height="131" fill="#1a7f37" opacity=".75" rx="3"/>
+        <text x="222" y="94" text-anchor="middle" class="s-label-g" font-size="12">52.2%</text>
+
+        <!-- 下降トレンド グループ -->
+        <text x="340" y="248" text-anchor="middle" fill="#424a53" font-size="12" font-family="Noto Sans JP,sans-serif">下降トレンド</text>
+        <!-- above_both × L × 下降: 34.9% → y=230-87.25=142.75 -->
+        <rect x="280" y="143" width="55" height="87" fill="#cf222e" opacity=".75" rx="3"/>
+        <text x="307" y="138" text-anchor="middle" class="s-label-r" font-size="12">34.9%</text>
+        <!-- below_both × L × 下降: 44.1% → y=230-110.25=119.75 -->
+        <rect x="370" y="120" width="55" height="110" fill="#1a7f37" opacity=".75" rx="3"/>
+        <text x="397" y="115" text-anchor="middle" class="s-label-g" font-size="12">44.1%</text>
+
+        <!-- 凡例 -->
+        <rect x="130" y="256" width="14" height="10" fill="#cf222e" opacity=".75" rx="2"/>
+        <text x="148" y="265" class="s-label-r" font-size="11">above_both × Long</text>
+        <rect x="320" y="256" width="14" height="10" fill="#1a7f37" opacity=".75" rx="2"/>
+        <text x="338" y="265" class="s-label-g" font-size="11">below_both × Long</text>
+        <text x="280" y="270" text-anchor="middle" fill="#6e7781" font-size="9" font-family="Noto Sans JP,sans-serif">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">【図3】トレンド別 above_both × Long（赤）vs below_both × Long（緑）の勝率比較。赤点線が損益分岐43%。上昇トレンドで差が最大（16pp）。いずれのトレンドでも above_both 側が below_both より低い傾向。</p>
+    </div>
+
+    <h3>4-3. シグナル別（above_both × Long、N≥50 のみ）</h3>
+    <table>
+      <thead>
+        <tr><th>シグナル</th><th>N</th><th>k</th><th>勝率</th><th>95%CI</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>macd_golden</td><td>152</td><td>63</td><td>41.4%</td><td>[33.9%, 49.4%]</td><td>43% 前後（CI またぎ）</td></tr>
+        <tr><td>high_break（高値ブレイク）</td><td>148</td><td>52</td><td>35.1%</td><td>[27.9%, 43.1%]</td><td>R CI 全域マイナス</td></tr>
+        <tr><td>bb_upper_break（BB上限突破）</td><td>108</td><td>46</td><td>42.6%</td><td>[33.7%, 52.0%]</td><td>CI またぎ（中立）</td></tr>
+        <tr><td>ma_golden（MA ゴールデンクロス）</td><td>78</td><td>26</td><td>33.3%</td><td>[23.9%, 44.4%]</td><td>低位</td></tr>
+        <tr><td>rsi_overbought（RSI 買われすぎ）</td><td>53</td><td>16</td><td>30.2%</td><td>[19.5%, 43.5%]</td><td>R CI 全域マイナス（最悪）</td></tr>
+      </tbody>
+    </table>
+    <p><strong>rsi_overbought × above_both × Long</strong>（N=53, 30.2%）は R CI 全域マイナスで最も成績が悪い。「RSI が買われすぎ状態かつ両MA上」——二重の過熱状態でのロングは特に機能しにくい。</p>
+    <p><strong>high_break</strong>（高値ブレイク）も N=148 で R CI 全域マイナス。高値を更新した直後の追いかけ買いが当システムでは損益分岐を割る傾向。</p>
+    <p>比較的マシなのは <strong>macd_golden</strong> と <strong>bb_upper_break</strong>——ただし 43% 前後の CI をまたぎ、有意な優位性は確認されていない。</p>
+
+    <h2 id="interpretation">5. 解釈：逆張りシグナルの「生息域」</h2>
+    <p>当システムの逆張りシグナル（bb_lower_touch、rsi_oversold_bounce）は構造的に価格が移動平均を<strong>下回った状態</strong>で発火する。above_both（両MA上）の状態では、これらのシグナルはほぼ発火しない（N=7のみ、全体の1.3%）。</p>
+
+    <div class="positive-box">
+      <strong>逆張り系の「適域」: below_both</strong><br>
+      bb_lower_touch・rsi_oversold_bounce が本来の機能を発揮するのは、価格が MA25・MA75 より<strong>下</strong>の領域。above_both では、これらのシグナルが「過熱域の端」でしか発火できず、期待値が構造的にマイナスになりやすい。
+    </div>
+
+    <div class="warning-box">
+      above_both × Long で唯一比較的マシな指数グループ（43.1%、N=153）でも CI [35.6%,51.1%] は 43% をまたいでおり、統計的優位性は確認されていない。MA 配置フィルターは特に other_fx（31.2%）・metal（22.5%）・btc（26.2%）で強く機能する。
+    </div>
+
+    <p>実務的な示唆: 当システムのシグナルを参考にする場合、<strong>above_both かどうか</strong>（エントリー価格 &gt; MA25 かつ &gt; MA75）を確認してロング判断の補助情報として使うことが考えられる。ただし本記事は情報提供であり、個別のトレード判断を推奨するものではない。</p>
+
+    <h2 id="tracker">6. 前向きトラッカー定点観測</h2>
+    <p>「ステート 上昇配置（&gt;MA25&amp;75）×ロング」（登録 2026-07-20、edge 仮説）の現在値：</p>
+    <div class="info-box">
+      FWD N=<strong>70</strong>: 31/70=<strong>44%</strong>, 平均R=+0.033, RCI=[-0.27, +0.33]<br>
+      IS（全期間R）= -0.12 / 全 IS N ≈479: 37.5%<br>
+      ホールドアウト閾値（N≥30）は達成。ただし FWD CI が 0 をまたぐため昇格基準（RCI 下限 &gt;0）未達。<br>
+      → 🟡 蓄積継続（FWD 改善傾向はあるが統計的有意差なし）
+    </div>
+
+    <div class="tracker-table">
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+    <p class="meta-line">基準日 2026-07-28／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.17 CI[-0.49~+0.14]（47/133・勝率35%）</td><td>✅昇格</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.18 CI[-0.00~+0.35]（60/119・勝率50%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.01 CI[-0.09~+0.08]（464/1091・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.10~+0.11]（371/860・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.12~+0.17]（290/662・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.06~+0.23]（170/366・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.14~+0.17]（148/341・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.10 CI[-0.22~+0.02]（127/328・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.11 CI[-0.24~+0.02]（116/304・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ステート 上昇配置（>MA25&75）×ロング</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.03 CI[-0.27~+0.33]（31/70・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.12~+0.14]（347/804・勝率43%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.21 CI[+0.02~+0.40]（158/305・勝率52%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.34 CI[+0.11~+0.58]（110/191・勝率58%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.39 CI[+0.07~+0.70]（69/116・勝率60%）</td><td>⛔反証</td></tr>
+</table>
+    </div>
+
+    <h2 id="related">7. 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <div class="related-card-title">📈 発火条件の図解カタログ</div>
+        <div class="related-card-desc">高値ブレイク・BB下限タッチ・RSI過売り反発など、当システムの主要シグナルがチャートのどの瞬間に当たるかを図解で解説</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-039.html">
+        <div class="related-card-title">🧪 #39 金属ロング gate 確定</div>
+        <div class="related-card-desc">GC=F/SI=F ロングが N=172 で勝率 22.1%・R CI 全域マイナス確定。above_both × metal が最悪グループとなる背景と整合</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-050.html">
+        <div class="related-card-title">🧪 #50 上昇×逆張り買い RSI/BB 二極化</div>
+        <div class="related-card-desc">上昇トレンドでの逆張りロングはシグナルによって全く性質が違う。RSI 73% vs BB 44% の二極化</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-026.html">
+        <div class="related-card-title">🧪 #26 指数×ロング 昇格確認</div>
+        <div class="related-card-desc">指数グループ×ロングが前向き N=104 で昇格した記録。現在は降格・tracking 中（#048）</div>
+      </a>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去のシステムシグナルの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+</body>
+</html>
