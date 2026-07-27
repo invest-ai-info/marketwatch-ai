@@ -224,6 +224,37 @@ def check_topic_queue(owner, repo, token):
     return len(keys), remaining
 
 
+# ⑥ 「宣言した仮説」がライブトラッカーに実在するか（＝事前登録の静かな失敗の検知）。
+#    2026-07-27 の実バグが動機: Q35 の新規3件を `signal_lab_tracker.SEED` に足したが、SEED は
+#    **トラッカー未作成時にしか使われない**（load_tracker は既存 JSON を返す）ため一度も登録されず、
+#    同日のリモート tracker 51件に3件とも不在だった。SESSION_HANDOFF と DOCTRINE には
+#    「7/27から観測開始」と書かれていたのに**実体が無かった**＝台帳が嘘をつく最悪の壊れ方。
+#    ①②⑤は「routine が走ったか」しか見ず、③は公開記事、④はゲート改変しか見ないので誰も捕まえられない。
+#    ここでは**宣言（コード側の SEED / register 定数）と実体（signal-lab-tracker.json）を突き合わせる**。
+#    ⚠️ 重複スキップは正常系: apply_holdout_bootstrap は id か filter が既存と重なる宣言を意図的に
+#    飛ばす（例 metal_all_1d は auto_group-metal と filter 同一）。よって**id と filter の両方が
+#    不在のときだけ**「登録漏れ」と判定する＝恒久的な誤検知を出さない。
+TRACKER_JSON_PATH = "signal-lab-tracker.json"
+
+
+def check_tracker_registration(owner, repo, token):
+    """コードで宣言した仮説が GitHub 側 tracker に実在するか。戻り値: (宣言総数, 欠落リスト)。"""
+    import signal_lab_tracker as T
+
+    declared = list(T.SEED)
+    for name in ("HOLDOUT_2026_07_02", "COMBO_2026_07_19", "STATE_2026_07_20", "REGISTER_2026_07_27"):
+        declared += (getattr(T, name, None) or {}).get("register", [])
+
+    live = json.loads(api_raw(
+        f"https://api.github.com/repos/{owner}/{repo}/contents/{TRACKER_JSON_PATH}", token))
+    live_ids = {h.get("id") for h in live.get("hypotheses", [])}
+    live_filters = {T._filter_key(h["filter"]) for h in live.get("hypotheses", []) if h.get("filter")}
+
+    missing = [s["id"] for s in declared
+               if s["id"] not in live_ids and T._filter_key(s["filter"]) not in live_filters]
+    return len(declared), sorted(set(missing))
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -308,6 +339,22 @@ def main():
     except Exception as e:
         # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ topicキュー残量の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑥ 事前登録した仮説がトラッカーに実在するか（登録漏れ＝台帳が嘘をつく壊れ方）")
+    try:
+        total, missing = check_tracker_registration(owner, repo, token)
+        if missing:
+            body.append(f"- 🚨 🟡 宣言 {total} 件のうち **{len(missing)} 件が tracker に不在**"
+                        f"（id も filter も無い＝重複スキップではない登録漏れ）: " + ", ".join(missing)
+                        + "。`signal_lab_tracker.py` の SEED に足しただけになっていないか確認する"
+                          "（SEEDはトラッカー未作成時にしか使われない＝2026-07-27 の実バグ）")
+            bad.append(("トラッカー登録漏れ", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 宣言 {total} 件すべてが tracker に実在（または filter 重複で正常スキップ）")
+    except Exception as e:
+        # ③④⑤と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ トラッカー登録の突合失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
