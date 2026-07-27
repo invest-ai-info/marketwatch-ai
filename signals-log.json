@@ -443206,8 +443206,8 @@
     "news_count": 0,
     "news_titles": [],
     "ai_narrative": "ユーロ/豪ドル（EUR/AUD）の4時間足チャートにおいて、直近20本安値割れという強い売りシグナルが点灯しました。RSIが30以下、MACDがシグナルを下回っていることからも、テクニカル的には売り優勢の状況です。通貨強弱においても、ユーロが弱く豪ドルが強いため、このショート戦略は複合順張りとして合理的です。  ファンダメンタルズ面では、豪ドルは中国経済の影響を強く受けます。上海・香港市場の回復は豪ドルにとってプラス材料ですが、テック業界の混乱や半導体株の低迷といったネガティブなニュースがアジア株式市場全体を圧迫する可能性もあります。このショートシナリオが崩れるのは、中国経済の急激な回復や、豪ドルを積極的に買い進めるような新たなファンダメンタルズ要因が出現した場合でしょう。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "expired",
+    "outcome_resolved_at": "2026-07-27T20:49:10+09:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
@@ -516660,6 +516660,740 @@
       "score": 1,
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋"
+      ]
+    }
+  },
+  {
+    "id": "CL=F_4h_20260727_2048",
+    "fired_at": "2026-07-27T20:48:45+09:00",
+    "timeframe": "4h",
+    "ticker": "CL=F",
+    "asset_name": "原油 WTI 先物",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 83.12000274658203,
+    "stop_loss": 86.21196515392403,
+    "take_profit_1": 78.99738620345939,
+    "take_profit_2": 76.93607793189805,
+    "atr": 2.061308271561326,
+    "sl_pct": 3.7198776529986737,
+    "tp1_pct": -4.959836870664898,
+    "tp2_pct": -7.439755305997347,
+    "indicators_at_signal": {
+      "rsi": 37.73,
+      "macd": 0.2192,
+      "macd_sig": 1.3268,
+      "ma25": 87.8296,
+      "ma75": 81.4548,
+      "bb_low": 82.9824,
+      "bb_up": 93.8926,
+      "recent_high": 93.5,
+      "recent_low": 83.34,
+      "adx": 32.79,
+      "chop": 38.48,
+      "ma_dev_pct": 7.8262,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 5.036
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "FRB、政策金利据え置きの見通し。ただし、利上げの可能性も排除されず",
+      "原油価格の安定化で欧州株式市場が午後に上昇",
+      "イランとの停戦再燃期待で原油価格が急落",
+      "カナダ銀行の金利見通し、原油価格高騰の影響は限定的、とNational Bankが分析",
+      "米・イランの週末の戦闘休止を受け、原油価格が1週間ぶりの安値に"
+    ],
+    "ai_narrative": "WTI原油は直近20本安値を割れ、RSIも37台と弱含み、MACDもシグナルを下回っているため、ショート方向の妥当性が高い。イラン情勢の緊迫緩和期待やFRBの金融政策見通しは、原油価格の下落圧力を支持するファンダメンタルズと言える。米ドルが弱含みとなっている点はやや逆風だが、短期的な原油価格の下落シナリオを否定するには、25MA（87.83）を上回って終値で推移することが必要だ。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 3.8,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "CL=F_4h_20260727_1659"
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.099,
+      "EUR": 0.039,
+      "GBP": -0.149,
+      "JPY": 0.056,
+      "AUD": 0.125
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 17.74 中立 (0)",
+        "豪ドル優位 (+1)",
+        "金>株 5d -1.8pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "MID",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 0,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "反転検知あり (-2)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 1 件に不一致）",
+      "score": -1.942,
+      "entry_vs_ma25_signed": 5.362,
+      "range_pos": -0.022,
+      "ma_ratio_pct": 7.826
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.75,
+        "avg_30d": 17.21,
+        "change_24h_pct": -4.47
+      },
+      "atr_regime": {
+        "current_atr": 2.0613,
+        "avg_atr_30d": 1.6113,
+        "ratio": 1.28,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "イランとの停戦再燃期待で原油価格が急落"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "green",
+      "score": 1,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋"
+      ]
+    }
+  },
+  {
+    "id": "^FTSE_4h_20260727_2048",
+    "fired_at": "2026-07-27T20:48:45+09:00",
+    "timeframe": "4h",
+    "ticker": "^FTSE",
+    "asset_name": "UK100 (FTSE 100)",
+    "signal_types": [
+      "rsi_overbought"
+    ],
+    "primary_signal": "rsi_overbought",
+    "primary_signal_label": "🟡 RSI 過買い（利確検討）",
+    "signal_count": 1,
+    "direction": null,
+    "entry": 10802.0595703125,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "atr": 60.71970472988898,
+    "sl_pct": null,
+    "tp1_pct": null,
+    "tp2_pct": null,
+    "indicators_at_signal": {
+      "rsi": 70.05,
+      "macd": 58.9242,
+      "macd_sig": 43.8452,
+      "ma25": 10620.9564,
+      "ma75": 10556.9432,
+      "bb_low": 10465.4063,
+      "bb_up": 10826.8897,
+      "recent_high": 10811.8301,
+      "recent_low": 10483.2695,
+      "adx": 16.96,
+      "chop": 38.69,
+      "ma_dev_pct": 0.6064,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": null,
+    "selection": null,
+    "news_count": 5,
+    "news_titles": [
+      "イランと米国の和平交渉再開の報道を受け、FTSE 100種株価指数が上昇",
+      "欧州株、金曜終値は上昇、ユーロ圏民間部門は7月拡大",
+      "WPPの抜本的再構築は5億ポンド節約か――より大きな課題は従業員の説得",
+      "FTSE 100ライブ：大手IT企業の資金燃焼と原油100ドル到達で、ロンドン株は下落か",
+      "中東紛争激化でFTSE 100種株価指数が下落"
+    ],
+    "ai_narrative": "UK100（FTSE 100）は現在、RSIが70.1と買われすぎており、過熱感から利確の検討が妥当です。ボリンジャーバンドの+2σ近辺での推移も、短期的な天井圏を示唆しています。ファンダメンタルズでは、イランと米国の和平交渉再開報道が一時的な上昇要因となった一方、中東紛争激化懸念が上値を抑える展開も予想され、方向感に欠けます。通貨強弱ではGBPが弱含みであり、これも上昇には逆風です。シナリオが崩れる条件としては、25MA（10620.96）を下回る展開が挙げられます。",
+    "outcome": "no_plan",
+    "outcome_resolved_at": "2026-07-27T20:49:10+09:00",
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": null,
+      "higher_tf_trend": null,
+      "explanation": ""
+    },
+    "currency_strength": {
+      "USD": -0.099,
+      "EUR": 0.039,
+      "GBP": -0.149,
+      "JPY": 0.056,
+      "AUD": 0.125
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 17.74 中立 (0)",
+        "豪ドル優位 (+1)",
+        "金>株 5d -1.8pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "neutral",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "neutral",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)"
+      ],
+      "edge_tier": null,
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "方向感なし（warn のみのシグナル）",
+      "score": null,
+      "entry_vs_ma25_signed": null,
+      "range_pos": null,
+      "ma_ratio_pct": null
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.75,
+        "avg_30d": 17.21,
+        "change_24h_pct": -4.47
+      },
+      "atr_regime": {
+        "current_atr": 60.7197,
+        "avg_atr_30d": 62.7321,
+        "ratio": 0.97,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "GBPJPY=X_4h_20260727_2048",
+    "fired_at": "2026-07-27T20:48:45+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPJPY=X",
+    "asset_name": "ポンド円",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 217.83599853515625,
+    "stop_loss": 217.3251958118382,
+    "take_profit_1": 218.51706883291365,
+    "take_profit_2": 218.85760398179238,
+    "atr": 0.3405351488787075,
+    "sl_pct": -0.23448958241657358,
+    "tp1_pct": 0.31265277655543144,
+    "tp2_pct": 0.46897916483314717,
+    "indicators_at_signal": {
+      "rsi": 40.7,
+      "macd": -0.0435,
+      "macd_sig": -0.0101,
+      "ma25": 218.1878,
+      "ma75": 217.9914,
+      "bb_low": 217.8508,
+      "bb_up": 218.505,
+      "recent_high": 218.623,
+      "recent_low": 217.822,
+      "adx": 14.66,
+      "chop": 64.15,
+      "ma_dev_pct": 0.0901,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.041,
+      "d_res_atr": 2.311
+    },
+    "selection": {
+      "tier": "elite",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "range"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "弱いGDP発表後、ポンドはほぼ横ばい",
+      "BoE（イングランド銀行）がよりハト派姿勢を示し、ポンド下落",
+      "弱い雇用統計後、ポンドはまちまちな値動き",
+      "月次GDPの改善にもかかわらず、ポンドは一部下落",
+      "予算発表後、ポンドは全体的に上昇"
+    ],
+    "ai_narrative": "ポンド円（217.836円）は、4H足ボリンジャーバンド-2σ（217.85円）にタッチし、反発の兆しを見せています。RSI 40.7も過度な売られすぎではないものの、下落圧力が弱まっていることを示唆しています。MACDもデッドクロス後、横ばい圏で推移しており、一旦の底打ち期待が持てます。  ファンダメンタルズでは、弱いGDPや雇用統計、BoEのハト派姿勢など、ポンドの下落要因が複数見られますが、月次GDPの改善や予算発表後の上昇といったポジティブな材料も存在します。これらの材料が複雑に絡み合い、レンジ相場を形成している可能性があります。  通貨強弱ではGBPが弱く、JPYがやや強いため、シグナルとは逆方向の圧力がありますが、テクニカルな反発サインが優勢と見ます。  このロングシナリオが崩れるのは、217.82円の直近安値を明確に下抜ける展開でしょう。  --- （上記はAIによる生成であり、投資助言ではありません。最終的な投資判断はご自身の責任で行ってください。）",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 3.8,
+      "prev_direction": "ショート（売り）",
+      "prev_signal_id": "GBPJPY=X_4h_20260727_1659"
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 日足 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": -0.099,
+      "EUR": 0.039,
+      "GBP": -0.149,
+      "JPY": 0.056,
+      "AUD": 0.125
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 17.74 中立 (0)",
+        "豪ドル優位 (+1)",
+        "金>株 5d -1.8pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ GBP 弱（-0.15%）× JPY 強（+0.06%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": -0.205,
+      "base_strength": -0.149,
+      "quote_strength": 0.056
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "反転検知あり (-2)",
+        "FX 強弱逆張り (-1)",
+        "選別ティア: 精鋭(runwayクリア×レンジ) (+2)"
+      ],
+      "edge_tier": "elite",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.55, entry_vs_ma25=-0.16%)",
+      "score": -0.554,
+      "entry_vs_ma25_signed": -0.161,
+      "range_pos": 0.017,
+      "ma_ratio_pct": 0.09
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.75,
+        "avg_30d": 17.21,
+        "change_24h_pct": -4.47
+      },
+      "atr_regime": {
+        "current_atr": 0.3405,
+        "avg_atr_30d": 0.419,
+        "ratio": 0.81,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "green",
+      "score": 1,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋"
+      ]
+    }
+  },
+  {
+    "id": "GBPAUD=X_4h_20260727_2048",
+    "fired_at": "2026-07-27T20:48:45+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPAUD=X",
+    "asset_name": "ポンド/豪ドル（ポンドオージー）",
+    "signal_types": [
+      "rsi_oversold_bounce"
+    ],
+    "primary_signal": "rsi_oversold_bounce",
+    "primary_signal_label": "🟢 RSI 過売り反発（押し目買い候補）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 1.9022799730300903,
+    "stop_loss": 1.8967904681697316,
+    "take_profit_1": 1.9095993128439017,
+    "take_profit_2": 1.9132589827508075,
+    "atr": 0.0036596699069057306,
+    "sl_pct": -0.2885750225091479,
+    "tp1_pct": 0.3847666966788639,
+    "tp2_pct": 0.5771500450182958,
+    "indicators_at_signal": {
+      "rsi": 29.71,
+      "macd": -0.0034,
+      "macd_sig": -0.0032,
+      "ma25": 1.909,
+      "ma75": 1.9205,
+      "bb_low": 1.9025,
+      "bb_up": 1.9146,
+      "recent_high": 1.914,
+      "recent_low": 1.9016,
+      "adx": 30.7,
+      "chop": 51.99,
+      "ma_dev_pct": 0.6011,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.178,
+      "d_res_atr": 3.208
+    },
+    "selection": {
+      "tier": "good",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "trend_down"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ポンド/豪ドルの4時間足チャートでは、RSIが過売り圏から反発を開始しており、短期的な買いシグナルが点灯しています。これは、過去の安値水準からの反発を期待するテクニカルな根拠に基づいています。  ファンダメンタルズ面では、中国株式市場が堅調に推移しており、これは豪ドルの支援要因となり得ます。しかし、通貨強弱ではポンドが弱く、豪ドルが強いため、このシグナルは複合逆張りとなり、注意が必要です。  このロングシナリオが崩れるのは、75MA（1.92）を明確に下抜ける展開となった場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "✅ 日足 上昇トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": -0.099,
+      "EUR": 0.039,
+      "GBP": -0.149,
+      "JPY": 0.056,
+      "AUD": 0.125
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": 0,
+      "factors": [
+        "VIX 17.74 中立 (0)",
+        "豪ドル優位 (+1)",
+        "金>株 5d -1.8pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": false,
+      "explanation": "⚠️ GBP 弱（-0.15%）× AUD 強（+0.12%） → 通貨強弱はシグナルと逆方向（複合逆張りで要警戒）",
+      "strength_diff": -0.274,
+      "base_strength": -0.149,
+      "quote_strength": 0.125
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 3858.25,
+          "change_pct": 1.15
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 25207.18,
+          "change_pct": 0.98
+        }
+      },
+      "news": [
+        "原油価格下落、アジア株市場を押し上げ",
+        "テックへの警戒感、ペルシャ湾情勢がアジア株市場を抑制",
+        "テックセクターの回復、アジア株市場を牽引",
+        "決算発表と原油価格、アジア株市場を揺さぶる",
+        "マイケル・バリー氏のように投資したいなら、今買うべき香港AI株3選"
+      ]
+    },
+    "confidence": {
+      "score": 4,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "FX 強弱逆張り (-1)"
+      ],
+      "edge_tier": "good",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-1.40, entry_vs_ma25=-0.35%)",
+      "score": -1.4,
+      "entry_vs_ma25_signed": -0.351,
+      "range_pos": 0.052,
+      "ma_ratio_pct": -0.601
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.75,
+        "avg_30d": 17.21,
+        "change_24h_pct": -4.47
+      },
+      "atr_regime": {
+        "current_atr": 0.0037,
+        "avg_atr_30d": 0.0042,
+        "ratio": 0.88,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋",
+        "落ちるナイフ(下降中のロング)",
+        "RSI売られすぎ(<=30)"
       ]
     }
   }
