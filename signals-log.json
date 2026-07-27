@@ -521526,8 +521526,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.03,
+    "max_adverse_excursion_pct": 0.011,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -521824,6 +521824,750 @@
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋"
       ]
+    }
+  },
+  {
+    "id": "GC=F_4h_20260728_0301",
+    "fired_at": "2026-07-28T03:01:03+09:00",
+    "timeframe": "4h",
+    "ticker": "GC=F",
+    "asset_name": "ゴールド先物",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 4077.300048828125,
+    "stop_loss": 4120.096496575227,
+    "take_profit_1": 4020.2381184986557,
+    "take_profit_2": 3991.7071533339213,
+    "atr": 28.530965164734635,
+    "sl_pct": 1.0496271364527678,
+    "tp1_pct": -1.3995028486036905,
+    "tp2_pct": -2.0992542729055357,
+    "indicators_at_signal": {
+      "rsi": 50.17,
+      "macd": 3.6496,
+      "macd_sig": 3.7016,
+      "ma25": 4089.984,
+      "ma75": 4061.888,
+      "bb_low": 4022.0526,
+      "bb_up": 4140.2273,
+      "recent_high": 4171.3999,
+      "recent_low": 4024.0,
+      "adx": 16.69,
+      "chop": 48.47,
+      "ma_dev_pct": 0.6917,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": true,
+      "block_frac": 0.934,
+      "aligned": false,
+      "d_sup_atr": 1.868,
+      "d_res_atr": 3.298
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": true,
+      "aligned": false,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今週月曜日（2026年7月27日）の金価格：イランとの戦闘休止により、金価格は上昇基調",
+      "株式市場、7月27日正午：ナスダックはNvidiaの下げが重しとなる中、ダウ平均は小幅上昇",
+      "Triple Flag (TFPM)、次期決算発表で再び市場予想を上回るか？",
+      "米国へ再移転するカナダ企業、また一つ",
+      "米国経済指標の弱さでドルと米国債利回りが下落、金価格は上昇"
+    ],
+    "ai_narrative": "ゴールド先物はMACDデッドクロスにより短期的な下降転換を示唆しており、テクニカル的にはショートが妥当と判断します。米国経済指標の弱さからドルと米国債利回りが下落しており、これは安全資産である金の価格上昇要因となり得ますが、本シグナルは下降示唆のため、このニュースは短期的な下落要因として一旦無視します。通貨強弱ではUSDが低迷しており、ショート方向感と一致しています。シナリオが崩れる条件としては、MACDがシグナル線を再び上抜ける展開が挙げられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.033,
+      "EUR": -0.034,
+      "GBP": -0.312,
+      "JPY": 0.108,
+      "AUD": 0.119
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 19.47 中立 (0)",
+        "金>株 5d -2.4pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "safe",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": "BULLISH",
+      "asset_conviction": "HIGH",
+      "signal_direction": "short",
+      "bias_aligned": false
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "選別ティア: 回避(飛びつき/ma_goldenロング/runway阻害) (-2)"
+      ],
+      "edge_tier": "avoid",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.24, entry_vs_ma25=+0.31%)",
+      "score": -0.243,
+      "entry_vs_ma25_signed": 0.31,
+      "range_pos": 0.362,
+      "ma_ratio_pct": 0.692
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "FOMC 政策金利発表（7月）",
+          "hours_until": 48.0,
+          "impact": "critical",
+          "datetime": "2026-07-30T03:00:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.47,
+        "avg_30d": 17.27,
+        "change_24h_pct": 4.79
+      },
+      "atr_regime": {
+        "current_atr": 28.531,
+        "avg_atr_30d": 31.8752,
+        "ratio": 0.9,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "SI=F_4h_20260728_0301",
+    "fired_at": "2026-07-28T03:01:03+09:00",
+    "timeframe": "4h",
+    "ticker": "SI=F",
+    "asset_name": "銀 先物",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 58.76499938964844,
+    "stop_loss": 60.02490885437225,
+    "take_profit_1": 57.08512010335002,
+    "take_profit_2": 56.24518046020081,
+    "atr": 0.8399396431492097,
+    "sl_pct": 2.1439793717512567,
+    "tp1_pct": -2.858639162335009,
+    "tp2_pct": -4.2879587435025135,
+    "indicators_at_signal": {
+      "rsi": 49.32,
+      "macd": 0.1793,
+      "macd_sig": 0.2021,
+      "ma25": 59.116,
+      "ma75": 58.4198,
+      "bb_low": 57.3908,
+      "bb_up": 60.5088,
+      "recent_high": 61.27,
+      "recent_low": 57.32,
+      "adx": 17.19,
+      "chop": 47.55,
+      "ma_dev_pct": 1.1919,
+      "ma_dir": "up",
+      "regime": "trend_up"
+    },
+    "sr_runway": {
+      "blocked": true,
+      "block_frac": 0.86,
+      "aligned": false,
+      "d_sup_atr": 1.72,
+      "d_res_atr": 2.982
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": true,
+      "aligned": false,
+      "regime": "trend_up"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "今週月曜（2026年7月27日）の銀価格：イラン空爆の一時停止で銀価格は上昇傾向",
+      "米・イランの停戦一時停止で原油価格が下落、金価格は4,100ドル超え",
+      "Vizsla Silver（TSX:VZLA）通期損失拡大、株価は過大評価か？",
+      "Hindustan Zinc Ltd（BOM:500188）2027年第1四半期決算説明会ハイライト：記録的な利益と戦略的…",
+      "Peter Schiff、金と銀に大きな動きを見込む"
+    ],
+    "ai_narrative": "銀先物はMACDデッドクロスにより短期的な下降転換を示唆しています。テクニカルには25MA（59.12）と75MA（58.42）の乖離、ボリンジャーバンドの-2σ（57.39）への接近も下落を示唆しています。ファンダメンタルズでは、イラン情勢を巡るニュースは価格上昇要因と見られ、足元のニュース材料は限定的です。通貨強弱では、JPYやUSDが相対的に強含んでいる点もショートの根拠となり得ます。シナリオが崩れるのは、予想に反して銀価格が直近高値（61.27）を上抜ける場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.033,
+      "EUR": -0.034,
+      "GBP": -0.312,
+      "JPY": 0.108,
+      "AUD": 0.119
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 19.47 中立 (0)",
+        "金>株 5d -2.4pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "other",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "選別ティア: 回避(飛びつき/ma_goldenロング/runway阻害) (-2)"
+      ],
+      "edge_tier": "avoid",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 1 件に不一致）",
+      "score": -0.464,
+      "entry_vs_ma25_signed": 0.594,
+      "range_pos": 0.366,
+      "ma_ratio_pct": 1.192
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "FOMC 政策金利発表（7月）",
+          "hours_until": 48.0,
+          "impact": "critical",
+          "datetime": "2026-07-30T03:00:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.47,
+        "avg_30d": 17.27,
+        "change_24h_pct": 4.79
+      },
+      "atr_regime": {
+        "current_atr": 0.8399,
+        "avg_atr_30d": 0.895,
+        "ratio": 0.94,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "ES=F_4h_20260728_0301",
+    "fired_at": "2026-07-28T03:01:03+09:00",
+    "timeframe": "4h",
+    "ticker": "ES=F",
+    "asset_name": "S&P500 先物",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 7426.0,
+    "stop_loss": 7483.211795859467,
+    "take_profit_1": 7349.71760552071,
+    "take_profit_2": 7311.576408281066,
+    "atr": 38.14119723964488,
+    "sl_pct": 0.7704254761576532,
+    "tp1_pct": -1.027233968210204,
+    "tp2_pct": -1.5408509523153064,
+    "indicators_at_signal": {
+      "rsi": 38.56,
+      "macd": -14.8942,
+      "macd_sig": -14.1207,
+      "ma25": 7489.32,
+      "ma75": 7538.3133,
+      "bb_low": 7404.2564,
+      "bb_up": 7551.8936,
+      "recent_high": 7563.5,
+      "recent_low": 7411.75,
+      "adx": 22.56,
+      "chop": 59.74,
+      "ma_dev_pct": 0.6499,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": true,
+      "block_frac": 0.187,
+      "aligned": false,
+      "d_sup_atr": 0.374,
+      "d_res_atr": 3.605
+    },
+    "selection": {
+      "tier": "avoid",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": true,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "本日の株式市場：ダウ平均、史上初の52,000ドル超えで引け、S&P 500とナスダックはテクノロジー株上昇で反発",
+      "本日の株式市場：AIへの懸念でテクノロジー株が圧迫され、S&P 500とナスダックは2週間の連勝記録が途絶える",
+      "本日の株式市場：イラン合意への楽観視とAIチップ取引の再燃を背景に、ダウ平均、S&P 500、ナスダックが上昇",
+      "本日の株式市場：債券利回りの上昇を受け、ダウ平均、S&P 500、ナスダックが下落",
+      "イラン情勢への懸念からFTSE 100と米国株が急落、原油相場も変動"
+    ],
+    "ai_narrative": "S&P500先物はMACDデッドクロスにより短期的な下降転換を示唆しています。RSIも38.6と売られすぎゾーンに近く、75MAを下抜けていることも下落の勢いを支持します。直近のニュースでは、AIへの懸念や債券利回り上昇がテクノロジー株を圧迫し、S&P500が下落する展開もあり、今回のショート戦略と整合的です。USDが通貨強弱で弱含みである点も、ドル建てのS&P500先物にとって下落要因となり得ます。シナリオが崩れるのは、再度75MAを上抜けて陽線が継続する場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": 0.033,
+      "EUR": -0.034,
+      "GBP": -0.312,
+      "JPY": 0.108,
+      "AUD": 0.119
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 19.47 中立 (0)",
+        "金>株 5d -2.4pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": "NEUTRAL",
+      "asset_conviction": "MID",
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 0,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 B (+1)",
+        "選別ティア: 回避(飛びつき/ma_goldenロング/runway阻害) (-2)"
+      ],
+      "edge_tier": "avoid",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 1 件に不一致）",
+      "score": 1.901,
+      "entry_vs_ma25_signed": 0.845,
+      "range_pos": 0.094,
+      "ma_ratio_pct": -0.65
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "B",
+      "score_label": "🟡 警戒",
+      "size_factor": 0.75,
+      "size_label": "通常運用",
+      "warnings": [
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 1,
+      "upcoming_events": [
+        {
+          "name": "FOMC 政策金利発表（7月）",
+          "hours_until": 48.0,
+          "impact": "critical",
+          "datetime": "2026-07-30T03:00:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.47,
+        "avg_30d": 17.27,
+        "change_24h_pct": 4.79
+      },
+      "atr_regime": {
+        "current_atr": 38.1412,
+        "avg_atr_30d": 31.8723,
+        "ratio": 1.2,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "イラン情勢への懸念からFTSE 100と米国株が急落、原油相場も変動"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "GBPUSD=X_4h_20260728_0301",
+    "fired_at": "2026-07-28T03:01:03+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "macd_dead",
+      "low_break"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 2,
+    "direction": "ショート（売り）",
+    "entry": 1.329115629196167,
+    "stop_loss": 1.3328062577491249,
+    "take_profit_1": 1.3241947911255565,
+    "take_profit_2": 1.3217343720902512,
+    "atr": 0.0024604190353052367,
+    "sl_pct": 0.27767550632068805,
+    "tp1_pct": -0.370234008427584,
+    "tp2_pct": -0.5553510126413761,
+    "indicators_at_signal": {
+      "rsi": 32.95,
+      "macd": -0.0024,
+      "macd_sig": -0.0023,
+      "ma25": 1.3346,
+      "ma75": 1.3402,
+      "bb_low": 1.328,
+      "bb_up": 1.3397,
+      "recent_high": 1.3394,
+      "recent_low": 1.3301,
+      "adx": 27.08,
+      "chop": 54.93,
+      "ma_dev_pct": 0.4172,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 4.16
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "米ドル価格予測：FRB、PCE、NFPに注目 – DXY、GBP/USD、EUR/USDの今後は？",
+      "米ドル価格予測：ECBは据え置き、PMIデータに注目 – DXYはGBP/USD、EUR/USDに対し上昇を継続できるか？",
+      "ブレント原油が100ドルに達し、米ドルが上昇：EUR/USD、GBP/USD、USD/CAD、USD/JPY分析",
+      "UBS、ノルウェークローネをFXトップ選定に追加 – 原油高は天井を打つとの見方",
+      "米ドル価格予測：ECB理事会が迫る – GBP/USD、EUR/USDはブレークアウトできるか？"
+    ],
+    "ai_narrative": "ポンドドルは、MACDのデッドクロスと直近安値更新により、短期的な下降トレンド入りを示唆しています。RSIも33と売られすぎ水準に近づいており、下落余地をうかがわせます。  ファンダメンタルズ面では、原油高による米ドルの堅調さとECB理事会への注目が、ポンドドルには重石となり得ます。通貨強弱でもGBPの弱さとUSDの相対的な強さが確認でき、ショートの方向性と一致しています。  このショートシナリオが崩れるのは、25MA（1.33）を明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 2.6,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "GBPUSD=X_4h_20260728_0022"
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": 0.033,
+      "EUR": -0.034,
+      "GBP": -0.312,
+      "JPY": 0.108,
+      "AUD": 0.119
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 19.47 中立 (0)",
+        "金>株 5d -2.4pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-07-27T15:20:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "HIGH",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 弱（-0.31%）× USD 強（+0.03%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": -0.345,
+      "base_strength": -0.312,
+      "quote_strength": 0.033
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 3,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 2 種併発 (+2)",
+        "環境 A (+2)",
+        "反転検知あり (-2)",
+        "FX 強弱順張り (+1)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 1 件に不一致）",
+      "score": 1.439,
+      "entry_vs_ma25_signed": 0.413,
+      "range_pos": -0.109,
+      "ma_ratio_pct": -0.417
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 1,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "FOMC 政策金利発表（7月）",
+          "hours_until": 48.0,
+          "impact": "critical",
+          "datetime": "2026-07-30T03:00:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 19.42,
+        "avg_30d": 17.27,
+        "change_24h_pct": 4.52
+      },
+      "atr_regime": {
+        "current_atr": 0.0025,
+        "avg_atr_30d": 0.0027,
+        "ratio": 0.9,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
     }
   }
 ]
