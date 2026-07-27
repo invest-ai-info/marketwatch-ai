@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-07-28 autopublish: ✅ 公開済み | emergency-fund | 生活防衛資金の作り方
+
+- **基準日**: 2026-07-28（JST）
+- **対象key**: emergency-fund（リスク管理・資金管理 / 🛡️）
+- **決定論ゲート**: 🟢緑（SVGはみ出し2件を座標修正後に通過・1イテレーション）
+- **Opusコンプラ+品質**: 🟡グレー → 修正（断定「一択」等3箇所軟化・専門用語MRF/ATR補足追記）→ 🟢白
+- **独立Opus確認**: 🟢白（三層免責・禁止語・無登録投資助言性すべてクリア）
+- **リンター**: check_site_consistency.py EXIT=0（警告15件は既存ファイル・今回無関係）
+- **公開URL**: https://marketwatch-jp.com/guide-emergency-fund.html
+- **HTTP確認**: CDN（Cloudflare）botブロックで直接確認不可。git push EXIT=0確認済み。
+
+---
+
 ## 2026-07-27 | 🤖 下書き生成 | emergency-fund | 生活防衛資金の作り方
 
 - **基準日**: 2026-07-27（JST）
