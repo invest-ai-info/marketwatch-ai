@@ -112,6 +112,20 @@ SEED = [
      "kind": "edge", "registered_at": "2026-06-16"},   # FX intraday 47.4%（q=0.06）
     # 注: 旧SEEDの「メタル＝回避ゲート」「全逆張り買い」はライブ1か月(主に時間足・極小N)由来で
     #     20年日足エビデンス(メタル×ロング勝ち/逆張りは指数限定)と矛盾するため不採用。
+    # ── Q35 全数探索スイープ(2026-07-27)の新規3件 ─────────────────────────
+    #   宣言グリッド61,913セル/評価5,993→train FDR通過858→holdout生存168→
+    #   hourアーティファクト54件除去→観測集合で統合すると実質7系統。うち既知(metal/other_fx/btc/tf=1d)を
+    #   除いた**新規3件**をここに登録する。⚠️BT合格は前向き入りの資格でしかない(DOCTRINE §0-2)。
+    #   registered_at=登録日以降の発火のみ計上＝遡及しない。
+    {"id": "bb_lower_1d_gate", "label": "BB下限タッチ(日足・回避)",
+     "filter": {"tf": "1d", "signal": "bb_lower_touch"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # Q35 train-0.131→holdout-0.121 (N1772→765)
+    {"id": "jpyfx_rsimid_gate", "label": "JPYクロス×RSI中立帯(回避)",
+     "filter": {"group": "jpy_fx", "rsi_band": "mid"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # Q35 train-0.191→holdout-0.111 (N474→930)
+    {"id": "long_up_above_edge", "label": "ロング×上昇トレンド×MA両線の上",
+     "filter": {"direction": "long", "trend": "上昇", "ma_pos": "above_both"},
+     "kind": "edge", "registered_at": "2026-07-27"},   # Q35 train+0.110→holdout+0.073 (N1606→4396)
 ]
 
 
