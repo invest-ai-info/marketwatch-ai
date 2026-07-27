@@ -80,4 +80,5 @@ SYNC_FILES = [
     "guide-signal-lab-052.html",
     "guide-proverb-kokusaku-ni-uri-nashi.html",
     "guide-news-2026-07-27-iran-ceasefire-oil-drop.html",
+    "guide-signal-lab-053.html",
 ]
