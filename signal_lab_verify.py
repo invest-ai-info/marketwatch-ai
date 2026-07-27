@@ -63,7 +63,16 @@ REV = {"rsi_oversold_bounce", "bb_lower_touch"}
 ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", "signals_all",
                        "reversal_long", "blocked", "tier", "env", "regime",
                        "rsi_band", "ma_pos", "macd_side",  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
-                       "news"}  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
+                       "news",  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
+                       "regime4"}  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
+# ⚠️ `regime` と `regime4` は**別次元**（同じものにしない）。
+#   regime  = ライブの risk_regime（RISK_ON 等）＝エンジンが発火時に記録する既存の語彙。
+#   regime4 = 固定オラクル `research/_regime_state.py`（Q27で凍結・MA200×60日実現ボラの750日分位×
+#             ヒステリシス21営業日・ポイントインタイム）の UP_LOW / UP_HIGH / DOWN_LOW / DOWN_HIGH。
+#   語彙が違うものを同じキーに流し込むと既存仮説の母集団が汚染されるため分離した（Q23「既存groupの定義は不変」と同じ理由）。
+#   値はレコードの `regime4` フィールドを読むだけ＝オラクルはローカル専用ファイルに依存しない
+#   （クラウドroutineは research/ 配下を読めないので、直読みさせるとローカルとクラウドで挙動が割れる）。
+#   バックテストへの後付けはローカルの `research/_regime4_annotate.py` が行う。
 
 
 # 🆕 2026-07-23 注目度バンド（Q24・バンド境界は事前宣言＝以後変更しない。Q21 H-V2 と同じ 0 / 1-2 / 3+）
@@ -202,6 +211,9 @@ def match(d, f):
         return False
     if "news" in f and news_band_of(d) != f["news"]:
         # 🆕 2026-07-23 注目度次元（記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
+        return False
+    if "regime4" in f and d.get("regime4") != f["regime4"]:
+        # 🆕 2026-07-27 レジーム4状態（Q34・記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
         return False
     return True
 
