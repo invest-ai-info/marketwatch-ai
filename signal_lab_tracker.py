@@ -126,7 +126,14 @@ SEED = [
     {"id": "long_up_above_edge", "label": "ロング×上昇トレンド×MA両線の上",
      "filter": {"direction": "long", "trend": "上昇", "ma_pos": "above_both"},
      "kind": "edge", "registered_at": "2026-07-27"},   # Q35 train+0.110→holdout+0.073 (N1606→4396)
+    # ── Q44 BTC×1h 回避ゲート（2026-07-27 事前登録・hypothesis_queue.md Q44・SHA256凍結）──
+    {"id": "btc_1h_gate", "label": "BTC×1時間足(回避)", "filter": {"group": "btc", "tf": "1h"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # 遡及 N91 勝率31.9% グロス-0.2564 CI[-0.452,-0.060]
 ]
+# ⚠️ **SEED は「トラッカー未作成時」にしか使われない**（load_tracker は既存 JSON があればそれを返す）。
+#    signal-lab-tracker.json は GitHub 側で routine が生成済み＝**SEED に足しただけの仮説は永久に登録されない**。
+#    実際 2026-07-27 に Q35 の3件を SEED に足したが、同日のリモート tracker（51件）に**入っていなかった**。
+#    新規登録は必ず下の「日付つき register 定数」経由にすること（COMBO/STATE と同じ経路）。
 
 
 # 🕰️ 2026-07-02 時間分割ホールドアウト検証の確定結果（コードが単一ソース・以後変更しない）。
@@ -170,6 +177,40 @@ HOLDOUT_2026_07_02 = {
 # 不合格に転じた4仮説の「N=30緩和」を剥奪し N=80 に戻す（オーナー決定 2026-07-03・冪等）。
 # 旧合格は独立扱いの過小SEによる見せかけ＝剥奪はエッジに不利方向の保守化なので事前登録の精神に反しない。
 HOLDOUT_REVOKE_2026_07_03 = ("index_revL_1d", "unblocked_long", "long_all", "long_1d")
+
+# 🆕 2026-07-27 Q35（全数探索の新規3件）＋ Q44（BTC×1h回避）の**実登録**（確定後は変更しない）。
+#   ⚠️ 発端＝**登録漏れの実バグ**。7/27 に Q35 の3件を SEED に足したが、SEED は
+#   「トラッカー未作成時のシード」であり `load_tracker()` は既存 JSON を返す＝**一度も登録されなかった**
+#   （同日のリモート tracker 51件に3件とも不在を実測）。SESSION_HANDOFF / DOCTRINE §5 は
+#   「7/27から観測開始」と書いていたが**実体が無かった**。ここに移して初めて有効になる。
+#   registered_at は当初宣言と同じ 2026-07-27＝**同日中の修正なので遡及は発生しない**。
+#   Q35 の3件は 20年BT の holdout 生存（BT合格は前向き入りの資格でしかない＝DOCTRINE §0-2）。
+#   Q44 は hypothesis_queue.md Q44 で SHA256 凍結済み（非盲検・13通りの分母を登録文に明記）。
+REGISTER_2026_07_27 = {"register": [
+    {"id": "bb_lower_1d_gate", "label": "BB下限タッチ(日足・回避)",
+     "filter": {"tf": "1d", "signal": "bb_lower_touch"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # Q35 train-0.131→holdout-0.121 (N1772→765)
+    {"id": "jpyfx_rsimid_gate", "label": "JPYクロス×RSI中立帯(回避)",
+     "filter": {"group": "jpy_fx", "rsi_band": "mid"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # Q35 train-0.191→holdout-0.111 (N474→930)
+    {"id": "long_up_above_edge", "label": "ロング×上昇トレンド×MA両線の上",
+     "filter": {"direction": "long", "trend": "上昇", "ma_pos": "above_both"},
+     "kind": "edge", "registered_at": "2026-07-27"},   # Q35 train+0.110→holdout+0.073 (N1606→4396)
+    {"id": "btc_1h_gate", "label": "BTC×1時間足(回避)", "filter": {"group": "btc", "tf": "1h"},
+     "kind": "gate", "registered_at": "2026-07-27"},   # Q44 遡及 N91 31.9% グロス-0.2564 CI[-0.452,-0.060]
+]}
+
+# 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
+#   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
+#   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
+#   Q44 で BTC×1h を回避ゲートとして別登録するにあたり、filter を id/label/証拠と一致させる。
+#   ⚠️ **開示**: この不整合に気づいたのは 1h のライブを見た後＝**結果を見てからの変更**である。
+#   ただし変更理由は出目ではなく「id/label/証拠と filter を一致させる」であり、しかも
+#   **エッジ側に不利な方向（母集団を絞る＝Nが減る）**なので事前登録の精神には反しない（7/03 剥奪と同型）。
+#   ⚠️ **同型の不整合が metal_all_1d / other_fx_revL / other_fx_long にも残っている**
+#   （id/labelが日足や特定条件を名乗るのに filter に tf 無し）。今回の対象外＝オーナー判断が
+#   BTC についてのみ出ているため。**棚卸しは別途**（SESSION_HANDOFF の宿題に記載）。
+TF_SCOPE_FIX_2026_07_27 = {"btc_all_1d": "1d"}
 
 # 🆕 2026-07-19 コンフルエンス（2指標同時発火）発見スイープの確定結果（オーナー依頼・確定後は変更しない）。
 #   実行: python signal_lab_sweep.py --log signals-log-backtest.json --min-n 50 --split 2021-01-01
@@ -231,19 +272,37 @@ def _filter_key(f):
 
 
 def apply_holdout_bootstrap(t):
-    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 / STATE_2026_07_20 を tracker に冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）。"""
+    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 / STATE_2026_07_20 / REGISTER_2026_07_27 を tracker に
+    冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）＋ TF_SCOPE_FIX の適用。"""
     changed = 0
     for h in t["hypotheses"]:
         ann = HOLDOUT_2026_07_02["annotate"].get(h.get("id"))
         if ann and "holdout_pass" not in h:
             h["holdout_pass"], h["holdout"] = ann["pass"], ann["holdout"]
             changed += 1
+    # 2026-07-27 tf スコープ補正は**登録の重複判定より前**に適用する
+    # （btc_all_1d が {group:btc} のままだと、後続の登録側と filter キーが噛み合わなくなるため）
+    for h in t["hypotheses"]:
+        tf = TF_SCOPE_FIX_2026_07_27.get(h.get("id"))
+        if tf and (h.get("filter") or {}).get("tf") != tf:
+            h["filter"]["tf"] = tf
+            h["scope_note"] = ("2026-07-27 tfスコープ補正: id/label/証拠(20年日足BT)に合わせ tf=1d に限定。"
+                               "1h は Q44 btc_1h_gate で別登録（オーナー決定）")
+            changed += 1
     existing = {_filter_key(h["filter"]) for h in t["hypotheses"]}
-    for s in HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"] + STATE_2026_07_20["register"]:
-        if _filter_key(s["filter"]) in existing:
+    # 🆕 2026-07-27: **id でも重複判定する**。filter だけで見ていると、TF_SCOPE_FIX で
+    #    btc_all_1d の filter が {group:btc}→{group:btc,tf:1d} に変わった瞬間に旧キー {group:btc} が空き、
+    #    HOLDOUT_2026_07_02 の btc_all_1d が「未登録」と誤認されて**毎回 重複登録され続ける**
+    #    （その重複にまた scope fix が当たって filter が変わり、また旧キーが空く＝無限振動）。
+    #    dry-run で実際に発生（2回目以降の changed が 0 にならない）。id 重複でも弾けば止まる。
+    existing_ids = {h.get("id") for h in t["hypotheses"]}
+    for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
+              + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]):
+        if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
         existing.add(_filter_key(s["filter"]))
+        existing_ids.add(s["id"])
         changed += 1
     # 2026-07-03 剥奪の冪等適用（GitHub側 tracker.json には旧 pass=True が既に書かれているため）
     for h in t["hypotheses"]:
