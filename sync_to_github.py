@@ -79,4 +79,5 @@ SYNC_FILES = [
     "guide-news-2026-07-26-fomc-hike-odds.html",
     "guide-signal-lab-052.html",
     "guide-proverb-kokusaku-ni-uri-nashi.html",
+    "guide-news-2026-07-27-iran-ceasefire-oil-drop.html",
 ]

@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-27", "line": '・<b>2026-07-27</b>: 📰 解説「<a href="guide-news-2026-07-27-iran-ceasefire-oil-drop.html" style="color:#0969da"><b>米・イラン攻撃停止で原油急落-6%──ブレント$100台→$90台、日経+320円の週明けを整理</b></a>」公開'},
         {"date": "2026-07-27", "line": '・<b>2026-07-27</b>: 🏛 解説「<a href="guide-proverb-kokusaku-ni-uri-nashi.html" style="color:#0969da"><b>国策に売りなし</b></a>」公開'},
         {"date": "2026-07-27", "line": '・<b>2026-07-27</b>: 🧪 解説「<a href="guide-signal-lab-052.html" style="color:#0969da"><b>blocked=True×Long エッジ幻想——N=186で41.9%に回帰した「壁なしロング」</b></a>」公開'},
         {"date": "2026-07-26", "line": '・<b>2026-07-26</b>: 📰 解説「<a href="guide-news-2026-07-26-fomc-hike-odds.html" style="color:#0969da"><b>FOMC利上げ確率が1週間で3%→35%急騰──原油・インフレ・ウォーシュの3シナリオ</b></a>」公開'},
