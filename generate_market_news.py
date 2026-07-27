@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-28", "line": '・<b>2026-07-28</b>: 🛡️ 解説「<a href="guide-emergency-fund.html" style="color:#0969da"><b>生活防衛資金の作り方</b></a>」公開'},
         {"date": "2026-07-28", "line": '・<b>2026-07-28</b>: 🧪 解説「<a href="guide-signal-lab-053.html" style="color:#0969da"><b>両MAライン上でロングは逆効果——MA配置と逆張りシグナルの生息域（N=549）</b></a>」公開'},
         {"date": "2026-07-27", "line": '・<b>2026-07-27</b>: 📰 解説「<a href="guide-news-2026-07-27-iran-ceasefire-oil-drop.html" style="color:#0969da"><b>米・イラン攻撃停止で原油急落-6%──ブレント$100台→$90台、日経+320円の週明けを整理</b></a>」公開'},
         {"date": "2026-07-27", "line": '・<b>2026-07-27</b>: 🏛 解説「<a href="guide-proverb-kokusaku-ni-uri-nashi.html" style="color:#0969da"><b>国策に売りなし</b></a>」公開'},
