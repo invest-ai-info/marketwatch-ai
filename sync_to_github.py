@@ -83,4 +83,5 @@ SYNC_FILES = [
     "guide-signal-lab-053.html",
     "guide-emergency-fund.html",
     "guide-proverb-heta-nampin-sukampin.html",
+    "guide-news-2026-07-28-cxmt-china-duv-semiconductor-crash.html",
 ]
