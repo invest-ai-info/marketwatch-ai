@@ -82,4 +82,5 @@ SYNC_FILES = [
     "guide-news-2026-07-27-iran-ceasefire-oil-drop.html",
     "guide-signal-lab-053.html",
     "guide-emergency-fund.html",
+    "guide-proverb-heta-nampin-sukampin.html",
 ]
