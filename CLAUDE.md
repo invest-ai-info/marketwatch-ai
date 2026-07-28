@@ -123,26 +123,9 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 | **risk-manager** ⭐ | `.claude/agents/risk-manager.md` | 統合判断・規律遵守の門番。SL/TP/ロット算出、過信防止 | **Opus** |
 
 ### 想定ワークフロー
+technical-analyst と fundamental-analyst を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで risk-manager に渡して統合判断（🟢条件成立／🟡グレー／🔴見送り推奨＋SL/TP/ロット）→ ユーザーが最終判断。
 
-```
-ユーザー「明日 NKD=F でロングを検討してる」
-   ↓
-メイン Claude が並列で 2 人に依頼（同一メッセージ内で Agent ツール 2 つ）
-   ├─ technical-analyst: チャート、シグナル、ATR、マルチ TF
-   └─ fundamental-analyst: 来週の指標、地政学、関連政治発言
-   ↓
-両方の結果を risk-manager の prompt に埋め込んで統合判断
-   ↓
-「🟢 ✅ 条件成立 / 🟡 ⚠️ グレー / 🔴 ❌ 見送り推奨」+ SL/TP/ロット
-   ↓
-ユーザーが最終判断
-```
-
-### 自動委譲のトリガー（description ベース）
-- 「チャート」「テクニカル」「シグナル」「ATR」 → technical-analyst
-- 「FOMC」「決算」「ファンダ」「地政学」「マクロ」 → fundamental-analyst
-- 「エントリーしていい？」「SL どこ」「リスク的にどう」 → risk-manager
-- 明示呼び出し例: 「risk-manager に聞いて、今 GC=F に入っていい？」
+⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**＝二重管理を避ける。明示呼び出し例＝「risk-manager に聞いて、今 GC=F に入っていい？」
 
 ### 設計原則
 1. **投資助言ではなく参考分析** — 各 agent は出力に必ず明記
@@ -164,27 +147,9 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 | **seo-ux-strategist** | `.claude/agents/seo-ux-strategist.md` | SEO（メタタグ・構造化データ・sitemap）、ナビバー・内部リンク、Core Web Vitals、モバイル最適化 | Sonnet |
 
 ### 想定ワークフロー
+content-writer と seo-ux-strategist を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで compliance-reviewer に渡す（断定表現／個別銘柄推奨該当性／黒・グレー・白判定＋修正案）→ 統合して**8ステップルール**で公開。
 
-```
-ユーザー「AMD 個別銘柄解説 第 5 弾を書きたい」
-   ↓
-メイン Claude が並列で 2 人に依頼（同一メッセージ内で Agent ツール 2 つ）
-   ├─ content-writer: 記事構成・本文ドラフト（NVIDIA/SBG 等のトーンを踏襲）
-   └─ seo-ux-strategist: タイトル/メタ/見出し最適化、構造化データ、内部リンク提案
-   ↓
-両方の結果を compliance-reviewer に渡す（テキスト橋渡し）
-   ├─ 断定表現チェック（「ほぼ確実」「一択」等）
-   ├─ 個別銘柄推奨に該当しないか
-   └─ 黒/グレー/白 判定 + 修正案
-   ↓
-メイン Claude が統合 → 8 ステップルール（記事追加）で公開
-```
-
-### 自動委譲のトリガー（description ベース）
-- 「記事」「解説」「ドラフト」「書いて」「執筆」「速報」「リライト」 → content-writer
-- 「法的に」「コンプラ」「金商法」「景表法」「ディスクレイマー」「免責」「投資助言」 → compliance-reviewer
-- 「SEO」「メタタグ」「サイトマップ」「内部リンク」「ナビバー」「モバイル」「構造化データ」 → seo-ux-strategist
-- 明示呼び出し例: 「compliance-reviewer に新記事 AMD を事前チェック頼んで」
+⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**。明示呼び出し例＝「compliance-reviewer に新記事 AMD を事前チェック頼んで」
 
 ### 設計原則
 1. **投資助言ではなく情報提供** — content-writer は断定表現を避ける、compliance-reviewer が事後監査
