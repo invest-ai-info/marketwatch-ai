@@ -2,6 +2,40 @@
 
 ---
 
+## 2026-07-28 | 🤖 下書き生成 | earnings-season | 決算発表の見方入門
+
+- **基準日**: 2026-07-28（JST / UTC 20:31）
+- **topic**: earnings-season — 「決算発表の見方（市場が動くのは「予想との差」）」
+- **シリーズ**: 基礎知識（カテゴリ：💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-earnings-season.html`
+- **参照出典**（WebSearch確認済み）:
+  - JPX 決算発表統計・発表予定日 (jpx.co.jp)
+  - 野村証券 QUICKコンセンサス用語集 (nomura.co.jp)
+  - Baruch College Earnings Estimates Guide (guides.newman.baruch.cuny.edu)
+  - iFinance / 東証マネ部！/ auじぶん銀行コラム — 事実売り・材料出尽くし・Buy the rumor
+  - 野村証券・SMBC日興証券 ガイダンスリスク解説
+  - RSM汐留パートナーズ 45日ルール解説 (shiodome.co.jp)
+  - 日本銀行金融研究所 インプライド・ボラティリティ論文 (imes.boj.or.jp)
+- **自己コンプラチェック**:
+  - ❌ 個別銘柄の売買推奨 → なし（一般論に限定）
+  - ❌ 断定・利益保証（絶対/必ず/100%/保証/儲かる） → なし
+  - ✅ kinsho-v1 免責 → 冒頭バナー・本文末・footer の3箇所に挿入済み
+  - ✅ noindex,nofollow → head内に挿入済み
+  - ✅ 出典妥当（WebSearch照合済み、不確実な数値は使用せず）
+  - ✅ ガイダンスリスクの記述は野村証券・SMBC日興証券の一般解説のみ
+- **SVG概念図**:
+  - SVG1: 日本の決算カレンダー（四半期サイクル） → TODO(SVG): ライト/ダーク実機確認要
+  - SVG2: コンセンサスとの差による株価反応3パターン → TODO(SVG): ライト/ダーク実機確認要
+  - SVG3: 決算またぎのギャップリスク → TODO(SVG): ライト/ダーク実機確認要（marker arrowhead表示要確認）
+- **人間の残作業**:
+  - SVG3のarrowheadマーカー（marker-end）がライト/ダーク両環境で正しく表示されるか実機確認
+  - 三つのSVG全体のレイアウト・テキストはみ出しの確認（特にスマホ幅）
+  - タイトルの微調整（必要に応じて）
+  - overnight-gap-risk.html のリンクは「公開予定」として本文注記済み（未公開）
+  - 公開は毎朝 08:40 の autodraft-publish が決定論ゲート＋Opusコンプラ通過後に自動実行
+
+---
+
 ## 2026-07-28 autopublish: ✅ 公開済み | emergency-fund | 生活防衛資金の作り方
 
 - **基準日**: 2026-07-28（JST）
