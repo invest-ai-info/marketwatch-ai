@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-07-29 autopublish: ✅ 公開済み | earnings-season | 決算発表の見方入門
+
+- **基準日**: 2026-07-29（JST）
+- **対象key**: earnings-season（基礎知識 / 💰 投資の基礎知識）
+- **決定論ゲート**: 🟢緑（EXIT=0・Opus修正後も再確認緑）
+- **Opusコンプラ+品質**: 🟡グレー → 修正6件（EPS定義追記・逆指値説明・IVクラッシュ説明・track-record記述修正・表現軟化2件）→ 🟢白
+- **独立Opus確認**: 🟢白（三層免責・禁止語・無登録投資助言性すべてクリア）
+- **リンター**: check_site_consistency.py EXIT=0（警告15件は既存ファイル・今回無関係）
+- **公開URL**: https://marketwatch-jp.com/guide-earnings-season.html
+- **HTTP確認**: CDN（Cloudflare）botブロックで直接確認不可。git push EXIT=0確認済み。
+
+---
+
 ## 2026-07-29 | 🤖 signal-lab-daily | #054 | 指数×ショートgate N=82初チェック
 
 - **基準日**: 2026-07-29（JST）
