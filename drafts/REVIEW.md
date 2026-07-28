@@ -14,7 +14,13 @@
   - gate条件「FWD N≥80かつRCI上限<0」: N=82✅ / RCI上限+0.475>0❌
   - ⛔反証「RCI下限>0」: -0.032<0❌（ゼロに肉薄）
 - **主要数値**: IS 18/64=28.1% → FWD 43/82=52.4% E(R)=+0.222 RCI[-0.032,+0.475]
-- **ゲート実行状況**: 実行中（signal_lab_verify.py未実行）
+- **ゲート実行状況**: ✅ 自動公開済み（2026-07-29）
+  - signal_lab_verify.py: 11/11 GREEN / EXIT=0
+  - compliance Opus: 🟡→🟢白（L202 self-repair: 「使用を控えるべき」→gate分類説明に軟化）
+  - independent Opus: 🟢白（Read-only確認）
+  - finalize: `guide-signal-lab-054.html` 生成完了
+  - publish: guides.html カード追加・更新履歴追加・SYNC_FILES追加
+  - PUSH-MAIN: 1回目成功（a92744e..01ea342）
 
 ---
 
