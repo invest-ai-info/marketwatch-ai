@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-07-29 | 🤖 signal-lab-daily | #054 | 指数×ショートgate N=82初チェック
+
+- **基準日**: 2026-07-29（JST）
+- **記事番号**: 054（AIシグナル研究日誌）
+- **仮説**: group=index × dir=short gate（tracker[o]）前向きN=82初チェックポイント
+- **優先度**: ②（前向きで大きく動いた仮説 — N=82≥80 宣言チェックポイント初到達）
+- **生成ファイル**: `drafts/draft-signal-lab-054.html`
+- **labnotes**: `drafts/labnotes/lab-054-analysis.md`, `drafts/labnotes/lab-054-claims.json`
+- **gate判定**: 🟡 蓄積中（gate未確認・⛔反証接近）
+  - gate条件「FWD N≥80かつRCI上限<0」: N=82✅ / RCI上限+0.475>0❌
+  - ⛔反証「RCI下限>0」: -0.032<0❌（ゼロに肉薄）
+- **主要数値**: IS 18/64=28.1% → FWD 43/82=52.4% E(R)=+0.222 RCI[-0.032,+0.475]
+- **ゲート実行状況**: 実行中（signal_lab_verify.py未実行）
+
+---
+
 ## 2026-07-28 | 🤖 下書き生成 | earnings-season | 決算発表の見方入門
 
 - **基準日**: 2026-07-28（JST / UTC 20:31）

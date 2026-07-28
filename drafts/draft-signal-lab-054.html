@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #54｜指数×ショート gate 前向きN=82初チェック——IS28%→FWD52%逆転と⛔反証接近 - MarketWatch AI</title>
+  <meta name="description" content="指数グループ×ショートgateの前向きN=82初チェックポイント確認。IS期間28.1%（N=64）から前向き52.4%（N=82）へ逆転。Gate宣言条件「RCI上限<0」は未達（RCI[-0.03,+0.48]）だが⛔反証接近。NKD=F FWD73.9%・macd_dead FWD58.7%が牽引。研究日誌第54回。">
+  <meta name="keywords" content="AIシグナル,指数,ショート,gate,勝率,検証,研究日誌,NKD=F,macd_dead,逆転">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-054.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #54｜指数×ショート gate 前向きN=82初チェック——IS28%→FWD52%逆転">
+  <meta property="og:description" content="指数×ショートgateはIS28.1%からFWD52.4%へ逆転。N=82で宣言チェックポイント到達。⛔反証接近（RCI下限-0.032）。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-054.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #54｜指数×ショート gate 前向きN=82初チェック——IS28%→FWD52%逆転と⛔反証接近",
+    "description": "指数グループ×ショートgateの前向きN=82初チェックポイント。IS28.1%からFWD52.4%へ逆転。Gate条件未達だが⛔反証に肉薄。NKD=F FWD73.9%・macd_dead FWD58.7%。研究日誌第54回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-29",
+    "dateModified": "2026-07-29",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-054.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    nav{max-width:1000px;margin:0 auto 32px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem;overflow-x:auto;display:block}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left;white-space:nowrap}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#d0d7de;stroke-width:1;stroke-dasharray:4 3}
+    .s-guide-r{stroke:#cf222e;stroke-width:1.2;stroke-dasharray:5 3}
+    .s-curve-p{stroke:#7c5cbf;stroke-width:2.5;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.2;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-o{stroke:#d97706;stroke-width:1.8;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none;opacity:.45}
+    .s-fill-g{fill:#e6ffed;stroke:none;opacity:.45}
+    .s-fill-r{fill:#ffebe9;stroke:none;opacity:.45}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    .tracker-table table{display:table;font-size:.82rem}
+    .tracker-table th,.tracker-table td{padding:7px 10px;white-space:normal}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📈 MarketWatch AI</div>
+    <div class="header-meta">日本人投資家向けAI市場分析・シグナル研究</div>
+  </div>
+</header>
+
+<main>
+  <nav>
+    <div class="nav-bar">
+      <a class="nav-btn" href="index.html">🏠 トップページ</a>
+      <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+      <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+      <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+      <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+      <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+      <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+      <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+      <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+      <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+    </div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #54
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #54<br><small style="font-size:.65em;color:#57606a;font-weight:400">指数×ショート gate 前向きN=82初チェック——IS28%→FWD52%逆転と⛔反証接近</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">
+      📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（MACDデッドクロス・安値ブレイク等）がチャートのどの瞬間に当たるかを図解で確認できます。
+    </div>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box" style="background:#fff8c5;border-left-color:#9a6700;color:#1f2328;padding:20px 24px;margin-bottom:24px">
+      <strong style="color:#9a6700;font-size:1rem">⏱️ 30秒でわかる今回のまとめ</strong>
+      <ul style="margin:10px 0 0 18px;color:#1f2328">
+        <li>指数グループ×ショートの<strong>全期間成績 41.8%（61/146）</strong>、95%CI [34.1%, 49.9%]——前回#025設立時のIS 28.1%から全体平均が大きく改善</li>
+        <li>銘柄格差が顕著：<strong>NKD=F（日経CME）55.8%（24/43）</strong> CI[41.1%,69.6%] が最高、YM=F 26.9%・^FTSE 30.8%の欧米指数は低位</li>
+        <li>シグナル格差も明確：<strong>macd_dead（MACDデッドクロス）47.6%（40/84）</strong> vs <strong>low_break（安値ブレイク）29.3%（12/41）</strong>の18.3pp差</li>
+        <li>前向き追跡（2026-06-30以降）N=82で宣言チェックポイント到達。gate確認条件「RCI上限&lt;0」は未達（R=+0.222・RCI[-0.03,+0.48]）。一方⛔反証条件「RCI下限&gt;0」もわずかに未達（下限=-0.032）——両方向の確定打なし・継続観察</li>
+        <li>比較対照の指数×ロングは全期間 43.8%（183/418）——前向き期間（2026-06-30以降）では指数×ショートと指数×ロングの成績関係が大きく逆転中（詳細は本文）</li>
+      </ul>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">gate設立の経緯と宣言条件</a></li>
+        <li><a href="#n82check">N=82チェックポイント：gate確認は？</a></li>
+        <li><a href="#reversal">IS→FWD逆転の詳細分析</a></li>
+        <li><a href="#ticker">銘柄別格差：NKD=Fが際立つ理由</a></li>
+        <li><a href="#signal">シグナル別：macd_dead vs low_break</a></li>
+        <li><a href="#direction">指数×ロングとの方向非対称逆転（#044/#048文脈）</a></li>
+        <li><a href="#acceleration">FWD後半加速：56.1%が示すもの</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+        <li><a href="#related">関連カード</a></li>
+      </ol>
+    </div>
+
+    <h2 id="background">1. gate設立の経緯と宣言条件</h2>
+
+    <p><strong>#025（2026-06-30）</strong>で指数グループ×ショートのin-sample（IS）期間を検証した結果、勝率 <strong>27.4%〜28.1%</strong>（N=62〜64件）、95%CI上限が43%（損益分岐）を下回ることを確認した。これは「このシステムのシグナルを指数でショートに使うと、過去データでは期待値がマイナスだった」という発見であり、<strong>使用を控えるべき組み合わせ（gate）</strong>として前向きトラッカー[o]に登録した。</p>
+
+    <div class="warning-box">
+      <strong>宣言条件（tracker[o]設立時）</strong><br>
+      前向き N≥80 かつ 平均R の 95%CI 上限 &lt; 0（期待値が95%信頼区間の全域でマイナス） →「gate確認」<br>
+      ※逆方向（CI下限 &gt; 0）が成立すると「⛔反証」（gateの根拠が崩れたと判定）
+    </div>
+
+    <p>これまで#045（2026-07-20）時点でFWD N=53、勝率52.8%というIS期間と大きく異なる数字が出ていたが、<strong>宣言N=80には届いていなかった</strong>。本日2026-07-29で FWD N=82 ≥ 80 に達し、初の正式チェックポイントとなった。</p>
+
+    <h2 id="n82check">2. N=82チェックポイント：gate確認は？</h2>
+
+    <div class="chart-figure">
+      <!-- SVG1：チャート風図解 — 指数でのMACDデッドクロス×ショート発火場面 -->
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+        <!-- IS期間（薄赤：損失が多かった時代） -->
+        <rect x="50" y="15" width="240" height="185" class="s-fill-r" rx="3"/>
+        <text x="170" y="32" class="s-label-r" text-anchor="middle" font-size="11">IS期間（SL多発）</text>
+        <!-- FWD期間（薄緑：好転した時代） -->
+        <rect x="310" y="15" width="330" height="185" class="s-fill-g" rx="3"/>
+        <text x="475" y="32" class="s-label-g" text-anchor="middle" font-size="11">FWD期間（TP増加）</text>
+
+        <!-- 損益分岐ライン 43% 相当の概念線 -->
+        <line x1="50" y1="120" x2="640" y2="120" class="s-guide-r"/>
+        <text x="644" y="124" class="s-label-r" font-size="11">損益分岐43%</text>
+
+        <!-- 価格ライン（指数概念チャート：IS期は上昇、FWDは横ばい・軟化） -->
+        <!-- IS期：上昇トレンド（ショートには逆風） -->
+        <polyline points="60,160 110,145 160,128 210,115 260,105 305,108"
+                  class="s-curve-p" stroke-width="2.5"/>
+        <!-- FWD期：横ばい〜軟化（ショートに有利） -->
+        <polyline points="310,108 360,115 410,120 460,125 520,118 580,130 635,140"
+                  class="s-curve-b" stroke-width="2.5"/>
+
+        <!-- IS期間：シグナル発火バー（赤×：SL多発の例示） -->
+        <rect x="145" y="100" width="30" height="50" fill="none" stroke="#cf222e" stroke-width="2" rx="2"/>
+        <line x1="160" y1="95" x2="160" y2="155" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="161" y="93" class="s-label-r" font-size="10">発火→SL</text>
+        <line x1="160" y1="80" x2="160" y2="95" stroke="#cf222e" stroke-width="1.2" marker-end="url(#arrowUp)"/>
+
+        <!-- FWD期間：シグナル発火バー（オレンジ○：TP到達の例示） -->
+        <rect x="395" y="102" width="30" height="48" fill="none" stroke="#d97706" stroke-width="2.5" rx="2"/>
+        <line x1="410" y1="96" x2="410" y2="155" stroke="#d97706" stroke-width="1.5"/>
+        <text x="411" y="93" class="s-label-y" font-size="10">発火→TP</text>
+        <line x1="410" y1="165" x2="410" y2="195" stroke="#d97706" stroke-width="1.2"/>
+        <text x="411" y="207" class="s-label-y" font-size="10">TP到達</text>
+
+        <!-- MACD示唆（画面下部） -->
+        <line x1="50" y1="220" x2="640" y2="220" class="s-axis"/>
+        <line x1="50" y1="220" x2="50" y2="290" class="s-axis"/>
+        <text x="45" y="217" class="s-label-sm" text-anchor="end">MACD</text>
+        <!-- IS MACD（緩やかにゼロ線を下回る） -->
+        <polyline points="60,235 120,228 180,240 250,255 300,260" stroke="#7c5cbf" stroke-width="1.8" fill="none"/>
+        <!-- FWD MACD（より明確にゼロ線割れ） -->
+        <polyline points="310,265 370,255 430,248 500,250 570,255 635,258" stroke="#0969da" stroke-width="1.8" fill="none"/>
+        <line x1="50" y1="248" x2="640" y2="248" class="s-guide" stroke-dasharray="3 3"/>
+        <text x="45" y="252" class="s-label-sm" text-anchor="end">0</text>
+        <text x="130" y="275" class="s-label-sm" text-anchor="middle" font-size="10">（MACD Dead）</text>
+        <text x="480" y="275" class="s-label-sm" text-anchor="middle" font-size="10">（MACD Dead・継続）</text>
+
+        <!-- Y軸ラベル -->
+        <text x="45" y="105" class="s-label-sm" text-anchor="end">高値</text>
+        <text x="45" y="165" class="s-label-sm" text-anchor="end">安値</text>
+
+        <!-- 凡例 -->
+        <rect x="55" y="185" width="10" height="10" fill="#cf222e" opacity="0.6" rx="2"/>
+        <text x="70" y="194" class="s-label-sm">IS期（28.1%）</text>
+        <rect x="160" y="185" width="10" height="10" fill="#d97706" opacity="0.6" rx="2"/>
+        <text x="175" y="194" class="s-label-sm">FWD期（52.4%）</text>
+        <line x1="310" y1="190" x2="325" y2="190" class="s-guide-r"/>
+        <text x="328" y="194" class="s-label-r" font-size="11">損益分岐43%</text>
+
+        <!-- 注記 -->
+        <text x="340" y="295" class="s-label-sm" text-anchor="middle" font-size="10">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">図1（チャート風概念図）：指数×ショートの発火場面イメージ。IS期間（2026-06-30以前）は上昇相場でショートが逆風となりSLが多発。FWD期間は相場が軟化し、MACDデッドクロス後のショートがTPに届きやすくなった。</p>
+    </div>
+
+    <p>チェックポイントの結果は以下の通りである：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>条件</th>
+          <th>宣言値</th>
+          <th>現在値（FWD N=82）</th>
+          <th>判定</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>前向きN</td>
+          <td>≥ 80</td>
+          <td>82件</td>
+          <td>✅ 達成</td>
+        </tr>
+        <tr>
+          <td>gate確認（CI上限&lt;0）</td>
+          <td>RCI上限 &lt; 0</td>
+          <td>RCI上限 = +0.475</td>
+          <td>❌ 未達（+0.475 >> 0）</td>
+        </tr>
+        <tr>
+          <td>⛔反証（CI下限&gt;0）</td>
+          <td>RCI下限 &gt; 0</td>
+          <td>RCI下限 = -0.032</td>
+          <td>❌ 接近中（-0.032 ≈ 0）</td>
+        </tr>
+        <tr>
+          <td>FWD勝率</td>
+          <td>参考値</td>
+          <td>52.4%（43/82）CI[41.8%,62.9%]</td>
+          <td>📈 IS(28.1%)から大幅改善</td>
+        </tr>
+        <tr>
+          <td>FWD平均R</td>
+          <td>参考値</td>
+          <td>+0.222R</td>
+          <td>📈 IS(-0.345R)から大幅改善</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="positive-box">
+      <strong>現時点の判定：🟡 蓄積中（⛔反証接近）</strong><br>
+      gate確認条件（RCI上限&lt;0）は全く成立せず。逆に⛔反証条件（RCI下限&gt;0）にほぼ肉薄している（-0.032）。IS期間28.1%の「損益分岐割れ」は過去の出来事になりつつあるが、統計的な確定打はまだない。
+    </div>
+
+    <h2 id="reversal">3. IS→FWD逆転の詳細分析</h2>
+
+    <p>IS期間（gate設立以前、N=64）とFWD期間（2026-06-30以降、N=82）の成績を比較すると、劇的な逆転が確認できる：</p>
+
+    <div class="chart-figure">
+      <!-- SVG2：IS vs FWD 比較バーチャート -->
+      <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="620" height="280" fill="#ffffff"/>
+        <!-- 軸 -->
+        <line x1="80" y1="230" x2="580" y2="230" class="s-axis"/>
+        <line x1="80" y1="30" x2="80" y2="230" class="s-axis"/>
+        <!-- 損益分岐43% ライン -->
+        <!-- y座標: 30 + (1 - 43/90) * 200 = 30 + 0.522 * 200 = 134.4 ≈ 135 -->
+        <line x1="80" y1="134" x2="580" y2="134" class="s-guide-r"/>
+        <text x="584" y="138" class="s-label-r" font-size="11">43%</text>
+
+        <!-- Y軸ラベル（0%〜90%） -->
+        <text x="76" y="232" class="s-label-sm" text-anchor="end">0%</text>
+        <text x="76" y="188" class="s-label-sm" text-anchor="end">20%</text>
+        <text x="76" y="144" class="s-label-sm" text-anchor="end">40%</text>
+        <text x="76" y="100" class="s-label-sm" text-anchor="end">60%</text>
+        <text x="76" y="56" class="s-label-sm" text-anchor="end">80%</text>
+        <!-- Y補助線 -->
+        <line x1="80" y1="188" x2="580" y2="188" class="s-guide"/>
+        <line x1="80" y1="144" x2="580" y2="144" class="s-guide"/>
+        <line x1="80" y1="100" x2="580" y2="100" class="s-guide"/>
+        <line x1="80" y1="56" x2="580" y2="56" class="s-guide"/>
+
+        <!-- バー1: IS指数×S 28.1% → y top = 230 - (28.1/90*200) = 230-62.4=167.6 -->
+        <rect x="110" y="168" width="55" height="62" fill="#cf222e" opacity="0.75" rx="3"/>
+        <text x="137" y="163" class="s-label-r" text-anchor="middle">28.1%</text>
+        <text x="137" y="247" class="s-label-sm" text-anchor="middle">IS期</text>
+        <text x="137" y="258" class="s-label-sm" text-anchor="middle">指数×S</text>
+        <text x="137" y="268" class="s-label-sm" text-anchor="middle">(N=64)</text>
+
+        <!-- バー2: FWD指数×S 52.4% → y top = 230 - (52.4/90*200) = 230-116.4=113.6 -->
+        <rect x="200" y="114" width="55" height="116" fill="#1a7f37" opacity="0.75" rx="3"/>
+        <text x="227" y="109" class="s-label-g" text-anchor="middle">52.4%</text>
+        <text x="227" y="247" class="s-label-sm" text-anchor="middle">FWD期</text>
+        <text x="227" y="258" class="s-label-sm" text-anchor="middle">指数×S</text>
+        <text x="227" y="268" class="s-label-sm" text-anchor="middle">(N=82)</text>
+
+        <!-- バー3: FWD後半 56.1% → y top = 230 - (56.1/90*200) = 230-124.7=105.3 -->
+        <rect x="290" y="105" width="55" height="125" fill="#1a7f37" opacity="0.50" rx="3"/>
+        <text x="317" y="100" class="s-label-g" text-anchor="middle">56.1%</text>
+        <text x="317" y="247" class="s-label-sm" text-anchor="middle">FWD後半</text>
+        <text x="317" y="258" class="s-label-sm" text-anchor="middle">指数×S</text>
+        <text x="317" y="268" class="s-label-sm" text-anchor="middle">(N=41)</text>
+
+        <!-- バー4: 指数×L FWD 32.6% → y top = 230 - (32.6/90*200) = 230-72.4=157.6 -->
+        <rect x="380" y="158" width="55" height="72" fill="#7c5cbf" opacity="0.65" rx="3"/>
+        <text x="407" y="153" class="s-label-sm" text-anchor="middle" fill="#7c5cbf">32.6%</text>
+        <text x="407" y="247" class="s-label-sm" text-anchor="middle">FWD期</text>
+        <text x="407" y="258" class="s-label-sm" text-anchor="middle">指数×L</text>
+        <text x="407" y="268" class="s-label-sm" text-anchor="middle">(N=187)</text>
+
+        <!-- バー5: 全期間指数×S 41.8% → y top = 230 - (41.8/90*200) = 230-92.9=137.1 -->
+        <rect x="470" y="137" width="55" height="93" fill="#0969da" opacity="0.65" rx="3"/>
+        <text x="497" y="132" class="s-label-b" text-anchor="middle">41.8%</text>
+        <text x="497" y="247" class="s-label-sm" text-anchor="middle">全期間</text>
+        <text x="497" y="258" class="s-label-sm" text-anchor="middle">指数×S</text>
+        <text x="497" y="268" class="s-label-sm" text-anchor="middle">(N=146)</text>
+
+        <!-- タイトル -->
+        <text x="310" y="22" class="s-label-b" text-anchor="middle" font-size="13">指数×ショート 期間別勝率比較</text>
+        <text x="584" y="229" class="s-label-r" font-size="11">損益分岐</text>
+        <text x="584" y="140" class="s-label-r" font-size="10">43%</text>
+
+        <!-- 注記 -->
+        <text x="310" y="278" class="s-label-sm" text-anchor="middle" font-size="10">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">図2：IS期間（gate設立以前）28.1%→FWD期間52.4%の逆転。FWD後半41件では56.1%と加速傾向。比較対照の指数×ロングFWD（紫）は32.6%と低位で、方向非対称が逆転している。</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>期間</th><th>N</th><th>勝数</th><th>勝率</th><th>平均R</th><th>備考</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>IS（gate設立以前）</td><td>64</td><td>18</td><td>28.1%</td><td>-0.345R</td><td>gate設立根拠</td></tr>
+        <tr><td>FWD（2026-06-30以降）</td><td>82</td><td>43</td><td>52.4%</td><td>+0.222R</td><td>RCI[-0.032,+0.475]</td></tr>
+        <tr><td>FWD 前半（先着41件）</td><td>41</td><td>20</td><td>48.8%</td><td>+0.137R</td><td>—</td></tr>
+        <tr><td>FWD 後半（後着41件）</td><td>41</td><td>23</td><td>56.1%</td><td>+0.307R</td><td>加速傾向</td></tr>
+        <tr><td>全期間</td><td>146</td><td>61</td><td>41.8%</td><td>-0.027R</td><td>CI[34.1%,49.9%]</td></tr>
+      </tbody>
+    </table>
+
+    <p>IS期間28.1%（損益分岐43%を大きく下回る）に対して、FWD期間は52.4%と大幅に上回った。さらに<strong>FWD後半41件は56.1%</strong>と、前半48.8%よりも改善傾向が続いており、逆転が持続的であることを示唆する。ただし、これはいずれも過去データの集計であり、将来を保証するものではない。</p>
+
+    <p>IS期間で損益分岐を大きく割った背景として、#025の分析では「IS期間の80.6%が<strong>上昇トレンド中の逆張りショート</strong>（トレンドに逆らった売り）」であったことが確認されている。当システムのシグナルは主に逆張り型であり、相場が力強く上昇している局面で下方向のシグナルを取ることは構造的に不利であった。</p>
+
+    <h2 id="ticker">4. 銘柄別格差：NKD=Fが際立つ理由</h2>
+
+    <p>指数グループ（NKD=F・ES=F・NQ=F・YM=F・^FTSE）の全期間成績を銘柄別に分解すると、<strong>NKD=F（日経225先物・CME）</strong>が際立つ：</p>
+
+    <table>
+      <thead>
+        <tr><th>銘柄</th><th>全期間N</th><th>全期間勝率</th><th>95%CI</th><th>IS勝率</th><th>FWD勝率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>NKD=F（日経225）</td><td>43</td><td><strong>55.8%</strong></td><td>[41.1%,69.6%]</td><td>35.0%(7/20)</td><td><strong>73.9%(17/23)</strong></td></tr>
+        <tr><td>ES=F（S&amp;P500）</td><td>30</td><td>46.7%</td><td>[30.2%,63.9%]</td><td>42.9%(6/14)</td><td>50.0%(8/16)</td></tr>
+        <tr><td>NQ=F（NASDAQ100）</td><td>34</td><td>35.3%</td><td>[21.5%,52.1%]</td><td>13.3%(2/15)</td><td>52.6%(10/19)</td></tr>
+        <tr><td>YM=F（ダウ30）</td><td>26</td><td>26.9%</td><td>[13.7%,46.1%]</td><td>18.2%(2/11)</td><td>33.3%(5/15)</td></tr>
+        <tr><td>^FTSE（英FTSE100）</td><td>13</td><td>30.8%</td><td>[12.7%,57.6%]</td><td>25.0%(1/4)</td><td>33.3%(3/9)</td></tr>
+        <tr><td><strong>合計（全銘柄）</strong></td><td><strong>146</strong></td><td><strong>41.8%</strong></td><td>[34.1%,49.9%]</td><td>28.1%(18/64)</td><td>52.4%(43/82)</td></tr>
+      </tbody>
+    </table>
+
+    <p>NKD=FはIS 35.0%→FWD 73.9%と<strong>38.9pp もの急改善</strong>を示した。FWD期間の17/23=73.9%はCI[52.4%,89.8%]と、下限でも52%を超える高水準である。ただしN=23は小標本であり、過度な期待は禁物だ。</p>
+
+    <p>一方でYM=F（26.9%）・^FTSE（30.8%）はIS期同様に低位に留まっており、<strong>銘柄によって結果が大きく異なる</strong>点に注意が必要だ。NQ=FはIS 13.3%からFWD 52.6%へ改善したが、全期間では35.3%とまだ損益分岐以下である。</p>
+
+    <h2 id="signal">5. シグナル別：macd_dead vs low_break</h2>
+
+    <p>指数×ショートの発火を担うシグナルは主に3種類あり、それぞれの全期間成績が大きく異なる：</p>
+
+    <div class="chart-figure">
+      <!-- SVG3：シグナル別・全期間成績 水平バーチャート -->
+      <svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="620" height="200" fill="#ffffff"/>
+        <!-- 軸 -->
+        <line x1="200" y1="20" x2="200" y2="170" class="s-axis"/>
+        <line x1="200" y1="170" x2="580" y2="170" class="s-axis"/>
+        <!-- 損益分岐43% -->
+        <!-- x = 200 + (43/80)*380 = 200 + 204.25 = 404 -->
+        <line x1="404" y1="20" x2="404" y2="170" class="s-guide-r"/>
+        <text x="404" y="15" class="s-label-r" text-anchor="middle" font-size="11">43%</text>
+        <!-- X軸ラベル -->
+        <text x="200" y="183" class="s-label-sm" text-anchor="middle">0%</text>
+        <text x="285" y="183" class="s-label-sm" text-anchor="middle">20%</text>
+        <text x="371" y="183" class="s-label-sm" text-anchor="middle">40%</text>
+        <text x="456" y="183" class="s-label-sm" text-anchor="middle">60%</text>
+        <text x="542" y="183" class="s-label-sm" text-anchor="middle">80%</text>
+        <!-- 補助線 -->
+        <line x1="285" y1="20" x2="285" y2="170" class="s-guide"/>
+        <line x1="371" y1="20" x2="371" y2="170" class="s-guide"/>
+        <line x1="456" y1="20" x2="456" y2="170" class="s-guide"/>
+
+        <!-- macd_dead 47.6% → x width = (47.6/80)*380 = 226 -->
+        <rect x="200" y="35" width="226" height="28" fill="#1a7f37" opacity="0.75" rx="3"/>
+        <text x="196" y="53" class="s-label" text-anchor="end">macd_dead</text>
+        <text x="196" y="64" class="s-label-sm" text-anchor="end">(N=84)</text>
+        <text x="432" y="54" class="s-label-g">47.6%</text>
+
+        <!-- low_break 29.3% → x width = (29.3/80)*380 = 139 -->
+        <rect x="200" y="80" width="139" height="28" fill="#cf222e" opacity="0.70" rx="3"/>
+        <text x="196" y="98" class="s-label" text-anchor="end">low_break</text>
+        <text x="196" y="109" class="s-label-sm" text-anchor="end">(N=41)</text>
+        <text x="345" y="99" class="s-label-r">29.3%</text>
+
+        <!-- ma_dead 38.9% → x width = (38.9/80)*380 = 185 -->
+        <rect x="200" y="125" width="185" height="28" fill="#9a6700" opacity="0.65" rx="3"/>
+        <text x="196" y="143" class="s-label" text-anchor="end">ma_dead</text>
+        <text x="196" y="154" class="s-label-sm" text-anchor="end">(N=18)</text>
+        <text x="391" y="144" class="s-label-y">38.9%</text>
+
+        <!-- 損益分岐ラベル -->
+        <text x="406" y="180" class="s-label-r" font-size="10">損益分岐43%</text>
+
+        <!-- 注記 -->
+        <text x="310" y="195" class="s-label-sm" text-anchor="middle" font-size="10">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+      </svg>
+      <p class="chart-caption">図3：指数×ショート シグナル別 全期間勝率。macd_dead（MACDデッドクロス）47.6% vs low_break（安値ブレイク）29.3%の18.3pp差が顕著。IS/FWD分解では差がさらに大きくなる。</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>シグナル</th><th>全期間N</th><th>全期間勝率</th><th>IS勝率</th><th>FWD勝率</th><th>特徴</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>macd_dead（MACDデッドクロス）</td><td>84</td><td><strong>47.6%</strong></td><td>34.2%(13/38)</td><td><strong>58.7%(27/46)</strong></td><td>FWDで大幅改善</td></tr>
+        <tr><td>low_break（安値ブレイク）</td><td>41</td><td>29.3%</td><td>11.1%(2/18)</td><td>43.5%(10/23)</td><td>IS・FWD共に低位</td></tr>
+        <tr><td>ma_dead（MAデッドクロス）</td><td>18</td><td>38.9%</td><td>33.3%(2/6)</td><td>41.7%(5/12)</td><td>中間的</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>macd_dead×指数×ショート</strong>が発火件数84件と最多であり、FWD 58.7%（27/46）は損益分岐を明確に上回る。一方で<strong>low_break×指数×ショート</strong>は全期間29.3%・IS 11.1%とシリーズ最低水準の一つであり、FWD 43.5%（10/23）でも損益分岐をギリギリ超える程度に留まる。</p>
+
+    <div class="info-box">
+      <strong>解釈</strong>：macd_dead（モメンタムの転換を示す指標）は指数×ショートで機能しやすいが、low_break（単純な安値更新）は指数においてはダマシが多い傾向。ただしこれは参考情報であり、個別シグナルに基づく売買判断を推奨するものではない。
+    </div>
+
+    <h2 id="direction">6. 指数×ロングとの方向非対称逆転（#044/#048文脈）</h2>
+
+    <p>本稿で最も注目すべき発見の一つが、<strong>指数×ロングと指数×ショートの成績関係の逆転</strong>である。</p>
+
+    <table>
+      <thead>
+        <tr><th>組み合わせ</th><th>全期間N</th><th>全期間勝率</th><th>IS期勝率</th><th>FWD期勝率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>指数×ロング</td><td>418</td><td>43.8%</td><td>〜52%（高水準）</td><td>32.6%（N=187）</td></tr>
+        <tr><td>指数×ショート</td><td>146</td><td>41.8%</td><td>28.1%（低位）</td><td>52.4%（N=82）</td></tr>
+      </tbody>
+    </table>
+
+    <p>IS期間は「指数ロングが強く、ショートは弱い」という状態であったが、FWD期間（2026-06-30以降）では<strong>ロング 32.6% vs ショート 52.4%</strong>と、完全に逆転している。</p>
+
+    <p>この現象は孤立した発見ではなく、一連の研究と整合する：</p>
+    <ul>
+      <li><strong>#044・#046・#048</strong>：指数×ロングが FWD後半 19.3% E(R)=-0.825 と崩落し、最終的に降格確定（🟡 tracking 中）</li>
+      <li>指数×ロング(全足ライブ) tracker は現在「前向き R=-0.002 CI[-0.21~+0.21]（124/290・勝率43%）」と中立水準に落ち着いている</li>
+      <li>一方で指数×ショート tracker は FWD R=+0.222 CI[-0.04~+0.49]（43/82・勝率52%）と上昇傾向</li>
+    </ul>
+
+    <div class="warning-box">
+      IS期間に「指数はロングが強い」という経験則を持っていた場合、FWD期間の逆転は直感に反する。ただし相場環境・レジームは変化するため、過去の経験則をそのまま未来に当てはめることには慎重であるべきである。本研究は純粋なデータ観察であり、将来の相場方向を示唆するものではない。
+    </div>
+
+    <h2 id="acceleration">7. FWD後半加速：56.1%が示すもの</h2>
+
+    <p>FWD期間82件を時系列で前半・後半に二分すると：</p>
+    <ul>
+      <li>FWD前半（先着41件）：20/41=<strong>48.8%</strong>、平均R=+0.137</li>
+      <li>FWD後半（後着41件）：23/41=<strong>56.1%</strong>、平均R=+0.307</li>
+    </ul>
+
+    <p>後半が前半より高く、かつ加速傾向にある点は注目に値する。ただし、41件×2分割では標準誤差が大きく（各CI幅が約±20pp程度）、統計的に有意な加速かどうかの断言は難しい。引き続きN蓄積で確認していく。</p>
+
+    <p>MA配置別の補足（FWD期間）：</p>
+    <ul>
+      <li>above_both（両MA上）×指数×ショート：FWD 14/22=<strong>63.6%</strong>（N=22）</li>
+      <li>below_both（両MA下）×指数×ショート：FWD 23/50=<strong>46.0%</strong>（N=50）</li>
+    </ul>
+
+    <p>興味深いことに、<strong>#053でロングに不利と確認した「両MA上」配置で、ショートは逆に高成績</strong>となっている（63.6%）。「両MA上」は高値圏への到達を意味するため、ショートには追い風になりうるという整合性がある。ただしN=22と小さく、参考値の域を超えない。</p>
+
+    <h2 id="tracker">8. 前向きトラッカー定点観測</h2>
+
+    <div class="tracker-table">
+      <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-07-29／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.21 CI[-0.52~+0.10]（47/139・勝率34%）</td><td>✅昇格</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.17 CI[+0.00~+0.33]（63/126・勝率50%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.01 CI[-0.09~+0.07]（493/1163・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.00 CI[-0.10~+0.10]（393/921・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.00 CI[-0.14~+0.14]（307/715・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[-0.07~+0.20]（180/394・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.14~+0.16]（154/357・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.21~+0.03]（133/341・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.10 CI[-0.22~+0.02]（125/325・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.00 CI[-0.17~+0.17]（131/306・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.17~+0.23]（130/295・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.00 CI[-0.21~+0.21]（124/290・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.12~+0.15]（124/286・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.01 CI[-0.20~+0.19]（98/230・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.14 CI[-0.34~+0.06]（72/196・勝率37%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.10 CI[-0.18~+0.38]（67/142・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.20 CI[-0.04~+0.44]（72/140・勝率51%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.14 CI[-0.38~+0.09]（43/117・勝率37%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.23~+0.33]（49/109・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.02 CI[-0.27~+0.22]（41/98・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.11 CI[-0.41~+0.19]（35/92・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>signal=low_break</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.40~+0.18]（32/84・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td><strong>group=index×dir=short ★本日</strong></td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.22 CI[-0.04~+0.49]（43/82・勝率52%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=btc×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.08 CI[-0.35~+0.19]（31/79・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>other_fx×逆張り買い(回避)</td><td>gate</td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.12 CI[-0.21~+0.46]（38/79・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ステート 上昇配置（&gt;MA25&amp;75）×ロング</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.06 CI[-0.21~+0.33]（34/75・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.01 CI[-0.13~+0.12]（366/859・勝率43%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.01~+0.35]（166/331・勝率50%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.27 CI[+0.04~+0.50]（115/211・勝率54%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.26 CI[+0.01~+0.51]（108/200・勝率54%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.34 CI[+0.02~+0.66]（70/122・勝率57%）</td><td>⛔反証</td></tr>
+</table>
+    </div>
+
+    <h2 id="related">9. 関連カード</h2>
+
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <div class="related-card-title">📐 発火条件の図解カタログ</div>
+        <div class="related-card-desc">MACDデッドクロス・安値ブレイク・MA配置などがチャート上のどの瞬間に当たるかを図解で解説。シグナル名と発火条件の対応が一覧できます。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-025.html">
+        <div class="related-card-title">🧪 #25 指数×ショート gate設立</div>
+        <div class="related-card-desc">IS期間27.4%（CI上限39.6%&lt;43%）でgateを設立した回。方向非対称25.3ppや low_break×指数×S=11.1%の分析を収録。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-048.html">
+        <div class="related-card-title">🧪 #48 指数×ロング降格確定</div>
+        <div class="related-card-desc">FWD N=244でCI下限マイナス2回連続・降格確定。本稿の方向非対称逆転（指数×ショートFWD52% vs ロング33%）と同期した出来事。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-044.html">
+        <div class="related-card-title">🧪 #44 指数×ロング後半崩落</div>
+        <div class="related-card-desc">FWD後半N=57でE(R)=-0.825と急落。降格ルール初日の全昇格仮説棚卸し。指数の方向非対称逆転が始まった転換点の記録。</div>
+      </a>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去のシステムシグナルの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- end .article -->
+
+</main>
+
+<footer>
+  <p><a href="index.html">トップ</a> | <a href="guides.html">解説記事</a> | <a href="track-record.html">シグナル成績</a></p>
+  <p style="margin-top:8px" data-disclaimer="kinsho-v1">本サイトは情報提供のみを目的としており、投資助言・売買の推奨を行うものではありません。投資判断はご自身の責任において行ってください。</p>
+  <p style="margin-top:6px">© 2026 MarketWatch AI</p>
+</footer>
+
+</body>
+</html>
