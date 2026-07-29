@@ -88,4 +88,5 @@ SYNC_FILES = [
     "guide-earnings-season.html",
     "guide-proverb-mochiai-hanare.html",
     "guide-news-2026-07-29-nikkei-drop-fomc-eve.html",
+    "guide-signal-lab-055.html",
 ]
