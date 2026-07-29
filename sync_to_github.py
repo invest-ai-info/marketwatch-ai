@@ -86,4 +86,5 @@ SYNC_FILES = [
     "guide-news-2026-07-28-cxmt-china-duv-semiconductor-crash.html",
     "guide-signal-lab-054.html",
     "guide-earnings-season.html",
+    "guide-proverb-mochiai-hanare.html",
 ]
