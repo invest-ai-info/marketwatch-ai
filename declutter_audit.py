@@ -22,18 +22,36 @@ MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 # チェック）。7/26 に一次側だけ 14→36 に直してここが取り残され、同じ警告が別経路から鳴り続けた。
 # 二度と分岐しないよう import で引く。`_doctrine_check.py` は `_`プレフィックス＝ローカル専用で
 # GitHub には無いため、クラウド実行時のフォールバックだけ数値を持つ（値は一次側と一致させること）。
+#
+# ⚠️ 2026-07-29: **DOCTRINE.md をこの表から削除**（オーナー承認）。値は一致していたが、一次側は
+# 「error(28KB)まで残り N KB＝知見約M行ぶん」という**カウントダウン付きの行動可能な警告**を出すのに対し、
+# ここは定型文の「古い完了セクションを退避してスリム化」を出していた＝**一次側が明確に否定した対処**
+# （DOCTRINE は §2実証済み知見と §5稼働中コミットが本体で削減余地なし・SESSION_HANDOFF 7/28節）。
+# 同じ閾値が二重に鳴る上に文言が劣化するので、DOCTRINE の監視は一次側に一本化する。
+# hypothesis_queue も一次側に警告があるが、こちらは文言が同等なので二重チェックとして残置。
 try:
     sys.path.insert(0, HERE)
-    from _doctrine_check import DOCTRINE_WARN_KB as _DOC_KB, QUEUE_WARN_KB as _Q_KB
+    from _doctrine_check import QUEUE_WARN_KB as _Q_KB
 except Exception:
-    _DOC_KB, _Q_KB = 24, 36
+    _Q_KB = 36
 DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32,
-                 "research/DOCTRINE.md": _DOC_KB, "research/hypothesis_queue.md": _Q_KB}
+                 "research/hypothesis_queue.md": _Q_KB}
 MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
+MEMORY_FILE_LIMIT_KB = 20   # 個別memoryファイル。recall時に丸ごと文脈へ入る＝1件の重さが実コスト
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
                         r"martingale|overshoot|panic|selection|strategy|trendfollow|volume|money|"
                         r"mfe|sr_|xtab|validate_)")
+
+# セクション見出し（h2）。⚠️ 2026-07-29: 旧実装は `l.startswith("## ")` だったが、SESSION_HANDOFF は
+# 全体が引用ブロック記法（`> ## …`）で書かれているため **14個中10個の見出しが不可視＝検出0個** で、
+# 「✅完了セクションが8個以上」の判定が構造的に一度も発火しない死にコードだった。
+# 先頭の `> ` を許容して修正。h3(`### `)は節内の小見出し＝セッション単位ではないので意図的に除外
+# （`##` の直後に `\s` を要求するので `###` にはマッチしない）。
+# ⚠️ 初版は `^>?\s*##\s` だったが `\s*` が行頭インデントまで飲み、`    ## x`（4スペース＝コード
+# ブロック）を見出しと誤検出した（旧 startswith 版には無かった退行・Codex レビューで検出）。
+# markdown 準拠で「見出し前の空白は3つまで」「引用は多重可」に修正。
+DONE_SEC_RE = re.compile(r"^ {0,3}(?:(?:> ?)+ {0,3})?##\s")
 
 
 def kb(p):
@@ -56,7 +74,7 @@ def main():
     hp = p("SESSION_HANDOFF.md")
     if os.path.exists(hp):
         done = [l.strip() for l in open(hp, encoding="utf-8", errors="replace")
-                if l.startswith("## ") and "✅" in l]
+                if DONE_SEC_RE.match(l) and "✅" in l]
         if len(done) >= 8:
             findings.append(("🟡", f"SESSION_HANDOFF の ✅完了セクションが {len(done)}個＝直近を残し古いものはアーカイブ候補"))
 
@@ -76,11 +94,23 @@ def main():
     if len(scratch) > SCRATCH_LIMIT:
         findings.append(("🟡", f"使い捨てscriptが {len(scratch)}本（_fix/_push/_probe/_test等）＝`_scratch_archive/` へ移動でフォルダ整理（稼働系 _jp_* は対象外）"))
 
-    # ⑤ 記憶の件数（多すぎなら consolidate-memory 推奨）
-    if os.path.exists(MEM):
-        n = sum(1 for l in open(MEM, encoding="utf-8", errors="replace") if l.strip().startswith("- ["))
-        if n >= 30:
-            findings.append(("🟡", f"記憶エントリ {n}件＝`/consolidate-memory` で重複統合・陳腐化整理を検討"))
+    # ⑤ 記憶の"重さ"（⚠️ 2026-07-29 改定＝「件数」→「1ファイルのKB」・オーナー承認）
+    # 旧実装は MEMORY.md の索引行が30件以上で `/consolidate-memory` を促していたが、実測すると
+    # 32件=304.8KB のうち **上位2ファイルだけで44%**（jp_doublebagger 72.9KB / signal_edge_research
+    # 61.2KB）を占めており、件数は重さの代理指標として機能していなかった＝統合して件数を減らしても
+    # recall時に注入される実バイト数は1バイトも減らない（＝警告が黙るだけで問題は残る）。
+    # 個別memoryは recall で丸ごと文脈に入るので、**重いファイルを名指しする**ほうが行動可能。
+    mem_dir = os.path.dirname(MEM)
+    mem_files = [(os.path.basename(f), kb(f)) for f in glob.glob(os.path.join(mem_dir, "*.md"))
+                 if os.path.isfile(f) and os.path.basename(f) != os.path.basename(MEM)]
+    heavy = sorted([x for x in mem_files if x[1] > MEMORY_FILE_LIMIT_KB], key=lambda x: -x[1])
+    if heavy:
+        total = sum(k for _, k in mem_files)
+        share = sum(k for _, k in heavy) / total * 100 if total else 0
+        detail = "、".join(f"{n[:-3]}({k:.0f}KB)" for n, k in heavy[:5])
+        findings.append(("🟡", f"重い記憶ファイル {len(heavy)}件（1件{MEMORY_FILE_LIMIT_KB}KB超）"
+                               f"＝全{len(mem_files)}件{total:.0f}KB の{share:.0f}%を占有。"
+                               f"要点を残して分割/要約: {detail}"))
 
     # ─── レポート ───
     today = datetime.date.today().isoformat()
@@ -94,7 +124,8 @@ def main():
         lines.append("## ✅ 検出なし — 今は十分スリムです")
     lines += ["", "---",
               "凡例: 🔴=明確な腐り(除去推奨) / 🟡=肥大・堆積(整理候補)。",
-              "整理は `mw declutter` で再実行。記憶は `/consolidate-memory`。文書スリム化は古い✅完了セクションを SESSION_ARCHIVE.md へ。"]
+              "整理は `mw declutter` で再実行。記憶は重いファイルを分割/要約（重複・陳腐化の整理は `/consolidate-memory`）。"
+              "文書スリム化は古い✅完了セクションを SESSION_ARCHIVE.md へ。DOCTRINE/キューの予算は `mw evolve`（一次側）。"]
     report = "\n".join(lines)
     print(report)
     with open(p("DECLUTTER_REPORT.md"), "w", encoding="utf-8", newline="\n") as f:
