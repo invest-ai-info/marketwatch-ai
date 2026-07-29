@@ -361,9 +361,11 @@ def _est_text_width(text, fs):
     return w
 
 
-def _svg_text_boxes(body):
+def _svg_text_boxes(body, with_pos=False):
     """SVG body 内の <text> を概算バウンディングボックス (x0,y0,x1,y1,text) のリストに変換。
-    y は baseline なので上に約0.9em・下に約0.15em 伸ばす。"""
+    y は baseline なので上に約0.9em・下に約0.15em 伸ばす。
+    with_pos=True のときは末尾に body 内の出現位置を足した6要素で返す（描画順の判定用）。
+    ※既定の戻り値の形は変えない＝既存の text_overlap_check は影響を受けない。"""
     boxes = []
     for m in re.finditer(r'<text\b([^>]*)>(.*?)</text>', body, re.S):
         attrs, raw = m.group(1), m.group(2)
@@ -386,7 +388,8 @@ def _svg_text_boxes(body):
             x0 = x - w
         else:
             x0 = x
-        boxes.append((x0, y - fs * 0.9, x0 + w, y + fs * 0.15, text))
+        box = (x0, y - fs * 0.9, x0 + w, y + fs * 0.15, text)
+        boxes.append(box + (m.start(),) if with_pos else box)
     return boxes
 
 
@@ -411,6 +414,96 @@ def text_overlap_check(html):
                 oy = min(a[3], b[3]) - max(a[1], b[1])
                 if ox > tol and oy > tol:
                     warns.append(f"text「{a[4][:14]}」と「{b[4][:14]}」が重なり（重複 {ox:.0f}x{oy:.0f}px）")
+    return warns
+
+
+def _svg_shape_boxes(body):
+    """SVG body 内の「テキストを隠しうる不透明な図形」を (box, class, 出現位置) で返す。
+    半透明（s-zone/s-band系）と塗り無し（s-fire / fill="none"）は隠さないので除外する。"""
+    NON_OPAQUE = ("s-zone", "s-fire", "s-band")
+    out = []
+    for m in re.finditer(r'<(rect|circle|ellipse)\b([^>]*?)/?>', body):
+        tag, attrs = m.group(1), m.group(2)
+        cm = re.search(r'class="([^"]*)"', attrs)
+        cls = cm.group(1) if cm else ""
+        if any(k in cls for k in NON_OPAQUE) or 'fill="none"' in attrs:
+            continue
+        num = lambda n: (lambda g: float(g.group(1)) if g else None)(
+            re.search(r'\b%s="(-?[\d.]+)"' % n, attrs))
+        if tag == "rect":
+            x, y, w, h = num("x"), num("y"), num("width"), num("height")
+            if None in (x, y, w, h):
+                continue
+            box = (x, y, x + w, y + h)
+        elif tag == "circle":
+            cx, cy, r = num("cx"), num("cy"), num("r")
+            if None in (cx, cy, r):
+                continue
+            box = (cx - r, cy - r, cx + r, cy + r)
+        else:
+            cx, cy, rx, ry = num("cx"), num("cy"), num("rx"), num("ry")
+            if None in (cx, cy, rx, ry):
+                continue
+            box = (cx - rx, cy - ry, cx + rx, cy + ry)
+        out.append((box, cls or tag, m.start()))
+    return out
+
+
+def text_occlusion_check(html):
+    """<text> が「自分より後に描かれた不透明な図形」に隠れていないかをチェック。
+
+    2026-07-29 追加。text_overlap_check は text 同士しか見ておらず、
+    「ラベルの上に不透明な楕円を後から描いて文字が消える」欠陥を素通りしていた
+    （実例＝図解の『翌朝の始値』が s-node の楕円に 28x9px 隠れた）。
+    SVG は後に書いた要素が上に来るため、出現位置の前後で判定できる。"""
+    warns = []
+    for m in re.finditer(r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', html, re.S):
+        body = m.group(3)
+        texts = _svg_text_boxes(body, with_pos=True)
+        shapes = _svg_shape_boxes(body)
+        tol = 3.0
+        for (x0, y0, x1, y1, t, tpos) in texts:
+            for (box, cls, spos) in shapes:
+                if spos <= tpos:          # 先に描かれた図形はテキストの下＝隠さない
+                    continue
+                ox = min(x1, box[2]) - max(x0, box[0])
+                oy = min(y1, box[3]) - max(y0, box[1])
+                if ox > tol and oy > tol:
+                    warns.append(f"text「{t[:14]}」が後から描かれた {cls} に隠れる"
+                                 f"（重複 {ox:.0f}x{oy:.0f}px）")
+    return warns
+
+
+def band_parallel_check(html, min_ratio=1.2):
+    """ボリンジャーバンド（class="s-bb" の2本）が平行チャネルになっていないかをチェック。
+
+    2026-07-29 追加。BBの本質は「σに連動して伸縮する」ことなので、
+    上下バンドの幅が一定＝平行だと、見た目がどれだけ曲がっていてもBBには見えない。
+    実例＝guide-signal-anatomy.html は幅 76→73px（最大/最小 1.04倍）の平行チャネルだった。
+    座標は `_gen_bb_panel.py` で計算して出すこと（目分量で描くと必ずこうなる）。"""
+    warns = []
+    for m in re.finditer(r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', html, re.S):
+        body = m.group(3)
+        ds = [d for tag, d in
+              ((t, (re.search(r'\bd="([^"]+)"', t) or [None, None])[1] if re.search(r'\bd="([^"]+)"', t) else None)
+               for t in re.findall(r'<path\b[^>]*>', body))
+              if d and 'class="s-bb"' in tag]
+        if len(ds) != 2:
+            continue
+        series = []
+        for d in ds:
+            nums = [float(v) for v in re.findall(r'-?\d+(?:\.\d+)?', d)]
+            series.append(list(zip(nums[0::2], nums[1::2])))
+        if len(series[0]) != len(series[1]) or len(series[0]) < 4:
+            continue                      # 点数が違う＝対応が取れないので判定しない
+        widths = [abs(b[1] - a[1]) for a, b in zip(series[0], series[1])]
+        if min(widths) <= 0.5:
+            continue
+        ratio = max(widths) / min(widths)
+        if ratio < min_ratio:
+            warns.append(f"ボリンジャーバンドが平行（幅 {min(widths):.0f}〜{max(widths):.0f}px"
+                         f"＝最大/最小 {ratio:.2f}倍 < {min_ratio}）＝σに連動していない。"
+                         f"`_gen_bb_panel.py` で計算し直す")
     return warns
 
 
