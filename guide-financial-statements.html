@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>決算書の読み方入門｜PL・BS・CFの3表は何を語るか - MarketWatch AI</title>
+  <meta name="description" content="損益計算書（PL）・貸借対照表（BS）・キャッシュフロー計算書（CF）の財務三表を直感図解で解説。利益が出ているのに現金が減る「黒字倒産」の仕組み、営業CF・投資CF・財務CFの3区分の読み方まで、投資初心者向けに分かりやすく解説します。">
+  <meta name="keywords" content="決算書,財務三表,損益計算書,PL,貸借対照表,BS,キャッシュフロー計算書,CF,黒字倒産,営業キャッシュフロー,投資初心者,財務分析">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-financial-statements.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="決算書の読み方入門｜PL・BS・CFの3表は何を語るか">
+  <meta property="og:description" content="財務三表（PL・BS・CF）を直感図解で解説。「黒字でも倒産する」仕組みと、売上・利益・営業CFの向きが揃っているかという見方まで。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-financial-statements.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "決算書の読み方入門｜PL・BS・CFの3表は何を語るか",
+    "description": "損益計算書・貸借対照表・キャッシュフロー計算書の財務三表を直感図解で解説。黒字倒産の仕組み、営業CF・投資CF・財務CFの3区分の読み方まで投資初心者向けに解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-30",
+    "dateModified": "2026-07-30",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-financial-statements.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 財務三表 固有スタイル */
+    .s-box-pl{fill:#ddf4ff;stroke:#0969da;stroke-width:2}
+    .s-box-bs{fill:#e6ffed;stroke:#1a7f37;stroke-width:2}
+    .s-box-cf{fill:#fff8c5;stroke:#9a6700;stroke-width:2}
+    .s-box-cash{fill:#ffebe9;stroke:#cf222e;stroke-width:2}
+    .s-box-title{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-box-title-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-box-title-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-box-sub{fill:#424a53;font-size:10.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-arrow{stroke:#8b949e;stroke-width:2;fill:none;marker-end:url(#arr)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    /* 財務三表ボックス：ダーク対応 */
+    body.dark .s-box-pl{fill:#1a2030;stroke:#58a6ff}
+    body.dark .s-box-bs{fill:#162416;stroke:#3fb950}
+    body.dark .s-box-cf{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-box-cash{fill:#2a1010;stroke:#f85149}
+    body.dark .s-box-title{fill:#79c0ff}
+    body.dark .s-box-title-g{fill:#7ee787}
+    body.dark .s-box-title-y{fill:#d4a017}
+    body.dark .s-box-sub{fill:#8b949e}
+    body.dark .s-arrow{stroke:#6e7781}
+    @media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 決算書の読み方入門
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は決算書・財務諸表の読み方に関する一般的な知識を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📋 決算書の読み方入門｜PL・BS・CFの3表は何を語るか</h1>
+    <div class="meta-line">公開日：2026 年 7 月 30 日 ／ 読了時間：約 13 分 ／ カテゴリ：💰 投資の基礎知識</div>
+
+    <p>株式投資を始めると、「決算発表で大きく動いた」「業績が好調でも株価が下がった」という場面に出くわします。こうしたとき、企業の実態を自分の目で確かめる手がかりになるのが<strong>決算書（財務諸表）</strong>です。とはいえ、「難しそう」「数字が苦手」と感じて遠ざけている方も多いのではないでしょうか。</p>
+    <p>この記事では、決算書の中心をなす<strong>財務三表——損益計算書（PL）・貸借対照表（BS）・キャッシュフロー計算書（CF）</strong>を、直感図解でゼロから解説します。後半では、<strong>「利益が出ているのに現金が足りなくなる」黒字倒産の仕組み</strong>と、3表を使って企業の状態をざっくりつかむ視点まで踏み込みます。特定企業の分析ではなく、<strong>読み方の一般論</strong>として解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>財務三表は「1年の成績表（PL）」「今の体力（BS）」「実際に動いた現金（CF）」の3点セット。<strong>3表はそれぞれ補い合う関係</strong>にあり、1表だけ見ても全体像はつかめない。</li>
+      <li><strong>利益と現金は別物</strong>。帳簿上は黒字でも現金が足りなければ倒産する（黒字倒産）。だから「営業キャッシュフロー」が実態を映すもう一つのものさしとして重視される。</li>
+      <li>初心者が最初に意識すべき視点は「<strong>売上・利益・営業CFの方向が揃っているか</strong>」。3つが同じ方向に伸びていれば事業の実態と財務数値が整合しているサインの一つと見られやすく、どれか一つが逆向きなら背景を確かめる価値がある。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">財務三表とは何か——3表の役割を一言で</a></li>
+        <li><a href="#section-2">損益計算書（PL）——1年の成績表</a></li>
+        <li><a href="#section-3">貸借対照表（BS）——今この瞬間の体力診断書</a></li>
+        <li><a href="#section-4">キャッシュフロー計算書（CF）——実際に動いた現金の記録</a></li>
+        <li><a href="#section-5">「黒字倒産」——利益があるのになぜ倒産するのか</a></li>
+        <li><a href="#section-6">3表を使った基本的な見方——売上・利益・営業CFの方向を揃えて読む</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 財務三表とは何か——3表の役割を一言で</h2>
+    <p>上場企業は一定の周期で決算を公開し、財務三表を開示しています。難しい言葉が並んでいますが、それぞれの役割は次の一言で整理できます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="three-stmt-title">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+          </marker>
+        </defs>
+        <title id="three-stmt-title">財務三表（PL・BS・CF）の役割と関係の概念図</title>
+        <text class="s-panel-label" x="20" y="22">財務三表の役割（概念図）</text>
+
+        <!-- PL ボックス -->
+        <rect class="s-box-pl" x="30" y="48" width="170" height="110" rx="10"/>
+        <text class="s-box-title" x="115" y="76" text-anchor="middle">損益計算書（PL）</text>
+        <text class="s-box-sub" x="115" y="96" text-anchor="middle">Income Statement</text>
+        <text class="s-box-sub" x="115" y="116" text-anchor="middle">「1年の成績表」</text>
+        <text class="s-box-sub" x="115" y="132" text-anchor="middle">売上→費用→利益の流れ</text>
+        <text class="s-label-sm" x="115" y="150" text-anchor="middle">期間：1年（または四半期）</text>
+
+        <!-- BS ボックス -->
+        <rect class="s-box-bs" x="235" y="48" width="170" height="110" rx="10"/>
+        <text class="s-box-title-g" x="320" y="76" text-anchor="middle">貸借対照表（BS）</text>
+        <text class="s-box-sub" x="320" y="96" text-anchor="middle">Balance Sheet</text>
+        <text class="s-box-sub" x="320" y="116" text-anchor="middle">「今の体力診断書」</text>
+        <text class="s-box-sub" x="320" y="132" text-anchor="middle">資産・負債・純資産の残高</text>
+        <text class="s-label-sm" x="320" y="150" text-anchor="middle">時点：決算日現在</text>
+
+        <!-- CF ボックス -->
+        <rect class="s-box-cf" x="440" y="48" width="170" height="110" rx="10"/>
+        <text class="s-box-title-y" x="525" y="76" text-anchor="middle">CF計算書（CF）</text>
+        <text class="s-box-sub" x="525" y="96" text-anchor="middle">Cash Flow Statement</text>
+        <text class="s-box-sub" x="525" y="116" text-anchor="middle">「現金の動きの記録」</text>
+        <text class="s-box-sub" x="525" y="132" text-anchor="middle">営業・投資・財務の3区分</text>
+        <text class="s-label-sm" x="525" y="150" text-anchor="middle">期間：1年（または四半期）</text>
+
+        <!-- 矢印：PL → BS -->
+        <line class="s-arrow" x1="202" y1="103" x2="233" y2="103"/>
+        <text class="s-label-sm" x="217" y="96" text-anchor="middle">利益→</text>
+        <text class="s-label-sm" x="217" y="118" text-anchor="middle">純資産</text>
+
+        <!-- 矢印：CF → BS -->
+        <line class="s-arrow" x1="438" y1="103" x2="407" y2="103"/>
+        <text class="s-label-sm" x="423" y="96" text-anchor="middle">←現金</text>
+        <text class="s-label-sm" x="423" y="118" text-anchor="middle">資産</text>
+
+        <!-- 下部の補足 -->
+        <text class="s-note" x="115" y="196" text-anchor="middle">「いくら儲けたか」</text>
+        <text class="s-note-g" x="320" y="196" text-anchor="middle">「資産と借金の残高は？」</text>
+        <text class="s-note-r" x="525" y="196" text-anchor="middle">「現金は本当に増えたか？」</text>
+
+        <text class="s-label-sm" x="320" y="240" text-anchor="middle">3表は互いに連動している——PLの当期利益はBSの純資産に加わり、CF末尾の現金はBSの現預金残高と一致する</text>
+        <text class="s-label-sm" x="320" y="260" text-anchor="middle">（1表だけ見ても全体像はつかめない）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 財務三表の役割と連動関係。PLの利益はBSの純資産に加算され、CFの期末現金残高はBSの現預金と一致する。3表はバラバラではなく、ひとつの企業の状態を違う角度から切り取った記録。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>3表には<strong>大きな共通点</strong>があります。PLとCFは「ある期間（たとえば1年）に何が起きたか」を記録するのに対し、BSは「決算日という1点のスナップショット」を示す点です。また、3表はバラバラに独立しているのではなく、<strong>互いに数字が連動しています</strong>。PLで計上した当期純利益はBSの純資産に加算され、CFの計算書の末尾に示される期末現金残高はBSの現預金残高と一致する——これが財務三表が「三表一体」と呼ばれる理由です。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 損益計算書（PL）——1年の成績表</h2>
+    <p>損益計算書（P/L: Profit and Loss Statement）は、<strong>「企業が一定期間にいくら稼ぎ、いくら使い、最終的にいくら残ったか」</strong>を示す書類です。会社の通知表や成績表に例えられることが多く、投資家にとって最初に目が行く書類でもあります。</p>
+
+    <h3>PLの基本構造</h3>
+    <p>PLは大きく「上から下へ」と段階的に利益が計算される構造になっています。</p>
+
+    <table>
+      <thead>
+        <tr><th>項目</th><th>内容</th><th>チェックポイント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>売上高</td><td>本業で稼いだ金額の合計</td><td>成長しているか・安定しているか</td></tr>
+        <tr><td>売上原価</td><td>商品・サービスを提供するためのコスト</td><td>売上高に対する割合（原価率）</td></tr>
+        <tr><td>売上総利益（粗利）</td><td>売上高 − 売上原価</td><td>事業の根幹的な稼ぐ力</td></tr>
+        <tr><td>販管費</td><td>人件費・広告費・家賃など</td><td>売上高に対して適正か</td></tr>
+        <tr><td>営業利益</td><td>粗利 − 販管費</td><td>本業で稼いだ利益の核心</td></tr>
+        <tr><td>経常利益</td><td>営業利益 ± 営業外損益（受取利息・支払利息など）</td><td>財務活動を含めた稼ぐ力</td></tr>
+        <tr><td>当期純利益</td><td>最終的な税引き後利益</td><td>株主に帰属する利益</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 「営業利益」が最重視される理由</strong>：特別損益（資産の売却益など一時的なもの）を除いた、<strong>本業だけの稼ぐ力</strong>を示すのが営業利益です。「今期は土地を売って利益が大きく見える」といった一時的要因を排除できるため、事業の継続的な実力を見るうえで最も参照されやすい指標です。
+    </div>
+
+    <p>PLが「成績表」と呼ばれる一方で、<strong>一つの大きな注意点</strong>があります。PLに載る数字は「<strong>発生主義</strong>」で記録されるため、<strong>「モノを売った」という事実が起きた時点で売上を計上します</strong>。実際に代金が口座に入ってきたかどうかは関係ありません。この「売上計上（PL）と現金入金（CF）のずれ」が、後述する黒字倒産を生み出す根本原因です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 貸借対照表（BS）——今この瞬間の体力診断書</h2>
+    <p>貸借対照表（B/S: Balance Sheet）は、<strong>「決算日この瞬間に、会社がどんな財産を持ち、どれだけの借金があり、自己資本はいくらか」</strong>を一覧で示す書類です。会社の体力・財務的な安全性を示す「体力診断書」に例えられます。</p>
+
+    <h3>BSの基本構造（左右が必ず一致する）</h3>
+    <p>BSの最大の特徴は<strong>左側（資産）と右側（負債＋純資産）が必ず同じ金額になる</strong>こと。だから「バランスシート」と呼ばれます。</p>
+
+    <table>
+      <thead>
+        <tr><th>左側（借方）</th><th>右側（貸方）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>【資産】<br>現預金・売掛金（商品を売ったが、まだ回収していない代金）・在庫・固定資産など<br>「会社が持っているもの」</td>
+          <td>【負債】<br>借入金・社債・買掛金（仕入れたが、まだ支払っていない代金）など<br>「他人から調達したお金（返す必要がある）」</td>
+        </tr>
+        <tr>
+          <td>（空欄）</td>
+          <td>【純資産（自己資本）】<br>資本金・利益剰余金など<br>「株主から集めたお金＋これまで積み上げた利益」</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>シンプルに言えば、<strong>「今ある財産（資産）＝借りてきたお金（負債）＋自己資金（純資産）」</strong>という恒等式です。資産を手に入れるには必ず財源（負債か純資産）が必要なため、左右は常に釣り合います。</p>
+
+    <div class="info-box">
+      <strong>💡 自己資本比率とは</strong>：「純資産 ÷ 総資産 × 100」で計算される指標で、資産全体のうち自己資金で賄われている割合を示します。高いほど借金に頼っていないことを意味し、財務の安全性の目安としてよく参照されます。ただし業種・規模・戦略によって適切な水準は異なるため、同業他社と比較することが大切です。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ キャッシュフロー計算書（CF）——実際に動いた現金の記録</h2>
+    <p>キャッシュフロー計算書（C/F: Cash Flow Statement）は、<strong>「一定期間に現金（キャッシュ）がどこから入ってきて、どこへ出ていったか」</strong>を記録する書類です。PLが「利益」を測るのに対し、CFは<strong>「実際に動いた現金」</strong>を追います。この違いが後述の黒字倒産の核心につながります。</p>
+
+    <p>CFは3つの区分に分かれています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="cf-three-title">
+        <title id="cf-three-title">CFの3区分（営業・投資・財務）の概念図</title>
+        <text class="s-panel-label" x="20" y="22">キャッシュフローの3区分</text>
+
+        <!-- 営業CF -->
+        <rect class="s-box-pl" x="20" y="44" width="186" height="140" rx="10"/>
+        <text class="s-box-title" x="113" y="70" text-anchor="middle">① 営業CF</text>
+        <text class="s-box-sub" x="113" y="90" text-anchor="middle">本業から生まれた現金</text>
+        <text class="s-box-sub" x="113" y="110" text-anchor="middle">売上入金・仕入支払い</text>
+        <text class="s-box-sub" x="113" y="128" text-anchor="middle">人件費・税金 など</text>
+        <text class="s-note-g" x="113" y="152" text-anchor="middle">✅ プラスが基本</text>
+        <text class="s-label-sm" x="113" y="172" text-anchor="middle">最も重視される区分</text>
+
+        <!-- 投資CF -->
+        <rect class="s-box-cf" x="227" y="44" width="186" height="140" rx="10"/>
+        <text class="s-box-title-y" x="320" y="70" text-anchor="middle">② 投資CF</text>
+        <text class="s-box-sub" x="320" y="90" text-anchor="middle">将来の稼ぎへの投資</text>
+        <text class="s-box-sub" x="320" y="110" text-anchor="middle">設備購入・有価証券売買</text>
+        <text class="s-box-sub" x="320" y="128" text-anchor="middle">不動産取得 など</text>
+        <text class="s-note-r" x="320" y="152" text-anchor="middle">成長投資中はマイナスに</text>
+        <text class="s-label-sm" x="320" y="172" text-anchor="middle">なりやすい</text>
+
+        <!-- 財務CF -->
+        <rect class="s-box-bs" x="434" y="44" width="186" height="140" rx="10"/>
+        <text class="s-box-title-g" x="527" y="70" text-anchor="middle">③ 財務CF</text>
+        <text class="s-box-sub" x="527" y="90" text-anchor="middle">お金の調達と返済</text>
+        <text class="s-box-sub" x="527" y="110" text-anchor="middle">銀行借入・返済</text>
+        <text class="s-box-sub" x="527" y="128" text-anchor="middle">増資・配当の支払い など</text>
+        <text class="s-label-sm" x="527" y="152" text-anchor="middle">成長期はプラス（借入）、</text>
+        <text class="s-label-sm" x="527" y="172" text-anchor="middle">成熟期はマイナス（返済）に</text>
+
+        <!-- 合計矢印 -->
+        <text class="s-label-sm" x="320" y="212" text-anchor="middle">① + ② + ③ = 現金の増減額（期末現金 = 期首現金 ＋ 増減額）</text>
+        <text class="s-label-sm" x="320" y="232" text-anchor="middle">この期末現金残高がBSの「現預金」と一致する</text>
+      </svg>
+      <figcaption class="chart-caption">▲ CFの3区分。「①営業CF（本業の現金収支）＋②投資CF（投資の現金収支）＋③財務CF（調達・返済の現金収支）」の合計が期中の現金増減額となり、期末残高はBSの現預金と一致する。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="positive-box">
+      <strong>健全な成長企業のCFパターン（一般論）</strong>：① 営業CF がプラス（本業でしっかり稼いでいる）、② 投資CF がマイナス（稼いだ現金を設備投資など将来に回している）、③ 財務CF がマイナス（借入返済が進んでいる）というパターンは、財務の安定と成長投資が両立している姿として一般的に評価されます。
+    </div>
+
+    <div class="info-box">
+      <strong>💡 減価償却費と「非現金費用」</strong>：PLに費用として計上される「減価償却費」は、実際には<strong>現金の出入りを伴わない費用</strong>です。設備を購入したときにキャッシュは出ていきますが、その後毎期「分割して計上」するだけ。だからCF計算書（<strong>間接法</strong>＝当期純利益を出発点に、現金の動きを伴わない項目を足し引きして営業CFを求める作成方法。実務で広く使われます）では、当期純利益に減価償却費を加算して戻す処理が行われます。これが「PLとCFがずれる」主な理由の一つです。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 「黒字倒産」——利益があるのになぜ倒産するのか</h2>
+    <p>PLでは立派な黒字を計上しているのに、手元の現金が尽きて倒産する——これが<strong>黒字倒産</strong>です。「利益があるのに倒産？」と不思議に思うかもしれませんが、その仕組みを理解すると、CFを見る意味が一気に深まります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="cash-gap-title">
+        <title id="cash-gap-title">売上計上と現金入金のタイムラグが黒字倒産を生む仕組みの概念図</title>
+        <text class="s-panel-label" x="20" y="22">利益と現金のズレが黒字倒産を生む（概念図）</text>
+
+        <!-- 時間軸 -->
+        <line class="s-axis" x1="40" y1="260" x2="610" y2="260"/>
+        <text class="s-label-sm" x="610" y="252" text-anchor="end">時間 →</text>
+
+        <!-- 販売時点 -->
+        <line class="s-guide" x1="120" y1="60" x2="120" y2="260"/>
+        <text class="s-note" x="120" y="54" text-anchor="middle">①商品を掛け売り</text>
+        <text class="s-label-sm" x="120" y="272" text-anchor="middle">PL上の「売上計上」</text>
+        <circle fill="#0969da" cx="120" cy="130" r="7"/>
+        <text class="s-note" x="160" y="126">PLでは利益が発生</text>
+
+        <!-- 仕入代金支払い -->
+        <line class="s-guide" x1="250" y1="80" x2="250" y2="260"/>
+        <text class="s-note-r" x="250" y="72" text-anchor="middle">②仕入代金の</text>
+        <text class="s-note-r" x="250" y="86" text-anchor="middle">支払期日が来た</text>
+        <text class="s-label-sm" x="250" y="272" text-anchor="middle">現金が出ていく</text>
+        <circle fill="#cf222e" cx="250" cy="180" r="7"/>
+        <text class="s-note-r" x="286" y="176">現金が減る（支払い）</text>
+
+        <!-- 売掛金未回収 -->
+        <line class="s-guide" x1="400" y1="80" x2="400" y2="260"/>
+        <text class="s-note-r" x="400" y="72" text-anchor="middle">③売掛金がまだ</text>
+        <text class="s-note-r" x="400" y="86" text-anchor="middle">回収できていない</text>
+        <text class="s-label-sm" x="400" y="272" text-anchor="middle">現金はまだ入らない</text>
+
+        <!-- 倒産 -->
+        <line class="s-brk" x1="520" y1="60" x2="520" y2="260"/>
+        <text class="s-note-r" x="520" y="52" text-anchor="middle">⚠️ 資金ショート</text>
+        <text class="s-note-r" x="520" y="66" text-anchor="middle">＝倒産の危機</text>
+        <text class="s-label-sm" x="520" y="272" text-anchor="middle">帳簿は黒字のまま</text>
+
+        <!-- 現金残高イメージ -->
+        <polyline class="s-curve-g" points="40,180 120,174 180,158"/>
+        <polyline class="s-curve-l" points="180,158 250,210 380,222 440,228 520,252"/>
+        <text class="s-legend" x="44" y="176">現金残高</text>
+        <text class="s-note-r" x="296" y="240">現金が枯渇していく</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 企業間取引では掛け売りが一般的。商品を売った時点でPLには「売上・利益」が計上されるが、現金入金は後回し。一方、仕入れや人件費の支払期日は先に来る。このタイムラグで手元現金が尽きると、帳簿上は黒字でも支払不能になる（黒字倒産）。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>黒字倒産が起きるのは、PLが<strong>「発生主義」（取引が起きた時点で計上）</strong>で記録されるのに対し、現金の移動には<strong>タイムラグ</strong>があるからです。典型的なシナリオはこうです。</p>
+    <ol>
+      <li>企業が商品を掛けで販売 → PLには売上・利益を計上（現金はまだ手元にない）。</li>
+      <li>仕入先への支払い期日が到来 → 現金が口座から出ていく。</li>
+      <li>売掛金（受け取るべき代金）の回収が遅れる、または取引先の倒産で焦げ付く。</li>
+      <li>手元現金が尽きて、支払期日に間に合わない → 支払不能（倒産）。</li>
+    </ol>
+    <p>このとき、帳簿（PL）には利益が残っています。<strong>「PLの利益」と「手元の現金」は別物</strong>——これが黒字倒産の本質です。だから投資家は、PLだけでなく<strong>「営業キャッシュフロー（本業から実際に生み出した現金）」</strong>を確認することで、より実態に近い稼ぐ力を把握しようとします。</p>
+
+    <div class="negative-box">
+      <strong>黒字倒産の典型トリガー</strong>：①売掛金の回収サイクルが長い（入金が遅い）、②取引先の突然の倒産による売掛金の回収不能、③急成長で在庫・設備への投資が先行して現金が先細りになる、などが挙げられます。なお、黒字倒産は中小企業に限らず、急成長中の企業でも起こりうる現象です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 3表を使った基本的な見方——売上・利益・営業CFの方向を揃えて読む</h2>
+    <p>財務三表をすべて精緻に分析するのは専門家でも時間がかかります。投資初心者がまず身につけるべきは、<strong>「3表の大きな方向感を揃えて読む」</strong>という視点です。ここでは一般的な基本的な見方を紹介します。</p>
+
+    <div class="warning-box">
+      以下の視点はあくまで<strong>「気づきのきっかけ」</strong>であり、特定の状態が直ちに「良い・悪い」を意味するわけではありません。業種・ビジネスモデル・成長段階によって適切な財務状態は大きく異なります。個別企業の評価には、同業他社との比較や過去の推移、背景の把握が不可欠です。
+    </div>
+
+    <h3>① 売上・営業利益・営業CFの「向き」を確認する</h3>
+    <p>最も基本的な確認です。</p>
+    <ul>
+      <li><strong>3つとも同じ方向（増加 or 横ばい）に動いている</strong>場合：本業の実態と財務数値が整合していることを示すサインの一つ。</li>
+      <li><strong>売上は増えているのに営業CFが減っている（または赤字）</strong>場合：売掛金の増加（入金が遅れている）や在庫の積み上がりが原因の可能性がある。急成長局面では一時的に起きることもある。</li>
+      <li><strong>PLでは利益が出ているのに、営業CFが継続的にマイナス</strong>の場合：事業からの現金が生み出せていないかもしれない。背景の確認が必要。</li>
+    </ul>
+
+    <h3>② BSで財務の安全性をざっくり見る</h3>
+    <ul>
+      <li><strong>流動比率（流動資産 ÷ 流動負債 × 100）</strong>：1年以内に入ってくる現金と出ていく支払いのバランス。一般に100%を超えていると短期的な支払い能力があると見られることが多い（業種差あり）。</li>
+      <li><strong>自己資本比率（純資産 ÷ 総資産 × 100）</strong>：高いほど借金依存度が低い。ただし適正水準は業種によって大きく異なる。</li>
+    </ul>
+
+    <h3>③ 投資CFと財務CFで「成長段階」を読む</h3>
+    <p>設備投資や研究開発への支出が多く投資CFが大きくマイナスの時期は、将来の成長に向けた投資期間かもしれません。一方で財務CFがプラス（借金が増えている）状態が続く場合は、借入への依存度の変化を長期的に確認する価値があります。</p>
+
+    <div class="info-box">
+      <strong>💡 決算書はどこで見られるか</strong>：上場企業の財務三表は、各社の<strong>IR（投資家向け情報）ページ</strong>や、<strong>日本取引所グループ（JPX）が運営するTDnet（適時開示情報閲覧サービス）</strong>で無料で閲覧できます。四半期ごとに「決算短信」が開示されており、PL・BSのエッセンスが掲載されています。なお、四半期決算短信ではキャッシュ・フロー計算書の作成は任意とされているため、CFは通期（および中間期）の決算短信や有価証券報告書で確認するとよいでしょう。
+    </div>
+
+    <p>本記事で解説した財務三表は、企業の「ものさし」である<strong>PERやPBR</strong>の前提知識にもなります。PERは「株価 ÷ 1株あたり純利益（EPS）」、PBRは「株価 ÷ 1株あたり純資産（BPS）」で計算されますが、EPSはPLの利益から、BPSはBSの純資産から算出されます。<a href="guide-per-pbr.html">PERとPBRの読み方</a>はあわせてご覧ください。また、決算発表時に市場が反応する仕組みについては、<a href="guide-earnings-season.html">決算発表の見方</a>で解説しています。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AIは、株式の個別銘柄分析ツールではありませんが、財務三表の知識はサイトを使ううえでいくつかの場面で役立ちます。</p>
+    <ul>
+      <li><strong>決算発表の前後の動きを理解する</strong>：<a href="calendar.html">経済カレンダー</a>には各国・各社の主要な経済発表スケジュールが載っています。決算発表が近い銘柄のボラティリティが上昇しやすい理由を、財務三表の知識があると実感を持って理解できます。</li>
+      <li><strong>「市場の健康度」と財務指標の関係</strong>：<a href="market-health.html">市場健康度</a>で確認できるバフェット指数や各種指標は、市場全体の「割高・割安」を測るものです。個別企業のPERやPBRとの比較軸として活用できます。</li>
+      <li><strong>シグナルと決算の重なりに注意する</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a>で公開しているテクニカルシグナルは、決算発表をまたぐ持ち越しリスクを別途考慮することが大切です。好決算でも株価が下がる「織り込み済み」のケースは、PLの数字よりも「予想との差」が重要であることを決算書の知識があると判断しやすくなります。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績ダッシュボードを見る</div>
+      <div class="cta-box-desc">テクニカルシグナルが決算前後にどう機能しているか——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボード →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>財務三表についての要点を整理します。</p>
+    <ul>
+      <li><strong>PL（損益計算書）</strong>：一定期間の「稼ぎ・コスト・利益」の成績表。<strong>発生主義</strong>で記録されるため、現金の動きとは一致しない。</li>
+      <li><strong>BS（貸借対照表）</strong>：決算日の「資産・負債・純資産」のスナップショット。左右が必ず釣り合う（バランスシート）。財務の安全性・安定性の基盤を見る。</li>
+      <li><strong>CF（キャッシュフロー計算書）</strong>：実際に動いた現金の記録。営業CF・投資CF・財務CFの3区分で、本業の現金創出力・投資姿勢・財務政策が分かる。</li>
+      <li><strong>黒字倒産</strong>：PLが黒字でも現金が尽きれば倒産する。売上計上と現金入金のタイムラグが原因。だから「営業CF」が実態のもう一つのものさしになる。</li>
+      <li><strong>初心者の第一歩</strong>：売上・営業利益・営業CFの3つが同じ方向に動いているかを確認する。ずれているときは背景を確かめる価値がある。</li>
+    </ul>
+    <p>財務三表は一度にすべてを読みこなす必要はありません。まず「3表がそれぞれ何を語っているか」を知ること、そして「PLと現金は別物」という視点を持つことが、投資判断の質を高める最初の一歩です。次のステップとして、PERやPBRで「企業の価値がいくらか」を測るものさしを学ぶと、財務三表の数字がさらに立体的に見えてきます。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-per-pbr.html">
+        <div class="related-card-title">📊 PERとPBRの読み方</div>
+        <div class="related-card-desc">財務三表の数字を使って「株価が割安か割高か」を測るものさし。PLの利益・BSの純資産が前提知識として活きる。</div>
+      </a>
+      <a class="related-card" href="guide-earnings-season.html">
+        <div class="related-card-title">📅 決算発表の見方入門</div>
+        <div class="related-card-desc">市場が動くのは「実数」でなく「予想との差」。発表前後のボラ上昇と持ち越しリスクも解説。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">決算発表前後のボラティリティを踏まえたテクニカルシグナルの実際の成績を勝ち負け含めて公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は財務諸表（決算書）の読み方に関する一般的な考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載内容は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</body>
+</html>
