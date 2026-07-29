@@ -177,6 +177,7 @@
         <li>ドルクロスFX 5銘柄（EURUSD・GBPUSD・AUDUSD・EURAUD・GBPAUD）における逆張り買い（BB下限タッチ＋RSI売られすぎバウンス）の<strong>全期間成績は 106/230=46.1%</strong>、95%CI [39.8%, 52.5%]</li>
         <li><strong>下降トレンド絞り</strong>では全期間 <strong>45/85=52.9%</strong>（CI[42.4%, 63.2%]）と最も高く、逆張りと下降トレンドの組み合わせがリターンに寄与</li>
         <li><strong>4h足</strong>では全期間 <strong>48/96=50.0%</strong>（CI[40.2%, 59.8%]）に対し、<strong>1h足</strong>は 53/128=41.4%（CI[33.2%, 50.1%]）と足種で差が生まれている</li>
+        <li>トレンド別の全期間成績：下降 45/85=52.9%、上昇 25/59=42.4%、<strong>中立・もみあい 36/86=41.9%</strong>（CI[32.0%, 52.4%]）——中立が最低で、もみあい相場での逆張りは全期間を通じて難しい</li>
         <li>シグナル別では <strong>BB下限タッチ 69/152=45.4%</strong> vs <strong>RSI売られすぎバウンス 37/78=47.4%</strong>。比較対照のロング全般（逆張り含む other_fx 全体）は 210/502=41.8%</li>
         <li>前向きトラッカー（2026-07-02 登録）では N=87 に達し、🏁ホールドアウト合格（N≥30）済み。gate確認条件「RCI上限&lt;0」は未達（+0.55）だが、⛔反証条件「RCI下限&gt;0」にも未達（-0.08）——現在最も⛔反証に近い gate 仮説の一つ（詳細は本文）</li>
       </ul>
@@ -314,7 +315,7 @@
       CI が全域プラスのため、「期待値がゼロ以上」という主張が95%信頼水準で支持される。ただし N=32 は小さく、今後の新しいデータで変わる可能性がある。
     </div>
 
-    <p>一方、中立トレンドでは IS 44.6% → FWD 33.3% と <strong>-11.3pp 悪化</strong>している。「もみあい相場での逆張りは依然として難しい」という傾向が前向き期間でも継続している点は注目に値する。</p>
+    <p>一方、中立トレンドでは IS 44.6% → FWD 33.3% と <strong>-11.3pp 悪化</strong>している。全期間を通じても中立トレンドの成績は <strong>36/86=41.9%</strong>（CI[32.0%, 52.4%]）と3区分中最低で、「もみあい相場での逆張りは依然として難しい」という傾向が前向き期間でも継続している点は注目に値する。</p>
 
     <!-- SVG2：IS→FWD トレンド別勝率比較棒グラフ -->
     <div class="chart-figure">
@@ -339,7 +340,7 @@
 
         <!-- ガイドライン -->
         <line x1="60" y1="135" x2="640" y2="135" class="s-guide-r"/>
-        <text x="645" y="139" class="s-label-r" font-size="10">損益分岐43%</text>
+        <text x="670" y="139" class="s-label-r" font-size="10" text-anchor="end">損益分岐43%</text>
 
         <!-- グループ1: 下降トレンド -->
         <!-- IS bar: 43.4% → y=220-(43.4/100*200)=220-86.8=133.2, height=86.8 -->
@@ -477,10 +478,10 @@
 
         <!-- 全体reversalL 全期間 44.7% → height=73.8, y=111.2 -->
         <rect x="450" y="111" width="70" height="74" fill="#8b949e" opacity="0.7" rx="3"/>
-        <text x="485" y="105" class="s-label" text-anchor="middle" font-size="12" fill="#57606a" font-weight="700">44.7%</text>
+        <text x="485" y="105" class="s-label" text-anchor="middle" font-size="12" fill="#57606a" font-weight="700">44.6%</text>
         <text x="485" y="205" class="s-label" text-anchor="middle" font-size="11">全体</text>
         <text x="485" y="220" class="s-label-sm" text-anchor="middle">×revL</text>
-        <text x="485" y="233" class="s-label-sm" text-anchor="middle">N=808</text>
+        <text x="485" y="233" class="s-label-sm" text-anchor="middle">N=809</text>
 
         <!-- タイトル -->
         <text x="350" y="14" class="s-label-b" text-anchor="middle" font-size="12" font-weight="700">グループ別 reversalL 全期間勝率比較</text>
