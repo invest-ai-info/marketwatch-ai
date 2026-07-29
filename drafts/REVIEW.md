@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-07-29 | 🤖 下書き生成 | financial-statements | 決算書の読み方入門
+
+- **基準日**: 2026-07-29（JST）
+- **対象key**: financial-statements（基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-financial-statements.html`
+- **参照出典**:
+  - https://biz.moneyforward.com/accounting/basic/21688/（財務三表の解説）
+  - https://shikin.yayoi-kk.co.jp/study/borrowing/bankruptcy.html（黒字倒産の仕組み）
+  - https://biz.moneyforward.com/accounting/basic/120/（CF計算書の解説）
+  - https://biz.moneyforward.com/accounting/basic/79216/（減価償却費とCF）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「保証」等を使用していない）
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末・footer の3点に記載
+  - ✅ 出典妥当（WebSearchで一般認知されている事実のみ使用）
+  - ✅ 財務指標（流動比率・自己資本比率）は「一般的に～と見られることが多い（業種差あり）」と注記
+  - ✅ 黒字倒産の説明は一般的な仕組み解説に限定、特定企業への言及なし
+- **SVG状況**: 3点作成（財務三表の役割図・CF3区分図・黒字倒産の仕組み図）。ライト/ダーク両対応のCSSクラス実装済み。実機での表示確認は人間の残作業
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク表示確認（特にボックス色・テキスト色）
+  - タイトル・見出し微調整（必要に応じて）
+  - compliance-reviewer (Opus) 監査
+  - 公開は毎朝 08:40 の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-07-29 autopublish: ✅ 公開済み | earnings-season | 決算発表の見方入門
 
 - **基準日**: 2026-07-29（JST）
