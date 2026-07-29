@@ -5281,6 +5281,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .hero-title{{font-size:2rem;font-weight:800;color:#0969da;margin-bottom:6px;text-shadow:0 1px 3px rgba(255,255,255,.8)}}
     .hero-sub{{font-size:1rem;color:#1f2328;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.8)}}
     @media(max-width:600px){{
+      /* 2026-07-29 スマホ読みやすさ改善（390x844 実測ベース）
+         B3: rem基準を16→17px。本文の最小が11〜12pxで小さすぎたため底上げする。
+             font-size のインライン指定が168箇所あり個別修正は非現実的なので、
+             rem の基準ごと上げて一括で効かせる。代償はページ長 +6.7%（実測）。
+         B2: タップ領域を44px以上へ（44px未満が51個あった）。 */
+      html{{font-size:17px}}
+      .nav-btn,.md-chip,.jump-bar a,.jump-bar button{{min-height:44px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}}
       .header-inner{{flex-direction:column}}
       .sentiment-banner{{flex-direction:column}}
       .nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
@@ -5408,38 +5415,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
 {morning_digest}
 
-{news_ticker_section}
-
-  <!-- 更新履歴 -->
-  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
-      <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
-      <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
-    </div>
-    <div style="color:#424a53">
-{update_history_first}
-      <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
-{update_history_rest}
-      </div></details>
-    </div>
-  </div>
-
-  <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
-  <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
-    <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
-    <a href="guide-compound-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">💰 複利シミュレーター</a>
-    <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
-    <a href="guide-fee-impact.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧾 手数料インパクト</a>
-    <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
-    <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
-  </div>
-
-  {indicator_preview_banner}
-  {weekly_strategy_banner}
-
-  <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
-  <div style="font-size:.82rem;color:#57606a;margin:0 4px 12px">📊 騰落レシオ（東証プライム）は <a href="market-health.html" style="color:#0969da;font-weight:600">市場健康度ページ</a> でご覧ください →</div>
-
   <!-- A8広告枠①（トップページ・ニュース上）-->
   <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
     <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
@@ -5514,6 +5489,38 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
+
+{news_ticker_section}
+
+  <!-- 更新履歴 -->
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
+      <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
+      <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
+    </div>
+    <div style="color:#424a53">
+{update_history_first}
+      <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+{update_history_rest}
+      </div></details>
+    </div>
+  </div>
+
+  <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
+  <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+    <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
+    <a href="guide-compound-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">💰 複利シミュレーター</a>
+    <a href="guide-breakeven-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">⚖️ 損益分岐勝率</a>
+    <a href="guide-fee-impact.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧾 手数料インパクト</a>
+    <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
+    <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
+  </div>
+
+  {indicator_preview_banner}
+  {weekly_strategy_banner}
+
+  <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
+  <div style="font-size:.82rem;color:#57606a;margin:0 4px 12px">📊 騰落レシオ（東証プライム）は <a href="market-health.html" style="color:#0969da;font-weight:600">市場健康度ページ</a> でご覧ください →</div>
 
 {featured_guides}
   <!-- 4機能カード（より深い市場分析へ）-->
