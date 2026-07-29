@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-29", "line": '・<b>2026-07-29</b>: 📰 解説「<a href="guide-news-2026-07-29-nikkei-drop-fomc-eve.html" style="color:#0969da"><b>日経2日合計-3,497円・FOMC今夜発表──Meta/MS決算で転換点となるか3シナリオで整理</b></a>」公開'},
         {"date": "2026-07-29", "line": '・<b>2026-07-29</b>: 📈 解説「<a href="guide-proverb-mochiai-hanare.html" style="color:#0969da"><b>もちあいは放れにつけ</b></a>」公開'},
         {"date": "2026-07-29", "line": '・<b>2026-07-29</b>: 💰 解説「<a href="guide-earnings-season.html" style="color:#0969da"><b>決算発表の見方入門</b></a>」公開'},
         {"date": "2026-07-29", "line": '・<b>2026-07-29</b>: 🧪 解説「<a href="guide-signal-lab-054.html" style="color:#0969da"><b>指数×ショートgate N=82初チェック——IS28%→FWD52%逆転</b></a>」公開'},
