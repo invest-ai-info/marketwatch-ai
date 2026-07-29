@@ -15,7 +15,7 @@ REVIEW.md に🚩エスカレ）。
   3. ナビ10ボタンが全て揃っている
   4. 未完成マーカー（TODO(SVG) 等）が残っていない
   5. 禁止表現（売買推奨の断定）が無い — 最小限のハードNGのみ。表現ニュアンスはOpus担当
-  6. SVG検査 = signal_lab_verify.py（固定オラクル）の bounds/text-overlap を流用
+  6. SVG検査 = signal_lab_verify.py（固定オラクル）の bounds/text-overlap/occlusion/band-parallel を流用
      過検出しても RED→人間レビューに回るだけ＝安全側
   7. スラッグ重複検査 — 既存 guide-*.html とトークン集合が同一/包含なら RED
      （2026-07-06 追加。実例: bonds-interest-rates vs interest-rates-bonds=語順違い、
@@ -119,6 +119,12 @@ def main():
         for w in slv.svg_bounds_check(html):
             fails.append(f"SVG: {w}")
         for w in slv.text_overlap_check(html):
+            fails.append(f"SVG: {w}")
+        # 2026-07-29 追加。text_overlap は text 同士しか見ないので「不透明図形に隠れる」を、
+        # bounds は座標しか見ないので「BBが平行＝σに連動しない」を、それぞれ素通りしていた。
+        for w in slv.text_occlusion_check(html):
+            fails.append(f"SVG: {w}")
+        for w in slv.band_parallel_check(html):
             fails.append(f"SVG: {w}")
     except Exception as e:
         fails.append(f"SVG検査を実行できない ({type(e).__name__}: {str(e)[:60]})")
