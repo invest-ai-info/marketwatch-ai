@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>持ち越しリスクと週末ギャップ｜寝ている間に窓が開く仕組みと対策 - MarketWatch AI</title>
+  <meta name="description" content="株やFXのポジションを翌日以降に持ち越すと、市場の閉場中に価格が動いて大きなギャップ（窓）が開くリスクがあります。逆指値がなぜ「指定した値段」で約定しないことがあるのか、週末の持ち越しで何が起きるのかを図解でやさしく解説します。">
+  <meta name="keywords" content="持ち越しリスク,週末ギャップ,窓開け,オーバーナイトリスク,逆指値,スリッページ,ギャップダウン,ギャップアップ,FX週末,リスク管理,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-overnight-gap-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="持ち越しリスクと週末ギャップ｜寝ている間に窓が開く仕組みと対策">
+  <meta property="og:description" content="株やFXの持ち越しリスクを図解解説。逆指値がなぜ「指定した値段で約定しない」のか、週末ギャップが損切りを直撃する仕組みまで。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-overnight-gap-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "持ち越しリスクと週末ギャップ｜寝ている間に窓が開く仕組みと対策",
+    "description": "株やFXの持ち越しリスクを図解解説。逆指値がなぜ「指定した値段で約定しない」のか、週末ギャップが損切りを直撃する仕組みまで。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-07-31",
+    "dateModified": "2026-07-31",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-overnight-gap-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVG概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-gap-fill{fill:#fff0f0;stroke:none}
+    .s-gap-fill-d{fill:rgba(207,34,46,.07);stroke:none}
+    .s-candle-g{fill:#1a7f37}
+    .s-candle-r{fill:#cf222e}
+    .s-wick{stroke:#1f2328;stroke-width:1.5}
+    .s-wick-g{stroke:#1a7f37;stroke-width:1.5}
+    .s-wick-r{stroke:#cf222e;stroke-width:1.5}
+    .s-market-open{fill:rgba(26,127,55,.08);stroke:none}
+    .s-market-closed{fill:rgba(207,34,46,.06);stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-gap-fill{fill:rgba(248,81,73,.07)}
+    body.dark .s-candle-g{fill:#3fb950}
+    body.dark .s-candle-r{fill:#f85149}
+    body.dark .s-wick{stroke:#c9d1d9}
+    body.dark .s-wick-g{stroke:#3fb950}
+    body.dark .s-wick-r{stroke:#f85149}
+    body.dark .s-market-open{fill:rgba(63,185,80,.06)}
+    body.dark .s-market-closed{fill:rgba(248,81,73,.05)}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 持ち越しリスクと週末ギャップ
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は持ち越しリスク・ギャップに関する仕組みを情報提供として解説したものであり、特定銘柄や商品の売買推奨・投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🌙 持ち越しリスクと週末ギャップ：寝ている間に窓が開く</h1>
+    <div class="meta-line">公開日：2026 年 7 月 31 日 ／ 読了時間：約 12 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <p>「逆指値を置いていたのに、想定より大きな損になった」——投資をある程度続けた人なら、一度は経験するかもしれない出来事です。株やFXでは、<strong>取引時間中（ザラ場）は価格が連続して動きますが、市場が閉まっている夜間や週末には取引が止まります</strong>。そして翌朝や週明けに市場が再開するとき、閉場中に積み上がった売買圧力が一気に解放され、<strong>前日の終値とは大きく異なる価格から始まる</strong>ことがあります。</p>
+    <p>これを<strong>「窓が開く（ギャップ）」</strong>と呼びます。相場が連続していたはずのチャートに、「前日の終わり」と「今日の始まり」の間に、誰も取引しなかった価格帯の空白が生まれる——まさに窓（空間）が開いたような見た目になるのです。この記事では、<strong>ギャップが起きるメカニズム</strong>、<strong>逆指値注文が「指定した値段で必ず約定するわけではない」理由</strong>、そして<strong>中上級者向けの持ち越しリスクの管理方法</strong>までを、図解を交えて解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ポジションを保有したまま市場が閉まると、<strong>再開時に大きく価格が飛ぶ（ギャップ）</strong>ことがある。特に週末のFXや指数先物、決算発表をまたぐ株は注意が必要。</li>
+      <li>逆指値（ストップ注文）は<strong>「指定した価格に触れたら自動で決済する」注文だが、ギャップが開いた場合は指定価格をすっ飛ばして、はるかに不利な価格で約定することがある（スリッページ）</strong>。「逆指値を置けば必ず指定価格で切れる」は誤解。</li>
+      <li>対策のキモは「<strong>ギャップが起きても許容できるサイズのポジションしか持ち越さない</strong>」こと。逆指値で止められる前提のポジションサイジングを見直すことが、持ち越しリスク管理の第一歩。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「窓が開く」とはどういうことか</a></li>
+        <li><a href="#section-2">ギャップが生まれる3つの状況</a></li>
+        <li><a href="#section-3">逆指値は「指定した値段」で約定するとは限らない</a></li>
+        <li><a href="#section-4">週末ギャップとFX・先物の特殊性</a></li>
+        <li><a href="#section-5">【中上級】持ち越しリスクの数え方と管理の考え方</a></li>
+        <li><a href="#section-6">当サイトでの活かし方</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 「窓が開く」とはどういうことか</h2>
+    <p>まずは基本のイメージを押さえましょう。ザラ場（市場が開いている時間）では、売りと買いが常に成立していて、価格は連続的に動いています。前の取引と次の取引の価格差はほとんどありません。</p>
+    <p>ところが市場が閉まると、取引自体が止まります。<strong>価格は止まっているように見えますが、価格を動かすニュースや出来事は止まりません</strong>。企業の業績発表、要人の発言、地政学的な出来事、経済指標の発表——これらは夜中でも週末でも起きます。市場が再開したとき、蓄積した材料が一気に織り込まれ、<strong>前日の終値（終値）から大きく飛んだ価格で取引が始まる</strong>のがギャップです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="gap-title">
+        <title id="gap-title">ギャップ（窓）の直感図解：前日終値と翌朝始値の間に空白が生まれる</title>
+        <text class="s-panel-label" x="40" y="22">ギャップ（窓）の直感図解</text>
+
+        <!-- 縦分割線（市場クローズ） -->
+        <line class="s-divv" x1="320" y1="40" x2="320" y2="270"/>
+        <text class="s-label-sm" x="220" y="38" text-anchor="middle">← 前日（ザラ場）</text>
+        <text class="s-label-sm" x="460" y="38" text-anchor="middle">翌朝（再開後）→</text>
+        <text class="s-label-sm" x="320" y="290" text-anchor="middle">市場クローズ</text>
+
+        <!-- 前日の価格動き（連続） -->
+        <polyline class="s-price" points="60,180 100,172 140,160 180,155 220,148 260,140 300,135"/>
+        <!-- 前日終値ライン -->
+        <line class="s-guide" x1="300" y1="135" x2="340" y2="135"/>
+        <circle class="s-hl" cx="300" cy="135" r="5"/>
+        <text class="s-note-g" x="180" y="128">前日終値</text>
+
+        <!-- ギャップ（空白エリア） -->
+        <rect class="s-gap-fill" x="320" y="135" width="30" height="75" />
+        <text class="s-note-r" x="330" y="165" font-size="10" text-anchor="middle">↓</text>
+        <text class="s-note-r" x="330" y="186" font-size="10" text-anchor="middle">窓</text>
+        <text class="s-note-r" x="330" y="200" font-size="10" text-anchor="middle">↓</text>
+
+        <!-- 翌朝の始値（ギャップダウン） -->
+        <line class="s-guide" x1="320" y1="210" x2="360" y2="210"/>
+        <circle class="s-rev" cx="356" cy="210" r="7"/>
+        <text class="s-note-r" x="364" y="206">翌朝始値（ギャップダウン）</text>
+
+        <!-- 翌朝の価格動き -->
+        <polyline class="s-price" points="356,210 400,218 440,230 480,225 520,215 560,200"/>
+
+        <!-- 矢印で差を示す -->
+        <line x1="305" y1="140" x2="305" y2="205" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arr-r)"/>
+        <defs><marker id="arr-r" markerWidth="7" markerHeight="7" refX="3" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#cf222e"/></marker></defs>
+        <text class="s-note-r" x="310" y="175" font-size="11">ギャップ</text>
+        <text class="s-note-r" x="310" y="188" font-size="11">（空白）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ ザラ場中は価格が連続して動く（左）。市場クローズ中に悪いニュースが出ると、翌朝の始値が前日終値より大きく下で始まる（右＝ギャップダウン）。この「前日終値〜翌朝始値の間に誰も取引できなかった価格帯の空白」が「窓（ギャップ）」。上方向に開く場合はギャップアップ。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>チャートでは、この「前日の終わり」と「翌日の始まり」の間に、値が飛んだ<strong>空白の帯</strong>として現れます。その見た目から「窓が開く」「窓が空く」「ギャップが入る」などと表現します。</p>
+
+    <div class="info-box">
+      <strong>💡 ギャップアップとギャップダウン</strong><br>
+      前日終値より高い価格で始まるのが<strong>ギャップアップ（窓空け上昇）</strong>。低い価格で始まるのが<strong>ギャップダウン（窓空け下落）</strong>。ロングポジション（買い持ち）を保有していれば、ギャップダウンが持ち越しリスクの直撃になります。ショートポジション（売り持ち）ならギャップアップが直撃です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ ギャップが生まれる3つの状況</h2>
+    <p>ギャップが特に起きやすいのは、次の3つの状況です。</p>
+
+    <h3>① 決算発表（引け後・寄付き前）</h3>
+    <p>日本株でも米国株でも、企業は取引時間外（引け後・翌朝の寄付き前）に決算を発表することがあります。<strong>市場予想を大きく上回る好決算や、想定外の下方修正</strong>が出ると、翌朝の始値が前日終値から大きくかけ離れた価格になることがあります。「決算をまたぐ保有（決算持ち越し）」が特にリスクが高いとされるのはこのためです。</p>
+
+    <h3>② 週末・休場をまたぐ地政学・政治リスク</h3>
+    <p>株式市場が閉まっている土曜・日曜の間に、地政学的な緊張の高まり、要人の予想外の発言、自然災害、政策転換などが起きることがあります。週が明けて市場が開いたとき、<strong>週末中に積み上がった材料が一気に反映されて、月曜朝の始値が大きく動く</strong>のが週末ギャップです。</p>
+
+    <h3>③ 時間外・夜間の経済指標発表</h3>
+    <p>米国の重要経済指標（雇用統計・CPIなど）や、日本時間の深夜に行われるFOMCの声明文発表など、<strong>日本の取引時間外に出る指標や発言</strong>が翌朝のギャップにつながることがあります。詳しくは<a href="guide-economic-indicators-basics.html">経済指標の読み方入門</a>も参照してください。</p>
+
+    <div class="warning-box">
+      ギャップはいつ、どれくらい開くか事前には分かりません。「大きな指標発表をまたいで持ち越す」「決算発表日をまたぐ」「週末に地政学リスクがくすぶっているのにポジションを持ち越す」——こうした場面では、<strong>通常より大きなギャップが入るリスクを意識する</strong>ことが大切です。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 逆指値は「指定した値段」で約定するとは限らない</h2>
+    <p>ここが持ち越しリスクを考えるうえで最も重要なポイントです。<a href="guide-loss-cut.html">損切りの記事</a>や<a href="guide-order-types.html">注文方法の基本</a>でも触れていますが、多くの初心者が誤解するのが<strong>「逆指値（ストップ注文）を置けば、指定した値段で必ず切れる」</strong>という思い込みです。</p>
+
+    <p>逆指値の正確な定義はこうです。<strong>「指定した価格（以上・以下）に達したら、その時点で成行注文を発動する注文」</strong>。重要なのは「<strong>成行注文を発動する</strong>」という部分です。発動した時点での市場価格が、指定したストップ価格と同じとは限りません。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="slip-title">
+        <title id="slip-title">通常の逆指値執行（ザラ場）とギャップ時の逆指値執行（スリッページ）の比較</title>
+        <text class="s-panel-label" x="40" y="22">逆指値のスリッページ：通常時 vs ギャップ時</text>
+
+        <!-- 縦分割 -->
+        <line class="s-divv" x1="320" y1="40" x2="320" y2="278"/>
+        <text class="s-label-sm" x="160" y="38" text-anchor="middle">通常時（ザラ場中）</text>
+        <text class="s-label-sm" x="480" y="38" text-anchor="middle">ギャップ時（翌朝）</text>
+
+        <!-- 左：通常時 -->
+        <!-- 価格ライン -->
+        <polyline class="s-price" points="60,90 110,100 160,110 210,122 248,135"/>
+        <!-- SLライン -->
+        <line class="s-brk" x1="50" y1="135" x2="295" y2="135"/>
+        <text class="s-label-sm" x="54" y="128">損切りライン（SL）= 1,000円</text>
+        <!-- SLヒット -->
+        <circle class="s-rev" cx="250" cy="135" r="7"/>
+        <polyline class="s-price" points="250,135 270,133 295,131" style="opacity:.3"/>
+        <text class="s-note-g" x="56" y="160">✅ SL = 約定価格</text>
+        <text class="s-note-g" x="56" y="176">ほぼ1,000円で決済できる</text>
+
+        <!-- 右：ギャップ時 -->
+        <!-- 前日終値 -->
+        <polyline class="s-price" points="340,90 380,98 420,108 460,120 490,130"/>
+        <circle class="s-hl" cx="490" cy="130" r="5"/>
+        <text class="s-label-sm" x="500" y="126">前日終値（1,050円）</text>
+
+        <!-- SLライン（1,000円） -->
+        <line class="s-brk" x1="330" y1="135" x2="610" y2="135"/>
+        <text class="s-label-sm" x="334" y="128">損切りライン（SL）= 1,000円</text>
+
+        <!-- ギャップ（空白エリア） -->
+        <rect class="s-gap-fill" x="490" y="135" width="30" height="80"/>
+
+        <!-- 翌朝始値（ギャップダウン、SL下） -->
+        <circle class="s-rev" cx="524" cy="215" r="7"/>
+        <text class="s-note-r" x="534" y="211">翌朝始値 = 920円</text>
+        <polyline class="s-price" points="524,215 560,220 600,225" style="opacity:.5"/>
+
+        <!-- 矢印 -->
+        <line x1="495" y1="134" x2="495" y2="210" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text class="s-note-r" x="500" y="176">1,000円〜920円の</text>
+        <text class="s-note-r" x="500" y="190">価格帯は空白</text>
+        <text class="s-note-r" x="334" y="240">❌ SL=1,000円のつもりが</text>
+        <text class="s-note-r" x="334" y="256">920円（差80円！）で約定</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 左（通常時）：ザラ場中に価格がSLに達した場合、そこで成行発動→ほぼSL価格で約定できる。右（ギャップ時）：前日終値1,050円・SL1,000円のロング保有でギャップダウン→翌朝始値が920円。SL（1,000円）〜始値（920円）の間には誰も取引できない空白があるため、発動した成行注文は920円で約定してしまう（80円分の予定外損失）。<strong>これがスリッページ</strong>。※ 価格はすべて概念図用の仮の数値です。</figcaption>
+    </figure>
+
+    <p>ギャップが開いた場合、ストップ価格（1,000円）と始値（920円）の間には誰も取引できなかった価格帯があります。逆指値は「1,000円以下になったら成行」という注文なので、1,000円より下で最初に取引が成立した920円で約定します。<strong>想定していた損失より大きな損失が実現する</strong>——これがギャップ時の逆指値の限界です。</p>
+
+    <div class="negative-box">
+      <strong>📉 重要：逆指値はリスク管理の必須ツールだが、「完全な保険」ではない</strong><br>
+      逆指値を置くことは、ザラ場中の損切り自動化として非常に有効です。しかしギャップが入ったとき、逆指値で「ここまでの損失に収める」という保証は持てません。特に<strong>大きなギャップが起きそうな場面（決算前・週末・重要指標前）での持ち越しは、逆指値があっても実際の損失が想定を超えることを前提に計画する</strong>必要があります。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 週末ギャップとFX・先物の特殊性</h2>
+    <p>株式（現物）とFX・先物では、持ち越しリスクの性質が少し異なります。</p>
+
+    <h3>FXの週末ギャップ</h3>
+    <p>FXは<strong>平日ほぼ24時間取引できる</strong>市場です（日本時間 月曜早朝〜土曜早朝ごろ）。しかし土曜〜日曜は全世界の主要FX取引所が閉まります。この間も、G7首脳の発言、中東情勢の変化、中央銀行の緊急決定、政変など、価格に影響する出来事は起こります。その結果、<strong>日曜夜の市場再開（東京オープン前後）に大きなギャップが入ることがある</strong>のがFXの週末ギャップです。</p>
+
+    <h3>株式指数先物の夜間取引</h3>
+    <p>日経225先物やS&P500先物（E-mini）には夜間取引セッションがあります。日本株の現物市場（東証）が閉まる15時30分以降でも、先物は夜間に動いており、翌朝の現物市場の寄り付きを先取りしています。先物が夜間に大きく動いていれば、翌朝の株式現物の寄り付きもギャップを伴いやすくなります。</p>
+
+    <h3>株式現物の東証取引時間</h3>
+    <p>東証（東京証券取引所）の取引時間は2024年11月以降、前場9:00〜11:30・後場12:30〜15:30です（以前は15:00まで）。この時間外（15:30〜翌9:00）に出たニュースは翌朝9:00の寄り付きで織り込まれ、ギャップが入ることがあります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 200" role="img" aria-labelledby="mkt-title">
+        <title id="mkt-title">主要市場の取引時間（日本時間）とギャップが入りやすいタイミング</title>
+        <text class="s-panel-label" x="40" y="22">主要市場の取引時間（JST目安）とギャップが入りやすい時間帯</text>
+
+        <!-- 時間軸（0時〜24時） -->
+        <line class="s-axis" x1="40" y1="160" x2="600" y2="160"/>
+        <text class="s-label-sm" x="40" y="178">0:00</text>
+        <text class="s-label-sm" x="166" y="178">6:00</text>
+        <text class="s-label-sm" x="296" y="178">12:00</text>
+        <text class="s-label-sm" x="428" y="178">18:00</text>
+        <text class="s-label-sm" x="560" y="178">24:00</text>
+        <!-- 目盛り補助線 -->
+        <line class="s-guide" x1="166" y1="44" x2="166" y2="160"/>
+        <line class="s-guide" x1="296" y1="44" x2="296" y2="160"/>
+        <line class="s-guide" x1="428" y1="44" x2="428" y2="160"/>
+
+        <!-- 東証 9:00-11:30 + 12:30-15:30 -->
+        <rect class="s-market-open" x="223" y="50" width="60" height="24" rx="3"/>
+        <text class="s-label-sm" x="253" y="66" text-anchor="middle">東証前場</text>
+        <rect class="s-market-open" x="309" y="50" width="77" height="24" rx="3"/>
+        <text class="s-label-sm" x="347" y="66" text-anchor="middle">東証後場</text>
+        <text class="s-label-sm" x="50" y="66">東証</text>
+
+        <!-- NY 22:30〜翌5:00 -->
+        <rect class="s-market-open" x="40" y="88" width="65" height="24" rx="3"/>
+        <text class="s-label-sm" x="72" y="104" text-anchor="middle">NYSE前半</text>
+        <rect class="s-market-open" x="562" y="88" width="38" height="24" rx="3"/>
+        <text class="s-label-sm" x="576" y="104" text-anchor="middle">NYSEオープン</text>
+        <text class="s-label-sm" x="50" y="104">NYSE</text>
+
+        <!-- ロンドン 16:00〜翌1:00 -->
+        <rect class="s-market-open" x="430" y="124" width="170" height="24" rx="3"/>
+        <text class="s-label-sm" x="502" y="140" text-anchor="middle">ロンドン（LSE）</text>
+        <text class="s-label-sm" x="50" y="140">LSE</text>
+
+        <!-- ギャップ注意マーク：東証寄り付き -->
+        <line x1="223" y1="44" x2="223" y2="160" stroke="#cf222e" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text class="s-note-r" x="175" y="44" font-size="10.5">⚠️ 寄付き</text>
+
+      </svg>
+      <figcaption class="chart-caption">▲ 各市場の取引時間（JST目安・概念図）。東証が閉まっている夜間もNYSEやロンドンは動いており、翌朝の東証寄り付き（9:00）でその動きが反映されてギャップが入ることがある。FXは平日24時間近く取引できるが、土日は全市場が閉まる。※ 正確な時間は夏時間等で変わります。概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 【中上級】持ち越しリスクの数え方と管理の考え方</h2>
+    <p>ここからは中上級者向けの実践的な考え方です。</p>
+
+    <h3>① 「最悪のギャップを想定してポジションサイズを決める」</h3>
+    <p>持ち越しリスクを管理するうえで最も根本的な考え方が、これです。<strong>逆指値で止められる前提でサイジングするのではなく、ギャップが入って逆指値が大幅にスリップした場合でも、許容できる損失に収まるサイズにする</strong>ことです。</p>
+    <p>たとえば、通常のトレードでは「損失が口座の2%まで」と計画している場合、持ち越しポジションでは「もしギャップでSLより10%下で約定しても、損失は口座の2〜3%まで」といった余裕のあるサイジングにする、という発想です。ポジションサイジングの基本については<a href="guide-position-sizing.html">ポジションサイジングの記事</a>も合わせてご確認ください。</p>
+
+    <h3>② 「ギャップリスクが高い場面では持ち越しを避ける or 大幅縮小する」</h3>
+    <p>以下のような場面は、ギャップが大きくなりやすいとされています。</p>
+    <ul>
+      <li><strong>決算発表日またぎ</strong>：その銘柄の決算発表が翌朝・翌日に予定されている</li>
+      <li><strong>大型経済指標の発表日またぎ</strong>：雇用統計・CPI・GDP・FOMC発表など。詳細は<a href="guide-economic-indicators-basics.html">経済指標入門</a>を参照</li>
+      <li><strong>週末持ち越し（特にFX・先物）</strong>：地政学リスクがくすぶっている時期はより注意</li>
+      <li><strong>重大な政治イベント直前</strong>：選挙・サミット・重要な議会採決など</li>
+    </ul>
+
+    <h3>③ スワップや金利を踏まえた「持ち越しコスト」</h3>
+    <p>FXポジションを翌日以降持ち越す場合、<strong>スワップポイント（2国間の政策金利差に基づく付与・支払い）</strong>が毎日発生します。スワップがプラス（受け取り）ならコストは下がりますが、マイナス（支払い）なら持ち越すほど損益が悪化します。スワップの仕組みは<a href="guide-swap-points.html">スワップポイントの記事</a>を参照してください。</p>
+
+    <h3>④ ギャップをある程度予測する手がかり</h3>
+    <p>ギャップの方向や大きさを事前に正確に知ることはできませんが、いくつかの<strong>手がかり</strong>は存在します。</p>
+    <ul>
+      <li><strong>先物・夜間取引の動き</strong>：日経225先物の夜間取引が翌朝の東証の方向性を示すことがある（ただし逆転することも）</li>
+      <li><strong>VIX（恐怖指数）の水準</strong>：市場が不安定なとき（VIX高水準）はギャップも大きくなりやすい傾向がある。詳細は<a href="guide-vix.html">VIX解説</a>を参照</li>
+      <li><strong>経済カレンダーの確認</strong>：持ち越す前に、その期間中に重大な発表がないか<a href="calendar.html">経済カレンダー</a>で確認する習慣をつける</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 チェックポイント：週末持ち越し前の自問</strong>
+      <ul style="margin-top:10px">
+        <li>今週末に地政学リスクや重大な政治イベントはあるか？</li>
+        <li>このポジションが最悪のギャップを受けても、口座に壊滅的なダメージはないか？</li>
+        <li>そのサイズ感は、ポジションサイジングのルールと整合しているか？</li>
+      </ul>
+      これらを確認せずに「なんとなく持ち越す」のが、最も避けたい行動パターンです。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI のテクニカルシグナルと成績管理には、持ち越しリスクへの対応が組み込まれています。</p>
+    <ul>
+      <li><strong>休場中のシグナル発火を成績集計から除外</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a>の注記にもあるとおり、市場が閉まっている時間帯に発火したシグナルは、成績の集計において扱いが異なります。週明けの大きなギャップが損切りを直撃した場合、それはシグナルのロジック自体の評価とは切り分けて考える必要があるためです。</li>
+      <li><strong>経済カレンダーとの連携</strong>：<a href="calendar.html">経済カレンダー</a>では重要指標の発表スケジュールを確認できます。持ち越しを検討する前に、期間中に大きな発表がないか確認するのに活用してください。</li>
+      <li><strong>市場健康度でリスク環境を把握</strong>：<a href="market-health.html">市場健康度</a>で VIX の水準や全体的な不安定度を確認することで、ギャップリスクが高い地合いかどうかの目安にできます。</li>
+    </ul>
+    <p>「逆指値があるから大丈夫」と持ち越しを楽観視するのではなく、<strong>「ギャップが入っても許容できるサイズしか持ち越さない」という姿勢</strong>が、長く市場に残り続けるための基本的な考え方です。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの成績と注記を確認する</div>
+      <div class="cta-box-desc">当サイトのテクニカルシグナルがどのように成績を集計し、週末ギャップなどの特殊ケースをどう扱っているか——実際のダッシュボードでご確認いただけます。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>持ち越しリスクとギャップについて整理します。</p>
+    <ul>
+      <li>市場が閉まっている間も価格を動かす材料は発生し続ける。<strong>翌朝・週明けの再開時に前日終値と大きく乖離した価格で始まることが「ギャップ」</strong>。</li>
+      <li>ギャップが起きやすいのは<strong>決算発表またぎ・重要指標前後・週末・地政学リスクが高い時期</strong>。</li>
+      <li>逆指値（ストップ注文）は「成行発動」のため、<strong>ギャップが入ると指定価格より大幅に不利な価格で約定する（スリッページ）</strong>ことがある。「逆指値を置いたから損失はSLまで」は誤り。</li>
+      <li>持ち越しリスクの本質的な対策は、<strong>ギャップでスリッページが生じても許容できるポジションサイズに抑える</strong>こと。逆指値で止まる前提でのサイジングを見直すことが出発点。</li>
+      <li>ギャップリスクが高い場面（決算・大型指標・地政学リスクの高い週末）では、<strong>持ち越しを避ける or 大幅に縮小する</strong>選択肢を常に持つ。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">損切りの心理と「逆指値で機械化する」ことの意味。ギャップ時の限界を理解したうえで、なぜ仕組み化が必要かを解説。</div>
+      </a>
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">📋 注文方法の基本</div>
+        <div class="related-card-desc">成行・指値・逆指値の違いと使い分け。逆指値が「指定価格での成行発動」である仕組みを詳しく解説。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジング</div>
+        <div class="related-card-desc">1トレードの損失をどう計算してロット数を決めるか。ギャップが入っても許容できるサイズ設計の基礎。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は持ち越しリスク・ギャップに関する投資の仕組みを情報提供として解説したものであり、特定銘柄・商品の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>

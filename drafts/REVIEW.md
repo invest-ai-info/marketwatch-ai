@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-07-31 | 🤖 下書き生成 | overnight-gap-risk | 持ち越しリスクと週末ギャップ
+
+- **基準日**: 2026-07-31（JST）
+- **対象key**: overnight-gap-risk（リスク管理 / 🛡️ リスク管理・資金管理）
+- **生成ファイル**: `drafts/draft-overnight-gap-risk.html`
+- **参照出典**:
+  - https://www.jpx.co.jp/english/equities/trading/domestic/01.html（東証取引時間の公式情報）
+  - https://www.jpx.co.jp/corporate/news/news-releases/1030/20230920-01.html（東証取引時間延長公式発表2023-09-20）
+  - https://daytraderbusiness.com/risk/stop-loss/the-impact-of-market-gaps-on-stop-loss-risk/（逆指値とギャップ時のスリッページ）
+  - https://blueberrymarkets.com/academy/understanding-market-gap-and-slippage/（スリッページの仕組み）
+  - https://titanfx.com/education/guide-to-weekend-gap-trading-in-forex（FX週末ギャップ）
+  - https://www.ebc.com/forex/what-is-gap-risk-in-trading-causes-examples-and-how-to-manage-them/（ギャップリスクの原因）
+- **事実確認済み内容**:
+  - 東証取引時間: 前場9:00-11:30・後場12:30-15:30（2024年11月5日に15:00→15:30へ延長）✅
+  - NYSE/Nasdaq: EDT夏時間22:30-05:00 JST / EST冬時間23:30-06:00 JST ✅
+  - LSE: BST夏時間16:00-00:30 JST / GMT冬時間17:00-01:30 JST ✅
+  - 逆指値=「指定価格以下で成行発動」→ギャップ時は指定価格をスキップして始値で約定 ✅
+  - FXの週末ギャップ：平日は24時間取引・土日は全市場クローズ → 週明けに蓄積材料を一気反映 ✅
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・仕組み解説のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「保証」「儲かる」等を使用していない）
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末p.disclaimer・footer の3点に記載
+  - ✅ 出典妥当（WebSearchで一般認知されている仕組みのみ使用）
+  - ✅ SVGの数値（1,000円/920円）は「概念図用の仮の数値」と明示
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ ナビバー10ボタン・順序厳守
+- **SVG状況**:
+  - 図1: 「窓（ギャップ）の直感図解」（前日終値→ギャップ→翌朝始値の空白） ✅
+  - 図2: 「逆指値スリッページ 通常時vs ギャップ時の比較」 ✅
+  - 図3: 「主要市場の取引時間（JST目安）」（東証・NYSE・LSE） ✅
+  - ライト/ダーク両対応のCSSクラス（.s-*）実装済み。実機での表示確認は人間の残作業
+  - ⚠️ 市場時間図のNYSE表示は夏時間(EDT)基準。「夏時間等で変わります」注記あり
+- **内部リンク注意**:
+  - `guide-order-types.html` へのリンクあり → 公開前に guide-order-types が公開済みか要確認（draft段階のためdraft-order-types.htmlが存在するが本番ページは未確認）
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク表示確認（特にギャップ塗り・ウィック色）
+  - タイトル・見出し微調整（必要に応じて）
+  - guide-order-types.html の公開状況確認
+  - compliance-reviewer (Opus) 監査
+  - 公開は毎朝 08:40 の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-07-30 autopublish: ✅ 公開済み | financial-statements | 決算書の読み方入門
 
 - **基準日**: 2026-07-30（JST）
