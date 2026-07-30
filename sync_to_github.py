@@ -93,4 +93,5 @@ SYNC_FILES = [
     "guide-proverb-sanwari-kouge.html",
     "guide-news-2026-07-30-msft-fomc-result.html",
     "guide-signal-lab-056.html",
+    "guide-overnight-gap-risk.html",
 ]
