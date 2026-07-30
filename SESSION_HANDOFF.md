@@ -1,9 +1,16 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-30 21:38）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-31 06:39）
 
-> ## 🌅 次セッションの入口＝**在flightはゼロ**。①②とも完了・push済み。
-> 残っているのは急がない宿題2つだけ＝**(a) sitemap に54本が未掲載**（下の「未対応の付随発見」）
+> ## 🌅 次セッションの入口＝**在flightはゼロ**。
+> **(a) 為替介入の続報＝本日中に「確定」が出る**。7/30 22:30 にドル円が30分で -3.03円（1時間で
+> -4.2円・安値158.888）。**当サイトの検証＝クロス円 -1.88% vs ドルストレート +0.42%＝円主導が4.5倍**で
+> ドル安では説明がつかない。ただし**当局の確認は未発表**（覆面介入なら永久に出ない可能性）。
+> 確定経路は ①当局者コメント ②**日銀の当座預金増減要因**（介入はT+2決済＝8/3決済分＝7/31夕方公表で推計可）。
+> ⚠️ 財務省の月次公表（7/31 19:00）は **6/29〜7/29 分＝7/30の介入は含まれない**（8月末公表）。
+> 記事は観測ベースで**公開済み**（`guide-news-2026-07-31-yen-surge-intervention-check.html`）。
+> **確定したら追記する**。素材＝`_fx_intervention_data.json`／再取得は `_fx_intervention_probe.py`。
 > **(b) Search Console のインデックス登録レポートを開いて、報告されている404 URL が
 > 7/30 に直した6件と一致するか確認**（別URLが載っていたらそれは未知の穴）。
+> **(c) 17:40 の `news-daily-auto` が同じ介入ネタを重複公開しないか夕方に確認**。
 >
 > **⚠️ 夜の回線輻輳は「日による」。**2026-07-30 に原因を特定した：
 > `api.github.com` と `github.com` は **AAAA を持たず IPv4 のみ**で、この回線は夜のピークに
@@ -24,8 +31,12 @@
 > → 双方向 diff で照合 → `mw check` → `PYTHONUTF8=1 python sync_to_github.py --force`。
 > **双方向 diff が要点**＝「合成 vs リモート＝CSS6行の追加のみ」かつ「合成 vs 旧ローカル＝履歴4行の
 > 取り込みのみ」を確認すれば、クラウドの追記を消しても自分の編集を失ってもいないと機械的に言える。
-> ⚠️ **旧版の「push後は手動 trigger が必要」は誤り**。`update-market-news.yml` は
-> `on: push` の `paths: generate_market_news.py` を監視しており、**push で自動起動する**（実測）。
+> `update-market-news.yml` は `on: push` の `paths: generate_market_news.py` を監視しており、
+> **generate_market_news.py だけを直す場合は push で自動起動する**（実測）。
+> ⚠️ **ただし新記事を公開するときは 8ステップの⑦（手動 trigger）を省略してはいけない**（7/31 実測）。
+> sync は SYNC_FILES 順に**1ファイルずつ commit**するため `generate_market_news.py` が記事より先に
+> push され、**on:push が「記事がまだ存在しないツリー」で走って sitemap から記事が漏れる**。
+> 起動は `python mw.py trigger update-market-news.yml`（**`.yml` を付けないと 404**）。
 
 > ## ✅ 2026-07-30 夜に完了＝Search Console「404」の解消と恒久対策
 >
@@ -50,10 +61,13 @@
 >    **新しいゲートを足したら必ず既存全記事で誤検知率を実測すること。**
 > テスト＝`_test_guide_link_check.py`(20件)＋`_test_publish_link_gate.py`(7件・`--dry-run`で実起動)。
 >
-> **📌 未対応の付随発見**：**記事は存在するのに sitemap に載っていないものが54件**
-> （`guide-auto-*` 13本・`guide-btc-crash-*`・`guide-interest-rates-bonds.html` 等）。
-> CLAUDE.md は「`build_sitemap_xml` が全 guide-*.html を自動収集」と書いているが**実態は漏れている**。
-> 404ではないので緊急ではないが、検索流入の取りこぼし。`build_sitemap_xml` の収集条件を読めば判別できる。
+> **📌 「sitemap に54本が未掲載」は誤認だった（7/31 訂正）**：**不具合ではない**。
+> `is_noindex_slug()`＝`guide-auto-*`／`guide-weekly-*`／`guide-monthly-report-*`／`NOINDEX_SLUGS`
+> （AdSense再申請前に薄い日付フラッシュを noindex 統合した分）による**意図的な除外**で、
+> **未掲載55本のうち54本が説明できた**（残る1本は当日公開の記事＝下記の push 順序が原因）。
+> CLAUDE.md の「全 guide-*.html を自動収集」は正しい。
+> ⚠️ **教訓＝生の差分だけ見て「漏れ」と判断しない**。未掲載を見つけたらまず `is_noindex_slug` に通す。
+> 監査スクリプトの型は「除外ルールの単一ソースを import して、説明できない分だけ残す」。
 
 > ## ✅ 2026-07-30 に完了してライブ反映済み
 >
@@ -117,7 +131,7 @@
 | **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（回帰テスト=**`_test_doctrine_registry.py` 13件**・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
 | **取り直せないスナップショットの欠測検知** 🆕7/28 | `_doctrine_check.py --agenda`（`mw evolve`）の心拍鮮度＋`_jp_earnings_cal_logger.py` の追記/冪等 | 決算カレンダーは**翌営業日1日分・履歴なし＝走らなかった日は永久欠測**。3日沈黙で ⚠️。**automation-health は GitHub 側でローカル専用ロガーを見られない**ため番人をここに置いた。BOM有無/沈黙/正常の3分岐を実測（BOMで例外→握り潰し→**番人が黙る**壊れ方を実際に踏んで修正済み） |
 | **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
-| sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要（⚠️7/30実測で**54本が未掲載**＝要調査） |
+| sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml`＋`is_noindex_slug`（除外の単一ソース） | 全 guide を自動収集・手動編集不要。未掲載＝noindex 対象の意図的除外（7/31 実測で55本中54本が該当＝**不具合ではない**）。⚠️新記事公開時は sync 後に **workflow を手動 trigger**（下記の push 順序） |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
 
