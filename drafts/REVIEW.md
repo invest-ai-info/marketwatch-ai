@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-07-30 autopublish: ✅ 公開済み | financial-statements | 決算書の読み方入門
+
+- **基準日**: 2026-07-30（JST）
+- **対象key**: financial-statements（基礎知識 / 💰 投資の基礎知識）
+- **決定論ゲート**: 🟢緑（SVGはみ出し修正後EXIT=0・Opus修正後も再確認緑）
+- **Opusコンプラ+品質**: 🟡グレー軽微5件修正（断定軟化1件・用語説明追加3件・CF四半期任意注記1件）→ 🟢白
+- **独立Opus確認**: 🟢白（三層免責・禁止語・無登録投資助言性すべてクリア）
+- **リンター**: check_site_consistency.py EXIT=0（警告15件は既存・今回無関係）
+- **プッシュ**: git push origin HEAD:main 成功（1回目）
+- **HTTP確認**: プロキシ制限のためクラウドから確認不可（push成功のため実際のデプロイはGitHub Actions経由）
+- **URL**: https://marketwatch-jp.com/guide-financial-statements.html
+
+---
+
 ## 2026-07-30 | ✅ 自動公開 | lab-055 | other_fxドルクロス逆張り買い gate——前向きN=87で⛔反証接近
 
 - **基準日**: 2026-07-30（JST）
