@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-31", "line": '・<b>2026-07-31</b>: 📰 解説「<a href="guide-news-2026-07-31-yen-surge-intervention-check.html" style="color:#0969da"><b>ドル円が1時間で4円超の急落──「介入観測」を通貨横断データで検証</b></a>」公開'},
         {"date": "2026-07-30", "line": '・<b>2026-07-30</b>: 📰 解説「<a href="guide-news-2026-07-30-msft-fomc-result.html" style="color:#0969da"><b>FOMC 9対3分裂据え置き×Microsoft Azure+43%──「5重発火週」答え合わせ</b></a>」公開'},
         {"date": "2026-07-30", "line": '・<b>2026-07-30</b>: 🎯 解説「<a href="guide-proverb-sanwari-kouge.html" style="color:#0969da"><b>三割高下に向かえ</b></a>」公開'},
         {"date": "2026-07-30", "line": '・<b>2026-07-30</b>: 💰 解説「<a href="guide-financial-statements.html" style="color:#0969da"><b>決算書の読み方入門（PL・BS・CFの3表）</b></a>」公開'},
