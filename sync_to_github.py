@@ -91,4 +91,5 @@ SYNC_FILES = [
     "guide-signal-lab-055.html",
     "guide-financial-statements.html",
     "guide-proverb-sanwari-kouge.html",
+    "guide-news-2026-07-30-msft-fomc-result.html",
 ]

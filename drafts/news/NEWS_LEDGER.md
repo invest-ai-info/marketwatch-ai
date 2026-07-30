@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-07-30
+- 判定: ✅ 公開済み
+- 選定トピック: FOMC 9対3分裂据え置き（3.50〜3.75%・5会合連続）× Microsoft FY26 Q4大幅ビート（Azure+43%・売上$90B・Anthropic投資益$3.2B・時間外+8.13%）× Meta EPS大幅ミス（$6.18 vs $7.18 コンセンサス・営業利益率43%→31%急落）× 日経平均3日ぶり反発（+433円24銭・61,867円43銭）「5重発火週」答え合わせ（カテゴリ: マクロ・FRB金融政策・AI・個別銘柄・指数）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7/29記事（FOMC前夜・3シナリオ）の「答え合わせ」として完全差別化。FOMCが9対3という2016年以来最多の分裂採決で据え置き、MSが市場予想を大幅上回りAzure+43%（定常通貨でも同値・前四半期+40%から加速）、MetaはEPS大幅ミスと明暗が分かれ、日経は3日ぶり反発で「前夜の3シナリオ」が一部解消した事実を整理。今夜GDP速報+Amazon、明日は日銀・キオクシア決算という継続的な注目点も中立整理。昨日記事（プレビュー）→今日記事（結果）の視点転換で重複なし。
+- 出典（2系統以上確認済み）:
+  - FOMC: CNN Business「Fed holds rates steady after cliffhanger meeting, three officials dissent」（2026-07-29）
+  - FOMC: CNBC「Fed rate decision July 2026: Divided Fed holds interest rates steady」（2026-07-29）
+  - FOMC: Forbes「Kevin Warsh's Fed Holds Interest Rates Steady Again—But Dissent Among Officials Mounts」（2026-07-29）
+  - FOMC: CBS News「Federal Reserve holds interest rates steady, but 3 officials vote for hike」（2026-07-29）
+  - FOMC: FRB公式プレスリリース（2026-07-29）
+  - Microsoft: Microsoft公式プレスリリース「Microsoft Cloud and AI Strength Fuels Fourth Quarter Results」（2026-07-29）
+  - Microsoft: CNBC「Microsoft (MSFT) Q4 earnings report 2026」（2026-07-29）
+  - Microsoft: GuruFocus「Microsoft Corp Q4 2026 Earnings Call Highlights」（2026-07-29）
+  - Microsoft: MSDynamicsWorld「Microsoft 2026 Q4 earnings」（2026-07-29）
+  - Meta: StockTitan「Meta reports second quarter 2026」（2026-07-30）
+  - 日経終値: 株探「日経平均大引け（7月30日）」（2026-07-30）
+  - 日銀: 日本銀行公式「金融政策決定会合の日程（2026年）」
+- コンプライアンス自己監査: 🟢白（初期🟡グレー→Opus自己修正→独立Opus確認🟢白）
+  - 修正内容: ①「異例の分裂」→「異例の分裂と報じられており」（断定→報道形）②植田総裁入院の表現を伝聞形に軟化（健康状態の断定回避）
+- 品質ルーブリック: 未実施（コンプラ白確認後に本稿掲載のため次回確認余地あり）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12系統以上 ✅ ⑤noindex不在 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告15件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-07-30-msft-fomc-result.html
+- commit: feat: auto-publish news 2026-07-30（main へ push 予定）
+
+---
+
 ## 2026-07-29
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均2日続落（-930円73銭・61,434円）＋今夜FOMC結果発表＋Meta/Microsoft Q2決算「ダブル転換点」3シナリオで中立整理（カテゴリ: 指数・マクロ・個別銘柄）
