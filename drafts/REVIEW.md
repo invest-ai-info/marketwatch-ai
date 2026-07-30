@@ -2,6 +2,10 @@
 
 ---
 
+2026-07-31 autopublish: 公開 | key=overnight-gap-risk | 決定論ゲート GREEN・Opus コンプラ白（グレー軽微修正4点適用）・独立 Opus 白確認 | URL=https://marketwatch-jp.com/guide-overnight-gap-risk.html
+
+---
+
 ## 2026-07-31 | 🤖 下書き生成 | overnight-gap-risk | 持ち越しリスクと週末ギャップ
 
 - **基準日**: 2026-07-31（JST）
