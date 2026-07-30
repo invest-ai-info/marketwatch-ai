@@ -1,6 +1,9 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-30 21:04）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-30 21:38）
 
-> ## 🌅 次セッションの入口＝**残っているのは②だけ**
+> ## 🌅 次セッションの入口＝**在flightはゼロ**。①②とも完了・push済み。
+> 残っているのは急がない宿題2つだけ＝**(a) sitemap に54本が未掲載**（下の「未対応の付随発見」）
+> **(b) Search Console のインデックス登録レポートを開いて、報告されている404 URL が
+> 7/30 に直した6件と一致するか確認**（別URLが載っていたらそれは未知の穴）。
 >
 > **⚠️ 夜の回線輻輳は「日による」。**2026-07-30 に原因を特定した：
 > `api.github.com` と `github.com` は **AAAA を持たず IPv4 のみ**で、この回線は夜のピークに
@@ -14,12 +17,15 @@
 > ⚠️ **教訓＝直後の冪等再確認は raw を使うと嘘をつく**（CDNキャッシュで「未適用0件」と出た）。
 > 書き込み直後の検証は **Contents API**（`?ref=main`）で行うこと。
 >
-> ### ② `generate_market_news.py` のタップ領域CSS（ローカル済み・未push）
-> `#mwTickerFilters button` / `#tools a` / `#theme-toggle` / `#ss-btn` を44pxへ。構文OK・`mw check`緑。
-> **push前に必ず reconcile**（クラウドが毎日 `_history_items` に追記するので stale になる）:
-> リモート取得 → `_apply_index_reorder.py --apply` → CSS再適用 → ハッシュ照合 → `sync --force`。
-> `--force` 時は `PYTHONUTF8=1` 必須。手順は 2026-07-30 に2回実行済みで確立している。
-> push後は Actions "Update Market News" を手動起動しないと index は再生成されない。
+> ### ✅ ② `generate_market_news.py` のタップ領域CSS — **完了（7/30 21:37）**
+> `#mwTickerFilters button` / `#tools a` / `#theme-toggle` / `#ss-btn` を44pxへ。commit `24944cd`。
+> **reconcile を機械化した＝`_apply_tap_targets.py`（冪等・dry-run既定）**。手で乗せ直すと事故るため。
+> 定石：リモート取得 → ローカルを置換 → `_apply_tap_targets.py --apply`（構文チェック内蔵）
+> → 双方向 diff で照合 → `mw check` → `PYTHONUTF8=1 python sync_to_github.py --force`。
+> **双方向 diff が要点**＝「合成 vs リモート＝CSS6行の追加のみ」かつ「合成 vs 旧ローカル＝履歴4行の
+> 取り込みのみ」を確認すれば、クラウドの追記を消しても自分の編集を失ってもいないと機械的に言える。
+> ⚠️ **旧版の「push後は手動 trigger が必要」は誤り**。`update-market-news.yml` は
+> `on: push` の `paths: generate_market_news.py` を監視しており、**push で自動起動する**（実測）。
 
 > ## ✅ 2026-07-30 夜に完了＝Search Console「404」の解消と恒久対策
 >
