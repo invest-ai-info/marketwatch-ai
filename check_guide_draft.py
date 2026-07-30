@@ -53,6 +53,18 @@ TODO_MARKERS = ["TODO(SVG)", "TODO（SVG）", "<!-- TODO"]
 LINK_EXT = (".html", ".htm", ".xml", ".json", ".txt", ".js", ".css",
             ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".pdf")
 
+# ⚠️ クラウド側(cron/routine)が生成する公開ページ＝SYNC禁忌ゆえローカルには存在しないことがある。
+#   本番には必ず存在するので実在チェックから除外する。これを入れないと、
+#   ナビ10ボタンが全記事から political-feed.html / youtube-summary.html を参照しているため
+#   **全記事がゲートに引っかかって自動公開レーンが全停止する**（2026-07-30 実測: 217/217件）。
+#   正は CLAUDE.md「SYNC_FILES の禁忌」節。
+CLOUD_GENERATED = {
+    "index.html", "calendar.html", "charts.html", "vix.html",
+    "market-health.html", "hot-assets.html",
+    "political-feed.html", "youtube-summary.html", "track-record.html",
+    "guide-new-books.html", "sitemap.xml", "news-ticker.json",
+}
+
 
 def slug_tokens(filename):
     """guide-xxx-yyy.html → {'xxx','yyy'}（日付・番号だけのトークンは除く）"""
@@ -107,6 +119,8 @@ def internal_link_check(html, path):
             continue
         p = u.split("#")[0].split("?")[0].lstrip("./").lstrip("/")
         if not p or not p.lower().endswith(LINK_EXT) or p in seen or p in selves:
+            continue
+        if p in CLOUD_GENERATED:      # クラウド生成＝ローカル不在でも本番には在る
             continue
         seen.add(p)
         if not os.path.exists(os.path.join(ROOT, p)):
