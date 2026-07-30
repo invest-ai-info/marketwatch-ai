@@ -1,0 +1,47 @@
+{
+  "article_id": "056",
+  "claims": [
+    {
+      "label": "1d×Long 全期間 勝率",
+      "filter": {"direction": "long", "tf": "1d"},
+      "k": 30,
+      "n": 75
+    },
+    {
+      "label": "1d×Long×bb_lower_touch 全期間 勝率（H2検証・エッジ確認）",
+      "filter": {"direction": "long", "tf": "1d", "signal": "bb_lower_touch"},
+      "k": 12,
+      "n": 16
+    },
+    {
+      "label": "1d×Long×bb_upper_break 全期間 勝率（H1検証・棄却確認）",
+      "filter": {"direction": "long", "tf": "1d", "signal": "bb_upper_break"},
+      "k": 1,
+      "n": 14
+    },
+    {
+      "label": "1d×Long×rsi_oversold_bounce 全期間 勝率",
+      "filter": {"direction": "long", "tf": "1d", "signal": "rsi_oversold_bounce"},
+      "k": 7,
+      "n": 12
+    },
+    {
+      "label": "1d×Long×high_break 全期間 勝率",
+      "filter": {"direction": "long", "tf": "1d", "signal": "high_break"},
+      "k": 1,
+      "n": 7
+    },
+    {
+      "label": "1d×Long×macd_golden 全期間 勝率",
+      "filter": {"direction": "long", "tf": "1d", "signal": "macd_golden"},
+      "k": 7,
+      "n": 15
+    },
+    {
+      "label": "1d×Short 全期間 勝率",
+      "filter": {"direction": "short", "tf": "1d"},
+      "k": 8,
+      "n": 22
+    }
+  ]
+}
