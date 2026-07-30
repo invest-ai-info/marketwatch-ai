@@ -210,7 +210,7 @@ window.addEventListener('resize',mark);
 
     <h1>🧪 AIシグナル研究日誌 #56<br><small style="font-size:.65em;color:#57606a;font-weight:400">日足ロングのシグナル二極化——BB下限タッチ(+1.125R) vs BB上限ブレイク(-1.250R)の2.375R差</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月（下書き中） &nbsp;|&nbsp; 読了：約10分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年7月31日 &nbsp;|&nbsp; 読了：約10分
     </div>
 
     <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">
@@ -251,7 +251,7 @@ window.addEventListener('resize',mark);
 
     <p>前向きトラッカー「ロング全般(日足)」は 2026-07-02 に登録され、2026-07-31 時点で前向き <strong>N=31</strong>（🏁ホールドアウト合格基準 N≥30 を達成）となり、チェックポイントを迎えた。E(R)=-0.398、95%CI [-0.68, -0.12] と CI 全域マイナスである。</p>
 
-    <p>この「全域マイナス」の原因を掘り下げるのが今回の課題だ。日足ロングの中には勝率 75% を誇る高パフォーマンスのシグナルタイプと、勝率 7% の壊滅的なシグナルタイプが共存しており、<strong>平均値がその二極を隠している</strong>可能性がある。</p>
+    <p>この「全域マイナス」の原因を掘り下げるのが今回の課題だ。日足ロングの中には過去データ上の勝率が 75% と高めに出ているシグナルタイプと、勝率 7% と大きく低いシグナルタイプが共存しており、<strong>平均値がその二極を隠している</strong>可能性がある。</p>
 
     <div class="warning-box">
       <strong>今回の事前合否基準（検証前に宣言）</strong><br>
@@ -454,11 +454,21 @@ window.addEventListener('resize',mark);
           <td><em>[-0.49, +0.29]</em></td>
           <td><em>—</em></td>
         </tr>
+        <tr style="background:#f6f8fa">
+          <td><em>1d Short 全体（参照）</em></td>
+          <td><em>22</em></td>
+          <td><em>8</em></td>
+          <td><em>36.4%</em></td>
+          <td><em>[19.7%, 57.0%]</em></td>
+          <td><em>-0.227</em></td>
+          <td><em>[-0.95, +0.49]</em></td>
+          <td><em>N小・参考値</em></td>
+        </tr>
       </tbody>
     </table>
     </div>
 
-    <p>逆張り系（BB下限タッチ・RSI売られすぎ）とブレイク系（BB上限ブレイク・高値ブレイク）の間には、期待値で最大 <strong>2.375R</strong> の開きがある。全体平均が -0.100R と損益分岐に接近して見えるのは、この二極が混在しているからだ。</p>
+    <p>逆張り系（BB下限タッチ・RSI売られすぎ）とブレイク系（BB上限ブレイク・高値ブレイク）の間には、期待値で最大 <strong>2.375R</strong> の開きがある。全体平均が -0.100R と損益分岐に接近して見えるのは、この二極が混在しているからだ。参照として日足ショート全体は 8/22=36.4%（N小・CI幅広く参考値のみ）。</p>
 
     <h2 id="h1h2">4. H1・H2 事前合否基準と検証結果</h2>
 
@@ -474,7 +484,7 @@ window.addEventListener('resize',mark);
       CI上限 31.5% &lt; 43% 達成。E(R)=-1.250R、95%CI [-1.74, -0.76] — <strong>全域マイナス確定</strong>
     </div>
 
-    <p>H1・H2 ともに宣言した基準を満たした。bb_upper_break と bb_lower_touch はともに N ≥ 10 を確保しており、結果の信頼性は一定程度担保されている。</p>
+    <p>H1・H2 ともに宣言した基準を満たした。bb_upper_break と bb_lower_touch はともに N ≥ 10 を確保しているが、サンプル数は依然として小さく、結果は暫定的なものとして扱う必要がある。</p>
 
     <h2 id="why">5. なぜ日足ではブレイク系が機能しないのか</h2>
 
@@ -623,10 +633,10 @@ window.addEventListener('resize',mark);
         <!-- バー：BB上限ブレイク -1.250R -->
         <!-- 165 + 1.250*80 = 165 + 100 = 265 → ただし260に制限 -->
         <rect x="520" y="165" width="70" height="95" fill="#cf222e" opacity="0.8" rx="4"/>
-        <text x="555" y="273" text-anchor="middle" font-size="11" fill="#cf222e" font-weight="700" font-family="Noto Sans JP,sans-serif">-1.250R</text>
-        <text x="555" y="280" text-anchor="middle" font-size="10" fill="#424a53" font-family="Noto Sans JP,sans-serif">BB上限</text>
-        <text x="555" y="290" text-anchor="middle" font-size="10" fill="#424a53" font-family="Noto Sans JP,sans-serif">ブレイク</text>
-        <text x="555" y="296" text-anchor="middle" font-size="9" fill="#8b949e" font-family="Noto Sans JP,sans-serif">N=14</text>
+        <text x="555" y="158" text-anchor="middle" font-size="11" fill="#cf222e" font-weight="700" font-family="Noto Sans JP,sans-serif">-1.250R</text>
+        <text x="555" y="278" text-anchor="middle" font-size="10" fill="#424a53" font-family="Noto Sans JP,sans-serif">BB上限</text>
+        <text x="555" y="289" text-anchor="middle" font-size="10" fill="#424a53" font-family="Noto Sans JP,sans-serif">ブレイク</text>
+        <text x="555" y="299" text-anchor="middle" font-size="9" fill="#8b949e" font-family="Noto Sans JP,sans-serif">N=14</text>
 
         <!-- 差分ブレース -->
         <line x1="150" y1="74" x2="150" y2="55" stroke="#9a6700" stroke-width="1.5"/>
