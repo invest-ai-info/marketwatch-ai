@@ -21,6 +21,11 @@ REVIEW.md に🚩エスカレ）。
      （2026-07-06 追加。実例: bonds-interest-rates vs interest-rates-bonds=語順違い、
       simple-vs-compound vs simple-vs-compound-interest=部分一致 の2本が重複公開された。
       キュー選定の完全一致スキップをすり抜ける「似スラッグの同一主題」を機械で止める）
+  8. 内部リンク実在検査 — サイト内リンク/画像の参照先が実ファイルとして存在するか
+     （2026-07-30 追加。Search Console の「見つかりませんでした(404)」を追跡したら、
+      自動公開レーンの記事6件が実在しない記事へリンクしていた＝4件はハルシネーション
+      [guide-boj-policy.html 等]、2件はパス取り違え[guide-contact.html＝正しくは contact.html]。
+      LLM は「あるはずの関連記事」を書けてしまうので、実在確認は機械側でしか担保できない）
 
 usage: python check_guide_draft.py <guide-xxx.html>
 """
@@ -43,6 +48,10 @@ NAV_LINKS = ["index.html", "political-feed.html", "track-record.html", "calendar
 BANNED_HARD = ["買い推奨", "売り推奨", "購入を推奨", "エントリー推奨", "買うべきです", "売るべきです"]
 
 TODO_MARKERS = ["TODO(SVG)", "TODO（SVG）", "<!-- TODO"]
+
+# 内部リンク実在検査の対象拡張子（ディレクトリURL等は対象外＝拡張子で判別する）
+LINK_EXT = (".html", ".htm", ".xml", ".json", ".txt", ".js", ".css",
+            ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".pdf")
 
 
 def slug_tokens(filename):
@@ -75,6 +84,33 @@ def slug_duplicate_check(path):
             continue
         if mine == theirs or (len(mine & theirs) >= 2 and (mine <= theirs or theirs <= mine)):
             fails.append(f"スラッグ重複疑い: {gb} と主題が重なる可能性（トークン {sorted(mine & theirs)} 共通）")
+    return fails
+
+
+def internal_link_check(html, path):
+    """サイト内リンク・画像の参照先が実ファイルとして存在するかを検査する。
+
+    存在しない先を指していると Google が 404 として拾い、その記事が
+    インデックスされないだけでなく「リンク切れのあるサイト」になる。
+    LLM は関連記事を"あるものとして"書けてしまうため、実在確認は機械側の責務。
+    ⚠️ 相対パスはサイトがフラット構成である前提で basename 相当に正規化する。
+    """
+    fails = []
+    me = os.path.basename(path)
+    # 下書き draft-xxx.html は公開時に guide-xxx.html になるので自己参照は正常
+    selves = {me, me.replace("draft-", "guide-"), me.replace("guide-", "draft-")}
+    seen = set()
+    for m in re.finditer(r'(?:href|src)="([^"]+)"', html):
+        u = m.group(1).strip()
+        if u.startswith(("http://", "https://", "//", "mailto:", "tel:", "#",
+                         "javascript:", "data:")):
+            continue
+        p = u.split("#")[0].split("?")[0].lstrip("./").lstrip("/")
+        if not p or not p.lower().endswith(LINK_EXT) or p in seen or p in selves:
+            continue
+        seen.add(p)
+        if not os.path.exists(os.path.join(ROOT, p)):
+            fails.append(f"リンク先が実在しない: {p}（404になる）")
     return fails
 
 
@@ -112,6 +148,9 @@ def main():
 
     # 7. スラッグ重複（似スラッグの同一主題＝重複コンテンツ防止）
     fails.extend(slug_duplicate_check(path))
+
+    # 8. 内部リンク実在（存在しない記事へのリンク＝Search Console の404の正体）
+    fails.extend(internal_link_check(html, path))
 
     # 6. SVG検査（固定オラクルの関数を流用＝判定基準の単一ソース化）
     try:
