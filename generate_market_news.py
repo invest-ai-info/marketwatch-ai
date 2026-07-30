@@ -5292,6 +5292,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
          B2: タップ領域を44px以上へ（44px未満が51個あった）。 */
       html{{font-size:17px}}
       .nav-btn,.md-chip,.jump-bar a,.jump-bar button{{min-height:44px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}}
+      /* 2026-07-30 追加。単独コントロールを44pxへ（実測で 35個→21個）。
+         ⚠️ 文中のインラインリンクは対象にしない。WCAG 2.5.8 は
+         「文中にある／非対象テキストの行高に制約される」ターゲットを除外しており、
+         強制的に44pxにすると本文の行送りが壊れる。残り21個のうち13個はこの除外に該当。 */
+      #mwTickerFilters button,#tools a{{min-height:44px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}}
+      #theme-toggle,#ss-btn{{min-width:44px;min-height:44px}}
       .header-inner{{flex-direction:column}}
       .sentiment-banner{{flex-direction:column}}
       .nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
