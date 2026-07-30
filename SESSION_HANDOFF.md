@@ -1,24 +1,18 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-07-30 20:12）
+# 🔖 セッション引き継ぎ（最終更新: 2026-07-30 21:04）
 
-> ## 🌅 次セッションの入口＝**朝いちで2つ push**（夜間の回線輻輳で中断したもの）
+> ## 🌅 次セッションの入口＝**残っているのは②だけ**
 >
-> **⚠️ 夜（19〜23時台）は GitHub API が繋がらない。**2026-07-30 に原因を特定した：
+> **⚠️ 夜の回線輻輳は「日による」。**2026-07-30 に原因を特定した：
 > `api.github.com` と `github.com` は **AAAA を持たず IPv4 のみ**で、この回線は夜のピークに
 > IPv4(PPPoE) が詰まる。IPv6 を持つ `raw.githubusercontent.com` だけが正常だった。
 > ping は 7ms で通るのに TCP443 が張れないのはこのため。**遮断ではなく輻輳**なので
-> リトライは効く。重いAPI作業は朝〜日中にやること。
+> リトライは効く。⚠️ ただし**同じ 7/30 の 20時台には普通に繋がり、①も404修正も完走した**。
+> 「夜は不通」と決めつけず、`Test-NetConnection api.github.com -Port 443` で**実測してから**判断する。
 >
-> ### ① クラウドレーン記事125本に行長CSSを注入（未実施）
-> ```
-> PYTHONUTF8=1 python _repair_cloud_articles.py          # dry-run
-> PYTHONUTF8=1 python _repair_cloud_articles.py --apply   # 本番
-> ```
-> `guide-news-*` / `guide-signal-lab-*` / `guide-proverb-*` は SYNC外なので Contents API 経由。
-> **反映済みは0本**（前回は1件も通らず中断＝半端な状態は無い）。
-> ⚠️ **リモートを列挙すること。ローカルミラーは遅行していて 24本がローカルに存在しない**（実測）。
-> 読み取りは raw（IPv6で生きている）、書き込みは **Git Trees API で1コミットに集約**（API 約11回）。
-> 初版の「1ファイルずつGET+PUT」は250回で完走せず、かつ125コミットが `on:push` を125回
-> 起こす設計ミスだった。`base_tree` を使うので**対象125パス以外は触らない**。
+> ### ✅ ① クラウドレーン記事125本に行長CSS注入 — **完了（7/30 20:33）**
+> 1コミット `05142936` で125本。Contents API で実測5/5にマークあり。
+> ⚠️ **教訓＝直後の冪等再確認は raw を使うと嘘をつく**（CDNキャッシュで「未適用0件」と出た）。
+> 書き込み直後の検証は **Contents API**（`?ref=main`）で行うこと。
 >
 > ### ② `generate_market_news.py` のタップ領域CSS（ローカル済み・未push）
 > `#mwTickerFilters button` / `#tools a` / `#theme-toggle` / `#ss-btn` を44pxへ。構文OK・`mw check`緑。
@@ -26,6 +20,34 @@
 > リモート取得 → `_apply_index_reorder.py --apply` → CSS再適用 → ハッシュ照合 → `sync --force`。
 > `--force` 時は `PYTHONUTF8=1` 必須。手順は 2026-07-30 に2回実行済みで確立している。
 > push後は Actions "Update Market News" を手動起動しないと index は再生成されない。
+
+> ## ✅ 2026-07-30 夜に完了＝Search Console「404」の解消と恒久対策
+>
+> **発端**＝Search Console の「ページがインデックスに登録されない新しい要因：見つかりませんでした(404)」。
+> sitemap 226URL に幽霊は0件・guides/index のリンク切れも0件で、**全284HTMLの本文内リンクを
+> 実ファイル705件と突合**して初めて6件出た。**参照元は全部クラウド自動公開レーン**：
+> 4件はハルシネーション（`guide-boj-policy.html`／`guide-bigtech-earnings.html`／7/15のIBM記事＝
+> 日付ゲートで公開が止まった日を後続2記事が「あるもの」として参照／未公開の格言）、
+> 2件はパス取り違え（`guide-contact.html`＝正しくは `contact.html`）。
+> → `_fix_broken_links.py`（ローカル専用・冪等）で1コミット `ed65f396`。代替がある物は差し替え、
+> 無い物は related-card ごと削除／本文中はアンカーだけ外して文章は残す。
+>
+> **恒久対策で踏んだ落とし穴が2つある。同じ間違いをしないこと：**
+> 1. 最初 `check_guide_draft.py` にだけ検査を足したが、**このゲートを通るのは autodraft/signal-lab/
+>    bookwatch だけ**で、実際に404を作った **news レーン(5件)と proverb レーン(1件)は素通り**だった。
+>    → **全レーンが必ず通る関門は `publish_article.py`**。ここに `check_link_gate` を置いた（commit 338cf35）。
+>    判定ロジックは `check_guide_draft.internal_link_check` に一本化（基準の二重管理を避ける）。
+> 2. 素朴に実在チェックすると **217記事中217件がRED＝自動公開レーン全停止**になる。
+>    ナビ10ボタンが全記事から `political-feed.html`／`youtube-summary.html` を参照しており、
+>    この2つは**SYNC禁忌＝ローカルに存在しない**ため。→ `CLOUD_GENERATED` ホワイトリストで除外し
+>    **217件→5件**（残5件もミラー遅行で、クラウド実行時は誤検知ゼロ）。
+>    **新しいゲートを足したら必ず既存全記事で誤検知率を実測すること。**
+> テスト＝`_test_guide_link_check.py`(20件)＋`_test_publish_link_gate.py`(7件・`--dry-run`で実起動)。
+>
+> **📌 未対応の付随発見**：**記事は存在するのに sitemap に載っていないものが54件**
+> （`guide-auto-*` 13本・`guide-btc-crash-*`・`guide-interest-rates-bonds.html` 等）。
+> CLAUDE.md は「`build_sitemap_xml` が全 guide-*.html を自動収集」と書いているが**実態は漏れている**。
+> 404ではないので緊急ではないが、検索流入の取りこぼし。`build_sitemap_xml` の収集条件を読めば判別できる。
 
 > ## ✅ 2026-07-30 に完了してライブ反映済み
 >
@@ -88,7 +110,8 @@
 | **事前登録した仮説の「登録漏れ」検知** 🆕7/27 | `check_automation_health.py` §⑥（同 09:30 JST・`check_tracker_registration`） | コード側の宣言（`SEED`＋register定数）と実体（`signal-lab-tracker.json`）を突合し、**idもfilterも不在**なら **Issue**。7/27 に Q35の3件が「SEEDに足しただけ＝一度も登録されず」なのに台帳が「観測開始」と書いていた事故の恒久対策。**filter重複による正常スキップ（`metal_all_1d`等4件）は誤検知しない**ことを実データで確認済み |
 | **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（回帰テスト=**`_test_doctrine_registry.py` 13件**・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
 | **取り直せないスナップショットの欠測検知** 🆕7/28 | `_doctrine_check.py --agenda`（`mw evolve`）の心拍鮮度＋`_jp_earnings_cal_logger.py` の追記/冪等 | 決算カレンダーは**翌営業日1日分・履歴なし＝走らなかった日は永久欠測**。3日沈黙で ⚠️。**automation-health は GitHub 側でローカル専用ロガーを見られない**ため番人をここに置いた。BOM有無/沈黙/正常の3分岐を実測（BOMで例外→握り潰し→**番人が黙る**壊れ方を実際に踏んで修正済み） |
-| sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要 |
+| **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
+| sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml` | 全 guide を自動収集・手動編集不要（⚠️7/30実測で**54本が未掲載**＝要調査） |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
 
