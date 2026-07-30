@@ -69,6 +69,25 @@ def _jp_date(d):
 # 🔒 2026-07-22 日付ゲート（7/15 日付事故の恒久対策・signal_lab_verify.date_check と同型）。
 #   記事の公開日 ≠ JST の今日なら公開を停止する。過去記事の再公開など意図的な場合のみ
 #   --allow-backdate で免除。UTC環境や日付の使い回しで前日付のまま公開する事故を決定論で遮断。
+# 🔒 2026-07-30 リンクゲート（Search Console「見つかりませんでした(404)」の恒久対策）。
+#   記事内のサイト内リンク/画像が実在しないまま公開されるのを止める。
+#   なぜ publish_article に置くか＝**全レーンが必ずここを通る**唯一の関門だから。
+#   check_guide_draft.py の検査8は autodraft/signal-lab/bookwatch しか通らず、
+#   実際に404を作った news レーン(5件)と proverb レーン(1件)を素通りさせていた。
+#   判定ロジックは check_guide_draft.internal_link_check に一本化する（基準の二重管理を避ける）。
+def check_link_gate(filename, html, allow_missing=False):
+    """記事内の参照先が実在しなければエラー一覧を返す。実在/免除なら空リスト。"""
+    if allow_missing:
+        return []
+    try:
+        from check_guide_draft import internal_link_check
+    except Exception as e:
+        # 検査できないこと自体は公開停止にしない（既存の公開経路を壊さない）が、必ず可視化する
+        print(f"⚠️ リンクゲートを実行できません（{type(e).__name__}: {str(e)[:60]}）")
+        return []
+    return internal_link_check(html, os.path.join(SCRIPT_DIR, filename))
+
+
 def check_date_gate(date, allow_backdate=False):
     """date(YYYY-MM-DD) が JST の今日と一致しなければエラーメッセージを返す。一致/免除なら None。"""
     if allow_backdate:
@@ -280,6 +299,8 @@ def main():
     ap.add_argument("--badge", default="badge-news", help="バッジCSSクラス（既定: badge-news）")
     ap.add_argument("--allow-backdate", action="store_true", dest="allow_backdate",
                     help="日付ゲート免除（公開日≠JST今日でも公開する。過去記事の再公開など意図的な場合のみ）")
+    ap.add_argument("--allow-missing-links", action="store_true", dest="allow_missing_links",
+                    help="リンクゲート免除（実在しない参照先があっても公開する。同時公開記事の相互リンク等）")
     ap.add_argument("--dry-run", action="store_true", dest="dry", help="書き込まず変更内容のみ表示")
     ap.add_argument("--no-reconcile", action="store_true", dest="no_reconcile",
                     help="公開前の main 自動取り込みを無効化（非常時のみ・巻き戻し事故の危険）")
@@ -299,6 +320,14 @@ def main():
     _gate_err = check_date_gate(date, allow_backdate=a.allow_backdate)
     if _gate_err:
         print(f"🚫 日付ゲート: {_gate_err}")
+        sys.exit(1)
+    _link_errs = check_link_gate(a.file, html, allow_missing=a.allow_missing_links)
+    if _link_errs:
+        print(f"🚫 リンクゲート: 実在しない参照先が {len(_link_errs)}件（そのまま公開すると404になる）")
+        for e in _link_errs:
+            print(f"     ❌ {e}")
+        print("   → 参照先を実在する記事に直すか、リンクを外してください"
+              "（意図的なら --allow-missing-links）")
         sys.exit(1)
 
     print(f"📝 記事公開の準備: {a.file}")
