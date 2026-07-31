@@ -95,4 +95,5 @@ SYNC_FILES = [
     "guide-signal-lab-056.html",
     "guide-overnight-gap-risk.html",
     "guide-proverb-kansan-ni-uri-nashi.html",
+    "guide-signal-lab-057.html",
 ]
