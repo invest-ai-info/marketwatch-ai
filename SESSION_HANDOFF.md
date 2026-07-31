@@ -31,7 +31,9 @@
 >
 > **持ち越す教訓（コードに書けなかった分だけ）**
 > - **書き込み直後の検証に raw を使わない**＝CDNキャッシュで「未反映」と嘘をつく。**Contents API (`?ref=main`)** で見る
-> - **監査はリモート基準**。ローカル優先で読むとミラー遅行で「直したはずが壊れている」と誤検知する（7/31 に3回踏んだ）
+> - **ミラー遅行は `_pull_mirror.py` で解消する**（7/31 20:27 実施＝163本取り込み後、ローカル基準の404監査も**0件**に）。
+>   クラウドレーン(`guide-news-/signal-lab-/proverb-/auto-/weekly-/monthly-report-`)は**リモートが真実**＝
+>   内容ハッシュ比較で古ければ上書き。「ローカルに無い分だけ取得」では**リモートで修正済みの古い版が残って誤検知が続く**
 > - **新ゲートを足したら既存全記事で誤検知率を実測**する。素朴な実在チェックは 217/217件 RED になった
 > - **ゲートは全レーンが通る関門に置く**。`check_guide_draft` 側だけでは news/proverb レーンが素通りする
 
@@ -65,6 +67,7 @@
 | **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（回帰テスト=**`_test_doctrine_registry.py` 13件**・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
 | **取り直せないスナップショットの欠測検知** 🆕7/28 | `_doctrine_check.py --agenda`（`mw evolve`）の心拍鮮度＋`_jp_earnings_cal_logger.py` の追記/冪等 | 決算カレンダーは**翌営業日1日分・履歴なし＝走らなかった日は永久欠測**。3日沈黙で ⚠️。**automation-health は GitHub 側でローカル専用ロガーを見られない**ため番人をここに置いた。BOM有無/沈黙/正常の3分岐を実測（BOMで例外→握り潰し→**番人が黙る**壊れ方を実際に踏んで修正済み） |
 | **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
+| **ローカルミラーの遅行を解消** 🆕7/31 | `_pull_mirror.py`（ローカル専用・冪等・dry-run既定） | クラウドが公開/更新した記事を取り込む。**内容ハッシュ(git blob sha)で比較**するので「ローカルに在るが古い」も検出。取り込み内容＝リモートと同一なので **sync は「⏭️内容変更なし」でスキップ＝無駄なコミットが出ない**。`guide-new-books.html` は SYNC_FORBIDDEN のため除外。⚠️これを怠ると `mw check`・404監査・FPテストが**揃って誤検知**する（7/31 に3回） |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml`＋`is_noindex_slug`（除外の単一ソース） | 全 guide を自動収集・手動編集不要。未掲載＝noindex 対象の意図的除外（7/31 実測で55本中54本が該当＝**不具合ではない**）。⚠️新記事公開時は sync 後に **workflow を手動 trigger**（下記の push 順序） |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
