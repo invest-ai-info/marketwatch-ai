@@ -164,6 +164,7 @@ content-writer と seo-ux-strategist を**同一メッセージ内で並列**に
 
 ### ⚠️ 絶対に SYNC_FILES に含めないファイル
 
+- 🆕 **`research/` 配下は丸ごとローカル専用**（2026-07-31・非公開研究）: `check_sync_forbidden` が**ディレクトリ単位**で error 停止＝**個別登録は不要**（経緯は SESSION_HANDOFF 同日節）
 - **HTML 6 コアページ**: `index.html` / `calendar.html` / `charts.html` / `vix.html` / `market-health.html` / `hot-assets.html`
 - **SEO 自動生成（2026-06-01 追加）**: `sitemap.xml`（`generate_market_news.py` の `build_sitemap_xml` が**全 guide-*.html を自動収集**して再生成、update-market-news が commit）。ローカルから push すると再生成版を一時的に巻き戻すため禁止。**記事追加時の手動 sitemap 編集も不要になった**（自動で全記事が載る）
 - **workflow 管理ファイル**: `signals-log.json` / `technical-alerts-history*.json` / `track-record.html`
