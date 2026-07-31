@@ -2,6 +2,52 @@
 
 ---
 
+## 2026-07-31 | 🤖 下書き生成 | overconfidence | 連勝のあとが一番危ない
+
+- **基準日**: 2026-07-31（JST）
+- **対象key**: overconfidence（投資心理 / 🧠 投資の心理・メンタル）
+- **生成ファイル**: `drafts/draft-overconfidence.html`
+- **参照出典**:
+  - https://www.quantifiedstrategies.com/hot-hand-fallacy-bias-in-trading/（ホットハンド誤謬とトレード心理）
+  - https://www.renascence.io/journal/hot-hand-fallacy-belief-in-continuing-success-based-on-past-wins（ホットハンド効果の行動経済学的説明）
+  - https://capital.com/hot-hand-fallacy-bias（ホットハンド誤謬の仕組み）
+  - https://ja.wikipedia.org/wiki/%E3%82%AE%E3%83%A3%E3%83%B3%E3%83%96%E3%83%A9%E3%83%BC%E3%81%AE%E8%AA%A4%E8%AC%AC（ギャンブラーの誤謬・大数の法則）
+  - https://medium.com/@trading.dude/how-many-trades-are-enough-a-guide-to-statistical-significance-in-backtesting-093c2eac6f05（統計的有意のトレード件数目安）
+  - https://www.edgeflo.com/blog/sample-size-trading（100件ルール・サンプルサイズ）
+- **事実確認済み内容**:
+  - 6連勝の確率 = (1/2)^6 = 1/64 ≈ 1.56%（約1.6%）✅ 算数で計算確認済み
+  - ホットハンド誤謬（hot hand fallacy）: 連続した成功から「流れがある」と過信する心理バイアス ✅
+  - 統計的有意の最低目安: 30件（中央極限定理）、実用的な評価: 100件以上（複数ソース一致） ✅
+  - 過信バイアスによる行動: ロット増加・ルール例外・損切り先送り（行動経済学の知見に一致） ✅
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・心理解説のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「保証」「儲かる」等を使用していない）
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末p.disclaimer・footer の3点に記載
+  - ✅ 出典妥当（WebSearchで確認した行動経済学の知見のみ使用）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ ナビバー10ボタン・順序厳守
+  - ✅ 統計的有意の件数目安は「一般的に言われる目安として」と明示し断言を避けた
+  - ✅ 100件以上でも「市場環境の変化には注意」と留保表現あり
+- **SVG状況**:
+  - 図1: 「64マスのコイン投げ・6連勝の直感図解」（1/64を視覚化） ✅
+  - 図2: 「過信が生む3つの危険な行動の概念図」（資産曲線の分岐） ✅
+  - 図3: 「サンプルサイズが増えるほどブレ幅が縮まる概念図」 ✅
+  - ライト/ダーク両対応のCSSクラス（.s-*）実装済み。実機での表示確認は人間の残作業
+  - ⚠️ 図1のコインはSVGスタイルクラス `.s-coin-h`/`.s-coin-t` で描画。ライト/ダーク実機確認推奨
+- **内部リンク**:
+  - `guide-trading-journal.html` → 公開済み ✅
+  - `guide-loss-cut.html` → 公開済み ✅
+  - `guide-position-sizing.html` → 公開済み ✅
+  - `guide-signal-lab-001.html` → 公開済み ✅
+  - `track-record.html` → 公開済み ✅
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク表示確認（コインの金色/灰色、棒グラフの色）
+  - タイトル・見出し微調整（必要に応じて）
+  - compliance-reviewer (Opus) 監査
+  - 公開は毎朝 08:40 の autodraft-publish がゲート付きで自動実行
+
+---
+
 2026-07-31 autopublish: 公開 | key=overnight-gap-risk | 決定論ゲート GREEN・Opus コンプラ白（グレー軽微修正4点適用）・独立 Opus 白確認 | URL=https://marketwatch-jp.com/guide-overnight-gap-risk.html
 
 ---
