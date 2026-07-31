@@ -4972,6 +4972,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-07-31", "line": '・<b>2026-07-31</b>: 🌫 解説「<a href="guide-proverb-kansan-ni-uri-nashi.html" style="color:#0969da"><b>閑散に売りなし</b></a>」公開'},
         {"date": "2026-07-31", "line": '・<b>2026-07-31</b>: 🛡️ 解説「<a href="guide-overnight-gap-risk.html" style="color:#0969da"><b>持ち越しリスクと週末ギャップ</b></a>」公開'},
         {"date": "2026-07-31", "line": '・<b>2026-07-31</b>: 🧪 解説「<a href="guide-signal-lab-056.html" style="color:#0969da"><b>日足ロングのシグナル二極化——BB下限タッチ+1.125R vs BB上限ブレイク-1.250R</b></a>」公開'},
         {"date": "2026-07-31", "line": '・<b>2026-07-31</b>: 📰 解説「<a href="guide-news-2026-07-31-yen-surge-intervention-check.html" style="color:#0969da"><b>ドル円が1時間で4円超の急落──「介入観測」を通貨横断データで検証</b></a>」公開'},
