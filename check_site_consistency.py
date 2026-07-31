@@ -52,6 +52,9 @@ SYNC_FORBIDDEN = {
     "idea-inbox.md",  # 研究アイデア受信箱 drafts/idea-inbox.md（routine idea-scout-weekly が毎週日曜GitHub側で追記。照合はbasename）
     # 🆕 2026-07-07 進化ループのローカル専用ファイル（非公開研究＝公開リポへ流出させない）
     "DOCTRINE.md", "hypothesis_queue.md", "_doctrine_check.py", "_hypothesis_registry.json",
+    # 🆕 2026-07-31 アーカイブ2種（basename でも止める＝research/ プレフィックス無しで
+    # 書かれた場合の保険。ディレクトリ規則は上の検査1の research/ 分岐が担う）
+    "DOCTRINE_ARCHIVE.md", "hypothesis_queue_archive.md",
 }
 
 errors = []
@@ -142,6 +145,28 @@ def check_economic_events():
             warnings.append(f"カレンダー: {mo}/{dy}「{name}」が木曜でない（ECB理事会は木曜が通例）＝要確認")
 
 
+def check_sync_forbidden(sync_files):
+    """SYNC禁忌の判定（3層: 個別禁忌リスト / `_`プレフィックス / research/ ディレクトリ）。
+
+    2026-07-31 に main() から切り出しただけで判定内容は不変＝回帰テスト
+    `_test_sync_research_guard.py` がここを直接呼べるようにするため。
+    """
+    for f in sorted(sync_files):
+        base = os.path.basename(f)
+        if base in SYNC_FORBIDDEN or f in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
+            errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
+        elif base.startswith("_"):
+            # 🆕 2026-07-07: 「_プレフィックス＝ローカル専用（非公開研究/個人データ）」規約をコードで強制
+            errors.append(f"🚨 ローカル専用（_プレフィックス）ファイルが SYNC_FILES に混入: {f}（非公開研究の流出防止）")
+        elif f.replace("\\", "/").startswith("research/"):
+            # 🆕 2026-07-31: 「research/ 配下は丸ごとローカル専用」をディレクトリ単位で強制。
+            # 列挙式（SYNC_FORBIDDEN に1件ずつ足す）は足し忘れが穴になる＝実測で research/ の
+            # 非アンダースコア .md 13件のうち登録済みは2件だけだった（非公開仮説の全文147KB＝
+            # hypothesis_queue_archive.md すら未登録）。境界は実態と一致する＝SYNC_FILES 全件に
+            # research/ 配下は1件も無い（誤検知率は `_test_sync_research_guard.py` が毎回実測）。
+            errors.append(f"🚨 research/ 配下（非公開研究）が SYNC_FILES に混入: {f}（公開リポへの流出防止）")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -149,13 +174,7 @@ def main():
 
     # 1. 🚨 SYNC禁忌チェック（最重要：巻き戻し事故防止。push直前のローカル実行でのみ意味がある）
     if sync_known:
-        for f in sorted(sync_files):
-            base = os.path.basename(f)
-            if base in SYNC_FORBIDDEN or f in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
-                errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
-            elif base.startswith("_"):
-                # 🆕 2026-07-07: 「_プレフィックス＝ローカル専用（非公開研究/個人データ）」規約をコードで強制
-                errors.append(f"🚨 ローカル専用（_プレフィックス）ファイルが SYNC_FILES に混入: {f}（非公開研究の流出防止）")
+        check_sync_forbidden(sync_files)
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""
