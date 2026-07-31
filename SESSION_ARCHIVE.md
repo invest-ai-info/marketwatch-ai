@@ -6,6 +6,94 @@ SESSION_HANDOFF.md のスリム化（2026-06-20）で、2026-06-17 以前の履�
 
 ---
 
+<!-- SESSION_HANDOFF スリム化（2026-07-31）で退避 -->
+
+## 📦 2026-07-30〜31 完了節（2026-07-31 退避）
+
+> ### ✅ ① クラウドレーン記事125本に行長CSS注入 — **完了（7/30 20:33）**
+> 1コミット `05142936` で125本。Contents API で実測5/5にマークあり。
+> ⚠️ **教訓＝直後の冪等再確認は raw を使うと嘘をつく**（CDNキャッシュで「未適用0件」と出た）。
+> 書き込み直後の検証は **Contents API**（`?ref=main`）で行うこと。
+>
+> ### ✅ ② `generate_market_news.py` のタップ領域CSS — **完了（7/30 21:37）**
+> `#mwTickerFilters button` / `#tools a` / `#theme-toggle` / `#ss-btn` を44pxへ。commit `24944cd`。
+> **reconcile を機械化した＝`_apply_tap_targets.py`（冪等・dry-run既定）**。手で乗せ直すと事故るため。
+> 定石：リモート取得 → ローカルを置換 → `_apply_tap_targets.py --apply`（構文チェック内蔵）
+> → 双方向 diff で照合 → `mw check` → `PYTHONUTF8=1 python sync_to_github.py --force`。
+> **双方向 diff が要点**＝「合成 vs リモート＝CSS6行の追加のみ」かつ「合成 vs 旧ローカル＝履歴4行の
+> 取り込みのみ」を確認すれば、クラウドの追記を消しても自分の編集を失ってもいないと機械的に言える。
+> `update-market-news.yml` は `on: push` の `paths: generate_market_news.py` を監視しており、
+> **generate_market_news.py だけを直す場合は push で自動起動する**（実測）。
+> ⚠️ **ただし新記事を公開するときは 8ステップの⑦（手動 trigger）を省略してはいけない**（7/31 実測）。
+> sync は SYNC_FILES 順に**1ファイルずつ commit**するため `generate_market_news.py` が記事より先に
+> push され、**on:push が「記事がまだ存在しないツリー」で走って sitemap から記事が漏れる**。
+> 起動は `python mw.py trigger update-market-news.yml`（**`.yml` を付けないと 404**）。
+
+> ## ✅ 2026-07-30 夜に完了＝Search Console「404」の解消と恒久対策
+>
+> **発端**＝Search Console の「ページがインデックスに登録されない新しい要因：見つかりませんでした(404)」。
+> sitemap 226URL に幽霊は0件・guides/index のリンク切れも0件で、**全284HTMLの本文内リンクを
+> 実ファイル705件と突合**して初めて6件出た。**参照元は全部クラウド自動公開レーン**：
+> 4件はハルシネーション（`guide-boj-policy.html`／`guide-bigtech-earnings.html`／7/15のIBM記事＝
+> 日付ゲートで公開が止まった日を後続2記事が「あるもの」として参照／未公開の格言）、
+> 2件はパス取り違え（`guide-contact.html`＝正しくは `contact.html`）。
+> → `_fix_broken_links.py`（ローカル専用・冪等）で1コミット `ed65f396`。代替がある物は差し替え、
+> 無い物は related-card ごと削除／本文中はアンカーだけ外して文章は残す。
+>
+> **恒久対策で踏んだ落とし穴が2つある。同じ間違いをしないこと：**
+> 1. 最初 `check_guide_draft.py` にだけ検査を足したが、**このゲートを通るのは autodraft/signal-lab/
+>    bookwatch だけ**で、実際に404を作った **news レーン(5件)と proverb レーン(1件)は素通り**だった。
+>    → **全レーンが必ず通る関門は `publish_article.py`**。ここに `check_link_gate` を置いた（commit 338cf35）。
+>    判定ロジックは `check_guide_draft.internal_link_check` に一本化（基準の二重管理を避ける）。
+> 2. 素朴に実在チェックすると **217記事中217件がRED＝自動公開レーン全停止**になる。
+>    ナビ10ボタンが全記事から `political-feed.html`／`youtube-summary.html` を参照しており、
+>    この2つは**SYNC禁忌＝ローカルに存在しない**ため。→ `CLOUD_GENERATED` ホワイトリストで除外し
+>    **217件→5件**（残5件もミラー遅行で、クラウド実行時は誤検知ゼロ）。
+>    **新しいゲートを足したら必ず既存全記事で誤検知率を実測すること。**
+> テスト＝`_test_guide_link_check.py`(20件)＋`_test_publish_link_gate.py`(7件・`--dry-run`で実起動)。
+>
+> **📌 「sitemap に54本が未掲載」は誤認だった（7/31 訂正）**：**不具合ではない**。
+> `is_noindex_slug()`＝`guide-auto-*`／`guide-weekly-*`／`guide-monthly-report-*`／`NOINDEX_SLUGS`
+> （AdSense再申請前に薄い日付フラッシュを noindex 統合した分）による**意図的な除外**で、
+> **未掲載55本のうち54本が説明できた**（残る1本は当日公開の記事＝下記の push 順序が原因）。
+> CLAUDE.md の「全 guide-*.html を自動収集」は正しい。
+> ⚠️ **教訓＝生の差分だけ見て「漏れ」と判断しない**。未掲載を見つけたらまず `is_noindex_slug` に通す。
+> 監査スクリプトの型は「除外ルールの単一ソースを import して、説明できない分だけ残す」。
+
+> ## ✅ 2026-07-30 に完了してライブ反映済み
+>
+> **サイトデザイン改善（スマホ/PC）** — index の並べ替えと読みやすさ。すべて実測値：
+> AI判断への到達 3.5→**1.9画面**／市場カード 5.0→**3.5画面**／A8広告① 3.3→**1.7画面**（動かさず前進）
+> ／記事の1行 70字→**40字**（PC・116本）／タップ44px未満 51→**35個**／13px未満の文字 132→**53個**
+> ／横スクロール0／ページ長は B3 の代償で 14.4→15.5画面。
+> 手段＝`_apply_index_reorder.py`（並べ替え・冪等）＋ 共通CSSに `html{font-size:17px}`（rem基準を
+> 上げてインライン168箇所を触らずに底上げ）＋ `_apply_readable_width.py`（記事へ `max-width:40em`）。
+> ⚠️ **全部を44pxにしてはいけない**。WCAG 2.5.8 は文中リンクを除外しており、残21個中13個が該当。
+>
+> **図解の破綻を是正** — `guide-signal-anatomy.html` の実測で3つ発覚：BBが平行チャネル（幅の
+> 最大/最小 **1.04倍**）／中心線なし／**足が x=390 で終わるのにバンドは x=480**（83px）。
+> → `_gen_bb_panel.py` で**計算して座標を出す**方式へ（幅比3.01倍・−2σ貫通・RSI26点を価格と
+> 0.05px精度で整列）。本文の「−2σタッチで発火」「RSI30割れ→反発」を図が満たすことを**seed採用条件**に
+> 入れてある（満たさない図を出さない）。差し込みは `_apply_bb_panels.py`（冪等・dry-run既定）。
+> **目分量で描くと必ず平行になる。今後チャートは計算で出す。**
+>
+> **公開ゲートに2検査を追加** — `signal_lab_verify.py` に `text_occlusion_check`（不透明図形に
+> 文字が隠れる）と `band_parallel_check`（バンドが平行＝σ非連動）。`check_guide_draft.py` に接続済。
+> 既知欠陥6ケースで陽性・陰性とも検証。既存 `text_overlap_check` は text同士しか見ておらず素通りしていた。
+>
+> **Codex 連携を確立** — `AGENTS.md`（プロジェクト＋`~/.codex/` グローバル）を新設。
+> `§0 ENCODING` を **ASCIIのみ**で書いてあるのが要点：CP932で読むと日本語が全滅する
+> （実測で CLAUDE.md が2,400文字化け）ため、化けても読める形で「UTF-8で読み直せ」を先頭に置いた。
+> 呼び出しは `codex exec -s read-only --skip-git-repo-check -C <dir> -o <out> -` に**stdinでプロンプト**
+> （引数渡しは PowerShell が引用符で分断する）。バイナリは `.codex/config.toml` の `CODEX_CLI_PATH`
+> から引く（パスにバージョンハッシュが入るので更新で壊れる）。`.git` が無いので `codex review` は不可。
+> **分業の実測**＝Codex はコードレビューで私の正規表現の退行を検出、図解2ラウンドともラベル配置は
+> Codex の方が正確（私は衝突1件と2件を出した）。「私が設計/Codexが実行」ではなく
+> **「私＝診断・仕様化・検証の設計／Codex＝明文化された仕様の実装」**。
+> 両者とも自分の描画結果を見られないので、**測定ゲートが本質**。
+
+---
+
 <!-- 2026-07-24 DOCTRINE §3スタブ化第3弾の退避行（要点はDOCTRINE §3スタブ行・数値の真実はsummary JSON） -->
 
 ## 📖 DOCTRINE §3退避行（2026-07-24 第3弾）
