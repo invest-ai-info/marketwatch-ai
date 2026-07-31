@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>連勝のあとが一番危ない｜小サンプルの罠と過信バイアスを行動経済学で解説 - MarketWatch AI</title>
+  <meta name="description" content="「6勝したから自分は実力がある」は本当か。コイン投げでも6連勝は約1.6%で起きる。小サンプルの罠・ホットハンド誤謬・過信バイアスを行動経済学でやさしく解説し、何件の記録があれば傾向と言えるか、過信が出たときの危険な行動（ロット増・ルール破り・損切り先送り）への対処まで、初心者〜中級者向けに図解で解説します。">
+  <meta name="keywords" content="過信,overconfidence,小サンプル,ホットハンド誤謬,hot hand fallacy,投資心理,行動経済学,連勝,勝率,統計的有意,サンプルサイズ,トレード心理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-overconfidence.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="連勝のあとが一番危ない｜小サンプルの罠と過信バイアスを行動経済学で解説">
+  <meta property="og:description" content="「6勝したから実力」は本当か。コイン投げでも6連勝は約1.6%で起きる。小サンプルの罠と過信バイアスを図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-overconfidence.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "連勝のあとが一番危ない｜小サンプルの罠と過信バイアスを行動経済学で解説",
+    "description": "「6勝したから実力」は本当か。コイン投げでも6連勝は約1.6%で起きる。小サンプルの罠・ホットハンド誤謬・過信バイアスを行動経済学で解説し、記録で確かめる方法まで。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-01",
+    "dateModified": "2026-08-01",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-overconfidence.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#0969da;border-color:#0969da;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#0969da;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#1f6feb;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 過信記事用の追加クラス */
+    .s-bar-b{fill:#0969da;stroke:none}
+    .s-bar-r{fill:#cf222e;stroke:none}
+    .s-bar-g{fill:#1a7f37;stroke:none}
+    .s-bar-bg{fill:#f6f8fa;stroke:#d0d7de;stroke-width:1}
+    .s-coin-h{fill:#f6c400;stroke:#d4a017;stroke-width:1.5}
+    .s-coin-t{fill:#e0e0e0;stroke:#8b949e;stroke-width:1.5}
+    .s-arrow{fill:#0969da;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#388bfd}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-bg{fill:#0d1117;stroke:#30363d}
+    body.dark .s-coin-h{fill:#d4a017;stroke:#9a6700}
+    body.dark .s-coin-t{fill:#30363d;stroke:#8b949e}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 連勝のあとが一番危ない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は過信バイアスや小サンプルの罠に関する投資心理・行動経済学の考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧠 連勝のあとが一番危ない｜小サンプルの罠と過信バイアス</h1>
+    <div class="meta-line">公開日：2026 年 8 月 1 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <p>「最近6回連続で勝っている。自分のやり方は正しいはずだ」——こう感じたことはないでしょうか。連勝が続くと、根拠のない自信が膨らみ、<strong>ロットを上げる・ルールを飛ばす・損切りを先送りにする</strong>といった行動が始まります。そして次の大負けで、積み上げた利益を一気に吐き出す。</p>
+    <p>この流れは意志の弱さではなく、行動経済学が説明する<strong>「小サンプルの罠」と「過信バイアス（overconfidence bias）」</strong>から生まれる、必然のパターンです。怖いのは、連勝のときほど「自分は大丈夫」と感じてしまうこと。<strong>気分が最高のとき、実は最も危険なポジションにいる</strong>のです。</p>
+    <p>この記事では、まず<strong>コイン投げの直感図解で「6連勝が示す意味」</strong>を視覚化し、その後<strong>過信が出たときに起きがちな危険な行動</strong>と、<strong>記録で自分のエッジ（＝手法が持つ優位性のこと）を確かめる方法</strong>まで解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>コイン投げでも6連勝は<strong>約64回に1回（確率約1.6%）</strong>起きる。少ない試行回数での「連勝」は<strong>実力の証明にならない</strong>場合がある。</li>
+      <li>過信が出ると「ロットを増やす・ルールを破る・損切りをずらす」という<strong>再現性を壊す行動</strong>が始まる。連勝直後こそルールの遵守が重要になる局面と考えられる。</li>
+      <li>傾向を言えるのは<strong>十分な数の記録を積み重ねてから</strong>。記録をつける習慣（<a href="guide-trading-journal.html">売買日誌</a>）は、過信を抑えるうえで有力な手立ての一つと考えられる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「6連勝＝実力」は本当か？（前半・入口）</a></li>
+        <li><a href="#section-2">コイン投げと6連勝の直感図解</a></li>
+        <li><a href="#section-3">ホットハンド誤謬：「流れ」という幻想</a></li>
+        <li><a href="#section-4">過信が引き起こす3つの危険な行動（後半・実践）</a></li>
+        <li><a href="#section-5">何件の記録があれば「傾向」と言えるか</a></li>
+        <li><a href="#section-6">期待値と再現性で過信を診断する</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== 前半：初心者向け ===== -->
+
+    <h2 id="section-1">1️⃣ 「6連勝＝実力」は本当か？（前半・入口）</h2>
+    <p>投資を始めると、最初のうちは感覚的に「うまくいっている時期」と「うまくいかない時期」を感じやすいものです。そして、うまくいっている時期が続くと、こんな考えが浮かびます。</p>
+    <ul>
+      <li>「自分のやり方は合っているようだ。もう少しリスクを取っても大丈夫では？」</li>
+      <li>「損切りラインが近づいているけど、今回は特別な気がする。もう少し様子を見よう。」</li>
+      <li>「ルールにはなかったが、このチャンスは逃せない。直感で入ろう。」</li>
+    </ul>
+    <p>これらはすべて、<strong>「連勝が続いている」という事実を「自分の実力が証明された」と解釈したとき</strong>に起きやすい思考です。しかし、本当に連勝は実力を証明するのでしょうか。次の図解で確かめてみましょう。</p>
+
+    <div class="info-box">
+      <strong>💡 この記事の立場</strong>：「連勝していてもルールを守れ」という精神論を説くのではありません。<strong>「連勝が意味することを算数で確かめると、信頼できる実力の証拠には試行回数が重要」</strong>という事実を直感的に理解してもらうことが目的です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ コイン投げと6連勝の直感図解</h2>
+    <p>まず、もっとも極端な例を考えてみます。<strong>表と裏が完全に五分五分のコイン投げ</strong>で、何回連続で表が出るかを想像してください。コインは前回の結果を覚えていません。6回投げて全部表が出る確率は——</p>
+    <p style="text-align:center;font-size:1.3rem;font-weight:700;color:#0969da;margin:16px 0">
+      (1/2)<sup>6</sup> = 1/64 ≈ <strong>約 1.6%</strong>
+    </p>
+    <p>つまり、<strong>100回試せばそのうち1〜2回は「6連続で表」が出る</strong>。珍しいことは珍しいですが、まったくあり得ないわけではありません。</p>
+    <p>これを投資に当てはめると何が分かるか。<strong>コイン投げレベルの戦略（＝エッジがゼロ）でも、6連勝くらいなら確率的に普通に起きうる</strong>。6回勝ったという事実だけでは、「自分の手法に優位性がある」とは言い切れないのです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 375" role="img" aria-labelledby="coin-title">
+        <title id="coin-title">コイン投げ6連勝の確率イメージ図（64回に1回起きる）</title>
+        <text class="s-panel-label" x="40" y="24">コイン投げで「6連勝」は 64 回に 1 回起きる</text>
+        <!-- 64個のコインを8×8グリッドで表示。1個だけ6連勝（金色=H）、残り63個はT（灰色） -->
+        <!-- Row 0 -->
+        <circle class="s-coin-t" cx="44" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="68" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="68" r="11"/>
+        <!-- Row 1 -->
+        <circle class="s-coin-t" cx="44" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="104" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="104" r="11"/>
+        <!-- Row 2 -->
+        <circle class="s-coin-t" cx="44" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="140" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="140" r="11"/>
+        <!-- Row 3 -->
+        <circle class="s-coin-t" cx="44" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="176" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="176" r="11"/>
+        <!-- Row 4 -->
+        <circle class="s-coin-t" cx="44" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="212" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="212" r="11"/>
+        <!-- Row 5 -->
+        <circle class="s-coin-t" cx="44" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="248" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="248" r="11"/>
+        <!-- Row 6 -->
+        <circle class="s-coin-t" cx="44" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="284" r="11"/>
+        <circle class="s-coin-t" cx="590" cy="284" r="11"/>
+        <!-- Row 7: 最終行。64番目だけ金色（6連勝） -->
+        <circle class="s-coin-t" cx="44" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="122" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="200" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="278" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="356" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="434" cy="320" r="11"/>
+        <circle class="s-coin-t" cx="512" cy="320" r="11"/>
+        <circle class="s-coin-h" cx="590" cy="320" r="14"/>
+        <text class="s-note" x="590" y="324" text-anchor="middle" font-size="10">WIN</text>
+        <!-- ラベル -->
+        <text class="s-label-sm" x="40" y="358">63個 = 6連勝に届かなかった試行</text>
+        <text class="s-note-g" x="540" y="358">1個 = 6連勝</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 64マスのうち、金色の1マスだけが「6連勝」。コイン投げ（エッジゼロ）でも、64回試せばそのうち1回は6連勝が起きる確率がある。<strong>6回勝ったという事実だけでは、手法の優位性は証明できない</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>もちろん、投資は純粋なコイン投げではありません。テクニカル指標の組み合わせや環境判断など、エッジを高めるための努力は意味があります。しかし<strong>「エッジがある」と確信するためには、十分な数の試行が必要</strong>。6回や10回の連勝は、その確信の根拠としては弱い——これが「小サンプルの罠」です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ ホットハンド誤謬：「流れ」という幻想</h2>
+    <p>連勝しているとき、人は「流れがある」「今は乗っている」と感じます。バスケットボールで「シュートが連続で決まっている選手は次も決まりやすい」という直感——これを<strong>ホットハンド効果（hot hand effect）</strong>と呼びます。</p>
+    <p>しかし行動経済学と確率論の研究は、多くのケースで<strong>「流れ」は実在せず、人間が連続した出来事にパターンを見出そうとする傾向（小数の法則）が生み出す幻想</strong>だと指摘しています。脳は本来、ランダムな出来事の中に意味を見出そうとします。コイン投げで「表・表・表」が続くと「そろそろ裏が出るはず」（ギャンブラーの誤謬）、あるいは「表の流れがある」（ホットハンド誤謬）と感じてしまう。</p>
+    <div class="negative-box">
+      <strong>📉 ホットハンド誤謬（hot hand fallacy）</strong>：連続した成功を見て「この流れは続く」と過信し、より大きなリスクを取る行動。<strong>実際には過去の連勝と次のトレードの結果は独立している</strong>（前のトレードの結果が次を決めるわけではない）にもかかわらず、因果関係があるかのように感じてしまう心理。
+    </div>
+    <p>特に投資では、この誤謬が<strong>「連勝中だから次はロットを上げる」「今の流れならルールを少し緩めていい」という危険な判断</strong>に直結します。流れを信じた分だけ、小さかったはずの一敗が大きな損失になりやすいのです。</p>
+
+    <!-- ===== 後半：中上級向け ===== -->
+
+    <h2 id="section-4">4️⃣ 過信が引き起こす3つの危険な行動（後半・実践）</h2>
+    <p>「自分は今うまくいっている」という過信が膨らんだとき、どんな行動が現れやすいか。典型的な3つのパターンを押さえておきましょう。</p>
+
+    <h3>① ロット（リスク量）を増やす</h3>
+    <p>連勝後に「次も勝てるはずだ」とロットを増やすのは、最もよく見られる過信の表れです。しかし<strong>トレードの結果は1件ずつ独立しており、連勝は次のトレードの結果を良くする効果はありません</strong>。ロットを増やした直後に大きな負けが来ると、連勝で積み上げた分を一度で失うことになります。資金管理のルール（例：1トレードで許容するリスクは口座の一定%以内）は、連勝中でも崩さないことが重要です。詳しくは <a href="guide-position-sizing.html">ポジションサイジング</a> の記事をご覧ください。</p>
+
+    <h3>② ルールの例外を自分に許す</h3>
+    <p>「今日は特別だ」「ここだけは」——このような例外の積み重ねは、ルールの骨格そのものを壊します。連勝中は「ルールが厳しすぎると感じる」タイミングでもあります。しかし、ルールは<strong>「うまくいっていない場面でも再現性を守るため」に作ったもの</strong>。うまくいっているときだけルールを守るのは、ルールがない状態と変わりません。</p>
+
+    <h3>③ 損切りを先送り・移動する</h3>
+    <p>過信のもう一つの現れが、「今回は連勝中だから少し持ちこたえれば戻るはず」という損切りの先送りです。損切りラインの意味や重要性については <a href="guide-loss-cut.html">損切りができない本当の理由</a> をご参照ください。ここで強調したいのは、<strong>連勝中ほど「自分は読みが当たっている」という感覚が損切りを遅らせる動機になりやすい</strong>という点です。連勝は「このポジションが正しい」の証明ではありません。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="overc-title">
+        <title id="overc-title">過信が出たときの危険な行動パターンと結果の概念図</title>
+        <text class="s-panel-label" x="40" y="24">過信が生む危険な行動（代表例：ロット増加・ルール例外）と資産への影響</text>
+        <!-- ベース資産曲線（連勝中は上昇） -->
+        <polyline class="s-curve-g" points="40,200 120,178 200,154 290,130"/>
+        <text class="s-note-g" x="44" y="218">連勝中の資産曲線</text>
+        <!-- 分岐点 -->
+        <circle class="s-hl" cx="290" cy="130" r="6"/>
+        <text class="s-note" x="298" y="124">過信が始まる点</text>
+        <!-- ①ロット増加→大負け -->
+        <polyline class="s-curve-l" points="290,130 360,112 400,220 440,230"/>
+        <text class="s-note-r" x="350" y="108">①ロット増加</text>
+        <text class="s-note-r" x="340" y="244">→一度の大負けで積み上げ消滅</text>
+        <!-- ②ルール破り→損失拡大（中間線） -->
+        <polyline points="290,130 360,120 410,160 470,195" fill="none" stroke="#d4a017" stroke-width:2 stroke-dasharray="6 3" style="stroke:#d4a017;stroke-width:2;stroke-dasharray:6 3;fill:none"/>
+        <text x="460" y="192" fill="#9a6700" font-size="11" font-family="'Noto Sans JP',sans-serif">②ルール例外→損失が予想外に膨らむ</text>
+        <!-- ルールを守った場合（点線で延長） -->
+        <polyline points="290,130 370,110 460,92 560,70" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="4 3" style="stroke:#8b949e;stroke-width:1.5;stroke-dasharray:4 3;fill:none"/>
+        <text class="s-label-sm" x="460" y="66">ルールを守り続けた場合（参考）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 連勝中（緑）に「過信が始まる点」に差し掛かったとき、ロット増加（赤）やルール例外（黄）を選ぶと資産曲線が急落するリスクがある。灰点線＝ルールを守り続けた場合の参考軌跡。<strong>連勝は「次もうまくいく保証」ではなく、過信の始まりのサイン</strong>でもある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 何件の記録があれば「傾向」と言えるか</h2>
+    <p>では、何回勝てば自分のエッジを信頼してよいのでしょうか。統計学には「大数の法則」という概念があります。試行回数が増えるほど、観測された結果（勝率など）は真の確率に近づいていく、というものです。</p>
+    <p>裏を返せば、<strong>試行回数が少ないほど、観測結果は真の値からズレやすい（ブレやすい）</strong>ということです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="sample-title">
+        <title id="sample-title">サンプルサイズが増えるほど観測勝率のブレ幅が縮まる概念図</title>
+        <text class="s-panel-label" x="40" y="24">サンプルサイズが小さいほど「勝率のブレ幅」が大きい</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="220" x2="600" y2="220"/>
+        <line class="s-axis" x1="60" y1="60" x2="60" y2="220"/>
+        <text class="s-label-sm" x="300" y="238">件数（試行回数）→</text>
+        <text class="s-label-sm" x="64" y="56">観測勝率 ↑</text>
+        <!-- 真の勝率（仮：55%）中心線 -->
+        <line class="s-guide" x1="60" y1="140" x2="600" y2="140"/>
+        <!-- ブレ幅（上下） -->
+        <!-- 小サンプル（左側）は幅広 -->
+        <rect class="s-bar-bg" x="90" y="80" width="60" height="120" rx="4"/>
+        <line stroke="#0969da" stroke-width="2" x1="120" y1="80" x2="120" y2="200"/>
+        <text class="s-note" x="96" y="76" font-size="10">6件</text>
+        <text class="s-note-r" x="92" y="214" font-size="9">勝率0〜100%もあり得る</text>
+        <!-- 中サンプル -->
+        <rect class="s-bar-bg" x="220" y="100" width="60" height="80" rx="4"/>
+        <line stroke="#0969da" stroke-width="2" x1="250" y1="100" x2="250" y2="180"/>
+        <text class="s-note" x="226" y="96" font-size="10">30件</text>
+        <!-- 大サンプル -->
+        <rect class="s-bar-bg" x="380" y="120" width="60" height="40" rx="4"/>
+        <line stroke="#0969da" stroke-width="2" x1="410" y1="120" x2="410" y2="160"/>
+        <text class="s-note" x="386" y="116" font-size="10">100件</text>
+        <!-- さらに大 -->
+        <rect class="s-bar-bg" x="520" y="130" width="60" height="20" rx="4"/>
+        <line stroke="#0969da" stroke-width="2" x1="550" y1="130" x2="550" y2="150"/>
+        <text class="s-note" x="526" y="126" font-size="10">300件+</text>
+        <!-- 真の勝率ラベル（バーの後ろに描画して隠れないよう左端に配置） -->
+        <text class="s-note" x="65" y="136">真の勝率（仮：55%）</text>
+        <!-- ブレ縮小の矢印 -->
+        <text class="s-note-g" x="120" y="258">← サンプルが増えるほどブレ幅が縮まり、真の実力が見えてくる →</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 件数が少ないほど「観測された勝率」の振れ幅（縦棒の長さ）が大きく、真の勝率とかけ離れた結果が出やすい。一般に、ある程度の統計的な安定には30件、実用的な評価には100件以上の試行が目安とされています。6件では判断の根拠として弱い。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>一般的に言われる目安として：</p>
+    <ul>
+      <li><strong>30件未満</strong>：サンプルが少なく、運と実力の判別がほぼ不可能。傾向を語るには材料不足。</li>
+      <li><strong>30〜100件</strong>：大まかな傾向が見えてくるが、まだブレが大きい。参考にはなるが過信は禁物。</li>
+      <li><strong>100件以上</strong>：徐々に「再現性があるか否か」を判断できる段階に近づく。それでも市場環境の変化には注意が必要。</li>
+    </ul>
+    <p>ここで重要なのは、これらはあくまで<strong>「目安」</strong>であり、トレード間の相関（似た条件での連続エントリーなど）がある場合は有効サンプル数はさらに少なくなる点です。また、市場環境が変われば過去の統計が将来に当てはまらないこともあります。</p>
+    <div class="warning-box">
+      「○○件勝ったから実力」という断言は、何件でも本来は難しいものです。統計は確かな材料ですが、市場は変化します。大切なのは<strong>「数値を根拠にする習慣」を持ちつつ、慢心しない姿勢を維持し続けること</strong>。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 期待値と再現性で過信を診断する</h2>
+    <p>過信を防ぐためのもっとも実用的なツールは、<strong>記録（売買日誌）</strong>です。記録をつける目的は、直感を数字に変えることです。連勝中の「自分はうまくいっている感」ではなく、<strong>「実際の平均利益と平均損失のバランス（＝1回あたりの損益の平均像＝期待値の考え方）」「勝率」「実行ルールの遵守率」</strong>という客観的な数字で自分のトレードを評価する習慣が、過信の有効な解毒剤になると考えられます。</p>
+    <p>たとえば「6連勝中」でも、記録を見ると「全部利益は小さくて、ちょうど一度の損失が小さかっただけ」という場合と「リスクリワードも守られている」という場合では、信頼度がまったく異なります。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>チェック項目</th>
+          <th>過信のサインがある場合</th>
+          <th>記録で確認できる健全なケース</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>勝率</td>
+          <td>「6連勝！」（6件のみ）</td>
+          <td>50件以上の累積で計算</td>
+        </tr>
+        <tr>
+          <td>平均リスクリワード</td>
+          <td>感覚で「勝ってる気がする」</td>
+          <td>平均利益÷平均損失が1以上を確認</td>
+        </tr>
+        <tr>
+          <td>ルール遵守率</td>
+          <td>「今回は特別」を何度か許した</td>
+          <td>ルール外エントリーがゼロ</td>
+        </tr>
+        <tr>
+          <td>損切り実行率</td>
+          <td>「待ったら戻った」経験あり</td>
+          <td>SLに触れたら機械的に撤退を記録</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>売買日誌の始め方や、自分のエッジを記録で見つける方法については、<a href="guide-trading-journal.html">売買日誌で自分のエッジを見つける</a> の記事で詳しく解説しています。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI が大切にしていることの一つが、<strong>「少ないサンプルで結論を出さない」</strong>という姿勢です。</p>
+    <ul>
+      <li><strong>シグナル研究は前向き検証を積み重ねる</strong>：当サイトの「AIシグナル研究日誌」シリーズは、1回の検証結果で「このシグナルは有効だ」と断言するのではなく、条件を変えながら継続的に前向き検証を積み重ね、判断を慎重に保っています。6件や10件の検証だけで「有効」とは言いません。興味のある方は <a href="guide-signal-lab-001.html">シグナル研究日誌 #001</a> からご覧ください。</li>
+      <li><strong>成績は勝ちも負けも公開する</strong>：<a href="track-record.html">シグナル成績ダッシュボード</a> では、連勝しているシグナルだけでなく、負けたシグナルも含めてすべての記録を公開しています。選択的に「勝ったときだけ見せる」のは、まさに生存者バイアス（＝生き残った成功例だけが目に入り、消えた失敗例が見えなくなる偏り）を利用した過信の温床です。</li>
+      <li><strong>記録で自分の実力を確かめる</strong>：実際にトレードをされている方にとっては、<a href="guide-trading-journal.html">売買日誌</a> の習慣が過信を抑える直接的な手立てになると考えられます。連勝中こそ記録を振り返る時間を作ってください。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>ℹ️ 関連記事</strong>：「6戦6勝だから自分のやり方は正しい」という過信は、連勝のあとに最も大きなリスクを取ってしまう行動につながります。損切りができない心理と一緒に理解すると、<strong>「なぜ人は過信のあとに大きく負けるのか」</strong>がより深く分かります。<a href="guide-loss-cut.html">損切りができない本当の理由</a> もあわせてご覧ください。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 「小サンプルで結論を出さない」を実践で見る</div>
+      <div class="cta-box-desc">当サイトのシグナルが実際に何勝何敗なのか、勝ちも負けも全部を公開しています。連勝だけを見せない透明性こそ、過信に対抗するための姿勢です。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>過信と小サンプルの罠についてまとめます。</p>
+    <ul>
+      <li>コイン投げ（エッジゼロ）でも6連勝は<strong>約64回に1回（確率約1.6%）</strong>起きる。少ない試行回数の連勝は実力の証明として弱い。</li>
+      <li>連続した成功に「流れがある」と感じるのは<strong>ホットハンド誤謬</strong>。多くの場合、過去の連勝と次のトレードの結果は独立している。</li>
+      <li>過信が出たときに現れやすい3つの行動——<strong>ロット増加・ルール例外・損切り先送り</strong>——はいずれも再現性を壊し、大きな損失の引き金になる。</li>
+      <li>傾向と言える目安として、一般的に<strong>30件以上（最低限）、100件以上（実用的評価）</strong>の記録が必要とされている。6件・10件は判断根拠として弱い。</li>
+      <li><strong>記録（売買日誌）</strong>は過信の有効な解毒剤と考えられる。連勝中こそ数字で自分を客観視する習慣が、判断のブレを抑える助けになる。</li>
+    </ul>
+    <p>「連勝のあとが一番危ない」という言葉は、気分が最高のときほど慎重に、ルールに忠実に、記録で確かめる——という姿勢の大切さを表しています。過信は誰にでも起きるものです。それを「知っている」だけでなく、<strong>記録という手立てを使って定期的に確かめる習慣</strong>に変えていきましょう。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-trading-journal.html">
+        <div class="related-card-title">📓 売買日誌で自分のエッジを見つける</div>
+        <div class="related-card-desc">記録の始め方から、データで自分の勝ち筋・負け筋を測る方法まで。過信を抑えるための有力な手立て。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・損失回避・処分効果を行動経済学で解説。過信と一緒に読むと理解が深まる。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">勝ちも負けも全部公開。小サンプルで結論を出さない透明な前向き検証を確認できる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は過信バイアスおよび小サンプルの罠に関する投資心理・行動経済学の考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#1f6feb!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
