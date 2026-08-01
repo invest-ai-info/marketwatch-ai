@@ -97,4 +97,5 @@ SYNC_FILES = [
     "guide-proverb-kansan-ni-uri-nashi.html",
     "guide-signal-lab-057.html",
     "guide-overconfidence.html",
+    "guide-proverb-soba-no-kane-tako-no-ito.html",
 ]
