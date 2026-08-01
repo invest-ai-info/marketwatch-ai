@@ -340,10 +340,27 @@ def build_sitemap_xml(now_jst) -> str:
 
 
 def build_robots_txt() -> str:
-    """robots.txt — 全許可 + sitemap 位置を明示。"""
+    """robots.txt — 公開ページは全許可。非公開の下書き/内部メモだけクロール拒否。
+
+    ⚠️ Disallow は必ずこの関数に書く。robots.txt を手で編集しても
+       update-market-news.yml が毎回ここから再生成して commit するので数時間で消える
+       （実例: 2026-06-05 23:48 に手動追加 → 23:55 の Actions 実行で消滅）。
+
+    遮断対象（いずれも実測で HTTP 200 = クロール可能だった。2026-08-01）:
+      /drafts/  … 自動生成の記事下書き 78本 + REVIEW.md + labnotes/news/proverb/sns
+      /memory/  … 投資家プロファイル等の内部メモ
+      /*.md     … リポジトリ直下の .md 21本（SESSION_HANDOFF / my-trade-review 等）。
+                  routine が今後も増やすため個別列挙せずワイルドカードで受ける。
+    サイトの HTML から .md へのリンクは 0 件なので表示・SEO への副作用は無い。
+    ※ robots.txt は行儀の良いクローラにしか効かない。raw.githubusercontent.com
+       経由の露出は塞げない（非公開化ではなく緩和）。
+    """
     return (
         "User-agent: *\n"
         "Allow: /\n"
+        "Disallow: /drafts/\n"
+        "Disallow: /memory/\n"
+        "Disallow: /*.md$\n"
         f"Sitemap: {BASE_URL}sitemap.xml\n"
     )
 
