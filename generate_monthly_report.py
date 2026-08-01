@@ -21,6 +21,13 @@ import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
+# 🚨 2026-08-01 追加＝このレーンは Gemini 出力が無審査で公開されていた。
+#    プロンプトが「来月の改善ポイント＝具体的なアクション提案」を要求し、例文がそのまま
+#    売買指示だったため、公開3本すべてに指示文が入った（2026-07号「4Hシグナルに絞って…
+#    積極的なエントリーを試みることを推奨します」／2026-06号「SI=F …ロットを大幅に減らす」）。
+#    weekly-review と同じ決定論ゲートを通す。禁止語の定義は compliance_gate.py が単一の真実。
+from compliance_gate import forbidden_terms_in, forbidden_terms_prompt
+
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 TRADES_FILE = "my-trades.json"
@@ -223,11 +230,17 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
 【執筆要件】（必ず守る）
 - 「今月のハイライト」を 1 段落 (200-250 字): 数値を必ず引用、定量的な発見を最低 2 つ含める。例「{month}月は HIGH スコア勝率 {{HIGH_WR}} が MID {{MID_WR}} を 20pt 上回り、信頼度スコアの予測力が確認された月となった」
 - 「データから見えた示唆」を箇条書き 3-4 項目: それぞれデータ根拠を明示。例「・環境 A スコアは {{env_a_wr}} の勝率 → 経済イベント無い時の優位性を確認」
-- 「来月の改善ポイント」を箇条書き 2-3 項目: 具体的なアクション提案。例「・LOW スコアシグナルは {{low_wr}} なので、来月は完全に見送り、HIGH のみエントリー」
+- 「来月の観察ポイント」を箇条書き 2-3 項目: **次に何を観測すれば今月の解釈を確かめられるか**を
+  データ根拠つきで書く。読者の売買行動には触れない。
+  例「・LOW スコアの勝率 {{low_wr}} は n={{low_n}} と小標本であり、来月の追加サンプルで再評価する」
 
-【避けること】
+【絶対に守る禁止事項】（1 つでも違反したら書き直すこと）
+- 銘柄名・ティッカー（SI=F, GC=F, NKD=F 等）と「行動」を結びつけない。
+  「○○は見送る」「○○に絞る」「○○のロットを減らす」「○○を推奨」は全て禁止
+- 次の語を一切使わない: {forbidden_terms_prompt()}
+- **読者の将来の行動に言及しない。** 集計事実と、その解釈上の限界だけを述べる
+- 言い換えで助言を隠すのではなく、そもそも将来の行動に触れない
 - 抽象的な感想（「市場は不安定だった」など）
-- 投資助言の断定（「○○を買え」）。「○○を検討する価値あり」までに留める
 - HTML / Markdown
 - 数値を引用しない一般論
 
@@ -240,6 +253,12 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
             resp = model.generate_content(prompt)
             text = (resp.text or "").strip()
             if text:
+                bad = forbidden_terms_in(text)
+                if bad:
+                    # 助言に読める語が出たモデル出力は採用しない。次のモデルで再試行し、
+                    # 全滅したら決定論テンプレ（_fallback_summary）へ落とす＝**黒は公開しない**。
+                    print(f"⚠️ コンプラゲート: {model_name} の出力に禁止語 {bad} → 不採用")
+                    continue
                 return text
         except Exception:
             continue
