@@ -187,12 +187,18 @@ def main():
     CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-", "guide-proverb-")
     checked = 0
     for gf in guide_files:
+        html = _read(gf)
+        # 🆕 2026-08-01: 免責検査だけは**除外の前**に置く。
+        # AUTO_PREFIXES の continue が SYNC登録/リンク切れ/ナビの誤検知を避けるために置かれていたが、
+        # その巻き添えで免責検査まで飛んでおり、`guide-weekly-2026-05-25` と
+        # `guide-auto-us_cpi-2026-05-14` の**免責ゼロを1本も検知できていなかった**（法務棚卸しで発覚）。
+        # 免責は生成レーンを問わない全記事共通の不変条件＝除外の対象ではない。
+        # 誤検知率は実測ゼロ（278本中、未設置は上記2本のみ＝いずれも真の欠落）。
+        if 'data-disclaimer="kinsho-v1"' not in html:
+            errors.append(f"{gf}: kinsho-v1 免責が無い")
         if gf.startswith(AUTO_PREFIXES):
             continue
         checked += 1
-        html = _read(gf)
-        if 'data-disclaimer="kinsho-v1"' not in html:
-            errors.append(f"{gf}: kinsho-v1 免責が無い")
         if 'id="mw-mobile-fit"' not in html:
             warnings.append(f"{gf}: スマホ横はみ出し防止CSS(mw-mobile-fit)が無い → `python fix_mobile_overflow.py`")
         # ↑上に戻るボタン（2026-07-21）: 静的記事は apply_back_to_top.py で注入。
