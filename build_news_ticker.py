@@ -38,6 +38,13 @@ TOTAL_ITEMS = 24
 MIN_ITEMS = 5           # これ未満しか取れない＝ネット/フィード不調とみなし既存JSONを保持
 SIM_THRESHOLD = 0.62    # タイトル類似の重複除去
 
+# カテゴリ別の下限枠（2026-08-01 追加）。数字は index.html 側の使われ方から決めている。
+#   stocks/fx/commodity/crypto … 4マーケットカード内のミニ見出しが c で絞って .slice(0,3)＝
+#       最大3件出し、0件なら枠ごと描画しない。カードに見出しを出すため 3。
+#   macro … カードは無いが絞り込みボタンがある（ボタンは常に6個描画される）。空振りを避ける最低限で 2。
+#   biz  … 常に潤沢（実測 raw 70件）なので枠不要。残り枠を鮮度順で自然に埋める。
+CAT_QUOTA = {"stocks": 3, "fx": 3, "commodity": 3, "crypto": 3, "macro": 2}
+
 
 def gnews(query):
     """Google News RSS 検索 URL（日本語版）。site: 指定で各社の日本語記事を横断取得できる。"""
@@ -157,21 +164,55 @@ def fetch_all():
 
 
 def dedup_and_cap(items):
+    """重複・1ソース占拠・カテゴリ偏りを抑えつつ TOTAL_ITEMS 件を選ぶ（全体は時刻降順）。
+
+    ⚠️ 2026-08-01: カテゴリ別の下限枠を追加。
+       それ以前は時刻降順に TOTAL_ITEMS まで取って break するだけだったため、
+       件数の多い biz が枠を食い尽くし、commodity と crypto が **常に0件** になっていた。
+       実測（2026-08-01 19時台）: 取得 raw=166 → commodity 5件・crypto 1件が取れているのに採用0件。
+       index.html の4カード内ミニ見出しは c で絞って最大3件出し 0件なら枠ごと描画しないため、
+       コモディティと暗号資産のカードだけ見出しが出ないまま放置されていた。
+       対策＝QUOTA_CATS を先に確保してから残りを鮮度順で埋める。
+    """
     items.sort(key=lambda x: x["dt"], reverse=True)
-    out, seen_norms, per_source = [], [], {}
-    for it in items:
+    out, seen_norms, per_source, used = [], [], {}, set()
+
+    def take(idx):
+        """重複・1ソース上限を検査して採用。可否によらず「処理済み」として記録する
+        （どちらの棄却理由も後から緩むことはないので再検査は不要）。"""
+        it = items[idx]
+        used.add(idx)
         nt = norm(it["t"])
         if not nt:
-            continue
+            return False
         if any(SequenceMatcher(None, nt, s).ratio() >= SIM_THRESHOLD for s in seen_norms):
-            continue
+            return False
         if per_source.get(it["s"], 0) >= PER_SOURCE_CAP:
-            continue
+            return False
         out.append(it)
         seen_norms.append(nt)
         per_source[it["s"]] = per_source.get(it["s"], 0) + 1
+        return True
+
+    # ① 枠取り。取れる件数が少ないカテゴリから先に確保する
+    #    （後回しにすると 1ソース上限を他カテゴリに先に食われて取り逃す）
+    avail = {c: sum(1 for it in items if it["c"] == c) for c in CAT_QUOTA}
+    for cat in sorted(CAT_QUOTA, key=lambda c: avail[c]):
+        got = 0
+        for idx, it in enumerate(items):
+            if got >= CAT_QUOTA[cat] or len(out) >= TOTAL_ITEMS:
+                break
+            if idx not in used and it["c"] == cat and take(idx):
+                got += 1
+
+    # ② 残り枠は純粋に鮮度順で埋める
+    for idx in range(len(items)):
         if len(out) >= TOTAL_ITEMS:
             break
+        if idx not in used:
+            take(idx)
+
+    out.sort(key=lambda x: x["dt"], reverse=True)  # 枠取りで崩れた並びを鮮度順へ戻す
     return out
 
 
