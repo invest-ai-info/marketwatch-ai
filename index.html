@@ -218,7 +218,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年8月1日 19:19 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年8月1日 19:23 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -262,7 +262,7 @@
       <span class="sentiment-badge">やや強気</span>
       <div class="sentiment-text">
         日経 64,362円 ／ S&amp;P500 7,489.72 ／
-        USD/JPY 157.40円 ／ BTC $63,002 ／
+        USD/JPY 157.40円 ／ BTC $63,004 ／
         金 $4,049.10/oz
       </div>
     </div>
@@ -270,7 +270,7 @@
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（19:19 JST 更新）</span></div>
+    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（19:23 JST 更新）</span></div>
     <div class="md-line">📈 値動きが大きい順：日経平均 <span class="md-up">▲4.0%</span>・ユーロ円 <span class="md-down">▼3.1%</span>・ドル円 <span class="md-down">▼1.7%</span>（前日比）</div>
     <div class="md-line">📅 本日の重要指標はなし。次は 🇺🇸 米雇用統計（7月分）（8/7・あと6日）</div>
     <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>16.0</b>（落ち着いた水準）・センチメント判定は「<b>やや強気</b>」</div>
@@ -298,6 +298,83 @@
       </div></details>
     </div>
   </div>
+
+  <!-- ⚡ 最新マーケットニュース
+       2026-08-01: オーナー判断で **📰更新履歴の直下** へ移動。
+       旧位置＝A8広告枠②の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
+       中身は build_news_ticker_section()＝閲覧時に JS が news-ticker.json を fetch するので
+       HTML 再生成なしで最新化される（毎時 news-ticker.yml が JSON を更新）。 -->
+  <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新・AI不使用） -->
+  <div style="background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #fb8500;border-radius:8px;padding:14px 22px;margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+      <span style="color:#fb8500;font-weight:700">⚡ 最新マーケットニュース <span style="font-size:.72rem;color:#57606a;font-weight:500">（各社見出しを自動収集・毎時更新）</span></span>
+      <span id="mwTickerMeta" style="font-size:.74rem;color:#57606a">読み込み中…</span>
+    </div>
+    <div id="mwTickerFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px"></div>
+    <div id="mwTickerList" style="font-size:.86rem;line-height:1.6"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px">
+      <span style="font-size:.7rem;color:#6e7781">見出しリンク先は各社の外部サイト。市場タグは機械判定の参考情報です。掲載は情報提供のみを目的とし、投資助言ではありません。</span>
+      <a id="mwTickerMore" href="javascript:void(0)" style="display:none;color:#0969da;font-size:.78rem;font-weight:600;text-decoration:none">さらに表示 ▼</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var CAT={stocks:['📈株式','#0969da'],fx:['💱為替','#8250df'],commodity:['🛢商品','#bc4c00'],
+             crypto:['🪙暗号','#9a6700'],macro:['🏛マクロ','#1a7f37'],biz:['📰経済','#6e7781']};
+    var list=document.getElementById('mwTickerList'),meta=document.getElementById('mwTickerMeta'),
+        more=document.getElementById('mwTickerMore'),fbar=document.getElementById('mwTickerFilters');
+    var all=[],filter='',shown=8;
+    function cat(n){return CAT[n.c]?n.c:'biz';}
+    function rel(iso){var m=(Date.now()-new Date(iso).getTime())/60000;if(!isFinite(m)||m<0)return'';
+      if(m<1)return'たった今';if(m<60)return Math.floor(m)+'分前';if(m<1440)return Math.floor(m/60)+'時間前';return Math.floor(m/1440)+'日前';}
+    function badge(n){var c=CAT[cat(n)];var b=document.createElement('span');
+      b.style.cssText='font-size:.68rem;font-weight:700;color:#ffffff;background:'+c[1]+';border-radius:9px;padding:1px 7px;white-space:nowrap';
+      b.textContent=c[0];return b;}
+    function row(n){var d=document.createElement('div');d.style.cssText='padding:5px 0;border-bottom:1px dashed #d8dee4;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap';
+      var tm=document.createElement('span');tm.style.cssText='color:#57606a;font-size:.74rem;white-space:nowrap;min-width:56px';tm.textContent=rel(n.dt);
+      var a=document.createElement('a');a.href=n.u;a.target='_blank';a.rel='noopener nofollow';
+      a.style.cssText='color:#0969da;text-decoration:none;font-weight:600;flex:1;min-width:200px';a.textContent=(n.e||'😐')+' '+n.t;
+      var s=document.createElement('span');s.style.cssText='color:#6e7781;font-size:.72rem;white-space:nowrap';s.textContent=n.s;
+      d.appendChild(tm);d.appendChild(badge(n));d.appendChild(a);d.appendChild(s);return d;}
+    function render(){
+      var items=filter?all.filter(function(n){return cat(n)===filter;}):all;
+      list.textContent='';
+      if(!items.length){list.innerHTML='<span style="color:#6e7781;font-size:.82rem">この市場の直近の見出しはいまのところありません。</span>';more.style.display='none';return;}
+      items.slice(0,shown).forEach(function(n){list.appendChild(row(n));});
+      more.style.display=items.length>shown?'inline':'none';}
+    function mkbtn(key,label,color){var b=document.createElement('button');
+      b.style.cssText='font-size:.74rem;font-weight:700;border-radius:14px;padding:3px 11px;cursor:pointer;border:1px solid #d0d7de;background:#f6f8fa;color:#57606a';
+      b.textContent=label;
+      b.onclick=function(){filter=key;shown=8;
+        Array.prototype.forEach.call(fbar.children,function(x){x.style.background='#f6f8fa';x.style.color='#57606a';x.style.borderColor='#d0d7de';});
+        b.style.background=color;b.style.color='#ffffff';b.style.borderColor=color;render();};
+      fbar.appendChild(b);return b;}
+    var btnAll=mkbtn('','すべて','#fb8500');
+    Object.keys(CAT).forEach(function(k){mkbtn(k,CAT[k][0],CAT[k][1]);});
+    more.onclick=function(){shown=24;render();};
+    fetch('news-ticker.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      all=(d.items||[]).filter(function(n){return /^https?:\/\//.test(n.u||'')&&n.t;});
+      if(!all.length)throw 0;
+      btnAll.onclick();
+      var u=new Date(d.updated);
+      meta.textContent='最終取得 '+(u.getMonth()+1)+'/'+u.getDate()+' '+('0'+u.getHours()).slice(-2)+':'+('0'+u.getMinutes()).slice(-2)+' JST';
+      // 各マーケットカード内のミニ一覧（該当市場の最新3件・見出しのみ＝AI解説なし）
+      Array.prototype.forEach.call(document.querySelectorAll('.mw-ticker-mini'),function(el){
+        var mc=el.getAttribute('data-mwcat');
+        var xs=all.filter(function(n){return cat(n)===mc;}).slice(0,3);
+        if(!xs.length){return;}
+        var h=document.createElement('div');h.style.cssText='font-size:.76rem;font-weight:700;color:#fb8500;margin:10px 0 2px';
+        h.textContent='⚡ 最新の見出し（毎時自動更新）';el.appendChild(h);
+        xs.forEach(function(n){var r2=document.createElement('div');r2.style.cssText='font-size:.78rem;padding:2px 0;display:flex;gap:6px;align-items:baseline';
+          var t2=document.createElement('span');t2.style.cssText='color:#57606a;font-size:.7rem;white-space:nowrap';t2.textContent=rel(n.dt);
+          var a2=document.createElement('a');a2.href=n.u;a2.target='_blank';a2.rel='noopener nofollow';
+          a2.style.cssText='color:#0969da;text-decoration:none';a2.textContent=n.t;
+          r2.appendChild(t2);r2.appendChild(a2);el.appendChild(r2);});});
+    }).catch(function(){meta.textContent='';
+      list.innerHTML='<span style="color:#6e7781;font-size:.82rem">最新ニュースを読み込めませんでした（時間をおいて再読み込みしてください）。</span>';});
+  })();
+  </script>
+
 
     <!-- 結果速報バナー（発表後・routine が WebSearch で生成した indicator-result.json 由来。複数指標対応。preview.html へ。2026-07-04 薄型化）-->
   <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#1a7f37,#0969da);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">📊 ✅ 🇯🇵 日銀金融政策決定会合（7月30〜31日） ＋ 🇯🇵 東京都区部CPI（7月速報値） ＋ 🇺🇸 米雇用コスト指数（ECI・2026年Q2） の結果速報（5件）— 各結果と市場反応を見る →</a>
@@ -335,7 +412,7 @@
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 現在価格64,362円は、Nvidiaの時価総額変動やウォーレン・バフェット氏のパッシブ投資推奨といったニュースが、直接的に日経平均の方向性を示すものではないため、中立的なスタンスが妥当です。テック関連のニュースはグローバルな動向を示唆するものの、日本株への短期的な影響は限定的であり、市場全体の方向性が明確になるまで様子見が賢明です。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均株価64,362円という水準は、Nvidiaの株価変動やウォーレン・バフェット氏のパッシブ投資推奨といった外部要因から、現時点では明確な方向感が出にくい状況です。テック関連の大型投資ニュースはありますが、直接的に日本株の動向を左右するほどの材料とは言えません。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -353,7 +430,7 @@
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> Nvidiaの株価変動はS&P500全体に影響を与える可能性があり、現時点では方向感が不透明です。ウォーレン・バフェット氏のパッシブ投資推奨は長期的な視点を示唆しており、短期的には様子見が賢明と考えられます。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> Nvidiaの動向に関するネガティブな見出しと、ウォーレン・バフェット氏のパッシブ投資推奨が混在しており、S&P500全体への影響は不明確です。現時点では、さらなる市場の方向性を見極めるための様子見が賢明と考えられます。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -371,25 +448,25 @@
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 現在のゴールド価格$4,049/ozは、提示されたニュースからは直接的な強弱判断を導き出すことが困難です。株式市場の恐怖が注目されていますが、それが金価格にどう影響するかは現時点では不明確であり、様子見が妥当です。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 現在のゴールド価格 $4,049/oz は、提示されたニュースからは直接的な影響を受けていると判断できない。株式市場の変動性を示唆するニュースはあるものの、ゴールドの直接的な価格変動要因としては判断材料が不足しているため、現時点では様子見が妥当である。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🪙</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$63,002</div>
+              <div class="ai-asset-price">$63,004</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:70%;background:#1a7f37"></div>
+              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコインは63,000ドルを超え、7月は7.5%上昇しており、短期的にはポジティブな momentum が見られます。ただし、長期的な比較や技術的な進化に関するニュースは、直接的な価格の方向性を示すものではないため、更なる押し目を待つのが賢明と考えられます。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコインは63,000ドルを維持し、7月には7.5%の上昇を記録しており、短期的な上昇トレンドが継続する可能性が示唆されます。ただし、長期的な比較や電子取引の進化といったニュースは、短期的な価格変動に直接的な影響を与えるものではないため、積極的な買いよりも押し目での対応が望ましいと考えられます。</div>
         </div>
     </div>
   </section>
@@ -480,8 +557,8 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$63,002 <span class="up price-change">😊▲0.30%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,864.14 <span class="up price-change">😊▲0.20%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$63,004 <span class="up price-change">😊▲0.30%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$1,863.81 <span class="up price-change">😊▲0.19%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://en.cryptonomist.ch/2026/07/31/bitcoin-etf-inflows-july-2026/" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ 米国スポットビットコインETFに7月30日2.33億ドルの純流入―ブラックロックIBITが1.83億ドルをリード</span>
@@ -498,78 +575,6 @@
     <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
-
-  <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新・AI不使用） -->
-  <div style="background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #fb8500;border-radius:8px;padding:14px 22px;margin-bottom:12px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px">
-      <span style="color:#fb8500;font-weight:700">⚡ 最新マーケットニュース <span style="font-size:.72rem;color:#57606a;font-weight:500">（各社見出しを自動収集・毎時更新）</span></span>
-      <span id="mwTickerMeta" style="font-size:.74rem;color:#57606a">読み込み中…</span>
-    </div>
-    <div id="mwTickerFilters" style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px"></div>
-    <div id="mwTickerList" style="font-size:.86rem;line-height:1.6"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px">
-      <span style="font-size:.7rem;color:#6e7781">見出しリンク先は各社の外部サイト。市場タグは機械判定の参考情報です。掲載は情報提供のみを目的とし、投資助言ではありません。</span>
-      <a id="mwTickerMore" href="javascript:void(0)" style="display:none;color:#0969da;font-size:.78rem;font-weight:600;text-decoration:none">さらに表示 ▼</a>
-    </div>
-  </div>
-  <script>
-  (function(){
-    var CAT={stocks:['📈株式','#0969da'],fx:['💱為替','#8250df'],commodity:['🛢商品','#bc4c00'],
-             crypto:['🪙暗号','#9a6700'],macro:['🏛マクロ','#1a7f37'],biz:['📰経済','#6e7781']};
-    var list=document.getElementById('mwTickerList'),meta=document.getElementById('mwTickerMeta'),
-        more=document.getElementById('mwTickerMore'),fbar=document.getElementById('mwTickerFilters');
-    var all=[],filter='',shown=8;
-    function cat(n){return CAT[n.c]?n.c:'biz';}
-    function rel(iso){var m=(Date.now()-new Date(iso).getTime())/60000;if(!isFinite(m)||m<0)return'';
-      if(m<1)return'たった今';if(m<60)return Math.floor(m)+'分前';if(m<1440)return Math.floor(m/60)+'時間前';return Math.floor(m/1440)+'日前';}
-    function badge(n){var c=CAT[cat(n)];var b=document.createElement('span');
-      b.style.cssText='font-size:.68rem;font-weight:700;color:#ffffff;background:'+c[1]+';border-radius:9px;padding:1px 7px;white-space:nowrap';
-      b.textContent=c[0];return b;}
-    function row(n){var d=document.createElement('div');d.style.cssText='padding:5px 0;border-bottom:1px dashed #d8dee4;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap';
-      var tm=document.createElement('span');tm.style.cssText='color:#57606a;font-size:.74rem;white-space:nowrap;min-width:56px';tm.textContent=rel(n.dt);
-      var a=document.createElement('a');a.href=n.u;a.target='_blank';a.rel='noopener nofollow';
-      a.style.cssText='color:#0969da;text-decoration:none;font-weight:600;flex:1;min-width:200px';a.textContent=(n.e||'😐')+' '+n.t;
-      var s=document.createElement('span');s.style.cssText='color:#6e7781;font-size:.72rem;white-space:nowrap';s.textContent=n.s;
-      d.appendChild(tm);d.appendChild(badge(n));d.appendChild(a);d.appendChild(s);return d;}
-    function render(){
-      var items=filter?all.filter(function(n){return cat(n)===filter;}):all;
-      list.textContent='';
-      if(!items.length){list.innerHTML='<span style="color:#6e7781;font-size:.82rem">この市場の直近の見出しはいまのところありません。</span>';more.style.display='none';return;}
-      items.slice(0,shown).forEach(function(n){list.appendChild(row(n));});
-      more.style.display=items.length>shown?'inline':'none';}
-    function mkbtn(key,label,color){var b=document.createElement('button');
-      b.style.cssText='font-size:.74rem;font-weight:700;border-radius:14px;padding:3px 11px;cursor:pointer;border:1px solid #d0d7de;background:#f6f8fa;color:#57606a';
-      b.textContent=label;
-      b.onclick=function(){filter=key;shown=8;
-        Array.prototype.forEach.call(fbar.children,function(x){x.style.background='#f6f8fa';x.style.color='#57606a';x.style.borderColor='#d0d7de';});
-        b.style.background=color;b.style.color='#ffffff';b.style.borderColor=color;render();};
-      fbar.appendChild(b);return b;}
-    var btnAll=mkbtn('','すべて','#fb8500');
-    Object.keys(CAT).forEach(function(k){mkbtn(k,CAT[k][0],CAT[k][1]);});
-    more.onclick=function(){shown=24;render();};
-    fetch('news-ticker.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-      all=(d.items||[]).filter(function(n){return /^https?:\/\//.test(n.u||'')&&n.t;});
-      if(!all.length)throw 0;
-      btnAll.onclick();
-      var u=new Date(d.updated);
-      meta.textContent='最終取得 '+(u.getMonth()+1)+'/'+u.getDate()+' '+('0'+u.getHours()).slice(-2)+':'+('0'+u.getMinutes()).slice(-2)+' JST';
-      // 各マーケットカード内のミニ一覧（該当市場の最新3件・見出しのみ＝AI解説なし）
-      Array.prototype.forEach.call(document.querySelectorAll('.mw-ticker-mini'),function(el){
-        var mc=el.getAttribute('data-mwcat');
-        var xs=all.filter(function(n){return cat(n)===mc;}).slice(0,3);
-        if(!xs.length){return;}
-        var h=document.createElement('div');h.style.cssText='font-size:.76rem;font-weight:700;color:#fb8500;margin:10px 0 2px';
-        h.textContent='⚡ 最新の見出し（毎時自動更新）';el.appendChild(h);
-        xs.forEach(function(n){var r2=document.createElement('div');r2.style.cssText='font-size:.78rem;padding:2px 0;display:flex;gap:6px;align-items:baseline';
-          var t2=document.createElement('span');t2.style.cssText='color:#57606a;font-size:.7rem;white-space:nowrap';t2.textContent=rel(n.dt);
-          var a2=document.createElement('a');a2.href=n.u;a2.target='_blank';a2.rel='noopener nofollow';
-          a2.style.cssText='color:#0969da;text-decoration:none';a2.textContent=n.t;
-          r2.appendChild(t2);r2.appendChild(a2);el.appendChild(r2);});});
-    }).catch(function(){meta.textContent='';
-      list.innerHTML='<span style="color:#6e7781;font-size:.82rem">最新ニュースを読み込めませんでした（時間をおいて再読み込みしてください）。</span>';});
-  })();
-  </script>
-
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
   <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
