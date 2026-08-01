@@ -53,9 +53,18 @@ def gnews(query):
 
 # (表示ソース名, URL, 市場キーワードフィルタを課すか)
 # Google News 経由は when:1d で当日分に限定。直接RSSは MAX_AGE_HOURS でカット。
+#
+# ⚠️ 2026-08-01: Bloomberg（gnews("site:bloomberg.co.jp when:1d")）を削除した。
+#    Google News が bloomberg.co.jp の**記事を索引していない**＝返るのは株価クオートと固定ページだけ。
+#    実測: entries=100 の中身が「80388: 香港取引所 Stock Price Quote」「CNY to USD Exchange Rate」
+#    「ブルームバーグ プロフェッショナル サービス」等で、日付の中央値は約90,000時間前（≒10年）。
+#    公式RSS も /feeds/rss・/rss・markets.rss の3本とも 0件＝日本語版に公開RSSが無い。
+#    毎時1リクエストを捨てていただけでなく、稀に日付だけ新しいクオートページ
+#    （実測「PHPMD Quote - Wisdom Tree 貴金属ﾊﾞｽｹｯﾄ上場 Fund」）が見出しとして混入する事故源でもあった。
+#    代替も探したが QUICK Money World / ロイター直RSS / JOGMEC は 0件、ダイヤモンドは漫画・育児記事が
+#    主体で市場ニュースにならないため、**補充せず削除のみ**とした（残る8ソースで件数は足りている）。
 FEEDS = [
     ("ロイター",     gnews("site:jp.reuters.com when:1d"), False),
-    ("Bloomberg",    gnews("site:bloomberg.co.jp when:1d"), False),
     ("日経",         gnews("site:nikkei.com (市場 OR 株 OR 円相場 OR 金利 OR 日銀 OR FRB) when:1d"), False),
     ("時事通信",     gnews("site:jiji.com (経済 OR 市場 OR 株 OR 円) when:1d"), False),
     ("株探",         gnews("site:kabutan.jp when:1d"), False),
@@ -63,6 +72,11 @@ FEEDS = [
     ("NHK経済",      "https://www3.nhk.or.jp/rss/news/cat5.xml", False),
     ("Yahoo!経済",   "https://news.yahoo.co.jp/rss/topics/business.xml", False),
     ("東洋経済",     "https://toyokeizai.net/list/feed/rss", True),  # 特集系が多い→市場語フィルタ
+    # 暗号資産専用（2026-08-01 追加）。上の8ソースは暗号資産の見出しを1日1件程度しか出さず、
+    # 暗号資産カードのミニ見出しが枠(CAT_QUOTA=3)を満たせなかったため専門媒体を2本足した。
+    # どちらも発行元が固定＝ソースバッジが嘘にならない（話題検索だと媒体名を詐称することになる）。
+    ("CoinPost",     "https://coinpost.jp/?feed=rss2", False),
+    ("CoinDesk JP",  "https://www.coindeskjapan.com/feed/", False),
 ]
 
 # 東洋経済など総合フィード用の「市場関連」キーワード（1つも含まなければ除外）
