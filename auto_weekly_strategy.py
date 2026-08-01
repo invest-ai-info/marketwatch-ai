@@ -20,6 +20,12 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
+# 🚨 2026-08-01 追加＝このレーンも Gemini 出力を無審査で公開HTMLへ流し込んでいた。
+#    実測では公開10本ともクリーンだったが、防御がプロンプトの「過度な断定は避ける」だけ＝
+#    LLM の自己申告に頼る形で、weekly-review が黒を量産したのと構造は同型。
+#    禁止語の定義は compliance_gate.py が単一の真実。
+from compliance_gate import forbidden_terms_in, forbidden_terms_prompt
+
 JST = timezone(timedelta(hours=9))
 
 # auto_indicator_preview.py から指標スケジュールを取得
@@ -142,7 +148,13 @@ def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators
 - 過度な断定や予想は避ける（「〜の可能性」「〜要注意」など慎重に）
 - ニュースに明示されていない情報の捏造はしない
 - 日付・曜日は【基準日】と【来週の重要指標】に書かれたものだけを使う。記憶や推測で具体的な日付・曜日を書かない（不確実なら「来週前半」「週半ば」など相対表現にする）
-- 数字（価格目線）は具体的に書くが、根拠が薄ければ範囲表現にする
+- 価格や金利の数字は、**すでに起きた事実の水準**としてのみ書く（例「為替は162円台の円安が継続」）。
+  **これから到達する水準＝目標値・下値メド・上値メドは書かない**
+
+【絶対に守る禁止事項】（1 つでも違反したら書き直すこと）
+- 銘柄名・ティッカーと「行動」を結びつけない。「○○は見送る」「○○に絞る」「○○を推奨」は全て禁止
+- 次の語を一切使わない: {forbidden_terms_prompt()}
+- 読者の売買行動そのものには触れない（「何が起きているか」「何を見るか」までに留める）
 - 日本語のみ
 - セクション見出し（"===..."）は必ず行頭にそのまま書く"""
 
@@ -154,6 +166,13 @@ def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators
             response = model.generate_content(prompt)
             text = (response.text or "").strip()
             if text:
+                bad = forbidden_terms_in(text)
+                if bad:
+                    # 助言に読める語が出たモデル出力は採用しない。次のモデルで再試行し、
+                    # 全滅したら AI セクション自体を出さない（None＝既存テンプレのみ）＝**黒は公開しない**。
+                    print(f"  ⚠️ コンプラゲート: {model_name} の出力に禁止語 {bad} → 不採用")
+                    last_err = f"{model_name}: 禁止語 {bad}"
+                    continue
                 print(f"  ✅ AI 週末セクション生成 ({model_name}, {len(text)} 字)")
                 return _render_weekend_section_html(text, news_items)
         except Exception as e:
