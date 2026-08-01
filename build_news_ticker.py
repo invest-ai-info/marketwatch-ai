@@ -116,9 +116,20 @@ _CAT_RULES = [
 ]
 
 
+# 部分一致ゆえの誤爆を止める除外語（当たったらそのカテゴリとしては数えず、次の規則へ進む）。
+# 2026-08-01 実測: commodity の「ゴールド」だけで ゴールドマン・サックス／ゴールドカード／
+# ゴールドウイン／ゴールドパートナー まで拾っていた。commodity の枠は3件しかないので、
+# 1件の誤爆が本物の金・原油の見出しを1件押し出す＝実害がある。
+# 「ゴールド」自体は残す（「ＳＰＤＲゴールドの現物保有高」等、本物の金相場ニュースが使うため）。
+_CAT_EXCLUDE = {
+    "commodity": ("ゴールドマン", "ゴールドカード", "ゴールドウイン",
+                  "ゴールドパートナー", "ゴールデン"),
+}
+
+
 def classify(title):
     for key, kws in _CAT_RULES:
-        if any(k in title for k in kws):
+        if any(k in title for k in kws) and not any(x in title for x in _CAT_EXCLUDE.get(key, ())):
             return key
     return "biz"  # その他の経済ニュース
 
