@@ -5433,6 +5433,28 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
 {morning_digest}
 
+  <!-- 📰更新履歴／📌指標プレビュー／📊週次戦略バナー
+       2026-08-01: オーナー判断で**センチメント直下（＝2026-07-04「トップ整理・案C」より前の位置）へ戻す**。
+       案Cではこの3つをマーケットカードより下へ移していたが、上に在る方が見やすいとのこと。
+       ⚠️ 案Cで同時に**追加**された 🧭ジャンプバー と 🧮計算ツール導線 はそのまま残す＝**並び順だけ**を戻す。
+       ⚠️ 騰落レシオのゲージは market-health へ移設したまま（跡地の1行リンクは下部に据え置き）。 -->
+  <!-- 更新履歴 -->
+  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
+      <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
+      <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
+    </div>
+    <div style="color:#424a53">
+{update_history_first}
+      <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+{update_history_rest}
+      </div></details>
+    </div>
+  </div>
+
+  {indicator_preview_banner}
+  {weekly_strategy_banner}
+
   <!-- A8広告枠①（トップページ・ニュース上）-->
   <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
     <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
@@ -5510,20 +5532,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
 {news_ticker_section}
 
-  <!-- 更新履歴 -->
-  <div style="background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:8px;padding:14px 22px;margin-bottom:12px;font-size:.88rem;line-height:1.9">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px">
-      <span style="color:#0969da;font-weight:700">📰 更新履歴</span>
-      <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
-    </div>
-    <div style="color:#424a53">
-{update_history_first}
-      <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
-{update_history_rest}
-      </div></details>
-    </div>
-  </div>
-
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
   <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
     <span style="color:#0969da;font-weight:700;white-space:nowrap;margin-right:4px">🧮 計算ツール</span>
@@ -5533,9 +5541,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
     <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
   </div>
-
-  {indicator_preview_banner}
-  {weekly_strategy_banner}
 
   <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
   <div style="font-size:.82rem;color:#57606a;margin:0 4px 12px">📊 騰落レシオ（東証プライム）は <a href="market-health.html" style="color:#0969da;font-weight:600">市場健康度ページ</a> でご覧ください →</div>
