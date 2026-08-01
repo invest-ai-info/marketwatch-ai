@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-08-02 | 🧪 signal-lab-058 | 公開済み | 金属ロングgate N=156フォローアップ——後半48.6%に反転・ゲート条件CI上限崩壊
+
+- **基準日**: 2026-08-02（JST）
+- **記事番号**: #058
+- **公開ファイル**: `guide-signal-lab-058.html`
+- **仮説**: group=metal×dir=long gate（#039登録）の前向きフォローアップ
+- **結果**: H1✅（FWD後半E(R)=+0.133R、前半-0.337Rから+0.470R改善）/ H2✅（ゲート条件CI上限+0.17>0で崩壊）
+- **claims**: 11/11 GREEN（signal_lab_verify.py）
+- **コンプラ**: Opusコンプラ🟢白（GRAY×4件修正済）→独立Opus🟢白確認
+- **tracker**: group=metal×dir=long ✅昇格（gate条件崩壊）。次CP: N=160
+- **sweep**: FDR通過0本（新規仮説なし）
+
+---
+
 ## 2026-08-02 | 🤖 下書き生成 | market-participants | 誰が相場を動かしているのか
 
 - **基準日**: 2026-08-02（JST）
