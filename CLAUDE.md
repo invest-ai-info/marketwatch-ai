@@ -203,18 +203,11 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 
 ### 🤖 robots.txt の Disallow（2026-08-01 実装）
 
-**`robots.txt` を手で編集しても消える。**`generate_market_news.py` の `build_robots_txt()` が毎回の update-market-news 実行で再生成→commit するため。実例＝2026-06-05 23:48 に手動で Disallow を足したが **7分後 23:55 の Actions 実行で消滅**し、以後 ~2か月不在だった（その間 CLAUDE.md は「Disallow 済」と書いていた＝**文書だけ直しても意味がない典型**）。**変更は必ず `build_robots_txt()` に書く。**
+**手で編集しても消える**＝`build_robots_txt()`（`generate_market_news.py`）が毎回の update-market-news で再生成→commit するため。実例＝2026-06-05 23:48 手動追加→**7分後の Actions で消滅**、以後~2か月不在なのに CLAUDE.md は「Disallow 済」と書いていた（**文書だけ直しても意味がない典型**）。**変更は必ず `build_robots_txt()` に書く。**
 
-現在の遮断対象（2026-08-01 実測でいずれも live HTTP 200＝クロール可能だった）:
+遮断＝`/drafts/`（下書き78本+REVIEW.md+labnotes/news/proverb/sns）・`/memory/`（投資家プロファイル）・`/*.md$`（直下21本。routine が増やすので個別列挙しない）。**3つとも 2026-08-01 実測で live HTTP 200 だった**。`Allow: /` と併存可（**より具体的な規則が勝つ**）・サイトHTMLから .md へのリンク0件＝表示/SEOへの副作用なし・sitemap にも不掲載（235 URL に混入0を実測）。
 
-| パス | 中身 |
-|---|---|
-| `/drafts/` | 下書き HTML 78本 + REVIEW.md + `labnotes/ news/ proverb/ sns/` |
-| `/memory/` | 投資家プロファイル等の内部メモ |
-| `/*.md$` | 直下の .md 21本（SESSION_HANDOFF / my-trade-review 等）。routine が増やすので個別列挙しない |
-
-- `Allow: /` と併存可（robots.txt は**より具体的な規則が勝つ**）。サイト HTML から .md へのリンクは 0 件＝表示・SEO への副作用なし
-- ⚠️ **これは非公開化ではない**。robots.txt は行儀の良いクローラにしか効かず、`raw.githubusercontent.com` 経由の露出は塞げない（2026-07-26 の既知課題）。恒久策＝下書きを public リポジトリに置かない、は未着手
+⚠️ **非公開化ではない**＝行儀の良いクローラにしか効かず `raw.githubusercontent.com` 経由の露出（2026-07-26）は塞げない。恒久策＝下書きを public に置かない、は未着手
 
 ---
 
