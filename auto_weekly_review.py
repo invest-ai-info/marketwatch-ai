@@ -261,8 +261,7 @@ def ai_lessons(sig_stats, trade_stats, api_key):
 【絶対に守る禁止事項】（1 つでも違反したら書き直すこと）
 - 銘柄名・ティッカー（EURUSD=X, SI=F, CL=F 等）と「行動」を結びつけない。
   「○○は見送る」「○○に絞る」「○○のロットを減らす」「○○を推奨」は全て禁止
-- 次の語を一切使わない: 推奨 / べき / 必須 / 鉄則 / 妥当 / 有望 / 買い場 / 見送 / 絞っ /
-  エントリー / 利確 / ロットを / 検討してもよい / 注目度を上げ
+- 次の語を一切使わない: {forbidden_terms_prompt()}
 - **未来形（「来週は〜」）で読者の行動に言及しない。** 過去形で先週の集計事実のみを述べる
 - 言い換えで助言を隠すのではなく、そもそも将来の行動に触れない
 - HTML タグ、Markdown 見出し（# など）は使わない
@@ -293,16 +292,16 @@ def ai_lessons(sig_stats, trade_stats, api_key):
 #    「CL=F は注目度を上げてもよい」が公開済み＝**銘柄名＋行動指示**＝無登録投資助言業のリスク。
 #    signal-lab / news-daily には Opus ゲートがあるが、weekly-review と weekly-strategy には無い。
 #    LLM の自己申告に頼らず、決定論の禁止語チェックで止める（プロンプト修正だけでは再発する）。
-FORBIDDEN_TERMS = (
-    "推奨", "べき", "必須", "鉄則", "妥当", "有望", "買い場", "見送", "絞っ",
-    "エントリー", "利確", "ロットを", "検討してもよい", "注目度を上げ",
-    "買い増し", "仕込", "狙い目", "押し目買い",
+#
+# 🔁 2026-08-01 夕方＝同じ穴が monthly-report / weekly-strategy にも在ることが実測で判明したため、
+#    禁止語の定義を `compliance_gate.py` へ移して**単一の真実**にした（列挙をコピーすると必ず古くなる）。
+#    ここでの再エクスポートは互換のため＝`auto_weekly_review.FORBIDDEN_TERMS` を参照する既存の
+#    回帰テスト（`_test_weekly_review_gate.py` 18件）をそのまま通す。
+from compliance_gate import (  # noqa: E402  (定義位置を動かさないため意図的にここで import)
+    FORBIDDEN_TERMS,
+    forbidden_terms_in,
+    forbidden_terms_prompt,
 )
-
-
-def forbidden_terms_in(text):
-    """生成文に含まれる禁止語を返す（空リストなら公開してよい）。"""
-    return [w for w in FORBIDDEN_TERMS if w in (text or "")]
 
 
 def _fallback_lessons(sig_stats, trade_stats):
