@@ -98,4 +98,5 @@ SYNC_FILES = [
     "guide-signal-lab-057.html",
     "guide-overconfidence.html",
     "guide-proverb-soba-no-kane-tako-no-ito.html",
+    "guide-news-2026-08-01-amazon-aws-boj-yen-gdp.html",
 ]
