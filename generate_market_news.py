@@ -5470,6 +5470,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </div>
   </div>
 
+  <!-- ⚡ 最新マーケットニュース
+       2026-08-01: オーナー判断で **📰更新履歴の直下** へ移動。
+       旧位置＝A8広告枠②の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
+       中身は build_news_ticker_section()＝閲覧時に JS が news-ticker.json を fetch するので
+       HTML 再生成なしで最新化される（毎時 news-ticker.yml が JSON を更新）。 -->
+{news_ticker_section}
+
   {indicator_preview_banner}
   {weekly_strategy_banner}
 
@@ -5547,8 +5554,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
-
-{news_ticker_section}
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
   <div id="tools" style="background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
