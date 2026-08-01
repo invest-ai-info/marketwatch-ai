@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-01 autopublish: guide-overconfidence.html 公開 / 決定論緑・Opus白（軽微修正適用）・独立Opus白確認 / URL: https://marketwatch-jp.com/guide-overconfidence.html
+
+---
+
 ## 2026-07-31 | 🤖 下書き生成 | overconfidence | 連勝のあとが一番危ない
 
 - **基準日**: 2026-07-31（JST）
