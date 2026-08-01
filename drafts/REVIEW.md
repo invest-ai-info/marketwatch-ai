@@ -2,6 +2,62 @@
 
 ---
 
+## 2026-08-02 | 🤖 下書き生成 | market-participants | 誰が相場を動かしているのか
+
+- **基準日**: 2026-08-02（JST）
+- **対象key**: market-participants（基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-market-participants.html`
+- **参照出典**:
+  - https://www.jpx.co.jp/markets/statistics-equities/investor-type/index.html （JPX 週次・投資部門別売買状況）
+  - https://www.jpx.co.jp/markets/statistics-equities/examination/um3qrc000001nwjv-att/j-bunpu2024.pdf （JPX 2024年度株式分布状況調査PDF）
+  - https://www.nikkei.com/article/DGXZQOUB049XE0U4A400C2000000/ （日経「投資部門別売買動向とは 海外勢のシェア6〜7割」）
+  - https://www.nikkei.com/article/DGXZQOUB228280S4A820C2000000/ （日経「現物株、7割前後が海外勢」）
+  - https://www.nikkei.com/article/DGXLASFL19H6D_Z11C20A0000000/ （日経「海外勢は順張り、個人は逆張り」）
+  - https://www.smd-am.co.jp/market/ichikawa/2025/05/irepo250527/ （三井住友DS「海外投資家と個人投資家の日本株売買状況」2025年5月）
+  - https://www.nli-research.co.jp/report/detail/id=84355?site=nli （ニッセイ基礎研究所「投資部門別売買動向（2025年）」）
+  - https://www.nli-research.co.jp/report/detail/id=79350?site=nli （ニッセイ基礎研究所「投資部門別売買動向（24年7月）」）
+- **事実確認済み内容**:
+  - 海外投資家の現物売買シェア: 2024年年間平均 **59.1%**、局面によっては67%超（日経記事・三井住友DS） ✅
+  - 先物市場の海外投資家シェア: **約75.7%**（三井住友DS 2025年5月）✅
+  - 個人投資家の現物シェア: 2024年 **24.2%**、局面によっては27%超 ✅
+  - 2024年度末の株式保有残高: 外国法人等 **32.4%**（過去最高）、信託銀行 **22.4%**、事業法人 **18.7%**、個人 **17.3%**（JPX 2024年度株式分布状況調査） ✅
+  - 2024年7〜8月急落（日経-5,200円）: 海外大幅売り越し、個人買い越し（ニッセイ基礎研究所） ✅
+  - 2025年事業法人が最大買い越し主体（自社株買い10兆円超）、信託銀行は7.29兆円売り越し（ニッセイ基礎研究所） ✅
+  - GPIFは基本ポートフォリオで国内株約25%を規定（一般的知識・公式発表より）✅
+  - 日銀ETF新規購入停止: 2024年3月の金融政策正常化以降（公開情報） ✅
+  - JPX週次データ公表スケジュール: 毎週第4営業日（木曜が多い）午後3時頃 ✅
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（市場構造・需給の一般解説のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「保証」「儲かる」等を使用していない）
+  - ✅ 「統計的な傾向」「局面によって異なる」「参考にとどめる」等の留保表現を随所に明記
+  - ✅ kinsho-v1 免責：冒頭バナー・本文末p.disclaimer・footer の3点に記載
+  - ✅ 出典妥当（JPX公式・日経・ニッセイ・三井住友DS等の一次・準一次情報のみ使用）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ ナビバー10ボタン・順序厳守（guide-loss-cut.html と同一）
+  - ✅ 「特定銘柄の推奨はしない」旨をSVGキャプションと本文で明示
+- **SVG状況**:
+  - 図1: 「5つの主要プレーヤーと役割の概念図」（横幅でシェアイメージを表現）✅ ライト/ダーク両対応 .s-overseas/.s-individual/.s-trust/.s-corp/.s-dealer で色分け
+  - 図2: 「下落局面での各プレーヤーの売買方向の概念図」✅ 矢印でdirection表現
+  - TODO(SVG): JPX部門別データの読み方（表形式の見本）→ コメントアウトで残作業マーク済み
+  - ライト/ダーク両対応のCSSクラス（.s-*）実装済み。実機での表示確認は人間の残作業
+- **内部リンク**:
+  - `guide-nikkei-vs-topix.html` → 公開済み ✅
+  - `guide-economic-indicators-basics.html` → 公開済み ✅
+  - `guide-loss-cut.html` → 公開済み ✅
+  - `guide-leverage.html` → 公開済み ✅
+  - `market-health.html` → コアページ ✅
+  - `calendar.html` → コアページ ✅
+  - `political-feed.html` → コアページ ✅
+  - `track-record.html` → コアページ ✅
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク表示確認（プレーヤー別カラーの視認性）
+  - TODO SVG（JPX読み方図）の追加・仕上げ（任意）
+  - タイトル・見出し微調整（必要に応じて）
+  - compliance-reviewer (Opus) 監査
+  - 公開は毎朝 08:40 の autodraft-publish がゲート付きで自動実行
+
+---
+
 2026-08-01 autopublish: guide-overconfidence.html 公開 / 決定論緑・Opus白（軽微修正適用）・独立Opus白確認 / URL: https://marketwatch-jp.com/guide-overconfidence.html
 
 ---
