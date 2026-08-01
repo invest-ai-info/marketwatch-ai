@@ -177,12 +177,12 @@ content-writer と seo-ux-strategist を**同一メッセージ内で並列**に
 - **QAレポート（2026-06-01 追加）**: `site-qa-report.md`（routine `site-qa-lint` `trig_01Ph7pZ1WpjL8mZn7gXj5TEm`、土曜 10:00 JST。`check_site_consistency.py` を実行した整合性チェック結果）。**routine が main へ生成・コミットするため、ローカルから push 禁止**
 - **指標結果速報（2026-06-05 追加）**: `indicator-result.json`（routine が重要指標の発表後に WebSearch で実数値・市場反応を生成・コミット。`generate_market_news.py` の `build_indicator_preview_banner` が読み、トップの注目指標バナーを「プレビュー→結果速報」に刷り替える）。**routine が GitHub 側で生成・コミットするため、ローカルから push 禁止**（SYNC_FILES に入れない）
 - **パニック反発スキャン（2026-06-03 追加）**: `panic-scan.md`（GitHub Actions `panic-scan.yml`、毎日 7:27 JST。`panic_bounce_scan.py` が非FX9資産の「投げ売り＝反発候補」を出力）。**Actions が GitHub 側で生成・コミットするため、ローカルから push 禁止**（ローカル実行時に同名ファイルができるが SYNC_FILES に入れない）。前向き検証データ蓄積用の非公開メモ
-- **記事下書き＋完全自動公開（2026-06-06 下書き／07-05 無人公開化）**: `drafts/draft-*.html` / `drafts/REVIEW.md`（routine `autodraft-article` `trig_01VpreEMybEJCmFiU5TS7Vet`、毎日 05:30 JST が心理＆リスク管理シリーズ下書きを生成）＋公開routine `autodraft-publish`（毎日 08:40 JST が最古の未公開下書きを仕上げ公開）。**routine が GitHub 側で生成＝SYNC_FILES に入れない**（下書きは `noindex,nofollow`＋robots.txt `/drafts/` Disallow）。公開ゲート＝`check_guide_draft.py`（固定・編集禁止＝noindex/kinsho-v1/ナビ10/TODO/売買推奨NG/SVGはみ出し）exit0 → Opusコンプラ+品質(QUALITY_RUBRIC)白（🟡軽微はOpus修正→再ゲート→独立Opus確認）→ publish_article.py＋push。🔴黒/要協議/赤は REVIEW.md に🚩エスカレ。**例外＝`AUTODRAFT_GUIDE.md`／`AUTOPUBLISH_GUIDE.md`／`BOOKWATCH_GUIDE.md`は人間編集＝SYNC入り**。手順書=`drafts/AUTOPUBLISH_GUIDE.md`
+- **記事下書き＋完全自動公開（2026-06-06 下書き／07-05 無人公開化）**: `drafts/draft-*.html` / `drafts/REVIEW.md`（routine `autodraft-article` `trig_01VpreEMybEJCmFiU5TS7Vet`、毎日 05:30 JST が心理＆リスク管理シリーズ下書きを生成）＋公開routine `autodraft-publish`（毎日 08:40 JST が最古の未公開下書きを仕上げ公開）。**routine が GitHub 側で生成＝SYNC_FILES に入れない**（下書きは `noindex,nofollow`＋robots.txt `/drafts/` Disallow＝**2026-08-01 にようやく実装**。それ以前は robots.txt に Disallow が無く 78本が実際にクロール可能だった＝下記「robots.txt の Disallow」節）。公開ゲート＝`check_guide_draft.py`（固定・編集禁止＝noindex/kinsho-v1/ナビ10/TODO/売買推奨NG/SVGはみ出し）exit0 → Opusコンプラ+品質(QUALITY_RUBRIC)白（🟡軽微はOpus修正→再ゲート→独立Opus確認）→ publish_article.py＋push。🔴黒/要協議/赤は REVIEW.md に🚩エスカレ。**例外＝`AUTODRAFT_GUIDE.md`／`AUTOPUBLISH_GUIDE.md`／`BOOKWATCH_GUIDE.md`は人間編集＝SYNC入り**。手順書=`drafts/AUTOPUBLISH_GUIDE.md`
 - **研究アイデア受信箱（2026-07-07）**: `drafts/idea-inbox.md`（routine `idea-scout-weekly`、毎週日曜 14:00 JST＝WebSearchで検証可能な新手法・論文を最大3件・事前登録形式で**追記のみ**・重複回避は `drafts/idea-tested-slugs.txt`(SYNC入り)と照合）。**routine が GitHub側で追記＝SYNC外**（登録済・照合basename）。ローカル進化ループ（`mw evolve`／`research/DOCTRINE.md`）の①INTAKE
 - **投資本 新刊ウォッチ（2026-07-05）**: `guide-new-books.html`（routine `book-watch-weekly`、毎週土曜 11:00 JST＝WebSearchで直近30日の投資系新刊を2ソース照合→中立紹介を最新40冊まで積み上げ）。**routine が GitHub側で更新＝SYNC外**（check_site_consistency の SYNC_FORBIDDEN 登録済）。手順書=`drafts/BOOKWATCH_GUIDE.md`（SYNC入り）
 - **週次トレード自己レビュー（2026-06-06）**: `my-trade-review.md`（routine `weekly-trade-review` `trig_01LgSjdK2is5m6oP7ta1mh7z`、毎週土曜 12:00 JST が `my-trades.json` を分析＝敗因/遵守度/改善点の非公開メモ）。**GitHub側生成＝SYNC外**。読む対象＝`my-trades.json`／`MY_TRADING_RULES.md`(発注前チェックリスト・SYNC入り)／`economic-events.json`。本人の自己点検
 - **シグナル研究日誌・日次研究会＋自動公開（2026-06-11 / 06-13 自動公開化）**: `signal-lab-ledger.md`（台帳）/ `drafts/draft-signal-lab-*.html` / `drafts/labnotes/lab-*-analysis.md` / `drafts/labnotes/lab-*-claims.json`（routine `signal-lab-daily` `trig_01V4A37Xow1vx2QAAvYwzR57`、毎朝 06:10 JST＝NY引け後。投資3視点で勝率改善仮説を**1日1本だけ**signals-logで反実仮想検証→下書き＋labnotes＋claims.json＋台帳を生成）。**routine が GitHub 側で生成＝SYNC_FILES に入れない**。自動公開ゲート＝①`signal_lab_verify.py`（**SYNC入りの固定コード＝独立オラクル・routine/agentは編集禁止・実行前に `git checkout` で確定版へ**。claims.jsonの全k/nをsignals-logから独立再計算して突合＝捏造不可＋『30秒まとめ』%完全性＋SVG＋**未対応フィルタキーは即赤**）exit0 → ②Opusコンプラ白なら自動公開（🟡軽微はOpus自己修正[表現軟化・免責のみ・数値/SVG不変]→数値再検証→別の独立Opusが白確認／🔴黒・要協議・検証赤・未対応次元は REVIEW.md に🚩エスカレ）。filterキー＝ticker/group/direction/trend/tf/signal/signals_all(コンボ=全シグナル同時発火・2026-07-19)/reversal_long/blocked/tier/env(環境警戒A-D・2026-07-19)/regime(RISK_ON等・2026-07-19)/rsi_band・ma_pos・macd_side(指標ステート・2026-07-20)/news(注目度0/1-2/3+・Q24・2026-07-23)。groupには拡張ユニバース5キーあり(metal_x/energy_x/rates/crypto_x/index_x=1d拡張8銘柄・Q23・2026-07-23＝既存groupと非重複・トラッカーは拡張group仮説のみ凍結迂回)。⚠️`--category`＝「AIシグナル研究日誌」(絵文字なし・🧪は--emoji)。記事番号は台帳管理。**エンジン・発火条件・固定オラクルには絶対触れない。人間の役割＝エスカレ回のレビューのみ**
-- **X(SNS)投稿ドラフト（2026-06-13）**: `drafts/sns/<YYYY-MM-DD>.md`（routine `sns-post-daily` `trig_01VkDY4djA8WAAZavhgu3j4M`、毎日 07:00/19:00 JST＝cron `0 10,22 * * *` UTC・JST時刻で朝/晩出し分け。@rx009898 が手動コピペするX投稿文を生成。価格=Yahoo／地合い=fundamental-context.json／イベント=economic-events.json・280字以内・免責短縮版）。**GitHub側生成＝SYNC外**。⚠️X API自動投稿はしない（無料枠2026-02廃止＝コピペ専用）。`/drafts/` は robots.txt Disallow 済
+- **X(SNS)投稿ドラフト（2026-06-13）**: `drafts/sns/<YYYY-MM-DD>.md`（routine `sns-post-daily` `trig_01VkDY4djA8WAAZavhgu3j4M`、毎日 07:00/19:00 JST＝cron `0 10,22 * * *` UTC・JST時刻で朝/晩出し分け。@rx009898 が手動コピペするX投稿文を生成。価格=Yahoo／地合い=fundamental-context.json／イベント=economic-events.json・280字以内・免責短縮版）。**GitHub側生成＝SYNC外**。⚠️X API自動投稿はしない（無料枠2026-02廃止＝コピペ専用）。`/drafts/` は robots.txt Disallow 済（2026-08-01〜。下記「robots.txt の Disallow」節）
 - **デイリーニュース記事 完全自動公開（2026-06-15→06-17 クラウド化）**: クラウドルーティン **`news-daily-auto`（`trig_01WZ9maArFYwaxyq99KJLJBi`、毎日 17:40 JST＝cron `40 8 * * *` UTC）**が手順書 `drafts/NEWS_DAILY_GUIDE.md` に従い最重要ニュースを「話題性×影響×付加価値」でスコア→**1本だけ**中立整理→**Opus自動公開ゲート（signal-lab方式＝決定論チェック[免責三層/禁止語/銘柄推奨無し/出典2系統]→🟢白は `publish_article.py --category "今日のニュース"`＋push／🟡軽微はOpus自己修正→別Opus確認／🔴黒・要協議・事実未確定はエスカレ）**で公開。公開物＝`guide-news-<YYYY-MM-DD>-<slug>.html`（通常記事）＋`guides.html`「今日のニュース」カード＋`drafts/news/NEWS_LEDGER.md`（GitHub側生成＝SYNC禁忌）。**薄い日は見送り**（合計9/15未満等）。個別銘柄は「買い/売り」と読ませないフラット整理厳守。⚠️旧ローカル `news-daily` は無効化済（二重公開防止でクラウド一本化）。手順書 `NEWS_DAILY_GUIDE.md`＝人編集＝**SYNC入り**・`drafts/news/*`はSYNC外。クラウドroutineは `RemoteTrigger`（list/get/run/create/update）で管理
 
 - **⚡最新ニュース・ライブフィード（2026-07-09）**: `news-ticker.json`（Actions `news-ticker.yml`、毎時37分＝`build_news_ticker.py` が日本語RSS/Google Newsの最新見出し24件を時刻降順で生成。index.html の「⚡最新マーケットニュース」枠がJSで閲覧時fetch）。**Actions が GitHub側で生成＝ローカルから push 禁止**（SYNC_FORBIDDEN 登録済）
@@ -200,6 +200,21 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 - `economic-events.json`, `my-trades.json`
 - Claude Code 設定（`.claude/agents/*.md`）
 - ドキュメント（CLAUDE.md, SESSION_HANDOFF.md, memory/*.md）
+
+### 🤖 robots.txt の Disallow（2026-08-01 実装）
+
+**`robots.txt` を手で編集しても消える。**`generate_market_news.py` の `build_robots_txt()` が毎回の update-market-news 実行で再生成→commit するため。実例＝2026-06-05 23:48 に手動で Disallow を足したが **7分後 23:55 の Actions 実行で消滅**し、以後 ~2か月不在だった（その間 CLAUDE.md は「Disallow 済」と書いていた＝**文書だけ直しても意味がない典型**）。**変更は必ず `build_robots_txt()` に書く。**
+
+現在の遮断対象（2026-08-01 実測でいずれも live HTTP 200＝クロール可能だった）:
+
+| パス | 中身 |
+|---|---|
+| `/drafts/` | 下書き HTML 78本 + REVIEW.md + `labnotes/ news/ proverb/ sns/` |
+| `/memory/` | 投資家プロファイル等の内部メモ |
+| `/*.md$` | 直下の .md 21本（SESSION_HANDOFF / my-trade-review 等）。routine が増やすので個別列挙しない |
+
+- `Allow: /` と併存可（robots.txt は**より具体的な規則が勝つ**）。サイト HTML から .md へのリンクは 0 件＝表示・SEO への副作用なし
+- ⚠️ **これは非公開化ではない**。robots.txt は行儀の良いクローラにしか効かず、`raw.githubusercontent.com` 経由の露出は塞げない（2026-07-26 の既知課題）。恒久策＝下書きを public リポジトリに置かない、は未着手
 
 ---
 
