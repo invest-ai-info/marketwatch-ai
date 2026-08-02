@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-08-03 | 🧪 signal-lab #059 | もみあい×ショート 前向きN=141 CI上限ゼロ接触
+
+- **基準日**: 2026-08-03（JST）
+- **生成ファイル**: `drafts/draft-signal-lab-059.html`
+- **claims**: `drafts/labnotes/lab-059-claims.json`（8件）
+- **優先度**: ②（前向きトラッカー大変動: FWD RCI上限+0.003にゼロ接触）
+- **主要発見**: low_break FWD RCI[-0.792, -0.041]→CI全域マイナス確定
+- **次ステップ**: `signal_lab_verify.py` ゲート → Opusコンプラ → 公開判断
+
+---
+
 ## 2026-08-03 | 🤖 下書き生成 | stock-split-buyback | 株式分割と自社株買いの仕組み
 
 - **基準日**: 2026-08-03（JST）
