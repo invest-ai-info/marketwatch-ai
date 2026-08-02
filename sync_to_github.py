@@ -102,4 +102,5 @@ SYNC_FILES = [
     "guide-signal-lab-058.html",
     "guide-proverb-kabu-yori-toki.html",
     "guide-news-2026-08-02-apple-q3-earnings-drop.html",
+    "guide-signal-lab-059.html",
 ]
