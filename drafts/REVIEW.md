@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-08-03 | 🤖 下書き生成 | stock-split-buyback | 株式分割と自社株買いの仕組み
+
+- **基準日**: 2026-08-03（JST）
+- **対象key**: stock-split-buyback（基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-stock-split-buyback.html`
+- **参照出典**:
+  - https://www.jpx.co.jp/english/equities/listing/company-split/01.html （JPX 株式分割・投資単位引下げ制度）
+  - https://www.japantimes.co.jp/business/2025/12/10/markets/japan-stocks-individual-investors/ （The Japan Times「日本株分割ラッシュ 2025年12月」）
+  - https://www.dividendjapan.com/p/japan-stock-splits-december-2025 （Dividend Japan「年末2025 株式分割 事例」）
+  - https://www.finra.org/investors/investing/investment-products/stocks/stock-splits （FINRA 株式分割の説明）
+  - https://corporatefinanceinstitute.com/learn/resources/accounting/dividend-vs-share-buyback-repurchase/ （CFI 配当vs自社株買い比較）
+  - https://www.cboe.com/insights/posts/stock-splits-lead-to-split-results-in-trading/ （CBOE 分割後の小口投資家参加率 +25.7%）
+  - https://pubsonline.informs.org/doi/10.1287/mnsc.2023.01423 （Management Science / INFORMS 株式分割と個人投資家参加）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「100%」等 不使用）
+  - ✅ kinsho-v1 免責 3箇所入り（冒頭バナー・本文末p.disclaimer・footer）
+  - ✅ 「分割＝株価が上がる」はアノマリーの域を出ないと明示
+  - ✅ 自社株買いのEPS上昇は数字上の改善であり本業成長とは別と明示
+- **SVG概念図**: 2点（株式分割前後の比較図・自社株買いEPS影響図）。ライト/ダーク両対応（s-box-b/g/r/y クラス + dark モード上書き定義済み）
+- **人間の残作業**:
+  - ブラウザでライト/ダーク実機確認（SVGボックスの視認性）
+  - タイトル・メタデスクリプションの微調整（任意）
+  - 公開は毎朝 08:40 の autodraft-publish が自動ゲート付きで実行
+
+---
+
 ## 2026-08-02 autopublish: 🚩要人間レビュー — market-participants（事実誤認2件・コンプラ白）
 
 - **対象key**: market-participants（基礎知識 / 💰 投資の基礎知識）
