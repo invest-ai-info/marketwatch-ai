@@ -88,3 +88,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://www.sciencedirect.com/science/article/abs/pii/S0927538X21001487 / https://link.springer.com/article/10.1007/s11156-025-01421-5
 - 検証案: jp-rankings.json銘柄を時価総額で三分位に分類し、大型vs小型の過去リターン差を算出。流動性フィルター（売買代金下位20%除外）の有無で2パターン比較し「除外が前提か」を確認。財務データjoin必要。
 - タグ: ○
+
+## 2026-08-02（JST）
+### slug: amihud-illiquidity-premium
+- 名前: Amihud非流動性プレミアム（日本株版）
+- 主張: 日次の絶対リターン÷日次出来高（円建て）で計算するAmihud ILLIQ指標が高い銘柄（非流動性が高い銘柄）は将来のリターンが高くなる傾向がある【出典の主張・未検証】。Amihud（2002 JFE）が米国市場で確立し、日本TSE全セクション（東証一部・二部・マザーズ）においても非流動性とリターンに統計的に有意な正の関係が確認されたと報告されている（ScienceDirect）。サイズ・ベータを制御後も効果が持続するとの指摘あり。2023年SSRNではAmihud指標を含む複数の流動性指標を日本株に適用した論文が掲載。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S0927538X09000572 / https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4605450
+- 検証案: jp-rankings.json銘柄の日足データからILLIQ（月次平均=|日次リターン|÷日次出来高の月平均）を計算し、高ILLIQ上位三分位vs低ILLIQ下位三分位の翌月リターン・勝率を比較。価格＋出来高データのみで完結。jp-size-revival（小型株）との交差集計も視野。
+- タグ: ◎
+
+### slug: greenblatt-magic-formula
+- 名前: Greenblatt Magic Formula（日本株適用）
+- 主張: EBIT/EV（利益利回り=EY）とEBIT/投下資本（資本利益率=ROC）の2指標を合算ランキングし上位銘柄群に投資する手法【出典の主張・未検証】。Greenblatt（"The Little Book That Beats the Market" 2005）が提唱。欧州・インド等の複数市場で市場平均を上回るリターンが報告されているが（Poznan大学国際比較論文・SSRN）、日本市場単独の査読論文は現時点で未確認。バリュー（EY）と質（ROC）の相乗効果が仮説の核心。buffett-quality（複合5基準）とは指標選択が異なる。
+- 出典: https://journals.ue.poznan.pl/REF/article/view/2790 / https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3945468
+- 検証案: 東証銘柄の四半期財務データ（EBIT・EV・投下資本）をjoinし、EYとROCを合算ランキング。上位20%vs下位20%の翌年リターン差を算出。buffett-qualityとの組み合わせ・相関も確認。
+- タグ: ○
+
+### slug: dekansho-bushi-seasonality
+- 名前: 日本株半期季節性（節分天井・彼岸底型・Dekansho-bushi効果）
+- 主張: 日本株では上半期（1〜6月）の月次リターンが有意に正、下半期（7〜12月）のリターンが有意に負になる傾向が50年以上持続しているとされる【出典の主張・未検証】。Springer収録の日本株カレンダー分析論文が確認。「Sell in May」と方向性が一致し、日本独自の企業決算サイクル・外国人投資家の動向が背景として挙げられる。小型株・低PBR銘柄で効果がより顕著との報告あり。larry-williams（月替わり・個別株）とは異なる半期スケール・指数レベルの検証。
+- 出典: https://link.springer.com/chapter/10.1007/978-4-431-55501-8_23 / https://www.sciencedirect.com/science/article/abs/pii/S0922142501000676
+- 検証案: NKD=F日足データで月別リターンを全期間・2010年以降で集計し、上半期月群（1〜6月）vs下半期月群（7〜12月）の平均リターン・勝率を比較。続いてjp-rankings.json銘柄で時価総額別・PBR別の効果差を確認。価格データのみで完結。
+- タグ: ◎
