@@ -101,4 +101,5 @@ SYNC_FILES = [
     "guide-news-2026-08-01-amazon-aws-boj-yen-gdp.html",
     "guide-signal-lab-058.html",
     "guide-proverb-kabu-yori-toki.html",
+    "guide-news-2026-08-02-apple-q3-earnings-drop.html",
 ]

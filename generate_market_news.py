@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-02", "line": '・<b>2026-08-02</b>: 📰 解説「<a href="guide-news-2026-08-02-apple-q3-earnings-drop.html" style="color:#0969da"><b>Apple Q3「記録的好決算」も株価-7.35%急落──ガイダンス大幅ミスと5要因を整理</b></a>」公開'},
         {"date": "2026-08-02", "line": '・<b>2026-08-02</b>: ⏰ 解説「<a href="guide-proverb-kabu-yori-toki.html" style="color:#0969da"><b>株を買うより時を買え</b></a>」公開'},
         {"date": "2026-08-02", "line": '・<b>2026-08-02</b>: 🧪 解説「<a href="guide-signal-lab-058.html" style="color:#0969da"><b>金属ロングgate N=156フォローアップ——後半48.6%に反転・ゲート条件CI上限崩壊</b></a>」公開'},
         {"date": "2026-08-01", "line": '・<b>2026-08-01</b>: 📰 解説「<a href="guide-news-2026-08-01-amazon-aws-boj-yen-gdp.html" style="color:#0969da"><b>【8/1】Amazon AWS+37%・日銀8-1据え置き・日米介入でドル円5円急落×GDP1.5%下振れ</b></a>」公開'},
