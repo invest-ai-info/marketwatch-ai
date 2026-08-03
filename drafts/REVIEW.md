@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-03 autopublish: guide-market-participants.html 公開 / 決定論緑・Opus 🟡グレー修正適用（F-1 下落幅修正、F-2 数値表記修正、F-4 日銀ETF見出し修正）・独立Opus白確認 / URL: https://marketwatch-jp.com/guide-market-participants.html
+
+---
+
 ## 2026-08-03 | 🧪 signal-lab #059 | もみあい×ショート 前向きN=141 CI上限ゼロ接触
 
 - **基準日**: 2026-08-03（JST）
