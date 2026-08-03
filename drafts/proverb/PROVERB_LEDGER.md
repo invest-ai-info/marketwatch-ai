@@ -51,8 +51,10 @@
 
 | 30 | ✅公開済み | 株を買うより時を買え | kabu-yori-toki | 2026-08-02 | 🟢白（初期・修正なし）→ 品質5観点全✅ → 🟢白（独立Opus確認・全5ゲートPASS） | JSDA格言コレクション第17番掲載（出典：jsda.or.jp・参考情報として記載）。由来の特定人物・初出文献は確認できず・諸説あり。システマティックリスク（市場リスク）・ブリンソン・フッド・ビーバワー（BHB）1986年研究「Determinants of Portfolio Performance」FAJ 42巻（93.6%はリターン変動の説明要因・個人投資家への直接適用限界を明示）・過熱期Aさんvs恐怖期Bさんの仮数字例（▼25% vs ▲50%・仮設定明示12箇所）・SVG2パネル概念図（過熱ゾーンs-zone-y/回復ゾーンs-zone-g）・認知バイアス3点（選択支持バイアス/アンカリング/計画錯誤）・4つの実践アプローチ（market-health.html指標チェック/calendar.html/分割エントリー/事前ルール化）・BBH誤解4点・英語格言"Time in the market beats timing the market"との違い・市場健康度CTAリンク。kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告15件は既存記事の偽陽性）。Opus×2コンプラ白・品質5観点全✅。自動公開ルーティン proverb-daily-auto による。 |
 
+| 31 | ✅公開済み | トレンドは友（Trend is your friend） | trend-is-your-friend | 2026-08-03 | 🟡グレー（初期：①「必ず」禁止語②CTAの過去実績注記不足→Opus軽微修正）→ 🟢白（最終）→ 品質5観点全✅ → 🟢白（独立Opus確認・7項目全適合） | Martin Zweig（1986年 Winning on Wall Street・1990年投資ルール・諸説あり）とEd Seykota（Schwager著Market Wizards 1989年・諸説あり）に帰属される英語格言。後半節「except at the end where it bends」の核心・Jegadeesh & Titman(1993, JoF Vol.48 pp.65-91)モメンタム月次1.31%・アンカリング/確証バイアス/プロスペクト理論・転換察知3観点・「逆らうな」vs「飛び乗る」比較表・よくある誤解3点・SVG友のライフサイクル概念図・仮数字例・kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告15件は既存記事の偽陽性）。自動公開ルーティン proverb-daily-auto による。 |
+
 ---
 
-次回候補：キュー #23「セル・イン・メイ」→ 🚩人間判断待ち（既存記事との重複問題）。人間レビュー後に公開 or #31 へ進む
+次回候補：キュー #23「セル・イン・メイ」→ 🚩人間判断待ち（既存記事との重複問題）。人間レビュー後に公開 or #32「FRBには逆らうな」へ進む
 
-最終更新：2026-08-02（proverb-daily-auto ルーティン・#30「株を買うより時を買え」✅公開済み）
+最終更新：2026-08-03（proverb-daily-auto ルーティン・#31「トレンドは友（Trend is your friend）」✅公開済み）
