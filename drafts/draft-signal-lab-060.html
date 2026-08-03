@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>逆張り買い（reversalL）⛔反証 N=415確認——下降×逆張りIS 30.2%→FWD 59.2%の劇的逆転とRSI二極化｜AIシグナル研究日誌 #060</title>
+<meta name="description" content="reversalLの前向きN=415到達。下降トレンドでのIS 30.2%→FWD 59.2%の逆転と、RSI売られすぎ（62.6%）とBBタッチ（47.3%）の二極化を検証。">
+<style>
+:root {
+  --bg: #f8f9fa; --card: #fff; --text: #212529; --muted: #6c757d;
+  --border: #dee2e6; --accent: #2563eb; --accent2: #16a34a;
+  --warn: #b45309; --danger: #dc2626; --positive: #15803d;
+  --tag-bg: #e0f2fe; --tag-text: #0369a1;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+    --border: #334155; --accent: #60a5fa; --accent2: #4ade80;
+    --warn: #fbbf24; --danger: #f87171; --positive: #86efac;
+    --tag-bg: #1e3a5f; --tag-text: #93c5fd; }
+}
+:root[data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+  --border: #334155; --accent: #60a5fa; --accent2: #4ade80;
+  --warn: #fbbf24; --danger: #f87171; --positive: #86efac;
+  --tag-bg: #1e3a5f; --tag-text: #93c5fd; }
+:root[data-theme="light"] { --bg: #f8f9fa; --card: #fff; --text: #212529; --muted: #6c757d;
+  --border: #dee2e6; --accent: #2563eb; --accent2: #16a34a;
+  --warn: #b45309; --danger: #dc2626; --positive: #15803d;
+  --tag-bg: #e0f2fe; --tag-text: #0369a1; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
+nav { background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+nav a { text-decoration: none; color: var(--muted); padding: 0.3rem 0.6rem;
+  border-radius: 4px; font-size: 0.8rem; white-space: nowrap; }
+nav a:hover { background: var(--tag-bg); color: var(--tag-text); }
+nav a.current { background: var(--accent); color: #fff; }
+.container { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1 { font-size: 1.45rem; line-height: 1.4; margin-bottom: 0.5rem; }
+h2 { font-size: 1.15rem; border-left: 4px solid var(--accent); padding-left: 0.6rem;
+  margin: 2rem 0 0.8rem; }
+h3 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+p { margin-bottom: 0.9rem; }
+.meta-line { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.2rem; }
+.tag { display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.5rem;
+  border-radius: 12px; background: var(--tag-bg); color: var(--tag-text); margin-right: 0.3rem; }
+.tag-red { background: #fee2e2; color: #dc2626; }
+.summary-box { background: var(--card); border: 2px solid var(--accent); border-radius: 8px;
+  padding: 1.1rem 1.3rem; margin: 1.2rem 0; }
+.summary-box h3 { color: var(--accent); margin-top: 0; }
+.summary-box ul { padding-left: 1.2rem; }
+.summary-box li { margin-bottom: 0.3rem; }
+.info-box { background: var(--card); border-left: 4px solid var(--accent);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.positive-box { background: var(--card); border-left: 4px solid var(--positive);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.warning-box { background: var(--card); border-left: 4px solid var(--warn);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.negative-box { background: var(--card); border-left: 4px solid var(--danger);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.2rem; font-size: 0.9rem; }
+th { background: var(--tag-bg); color: var(--tag-text); padding: 0.5rem 0.7rem;
+  text-align: center; border: 1px solid var(--border); font-weight: 600; }
+td { padding: 0.45rem 0.7rem; border: 1px solid var(--border); text-align: center; }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--card) 95%, var(--bg)); }
+.highlight-row td { background: color-mix(in srgb, #dcfce7 70%, var(--card)); font-weight: 600; }
+@media (prefers-color-scheme: dark) { .highlight-row td { background: color-mix(in srgb, #14532d 60%, var(--card)); } }
+:root[data-theme="dark"] .highlight-row td { background: color-mix(in srgb, #14532d 60%, var(--card)); }
+:root[data-theme="light"] .highlight-row td { background: color-mix(in srgb, #dcfce7 70%, var(--card)); }
+.good { color: var(--positive); font-weight: 700; }
+.bad { color: var(--danger); font-weight: 700; }
+.neutral { color: var(--muted); }
+.chart-figure { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 1rem; margin: 1.2rem 0; overflow-x: auto; }
+.chart-figure figcaption { font-size: 0.78rem; color: var(--muted); text-align: center;
+  margin-top: 0.6rem; }
+.chart-figure .note { font-size: 0.72rem; color: var(--muted); text-align: center;
+  margin-top: 0.2rem; font-style: italic; }
+.disclaimer-banner { background: color-mix(in srgb, var(--warn) 10%, var(--card));
+  border: 1px solid var(--warn); border-radius: 6px; padding: 0.9rem 1.1rem;
+  margin: 1.5rem 0; font-size: 0.82rem; color: var(--text); }
+.disclaimer-banner strong { color: var(--warn); }
+.related-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.9rem 1.1rem; margin: 1.5rem 0; }
+.related-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.related-card a:hover { text-decoration: underline; }
+/* Tracker table override */
+#tracker { font-size: 1rem; border-left: none; padding-left: 0; }
+#tracker + p.meta-line { font-size: 0.78rem; color: var(--muted); }
+#tracker ~ table td:last-child { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/index.html">🏠 ホーム</a>
+  <a href="/political-feed.html">🚨 政治速報</a>
+  <a href="/track-record.html">📊 成績</a>
+  <a href="/calendar.html">📅 カレンダー</a>
+  <a href="/guides.html" class="current">📚 解説</a>
+  <a href="/guide-investment-books.html">📖 投資本</a>
+  <a href="/market-health.html">🩺 市場健康度</a>
+  <a href="/hot-assets.html">🔥 話題の資産</a>
+  <a href="/charts.html">📈 チャート</a>
+  <a href="/youtube-summary.html">📺 YouTube</a>
+</nav>
+
+<div class="container">
+
+<p class="meta-line">
+  <span class="tag">🧪 AIシグナル研究日誌</span>
+  <span class="tag">#060</span>
+  <span class="tag">reversalL</span>
+  <span class="tag">⛔反証</span>
+  <span class="tag">N=415</span>
+  公開：2026年8月4日
+</p>
+
+<h1>逆張り買い（reversalL）⛔反証 N=415確認<br>——下降×逆張りIS 30.2%→FWD 59.2%の劇的逆転とRSI二極化</h1>
+
+<div class="summary-box">
+  <h3>⏱ 30秒まとめ</h3>
+  <ul>
+    <li><strong>reversalL 全体</strong>：全期間 k=382 / n=857（勝率44.6%）。前向きN=415・勝率51.6% CI[46.8~56.3]、平均R=+0.19でCI下限が正値を維持（⛔反証）</li>
+    <li><strong>下降×reversalL</strong>：全期間 k=141 / n=321（43.9%）。前向きでは59.2%・平均R=+0.33 CI[+0.06~+0.60]に逆転（⛔反証）</li>
+    <li><strong>IS最悪→FWD最良の逆転</strong>：In-Sample期間で最下位だった「下降×逆張り」が、前向き期間で最上位に浮上（IS 30.2%→FWD 59.2%）</li>
+    <li><strong>RSI vs BB 二極化</strong>：RSI売られすぎ FWD 62.6% CI[53.2~71.3] vs BBタッチ FWD 47.3% CI[41.8~52.9]。RSIのRCI下限が正値</li>
+    <li>⚠️ <strong>本記事はシグナル研究の記録。売買推奨ではない</strong></li>
+  </ul>
+</div>
+
+<h2>はじめに：N=415で何が見えたか</h2>
+<p>
+reversalLは「逆張り買い（rsi_oversold_bounce または bb_lower_touch のロング発火）」を指す研究ユニット。
+2026-06-25の<strong>#032</strong>（前向きN=81）で⛔反証（"下限0以上"）が初確認され、
+以降の前向き積み上げにより本日基準日 2026-08-04 時点で<strong>前向きN=415（+328件）</strong>に到達した。
+</p>
+<p>
+最大の発見は、In-Sample（IS）期間で全セグメント最低だった<strong>「下降トレンド×逆張り買い」</strong>が、
+前向き（FWD）期間で全セグメント最高に逆転したことだ。この「IS最悪→FWD最良」という逆転現象と、
+シグナル種別（RSI vs BB）の二極化を詳しく掘り下げる。
+</p>
+
+<h2>データ概要</h2>
+
+<div class="info-box">
+  <strong>分析対象</strong>：signals-log.json から closed（tp1/tp2/sl）のみを使用。1d拡張銘柄（metal_x/energy_x/rates/crypto_x/index_x）は前向きトラッカーで除外済み。<br>
+  <strong>期間区分</strong>：IS＝outcome_resolved_at ＜ 2026-06-25（#032 登録前）、FWD＝2026-06-25以降<br>
+  <strong>対象シグナル</strong>：reversalL = primary_signal ∈ {rsi_oversold_bounce, bb_lower_touch} かつ dir=long
+</div>
+
+<table>
+  <thead><tr><th>区分</th><th>N（closed）</th><th>勝ち（k）</th><th>勝率</th><th>平均R</th></tr></thead>
+  <tbody>
+    <tr><td>IS（N=441）</td><td>441</td><td>168</td><td class="bad">38.1%</td><td class="bad">−0.112</td></tr>
+    <tr class="highlight-row"><td>FWD（N=415）</td><td>415</td><td>214</td><td class="good">51.6%</td><td class="good">+0.201</td></tr>
+    <tr><td>全期間</td><td>857</td><td>382</td><td>44.6%</td><td>−</td></tr>
+  </tbody>
+</table>
+<p class="meta-line">Wilson 95%CI（FWD）：[46.8%, 56.3%]　RCI：[+0.089, +0.314]</p>
+
+<h2>発見①：下降トレンドでの劇的逆転</h2>
+
+<figure class="chart-figure">
+  <svg viewBox="0 0 580 260" width="100%" style="max-width:580px;display:block;margin:0 auto;" aria-label="IS vs FWD trend breakdown bar chart">
+    <defs>
+      <style>
+        .sv-axis { font-size: 11px; fill: var(--muted, #6c757d); font-family: sans-serif; }
+        .sv-label { font-size: 11.5px; fill: var(--text, #212529); font-family: sans-serif; font-weight: 600; }
+        .sv-val { font-size: 11px; fill: var(--text, #212529); font-family: sans-serif; }
+        .sv-title { font-size: 12px; fill: var(--muted, #6c757d); font-family: sans-serif; }
+      </style>
+    </defs>
+    <!-- Y-axis base line -->
+    <line x1="120" y1="20" x2="120" y2="220" stroke="var(--border,#dee2e6)" stroke-width="1"/>
+    <!-- 50% reference line -->
+    <line x1="120" y1="120" x2="560" y2="120" stroke="var(--warn,#b45309)" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="562" y="124" class="sv-title" text-anchor="start">50%</text>
+    <!-- Bars: 3 groups × 2 bars (IS=blue, FWD=green) -->
+    <!-- 上昇: IS=60.3%, FWD=42.4% -->
+    <text x="40" y="85" class="sv-label" text-anchor="middle">上昇</text>
+    <!-- IS bar: height prop to %, baseline=220, scale: 200px for 100% => 2px/% -->
+    <!-- IS 60.3%: height=120.6 → bar top y=220-120.6=99.4 -->
+    <rect x="145" y="99" width="34" height="121" fill="#60a5fa" rx="2"/>
+    <text x="162" y="94" class="sv-val" text-anchor="middle">60.3%</text>
+    <!-- FWD 42.4%: height=84.8 → y=220-84.8=135 -->
+    <rect x="183" y="135" width="34" height="85" fill="#86efac" rx="2"/>
+    <text x="200" y="130" class="sv-val" text-anchor="middle">42.4%</text>
+
+    <!-- 中立: IS=25.9%, FWD=52.1% -->
+    <text x="40" y="155" class="sv-label" text-anchor="middle">中立</text>
+    <rect x="320" y="168" width="34" height="52" fill="#60a5fa" rx="2"/>
+    <text x="337" y="163" class="sv-val" text-anchor="middle">25.9%</text>
+    <rect x="358" y="116" width="34" height="104" fill="#86efac" rx="2"/>
+    <text x="375" y="111" class="sv-val" text-anchor="middle">52.1%</text>
+
+    <!-- 下降: IS=30.2%, FWD=59.2% ← 主役 -->
+    <text x="40" y="200" class="sv-label" text-anchor="middle" fill="var(--accent,#2563eb)">下降</text>
+    <rect x="232" y="160" width="34" height="60" fill="#60a5fa" rx="2"/>
+    <text x="249" y="155" class="sv-val" text-anchor="middle">30.2%</text>
+    <rect x="270" y="102" width="34" height="118" fill="#4ade80" rx="2" stroke="var(--positive,#15803d)" stroke-width="1.5"/>
+    <text x="287" y="97" class="sv-val" text-anchor="middle" fill="var(--positive,#15803d)">59.2%</text>
+
+    <!-- Legend -->
+    <rect x="380" y="200" width="14" height="12" fill="#60a5fa" rx="2"/>
+    <text x="398" y="211" class="sv-title">IS（学習期間）</text>
+    <rect x="470" y="200" width="14" height="12" fill="#86efac" rx="2"/>
+    <text x="488" y="211" class="sv-title">FWD（前向き）</text>
+
+    <!-- X group labels -->
+    <text x="175" y="245" class="sv-axis" text-anchor="middle">上昇トレンド</text>
+    <text x="253" y="245" class="sv-axis" text-anchor="middle">下降トレンド</text>
+    <text x="353" y="245" class="sv-axis" text-anchor="middle">中立もみあい</text>
+  </svg>
+  <figcaption>図1：reversalL の IS vs FWD 勝率（トレンド別）</figcaption>
+  <p class="note">※ 下降×逆張り買いが IS 最低（30.2%）→ FWD 最高（59.2%）に逆転</p>
+</figure>
+
+<div class="positive-box">
+  <strong>IS→FWD 逆転の詳細</strong>
+  <table style="margin-top:0.6rem;">
+    <thead><tr><th>トレンド</th><th>IS 勝率 (N)</th><th>FWD 勝率 (N)</th><th>FWD CI 95%</th><th>変化</th></tr></thead>
+    <tbody>
+      <tr><td>上昇</td><td>60.3% (131)</td><td>42.4% (118)</td><td>[33.6~51.5]</td><td class="bad">−17.9%pt ↓</td></tr>
+      <tr class="highlight-row"><td><strong>下降</strong></td><td class="bad">30.2% (169)</td><td class="good">59.2% (152)</td><td class="good">[51.2~66.9]</td><td class="good"><strong>+29.0%pt ↑↑</strong></td></tr>
+      <tr><td>中立</td><td>25.9% (139)</td><td>52.1% (144)</td><td>[43.8~60.3]</td><td class="good">+26.2%pt ↑</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+IS期間（2026-06-25以前）では、下降トレンド中の逆張り買いは勝率<strong>30.2%</strong>と全セグメント最低だった。
+しかし前向き期間（2026-06-25以降・N=152）では<strong>59.2%</strong>に逆転し、全セグメント最高となった。
+</p>
+<p>
+この現象の解釈としては、IS期間には下降一辺倒の強いトレンド相場（2024年後半〜2025年初頭など）が含まれており、
+「売られすぎ」が深みに嵌まり損切りが多かった可能性がある。
+前向き期間は相場の往復（戻し）局面が多く、下降後の反発力が機能しやすい環境だったと考えられる。
+ただし、N=152はまだ過渡的な数字であり、傾向の安定化には継続観察が必要だ。
+</p>
+
+<h2>発見②：RSI vs BB の二極化</h2>
+
+<figure class="chart-figure">
+  <svg viewBox="0 0 400 200" width="100%" style="max-width:400px;display:block;margin:0 auto;" aria-label="RSI vs BB FWD win rate bar chart">
+    <defs><style>.sv2 { font-size: 12px; fill: var(--text,#212529); font-family: sans-serif; }</style></defs>
+    <!-- 50% line -->
+    <line x1="60" y1="100" x2="380" y2="100" stroke="var(--warn,#b45309)" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="383" y="104" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">50%</text>
+    <!-- RSI bars IS/FWD -->
+    <text x="120" y="170" class="sv2" text-anchor="middle">RSI\n売られすぎ</text>
+    <!-- IS: 35.2% => height=70.4, y=100+(100-35.2)=164.8 -->
+    <rect x="75" y="130" width="35" height="40" fill="#60a5fa" rx="2"/>
+    <text x="92" y="125" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">35.2%</text>
+    <!-- FWD: 62.6% => height=125.2, y=100-25.2=74.8 -->
+    <rect x="115" y="25" width="35" height="75" fill="#4ade80" rx="2" stroke="var(--positive,#15803d)" stroke-width="1.5"/>
+    <text x="132" y="20" style="font-size:11px;fill:var(--positive,#15803d);font-weight:bold;font-family:sans-serif;text-anchor:middle">62.6%</text>
+    <text x="104" y="186" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">RSI売られすぎ</text>
+
+    <!-- BB bars IS/FWD -->
+    <!-- IS: 40.2% => height=80.4, y=100+(100-40.2)=159.8 -->
+    <rect x="255" y="120" width="35" height="40" fill="#60a5fa" rx="2"/>
+    <text x="272" y="115" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">40.2%</text>
+    <!-- FWD: 47.3% => height=94.6, y=100-(-2.7)=102.7, essentially near center -->
+    <rect x="295" y="53" width="35" height="47" fill="#86efac" rx="2"/>
+    <text x="312" y="48" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif;text-anchor:middle">47.3%</text>
+    <text x="284" y="186" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">BBタッチ</text>
+
+    <!-- Legend -->
+    <rect x="60" y="10" width="12" height="10" fill="#60a5fa" rx="2"/>
+    <text x="76" y="19" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">IS</text>
+    <rect x="100" y="10" width="12" height="10" fill="#86efac" rx="2"/>
+    <text x="116" y="19" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">FWD</text>
+  </svg>
+  <figcaption>図2：シグナル種別（RSI vs BB）の IS/FWD 勝率比較</figcaption>
+</figure>
+
+<table>
+  <thead><tr><th>シグナル</th><th>IS 勝率 (N)</th><th>FWD 勝率 (N)</th><th>FWD CI 95%</th><th>RCI 下限</th></tr></thead>
+  <tbody>
+    <tr class="highlight-row"><td>RSI売られすぎ反発</td><td>35.2% (182)</td><td class="good">62.6% (115)</td><td>[53.2~71.3]</td><td class="good"><strong>+0.032（正値）</strong></td></tr>
+    <tr><td>BB下限タッチ</td><td>40.2% (259)</td><td class="neutral">47.3% (300)</td><td>[41.8~52.9]</td><td class="neutral">−0.032（ゼロ跨ぎ）</td></tr>
+  </tbody>
+</table>
+
+<div class="warning-box">
+  <strong>解釈上の注意</strong>：N=115（RSI FWD）はまだ過渡的な数字。現時点でCI下限が辛うじて正値を示しているが、
+  今後数百件の積み上げで揺れ戻しが起きる可能性は残る。過信せず、定点観測を継続する。
+</div>
+
+<p>
+RSI売られすぎ（rsi_oversold_bounce）は IS 35.2% → FWD <strong>62.6%</strong>と大きく改善し、
+CI 95%が [53.2%, 71.3%] でRCI下限が正値（+0.032）に達した。
+一方、BBタッチ（bb_lower_touch）は IS 40.2% → FWD 47.3%と改善しているものの、CIがゼロを跨ぎ（[41.8%, 52.9%]）、
+独立したエッジとして確立するには追加データが必要だ。
+</p>
+<p>
+この差の解釈：RSI売られすぎは「価格が内部指標的に真に行き過ぎた」状態を捉えるのに対し、
+BBタッチは「ボラティリティ相対で下限に触れた」だけで、強いトレンドでは連続タッチが起きやすく過剰反応を含みやすい。
+</p>
+
+<h2>概念図：下降トレンド中の reversalL 発火</h2>
+
+<figure class="chart-figure">
+  <svg viewBox="0 0 540 220" width="100%" style="max-width:540px;display:block;margin:0 auto;" aria-label="Conceptual chart showing reversalL in downtrend">
+    <!-- Price line: downtrend with bounce -->
+    <!-- Grid -->
+    <line x1="50" y1="20" x2="50" y2="185" stroke="var(--border,#dee2e6)" stroke-width="1"/>
+    <line x1="50" y1="185" x2="520" y2="185" stroke="var(--border,#dee2e6)" stroke-width="1"/>
+    <!-- RSI oversold zone indicator at bottom -->
+    <rect x="51" y="160" width="469" height="25" fill="color-mix(in srgb, #fee2e2 60%, transparent)" opacity="0.4"/>
+    <text x="56" y="173" style="font-size:9px;fill:var(--danger,#dc2626);font-family:sans-serif">RSI 売られすぎゾーン（≤30）</text>
+
+    <!-- Downtrend price path -->
+    <polyline points="55,50 110,65 155,80 185,100 220,130 255,155 270,170 285,165 310,150 340,135 380,118 420,105 460,95 510,85"
+      fill="none" stroke="var(--danger,#dc2626)" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Highlight the reversal zone -->
+    <circle cx="270" cy="170" r="7" fill="none" stroke="#f97316" stroke-width="2.5"/>
+    <line x1="270" y1="163" x2="270" y2="148" stroke="#f97316" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="278" y="162" style="font-size:11px;fill:#f97316;font-weight:bold;font-family:sans-serif">発火</text>
+
+    <!-- MA line (higher timeframe trend = down) -->
+    <polyline points="55,40 150,72 250,120 350,140 510,145"
+      fill="none" stroke="var(--muted,#6c757d)" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="470" y="160" style="font-size:9px;fill:var(--muted,#6c757d);font-family:sans-serif">上位足MA（下降）</text>
+
+    <!-- Recovery arrow -->
+    <path d="M310,150 Q360,100 460,95" fill="none" stroke="var(--positive,#15803d)" stroke-width="2" stroke-dasharray="4,3"/>
+    <polygon points="460,95 452,102 468,100" fill="var(--positive,#15803d)"/>
+    <text x="370" y="88" style="font-size:10px;fill:var(--positive,#15803d);font-family:sans-serif">FWD 59.2%</text>
+
+    <!-- Label -->
+    <text x="60" y="42" style="font-size:11px;fill:var(--text,#212529);font-weight:bold;font-family:sans-serif">下降トレンド継続中</text>
+  </svg>
+  <figcaption>図3：下降トレンド中の逆張り買い発火（概念図）</figcaption>
+  <p class="note">※ 実際のチャートとは異なる概念図です。売買を推奨するものではありません。</p>
+</figure>
+
+<h2>全期間（TOTAL）クレーム検証</h2>
+
+<p>
+以下の数値は <code>signal_lab_verify.py</code> が全期間クローズ済みデータから独立再計算する対象（claims.json の内容）。
+IS/FWD の内訳はナラティブ分析のみ。
+</p>
+
+<table>
+  <thead><tr><th>フィルタ</th><th>勝ち(k)</th><th>N</th><th>全期間勝率</th></tr></thead>
+  <tbody>
+    <tr><td>reversalL（全体）</td><td>382</td><td>857</td><td>44.6%</td></tr>
+    <tr><td>reversalL × 上昇トレンド</td><td>129</td><td>249</td><td>51.8%</td></tr>
+    <tr><td>reversalL × 下降トレンド</td><td>141</td><td>321</td><td>43.9%</td></tr>
+    <tr><td>reversalL × 中立・もみあい</td><td>111</td><td>283</td><td>39.2%</td></tr>
+    <tr><td>reversalL × RSI売られすぎ反発</td><td>136</td><td>297</td><td>45.8%</td></tr>
+    <tr><td>reversalL × BB下限タッチ</td><td>246</td><td>560</td><td>43.9%</td></tr>
+    <tr><td>reversalL × 貴金属</td><td>45</td><td>136</td><td>33.1%</td></tr>
+    <tr><td>reversalL × 指数</td><td>98</td><td>197</td><td>49.7%</td></tr>
+    <tr><td>reversalL × クロス円以外FX</td><td>108</td><td>235</td><td>46.0%</td></tr>
+    <tr><td>reversalL × 円クロス</td><td>78</td><td>169</td><td>46.2%</td></tr>
+  </tbody>
+</table>
+
+<div class="info-box">
+  <strong>注</strong>：全期間勝率には IS 期間も含まれるため、FWD 単独（51.6%）よりも低く見える。
+  トラッカーの昇格判断は FWD のみを使用。全期間値は <code>signal_lab_verify.py</code> の独立検証用途。
+</div>
+
+<h2>前向きトラッカー定点観測</h2>
+
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-08-04／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+<div style="overflow-x:auto;">
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.14 CI[-0.42~+0.14]（59/160・勝率37%）</td><td>✅昇格</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.19 CI[+0.04~+0.34]（75/147・勝率51%）</td><td>✅昇格</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.08~+0.14]（478/1079・勝率44%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.19 CI[+0.03~+0.34]（208/409・勝率51%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.28 CI[+0.09~+0.47]（148/270・勝率55%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.27 CI[+0.07~+0.46]（140/258・勝率54%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.33 CI[+0.06~+0.60]（86/151・勝率57%）</td><td>⛔反証</td></tr>
+<tr><td>group=all（参考）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.06~+0.09]（625/1437・勝率44%）</td><td>🟡蓄積中</td></tr>
+</table>
+</div>
+<p class="meta-line">⛔反証 = 元の「損切り側に偏る」仮説がデータで否定されている（むしろ正値）。研究対象として継続追跡中。</p>
+
+<h2>まとめと今後の焦点</h2>
+
+<div class="positive-box">
+  <strong>✅ 確認できたこと（N=415）</strong>
+  <ul style="padding-left:1.2rem;margin-top:0.4rem;">
+    <li>reversalL 前向き勝率 51.6%・平均R=+0.19 は N=81 からN=415まで一貫して維持</li>
+    <li>下降×reversalL が前向き最高（59.2%）に逆転：⛔反証として最も力強い</li>
+    <li>RSI売られすぎ（62.6%）は独立エッジの候補として浮上</li>
+  </ul>
+</div>
+
+<div class="warning-box">
+  <strong>⚠️ 不確実性が残ること</strong>
+  <ul style="padding-left:1.2rem;margin-top:0.4rem;">
+    <li>下降FWD N=152・RSI FWD N=115 はまだ過渡的。CIは広い</li>
+    <li>BB FWD 47.3%は CI がゼロ跨ぎ：独立エッジとして確定していない</li>
+    <li>IS期間の「上昇×逆張り高勝率（60.3%）」がFWDで42.4%に下落：上昇×reversalL は別途要観察</li>
+    <li>相場環境変化（リスクオフ急進など）で逆転する可能性を常に念頭に</li>
+  </ul>
+</div>
+
+<p><strong>次回の焦点</strong>：① RSI FWD N が 150 を超えた時点で二極化の安定度を再検証、② 下降×reversalL の銘柄別内訳（金属 vs 指数 vs FX）でどのグループが主導しているかを解剖。</p>
+
+<div class="related-card">
+  <strong>関連記事</strong><br>
+  <a href="/guide-signal-anatomy.html">📐 シグナル解剖：AIアラートの構造と読み方</a> ——
+  reversalL の「1H/4H足での売られすぎ発火」がどう計算されるかを解説。<br>
+  <a href="/track-record.html">📊 シグナル成績ダッシュボード</a> ——
+  全シグナルの累積成績・環境スコア別分析を確認できます。
+</div>
+
+<div class="disclaimer-banner">
+  <strong>【免責事項 kinsho-v1】</strong><br>
+  ① 本記事はシグナル研究の記録であり、特定の有価証券・金融商品の売買を推奨・勧誘するものではありません。<br>
+  ② 過去のシグナル統計は将来の結果を保証しません。投資にはリスクが伴い、元本を割り込む可能性があります。<br>
+  ③ 最終的な投資判断はご自身の責任で行ってください。本記事の情報を参考にした取引により生じたいかなる損害についても、当サイトは責任を負いません。
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
