@@ -179,6 +179,7 @@
   /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
   </style>
 <style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
 html,body{overflow-x:hidden}
 .article,main,section,header,footer{max-width:100%}
 *{overflow-wrap:break-word;word-break:normal}
@@ -192,6 +193,7 @@ td strong,td b,th strong{white-space:nowrap}
   .article{padding:14px 11px}
   h1{font-size:1.26rem;line-height:1.4}
   h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
   table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
   th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
   .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
@@ -205,17 +207,21 @@ td strong,td b,th strong{white-space:nowrap}
 <script id="mw-mobile-fit-js">
 (function(){try{
 function mark(){
-  var w=document.documentElement.scrollWidth,t=document.querySelectorAll('table');
-  for(var i=0;i<t.length;i++){
-    var h=t[i].previousElementSibling;
-    if(h&&h.classList.contains('mw-scroll-hint'))continue;
-    if(t[i].scrollWidth>t[i].parentElement.clientWidth+4){
-      var d=document.createElement('div');d.className='mw-scroll-hint';d.textContent='← 横スクロールできます →';
-      t[i].parentNode.insertBefore(d,t[i]);
-    }
-  }
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
 }
-document.addEventListener('DOMContentLoaded',mark);
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
 window.addEventListener('resize',mark);
 }catch(e){}})();
 </script>

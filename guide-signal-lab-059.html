@@ -185,6 +185,7 @@ td strong,td b,th strong{white-space:nowrap}
   .article{padding:14px 11px}
   h1{font-size:1.26rem;line-height:1.4}
   h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
   table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
   th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
   .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
@@ -206,7 +207,7 @@ if(t.scrollWidth-t.clientWidth>4){
 t.setAttribute('data-mw-sc','1');
 var h=document.createElement('div');
 h.className='mw-scroll-hint';
-h.textContent='→ 横にスクロールできます';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
 if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
 t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
 }

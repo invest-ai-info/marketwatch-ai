@@ -209,7 +209,7 @@ if(t.scrollWidth-t.clientWidth>4){
 t.setAttribute('data-mw-sc','1');
 var h=document.createElement('div');
 h.className='mw-scroll-hint';
-h.textContent='→ 横にスクロールできます';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
 if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
 t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
 }
