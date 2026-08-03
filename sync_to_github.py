@@ -105,4 +105,5 @@ SYNC_FILES = [
     "guide-signal-lab-059.html",
     "guide-market-participants.html",
     "guide-proverb-trend-is-your-friend.html",
+    "guide-news-2026-08-03-yen-intervention-confirmed.html",
 ]
