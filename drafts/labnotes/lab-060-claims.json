@@ -1,72 +1,65 @@
-[
-  {
-    "id": "c1",
-    "filter": {"reversal_long": true},
-    "k": 382,
-    "n": 857,
-    "description": "逆張り買い全体（reversalL）の勝率"
-  },
-  {
-    "id": "c2",
-    "filter": {"reversal_long": true, "trend": "上昇"},
-    "k": 129,
-    "n": 249,
-    "description": "reversalL × 上昇トレンド"
-  },
-  {
-    "id": "c3",
-    "filter": {"reversal_long": true, "trend": "下降"},
-    "k": 141,
-    "n": 321,
-    "description": "reversalL × 下降トレンド"
-  },
-  {
-    "id": "c4",
-    "filter": {"reversal_long": true, "trend": "中立・もみあい"},
-    "k": 111,
-    "n": 283,
-    "description": "reversalL × 中立・もみあいトレンド"
-  },
-  {
-    "id": "c5",
-    "filter": {"reversal_long": true, "signal": "rsi_oversold_bounce"},
-    "k": 136,
-    "n": 297,
-    "description": "reversalL × RSI売られすぎ反発シグナル"
-  },
-  {
-    "id": "c6",
-    "filter": {"reversal_long": true, "signal": "bb_lower_touch"},
-    "k": 246,
-    "n": 560,
-    "description": "reversalL × BB下限タッチシグナル"
-  },
-  {
-    "id": "c7",
-    "filter": {"reversal_long": true, "group": "metal"},
-    "k": 45,
-    "n": 136,
-    "description": "reversalL × 貴金属グループ"
-  },
-  {
-    "id": "c8",
-    "filter": {"reversal_long": true, "group": "index"},
-    "k": 98,
-    "n": 197,
-    "description": "reversalL × 指数グループ"
-  },
-  {
-    "id": "c9",
-    "filter": {"reversal_long": true, "group": "other_fx"},
-    "k": 108,
-    "n": 235,
-    "description": "reversalL × クロス円以外FXグループ"
-  },
-  {
-    "id": "c10",
-    "filter": {"reversal_long": true, "group": "jpy_fx"},
-    "k": 78,
-    "n": 169,
-    "description": "reversalL × 円クロスグループ"
-  }
-]
+{
+  "article_id": "060",
+  "claims": [
+    {
+      "label": "reversalL 全体（全期間合算）",
+      "filter": {"reversal_long": true},
+      "k": 382,
+      "n": 857
+    },
+    {
+      "label": "reversalL × 上昇トレンド（全期間合算）",
+      "filter": {"reversal_long": true, "trend": "上昇"},
+      "k": 129,
+      "n": 249
+    },
+    {
+      "label": "reversalL × 下降トレンド（全期間合算）",
+      "filter": {"reversal_long": true, "trend": "下降"},
+      "k": 141,
+      "n": 321
+    },
+    {
+      "label": "reversalL × 中立・もみあいトレンド（全期間合算）",
+      "filter": {"reversal_long": true, "trend": "中立・もみあい"},
+      "k": 111,
+      "n": 283
+    },
+    {
+      "label": "reversalL × signal=rsi_oversold_bounce（全期間合算）",
+      "filter": {"reversal_long": true, "signal": "rsi_oversold_bounce"},
+      "k": 136,
+      "n": 297
+    },
+    {
+      "label": "reversalL × signal=bb_lower_touch（全期間合算）",
+      "filter": {"reversal_long": true, "signal": "bb_lower_touch"},
+      "k": 246,
+      "n": 560
+    },
+    {
+      "label": "reversalL × group=metal（貴金属・全期間合算）",
+      "filter": {"reversal_long": true, "group": "metal"},
+      "k": 45,
+      "n": 136
+    },
+    {
+      "label": "reversalL × group=index（指数・全期間合算）",
+      "filter": {"reversal_long": true, "group": "index"},
+      "k": 98,
+      "n": 197
+    },
+    {
+      "label": "reversalL × group=other_fx（ドルクロスFX・全期間合算）",
+      "filter": {"reversal_long": true, "group": "other_fx"},
+      "k": 108,
+      "n": 235
+    },
+    {
+      "label": "reversalL × group=jpy_fx（円クロスFX・全期間合算）",
+      "filter": {"reversal_long": true, "group": "jpy_fx"},
+      "k": 78,
+      "n": 169
+    }
+  ]
+}

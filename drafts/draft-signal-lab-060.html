@@ -119,13 +119,13 @@ tr:nth-child(even) td { background: color-mix(in srgb, var(--card) 95%, var(--bg
 <h1>逆張り買い（reversalL）⛔反証 N=415確認<br>——下降×逆張りIS 30.2%→FWD 59.2%の劇的逆転とRSI二極化</h1>
 
 <div class="summary-box">
-  <h3>⏱ 30秒まとめ</h3>
-  <ul>
-    <li><strong>reversalL 全体</strong>：全期間 k=382 / n=857（勝率44.6%）。前向きN=415・勝率51.6% CI[46.8~56.3]、平均R=+0.19でCI下限が正値を維持（⛔反証）</li>
-    <li><strong>下降×reversalL</strong>：全期間 k=141 / n=321（43.9%）。前向きでは59.2%・平均R=+0.33 CI[+0.06~+0.60]に逆転（⛔反証）</li>
-    <li><strong>IS最悪→FWD最良の逆転</strong>：In-Sample期間で最下位だった「下降×逆張り」が、前向き期間で最上位に浮上（IS 30.2%→FWD 59.2%）</li>
-    <li><strong>RSI vs BB 二極化</strong>：RSI売られすぎ FWD 62.6% CI[53.2~71.3] vs BBタッチ FWD 47.3% CI[41.8~52.9]。RSIのRCI下限が正値</li>
-    <li>⚠️ <strong>本記事はシグナル研究の記録。売買推奨ではない</strong></li>
+  <strong>⏱ 30秒でわかる</strong>
+  <ul style="padding-left:1.2rem;margin-top:0.5rem;">
+    <li><strong>reversalL 全体（全期間）</strong>：382/857 = 44.6%。前向きN=415で⛔反証継続中（詳細は本文）</li>
+    <li><strong>トレンド別全期間勝率</strong>：上昇 51.8%（N=249） ／ 下降 43.9%（N=321） ／ 中立 39.2%（N=283）</li>
+    <li><strong>シグナル別全期間勝率</strong>：RSI売られすぎ 45.8%（N=297） ／ BB下限タッチ 43.9%（N=560）</li>
+    <li><strong>前向き期間（N=415）で劇的逆転</strong>：全期間で最低だった下降×逆張りが前向き最高に（詳細は本文の表参照）</li>
+    <li>⚠️ <strong>本記事はシグナル研究の記録。売買推奨ではありません</strong></li>
   </ul>
 </div>
 
@@ -245,32 +245,31 @@ IS期間（2026-06-25以前）では、下降トレンド中の逆張り買い�
   <svg viewBox="0 0 400 200" width="100%" style="max-width:400px;display:block;margin:0 auto;" aria-label="RSI vs BB FWD win rate bar chart">
     <defs><style>.sv2 { font-size: 12px; fill: var(--text,#212529); font-family: sans-serif; }</style></defs>
     <!-- 50% line -->
-    <line x1="60" y1="100" x2="380" y2="100" stroke="var(--warn,#b45309)" stroke-width="1" stroke-dasharray="4,3"/>
-    <text x="383" y="104" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">50%</text>
+    <line x1="60" y1="100" x2="375" y2="100" stroke="var(--warn,#b45309)" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="374" y="104" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif;text-anchor:end">50%</text>
     <!-- RSI bars IS/FWD -->
-    <text x="120" y="170" class="sv2" text-anchor="middle">RSI\n売られすぎ</text>
-    <!-- IS: 35.2% => height=70.4, y=100+(100-35.2)=164.8 -->
+    <!-- IS: 35.2% -->
     <rect x="75" y="130" width="35" height="40" fill="#60a5fa" rx="2"/>
     <text x="92" y="125" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">35.2%</text>
-    <!-- FWD: 62.6% => height=125.2, y=100-25.2=74.8 -->
+    <!-- FWD: 62.6% -->
     <rect x="115" y="25" width="35" height="75" fill="#4ade80" rx="2" stroke="var(--positive,#15803d)" stroke-width="1.5"/>
-    <text x="132" y="20" style="font-size:11px;fill:var(--positive,#15803d);font-weight:bold;font-family:sans-serif;text-anchor:middle">62.6%</text>
+    <text x="132" y="50" style="font-size:11px;fill:var(--positive,#15803d);font-weight:bold;font-family:sans-serif;text-anchor:middle">62.6%</text>
     <text x="104" y="186" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">RSI売られすぎ</text>
 
     <!-- BB bars IS/FWD -->
-    <!-- IS: 40.2% => height=80.4, y=100+(100-40.2)=159.8 -->
+    <!-- IS: 40.2% -->
     <rect x="255" y="120" width="35" height="40" fill="#60a5fa" rx="2"/>
     <text x="272" y="115" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">40.2%</text>
-    <!-- FWD: 47.3% => height=94.6, y=100-(-2.7)=102.7, essentially near center -->
+    <!-- FWD: 47.3% -->
     <rect x="295" y="53" width="35" height="47" fill="#86efac" rx="2"/>
-    <text x="312" y="48" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif;text-anchor:middle">47.3%</text>
+    <text x="312" y="78" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif;text-anchor:middle">47.3%</text>
     <text x="284" y="186" style="font-size:10px;fill:var(--text,#212529);font-family:sans-serif;text-anchor:middle">BBタッチ</text>
 
-    <!-- Legend -->
-    <rect x="60" y="10" width="12" height="10" fill="#60a5fa" rx="2"/>
-    <text x="76" y="19" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">IS</text>
-    <rect x="100" y="10" width="12" height="10" fill="#86efac" rx="2"/>
-    <text x="116" y="19" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">FWD</text>
+    <!-- Legend (bottom) -->
+    <rect x="200" y="170" width="12" height="10" fill="#60a5fa" rx="2"/>
+    <text x="216" y="179" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">IS</text>
+    <rect x="250" y="170" width="12" height="10" fill="#86efac" rx="2"/>
+    <text x="266" y="179" style="font-size:10px;fill:var(--muted,#6c757d);font-family:sans-serif">FWD</text>
   </svg>
   <figcaption>図2：シグナル種別（RSI vs BB）の IS/FWD 勝率比較</figcaption>
 </figure>
@@ -323,7 +322,7 @@ BBタッチは「ボラティリティ相対で下限に触れた」だけで、
     <!-- MA line (higher timeframe trend = down) -->
     <polyline points="55,40 150,72 250,120 350,140 510,145"
       fill="none" stroke="var(--muted,#6c757d)" stroke-width="1.5" stroke-dasharray="6,3"/>
-    <text x="470" y="160" style="font-size:9px;fill:var(--muted,#6c757d);font-family:sans-serif">上位足MA（下降）</text>
+    <text x="430" y="160" style="font-size:9px;fill:var(--muted,#6c757d);font-family:sans-serif">上位足MA（下降）</text>
 
     <!-- Recovery arrow -->
     <path d="M310,150 Q360,100 460,95" fill="none" stroke="var(--positive,#15803d)" stroke-width="2" stroke-dasharray="4,3"/>
