@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-04 autopublish: guide-stock-split-buyback.html 公開 / 決定論緑・Opus 🟡グレー修正適用（G1-G6: 時価総額定義修正・金庫株補足・東証基準「5万円以上50万円未満」・課税注記追加・配当確実性ヘッジ・自社株割安表現軟化）・品質②③補足（アノマリー括弧説明・シグナリング仮説説明・研究結論不一致の背景説明）・独立Opus🟢白確認 / URL: https://marketwatch-jp.com/guide-stock-split-buyback.html
+
+---
+
 ## 2026-08-04 | 🧪 signal-lab #060 | reversalL⛔反証 N=415——下降×逆張りIS 30.2%→FWD 59.2%の劇的逆転とRSI二極化
 
 - **基準日**: 2026-08-04（JST）
