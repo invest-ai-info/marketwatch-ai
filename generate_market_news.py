@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-03", "line": '・<b>2026-08-03</b>: 🤝 解説「<a href="guide-proverb-trend-is-your-friend.html" style="color:#0969da"><b>トレンドは友（Trend is your friend）</b></a>」公開'},
         {"date": "2026-08-03", "line": '・<b>2026-08-03</b>: 💰 解説「<a href="guide-market-participants.html" style="color:#0969da"><b>誰が相場を動かしているのか｜投資部門別売買動向の見方</b></a>」公開'},
         {"date": "2026-08-03", "line": '・<b>2026-08-03</b>: 💴 解説「<a href="guide-jpy-coordinated-intervention-2026-08.html" style="color:#0969da"><b>日米の円買い協調介入と報じられる──15年ぶりと28年ぶりの違い</b></a>」公開'},
         {"date": "2026-08-03", "line": '・<b>2026-08-03</b>: 🧪 解説「<a href="guide-signal-lab-059.html" style="color:#0969da"><b>もみあい×ショート 前向きN=141 CI上限ゼロ接触</b></a>」公開'},

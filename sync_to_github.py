@@ -104,4 +104,5 @@ SYNC_FILES = [
     "guide-news-2026-08-02-apple-q3-earnings-drop.html",
     "guide-signal-lab-059.html",
     "guide-market-participants.html",
+    "guide-proverb-trend-is-your-friend.html",
 ]
