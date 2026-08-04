@@ -178,7 +178,7 @@ def build_html(items):
 body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#fff;color:#1f2328;line-height:1.7;min-height:100vh}}
 header{{background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
 .header-inner{{max-width:1200px;margin:0 auto}}
-.header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+.header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
 .header-meta{{font-size:.85rem;color:#57606a;margin-top:4px}}
 main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
 .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}}
