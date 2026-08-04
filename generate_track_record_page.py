@@ -290,7 +290,7 @@ def render_my_trades_section(trades):
 
     return f"""
       <div style="background:linear-gradient(135deg,#ddf4ff,#ffffff);border:1px solid #54aeff;border-radius:12px;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:1.2rem;color:#0969da;margin-bottom:12px">💼 実取引ログ（サラリーマン投資家モデル）</h2>
+        <h2 style="font-size:1.2rem;color:#1E3A6E;margin-bottom:12px">💼 実取引ログ（サラリーマン投資家モデル）</h2>
         <p style="font-size:.85rem;color:#57606a;margin-bottom:16px">
           AI シグナルを参考に、平日仕事中に行った実際の取引を記録しています。
           金額はプライバシー保護のため % 表示にしています。
@@ -1353,7 +1353,7 @@ def build_html(signals, trades, tracker=None):
     .breadcrumb a{{color:#0969da;text-decoration:none}}
     .page-header{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:28px 32px;margin-bottom:24px}}
     h1{{font-size:1.8rem;color:#1E3A6E;margin-bottom:8px}}
-    h2{{font-size:1.25rem;color:#1f6feb;margin:24px 0 14px}}
+    h2{{font-size:1.25rem;color:#2C4F8F;margin:24px 0 14px}}
     .page-desc{{font-size:.92rem;color:#57606a}}
     .kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px}}
     .kpi-card{{background:#f6f8fa;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:10px;padding:18px 22px}}
@@ -1424,7 +1424,7 @@ def build_html(signals, trades, tracker=None):
 <header>
   <div class="header-inner">
     <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
-    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📊 シグナル成績</div></div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📊 シグナル成績</div></div>
   </div>
 </header>
 <main>
