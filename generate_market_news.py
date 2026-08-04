@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-04", "line": '・<b>2026-08-04</b>: 📰 解説「<a href="guide-news-2026-08-04-trump-iran-talks-oil-crash.html" style="color:#0969da"><b>【8/4】トランプ・イラン交渉情報錯綜、原油WTI -6%急落</b></a>」公開'},
         {"date": "2026-08-04", "line": '・<b>2026-08-04</b>: 🏦 解説「<a href="guide-proverb-dont-fight-the-fed.html" style="color:#0969da"><b>FRBには逆らうな</b></a>」公開'},
         {"date": "2026-08-04", "line": '・<b>2026-08-04</b>: 💰 解説「<a href="guide-stock-split-buyback.html" style="color:#0969da"><b>株式分割と自社株買いの仕組み</b></a>」公開'},
         {"date": "2026-08-04", "line": '・<b>2026-08-04</b>: 🧪 解説「<a href="guide-signal-lab-060.html" style="color:#0969da"><b>reversalL⛔反証 N=415確認——下降IS→FWD劇的逆転とRSI二極化</b></a>」公開'},
