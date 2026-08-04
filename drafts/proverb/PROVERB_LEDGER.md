@@ -53,8 +53,10 @@
 
 | 31 | ✅公開済み | トレンドは友（Trend is your friend） | trend-is-your-friend | 2026-08-03 | 🟡グレー（初期：①「必ず」禁止語②CTAの過去実績注記不足→Opus軽微修正）→ 🟢白（最終）→ 品質5観点全✅ → 🟢白（独立Opus確認・7項目全適合） | Martin Zweig（1986年 Winning on Wall Street・1990年投資ルール・諸説あり）とEd Seykota（Schwager著Market Wizards 1989年・諸説あり）に帰属される英語格言。後半節「except at the end where it bends」の核心・Jegadeesh & Titman(1993, JoF Vol.48 pp.65-91)モメンタム月次1.31%・アンカリング/確証バイアス/プロスペクト理論・転換察知3観点・「逆らうな」vs「飛び乗る」比較表・よくある誤解3点・SVG友のライフサイクル概念図・仮数字例・kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告15件は既存記事の偽陽性）。自動公開ルーティン proverb-daily-auto による。 |
 
+| 32 | ✅公開済み | FRBには逆らうな（Don't fight the Fed） | dont-fight-the-fed | 2026-08-04 | 🟡グレー（初期：冒頭バナーdata-disclaimer="kinsho-v1"属性欠落→Opus軽微修正）→ 🟢白（最終）→ 品質②バリュエーション用語説明追加・NASDAQ数値精度修正（76%→78%）・日付精度修正（初頭→前半）・SVG改行修正 → 🟢白（独立Opus確認・4項目全PASS） | マーティン・ツバイク（1942〜2013年）が1971年創刊「Zweig Forecast」で広め1986年著書「Winning on Wall Street」で定着（諸説あり）。3ルート（割引率・企業業績・リスク選好）・歴史事例4例（ドットコム/QE/コロナ/2022年）・格言の限界4点・「国策に売りなし」との比較表・Don't fight the BOJ（英語圏での定型句未定着・諸説あり）・FOMC calendar.htmlへのCTA。SVG2パネル概念図・kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告15件は既存記事の偽陽性）。自動公開ルーティン proverb-daily-auto による。 |
+
 ---
 
-次回候補：キュー #23「セル・イン・メイ」→ 🚩人間判断待ち（既存記事との重複問題）。人間レビュー後に公開 or #32「FRBには逆らうな」へ進む
+次回候補：キュー #23「セル・イン・メイ」→ 🚩人間判断待ち（既存記事との重複問題）。人間レビュー後に公開 or #33「稲妻が輝く瞬間に市場に居よ」へ進む
 
-最終更新：2026-08-03（proverb-daily-auto ルーティン・#31「トレンドは友（Trend is your friend）」✅公開済み）
+最終更新：2026-08-04（proverb-daily-auto ルーティン・#32「FRBには逆らうな（Don't fight the Fed）」✅公開済み）
