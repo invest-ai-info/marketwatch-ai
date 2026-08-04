@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-08-05 | 🤖 下書き生成 | margin-trading | 信用取引の基礎（制度信用と一般信用・逆日歩・貸借倍率）
+
+- **基準日**: 2026-08-05（JST）
+- **対象 key**: margin-trading（基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-margin-trading.html`
+- **参照出典**:
+  - SMBC日興証券「委託保証金率・維持率」https://www.smbcnikko.co.jp/products/stock/margin/knowledge/009.html
+  - SMBC日興証券「制度信用と一般信用の違い」https://www.smbcnikko.co.jp/products/stock/margin/knowledge/018.html
+  - SBIネオトレード証券「逆日歩の計算方法」https://www.sbineotrade.jp/margin/column/negative-interest-per-diem/
+  - 日本証券金融「品貸入札・逆日歩」https://www.taisyaku.jp/about/backwardation/
+  - JPX「レバレッジ商品等の委託保証金率」https://www.jpx.co.jp/markets/equities/margin-reg/02.html
+- **主な数値（複数出典で確認済み）**:
+  - 委託保証金率: 30%（法定最低） / 最低額: 30万円 / 最大レバレッジ: 約3.33倍
+  - 制度信用 返済期限: 6ヵ月（固定） / 一般信用: 無期限（多くのネット証券）
+  - 維持保証金率: 20%（追証発生の閾値）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（制度の一般論のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「保証」「儲かる」不使用）
+  - ✅ 「利用推奨しない」旨を冒頭・本文・まとめで明記
+  - ✅ kinsho-v1 免責（冒頭バナー・本文末・footer）あり / noindex,nofollow あり
+  - ✅ guide-leverage.html と役割分担明記（本記事=仕組み・leverage記事=危険性）
+  - ✅ guide-margin-balance.html への相互リンクあり（必須要件）
+- **SVG 図**: ①委託保証金とレバレッジ概念図 ②逆日歩フロー図 ③追証発生図（3点実装）
+- **人間の残作業**:
+  - [ ] SVG の実機ライト/ダーク確認（`.s-fill-g/.s-fill-b/.s-fill-r/.s-fill-y` 追加クラス）
+  - [ ] 逆日歩フロー図の矢印（`marker-end="url(#arrowhead)"`）表示確認
+  - [ ] Opus compliance-reviewer 監査（公開前）
+  - [ ] `mw publish` で guides.html「💰 投資の基礎知識」カテゴリに追加
+
+---
+
 2026-08-04 autopublish: guide-stock-split-buyback.html 公開 / 決定論緑・Opus 🟡グレー修正適用（G1-G6: 時価総額定義修正・金庫株補足・東証基準「5万円以上50万円未満」・課税注記追加・配当確実性ヘッジ・自社株割安表現軟化）・品質②③補足（アノマリー括弧説明・シグナリング仮説説明・研究結論不一致の背景説明）・独立Opus🟢白確認 / URL: https://marketwatch-jp.com/guide-stock-split-buyback.html
 
 ---
