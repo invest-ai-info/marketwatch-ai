@@ -415,13 +415,13 @@ header{{background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid 
 main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
 .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}}
 .nav-btn{{padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px}}
-.nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+.nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
 .breadcrumb{{font-size:.82rem;color:#57606a;margin-bottom:16px}}
 .breadcrumb a{{color:#0969da;text-decoration:none}}
 .article{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}}
-h1{{font-size:1.85rem;color:#0969da;margin-bottom:8px;line-height:1.4}}
+h1{{font-size:1.85rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}}
 .meta-line{{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}}
-h2{{font-size:1.3rem;color:#1f6feb;margin-top:32px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}}
+h2{{font-size:1.3rem;color:#2C4F8F;margin-top:32px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}}
 p{{font-size:.97rem;color:#424a53;margin-bottom:16px}}
 ul{{margin:10px 0 18px 28px;color:#424a53}}
 li{{margin-bottom:8px}}
