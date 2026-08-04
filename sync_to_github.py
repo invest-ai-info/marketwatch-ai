@@ -108,4 +108,5 @@ SYNC_FILES = [
     "guide-news-2026-08-03-yen-intervention-confirmed.html",
     "guide-signal-lab-060.html",
     "guide-stock-split-buyback.html",
+    "guide-proverb-dont-fight-the-fed.html",
 ]
