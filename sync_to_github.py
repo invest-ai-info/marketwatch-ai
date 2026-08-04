@@ -111,4 +111,5 @@ SYNC_FILES = [
     "guide-proverb-dont-fight-the-fed.html",
     "guide-news-2026-08-04-trump-iran-talks-oil-crash.html",
     "guide-signal-lab-061.html",
+    "guide-sns-information-literacy.html",
 ]
