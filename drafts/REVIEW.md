@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-05 autopublish: guide-sns-information-literacy.html 公開 / 決定論緑・Opus 🟡グレー修正適用（G1-G5: 「100人中20人」仮の例注記追加・「見分ける力が身につきます」→「見分けやすくなります」・「踊らされるリスクが大きく下がります」→「情報に振り回されにくくなると考えられます」・§6③チェックリスト❌項目を精密化・「一次情報」初出定義1文追加）・独立Opus🟢白確認 / URL: https://marketwatch-jp.com/guide-sns-information-literacy.html
+
+---
+
 ## 2026-08-05 | ✅ 自動公開完了 | signal-lab-061 | もみあい×ショート CI全域マイナス確定
 
 - **公開 URL**: `guide-signal-lab-061.html`（AIシグナル研究日誌 #061）
