@@ -184,9 +184,9 @@ main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
 .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}}
 .nav-btn{{padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;min-width:170px;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}}
 .nav-btn:hover{{border-color:#0969da;color:#0969da}}
-.nav-btn.current{{background:#0969da;border-color:#0969da;color:#fff}}
+.nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
 .page-header{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:28px 32px;margin-bottom:24px}}
-h1{{font-size:1.8rem;color:#0969da;margin-bottom:8px}}
+h1{{font-size:1.8rem;color:#1E3A6E;margin-bottom:8px}}
 .page-desc{{font-size:.92rem;color:#57606a}}
 .kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:18px 0 28px}}
 .kpi{{background:#fff;border:1px solid #d0d7de;border-left:4px solid #0969da;border-radius:10px;padding:16px;text-align:center}}
