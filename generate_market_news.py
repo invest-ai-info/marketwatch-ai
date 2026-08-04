@@ -229,7 +229,7 @@ def brand_header(page_emoji, page_title, updated="", extra=""):
         '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>'
         '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
         '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
-        f'<div style="font-size:1.3rem;font-weight:700;color:#0969da;line-height:1.35">{page_emoji} {page_title}</div>'
+        f'<div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">{page_emoji} {page_title}</div>'
         f'{meta}'
         '</div></div></header>'
     )
@@ -1663,7 +1663,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   </div>
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 VIX恐怖指数の見方・活用法</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 VIX恐怖指数の見方・活用法</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">VIX（恐怖指数）は、S&amp;P500のオプション価格から算出される「今後30日間の予想変動率」です。数字が大きいほど投資家が将来の値動きを大きく（＝不安に）見ている、という<strong>市場の“体温計”</strong>のような指標です。株価が急落する局面ではVIXが跳ね上がり、相場が落ち着くと低下します（株価とVIXは逆相関の傾向）。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このページの<strong>90日チャートと早見表</strong>は、次のように読むと実用的です。まず<strong>今のVIXがどの帯（平常/警戒/恐怖）にいるか</strong>を確認します。20以下なら平常運転、20〜30は警戒、30超は強い恐怖です。重要なのは“絶対水準”だけでなく<strong>「直近からの変化の速さ」</strong>。短期間でVIXが急騰したときほど、市場がパニックに傾いている合図になります。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
@@ -2706,7 +2706,7 @@ def build_hot_assets_html(hot_data, now_jst):
 {sections_html}
 
   <div id="sec-guide" style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px;max-width:1100px;margin-left:auto;margin-right:auto">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 出来高急増ランキングの見方・活用法</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 出来高急増ランキングの見方・活用法</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">出来高は「その銘柄にどれだけ資金と関心が集まっているか」を示す、価格と並んで重要な情報です。このランキングは<strong>本日の出来高が直近20営業日の平均の何倍か（急増率）</strong>で並べており、ニュース・決算・思惑などで<strong>市場の注目が一気に集まった銘柄</strong>がひと目で分かります。「相場のどこに今、資金が向かっているか」を把握する地図として使えます。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">ただし大切な注意点があります。<strong>出来高が急増している＝上がる、ではありません</strong>。急増は「注目された」という事実にすぎず、買いで急増することも、投げ売り（パニック）で急増することもあります。急騰して話題になっている銘柄に勢いで<strong>飛びつくと高値づかみ</strong>になりやすいのは、出来高急増の典型的な落とし穴です。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
@@ -2777,7 +2777,7 @@ def build_earnings_section():
     updated = data.get("updated", "")
     return (
         '<div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:22px 26px;margin-top:24px">'
-        '<h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 6px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📊 主要企業の決算予定</h2>'
+        '<h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 6px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📊 主要企業の決算予定</h2>'
         f'<p style="font-size:.82rem;color:#6e7781;margin:0 0 14px;line-height:1.6">米国はNasdaqより自動取得／日本は発表予定日（各社IRで確定・日程は変更の場合あり）｜更新: {updated}</p>'
         '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px 26px">'
         '<div><div style="font-weight:700;color:#1f2328;margin-bottom:4px;font-size:.98rem">🇺🇸 米国</div>'
@@ -3029,7 +3029,7 @@ def build_calendar_html(now_jst):
   {earnings_section}
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 経済カレンダーの見方・活用法</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 経済カレンダーの見方・活用法</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">経済指標とは、雇用・物価・景気などの「国の経済の通信簿」です。相場が動くのは指標の良し悪しそのものより、<strong>事前の「予想値」と発表された「実績値」のズレ（サプライズ）</strong>。予想を大きく上回る/下回るほど、株価や為替が瞬間的に大きく動きます。このカレンダーは、そうした<strong>“相場が動きやすい日”を前もって把握する</strong>ためのものです。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">使い方はシンプルです。まず<strong>今週・来週の「⭐最重要」指標がいつあるか</strong>を確認します。そして——これは実体験からの教訓でもありますが——<strong>重要指標の直前に、新しいポジションを大きく持ち越さない</strong>こと。たとえば米雇用統計やFOMCの前夜にうっかり建てたポジションが、発表直後の急変で損切りになる、というのはよくある失敗です。発表を「跨ぐ」のか「避ける」のかを、事前に決めておくだけでリスクが大きく変わります。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
@@ -3893,7 +3893,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   </section>
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 市場健康度の読み方</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 市場健康度の読み方</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このダッシュボードは、性質の異なる複数の“体温計”を1画面に集めたものです。大きく分けて、<strong>市場心理</strong>を測る指標（VIX恐怖指数・恐怖と強欲指数）、<strong>過熱/売られすぎ</strong>を測る指標（騰落レシオ）、そして<strong>割高/割安（バリュエーション）</strong>を測る指標（バフェット指数・CAPEレシオ・PER）です。性格が違うものを並べることで、相場全体の“温度感”を多面的に把握できます。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">読み方のコツは、<strong>1つの指標だけで判断しないこと</strong>。複数の指標が<strong>同じ方向（過熱、または悲観）を同時に指したときほど、シグナルの信頼度が高い</strong>とされます。たとえば「VIXが急騰（恐怖）＋騰落レシオが70未満（売られすぎ）」が重なれば、行き過ぎた悲観＝逆張りを検討する材料に。逆に「バフェット指数もCAPEも歴史的高水準（割高）＋恐怖と強欲が極度の強欲」なら、新規の一括投資は控えめに、という具合です。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
@@ -4177,7 +4177,7 @@ def build_charts_html(hist, now_jst):
   </div>
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 150年チャートの活かし方</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 150年チャートの活かし方</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">日々のニュースを追っていると、目先の上げ下げに心が振り回されがちです。このページの<strong>150年スケールの超長期チャート</strong>は、いま起きている値動きを<strong>“歴史の文脈”の中で見る</strong>ための地図です。長い目で見れば、株価は世界恐慌・オイルショック・ブラックマンデー・ITバブル崩壊・リーマンショック・コロナショックといった<strong>暴落を何度もはさみながら、それでも長期では上昇</strong>してきました。対数スケールで見ると、1929年の世界恐慌（約9割下落）がいかに別格だったかも一目でわかります。上の年表は、その節目となった出来事をまとめたものです。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">このページの一番の使いどころは、<strong>暴落の渦中で冷静さを保つ</strong>ことです。渦中では「もう終わりだ」と感じても、後から長期チャートで振り返ると、多くの危機は<strong>一時的な急落</strong>として刻まれています。ただし——<strong>「いつか戻る」と“どこが底か”は別問題</strong>。回復まで何年もかかった局面もあり、底は誰にも当てられません。だからこそ、長期では強気でも、<strong>一度に動かず分割で・損切りラインを決めて</strong>臨むのが現実的です。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
@@ -5618,7 +5618,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   </div>
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:26px 30px;margin-top:28px">
-    <h2 style="font-size:1.25rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
+    <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
     <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
     <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
       <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
