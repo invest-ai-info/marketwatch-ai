@@ -735,7 +735,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <header>
   <div class="header-inner">
     <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
-    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📺 YouTube要約</div></div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📺 YouTube要約</div></div>
   </div>
 </header>
 <main>
@@ -765,7 +765,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   {videos_html}
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
-    <h2 style="font-size:1.2rem;color:#1f6feb;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 YouTube要約の使い方</h2>
+    <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 YouTube要約の使い方</h2>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">投資系YouTubeは情報の宝庫ですが、1本20〜30分の動画を毎日何本も見るのは大変です。このページは、厳選チャンネルの新着動画を<strong>AIが「核心メッセージ・重要トピック・日本人投資家への示唆」に要約</strong>したもの。<strong>「見るべき動画」を見分け、情報収集の時間を短縮する</strong>ための入口として使ってください。要約はあくまで概要なので、<strong>気になったものは必ず元動画で内容を確認</strong>することをおすすめします（動画の著作権は各チャンネルに帰属します）。</p>
     <p style="font-size:.95rem;color:#424a53;line-height:1.85;margin-bottom:12px">投資系の発信を見るときの<strong>大切な心構え</strong>も添えておきます。発信者には立場（ポジション）があり、自分が持っている資産に有利な見方を語りがちです（ポジショントーク）。だからこそ、<strong>一つの意見を鵜呑みにせず、強気・弱気の両方の見方を比べ、最後は自分のルールで判断する</strong>ことが大切です。</p>
     <ul style="margin:6px 0 14px 22px;color:#424a53;font-size:.94rem;line-height:1.85">
