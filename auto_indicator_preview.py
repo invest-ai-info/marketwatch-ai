@@ -411,7 +411,7 @@ def build_preview_html(event):
     body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}}
     header{{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}}
     .header-inner{{max-width:1200px;margin:0 auto}}
-    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#0969da,#1f6feb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
+    .header-title{{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}}
     .header-meta{{font-size:.85rem;color:#57606a;margin-top:4px}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}}
@@ -458,7 +458,7 @@ def build_preview_html(event):
     .related-card-desc{{font-size:.78rem;color:#57606a;line-height:1.55}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
     footer a{{color:#0969da;text-decoration:none}}
-    #reading-progress{{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#0969da,#1f6feb);z-index:9998;transition:width .1s ease-out}}
+    #reading-progress{{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}}
     @media(max-width:600px){{.article{{padding:24px 20px}}h1{{font-size:1.35rem}}.countdown-num{{font-size:2rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
     .ad-slot{{margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center;overflow:hidden;max-width:100%}}
     .ad-slot a,.ad-slot img{{max-width:100%;height:auto;display:inline-block}}
