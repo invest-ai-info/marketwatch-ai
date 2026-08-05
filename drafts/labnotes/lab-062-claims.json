@@ -1,0 +1,59 @@
+{
+  "article_id": "062",
+  "claims": [
+    {
+      "label": "上昇×reversal_long 全件",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 130,
+      "n": 250
+    },
+    {
+      "label": "下降×reversal_long 全件",
+      "filter": {"trend": "下降", "reversal_long": true},
+      "k": 142,
+      "n": 323
+    },
+    {
+      "label": "中立・もみあい×reversal_long 全件",
+      "filter": {"trend": "中立・もみあい", "reversal_long": true},
+      "k": 113,
+      "n": 285
+    },
+    {
+      "label": "上昇×reversal_long×rsi_oversold_bounce",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce"},
+      "k": 36,
+      "n": 58
+    },
+    {
+      "label": "上昇×reversal_long×bb_lower_touch",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch"},
+      "k": 94,
+      "n": 192
+    },
+    {
+      "label": "上昇×reversal_long×group=index",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "index"},
+      "k": 49,
+      "n": 85
+    },
+    {
+      "label": "上昇×reversal_long×group=jpy_fx",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "jpy_fx"},
+      "k": 38,
+      "n": 72
+    },
+    {
+      "label": "上昇×reversal_long×group=other_fx",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "other_fx"},
+      "k": 26,
+      "n": 61
+    },
+    {
+      "label": "reversal_long=True 全体（参照）",
+      "filter": {"reversal_long": true},
+      "k": 386,
+      "n": 862
+    }
+  ]
+}
