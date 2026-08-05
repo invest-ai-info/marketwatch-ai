@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #62｜上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の勝率乖離が示す本質 - MarketWatch AI</title>
-  <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="上昇トレンド中の逆張り買い（N=250）は勝率52.0%・CI下限45.8%で損益分岐43%を超え、前向きN=149でもトラッカー昇格。RSI売られすぎ62.1% vs BB下限49.0%の13pp差が本質。">
   <meta name="keywords" content="AIシグナル,検証,上昇トレンド,逆張り,押し目買い,rsi,bb_lower_touch,勝率,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-062.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AIシグナル研究日誌 #62｜上昇トレンド中の押し目買いが前向き昇格">
-  <meta property="og:description" content="上昇×逆張り買いN=250の52.0%が前向き昇格。RSI売られすぎ62.1% vs BB下限49.0%の乖離発見。">
+  <meta property="og:title" content="AIシグナル研究日誌 #62｜上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の勝率乖離が示す本質">
+  <meta property="og:description" content="上昇トレンド中の逆張り買い（N=250）は勝率52.0%・CI下限45.8%で損益分岐43%を超え、前向きN=149でもトラッカー昇格。RSI売られすぎ62.1% vs BB下限49.0%の13pp差が本質。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-062.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
@@ -22,8 +23,8 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "AIシグナル研究日誌 #62｜上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の乖離が示す本質",
-    "description": "上昇トレンド中の逆張り買い（N=250）は勝率52.0%・CI下限45.8%で損益分岐43%を超え、前向きN=149でもトラッカー昇格。",
+    "headline": "AIシグナル研究日誌 #62｜上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の勝率乖離が示す本質",
+    "description": "上昇トレンド中の逆張り買い（N=250）は勝率52.0%・CI下限45.8%で損益分岐43%を超え、前向きN=149でもトラッカー昇格。RSI売られすぎ62.1% vs BB下限49.0%の13pp差が本質。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-08-06",
@@ -251,14 +252,14 @@ window.addEventListener('resize',mark);
 
     <h1>🧪 AIシグナル研究日誌 #62<br><small style="font-size:.65em;color:#57606a;font-weight:400">上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の勝率乖離が示す本質</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月（下書き中） &nbsp;|&nbsp; 読了：約10分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月6日 &nbsp;|&nbsp; 読了：約10分
     </div>
 
     <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・BB下限タッチ等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第62回です。<a href="guide-signal-lab-022.html">第22回</a>・<a href="guide-signal-lab-027.html">第27回</a>でも逆張り買いのトレンド依存性を調べてきましたが、今回はその続編として「<strong>上昇トレンド中の逆張り買いが前向きトラッカーで正式に昇格した</strong>」という報告です。</p>
 
-    <p>前向きN=148のデータが蓄積され、期待値（平均R）の95%信頼区間が完全にプラス（+0.05〜+0.34）となり、システムが自動で<strong>✅昇格</strong>を記録しました。今回は昇格の裏付けとなるin-sampleの数値を深掘りし、「なぜ上昇トレンドで逆張り買いが効くのか」をシグナル種別・グループ別に解剖します。</p>
+    <p>前向きN=148のデータが蓄積され、期待値（平均R）の95%信頼区間が完全にプラス（+0.05〜+0.34）となり、システムが自動で<strong>✅昇格</strong>を記録しました。今回は昇格の裏付けとなるin-sampleの数値を深掘りし、「なぜ上昇トレンドで逆張り買いの成績が相対的に良かったのか」をシグナル種別・グループ別に解剖します。</p>
 
     <!-- 30秒まとめ -->
     <div class="info-box">
@@ -267,7 +268,7 @@ window.addEventListener('resize',mark);
       ② 前向きN=148で期待値CI全域プラス（+0.05〜+0.34）→ <strong>前向きトラッカー✅昇格</strong><br>
       ③ トレンド序列：上昇<strong>52.0%</strong> ＞ 下降<strong>44.0%</strong> ＞ 中立・もみあい<strong>39.6%</strong> — <strong>前向きでも序列維持</strong>（詳細は本文参照）<br>
       ④ シグナル分解：RSI売られすぎ<strong>62.1%</strong>（N=58）vs BB下限タッチ<strong>49.0%</strong>（N=192）の<strong>13pp差</strong>を発見<br>
-      ⑤ 前向きでもRSI・BBの乖離は拡大傾向——上昇中の「押し目」はRSIシグナルが主体（詳細は本文参照）
+      ⑤ 前向きでもRSI・BBの乖離は拡大傾向——上昇中の「押し目」はRSIシグナルが主体である可能性（詳細は本文参照）
     </div>
 
     <div class="toc">
@@ -505,7 +506,7 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <p>RSI売られすぎが<strong>62.1%</strong>と非常に高い水準。BB下限タッチは49.0%で43%は超えていますが、RSIと比べると13pp低い状態です。</p>
+    <p>RSI売られすぎが<strong>62.1%</strong>と相対的に高い水準。BB下限タッチは49.0%で43%は超えていますが、RSIと比べると13pp低い状態です。</p>
 
     <h3>前向きデータ（2026-06-22以降）での比較</h3>
     <table>
@@ -518,10 +519,10 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <p>前向きで見ると乖離はさらに拡大。RSIは<strong>69.7%</strong>と圧倒的な前向き成績を示し、BBは45.7%でCIが43%をまたいでいます。</p>
+    <p>前向きで見ると乖離はさらに拡大。RSIは<strong>69.7%</strong>と高めの前向き数値となり、BBは45.7%でCIが43%をまたいでいます。</p>
 
     <div class="positive-box">
-      <strong>解釈</strong>: RSI売られすぎは「本当に売られすぎた状態」からの反発であり、上昇トレンド中にこの状態が起きると「下げすぎた = 必ず元の流れに戻ろうとする圧力が強い」という文脈が一致する。BB下限タッチは「統計的外れ値」を拾うが、上昇トレンド中でも必ずしも極端な売られすぎを意味しない——その差が勝率の差に出ている可能性がある。
+      <strong>解釈</strong>: RSI売られすぎは「本当に売られすぎた状態」からの反発であり、上昇トレンド中にこの状態が起きると「下げすぎた後に元の流れへ戻ろうとする力が働きやすい」という文脈と整合しやすい。BB下限タッチは「統計的外れ値」を拾うが、上昇トレンド中でも必ずしも極端な売られすぎを意味しない——その差が勝率の差に出ている可能性がある。
     </div>
 
     <!-- 図3: RSI vs BB比較バーチャート -->
@@ -603,7 +604,7 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <p>指数（日経・S&amp;P・ナスダック等）が57.6%と最も安定しており、<a href="guide-signal-lab-026.html">第26回</a>や<a href="guide-signal-lab-021.html">第21回</a>で確認した「指数ロングのエッジ」と整合します。円クロスFXも52.8%で健全です。</p>
+    <p>指数（日経・S&amp;P・ナスダック等）が57.6%と最も安定しており、<a href="guide-signal-lab-026.html">第26回</a>や<a href="guide-signal-lab-021.html">第21回</a>で確認した「指数ロングのエッジ」と整合します。円クロスFXも52.8%で損益分岐を上回っています。</p>
 
     <p>ドル建てFX（EURUSD・GBPUSD・AUDUSDなど）は42.6%とやや低め。CIが[31.0%, 55.1%]と広いため確定的ではありませんが、<a href="guide-signal-lab-016.html">第16回</a>で確認した「ドル建てFX×ロングの弱さ」と方向性が一致しています。</p>
 
@@ -616,7 +617,7 @@ window.addEventListener('resize',mark);
 
     <p>前向きトラッカーの昇格基準は「<strong>前向きN≥80、かつ期待値（平均R）の95%CIが完全にプラス</strong>」です。今回の trend=上昇×reversalL は前向きN=148を蓄積し、平均R=+0.20、CI=<strong>[+0.05, +0.34]</strong>で基準をクリアしました。</p>
 
-    <p>これは研究日誌シリーズ約60回の中で数少ない「エッジ昇格」です。前向きCIが完全にプラスとなっているため、<strong>過去データだけでなく直近の実績でもエッジが維持されている</strong>ことを示しています。</p>
+    <p>これは研究日誌シリーズ約60回の中で数少ない「エッジ昇格」です。前向きCIが完全にプラスとなっているため、<strong>過去データだけでなく直近の記録でもエッジが維持されている</strong>可能性を示唆しています（将来も同様に推移するとは限りません）。</p>
 
     <div class="positive-box">
       <strong>ただし昇格はあくまで「候補の旗立て」</strong>: この結果が発火エンジンや配信条件に自動で反映されるわけではありません。最終的な実取引への活用は、人間がこれらのデータを参照した上で慎重に判断する必要があります。
