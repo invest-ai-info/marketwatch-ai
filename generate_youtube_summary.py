@@ -718,7 +718,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     .video-watch:hover{{background:#a40e1f}}
     .empty-msg{{background:#fff8c5;border:1px solid #d29922;border-radius:10px;padding:18px 24px;color:#7b5a00;font-size:.95rem}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:780px){{
       .video-card{{grid-template-columns:1fr}}
       .video-thumb-wrap img{{width:100%;max-width:480px;margin:0 auto}}

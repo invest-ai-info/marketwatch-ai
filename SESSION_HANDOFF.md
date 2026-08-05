@@ -49,10 +49,12 @@
 > ### 未完の作業
 > | # | 内容 |
 > |---|---|
-> | 1 | **Task 6: ロゴ**。`apply_logo.py` の SVG 定数を 地`#1E3A6E`・丸`#E8A317` へ（現行の赤丸 `#d92b2b` は意味色と衝突）。⚠️PNG/ICO は再生成されない可能性あり＝要確認 |
-> | 2 | **Task 7: Phase 2**（本文リンクを藍(明)＋**下線**・オーナー承認済み）。`--phase 2` は実装済み・dry-run で136本403箇所。⚠️**f-string 形にも当たるようになった**ので dry-run の件数は再測すること |
-> | 3 | 🔴 **ヘッダーのページラベルが静的記事187本で旧青のまま**（`<header>` 内の `<div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div>`）。**藍のグラデのサイトタイトルのすぐ下に旧青が並ぶ**＝最も目に付く残り。ルールは実装済み（インライン見出し4本）なので `python apply_brand_color.py --phase 1 --include-cloud --apply` を回すだけ＝**140本(SYNC)＋57本(クラウドレーン・分割コミット)**。8/5 はオーナー判断で**生成ページ19箇所のみ適用**し静的は見送り＝現状は「6コア等は藍・記事は旧青」に割れている |
-> | 4 | **新記事が旧テンプレで出る問題**＝`guide-signal-lab-060.html`(8/4公開) だけ `h1{font-size:1.95rem;color:...}` を持たず RULES にかからない（60本中1本）。クラウドの新テンプレが定着すると**今後の公開分が素通りし続ける**。恒久策は `check_guide_draft.py` に「旧色で出していないか」の検査を足すこと |
+> | 1 | **Task 7: Phase 2**（本文リンクを藍(明)＋**下線**・オーナー承認済み）。⚠️**旧見積「136本403箇所」は f-string 対応前の値で、実測は306本895箇所**（生成ページも対象に入ったため）。`--phase 2` は実装済み |
+>
+> ✅ **8/5 完了**: ヘッダーラベル（197本）／**Task 6 ロゴ**（地=藍・丸=山吹。`OLD_LOGO_SVGS` で移行、`make_favicons.py` を新設して
+> **PNG/ICO も SVG から描き起こせるようにした**＝「再生成されない可能性」の積み残しを解消）／
+> **新テンプレ対応**（`guide-signal-lab-060` は CSS変数式＝`var(--accent)` で既存ルールが1つも当たらなかった。
+> ライトの `--accent` と h1 をルール化して修正＋`check_guide_draft.py` 検査9 で今後を遮断。**誤検知0/295本**）
 >
 > 🔑 **Phase 1 で二度踏んだ構図＝「名指しの形が実体と違う」**。①CSSブロックだけ名指し→f-string の二重波括弧を取りこぼし ②CSSルールだけ名指し→**要素の `style` 属性**を取りこぼし。
 > **色の適用漏れを疑うときは「どこに書かれた色か」を先に数える**（`<style>`内 / f-string内 / style属性内）。ライブの computed 値で確かめるのが最短。
@@ -94,6 +96,8 @@
 |---|---|---|
 | SYNC禁忌ファイルを誤って push しない | `check_site_consistency.py` の `SYNC_FORBIDDEN`（`mw check`） | 巻き戻し事故を push 前に **error 停止** |
 | **ドキュメントの文字でライブが止まるのを防止** 🆕8/5 | `.nojekyll`（Jekyll を丸ごと迂回）＋ `check_site_consistency.py` の `check_liquid_in_markdown` | Jekyll は**同期対象の .md 24件を Liquid として解釈**する。手順書に波括弧2連を書いただけで**Pages ビルドが12時間全失敗**（`duration=0` の即失敗・本文は "Page build failed." のみ）。**ライブは古いビルドを配信し続け health-check も緑**＝人力では気づけない。検査は `.nojekyll` 有無で error/warning を切替（無ければ実際に落ちるので error）。誤検知ゼロを実測 |
+| **新記事が旧テンプレ/旧色で公開されるのを防止** 🆕8/5 | `check_guide_draft.py` 検査9（判定は `apply_brand_color` の RULES/TOKENS を流用＝**色の知識を複製しない**） | ①Phase1の役割に旧色が残る ②ブランド色が1つも無い（＝既存と構造が違うテンプレ）の2条件で公開ブロック。`guide-signal-lab-060` はクラウドが**CSS変数式の別テンプレ**で出したため既存ルールが1つも当たらず、60本中1本だけ未適用だった。**誤検知率を全295本で実測＝0本**（真陽性1のみ） |
+| **ロゴのラスタ画像が旧色で取り残されるのを防止** 🆕8/5 | `make_favicons.py`（`favicon.svg` を**単一の真実**として Pillow で描き直す。cairosvg 等の依存は足さない） | `apply_logo.py` はHTML内のインラインSVGしか直せず、**favicon-32/192・apple-touch-icon・ico は旧色のまま残る**（SVG対応ブラウザだけ新色という食い違い）。旧SVGで描き起こして現物と照合＝画素の96〜99.6%が一致することを実測してから配色を変えた。⚠️ロゴを変えたら `apply_logo.py --apply` と**両方**回す |
 | **コミット連打で Pages のビルド上限を叩かない** 🆕8/5 | `sync_to_github.py --batch`（Git Data API で blob/tree→**1コミット**。テキストは tree に content 直埋め・バイナリのみ blob 化） | Contents API は**1ファイル＝1コミット**なので 257件の sync がビルド連打になる（実測 JST04時台48件/05時台11件/06時台25件・目安は10回/時）。一括なら**内容一致251件は tree 取得1回で通信ゼロ判定**＝往復も激減。staleness ガードと `--force` の意味は逐次版と同一 |
 | 公開前に main を取り込む（reconcile） | `publish_article.py` 内蔵 reconcile | ローカル公開での巻き戻しを防止 |
 | **ローカルが古い状態での sync 巻き戻し防止** 🆕 | `sync_to_github.py` の staleness ガード（remote_sha baseline 比較） | 前回 sync 後に GitHub 側が更新されたファイルの push を **🚫中止**（意図的なら `--force`） |
