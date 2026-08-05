@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-08-06 | 🤖 下書き生成 | commodity-basics | コモディティの基礎（金・原油はなぜ動くのか）
+
+- **基準日**: 2026-08-06（JST）
+- **対象 key**: commodity-basics（基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-commodity-basics.html`
+- **参照出典**:
+  - Chicago Fed Letter 464（2021）「What Drives Gold Prices?」https://www.chicagofed.org/publications/chicago-fed-letter/2021/464
+  - PIMCO「Understanding Commodities」https://www.pimco.com/us/en/resources/education/understanding-commodities
+  - CME Group「Gold and the US Dollar: An Evolving Relationship? (2025)」https://www.cmegroup.com/openmarkets/metals/2025/Gold-and-the-US-Dollar-An-Evolving-Relationship.html
+  - EIA「Oil Prices: Prices and Outlook」https://eia.gov/energyexplained/oil-and-petroleum-products/prices-and-outlook.php
+  - Fidelity「Commodity ETFs: Contango/Backwardation」https://www.fidelity.com/learning-center/investment-products/etf/commodity-etfs-contango-backwardation
+  - Fidelity「Commodity ETFs: Sources of Return」https://www.fidelity.com/learning-center/investment-products/etf/commodity-etfs-sources-return
+  - ScienceDirect「Commodities and portfolio diversification: Myth or fact? (2022)」https://www.sciencedirect.com/science/article/abs/pii/S1062976922000916
+  - Lazard「Why Commodities? A Forgotten Asset Class」
+  - goldsilver.com「Gold Prices and Real Interest Rates」
+- **コンプラ自己チェック**:
+  - ✅ 個別銘柄・特定商品の売買推奨なし（「購入推奨ではありません」明記）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」使用なし）
+  - ✅ kinsho-v1 免責：記事冒頭バナー・本文末 p.disclaimer・footer 全3箇所に挿入
+  - ✅ 数値出典：OPEC+ 40%超（TMGM/EIA参照として記述）、ホルムズ約20%（EIA）、ロールコスト年率～13%（Fidelityの一般的なメカニズム解説を参照して説明）
+  - ✅ WebSearch で事実確認済み
+  - ✅ noindex,nofollow メタタグ挿入済み（下書き）
+- **SVG 図**: 3点（① 実質金利と金価格の逆相関・② 原油の需給＋地政学二層構造・③ コンタンゴ/バックワーデーション先物カーブ）。ライト/ダーク両テーマ対応スタイル実装済み。
+- **人間の残作業**:
+  - SVG 3点の実機ライト/ダークテーマ確認（ラベルの視認性・色対比）
+  - タイトル・description の微調整（必要に応じ）
+  - 公開は毎朝 08:40 の `autodraft-publish` が決定論ゲート（`check_guide_draft.py`）→ Opus コンプラ・品質審査を経て自動実行
+
+---
+
 2026-08-05 autopublish: guide-sns-information-literacy.html 公開 / 決定論緑・Opus 🟡グレー修正適用（G1-G5: 「100人中20人」仮の例注記追加・「見分ける力が身につきます」→「見分けやすくなります」・「踊らされるリスクが大きく下がります」→「情報に振り回されにくくなると考えられます」・§6③チェックリスト❌項目を精密化・「一次情報」初出定義1文追加）・独立Opus🟢白確認 / URL: https://marketwatch-jp.com/guide-sns-information-literacy.html
 
 ---
