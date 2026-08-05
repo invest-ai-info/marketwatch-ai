@@ -166,6 +166,26 @@ def main():
     # 8. 内部リンク実在（存在しない記事へのリンク＝Search Console の404の正体）
     fails.extend(internal_link_check(html, path))
 
+    # 9. ブランドカラー（新記事が旧色テンプレのまま公開されるのを防ぐ）
+    #    🔴 2026-08-05: `guide-signal-lab-060.html`（クラウドが公開）だけが
+    #       `h1{font-size:1.95rem;color:...}` を持たず、既存60本中この1本だけ未適用だった。
+    #       クラウドの新テンプレが定着すると**今後の公開分が素通りし続ける**＝
+    #       サイトの配色が静かに割れていく。人が毎回見るのは無理なのでゲートに置く。
+    #    判定は apply_brand_color の RULES/TOKENS を使う＝**色の知識をここに複製しない**。
+    try:
+        import apply_brand_color as abc
+        _fixed, _n = abc.apply_rules(html, phase=1)
+        if _n:
+            fails.append(f"旧ブランドカラーが {_n}箇所（`python apply_brand_color.py "
+                         f"--phase 1 --include-cloud --apply` で直る）")
+        elif abc.TOKENS["brand"] not in html and abc.TOKENS["brand_lite"] not in html:
+            # 旧色でもないのにブランド色も無い＝RULES が想定する形を持たないテンプレ。
+            # 放置すると「見出しが地の文と同色」の記事が増える。
+            fails.append(f"ブランドカラー（{abc.TOKENS['brand']} / {abc.TOKENS['brand_lite']}）が"
+                         f"1つも無い＝既存テンプレと構造が違う（見出しの色指定を確認）")
+    except Exception as e:
+        fails.append(f"ブランドカラー検査を実行できない ({type(e).__name__}: {str(e)[:60]})")
+
     # 6. SVG検査（固定オラクルの関数を流用＝判定基準の単一ソース化）
     try:
         import signal_lab_verify as slv
