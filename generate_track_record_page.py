@@ -1350,7 +1350,7 @@ def build_html(signals, trades, tracker=None):
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
     .breadcrumb{{font-size:.82rem;color:#57606a;margin-bottom:16px}}
-    .breadcrumb a{{color:#0969da;text-decoration:none}}
+    .breadcrumb a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     .page-header{{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:28px 32px;margin-bottom:24px}}
     h1{{font-size:1.8rem;color:#1E3A6E;margin-bottom:8px}}
     h2{{font-size:1.25rem;color:#2C4F8F;margin:24px 0 14px}}
@@ -1384,7 +1384,7 @@ def build_html(signals, trades, tracker=None):
     .win-card{{background:#ffffff;border:1px solid #d0d7de;border-left:5px solid #1a7f37;border-radius:10px;padding:16px 20px;margin:12px 0}}
     .win-cat-tag{{display:inline-block;background:#dafbe1;color:#1a7f37;border:1px solid #1a7f37;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.04em}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.kpi-value{{font-size:1.4rem}}h1{{font-size:1.4rem}}}}
     body.dark{{background:#0d1117;color:#e6edf3}}
     body.dark header{{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}}

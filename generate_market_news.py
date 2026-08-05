@@ -1585,7 +1585,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     .level-table tr:hover td{{background:#ffffff}}
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
@@ -2645,7 +2645,7 @@ def build_hot_assets_html(hot_data, now_jst):
     @media(max-width:760px){{.jprank-grid{{grid-template-columns:1fr;gap:18px}}}}
 
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     .jump-bar{{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px auto 2px;max-width:1100px}}
     .jump-bar a{{padding:4px 12px;border:1px solid #d0d7de;border-radius:999px;background:#f6f8fa;color:#57606a;font-size:.78rem;font-weight:600;text-decoration:none}}
     .jump-bar a:hover{{border-color:#0969da;color:#0969da}}
@@ -2954,7 +2954,7 @@ def build_calendar_html(now_jst):
     .beginner-box{{margin:24px 0;background:#ddf4ff;border:1px solid #54aeff;border-radius:8px;padding:14px 18px;font-size:.82rem;color:#1f6feb;line-height:1.8}}
     .beginner-box::before{{content:"🔰 経済指標の見方　";font-weight:700;color:#0969da}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
@@ -3347,7 +3347,7 @@ def build_preview_html(now_jst):
     .beginner-box::before{{content:"🔰 このページの使い方　";font-weight:700;color:#0969da}}
     .disclaimer{{margin-top:20px;font-size:.78rem;color:#6e7781;line-height:1.7;padding:12px 16px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:768px){{
       .header-inner{{flex-direction:column;align-items:flex-start}}
       .card-header{{flex-direction:column;gap:12px}}
@@ -3747,7 +3747,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .beginner::before{{content:"🔰 初心者メモ　";font-weight:700;color:#0969da}}
   .formula{{font-family:'Consolas',monospace;background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:.82rem;color:#218bff;margin:8px 0;display:inline-block}}
   footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:24px 32px;text-align:center;font-size:.9rem;color:#57606a;line-height:1.85}}
-  footer a{{color:#0969da;text-decoration:none}}
+  footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
   @media(max-width:600px){{.big-num{{font-size:2.1rem}}.header-title{{font-size:1.4rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}}}
 </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
@@ -4076,7 +4076,7 @@ def build_charts_html(hist, now_jst):
     .ev-desc{{color:#57606a;font-size:.8rem}}
     .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
   .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
@@ -5314,7 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .card-news .news-title{{font-size:.8rem}}
     .card-news .news-meta{{font-size:.68rem}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
-    footer a{{color:#0969da;text-decoration:none}}
+    footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}

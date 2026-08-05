@@ -228,7 +228,7 @@ h2{{font-size:1.25rem;color:#2C4F8F;margin:28px 0 14px;padding-bottom:8px;border
 .src-bar-fill{{height:100%;background:linear-gradient(90deg,#0969da,#54aeff)}}
 .src-count{{min-width:60px;text-align:right;color:#57606a}}
 footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}}
-footer a{{color:#0969da;text-decoration:none}}
+footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 @media(max-width:600px){{.nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}.page-header{{padding:20px}}h1{{font-size:1.4rem}}.kpi-num{{font-size:1.3rem}}.time-label{{margin-left:0}}}}
 body.dark{{background:#0d1117;color:#e6edf3}}
 body.dark header{{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}}
