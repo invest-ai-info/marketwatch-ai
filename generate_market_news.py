@@ -226,7 +226,7 @@ def brand_header(page_emoji, page_title, updated="", extra=""):
         '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
         '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
         'background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;'
-        '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>'
+        '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>'
         '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
         '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
         f'<div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">{page_emoji} {page_title}</div>'
