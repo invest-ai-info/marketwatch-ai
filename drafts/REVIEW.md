@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-08-06 | ✅ 自動公開完了 | signal-lab-062 | AIシグナル研究日誌 #62
+
+- **公開ファイル**: `guide-signal-lab-062.html`
+- **タイトル**: 上昇トレンド中の押し目買いが前向き昇格——RSI vs BB の勝率乖離が示す本質
+- **gate①**: signal_lab_verify.py 8/8 GREEN, EXIT=0
+- **gate②**: compliance-reviewer Opus 🟢 白（軽微グレー7件を自己修正）
+- **gate③**: 数値再検証 EXIT=0（compliance後も8/8 GREEN）
+- **gate④**: 独立Opus 🟢 白（独立審査で同一結論）
+- **公開コミット**: feat: auto-publish signal-lab 062 (verified+compliance)
+- **guides.html**: AIシグナル研究日誌カード追加済み
+- **update-market-news**: 手動trigger推奨（index更新履歴反映）
+
+---
+
 ## 2026-08-06 | 🤖 下書き生成 | commodity-basics | コモディティの基礎（金・原油はなぜ動くのか）
 
 - **基準日**: 2026-08-06（JST）
