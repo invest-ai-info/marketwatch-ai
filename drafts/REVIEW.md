@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-06 autopublish: 🚩ゲート赤／ゲート不具合疑い: key=margin-trading / check_guide_draft.py が `apply_brand_color` モジュールを import しようとしたが origin/main に当該ファイルが存在しない（ModuleNotFoundError）。ゲートは 2026-08-05 に追加されたブランドカラー検査（コメント行170付近）で依存モジュールが未同期と推測。ゲートを編集・迂回するのは禁止のため公開せずエスカレ。対処＝`apply_brand_color.py` を SYNC_FILES に追加して GitHub に push し、ゲートが EXIT=0 になることを確認してから再実行すること。
+
+---
+
 ## 2026-08-06 | ✅ 自動公開完了 | signal-lab-062 | AIシグナル研究日誌 #62
 
 - **公開ファイル**: `guide-signal-lab-062.html`
