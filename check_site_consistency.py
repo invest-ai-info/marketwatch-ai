@@ -167,6 +167,37 @@ def check_sync_forbidden(sync_files):
             errors.append(f"🚨 research/ 配下（非公開研究）が SYNC_FILES に混入: {f}（公開リポへの流出防止）")
 
 
+def check_liquid_in_markdown(sync_files):
+    """同期する .md に Liquid 構文（波括弧2連・波括弧＋％）が無いか検査する。
+
+    🔴 2026-08-05 の実事故: GitHub Pages(Jekyll) は **.md を Liquid テンプレートとして解釈**する。
+       SESSION_HANDOFF.md に「f-string の波括弧は二重」と説明するため波括弧を2つ並べて書いただけで
+       閉じられない Liquid タグとみなされ、**Pages のビルドが12時間全失敗**した
+       （duration=0 の即失敗・エラー本文は "Page build failed." だけで原因が出ない）。
+       ライブは古いビルドを配信し続けるので**訪問者に破損は見えず**、health-check も
+       「最終更新の日付が今日か」しか見ないため**緑のまま**＝人力では気づけない壊れ方をする。
+
+    判定は `.nojekyll` の有無で段階を変える:
+       無い → Jekyll が走る＝**実際にビルドが落ちる**ので error
+       有る → 無害化済みだが、`.nojekyll` を失うと再発する潜在リスクなので warning
+    """
+    md = [f for f in sync_files if f.lower().endswith(".md")]
+    has_nojekyll = _exists(".nojekyll")
+    for f in sorted(md):
+        if not _exists(f):
+            continue
+        body = _read(f)
+        hits = body.count("{" + "{") + body.count("{" + "%")
+        if not hits:
+            continue
+        msg = (f"{f}: Liquid 構文（波括弧2連 等）が {hits}箇所。"
+               f"Jekyll がテンプレートとして解釈しビルドが落ちる")
+        if has_nojekyll:
+            warnings.append(msg + "（.nojekyll があるので現状は無害）")
+        else:
+            errors.append("🚨 " + msg + "（.nojekyll が無い＝ライブ更新が止まる）")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -175,6 +206,7 @@ def main():
     # 1. 🚨 SYNC禁忌チェック（最重要：巻き戻し事故防止。push直前のローカル実行でのみ意味がある）
     if sync_known:
         check_sync_forbidden(sync_files)
+        check_liquid_in_markdown(sync_files)
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""

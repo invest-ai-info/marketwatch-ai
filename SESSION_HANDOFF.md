@@ -62,15 +62,11 @@
 > 🔑 **Phase 1 で二度踏んだ構図＝「名指しの形が実体と違う」**。①CSSブロックだけ名指し→f-string の二重波括弧を取りこぼし ②CSSルールだけ名指し→**要素の `style` 属性**を取りこぼし。
 > **色の適用漏れを疑うときは「どこに書かれた色か」を先に数える**（`<style>`内 / f-string内 / style属性内）。ライブの computed 値で確かめるのが最短。
 >
-> ## 🔴🔴 8/5 の最大の事故＝**ドキュメントに書いた文字でライブが12時間止まった**
-> `.md` は GitHub Pages(Jekyll) が **Liquid テンプレートとして解釈する**。この手順書に
-> 「f-string の波括弧は二重」と説明するため**波括弧を2つ並べて書いた**ところ、閉じられない Liquid タグとみなされ
-> **Pages のビルドが全失敗**（`duration=0` の即失敗・エラー本文は "Page build failed." のみで原因が出ない）。
-> ライブは古いビルドを配信し続けるので**訪問者には破損が見えず**、`health-check.yml` も
-> 「最終更新の日付が今日か」しか見ないため**緑のまま**＝誰も気づけない。
-> **恒久策＝`.nojekyll` を追加**（このサイトは全ページ生成済みの静的HTMLで Jekyll 機能を1つも使っていない）。
-> ⚠️ **同期対象の `.md` は24件**あるので、`.nojekyll` が無い限り誰でも同じ地雷を踏める。
-> ⚠️ 併せて**コミット連打も避ける**（Pages のビルドは目安10回/時）。`sync_to_github.py --batch` が1コミットに束ねる。
+> ## 🔴 8/5 の最大の事故＝**ドキュメントに書いた文字でライブが12時間止まった**（解決済み・恒久策はコードへ）
+> `.md` を Jekyll が Liquid として解釈し、手順書に書いた波括弧2連で**Pages ビルドが全失敗**。
+> ライブは古いビルドを配信し続け `health-check` も緑のまま＝**人力では気づけない**。復旧＝`.nojekyll` 追加（10:14 に built 復帰）。
+> **教訓＝「壊れたのにアラートが鳴らない」経路を疑え。** 監視は"日付が今日か"しか見ていなかった。
+> 詳細と再発防止は下の強制ルール表の2行（Liquid検査／一括コミット）が単一の真実。
 >
 > ## ✅ **(a) 為替介入＝記事公開で決着**（8/3・ライブ確認済み）＝**全文は SESSION_ARCHIVE【2026-08-05 退避】**
 > 持ち越す教訓1つ＝**外挿の適用限界を🔴で自己申告する型**（独立Opus監査3巡で私の誤り4件を捕捉。うち最重要は**n=7の標本に協調介入が1件も無いのに外挿**した件）は速報記事へ横展開する価値あり。
@@ -102,6 +98,8 @@
 | 強制しているルール | 受け皿コード（単一の真実） | 効果 |
 |---|---|---|
 | SYNC禁忌ファイルを誤って push しない | `check_site_consistency.py` の `SYNC_FORBIDDEN`（`mw check`） | 巻き戻し事故を push 前に **error 停止** |
+| **ドキュメントの文字でライブが止まるのを防止** 🆕8/5 | `.nojekyll`（Jekyll を丸ごと迂回）＋ `check_site_consistency.py` の `check_liquid_in_markdown` | Jekyll は**同期対象の .md 24件を Liquid として解釈**する。手順書に波括弧2連を書いただけで**Pages ビルドが12時間全失敗**（`duration=0` の即失敗・本文は "Page build failed." のみ）。**ライブは古いビルドを配信し続け health-check も緑**＝人力では気づけない。検査は `.nojekyll` 有無で error/warning を切替（無ければ実際に落ちるので error）。誤検知ゼロを実測 |
+| **コミット連打で Pages のビルド上限を叩かない** 🆕8/5 | `sync_to_github.py --batch`（Git Data API で blob/tree→**1コミット**。テキストは tree に content 直埋め・バイナリのみ blob 化） | Contents API は**1ファイル＝1コミット**なので 257件の sync がビルド連打になる（実測 JST04時台48件/05時台11件/06時台25件・目安は10回/時）。一括なら**内容一致251件は tree 取得1回で通信ゼロ判定**＝往復も激減。staleness ガードと `--force` の意味は逐次版と同一 |
 | 公開前に main を取り込む（reconcile） | `publish_article.py` 内蔵 reconcile | ローカル公開での巻き戻しを防止 |
 | **ローカルが古い状態での sync 巻き戻し防止** 🆕 | `sync_to_github.py` の staleness ガード（remote_sha baseline 比較） | 前回 sync 後に GitHub 側が更新されたファイルの push を **🚫中止**（意図的なら `--force`） |
 | **公開記事が guides.html カードから消えていないか** 🆕 | `check_automation_health.py` §③（`automation-health.yml` 毎朝09:30 JST） | 巻き戻し（local-drift）を **翌朝 Issue で即検知** |
