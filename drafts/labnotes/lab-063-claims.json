@@ -1,82 +1,65 @@
-[
-  {
-    "id": "c01",
-    "desc": "全期間・rsi_oversold_bounce 全体勝率",
-    "filter": {"signal": "rsi_oversold_bounce"},
-    "k": 139,
-    "n": 301,
-    "note": "全クローズシグナル(tp1+sl)中 rsi_oversold_bounce の勝率 46.2%"
-  },
-  {
-    "id": "c02",
-    "desc": "全期間・rsi_oversold_bounce × group=index",
-    "filter": {"signal": "rsi_oversold_bounce", "group": "index"},
-    "k": 39,
-    "n": 63,
-    "note": "指数群 61.9%（全期間）"
-  },
-  {
-    "id": "c03",
-    "desc": "全期間・rsi_oversold_bounce × group=jpy_fx",
-    "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},
-    "k": 19,
-    "n": 49,
-    "note": "円クロス群 38.8%（全期間）"
-  },
-  {
-    "id": "c04",
-    "desc": "全期間・rsi_oversold_bounce × group=other_fx",
-    "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},
-    "k": 37,
-    "n": 78,
-    "note": "ドルクロス群 47.4%（全期間）"
-  },
-  {
-    "id": "c05",
-    "desc": "全期間・rsi_oversold_bounce × group=metal",
-    "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},
-    "k": 19,
-    "n": 60,
-    "note": "金属群 31.7%（全期間）"
-  },
-  {
-    "id": "c06",
-    "desc": "全期間・rsi_oversold_bounce × trend=上昇",
-    "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},
-    "k": 36,
-    "n": 58,
-    "note": "上昇トレンド下 62.1%（全期間）"
-  },
-  {
-    "id": "c07",
-    "desc": "全期間・rsi_oversold_bounce × trend=下降",
-    "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},
-    "k": 57,
-    "n": 134,
-    "note": "下降トレンド下 42.5%（全期間）"
-  },
-  {
-    "id": "c08",
-    "desc": "全期間・rsi_oversold_bounce × trend=中立・もみあい",
-    "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},
-    "k": 45,
-    "n": 107,
-    "note": "中立トレンド下 42.1%（全期間）"
-  },
-  {
-    "id": "c09",
-    "desc": "全期間・rsi_oversold_bounce × tf=1h",
-    "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},
-    "k": 83,
-    "n": 192,
-    "note": "1時間足 43.2%（全期間）"
-  },
-  {
-    "id": "c10",
-    "desc": "全期間・rsi_oversold_bounce × tf=4h",
-    "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"},
-    "k": 49,
-    "n": 97,
-    "note": "4時間足 50.5%（全期間）"
-  }
-]
+{
+  "article_id": "063",
+  "claims": [
+    {
+      "label": "rsi_oversold_bounce 全体",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 139,
+      "n": 301
+    },
+    {
+      "label": "rsi_oversold_bounce × group=index",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index"},
+      "k": 39,
+      "n": 63
+    },
+    {
+      "label": "rsi_oversold_bounce × group=jpy_fx",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},
+      "k": 19,
+      "n": 49
+    },
+    {
+      "label": "rsi_oversold_bounce × group=other_fx",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},
+      "k": 37,
+      "n": 78
+    },
+    {
+      "label": "rsi_oversold_bounce × group=metal",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},
+      "k": 19,
+      "n": 60
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=上昇",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},
+      "k": 36,
+      "n": 58
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=下降",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},
+      "k": 57,
+      "n": 134
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=中立・もみあい",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},
+      "k": 45,
+      "n": 107
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=1h",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},
+      "k": 83,
+      "n": 192
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=4h",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"},
+      "k": 49,
+      "n": 97
+    }
+  ]
+}
