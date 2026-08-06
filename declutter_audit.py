@@ -83,7 +83,10 @@ def main():
     if os.path.exists(sp):
         src = open(sp, encoding="utf-8", errors="replace").read()
         m = re.search(r"SYNC_FILES\s*=\s*\[(.*?)\n\]", src, re.S)
-        entries = re.findall(r'"([^"]+)"', m.group(1)) if m else []
+        # コメント（# 以降）は行ごとに捨ててから引用文字列を拾う。コメント内の "…" を登録と誤認した
+        # 実例＝2026-08-06 の "Page build failed."（8/5 の .nojekyll 経緯コメント）→ 🔴誤検知
+        entries = [e for ln in (m.group(1).splitlines() if m else [])
+                   for e in re.findall(r'"([^"]+)"', ln.split("#", 1)[0])]
         missing = [e for e in entries if not os.path.exists(p(e))]
         if missing:
             findings.append(("🔴", f"SYNC_FILES 死に登録 {len(missing)}件（実体なし→該当行を削除）: " + ", ".join(missing[:8])))
