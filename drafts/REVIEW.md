@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-08-07 | 🤖 下書き生成 | signal-lab-063 | AIシグナル研究日誌 #63
+
+- **基準日**: 2026-08-07（JST）
+- **テーマ**: rsi_oversold_bounce 全足統合解析——IS39.1%→FWD51.8%のグループ格差解剖
+- **優先度**: ②（前向きトラッカー蓄積中・E(R)CI下限-0.058でゼロ接近）
+- **生成ファイル**: `drafts/draft-signal-lab-063.html`
+- **labnotes**: `drafts/labnotes/lab-063-analysis.md` / `drafts/labnotes/lab-063-claims.json`
+- **統計サマリー**:
+  - FWD N=168: 87/168=51.8% CI[44.3%,59.2%] E(R)=+0.208 ClusterCI[-0.058,+0.474]
+  - H1✅ CI下限44.3% > 43%
+  - H2✅ 上昇×RSI FWD 27/38=71.1% CI下限55.2% > 50%
+  - H3✅ jpy_fx IS 10.0%→FWD 58.6%（+48.6pp） / metal IS 12.9%→FWD 51.7%（+38.8pp）
+  - 4h FWD 62.5% vs 1h FWD 45.0%（+17.5pp）
+  - 後半 58.3% E(R)=+0.361 RCI[+0.045,+0.677]（全域プラス）
+  - 全期間 139/301=46.2%（signal_lab_verify.py 検証対象、claims 10件）
+- **公開ゲート**:
+  - [ ] signal_lab_verify.py GREEN
+  - [ ] Opus コンプラ 白
+  - [ ] 独立Opus 確認 白
+  - [ ] finalize + publish_article.py + PUSH-MAIN
+
+---
+
 ## 2026-08-06 | 🤖 下書き生成 | correlation-risk | 見えない集中投資リスク（相関リスク）
 
 - **基準日**: 2026-08-06（JST）
