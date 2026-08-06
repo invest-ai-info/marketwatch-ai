@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-07 autopublish: 🚩ゲート赤／インフラ未解決（2日連続）: key=margin-trading / `check_guide_draft.py` が `apply_brand_color` モジュール（origin/mainに不在）を import しようとしてModuleNotFoundError。固定オラクル＝ゲートの編集・迂回は禁止のため公開せずエスカレ。**人間必須の対処**: ローカルで`apply_brand_color.py`を作成し SYNC_FILES に追加→push → ゲートEXIT=0確認 → 次回autopublishが自動再ピック。後続キュー: commodity-basics(#34) / correlation-risk(#35)の下書き在り、SOP「最初の1本」規則でmargin-trading解消まで待機。
+
+---
+
 ## 2026-08-07 | 🤖 下書き生成 | signal-lab-063 | AIシグナル研究日誌 #63
 
 - **基準日**: 2026-08-07（JST）
