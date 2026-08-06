@@ -115,4 +115,5 @@ SYNC_FILES = [
     "guide-proverb-inazuma-kagayaku-shunkan.html",
     "guide-news-2026-08-05-nikkei-rally-ai-semis-ibiden.html",
     "guide-signal-lab-062.html",
+    "guide-news-2026-08-06-spacex-lockup-expiry.html",
 ]
