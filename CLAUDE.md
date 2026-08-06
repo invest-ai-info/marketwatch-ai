@@ -32,7 +32,7 @@
 → 🩺 market-health → 🔥 hot-assets → 📈 charts → 📺 youtube-summary
 ```
 
-- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）。2026-06-15 に 📖 投資本 を追加して **10 ボタン**化＝モバイルは 2 列×5 行でむしろ整然（375px で崩れ無しを preview 確認済）
+- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）。10ボタンはモバイル2列×5行・375pxで崩れ無し確認済
 - ナビバー変更時は **決定論ツールで一括更新**：
   - **guide-*.html（約75本）＝ `python unify_navbar.py --apply`**（10ボタン標準を内蔵。投資本ページのみ自身を current、他は guides.html を current）
   - **生成スクリプト8本＋guides.html＋about/contact/privacy ＝ `python apply_books_nav_scripts.py --apply`**（各 `guides.html` の nav 行直後に挿入・冪等）。対象スクリプト＝`generate_market_news.py`（nav 7ブロック）／`generate_youtube_summary.py`／`generate_track_record_page.py`／`build_political_feed_page.py`／`auto_weekly_strategy.py`／`auto_weekly_review.py`／`generate_monthly_report.py`／`auto_indicator_preview.py`
@@ -56,9 +56,9 @@
 | **monthly-backup.yml** | 毎月 1〜3 日 09:10（同上・冪等） | signals-log の GitHub Release |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新日付チェック |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
-| **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株 値上がり/値下がりトップ20＋売買代金2日＋決算赤字黒字＋業種を Yahoo価格で生成（`build_jp_rankings.py`→`jp-rankings.json`）。commitで update-market-news の on:push が hot-assets 即再描画。赤字黒字/名前/業種は静的 `jp-stock-info.json`（四半期 `make_jp_stock_info.py`）。※朝実行はcron遅延で不可 |
+| **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
-| **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`＝日本語RSS/Google News 9本から見出しを時刻降順で `news-ticker.json` に毎時生成・AI不使用。index.html はJSが閲覧時にfetch＝HTML再生成なしで常に最新。2026-07-09新設） |
+| **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
 
 ### 環境変数 / GitHub Secrets
 - `NEWSAPI_KEY`、`GEMINI_API_KEY`（Tier 1 課金）、`YOUTUBE_API_KEY`
@@ -203,9 +203,9 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 
 ### 🤖 robots.txt の Disallow（2026-08-01 実装）
 
-**手で編集しても消える**＝`build_robots_txt()`（`generate_market_news.py`）が毎回の update-market-news で再生成→commit するため。実例＝2026-06-05 23:48 手動追加→**7分後の Actions で消滅**、以後~2か月不在なのに CLAUDE.md は「Disallow 済」と書いていた（**文書だけ直しても意味がない典型**）。**変更は必ず `build_robots_txt()` に書く。**
+**手で編集しても消える**＝`build_robots_txt()`（`generate_market_news.py`）が毎回の update-market-news で再生成→commit するため。**変更は必ず `build_robots_txt()` に書く**（手動編集が7分で消えた実例＝SESSION_ARCHIVE【2026-08-06 退避】）。
 
-遮断＝`/drafts/`（下書き78本+REVIEW.md+labnotes/news/proverb/sns）・`/memory/`（投資家プロファイル）・`/*.md$`（直下21本。routine が増やすので個別列挙しない）。**3つとも 2026-08-01 実測で live HTTP 200 だった**。`Allow: /` と併存可（**より具体的な規則が勝つ**）・サイトHTMLから .md へのリンク0件＝表示/SEOへの副作用なし・sitemap にも不掲載（235 URL に混入0を実測）。
+遮断＝`/drafts/`（下書き+REVIEW.md+labnotes/news/proverb/sns）・`/memory/`（投資家プロファイル）・`/*.md$`（routine が増やすので個別列挙しない）。`Allow: /` と併存可（**より具体的な規則が勝つ**）・.md へのサイト内リンク0件・sitemap にも不掲載。
 
 ⚠️ **非公開化ではない**＝行儀の良いクローラにしか効かず `raw.githubusercontent.com` 経由の露出（2026-07-26）は塞げない。恒久策＝下書きを public に置かない、は未着手
 
@@ -222,13 +222,10 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 
 1. 新 HTML ファイル作成（既存 `guide-*.html` のデザインを踏襲）
 2. `guides.html` の該当カテゴリに記事カードを追加（最新が最上段）
-3. ~~`sitemap.xml` に `<url>` ブロック追加~~ → **不要（2026-06-01〜自動）**：`build_sitemap_xml` が全 guide-*.html を自動収集して再生成（sitemap.xml は SYNC禁忌）
+3. ~~`sitemap.xml` に `<url>` ブロック追加~~ → **不要**（`build_sitemap_xml` が自動再生成・SYNC禁忌）
 4. `sync_to_github.py` の `SYNC_FILES` に新 HTML を追加
-5. `generate_market_news.py` の「📰 更新履歴」に新エントリ追加
-   - **常に最新 5 件キープ**（最古 1 件を削除、push out 方式）
-   - 最後の行は `公開` で終わり、`<br>` を付けない
-   - **2026-06-01 改修**：更新履歴は `build_html()` 内の **`_history_items` リスト**（`{"date","line"}`）で管理。新記事は **このリストに1件追加するだけ**（`date` は `YYYY-MM-DD`）。**日付降順ソート＋最新5件キープは自動**（手で削る必要なし、`<br>`の付け外しも不要）。
-   - ⚠️ **週次戦略記事（`guide-weekly-*.html`）は手動追記しない**：`build_weekly_history_item()` が最新の guide-weekly を自動検出してリストに加える（同時に `build_weekly_strategy_banner()` が index.html 上部にバナーも自動生成）。手で足すと二重になる
+5. `generate_market_news.py` の「📰 更新履歴」＝`build_html()` 内の **`_history_items` リスト**（`{"date","line"}`）に **1件追加するだけ**（`date` は `YYYY-MM-DD`。日付降順ソート＋最新5件キープは描画側が自動＝手で削らない。⚠️旧記述「push out 方式」「`<br>` 調整」は誤り＝2026-07-28 訂正）
+   - ⚠️ **週次戦略記事（`guide-weekly-*.html`）は手動追記しない**：`build_weekly_history_item()` が自動検出してリストに加える（index.html のバナーも自動）。手で足すと二重になる
 6. `sync_to_github.py` 実行で push
 7. GitHub Actions の `Update Market News` を `workflow_dispatch` で手動起動 → index.html 再生成
 8. ライブ反映確認（HTTP 200、更新履歴の表示、guides.html での表示）
