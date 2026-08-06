@@ -105,7 +105,7 @@
 | **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
 | **ローカルミラーの遅行を解消** 🆕7/31 | `_pull_mirror.py`（ローカル専用・冪等・dry-run既定） | クラウドが公開/更新した記事を取り込む。**内容ハッシュ(git blob sha)で比較**するので「ローカルに在るが古い」も検出。取り込み内容＝リモートと同一なので **sync は「⏭️内容変更なし」でスキップ＝無駄なコミットが出ない**。`guide-new-books.html` は SYNC_FORBIDDEN のため除外。⚠️これを怠ると `mw check`・404監査・FPテストが**揃って誤検知**する（7/31 に3回） |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml`＋`is_noindex_slug`（除外の単一ソース） | 全 guide を自動収集・手動編集不要。未掲載＝noindex 対象の意図的除外（7/31 実測で55本中54本が該当＝**不具合ではない**）。⚠️新記事公開時は sync 後に **workflow を手動 trigger**（下記の push 順序） |
-| **tickerフィードのソース単位の停止検知** 🆕8/6 | `build_news_ticker.py` の `feed_health`＋`check_automation_health.py` §⑦（閾値は `FEEDS` の `stale_days`＝単一の真実。テスト=**`_test_news_ticker_sources.py` 27件**） | ①は workflow 成否しか見ない＝**緑のまま特定フィードだけ死ぬ形**（8/1 Bloomberg型）を捕捉。同日にソースを10→18本へ拡張（公的機関+トピック横断・発行元バッジはエントリから取得）。トピック検索は「静か」が正常＝監視外で誤検知ゼロ方針・実データ誤検知0を実測 |
+| **tickerフィードの停止検知（ソース単位）** 🆕8/6 | `build_news_ticker.py` の `feed_health`＋`check_automation_health.py` §⑦（閾値=`FEEDS` の `stale_days`。テスト=**`_test_news_ticker_sources.py` 27件**） | workflow緑のまま特定フィードだけ死ぬ形（8/1 Bloomberg型）を捕捉。同日ソース10→18本（公的機関+トピック横断・バッジは実発行元）。トピック検索は監視外＝誤検知ゼロ方針・実データ誤検知0を実測 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
 
