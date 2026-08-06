@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-08-06 | 🤖 下書き生成 | correlation-risk | 見えない集中投資リスク（相関リスク）
+
+- **基準日**: 2026-08-06（JST）
+- **対象 key**: correlation-risk（リスク管理 / 🛡️ リスク管理・資金管理）
+- **生成ファイル**: `drafts/draft-correlation-risk.html`
+- **参照出典**:
+  - myINDEX「投資の用語集：相関係数とは」https://myindex.jp/study/glossary/correlation.html
+  - 大和ネクスト銀行「相場の下げに強い分散投資、実現するためには『相関係数』を知ろう」https://www.bank-daiwa.co.jp/column/articles/2020/2020_252.html
+  - 楽天証券「【初心者必見】株の分散投資とは？リスクを抑えるポートフォリオ例を徹底解説」https://fa.rakuten-sec.co.jp/column/20260227-04/
+  - Welf Insights「The Correlation Crisis: When Diversification Fails」https://insights.welf.com/the-correlation-crisis
+  - Tactical Investor「Diversification Failure: When Your Portfolio Falls Apart Together」https://tacticalinvestor.com/diversification-failure-when-your-portfolio-falls-apart-together/
+  - The Predictive Investor「Correlation in Portfolio Risk Management」https://www.thepredictiveinvestor.com/p/correlation-in-portfolio-risk-management
+  - 東洋経済「リスクを《回避したつもり》になっていませんか?」https://toyokeizai.net/articles/-/945001
+- **コンプラ自己チェック**:
+  - ✅ 個別銘柄・特定商品の売買推奨なし（「半導体A〜E株」は概念的な説明のみ、買い/売り推奨ゼロ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」「一択」使用なし）
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末 `data-disclaimer="kinsho-v1"` ・フッター `data-disclaimer="kinsho-v1"` の3箇所）
+  - ✅ `<meta name="robots" content="noindex,nofollow">` あり（下書き検索除外）
+  - ✅ 危機時の相関上昇は「傾向がある」「歴史上繰り返し起きている」と適切にヘッジ（断定せず）
+  - ✅ 出典が妥当な一般情報（教科書的事実の範囲内）
+- **人間の残作業**:
+  - SVG3点のライト/ダーク実機ブラウザ確認（特にグラデーションバー・概念図の色が両テーマで視認可能か）
+  - タイトル・見出しの微調整（「見えない集中投資リスク（相関リスク）」が長い場合は短縮検討）
+  - 公開は毎朝 08:40 の autodraft-publish ルーティンがゲート付きで自動実行（人間は REVIEW.md 確認→問題なければ放置でOK）
+
+---
+
 2026-08-06 autopublish: 🚩ゲート赤／ゲート不具合疑い: key=margin-trading / check_guide_draft.py が `apply_brand_color` モジュールを import しようとしたが origin/main に当該ファイルが存在しない（ModuleNotFoundError）。ゲートは 2026-08-05 に追加されたブランドカラー検査（コメント行170付近）で依存モジュールが未同期と推測。ゲートを編集・迂回するのは禁止のため公開せずエスカレ。対処＝`apply_brand_color.py` を SYNC_FILES に追加して GitHub に push し、ゲートが EXIT=0 になることを確認してから再実行すること。
 
 ---
