@@ -255,6 +255,34 @@ def check_tracker_registration(owner, repo, token):
     return len(declared), sorted(set(missing))
 
 
+# ⑦ ティッカー用フィードのソース単位の停止検知（2026-08-06 追加）。
+#    ①は news-ticker.yml の実行成否しか見ないため、workflow が緑のまま特定フィードだけが
+#    死ぬ形（URL変更・RSS廃止＝8/1 Bloomberg の壊れ方）を捕まえられない。
+#    build_news_ticker.py が JSON に書く feed_health（フィード別の最終観測時刻）と、
+#    FEEDS 側の閾値 stale_days を突き合わせる。閾値の単一の真実は FEEDS（ここに複製しない）。
+#    トピック検索フィードは stale_days=None＝監視対象外（「静か」が正常＝誤検知ゼロ方針）。
+TICKER_JSON_PATH = "news-ticker.json"
+
+
+def eval_ticker_feed_health(feeds, feed_health, now):
+    """純関数（テスト対象）。戻り値: (停止 [(name, 経過日, 閾値日)], 観測開始前 [name], 監視対象数)。"""
+    stale, pending, watched = [], [], 0
+    for feed in feeds:
+        days = feed.get("stale_days")
+        if not days:
+            continue
+        watched += 1
+        rec = feed_health.get(feed["name"]) or {}
+        last = rec.get("last") or rec.get("first")
+        if not last:
+            pending.append(feed["name"])
+            continue
+        a = age_hours(last, now) / 24.0
+        if a > days:
+            stale.append((feed["name"], a, days))
+    return stale, pending, watched
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -355,6 +383,30 @@ def main():
     except Exception as e:
         # ③④⑤と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ トラッカー登録の突合失敗: {e}")
+
+    body.append("")
+    body.append("### ⑦ ティッカー用フィードの停止検知（①はworkflow成否しか見ない死角＝ソース単位で見る）")
+    try:
+        import build_news_ticker as B
+        data = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/{TICKER_JSON_PATH}", token))
+        fh = data.get("feed_health")
+        if fh is None:
+            body.append("- ⚪ feed_health が未生成（旧版JSON＝次回の毎時実行から記録開始）")
+        else:
+            stale, pending, watched = eval_ticker_feed_health(B.FEEDS, fh, now)
+            if stale:
+                det = ", ".join(f"{n}（{a:.0f}日無音/閾値{d}日）" for n, a, d in stale)
+                body.append(f"- 🚨 🟡 記事が途絶えたフィード {len(stale)}/{watched} 本: {det}。"
+                            f"URL変更/RSS廃止を疑い、実測プローブ→FEEDS を削除/差し替え"
+                            f"（8/1 Bloomberg・8/6 プローブと同じ手順）")
+                bad.append(("tickerフィード停止", "warn"))
+            else:
+                note = f"（観測開始前 {len(pending)} 本）" if pending else ""
+                body.append(f"- ✅ 🟢 監視対象 {watched} 本すべて閾値内{note}")
+    except Exception as e:
+        # ③〜⑥と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ フィード鮮度の確認失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
