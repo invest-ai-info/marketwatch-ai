@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>巨匠の教えをデータで検証 #7｜エリオット波動——機械カウントで「第3波は最短にならない」は概ね成立（波3÷波1の中央値1.59）。しかし「フィボ押し→ブレイク」の優位性は確認できなかった - MarketWatch AI</title>
+  <meta name="description" content="エリオット波動の基本（推進5波+調整3波・3つの鉄則・フィボナッチ比率）を図解で整理し、当サイトが5資産・約15年の日足をZigZagで機械カウントして検証。インパルス39本で「第3波が最短」は5.1%・「最長」は66.7%・波3÷波1の中央値は1.59と経験則は概ね観察された。一方「フィボ押し→ブレイク」の売買ルール化（シグナル67回）は超過リターンが有意でなく（h=20日で+3.45%・p=0.135）、holdoutはN不足で検定不能。「説明力」と「予測力」は別物——という検証記録。">
+  <meta name="keywords" content="エリオット波動,波動理論,推進5波,調整3波,インパルス,第3波,フィボナッチ,61.8%,38.2%,ZigZag,バックテスト,データ検証,テクニカル分析">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-elliott-wave.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="巨匠の教えをデータで検証 #7｜エリオット波動——機械カウントで「第3波は最短にならない」は概ね成立。しかし「フィボ押し→ブレイク」の優位性は確認できなかった">
+  <meta property="og:description" content="5資産・約15年の日足をZigZagで機械カウント。インパルス39本で経験則（第3波最短5.1%・最長66.7%・波3÷波1中央値1.59）は概ね観察された。一方、売買ルール化した67回のシグナルに統計的な優位性は確認できず、holdoutは検定不能。「説明できる」と「事前に当てられる」は別物——という検証記録。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-elliott-wave.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "巨匠の教えをデータで検証 #7｜エリオット波動——機械カウントで「第3波は最短にならない」は概ね成立。しかし「フィボ押し→ブレイク」の優位性は確認できなかった",
+    "description": "エリオット波動の基本を図解で整理し、5資産・約15年の日足をZigZagで機械カウントして検証。構造の経験則は概ね観察された一方、売買ルール化したシグナル67回に統計的な優位性は確認できなかった。「説明力」と「予測力」は別物——という検証記録。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-06",
+    "dateModified": "2026-08-06",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-elliott-wave.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .bar-b{fill:#0969da}
+    .bar-g{fill:#1a7f37}
+    .bar-r{fill:#cf222e}
+    .bar-gray{fill:#8b949e}
+    .w-line-imp{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .w-line-cor{stroke:#9a6700;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .w-dot{fill:#0969da;stroke:#ffffff;stroke-width:1.5}
+    .w-dot-cor{fill:#9a6700;stroke:#ffffff;stroke-width:1.5}
+    .w-dot-sig{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    body.dark .bar-b{fill:#58a6ff}
+    body.dark .bar-g{fill:#3fb950}
+    body.dark .bar-r{fill:#f85149}
+    body.dark .bar-gray{fill:#6e7781}
+    body.dark .w-line-imp{stroke:#58a6ff}
+    body.dark .w-line-cor{stroke:#d4a017}
+    body.dark .w-dot{fill:#58a6ff;stroke:#0d1117}
+    body.dark .w-dot-cor{fill:#d4a017;stroke:#0d1117}
+    body.dark .w-dot-sig{fill:#f85149;stroke:#0d1117}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #7
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🎓 巨匠の教えをデータで検証 #7<br><small style="font-size:.65em;color:#57606a;font-weight:400">エリオット波動——機械カウントで「第3波は最短にならない」は概ね成立（波3÷波1の中央値1.59）。しかし「フィボ押し→ブレイク」を売買ルールにしても優位性は確認できなかった</small></h1>
+    <div class="meta-line">
+      カテゴリ：🎓 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年8月6日 &nbsp;|&nbsp; 読了：約12分
+    </div>
+
+    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>検証できる形のルールに翻訳して、データで確かめる</strong>連載です。第7回のテーマは、テクニカル分析の世界で最も有名で、最も賛否が分かれる理論のひとつ——<strong>エリオット波動（Elliott Wave Principle）</strong>です。</p>
+
+    <p>記事の前半では、エリオット波動の基本（推進5波＋調整3波・3つの鉄則・フィボナッチとの関係）を図解で整理します。後半では、当サイトが<strong>5資産・約15年の日足データを機械的にカウントして行った検証</strong>の結果を、うまくいった部分もいかなかった部分も含めて、そのまま報告します。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① エリオット波動は「相場は<strong>推進5波＋調整3波</strong>のパターンを描く」という1930年代生まれの理論。主観的な波のカウントが本体で、そのままでは検証できない<br>
+      ② そこで当サイトは、波の分解を<strong>ZigZagで機械化</strong>し、5資産・約15年の日足で確かめた。鉄則を満たすインパルス候補39本のうち「第3波が最短」は<strong>5.1%</strong>（理論上は0%のはず）、「第3波が最長」は<strong>66.7%</strong>、波3÷波1の中央値は<strong>1.59</strong>（教科書のフィボナッチ比1.618にかなり近い）——<strong>構造の経験則は機械カウントでも概ね観察された</strong><br>
+      ③ しかし「波1→フィボナッチ押し→高値ブレイクで買い」という売買ルールに翻訳すると、15年で<strong>67回</strong>しか出ない稀なシグナルで、超過リターンは<strong>統計的に有意でなく</strong>（20営業日で+3.45%・p=0.135）、holdout期間はN不足で<strong>検定不能</strong>だった<br>
+      ④ つまり「<strong>後から説明できる</strong>」と「<strong>事前に当てられる</strong>」は別物——が本記事の中心メッセージ<br>
+      ⑤ 数値はすべて過去データの観察で、<strong>手数料・スリッページ未控除</strong>。将来の成果を保証するものではない
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#what">エリオット波動とは——群集心理がパターンを作るという思想</a></li>
+        <li><a href="#structure">基本構造——推進5波＋調整3波とフラクタル性</a></li>
+        <li><a href="#rules">3つの鉄則——カウントを棄却するためのルール</a></li>
+        <li><a href="#fibonacci">フィボナッチとの関係——1.618倍と38.2%/61.8%押し</a></li>
+        <li><a href="#difficulty">なぜ人気で、なぜ難しいのか——カウントの多義性</a></li>
+        <li><a href="#verification">当サイトの機械化検証——方法・結果・限界</a></li>
+        <li><a href="#practice">実務上の注意——環境認識の一つの視点として</a></li>
+        <li><a href="#summary">まとめ＋🔰初心者メモ</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="what">① エリオット波動とは——群集心理がパターンを作るという思想</h2>
+
+    <p><strong>ラルフ・ネルソン・エリオット</strong>（1871-1948）は米国の会計士です。長い病気療養の期間に過去の株価チャートを徹底的に研究し、1930年代に「市場の値動きはでたらめではなく、繰り返し現れる波のパターンで進む」という結論に到達しました。その成果は1938年の著書『The Wave Principle（波動理論）』にまとめられ、後の世代のアナリストたちに受け継がれて、今日「エリオット波動」と呼ばれる体系になっています。</p>
+
+    <p>この理論の土台にあるのは、<strong>「価格を動かすのは群集心理であり、群集心理には自然なリズムがある」</strong>という思想です。楽観が広がる局面では買いが買いを呼び、疑念が生まれる局面では利益確定が進み、悲観が極まると投げ売りが起こる——こうした<strong>人間の集合的な感情の振り子</strong>が、チャート上に特定の形（波）を繰り返し刻む、とエリオットは考えました。</p>
+
+    <p>同時代に確立していた<strong>ダウ理論</strong>と比べると、この理論の野心がよく分かります。ダウ理論が「いまトレンドはあるのか、続いているのか」を判定する枠組みだとすれば、エリオット波動は<strong>トレンドの内部構造——どこから始まり、いまどの段階で、どこで終わるのか——まで記述しようとする</strong>理論です。移動平均線やRSIのような「インジケーター（指標）」が価格データを数式で加工して補助線を引くのに対し、エリオット波動は相場の設計図そのものを描こうとする。この包括性・思想性が、90年近く経った今も世界中に熱心な実践者がいる理由のひとつです。日本でもFXや株式のチャート解説で「第3波」「C波」といった用語を目にする機会は多いはずです。</p>
+
+    <!-- =============================== -->
+    <h2 id="structure">② 基本構造——推進5波＋調整3波とフラクタル性</h2>
+
+    <p>エリオット波動の最も基本的な主張は、トレンドは<strong>「5つの波で進み、3つの波で戻る」</strong>というものです。</p>
+
+    <ul>
+      <li><strong>推進波（インパルス）＝波1〜波5</strong>——トレンド方向に進む5つの波。波1・3・5がトレンド方向へ進み、波2・4がその途中の調整（押し・戻し）</li>
+      <li><strong>調整波＝波a・b・c</strong>——5波が完了した後、トレンドと逆方向に戻す3つの波</li>
+    </ul>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="エリオット波動の基本形。上昇の推進5波（1から5）と調整3波（a・b・c）を折れ線で示した概念図">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">エリオット波動の基本形——推進5波＋調整3波</text>
+        <!-- 軸 -->
+        <line x1="60" y1="40" x2="60" y2="320" class="s-axis"/>
+        <line x1="60" y1="320" x2="660" y2="320" class="s-axis"/>
+        <text x="52" y="325" text-anchor="end" class="s-label-sm">安</text>
+        <text x="52" y="52" text-anchor="end" class="s-label-sm">高</text>
+        <text x="656" y="336" text-anchor="end" class="s-label-sm">時間 →</text>
+        <!-- 波1高値の水平ガイド（鉄則③の目安） -->
+        <line x1="60" y1="205.7" x2="660" y2="205.7" class="s-guide"/>
+        <text x="655" y="220" text-anchor="end" class="s-label-sm">波1の高値（波4はこの水準に重ならない＝鉄則③）</text>
+        <!-- 推進5波 -->
+        <polyline points="60.0,320.0 147.8,205.7 199.0,262.9 338.0,81.1 389.3,154.3 499.0,40.0" class="w-line-imp"/>
+        <!-- 調整3波 -->
+        <polyline points="499.0,40.0 557.6,131.4 601.5,85.7 660.0,182.9" class="w-line-cor"/>
+        <!-- ピボット点 -->
+        <circle cx="60.0" cy="320.0" r="4" class="w-dot"/>
+        <circle cx="147.8" cy="205.7" r="4" class="w-dot"/>
+        <circle cx="199.0" cy="262.9" r="4" class="w-dot"/>
+        <circle cx="338.0" cy="81.1" r="4" class="w-dot"/>
+        <circle cx="389.3" cy="154.3" r="4" class="w-dot"/>
+        <circle cx="499.0" cy="40.0" r="4" class="w-dot"/>
+        <circle cx="557.6" cy="131.4" r="4" class="w-dot-cor"/>
+        <circle cx="601.5" cy="85.7" r="4" class="w-dot-cor"/>
+        <circle cx="660.0" cy="182.9" r="4" class="w-dot-cor"/>
+        <!-- 波ラベル -->
+        <text x="147.8" y="192" text-anchor="middle" class="s-label-b">1</text>
+        <text x="199.0" y="282" text-anchor="middle" class="s-label-b">2</text>
+        <text x="330.0" y="70" text-anchor="middle" class="s-label-b">3</text>
+        <text x="389.3" y="174" text-anchor="middle" class="s-label-b">4</text>
+        <text x="512.0" y="50" text-anchor="start" class="s-label-b">5</text>
+        <text x="551.0" y="150" text-anchor="middle" class="s-label-y">a</text>
+        <text x="601.5" y="74" text-anchor="middle" class="s-label-y">b</text>
+        <text x="645.0" y="200" text-anchor="middle" class="s-label-y">c</text>
+        <!-- 波3の注記 -->
+        <text x="215.0" y="120" text-anchor="middle" class="s-label-g" style="font-size:12px">波3＝波1×1.59</text>
+        <text x="215.0" y="137" text-anchor="middle" class="s-label-sm" style="font-size:10.5px">（検証1の実測中央値を反映）</text>
+        <!-- 凡例 -->
+        <text x="350" y="349" text-anchor="middle" class="s-label-sm">青＝推進5波（1→5）／黄＝調整3波（a→c）。波2は波1の起点を割らず、波4は波1の高値に重ならない形</text>
+      </svg>
+      <figcaption class="chart-caption">図1：エリオット波動の基本形（5-3波動）。波3の長さは後述の検証1で得た実測中央値（波1の1.59倍）を反映した理想形として描いている。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <p>教科書では、それぞれの波に「性格」も与えられています。<strong>波1</strong>は下落の余韻が残る疑心暗鬼の中で静かに始まり、<strong>波2</strong>で「やはり駄目だったか」という失望の売りに深く押される。<strong>波3</strong>はファンダメンタルズの好転が広く認知されて参加者が一気に増える、最も力強く伸びやすい波。<strong>波4</strong>は利益確定でだらだらと停滞し、<strong>波5</strong>は楽観が極まる中で上昇の勢い自体は衰えていく——。そして<strong>a・b・c</strong>の調整では、bの戻りが「まだ上がる」という期待を誘ってから、cで本格的に崩れる。個々の局面の群集心理を物語として描写するこの筆致が、理論の人気を支えてきました（もっとも、これらは後述のとおり「傾向の主張」であって保証ではありません）。</p>
+
+    <p>もうひとつの重要な性質が<strong>フラクタル性（入れ子構造）</strong>です。エリオット波動では、たとえば「波1」を拡大すると、その内部にさらに小さな推進5波＋調整3波が見える——と考えます。月足の1つの波は週足の5波で構成され、週足の1つの波は日足の5波で構成される、というように、<strong>同じパターンがあらゆる時間軸で相似形に繰り返される</strong>という世界観です。教科書には、数百年単位の「グランドスーパーサイクル」から分単位の微細な波まで、波の階層（ディグリー）に名前を付けた体系まで用意されています。この「どの時間軸でも同じ文法で読める」という主張が、理論の魅力であると同時に、後述する「カウントの多義性」の源にもなっています。</p>
+
+    <!-- =============================== -->
+    <h2 id="rules">③ 3つの鉄則——カウントを棄却するためのルール</h2>
+
+    <p>エリオット波動には多くの経験則（ガイドライン）がありますが、その中で「これを破ったらそのカウントは間違い」とされる<strong>絶対ルールは3つだけ</strong>です。</p>
+
+    <table>
+      <tr><th>鉄則</th><th>内容</th><th>意味</th></tr>
+      <tr><td>鉄則①</td><td><strong>波2は波1の起点を割らない</strong></td><td>調整（波2）がスタート地点より深くなったら、それは「上昇トレンドの押し」ではなく下降の継続とみなす</td></tr>
+      <tr><td>鉄則②</td><td><strong>波3は波1・3・5の中で最短にならない</strong></td><td>波3が最長である必要はないが、3本の推進波の中で最も短いことはない、とされる</td></tr>
+      <tr><td>鉄則③</td><td><strong>波4は波1の価格帯に重ならない</strong></td><td>波4の押しが波1の高値より深く食い込んだら、そのカウントは棄却する（市場によっては僅かな重なりを許容する流儀もある）</td></tr>
+    </table>
+
+    <p>ここで注目したいのは、3つの鉄則がいずれも<strong>「こうなったらこのカウントを捨てる」という棄却条件</strong>だという点です。たとえば「いまは波2の押し目だ」と考えていた局面で価格が波1の起点を割り込んだら、鉄則①により、その見立ては（好みや解釈の余地なく）廃棄が確定します。エリオット波動の実践は「未来を言い当てる」ことよりも、「いま考えているシナリオが崩れたことを機械的に認める」ことに重心がある——という整理は、賛否どちらの立場の論者もおおむね共有しています。曖昧さの多いこの理論の中で、鉄則だけは白黒が付く客観的なルールになっている。この構造は、後述する検証で「機械化しやすい部分」でもありました。</p>
+
+    <div class="info-box">
+      💡 なお、有名な経験則として「波3が最も力強く伸びやすい（エクステンションしやすい）」「波2と波4は形が交互になりやすい（オルタネーション）」などがありますが、これらは鉄則ではなく<strong>ガイドライン（傾向の主張)</strong>です。鉄則は「破ってはならない」、ガイドラインは「そうなりやすいとされる」——この区別を押さえておくと教科書が読みやすくなります。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="fibonacci">④ フィボナッチとの関係——1.618倍と38.2%/61.8%押し</h2>
+
+    <p>エリオット波動は、<strong>フィボナッチ比率</strong>と組み合わせて語られることがほとんどです。教科書では、たとえば次のような目安が示されます。</p>
+
+    <ul>
+      <li><strong>波3の長さは波1の1.618倍</strong>になりやすい、とされる（1.618は黄金比）</li>
+      <li><strong>波2の押しは波1の61.8%</strong>、<strong>波4の押しは38.2%</strong>が目安とされる</li>
+      <li>調整の深さを測る水準として<strong>38.2%・50%・61.8%</strong>のリトレースメントが使われる</li>
+    </ul>
+
+    <p>なぜフィボナッチなのか。エリオット自身は晩年、波のパターンの背後には自然界に遍在する黄金比の秩序がある——という壮大な世界観に到達しました。この宇宙論的な説明を文字どおり受け取るかどうかは読者に委ねるとして、実務の観点で重要なのは、フィボナッチ比率が<strong>「主観的なカウントに、具体的な価格水準という出口を与える」</strong>役割を果たしていることです。「いまは波2の押し」というカウントだけでは行動につながりませんが、「波1の61.8%押しの水準はここ」と物差しを当てれば、注目すべき価格が特定できる。エリオット波動が単なる観察論に留まらず実践の道具として広まったのは、この組み合わせによるところが大きいと言えます。</p>
+
+    <p>フィボナッチ比率そのものの仕組み（黄金比・リトレースメント・エクステンション）は、当サイトの<a href="guide-fibonacci.html">フィボナッチリトレースメント解説</a>で図解しています。本記事では「エリオット波動の波の長さ・押しの深さを測る物差しとしてフィボナッチが使われる」という関係だけ押さえておけば十分です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="波1の上昇後、フィボナッチ38.2%から61.8%の押し帯で反発し、波1高値の水平線を終値で上抜ける様子を示した概念図">
+        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">フィボナッチ押しとブレイク——検証2のシグナル定義</text>
+        <!-- 軸 -->
+        <line x1="60" y1="40" x2="60" y2="320" class="s-axis"/>
+        <line x1="60" y1="320" x2="660" y2="320" class="s-axis"/>
+        <text x="52" y="325" text-anchor="end" class="s-label-sm">安</text>
+        <text x="52" y="52" text-anchor="end" class="s-label-sm">高</text>
+        <text x="656" y="336" text-anchor="end" class="s-label-sm">時間 →</text>
+        <!-- フィボ帯 38.2%〜61.8%押し -->
+        <rect x="200" y="186.9" width="380" height="50.8" class="s-fill-y"/>
+        <line x1="200" y1="186.9" x2="580" y2="186.9" class="s-guide"/>
+        <line x1="200" y1="237.7" x2="580" y2="237.7" class="s-guide"/>
+        <text x="586" y="191" text-anchor="start" class="s-label-y" style="font-size:11.5px">38.2%押し</text>
+        <text x="586" y="242" text-anchor="start" class="s-label-y" style="font-size:11.5px">61.8%押し</text>
+        <!-- 事前登録の判定帯 30〜70% -->
+        <line x1="200" y1="169.2" x2="580" y2="169.2" class="s-guide"/>
+        <line x1="200" y1="255.4" x2="580" y2="255.4" class="s-guide"/>
+        <text x="586" y="173" text-anchor="start" class="s-label-sm" style="font-size:10.5px">押し30%</text>
+        <text x="586" y="259" text-anchor="start" class="s-label-sm" style="font-size:10.5px">押し70%</text>
+        <!-- 波1高値ライン -->
+        <line x1="221" y1="104.6" x2="660" y2="104.6" class="s-guide"/>
+        <text x="230" y="98" text-anchor="start" class="s-label-sm" style="font-size:11.5px">波1の高値ライン</text>
+        <!-- 価格の折れ線 -->
+        <polyline points="60.0,320.0 221.0,104.6 352.7,225.2 477.1,104.6 499.0,87.4 660.0,48.6" class="w-line-imp"/>
+        <!-- ブレイク点 -->
+        <circle cx="499.0" cy="87.4" r="6" class="w-dot-sig"/>
+        <text x="505.0" y="122" text-anchor="start" class="s-label-r" style="font-size:12px">終値で上抜け＝シグナル</text>
+        <!-- 注記 -->
+        <text x="138.0" y="192" text-anchor="end" class="s-label-b" style="font-size:12px">波1</text>
+        <text x="352.7" y="250" text-anchor="middle" class="s-label-sm" style="font-size:11px">帯の中で反発</text>
+        <!-- 凡例 -->
+        <text x="350" y="349" text-anchor="middle" class="s-label-sm">黄色い帯＝フィボナッチ38.2〜61.8%押し。破線＝事前登録の判定帯（押し30〜70%）と波1高値。●＝終値ブレイクの日</text>
+      </svg>
+      <figcaption class="chart-caption">図2：「波1の上昇 → フィボナッチ水準を含む押し → 波1高値を終値で上抜け」の流れ。後述の検証2では、この形を機械的に検出して「買いシグナル」とみなした（判定帯は38.2%/61.8%を包含する押し30〜70%で事前固定）。※ 実在の価格ではなくイメージです。</figcaption>
+    </figure>
+
+    <!-- =============================== -->
+    <h2 id="difficulty">⑤ なぜ人気で、なぜ難しいのか——カウントの多義性</h2>
+
+    <h3>人気の理由——包括性と物語性</h3>
+    <p>エリオット波動が90年近く生き残ってきた理由は、はっきりしています。第一に、<strong>どんな相場にも適用できる包括性</strong>。株でも為替でも暗号資産でも、どの時間軸でも「いまは何波か」を問うことができます。第二に、<strong>物語としての強さ</strong>。「いまは第3波の入り口」という一言は、過去の説明と未来の見通しを同時に与えてくれるように感じられます。第三に、フィボナッチと組み合わせることで<strong>具体的な水準（目標や押しの目安）が計算できる</strong>こと。曖昧な「上がりそう」ではなく数字が出せるのは、実践者にとって大きな魅力です。</p>
+
+    <h3>難しさの本丸——同じチャートに複数の「正しい」カウント</h3>
+    <p>一方で、エリオット波動には構造的な難しさがあります。それは<strong>カウントの多義性</strong>——つまり、<strong>同じチャートに対して、鉄則をすべて満たす「正しいカウント」が複数成立してしまう</strong>ことです。いま見えている上昇を「波3の始まり」と数える人と、「調整のb波」と数える人が、どちらも規則違反なしに主張できる場面は珍しくありません。しかも相場が進んで想定が崩れたら、「あれは波4ではなくa波だった」と<strong>カウントを引き直すことが理論の内部で正当化されて</strong>います。</p>
+
+    <p>ここから、よく知られた批判が生まれます——<strong>「エリオット波動は後付けなら常にどんな相場でも説明できる。しかしそれは、事前の予測に使えることを意味しない」</strong>。カウントの引き直しが無限に許されるなら、理論が間違っていたと確定する瞬間が原理的に訪れないからです。「どんな結果が出ても説明がつく理論」は、科学の言葉で言えば<strong>反証可能性が低い</strong>理論であり、学術的な検証の俎上に載せること自体が難しい——という指摘は昔からなされてきました。波の定義が検証者の主観に依存する限り、「エリオット波動は有効か」という問いには、実は誰も客観的な形で答えられないのです。</p>
+
+    <p>公平を期すと、熟練の実践者の多くはこの限界を自覚しており、「予言」ではなく「シナリオの整理と棄却の道具」として使っています。カウントが複数あり得ること自体は、「複数のシナリオを常に持つ」という健全な習慣と表裏一体だ、という擁護も可能です。それでも、「説明できる」ことと「事前に当てられる」ことが別問題であることは変わりません。<strong>そして後者は、思想や経験談ではなくデータで確かめるしかない</strong>——というのが、次章の検証の出発点です。</p>
+
+    <!-- =============================== -->
+    <h2 id="verification">⑥ 当サイトの機械化検証——方法・結果・限界</h2>
+
+    <div class="warning-box">
+      本章の数値はすべて過去データの観察であり、<strong>手数料・スリッページは未控除</strong>です。将来の成果を保証するものではなく、特定の手法や銘柄の売買を推奨するものでもありません。
+    </div>
+
+    <h3>方法——主観のカウントを、機械の操作に置き換える</h3>
+
+    <p>エリオット波動の検証には根本的な問題があります。<strong>波のカウントが主観的である以上、「エリオット波動そのもの」は検証にかけられない</strong>のです。そこで当サイトは、波の分解を完全に機械化しました（2026年8月6日実施）。</p>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>対象</td><td>日経225（^N225）・S&amp;P500（^GSPC）・金先物（GC=F）・ドル円（JPY=X）・ビットコイン（BTC-USD）の日足終値・直近約15年（BTCは全期間約12年）</td></tr>
+      <tr><td>波の分解</td><td>終値ベースの<strong>ZigZag</strong>でスイングに分解。反転閾値は<strong>指数・金5%／ドル円3%／BTC10%</strong></td></tr>
+      <tr><td>インパルス候補</td><td>3つの鉄則の条件をすべて満たす<strong>連続5スイング</strong>を、上昇・下降の両方向で機械抽出</td></tr>
+      <tr><td>事前登録</td><td>閾値・判定条件・合格基準は<strong>実行前に登録して固定</strong>（結果を見てから動かしていない）</td></tr>
+    </table>
+
+    <p>ZigZagとは、一定率（ここでは資産ごとに5%・3%・10%）以上の反転だけを拾って、価格の動きを高値と安値を結ぶ折れ線に単純化する手法です。これを使えば「どこからどこまでが1つの波か」の判定から人間の裁量が消え、<strong>誰が何回実行しても同じ波が抽出される</strong>——つまり検証が再現可能になります。また、パラメータや合格基準を実行前に固定する<strong>事前登録</strong>は、結果を見てから条件を後出しで調整して「都合のよい結果が出る設定」を探してしまうこと（いわゆるデータの拷問）を防ぐための、当サイトの全検証共通の作法です。</p>
+
+    <p>その上で、先に強調しておきます。<strong>これはエリオット波動の「一つの操作化」にすぎません</strong>。ZigZagが刻むスイングは、熟練者が数える「波」と同じとは限らず、閾値を変えれば抽出される波の本数も変わります。フラクタル性（波の入れ子）も、単一の閾値のZigZagでは1つの階層しか見えません。本検証が答えられるのは「機械的に定義した波に、教科書の経験則は現れるか」までであり、主観カウントの巧拙そのものを裁くものではありません。</p>
+
+    <h3>検証1——構造の経験則は、機械カウントでも観察されるか</h3>
+
+    <p>5資産合算で、鉄則を満たす<strong>インパルス候補は39本</strong>抽出されました。この39本について、教科書の経験則がどのくらい成り立っているかを数えたのが次の表です。</p>
+
+    <table>
+      <tr><th>経験則</th><th>結果</th><th>読み方</th></tr>
+      <tr><td>「第3波が最短」の割合</td><td><strong>2/39＝5.1%</strong></td><td>鉄則②により理論上は0%のはず。機械カウントでも概ね成立</td></tr>
+      <tr><td>「第3波が最長」の割合</td><td><strong>26/39＝66.7%</strong></td><td>約3分の2で波3が最長。「波3が伸びやすい」というガイドラインと整合的</td></tr>
+      <tr><td>波3÷波1の中央値</td><td><strong>1.59</strong></td><td>教科書のフィボナッチ比<strong>1.618</strong>にかなり近い</td></tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>検証1の結果</strong>——鉄則②の裏付け（最短5.1%）、波3優位（最長66.7%）、そして波3÷波1の中央値1.59。<strong>エリオットが観察した構造の痕跡は、人間の主観を排した機械カウントでも概ね観察されました</strong>。90年前に手作業のチャート研究からこの規則性を拾い上げた観察眼は、率直に言って見事です。
+    </div>
+
+    <p>ただし注意も必要です。39本という本数は<strong>小サンプル</strong>で、割合の数字は数本の増減で大きく動きます。また、抽出条件そのものに鉄則を使っている以上、「鉄則を満たす波は鉄則的に振る舞う」という<strong>部分的な循環</strong>も含まれています（「第3波最短5.1%」が0%でないのは、判定順序の関係で境界的なケースが残るためです）。この表は「経験則が宇宙の法則だと証明された」ではなく、「機械の目にも同じ傾向が見えた」程度に読むのが誠実だと考えています。</p>
+
+    <h3>検証2——では、それを売買ルールにしたら勝てるのか</h3>
+
+    <p>構造が観察されることと、それで利益が出ることは別問題です。そこで、図2で視覚化した<strong>「フィボ押し→ブレイク」</strong>を機械シグナルとして定義し、エッジ（優位性）を検証しました。</p>
+
+    <ul>
+      <li><strong>シグナル定義（事前固定）</strong>——波1に相当する上昇スイング → 押しが<strong>30〜70%</strong>（教科書の38.2%/61.8%を包含する帯）に収まる → その後、<strong>波1の高値を終値で上抜けた日</strong>を「買いシグナル」とみなす</li>
+      <li><strong>発生頻度</strong>——5資産・約15年で<strong>計67回</strong>（日経15・S&amp;P500 17・金10・ドル円7・BTC 18）。1資産あたり年1回前後という<strong>稀なイベント</strong></li>
+      <li><strong>評価方法</strong>——シグナル後の前向き5営業日／20営業日リターンを、<strong>同一銘柄の全営業日ベースライン（同日対照）</strong>と比較。有意性は<strong>プラセボ・ブロックブートストラップ2,000回</strong>で判定。期間は<strong>train（〜2020年末）／holdout（2021年〜）</strong>に分割し、holdoutの判定にはシグナル最低40回という基準を事前登録</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>🔰 p値と「同日対照」を1分で</strong><br>
+      <strong>p値</strong>は「本当は実力差がないのに、偶然だけでこの数字以上の差が出る確率」です。慣例では0.05を下回ってはじめて「偶然では説明しにくい＝統計的に有意」とみなします。<strong>同日対照</strong>は、シグナル日のリターンを「同じ銘柄の普通の日」と比べる方法です。強い上昇相場では何もしなくてもプラスになるので、「シグナルのおかげか、ただ地合いが良かっただけか」を切り分けるために、この比較が欠かせません。
+    </div>
+
+    <table>
+      <tr><th>区分</th><th>超過リターン</th><th>p値</th><th>判定</th></tr>
+      <tr><td>train・5営業日後</td><td>−0.06%</td><td>0.456</td><td>ベースラインと差なし</td></tr>
+      <tr><td>train・20営業日後</td><td>+3.45%</td><td>0.135</td><td>プラスだが<strong>統計的に有意でない</strong></td></tr>
+      <tr><td>holdout（2021年〜）</td><td colspan="2">シグナル26回 ＜ 事前登録の最低40回</td><td><strong>検定不能</strong>（結論を出さないことを事前に決めていた）</td></tr>
+    </table>
+
+    <p>表の読み方を補足します。5営業日後の超過リターンは−0.06%——シグナルの直後に限れば、普通の日と<strong>見分けがつきません</strong>でした。20営業日後は+3.45%とプラス方向に出ましたが、p値0.135は「実力差ゼロでも7回に1回くらいは偶然出てしまう水準」であり、事前に決めた合格ラインを超えていません。そしてholdout（2021年以降）は、シグナルがそもそも26回しか発生せず、事前登録した「最低40回なければ検定しない」という基準に届きませんでした。<strong>少ない件数で無理に結論を出せば、それらしい数字はいくらでも作れてしまう</strong>——だからこそ「足りなければ判定しない」を先に決めておいた、という設計です。</p>
+
+    <div class="negative-box">
+      <strong>検証2の総合判定——「フィボ押し→ブレイク」の優位性は確認できなかった。</strong>trainの20営業日後は+3.45%とプラス方向だったものの、偶然でも起こり得る範囲（p=0.135）を出ず、holdoutはサンプル不足で検定自体が成立しなかった。「有意差なし＋検定不能」で、事前に決めた合格の条件をどの区分でも満たしていない。当サイトが同じ手順で検証した範囲では、パターン系・順張り系の手法がtrain/holdout両期間で合格基準を満たした例は<strong>現時点では確認できていない</strong>。これは検証の対象・期間・条件に依存する結果であり、これらの手法一般の有効性を否定するものではない。
+    </div>
+
+    <p>念のため補足すると、これは「エリオット波動は無意味」という証明でも<strong>ありません</strong>。今回検証したのは「機械化した一つの売買ルール」であり、熟練者の裁量カウントや、他の条件と組み合わせた使い方は検証の外側にあります。ただ、少なくとも<strong>「教科書どおりの形を機械的に検出して買う」だけでは、優位性を示すことはできなかった</strong>——これが5資産15年分のデータからの報告です。</p>
+
+    <h3>この検証の限界（必ずお読みください）</h3>
+
+    <ul>
+      <li><strong>①機械化は一つの操作化にすぎない</strong>——エリオット波動の本体は主観的カウントであり、ZigZag分解はその一つの翻訳にすぎない。閾値（5%/3%/10%）を変えれば波の本数も比率も変わり得る</li>
+      <li><strong>②サンプルが小さい</strong>——インパルス39本・シグナル67回は統計的にかなり小さい。割合や中央値は数本の増減で動く</li>
+      <li><strong>③holdoutは検定不能</strong>——holdout期間のシグナルは26回で、事前登録した最低40回に届かず、事前登録基準に従い検定を行っていない。「holdoutで負けた」のではなく「判定できない」が正確な表現</li>
+      <li><strong>④手数料・スリッページ未控除</strong>——掲載の超過リターンはコスト控除前。実際の売買ではさらに不利になり得る</li>
+    </ul>
+
+    <h3>誠実な解釈——「説明力」と「予測力」は別物</h3>
+
+    <p>2つの検証を並べると、きれいな非対称が浮かび上がります。<strong>構造の経験則（検証1）は機械カウントでも概ね観察された。しかし、それをそのまま売買ルールに翻訳しても、優位性は示せなかった（検証2)</strong>。エリオットの観察は本物の規則性を捉えていた可能性がある——それでも、「規則性が存在すること」と「その規則性で市場に先回りできること」の間には、深い谷がある。⑤で述べた「後付けの説明力と事前の予測力は別問題」という理論への批判が、データの上でもそのまま再現された形です。これが本記事の中心メッセージです。</p>
+
+    <!-- =============================== -->
+    <h2 id="practice">⑦ 実務上の注意——環境認識の一つの視点として</h2>
+
+    <p>ここまでの整理を踏まえると、エリオット波動との現実的な付き合い方は、おおよそ次のように考えられます。</p>
+
+    <ul>
+      <li><strong>「単体を売買の根拠にしない」という考え方</strong>——検証2では、形の検出だけで優位性は確認できなかった。カウントは「いまの相場がどんな局面か」を整理する<strong>環境認識の一つの視点</strong>と位置づける考え方が現実的とされる</li>
+      <li><strong>「予言」ではなく「棄却条件」として読む立場</strong>——3つの鉄則の本質は、シナリオが崩れたことを機械的に認めるルール。「カウントが正しいか」より「どこで自分の見立てを捨てるか」が定まることに、この理論の実務的な価値を見出す実践者が多い</li>
+      <li><strong>リスク管理を先に置く考え方</strong>——どんなに美しいカウントも、想定と逆に動いたときの損失をどう限定するかが決まっていなければ意味をなさない。損失の管理を分析手法より優先する——という考え方を当サイトは重視しています（具体的な損失管理の方法や水準は、ご自身の判断でお決めください）</li>
+      <li><strong>「複数のカウントを持つ」という作法</strong>——多義性は排除できないため、むしろ「本命カウント」と「対抗カウント」を並走させ、どちらが棄却されたかで局面を判断する、という使い方が教科書でも紹介されることが多い</li>
+    </ul>
+
+    <p>もうひとつ、情報の受け手としての注意も挙げておきます。エリオット波動を使った相場解説は、「第3波の入り口」「大暴落のC波が来る」といった<strong>強い物語を作りやすい</strong>道具でもあります。⑤で見たとおり同じチャートに複数のカウントが成立し得る以上、断定調のカウントを目にしたときは「別のカウントならどう読めるか」「このカウントはどこで棄却されるのか」を合わせて考える——という受け取り方を身につけておくと、振り回されにくくなります。</p>
+
+    <!-- =============================== -->
+    <h2 id="summary">⑧ まとめ＋🔰初心者メモ</h2>
+
+    <div class="positive-box">
+      <strong>本記事のまとめ</strong><br>
+      ① エリオット波動は「群集心理が推進5波＋調整3波のパターンを刻む」という1930年代生まれの理論で、3つの鉄則とフィボナッチ比率が骨格<br>
+      ② 当サイトの機械化検証（5資産・約15年）では、インパルス39本で「第3波最短」5.1%・「第3波最長」66.7%・波3÷波1中央値1.59と、<strong>構造の経験則は概ね観察された</strong><br>
+      ③ しかし「フィボ押し→ブレイク」の売買ルール化（67回）は<strong>有意な優位性を示せず</strong>、holdoutは検定不能——「説明できる」と「事前に当てられる」は別物<br>
+      ④ サンプルは小さく、機械化は一つの操作化にすぎず、コストも未控除——結果は限定つきの観察であり、断定ではない
+    </div>
+
+    <div class="info-box">
+      <strong>🔰 初心者メモ——エリオット波動を初めて聞いた方へ</strong><br>
+      「相場は5つの波で進んで、3つの波で戻る」というパターンの理論です。プロの間でも波の数え方（カウント）はしばしば分かれるので、「唯一の正しいカウント」を探そうとすると挫折しがちです。まずは<strong>推進波・調整波・フィボナッチ押し</strong>という用語に慣れて、チャート解説で「第3波」と出てきたときに話の位置づけが分かる——を最初のゴールにするのがおすすめの学び方です。関連する基礎は<a href="guide-fibonacci.html">フィボナッチ解説</a>と<a href="guide-moving-average.html">移動平均線の基本</a>が入り口になります。
+    </div>
+
+    <p>エリオット波動は、機械の目にも映る規則性を90年前に見抜いた偉大な観察であると同時に、そのまま売買ルールにして勝てることまでは（少なくとも今回の検証では）示せなかった理論でもあります。チャート解説で「いまは第3波」という言葉に出会ったとき——その裏に「複数のカウントがあり得る」「説明力と予測力は別物」という2つの留保がある、という見方を知っておくと、情報を受け取る際の解像度が上がるかもしれません。</p>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 あわせて読みたい</div>
+      <div class="cta-box-desc">テクニカル分析の基礎解説・記事一覧はこちら</div>
+      <div class="related-grid">
+        <a href="guide-fibonacci.html" class="related-card">
+          <div class="related-card-title">📐 フィボナッチリトレースメント</div>
+          <div class="related-card-desc">黄金比・38.2/50/61.8%・押し目の見方。エリオット波動の「物差し」を図解で解説。</div>
+        </a>
+        <a href="guide-ichimoku.html" class="related-card">
+          <div class="related-card-title">☁️ 一目均衡表の読み方</div>
+          <div class="related-card-desc">雲・転換線・基準線・三役好転。日本発の時間軸を重視したテクニカル理論。</div>
+        </a>
+        <a href="guide-moving-average.html" class="related-card">
+          <div class="related-card-title">📈 移動平均線の基本</div>
+          <div class="related-card-desc">ゴールデンクロス・パーフェクトオーダーなど、まず最初に押さえたい基礎指標。</div>
+        </a>
+      </div>
+      <div style="margin-top:14px"><a href="guides.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">解説記事の一覧を見る →</a></div>
+    </div>
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+    </p>
+
+  </div><!-- /article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px" data-disclaimer="kinsho-v1">※ 本記事は情報提供・教育目的であり、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement,p=document.getElementById('reading-progress');
+  if(p){var t=d.scrollTop||document.body.scrollTop,h=d.scrollHeight-d.clientHeight;p.style.width=h>0?(t/h*100)+'%':'0'}
+});
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
+(function(){
+  if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    var b=document.getElementById('theme-toggle');
+    if(b)b.textContent='☀️';
+  }
+})();
+</script>
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
