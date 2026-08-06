@@ -12,6 +12,11 @@ build_news_ticker.py — ⚡最新ニュース・ライブフィード生成（A
   - 選定はスコアリングせず「時刻降順」＝鮮度がすべて（解説つきの選定は既存レーンの役割）
   - センチメント絵文字はキーワード判定（generate_market_news.py の判定と同一語彙・AI不使用）
   - フェイルセーフ: 取得が薄い時（<MIN_ITEMS）は既存 JSON を保持して終了（良品を空で上書きしない）
+  - 2026-08-06 拡張: 固定ソースに公的機関（日銀/財務省）とトピック横断検索5本を追加（計18本）。
+    トピック検索のバッジはエントリの <source>（実際の発行元）＝媒体名を詐称しない。
+    フィード別の最終観測時刻を `feed_health` として JSON に持ち、automation-health §⑦ が
+    ソース単位の「静かな停止」を検知する（index.html の JS は d.items / d.updated しか読まない
+    ことを実測済み＝キー追加は表示に無影響）。
 
 ⚠️ news-ticker.json は GitHub Actions が生成・commit する＝SYNC_FILES に入れない（SYNC禁忌）。
    このスクリプト自体は SYNC 対象。
@@ -51,8 +56,15 @@ def gnews(query):
     return f"https://news.google.com/rss/search?q={quote(query)}&hl=ja&gl=JP&ceid=JP:ja"
 
 
-# (表示ソース名, URL, 市場キーワードフィルタを課すか)
-# Google News 経由は when:1d で当日分に限定。直接RSSは MAX_AGE_HOURS でカット。
+# 各フィードは dict:
+#   name        … 表示ソース名（badge_entry=True では取得失敗時のフォールバック表示名）
+#   url         … RSS URL（Google News 経由は when:1d で当日限定。直接RSSは MAX_AGE_HOURS でカット）
+#   kw          … True なら MARKET_KWS の市場語フィルタを課す（生活記事が混ざる総合メディア用）
+#   stale_days  … automation-health §⑦ のソース停止検知の閾値[日]。None=監視しない
+#                 （トピック検索は「静か」が正常になり得るため必ず None＝誤検知ゼロ方針）
+#   badge_entry … True ならエントリの <source>（実際の発行元）をバッジに使う（トピック検索用）。
+#                 8/1 に「話題検索だと媒体名を詐称する」で却下したが、Google News RSS は
+#                 エントリ単位で発行元タグを持つ（8/6 実測 30/30 件）＝そこから取れば嘘にならない
 #
 # ⚠️ 2026-08-01: Bloomberg（gnews("site:bloomberg.co.jp when:1d")）を削除した。
 #    Google News が bloomberg.co.jp の**記事を索引していない**＝返るのは株価クオートと固定ページだけ。
@@ -64,24 +76,64 @@ def gnews(query):
 #    代替も探したが QUICK Money World / ロイター直RSS / JOGMEC は 0件、ダイヤモンドは漫画・育児記事が
 #    主体で市場ニュースにならないため、**補充せず削除のみ**とした（残る8ソースで件数は足りている）。
 FEEDS = [
-    ("ロイター",     gnews("site:jp.reuters.com when:1d"), False),
-    ("日経",         gnews("site:nikkei.com (市場 OR 株 OR 円相場 OR 金利 OR 日銀 OR FRB) when:1d"), False),
-    ("時事通信",     gnews("site:jiji.com (経済 OR 市場 OR 株 OR 円) when:1d"), False),
-    ("株探",         gnews("site:kabutan.jp when:1d"), False),
-    ("みんかぶ",     gnews("site:minkabu.jp when:1d"), False),
-    ("NHK経済",      "https://www3.nhk.or.jp/rss/news/cat5.xml", False),
-    ("Yahoo!経済",   "https://news.yahoo.co.jp/rss/topics/business.xml", False),
-    ("東洋経済",     "https://toyokeizai.net/list/feed/rss", True),  # 特集系が多い→市場語フィルタ
-    # 暗号資産専用（2026-08-01 追加）。上の8ソースは暗号資産の見出しを1日1件程度しか出さず、
-    # 暗号資産カードのミニ見出しが枠(CAT_QUOTA=3)を満たせなかったため専門媒体を2本足した。
-    # どちらも発行元が固定＝ソースバッジが嘘にならない（話題検索だと媒体名を詐称することになる）。
-    ("CoinPost",     "https://coinpost.jp/?feed=rss2", False),
-    ("CoinDesk JP",  "https://www.coindeskjapan.com/feed/", False),
+    {"name": "ロイター",    "url": gnews("site:jp.reuters.com when:1d"), "kw": False, "stale_days": 7},
+    {"name": "日経",        "url": gnews("site:nikkei.com (市場 OR 株 OR 円相場 OR 金利 OR 日銀 OR FRB) when:1d"), "kw": False, "stale_days": 7},
+    {"name": "時事通信",    "url": gnews("site:jiji.com (経済 OR 市場 OR 株 OR 円) when:1d"), "kw": False, "stale_days": 7},
+    {"name": "株探",        "url": gnews("site:kabutan.jp when:1d"), "kw": False, "stale_days": 7},
+    {"name": "みんかぶ",    "url": gnews("site:minkabu.jp when:1d"), "kw": False, "stale_days": 7},
+    {"name": "NHK経済",     "url": "https://www3.nhk.or.jp/rss/news/cat5.xml", "kw": False, "stale_days": 7},
+    {"name": "Yahoo!経済",  "url": "https://news.yahoo.co.jp/rss/topics/business.xml", "kw": False, "stale_days": 7},
+    {"name": "東洋経済",    "url": "https://toyokeizai.net/list/feed/rss", "kw": True, "stale_days": 7},  # 特集系が多い→市場語フィルタ
+    # 暗号資産専用（2026-08-01 追加）。総合ソースは暗号資産の見出しを1日1件程度しか出さず、
+    # 暗号資産カードのミニ見出しが枠(CAT_QUOTA=3)を満たせなかったため専門媒体を2本置いている。
+    {"name": "CoinPost",    "url": "https://coinpost.jp/?feed=rss2", "kw": False, "stale_days": 7},
+    {"name": "CoinDesk JP", "url": "https://www.coindeskjapan.com/feed/", "kw": False, "stale_days": 7},
+    # --- 公的機関（2026-08-06 追加）。発行元固定の一次情報＝報道より先に原文が出る。
+    #     8/6 実測プローブ: 日銀 whatsnew=60件/最新9.2h・財務省 news.rss=100件/最新3.2h（国債入札・大臣会見）。
+    #     低頻度（週末は沈黙）なので停止閾値は30日。
+    # ⚠️ 同日に測って死んでいた候補（再プローブ不要）: 金融庁 fsaRSS.xml=0件／JPX rss/news.xml=0件／
+    #     財務省 rss/index.xml=0件／トウシル・マネクリ=RSS実体なし／経産省 atom=最新でも1158h(48日前)＝不適。
+    {"name": "日銀",        "url": "https://www.boj.or.jp/rss/whatsnew.xml", "kw": False, "stale_days": 30},
+    {"name": "財務省",      "url": "https://www.mof.go.jp/news.rss", "kw": False, "stale_days": 30},
+    # 市場系メディア（2026-08-06 追加）。ZUU は車・時計等の生活記事も流れる（8/6 実測「BMW X5…」）→市場語フィルタ必須
+    {"name": "ZUU",         "url": "https://zuuonline.com/feed", "kw": True, "stale_days": 7},
+    # --- トピック狙い撃ち（2026-08-06 追加・Google News 横断検索）。固定ソース網に無い媒体
+    #     （朝日/WSJ/Reuters日本語/外為どっとコム/トレーダーズ・ウェブ等）まで実効カバレッジが広がる。
+    #     8/6 実測: 5本とも 26h以内30/30件・発行元タグ30/30件・中央値4.7〜17.8h。
+    {"name": "介入",        "url": gnews("為替介入 OR 円買い介入 OR 政府日銀 when:1d"), "kw": False, "stale_days": None, "badge_entry": True},
+    {"name": "中銀",        "url": gnews("FOMC OR FRB OR パウエル when:1d"), "kw": False, "stale_days": None, "badge_entry": True},
+    {"name": "経済指標",    "url": gnews("雇用統計 OR 消費者物価指数 OR GDP when:1d"), "kw": False, "stale_days": None, "badge_entry": True},
+    {"name": "決算修正",    "url": gnews("決算 (上方修正 OR 下方修正) when:1d"), "kw": False, "stale_days": None, "badge_entry": True},
+    {"name": "地政学",      "url": gnews("地政学 (原油 OR 市場 OR 円) when:1d"), "kw": False, "stale_days": None, "badge_entry": True},
 ]
+
+# トピック検索が拾う発行元の除外。①名指しリスト（部分一致）＋②文字体系ルールの二段構え。
+# 8/6 実測: Vietnam.vn・BigGo（日本語化された海外アグリゲータ）／PR TIMES（プレスリリース
+# ＝企業広報であってニュースでない）／Межа（ウクライナ語圏メディアの日本語化記事）。
+# ②は「日本語媒体名に出ない文字体系（キリル/アラビア/タイ文字）」を機械判定＝名指しのモグラ叩きを減らす。
+NG_PUBLISHERS = ("Vietnam.vn", "BigGo", "PR TIMES")
+_NG_SCRIPT_RE = re.compile(r"[Ѐ-ӿ؀-ۿ฀-๿]")
+
+
+def is_ng_publisher(badge):
+    return bool(_NG_SCRIPT_RE.search(badge)) or any(ng in badge for ng in NG_PUBLISHERS)
+
+
+def entry_badge(e, feed):
+    """表示するソースバッジ。badge_entry のフィードはエントリの <source>（実際の発行元）を使う。
+    取れなければフィード名にフォールバック（表示崩れ防止で24字まで）。"""
+    if feed.get("badge_entry"):
+        src = ((e.get("source") or {}).get("title") or "").strip()
+        # セクション付き媒体名（8/6 実測「Investing.com - FX | 株式市場」）は先頭セグメントだけ使う
+        src = src.split(" | ")[0].split(" - ")[0].strip()
+        if src:
+            return src[:24]
+    return feed["name"]
 
 # 東洋経済など総合フィード用の「市場関連」キーワード（1つも含まなければ除外）
 MARKET_KWS = ("市場", "株", "円", "ドル", "金利", "日銀", "FRB", "FOMC", "為替", "投資",
-              "決算", "債券", "原油", "金価格", "インフレ", "景気", "GDP", "関税", "経済")
+              "決算", "債券", "原油", "金価格", "インフレ", "景気", "GDP", "関税", "経済",
+              "相場")  # 2026-08-06 追加: ZUU の「日々是相場」等が円/株を含まず落ちていた
 
 # センチメント判定（generate_market_news.py の _POS_WORDS/_NEG_WORDS と同一語彙・依存を軽くするため複製）
 _POS_WORDS = {
@@ -148,7 +200,8 @@ def clean_title(title):
                 t = head.strip()
             else:
                 break
-    return t
+    # TBS NEWS DIG 等の見出し末尾に残る飾り（8/6 実測「…フォトギャラリー | TBS…」）
+    return re.sub(r"\s*フォトギャラリー$", "", t).strip()
 
 
 def norm(t):
@@ -156,36 +209,59 @@ def norm(t):
 
 
 def fetch_all():
+    """全フィードを取得。戻り値: (採用候補items, フィード別の最新エントリ時刻 {name: JST iso})。
+    feed_seen は「フィードが記事を出しているか」の生存記録＝鮮度/日本語/市場語フィルタの採否とは
+    無関係に、有効な日付を持つ生エントリの最新時刻を記録する（停止検知 §⑦ の材料）。"""
     import feedparser
     now_utc = datetime.datetime.now(datetime.timezone.utc)
-    items = []
-    for source, url, kw_filter in FEEDS:
+    items, feed_seen = [], {}
+    for feed in FEEDS:
+        source, url = feed["name"], feed["url"]
         try:
-            feed = feedparser.parse(url, request_headers={"User-Agent": "Mozilla/5.0 marketwatch-jp/1.0"})
+            fp = feedparser.parse(url, request_headers={"User-Agent": "Mozilla/5.0 marketwatch-jp/1.0"})
             n = 0
-            for e in (feed.entries or [])[:30]:
+            for e in (fp.entries or [])[:30]:
                 title = clean_title(e.get("title", ""))
                 link = e.get("link", "") or ""
                 tp = e.get("published_parsed") or e.get("updated_parsed")
                 if not title or not link.startswith("http") or not tp:
                     continue
+                dt = datetime.datetime.fromtimestamp(calendar.timegm(tp), datetime.timezone.utc)
+                iso = dt.astimezone(JST).isoformat(timespec="minutes")
+                if iso > feed_seen.get(source, ""):
+                    feed_seen[source] = iso
                 # 日本語読者向けティッカー: 日本語がほぼ無い見出しは銘柄ページ等のゴミ＝除外
                 if len(re.findall(r"[ぁ-んァ-ヶ一-龠]", title)) < 3:
                     continue
-                dt = datetime.datetime.fromtimestamp(calendar.timegm(tp), datetime.timezone.utc)
                 age_h = (now_utc - dt).total_seconds() / 3600
                 if age_h < -0.5 or age_h > MAX_AGE_HOURS:
                     continue
-                if kw_filter and not any(k in title for k in MARKET_KWS):
+                if feed["kw"] and not any(k in title for k in MARKET_KWS):
                     continue
-                items.append({"t": title, "u": link, "s": source,
-                              "dt": dt.astimezone(JST).isoformat(timespec="minutes"),
-                              "e": sentiment_emoji(title), "c": classify(title)})
+                badge = entry_badge(e, feed)
+                if is_ng_publisher(badge):
+                    continue
+                items.append({"t": title, "u": link, "s": badge,
+                              "dt": iso, "e": sentiment_emoji(title), "c": classify(title)})
                 n += 1
             print(f"  {source:<10} {n}件")
         except Exception as ex:
             print(f"  ⚠️ {source}: 取得エラー {ex}")
-    return items
+    return items, feed_seen
+
+
+def merge_feed_health(prev, seen, now_iso):
+    """フィードごとの観測記録 {name: {"first": 監視開始時刻, "last": 最後に記事を観測した時刻|None}}。
+    今回0件/取得エラーのフィードは前回値を保持（消さない）。FEEDS から外れたフィードは落とす。"""
+    out = {}
+    for feed in FEEDS:
+        name = feed["name"]
+        rec = dict(prev.get(name) or {"first": now_iso, "last": None})
+        newest = seen.get(name)
+        if newest and (not rec.get("last") or newest > rec["last"]):
+            rec["last"] = newest
+        out[name] = rec
+    return out
 
 
 def dedup_and_cap(items):
@@ -244,11 +320,19 @@ def dedup_and_cap(items):
 def main():
     now_jst = datetime.datetime.now(JST)
     print(f"[news-ticker] {now_jst:%Y-%m-%d %H:%M JST} フィード{len(FEEDS)}本を取得…")
-    fresh = dedup_and_cap(fetch_all())
+    try:
+        with open(OUT, encoding="utf-8") as f:
+            prev = json.load(f)
+    except Exception:
+        prev = {}
+    raw, feed_seen = fetch_all()
+    fresh = dedup_and_cap(raw)
     if len(fresh) < MIN_ITEMS:
         print(f"[keep] 取得 {len(fresh)}件 < {MIN_ITEMS}＝フィード不調とみなし既存 news-ticker.json を保持")
         return
-    payload = {"updated": now_jst.isoformat(timespec="minutes"), "items": fresh}
+    payload = {"updated": now_jst.isoformat(timespec="minutes"), "items": fresh,
+               "feed_health": merge_feed_health(prev.get("feed_health") or {}, feed_seen,
+                                                now_jst.isoformat(timespec="minutes"))}
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=0)
     print(f"[ok] {len(fresh)}件 → news-ticker.json（最新: {fresh[0]['dt']} / {fresh[0]['t'][:40]}）")
