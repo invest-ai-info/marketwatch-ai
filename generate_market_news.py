@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-07", "line": '・<b>2026-08-07</b>: 🧪 解説「<a href="guide-signal-lab-063.html" style="color:#0969da"><b>RSI売られすぎ逆張り——グループ格差解剖（全301件）</b></a>」公開'},
         {"date": "2026-08-06", "line": '・<b>2026-08-06</b>: 🎓 解説「<a href="guide-elliott-wave.html" style="color:#0969da"><b>エリオット波動を5資産15年で機械検証</b></a>」公開'},
         {"date": "2026-08-06", "line": '・<b>2026-08-06</b>: 📰 解説「<a href="guide-news-2026-08-06-spacex-lockup-expiry.html" style="color:#0969da"><b>SpaceXロックアップ解除──9億株・23B規模の供給ショック</b></a>」公開'},
         {"date": "2026-08-06", "line": '・<b>2026-08-06</b>: 🧪 解説「<a href="guide-signal-lab-062.html" style="color:#0969da"><b>研究日誌 #62：上昇×押し目買いが昇格——RSI vs BB の勝率乖離</b></a>」公開'},

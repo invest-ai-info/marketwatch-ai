@@ -18,10 +18,10 @@
   - 後半 58.3% E(R)=+0.361 RCI[+0.045,+0.677]（全域プラス）
   - 全期間 139/301=46.2%（signal_lab_verify.py 検証対象、claims 10件）
 - **公開ゲート**:
-  - [ ] signal_lab_verify.py GREEN
-  - [ ] Opus コンプラ 白
-  - [ ] 独立Opus 確認 白
-  - [ ] finalize + publish_article.py + PUSH-MAIN
+  - [x] signal_lab_verify.py GREEN（10/10）
+  - [x] Opus コンプラ 白（SVG①②修正＋表現軟化後）
+  - [x] 独立Opus 確認 白
+  - [x] finalize + publish_article.py + PUSH-MAIN → ✅ 公開済み（2026-08-07 guide-signal-lab-063.html）
 
 ---
 
