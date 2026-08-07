@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-07
+- 判定: ✅ 公開済み
+- 選定トピック: イラン議会がホルムズ海峡通行制限草案を公表──ブレント原油+3.8%/$82.49急反発、日本エネルギーコストへの影響を中立整理（カテゴリ: 地政学・エネルギー・コモディティ・マクロ）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 選定理由: イラン議会・国家安全保障外交委員会が米国・イスラエル船籍禁止＋「敵対的国家」への20%ペナルティを含むホルムズ草案を8/6に公表。週前半にベッセント発言で-8%落ちた原油が+3.8%/$82.49に急反発。8/4記事（Trump-Iran情報錯綜・WTI-6%）とは対局の「油価反発」という新フェーズ。日本94%中東依存の付加価値が高い。8/7現在もNFP発表控え上昇圧力/Trump延長との二方向で動く展開。
+- 出典（8系統確認済み）:
+  - CNBC 2026-08-06（Oil prices jump after Iran publishes restrictive draft plan for Strait of Hormuz）
+  - CNBC 2026-08-07（Oil rises amid supply disruption fears following Iran's restrictive draft plan）
+  - AGBI 2026-08-06（Iran plan to restrict US vessels from Hormuz lifts oil prices）
+  - Yahoo Finance（Oil rises on concerns over Strait of Hormuz reopening plans）
+  - CryptoBriefing（Oil prices rise on Iran's draft plan to restrict Strait of Hormuz traffic）
+  - MarineLink（Oil Climbs as Hormuz Transit Plan Raises Fresh Concerns）
+  - BigGo Finance（Crude Oil Futures Surge on Report Iran Is Reviewing Bill to Ban 'Hostile' Ships From Strait of Hormuz）
+  - TradingEconomics（Oil Falls as Trump Extends Deadline for Iran Deal）
+  - The National 2026-08-03（Oil prices fall on potential US-Iran deal to open Strait of Hormuz）（背景）
+- コンプライアンス監査:
+  - 第一Opus: 🟡グレー→2件修正適用（①実名個別銘柄3社削除しセクター一般論に格下げ②シナリオBの「過去事例も多い」→伝聞調に軟化）→最終🟢白
+  - 第二独立Opus: 🟢白（kinsho-v1×3箇所・禁止語ゼロ・銘柄推奨なし・出典8系統・noindex不在・断定なし・全6項目パス）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典8系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告15件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-07-iran-hormuz-draft-oil-surge.html
+
+---
+
 ## 2026-08-06
 - 判定: ✅ 公開済み
 - 選定トピック: SpaceXロックアップ解除──9億1150万株・$116〜123B規模の供給ショック、株価がIPO価格$135を下回る（カテゴリ: IPO・個別銘柄・グロース株）
