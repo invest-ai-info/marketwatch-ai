@@ -2,6 +2,10 @@
 
 ---
 
+2026-08-08 autopublish: 🚩ゲート赤／インフラ未解決（3日連続）: key=margin-trading / `check_guide_draft.py` の検査#9が `apply_brand_color` モジュール（origin/mainに不在）を import しようとして ModuleNotFoundError → EXIT=1。固定オラクル＝ゲートの編集・迂回は禁止のため公開せずエスカレ。**人間必須の対処**: ローカルで `apply_brand_color.py` を作成し SYNC_FILES に追加→push → ゲート EXIT=0 確認 → 次回 autopublish が自動再ピック（margin-trading → commodity-basics → correlation-risk → ipo-basics の順）。
+
+---
+
 ## 2026-08-08 | 🧪 AIシグナル研究日誌 #064 | 金属ロングgate 降格候補確認
 
 - **記事番号**: #064
