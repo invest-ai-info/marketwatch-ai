@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-08-07 | 🤖 下書き生成 | ipo-basics | 投資の基礎知識
+
+- **基準日**: 2026-08-07（JST：UTC+9 → 2026-08-07T20:30Z≒JST 05:30 翌日だが、スケジューラ基準日 2026-08-07 として記録）
+- **対象 key**: `ipo-basics`（キュー順 #36 / 基礎知識 / 💰 投資の基礎知識）
+- **生成ファイル**: `drafts/draft-ipo-basics.html`
+- **参照出典**:
+  - 日本証券業協会「IPOにおける公開価格の設定プロセスの見直しについて」https://www.jsda.or.jp/shijyo/minasama/koukaikakaku.html
+  - moneyforward「IPOで資金調達を行う仕組み｜公募価格の設定方式や流れを解説」https://biz.moneyforward.com/ipo/basic/4436/
+  - moneyforward「ブックビルディング方式とは？」https://biz.moneyforward.com/ipo/basic/5627/
+  - moneyforward「IPOにおけるロックアップとは？目的や種類、解除条件について」https://biz.moneyforward.com/ipo/basic/5532/
+  - traders.co.jp「IPOの必須知識！知っておきたいロックアップ解除〜基本編〜」https://www.traders.co.jp/column/article/67
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「〇〇を買え」等なし。IPOの仕組み一般論に限定）
+  - ✅ 断定・利益保証なし（「IPOは必ず儲かる」は誤解として否定）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer 3箇所）
+  - ✅ noindex,nofollow メタタグあり
+  - ✅ 出典・事実妥当（ブックビルディング期間≒5営業日・ロックアップ90/180日・1.5倍解除条件は出典に基づく）
+  - ✅ 「IPOは必ず儲かる」と読ませない構成
+- **SVG図**: 3点作成（IPOプロセス流れ図 / 公募価格vs初値3パターン / ロックアップ解除イメージ）
+  - ⚠️ SVGの実機ライト/ダーク表示確認が必要（ダークモードでfill色が見えるか特に注意）
+- **人間の残作業**:
+  1. SVG実機ライト/ダーク確認（特にパターン図・ロックアップ図の fill 色）
+  2. タイトル・リード文の微調整（必要に応じて）
+  3. compliance-reviewer（Opus）監査
+  4. 公開は毎朝 08:40 の `autodraft-publish` ルーティンが `check_guide_draft.py` ゲート通過後に自動実行
+  - ⚠️ なお `check_guide_draft.py` が `apply_brand_color` モジュール不在でEXIT=1のまま（2日連続）。本下書きの公開もゲート修復後になる。人間の対処が先決。
+
+---
+
 2026-08-07 autopublish: 🚩ゲート赤／インフラ未解決（2日連続）: key=margin-trading / `check_guide_draft.py` が `apply_brand_color` モジュール（origin/mainに不在）を import しようとしてModuleNotFoundError。固定オラクル＝ゲートの編集・迂回は禁止のため公開せずエスカレ。**人間必須の対処**: ローカルで`apply_brand_color.py`を作成し SYNC_FILES に追加→push → ゲートEXIT=0確認 → 次回autopublishが自動再ピック。後続キュー: commodity-basics(#34) / correlation-risk(#35)の下書き在り、SOP「最初の1本」規則でmargin-trading解消まで待機。
 
 ---
