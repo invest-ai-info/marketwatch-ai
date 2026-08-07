@@ -117,4 +117,5 @@ SYNC_FILES = [
     "guide-signal-lab-062.html",
     "guide-news-2026-08-06-spacex-lockup-expiry.html",
     "guide-signal-lab-063.html",
+    "guide-news-2026-08-07-iran-hormuz-draft-oil-surge.html",
 ]
