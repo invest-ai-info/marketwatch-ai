@@ -1,12 +1,12 @@
-# 💡 記事ネタ候補（基準日: 2026-08-07 JST）
+# 💡 記事ネタ候補（基準日: 2026-08-08 JST）
 
 > 編集者向け内部メモ。サイト未公開。公開時は CLAUDE.md の 8 ステップ＋compliance-reviewer 監査が必須。
 
 ---
 
-## 📰 当日トレンド要約（2026-08-07 朝時点）
+## 📰 当日トレンド要約（2026-08-08 朝時点）
 
-**米7月雇用統計が本日（8/7 21:30 JST）発表予定**で、FRBの9月追加利上げ是非を決定づける最重要指標として注目が集中している。前日に協調介入後の**日銀9月利上げ確率が60%超に急上昇**し（実質賃金6カ月連続プラスが後押し）、ドル円は157円台まで軟化。日本株は8/5に+2,342円の大幅反発（AI・半導体主導）を見せたが、本日は決算ピーク（667社）と雇用統計が重なる荒れ展開に警戒が必要。**NVIDIA（NVDA）の8/26 Q2決算**が最大の「AI株踊り場か続伸か」の試金石として市場の目線が固まりつつある。
+**米7月雇用統計（8/7 発表済み）を受け、FRBの9月判断と円相場の行方が焦点**。日本では家計消費が7か月連続マイナス（6月▲3.3%）という予想外の弱さが出たが実質賃金は6か月連続プラスという矛盾が続き、日銀9月利上げ確率が60%超に浮上している。AI株では**NVIDIA（NVDA）の8/26 Q2決算**が最大の通過点として認知され「前に買うべきか」という検索需要が急増。新NISAでは円高進行でオルカン・S&P500の円建て基準価額が下落し、「為替ヘッジどうする？」という実用的疑問が高まっている。
 
 ---
 
@@ -18,111 +18,111 @@
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「NVIDIA 8月26日 Q2決算 — AI需要・中国ライセンス問題・250Bドル警告、3シナリオで個人投資家が押さえるポイント」 |
-| **概要（30字）** | 8/26発表のNVDA Q2決算を前に、AI需要・中国規制・マイケル・バーリ警告を3シナリオで整理 |
-| **なぜ今か** | 8/4 Motley Fool「Nvidia's Aug.26 shareholder meeting – what to watch」など複数英語メディアが報道。NVDAは2026年に入り株価ほぼ横ばい（$210前後）で「決算前に買うべきか」という検索需要が急増。中国向けH20チップのライセンス不透明感、マイケル・バーリが指摘した2500億ドルの循環融資リスク、36人のアナリストが一致して「Buy」評価という3つの論点を整理する記事需要が高い |
-| **読者の検索意図** | 「NVIDIA 決算 いつ 2026」「NVDA 株価 今後 見通し」「エヌビディア 個人投資家 どうする」 |
+| **仮タイトル案** | 「NVIDIA 8月26日 Q2決算プレビュー｜売上96%増予想・中国ライセンス問題・3シナリオで個人投資家が押さえる5点」 |
+| **概要（30字）** | 8/26発表NVDAのQ2決算。売上911億ドル予想・AI需要・中国問題・36社アナリスト評価を整理 |
+| **なぜ今か** | 発表まで約18日。AMD決算でデータセンター需要が確認されNVDA強気論が再燃。株価は$219前後で年初来+17%。「決算前に買うべきか」検索急増。中国向けH20チップのライセンス問題・マイケル・バーリの2,500億ドル循環融資警告という懸念材料も整理ニーズが高い |
+| **読者の検索意図** | 「NVIDIA 決算 いつ 2026」「NVDA 株価 今後 8月」「エヌビディア 日本株 半導体 影響」 |
 | **想定カテゴリ** | 個別銘柄解説 / AI・半導体テーマ |
 | **信頼度** | **HIGH**（独立3社以上） |
-| **根拠ソース** | [Motley Fool Nvidia Aug.26 shareholder meeting](https://www.fool.com/investing/2026/08/01/nvidias-shareholder-meeting-is-aug-26-heres-what-i/) 2026-08-01 ／ [Yahoo Finance NVDA analyst forecast](https://finance.yahoo.com/markets/stocks/articles/buy-nvidia-stock-aug-26-173200031.html) 2026-08-04 ／ [FX Leaders NVDA reclaims $210](https://www.fxleaders.com/news/2026/08/04/nvidia-stock-forecast-today-nvda-reclaims-210-as-ai-demand-outweighs-financing-concerns/) 2026-08-04 |
+| **根拠ソース** | Motley Fool「Prediction: Nvidia Stock Will Skyrocket on Aug. 26」(2026-08-02) https://www.fool.com/investing/2026/08/02/prediction-nvidia-stock-will-skyrocket-on-aug-26/ ／ Seeking Alpha「Nvidia Earnings: AMD's Results Point To Massive AI Demand」https://seekingalpha.com/article/4930651-nvidia-earnings-amds-results-point-to-massive-ai-demand-preview ／ Yahoo Finance「36 Analysts Share Their NVIDIA Stock Forecast Before August Earnings」https://finance.yahoo.com/markets/stocks/articles/36-analysts-share-nvidia-stock-101344754.html |
 | **難易度** | 中 |
-| **重複確認** | `guide-nvidia-2026-05.html` は5月の決算解説（3か月前）。8/26 Q2前展望は未掲載。AI株テーマとして独立記事の価値あり |
+| **重複確認** | `guide-amd-2026-05.html` はAMD決算（別銘柄）。NVDAの8/26 Q2決算前展望は未掲載 |
 
 ---
 
-### 候補②【マクロ・日銀】日銀9月追加利上げ確率 60% 超に：実質賃金6カ月連続プラスと植田発言で何が変わるか
+### 候補②【マクロ・経済指標】米CPI（7月分）8月12日発表直前：インフレ再加速？FRB9月判断の読み方
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「日銀 9月利上げ確率 60% 超えの意味 — 実質賃金6カ月プラス・植田発言・円高シナリオを個人投資家向けに整理」 |
-| **概要（30字）** | 利上げ確率急上昇の背景と、円高・国内株・債券・新NISA外貨建てへの実際の影響を段階別に解説 |
-| **なぜ今か** | 8月5日みんかぶFX報道「日銀9月利上げ確率上昇、実質賃金6カ月連続プラス」。Bloombergも「前倒し進む」と報道。政策金利が現行1.00%から1.25%へ引き上げられた場合の影響は多岐にわたる。既存記事`guide-jpy-coordinated-intervention-2026-08.html`は介入の仕組みを解説するが、「次の利上げで個人投資家の何が変わるか」の実用解説が空白 |
-| **読者の検索意図** | 「日銀 9月 利上げ いつ 確率」「円高 株価 影響 2026年8月」「利上げ 個人投資家 どう対応」 |
-| **想定カテゴリ** | マクロ戦略 / FX解説 / 金融政策 |
-| **信頼度** | **HIGH**（公式データ＋複数独立報道） |
-| **根拠ソース** | [みんかぶFX 実質賃金6カ月プラスで9月利上げ確率上昇 8/5](https://fx.minkabu.jp/news/375284) 2026-08-05 ／ [Bloomberg 日銀追加利上げ前倒し 8/3](https://www.bloomberg.com/jp/news/articles/2026-08-03/TJ62GHKK3NYA00) 2026-08-03 ／ [日経 日銀9月利上げ予想6割超 8/5](https://www.nikkei.com/article/DGXZQOFL050XS0V00C26A8000000/) 2026-08-05 ／ [楽天証券 日米協調介入と日銀利上げ](https://media.rakuten-sec.net/articles/-/53108) 2026-08-04 |
-| **難易度** | 中 |
-| **重複確認** | `guide-jpy-coordinated-intervention-2026-08.html` は介入の仕組み解説。「9月利上げが個人投資家の何を変えるか」の実用解説は未掲載 |
-
----
-
-### 候補③【資産形成・新NISA】オルカン純資産がS&P500を逆転 — 新NISA 2年目の分散戦略を再点検する
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「オルカン vs S&P500、純資産12.2 兆円で逆転 — 新NISA 2 年目、分散投資に切り替えるべき 3 つの判断軸」 |
-| **概要（30字）** | 2026年5月にオルカン純資産がS&P500を逆転。円高・米国集中リスク増大の今、分散戦略の再設計ポイントを解説 |
-| **なぜ今か** | 2026年5月28日にオルカン（全世界株）純資産が約12.2兆円に達しS&P500（約11.9兆円）を逆転（財経新聞2026-06-02報道）。同時に日米協調介入で円高が進み、米国株一択の外貨建てリスクが顕在化。「オルカンに乗り換えるべきか」「国内高配当株を足すべきか」という検索需要が増えている。SBI証券8/3レポートで「オルカンの次に選ばれた9ファンド」も公表され、2年目の見直し機運が高まっている |
-| **読者の検索意図** | 「オルカン S&P500 どっちがいい 2026」「新NISA 2年目 見直し」「オルカン 円高 影響」 |
-| **想定カテゴリ** | 資産形成 / 投資信託解説 |
-| **信頼度** | **HIGH**（独立2社以上） |
-| **根拠ソース** | [財経新聞 オルカン純資産S&P500逆転 6/2](https://www.zaikei.co.jp/article/20260602/855328.html) 2026-06-02 ／ [SBI証券 オルカンの次に選ばれた9ファンド 8/3](https://go.sbisec.co.jp/media/report/fund_info_plus/fund_info_plus_260803.html) 2026-08-03 ／ [財経新聞 国内高配当株回帰 6/13](https://www.zaikei.co.jp/article/20260613/856751.html) 2026-06-13 |
+| **仮タイトル案** | 「8月12日 米CPI発表の前に知っておきたいこと｜インフレ再燃なら利下げ遠のく？ドル円と日本株への波及を解説」 |
+| **概要（30字）** | 7月CPI 8/12 8:30ET 発表。4月実績3.8%から鈍化か再加速かで株・ドル円が動く |
+| **なぜ今か** | 発表まで4日。4月CPIは3.8%（エネルギー+17.9%）と高止まりで市場を揺らした実績あり。7月分がさらに上ぶれすれば9月利下げ期待がはく落しドル高・円安→日本株輸出株にはプラス。下ぶれなら利下げ期待が戻りドル安・円高→日本市場に複雑な影響 |
+| **読者の検索意図** | 「CPI 発表 日本時間 8月」「インフレ FRB 利下げ いつ」「ドル円 CPI 影響」 |
+| **想定カテゴリ** | 投資指標解説 / マクロ戦略 |
+| **信頼度** | **HIGH**（BLS公式カレンダー、Finance Calendar 確定日時） |
+| **根拠ソース** | BLS「CPI Schedule」(予告) https://www.bls.gov/cpi/ ／ Finance Calendar「US CPI Report August 2026: Date, Time & What to Expect」https://www.financecalendar.com/event/us-cpi-report-august-2026/ ／ IG UK「US CPI June 2026 preview」https://www.ig.com/uk/trading-strategies/us-cpi-june-2026-preview-what-to-expect-tomorrow-260713 |
 | **難易度** | 小 |
-| **重複確認** | `guide-nisa.html` は制度解説。`guide-nisa-ranking.html` はランキング系。「オルカン逆転×分散再設計」の観点は未掲載 |
+| **重複確認** | `guide-auto-us_cpi-2026-07-10.html`（7月CPI速報）は自動生成の数値速報。「発表直前の読み方・シナリオ別影響」の解説は未掲載 |
 
 ---
 
-### 候補④【個別銘柄・金融株】三菱UFJ 1Q 純利益 48% 増：利上げ環境で銀行株はここからどうなるか
+### 候補③【マクロ・日本経済】実質賃金6か月プラスでも家計消費7か月マイナスの謎：日銀9月利上げへの含意
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「三菱UFJ 1Q 純利益48%増・8,094億円 — 日銀利上げサイクルで金融株はどこまで上昇余地があるか」 |
-| **概要（30字）** | 三菱UFJ FY2027Q1は純利益48%増と好決算。日銀9月利上げ観測が重なる今、銀行・金融株の中期評価を解説 |
-| **なぜ今か** | 2026年8月3日発表のMUFG 1Q結果：営業収益+20.1%（3.9兆円）、純利益+48.2%（8,094億円）。日銀が6月に1.00%へ引き上げ済み、9月1.25%への追加利上げ観測もある中、「利上げで銀行株は買いか」という検索需要が急増。既存の`guide-bank-stocks-2026-05.html`は5月時点の解説で、最新1Q決算と9月利上げシナリオを加味した更新版が必要 |
-| **読者の検索意図** | 「三菱UFJ 決算 結果 2026年8月」「銀行株 利上げ 恩恵 日本株」「MUFG 株価 今後 見通し」 |
-| **想定カテゴリ** | 個別銘柄解説 / 金融テーマ |
-| **信頼度** | **HIGH**（公式IR＋複数報道） |
-| **根拠ソース** | [みんかぶ MUFG 1Q決算発表 8/3](https://minkabu.jp/stock/8306/news/4582626) 2026-08-03 ／ [日経 ソフトバンクGやトヨタ今週決算 8/2](https://www.nikkei.com/article/DGXZQOCD302CI0Q6A730C2000000/) 2026-08-02 ／ [楽天証券 日本株夏の投資戦略](https://media.rakuten-sec.net/articles/-/52916) 2026-08-05 |
-| **難易度** | 中 |
-| **重複確認** | `guide-bank-stocks-2026-05.html` は3か月前の解説。1Q決算結果＋利上げシナリオ更新版は未掲載 |
-
----
-
-### 候補⑤【個別銘柄・米国株】SpaceX ロックアップ解除が始まった — 個人投資家はどう向き合うか
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「SpaceX（SPCX）8月6日ロックアップ解除スタート — 9億株・3,200億ドルの売り圧力を個人投資家はどう読むか」 |
-| **概要（30字）** | 8/6から段階的に始まるSPCXロックアップ解除の仕組みと株価への影響、IPO後のリスクを解説 |
-| **なぜ今か** | 8月6日にSpaceXのIPO後初のロックアップ解除が始動。第1弾は制限株の20%・約9,150万株。90日間で最大24億株（約3,200億ドル相当）が段階的に解放される。フロートが現在の約4.3%から大幅拡大するため売り圧力の継続が懸念される。`guide-news-2026-08-06-spacex-lockup-expiry.html`で速報済みだが、「ロックアップ解除とは何か」「個人投資家はいつ購入を検討できるか」の解説記事として深掘りする価値がある |
-| **読者の検索意図** | 「SpaceX ロックアップ解除 意味 わかりやすく」「SPCX 株価 これから 見通し」「IPO ロックアップ 終わったら 株価」 |
-| **想定カテゴリ** | 投資指標解説 / 個別銘柄解説 |
-| **信頼度** | **MID**（独立2社以上） |
-| **根拠ソース** | [KuCoin SpaceX 116B ロックアップ 8月開始](https://www.kucoin.com/ja/blog/ru-spacex-116-billion-stock-unlock-staggered-release-starts-august-2026) 2026-08 ／ [Forbes JAPAN SPCX 8/6の試練](https://forbesjapan.com/articles/detail/102316) 2026-07 ／ [日経 スペースX株売却制限8/6解除](https://www.nikkei.com/article/DGXZQOGN04B5W0U6A800C2000000/) 2026-08 |
-| **難易度** | 小 |
-| **重複確認** | `guide-news-2026-08-06-spacex-lockup-expiry.html` は速報（今日のニュース）。「ロックアップ解除とは何か」の解説＋投資家向けアクション指針は未掲載 |
-
----
-
-### 候補⑥【マクロ・FX】本日発表！米7月雇用統計とFRBの次の一手 — ドル円と日本株への連鎖を解説
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「米7月雇用統計（8/7）の3つの注目点 — NFP・平均時給・失業率でFRBの9月判断はどう変わるか」 |
-| **概要（30字）** | 本日発表の米雇用統計でFRBの次の一手が変わる。3論点（NFP・時給・失業率）とドル円・日本株への波及を解説 |
-| **なぜ今か** | 本日8月7日21:30 JST（日本時間）に7月分NFPが発表される。外為どっとコム8/6付レポートが「9月利上げか？3つの論点」を整理し、NFP10万人超か・平均時給+0.4%加速か・失業率変化の3点が焦点と整理。`guide-auto-us_jobs-2026-08-07.html`は自動生成の数値速報だが、「結果の読み方・FRB・日本株へのインパクト」の解説が別途必要 |
-| **読者の検索意図** | 「米国雇用統計 2026年8月 結果 日本株 影響」「FRB 9月 利上げ 雇用統計 どうなる」「ドル円 雇用統計 後 どう動く」 |
+| **仮タイトル案** | 「実質賃金が増えても消費が増えない理由｜家計消費7か月連続マイナスと日銀9月利上げ確率60%超の関係を解説」 |
+| **概要（30字）** | 6月家計消費▲3.3%（予想+1%を大幅下回り）。予防的貯蓄・物価不信が消費を抑える構図を分析 |
+| **なぜ今か** | 8月6日に総務省発表。Bloomberg・Yahoo Finance が同日報道。「賃金プラス＆消費マイナス」の逆説は日銀の判断を揺らし、9月利上げが適切かどうかの論争が始まっている。日本人投資家が「円高・国内景気」を見る際の必須背景知識 |
+| **読者の検索意図** | 「家計消費 マイナス なぜ 2026」「実質賃金 消費 増えない 理由」「日銀 9月 利上げ 判断 消費」 |
 | **想定カテゴリ** | 経済指標解説 / マクロ戦略 |
-| **信頼度** | **MID**（複数独立報道） |
-| **根拠ソース** | [外為どっとコム 米雇用統計3論点 8/6](https://www.gaitame.com/media/entry/2026/08/06/173554) 2026-08-06 ／ [ソニー銀行 雇用統計注目ポイント 8/7](https://blog.sonybank.jp/ces.html) 2026-08 ／ [外為どっとコム 8/3週イベント予定](https://www.gaitame.com/media/entry/2026/08/02/060200) 2026-08-02 |
-| **難易度** | 小 |
-| **重複確認** | `guide-auto-us_jobs-2026-08-07.html` は自動生成の速報記事（数値並べ）。「読み方・FRB判断・日本株波及」の解説記事は未掲載 |
+| **信頼度** | **HIGH**（Bloomberg、Yahoo Finance 同日独立報道） |
+| **根拠ソース** | Bloomberg「Japan's Households Continue to Cut Spending Despite Wage Gains」(2026-08-06) https://www.bloomberg.com/news/articles/2026-08-06/japan-s-households-continue-to-cut-spending-despite-wage-gains ／ Yahoo Finance「Japan June household spending falls unexpectedly」(2026-08-06) https://finance.yahoo.com/economy/articles/japan-june-household-spending-falls-234209231.html ／ Trading Economics「Japan Household Spending」https://tradingeconomics.com/japan/household-spending |
+| **難易度** | 中 |
+| **重複確認** | `guide-auto-boj-2026-07-31.html`（7月BOJ決定速報）あり。本記事は「家計消費データの読み方×日銀判断への含意」が主軸で差別化 |
 
 ---
 
-### 候補⑦【資産形成・FX リスク】円高進行で外貨建て資産が下落：為替ヘッジ付きファンドの使い方と誤解
+### 候補④【国際貿易・個別銘柄】日米貿易合意「自動車関税15%」でトヨタ・ホンダ株はどう変わるか
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「協調介入後に円高加速 — 新NISA で持つ外貨建て資産を守る「為替ヘッジ」の正しい使い方と 3 つの誤解」 |
-| **概要（30字）** | 日米協調介入で円高が進む今、新NISAのオルカン・S&P500保有者が直面する為替リスクと対処法を解説 |
-| **なぜ今か** | 7月31日の日米協調介入でドル円が163→155円まで急騰（円高方向）。オルカン・S&P500を積み立てる新NISA保有者にとって円ベースの基準価額が下落し、「今後も円高が続くなら為替ヘッジ付きに切り替えるべきか」という検索需要が増加。ピクテ・ゴールド（為替ヘッジなし）が2026年上半期NISA3位に入るなど、為替リスクへの意識が高まっているタイミング |
-| **読者の検索意図** | 「為替ヘッジ 新NISA 意味」「円高 オルカン 下落 どうする」「為替ヘッジあり なし どっちがいい」 |
-| **想定カテゴリ** | 投資指標解説 / 資産形成 |
-| **信頼度** | **MID**（独立2社以上） |
-| **根拠ソース** | [Bloomberg 日銀9月利上げ・介入後の円買い 8/3](https://www.bloomberg.com/jp/news/articles/2026-08-03/TJ62GHKK3NYA00) 2026-08-03 ／ [NHKニュース 日米協調介入 8/3](https://news.web.nhk/newsweb/na/na-k10015194421000) 2026-08-03 ／ [SBI証券 NISA オルカン＋α 分散解説](https://go.sbisec.co.jp/prd/common/newyear_forecast_2026_report_nisa.html) 2026-01 |
+| **仮タイトル案** | 「日米貿易合意「自動車関税15%」解説｜25%から引き下げで日本の輸出株にどんな恩恵があるか」 |
+| **概要（30字）** | 25%→15%関税合意で日本GDP+0.3%・企業EPS+3%試算。製薬・電子部品の追加懸念も整理 |
+| **なぜ今か** | 7月末に大枠合意し8月から株価への織り込みが本格化。一方で製薬関税が200%に向かう懸念（トランプ発言）が残り、全体像を整理した解説へのニーズが高い。自動車メーカー株（トヨタ・ホンダ・マツダ等）の今後の見方を知りたい投資家が多い |
+| **読者の検索意図** | 「日米 貿易 関税 自動車 2026」「トヨタ 株 関税 影響 見通し」「輸出株 円高 関税 どっちが効く」 |
+| **想定カテゴリ** | マーケット戦略 / 個別銘柄解説 |
+| **信頼度** | **HIGH**（OANDA, FXStreet, JPMorgan Research 複数報道） |
+| **根拠ソース** | OANDA「W/C 03/08 – US-Japan yen intervention, USDJPY, Nikkei, Dow outlook」(2026-08-03) https://www.oanda.com/au-en/skills-and-insights/education/market-commentary/market-moves/03082026-us-japan-yen-intervention-usdjpy-nikkei-dow-outlook/ ／ FXStreet「Japan trade deal boost equities globally」(2026-07-23) https://www.fxstreet.com/analysis/japan-trade-deal-boost-equities-globally-202507230938 ／ J.P. Morgan「US Tariffs: What's the Impact?」https://www.jpmorgan.com/insights/global-research/current-events/us-tariffs |
+| **難易度** | 中 |
+| **重複確認** | 介入解説記事（`guide-jpy-coordinated-intervention-2026-08.html` 等）は多数あるが「日米貿易合意15%+輸出株影響」の切り口は未掲載 |
+
+---
+
+### 候補⑤【資産形成・新NISA】新NISA2年目：オルカン・S&P500・日経高配当50の比較と2026年夏の選択
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「新NISA2年目の選択肢を比較｜「オルカン」「S&P500」「日経高配当株50インデックス」どれが今の相場に合うか」 |
+| **概要（30字）** | 成長投資枠2年目。円高・AI相場・高配当ブームの今、3ファンドの特性と使い分けを解説 |
+| **なぜ今か** | 2026年は「オルカン」が日本最大のファンドとしてS&P500型を純資産で逆転。協調介入で円高が進み外貨建てファンドの円ベース評価額が下落。「日経高配当50」が2026年パフォーマンスでオルカン・S&P500を超えると注目を集め、NISA成長投資枠での活用が増加中。SBI証券8/3最新ランキングで3ファンドの差異が明確化 |
+| **読者の検索意図** | 「NISA オルカン S&P500 日経高配当 どっちがいい 2026」「新NISA 成長投資枠 おすすめ 8月」「円高 NISA 外国株 影響」 |
+| **想定カテゴリ** | 資産形成 / 投資信託解説 |
+| **信頼度** | **HIGH**（Diamond ZAI, kabutan, my-best, 価格.com 複数メディア） |
+| **根拠ソース** | Diamond ZAI「NISAで人気の投資信託ランキング2026年8月」(2026-08-03) https://www.diamond.co.jp/zai/articles/-/305 ／ Diamond「日経平均高配当株50インデックスに注目」https://diamond.jp/zai/articles/-/1060967 ／ kabutan「2026年NISAおすすめ銘柄10選」https://kabutan.jp/hikaku/nisa_recommended-brand/ |
 | **難易度** | 小 |
-| **重複確認** | 為替ヘッジの使い方を正面から解説した記事は未掲載。`guide-currency-risk.html` は通貨リスク全般で別テーマ |
+| **重複確認** | `guide-nisa.html`（制度基礎）・`guide-nisa-ranking.html`（ランキング）あり。「2026年夏の3ファンド比較×今の相場環境」は未掲載 |
+
+---
+
+### 候補⑥【コモディティ】金（ゴールド）2026年の乱高下を踏まえたインフレヘッジ戦略：今から保有する意味はあるか
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「ゴールドは本当にインフレヘッジになるか？2026年の急騰・急落を踏まえた長期保有戦略を解説」 |
+| **概要（30字）** | 金は1月$5,400台→6月急落→$4,000台で再上昇。実質利回りとの関係から長期保有価値を再評価 |
+| **なぜ今か** | `guide-news-2026-06-30-gold-q2-crash.html`（急落解説）公開後、金価格が再び$4,000台で推移し「急落の次に何が来るか」「今から保有すべきか」の疑問が続いている。地政学リスク（イラン・ホルムズ海峡）・中央銀行の旺盛な需要・ドル安傾向が複合し、長期ヘッジとしての評価を見直す好機 |
+| **読者の検索意図** | 「金 投資 2026 今から」「ゴールド インフレヘッジ 効果 本当か」「金ETF GLD 日本 買い方」 |
+| **想定カテゴリ** | コモディティ / 投資指標解説 |
+| **信頼度** | **MID**〜HIGH（Fortune, intellectia.ai, SSGA, Forbes 複数媒体） |
+| **根拠ソース** | Fortune「Current price of gold: August 7, 2026」(2026-08-07) https://fortune.com/article/current-price-of-gold-08-07-2026/ ／ intellectia.ai「Gold Investment Strategy August 2026: XAU Analysis & Price Outlook」https://intellectia.ai/blog/gold-investment-strategy-august-2026-xau-outlook ／ Forbes「Gold At Record Highs: A Poor Short-Term Inflation Hedge」(2026-02-22) https://www.forbes.com/sites/bill_stone/2026/02/22/gold-at-record-highs-a-poor-short-term-inflation-hedge/ |
+| **難易度** | 中 |
+| **重複確認** | `guide-news-2026-06-30-gold-q2-crash.html`（速報的急落解説）あり。「インフレヘッジ理論の再検証+長期戦略」の角度は未掲載 |
+
+---
+
+### 候補⑦【暗号資産】日本版ビットコインETF：機関投資家79%が計画中の今、個人投資家が知っておくこと
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「日本版ビットコインETF解禁への道｜機関投資家79%が検討中・2028年承認観測を踏まえた個人投資家の備え方」 |
+| **概要（30字）** | 日本BTC ETF承認は2028年見込み。$18.4B市場を先読みし今何を準備すべきかを解説 |
+| **なぜ今か** | 日米協調介入後もBTCは$63,000台を維持し「安定資産」としての認知が上昇。Blockster報道で日本機関投資家の79%が具体的投資計画を持ちステーキング・貸付等の高度商品への関心も60%超。AMBCrypto・Benzingaが「2028年解禁・$18.4B市場」の試算を公表し規制議論が加速 |
+| **読者の検索意図** | 「ビットコインETF 日本 解禁 いつ」「BTC ETF 個人投資家 準備」「仮想通貨 NISA 対象 可能性 2026」 |
+| **想定カテゴリ** | 暗号資産 / 投資指標解説 |
+| **信頼度** | **HIGH**（AMBCrypto, Benzinga, Blockster, CoinDesk 複数独立報道） |
+| **根拠ソース** | AMBCrypto「Japan's spot Bitcoin ETF could hit $18B in 2 years after debut」https://ambcrypto.com/japans-spot-bitcoin-etf-could-hit-18b-in-2-years-after-debut-report/ ／ Benzinga「Japan's Bitcoin ETF Market Could Hit $18.4B」(2026-07) https://www.benzinga.com/crypto/cryptocurrency/26/07/60664502/japan-bitcoin-etf-market-could-hit-18-4b-by-2028-whats-driving-the-demand ／ Blockster「Japan's Institutional Crypto Sentiment Hits New Highs in 2026」https://blockster.com/japans-institutional-crypto-sentiment-hits-new-highs-in-2026 |
+| **難易度** | 中 |
+| **重複確認** | `guide-btc-crash-2026-05-19.html`・`guide-btc-crash-2026-06.html`（急落解説）あり。「ETF解禁動向+個人投資家の準備」は未掲載 |
 
 ---
 
@@ -130,9 +130,9 @@
 
 | 優先度 | 候補 | 推薦理由 |
 |---|---|---|
-| ★★★ | **候補①NVIDIA 8/26 Q2 決算前展望** | 8/26が近づくにつれ「NVIDIA 決算」の検索急増が予測される。中国ライセンス問題・バーリ警告・36アナリスト強気という3論点の整理は差別化できる。HIGH信頼度で今週公開すれば時間的優位性あり |
-| ★★★ | **候補②日銀9月利上げ確率60%超・個人投資家への実用解説** | 協調介入記事は既存だが「次の利上げで何が変わるか」の実用解説が完全空白。日経・Bloomberg・みんかぶの独立3ソースでHIGH確定。ロングテールSEO（「日銀 9月 いつ」等）で長く検索流入が取れる |
-| ★★ | **候補③オルカン純資産S&P500逆転×新NISA2年目** | 円高が進む今、「分散に切り替えるべきか」という需要が最高潮。難易度「小」で早期公開可能。NISA記事は既存（制度解説）だが本記事は「今の市場環境での選択肢」と差別化できる |
+| ★★★ | **候補②米CPI 8/12発表プレビュー** | 残り4日。発表前に公開しないと鮮度がゼロになる最時間敏感ネタ。難易度「小」で即公開できる |
+| ★★★ | **候補①NVIDIA 8/26 Q2決算前展望** | 18日の猶予があり充分に作り込める。AI株・日本の半導体関連株（イビデン等）との連動解説で差別化。HIGH信頼度 |
+| ★★ | **候補③家計消費7か月マイナスと日銀9月利上げ** | 8/6発表の最新データを即活用できる。「賃金プラス＆消費マイナス」の逆説は一般読者にとっても直感的で引き込みやすい |
 
 ---
 
