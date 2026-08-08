@@ -131,22 +131,63 @@ def age_hours(iso, now):
     return (now - ts).total_seconds() / 3600.0
 
 
-def check_workflow(owner, repo, token, wf, max_h, now):
-    """直近の実行が（completed かつ success）で、かつ max_h 以内か。"""
-    data = api(f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{wf}/runs?per_page=1", token)
-    runs = data.get("workflow_runs", [])
+def judge_runs(runs, max_h, now):
+    """純関数（テスト対象）＝実行履歴から健全性を判定する。
+
+    ⚠️ 2026-08-08 改定: **cancelled を failure と同一視しない**。
+       旧実装は直近1件だけを見て `conclusion != "success"` なら異常としていたが、
+       `cancelled` の大半は **concurrency による意図的な取り下げ**（`signal-workflows` 群の
+       3重cron冗長化や `cancel-in-progress: true` の後勝ち）であって、故障ではない。
+       実測（2026-08-06）: 失敗扱いの非Pages run 11件のうち **10件が job=cancelled・失敗stepゼロ**、
+       残り1件も GitHub 側の "Service Unavailable"（アクション取得の一時障害）だった。
+       この設計のまま cancelled が直近に来た朝があれば、番人は**故障していないのに Issue を立てる**。
+
+       新方式: ①cancelled は判定から除外して「直近の実質的な結果」を見る
+               ②ただし **max_h 以内に success が1件も無ければ異常**（＝全部 cancelled で
+                 詰まっている状態や、本当に走っていない状態は取り逃さない）
+       戻り値: (ok, note)
+    """
     if not runs:
         return False, "実行履歴なし"
-    r = runs[0]
-    a = age_hours(r["created_at"], now)
-    agetxt = f"{a:.1f}h前" if a < 48 else f"{a/24:.1f}日前"
-    if r.get("status") != "completed":
-        return True, f"実行中（{r.get('status')}）"  # 走行中はOK扱い
-    if r.get("conclusion") != "success":
-        return False, f"直近実行が失敗（{r.get('conclusion')}・{agetxt}）"
+
+    # 走行中（未完了）が最新なら OK 扱い（旧実装と同じ）
+    newest = runs[0]
+    if newest.get("status") != "completed":
+        return True, f"実行中（{newest.get('status')}）"
+
+    completed = [r for r in runs if r.get("status") == "completed"]
+    succ = [r for r in completed if r.get("conclusion") == "success"]
+    cancelled_recent = sum(1 for r in completed
+                           if r.get("conclusion") == "cancelled" and age_hours(r["created_at"], now) <= max_h)
+
+    def agetxt(r):
+        a = age_hours(r["created_at"], now)
+        return f"{a:.1f}h前" if a < 48 else f"{a/24:.1f}日前"
+
+    # ① cancelled を除いた「実質的な直近の結果」が失敗なら異常
+    substantive = [r for r in completed if r.get("conclusion") != "cancelled"]
+    if substantive and substantive[0].get("conclusion") != "success":
+        return False, f"直近実行が失敗（{substantive[0].get('conclusion')}・{agetxt(substantive[0])}）"
+
+    # ② max_h 以内に success が1件も無ければ異常（全部 cancelled で詰まる形もここで捕まる）
+    if not succ:
+        return False, f"取得範囲内に成功実行なし（cancelled {cancelled_recent}件）"
+    a = age_hours(succ[0]["created_at"], now)
     if a > max_h:
-        return False, f"{max_h}h以上動いていない（最後の成功 {agetxt}）"
-    return True, f"成功 {agetxt}"
+        extra = f"・直近{max_h}hに cancelled {cancelled_recent}件" if cancelled_recent else ""
+        return False, f"{max_h}h以上成功していない（最後の成功 {agetxt(succ[0])}{extra}）"
+
+    note = f"成功 {agetxt(succ[0])}"
+    if cancelled_recent:
+        # 故障ではないが、多発は輻輳/設計の兆候なので可視化はする（Issueにはしない）
+        note += f"（別途 cancelled {cancelled_recent}件＝concurrencyによる取り下げ・故障ではない）"
+    return True, note
+
+
+def check_workflow(owner, repo, token, wf, max_h, now):
+    """直近の実行群から健全性を判定（判定則は judge_runs＝単一の真実）。"""
+    data = api(f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{wf}/runs?per_page=20", token)
+    return judge_runs(data.get("workflow_runs", []), max_h, now)
 
 
 def check_file(owner, repo, token, path, max_h, now):
