@@ -119,4 +119,5 @@ SYNC_FILES = [
     "guide-signal-lab-063.html",
     "guide-news-2026-08-07-iran-hormuz-draft-oil-surge.html",
     "guide-signal-lab-064.html",
+    "guide-news-2026-08-08-us-jobs-shock-sp500-record.html",
 ]

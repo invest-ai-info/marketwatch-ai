@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-08", "line": '・<b>2026-08-08</b>: 📰 解説「<a href="guide-news-2026-08-08-us-jobs-shock-sp500-record.html" style="color:#0969da"><b>【8/8】米7月雇用統計-2.3万人の衝撃──S&P500最高値・「悪いニュースは良いニュース」の逆説</b></a>」公開'},
         {"date": "2026-08-08", "line": '・<b>2026-08-08</b>: 🧪 解説「<a href="guide-signal-lab-064.html" style="color:#0969da"><b>金属ロングgate 降格候補確認 FWD N=177</b></a>」公開'},
         {"date": "2026-08-07", "line": '・<b>2026-08-07</b>: 📰 解説「<a href="guide-news-2026-08-07-iran-hormuz-draft-oil-surge.html" style="color:#0969da"><b>【8/7】イランがホルムズ通行制限草案を公表──ブレント原油+3.8%急反発</b></a>」公開'},
         {"date": "2026-08-07", "line": '・<b>2026-08-07</b>: 🧪 解説「<a href="guide-signal-lab-063.html" style="color:#0969da"><b>RSI売られすぎ逆張り——グループ格差解剖（全301件）</b></a>」公開'},
