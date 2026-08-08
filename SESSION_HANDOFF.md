@@ -21,11 +21,9 @@
 >
 > ### ⚠️ 実測で分かった落とし穴（同じ轍を踏まない）
 > - **色→色の一括置換は禁止。** `#0969da` の366箇所は役割がバラバラ。RULES は**素の文字列ペアで名指し**（正規表現にすると revert が不正確になる）
-> - 🆕 **「名指しの形が実体と違う」を3回踏んだ**（記事は塗れているのに一部だけ旧色、という気づきにくい壊れ方）:
->   ①生成スクリプトの CSS は f-string ＝**波括弧が二重** ②色は CSSブロックでなく**要素の `style` 属性**にも書かれている
->   ③クラウドの新テンプレは **CSS変数 `var(--accent)` 経由**。いずれも `fstring_form()`／インライン見出しルール／変数ルールで**コード側に解決済み**。
->   **疑うときは「どこに書かれた色か」を先に数える**（`<style>`内 / f-string内 / style属性内 / CSS変数）
-> - **h1 は font-size のバリエーションが3種**（1.95rem 180本／1.85rem 51本／1.8rem 47本）。1種だけ書くと大多数を取りこぼす
+> - 🆕 **「名指しの形が実体と違う」を3回踏んだ**（f-string＝波括弧二重／`style`属性／CSS変数 `var(--accent)`。3つとも
+>   コード側で解決済み＝全文は SESSION_ARCHIVE【2026-08-08 退避】）。**疑うときは「どこに書かれた色か」を先に数える**
+> - **h1 の font-size は3種**（1.95/1.85/1.8rem）。1種だけ書くと大多数を取りこぼす
 > - **ダークで藍は 1.70:1 ＝ ほぼ不可視。** ダークの見出しは `#e6edf3`（16.02:1・既に118本が採用）を注入。マーカー `/*mw-brand*/` 付きで revert が正確
 > - 🆕🔑 **「ローカルとリモートが違う」の理由を測らずに動くな**（8/5 に2回踏みかけた）。**測り方＝ローカルから
 >   `apply_rules(..., revert=True)` して remote の blob sha と一致するか。通信ゼロ。** 一致＝差分は自分の変換だけ（送ってよい）／
@@ -105,7 +103,8 @@
 | **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
 | **ローカルミラーの遅行を解消** 🆕7/31 | `_pull_mirror.py`（ローカル専用・冪等・dry-run既定） | クラウドが公開/更新した記事を取り込む。**内容ハッシュ(git blob sha)で比較**するので「ローカルに在るが古い」も検出。取り込み内容＝リモートと同一なので **sync は「⏭️内容変更なし」でスキップ＝無駄なコミットが出ない**。`guide-new-books.html` は SYNC_FORBIDDEN のため除外。⚠️これを怠ると `mw check`・404監査・FPテストが**揃って誤検知**する（7/31 に3回） |
 | sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml`＋`is_noindex_slug`（除外の単一ソース） | 全 guide を自動収集・手動編集不要。未掲載＝noindex 対象の意図的除外（7/31 実測で55本中54本が該当＝**不具合ではない**）。⚠️新記事公開時は sync 後に **workflow を手動 trigger**（下記の push 順序） |
-| **tickerフィードの停止検知（ソース単位）** 🆕8/6 | `build_news_ticker.py` の `feed_health`＋`check_automation_health.py` §⑦（閾値=`FEEDS` の `stale_days`。テスト=**`_test_news_ticker_sources.py` 27件**） | workflow緑のまま特定フィードだけ死ぬ形（8/1 Bloomberg型）を捕捉。同日ソース10→18本（公的機関+トピック横断・バッジは実発行元）。トピック検索は監視外＝誤検知ゼロ方針・実データ誤検知0を実測 |
+| **「Run failed」の誤判定を防ぐ** 🆕8/8 | `judge_runs`（`check_automation_health.py`・テスト16件） | 8/6の失敗11件は**10件がcancelled・失敗step0**＋1件が GitHub の `Service Unavailable`＝コード起因ゼロ。旧番人は直近1件の`!=success`判定＝**誤Issueの時限爆弾**。新＝cancelled除外・閾値内にsuccess 0なら異常。⚠️`signal-workflows`群は`signals-log.json`共有＝**分割禁止**（詳細=auto-memory `reference_actions_failure_triage`） |
+| **tickerフィードの停止検知** 🆕8/6 | `build_news_ticker.py` の `feed_health`＋§⑦（閾値=`FEEDS`の`stale_days`・テスト27件） | workflow緑のまま特定フィードだけ死ぬ形（8/1 Bloomberg型）を捕捉。同日ソース10→18本（公的機関+トピック横断・バッジは実発行元）。トピック検索は監視外＝誤検知ゼロ方針 |
 
 🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
 
