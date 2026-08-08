@@ -3,6 +3,35 @@
 
 ---
 
+## 2026-08-08
+- 判定: ✅ 公開済み
+- 選定トピック: 米7月雇用統計が-2.3万人で歴史的ミス──S&P500最高値7,758・ナスダック週間+5.2%・ドル円157円台「悪いニュースは良いニュース」の逆説と日本市場への論点を中立整理（カテゴリ: マクロ・米国雇用・FRB金融政策・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: BLS公式で確認された7月NFP -2.3万人（vs予想+8万人大幅下振れ）＋S&P500史上最高値7,758＋ドル円157円台の円高という3大確定事実。昨日（8/7）の記事はホルムズ原油↑反発。本日は「雇用悪化なのに株高」という「悪いニュースは良いニュース」の逆説構造を解説。前2か月の-10.3万人遡及修正・ナスダック週間+5.19%・アトラシアン+35%という確定数値あり。日本人投資家向けに月曜（8/10）開場への論点整理として付加価値も高い。
+- 出典（10系統以上確認済み）:
+  - BLS公式「THE EMPLOYMENT SITUATION — JULY 2026」（2026-08-07, https://www.bls.gov/news.release/archives/empsit_08072026.htm）
+  - Yahoo Finance「US nonfarm payrolls fall in July; unemployment rate eases to 4.1%」（2026-08-07）
+  - Quartz「U.S. payrolls fell 23000 in July 2026, first drop in months」（2026-08-07）
+  - TheStreet「Stock Market Today, Aug.7: Nasdaq rises after July jobs report shows unexpected losses」（2026-08-07）
+  - Yahoo Finance「Stock market today: Dow, S&P 500, Nasdaq rise after July jobs report surprises」（2026-08-07）
+  - STL.News「U.S. Stock Market Today - Friday, August 7, 2026」（2026-08-07）
+  - BigGo Finance「Jobs Shock Eases Rate Hike Pressure; S&P 500 Hits Record High」（2026-08-07）
+  - BNN Bloomberg「Japan's yen surges after US jobs data, traders wary of intervention risk」（2026-08-07）
+  - Yahoo Finance（円）「Japan's yen surges after US jobs data, traders wary of intervention risk」（2026-08-07）
+  - Nikkei Asia「Japan's yen jumps after US jobs data」（2026-08-07）
+  - Investing.com「Atlassian Q4 FY2026 earnings call transcript; shares jump 35%」（2026-08-07）
+  - Forbes Australia「Atlassian defies 'SaaSpocalypse' fears, jumps 35% after strong earnings」（2026-08-07）
+- コンプライアンス監査:
+  - 第一Opus: 🟡グレー→2件修正適用（①シナリオA内のアドバンテスト言及に「過去の事例・推奨非該当」注記追加②「9月利上げ観測ほぼ消えた」→一部報道の見方として帰属明示）→最終🟢白
+  - 第二独立Opus: 🟢白（kinsho-v1×3箇所・禁止語ゼロ・銘柄推奨なし・出典10系統以上・noindex不在・将来断定なし・全6項目パス）
+- 品質ルーブリック: ②⚠️→FOMC初出に「連邦公開市場委員会：FRBの政策決定委員会」を括弧追記→全5観点✅
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典10系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告15件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-08-us-jobs-shock-sp500-record.html
+- commit: 557e16c（main へ push 済み）
+
+---
+
 ## 2026-08-07
 - 判定: ✅ 公開済み
 - 選定トピック: イラン議会がホルムズ海峡通行制限草案を公表──ブレント原油+3.8%/$82.49急反発、日本エネルギーコストへの影響を中立整理（カテゴリ: 地政学・エネルギー・コモディティ・マクロ）
