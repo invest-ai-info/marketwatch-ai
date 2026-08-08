@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-08-09 | 🤖 下書き生成 | reit-basics | 投資の基礎知識
+
+- **基準日**: 2026-08-09（JST）
+- **topic**: REITの仕組み（不動産を小口で持つということ）
+- **key**: `reit-basics`
+- **生成ファイル**: `drafts/draft-reit-basics.html`
+- **シリーズ**: 💰 投資の基礎知識
+- **参照した出典URL**:
+  - https://kabu.com/kabuyomu/money/1279.html （三菱UFJ eスマート証券：REITの仕組み）
+  - https://www.smbc.co.jp/kojin/money-viva/kihon-no-ki/0019/ （三井住友銀行：REITの仕組み）
+  - https://info.monex.co.jp/news/2025/20250221_02.html （マネックス証券：金利上昇とJ-REIT）
+  - https://media.rakuten-sec.net/articles/-/21727 （楽天証券トウシル：不動産タイプ別の特徴）
+  - https://money-campus.net/archives/846 （お金のキャンパス：J-REITポートフォリオのタイプ別特徴）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「特定の銘柄を推奨するものではありません」と明記）
+  - ✅ 断定・利益保証の表現なし（「絶対」「必ず」「100%」「儲かる」等は不使用）
+  - ✅ kinsho-v1免責：冒頭バナー・本文末 p.disclaimer・フッターの3箇所に挿入
+  - ✅ 出典は一般的な金融情報サービス・証券会社のサイト
+  - ✅ `<meta name="robots" content="noindex,nofollow">` 入り（下書き検索除外）
+- **SVGの状況**:
+  - 図1（REITの資金循環概念図）：生成済み。要ライト/ダーク実機確認（darkテーマ時のSVG背景色とテキスト色）
+  - 図2（金利上昇とREIT価格のシーソー概念図）：生成済み。要ライト/ダーク実機確認
+  - 図3（TODO）：用途別景気感応度は表形式で代替済み。SVG概念図は省略（表で十分な情報量）
+- **人間がやる残作業**:
+  1. SVG図1・図2のライト/ダーク実機ブラウザ確認
+  2. タイトル・見出しの微調整（必要に応じて）
+  3. compliance-reviewer（Opus）監査
+  4. 公開は毎朝08:40の autodraft-publish が自動ゲート（check_guide_draft.py → Opusコンプラ → 公開）
+
+---
+
 2026-08-08 autopublish: 🚩ゲート赤／インフラ未解決（3日連続）: key=margin-trading / `check_guide_draft.py` の検査#9が `apply_brand_color` モジュール（origin/mainに不在）を import しようとして ModuleNotFoundError → EXIT=1。固定オラクル＝ゲートの編集・迂回は禁止のため公開せずエスカレ。**人間必須の対処**: ローカルで `apply_brand_color.py` を作成し SYNC_FILES に追加→push → ゲート EXIT=0 確認 → 次回 autopublish が自動再ピック（margin-trading → commodity-basics → correlation-risk → ipo-basics の順）。
 
 ---
