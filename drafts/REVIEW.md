@@ -2,6 +2,53 @@
 
 ---
 
+## 2026-08-09 | 🚩 要人間レビュー | signal-lab-065 | AIシグナル研究日誌
+
+- **記事**: `drafts/draft-signal-lab-065.html`（#065 もみあい×ショート FWD N=157 全域マイナス確定）
+- **verify.py**: ✅ GREEN 6/6 クレーム緑・SVG警告0件
+- **コンプラ判定**: 🔴黒・要協議（Opus, 2026-08-09）
+
+### ブロッカー（必須修正・弁護士協議不要の機械的修正）
+
+**B-1: `data-disclaimer="kinsho-v1"` 属性が全箇所欠落 + 無登録開示文がない**
+
+以下3箇所に属性追加と無登録明示文の追加が必要（姉妹記事 `guide-signal-lab-059.html` から移植）:
+
+1. **冒頭バナー**（約250行）: `<div class="disclaimer-banner"` → `<div class="disclaimer-banner" data-disclaimer="kinsho-v1"` に変更。バナー内に一文追加:
+   「当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。」
+
+2. **本文末免責**（約975行）: `<p class="disclaimer"` → `<p class="disclaimer" data-disclaimer="kinsho-v1"` に変更
+
+3. **フッター**（最終部）: フッター内に `<div data-disclaimer="kinsho-v1">` 行を新設（既存フッターに免責文なし）
+
+### グレー修正案（表現軟化のみ・数値/SVG不変）
+
+| # | 行 | 修正箇所 |
+|---|---|---|
+| G1 | 871 | 「方向が逆ならロングの方が有利」→「ロングとの非対称：前向き集計ではロング側が約14pp高い勝率となりました」 |
+| G2 | 893 | 「ロングの方が有利なはずです」→「…ロング側の検証を進める動機になります」 |
+| G3 | 880 | 「もみあいでショートを打つ理由は統計的にはない」→「統計的な裏付けは今回の集計では見出せませんでした」 |
+| G4 | 823 | 「ゼロをまたいでいる」→「損益分岐43%をまたいでいる」（事実誤り修正、数値不変） |
+| G5 | 412 | 「という計算になります」→「過去データ上は…に相当する計算です」 |
+| G6 | 278 | 「全方位で損失」→「全カテゴリで損益分岐を下回りました」 |
+
+### その他指摘（任意）
+
+- 324/331/338行: #019・#029・#059のリンクが `href="#"` → #059は `guide-signal-lab-059.html` が実在
+- 897行と902行で `id="tracker"` の h2 が重複（読者に二重見出し）
+
+### 修正後の手順
+
+修正完了後:
+1. `git checkout -- signal_lab_verify.py finalize_signal_lab.py publish_article.py check_site_consistency.py`
+2. `python signal_lab_verify.py drafts/draft-signal-lab-065.html drafts/labnotes/lab-065-claims.json`（EXIT=0確認）
+3. 独立Opusによる最終確認
+4. `python finalize_signal_lab.py 065 2026-08-09`
+5. `python publish_article.py --file guide-signal-lab-065.html --category "AIシグナル研究日誌" --emoji 🧪 --card-title "もみあい×ショート FWD N=157 全域マイナス確定" --desc "前向きN=157でE(R)CI全域マイナス確定。IS63.6%のエッジはフィッティングだった"`
+6. `python check_site_consistency.py` → git commit → PUSH-MAIN
+
+---
+
 ## 2026-08-09 | 🤖 下書き生成 | reit-basics | 投資の基礎知識
 
 - **基準日**: 2026-08-09（JST）
