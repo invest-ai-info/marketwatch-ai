@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-08-10 | 🚩 ゲート赤／ゲート不具合疑い（2日連続）| margin-trading | autopublish
+
+- **対象**: `drafts/draft-margin-trading.html`（信用取引の基礎）
+- **決定論ゲート**: 🔴 RED（EXIT=1）
+- **エラー内容**: `ブランドカラー検査を実行できない (ModuleNotFoundError: No module named 'apply_brand_color')`
+- **状況**: 昨日（2026-08-09）と同じ問題が継続。`git checkout origin/main` で固定ゲート4本を確定版に戻した後も `apply_brand_color.py` は `origin/main` に存在しない。
+- **影響範囲**: この問題は `margin-trading` 固有ではなく **全ての下書き（34. commodity-basics 以降も含む全キュー）** に影響する。`check_guide_draft.py` 検査項目9が `apply_brand_color` を import しており、モジュールが無い限り全ファイルでゲート赤となる。
+- **対処**: 固定オラクル原則によりゲート編集禁止。`apply_brand_color.py` をリポジトリに追加するか、ゲートの import 依存を修正する作業は**人間のローカルセッション専任**。
+- **下書き**: `drafts/draft-margin-trading.html` は保持
+
+---
+
 ## 2026-08-10 | ✅ 公開完了 | signal-lab-066 | signal-lab-daily
 
 - **記事番号**: #066
