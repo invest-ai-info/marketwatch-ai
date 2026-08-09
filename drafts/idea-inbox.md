@@ -110,3 +110,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://link.springer.com/chapter/10.1007/978-4-431-55501-8_23 / https://www.sciencedirect.com/science/article/abs/pii/S0922142501000676
 - 検証案: NKD=F日足データで月別リターンを全期間・2010年以降で集計し、上半期月群（1〜6月）vs下半期月群（7〜12月）の平均リターン・勝率を比較。続いてjp-rankings.json銘柄で時価総額別・PBR別の効果差を確認。価格データのみで完結。
 - タグ: ◎
+
+## 2026-08-09（JST）
+### slug: ivol-puzzle-jp
+- 名前: 固有ボラティリティ・パズル（高IVOL→低リターン・日本株版）
+- 主張: 市場モデル（CAPM）の残差として計算される固有ボラティリティ（IVOL）が高い銘柄は、翌月の株価リターンが有意に低くなる傾向がある【出典の主張・未検証】。Ang et al.（2006 JF）が米国で確認し、同グループの2009年論文で23カ国（日本含む）でも負の関係を報告。総ボラティリティ/ベータを使う「低ボラアノマリー（low-volatility 検証済み）」とは異なり、市場リターンを除去した残差リスク成分に特化した別角度の検証。2025年のWiley Financial Management掲載論文でも「IVOL逆説はアービトラージ制約で持続」と確認。
+- 出典: https://onlinelibrary.wiley.com/doi/full/10.1111/fima.70058 / https://alphaarchitect.com/idiosyncratic-volatility/
+- 検証案: signals-log/jp-rankings銘柄の日足データでTOPIX代理（NKD=F）への過去21日回帰を実施し残差標準偏差（IVOL）を月次計算。高IVOL上位三分位 vs 低IVOL下位三分位の翌月リターン・勝率を比較。価格データのみで完結。
+- タグ: ◎
+
+### slug: net-issuance-anomaly-jp
+- 名前: 株式純発行アノマリー（希薄化企業は割高・日本株版）
+- 主張: 前期比で発行済株式数が増加した銘柄（増資・新株予約権行使等）は翌年の株価リターンが低く、減少した銘柄（自社株買いによる消却）は高い傾向がある【出典の主張・未検証】。Loughran & Ritter（1995）が米国で確認。Kang, Kim & Stulz（1999）が日本株で公募増資後の長期マイナス超過リターンを報告。Lu（NBER w23809, 2017）が日本・英国・仏独加5カ国で11アノマリーを横断検証し純発行アノマリーが有意に機能すると確認。背景＝経営者が株価過大評価タイミングを見計らって増資する「マーケットタイミング仮説」。japan-buyback-post（短期イベント効果・watchリスト）とは独立したクロスセクション年次比較の別仮説。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S0304405X09001007 / https://www.nber.org/system/files/working_papers/w23809/w23809.pdf
+- 検証案: jp-rankings銘柄の財務データから「発行済株式数変化率」を年次計算し、増加率上位三分位（希薄化）vs 減少三分位（自社株買い消却）の翌年リターン差を算出。jp-asset-growth（総資産成長・queued）とは変数が異なるため独立検証。
+- タグ: ○
+
+### slug: net-payout-yield-jp
+- 名前: 総株主還元利回り（配当+自社株買い統合ファクター・日本株版）
+- 主張: 配当利回りと自社株買い利回りを合算した「ネット・ペイアウト・イールド」（NPY＝（配当＋純自社株買い消却額）÷株価）が高い銘柄群は、配当利回り単独より翌年リターンの予測力が有意に高い傾向がある【出典の主張・未検証】。Ibbotson & Straehl（2017）が米国1871〜2014年で「NPYは実現リターンのほぼ全説明力を持つ」と報告。Meb Faberの実証でも米国株・国際株で配当+自社株買いの合算指標が優位。日本では2023年以降のTSE資本効率要請で配当+自社株買いが過去最高水準（FY2025: 22兆円超）となり環境的追い風が強い。jp-high-dividend-yield（未消化・配当のみ）との比較で「自社株買い付加価値」も同時検証可能。
+- 出典: https://quantpedia.com/strategies/net-payout-yield-effect / https://mebfaber.com/wp-content/uploads/2023/05/Shareholder-Yield.pdf
+- 検証案: jp-rankings銘柄の財務データから「配当総額＋自社株買い消却額」をjoinしNPYを計算。高NPY三分位 vs 低NPY三分位の翌年リターン差を算出。jp-high-dividend-yield（配当のみ版）との差分で自社株買い要素の追加効果を定量化。
+- タグ: ○
