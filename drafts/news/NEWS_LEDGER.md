@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-08-09
+- 判定: ✅ 公開済み
+- 選定トピック: トランプ政権がポリシリコンに15%関税＋最低輸入価格を設定（Section 232）──半導体・太陽光サプライチェーン再編と日本投資家への論点を中立整理（カテゴリ: 貿易政策・半導体・エネルギー・米中関係）
+- スコア: 話題性 4 / 影響 5 / 付加価値 5（合計 14/15）
+- 選定理由: 2026年8月6日（現地時間）にトランプ大統領がポリシリコン関連品にSection 232・15%関税と最低輸入価格（MIP：原料$21/kg・ウエハー$100/kg・セル$0.22/W・モジュール$0.38/W）を設定（12月4日発効）。FSLR+8.95%・ENPH+6%・SEDG+7.6%の太陽光株急騰を招いた。競合しうる直近記事（8/4 Trump-Iran原油・8/7 イラン草案・8/8 NFP）と題材が被らず新規トピック。中国が世界シェア約80%を握るポリシリコンという素材切り口は半導体×太陽光×AI安全保障の三層構造を持ち付加価値が高い。日本の信越化学/Hemlock角度での日本投資家関連性も確認。ホルムズ関連はすでに2本（8/4・8/7）でカバー済みのため見送り。
+- 出典（12媒体以上確認済み）:
+  - Bloomberg 2026-08-06（Trump Signs Order Imposing Tariffs on Imported Polysilicon）
+  - Nikkei Asia 2026-08-07（US imposes 15% tariff on polysilicon in pushback against China）
+  - CNBC 2026-08-07（Solar stocks shine after Trump extends China tariffs to polysilicon products）
+  - GHY International 2026-08-07（U.S. Section 232 Tariff on Polysilicon, effective December 4, 2026）
+  - PV Tech 2026-08-07（US introduces 15% tariffs and minimum prices for polysilicon imports under Section 232）
+  - Supply Chain Dive 2026-08-07（Trump imposes 15% tariff on polysilicon imports for chips, solar power）
+  - Mercom India 2026-08-07（US Imposes 15% Tariff on Polysilicon Derivatives, Sets Solar Import Prices）
+  - Troutman Pepper Locke 2026-08-07（Polysilicon Under Pressure: New Section 232 Tariffs）
+  - US News Money 2026-08-04（US Weighs Polysilicon Price Floor, Tariffs to Counter China）
+  - Yahoo Finance 2026-08-04（Exclusive-US weighs polysilicon price floor, tariffs）
+  - Benzinga 2026-08-07（Trump Targets China's Grip on Global Polysilicon Supply With 15% Tariff）
+  - Seeking Alpha / StockTwits 2026-08-07（FSLR+8.95%・ENPH+6%・SEDG+7.6%の株価反応）
+- コンプライアンス監査:
+  - 第一Opus: 🟡グレー→2件修正適用（①シナリオA内の個別ティッカーと株価方向を結びつける記述を「報道された反応」の過去形に差し替え ②「推奨する」という語を「各社の開示情報等でご自身でご確認いただきたい」に変更）→最終🟢白
+  - 第二独立Opus: 🟢白（kinsho-v1×3箇所・禁止語ゼロ・銘柄推奨なし・noindexなし・出典12媒体・断定的将来予測なし・全6項目パス）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典12媒体以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告15件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-09-trump-polysilicon-tariff-solar-chips.html
+- commit: 3175344（main へ push 済み）
+
+---
+
 ## 2026-08-08
 - 判定: ✅ 公開済み
 - 選定トピック: 米7月雇用統計が-2.3万人で歴史的ミス──S&P500最高値7,758・ナスダック週間+5.2%・ドル円157円台「悪いニュースは良いニュース」の逆説と日本市場への論点を中立整理（カテゴリ: マクロ・米国雇用・FRB金融政策・為替）
