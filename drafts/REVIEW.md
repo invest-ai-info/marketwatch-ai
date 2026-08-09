@@ -2,6 +2,46 @@
 
 ---
 
+## 2026-08-09 | ✅ 下書き生成完了 | market-hours | autodraft
+
+- **基準日（JST）**: 2026-08-09（UTC 20:31 → JST 翌5:31）
+- **topic**: #38「取引時間の話（東京・ロンドン・NYと動きやすい時間帯）」
+- **キー**: `market-hours`
+- **生成ファイル**: `drafts/draft-market-hours.html`
+- **カテゴリ**: 投資の基礎知識
+- **参照出典URL**:
+  - JPX公式 取引時間: https://www.jpx.co.jp/english/equities/trading/domestic/01.html
+  - 松井証券 東証取引時間延伸（2024年11月）: https://www.matsui.co.jp/news/2024/detail_1018_01.html
+  - TradingHours.com – LSE: https://www.tradinghours.com/markets/lse
+  - Vantage Markets – Global Stock Market Hours: https://www.vantagemarkets.com/academy/stock-market-trading-hours/
+  - OANDA – Best Time to Trade Forex: https://www.oanda.com/us-en/trade-tap-blog/trading-knowledge/when-is-the-best-time-for-forex-trading/
+  - Babypips – Forex Trading Sessions: https://www.babypips.com/learn/forex/forex-trading-sessions
+  - FXOpen – Forex Time Zones & Overlaps: https://fxopen.com/blog/en/forex-trading-time-zones-market-hours-and-overlaps/
+  - FXView – Why Do Spreads Widen: https://fxview.com/global/blogs/why-do-forex-spreads-widen-6-critical-reasons
+  - みんかぶFX – 米国雇用統計: https://fx.minkabu.jp/indicators/US-NFP
+  - IG証券 – 非農業部門雇用者数: https://www.ig.com/jp/financial-events/non-farm-payrolls
+
+- **自己コンプラチェック**:
+  - ✅ kinsho-v1 免責：3箇所（冒頭バナー＋本文末＋footer）に `data-disclaimer="kinsho-v1"` 属性付きで挿入済み
+  - ✅ 個別銘柄の売買推奨：なし（取引時間の一般的な説明のみ）
+  - ✅ 断定・利益保証：「絶対」「必ず」「100%」「保証」等の禁止語なし
+  - ✅ `<meta name="robots" content="noindex,nofollow">` 挿入済み
+  - ✅ 出典：全ての数値（取引時間・オーバーラップ・指標発表時刻）はWebSearchで照合・出典明記
+  - ✅ サマータイム変動の注意書き：本文・表内に明記
+
+- **SVG概念図**:
+  - SVG①：3市場のリレータイムライン（冬時間JST・24時間）← ライト/ダーク実機確認が必要
+  - SVG②：FXボラティリティの時間帯別概念図（ロンドン×NY重複帯ピーク）← 同上
+  - TODO(SVG): スプレッドの時間帯別変化（デッドゾーンでの拡大）の概念図 → 本文にTODOコメント記載済み
+
+- **人間の残作業**:
+  1. SVG①②のライト/ダーク実機確認（dark mode でs-bar-*, s-note-* の色が読みやすいか）
+  2. タイトル微調整（必要に応じて）
+  3. TODOのSVG③（スプレッド変化図）追加（任意）
+  4. 公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-08-09 | 🚩 ゲート赤／ゲート不具合疑い | margin-trading | autopublish
 
 - **対象**: `drafts/draft-margin-trading.html`（信用取引の基礎）
