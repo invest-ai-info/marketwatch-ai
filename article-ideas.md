@@ -1,155 +1,160 @@
-# 💡 記事ネタ候補（基準日: 2026-08-09 JST）
+# 💡 記事ネタ候補（基準日 JST: 2026-08-10）
 
-> 編集者向け内部メモ。サイト未公開。公開時は CLAUDE.md の 8 ステップ＋compliance-reviewer 監査が必須。
-
----
-
-## 📰 当日トレンド要約（2026-08-09 早朝時点）
-
-**S&P500が雇用統計ショック後に最高値更新（8/8速報記事公開済み）**。次の焦点は**8/12発表の米CPI（残り3日）**と**8/26のNVIDIA Q2決算（残り17日）**に移行。国内では日銀9月利上げ確率が40%超に浮上し、日米協調介入（8/3）から1週間でドル円が158円台に押し戻されている「介入の定着しない円高」が話題の中心。新NISAでは円高局面でオルカン・S&P500の円建て基準価額が下落し「為替ヘッジをどうするか」「高配当株に乗り換えるべきか」の疑問が増加。コモディティでは金が地政学プレミアム（中東・ホルムズ）を抱えたまま$4,000台を維持し再評価ニーズが続いている。
+> 生成: 2026-08-10 07:39 JST（スケジュールタスク `article-idea-scout` による自動更新）
 
 ---
 
-## 📋 記事ネタ候補一覧（8件、HIGH 6件 / MID 2件）
+## 📰 当日トレンド要約
+
+日銀の9月追加利上げ観測が急速に高まる中、8月12日の米国CPI発表に市場の目が集まっている。ウォーシュFRB議長体制下で利上げ再開シナリオが現実味を帯び、「リスクオフと強円」が日本株の上値を抑える構図。一方、シルバー（銀）が太陽光・AI需要で最高値圏を更新し続け、NVIDIAの8月26日決算に向けてAI半導体テーマの物色が再加速。国内では新NISA経由の投信流入が上半期12.5兆円と過去最高を更新し、個人投資家の資金が市場を下支えしている。
 
 ---
 
-### 候補①【個別銘柄・米国株】NVIDIA 8月26日 Q2 決算前展望：AI株最重要イベントの注目点と3シナリオ
+## 候補一覧（8件：HIGH 6件 / MID 2件）
+
+---
+
+### 📌 候補①：日銀9月利上げ観測を徹底解説――1.0%からの次の一手と円相場
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「NVIDIA 8月26日 Q2決算プレビュー｜売上900億ドル超予想・中国ライセンス問題・3シナリオで個人投資家が押さえる5点」 |
-| **概要（30字）** | 8/26発表NVDAのQ2決算。AI需要・中国問題・日本半導体株との連動を整理 |
-| **なぜ今か** | 発表まで17日。TSMCがQ2売上+36%増・純利益+77%超と大幅増益でAI需要が再確認済み。AMD・Microsoftの決算もAIデータセンター需要の強さを示し「NVDAへの期待値が高すぎる」vs「さらに上振れる」論争が活発化。S&P500最高値更新直後でAI関連株への注目が最高潮、発表前の整理記事ニーズが高い |
-| **読者の検索意図** | 「NVIDIA 決算 いつ 2026」「NVDA 株価 今後 8月」「エヌビディア 日本株 半導体 影響」 |
-| **想定カテゴリ** | 個別銘柄解説 / AI・半導体テーマ |
-| **信頼度** | **HIGH**（Motley Fool・Yahoo Finance・Silicon Analysts 複数独立報道） |
-| **根拠ソース** | Motley Fool「TSMC Just Announced Fantastic News for Nvidia Shareholders」(2026-07-16) https://www.fool.com/investing/2026/07/16/tsmc-just-announced-fantastic-news-for-nvidia-shar/ ／ Yahoo Finance「Nvidia vs TSM—Earnings Reveal AI Hardware Power Split」https://finance.yahoo.com/markets/stocks/articles/nvidia-vs-tsm-earnings-reveal-134322690.html ／ Silicon Analysts「Semiconductor Earnings Tracker — TSMC, NVIDIA, AMD, ASML」https://siliconanalysts.com/earnings |
+| **仮タイトル案** | 「日銀は9月に動くか？利上げ観測が急浮上した3つの理由と円・株への影響」 |
+| **30字概要** | 日銀の次回利上げ時期と投資家への実質的影響をわかりやすく解説 |
+| **なぜ今か** | 7月31日に1.0%で据え置いたが、9月会合での追加利上げ確率が急上昇。日米協調介入後に「円安放置は不可」の政策メッセージが強まった |
+| **検索意図** | 「日銀 9月 利上げ」「円高 株 影響」「日銀 政策金利 2026」 |
+| **想定カテゴリ** | マーケット戦略 / 金融政策解説 |
 | **難易度** | 中 |
-| **重複確認** | `guide-news-2026-08-05-nikkei-rally-ai-semis-ibiden.html`（速報）あり。「NVDA 8/26決算前の総合プレビュー」は未掲載 |
+| **信頼度** | **HIGH**（CNBC・Bloomberg・BofA・Japan Timesが独立報道） |
+| **根拠ソース** | CNBC 2026-07-31「BOJ holds rates at 1%」https://www.cnbc.com/2026/07/31/boj-rates-yen-intervention-inflation-japan.html ／ Japan Times 2026-08-06「BofA sees yen jumping 6%」https://www.japantimes.co.jp/business/2026/08/06/economy/boa-yen-expectations/ ／ StreamlineFeed「Bank of Japan Signals Accelerated September Rate Hike」https://streamlinefeed.co.ke/news/bank-of-japan-september-rate-hike-yen-support |
+| **重複確認** | `guide-auto-boj-2026-07-31.html`（7月BOJ速報）あり → 「9月利上げ確率と投資家へのインパクト」角度で差別化 |
 
 ---
 
-### 候補②【最緊急・マクロ指標】米CPI（7月分）8月12日発表直前：インフレ再加速？FRB9月判断の読み方
+### 📌 候補②：銀（シルバー）が静かに最高値圏へ――AI・太陽光・供給不足の三重構造
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「8月12日 米CPI発表の前に知っておきたいこと｜インフレ再燃なら利上げ継続？ドル円と日本株への波及を3シナリオで解説」 |
-| **概要（30字）** | 7月CPI 8/12 発表。4月実績3.8%から鈍化か再加速かで株・ドル円が動く |
-| **なぜ今か** | 発表まで**3日**（最緊急）。雇用統計ショック後にFRBの利上げ観測は後退したが、CPIが再び3.8%超なら9月利上げ観測が戻り市場が再動揺する可能性。日本人投資家が最も影響を受けるドル円・輸出株・NISA外貨ファンドへの影響をシナリオ別に整理した解説が不足 |
-| **読者の検索意図** | 「CPI 発表 日本時間 8月」「インフレ FRB 利上げ 利下げ いつ」「ドル円 CPI 影響 2026」 |
-| **想定カテゴリ** | 投資指標解説 / マクロ戦略 |
-| **信頼度** | **HIGH**（BLS公式スケジュール確定、Bloomberg・外為どっとコム複数独立報道） |
-| **根拠ソース** | Bloomberg「S&P500は反発、雇用市場の急減速で利上げ観測後退」(2026-08-07) https://www.bloomberg.com/jp/news/articles/2026-08-07/TJEGWWKK3NYA00 ／ 外為どっとコム「S&P500見通し（8/7〜14）7,850を試せるか7,500まで押すか」(2026-08-07) https://www.gaitame.com/media/entry/2026/08/07/121157 ／ 野村証券「米金融政策見通しを変更 年2回の利下げから据え置きへ」https://www.nomura.co.jp/wealthstyle/article/0746/ |
+| **仮タイトル案** | 「金より面白い？銀価格が70ドル超に急騰した理由――AI需要・太陽光・6年連続供給不足」 |
+| **30字概要** | 銀が金を上回る勢いで急騰している構造的背景を初心者向けに解説 |
+| **なぜ今か** | 8月第1週にシルバーが週間+11.6%の急騰。太陽光パネル・AIデータセンター・EV向け需要が重なり6年連続で供給不足。金の陰に隠れた「次のコモディティテーマ」として注目度急上昇 |
+| **検索意図** | 「シルバー 価格 急騰 2026」「銀 投資 初心者」「SI=F 見通し」 |
+| **想定カテゴリ** | 投資指標解説 / コモディティ |
 | **難易度** | 小 |
-| **重複確認** | `guide-auto-us_cpi-2026-08-12.html`（自動生成・速報）あり。「発表直前のシナリオ別影響解説」は未掲載で差別化できる |
+| **信頼度** | **HIGH**（CNBC・Carbon Credits・Mining Weekly・BullionVault） |
+| **根拠ソース** | CNBC 2026-06-25「Gold hovers around $4,000, silver holds below $60」https://www.cnbc.com/2026/06/25/gold-silver-price-rally-invest-interest-rates.html ／ Carbon Credits「Silver in 2026 and Beyond」https://carboncredits.com/silver-in-2026-and-beyond-rising-prices-solar-substitution-and-a-market-still-in-deficit/ ／ HokaNews 2026-08「Gold and Silver Surge to Record Weekly Gains」https://www.hokanews.com/2026/08/gold-and-silver-surge-to-record-weekly.html |
+| **重複確認** | `guide-news-2026-06-30-gold-q2-crash.html`（金の下落）あり → 銀は別テーマとして差別化OK |
 
 ---
 
-### 候補③【マクロ・日本経済】実質賃金6か月プラスでも家計消費7か月マイナスの謎：日銀9月利上げへの含意
+### 📌 候補③：NVIDIA 8月26日決算プレビュー――AI相場の次の分岐点
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「実質賃金が増えても消費が増えない理由｜家計消費7か月連続マイナスと日銀9月利上げ確率40%超の関係を解説」 |
-| **概要（30字）** | 6月家計消費▲3.3%（予想+1%を大幅下回り）。予防的貯蓄・物価不信が消費を抑える構図 |
-| **なぜ今か** | 8/6に総務省発表。Bloomberg・Yahoo Finance が即日報道。「賃金プラス＆消費マイナス」の逆説は日銀が9月利上げを判断する上での最大の不確実材料。協調介入（8/3）で9月利上げ観測が前倒しになる一方、消費の弱さが利上げの足かせになる「板挟み」構図を解説すると独自性が出る |
-| **読者の検索意図** | 「家計消費 マイナス なぜ 2026」「実質賃金 消費 増えない 理由」「日銀 9月 利上げ 確率 2026」 |
-| **想定カテゴリ** | 経済指標解説 / 日本マクロ |
-| **信頼度** | **HIGH**（Bloomberg, Yahoo Finance, 横浜総研コラム 複数独立報道） |
-| **根拠ソース** | Bloomberg「日銀追加利上げ予想は9月視野に前倒し進む、円安阻止の日米介入受け」(2026-08-03) https://www.bloomberg.com/jp/news/articles/2026-08-03/TJ62GHKK3NYA00 ／ 横浜総研「日銀、物価上振れへの警戒感を強める 9月利上げ可能性も」(2026-08-03) https://www.yokohama-ri.co.jp/html/report/pdf/column260803_kitada.pdf ／ 明治安田AM「為替見通し（2026年8月3日）」https://www.myam.co.jp/market/report/2026/20260803-2020098994.html |
+| **仮タイトル案** | 「NVIDIA 8月26日決算完全プレビュー――売上9.1兆円の大台乗せなるか、日本株への波及も解説」 |
+| **30字概要** | NVIDIA決算がAI半導体テーマ全体の方向感を左右する理由をわかりやすく整理 |
+| **なぜ今か** | 8月26日に四半期決算発表予定。売上高$91B（約9.1兆円）が目安で、超過なら日本のAI半導体関連株（イビデン・レーザーテック・信越化学等）に追い風 |
+| **検索意図** | 「NVIDIA 決算 8月 2026」「AI 半導体 日本株 影響」「NVDA 見通し」 |
+| **想定カテゴリ** | 速報 / 個別銘柄解説 |
 | **難易度** | 中 |
-| **重複確認** | `guide-auto-boj-2026-07-31.html`（7月BOJ決定速報）あり。「家計消費データ×日銀判断の板挟み解説」は未掲載 |
+| **信頼度** | **HIGH**（Motley Fool・FinanceCalendar・FX Leaders・Intellectia） |
+| **根拠ソース** | Motley Fool 2026-08-06「History Says This Is What Will Happen to Nvidia Stock After Aug. 26」https://www.fool.com/investing/2026/08/06/history-says-this-is-what-will-happen-to-nvidia-st/ ／ FX Leaders 2026-08-04「NVDA Reclaims $210」https://www.fxleaders.com/news/2026/08/04/nvidia-stock-forecast-today-nvda-reclaims-210-as-ai-demand-outweighs-financing-concerns/ ／ Intellectia「NVIDIA Stock Analysis August 2026」https://intellectia.ai/blog/nvda-stock-analysis-august-2026 |
+| **重複確認** | `guide-news-2026-08-05-nikkei-rally-ai-semis-ibiden.html`（AI株速報）あり → 「NVDA決算前総合プレビュー」は未掲載で差別化OK |
 
 ---
 
-### 候補④【為替・マクロ】協調介入から1週間、ドル円がなぜ158円台に戻ったのか：介入の限界と投資家の正しい構え方
+### 📌 候補④：新NISA上半期12.5兆円の記録的流入――何が買われ、どこへ向かうか
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「日米協調介入から1週間でドル円が158円台に戻ったのはなぜ？介入の仕組みと限界・NISA外貨資産保有者が取るべき行動を解説」 |
-| **概要（30字）** | 8/3介入で157円台に急騰も1週間で158円超に押し戻し。構造的ドル高と介入効果の限界を解説 |
-| **なぜ今か** | 8/3の日米協調介入確認（1998年以来28年ぶり）後、8/6〜8時点でドル円が158円台に戻りつつある（Russell Investments, CNBC報道）。「なぜ介入しても円安に戻るのか」という疑問が投資家の間で最大の話題。外貨資産（オルカン・ドル建て債券等）を持つNISA投資家が「為替リスクをどう考えるか」の教育記事ニーズが特に高い |
-| **読者の検索意図** | 「ドル円 介入 効果 なぜ戻る」「為替介入 限界 仕組み」「円高 NISA 外国株 どうする 2026」 |
-| **想定カテゴリ** | マーケット戦略 / 為替・FX入門 |
-| **信頼度** | **HIGH**（CNBC, Russell Investments, 野村証券ウェルスタイル 複数独立報道） |
-| **根拠ソース** | CNBC「Japan-U.S. yen intervention: impact on global currency markets」(2026-08-07) https://www.cnbc.com/2026/08/07/japan-us-yen-intervention-global-currency-markets.html ／ Russell Investments「Will coordinated FX intervention in Japan work?」(2026-08-07) https://russellinvestments.com/content/ri/us/en/insights/russell-research/2026/08/FX-intervention-Japan.html ／ 野村証券「2026年末の米ドル円見通しを152.5円に引き上げ」https://www.nomura.co.jp/wealthstyle/article/0676/ |
+| **仮タイトル案** | 「新NISA上半期12.5兆円の衝撃――オルカン一強から半導体・金ETFへ広がる個人マネーの行方」 |
+| **30字概要** | 2026年上半期に過去最高を塗り替えた投信流入の実態と個人投資家の資産形成戦略 |
+| **なぜ今か** | 2026年1〜6月の投信資金流入が前年比1.6倍・過去最高の12.5兆円（日経・Diamond報道）。上半期の集計データが7月末に公表され、「何が売れているか」の実態が明らかになった。新NISAのセカンドステージとして成長投資枠の活用者が5割超 |
+| **検索意図** | 「新NISA 2026 何を買う」「投信 人気ランキング 2026」「オルカン 次 何」 |
+| **想定カテゴリ** | 投資指標解説 / 個人投資家向け戦略 |
+| **難易度** | 小 |
+| **信頼度** | **HIGH**（Nikkei・Diamond ZAi・SBI証券公式データ） |
+| **根拠ソース** | Diamond 2026「新NISAの積立の威力は本物！2026年上期、投信流入が過去最高12.5兆円」https://diamond.jp/articles/-/394435 ／ Nikkei 2026-07「投信への資金流入12兆円で最高」https://www.nikkei.com/article/DGXZQOUB08BUT0Y6A700C2000000/ ／ SBI証券 2026-08「NISA成長投資枠で選ばれた人気ファンド9本」https://go.sbisec.co.jp/media/report/fund_info_plus/fund_info_plus_260803.html |
+| **重複確認** | NISA単体の解説記事は未掲載。既存の`guide-ideco.html`等とは主題が異なり差別化OK |
+
+---
+
+### 📌 候補⑤：フィジカルAIと日本の産業ロボット株――ファナック・安川・キーエンスに何が起きているか
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「AIに『体』を与える時代へ――フィジカルAI投資で脚光を浴びる日本の産業ロボット株5選」 |
+| **30字概要** | NVIDIAとの提携が相次ぐファナック・安川・富士通の事業変革と株価への影響を解説 |
+| **なぜ今か** | 2026年7月16日、富士通・ファナック・安川電機・川崎重工がNVIDIAフレームワークを製造・物流・医療に組み込む提携を発表。政府がフィジカルAIに1.23兆円を配分し「第2のAI革命」テーマが本格化 |
+| **検索意図** | 「フィジカルAI 日本株」「ファナック 2026 AI」「産業ロボット 投資テーマ」 |
+| **想定カテゴリ** | 個別銘柄解説 / テーマ株 |
 | **難易度** | 中 |
-| **重複確認** | `guide-jpy-coordinated-intervention-2026-08.html`（介入確認速報）あり。「介入後1週間で円安に戻った理由と投資家の構え方」は未掲載で明確に差別化できる |
+| **信頼度** | **HIGH**（Fujitsu Global公式・securities.io・Note複数） |
+| **根拠ソース** | Fujitsu Global 2026-07-16「Fujitsu to explore physical AI with FANUC, Yaskawa, Kawasaki」https://global.fujitsu/en-global/pr/news/2026/07/16-01 ／ Securities.io「Top 10 Physical AI Stocks 2026」https://www.securities.io/top-physical-ai-stocks/ ／ Note「フィジカルAI関連株まとめ 日本企業が次の主役」https://note.com/kabu_times/n/n6f9b387115b8 |
+| **重複確認** | フィジカルAI・産業ロボット特集は未掲載。差別化OK |
 
 ---
 
-### 候補⑤【国際貿易・個別銘柄】日米貿易合意「自動車関税15%」でトヨタ・ホンダ株はどう変わるか
+### 📌 候補⑥：ウォーシュFRBと8月12日CPI――9月利上げへのカウントダウン
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「日米貿易合意「自動車関税25%→15%」解説｜輸出株に何円分の恩恵か、製薬・電子部品の追加リスクも整理」 |
-| **概要（30字）** | 関税合意で日本GDP+0.3%・EPS+3%試算。自動車株と為替・製薬リスクを一体整理 |
-| **なぜ今か** | 7月末に大枠合意し8月以降に株価への織り込みが本格化。トヨタ・ホンダ・マツダ等の輸出株が「円高」と「関税引き下げ」の2つの力を同時に受けており、どちらの影響が大きいかを整理した記事へのニーズが高い。製薬品への200%関税懸念（トランプ発言継続）との比較でも論点が多い |
-| **読者の検索意図** | 「日米 貿易 関税 自動車 2026」「トヨタ 株 関税 影響 見通し」「輸出株 円高 関税 どっちが効く」 |
+| **仮タイトル案** | 「8月12日のCPIが9月FRB利上げを決める――ウォーシュ新議長の『インフレ断固対処』シナリオとは」 |
+| **30字概要** | 市場が注目するCPI発表で利上げ確率55%に達したFRB政策の転換点を解説 |
+| **なぜ今か** | 8月12日CPI発表（3日後）がウォーシュ体制での9月利上げ判断の鍵。CMEデータでは8月6日時点で9月利上げ確率54.71%。「物価は高すぎる」とのFRB声明が市場に緊張感をもたらしている |
+| **検索意図** | 「FRB 9月 利上げ 確率」「ウォーシュ 議長 政策」「米国CPI 8月 2026」 |
+| **想定カテゴリ** | マーケット戦略 / 金融政策解説 |
+| **難易度** | 中 |
+| **信頼度** | **HIGH**（Yahoo Finance・Chase・TradingKey・CMEデータ） |
+| **根拠ソース** | Yahoo Finance 2026-08「The Aug. 12 Inflation Report Could Decide Whether Kevin Warsh Raises Rates」https://finance.yahoo.com/economy/policy/articles/aug-12-inflation-report-could-140522541.html ／ Chase 2026-07「Kevin Warsh Says Fed Will Deliver Price Stability」https://www.chase.com/personal/investments/learning-and-insights/article/kevin-warsh-july-2026-federal-reserve-will-deliver-price-stability ／ TradingKey「Fed's Warsh May Consider September Rate Hike」https://www.tradingkey.com/analysis/economic/central-banks/262084595-fed-chair-kevin-warsh-admits-missteps-september-rate-hike-probability-tradingkey |
+| **重複確認** | `guide-auto-us_cpi-2026-08-12.html`（自動生成CPI速報）あり → 「ウォーシュ体制・政策転換の背景解説」に絞ること |
+
+---
+
+### 📌 候補⑦：日米貿易協定で自動車関税15%に――トヨタ・ホンダへの恩恵と5500億ドル投資の実態（MID）
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル案** | 「日米貿易協定の勝者と敗者――自動車関税25%→15%への引き下げで日本のモノづくりはどう変わる」 |
+| **30字概要** | 歴史的な日米貿易合意の内容と日本の自動車・製造業への中長期的影響を整理 |
+| **なぜ今か** | 日本が5500億ドルの米国投資を条件に自動車関税を15%へ引き下げる合意が確定。韓国勢（ヒュンダイ・キア）が相対的に不利になる一方、日本自動車株には追い風との見方も広がる |
+| **検索意図** | 「日米 関税 自動車 2026」「トヨタ 株 関税 影響」「日米貿易協定 内容」 |
 | **想定カテゴリ** | マーケット戦略 / 個別銘柄解説 |
-| **信頼度** | **HIGH**（OANDA, FXStreet, J.P. Morgan Research 複数独立報道） |
-| **根拠ソース** | OANDA「W/C 03/08 – US-Japan yen intervention, USDJPY, Nikkei outlook」(2026-08-03) https://www.oanda.com/au-en/skills-and-insights/education/market-commentary/market-moves/03082026-us-japan-yen-intervention-usdjpy-nikkei-dow-outlook/ ／ FXStreet「Japan trade deal boost equities globally」(2026-07-23) https://www.fxstreet.com/analysis/japan-trade-deal-boost-equities-globally-202507230938 ／ J.P. Morgan「US Tariffs: What's the Impact?」https://www.jpmorgan.com/insights/global-research/current-events/us-tariffs |
 | **難易度** | 中 |
-| **重複確認** | 介入解説記事（`guide-jpy-coordinated-intervention-2026-08.html`等）は多数あるが「貿易合意15%＋輸出株影響の一体整理」は未掲載 |
+| **信頼度** | **MID**（CSIS・CBTnews・ArentFox Schiff・Hudson。合意済みだが実施段階の不確定要素あり） |
+| **根拠ソース** | ArentFox Schiff「US-Japan Trade Agreement Update」https://www.afslaw.com/perspectives/alerts/us-japan-trade-agreement-update-tariff-reductions-and-550-billion-investment ／ CBTnews「US Cuts Japanese Auto Tariffs to 15%」https://www.cbtnews.com/u-s-cuts-tariffs-on-japanese-autos-to-15-under-trade-deal/ ／ Fastmarkets「How the US-Japan trade deal will impact auto production」https://www.fastmarkets.com/insights/how-the-us-japan-trade-deal-will-impact-auto-production-and-steel-demand/ |
+| **重複確認** | 未掲載。差別化OK |
 
 ---
 
-### 候補⑥【資産形成・新NISA】新NISA3年目：オルカン・S&P500・日経高配当50の比較と2026年夏の選択
+### 📌 候補⑧：高市政権の17戦略産業と防衛株ブーム――三菱重工・IHIは第2の成長相場に入ったか（MID）
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル案** | 「新NISA3年目の選択肢を比較｜「オルカン」「S&P500」「日経高配当株50インデックス」どれが今の相場に合うか」 |
-| **概要（30字）** | 成長投資枠3年目。円高・AI相場・高配当ブームの今、3ファンドの特性と使い分けを解説 |
-| **なぜ今か** | 2026年はオルカンが日本最大ファンドとしてS&P500型を純資産で逆転。協調介入後の円高で外貨建てファンドの円ベース基準価額が下落し「オルカン大丈夫?」という動揺が広がる。一方「日経高配当株50インデックス」が2026年パフォーマンスでオルカン・S&P500を上回ると野村・ダイヤモンドZAIが注目。NISA口座の3年目見直し需要が高まっている |
-| **読者の検索意図** | 「NISA オルカン S&P500 日経高配当 どっちがいい 2026」「新NISA 成長投資枠 おすすめ 8月」「円高 NISA ファンド 影響」 |
-| **想定カテゴリ** | 資産形成 / 投資信託解説 |
-| **信頼度** | **HIGH**（野村証券, Diamond ZAI, president.jp 複数媒体） |
-| **根拠ソース** | 野村証券「2026年末の日本株見通しを日経平均60,000円に上方修正」https://www.nomura.co.jp/wealthstyle/article/0607/ ／ Diamond ZAI「日経平均高配当株50インデックスに注目」https://diamond.jp/zai/articles/-/1060967 ／ president.jp「2026年になっても「S&P500·オルカン一択」は危ない」https://president.jp/articles/-/107002 |
-| **難易度** | 小 |
-| **重複確認** | `guide-dividend-basics.html`・`guide-ideco.html` あり。「2026年夏の3ファンド相場環境比較」は未掲載 |
+| **仮タイトル案** | 「防衛・AI・造船・次世代エネルギー――高市政権『17戦略分野』で本命となる日本株を整理する」 |
+| **30字概要** | 政権主導の産業政策で注目を集める防衛・造船・AI株の選び方と注意点 |
+| **なぜ今か** | 経産省が2026年度税制改正で5兆円規模の大型設備投資減税を要望。高市政権の戦略17分野がその8割を占め、防衛・AI・水素・造船などが優遇対象。三菱重工はNATO世界第17位の規模に成長し、武器輸出解禁により海外展開フェーズへ |
+| **検索意図** | 「日本 防衛株 2026」「高市 産業政策 投資」「三菱重工 株価 見通し」 |
+| **想定カテゴリ** | テーマ株 / マーケット戦略 |
+| **難易度** | 大 |
+| **信頼度** | **MID**（Bloomberg・Nomura・Moomoo・Mordor Intelligence。長期テーマで直近ニュースフックが薄い） |
+| **根拠ソース** | Bloomberg 2026-02-09「Japan Defense Stocks Surge on Takaichi's National Security Plans」https://www.bloomberg.com/news/articles/2026-02-09/japan-defense-stocks-surge-on-takaichi-s-national-security-plans ／ Nomura 2026「2026年の日本株9大テーマをマクロ経済から読み解く」https://www.nomura.co.jp/wealthstyle/article/0541/ ／ Mordor Intelligence「Japan Defense Market 2026」https://www.mordorintelligence.com/industry-reports/japan-defense-market |
+| **重複確認** | 防衛株総合特集は未掲載。差別化OK |
 
 ---
 
-### 候補⑦【コモディティ】金（ゴールド）は本当にインフレヘッジになるか？2026年の急騰・急落後に改めて考える
+## 🔑 編集者へのメモ
 
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「ゴールドは本当にインフレヘッジになるか？2026年の急騰・急落を踏まえた長期保有戦略を解説」 |
-| **概要（30字）** | 金は$5,400台から急落後$4,000台で再上昇。実質金利・地政学・中銀需要で評価し直す |
-| **なぜ今か** | `guide-news-2026-06-30-gold-q2-crash.html`（急落解説）公開後、金価格が$4,000台で安定推移。中東情勢（イラン・ホルムズ海峡）と中央銀行の旺盛な買いが下支え。「急落の次に何が来るか」「NISAで金ETFを持つ意味はあるか」の解説ニーズが継続 |
-| **読者の検索意図** | 「金 投資 2026 今から」「ゴールド インフレヘッジ 効果 本当か」「金ETF iシェアーズ 買い方 日本」 |
-| **想定カテゴリ** | コモディティ / 投資指標解説 |
-| **信頼度** | **MID〜HIGH**（skyriss.com, physicalgold.com, Forbes 複数媒体） |
-| **根拠ソース** | skyriss「Middle East Tensions and Their Impact on Oil & Gold Prices in 2026」https://www.skyriss.com/guides/middle-east-tensions-oil-gold-prices ／ physicalgold.com「Gold vs Oil Prices in 2026: What it Means for Investors」https://www.physicalgold.com/insights/gold-vs-oil-prices-in-2026-implications-for-investors-amid-middle-east-war/ ／ Forbes「Gold At Record Highs: A Poor Short-Term Inflation Hedge」(2026-02-22) https://www.forbes.com/sites/bill_stone/2026/02/22/gold-at-record-highs-a-poor-short-term-inflation-hedge/ |
-| **難易度** | 中 |
-| **重複確認** | `guide-news-2026-06-30-gold-q2-crash.html`（速報的急落解説）あり。「インフレヘッジ理論の再検証＋長期戦略」の角度は未掲載 |
+### ✅ 特に推し候補（タイムリー度×読者ニーズ）
+1. **候補①（日銀9月利上げ）** ⭐最優先：3日以内に執筆すべき最高優先度。金利・円・株・不動産に直撃する生活密着テーマ
+2. **候補④（新NISA12.5兆円）**：上半期データ公開直後で鮮度が高く、初心者読者の検索意図ともぴったり
+3. **候補②（銀の急騰）**：金記事との差別化が容易で、AI×コモディティ×エネルギー転換という「複合テーマ」として深く書ける
 
----
-
-### 候補⑧【暗号資産・規制】日本版ビットコインETF解禁への道：機関投資家79%が検討中・個人投資家の備え方
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル案** | 「日本版ビットコインETF解禁への道｜機関投資家79%が検討中・2028年承認観測を踏まえた個人投資家の準備」 |
-| **概要（30字）** | 日本BTC ETF承認は2028年見込み。$18.4B市場を先読みし今何を準備すべきかを解説 |
-| **なぜ今か** | 日米協調介入後もBTCが比較的堅調を維持し「デジタル資産」としての認知が上昇。Blockster報道で日本機関投資家の79%が具体的投資計画を持ち、ステーキング・貸付等への関心も60%超。AMBCrypto・Benzingaが「2028年解禁・$18.4B市場」の試算を公表し規制議論が加速。「NISAでビットコインが買えるようになるのか」という個人投資家の疑問に答える |
-| **読者の検索意図** | 「ビットコインETF 日本 解禁 いつ」「BTC ETF 個人投資家 準備」「仮想通貨 NISA 対象 可能性 2026」 |
-| **想定カテゴリ** | 暗号資産 / 制度・規制解説 |
-| **信頼度** | **MID**（AMBCrypto, Benzinga, Blockster 複数独立報道。規制予測の不確実性あり） |
-| **根拠ソース** | AMBCrypto「Japan's spot Bitcoin ETF could hit $18B in 2 years after debut」https://ambcrypto.com/japans-spot-bitcoin-etf-could-hit-18b-in-2-years-after-debut-report/ ／ Benzinga「Japan's Bitcoin ETF Market Could Hit $18.4B」(2026-07) https://www.benzinga.com/crypto/cryptocurrency/26/07/60664502/japan-bitcoin-etf-market-could-hit-18-4b-by-2028-whats-driving-the-demand ／ diamond.jp「ビットコイン(BTC)の今後は？2026年価格予想や将来性を解説」https://diamond.jp/crypto/market/btc-future/ |
-| **難易度** | 中 |
-| **重複確認** | `guide-btc-crash-2026-05-19.html`・`guide-btc-crash-2026-06.html`（急落解説）あり。「ETF解禁動向＋個人投資家の備え方」は未掲載 |
+### ⏳ 執筆タイミング目安
+- **今週中**（8/10〜8/12）: 候補①・候補⑥（CPI発表8/12前後が最適ウィンドウ）
+- **8月26日前後**: 候補③（NVIDIA決算プレビュー→当日速報）
+- **今月中**: 候補④・候補②・候補⑤
+- **中長期（来月でも可）**: 候補⑦・候補⑧
 
 ---
 
-## ⭐ 編集長へのおすすめ（特に推し 3 件）
-
-| 優先度 | 候補 | 推薦理由 |
-|---|---|---|
-| ★★★ | **候補②米CPI 8/12発表直前プレビュー** | 残り3日。発表前に公開しないと鮮度がゼロになる最緊急ネタ。難易度「小」で即公開可能。S&P500最高値更新直後でドル円・インフレへの注目が最高潮 |
-| ★★★ | **候補④協調介入後も158円台に戻ったドル円の謎** | 8/3介入から1週間で「なぜ円高が定着しないのか」がSNS・検索で最大話題。NISA外貨ファンド保有者への実用的アドバイスに直結する教育記事で差別化も明確 |
-| ★★ | **候補①NVIDIA 8/26 Q2決算前展望** | 残り17日。TSMC好決算でAI需要確認済み、徐々に作り込める。日本半導体株（東京エレクトロン・アドバンテスト等）との連動解説で独自性を出せる |
-
----
-
-※これは編集用メモ。公開時は CLAUDE.md の 8 ステップ＋compliance-reviewer 監査が必須。断定表現・個別銘柄の買い推奨は記事本文に一切含めないこと。
+※これは編集用メモです。公開時は CLAUDE.md の8ステップ＋compliance-reviewer監査が必須。
