@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #66｜下降トレンド gate FWD N=519 でCI下限プラス到達——IS→FWD 転換の全解剖 - MarketWatch AI</title>
+  <meta name="description" content="下降トレンド（trend=下降）gate仮説の前向き検証 N=519。FWD期間の期待値CI下限が+0.023Rに到達、IS期間比-0.247Rから劇的転換。金属グループIS22.8%→FWD53.4%の反転が主因。研究日誌第66回。">
+  <meta name="keywords" content="AIシグナル,下降トレンド,gate,前向き検証,IS,FWD,金属,期待値,勝率,GC=F,SI=F,rsi_oversold_bounce,bb_lower_touch">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-066.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #66｜下降トレンド gate FWD N=519 でCI下限プラス到達——IS→FWD 転換の全解剖">
+  <meta property="og:description" content="下降トレンドgate仮説 FWD N=519で期待値CI下限+0.023R到達。IS期間-0.247Rから大幅改善。金属グループの反転が主因。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-066.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #66｜下降トレンド gate FWD N=519 でCI下限プラス到達——IS→FWD 転換の全解剖",
+    "description": "下降トレンドgate仮説 FWD N=519で期待値CI下限+0.023R到達。IS期間-0.247Rから大幅改善。金属グループの反転が主因。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-10",
+    "dateModified": "2026-08-10",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-066.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:20px 28px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.35rem;font-weight:700;color:#1E3A6E}
+    .header-meta{font-size:.82rem;color:#57606a;margin-top:2px}
+    main{max-width:1200px;margin:0 auto;padding:24px 20px}
+    .nav-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px}
+    .nav-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 6px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;color:#57606a;text-decoration:none;font-size:.82rem;font-weight:600;transition:all .2s;text-align:center}
+    .nav-btn:hover{border-color:#0969da;color:#0969da;text-decoration:none}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.8rem;color:#57606a;margin-bottom:14px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:32px 36px}
+    h1{font-size:1.75rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.82rem;color:#57606a;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.22rem;color:#2C4F8F;margin-top:32px;margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.02rem;color:#1f2328;margin-top:20px;margin-bottom:8px}
+    p{font-size:.95rem;color:#424a53;margin-bottom:14px}
+    ul,ol{margin:8px 0 16px 26px;color:#424a53}
+    li{margin-bottom:7px;font-size:.93rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:13px 17px;margin-bottom:22px;font-size:.86rem;color:#6a4c00;font-weight:600}
+    table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+    th,td{padding:10px 13px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.85rem}
+    td:first-child{font-weight:600;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:15px 18px;margin:16px 0;font-size:.91rem;color:#1f6feb}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:15px 18px;margin:16px 0;font-size:.9rem;color:#9a6700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:15px 18px;margin:16px 0;font-size:.91rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:15px 18px;margin:16px 0;font-size:.91rem;color:#cf222e}
+    /* 30秒まとめ */
+    .summary-box{background:#ffffff;border:2px solid #1E3A6E;border-radius:12px;padding:22px 26px;margin:24px 0}
+    .summary-box-title{font-size:1.05rem;color:#1E3A6E;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .summary-stat{display:flex;align-items:baseline;gap:8px;margin:9px 0}
+    .summary-num{font-size:1.65rem;font-weight:700;color:#cf222e;line-height:1.1}
+    .summary-num-b{font-size:1.65rem;font-weight:700;color:#0969da;line-height:1.1}
+    .summary-num-g{font-size:1.65rem;font-weight:700;color:#1a7f37;line-height:1.1}
+    .summary-desc{font-size:.88rem;color:#57606a}
+    .badge-red{display:inline-block;background:#cf222e;color:#fff;border-radius:4px;padding:2px 7px;font-size:.77rem;font-weight:700;margin-right:4px}
+    .badge-blue{display:inline-block;background:#0969da;color:#fff;border-radius:4px;padding:2px 7px;font-size:.77rem;font-weight:700;margin-right:4px}
+    .badge-yellow{display:inline-block;background:#9a6700;color:#fff;border-radius:4px;padding:2px 7px;font-size:.77rem;font-weight:700;margin-right:4px}
+    /* SVG */
+    .chart-figure{margin:20px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.8rem;color:#57606a;margin-top:7px;line-height:1.6;text-align:center}
+    .s-label{fill:#424a53;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:10.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.2}
+    .s-guide{stroke:#8b949e;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-is{fill:#1f6feb;opacity:.7}
+    .s-bar-fwd{fill:#1a7f37;opacity:.85}
+    .s-bar-neg{fill:#cf222e;opacity:.7}
+    /* 関連カード */
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:12px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:13px 15px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.88rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.76rem;color:#57606a;line-height:1.5}
+    p.disclaimer{font-size:.78rem;color:#6e7781;line-height:1.7;margin-top:24px;padding-top:16px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:18px 28px;text-align:center;font-size:.76rem;color:#6e7781;margin-top:36px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    /* ダーク対応 */
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h1{color:#e6edf3}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark .summary-box{background:#161b22;border-color:#2C4F8F}
+    body.dark .summary-box-title{color:#79c0ff}
+    body.dark .summary-desc{color:#8b949e}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-bar-is{fill:#388bfd}
+    body.dark .s-bar-fwd{fill:#3fb950}
+    body.dark .s-bar-neg{fill:#f85149}
+    @media(min-width:900px){.article p{max-width:40em}}
+  </style>
+  <style id="mw-mobile-fit">
+  html,body{overflow-x:hidden}
+  .article,main,section,header,footer{max-width:100%}
+  *{overflow-wrap:break-word;word-break:normal}
+  img,svg,iframe,video{max-width:100%!important;height:auto}
+  pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+  .mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 12px;text-align:right;font-weight:500}
+  @media(min-width:601px){.mw-scroll-hint{display:none}}
+  @media(max-width:600px){
+    body{font-size:.88rem;line-height:1.7}
+    .article{padding:14px 11px}
+    h1{font-size:1.22rem;line-height:1.4}
+    h2{font-size:1.05rem}
+    .nav-bar{grid-template-columns:repeat(2,1fr)}
+    table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.78rem}
+    th,td{padding-left:5px;padding-right:5px;white-space:nowrap}
+    .meta-line,.chart-caption,.disclaimer,.related-card-desc{font-size:.72rem}
+  }
+  @media(max-width:380px){
+    body{font-size:.84rem}
+    .article{padding:11px 7px}
+    table{font-size:.74rem}
+  }
+  </style>
+</head>
+<body>
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="document.body.classList.toggle('dark')" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:40px;height:40px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;font-size:17px;display:flex;align-items:center;justify-content:center">🌙</button>
+<script>window.addEventListener('scroll',function(){var e=document.getElementById('reading-progress');if(e){var h=document.documentElement;e.style.width=((h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%'}})</script>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:25px;height:25px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.18rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar" aria-label="メインナビゲーション">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #66
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #66<br><small style="font-size:.6em;color:#57606a;font-weight:400">下降トレンド gate FWD N=519 でCI下限プラス到達——IS→FWD 転換の全解剖</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月10日 &nbsp;|&nbsp; 読了：約12分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:12px 0 20px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・MACD等）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第66回です。</p>
+
+    <p>今回は「<strong>trend=下降 gate仮説</strong>」の前向き（FWD）N=519到達時点での中間解剖です。この仮説は「上位足トレンドが下降している局面でのシグナル発火を<em>避けるべき</em>」という回避ルールです。IS（in-sample）期間では勝率35.8%と明確に損失圏にあり、ゲートとして強力に機能していました。しかし前向き期間に入って以降、劇的な変化が起きています——FWD勝率は47.8%まで上昇し、期待値の95%CI下限が初めてプラス圏（+0.023R）に到達しました。ゲートは崩れつつあるのでしょうか。</p>
+
+    <!-- 30秒でわかる -->
+    <div class="summary-box" id="summary">
+      <div class="summary-box-title">⏱️ 30秒でわかる</div>
+      <div class="summary-stat">
+        <span class="summary-num">-0.247R</span>
+        <span class="summary-desc">IS期間（N=377）の期待値。損益分岐を大きく下回りゲートを強く支持</span>
+      </div>
+      <div class="summary-stat">
+        <span class="summary-num-g">+0.172R</span>
+        <span class="summary-desc">FWD期間（N=519）の期待値。95%CI下限 <strong>+0.023R</strong>——初のプラス確定</span>
+      </div>
+      <div class="summary-stat">
+        <span class="summary-num-b">42.7%</span>
+        <span class="summary-desc">全期間（N=896）勝率。IS+FWD平均ではまだ損益分岐43%を下回る</span>
+      </div>
+      <p style="margin-top:12px;font-size:.86rem;color:#57606a">
+        <strong>結論：</strong>FWD期間単独では期待値がプラス転換したが、全期間では±0（42.7%、−0.004R）。トラッカー（cluster調整済み）はまだ🟡蓄積中。⛔反証確定には連続2本の条件ヒットが必要。金属グループの IS 22.8%→FWD 53.4% レジーム転換が主因。
+      </p>
+    </div>
+
+    <!-- 目次 -->
+    <div class="info-box" style="font-size:.87rem;margin:16px 0">
+      <strong>📑 目次</strong>&nbsp;
+      <a href="#background">①ゲート仮説とは</a> ／
+      <a href="#main-result">②IS vs FWD 全体比較</a> ／
+      <a href="#chart-is-fwd">③推移グラフ</a> ／
+      <a href="#group">④グループ別分解</a> ／
+      <a href="#signal">⑤シグナル別分解</a> ／
+      <a href="#reversal">⑥逆張りvs順張り</a> ／
+      <a href="#tracker">⑦前向きトラッカー</a> ／
+      <a href="#conclusion">⑧結論</a>
+    </div>
+
+    <!-- ①ゲート仮説とは -->
+    <h2 id="background">① 「trend=下降 gate」とは何か</h2>
+
+    <p>このシステムでは、シグナル発火のたびに上位足トレンド（<code>trend_alignment.higher_tf_trend</code>）を記録します。値は「上昇」「下降」「中立・もみあい」「unknown」の4種です。</p>
+
+    <p>過去の研究日誌では「IS期間において下降トレンド中のシグナルは全体平均を大幅に下回る」ことが繰り返し確認され、「trend=下降のシグナルは回避する」というgate仮説として登録されました。gateとは「取引を避けるべき条件」であり、CI全域がマイナス（CI_upper &lt; 0）であれば回避が統計的に確定します。</p>
+
+    <!-- SVG 1: 概念図 — ゲート仮説の発火構造 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="680" height="260" fill="#f6f8fa" rx="8"/>
+        <!-- タイトル -->
+        <text x="340" y="24" text-anchor="middle" class="s-label" style="font-size:12.5px;font-weight:700;fill:#1E3A6E">trend=下降 gate 発火構造——上位足 vs 下位足</text>
+
+        <!-- 左ペイン：上位足 下降トレンド -->
+        <rect x="20" y="40" width="280" height="170" fill="#ffffff" rx="6" stroke="#d0d7de" stroke-width="1"/>
+        <text x="160" y="60" text-anchor="middle" class="s-label" style="font-size:11px;font-weight:700;fill:#57606a">上位足（4H or 日足）トレンド = 下降</text>
+
+        <!-- 下降チャートライン -->
+        <polyline points="40,80 70,95 100,90 130,108 160,115 195,130 230,125 265,148 285,155" fill="none" stroke="#cf222e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- MA線 -->
+        <polyline points="40,82 100,92 160,118 230,130 285,152" fill="none" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <!-- ラベル -->
+        <text x="240" y="100" class="s-label-sm" style="fill:#9a6700">MA</text>
+        <text x="245" y="148" class="s-label-r" style="font-size:11px">下降中</text>
+
+        <!-- 矢印：gate判定 -->
+        <line x1="310" y1="125" x2="355" y2="125" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#57606a"/>
+          </marker>
+        </defs>
+        <text x="330" y="117" text-anchor="middle" class="s-label-sm">ゲート判定</text>
+
+        <!-- 右ペイン：シグナル発火 + gate発動 -->
+        <rect x="360" y="40" width="295" height="170" fill="#fff8c5" rx="6" stroke="#d4a017" stroke-width="1.2"/>
+        <text x="507" y="60" text-anchor="middle" class="s-label" style="font-size:11px;font-weight:700;fill:#9a6700">下位足シグナル発火</text>
+
+        <!-- 下位足チャート（上昇反転の試み） -->
+        <polyline points="375,145 395,148 415,130 435,135 450,120 465,125 485,108 505,112 520,100 540,105 558,92" fill="none" stroke="#0969da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- RSIバンド -->
+        <text x="378" y="158" class="s-label-sm" style="fill:#0969da">↑ rsi_oversold / bb_lower / macd_golden</text>
+
+        <!-- gate発動バナー -->
+        <rect x="375" y="168" width="265" height="30" fill="#cf222e" rx="4" opacity=".12"/>
+        <rect x="375" y="168" width="265" height="30" fill="none" rx="4" stroke="#cf222e" stroke-width="1"/>
+        <text x="507" y="188" text-anchor="middle" class="s-label-r" style="font-size:11.5px;font-weight:700">⛔ gate 発動 → 「取引回避」ルール</text>
+
+        <!-- 下部ラベル -->
+        <text x="340" y="228" text-anchor="middle" class="s-label-sm">IS期間（N=377）：35.8%勝率 → gate 有効 ✓</text>
+        <text x="340" y="248" text-anchor="middle" class="s-label-sm" style="fill:#1a7f37">FWD期間（N=519）：47.8%勝率 → gate 崩壊接近 ⚠️</text>
+      </svg>
+      <p class="chart-caption">図1：trend=下降 gate の発火構造。上位足トレンドが下降中に下位足シグナルが発火した場合に「取引回避」ルールが発動する。IS期間はゲートが有効だったが、FWD期間で崩壊の兆候が現れている。</p>
+    </div>
+
+    <!-- ②IS vs FWD 全体比較 -->
+    <h2 id="main-result">② IS期間 vs FWD期間：全体比較</h2>
+
+    <p>下表は trend=下降 gate仮説の全体成績をIS（学習期間）とFWD（前向き期間：2026-06-25以降）に分けて示したものです。</p>
+
+    <table>
+      <thead>
+        <tr><th>期間</th><th>N（決済済み）</th><th>勝数</th><th>勝率</th><th>期待値 E(R)</th><th>95%CI（R）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IS期間</td><td>377</td><td>135</td>
+          <td style="color:#cf222e;font-weight:700">35.8%</td>
+          <td style="color:#cf222e;font-weight:700">−0.247R</td>
+          <td>[−0.412, −0.072]</td>
+        </tr>
+        <tr>
+          <td>FWD期間</td><td>519</td><td>248</td>
+          <td style="color:#1a7f37;font-weight:700">47.8%</td>
+          <td style="color:#1a7f37;font-weight:700">+0.172R</td>
+          <td style="color:#1a7f37">[+0.023, +0.324]</td>
+        </tr>
+        <tr style="background:#f6f8fa">
+          <td>全期間（IS+FWD）</td><td>896</td><td>383</td>
+          <td>42.7%</td>
+          <td>−0.004R</td>
+          <td>[−0.117, +0.110]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <strong>重要な解釈上の注意：</strong> FWD期間単独のCI下限は +0.023R でプラスに入りましたが、全期間（IS+FWD合算）の42.7%は損益分岐43%をわずかに下回り、CI全域が±0に収束しています（−0.004R）。統計的には「gate廃止」を正当化するには全期間でも明確なプラスが必要です。FWD期間のみが劇的に改善しているのは、この期間に特有のマーケット状況が絡んでいる可能性が高い。
+    </div>
+
+    <p>IS→FWD での改善量は <strong>+0.419R</strong>（−0.247R → +0.172R）に及びます。IS期間はN=377で95%CI全域がマイナス（−0.412〜−0.072）であり、ゲートとして非常に強力でした。FWD期間は異質な様相を見せています——これが構造変化なのか、一時的なレジーム変化なのかを次節以降で分解します。</p>
+
+    <!-- SVG 2: チャートスタイル — IS/FWD 比較棒グラフ -->
+    <h2 id="chart-is-fwd">③ IS vs FWD 比較グラフ</h2>
+    <div class="chart-figure">
+      <svg viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="310" fill="#f6f8fa" rx="8"/>
+        <text x="340" y="24" text-anchor="middle" class="s-label" style="font-size:12.5px;font-weight:700;fill:#1E3A6E">IS vs FWD 勝率比較（trend=下降 × 各セグメント）</text>
+
+        <!-- 軸 -->
+        <!-- Y軸 0%-70% -->
+        <line x1="90" y1="42" x2="90" y2="265" class="s-axis"/>
+        <line x1="90" y1="265" x2="650" y2="265" class="s-axis"/>
+
+        <!-- ガイドライン -->
+        <!-- 70% = y=42, 0% = y=265, range=223px / 70 = 3.186px/% -->
+        <!-- 43% break-even = 265 - 43*3.186 = 265 - 136.9 = 128.1 -->
+        <line x1="90" y1="128" x2="650" y2="128" class="s-guide"/>
+        <text x="82" y="132" text-anchor="end" class="s-label-y" style="font-size:9px">43%</text>
+
+        <!-- Y目盛り -->
+        <text x="82" y="46" text-anchor="end" class="s-label-sm">70%</text>
+        <text x="82" y="78" text-anchor="end" class="s-label-sm">60%</text>
+        <text x="82" y="110" text-anchor="end" class="s-label-sm">50%</text>
+        <text x="82" y="150" text-anchor="end" class="s-label-sm">40%</text>
+        <text x="82" y="182" text-anchor="end" class="s-label-sm">30%</text>
+        <text x="82" y="214" text-anchor="end" class="s-label-sm">20%</text>
+        <text x="82" y="246" text-anchor="end" class="s-label-sm">10%</text>
+
+        <!-- 横グリッド -->
+        <line x1="90" y1="46" x2="650" y2="46" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="78" x2="650" y2="78" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="110" x2="650" y2="110" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="142" x2="650" y2="142" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="174" x2="650" y2="174" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="206" x2="650" y2="206" stroke="#e1e8f0" stroke-width="1"/>
+        <line x1="90" y1="238" x2="650" y2="238" stroke="#e1e8f0" stroke-width="1"/>
+
+        <!--
+          グループ: 全体 / metal / index / reversal_long / bb_lower
+          各グループに IS(青) と FWD(緑) の2本棒
+          Width per group: 120px, group starts: 100,220,340,460,560...
+          bar width=42, gap=8 between IS/FWD, 14px margin between groups
+          Groups: 全体(IS35.8%,FWD47.8%) metal(IS22.8%,FWD53.4%) index(FWD51.6%) reversal(IS32.4%,FWD57.7%) bb_lower(IS31.3%,FWD56.9%)
+          y = 265 - wr*3.186
+        -->
+
+        <!-- グループ1: 全体 -->
+        <!-- IS 35.8% → y = 265 - 35.8*3.186 = 265-114.1 = 150.9 ≈ 151, h=114 -->
+        <rect x="102" y="151" width="40" height="114" class="s-bar-is" rx="3"/>
+        <text x="122" y="147" text-anchor="middle" class="s-label-r" style="font-size:10px">35.8%</text>
+        <!-- FWD 47.8% → y = 265 - 47.8*3.186 = 265-152.3 = 112.7 ≈ 113, h=152 -->
+        <rect x="148" y="113" width="40" height="152" class="s-bar-fwd" rx="3"/>
+        <text x="168" y="109" text-anchor="middle" class="s-label-g" style="font-size:10px">47.8%</text>
+        <text x="145" y="285" text-anchor="middle" class="s-label-sm" style="font-size:9px">全体</text>
+
+        <!-- グループ2: metal -->
+        <!-- IS 22.8% → y = 265-22.8*3.186 = 265-72.6 = 192.4 ≈ 192, h=73 -->
+        <rect x="218" y="192" width="40" height="73" class="s-bar-is" rx="3"/>
+        <text x="238" y="188" text-anchor="middle" class="s-label-r" style="font-size:10px">22.8%</text>
+        <!-- FWD 53.4% → y = 265-53.4*3.186 = 265-170.1 = 94.9 ≈ 95, h=170 -->
+        <rect x="264" y="95" width="40" height="170" class="s-bar-fwd" rx="3"/>
+        <text x="284" y="91" text-anchor="middle" class="s-label-g" style="font-size:10px">53.4%</text>
+        <text x="261" y="285" text-anchor="middle" class="s-label-sm" style="font-size:9px">metal</text>
+
+        <!-- グループ3: reversal_long -->
+        <!-- IS 32.4% → y = 265-32.4*3.186 = 265-103.2 = 161.8 ≈ 162, h=103 -->
+        <rect x="338" y="162" width="40" height="103" class="s-bar-is" rx="3"/>
+        <text x="358" y="158" text-anchor="middle" class="s-label-r" style="font-size:10px">32.4%</text>
+        <!-- FWD 57.7% → y = 265-57.7*3.186 = 265-183.8 = 81.2 ≈ 81, h=184 -->
+        <rect x="384" y="81" width="40" height="184" class="s-bar-fwd" rx="3"/>
+        <text x="404" y="77" text-anchor="middle" class="s-label-g" style="font-size:10px">57.7%</text>
+        <text x="381" y="285" text-anchor="middle" class="s-label-sm" style="font-size:9px">reversal</text>
+
+        <!-- グループ4: bb_lower_touch -->
+        <!-- IS 31.3% → y = 265-31.3*3.186 = 265-99.7 = 165.3 ≈ 165, h=100 -->
+        <rect x="458" y="165" width="40" height="100" class="s-bar-is" rx="3"/>
+        <text x="478" y="161" text-anchor="middle" class="s-label-r" style="font-size:10px">31.3%</text>
+        <!-- FWD 56.9% → y = 265-56.9*3.186 = 265-181.3 = 83.7 ≈ 84, h=181 -->
+        <rect x="504" y="84" width="40" height="181" class="s-bar-fwd" rx="3"/>
+        <text x="524" y="80" text-anchor="middle" class="s-label-g" style="font-size:10px">56.9%</text>
+        <text x="501" y="285" text-anchor="middle" class="s-label-sm" style="font-size:9px">bb_lower</text>
+
+        <!-- グループ5: high_break -->
+        <!-- IS 35.7% → y = 265-35.7*3.186 = 265-113.7 = 151.3 ≈ 151, h=114 -->
+        <rect x="573" y="151" width="40" height="114" class="s-bar-is" rx="3"/>
+        <text x="593" y="147" text-anchor="middle" class="s-label-r" style="font-size:10px">35.7%</text>
+        <!-- FWD 29.3% → y = 265-29.3*3.186 = 265-93.3 = 171.7 ≈ 172, h=93 -->
+        <rect x="619" y="172" width="40" height="93" class="s-bar-neg" rx="3"/>
+        <text x="639" y="168" text-anchor="middle" class="s-label-r" style="font-size:10px">29.3%</text>
+        <text x="616" y="285" text-anchor="middle" class="s-label-sm" style="font-size:9px">high_brk</text>
+
+        <!-- 凡例 -->
+        <rect x="92" y="297" width="14" height="10" class="s-bar-is" rx="2"/>
+        <text x="110" y="307" class="s-label-sm" style="fill:#0969da">IS期間</text>
+        <rect x="165" y="297" width="14" height="10" class="s-bar-fwd" rx="2"/>
+        <text x="183" y="307" class="s-label-sm" style="fill:#1a7f37">FWD期間</text>
+        <rect x="238" y="297" width="14" height="10" class="s-bar-neg" rx="2"/>
+        <text x="256" y="307" class="s-label-sm" style="fill:#cf222e">FWD(悪化)</text>
+      </svg>
+      <p class="chart-caption">図2：IS期間 vs FWD期間の勝率比較。全体・metal・逆張り(reversal)・bb_lower は FWD で大幅改善（青→緑）。high_break だけが FWD でさらに悪化（赤）。損益分岐43%ラインを黄色の点線で示す。</p>
+    </div>
+
+    <!-- ④グループ別分解 -->
+    <h2 id="group">④ グループ別分解：主因は金属の反転</h2>
+
+    <p>IS→FWD で最も劇的な変化を見せたのは <strong>金属グループ（GC=F 金・SI=F 銀）</strong> です。</p>
+
+    <table>
+      <thead>
+        <tr><th>グループ</th><th>IS k/N</th><th>IS勝率</th><th>FWD k/N</th><th>FWD勝率</th><th>全期間 N</th><th>全期間勝率</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>metal（金・銀）</td>
+          <td>31/136</td><td style="color:#cf222e">22.8%</td>
+          <td>55/103</td><td style="color:#1a7f37">53.4%</td>
+          <td>239</td><td>36.0%（86/239）</td>
+        </tr>
+        <tr>
+          <td>index（株価指数）</td>
+          <td>—</td><td>—</td>
+          <td>49/95</td><td style="color:#1a7f37">51.6%</td>
+          <td>120</td><td>52.5%（63/120）</td>
+        </tr>
+        <tr>
+          <td>other_fx（FX USD系）</td>
+          <td>—</td><td>—</td>
+          <td>73/156</td><td>46.8%</td>
+          <td>274</td><td>44.5%</td>
+        </tr>
+        <tr>
+          <td>jpy_fx（JPY系）</td>
+          <td>—</td><td>—</td>
+          <td>—</td><td>—</td>
+          <td>92</td><td>37.0%（34/92）</td>
+        </tr>
+        <tr>
+          <td>oil（原油）</td>
+          <td>—</td><td>—</td>
+          <td>—</td><td>—</td>
+          <td>65</td><td>55.4%（36/65）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>金属の反転幅（+30.6pp）</strong>は全グループ中最大です。IS期間の22.8%は「下降トレンド中の金属シグナルは圧倒的に損失」を示していましたが、FWD期間（2026-06-25以降）に入ると53.4%まで急騰しています。</p>
+
+    <p>このレジーム転換の主な理由として考えられるのは：</p>
+    <ul>
+      <li><strong>金（GC=F）の長期上昇トレンド転換</strong>：IS期間は金価格が下落局面にあり、下降トレンド中のシグナル（主に売り）が有効だった。しかしFWD期間に入ってから金は上昇トレンドへ移行し、下降トレンドの「下げ」を期待したシグナルが逆方向に動いた可能性。</li>
+      <li><strong>ATRの収縮・拡大サイクル</strong>：FWD期間には金属のボラティリティが変化し、SL/TP比率に有利な動きが増えた可能性。</li>
+    </ul>
+
+    <p>重要な注意点として：全期間での金属は <strong>36.0%（86/239）</strong>、E(R)=−0.241R（RCI[−0.443, −0.023]）と<strong>まだ統計的に有意な損失圏</strong>にあります。IS期間の重いマイナスが全期間を引っ張っているためで、FWD単独の改善だけでは「metal×下降は取引してよい」とは言えません。</p>
+
+    <div class="negative-box">
+      metal × 下降トレンド：全期間では 36.0%（−0.241R）で引き続き損失圏。FWD単独で53.4%に改善しても、IS期間N=136の重い実績がある限り、「gate廃止」判断は早計です。
+    </div>
+
+    <!-- ⑤シグナル別分解 -->
+    <h2 id="signal">⑤ シグナル別分解：high_break は FWD でも悪化</h2>
+
+    <p>下降トレンド中に発火するシグナルを種別で比較すると、IS→FWD の改善は均一ではないことが分かります。</p>
+
+    <table>
+      <thead>
+        <tr><th>シグナル名</th><th>IS k/N</th><th>IS勝率</th><th>FWD k/N</th><th>FWD勝率</th><th>全期間（k/N）</th><th>全期間勝率</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>rsi_oversold_bounce<br><small>RSI過売り反発</small></td>
+          <td>29/87</td><td style="color:#cf222e">33.3%</td>
+          <td>28/47</td><td style="color:#1a7f37">59.6%</td>
+          <td>57/134</td><td>42.5%</td>
+        </tr>
+        <tr>
+          <td>bb_lower_touch<br><small>−2σタッチ</small></td>
+          <td>26/83</td><td style="color:#cf222e">31.3%</td>
+          <td>62/109</td><td style="color:#1a7f37">56.9%</td>
+          <td>88/192</td><td>45.8%</td>
+        </tr>
+        <tr>
+          <td>macd_golden<br><small>MACD GC</small></td>
+          <td>—</td><td>—</td>
+          <td>38/90</td><td>42.2%</td>
+          <td>56/130</td><td>43.1%</td>
+        </tr>
+        <tr>
+          <td>macd_dead<br><small>MACD DC</small></td>
+          <td>—</td><td>—</td>
+          <td>35/75</td><td>46.7%</td>
+          <td>55/137</td><td>40.1%</td>
+        </tr>
+        <tr>
+          <td style="color:#cf222e">high_break<br><small>高値ブレイク</small></td>
+          <td>5/14</td><td>35.7%</td>
+          <td>12/41</td><td style="color:#cf222e">29.3%</td>
+          <td>17/55</td><td style="color:#cf222e">30.9%</td>
+        </tr>
+        <tr>
+          <td>low_break<br><small>安値ブレイク</small></td>
+          <td>—</td><td>—</td>
+          <td>9/26</td><td>34.6%</td>
+          <td>25/68</td><td>36.8%</td>
+        </tr>
+        <tr>
+          <td>ma_golden<br><small>MA GC（順張り）</small></td>
+          <td>—</td><td>—</td>
+          <td>8/27</td><td>29.6%</td>
+          <td>14/35</td><td>40.0%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>逆張り系（rsi_oversold_bounce・bb_lower_touch）</strong>はFWD期間で59.6%・56.9%まで急改善。一方、<strong>high_break（高値ブレイクアウト）</strong>はIS 35.7%→FWD 29.3%（30.9%全期間）とむしろ悪化しています。全期間でも 17/55=30.9%（RCI[−0.789, +0.040]）と95%CI上限がほぼゼロ接触。</p>
+
+    <p>これは重要な示唆です——「下降トレンド中の full gate」よりも、「下降トレンド中でも逆張り系は許容し、high_break系は回避継続」という細分化された判断の方が精度が高い可能性があります。ただしこれ自体が新たな仮説であり、IS overfittingに注意が必要です（別回の検証課題）。</p>
+
+    <div class="info-box">
+      <strong>bb_lower_touch（−2σタッチ）</strong>の全期間実績：88/192=<strong>45.8%</strong>（E(R)=+0.104R、RCI[−0.138, +0.352]）。FWD単独は56.9%と良好だが全期間CIはまだゼロをまたぐ。注意深く監視継続。
+    </div>
+
+    <!-- ⑥逆張り vs 順張り -->
+    <h2 id="reversal">⑥ 逆張り vs 順張り：reversal_long の改善分析</h2>
+
+    <p>trend=下降 × reversal_long（逆張り買い）は別仮説（⛔反証済み: 「下降×逆張りは回避する」が覆された）として既に確定していますが、今回の trend=下降 gate 全体の改善への寄与を確認しました。</p>
+
+    <table>
+      <thead>
+        <tr><th>セグメント</th><th>IS k/N</th><th>IS勝率</th><th>FWD k/N</th><th>FWD勝率</th><th>全期間（k/N）</th><th>全期間勝率</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>reversal_long=True<br><small>逆張り買い</small></td>
+          <td>55/170</td><td style="color:#cf222e">32.4%</td>
+          <td>90/156</td><td style="color:#1a7f37">57.7%</td>
+          <td>145/326</td><td>44.5%</td>
+        </tr>
+        <tr>
+          <td>非reversal（それ以外）</td>
+          <td>80/207</td><td>38.6%</td>
+          <td>158/363</td><td>43.5%</td>
+          <td>238/570</td><td>41.8%</td>
+        </tr>
+        <tr>
+          <td>方向=ロング（全て）</td>
+          <td>92/260</td><td>35.4%</td>
+          <td>194/401</td><td>48.4%</td>
+          <td>286/661</td><td>43.3%</td>
+        </tr>
+        <tr>
+          <td>方向=ショート（全て）</td>
+          <td>43/117</td><td>36.8%</td>
+          <td>54/118</td><td>45.8%</td>
+          <td>97/235</td><td>41.3%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>reversal_long（IS 32.4% → FWD 57.7%）の改善幅は +25.3pp で最大ですが、非reversal セグメントも IS 38.6% → FWD 43.5% と +4.9pp 改善しています。つまり、<strong>FWD期間の改善は逆張りだけでなく全方位的</strong>です——ただし、非reversal のFWD 43.5%は損益分岐43%をわずかに上回る程度であり、全期間（41.8%）では損失圏です。</p>
+
+    <!-- ⑦前向きトラッカー -->
+    <h2 id="tracker">⑦ 前向きトラッカー現在状態（2026-08-10）</h2>
+
+    <p>トラッカーはcluster調整済みSE（同一日付の複数発火を1件に圧縮してSEを算出）を使用するため、raw の signal_lab_verify.py 計算値より保守的なCIになります。</p>
+
+    <table>
+      <thead>
+        <tr><th>仮説</th><th>状態</th><th>FWD N（cluster調整）</th><th>E(R)</th><th>RCI（cluster調整）</th><th>次のマイルストーン</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>trend=下降 gate</td>
+          <td><span class="badge-yellow">🟡 蓄積中</span></td>
+          <td>N≈517</td>
+          <td>+0.12R</td>
+          <td>[+0.01, +0.23]</td>
+          <td>⛔反証には連続2本ヒット要</td>
+        </tr>
+        <tr>
+          <td>group=metal × long gate（参考）</td>
+          <td><span class="badge-yellow">✅ 昇格</span></td>
+          <td>N≈176</td>
+          <td>−0.006R</td>
+          <td>[−0.29, +0.28]</td>
+          <td>昇格確定（別仮説）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>trend=下降 gate のcluster調整後 RCI は [+0.01, +0.23] です。下限が +0.01 > 0 に到達しており、理論上は⛔反証の条件（CI_lower > 0）を満たしつつあります。しかし昇格ルール上、<strong>⛔反証確定には連続2本の条件ヒット</strong>が必要です。本日（2026-08-10）が1本目です。次回の日次sweep（2026-08-11）でもCI_lower > 0 を維持できれば、⛔反証への移行が検討されます。</p>
+
+    <div class="warning-box">
+      <strong>注意：</strong>トラッカーが⛔反証に移行しても、それは「下降トレンド中のシグナルを取引してよい」という意味ではありません。全期間（42.7%、−0.004R）では依然として±0圏であり、実運用での変更はより長期の検証（FWD N=1000以上）を待つことが賢明です。
+    </div>
+
+    <!-- ⑧結論 -->
+    <h2 id="conclusion">⑧ 結論と今後の監視ポイント</h2>
+
+    <p>本日の検証結果を整理します：</p>
+    <ul>
+      <li>✅ <strong>FWD N=519で期待値CI下限がプラス確定</strong>（raw RCI[+0.023, +0.324]）：trend=下降 gate は初の「⛔反証候補」条件を満たした</li>
+      <li>✅ <strong>IS→FWD の改善は全方位的</strong>：reversal_long（+25.3pp）だけでなく非逆張り、ロング、ショートともに改善</li>
+      <li>✅ <strong>金属グループのIS 22.8%→FWD 53.4%</strong>が最大の改善要因（+30.6pp）</li>
+      <li>⚠️ <strong>全期間では42.7%（−0.004R）</strong>：統計的には中立。gate廃止の根拠としては不十分</li>
+      <li>⚠️ <strong>high_break はFWDでも悪化</strong>（29.3%）：このシグナルだけは引き続き下降トレンド中の回避が有効</li>
+      <li>⚠️ <strong>トラッカーはまだ🟡蓄積中</strong>：cluster調整後のCI_lower = +0.01（辛うじてゼロ超え）。連続2本確認が必要</li>
+    </ul>
+
+    <p><strong>今後の監視ポイント</strong>：翌日（2026-08-11）のsweep で trend=下降 gate がCI_lower > 0 を連続して維持できるかが最大の焦点です。市場環境が変わり、金属のFWD改善が一服すれば全期間CIがマイナスに戻ることも考えられます。</p>
+
+    <p style="font-size:.88rem;color:#57606a;margin-top:16px">本研究は反実仮想分析（過去データへの仮説適用）です。実際の取引には多くの追加リスク要因（スリッページ、資金管理、心理的バイアス等）があります。本記事は情報提供のみを目的としており、特定の売買を推奨するものではありません。</p>
+
+    <!-- 関連記事 -->
+    <h2>関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <div class="related-card-title">📊 発火条件の図解カタログ</div>
+        <div class="related-card-desc">rsi_oversold_bounce・bb_lower_touch など主要シグナルの発火条件をチャートで解説。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-060.html">
+        <div class="related-card-title">🧪 #060 下降×逆張り ⛔反証確定</div>
+        <div class="related-card-desc">trend=下降×reversal_long の⛔反証が確定した回。今回の前身となる分析。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-064.html">
+        <div class="related-card-title">🧪 #064 金属ロング gate 降格候補</div>
+        <div class="related-card-desc">金属グループ gate の FWD N=177定点。今回の金属改善の背景を理解する参照記事。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-065.html">
+        <div class="related-card-title">🧪 #065 もみあい×ショート 崩壊確定</div>
+        <div class="related-card-desc">FWD N=157 でCI全域マイナス確定。gate仮説崩壊の逆方向の例。</div>
+      </a>
+      <a class="related-card" href="guides.html">
+        <div class="related-card-title">📚 解説記事一覧</div>
+        <div class="related-card-desc">AIシグナル研究日誌の全回、投資心理、リスク管理などの記事一覧。</div>
+      </a>
+    </div>
+
+    <!-- フッター免責 kinsho-v1（3点） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      【免責事項】①本記事は情報提供のみを目的としており、特定の金融商品の売買を勧誘・推奨するものではありません。②当サイトは金融商品取引業者ではなく、投資助言業・代理業の登録を受けていません。③記載された過去の検証結果は将来の成果を保証するものではなく、投資の最終判断はご自身の責任でお願いします。本記事の情報利用により生じた損失について、当サイトは一切の責任を負いません。
+    </p>
+
+  </div><!-- .article -->
+</main>
+
+<footer>
+  <!-- ③ フッター（kinsho-v1） -->
+  <p data-disclaimer="kinsho-v1" style="margin-bottom:10px;font-size:.78rem;color:#6e7781">⚠️ 本サイトは情報提供が目的であり、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。</p>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="about.html">運営者情報</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+(function(){
+  var el=document.getElementById('reading-progress');
+  if(!el)return;
+  function upd(){
+    var h=document.documentElement;
+    var pct=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight);
+    el.style.width=(pct*100)+'%';
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+})();
+</script>
+</body>
+</html>
