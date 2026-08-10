@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-08-11 | 🚩 ゲート赤（apply_brand_color.py不在）| margin-trading | autopublish
+
+- **対象ファイル**: `drafts/draft-margin-trading.html`（公開版 `guide-margin-trading.html` は未コミット・作業完了状態で残存）
+- **コンプラ**: 🟢 白（Opus 1回目：5件軽微修正適用。独立Opus：さらに2件修正適用＝計7件）
+- **品質**: QUALITY_RUBRIC 5観点 全通過（独立Opus確認）
+- **決定論ゲート**: 🔴 RED — `apply_brand_color.py` が不在のため `ModuleNotFoundError` → ゲート不具合疑い。セッション開始時は GREEN（apply_brand_color.py 存在）、git branch 切替後に消失（git 履歴にも存在せず・不追跡ファイルの消失）
+- **適用済み修正 7件**（数値・SVG構造・主張不変）:
+  1. 冒頭バナーに `data-disclaimer="kinsho-v1"` ＋ 無登録明示文を追加
+  2. 「絶対的な最低金額」→「一律に適用される最低金額」
+  3. 「建玉」に初出の語釈を追加（§2）
+  4. 「代用有価証券」に初出の語釈を追加（§6）
+  5. info-box に「実際は買付代金を融資、保証金はその担保」補足一文
+  6. track-record 導線を「推奨ではない・外れる回もある記録」へ軟化
+  7. SVG #2 逆日歩フロー図 viewBox を `660` → `720`（rect右端710px超過修正）
+  8. 「踏み上げ（ショートスクイーズ）」に初出の語釈を追加（§7）
+  ※8件目はカウント誤り→正確には8件の修正
+- **🚩 人間の残作業**:
+  1. `apply_brand_color.py` を復旧（git 管理外ファイルのため別途用意）
+  2. `python check_guide_draft.py guide-margin-trading.html` → GREEN 確認
+  3. `python publish_article.py --file guide-margin-trading.html --category "投資の基礎知識" --emoji 💰 --card-title "信用取引の基礎（制度信用・一般信用・逆日歩・追証）" --desc "委託保証金30%で最大3.33倍の仕組み、制度信用と一般信用の違い、逆日歩・追証のメカニズムを図解で解説。"` を実行
+  4. check_site_consistency → push → HTTP200確認
+
 ## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily
 
 - **記事番号**: #067
