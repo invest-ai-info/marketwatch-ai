@@ -1,0 +1,52 @@
+name: EDINET Holdings
+
+# 大量保有報告書（5%ルール）の新着一覧。edinet-holdings.json だけを commit する軽量レーン。
+# holdings.html は JS が閲覧時に JSON を fetch するため、このワークフローで HTML 再生成は不要。
+# ※update-market-news.yml の on:push paths に edinet-holdings.json は含まれない＝連鎖起動しない。
+#
+# ⚠️ EDINET 利用規約（PDL1.0準拠）は「短時間における大量のアクセス」を禁止しているため、
+#    1日1回・直近5日ぶんのみ（=5リクエスト、間に待機）に抑えている。頻度を上げないこと。
+# ⚠️ Secrets: EDINET_API_KEY（EDINETのアカウント作成→多要素認証→APIキー発行画面で取得）。
+#    未設定の場合はスクリプトが exit 2 で止まる（空のJSONで上書きはしない）。
+
+on:
+  schedule:
+    - cron: '10 10 * * 1-5'   # 平日 19:10 JST（提出締切17:00の後・:00混雑回避）
+  workflow_dispatch:
+
+concurrency:
+  group: edinet-holdings
+  cancel-in-progress: true
+
+jobs:
+  holdings:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build EDINET holdings JSON
+        env:
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+        run: python build_edinet_holdings.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add edinet-holdings.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: edinet holdings $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin main || true
+            git push
+          fi
