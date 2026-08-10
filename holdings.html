@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>大量保有報告書の新着一覧（5%ルール） - MarketWatch AI</title>
+  <meta name="description" content="金融庁EDINETに提出された大量保有報告書（5%ルール）の新着を、提出者・対象銘柄・提出日時つきで一覧表示。原本へのリンクつき。出典：EDINET閲覧サイト。">
+  <link rel="canonical" href="https://marketwatch-jp.com/holdings.html">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.7}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#ffffff}
+    .doc-card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:32px}
+    h1{font-size:1.8rem;color:#1E3A6E;margin-bottom:8px}
+    .subtitle{font-size:.95rem;color:#57606a;margin-bottom:24px}
+    h2{font-size:1.2rem;color:#2C4F8F;margin-top:28px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #d0d7de}
+    p{font-size:.95rem;color:#424a53;margin-bottom:14px}
+    ul{margin:10px 0 14px 24px;color:#424a53;font-size:.95rem}
+    li{margin-bottom:8px}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .beginner-note{background:#fff8e6;border:1px solid #E8A317;border-left-width:4px;border-radius:8px;padding:14px 16px;margin:18px 0;font-size:.9rem;color:#5c4708}
+    .beginner-note b{color:#7a5c05}
+    .caution-note{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #57606a;border-radius:8px;padding:14px 16px;margin:18px 0;font-size:.88rem;color:#424a53}
+    .meta-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.85rem;color:#57606a;margin-bottom:14px}
+    .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:4px;background:#1E3A6E;color:#fff;letter-spacing:.03em}
+    .badge.fix{background:#9a6700}
+    .filter-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+    .filter-row input{flex:1 1 220px;min-width:0;padding:9px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:.9rem;background:#fff;color:#1f2328}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table.hold{width:100%;border-collapse:collapse;margin-top:10px;min-width:640px}
+    table.hold th,table.hold td{padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:left;font-size:.9rem;vertical-align:top}
+    table.hold th{color:#57606a;font-weight:600;background:#ffffff;white-space:nowrap;position:sticky;top:0}
+    table.hold td{color:#424a53}
+    td.filer{font-weight:600;color:#1f2328}
+    td.code{font-variant-numeric:tabular-nums;white-space:nowrap}
+    td.dt{white-space:nowrap;font-variant-numeric:tabular-nums;color:#57606a}
+    .state{padding:26px 4px;text-align:center;color:#57606a;font-size:.92rem}
+    .source-box{margin-top:22px;padding:14px 16px;background:#ffffff;border:1px solid #d0d7de;border-radius:8px;font-size:.82rem;color:#57606a;line-height:1.7}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta,body.dark .subtitle,body.dark .meta-line,body.dark .state{color:#8b949e}
+    body.dark main .doc-card{background:#161b22;border-color:#30363d}
+    body.dark h1{color:#e6edf3}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark p,body.dark ul,body.dark li{color:#c9d1d9}
+    body.dark a{color:#79c0ff}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#1f6feb;border-color:#1f6feb;color:#fff}
+    body.dark .beginner-note{background:#2b2410;border-color:#9a6700;color:#e3c766}
+    body.dark .beginner-note b{color:#f0d68a}
+    body.dark .caution-note{background:#0d1117;border-color:#30363d;border-left-color:#8b949e;color:#c9d1d9}
+    body.dark table.hold th{background:#0d1117;color:#8b949e;border-bottom-color:#30363d}
+    body.dark table.hold td{color:#c9d1d9;border-bottom-color:#30363d}
+    body.dark td.filer{color:#e6edf3}
+    body.dark td.dt{color:#8b949e}
+    body.dark .filter-row input{background:#0d1117;border-color:#30363d;color:#e6edf3}
+    body.dark .source-box{background:#0d1117;border-color:#30363d;color:#8b949e}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn current" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="doc-card">
+    <h1>🏦 大量保有報告書の新着一覧</h1>
+    <div class="subtitle">金融庁 EDINET に提出された「5%ルール」の届出を、提出された順に並べています</div>
+
+    <div class="beginner-note">
+      🔰 <b>大量保有報告書（5%ルール）とは</b><br>
+      上場企業の株式を <b>5%を超えて保有</b> することになった人・法人は、原則としてその日から
+      <b>5営業日以内</b> に「誰が」「どの会社の株を」「どれだけ」持っているかを届け出る義務があります（金融商品取引法）。
+      その後も保有割合が <b>1%以上増減</b> すると「変更報告書」を出します。
+      <b>誰がどの銘柄に大きな資金を入れたかが公開情報として分かる</b>、という点が投資家にとっての意味です。
+    </div>
+
+    <div class="caution-note">
+      ⚠️ <b>読むときの注意</b>：提出は「事実の届出」であって、その銘柄の値上がりを示すものでも、
+      売買を勧めるものでもありません。保有目的は「純投資」「政策保有」「経営参加」などさまざまで、
+      <b>担保差入れや信託の設定など、株価の見通しと関係のない事情</b>で提出されることもあります。
+      当ページは提出の事実のみを掲載しています。詳細は必ず <b>EDINET の原本</b> をご確認ください。
+    </div>
+
+    <h2>新着の届出</h2>
+    <div class="meta-line">
+      <span id="hd-updated">読み込み中…</span>
+      <span id="hd-count"></span>
+    </div>
+    <div class="filter-row">
+      <input id="hd-q" type="search" placeholder="提出者名・証券コードで絞り込み（例: 4755 / 野村）" aria-label="絞り込み">
+    </div>
+    <div class="table-wrap">
+      <table class="hold">
+        <thead>
+          <tr>
+            <th>提出日時</th>
+            <th>提出者（保有者）</th>
+            <th>証券コード</th>
+            <th>書類</th>
+            <th>原本</th>
+          </tr>
+        </thead>
+        <tbody id="hd-body"></tbody>
+      </table>
+    </div>
+    <div class="state" id="hd-state">読み込み中…</div>
+
+    <h2>保有割合について</h2>
+    <p>
+      現在この一覧に表示しているのは <b>「誰が・どの銘柄に・いつ提出したか」</b> までです。
+      <b>保有割合（何％から何％へ）は書類の本文に記載</b>されており、一覧のデータには含まれません。
+      割合や保有目的を確認する場合は、各行の「原本を見る」から EDINET の書類をご覧ください。
+    </p>
+
+    <div class="source-box" id="hd-source">
+      出典：<a href="https://disclosure2.edinet-fsa.go.jp/" target="_blank" rel="noopener">EDINET 閲覧サイト</a>（金融庁）をもとに MarketWatch AI 作成。
+      <a href="https://disclosure2dl.edinet-fsa.go.jp/guide/static/disclosure/WZEK0030.html" target="_blank" rel="noopener">公共データ利用規約（PDL1.0）</a>に基づき利用しています。
+      データは EDINET API 経由で1日1回取得しており、EDINET 上の最新状態と差がある場合があります。
+    </div>
+  </div>
+</main>
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+<p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+<script src="site-search.js" defer></script>
+<script>
+/* 大量保有報告書の一覧を閲覧時に取得して描画（HTML再生成なしで常に最新）。
+   ⚠️ JSON が未生成のうち（APIキー投入前）は 404 になるので、その場合は「準備中」を出す。 */
+(function(){
+  var body=document.getElementById('hd-body'), state=document.getElementById('hd-state');
+  var upd=document.getElementById('hd-updated'), cnt=document.getElementById('hd-count');
+  var q=document.getElementById('hd-q'), all=[];
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sec(s){ /* EDINETの証券コードは5桁（末尾0）。4桁の一般表記に直す */
+    s=String(s||''); return (s.length===5&&s.charAt(4)==='0')?s.slice(0,4):(s||'—');}
+  function render(){
+    var kw=(q.value||'').trim().toLowerCase();
+    var rows=all.filter(function(it){
+      if(!kw)return true;
+      return (it.filer||'').toLowerCase().indexOf(kw)>=0 || String(it.sec||'').indexOf(kw)>=0;
+    });
+    body.innerHTML=rows.map(function(it){
+      var isFix=(it.type||'').indexOf('訂正')>=0;
+      return '<tr><td class="dt">'+esc(it.dt)+'</td>'+
+        '<td class="filer">'+esc(it.filer||'—')+'</td>'+
+        '<td class="code">'+esc(sec(it.sec))+'</td>'+
+        '<td><span class="badge'+(isFix?' fix':'')+'">'+esc(it.type||'大量保有')+'</span></td>'+
+        '<td><a href="'+esc(it.url)+'" target="_blank" rel="noopener">原本を見る</a></td></tr>';
+    }).join('');
+    state.textContent = rows.length ? '' : (all.length ? '該当する届出がありません（絞り込み条件を変えてみてください）'
+                                                      : '直近の届出はありません');
+    state.style.display = rows.length ? 'none' : 'block';
+    cnt.textContent = rows.length ? ('表示 '+rows.length+' 件') : '';
+  }
+  fetch('edinet-holdings.json?t='+Date.now(),{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw 0; return r.json();
+  }).then(function(d){
+    all=(d.items||[]).filter(function(it){return it && it.id && it.url;});
+    var u=d.updated?new Date(d.updated):null;
+    upd.textContent = u&&!isNaN(u) ? ('最終更新: '+u.toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})) : '';
+    render(); q.addEventListener('input',render);
+  }).catch(function(){
+    upd.textContent='';
+    state.textContent='この一覧は現在準備中です。まもなく EDINET の届出を掲載します。';
+  });
+})();
+</script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
