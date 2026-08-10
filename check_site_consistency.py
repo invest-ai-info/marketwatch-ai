@@ -48,6 +48,7 @@ SYNC_FORBIDDEN = {
     "jp-rankings.json",  # 値上がり/値下がりランキング（jp-rankings.yml が GitHub 側で毎朝生成・コミット。ローカルpush禁止）
     "jp-margin.json",  # 信用残ウォッチ（jp-rankings.yml が build_jp_margin.py で生成・コミット。ローカルpush禁止）
     "news-ticker.json",  # ⚡最新ニュース・ライブフィード（news-ticker.yml が毎時GitHub側で生成・コミット。ローカルpush禁止）
+    "edinet-holdings.json",  # 大量保有報告書の新着（edinet-holdings.yml が平日GitHub側で生成・コミット。ローカルpush禁止）
     "guide-new-books.html",  # 投資本新刊ウォッチ（routine book-watch-weekly が毎週土曜GitHub側で更新。ローカルpush禁止）
     "idea-inbox.md",  # 研究アイデア受信箱 drafts/idea-inbox.md（routine idea-scout-weekly が毎週日曜GitHub側で追記。照合はbasename）
     # 🆕 2026-07-07 進化ループのローカル専用ファイル（非公開研究＝公開リポへ流出させない）
