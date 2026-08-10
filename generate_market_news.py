@@ -1611,6 +1611,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   <a class="nav-btn" href="charts.html">📈 150年チャート</a>
@@ -2674,6 +2675,7 @@ def build_hot_assets_html(hot_data, now_jst):
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn current" href="hot-assets.html">🔥 出来高急増</a>
     <a class="nav-btn" href="charts.html">📈 150年チャート</a>
@@ -2988,6 +2990,7 @@ def build_calendar_html(now_jst):
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   <a class="nav-btn" href="charts.html">📈 150年チャート</a>
@@ -3378,6 +3381,7 @@ def build_preview_html(now_jst):
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   <a class="nav-btn" href="charts.html">📈 150年チャート</a>
@@ -3768,6 +3772,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
     <a class="nav-btn current" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
     <a class="nav-btn" href="charts.html">📈 150年チャート</a>
@@ -4102,6 +4107,7 @@ def build_charts_html(hist, now_jst):
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   <a class="nav-btn current" href="charts.html">📈 150年チャート</a>
@@ -5436,6 +5442,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
     <a class="nav-btn" href="charts.html">📈 150年チャート</a>
