@@ -128,15 +128,16 @@
       <span id="hd-count"></span>
     </div>
     <div class="filter-row">
-      <input id="hd-q" type="search" placeholder="提出者名・証券コードで絞り込み（例: 4755 / 野村）" aria-label="絞り込み">
+      <input id="hd-q" type="search" placeholder="銘柄名・証券コード・提出者名で絞り込み（例: 7203 / トヨタ / 野村）" aria-label="絞り込み">
     </div>
     <div class="table-wrap">
       <table class="hold">
         <thead>
           <tr>
             <th>提出日時</th>
+            <th>対象銘柄</th>
+            <th>コード</th>
             <th>提出者（保有者）</th>
-            <th>証券コード</th>
             <th>書類</th>
             <th>原本</th>
           </tr>
@@ -183,13 +184,16 @@
     var kw=(q.value||'').trim().toLowerCase();
     var rows=all.filter(function(it){
       if(!kw)return true;
-      return (it.filer||'').toLowerCase().indexOf(kw)>=0 || String(it.sec||'').indexOf(kw)>=0;
+      return (it.filer||'').toLowerCase().indexOf(kw)>=0
+          || (it.iname||'').toLowerCase().indexOf(kw)>=0
+          || String(it.isec||'').indexOf(kw)>=0;
     });
     body.innerHTML=rows.map(function(it){
       var isFix=(it.type||'').indexOf('訂正')>=0;
       return '<tr><td class="dt">'+esc(it.dt)+'</td>'+
-        '<td class="filer">'+esc(it.filer||'—')+'</td>'+
-        '<td class="code">'+esc(sec(it.sec))+'</td>'+
+        '<td class="filer">'+esc(it.iname||'—')+'</td>'+
+        '<td class="code">'+esc(sec(it.isec))+'</td>'+
+        '<td>'+esc(it.filer||'—')+'</td>'+
         '<td><span class="badge'+(isFix?' fix':'')+'">'+esc(it.type||'大量保有')+'</span></td>'+
         '<td><a href="'+esc(it.url)+'" target="_blank" rel="noopener">原本を見る</a></td></tr>';
     }).join('');
