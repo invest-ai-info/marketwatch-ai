@@ -23,7 +23,9 @@
 ⚠️ edinet-holdings.json は Actions が生成・commit する＝**SYNC_FILES に入れない（SYNC禁忌）**。
    このスクリプトと holdings.html は SYNC 対象。
 """
+import csv
 import datetime
+import io
 import json
 import os
 import sys
@@ -31,6 +33,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zipfile
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -42,6 +45,14 @@ JST = datetime.timezone(datetime.timedelta(hours=9))
 API = "https://api.edinet-fsa.go.jp/api/v2/documents.json"
 DOC_URL = "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx"   # 書類閲覧ページ（出典リンク先）
 TERMS_URL = "https://disclosure2dl.edinet-fsa.go.jp/guide/static/disclosure/WZEK0030.html"
+
+# EDINETコードリスト（EDINETコード → 提出者名・証券コード）。APIキー不要の公開ZIP。
+# ⚠️ 2026-08-10 実測で判明した設計の誤りの修正に必要:
+#   書類一覧APIの `secCode` は **提出者（＝保有者）の証券コード**であって、対象銘柄のものではない。
+#   大量保有報告書の提出者はファンド・個人・財団が大半なので **120件中115件（96%）が空**だった。
+#   「どの銘柄への届出か」は `issuerEdinetCode`（発行会社のEDINETコード）にあり、
+#   このリストで 会社名＋証券コード に解決する。
+CODELIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip"
 
 # 書類種別コード（API仕様書 4-1 参考資料。2026-08-08 に PDF から実確認）
 #   350 = 大量保有報告書 ／ 360 = 訂正大量保有報告書
@@ -76,6 +87,48 @@ def api_get(date_str, api_key):
     return body
 
 
+def parse_code_list(raw_zip):
+    """EdinetcodeDlInfo.csv を {EDINETコード: {"name":..., "sec":...}} へ。
+
+    ⚠️ 文字コードは cp932（UTF-8で読むと例外）。1行目はダウンロード日・件数のヘッダ、
+       2行目が列名、3行目以降がデータ（2026-08-10 実測: 11,380件）。
+    """
+    z = zipfile.ZipFile(io.BytesIO(raw_zip))
+    raw = z.read(z.namelist()[0])
+    txt = raw.decode("cp932", errors="replace")
+    rows = list(csv.reader(io.StringIO(txt)))
+    if len(rows) < 3:
+        return {}
+    header = rows[1]
+    try:
+        i_code = header.index("ＥＤＩＮＥＴコード")
+        i_name = header.index("提出者名")
+        i_sec = header.index("証券コード")
+    except ValueError:
+        return {}                      # 列名が変わったら黙って諦める（誤った列を読むより安全）
+    out = {}
+    for r in rows[2:]:
+        if len(r) <= max(i_code, i_name, i_sec):
+            continue
+        code = (r[i_code] or "").strip()
+        if code:
+            out[code] = {"name": (r[i_name] or "").strip(), "sec": (r[i_sec] or "").strip()}
+    return out
+
+
+def fetch_code_map():
+    """EDINETコードリストを取得。失敗しても**レーン自体は止めない**（会社名が出ないだけ）。"""
+    try:
+        req = urllib.request.Request(CODELIST_URL, headers={"User-Agent": "marketwatch-jp/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            m = parse_code_list(r.read())
+        print(f"  EDINETコードリスト: {len(m)}件")
+        return m
+    except Exception as ex:
+        print(f"  ⚠️ EDINETコードリスト取得失敗（会社名なしで継続）: {ex}")
+        return {}
+
+
 def is_large_holding(doc):
     """大量保有関連の提出書類か（府令コード優先・書類種別コードで補完）。"""
     if doc.get("ordinanceCode") == ORDINANCE_LARGE_HOLDING:
@@ -83,9 +136,13 @@ def is_large_holding(doc):
     return doc.get("docTypeCode") in DOCTYPE_LABEL
 
 
-def normalize(doc, date_str):
+def normalize(doc, date_str, code_map=None):
     """1件を表示用の最小形へ。**保有割合は書類一覧APIに含まれない**ので持たせない
-    （持っていない数字を推測で埋めない＝このプロジェクトの原則）。"""
+    （持っていない数字を推測で埋めない＝このプロジェクトの原則）。
+
+    対象銘柄は issuerEdinetCode を code_map で会社名＋証券コードに解決する
+    （secCode は提出者自身のコードなので対象銘柄ではない＝2026-08-10 の修正）。
+    """
     doc_id = (doc.get("docID") or "").strip()
     if not doc_id:
         return None
@@ -95,11 +152,14 @@ def normalize(doc, date_str):
     if str(doc.get("disclosureStatus") or "0") in ("1", "2"):
         return None
     desc = (doc.get("docDescription") or "").strip()
+    issuer_code = (doc.get("issuerEdinetCode") or "").strip()
+    info = (code_map or {}).get(issuer_code) or {}
     return {
         "id": doc_id,
         "filer": (doc.get("filerName") or "").strip(),          # 提出者（保有者）
-        "issuer": (doc.get("issuerEdinetCode") or "").strip(),   # 発行会社EDINETコード
-        "sec": (doc.get("secCode") or "").strip(),               # 証券コード（5桁）
+        "issuer": issuer_code,                                   # 発行会社EDINETコード
+        "iname": info.get("name", ""),                           # 対象銘柄の会社名（解決できた場合）
+        "isec": info.get("sec", ""),                             # 対象銘柄の証券コード（5桁）
         "desc": desc,
         "type": DOCTYPE_LABEL.get(doc.get("docTypeCode"), "大量保有関連"),
         "dt": (doc.get("submitDateTime") or f"{date_str} 00:00").strip(),
@@ -107,7 +167,7 @@ def normalize(doc, date_str):
     }
 
 
-def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep):
+def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep, code_map=None):
     """直近 lookback 日ぶんを取得して新しい順に返す。docID で重複排除。"""
     today = today or datetime.datetime.now(JST).date()
     items, seen, errors = [], set(), []
@@ -126,7 +186,7 @@ def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep):
         for doc in (body.get("results") or []):
             if not is_large_holding(doc):
                 continue
-            row = normalize(doc, ds)
+            row = normalize(doc, ds, code_map)
             if row and row["id"] not in seen:
                 seen.add(row["id"])
                 items.append(row)
@@ -146,8 +206,9 @@ def main():
         return 2
     now = datetime.datetime.now(JST)
     print(f"[edinet-holdings] {now:%Y-%m-%d %H:%M JST} 直近{LOOKBACK_DAYS}日を取得…")
+    code_map = fetch_code_map()
     try:
-        items, errors = collect(api_key)
+        items, errors = collect(api_key, code_map=code_map)
     except EdinetError as e:
         print(f"❌ {e}\n   → 既存 edinet-holdings.json は保持します（空で上書きしない）")
         return 1
