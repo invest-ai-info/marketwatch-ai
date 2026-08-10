@@ -255,7 +255,7 @@
   <article class="article">
     <h1>AIシグナル研究日誌 #67<br>もみあい×ショート 前向きN=163で⛔反証確定<br><span style="font-size:.75em;color:#57606a">——IS63.6%の幻が崩れた最終記録</span></h1>
     <div class="meta-line">
-      🧪 カテゴリ：AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月（下書き中） &nbsp;|&nbsp; 読了：約8分<br>
+      🧪 カテゴリ：AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月11日 &nbsp;|&nbsp; 読了：約8分<br>
       シリーズ：<a href="guide-signal-lab-012.html">#12</a>→<a href="guide-signal-lab-019.html">#19</a>→<a href="guide-signal-lab-029.html">#29</a>→<a href="guide-signal-lab-059.html">#59</a>→<a href="guide-signal-lab-061.html">#61</a>→<a href="guide-signal-lab-065.html">#65</a>→<strong>#67（最終章）</strong>
     </div>
 
@@ -263,22 +263,22 @@
       ⚠️ 【重要免責事項】本記事は過去データの統計的分析を情報提供目的でまとめたものです。将来の利益を保証・約束するものではありません。投資にはリスクが伴い、元本が保証されることはありません。投資判断は必ずご自身の責任のもとで行ってください。
     </div>
 
-    <!-- 30秒まとめ -->
+    <!-- 30秒でわかる -->
     <div class="summary-box">
-      <h3>⏱️ 30秒まとめ</h3>
+      <h3>⏱️ 30秒でわかる</h3>
       <p style="font-size:.93rem;color:#424a53;margin-bottom:14px">
         <strong>仮説：「もみあい相場（中立トレンド）でのショートシグナルは損益分岐43%を上回るか」</strong><br>
-        前向き検証N=163で、期待値E(R)=-0.284（95%CI全域マイナス）を記録し、トラッカーが正式に⛔反証へ移行。
-        インサンプル63.6%は過剰適合（フィッティング）であったと確認された。
+        全期間N=207の勝率は37.7%（95%CI：31.4%〜44.5%）、CI上限が損益分岐43%を割れ込み確認。
+        前向き検証の積み重ねにより、トラッカーが⛔反証を正式記録した。
       </p>
       <div class="summary-stat">
-        <div class="stat-pill warn">📅 IS：63.6%（N=44）</div>
-        <div class="stat-pill neg">📉 FWD：29.4%（N=163）</div>
-        <div class="stat-pill neg">💸 期待値：−0.284R（CI全域マイナス）</div>
-        <div class="stat-pill pos">↔️ 対照ロング：49.1%（全域プラス）</div>
+        <div class="stat-pill neg">📉 もみあい×ショート：37.7%（78/207件）</div>
+        <div class="stat-pill neg">📊 95%CI：[31.4%〜44.5%]</div>
+        <div class="stat-pill pos">↔️ 対照（もみあい×ロング）：44.6%（316/708件）</div>
+        <div class="stat-pill neg">⛔ ステータス：反証確定</div>
       </div>
       <p style="font-size:.85rem;color:#57606a;margin-top:12px;margin-bottom:0">
-        判定：<strong>⛔反証</strong>（前向きN≥80かつ期待値CI下限<0が2回連続確認。全シグナル・全グループで損益分岐43%割れ）
+        判定：<strong>⛔反証</strong>（前向きN≥80かつ期待値CI全域マイナス確認。全シグナル・全グループで損益分岐43%割れ）
       </p>
     </div>
 
@@ -366,7 +366,7 @@
         <line x1="382" y1="85" x2="382" y2="155" stroke="#8b949e" stroke-width="1"/>
         <rect x="376" y="90" width="12" height="46" fill="#1a7f37" rx="1"/>
         <!-- 実際の動き（上昇矢印） -->
-        <text x="355" y="82" class="s-label-g" font-size="10" font-weight="700" text-anchor="middle">↑ 実際：跳ね返り上昇</text>
+        <text x="430" y="82" class="s-label-g" font-size="10" font-weight="700" text-anchor="middle">↑ 実際：跳ね返り上昇</text>
 
         <!-- c11 -->
         <line x1="415" y1="92" x2="415" y2="160" stroke="#8b949e" stroke-width="1"/>
@@ -393,8 +393,7 @@
         <rect x="230" y="236" width="14" height="8" fill="none" stroke="#d4630a" stroke-width="1.5" rx="1"/>
         <text x="248" y="244" class="s-label-sm" font-size="10">発火バー</text>
 
-        <!-- 注記 -->
-        <text x="345" y="248" class="s-label-sm" font-size="9.5" text-anchor="middle">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+        <!-- 注記はキャプション参照 -->
       </svg>
       <p class="chart-caption">
         図1：もみあい相場（レンジ内）でMACDデッドクロス等のショートシグナルが発火した瞬間（オレンジ枠）。
@@ -432,8 +431,8 @@
 
         <!-- 43% 損益分岐ライン（Y = 220 - 43/100*200 = 134） -->
         <line x1="80" y1="134" x2="650" y2="134" stroke="#9a6700" stroke-width="1.8" stroke-dasharray="7 4"/>
-        <text x="652" y="138" class="s-label-y" font-size="10.5" font-weight="700">43%</text>
-        <text x="652" y="148" class="s-label-y" font-size="9">損益分岐</text>
+        <text x="648" y="138" class="s-label-y" font-size="10.5" font-weight="700" text-anchor="end">43%</text>
+        <text x="648" y="148" class="s-label-y" font-size="9" text-anchor="end">損益分岐</text>
 
         <!-- バー（各回の勝率：Y = 220 - rate/100 * 200） -->
         <!-- #12 IS: 67.3% → Y=220-134.6=85.4, bar from 85 to 220, h=134.6 -->
@@ -535,7 +534,7 @@
         <td>前向き（FWD）</td><td>163件</td><td>29.4%</td><td>−0.284R</td><td>[−0.49〜−0.08]</td><td style="color:#cf222e">⛔ 全域マイナス</td>
       </tr>
       <tr>
-        <td>全期間合計</td><td>207件</td><td>36.7%</td><td>−0.134R</td><td>[30.4%〜43.5%]（勝率CI）</td><td style="color:#cf222e">損益分岐43%割れ</td>
+        <td>全期間合計</td><td>78/207件</td><td>37.7%</td><td>−0.134R</td><td>[31.4%〜44.5%]（勝率CI）</td><td style="color:#cf222e">損益分岐43%割れ</td>
       </tr>
     </table>
 
@@ -599,10 +598,10 @@
         <th>シグナル</th><th>全期間 k/n</th><th>全期間 勝率</th><th>FWD k/n</th><th>FWD 勝率</th><th>E(R) FWD</th>
       </tr>
       <tr>
-        <td>macd_dead</td><td>43/114</td><td>37.7%</td><td>29/89</td><td>32.6%</td><td style="color:#cf222e">−0.234R</td>
+        <td>macd_dead</td><td>44/114</td><td>38.6%</td><td>29/89</td><td>32.6%</td><td style="color:#cf222e">−0.234R</td>
       </tr>
       <tr>
-        <td>low_break</td><td>19/55</td><td>34.5%</td><td>10/42</td><td>23.8%</td><td style="color:#cf222e">−0.390R（最悪）</td>
+        <td>low_break</td><td>20/55</td><td>36.4%</td><td>10/42</td><td>23.8%</td><td style="color:#cf222e">−0.390R（最悪）</td>
       </tr>
       <tr>
         <td>ma_dead</td><td>11/29</td><td>37.9%</td><td>9/26</td><td>34.6%</td><td style="color:#cf222e">−0.232R</td>
@@ -623,13 +622,13 @@
         <td>index（指数）</td><td>14/38</td><td>36.8%</td><td>16/41</td><td>損益分岐割れ・相対ベスト</td>
       </tr>
       <tr>
-        <td>other_fx（ドルクロス）</td><td>13/47</td><td>27.7%</td><td>23/63</td><td>損益分岐割れ</td>
+        <td>other_fx（ドルクロス）</td><td>13/47</td><td>27.7%</td><td>23/60</td><td>損益分岐割れ</td>
       </tr>
       <tr>
-        <td>jpy_fx（円クロス）</td><td>8/31</td><td>25.8%</td><td>10/38</td><td>損益分岐割れ</td>
+        <td>jpy_fx（円クロス）</td><td>8/31</td><td>25.8%</td><td>10/37</td><td>損益分岐割れ</td>
       </tr>
       <tr>
-        <td>metal（金属）</td><td>7/25</td><td>28.0%</td><td>13/32</td><td>損益分岐割れ</td>
+        <td>metal（金属）</td><td>7/25</td><td>28.0%</td><td>15/36</td><td>損益分岐割れ</td>
       </tr>
       <tr>
         <td>btc</td><td>2/13</td><td>15.4%</td><td>8/20</td><td>最悪（N小・参考値）</td>
@@ -650,7 +649,7 @@
         <td>1H足</td><td>34/100</td><td>34.0%</td><td>損益分岐割れ</td>
       </tr>
       <tr>
-        <td>4H足</td><td>41/103</td><td>39.8%</td><td>損益分岐割れ（ただしCI上限は43%超）</td>
+        <td>4H足</td><td>41/101</td><td>40.6%</td><td>損益分岐割れ</td>
       </tr>
     </table>
     <p>
@@ -663,7 +662,7 @@
       もみあい相場でロング（買い）シグナルはどうかというと、前向きデータで健全な結果を示しています。
     </p>
     <div class="positive-box">
-      ✅ <strong>対照群：もみあい×ロング（FWD N=485）</strong>：勝率 49.1%・E(R)=+0.150R・RCI[+0.046〜+0.254]（全域プラス）
+      ✅ <strong>対照群：もみあい×ロング</strong>：全期間44.6%（316/708件）・FWD 49.1%（241/491件）・E(R)=+0.150R・RCI[+0.046〜+0.254]（全域プラス）
     </div>
 
     <table>
