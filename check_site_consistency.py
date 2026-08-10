@@ -260,9 +260,10 @@ def main():
     # 4. ナビ10ボタン整合性：nav を持つ生成スクリプト(.py)・静的/手動HTMLが10リンク全部を含むか。
     #    自動生成済みの過去記事(guide-weekly-*/guide-monthly-report-*/guide-auto-*)は出力なので除外。
     #    ナビの正は生成スクリプト側で担保する＝ソースを検査してドリフトを根元で捕まえる。
+    # 🆕 2026-08-10: holdings.html（大量保有報告書）を追加＝11ボタン標準
     NAV_LINKS = ["index.html", "political-feed.html", "track-record.html", "calendar.html",
-                 "guides.html", "guide-investment-books.html", "market-health.html",
-                 "hot-assets.html", "charts.html", "youtube-summary.html"]
+                 "guides.html", "guide-investment-books.html", "holdings.html",
+                 "market-health.html", "hot-assets.html", "charts.html", "youtube-summary.html"]
     for src in sorted(glob.glob(os.path.join(SD, "*.py")) + glob.glob(os.path.join(SD, "*.html"))):
         name = os.path.basename(src)
         if name.startswith(("guide-weekly-", "guide-monthly-report-", "guide-auto-") + CLOUD_PREFIXES):
