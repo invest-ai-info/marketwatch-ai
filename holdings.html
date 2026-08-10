@@ -6,8 +6,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>大量保有報告書の新着一覧（5%ルール） - MarketWatch AI</title>
-  <meta name="description" content="金融庁EDINETに提出された大量保有報告書（5%ルール）の新着を、提出者・対象銘柄・提出日時つきで一覧表示。原本へのリンクつき。出典：EDINET閲覧サイト。">
+  <title>大量保有報告書・自社株買いの新着一覧（5%ルール） - MarketWatch AI</title>
+  <meta name="description" content="金融庁EDINETに提出された大量保有報告書（5%ルール）と自己株券買付状況報告書（自社株買い）の新着を、対象銘柄・保有割合・提出者つきで一覧表示。前回比+5ポイント以上の増加や新規5%超えを強調。原本へのリンクつき。出典：EDINET閲覧サイト。">
   <link rel="canonical" href="https://marketwatch-jp.com/holdings.html">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
@@ -43,6 +43,9 @@
     .meta-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.85rem;color:#57606a;margin-bottom:14px}
     .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:4px;background:#1E3A6E;color:#fff;letter-spacing:.03em}
     .badge.fix{background:#9a6700}
+    .badge.bb{background:#57606a}
+    .ratio-kind{display:block;font-size:.72rem;color:#57606a;margin-top:1px}
+    .filter-row select{padding:9px 10px;border:1px solid #d0d7de;border-radius:8px;font-size:.9rem;background:#fff;color:#1f2328}
     .chg{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;white-space:nowrap}
     .chg.up{background:#1a7f37;color:#fff}
     .chg.down{background:#cf222e;color:#fff}
@@ -88,7 +91,8 @@
     body.dark table.hold td{color:#c9d1d9;border-bottom-color:#30363d}
     body.dark td.filer{color:#e6edf3}
     body.dark td.dt{color:#8b949e}
-    body.dark .filter-row input{background:#0d1117;border-color:#30363d;color:#e6edf3}
+    body.dark .filter-row input,body.dark .filter-row select{background:#0d1117;border-color:#30363d;color:#e6edf3}
+    body.dark .ratio-kind{color:#8b949e}
     body.dark .source-box{background:#0d1117;border-color:#30363d;color:#8b949e}
     body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
   </style>
@@ -128,6 +132,15 @@
       <b>誰がどの銘柄に大きな資金を入れたかが公開情報として分かる</b>、という点が投資家にとっての意味です。
     </div>
 
+    <div class="beginner-note" style="background:#f6f8fa;border-color:#57606a">
+      🏢 <b>自己株券買付状況報告書（自社株買い）も同じ一覧に載せています</b><br>
+      会社が自社の株式を買い付けた場合、その月の状況を翌月に届け出ます（金融商品取引法24条の6）。
+      <b>大量保有報告書とは別の制度</b>で、届出も<b>月次</b>です。一覧では
+      <span class="badge bb">自己株</span> のバッジで区別しています。
+      ⚠️ <b>「保有割合」欄の意味が異なります</b>：大量保有は<b>外部の株主が持つ割合</b>、
+      自己株は<b>会社自身が持つ自己株式の比率</b>です。各行に注記しています。
+    </div>
+
     <div class="caution-note">
       ⚠️ <b>読むときの注意</b>：提出は「事実の届出」であって、その銘柄の値上がりを示すものでも、
       売買を勧めるものでもありません。保有目的は「純投資」「政策保有」「経営参加」などさまざまで、
@@ -143,11 +156,17 @@
     <div class="filter-row">
       <input id="hd-q" type="search" placeholder="銘柄名・証券コード・提出者名で絞り込み（例: 7203 / トヨタ / 野村）" aria-label="絞り込み">
       <label class="toggle"><input id="hd-only" type="checkbox"> 変動の大きいものだけ</label>
+      <select id="hd-kind" aria-label="書類の種類">
+        <option value="">すべての届出</option>
+        <option value="holding">大量保有報告書のみ</option>
+        <option value="buyback">自己株買付のみ</option>
+      </select>
     </div>
     <div class="legend">
       <span><span class="chg new">新規</span> 初めて5%を超えた届出</span>
       <span><span class="chg up">大幅増</span> 前回比 +5ポイント以上</span>
       <span><span class="chg down">大幅減</span> 前回比 −5ポイント以上</span>
+      <span><span class="badge bb">自己株</span> 会社が自社株を買い付けた月次報告</span>
     </div>
     <div class="table-wrap">
       <table class="hold">
@@ -178,6 +197,11 @@
       割合が増えた理由には市場での買い付けのほか、担保の設定、組織再編、共同保有者の追加など
       株価の見通しと関係のない事情も含まれます。<b>保有目的は必ず原本でご確認ください。</b>
     </p>
+    <p>
+      <b>自己株買付の行</b>に表示しているのは、報告月末時点で<b>会社が保有している自己株式の比率</b>
+      （保有自己株式数 ÷ 発行済株式総数）です。<b>その月に買い付けた株数や金額ではありません</b>。
+      買付の内訳（取締役会決議の内容・取得株数・価額の総額）は原本に記載されています。
+    </p>
     <p style="font-size:.88rem;color:#6e7781">
       ※ 割合は書類本文（XBRL）から自動抽出しています。書類の様式によっては抽出できず空欄になる場合があり、
       その場合は「原本を見る」からご確認ください。取得直後の届出は割合の反映が翌回の更新になることがあります。
@@ -204,17 +228,21 @@
 (function(){
   var body=document.getElementById('hd-body'), state=document.getElementById('hd-state');
   var upd=document.getElementById('hd-updated'), cnt=document.getElementById('hd-count');
-  var q=document.getElementById('hd-q'), only=document.getElementById('hd-only'), all=[];
+  var q=document.getElementById('hd-q'), only=document.getElementById('hd-only');
+  var kindSel=document.getElementById('hd-kind'), all=[];
   var CHG={up:'大幅増', down:'大幅減', 'new':'新規'};
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function sec(s){ /* EDINETの証券コードは5桁（末尾0）。4桁の一般表記に直す */
     s=String(s||''); return (s.length===5&&s.charAt(4)==='0')?s.slice(0,4):(s||'—');}
   function ratioCell(it){
+    var bb=(it.kind==='buyback');
     if(it.ratio===null||it.ratio===undefined)return '<span class="ratio-prev">—</span>';
     var s='<span class="ratio-main">'+it.ratio.toFixed(2)+'%</span>';
     if(it.flag&&CHG[it.flag])s+='<span class="chg '+it.flag+'">'+CHG[it.flag]+'</span>';
-    if(it.prev!==null&&it.prev!==undefined){
+    /* 大量保有＝外部株主の保有割合／自己株＝会社が持つ自己株式の比率。意味が違うので必ず明記する */
+    s+='<span class="ratio-kind">'+(bb?'自己株式の保有比率':'株券等保有割合')+'</span>';
+    if(!bb&&it.prev!==null&&it.prev!==undefined){
       var d=(it.delta===null||it.delta===undefined)?null:it.delta;
       s+='<span class="ratio-prev">前回 '+it.prev.toFixed(2)+'%'+
          (d===null?'':' （'+(d>0?'+':'')+d.toFixed(2)+'pt）')+'</span>';
@@ -222,8 +250,9 @@
     return s;
   }
   function render(){
-    var kw=(q.value||'').trim().toLowerCase(), onlyBig=only.checked;
+    var kw=(q.value||'').trim().toLowerCase(), onlyBig=only.checked, kd=kindSel.value;
     var rows=all.filter(function(it){
+      if(kd&&(it.kind||'holding')!==kd)return false;
       if(onlyBig&&!it.flag)return false;
       if(!kw)return true;
       return (it.filer||'').toLowerCase().indexOf(kw)>=0
@@ -231,13 +260,14 @@
           || String(it.isec||'').indexOf(kw)>=0;
     });
     body.innerHTML=rows.map(function(it){
-      var isFix=(it.type||'').indexOf('訂正')>=0;
+      var isFix=(it.type||'').indexOf('訂正')>=0, isBB=(it.kind==='buyback');
       return '<tr'+(it.flag?' class="hl"':'')+'><td class="dt">'+esc(it.dt)+'</td>'+
         '<td class="filer">'+esc(it.iname||'—')+'</td>'+
         '<td class="code">'+esc(sec(it.isec))+'</td>'+
         '<td class="ratio">'+ratioCell(it)+'</td>'+
         '<td>'+esc(it.filer||'—')+'</td>'+
-        '<td><span class="badge'+(isFix?' fix':'')+'">'+esc(it.type||'大量保有')+'</span></td>'+
+        '<td><span class="badge'+(isBB?' bb':(isFix?' fix':''))+'">'+
+          esc(isBB?'自己株':(it.type||'大量保有'))+'</span></td>'+
         '<td><a href="'+esc(it.url)+'" target="_blank" rel="noopener">原本を見る</a></td></tr>';
     }).join('');
     state.textContent = rows.length ? '' : (all.length ? '該当する届出がありません（絞り込み条件を変えてみてください）'
@@ -252,6 +282,7 @@
     var u=d.updated?new Date(d.updated):null;
     upd.textContent = u&&!isNaN(u) ? ('最終更新: '+u.toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})) : '';
     render(); q.addEventListener('input',render); only.addEventListener('change',render);
+    kindSel.addEventListener('change',render);
   }).catch(function(){
     upd.textContent='';
     state.textContent='この一覧は現在準備中です。まもなく EDINET の届出を掲載します。';

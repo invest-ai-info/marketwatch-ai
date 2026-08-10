@@ -23,6 +23,7 @@
 ⚠️ edinet-holdings.json は Actions が生成・commit する＝**SYNC_FILES に入れない（SYNC禁忌）**。
    このスクリプトと holdings.html は SYNC 対象。
 """
+import collections
 import csv
 import datetime
 import io
@@ -63,6 +64,13 @@ CODELIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/E
 ORDINANCE_LARGE_HOLDING = "060"
 DOCTYPE_LABEL = {"350": "大量保有報告書", "360": "訂正大量保有報告書"}
 
+# 🆕 2026-08-11: 自己株券買付状況報告書（オーナー依頼で同じ一覧に載せる）。
+#   ⚠️ 大量保有（府令060）とは**別の開示制度**＝府令010・金商法24条の6・**月次の状況報告**。
+#   「保有割合」の意味も違う（大量保有＝外部株主の保有割合／自己株＝会社が持つ自己株式の比率）。
+#   同じ列に出すので、ページ側で必ずラベルを分けて誤読を防ぐこと。
+DOCTYPE_BUYBACK = {"220": "自己株券買付状況報告書", "230": "訂正自己株券買付状況報告書"}
+KIND_HOLDING, KIND_BUYBACK = "holding", "buyback"
+
 # ===== 保有割合の強調ルール（オーナー決定 2026-08-10）=====
 # 「大きく買い進んだ／新しい大口が出た／大きく売った」を一目で分かるようにする。
 # ⚠️ これは事実の分類であって売買推奨ではない（ページ側でも明記する）。
@@ -71,7 +79,10 @@ DOWN_THRESHOLD = -5.0    # 前回比 −5ポイント以上 → 強調（売却�
 NEW_THRESHOLD = 5.0      # 新規提出（前回報告なし）で保有割合がこの値超 → 強調（新規の大口）
 
 LOOKBACK_DAYS = 5        # cron遅延・休日を跨いでも取りこぼさない（重複は docID で排除）
-KEEP_ITEMS = 120         # ページに出す上限
+# ⚠️ 種別ごとに枠を確保する。自己株買付は提出が非常に多く（2026-08-11 実測: 5日で248件・
+#    8/7だけで137件）、単純な時刻降順で混ぜると**大量保有報告書が押し出されて消える**。
+#    ⚡ニュースティッカーで同じ失敗（低頻度カテゴリの全滅）を踏んでいるので最初から枠で確保する。
+KEEP_ITEMS = {KIND_HOLDING: 120, KIND_BUYBACK: 80}
 REQUEST_WAIT = 1.2       # 連続リクエストの間隔[秒]（規約の「短時間における大量のアクセス」回避）
 RATIO_FETCH_WAIT = 1.5   # 書類取得APIの間隔[秒]。同上
 RATIO_FETCH_BUDGET = 90  # 1回の実行で新規に取りに行く書類数の上限（暴走防止）
@@ -269,6 +280,69 @@ def is_large_holding(doc):
     return doc.get("docTypeCode") in DOCTYPE_LABEL
 
 
+def doc_kind(doc):
+    """対象書類なら種別を返す（対象外は None）。"""
+    if is_large_holding(doc):
+        return KIND_HOLDING
+    if doc.get("docTypeCode") in DOCTYPE_BUYBACK:
+        return KIND_BUYBACK
+    return None
+
+
+# 自己株券買付状況報告書の「保有状況」テキストブロック（数値が独立要素になっておらず
+# 表を平坦化した文字列に埋まっている＝2026-08-11 実測）。20書類で 20/20 抽出成功・
+# 値も 0.09〜17.41% と妥当（自己株式数 ≤ 発行済株式総数 も全件成立）を確認済み。
+EL_HOLD_BLOCK = "HoldingOfTreasurySharesTextBlock"
+RE_SHARES_TOTAL = re.compile(r"発行済株式総数[^\d]{0,12}([\d,]+)")
+RE_SHARES_OWN = re.compile(r"保有自己株式数[^\d]{0,12}([\d,]+)")
+
+
+def extract_treasury_ratio(csv_text):
+    """自己株券買付状況報告書から「自己株式の保有比率[%]」を計算する純関数。
+
+    戻り値: (比率[%] or None, 発行済株式総数 or None, 保有自己株式数 or None)
+    ⚠️ 妥当性を満たさない値は **None**（0 と混同させない・推測で直さない）:
+       発行済>0 / 0≤自己≤発行済 / 比率0〜100。
+    """
+    block = ""
+    for line in csv_text.splitlines():
+        if EL_HOLD_BLOCK in line:
+            f = [c.strip('"') for c in line.split("\t")]
+            if len(f) >= 9:
+                block = f[8]
+            break
+    if not block:
+        return None, None, None
+    mt, mo = RE_SHARES_TOTAL.search(block), RE_SHARES_OWN.search(block)
+    if not (mt and mo):
+        return None, None, None
+    try:
+        total = int(mt.group(1).replace(",", ""))
+        own = int(mo.group(1).replace(",", ""))
+    except ValueError:
+        return None, None, None
+    if total <= 0 or own < 0 or own > total:
+        return None, None, None
+    return round(own / total * 100, 2), total, own
+
+
+def fetch_treasury_ratio(doc_id, api_key):
+    """自己株券買付状況報告書の自己株比率を取得（失敗は None）。"""
+    url = (f"https://api.edinet-fsa.go.jp/api/v2/documents/{urllib.parse.quote(doc_id)}"
+           f"?type=5&Subscription-Key={urllib.parse.quote(api_key)}")
+    with urllib.request.urlopen(
+            urllib.request.Request(url, headers={"User-Agent": "marketwatch-jp/1.0"}),
+            timeout=TIMEOUT) as r:
+        raw = r.read()
+    if raw[:2] != b"PK":
+        return None, None, None
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    names = [n for n in z.namelist() if n.lower().endswith(".csv")]
+    if not names:
+        return None, None, None
+    return extract_treasury_ratio(z.read(names[0]).decode("utf-16", errors="replace"))
+
+
 def normalize(doc, date_str, code_map=None):
     """1件を表示用の最小形へ。**保有割合は書類一覧APIに含まれない**ので持たせない
     （持っていない数字を推測で埋めない＝このプロジェクトの原則）。
@@ -285,17 +359,30 @@ def normalize(doc, date_str, code_map=None):
     if str(doc.get("disclosureStatus") or "0") in ("1", "2"):
         return None
     desc = (doc.get("docDescription") or "").strip()
-    issuer_code = (doc.get("issuerEdinetCode") or "").strip()
+    kind = doc_kind(doc) or KIND_HOLDING
+    if kind == KIND_BUYBACK:
+        # 自己株買付は「提出者＝対象会社」＝issuerEdinetCode は空。提出者側のコードで解決する。
+        issuer_code = (doc.get("edinetCode") or "").strip()
+    else:
+        issuer_code = (doc.get("issuerEdinetCode") or "").strip()
     info = (code_map or {}).get(issuer_code) or {}
     # ⚠️ 書類名は docDescription を正とする（2026-08-10 実測: docTypeCode 350 には
     #    「大量保有報告書」だけでなく「変更報告書」も含まれ、コード表だけでは区別できない）。
-    label = desc or DOCTYPE_LABEL.get(doc.get("docTypeCode"), "大量保有関連")
+    if kind == KIND_BUYBACK:
+        label = DOCTYPE_BUYBACK.get(doc.get("docTypeCode"), "自己株券買付状況報告書")
+    else:
+        label = desc or DOCTYPE_LABEL.get(doc.get("docTypeCode"), "大量保有関連")
     return {
         "id": doc_id,
-        "filer": (doc.get("filerName") or "").strip(),          # 提出者（保有者）
-        "issuer": issuer_code,                                   # 発行会社EDINETコード
-        "iname": info.get("name", ""),                           # 対象銘柄の会社名（解決できた場合）
-        "isec": info.get("sec", ""),                             # 対象銘柄の証券コード（5桁）
+        "kind": kind,
+        "filer": (doc.get("filerName") or "").strip(),          # 提出者（保有者／自己株は会社自身）
+        "issuer": issuer_code,                                   # 対象会社のEDINETコード
+        # ⚠️ 未解決時のフォールバックは **自己株買付のみ**。大量保有で提出者名を代用すると
+        #    「保有者を対象銘柄として表示する」誤りになる（2026-08-11 テストで捕捉）。
+        "iname": info.get("name", "") or (
+            (doc.get("filerName") or "").strip() if kind == KIND_BUYBACK else ""),
+        "isec": info.get("sec", "") or (
+            (doc.get("secCode") or "").strip() if kind == KIND_BUYBACK else ""),
         "desc": desc,
         "type": label[:24],
         "csv": str(doc.get("csvFlag") or "0") == "1",            # 割合を取りに行けるか
@@ -312,13 +399,18 @@ def enrich_ratios(items, api_key, cache, sleep=time.sleep, budget=RATIO_FETCH_BU
     戻り値: (取得した件数, 失敗件数)
     """
     fetched = failed = 0
-    for it in items:
+    # ⚠️ 大量保有を先に埋める。予算超過で削られるのは自己株買付（件数が多く、月次で毎回出る）側にする。
+    for it in sorted(items, key=lambda x: 0 if x.get("kind") == KIND_HOLDING else 1):
         hit = cache.get(it["id"])
         if hit is not None:
             it["ratio"], it["prev"], it["reason"] = hit.get("ratio"), hit.get("prev"), hit.get("reason", "")
         elif it.get("csv") and fetched < budget:
             try:
-                cur, prev, reason = fetch_doc_ratio(it["id"], api_key)
+                if it.get("kind") == KIND_BUYBACK:
+                    cur, _total, _own = fetch_treasury_ratio(it["id"], api_key)
+                    prev, reason = None, ""
+                else:
+                    cur, prev, reason = fetch_doc_ratio(it["id"], api_key)
                 it["ratio"], it["prev"], it["reason"] = cur, prev, reason
                 fetched += 1
             except Exception as ex:
@@ -330,9 +422,12 @@ def enrich_ratios(items, api_key, cache, sleep=time.sleep, budget=RATIO_FETCH_BU
         else:
             it["ratio"] = it["prev"] = None
             it["reason"] = ""
-        # 強調フラグ（訂正報告書は「新規」と呼ばない）
-        it["flag"], it["delta"] = classify_change(
-            it["ratio"], it["prev"], is_amend="訂正" in (it.get("type") or ""))
+        # 強調フラグは**大量保有だけ**。自己株の比率は意味が違うので同じ判定にかけない
+        if it.get("kind") == KIND_BUYBACK:
+            it["flag"], it["delta"] = "", None
+        else:
+            it["flag"], it["delta"] = classify_change(
+                it["ratio"], it["prev"], is_amend="訂正" in (it.get("type") or ""))
     return fetched, failed
 
 
@@ -351,20 +446,36 @@ def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep, code_
             errors.append(f"{ds}: {ex}")
             print(f"  ⚠️ {ds} 取得失敗: {ex}")
             continue
-        n = 0
+        n = collections.Counter()
         for doc in (body.get("results") or []):
-            if not is_large_holding(doc):
+            if doc_kind(doc) is None:
                 continue
             row = normalize(doc, ds, code_map)
             if row and row["id"] not in seen:
                 seen.add(row["id"])
                 items.append(row)
-                n += 1
-        print(f"  {ds}: {n}件")
+                n[row["kind"]] += 1
+        print(f"  {ds}: 大量保有 {n[KIND_HOLDING]}件 / 自己株買付 {n[KIND_BUYBACK]}件")
         if i < lookback - 1:
             sleep(REQUEST_WAIT)
     items.sort(key=lambda x: x["dt"], reverse=True)
-    return items[:KEEP_ITEMS], errors
+    return cap_by_kind(items), errors
+
+
+def cap_by_kind(items):
+    """種別ごとの枠で切ってから、全体を時刻降順に戻す。
+
+    ⚠️ 単純な時刻降順の打ち切りだと、件数の多い自己株買付（実測 5日で248件）が枠を食い尽くし、
+       **大量保有報告書が1件も残らない**ことがある（⚡ニュースティッカーで実際に踏んだ形）。
+    """
+    kept, used = [], collections.Counter()
+    for it in items:                      # items は時刻降順で渡ってくる前提
+        k = it.get("kind") or KIND_HOLDING
+        if used[k] < KEEP_ITEMS.get(k, 0):
+            kept.append(it)
+            used[k] += 1
+    kept.sort(key=lambda x: x["dt"], reverse=True)
+    return kept
 
 
 def get_api_key():
