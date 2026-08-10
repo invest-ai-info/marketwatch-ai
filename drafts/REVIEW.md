@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-08-11 | ✍️ 下書き生成完了 | sunk-cost | autodraft-article
+
+- **基準日（JST）**: 2026-08-11（UTC 2026-08-10T20:31Z）
+- **topic**: #39 `sunk-cost`（シリーズ：投資心理）
+- **仮タイトル**: 塩漬けとサンクコスト——「もう戻らないお金」が投資判断を歪める理由
+- **生成ファイル**: `drafts/draft-sunk-cost.html`
+- **参照出典**:
+  - https://www.behavioraleconomics.com/resources/mini-encyclopedia-of-be/sunk-cost-fallacy/ （サンクコスト効果の定義・損失回避との関係）
+  - https://asana.com/resources/sunk-cost-fallacy （コンコルド・Nokia 事例）
+  - https://www.nomura.co.jp/terms/japan/ko/A02762.html （野村証券：コンコルド効果の定義）
+  - https://www.issoh.co.jp/column/details/8560/ （コンコルド効果と投資心理の解説）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（価格例は「1,000円」「600円」の一般的仮設値）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「儲かる」等を不使用）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末 p.disclaimer・footer）
+  - ✅ 出典・事実確認済み（サンクコスト定義・コンコルド事例を WebSearch 照合）
+  - ✅ `<meta name="robots" content="noindex,nofollow">` 入り（検索除外）
+  - ✅ loss-cut / profit-taking との役割分担を冒頭 info-box で明示
+- **SVG**: 3点（映画チケットの比較図・建値への固執グラフ・機会損失概念図）
+  - ⚠️ TODO(SVG): 全3点ライト/ダーク実機確認要（`.s-box-fill-*` 追加クラスのダーク表示確認）
+- **人間の残作業**:
+  1. SVG 3点のライト/ダーク実機目視確認
+  2. `guide-profit-taking.html` が実際に公開済みか確認（リンク先として記載）
+  3. タイトル微調整（必要に応じて）
+  4. 公開は毎朝 08:40 の `autodraft-publish` ゲート付き自動実行を待つ（または人間が `mw publish` で手動）
+
+---
+
 ## 2026-08-10 | 🚩 ゲート赤／ゲート不具合疑い（2日連続）| margin-trading | autopublish
 
 - **対象**: `drafts/draft-margin-trading.html`（信用取引の基礎）
