@@ -2,6 +2,66 @@
 
 ---
 
+## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily
+
+- **記事番号**: #067
+- **対象ファイル**: `drafts/draft-signal-lab-067.html`
+- **claims.json**: `drafts/labnotes/lab-067-claims.json`（verify.py 11/11 全件一致済）
+- **テーマ**: もみあい×ショート ⛔反証確定（FWD N=163 勝率30.7% E(R)=-0.301）
+
+### ゲート結果サマリー
+
+| ステップ | 結果 |
+|---|---|
+| signal_lab_verify.py（11件） | ✅ GREEN（EXIT=0）|
+| Opusコンプラ（1回目） | 🟢 白（SVG・免責修正済）|
+| 数値再検証 | ✅ claims.json全件一致 |
+| 独立Opus確認 | 🔴 否（FWD本文データ誤り・制御CI不整合） |
+
+### 🔴 独立Opusが検出したエラー（FWD本文 — claims.json対象外・verify.py未チェック）
+
+**① FWD シグナル別勝率（本文 FWD セクション）**
+
+| シグナル | 記事の誤り | 正しい値（verify.py win/closed定義） |
+|---|---|---|
+| macd_dead | 29/89 (32.6%) | **30/89 (33.7%)** |
+| low_break | 10/42 (23.8%) | **11/42 (26.2%)** |
+| ma_dead | 9/26 (34.6%) | ✅ 正しい |
+
+**② FWD グループ別勝率（本文 FWD セクション）**
+
+| グループ | 記事の誤り | 正しい値 |
+|---|---|---|
+| other_fx | 13/47 (27.7%) | **13/44 (29.5%)** |
+| jpy_fx | 8/31 (25.8%) | **8/30 (26.7%)** |
+| metal | 7/25 (28.0%) | **9/29 (31.0%)** |
+| index | 14/38 (36.8%) | ✅ 正しい |
+| btc | 2/13 (15.4%) | ✅ 正しい |
+
+**③ 対照群（もみあい×ロング FWD） CI 表記**
+- 記事: 「RCI[+0.046〜+0.254]（全域プラス）」
+- 実態: CI はゼロをまたぐ（🟡蓄積中。「全域プラス」の断定は不可）
+- 修正案: 「FWD 241/491=49.1%、E(R)=+0.150」とし CI/全域プラス断定を削除
+
+**④ SVG3（シグナル別成績棒グラフ）バー長**
+- ①②のシグナル勝率修正に伴い、macd_dead・low_break のバー高さ（h 値）と % ラベルを再計算要
+
+### ✅ 修正不要・確定済み事項
+- 全期間 claims 11件: verify.py 11/11 GREEN（k/n定義：win=tp1+tp2、closed=tp1+tp2+sl）
+- 全期間 claims の代表勝率: 78/207=37.7% ✅
+- FWD ベース: 50/163=30.7% ✅
+- IS統計: 28/44=63.6%（IS件数は出来高・試行的記載、verify.py対象外）
+- 主結論（⛔反証・前向きN=163で崩壊）は変更なし
+- kinsho-v1 免責 3点: ✅ 確認済
+
+### 人間の残作業
+1. `drafts/draft-signal-lab-067.html` を開き、FWD本文の①②③を上表の正しい値へ修正
+2. SVG3 棒グラフのバー高さ・%ラベルを修正済み勝率に合わせて再計算
+3. 修正後、ゲートを再走（`python signal_lab_verify.py drafts/draft-signal-lab-067.html drafts/labnotes/lab-067-claims.json` → ✅後にコンプラ Opus→独立Opus の順）
+4. 独立Opus 🟢白 を確認してから `finalize_signal_lab.py` → `publish_article.py` → push
+
+---
+
 ## 2026-08-11 | ✍️ 下書き生成完了 | sunk-cost | autodraft-article
 
 - **基準日（JST）**: 2026-08-11（UTC 2026-08-10T20:31Z）
