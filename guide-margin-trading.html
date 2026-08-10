@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>信用取引の基礎｜制度信用・一般信用・逆日歩・追証の仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="信用取引の委託保証金（最低30%・最低30万円・最大約3.33倍）、制度信用と一般信用の違い（逆日歩あり/なし・返済期限の差）、追証（維持保証金率20%以下で発生）まで、初心者〜中級者向けに図解で解説します。">
+  <meta name="keywords" content="信用取引,委託保証金,制度信用,一般信用,逆日歩,追証,貸借倍率,信用倍率,空売り,カラ売り,信用残,投資基礎知識,マージンコール">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-margin-trading.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="信用取引の基礎｜制度信用・一般信用・逆日歩・追証の仕組みを図解">
+  <meta property="og:description" content="委託保証金30%で最大3.33倍の取引が可能な信用取引の仕組み。制度信用と一般信用の違い、逆日歩の発生メカニズム、追証（維持率20%以下）を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-margin-trading.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "信用取引の基礎｜制度信用・一般信用・逆日歩・追証の仕組みを図解",
+    "description": "信用取引の委託保証金（30%・3.33倍）、制度信用と一般信用の違い、逆日歩の発生メカニズム、追証（維持率20%以下）まで図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-11",
+    "dateModified": "2026-08-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-margin-trading.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#0969da;text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#0969da;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#0969da;text-decoration:none}
+    /* SVG 概念図（インライン・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 信用取引用追加クラス */
+    .s-fill-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5}
+    .s-fill-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1.5}
+    .s-fill-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1.5}
+    .s-fill-y{fill:#fff8c5;stroke:#d4a017;stroke-width:1.5}
+    .s-text-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-arrow{stroke:#57606a;stroke-width:2;marker-end:url(#arrowhead)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-fill-b{fill:#1a2030;stroke:#79c0ff}
+    body.dark .s-fill-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-fill-y{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-g{fill:#7ee787}
+    body.dark .s-text-r{fill:#ff8080}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#0969da"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#d92b2b" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#0969da">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 信用取引の基礎
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は信用取引の仕組みを解説する「情報提供」であり、信用取引の利用を推奨するものでも、特定の銘柄・手法の売買助言でもありません。信用取引はレバレッジを伴う高リスク取引です。投資判断はご自身の責任で行ってください。</div>
+
+    <h1>💰 信用取引の基礎｜制度信用・一般信用・逆日歩・追証の仕組みを図解</h1>
+    <div class="meta-line">公開日：2026 年 8 月 11 日 ／ 読了時間：約 15 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>株式投資を続けていると、「信用取引」という言葉を耳にする機会が増えてきます。<strong>手持ち資金の約3倍以上の取引ができる</strong>、価格が<strong>下がっているときでも利益を狙える（空売り）</strong>——そんな特徴から、上級者向けのツールとして知られています。しかし仕組みを理解せずに使うと、<strong>追証（おいしょう）</strong>と呼ばれるマージンコールや強制決済に追い込まれるリスクがあります。</p>
+    <p>本記事では「信用取引とはそもそも何か」という基本から、<strong>制度信用と一般信用の違い、逆日歩（ぎゃくひぶ）が発生するメカニズム、追証が生まれる条件</strong>まで、段階的に図解で解説します。なお本記事は<strong>制度（仕組み）の解説</strong>を目的としており、信用取引の利用を勧めるものではありません。レバレッジが資産に与えるリスクの詳細については、<a href="../guide-leverage.html">レバレッジとナンピンの正体</a>の記事もあわせてご参照ください。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>委託保証金（最低30%・最低30万円）を入れることで、自己資金の最大約3.33倍の取引ができる</strong>。ただしレバレッジは利益だけでなく損失も同じ倍率で拡大させる。</li>
+      <li>制度信用（返済期限6ヵ月・逆日歩あり）と一般信用（無期限・逆日歩なし）では<strong>コスト構造と空売りのリスクが大きく異なる</strong>。逆日歩は予測できず、短期で損益を大きく動かすことがある。</li>
+      <li><strong>維持保証金率が20%を下回ると追証が発生</strong>し、期限内に対処しないと強制決済になる。最悪の場合、入金した保証金を超える損失が生じることもある。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">信用取引とは──現物取引との根本的な違い</a></li>
+        <li><a href="#section-2">委託保証金の仕組み──「30%で3.33倍」を図解</a></li>
+        <li><a href="#section-3">空売り（カラ売り）──価格下落時に利益を狙う仕組み</a></li>
+        <li><a href="#section-4">制度信用と一般信用──何がどう違うのか</a></li>
+        <li><a href="#section-5">逆日歩のメカニズム──制度信用で空売りする隠れたリスク</a></li>
+        <li><a href="#section-6">追証（マージンコール）──維持率20%割れで何が起きるか</a></li>
+        <li><a href="#section-7">信用倍率・貸借倍率の読み方</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 信用取引とは──現物取引との根本的な違い</h2>
+    <p>株式の「現物取引」は、<strong>手持ちの資金の範囲でしか株を買えない</strong>取引です。100万円しか持っていなければ、買える株は100万円分が上限です。</p>
+    <p>一方、<strong>信用取引は証券会社に「保証金」を預けることで、その何倍もの株を売買できる仕組み</strong>です。証券会社から資金や株式を借りて取引します。大きな特徴は2つあります。</p>
+    <ul>
+      <li><strong>「買い」だけでなく「売り」から入れる</strong>（空売り）：価格が下がる局面でも利益を狙えます。</li>
+      <li><strong>レバレッジ（てこ）を使える</strong>：少ない資金で大きな取引ができる分、利益も損失も拡大します。</li>
+    </ul>
+    <div class="warning-box">
+      信用取引は「リターンを増やす手段」である前に、<strong>「リスクも同じ比率で増える仕組み」</strong>です。また損失が預けた保証金を超えることもあります。仕組みを十分に理解してから検討することが基本です。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 委託保証金の仕組み──「30%で3.33倍」を図解</h2>
+    <p>信用取引を始めるには、証券会社に<strong>委託保証金（いたくほしょうきん）</strong>を預ける必要があります。法律で定められた最低ラインは次の2つです（金融商品取引法に基づく規定）。</p>
+    <ul>
+      <li><strong>委託保証金率：30%以上</strong>（建玉＝信用取引で保有している未決済のポジションのこと。その金額に対して30%以上の保証金が必要）</li>
+      <li><strong>委託保証金の最低額：30万円以上</strong>（建玉額の大小に関わらず一律に適用される最低金額）</li>
+    </ul>
+    <p>この「30%」から逆算すると、<strong>最大レバレッジは約3.33倍（= 1 ÷ 0.30）</strong>になります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 300" role="img" aria-labelledby="margin-title">
+        <title id="margin-title">委託保証金30%で最大3.33倍の取引ができることを示す概念図</title>
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#57606a"/>
+          </marker>
+        </defs>
+        <!-- 左：現物取引 -->
+        <text class="s-panel-label" x="30" y="24">現物取引</text>
+        <text class="s-label-sm" x="30" y="42">100万円の株を買うには</text>
+        <!-- 資金バー（現物） -->
+        <rect class="s-fill-b" x="30" y="52" width="200" height="60" rx="6"/>
+        <text class="s-text-b" x="130" y="77" text-anchor="middle">自己資金 100万円</text>
+        <text class="s-text-b" x="130" y="97" text-anchor="middle">↕ 取引額 100万円</text>
+        <text class="s-note" x="130" y="138" text-anchor="middle">レバレッジ = 1倍</text>
+        <!-- 中央 区切り -->
+        <line class="s-divv" x1="330" y1="20" x2="330" y2="270"/>
+        <!-- 右：信用取引 -->
+        <text class="s-panel-label" x="350" y="24">信用取引（委託保証金率30%）</text>
+        <text class="s-label-sm" x="350" y="42">100万円の株を買うのに必要な保証金は…</text>
+        <!-- 建玉バー -->
+        <rect class="s-fill-r" x="350" y="52" width="270" height="20" rx="4"/>
+        <text class="s-label-sm" x="485" y="67" text-anchor="middle">建玉（取引額）100万円</text>
+        <!-- 保証金部分 -->
+        <rect class="s-fill-g" x="350" y="74" width="81" height="100" rx="4"/>
+        <text class="s-text-g" x="390" y="118" text-anchor="middle">保証金</text>
+        <text class="s-text-g" x="390" y="136" text-anchor="middle">30万円</text>
+        <text class="s-note-g" x="390" y="154" text-anchor="middle">（30%）</text>
+        <!-- 借入部分 -->
+        <rect class="s-fill-y" x="433" y="74" width="187" height="100" rx="4"/>
+        <text class="s-label-sm" x="526" y="118" text-anchor="middle">証券会社からの</text>
+        <text class="s-label-sm" x="526" y="136" text-anchor="middle">借入 70万円</text>
+        <text class="s-label-sm" x="526" y="154" text-anchor="middle">（70%）</text>
+        <!-- 矢印とレバレッジ表示 -->
+        <text class="s-note" x="485" y="198" text-anchor="middle">30万円の保証金で100万円を取引</text>
+        <text class="s-note" x="485" y="218" text-anchor="middle">レバレッジ ≈ 3.33倍</text>
+        <!-- 注 -->
+        <text class="s-label-sm" x="30" y="260">※ 最低保証金額は30万円（法定）。株価や口座状況により条件は異なります。</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 現物取引では100万円の株に100万円が必要（左）。信用取引なら30万円の保証金で100万円分を取引できる（右）。ただし<strong>利益・損失ともに約3.33倍の規模になる</strong>。建玉が思い通りに動かなければ、預けた保証金をすべて失う以上の損失が生じることもある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="info-box">
+      <strong>💡 保証金率は証券会社が高く設定できる</strong>：30%は法定の「最低ライン」です。各証券会社は独自に30%を超える保証金率を設定することがあります。また、株価急落時や特定の銘柄では、取引所や証券会社が臨時に保証金率を引き上げることもあります（委託保証金率の変更）。<br><br>
+      なお上の図は「自己資金と借りた分の比率」を直感的に示したイメージです。実際の信用買いでは買付代金そのものを証券会社から融資してもらい、委託保証金はその<strong>担保</strong>として差し入れる位置づけになります（現金のほか代用有価証券も利用できます）。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 空売り（カラ売り）──価格下落時に利益を狙う仕組み</h2>
+    <p>信用取引で特徴的なのが、<strong>「売りから入れる」</strong>仕組みです。現物取引では「まず株を買い、後で売る」という順番しかありませんが、信用取引では<strong>「先に株を売り、後で買い戻す」という逆の順番</strong>が可能です。これを<strong>空売り（カラ売り・信用売り）</strong>と呼びます。</p>
+    <h3>空売りの流れ</h3>
+    <ol>
+      <li>証券会社を通じて株を借り、市場で売却する（新規の「売り」建玉を立てる）。</li>
+      <li>その後、株価が下落した時点で株を買い戻す（「返済」）。</li>
+      <li>売却価格と買い戻し価格の差額が利益になる。</li>
+    </ol>
+    <p>例えば、A社株を1,000円で空売りし、後に800円で買い戻せば、200円の利益です。反対に株価が1,200円に上昇した場合は200円の損失になります。<strong>空売りでは理論上、損失に上限がありません</strong>（株価が上がり続ける限り損失が拡大するため）。これが空売りのリスクの非対称性です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 制度信用と一般信用──何がどう違うのか</h2>
+    <p>日本の信用取引には<strong>「制度信用取引」と「一般信用取引」の2種類</strong>があります。どちらも「保証金を預けて取引する」という基本は同じですが、ルールが大きく異なります。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>制度信用取引</th>
+          <th>一般信用取引</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ルールの根拠</td>
+          <td>証券取引所が定める</td>
+          <td>証券会社と投資家の契約</td>
+        </tr>
+        <tr>
+          <td>返済期限</td>
+          <td><strong>6ヵ月（固定）</strong></td>
+          <td>無期限（多くのネット証券）または証券会社が設定</td>
+        </tr>
+        <tr>
+          <td>逆日歩</td>
+          <td><strong>あり（予測不能）</strong></td>
+          <td><strong>なし</strong></td>
+        </tr>
+        <tr>
+          <td>株の調達先</td>
+          <td>日本証券金融（日証金）経由</td>
+          <td>証券会社が直接調達</td>
+        </tr>
+        <tr>
+          <td>貸株料（金利）</td>
+          <td>標準的（低め）</td>
+          <td>やや高め（逆日歩リスクの代わり）</td>
+        </tr>
+        <tr>
+          <td>対象銘柄（売り）</td>
+          <td>取引所指定の「貸借銘柄」のみ</td>
+          <td>証券会社次第（幅広い）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>大まかにまとめると、<strong>制度信用はルールが統一されている代わりに「逆日歩」という不確定コストが生じる</strong>可能性があります。一般信用は逆日歩がない代わりに<strong>貸株料がやや高め</strong>です。どちらを選ぶかは、取引期間の長さや空売りの意図によって変わります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 逆日歩のメカニズム──制度信用で空売りする際の隠れたリスク</h2>
+    <p><strong>逆日歩（ぎゃくひぶ）</strong>は、制度信用取引で空売りをする場合にのみ発生するコストです。「想定外に大きな費用になることがある」ために、特に注意が必要です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 720 280" role="img" aria-labelledby="gyaku-title">
+        <title id="gyaku-title">逆日歩が発生するメカニズムのフロー図</title>
+        <!-- Step 1 -->
+        <rect class="s-fill-b" x="20" y="30" width="140" height="56" rx="8"/>
+        <text class="s-text-b" x="90" y="56" text-anchor="middle">投資家が</text>
+        <text class="s-text-b" x="90" y="76" text-anchor="middle">空売りを注文</text>
+        <!-- 矢印 1→2 -->
+        <line x1="162" y1="58" x2="188" y2="58" stroke="#57606a" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Step 2 -->
+        <rect class="s-fill-b" x="190" y="30" width="150" height="56" rx="8"/>
+        <text class="s-text-b" x="265" y="52" text-anchor="middle">証券会社が</text>
+        <text class="s-text-b" x="265" y="68" text-anchor="middle">日証金から</text>
+        <text class="s-text-b" x="265" y="84" text-anchor="middle">株を借りる</text>
+        <!-- 矢印 2→3 -->
+        <line x1="342" y1="58" x2="368" y2="58" stroke="#57606a" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Step 3 -->
+        <rect class="s-fill-r" x="370" y="30" width="140" height="56" rx="8"/>
+        <text class="s-text-r" x="440" y="56" text-anchor="middle">日証金の株が</text>
+        <text class="s-text-r" x="440" y="76" text-anchor="middle">不足（貸株超過）</text>
+        <!-- 矢印 3→4 -->
+        <line x1="512" y1="58" x2="538" y2="58" stroke="#57606a" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- Step 4 -->
+        <rect class="s-fill-r" x="540" y="30" width="110" height="56" rx="8"/>
+        <text class="s-text-r" x="595" y="52" text-anchor="middle">外部から</text>
+        <text class="s-text-r" x="595" y="68" text-anchor="middle">株を調達</text>
+        <text class="s-text-r" x="595" y="84" text-anchor="middle">（品貸入札）</text>
+        <!-- 矢印 下 -->
+        <line x1="595" y1="88" x2="595" y2="124" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- 逆日歩 -->
+        <rect class="s-fill-r" x="430" y="126" width="280" height="50" rx="8"/>
+        <text class="s-text-r" x="570" y="149" text-anchor="middle">逆日歩（品貸料）が決定</text>
+        <text class="s-text-r" x="570" y="166" text-anchor="middle">→ 翌営業日に空売り保有者が負担</text>
+        <!-- 矢印 左 -->
+        <line x1="428" y1="151" x2="402" y2="151" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowhead)" transform="rotate(180,415,151)"/>
+        <line x1="428" y1="151" x2="200" y2="151" stroke="#cf222e" stroke-width="2"/>
+        <line x1="200" y1="151" x2="200" y2="90" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <!-- ポイント -->
+        <text class="s-note-r" x="30" y="210">⚠️ 逆日歩は入札によって毎日変動し、事前に金額は分からない</text>
+        <text class="s-note-r" x="30" y="228">⚠️ 週末・連休をまたぐと日数分まとめて課される（3日分・4日分など）</text>
+        <text class="s-label-sm" x="30" y="256">出典参考：日本証券金融株式会社（日証金）品貸入札の仕組み</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 制度信用の空売りでは証券会社が日証金を通じて株を借りる。人気の空売り銘柄では日証金の在庫が不足し「品貸入札（ひなかしにゅうさつ）」が行われる。この入札で決まる「品貸料」が逆日歩として<strong>空売りしていた全投資家に徴収される</strong>。金額は翌営業日まで分からず、予算外のコストになることがある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>逆日歩の特徴と注意点</h3>
+    <ul>
+      <li><strong>金額は事前に分からない</strong>：品貸入札の結果によるため、翌営業日になるまで確定しません。</li>
+      <li><strong>週末・祝日をまたぐと複数日分が一括で課される</strong>：たとえば金曜日の引け後に売り建てを持ち越すと、土日分も含めた3日分の逆日歩がかかります。</li>
+      <li><strong>最高料率（上限）が存在する</strong>：日証金が銘柄ごとに設定する最高料率を超えることはありませんが、それでも大きな金額になることがあります。</li>
+      <li><strong>一般信用取引には逆日歩がない</strong>：空売りで逆日歩リスクを避けたい場合は一般信用を利用する方法があります（ただし貸株料は高め）。</li>
+    </ul>
+
+    <div class="negative-box">
+      <strong>📉 逆日歩の落とし穴</strong>：「ちょっと空売りして少し下がったら決済」と思っていたのに、逆日歩が膨らんで値下がり益を上回る費用になった——というケースがあります。特に<strong>人気の空売り対象銘柄ほど逆日歩が発生しやすい</strong>傾向があるため、注意が必要です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 追証（マージンコール）──維持率20%割れで何が起きるか</h2>
+    <p>信用取引で建玉（ポジション）を保有中に株価が不利な方向へ動くと、預けた保証金の価値が下がります。これが一定の水準を下回ると<strong>追証（おいしょう・マージンコール）</strong>が発生します。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 310" role="img" aria-labelledby="margin-call-title">
+        <title id="margin-call-title">追証が発生するメカニズム──維持保証金率の変化を示す概念図</title>
+        <!-- 状態1：安全 -->
+        <text class="s-panel-label" x="30" y="24">① エントリー時（維持率 30%）</text>
+        <!-- 建玉バー -->
+        <rect x="30" y="36" width="260" height="28" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-label-sm" x="160" y="55" text-anchor="middle">建玉 100万円</text>
+        <!-- 保証金部分 -->
+        <rect class="s-fill-g" x="30" y="66" width="78" height="60" rx="4"/>
+        <text class="s-text-g" x="69" y="91" text-anchor="middle">保証金</text>
+        <text class="s-text-g" x="69" y="109" text-anchor="middle">30万</text>
+        <!-- 借入部分 -->
+        <rect x="110" y="66" width="180" height="60" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="200" y="97" text-anchor="middle">借入 70万円</text>
+        <text class="s-note-g" x="160" y="148" text-anchor="middle">維持率 = 30万÷100万 = 30%（安全）</text>
+
+        <!-- 矢印 -->
+        <line class="s-axis" x1="160" y1="160" x2="160" y2="180" marker-end="url(#arrowhead)"/>
+        <text class="s-note-r" x="166" y="174" font-size="11" fill="#cf222e">株価が11%下落</text>
+
+        <!-- 状態2：追証 -->
+        <text class="s-panel-label" x="30" y="198">② 追証発生（維持率 < 20%）</text>
+        <!-- 建玉バー（同じ） -->
+        <rect x="30" y="210" width="260" height="28" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-label-sm" x="160" y="229" text-anchor="middle">建玉 100万円（含み損11万円）</text>
+        <!-- 実質保証金（減少） -->
+        <rect class="s-fill-r" x="30" y="240" width="57" height="60" rx="4"/>
+        <text class="s-text-r" x="58" y="265" text-anchor="middle">実質</text>
+        <text class="s-text-r" x="58" y="282" text-anchor="middle">保証金</text>
+        <text class="s-text-r" x="58" y="295" text-anchor="middle" font-size="10">19万</text>
+        <!-- 借入部分 -->
+        <rect x="89" y="240" width="180" height="60" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="179" y="271" text-anchor="middle">借入 70万円</text>
+        <!-- 不足部分の強調 -->
+        <rect class="s-fill-r" x="272" y="240" width="50" height="60" rx="4"/>
+        <text class="s-text-r" x="297" y="265" text-anchor="middle" font-size="10">含み損</text>
+        <text class="s-text-r" x="297" y="281" text-anchor="middle" font-size="10">▲11万</text>
+        <!-- ラベル -->
+        <text class="s-note-r" x="365" y="276" text-anchor="start">維持率 = 19万÷100万 = 19%</text>
+        <text class="s-note-r" x="365" y="294" text-anchor="start">→ 20%割れ ＝ 追証発生!</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 保証金30万円で建玉100万円を保有（維持率30%）。株価が約11%下落すると含み損が11万円になり、実質保証金は19万円に。維持率が19%となり<strong>20%を割り込んで追証が発生</strong>。対処しない場合は強制決済になる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>追証が発生したあとの流れ</h3>
+    <ol>
+      <li><strong>証券会社から通知</strong>が来る（当日または翌営業日）。</li>
+      <li>設定された<strong>期限まで</strong>に次のいずれかを行う：
+        <ul>
+          <li><strong>追加入金</strong>：現金や代用有価証券（保有株式などを一定の掛け目で評価し、担保として差し入れるもの）を追加で預けて維持率を20%以上に戻す。</li>
+          <li><strong>建玉の一部を決済</strong>：ポジションを減らして維持率を回復させる。</li>
+        </ul>
+      </li>
+      <li>期限内に対処できなければ、証券会社による<strong>強制決済（強制ロスカット）</strong>が実行される。</li>
+    </ol>
+    <div class="negative-box">
+      <strong>📉 追証の怖い点</strong>：強制決済は多くの場合「翌営業日の寄り付き（始値）」で行われます。相場が大きく動いている局面では、<strong>想定より大幅に不利な価格での決済</strong>になることがあります。さらに最悪の場合、強制決済後も損失が預けた保証金を超え、<strong>超過分を証券会社に支払う義務が残ります</strong>。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 信用倍率・貸借倍率の読み方</h2>
+    <p>信用取引で蓄積されるデータは、相場の需給を読む指標としても使われます。代表的なのが以下の2つです。</p>
+
+    <h3>① 信用倍率（しんようばいりつ）</h3>
+    <p><strong>信用倍率 = 信用買い残 ÷ 信用売り残</strong></p>
+    <p>市場全体または個別銘柄の「信用取引の買い残高」と「売り残高」の比率です。全証券会社の信用取引データを合計したものが対象です。</p>
+    <ul>
+      <li><strong>倍率が高い（例：10倍以上）</strong>：買い残が多く、売り決済（信用の返済売り）による<strong>需給の重さ</strong>が意識されることがある。</li>
+      <li><strong>倍率が低い（1倍を下回る）</strong>：売り残が多く、踏み上げ（ショートスクイーズ＝空売りしていた投資家が損失を抑えるために買い戻しに走り、その買いがさらに株価を押し上げる連鎖）が起きると急騰する可能性がある。</li>
+    </ul>
+
+    <h3>② 貸借倍率（たいしゃくばいりつ）</h3>
+    <p><strong>貸借倍率 = 融資残 ÷ 貸株残</strong></p>
+    <p>こちらは<strong>日本証券金融（日証金）のデータ</strong>のみが対象で、制度信用取引の中でも日証金を経由した部分に限られます。解釈の考え方は信用倍率と同様です。</p>
+
+    <div class="info-box">
+      <strong>💡 信用残データの活用</strong>：当サイトの<a href="../guide-margin-balance.html">信用残・信用倍率の読み方</a>の記事では、信用買い残と売り残の具体的な見方を詳しく解説しています。本記事は「制度の仕組み」、信用残記事は「データの見方」として、あわせてご参照ください。
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、個別銘柄の売買を推奨するサービスは行っていませんが、テクニカル分析や需給情報として信用取引関連のデータを活用できる場面があります。</p>
+    <ul>
+      <li><strong>シグナル成績ダッシュボード</strong>：<a href="../track-record.html">track-record.html</a> では、ルールに基づいた機械的なシグナルの成績を、勝ちも負けも含めて記録として公開しています。個別の売買を推奨するものではありませんが、「ルール通りに動いても外れる回はある」という事実を確認する材料としてご覧いただけます。</li>
+      <li><strong>信用残の読み方</strong>：<a href="../guide-margin-balance.html">信用残・信用倍率の解説記事</a>が、この記事の「実践編」に当たります。本記事で仕組みを理解した上で、データの読み方を学んでいただくことを想定しています。</li>
+    </ul>
+    <div class="warning-box">
+      信用取引はレバレッジ商品です。「仕組みを理解している」ことと「実際に使いこなせる」ことは別問題です。<strong>追証・強制決済が資産に大きなダメージを与えることを常に念頭に置いてください。</strong>詳細なリスクの解説は<a href="../guide-leverage.html">レバレッジとナンピンの正体</a>の記事をご覧ください。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績をチェックしてみる</div>
+      <div class="cta-box-desc">ルールに基づいて機械的に発火するテクニカルシグナルの、勝ちも負けも含めた成績を公開しています。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>信用取引の仕組みについて、ポイントを整理します。</p>
+    <ul>
+      <li><strong>委託保証金30%・最低30万円</strong>を預けることで最大約3.33倍の取引が可能。利益も損失もレバレッジ倍率で拡大する。</li>
+      <li><strong>空売り（カラ売り）</strong>は「先に売って後で買い戻す」仕組みで、価格下落局面での利益を狙える一方、<strong>損失に理論上の上限がない</strong>。</li>
+      <li><strong>制度信用（返済期限6ヵ月）と一般信用（無期限）</strong>の最大の違いは「逆日歩の有無」。制度信用で人気銘柄を空売りすると、<strong>逆日歩というコストが予測不能に発生する</strong>ことがある。</li>
+      <li><strong>維持保証金率が20%を下回ると追証が発生</strong>し、対処できなければ証券会社による強制決済になる。強制決済後も損失が保証金を超えた場合は、超過分の支払い義務が生じる。</li>
+      <li>信用倍率・貸借倍率は需給の参考指標として使われるが、それだけで相場の方向性を断定することはできない。</li>
+    </ul>
+    <p>信用取引は現物取引にはない「売りから入れる柔軟性」と「資金効率」を提供する一方で、<strong>追証・強制決済・逆日歩といったリスクが現物取引にはない形で存在</strong>します。利用を検討する前に、まず仕組みを十分に理解し、余裕のある資金計画を立てることが大切です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="../guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-leverage.html">
+        <div class="related-card-title">⚡ レバレッジとナンピンの正体</div>
+        <div class="related-card-desc">強制ロスカットや証拠金の仕組みを含む、レバレッジの危険性を詳しく解説。信用取引を検討する前に読んでおきたい記事。</div>
+      </a>
+      <a class="related-card" href="../guide-margin-balance.html">
+        <div class="related-card-title">📊 信用残・信用倍率の読み方</div>
+        <div class="related-card-desc">信用買い残・信用売り残・貸借倍率のデータを実際にどう読み解くか。本記事の「実践編」にあたる解説。</div>
+      </a>
+      <a class="related-card" href="../guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">レバレッジを使う信用取引では損切りの規律がさらに重要になる。なぜ損切りできないのかを行動経済学から解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は信用取引の仕組みを情報提供として解説したものであり、特定の銘柄・手法の売買推奨や投資助言ではありません。信用取引はレバレッジを伴う高リスク取引であり、投資元本を超える損失が生じる可能性があります。記載の数値（委託保証金率・維持保証金率等）は2026年8月時点の一般的な情報に基づきますが、法令改正・各社規定の変更により異なる場合があります。投資判断はご自身の責任で行い、必要に応じて証券会社や専門家にご確認ください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="../about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="../site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
