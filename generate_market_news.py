@@ -4989,6 +4989,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-10", "line": '・<b>2026-08-10</b>: 📰 解説「<a href="guide-news-2026-08-10-nikkei-surge-ai-semis-cpi-week.html" style="color:#0969da"><b>【8/10】日経平均1363円高で66,970円・AI半導体主導、今週はCPI週</b></a>」公開'},
         {"date": "2026-08-10", "line": '・<b>2026-08-10</b>: 🧪 解説「<a href="guide-signal-lab-066.html" style="color:#0969da"><b>下降トレンド gate FWD N=519 でCI下限プラス到達</b></a>」公開'},
         {"date": "2026-08-09", "line": '・<b>2026-08-09</b>: 📰 解説「<a href="guide-news-2026-08-09-trump-polysilicon-tariff-solar-chips.html" style="color:#0969da"><b>【8/9】ポリシリコンに15%関税＋最低輸入価格──AI・太陽光サプライチェーン再編を中立整理</b></a>」公開'},
         {"date": "2026-08-08", "line": '・<b>2026-08-08</b>: 📰 解説「<a href="guide-news-2026-08-08-us-jobs-shock-sp500-record.html" style="color:#0969da"><b>【8/8】米7月雇用統計-2.3万人の衝撃──S&P500最高値・「悪いニュースは良いニュース」の逆説</b></a>」公開'},
