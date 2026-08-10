@@ -43,6 +43,16 @@
     .meta-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.85rem;color:#57606a;margin-bottom:14px}
     .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:4px;background:#1E3A6E;color:#fff;letter-spacing:.03em}
     .badge.fix{background:#9a6700}
+    .chg{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;white-space:nowrap}
+    .chg.up{background:#1a7f37;color:#fff}
+    .chg.down{background:#cf222e;color:#fff}
+    .chg.new{background:#9a6700;color:#fff}
+    td.ratio{white-space:nowrap;font-variant-numeric:tabular-nums}
+    .ratio-main{font-weight:700;font-size:1.02rem;color:#1f2328}
+    .ratio-prev{display:block;font-size:.76rem;color:#57606a;margin-top:2px}
+    tr.hl{background:#fbfdff}
+    .legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:12px 0 4px;font-size:.82rem;color:#57606a}
+    .toggle{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;color:#424a53;white-space:nowrap}
     .filter-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
     .filter-row input{flex:1 1 220px;min-width:0;padding:9px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:.9rem;background:#fff;color:#1f2328}
     .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -71,6 +81,9 @@
     body.dark .beginner-note{background:#2b2410;border-color:#9a6700;color:#e3c766}
     body.dark .beginner-note b{color:#f0d68a}
     body.dark .caution-note{background:#0d1117;border-color:#30363d;border-left-color:#8b949e;color:#c9d1d9}
+    body.dark .ratio-main{color:#e6edf3}
+    body.dark .ratio-prev,body.dark .legend,body.dark .toggle{color:#8b949e}
+    body.dark tr.hl{background:#11171f}
     body.dark table.hold th{background:#0d1117;color:#8b949e;border-bottom-color:#30363d}
     body.dark table.hold td{color:#c9d1d9;border-bottom-color:#30363d}
     body.dark td.filer{color:#e6edf3}
@@ -129,6 +142,12 @@
     </div>
     <div class="filter-row">
       <input id="hd-q" type="search" placeholder="銘柄名・証券コード・提出者名で絞り込み（例: 7203 / トヨタ / 野村）" aria-label="絞り込み">
+      <label class="toggle"><input id="hd-only" type="checkbox"> 変動の大きいものだけ</label>
+    </div>
+    <div class="legend">
+      <span><span class="chg new">新規</span> 初めて5%を超えた届出</span>
+      <span><span class="chg up">大幅増</span> 前回比 +5ポイント以上</span>
+      <span><span class="chg down">大幅減</span> 前回比 −5ポイント以上</span>
     </div>
     <div class="table-wrap">
       <table class="hold">
@@ -137,6 +156,7 @@
             <th>提出日時</th>
             <th>対象銘柄</th>
             <th>コード</th>
+            <th>保有割合</th>
             <th>提出者（保有者）</th>
             <th>書類</th>
             <th>原本</th>
@@ -147,11 +167,20 @@
     </div>
     <div class="state" id="hd-state">読み込み中…</div>
 
-    <h2>保有割合について</h2>
+    <h2>保有割合の見かた</h2>
     <p>
-      現在この一覧に表示しているのは <b>「誰が・どの銘柄に・いつ提出したか」</b> までです。
-      <b>保有割合（何％から何％へ）は書類の本文に記載</b>されており、一覧のデータには含まれません。
-      割合や保有目的を確認する場合は、各行の「原本を見る」から EDINET の書類をご覧ください。
+      <b>保有割合</b>は、その保有者（共同保有者がいる場合はその合計）が対象銘柄の株券等をどれだけ持っているかを示します。
+      変更報告書には<b>直前の報告時点の割合</b>も記載されるため、当ページではその差を「◯◯ポイント」として併記しています。
+      パーセントの差なので「％」ではなく「ポイント（pt）」で表記しています。
+    </p>
+    <p>
+      ⚠️ <b>強調は事実の分類であって、売買を勧めるものではありません。</b>
+      割合が増えた理由には市場での買い付けのほか、担保の設定、組織再編、共同保有者の追加など
+      株価の見通しと関係のない事情も含まれます。<b>保有目的は必ず原本でご確認ください。</b>
+    </p>
+    <p style="font-size:.88rem;color:#6e7781">
+      ※ 割合は書類本文（XBRL）から自動抽出しています。書類の様式によっては抽出できず空欄になる場合があり、
+      その場合は「原本を見る」からご確認ください。取得直後の届出は割合の反映が翌回の更新になることがあります。
     </p>
 
     <div class="source-box" id="hd-source">
@@ -175,14 +204,27 @@
 (function(){
   var body=document.getElementById('hd-body'), state=document.getElementById('hd-state');
   var upd=document.getElementById('hd-updated'), cnt=document.getElementById('hd-count');
-  var q=document.getElementById('hd-q'), all=[];
+  var q=document.getElementById('hd-q'), only=document.getElementById('hd-only'), all=[];
+  var CHG={up:'大幅増', down:'大幅減', 'new':'新規'};
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function sec(s){ /* EDINETの証券コードは5桁（末尾0）。4桁の一般表記に直す */
     s=String(s||''); return (s.length===5&&s.charAt(4)==='0')?s.slice(0,4):(s||'—');}
+  function ratioCell(it){
+    if(it.ratio===null||it.ratio===undefined)return '<span class="ratio-prev">—</span>';
+    var s='<span class="ratio-main">'+it.ratio.toFixed(2)+'%</span>';
+    if(it.flag&&CHG[it.flag])s+='<span class="chg '+it.flag+'">'+CHG[it.flag]+'</span>';
+    if(it.prev!==null&&it.prev!==undefined){
+      var d=(it.delta===null||it.delta===undefined)?null:it.delta;
+      s+='<span class="ratio-prev">前回 '+it.prev.toFixed(2)+'%'+
+         (d===null?'':' （'+(d>0?'+':'')+d.toFixed(2)+'pt）')+'</span>';
+    }
+    return s;
+  }
   function render(){
-    var kw=(q.value||'').trim().toLowerCase();
+    var kw=(q.value||'').trim().toLowerCase(), onlyBig=only.checked;
     var rows=all.filter(function(it){
+      if(onlyBig&&!it.flag)return false;
       if(!kw)return true;
       return (it.filer||'').toLowerCase().indexOf(kw)>=0
           || (it.iname||'').toLowerCase().indexOf(kw)>=0
@@ -190,9 +232,10 @@
     });
     body.innerHTML=rows.map(function(it){
       var isFix=(it.type||'').indexOf('訂正')>=0;
-      return '<tr><td class="dt">'+esc(it.dt)+'</td>'+
+      return '<tr'+(it.flag?' class="hl"':'')+'><td class="dt">'+esc(it.dt)+'</td>'+
         '<td class="filer">'+esc(it.iname||'—')+'</td>'+
         '<td class="code">'+esc(sec(it.isec))+'</td>'+
+        '<td class="ratio">'+ratioCell(it)+'</td>'+
         '<td>'+esc(it.filer||'—')+'</td>'+
         '<td><span class="badge'+(isFix?' fix':'')+'">'+esc(it.type||'大量保有')+'</span></td>'+
         '<td><a href="'+esc(it.url)+'" target="_blank" rel="noopener">原本を見る</a></td></tr>';
@@ -208,7 +251,7 @@
     all=(d.items||[]).filter(function(it){return it && it.id && it.url;});
     var u=d.updated?new Date(d.updated):null;
     upd.textContent = u&&!isNaN(u) ? ('最終更新: '+u.toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})) : '';
-    render(); q.addEventListener('input',render);
+    render(); q.addEventListener('input',render); only.addEventListener('change',render);
   }).catch(function(){
     upd.textContent='';
     state.textContent='この一覧は現在準備中です。まもなく EDINET の届出を掲載します。';

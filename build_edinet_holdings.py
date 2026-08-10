@@ -28,8 +28,10 @@ import datetime
 import io
 import json
 import os
+import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -61,9 +63,18 @@ CODELIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/E
 ORDINANCE_LARGE_HOLDING = "060"
 DOCTYPE_LABEL = {"350": "大量保有報告書", "360": "訂正大量保有報告書"}
 
+# ===== 保有割合の強調ルール（オーナー決定 2026-08-10）=====
+# 「大きく買い進んだ／新しい大口が出た／大きく売った」を一目で分かるようにする。
+# ⚠️ これは事実の分類であって売買推奨ではない（ページ側でも明記する）。
+UP_THRESHOLD = 5.0       # 前回比 +5ポイント以上 → 強調（買い増し）
+DOWN_THRESHOLD = -5.0    # 前回比 −5ポイント以上 → 強調（売却）
+NEW_THRESHOLD = 5.0      # 新規提出（前回報告なし）で保有割合がこの値超 → 強調（新規の大口）
+
 LOOKBACK_DAYS = 5        # cron遅延・休日を跨いでも取りこぼさない（重複は docID で排除）
 KEEP_ITEMS = 120         # ページに出す上限
 REQUEST_WAIT = 1.2       # 連続リクエストの間隔[秒]（規約の「短時間における大量のアクセス」回避）
+RATIO_FETCH_WAIT = 1.5   # 書類取得APIの間隔[秒]。同上
+RATIO_FETCH_BUDGET = 90  # 1回の実行で新規に取りに行く書類数の上限（暴走防止）
 TIMEOUT = 30
 
 
@@ -129,6 +140,128 @@ def fetch_code_map():
         return {}
 
 
+def classify_change(ratio, prev_ratio, is_amend=False):
+    """保有割合の変化を分類する純関数（ネットワーク・書式に依存しない＝テスト対象）。
+
+    戻り値: (flag, delta)
+      flag  … "up" | "down" | "new" | ""（強調なし）
+      delta … 前回比のポイント差（前回が無ければ None）
+
+    ⚠️ 数値が取れていない（None）ときは**推測しない**＝flag="" / delta=None。
+       「取れなかった」と「変化なし」を混同させないため、呼び出し側も None を空欄で描く。
+    """
+    if ratio is None:
+        return "", None
+    if prev_ratio is None:
+        # 前回報告が無い＝新規の大量保有（訂正報告書は「新規」と呼べないので除く）
+        if not is_amend and ratio > NEW_THRESHOLD:
+            return "new", None
+        return "", None
+    delta = round(ratio - prev_ratio, 2)
+    if delta >= UP_THRESHOLD:
+        return "up", delta
+    if delta <= DOWN_THRESHOLD:
+        return "down", delta
+    return "", delta
+
+
+def parse_ratio(value, unit=""):
+    """XBRL/CSV の値を割合[%]の float へ。取れない値は **None**（0.0 と混同させない）。
+
+    ⚠️⚠️ **単位 `pure` は小数**（2026-08-10・15書類54行で実測。全行 pure・1超えゼロ）。
+       `0.5121` は 0.51% ではなく **51.21%**。そのまま読むと **100倍ずれる**。
+       裏付け＝①共同保有者の内訳 0.5121+0.3494+0.0008 が集約 0.8623 に一致
+       ②別書類で 前回0.0893→今回0.0000・提出事由「１％以上減少」＝8.93%→0%と整合
+       （0.0893% なら5%基準を満たさず提出自体があり得ない）。
+
+    ⚠️ **全角の正規化を最初に行う**（2026-08-10 テストで捕捉）。
+       Python の `\\d` は全角数字にマッチするが全角ピリオド「．」にはマッチしないため、
+       正規化しないと「１２．３４」が **12.0** になる＝小数部が静かに消える。
+       二次情報で数字が壊れる典型（[[project_marketwatch_compliance]] の教訓）なので、
+       NFKC 正規化してから解釈する。
+    ⚠️ 0% は正当な値（全部売却して 0% になった変更報告書がある）＝捨てないこと。
+       0〜100 の範囲外は書式違いとみなして None（推測で直さない）。
+    """
+    if value is None:
+        return None
+    s = unicodedata.normalize("NFKC", str(value)).strip()
+    s = s.replace(",", "").replace("%", "").replace(" ", "")
+    if not s:
+        return None
+    m = re.search(r"-?\d+(?:\.\d+)?", s)
+    if not m:
+        return None
+    try:
+        v = float(m.group(0))
+    except ValueError:
+        return None
+    if unit == "pure":
+        v *= 100
+    if v < 0 or v > 100:
+        return None      # 範囲外＝書式違い。推測で直さず空欄にして原本を見てもらう
+    return round(v, 2)
+
+
+# XBRL要素ID（2026-08-10 実データで確認）
+EL_RATIO = "jplvh_cor:HoldingRatioOfShareCertificatesEtc"
+EL_PREV = "jplvh_cor:HoldingRatioOfShareCertificatesEtcPerLastReport"
+EL_REASON = "jplvh_cor:ReasonForFilingChangeReportCoverPage"
+CTX_AGG = "FilingDateInstant"     # 共同保有者がいる場合のグループ合計
+
+
+def extract_ratio_rows(csv_text):
+    """XBRL_TO_CSV（タブ区切り）から (現在割合, 前回割合, 提出事由) を取り出す純関数。
+
+    選び方（2026-08-10 実測の構造に従う）:
+      ① 集約行 `FilingDateInstant` があればそれ（＝グループ合計。内訳の和と一致することを確認済み）
+      ② 無ければ内訳が**1行だけ**のときに限りその行（単独保有＝集約行が出ない書類が 9/15 件）
+      ③ 内訳が複数あるのに集約が無い場合は **None**（合算を自作しない＝数字を作らない）
+    """
+    agg_cur = agg_prev = None
+    members_cur, members_prev = [], []
+    reason = ""
+    for line in csv_text.splitlines()[1:]:
+        f = [c.strip('"') for c in line.split("\t")]
+        if len(f) < 9:
+            continue
+        eid, ctx, unit, val = f[0], f[2], f[6], f[8]
+        if eid == EL_RATIO:
+            r = parse_ratio(val, unit)
+            if ctx == CTX_AGG:
+                agg_cur = r
+            else:
+                members_cur.append(r)
+        elif eid == EL_PREV:
+            r = parse_ratio(val, unit)
+            if ctx == CTX_AGG:
+                agg_prev = r
+            else:
+                members_prev.append(r)
+        elif eid == EL_REASON and val not in ("－", "-", ""):
+            reason = val
+    if agg_cur is not None:
+        return agg_cur, agg_prev, reason
+    if len(members_cur) == 1:
+        return members_cur[0], (members_prev[0] if len(members_prev) == 1 else None), reason
+    return None, None, reason
+
+
+def fetch_doc_ratio(doc_id, api_key):
+    """書類取得API(type=5＝XBRLのCSV)から割合を取る。失敗は (None, None, "") で返す（止めない）。"""
+    url = (f"https://api.edinet-fsa.go.jp/api/v2/documents/{urllib.parse.quote(doc_id)}"
+           f"?type=5&Subscription-Key={urllib.parse.quote(api_key)}")
+    req = urllib.request.Request(url, headers={"User-Agent": "marketwatch-jp/1.0"})
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+        raw = r.read()
+    if raw[:2] != b"PK":               # ZIPでなければ失敗（本文にJSONエラーが入る形）
+        return None, None, ""
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    names = [n for n in z.namelist() if n.lower().endswith(".csv")]
+    if not names:
+        return None, None, ""
+    return extract_ratio_rows(z.read(names[0]).decode("utf-16", errors="replace"))
+
+
 def is_large_holding(doc):
     """大量保有関連の提出書類か（府令コード優先・書類種別コードで補完）。"""
     if doc.get("ordinanceCode") == ORDINANCE_LARGE_HOLDING:
@@ -154,6 +287,9 @@ def normalize(doc, date_str, code_map=None):
     desc = (doc.get("docDescription") or "").strip()
     issuer_code = (doc.get("issuerEdinetCode") or "").strip()
     info = (code_map or {}).get(issuer_code) or {}
+    # ⚠️ 書類名は docDescription を正とする（2026-08-10 実測: docTypeCode 350 には
+    #    「大量保有報告書」だけでなく「変更報告書」も含まれ、コード表だけでは区別できない）。
+    label = desc or DOCTYPE_LABEL.get(doc.get("docTypeCode"), "大量保有関連")
     return {
         "id": doc_id,
         "filer": (doc.get("filerName") or "").strip(),          # 提出者（保有者）
@@ -161,10 +297,43 @@ def normalize(doc, date_str, code_map=None):
         "iname": info.get("name", ""),                           # 対象銘柄の会社名（解決できた場合）
         "isec": info.get("sec", ""),                             # 対象銘柄の証券コード（5桁）
         "desc": desc,
-        "type": DOCTYPE_LABEL.get(doc.get("docTypeCode"), "大量保有関連"),
+        "type": label[:24],
+        "csv": str(doc.get("csvFlag") or "0") == "1",            # 割合を取りに行けるか
         "dt": (doc.get("submitDateTime") or f"{date_str} 00:00").strip(),
         "url": f"{DOC_URL}?S100PLACEHOLDER".replace("S100PLACEHOLDER", doc_id),
     }
+
+
+def enrich_ratios(items, api_key, cache, sleep=time.sleep, budget=RATIO_FETCH_BUDGET):
+    """各件に保有割合を付ける。**キャッシュ済みの書類は再取得しない**
+    （EDINET規約の「短時間における大量のアクセス」を避ける＝新着ぶんだけ取りに行く）。
+
+    cache: {docID: {"ratio":…, "prev":…, "reason":…}}（前回の edinet-holdings.json から復元）
+    戻り値: (取得した件数, 失敗件数)
+    """
+    fetched = failed = 0
+    for it in items:
+        hit = cache.get(it["id"])
+        if hit is not None:
+            it["ratio"], it["prev"], it["reason"] = hit.get("ratio"), hit.get("prev"), hit.get("reason", "")
+        elif it.get("csv") and fetched < budget:
+            try:
+                cur, prev, reason = fetch_doc_ratio(it["id"], api_key)
+                it["ratio"], it["prev"], it["reason"] = cur, prev, reason
+                fetched += 1
+            except Exception as ex:
+                it["ratio"] = it["prev"] = None
+                it["reason"] = ""
+                failed += 1
+                print(f"  ⚠️ {it['id']} 割合取得失敗: {ex}")
+            sleep(RATIO_FETCH_WAIT)
+        else:
+            it["ratio"] = it["prev"] = None
+            it["reason"] = ""
+        # 強調フラグ（訂正報告書は「新規」と呼ばない）
+        it["flag"], it["delta"] = classify_change(
+            it["ratio"], it["prev"], is_amend="訂正" in (it.get("type") or ""))
+    return fetched, failed
 
 
 def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep, code_map=None):
@@ -198,20 +367,48 @@ def collect(api_key, today=None, lookback=LOOKBACK_DAYS, sleep=time.sleep, code_
     return items[:KEEP_ITEMS], errors
 
 
+def get_api_key():
+    """APIキーの取得元は ①環境変数（Actions＝GitHub Secrets） ②market-news-config.json の
+    `edinet_api_key`（ローカル開発用・**.gitignore 済みでSYNC対象外**）の順。
+    check_automation_health.get_cfg と同じ方式に揃えている。"""
+    key = os.environ.get("EDINET_API_KEY", "").strip()
+    if key:
+        return key
+    try:
+        with open(os.path.join(HERE, "market-news-config.json"), encoding="utf-8-sig") as f:
+            return (json.load(f).get("edinet_api_key") or "").strip()
+    except Exception:
+        return ""
+
+
 def main():
-    api_key = os.environ.get("EDINET_API_KEY", "").strip()
+    api_key = get_api_key()
     if not api_key:
-        print("❌ 環境変数 EDINET_API_KEY が未設定です（GitHub Secrets に登録してください）。"
-              "\n   取得手順: EDINET でアカウント作成→多要素認証→APIキー発行画面")
+        print("❌ APIキーが未設定です。Actions では GitHub Secrets の EDINET_API_KEY、"
+              "ローカルでは market-news-config.json の \"edinet_api_key\" を参照します。")
         return 2
     now = datetime.datetime.now(JST)
     print(f"[edinet-holdings] {now:%Y-%m-%d %H:%M JST} 直近{LOOKBACK_DAYS}日を取得…")
+    try:                                   # 前回JSON＝割合キャッシュの供給元
+        with open(OUT, encoding="utf-8") as f:
+            prev = json.load(f)
+    except Exception:
+        prev = {}
     code_map = fetch_code_map()
     try:
         items, errors = collect(api_key, code_map=code_map)
     except EdinetError as e:
         print(f"❌ {e}\n   → 既存 edinet-holdings.json は保持します（空で上書きしない）")
         return 1
+
+    # 前回JSONから割合キャッシュを復元（取得済み書類は再取得しない）
+    cache = {i["id"]: i for i in (prev.get("items") or []) if i.get("id") and "ratio" in i}
+    fetched, failed = enrich_ratios(items, api_key, cache)
+    got = sum(1 for i in items if i.get("ratio") is not None)
+    cached = sum(1 for i in items if i["id"] in cache)
+    pending = len(items) - fetched - failed - cached   # 予算上限で今回は見送った件数
+    print(f"  保有割合: 解決 {got}/{len(items)}（新規取得 {fetched} / キャッシュ {cached} / "
+          f"失敗 {failed} / 予算超過で次回 {pending}）")
     if not items:
         # 週末・連休は提出ゼロが正常。既存を保持して終了（空で上書きしない）
         print("[keep] 対象0件＝既存 edinet-holdings.json を保持（休日は提出ゼロが正常）")
@@ -219,6 +416,7 @@ def main():
     payload = {
         "updated": now.isoformat(timespec="minutes"),
         "count": len(items),
+        "thresholds": {"up": UP_THRESHOLD, "down": DOWN_THRESHOLD, "new": NEW_THRESHOLD},
         "source": {
             "name": "金融庁 EDINET",
             "url": "https://disclosure2.edinet-fsa.go.jp/",
