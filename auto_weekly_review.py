@@ -452,6 +452,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
   <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
   <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
   <a class="nav-btn" href="charts.html">📈 150年チャート</a>
