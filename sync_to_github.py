@@ -123,4 +123,5 @@ SYNC_FILES = [
     "guide-news-2026-08-09-trump-polysilicon-tariff-solar-chips.html",
     "guide-signal-lab-066.html",
     "guide-news-2026-08-10-nikkei-surge-ai-semis-cpi-week.html",
+    "guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html",
 ]
