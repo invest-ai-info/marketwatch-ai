@@ -3,6 +3,35 @@
 
 ---
 
+## 2026-08-11
+- 判定: ✅ 公開済み
+- 選定トピック: 金（ゴールド）が$4,430突破・2カ月ぶり高値──中央銀行の記録的買いとCPI前夜の3シナリオを中立整理（カテゴリ: コモディティ・GC=F・中央銀行・FRB・インフレ）
+- スコア: 話題性 4 / 影響 4 / 付加価値 5（合計 13/15）
+- 選定理由: 8/11（火）の金先物が$4,432/oz前後まで上昇し2カ月ぶり高値。8/10記事（日経平均+CPI週プレビュー）とは題材差別化OK（金相場そのものを取り上げた記事はなし）。NFP弱・中央銀行Q2 289トン記録買い・ホルムズリスクの3要因が重なる構造的な付加価値あり。翌日CPI（8/12）との論点整理で付加価値5。
+- 出典（確認済み）:
+  - markets.com「Gold Price Today, August 11: Gold Rallies Above $4,430」（2026-08-11）
+  - FXStreet「Gold rallies further beyond $4,400, highest since early June」（2026-08-11）
+  - FXStreet「Gold price forecast: XAU/USD extends bullish run above $4,400」（2026-08-11）
+  - 日本経済新聞「金市場にマネー回帰 2カ月ぶり高値 米利上げ観測後退 中国、中銀の保有量増」（2026-08-11）
+  - goldsilver.com「Central Banks Bought 289 Tonnes of Gold Last Quarter」（2026）
+  - ECBレポート引用 cruxinvestor.com（2026-06）
+  - intellectia.ai「Gold Price Hits $4,400: Fed Inflation Data Driving Historic Rally 2026」
+  - goldprice.com「Macro Drivers Behind the July-August 2026 Gold Rally」
+  - X/@marketsday「US Economic Calendar August 12, 2026」
+  - Kiplinger「What to Expect From the July CPI Report」（2026-08-10）
+  - CNBC「CPI report will show tamer inflation, prediction markets show」（2026-08-10）
+  - Rio Times Online「Global Economy Briefing August 11, 2026」
+- コンプライアンス監査:
+  - 第一Opus: 🟡グレー→軽微修正1件（meta description「三重の追い風」→「3要因が背景として指摘されている」）→最終🟢白
+  - 第二独立Opus: 🟢白（9/9項目パス・kinsho-v1×3箇所・禁止語ゼロ・銘柄推奨なし・出典9系統以上・断定的将来予測なし）
+  - 品質修正: 日付表記誤り2件修正（「8月8日」→「8月7日（米国時間）」・「8月9〜10日」→「8月7日・10日の2営業日」）・ECB孫引き明記
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末・フッター）✅ ②禁止語なし ✅ ③銘柄推奨なし ✅ ④出典16件（9系統以上）✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告17件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html
+- commit: b292c25（main へ push 済み）
+
+---
+
 ## 2026-08-10
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均が週明け1,363円高で66,970円──AI・半導体株が上昇をけん引、今週の米CPI（8/12）が次の分岐点（カテゴリ: 日本株・マクロ・半導体・FRB金融政策）
