@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-08-12 | 🚩 コンプラ黒（IS/FWD混同・景表法優良誤認） | signal-lab-067 | signal-lab-daily
+
+- **対象ファイル**: `drafts/draft-signal-lab-067.html`
+- **verify.py**: 🟢 緑（11/11 claims GREEN, EXIT=0）
+- **コンプラOpus**: 🔴 黒（公開不可）
+- **理由**: `lab-067-claims.json` の group/trend/tf フィルタに日付条件（REG_DATE）がなく、記事④⑤⑥節の「（IS）」列が実際は全期間（IS+FWD）。真のIS-only値は 上昇 9/20=45.0%（記事掲載 65.1%）、4h 19/49=38.8%（記事掲載 53.8%）、jpy_fx 2/20=10.0%（記事掲載 45.5%）。L379「FWDでも同様の構造が確認」はFWDが「IS」列の部分集合のため循環ロジック。表現変更のみでは修正不能＝再集計が必要。
+- **要対応（再生成時）**:
+  1. 分析スクリプトで IS（REG_DATE前）と FWD（REG_DATE以降）を明示分離（`#063` labnoteの `REG_DATE = "2026-06-16"` 方式に準拠。登録日を6/16か6/17かシリーズ統一確認）
+  2. claims.json の各フィルタを IS-only と FWD-only に分離（verify.py は全期間集計のみ→IS側のみ claims に含める）
+  3. 記事本文: IS列と FWD列が独立集合であることを明記。L379「FWDでも確認」を再集計後の実際のIS値に基づき書き直し
+  4. 「CI がゼロ超え」→「ゼロに到達」（実値 +0.00・トラッカー 🟡蓄積中。CI下限>0 の昇格条件には未達）
+  5. 🟡9件（断定表現・時間足内訳の残差・トラッカー重複行 等）を修正
+- **次回トピック優先度**: 再生成（#067）。IS/FWD分離後に再度ゲート実行。
+
+---
+
 ## 2026-08-11 | 🚩 ゲート赤（apply_brand_color.py不在）| margin-trading | autopublish
 
 - **対象ファイル**: `drafts/draft-margin-trading.html`（公開版 `guide-margin-trading.html` は未コミット・作業完了状態で残存）
