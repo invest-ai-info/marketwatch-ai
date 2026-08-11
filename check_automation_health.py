@@ -278,13 +278,30 @@ def check_topic_queue(owner, repo, token):
 TRACKER_JSON_PATH = "signal-lab-tracker.json"
 
 
+def declared_hypotheses(T):
+    """`signal_lab_tracker` が宣言している仮説を全部集める（純関数・テスト対象）。
+
+    ⚠️ 2026-08-11 修正: 旧実装は定数名を**ハードコードしたタプル**で列挙しており、
+       同日追加した `REGISTER_2026_08_11`（Q24 news_zero_edge）が**検査から漏れていた**
+       ＝「登録漏れを検知する番人」自身が新しい登録漏れを見逃す構造だった。
+       日付つき register 定数は今後も増えるので、**名前の形で動的に拾う**。
+       （§⑥の趣旨は「宣言と実体の突合」＝宣言の集め方が手作業だと趣旨が崩れる）
+    """
+    out = list(T.SEED)
+    for name in sorted(dir(T)):
+        if not re.fullmatch(r"[A-Z][A-Z_]*_\d{4}_\d{2}_\d{2}", name):
+            continue
+        v = getattr(T, name, None)
+        if isinstance(v, dict):
+            out += v.get("register", [])
+    return out
+
+
 def check_tracker_registration(owner, repo, token):
     """コードで宣言した仮説が GitHub 側 tracker に実在するか。戻り値: (宣言総数, 欠落リスト)。"""
     import signal_lab_tracker as T
 
-    declared = list(T.SEED)
-    for name in ("HOLDOUT_2026_07_02", "COMBO_2026_07_19", "STATE_2026_07_20", "REGISTER_2026_07_27"):
-        declared += (getattr(T, name, None) or {}).get("register", [])
+    declared = declared_hypotheses(T)
 
     live = json.loads(api_raw(
         f"https://api.github.com/repos/{owner}/{repo}/contents/{TRACKER_JSON_PATH}", token))
@@ -303,6 +320,62 @@ def check_tracker_registration(owner, repo, token):
 #    FEEDS 側の閾値 stale_days を突き合わせる。閾値の単一の真実は FEEDS（ここに複製しない）。
 #    トピック検索フィードは stale_days=None＝監視対象外（「静か」が正常＝誤検知ゼロ方針）。
 TICKER_JSON_PATH = "news-ticker.json"
+
+
+# ⑧ エスカレの滞留検知（2026-08-11 追加）。
+#    動機＝実際に起きた見落とし: オーナーが「今日シグナル研究日誌が更新されていない」と**目視で**気づいた。
+#    実体は routine 正常（06:29 下書き生成）で、公開ゲートの最終段（独立Opus）が 🔴否 →
+#    07:02 に `drafts/REVIEW.md` へ 🚩 エスカレしていた。さらに #065 が 8/09 から**2日間放置**
+#    （公開番号は #001〜#066 で **#065 だけ欠番**）。
+#    ①②は「走ったか」、③は公開記事の掲載、④はゲート改変、⑤はキュー枯渇しか見ないので、
+#    **「走ったが人間待ちで止まっている」形を誰も捕まえられなかった**。ここで塞ぐ。
+#    ⚠️ 🚩 が出ること自体は正常（ゲートが働いた証拠）。異常なのは**放置され続けること**なので
+#       閾値は日数で持つ＝当日中のエスカレでは鳴らさない（鳴りっぱなしにしない）。
+REVIEW_PATH = "drafts/REVIEW.md"
+ESCALATION_STALE_DAYS = 2
+# 見出しの形: `## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily`
+RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n]+?)\s*\|", re.M)
+
+
+def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS):
+    """純関数（テスト対象）。戻り値: (滞留 [(target, 日付, 経過日)], 🚩総数, 未解決総数)。
+
+    解決の判定は**実体で**行う（宣言でなく成果物を見る＝③と同じ方針）:
+      ① `guide-<target>.html` が公開済みなら解決
+      ② 同じ target について、より新しい見出しが 🚩 なしで「公開」と言っていれば解決
+    どちらも無ければ未解決。未解決のうち stale_days 以上経過したものだけを滞留として返す。
+    """
+    heads = [(d, kind, tgt) for d, kind, tgt in RE_REVIEW_HEAD.findall(review_md)]
+    # target ごとの最新の「公開」見出し日
+    published_head = {}
+    for d, kind, tgt in heads:
+        if "🚩" not in kind and "公開" in kind:
+            published_head[tgt] = max(published_head.get(tgt, ""), d)
+    flags = [(d, tgt) for d, kind, tgt in heads if "🚩" in kind]
+    stale, unresolved = [], 0
+    seen = set()
+    for d, tgt in flags:
+        if tgt in seen:          # 同じ対象の複数エスカレは最新1件で代表させる
+            continue
+        seen.add(tgt)
+        if f"guide-{tgt}.html" in published or published_head.get(tgt, "") >= d:
+            continue
+        unresolved += 1
+        try:
+            age = (now.date() - dt.date.fromisoformat(d)).days
+        except ValueError:
+            continue
+        if age >= stale_days:
+            stale.append((tgt, d, age))
+    stale.sort(key=lambda x: -x[2])
+    return stale, len(flags), unresolved
+
+
+def check_escalation_backlog(owner, repo, token, now):
+    """戻り値: (滞留リスト, 🚩総数, 未解決総数)。実体＝リポジトリ直下の公開HTML一覧で判定。"""
+    md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{REVIEW_PATH}", token)
+    published = set(list_repo_root_files(owner, repo, token))
+    return eval_escalations(md, published, now)
 
 
 def eval_ticker_feed_health(feeds, feed_health, now):
@@ -448,6 +521,25 @@ def main():
     except Exception as e:
         # ③〜⑥と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ フィード鮮度の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑧ エスカレの滞留（走ったが人間待ちで止まっている＝①②③⑤の死角）")
+    try:
+        stale, flags, unresolved = check_escalation_backlog(owner, repo, token, now)
+        if stale:
+            det = ", ".join(f"{t}（{d}・{a}日放置）" for t, d, a in stale)
+            body.append(f"- 🚨 🟡 未対応の 🚩 が {len(stale)} 件（{ESCALATION_STALE_DAYS}日以上）: {det}。"
+                        f"{REVIEW_PATH} の該当節に修正指示が具体値まで書かれている。"
+                        f"⚠️ **signal-lab は放置すると直せなくなる**＝claims.json に基準日が無く "
+                        f"`signal_lab_verify.py` はライブログで再計算するため、"
+                        f"日中に決済が増えると同じ下書きでは二度と GREEN にならない（当日中に対応するか、"
+                        f"諦めて次回生成に回すかの判断が要る）")
+            bad.append(("エスカレ滞留", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 未対応の 🚩 は {unresolved} 件"
+                        f"（いずれも{ESCALATION_STALE_DAYS}日未満・🚩通算{flags}件）")
+    except Exception as e:
+        body.append(f"- 🚨 ⚪ エスカレ滞留の確認失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
