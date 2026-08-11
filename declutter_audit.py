@@ -28,14 +28,13 @@ MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 # ここは定型文の「古い完了セクションを退避してスリム化」を出していた＝**一次側が明確に否定した対処**
 # （DOCTRINE は §2実証済み知見と §5稼働中コミットが本体で削減余地なし・SESSION_HANDOFF 7/28節）。
 # 同じ閾値が二重に鳴る上に文言が劣化するので、DOCTRINE の監視は一次側に一本化する。
-# hypothesis_queue も一次側に警告があるが、こちらは文言が同等なので二重チェックとして残置。
-try:
-    sys.path.insert(0, HERE)
-    from _doctrine_check import QUEUE_WARN_KB as _Q_KB
-except Exception:
-    _Q_KB = 36
-DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32,
-                 "research/hypothesis_queue.md": _Q_KB}
+# ⚠️ 2026-08-11: **hypothesis_queue.md もこの表から削除**（オーナー承認・DOCTRINE を外したのと同じ理由）。
+# 一次側（`_doctrine_check.check_queue_wip`）が **バイト数→アクティブQの本数** に変わったため、
+# ここでバイト数を見ると「古い完了セクションを退避してスリム化」という**一次側が明確に否定した対処**を
+# 出すことになる（キューの正しい対処は「仮説を1本閉じる」であって「文書を削る」ではない。
+# 閉じたQは既にアーカイブ済みで、残っているのは全て進行中＝退避できるものが無い）。
+# 監視は一次側に一本化する。⚠️ 閾値の単一ソースは `_doctrine_check.QUEUE_WARN_N/QUEUE_ERR_N`。
+DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32}
 MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
 MEMORY_FILE_LIMIT_KB = 20   # 個別memoryファイル。recall時に丸ごと文脈へ入る＝1件の重さが実コスト
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
