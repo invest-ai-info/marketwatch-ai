@@ -534,10 +534,12 @@ def main():
             det = ", ".join(f"{t}（{d}・{a}日放置）" for t, d, a in stale)
             body.append(f"- 🚨 🟡 未対応の 🚩 が {len(stale)} 件（{ESCALATION_STALE_DAYS}日以上）: {det}。"
                         f"{REVIEW_PATH} の該当節に修正指示が具体値まで書かれている。"
-                        f"⚠️ **signal-lab は放置すると直せなくなる**＝claims.json に基準日が無く "
-                        f"`signal_lab_verify.py` はライブログで再計算するため、"
-                        f"日中に決済が増えると同じ下書きでは二度と GREEN にならない（当日中に対応するか、"
-                        f"諦めて次回生成に回すかの判断が要る）")
+                        f"⚠️ signal-lab を後日直すときは **必ず基準時刻を凍結する**："
+                        f"`python signal_lab_verify.py <draft> <claims> --asof <生成時刻ISO8601>`"
+                        f"（claims.json に \"asof\" があればそちらが優先）。"
+                        f"凍結しないとライブログが進んだぶん k/n がずれ、正しい下書きでも RED になる"
+                        f"（2026-08-11 に #065 が 0/6 → 凍結して 6/6 緑を実測）。"
+                        f"asof は記事の公開日と同じJST日付でなければ RED＝都合のよい断面は選べない")
             bad.append(("エスカレ滞留", "warn"))
         else:
             body.append(f"- ✅ 🟢 未対応の 🚩 は {unresolved} 件"
