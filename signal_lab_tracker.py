@@ -200,6 +200,25 @@ REGISTER_2026_07_27 = {"register": [
      "kind": "gate", "registered_at": "2026-07-27"},   # Q44 遡及 N91 31.9% グロス-0.2564 CI[-0.452,-0.060]
 ]}
 
+# 🆕 2026-08-11 Q24（注目度エッジ・news次元）の**実登録**（オーナー決定 2026-08-11・確定後は変更しない）。
+#   経緯: 7/31 の着手前チェックで第1段「BT全量探索」が**実行不能**と確定（BTログ2本とも `news_count`
+#   保有 0.0%＝発火時にしか記録されず遡及復元不可）。第2段の時間分割もライブ73日分しかなく、
+#   それは Q21 H-V2 の**発見窓そのもの**＝覗き見。⇒ 残る唯一の道が前向き tracker 登録。
+#   オーナー判断（2026-08-11）＝**変種9本ではなく主張1本**（3バンド×{単独/×long/×short}を全部登録すると
+#   分母9でFDRが重くなり、6.48件/日では到達しない）。分母＝**1本**に固定する。
+#   ⚠️⚠️ **検出力の開示（登録前に実測・`research/_q24_power.py`）**:
+#      news=0 は決済済 499件/77日＝**6.48件/日**、**σ=1.165R**。
+#      トラッカー標準の N=80 では **MDE=0.365R**（素朴・日クラスタ補正前）。
+#      ところが本仮説の出どころ Q21 H-V2 の効果量は **−0.20R** ＝
+#      **最初のチェックポイント(N=80)は、期待される規模の効果を構造的に確認できない。**
+#      N=160→MDE 0.258R（25日）／N=240→MDE 0.211R（37日）でようやく境界。
+#      ⇒ **N=80 で非有意でも「効果なし」と読まない**（棄却の根拠にしない）。実質的な判断は N≥240 以降。
+#      この開示を凍結側に残すのが登録の条件（Q28/Q29/Q31 は検出力不足を"実行後"に発見して失った）。
+REGISTER_2026_08_11 = {"register": [
+    {"id": "news_zero_edge", "label": "注目度ゼロ(news=0)", "filter": {"news": "0"},
+     "kind": "edge", "registered_at": "2026-08-11"},   # Q24 主張1本・σ=1.165R・6.48件/日・N80のMDE=0.365R
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -297,7 +316,8 @@ def apply_holdout_bootstrap(t):
     #    dry-run で実際に発生（2回目以降の changed が 0 にならない）。id 重複でも弾けば止まる。
     existing_ids = {h.get("id") for h in t["hypotheses"]}
     for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
-              + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]):
+              + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
+              + REGISTER_2026_08_11["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
