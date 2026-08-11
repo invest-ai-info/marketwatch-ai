@@ -2,70 +2,70 @@
   "article_id": "067",
   "claims": [
     {
-      "label": "もみあい×ショート 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short"},
-      "k": 78,
-      "n": 207
+      "label": "rsi_oversold_bounce 全体",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 149,
+      "n": 311
     },
     {
-      "label": "もみあい×ショート × signal=macd_dead 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "signal": "macd_dead"},
-      "k": 44,
-      "n": 114
+      "label": "rsi_oversold_bounce × group=index",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index"},
+      "k": 40,
+      "n": 64
     },
     {
-      "label": "もみあい×ショート × signal=low_break 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "signal": "low_break"},
-      "k": 20,
+      "label": "rsi_oversold_bounce × group=jpy_fx",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},
+      "k": 25,
       "n": 55
     },
     {
-      "label": "もみあい×ショート × signal=ma_dead 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "signal": "ma_dead"},
-      "k": 11,
-      "n": 29
+      "label": "rsi_oversold_bounce × group=other_fx",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},
+      "k": 38,
+      "n": 79
     },
     {
-      "label": "もみあい×ショート × group=jpy_fx 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "group": "jpy_fx"},
-      "k": 10,
-      "n": 37
-    },
-    {
-      "label": "もみあい×ショート × group=other_fx 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "group": "other_fx"},
-      "k": 23,
+      "label": "rsi_oversold_bounce × group=metal",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},
+      "k": 19,
       "n": 60
     },
     {
-      "label": "もみあい×ショート × group=index 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "group": "index"},
-      "k": 16,
-      "n": 41
-    },
-    {
-      "label": "もみあい×ショート × group=metal 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "group": "metal"},
-      "k": 15,
-      "n": 36
-    },
-    {
-      "label": "もみあい×ショート × tf=1h 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "tf": "1h"},
-      "k": 34,
-      "n": 100
-    },
-    {
-      "label": "もみあい×ショート × tf=4h 全期間",
-      "filter": {"trend": "中立・もみあい", "direction": "short", "tf": "4h"},
+      "label": "rsi_oversold_bounce × trend=上昇",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},
       "k": 41,
-      "n": 101
+      "n": 63
     },
     {
-      "label": "もみあい×ロング 全期間（対照群）",
-      "filter": {"trend": "中立・もみあい", "direction": "long"},
-      "k": 316,
-      "n": 708
+      "label": "rsi_oversold_bounce × trend=下降",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},
+      "k": 57,
+      "n": 134
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=中立・もみあい",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},
+      "k": 50,
+      "n": 112
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=1h",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},
+      "k": 86,
+      "n": 195
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=4h",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"},
+      "k": 56,
+      "n": 104
+    },
+    {
+      "label": "bb_lower_touch 全体（比較対照）",
+      "filter": {"signal": "bb_lower_touch"},
+      "k": 268,
+      "n": 596
     }
   ]
 }

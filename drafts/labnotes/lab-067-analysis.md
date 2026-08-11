@@ -1,94 +1,126 @@
-# lab-067 分析メモ
+# lab-067-analysis.md
+# 記事 #067: RSI売られすぎ逆張り買い(rsi_oversold_bounce) 前向きN=178
+# 基準日: 2026-08-12 (JST)
 
-## 検証日
-2026-08-11（JST）
+## 分析スクリプト
 
-## 採択仮説
-**trend=中立・もみあい × direction=short（もみあい相場×ショート）の前向き⛔反証確定確認**
+```python
+import json, math
 
-優先度①：tracker更新にて `trend=中立・もみあい×dir=short` が⛔反証に正式ステータス変化（前向き N=163, E(R)=-0.284, CI[-0.49~-0.08]・全域マイナス）
+with open('signals-log.json') as f:
+    data = json.load(f)
+signals = data if isinstance(data, list) else data.get('signals', [])
 
-## スクリプト実行記録
+GROUPS = {
+    'metal': {'GC=F','SI=F'},
+    'index': {'NKD=F','ES=F','NQ=F','YM=F','^FTSE'},
+    'jpy_fx': {'USDJPY=X','EURJPY=X','GBPJPY=X','AUDJPY=X'},
+    'other_fx': {'EURUSD=X','GBPUSD=X','AUDUSD=X','EURAUD=X','GBPAUD=X'},
+    'btc': {'BTC-USD'},
+    'oil': {'CL=F'},
+}
+def get_group(ticker):
+    for g, tickers in GROUPS.items():
+        if ticker in tickers:
+            return g
+    return 'other'
 
-### 1. tracker update (2026-08-11)
+def wilson(k, n, z=1.96):
+    if n == 0: return (0,0)
+    p = k/n
+    lo = (p + z*z/(2*n) - z*math.sqrt(p*(1-p)/n + z*z/(4*n*n))) / (1 + z*z/n)
+    hi = (p + z*z/(2*n) + z*math.sqrt(p*(1-p)/n + z*z/(4*n*n))) / (1 + z*z/n)
+    return (max(0,lo), min(1,hi))
+
+REG_DATE = "2026-06-17"  # rsi_oversold_bounce 登録日 (前向き基準)
+
+def is_win(s): return s.get('outcome') in ('tp1','tp2')
+def is_closed(s): return s.get('outcome') in ('tp1','tp2','sl')
+def is_fwd(s): return s.get('fired_at','') >= REG_DATE
+
+osb = [s for s in signals if s.get('primary_signal') == 'rsi_oversold_bounce']
+osb_closed = [s for s in osb if is_closed(s)]
+osb_fwd = [s for s in osb if is_fwd(s)]
+osb_fwd_closed = [s for s in osb_fwd if is_closed(s)]
+
+print(f"全体 closed: k={sum(1 for s in osb_closed if is_win(s))}, n={len(osb_closed)}")
+
+# FWD期間のみ
+print(f"FWD closed: k={sum(1 for s in osb_fwd_closed if is_win(s))}, n={len(osb_fwd_closed)}")
+
+# group別 全期間
+for g in ['index','jpy_fx','other_fx','metal']:
+    sub = [s for s in osb_closed if get_group(s.get('ticker','')) == g]
+    k = sum(1 for s in sub if is_win(s))
+    n = len(sub)
+    lo,hi = wilson(k,n)
+    print(f"group={g}: k={k}, n={n}, wr={k/n:.1%}, WCI=[{lo:.1%},{hi:.1%}]")
+
+# trend別 全期間
+for t in ['上昇','下降','中立・もみあい']:
+    sub = [s for s in osb_closed if s.get('trend_alignment',{}).get('higher_tf_trend') == t]
+    k = sum(1 for s in sub if is_win(s))
+    n = len(sub)
+    lo,hi = wilson(k,n)
+    print(f"trend={t}: k={k}, n={n}, wr={k/n:.1%}, WCI=[{lo:.1%},{hi:.1%}]")
+
+# tf別 全期間
+for tf in ['1h','4h']:
+    sub = [s for s in osb_closed if s.get('timeframe') == tf]
+    k = sum(1 for s in sub if is_win(s))
+    n = len(sub)
+    lo,hi = wilson(k,n)
+    print(f"tf={tf}: k={k}, n={n}, wr={k/n:.1%}, WCI=[{lo:.1%},{hi:.1%}]")
+
+# bb_lower_touch 比較対照
+bbt = [s for s in signals if s.get('primary_signal') == 'bb_lower_touch' and is_closed(s)]
+k = sum(1 for s in bbt if is_win(s)); n = len(bbt)
+lo,hi = wilson(k,n)
+print(f"bb_lower_touch: k={k}, n={n}, wr={k/n:.1%}, WCI=[{lo:.1%},{hi:.1%}]")
 ```
-python signal_lab_tracker.py update --date 2026-08-11
+
+## 実行結果
+
 ```
-🚩 今回ステータス変化:
-- trend=中立・もみあい×dir=short: **rejected**（前向き 平均R -0.284 / N=163）
+全体 closed: k=149, n=311
+FWD closed: k=97, n=178
 
-### 2. sweep (2026-08-11)
+group=index:    k=40,  n=64,  wr=62.5%, WCI=[50.0%,73.6%]
+group=jpy_fx:   k=25,  n=55,  wr=45.5%, WCI=[32.7%,58.6%]
+group=other_fx: k=38,  n=79,  wr=48.1%, WCI=[37.2%,59.2%]
+group=metal:    k=19,  n=60,  wr=31.7%, WCI=[20.6%,44.9%]
+
+trend=上昇:           k=41, n=63,  wr=65.1%, WCI=[52.5%,75.8%]
+trend=下降:           k=57, n=134, wr=42.5%, WCI=[34.3%,51.2%]
+trend=中立・もみあい: k=50, n=112, wr=44.6%, WCI=[35.6%,54.0%]
+
+tf=1h: k=86, n=195, wr=44.1%, WCI=[37.3%,51.1%]
+tf=4h: k=56, n=104, wr=53.8%, WCI=[44.1%,63.3%]
+
+bb_lower_touch: k=268, n=596, wr=45.0%, WCI=[41.0%,49.0%]
 ```
-python signal_lab_sweep.py --json drafts/labnotes/sweep-2026-08-11.json
-```
-FDR通過3本:
-- tf=1d×reversalL (R+0.60) ← 既登録
-- rsi=os×trend=上昇 (R+0.41) ← **新規登録**
-- trend=上昇×reversalL (R+0.22) ← 既登録
 
-### 3. register
-```
-python signal_lab_tracker.py register --from drafts/labnotes/sweep-2026-08-11.json --date 2026-08-11
-```
-新規登録 1本：rsi=os×trend=上昇（edge）
+## 前向きトラッカー値（signal_lab_tracker.py より、2026-08-12）
 
-## 検証Python実行（反実仮想集計）
+- FWD 全体: 97/178=54.5%, E(R)=+0.272, RCI[+0.00, +0.54]（cluster-corrected）
+- trend=上昇 FWD: 32/43=74.4%
+- trend=中立 FWD:  32/53=60.4%
+- trend=下降 FWD:  33/82=40.2%
+- tf=4h FWD:  37/55=67.3%
+- tf=1h FWD:  53/114=46.5%
+- group=index FWD:   20/29=69.0%
+- group=jpy_fx FWD:  23/35=65.7%
+- group=other_fx FWD: 24/56=42.9%
 
-### 基本フィルタ設定
-- trend=中立・もみあい × direction=short（ショート）
-- closed = outcome in ('tp1', 'sl', 'expired'), 1d拡張銘柄除外
-- 登録日（REG_DATE）= 2026-06-17
+### 前向き時系列 3分割（FWD期間）
+- FWD-1 (2026-06-17〜06-25): 20/59=33.9%, E(R)=-0.314
+- FWD-2 (2026-06-25〜07-17): 38/59=64.4%, E(R)=+0.754
+- FWD-3 (2026-07-21〜08-11): 39/60=65.0%, E(R)=+0.775
 
-### 全期間統計（claims.json根拠）
-| 指標 | k | n | 勝率 | 95%CI |
-|---|---|---|---|---|
-| もみあい×ショート 全期間 | 76 | 207 | 36.7% | [30.4%, 43.5%] |
-| signal=macd_dead | 43 | 114 | 37.7% | [29.4%, 46.9%] |
-| signal=low_break | 19 | 55 | 34.5% | [23.4%, 47.7%] |
-| signal=ma_dead | 11 | 29 | 37.9% | [22.7%, 56.0%] |
-| group=jpy_fx | 10 | 38 | 26.3% | [15.0%, 42.0%] |
-| group=other_fx | 23 | 63 | 36.5% | [25.7%, 48.9%] |
-| group=index | 16 | 41 | 39.0% | [25.7%, 54.3%] |
-| group=metal | 13 | 32 | 40.6% | [25.5%, 57.7%] |
-| tf=1h | 34 | 100 | 34.0% | - |
-| tf=4h | 41 | 103 | 39.8% | - |
-| もみあい×ロング（対照） | 313 | 702 | 44.6% | [40.9%, 48.3%] |
+## 主要発見
 
-### IS / FWD 分割（記事本文用・verify.pyによる独立確認対象外）
-| 期間 | k | n | 勝率 | E(R) | RCI |
-|---|---|---|---|---|---|
-| IS（登録前） | 28 | 44 | 63.6% | +0.485 | - |
-| FWD（登録後） | 48 | 163 | 29.4% | -0.301 | [-0.464, -0.138] |
-| tracker（クラスタ補正） | - | 163 | - | -0.284 | [-0.49, -0.08] |
-
-### FWD シグナル別
-| signal | k | n | 勝率 | E(R) |
-|---|---|---|---|---|
-| macd_dead | 29 | 89 | 32.6% | -0.234 |
-| low_break | 10 | 42 | 23.8% | -0.390 |
-| ma_dead | 9 | 26 | 34.6% | -0.232 |
-
-### FWD グループ別
-| group | k | n | 勝率 |
-|---|---|---|---|
-| index | 14 | 38 | 36.8% |
-| jpy_fx | 8 | 31 | 25.8% |
-| other_fx | 13 | 47 | 27.7% |
-| metal | 7 | 25 | 28.0% |
-| btc | 2 | 13 | 15.4% |
-
-### 最新20件
-- 2/20 = 10.0%（さらに深刻化）
-
-### 対照: もみあい×ロング FWD
-- N=485, k=238, 49.1%, E(R)=+0.150, RCI[+0.046, +0.254]（全域プラス）
-
-## Wilson CI 計算根拠
-- z=1.96（95%信頼区間）
-- 低サンプル N<30 のサブグループは参照用のみ・確定打なし扱い
-
-## 新規 FDR 候補
-- rsi=os×trend=上昇（edge）: IS 勝率高め・sweep上位。前向き追跡開始。
-
-## シリーズ経緯
-#012(IS67.3%) → #019(+26件50.7%) → #029(FWD31.5%) → #059(FWD33.3%) → #061(FWD33.6%) → #065(FWD31.8% CI全域マイナス確定) → #067(FWD29.4% tracker⛔反証正式記録)
+1. FWD RCI下限が遂にゼロ到達（N=178, 以前はN=168で[-0.058,+0.474]）
+2. 上昇トレンドで74%（FWD）——「逆張り」でも上昇トレンドに乗るほうが有利
+3. 4H足: FWD 67.3% > 1H足: FWD 46.5%（#015の全体的4H劣勢と逆転）
+4. jpy_fx: IS(全期間)45.5% → FWD 65.7%（政策・介入期待で構造変化?）
+5. 前向き時系列: 初期(6/17〜6/25)は33.9%と軟調→後半2区間は65%で安定
