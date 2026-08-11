@@ -95,7 +95,13 @@
     body.dark .ratio-kind{color:#8b949e}
     body.dark .source-box{background:#0d1117;border-color:#30363d;color:#8b949e}
     body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
-  </style>
+    /* スマホのナビ（サイト標準形＝guide-*.html と同一。2列グリッド）。
+       ⚠️ 無いと .nav-btn{min-width:170px} が効いたまま＝375px では枠327pxに1個しか入らず
+       11ボタンが11行に縦積みになる（2026-08-11 実測・オーナー報告）。
+       このページは apply_nav_css.py の対象外（同ツールは guide-*.html 限定かつモバイル規則は不変）
+       なので、標準形が一度も当たっていなかった。 */
+    @media(max-width:600px){.nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
+</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
 </head>
 <body>
