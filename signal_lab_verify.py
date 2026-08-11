@@ -248,11 +248,80 @@ def date_check(html):
     return fails
 
 
+def article_date(html):
+    """記事が名乗る公開日（JST・YYYY-MM-DD）。無ければ None。asof の妥当性検査に使う。"""
+    m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})"', html)
+    if m:
+        return m.group(1)
+    m = re.search(r'公開：\s*(\d{4})年(\d{1,2})月(\d{1,2})日', html)
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else None
+
+
+def parse_asof(s):
+    """asof 文字列 → aware datetime。タイムゾーン無しは JST とみなす。失敗は None。"""
+    try:
+        t = _dt.datetime.fromisoformat(str(s).strip().replace(" ", "T", 1))
+    except (ValueError, AttributeError):
+        return None
+    return t if t.tzinfo else t.replace(tzinfo=_dt.timezone(_dt.timedelta(hours=9)))
+
+
+def resolved_at(d):
+    """決済が確定した時刻（aware）。無い/壊れているものは None。"""
+    return parse_asof(d.get("outcome_resolved_at")) if d.get("outcome_resolved_at") else None
+
+
+def apply_asof(data, asof, art_date):
+    """基準時刻での凍結。戻り値 (絞ったdata, 不備リスト, 除外した決済済み件数)。
+
+    ⚠️ 2026-08-11 追加。動機＝**エスカレした下書きが二度と検証できなくなる**問題:
+       claims は生成時点(朝)のログで計算されるが、本オラクルは実行時のライブログで再計算する。
+       日中に決済が増えると同じ下書きは永久に RED になり、🚩 が付いた回は**直そうにも直せない**
+       （実例 #065 が2日放置・#067 が当日夕方に 11/11→2/11 へ転落）。
+    ⚠️ 打ち切りは **`outcome_resolved_at`**（決済確定時刻）で行う。`fired_at` では誤り＝
+       朝より前に発火して日中に決済した玉を「朝も計上済み」と誤認するため。
+    ⚠️ **捏造不可の担保は失わない**: 数字は依然として実ログからの再計算と完全一致する必要があり、
+       asof は「どの断面か」を選べるだけ。さらに断面を生成日に固定するため
+       **asof は記事が名乗る公開日と同じJST日付でなければ RED**（遠い過去の都合のよい断面を選べない）。
+       ⚠️ 既知の限界: 同一日内での断面選択は理論上残る（開示事項）。
+    """
+    fails = []
+    if asof > _dt.datetime.now(_dt.timezone.utc):
+        fails.append(f"asof {asof.isoformat()} が未来＝断面として不正")
+    if art_date:
+        a_jst = asof.astimezone(_dt.timezone(_dt.timedelta(hours=9))).strftime("%Y-%m-%d")
+        if a_jst != art_date:
+            fails.append(f"asof の日付 {a_jst} が記事の公開日 {art_date} と不一致"
+                         f"＝生成日以外の断面は認めない（都合のよい切り口の防止）")
+    kept, dropped = [], 0
+    for d in data:
+        if not closed(d):
+            kept.append(d)          # 未決済は元から compute で除外される＝そのまま通す
+            continue
+        r = resolved_at(d)
+        if r is None or r > asof:
+            dropped += 1
+        else:
+            kept.append(d)
+    return kept, fails, dropped
+
+
 def main():
-    if len(sys.argv) < 3:
-        print("usage: python signal_lab_verify.py <draft.html> <claims.json>")
+    argv = [a for a in sys.argv[1:]]
+    asof_cli = None
+    for i, a in enumerate(argv):
+        if a == "--asof" and i + 1 < len(argv):
+            asof_cli = argv[i + 1]
+            argv = argv[:i] + argv[i + 2:]
+            break
+        if a.startswith("--asof="):
+            asof_cli = a.split("=", 1)[1]
+            argv = argv[:i] + argv[i + 1:]
+            break
+    if len(argv) < 2:
+        print("usage: python signal_lab_verify.py <draft.html> <claims.json> [--asof <ISO8601>]")
         sys.exit(2)
-    draft_path, claims_path = sys.argv[1], sys.argv[2]
+    draft_path, claims_path = argv[0], argv[1]
     log_path = os.path.join(ROOT, "signals-log.json")
     if not os.path.exists(log_path):
         # fetch版フォールバック
@@ -265,7 +334,23 @@ def main():
     fails = []
     oks = 0
     allowed_pcts = set()  # 要約ボックス完全性チェック用：claim の勝率＋CI境界
-    print(f"=== signal_lab_verify: article #{claims.get('article_id','?')} / signals N={len(data)} ===")
+
+    # 基準時刻の凍結（任意）。claims.json の "asof" ＞ CLI の --asof の順で拾う。
+    # 無ければ**従来どおりライブ全量**＝既存記事の再監査に一切影響しない。
+    asof_src = claims.get("asof") or asof_cli
+    asof_note = ""
+    if asof_src:
+        asof = parse_asof(asof_src)
+        if asof is None:
+            fails.append(f"asof を解釈できない: {asof_src!r}（ISO8601で書く）")
+        else:
+            data, af, dropped = apply_asof(data, asof, article_date(html))
+            fails.extend(af)
+            for x in af:
+                print(f"  ❌ asof: {x}")
+            jst_txt = asof.astimezone(_dt.timezone(_dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M JST")
+            asof_note = f" / asof={jst_txt}（基準時刻以降の決済 {dropped}件を除外）"
+    print(f"=== signal_lab_verify: article #{claims.get('article_id','?')} / signals N={len(data)}{asof_note} ===")
     for df in date_check(html):
         fails.append(df)
         print(f"  ❌ 日付: {df}")

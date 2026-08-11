@@ -332,7 +332,11 @@ TICKER_JSON_PATH = "news-ticker.json"
 #    ⚠️ 🚩 が出ること自体は正常（ゲートが働いた証拠）。異常なのは**放置され続けること**なので
 #       閾値は日数で持つ＝当日中のエスカレでは鳴らさない（鳴りっぱなしにしない）。
 REVIEW_PATH = "drafts/REVIEW.md"
-ESCALATION_STALE_DAYS = 2
+# 🆕 2026-08-11 夜: 2日 → **1日**（オーナー決定）。理由＝signal-lab は放置すると救済コストが上がる。
+#    基準時刻凍結（`signal_lab_verify.py --asof` / claims.json の "asof"）を入れたので
+#    「日が変わると直せない」問題自体は解消したが、**asof を持たない旧claimsは依然として救済不能**で、
+#    かつ 09:30 の本チェックは 06:10 生成の**翌朝**に鳴る＝1日にしないと最短でも2日放置になる。
+ESCALATION_STALE_DAYS = 1
 # 見出しの形: `## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily`
 RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n]+?)\s*\|", re.M)
 
