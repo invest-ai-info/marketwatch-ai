@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-08-12 | 🚩 ゲート赤（apply_brand_color.py不在・継続） | margin-trading | autopublish
+
+- **対象ファイル**: `guide-margin-trading.html`（昨日のautopublishが仕上げ済み・コミット済み・noindex除去・canonical整合）
+- **決定論ゲート**: 🔴 RED（EXIT=1）
+  - エラー: `ブランドカラー検査を実行できない (ModuleNotFoundError: No module named 'apply_brand_color')`
+- **原因**: `apply_brand_color.py` は git 非追跡ファイル。新規クラウドセッションのクリーンクローンでは常に欠失する。
+- **状況**: 昨日（2026-08-11）と同じ問題。コンプラ・品質ゲートは白（2026-08-11の記録参照）。ゲートを修正して通す行為は固定オラクル規約で禁止のためエスカレ。
+- **🚩 人間の残作業（前回と同じ）**:
+  1. `apply_brand_color.py` をgit追跡ファイルに追加（`git add apply_brand_color.py && git commit`）→ クラウドセッションで自動取得可能になる
+  2. または: `check_guide_draft.py` のブランドカラー検査を「apply_brand_color不在時はWARNINGに格下げ」へ改修（オーナーローカル作業）
+  3. 修正後: `python check_guide_draft.py guide-margin-trading.html` → GREEN確認
+  4. `python publish_article.py --file guide-margin-trading.html --category "投資の基礎知識" --emoji 💰 --card-title "信用取引の基礎（制度信用・一般信用・逆日歩・追証）" --desc "委託保証金30%で最大3.33倍の仕組み、制度信用と一般信用の違い、逆日歩・追証のメカニズムを図解で解説。"`
+  5. `python check_site_consistency.py` → GREEN → push → HTTP200確認
+- **⚠️ 長期ブロッカー**: apply_brand_color.pyのgit未追跡問題が解決するまでautopublishレーンはmargin-trading（#33）で毎日ゲート赤→エスカレとなる
+
+---
+
 ## 2026-08-12 | 🚩 コンプラ黒（IS/FWD混同・景表法優良誤認） | signal-lab-067 | signal-lab-daily
 
 - **対象ファイル**: `drafts/draft-signal-lab-067.html`
