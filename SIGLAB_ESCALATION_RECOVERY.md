@@ -51,6 +51,12 @@ python signal_lab_verify.py drafts/draft-signal-lab-NNN.html drafts/labnotes/lab
 
 ⚠️ **エンジン・発火条件・固定オラクルには触らない。** 直すのは記事本文だけ。
 
+⚠️ **2本以上を同日に仕上げるときは、1本ごとに sync まで完走させる**（または最後に1本目の
+`publish_article.py` を再実行＝冪等）。`publish_article.py` の reconcile は main の guides.html /
+generate_market_news.py を取り込むため、**未push の1本目のカード・履歴登録を2本目の publish が
+黙って消す**（2026-08-12 実測: 065→067 連続公開で 065 のカードと履歴が main から欠落。
+Contents API での実体確認で検出→065 再 publish→再 sync で復旧）。
+
 ---
 
 ## 2. 日付の衝突（数日寝かせた回を公開するとき）
