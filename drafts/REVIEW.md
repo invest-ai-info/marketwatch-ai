@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-08-13 | 🟡 ゲート実行中 | signal-lab-068 | signal-lab-daily
+
+- **対象ファイル**: `drafts/draft-signal-lab-068.html`
+- **仮説**: rsi_band=os × trend=上昇 × dir=long（IS: ロング76.9% CI[63.2%,87.1%]・方向非対称54pp・4H足71.4%）
+- **verify.py**: 実行中（11 claims）
+- **コンプラOpus**: 実行中
+- **状態**: IS候補・FWD N=1蓄積開始。tracker[w]新設（auto_rsi_band-os_trend-上昇）
+
+---
+
 ## 2026-08-12 | ✅ 公開完了（エスカレ復旧） | signal-lab-065 | 人間レビュー
 
 - 2026-08-09 🚩（コンプラ黒＝kinsho-v1免責3箇所欠落）の復旧完了。B-1免責＋G1〜G6軟化＋任意2件（#019/#029/#059リンク・tracker見出し重複）を適用

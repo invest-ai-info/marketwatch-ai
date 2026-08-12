@@ -1,0 +1,16 @@
+{
+  "article_id": "068",
+  "claims": [
+    {"label": "rsi_band=os × 上昇 全方向 (IS全件)",    "filter": {"rsi_band": "os", "trend": "上昇"},                         "k": 45, "n": 74},
+    {"label": "rsi_band=os 全体 (比較)",               "filter": {"rsi_band": "os"},                                         "k": 167, "n": 360},
+    {"label": "rsi_band=os × 中立・もみあい (比較)",   "filter": {"rsi_band": "os", "trend": "中立・もみあい"},                "k": 60, "n": 144},
+    {"label": "rsi_band=os × 下降 (比較)",             "filter": {"rsi_band": "os", "trend": "下降"},                        "k": 61, "n": 141},
+    {"label": "rsi_band=os × 上昇 × ロング (★主仮説)","filter": {"rsi_band": "os", "trend": "上昇", "direction": "long"},    "k": 40, "n": 52},
+    {"label": "rsi_band=os × 上昇 × ショート (対照)",  "filter": {"rsi_band": "os", "trend": "上昇", "direction": "short"},   "k": 5, "n": 22},
+    {"label": "rsi_band=os × 上昇 × 4H足",             "filter": {"rsi_band": "os", "trend": "上昇", "tf": "4h"},            "k": 25, "n": 35},
+    {"label": "rsi_band=os × 上昇 × 1H足",             "filter": {"rsi_band": "os", "trend": "上昇", "tf": "1h"},            "k": 13, "n": 29},
+    {"label": "signal=rsi_oversold_bounce × 上昇",     "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},          "k": 41, "n": 63},
+    {"label": "bb_lower_touch × 上昇 (比較)",          "filter": {"signal": "bb_lower_touch", "trend": "上昇"},              "k": 100, "n": 206},
+    {"label": "reversal_long × 上昇 (比較)",           "filter": {"reversal_long": true, "trend": "上昇"},                   "k": 141, "n": 268}
+  ]
+}
