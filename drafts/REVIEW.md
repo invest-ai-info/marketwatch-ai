@@ -2,13 +2,15 @@
 
 ---
 
-## 2026-08-13 | 🟡 ゲート実行中 | signal-lab-068 | signal-lab-daily
+## 2026-08-13 | ✅ 公開完了（自動公開） | signal-lab-068 | signal-lab-daily
 
-- **対象ファイル**: `drafts/draft-signal-lab-068.html`
+- **対象ファイル**: `guide-signal-lab-068.html`（`drafts/draft-signal-lab-068.html` → 公開）
 - **仮説**: rsi_band=os × trend=上昇 × dir=long（IS: ロング76.9% CI[63.2%,87.1%]・方向非対称54pp・4H足71.4%）
-- **verify.py**: 実行中（11 claims）
-- **コンプラOpus**: 実行中
-- **状態**: IS候補・FWD N=1蓄積開始。tracker[w]新設（auto_rsi_band-os_trend-上昇）
+- **verify.py**: 🟢 11/11 GREEN（30秒まとめ heading fix: "30秒まとめ"→"30秒でわかる"）
+- **コンプラOpus（1回目）**: 🟡 グレー → 自己修正済み（6箇所: kinsho-v1属性付与・売買サイン表現軟化・N≥60→N≥80×3）。verify.py再実行 11/11 GREEN確認
+- **独立Opus確認**: 🟢 白（「独立確認: 🟢白 → 公開確定」明記）
+- **finalize/publish/consistency**: 全EXIT=0
+- **状態**: IS候補・FWD N=1蓄積開始。tracker[w]新設（auto_rsi_band-os_trend-上昇）。公開URL: guide-signal-lab-068.html
 
 ---
 
