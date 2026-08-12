@@ -20,6 +20,7 @@
   4. 金・ドル円・10年債は確定時刻を明記した値に更新
   5. publish_article.py で公開（カテゴリ「今日のニュース」・日付は 8/13）
 - 構造的提言: `NEWS_DAILY_GUIDE.md` の見送り基準に「指標発表予定時刻 > routine実行時刻なら同日夕の結果記事は書けない」ルールを追加推奨（economic-events.json の発表時刻で機械判定可能）
+- ⚠️ 追加情報（CPI数値確認エージェント）: BLS公式の2026年7月分は検索インデックス未更新（6月分止まり）で実数値確認不能。Conference Board発表後分析断片「Core CPI accelerated in both MoM and YoY terms. Good prices are rising thanks to tariffs, lifting inflation back toward 3%」→ コアCPIが予想（+2.5%）を**上振れた**可能性を示唆。第1次エージェントの「CPI comes in cool（予想下回り）」と方向が逆。公開していれば方向性ごと誤報になった可能性あり。復旧時は BLS M07ページ（bls.gov/news.release/archives/cpi_08122026.htm）で確定値を確認してから方向性を決定すること。
 
 ---
 
