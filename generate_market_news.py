@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-09", "line": '・<b>2026-08-09</b>: 🧪 解説「<a href="guide-signal-lab-065.html" style="color:#0969da"><b>もみあい×ショート FWD N=157 全域マイナス確定</b></a>」公開'},
         {"date": "2026-08-12", "line": '・<b>2026-08-12</b>: 🧪 解説「<a href="guide-signal-lab-067.html" style="color:#0969da"><b>RSI売られすぎ逆張り買い 前向きN=178 CI下限ゼロ到達</b></a>」公開'},
         {"date": "2026-08-11", "line": '・<b>2026-08-11</b>: 📰 解説「<a href="guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html" style="color:#0969da"><b>【8/11】金（ゴールド）,430突破・2カ月ぶり高値</b></a>」公開'},
         {"date": "2026-08-10", "line": '・<b>2026-08-10</b>: 📰 解説「<a href="guide-news-2026-08-10-nikkei-surge-ai-semis-cpi-week.html" style="color:#0969da"><b>【8/10】日経平均1363円高で66,970円・AI半導体主導、今週はCPI週</b></a>」公開'},
