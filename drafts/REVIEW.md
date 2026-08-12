@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-08-12 | ✅ 公開完了（エスカレ復旧） | signal-lab-065 | 人間レビュー
+
+- 2026-08-09 🚩（コンプラ黒＝kinsho-v1免責3箇所欠落）の復旧完了。B-1免責＋G1〜G6軟化＋任意2件（#019/#029/#059リンク・tracker見出し重複）を適用
+- 追加監査で計15件修正（コンプラOpus 9件 → 独立Opus 5件 → 3巡目2件＝#059行の -0.650→-0.417 誤帰属修正・⛔反証脚注の両方向定義化）
+- verify: `--asof 2026-08-09T06:30:00+09:00` 凍結で 6/6 緑・EXIT=0（`SIGNAL_LAB_SKIP_DATE_CHECK=1`）
+- 監査: コンプラOpus グレー → 修正 → 独立Opus グレー → 修正 → 独立Opus(3巡目)コンプラ4観点白 → 独立Opus(4巡目) **白**
+- 公開: `finalize_signal_lab.py 065 2026-08-09` → `publish_article.py --allow-backdate`（復旧手順書§2 A案＝生成日 8/9 のまま）
+
+---
+
+## 2026-08-12 | ✅ 公開完了（エスカレ復旧・オラクル拡張） | signal-lab-067 | 人間レビュー
+
+- 08-11/08-12 の2日連続🚩（最終形＝コンプラ黒: IS/FWD混同）の構造修正。ループ原因＝claims に期間の次元が無く「（IS）」列へ全期間の数字を書いても緑で通る穴
+- **`signal_lab_verify.py` に `fired_before`/`fired_from` を人間として正式拡張**（制約を増やす方向・REG_DATE方式を claims で宣言可能に）
+- claims を22件へ再構築（IS/FWD分離・`asof: 2026-08-12T06:29:32+09:00` 内蔵）→ 22/22 緑・EXIT=0
+- 本文④⑤⑥の「IS」列を真のIS値へ全面書き換え（真のISではトレンド勾配なし＝FWD期間でのみ出現と明記・IS全体39.1%=損益分岐割れを30秒まとめ⑤で自己開示）・「ゼロ超え」→「ゼロに到達」・トラッカー重複行削除・日足残差12件注記
+- 監査: コンプラOpus グレー6件 → 修正 → 独立Opus **白**（QUALITY_RUBRIC 5観点 全✅）
+- 公開: `finalize_signal_lab.py 067 2026-08-12` → `publish_article.py`（当日付＝backdate不要）
+- 再発防止: `SIGNAL_LAB_SOP.md` に「claimsにasof必須」「IS/FWD比較はfired_before/fired_fromで期間宣言必須」を追記
+
+---
+
 ## 2026-08-12 | 🚩 ゲート赤（apply_brand_color.py不在・継続） | margin-trading | autopublish
 
 - **対象ファイル**: `guide-margin-trading.html`（昨日のautopublishが仕上げ済み・コミット済み・noindex除去・canonical整合）

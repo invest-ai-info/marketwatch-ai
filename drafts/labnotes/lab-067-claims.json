@@ -1,68 +1,135 @@
 {
   "article_id": "067",
+  "asof": "2026-08-12T06:29:32+09:00",
   "claims": [
     {
-      "label": "rsi_oversold_bounce 全体",
+      "label": "rsi_oversold_bounce 全体（全期間）",
       "filter": {"signal": "rsi_oversold_bounce"},
       "k": 149,
       "n": 311
     },
     {
-      "label": "rsi_oversold_bounce × group=index",
-      "filter": {"signal": "rsi_oversold_bounce", "group": "index"},
-      "k": 40,
-      "n": 64
+      "label": "rsi_oversold_bounce 全体 IS",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17"},
+      "k": 52,
+      "n": 133
     },
     {
-      "label": "rsi_oversold_bounce × group=jpy_fx",
-      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},
-      "k": 25,
+      "label": "rsi_oversold_bounce 全体 FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17"},
+      "k": 97,
+      "n": 178
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=上昇 IS",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "fired_before": "2026-06-17"},
+      "k": 9,
+      "n": 20
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=下降 IS",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降", "fired_before": "2026-06-17"},
+      "k": 24,
+      "n": 52
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=中立・もみあい IS",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい", "fired_before": "2026-06-17"},
+      "k": 18,
+      "n": 59
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=上昇 FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "fired_from": "2026-06-17"},
+      "k": 32,
+      "n": 43
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=下降 FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降", "fired_from": "2026-06-17"},
+      "k": 33,
+      "n": 82
+    },
+    {
+      "label": "rsi_oversold_bounce × trend=中立・もみあい FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい", "fired_from": "2026-06-17"},
+      "k": 32,
+      "n": 53
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=4h IS",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_before": "2026-06-17"},
+      "k": 19,
+      "n": 49
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=1h IS",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_before": "2026-06-17"},
+      "k": 33,
+      "n": 81
+    },
+    {
+      "label": "rsi_oversold_bounce × tf=4h FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_from": "2026-06-17"},
+      "k": 37,
       "n": 55
     },
     {
-      "label": "rsi_oversold_bounce × group=other_fx",
-      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},
-      "k": 38,
-      "n": 79
+      "label": "rsi_oversold_bounce × tf=1h FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_from": "2026-06-17"},
+      "k": 53,
+      "n": 114
     },
     {
-      "label": "rsi_oversold_bounce × group=metal",
-      "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},
-      "k": 19,
-      "n": 60
+      "label": "rsi_oversold_bounce × group=index IS",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index", "fired_before": "2026-06-17"},
+      "k": 20,
+      "n": 35
     },
     {
-      "label": "rsi_oversold_bounce × trend=上昇",
-      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},
-      "k": 41,
-      "n": 63
+      "label": "rsi_oversold_bounce × group=jpy_fx IS",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx", "fired_before": "2026-06-17"},
+      "k": 2,
+      "n": 20
     },
     {
-      "label": "rsi_oversold_bounce × trend=下降",
-      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},
-      "k": 57,
-      "n": 134
+      "label": "rsi_oversold_bounce × group=other_fx IS",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx", "fired_before": "2026-06-17"},
+      "k": 14,
+      "n": 23
     },
     {
-      "label": "rsi_oversold_bounce × trend=中立・もみあい",
-      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},
-      "k": 50,
-      "n": 112
+      "label": "rsi_oversold_bounce × group=metal IS",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal", "fired_before": "2026-06-17"},
+      "k": 4,
+      "n": 31
     },
     {
-      "label": "rsi_oversold_bounce × tf=1h",
-      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},
-      "k": 86,
-      "n": 195
+      "label": "rsi_oversold_bounce × group=index FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index", "fired_from": "2026-06-17"},
+      "k": 20,
+      "n": 29
     },
     {
-      "label": "rsi_oversold_bounce × tf=4h",
-      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"},
-      "k": 56,
-      "n": 104
+      "label": "rsi_oversold_bounce × group=jpy_fx FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx", "fired_from": "2026-06-17"},
+      "k": 23,
+      "n": 35
     },
     {
-      "label": "bb_lower_touch 全体（比較対照）",
+      "label": "rsi_oversold_bounce × group=other_fx FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx", "fired_from": "2026-06-17"},
+      "k": 24,
+      "n": 56
+    },
+    {
+      "label": "rsi_oversold_bounce × group=metal FWD",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal", "fired_from": "2026-06-17"},
+      "k": 15,
+      "n": 29
+    },
+    {
+      "label": "bb_lower_touch 全体（比較対照・全期間）",
       "filter": {"signal": "bb_lower_touch"},
       "k": 268,
       "n": 596

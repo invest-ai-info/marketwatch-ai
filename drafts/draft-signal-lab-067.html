@@ -7,8 +7,8 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-  <title>AIシグナル研究日誌 #67｜RSI売られすぎ逆張り買い 前向きN=178・期待値CIが遂にゼロ超え - MarketWatch AI</title>
-  <meta name="description" content="rsi_oversold_bounce（RSI30以下逆張り買い）の前向きN=178・平均R+0.272・CI[+0.00~+0.54]。上昇トレンドで74%・4H足67%と逆転現象。研究日誌第67回。">
+  <title>AIシグナル研究日誌 #67｜RSI売られすぎ逆張り買い 前向きN=178・期待値CI下限がゼロに到達 - MarketWatch AI</title>
+  <meta name="description" content="rsi_oversold_bounce（RSI30以下逆張り買い）の前向きN=178・平均R+0.272・CI[+0.00~+0.54]。上昇トレンドで74%・4H足67%と逆転現象。登録前(IS)は損益分岐を下回る点も本文で併記。研究日誌第67回。">
   <meta name="keywords" content="AIシグナル,RSI,売られすぎ,逆張り,rsi_oversold_bounce,勝率,前向き検証,研究日誌,トレンドフィルタ">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
   <script>
@@ -231,7 +231,7 @@ window.addEventListener('resize',mark);
       ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
     </div>
 
-    <h1>🧪 AIシグナル研究日誌 #67<br><small style="font-size:.65em;color:#57606a;font-weight:400">RSI売られすぎ逆張り買い 前向きN=178——期待値CIが遂にゼロ超え、上昇トレンドで74%・4H逆転の解剖</small></h1>
+    <h1>🧪 AIシグナル研究日誌 #67<br><small style="font-size:.65em;color:#57606a;font-weight:400">RSI売られすぎ逆張り買い 前向きN=178——期待値CI下限がゼロに到達、前向きで上昇トレンド74%・4H逆転の解剖</small></h1>
     <div class="meta-line">
       カテゴリ：AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月12日 &nbsp;|&nbsp; 読了：約12分
     </div>
@@ -242,10 +242,11 @@ window.addEventListener('resize',mark);
     <!-- 30秒まとめ -->
     <div class="info-box">
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
-      ① 前向きN=178・平均R<strong>+0.272</strong>・CI[<strong>+0.00〜+0.54</strong>]（cluster補正）——CI下限が遂にゼロ到達<br>
-      ② 上昇トレンドで<strong>65.1%</strong>（41/63）vs 下降 42.5%——「逆張りでもトレンドに乗る」が大きな差を生む<br>
-      ③ 4H足: <strong>53.8%</strong>（56/104）vs 1H足: <strong>44.1%</strong>（86/195）——#015の全体4H劣勢と逆転（rsi_oversold_bounce限定）<br>
-      ④ 前向き時系列: 初期は低調、後半2区間で安定（詳細は本文）
+      ① 前向きN=178・平均R<strong>+0.272</strong>・CI[<strong>+0.00〜+0.54</strong>]（cluster補正）——CI下限がゼロに到達（プラス圏は未達）<br>
+      ② 前向きでは上昇トレンドで<strong>74.4%</strong>（32/43）vs 下降 40.2%——登録前（IS）にはこの差は無く、前向き期間で出現<br>
+      ③ 前向きの4H足: <strong>67.3%</strong>（37/55）vs 1H足: <strong>46.5%</strong>（53/114）——#015の全体4H劣勢と逆転（rsi_oversold_bounce限定）<br>
+      ④ 前向き時系列: 初期は低調、後半2区間で安定（詳細は本文）<br>
+      ⑤ 本まとめは前向き（FWD）中心の抜粋です。全期間および登録前（IS）の成績（ISは損益分岐を下回る）は本文③をご覧ください
     </div>
 
     <div class="toc">
@@ -254,9 +255,9 @@ window.addEventListener('resize',mark);
         <li><a href="#hypothesis">今回の仮説——RSI売られすぎで「反発」は起きるか</a></li>
         <li><a href="#method">シグナルの発火条件と検証設計</a></li>
         <li><a href="#result-overall">結果①：全期間の成績——N=311でほぼ5割</a></li>
-        <li><a href="#result-trend">結果②：トレンドフィルタが最大の差異要因</a></li>
-        <li><a href="#result-tf">結果③：4H足がFWDで逆転——#015との対比</a></li>
-        <li><a href="#result-group">結果④：グループ別——indexとjpy_fxが好調</a></li>
+        <li><a href="#result-trend">結果②：トレンド別内訳——上昇優位は前向き期間で出現</a></li>
+        <li><a href="#result-tf">結果③：4H足はFWDで1H足を上回る——#015との対比</a></li>
+        <li><a href="#result-group">結果④：グループ別——前向きではindexとjpy_fxが高め</a></li>
         <li><a href="#result-temporal">結果⑤：前向き時系列——初期軟調→後半安定</a></li>
         <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
         <li><a href="#next">次回に向けて</a></li>
@@ -268,10 +269,10 @@ window.addEventListener('resize',mark);
 
     <p>RSI（相対力指数）が30以下になると「売られすぎ」と呼ばれ、多くのチャート入門書では「買いサイン」として紹介されています。しかし実際に統計的エッジがあるかどうかは、データで検証しなければわかりません。</p>
 
-    <p>rsi_oversold_bounce は「RSIが30以下に落ち込み、そこから反転上昇したタイミング」でロングを発火させるシグナルです。AIシグナルシステムは 2026年6月17日にこの仮説を<strong>前向き追跡対象</strong>として登録し、リアルタイムで勝率・期待値を集計し続けています。</p>
+    <p>rsi_oversold_bounce は「RSIが30以下に落ち込み、そこから反転上昇したタイミング」でロングを発火させるシグナルです。AIシグナルシステムは 2026年6月16日にこの仮説を<strong>前向き追跡対象</strong>として登録し、翌6月17日以降に発火したシグナルを前向き（FWD）として、リアルタイムで勝率・期待値を集計し続けています。</p>
 
     <div class="warning-box">
-      前向き（FWD）データは仮説登録日以降の out-of-sample データです。全期間（IS）データとは意味が異なり、FWD のほうが「本当に機能するか」の信頼性が高い指標になります。
+      前向き（FWD）データは仮説登録日の翌日以降に発火した out-of-sample データです。登録前のデータ（IS：in-sample）とは独立の集合で、FWD のほうが「本当に機能するか」の信頼性が高い指標になります。本記事では IS と FWD を分けて表記し、両方を合わせたものは「全期間」と呼びます。
     </div>
 
     <!-- SVGチャート図解：RSI売られすぎシグナルの概念図 -->
@@ -329,7 +330,7 @@ window.addEventListener('resize',mark);
         <!-- シグナル垂直ライン -->
         <line x1="355" y1="40" x2="355" y2="265" stroke="#1a7f37" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.6"/>
       </svg>
-      <p class="chart-caption">RSIが30以下の過売りゾーンに入り、そこから上向きに転じた時点（↑矢印）でロングシグナルが発火する。上昇トレンド時は反発の勢いが維持されやすい（FWD 74%）。</p>
+      <p class="chart-caption">RSIが30以下の過売りゾーンに入り、そこから上向きに転じた時点（↑矢印）でロングシグナルが発火する。前向き集計では上昇トレンド時に高い勝率が観測された（FWD 74.4%・N=43。将来の成績を示すものではありません）。</p>
     </div>
 
     <!-- ======================== -->
@@ -343,7 +344,7 @@ window.addEventListener('resize',mark);
       <li>損益確定: SL=エントリー−ATR×1.5 / TP1=+ATR×2.0 / TP2=+ATR×3.0（TP1でR換算+1.33R、TP2=+2.0R）</li>
     </ul>
 
-    <p>前向き追跡の登録日は <strong>2026年6月17日</strong>。それ以前のデータは「仮説発見時点の全期間（IS）」として区別し、登録後のデータを <strong>前向き（FWD）</strong> として独立評価します。期待値 E(R) の信頼区間はトレード日でグループ化した cluster-corrected SE を使用しているため、同日に複数シグナルが発火した場合でも独立標本として過大評価しません。</p>
+    <p>前向き追跡の登録日は <strong>2026年6月16日</strong>（前向き集計は翌6月17日以降の発火分）。登録前のデータは <strong>in-sample（IS）</strong> として区別し、登録後のデータを <strong>前向き（FWD）</strong> として独立評価します。期待値 E(R) の信頼区間はトレード日でグループ化した cluster-corrected SE を使用しているため、同日に複数シグナルが発火した場合でも独立標本として過大評価しません。</p>
 
     <!-- ======================== -->
     <h2 id="result-overall">③ 結果①：全期間の成績——N=311でほぼ5割</h2>
@@ -352,57 +353,61 @@ window.addEventListener('resize',mark);
 
     <table>
       <tr><th>条件</th><th>勝数/総数</th><th>勝率</th><th>95% Wilson CI</th></tr>
-      <tr><td>全体</td><td>149/311</td><td>47.9%</td><td>[43.1%〜52.8%]</td></tr>
-      <tr><td>比較: bb_lower_touch</td><td>268/596</td><td>45.0%</td><td>[41.0%〜49.0%]</td></tr>
+      <tr><td>全体（全期間＝IS+FWD）</td><td>149/311</td><td>47.9%</td><td>[43.1%〜52.8%]</td></tr>
+      <tr><td>　内訳: 登録前（IS）</td><td>52/133</td><td>39.1%</td><td>[31.2%〜47.6%]</td></tr>
+      <tr><td>　内訳: 前向き（FWD）</td><td>97/178</td><td><strong>54.5%</strong></td><td>[47.2%〜61.6%]</td></tr>
+      <tr><td>比較: bb_lower_touch（全期間）</td><td>268/596</td><td>45.0%</td><td>[41.0%〜49.0%]</td></tr>
     </table>
 
-    <p>全期間では <strong>47.9%</strong>（149/311）と損益分岐点（43%）を上回りますが、95% CI は 43〜52% とやや広く、これだけで「優位」とは言い切れません。比較対照として示した bb_lower_touch（ボリンジャー下限タッチ）は 45.0%（268/596）で、rsi_oversold_bounce は若干上回る水準です。</p>
+    <p>全期間では <strong>47.9%</strong>（149/311）と損益分岐点（43%）を上回りますが、内訳を見ると様相が異なります。登録前（IS）は <strong>39.1%</strong>（52/133）と損益分岐を下回っており、全期間のプラス寄りは主に前向き期間の <strong>54.5%</strong>（97/178）によるものです。つまりこの仮説は「IS段階では有望に見えなかったが、前向きで成績が上がった」珍しいパターンです（逆のパターン＝ISで有望・FWDで崩壊は #065 で確認済み）。比較対照として示した bb_lower_touch（ボリンジャー下限タッチ）は全期間 45.0%（268/596）です。</p>
 
     <div class="info-box">
       <strong>損益分岐とは？</strong> SL=−1.0R, TP1=+1.33R のとき、1勝1敗で±0になる勝率 = 1/(1+1.33) ≈ 43%。これを超えると期待値がプラスになります。
     </div>
 
     <!-- ======================== -->
-    <h2 id="result-trend">④ 結果②：トレンドフィルタが最大の差異要因</h2>
+    <h2 id="result-trend">④ 結果②：トレンド別内訳——上昇優位は前向き期間で出現</h2>
 
-    <p>全期間（IS）での上位足トレンド別内訳を見ると、顕著な差があります。</p>
+    <p>まず登録前（IS）の上位足トレンド別内訳です。</p>
 
     <table>
       <tr><th>上位足トレンド</th><th>勝数/総数（IS）</th><th>勝率</th><th>95% Wilson CI</th></tr>
-      <tr><td>上昇</td><td>41/63</td><td><strong>65.1%</strong></td><td>[52.5%〜75.8%]</td></tr>
-      <tr><td>下降</td><td>57/134</td><td>42.5%</td><td>[34.3%〜51.2%]</td></tr>
-      <tr><td>中立・もみあい</td><td>50/112</td><td>44.6%</td><td>[35.6%〜54.0%]</td></tr>
+      <tr><td>上昇</td><td>9/20</td><td>45.0%</td><td>[25.8%〜65.8%]</td></tr>
+      <tr><td>下降</td><td>24/52</td><td>46.2%</td><td>[33.3%〜59.5%]</td></tr>
+      <tr><td>中立・もみあい</td><td>18/59</td><td>30.5%</td><td>[20.3%〜43.1%]</td></tr>
     </table>
 
-    <p>上昇トレンドでは <strong>65.1%</strong> と圧倒的に高く、CI下限も52.5%と損益分岐を大きく上回ります。一方、下降トレンド・中立では損益分岐付近に留まります。</p>
+    <p>IS では上昇 45.0%・下降 46.2% とほぼ並んでおり、<strong>トレンドによる明確な勾配は見られません</strong>（各区分とも小サンプルで CI が広い点にも注意）。</p>
 
-    <p>前向き（FWD）でも同様の構造が確認されています。</p>
+    <p>これに対し、独立した集合である前向き（FWD）では、トレンド別の差がはっきり現れました。</p>
 
     <table>
-      <tr><th>上位足トレンド</th><th>勝数/総数（FWD）</th><th>勝率（FWD）</th></tr>
-      <tr><td>上昇</td><td>32/43</td><td><strong>74.4%</strong></td></tr>
-      <tr><td>中立</td><td>32/53</td><td>60.4%</td></tr>
-      <tr><td>下降</td><td>33/82</td><td>40.2%</td></tr>
+      <tr><th>上位足トレンド</th><th>勝数/総数（FWD）</th><th>勝率（FWD）</th><th>95% Wilson CI</th></tr>
+      <tr><td>上昇</td><td>32/43</td><td><strong>74.4%</strong></td><td>[59.8%〜85.1%]</td></tr>
+      <tr><td>中立・もみあい</td><td>32/53</td><td>60.4%</td><td>[46.9%〜72.4%]</td></tr>
+      <tr><td>下降</td><td>33/82</td><td>40.2%</td><td>[30.3%〜51.1%]</td></tr>
     </table>
 
-    <p>「逆張り」という名前にもかかわらず、<strong>上昇トレンドで逆張りするほうが成績が良い</strong>という逆説的な結果です。これは「一時的な押し目」と「本格的な下降転換」の違いを上位足トレンドが選別していると解釈できます。</p>
+    <p>「逆張り」という名前にもかかわらず、前向き集計では<strong>上昇トレンド中の発火のほうが高い勝率</strong>という逆説的な結果でした。ただしこの勾配は IS では見られず前向き期間で初めて出現したもので、上昇 N=43 という標本サイズを考えると、偶然の可能性もまだ否定できません。</p>
 
     <div class="positive-box">
-      <strong>解釈：上昇トレンド中の RSI30 タッチは「押し目買い」に近い</strong>。上昇トレンドが継続している中で短期的に売られすぎになったケースは、反発力が強くなる傾向があります。
+      <strong>作業仮説：上昇トレンド中の RSI30 タッチは、下降局面での発火とは性質が異なる可能性がある</strong>。上昇トレンドが継続している中で短期的に売られすぎになったケースは反発しやすい——という解釈は可能ですが、現時点では前向き期間だけで観測された傾向であり、仮説の域を出ません。本記事は特定の売買手法・売買タイミングを推奨するものではありません。
     </div>
 
     <!-- ======================== -->
-    <h2 id="result-tf">⑤ 結果③：4H足がFWDで逆転——#015との対比</h2>
+    <h2 id="result-tf">⑤ 結果③：4H足はFWDで1H足を上回る——#015との対比</h2>
 
     <p>時間足別の比較です。</p>
 
     <table>
       <tr><th>時間足</th><th>勝率（IS）</th><th>勝率（FWD）</th><th>FWD 総数</th></tr>
-      <tr><td>4H足</td><td>53.8%（56/104）</td><td><strong>67.3%</strong>（37/55）</td><td>55</td></tr>
-      <tr><td>1H足</td><td>44.1%（86/195）</td><td>46.5%（53/114）</td><td>114</td></tr>
+      <tr><td>4H足</td><td>38.8%（19/49）</td><td><strong>67.3%</strong>（37/55）</td><td>55</td></tr>
+      <tr><td>1H足</td><td>40.7%（33/81）</td><td>46.5%（53/114）</td><td>114</td></tr>
     </table>
 
-    <p><a href="../guide-signal-lab-015.html">第15回（#015）</a>では「4H足ロングは全体的に弱い（35.2%）」という発見がありました。ところが rsi_oversold_bounce に限定すると、FWDで4H足が <strong>67.3%</strong> と1H足（46.5%）を大きく上回る逆転現象が起きています。</p>
+    <p>※ このほか日足（1D）の発火が全期間で12件ありますが、少数のため表は 1H/4H のみ掲載しています（全体Nとの差分は日足分です）。</p>
+
+    <p><a href="../guide-signal-lab-015.html">第15回（#015）</a>では「4H足ロングは全体的に弱い（35.2%）」という発見がありました。rsi_oversold_bounce でも IS では 4H 38.8% と 1H 40.7% をわずかに下回っていました。ところが FWD では4H足が <strong>67.3%</strong> と1H足（46.5%）を大きく上回る逆転現象が起きています。なお #015 の数字は全シグナルを横断した別集計時点のもので、本記事の前向き4H（本シグナル限定・2026年6月17日以降）とは母集団も期間も異なります。直接比較はできない参考対比としてお読みください。</p>
 
     <p>考えられる理由としては、4H足の RSI は短期の雑音が除去されており、「本当に売られすぎ」の状態がより正確に検出されている可能性があります。1H足では「ちょっとだけ売られすぎ」のケースが混入しやすい構造かもしれません。</p>
 
@@ -411,26 +416,27 @@ window.addEventListener('resize',mark);
     </div>
 
     <!-- ======================== -->
-    <h2 id="result-group">⑥ 結果④：グループ別——indexとjpy_fxが好調</h2>
+    <h2 id="result-group">⑥ 結果④：グループ別——前向きではindexとjpy_fxが高め</h2>
 
-    <p>銘柄グループ別の全期間（IS）成績と前向き（FWD）成績の比較です。</p>
+    <p>銘柄グループ別の登録前（IS）成績と前向き（FWD）成績の比較です。</p>
 
     <table>
       <tr><th>グループ</th><th>勝率（IS）</th><th>FWD 勝率</th><th>FWD 総数</th></tr>
-      <tr><td>index（株価指数）</td><td>62.5%（40/64）</td><td><strong>69.0%</strong>（20/29）</td><td>29</td></tr>
-      <tr><td>jpy_fx（円クロス）</td><td>45.5%（25/55）</td><td><strong>65.7%</strong>（23/35）</td><td>35</td></tr>
-      <tr><td>other_fx（その他FX）</td><td>48.1%（38/79）</td><td>42.9%（24/56）</td><td>56</td></tr>
-      <tr><td>metal（金属）</td><td>31.7%（19/60）</td><td>（集計中）</td><td>—</td></tr>
+      <tr><td>index（株価指数）</td><td>57.1%（20/35）</td><td><strong>69.0%</strong>（20/29）</td><td>29</td></tr>
+      <tr><td>jpy_fx（円クロス）</td><td>10.0%（2/20）</td><td><strong>65.7%</strong>（23/35）</td><td>35</td></tr>
+      <tr><td>other_fx（その他FX）</td><td>60.9%（14/23）</td><td>42.9%（24/56）</td><td>56</td></tr>
+      <tr><td>metal（金属）</td><td>12.9%（4/31）</td><td>51.7%（15/29）</td><td>29</td></tr>
     </table>
+    <p>※ 本表は発火件数の多い主要グループのみの抜粋です。掲載外グループの発火分は含まれておらず、各列の合計は全体Nと一致しません。</p>
 
-    <p>全期間で最も高かった index グループは FWD でも <strong>69.0%</strong> と一貫して好調です。注目は jpy_fx（円クロス）で、IS では 45.5% に過ぎなかったのが FWD では <strong>65.7%</strong> に急上昇しています。</p>
+    <p>index グループは IS 57.1%・FWD <strong>69.0%</strong> と両集合で相対的に高めです。jpy_fx（円クロス）は IS 10.0%（2/20）から FWD <strong>65.7%</strong> へ、metal（金属）も IS 12.9% から FWD 51.7% へ大きく変化した一方、other_fx は IS 60.9% から FWD 42.9% へ逆に低下しており、<strong>IS と FWD で順位が入れ替わるグループが複数あります</strong>。</p>
 
-    <p>これは 2026年に入ってからの円安修正局面・日銀政策転換期を背景に、RSI 過売りからの反発パターンが円クロスで機能しやすくなった可能性があります。一方、metal（金属）は IS で 31.7% と低く、金・銀での逆張り買いは苦手であることが示唆されます。</p>
+    <p>jpy_fx の変化は 2026年に入ってからの円安修正局面・日銀政策転換期を背景に、RSI 過売りからの反発パターンが円クロスで機能しやすくなった可能性がありますが、IS 側の N=20〜31 という小ささを踏まえると、グループ別の数値は振れが大きく、確定的なことは言えません。</p>
 
     <!-- ======================== -->
     <h2 id="result-temporal">⑦ 結果⑤：前向き時系列——初期軟調→後半安定</h2>
 
-    <p>前向き期間（2026年6月17日〜）を3分割して時系列の変化を確認します。</p>
+    <p>前向き期間（2026年6月17日〜）を件数で3等分（59/59/60件）して時系列の変化を確認します（表の日付は各分位に実際に含まれる発火日の範囲です）。</p>
 
     <table>
       <tr><th>期間</th><th>勝数/総数</th><th>勝率</th><th>平均R</th></tr>
@@ -439,12 +445,12 @@ window.addEventListener('resize',mark);
       <tr><td>FWD-3（7/21〜8/11）</td><td>39/60</td><td><strong>65.0%</strong></td><td>+0.775</td></tr>
     </table>
 
-    <p>初期（6/17〜6/25）は 33.9% と損益分岐を大幅に下回りました。これは登録直後に市場環境が逆張りに不利だったことが主因と考えられます（VIX急上昇局面・強いトレンド相場が続いていた時期）。その後は2区間連続で 64〜65% と安定しており、<strong>回復後の継続性は確認できています</strong>。</p>
+    <p>初期（6/17〜6/25）は 33.9% と損益分岐を大幅に下回りました。これは登録直後に市場環境が逆張りに不利だったことが主因と考えられます（VIX急上昇局面・強いトレンド相場が続いていた時期）。その後の2区間は 64〜65% で推移しました（過去の観測であり、将来の継続を保証するものではありません）。</p>
 
     <p>前向き全体（N=178）の平均R+0.272・CI[+0.00〜+0.54] は、cluster-corrected SEによる保守的な推定でCI下限がゼロに到達した状態です。昇格条件（N≥80かつCI下限>0が2回連続）の達成まで、引き続き観測が必要です。</p>
 
     <div class="info-box">
-      <strong>前回との比較：</strong> N=168（#063 時点）のCI = [−0.058, +0.474] → N=178（今回）の CI = [+0.00, +0.54]。下限が初めてゼロを超えました。
+      <strong>前回との比較：</strong> N=168（#063 時点）のCI = [−0.058, +0.474] → N=178（今回）の CI = [+0.00, +0.54]。下限が初めてゼロに到達しました（プラス圏には未達＝昇格条件「CI下限&gt;0」はまだ満たしていません）。
     </div>
 
     <!-- ======================== -->
@@ -457,7 +463,6 @@ window.addEventListener('resize',mark);
 <tr><td><strong>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</strong></td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td><strong>平均R +0.27 CI[+0.00~+0.54]（97/178・勝率54%）</strong></td><td>🟡蓄積中</td></tr>
 <tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.03~+0.12]（780/1737・勝率45%）</td><td>🟡蓄積中</td></tr>
 <tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.03~+0.14]（623/1373・勝率45%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.22 CI[+0.07~+0.38]（87/166・勝率52%）</td><td>✅昇格</td></tr>
 <tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.01~+0.22]（621/1312・勝率47%）</td><td>⛔反証</td></tr>
 <tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.24 CI[+0.09~+0.39]（243/458・勝率53%）</td><td>⛔反証</td></tr>
 <tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.29 CI[-0.49~-0.10]（51/168・勝率30%）</td><td>⛔反証</td></tr>
@@ -471,10 +476,10 @@ window.addEventListener('resize',mark);
     <p>今回の検証で確認できたことをまとめます。</p>
 
     <ul>
-      <li><strong>CI下限ゼロ到達</strong>（N=178）——昇格条件の一歩手前まで来ました</li>
-      <li><strong>上昇トレンドフィルタが有効</strong>——FWD 74% vs 下降 40% の格差は大きい</li>
-      <li><strong>4H足逆転現象</strong>——全体では4H劣勢（#015）なのに、この仮説では4H優勢</li>
-      <li><strong>jpy_fx の構造変化?</strong>——IS 45.5% → FWD 65.7%（N=35、小サンプル注意）</li>
+      <li><strong>CI下限ゼロ到達</strong>（N=178）——昇格条件（CI下限&gt;0）は未達（下限がゼロに接した段階）</li>
+      <li><strong>上昇トレンド優位は前向き期間で出現</strong>——FWD 74% vs 下降 40%。ただし IS には無い勾配＝偶然の可能性も残る</li>
+      <li><strong>4H足逆転現象</strong>——全体では4H劣勢（#015）なのに、この仮説の FWD では4H優勢</li>
+      <li><strong>jpy_fx の構造変化?</strong>——IS 10.0%（2/20）→ FWD 65.7%（23/35）。ともに小サンプル注意</li>
       <li><strong>初期軟調は市場環境由来の可能性</strong>——VIX急上昇期 vs 安定化後で大きく異なる</li>
     </ul>
 
@@ -515,7 +520,7 @@ window.addEventListener('resize',mark);
 
 <footer>
   <p><a href="../index.html">MarketWatch AI</a> | <a href="../guides.html">解説記事一覧</a> | <a href="../about.html">サイトについて</a> | <a href="../privacy.html">プライバシーポリシー</a></p>
-  <p style="margin-top:8px">© 2024-2026 MarketWatch AI. 本サイトは情報提供を目的としており、投資助言ではありません。</p>
+  <p style="margin-top:8px" data-disclaimer="kinsho-v1">© 2024-2026 MarketWatch AI. 本サイトは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。</p>
 </footer>
 
 <script>
