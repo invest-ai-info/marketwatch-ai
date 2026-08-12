@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-08-13 | 🚩 ゲート赤／ゲート不具合疑い | margin-trading | autopublish
+
+- **対象ファイル**: `drafts/draft-margin-trading.html`（キュー#33）
+- **終了判定**: 当日のautopublish記録なし → 処理継続
+- **仕上げ**: noindex除去・日付更新（8/5→8/13）・数値WebSearch確認済み（委託保証金率30%・最低30万・維持率20%・制度信用6ヵ月）
+- **固定ゲート4本**: `git checkout origin/main` で確定版に戻し完了
+- **決定論ゲート**: 🔴 RED（EXIT=1）`check_guide_draft.py` が `ModuleNotFoundError: No module named 'apply_brand_color'` で失敗
+- **原因**: `apply_brand_color.py` がGitHubリポジトリに存在しない（`mcp__github__get_file_contents` でも404）。ゲートの検査9「ブランドカラー検査」が依存するモジュールが欠落しているクラウド環境では常にゲート赤になる。
+- **対応**: 固定ゲートは編集禁止のため公開せずエスカレ。`apply_brand_color.py` をリポジトリに追加するかゲート検査9の例外処理を修正する必要あり（人間のローカルセッションで対応）。
+- **公開**: なし（エスカレ）
+
+---
+
 ## 2026-08-13 | ✅ 公開完了（自動公開） | signal-lab-068 | signal-lab-daily
 
 - **対象ファイル**: `guide-signal-lab-068.html`（`drafts/draft-signal-lab-068.html` → 公開）
