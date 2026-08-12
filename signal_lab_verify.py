@@ -64,7 +64,8 @@ ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", 
                        "reversal_long", "blocked", "tier", "env", "regime",
                        "rsi_band", "ma_pos", "macd_side",  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
                        "news",  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
-                       "regime4"}  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
+                       "regime4",  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
+                       "fired_before", "fired_from"}  # 🆕 2026-08-12 IS/FWD分離（#067・人間による正式拡張＝下記コメント）
 # ⚠️ `regime` と `regime4` は**別次元**（同じものにしない）。
 #   regime  = ライブの risk_regime（RISK_ON 等）＝エンジンが発火時に記録する既存の語彙。
 #   regime4 = 固定オラクル `research/_regime_state.py`（Q27で凍結・MA200×60日実現ボラの750日分位×
@@ -215,6 +216,22 @@ def match(d, f):
     if "regime4" in f and d.get("regime4") != f["regime4"]:
         # 🆕 2026-07-27 レジーム4状態（Q34・記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
         return False
+    # 🆕 2026-08-12 IS/FWD分離（#067ループの構造修正・人間による正式拡張）:
+    #   fired_before / fired_from = 発火時刻 fired_at の境界。値は "YYYY-MM-DD"（JST日付）。
+    #   fired_at の ISO 文字列（+09:00）との辞書順比較＝#063 labnote の REG_DATE 方式を踏襲。
+    #   IS = {"fired_before": "<REG_DATE翌日>"} / FWD = {"fired_from": "<REG_DATE翌日>"} で
+    #   全期間を厳密に2分割できる（登録日=トラッカー registered_at、前向きは翌日以降の発火）。
+    #   背景＝claims に期間の次元が無く「（IS）」ラベルの列を全期間の数字で埋めても緑で通った
+    #   （2026-08-12 #067 コンプラ黒）。期間を claims で宣言可能にして塞ぐ。
+    #   fired_at が無いレコードはどちらにもマッチしない（blocked/tier/env と同じ意味論）。
+    if "fired_before" in f:
+        fa = d.get("fired_at")
+        if not fa or not (fa < f["fired_before"]):
+            return False
+    if "fired_from" in f:
+        fa = d.get("fired_at")
+        if not fa or not (fa >= f["fired_from"]):
+            return False
     return True
 
 

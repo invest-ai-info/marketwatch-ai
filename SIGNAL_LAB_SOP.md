@@ -40,7 +40,9 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD>
 - 主張する数値は claims.json に入れ、**既存の自動公開ゲート**を通す：
   `signal_lab_verify.py draft.html claims.json`（exit0＝緑）→ Opusコンプラ（黒/グレー/白）→ **品質レーン（`QUALITY_RUBRIC.md` の5観点・白の後に実行）** → 公開（`finalize_signal_lab.py`）。
   - 品質レーン＝機械チェック/コンプラで拾えない「中身の読みやすさ・明快さ」だけを採点。⚠️要改善は**表現・構成・補足1文のみ**で自己修正→再採点（**数値・SVG・claims.json・主張は絶対に不変**）。❌（直すと中身が変わる）は公開せず `drafts/REVIEW.md` に「🚩要人間レビュー（品質：観点#）」でエスカレ。観点①「30秒まとめ」の存在は `signal_lab_verify.py` が既に強制済＝重複チェックしない。詳細は `QUALITY_RUBRIC.md`。
+- ⚠️ **claims.json には必ず `"asof": "<生成時刻 ISO8601・JST>"` を書く**（例 `"asof": "2026-08-09T06:30:00+09:00"`）。k/n は生成時点のログで計算されるが `signal_lab_verify.py` は実行時のライブログで再計算するため、日中に決済が増えるだけで後日の再検証が RED になる（実測: 凍結なし 0/6 緑 → 凍結ありで 6/6 緑）。asof があれば `--asof` 無しで再現できる。**JST日付は記事が名乗る公開日と一致必須**。詳細＝`SIGLAB_ESCALATION_RECOVERY.md`
 - ⚠️ claims の filter は `signal_lab_verify.py` の `ALLOWED_FILTER_KEYS` の範囲のみ。新次元が要る仮説は**verify.pyを人間が拡張するまでエスカレ**（勝手に増やさない）。
+- 🆕 **IS/FWD を比較する記事は、期間を claims で宣言する**（2026-08-12 拡張・#067コンプラ黒の再発防止）: `fired_before` / `fired_from`（値は `"YYYY-MM-DD"`・発火時刻の境界）で IS＝`{"fired_before":"<登録日翌日>"}`・FWD＝`{"fired_from":"<登録日翌日>"}` に分離した claim を両方入れ、本文の「（IS）」「（FWD）」列は必ず対応する claim の数字を使う。登録日はトラッカーの `registered_at`（前向き集計は翌日以降の発火）。**全期間の数字に「（IS）」とラベルするのは景表法上の優良誤認＝黒**（#067 2026-08-12 の実例）。
 
 ## 昇格基準（コード化済み・`signal_lab_tracker.py`／2026-06-16 **期待値ベース**に更新）
 - 指標＝**期待値（1トレード平均R）**。**SL=-1R / TP1=+1.33R / TP2=+2R**。勝率でなく「実際に儲かるか」で判定（勝率45%でも期待値プラスはあり得る）。
