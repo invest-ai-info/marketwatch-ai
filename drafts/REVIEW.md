@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-08-14 | 🚩 ゲート赤（apply_brand_color.py不在・3日連続） | margin-trading | autopublish
+
+- **対象ファイル**: `guide-margin-trading.html`（キュー#33・2026-08-12に仕上げ済み）
+- **終了判定**: 当日の autopublish 公開記録なし → 処理継続
+- **固定ゲート4本**: `git checkout origin/main -- check_guide_draft.py signal_lab_verify.py check_site_consistency.py publish_article.py` → EXIT=0
+- **決定論ゲート**: 🔴 RED（EXIT=1）
+  - エラー: `ブランドカラー検査を実行できない (ModuleNotFoundError: No module named 'apply_brand_color')`
+- **原因**: `apply_brand_color.py` がリポジトリに存在しない（2026-08-12以降同じ）。check_guide_draft.py 検査9が依存するモジュール不在のためクラウド環境で常にゲート赤。
+- **対応**: 固定ゲート編集禁止のため公開不可。3日連続同一原因でエスカレ。
+  - 恒久対策が必要: `apply_brand_color.py` をリポジトリに追加 **または** `check_guide_draft.py` 検査9の不在時処理を人間のローカルセッションで修正（固定ゲート改修は人間専任）
+  - 次の autopublish 対象: #33 margin-trading が解消するまで同ファイルを再試行し続ける（キュー順の規則上スキップ不可）
+- **公開**: なし（エスカレ）
+
+---
+
 ## 2026-08-14 | ✅ 公開完了 | signal-lab-069 | signal-lab-daily
 
 - **公開URL**: `guide-signal-lab-069.html`（AIシグナル研究日誌 #069）
