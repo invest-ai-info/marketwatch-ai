@@ -126,4 +126,5 @@ SYNC_FILES = [
     "guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html",
     "guide-signal-lab-068.html",
     "guide-news-2026-08-13-us-cpi-topix-record.html",
+    "guide-signal-lab-069.html",
 ]
