@@ -1,14 +1,14 @@
-# 💡 記事ネタ候補（基準日 2026-08-13 JST）
+# 💡 記事ネタ候補（基準日 2026-08-14 JST）
 
 > 編集用内部メモ。サイト公開時は CLAUDE.md の 8 ステップ＋compliance-reviewer 監査が必須。
 
 ---
 
-## 📰 当日トレンド要約（2026-08-09〜13）
+## 📰 当日トレンド要約（2026-08-12〜14）
 
-- **9月FOMC利下げ確率85%に急上昇**：8月12日発表の米7月CPI（前年比＋2.5%）が予想（2.6%）を下回り、CME FedWatchによる9月17〜18日会合での利下げ確率が85%まで上昇。「利上げ再開シナリオ」から「いつ・どれだけ下げるか」へ市場の問いが完全に転換した。ドル円・日本株への波及を読む需要が急増している。
-- **エヌビディア 8/26決算まであと13日**：7月SOX指数▲20.6%急落後の最初の大型決算が接近。四半期売上予想 $91.8B（前年比約2倍）が確認されるか、AI需要のピーク論が台頭するかの分岐点として個人投資家の検索ボリュームが急増中。
-- **米中間選挙（2026年11月）が投資テーマとして浮上**：投票まで約80日。「中間選挙年は秋に株価軟調、翌年+16.5%」の歴史的アノマリーが証券各社メディアで注目され始め、日本個人投資家向けの解説需要が高まっている。
+- **エヌビディア8/26決算まで12日**：AI需要の継続を確認するか「ピーク論」が台頭するかの分岐点。Q2予想売上 $91〜95B（前年比約2倍）。59/61社がBuy評価で目標株価コンセンサスは$302。個人投資家の関心が急上昇中。
+- **日本版暗号資産ETF法が7月15日に成立**：金融商品取引法改正で暗号資産を「金融商品」として再分類。2027年度施行・2028年1月から税率20%（現行最大55%）へ。ビットコインETFの国内上場への道が開き、NISAとの組み合わせも視野に入ってきた。
+- **金8月急反発・米7月CPI3.4%の構図**：金（ゴールド）は7月中旬の$4,000割れ底から$4,399まで約1ヶ月で+9.9%反発。米CPI前年比3.4%（コア2.5%=2021年来最低）でFED利上げ圧力が低下し、ドル安→金買いの構図が鮮明になっている。
 
 ---
 
@@ -16,145 +16,147 @@
 
 ---
 
-### 1. 【推し①】9月FOMC利下げ確率85%：CPI2.5%後の新シナリオとドル円・日本株への影響
+### 1. 【推し①・最高緊急度】エヌビディア8/26決算12日前完全プレビュー：個人投資家が見るべき4つのポイント
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | 9月FOMC利下げはほぼ確実？ CPI2.5%が示す次の一手と日本株・ドル円のシナリオ |
-| **概要（30字）** | 米CPI2.5%受けFOMC利下げ確率85%。円・日本株への波及を解説 |
-| **なぜ今か** | 8月12日CPI発表直後で検索ボリュームが最も高い。9月17〜18日FOMC会合まで約5週間、「先手を打つ」投資家向けの旬の解説タイミング。既存のFOMC記事（7月会合速報・「タカ派3票」）は利上げリスク目線だったが、CPI発表でシナリオが完全転換したため差別化できる |
-| **検索意図** | 「FOMC 利下げ 2026 9月」「CPI 2.5 ドル円 影響」「米国利下げ 日本株 どうなる」 |
+| **仮タイトル（SEO）** | エヌビディア決算2026年8月26日：売上$91〜95B予想の読み方と日本株・半導体ETFへの波及 |
+| **概要（30字）** | NVDA 8/26決算12日前。AI需要・Blackwell・次期ガイダンスを解説 |
+| **なぜ今か** | 8月26日の決算発表まで残り12日。「SOX▲20%急落後の最初の大型決算」として日本の個人投資家も無関係ではない（日経AI半導体株・信越化学・アドバンテスト等への波及）。今週中に公開できれば最大の検索量を取れる。 |
+| **検索意図** | 「エヌビディア 決算 2026 8月」「NVDA 決算 予想」「半導体 ETF 決算前 どうなる」 |
+| **カテゴリ** | マーケット戦略 / 個別銘柄解説（決算プレビュー） |
+| **難易度** | 中 |
+| **信頼度** | HIGH（Motley Fool・intellectia.ai・ad-hoc-news.de・finbold 複数ソース一致） |
+| **差別化** | 既存 `guide-auto-us_cpi-2026-08-12.html` / `guide-btc-crash-2026-06.html` とは重複なし。日本株への波及（アドバンテスト・信越・SOXX連動ETF）を軸にした解説。 |
+| **ソース** | [Motley Fool「Nvidia Stock Soar After Aug.26」](https://www.fool.com/investing/2026/08/11/prediction-nvidia-stock-is-going-soar-after-aug-26/)（2026/08/11）、[intellectia.ai「NVDA Earnings August 2026」](https://intellectia.ai/blog/nvda-stock-earnings-august-2026)（2026/08/13）、[finbold「Nvidia stock price prediction after August 26」](https://finbold.com/nvidia-stock-price-prediction-after-august-26-earnings/)（2026/08/13）、[ad-hoc-news「Nvidia stock climbs ahead of earnings」](https://www.ad-hoc-news.de/boerse/news/corporate-news/nvidia-stock-climbs-ahead-of-august-earnings-as-ai-guidance-points-to-91/69946578)（2026/08/13） |
+
+---
+
+### 2. 【推し②・新テーマ】日本版ビットコインETF法2026：金融商品取引法改正で個人投資家の暗号資産はどう変わるか
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル（SEO）** | 日本の暗号資産が金融商品へ：2026年7月成立の法改正でビットコインETF・税率20%・NISAはどうなる？ |
+| **概要（30字）** | FIEA改正で暗号資産を金融商品化。税率55%→20%・ETF解禁の道筋 |
+| **なぜ今か** | 2026年7月15日に参院本会議で可決・成立したばかり（約1ヶ月前）。2027年度施行・2028年税改正という実施タイムラインが明確化し「いつ・どう対応すべきか」の解説需要が急増。国内ガイドはまだ少なく、空白テーマとして先行可能。 |
+| **検索意図** | 「日本 ビットコインETF 2026」「暗号資産 税率 20% いつから」「仮想通貨 NISA 使える」「FIEA 改正 個人投資家」 |
+| **カテゴリ** | 投資指標解説 / 税金・制度解説 |
+| **難易度** | 小〜中 |
+| **信頼度** | HIGH（Coindesk・TechTimes・cryptonomist・cryptobriefing 4社以上一致） |
+| **差別化** | 既存の `guide-btc-crash-2026-06.html` / `guide-btc-crash-2026-05-19.html` は価格急落の解説。本記事は「制度・税制・NISA連携」の切り口で完全差別化。 |
+| **ソース** | [Coindesk「Japan reclassifies crypto as financial asset」](https://www.coindesk.com/policy/2026/07/15/japan-reclassifies-crypto-as-a-financial-asset-paves-way-for-tax-cuts)（2026/07/15）、[TechTimes「Japan Passes Crypto Law: ETFs Could Arrive Before Tax Drop」](https://www.techtimes.com/articles/320705/20260716/japan-passes-crypto-law-etfs-could-arrive-before-tax-rate-drops-20-percent.htm)（2026/07/16）、[cryptonomist「Japan's Bitcoin ETF Could Unlock $18.4B Market by 2028」](https://en.cryptonomist.ch/2026/07/24/japans-bitcoin-etf-regulatory-pathway/)（2026/07/24）、[cryptobriefing「Japan reclassifies crypto, slashes tax to 20%」](https://cryptobriefing.com/japan-reclassifies-crypto-financial-assets/)（2026/07/15） |
+
+---
+
+### 3. 【推し③】9月FOMC利下げシナリオ：CPI3.4%後のドル円・日本株の読み方
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル（SEO）** | 9月FOMCで利下げはある？ CPI3.4%・コア2.5%が示すシナリオとドル円・日本株への影響 |
+| **概要（30字）** | 米CPI3.4%でFED利上げ圧力後退。9月17-18日FOMC前の戦略を解説 |
+| **なぜ今か** | 8月12日発表の米7月CPI（前年比3.4%、コア2.5%=2021年3月来最低）を受け、市場はFEDの次の一手を「利上げか利下げか」から「いつ利下げか」へと問いを転換。9月17〜18日FOMC会合まで約5週間、「先手を打つ」個人投資家向けの旬の解説タイミング。 |
+| **検索意図** | 「FOMC 9月 利下げ 2026」「CPI 3.4% 日本株 どうなる」「米国 金利 ドル円 影響」 |
 | **カテゴリ** | マーケット戦略 / 投資指標解説 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（BLS.gov公式・CME FedWatch・CNBC 2026/08/11・intellectia.ai 複数ソース一致） |
-| **ソース** | [BLS「Consumer Price Index - July 2026」](https://www.bls.gov/news.release/cpi.nr0.htm)（2026/08/12）、[CNBC「Inflation report Wednesday」](https://www.cnbc.com/2026/08/11/an-inflation-report-wednesday-should-be-a-big-deal-for-the-fed-heres-what-to-expect.html)（2026/08/11）、[CME FedWatch「September FOMC Probability」](https://centralbank.watch/federal-reserve/)（2026/08/12）、[intellectia.ai「Fed Rate Cut Expectations September 2026」](https://intellectia.ai/blog/fed-rate-cut-expectations-september-2026) |
-| **既存記事との差分** | `guide-auto-fomc-2026-07-29.html`（7月会合速報）・`guide-auto-us_cpi-2026-08-12.html`（CPI速報）はいずれも単発事実報道。本候補は「利下げが実現した場合のシナリオ分岐（25bps vs 50bps）×ドル円・Nikkei・債券の連動性」を体系解説する前向き記事として差別化 |
+| **信頼度** | HIGH（BLS.gov公式・CNBC・babypips 複数ソース一致。実数値確認済） |
+| **差別化** | `guide-auto-us_cpi-2026-08-12.html` は速報。本記事は「シナリオ分析・ドル円への影響・日本株戦略」の深掘り解説として差別化。 |
+| **ソース** | [BLS「Consumer Price Index – July 2026」](https://www.bls.gov/news.release/cpi.nr0.htm)（2026/08/12）、[babypips「US CPI July 2026 Results」](https://www.babypips.com/news/headline-us-cpi-july-2026-results-fed-rate-decision-2026-08-12)（2026/08/12）、[CNBC「CPI inflation report July 2026」](https://www.cnbc.com/2026/08/12/cpi-inflation-report-july-2026.html)（2026/08/12）、[Fox Business「July CPI inflation: consumer price growth cooled」](https://www.foxbusiness.com/economy/cpi-inflation-july-2026)（2026/08/12） |
 
 ---
 
-### 2. 【推し②】エヌビディア 8月26日決算プレビュー：$91.8B予想で問われるAI需要の持続力
+### 4. 金（ゴールド）8月急反発の背景と個人投資家の投資手段比較：ETF・現物・先物
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | エヌビディア（NVDA）2026年Q2決算はいつ？ 売上$91.8B予想・注目指標を個人投資家向けに解説 |
-| **概要（30字）** | 8/26決算・売上$91.8B予想。AI需要継続か転換点かを解説 |
-| **なぜ今か** | 決算発表まで13日（8月26日）。直前に検索ボリュームが急増する典型的タイミング。7月のSOX▲20.6%急落後の"回復トレード"文脈とも合致し、「どの数字を見るか」の実務ガイドの需要が高い |
-| **検索意図** | 「エヌビディア 決算 2026 8月」「NVDA 株価 いつ発表」「AI株 Q2 業績」 |
-| **カテゴリ** | 個別銘柄解説 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（マネックス証券・SBI証券・みんかぶ米国株・財経新聞が一致） |
-| **ソース** | [マネックス証券「8月決算予定銘柄」](https://info.monex.co.jp/news/2026/20260728_02.html)（2026/07/28）、[SBI証券「AI・半導体注目の中小型株」](https://go.sbisec.co.jp/media/report/dom_em_weekly/dom_em_weekly_260805.html)（2026/08/05）、[財経新聞「SOX 7月▲20.6%下落・NVDA決算前の注目点」](https://www.zaikei.co.jp/article/20260803/864187.html)（2026/08/03） |
-| **既存記事との差分** | 既存のAI関連記事は背景解説中心。本候補は「NVDAのQ2決算で何を確認するか：売上・GPUデータセンター比率・次四半期ガイダンス・Blackwellスケジュール」に絞った直前プレビュー。決算後の結果解説記事と合わせて2本体制も可 |
-
----
-
-### 3. 【推し③】米中間選挙（2026年11月）アノマリー：秋安・翌年高の歴史パターンと個人投資家の備え
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | 米中間選挙（2026年11月）と株価の関係——「秋安・翌年高」アノマリーを日米両市場で解説 |
-| **概要（30字）** | 中間選挙年は株価軟調、翌年+16.5%の歴史パターンを解説 |
-| **なぜ今か** | 選挙本番まで約80日（11月3日）。証券各社がアノマリー解説記事を出し始めた段階で、個人投資家が「秋にどう動くか」を検索し始めるタイミング。既存記事に中間選挙テーマは皆無で完全な空白領域 |
-| **検索意図** | 「米中間選挙 2026 株価 影響」「中間選挙 アノマリー 秋安」「米国株 11月 どうなる」 |
-| **カテゴリ** | マーケット戦略 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（ForbesJapan・野村証券・マネックス証券・楽読が複数独立して言及） |
-| **ソース** | [ForbesJapan「中間選挙の年、米国株は荒れる——秋の下落は絶好の買い場」](https://forbesjapan.com/articles/detail/99194)、[野村証券「2026年は米中間選挙に注目 経験則では秋に株価上昇」](https://www.nomura.co.jp/wealthstyle/article/0536/)、[マネックス証券「中間選挙アノマリーにどう向き合うか」](https://media.monex.co.jp/articles/-/28335)、[bloomo「2026年中間選挙は株価にどう影響する？」](https://bloomo.co.jp/learn/library/article/midterm_election_anomaly/) |
-| **既存記事との差分** | 政治関連では`guide-honebuto-2026.html`（骨太方針）・`political-feed.html`（速報）があるが、「選挙アノマリー×投資戦略」という切り口は未着手。日米両市場への波及を数値でまとめる解説記事として独立性が高い |
-
----
-
-### 4. 日銀1.25%時代の個人マネー術：住宅ローン・預金金利・インフレ連動資産の見直し方
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | 日銀が1.25%へ利上げ——住宅ローン・普通預金・インフレ対策、個人投資家がすべき3つの見直し |
-| **概要（30字）** | 日銀1.25%利上げ後の家計への実質影響と対策を解説 |
-| **なぜ今か** | 7月31日の日銀利上げを受け、銀行各行が8月から住宅ローン変動金利・普通預金金利を改定中。「自分の返済額はいくら増える？」「普通預金に置いておくのは損か？」という生活密着型の検索が急増するタイミング |
-| **検索意図** | 「日銀利上げ 1.25 住宅ローン 影響」「変動金利 2026年8月 上がる」「預金金利 上がった どうする」 |
-| **カテゴリ** | 投資指標解説 / パーソナルファイナンス |
-| **難易度** | 小 |
-| **信頼度** | HIGH（日銀総裁会見PDF 2026/08/03公開・野村証券「追加利上げ予想」が複数ソースを確認） |
-| **ソース** | [日本銀行「2026年8月3日 総裁記者会見（PDF）」](https://www.boj.or.jp/about/press/kaiken_2026/kk260803a.pdf)（2026/08/03）、[野村証券「日銀の追加利上げ予想 2026年2回・2027年1回を新たなメインシナリオに」](https://www.nomura.co.jp/wealthstyle/article/0571/)、[みんかぶFX「日本・日銀政策金利」](https://fx.minkabu.jp/indicators/JP-BOJ) |
-| **既存記事との差分** | `guide-auto-boj-2026-07-31.html`（市場向け速報）に対し、本候補は「家計・個人の資産配分への実質的な影響と対応策」に絞った生活密着型の解説。金利上昇時に検討すべき債券・MMF・インフレ連動商品についても言及できる |
-
----
-
-### 5. SOX（半導体指数）7月▲20%急落の構造：AI株はバブル崩壊か、押し目か
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | SOX（半導体指数）が7月に▲20%下落——AI株調整の本質と長期投資家の判断軸 |
-| **概要（30字）** | SOX7月▲20.6%。バブル崩壊か押し目かを指標で解説 |
-| **なぜ今か** | NVDA決算（8/26）を前に「持つべきか売るべきか」の判断を求める読者が増加中。7月急落の「なぜ」を体系的に解説した記事はまだ少ない |
-| **検索意図** | 「半導体株 下落 2026 理由」「SOX 今後 見通し」「AI株 調整 長期投資 どうする」 |
-| **カテゴリ** | マーケット戦略 / 個別銘柄解説 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（財経新聞・SBI証券・楽天証券が複数独立して言及） |
-| **ソース** | [財経新聞「SOX 7月▲20.6%下落」](https://www.zaikei.co.jp/article/20260803/864187.html)（2026/08/03）、[SBI証券「AI・半導体関連日本株8選」](https://go.sbisec.co.jp/media/report/dom_em_weekly/dom_em_weekly_260805.html)（2026/08/05）、[楽天証券「2026年後半 AI半導体の押し目買いと循環物色」](https://media.rakuten-sec.net/articles/-/52844) |
-| **既存記事との差分** | 既存の速報記事は特定日付の事実報道。本候補は「SOX急落の構造的要因（AI支出サイクル・在庫・金利感応度・SOX対SP500バリュエーション乖離）と長期視点での判断軸」を体系整理するハウツー記事。`guide-silicon-cycle.html`（半導体サイクル解説）とは"現在地の診断"として差別化 |
-
----
-
-### 6. 新NISA成長投資枠で狙う高配当ETF：利回り・コスト・分散の選び方ガイド（2026年版）
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | 新NISA成長投資枠で高配当ETFを選ぶには？ 利回り・信託報酬・分散の3基準で徹底比較 |
-| **概要（30字）** | NISA成長投資枠で高配当ETFを選ぶ3基準を数値で解説 |
-| **なぜ今か** | 金利上昇局面で「インカム（配当）」への注目が高まり、NISA枠でのETF購入検索が増加中。diamond.co.jp・SBI証券の8月ランキングでも高配当系ファンドが上位入り |
-| **検索意図** | 「新NISA 高配当ETF 2026 おすすめ」「VYM vs HDV NISA どっち」「配当ETF 毎月分配 NISA 税金」 |
-| **カテゴリ** | 投資指標解説 / 新NISA |
-| **難易度** | 小 |
-| **信頼度** | HIGH（ダイヤモンドZAi・behavior.co.jp・SBI証券の複数メディアが一致して話題） |
-| **ソース** | [ダイヤモンドZAi「NISAで人気の投資信託ランキング 2026年8月」](https://www.diamond.co.jp/zai/articles/-/305)（2026/08）、[ほけんのAI「新NISA×高配当ETF 月1万円の元本早見表」](https://www.behavior.co.jp/blog/high-dividend-etf-nisa-guide)（2026/08更新）、[kabutan「2026年NISAおすすめ銘柄10選」](https://kabutan.jp/hikaku/nisa_recommended-brand/) |
-| **既存記事との差分** | `guide-nisa.html`（制度解説）・`guide-nisa-ranking.html`（旧ランキング）と差別化。本候補は「ETFを比較する際に見るべき数値（分配利回り・実質コスト・ベンチマーク・為替ヘッジ有無）の読み方」に絞ったハウツー。配当課税とNISAの相性（外国株配当の外国税はNISA内でも取られる点）も含める |
-
----
-
-### 7. インドETF入門：米中対立下で注目が集まるアジアの"第三の投資先"
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | インドETFとは？ 米中対立のデリスキングで日本人が注目し始めた理由と選び方 |
-| **概要（30字）** | 米中対立でインド株ETFが台頭。特徴・リスク・選び方を解説 |
-| **なぜ今か** | 米中対立の長期化・サプライチェーン再編（China+1）でインド市場が「代替投資先」として浮上。NISA成長投資枠で購入可能なインドETFが増え、検索ボリュームが増加傾向にある |
-| **検索意図** | 「インドETF NISA 2026」「インド株 どうやって買う」「NEXT FUNDS インドETF 信託報酬」 |
-| **カテゴリ** | 投資指標解説 / グローバル投資 |
+| **仮タイトル（SEO）** | 金2026年8月急反発+9.9%：背景を読み解く＋ETF・現物・先物で選ぶ投資手段ガイド |
+| **概要（30字）** | 7月底打ち後に9.9%反発の金。ETF・現物・先物の違いを平易に解説 |
+| **なぜ今か** | 金は1月の史上最高値$5,354→7月中旬$4,000割れへ急落後、8月に$4,399まで反発（約1ヶ月で+9.9%）。CPI発表でFED利上げ圧力が低下→ドル安→金買いの構図が鮮明になり「金を買いたいが何で買えばいい？」の検索が増加。 |
+| **検索意図** | 「金 ETF 買い方 2026」「ゴールド 現物 vs ETF」「金投資 個人 おすすめ」「ゴールド 今が買い時？」 |
+| **カテゴリ** | 投資指標解説 / 商品（コモディティ）解説 |
 | **難易度** | 小〜中 |
-| **信頼度** | MID（市場トレンドからの推測が含まれる。具体的なETF比較データで補強推奨） |
-| **ソース** | [SBI証券「2026年後半 割安感の強い新興国銘柄」](https://go.sbisec.co.jp/media/report/dom_em_weekly/dom_em_weekly_260624.html)（2026/06）、[PayPay証券「8月の注目点と参考銘柄」](https://media.paypay-sec.co.jp/cat5/f250818)（2026/08） |
-| **既存記事との差分** | アジア新興国への地域解説記事は既存ガイドに空白あり。米国・日本偏重のポートフォリオに対する分散テーマとして独立性が高く、常緑記事として長期流入が見込める |
+| **信頼度** | HIGH（Motley Fool・Fortune・goldenarkreserve.com 複数ソース。価格確認済） |
+| **差別化** | `guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html` は速報。本記事は「投資手段比較（GLD/IAU ETF・田中貴金属現物・金先物）」の常緑解説として差別化（前ファイルのメモで「次回候補」と明記済）。 |
+| **ソース** | [Motley Fool「Gold Is Up Sharply in August. What's Driving It Higher?」](https://www.fool.com/investing/2026/08/13/gold-is-up-sharply-in-august-whats-driving-it-high/)（2026/08/13）、[Fortune「Current price of gold: August 4, 2026」](https://fortune.com/article/current-price-of-gold-08-04-2026/)（2026/08/04）、[goldenarkreserve「Gold Market Analysis: Early August 2026」](https://goldenarkreserve.com/blog/gold-market-analysis-early-august-2026-price-policy-demand/)（2026/08/10） |
 
 ---
 
-## 📊 難易度・緊急度マトリクス
+### 5. ホルムズ海峡封鎖2026年夏：原油$82の長期化シナリオと日本経済・投資への影響
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル（SEO）** | ホルムズ海峡封鎖が長期化：原油$82の背景と日本経済・原油ETF投資の考え方2026年8月版 |
+| **概要（30字）** | 米イラン対立でホルムズ通過量が21.6→4.9Mb/dに急減。日本への影響 |
+| **なぜ今か** | 7月末に新たな交戦が再発し、IEA・OPECともに2026年需要見通しを大幅下方修正（8月最新版）。原油は$82で下押しされ、「なぜ地政学リスクがあるのに原油高にならないか」という疑問が個人投資家の間で急増している。6月の速報（guide-news-2026-06-20）から状況が大きく変化。 |
+| **検索意図** | 「ホルムズ海峡 封鎖 影響 日本」「原油 2026 見通し」「原油ETF 買い時」 |
+| **カテゴリ** | マーケット戦略 / 地政学解説 |
+| **難易度** | 中 |
+| **信頼度** | HIGH（IEA Oil Market Report August 2026・EIA STEO・kavout.com 複数機関一致） |
+| **差別化** | `guide-news-2026-06-20-iran-oil-hormuz.html` は6月速報。本記事は「7月末の交戦再発後の最新動向＋供給過剰×地政学リスクのパラドックス解説＋日本への影響」として更新版差別化。 |
+| **ソース** | [IEA「Oil Market Report – August 2026」](https://www.iea.org/reports/oil-market-report-august-2026)（2026/08）、[EIA STEO「Global oil markets」](https://www.eia.gov/outlooks/steo/report/global_oil.php)（2026/08）、[kavout「OPEC+ Production Boost Strips Oil's Geopolitical Cushion」](https://www.kavout.com/market-lens/opec-production-boost-strips-oil-s-geopolitical-cushion-accelerating-2026-supply-glut)（2026/08）、[Fortune「Current price of oil as of August 11, 2026」](https://fortune.com/article/price-of-oil-08-11-2026/)（2026/08/11） |
+
+---
+
+### 6. 日経平均68,000円台・個人投資家の7割強気でも「8月後半安の法則」は本物か
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル（SEO）** | 日経平均68,000円と2026年後半戦：個人投資家7割が強気でも8月後半に弱い理由と対策 |
+| **概要（30字）** | 日経68,490円・年初来+33%も8月後半は歴史的弱月。季節性と戦略を解説 |
+| **なぜ今か** | 日経平均は8月13日に68,490円を記録し年初来約33%上昇。一方、TOPIX過去20〜30年平均で8月は年間最弱月とされ、マネクリ等で「前半高・後半安」への警戒記事が出始めている。個人投資家アンケートでは7割超が「さらなる上昇」を期待しており、過信リスクを冷静に解説できる記事が空いている。 |
+| **検索意図** | 「日経平均 2026年後半 どうなる」「8月 株 弱い 理由」「日本株 夏 戦略」 |
+| **カテゴリ** | マーケット戦略 |
+| **難易度** | 小 |
+| **信頼度** | HIGH（マネックスメディア・prtimes調査・Trading Economics 複数ソース。数値確認済） |
+| **差別化** | `guide-summer-doldrums.html` は「夏枯れ相場」の一般解説。本記事は「2026年の具体的状況（68,000円・+33%・7割強気）＋季節アノマリーデータ＋後半の具体的対策」として現在進行形の差別化。 |
+| **ソース** | [マネクリ「8月は前半高・後半安となる可能性」](https://media.monex.co.jp/articles/-/29885)（2026/08）、[prtimes「個人投資家の7割弱が日経平均さらなる上昇を展望」](https://prtimes.jp/main/html/rd/p/000000041.000120005.html)（2026/07）、[Trading Economics「Japan Stock Market Index（JP225）」](https://tradingeconomics.com/japan/stock-market)（2026/08/13時点） |
+
+---
+
+### 7. 日米関税合意後のセクター別影響：自動車・半導体・食品、日本株はどう動く？
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル（SEO）** | 日米関税15%合意後の影響を整理：自動車・半導体・食品セクター別に読む日本株2026年版 |
+| **概要（30字）** | 米が日本輸入品に15%関税。Toyota・TSMC・食品各セクターへの影響を整理 |
+| **なぜ今か** | 2025年7月の日米貿易枠組み合意で日本輸入品に一律15%関税が設定（当初提示より低下も2024年比は上昇）。2026年2月最高裁判決でIEEPA関税が違憲→代替関税措置（10%サーチャージ）に移行しており、「実際にどのセクターが今影響を受けているのか」の整理記事は手薄。 |
+| **検索意図** | 「日米関税 日本株 影響」「トヨタ 関税 2026」「半導体 関税 輸出」「日本株 セクター 2026 どこが強い」 |
+| **カテゴリ** | マーケット戦略 / 個別セクター解説 |
+| **難易度** | 中 |
+| **信頼度** | MID（Hudson Institute・Congress.gov CRS・fxstreet 複数ソース。数値は当初合意の公開資料から） |
+| **差別化** | `guide-us-china-summit-2026-05.html` / `guide-honebuto-2026.html` は別テーマ。日米貿易合意の「セクター別整理」は既存記事に存在しない。 |
+| **ソース** | [Hudson Institute「Implications of the US-Japan Trade Deal」](https://www.hudson.org/trade/largest-trade-deal-history-implications-us-japan-trade-deal-william-chou)（2026/07）、[Congress.gov CRS「U.S.-Japan Trade Agreements and Tariff Negotiations」](https://www.congress.gov/crs-product/IF11120)（2026）、[fxstreet「USD/JPY as US-Japan trade talks progress」](https://www.fxstreet.com/news/usd-jpy-dips-as-attention-shifts-to-us-japan-trade-talks-202507221328)（2026/07/22） |
+
+---
+
+## 📊 優先度一覧（エディター向けサマリー）
 
 | # | タイトル要約 | 信頼度 | 難易度 | 緊急度 |
 |---|---|---|---|---|
-| 1 | 9月FOMC利下げ確率85%シナリオ解説 | HIGH | 中 | 🔴 高（CPI発表直後・9月FOMC前） |
-| 2 | エヌビディア 8/26決算プレビュー | HIGH | 中 | 🔴 高（8/26前に要公開） |
-| 3 | 米中間選挙アノマリーと投資戦略 | HIGH | 中 | 🟡 中（11月まで約80日） |
-| 4 | 日銀1.25%後の家計マネー術 | HIGH | 小 | 🟡 中（8月から変動金利改定ラッシュ） |
-| 5 | SOX急落後の長期投資判断軸 | HIGH | 中 | 🟡 中（NVDA決算前） |
-| 6 | 新NISA×高配当ETF選び方 | HIGH | 小 | 🟡 中（常緑+金利上昇で旬） |
-| 7 | インドETF入門 | MID | 小〜中 | 🟢 低（常緑・空白テーマ） |
+| 1 | エヌビディア8/26決算12日前プレビュー | HIGH | 中 | 🔴 最高（8/26まで12日） |
+| 2 | 日本版暗号資産ETF法解説（7/15成立） | HIGH | 小〜中 | 🟡 中（新テーマ・独自性高） |
+| 3 | 9月FOMCシナリオとドル円・日本株 | HIGH | 中 | 🔴 高（9/17-18 FOMC前・5週） |
+| 4 | 金8月急反発＋投資手段比較 | HIGH | 小〜中 | 🟡 中（速報との差別化あり） |
+| 5 | ホルムズ封鎖2026夏版・原油と日本 | HIGH | 中 | 🟡 中（6月記事から状況更新） |
+| 6 | 日経平均8月後半アノマリーと戦略 | HIGH | 小 | 🟡 中（8月後半接近） |
+| 7 | 日米関税合意セクター別影響整理 | MID | 中 | 🟢 低（常緑・空白テーマ） |
+
+**特に推しのネタ（本日）**: ①（決算12日前・期限付き）、②（7/15法成立・新テーマ・空白）、③（CPI後・FOMC前・旬継続）
 
 ---
 
 ## ✅ 重複確認メモ（除外した主な既出テーマ）
 
-- `guide-auto-us_cpi-2026-08-12.html`：CPI速報記事あり → 除外（1は「利下げシナリオ分析」として差別化）
+- `guide-auto-us_cpi-2026-08-12.html`：CPI速報記事あり → 3は「9月FOMCシナリオ分析」として差別化
 - `guide-auto-us_jobs-2026-08-07.html`：雇用統計速報あり → 除外
-- `guide-auto-boj-2026-07-31.html`：BOJ会合速報あり → 除外（4は「家計への実質影響」として差別化）
-- `guide-auto-fomc-2026-07-29.html`：7月FOMC速報あり → 除外（1は「9月利下げシナリオ」として差別化）
+- `guide-auto-boj-2026-07-31.html`：BOJ会合速報あり → 除外（「日銀1%後の家計マネー術」は別機会へ）
+- `guide-auto-fomc-2026-07-29.html`：7月FOMC速報あり → 除外（3は「9月利下げシナリオ」として差別化）
 - `guide-jpy-coordinated-intervention-2026-08.html`：協調介入の事実報道あり → 除外
-- `guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html`：金速報あり → 「金の投資手段比較（ETF・現物・先物）」は次回候補
-- `guide-summer-doldrums.html`：夏枯れ解説あり → 除外
-- `guide-nisa.html` / `guide-nisa-ranking.html`：NISA制度・旧ランキングあり → 6は「選び方ハウツー」で差別化
+- `guide-news-2026-08-11-gold-4430-central-bank-cpi-eve.html`：金速報あり → 4は「投資手段比較」で差別化（前回メモで「次回候補」と明記済）
+- `guide-summer-doldrums.html`：夏枯れ一般解説あり → 6は「2026年現状+後半戦略」で差別化
+- `guide-btc-crash-2026-06.html` / `guide-btc-crash-2026-05-19.html`：BTC急落解説あり → 2は「法改正・税制・ETF」で完全差別化
+- `guide-news-2026-06-20-iran-oil-hormuz.html`：6月時点の速報あり → 5は「7月末再発後の最新状況」で差別化
 - `guide-yen-carry-trade.html`：円キャリー解説あり → 除外
-- `guide-silicon-cycle.html`：半導体サイクル解説あり → 5は「SOX急落の現状分析」として差別化
-- `guide-news-2026-08-09-trump-polysilicon-tariff-solar-chips.html`：ポリシリコン関税速報あり → 除外
+- `guide-us-china-summit-2026-05.html`：米中サミット記事あり → 7は「日米関税」で別テーマ
 
 ---
 
