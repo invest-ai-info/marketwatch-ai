@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-08-13 | ℹ️ 全topic下書き済み | autodraft-article | スキップ
+
+- **基準日**: 2026-08-13（UTC 20:31 → JST 2026-08-14 05:31）
+- **判定**: キュー39件（#1〜#39）すべてが「公開済み」または「draft-*.html 存在」のいずれかに該当。
+  - 公開済み（guides.html に掲載）: #1〜#32 のうち32件 + 一部 #6/#7/#5/#14（cognitive-biases / diversification / compounding-drawdown / etf-vs-mutual-fund 等）
+  - 下書きのみ（未公開）: #33 margin-trading / #34 commodity-basics / #35 correlation-risk / #36 ipo-basics / #37 reit-basics / #38 market-hours / #39 sunk-cost
+- **アクション**: 新規生成なし（空コミットなし）。仕様どおりのスキップ。
+- **次の対応**: キューに新 topic を補充するか、未公開7件（#33〜#39）を autopublish ゲートへ投入することで再開可能。
+- **残作業**: なし（routineは次回起動時も同様にスキップ）
+
+---
+
 ## 2026-08-13 | 🚩 ゲート赤／ゲート不具合疑い | margin-trading | autopublish
 
 - **対象ファイル**: `drafts/draft-margin-trading.html`（キュー#33）
