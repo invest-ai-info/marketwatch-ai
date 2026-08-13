@@ -221,12 +221,12 @@
 
     <h1>🧪 AIシグナル研究日誌 #69<br>RSI売られすぎ逆張り買い — FWD N=179 で4H足67.3%・昇格条件接近を確認</h1>
     <div class="meta-line">
-      公開：2026年8月（下書き中） ／ 検証シリーズ #069 ／ 読了 約7分 ／ カテゴリ：前向きトラッカー追跡
+      公開：2026年8月14日 ／ 検証シリーズ #069 ／ 読了 約7分 ／ カテゴリ：前向きトラッカー追跡
     </div>
 
     <!-- 30秒まとめ -->
     <div class="summary-box">
-      <h3>⚡ 30秒まとめ</h3>
+      <h3>⚡ 30秒でわかる</h3>
       <div class="summary-item"><span>対象シグナル</span><span class="summary-val">rsi_oversold_bounce（RSI売られすぎ逆張り買い）</span></div>
       <div class="summary-item"><span>IS期間 勝率（N=133）</span><span class="summary-val red">39.1%（52/133）※損益分岐43%割れ</span></div>
       <div class="summary-item"><span>FWD期間 勝率（N=179）</span><span class="summary-val green">54.7%（98/179）CI[47.4%,61.9%]</span></div>
@@ -468,7 +468,7 @@
         <text x="60" y="90" class="s-label-sm" text-anchor="end">58%</text>
         <!-- 43%ライン -->
         <line x1="70" y1="133" x2="470" y2="133" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="6 4"/>
-        <text x="475" y="137" class="s-label-y" font-size="11">損益分岐43%</text>
+        <text x="460" y="137" class="s-label-y" text-anchor="end" font-size="11">損益分岐43%</text>
 
         <!-- 1H足バー (47.0%) -->
         <rect x="110" y="111" width="100" height="109" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5" rx="4"/>
@@ -519,15 +519,16 @@
       6月25日以降（FWD-2）から64.4%へ急改善し、後期（FWD-3）でも65.6%と安定しています。
     </p>
     <div class="positive-box">
-      <strong>FWD-2以降の安定が重要:</strong> 直近2ヶ月間（N=120）の勝率は64.4〜65.6%で安定しており、
-      「初期不振は過渡期ノイズ」という解釈が成立します。FWD全体では+15.6pp改善ですが、
-      「最新期の実力」は65%前後と見るのが適切かもしれません。
+      <strong>FWD-2以降の推移:</strong> 直近2ヶ月間（N=120）の勝率は64.4〜65.6%で推移しており、
+      「初期不振は過渡期のノイズだった」という解釈も可能ですが、確定した結論ではありません。FWD全体では+15.6pp改善しています。<br>
+      なお、この3分割は結果を見たあとに行った事後的な区切りであり、区切り位置を変えれば数値も変わります。直近期の勝率が今後も同水準で続くことを示すものではありません。
     </div>
 
     <!-- §7 探索的発見 -->
     <h2 id="exploratory">§7 探索的発見（トレンド・グループ別）</h2>
     <div class="warning-box">
-      以下は探索的発見です。signals-log の <code>trend</code>・<code>group</code> フィールドがこのシグナルには記録されていないため、<code>trend_alignment.higher_tf_trend</code>（上位足トレンド）とティッカーからのグループ推定を使っています。正式な verify.py 検証対象外ですのでご注意ください。
+      以下は探索的発見です。signals-log の <code>trend</code>・<code>group</code> フィールドがこのシグナルには記録されていないため、<code>trend_alignment.higher_tf_trend</code>（上位足トレンド）とティッカーからのグループ推定を使っています。正式な verify.py 検証対象外ですのでご注意ください。<br>
+      また、以下はトレンド3区分・グループ6区分という複数の切り口を事後的に比較したもので、多重比較の補正を行っていません。区分ごとのサンプルが小さい行（BTC・原油など）はとくに偶然の偏りが出やすく、数値をそのまま将来の傾向とみなすことはできません。
     </div>
 
     <h3>トレンド別（上位足トレンドを使用）</h3>
@@ -593,6 +594,9 @@
       昇格の厳密な判定として、<strong>tracker は依然 🟡蓄積中</strong>を維持しています（自動昇格には至っていません）。
       次のチェックポイントでCI下限が引き続きプラスを維持すれば、正式昇格となります。
     </p>
+    <div class="warning-box">
+      1回目（#067）のcluster補正後CI下限は +0.00 で、宣言基準である「CI下限 &gt; 0」を厳密には満たしていません。したがって現状は「基準を2回連続で達成した」状態ではなく、「2回続けて基準の近傍にある」という段階です。今後の集計で基準を下回る可能性も残ります。
+    </div>
 
     <!-- §9 前向きトラッカー定点観測 -->
     <h2 id="tracker">§9 前向きトラッカー定点観測（2026-08-14）</h2>
@@ -613,6 +617,7 @@
 <tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.33 CI[+0.07~+0.59]（90/158・勝率57%）</td><td>⛔反証</td></tr>
 <tr><td>rsi=os×trend=上昇</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +1.33 CI[+1.33~+1.33]（1/1・勝率100%）</td><td>🟡蓄積中</td></tr>
       </table>
+      <p style="font-size:.85rem;color:#6e7781;margin-top:10px">※ 表には登録直後で前向きサンプルが極端に少ない仮説（N=1 など）も含まれます。サンプルが少ない行の勝率・平均Rは統計的な意味を持たず、勝率100%という表示も偶然の範囲を出ません。宣言基準（前向きN≥80）を満たすまでは実績としての評価はできません。いずれの行も過去の集計値であり、将来の成果を示すものではありません。</p>
     </div>
 
     <!-- §10 関連記事 -->
@@ -645,7 +650,7 @@
       <li><strong>時間足二極化（H2クリア）:</strong> 4H足 67.3% E(R)+0.569（CI全域プラス）vs 1H足 47.0% E(R)+0.095（CI0跨ぎ）、差20.3pp</li>
       <li><strong>時系列安定:</strong> FWD-1（不毛期）33.9% → FWD-2（64.4%）→ FWD-3（65.6%）と安定化</li>
       <li><strong>昇格条件:</strong> tracker cluster補正後 CI[+0.01,+0.55]で2回連続CI下限プラス接近。次回チェックで正式確認予定</li>
-      <li><strong>探索的:</strong> 上昇トレンドで74.4%・指数グループで69.0%と特に優位（正式検証は次回以降）</li>
+      <li><strong>探索的:</strong> 上昇トレンドで74.4%・指数グループで69.0%と高め（多重比較を補正していない事後的な区分けのため参考値。正式検証は次回以降）</li>
     </ul>
 
     <p class="disclaimer" data-disclaimer="kinsho-v1">
