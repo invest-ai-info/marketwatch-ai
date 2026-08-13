@@ -2,12 +2,14 @@
 
 ---
 
-## 2026-08-14 | 🔄 ゲート実行中 | signal-lab-069 | signal-lab-daily
+## 2026-08-14 | ✅ 公開完了 | signal-lab-069 | signal-lab-daily
 
-- **対象ファイル**: `drafts/draft-signal-lab-069.html`
+- **公開URL**: `guide-signal-lab-069.html`（AIシグナル研究日誌 #069）
 - **仮説**: rsi_oversold_bounce FWD N=179 で4H足67.3%・昇格条件CI下限2回連続プラス（IS 39.1%→FWD 54.7%）
-- **claims.json**: 全5件（全体/IS/FWD/FWD×1H/FWD×4H）、verify.py対応フィルタのみ
-- **次ステップ**: 8-1 git commit → PUSH-MAIN → 8-2 verify.py → 8-3 Opusコンプラ → 公開または🚩
+- **verify結果**: 5/5 GREEN（全体150/312=48.1%・IS 52/133=39.1%・FWD 98/179=54.7%・1H 54/115=47.0%・4H 37/55=67.3%）
+- **コンプラ**: Opus 3ラウンド → 🟢白（数値・SVG変更なし、表現軟化のみ）
+- **kinsho-v1**: 3件（finalize条件クリア）
+- **暫定昇格**: cluster補正後 RCI[+0.01,+0.55]、連続2回CI下限>0達成
 
 ---
 
