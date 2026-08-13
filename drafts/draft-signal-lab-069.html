@@ -215,7 +215,7 @@
   </div>
 
   <article class="article">
-    <div class="disclaimer-banner">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
       ⚠️ 本記事は過去データの統計的検証に関する情報提供です。投資助言・売買推奨ではありません。
     </div>
 
@@ -496,7 +496,7 @@
         <!-- タイトル -->
         <text x="265" y="15" class="s-label" text-anchor="middle" font-size="12" font-weight="700">時間足別 FWD勝率（2026-06-16〜2026-08-12）</text>
       </svg>
-      <div class="chart-caption">図2：4H足と1H足のFWD勝率比較（実測統計値）。CI[54.1%, 78.2%]の4H足がCI全域43%超。1H足はCI下限38.1%でハードル未達。<br>※ バー高さは模式的。ひげはCI下限〜点推定の範囲のみを示しており、上限の不確実性（4H上限78.2%・1H上限56.0%）は上表の数値を参照してください。</div>
+      <div class="chart-caption">図2：4H足と1H足のFWD勝率比較（実測統計値）。CI[54.1%, 78.2%]の4H足がCI全域43%超。1H足はCI下限38.1%でハードル未達。<br>※ バー高さ・ひげは不確実性を模式的に示したものです。正確な信頼区間（4H: 54.1〜78.2%、1H: 38.1〜56.0%）は上表の数値をご参照ください。</div>
     </div>
 
     <div class="warning-box">
@@ -585,7 +585,7 @@
       </tbody>
     </table>
     <p>
-      tracker のcluster補正後CI下限は<strong>+0.01</strong>（1日前から+0.01移動）と、わずかにプラス域に入りました。
+      tracker のcluster補正後CI下限は<strong>+0.01</strong>（2日前から+0.01移動）と、わずかにプラス域に入りました。
       raw bootstrap CI下限は<strong>+0.108</strong>と明確にプラスです。
     </p>
     <div class="info-box">
@@ -649,7 +649,7 @@
       本日（#069）は、rsi_oversold_bounce の前向き実績 N=179 を解析しました。
     </p>
     <ul>
-      <li><strong>IS→FWD改善:</strong> 39.1% → 54.7%（+15.6pp）。E(R)bootstrap CI下限+0.108でプラス確定</li>
+      <li><strong>IS→FWD改善:</strong> 39.1% → 54.7%（+15.6pp）。E(R)bootstrap CI下限+0.108でCI下限がプラス圏</li>
       <li><strong>時間足二極化（H2クリア）:</strong> 4H足 67.3% E(R)+0.569（CI全域プラス）vs 1H足 47.0% E(R)+0.095（CI0跨ぎ）、差20.3pp</li>
       <li><strong>時系列安定:</strong> FWD-1（不毛期）33.9% → FWD-2（64.4%）→ FWD-3（65.6%）と安定化</li>
       <li><strong>昇格条件:</strong> tracker cluster補正後 CI[+0.01,+0.55]で2回連続CI下限プラス接近。次回チェックで正式確認予定</li>
@@ -657,13 +657,13 @@
     </ul>
 
     <p class="disclaimer" data-disclaimer="kinsho-v1">
-      ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトのAIシグナルの仕組みと過去データ検証の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。記事中の図はすべて概念を示すイメージ図であり、実在の値動きではありません。掲載した検証成績は特定条件下での過去の集計値であり、将来の成果を保証しません。記事中の発火イメージ図（図1）は概念図であり実際の値動きではありません。比較グラフ（図2）は実測統計値に基づきますがバー高さは模式的です。投資判断はご自身の責任で行ってください。
+      ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトのAIシグナルの仕組みと過去データ検証の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。掲載した検証成績は特定条件下での過去の集計値であり、将来の成果を保証しません。記事中の発火イメージ図（図1）は概念図であり実際の値動きではありません。比較グラフ（図2）は実測統計値に基づきますがバー高さは模式的です。投資判断はご自身の責任で行ってください。
     </p>
   </article>
 </main>
 
 <footer>
-  <p>© 2026 <a href="https://marketwatch-jp.com">MarketWatch AI</a> — 日本人投資家向けAIシグナル研究 / <a href="about.html">サイトについて</a> / <a href="privacy.html">プライバシー</a></p>
+  <p data-disclaimer="kinsho-v1">© 2026 <a href="https://marketwatch-jp.com">MarketWatch AI</a> — 日本人投資家向けAIシグナル研究 / <a href="about.html">サイトについて</a> / <a href="privacy.html">プライバシー</a></p>
 </footer>
 
 <script>
