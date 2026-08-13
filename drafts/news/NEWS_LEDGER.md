@@ -3,6 +3,35 @@
 
 ---
 
+## 2026-08-13
+- 判定: ✅ 公開済み
+- 選定トピック: 米7月CPIがコア5年ぶり低水準・ヘッドライン+3.4%──FRB9月利上げ観測後退でTOPIX最高値更新・日経68,000円台（カテゴリ: マクロ・FRB金融政策・日本株・半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 8/12（日本時間21:30）に発表された米7月CPIがヘッドライン+3.4%・コア+2.5%（2021年3月以来最低水準）で予想通り着地。FRB9月利上げ確率が48%→38%に低下。翌8/13東京市場でTOPIX最高値更新・日経平均68,000円台・半導体AI株急騰。8/11記事（金相場CPI前夜）の続報かつ独立した「CPI結果＋日本株反応」の新角度で差別化OK
+- 出典（確認済み・2系統以上）:
+  - 米労働統計局（BLS）「Consumer Price Index Summary — 2026 M07 Results」（bls.gov 公式・一次情報）
+  - CNBC「CPI inflation report July 2026: Prices rose 0.1%, annual rate 3.4%」（2026-08-12）
+  - NBC News「July 2026 CPI report: Inflation remained stubborn」（2026-08-12）
+  - The Motley Fool / Yahoo Finance「July Inflation Data Came in as Expected, Lowering the Odds of a Fed Hike in September Yet Again」（2026-08-12）
+  - HousingWire「CPI inflation cools in July as shelter rises 0.1%」（2026-08-12）
+  - Yahoo Finance「S&P 500 and Nasdaq Climb as Inflation Cools, Easing Fed Rate Fears」（2026-08-12）
+  - Trading Economics「Japan Stock Market Index (JP225)」（2026-08-13）
+  - Market Screener「Japan's Nikkei posts highest close in nearly four weeks on AI rally」（2026-08-13）
+  - WSLS「Asian shares mostly rise after AI leads rally on Wall Street」（2026-08-13）
+  - BigGo Finance「Nikkei 225 Surges 720 Yen to 68,460 Range」（2026-08-13）
+  - FXEmpire「U.S. Dollar Gains Ground As Inflation Rate Meets Expectations: USD/JPY」（2026-08-13）
+- コンプライアンス監査（Opus 3段階）:
+  - 第1Opus（初期判定）: 🟢白（全6観点パス。数値整合の申し送り1件）
+  - 数値修正: title/H1/og:title/JSON-LD の「68,308円（+1.16%）」→「68,000円台」に統一（本文の出典範囲と整合）
+  - 第2Opus（独立確認）: 🔴要修正→数値整合修正後に🟢白の条件付き承認
+  - 第3Opus（最終確認・修正後）: 🟢白（全6項目✅・指摘なし）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末L292・フッターL301）✅ ②禁止語なし（「保証」は否定形のみ・断定語0件）✅ ③銘柄推奨なし✅ ④出典11系統（BLS公式＋報道10社）✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告18件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-13-us-cpi-topix-record.html
+- commit: 42d854c（main へ push 済み）
+
+---
+
 ## 2026-08-12
 - 判定: 🚩要人間レビュー（エスカレ）
 - 選定トピック（第1候補）: 米7月CPI予想下回る（カテゴリ: マクロ・FRB・インフレ）
