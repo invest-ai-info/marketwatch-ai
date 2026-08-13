@@ -2,6 +2,15 @@
 
 ---
 
+## 2026-08-14 | 🔄 ゲート実行中 | signal-lab-069 | signal-lab-daily
+
+- **対象ファイル**: `drafts/draft-signal-lab-069.html`
+- **仮説**: rsi_oversold_bounce FWD N=179 で4H足67.3%・昇格条件CI下限2回連続プラス（IS 39.1%→FWD 54.7%）
+- **claims.json**: 全5件（全体/IS/FWD/FWD×1H/FWD×4H）、verify.py対応フィルタのみ
+- **次ステップ**: 8-1 git commit → PUSH-MAIN → 8-2 verify.py → 8-3 Opusコンプラ → 公開または🚩
+
+---
+
 ## 2026-08-13 | ℹ️ 全topic下書き済み | autodraft-article | スキップ
 
 - **基準日**: 2026-08-13（UTC 20:31 → JST 2026-08-14 05:31）

@@ -1,0 +1,35 @@
+{
+  "article_id": "069",
+  "claims": [
+    {
+      "label": "全体（全期間）: signal=rsi_oversold_bounce",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 150,
+      "n": 312
+    },
+    {
+      "label": "IS期間（fired_before 2026-06-16）: signal=rsi_oversold_bounce",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "FWD期間（fired_from 2026-06-16）: signal=rsi_oversold_bounce",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "k": 98,
+      "n": 179
+    },
+    {
+      "label": "FWD×1H足: signal=rsi_oversold_bounce, fired_from=2026-06-16, tf=1h",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1h"},
+      "k": 54,
+      "n": 115
+    },
+    {
+      "label": "FWD×4H足: signal=rsi_oversold_bounce, fired_from=2026-06-16, tf=4h",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "4h"},
+      "k": 37,
+      "n": 55
+    }
+  ]
+}

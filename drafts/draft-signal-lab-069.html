@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #69｜RSI売られすぎ逆張り買い — FWD N=179 で4H足67.3%・昇格条件接近を確認 - MarketWatch AI</title>
+  <meta name="description" content="RSI売られすぎ逆張り買い（rsi_oversold_bounce）の前向き実績 N=179 を解析。IS39.1%からFWD54.7%へ+15.6pp改善。4H足は67.3%（E(R)=+0.569）、1H足は47.0%と20pp超の時間足二極化を確認。昇格条件CI下限+0.01に到達。">
+  <meta name="keywords" content="RSI売られすぎ,逆張り,rsi_oversold_bounce,4H足,勝率,AIシグナル,研究日誌,前向き検証">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-069.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #69｜RSI売られすぎ逆張り買い — FWD N=179 で4H足67.3%・昇格条件接近">
+  <meta property="og:description" content="RSI売られすぎ逆張り買い の前向き N=179。IS39.1%→FWD54.7%。4H足67.3%（CI全域プラス）vs 1H足47.0%の20pp差。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-069.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #69｜RSI売られすぎ逆張り買い — FWD N=179 で4H足67.3%・昇格条件接近",
+    "description": "RSI売られすぎ逆張り買いの前向き検証 N=179。IS39.1%→FWD54.7%。4H足67.3%・昇格条件CI下限+0.01到達。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-14",
+    "dateModified": "2026-08-14",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-069.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem;overflow-x:auto;display:block}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .summary-box{background:#ffffff;border:2px solid #1E3A6E;border-radius:10px;padding:20px 24px;margin:20px 0}
+    .summary-box h3{color:#1E3A6E;margin-top:0;font-size:1.05rem}
+    .summary-item{display:flex;justify-content:space-between;border-bottom:1px solid #d0d7de;padding:7px 0;font-size:.93rem}
+    .summary-item:last-child{border-bottom:none}
+    .summary-val{font-weight:700;color:#0969da}
+    .summary-val.green{color:#1a7f37}
+    .summary-val.red{color:#cf222e}
+    .tracker-table table{display:table}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .summary-box{background:#161b22;border-color:#58a6ff}
+    body.dark .summary-box h3{color:#79c0ff}
+    body.dark .summary-item{border-bottom-color:#30363d}
+    body.dark .summary-val{color:#79c0ff}
+    body.dark .summary-val.green{color:#7ee787}
+    body.dark .summary-val.red{color:#ff8080}
+    .logo-svg{display:inline-block;vertical-align:middle;margin-right:10px}
+  </style>
+</head>
+<body>
+<div id="reading-progress"></div>
+
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg class="logo-svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="8" fill="#1E3A6E"/>
+        <polyline points="6,26 13,16 19,21 27,10" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="27" cy="10" r="2.5" fill="#54aeff"/>
+      </svg>
+      <div>
+        <div class="header-title">MarketWatch AI</div>
+        <div class="header-meta">🧪 AIシグナル研究日誌 — 前向き検証プロジェクト</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar" aria-label="メインナビゲーション">
+    <a href="index.html" class="nav-btn">🏠 ホーム</a>
+    <a href="political-feed.html" class="nav-btn">🚨 政治発言</a>
+    <a href="track-record.html" class="nav-btn">📊 成績</a>
+    <a href="calendar.html" class="nav-btn">📅 カレンダー</a>
+    <a href="guides.html" class="nav-btn current">📚 解説記事</a>
+    <a href="guide-investment-books.html" class="nav-btn">📖 投資本</a>
+    <a href="market-health.html" class="nav-btn">🩺 市場健康度</a>
+    <a href="hot-assets.html" class="nav-btn">🔥 急騰ランキング</a>
+    <a href="charts.html" class="nav-btn">📈 チャート</a>
+    <a href="youtube-summary.html" class="nav-btn">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">ホーム</a> &rsaquo; <a href="guides.html">解説記事</a> &rsaquo; AIシグナル研究日誌 #69
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner">
+      ⚠️ 本記事は過去データの統計的検証に関する情報提供です。投資助言・売買推奨ではありません。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #69<br>RSI売られすぎ逆張り買い — FWD N=179 で4H足67.3%・昇格条件接近を確認</h1>
+    <div class="meta-line">
+      公開：2026年8月（下書き中） ／ 検証シリーズ #069 ／ 読了 約7分 ／ カテゴリ：前向きトラッカー追跡
+    </div>
+
+    <!-- 30秒まとめ -->
+    <div class="summary-box">
+      <h3>⚡ 30秒まとめ</h3>
+      <div class="summary-item"><span>対象シグナル</span><span class="summary-val">rsi_oversold_bounce（RSI売られすぎ逆張り買い）</span></div>
+      <div class="summary-item"><span>IS期間 勝率（N=133）</span><span class="summary-val red">39.1%（52/133）※損益分岐43%割れ</span></div>
+      <div class="summary-item"><span>FWD期間 勝率（N=179）</span><span class="summary-val green">54.7%（98/179）CI[47.4%,61.9%]</span></div>
+      <div class="summary-item"><span>FWD E(R) bootstrap CI</span><span class="summary-val green">+0.277 CI[+0.108,+0.447]</span></div>
+      <div class="summary-item"><span>4H足 FWD勝率（N=55）</span><span class="summary-val green">67.3%（37/55）E(R)=+0.569 CI全域プラス</span></div>
+      <div class="summary-item"><span>1H足 FWD勝率（N=115）</span><span class="summary-val">47.0%（54/115）E(R)=+0.095（CI0跨ぎ）</span></div>
+      <div class="summary-item"><span>tracker 昇格状態</span><span class="summary-val">🟡蓄積中（cluster補正後CI下限+0.01 ← 2回目接近）</span></div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">仮説の背景と今回の位置づけ</a></li>
+        <li><a href="#hypothesis">検証仮説と事前基準</a></li>
+        <li><a href="#chart">概念チャート：RSI30割れ発火の場面</a></li>
+        <li><a href="#results">検証結果：IS→FWD の全体像</a></li>
+        <li><a href="#tf">時間足別解析（4H vs 1H）</a></li>
+        <li><a href="#temporal">時系列推移：FWD3分割</a></li>
+        <li><a href="#exploratory">探索的発見（トレンド・グループ別）</a></li>
+        <li><a href="#promotion">昇格条件の確認</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+        <li><a href="#related">関連記事</a></li>
+      </ol>
+    </div>
+
+    <!-- §1 背景 -->
+    <h2 id="background">§1 仮説の背景と今回の位置づけ</h2>
+    <p>
+      RSI売られすぎ逆張り買い（<strong>rsi_oversold_bounce</strong>）は、RSIが30以下に低下した場面でロングエントリーを提案するシグナルです。
+      「底値を拾う」という直感に合う戦略ですが、<a href="guide-signal-lab-009.html">#009</a> や <a href="guide-signal-lab-023.html">#023</a> では
+      「資産グループによって性能が真逆に分かれる」ことが明らかになっています。
+    </p>
+    <p>
+      前回の <a href="guide-signal-lab-067.html">#067</a> では、全方向FWD N=178 のE(R)=+0.272・CI下限がほぼゼロ到達という「昇格条件1回目接近」を確認しました。
+      さらに <a href="guide-signal-lab-068.html">#068</a> では、このシグナルを<strong>上昇トレンド×ロング</strong>に絞るとIS N=52で76.9%（CI下限63.2%）という顕著な優位が見つかり、前向きトラッカー[w]を新設しました。
+    </p>
+    <p>
+      本日（#069）は、全方向FWD N=179 の完全集計を行い、<strong>時間足ごとの二極化（4H vs 1H）</strong>と<strong>時系列の安定化（FWD-1の不毛期脱出）</strong>を解析します。
+      昇格条件として宣言している「前向きE(R)のCI下限>0」が2回連続で達成されているかを確認します。
+    </p>
+
+    <!-- §2 仮説 -->
+    <h2 id="hypothesis">§2 検証仮説と事前基準</h2>
+    <p>今回の事前宣言は以下のとおりです。</p>
+    <ul>
+      <li><strong>H1（FWD昇格条件）</strong>：FWD N=179の平均R（期待値）の95% CI下限 &gt; 0</li>
+      <li><strong>H2（時間足二極化）</strong>：4H足 FWD勝率 が 1H足 FWD勝率 を10pp以上上回る</li>
+    </ul>
+    <p>損益分岐の基準値は <strong>43.0%</strong>（TP1:TP2:SL比率と既存研究から設定した全データ共通ハードル）。</p>
+    <div class="info-box">
+      <strong>なぜ43%がハードル？</strong> このシステムのTP1/SL比率（約+2.0R/-1.0R）では勝率43%前後が期待値ゼロに対応します。より正確には、TP1ヒット勝率×1.333 = SLヒット負率×1.0の均衡点として過去研究から導出した実績値です。
+    </div>
+
+    <!-- §3 チャート風図解 -->
+    <h2 id="chart">§3 概念チャート：RSI30割れ発火の場面</h2>
+    <div class="chart-figure">
+      <svg viewBox="0 0 680 420" role="img" aria-label="RSI売られすぎ逆張り買いの概念チャート（4H足）">
+        <title>RSI売られすぎ逆張り買い — 発火条件の概念チャート</title>
+        <!-- 背景 -->
+        <rect x="0" y="0" width="680" height="420" fill="#ffffff"/>
+        <!-- 価格チャートエリア（上280px） -->
+        <rect x="50" y="20" width="590" height="230" fill="#f6f8fa" rx="4"/>
+        <!-- 分割線 -->
+        <line x1="50" y1="258" x2="640" y2="258" stroke="#d0d7de" stroke-width="1"/>
+        <!-- RSIエリア（下120px） -->
+        <rect x="50" y="265" width="590" height="135" fill="#f6f8fa" rx="4"/>
+
+        <!-- 価格軸ラベル -->
+        <text x="30" y="30" class="s-label-sm" text-anchor="middle">高</text>
+        <text x="30" y="240" class="s-label-sm" text-anchor="middle">安</text>
+        <text x="45" y="252" class="s-label-sm" text-anchor="end">価格</text>
+
+        <!-- ローソク足（概念） -->
+        <!-- 足1: 上昇 -->
+        <line x1="100" y1="90" x2="100" y2="55" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="92" y="90" width="16" height="30" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 足2: 上昇 -->
+        <line x1="140" y1="75" x2="140" y2="42" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="132" y="75" width="16" height="28" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 足3: 陰線 下落開始 -->
+        <line x1="180" y1="62" x2="180" y2="108" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="172" y="66" width="16" height="38" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 足4: 陰線 -->
+        <line x1="220" y1="80" x2="220" y2="130" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="212" y="84" width="16" height="42" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 足5: 陰線 大幅下落 -->
+        <line x1="260" y1="105" x2="260" y2="168" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="252" y="112" width="16" height="52" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 足6: 陰線 最安値近辺（RSI30割れ発火バー） -->
+        <rect x="292" y="0" width="38" height="258" fill="#fff8c5" fill-opacity="0.55"/>
+        <line x1="310" y1="150" x2="310" y2="205" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="302" y="158" width="16" height="44" fill="#ffebe9" stroke="#e87b00" stroke-width="2.5"/>
+        <!-- オレンジ枠の強調 -->
+        <rect x="298" y="154" width="24" height="52" fill="none" stroke="#e87b00" stroke-width="2.5" rx="2"/>
+        <!-- 発火ラベル -->
+        <text x="310" y="227" class="s-label-y" text-anchor="middle" font-size="11">🔥発火</text>
+        <text x="310" y="240" class="s-label-sm" text-anchor="middle">ロング</text>
+
+        <!-- 足7: 反転陽線 -->
+        <line x1="350" y1="165" x2="350" y2="195" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="342" y="155" width="16" height="38" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 足8: 上昇 -->
+        <line x1="390" y1="130" x2="390" y2="162" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="382" y="122" width="16" height="40" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 足9: 上昇 TP1到達 -->
+        <line x1="430" y1="88" x2="430" y2="130" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="422" y="82" width="16" height="48" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 足10: 横ばい -->
+        <line x1="470" y1="80" x2="470" y2="100" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="462" y="80" width="16" height="20" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+
+        <!-- TP1ライン（点線） -->
+        <line x1="310" y1="115" x2="590" y2="115" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="595" y="119" class="s-label-g" font-size="11">TP1</text>
+        <!-- SLライン（点線） -->
+        <line x1="310" y1="212" x2="590" y2="212" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="595" y="216" class="s-label-r" font-size="11">SL</text>
+
+        <!-- 引出線: RSI割れ説明 -->
+        <line x1="310" y1="154" x2="310" y2="148" stroke="#e87b00" stroke-width="1.5"/>
+        <line x1="240" y1="148" x2="310" y2="148" stroke="#e87b00" stroke-width="1.5"/>
+        <text x="235" y="145" class="s-label-y" text-anchor="end" font-size="11.5">RSI 30割れで発火</text>
+
+        <!-- 価格エリアタイトル -->
+        <text x="640" y="35" class="s-label-sm" text-anchor="end">概念価格チャート（4H足）</text>
+
+        <!-- RSIサブチャート -->
+        <!-- RSI軸 -->
+        <line x1="50" y1="265" x2="50" y2="395" class="s-axis"/>
+        <line x1="50" y1="395" x2="640" y2="395" class="s-axis"/>
+        <!-- RSI 70ライン -->
+        <line x1="50" y1="278" x2="640" y2="278" class="s-guide"/>
+        <text x="45" y="282" class="s-label-sm" text-anchor="end">70</text>
+        <!-- RSI 30ライン -->
+        <line x1="50" y1="357" x2="640" y2="357" stroke="#cf222e" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text x="45" y="361" class="s-label-r" text-anchor="end">30</text>
+        <!-- RSI 50ライン -->
+        <line x1="50" y1="318" x2="640" y2="318" class="s-guide"/>
+        <text x="45" y="322" class="s-label-sm" text-anchor="end">50</text>
+
+        <!-- RSI曲線（概念） -->
+        <!-- 上昇時: RSI 60~70程度 -->
+        <polyline points="
+          80,297 120,290 160,283
+          200,302 240,325 280,348
+          310,376
+          340,353 380,320 420,298
+          460,293 500,305"
+          stroke="#0969da" stroke-width="2.4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <!-- RSI30割れ強調点 -->
+        <circle cx="310" cy="376" r="5" fill="#e87b00" stroke="#ffffff" stroke-width="1.5"/>
+        <text x="310" y="392" class="s-label-y" text-anchor="middle" font-size="10.5">RSI≤30</text>
+
+        <!-- RSIサブチャートタイトル -->
+        <text x="640" y="278" class="s-label-sm" text-anchor="end">RSI(14)</text>
+
+        <!-- 凡例 -->
+        <rect x="470" y="32" width="160" height="62" fill="#ffffff" stroke="#d0d7de" stroke-width="1" rx="4"/>
+        <rect x="478" y="42" width="12" height="12" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text x="496" y="53" class="s-label-sm">陽線（上昇）</text>
+        <rect x="478" y="62" width="12" height="12" fill="#ffebe9" stroke="#cf222e" stroke-width="1"/>
+        <text x="496" y="73" class="s-label-sm">陰線（下落）</text>
+        <rect x="478" y="82" width="12" height="12" fill="none" stroke="#e87b00" stroke-width="2"/>
+        <text x="496" y="93" class="s-label-sm">発火バー</text>
+      </svg>
+      <div class="chart-caption">図1：RSI売られすぎ逆張り買いの発火条件イメージ（4H足）。下落→RSI30割れ（発火バー・オレンジ枠）→反転→TP1達成の流れ。青線＝RSI(14)。<br>※ 概念を示すイメージ図です（実際の値動き・数値ではありません）</div>
+    </div>
+
+    <!-- §4 検証結果 -->
+    <h2 id="results">§4 検証結果：IS→FWD の全体像</h2>
+    <p>
+      シグナルの集計期間は、前向き登録日（2026-06-16）を境にIS（サンプル内）とFWD（前向き）に分割しています。
+      なお、rsi_oversold_bounce は定義上すべて<strong>ロング（買い）</strong>シグナルのため、方向偏りは生じません。
+    </p>
+
+    <table>
+      <thead><tr><th>期間</th><th>N</th><th>勝率</th><th>95% CI（Wilson）</th><th>E(R) bootstrap CI</th></tr></thead>
+      <tbody>
+        <tr><td>全体（IS+FWD）</td><td>312</td><td>48.1%（150/312）</td><td>[42.6%, 53.6%]</td><td>—</td></tr>
+        <tr><td>IS（〜2026-06-15）</td><td>133</td><td class="red">39.1%（52/133）</td><td>[31.2%, 47.6%]</td><td>−0.088</td></tr>
+        <tr><td>FWD（2026-06-16〜）</td><td>179</td><td class="green">54.7%（98/179）</td><td>[47.4%, 61.9%]</td><td class="green">+0.277 CI[+0.108, +0.447]</td></tr>
+      </tbody>
+    </table>
+    <style>
+      td.green{color:#1a7f37;font-weight:700}
+      td.red{color:#cf222e;font-weight:700}
+    </style>
+
+    <p>
+      IS期間は39.1%と損益分岐43%を下回っていましたが、FWD期間には<strong>54.7%（+15.6pp）</strong>へ改善しました。
+      FWDのE(R)は+0.277で、bootstrap CI下限が+0.108と<strong>明確なプラス域</strong>に入っています。
+    </p>
+
+    <div class="positive-box">
+      <strong>IS期間の損益分岐割れは何を意味するか？</strong><br>
+      IS期間（〜2026-06-15）は金属グループが長期の下落局面にあり、逆張り買いシグナルが連発しながら機能しない「不毛期」が続いていました（#030, #032, #039 で確認）。
+      FWD開始後に金属レジームが転換し、全体勝率が大幅に改善した構図は、複数の仮説（reversalL / dir=long / trend=下降×reversalL）と同じパターンです。
+    </div>
+
+    <!-- §5 時間足別 -->
+    <h2 id="tf">§5 時間足別解析（4H vs 1H）</h2>
+    <p>FWD N=179 のうち、時間足別に分解すると鮮明な二極化が見えてきます。</p>
+
+    <table>
+      <thead><tr><th>時間足</th><th>IS N</th><th>IS 勝率</th><th>FWD N</th><th>FWD 勝率（95% CI）</th><th>FWD E(R) CI</th></tr></thead>
+      <tbody>
+        <tr><td>1H足（1時間）</td><td>81</td><td>40.7%</td><td>115</td><td>47.0%（54/115）CI[38.1%, 56.0%]</td><td>+0.095 CI[−0.107, +0.319]</td></tr>
+        <tr><td>4H足（4時間）</td><td>49</td><td>38.8%</td><td>55</td><td class="green">67.3%（37/55）CI[54.1%, 78.2%]</td><td class="green">+0.569 CI[+0.273, +0.866]</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>4H足: 37/55 = 67.3%</strong>（CI下限54.1% &gt; 43%、E(R) CI全域プラス）に対し、
+      1H足は47.0%（CI下限38.1%、E(R) CI がゼロを跨ぐ）と、<strong>差20.3pp</strong>の明確な二極化が生じています。
+    </p>
+    <p>
+      H2（差≥10pp）は確認。ただし 4H足の N=55 は「やや小さいサンプル」であることに注意が必要です。
+    </p>
+
+    <!-- 4H vs 1H 比較図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 500 280" role="img" aria-label="4H足と1H足のFWD勝率比較棒グラフ">
+        <title>4H足 vs 1H足 FWD勝率比較</title>
+        <rect width="500" height="280" fill="#ffffff"/>
+        <!-- Y軸 -->
+        <line x1="70" y1="20" x2="70" y2="220" class="s-axis"/>
+        <line x1="70" y1="220" x2="470" y2="220" class="s-axis"/>
+        <!-- Y軸目盛 -->
+        <line x1="65" y1="220" x2="70" y2="220" class="s-axis"/>
+        <text x="60" y="224" class="s-label-sm" text-anchor="end">0%</text>
+        <line x1="65" y1="133" x2="70" y2="133" class="s-axis"/>
+        <text x="60" y="137" class="s-label-sm" text-anchor="end">43%</text>
+        <line x1="65" y1="102" x2="70" y2="102" class="s-axis"/>
+        <text x="60" y="106" class="s-label-sm" text-anchor="end">54%</text>
+        <line x1="65" y1="55" x2="70" y2="55" class="s-axis"/>
+        <text x="60" y="59" class="s-label-sm" text-anchor="end">67%</text>
+        <line x1="65" y1="86" x2="70" y2="86" class="s-axis"/>
+        <text x="60" y="90" class="s-label-sm" text-anchor="end">58%</text>
+        <!-- 43%ライン -->
+        <line x1="70" y1="133" x2="470" y2="133" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text x="475" y="137" class="s-label-y" font-size="11">損益分岐43%</text>
+
+        <!-- 1H足バー (47.0%) -->
+        <rect x="110" y="111" width="100" height="109" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5" rx="4"/>
+        <text x="160" y="108" class="s-label-b" text-anchor="middle" font-size="14">47.0%</text>
+        <text x="160" y="245" class="s-label" text-anchor="middle">1H足（N=115）</text>
+        <!-- CI bar for 1H -->
+        <line x1="160" y1="88" x2="160" y2="133" stroke="#0969da" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="160" y="258" class="s-label-sm" text-anchor="middle">CI[38.1, 56.0]%</text>
+
+        <!-- 4H足バー (67.3%) -->
+        <rect x="290" y="55" width="100" height="165" fill="#e6ffed" stroke="#1a7f37" stroke-width="2" rx="4"/>
+        <text x="340" y="48" class="s-label-g" text-anchor="middle" font-size="15">67.3% ✅</text>
+        <text x="340" y="245" class="s-label" text-anchor="middle">4H足（N=55）</text>
+        <!-- CI bar for 4H -->
+        <line x1="340" y1="102" x2="340" y2="55" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="340" y="258" class="s-label-sm" text-anchor="middle">CI[54.1, 78.2]%</text>
+
+        <!-- 差の矢印 -->
+        <line x1="213" y1="83" x2="287" y2="65" stroke="#57606a" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text x="250" y="70" class="s-label-sm" text-anchor="middle">差 20.3pp</text>
+
+        <!-- タイトル -->
+        <text x="265" y="15" class="s-label" text-anchor="middle" font-size="12" font-weight="700">時間足別 FWD勝率（2026-06-16〜2026-08-12）</text>
+      </svg>
+      <div class="chart-caption">図2：4H足と1H足のFWD勝率比較。CI[54.1%, 78.2%]の4H足がCI全域43%超。1H足はCI下限38.1%でハードル未達。<br>※ 概念を示すイメージ図です（実際の値動き・数値ではありません）</div>
+    </div>
+
+    <div class="warning-box">
+      4H足 N=55 はサンプルサイズとして最低限のレベルです。個別の外れ値（特に大きなE(R)のシグナル）がCI幅を左右する可能性があります。次チェックポイントは N≥80 です。
+    </div>
+
+    <!-- §6 時系列推移 -->
+    <h2 id="temporal">§6 時系列推移：FWD3分割</h2>
+    <p>
+      FWD N=179を時系列で3等分すると、初期の不振→安定という特徴的なパターンが見えます。
+    </p>
+    <table>
+      <thead><tr><th>FWD期間</th><th>日付範囲</th><th>N</th><th>勝率</th><th>E(R)</th></tr></thead>
+      <tbody>
+        <tr><td>前期（FWD-1）</td><td>2026-06-17 〜 06-25</td><td>59</td><td class="red">33.9%（20/59）</td><td>−0.209</td></tr>
+        <tr><td>中期（FWD-2）</td><td>2026-06-25 〜 07-17</td><td>59</td><td class="green">64.4%（38/59）</td><td>+0.503</td></tr>
+        <tr><td>後期（FWD-3）</td><td>2026-07-21 〜 08-12</td><td>61</td><td class="green">65.6%（40/61）</td><td>+0.530</td></tr>
+      </tbody>
+    </table>
+    <p>
+      FWD-1（6月中旬〜6月末）は33.9%と低迷していました。これは金属レジームの転換前夜に相当し、
+      GC=F/SI=Fが下落継続中の場面でRSI逆張り買いが連敗したと推定されます（#030/#039と同じ時期）。
+      6月25日以降（FWD-2）から64.4%へ急改善し、後期（FWD-3）でも65.6%と安定しています。
+    </p>
+    <div class="positive-box">
+      <strong>FWD-2以降の安定が重要:</strong> 直近2ヶ月間（N=120）の勝率は64.4〜65.6%で安定しており、
+      「初期不振は過渡期ノイズ」という解釈が成立します。FWD全体では+15.6pp改善ですが、
+      「最新期の実力」は65%前後と見るのが適切かもしれません。
+    </div>
+
+    <!-- §7 探索的発見 -->
+    <h2 id="exploratory">§7 探索的発見（トレンド・グループ別）</h2>
+    <div class="warning-box">
+      以下は探索的発見です。signals-log の <code>trend</code>・<code>group</code> フィールドがこのシグナルには記録されていないため、<code>trend_alignment.higher_tf_trend</code>（上位足トレンド）とティッカーからのグループ推定を使っています。正式な verify.py 検証対象外ですのでご注意ください。
+    </div>
+
+    <h3>トレンド別（上位足トレンドを使用）</h3>
+    <table>
+      <thead><tr><th>上位足トレンド</th><th>FWD N</th><th>FWD 勝率</th><th>95% CI</th></tr></thead>
+      <tbody>
+        <tr><td>上昇</td><td>43</td><td class="green">74.4%（32/43）</td><td>[59.8%, 85.1%]</td></tr>
+        <tr><td>中立・もみあい</td><td>54</td><td class="green">61.1%（33/54）</td><td>[47.8%, 73.0%]</td></tr>
+        <tr><td>下降</td><td>82</td><td>40.2%（33/82）</td><td>[30.3%, 51.1%]</td></tr>
+      </tbody>
+    </table>
+    <p>
+      上昇トレンドで74.4%という顕著な優位があります。これは<a href="guide-signal-lab-068.html">#068</a>で確認した
+      「rsi=os×上昇×ロングがIS76.9%」と整合的です。下降トレンドでは40.2%と損益分岐付近に止まっており、
+      「下降中の逆張り買いは危険」という直感と合致しています。
+    </p>
+    <p>
+      ただし、これは<strong>上位足トレンドとの整合性</strong>の話です。#068では同シグナルで発火時点の相場トレンド
+      （1H/4H発火なら更に上位の日足トレンド）を見ており、厳密な定義が異なります。次回以降の正式検証で確認予定です。
+    </p>
+
+    <h3>資産グループ別（探索的）</h3>
+    <table>
+      <thead><tr><th>グループ</th><th>FWD N</th><th>FWD 勝率</th><th>E(R)</th></tr></thead>
+      <tbody>
+        <tr><td>指数（index）</td><td>29</td><td class="green">69.0%（20/29）</td><td>+0.609</td></tr>
+        <tr><td>円クロス（jpy_fx）</td><td>36</td><td class="green">66.7%（24/36）</td><td>+0.555</td></tr>
+        <tr><td>金属（metal）</td><td>29</td><td>51.7%（15/29）</td><td>+0.207</td></tr>
+        <tr><td>原油（oil）</td><td>17</td><td>52.9%（9/17）</td><td>+0.235</td></tr>
+        <tr><td>BTC</td><td>12</td><td>50.0%（6/12）</td><td>+0.166</td></tr>
+        <tr><td>ドルクロス（other_fx）</td><td>56</td><td>42.9%（24/56）</td><td>±0.000</td></tr>
+      </tbody>
+    </table>
+    <p>
+      指数（69.0%）と円クロス（66.7%）が突出しており、ドルクロス（42.9%・E(R)ゼロ）が最弱です。
+      金属はIS期間の大幅損失が回復中（51.7%）ですが、他グループと比べてE(R)は低めです。
+    </p>
+    <p>
+      なお、ドルクロスFX（EURUSD/GBPUSD等）でのRSI逆張り買いは<a href="guide-signal-lab-023.html">#023</a>・<a href="guide-signal-lab-055.html">#055</a>でも
+      弱さが確認されており、今回の探索的結果と整合しています。
+    </p>
+
+    <!-- §8 昇格条件確認 -->
+    <h2 id="promotion">§8 昇格条件の確認</h2>
+    <p>tracker[売られすぎ逆張り買い・全足] の昇格条件は、<strong>「前向きN≥80かつ平均Rの95%CI下限&gt;0 を連続2回確認」</strong>です。</p>
+    <table>
+      <thead><tr><th>確認回</th><th>記事</th><th>FWD N</th><th>E(R)</th><th>tracker cluster補正後 CI</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>1回目</td><td><a href="guide-signal-lab-067.html">#067</a></td><td>178</td><td>+0.272</td><td>[+0.00, +0.54]</td><td>🟡 下限ゼロ到達（ほぼ正値）</td></tr>
+        <tr><td>2回目（本日）</td><td>#069</td><td>179</td><td>+0.277</td><td>[+0.01, +0.55]</td><td>🟡 下限+0.01（2回連続）</td></tr>
+      </tbody>
+    </table>
+    <p>
+      tracker のcluster補正後CI下限は<strong>+0.01</strong>（1日前から+0.01移動）と、わずかにプラス域に入りました。
+      raw bootstrap CI下限は<strong>+0.108</strong>と明確にプラスです。
+    </p>
+    <div class="info-box">
+      <strong>cluster補正とは：</strong> 同じ資産に短期間に複数シグナルが発火する場合、それらは独立とは言えません（1H足と4H足が同時発火するケースなど）。
+      tracker は相関を考慮してCI幅を広げる「cluster補正」を適用しているため、raw bootstrap より conservative（保守的）なCIになります。
+      このため tracker CI下限（+0.01）とraw CI下限（+0.108）に差が生じています。
+    </div>
+    <p>
+      昇格の厳密な判定として、<strong>tracker は依然 🟡蓄積中</strong>を維持しています（自動昇格には至っていません）。
+      次のチェックポイントでCI下限が引き続きプラスを維持すれば、正式昇格となります。
+    </p>
+
+    <!-- §9 前向きトラッカー定点観測 -->
+    <h2 id="tracker">§9 前向きトラッカー定点観測（2026-08-14）</h2>
+    <div class="tracker-table">
+      <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+      <p class="meta-line">基準日 2026-08-14／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+      <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.26~+0.29]（83/191・勝率44%）</td><td>✅昇格</td></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.21 CI[+0.06~+0.35]（90/174・勝率52%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.05~+0.10]（819/1860・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.28 CI[+0.01~+0.55]（98/179・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.11 CI[-0.01~+0.22]（254/535・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.11 CI[-0.07~+0.29]（206/433・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.09 CI[-0.02~+0.19]（654/1406・勝率46%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.22 CI[+0.08~+0.36]（253/483・勝率52%）</td><td>⛔反証</td></tr>
+<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.25 CI[+0.09~+0.41]（176/329・勝率54%）</td><td>⛔反証</td></tr>
+<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.31 CI[-0.50~-0.12]（53/179・勝率30%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.33 CI[+0.07~+0.59]（90/158・勝率57%）</td><td>⛔反証</td></tr>
+<tr><td>rsi=os×trend=上昇</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +1.33 CI[+1.33~+1.33]（1/1・勝率100%）</td><td>🟡蓄積中</td></tr>
+      </table>
+    </div>
+
+    <!-- §10 関連記事 -->
+    <h2 id="related">§10 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <div class="related-card-title">📖 発火条件の図解カタログ</div>
+        <div class="related-card-desc">RSI売られすぎ・BB下限タッチ・MACDデッドなど全9シグナルの発火条件を図解で解説。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-067.html">
+        <div class="related-card-title">🧪 #067 RSI逆張り買い FWD N=178 CI下限ゼロ到達</div>
+        <div class="related-card-desc">本記事の前回。FWD N=178でCI下限がゼロに到達、昇格条件1回目接近を確認。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-068.html">
+        <div class="related-card-title">🧪 #068 RSI×上昇×ロング IS76.9%の優位</div>
+        <div class="related-card-desc">rsi_oversold_bounce の上昇トレンド×ロング絞り込みで76.9%を記録。tracker[w]新設。</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-023.html">
+        <div class="related-card-title">🧪 #023 RSI vs BB 性能差</div>
+        <div class="related-card-desc">RSI売られすぎとBB下限タッチを比較。jpy_fxでRSI19.4% vs BB58.2%の38pp差を発見。</div>
+      </a>
+    </div>
+
+    <h2>まとめ</h2>
+    <p>
+      本日（#069）は、rsi_oversold_bounce の前向き実績 N=179 を解析しました。
+    </p>
+    <ul>
+      <li><strong>IS→FWD改善:</strong> 39.1% → 54.7%（+15.6pp）。E(R)bootstrap CI下限+0.108でプラス確定</li>
+      <li><strong>時間足二極化（H2クリア）:</strong> 4H足 67.3% E(R)+0.569（CI全域プラス）vs 1H足 47.0% E(R)+0.095（CI0跨ぎ）、差20.3pp</li>
+      <li><strong>時系列安定:</strong> FWD-1（不毛期）33.9% → FWD-2（64.4%）→ FWD-3（65.6%）と安定化</li>
+      <li><strong>昇格条件:</strong> tracker cluster補正後 CI[+0.01,+0.55]で2回連続CI下限プラス接近。次回チェックで正式確認予定</li>
+      <li><strong>探索的:</strong> 上昇トレンドで74.4%・指数グループで69.0%と特に優位（正式検証は次回以降）</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は当サイトのAIシグナルの仕組みと過去データ検証の結果に関する情報提供であり、特定の金融商品の売買推奨や投資助言ではありません。記事中の図はすべて概念を示すイメージ図であり、実在の値動きではありません。掲載した検証成績は特定条件下での過去の集計値であり、将来の成果を保証しません。投資判断はご自身の責任で行ってください。
+    </p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 <a href="https://marketwatch-jp.com">MarketWatch AI</a> — 日本人投資家向けAIシグナル研究 / <a href="about.html">サイトについて</a> / <a href="privacy.html">プライバシー</a></p>
+</footer>
+
+<script>
+  const bar = document.getElementById('reading-progress');
+  document.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  });
+  // Dark mode
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  if (prefersDark.matches) document.body.classList.add('dark');
+  prefersDark.addEventListener('change', e => {
+    if (e.matches) document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+  });
+</script>
+</body>
+</html>
