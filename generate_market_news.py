@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-13", "line": '・<b>2026-08-13</b>: 📱 解説「<a href="guide-scam-sns-celebrity-ad.html" style="color:#0969da"><b>SNS型投資詐欺——著名人なりすまし広告の手口を5段階で分解</b></a>」公開'},
         {"date": "2026-08-13", "line": '・<b>2026-08-13</b>: 🧪 解説「<a href="guide-signal-lab-068.html" style="color:#0969da"><b>研究日誌 #68｜RSI売られすぎ×上昇トレンド ロング76.9%——方向非対称54ppと4H足の優位</b></a>」公開'},
         {"date": "2026-08-09", "line": '・<b>2026-08-09</b>: 🧪 解説「<a href="guide-signal-lab-065.html" style="color:#0969da"><b>もみあい×ショート FWD N=157 全域マイナス確定</b></a>」公開'},
         {"date": "2026-08-12", "line": '・<b>2026-08-12</b>: 🧪 解説「<a href="guide-signal-lab-067.html" style="color:#0969da"><b>RSI売られすぎ逆張り買い 前向きN=178 CI下限ゼロ到達</b></a>」公開'},
