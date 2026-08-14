@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-08-15 | ✅ 公開完了 | margin-trading | autopublish
+
+- **対象ファイル**: `guide-margin-trading.html`（キュー#33・信用取引の基礎）
+- **公開URL**: https://marketwatch-jp.com/guide-margin-trading.html
+- **決定論ゲート**: 🟢 GREEN（apply_brand_color.py が復活・ブランドカラー1箇所修正済）
+- **Opus コンプラ+品質 初期判定**: 🟡グレー（軽微修正を適用）
+  - 品貸入札ふりがな修正（ひなかし→しながし）
+  - 最高料率の説明精緻化（臨時引上げリスク明記）
+  - 専門用語（貸株料・貸借銘柄・委託保証金維持率）の初出定義追加
+  - リード文「約3倍以上」→「約3倍程度まで」
+- **決定論ゲート再確認**: 🟢 GREEN
+- **独立 Opus 白確認**: 🟢白（コンプラ・免責3箇所・品質5観点すべて合格）
+- **追加修正（独立Opus指摘）**: ナビ11ボタン統一・../パス修正（27箇所）
+- **check_site_consistency.py**: EXIT=0（エラーなし）
+- **push**: 2026-08-15 08:42 JST HEAD→main（80c817f）
+
+---
+
 ## 2026-08-14 | 🚩 ゲート赤（apply_brand_color.py不在・3日連続） | margin-trading | autopublish
 
 - **対象ファイル**: `guide-margin-trading.html`（キュー#33・2026-08-12に仕上げ済み）
