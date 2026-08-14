@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 💰 解説「<a href="guide-margin-trading.html" style="color:#0969da"><b>信用取引の基礎（制度/一般・逆日歩・追証）</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🧪 解説「<a href="guide-signal-lab-070.html" style="color:#0969da"><b>上昇×逆張り買い 前向きN=187 昇格継続——RSI 74% vs BB 45% 二極化 #070</b></a>」公開'},
         {"date": "2026-08-14", "line": '・<b>2026-08-14</b>: 📰 解説「<a href="guide-news-2026-08-14-applied-materials-q3-ai-demand.html" style="color:#0969da"><b>【8/14】AMAT Q3記録決算・AIが「前例のない需要」で日経4日続伸</b></a>」公開'},
         {"date": "2026-08-14", "line": '・<b>2026-08-14</b>: ⚖️ 解説「<a href="guide-proverb-songiri-hayaku-ri-nobase.html" style="color:#0969da"><b>損切りは早く、利は伸ばせ</b></a>」公開'},
