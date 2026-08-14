@@ -73,7 +73,9 @@
 
 次回候補：キュー #23「セル・イン・メイ」→ 🚩人間判断待ち（既存 guide-sell-in-may.html との重複問題）。人間レビュー後に公開。
 
-最終更新：2026-08-13（proverb-daily-auto ルーティン・キュー枯渇継続中・補充依頼8日目）
+最終更新：2026-08-14（proverb-daily-auto ルーティン）
+
+| 34 | ✅公開済み | 損切りは早く、利は伸ばせ | songiri-hayaku-ri-nobase | 2026-08-14 | 🟡グレー（初期：断定表現5件）→ Opus軽微修正（表現軟化・免責追加）→ 🟢白（最終）→ 品質②CAN-SLIM説明追加 → 🟢白（独立Opus確認・4観点全PASS） | "Cut your losses short, let your profits run"。最古の記録 James Grant 著 "The Great Metropolis" 第2シリーズ（ロンドン、1837年、Barry Popik文献調査）。David Ricardo 帰属は諸説あり・一次資料未確認。CAN-SLIM O'Neil(1988)・Ed Seykota(Market Wizards 1989)・プロスペクト理論 Kahneman & Tversky(Econometrica 1979)・処分効果 Shefrin & Statman(JoF 1985)を含む。SVG2パネル概念図（損小利大vs損大利小）・仮数字例表・kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告18件は既存記事の偽陽性）。自動公開ルーティン proverb-daily-auto による。 |
 
 ## ✅ 人間判断（2026-08-13）: #23クローズ＋キュー補充＝枯渇解消
 - **#23「セル・イン・メイ」＝執筆しない（クローズ）**。既存 `guide-sell-in-may.html`（検証記事・公開済み）と主題が同一のため統合＝既存記事を正史とする。キュー行にも⛔スキップ指示を明記済み。
