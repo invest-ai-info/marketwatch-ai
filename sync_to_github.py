@@ -127,4 +127,5 @@ SYNC_FILES = [
     "guide-signal-lab-068.html",
     "guide-news-2026-08-13-us-cpi-topix-record.html",
     "guide-signal-lab-069.html",
+    "guide-proverb-songiri-hayaku-ri-nobase.html",
 ]
