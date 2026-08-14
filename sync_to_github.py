@@ -129,4 +129,5 @@ SYNC_FILES = [
     "guide-signal-lab-069.html",
     "guide-proverb-songiri-hayaku-ri-nobase.html",
     "guide-news-2026-08-14-applied-materials-q3-ai-demand.html",
+    "guide-signal-lab-070.html",
 ]
