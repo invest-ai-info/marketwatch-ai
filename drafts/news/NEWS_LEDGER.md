@@ -3,6 +3,27 @@
 
 ---
 
+## 2026-08-14
+- 判定: ✅ 公開済み
+- 選定トピック: Applied Materials Q3 FY2026 記録決算・売上$91.2億（+25%）・非GAAP EPS $3.50（+41%）「AIが前例のない需要」──日経68,713円4日続伸・TOPIX初の4,200突破（カテゴリ: 個別銘柄決算・AI・半導体装置・日本株）
+- スコア: 話題性 4 / 影響 5 / 付加価値 5（合計 14/15）
+- 選定理由: 8/13（米国時間）引け後にAMATが記録的Q3決算を発表（売上+25%・EPS+41%・Q4ガイダンスも市場予想超え）。CEO「unprecedented demand」発言が確定情報。翌8/14東京市場で日経4日続伸68,713円・TOPIX初の4,200突破・アドバンテスト最高値更新という明確な波及事実あり。8/13記事（CPI+TOPIX最高値）と差別化OK（AMATという新たなドライバー切り口）
+- 出典（確認済み・2系統以上）:
+  - StockTitan「Applied Materials Announces Third Quarter 2026」（2026-08-13・売上$9.12B・EPS $3.50・Q4ガイダンス確認）
+  - Benzinga「Applied Materials Beats Q3 Estimates, Issues Strong Guidance — 'Unprecedented' Demand」（2026-08-13）
+  - 24/7 Wall St.「Live: Will Applied Materials Crush Tonight's Q3 Earnings After 200% Rally?」（2026-08-13）
+  - 財経新聞「日経平均大引け：前日比405.21円高の68713.80円」（2026-08-14）
+  - 日本経済新聞「日経平均終値405円高 アドバンテスト最高値はAIラリー再来の合図か」（2026-08-14）
+  - BigGo Finance「Nikkei rises for 4th straight gain; TOPIX hits record high for 3rd consecutive day」（2026-08-14）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2件適用（①AMAT株価年初来+約200%に算出起点・時点・公式確認喚起の注記追加 ②小売売上高・ミシガン大発表日程の出典SNSに一次情報確認喚起追加 ／ 数値・事実・構造は不変）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 🟢白（全6項目①〜⑥✅・公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー・本文末L294・フッターL303）✅ ②禁止語なし（保証・必ず はすべて否定形）✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告18件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-14-applied-materials-q3-ai-demand.html
+
+---
+
 ## 2026-08-13
 - 判定: ✅ 公開済み
 - 選定トピック: 米7月CPIがコア5年ぶり低水準・ヘッドライン+3.4%──FRB9月利上げ観測後退でTOPIX最高値更新・日経68,000円台（カテゴリ: マクロ・FRB金融政策・日本株・半導体）
