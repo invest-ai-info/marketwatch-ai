@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>コモディティの基礎｜金・原油はなぜ動くのか？実質金利・需給・先物の仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="金（ゴールド）は実質金利とドルの裏返しで動き、原油は需給と地政学が価格を支配する。コモディティ投資の基礎として、先物の限月・コンタンゴ・ロールオーバーの落とし穴、株式との相関・分散効果まで、初心者〜中級者向けに図解で解説します。">
+  <meta name="keywords" content="コモディティ,金,ゴールド,原油,実質金利,TIPS,コンタンゴ,バックワーデーション,先物,ロールオーバー,分散投資,商品投資,原油ETF,金ETF,投資の基礎">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-commodity-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="コモディティの基礎｜金・原油はなぜ動くのか？実質金利・需給・先物の仕組みを図解">
+  <meta property="og:description" content="金は実質金利とドルの裏返し、原油は需給と地政学。先物の限月・コンタンゴの落とし穴・株式との相関まで図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-commodity-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "コモディティの基礎｜金・原油はなぜ動くのか？実質金利・需給・先物の仕組みを図解",
+    "description": "金は実質金利とドルの裏返し、原油は需給と地政学。先物の限月・コンタンゴの落とし穴・株式との相関まで図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-16",
+    "dateModified": "2026-08-16",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-commodity-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* コモディティ 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-box-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5;rx:6}
+    .s-box-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1.5}
+    .s-box-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1.5}
+    .s-text-g{fill:#1a7f37;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-r{fill:#cf222e;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-b{fill:#0969da;font-size:12px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-dark{fill:#1f2328;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-arrow{stroke:#57606a;stroke-width:2;fill:#57606a}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-box-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-box-r{fill:#2a1010;stroke:#f85149}
+    body.dark .s-box-b{fill:#1a2030;stroke:#58a6ff}
+    body.dark .s-text-g{fill:#7ee787}
+    body.dark .s-text-r{fill:#ff8080}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-dark{fill:#c9d1d9}
+    body.dark .s-arrow{stroke:#8b949e;fill:#8b949e}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; コモディティの基礎
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はコモディティ（商品）投資の仕組みを解説した「情報提供」であり、特定商品・銘柄の購入推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 コモディティの基礎｜金・原油はなぜ動くのか？</h1>
+    <div class="meta-line">公開日：2026 年 8 月 16 日 ／ 読了時間：約 16 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「金は有事に上がる」「原油は景気に敏感」——よく耳にするフレーズですが、<strong>なぜそうなるのか、メカニズムを説明できる人は意外と少ない</strong>ものです。なんとなく「そういうもの」として受け止めていると、実際に価格が動いたときに理由を掴めず、振り回されるだけになります。</p>
+    <p>この記事では、コモディティ（商品）の中でも特に影響力の大きい<strong>金（ゴールド）と原油</strong>を取り上げ、それぞれの価格を動かす本質的な仕組みを図解で整理します。前半は初心者の入口として「なぜ金はドルや金利と逆に動くのか」「原油の価格は何で決まるのか」を直感的に理解できるよう図解し、後半は中上級者向けに<strong>先物の仕組みとコンタンゴ（ロールオーバーコスト）、株式との相関</strong>まで踏み込みます。「コモディティに長期投資しようとしたら現物より大きく負けていた」という落とし穴も含めて、最後まで読めば全体像が掴めるはずです。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>金の主な動因は<strong>「実質金利」と「ドル」の裏返し</strong>。実質金利が下がると（＝無利子の金の機会コストが下がる）金は上がりやすく、ドル高は金安に働く。インフレ局面でも実質金利がプラスのままなら金が急騰するとは限らない。</li>
+      <li>原油の価格は<strong>「需給（OPEC+ の供給政策と世界経済の需要）」と「地政学（輸送ルートの遮断リスク）」</strong>が二大要因。長期トレンドは需給で決まり、短期急変動は地政学リスクで起きやすい。</li>
+      <li><strong>先物を使う商品 ETF にはロールオーバーコストという隠れた費用</strong>がある。コンタンゴ（先物高＞現物）の状態が続くと、現物価格が横ばいでも ETF の価値が目減りしていくため、仕組みの理解なしに「商品に長期投資」は思わぬ落とし穴がある。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">コモディティとは？主なカテゴリと投資方法</a></li>
+        <li><a href="#section-2">金（ゴールド）はなぜ動くのか——実質金利とドルの裏返し</a></li>
+        <li><a href="#section-3">原油はなぜ動くのか——需給と地政学の二層構造</a></li>
+        <li><a href="#section-4">【中上級編】先物の仕組みと限月——コモディティ投資の土台</a></li>
+        <li><a href="#section-5">コンタンゴとロールオーバーコスト——「長期投資の落とし穴」</a></li>
+        <li><a href="#section-6">株式との相関と分散効果——コモディティを持つ意味</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== Section 1 ===== -->
+    <h2 id="section-1">1️⃣ コモディティとは？主なカテゴリと投資方法</h2>
+    <p>コモディティ（Commodity）とは、<strong>農産物・エネルギー・金属などの「実物資産（モノ）」</strong>を指す言葉です。株式や債券と違い、配当や利息を生まない代わりに、世界中で取引される「共通の商品」として相場が決まります。主なカテゴリは次のとおりです。</p>
+
+    <table>
+      <thead>
+        <tr><th>カテゴリ</th><th>代表的なもの</th><th>価格を動かす主因</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>貴金属</td><td>金（ゴールド）・銀・白金</td><td>実質金利・ドル・有事リスク</td></tr>
+        <tr><td>エネルギー</td><td>原油（WTI/Brent）・天然ガス</td><td>OPEC+供給・世界需要・地政学</td></tr>
+        <tr><td>農産物</td><td>小麦・大豆・トウモロコシ</td><td>天候・作付面積・バイオ燃料需要</td></tr>
+        <tr><td>ベースメタル</td><td>銅・アルミニウム・ニッケル</td><td>世界の工業生産・中国景気</td></tr>
+      </tbody>
+    </table>
+
+    <p>コモディティへの主な投資方法は①<strong>現物（金地金・コインなど）</strong>の購入、②<strong>先物（Futures）</strong>取引、③<strong>ETF・投資信託</strong>の3つです。個人投資家が最もアクセスしやすいのは ETF ですが、後半で説明するように、ETF が<strong>現物を直接保有するか、先物を使うか</strong>で性質が大きく異なります。</p>
+
+    <div class="info-box">
+      <strong>💡 この記事のスタンス</strong>：コモディティは「買うべきか」ではなく、<strong>「どんな仕組みで動くのかを知る」</strong>ことが目的です。仕組みを理解したうえで、自分のポートフォリオに合うかを判断してください。
+    </div>
+
+    <!-- ===== Section 2 ===== -->
+    <h2 id="section-2">2️⃣ 金（ゴールド）はなぜ動くのか——実質金利とドルの裏返し</h2>
+    <p>「金は有事に買われる」は半分正しく、半分不正確です。<strong>金価格を長期的に説明する最大の要因は「実質金利」</strong>であり、有事リスクはそこに上乗せされる"プレミアム"にすぎません。</p>
+
+    <h3>実質金利とは何か</h3>
+    <p>実質金利とは、<strong>名目金利からインフレ率を引いた「本当の利回り」</strong>のことです（フィッシャー方程式：実質金利 ≒ 名目金利 − インフレ率）。金は配当も利息も生まない資産です。したがって、<strong>お金を国債に預けると高い実質利回りが得られる局面</strong>では、金を持つ機会コストが高まり、金は売られやすくなります。逆に、<strong>実質金利がゼロ近傍や負の領域に落ちると</strong>、金を持っていても「金利の取りそびれ」がほとんど発生しないため、金が選ばれやすくなるのです。</p>
+    <p>実務では、米国の<strong>10 年物 TIPS（物価連動国債）利回りが「実質金利の体温計」</strong>として広く使われます。TIPS 利回りが上昇すると金は下落しやすく、TIPS 利回りが低下すると金は上昇しやすいという逆相関関係が知られています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="gold-title">
+        <title id="gold-title">実質金利と金価格の逆相関関係（概念図）</title>
+        <text class="s-panel-label" x="40" y="24">実質金利（TIPS利回り）と金価格の関係</text>
+        <!-- 横軸：時間 -->
+        <line class="s-axis" x1="50" y1="290" x2="610" y2="290"/>
+        <text class="s-label-sm" x="56" y="310">時間 →</text>
+        <!-- 縦軸ラベル -->
+        <text class="s-label-sm" x="56" y="44">価格・利回り ↑</text>
+        <!-- 実質金利ライン（上昇→下落、青） -->
+        <polyline class="s-curve-b" points="50,220 140,160 220,120 290,140 380,200 450,240 540,190 600,160"/>
+        <text class="s-text-b" x="52" y="212">TIPS実質金利</text>
+        <!-- 金価格ライン（下落→上昇、緑） -->
+        <polyline class="s-curve-g" points="50,100 140,150 220,190 290,170 380,110 450,75 540,115 600,140"/>
+        <text class="s-text-g" x="432" y="68">金価格</text>
+        <!-- 逆相関を示す矢印メモ -->
+        <line class="s-guide" x1="200" y1="60" x2="200" y2="290"/>
+        <text class="s-note-r" x="206" y="76">実質金利 ↑</text>
+        <text class="s-note-r" x="206" y="92">→ 金 ↓</text>
+        <line class="s-guide" x1="450" y1="60" x2="450" y2="290"/>
+        <text class="s-note-g" x="456" y="254">実質金利 ↓</text>
+        <text class="s-note-g" x="456" y="270">→ 金 ↑</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 実質金利（青）と金価格（緑）は逆の方向に動く傾向がある。実質金利が下がると金の「機会コスト」が下がり、金が選ばれやすくなる。TIPS 利回りは実質金利の実務的な代理指標として使われる。※ 概念を示すイメージ図です。実際の値動きとは異なります。</figcaption>
+    </figure>
+
+    <h3>ドルとの関係</h3>
+    <p>金の国際価格は<strong>米ドル建て</strong>で表示されます。そのため、<strong>ドルが強くなると（ドル高）、ドル以外の通貨を持つ投資家にとって金は"割高"になり、需要が下がりやすい</strong>。逆に、ドル安は金の国際需要を高め、価格を押し上げる方向に働きます。ただし、これは機械的な関係ではなく、中央銀行の買い付けや地政学的なリスクオフで両者が連動して上がることもあります。</p>
+
+    <h3>インフレヘッジとしての金——「半分正しい」の理由</h3>
+    <p>「金はインフレヘッジ」というイメージは長年定着していますが、実際には<strong>インフレが高くても実質金利がプラスのまま維持されている局面では、金が大きく上昇しない場合</strong>があります。たとえば、中央銀行が名目金利をインフレと同じ速度、もしくはそれ以上に引き上げれば、実質金利は高止まりします。インフレ率だけを見て「金は上がるはず」と判断すると、見当違いになることがある点に注意が必要です。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント整理</strong>：金価格の方向性を考えるときは「インフレ率」よりも<strong>「実質金利（＝名目金利－インフレ率）が上がっているか下がっているか」</strong>を軸にする方が、より実態に近い判断ができます。
+    </div>
+
+    <!-- ===== Section 3 ===== -->
+    <h2 id="section-3">3️⃣ 原油はなぜ動くのか——需給と地政学の二層構造</h2>
+    <p>原油価格を理解するキーワードは<strong>「需給」と「地政学」</strong>の2つです。長期トレンドは需給で決まり、短期急変動は地政学で引き起こされることが多いという、二層構造になっています。</p>
+
+    <h3>供給サイド：OPEC+ の存在</h3>
+    <p><strong>OPEC+（石油輸出国機構プラス）はサウジアラビアをはじめとする産油国グループ</strong>で、世界の原油生産量のおよそ 40% 以上を占めるとされます（集計の定義〈OPEC 単体か、ロシアなどを含む OPEC+ か〉や調査機関によって数値には幅があります。TMGM リサーチ参照）。このグループが減産・増産の方針を決定することで、供給量に直接影響を与えます。ただし、<strong>米国のシェールオイル生産がバッファー</strong>として機能するため、OPEC+ が減産しても米国が増産で補い、効果が相殺されることもあります。</p>
+
+    <h3>需要サイド：世界経済と輸送</h3>
+    <p>原油の最大の用途は<strong>輸送（自動車・航空機・船舶）と工業用エネルギー</strong>です。したがって、<strong>世界の GDP 成長が旺盛な局面では需要が増え原油価格を押し上げる</strong>ことが多く、景気後退期には需要が収縮して価格が下押しされます。中国の製造業指数や米国の輸送統計などが短期的な需要サインとして注目されます。</p>
+
+    <h3>地政学：チョークポイントのリスク</h3>
+    <p>原油の大半はタンカーで輸送されます。<strong>世界の石油消費量のおよそ 20% に相当する量が通過するとされるホルムズ海峡</strong>（米国エネルギー情報局 EIA 参照）など、地理的なボトルネック（チョークポイント）に緊張が走ると、「輸送が途絶するかもしれない」という<strong>リスクプレミアム</strong>が価格に加算されます。有事の報道で原油が急騰する局面は、この地政学リスクプレミアムが膨らんでいる状態です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="oil-title">
+        <title id="oil-title">原油価格の二層構造——需給（長期トレンド）と地政学（短期スパイク）の概念図</title>
+        <text class="s-panel-label" x="40" y="24">原油価格の構造：需給トレンドに地政学スパイクが乗る</text>
+        <!-- 横軸 -->
+        <line class="s-axis" x1="50" y1="270" x2="610" y2="270"/>
+        <text class="s-label-sm" x="56" y="290">時間 →</text>
+        <!-- 縦軸 -->
+        <line class="s-axis" x1="50" y1="30" x2="50" y2="270"/>
+        <text class="s-label-sm" x="56" y="48">価格 ↑</text>
+        <!-- 需給トレンドライン（なだらか・青） -->
+        <polyline class="s-curve-b" points="60,220 160,210 260,200 360,185 440,195 540,180 600,170"/>
+        <text class="s-text-b" x="380" y="200">需給トレンド（長期の底流）</text>
+        <!-- 地政学スパイク（赤ピーク） -->
+        <polyline class="s-curve-l" points="60,220 160,210 260,200 310,185 340,110 360,185 440,195 490,180 510,100 530,180 540,180 600,170"/>
+        <text class="s-note-r" x="298" y="102">地政学スパイク①</text>
+        <line class="s-guide" x1="340" y1="110" x2="340" y2="270"/>
+        <text class="s-note-r" x="500" y="94">地政学スパイク②</text>
+        <line class="s-guide" x1="510" y1="100" x2="510" y2="270"/>
+      </svg>
+      <figcaption class="chart-caption">▲ 青い線が需給によって形成されるトレンド。その上に赤の地政学リスクによる急騰・急落が重なる。大半の期間は青のトレンドが支配するが、チョークポイントへの緊張時に一時的な価格スパイクが発生する。スパイクは情報次第で急速に解消することもある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="warning-box">
+      地政学イベントが価格スパイクを引き起こしても、<strong>緊張が緩和されると需給の実態に引き戻される</strong>ことが多いです。「有事に原油を買う」という判断は、解消タイミングによっては高値づかみになるリスクがあります。
+    </div>
+
+    <!-- ===== Section 4 ===== -->
+    <h2 id="section-4">4️⃣【中上級編】先物の仕組みと限月——コモディティ投資の土台</h2>
+    <p>ここからは中上級者向けの内容に入ります。コモディティ投資を理解するうえで避けて通れないのが<strong>先物（Futures）の仕組み</strong>です。先物を使った ETF が現物と「全く違う動き」をすることがある理由を、ここで整理します。</p>
+
+    <h3>先物とは「将来の約束」</h3>
+    <p>先物（Futures）とは、<strong>「将来の特定日に、ある商品を今決めた価格で売買する」という契約</strong>です。たとえば「3 か月後に原油 1,000 バレルを 1 バレル 70 ドルで買う」という約束を今日結ぶ、それが先物取引です。</p>
+    <p>先物には<strong>限月（げんつき、Delivery Month）</strong>があります。これは「いつ受け渡しするか」を示す期限で、商品や取引所によって毎月設定される場合もあれば、特定の月だけに設定される場合もあります（原油のように毎月あるもの、金のように取引の中心が特定の月に偏るものがあります）。11 月限（11 月の受け渡し）が近づくと、その先物の取引は終了し、投資家は次の限月（12 月限）の先物を買い直す必要があります。この作業を<strong>「乗り換え（ロールオーバー）」</strong>と呼びます。</p>
+
+    <h3>現物 ETF と先物 ETF の違い</h3>
+    <p>金の ETF には、<strong>実際に金の地金を保管庫に積み上げて裏付けとする「現物 ETF」</strong>が存在します（例：SPDR ゴールドシェアなど）。商品名はあくまで「現物型」という仕組みの例示であり、特定商品を選ぶよう促すものではありません。このタイプは金現物価格とほぼ連動する傾向があります。一方、<strong>原油 ETF の多くは先物を使って運用されます</strong>（現物の原油を物理的に保管するコストが膨大なため）。先物ベースの ETF は、現物の原油価格とは異なる動きをすることがあります——その主因が次章のコンタンゴです。</p>
+
+    <!-- ===== Section 5 ===== -->
+    <h2 id="section-5">5️⃣ コンタンゴとロールオーバーコスト——「長期投資の落とし穴」</h2>
+    <p>先物市場には<strong>コンタンゴ（Contango）</strong>と<strong>バックワーデーション（Backwardation）</strong>という 2 つの状態があります。これを知らずに先物ベースの商品 ETF に長期投資すると、思わぬ損失を被ることがあります。</p>
+
+    <h3>コンタンゴ：先物価格 ＞ 現物価格</h3>
+    <p><strong>コンタンゴとは「遠い期限の先物ほど価格が高い」状態</strong>です。保管コスト・保険・資金調達コスト（キャリーコスト）を反映した"普通の状態"で、多くのコモディティで発生します。これが落とし穴になる理由は<strong>ロールオーバー時にある</strong>のです。</p>
+    <p>コンタンゴの市場で先物 ETF がロールオーバーを行うとは、「高値の次月限を買い直す」ことを意味します。現物価格が全く動いていなくても、<strong>毎月「安い当月限を売り・高い次月限を買う」を繰り返すことで、徐々に資産が目減りしていきます</strong>。この目減り分を「ロールコスト（Roll Cost）」と呼びます。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="contango-title">
+        <title id="contango-title">コンタンゴとバックワーデーションの先物カーブ概念図</title>
+        <text class="s-panel-label" x="40" y="24">先物カーブの形状：コンタンゴ vs バックワーデーション</text>
+        <!-- 横軸：限月 -->
+        <line class="s-axis" x1="60" y1="230" x2="580" y2="230"/>
+        <text class="s-label-sm" x="60" y="252">現物（スポット）</text>
+        <text class="s-label-sm" x="220" y="252">1か月先物</text>
+        <text class="s-label-sm" x="370" y="252">3か月先物</text>
+        <text class="s-label-sm" x="500" y="252">6か月先物</text>
+        <!-- 縦軸 -->
+        <line class="s-axis" x1="60" y1="40" x2="60" y2="230"/>
+        <text class="s-label-sm" x="64" y="54">価格 ↑</text>
+        <!-- コンタンゴカーブ（右上がり・赤） -->
+        <polyline class="s-curve-l" points="100,190 260,170 390,148 530,122"/>
+        <circle r="5" cx="100" cy="190" fill="#cf222e"/>
+        <circle r="5" cx="260" cy="170" fill="#cf222e"/>
+        <circle r="5" cx="390" cy="148" fill="#cf222e"/>
+        <circle r="5" cx="530" cy="122" fill="#cf222e"/>
+        <text class="s-text-r" x="630" y="118" text-anchor="end">コンタンゴ</text>
+        <text class="s-label-sm" x="630" y="132" text-anchor="end">（先物高＞現物）</text>
+        <!-- バックワーデーションカーブ（右下がり・緑） -->
+        <polyline class="s-curve-g" points="100,130 260,152 390,170 530,190"/>
+        <circle r="5" cx="100" cy="130" fill="#1a7f37"/>
+        <circle r="5" cx="260" cy="152" fill="#1a7f37"/>
+        <circle r="5" cx="390" cy="170" fill="#1a7f37"/>
+        <circle r="5" cx="530" cy="190" fill="#1a7f37"/>
+        <text class="s-text-g" x="630" y="188" text-anchor="end">バックワーデーション</text>
+        <text class="s-label-sm" x="630" y="202" text-anchor="end">（先物安＜現物）</text>
+        <!-- スポット水平線（点線） -->
+        <line class="s-guide" x1="60" y1="190" x2="580" y2="190"/>
+        <text class="s-note" x="64" y="188">現物価格（スポット）ライン</text>
+      </svg>
+      <figcaption class="chart-caption">▲ コンタンゴ（赤）は限月が遠いほど先物価格が高い「右肩上がり」の先物カーブ。バックワーデーション（緑）は反対に「右肩下がり」。コンタンゴ下でロールオーバーするたびに「安く売り・高く買い直す」が繰り返されロールコストが発生する。バックワーデーションでは逆に「高く売り・安く買い直す」というロール益が得られる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>ロールコストの現実的な影響</h3>
+    <p>たとえば、毎月のロールオーバーで 1% のコストが発生し続けた場合、複利計算では年率でおよそ 11〜12% 程度の資産の目減りになります（0.99の12乗≈0.886）。これは「毎月 1%」と置いた場合の仮定に基づく試算であり、実際のロールコストは銘柄・時期によって大きく変動します（目減りが起きる仕組み自体は、先物で運用する商品ファンドに共通する一般的な性質として知られています）。<strong>現物の原油価格が 1 年間横ばいだったとしても、先物 ETF が -10% 近くになる、というシナリオは十分あり得ます</strong>。</p>
+    <p>逆に、<strong>バックワーデーション（現物 ＞ 先物）の局面</strong>では「高く売り・安く買い直す」というロール益が得られます。現物価格の上昇に加えてロール益が乗るため、先物 ETF が現物以上に上昇することもあります。</p>
+
+    <div class="warning-box">
+      「原油が上がっているはずなのに、原油 ETF が全然増えていない」——これはコンタンゴのロールコストが原因である可能性があります。先物ベースの商品 ETF を選ぶ際は、先物カーブの形状（コンタンゴかバックワーデーションか）を確認することが重要です。特定の ETF の推奨ではなく、<strong>仕組みを理解することが最初のステップ</strong>です。
+    </div>
+
+    <!-- ===== Section 6 ===== -->
+    <h2 id="section-6">6️⃣ 株式との相関と分散効果——コモディティを持つ意味</h2>
+    <p>コモディティが「ポートフォリオの分散資産として有効」と言われる理由は、<strong>株式との相関が伝統的に低め</strong>だからです。株が暴落するとき、エネルギーや貴金属が独自の動きをして下落幅を緩和することがある、という考え方です。</p>
+
+    <h3>分散効果は「常に保証されるわけではない」</h3>
+    <p>ただし、コモディティの分散効果には重要な留保があります。2000 年代以降、機関投資家がコモディティへの資金配分を増やしたことで「コモディティの金融化」が進み、<strong>金融危機時（2008 年など）には株式と一緒に下落するケースも見られました</strong>（コモディティの金融化と危機時の相関上昇については、複数の学術研究で指摘されています）。危機時には「相関が上がる（すべてが同時に売られる）」傾向があり、最も分散効果が必要な場面で効きにくくなることがあります。</p>
+
+    <h3>金と原油で分散効果は異なる</h3>
+    <p>同じコモディティでも、<strong>金は株式との相関が低めを維持しやすい</strong>とされる一方、<strong>原油は世界景気に連動しやすい</strong>ため、景気後退時に株式と同時に下落することがあります。コモディティ全体を一括りに「分散になる」と考えるのではなく、種類ごとの性質を把握することが大切です。</p>
+
+    <table>
+      <thead>
+        <tr><th>コモディティ</th><th>株式との一般的な相関</th><th>特記事項</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>金（ゴールド）</td><td>低め（逆相関になることも）</td><td>リスクオフ時に買われやすい傾向</td></tr>
+        <tr><td>原油</td><td>中程度（景気連動）</td><td>世界需要の代理指標でもある</td></tr>
+        <tr><td>農産物</td><td>低め（独自要因が大）</td><td>天候・需給の独自ロジック</td></tr>
+        <tr><td>銅など工業金属</td><td>高め（中国・工業景気と連動）</td><td>「銅は経済博士（Dr. Copper）」とも</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 分散の考え方</strong>：コモディティの相関や分散効果についてより深く学ぶなら、<a href="guide-diversification.html">分散とポートフォリオ（相関・コア/サテライト）</a>の記事も参照してください。相関係数の意味や、高相関資産をまとめて持つと「分散したつもりが実は集中投資」になるリスクを解説しています。
+    </div>
+
+    <!-- ===== Section 7 ===== -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、コモディティの動向を複数の角度から参照できるようにしています。</p>
+    <ul>
+      <li><strong><a href="charts.html">📈 150 年価格チャート</a></strong>：金の超長期チャートを掲載しています。1970 年代のスタグフレーション局面、2008 年後の超低金利局面など、実質金利の変遷と金価格の歴史を直感的に確認できます。</li>
+      <li><strong><a href="hot-assets.html">🔥 出来高急増ランキング</a></strong>：コモディティ系の ETF や先物関連銘柄が急騰・急落した日は、ランキングに現れやすいです。価格の急変と出来高の増加が重なる日は、地政学イベントや重要指標の発表日と重なることが多く、背景を確認するヒントになります。</li>
+      <li><strong><a href="political-feed.html">🚨 政治発言ライブ</a></strong>：中東情勢やエネルギー政策に関する発言が原油への材料になることがあります。政治発言フィードで情報を確認し、コモディティ価格との関係を考える参考にしてください。</li>
+      <li><strong>テクニカルシグナル</strong>：当サイトが監視する 18 銘柄には <strong>GC=F（金先物）、CL=F（原油先物）</strong>が含まれています。シグナルの発火状況は <a href="track-record.html">シグナル成績ダッシュボード</a> で確認できます。シグナルはあらかじめ決めたルールで機械的に発火するものであり、売買の推奨ではありません。</li>
+    </ul>
+
+    <p>また、コモディティの動向は他の資産クラスと密接に関連しています。金の動向を読む際には<a href="guide-bonds-interest-rates.html">金利と債券の関係</a>の記事と合わせると理解が深まります。為替との接続については<a href="guide-yen-carry-trade.html">円キャリートレードと為替の仕組み</a>も参考になります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📈 金・原油の過去シグナルをのぞいてみる</div>
+      <div class="cta-box-desc">GC=F（金）と CL=F（原油）を含む 18 銘柄のテクニカルシグナルが、実際にどのような局面で発火し、結果はどうだったかを勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- ===== Section 8 ===== -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>コモディティ投資の基礎をここで整理します。</p>
+    <ul>
+      <li><strong>金の主動因は実質金利とドル</strong>。実質金利（名目金利－インフレ率）が下がると金の機会コストが下がり、金が選ばれやすくなる。TIPS 利回りはその体温計として使われる。インフレ率だけ見ていても判断を誤ることがある。</li>
+      <li><strong>原油は需給と地政学の二層構造</strong>。OPEC+ が世界産油量の 40% 以上を押さえ供給サイドを左右するが（米シェールの増産が効果を相殺することもある）、ホルムズ海峡などのチョークポイントへの緊張が短期スパイクを生む。地政学スパイクは緊張解消で急速に解消されることもある。</li>
+      <li><strong>先物 ETF にはロールオーバーコストがある</strong>。コンタンゴ（先物高＞現物）の市場では、毎月のロールオーバーのたびに資産が目減りしうる。現物価格が上昇していても ETF が追いつかないケースはこのメカニズムによる。金の現物 ETF と原油の先物 ETF では性質が大きく異なる。</li>
+      <li><strong>分散効果は条件付き</strong>。コモディティは株式との相関が低めとされるが、金融危機時には同時下落するケースもある。種類によって相関の性質が異なるため、「コモディティ全般が分散になる」とは言い切れない。</li>
+    </ul>
+    <p>コモディティは仕組みを知ることで、ニュースの「なぜ金が上がったのか」「原油が急落したのか」という問いに、自分なりの仮説を立てられるようになります。仮説を持って相場を見ると、情報の読み取り方が変わってきます。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-bonds-interest-rates.html">
+        <div class="related-card-title">📉 金利と債券の関係</div>
+        <div class="related-card-desc">実質金利の源泉となる金利と債券価格の関係を図解。金の動向を読むための背景知識として。</div>
+      </a>
+      <a class="related-card" href="guide-diversification.html">
+        <div class="related-card-title">🗂 分散とポートフォリオ</div>
+        <div class="related-card-desc">相関係数の意味と、コア/サテライト配分の考え方。コモディティの分散効果を正しく理解するための土台。</div>
+      </a>
+      <a class="related-card" href="charts.html">
+        <div class="related-card-title">📈 150年価格チャート</div>
+        <div class="related-card-desc">金の超長期チャートを掲載。実質金利の変遷と金価格の関係を歴史的に確認できます。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はコモディティ（商品）の仕組みや価格変動要因を情報提供として解説したものであり、特定の商品・銘柄の購入推奨や投資助言ではありません。記載内容は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>

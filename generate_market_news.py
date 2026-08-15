@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-16", "line": '・<b>2026-08-16</b>: 💰 解説「<a href="guide-commodity-basics.html" style="color:#0969da"><b>コモディティの基礎｜金・原油はなぜ動くのか</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 📰 解説「<a href="guide-news-2026-08-15-sp500-7800-record-consumer-data.html" style="color:#0969da"><b>【8/15】S&P500史上初7,816高値→消費データ急悪化で反落</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🌐 解説「<a href="guide-scam-unregistered-broker.html" style="color:#0969da"><b>海外無登録業者の出金拒否（FX・バイナリー）</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🌡 解説「<a href="guide-proverb-greedy-when-fearful.html" style="color:#0969da"><b>他人が貪欲なときに恐れ、他人が恐れるときに貪欲であれ</b></a>」公開'},
