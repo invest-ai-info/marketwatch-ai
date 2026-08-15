@@ -133,4 +133,5 @@ SYNC_FILES = [
     "guide-margin-trading.html",
     "guide-proverb-greedy-when-fearful.html",
     "guide-scam-unregistered-broker.html",
+    "guide-news-2026-08-15-sp500-7800-record-consumer-data.html",
 ]
