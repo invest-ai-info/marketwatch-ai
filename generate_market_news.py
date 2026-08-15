@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🌐 解説「<a href="guide-scam-unregistered-broker.html" style="color:#0969da"><b>海外無登録業者の出金拒否（FX・バイナリー）</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🌡 解説「<a href="guide-proverb-greedy-when-fearful.html" style="color:#0969da"><b>他人が貪欲なときに恐れ、他人が恐れるときに貪欲であれ</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 💰 解説「<a href="guide-margin-trading.html" style="color:#0969da"><b>信用取引の基礎（制度/一般・逆日歩・追証）</b></a>」公開'},
         {"date": "2026-08-15", "line": '・<b>2026-08-15</b>: 🧪 解説「<a href="guide-signal-lab-070.html" style="color:#0969da"><b>上昇×逆張り買い 前向きN=187 昇格継続——RSI 74% vs BB 45% 二極化 #070</b></a>」公開'},

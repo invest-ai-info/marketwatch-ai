@@ -132,4 +132,5 @@ SYNC_FILES = [
     "guide-signal-lab-070.html",
     "guide-margin-trading.html",
     "guide-proverb-greedy-when-fearful.html",
+    "guide-scam-unregistered-broker.html",
 ]
