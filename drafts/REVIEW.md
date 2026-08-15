@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-08-15 | 🚩 ゲート赤（旧ブランドカラー5箇所） | book-watch-weekly | 人間対応必要
+
+- **ルーティン**: `book-watch-weekly`（毎週土曜 11:00 JST）
+- **状況**: 新刊2冊を調査・エントリ作成済みだが `check_guide_draft.py guide-new-books.html` がEXIT=1
+- **ゲートエラー**: `旧ブランドカラーが 5箇所（python apply_brand_color.py --phase 1 --include-cloud --apply で直る）`
+- **原因**: `guide-new-books.html` にはブランドカラー旧値が **既存エントリに** 5箇所残存（今回の新エントリが原因ではない）。today（2026-08-15）の autopublish が `apply_brand_color.py` を復活させたが、book-watch の SOP には同スクリプトの実行ステップがないため、自動で直せない状態。
+- **bookwatch SOP**: 「REDなら公開せず REVIEW.md にエスカレ記録のみコミット」→ guide-new-books.html 変更を差し戻し、本エントリのみコミット
+- **今週追加予定だった新刊（2ソース確認済み）**:
+  1. 『為替介入とは何か 200兆円規模「外為特会」が生まれた謎』著者：服部孝洋（東大金融教育研究センター特任准教授）、出版社：集英社新書、発売：2026-08-07、定価：¥1,320（税込）、ISBN: 9784087214253。確認ソース：集英社公式サイト（shueisha.co.jp）＋集英社プレスリリース（PR TIMES 2026-08-06公開）
+  2. 『資産を動かせ！ 超円安・インフレ時代に生き残るための「お金」の質的変換ロードマップ』著者：岡本康、出版社：スタンダーズ、発売：2026-07-27、定価：¥1,980（税込）、ISBN: 9784866367958。確認ソース：国立国会図書館サーチ（ndlsearch.ndl.go.jp）＋スタンダーズ公式サイト（standards.co.jp）
+- **人間への対応依頼**:
+  - `python apply_brand_color.py --phase 1 --include-cloud --apply` をローカルで実行して `guide-new-books.html` の旧ブランドカラー5箇所を修正してください
+  - その後、上記2冊のエントリを `guide-new-books.html` の `<!-- BOOKWATCH:INSERT -->` 直後に追加して push してください
+  - あるいは book-watch-weekly の SOP に `apply_brand_color.py` 実行ステップを追加することで次回から自動化できます
+
+---
+
 ## 2026-08-15 | ✅ 公開完了 | margin-trading | autopublish
 
 - **対象ファイル**: `guide-margin-trading.html`（キュー#33・信用取引の基礎）
