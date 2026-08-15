@@ -3,6 +3,26 @@
 
 ---
 
+## 2026-08-15
+- 判定: ✅ 公開済み
+- 選定トピック: S&P 500史上初の7,816高値（時価総額$70.8兆）→翌日小売-0.6%・UMich消費者信頼感51.0急落で小反落。PPI鈍化（+4.7%YoY）・週間3連続プラス・日経3日続伸68,713円（カテゴリ: マクロ・米国株・S&P 500記録・消費データ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: S&P 500が初めて7,800を超え7,816.70の史上最高値（8/13米国時間）。$70.8兆という時価総額規模も節目として話題性高。翌8/14に小売-0.6%（予想+0.1%を大幅ミス）・消費者信頼感51.0（前月55.2）という混合シグナルで反落し、「インフレ鈍化と消費減速が同時進行」という分析価値ある局面。日経3日続伸（8/12-14）との連動も明確。8/14記事（AMAT決算）と起点は異なるため重複なし。
+- 出典（2系統以上）:
+  - Washington Post「How major US stock indexes fared Thursday 8/13/2026」
+  - BLS公式 bls.gov/news.release/archives/ppi_08132026.htm
+  - Axios「Producer Price Index shows another cool July inflation reading」2026-08-13
+  - Motley Fool「S&P 500 Eases Off Its Record as the Consumer Finally Blinks」2026-08-14
+  - Detroit News「U.S. Stocks fall; S&P 500 down 0.2%」2026-08-14
+  - Yahoo Finance「Stock market today: S&P 500 slips from record high but caps third straight week of gains」2026-08-14
+  - 財経新聞（日経平均大引け 8/12〜8/14）
+  - 株探ニュース「日経225先物：15日夜間取引終値」2026-08-15
+- コンプラ自己監査: 🟢白（Opus第1ゲート：数値誤記・日付誤り5件を修正。Opus第2ゲート：さらに5件の日付・タイポを確認・修正。2回のOpassゲートを通過して🟢白確定）
+- 下書き: （直接公開・下書きファイルは作成していない）
+- 公開ファイル: guide-news-2026-08-15-sp500-7800-record-consumer-data.html
+
+---
+
 ## 2026-08-14
 - 判定: ✅ 公開済み
 - 選定トピック: Applied Materials Q3 FY2026 記録決算・売上$91.2億（+25%）・非GAAP EPS $3.50（+41%）「AIが前例のない需要」──日経68,713円4日続伸・TOPIX初の4,200突破（カテゴリ: 個別銘柄決算・AI・半導体装置・日本株）
