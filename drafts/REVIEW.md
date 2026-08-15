@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-08-16 | 🔄 ゲート実行中 | signal-lab-daily #071 | blocked=T×Short FWD崩落
+
+- **対象ファイル**: `drafts/draft-signal-lab-071.html`
+- **テーマ**: S/R壁あり×ショート 前向きN=142——IS 58.5%→FWD 18.8%の段階的崩落と⛔反証接近
+- **FWD成績**: 48/142=33.8% CI[26.5%,41.9%] E(R)=-0.211 CI[-0.393,-0.030]
+- **Wilson CI 上限**: 41.9% < 43% → ブレイクイーブン未満確認済
+- **claims**: 15件 (`drafts/labnotes/lab-071-claims.json`)
+- **状態**: signal_lab_verify ゲート実行中 → Opus コンプラ審査へ
+
+---
+
 ## 2026-08-15 | 🚩 ゲート赤（旧ブランドカラー5箇所） | book-watch-weekly | 人間対応必要
 
 - **ルーティン**: `book-watch-weekly`（毎週土曜 11:00 JST）
