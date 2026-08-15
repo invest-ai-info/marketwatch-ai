@@ -1,92 +1,22 @@
-[
-  {
-    "label": "blocked=T×Short ALL全期間",
-    "filter": {"blocked": true, "direction": "short"},
-    "k": 79,
-    "n": 195
-  },
-  {
-    "label": "blocked=T×Short IS（2026-06-25以前）",
-    "filter": {"blocked": true, "direction": "short", "fired_before": "2026-06-25"},
-    "k": 31,
-    "n": 53
-  },
-  {
-    "label": "blocked=T×Short FWD（2026-06-25以降）",
-    "filter": {"blocked": true, "direction": "short", "fired_from": "2026-06-25"},
-    "k": 48,
-    "n": 142
-  },
-  {
-    "label": "blocked=T×Short FWD signal=macd_dead",
-    "filter": {"blocked": true, "direction": "short", "signal": "macd_dead", "fired_from": "2026-06-25"},
-    "k": 34,
-    "n": 98
-  },
-  {
-    "label": "blocked=T×Short FWD signal=ma_dead",
-    "filter": {"blocked": true, "direction": "short", "signal": "ma_dead", "fired_from": "2026-06-25"},
-    "k": 12,
-    "n": 37
-  },
-  {
-    "label": "blocked=T×Short IS signal=ma_dead",
-    "filter": {"blocked": true, "direction": "short", "signal": "ma_dead", "fired_before": "2026-06-25"},
-    "k": 14,
-    "n": 17
-  },
-  {
-    "label": "blocked=T×Short IS signal=macd_dead",
-    "filter": {"blocked": true, "direction": "short", "signal": "macd_dead", "fired_before": "2026-06-25"},
-    "k": 14,
-    "n": 31
-  },
-  {
-    "label": "blocked=T×Short FWD group=metal",
-    "filter": {"blocked": true, "direction": "short", "group": "metal", "fired_from": "2026-06-25"},
-    "k": 8,
-    "n": 18
-  },
-  {
-    "label": "blocked=T×Short FWD group=oil",
-    "filter": {"blocked": true, "direction": "short", "group": "oil", "fired_from": "2026-06-25"},
-    "k": 0,
-    "n": 9
-  },
-  {
-    "label": "blocked=T×Short FWD group=btc",
-    "filter": {"blocked": true, "direction": "short", "group": "btc", "fired_from": "2026-06-25"},
-    "k": 2,
-    "n": 12
-  },
-  {
-    "label": "blocked=T×Short FWD group=index",
-    "filter": {"blocked": true, "direction": "short", "group": "index", "fired_from": "2026-06-25"},
-    "k": 15,
-    "n": 36
-  },
-  {
-    "label": "blocked=T×Short IS group=metal",
-    "filter": {"blocked": true, "direction": "short", "group": "metal", "fired_before": "2026-06-25"},
-    "k": 7,
-    "n": 8
-  },
-  {
-    "label": "blocked=T×Short FWD tf=1h",
-    "filter": {"blocked": true, "direction": "short", "tf": "1h", "fired_from": "2026-06-25"},
-    "k": 27,
-    "n": 82
-  },
-  {
-    "label": "blocked=T×Long FWD（対照群）",
-    "filter": {"blocked": true, "direction": "long", "fired_from": "2026-06-25"},
-    "k": 131,
-    "n": 281
-  },
-  {
-    "label": "blocked=F×Short FWD（参考：壁なしショート）",
-    "filter": {"blocked": false, "direction": "short", "fired_from": "2026-06-25"},
-    "k": 138,
-    "n": 373
-  }
-]
+{
+  "article_id": "071",
+  "claims": [
+    {"label": "blocked=T×Short ALL全期間", "filter": {"blocked": true, "direction": "short"}, "k": 79, "n": 195},
+    {"label": "blocked=T×Short IS（2026-06-25以前）", "filter": {"blocked": true, "direction": "short", "fired_before": "2026-06-25"}, "k": 31, "n": 53},
+    {"label": "blocked=T×Short FWD（2026-06-25以降）", "filter": {"blocked": true, "direction": "short", "fired_from": "2026-06-25"}, "k": 48, "n": 142},
+    {"label": "blocked=T×Short FWD signal=macd_dead", "filter": {"blocked": true, "direction": "short", "signal": "macd_dead", "fired_from": "2026-06-25"}, "k": 34, "n": 98},
+    {"label": "blocked=T×Short FWD signal=ma_dead", "filter": {"blocked": true, "direction": "short", "signal": "ma_dead", "fired_from": "2026-06-25"}, "k": 12, "n": 37},
+    {"label": "blocked=T×Short IS signal=ma_dead", "filter": {"blocked": true, "direction": "short", "signal": "ma_dead", "fired_before": "2026-06-25"}, "k": 14, "n": 17},
+    {"label": "blocked=T×Short IS signal=macd_dead", "filter": {"blocked": true, "direction": "short", "signal": "macd_dead", "fired_before": "2026-06-25"}, "k": 14, "n": 31},
+    {"label": "blocked=T×Short FWD group=metal", "filter": {"blocked": true, "direction": "short", "group": "metal", "fired_from": "2026-06-25"}, "k": 8, "n": 18},
+    {"label": "blocked=T×Short FWD group=oil", "filter": {"blocked": true, "direction": "short", "group": "oil", "fired_from": "2026-06-25"}, "k": 0, "n": 9},
+    {"label": "blocked=T×Short FWD group=btc", "filter": {"blocked": true, "direction": "short", "group": "btc", "fired_from": "2026-06-25"}, "k": 2, "n": 12},
+    {"label": "blocked=T×Short FWD group=index", "filter": {"blocked": true, "direction": "short", "group": "index", "fired_from": "2026-06-25"}, "k": 15, "n": 36},
+    {"label": "blocked=T×Short IS group=metal", "filter": {"blocked": true, "direction": "short", "group": "metal", "fired_before": "2026-06-25"}, "k": 7, "n": 8},
+    {"label": "blocked=T×Short FWD tf=1h", "filter": {"blocked": true, "direction": "short", "tf": "1h", "fired_from": "2026-06-25"}, "k": 27, "n": 82},
+    {"label": "blocked=T×Long FWD（対照群）", "filter": {"blocked": true, "direction": "long", "fired_from": "2026-06-25"}, "k": 131, "n": 281},
+    {"label": "blocked=F×Short FWD（参考：壁なしショート）", "filter": {"blocked": false, "direction": "short", "fired_from": "2026-06-25"}, "k": 124, "n": 328},
+    {"label": "blocked=T×Short FWD Aug2026（2026-08-01以降）", "filter": {"blocked": true, "direction": "short", "fired_from": "2026-08-01"}, "k": 4, "n": 32},
+    {"label": "blocked=T×Short FWD 後半（2026-07-28〜2026-08-15）", "filter": {"blocked": true, "direction": "short", "fired_from": "2026-07-28", "fired_before": "2026-08-15"}, "k": 11, "n": 50}
+  ]
+}

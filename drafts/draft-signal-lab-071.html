@@ -185,10 +185,9 @@ window.addEventListener('resize',mark);
     <li><strong>検証対象</strong>：サポート・レジスタンス壁（S/R壁）に行く手を阻まれたショートシグナル（blocked=True×ショート）</li>
     <li><strong>IS期（前向き開始前・N=53）</strong>：31/53 = 58.5% CI[45.1%,70.7%]——一見好成績</li>
     <li><strong>FWD期（前向きN=142）</strong>：48/142 = 33.8% CI[26.5%,41.9%]——Wilson CI 上限 41.9% が閾値43%を下回り、ブレイクイーブン未満を統計的に確認</li>
-    <li><strong>直近FWD第3四半期（N=48）</strong>：9/48 = 18.8% E(R)=-0.56——崩落が加速中</li>
-    <li><strong>Aug2026単月（N=32）</strong>：4/32 = 12.5% E(R)=-0.71——直近1.5か月で致命的悪化</li>
-    <li><strong>IS好成績の原因解体</strong>：ma_dead 82.4%（N=17）+ metal 87.5%（N=8）の小サンプル過剰適合。FWDでは両者とも32〜44%へ崩落</li>
-    <li><strong>対照群</strong>：S/R壁あり×ロング FWD 46.6% / 壁なしショート FWD 37.0%——壁ありショートが最も劣位</li>
+    <li><strong>Aug2026単月（2026-08-01〜・N=32）</strong>：4/32 = 12.5%——直近1.5か月の致命的悪化</li>
+    <li><strong>IS好成績の原因解体</strong>：ma_dead 82.4%（N=17）+ metal 87.5%（N=8）の小サンプル過剰適合。FWDではma_dead 32.4%・metal 44.4%へ大幅低下</li>
+    <li><strong>対照群</strong>：S/R壁あり×ロング FWD 46.6% / 壁なしショート FWD 37.8%——壁ありショートが最も劣位</li>
     <li>⚠️ <strong>本記事はシグナル研究の記録。売買推奨ではありません</strong></li>
   </ul>
 </div>
@@ -378,20 +377,24 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
     <td>8/18</td><td>44.4%</td><td>[24.6%, 66.3%]</td>
   </tr>
   <tr class="bad-row">
-    <td>oil（原油）</td><td>2/4</td><td>50.0%</td><td>[15.3%, 84.7%]</td>
+    <td>oil（原油）</td><td>2/3</td><td>66.7%</td><td>[20.8%, 93.9%]</td>
     <td>0/9</td><td class="bad">0.0%</td><td>[0.0%, 31.6%]</td>
   </tr>
   <tr class="bad-row">
-    <td>btc（ビットコイン）</td><td>2/5</td><td>40.0%</td><td>[11.8%, 76.9%]</td>
+    <td>btc（ビットコイン）</td><td>1/4</td><td>25.0%</td><td>[4.6%, 69.9%]</td>
     <td>2/12</td><td class="bad">16.7%</td><td>[4.7%, 43.3%]</td>
   </tr>
   <tr>
-    <td>index（株価指数）</td><td>5/8</td><td>62.5%</td><td>[30.6%, 86.3%]</td>
+    <td>index（株価指数）</td><td>3/6</td><td>50.0%</td><td>[18.8%, 81.2%]</td>
     <td>15/36</td><td>41.7%</td><td>[27.0%, 58.0%]</td>
   </tr>
   <tr>
-    <td>other_fx（FXドル系）</td><td>15/28</td><td>53.6%</td><td>[35.6%, 70.7%]</td>
-    <td>23/67</td><td>34.3%</td><td>[23.8%, 46.5%]</td>
+    <td>jpy_fx（JPYクロス）</td><td>7/13</td><td>53.8%</td><td>[29.1%, 76.8%]</td>
+    <td>3/18</td><td class="bad">16.7%</td><td>[5.8%, 39.2%]</td>
+  </tr>
+  <tr>
+    <td>other_fx（FXドル系）</td><td>11/19</td><td>57.9%</td><td>[36.3%, 76.6%]</td>
+    <td>20/49</td><td>40.8%</td><td>[28.2%, 54.8%]</td>
   </tr>
 </table>
 
@@ -414,7 +417,7 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
 
 <!-- 図2: FWD quarterly bar chart -->
 <figure class="chart-figure">
-  <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FWD期を3等分した四半期別勝率の推移">
+  <svg viewBox="0 0 580 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FWD期を3等分した四半期別勝率の推移">
     <rect width="580" height="220" fill="#f8f9fa" rx="6"/>
     <text x="290" y="20" font-size="12" text-anchor="middle" fill="#374151" font-family="sans-serif" font-weight="bold">FWD期 四半期別勝率の推移（blocked=T×ショート）</text>
 
@@ -435,47 +438,47 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
     <line x1="40" y1="200" x2="560" y2="200" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
 
     <!-- 43% threshold line -->
-    <line x1="40" y1="122" x2="560" y2="122" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,3"/>
-    <text x="562" y="126" font-size="8" fill="#d97706" font-family="sans-serif" font-weight="bold">43%閾値</text>
+    <line x1="40" y1="122" x2="556" y2="122" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="540" y="118" font-size="8" fill="#d97706" font-family="sans-serif" font-weight="bold">43%</text>
 
-    <!-- Bar chart: Q1=38.3%, Q2=44.7%, Q3=18.8%, Aug=12.5% -->
+    <!-- Bar chart: Q1=38.3%, Q2=44.7%, Q3=22.0%, Aug=12.5% -->
     <!-- Scale: 0%=200, 60%=55 → per 1% = (200-55)/60 = 2.417px -->
-    <!-- Q1 (38.3%): bar top = 200 - 38.3*2.417 = 200 - 92.6 = 107.4 -->
+    <!-- Q1 (38.3%): bar top = 200 - 38.3*2.417 = 107 -->
     <rect x="70" y="107" width="80" height="93" fill="#60a5fa" rx="3"/>
     <text x="110" y="100" font-size="12" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">38.3%</text>
-    <text x="110" y="212" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Q1（N=47）</text>
-    <text x="110" y="223" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">6/26〜7/14</text>
+    <text x="110" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">前半（N=47）</text>
+    <text x="110" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">6/26〜7/14</text>
 
-    <!-- Q2 (44.7%): bar top = 200 - 44.7*2.417 = 200 - 108.0 = 92 -->
+    <!-- Q2 (44.7%): bar top = 200 - 44.7*2.417 = 92 -->
     <rect x="185" y="92" width="80" height="108" fill="#60a5fa" rx="3"/>
     <text x="225" y="85" font-size="12" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">44.7%</text>
-    <text x="225" y="212" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Q2（N=47）</text>
-    <text x="225" y="223" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/14〜7/31</text>
+    <text x="225" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">中盤（N=47）</text>
+    <text x="225" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/14〜7/31</text>
 
-    <!-- Q3 (18.8%): bar top = 200 - 18.8*2.417 = 200 - 45.4 = 154.6 -->
-    <rect x="300" y="155" width="80" height="45" fill="#f87171" rx="3"/>
-    <text x="340" y="148" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">18.8%</text>
-    <text x="340" y="212" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Q3（N=48）</text>
-    <text x="340" y="223" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/31〜8/14</text>
+    <!-- Q3 (22.0%): bar top = 200 - 22.0*2.417 = 146.8 -->
+    <rect x="300" y="147" width="80" height="53" fill="#f87171" rx="3"/>
+    <text x="340" y="140" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">22.0%</text>
+    <text x="340" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">後半（N=50）</text>
+    <text x="340" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/28〜8/14</text>
 
-    <!-- Aug (12.5%): bar top = 200 - 12.5*2.417 = 200 - 30.2 = 169.8 -->
+    <!-- Aug (12.5%): bar top = 200 - 12.5*2.417 = 169.8 -->
     <rect x="415" y="170" width="80" height="30" fill="#dc2626" rx="3"/>
     <text x="455" y="163" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">12.5%</text>
-    <text x="455" y="212" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Aug2026（N=32）</text>
-    <text x="455" y="223" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">8/1〜8/14</text>
+    <text x="455" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Aug2026（N=32）</text>
+    <text x="455" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">8/1〜現在</text>
 
     <!-- Trend arrow -->
     <line x1="150" y1="138" x2="400" y2="162" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
   </svg>
-  <figcaption>FWD期を四半期（約N=47〜48）に分割した勝率推移。Q2で一時43%閾値に近づいたが、Q3・Aug2026で急加速崩落。橙破線=43%閾値</figcaption>
-  <p class="note">「Aug2026」はQ3と期間が重複（Aug1日以降）。直近1.5ヶ月の急悪化を別掲。投資助言ではありません</p>
+  <figcaption>FWD期を3分割した勝率推移（前半N=47→中盤N=47→後半N=50）。中盤で一時43%閾値に近づいたが、後半・Aug2026で急加速崩落。橙線=43%閾値</figcaption>
+  <p class="note">「Aug2026」は後半（7/28〜8/14）と期間が重複（8/1以降）。直近1.5ヶ月の急悪化を別掲。投資助言ではありません</p>
 </figure>
 
 <div class="negative-box">
-  <strong>🔴 時系列崩落が加速：Q1 38.3% → Q2 44.7% → Q3 18.8% → Aug 12.5%</strong><br>
-  Q1はすでに38.3%と閾値を下回っていたが、Q2では44.7%と一時的に盛り返した。
-  しかしQ3（7月末〜8月中旬）では18.8%（E(R)=−0.56）へと急落し、
-  Aug2026単月では12.5%（E(R)=−0.71）という深刻な水準に達した。
+  <strong>🔴 時系列崩落が加速：前半38.3% → 中盤44.7% → 後半22.0% → Aug 12.5%</strong><br>
+  前半はすでに38.3%と閾値を下回っていたが、中盤では44.7%と一時的に盛り返した。
+  しかし後半（7/28〜8/14、N=50）では22.0%（E(R)=約−0.5）へと急落し、
+  Aug2026単月（N=32）では12.5%という深刻な水準に達した。
   この時系列パターンは「一時的な変動」ではなく<strong>趨勢的な悪化</strong>を示しており、
   ⛔反証確定が近い可能性を強く示唆する。
 </div>
@@ -514,7 +517,7 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
     <td><strong>壁あり×ショート（本記事）</strong></td><td>48/142</td><td class="bad"><strong>33.8%</strong></td><td>[26.5%, 41.9%]</td><td class="bad">-0.211</td><td>[-0.393, -0.030]</td>
   </tr>
   <tr>
-    <td>壁なし×ショート（参考）</td><td>138/373</td><td>37.0%</td><td>[32.2%, 42.0%]</td><td>-0.143</td><td>[-0.258, -0.028]</td>
+    <td>壁なし×ショート（参考）</td><td>124/328</td><td>37.8%</td><td>[32.8%, 43.1%]</td><td>-0.143</td><td>[-0.258, -0.028]</td>
   </tr>
   <tr class="highlight-row">
     <td>壁あり×ロング（対照）</td><td>131/281</td><td class="good">46.6%</td><td>[40.9%, 52.5%]</td><td class="good">+0.088</td><td>[-0.048, +0.224]</td>
@@ -531,10 +534,10 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
 </div>
 
 <div class="info-box">
-  <strong>壁なしショート（参考）：37.0%</strong><br>
-  壁なしショート（bf×Short FWD 138/373=37.0%）も43%を下回るため、
+  <strong>壁なしショート（参考）：37.8%</strong><br>
+  壁なしショート（bf×Short FWD 124/328=37.8%）も43%を下回るため、
   ショート全般が難しい環境であることは確かだ。
-  しかし壁ありショート（33.8%）は壁なしショートよりさらに3pp低く、
+  しかし壁ありショート（33.8%）は壁なしショートよりさらに4pp低く、
   「壁によるハンディキャップ」が付加されている。
 </div>
 
@@ -569,7 +572,7 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
 
     <rect x="170" y="110" width="110" height="32" fill="#fef9c3" rx="6" stroke="#d97706" stroke-width="1.2"/>
     <text x="225" y="128" font-size="10" text-anchor="middle" fill="#92400e" font-family="sans-serif" font-weight="bold">🟡蓄積→悪化</text>
-    <text x="225" y="142" font-size="8" text-anchor="middle" fill="#92400e" font-family="sans-serif">Q3 18.8%で急落中</text>
+    <text x="225" y="142" font-size="8" text-anchor="middle" fill="#92400e" font-family="sans-serif">後半22%・Aug12.5%急落</text>
 
     <rect x="300" y="110" width="130" height="32" fill="#dcfce7" rx="6" stroke="#16a34a" stroke-width="1.2"/>
     <text x="365" y="128" font-size="10" text-anchor="middle" fill="#15803d" font-family="sans-serif" font-weight="bold">✅壁あり×ロング</text>
@@ -642,6 +645,7 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
 <div class="info-box">
   <strong>③ Aug2026単月 12.5% の意味</strong><br>
   8月1日以降のN=32はまだ少ないが、CI[4.8%,28.3%]は上限でも30%未満で確固とした低成績だ。
+  後半（7/28〜8/14、N=50）でも22.0%と劇的に低い。
   もしこの水準が続けば、次回の自動再検証（signal_lab_tracker.py）で
   ⛔反証の確定条件（2回連続NG）に達する可能性が高い。
 </div>
@@ -651,7 +655,7 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
   同じ「壁あり」でも、ロング（FWD 46.6%）とショート（FWD 33.8%）で13ppの差がある。
   S/R壁の本質は「反発しやすい水準」であり、その反発方向と同じ向きにポジションを持つか、
   反対向きに持つかで成績が大きく異なる——という構造的な解釈が成立する。
-  ただし壁あり×ロングもまだ前向き検証中であり、断定的な推奨はできない。
+  ただし壁あり×ロングもまだ前向き検証中（E(R) CIがゼロを跨ぐ）であり、断定的な推奨はできない。
 </div>
 
 <h2>まとめ</h2>
