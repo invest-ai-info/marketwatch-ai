@@ -81,3 +81,4 @@
 - **#23「セル・イン・メイ」＝執筆しない（クローズ）**。既存 `guide-sell-in-may.html`（検証記事・公開済み）と主題が同一のため統合＝既存記事を正史とする。キュー行にも⛔スキップ指示を明記済み。
 - **キューに #34〜39 の6本を補充**（損切りは早く利は伸ばせ／他人が貪欲なときに恐れよ／相場は明日もある／遠くのものは避けよ／歴史は韻を踏む／辛抱する木に金がなる）。次回ルーティン発火時から #34 を再開。
 - 記録者: オーナー指示によるセッション作業（Claude）。
+| 35 | ✅公開済み | 他人が貪欲なときに恐れ、他人が恐れるときに貪欲であれ | greedy-when-fearful | 2026-08-15 | 🟡グレー（初期：①Section 8の記述矛盾（2009年3月に底打ちしたのに「その後も下落が続きました」）→Opus軽微修正・②第三者統計+8.6%の根拠表示補強）→ 🟢白（最終）→ 品質②「メタ認知」に初出説明が薄い⚠️→1文追記 → 🟢白（独立Opus確認・全観点PASS） | ウォーレン・バフェット、1986年バークシャー・ハサウェイ株主書簡（1987年公開・諸説あり）。原文「We simply attempt to be fearful when others are greedy and to be greedy only when others are fearful.」。2008-10-16 NYT「Buy American. I am.」・プロスペクト理論（Kahneman & Tversky, 1979, Econometrica）・AAII弱気70.3%（2009-03-05）・強気75.0%（2000-01-06）・CNN Fear & Greed Index 7指標・Nationwide Financial +8.6%（出典・限界明示）・ハーディング/確証バイアス・姉妹格言（#6/#13）との比較表・感情の温度計SVG概念図・kinsho-v1三層完備。check_site_consistency.py EXIT=0（警告16件は既存記事の偽陽性）。自動公開ルーティン proverb-daily-auto による。 |
