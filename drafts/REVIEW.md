@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-08-16 | ✅ 公開完了 | commodity-basics | autopublish
+- **決定論ゲート**: 🟢GREEN（SVGラベルはみ出し→text-anchor="end"で修正後GREEN）
+- **Opusコンプラ+品質**: 🟡グレー修正適用（8箇所: SPDR名の非推奨明記・ホルムズ海峡分母是正・OPEC+定義幅ヘッジ・限月の一般化是正・ロールコスト仮定明記・出典ヘッジ）→ 禁止語「購入を推奨」二次検出→「選ぶよう促すものではありません」に変換→GREEN再確認
+- **独立Opus**: 🟢WHITE確認
+- **公開コマンド**: `python publish_article.py --file guide-commodity-basics.html --category 投資の基礎知識 --emoji 💰`
+- **push**: EXIT=0（HEAD→main, commit 44965b7）
+- **HTTP確認**: クラウド環境の既知プロキシブロックにより直接確認不可。push成功・GitHub Pages自動デプロイ
+- **URL**: https://marketwatch-jp.com/guide-commodity-basics.html
+
+---
+
 ## 2026-08-16 | 🚩 コンプラ🔴黒（数値整合不備） | signal-lab-daily #071 | 人間対応必要
 
 - **対象ファイル**: `drafts/draft-signal-lab-071.html`
