@@ -33,6 +33,11 @@ jobs:
           GH_OWNER: ${{ github.repository_owner }}
           GH_REPO: ${{ github.event.repository.name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # ⑨ Gmailアプリパスワードの死活確認用（login のみ・メールは送らない）。
+          # 失効すると全メールレーンが同時に死ぬが、送信側は失敗を握り潰して緑のままなので、
+          # ここで毎朝 login を試す（2026-08-16 に3週間気づけなかった事故の恒久対策）。
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python check_automation_health.py
 
       - name: Open or update issue on failure
