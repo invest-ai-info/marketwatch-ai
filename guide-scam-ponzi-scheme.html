@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>ポンジ・スキームの仕組みを数字で見抜く——「配当が振り込まれた」は安全の証明にならない理由 - MarketWatch AI</title>
+  <meta name="description" content="「配当が本当に振り込まれた」は安全の証明にならない——それがポンジ・スキームの核心です。配当の原資は後から参加した人の元本。数理的に破綻を避けられない構造を仮の例で分解し、金融庁登録確認・無登録業者リスト照合の確認手順と相談窓口まで整理。投資詐欺から身を守るシリーズ第4回。">
+  <meta name="keywords" content="ポンジスキーム,投資詐欺,元本保証,配当詐欺,出資金詐欺,無登録業者,金融庁,出資法,確認手順,相談窓口">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-scam-ponzi-scheme.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ポンジ・スキームの仕組みを数字で見抜く——「配当が振り込まれた」は安全の証明にならない理由">
+  <meta property="og:description" content="配当の原資は後から参加した人の元本。数理的に破綻を避けられないポンジ・スキームの構造を仮の例で分解。確認手順と相談窓口を整理。投資詐欺から身を守るシリーズ第4回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-scam-ponzi-scheme.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ポンジ・スキームの仕組みを数字で見抜く——「配当が振り込まれた」は安全の証明にならない理由",
+    "description": "配当の原資は後から参加した人の元本。数理的に破綻を避けられないポンジ・スキームの構造を仮の例で分解し、確認手順・相談窓口を整理。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-16",
+    "dateModified": "2026-08-16",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-scam-ponzi-scheme.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.50}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; ポンジ・スキーム（配当詐欺の構造）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は投資詐欺の手口と対策に関する一般的な「情報提供」であり、特定銘柄・金融商品の売買推奨や投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🎪 ポンジ・スキームの仕組みを数字で見抜く——「配当が振り込まれた」は安全の証明にならない理由</h1>
+    <div class="meta-line">公開日：2026 年 8 月 16 日 ／ 読了時間：約 9 分 ／ カテゴリ：投資詐欺から身を守る（第4回）</div>
+
+    <p>「実際に配当が振り込まれた」——この体験は、詐欺を見抜く上で最も役に立たない情報の一つです。それがポンジ・スキームの核心的なトリックだからです。</p>
+    <p>ポンジ・スキームとは、投資で得た実際の利益から配当を払うのではなく、<strong>後から参加した人の元本を既存の参加者への「配当」として流用する手口</strong>です。配当は本物のお金として振り込まれるため、受け取った側は「本当に運用されている」と確信します。しかし、その確信こそが最大の罠です。</p>
+    <p>この手口は、名称の由来となった人物が1920年代に実施した詐欺に遡る歴史的な手口であると同時に、現代の投資詐欺にも広く組み込まれています。SNS上で勧誘される「高利回り投資」の多くが、この構造を持ちます。</p>
+
+    <div class="info-box"><strong>⏱️ 3行サマリ</strong><br>
+      ① ポンジ・スキームの配当は「後から入った参加者の元本」から払われる。実際の運用益は存在しない（あるいはほぼ存在しない）ため、<strong>配当を受け取っても元本の安全は保証されない</strong>。<br>
+      ② 配当を払い続けるには新規参加者を増やし続ける必要があり、数学的に限界が来る。参加者が増えるほど必要な新規資金も増え、<strong>構造上いずれ破綻する</strong>。<br>
+      ③ 防御は「配当を受け取ったかどうか」でなく、「金融庁に登録された業者か」「元本保証を約束していないか」という<strong>経路と手順</strong>で判断する。
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#section-1">ポンジ・スキームとは——配当の出どころを問う</a></li>
+        <li><a href="#section-2">「月3%配当」の数字を分解する（仮の例）</a></li>
+        <li><a href="#section-3">概念図：お金の実際の流れ</a></li>
+        <li><a href="#section-4">なぜ崩壊は数学的に不可避か</a></li>
+        <li><a href="#section-5">「配当が来た」が最強の罠になる理由——騙される側の心理</a></li>
+        <li><a href="#section-6">「月利」「元本保証」「高配当」が出たときの確認手順</a></li>
+        <li><a href="#section-7">相談窓口と被害に遭ってしまったときの初動</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ ポンジ・スキームとは——配当の出どころを問う</h2>
+
+    <p>正当な投資では、配当や利益の分配は<strong>実際の事業活動や運用で得た収益</strong>から行われます。株式の配当は企業の利益から、債券の利子は借り手が生み出した価値から支払われます。</p>
+    <p>ポンジ・スキームでは、その仕組みが根本的に異なります。</p>
+
+    <div class="warning-box">「高利回りを稼いでいる」と見せかけながら、実際には運用を行っていない（あるいはごくわずかしか行っていない）。配当の原資は、後から参加した投資家が払い込んだ元本。</div>
+
+    <p>法的には、このような手口は日本において複数の法令と関係します。出資を募り、「高利回りの配当」を謳うことには<strong>出資法（出資の受入れ、預り金及び金利等の取締りに関する法律）</strong>や<strong>金融商品取引法</strong>との関係が生じます。日本国内で金融商品取引業を行うには金融庁への登録が原則として必要であり、無登録でこれを行うことは法令違反にあたります。</p>
+
+    <h3>ポンジ・スキームの4つの共通要素</h3>
+    <p>手口の形はさまざまですが、次の4要素がそろっている場合、この構造を強く疑うべきです。</p>
+    <ul>
+      <li><strong>① 異常に高い利回りの「約束」</strong>——年10%以上、あるいは「毎月〇%」といった水準を<strong>固定・確約</strong>する説明（危険信号は利回りの高さそのものより、変動する市場でその水準を約束できるとする点にあります）</li>
+      <li><strong>② 「元本保証」または「損失がほぼない」という説明</strong>——リスクの高い運用でリターンを得ようとすれば元本毀損リスクは必然であり、「保証」は正規業者では原則できない</li>
+      <li><strong>③ 運用先の詳細が不透明</strong>——「独自のアルゴリズム」「海外の秘密のポートフォリオ」など、第三者が検証できない説明</li>
+      <li><strong>④ 出金時の障壁</strong>——「さらに投資すれば出金できる」「解約金がかかる」「手続きに時間がかかる」という対応</li>
+    </ul>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「月3%配当」の数字を分解する（仮の例）</h2>
+
+    <p>ここからは、<strong>考え方を説明するための仮の例</strong>を使って、配当の数理構造を具体的に見ていきます。実在の事業者・商品を想定したものではありません。</p>
+
+    <h3>仮の例：月3%の配当を約束するスキーム</h3>
+    <p>10人が各100万円を出資し、運営者が「毎月3%の配当（月3万円）を支払う」と約束した場合を考えます。</p>
+
+    <table>
+      <tr><th>項目</th><th>数値（仮の例）</th><th>補足</th></tr>
+      <tr><td>参加者</td><td>10人</td><td>各100万円出資</td></tr>
+      <tr><td>元本合計</td><td>1,000万円</td><td>これが「資金プール」</td></tr>
+      <tr><td>月3%の配当</td><td>30万円/月</td><td>10人 × 3万円 = 30万円</td></tr>
+      <tr><td>年間の配当支払総額</td><td>360万円/年</td><td>元本の36%に相当</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 まず「36%のリターン」を一般的な運用と比べてみる</strong><br>
+      年36%（月3%）の収益を安定して生み出せる投資は、正規の金融商品では通常存在しません。国内の株式市場の長期平均的な年間リターンでも数%程度とされています。「確実に月3%」という約束は、それだけで強い警戒信号です。
+    </div>
+
+    <h3>では、30万円/月はどこから来るか</h3>
+    <p>正当な運用収益が存在しない（あるいは極めて少ない）場合、配当の出どころは2つしかありません。</p>
+
+    <p><strong>選択肢A：元本を取り崩して支払う</strong></p>
+    <p>1,000万円の元本から30万円/月を支払い続けると、単純計算で<strong>約33ヶ月（3年弱）で元本が枯渇</strong>します。運営者が生活費・経費・私的使用に流用すれば、枯渇はさらに早まります。逆に言えば、<strong>運用実態がまったくなくても2〜3年は「配当」が続き得る</strong>ということです。参加者は「正常に運用されている」と信じたまま、ある日突然「運用先の問題で払えなくなった」という連絡を受けます。</p>
+    <p style="font-size:.82rem;color:#57606a">検算：1,000万円 ÷ 30万円/月 ≒ 33ヶ月</p>
+
+    <p><strong>選択肢B：新規参加者の元本で支払う</strong></p>
+    <p>毎月の配当支払い30万円を新規参加者の元本でまかなうには、月30万円の新規入金が必要です。ただし、その新規参加者にも月3%の配当を約束するため、毎月の支払い義務が3%ずつ増え続けます。下表は参加者数と支払い義務の累積を仮の例で示したものです（月3%複利での成長を前提）。</p>
+
+    <table>
+      <tr><th>経過時点</th><th>累計参加者数（仮）</th><th>月配当総額（仮）</th><th>必要な新規資金（仮）</th></tr>
+      <tr><td>開始時</td><td>10人</td><td>30万円</td><td>30万円/月</td></tr>
+      <tr><td>1年後</td><td>約14人</td><td>約43万円</td><td>約43万円/月</td></tr>
+      <tr><td>2年後</td><td>約20人</td><td>約61万円</td><td>約61万円/月</td></tr>
+      <tr><td>5年後</td><td>約59人</td><td>約177万円</td><td>約177万円/月</td></tr>
+      <tr><td>10年後</td><td>約350人</td><td>約1,050万円</td><td>約1,050万円/月</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">※上記は考え方を説明するための仮の例であり、概算値です。実際のスキームの規模・条件は異なります。</p>
+
+    <p>毎月3%以上のペースで参加者数が増え続けなければ、配当が支払えなくなります。参加者が増えれば増えるほど、新規で必要な資金も増えます。<strong>これが「数学的に限界が来る」理由</strong>です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 概念図：お金の実際の流れ</h2>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ポンジ・スキームの資金フロー概念図">
+        <title>ポンジ・スキームの資金フロー（概念図）</title>
+        <defs>
+          <marker id="arrowR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#cf222e"/>
+          </marker>
+          <marker id="arrowB" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#0969da"/>
+          </marker>
+          <marker id="arrowG" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#1a7f37"/>
+          </marker>
+          <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#8b949e"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="700" height="540" fill="#f6f8fa" rx="8"/>
+
+        <!-- Title -->
+        <text x="350" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A6E" font-family="sans-serif">ポンジ・スキームにおける資金の実際の流れ（概念図）</text>
+
+        <!-- 新規参加者ボックス (top left) -->
+        <rect x="30" y="55" width="160" height="70" rx="8" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="110" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#1f6feb" font-family="sans-serif">新規参加者</text>
+        <text x="110" y="102" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">「高利回り」に</text>
+        <text x="110" y="116" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">引き寄せられ出資</text>
+
+        <!-- 既存参加者ボックス (bottom left) -->
+        <rect x="30" y="390" width="160" height="80" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="110" y="418" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f37" font-family="sans-serif">既存参加者</text>
+        <text x="110" y="436" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">「配当が来た！」と</text>
+        <text x="110" y="452" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">信頼を深める</text>
+        <text x="110" y="466" text-anchor="middle" font-size="10" fill="#1a7f37" font-family="sans-serif">→ 追加投資や紹介</text>
+
+        <!-- 運営者ボックス (center) -->
+        <rect x="270" y="195" width="160" height="80" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="2"/>
+        <text x="350" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#cf222e" font-family="sans-serif">運営者</text>
+        <text x="350" y="245" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">元本を受け取り</text>
+        <text x="350" y="260" text-anchor="middle" font-size="11" fill="#cf222e" font-family="sans-serif">実際の運用は少ない</text>
+
+        <!-- 元本流用ボックス (right) -->
+        <rect x="510" y="195" width="155" height="80" rx="8" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="587" y="221" text-anchor="middle" font-size="12" font-weight="700" fill="#9a6700" font-family="sans-serif">元本の行き先</text>
+        <text x="587" y="239" text-anchor="middle" font-size="10" fill="#6a4c00" font-family="sans-serif">・運営者の生活費・報酬</text>
+        <text x="587" y="254" text-anchor="middle" font-size="10" fill="#6a4c00" font-family="sans-serif">・広告・リクルート費用</text>
+        <text x="587" y="269" text-anchor="middle" font-size="10" fill="#cf222e" font-family="sans-serif">→ 参加者に戻らない</text>
+
+        <!-- 新規参加者 → 運営者（元本入金） -->
+        <line x1="190" y1="90" x2="268" y2="220" stroke="#0969da" stroke-width="2" marker-end="url(#arrowB)"/>
+        <rect x="180" y="130" width="90" height="36" rx="5" fill="#ddf4ff" opacity="0.9"/>
+        <text x="225" y="146" text-anchor="middle" font-size="10" font-weight="700" fill="#0969da" font-family="sans-serif">①元本入金</text>
+        <text x="225" y="160" text-anchor="middle" font-size="10" fill="#424a53" font-family="sans-serif">100万円/人</text>
+
+        <!-- 運営者 → 既存参加者（名目配当） -->
+        <line x1="270" y1="255" x2="192" y2="410" stroke="#1a7f37" stroke-width="2" marker-end="url(#arrowG)"/>
+        <rect x="170" y="300" width="104" height="40" rx="5" fill="#e6ffed" opacity="0.9"/>
+        <text x="222" y="316" text-anchor="middle" font-size="10" font-weight="700" fill="#1a7f37" font-family="sans-serif">②「配当」名目</text>
+        <text x="222" y="332" text-anchor="middle" font-size="10" fill="#424a53" font-family="sans-serif">新規元本から払う</text>
+
+        <!-- 運営者 → 元本流用 -->
+        <line x1="430" y1="235" x2="508" y2="235" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowR)"/>
+        <text x="469" y="225" text-anchor="middle" font-size="10" font-weight="700" fill="#cf222e" font-family="sans-serif">③元本流用</text>
+
+        <!-- 既存参加者 → 新規参加者（口コミ） -->
+        <line x1="110" y1="390" x2="110" y2="127" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowGray)"/>
+        <rect x="2" y="255" width="90" height="50" rx="5" fill="#f6f8fa" opacity="0.95"/>
+        <text x="47" y="273" text-anchor="middle" font-size="9" fill="#57606a" font-family="sans-serif">④口コミで</text>
+        <text x="47" y="287" text-anchor="middle" font-size="9" fill="#57606a" font-family="sans-serif">友人・家族に</text>
+        <text x="47" y="301" text-anchor="middle" font-size="9" fill="#57606a" font-family="sans-serif">紹介</text>
+
+        <!-- 崩壊の表示 -->
+        <rect x="200" y="430" width="310" height="90" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="355" y="455" text-anchor="middle" font-size="13" font-weight="700" fill="#cf222e" font-family="sans-serif">🚨 新規参加者が来なくなると…</text>
+        <text x="355" y="475" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">配当の原資がなくなる → 出金停止 → 崩壊</text>
+        <text x="355" y="492" text-anchor="middle" font-size="11" fill="#424a53" font-family="sans-serif">この時点で既存参加者の元本は</text>
+        <text x="355" y="508" text-anchor="middle" font-size="11" fill="#cf222e" font-family="sans-serif">すでに運営者に流用されている</text>
+
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際のスキームの構造・規模は多様であり、この図は説明のための概念化です。</p>
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ なぜ崩壊は数学的に不可避か</h2>
+
+    <p>ポンジ・スキームが「詐欺的な意図があるか否か」に関わらず数理的に持続不可能である理由を、もう少し掘り下げます。</p>
+
+    <h3>指数関数的な新規資金の必要性</h3>
+    <p>月3%の配当を新規参加者の元本だけで賄う場合、<strong>参加者数は毎月3%以上の割合で増え続けなければなりません</strong>。複利の逆算です。</p>
+    <p>月3%複利での成長を続けた場合、参加者数は次のように増加する必要があります（<strong>考え方を説明するための仮の例</strong>）。</p>
+
+    <table>
+      <tr><th>経過年数</th><th>必要な参加者数の倍率（仮）</th><th>説明</th></tr>
+      <tr><td>1年後</td><td>約1.4倍</td><td>10人→約14人</td></tr>
+      <tr><td>2年後</td><td>約2.0倍</td><td>10人→約20人</td></tr>
+      <tr><td>5年後</td><td>約5.9倍</td><td>10人→約59人</td></tr>
+      <tr><td>10年後</td><td>約35倍</td><td>10人→約350人</td></tr>
+      <tr><td>20年後</td><td>約1,205倍</td><td>10人→約12,000人（小規模な市町村の人口規模）</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">※複利計算（1.03^n）に基づく概算。考え方を説明するための仮の例であり、実際のスキームの推移を予測するものではありません。</p>
+
+    <p>これは<strong>永遠に続けることのできない指数関数的成長</strong>を前提としています。実際には、新規参加者の獲得ペースが鈍化した瞬間に、支払い義務と入金額の差が急拡大し、崩壊が始まります。</p>
+
+    <h3>崩壊のトリガー</h3>
+    <p>歴史的に確認されているこの種の投資詐欺の崩壊は、いくつかのパターンで起きています。</p>
+    <ul>
+      <li><strong>出金要求の集中</strong>：経済不安や市場の不安定化で、参加者の一部が一斉に出金を請求する。配当の支払いには足りていた資金も、元本を返す義務が加わると不足する。</li>
+      <li><strong>新規参加者の枯渇</strong>：口コミや広告による獲得に限界が来る。</li>
+      <li><strong>第三者による告発・捜査</strong>：詐欺の構造に気づいた内部者・被害者が通報する。</li>
+      <li><strong>運営者の自発的な逃亡</strong>：崩壊を察知した運営者が資金ごと逃亡する（「夜逃げ型」）。</li>
+    </ul>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 「配当が来た」が最強の罠になる理由——騙される側の心理</h2>
+
+    <p>詐欺の報告を聞いたとき「なぜ騙されてしまうのか」と感じることがあるかもしれません。しかし、ポンジ・スキームには、合理的な判断を難しくする心理的な仕掛けが意図的に組み込まれています。</p>
+
+    <h3>① 確証バイアス（Confirmation bias）</h3>
+    <p>「配当が振り込まれた」という実体験は、「この投資は本物だ」という強力な証拠として機能します。人は自分の判断を支持する情報を優先的に記憶し、否定する情報を軽視しがちです（確証バイアス）。配当を受け取るたびに、疑いを持つのが難しくなります。</p>
+
+    <h3>② サンクコスト（Sunk cost）と損失回避</h3>
+    <p>「ここまで配当をもらってきたのだから」「今さら引いたら損だ」という感覚です。すでに支払った元本（サンクコスト）を惜しむあまり、「もう少し待てば戻るはず」と追加入金してしまいます。ポンジ・スキームの運営者は、出金要求をした参加者に対して「追加投資をすれば出金手数料が免除される」という説明をすることがあります。これは心理的な誘導です。</p>
+
+    <h3>③ 社会的証明（Social proof）と口コミ</h3>
+    <p>「配当が来た」という体験を持つ参加者が、家族や友人に紹介します。紹介者が「本当に儲かった」と語るとき、その信憑性は大きくなります。ポンジ・スキームが長期間続くほど、口コミによる参加者の輪が広がり、被害の規模も拡大します。</p>
+    <p>SNS型の投資詐欺でも同様の仕組みが使われます。成功報告を行うサクラが「社会的証明」を作り出します（詳しくは<a href="guide-scam-sns-celebrity-ad.html">著名人なりすまし広告型の手口分解</a>を参照）。</p>
+
+    <h3>④ 権威バイアス（Authority bias）</h3>
+    <p>「元証券会社の運用責任者」「○○賞受賞の投資家」「独自開発のアルゴリズム」という説明が付くと、運用の実態を確認する動機が弱まります。運営者は権威のある肩書きや実績を演出することで、参加者の批判的思考を抑制します。肩書きや説明ではなく、<strong>金融庁への登録の有無という客観的な事実</strong>で判断することが有効な対抗策です。</p>
+
+    <h3>⑤ 恐怖と焦りの利用</h3>
+    <p>「今月末で参加枠が終わります」「早い者勝ちです」という時間的プレッシャーが加わると、確認の時間を省いてしまいます。正規の投資機会は、数日の確認期間で消えることはありません。急かされた場合こそ、立ち止まる必要があります。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 「月利」「元本保証」「高配当」が出たときの確認手順</h2>
+
+    <p>「怪しいかどうか」を自分の直感や、配当が来たかどうかで判断する必要はありません。<strong>誰がやっても同じ結果になる手順</strong>で確認します。</p>
+
+    <ol>
+      <li>
+        <strong>業者名を金融庁の「免許・許可・登録等を受けている業者一覧」で検索する</strong><br>
+        金融庁の公式サイト（fsa.go.jp）に一覧が公開されています。日本国内で資金の運用や投資助言を業として行うには、原則として金融庁への登録が必要です。<strong>一覧に名前がない業者とは取引しない</strong>。
+      </li>
+      <li>
+        <strong>金融庁の「無登録で金融商品取引業等を行う者」リストと照合する</strong><br>
+        警告済みの無登録業者名が公開されています（ただし、<strong>リストに掲載されていない業者が安全というわけではありません</strong>——新しい名前は次々に作られるため）。
+      </li>
+      <li>
+        <strong>「月利〇%」「元本保証」という言葉が出た段階で止まる</strong><br>
+        日本の正規の金融機関は、投資性のある商品について、原則として特定の利回りを「保証」することができません（元本・利息があらかじめ確定している預金等とは扱いが異なります）。元本保証を謳う投資勧誘は、金融商品取引法の観点からも強い警戒信号です。
+      </li>
+      <li>
+        <strong>「登録番号を持っている」と言われたら番号を自分で確認する</strong><br>
+        実在する登録業者の番号を騙る手口があります。金融庁の一覧で番号を照合し、その業者の<strong>公式サイトに記載された連絡先に自分からかけ直して</strong>、勧誘が本当にその会社のものか確認します。
+      </li>
+      <li>
+        <strong>振り込む前に第三者に話す</strong><br>
+        家族・友人、または警察相談専用電話 <strong>#9110</strong>・消費者ホットライン <strong>188</strong>。「相談してから判断する」と伝えたときに急かしてくる相手の反応が、判断材料になります。
+      </li>
+      <li>
+        <strong>「配当が来たから大丈夫」という論理をリセットする</strong><br>
+        配当の受取りは、元本の安全を意味しません。配当は後から参加した人の元本から来ている可能性があります。配当を受け取っても、元本が戻る保証にはなりません。
+      </li>
+    </ol>
+
+    <div class="positive-box">
+      <strong>✅ 一言で言えば</strong><br>
+      「本当に儲かっているか」より「金融庁に登録された正規の業者か」を先に確認する。それだけで、ポンジ・スキームを含む多くの投資詐欺の入口を閉じることができます。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 相談窓口と被害に遭ってしまったときの初動</h2>
+
+    <p>不審な勧誘の段階でも、被害が生じた後でも、公的な相談窓口があります。番号を控えておくだけで、いざというときの行動が速くなります。</p>
+
+    <table>
+      <tr><th>窓口</th><th>番号</th><th>主な用途</th></tr>
+      <tr><td>警察相談専用電話</td><td><strong>#9110</strong></td><td>不審な勧誘・詐欺かもしれない段階の相談（平日 8:30〜17:15。受付時間は都道府県警により異なり、時間外は当直・音声案内で対応）</td></tr>
+      <tr><td>消費者ホットライン</td><td><strong>188</strong></td><td>契約・解約などのトラブル全般（最寄りの消費生活センターへ）</td></tr>
+      <tr><td>金融庁 詐欺的な投資に関する相談ダイヤル</td><td><strong>0570-050588</strong></td><td>投資勧誘に関する相談（平日10:00〜17:00）</td></tr>
+      <tr><td>証券取引等監視委員会 情報提供窓口</td><td><strong>0570-00-3581</strong></td><td>無登録業者・不審な勧誘の情報提供（平日10:00〜16:00）</td></tr>
+      <tr><td>緊急時・被害発生</td><td><strong>110</strong> / 最寄りの警察署</td><td>被害届の提出</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">※窓口・受付時間は2026年8月16日時点で金融庁公式サイト等により確認。変更される場合があるため、利用時に公式サイトでご確認ください。</p>
+
+    <h3>被害に気づいたときの初動</h3>
+    <ol>
+      <li><strong>警察（#9110 または最寄り署）へ相談・被害届の提出</strong>——時間が経つほど資金の追跡は難しくなります。</li>
+      <li><strong>振込先の金融機関に連絡する</strong>——「振り込め詐欺救済法」に基づき、犯罪利用口座の凍結と、残存資金からの被害回復分配金制度があります（<strong>全額が戻ることを保証する制度ではありません</strong>。早いほど可能性は残ります）。</li>
+      <li><strong>証拠を保全する</strong>——チャット履歴・通帳・振込明細・相手の口座情報・送受信したメッセージのスクリーンショット。アカウントをブロックする前に記録します。</li>
+      <li><strong>「被害金を取り戻します」と近づく業者を疑う</strong>——被害者情報をもとに接触してくる「被害回復詐欺」（二次被害）が、金融庁の注意喚起にも定番手口として掲載されています。回復の相談は、警察・消費生活センター・弁護士会など公的な経路で行います。</li>
+    </ol>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li><strong>配当の原資</strong>：ポンジ・スキームの「配当」は、後から参加した人の元本から払われる。実際の運用益はほぼ存在しないため、配当を受け取っても元本は安全ではない。</li>
+      <li><strong>数学的必然</strong>：新規参加者を増やし続けなければ配当が支払えない構造は、複利の性質により指数関数的な成長を前提とする。これは有限な参加者数の中では持続不可能であり、崩壊は数理的に不可避。</li>
+      <li><strong>「配当が来た」という体験の危険性</strong>：確証バイアス・サンクコスト・社会的証明・権威バイアスが重なり、配当の受取りがむしろ判断を鈍らせる。「本物の証拠」ではなく「崩壊を先延ばしする設計の一部」と理解する。</li>
+      <li><strong>確認手順</strong>：「月利」「元本保証」「高配当」が出たら、まず金融庁の登録業者一覧で確認。直感や配当実績ではなく、登録の有無という客観的事実で判断する。</li>
+      <li><strong>窓口</strong>：#9110（警察相談）/ 188（消費者ホットライン）/ 金融庁 0570-050588。被害後は警察＋振込先金融機関＋証拠保全＋二次被害への警戒。</li>
+    </ul>
+
+    <p>ポンジ・スキームの構造を知れば、「配当が来た」という情報に対する見方が変わります。それは「本物の証拠」でも「安全の保証」でもなく、「次の新規参加者の元本が来ている間はシステムが動いている」というサインに過ぎません。<strong>経路で見抜き、登録を確認し、迷ったら相談する</strong>——この3つを持っておくことが、ポンジ・スキームに対して最も実効性の高い防御です。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🛡️ 総論：投資詐欺の「6つの危険サイン」もあわせてどうぞ</div>
+      <div class="cta-box-desc">ポンジ・スキームを含む投資詐欺の見取り図・「月利5%」を算数で見抜く方法・確認チェックリストを総論記事で整理しています。</div>
+      <a class="cta-btn" href="guide-investment-scams.html">投資詐欺の見分け方（総論）を読む →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-investment-scams.html">
+        <div class="related-card-title">🛡️ 投資詐欺の見分け方（総論）</div>
+        <div class="related-card-desc">典型パターン図鑑・「月利5%」の算数・6つの危険サイン・登録確認の手順。シリーズのハブとなる総論。</div>
+      </a>
+      <a class="related-card" href="guide-scam-sns-celebrity-ad.html">
+        <div class="related-card-title">📱 SNS型投資詐欺①著名人なりすまし広告</div>
+        <div class="related-card-desc">2026年上半期797.9億円・5,893件。5段階の手口分解と経路で見抜く方法。ポンジ型と組み合わされることが多い。</div>
+      </a>
+      <a class="related-card" href="guide-scam-unregistered-broker.html">
+        <div class="related-card-title">🌐 海外無登録業者の出金拒否</div>
+        <div class="related-card-desc">「利益が出ているのに出金できない」——金融庁相談の定番。ポンジ型との類似構造を持つ出金拒否の手順化。</div>
+      </a>
+      <a class="related-card" href="guide-cognitive-biases.html">
+        <div class="related-card-title">🧠 認知バイアス大全</div>
+        <div class="related-card-desc">確証バイアス・サンクコスト・社会的証明——詐欺が突いてくる心の癖を体系的に整理。</div>
+      </a>
+      <a class="related-card" href="guide-simple-vs-compound-interest.html">
+        <div class="related-card-title">📐 単利と複利の違い</div>
+        <div class="related-card-desc">「月3%複利」が年間どれほどの数値になるかを計算で理解する。高利回り約束の非現実性を見抜く基礎知識。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は投資詐欺の手口と対策に関する一般的な情報を提供するものであり、特定銘柄・金融商品の売買推奨や投資助言ではありません。記載の統計値は警察庁・金融庁等の公表情報に基づきますが（2026年8月16日時点で確認）、暫定値を含み、今後修正される可能性があります。本記事内の数値の仮の例はあくまでも考え方を説明するための試算であり、実際の詐欺事案の数値を保証するものではありません。個別の被害・契約に関する判断は、警察・消費生活センター・弁護士等の専門窓口にご相談ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>

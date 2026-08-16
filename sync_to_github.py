@@ -136,4 +136,5 @@ SYNC_FILES = [
     "guide-news-2026-08-15-sp500-7800-record-consumer-data.html",
     "guide-commodity-basics.html",
     "guide-proverb-soba-wa-asu-mo-aru.html",
+    "guide-scam-ponzi-scheme.html",
 ]
