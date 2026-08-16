@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-08-17 | ⏹ スキップ | 全topic下書き済み | autodraft
+
+- **基準日**: 2026-08-17 JST（UTC 2026-08-16T20:30Z）
+- **照合結果**: キュー全39件すべて「draft存在 or 公開済み」
+  - 公開済み（draft不要）: compounding-drawdown / cognitive-biases / diversification / etf-vs-mutual-fund + 多数
+  - draft存在（公開待ち）: position-sizing / risk-reward / profit-taking / order-types / per-pbr / nikkei-vs-topix / overnight-gap-risk / overconfidence / correlation-risk / ipo-basics / reit-basics / market-hours / sunk-cost 他
+- **アクション**: 新規下書きなし（空コミット回避）。REVIEW.mdのみ更新
+- **次回の対応**: キューに新topicを追加するか、既存下書きを autopublish ゲートへ流す
+
+---
+
 ## 2026-08-16 | ✅ 公開完了 | commodity-basics | autopublish
 - **決定論ゲート**: 🟢GREEN（SVGラベルはみ出し→text-anchor="end"で修正後GREEN）
 - **Opusコンプラ+品質**: 🟡グレー修正適用（8箇所: SPDR名の非推奨明記・ホルムズ海峡分母是正・OPEC+定義幅ヘッジ・限月の一般化是正・ロールコスト仮定明記・出典ヘッジ）→ 禁止語「購入を推奨」二次検出→「選ぶよう促すものではありません」に変換→GREEN再確認
