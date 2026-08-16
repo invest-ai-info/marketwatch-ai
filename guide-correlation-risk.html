@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>見えない集中投資リスク（相関リスク）｜「5銘柄に分散したつもり」が同じ賭けになる理由 - MarketWatch AI</title>
+  <meta name="description" content="「5銘柄に分散した」のに暴落で全部いっしょに下がった——その正体は「相関リスク」です。分散投資の質は銘柄数ではなく相関の低さで決まる仕組みを図解で解説。同テーマ・同通貨・同方向ポジションを合算して考える実践的なリスク管理の考え方まで、初心者〜中級者向けにやさしく説明します。">
+  <meta name="keywords" content="相関リスク,見えない集中投資,分散投資失敗,相関係数,ポートフォリオ,同テーマ株,暴落,リスク管理,集中リスク,FX相関,資産運用">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-correlation-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="見えない集中投資リスク（相関リスク）｜「5銘柄に分散したつもり」が同じ賭けになる理由">
+  <meta property="og:description" content="「5銘柄に分散した」のに暴落で全部いっしょに下がった——その正体は「相関リスク」。銘柄数ではなく相関で考えるリスク管理を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-correlation-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "見えない集中投資リスク（相関リスク）｜「5銘柄に分散したつもり」が同じ賭けになる理由",
+    "description": "分散投資の質は銘柄数ではなく相関係数で決まる。同テーマ・同通貨・同方向ポジションは合算してリスクを考える。暴落時に相関が収束する現象まで図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-17",
+    "dateModified": "2026-08-17",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-correlation-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* SVG概念図（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-g{fill:#1a7f3720;stroke:#1a7f37;stroke-width:1.2}
+    .s-fill-r{fill:#cf222e20;stroke:#cf222e;stroke-width:1.2}
+    .s-fill-b{fill:#0969da15;stroke:#0969da;stroke-width:1.2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-g{fill:#3fb95025;stroke:#3fb950}
+    body.dark .s-fill-r{fill:#f8514925;stroke:#f85149}
+    body.dark .s-fill-b{fill:#58a6ff20;stroke:#58a6ff}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 見えない集中投資リスク（相関リスク）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は相関リスクと分散投資に関する考え方を整理した「情報提供」であり、特定銘柄・商品の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ 見えない集中投資リスク（相関リスク）</h1>
+    <div class="meta-line">公開日：2026 年 8 月 17 日 ／ 読了時間：約 12 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <div class="info-box">
+      📎 <strong>分散投資の基本（卵を一つのカゴに盛るな・コア/サテライト）</strong>については <a href="../guide-diversification.html">分散とポートフォリオの解説記事</a> をご覧ください。本記事はその「実践編」として、<strong>「銘柄を増やしても分散になっていない」落とし穴（相関リスク）</strong>にフォーカスします。
+    </div>
+
+    <p>「5銘柄に分散しているから大丈夫」。そう思っていたのに、暴落が来るとすべてが同時に下がってしまった——そんな経験をしたことはないでしょうか。じつは<strong>分散投資の質を決めるのは「銘柄の数」ではなく「資産間の相関の低さ」</strong>です。この「見えない集中投資リスク」、別名<strong>相関リスク（Correlation Risk）</strong>を理解することは、ポートフォリオを守るうえで欠かせない視点です。</p>
+
+    <h2>📌 この記事の結論（3行サマリ）</h2>
+    <ul>
+      <li>分散の質は<strong>「銘柄数」ではなく「相関係数の低さ」</strong>で決まる。同じ方向に動く資産を増やしても、リスクは減らない。</li>
+      <li>同テーマ・同通貨・同方向のポジションは<strong>「合算して1つのリスクとして見る」</strong>習慣が、集中リスクを防ぐ実践的な方法。</li>
+      <li>暴落時は多くの資産間の相関が上昇し、<strong>「普段は効いていた分散が失われる」</strong>ことが歴史上繰り返し起きている。最も必要な時ほど機能しにくい点を知っておくことが大切。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「5銘柄持てば安心」は半分だけ正しい</a></li>
+        <li><a href="#section-2">相関係数とは何か（-1から+1のスペクトル図解）</a></li>
+        <li><a href="#section-3">「分散したつもり」の典型パターン3選</a></li>
+        <li><a href="#section-4">合算して考える：テーマ・通貨・方向を軸に</a></li>
+        <li><a href="#section-5">暴落時に相関が収束する「分散の失敗」</a></li>
+        <li><a href="#section-6">自分のポートフォリオを点検する3つの問い</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 「5銘柄持てば安心」は半分だけ正しい</h2>
+    <p>「一つの銘柄に全額入れるな」「分散しろ」——これは正しい原則です。しかし、<strong>「5つ持てばリスクが5分の1になる」わけでは全くありません</strong>。</p>
+    <p>たとえば、国内の半導体関連株を5銘柄保有しているとします。銘柄は5つに分かれていますが、それら全部が「半導体セクターの景況感」というひとつの共通要因に連動しています。半導体産業全体に逆風が吹けば、5つとも同じ方向に動く可能性が高い。これは実質的に<strong>1つの賭けを5倍の量で持っているのと変わりません</strong>。</p>
+    <p>分散が本当に機能するかどうかの鍵は<strong>「資産間の相関がどれだけ低いか」</strong>にあります。相関が高い資産をいくら増やしても、リスクはほとんど下がらないのです。</p>
+
+    <div class="warning-box">銘柄数を増やすことは「分散のための必要条件」ではあっても「十分条件」ではありません。相関を意識しない分散は「気休め」になります。</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 相関係数とは何か（-1から+1のスペクトル図解）</h2>
+    <p>2つの資産がどれだけ似た動きをするかを数値化したものを<strong>相関係数</strong>といいます。値は<strong>-1から+1の間</strong>に収まり、次のように解釈します。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 200" role="img" aria-labelledby="corr-spectrum-title">
+        <title id="corr-spectrum-title">相関係数のスペクトル（-1から+1の概念図）</title>
+        <!-- タイトル -->
+        <text class="s-panel-label" x="32" y="24">相関係数のスペクトル（-1 〜 +1）</text>
+
+        <!-- グラデーションバー背景 -->
+        <defs>
+          <linearGradient id="corrGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a7f37" stop-opacity="0.85"/>
+            <stop offset="40%" stop-color="#1a7f37" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="#8b949e" stop-opacity="0.4"/>
+            <stop offset="60%" stop-color="#cf222e" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#cf222e" stop-opacity="0.85"/>
+          </linearGradient>
+        </defs>
+        <rect x="60" y="55" width="520" height="30" rx="6" fill="url(#corrGrad)" stroke="#d0d7de" stroke-width="1"/>
+
+        <!-- 目盛り線 -->
+        <line class="s-guide" x1="60"  y1="50" x2="60"  y2="100"/>
+        <line class="s-guide" x1="190" y1="50" x2="190" y2="100"/>
+        <line class="s-guide" x1="320" y1="50" x2="320" y2="100"/>
+        <line class="s-guide" x1="450" y1="50" x2="450" y2="100"/>
+        <line class="s-guide" x1="580" y1="50" x2="580" y2="100"/>
+
+        <!-- ラベル（上部） -->
+        <text class="s-label-sm" x="60"  y="44" text-anchor="middle">−1</text>
+        <text class="s-label-sm" x="190" y="44" text-anchor="middle">−0.5</text>
+        <text class="s-label-sm" x="320" y="44" text-anchor="middle">0</text>
+        <text class="s-label-sm" x="450" y="44" text-anchor="middle">+0.5</text>
+        <text class="s-label-sm" x="580" y="44" text-anchor="middle">+1</text>
+
+        <!-- 説明テキスト（下部） -->
+        <text class="s-note-g" x="60"  y="115" text-anchor="middle">完全逆相関</text>
+        <text class="s-note-g" x="60"  y="130" text-anchor="middle">（最高の分散効果）</text>
+        <text class="s-label-sm" x="320" y="115" text-anchor="middle">無相関</text>
+        <text class="s-label-sm" x="320" y="130" text-anchor="middle">（それぞれ独立して動く）</text>
+        <text class="s-note-r" x="580" y="115" text-anchor="middle">完全正相関</text>
+        <text class="s-note-r" x="580" y="130" text-anchor="middle">（分散効果ゼロ）</text>
+
+        <!-- 実用ゾーン説明 -->
+        <rect x="60" y="155" width="200" height="28" rx="4" fill="#1a7f3715" stroke="#1a7f37" stroke-width="1"/>
+        <text class="s-note-g" x="160" y="173" text-anchor="middle">理想的な組み合わせ（−0.7以下）</text>
+        <rect x="400" y="155" width="180" height="28" rx="4" fill="#cf222e15" stroke="#cf222e" stroke-width="1"/>
+        <text class="s-note-r" x="490" y="173" text-anchor="middle">要注意ゾーン（+0.7以上）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 相関係数のスペクトル。-1（完全逆相関）に近いほど分散効果が高く、+1（完全正相関）に近いほど「一緒に動く」＝分散の意味がなくなる。実際の市場では0や-1に近い組み合わせを見つけるのは容易でなく、危機時は特に値が変動する。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>相関係数の値</th><th>意味</th><th>分散効果</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>−1（完全逆相関）</td><td>片方が上がれば、もう片方は必ず同じだけ下がる</td><td>最大（理想）</td></tr>
+        <tr><td>0（無相関）</td><td>2つの資産は独立して動く</td><td>有効</td></tr>
+        <tr><td>+0.7〜+1</td><td>強い正相関。同方向に動きやすい</td><td>ほぼなし</td></tr>
+        <tr><td>+1（完全正相関）</td><td>完全に同じ動き。2つ持つ意味がない</td><td>ゼロ</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.85rem;color:#6e7781;margin-top:-8px">※ 相関係数 −1 は「比例して反対方向に動く」という意味であり、値動きの幅まで一致するとは限りません。また ±0.7 という区切りは実務で広く使われる目安のひとつであり、公的に定められた基準ではありません。</p>
+
+    <p>現実の市場では<strong>完全に無相関な資産ペアを見つけることは難しく</strong>、株式同士は概ねプラスの相関を持ちます。だからこそ、異なる資産クラス（株式・債券・コモディティ〔金・原油などの商品〕・通貨など）を組み合わせることに意義があるわけです。ただし後述するように、危機局面では「普段は相関が低かった組み合わせ」でも相関が上昇することがあります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 「分散したつもり」の典型パターン3選</h2>
+    <p>では実際に、どのような状況で「見かけの分散・実質の集中」が起きるのでしょうか。よくある3つのパターンを見てみましょう。</p>
+
+    <h3>パターン①：同テーマ・同セクターの銘柄を複数持つ</h3>
+    <p>AIブームで話題の半導体メーカーを5銘柄買ったとします。銘柄は違いますが、共通の「AIテーマ」「半導体サイクル」「米国金利感応度」といった要因で動きます。<strong>AIテーマが失速すれば、5銘柄ともに売られる</strong>。これは1テーマに5倍賭けているのと本質的に同じです。</p>
+    <p>同様に、「グロース株5銘柄」「日本の自動車株3銘柄」「米国FANG系5銘柄」なども同じ構造です。業種が同じ、景気感応度が同じ、地域が同じ——こうした共通点があるほど相関は高くなる傾向があります。</p>
+
+    <h3>パターン②：同じ通貨ペアの「派生」を複数持つ</h3>
+    <p>外国為替（FX）でよくあるのが、「USDJPY・EURJPY・GBPJPY」を同時にロングにするケースです。3つのポジションがあるように見えますが、<strong>3つとも「円安になれば利益、円高になれば損失」という共通構造</strong>を持っています。実質的には「円の方向性」という1つの賭けを3倍の量で持っているにすぎません。</p>
+    <p>外国株や外国ETFでも似た現象が起きます。「米国株・米国社債・米国REIT（不動産に投資する上場商品）をそれぞれ買った」場合、すべてが米ドル建てであるため、円ベースの損益は<strong>「米ドル/円の為替変動」という共通リスクを3ポジション分抱えている</strong>状態になります。</p>
+
+    <h3>パターン③：同じ方向性のポジションが積み重なる</h3>
+    <p>「景気回復を見込んで株を買い、原油も買い、銅も買い」という場合、3つの異なる資産ですが、<strong>すべて「景気が良くなれば上がる」リスクオン資産</strong>です。景気後退懸念が高まると3つとも同時に下落する可能性があります。</p>
+    <p>ポジションの向き（ロング/ショート）も相関リスクに影響します。全部ロングか全部ショートに偏っていれば、市場全体の方向転換で一斉に損失を受けることになります。</p>
+
+    <!-- SVG2: 見かけの分散 vs 実質的な集中 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 240" role="img" aria-labelledby="fake-div-title">
+        <title id="fake-div-title">見かけ上の分散と実質的な集中の概念図</title>
+
+        <!-- 左パネル：見かけ上の分散 -->
+        <text class="s-panel-label" x="40" y="24">見かけ上の「分散」</text>
+        <text class="s-label-sm" x="40" y="40">株A〜Eを5銘柄保有</text>
+
+        <!-- 5つの円（異なるラベル） -->
+        <circle cx="80"  cy="100" r="26" class="s-fill-g"/>
+        <text class="s-legend" x="80"  y="105" text-anchor="middle">A株</text>
+        <circle cx="140" cy="75"  r="26" class="s-fill-b"/>
+        <text class="s-legend" x="140" y="80" text-anchor="middle">B株</text>
+        <circle cx="200" cy="110" r="26" class="s-fill-r"/>
+        <text class="s-legend" x="200" y="115" text-anchor="middle">C株</text>
+        <circle cx="155" cy="145" r="26" class="s-fill-g"/>
+        <text class="s-legend" x="155" y="150" text-anchor="middle">D株</text>
+        <circle cx="95"  cy="145" r="26" class="s-fill-b"/>
+        <text class="s-legend" x="95"  y="150" text-anchor="middle">E株</text>
+
+        <!-- 「分散？」矢印 -->
+        <text class="s-note-g" x="80" y="210" text-anchor="middle">「5銘柄 = 分散した」</text>
+
+        <!-- 縦区切り -->
+        <line class="s-divv" x1="310" y1="20" x2="310" y2="225"/>
+
+        <!-- 右パネル：実質的な集中（全部テック系・同方向矢印） -->
+        <text class="s-panel-label" x="330" y="24">実質的な「集中」（全部同テーマ）</text>
+        <text class="s-label-sm" x="330" y="40">全部が半導体・テック系銘柄</text>
+
+        <!-- 5つの円（同じテーマラベル） -->
+        <circle cx="390" cy="100" r="26" fill="#cf222e25" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-legend" x="390" y="105" text-anchor="middle">A株</text>
+        <circle cx="450" cy="75"  r="26" fill="#cf222e25" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-legend" x="450" y="80"  text-anchor="middle">B株</text>
+        <circle cx="510" cy="110" r="26" fill="#cf222e25" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-legend" x="510" y="115" text-anchor="middle">C株</text>
+        <circle cx="465" cy="145" r="26" fill="#cf222e25" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-legend" x="465" y="150" text-anchor="middle">D株</text>
+        <circle cx="405" cy="145" r="26" fill="#cf222e25" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-legend" x="405" y="150" text-anchor="middle">E株</text>
+
+        <!-- 下向き矢印（同方向に動く） -->
+        <line x1="450" y1="180" x2="450" y2="215" stroke="#cf222e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="450,220 443,208 457,208" fill="#cf222e"/>
+        <text class="s-note-r" x="450" y="235" text-anchor="middle">テーマ崩れ → 全銘柄が同時に下落</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 5銘柄を持っていても、全部が同一テーマ（半導体・テック等）なら「そのテーマの暴落」に対して1ポジションと同じ動きをする。銘柄数ではなく「動く方向の多様性」が分散の本質。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 合算して考える：テーマ・通貨・方向を軸に</h2>
+    <p>相関リスクを実践的に管理する方法として有効なのが、<strong>「ポジションを3つの軸で合算して見る」</strong>習慣です。</p>
+    <ul>
+      <li><strong>テーマ軸</strong>：同じ産業・景気サイクルに連動するポジションは合算する（例：半導体A＋半導体B＋半導体ETFは「半導体1ポジション」として見る）</li>
+      <li><strong>通貨軸</strong>：ベースとなる通貨が同じポジションは合算する（例：ドル円・ユーロ円・ポンド円ロングは「円ショート3倍」として見る）</li>
+      <li><strong>方向軸</strong>：リスクオン/リスクオフの向きが揃っているポジションは合算する（例：景気敏感株×3＋原油ロング＝景気回復賭け大量保有）</li>
+    </ul>
+    <p>この視点で自分のポートフォリオを見直すと、「バラバラな資産を持っているようで、実は大きく同じ方向に偏っている」ことに気づくことがあります。<strong>真の分散とは、これらの軸で見たときに複数の方向性が共存している状態</strong>を指します。</p>
+
+    <div class="info-box">
+      <strong>💡 実践的なチェック方法</strong>：保有ポジションを紙に書き出し、「これが下がる/損する状況はどんなシナリオか？」を各ポジションに書いてみてください。同じシナリオが複数のポジションに書かれていれば、それらは実質的に相関しています。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 暴落時に相関が収束する「分散の失敗」</h2>
+    <p>相関リスクについて理解するうえで、もっとも重要な事実があります。それは<strong>「普段は相関が低かった資産同士でも、市場が大きく崩れる局面では相関が上昇する傾向がある」</strong>という現象です。</p>
+    <p>平常時の市場では、株式・債券・コモディティ・不動産などはそれぞれ独立した要因で動き、分散の恩恵を受けられます。ところが、リーマンショック（2008年）やコロナショック（2020年）のような急激な市場崩壊では、多くの投資家が一斉に「手元現金を確保しよう」と動き、資産クラスを問わずに売却します。その結果、<strong>普段は相関が低かった資産同士が「同時に下落する」という状況が生まれます</strong>。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 230" role="img" aria-labelledby="crisis-corr-title">
+        <title id="crisis-corr-title">平常時と危機時の相関変化の概念図</title>
+
+        <!-- 左パネル：平常時 -->
+        <text class="s-panel-label" x="40" y="22">平常時（相関が低い）</text>
+        <line class="s-axis" x1="40" y1="170" x2="290" y2="170"/>
+        <line class="s-axis" x1="40" y1="60"  x2="40"  y2="175"/>
+
+        <!-- 3つの資産ラインが独立して動く -->
+        <path class="s-curve-g" d="M40,140 C 70,120 90,130 120,110 C 150,90 165,100 200,95 C 225,90 255,80 285,75"/>
+        <path class="s-curve-l" d="M40,120 C 65,130 90,115 120,130 C 148,145 170,120 200,135 C 228,150 258,140 285,145"/>
+        <path class="s-curve-b" d="M40,100 C 70,108 95,92 120,98 C 148,104 175,85 200,90 C 228,95 258,100 285,88"/>
+
+        <!-- 凡例（全幅に分散配置） -->
+        <line x1="42" y1="192" x2="62" y2="192" stroke="#1a7f37" stroke-width="2.5"/>
+        <text class="s-label-sm" x="66" y="196">資産A（株）</text>
+        <line x1="190" y1="192" x2="210" y2="192" stroke="#cf222e" stroke-width="2.5"/>
+        <text class="s-label-sm" x="214" y="196">資産B（コモディティ）</text>
+        <line x1="430" y1="192" x2="450" y2="192" stroke="#0969da" stroke-width="2.5"/>
+        <text class="s-label-sm" x="454" y="196">資産C（債券）</text>
+
+        <text class="s-note-g" x="165" y="215" text-anchor="middle">それぞれ独自の動き　→ 分散が機能</text>
+
+        <!-- 縦区切り -->
+        <line class="s-divv" x1="310" y1="18" x2="310" y2="220"/>
+
+        <!-- 右パネル：危機時 -->
+        <text class="s-panel-label" x="330" y="22">危機時（相関が上昇）</text>
+        <line class="s-axis" x1="330" y1="170" x2="600" y2="170"/>
+        <line class="s-axis" x1="330" y1="60"  x2="330" y2="175"/>
+
+        <!-- 3つの資産ラインが急落して収束 -->
+        <path class="s-curve-g" d="M330,90 C 355,88 375,95 400,130 C 420,155 440,158 480,162 C 510,165 570,168 598,168"/>
+        <path class="s-curve-l" d="M330,100 C 355,98 375,105 400,138 C 420,158 440,161 480,163 C 510,165 570,167 598,167"/>
+        <path class="s-curve-b" d="M330,80 C 355,82 375,88 400,125 C 420,152 440,155 480,160 C 510,163 570,166 598,166"/>
+
+        <!-- ショック発生マーカー -->
+        <line class="s-brk" x1="395" y1="60" x2="395" y2="170"/>
+        <text class="s-note-r" x="398" y="75">市場ショック</text>
+        <text class="s-note-r" x="398" y="89">発生</text>
+
+        <text class="s-note-r" x="470" y="215" text-anchor="middle">全資産が同方向に動く　→ 分散が機能しなくなる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 平常時はそれぞれ異なる動きをしていた複数資産が、市場ショック発生後は同方向（急落）に動き出す概念図。このように「最も分散が必要な時ほど分散が機能しにくくなる」という現象は、過去の大きな市場危機で繰り返し観察されています。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>これは投資家にとって<strong>「二重の痛み」</strong>です。ポートフォリオ全体が下がる（相場リスク）だけでなく、普段は機能していた分散効果が消える（相関リスクの顕在化）という事態が重なります。</p>
+    <p>だからといって、分散投資に意味がないわけではありません。<strong>平常時の分散は、一般にリスクを下げる効果が期待できます</strong>。ただし、「暴落でも必ず守られる」と過信せず、資産クラス間の相関は動的に変化するという前提で考えることが大切です。</p>
+
+    <div class="warning-box">市場の暴落局面では、通常の相関係数に基づいたリスク計算が実際のリスクを過小評価することがあります。ポジションサイジングで余力を持たせておくことが、こうした「想定外の相関上昇」への備えになります。ポジションサイジングについては <a href="../guide-position-sizing.html">こちらの記事</a> をご覧ください。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 自分のポートフォリオを点検する3つの問い</h2>
+    <p>相関リスクを意識しつつ、実際のポートフォリオを自己点検するための問いを3つ挙げます。</p>
+
+    <h3>問い1：同じセクター・テーマへの偏りはないか？</h3>
+    <p>保有銘柄を「業種・テーマ・景気感応度」で分類してみましょう。たとえば「すべてが金利上昇で恩恵を受けるポジション」あるいは「すべてが円安で恩恵を受けるポジション」だとしたら、それは事実上の集中投資です。</p>
+
+    <h3>問い2：ベース通貨は何か？</h3>
+    <p>外国資産を持つ場合、すべてが同じ外貨建てになっていないか確認しましょう。ドル建て資産ばかりなら「ドル高/円安」が続く間は良くても、円高転換で一斉に損失が拡大するリスクがあります。<a href="../guide-currency-risk.html">為替リスクの解説記事</a>も合わせてご参照ください。</p>
+
+    <h3>問い3：「全部一緒に損するシナリオ」を想像できるか？</h3>
+    <p>最もシンプルなチェック方法です。保有中の全ポジションが同時に大きく損するシナリオを考えてみてください。「景気が急後退する」「ドルが急落する」「金利が急騰する」——もし1つのシナリオで多くのポジションに打撃が来るなら、それだけの集中リスクを抱えていることを意味します。</p>
+
+    <div class="positive-box">
+      <strong>✅ 良い分散の目安</strong>：「Aのシナリオではポジション①②が損するが③④は利益」「Bのシナリオではポジション③④が損するが①②は利益」——このように異なるシナリオで損益が相殺し合う組み合わせが、真の分散です。完璧な組み合わせは現実には難しいですが、方向性としてこれを目指します。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>当サイトが監視している18銘柄（金・銀・原油・日経・S&amp;P500・ナスダック・ダウ・FTSE・BTC・円ドルなど複数FXペア）は、意図的に<strong>コモディティ・指数・暗号資産・FXという異なる資産クラスにまたがっています</strong>。これは、単一テーマへの依存を避け、複数の市場環境で機会が生まれるよう設計されているためです。</p>
+    <p>一方で、複数のFX円ペア（ドル円・ユーロ円・ポンド円・豪ドル円）が同時にシグナルを出すこともあります。これらは「円の方向性」という意味で相関が高く、<strong>同時に複数エントリーする場合は「実質的に円ペアに集中している」と認識する必要があります</strong>。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの実際の成績を確認する</div>
+      <div class="cta-box-desc">複数資産クラスにわたるシグナルが、実際にどのように機能しているか——勝ちも負けも含めた記録を公開しています。相関リスクの視点でも参考にしてください。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>相関リスクについて、大切なポイントを整理します。</p>
+    <ul>
+      <li>分散の質は<strong>「銘柄数」ではなく「相関の低さ（相関係数）」</strong>で決まる。相関が高い資産をいくら増やしてもリスクは減らない。</li>
+      <li>同テーマ・同通貨・同方向のポジションは<strong>テーマ軸・通貨軸・方向軸で合算して考える</strong>。隠れた集中リスクに気づくための実践的な方法。</li>
+      <li>暴落時は多くの資産間の相関が上昇し、<strong>「普段は機能していた分散が失われる」現象</strong>が歴史上繰り返し起きている。</li>
+      <li>対策は完璧な分散を目指すより、<strong>「全部いっしょに損するシナリオ」を具体的に描き、そのリスクを適切なポジションサイズで管理すること</strong>（<a href="../guide-position-sizing.html">ポジションサイジング</a>・<a href="../guide-compounding-drawdown.html">最大ドローダウン</a>の記事も参照）。</li>
+      <li>分散投資は「完璧なリスク回避策」ではなく、<strong>「長期的なリスク低減を助ける手段のひとつ」</strong>と捉えることが現実的な理解です。</li>
+    </ul>
+    <p>「自分はちゃんと分散している」と思っているポートフォリオを、一度テーマ・通貨・方向の3軸で見直してみてください。気づいていなかった集中リスクが見えてくることがあります。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="../guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-diversification.html">
+        <div class="related-card-title">🌐 分散とポートフォリオの基本</div>
+        <div class="related-card-desc">「卵を一つのカゴに盛るな」の原則からコア/サテライト戦略まで。本記事の前編にあたる分散投資の基礎解説。</div>
+      </a>
+      <a class="related-card" href="../guide-position-sizing.html">
+        <div class="related-card-title">💰 ポジションサイジングの技術</div>
+        <div class="related-card-desc">相関リスクが顕在化しても退場しないために必要な「1トレードの資金管理と許容リスク」の考え方。</div>
+      </a>
+      <a class="related-card" href="../guide-compounding-drawdown.html">
+        <div class="related-card-title">📉 複利と最大ドローダウン</div>
+        <div class="related-card-desc">ポートフォリオが一斉に下落した際の連敗リスクと、それでも退場しない資金設計の原則。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は相関リスク・分散投資に関する考え方を情報提供として解説したものであり、特定の銘柄・資産の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="../about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="../site-search.js" defer></script>
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var btn=document.getElementById('mw-back-to-top');if(!btn)return;window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300)},{passive:true});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+
+</body>
+</html>

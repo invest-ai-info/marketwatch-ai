@@ -139,4 +139,5 @@ SYNC_FILES = [
     "guide-scam-ponzi-scheme.html",
     "guide-news-2026-08-16-fomc-july-dissents-jackson-hole.html",
     "guide-signal-lab-071.html",
+    "guide-correlation-risk.html",
 ]
