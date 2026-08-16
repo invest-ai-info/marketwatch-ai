@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>S/R壁あり×ショート 前向きN=142——IS 58.5%→FWD 33.8%、後半22.0%まで段階的崩落と⛔反証接近｜AIシグナル研究日誌 #071</title>
+  <meta name="description" content="サポレジ壁（blocked=True）のあるショートシグナルが前向きN=142で急速悪化。IS期58.5%の好成績はma_dead 82.4%(N=17)・metal 87.5%(N=8)という小サンプルの過剰適合が原因。FWD期は33.8% Wilson CI上限41.9%＜43%でブレイクイーブン未満を統計的に確認。後半期間（N=50）は22.0%・Aug2026単月12.5%と崩落が加速している。">
+  <meta name="keywords" content="">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-071.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="S/R壁あり×ショート 前向きN=142——IS 58.5%→FWD 33.8%、後半22.0%まで段階的崩落と⛔反証接近｜AIシグナル研究日誌 #071">
+  <meta property="og:description" content="サポレジ壁（blocked=True）のあるショートシグナルが前向きN=142で急速悪化。IS期58.5%の好成績はma_dead 82.4%(N=17)・metal 87.5%(N=8)という小サンプルの過剰適合が原因">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-071.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "S/R壁あり×ショート 前向きN=142——IS 58.5%→FWD 33.8%、後半22.0%まで段階的崩落と⛔反証接近｜AIシグナル研究日誌 #071",
+    "description": "サポレジ壁（blocked=True）のあるショートシグナルが前向きN=142で急速悪化。IS期58.5%の好成績はma_dead 82.4%(N=17)・metal 87.5%(N=8)という小サンプルの過剰適合が原因",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-16",
+    "dateModified": "2026-08-16",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-071.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+:root {
+  --bg: #f8f9fa; --card: #fff; --text: #212529; --muted: #6c757d;
+  --border: #dee2e6; --accent: #2C4F8F; --accent2: #16a34a;
+  --warn: #b45309; --danger: #dc2626; --positive: #15803d;
+  --tag-bg: #e0f2fe; --tag-text: #0369a1;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+    --border: #334155; --accent: #60a5fa; --accent2: #4ade80;
+    --warn: #fbbf24; --danger: #f87171; --positive: #86efac;
+    --tag-bg: #1e3a5f; --tag-text: #93c5fd; }
+}
+:root[data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+  --border: #334155; --accent: #60a5fa; --accent2: #4ade80;
+  --warn: #fbbf24; --danger: #f87171; --positive: #86efac;
+  --tag-bg: #1e3a5f; --tag-text: #93c5fd; }
+:root[data-theme="light"] { --bg: #f8f9fa; --card: #fff; --text: #212529; --muted: #6c757d;
+  --border: #dee2e6; --accent: #2C4F8F; --accent2: #16a34a;
+  --warn: #b45309; --danger: #dc2626; --positive: #15803d;
+  --tag-bg: #e0f2fe; --tag-text: #0369a1; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
+nav { background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+nav a { text-decoration: none; color: var(--muted); padding: 0.3rem 0.6rem;
+  border-radius: 4px; font-size: 0.8rem; white-space: nowrap; }
+nav a:hover { background: var(--tag-bg); color: var(--tag-text); }
+nav a.current { background: var(--accent); color: #fff; }
+.container { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1 { font-size: 1.45rem; color: #1E3A6E; line-height: 1.4; margin-bottom: 0.5rem; }
+h2 { font-size: 1.15rem; border-left: 4px solid var(--accent); padding-left: 0.6rem;
+  margin: 2rem 0 0.8rem; }
+h3 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+p { margin-bottom: 0.9rem; }
+.meta-line { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.2rem; }
+.tag { display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.5rem;
+  border-radius: 12px; background: var(--tag-bg); color: var(--tag-text); margin-right: 0.3rem; }
+.tag-red { background: #fee2e2; color: #b91c1c; }
+.summary-box { background: var(--card); border: 2px solid var(--accent); border-radius: 8px;
+  padding: 1.1rem 1.3rem; margin: 1.2rem 0; }
+.summary-box h3 { color: var(--accent); margin-top: 0; }
+.summary-box ul { padding-left: 1.2rem; }
+.summary-box li { margin-bottom: 0.3rem; }
+.info-box { background: var(--card); border-left: 4px solid var(--accent);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.positive-box { background: var(--card); border-left: 4px solid var(--positive);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.warning-box { background: var(--card); border-left: 4px solid var(--warn);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+.negative-box { background: var(--card); border-left: 4px solid var(--danger);
+  padding: 0.9rem 1.1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.2rem; font-size: 0.9rem; }
+th { background: var(--tag-bg); color: var(--tag-text); padding: 0.5rem 0.7rem;
+  text-align: center; border: 1px solid var(--border); font-weight: 600; }
+td { padding: 0.45rem 0.7rem; border: 1px solid var(--border); text-align: center; }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--card) 95%, var(--bg)); }
+.highlight-row td { background: color-mix(in srgb, #dcfce7 70%, var(--card)); font-weight: 600; }
+@media (prefers-color-scheme: dark) { .highlight-row td { background: color-mix(in srgb, #14532d 60%, var(--card)); } }
+:root[data-theme="dark"] .highlight-row td { background: color-mix(in srgb, #14532d 60%, var(--card)); }
+:root[data-theme="light"] .highlight-row td { background: color-mix(in srgb, #dcfce7 70%, var(--card)); }
+.warn-row td { background: color-mix(in srgb, #fef9c3 70%, var(--card)); }
+@media (prefers-color-scheme: dark) { .warn-row td { background: color-mix(in srgb, #422006 60%, var(--card)); } }
+:root[data-theme="dark"] .warn-row td { background: color-mix(in srgb, #422006 60%, var(--card)); }
+:root[data-theme="light"] .warn-row td { background: color-mix(in srgb, #fef9c3 70%, var(--card)); }
+.bad-row td { background: color-mix(in srgb, #fee2e2 70%, var(--card)); }
+@media (prefers-color-scheme: dark) { .bad-row td { background: color-mix(in srgb, #7f1d1d 50%, var(--card)); } }
+:root[data-theme="dark"] .bad-row td { background: color-mix(in srgb, #7f1d1d 50%, var(--card)); }
+:root[data-theme="light"] .bad-row td { background: color-mix(in srgb, #fee2e2 70%, var(--card)); }
+.good { color: var(--positive); font-weight: 700; }
+.bad { color: var(--danger); font-weight: 700; }
+.neutral { color: var(--muted); }
+.chart-figure { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 1rem; margin: 1.2rem 0; overflow-x: auto; }
+.chart-figure figcaption { font-size: 0.78rem; color: var(--muted); text-align: center;
+  margin-top: 0.6rem; }
+.chart-figure .note { font-size: 0.72rem; color: var(--muted); text-align: center;
+  margin-top: 0.2rem; font-style: italic; }
+.disclaimer-banner { background: color-mix(in srgb, var(--warn) 10%, var(--card));
+  border: 1px solid var(--warn); border-radius: 6px; padding: 0.9rem 1.1rem;
+  margin: 1.5rem 0; font-size: 0.82rem; color: var(--text); }
+.disclaimer-banner strong { color: var(--warn); }
+.related-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.9rem 1.1rem; margin: 1.5rem 0; }
+.related-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.related-card a:hover { text-decoration: underline; }
+#tracker { font-size: 1rem; border-left: none; padding-left: 0; }
+#tracker + p.meta-line { font-size: 0.78rem; color: var(--muted); }
+</style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+<nav>
+  <a href="/index.html">🏠 ホーム</a>
+  <a href="/political-feed.html">🚨 政治速報</a>
+  <a href="/track-record.html">📊 成績</a>
+  <a href="/calendar.html">📅 カレンダー</a>
+  <a href="/guides.html" class="current">📚 解説</a>
+  <a href="/guide-investment-books.html">📖 投資本</a>
+  <a href="/market-health.html">🩺 市場健康度</a>
+  <a href="/hot-assets.html">🔥 話題の資産</a>
+  <a href="/charts.html">📈 チャート</a>
+  <a href="/youtube-summary.html">📺 YouTube</a>
+</nav>
+
+<div class="container">
+
+<p class="meta-line">
+  <span class="tag">🧪 AIシグナル研究日誌</span>
+  <span class="tag">#071</span>
+  <span class="tag">blocked=True</span>
+  <span class="tag">dir=short</span>
+  <span class="tag tag-red">⛔反証接近</span>
+  公開：2026年8月
+</p>
+
+<!-- ① 冒頭バナー（kinsho-v1） -->
+<div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+  ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+</div>
+
+<h1>S/R壁あり×ショート 前向きN=142<br>——IS 58.5%→FWD 33.8%、後半22.0%まで段階的崩落と⛔反証接近</h1>
+
+<div class="summary-box">
+  <strong>⏱ 30秒でわかる</strong>
+  <ul style="padding-left:1.2rem;margin-top:0.5rem;">
+    <li><strong>検証対象</strong>：サポート・レジスタンス壁（S/R壁）に行く手を阻まれたショートシグナル（blocked=True×ショート）</li>
+    <li><strong>IS期（前向き開始前・N=53）</strong>：31/53 = 58.5% CI[45.1%,70.7%]——一見好成績</li>
+    <li><strong>FWD期（前向きN=142）</strong>：48/142 = 33.8% CI[26.5%,41.9%]——Wilson CI 上限 41.9% が閾値43%を下回り、ブレイクイーブン未満を統計的に確認</li>
+    <li><strong>Aug2026単月（2026-08-01〜・N=32）</strong>：4/32 = 12.5%——直近1.5か月の致命的悪化</li>
+    <li><strong>IS好成績の原因解体</strong>：ma_dead 82.4%（N=17）+ metal 87.5%（N=8）の小サンプル過剰適合。FWDではma_dead 32.4%・metal 44.4%へ大幅低下</li>
+    <li><strong>対照群</strong>：S/R壁あり×ロング FWD 46.6% / 壁なしショート FWD 37.8%——壁ありショートが最も劣位</li>
+    <li>⚠️ <strong>本記事はシグナル研究の記録。売買推奨ではありません</strong></li>
+  </ul>
+</div>
+
+<h2>はじめに：「壁のあるショート」とは何か</h2>
+<p>
+相場には価格が跳ね返されやすい水準（サポート・レジスタンス、略してS/R）が存在する。
+<strong>ショートポジション（売りエントリー）</strong>の場合、価格の下落を狙うわけだが、
+進行方向にS/Rのサポート壁があると、そこで価格が跳ね返って上昇に転じるリスクが高まる。
+</p>
+<p>
+システムでは各シグナルに対して「S/R壁チェック」を行い、
+<code>sr_runway.blocked = True</code>（行く手に壁あり）か否かを記録している。
+今回検証するのは、<strong>「壁あり（blocked=True）かつショート方向」</strong>のシグナル群だ。
+前向きトラッカーで🟡蓄積中として経過観察していたこの仮説が、
+直近データで急速に悪化しているため、今回の研究テーマとして取り上げた。
+</p>
+
+<h2>データ定義</h2>
+
+<div class="info-box">
+  <strong>分析対象</strong>：signals-log.json から closed（tp1/sl）のみを使用（2026-08-16基準）<br>
+  <strong>blocked=True</strong>：sr_runway.blocked フィールドが True のシグナル（進行方向にS/R壁あり）<br>
+  <strong>ショート方向</strong>：direction フィールドが "ショート（売り）" を含むシグナル<br>
+  <strong>IS/FWD区分</strong>：FWD_START = 2026-06-25（トラッカー登録準備開始日）<br>
+  <strong>勝利定義</strong>：outcome = tp1（TP1到達）。sl はロス確定<br>
+  <strong>E(R)</strong>：tp1=abs(tp1_pct)/abs(sl_pct)×R、sl=−1.0R で推定（上限5.0R）<br>
+  <strong>CI</strong>：勝率は Wilson 区間（95%）、E(R)は平均±1.96×SE
+</div>
+
+<h2>全体成績：IS好成績からFWD崩落へ</h2>
+
+<table>
+  <tr>
+    <th>期間</th><th>k（勝）</th><th>n（閉鎖）</th><th>勝率</th><th>Wilson 95%CI</th><th>E(R)</th><th>E(R) 95%CI</th>
+  </tr>
+  <tr>
+    <td>全期間</td><td>79</td><td>195</td><td>40.5%</td><td>[33.9%, 47.5%]</td><td>-0.055</td><td>[-0.199, +0.088]</td>
+  </tr>
+  <tr class="warn-row">
+    <td>IS（2026-06-25より前）</td><td>31</td><td>53</td><td class="good">58.5%</td><td>[45.1%, 70.7%]</td><td class="good">+0.365</td><td>[+0.055, +0.674]</td>
+  </tr>
+  <tr class="bad-row">
+    <td><strong>FWD（2026-06-25〜）</strong></td><td><strong>48</strong></td><td><strong>142</strong></td>
+    <td class="bad"><strong>33.8%</strong></td><td class="bad">[26.5%, 41.9%]</td><td class="bad"><strong>-0.211</strong></td><td>[-0.393, -0.030]</td>
+  </tr>
+</table>
+
+<div class="negative-box">
+  <strong>🔴 Wilson CI 上限 41.9% ＜ 43%（ブレイクイーブン閾値）</strong><br>
+  ブレイクイーブン勝率（SL=1R、TP1≈1.33R の場合）は約43%。
+  FWD期の Wilson CI 上限が 41.9% と閾値を下回ることで、
+  「FWD期の真の勝率がブレイクイーブン未満」が95%信頼区間で統計的に確認された。
+  これは単なる「成績悪化」ではなく、<strong>負けが期待値に構造的に組み込まれている</strong>ことを示唆する。
+</div>
+
+<!-- 図1: IS vs FWD 比較バー図 + S/R壁コンセプト -->
+<figure class="chart-figure">
+  <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IS期58.5%対FWD期33.8%の勝率比較と、S/R壁がショートを阻むイメージ">
+    <!-- Background -->
+    <rect width="600" height="240" fill="#f8f9fa" rx="6"/>
+
+    <!-- Left panel: IS vs FWD bar chart -->
+    <text x="120" y="20" font-size="11" text-anchor="middle" fill="#374151" font-family="sans-serif" font-weight="bold">勝率比較</text>
+
+    <!-- IS bar (58.5%) -->
+    <rect x="30" y="50" width="60" height="140" fill="#e0f2fe" rx="3"/>
+    <rect x="30" y="168" width="60" height="22" fill="#94a3b8" rx="3"/><!-- empty part top -->
+    <!-- IS fill from bottom: 58.5% of 140px = 81.9px -->
+    <rect x="30" y="108" width="60" height="82" fill="#2563eb" rx="3"/>
+    <text x="60" y="42" font-size="12" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">58.5%</text>
+    <text x="60" y="208" font-size="10" text-anchor="middle" fill="#374151" font-family="sans-serif">IS期</text>
+    <text x="60" y="220" font-size="8" text-anchor="middle" fill="#6c757d" font-family="sans-serif">N=53</text>
+
+    <!-- 43% line -->
+    <line x1="20" y1="170" x2="230" y2="170" stroke="#d97706" stroke-width="1.2" stroke-dasharray="5,3"/>
+    <text x="233" y="174" font-size="8" fill="#d97706" font-family="sans-serif">43%</text>
+    <text x="233" y="184" font-size="7" fill="#d97706" font-family="sans-serif">閾値</text>
+
+    <!-- FWD bar (33.8%) -->
+    <rect x="110" y="50" width="60" height="140" fill="#fee2e2" rx="3"/>
+    <!-- FWD fill from bottom: 33.8% of 140px = 47.3px -->
+    <rect x="110" y="143" width="60" height="47" fill="#dc2626" rx="3"/>
+    <text x="140" y="42" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">33.8%</text>
+    <text x="140" y="208" font-size="10" text-anchor="middle" fill="#374151" font-family="sans-serif">FWD期</text>
+    <text x="140" y="220" font-size="8" text-anchor="middle" fill="#6c757d" font-family="sans-serif">N=142</text>
+
+    <!-- 50% line -->
+    <line x1="20" y1="120" x2="230" y2="120" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+    <text x="233" y="124" font-size="8" fill="#94a3b8" font-family="sans-serif">50%</text>
+
+    <!-- Arrow showing deterioration -->
+    <line x1="95" y1="135" x2="108" y2="145" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
+    <text x="102" y="128" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">▼25pp</text>
+    <defs>
+      <marker id="arr-red" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#dc2626"/>
+      </marker>
+      <marker id="arr-up" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,6 L6,6 L3,0 z" fill="#16a34a"/>
+      </marker>
+    </defs>
+
+    <!-- Vertical divider -->
+    <line x1="260" y1="30" x2="260" y2="230" stroke="#dee2e6" stroke-width="1"/>
+
+    <!-- Right panel: S/R wall concept image -->
+    <text x="430" y="20" font-size="11" text-anchor="middle" fill="#374151" font-family="sans-serif" font-weight="bold">S/R壁がショートを阻むイメージ</text>
+
+    <!-- Price chart -->
+    <!-- Support wall (horizontal band) -->
+    <rect x="280" y="140" width="300" height="18" fill="#fef3c7" rx="2"/>
+    <rect x="280" y="140" width="300" height="18" fill="none" stroke="#d97706" stroke-width="1.2" rx="2" stroke-dasharray="5,3"/>
+    <text x="285" y="134" font-size="9" fill="#d97706" font-family="sans-serif" font-weight="bold">🧱 サポート壁（S/R）</text>
+
+    <!-- Price falling then bouncing off support -->
+    <polyline points="290,60 310,75 325,68 345,90 360,105 375,118 385,132 395,140 405,132 420,120 440,108 460,95 475,82 490,68" fill="none" stroke="#374151" stroke-width="2"/>
+
+    <!-- Short entry arrow (going down) -->
+    <line x1="345" y1="78" x2="345" y2="95" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arr-red)"/>
+    <text x="350" y="73" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">売り↓</text>
+
+    <!-- Bounce arrow (going up, blocked by wall → reversal) -->
+    <line x1="408" y1="135" x2="408" y2="115" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-up)"/>
+    <text x="415" y="150" font-size="9" fill="#16a34a" font-family="sans-serif" font-weight="bold">壁反発↑</text>
+    <text x="415" y="162" font-size="8" fill="#16a34a" font-family="sans-serif">→SLヒット</text>
+
+    <!-- TP label (far down) -->
+    <line x1="280" y1="195" x2="580" y2="195" stroke="#dc2626" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <text x="285" y="210" font-size="8" fill="#dc2626" font-family="sans-serif">TP1（届かない）</text>
+
+    <!-- SL label (above entry) -->
+    <line x1="280" y1="68" x2="580" y2="68" stroke="#b91c1c" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <text x="285" y="63" font-size="8" fill="#b91c1c" font-family="sans-serif">SL（ここで確定）</text>
+  </svg>
+  <figcaption>左：IS期（58.5%）とFWD期（33.8%）の勝率比較。橙破線=ブレイクイーブン閾値43%　右：S/R壁があるショートは壁で価格が反発しやすく、TP1到達前にSLをヒットするケースが多い</figcaption>
+  <p class="note">数値は 2026-08-16 基準の signals-log.json から算出。投資助言ではありません</p>
+</figure>
+
+<h2>IS好成績の解体：小サンプル過剰適合の典型</h2>
+
+<p>
+IS期の58.5%（31/53）は一見すると良い成績に見える。
+しかしこの数字を支えていた内訳を分解すると、構造的な問題が浮かび上がる。
+</p>
+
+<h3>シグナル別 IS vs FWD</h3>
+
+<table>
+  <tr>
+    <th>シグナル</th><th>IS k/n</th><th>IS 勝率</th><th>IS 95%CI</th><th>FWD k/n</th><th>FWD 勝率</th><th>FWD 95%CI</th>
+  </tr>
+  <tr class="warn-row">
+    <td>ma_dead（MA死亡クロス）</td><td>14/17</td><td class="good">82.4%</td><td>[59.0%, 93.8%]</td>
+    <td>12/37</td><td class="bad">32.4%</td><td>[19.1%, 49.2%]</td>
+  </tr>
+  <tr>
+    <td>macd_dead（MACD死亡クロス）</td><td>14/31</td><td>45.2%</td><td>[28.9%, 62.6%]</td>
+    <td>34/98</td><td class="bad">34.7%</td><td>[25.8%, 44.8%]</td>
+  </tr>
+</table>
+
+<div class="negative-box">
+  <strong>🔴 ma_dead（移動平均の死亡クロス）：IS 82.4%（N=17）→ FWD 32.4%（N=37）</strong><br>
+  IS期のサンプルはわずか17件。N=17での82.4%は統計的に不安定であり、
+  CI[59.0%,93.8%]も非常に幅広い。
+  FWDでは37件に増えたが勝率は32.4%（CI[19.1%,49.2%]）へと50pp近く崩落した。
+  MA死亡クロス後にS/R壁で反発するパターンがFWD期では主流となっており、
+  「MA下降＋壁あり」の組み合わせが逆に上昇力を持つ可能性を示している。
+</div>
+
+<div class="warning-box">
+  <strong>⚠️ macd_dead（MACDデッドクロス）：IS 45.2% → FWD 34.7%</strong><br>
+  IS期でも45.2%と低調だったmacd_deadは、FWDでさらに34.7%へ悪化した。
+  MACDデッドクロス後のショートは壁あり・なし問わず成績が良くないが（bf×S FWD 37.8%）、
+  壁ありではさらに劣位となっている。
+</div>
+
+<h3>グループ別 IS vs FWD（主要グループ）</h3>
+
+<table>
+  <tr>
+    <th>グループ</th><th>IS k/n</th><th>IS 勝率</th><th>IS 95%CI</th><th>FWD k/n</th><th>FWD 勝率</th><th>FWD 95%CI</th>
+  </tr>
+  <tr class="warn-row">
+    <td>metal（金・銀）</td><td>7/8</td><td class="good">87.5%</td><td>[52.9%, 97.8%]</td>
+    <td>8/18</td><td>44.4%</td><td>[24.6%, 66.3%]</td>
+  </tr>
+  <tr class="bad-row">
+    <td>oil（原油）</td><td>2/3</td><td>66.7%</td><td>[20.8%, 93.9%]</td>
+    <td>0/9</td><td class="bad">0.0%</td><td>[0.0%, 31.6%]</td>
+  </tr>
+  <tr class="bad-row">
+    <td>btc（ビットコイン）</td><td>1/4</td><td>25.0%</td><td>[4.6%, 69.9%]</td>
+    <td>2/12</td><td class="bad">16.7%</td><td>[4.7%, 43.3%]</td>
+  </tr>
+  <tr>
+    <td>index（株価指数）</td><td>3/6</td><td>50.0%</td><td>[18.8%, 81.2%]</td>
+    <td>15/36</td><td>41.7%</td><td>[27.0%, 58.0%]</td>
+  </tr>
+  <tr>
+    <td>jpy_fx（JPYクロス）</td><td>7/13</td><td>53.8%</td><td>[29.1%, 76.8%]</td>
+    <td>3/18</td><td class="bad">16.7%</td><td>[5.8%, 39.2%]</td>
+  </tr>
+  <tr>
+    <td>other_fx（FXドル系）</td><td>11/19</td><td>57.9%</td><td>[36.3%, 76.6%]</td>
+    <td>20/49</td><td>40.8%</td><td>[28.2%, 54.8%]</td>
+  </tr>
+</table>
+
+<div class="negative-box">
+  <strong>🔴 metalグループ：IS 87.5%（N=8）→ FWD 44.4%（N=18）</strong><br>
+  IS期のN=8は極めて小さい。87.5%というCI[52.9%,97.8%]の幅広い数字は統計的ノイズが大きく、
+  「金・銀のショートで壁反発が起きにくかった」という IS 期固有の相場状況に依存している可能性が高い。
+  FWD では 44.4%（CI[24.6%,66.3%]）と大幅に低下し、ブレイクイーブン近辺に収束してきた。
+</div>
+
+<div class="negative-box">
+  <strong>🔴 oilグループ：FWD 0/9 = 0.0%（全負け）</strong><br>
+  前向き期間での原油ショート（壁あり）は9件全てがSLヒットという結果となった。
+  CI[0.0%, 31.6%]は上限31.6%でも43%を大きく下回る結果となっている。
+  原油はもともとクールダウン24h（他資産の2倍）の銘柄であり、
+  反転ダイナミクスが他資産と異なることがこの結果に影響している可能性がある。
+</div>
+
+<h2>FWD期の時系列崩落：第3四半期で急加速</h2>
+
+<!-- 図2: FWD quarterly bar chart -->
+<figure class="chart-figure">
+  <svg viewBox="0 0 580 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FWD期を3等分した四半期別勝率の推移">
+    <rect width="580" height="220" fill="#f8f9fa" rx="6"/>
+    <text x="290" y="20" font-size="12" text-anchor="middle" fill="#374151" font-family="sans-serif" font-weight="bold">FWD期 四半期別勝率の推移（blocked=T×ショート）</text>
+
+    <!-- Y-axis labels -->
+    <text x="35" y="55" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">60%</text>
+    <text x="35" y="85" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">50%</text>
+    <text x="35" y="115" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">40%</text>
+    <text x="35" y="145" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">30%</text>
+    <text x="35" y="175" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">20%</text>
+    <text x="35" y="200" font-size="8" text-anchor="end" fill="#6c757d" font-family="sans-serif">10%</text>
+
+    <!-- Grid lines -->
+    <line x1="40" y1="55" x2="560" y2="55" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="40" y1="85" x2="560" y2="85" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="40" y1="115" x2="560" y2="115" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="40" y1="145" x2="560" y2="145" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="40" y1="175" x2="560" y2="175" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="40" y1="200" x2="560" y2="200" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+    <!-- 43% threshold line -->
+    <line x1="40" y1="122" x2="556" y2="122" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="540" y="118" font-size="8" fill="#d97706" font-family="sans-serif" font-weight="bold">43%</text>
+
+    <!-- Bar chart: Q1=40.0%, Q2=46.6%, Q3=22.0%, Aug=12.5% -->
+    <!-- Scale: 0%=200, 60%=55 → per 1% = (200-55)/60 = 2.417px -->
+    <!-- Q1 (40.0%): bar top = 200 - 40.0*2.417 = 103 -->
+    <rect x="70" y="103" width="80" height="97" fill="#60a5fa" rx="3"/>
+    <text x="110" y="96" font-size="12" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">40.0%</text>
+    <text x="110" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">前半（N=55）</text>
+    <text x="110" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">6/25〜7/14</text>
+
+    <!-- Q2 (46.6%): bar top = 200 - 46.6*2.417 = 87 -->
+    <rect x="185" y="87" width="80" height="113" fill="#60a5fa" rx="3"/>
+    <text x="225" y="80" font-size="12" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">46.6%</text>
+    <text x="225" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">中盤（N=58）</text>
+    <text x="225" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/14〜7/28</text>
+
+    <!-- Q3 (22.0%): bar top = 200 - 22.0*2.417 = 146.8 -->
+    <rect x="300" y="147" width="80" height="53" fill="#f87171" rx="3"/>
+    <text x="340" y="140" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">22.0%</text>
+    <text x="340" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">後半（N=50）</text>
+    <text x="340" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">7/28〜8/14</text>
+
+    <!-- Aug (12.5%): bar top = 200 - 12.5*2.417 = 169.8 -->
+    <rect x="415" y="170" width="80" height="30" fill="#dc2626" rx="3"/>
+    <text x="455" y="163" font-size="12" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">12.5%</text>
+    <text x="455" y="215" font-size="9" text-anchor="middle" fill="#374151" font-family="sans-serif">Aug2026（N=32）</text>
+    <text x="455" y="227" font-size="7" text-anchor="middle" fill="#6c757d" font-family="sans-serif">8/1〜現在</text>
+
+    <!-- Trend arrow -->
+    <line x1="150" y1="138" x2="400" y2="162" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  </svg>
+  <figcaption>FWD期を3分割した勝率推移（前半N=55→中盤N=58→後半N=50）。中盤で一時43%閾値に近づいたが、後半・Aug2026で急加速崩落。橙線=43%閾値</figcaption>
+  <p class="note">「Aug2026」は後半（7/28〜8/14）と期間が重複（8/1以降）。直近1.5ヶ月の急悪化を別掲。投資助言ではありません</p>
+</figure>
+
+<div class="negative-box">
+  <strong>🔴 時系列崩落が加速：前半40.0% → 中盤46.6% → 後半22.0% → Aug 12.5%</strong><br>
+  前半はすでに40.0%と閾値を下回っていたが、中盤では46.6%と一時的に盛り返した。
+  しかし後半（7/28〜8/14、N=50）では22.0%（E(R)=約−0.5）へと急落し、
+  Aug2026単月（N=32）では12.5%という深刻な水準に達した。
+  この時系列パターンは「一時的な変動」ではなく<strong>趨勢的な悪化</strong>を示しており、
+  ⛔反証確定が近い可能性を強く示唆する。
+</div>
+
+<h2>タイムフレーム別成績：全足で劣位</h2>
+
+<table>
+  <tr>
+    <th>タイムフレーム</th><th>FWD k/n</th><th>FWD 勝率</th><th>FWD 95%CI</th><th>E(R)</th>
+  </tr>
+  <tr class="bad-row">
+    <td>1時間足（1h）</td><td>27/82</td><td class="bad">32.9%</td><td>[23.4%, 44.0%]</td><td>-0.244</td>
+  </tr>
+  <tr class="bad-row">
+    <td>4時間足（4h）</td><td>20/52</td><td class="bad">38.5%</td><td>[26.2%, 52.5%]</td><td>-0.143</td>
+  </tr>
+  <tr class="bad-row">
+    <td>日足（1d）</td><td>1/8</td><td class="bad">12.5%</td><td>[2.2%, 47.1%]</td><td>-0.821</td>
+  </tr>
+</table>
+
+<p>
+1h・4h・1d のいずれも勝率はブレイクイーブン43%を下回り、E(R)は全てマイナスだった。
+検証した範囲では、タイムフレームを変えても「壁ありショート」の劣位は解消されていない。
+日足（N=8）はサンプル不足だが、1h（N=82）と4h（N=52）は十分な件数があり、
+特に1h（32.9%）は統計的に信頼できる水準での低成績といえる。
+</p>
+
+<h2>対照群との比較：壁あり×ショートが最も劣位</h2>
+
+<table>
+  <tr>
+    <th>区分</th><th>FWD k/n</th><th>FWD 勝率</th><th>FWD 95%CI</th><th>E(R)</th><th>E(R) 95%CI</th>
+  </tr>
+  <tr class="bad-row">
+    <td><strong>壁あり×ショート（本記事）</strong></td><td>48/142</td><td class="bad"><strong>33.8%</strong></td><td>[26.5%, 41.9%]</td><td class="bad">-0.211</td><td>[-0.393, -0.030]</td>
+  </tr>
+  <tr>
+    <td>壁なし×ショート（参考）</td><td>124/328</td><td>37.8%</td><td>[32.8%, 43.1%]</td><td>-0.143</td><td>[-0.258, -0.028]</td>
+  </tr>
+  <tr class="highlight-row">
+    <td>壁あり×ロング（対照）</td><td>132/283</td><td class="good">46.6%</td><td>[40.9%, 52.5%]</td><td class="good">+0.088</td><td>[-0.048, +0.224]</td>
+  </tr>
+</table>
+
+<div class="positive-box">
+  <strong>✅ 壁あり×ロング FWD 46.6%——壁反発を逆用する発想</strong><br>
+  興味深いのは、「壁あり×ショート」が33.8%と最劣位である一方、
+  <strong>「壁あり×ロング」は46.6%（E(R)=+0.088 CI[-0.048,+0.224]）</strong>と相対的に良好な成績を示していることだ。
+  S/R壁付近では価格が反発しやすいという性質があるとすれば、
+  その反発方向と同じ向きのシグナル群のほうが、検証期間中の成績は相対的に良かった——という非対称性がデータ上は読み取れる。
+  ただし壁あり×ロングのE(R) CIはまだ0を跨いでおり、独立した昇格判定は継続中だ。将来も同じ関係が続くとは限らない。
+</div>
+
+<div class="info-box">
+  <strong>壁なしショート（参考）：37.8%</strong><br>
+  壁なしショート（bf×Short FWD 124/328=37.8%）も43%を下回るため、
+  ショート全般が難しい環境であることは確かだ。
+  しかし壁ありショート（33.8%）は壁なしショートよりさらに4pp低く、
+  「壁によるハンディキャップ」が付加されている。
+</div>
+
+<!-- 図3: フォワードトラッカー状況図 -->
+<figure class="chart-figure">
+  <svg viewBox="0 0 580 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="blocked=True×ショートの蓄積進捗：反証接近を示す状況図">
+    <rect width="580" height="160" fill="#f8f9fa" rx="6"/>
+    <text x="290" y="20" font-size="11" text-anchor="middle" fill="#374151" font-family="sans-serif" font-weight="bold">前向きトラッカー：blocked=T×ショート — ⛔反証接近の状況</text>
+
+    <!-- Progress bar background -->
+    <rect x="40" y="45" width="500" height="28" fill="#e0f2fe" rx="14"/>
+
+    <!-- Wilson CI upper (41.9% of 100%) shown as fill to threshold -->
+    <!-- Scale: 43% threshold is at x=40+500*0.43=255 -->
+    <!-- CI upper 41.9% fills to x=40+500*0.419=249.5 -->
+    <rect x="40" y="45" width="210" height="28" fill="#dc2626" rx="14"/>
+    <text x="145" y="64" font-size="10" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="bold">FWD 33.8% CI上限41.9%</text>
+
+    <!-- 43% threshold marker -->
+    <line x1="255" y1="38" x2="255" y2="80" stroke="#d97706" stroke-width="2"/>
+    <text x="255" y="33" font-size="9" text-anchor="middle" fill="#d97706" font-family="sans-serif" font-weight="bold">43%</text>
+    <text x="255" y="92" font-size="8" text-anchor="middle" fill="#d97706" font-family="sans-serif">閾値</text>
+
+    <!-- 50% line -->
+    <line x1="290" y1="38" x2="290" y2="80" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3,2"/>
+    <text x="290" y="33" font-size="8" text-anchor="middle" fill="#94a3b8" font-family="sans-serif">50%</text>
+
+    <!-- Status labels -->
+    <rect x="40" y="110" width="110" height="32" fill="#fee2e2" rx="6" stroke="#dc2626" stroke-width="1.2"/>
+    <text x="95" y="128" font-size="10" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">⛔反証接近</text>
+    <text x="95" y="142" font-size="8" text-anchor="middle" fill="#b91c1c" font-family="sans-serif">CI上限＜43%確認済</text>
+
+    <rect x="170" y="110" width="110" height="32" fill="#fef9c3" rx="6" stroke="#d97706" stroke-width="1.2"/>
+    <text x="225" y="128" font-size="10" text-anchor="middle" fill="#92400e" font-family="sans-serif" font-weight="bold">🟡蓄積→悪化</text>
+    <text x="225" y="142" font-size="8" text-anchor="middle" fill="#92400e" font-family="sans-serif">後半22%・Aug12.5%急落</text>
+
+    <rect x="300" y="110" width="130" height="32" fill="#dcfce7" rx="6" stroke="#16a34a" stroke-width="1.2"/>
+    <text x="365" y="128" font-size="10" text-anchor="middle" fill="#15803d" font-family="sans-serif" font-weight="bold">✅壁あり×ロング</text>
+    <text x="365" y="142" font-size="8" text-anchor="middle" fill="#15803d" font-family="sans-serif">FWD 46.6%（継続観察）</text>
+
+    <rect x="450" y="110" width="110" height="32" fill="#e0f2fe" rx="6" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="505" y="128" font-size="10" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">📡次の確認点</text>
+    <text x="505" y="142" font-size="8" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif">⛔確定 or Q4改善?</text>
+  </svg>
+  <figcaption>前向き勝率33.8%のWilson CI上限（41.9%）がすでに43%閾値を下回り、ブレイクイーブン未満を統計的に確認。後半22.0%・Aug12.5%の時系列崩落が継続中</figcaption>
+  <p class="note">トラッカー更新は毎朝 signal_lab_tracker.py で自動実行。投資助言ではありません</p>
+</figure>
+
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-08-16／昇格＝前向きN≥80（edge: E(R) CI下限&gt;0）または gate（CI上限&lt;0）・2回連続確認／降格＝昇格後の再判定2回連続割れ→🟡へ（再昇格可）</p>
+
+<table>
+  <tr>
+    <th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値</th><th>状態</th>
+  </tr>
+  <tr class="highlight-row">
+    <td><strong>trend=上昇×reversalL</strong></td><td>edge</td><td>E(R) CI下限&gt;0</td>
+    <td>E(R)+0.19 CI[+0.05,+0.33]（95/186=51%）</td><td class="good">✅昇格</td>
+  </tr>
+  <tr class="highlight-row">
+    <td><strong>group=metal×dir=long</strong></td><td>gate</td><td>E(R) CI上限&lt;0</td>
+    <td>E(R)+0.01 CI[-0.25,+0.27]（86/199=43%）</td><td class="good">✅昇格</td>
+  </tr>
+  <tr class="bad-row">
+    <td><strong>blocked=True×dir=short（本記事）</strong></td><td>edge</td><td>E(R) CI下限&gt;0</td>
+    <td>E(R)-0.21 CI[-0.39,-0.03]（48/142=34%）</td><td class="bad">🟡蓄積→⛔接近</td>
+  </tr>
+  <tr>
+    <td>dir=long</td><td>gate</td><td>E(R) CI上限&lt;0</td>
+    <td>E(R)+0.09 CI[-0.02,+0.19]（681/1462=47%）</td><td class="bad">⛔反証</td>
+  </tr>
+  <tr>
+    <td>reversalL（逆張り買い全般）</td><td>gate</td><td>E(R) CI上限&lt;0</td>
+    <td>E(R)+0.22 CI[+0.09,+0.36]（264/504=52%）</td><td class="bad">⛔反証</td>
+  </tr>
+  <tr>
+    <td>trend=下降×reversalL</td><td>gate</td><td>E(R) CI上限&lt;0</td>
+    <td>E(R)+0.34 CI[+0.08,+0.60]（92/160=58%）</td><td class="bad">⛔反証</td>
+  </tr>
+</table>
+
+<!-- ② 中間免責（kinsho-v1） -->
+<div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+  ⚠️ <strong>再確認：</strong>本記事のシグナル統計は過去データに基づく研究記録であり、将来のパフォーマンスを保証するものではありません。投資はご自身の判断と責任で行ってください。
+</div>
+
+<h2>交絡点検・解釈上の注意</h2>
+
+<div class="info-box">
+  <strong>① IS高値（58.5%）の解体</strong><br>
+  IS期を牽引したのは ma_dead 82.4%（N=17）と metal 87.5%（N=8）の2グループだ。
+  いずれも N が小さく、CI が非常に広い（ma_dead: [59.0%,93.8%]、metal: [52.9%,97.8%]）。
+  これは「IS期の特定期間に壁ありショートがたまたま機能した」という小サンプル過剰適合であり、
+  将来を見通す能力はなかったと考えるのが合理的だ。
+</div>
+
+<div class="info-box">
+  <strong>② Q2での一時的改善（46.6%）が示すもの</strong><br>
+  Q2（7/14〜7/28）で46.6%と閾値に近づいた期間があった。
+  この一時的な改善は「本当の改善か、それとも揺れか」を区別することが重要だ。
+  Q3での22.0%への急落から振り返ると、Q2の改善は統計的ノイズの範囲内であり、
+  FWD全体のトレンドは一貫して低調だったと解釈するのが自然だ。
+</div>
+
+<div class="info-box">
+  <strong>③ Aug2026単月 12.5% の意味</strong><br>
+  8月1日以降のN=32はまだ少ないが、CI[5.0%,28.1%]は上限でも30%未満と低い水準にとどまっている。
+  後半（7/28〜8/14、N=50）でも22.0%と低調だった。
+  もしこの水準が続けば、次回の自動再検証（signal_lab_tracker.py）で
+  ⛔反証の確定条件（2回連続NG）に達する可能性が高い。
+</div>
+
+<div class="info-box">
+  <strong>④ 壁あり×ロングとの非対称性</strong><br>
+  同じ「壁あり」でも、ロング（FWD 46.6%）とショート（FWD 33.8%）で13ppの差がある。
+  S/R壁の本質は「反発しやすい水準」であり、その反発方向と同じ向きにポジションを持つか、
+  反対向きに持つかで成績が大きく異なる——という構造的な解釈が成立する。
+  ただし壁あり×ロングもまだ前向き検証中（E(R) CIがゼロを跨ぐ）であり、断定的な推奨はできない。
+</div>
+
+<h2>まとめ</h2>
+
+<p>
+本記事の主要な発見をまとめる：
+</p>
+
+<ol style="padding-left:1.4rem; margin-bottom:1rem;">
+  <li style="margin-bottom:0.5rem;"><strong>IS期58.5%はma_dead(N=17)82.4%・metal(N=8)87.5%の小サンプル過剰適合</strong>——FWD期では両者とも32〜44%へ崩落した</li>
+  <li style="margin-bottom:0.5rem;"><strong>FWD期33.8% Wilson CI上限41.9%＜43%</strong>——ブレイクイーブン未満が統計的に確認済み。E(R)=-0.211 CI[-0.393,-0.030]でCIも全区間マイナス</li>
+  <li style="margin-bottom:0.5rem;"><strong>時系列崩落が加速</strong>：Q1 40.0% → Q2 46.6%（一時改善）→ Q3 22.0% → Aug 12.5%</li>
+  <li style="margin-bottom:0.5rem;"><strong>全グループ・全タイムフレームで劣位</strong>：oil FWD 0/9=0.0%、btc 16.7%、1h 32.9%、1d 12.5% ——救済グループなし</li>
+  <li style="margin-bottom:0.5rem;"><strong>壁あり×ロング（FWD 46.6%）との非対称性</strong>——S/R壁付近では反発が起きやすい傾向がみられ、反発方向と同じ向きのシグナル群と逆向きのシグナル群とで、検証期間中の成績に差が出ていた</li>
+</ol>
+
+<p>
+「S/R壁があるショートはショート全体より成績上の劣位がある」という仮説について、
+前向きデータでも同じ方向の結果が積み上がってきている。
+IS期の高勝率に惑わされず、前向き期間での持続的な劣位を素直に受け止めることが、
+シグナル研究では重要だと考えている。
+次の節目は Q4（8月後半以降）のデータ追加後の tracker 再判定であり、
+⛔反証が確定するか、それとも予想外の改善を見せるかを継続観察する。
+</p>
+
+<p>
+S/R（サポート・レジスタンス）の基本概念については
+<a href="/guide-signal-anatomy.html">シグナル構造と勝率の読み方</a>も参照されたい。
+</p>
+
+<div class="related-card">
+  <strong>関連記事</strong><br>
+  <a href="/guide-signal-anatomy.html">シグナル構造と勝率の読み方 — reversalL・breakout・trend・S/R の基本</a><br>
+  <a href="/guide-signal-lab-070.html" style="margin-top:0.4rem;display:block;">🧪 AIシグナル研究日誌 #070 — 上昇×逆張り買い 前向きN=187 昇格継続：RSI 74% vs BB 45% の構造的二極化</a>
+</div>
+
+<!-- ③ フッター免責（kinsho-v1） -->
+<div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+  <strong>⚠️ 免責事項（重要）</strong><br>
+  本記事は教育・情報提供目的のシグナル研究記録であり、投資助言・売買推奨ではありません。
+  掲載されたシグナル統計・成績は過去データに基づくものであり、将来の運用成果を保証・示唆するものではありません。
+  当サイト（MarketWatch AI）は金融商品取引業者ではなく、投資助言業・投資一任業の登録を行っておりません。
+  実際の投資判断はご自身の責任において、必要に応じて専門家へご相談の上で行ってください。
+</div>
+
+</div><!-- /container -->
+<script src="site-search.js" defer></script>
+</body>
+</html>
