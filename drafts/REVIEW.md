@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-08-17 | ✅ 公開完了 | correlation-risk | autopublish
+- **決定論ゲート**: 🟢GREEN（SVGテキスト重なり「資産B(コモディティ)」vs「資産C(債券)」→凡例を全幅分散配置で修正後GREEN）
+- **Opus コンプラ+品質**: 🟡グレー修正4点適用（±0.7の目安注記追加・コモディティ初出説明追加・REIT初出説明追加・「着実に」→「一般に...期待できます」）＋任意2点（冒頭バナーにkinsho-v1属性・S&amp;P500をHTMLエンティティ修正）→ GREEN再確認
+- **独立Opus**: 🟢WHITE確認（8項目全合格）
+- **公開コマンド**: `python publish_article.py --file guide-correlation-risk.html --category リスク管理・資金管理 --emoji 🛡️`
+- **整合性チェック**: EXIT=0（エラーなし・警告19件はpreexisting）
+- **push**: EXIT=0（HEAD→main, commit cfdbe05）
+- **HTTP確認**: クラウド環境の既知プロキシブロックにより直接確認不可。push成功・GitHub Pages自動デプロイ
+- **URL**: https://marketwatch-jp.com/guide-correlation-risk.html
+
+---
+
 ## 2026-08-17 | ⏹ スキップ | 全topic下書き済み | autodraft
 
 - **基準日**: 2026-08-17 JST（UTC 2026-08-16T20:30Z）
