@@ -137,4 +137,5 @@ SYNC_FILES = [
     "guide-commodity-basics.html",
     "guide-proverb-soba-wa-asu-mo-aru.html",
     "guide-scam-ponzi-scheme.html",
+    "guide-news-2026-08-16-fomc-july-dissents-jackson-hole.html",
 ]
