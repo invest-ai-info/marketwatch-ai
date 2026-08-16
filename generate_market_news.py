@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-14", "line": '・<b>2026-08-14</b>: 💔 解説「<a href="guide-scam-romance-invest.html" style="color:#0969da"><b>SNS型ロマンス詐欺——恋愛感情×投資誘導の手口を段階分解</b></a>」公開'},
         {"date": "2026-08-16", "line": '・<b>2026-08-16</b>: 🧪 解説「<a href="guide-signal-lab-071.html" style="color:#0969da"><b>S/R壁あり×ショート FWD崩落——IS 58.5%→33.8%、後半22.0%と⛔反証接近</b></a>」公開'},
         {"date": "2026-08-16", "line": '・<b>2026-08-16</b>: 📰 解説「<a href="guide-news-2026-08-16-fomc-july-dissents-jackson-hole.html" style="color:#0969da"><b>【8/16】FRBの7月FOMC「3人反対票」とジャクソンホールへの論点を中立整理</b></a>」公開'},
         {"date": "2026-08-16", "line": '・<b>2026-08-16</b>: 🎪 解説「<a href="guide-scam-ponzi-scheme.html" style="color:#0969da"><b>ポンジ・スキームの見抜き方</b></a>」公開'},
