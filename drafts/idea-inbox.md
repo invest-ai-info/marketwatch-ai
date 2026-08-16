@@ -132,3 +132,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://quantpedia.com/strategies/net-payout-yield-effect / https://mebfaber.com/wp-content/uploads/2023/05/Shareholder-Yield.pdf
 - 検証案: jp-rankings銘柄の財務データから「配当総額＋自社株買い消却額」をjoinしNPYを計算。高NPY三分位 vs 低NPY三分位の翌年リターン差を算出。jp-high-dividend-yield（配当のみ版）との差分で自社株買い要素の追加効果を定量化。
 - タグ: ○
+
+## 2026-08-16（JST）
+### slug: piotroski-fscore-jp
+- 名前: ピオトロスキーFスコア（日本株版）
+- 主張: 財務健全性の9バイナリー指標（収益性4：ROA・ΔROAt・CFO・Δ粗利益率、財務健全性3：Δ負債比率・Δ流動比率・新株発行なし、効率性2：Δ粗利益率・Δ資産回転率）の合計スコアが高い（8〜9点）銘柄群は低スコア（0〜2点）銘柄を大幅にアウトパフォームする傾向がある【出典の主張・未検証】。Piotroski（2000, JAR）が米国で年率13.4%の超過リターンを報告。Noma（2010）が日本（1986〜2001年）でハイBM×ハイFスコアのヘッジポートフォリオが年率17.6%を達成と報告。2020年の国際研究「Piotroski's F-Score: international evidence」でも米国外市場での有効性が確認されている。buffett-quality（tested・5基準複合）とは指標体系が異なる別検証。
+- 出典: https://quantpedia.com/strategies/piotroski-f-score-effect-in-stocks/ / https://www.quant-investing.com/blog/piotroski-f-score-improves-global-stock-performance
+- 検証案: 東証銘柄の四半期財務データ（ROA・CFO・負債比率・発行済株式数・資産回転率）から9点スコアを計算し、高スコア（8〜9点）vs 低スコア（0〜2点）の翌年リターン差を算出。jp-rankings銘柄で高PBR（割高）時の誤検知率も確認する。財務データjoin必要。
+- タグ: ○
+
+### slug: long-term-reversal-jp
+- 名前: 長期リターン反転効果（3〜5年敗者逆張り・日本株版）
+- 主張: 直近3〜5年間のリターンが市場全体の最下位だった「敗者」銘柄群が、最上位の「勝者」銘柄群を翌3〜5年で有意にアウトパフォームする傾向がある【出典の主張・未検証】。De Bondt & Thaler（1985 JF）が米国1926〜1982年の36ヶ月評価で「敗者は勝者を24.6%上回る」と報告。日本株では1975〜2000年データを対象とした分析（Applied Financial Economics 2003）で「敗者優位」が確認されているが、勝者の明確なアンダーパフォームは米国ほど顕著でないとの報告もあり証拠は部分的。momentum-12-1（tested・1年順張り）とは方向とラグが逆の独立した現象。short-term-reversal-1w（tested・1週間）とはスケールが大きく異なる。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S0922142503000574 / https://alphaarchitect.com/quantitative-momentum-research-long-term-return-reversal/
+- 検証案: jp-rankings銘柄の日足データで過去36ヶ月・60ヶ月リターン下位三分位（敗者）vs 上位三分位（勝者）を構成し、翌12ヶ月リターン・勝率を比較。価格データのみで完結。momentum-12-1（順張り）の結果と方向を重ね合わせて「持続ゾーンvs反転ゾーン」の変わり目の時間軸を確認する。
+- タグ: ◎
+
+### slug: sector-momentum-jp
+- 名前: セクター・モメンタム（業種ローテーション・日本株版）
+- 主張: 過去12ヶ月リターンが上位だった業種セクターの株を買い、下位業種を売るローテーション戦略が、銘柄レベルのクロスセクション・モメンタムの多くを説明し、サイズ・BM・個別株モメンタムを制御後も有意な超過リターンを示す傾向がある【出典の主張・未検証】。Moskowitz & Grinblatt（1999 JF「Do Industries Explain Momentum?」）が米国で確認。2023年にSpringer Asia-Pacific Financial Markets掲載の「Decomposing the Momentum in the Japanese Stock Market」論文が日本株モメンタムを業種成分と個別成分に分解し、業種が一定の説明力を持つことを示唆。momentum-12-1（tested・個別株クロスセクション）とは集計レベルが異なり独立した検証。
+- 出典: https://quantpedia.com/strategies/sector-momentum-rotational-system / https://link.springer.com/article/10.1007/s10690-023-09413-y
+- 検証案: jp-rankings銘柄をjp-stock-info.jsonの業種フィールドでグルーピングし、業種別過去12ヶ月平均リターンを計算。上位3業種 vs 下位3業種の翌3ヶ月リターン差・勝率を算出。業種カバレッジが不足する場合はTOPIX業種別指数（価格データ）で代替検証する。
+- タグ: ◎
