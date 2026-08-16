@@ -54,6 +54,9 @@ WORKFLOW_CHECKS = [
     #    max_h は「1回まるごとスキップされたら検知」水準：週次=10日 / 月次=35日。
     ("週次振り返り",            "weekly-review.yml",       24 * 10, "warn"),
     ("週次投資戦略",            "weekly-strategy.yml",     24 * 10, "warn"),
+    # 🆕 2026-08-16 追加。8/2・8/9・8/16 と3週連続で失敗していたのに、監視対象外だったので
+    #    誰も気づけなかった（原因＝Gmailアプリパスワードの失効。⑨で毎朝直接確かめる）。
+    ("週次ゾーンメール",        "weekly-zone-email.yml",   24 * 10, "warn"),
     ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
     ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
     ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),
@@ -401,6 +404,43 @@ def eval_ticker_feed_health(feeds, feed_health, now):
     return stale, pending, watched
 
 
+def check_smtp_auth():
+    """Gmail アプリパスワードが生きているかを login だけで確かめる（メールは送らない）。
+
+    戻り値 (ok, note): ok=True 正常 / False 認証失効 / None 判定不能（未設定・一時障害）。
+
+    なぜ要るか＝2026-08-16 に実際に踏んだ穴。アプリパスワードが失効すると
+    **メール送信の全レーンが同時に死ぬ**が、`generate_technical_alerts.py` /
+    `fetch_political_news.py` / `panic_bounce_scan.py` / `monthly_calendar_reminder.py` は
+    送信失敗を `except Exception` で握り潰して exit 0 のまま緑になる
+    （シグナル記録を送信成否から切り離すための正しい設計なので、そちらは変えない）。
+    唯一 `weekly-zone-email.yml` だけが赤くなるが**週1回＝最大7日気づけない**。
+    実際 8/2 から3週間、誰も気づかなかった。ここで毎朝 login を試して24h以内に捕まえる。
+    ⚠️ 送信はしない（毎朝メールが増えると読まれなくなる＝警報の価値が下がる）。
+    """
+    user = os.environ.get("GMAIL_USER")
+    pw = os.environ.get("GMAIL_APP_PASSWORD")
+    if not (user and pw):
+        # ローカル実行では鍵を持たないのが正常。無いデータで判定しない。
+        return None, "GMAIL_USER/GMAIL_APP_PASSWORD が未設定＝判定しない（ローカル実行では正常）"
+    import smtplib
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as server:
+            server.login(user, pw)
+        return True, "アプリパスワードは有効（login のみ・送信なし）"
+    except smtplib.SMTPAuthenticationError as e:
+        detail = e.smtp_error.decode("utf-8", "replace") if isinstance(e.smtp_error, bytes) else str(e.smtp_error)
+        return False, (f"Gmail が認証を拒否（{e.smtp_code} {detail[:120]}）"
+                       f"＝アプリパスワードの失効/取り消しが濃厚。"
+                       f"Google アカウント → セキュリティ → 2段階認証 → アプリパスワード を再発行し、"
+                       f"リポジトリ Secrets の GMAIL_APP_PASSWORD を更新する（16桁・空白なし）。"
+                       f"⚠️ この間、テクニカル/政治/パニックの各メールも同時に届いていない"
+                       f"（それらは送信失敗を握り潰すため workflow は緑のまま）")
+    except Exception as e:
+        # 一時的なネットワーク/SMTP障害で毎朝 Issue を立てない（③〜⑧と同じ方針）
+        return None, f"SMTP 到達を確認できず（一時障害の可能性・判定しない）: {type(e).__name__}: {str(e)[:80]}"
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -546,6 +586,17 @@ def main():
                         f"（いずれも{ESCALATION_STALE_DAYS}日未満・🚩通算{flags}件）")
     except Exception as e:
         body.append(f"- 🚨 ⚪ エスカレ滞留の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑨ Gmailアプリパスワードの死活（メール全レーンの共通の急所）")
+    ok, note = check_smtp_auth()
+    if ok is None:
+        body.append(f"- ⚪ {note}")
+    elif ok:
+        body.append(f"- ✅ 🟢 {note}")
+    else:
+        body.append(f"- 🚨 🔴 {note}")
+        bad.append(("Gmail認証失効", "critical"))
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
