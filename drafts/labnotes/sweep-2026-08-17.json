@@ -1,0 +1,75 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "mode": {
+    "net": false,
+    "cost_mult": 1.5,
+    "itt": false
+  },
+  "candidates": [
+    {
+      "label": "rsi=os×trend=上昇",
+      "filter": {
+        "rsi_band": "os",
+        "trend": "上昇"
+      },
+      "k": 47,
+      "n": 76,
+      "n_days": 35,
+      "pct": 61.8,
+      "ci_lo": 50.6,
+      "ci_hi": 71.9,
+      "avgR": 0.443,
+      "rci_lo": 0.218,
+      "rci_hi": 0.668,
+      "p": 0.00011034629400796803,
+      "profitable": true,
+      "exp_pct": 6.2,
+      "q": 0.0233,
+      "fdr_pass": true
+    },
+    {
+      "label": "tf=1d×reversalL",
+      "filter": {
+        "tf": "1d",
+        "reversal_long": true
+      },
+      "k": 22,
+      "n": 32,
+      "n_days": 18,
+      "pct": 68.8,
+      "ci_lo": 51.4,
+      "ci_hi": 82.0,
+      "avgR": 0.604,
+      "rci_lo": 0.236,
+      "rci_hi": 0.972,
+      "p": 0.0012868533718868314,
+      "profitable": true,
+      "exp_pct": 11.1,
+      "q": 0.0905,
+      "fdr_pass": true
+    },
+    {
+      "label": "trend=上昇×reversalL",
+      "filter": {
+        "trend": "上昇",
+        "reversal_long": true
+      },
+      "k": 149,
+      "n": 288,
+      "n_days": 68,
+      "pct": 51.7,
+      "ci_lo": 46.0,
+      "ci_hi": 57.4,
+      "avgR": 0.207,
+      "rci_lo": 0.082,
+      "rci_hi": 0.333,
+      "p": 0.0011972487301474821,
+      "profitable": true,
+      "exp_pct": 1.4,
+      "q": 0.0905,
+      "fdr_pass": true
+    }
+  ]
+}
