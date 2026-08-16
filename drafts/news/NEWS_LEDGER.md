@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-08-16
+- 判定: ✅ 公開済み
+- 選定トピック: FRBが9対3票で据え置いた7月FOMC──「3人の反対票」（ハマック・カシュカリ・ローガン）が示す分断と来週2大焦点（議事録8/19・ジャクソンホール8/27-29・ウォーシュ議長初講演）を中立整理（カテゴリ: マクロ・FRB金融政策・ジャクソンホール）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 7月29日FOMC決定（9対3・5会合連続据え置き）は確定事実。3名の反対票は2016年9月以来最大の分断。30年債利回り5.21%（19年ぶり）・9月利上げ確率57%超も報道確認済み。来週の議事録（8/19）とウォーシュ議長のジャクソンホール初講演（8/28・「blank piece of paper」と表明）は日米金融市場の方向性を左右しうる最重要イベント。日本投資家にも直接影響するBOJ政策（1.0%・9月利上げ観測）との組み合わせも解説。8/15記事（S&P500記録+消費データ）との差別化明確。
+- 出典（2系統以上）:
+  - Federal Reserve「FOMC Statement 2026-07-29」（federalreserve.gov）
+  - U.S. News「Fed Holds Rates Steady, but 3 Members Favored a Rate Hike」（2026-07-29）
+  - CNBC「Divided Fed holds interest rates steady, but three officials dissent」（2026-07-29）
+  - TechTimes「Three Fed Dissenters Signal September Hike Is Live After Most Hawkish FOMC Vote in Nearly Ten Years」（2026-07-29）
+  - Yahoo Finance「Fed meeting live: Fed Chairman Warsh gets the 'good family fight'」（2026-07-29）
+  - Capital Street FX「Week Ahead 17-21 August 2026: FOMC Minutes」（2026-08-15）
+  - Federal Reserve「Calendar: August 2026」（federalreserve.gov）
+  - Finance Calendar「Jackson Hole Economic Symposium 2026」
+  - Regards of Wallstreet「Jackson Hole 2026: Dates, Schedule, and Warsh's First Speech」
+  - Bank of Japan「Monetary Policy Releases 2026」（boj.or.jp）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①8/17を米国市場「休場期間」とする自己矛盾を解消 ②視点Bの見出し「ハト派多数・鷹派少数」が本文と意味逆転→修正 ③「white paper」誤引用→「blank piece of paper」に訂正 ／ 数値・事実・構造・出典は不変）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 🟢白（全5項目①kinsho-v1×3 ②禁止語なし ③銘柄推奨なし ④出典2系統以上 ⑤将来断定なし、すべて✅・公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー162行・本文末299行・フッター308行）✅ ②禁止語なし（「必ずしも〜限らず」「保証するものではありません」はいずれも否定形）✅ ③銘柄推奨なし（Reddit/RDDTは事実報告＋括弧内明示）✅ ④出典10系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告17件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-16-fomc-july-dissents-jackson-hole.html
+- commit: 09afeeb（main へ push 済み）
+
+---
+
 ## 2026-08-15
 - 判定: ✅ 公開済み
 - 選定トピック: S&P 500史上初の7,816高値（時価総額$70.8兆）→翌日小売-0.6%・UMich消費者信頼感51.0急落で小反落。PPI鈍化（+4.7%YoY）・週間3連続プラス・日経3日続伸68,713円（カテゴリ: マクロ・米国株・S&P 500記録・消費データ）
