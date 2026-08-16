@@ -57,9 +57,28 @@ def main():
     msg["Date"] = formatdate(localtime=True)
     msg.attach(part)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as server:
-        server.login(user, pw)
-        server.sendmail(user, [to], msg.as_string())
+    # ⚠️ ここは絶対に握り潰さない（try/except で緑にしない）。
+    # 他のメールレーン（technical-alerts / political-alerts / panic-scan /
+    # monthly-calendar-reminder）は送信失敗を except Exception で飲み込んで exit 0 になる。
+    # それはシグナル記録を送信成否から切り離すための正しい設計だが、結果として
+    # **アプリパスワードが失効すると、赤くなるのはこのレーンだけ**になる。
+    # 実例 2026-08-16: 8/2 から3週連続でここだけ落ちていた（他は全部緑）。
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as server:
+            server.login(user, pw)
+            server.sendmail(user, [to], msg.as_string())
+    except smtplib.SMTPAuthenticationError as e:
+        detail = e.smtp_error.decode("utf-8", "replace") if isinstance(e.smtp_error, bytes) else str(e.smtp_error)
+        print(f"❌ Gmail が認証を拒否しました: {e.smtp_code} {detail}")
+        print("   → アプリパスワードの失効/取り消しが濃厚です。")
+        print("     Google アカウント → セキュリティ → 2段階認証 → アプリパスワード を再発行し、")
+        print("     リポジトリ Secrets の GMAIL_APP_PASSWORD を更新してください（16桁・空白なし）。")
+        print("   ⚠️ 同じ鍵を使う他レーン（テクニカル/政治/パニック/月次カレンダー）のメールも")
+        print("      同時に届いていません。ただしそちらは送信失敗を握り潰すため workflow は緑のままです。")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ メール送信に失敗しました: {type(e).__name__}: {e}")
+        sys.exit(1)
     print(f"✅ 週次ゾーンプランを {to} に送信しました: {subject}")
 
 
