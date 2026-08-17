@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-17", "line": '・<b>2026-08-17</b>: 🎭 解説「<a href="guide-scam-pre-ipo-stock.html" style="color:#0969da"><b>未公開株・私募社債「劇場型詐欺」の手口</b></a>」公開'},
         {"date": "2026-08-17", "line": '・<b>2026-08-17</b>: 🔍 解説「<a href="guide-proverb-tooku-wa-sakeyo.html" style="color:#0969da"><b>遠くのものは避けよ</b></a>」公開'},
         {"date": "2026-08-17", "line": '・<b>2026-08-17</b>: 🛡️ 解説「<a href="guide-correlation-risk.html" style="color:#0969da"><b>見えない集中投資リスク（相関リスク）</b></a>」公開'},
         {"date": "2026-08-14", "line": '・<b>2026-08-14</b>: 💔 解説「<a href="guide-scam-romance-invest.html" style="color:#0969da"><b>SNS型ロマンス詐欺——恋愛感情×投資誘導の手口を段階分解</b></a>」公開'},

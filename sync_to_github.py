@@ -141,4 +141,5 @@ SYNC_FILES = [
     "guide-signal-lab-071.html",
     "guide-correlation-risk.html",
     "guide-proverb-tooku-wa-sakeyo.html",
+    "guide-scam-pre-ipo-stock.html",
 ]
