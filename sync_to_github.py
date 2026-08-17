@@ -142,4 +142,5 @@ SYNC_FILES = [
     "guide-correlation-risk.html",
     "guide-proverb-tooku-wa-sakeyo.html",
     "guide-scam-pre-ipo-stock.html",
+    "guide-news-2026-08-17-walmart-target-homedepot-consumer-test.html",
 ]
