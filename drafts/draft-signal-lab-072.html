@@ -259,13 +259,13 @@ window.addEventListener('resize',mark);
     </div>
 
     <h1>AIシグナル研究日誌 #72｜「下降トレンドは損益分岐割れ」gate が⛔反証確定<br>——前向き N=567 で CI下限プラス到達</h1>
-    <div class="meta-line">公開：2026年8月（下書き中）　🧪 AIシグナル研究日誌　読了目安：約8分</div>
+    <div class="meta-line">公開：2026年8月18日　🧪 AIシグナル研究日誌　読了目安：約8分</div>
 
     <!-- ② 30秒まとめ -->
     <div class="info-box">
-      <strong>📌 30秒まとめ</strong><br>
+      <strong>📌 30秒でわかる</strong><br>
       「下降トレンド中に発火したシグナルは損益分岐43%を割る」という gate 仮説（2026-06-25設立）が、前向き N=567（cluster補正後）・E(R)=+0.123 RCI=[+0.01,+0.23] で <strong>⛔反証確定</strong>。
-      IS期は N=377 で勝率 35.8%・E(R)=-0.284（損益分岐割れ）だったが、前向き期（FWD）は N=570 で勝率 47.9%・E(R)=-0.042 に転換。
+      IS期は N=377 で勝率 35.8%・E(R)=-0.284（損益分岐割れ）だったが、前向き期（FWD）は 273/571=47.8%・E(R)=-0.042 に転換。
       主因は<strong>金属グループのレジーム転換</strong>（IS 36.0% → FWD 53.4%）で、逆張りシグナルの bb_lower_touch（FWD 54.7%）・RSI売られすぎ（FWD 59.2%）が牽引。
       ただし <strong>high_break（FWD 34.0%）は依然として損益分岐を大きく割り込む</strong>ため注意が必要。
       これは <a href="guide-signal-lab-030.html">#030</a>・<a href="guide-signal-lab-032.html">#032</a>・<a href="guide-signal-lab-039.html">#039</a>・<a href="guide-signal-lab-060.html">#060</a> に続く「金属レジーム転換」シリーズの一端。
@@ -321,10 +321,10 @@ window.addEventListener('resize',mark);
         <line x1="55" y1="30" x2="55" y2="240" class="s-axis"/>
         <!-- 損益分岐ライン（43%相当・概念） -->
         <line x1="55" y1="145" x2="560" y2="145" class="s-guide"/>
-        <text x="562" y="149" class="s-label-y" font-size="10.5">43%ライン</text>
+        <text x="558" y="149" class="s-label-y" font-size="10.5" text-anchor="end">43%ライン</text>
         <!-- 下降MA（上位足） -->
         <polyline points="60,60 130,80 200,100 280,120 350,145 430,165 510,185" class="s-curve-r" stroke-width="2.2" stroke-dasharray="6 3"/>
-        <text x="515" y="183" class="s-label-r" font-size="10.5">上位足MA（下向き）</text>
+        <text x="510" y="183" class="s-label-r" font-size="10.5" text-anchor="end">上位足MA（下向き）</text>
         <!-- ローソク足 コンセプト（価格 is below MA） -->
         <!-- 各ローソク（簡略化）: x=bar_center, y_open, y_close, wick_top, wick_bot -->
         <!-- Bar1 -->
@@ -362,7 +362,7 @@ window.addEventListener('resize',mark);
         <rect x="434" y="185" width="12" height="14" fill="#cf222e" rx="1"/>
         <!-- 引出線ラベル -->
         <line x1="55" y1="100" x2="75" y2="100" stroke="#8b949e" stroke-width="1"/>
-        <text x="20" y="103" class="s-label-sm" text-anchor="middle" transform="rotate(-90,20,120)">価格（概念）</text>
+        <text x="40" y="103" class="s-label-sm" text-anchor="middle" transform="rotate(-90,40,120)">価格（概念）</text>
         <!-- タイトル -->
         <text x="300" y="22" class="s-label" font-size="12" font-weight="600" text-anchor="middle">下降トレンド中のシグナル発火（概念図）</text>
         <!-- 赤背景ラベル -->
@@ -382,8 +382,8 @@ window.addEventListener('resize',mark);
     <table>
       <tr><th>期間</th><th>N</th><th>勝率</th><th>95%CI（勝率）</th><th>E(R)</th><th>判定</th></tr>
       <tr><td>IS期（〜2026-06-24）</td><td>377</td><td>35.8%</td><td>[31.1%, 40.8%]</td><td>-0.284</td><td style="color:#cf222e">▼ 損益分岐割れ・gate設立</td></tr>
-      <tr><td>FWD期（2026-06-25〜）</td><td>570</td><td>47.9%</td><td>[43.8%, 52.0%]</td><td>-0.042</td><td style="color:#1a7f37">▲ 損益分岐回復</td></tr>
-      <tr><td>全期間</td><td>947</td><td>43.1%</td><td>[40.0%, 46.3%]</td><td>-0.138</td><td>—</td></tr>
+      <tr><td>FWD期（2026-06-25〜）</td><td>571</td><td>47.8%</td><td>[43.7%, 51.9%]</td><td>-0.042</td><td style="color:#1a7f37">▲ 損益分岐回復</td></tr>
+      <tr><td>全期間</td><td>948</td><td>43.0%</td><td>[39.9%, 46.2%]</td><td>-0.138</td><td>—</td></tr>
     </table>
 
     <p>
@@ -417,11 +417,11 @@ window.addEventListener('resize',mark);
         <text x="145" y="124" class="s-label-r" text-anchor="middle">35.8%</text>
         <text x="145" y="215" class="s-label-sm" text-anchor="middle">IS期</text>
         <text x="145" y="226" class="s-label-sm" text-anchor="middle">N=377</text>
-        <!-- FWD 47.9% → height=95.8, y=200-95.8=104 -->
+        <!-- FWD 47.8% → height=95.6, y=200-95.6=104 -->
         <rect x="210" y="104" width="60" height="96" fill="#1a7f37" rx="3" opacity="0.85"/>
-        <text x="240" y="99" class="s-label-g" text-anchor="middle">47.9%</text>
+        <text x="240" y="99" class="s-label-g" text-anchor="middle">47.8%</text>
         <text x="240" y="215" class="s-label-sm" text-anchor="middle">FWD期</text>
-        <text x="240" y="226" class="s-label-sm" text-anchor="middle">N=570</text>
+        <text x="240" y="226" class="s-label-sm" text-anchor="middle">N=571</text>
         <!-- metal IS 36.0% -->
         <rect x="330" y="128" width="55" height="72" fill="#cf222e" rx="3" opacity="0.65"/>
         <text x="357" y="123" class="s-label-r" font-size="11" text-anchor="middle">36.0%</text>
@@ -459,7 +459,7 @@ window.addEventListener('resize',mark);
       これは <a href="guide-signal-lab-030.html">#030</a>・<a href="guide-signal-lab-039.html">#039</a>・<a href="guide-signal-lab-060.html">#060</a> で繰り返し確認してきた「金属レジーム転換」と同根の現象だ。
     </p>
     <p>
-      指数グループも安定して改善（FWD 51.0%）。一方でBTCと原油は方向感が薄く、引き続き個別で観察する必要がある。
+      指数グループも安定して改善（全期間 63/121=52.1%、FWD 49/96=51.0%）。一方でBTCと原油は方向感が薄く、引き続き個別で観察する必要がある。
     </p>
 
     <h3>4-2. 時間足別</h3>
@@ -467,7 +467,7 @@ window.addEventListener('resize',mark);
     <table>
       <tr><th>時間足</th><th>全期間 勝率</th><th>FWD 勝率</th><th>FWD E(R)</th><th>FWD N</th></tr>
       <tr><td>4H足</td><td>46.4%</td><td style="color:#1a7f37;font-weight:700">52.5%</td><td>+0.051</td><td>217</td></tr>
-      <tr><td>1H足</td><td>41.3%</td><td>45.7%</td><td>-0.086</td><td>337</td></tr>
+      <tr><td>1H足</td><td>41.3%</td><td>45.6%</td><td>-0.086</td><td>338</td></tr>
     </table>
 
     <p>
@@ -594,7 +594,7 @@ window.addEventListener('resize',mark);
 </table>
 
     <div class="info-box">
-      <strong>🆕 今回の変化</strong>：<code>trend=下降</code> が本日 ⛔反証に移行。IS 35.8% → FWD 47.9%（tracker補正後 E(R)=+0.123）の逆転を前向き N=567 で確認。
+      <strong>🆕 今回の変化</strong>：<code>trend=下降</code> が本日 ⛔反証に移行。IS 35.8% → FWD 47.8%（tracker補正後 E(R)=+0.123）の逆転を前向き N=567 で確認。
     </div>
 
     <h2 id="related">8. 関連記事</h2>
