@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-08-17 | 🔄 ゲート実行中 | signal-lab-daily #072 | signal-lab-daily
+
+- **トピック**: trend=下降 gate ⛔反証確定——前向きN=570(cluster N=567)でCI下限プラス2回連続確認
+- **優先度**: ①（tracker[v] ⛔反証変化）
+- **IS/FWD**: IS 135/377=35.8% E(R)=-0.284 → FWD 273/570=47.9%; cluster補正 E(R)=+0.123 RCI[+0.01,+0.23]
+- **主因**: 金属IS22.8%→FWD53.4%(+30.6pp)——#030/#032/#039/#060と同根の金属レジーム転換
+- **claims.json**: 16件（全IS/FWD分離済み・fired_before/fired_from境界=2026-06-25）
+- **下書き**: `drafts/draft-signal-lab-072.html`
+- **verify.py**: ゲート実行中（Step 8-2）
+- **次アクション**: signal_lab_verify.py → Opus コンプラ → 独立Opus → publish or エスカレ
+
+---
+
 ## 2026-08-17 | ✅ 公開完了 | correlation-risk | autopublish
 - **決定論ゲート**: 🟢GREEN（SVGテキスト重なり「資産B(コモディティ)」vs「資産C(債券)」→凡例を全幅分散配置で修正後GREEN）
 - **Opus コンプラ+品質**: 🟡グレー修正4点適用（±0.7の目安注記追加・コモディティ初出説明追加・REIT初出説明追加・「着実に」→「一般に...期待できます」）＋任意2点（冒頭バナーにkinsho-v1属性・S&amp;P500をHTMLエンティティ修正）→ GREEN再確認

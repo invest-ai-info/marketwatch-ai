@@ -1,0 +1,101 @@
+{
+  "article_id": "072",
+  "claims": [
+    {
+      "label": "trend=下降 全期間・全シグナル",
+      "filter": {"trend": "下降"},
+      "k": 408,
+      "n": 947
+    },
+    {
+      "label": "trend=下降 IS期間（2026-06-25より前）",
+      "filter": {"trend": "下降", "fired_before": "2026-06-25"},
+      "k": 135,
+      "n": 377
+    },
+    {
+      "label": "trend=下降 FWD期間（2026-06-25以降）",
+      "filter": {"trend": "下降", "fired_from": "2026-06-25"},
+      "k": 273,
+      "n": 570
+    },
+    {
+      "label": "trend=下降 × 金属グループ 全期間",
+      "filter": {"trend": "下降", "group": "metal"},
+      "k": 86,
+      "n": 239
+    },
+    {
+      "label": "trend=下降 × 金属グループ FWD",
+      "filter": {"trend": "下降", "group": "metal", "fired_from": "2026-06-25"},
+      "k": 55,
+      "n": 103
+    },
+    {
+      "label": "trend=下降 × 指数グループ 全期間",
+      "filter": {"trend": "下降", "group": "index"},
+      "k": 63,
+      "n": 121
+    },
+    {
+      "label": "trend=下降 × 指数グループ FWD",
+      "filter": {"trend": "下降", "group": "index", "fired_from": "2026-06-25"},
+      "k": 49,
+      "n": 96
+    },
+    {
+      "label": "trend=下降 × 4H足 全期間",
+      "filter": {"trend": "下降", "tf": "4h"},
+      "k": 175,
+      "n": 377
+    },
+    {
+      "label": "trend=下降 × 4H足 FWD",
+      "filter": {"trend": "下降", "tf": "4h", "fired_from": "2026-06-25"},
+      "k": 114,
+      "n": 217
+    },
+    {
+      "label": "trend=下降 × 1H足 FWD",
+      "filter": {"trend": "下降", "tf": "1h", "fired_from": "2026-06-25"},
+      "k": 154,
+      "n": 337
+    },
+    {
+      "label": "trend=下降 × signal=bb_lower_touch 全期間",
+      "filter": {"trend": "下降", "signal": "bb_lower_touch"},
+      "k": 90,
+      "n": 200
+    },
+    {
+      "label": "trend=下降 × signal=bb_lower_touch FWD",
+      "filter": {"trend": "下降", "signal": "bb_lower_touch", "fired_from": "2026-06-25"},
+      "k": 64,
+      "n": 117
+    },
+    {
+      "label": "trend=下降 × signal=rsi_oversold_bounce 全期間",
+      "filter": {"trend": "下降", "signal": "rsi_oversold_bounce"},
+      "k": 58,
+      "n": 136
+    },
+    {
+      "label": "trend=下降 × signal=rsi_oversold_bounce FWD",
+      "filter": {"trend": "下降", "signal": "rsi_oversold_bounce", "fired_from": "2026-06-25"},
+      "k": 29,
+      "n": 49
+    },
+    {
+      "label": "trend=下降 × signal=high_break 全期間",
+      "filter": {"trend": "下降", "signal": "high_break"},
+      "k": 21,
+      "n": 61
+    },
+    {
+      "label": "trend=下降 × signal=high_break FWD",
+      "filter": {"trend": "下降", "signal": "high_break", "fired_from": "2026-06-25"},
+      "k": 16,
+      "n": 47
+    }
+  ]
+}
