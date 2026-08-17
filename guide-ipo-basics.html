@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>IPO（新規上場）の仕組みをわかりやすく解説｜公募価格・ブックビルディング・ロックアップ解除まで - MarketWatch AI</title>
+  <meta name="description" content="IPOとは何か？公募価格が決まるブックビルディングの流れ、抽選の仕組み、初値が公募価格と異なる理由、ロックアップ解除の需給インパクトまで、初心者にもわかりやすく図解で解説します。「IPOは必ず儲かる」は誤りです。">
+  <meta name="keywords" content="IPO,新規上場,公募価格,ブックビルディング,初値,ロックアップ,抽選,仮条件,上場,投資初心者,株式投資">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-ipo-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="IPO（新規上場）の仕組みをわかりやすく解説｜公募価格・ブックビルディング・ロックアップ解除まで">
+  <meta property="og:description" content="IPOとは？公募価格・ブックビルディング・初値・ロックアップ解除の仕組みを図解で解説。「IPOは儲かる」の誤解も正します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-ipo-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "IPO（新規上場）の仕組みをわかりやすく解説｜公募価格・ブックビルディング・ロックアップ解除まで",
+    "description": "IPOとは？公募価格・ブックビルディング・初値・ロックアップ解除の仕組みを図解で解説。「IPOは儲かる」の誤解も正します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-18",
+    "dateModified": "2026-08-18",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-ipo-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    /* readable-width v1 */
+    @media(min-width:900px){.article p{max-width:40em}}
+  </style>
+  <style id="mw-mobile-fit">
+  html,body{overflow-x:hidden}
+  .article,main,section,header,footer{max-width:100%}
+  *{overflow-wrap:break-word;word-break:normal}
+  img,svg,iframe,video{max-width:100%!important;height:auto}
+  pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+  td strong,td b,th strong{white-space:nowrap}
+  .mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+  @media(min-width:601px){.mw-scroll-hint{display:none}}
+  @media(max-width:600px){
+    body{font-size:.9rem;line-height:1.7}
+    .article{padding:14px 11px}
+    h1{font-size:1.26rem;line-height:1.4}
+    h2{font-size:1.08rem}
+    table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+    th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+    .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+  }
+  @media(max-width:380px){
+    body{font-size:.86rem}
+    .article{padding:12px 8px}
+    table{font-size:.76rem}
+  }
+  </style>
+  <script id="mw-mobile-fit-js">
+  (function(){try{
+  function mark(){
+  if(window.innerWidth>600)return;
+  var ts=document.getElementsByTagName('table');
+  for(var i=0;i<ts.length;i++){(function(t){
+  if(t.getAttribute('data-mw-sc'))return;
+  if(t.scrollWidth-t.clientWidth>4){
+  t.setAttribute('data-mw-sc','1');
+  var h=document.createElement('div');
+  h.className='mw-scroll-hint';
+  h.textContent='→ 横にスクロールできます';
+  if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+  t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+  }
+  })(ts[i]);}
+  }
+  if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+  window.addEventListener('resize',mark);
+  }catch(e){}})();
+  </script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; IPO（新規上場）の仕組み
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はIPO（新規上場）の仕組みを整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 IPO（新規上場）の仕組み｜公募価格・ブックビルディング・ロックアップ解除まで</h1>
+    <div class="meta-line">公開日：2026 年 8 月 18 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「IPOに当選した」「公開価格を下回って上場した」——ニュースや投資仲間との会話でIPOという言葉はよく聞くものの、<strong>上場の仕組みや公募価格が決まるプロセスを正確に理解している人は意外と少ない</strong>ものです。「IPOに応募すれば必ず儲かる」という話を聞いたことがある人もいるかもしれませんが、それは事実ではありません。</p>
+    <p>この記事では、IPOの基本的な流れから、公募価格が決まるブックビルディングの仕組み、初値が公募価格と異なる理由、そして<strong>上場後にしばしば株価の節目となるロックアップ解除の需給インパクト</strong>まで、初心者にもわかりやすく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>IPOとは未上場企業が証券取引所に株式を公開すること。<strong>公募価格は「ブックビルディング」という投資家の需要積み上げによって決まる</strong>（想定発行価格→仮条件→公募価格の順）。</li>
+      <li>初値は上場当日の最初の約定価格であり、公募価格と一致するとは限らない。過去の日本株IPOでは<strong>公募価格を上回る初値をつけた銘柄が多いとされる</strong>（年によってばらつきがある）が、公募割れ（初値＜公募価格）も起きる。</li>
+      <li>上場後には<strong>ロックアップ（売却制限）解除のタイミングで需給が崩れやすい</strong>。「IPOは必ず儲かる」は誤解であり、結果は事前に分からない。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">IPOとは何か？なぜ企業は上場するのか</a></li>
+        <li><a href="#section-2">上場までの流れ（仮条件→ブックビルディング→公募価格）</a></li>
+        <li><a href="#section-3">抽選と配分の仕組み</a></li>
+        <li><a href="#section-4">初値はどう決まる？公募価格との違い</a></li>
+        <li><a href="#section-5">ロックアップとは？解除後の需給インパクト</a></li>
+        <li><a href="#section-6">「IPOは儲かる」が危険な理由</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ IPOとは何か？なぜ企業は上場するのか</h2>
+    <p><strong>IPO（Initial Public Offering）</strong>とは、これまで株式を公開していなかった未上場企業が、証券取引所に株式を上場して広く一般投資家に公開することです。日本語では「新規公開株式」や「新規上場」とも呼ばれます。</p>
+    <h3>企業がIPOをする主な目的</h3>
+    <ul>
+      <li><strong>資金調達</strong>：株式を発行・売却して事業拡大のための資金を得る</li>
+      <li><strong>知名度・信頼性の向上</strong>：上場することで社会的信用が増し、採用・取引先獲得にもプラスになる</li>
+      <li><strong>既存株主（創業者・VC）の出口</strong>：長年保有していた株式を市場で換金できるようになる</li>
+    </ul>
+    <p>投資家にとってIPOへの参加は、「まだ広く知られていない企業の成長に早期から関与できる」という魅力がある一方で、上場初日から株価が大きく動くリスクも伴います。</p>
+
+    <div class="info-box">
+      <strong>💡 「公募」と「売出し」の違い</strong>：IPOには、企業が新たに株式を発行して資金を調達する「<strong>公募</strong>」と、既存株主が保有株を売却する「<strong>売出し</strong>」の2種類があります。投資家が応募するのは主に公募分ですが、売出しも同じタイミングで行われることが多くあります。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 上場までの流れ（仮条件→ブックビルディング→公募価格）</h2>
+    <p>日本では現在、<strong>ブックビルディング方式</strong>が一般的なIPOの価格決定方法です。手順を順に見ていきましょう。</p>
+
+    <!-- SVG: IPOプロセスの流れ図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="ipo-flow-title">
+        <title id="ipo-flow-title">IPO上場プロセスの流れ（想定発行価格→仮条件→ブックビルディング→公募価格→上場日）の概念図</title>
+        <!-- 背景ステップボックス -->
+        <!-- Step 1 -->
+        <rect x="20" y="70" width="110" height="120" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+        <text x="75" y="96" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#0969da">STEP 1</text>
+        <text x="75" y="116" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">想定発行</text>
+        <text x="75" y="132" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">価格の設定</text>
+        <text x="75" y="152" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">主幹事証券が</text>
+        <text x="75" y="168" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">算定・提示</text>
+        <!-- Arrow 1→2 -->
+        <polygon points="136,130 150,122 150,138" fill="#0969da"/>
+        <!-- Step 2 -->
+        <rect x="152" y="70" width="110" height="120" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+        <text x="207" y="96" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#0969da">STEP 2</text>
+        <text x="207" y="116" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">仮条件の</text>
+        <text x="207" y="132" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">決定</text>
+        <text x="207" y="152" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">機関投資家の</text>
+        <text x="207" y="168" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">意見を反映</text>
+        <!-- Arrow 2→3 -->
+        <polygon points="268,130 282,122 282,138" fill="#0969da"/>
+        <!-- Step 3 -->
+        <rect x="284" y="70" width="110" height="120" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="339" y="96" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">STEP 3</text>
+        <text x="339" y="116" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">ブック</text>
+        <text x="339" y="132" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">ビルディング</text>
+        <text x="339" y="152" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">約5営業日・</text>
+        <text x="339" y="168" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">需要積み上げ</text>
+        <!-- Arrow 3→4 -->
+        <polygon points="400,130 414,122 414,138" fill="#0969da"/>
+        <!-- Step 4 -->
+        <rect x="416" y="70" width="110" height="120" rx="8" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="471" y="96" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#9a6700">STEP 4</text>
+        <text x="471" y="116" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">公募価格</text>
+        <text x="471" y="132" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">の決定</text>
+        <text x="471" y="152" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">仮条件の範囲内</text>
+        <text x="471" y="168" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">で確定</text>
+        <!-- Arrow 4→5 -->
+        <polygon points="532,130 546,122 546,138" fill="#0969da"/>
+        <!-- Step 5 -->
+        <rect x="548" y="70" width="76" height="120" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="586" y="96" text-anchor="middle" font-size="13" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">STEP 5</text>
+        <text x="586" y="118" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">上場日</text>
+        <text x="586" y="138" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">初値が</text>
+        <text x="586" y="154" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">決まる</text>
+        <!-- ラベル -->
+        <text class="s-panel-label" x="20" y="56">IPO上場プロセスの流れ（概念図）</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の期間・条件は案件・証券会社によって異なります。</p>
+    </figure>
+
+    <h3>① 想定発行価格の設定</h3>
+    <p>まず主幹事証券会社（そのIPOを取りまとめる中心的な証券会社）が、企業の業績・類似企業との比較などをもとに<strong>「想定発行価格」</strong>を算定・提示します。これは公募価格の出発点であり、投資家への参考情報として公表されます。</p>
+
+    <h3>② 仮条件の決定</h3>
+    <p>想定発行価格をベースに、機関投資家のヒアリング（ロードショー＝経営陣が機関投資家に事業を説明する会）を経て、<strong>「仮条件」という価格帯（例：○○円〜△△円）</strong>が決定されます。投資家はこの範囲内で申込価格と株数を申告します。</p>
+
+    <h3>③ ブックビルディング（需要積み上げ）</h3>
+    <p>仮条件が公表されてから約5営業日の「ブックビルディング期間」に、一般投資家・機関投資家から購入の申込みが集まります。主幹事がこれを集計・分析し、需要の強さや市場環境を総合的に判断します。</p>
+
+    <h3>④ 公募価格の決定</h3>
+    <p>集まった需要をもとに、仮条件の範囲内で<strong>「公募価格（＝投資家が実際に申し込む価格）」</strong>が確定します。需要が非常に強ければ仮条件の上限付近に、弱ければ下限付近に設定されます。</p>
+
+    <div class="info-box">
+      <strong>💡 仮条件の「上限」に設定されるケースが多い</strong>：人気のあるIPOでは、ブックビルディングで需要が殺到し、仮条件の上限値が公募価格になることがよくあります。逆に需要が集まらなければ下限に近い価格になります。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 抽選と配分の仕組み</h2>
+    <p>公募価格が決まると、投資家への株式の配分が行われます。人気IPOでは申込数が配分可能株数をはるかに上回ることが多く、<strong>証券会社ごとに定められた抽選ルール</strong>に従って当選者が決まります。</p>
+
+    <h3>一般的な配分の流れ</h3>
+    <ul>
+      <li>一般投資家（個人）向けに配分される株数には上限があり、案件の規模・主幹事の方針によって大きく異なる</li>
+      <li>大型IPOほど機関投資家への配分比率が高くなる傾向がある</li>
+      <li>個人向けは各証券会社が独自の抽選システムを運営（均等抽選・ポイント方式など）</li>
+    </ul>
+
+    <div class="warning-box">人気の高いIPOほど当選確率は低くなる傾向があります。「口座を多く持てば当選しやすい」「ポイントを積み上げる」など各社の仕組みを確認しましょう。ただし、当選=利益確定ではありません。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 初値はどう決まる？公募価格との違い</h2>
+    <p><strong>初値（はつね）</strong>とは、上場初日に市場で最初に成立した約定価格のことです。公募価格はあくまで「投資家が申し込んだ価格」であり、上場当日の初値と必ずしも一致しません。</p>
+
+    <!-- SVG: 公募価格と初値の関係 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 200" role="img" aria-labelledby="ipo-initialval-title">
+        <title id="ipo-initialval-title">公募価格と初値の3パターン（初値＞公募価格、初値＝公募価格、公募割れ）の概念図</title>
+        <text class="s-panel-label" x="20" y="24">公募価格と初値の関係（3パターン・概念図）</text>
+        <!-- パターン1: 初値上昇 -->
+        <rect x="20" y="40" width="180" height="140" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="110" y="63" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">パターン①</text>
+        <text x="110" y="82" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">初値 ＞ 公募価格</text>
+        <!-- 矢印上向き -->
+        <line x1="110" y1="155" x2="110" y2="108" stroke="#1a7f37" stroke-width="2.5"/>
+        <polygon points="110,100 104,112 116,112" fill="#1a7f37"/>
+        <text x="130" y="152" text-anchor="start" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">公募価格</text>
+        <text x="130" y="107" text-anchor="start" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">初値</text>
+        <text x="110" y="178" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">「公開価格超え」</text>
+
+        <!-- パターン2: 初値同等 -->
+        <rect x="220" y="40" width="180" height="140" rx="8" fill="#f6f8fa" stroke="#8b949e" stroke-width="1.5"/>
+        <text x="310" y="63" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#424a53">パターン②</text>
+        <text x="310" y="82" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">初値 ≒ 公募価格</text>
+        <line x1="260" y1="130" x2="360" y2="130" stroke="#57606a" stroke-width="2"/>
+        <text x="310" y="150" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">公募価格 ≒ 初値</text>
+        <text x="310" y="178" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#57606a">ほぼ変わらず</text>
+
+        <!-- パターン3: 公募割れ -->
+        <rect x="420" y="40" width="200" height="140" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="520" y="63" text-anchor="middle" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">パターン③</text>
+        <text x="520" y="82" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#424a53">初値 ＜ 公募価格</text>
+        <line x1="475" y1="108" x2="475" y2="155" stroke="#cf222e" stroke-width="2.5"/>
+        <polygon points="475,163 469,151 481,151" fill="#cf222e"/>
+        <text x="495" y="110" text-anchor="start" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">公募価格</text>
+        <text x="495" y="158" text-anchor="start" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">初値（下落）</text>
+        <text x="520" y="178" text-anchor="middle" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">「公募割れ」</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の価格・割合は銘柄・市場環境によって大きく異なります。</p>
+    </figure>
+
+    <h3>初値が高くなりやすい要因</h3>
+    <ul>
+      <li>上場規模（時価総額）が小さく、需要が供給を大きく上回る場合</li>
+      <li>成長期待が高く、注目度の高い業種・テーマに合致している場合</li>
+      <li>市場全体の地合いが良く、リスクオン（投資家がリスクを取りやすい強気の地合い）環境の場合</li>
+    </ul>
+
+    <h3>公募割れ（初値が公募価格を下回る）が起きる理由</h3>
+    <ul>
+      <li>市場環境の急変（上場直前に相場が大きく下落した場合など）</li>
+      <li>公募価格が高すぎた（業績や成長性に対して割高だった）場合</li>
+      <li>同時期に大型IPOが集中し、需要が分散した場合</li>
+    </ul>
+
+    <div class="warning-box">一般に、過去の日本株IPOでは公募価格を上回る初値をつけた銘柄が多いとされますが、その比率は年・市況によって大きくばらつきます（最新の実績は取引所や主幹事証券の公表資料でご確認ください）。「今後も同様」を保証するものではなく、公募割れも現実に起きており、当選＝利益確定ではありません。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ ロックアップとは？解除後の需給インパクト</h2>
+    <p>IPO後の株価に大きな影響を与えるのが<strong>「ロックアップ（Lock-up）」</strong>という仕組みです。</p>
+    <p>ロックアップとは、<strong>創業者・経営陣・ベンチャーキャピタル（VC）・事業会社などの既存株主が、上場後の一定期間、保有株式を売却しないことを約束する契約</strong>です。上場直後に大量の株式が市場に流れると需給が崩れ株価が急落するおそれがあるため、一定期間の売却を禁じて株価の安定を図るために設けられます。</p>
+
+    <h3>ロックアップの主な期間・条件</h3>
+    <ul>
+      <li><strong>期間条件</strong>：上場日から90日、または180日が一般的</li>
+      <li><strong>価格条件</strong>：「公募価格の1.5倍以上になった場合に解除」という条件が付くケースもある</li>
+      <li>上記の両方が組み合わさっている場合もある（例：上場90日後かつ公募価格の1.5倍以上で解除）</li>
+    </ul>
+
+    <!-- SVG: ロックアップ解除イメージ -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 220" role="img" aria-labelledby="lockup-title">
+        <title id="lockup-title">ロックアップ期間と解除後の需給イメージ（概念図）</title>
+        <text class="s-panel-label" x="20" y="24">ロックアップ期間と解除後の需給イメージ（概念図）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="50" y1="180" x2="610" y2="180"/>
+        <line class="s-axis" x1="50" y1="40" x2="50" y2="185"/>
+        <!-- ロックアップ期間帯 -->
+        <rect x="50" y="40" width="320" height="140" fill="#e6ffed" opacity="0.5"/>
+        <text x="210" y="60" text-anchor="middle" font-size="11" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#1a7f37">← ロックアップ期間（例：90〜180日）→</text>
+        <!-- 解除後帯 -->
+        <rect x="370" y="40" width="240" height="140" fill="#ffebe9" opacity="0.4"/>
+        <text x="490" y="60" text-anchor="middle" font-size="11" font-weight="700" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">解除後（売り圧力が出やすい）</text>
+        <!-- ロックアップ解除ライン -->
+        <line x1="370" y1="40" x2="370" y2="185" stroke="#cf222e" stroke-width="2" stroke-dasharray="6 3"/>
+        <text x="375" y="80" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#cf222e">解除日</text>
+        <!-- 概念的な価格線（上昇→解除で下落） -->
+        <polyline points="50,160 150,140 250,120 370,100 420,130 490,145 570,150"
+          fill="none" stroke="#2C4F8F" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- 公募価格ライン -->
+        <line x1="50" y1="160" x2="610" y2="160" stroke="#57606a" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="55" y="157" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">公募価格（参考）</text>
+        <!-- 軸ラベル -->
+        <text x="320" y="198" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif" fill="#6e7781">時間（上場日→）</text>
+        <text class="s-label-sm" x="35" y="120" text-anchor="middle" transform="rotate(-90,35,120)">株価</text>
+        <!-- 凡例 -->
+        <line x1="440" y1="194" x2="470" y2="194" stroke="#2C4F8F" stroke-width="2.5"/>
+        <text x="475" y="198" font-size="10" font-family="'Noto Sans JP',sans-serif" fill="#424a53">株価イメージ</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の株価推移は銘柄・市場環境によって大きく異なります。ロックアップ解除後に必ず下落するわけではありません。</p>
+    </figure>
+
+    <h3>ロックアップ解除が株価に与えうる影響</h3>
+    <p>ロックアップが解除されると、それまで売れなかった大株主（VCや創業者）が保有株を売却できるようになります。大量の株式が市場に供給されると需給が崩れ、株価が下落しやすくなる場合があります。これは「<strong>上場ゴール</strong>（上場自体が目的化し、上場後に成長が続かない状態を指す俗称）」と呼ばれるリスクと関連します。</p>
+    <p>ただし、解除後に必ず下落するわけではなく、業績が好調で需要が旺盛なら株価が維持・上昇し続けることもあります。ロックアップの解除日や条件は目論見書（プロスペクタス）で確認できます。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 「IPOは儲かる」が危険な理由</h2>
+    <p>「IPOに当選すれば初値で売れば儲かる」という話を聞いたことがあるかもしれません。一般に、過去の日本株市場では多くのIPO銘柄が公募価格を上回る初値をつけるとされています（年ごとのばらつきは大きく、市況によって傾向は変化します）。しかしこれを「必ず儲かる」と解釈するのは危険です。</p>
+
+    <h3>注意すべきポイント</h3>
+    <ul>
+      <li><strong>当選確率が低い</strong>：人気IPOほど応募が集中し、当選できないことが多い。当選できる銘柄が必ずしも上昇するとは限らない</li>
+      <li><strong>公募割れのリスク</strong>：市場環境の悪化や割高な公募価格設定により、初値が公募価格を下回ることもある</li>
+      <li><strong>上場後の株価は未知数</strong>：たとえ初値が高くても、その後の業績が伴わなければ株価は下落する場合がある</li>
+      <li><strong>過去の傾向は将来を保証しない</strong>：市場環境・制度・参加者の動向は変化する</li>
+    </ul>
+
+    <div class="negative-box">「IPOは必ず儲かる」という断定は誤りです。初値が公募価格を上回っても、当選できるかどうか・売るタイミング・その後の値動きなど、利益は事前に確定しません。</div>
+
+    <h3>目論見書（もくろみしょ）を読む習慣</h3>
+    <p>IPOに応募する前には、企業が公表する<strong>目論見書（プロスペクタス）</strong>を確認することが重要です。目論見書には事業内容・財務状況・リスク要因・ロックアップ条件などが記載されています。主幹事証券会社のウェブサイトや金融庁のEDINET（有価証券報告書などの開示書類を無料で閲覧できる電子開示システム）でも閲覧できます。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>IPOの知識は、個別株への理解を深めるだけでなく、市場全体の動向を読む力にもつながります。</p>
+    <ul>
+      <li><strong>株式指数との関係</strong>：大型IPOが相次ぐと市場全体の資金需要が高まり、既存の指数銘柄から資金が流れることがある。当サイトの <a href="charts.html">📈 150年チャート</a> で指数の長期トレンドを把握しておくと役立ちます。</li>
+      <li><strong>市場の健康度の確認</strong>：IPO市場が活況かどうかは投資家心理を映す指標の一つ。<a href="market-health.html">🩺 市場健康度</a> ページで恐怖&強欲指数や市場全体の状態を確認しながら判断の参考にしてください。</li>
+      <li><strong>基礎知識の積み上げ</strong>：IPOで取引される個別株を理解するには、<a href="guide-per-pbr.html">PERとPBRの読み方</a> や <a href="guide-financial-statements.html">決算書の読み方入門</a> も参考になります。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績ダッシュボード</div>
+      <div class="cta-box-desc">当サイトのテクニカルシグナルの成績（勝ち・負け含む全数）を公開しています。投資判断の参考情報として活用ください。</div>
+      <a class="cta-btn" href="track-record.html">成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li>IPOとは未上場企業が証券取引所に株式を公開すること。ブックビルディング方式で<strong>想定発行価格→仮条件→公募価格</strong>の順に価格が決まる。</li>
+      <li>初値は上場当日に市場で決まり、公募価格と一致するとは限らない。過去には公募価格を上回る初値をつけた銘柄が多いとされるが、比率は年・市況によってばらつきがあり、<strong>公募割れも存在する</strong>。</li>
+      <li>ロックアップ（売却制限）解除のタイミングで<strong>需給が崩れ株価が動きやすい</strong>こともある。</li>
+      <li>「IPOは必ず儲かる」は誤解であり、<strong>当選確率・公募割れリスク・上場後の値動きなど不確実性は多い</strong>。目論見書を読んで自分で判断する姿勢が大切。</li>
+    </ul>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-per-pbr.html">
+        <div class="related-card-title">📐 PERとPBRの読み方</div>
+        <div class="related-card-desc">IPOで注目される企業の「割安・割高」をどう測るか。PERとPBRの基本を図解で解説します。</div>
+      </a>
+      <a class="related-card" href="guide-financial-statements.html">
+        <div class="related-card-title">📋 決算書の読み方入門</div>
+        <div class="related-card-desc">PL・BS・CFの3表が語ること。上場企業の財務状態を読む基礎知識。</div>
+      </a>
+      <a class="related-card" href="guide-stock-split-buyback.html">
+        <div class="related-card-title">✂️ 株式分割と自社株買い</div>
+        <div class="related-card-desc">分割でピザの切り方が変わっても会社の価値は変わらない。上場後によく起きる株主還元策の仕組み。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はIPO（新規上場）の仕組みを情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
