@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-08-18 | ✅ 公開完了 | ipo-basics | autopublish
+- **記事**: IPO（新規上場）の仕組み（基礎知識シリーズ #36）
+- **決定論ゲート**: 🟢 GREEN（2回確認）
+- **Opusコンプラ初回**: 🟡 グレー → 修正適用（実績表現軟化×4箇所・用語説明5件・SVGラベル座標・nav 11ボタン化・back-to-top注入）
+- **独立Opus確認**: 🟢 白（2回目で全項目OK）
+- **check_site_consistency**: EXIT=0（警告のみ）
+- **URL**: https://marketwatch-jp.com/guide-ipo-basics.html（クラウド環境のため直接HTTP確認不可・デプロイ後にオーナーがご確認ください）
+
+---
+
 ## 2026-08-18 | 🚩要人間レビュー（コンプラ：黒・期間ラベル誤記） | signal-lab-daily #072 | signal-lab-daily
 
 - **トピック**: trend=下降 gate ⛔反証確定——前向きN=571(cluster N=567)でCI下限プラス2回連続確認
