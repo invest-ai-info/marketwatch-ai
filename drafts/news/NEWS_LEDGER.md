@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-08-17
+- 判定: ✅ 公開済み
+- 選定トピック: 今週ウォール街は「消費者の真実」週間──Walmart・Home Depot・Target三決算＋FOMC議事録で7月小売ショックの答えが出る（カテゴリ: マクロ・米国消費・小売決算・FOMC議事録）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 選定理由: 7月米小売売上高-0.6%（9か月ぶり下落・予想大幅下振れ、8/14発表）・消費者信頼感51.0急落の後、今週8/18 Home Depot・8/19 Target+Lowe's・8/20 Walmart が相次いで決算発表。同8/19にFOMC議事録（7月29日分）も公開予定。「小売ショックは踊り場か転換点か」の答えが今週出るという構図。8/16 FOMC記事と重複しない（消費実態の決算検証という独立した角度）。日本市場も日経7万円回復見通し等で連動。
+- 出典（2系統以上）:
+  - U.S. News「US Retail Sales Unexpectedly Fall 0.6% as Spending Cools」（2026-08-14）
+  - CNN Business「Frustrated US consumers cut their retail spending last month」（2026-08-14）
+  - CNBC「Stock market next week: Outlook for Aug. 17-21, 2026」（2026-08-14）
+  - Capital Street FX「Week Ahead, 17–21 August 2026: FOMC Minutes, A Retail-Earnings Wave」
+  - TradingKey「The Week Ahead: Fed Minutes, Walmart, Target and Home Depot Earnings」
+  - Yahoo Finance「Earnings Preview: What To Expect From The Home Depot's Report」
+  - Top1Markets「Walmart, Target and Home Depot Earnings: Four Tests That Separate a Blip From a Rollover」
+  - ATB Financial「Weekly Market Update August 17 2026」
+  - 日本経済新聞「日経平均7万円回復うかがう」（2026-08-16）
+  - ダイヤモンドZAi「来週（8/17〜8/21）の日経平均予想レンジ」
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2件適用（①「需要が強くなりやすい」→「需要が相対的に落ちにくいとされる」②「市場予想を形成する。今週の結果を踏まえた上での判断が有効と考えられる」→「市場予想を形成するとみられる。今週の結果は、その市場予想を読むうえでの材料の一つとして市場で参照される見込みだ」）→ 最終🟢白
+  - 第1Opus指摘の非コンプラ3件（事実誤記・数値不整合・プレースホルダ）は自分で修正：①「7月14日」→「8月14日」（小売発表日誤記） ②「9名中3名＋残り9名」→「12名中3名＋据え置き9名」（総数整合） ③MailerLite XXXXXX プレースホルダブロック削除（他339記事に前例なし）
+  - 第2Opus（独立確認・Read専用）: 🟢白（全5項目①kinsho-v1×3箇所 ②禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典12系統、すべて✅・公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（L162冒頭バナー/L318本文末/L328フッター）✅ ②禁止語なし（必ず/確実に/絶対/儲かる/一択/保証いずれも否定形のみ）✅ ③銘柄推奨なし✅ ④出典12系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告20件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-17-walmart-target-homedepot-consumer-test.html
+- commit: 06703f9（main へ push 済み）
+
+---
+
 ## 2026-08-16
 - 判定: ✅ 公開済み
 - 選定トピック: FRBが9対3票で据え置いた7月FOMC──「3人の反対票」（ハマック・カシュカリ・ローガン）が示す分断と来週2大焦点（議事録8/19・ジャクソンホール8/27-29・ウォーシュ議長初講演）を中立整理（カテゴリ: マクロ・FRB金融政策・ジャクソンホール）
