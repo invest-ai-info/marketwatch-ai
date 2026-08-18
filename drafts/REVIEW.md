@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-08-19 | 🔲 下書き生成 | counterparty-risk | autodraft
+
+- **記事**: 証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説（リスク管理シリーズ #40）
+- **生成ファイル**: `drafts/draft-counterparty-risk.html`
+- **参照出典URL**:
+  - https://jipf.or.jp/introduction/ （日本投資者保護基金・投資者保護とは）
+  - https://jipf.or.jp/about/ （日本投資者保護基金・基金について）
+  - https://jipf.or.jp/qa/ （日本投資者保護基金・Q&A）
+  - https://www.jsda.or.jp/shijyo/seido/jishukisei/web-handbook/301_hourei/files/bunbetsuqa8.pdf （日本証券業協会・顧客資産の分別管理Q&A 第8版 令和7年6月）
+  - https://www.jsda.or.jp/anshin/bunbetsu/files/bunbetukanri20110712.pdf （金融商品取引業者等の分別管理Q&A・個人投資家向けリーフレット）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般的な制度解説に限定）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「保証」「儲かる」等を使用していない）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer）
+  - ✅ `<meta name="robots" content="noindex,nofollow">` あり
+  - ✅ 出典に一次情報（jipf.or.jp・jsda.or.jp）を明記
+  - ✅ 特定証券会社の安全性評価・比較なし
+  - ✅ 補償額（1,000万円）は一次情報から引用
+  - ✅ FX・CFD等の条件付き項目は「要確認」として断定回避
+- **SVGのTODO**: あり（「登録業者 vs 無登録業者の保護レベル比較」シンプル2列図を要追加・要ライト/ダーク実機確認。SVG2点は自動生成済み、ライト/ダーク両テーマの実機確認が必要）
+- **人間がやる残作業**:
+  1. SVG2点のライト/ダーク実機確認（特に `fill` の視認性）
+  2. 3点目SVGのTODOコメント確認・追加or削除判断
+  3. compliance-reviewer(Opus)による監査
+  4. 公開時のカテゴリ「🛡️ リスク管理・資金管理」が guides.html に未作成の場合、人間が新設
+  5. 公開は毎朝 08:40 の `autodraft-publish` が自動実行（ゲート付き）
+
+---
+
 ## 2026-08-18 | ✅ 公開完了 | ipo-basics | autopublish
 - **記事**: IPO（新規上場）の仕組み（基礎知識シリーズ #36）
 - **決定論ゲート**: 🟢 GREEN（2回確認）

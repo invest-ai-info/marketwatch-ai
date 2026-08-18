@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説 - MarketWatch AI</title>
+  <meta name="description" content="証券会社が破綻しても顧客資産が守られる理由を「分別管理義務（金融商品取引法）」「信託保全」「日本投資者保護基金（上限1,000万円）」の3層構造で図解。何が補償されて何が補償されないか、無登録業者との違い、口座を複数持つ意味まで初心者にもわかりやすく解説します。">
+  <meta name="keywords" content="証券会社破綻,分別管理,投資者保護基金,JIPF,顧客資産保護,信託保全,金融商品取引法,証券口座,リスク管理,無登録業者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-counterparty-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説">
+  <meta property="og:description" content="証券会社破綻でも顧客資産が守られる仕組み（分別管理・信託保全・日本投資者保護基金）を3層構造で図解。何が補償され、何がされないかをわかりやすく解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-counterparty-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説",
+    "description": "証券会社が破綻しても顧客資産が守られる理由を「分別管理義務」「信託保全」「日本投資者保護基金」の3層構造で図解。何が補償されて何がされないかを初心者にもわかりやすく解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-19",
+    "dateModified": "2026-08-19",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-counterparty-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 証券会社が破綻したらどうなるのか
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は証券口座の保護制度に関する一般的な仕組みの解説であり、投資助言や特定の金融機関の安全性評価ではありません。制度の詳細・最新情報は金融庁や日本投資者保護基金など公的機関の一次情報でご確認ください。</div>
+
+    <h1>🛡️ 証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説</h1>
+    <div class="meta-line">下書き日：2026 年 8 月 19 日 ／ 読了時間：約 12 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <p>「ネット証券に資産を預けていて、万が一その証券会社が倒産したらどうなるのか？」——一度は頭をよぎったことがある疑問ではないでしょうか。銀行と違って証券会社には「預金保険」のイメージがなく、漠然とした不安を感じる人も少なくありません。</p>
+    <p>結論から言うと、<strong>金融商品取引法が定める「分別管理義務」と「日本投資者保護基金（JIPF）」の2段構えで、顧客資産は証券会社の経営破綻から切り離される仕組み</strong>になっています。ただし「何でも全額補償される」わけではなく、補償されるものとされないものが明確に存在します。この記事では、仕組みを図解で解説し、投資家として知っておくべきポイントを整理します。</p>
+    <p>なお、<strong>無登録業者には今回解説する保護制度が適用されません</strong>。詐欺・無登録業者のリスクについては<a href="../guide-investment-scams.html">投資詐欺の見分け方</a>をあわせてご参照ください。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>証券会社は法律（金融商品取引法第43条の2）により、<strong>顧客の資産を自社の資産と厳格に分けて管理する「分別管理義務」</strong>がある。分別管理が適切に行われていれば、破綻しても顧客資産は原則全額返還される。</li>
+      <li>万一、分別管理に問題があって返還できない場合は、<strong>「日本投資者保護基金（JIPF）」が1人あたり上限1,000万円まで補償</strong>する（時価換算）。補償するのは「分別管理の不備による不足分」であり、<strong>相場の値下がりによる損失は補償対象外</strong>。</li>
+      <li>これらの保護は<strong>金融庁に登録された証券会社の口座にのみ適用</strong>される。「必ず儲かる」を謳う無登録業者は分別管理も保護基金も適用されず、極めてリスクが高い。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">証券口座の資産は「証券会社のお金」ではない</a></li>
+        <li><a href="#section-2">分別管理の3層構造：株・投信・現金それぞれの保全</a></li>
+        <li><a href="#section-3">証券会社が破綻したときの流れ（概念図）</a></li>
+        <li><a href="#section-4">日本投資者保護基金（JIPF）とは</a></li>
+        <li><a href="#section-5">何が補償されて、何がされないか</a></li>
+        <li><a href="#section-6">無登録業者には一切の保護が及ばない</a></li>
+        <li><a href="#section-7">複数口座を持つ意味と実務的な考え方</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== 前半：初心者向け ===== -->
+
+    <h2 id="section-1">1️⃣ 証券口座の資産は「証券会社のお金」ではない</h2>
+    <p>まず根本的な誤解を解いておきましょう。<strong>証券口座に入れた株式・投信・現金は、証券会社の資産ではなく、あくまであなたの資産です</strong>。証券会社は「管理を委託されている」にすぎません。</p>
+    <p>銀行に預金した場合、そのお金は一度銀行の資産になり、銀行が貸し出しなどに使います（だから「預金」という）。一方、証券口座の株式や預かり金は、<strong>最初からあなた名義の資産として、証券会社の自社資産とは「別の引き出し」に厳格に分けて保管する義務</strong>が法律で定められています。これが「分別管理」の基本思想です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="bunbetsu-title">
+        <title id="bunbetsu-title">分別管理のイメージ：証券会社内の顧客資産と自社資産は別の引き出し</title>
+        <!-- 背景：証券会社の外枠 -->
+        <rect x="40" y="30" width="560" height="240" rx="14" fill="none" stroke="#8b949e" stroke-width="1.5"/>
+        <text x="320" y="20" text-anchor="middle" class="s-panel-label">証券会社</text>
+
+        <!-- 左ボックス：顧客資産 -->
+        <rect x="70" y="60" width="220" height="180" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="2"/>
+        <text x="180" y="95" text-anchor="middle" class="s-note" font-size="14">👤 顧客の資産</text>
+        <text x="180" y="120" text-anchor="middle" class="s-legend" font-size="12">株式・投信（保護預かり）</text>
+        <text x="180" y="142" text-anchor="middle" class="s-legend" font-size="12">預かり金（信託銀行に信託）</text>
+        <text x="180" y="175" text-anchor="middle" class="s-note-g" font-size="13">法律で厳格に分離</text>
+        <text x="180" y="200" text-anchor="middle" class="s-note-g" font-size="12">（金商法 第43条の2）</text>
+        <text x="180" y="225" text-anchor="middle" class="s-label-sm">← あなたの財布</text>
+
+        <!-- 中央の仕切り -->
+        <line x1="320" y1="60" x2="320" y2="240" stroke="#cf222e" stroke-width="2.5" stroke-dasharray="7 4"/>
+        <text x="320" y="158" text-anchor="middle" class="s-note-r" font-size="18" font-weight="700">｜</text>
+        <text x="320" y="175" text-anchor="middle" class="s-note-r" font-size="11">厳格な壁</text>
+
+        <!-- 右ボックス：会社資産 -->
+        <rect x="350" y="60" width="220" height="180" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="2"/>
+        <text x="460" y="95" text-anchor="middle" class="s-note-r" font-size="14">🏢 証券会社の資産</text>
+        <text x="460" y="120" text-anchor="middle" class="s-legend" font-size="12">自己売買資金・事業資産</text>
+        <text x="460" y="142" text-anchor="middle" class="s-legend" font-size="12">固定資産・借入金など</text>
+        <text x="460" y="200" text-anchor="middle" class="s-note-r" font-size="12">破綻時は債権者への</text>
+        <text x="460" y="220" text-anchor="middle" class="s-note-r" font-size="12">弁済対象</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。顧客の預かり資産と証券会社の自社資産は法律で別管理が義務づけられており、左側の「顧客の財布」は証券会社が破綻しても切り離されます。</p>
+    </figure>
+
+    <h2 id="section-2">2️⃣ 分別管理の3層構造：株・投信・現金それぞれの保全</h2>
+    <p>一口に「分別管理」といっても、資産の種類によって保全の仕組みが異なります。</p>
+
+    <div class="info-box">
+      <strong>💡 分別管理の仕組みは金融庁登録の証券会社にのみ適用されます。</strong> 登録業者かどうかは金融庁の「免許・許可・登録等を受けている業者一覧」で誰でも確認できます。
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>資産の種類</th>
+          <th>保全の仕組み</th>
+          <th>ポイント</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>株式・ETF・投資信託</td>
+          <td>保護預かり（証券保管振替機構 等）</td>
+          <td>名義はあなた。証券会社の固有財産とは分離保管</td>
+        </tr>
+        <tr>
+          <td>口座内の現金（預かり金）</td>
+          <td>信託銀行への信託保全（顧客分別金信託）</td>
+          <td>信託銀行に日々預け入れ。証券会社の倒産リスクから遮断</td>
+        </tr>
+        <tr>
+          <td>外国株・外貨建て資産</td>
+          <td>海外保管機関への分別管理</td>
+          <td>各国の法制度が適用。確認は各証券会社の開示資料で</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>有価証券は「証券保管振替機構（ほふり）」などを通じ、証券会社の固有財産と分離して管理されます。現金については、証券会社は顧客から預かった「顧客分別金」を法律に基づき信託銀行に信託することが義務づけられています（「信託保全」）。これにより、証券会社が経営危機に陥っても、顧客の現金は信託銀行側に安全に保全されている状態になります。</p>
+
+    <h2 id="section-3">3️⃣ 証券会社が破綻したときの流れ（概念図）</h2>
+    <p>では、実際に証券会社が破綻した場合、どのような流れで顧客資産が返還（または補償）されるのでしょうか。大まかな分岐を図解します。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 380" role="img" aria-labelledby="hasan-title">
+        <title id="hasan-title">証券会社が破綻した場合の顧客資産の流れ（概念図）</title>
+        <!-- 起点 -->
+        <rect x="230" y="20" width="180" height="46" rx="10" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="320" y="43" text-anchor="middle" class="s-legend" font-size="13" font-weight="700">証券会社 破綻</text>
+        <!-- 矢印：分岐点へ -->
+        <line x1="320" y1="66" x2="320" y2="100" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arr)"/>
+        <!-- 分岐点ボックス -->
+        <rect x="210" y="100" width="220" height="46" rx="10" fill="#f6f8fa" stroke="#8b949e" stroke-width="1.5"/>
+        <text x="320" y="123" text-anchor="middle" class="s-legend" font-size="12">分別管理は適切だったか？</text>
+
+        <!-- 左分岐：YES -->
+        <line x1="250" y1="146" x2="140" y2="196" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrG)"/>
+        <text x="165" y="175" text-anchor="middle" class="s-note-g" font-size="12">✅ YES</text>
+        <rect x="50" y="196" width="180" height="56" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="140" y="220" text-anchor="middle" class="s-note-g" font-size="13" font-weight="700">原則：全額返還</text>
+        <text x="140" y="240" text-anchor="middle" class="s-legend" font-size="11">管財人を通じて</text>
+        <text x="140" y="256" text-anchor="middle" class="s-legend" font-size="11">順次返還手続き</text>
+        <!-- ↓ -->
+        <line x1="140" y1="252" x2="140" y2="290" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrG)"/>
+        <rect x="50" y="290" width="180" height="46" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="140" y="318" text-anchor="middle" class="s-note-g" font-size="12">顧客に資産が戻る</text>
+
+        <!-- 右分岐：NO -->
+        <line x1="390" y1="146" x2="500" y2="196" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arrR)"/>
+        <text x="475" y="175" text-anchor="middle" class="s-note-r" font-size="12">⚠️ NO（不備あり）</text>
+        <rect x="410" y="196" width="180" height="56" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="500" y="220" text-anchor="middle" class="s-note-r" font-size="13" font-weight="700">返還不足が発生</text>
+        <text x="500" y="240" text-anchor="middle" class="s-legend" font-size="11">分別管理の不備</text>
+        <text x="500" y="256" text-anchor="middle" class="s-legend" font-size="11">流用等で不足が生じた</text>
+        <!-- ↓ -->
+        <line x1="500" y1="252" x2="500" y2="290" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arrR)"/>
+        <rect x="410" y="290" width="180" height="66" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="500" y="313" text-anchor="middle" class="s-note" font-size="12">日本投資者保護基金（JIPF）</text>
+        <text x="500" y="333" text-anchor="middle" class="s-note" font-size="12">が補償（上限1,000万円）</text>
+        <text x="500" y="350" text-anchor="middle" class="s-label-sm">不足額を時価換算で補填</text>
+
+        <!-- 矢印マーカー定義 -->
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,10 3.5,0 7" fill="#8b949e"/>
+          </marker>
+          <marker id="arrG" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,10 3.5,0 7" fill="#1a7f37"/>
+          </marker>
+          <marker id="arrR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,10 3.5,0 7" fill="#cf222e"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。分別管理が適切に行われていれば原則として顧客資産は全額返還されます。不備があった場合のみ日本投資者保護基金が補償（上限1,000万円）に入ります。</p>
+    </figure>
+
+    <p>重要な点は、<strong>日本投資者保護基金の出番は「分別管理に問題があった場合のセーフティネット」</strong>であることです。分別管理が適切であれば、保護基金を使わずに顧客資産はそのまま返還されます。</p>
+
+    <!-- ===== 後半：中上級向け ===== -->
+
+    <h2 id="section-4">4️⃣ 日本投資者保護基金（JIPF）とは</h2>
+    <p>日本投資者保護基金（JIPF）は、証券会社が分別管理を適切に行えていなかったために顧客資産が返還できない事態に備えた、<strong>最後の砦となるセーフティネット機関</strong>です。金融商品取引法に基づいて設立されており、国内の金融商品取引業者（証券会社等）が加入を義務づけられています。</p>
+
+    <h3>補償の上限と対象</h3>
+    <p>JIPFは、対象となる顧客1人につき<strong>最大1,000万円まで</strong>、返還できない資産を破綻日の時価で換算した額を補償します（出典：<a href="https://jipf.or.jp/introduction/" target="_blank" rel="noopener noreferrer">日本投資者保護基金・投資者保護とは</a>）。</p>
+
+    <div class="warning-box">補償はあくまで「分別管理の不備で返還できなかった分の穴埋め」です。相場の値下がりで資産価値が減った損失は補償の対象ではありません。</div>
+
+    <h3>補償が発動するまでの流れ</h3>
+    <ol>
+      <li>証券会社が破綻し、管財人（金融庁の指定する機関等）が顧客資産の調査を行う</li>
+      <li>分別管理の不備が確認され、顧客への返還額が定まる</li>
+      <li>返還額が不足している場合、JIPFが不足分を補償（上限1,000万円）</li>
+      <li>顧客は管財人またはJIPFから資産の返還・補償を受ける</li>
+    </ol>
+
+    <h2 id="section-5">5️⃣ 何が補償されて、何がされないか</h2>
+    <p>「1,000万円まで守られる」という言葉だけでは不十分で、<strong>何が補償されて何がされないか</strong>を正確に理解することが大切です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>区分</th>
+          <th>内容</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>✅ 補償対象（基本）</td>
+          <td>分別管理の不備により返還できない有価証券・現金の不足分</td>
+          <td>時価換算で上限1,000万円。1人あたりの合計（複数口座は合算）</td>
+        </tr>
+        <tr>
+          <td>❌ 補償外①</td>
+          <td>相場の値下がりによる損失</td>
+          <td>保護基金は価格リスクを補償するものではない</td>
+        </tr>
+        <tr>
+          <td>❌ 補償外②</td>
+          <td>分別管理が適切な場合の不足（仮定の話）</td>
+          <td>適切に管理されていれば保護基金の出番自体がない</td>
+        </tr>
+        <tr>
+          <td>❌ 補償外③</td>
+          <td>無登録業者への投資</td>
+          <td>JIPFへの加入は登録業者のみ。無登録は対象外</td>
+        </tr>
+        <tr>
+          <td>⚠️ 要確認</td>
+          <td>FX・CFD等のデリバティブ取引</td>
+          <td>商品・口座形態・業者登録種別によって異なる。各業者の開示確認を</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 1,000万円の上限は「一つの証券会社あたり」ではなく「1人の顧客あたり」です。</strong> 同一業者に複数口座があっても、その業者における補償は合算して上限1,000万円となる点に注意が必要です。異なる証券会社に口座を持つ場合は、それぞれについて上限が適用されます（詳細は後述）。
+    </div>
+
+    <h2 id="section-6">6️⃣ 無登録業者には一切の保護が及ばない</h2>
+    <p>ここが最も重要な点の一つです。<strong>金融庁に登録されていない無登録の投資業者には、分別管理義務も投資者保護基金も一切適用されません</strong>。</p>
+    <p>つまり、無登録業者に資産を預けた場合、業者が倒産または逃亡しても、法的な資産保護の枠組みが存在しないため、<strong>資産が戻らないリスクが非常に高くなります</strong>。SNSや紹介を通じた「必ず儲かる」「元本保証で高利回り」などを謳う投資話の多くは、こうした無登録業者が関与していることがあります。</p>
+
+    <!-- TODO(SVG): 「登録業者 vs 無登録業者の保護レベル比較」シンプル2列図を要追加・要ライト/ダーク実機確認 -->
+
+    <div class="warning-box">
+      金融庁の「免許・許可・登録等を受けている業者一覧」（金融庁ウェブサイト）で、取引前に必ず登録の有無を確認してください。名前が似た業者や偽の登録番号を使う手口も報告されています。出典番号が本物かどうか、金融庁の一次情報で照合することを強く推奨します。
+    </div>
+
+    <p>詐欺・無登録業者の手口と見分け方については<a href="../guide-investment-scams.html">投資詐欺の見分け方（必ず儲かるは全部ウソ）</a>で詳しく解説しています。</p>
+
+    <h2 id="section-7">7️⃣ 複数口座を持つ意味と実務的な考え方</h2>
+    <p>補償の仕組みを理解した上で、「複数の証券会社に口座を持つ意味はあるか？」という実務的な視点も考えてみましょう。</p>
+
+    <h3>リスク分散としての複数口座</h3>
+    <p>分別管理義務が法律で定められているとはいえ、破綻時の返還手続きには時間がかかる場合があります。証券会社を複数に分けておくことで、<strong>一社で手続きが長引いても、別の口座で取引を継続できる状態を維持しやすくなります</strong>。</p>
+    <p>また、JIPFの補償上限が1社あたり1,000万円であるため、仮に一社への集中リスクを分散させる考え方もあります。ただし、<strong>これは証券会社選びの主要な判断基準というよりも、システムダウン・手続き遅延などの運用継続性リスクに対する備え</strong>という側面が強いでしょう。</p>
+
+    <h3>証券会社選びで確認すべきこと</h3>
+    <ul>
+      <li><strong>金融庁への登録の有無</strong>（免許・登録等業者一覧で確認）</li>
+      <li><strong>JIPF加入の有無</strong>（JIPFのウェブサイトで会員一覧を確認可能）</li>
+      <li><strong>信託保全の状況</strong>（顧客分別金信託の開示。各証券会社のウェブサイト等）</li>
+      <li><strong>外国株・デリバティブの管理体制</strong>（商品によって仕組みが異なる）</li>
+    </ul>
+
+    <div class="positive-box">
+      大手ネット証券は金融庁への登録・JIPF加入・信託保全のいずれも実施しています。利用前に各社の開示資料（分別管理の状況等）を確認する習慣をつけると、制度への理解が深まります。
+    </div>
+
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AIは、日本人投資家が「正しい情報を持って、自分で考えて判断できる」ようになることを目的としたサイトです。今回解説した証券口座の保護制度は、投資の前提知識として欠かせない内容です。</p>
+    <p>当サイトでは、資金管理やリスク管理に関する解説を複数公開しています。</p>
+    <ul>
+      <li><a href="../guide-position-sizing.html">ポジションサイジング</a>——1トレードに何%のリスクをかけるかという設計</li>
+      <li><a href="../guide-leverage.html">レバレッジとナンピンの正体</a>——信用・FXのリスク構造</li>
+      <li><a href="../guide-emergency-fund.html">生活防衛資金</a>——投資に回してはいけないお金の考え方</li>
+      <li><a href="../guide-investment-scams.html">投資詐欺の見分け方</a>——無登録業者・ポンジ詐欺の典型手口</li>
+    </ul>
+    <p>なお当サイトのシグナル検証結果やアラート成績は<a href="../track-record.html">シグナル成績ダッシュボード</a>で公開しています。本記事で解説した保護制度はあくまで証券口座の安全性に関するものであり、投資そのものの利益を保証するものではありません。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を確認する</div>
+      <div class="cta-box-desc">テクニカルアラートの発火履歴・SL/TP結果・環境スコアを記録しています。制度の理解とあわせてご活用ください。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>証券口座の資産保護について、ポイントをまとめます。</p>
+    <ul>
+      <li><strong>分別管理義務（金商法第43条の2）</strong>：証券会社は顧客資産を自社資産と厳格に分離・管理する法的義務がある。</li>
+      <li><strong>信託保全</strong>：顧客の現金（預かり金）は信託銀行に信託され、証券会社の倒産リスクから遮断される。</li>
+      <li><strong>日本投資者保護基金（JIPF）</strong>：分別管理の不備で返還できない場合のセーフティネット。上限1,000万円（1人あたり・時価換算）。</li>
+      <li><strong>補償されないもの</strong>：相場の値下がりによる損失・無登録業者への投資・分別管理が適切な場合の仮定の不足。</li>
+      <li><strong>無登録業者は論外</strong>：保護制度の枠外。取引前に金融庁の登録を必ず確認する。</li>
+    </ul>
+    <p>証券会社への資産集中に「万が一のリスク」を感じていた方も、仕組みを理解することで適切な判断ができるようになります。不安は知識で解消する——それが投資家として最も大切な姿勢の一つです。</p>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ <strong>免責事項（kinsho-v1）</strong>：本記事は投資の参考情報として作成した解説コンテンツであり、特定の金融商品・証券会社の推奨、投資助言、または安全性の評価を目的としたものではありません。記載の制度・数値（補償上限額等）は本記事執筆時点での一般的な情報に基づいており、制度変更・最新状況は必ず金融庁・日本投資者保護基金等の公的機関の一次情報でご確認ください。投資に関する最終判断はご自身の責任でお願いします。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
+
+    <h2>📎 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-investment-scams.html">
+        <div class="related-card-title">🚨 投資詐欺の見分け方</div>
+        <div class="related-card-desc">「必ず儲かる」は全部ウソ。ポンジ・SNS勧誘・高額商材の典型手口と、登録業者の確認方法を解説。</div>
+      </a>
+      <a class="related-card" href="../guide-leverage.html">
+        <div class="related-card-title">⚠️ レバレッジとナンピンの正体</div>
+        <div class="related-card-desc">強制ロスカットと証拠金の仕組みを解説。なぜナンピンが資産を溶かすかを理解する。</div>
+      </a>
+      <a class="related-card" href="../guide-emergency-fund.html">
+        <div class="related-card-title">🏦 生活防衛資金</div>
+        <div class="related-card-desc">投資に回してはいけないお金の決め方。生活費何か月分を現金で確保すべきかの考え方。</div>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+
+</body>
+</html>
