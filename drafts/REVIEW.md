@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-08-19 | ✅ 公開完了 | reit-basics | autopublish
+
+- **記事**: REITの仕組みをわかりやすく解説｜不動産を小口で持つということ（💰 投資の基礎知識）
+- **公開ファイル**: `guide-reit-basics.html`
+- **ゲート結果**:
+  - check_guide_draft.py: 🟢 GREEN (EXIT=0)
+  - Opus初回判定: 🟡 グレー（投資口主→投資主 2箇所・冒頭バナーkinsho-v1補強）
+  - 軽微修正適用後 check_guide_draft.py 再実行: 🟢 GREEN (EXIT=0)
+  - 独立Opus確認: 🟢 白（公開可）
+  - check_site_consistency.py: 🟢 EXIT=0（エラーなし・警告20件は既存サイト横断の警告）
+- **URL**: https://marketwatch-jp.com/guide-reit-basics.html
+- **HTTP確認**: プロキシ制限により自動確認不可（push PUSH_EXIT=0 で反映済み）
+
+---
+
 ## 2026-08-19 | ✅ 公開完了 | signal-lab-073 | signal-lab-daily
 
 - **記事**: AIシグナル研究日誌 #073 — trend=上昇×reversalL 前向きN=205 指数33%崩落・JPY57%堅守の二極化（降格警戒1回目）
