@@ -35,6 +35,11 @@ routine `book-watch-weekly`（毎週土曜 11:00 JST）が読む手順書。**�
 - `guide-investment-books.html` の冒頭付近に新刊ウォッチへのリンク1行を追加（この1回のみ編集可）。
 
 ### 4. 決定論チェック → コミット → 確認
+- 🆕 **チェックの前に必ず `python apply_brand_color.py --phase 1 --include-cloud --apply` を実行する**（冪等）。
+  理由＝`guide-new-books.html` は**毎週追記される長期ページ**なので、過去エントリに旧ブランドカラーが
+  残っていると、**今週の追記が正しくてもゲートが赤**になる。2026-08-15 に実際にこれで止まり、
+  「原因は今回の追加ではないのに公開できない」状態が3日続いた（旧色5箇所・既存エントリ由来）。
+  この1行があれば routine が自分で直せる＝人間待ちにならない。
 - `python check_guide_draft.py guide-new-books.html` → exit 0 必須（REDなら公開せずエスカレ）。
 - PUSH-MAIN規約でコミット（fetch+rebase+push HEAD:main 最大5回。失敗時 `bookwatch-pending-<UTC>` 退避）。
 - `https://marketwatch-jp.com/guide-new-books.html` HTTP 200 確認。
