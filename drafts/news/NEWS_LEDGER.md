@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-08-18
+- 判定: ✅ 公開済み
+- 選定トピック: 米イラン停戦が期限切れ、紛争「第2局面」へ──ホルムズ海峡で当日船舶攻撃・ブレント原油$90台、日本エネルギーコストへの影響を中立整理（カテゴリ: 地政学・エネルギー・コモディティ・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 60日間の米イラン停戦延長が8/17に期限切れ。トランプ大統領が延長を拒否し、8/18に実際にホルムズ海峡で貨物船1隻への攻撃をUKMTOが確認（エンジンルーム損傷・乗組員1名死傷）。ホルムズ通航量は日曜3隻（前週末比: 31隻）と急減。ブレント$90台（前年比+38%）。8/7記事（イラン制限草案）とは別フェーズ（草案発表→停戦失効＋実攻撃確認という段階変化）。日本の中東石油依存94%・BOJ利上げ観測との交差という付加価値あり。
+- 出典（2系統以上）:
+  - CNBC「Ship attacked in Hormuz Strait as U.S.-Iran ceasefire expiry risks prolonged conflict」（2026-08-18）
+  - CNBC「Trump threatens Oman, Hormuz Strait traffic slows, Iran ceasefire ends」（2026-08-17）
+  - CNN「Deadline to reach US-Iran deal expires, Trump threatens Oman」（2026-08-17）
+  - Washington Times「The 'cease-fire' with Iran has expired, so what's next?」（2026-08-17）
+  - Forbes Advisor「Crude Oil Price Today: August 17, 2026」（ブレント$90台価格確認）
+  - 米議会図書館調査局（CRS）「The Strait of Hormuz: Security Developments and Impacts on Oil, Gas, and Other Commodities」
+  - Kpler（船舶追跡データ: 日曜3隻、前週末31隻）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①L245 negative-box「利上げを検討する」→「利上げを選択肢として残しているとの報道もある（報道ベース）」+末尾に「価格や政策の予測ではない」追記 ②L250チェックポイント節冒頭に非助言の明示文追加 ③L253価格レンジに「場合分けの例示であり特定水準への見通しではない」付記 ／ 事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 🟢白（全5項目①kinsho-v1×3箇所 ②断定禁止語なし（"100%"はCSS内のみ） ③銘柄推奨なし ④将来断言なし ⑤出典7系統以上、すべて✅・公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末/フッター）✅ ②禁止語なし（"100%"はCSS幅指定のみ・"保証"は免責文中の否定形のみ）✅ ③銘柄推奨なし✅ ④出典7系統以上✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告19件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-18-iran-hormuz-ceasefire-expired-oil.html
+- commit: efdfcab（main へ push 済み）
+
+---
+
 ## 2026-08-17
 - 判定: ✅ 公開済み
 - 選定トピック: 今週ウォール街は「消費者の真実」週間──Walmart・Home Depot・Target三決算＋FOMC議事録で7月小売ショックの答えが出る（カテゴリ: マクロ・米国消費・小売決算・FOMC議事録）
