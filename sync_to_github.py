@@ -144,4 +144,5 @@ SYNC_FILES = [
     "guide-scam-pre-ipo-stock.html",
     "guide-news-2026-08-17-walmart-target-homedepot-consumer-test.html",
     "guide-ipo-basics.html",
+    "guide-proverb-rekishi-wa-in-wo-fumu.html",
 ]
