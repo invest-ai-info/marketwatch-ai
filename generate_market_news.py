@@ -4995,6 +4995,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-19", "line": '・<b>2026-08-19</b>: 🧪 解説「<a href="guide-signal-lab-073.html" style="color:#0969da"><b>上昇×逆張り買いN=205 指数33%vs JPY57%の二極化</b></a>」公開'},
         {"date": "2026-08-18", "line": '・<b>2026-08-18</b>: 📰 解説「<a href="guide-news-2026-08-18-iran-hormuz-ceasefire-expired-oil.html" style="color:#0969da"><b>【8/18】米イラン停戦期限切れ、ホルムズ海峡で船舶攻撃──ブレント0台</b></a>」公開'},
         {"date": "2026-08-18", "line": '・<b>2026-08-18</b>: 📜 解説「<a href="guide-proverb-rekishi-wa-in-wo-fumu.html" style="color:#0969da"><b>歴史は繰り返さないが韻を踏む</b></a>」公開'},
         {"date": "2026-08-18", "line": '・<b>2026-08-18</b>: 💰 解説「<a href="guide-ipo-basics.html" style="color:#0969da"><b>IPO（新規上場）の仕組み</b></a>」公開'},
