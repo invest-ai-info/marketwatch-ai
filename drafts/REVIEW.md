@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-19 | ✅ 公開完了 | signal-lab-073 | signal-lab-daily
+
+- **記事**: AIシグナル研究日誌 #073 — trend=上昇×reversalL 前向きN=205 指数33%崩落・JPY57%堅守の二極化（降格警戒1回目）
+- **公開ファイル**: `guide-signal-lab-073.html`
+- **検証結果**:
+  - signal_lab_verify.py: 13/13 GREEN, EXIT=0
+  - check_guide_draft.py: GREEN, EXIT=0
+  - Opusコンプラ: 🟡軽微9件 → 自己修正 → 🟢白
+  - 独立Opus確認: 🟡軽微1件 → 自己修正 → 🟢白（EXIT=0再確認済）
+- **主要数値**:
+  - FWD全体: N=205, k=98, 47.8%, CI[41.1%,54.6%], E(R)=+0.173
+  - tracker補正後 CI[-0.05~+0.30]（CI下限 初めてゼロ割れ＝降格警戒1回目）
+  - RSI(FWD): N=46, k=31, 67.4%, CI[53.0%,79.1%]
+  - BB(FWD): N=159, k=67, 42.1%, CI[34.7%,49.9%]（無エッジ確認）
+  - 指数(FWD): N=60, k=20, 33.3%；P3: N=27, k=7, 25.9%（急落）
+  - jpy_fx(FWD): N=58, k=33, 56.9%；P3: N=12, k=10, 83.3%（健全）
+- **URL**: https://marketwatch-jp.com/guide-signal-lab-073.html
+- **プッシュ**: main に push 完了（e816171）
+
+---
+
 ## 2026-08-19 | 🔲 下書き生成 | counterparty-risk | autodraft
 
 - **記事**: 証券会社が破綻したらどうなるのか｜分別管理と投資者保護の仕組みを図解で解説（リスク管理シリーズ #40）
