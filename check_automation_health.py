@@ -344,6 +344,22 @@ ESCALATION_STALE_DAYS = 1
 RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n]+?)\s*\|", re.M)
 
 
+# 見出し3列目（対象）の表記ゆれを実体スラッグへ寄せる。
+# 2026-08-18 実測: signal-lab レーンは回によって `signal-lab-067`（スラッグ）と
+# `signal-lab-daily #071`（ルーティン名＋番号）の2通りを書く。後者は
+# `guide-signal-lab-daily #071.html` を探しに行って必ず不在＝**永久に滞留と誤検知**していた
+# （#071 はライブ200＝実際には解決済みだったのに3日間鳴り続けた）。
+RE_LAB_TARGET = re.compile(r"signal-lab\D*(\d{2,4})")
+# 明示の解決マーク（書き手が見出しに残す）。実体判定が効かない回の保険。
+RESOLVED_MARKS = ("[解消済み]", "[解決済み]", "解消済み", "解決済み")
+
+
+def normalize_target(tgt):
+    """`signal-lab-daily #071` → `signal-lab-071`。それ以外は素通し。"""
+    m = RE_LAB_TARGET.search(tgt or "")
+    return f"signal-lab-{m.group(1)}" if m else (tgt or "").strip()
+
+
 def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS):
     """純関数（テスト対象）。戻り値: (滞留 [(target, 日付, 経過日)], 🚩総数, 未解決総数)。
 
@@ -352,20 +368,22 @@ def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS
       ② 同じ target について、より新しい見出しが 🚩 なしで「公開」と言っていれば解決
     どちらも無ければ未解決。未解決のうち stale_days 以上経過したものだけを滞留として返す。
     """
-    heads = [(d, kind, tgt) for d, kind, tgt in RE_REVIEW_HEAD.findall(review_md)]
+    heads = [(d, kind, normalize_target(tgt)) for d, kind, tgt in RE_REVIEW_HEAD.findall(review_md)]
     # target ごとの最新の「公開」見出し日
     published_head = {}
     for d, kind, tgt in heads:
         if "🚩" not in kind and "公開" in kind:
             published_head[tgt] = max(published_head.get(tgt, ""), d)
-    flags = [(d, tgt) for d, kind, tgt in heads if "🚩" in kind]
+    flags = [(d, tgt, kind) for d, kind, tgt in heads if "🚩" in kind]
     stale, unresolved = [], 0
     seen = set()
-    for d, tgt in flags:
+    for d, tgt, kind in flags:
         if tgt in seen:          # 同じ対象の複数エスカレは最新1件で代表させる
             continue
         seen.add(tgt)
         if f"guide-{tgt}.html" in published or published_head.get(tgt, "") >= d:
+            continue
+        if any(m in kind for m in RESOLVED_MARKS):   # 見出しに明示の解決マーク
             continue
         unresolved += 1
         try:
