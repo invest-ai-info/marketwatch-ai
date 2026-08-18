@@ -145,4 +145,5 @@ SYNC_FILES = [
     "guide-news-2026-08-17-walmart-target-homedepot-consumer-test.html",
     "guide-ipo-basics.html",
     "guide-proverb-rekishi-wa-in-wo-fumu.html",
+    "guide-news-2026-08-18-iran-hormuz-ceasefire-expired-oil.html",
 ]
