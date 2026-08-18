@@ -81,7 +81,12 @@ FEEDS = [
     {"name": "時事通信",    "url": gnews("site:jiji.com (経済 OR 市場 OR 株 OR 円) when:1d"), "kw": False, "stale_days": 7},
     {"name": "株探",        "url": gnews("site:kabutan.jp when:1d"), "kw": False, "stale_days": 7},
     {"name": "みんかぶ",    "url": gnews("site:minkabu.jp when:1d"), "kw": False, "stale_days": 7},
-    {"name": "NHK経済",     "url": "https://www3.nhk.or.jp/rss/news/cat5.xml", "kw": False, "stale_days": 7},
+    # ⛔ NHK経済（2026-08-18 削除）＝**NHK側のRSSが停止**。うちの設定ミスではない。
+    #    実測: cat5.xml は HTTP 200 を返すが Last-Modified=2026-08-08 / lastBuildDate=2026-08-09 01:15 JST で凍結。
+    #    Cache-Control=max-age=60（短命）でキャッシュ由来ではなく、クエリでキャッシュ回避しても同じ内容。
+    #    **cat0/cat4/cat5/cat6 の全カテゴリが 8/8 で同時停止**＝経済カテゴリ固有の問題でもない。
+    #    移設先も無し（www.nhk.or.jp=301 / news/business/rss.xml=301 / rss/news/business.xml=404）。
+    #    → 8/1 Bloomberg と同じ判断で削除。同じ範囲はロイター/日経/時事/Yahoo!経済/東洋経済が既にカバーする。
     {"name": "Yahoo!経済",  "url": "https://news.yahoo.co.jp/rss/topics/business.xml", "kw": False, "stale_days": 7},
     {"name": "東洋経済",    "url": "https://toyokeizai.net/list/feed/rss", "kw": True, "stale_days": 7},  # 特集系が多い→市場語フィルタ
     # 暗号資産専用（2026-08-01 追加）。総合ソースは暗号資産の見出しを1日1件程度しか出さず、
