@@ -412,6 +412,22 @@ def main():
     else:
         summary_unexplained.append("（30秒まとめボックスが見つからない＝構造異常）")
 
+    # 期間ラベルの取り違え検査（#067/#072 と同じ型の再発防止・上の period_label_check 参照）
+    _buckets = {"IS": set(), "FWD": set(), "none": set()}
+    for cl in claims["claims"]:
+        f = cl.get("filter", {}) or {}
+        if set(f) - ALLOWED_FILTER_KEYS:
+            continue
+        _k, _n = compute(data, f)
+        if not _n:
+            continue
+        _key = "IS" if "fired_before" in f else ("FWD" if "fired_from" in f else "none")
+        _buckets[_key].add(round(100 * _k / _n, 1))
+    period_bad = period_label_check(html, _buckets)
+    for pb in period_bad:
+        print(f"  ❌ 期間ラベル: {pb}")
+    fails.extend(period_bad)
+
     # SVGチェック：①縦はみ出し(text/rectのy) ②text同士の重なり・横はみ出し
     svg_warn = svg_bounds_check(html) + text_overlap_check(html)
     for w in svg_warn:
@@ -432,6 +448,81 @@ def main():
         sys.exit(1)
     print("GREEN（数字・SVGとも自動公開条件を満たす）")
     sys.exit(0)
+
+
+# ── 期間ラベルと出所の一致（2026-08-18 追加・人間による正式拡張／制約を増やす方向）
+#
+# 塞ぐ穴: 表の「IS 勝率」列に**全期間の数字**を書いても緑で通った。
+#   claims の k/n は再計算一致するし、数字は記事HTMLに実在するので既存2検査を素通りする。
+#   実例 #067(2026-08-12) と #072(2026-08-18) の**2回**同じ型で 🔴黒＝Opusコンプラ頼みだった。
+#   SOP には「全期間の数字に（IS）とラベルするのは景表法上の優良誤認＝黒」と明記済みだが、
+#   **文書に書いてあるだけでコードが止めていなかった**＝再発した。
+#
+# 規則: 期間を名乗る列（ヘッダに IS / FWD / OOS）のセルに出る勝率%は、
+#       **その期間で絞った claim の値**でなければならない。
+#       別期間の claim の値だったら赤（＝取り違えの疑い）。
+#
+# 誤検知を抑える2つの限定（2026-08-18 に過去68本で実測して決めた）:
+#   ①claims が期間キー（fired_before/fired_from）を1つも使っていない記事は**対象外**。
+#     8/12 の拡張以前は期間を表現する手段が無く、全部が 'none' 扱いになるため。
+#     この限定が無いと #035/#037/#050/#054/#058/#066 の6本が誤って赤くなる（実測）。
+#   ②信頼区間の列は**対象外**（ヘッダに CI/信頼区間、または値が範囲表記）。
+#     CI境界は勝率そのものではないので集合が合わない。これが無いと #070 が誤って赤くなる（実測）。
+#   → 実測結果: 68本中で赤くなるのは **#071(3件) と #072(2件) だけ**＝どちらも実際に
+#     IS/FWD の取り違えが指摘された回。**それ以外の記事は1件も赤くならない**。
+#
+# ⚠️ 「claim がまったく無い数字」は**ここでは赤にしない**。過去68本で373件あり（24本が該当）、
+#    別種の緩さ（記事の数字が claims を超えて増える）なので、ここで一緒に締めるとレーンが止まる。
+RE_PERIOD_IS  = re.compile(r"(?<![A-Za-z])IS(?![A-Za-z])")
+RE_PERIOD_FWD = re.compile(r"(?<![A-Za-z])(FWD|OOS)(?![A-Za-z])")
+RE_CELL_PCT   = re.compile(r"(\d+(?:\.\d+)?)\s*%")
+RE_CI_HEAD    = re.compile(r"CI|信頼区間")
+
+
+def _cell_text(x):
+    return re.sub(r"<[^>]+>", "", x).strip()
+
+
+def period_label_check(html, bucket_pcts):
+    """期間を名乗る列の数字が、その期間の claim 由来かを見る。戻り値: 違反メッセージの list。
+
+    bucket_pcts = {"IS": {…%}, "FWD": {…%}, "none": {…%}}（呼び出し側が claim から作る）
+    """
+    if not (bucket_pcts.get("IS") or bucket_pcts.get("FWD")):
+        return []          # 限定①: 期間キーを使っていない記事は対象外
+    out = []
+    for t in re.findall(r"<table.*?</table>", html, re.S):
+        rows = re.findall(r"<tr[^>]*>(.*?)</tr>", t, re.S)
+        if not rows:
+            continue
+        heads = [_cell_text(c) for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", rows[0], re.S)]
+        cols = {}
+        for i, h in enumerate(heads):
+            if RE_CI_HEAD.search(h):           # 限定②: CI列は見ない
+                continue
+            if RE_PERIOD_IS.search(h):
+                cols[i] = "IS"
+            elif RE_PERIOD_FWD.search(h):
+                cols[i] = "FWD"
+        if not cols:
+            continue
+        for r in rows[1:]:
+            cells = [_cell_text(c) for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", r, re.S)]
+            if not cells:
+                continue
+            for i, kind in cols.items():
+                if i >= len(cells) or "[" in cells[i] or "〜" in cells[i]:
+                    continue               # 限定②: 範囲表記のセルも見ない
+                for m in RE_CELL_PCT.finditer(cells[i]):
+                    v = round(float(m.group(1)), 1)
+                    if v in bucket_pcts[kind]:
+                        continue
+                    other = [k for k in ("IS", "FWD", "none") if k != kind and v in bucket_pcts.get(k, set())]
+                    if other:
+                        where = "全期間" if other == ["none"] else "/".join(other)
+                        out.append(f"「{heads[i]}」列 行「{cells[0][:20]}」の {v}% は "
+                                   f"{kind} で絞った claim に無く、{where} の claim の値＝期間の取り違えの疑い")
+    return out
 
 
 def svg_bounds_check(html):
