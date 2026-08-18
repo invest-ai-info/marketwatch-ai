@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>REITの仕組みをわかりやすく解説｜不動産を小口で持つ仕組み・分配金・金利との関係 - MarketWatch AI</title>
+  <meta name="description" content="REIT（不動産投資信託）の仕組みをわかりやすく解説。投資家から集めた資金で不動産を保有・賃料を分配する仕組み、分配金利回りが高い理由（90%超分配ルール）、金利上昇が価格に与える2つの影響、用途別（オフィス・物流・住宅）の景気感応度の違いまで、初心者〜中級者向けに図解で丁寧に説明します。">
+  <meta name="keywords" content="REIT,リート,不動産投資信託,J-REIT,分配金,利回り,金利,仕組み,投資口,オフィス,物流,住宅,NAV,不動産投資,基礎知識">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-reit-basics.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="REITの仕組みをわかりやすく解説｜不動産を小口で持つ・分配金・金利との関係">
+  <meta property="og:description" content="REIT（不動産投資信託）の仕組みを図解で解説。90%超分配ルールで高利回りになる理由と、金利上昇が価格を押し下げる2つのメカニズムを詳説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-reit-basics.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "REITの仕組みをわかりやすく解説｜不動産を小口で持つ・分配金・金利との関係",
+    "description": "REIT（不動産投資信託）の仕組みを図解で解説。90%超分配ルールで高利回りになる理由と、金利上昇が価格を押し下げる2つのメカニズムを詳説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-19",
+    "dateModified": "2026-08-19",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-reit-basics.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* REIT図専用クラス */
+    .s-flow-box{rx:8;ry:8}
+    .s-flow-txt{font-size:12px;font-family:'Noto Sans JP',sans-serif;text-anchor:middle;dominant-baseline:central}
+    .s-arrow{stroke-width:2;fill:none;marker-end:url(#arr)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; REITの仕組み
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本記事はREIT（不動産投資信託）の一般的な仕組みを解説する「情報提供」であり、特定の銘柄や商品の売買推奨・投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🏢 REITの仕組みをわかりやすく解説｜不動産を小口で持つということ</h1>
+    <div class="meta-line">公開日：2026 年 8 月 19 日 ／ 読了時間：約 13 分 ／ カテゴリ：💰 投資の基礎知識</div>
+
+    <p>「不動産に投資したい。でも、マンション一棟を買う資金はない」——そんな個人投資家にとって、<strong>REIT（Real Estate Investment Trust：不動産投資信託）</strong>は一つの選択肢として語られることがあります。少額から不動産に間接的にアクセスできる仕組みですが、その構造は株式や債券とは異なる独特のメカニズムを持っています。</p>
+    <p>この記事では、REITが<strong>どうやって分配金を生み出すのか</strong>（仕組みと90%超分配ルール）、<strong>なぜ金利の動きに敏感なのか</strong>（2つの経路）、そして<strong>用途別（オフィス・物流・住宅など）で景気への感応度がどう違うのか</strong>を、初心者向けの直感的な図解から中上級者向けの実践的な視点まで順を追って解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>REITは多数の投資家の資金をまとめて不動産を購入し、賃料収入や売却益を分配金として還元する仕組み。<strong>利益の90%超を分配する要件を満たすと法人税が実質ゼロになる</strong>ため、株より分配しやすい構造になっている。</li>
+      <li>金利が上昇するとREITには<strong>「借入コスト増→分配金が減る」と「国債利回り上昇→相対的な魅力が薄れ価格が下がる」の2つの逆風</strong>が同時に吹く。</li>
+      <li>用途別で景気感応度が違い、<strong>オフィスは景気連動度が高く、住宅・物流は安定傾向</strong>。組み合わせを意識することがリスク管理の出発点になる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">REITとは何か——不動産を「証券化」する仕組み</a></li>
+        <li><a href="#section-2">分配金利回りが高く見える理由——90%超分配ルールとは</a></li>
+        <li><a href="#section-3">仕組みを図解：投資家→REIT→不動産→分配金の流れ</a></li>
+        <li><a href="#section-4">金利上昇がREITを直撃する2つの経路</a></li>
+        <li><a href="#section-5">用途別に見る景気感応度の違い</a></li>
+        <li><a href="#section-6">中上級編：NAV倍率と内部留保できないリスク</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ REITとは何か——不動産を「証券化」する仕組み</h2>
+    <p>REIT（リート）は、<strong>多くの投資家から資金を集め、それを使ってオフィスビルや商業施設・賃貸住宅・物流倉庫などの不動産を取得・運用し、得られた賃料収入や売却益を投資家に分配する仕組み</strong>です。日本では東京証券取引所に上場している「J-REIT」として株式と同様に売買できます。</p>
+
+    <p>不動産投資というと「億単位の資金が必要」というイメージがありますが、REITは<strong>証券化（不動産を「投資口」という小さな単位に分割）</strong>することで、比較的少ない資金から間接的に不動産に関わる仕組みを提供しています。ただし、あくまで金融商品であり、直接不動産を所有するわけではありません。</p>
+
+    <div class="info-box">
+      <strong>💡 「投資口」とは</strong>：REITは会社ではなく「投資法人」という法的形態をとります。出資の単位を「株式」ではなく<strong>「投資口」</strong>と呼び、これが東証に上場されて売買されます。価格は需給で変動し、株式と同様に市場で取引されます。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 分配金利回りが高く見える理由——90%超分配ルールとは</h2>
+    <p>REITが「高利回り」として紹介されることがあります。その背景には、一般的な株式会社とは根本的に異なる<strong>分配金の構造</strong>があります。</p>
+
+    <p>日本のJ-REITは、<strong>利益の90%超を分配金として投資主に還元するなど一定の要件を満たすことで、法人税の課税が実質的にゼロになる</strong>仕組みになっています。一般の上場企業は利益に法人税がかかった後の残りから配当を出しますが、REITは税引き前に近い利益の大部分を分配できるため、同じ利益規模でも投資家に渡せる金額が大きくなる傾向があります。</p>
+
+    <div class="warning-box">
+      「利回りが高い＝良い投資」ではありません。分配金利回りは<strong>「分配金÷現在の価格」</strong>ですから、価格が大きく下がると利回りが高く見えることもあります（「利回りの罠」）。また、分配金は固定ではなく、不動産の稼働率や借入コストの変動によって変わります。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 仕組みを図解：投資家→REIT→不動産→分配金の流れ</h2>
+
+    <!-- SVG：REITの資金循環図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 660 300" role="img" aria-labelledby="reit-flow-title">
+        <title id="reit-flow-title">REITの資金循環の概念図：投資家→投資口購入→REIT（投資法人）→不動産取得→賃料収入→分配金→投資家</title>
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#57606a"/>
+          </marker>
+          <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#1a7f37"/>
+          </marker>
+        </defs>
+        <!-- 投資家ボックス（左） -->
+        <rect x="20" y="115" width="110" height="70" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text class="s-flow-txt" fill="#0969da" font-weight="700" x="75" y="147">👤 投資家</text>
+        <text class="s-flow-txt" fill="#57606a" font-size="11" x="75" y="167">（投資口を購入）</text>
+
+        <!-- REITボックス（中央） -->
+        <rect x="265" y="95" width="130" height="110" rx="10" fill="#f0f8ff" stroke="#2C4F8F" stroke-width="2"/>
+        <text class="s-flow-txt" fill="#1E3A6E" font-weight="700" font-size="13" x="330" y="130">🏛️ REIT</text>
+        <text class="s-flow-txt" fill="#57606a" font-size="11" x="330" y="150">（投資法人）</text>
+        <text class="s-flow-txt" fill="#57606a" font-size="10" x="330" y="170">資金を集め</text>
+        <text class="s-flow-txt" fill="#57606a" font-size="10" x="330" y="186">不動産を運用</text>
+
+        <!-- 不動産ボックス（右） -->
+        <rect x="530" y="115" width="110" height="70" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text class="s-flow-txt" fill="#1a7f37" font-weight="700" x="585" y="143">🏢 不動産</text>
+        <text class="s-flow-txt" fill="#57606a" font-size="11" x="585" y="163">賃料・売却益</text>
+
+        <!-- 矢印：投資家→REIT（資金） -->
+        <line class="s-arrow" x1="132" y1="143" x2="263" y2="143" stroke="#0969da" stroke-width="2" marker-end="url(#arr)"/>
+        <text class="s-note" x="167" y="133">資金</text>
+
+        <!-- 矢印：REIT→不動産（取得） -->
+        <line class="s-arrow" x1="397" y1="143" x2="528" y2="143" stroke="#57606a" stroke-width="2" marker-end="url(#arr)"/>
+        <text class="s-label-sm" x="432" y="133">不動産取得</text>
+
+        <!-- 矢印：不動産→REIT（賃料） -->
+        <path d="M585,185 Q585,240 330,240 Q265,240 330,210" fill="none" stroke="#1a7f37" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr-g)"/>
+        <text class="s-note-g" x="430" y="256">賃料収入</text>
+
+        <!-- 矢印：REIT→投資家（分配金） -->
+        <path d="M265,175 Q200,230 75,185" fill="none" stroke="#1a7f37" stroke-width="2" marker-end="url(#arr-g)"/>
+        <text class="s-note-g" x="130" y="232">分配金</text>
+
+        <!-- 注：90%超 -->
+        <rect x="230" y="50" width="200" height="36" rx="6" fill="#fff8c5" stroke="#d4a017" stroke-width="1"/>
+        <text class="s-flow-txt" fill="#6a4c00" font-size="11" font-weight="700" x="330" y="68">利益の90%超を分配→法人税ほぼゼロ</text>
+      </svg>
+      <figcaption class="chart-caption">▲ REITの資金循環の概念図。投資家が投資口を購入した資金でREITが不動産を取得・運用し、賃料収入などを分配金として投資家に還元する。利益の90%超を分配することで法人税が実質かからない仕組みが、分配金を高くできる理由。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>上図のように、REITは<strong>「不動産から上がる収益を、法人税コストを最小化しつつ投資家に届ける導管」</strong>として機能します。なお、REITは内部に利益を貯めておく（内部留保を積む）ことをほとんどしません。その結果、新たな物件を取得するための資金は<strong>借入や投資口の新規発行（公募増資）に頼る</strong>構造になっています。この点は後のセクションで詳しく触れます。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 金利上昇がREITを直撃する2つの経路</h2>
+    <p>REITは<strong>金利に非常に敏感な金融商品</strong>です。金利が上昇すると、次の2つの経路でREITにとって逆風になります。</p>
+
+    <h3>経路①：借入コストの上昇→分配金の減少</h3>
+    <p>REITは不動産を取得する際に、投資家からの資金だけでなく<strong>金融機関からの借入（ローン）</strong>も活用します。金利が上がると借入コストが増え、利払い費用が増加します。その結果、賃料収入からの手残りが減り、分配金に回せる金額が少なくなる可能性があります。</p>
+
+    <h3>経路②：国債利回りとの利回り競争→価格の下落</h3>
+    <p>REITは「利回り商品」として、国債（リスクフリー）と比較されながら価格が形成されます。金利が上昇して国債の利回りが高まると、投資家がREITに求める利回りの水準も上がります。<strong>求められる利回りが上がる→現在の分配金水準のままでは利回りが不足→価格が下がることで利回りが高まるように調整される</strong>という構造です。</p>
+
+    <!-- SVG：金利上昇とREIT価格のシーソー -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="reit-rate-title">
+        <title id="reit-rate-title">金利上昇とREIT価格の関係（シーソー概念図）</title>
+        <text class="s-panel-label" x="40" y="24">金利上昇 → 国債利回り上昇 → REIT価格下落（概念）</text>
+
+        <!-- 国債ブロック（左・上がる） -->
+        <rect x="50" y="80" width="140" height="70" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text class="s-flow-txt" fill="#1a7f37" font-weight="700" x="120" y="110">🏦 国債利回り</text>
+        <text class="s-flow-txt" fill="#1a7f37" font-size="22" x="120" y="138">↑ 上昇</text>
+
+        <!-- REITブロック（右・下がる） -->
+        <rect x="450" y="130" width="140" height="70" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text class="s-flow-txt" fill="#cf222e" font-weight="700" x="520" y="160">🏢 REIT価格</text>
+        <text class="s-flow-txt" fill="#cf222e" font-size="22" x="520" y="188">↓ 下落</text>
+
+        <!-- シーソーの棒 -->
+        <line x1="120" y1="152" x2="520" y2="202" stroke="#57606a" stroke-width="3" stroke-linecap="round"/>
+        <!-- 支点 -->
+        <polygon points="320,215 306,240 334,240" fill="#8b949e"/>
+        <line x1="300" y1="240" x2="340" y2="240" stroke="#8b949e" stroke-width="3"/>
+
+        <!-- 注釈：利回り競争 -->
+        <text class="s-note" x="250" y="172" text-anchor="middle">利回り競争</text>
+        <text class="s-label-sm" x="250" y="190" text-anchor="middle">求められる利回り↑ → 価格↓</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 金利上昇とREIT価格の関係の概念図。国債利回りが上がると投資家がREITに求める利回り水準も上がり、分配金額が変わらなければREIT価格が下落することで利回りが高まる方向に調整される。実際の市場では他の要因も複合するため、この図はあくまで一般的な傾向の概念を示したもの。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>これら2つの経路が重なるため、<strong>金利上昇局面ではREITが下落しやすい</strong>とされることが多いです。逆に、金利が低い環境や低下局面では、借入コストが抑えられ国債利回りとの差（スプレッド）が有利になることで、REITが注目されやすくなる傾向があります。ただし、市場の動きは複合的な要因で決まるため、金利だけで判断することはできません。</p>
+
+    <div class="info-box">
+      <strong>💡 金利と債券・株式の関係も参考に</strong>：金利が価格に与える影響は、債券ではさらに直接的です。「金利が上がると債券価格が下がる」という仕組みは <a href="../guide-bonds-interest-rates.html">金利と債券の関係</a> で詳しく解説しています。REITはその中間的な性格を持つ商品と言えます。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 用途別に見る景気感応度の違い</h2>
+    <p>J-REITが投資する不動産は一種類ではなく、<strong>オフィス・物流・住宅・商業施設・ホテル・ヘルスケア</strong>など多岐にわたります。それぞれ景気との連動度（感応度）が異なります。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>用途</th>
+          <th>景気感応度</th>
+          <th>主な特徴</th>
+          <th>リスクの例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🏢 オフィス</td>
+          <td>高め</td>
+          <td>景気拡大期は賃料上昇期待。契約更新（2年程度）で調整しやすい</td>
+          <td>景気後退・リモートワーク普及で空室増・賃料下落</td>
+        </tr>
+        <tr>
+          <td>🏭 物流施設</td>
+          <td>比較的低い</td>
+          <td>長期契約（5〜10年）が多く入れ替えが少ない。EC拡大が需要を下支え</td>
+          <td>大型施設の供給増による競争激化</td>
+        </tr>
+        <tr>
+          <td>🏠 住宅（レジデンス）</td>
+          <td>低め</td>
+          <td>景気と家賃がすぐに連動しにくく稼働率が安定しやすい</td>
+          <td>人口動態の変化・エリア需要の変動</td>
+        </tr>
+        <tr>
+          <td>🏪 商業施設</td>
+          <td>中〜高め</td>
+          <td>消費動向の影響を受けやすい。テナントの業績と連動</td>
+          <td>EC拡大による実店舗の集客力低下</td>
+        </tr>
+        <tr>
+          <td>🏨 ホテル</td>
+          <td>高い（変動大）</td>
+          <td>インバウンド需要など観光景気と直結する。回復局面では大きく伸びる可能性</td>
+          <td>パンデミックや地政学的リスクで急落</td>
+        </tr>
+        <tr>
+          <td>🏥 ヘルスケア</td>
+          <td>比較的独立</td>
+          <td>高齢化社会の需要を背景に安定した分配が期待される面もある</td>
+          <td>制度変更リスク・運営事業者の経営リスク</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p>特定の用途に集中した「特化型」と、複数の用途を組み合わせた「複合型」「総合型」があります。安定性を重視するか、景気上昇局面でのリターンを重視するかによって、組み合わせ方の考え方が変わってきます。ただし、<strong>特定のREIT銘柄を推奨するものではありません</strong>。あくまで用途別の一般的な傾向として参考にしてください。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 中上級編：NAV倍率と内部留保できないリスク</h2>
+
+    <h3>NAV倍率——「実態価値」との比較</h3>
+    <p>REITの割安・割高を測る指標として<strong>NAV倍率（Net Asset Value倍率）</strong>が参照されることがあります。NAVは保有不動産の鑑定評価額から負債を差し引いた「純資産価値」であり、NAV倍率は<strong>「現在の市場価格 ÷ NAV（1口あたり）」</strong>で計算されます。株式のPBRに近い考え方です。</p>
+    <ul>
+      <li><strong>NAV倍率 1倍以上</strong>：市場価格が不動産の鑑定評価を上回っている（割高感がある可能性）</li>
+      <li><strong>NAV倍率 1倍以下</strong>：市場価格が鑑定評価を下回っている（割安感がある可能性）</li>
+    </ul>
+    <div class="warning-box">
+      鑑定評価は定期的に更新されますが、市場の実勢価格とズレることがあります。NAV倍率はあくまで参考指標の一つであり、これだけで投資判断を行うことは適切ではありません。
+    </div>
+
+    <h3>内部留保できないことの意味</h3>
+    <p>REITは利益をほぼすべて分配するため、<strong>自己資金を蓄えることが難しい</strong>構造です。新たな物件を取得する際は、①金融機関からの借入（金利上昇リスク）、②投資口の新規発行（公募増資：既存投資主に希薄化リスク）のいずれかに頼ることになります。</p>
+    <p>市場環境が良い（価格が高い）ときは増資がしやすく物件を増やせますが、<strong>金利上昇や市場の下落局面ではこのサイクルが止まりやすく、成長が鈍化するリスク</strong>があります。この「成長のための資金を外部から調達し続ける構造」は、REITを理解するうえでの重要なポイントです。</p>
+
+    <div class="info-box">
+      <strong>💡 分配金と内部留保の関係</strong>：一般の株式会社は利益の一部を内部留保し、自己資金で設備投資や事業拡大ができます。REITは逆に、成長のコストを常に借入や増資で調達します。「高分配＝成長余地が乏しい構造」であることを念頭に置くとREITの性格が理解しやすくなります。<a href="../guide-dividend-basics.html">配当の仕組み</a>も合わせてご覧ください。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>当サイトでは金利環境や市場の「健康度」を複数の指標で継続的にモニタリングしています。REITを検討する際の参考として、以下のページを活用できます。</p>
+    <ul>
+      <li><strong><a href="../market-health.html">市場健康度ページ</a></strong>：VIX（恐怖指数）や各種市場指標の状況確認に。金利の動向とあわせてREITの市場環境を把握する材料として。</li>
+      <li><strong><a href="../calendar.html">経済カレンダー</a></strong>：金利に影響を与える中央銀行の政策決定（日銀・FOMC等）の日程を確認できます。REITは金利に敏感なため、政策変更の前後は動きが大きくなりやすい。</li>
+      <li><strong><a href="../guide-bonds-interest-rates.html">金利と債券の関係</a></strong>：金利がなぜ資産価格を動かすのか、より深く理解したい場合の参考記事。</li>
+      <li><strong><a href="../guide-diversification.html">分散とポートフォリオ</a></strong>：REITを組み込む場合も「全体のリスクの中でどう位置づけるか」が出発点。相関を意識した分散の考え方はこちら。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 テクニカル・マクロ視点でのシグナルを確認する</div>
+      <div class="cta-box-desc">当サイトのシグナル成績ダッシュボードでは、金・原油・FX・株価指数など複数資産のテクニカルシグナルの発火履歴と成績を公開しています（REITの個別銘柄ではありません）。市場全体の方向感の参考として活用できます。</div>
+      <a class="cta-btn" href="../track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>REITについて学んできた内容を整理します。</p>
+    <ul>
+      <li>REITは<strong>多数の投資家から集めた資金で不動産を保有・運用し、賃料収入等を分配金として還元する仕組み</strong>。東証に上場しているJ-REITは株式と同様に売買できる。</li>
+      <li>利益の<strong>90%超を分配する要件を満たすことで法人税が実質ゼロになる</strong>仕組みが、分配金利回りを高めに見せる構造的な理由。ただし「高利回り＝安全」ではなく、価格下落による利回り上昇（利回りの罠）や分配金減少リスクに注意。</li>
+      <li>金利上昇はREITに<strong>①借入コスト増による分配金の圧縮と、②国債利回りとの利回り競争による価格下落という2つの逆風</strong>をもたらす。</li>
+      <li>用途別で景気感応度が異なり、<strong>オフィスは景気連動度高め、物流・住宅は安定傾向</strong>。組み合わせを意識することがリスク管理の基本。</li>
+      <li><strong>内部留保できない構造</strong>ゆえに、成長には借入や増資が必要。金利環境や市場環境が成長の速度に直接影響する。</li>
+    </ul>
+
+    <p>REITは不動産という実物資産と金融商品の中間的な性格を持ちます。仕組みの特性を理解したうえで、ご自身の投資方針・リスク許容度・他の資産とのバランスをふまえた判断をされることをお勧めします。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="../guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="../guide-bonds-interest-rates.html">
+        <div class="related-card-title">📊 金利と債券の関係</div>
+        <div class="related-card-desc">金利が上がると債券価格が下がるシーソーの仕組みをデュレーション・逆イールドとあわせて解説。REITの金利感応度を理解する前提知識として。</div>
+      </a>
+      <a class="related-card" href="../guide-dividend-basics.html">
+        <div class="related-card-title">💰 配当の仕組み</div>
+        <div class="related-card-desc">権利確定日・配当落ち・高配当利回りの罠など、分配金（配当）に関する基本知識。REITの分配金と株式配当の構造的な違いを理解するためにも参考に。</div>
+      </a>
+      <a class="related-card" href="../guide-diversification.html">
+        <div class="related-card-title">🌐 分散とポートフォリオ</div>
+        <div class="related-card-desc">相関を意識したコア/サテライト戦略の考え方。REITをポートフォリオに組み込む際の基本的な視点として活用できる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はREIT（不動産投資信託）の一般的な仕組みを情報提供として解説したものであり、特定のREIT銘柄や商品の売買推奨・投資助言ではありません。記載の内容は執筆時点の一般的な情報に基づくものであり、制度変更・市場環境の変化により内容が変わることがあります。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="../about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="../site-search.js" defer></script>
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;window.addEventListener('scroll',function(){b.classList.toggle('show',window.scrollY>300)},{passive:true});b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+</script>
+
+</body>
+</html>

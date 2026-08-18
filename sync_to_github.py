@@ -147,4 +147,5 @@ SYNC_FILES = [
     "guide-proverb-rekishi-wa-in-wo-fumu.html",
     "guide-news-2026-08-18-iran-hormuz-ceasefire-expired-oil.html",
     "guide-signal-lab-073.html",
+    "guide-reit-basics.html",
 ]
