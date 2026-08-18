@@ -1,0 +1,83 @@
+{
+  "article_id": "073",
+  "claims": [
+    {
+      "label": "trend=上昇×reversalL 全期間",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 152,
+      "n": 306
+    },
+    {
+      "label": "trend=上昇×reversalL IS期(fired<2026-06-22)",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-22"},
+      "k": 54,
+      "n": 101
+    },
+    {
+      "label": "trend=上昇×reversalL FWD全体(fired>=2026-06-22)",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-22"},
+      "k": 98,
+      "n": 205
+    },
+    {
+      "label": "FWD×rsi_oversold_bounce",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-22"},
+      "k": 31,
+      "n": 46
+    },
+    {
+      "label": "FWD×bb_lower_touch",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-22"},
+      "k": 67,
+      "n": 159
+    },
+    {
+      "label": "FWD×group=index",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "index", "fired_from": "2026-06-22"},
+      "k": 20,
+      "n": 60
+    },
+    {
+      "label": "FWD×group=jpy_fx",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "jpy_fx", "fired_from": "2026-06-22"},
+      "k": 33,
+      "n": 58
+    },
+    {
+      "label": "FWD×group=other_fx",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "other_fx", "fired_from": "2026-06-22"},
+      "k": 28,
+      "n": 53
+    },
+    {
+      "label": "P3全体(fired>=2026-08-03、#062以降)",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-08-03"},
+      "k": 23,
+      "n": 57
+    },
+    {
+      "label": "P3×group=index(fired>=2026-08-03)",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "index", "fired_from": "2026-08-03"},
+      "k": 7,
+      "n": 27
+    },
+    {
+      "label": "P3×group=jpy_fx(fired>=2026-08-03)",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "jpy_fx", "fired_from": "2026-08-03"},
+      "k": 10,
+      "n": 12
+    },
+    {
+      "label": "P3×rsi_oversold_bounce(fired>=2026-08-03)",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-08-03"},
+      "k": 8,
+      "n": 13
+    },
+    {
+      "label": "P3×bb_lower_touch(fired>=2026-08-03)",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-08-03"},
+      "k": 15,
+      "n": 44
+    }
+  ]
+}
