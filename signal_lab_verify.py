@@ -421,7 +421,7 @@ def main():
         _k, _n = compute(data, f)
         if not _n:
             continue
-        _key = "IS" if "fired_before" in f else ("FWD" if "fired_from" in f else "none")
+        _key = period_bucket(f)
         _buckets[_key].add(round(100 * _k / _n, 1))
     period_bad = period_label_check(html, _buckets)
     for pb in period_bad:
@@ -468,8 +468,8 @@ def main():
 #     この限定が無いと #035/#037/#050/#054/#058/#066 の6本が誤って赤くなる（実測）。
 #   ②信頼区間の列は**対象外**（ヘッダに CI/信頼区間、または値が範囲表記）。
 #     CI境界は勝率そのものではないので集合が合わない。これが無いと #070 が誤って赤くなる（実測）。
-#   → 実測結果: 68本中で赤くなるのは **#071(3件) と #072(2件) だけ**＝どちらも実際に
-#     IS/FWD の取り違えが指摘された回。**それ以外の記事は1件も赤くならない**。
+#   → 実測結果（2026-08-18・過去66本を claims の主張値で照合）: **赤は #072 の1本だけ**
+#     ＝Opusコンプラが🔴黒と判定した当の箇所（金属のIS列に全期間値）。**残り65本は緑のまま**。
 #
 # ⚠️ 「claim がまったく無い数字」は**ここでは赤にしない**。過去68本で373件あり（24本が該当）、
 #    別種の緩さ（記事の数字が claims を超えて増える）なので、ここで一緒に締めるとレーンが止まる。
@@ -477,6 +477,21 @@ RE_PERIOD_IS  = re.compile(r"(?<![A-Za-z])IS(?![A-Za-z])")
 RE_PERIOD_FWD = re.compile(r"(?<![A-Za-z])(FWD|OOS)(?![A-Za-z])")
 RE_CELL_PCT   = re.compile(r"(\d+(?:\.\d+)?)\s*%")
 RE_CI_HEAD    = re.compile(r"CI|信頼区間")
+
+
+def period_bucket(f):
+    """claim の filter を期間バケット（IS / FWD / none）へ振り分ける。
+
+    ⚠️ **判定順が肝**＝`fired_from` を先に見る。`fired_from` と `fired_before` を
+       **両方**持つ claim は「FWD期間の部分窓」（例: #071 の FWD Q1/Q2/後半）であって IS ではない。
+       `fired_before` を先に見ると FWD の部分窓を IS と誤分類し、**正しい記事を赤にする**
+       （2026-08-18 の初版で実際に踏み、#071 を誤って「取り違え3件」と判定した）。
+    """
+    if "fired_from" in f:
+        return "FWD"
+    if "fired_before" in f:
+        return "IS"
+    return "none"
 
 
 def _cell_text(x):
