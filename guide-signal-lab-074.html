@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との25pp差と期待値+0.58R - MarketWatch AI</title>
   <meta name="description" content="RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=220を時間足別に解剖。4H足（67.8%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の25pp差を確認。4H×JPYクロスは93.8%（N=16）。">
   <meta name="keywords" content="AIシグナル,検証,RSI,売られすぎ,逆張り,4H足,時間足,勝率,研究日誌,jpy_fx">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-074.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との25pp差と期待値+0.58R">
-  <meta property="og:description" content="前向きN=220を時間足別に解剖。4H足67.8%/E(R)=+0.58R vs 1H足43.3%/E(R)≈0の25pp差。4H×JPYクロス93.8%(N=16)。">
+  <meta property="og:description" content="RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=220を時間足別に解剖。4H足（67.8%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の25pp差を確認。4H×JPYクロ">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-074.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
@@ -23,7 +24,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との25pp差と期待値+0.58R",
-    "description": "RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=220を時間足別に解剖。4H足（67.8%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の25pp差。",
+    "description": "RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=220を時間足別に解剖。4H足（67.8%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の25pp差を確認。4H×JPYクロ",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-08-20",
@@ -130,6 +131,53 @@
       .summary-stat{grid-template-columns:repeat(2,1fr)}
     }
   </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
 </head>
 <body>
 <header>
@@ -715,5 +763,6 @@
 <footer>
   <p>&copy; 2026 MarketWatch AI | <a href="../index.html">トップページ</a> | <a href="../guides.html">解説一覧</a> | <a href="../about.html">サイトについて</a> | <a href="../privacy.html">プライバシーポリシー</a></p>
 </footer>
+<script src="site-search.js" defer></script>
 </body>
 </html>
