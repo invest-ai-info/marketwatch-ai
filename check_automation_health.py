@@ -352,6 +352,12 @@ RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n
 RE_LAB_TARGET = re.compile(r"signal-lab\D*(\d{2,4})")
 # 明示の解決マーク（書き手が見出しに残す）。実体判定が効かない回の保険。
 RESOLVED_MARKS = ("[解消済み]", "[解決済み]", "解消済み", "解決済み")
+# ルーティン名と成果物ファイル名が食い違う対象。**表示名（ルーティン名）は変えず、実体照合だけ別名で行う**。
+# 2026-08-19 実測: `book-watch-weekly` の成果物は `guide-new-books.html`（単一ソース＝drafts/BOOKWATCH_GUIDE.md）。
+# 素のままだと `guide-book-watch-weekly.html` を探しに行って必ず不在＝**公開済みでも永久に滞留と誤検知**する
+# （8/18 に新刊2冊を公開してライブ200なのに、8/19 も「4日放置」と鳴り続けていた）。
+# ⚠️ ここは表記ゆれ（normalize_target）ではなく**別物の対応表**。ルーティン名は識別子として保つ。
+TARGET_ARTIFACT = {"book-watch-weekly": "new-books"}
 
 
 def normalize_target(tgt):
@@ -364,7 +370,7 @@ def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS
     """純関数（テスト対象）。戻り値: (滞留 [(target, 日付, 経過日)], 🚩総数, 未解決総数)。
 
     解決の判定は**実体で**行う（宣言でなく成果物を見る＝③と同じ方針）:
-      ① `guide-<target>.html` が公開済みなら解決
+      ① `guide-<target>.html`（TARGET_ARTIFACT に別名があればそれ）が公開済みなら解決
       ② 同じ target について、より新しい見出しが 🚩 なしで「公開」と言っていれば解決
     どちらも無ければ未解決。未解決のうち stale_days 以上経過したものだけを滞留として返す。
     """
@@ -381,7 +387,8 @@ def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS
         if tgt in seen:          # 同じ対象の複数エスカレは最新1件で代表させる
             continue
         seen.add(tgt)
-        if f"guide-{tgt}.html" in published or published_head.get(tgt, "") >= d:
+        artifact = TARGET_ARTIFACT.get(tgt, tgt)
+        if f"guide-{artifact}.html" in published or published_head.get(tgt, "") >= d:
             continue
         if any(m in kind for m in RESOLVED_MARKS):   # 見出しに明示の解決マーク
             continue
