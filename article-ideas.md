@@ -1,12 +1,12 @@
-# 💡 記事ネタ候補（基準日 2026-08-19 JST / 火曜）
+# 💡 記事ネタ候補（基準日 2026-08-20 JST / 木曜）
 
 _編集者向け内部メモ。このファイルはサイト非公開。_
 
 ---
 
-## 📊 当日トレンド要約（2026-08-19）
+## 📊 当日トレンド要約（2026-08-20）
 
-8月18日（月）の日経平均は前週比−2.54%（67,460円）と急反落。先週5営業日の+5.5%上昇を部分的に帳消しにした。主因はイラン–米国の停戦協議が期限切れとなり、イランが「全面攻勢態勢」への移行を宣言したことによる原油高・インフレ再燃懸念。ドル円は約159円台で推移し、日銀の9月追加利上げ観測が高まる中でも円高進行は限定的。米国では7月小売売上高が−0.6%（予想+0.1%）と大幅ミス、ミシガン大学消費者信頼感も51.0（前月55.2）に急落。一方、8月26日のNVIDIA決算・8月27–29日のジャクソンホール（ウォーシュ新FRB議長の初演説）という2大イベントが目前に迫り、方向感を掴みにくい週が続く。
+日経平均は8月19日（水）に前日比−3.1%（約65,500円）と2日続落。AI・半導体関連株への売りが加速し、キオクシア−10%、古河電工−9.8%、藤倉コンポジット−8.4%、アドバンテスト−4.4%、東京エレクトロン−4.7%といった国内AI供給網銘柄が軒並み急落した。背景は米30年国債利回りが19年ぶり高水準（5.33%）に達したことで「高バリュエーションのグロース株には居場所がない」との心理が連鎖したとみられる。ドル円は159円台を維持し、日銀の9月追加利上げ観測は依然として高い（Reutersが「9月17-18日会合で利上げ確実」と報道）。原油（ブレント）は$88台で推移しており、ホルムズ停戦失効後の再緊張を受けて$100回帰シナリオが一部アナリストから浮上している。今週後半はジャクソンホール（8月27-29日）直前の"情報空白週"で、ポジション整理の動きが続く見通し。
 
 ---
 
@@ -14,116 +14,116 @@ _編集者向け内部メモ。このファイルはサイト非公開。_
 
 ---
 
-### 候補1｜ホルムズ海峡「停戦失効」と日本のエネルギー安全保障——93%依存の現実を解説
+### 候補1｜AI半導体株「急落」は崩壊か健全調整か——日本の供給網銘柄を徹底解説
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル** | 「ホルムズ海峡と日本のエネルギー依存：石油輸入の93%がリスクにさらされる構造を解説」 |
-| **概要（30字）** | 日本の原油の93%がホルムズ経由——地政学リスクが家計・株式市場に与える影響を数字で整理 |
-| **なぜ今か** | 8/18に米国がイランとの停戦延長を拒否、イランが「全面攻勢」宣言。日経−2.54%急落の直接要因。原油高は輸入コスト増→コアCPI上昇→日銀利上げ促進という連鎖を生む |
-| **検索意図** | ホルムズ海峡 日本 影響 / イラン 原油 日本株 / エネルギー安全保障 投資リスク |
-| **想定カテゴリ** | 地政学・エネルギー解説 |
+| **仮タイトル** | 「日経−3.1%・キオクシア−10%急落：AIバブル崩壊？それとも健全調整？日本半導体サプライチェーンの読み方」 |
+| **概要（30字）** | AIブーム恩恵を受けてきた国内半導体関連株が急落。崩壊シグナルか、バリュエーション修正かを見分ける判断軸を整理 |
+| **なぜ今か** | 2026-08-19に日経が2日続けて大幅安。キオクシア・古河電工・藤倉・東エレク・アドバンテストなど主力半導体関連株が軒並み5〜10%急落。原因は米長期金利急騰（30年5.33%・19年ぶり高水準）。「AIテーマで上昇してきた銘柄のリスク」を解説する最適タイミング |
+| **検索意図** | キオクシア 株 なぜ下落 / AI半導体 調整 どこまで / 東京エレクトロン 今後 |
+| **想定カテゴリ** | マーケット戦略・個別銘柄解説 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（CSISレポート、Al Jazeera、IEA共同確認） |
-| **根拠ソース** | [CSIS – Implications of the Iran Conflict for Japan](https://www.csis.org/analysis/what-are-implications-iran-conflict-japan)（2026年） ／ [Al Jazeera – Japan PM: Iran war having 'enormous impact'](https://www.aljazeera.com/news/2026/5/4/japan-pm-says-iran-war-oil-crisis-having-enormous-impact-in-asia-pacific) ／ [Business Recorder – Nikkei slides as Middle East stalemate fuels oil concerns](https://www.brecorder.com/news/40435357/japans-nikkei-slides-as-middle-east-stalemate-fuels-oil-inflation-concerns)（2026-08-18） |
+| **信頼度** | HIGH（Bloomberg、Business Recorder、Intellectia AI 複数確認） |
+| **根拠ソース** | [Bloomberg – Japanese Stocks Slide as Bond Market Anxiety Hits AI Sentiment](https://www.bloomberg.com/news/articles/2026-08-19/japanese-stocks-slide-as-bond-market-anxiety-hits-ai-sentiment)（2026-08-19） ／ [Intellectia AI – Chip Stocks Selloff August 2026](https://intellectia.ai/blog/chip-stocks-selloff-august-2026) ／ [Business Recorder – Japan's Nikkei struggles for direction](https://www.brecorder.com/news/amp/40434446) |
 
 ---
 
-### 候補2｜ウォーシュFRB議長「ジャクソンホール初演説」完全予習ガイド——9月FOMC前の最重要ヒント
+### 候補2｜中央銀行が「金」を爆買い：Q2 288.9トン記録更新が意味するドル不信の実態
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル** | 「ジャクソンホール2026年8月27–29日：ウォーシュ新FRB議長の初演説で何が変わるか」 |
-| **概要（30字）** | 8/28の演説で利下げ観測・ドル円・日本株への影響を事前整理。鷹派議長の"言わないこと"の読み方 |
-| **なぜ今か** | イベント1週間前。就任後5連続金利据え置き（3.5–3.75%）＋反対票3名。フォワードガイダンス削減姿勢でマーケットが読みにくい。投資家が事前に論点を整理しておく価値が高い |
-| **検索意図** | ジャクソンホール 2026 日程 / ウォーシュ 演説 影響 / FRB 利下げ 見通し 2026 |
-| **想定カテゴリ** | マクロ経済・金融政策解説 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（Regards of Wallstreet、Finance Calendar、Cryptobriefing 複数確認） |
-| **根拠ソース** | [Regards of Wallstreet – Jackson Hole 2026 Dates & Warsh's First Speech](https://www.regardsofwallstreet.com/news/jackson-hole-2026-dates-schedule-warsh-first-speech) ／ [Cryptobriefing – Fed Holds Rates, Kaplan Urges Warsh Clarity at Jackson Hole](https://cryptobriefing.com/fed-holds-rates-kaplan-warsh-jackson-hole/)（2026-07-29） ／ [BigGo Finance – Warsh Hints at 'Big Picture' Speech](https://finance.biggo.com/news/5199dcdf-716b-4f74-81f1-60f5a3b95518) |
-
----
-
-### 候補3｜米消費者信頼感51.0急落の意味——米国景気後退リスクを日本人投資家はどう見るか
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル** | 「米消費者信頼感51.0・小売売上高−0.6%の衝撃：景気後退リスクを投資家目線で読み解く」 |
-| **概要（30字）** | 消費失速の最新データが示す米景気サイクルの現在地と、日本株・円相場への影響シナリオ |
-| **なぜ今か** | 8/14に7月小売売上高が−0.6%のサプライズ低下、8/15に8月ミシガン消費者信頼感が51.0（予想55.0を大幅下回り7月比−4.2pt）。インフレと消費後退の両立という「スタグフレーション的」状況が浮上 |
-| **検索意図** | 米国 景気後退 2026 / ミシガン消費者信頼感 株式市場 / アメリカ消費失速 日本株 影響 |
-| **想定カテゴリ** | マーケット戦略・経済指標解説 |
+| **仮タイトル** | 「2026年Q2・中央銀行の金購入量が四半期最高記録288.9トン：ドル基軸通貨体制への疑問符を解説」 |
+| **概要（30字）** | 世界の中央銀行が前年同期比62%増のペースで金を積み増す。日本人投資家が金投資をどう位置づけるか考える材料を整理 |
+| **なぜ今か** | 世界金協議会（WGC）データによれば2026年Q2の中央銀行金購入量は288.9トンと四半期最高を記録。45%の中央銀行が「今後12カ月で金準備を増やす」と回答。金価格は$4,491前後で推移し、年初来高値$5,600から下落後の反発局面。金利低下期待と地政学リスクのダブル効果で、個人投資家の関心が高まっている |
+| **検索意図** | 金 投資 2026 見通し / ゴールド なぜ上がる / 中央銀行 金 購入 理由 |
+| **想定カテゴリ** | コモディティ・分散投資解説 |
 | **難易度** | 小〜中 |
-| **信頼度** | HIGH（Bloomberg日本語版、財経新聞、日本経済新聞複数確認） |
-| **根拠ソース** | [Bloomberg JP – 米個人消費に減速の兆し](https://www.bloomberg.com/jp/news/articles/2026-08-14/TJRMOUKJH6VE00)（2026-08-14） ／ [BigGo Finance JP – 消費者信頼感8月51.0に急低下](https://finance.biggo.jp/news/d96e4189-106c-48c0-a883-20099a6416b3) ／ [財経新聞 – 米国株式市場は反落、消費や景気減速懸念](https://www.zaikei.co.jp/article/20260815/865902.html) |
+| **信頼度** | HIGH（World Gold Council、BingX、Yahoo Finance、eToro 複数確認） |
+| **根拠ソース** | [BingX – Gold August 2026 Rebound: Rate Cuts and Central Banks](https://bingx.com/en/blog/article/gold-august-2026-rebound-what-the-logic-switch-means-for-rate-cuts-and-central-banks) ／ [Yahoo Finance – Gold Price Prediction August 2026](https://finance.yahoo.com/markets/commodities/articles/gold-price-prediction-august-2026-130000574.html) ／ [eToro – Gold Price Rebounds 11% in 2026 Amid Central Bank Buying Spree](https://www.etoro.com/news-and-analysis/market-insights/gold-gains-more-than-10-in-a-month-is-it-heading-for-new-highs/) |
 
 ---
 
-### 候補4｜NVIDIA 8月26日決算「何を見るべきか」——Blackwell需要とデータセンター資本支出の実態
+### 候補3｜米30年国債利回り5.3%超えの衝撃：日本の生保・年金が直面するデュレーションリスク
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル** | 「NVIDIA 2026年8月26日決算チェックポイント：売上高・粗利・ガイダンスの読み方と日本株連動銘柄」 |
-| **概要（30字）** | 決算1週間前に押さえるべき数値基準・注目指標・SOX指数と日本の半導体株への波及経路 |
-| **なぜ今か** | 8/26発表まで1週間を切った。コンセンサス売上高$28.7B（YoY+50%超）。Applied Materialsが先行して好決算を発表しており、AI半導体需要確認の最終ピースとして注目度が最高潮 |
-| **検索意図** | NVIDIA 決算 2026年8月 / NVDA 業績 見通し / エヌビディア 日本株 影響 |
-| **想定カテゴリ** | 個別銘柄解説（決算プレビュー） |
+| **仮タイトル** | 「米30年国債5.33%・19年ぶり高水準：日本の生命保険・年金運用が抱えるリスクを個人投資家目線で解説」 |
+| **概要（30字）** | 長期金利急騰が「安全資産」への資金逃避ではなく"債券売り"として現れる逆説と、日本の機関投資家への波及経路 |
+| **なぜ今か** | 2026-08-18に米30年国債が5.33%と2007年6月以来の高水準を記録（既報記事あり）。しかし日本の生保・年金の外債運用への影響、含み損と為替ヘッジコストの組み合わせという構造問題は未解説。株式急落と債券安の同時進行（債株逆相関の崩壊）という個人投資家向けの教育的価値も高い |
+| **検索意図** | 米国債 金利 上昇 影響 / 債券 株 同時下落 なぜ / 生命保険 外国債券 リスク |
+| **想定カテゴリ** | 投資指標解説・マクロ経済 |
+| **難易度** | 中〜大 |
+| **信頼度** | HIGH（CNBC、Axios、FRED・米財務省データ複数確認） |
+| **根拠ソース** | [CNBC – 30-year Treasury yield tops 5.33%, new 19-year high](https://www.cnbc.com/2026/08/18/treasury-yields-.html)（2026-08-18） ／ [Axios – What rising Treasury yields are telling us](https://www.axios.com/2026/08/17/treasury-yields-warsh-bonds)（2026-08-17） ／ [FRED – Market Yield on US Treasury 30-Year](https://fred.stlouisfed.org/series/DGS30) |
+
+---
+
+### 候補4｜ホルムズ停戦失効後の原油シナリオ：$88から$100回帰の現実可能性を検証
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル** | 「原油$88台・ホルムズ停戦失効後の次のシナリオ：$100回帰と日本経済への影響を整理」 |
+| **概要（30字）** | 停戦期限切れで船舶通行がほぼ停止状態になったホルムズ海峡。原油100ドル超えが現実になった場合の日本株・物価・日銀への影響シナリオを整理 |
+| **なぜ今か** | 8/18に米国がイランとの停戦延長を拒否、海峡通過船舶が直近5日平均12隻まで激減。ブレント$88台から一部アナリストは「中国の輸入増加＋Houthi攻撃が続けば$100超も」と警告（Rapidan Energy）。原油高→輸入インフレ→日銀利上げ圧力という連鎖を解説する価値が高い |
+| **検索意図** | 原油 今後 見通し 2026 / ホルムズ海峡 日本 影響 / 原油高 日本株 どうなる |
+| **想定カテゴリ** | 地政学・コモディティ解説 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Intellectia AI、ad-hoc-news、247 Wall St. 複数確認） |
-| **根拠ソース** | [Intellectia AI – NVIDIA Earnings Preview August 2026](https://intellectia.ai/blog/nvda-earnings-august-26-2026-preview)（2026-08） ／ [ad-hoc-news – Nvidia stock climbs, AI guidance points to $91B quarter](https://www.ad-hoc-news.de/boerse/news/corporate-news/nvidia-stock-climbs-ahead-of-august-earnings-as-ai-guidance-points-to-91/69946578) ／ [247 Wall St. – 3 Semiconductor Stocks Before AI Earnings Wave](https://247wallst.com/investing/2026/08/13/3-semiconductor-stocks-to-buy-before-the-next-ai-earnings-wave-in-august/)（2026-08-13） |
+| **信頼度** | HIGH（CNBC、tradingeconomics、Rapidan Energy複数確認） |
+| **根拠ソース** | [CNBC – Hormuz deadlock: Oil price outlook as U.S.-Iran standoff drags on](https://www.cnbc.com/2026/08/11/hormuz-oil-prices-us-iran.html)（2026-08-11） ／ [CNBC – Brent rises above $90 as Iran rules out interim deal extension](https://www.cnbc.com/2026/08/17/oil-prices-iran-war-strait-hormuz.html)（2026-08-17） ／ [TradingEconomics – Oil Surges Past $100 on Ceasefire Doubts](https://tradingeconomics.com/commodity/crude-oil/news/540675) |
 
 ---
 
-### 候補5｜日銀9月追加利上げ観測と円相場シナリオ——「¥149予測」の根拠と投資家への影響
+### 候補5｜日銀9月利上げ「ほぼ確実」の最終確認：1.25%への引き上げと円・株式への影響シナリオ
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル** | 「日銀9月・10月利上げ観測の現在地：ドル円159円から149円まで何が起きるかを解説」 |
-| **概要（30字）** | BOJ現行金利1.0%・米FRB3.5–3.75%の差が縮小する場合の円高シナリオと、日本株・外国株投資への影響を整理 |
-| **なぜ今か** | 8/14にBloombergが「BOJ次の動きを日本語で解説」、バンク・オブ・アメリカが2026年末¥149予測を発表。日経急落の一因は円高懸念でもある。原油高→インフレ→日銀利上げ圧力という連鎖が加速中 |
-| **検索意図** | 日銀 利上げ いつ / ドル円 今後 見通し 2026 / 円高 日本株 影響 |
-| **想定カテゴリ** | 為替・金融政策解説 |
+| **仮タイトル** | 「日銀9月17-18日会合：利上げがほぼ確実視される理由と、ドル円・日本株への影響シナリオを解説」 |
+| **概要（30字）** | Reuters調査が「9月利上げ確実」、現行1.0%から1.25%へ。個人投資家が想定しておくべき3つのシナリオを整理 |
+| **なぜ今か** | Bloomberg/Reutersが2026-08-14前後に「BOJ、9月にも利上げへ」と報道。中東情勢による原油高でコアインフレが2%超え「明確に超える見通し」とBOJが7月31日に公表済み。ドル円159円台での維持は「円安是正のための利上げ」という二重の動機も。利上げ3回目の効果を解説するタイミングとして最適 |
+| **検索意図** | 日銀 いつ 利上げ / 日銀 9月 会合 / ドル円 利上げ 影響 |
+| **想定カテゴリ** | 金融政策・為替解説 |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Bloomberg、Japan Times、OMFIF複数確認） |
-| **根拠ソース** | [Bloomberg – Yen Edges Higher, Traders Weigh BOJ's Next Move](https://www.bloomberg.com/news/articles/2026-08-14/yen-edges-higher-against-dollar-as-traders-weigh-boj-s-next-move)（2026-08-14） ／ [Japan Times – Bank of America sees yen jumping 6% by end of 2026](https://www.japantimes.co.jp/business/2026/08/06/economy/boa-yen-expectations/)（2026-08-06） ／ [OMFIF – Japan's yen intervention and unusual US support](https://www.omfif.org/2026/08/japans-yen-intervention-and-the-us-unusual-support/)（2026年8月） |
+| **信頼度** | HIGH（Bloomberg、CNBC、FXStreet・Reuters複数確認） |
+| **根拠ソース** | [FXStreet – BoJ set to hike rates as soon as September – Reuters](https://www.fxstreet.com/news/boj-set-to-hike-rates-as-soon-as-september-202608140605)（2026-08-14） ／ [Bloomberg – BOJ Keeps September Rate Hike in Play After Hold, FX Action](https://www.bloomberg.com/news/articles/2026-07-31/boj-holds-rate-steady-with-upward-revision-to-economic-outlook)（2026-07-31） ／ [CNBC – BOJ holds rates at 1%, warns of core inflation exceeding 2%](https://www.cnbc.com/2026/07/31/boj-rates-yen-intervention-inflation-japan.html) |
 
 ---
 
-### 候補6｜中国デフレが日本株に与える意外な影響——「輸入デフレ」と輸出企業の二面性を解説
+### 候補6｜「積み立て継続か、一時停止か」——急落局面でNISA積立者が押さえる3つの判断軸
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル** | 「中国CPI+0.5%・GDP最低水準：中国デフレが日本企業と株式市場に与える2つの顔」 |
-| **概要（30字）** | 中国の輸入デフレ（安い輸入品→物価押し下げ）と輸出先需要減少（日本製品の販売不振）という逆方向の影響を整理 |
-| **なぜ今か** | 2026年Q2の中国GDP成長率が3年超ぶりの低水準。CPI+0.5%（6カ月ぶり最低）・小売売上高+0.6%（歴史的弱さ）。日本の対中輸出依存度を考えると中長期で影響が出てくる |
-| **検索意図** | 中国 景気後退 日本株 影響 / 中国デフレ 輸入 物価 / 中国経済 日本 投資 |
-| **想定カテゴリ** | マクロ経済・地域分析 |
-| **難易度** | 中 |
-| **信頼度** | MID（Asia Times、Liga Biz、Quora等から傍証、日本語一次ソースに限界あり） |
-| **根拠ソース** | [Asia Times – Why China's war on deflation is faltering in real time](https://asiatimes.com/2026/08/why-chinas-war-on-deflation-is-faltering-in-real-time/)（2026-08） ／ [Liga Biz EN – China's economy slowdown: consumption and investment falling](https://biz.liga.net/en/economic-policy/news/chinas-economy-is-slowing-down-consumption-and-investment-are-falling-while-exports-are-rising/) ／ [The Tokyo Foundation – Chinese Economy at a Crossroads](https://www.tokyofoundation.org/research/detail.php?id=976) |
-
----
-
-### 候補7｜新NISA上半期12.5兆円の「集中リスク」——市場急落局面でのリバランス判断
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル** | 「新NISA2年目：12.5兆円が全世界株・S&P500に集中——急落局面でリバランスは必要か」 |
-| **概要（30字）** | 2026年上半期の投信フローが特定指数ファンドに集中した現状と、市場急落時に個人投資家が考えるべき分散・継続の判断軸 |
-| **なぜ今か** | 日経−2.54%急落で「このまま積み立て続けていいか」という疑問が個人投資家に浮上。実際は上半期12.5兆円が外国株ファンド中心に集中（S&P500・全世界株の2本で3.4兆円）。集中リスクを解説する好機 |
-| **検索意図** | 新NISA 積立 続けるべきか / NISA 下落 どうする / 全世界株 リバランス タイミング |
-| **想定カテゴリ** | 投資基礎・NISA解説 |
+| **仮タイトル** | 「日経急落時のNISA積立：やめる・減らす・増やす——行動経済学と過去データで読み解く判断軸3選」 |
+| **概要（30字）** | 上半期12.5兆円の資金が流入した新NISAで、急落時の積立行動を変えるべきかを行動経済学の視点で解説 |
+| **なぜ今か** | 日経−3.1%急落を受け、SNSで「積立をいったん止めるべき？」「このまま続けていいか不安」という個人投資家の声が急増。2026年上半期の投信フロー12.5兆円（外国株中心）の多くが初めて大きな下落を経験する場面。損失回避バイアス・恐怖心の扱い方を解説する好機 |
+| **検索意図** | NISA 株価下落 続けるべき / 積立投資 急落 どうする / 全世界株 下落 損失 |
+| **想定カテゴリ** | 投資基礎・NISA・行動経済学 |
 | **難易度** | 小 |
-| **信頼度** | HIGH（ダイヤモンド・ザイ、日経、みんかぶ複数確認） |
-| **根拠ソース** | [Diamond ZAi – 新NISAの積立の威力は本物！上期投信流入が過去最高12.5兆円](https://diamond.jp/articles/-/394435)（2026年） ／ [Nikkei – NISAの利用実態：成長投資枠フル活用が5割超](https://www.nikkei.com/article/DGXZQOUB107GG0Q6A710C2000000/) ／ [Minkabu – 投資信託おすすめ銘柄 2026年8月版](https://itf.minkabu.jp/news/recommended) |
+| **信頼度** | HIGH（Diamond ZAi、日経新聞、WGC・歴史データ複数確認） |
+| **根拠ソース** | [Diamond ZAi – 新NISAの積立の威力は本物！上期投信流入が過去最高12.5兆円](https://diamond.jp/articles/-/394435)（2026年） ／ [Nikkei – NISAの利用実態：成長投資枠のフル活用を目指す人が5割超](https://www.nikkei.com/article/DGXZQOUB107GG0Q6A710C2000000/) ／ [Diamond ZAi – 新NISA人気投資信託ランキング 2026年8月](https://www.diamond.co.jp/zai/articles/-/305) |
+
+---
+
+### 候補7｜ジャクソンホール直前週の鉄則：「情報空白」に動く市場と個人投資家の対処法
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル** | 「ジャクソンホール2026年8月27-29日：直前週の"情報空白"に振り回されないための投資行動ガイド」 |
+| **概要（30字）** | FRB議長演説前後に急変しやすい相場の傾向と、個人投資家が陥りがちな行動パターンおよびその回避策を整理 |
+| **なぜ今か** | 8月20日〜8月27日はジャクソンホール直前の"静けさ"の週。新FRB議長ウォーシュの初演説（8月28日予定）まで主要なデータ発表が少なく、市場はポジション整理モードに入る傾向がある。この"待機週"の特性と、安易なポジション変更が裏目に出やすい理由を解説する教育的記事として最適 |
+| **検索意図** | ジャクソンホール 2026 日程 影響 / FRB 発表前 株価 / 相場 イベント前 どうする |
+| **想定カテゴリ** | マーケット戦略・投資行動 |
+| **難易度** | 小〜中 |
+| **信頼度** | HIGH（複数金融メディア、過去の相場行動データで裏付け） |
+| **根拠ソース** | [Morningstar – Why Powell's Jackson Hole Speech Suggests a Rate Cut Is on the Way](https://www.morningstar.com/economy/why-powells-jackson-hole-speech-suggests-an-interest-rate-cut-is-way) ／ [Fed Reserve Board – Speech on economic outlook and framework review](https://www.federalreserve.gov/newsevents/speech/powell20250822a.htm) ／ [Yahoo Finance – Rate cut watch: All eyes on Jackson Hole speech](https://finance.yahoo.com/news/rate-cut-watch-all-eyes-on-fed-chair-powells-final-jackson-hole-speech-100023617.html) |
 
 ---
 
 ## 🏆 編集長推しネタ TOP3
 
-1. **候補2「ジャクソンホール初演説ガイド」** — イベント1週間前の最適タイミング。フォワードガイダンス削減という"新しいFRB"の読み方を解説する差別化記事になる。
-2. **候補3「米消費者信頼感51.0急落」** — 直近48時間の最新データに基づく解説。スタグフレーションリスクへの切り口は日本人読者が最も検索しやすいテーマ。
-3. **候補1「ホルムズ停戦失効とエネルギー安全保障」** — 本日の日経急落の直接原因。日本の93%石油依存という構造的リスクを深掘りする解説記事は既存記事と差別化できる。
+1. **候補1「AI半導体株急落：崩壊か健全調整か」** — 本日の日経−3.1%急落とキオクシア−10%という数字が読者の検索行動を直接引き起こす。タイムリーかつ差別化できる解説記事の好機。
+2. **候補2「中央銀行の金爆買い記録Q2 288.9トン」** — 金投資解説はサイト既存記事と重複しない切り口。中央銀行という機関投資家視点から"なぜ今、金なのか"を掘り下げることで検索流入と読者教育の両立が狙える。
+3. **候補5「日銀9月利上げ最終確認」** — Reuters調査「確実」報道を受けた"タイミング物"の記事。9月17-18日の会合まで約4週間で、事前解説の公開タイミングとして最適。
 
 ---
 
