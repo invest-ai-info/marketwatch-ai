@@ -624,6 +624,28 @@ def main():
         bad.append(("Gmail認証失効", "critical"))
 
     body.append("")
+    body.append("### ⑩ 市場健康度の履歴（系列別の取得停止）")
+    try:
+        import build_health_history as BHH
+        data = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/market-health-history.json", token))
+        stale, pending, watched = BHH.eval_series_health(data.get("health") or {}, now)
+        if stale:
+            det = ", ".join(f"{n}（{a}日取得なし/閾値{d}日）" for n, a, d in stale)
+            body.append(f"- 🚨 🟡 取得が止まっている系列 {len(stale)}/{watched}: {det}。"
+                        f"build_health_history.py の該当 fetch を実測プローブし、"
+                        f"URL変更なら差し替え・恒久停止なら系列を落とす。"
+                        f"⚠️ **代替の別指標を同じ名前で入れない**"
+                        f"（発表元ごとに区分が違う＝2026-08-19 に CNN と alternative.me で実測）")
+            bad.append(("健康度履歴の停止", "warn"))
+        else:
+            note = f"（観測開始前 {len(pending)} 本）" if pending else ""
+            body.append(f"- ✅ 🟢 監視 {watched} 系列すべて閾値内{note}")
+    except Exception as e:
+        # ③〜⑧と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ 健康度履歴の確認失敗: {e}")
+
+    body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
     if bad:
         body.insert(1, f"## 🚨 {len(bad)}件に異常: " + " / ".join(l for l, _ in bad) + "\n")

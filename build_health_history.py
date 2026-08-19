@@ -135,6 +135,11 @@ def parse_crypto_fg(payload):
 def compute_buffett(w5000_points, gdp_bn):
     """バフェット指数 = Wilshire5000 / 米名目GDP(10億ドル) * 100。
 
+    ⚠️ 指数の値をそのまま「10億ドル」として扱ってよいかを 2026-08-19 に校正した:
+       2026-04-20 の ^W5000 = 71,240.01、GDP = 30,769.7（世界銀行2025年）→ 231.5%。
+       同日にサイトが手動で載せていた currentmarketvaluation.com 由来の値は 232%。
+       差 0.5pp ＝ GDP の版の違いで説明でき、**1ポイント≒10億ドルで正しい**と確認した。
+
     GDP は四半期（FRED）＝日次で動くのは分子だけ。gdp_bn が None なら**何も返さない**
     （前回値で勝手に埋めない）。
     """
@@ -163,28 +168,44 @@ def fetch_crypto_fg(limit=30):
         "https://api.alternative.me/fng/?limit=" + str(limit) + "&format=json"))
 
 
-def fetch_us_gdp_bn():
-    """FRED の米名目GDP（10億ドル・四半期）の最新値。
+def parse_worldbank_gdp(payload):
+    """世界銀行 API の JSON -> 最新の米名目GDP（10億ドル）。値が無い年は飛ばす。"""
+    rows = payload[1] if isinstance(payload, list) and len(payload) > 1 else []
+    for row in rows:                       # 新しい年から並んでいる
+        if row.get("value"):
+            return float(row["value"]) / 1e9
+    return None
 
-    ⚠️ ローカルPCからは TLS フィンガープリントで遮断されタイムアウトする（実測）。
-       届かなければ None を返し、呼び出し側が JSON の前回値を使う。
+
+def fetch_us_gdp_bn():
+    """米名目GDP（10億ドル）。FRED を試し、届かなければ世界銀行にフォールバックする。
+
+    ⚠️ FRED はローカルPCからも **GitHub Actions からも**届かない（2026-08-19 に両方で実測。
+       Actions では例外が握り潰されて gdp=None のまま完走していた）。実運用の主役は世界銀行側。
+    ⚠️ 世界銀行は**年次**なので、四半期より粗い。バフェット指数の日次の動きは分子（株価）だけ
+       ＝この限界はページ上で自己開示する。
     """
     try:
         req = urllib.request.Request(
             "https://fred.stlouisfed.org/graph/fredgraph.csv?id=GDP",
             headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=25) as res:
+        with urllib.request.urlopen(req, timeout=20) as res:
             raw = res.read().decode("utf-8", "replace")
+        for line in reversed([l for l in raw.strip().splitlines() if l]):
+            parts = line.split(",")
+            if len(parts) >= 2:
+                try:
+                    return float(parts[1])
+                except ValueError:
+                    continue
+    except Exception:
+        pass
+    try:
+        return parse_worldbank_gdp(_get_json(
+            "https://api.worldbank.org/v2/country/USA/indicator/NY.GDP.MKTP.CD"
+            "?format=json&per_page=5"))
     except Exception:
         return None
-    for line in reversed([l for l in raw.strip().splitlines() if l]):
-        parts = line.split(",")
-        if len(parts) >= 2:
-            try:
-                return float(parts[1])
-            except ValueError:
-                continue
-    return None
 
 
 def fetch_buffett_us(rng="5d", gdp_bn=None):
@@ -192,21 +213,31 @@ def fetch_buffett_us(rng="5d", gdp_bn=None):
 
 
 SERIES_META = {
-    "vix":        {"label": "米VIX", "unit": "",
+    # stale_days＝この日数以上あいたら「取得が止まっている」とみなす。
+    # 2026-08-19 に直近1年の実データで**点と点の実際の間隔**を測って決めた（推測で置かない）。
+    # 実測の最大間隔: vix 4日 / cnn_fg 4日 / crypto_fg 1日 / buffett_us 5日。
+    # ⚠️ 一律3日にすると vix と cnn_fg は年45〜46回（ほぼ毎週）誤検知する＝3日の間隔は正常。
+    "vix":        {"label": "米VIX", "unit": "", "stale_days": 5,
                    "source": "Yahoo Finance (^VIX)"},
-    "cnn_fg":     {"label": "CNN 恐怖&強欲", "unit": "",
+    "cnn_fg":     {"label": "CNN 恐怖&強欲", "unit": "", "stale_days": 5,
                    "source": "CNN Business"},
-    "crypto_fg":  {"label": "Crypto 恐怖&強欲", "unit": "",
+    "crypto_fg":  {"label": "Crypto 恐怖&強欲", "unit": "", "stale_days": 3,  # 24時間365日＝毎日ある
                    "source": "alternative.me"},
-    "buffett_us": {"label": "米バフェット指数", "unit": "%",
-                   "source": "Yahoo Finance (^W5000) / 米名目GDP (FRED GDP)"},
+    "buffett_us": {"label": "米バフェット指数", "unit": "%", "stale_days": 6,
+                   "source": "Yahoo Finance (^W5000) / 米名目GDP (世界銀行・年次)",
+                   "note": "分母の名目GDPは年次のため、日々動いているのは分子（株式時価総額）だけです。"},
 }
+
+
+def _meta_note(key):
+    return SERIES_META[key].get("note", "")
 
 
 def empty_history():
     return {
         "updated_at": None,
         "series": {k: {"label": m["label"], "source": m["source"], "unit": m["unit"],
+                       "note": m.get("note", ""),
                        "zones": [list(z) for z in ZONES[k]], "points": []}
                    for k, m in SERIES_META.items()},
         "health": {k: {"last_ok": None, "points": 0} for k in SERIES_META},
@@ -269,6 +300,36 @@ def series_range(doc, key, backfill):
     if backfill or len(doc["series"][key]["points"]) < SELF_HEAL_MIN_POINTS:
         return "1y", 400
     return "5d", 30
+
+
+def eval_series_health(health, now, stale_days=None):
+    """純関数。戻り値: (停止 [(系列, 経過日, 閾値)], 観測開始前 [系列], 監視対象数)。
+
+    閾値は系列ごと（SERIES_META の stale_days）。市場データは土日・祝日で必ず空くので
+    一律にすると毎週鳴る＝実データの間隔を測って決めてある（上の SERIES_META のコメント）。
+    stale_days を渡すと全系列をその値で上書きする（テスト用）。
+
+    一度も取れていない系列（last_ok が None）は「観測開始前」として鳴らさない
+    ＝新しい系列を足した初日に赤くしない（news-ticker の feed_health と同じ方針）。
+    """
+    today = now.astimezone(JST).date()
+    stale, pending = [], []
+    for key, meta in SERIES_META.items():
+        limit = stale_days if stale_days is not None else meta["stale_days"]
+        rec = health.get(key) or {}
+        last = rec.get("last_ok")
+        if not last:
+            pending.append(key)
+            continue
+        try:
+            age = (today - dt.date.fromisoformat(last)).days
+        except ValueError:
+            pending.append(key)
+            continue
+        if age >= limit:
+            stale.append((key, age, limit))
+    stale.sort(key=lambda x: -x[1])
+    return stale, pending, len(SERIES_META)
 
 
 def main():

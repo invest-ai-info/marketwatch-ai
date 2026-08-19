@@ -3625,7 +3625,8 @@ def build_health_chart_section():
           '<div class="mh-chart-head">' + s.label + '　<span style="color:#1E3A6E">' +
             last[1] + s.unit + '</span>' +
             ' <span style="font-size:.78rem;color:#57606a;font-weight:400">(' + last[0] + ' 時点)</span></div>' +
-          '<div class="mh-chart-src">出典: ' + s.source + '</div>' +
+          '<div class="mh-chart-src">出典: ' + s.source +
+            (s.note ? '<br>' + s.note : '') + '</div>' +
           '<div class="mh-chart-wrap"><canvas id="mh-canvas-' + key + '"></canvas></div>' +
           '<div class="mh-chart-zones">' + legend(s.zones) + '</div>';
         host.appendChild(card);
