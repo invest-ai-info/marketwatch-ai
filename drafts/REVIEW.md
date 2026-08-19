@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-08-19 | ⏳ 下書き生成 | liquidity-risk | autodraft-article
+
+- **記事**: 流動性リスク｜売りたいときに売れない理由と板・スリッページの仕組みを図解
+- **シリーズ**: 🛡️ リスク管理・資金管理
+- **下書きファイル**: `drafts/draft-liquidity-risk.html`
+- **参照出典**:
+  - [流動性リスク - minFX](https://min-fx.jp/support/words/jp/kana-ri/post-849/)
+  - [スリッページとは - invest-concierge](https://www.invest-concierge.com/terms/slippage)
+  - [FXスリッページの解説 - BigBossコラム](https://www.bigboss-financial.com/column/overseasfx-slippage/)
+  - [フラッシュクラッシュとは - IG](https://www.ig.com/jp/trading-strategies/flash-crashes-explained-200710)
+  - [取引所の流動性・板が薄い解説 - note](https://note.com/miodayo_/n/n7e9095bfa24a)
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「大型株を買え」とは書いていない旨を明記）
+  - ✅ 断定・利益保証なし（「保証しない」を明記。スリッページ・ストップ不保証を明示）
+  - ✅ kinsho-v1免責：冒頭バナー・本文末・footer の3箇所に配置
+  - ✅ noindex,nofollow メタタグあり
+  - ✅ フラッシュクラッシュは一般論として記載（特定の日時・損失額などの数値なし）
+- **SVG概念図**: 3点（板の厚薄比較・スリッページ・暴落時流動性消失）
+  - ⚠️ TODO(SVG): 実機ライト/ダークモードで表示確認要（SVGのfill・strokeがダーク時に見やすいか）
+- **内部リンク**: order-types.html・market-hours.html・overnight-gap-risk.html・position-sizing.html・hot-assets.html・track-record.html
+- **人間の残作業**:
+  - SVG3点の実機ライト/ダーク確認
+  - タイトル・h1の微調整（必要なら）
+  - autopublish-publish（毎朝08:40）がゲート付きで自動公開予定
+
+---
+
 ## 2026-08-19 | ✅ 公開完了 | reit-basics | autopublish
 
 - **記事**: REITの仕組みをわかりやすく解説｜不動産を小口で持つということ（💰 投資の基礎知識）

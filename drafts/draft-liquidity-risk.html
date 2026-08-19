@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>流動性リスク｜売りたいときに売れない理由と、板・スリッページの仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="流動性リスクとは、売りたいときに希望価格で売れないリスク。板が薄い銘柄・深夜FX・暴落時に起こるスリッページとスプレッド拡大の仕組みを初心者向けに図解。指値と成行の使い分けまで徹底解説します。">
+  <meta name="keywords" content="流動性リスク,板が薄い,スリッページ,スプレッド拡大,成行注文,指値注文,出来高,フラッシュクラッシュ,暴落,FX,投資リスク">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-liquidity-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="流動性リスク｜売りたいときに売れない理由と板・スリッページの仕組みを図解">
+  <meta property="og:description" content="板が薄い・深夜FX・暴落時に起こるスリッページとスプレッド拡大を図解。流動性リスクの正体と指値/成行の使い分けを解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-liquidity-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "流動性リスク｜売りたいときに売れない理由と板・スリッページの仕組みを図解",
+    "description": "板が薄い・深夜FX・暴落時に起こるスリッページとスプレッド拡大を図解。流動性リスクの正体と指値/成行の使い分けを解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-19",
+    "dateModified": "2026-08-19",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-liquidity-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 流動性リスク
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は流動性リスクにまつわる投資の仕組みを整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ 流動性リスク｜売りたいときに売れない、その理由</h1>
+    <div class="meta-line">公開日：2026 年 8 月 19 日 ／ 読了時間：約 12 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <p>投資で「リスク」というと、多くの人が<strong>「値が下がるかもしれないリスク」</strong>を思い浮かべます。しかし、もう一つ、見落とされがちな危険があります。それが<strong>流動性リスク（Liquidity Risk）</strong>——<strong>「売りたいときに、希望した価格で売れない」</strong>リスクです。</p>
+    <p>板が薄い銘柄を成行で売ったら想定より大幅に安い値で約定した、深夜のFXで逃げようとしたらスプレッドが通常の何倍も広がっていた、暴落時に一斉に売り注文が殺到して値がなかった——こうした経験は、流動性リスクの典型例です。<strong>資産を持っているのに換金できない、または換金に大きなコストがかかる</strong>。これが流動性リスクの本質です。</p>
+    <p>この記事では、流動性リスクの構造を板（注文板）の仕組みから図解で説明し、実際の市場でどんな場面に起きやすいかを整理します。後半では、中上級者向けに「暴落時の流動性消失」というやや高度な現象と、注文方法（<a href="guide-order-types.html">指値と成行の使い分け</a>）を絡めた実践的な対処法まで踏み込みます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>流動性リスクとは「売りたいときに希望価格で売れない」リスク。<strong>板が薄い＝買い注文が少ない</strong>と、成行で売るほど価格が大きく下に動く。</li>
+      <li>発生しやすい場面は<strong>出来高の少ない銘柄・深夜や早朝のFX・暴落時の市場全体</strong>。普段は目立たないが、最も逃げたい瞬間に最も大きく出る。</li>
+      <li>完全な回避は難しいが、<strong>指値注文の活用・流動性の高い商品や時間帯の選択・ポジションサイズを大きくしすぎない</strong>ことで影響を抑えられる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">流動性とは何か——注文板（板）の仕組み</a></li>
+        <li><a href="#section-2">板が薄いと何が起きるか——スリッページの図解</a></li>
+        <li><a href="#section-3">流動性リスクが高まる3つの場面</a></li>
+        <li><a href="#section-4">【中上級】暴落時に流動性が一斉に消える仕組み</a></li>
+        <li><a href="#section-5">【中上級】スプレッドと流動性コスト</a></li>
+        <li><a href="#section-6">注文方法との関係——指値 vs 成行</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 流動性とは何か——注文板（板）の仕組み</h2>
+    <p>「<strong>流動性（Liquidity）</strong>」とは、簡単に言えば<strong>「売り手と買い手がどれだけ市場に集まっているか」</strong>の度合いです。流動性が高い＝売買が活発に行われている、流動性が低い（薄い）＝売買相手が少ない、と考えればよいでしょう。</p>
+    <p>株式市場では、この状態を「<strong>板（はん）</strong>」と呼ばれる注文表で確認できます。板には、いくらで何株買いたいか（買い注文）と、いくらで何株売りたいか（売り注文）が並んでいます。<strong>現在値（最後に取引が成立した価格）に近い場所に多くの注文が積まれているほど、流動性が高い</strong>ということになります。</p>
+
+    <!-- SVG図1: 板が厚い状態 vs 薄い状態の比較 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="板が厚い状態と薄い状態の比較図">
+        <!-- 背景 -->
+        <rect width="640" height="320" fill="none"/>
+        <!-- タイトル -->
+        <text x="320" y="22" text-anchor="middle" class="s-legend" font-weight="700" font-size="14">【板の厚さ比較】流動性が高い（左）vs 低い（右）</text>
+
+        <!-- === 左: 板が厚い === -->
+        <!-- ラベル -->
+        <text x="155" y="48" text-anchor="middle" class="s-note-g" font-size="13">板が厚い（流動性 高）</text>
+        <!-- 売り注文（上側・赤) -->
+        <text x="82" y="78" text-anchor="end" class="s-label-sm">1,050円</text>
+        <rect x="90" y="67" width="30" height="16" fill="#ffebe9" rx="3"/>
+        <text x="82" y="95" text-anchor="end" class="s-label-sm">1,045円</text>
+        <rect x="90" y="84" width="55" height="16" fill="#ffebe9" rx="3"/>
+        <text x="82" y="112" text-anchor="end" class="s-label-sm">1,040円</text>
+        <rect x="90" y="101" width="80" height="16" fill="#ffebe9" rx="3"/>
+        <text x="82" y="129" text-anchor="end" class="s-label-sm">1,035円</text>
+        <rect x="90" y="118" width="110" height="16" fill="#ffebe9" rx="3"/>
+        <!-- 現在値ライン -->
+        <line x1="90" y1="142" x2="220" y2="142" stroke="#0969da" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="155" y="140" text-anchor="middle" class="s-note" font-size="11">▶ 現在値 1,030円</text>
+        <!-- 買い注文（下側・緑） -->
+        <rect x="90" y="148" width="115" height="16" fill="#e6ffed" rx="3"/>
+        <text x="82" y="161" text-anchor="end" class="s-label-sm">1,025円</text>
+        <rect x="90" y="165" width="90" height="16" fill="#e6ffed" rx="3"/>
+        <text x="82" y="178" text-anchor="end" class="s-label-sm">1,020円</text>
+        <rect x="90" y="182" width="60" height="16" fill="#e6ffed" rx="3"/>
+        <text x="82" y="195" text-anchor="end" class="s-label-sm">1,015円</text>
+        <rect x="90" y="199" width="35" height="16" fill="#e6ffed" rx="3"/>
+        <text x="82" y="212" text-anchor="end" class="s-label-sm">1,010円</text>
+        <!-- コメント -->
+        <text x="155" y="240" text-anchor="middle" class="s-note-g" font-size="12">各価格に注文が多い</text>
+        <text x="155" y="258" text-anchor="middle" class="s-note-g" font-size="12">→ 成行でも大きく動かない</text>
+
+        <!-- === 右: 板が薄い === -->
+        <text x="475" y="48" text-anchor="middle" class="s-note-r" font-size="13">板が薄い（流動性 低）</text>
+        <!-- 売り注文（上側・赤) -->
+        <text x="402" y="78" text-anchor="end" class="s-label-sm">1,060円</text>
+        <rect x="410" y="67" width="8" height="16" fill="#ffebe9" rx="3"/>
+        <text x="402" y="95" text-anchor="end" class="s-label-sm">1,052円</text>
+        <rect x="410" y="84" width="5" height="16" fill="#ffebe9" rx="3"/>
+        <text x="402" y="112" text-anchor="end" class="s-label-sm">1,046円</text>
+        <rect x="410" y="101" width="12" height="16" fill="#ffebe9" rx="3"/>
+        <!-- 現在値ライン -->
+        <line x1="410" y1="125" x2="540" y2="125" stroke="#0969da" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="475" y="123" text-anchor="middle" class="s-note" font-size="11">▶ 現在値 1,040円</text>
+        <!-- 買い注文（下側・緑）: ほぼ空っぽ -->
+        <rect x="410" y="131" width="10" height="16" fill="#e6ffed" rx="3"/>
+        <text x="402" y="144" text-anchor="end" class="s-label-sm">1,030円</text>
+        <rect x="410" y="148" width="6" height="16" fill="#e6ffed" rx="3"/>
+        <text x="402" y="161" text-anchor="end" class="s-label-sm">1,010円</text>
+        <!-- 大きく飛んだ約定 -->
+        <text x="402" y="178" text-anchor="end" class="s-label-sm">980円</text>
+        <rect x="410" y="165" width="4" height="16" fill="#e6ffed" rx="3"/>
+        <!-- コメント -->
+        <text x="475" y="210" text-anchor="middle" class="s-note-r" font-size="12">注文が飛び石状態</text>
+        <text x="475" y="228" text-anchor="middle" class="s-note-r" font-size="12">→ 成行売りで一気に</text>
+        <text x="475" y="246" text-anchor="middle" class="s-note-r" font-size="12">980円まで落ちることも</text>
+
+        <!-- 区切り線 -->
+        <line x1="320" y1="40" x2="320" y2="280" stroke="#d0d7de" stroke-width="1" stroke-dasharray="5 4"/>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。左は注文が各価格帯に厚く積まれている「流動性が高い」状態、右は注文が飛び石状になっている「板が薄い」状態。</p>
+    </div>
+
+    <p>流動性が高い場合、ある価格に大量の買い注文が積まれているため、少し売っても価格はほとんど動きません。一方、板が薄い場合は<strong>買い手が飛び石状にしかいない</strong>ため、まとまった量を成行で売ると「次の買い注文がある価格まで」一気に値が落ちます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 板が薄いと何が起きるか——スリッページの図解</h2>
+    <p>板が薄い状態で成行注文を出すと、<strong>スリッページ</strong>が発生します。スリッページとは、<strong>注文を出した価格（または直前の表示価格）と、実際に約定した価格のズレ</strong>のことです。</p>
+
+    <!-- SVG図2: スリッページの概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="スリッページの概念図">
+        <rect width="640" height="260" fill="none"/>
+        <text x="320" y="22" text-anchor="middle" class="s-legend" font-weight="700" font-size="14">スリッページの概念図（板が薄い銘柄を成行売りした場合）</text>
+
+        <!-- 価格軸 -->
+        <line x1="80" y1="40" x2="80" y2="230" class="s-axis"/>
+        <!-- 価格ラベル -->
+        <text x="74" y="65" text-anchor="end" class="s-label-sm">1,040円</text>
+        <line x1="78" y1="61" x2="82" y2="61" stroke="#8b949e" stroke-width="1"/>
+        <text x="74" y="110" text-anchor="end" class="s-label-sm">1,030円</text>
+        <line x1="78" y1="106" x2="82" y2="106" stroke="#8b949e" stroke-width="1"/>
+        <text x="74" y="155" text-anchor="end" class="s-label-sm">1,010円</text>
+        <line x1="78" y1="151" x2="82" y2="151" stroke="#8b949e" stroke-width="1"/>
+        <text x="74" y="200" text-anchor="end" class="s-label-sm">980円</text>
+        <line x1="78" y1="196" x2="82" y2="196" stroke="#8b949e" stroke-width="1"/>
+
+        <!-- 「注文時の表示価格」水平線 -->
+        <line x1="80" y1="106" x2="580" y2="106" stroke="#0969da" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="585" y="110" class="s-note" font-size="11">注文時の価格</text>
+        <text x="585" y="123" class="s-note" font-size="11">1,030円</text>
+
+        <!-- 成行売り注文を出す点 -->
+        <circle cx="200" cy="106" r="7" fill="#0969da"/>
+        <text x="200" y="96" text-anchor="middle" class="s-note" font-size="11">「1,030円で</text>
+        <text x="200" y="84" text-anchor="middle" class="s-note" font-size="11">成行売り」</text>
+
+        <!-- 約定価格の矢印（下に落ちる） -->
+        <path d="M200,113 Q280,160 360,196" stroke="#cf222e" stroke-width="2.5" fill="none" marker-end="url(#arrowRed)"/>
+        <defs>
+          <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#cf222e"/>
+          </marker>
+        </defs>
+
+        <!-- 実際の約定価格 -->
+        <circle cx="360" cy="196" r="7" fill="#cf222e"/>
+        <text x="380" y="192" class="s-note-r" font-size="12" font-weight="700">実際の約定価格</text>
+        <text x="380" y="208" class="s-note-r" font-size="12" font-weight="700">980円</text>
+
+        <!-- スリッページの矢印 -->
+        <line x1="430" y1="110" x2="430" y2="192" stroke="#9a6700" stroke-width="1.5"/>
+        <line x1="425" y1="110" x2="435" y2="110" stroke="#9a6700" stroke-width="1.5"/>
+        <line x1="425" y1="192" x2="435" y2="192" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="445" y="155" class="s-label-sm" fill="#9a6700" font-weight="700" font-size="12.5">スリッページ</text>
+        <text x="445" y="170" class="s-label-sm" fill="#9a6700" font-size="11.5">＝50円のロス</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。板が薄いと「1,030円で成行売り」を出しても、途中の買い注文を食い尽くして980円で約定することがあります。</p>
+    </div>
+
+    <p>スリッページは<strong>成行注文や逆指値注文（ストップ注文）を使ったときに発生しやすく</strong>、指値注文ではスリッページ自体は発生しません（ただし、指値では約定しない場合があります）。流動性が低いほど、スリッページは大きくなります。</p>
+    <div class="warning-box">スリッページは、損切りで使う逆指値注文でも発生します。「1,000円を割ったら損切り」と逆指値を設定しても、板が薄ければ980円や960円で約定することがあります。<strong>「逆指値を置けば必ずその価格で損切りできる」とは限りません</strong>。詳しくは<a href="guide-overnight-gap-risk.html">持ち越しリスクと週末ギャップ</a>も参照してください。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 流動性リスクが高まる3つの場面</h2>
+    <p>流動性リスクは常に同じ大きさで存在するわけではありません。<strong>「普段は問題なくても、特定の場面で突然大きくなる」</strong>という性質があります。特に注意が必要な場面を3つ挙げます。</p>
+
+    <h3>① 出来高の少ない銘柄</h3>
+    <p>1日の出来高（売買が成立した数量）が少ない銘柄は、そもそも市場参加者が少ないため板が常に薄い状態です。<strong>小型株・新興株・マイナーな商品</strong>に多く見られます。こうした銘柄は、少量の売買注文でも価格が大きく動きます。</p>
+    <div class="info-box"><strong>ℹ️ 注意</strong>：「出来高の少ない銘柄を避けるべき」とか「大型株を選ぶべき」と言いたいのではありません。投資対象の選択はご自身の判断ですが、<strong>流動性の低さがリスクの一要素である</strong>という点を認識しておくことが大切です。</div>
+
+    <h3>② 深夜・早朝のFX（市場が重なっていない時間帯）</h3>
+    <p>FX（外国為替証拠金取引）では、市場が24時間動いていますが、<strong>東京・ロンドン・ニューヨークのどの市場も開いていない「薄い時間帯」</strong>（日本時間の深夜〜早朝など）はスプレッドが広がりやすく、スリッページも発生しやすくなります。<a href="guide-market-hours.html">取引時間の仕組み</a>も参考にしてください。</p>
+
+    <h3>③ 急落・暴落時の市場全体</h3>
+    <p>通常は流動性の高い銘柄や通貨ペアであっても、<strong>市場全体が急落するような局面では流動性が一時的に枯渇する</strong>ことがあります。「パニック売り」の状態では全員が売りに回るため、まとまった買い注文がほとんど消え、売りたくても売れない、あるいは大きくスリッページが発生するという状況になります。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣【中上級】暴落時に流動性が一斉に消える仕組み</h2>
+    <p>暴落局面での流動性消失は、個々の投資家にとって特に深刻です。この現象を「<strong>流動性の蒸発</strong>」と呼ぶこともあります。</p>
+    <p>通常、マーケットメイカー（証券会社・銀行など）が一定の流動性を供給する役割を担っています。しかし急落時には、マーケットメイカー自身もリスクを減らすために買いを引き上げることがあります。結果として<strong>「売りたい人だらけ、買う人がいない」</strong>という状態が短時間で発生します。</p>
+    <p>この現象の極端な例が「<strong>フラッシュクラッシュ</strong>」です。アルゴリズム取引による大量の売りが引き金となり、既存の買い注文を瞬時に食い尽くして価格が急落する事象で、FX市場や先物市場で過去に複数回発生しています。フラッシュクラッシュ時は逆指値（ストップロス）が連鎖的に発動することで、下落がさらに加速する場合もあります。</p>
+
+    <!-- SVG図3: 暴落時の流動性消失の概念図 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="暴落時の流動性消失の概念図">
+        <rect width="640" height="240" fill="none"/>
+        <text x="320" y="22" text-anchor="middle" class="s-legend" font-weight="700" font-size="14">流動性の変化イメージ（平常時 → 急落時）</text>
+
+        <!-- 平常時 -->
+        <text x="190" y="48" text-anchor="middle" class="s-note-g" font-size="13">平常時</text>
+        <!-- 棒グラフ（流動性が高い） -->
+        <rect x="80" y="60" width="40" height="110" fill="#e6ffed" rx="4" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="130" y="80" width="40" height="90" fill="#e6ffed" rx="4" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="180" y="90" width="40" height="80" fill="#e6ffed" rx="4" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="230" y="100" width="40" height="70" fill="#e6ffed" rx="4" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="190" y="195" text-anchor="middle" class="s-note-g" font-size="11">買い注文が</text>
+        <text x="190" y="210" text-anchor="middle" class="s-note-g" font-size="11">多く積まれている</text>
+        <!-- ラベル -->
+        <text x="100" y="58" text-anchor="middle" class="s-label-sm">100</text>
+        <text x="150" y="78" text-anchor="middle" class="s-label-sm">80</text>
+        <text x="200" y="88" text-anchor="middle" class="s-label-sm">65</text>
+        <text x="250" y="98" text-anchor="middle" class="s-label-sm">50</text>
+        <!-- X軸 -->
+        <line x1="70" y1="170" x2="290" y2="170" class="s-axis"/>
+        <text x="190" y="185" text-anchor="middle" class="s-label-sm">価格帯（売値に近い順）</text>
+
+        <!-- 矢印 -->
+        <text x="320" y="110" text-anchor="middle" font-size="28" fill="#cf222e">→</text>
+        <text x="320" y="135" text-anchor="middle" class="s-note-r" font-size="12">急落・パニック</text>
+
+        <!-- 急落時 -->
+        <text x="480" y="48" text-anchor="middle" class="s-note-r" font-size="13">急落時</text>
+        <!-- 棒グラフ（流動性が枯渇） -->
+        <rect x="360" y="155" width="40" height="15" fill="#ffebe9" rx="4" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="410" y="162" width="40" height="8" fill="#ffebe9" rx="4" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 残りの価格帯は空 -->
+        <rect x="460" y="166" width="40" height="4" fill="#ffebe9" rx="4" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="510" y="168" width="40" height="2" fill="#ffebe9" rx="4" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="380" y="153" text-anchor="middle" class="s-label-sm">5</text>
+        <text x="430" y="160" text-anchor="middle" class="s-label-sm">3</text>
+        <text x="480" y="164" text-anchor="middle" class="s-label-sm">2</text>
+        <text x="530" y="166" text-anchor="middle" class="s-label-sm">1</text>
+        <!-- X軸 -->
+        <line x1="350" y1="170" x2="570" y2="170" class="s-axis"/>
+        <text x="480" y="185" text-anchor="middle" class="s-label-sm">価格帯（売値に近い順）</text>
+        <text x="480" y="205" text-anchor="middle" class="s-note-r" font-size="11">買い注文が激減</text>
+        <text x="480" y="220" text-anchor="middle" class="s-note-r" font-size="11">→ 少しの売りで大暴落</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。平常時に多く積まれていた買い注文が、急落時には一斉に引き上げられ流動性が枯渇するイメージを示しています。</p>
+    </div>
+
+    <p>このため、<strong>暴落時は「逃げたいときほど逃げにくい」</strong>という逆説的な状況が生まれます。リスク管理の上では、こうした状況でも許容できる損失に収まるよう、<a href="guide-position-sizing.html">ポジションサイズを事前に適切に設定しておく</a>ことが重要です。</p>
+    <div class="warning-box">「いざとなれば売れば済む」という前提は、暴落時には成り立たないことがあります。流動性リスクは、相場が動いていない平常時には実感しにくいため、ポジションを持つ前から想定しておく必要があります。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣【中上級】スプレッドと流動性コスト</h2>
+    <p>流動性の低さは、スリッページだけでなく<strong>スプレッドの拡大</strong>にも現れます。スプレッドとは、売値（BID）と買値（ASK）の差のことです。</p>
+    <p>例：売値（BID）が149.99円、買値（ASK）が150.01円のとき、スプレッドは0.02円（2銭）です。FXでは「スプレッドが広い＝売買コストが高い」を意味します。</p>
+    <p>通常、スプレッドは市場参加者が多い時間帯（東京・ロンドン・NY各市場のオーバーラップ時間など）に狭くなります。一方、深夜から早朝の市場参加者が少ない時間帯、および重要指標発表の直前直後（乱高下するタイミング）はスプレッドが大幅に拡大することがあります。</p>
+    <p><strong>スプレッドの拡大自体が「見えにくいコスト」</strong>です。逃げるべきタイミングでスプレッドが広がっていると、損切りのコストが想定より大きくなります。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>場面</th>
+          <th>流動性</th>
+          <th>スプレッド</th>
+          <th>スリッページリスク</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>主要市場が重なる時間帯</td>
+          <td>高い</td>
+          <td>狭い（通常通り）</td>
+          <td>低い</td>
+        </tr>
+        <tr>
+          <td>深夜・早朝（市場間の谷間）</td>
+          <td>低下</td>
+          <td>広がりやすい</td>
+          <td>中〜高</td>
+        </tr>
+        <tr>
+          <td>重要指標発表の直前直後</td>
+          <td>一時的に低下</td>
+          <td>急拡大することも</td>
+          <td>高い</td>
+        </tr>
+        <tr>
+          <td>急落・パニック相場</td>
+          <td>枯渇</td>
+          <td>大幅拡大</td>
+          <td>非常に高い</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 注文方法との関係——指値 vs 成行</h2>
+    <p>流動性リスクへの実践的な対処として、注文方法の使い分けが役立ちます。</p>
+    <ul>
+      <li><strong>成行注文</strong>：その時点の最良価格で即座に約定させる注文。流動性が低い場面ではスリッページが大きくなる。</li>
+      <li><strong>指値注文</strong>：「この価格以下なら買う（以上なら売る）」を指定する注文。スリッページは発生しないが、<strong>指値価格に到達しない場合は約定しない</strong>。</li>
+    </ul>
+    <p>指値注文を使えばスリッページは避けられますが、「<strong>約定したくないときに約定しない</strong>」だけでなく、「<strong>逃げたいときに約定しない</strong>」というトレードオフもあります。板が薄い銘柄で急いで逃げたい場面では、指値にしたことで約定せず損失が拡大するケースもあります。</p>
+    <div class="positive-box">注文方法の使い分けは一概に「どちらが正しい」とは言えません。<a href="guide-order-types.html">注文方法の基本（成行・指値・逆指値）</a>の記事で、それぞれの使いどころを整理しています。</div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、シグナルメールにポジションプランとして損切り（SL）の目安を掲載しています。しかし、<strong>逆指値が必ずその価格で約定するとは限らない</strong>——それが流動性リスクの現実です。当サイトのシグナル成績（<a href="track-record.html">シグナル成績ダッシュボード</a>）は実際の市場データに基づいていますが、特に値動きの激しい局面での約定価格は実際のトレードと異なる場合があります。</p>
+    <p>出来高急増ランキング（<a href="hot-assets.html">🔥 出来高急増</a>）では、現在どの銘柄に売買が集中しているかを確認できます。<strong>出来高が急増している銘柄は流動性が一時的に高まっている可能性</strong>があります。一方、ランキング上位でも、出来高が急増した後に急減した場合は再び流動性が薄くなることもあります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナルの発火状況・成績を確認する</div>
+      <div class="cta-box-desc">ルールで機械的に発火するシグナルと、損切り目安のセットで実際の成績がどうなっているか——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>流動性リスクについて学んできた内容を整理します。</p>
+    <ul>
+      <li>流動性リスクとは<strong>「売りたいときに希望価格で売れないリスク」</strong>。板が薄いと成行売りで価格が大幅に動く（スリッページ）。</li>
+      <li>発生しやすい場面は<strong>①出来高が少ない銘柄、②深夜・早朝のFX、③急落・パニック相場</strong>。普段は見えにくいが、最も逃げたい瞬間に最も大きく出る。</li>
+      <li><strong>逆指値（ストップロス）でも、板が薄い場合は指定した価格での約定を保証しない</strong>。持ち越しリスクとも関連する重要な点。</li>
+      <li>スプレッド拡大も流動性リスクの現れ。深夜や指標発表直後は見えないコストが増す。</li>
+      <li>対策の基本は<strong>指値注文の活用・流動性の高い時間帯の選択・ポジションサイズの適切な設定（過大なポジションを避ける）</strong>。完全な回避は難しいが、影響を小さくすることはできる。</li>
+    </ul>
+    <p>流動性リスクへの理解は、「逃げられると思っていたのに逃げられなかった」という経験を減らすための土台です。注文の仕組みと市場の時間帯を組み合わせて、自分が取引する環境の流動性を意識してみてください。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">📋 注文方法の基本（成行・指値・逆指値）</div>
+        <div class="related-card-desc">3つの注文方法の仕組みと使いどころを図解。流動性リスクへの対処として指値注文を使うべき場面とは。</div>
+      </a>
+      <a class="related-card" href="guide-market-hours.html">
+        <div class="related-card-title">🕐 取引時間と動きやすい時間帯</div>
+        <div class="related-card-desc">東京・ロンドン・NYの市場リレーを図解。流動性が高まる時間帯・薄くなる時間帯を把握する。</div>
+      </a>
+      <a class="related-card" href="guide-overnight-gap-risk.html">
+        <div class="related-card-title">💤 持ち越しリスクと週末ギャップ</div>
+        <div class="related-card-desc">逆指値が「指定した価格で必ず約定するとは限らない」理由。夜間・週末の価格ギャップと流動性の関係。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は流動性リスクにまつわる投資の仕組みを情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の商品・手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</body>
+</html>
