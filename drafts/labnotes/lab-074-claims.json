@@ -1,0 +1,41 @@
+{
+  "article_id": "074",
+  "claims": [
+    {
+      "label": "IS 勝率（tracker登録前：fired_before 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17"},
+      "k": 51,
+      "n": 132
+    },
+    {
+      "label": "FWD 全体勝率（fired_from 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17"},
+      "k": 114,
+      "n": 225
+    },
+    {
+      "label": "FWD 4H足 勝率（tf=4h, fired_from 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_from": "2026-06-17"},
+      "k": 40,
+      "n": 62
+    },
+    {
+      "label": "FWD 1H足 勝率（tf=1h, fired_from 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_from": "2026-06-17"},
+      "k": 65,
+      "n": 150
+    },
+    {
+      "label": "FWD 4H足×jpy_fx 勝率（group=jpy_fx, tf=4h, fired_from 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "group": "jpy_fx", "fired_from": "2026-06-17"},
+      "k": 15,
+      "n": 18
+    },
+    {
+      "label": "FWD 4H足×other_fx 勝率（group=other_fx, tf=4h, fired_from 2026-06-17）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "group": "other_fx", "fired_from": "2026-06-17"},
+      "k": 12,
+      "n": 25
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "min_n": 20,
+  "alpha": 0.1,
+  "breakeven_pct": 43.0,
+  "mode": {
+    "net": false,
+    "cost_mult": 1.5,
+    "itt": false
+  },
+  "candidates": [
+    {
+      "label": "tf=1d×reversalL",
+      "filter": {
+        "tf": "1d",
+        "reversal_long": true
+      },
+      "k": 24,
+      "n": 34,
+      "n_days": 19,
+      "pct": 70.6,
+      "ci_lo": 53.8,
+      "ci_hi": 83.2,
+      "avgR": 0.647,
+      "rci_lo": 0.295,
+      "rci_hi": 0.999,
+      "p": 0.00031817686581359084,
+      "profitable": true,
+      "exp_pct": 12.8,
+      "q": 0.0337,
+      "fdr_pass": true
+    },
+    {
+      "label": "rsi=ob×trend=下降",
+      "filter": {
+        "rsi_band": "ob",
+        "trend": "下降"
+      },
+      "k": 5,
+      "n": 28,
+      "n_days": 20,
+      "pct": 17.9,
+      "ci_lo": 7.9,
+      "ci_hi": 35.6,
+      "avgR": -0.583,
+      "rci_lo": -0.891,
+      "rci_hi": -0.275,
+      "p": 0.00020641434842194606,
+      "profitable": false,
+      "exp_pct": 0.0,
+      "q": 0.0337,
+      "fdr_pass": true
+    }
+  ]
+}

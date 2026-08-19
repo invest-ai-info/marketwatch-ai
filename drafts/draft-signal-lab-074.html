@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との21pp差と期待値+0.58R - MarketWatch AI</title>
+  <meta name="description" content="RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=225を時間足別に解剖。4H足（64.5%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の21pp差を確認。4H×JPYクロスは83.3%（N=18）。">
+  <meta name="keywords" content="AIシグナル,検証,RSI,売られすぎ,逆張り,4H足,時間足,勝率,研究日誌,jpy_fx">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との21pp差と期待値+0.58R">
+  <meta property="og:description" content="前向きN=225を時間足別に解剖。4H足64.5%/E(R)=+0.58R vs 1H足43.3%/E(R)≈0の21pp差。4H×JPYクロス83.3%。">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との21pp差と期待値+0.58R",
+    "description": "RSI売られすぎ逆張り（rsi_oversold_bounce）の前向きN=225を時間足別に解剖。4H足（64.5%/E(R)=+0.58R）vs 1H足（43.3%/E(R)≈0）の21pp差。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-20",
+    "dateModified": "2026-08-20",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-074.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .header-logo-svg{width:32px;height:32px;flex-shrink:0}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem;overflow-x:auto;display:block}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left;white-space:nowrap}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .summary-box{background:#ffffff;border:2px solid #0969da;border-radius:12px;padding:22px 26px;margin:24px 0}
+    .summary-box-title{font-size:1rem;color:#0969da;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+    .summary-stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+    .summary-item{background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;text-align:center}
+    .summary-item-label{font-size:.78rem;color:#57606a;margin-bottom:4px}
+    .summary-item-value{font-size:1.35rem;font-weight:700;color:#0969da}
+    .summary-item-sub{font-size:.75rem;color:#57606a;margin-top:2px}
+    .summary-verdict{font-size:.92rem;color:#424a53;border-top:1px solid #d0d7de;padding-top:12px;margin-top:4px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    .tracker-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.88rem}
+    .tracker-table th,.tracker-table td{padding:9px 12px;border-bottom:1px solid #d0d7de;text-align:left}
+    .tracker-table th{background:#f6f8fa;color:#57606a;font-weight:600;font-size:.82rem}
+    .tracker-table td:first-child{font-size:.82rem}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-btn{min-width:140px;font-size:.85rem;padding:10px 14px}
+      .summary-stat{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="header-logo" style="text-decoration:none">
+      <svg class="header-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#1E3A6E"/>
+        <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#54aeff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="22" cy="8" r="2.5" fill="#f78166"/>
+      </svg>
+      <span class="header-title">MarketWatch AI</span>
+    </a>
+    <p class="header-meta">🧪 AIシグナル研究日誌 ｜ 18銘柄テクニカルシグナルの反実仮想検証</p>
+  </div>
+</header>
+
+<main>
+  <!-- ナビバー (10ボタン標準) -->
+  <nav class="nav-bar" aria-label="サイトナビゲーション">
+    <a href="../index.html" class="nav-btn">🏠 ホーム</a>
+    <a href="../political-feed.html" class="nav-btn">🚨 政治発言</a>
+    <a href="../track-record.html" class="nav-btn">📊 成績</a>
+    <a href="../calendar.html" class="nav-btn">📅 カレンダー</a>
+    <a href="../guides.html" class="nav-btn current">📚 解説一覧</a>
+    <a href="../guide-investment-books.html" class="nav-btn">📖 投資本</a>
+    <a href="../market-health.html" class="nav-btn">🩺 市場健康度</a>
+    <a href="../hot-assets.html" class="nav-btn">🔥 急騰銘柄</a>
+    <a href="../charts.html" class="nav-btn">📈 チャート</a>
+    <a href="../youtube-summary.html" class="nav-btn">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">ホーム</a> &rsaquo;
+    <a href="../guides.html">解説一覧</a> &rsaquo;
+    AIシグナル研究日誌 #74
+  </div>
+
+  <article class="article">
+    <h1>🧪 AIシグナル研究日誌 #74<br>RSI売られすぎ逆張りは4H足で輝く<br>——1H足との21pp差と期待値+0.58R（前向きN=225）</h1>
+    <p class="meta-line">
+      公開：2026年8月（下書き中） ｜ 読了目安 8分 ｜
+      カテゴリ：AIシグナル研究日誌 ｜
+      シリーズ：<a href="guide-signal-lab-069.html">#69「RSI逆張り買い 暫定昇格」</a>の後継
+    </p>
+
+    <!-- kinsho-v1 免責3点 -->
+    <div class="disclaimer-banner">
+      ⚠️ 本記事は過去データによる統計的検証の記録であり、投資助言ではありません。将来の利益を保証するものではなく、すべての投資判断はご自身の責任で行ってください。損失が生じた場合も当サイトは責任を負いません。
+    </div>
+
+    <!-- 30秒まとめ -->
+    <div class="summary-box">
+      <div class="summary-box-title">⏱️ 30秒まとめ</div>
+      <div class="summary-stat">
+        <div class="summary-item">
+          <div class="summary-item-label">FWD全体（N=225）</div>
+          <div class="summary-item-value">50.7%</div>
+          <div class="summary-item-sub">114/225｜CI[44.2%,57.1%]</div>
+        </div>
+        <div class="summary-item" style="border-color:#1a7f37;">
+          <div class="summary-item-label" style="color:#1a7f37;">FWD 4H足（N=62）</div>
+          <div class="summary-item-value" style="color:#1a7f37;">64.5%</div>
+          <div class="summary-item-sub">40/62｜E(R)=+0.58R</div>
+        </div>
+        <div class="summary-item" style="border-color:#cf222e;">
+          <div class="summary-item-label" style="color:#cf222e;">FWD 1H足（N=150）</div>
+          <div class="summary-item-value" style="color:#cf222e;">43.3%</div>
+          <div class="summary-item-sub">65/150｜E(R)≈0R</div>
+        </div>
+        <div class="summary-item" style="border-color:#9a6700;">
+          <div class="summary-item-label" style="color:#9a6700;">4H × JPYクロス（N=18）</div>
+          <div class="summary-item-value" style="color:#9a6700;">83.3%</div>
+          <div class="summary-item-sub">15/18｜CI[60.8%,94.2%]（参考値）</div>
+        </div>
+      </div>
+      <div class="summary-verdict">
+        <strong>判定：</strong>4H足FWD E(R)=+0.58R CI全域プラス[+0.30,+0.86]を確認。1H足はCI±0（E(R)≈0）で無エッジ。全体平均が「1H占有67%」に押し下げられている構図。4H後半（2026-07-17〜）は74.2% E(R)=+0.92Rに加速中。IS(38.6%)→FWD改善の主役は4H足だった可能性が高い。
+      </div>
+    </div>
+
+    <!-- 目次 -->
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#background">仮説の背景</a></li>
+        <li><a href="#method">検証方法</a></li>
+        <li><a href="#result">検証結果</a>
+          <ul>
+            <li><a href="#tf-split">時間足別の比較</a></li>
+            <li><a href="#group-split">4H足 × グループ別</a></li>
+            <li><a href="#time-series">時系列推移</a></li>
+          </ul>
+        </li>
+        <li><a href="#interpret">解釈と示唆</a></li>
+        <li><a href="#tracker">定点トラッカー観測</a></li>
+        <li><a href="#related">関連記事</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. 背景 -->
+    <h2 id="background">① 仮説の背景</h2>
+    <p>
+      RSI売られすぎ逆張り買い（rsi_oversold_bounce）は、RSIが30を下回ったタイミングで逆張りロングを試みるシグナルです。
+      研究日誌 #69（2026-08-11）では前向きN≥80・期待値CI下限>0（cluster補正後）の連続2本を確認し、暫定昇格としました。
+    </p>
+    <p>
+      しかし、tracker が示す現在値は <strong>R=+0.21 CI[-0.03〜+0.45]</strong>（N=220、cluster補正後）と、CI下限がまだわずかにマイナスに接しています。
+      なぜ全体CIが引き下げられているのか——その正体を探るべく、今回は <strong>時間足（4H vs 1H）</strong> で分解しました。
+    </p>
+    <div class="info-box">
+      <strong>本日の仮説：</strong><br>
+      rsi_oversold_bounce（RSI売られすぎ逆張り）のエッジは4H足に集中しており、1H足は損益分岐（約43%）付近で無エッジである。
+    </div>
+
+    <!-- 図1: チャート風図解 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="4H足と1H足でのRSI売られすぎシグナル概念図">
+        <!-- 背景 -->
+        <rect width="720" height="320" fill="#f9fafb" rx="8"/>
+        <!-- タイトル -->
+        <text x="360" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">RSI売られすぎ逆張り：発火タイミングの概念図（4H足 vs 1H足）</text>
+
+        <!-- == 左パネル: 4H足 == -->
+        <!-- 枠 -->
+        <rect x="30" y="38" width="310" height="262" fill="#ffffff" stroke="#d0d7de" stroke-width="1" rx="6"/>
+        <text x="185" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">4H足（FWD勝率64.5%）</text>
+
+        <!-- 価格ゾーン -->
+        <rect x="40" y="62" width="290" height="130" fill="#f6f8fa" rx="4"/>
+        <!-- 価格ラベル -->
+        <text x="38" y="76" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">高値</text>
+        <text x="38" y="154" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">安値</text>
+
+        <!-- ローソク足 (4H = 大きめ) -->
+        <!-- 下落ローソク1 -->
+        <rect x="60" y="70" width="20" height="52" fill="#cf222e" rx="2"/>
+        <line x1="70" y1="68" x2="70" y2="72" stroke="#cf222e" stroke-width="1.5"/>
+        <line x1="70" y1="122" x2="70" y2="128" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 下落ローソク2 -->
+        <rect x="90" y="80" width="20" height="48" fill="#cf222e" rx="2"/>
+        <line x1="100" y1="78" x2="100" y2="82" stroke="#cf222e" stroke-width="1.5"/>
+        <line x1="100" y1="128" x2="100" y2="134" stroke="#cf222e" stroke-width="1.5"/>
+        <!-- 下落ローソク3 -->
+        <rect x="120" y="94" width="20" height="44" fill="#cf222e" rx="2"/>
+        <line x1="130" y1="92" x2="130" y2="96" stroke="#cf222e" stroke-width="1.5"/>
+        <line x1="130" y1="138" x2="130" y2="145" stroke="#cf222e" stroke-width="1.5"/>
+
+        <!-- 発火ローソク（オレンジ枠・シグナル発火） -->
+        <rect x="150" y="104" width="22" height="40" fill="#fff8c5" stroke="#d4a017" stroke-width="2.5" rx="2"/>
+        <line x1="161" y1="100" x2="161" y2="106" stroke="#d4a017" stroke-width="2"/>
+        <line x1="161" y1="144" x2="161" y2="152" stroke="#d4a017" stroke-width="2"/>
+        <!-- シグナルラベル -->
+        <text x="161" y="97" text-anchor="middle" font-size="10" fill="#d4a017" font-weight="700" font-family="'Noto Sans JP',sans-serif">発火 ↓</text>
+        <!-- 引出線 -->
+        <line x1="172" y1="124" x2="198" y2="145" stroke="#d4a017" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="202" y="148" font-size="10" fill="#d4a017" font-weight="700" font-family="'Noto Sans JP',sans-serif">RSI&lt;30</text>
+
+        <!-- 反発ローソク -->
+        <rect x="182" y="86" width="22" height="44" fill="#1a7f37" rx="2"/>
+        <line x1="193" y1="82" x2="193" y2="88" stroke="#1a7f37" stroke-width="1.5"/>
+        <line x1="193" y1="130" x2="193" y2="138" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="212" y="76" width="22" height="46" fill="#1a7f37" rx="2"/>
+        <line x1="223" y1="72" x2="223" y2="78" stroke="#1a7f37" stroke-width="1.5"/>
+        <line x1="223" y1="122" x2="223" y2="130" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- TP矢印 -->
+        <line x1="234" y1="110" x2="300" y2="78" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <text x="280" y="74" font-size="10" fill="#1a7f37" font-weight="700" font-family="sans-serif">TP達成✓</text>
+
+        <!-- RSIゾーン (4H) -->
+        <rect x="40" y="198" width="290" height="80" fill="#f6f8fa" rx="4"/>
+        <text x="50" y="213" font-size="10" fill="#57606a" font-family="sans-serif">RSI</text>
+        <!-- RSIライン 下降→30割れ→反発 -->
+        <polyline points="60,208 90,218 120,228 161,245 193,230 223,215 270,206" stroke="#0969da" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <!-- RSI 30ライン -->
+        <line x1="40" y1="245" x2="330" y2="245" stroke="#cf222e" stroke-width="1" stroke-dasharray="4 2"/>
+        <text x="332" y="249" font-size="10" fill="#cf222e" font-family="sans-serif">30</text>
+        <!-- 売られすぎゾーン -->
+        <rect x="40" y="245" width="290" height="31" fill="#ffebe9" opacity="0.5"/>
+        <text x="185" y="263" text-anchor="middle" font-size="10" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">売られすぎゾーン</text>
+        <!-- RSI発火点 -->
+        <circle cx="161" cy="245" r="4" fill="#d4a017" stroke="#ffffff" stroke-width="1.5"/>
+
+        <!-- == 右パネル: 1H足 == -->
+        <rect x="380" y="38" width="310" height="262" fill="#ffffff" stroke="#d0d7de" stroke-width="1" rx="6"/>
+        <text x="535" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">1H足（FWD勝率43.3%）</text>
+
+        <!-- 価格ゾーン -->
+        <rect x="390" y="62" width="290" height="130" fill="#f6f8fa" rx="4"/>
+        <!-- 小さいローソク足 -->
+        <rect x="408" y="82" width="12" height="28" fill="#cf222e" rx="1.5"/>
+        <line x1="414" y1="80" x2="414" y2="84" stroke="#cf222e" stroke-width="1"/>
+        <line x1="414" y1="110" x2="414" y2="115" stroke="#cf222e" stroke-width="1"/>
+        <rect x="425" y="88" width="12" height="26" fill="#cf222e" rx="1.5"/>
+        <line x1="431" y1="86" x2="431" y2="90" stroke="#cf222e" stroke-width="1"/>
+        <line x1="431" y1="114" x2="431" y2="119" stroke="#cf222e" stroke-width="1"/>
+        <rect x="442" y="95" width="12" height="28" fill="#cf222e" rx="1.5"/>
+        <line x1="448" y1="93" x2="448" y2="97" stroke="#cf222e" stroke-width="1"/>
+        <line x1="448" y1="123" x2="448" y2="128" stroke="#cf222e" stroke-width="1"/>
+        <rect x="459" y="100" width="12" height="26" fill="#cf222e" rx="1.5"/>
+        <!-- 発火ローソク (1H) -->
+        <rect x="476" y="104" width="13" height="22" fill="#fff8c5" stroke="#d4a017" stroke-width="2" rx="1.5"/>
+        <line x1="482" y1="101" x2="482" y2="106" stroke="#d4a017" stroke-width="1.5"/>
+        <line x1="482" y1="126" x2="482" y2="131" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="482" y="98" text-anchor="middle" font-size="10" fill="#d4a017" font-weight="700" font-family="'Noto Sans JP',sans-serif">発火 ↓</text>
+        <!-- 1H の微弱な反発 -->
+        <rect x="494" y="100" width="13" height="14" fill="#1a7f37" rx="1.5"/>
+        <rect x="511" y="102" width="13" height="18" fill="#cf222e" rx="1.5"/>
+        <rect x="528" y="99" width="13" height="16" fill="#1a7f37" rx="1.5"/>
+        <rect x="545" y="103" width="13" height="20" fill="#cf222e" rx="1.5"/>
+        <!-- もみあいを示す波線 -->
+        <polyline points="494,96 528,94 562,97 590,95 640,96" stroke="#8b949e" stroke-width="1.2" fill="none" stroke-dasharray="3 2"/>
+        <text x="620" y="91" font-size="10" fill="#8b949e" font-family="'Noto Sans JP',sans-serif">揉み合い</text>
+        <!-- SL矢印 -->
+        <line x1="540" y1="128" x2="580" y2="145" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <text x="582" y="149" font-size="10" fill="#cf222e" font-weight="700" font-family="sans-serif">SL ×</text>
+
+        <!-- RSIゾーン (1H) -->
+        <rect x="390" y="198" width="290" height="80" fill="#f6f8fa" rx="4"/>
+        <text x="400" y="213" font-size="10" fill="#57606a" font-family="sans-serif">RSI</text>
+        <polyline points="408,210 425,218 442,228 482,245 511,236 545,228 590,222 640,218" stroke="#0969da" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <line x1="390" y1="245" x2="680" y2="245" stroke="#cf222e" stroke-width="1" stroke-dasharray="4 2"/>
+        <text x="682" y="249" font-size="10" fill="#cf222e" font-family="sans-serif">30</text>
+        <rect x="390" y="245" width="290" height="31" fill="#ffebe9" opacity="0.5"/>
+        <text x="535" y="263" text-anchor="middle" font-size="10" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">売られすぎゾーン</text>
+        <circle cx="482" cy="245" r="4" fill="#d4a017" stroke="#ffffff" stroke-width="1.5"/>
+
+        <!-- 凡例 -->
+        <rect x="30" y="305" width="14" height="8" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5" rx="1"/>
+        <text x="48" y="313" font-size="10" fill="#57606a" font-family="'Noto Sans JP',sans-serif">シグナル発火</text>
+        <rect x="150" y="305" width="14" height="8" fill="#1a7f37" rx="1"/>
+        <text x="168" y="313" font-size="10" fill="#57606a" font-family="'Noto Sans JP',sans-serif">陽線（上昇）</text>
+        <rect x="260" y="305" width="14" height="8" fill="#cf222e" rx="1"/>
+        <text x="278" y="313" font-size="10" fill="#57606a" font-family="'Noto Sans JP',sans-serif">陰線（下落）</text>
+      </svg>
+      <p class="chart-caption">図1：RSI売られすぎシグナルの発火イメージ（左＝4H足、右＝1H足）。4H足は1本で大きく動くため、RSI30割れからの反発エネルギーが大きくTP到達しやすい（概念を示すイメージ図であり、実際の値動きではありません）</p>
+    </div>
+
+    <!-- 2. 検証方法 -->
+    <h2 id="method">② 検証方法</h2>
+    <p>
+      対象は signals-log.json の closed シグナル（計3,427件）のうち、<strong>primary_signal = rsi_oversold_bounce</strong> に絞りました。
+      FWD期間の起点は前向きトラッカーへの登録日（2026-06-17）とし、それ以前を IS（in-sample）と定義します。
+    </p>
+    <ul>
+      <li><strong>IS：</strong>fired_at &lt; 2026-06-17（132件）</li>
+      <li><strong>FWD：</strong>fired_at ≥ 2026-06-17（225件）</li>
+      <li>勝率定義：TP1 または TP2 到達 = 勝ち / SL = 負け（no_plan・pending は除外）</li>
+      <li>期待値 E(R)：TP1=+1.333R、TP2=+2.0R、SL=−1.0R で計算</li>
+      <li>Wilson信頼区間（95%）で統計的不確実性を確認</li>
+    </ul>
+    <div class="info-box">
+      <strong>事前宣言基準（FWD解析）</strong><br>
+      H1：4H足 FWD の E(R) RCI下限 &gt; 0 かつ N ≥ 20<br>
+      H2：1H足 FWD の E(R) RCI が 0 を跨ぐ（無エッジ確認）<br>
+      H3：4H×jpy_fx の勝率CI下限 &gt; 43%（参考・N小）
+    </div>
+
+    <!-- 3. 検証結果 -->
+    <h2 id="result">③ 検証結果</h2>
+
+    <h3 id="tf-split">3-1. 全体とIS/FWD比較</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>期間</th><th>N</th><th>勝率</th><th>95%CI</th><th>E(R)</th><th>RCI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IS（〜2026-06-16）</td><td>132</td><td>38.6%</td><td>[30.8%,47.2%]</td><td>−0.10R</td><td>[−0.29,+0.10]</td>
+          </tr>
+          <tr style="background:#e6ffed;">
+            <td><strong>FWD全体（2026-06-17〜）</strong></td><td><strong>225</strong></td><td><strong>50.7%</strong></td><td>[44.2%,57.1%]</td><td><strong>+0.21R</strong></td><td>[+0.06,+0.36]</td>
+          </tr>
+          <tr>
+            <td>FWD-P1（6/17〜7/1）</td><td>75</td><td>40.0%</td><td>—</td><td>−0.04R</td><td>[−0.31,+0.22]</td>
+          </tr>
+          <tr>
+            <td>FWD-P2（7/1〜7/28）</td><td>75</td><td>54.7%</td><td>—</td><td>+0.29R</td><td>[+0.03,+0.56]</td>
+          </tr>
+          <tr style="background:#e6ffed;">
+            <td>FWD-P3（7/29〜8/20）</td><td>75</td><td>57.3%</td><td>—</td><td>+0.37R</td><td>[+0.11,+0.64]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      FWD全体では50.7%・E(R)=+0.21R RCI[+0.06,+0.36] と改善していますが、tracker（cluster補正後）は CI[-0.03〜+0.45] とまだCI下限がわずかにマイナス圏です。
+      この乖離の正体が次の時間足分解で明らかになります。
+    </p>
+
+    <h3>3-2. 時間足別の比較</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>時間足</th><th>N</th><th>勝率</th><th>95%CI</th><th>E(R)</th><th>RCI</th><th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#e6ffed;">
+            <td><strong>4H足（FWD）</strong></td><td><strong>62</strong></td><td><strong>64.5%</strong></td><td>[52.1%,75.3%]</td><td><strong>+0.58R</strong></td><td>[+0.30,+0.86]</td><td>✅ CI全域プラス</td>
+          </tr>
+          <tr style="background:#ffebe9;">
+            <td><strong>1H足（FWD）</strong></td><td><strong>150</strong></td><td><strong>43.3%</strong></td><td>[35.7%,51.3%]</td><td><strong>+0.01R</strong></td><td>[−0.18,+0.20]</td><td>⚠️ 無エッジ</td>
+          </tr>
+          <tr>
+            <td>日足（FWD）</td><td>13</td><td>69.2%</td><td>[42.4%,87.3%]</td><td>+0.91R</td><td>[+0.35,+1.47]</td><td>🟡 N小・参考</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="positive-box">
+      <strong>H1 確認 ✅：</strong>4H足 FWD 勝率64.5%・E(R)=+0.58R・RCI[+0.30,+0.86]、CI全域プラス（N=62≥20）。<br>
+      <strong>H2 確認 ✅：</strong>1H足 FWD E(R)=+0.01R・RCI[−0.18,+0.20]でゼロを跨ぐ＝無エッジ確認。<br>
+      <strong>差の正体：</strong>全体FWD 225件のうち1H足が150件（67%）を占めるため、全体平均が押し下げられている。
+    </div>
+
+    <!-- 図2: 棒グラフ 4H vs 1H グループ別 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" aria-label="4H足と1H足の勝率グループ別比較">
+        <rect width="680" height="280" fill="#f9fafb" rx="8"/>
+        <text x="340" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">4H足 vs 1H足｜グループ別 FWD勝率比較（前向きN=225）</text>
+
+        <!-- Y軸 -->
+        <line x1="100" y1="38" x2="100" y2="228" stroke="#8b949e" stroke-width="1.3"/>
+        <!-- X軸 -->
+        <line x1="100" y1="228" x2="640" y2="228" stroke="#8b949e" stroke-width="1.3"/>
+
+        <!-- 損益分岐43%ライン -->
+        <line x1="100" y1="142" x2="640" y2="142" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="5 3"/>
+        <text x="644" y="146" font-size="10" fill="#9a6700" font-family="sans-serif">43%</text>
+
+        <!-- Y軸目盛り: 0%=228, 100%=38, 43%=142, 64.5%=75 -->
+        <!-- Y = 228 - (pct/100)*190 -->
+        <text x="96" y="232" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">0%</text>
+        <text x="96" y="194" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">20%</text>
+        <text x="96" y="156" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">40%</text>
+        <line x1="98" y1="152" x2="640" y2="152" stroke="#e1e4e8" stroke-width="0.8"/>
+        <text x="96" y="118" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">60%</text>
+        <line x1="98" y1="114" x2="640" y2="114" stroke="#e1e4e8" stroke-width="0.8"/>
+        <text x="96" y="80" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">80%</text>
+        <line x1="98" y1="76" x2="640" y2="76" stroke="#e1e4e8" stroke-width="0.8"/>
+
+        <!-- グループ: index, jpy_fx, other_fx, metal, 全体 -->
+        <!-- 各グループ幅=100px, gap=10px. 開始x=115 -->
+        <!-- 4H bar: 中央から-12, 1H bar: 中央から+2 -->
+
+        <!-- index: 4H=80%(N=5小) 1H=42.6% -->
+        <!-- x_center = 140 -->
+        <rect x="116" y="76" width="20" height="152" fill="#1a7f37" opacity="0.8" rx="3"/>
+        <text x="126" y="72" text-anchor="middle" font-size="10" font-weight="700" fill="#1a7f37" font-family="sans-serif">80%</text>
+        <text x="126" y="64" text-anchor="middle" font-size="9" fill="#8b949e" font-family="sans-serif">(N=5)</text>
+        <rect x="140" y="147" width="20" height="81" fill="#cf222e" opacity="0.7" rx="3"/>
+        <text x="150" y="143" text-anchor="middle" font-size="10" fill="#cf222e" font-family="sans-serif">43%</text>
+        <text x="140" y="252" text-anchor="middle" font-size="10" fill="#424a53" font-family="'Noto Sans JP',sans-serif">指数</text>
+
+        <!-- jpy_fx: 4H=83.3% 1H=40.0% -->
+        <rect x="216" y="70" width="20" height="158" fill="#1a7f37" rx="3"/>
+        <text x="226" y="66" text-anchor="middle" font-size="10" font-weight="700" fill="#1a7f37" font-family="sans-serif">83%</text>
+        <rect x="240" y="152" width="20" height="76" fill="#cf222e" opacity="0.7" rx="3"/>
+        <text x="250" y="148" text-anchor="middle" font-size="10" fill="#cf222e" font-family="sans-serif">40%</text>
+        <text x="240" y="252" text-anchor="middle" font-size="10" fill="#424a53" font-family="'Noto Sans JP',sans-serif">JPY/FX</text>
+
+        <!-- other_fx: 4H=48% 1H=40% -->
+        <rect x="316" y="137" width="20" height="91" fill="#1a7f37" opacity="0.6" rx="3"/>
+        <text x="326" y="133" text-anchor="middle" font-size="10" fill="#1a7f37" font-family="sans-serif">48%</text>
+        <rect x="340" y="152" width="20" height="76" fill="#cf222e" opacity="0.7" rx="3"/>
+        <text x="350" y="148" text-anchor="middle" font-size="10" fill="#cf222e" font-family="sans-serif">40%</text>
+        <text x="340" y="252" text-anchor="middle" font-size="10" fill="#424a53" font-family="'Noto Sans JP',sans-serif">USD/FX</text>
+
+        <!-- metal: 4H=75% 1H=54.2% -->
+        <rect x="416" y="85" width="20" height="143" fill="#1a7f37" opacity="0.8" rx="3"/>
+        <text x="426" y="81" text-anchor="middle" font-size="10" font-weight="700" fill="#1a7f37" font-family="sans-serif">75%</text>
+        <text x="426" y="73" text-anchor="middle" font-size="9" fill="#8b949e" font-family="sans-serif">(N=8)</text>
+        <rect x="440" y="125" width="20" height="103" fill="#8b949e" opacity="0.6" rx="3"/>
+        <text x="450" y="121" text-anchor="middle" font-size="10" fill="#57606a" font-family="sans-serif">54%</text>
+        <text x="440" y="252" text-anchor="middle" font-size="10" fill="#424a53" font-family="'Noto Sans JP',sans-serif">金属</text>
+
+        <!-- 全体: 4H=64.5% 1H=43.3% -->
+        <rect x="516" y="106" width="20" height="122" fill="#1a7f37" rx="3"/>
+        <text x="526" y="102" text-anchor="middle" font-size="10" font-weight="700" fill="#1a7f37" font-family="sans-serif">64.5%</text>
+        <rect x="540" y="145" width="20" height="83" fill="#cf222e" rx="3"/>
+        <text x="550" y="141" text-anchor="middle" font-size="10" font-weight="700" fill="#cf222e" font-family="sans-serif">43.3%</text>
+        <text x="540" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">全体</text>
+
+        <!-- 凡例 -->
+        <rect x="340" y="258" width="12" height="10" fill="#1a7f37" rx="2"/>
+        <text x="356" y="268" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">4H足</text>
+        <rect x="400" y="258" width="12" height="10" fill="#cf222e" rx="2"/>
+        <text x="416" y="268" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">1H足</text>
+      </svg>
+      <p class="chart-caption">図2：4H足（緑）vs 1H足（赤）のグループ別FWD勝率。4H×JPYクロスが83%と最強。指数・金属もN小ながら4H優位。USD/FXのみ4H＝48%と両足接近（概念を示すイメージ図であり、実際の値動きではありません）</p>
+    </div>
+
+    <h3 id="group-split">3-3. 4H足 × グループ別（FWD）</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr><th>グループ</th><th>N（4H）</th><th>勝率</th><th>95%CI</th><th>E(R)</th><th>対照：1H勝率</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#e6ffed;">
+            <td><strong>JPYクロス（jpy_fx）</strong></td><td>18</td><td><strong>83.3%</strong></td><td>[60.8%,94.2%]</td><td>+1.19R</td><td>40.0%</td>
+          </tr>
+          <tr>
+            <td>指数（index）</td><td>5</td><td>80.0%</td><td>[37.6%,96.4%]</td><td>+0.87R</td><td>42.6%</td>
+          </tr>
+          <tr>
+            <td>金属（metal）</td><td>8</td><td>75.0%</td><td>[40.9%,92.9%]</td><td>+0.75R</td><td>54.2%</td>
+          </tr>
+          <tr>
+            <td>USD/FX（other_fx）</td><td>25</td><td>48.0%</td><td>[30.0%,66.5%]</td><td>+0.17R</td><td>40.0%</td>
+          </tr>
+          <tr>
+            <td>原油（oil）</td><td>5</td><td>60.0%</td><td>[23.1%,88.2%]</td><td>+0.40R</td><td>25.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warning-box">
+      JPYクロス（4H）はCI下限60.8%&gt;43%でH3確認 ✅（N=18参考値・過信禁止）。指数・金属はN=5〜8と小サンプル。USD/FX（other_fx）のみ4H=48%と1H=40%の差が小さく、USD/FXペアでは時間足効果が弱い可能性がある。
+    </div>
+
+    <h3 id="time-series">3-4. 時系列推移（4H vs 1H の前半・後半）</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr><th>期間</th><th>4H勝率</th><th>4H E(R)</th><th>1H勝率</th><th>1H E(R)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>前半（〜2026-07-16/17）</td><td>54.8%（17/31）</td><td>+0.28R</td><td>41.3%（31/75）</td><td>−0.04R</td>
+          </tr>
+          <tr style="background:#e6ffed;">
+            <td><strong>後半（2026-07-17〜8/20）</strong></td><td><strong>74.2%（23/31）</strong></td><td><strong>+0.92R</strong></td><td>45.3%（34/75）</td><td>+0.06R</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      4H足の後半（2026-07-17〜）は <strong>74.2% E(R)=+0.92R</strong> と著しく加速しています。
+      同期間の1H足後半は45.3%とわずかな改善にとどまり、差は29ppまで拡大しました。
+    </p>
+
+    <!-- 図3: 時系列推移チャート -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" aria-label="4Hと1Hの勝率時系列推移">
+        <rect width="640" height="230" fill="#f9fafb" rx="8"/>
+        <text x="320" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">FWD勝率の時系列推移（期間3分割）</text>
+
+        <!-- 軸 -->
+        <line x1="80" y1="175" x2="600" y2="175" stroke="#8b949e" stroke-width="1.3"/>
+        <line x1="80" y1="30" x2="80" y2="175" stroke="#8b949e" stroke-width="1.3"/>
+
+        <!-- Y軸目盛り: 0%=175, 100%=30, 1pp=(175-30)/100=1.45px -->
+        <!-- 43%=175-62.4=112.6 -->
+        <line x1="80" y1="113" x2="600" y2="113" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="5 3"/>
+        <text x="604" y="117" font-size="10" fill="#9a6700" font-family="sans-serif">43%</text>
+        <text x="76" y="118" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">40%</text>
+        <text x="76" y="83" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">60%</text>
+        <line x1="80" y1="79" x2="600" y2="79" stroke="#e1e4e8" stroke-width="0.7"/>
+        <text x="76" y="48" text-anchor="end" font-size="10" fill="#6e7781" font-family="sans-serif">80%</text>
+        <line x1="80" y1="44" x2="600" y2="44" stroke="#e1e4e8" stroke-width="0.7"/>
+
+        <!-- X軸ラベル (3点: P1中心=200, P2中心=340, P3中心=500) -->
+        <text x="200" y="192" text-anchor="middle" font-size="10" fill="#6e7781" font-family="'Noto Sans JP',sans-serif">P1（6/17〜7/1）</text>
+        <text x="370" y="192" text-anchor="middle" font-size="10" fill="#6e7781" font-family="'Noto Sans JP',sans-serif">P2（7/1〜7/28）</text>
+        <text x="530" y="192" text-anchor="middle" font-size="10" fill="#6e7781" font-family="'Noto Sans JP',sans-serif">P3（7/29〜8/20）</text>
+
+        <!-- 4H ライン: P1=54.8%(175-1.45*54.8=95.5), P2後半前=64.5%, P3後半=74.2% -->
+        <!-- Y=175-pct*1.45 -->
+        <!-- P1:54.8% → y=175-79.5=95.5; P2前:64.5%→y=175-93.5=81.5; P3後:74.2%→y=175-107.6=67.4 -->
+        <polyline points="200,95 370,81 530,67" stroke="#1a7f37" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="200" cy="95" r="5" fill="#1a7f37"/>
+        <circle cx="370" cy="81" r="5" fill="#1a7f37"/>
+        <circle cx="530" cy="67" r="5" fill="#1a7f37"/>
+        <text x="200" y="88" text-anchor="middle" font-size="11" font-weight="700" fill="#1a7f37" font-family="sans-serif">54.8%</text>
+        <text x="370" y="74" text-anchor="middle" font-size="11" font-weight="700" fill="#1a7f37" font-family="sans-serif">64.5%</text>
+        <text x="530" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#1a7f37" font-family="sans-serif">74.2%</text>
+
+        <!-- 1H ライン: P1=40%(y=175-58=117), P2=42%(y=175-60.9=114.1), P3=45.3%(y=175-65.7=109.3) -->
+        <!-- 実際のデータは前半/後半分割なのでP1=41.3%, P2=43.3%(全体半期), P3=45.3% -->
+        <polyline points="200,115 370,112 530,110" stroke="#cf222e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="200" cy="115" r="4" fill="#cf222e"/>
+        <circle cx="370" cy="112" r="4" fill="#cf222e"/>
+        <circle cx="530" cy="110" r="4" fill="#cf222e"/>
+        <text x="200" y="128" text-anchor="middle" font-size="11" fill="#cf222e" font-family="sans-serif">41%</text>
+        <text x="370" y="125" text-anchor="middle" font-size="11" fill="#cf222e" font-family="sans-serif">43%</text>
+        <text x="530" y="123" text-anchor="middle" font-size="11" fill="#cf222e" font-family="sans-serif">45%</text>
+
+        <!-- 差の矢印 -->
+        <line x1="530" y1="70" x2="530" y2="107" stroke="#8b949e" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <text x="548" y="90" font-size="11" font-weight="700" fill="#9a6700" font-family="sans-serif">△29pp</text>
+
+        <!-- 凡例 -->
+        <line x1="200" y1="213" x2="226" y2="213" stroke="#1a7f37" stroke-width="3"/>
+        <circle cx="213" cy="213" r="4" fill="#1a7f37"/>
+        <text x="230" y="218" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">4H足</text>
+        <line x1="330" y1="213" x2="356" y2="213" stroke="#cf222e" stroke-width="2.5"/>
+        <circle cx="343" cy="213" r="4" fill="#cf222e"/>
+        <text x="360" y="218" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">1H足</text>
+      </svg>
+      <p class="chart-caption">図3：4H足（緑）は3期間を通じて上昇傾向（54.8%→74.2%）。1H足（赤）は横ばい（41〜45%）で損益分岐付近に留まる（概念を示すイメージ図であり、実際の値動きではありません）</p>
+    </div>
+
+    <!-- 4. 解釈と示唆 -->
+    <h2 id="interpret">④ 解釈と示唆</h2>
+    <p>
+      RSI売られすぎ（30割れ）の逆張りは、<strong>時間足が大きいほど有効</strong>である可能性が今回のデータから示唆されます。
+      理由として考えられるのは次の点です。
+    </p>
+    <ul>
+      <li><strong>4H足は1H足より価格移動が大きい：</strong>同じRSI30割れでも4H足の場合、実際の価格下落幅がより大きく、反発エネルギーも相応に大きくなりやすい。</li>
+      <li><strong>4H足のほうがノイズが少ない：</strong>1H足は短期的なノイズ（ランダムな上下）が多いため、RSI30割れが「真の売られすぎ」を示さないケースが多い可能性。</li>
+      <li><strong>JPYクロスとの相性（4H×jpy_fx=83%）：</strong>円クロス通貨ペア（ドル円・ユーロ円等）は東京・欧州・NY時間の切り替わりに大きく動くことが多く、4H足でRSIが30を割ると反発が鮮明に出やすい。</li>
+    </ul>
+    <div class="warning-box">
+      USD/FX（EURUSD等）は4H=48% vs 1H=40%と差が比較的小さい。JPYクロスとは市場の動き方が異なり、4H優位の恩恵を受けにくい可能性がある点に注意。
+    </div>
+    <p>
+      一方で、<strong>4H×jpy_fx(N=18)、4H×指数(N=5)、4H×金属(N=8)は小サンプル</strong>であり、数字を過信するのは禁物です。
+      継続的な前向きデータの蓄積で確認することが不可欠です。
+    </p>
+    <div class="info-box">
+      <strong>実務的示唆（情報提供・助言ではありません）：</strong><br>
+      rsi_oversold_bounce シグナルが来た際、1H足より4H足のほうが統計的には良好な成績を示しています（64.5% vs 43.3%）。ただし確定的な知見ではなく、前向きでの継続確認が必要です。投資判断はご自身の責任で。
+    </div>
+
+    <!-- 5. 前向きトラッカー -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+    <p class="meta-line">基準日 2026-08-20／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+    <div style="overflow-x:auto;">
+      <table class="tracker-table">
+        <tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+        <tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.20~+0.32]（101/222・勝率46%）</td><td>✅昇格</td></tr>
+        <tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.09 CI[-0.09~+0.26]（101/217・勝率46%）</td><td>✅昇格</td></tr>
+        <tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.03~+0.10]（1007/2277・勝率44%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.04~+0.11]（795/1789・勝率44%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.03~+0.24]（306/646・勝率47%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.21 CI[-0.03~+0.45]（114/220・勝率52%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.05 CI[-0.16~+0.06]（258/633・勝率41%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.18 CI[-0.38~+0.02]（58/165・勝率35%）</td><td>🟡蓄積中</td></tr>
+        <tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[-0.02~+0.17]（786/1713・勝率46%）</td><td>⛔反証</td></tr>
+        <tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[+0.03~+0.24]（290/598・勝率48%）</td><td>⛔反証</td></tr>
+        <tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.15 CI[+0.02~+0.28]（292/593・勝率49%）</td><td>⛔反証</td></tr>
+        <tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.20 CI[+0.05~+0.35]（213/414・勝率51%）</td><td>⛔反証</td></tr>
+        <tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.22 CI[-0.40~-0.05]（72/216・勝率33%）</td><td>⛔反証</td></tr>
+        <tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.30 CI[+0.06~+0.54]（98/176・勝率56%）</td><td>⛔反証</td></tr>
+      </table>
+    </div>
+
+    <!-- 6. 関連記事 -->
+    <h2 id="related">🔗 関連記事</h2>
+    <div class="related-grid">
+      <a href="guide-signal-anatomy.html" class="related-card">
+        <div class="related-card-title">📐 発火条件の図解カタログ</div>
+        <div class="related-card-desc">RSI・BB・MACDなど各シグナルの発火条件を図解。本記事と合わせて読むと理解が深まります。</div>
+      </a>
+      <a href="guide-signal-lab-069.html" class="related-card">
+        <div class="related-card-title">🧪 研究日誌 #69｜rsi_oversold 暫定昇格</div>
+        <div class="related-card-desc">FWD N=179 cluster補正後CI下限2回連続プラスで暫定昇格を確認した回。本記事の前継。</div>
+      </a>
+      <a href="guide-signal-lab-015.html" class="related-card">
+        <div class="related-card-title">🧪 研究日誌 #15｜4H足ロングは系統的に弱い</div>
+        <div class="related-card-desc">4H足全般のロング勝率（35.2%）が損益分岐割れを確認した回。本記事との対比が興味深い。</div>
+      </a>
+      <a href="guide-signal-lab-023.html" class="related-card">
+        <div class="related-card-title">🧪 研究日誌 #23｜RSI vs BB 性能差</div>
+        <div class="related-card-desc">jpy_fx×RSI=19.4% vs BB=58.2%という38.8pp差を発見した回。本記事の4H×jpy_fx高勝率とつながる。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer">
+      本記事はMarketWatch AIが過去の発火ログ（signals-log.json）を反実仮想集計した研究記録です。掲載データは特定の時点のものであり、将来の成果を保証するものではありません。勝率・期待値はバックテストに基づく参考値であり、実際の取引では手数料・スリッページ・市場環境の変化等により結果が異なります。本記事の情報は投資助言を構成せず、売買の推奨・勧誘を目的としていません。すべての投資判断は自己責任で行い、必要に応じて専門家にご相談ください。MarketWatch AIは本記事の情報を利用した投資による損失について一切の責任を負いません。金融商品取引法に基づく登録を受けた投資助言業者ではありません。
+    </p>
+  </article>
+</main>
+
+<footer>
+  <p>&copy; 2026 MarketWatch AI | <a href="../index.html">トップページ</a> | <a href="../guides.html">解説一覧</a> | <a href="../about.html">サイトについて</a> | <a href="../privacy.html">プライバシーポリシー</a></p>
+</footer>
+</body>
+</html>
