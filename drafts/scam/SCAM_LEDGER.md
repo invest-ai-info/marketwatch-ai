@@ -47,3 +47,57 @@
 **下書きファイル**: `drafts/scam/draft-romance-invest.html`（noindex 付き・コンプラ修正済み）
 **統計出典**: 警察庁公表「令和8年上半期における特殊詐欺及びSNS型投資・ロマンス詐欺の認知・検挙状況等（暫定値）」2026年8月公表
 **数値自己検証**: 246.6億円÷2,509件≒9,828,617円≒983万円/件（確認済み）
+
+---
+
+### 🚩 2026-08-19 guide-scam-investment-seminar.html（投資塾・高額情報商材）
+
+**手口**: 投資塾・高額情報商材「無料→有料の階段」/ slug: investment-seminar / 絵文字: 🎓
+
+**コンプラゲート（第1回・自前監査エージェント）**: 🟡グレー → 8件修正 → 🟢白
+**コンプラゲート（独立Opus最終確認）**: 🔴黒 → エスカレ
+
+**独立Opus の 🔴黒 根拠（2件の事実誤認）**:
+1. **法人罰金額が誤り**: 「3億円以下」→ 正しくは「**5億円以下**」（金商法第207条第1項第2号・無登録営業の両罰規定）
+   - 2011年改正で300万円→5億円に引き上げ。3億円は別号（別類型）の金額。
+2. **出典の誤帰属**: 罰則表の出典を金融庁「無登録業者との取引は要注意！！」(fsa.go.jp) としていたが、当該ページに罰則金額の記載なし。
+3. （付随）**「懲役」は旧称**: 2025年6月施行の刑法改正で「拘禁刑」へ変更済み。
+
+**品質ルーブリック ⚠️ 追加指摘**:
+- 「PIO-NET」の初出説明なし（→ 修正済み）
+- 「ベット・コミットメント効果」は不正確な術語（→ 「コミットメントと一貫性（サンクコスト効果）」に修正済み）
+
+**修正適用済み項目（下書きに反映）**:
+- ✅ 法人罰金: 3億円 → 5億円（第207条第1項第2号 明示）
+- ✅ 個人罰則: 「懲役」→「拘禁刑（2025年5月31日以前の行為は懲役）」（第197条の2第10号の4 号数明示）
+- ✅ 出典: e-Gov 法令検索（第197条の2第10号の4・第207条第1項第2号）に変更、fsa.go.jp は別行で「無登録業者注意喚起」として分離
+- ✅ h3 タイトル: 「（金融庁公表）」→「（金融商品取引法）」
+- ✅ PIO-NET の初出に「全国の消費生活センターに寄せられた相談情報を集約するデータベース」説明追記
+- ✅ 「ベット・コミットメント効果」→「コミットメントと一貫性（サンクコスト効果）」
+- ✅ 「両罰規定」の初出（3行サマリ）に「〈違反行為者個人だけでなく法人にも連帯して罰金が科される制度〉」注記追加
+- ✅ 「特定継続的役務提供」の初出前に説明一文追加（7種=法定対象の長期継続的役務）
+
+**決定論チェック（check_guide_draft.py）**:
+- drafts/scam/draft-investment-seminar.html: noindex 付き下書きとして保存（noindex RED は意図的）
+- root の guide-scam-investment-seminar.html: 未コミット（意図的）
+
+**記事の構成・法的姿勢は健全**: 独立Opus が「記事の構成・主張・法的姿勢そのものは健全」と確認。一次ソースからの法令条文番号の確認（e-Gov で 第207条第1項第2号 を直接確認）が取れれば即公開可。
+
+**オーナーへの対応依頼**:
+1. `e-Gov 法令検索` で「金融商品取引法 第207条第1項第2号」を検索し「5億円以下の罰金」と記載されていることを確認
+2. 確認後: `drafts/scam/draft-investment-seminar.html` から noindex メタタグを削除 → `guide-scam-investment-seminar.html` としてルートにコピー → 以下を実行:
+   ```
+   python publish_article.py --file guide-scam-investment-seminar.html \
+     --category "投資詐欺から身を守る" --emoji 🎓 \
+     --card-title "投資塾・高額情報商材「無料→有料の階段」" \
+     --desc "無料セミナーから高額個別指導へのエスカレート手口を3段階分解。特商法の解約手順も整理。"
+   python check_site_consistency.py
+   git add guide-scam-investment-seminar.html guides.html generate_market_news.py sync_to_github.py
+   git commit -m 'feat: 投資詐欺シリーズ auto-publish investment-seminar'
+   git push origin main
+   ```
+3. このレコードを「公開済み記事」表に移動し「🟢白（独立Opus確認後・法令条文確認済み）」と記録
+
+**下書きファイル**: `drafts/scam/draft-investment-seminar.html`（noindex 付き・全修正適用済み）
+**統計**: 仮の例のみ（egress ブロックにより一次統計直接取得不可）
+**関連記事（リンク実在確認済み）**: guide-investment-scams.html / guide-scam-sns-celebrity-ad.html / guide-scam-ponzi-scheme.html / guide-cognitive-biases.html
