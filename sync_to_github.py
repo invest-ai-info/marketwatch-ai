@@ -148,4 +148,5 @@ SYNC_FILES = [
     "guide-news-2026-08-18-iran-hormuz-ceasefire-expired-oil.html",
     "guide-signal-lab-073.html",
     "guide-reit-basics.html",
+    "guide-proverb-shinbo-suru-ki.html",
 ]
