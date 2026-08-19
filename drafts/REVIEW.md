@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-08-20 | ✅ 公開完了 | market-hours | autopublish
+
+- **記事**: 取引時間の話｜東京・ロンドン・NYと動きやすい時間帯（💰 投資の基礎知識）
+- **公開ファイル**: `guide-market-hours.html`
+- **ゲート結果**:
+  - check_guide_draft.py: 🟢 GREEN（SVG重なり5件→座標修正で解消、EXIT=0）
+  - Opus初回判定: 🟡 グレー（②専門用語5語説明なし・④軽微軟化1件・整合性補記2件）
+  - 軽微修正適用後 check_guide_draft.py 再実行: 🟢 GREEN (EXIT=0)
+  - 独立Opus確認: 🟢 全✅（①〜⑤ 全合格）
+- **URL**: https://marketwatch-jp.com/guide-market-hours.html
+
+---
+
 ## 2026-08-20 | ✅ 自動公開済み | signal-lab-074 | signal-lab-daily
 
 - **記事**: AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との25pp差と期待値+0.58R（前向きN=220）
