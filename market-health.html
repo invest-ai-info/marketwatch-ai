@@ -31,6 +31,8 @@
   gtag('js', new Date());
   gtag('config', 'G-FMVFEV7Q2E');
 </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;font-size:16px;line-height:1.75}
@@ -78,7 +80,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年08月19日 22:13 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年08月19日 22:15 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -219,7 +221,7 @@
       <article class="card">
         <div class="card-header"><div class="card-title">📐 米イールドカーブ（10年−3か月）</div><div class="card-sub">長短逆転＝景気後退の前兆とされる</div></div>
         <div class="big-num" style="color:#1a7f37">+0.95% <span class="tag" style="background:#1a7f37;color:#fff">順イールド（正常）</span></div>
-        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">3か月 3.70％ ／ 5年 4.34％ ／ 10年 4.65％（1か月 +0.03pt） ／ 30年 5.20％</div>
+        <div style="font-size:.86rem;color:#57606a;margin:6px 0 2px">3か月 3.70％ ／ 5年 4.34％ ／ 10年 4.65％（1か月 +0.03pt） ／ 30年 5.21％</div>
         <p class="comment">長期(10年)が短期(3か月)より高い＝<b>順イールド（正常）</b>。長短が逆転（逆イールド）すると、過去は景気後退の前に現れることが多かった指標です（必ず当たるわけではありません）。米NY連銀の景気後退モデルも10年−3か月を使用。</p>
         <div class="beginner">出典: Yahoo Finance（^IRX/^FVX/^TNX/^TYX・当日）。くわしくは <a href="guide-yield-curve.html" style="color:#1f6feb">イールドカーブ・逆イールドとは</a>。情報提供であり投資助言ではありません。</div>
       </article>
@@ -251,6 +253,146 @@
       <b style="color:#79c0ff">長期（1年以上）</b>: 日本株・新興国・金・債券などへの分散で米国一極集中リスクを下げる戦略が有効。
     </p>
   </section>
+
+
+  <div class="section-title">📈 毎日の変化</div>
+  <div style="font-size:.86rem;color:#57606a;margin:-6px 0 14px">
+    背景の帯は上のカードと同じ判定基準です（発表元ごとの区分をそのまま使っています）。
+    データを取得できなかった日は点を打たないため、線が切れて表示されます。
+  </div>
+  <div id="mh-range" style="margin-bottom:14px">
+    <button class="mh-range-btn" data-days="30">1か月</button>
+    <button class="mh-range-btn" data-days="90">3か月</button>
+    <button class="mh-range-btn current" data-days="366">1年</button>
+  </div>
+  <div id="mh-charts"></div>
+  <style>
+    .mh-range-btn{margin-right:6px;padding:6px 14px;border:1px solid #d0d7de;border-radius:8px;
+      background:#fff;color:#57606a;font-size:.86rem;cursor:pointer}
+    .mh-range-btn.current{background:#2C4F8F;border-color:#2C4F8F;color:#fff;font-weight:600}
+    .mh-chart-card{margin-bottom:16px;padding:16px;border:1px solid #d0d7de;border-radius:12px;background:#fff}
+    .mh-chart-head{font-weight:700;margin-bottom:2px}
+    .mh-chart-src{font-size:.78rem;color:#57606a;margin-bottom:10px}
+    .mh-chart-wrap{position:relative;height:190px}
+    .mh-chart-zones{margin-top:8px;font-size:.74rem;color:#6e7781}
+    .mh-zone-chip{display:inline-block;margin-right:8px}
+    .mh-zone-dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:3px;vertical-align:-1px}
+  </style>
+  <script>
+  (function(){
+    var DOC = null, DAYS = 366, charts = {};
+    var ORDER = ['vix', 'cnn_fg', 'crypto_fg', 'buffett_us'];
+
+    function hexA(hex, a){
+      var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    function bands(zones){
+      var out = {};
+      zones.forEach(function(z, i){
+        var box = { type: 'box', backgroundColor: hexA(z[3], 0.10), borderWidth: 0,
+                    drawTime: 'beforeDatasetsDraw' };
+        if (z[0] !== null) box.yMin = z[0];
+        if (z[1] !== null) box.yMax = z[1];
+        out['z' + i] = box;
+      });
+      return out;
+    }
+
+    function legend(zones){
+      return zones.map(function(z){
+        return '<span class="mh-zone-chip"><span class="mh-zone-dot" style="background:' +
+               hexA(z[3], 0.45) + '"></span>' + z[2] + '</span>';
+      }).join('');
+    }
+
+    function draw(key){
+      var s = DOC.series[key];
+      var pts = s.points.slice(-DAYS);
+      var el = document.getElementById('mh-canvas-' + key);
+      if (!el) return;
+      if (charts[key]) charts[key].destroy();
+      charts[key] = new Chart(el.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: pts.map(function(p){ return p[0]; }),
+          datasets: [{
+            label: s.label,
+            data: pts.map(function(p){ return p[1]; }),
+            borderColor: '#1E3A6E',
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            spanGaps: false,
+            tension: 0.15
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', borderColor: '#d0d7de', borderWidth: 1 },
+            annotation: { annotations: bands(s.zones) }
+          },
+          scales: {
+            x: { ticks: { color: '#57606a', font: { size: 10 }, maxTicksLimit: 8 },
+                 grid: { display: false } },
+            y: { ticks: { color: '#57606a', font: { size: 10 } },
+                 grid: { color: 'rgba(140,149,159,0.18)' } }
+          }
+        }
+      });
+    }
+
+    function render(){
+      var host = document.getElementById('mh-charts');
+      host.innerHTML = '';
+      var drawn = 0;
+      ORDER.forEach(function(key){
+        var s = DOC.series[key];
+        if (!s || !s.points || !s.points.length) return;
+        drawn++;
+        var last = s.points[s.points.length - 1];
+        var card = document.createElement('div');
+        card.className = 'mh-chart-card';
+        card.innerHTML =
+          '<div class="mh-chart-head">' + s.label + '　<span style="color:#1E3A6E">' +
+            last[1] + s.unit + '</span>' +
+            ' <span style="font-size:.78rem;color:#57606a;font-weight:400">(' + last[0] + ' 時点)</span></div>' +
+          '<div class="mh-chart-src">出典: ' + s.source + '</div>' +
+          '<div class="mh-chart-wrap"><canvas id="mh-canvas-' + key + '"></canvas></div>' +
+          '<div class="mh-chart-zones">' + legend(s.zones) + '</div>';
+        host.appendChild(card);
+        draw(key);
+      });
+      if (!drawn) {
+        host.innerHTML = '<div style="color:#57606a;font-size:.9rem">まだ表示できる履歴がありません。</div>';
+      }
+    }
+
+    document.getElementById('mh-range').addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('.mh-range-btn') : null;
+      if (!b || !DOC) return;
+      DAYS = +b.getAttribute('data-days');
+      Array.prototype.forEach.call(document.querySelectorAll('.mh-range-btn'), function(x){
+        if (x === b) { x.className = 'mh-range-btn current'; } else { x.className = 'mh-range-btn'; }
+      });
+      render();
+    });
+
+    fetch('market-health-history.json?t=' + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(d){ DOC = d; render(); })
+      .catch(function(){
+        document.getElementById('mh-charts').innerHTML =
+          '<div style="color:#57606a;font-size:.9rem">履歴データを読み込めませんでした。</div>';
+      });
+  })();
+  </script>
+
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
     <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 市場健康度の読み方</h2>
