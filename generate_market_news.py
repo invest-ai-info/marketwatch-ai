@@ -11,6 +11,7 @@ import html
 import urllib.request
 import urllib.parse
 from datetime import datetime, timezone, timedelta
+from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -3501,6 +3502,162 @@ def fetch_curve_credit(timeout=15):
     return out
 
 
+def build_health_chart_section():
+    """市場健康度の日次推移チャート。**非 f-string**（JS の波括弧をエスケープしないため）。
+
+    データは閲覧時に market-health-history.json を fetch する＝HTML を再生成しなくても最新になる
+    （news-ticker と同じ方式）。欠測日は点を打たないので、線は切れ目として表示される。
+    帯の閾値は JSON の zones＝build_health_history.ZONES が単一の真実。
+    """
+    return """
+  <div class="section-title">📈 毎日の変化</div>
+  <div style="font-size:.86rem;color:#57606a;margin:-6px 0 14px">
+    背景の帯は上のカードと同じ判定基準です（発表元ごとの区分をそのまま使っています）。
+    データを取得できなかった日は点を打たないため、線が切れて表示されます。
+  </div>
+  <div id="mh-range" style="margin-bottom:14px">
+    <button class="mh-range-btn" data-days="30">1か月</button>
+    <button class="mh-range-btn" data-days="90">3か月</button>
+    <button class="mh-range-btn current" data-days="366">1年</button>
+  </div>
+  <div id="mh-charts"></div>
+  <style>
+    .mh-range-btn{margin-right:6px;padding:6px 14px;border:1px solid #d0d7de;border-radius:8px;
+      background:#fff;color:#57606a;font-size:.86rem;cursor:pointer}
+    .mh-range-btn.current{background:#2C4F8F;border-color:#2C4F8F;color:#fff;font-weight:600}
+    .mh-chart-card{margin-bottom:16px;padding:16px;border:1px solid #d0d7de;border-radius:12px;background:#fff}
+    .mh-chart-head{font-weight:700;margin-bottom:2px}
+    .mh-chart-src{font-size:.78rem;color:#57606a;margin-bottom:10px}
+    .mh-chart-wrap{position:relative;height:190px}
+    .mh-chart-zones{margin-top:8px;font-size:.74rem;color:#6e7781}
+    .mh-zone-chip{display:inline-block;margin-right:8px}
+    .mh-zone-dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:3px;vertical-align:-1px}
+  </style>
+  <script>
+  (function(){
+    var DOC = null, DAYS = 366, charts = {};
+    var ORDER = ['vix', 'cnn_fg', 'crypto_fg', 'buffett_us'];
+
+    function hexA(hex, a){
+      var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+
+    function bands(zones){
+      var out = {};
+      zones.forEach(function(z, i){
+        var box = { type: 'box', backgroundColor: hexA(z[3], 0.10), borderWidth: 0,
+                    drawTime: 'beforeDatasetsDraw' };
+        if (z[0] !== null) box.yMin = z[0];
+        if (z[1] !== null) box.yMax = z[1];
+        out['z' + i] = box;
+      });
+      return out;
+    }
+
+    function legend(zones){
+      return zones.map(function(z){
+        return '<span class="mh-zone-chip"><span class="mh-zone-dot" style="background:' +
+               hexA(z[3], 0.45) + '"></span>' + z[2] + '</span>';
+      }).join('');
+    }
+
+    function cutoff(){
+      // 「1か月」を系列ごとに違う長さにしないため、点数ではなく**日付**で切る。
+      // VIX は営業日しか点が無く、Crypto は毎日あるので、slice(-N) だと横軸が揃わない。
+      var d = new Date(Date.now() - DAYS * 86400000);
+      return d.toISOString().slice(0, 10);
+    }
+
+    function draw(key){
+      var s = DOC.series[key];
+      var from = cutoff();
+      var pts = s.points.filter(function(p){ return p[0] >= from; });
+      var el = document.getElementById('mh-canvas-' + key);
+      if (!el) return;
+      if (charts[key]) charts[key].destroy();
+      charts[key] = new Chart(el.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: pts.map(function(p){ return p[0]; }),
+          datasets: [{
+            label: s.label,
+            data: pts.map(function(p){ return p[1]; }),
+            borderColor: '#1E3A6E',
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            spanGaps: false,
+            tension: 0.15
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: 'rgba(22,27,34,0.95)', borderColor: '#d0d7de', borderWidth: 1 },
+            annotation: { annotations: bands(s.zones) }
+          },
+          scales: {
+            x: { ticks: { color: '#57606a', font: { size: 10 }, maxTicksLimit: 8 },
+                 grid: { display: false } },
+            y: { ticks: { color: '#57606a', font: { size: 10 } },
+                 grid: { color: 'rgba(140,149,159,0.18)' } }
+          }
+        }
+      });
+    }
+
+    function render(){
+      var host = document.getElementById('mh-charts');
+      host.innerHTML = '';
+      var drawn = 0;
+      ORDER.forEach(function(key){
+        var s = DOC.series[key];
+        if (!s || !s.points || !s.points.length) return;
+        drawn++;
+        var last = s.points[s.points.length - 1];
+        var card = document.createElement('div');
+        card.className = 'mh-chart-card';
+        card.innerHTML =
+          '<div class="mh-chart-head">' + s.label + '　<span style="color:#1E3A6E">' +
+            last[1] + s.unit + '</span>' +
+            ' <span style="font-size:.78rem;color:#57606a;font-weight:400">(' + last[0] + ' 時点)</span></div>' +
+          '<div class="mh-chart-src">出典: ' + s.source + '</div>' +
+          '<div class="mh-chart-wrap"><canvas id="mh-canvas-' + key + '"></canvas></div>' +
+          '<div class="mh-chart-zones">' + legend(s.zones) + '</div>';
+        host.appendChild(card);
+        draw(key);
+      });
+      if (!drawn) {
+        host.innerHTML = '<div style="color:#57606a;font-size:.9rem">まだ表示できる履歴がありません。</div>';
+      }
+    }
+
+    document.getElementById('mh-range').addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('.mh-range-btn') : null;
+      if (!b || !DOC) return;
+      DAYS = +b.getAttribute('data-days');
+      Array.prototype.forEach.call(document.querySelectorAll('.mh-range-btn'), function(x){
+        if (x === b) { x.className = 'mh-range-btn current'; } else { x.className = 'mh-range-btn'; }
+      });
+      render();
+    });
+
+    fetch('market-health-history.json?t=' + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(d){ DOC = d; render(); })
+      .catch(function(){
+        document.getElementById('mh-charts').innerHTML =
+          '<div style="color:#57606a;font-size:.9rem">履歴データを読み込めませんでした。</div>';
+      });
+  })();
+  </script>
+"""
+
+
 def build_market_health_html(data, vix_val, touraku, now_jst):
     """市場健康度ダッシュボード（market-health.html）を生成。
     動的に取れるもの: 米VIX, 騰落レシオ, 日経/S&P500終値
@@ -3529,20 +3686,14 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         if v < 40: return "#bf3989", "やや警戒", v / 50 * 100
         return "#da3633", "警戒", min(v / 50 * 100, 100)
 
-    def _classify_fg(v):
-        # CNN/Crypto Fear&Greed: 0=Extreme Fear, 100=Extreme Greed
-        if v < 25: return "#1a7f37", "極度の恐怖"
-        if v < 45: return "#0969da", "恐怖"
-        if v < 55: return "#9a6700", "中立"
-        if v < 75: return "#bf3989", "強欲"
-        return "#da3633", "極度の強欲"
+    def _classify_fg(v, series="cnn_fg"):
+        # 閾値の単一の真実は build_health_history.ZONES（チャートの帯と同じ基準を使う）。
+        # ⚠️ CNN と alternative.me は区分が違う（2026-08-19 に両ソースの全公開値で実測）ので
+        #    series を取り違えると、発表元自身のラベルと食い違う表示になる。
+        return classify_zone(series, v)
 
     def _classify_buffett(v):
-        if v < 70: return "#1a7f37", "大きく割安"
-        if v < 100: return "#0969da", "適正"
-        if v < 135: return "#9a6700", "やや割高"
-        if v < 180: return "#bf3989", "割高"
-        return "#da3633", "大きく割高"
+        return classify_zone("buffett_us", v)
 
     def _classify_cape(v):
         if v < 15: return "#1a7f37", "割安"
@@ -3564,7 +3715,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     cnn = MANUAL_METRICS["cnn_fg"]
     cnn_color, cnn_label = _classify_fg(cnn)
     cry = MANUAL_METRICS["crypto_fg"]
-    cry_color, cry_label = _classify_fg(cry)
+    cry_color, cry_label = _classify_fg(cry, "crypto_fg")  # 区分は alternative.me 自身のもの
     bfu = MANUAL_METRICS["buffett_us"]
     bfu_color, bfu_label = _classify_buffett(bfu)
     bfu_pos = min(bfu / 250 * 100, 100)
@@ -3579,19 +3730,15 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     nper_pos = min(nper / 30 * 100, 100)
     mdate = MANUAL_METRICS["manual_date"]
 
-    # 米VIX
+    # 米VIX。判定色とラベルは ZONES から引き、ゲージの針位置だけ表示上の都合で別に持つ。
+    _VIX_PIN = [(15, 15), (20, 25), (30, 45), (40, 65), (None, 85)]
     if vix_val is None:
         vix_disp, vix_tag, vix_color, vix_pos = "N/A", _tag("#57606a", "取得不可"), "#57606a", 30
-    elif vix_val < 15:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#1a7f37", "落ち着き"), "#1a7f37", 15
-    elif vix_val < 20:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#1a7f37", "通常"), "#1a7f37", 25
-    elif vix_val < 30:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#9a6700", "中位"), "#9a6700", 45
-    elif vix_val < 40:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#bf3989", "警戒"), "#bf3989", 65
     else:
-        vix_disp, vix_tag, vix_color, vix_pos = f"{vix_val:.1f}", _tag("#da3633", "パニック"), "#da3633", 85
+        vix_color, vix_label = classify_zone("vix", vix_val)
+        vix_disp = f"{vix_val:.1f}"
+        vix_tag = _tag(vix_color, vix_label)
+        vix_pos = next(p for hi, p in _VIX_PIN if hi is None or vix_val < hi)
 
     # 騰落レシオ
     if touraku is None:
@@ -3716,6 +3863,8 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 {seo_head("market-health.html", "市場健康度ダッシュボード", "VIX・恐怖&強欲指数・バフェット指数・CAPEレシオ・騰落レシオを一画面で可視化。割高/割安/過熱/底値圏を色分け表示し、相場全体の温度感を瞬時に判断できます。")}
 {GA4_TAG}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
   *{{margin:0;padding:0;box-sizing:border-box}}
   body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;font-size:16px;line-height:1.75}}
@@ -3896,6 +4045,8 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
       <b style="color:#79c0ff">長期（1年以上）</b>: 日本株・新興国・金・債券などへの分散で米国一極集中リスクを下げる戦略が有効。
     </p>
   </section>
+
+{build_health_chart_section()}
 
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:24px 28px;margin-top:24px">
     <h2 style="font-size:1.2rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 市場健康度の読み方</h2>

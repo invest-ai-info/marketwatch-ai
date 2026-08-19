@@ -65,6 +65,13 @@ jobs:
       - name: Install dependencies
         run: pip install yfinance requests deep_translator feedparser google-generativeai
 
+      - name: Collect market health history
+        # 生成の「前」に走らせる＝カードに出る数字と履歴の最新点が必ず一致する。
+        # continue-on-error＝履歴の取得失敗で6コアページの更新を巻き添えにしない。
+        # 取れなかったことは automation-health §⑩ が拾う。
+        run: python build_health_history.py
+        continue-on-error: true
+
       - name: Generate market news HTML (6 files)
         run: python generate_market_news.py
 
@@ -72,7 +79,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html preview.html sitemap.xml robots.txt
+          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html preview.html sitemap.xml robots.txt market-health-history.json
           # 自動生成記事（auto_weekly_strategy / auto_indicator_preview の出力）も含める
           git add guide-weekly-*.html guide-auto-*.html 2>/dev/null || true
           if git diff --cached --quiet; then
