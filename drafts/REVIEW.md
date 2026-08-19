@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-08-20 | ✅ 自動公開済み | signal-lab-074 | signal-lab-daily
+
+- **記事**: AIシグナル研究日誌 #74｜RSI売られすぎ逆張り × 4H足——1H足との25pp差と期待値+0.58R（前向きN=220）
+- **公開ファイル**: `guide-signal-lab-074.html`
+- **gate**: signal_lab_verify EXIT=0（6/6 claims GREEN）
+- **compliance**: GRAY_FIXED（kinsho-v1マーカー追加・「急加速中」軟化・「最強」→「グループ内で最も高い」・実務示唆→統計観察へ軟化）
+- **independent Opus**: OK（全7チェック通過）
+- **主要数値**: IS=39.1%(52/133) / FWD全体=51.8%(114/220) / 4H=67.8%(40/59) E(R)=+0.58R / 1H=43.3%(65/150) E(R)≈0 / 4H×jpy_fx=93.8%(15/16)
+
+---
+
 ## 2026-08-19 | ⏳ 下書き生成 | liquidity-risk | autodraft-article
 
 - **記事**: 流動性リスク｜売りたいときに売れない理由と板・スリッページの仕組みを図解
