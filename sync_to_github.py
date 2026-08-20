@@ -152,4 +152,5 @@ SYNC_FILES = [
     "guide-news-2026-08-19-30yr-treasury-yield-19yr-high.html",
     "guide-signal-lab-074.html",
     "guide-market-hours.html",
+    "guide-proverb-bijin-toohyou.html",
 ]
