@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-08-20
+- 判定: ✅ 公開済み
+- 選定トピック: 米財務省が長期国債買い戻しを2倍に拡大（$2B→$4B/回）──「ベッセント・プット」は19年ぶり高金利を抑制できるか？日本投資家への影響を中立整理（カテゴリ: マクロ・債券・財政政策）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 8/19（米国時間）、財務省が長期国債（10〜30年）の流動性支援バイバック上限を$2B→$4B/回（最低2倍）へ引き上げ（9/9〜11/4）。これを受けて30年利回りが9〜10bps低下し5.19%、10年が6bps低下し4.65%、ドルが3か月ぶり安値、日経平均が890円高と大幅反発。Bloomberg「ベッセント・プット」・Bloomberg Japan「ツイストオペ再来か」・NBC News「サプライズの動き」と大手媒体が一斉報道。前日8/19記事（30年利回り5.33%の問題）の「政策対応フェーズ」に当たる独立トピックで既出扱いにならない。
+- 出典（6系統）:
+  - CNBC「Treasury doubles debt buybacks as Bessent moves to steady bond market」（2026-08-19）
+  - Bloomberg「Bessent Deploys Debt Buybacks in Sign of Concern Over Yield Rise」（2026-08-19）
+  - Bloomberg Japan「市場に広がる「ベッセント・プット」」（2026-08-19）
+  - NBC News「Bond yields fall after Treasury announces surprise move to ease rising rates」（2026-08-19）
+  - Benzinga「Treasury Doubles Long-Bond Buybacks, Yields Fall Sharply」（2026-08-19）
+  - 日本経済新聞「日経平均890円高、「売られすぎ」銘柄に買い戻し」（2026-08-20）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正1件適用（ジャクソンホール日程の「予定」→「報じられている」に軟化＋「報道ベースの参考情報で変更される場合がある」追記。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典6系統）✅・公開OK。非コンプラ欠陥1件（関連記事リンク切れ guide-news-2026-08-16-fomc-july-minutes-three-dissenters.html→正：fomc-july-dissents-jackson-hole.html）を検出→即修正済み
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典6系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告21件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-20-treasury-buyback-bessent-yield.html
+- commit: c9031b1（main へ push 済み）
+
+---
+
 ## 2026-08-19
 - 判定: ✅ 公開済み
 - 選定トピック: 30年米国債利回り5.33%：19年ぶり高水準が示す3つの構造的変化（財政赤字・インフレ粘着・Warsh不確実性）と日本投資家への影響を中立整理（カテゴリ: マクロ・債券・金融政策・米国金利）
