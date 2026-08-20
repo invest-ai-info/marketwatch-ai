@@ -1,3 +1,20 @@
+## 2026-08-21 ✅ 公開完了 | sunk-cost | autopublish
+
+- **記事**: 塩漬けとサンクコスト（埋没費用）｜「もう戻らないお金」が判断を歪める理由
+- **シリーズ**: 🧠 投資の心理・メンタル
+- **公開ファイル**: `guide-sunk-cost.html`
+- **ゲート通過記録**:
+  - check_guide_draft.py: GREEN（SVGはみ出し1件修正後クリア）
+  - Opusコンプラ+品質1回目: 🟡軽微（FIX-1〜6適用: 用語初出説明×3・断定軟化×2・Markdown修復×1）
+  - check_guide_draft.py再確認: GREEN
+  - 独立Opus確認: 🟢白（公開承認）
+  - publish_article.py: guides.html更新・SYNC_FILES追加・更新履歴追加
+  - check_site_consistency.py: エラーなし（警告22件は既存）
+  - PUSH-MAIN: 成功
+- **公開URL**: https://marketwatch-jp.com/guide-sunk-cost.html
+
+---
+
 ## 2026-08-21 #075 ✅ 公開済み
 
 **テーマ**: trend=上昇×逆張り買い FWD N=229 後期解剖——BB後期全域マイナス確定・指数後期全域マイナス確定・RSI65%全域プラス継続
