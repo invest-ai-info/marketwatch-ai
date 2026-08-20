@@ -1,3 +1,25 @@
+## 2026-08-21 #075 ✅ 公開済み
+
+**テーマ**: trend=上昇×逆張り買い FWD N=229 後期解剖——BB後期全域マイナス確定・指数後期全域マイナス確定・RSI65%全域プラス継続
+
+**ゲート通過記録**:
+- signal_lab_verify.py: GREEN 12/12 claims / 0 SVG warnings (SVG警告4件→修正後クリア)
+- Opusコンプラ1回目: 🟡軽微（FIX-1〜4適用: フッター免責強化・断定表現軟化×2・重複id解消）
+- signal_lab_verify.py再確認: GREEN 12/12
+- 独立Opus確認: 🟢白 FINAL VERDICT
+- finalize_signal_lab.py: svg=4 kinsho=3 43KB
+- publish_article.py: guides.html更新・SYNC_FILES追加・更新履歴追加
+- mw.py check: ✅ OK（エラーなし・既存警告21件は別記事）
+- PUSH-MAIN: 成功
+
+**主要数値** (verify.py確定値):
+- FWD全体: 107/229=46.7% RCI[-0.06,+0.24]（降格警戒継続）
+- H1✅ BB後期: 15/55=27.3% RCI[-0.641,-0.087]（全域マイナス確定）
+- H2✅ 指数後期: 7/31=22.6% RCI[-0.822,-0.124]（全域マイナス確定）
+- H3✅ RSI FWD: 36/55=65.5% RCI[+0.231,+0.823]（全域プラス継続）
+
+**公開URL**: https://marketwatch-jp.com/guide-signal-lab-075.html
+
 # 🤖 AUTODRAFT REVIEW ノート（最新が上）
 
 ---
