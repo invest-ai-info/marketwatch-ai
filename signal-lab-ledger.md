@@ -237,5 +237,5 @@
 - **テーマ**: ロング回避ゲート2本が前向きで⛔反証——trend=中立・下降×ロングのCI全域プラス確定、金属×ロングは降格
 - **仮説**: trend=中立×long FWD RCI下限>0 / trend=下降×long FWD RCI下限>0 / metal×long FWD（降格のみ・⛔未達）
 - **結果**: 中立FWD 353/739=47.8% E(R)=+0.172 RCI[+0.046~+0.298]✅ / 下降FWD 248/499=49.7% E(R)=+0.239 RCI[+0.086~+0.393]✅ / metal FWD 114/235=48.5% E(R)=+0.198 RCI[-0.026~+0.422]❌降格
-- **ステータス**: ゲート実行中（verify→Opus→publish予定）
-- **記事**: guide-signal-lab-076.html（予定）
+- **ステータス**: 🟢公開済み（verify GREEN 7/7 / Opus🟡軽微自己修正→独立Opus🟢白）
+- **記事**: guide-signal-lab-076.html 公開済み

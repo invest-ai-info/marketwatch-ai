@@ -5,7 +5,11 @@
 - **claims**: `drafts/labnotes/lab-076-claims.json`（7件）
 - **分析**: `drafts/labnotes/lab-076-analysis.md`
 - **仮説**: trend=中立×long FWD RCI[+0.046~+0.298]✅ / trend=下降×long FWD RCI[+0.086~+0.393]✅ / metal×long FWD RCI[-0.026~+0.422]❌降格
-- **ゲート状態**: verify.py待ち→Opus待ち
+- **ゲート状態**: 🟢公開済み
+  - verify GREEN 7/7（k/n修正: 下降FWD 248/499→247/498, metal FWD 114/235→113/234）
+  - Opus🟡軽微（kinsho-v1強化・利益示唆軟化）→独立Opus🟢白
+  - finalize: svg=4 kinsho=3 / publish_article.py完了 / check_site_consistency OK
+  - guide-signal-lab-076.html push済み
 
 ---
 
