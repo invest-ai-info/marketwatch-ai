@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-08-21
+- 判定: 🚩要人間レビュー（事実・数値の正確性問題によるエスカレ）
+- 選定トピック: ウォルマートQ2 FY2027決算：5年ぶりコンプ未達で株価約10%急落、ダウ700ポイント超安──米国消費の変調を中立整理（カテゴリ: 米国消費・小売決算・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典（確認済み分）:
+  - CNBC「Walmart (WMT) Q2 2027 earnings」（2026-08-20）
+  - Walmart公式「Q2 FY2027 Earnings Release」（2026-08-20 ／ corporate.walmart.com）
+  - The Motley Fool「Walmart's 10% Plunge Weighs on All Three Major Indexes」（2026-08-20）
+  - BestStocks「Why Walmart (WMT) Stock Fell ~9% Despite a Q2 Earnings Beat」（2026-08-20）
+  - NBC News「Stocks tumble Thursday as Walmart sales growth forecast disappoints」（2026-08-20）
+  - Yahoo Finance「Stock Market Today, Aug. 20: Stocks Slide on Weak Retail Earnings」（2026-08-20）
+  - Detroit News「Wall St slips on rising bond yields; Walmart results weigh」（2026-08-20）
+  - Benzinga「Walmart Suffers $22 Billion Valuation Drop On A Single Day」（2026-08-20）
+  - 247 Wall St「Walmart Q2 2027: Tariff Windfall Beat and What the Back Half Means」（2026-08-20）
+- コンプライアンス監査（Opus第1段階）: 🔴黒・エスカレ（法務リスクではなく事実・数値の正確性問題）
+- エスカレ理由（3点）:
+  1. 【最重要・桁違い】本文L189「$2.9B（約4.3兆円）」→ 正しくは約4,300億円（現レートで$2.9B≒約4,200〜4,500億円）。さらにmeta description・og:descriptionでは「2.9兆円」と別の誤数値が混在。4箇所すべて修正が必要。
+  2. 【出典・数値の整合確認】Benzinga「$22B Valuation Drop」とWMT株価「約10%急落」の整合性要確認（WMT時価総額規模が前提）。eコマース+23%・Brent $88/イラン停戦・ウォーシュFRB議長の役職記述に出典未明記。
+  3. 【表現修正（グレー相当）】L229「底値探りに注目する向き」→ 個別銘柄の押し目買い示唆と読まれうる。削除または行動示唆のない表現へ。H1/title等「転換点」→「変調の可能性」等に軟化。
+- コンプラ構造（合格済み確認）: kinsho-v1×3（冒頭バナー/本文末/フッター）✅、禁止語なし✅、売買推奨なし（L229除く）✅、出典2系統以上✅
+- 下書き: drafts/news/draft-news-2026-08-21.html（noindex,nofollow付き）
+- 次のアクション: ①$2.9B円換算を4箇所修正（約4,300億円またはドル表記のみ） ②Benzinga見出し実在確認＋eコマース+23%・Brent $88・Warsh役職に出典追記 ③L229「底値探り」削除 ④H1/title「転換点→変調の可能性」6箇所修正 → 再度Opus監査へ
+
+---
+
 ## 2026-08-20
 - 判定: ✅ 公開済み
 - 選定トピック: 米財務省が長期国債買い戻しを2倍に拡大（$2B→$4B/回）──「ベッセント・プット」は19年ぶり高金利を抑制できるか？日本投資家への影響を中立整理（カテゴリ: マクロ・債券・財政政策）
