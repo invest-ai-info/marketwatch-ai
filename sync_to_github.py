@@ -159,4 +159,5 @@ SYNC_FILES = [
     "guide-proverb-kakaku-to-kachi.html",
     "guide-scam-deepfake-scam.html",
     "guide-signal-lab-076.html",
+    "guide-counterparty-risk.html",
 ]
