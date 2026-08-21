@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>受渡日（決済日）とは何か｜約定日と受渡日の違い・権利付き最終日・出金タイミングをやさしく解説 - MarketWatch AI</title>
+  <meta name="description" content="株を売買しても、お金や株式は当日に動かない。約定日（やくじょう日）と受渡日の違い、日本株のT+2制度の仕組み、権利付き最終日の逆算方法、年末年始の落とし穴、売却代金の出金タイミングまで、初心者向けに図解でやさしく解説します。">
+  <meta name="keywords" content="受渡日,決済日,約定日,T+2,権利付き最終日,権利確定日,権利落ち日,出金タイミング,投資初心者,株式投資,証券口座">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-settlement-cycle.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="受渡日（決済日）とは何か｜約定日と受渡日の違い・権利付き最終日・出金タイミングをやさしく解説">
+  <meta property="og:description" content="株を売買しても、お金や株式は当日に動かない。T+2制度・権利付き最終日・出金タイミングを図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-settlement-cycle.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "受渡日（決済日）とは何か｜約定日と受渡日の違い・権利付き最終日・出金タイミングをやさしく解説",
+    "description": "株を売買しても、お金や株式は当日に動かない。日本株のT+2制度・権利付き最終日の逆算・出金タイミングを図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-22",
+    "dateModified": "2026-08-22",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-settlement-cycle.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-box-b{fill:#ddf4ff;stroke:#0969da;stroke-width:1.5;rx:6}
+    .s-box-g{fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5}
+    .s-box-y{fill:#fff8c5;stroke:#9a6700;stroke-width:1.5}
+    .s-text-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-text-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-arrow{stroke:#57606a;stroke-width:2;fill:none;marker-end:url(#arrowhead)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-box-b{fill:#1a2030;stroke:#58a6ff}
+    body.dark .s-box-g{fill:#162416;stroke:#3fb950}
+    body.dark .s-box-y{fill:#2a1f0e;stroke:#d4a017}
+    body.dark .s-text-b{fill:#79c0ff}
+    body.dark .s-text-g{fill:#7ee787}
+    body.dark .s-text-y{fill:#d4a017}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-arrow{stroke:#8b949e}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 受渡日（決済日）とは何か
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は受渡日・決済制度の一般的な仕組みを整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。制度の詳細や最新情報は証券会社・JPX・金融庁の公式情報をご確認ください。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📅 受渡日（決済日）とは何か｜約定日との違い・T+2制度・権利付き最終日をやさしく解説</h1>
+    <div class="meta-line">公開日：2026 年 8 月 22 日 ／ 読了時間：約 12 分 ／ カテゴリ：💰 投資の基礎知識</div>
+
+    <p>株式や ETF を売買したとき、<strong>お金や株式が実際に自分の口座に届くのは、取引が成立した日ではありません</strong>。「注文が通った（約定した）日」と「お金・株式が動く日（受渡日）」は、<strong>別の日</strong>です。日本株の場合、現在は<strong>約定日から数えて 2 営業日後（T+2）</strong>が受渡日になっています。</p>
+    <p>この「ズレ」を知らないまま投資をしていると、「売ったのにお金が出金できない」「配当の権利をもらえると思ったのに取れていなかった」「年内に損益を確定したかったのに翌年扱いになってしまった」——という、<strong>知らないと損をする落とし穴</strong>にはまることがあります。本記事では、受渡日の仕組みから、権利付き最終日の逆算方法、年末年始の注意点まで、図解でやさしく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>日本株・ETF の受渡日は現在<strong>T+2（約定日から 2 営業日後）</strong>。売買が成立しても、お金と株式が実際に動くのは 2 営業日後。</li>
+      <li>配当や株主優待の権利を得るには、<strong>権利確定日の 2 営業日前「権利付き最終日」</strong>までに株を保有する必要がある。カレンダー計算で「1 日ずれた」ミスを防ごう。</li>
+      <li>年末年始・大型連休は営業日が飛ぶため受渡日がずれる。<strong>税務上の損益は約定日ではなく受渡日基準</strong>なので、年内に確定したい場合は早めに動くことが必要。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">約定日と受渡日——何が違うのか</a></li>
+        <li><a href="#section-2">T+2 とは：日本株の受渡日の仕組み（概念図）</a></li>
+        <li><a href="#section-3">売却代金はいつ出金できるのか</a></li>
+        <li><a href="#section-4">権利付き最終日を逆算する（配当・優待の権利）</a></li>
+        <li><a href="#section-5">年末年始・連休の落とし穴</a></li>
+        <li><a href="#section-6">税務上の損益は「受渡日」が基準</a></li>
+        <li><a href="#section-7">投資信託の受渡日は株式とは異なる</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 約定日と受渡日——何が違うのか</h2>
+
+    <p>株式投資をすると、まず出てくる 2 つの言葉が「<strong>約定日（やくじょう日）</strong>」と「<strong>受渡日（うけわたしび）</strong>」です。</p>
+
+    <ul>
+      <li><strong>約定日（T日）</strong>：注文が市場で成立した日。売買の「契約が成立した日」のイメージ。証券口座の取引履歴にこの日付が表示される。</li>
+      <li><strong>受渡日（T+2日）</strong>：実際にお金（代金）と株式（証券）の受け渡しが行われる日。売り手は代金を受け取り、買い手は株式を受け取る「決済完了」の日。</li>
+    </ul>
+
+    <p>不動産の売買に例えると、「売買契約を結んだ日（約定日）」と「引き渡し・残代金の支払いが終わる日（受渡日）」が分かれているのと同じ構造です。</p>
+
+    <div class="info-box">
+      <strong>💡 なぜズレがあるのか</strong>：膨大な数の取引をすべて当日中に処理するのは現実的ではないため、証券取引所（JPX）と証券決済機関（JASDEC）が集中して処理する仕組みになっています。このバッファが「数営業日後の受渡」として現れます。米国ではかつて T+3、次いで T+2 でしたが 2024 年 5 月に T+1 へ移行しています。日本でも T+1 化の検討が進んでいます（2025 年 7 月時点で検討段階、実施時期は未定）。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ T+2 とは：日本株の受渡日の仕組み（概念図）</h2>
+
+    <p>日本株・ETF の現在のルール：<strong>約定日（T 日）の 2 営業日後が受渡日</strong>です（2019 年 7 月 16 日から T+3 を廃止して T+2 に移行）。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 680 200" role="img" aria-labelledby="t2-title">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#57606a"/>
+          </marker>
+        </defs>
+        <title id="t2-title">T+2受渡日の仕組み：約定日から2営業日後に決済完了</title>
+        <text class="s-panel-label" x="20" y="26">日本株・ETFのT+2決済タイムライン</text>
+
+        <!-- T日ボックス -->
+        <rect x="30" y="50" width="160" height="80" rx="8" class="s-box-b"/>
+        <text class="s-text-b" x="110" y="82" text-anchor="middle">T日（約定日）</text>
+        <text class="s-label-sm" x="110" y="102" text-anchor="middle">売買契約が成立</text>
+        <text class="s-label-sm" x="110" y="118" text-anchor="middle">まだお金は動かない</text>
+
+        <!-- 矢印1 -->
+        <line class="s-arrow" x1="193" y1="90" x2="255" y2="90"/>
+        <text class="s-label-sm" x="224" y="80" text-anchor="middle">+1営業日</text>
+
+        <!-- T+1ボックス -->
+        <rect x="258" y="50" width="160" height="80" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-legend" x="338" y="82" text-anchor="middle">T+1日</text>
+        <text class="s-label-sm" x="338" y="102" text-anchor="middle">処理中</text>
+        <text class="s-label-sm" x="338" y="118" text-anchor="middle">（まだ動かない）</text>
+
+        <!-- 矢印2 -->
+        <line class="s-arrow" x1="421" y1="90" x2="483" y2="90"/>
+        <text class="s-label-sm" x="452" y="80" text-anchor="middle">+1営業日</text>
+
+        <!-- T+2ボックス -->
+        <rect x="486" y="50" width="170" height="80" rx="8" class="s-box-g"/>
+        <text class="s-text-g" x="571" y="78" text-anchor="middle">T+2日（受渡日）</text>
+        <text class="s-label-sm" x="571" y="98" text-anchor="middle">決済完了！</text>
+        <text class="s-label-sm" x="571" y="114" text-anchor="middle">お金と株式が動く</text>
+        <text class="s-label-sm" x="571" y="130" text-anchor="middle">出金が可能になる</text>
+
+        <!-- 下注記 -->
+        <text class="s-label-sm" x="340" y="175" text-anchor="middle">※土日・祝日は営業日にカウントされません</text>
+        <text class="s-label-sm" x="340" y="191" text-anchor="middle">例：月曜約定 → 水曜受渡（水・木・金の場合もあり）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 日本株・ETFのT+2決済タイムライン。月曜日に約定した場合、受渡日は（祝日がなければ）水曜日になります。※ 概念を示すイメージ図です。制度の詳細はJPX公式サイトをご確認ください。</figcaption>
+    </figure>
+
+    <p>「営業日」のカウントでは<strong>土日・祝日は数えません</strong>。たとえば木曜日に約定した場合、金曜日が T+1 で、土日を飛ばして月曜日が T+2（受渡日）になります。</p>
+
+    <table>
+      <thead><tr><th>約定曜日（祝日なし）</th><th>T+1</th><th>T+2（受渡日）</th></tr></thead>
+      <tbody>
+        <tr><td>月曜日</td><td>火曜日</td><td>水曜日</td></tr>
+        <tr><td>火曜日</td><td>水曜日</td><td>木曜日</td></tr>
+        <tr><td>水曜日</td><td>木曜日</td><td>金曜日</td></tr>
+        <tr><td>木曜日</td><td>金曜日</td><td>翌週月曜日</td></tr>
+        <tr><td>金曜日</td><td>翌週月曜日</td><td>翌週火曜日</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 売却代金はいつ出金できるのか</h2>
+
+    <p>株式を売却したとき、売却代金をすぐに銀行口座に出金しようとして「まだ出金できない」と表示されて戸惑った経験はないでしょうか。これは受渡日の仕組みによるものです。</p>
+
+    <div class="negative-box">
+      <strong>📉 よくある誤解</strong>：「約定したので代金がもう使える」と思って次の取引をしようとしたり、すぐに出金しようとする。→ 実際には受渡日（T+2）まで決済は完了していない。
+    </div>
+
+    <p>一般的な流れとしては、受渡日（T+2 日）を迎えた後に出金指示を出し、さらに銀行口座への着金に 1 営業日程度かかる場合があります。<strong>証券会社によって出金のルールは異なるため</strong>、利用している証券会社の FAQ や公式サイトで確認することをお勧めします。</p>
+
+    <div class="info-box">
+      <strong>💡 証券口座内での即日利用</strong>：売却代金は受渡日前でも、<strong>同じ証券口座内でのさらなる株式購入の資金</strong>として使える場合があります（「未収金」として扱われる）。ただし出金はできません。詳細は各証券会社の規定によります。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 権利付き最終日を逆算する（配当・優待の権利）</h2>
+
+    <p>受渡日の仕組みが最も実務的に重要になるのが、<strong>配当や株主優待の「権利取得」</strong>の場面です。多くの投資初心者が「権利確定日に株を持っていれば配当が取れる」と理解していますが、T+2 制度があるため、実際には<strong>権利確定日の 2 営業日前（権利付き最終日）</strong>までに株を保有している必要があります。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 680 220" role="img" aria-labelledby="kenri-title">
+        <title id="kenri-title">権利確定日・権利付き最終日・権利落ち日の関係図</title>
+        <text class="s-panel-label" x="20" y="26">権利取得に必要な日付の逆算（T+2の場合）</text>
+
+        <!-- 権利確定日 -->
+        <rect x="480" y="60" width="170" height="70" rx="8" class="s-box-b"/>
+        <text class="s-text-b" x="565" y="88" text-anchor="middle">権利確定日</text>
+        <text class="s-label-sm" x="565" y="108" text-anchor="middle">株主名簿が確定する日</text>
+        <text class="s-label-sm" x="565" y="124" text-anchor="middle">（多くは月末）</text>
+
+        <!-- 権利落ち日 -->
+        <rect x="260" y="60" width="170" height="70" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-legend" x="345" y="88" text-anchor="middle">権利落ち日</text>
+        <text class="s-label-sm" x="345" y="108" text-anchor="middle">権利確定日の前営業日</text>
+        <text class="s-label-sm" x="345" y="124" text-anchor="middle">この日以降買っても権利なし</text>
+
+        <!-- 権利付き最終日 -->
+        <rect x="30" y="60" width="190" height="70" rx="8" class="s-box-g"/>
+        <text class="s-text-g" x="125" y="85" text-anchor="middle">権利付き最終日</text>
+        <text class="s-label-sm" x="125" y="105" text-anchor="middle">権利確定日の2営業日前</text>
+        <text class="s-label-sm" x="125" y="122" text-anchor="middle">この日までに買えば権利取得</text>
+
+        <!-- 矢印（右から左） -->
+        <line x1="477" y1="95" x2="433" y2="95" stroke="#57606a" stroke-width="2"/>
+        <polygon points="433,91 425,95 433,99" fill="#57606a"/>
+        <text class="s-label-sm" x="455" y="82">前営業日</text>
+
+        <line x1="257" y1="95" x2="213" y2="95" stroke="#57606a" stroke-width="2"/>
+        <polygon points="213,91 205,95 213,99" fill="#57606a"/>
+        <text class="s-label-sm" x="221" y="82">さらに前営業日</text>
+
+        <!-- ポイントボックス -->
+        <rect x="30" y="155" width="620" height="50" rx="6" class="s-box-y"/>
+        <text class="s-text-y" x="340" y="178" text-anchor="middle">「権利確定日に株を持っていれば良い」は誤り</text>
+        <text class="s-label-sm" x="340" y="196" text-anchor="middle">→ 権利付き最終日の取引時間終了までに保有していること（T+2のため）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 権利取得の日付関係。T+2制度のため「権利確定日の2営業日前」＝権利付き最終日までに購入が必要。権利落ち日以降に買っても権利は取れません。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <h3>具体例で確認する</h3>
+    <p>仮に 3 月 31 日（月曜日）が権利確定日の場合：</p>
+    <ul>
+      <li><strong>3 月 31 日（月）</strong>：権利確定日（株主名簿確定）</li>
+      <li><strong>3 月 28 日（金）</strong>：権利落ち日（前営業日）</li>
+      <li><strong>3 月 27 日（木）</strong>：<strong>権利付き最終日（この日の取引時間終了までに購入が必要）</strong></li>
+    </ul>
+
+    <div class="warning-box">
+      3 月 28 日（金）や 3 月 31 日（月）に株を買っても、配当・優待の権利は取れません。権利確定日が月末でも、権利付き最終日はその月の 2〜3 営業日前になることを覚えておきましょう。
+    </div>
+
+    <p>詳しくは <a href="guide-dividend-basics.html">配当の仕組み（権利確定日・配当利回りの読み方と罠）</a> も合わせてご覧ください。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 年末年始・連休の落とし穴</h2>
+
+    <p>T+2 の仕組みは「2 営業日後」ですが、<strong>年末年始・大型連休（ゴールデンウィーク・シルバーウィーク等）は営業日がまとめてお休みになる</strong>ため、受渡日が通常より大幅にずれます。</p>
+
+    <h3>年末の注意点：年内受渡の最終売買日</h3>
+    <p>12 月 30 日と 31 日が非営業日（年末休み）の場合、年内に受渡日が来る最後の約定日は例年 <strong>12 月 26 日前後</strong>になります（年によって異なります）。12 月 27 日以降に売却しても、受渡日が翌年にずれ込む可能性があります。</p>
+
+    <div class="negative-box">
+      <strong>📉 年末の損益確定ミス</strong>：「12 月 29 日に損切りして今年の損失を確定しよう」→ 実際には受渡日が翌年 1 月になり、税務上は<strong>翌年の損失</strong>として扱われる。年末は特に余裕を持って行動することが重要です。
+    </div>
+
+    <h3>大型連休（GW 等）の権利付き最終日</h3>
+    <p>たとえば権利確定日の前後に祝日が集中するゴールデンウィークのような時期は、権利付き最終日が通常より 1〜3 日以上早まることがあります。長期連休前は特に権利日のカレンダーを確認しましょう。</p>
+
+    <p>利用している証券会社の Web サイトや、JPX（日本取引所グループ）の公式ページで各年の具体的な営業日カレンダーを確認することをお勧めします。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 税務上の損益は「受渡日」が基準</h2>
+
+    <p>投資の税金を考えるうえで重要なのが、<strong>損益の確定タイミングは「約定日」ではなく「受渡日」が基準</strong>という点です。</p>
+
+    <div class="info-box">
+      <strong>💡 受渡日基準の実務的な意味</strong>
+      <ul style="margin-top:8px">
+        <li>12 月中に約定しても、受渡日が翌年になれば<strong>翌年の損益</strong>として扱われる。</li>
+        <li>NISA の年間非課税投資枠の利用も、受渡日が基準になることが一般的（利用している証券会社で確認）。</li>
+        <li>年内に損益通算したい場合は、<strong>受渡日が年内に来る最後の約定日</strong>（年内受渡の最終売買日）を意識する必要がある。</li>
+      </ul>
+    </div>
+
+    <p>税務の具体的な取り扱いは個人の状況によって異なります。<strong>個別の税務判断については税務署・税理士等の専門家にご相談ください</strong>。</p>
+
+    <p>投資の税制全般については <a href="guide-stock-tax-basics.html">株・投信の税金入門（20.315%・損益通算・特定口座の仕組み）</a> も合わせてご覧ください。</p>
+
+    <!-- Section 7: 中上級向け -->
+    <h2 id="section-7">7️⃣ 投資信託の受渡日は株式とは異なる</h2>
+
+    <p>ここからは中上級者向けの内容です。株式・ETF は T+2 ですが、<strong>投資信託（非上場）の受渡日はファンドごとに異なり、T+3〜T+5 など株式より長くなることが多い</strong>です。</p>
+
+    <p>たとえば、投資信託を解約（換金）してもその代金が入金されるまでに 5 営業日かかるファンドもあります。「解約したらすぐ別の投資に回せる」という前提で動くと、思ったタイミングで資金を使えないことがあります。</p>
+
+    <table>
+      <thead><tr><th>商品</th><th>一般的な受渡日の目安</th><th>注意点</th></tr></thead>
+      <tbody>
+        <tr><td>国内株式・ETF</td><td>T+2</td><td>2019年7月以降</td></tr>
+        <tr><td>米国株（国内証券会社経由）</td><td>T+3〜T+4</td><td>米国ではT+1（2024年5月〜）だが、日本側の処理日数が加わる</td></tr>
+        <tr><td>投資信託（国内）</td><td>T+2〜T+5程度</td><td>ファンドにより大きく異なる</td></tr>
+        <tr><td>FX（外国為替証拠金）</td><td>原則当日（証拠金取引）</td><td>証拠金取引の特性による</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      上表はあくまで目安です。正確な受渡日は各商品・各証券会社のルールによって異なるため、取引前に証券会社の公式情報で必ず確認してください。
+    </div>
+
+    <h3>T+1 化の動向（中上級者向け）</h3>
+    <p>米国では 2024 年 5 月に株式の決済サイクルが T+2 から T+1 に移行しました。日本でも金融審議会（2024 年 7 月の報告書）でT+1 化の必要性が示され、2025 年 7 月時点で中間整理が公表されましたが、実施時期は未定です（出典：金融庁、2025 年 7 月）。T+1 化が実現すると受渡日が 1 日早まり、権利付き最終日の計算なども変わる可能性があります。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+
+    <p>受渡日の知識は、具体的な投資行動に直結します。当サイトでは次のページが関連しています。</p>
+
+    <ul>
+      <li><strong><a href="calendar.html">📅 経済カレンダー</a></strong>：重要な経済指標の発表日を確認し、権利確定日・年末の受渡日と重なっていないかを事前にチェックする。</li>
+      <li><strong><a href="guide-dividend-basics.html">配当の仕組み</a></strong>：権利付き最終日・配当落ちの具体的な計算方法を詳しく解説。</li>
+      <li><strong><a href="guide-order-types.html">注文方法の基本</a></strong>：指値・逆指値注文の仕組みと受渡日の関係（特に逆指値が「指定した価格で必ず執行されるとは限らない」という仕組み）と合わせて理解すると◎。</li>
+      <li><strong><a href="guide-stock-tax-basics.html">株・投信の税金入門</a></strong>：損益通算を年内に確定するための受渡日の活用。</li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績をチェック</div>
+      <div class="cta-box-desc">テクニカル分析に基づくシグナルの実際の成績・検証結果を公開中。受渡日の知識と合わせて、より実践的な判断に役立ててください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+
+    <p>受渡日は地味に見えて、<strong>配当・優待の権利取得、年末の損益確定、売却代金の出金タイミング</strong>に直接影響する重要な制度知識です。</p>
+
+    <ul>
+      <li>日本株・ETF の受渡日は現在<strong>T+2（約定日の 2 営業日後）</strong></li>
+      <li>配当・優待の権利を取るには<strong>権利確定日の 2 営業日前（権利付き最終日）</strong>までに購入が必要</li>
+      <li>年末年始・大型連休は受渡日がずれる。<strong>年内損益確定は早めに確認</strong></li>
+      <li>税務上の損益は<strong>受渡日ベース</strong>（約定日ではない）</li>
+      <li>投資信託は株式より受渡日が長くなることが多い（ファンドごとに異なる）</li>
+    </ul>
+
+    <p>「知らなかった」では済まない実務知識なので、この機会にしっかり理解しておきましょう。制度の詳細は証券会社や JPX の公式情報をご確認ください。</p>
+
+    <!-- 関連記事 -->
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-dividend-basics.html">
+        <div class="related-card-title">💰 配当の仕組み</div>
+        <div class="related-card-desc">権利確定日・配当落ち・高配当利回りの罠まで解説。受渡日と合わせて理解すると◎</div>
+      </a>
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">📋 注文方法の基本</div>
+        <div class="related-card-desc">成行・指値・逆指値の使い分け。受渡日のズレと約定のタイミングを理解しよう</div>
+      </a>
+      <a class="related-card" href="guide-stock-tax-basics.html">
+        <div class="related-card-title">💴 株・投信の税金入門</div>
+        <div class="related-card-desc">20.315%・損益通算・特定口座の仕組み。年末の受渡日確認と合わせて読みたい</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" id="kinsho-v1">【免責事項】本記事は投資教育・情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。本記事の内容は執筆時点の情報に基づいており、制度・ルールは変更される場合があります。最新の情報は証券会社・日本取引所グループ（JPX）・金融庁の公式情報をご確認ください。投資には元本割れのリスクがあります。投資判断はご自身の責任において行ってください。税務に関する具体的な判断については、税務署・税理士等の専門家にご相談ください。当サイトは金融商品取引業者ではなく、投資助言業の登録も行っていません。</p>
+
+  </article>
+
+</main>
+
+<footer>
+  <p><a href="index.html">MarketWatch AI</a> ／ <a href="guides.html">解説記事一覧</a> ／ <a href="privacy.html">プライバシーポリシー</a> ／ <a href="about.html">このサイトについて</a></p>
+  <p style="margin-top:8px">© 2026 MarketWatch AI ／ 本サイトは情報提供を目的としており、投資助言ではありません。</p>
+</footer>
+
+<script>
+// テーマトグル
+function toggleTheme(){
+  const b=document.body;
+  if(b.classList.contains('dark')){b.classList.remove('dark');localStorage.setItem('theme','light');document.getElementById('theme-toggle').textContent='🌙';}
+  else{b.classList.add('dark');localStorage.setItem('theme','dark');document.getElementById('theme-toggle').textContent='☀️';}
+}
+(function(){
+  const t=localStorage.getItem('theme');
+  if(t==='dark'){document.body.classList.add('dark');document.getElementById('theme-toggle').textContent='☀️';}
+})();
+// 読書進捗バー
+window.addEventListener('scroll',function(){
+  const el=document.getElementById('reading-progress');
+  if(!el)return;
+  const h=document.documentElement;
+  const pct=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  el.style.width=Math.min(100,Math.max(0,pct))+'%';
+},{passive:true});
+</script>
+</body>
+</html>

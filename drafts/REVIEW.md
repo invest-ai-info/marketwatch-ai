@@ -1,3 +1,25 @@
+## 2026-08-22 🤖 自動生成 | settlement-cycle | autodraft-article
+
+- **記事**: 受渡日（決済日）とは何か｜約定日との違い・T+2制度・権利付き最終日・出金タイミングをやさしく解説
+- **シリーズ**: 💰 投資の基礎知識
+- **下書きファイル**: `drafts/draft-settlement-cycle.html`
+- **参照出典**:
+  - JPX「株式等の決済期間短縮化（T+2化）」: https://www.jpx.co.jp/equities/clearing-settlement/tplus2-settlement-cycle/index.html
+  - 金融庁「証券決済期間の短縮化（T+1化）に係る検討状況」(2025年7月): https://www.fsa.go.jp/news/r7/20250715_t1.html
+  - JPX「T+1化の検討状況」(2025年7月): https://www.jpx.co.jp/corporate/news/news-releases/1030/20250715-01.html
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・制度説明のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず儲かる」等の表現なし）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・フッター）
+  - ✅ 出典明記・一次情報（JPX・金融庁）を参照
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ 税務アドバイス禁止（「税理士へ」の一文あり）
+  - ✅ 制度変更の可能性を明記
+- **SVGのTODO**: SVG 2点（T+2タイムライン・権利日関係図）。ライト/ダーク実機確認が必要（body.dark の .s-box-* クラスのSVG fill が正しく切り替わるか）
+- **人間の残作業**: SVGライト/ダーク実機確認・タイトル微調整。公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-08-21 ✅ 公開完了 | sunk-cost | autopublish
 
 - **記事**: 塩漬けとサンクコスト（埋没費用）｜「もう戻らないお金」が判断を歪める理由
