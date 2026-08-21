@@ -1,3 +1,7 @@
+## 2026-08-22 autopublish: ✅公開 | guide-counterparty-risk | 決定論🟢 / Opus🟡軽微修正→独立Opus🟢白 | https://marketwatch-jp.com/guide-counterparty-risk.html
+
+---
+
 ## 2026-08-22 🤖 signal-lab-daily #076 | ロング回避ゲート2本⛔反証確定 + metal×long降格
 
 - **記事番号**: #076（#075は2026-08-21公開済み）
