@@ -154,4 +154,8 @@ SYNC_FILES = [
     "guide-market-hours.html",
     "guide-proverb-bijin-toohyou.html",
     "guide-news-2026-08-20-treasury-buyback-bessent-yield.html",
+    "guide-signal-lab-075.html",
+    "guide-sunk-cost.html",
+    "guide-proverb-kakaku-to-kachi.html",
+    "guide-scam-deepfake-scam.html",
 ]

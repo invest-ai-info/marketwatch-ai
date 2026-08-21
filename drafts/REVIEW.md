@@ -1,4 +1,73 @@
+## 2026-08-21 ✅ 公開完了 | sunk-cost | autopublish
+
+- **記事**: 塩漬けとサンクコスト（埋没費用）｜「もう戻らないお金」が判断を歪める理由
+- **シリーズ**: 🧠 投資の心理・メンタル
+- **公開ファイル**: `guide-sunk-cost.html`
+- **ゲート通過記録**:
+  - check_guide_draft.py: GREEN（SVGはみ出し1件修正後クリア）
+  - Opusコンプラ+品質1回目: 🟡軽微（FIX-1〜6適用: 用語初出説明×3・断定軟化×2・Markdown修復×1）
+  - check_guide_draft.py再確認: GREEN
+  - 独立Opus確認: 🟢白（公開承認）
+  - publish_article.py: guides.html更新・SYNC_FILES追加・更新履歴追加
+  - check_site_consistency.py: エラーなし（警告22件は既存）
+  - PUSH-MAIN: 成功
+- **公開URL**: https://marketwatch-jp.com/guide-sunk-cost.html
+
+---
+
+## 2026-08-21 #075 ✅ 公開済み
+
+**テーマ**: trend=上昇×逆張り買い FWD N=229 後期解剖——BB後期全域マイナス確定・指数後期全域マイナス確定・RSI65%全域プラス継続
+
+**ゲート通過記録**:
+- signal_lab_verify.py: GREEN 12/12 claims / 0 SVG warnings (SVG警告4件→修正後クリア)
+- Opusコンプラ1回目: 🟡軽微（FIX-1〜4適用: フッター免責強化・断定表現軟化×2・重複id解消）
+- signal_lab_verify.py再確認: GREEN 12/12
+- 独立Opus確認: 🟢白 FINAL VERDICT
+- finalize_signal_lab.py: svg=4 kinsho=3 43KB
+- publish_article.py: guides.html更新・SYNC_FILES追加・更新履歴追加
+- mw.py check: ✅ OK（エラーなし・既存警告21件は別記事）
+- PUSH-MAIN: 成功
+
+**主要数値** (verify.py確定値):
+- FWD全体: 107/229=46.7% RCI[-0.06,+0.24]（降格警戒継続）
+- H1✅ BB後期: 15/55=27.3% RCI[-0.641,-0.087]（全域マイナス確定）
+- H2✅ 指数後期: 7/31=22.6% RCI[-0.822,-0.124]（全域マイナス確定）
+- H3✅ RSI FWD: 36/55=65.5% RCI[+0.231,+0.823]（全域プラス継続）
+
+**公開URL**: https://marketwatch-jp.com/guide-signal-lab-075.html
+
 # 🤖 AUTODRAFT REVIEW ノート（最新が上）
+
+---
+
+## 2026-08-20 | ⏳ 下書き生成 | sunk-cost | autodraft-article
+
+- **記事**: 塩漬けとサンクコスト（埋没費用）｜「もう戻らないお金」が判断を歪める理由
+- **シリーズ**: 🧠 投資の心理・メンタル
+- **下書きファイル**: `drafts/draft-sunk-cost.html`
+- **参照出典**:
+  - Arkes & Blumer (1985) "The Psychology of Sunk Cost", *Organizational Behavior and Human Decision Processes*, vol.35, pp.124-140
+  - Kahneman & Tversky (1979) "Prospect Theory", *Econometrica*, vol.47 — 損失回避 λ ≈ 2.25（範囲 1.5〜2.5）
+  - Shefrin & Statman (1985) "The Disposition to Sell Winners Too Early and Ride Losers Too Long", *Journal of Finance*, vol.40
+  - コンコルド協定調印1962年・英財務省1965年採算不可評価・商業運航1976年・退役2003年（各確認済み）
+  - Thaler (1980) *Journal of Economic Behavior and Organization* — sunk cost effect の行動経済学的定式化（2017年ノーベル経済学賞）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・概念説明のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」等の使用なし）
+  - ✅ kinsho-v1 免責：冒頭バナー ＋ 本文末 ＋ footer（3箇所）
+  - ✅ 不確認の数値（「4.7%アンダーパフォーム」等）は本文に含まず
+  - ✅ loss-cut / cognitive-biases との役割分担を冒頭 info-box で明示
+  - ✅ noindex,nofollow 設定あり
+- **SVG 状況**:
+  - 図1: サンクコスト直感図解（チケット例）— 実装済み・要ライト/ダーク実機確認
+  - 図2: 建値への固執と問い直しの対比図 — 実装済み・要ライト/ダーク実機確認
+  - 図3: 機会費用の概念図 — TODO コメント残し（Section 6 内に記載）
+- **人間の残作業**:
+  1. SVG 図1・図2 のライト/ダーク実機表示確認
+  2. 機会費用 TODO 図の追加（任意）
+  3. タイトル・見出し微調整（任意）
+  4. **公開は毎朝 08:40 の autopublish-route が自動ゲート付きで実行**（check_guide_draft.py → Opus コンプラ → 自動公開）
 
 ---
 
