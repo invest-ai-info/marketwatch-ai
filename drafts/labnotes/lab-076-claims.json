@@ -1,0 +1,48 @@
+{
+  "article_id": "076",
+  "asof": "2026-08-22",
+  "claims": [
+    {
+      "label": "trend=中立・もみあい×dir=long IS期間（gate前 2026-06-17より前）",
+      "filter": {"trend": "中立・もみあい", "direction": "long", "fired_before": "2026-06-17"},
+      "k": 75,
+      "n": 217
+    },
+    {
+      "label": "trend=中立・もみあい×dir=long FWD期間（gate後 2026-06-17以降）",
+      "filter": {"trend": "中立・もみあい", "direction": "long", "fired_from": "2026-06-17"},
+      "k": 353,
+      "n": 739
+    },
+    {
+      "label": "trend=下降×dir=long IS期間（gate前 2026-06-25より前）",
+      "filter": {"trend": "下降", "direction": "long", "fired_before": "2026-06-25"},
+      "k": 92,
+      "n": 260
+    },
+    {
+      "label": "trend=下降×dir=long FWD期間（gate後 2026-06-25以降）",
+      "filter": {"trend": "下降", "direction": "long", "fired_from": "2026-06-25"},
+      "k": 248,
+      "n": 499
+    },
+    {
+      "label": "trend=下降×reversalL FWD期間（逆張り買い×下降トレンド・2026-06-25以降）",
+      "filter": {"trend": "下降", "reversal_long": true, "fired_from": "2026-06-25"},
+      "k": 103,
+      "n": 185
+    },
+    {
+      "label": "group=metal×dir=long IS期間（gate前 2026-06-19より前）",
+      "filter": {"group": "metal", "direction": "long", "fired_before": "2026-06-19"},
+      "k": 17,
+      "n": 93
+    },
+    {
+      "label": "group=metal×dir=long FWD期間（gate後 2026-06-19以降・降格後継続観察）",
+      "filter": {"group": "metal", "direction": "long", "fired_from": "2026-06-19"},
+      "k": 114,
+      "n": 235
+    }
+  ]
+}

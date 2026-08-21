@@ -1,3 +1,14 @@
+## 2026-08-22 🤖 signal-lab-daily #076 | ロング回避ゲート2本⛔反証確定 + metal×long降格
+
+- **記事番号**: #076（#075は2026-08-21公開済み）
+- **下書き**: `drafts/draft-signal-lab-076.html`
+- **claims**: `drafts/labnotes/lab-076-claims.json`（7件）
+- **分析**: `drafts/labnotes/lab-076-analysis.md`
+- **仮説**: trend=中立×long FWD RCI[+0.046~+0.298]✅ / trend=下降×long FWD RCI[+0.086~+0.393]✅ / metal×long FWD RCI[-0.026~+0.422]❌降格
+- **ゲート状態**: verify.py待ち→Opus待ち
+
+---
+
 ## 2026-08-22 🤖 自動生成 | settlement-cycle | autodraft-article
 
 - **記事**: 受渡日（決済日）とは何か｜約定日との違い・T+2制度・権利付き最終日・出金タイミングをやさしく解説
