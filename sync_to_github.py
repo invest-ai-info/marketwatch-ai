@@ -157,4 +157,5 @@ SYNC_FILES = [
     "guide-signal-lab-075.html",
     "guide-sunk-cost.html",
     "guide-proverb-kakaku-to-kachi.html",
+    "guide-scam-deepfake-scam.html",
 ]
