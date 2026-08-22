@@ -86,7 +86,7 @@ CAPE・日経予想PER（元データが月次・週次＝日次チャートに�
 - **収集は `update-market-news.yml` に相乗り**（`build_health_history.py` と同じ位置＝生成の**前**・`continue-on-error`）。API呼び出しは1回の生成あたり約10コール（プライム銘柄マスタ1件＋直近10暦日ぶんの日足）＝軽量
 - **ローカルで実データバックフィル済み**（`python build_touraku_history.py --backfill`＝86営業日ぶん取得・`touraku-history.json` に seed 済み）。**現在の25日騰落レシオ＝116.8%**（2026-08-21時点、真の公式値とほぼ完全一致）。`get_touraku_ratio()` を実際に呼んで116.8を返すこと・`analyze_touraku()` が「通常/🟢」に正しく分類することを実測確認済み
 - テスト `_test_touraku_history.py` — **19/19 PASS**（merge_points冪等性・compute_up_down前日値照合・ratio25の窓境界と0除算・calendar_days_back土日除外・load_historyの堅牢性）
-- **🔴 オーナーの手が要る最後の1点**: **GitHub リポジトリに `JQUANTS_API_KEY` シークレットを登録してください**（Settings > Secrets and variables > Actions > New repository secret。値は `market-news-config.json` の `jquants_api_key` と同じもの）。**登録するまでは`touraku-history.json`が8/21時点のまま更新が止まる**（`build_touraku_history.py` は鍵が無いと `equities/master` 呼び出しで例外→continue-on-errorで握り潰され、前回JSONのまま生成が続く＝表示は止まった直近値のまま・壊れはしない）。登録後の次回runから自動で追いつく
+- **🔴 オーナーの手が要る最後の1点**: **GitHub リポジトリに `JQUANTS_API_KEY` シークレットを登録してください**（Settings > Secrets and variables > Actions > New repository secret。値は `market-news-config.json` の `jquants_api_key` と同じもの）。`touraku-history.json` は SYNC禁忌（ローカルからpush不可）だが、`build_touraku_history.py` は `market-health-history.json` と同じ「蓄積点が少なければ自動でバックフィル相当のレンジを取りに行く」自己修復ロジック（`SELF_HEAL_MIN_POINTS`）を持たせてある＝**シークレット登録後の最初のrunで自動的に約4ヶ月ぶん埋まり、手でファイルを転送する必要は無い**。**登録するまでは**`equities/master` 呼び出しが失敗し続け（continue-on-errorで握り潰される）、騰落レシオは「取得不可」表示のまま＝壊れはしない
 - 参考: どちらの方式で進めるかは一度オーナーに確認し、「J-Quants方式（正確・推奨）」を選択いただいた上で実装した
 
 ### 📎 2026-08-17〜19 にやったこと（要点）
