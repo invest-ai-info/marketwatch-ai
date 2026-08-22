@@ -80,7 +80,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年08月22日 10:31 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">🩺 市場健康度ダッシュボード</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年08月22日 14:21 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">投資家心理・バリュエーション・ボラティリティを総合診断</div></div></div></header>
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -106,7 +106,7 @@
     <h2>⚠️ 総合診断: センチメントとバリュエーションを一目で確認</h2>
     <p>
       センチメント・ボラティリティ・割高割安を総合判定。
-      <b>米VIX 15.1</b> ／ <b>騰落レシオ 177.8%</b> はリアルタイム更新。
+      <b>米VIX 15.1</b> ／ <b>騰落レシオ N/A</b> はリアルタイム更新。
       その他の指標は <b>2026-04-20 時点の参考値</b>（月次手動更新）。
       <br>● 青=適正／割安　● 橙=やや割高・過熱　● 赤=危険水準
     </p>
@@ -133,8 +133,8 @@
       </article>
       <article class="card">
         <div class="card-header"><div class="card-title">📊 騰落レシオ（25日）</div><div class="card-sub">東証プライム</div></div>
-        <div class="big-num" style="color:#da3633">177.8% <span class="tag" style="background:#da3633;color:#fff">過熱</span></div>
-        <div class="gauge fear"><div class="gauge-pin" style="left:95%"></div></div>
+        <div class="big-num" style="color:#57606a">N/A <span class="tag" style="background:#57606a;color:#fff">取得不可</span></div>
+        <div class="gauge fear"><div class="gauge-pin" style="left:50%"></div></div>
         <div class="gauge-labels"><span>30</span><span>70</span><span>100</span><span>120</span><span>170</span></div>
         <p class="comment">120%以上は買われすぎ、70%以下は売られすぎの目安。リアルタイム値。</p>
         <div class="beginner">値上がり銘柄数÷値下がり銘柄数×100。日本株の短期的な過熱感を測る定番指標。</div>
@@ -456,7 +456,7 @@
   </div>
 </div>
 </div>
-<style>
+<style data-mw-scoped="widget">
 .mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
 .mw-newsletter *{box-sizing:border-box}
 .mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
@@ -510,11 +510,11 @@ function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-
   <p style="margin-top:8px"><a href="about.html">運営者情報</a> &nbsp;|&nbsp; <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp; <a href="contact.html">お問い合わせ</a></p>
 <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
-<script>(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark .header-title,body.dark .header-meta,body.dark .header-meta span{color:#e6edf3!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark hr{border-color:#30363d!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}body.dark *[style*="background:#fff"]:not(img),body.dark *[style*="background:#ffffff"]:not(img),body.dark *[style*="background-color:#fff"]:not(img),body.dark *[style*="background-color:#ffffff"]:not(img),body.dark *[style*="background:#f6f8fa"]:not(img),body.dark *[style*="background-color:#f6f8fa"]:not(img){background:#161b22!important}body.dark *[style*="border:1px solid #d0d7de"],body.dark *[style*="border-color:#d0d7de"]{border-color:#30363d!important}body.dark *[style*="color:#1f2328"],body.dark *[style*="color:#57606a"],body.dark *[style*="color:#6e7781"],body.dark *[style*="color:#424a53"]{color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();</script>
+<script>(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{if(ss[i].ownerNode&&ss[i].ownerNode.getAttribute&&ss[i].ownerNode.getAttribute('data-mw-scoped')==='widget'){continue}var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark .header-title,body.dark .header-meta,body.dark .header-meta span{color:#e6edf3!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark hr{border-color:#30363d!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}body.dark *[style*="background:#fff"]:not(img),body.dark *[style*="background:#ffffff"]:not(img),body.dark *[style*="background-color:#fff"]:not(img),body.dark *[style*="background-color:#ffffff"]:not(img),body.dark *[style*="background:#f6f8fa"]:not(img),body.dark *[style*="background-color:#f6f8fa"]:not(img){background:#161b22!important}body.dark *[style*="border:1px solid #d0d7de"],body.dark *[style*="border-color:#d0d7de"]{border-color:#30363d!important}body.dark *[style*="color:#1f2328"],body.dark *[style*="color:#57606a"],body.dark *[style*="color:#6e7781"],body.dark *[style*="color:#424a53"]{color:#e6edf3!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();</script>
 <script src="site-search.js" defer></script>
 
 <!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
-<style>
+<style data-mw-scoped="widget">
 #mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
 #mw-back-to-top.show{opacity:1;visibility:visible}
 #mw-back-to-top:hover{border-color:#0969da;color:#0969da}
