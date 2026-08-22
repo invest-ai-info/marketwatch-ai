@@ -48,6 +48,7 @@
     + 'body.dark #ss-foot{border-top-color:#30363d}'
     + '@media(max-width:600px){#ss-btn{top:14px;right:62px;width:40px;height:40px}#ss-overlay{padding:40px 10px}#ss-foot{display:none}}';
   var styleEl = document.createElement('style');
+  styleEl.setAttribute('data-mw-scoped', 'widget'); // ダークモード判定JSに「ページ全体の明示ルールではない」と伝える目印
   styleEl.textContent = css;
   document.head.appendChild(styleEl);
 
