@@ -92,7 +92,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html preview.html sitemap.xml robots.txt market-health-history.json touraku-history.json
+          git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html preview.html sitemap.xml robots.txt market-health-history.json
+          # 🆕 2026-08-22 修正: touraku-history.json は JQUANTS_API_KEY 未登録の間 build_touraku_history.py が
+          # 例外を握り潰して保存せず終了するため、ファイル自体が存在しない（新規リポジトリには元から無い）。
+          # `git add` に存在しないパスを混ぜると **他のファイルも道連れで pathspec エラー→コミット全体が失敗**
+          # する（2026-08-22 に実測: 生成は成功したのに毎回このステップだけ exit 128 で6コアページが更新されない
+          # 事故になっていた）。存在するときだけ足す
+          if [ -f touraku-history.json ]; then git add touraku-history.json; fi
           # 自動生成記事（auto_weekly_strategy / auto_indicator_preview の出力）も含める
           git add guide-weekly-*.html guide-auto-*.html 2>/dev/null || true
           if git diff --cached --quiet; then
