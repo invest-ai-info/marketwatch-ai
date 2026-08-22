@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-08-22
+- 判定: ✅ 公開済み
+- 選定トピック: ジャクソンホール2026：ウォーシュFRB議長の「就任初講演」で9月以降の政策が動く（カテゴリ: マクロ・金融政策・米国金利）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 8/27-29のジャクソンホール経済シンポジウムでウォーシュFRB議長（2026-05-22就任）が就任後初の主要講演。9月15-16日FOMCへの最後の主要シグナル機会として市場注目が高い。今週は30年債5.33%→財務省バイバック介入→5.19%と乱高下し「次の方向感」を求める状況。週末の市場ニュースとして過去最高水準の付加価値を持つ確認済み事実ベースのプレビュー記事が書けると判断。ビットコイン週間+22%（13/15）・金$4,590/3ヶ月高値（9/15）を上回る。
+- 出典（確認済み）:
+  - Kansas City Fed「Jackson Hole Economic Symposium」（公式）
+  - Regards of Wallstreet「Jackson Hole 2026: Dates, Schedule, and Warsh's First Speech as Fed Chair」
+  - CNBC「Fed meeting recap: Warsh says Fed won't hesitate to stop inflation」（2026-07-29）
+  - Bloomberg「Jackson Hole 2026」
+  - FRB公式プレスリリース「Kevin Warsh takes oath of office」（2026-05-22）
+  - Britannica Money「Kevin Warsh」
+  - CFI「Jackson Hole: Where Words Move Markets」
+  - moomoo「Jackson Hole Looms: Chairman Warsh's Debut」
+  - kalkine.com「Jackson Hole 2026: Can Warsh's Debut Signal Where Rates Go Next」
+  - investinglive.com「Jackson Hole hype outruns Warsh playbook」
+  - DayTradingToolkit「Jackson Hole 2026: What Day Traders Should Watch」
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正1件適用（L225「考えておく必要がある」→「論点のひとつとして挙げられている」に軟化。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典10系統以上）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典10系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告24件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-22-jackson-hole-warsh-debut.html
+- commit: b3becac（main へ push 済み）
+
+---
+
 ## 2026-08-21
 - 判定: 🚩要人間レビュー（事実・数値の正確性問題によるエスカレ）
 - 選定トピック: ウォルマートQ2 FY2027決算：5年ぶりコンプ未達で株価約10%急落、ダウ700ポイント超安──米国消費の変調を中立整理（カテゴリ: 米国消費・小売決算・マクロ）
