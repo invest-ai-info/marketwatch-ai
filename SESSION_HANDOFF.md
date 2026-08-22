@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 14:15）
+# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 14:35）
 
 ## 🚩 次のセッションは、ここから（状態はすべて 2026-08-19 22:35 JST の実測）
 
@@ -71,23 +71,23 @@ CAPE・日経予想PER（元データが月次・週次＝日次チャートに�
 4. **停止検知の閾値「一律3日」は誤り**。353日ぶんを日毎に回した誤検知＝一律2日:174回／**一律3日:24回**／
    一律4日:2回／**系列別:0回**。実測の最大間隔（vix4・cnn4・crypto1・buffett5日）から系列別に置いた
 
-### ✅ 2026-08-22: 既存の欠陥3件を調査 → B・Cは修正済み、Aは根本原因を特定した上でスコープ判断待ち
+### ✅ 2026-08-22: 既存の欠陥3件（A・B・C）すべて対応完了
 
 | # | 内容 | 状態 |
 |---|---|---|
-| B | vix.html の警戒ライン・恐怖ラインの点線 | **修正済み**。`build_vix_html` の `<head>` に `chartjs-plugin-annotation` の `<script>` を追加（他ページと同じ1行）。ローカルで実データ描画テスト済み |
-| C | ダークモードが5ページ（vix/charts/hot-assets/calendar/market-health）で機能しない | **修正済み**。根本原因は `site-search.js` 単体ではなく、**`safe_write()` が全ページに自動注入する `NEWSLETTER_FORM`／`BACK_TO_TOP` の `<style>` ブロック**（body.dark対応ずみの自己完結ウィジェット）が、ページ本体より先にDOMへ乗る位置にあり、判定JSの「`body.dark` セレクタが1つでもあれば明示ルールあり」という緩い判定に誤ってヒットしていた（index/guidesは自前の本体ダークCSSを別途持つので症状が出なかっただけ）。3箇所の注入元（site-search.js の動的`<style>`／NEWSLETTER_FORM／BACK_TO_TOP）に `data-mw-scoped="widget"` を付け、判定JS（7箇所すべて）がそれをスキップするよう修正。ローカルでvix.html相当を実レンダリングし、トグルで `body.dark`→背景 `#0d1117` になることをブラウザで実測確認済み |
-| A | **騰落レシオが別の指標**だった件 | **数値の誤表示は止めた／正しい算出方法はオーナー判断待ち**。詳細は次項 |
+| B | vix.html の警戒ライン・恐怖ラインの点線 | **修正済み・ライブ確認済み**。`build_vix_html` の `<head>` に `chartjs-plugin-annotation` の `<script>` を追加（他ページと同じ1行）。本番vix.htmlで `Chart.getChart().options.plugins.annotation.annotations` に2件登録されていることをJS実行で確認 |
+| C | ダークモードが5ページ（vix/charts/hot-assets/calendar/market-health）で機能しない | **修正済み・ライブ確認済み**。根本原因は `site-search.js` 単体ではなく、**`safe_write()` が全ページに自動注入する `NEWSLETTER_FORM`／`BACK_TO_TOP` の `<style>` ブロック**（body.dark対応ずみの自己完結ウィジェット）が、ページ本体より先にDOMへ乗る位置にあり、判定JSの「`body.dark` セレクタが1つでもあれば明示ルールあり」という緩い判定に誤ってヒットしていた（index/guidesは自前の本体ダークCSSを別途持つので症状が出なかっただけ）。3箇所の注入元（site-search.js の動的`<style>`／NEWSLETTER_FORM／BACK_TO_TOP）に `data-mw-scoped="widget"` を付け、判定JS（7箇所すべて）がそれをスキップするよう修正。本番vix.htmlで `toggleTheme()` 実行→背景が実際に `#0d1117` になることを確認 |
+| A | 騰落レシオが別の指標だった件 | **修正済み・J-Quants方式で本番実装**（オーナー判断＝J-Quants方式を選択）。詳細は次項 |
 
-#### A の詳細（8/22 調査）
+#### A の詳細（8/22・J-Quants方式で実装完了）
 
-- **一次ソース（nikkei225jp.com）は直せない**: ページ構造が変わり、25日騰落レシオの数値はサーバー側HTMLに無い。実際は `/_data/_nfsDATA/DAY/daily2year.json` をクライアントJSで読んで描画している。実測するとこのURLは取得できる（HTTP 200）が、**同サイトの robots.txt が `User-agent: *` に対し明示的に `Disallow: /_data/`**（例外は無関係なXML2件のみ）にしている＝自動巡回で取りに行くのは筋が悪い
-- **フォールバック（TOPIX ETF 1306.T の日次騰落"日数"を騰落"銘柄数"の代わりに使う近似）は指標として別物**だった。実測で確認：J-Quantsの全銘柄日足レイク(`_jq_daily_lake`)＋東証プライム銘柄マスタ(`_jp_listed_master.json`)から真の25日騰落レシオを独立計算し、nikkei225jp.comが自分で計算・公開している値（WebFetchで取得）と突き合わせたところ、8/21時点で884勝622敗(116.76%)＝ほぼ完全一致（サイト側発表883勝622敗116.81%、1銘柄差のみ）。一方ライブの表示値177.8%は「16/9×100」（ETFの日次騰落"日数"）で、**種類の違う計算**。しかも判定が反転する差だった＝真値116.8%は「適正」（🟢）、誤表示177.8%は「過熱」（🔴）
-- **応急処置として実施済み**: `get_touraku_ratio()` からETF近似を削除し、一次ソース失敗時は `None` を返すようにした。`market-health.html`・AI解説・健康度セクションはいずれも既存の「取得不可→N/A表示」パスを持っているため、コード変更はこの1関数のみ。次回の生成から**騰落レシオは「取得不可」表示になり、誤った数値は出なくなる**（コード上で確認・実データでの反映は次回 update-market-news 後）
-- **正しい値を復活させる方法は2案、判断待ち**:
-  1. **J-Quants方式**（実測で正確・上記の再計算そのもの）: 公開パイプライン（GitHub Actions）に `JQUANTS_API_KEY` を新規シークレットとして追加し、生成のたびに `equities/bars/daily` を25日ぶん＋`equities/master`を叩く必要がある（Light プランへの新規・継続的なAPI消費＝コスト影響あり）。これまでJ-Quantsは非公開の個人トレード研究パイプライン専用だった（`jp_daily.py` 等）＝**公開サイトの自動生成にJ-Quantsを組み込むのは初めて**という一線を越える判断
-  2. **Yahoo/yfinanceバスケット方式**（新規シークレット・追加コスト無し）: 東証プライムの流動性上位300〜400銘柄程度の**公開情報のコード一覧**を新規に作り生成スクリプトに埋め込み、既存のyfinance経由（無料・無認証・生成スクリプトが全指標ですでに使っている方式）で終値を取得して同じ計算をする。「全銘柄」ではなく「流動性上位◯銘柄」になるため、**説明文を正直に書き直す必要**がある（母数が変わればitem Aの本来の指摘＝「別物を本来の名前で出している」を形を変えて繰り返しかねない）
-  - どちらも未着手。**オーナー判断待ち**
+- **一次ソース（nikkei225jp.com）は直せない**（ページ構造変更＋robots.txtがJSONエンドポイントをDisallow）。旧フォールバック（TOPIX ETFの日次騰落"日数"を銘柄数の代わりに使う近似）は指標として別物だった（詳細は上の調査ログ）ため削除。
+- **新規実装 `build_touraku_history.py`**（J-Quants `equities/bars/daily`＋`equities/master` で東証プライム全銘柄の終値を取得→前日比で値上がり/値下がり銘柄数を集計）が `touraku-history.json`（**SYNC禁忌**＝Actions生成・`check_site_consistency.py`のSYNC_FORBIDDENに登録済み）へ日次で追記。`generate_market_news.py` の `get_touraku_ratio()` はこのJSONから直近25営業日ぶんの `ratio25()` を計算する（一次ソースの生死に関わらず安定動作）。
+- **収集は `update-market-news.yml` に相乗り**（`build_health_history.py` と同じ位置＝生成の**前**・`continue-on-error`）。API呼び出しは1回の生成あたり約10コール（プライム銘柄マスタ1件＋直近10暦日ぶんの日足）＝軽量
+- **ローカルで実データバックフィル済み**（`python build_touraku_history.py --backfill`＝86営業日ぶん取得・`touraku-history.json` に seed 済み）。**現在の25日騰落レシオ＝116.8%**（2026-08-21時点、真の公式値とほぼ完全一致）。`get_touraku_ratio()` を実際に呼んで116.8を返すこと・`analyze_touraku()` が「通常/🟢」に正しく分類することを実測確認済み
+- テスト `_test_touraku_history.py` — **19/19 PASS**（merge_points冪等性・compute_up_down前日値照合・ratio25の窓境界と0除算・calendar_days_back土日除外・load_historyの堅牢性）
+- **🔴 オーナーの手が要る最後の1点**: **GitHub リポジトリに `JQUANTS_API_KEY` シークレットを登録してください**（Settings > Secrets and variables > Actions > New repository secret。値は `market-news-config.json` の `jquants_api_key` と同じもの）。**登録するまでは`touraku-history.json`が8/21時点のまま更新が止まる**（`build_touraku_history.py` は鍵が無いと `equities/master` 呼び出しで例外→continue-on-errorで握り潰され、前回JSONのまま生成が続く＝表示は止まった直近値のまま・壊れはしない）。登録後の次回runから自動で追いつく
+- 参考: どちらの方式で進めるかは一度オーナーに確認し、「J-Quants方式（正確・推奨）」を選択いただいた上で実装した
 
 ### 📎 2026-08-17〜19 にやったこと（要点）
 
