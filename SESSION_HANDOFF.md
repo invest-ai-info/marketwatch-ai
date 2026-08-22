@@ -1,4 +1,59 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 14:35）
+# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 15:20）
+
+## 🆕 2026-08-22 午後: 積み残しの設計書差分＋ブランドカラー Phase 2 を実行
+
+オーナー指示「保留中の作業をすべて進めて」に対し、対象を3点に絞って実施（他は
+オーナー本人の判断／作業が要る項目のため対象外にした＝下記「オーナーの手が要るもの」節は不変）。
+
+### ① market-health-history 設計書の差分＝騰落レシオを5系列目として追加
+
+`docs/superpowers/specs/2026-08-19-market-health-history-design.md` §3 が「別物問題」を理由に
+チャート対象外にしていた騰落レシオを、8/22午前の欠陥A対応（J-Quants方式）でブロッカーが解消したのを受けて
+5系列目として実装した（設計書 §11 に詳細）。
+
+- `build_health_history.py` に `fetch_touraku_ratio_series()` を追加。**ネットワークは叩かない**＝
+  `build_touraku_history.py` が集めた `touraku-history.json` をローカルで読み、日付ごとに25日窓の
+  `ratio25` を計算するだけ（式は build_touraku_history から import＝複製しない）
+- `ZONES["touraku_ratio"]` を新設し、`generate_market_news.py` の `analyze_touraku()` が持っていた
+  ハードコード閾値（底値圏<60／売られすぎ60-80／通常80-120／買われすぎ120-140／過熱圏140-）を
+  数値そのままで移設。`analyze_touraku()` は `classify_zone("touraku_ratio", ...)` を呼ぶだけに置換
+  （リファクタ前後で戻り値が完全一致することをローカル実測で確認）
+- 🐛 **実装中に見つけたバグ**: `update-market-news.yml` は元 `build_health_history → build_touraku_history`
+  の順だった。`fetch_touraku_ratio_series()` はローカルJSONを読むだけなので、この順だと当日ぶんの
+  更新前を読んで**touraku_ratio系列だけ毎日1日遅れる**。`build_touraku_history → build_health_history`
+  に入れ替えて修正
+- ⚠️ **stale_days=10 は暫定値**。touraku-history.json は2026-04-16開始でまだ年末年始を跨いだ実測が無い
+  （実測最大間隔は6日＝GW想定）。他系列と同じ「実測+1日」まで詰めるのは2027年初に見直す
+- テスト `_test_health_history.py` を D9〜D12・K1〜K5 で拡張＝**全55/55 PASS**（新設5件含む）。
+  ローカルで `build_health_history.py` を実行し、touraku_ratio 62点・最新116.8%（2026-08-21時点）・
+  `classify_zone` が「通常」🟢に分類することを実測確認
+- push 済み（コミット `1de67ad`）・`update-market-news.yml` を手動 trigger 済み。
+  ⚠️ **リモートの `touraku-history.json` はまだ存在しない**＝`JQUANTS_API_KEY` シークレット未登録のため
+  （§Aで既知）。**このチャートが実際にデータを持つのは、オーナーがシークレットを登録した後の初回runから**
+  （自己修復ロジックで自動的に約4ヶ月ぶん埋まる。手動作業は不要）
+
+### ② ブランドカラー Phase 2 適用
+
+`apply_brand_color.py --phase 2 --include-cloud --apply` を実行。dry-run 時点で対象370ファイル中
+**変更が要ったのは18ファイル・54箇所だけ**（大半のSYNC登録済み記事＋生成スクリプト8本は既にPhase2相当の
+スタイルだった＝「承認済み・実測306本895箇所」という旧見積りは実測と乖離していた。実際に差分があったのは
+主に直近のクラウド自動生成記事）。sync dry-run では18件中17件が**内容一致でスキップ**（＝ライブは既に
+その配色）、実送信は `guide-margin-trading.html` の1件のみ。62/62 の既存回帰テスト（`_test_apply_brand_color.py`）
+は全PASS。同じコミット `1de67ad` で push 済み
+
+### ③ 副次的に見つけた/直したもの
+
+- `_pull_mirror.py --apply` でローカルミラーが11本遅行していたのを解消（クラウド公開済み・ローカル未取得）。
+  取り込んだ4本（`guide-counterparty-risk.html` 等）が `mw check` で SYNC_FILES 未登録エラーになったため、
+  `sync_to_github.py` の SYNC_FILES に追加登録（`_pull_mirror.py` 自身が印字する定型の次の手順どおり）
+- ⚠️ **未対応（今回のスコープ外・既存の別問題）**: `mw check` の警告33件（guides.htmlカード未掲載4本／
+  ナビCSS max-width欠落11本／back-to-topボタン欠落3本）はすべて今回の変更と無関係の既存問題。触っていない
+- ⚠️ **無関係の既存テストフレーク1件**: `_test_publish_link_gate.py`「実例6件すべてを検出」が
+  `guide-proverb-soba-no-kane-tako-no-ito.html` を検出できず1/7失敗。この記事は現在ローカルに実在するため
+  （ミラー取り込み等で存在するようになった）、テストの固定フィクスチャ（過去の壊れリンク実例）が
+  現状と合わなくなっただけ＝コードのバグではない。今回は直していない
+
+---
 
 ## 🚩 次のセッションは、ここから（状態はすべて 2026-08-19 22:35 JST の実測）
 
