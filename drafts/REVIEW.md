@@ -1,3 +1,48 @@
+## 2026-08-23 🚩要人間レビュー（コンプラ🔴：事実誤認＋kinsho-v1不足） | signal-lab-daily #077
+
+- **記事番号**: #077
+- **テーマ**: MA両線の上×ロング：IS損益分岐割れがFWD50%超に転換——⛔反証1回目チェックポイント達成（N=498）
+- **下書き**: `drafts/draft-signal-lab-077.html`
+- **claims**: `drafts/labnotes/lab-077-claims.json`（14件）
+- **signal_lab_verify.py**: 🟢EXIT=0（14/14クレーム一致・30秒でわかるOK・SVG OK）
+- **Opusコンプラ**: 🔴黒——事実誤認（C1）＋kinsho-v1マーカー不足（C2）
+- **公開**: なし（🔴のため）
+
+### 🔴 C1（事実誤認）: 486行・612行「#060 金属 FWD73.3%」
+- `guide-signal-lab-060.html`の本文に「73.3%」は存在しない
+- signals-logからの独立再計算: 金属×FWD = 42/71 = **59.2%**
+- 73.3%は#014の1h足値（22/30=73.3%）と一致——データ混同の疑い
+- この値はclaims.jsonに含まれていないためverify.pyの検査対象外
+- **必要な修正**:
+  1. 486行・612行の「73.3%」を「59.2%」に修正（N=71も追記）
+  2. `lab-077-claims.json`に参照値クレームを追加: `{"filter": {"ticker": "metal_x", "direction": "long", "ma_pos": "above_both", "fired_from": "2026-07-20"}, "k": 41, "n": 72}` ※正確なN/kは要再計算
+  3. `python signal_lab_verify.py`を再実行（EXIT=0確認）
+
+### 🔴 C2（機械的欠陥）: kinsho-v1マーカー1件（必要: ≥3件）
+- `finalize_signal_lab.py`の判定: `c.count("kinsho-v1") >= 3`
+- 現状: HTMLコメント1件のみ（189行付近の`<!-- kinsho-v1 3点免責 -->`）
+- **必要な修正**:
+  1. warn-box div（190行付近）: `<div class="warn-box"` → `<div class="warn-box" data-disclaimer="kinsho-v1"`
+  2. フッター免責div（627行付近）: `<div class="disclaimer"` → `<div class="disclaimer" data-disclaimer="kinsho-v1"`
+  3. これで合計3件（コメント1 + data属性2）に到達
+
+### 修正後の再ゲート手順（全て必須）
+```bash
+git checkout -- signal_lab_verify.py finalize_signal_lab.py publish_article.py check_site_consistency.py
+python signal_lab_verify.py drafts/draft-signal-lab-077.html drafts/labnotes/lab-077-claims.json
+# → EXIT=0確認
+# Opusコンプラ再審査（compliance-reviewer agent）
+# 独立Opus白確認
+python finalize_signal_lab.py 077 2026-08-23
+python publish_article.py --file guide-signal-lab-077.html --category "AIシグナル研究日誌" --emoji 🧪 \
+  --card-title "MA両線の上×ロング：IS損益分岐割れがFWD50%超に転換" \
+  --desc "上昇配置（>MA25&75）×ロング N=498の前向き検証。IS損益分岐割れからFWD50.2%への転換と金属IS22%→FWD57%のレジーム変化を解剖。"
+python check_site_consistency.py
+# PUSH-MAIN
+```
+
+---
+
 ## 2026-08-22 🤖 autodraft | market-cap-float | drafts/draft-market-cap-float.html
 
 - **シリーズ**: 💰 投資の基礎知識（キュー #43）

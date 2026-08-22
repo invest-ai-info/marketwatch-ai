@@ -244,5 +244,5 @@
 - **テーマ**: MA両線の上×ロング：IS損益分岐割れがFWD50%超に転換——⛔反証1回目チェックポイント達成（N=498）
 - **仮説**: H1=FWD above_both×Long cluster補正後CI下限>0 / H2=方向非対称Long vs Short≥10pp / H3=metal IS→FWD変化≥25pp
 - **結果**: FWD 250/498=50.2% E(R)=+0.171 cluster補正後CI[+0.03~+0.32]✅ / Long50.2% vs Short35.3% 差14.9pp✅ / metal IS22.2%→FWD56.9%（+34.7pp）✅ / H1H2H3全通過A
-- **ステータス**: 下書き生成済み・ゲート実行中（verify/コンプラ待ち）
+- **ステータス**: 🚩エスカレ中（Opusコンプラ🔴: C1事実誤認486/612行「#060金属FWD73.3%」→実測59.2%・C2 kinsho-v1マーカー1件<3）人間修正→再ゲート要
 - **記事**: drafts/draft-signal-lab-077.html
