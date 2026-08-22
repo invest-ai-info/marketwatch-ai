@@ -49,6 +49,11 @@ STEADY_LOOKBACK_DAYS = 10
 # --backfill 時にさかのぼる暦日数。25日窓の計算にすぐ使えるよう、営業日換算で
 # 余裕を持って約4ヶ月ぶん集める。
 BACKFILL_LOOKBACK_DAYS = 130
+# 蓄積点がこれ未満なら、--backfill を付けなくても自動でバックフィル相当のレンジを取りに行く
+# （build_health_history.py の SELF_HEAL_MIN_POINTS と同じ考え方）。
+# touraku-history.json は SYNC禁忌＝ローカルから push できないため、GitHub Actions に
+# JQUANTS_API_KEY を登録した直後の最初の1回で自動的に25日窓ぶん以上を埋めてほしい。
+SELF_HEAL_MIN_POINTS = RATIO_WINDOW + 5
 
 
 def _api_key():
@@ -192,7 +197,10 @@ def collect(lookback_days, key=None):
 def main():
     backfill = "--backfill" in sys.argv
     doc = load_history()
-    lookback = BACKFILL_LOOKBACK_DAYS if backfill else STEADY_LOOKBACK_DAYS
+    if backfill or len(doc["points"]) < SELF_HEAL_MIN_POINTS:
+        lookback = BACKFILL_LOOKBACK_DAYS
+    else:
+        lookback = STEADY_LOOKBACK_DAYS
 
     try:
         new_points, n_codes = collect(lookback)
