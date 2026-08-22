@@ -12,6 +12,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
+from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -483,35 +484,51 @@ def merge_historical(long_data, key, recent_dates, recent_prices):
 def get_touraku_ratio():
     """騰落レシオ（25日）を取得する。東証プライム全銘柄の値上がり/値下がりを25日分集計して算出。
 
-    ⚠️ 2026-08-22 実測で「Web方式」の値を根本修正した（診断は SESSION_HANDOFF 既存欠陥Aの調査）:
+    ⚠️ 2026-08-22 根本修正した（診断は SESSION_HANDOFF 既存欠陥Aの調査）:
       - nikkei225jp.com はページ構造が変わり、25日騰落レシオの数値はサーバー側HTMLに存在しない
         （値は /_data/_nfsDATA/DAY/daily2year.json をクライアントJSで読んで描画している）。
         そのURLは同サイトの robots.txt が User-agent:* に対し明示的に Disallow: /_data/ にしている
-        （例外は無関係なXML2件のみ）ため、自動巡回では取りに行かない。
-      - 旧「方法2」（TOPIX ETF 1306.T の日次騰落"日数"を騰落"銘柄数"の代わりに使う近似）は
+        （例外は無関係なXML2件のみ）ため、自動巡回では取りに行かない＝この一次ソースは基本失敗する。
+      - 旧フォールバック（TOPIX ETF 1306.T の日次騰落"日数"を騰落"銘柄数"の代わりに使う近似）は
         指標としての種類が違う（単一銘柄の時系列自己相関 ≠ 全市場の値上がり/値下がり銘柄数の断面比）。
         実測でも別物と分かった：同日の真値（116.8%＝適正）に対し、この近似は177.8%（過熱）を出し、
-        投資判断の色（🟢適正→🔴過熱）ごと反転させていた。
-      正しい算出には東証プライム全銘柄の個別値上がり/値下がりが要る（J-Quants等の有償データ源）が、
-      それを自動生成パイプラインに組み込むかはコスト/利用規約の判断が要るため保留＝
-      誤った数値を「東証プライム全銘柄」の名で出し続けるより、取得不可として空欄にする。
+        投資判断の色（🟢適正→🔴過熱）ごと反転させていた＝削除済み。
+      - 新フォールバック: J-Quants（東証プライム全銘柄の終値・既存の非公開研究パイプラインが使う
+        正規契約の有償API）で独立に25日騰落レシオを算出する `build_touraku_history.py` を
+        update-market-news.yml の生成前ステップとして新設し、その集計結果 touraku-history.json を読む。
+        実測で公式値とほぼ一致（2026-08-21: 自前884勝622敗=116.76% ／ サイト公表883勝622敗=116.81%）。
     """
     try:
         url = "https://nikkei225jp.com/data/touraku.php"
         req = urllib.request.Request(url, headers={"User-Agent": "MarketWatch/1.0"})
         with urllib.request.urlopen(req, timeout=10) as res:
-            html = res.read().decode("utf-8", errors="replace")
+            page_html = res.read().decode("utf-8", errors="replace")
         # テーブルから騰落レシオ（25日）を抽出（現状のページ構造ではまず一致しない＝上記の注記参照。
         # サイト側が将来サーバーレンダリングに戻した場合に備えて残す）
         import re
-        m = re.search(r'25日[^<]*</t[dh]>\s*<td[^>]*>\s*([\d.]+)', html)
+        m = re.search(r'25日[^<]*</t[dh]>\s*<td[^>]*>\s*([\d.]+)', page_html)
         if m:
             val = float(m.group(1))
             print(f"  騰落レシオ(Web): {val}")
             return val
-        print("  騰落レシオ: 一次ソースの構造が一致せず抽出失敗（既知の欠陥・SESSION_HANDOFF参照）")
     except Exception as e:
-        print(f"  騰落レシオWeb取得失敗: {e}")
+        print(f"  騰落レシオWeb取得失敗（想定内・下でJ-Quants集計にフォールバック）: {e}")
+
+    # J-Quantsベースの日次履歴（build_touraku_history.py が生成前ステップで更新）から算出
+    try:
+        hist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "touraku-history.json")
+        with open(hist_path, encoding="utf-8") as f:
+            hist = json.load(f)
+        val = _touraku_ratio25(hist.get("points") or [])
+        if val is not None:
+            print(f"  騰落レシオ(J-Quants集計): {val}")
+            return val
+        print(f"  騰落レシオ: touraku-history.json の点数が窓(25日)に未達 "
+              f"({len(hist.get('points') or [])}点)")
+    except FileNotFoundError:
+        print("  騰落レシオ: touraku-history.json が無い（build_touraku_history.py 未実行）")
+    except Exception as e:
+        print(f"  騰落レシオ: touraku-history.json 読み込み失敗: {e}")
 
     return None
 
