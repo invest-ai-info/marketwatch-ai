@@ -1,4 +1,4 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 15:20）
+# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 15:45）
 
 ## 🆕 2026-08-22 午後: 積み残しの設計書差分＋ブランドカラー Phase 2 を実行
 
@@ -31,6 +31,18 @@
   ⚠️ **リモートの `touraku-history.json` はまだ存在しない**＝`JQUANTS_API_KEY` シークレット未登録のため
   （§Aで既知）。**このチャートが実際にデータを持つのは、オーナーがシークレットを登録した後の初回runから**
   （自己修復ロジックで自動的に約4ヶ月ぶん埋まる。手動作業は不要）
+- 🚨 **verify中に見つけた別の実害バグ（今回の変更が原因ではない・当日朝の欠陥A対応コミットが原因）**:
+  `update-market-news.yml` の「Commit and push」ステップが `git add ... touraku-history.json` を含んでいたが、
+  `JQUANTS_API_KEY` 未登録の間はこのファイル自体が存在しない（`build_touraku_history.py` が例外を握り潰して
+  保存せず終了するため）。**存在しないパスを `git add` に混ぜると他のファイルも道連れで exit 128 になり、
+  コミット全体が失敗する**＝欠陥A対応コミットが乗った 8/22 朝以降、update-market-news.yml は**生成には
+  成功するが毎回 push だけ失敗し、6コアページが一切更新されていなかった**（実測: このセッションで trigger
+  した最初の2回が同じ理由で failure）。`if [ -f touraku-history.json ]; then git add touraku-history.json; fi`
+  に修正（コミット `a87d87e`）→ 3回目の trigger で成功（run 32556895773・全ステップ success）。
+  **ライブでの実測確認済み**: Contents API で `market-health-history.json` に `touraku_ratio` キーが
+  追加されていること／`market-health.html` の4チャート（VIX・CNN・Crypto・バフェット）が正常表示・
+  既存の騰落レシオ・ゲージカードが `N/A 取得不可` を正しく表示（`analyze_touraku(None)` のリグレッション無し）
+  を確認
 
 ### ② ブランドカラー Phase 2 適用
 
