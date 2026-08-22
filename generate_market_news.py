@@ -533,20 +533,30 @@ def get_touraku_ratio():
     return None
 
 
+_TOURAKU_ICON = {
+    "過熱圏": "😢", "買われすぎ": "😐", "通常": "😊", "売られすぎ": "😐", "底値圏": "😊",
+}
+_TOURAKU_COMMENT = {
+    "過熱圏": "市場は過熱状態です。短期的な調整（下落）に警戒が必要です。",
+    "買われすぎ": "やや買われすぎの水準。利益確定売りが出やすい局面です。",
+    "通常": "通常の範囲内。市場は安定しています。",
+    "売られすぎ": "やや売られすぎの水準。反発のきっかけ待ちです。",
+    "底値圏": "歴史的な底値圏です。長期投資家にとっては買いのチャンスかもしれません。",
+}
+
+
 def analyze_touraku(ratio):
-    """騰落レシオの水準を分析してコメントを返す"""
+    """騰落レシオの水準を分析してコメントを返す。
+
+    ⚠️ 2026-08-22：閾値の単一の真実を build_health_history.ZONES["touraku_ratio"] へ移設した
+    （数値は移設前と同一＝表示挙動は変えていない。他の4系列と同じ「複製しない」方針に揃えた）。
+    """
     if ratio is None:
         return "N/A", "#6e7781", "😐", "データを取得できませんでした。"
-    if ratio >= 140:
-        return "過熱圏", "#da3633", "😢", f"騰落レシオ {ratio:.0f}%：市場は過熱状態です。短期的な調整（下落）に警戒が必要です。"
-    elif ratio >= 120:
-        return "買われすぎ", "#bf3989", "😐", f"騰落レシオ {ratio:.0f}%：やや買われすぎの水準。利益確定売りが出やすい局面です。"
-    elif ratio >= 80:
-        return "通常", "#1a7f37", "😊", f"騰落レシオ {ratio:.0f}%：通常の範囲内。市場は安定しています。"
-    elif ratio >= 60:
-        return "売られすぎ", "#9a6700", "😐", f"騰落レシオ {ratio:.0f}%：やや売られすぎの水準。反発のきっかけ待ちです。"
-    else:
-        return "底値圏", "#238636", "😊", f"騰落レシオ {ratio:.0f}%：歴史的な底値圏です。長期投資家にとっては買いのチャンスかもしれません。"
+    color, label = classify_zone("touraku_ratio", ratio)
+    icon = _TOURAKU_ICON[label]
+    comment = f"騰落レシオ {ratio:.0f}%：{_TOURAKU_COMMENT[label]}"
+    return label, color, icon, comment
 
 
 def fmt_price(val, decimals=2, prefix="", suffix=""):
@@ -3546,7 +3556,7 @@ def build_health_chart_section():
   <script>
   (function(){
     var DOC = null, DAYS = 366, charts = {};
-    var ORDER = ['vix', 'cnn_fg', 'crypto_fg', 'buffett_us'];
+    var ORDER = ['vix', 'cnn_fg', 'crypto_fg', 'buffett_us', 'touraku_ratio'];
 
     function hexA(hex, a){
       var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);

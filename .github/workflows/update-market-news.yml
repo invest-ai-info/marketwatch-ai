@@ -68,18 +68,21 @@ jobs:
       - name: Install dependencies
         run: pip install yfinance requests deep_translator feedparser google-generativeai
 
+      - name: Collect touraku ratio history
+        # 🆕 2026-08-22。build_health_history.py より**先**に走らせる。
+        # ⚠️2026-08-22 訂正: 元は build_health_history → build_touraku_history の順だったが、
+        # build_health_history.py の touraku_ratio 系列は touraku-history.json を読むだけの
+        # ローカル計算＝先に更新しておかないと当日ぶんが反映されず1日遅れてしまう。
+        # continue-on-error＝JQUANTS_API_KEY 未登録なら equities/master 呼び出しで失敗するが、
+        # スクリプト側で例外を握り潰して前回JSONのまま終了する（6コアページの更新は巻き添えにしない）。
+        run: python build_touraku_history.py
+        continue-on-error: true
+
       - name: Collect market health history
         # 生成の「前」に走らせる＝カードに出る数字と履歴の最新点が必ず一致する。
         # continue-on-error＝履歴の取得失敗で6コアページの更新を巻き添えにしない。
         # 取れなかったことは automation-health §⑩ が拾う。
         run: python build_health_history.py
-        continue-on-error: true
-
-      - name: Collect touraku ratio history
-        # 🆕 2026-08-22。同じ理由で生成の「前」・continue-on-error。
-        # JQUANTS_API_KEY 未登録の場合は equities/master 呼び出しで失敗するが、
-        # スクリプト側で例外を握り潰して前回JSONのまま終了する（6コアページの更新は巻き添えにしない）。
-        run: python build_touraku_history.py
         continue-on-error: true
 
       - name: Generate market news HTML (6 files)

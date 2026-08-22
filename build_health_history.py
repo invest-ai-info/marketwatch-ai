@@ -16,6 +16,12 @@ import os
 import sys
 import urllib.request
 
+from build_touraku_history import (
+    ratio25 as _touraku_ratio25,
+    RATIO_WINDOW as _TOURAKU_WINDOW,
+    HISTORY_PATH as _TOURAKU_HISTORY_PATH,
+)
+
 JST = dt.timezone(dt.timedelta(hours=9))
 ROOT = os.path.dirname(os.path.abspath(__file__))
 HISTORY_PATH = os.path.join(ROOT, "market-health-history.json")
@@ -57,6 +63,16 @@ ZONES = {
         (100, 135, "やや割高", "#9a6700"),
         (135, 180, "割高", "#bf3989"),
         (180, None, "大きく割高", "#da3633"),
+    ],
+    # 🆕 2026-08-22。既存 generate_market_news.py の analyze_touraku() が持っていた閾値を
+    #    そのまま移設した（数値は不変＝表示挙動は変えない）。ここが単一の真実になったので
+    #    analyze_touraku() 側は classify_zone("touraku_ratio", ...) を呼ぶだけに置き換える。
+    "touraku_ratio": [
+        (None, 60, "底値圏", "#238636"),
+        (60, 80, "売られすぎ", "#9a6700"),
+        (80, 120, "通常", "#1a7f37"),
+        (120, 140, "買われすぎ", "#bf3989"),
+        (140, None, "過熱圏", "#da3633"),
     ],
 }
 
@@ -212,6 +228,39 @@ def fetch_buffett_us(rng="5d", gdp_bn=None):
     return compute_buffett(fetch_yahoo("^W5000", rng), gdp_bn)
 
 
+def fetch_touraku_ratio_series(path=None):
+    """騰落レシオ(25日)の日次ロング系列を作る。
+
+    🆕 2026-08-22。ネットワークは叩かない＝build_touraku_history.py が既に集めた
+    touraku-history.json（{date, up, down} の生集計）をローカルで読み、日付ごとに
+    「その日を最終日とする直近25日窓」の ratio25 を計算して積み上げる。
+    計算式（ratio25・RATIO_WINDOW）は build_touraku_history.py を単一の真実として import する
+    （generate_market_news.py の get_touraku_ratio() と同じ流用元）。
+
+    ⚠️ ステップ順が前提: update-market-news.yml は
+       build_touraku_history.py → build_health_history.py の順で回す
+       （逆だと当日ぶんの touraku-history.json 更新前を読んでしまい、この系列だけ1日遅れる）。
+    """
+    hist = _load_touraku_history(path)
+    points = hist.get("points") or []
+    out = []
+    for i in range(_TOURAKU_WINDOW - 1, len(points)):
+        window = points[i - _TOURAKU_WINDOW + 1 : i + 1]
+        r = _touraku_ratio25(window)
+        if r is not None:
+            out.append([points[i][0], r])
+    return out
+
+
+def _load_touraku_history(path=None):
+    p = path or _TOURAKU_HISTORY_PATH
+    try:
+        with open(p, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {"points": []}
+
+
 SERIES_META = {
     # stale_days＝この日数以上あいたら「取得が止まっている」とみなす。
     # 2026-08-19 に直近1年の実データで**点と点の実際の間隔**を測って決めた（推測で置かない）。
@@ -226,6 +275,15 @@ SERIES_META = {
     "buffett_us": {"label": "米バフェット指数", "unit": "%", "stale_days": 6,
                    "source": "Yahoo Finance (^W5000) / 米名目GDP (世界銀行・年次)",
                    "note": "分母の名目GDPは年次のため、日々動いているのは分子（株式時価総額）だけです。"},
+    # 🆕 2026-08-22。stale_days は暫定値＝touraku-history.json の蓄積は2026-04-16開始で
+    #    まだ4か月ぶんしか無く（実測の最大間隔は6日＝ゴールデンウィーク想定）、年末年始休場
+    #    （実測データに未収録）を安全側に見込んで測定値6日より広めの10日を採用した。
+    #    他の系列のように「実測の最大間隔+1日」まで詰めるのは、年末年始を跨いだ1年ぶんの
+    #    データが溜まってから（目安2027年初）に見直す。
+    "touraku_ratio": {"label": "騰落レシオ(25日)", "unit": "%", "stale_days": 10,
+                      "source": "J-Quants (東証プライム全銘柄の終値集計) の25日騰落レシオ",
+                      "note": "元データ touraku-history.json は2026-08-22開始のため、休場日数の"
+                              "扱いはまだ1年分の実測に基づいていません（暫定の閾値）。"},
 }
 
 
@@ -353,10 +411,13 @@ def main():
         "cnn_fg": fetch_cnn_fg,            # CNN は常に全履歴（約251点）を返すのでレンジ指定なし
         "crypto_fg": lambda: fetch_crypto_fg(lim_crypto),
         "buffett_us": lambda: fetch_buffett_us(rng_bf, gdp),
+        # touraku_ratio はネットワークを叩かず touraku-history.json をローカルで読むだけなので
+        # レンジ指定は不要（毎回、蓄積済みの全期間から計算し直す＝関数自体が冪等）。
+        "touraku_ratio": fetch_touraku_ratio_series,
     }
     doc = collect(doc, fetchers, now_jst_date)
 
-    # 4系列を直近1年で揃える。CNN が約251営業日ぶんしか返さないため、そこに合わせる。
+    # 全系列を直近1年で揃える。CNN が約251営業日ぶんしか返さないため、そこに合わせる。
     # 毎回かけるのでファイルが無限に伸びない（1年より古い点は落ちていく）。
     cutoff = (dt.datetime.now(JST) - dt.timedelta(days=366)).strftime("%Y-%m-%d")
     for k in doc["series"]:
