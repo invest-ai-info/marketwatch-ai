@@ -1,3 +1,5 @@
+## 2026-08-23 autopublish: ✅公開 | guide-liquidity-risk | 決定論🟢 / Opus🟡軽微修正（板読み誤り修正・スリッページ表現軟化・論理文修正）→独立Opus🟢白 | https://marketwatch-jp.com/guide-liquidity-risk.html
+
 ## 2026-08-23 🚩要人間レビュー（コンプラ🔴：事実誤認＋kinsho-v1不足） | signal-lab-daily #077
 
 - **記事番号**: #077
