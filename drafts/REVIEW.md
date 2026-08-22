@@ -1,3 +1,29 @@
+## 2026-08-22 🤖 autodraft | market-cap-float | drafts/draft-market-cap-float.html
+
+- **シリーズ**: 💰 投資の基礎知識（キュー #43）
+- **仮タイトル**: 時価総額と浮動株（なぜ小型株は激しく動くのか）
+- **生成ファイル**: `drafts/draft-market-cap-float.html`
+- **参照出典**:
+  - JPX Q&A Regarding Free-Float Weight: https://www.jpx.co.jp/english/markets/indices/line-up/faq_e.pdf
+  - JPX Overview of Revisions of TOPIX (2026): https://www.jpx.co.jp/english/markets/indices/revisions-indices/b5b4pj0000049s3x-att/RevisionsofTOPIX_e.pdf
+  - Bloomberg: Over 600 Companies Likely to Be Culled in Topix Overhaul (2026-08-06)
+  - Statista: Japan number of listed companies by market division 2024
+  - NLI Research Institute / QUICK Market View: TOPIX reform 692社除外候補
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・仕組みの解説に限定）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「儲かる」等の表現なし）
+  - ✅ kinsho-v1免責：冒頭バナー・本文末・footer の3カ所
+  - ✅ noindex,nofollow 設定済み
+  - ✅ 数値はJPX一次情報・Bloomberg等から照合（TOPIX約107兆円・692社除外候補・浮動株比率の範囲）
+  - ✅ 「小型株投資を勧めない」に沿って仕組みの説明に限定
+- **SVG概念図**: 3点（①時価総額の直感図解、②大型vs小型の浮動株比率の棒グラフ、③指数組入れ・除外と需給の関係）
+- **人間がやる残作業**:
+  - SVGの実機ライト/ダーク確認（特に dark用 `.s-bar-*` クラス）
+  - タイトル微調整（「なぜ小型株は激しく動くのか」を副題として適切か確認）
+  - 公開は毎朝08:40の `autodraft-publish` が決定論ゲート→Opusコンプラゲート付きで自動実行
+
+---
+
 ## 2026-08-22 autopublish: ✅公開 | guide-counterparty-risk | 決定論🟢 / Opus🟡軽微修正→独立Opus🟢白 | https://marketwatch-jp.com/guide-counterparty-risk.html
 
 ---

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>時価総額と浮動株（なぜ小型株は激しく動くのか）｜株価が安い≠割安の真実 - MarketWatch AI【下書き】</title>
+  <meta name="description" content="【下書き・未公開】時価総額＝株価×発行済株式数。しかし市場で実際に売買できるのはその一部「浮動株」だけ。浮動株比率が低いと同じ金額の売買でも株価が激しく動く仕組み、指数への組入れ・除外が需給を動かす理由、「株価が安い＝割安ではない」理由を図解で解説。">
+  <meta name="keywords" content="時価総額,浮動株,浮動株比率,小型株,大型株,TOPIX,指数組入れ,株価,割安,発行済株式数,市場区分,投資基礎知識">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-market-cap-float.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="時価総額と浮動株（なぜ小型株は激しく動くのか）">
+  <meta property="og:description" content="時価総額と浮動株の仕組みを図解。同じ金額でも浮動株が少ないと値が飛ぶ理由・指数組入れが需給を動かす理由・株価が安い≠割安の真実。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-market-cap-float.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "時価総額と浮動株（なぜ小型株は激しく動くのか）｜株価が安い≠割安の真実",
+    "description": "時価総額と浮動株の仕組みを図解。浮動株が少ないと値が飛ぶ理由・指数組入れが需給を動かす理由・株価が安い＝割安ではない理由を初心者から中上級まで解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-22",
+    "dateModified": "2026-08-22",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-market-cap-float.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 浮動株図専用SVGクラス */
+    .s-bar-blue{fill:#1E3A6E}
+    .s-bar-gray{fill:#d0d7de}
+    .s-bar-green{fill:#1a7f37}
+    .s-bar-red{fill:#cf222e}
+    .s-bar-label{fill:#424a53;font-size:12px;font-family:'Noto Sans JP',sans-serif;font-weight:600}
+    .s-bar-value{fill:#ffffff;font-size:11px;font-family:'Noto Sans JP',sans-serif;font-weight:700}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-blue{fill:#2C4F8F}
+    body.dark .s-bar-gray{fill:#30363d}
+    body.dark .s-bar-green{fill:#2ea043}
+    body.dark .s-bar-red{fill:#f85149}
+    body.dark .s-bar-label{fill:#c9d1d9}
+    /* readable-width v1 */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 時価総額と浮動株
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は時価総額・浮動株にまつわる株式市場の仕組みを解説した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📊 時価総額と浮動株（なぜ小型株は激しく動くのか）</h1>
+    <div class="meta-line">公開日：2026 年 8 月 22 日 ／ 読了時間：約 12 分 ／ カテゴリ：💰 投資の基礎知識</div>
+
+    <p>「あの株は株価が低いから割安だろう」——株を始めたばかりの人が最初に陥りやすい誤解です。しかし、<strong>株価が安いことと会社の値段（時価総額）が安いことは、まったく別の話</strong>です。同じように、「小型株はよく動く」とよく聞きますが、その理由を仕組みから理解している人は多くありません。</p>
+    <p>この記事では、<strong>時価総額とは何か</strong>から始め、<strong>実際に市場で売買できる株のことを指す「浮動株」</strong>の概念、そして<strong>浮動株が少ないと同じ金額の売買でも値が激しく飛ぶ理由</strong>、さらに<strong>指数（TOPIXなど）への組入れ・除外が需給を動かす仕組み</strong>まで、図解とともに解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>時価総額＝株価×発行済株式数</strong>。「会社の値段」を表す数字で、株価が低くても発行済株式数が多ければ時価総額は大きい。<strong>株価が安い≠割安</strong>。</li>
+      <li>市場で実際に売買できるのは発行済株式数のうちの<strong>「浮動株（大株主・自己株式等を除いた部分）」だけ</strong>。浮動株が少ない（板が薄い）と、同じ金額の売買でも値が大きく動く。</li>
+      <li><strong>指数（TOPIXなど）への組入れ・除外</strong>は、パッシブファンドの機械的な売買を通じて需給に直接影響する。浮動株比率が低いほどその影響は株価に大きく出やすい。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">時価総額とは何か（株価×株数の直感図解）</a></li>
+        <li><a href="#section-2">「株価が安い＝割安」ではない理由</a></li>
+        <li><a href="#section-3">浮動株とは何か（市場で実際に売買できる株）</a></li>
+        <li><a href="#section-4">浮動株が少ないと値が飛ぶ理由（板の薄さ）</a></li>
+        <li><a href="#section-5">指数への組入れ・除外が需給を動かす仕組み</a></li>
+        <li><a href="#section-6">市場区分と時価総額の目安（日本株の場合）</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 時価総額とは何か（株価×株数の直感図解）</h2>
+    <p>まず最も基本的な概念から押さえましょう。<strong>時価総額（しかそうがく）</strong>とは、「その会社全体を今の株価で買うとしたら、いくらかかるか」を表す数字です。計算式はシンプルです。</p>
+
+    <div class="info-box">
+      <strong>時価総額 ＝ 株価 × 発行済株式数（総発行株式数）</strong>
+    </div>
+
+    <p>たとえば、株価が1,000円で発行済株式数が1億株の会社なら、時価総額は<strong>1,000億円</strong>。株価が100円でも発行済株式数が50億株あれば、時価総額は<strong>5,000億円</strong>になります。株価だけ見ると前者の方が「高い」ですが、会社の規模（時価総額）は後者の方がはるかに大きいのです。</p>
+
+    <!-- SVG 1: 時価総額の直感図解 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="cap-title">
+        <title id="cap-title">時価総額＝株価×発行済株式数の概念図。株価が高くても株数が少なければ時価総額は小さい</title>
+        <text class="s-panel-label" x="40" y="24">時価総額 ＝ 株価 × 発行済株式数（総発行株式）</text>
+
+        <!-- 会社A: 株価高い・株数少ない -->
+        <text class="s-bar-label" x="130" y="55" text-anchor="middle">会社 A</text>
+        <text class="s-label-sm" x="130" y="70" text-anchor="middle">株価 1,000円 × 1億株</text>
+        <!-- 株価の棒 -->
+        <rect class="s-bar-blue" x="50" y="80" width="60" height="120" rx="4"/>
+        <text class="s-bar-value" x="80" y="145" text-anchor="middle">株価</text>
+        <text class="s-bar-value" x="80" y="160" text-anchor="middle">1,000円</text>
+        <!-- 株数の棒 -->
+        <rect class="s-bar-gray" x="130" y="140" width="60" height="60" rx="4"/>
+        <text class="s-bar-label" x="160" y="175" text-anchor="middle" style="fill:#57606a">1億株</text>
+        <!-- イコール・時価総額 -->
+        <text class="s-legend" x="210" y="165" font-size="20" font-weight="700">＝</text>
+        <rect x="240" y="100" width="90" height="100" rx="6" fill="#ddf4ff" stroke="#0969da" stroke-width="2"/>
+        <text class="s-note" x="285" y="148" text-anchor="middle" style="font-size:13px">時価総額</text>
+        <text class="s-note" x="285" y="166" text-anchor="middle" style="font-size:13px">1,000億円</text>
+
+        <!-- 会社B: 株価低い・株数多い -->
+        <text class="s-bar-label" x="490" y="55" text-anchor="middle">会社 B</text>
+        <text class="s-label-sm" x="490" y="70" text-anchor="middle">株価 100円 × 50億株</text>
+        <!-- 株価の棒 -->
+        <rect class="s-bar-blue" x="410" y="188" width="60" height="12" rx="4"/>
+        <text class="s-bar-label" x="440" y="217" text-anchor="middle" style="fill:#424a53">株価</text>
+        <text class="s-bar-label" x="440" y="232" text-anchor="middle" style="fill:#424a53">100円</text>
+        <!-- 株数の棒 -->
+        <rect class="s-bar-gray" x="490" y="80" width="60" height="120" rx="4"/>
+        <text class="s-bar-label" x="520" y="147" text-anchor="middle" style="fill:#57606a">50億株</text>
+        <!-- イコール・時価総額 -->
+        <text class="s-legend" x="570" y="165" font-size="20" font-weight="700">＝</text>
+
+        <!-- 比較メッセージ -->
+        <rect x="20" y="248" width="600" height="24" rx="4" fill="#fff8c5"/>
+        <text x="320" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#9a6700" font-family="'Noto Sans JP',sans-serif">会社Bの時価総額は5,000億円→ 株価は安くても会社の規模は会社Aの5倍</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 株価が高い会社Aより、株価が低い会社Bの方が時価総額（会社全体の値段）は大きい。<strong>「株価が安い＝会社が小さい・割安」ではない</strong>。時価総額で比べることが会社規模を測る正しいものさし。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「株価が安い＝割安」ではない理由</h2>
+    <p>なぜ株価だけで判断してはいけないのか、もう少し掘り下げましょう。株価とは、<strong>時価総額を発行済株式数で割ったもの</strong>にすぎません。1株あたりの「スライスの値段」であって、「スライスの大きさ（会社の価値）」ではない。</p>
+    <p>たとえば同じ1,000億円のピザ（会社の価値）でも、<strong>100枚に切れば1枚1,000万円、1億枚に切れば1枚10円</strong>になります。スライスの値段（株価）は全く異なりますが、ピザ全体の価値は同じです。</p>
+
+    <div class="warning-box">
+      株価が安くても「割安」とは言えません。会社の価値（時価総額）が適正かを測るには、利益や純資産と比べる指標——<strong>PER（株価収益率）やPBR（株価純資産倍率）</strong>——が必要です。詳しくは <a href="guide-per-pbr.html">PERとPBRの読み方</a> の記事をあわせてご覧ください。
+    </div>
+
+    <p>株式分割が行われると株価は下がりますが、発行済株式数が増えるため時価総額は変わりません（ピザを細かく切り直すだけ）。株価が下がったからといって「割安になった」わけではない——これも同じ論理です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 浮動株とは何か（市場で実際に売買できる株）</h2>
+    <p>時価総額は「会社全体の値段」ですが、実際に株式市場で日々売買されているのはその<strong>一部</strong>にすぎません。それが<strong>浮動株（ふどうかぶ）</strong>です。</p>
+    <p>発行済株式数の中には、<strong>長期間ほぼ動かない「安定保有株」</strong>が含まれています。具体的には：</p>
+    <ul>
+      <li><strong>大株主（創業家・親会社）が保有する株</strong>：売るつもりのない長期保有</li>
+      <li><strong>自己株式（自社が買い戻した株）</strong>：議決権も配当もなく、市場に出回らない</li>
+      <li><strong>持合株式（取引先との株式持ち合い）</strong>：政策的に保有し通常は売らない</li>
+      <li><strong>役員・従業員保有株</strong>：ストックオプション等、ロックアップ期間中は売れない</li>
+    </ul>
+    <p>これらを差し引いた残りが<strong>浮動株</strong>で、市場で自由に売買される「流通している株」です。JPXはこれを <strong>FFW（Free Float Weight）</strong> と呼び、<code>FFW ＝ 1 − (非浮動株 ÷ 発行済株式数)</code> で計算します。</p>
+
+    <!-- SVG 2: 発行済株式数 vs 浮動株の比較（大型株・小型株） -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="float-title">
+        <title id="float-title">大型株は浮動株比率が高く、小型（創業者保有型）株は浮動株比率が低い概念図</title>
+        <text class="s-panel-label" x="40" y="24">発行済株式数の内訳（大型株 vs 小型・創業者保有型のイメージ）</text>
+
+        <!-- 大型株（浮動株比率 高い） -->
+        <text class="s-bar-label" x="160" y="50" text-anchor="middle">大型株（例：浮動株比率 ～80%）</text>
+        <!-- 浮動株バー -->
+        <rect class="s-bar-green" x="40" y="62" width="240" height="48" rx="4"/>
+        <text class="s-bar-value" x="160" y="92" text-anchor="middle">浮動株（市場で売買できる） 80%</text>
+        <!-- 安定保有バー -->
+        <rect class="s-bar-gray" x="280" y="62" width="60" height="48" rx="4"/>
+        <text class="s-bar-label" x="310" y="92" text-anchor="middle" style="fill:#57606a;font-size:11px">安定保有 20%</text>
+
+        <!-- 小型株（浮動株比率 低い） -->
+        <text class="s-bar-label" x="160" y="160" text-anchor="middle">小型・創業者保有型（例：浮動株比率 ～25%）</text>
+        <!-- 浮動株バー（小さい） -->
+        <rect class="s-bar-green" x="40" y="172" width="75" height="48" rx="4"/>
+        <text class="s-bar-value" x="77" y="200" text-anchor="middle">浮動株 25%</text>
+        <!-- 安定保有バー（大きい） -->
+        <rect class="s-bar-gray" x="115" y="172" width="225" height="48" rx="4"/>
+        <text class="s-bar-label" x="227" y="200" text-anchor="middle" style="fill:#57606a">創業者・大株主・持合 75%（ほぼ動かない）</text>
+
+        <!-- 注釈 -->
+        <rect x="20" y="240" width="600" height="44" rx="4" fill="#ddf4ff"/>
+        <text class="s-note" x="320" y="258" text-anchor="middle">小型株の浮動株比率が低いと「市場に出回っている株の数」が少ない。</text>
+        <text class="s-note" x="320" y="276" text-anchor="middle">同じ1,000万円の買い注文でも、浮動株が少ない銘柄の方が株価への影響が大きい。</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 大型株は浮動株比率が高く（70〜100%程度）、市場に流通する株が多い。小型株や創業者が大量保有する企業は浮動株比率が10〜30%程度になることもあり、「市場で実際に動く株数」が限られる。数値はあくまで概念上のイメージです。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 浮動株が少ないと値が飛ぶ理由（板の薄さ）</h2>
+    <p>ここが小型株の値動きの激しさを理解する核心です。株式取引は<strong>売り手と買い手のマッチング</strong>で成立します。「板（いた）」と呼ばれる注文一覧に、各価格帯での売り注文・買い注文が並んでいます。</p>
+    <p><strong>浮動株が多い（板が厚い）</strong>場合は、少々大きな買い注文が入っても、各価格帯に十分な売り注文が積まれているため、株価はなめらかに動きます。一方、<strong>浮動株が少ない（板が薄い）</strong>場合は、少ない売り注文を次々に飲み込みながら価格が上がっていくため、同じ金額でも値が大きく飛びやすくなります。</p>
+
+    <div class="info-box">
+      <strong>💡 直感的なたとえ</strong>：同じ100万円を使って「100枚の福袋がある行列」と「10枚しかない行列」で買い占めを試みる場面を想像してください。後者の行列はすぐに品切れになります。浮動株が少ない銘柄への大口注文も同じで、出回っている株をあっという間に買い上げてしまい、価格が急騰しやすくなります。
+    </div>
+
+    <h3>機関投資家・アルゴリズム取引との関係</h3>
+    <p>機関投資家（大きな資金を運用するプロ）が小型株に参入しにくい理由のひとつも、この<strong>流動性の問題</strong>にあります。大きなポジションを作ろうとすると自分で株価を押し上げてしまい、希望の価格で買えなくなる。逆に売りたいときも、自分の売りで相場を崩してしまう（<em>マーケットインパクト</em>と呼ばれます）。浮動株が少ない銘柄は、大口資金が自由に出入りできないため、<strong>個人投資家の売買が相対的に大きなインパクトを持ちやすい</strong>特性があります。</p>
+
+    <div class="warning-box">
+      値動きが激しい＝チャンスが多い、とは限りません。同じ理由で<strong>下落するときも値が飛ぶ</strong>ため、損切りが想定外の価格になるリスク（スリッページ）も高くなります。浮動株の少ない銘柄への参入前には、<a href="guide-liquidity-risk.html">流動性リスク</a>と<a href="guide-order-types.html">注文方法（指値と成行）</a>の考え方を把握しておくことが重要です。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 指数への組入れ・除外が需給を動かす仕組み</h2>
+    <p>ここからは中上級者向けの実践的な話です。<strong>TOPIX（東証株価指数）</strong>や<strong>日経平均</strong>などの株価指数には、「パッシブファンド」と呼ばれる投資信託・ETFが連動しています。これらのファンドは、指数の構成銘柄と同じ割合で株を機械的に保有します。</p>
+    <p>TOPIXに連動するパッシブ資金は、2026年時点で国内だけで<strong>約107兆円規模</strong>（出典：Bloomberg・JPX）と言われます。これほどの資金が指数に連動して動くため、<strong>指数への組入れ・除外は純粋に需給の変化をもたらします</strong>。</p>
+    <p>具体的には：</p>
+    <ul>
+      <li><strong>指数への組入れが決定した銘柄</strong>：パッシブファンドが一斉に買いを入れるため、需給的な押し上げが起きやすい。</li>
+      <li><strong>指数からの除外が決定した銘柄</strong>：パッシブファンドが一斉に売りを出すため、需給的な圧力がかかる。</li>
+    </ul>
+    <p>この効果は、<strong>浮動株比率が低い（板が薄い）銘柄ほど株価に大きく出やすい</strong>という構造があります。同じ金額の売買でも、流通している株数が少ない銘柄の方が値が動くからです。</p>
+
+    <h3>TOPIXの2026年改革が示す実例</h3>
+    <p>JPXは2026年10月から<strong>次世代TOPIX</strong>への移行を進めており、自由浮動株時価総額のランキング下位3%に相当する約700社前後が段階的に除外される見通しです（出典：NLI Research Institute、Bloomberg 2026年8月）。除外は8四半期（約2年）かけて段階的に行われます。</p>
+
+    <!-- SVG 3: 指数組入れ・除外が株価に与える需給イメージ図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 270" role="img" aria-labelledby="idx-title">
+        <title id="idx-title">指数組入れは需給の押し上げ、除外は需給の売り圧力をもたらす仕組みの概念図</title>
+        <text class="s-panel-label" x="40" y="24">指数組入れ・除外と需給の関係（概念図）</text>
+
+        <!-- 左：組入れ -->
+        <text class="s-note-g" x="160" y="48" text-anchor="middle">✅ 指数に組入れ</text>
+        <rect x="60" y="56" width="200" height="36" rx="6" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="160" y="78" text-anchor="middle" font-size="12" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif" font-weight="600">パッシブファンドが一斉に買い</text>
+        <!-- 矢印下 -->
+        <line x1="160" y1="92" x2="160" y2="120" stroke="#1a7f37" stroke-width="2"/>
+        <polygon points="155,120 165,120 160,132" fill="#1a7f37"/>
+        <!-- 株価上昇棒 -->
+        <rect class="s-bar-green" x="100" y="132" width="120" height="30" rx="4"/>
+        <text class="s-bar-value" x="160" y="152" text-anchor="middle">需給↑ 株価上昇圧力</text>
+        <!-- 浮動株少ないと増幅 -->
+        <rect x="60" y="178" width="200" height="56" rx="6" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="160" y="200" text-anchor="middle" font-size="11.5" fill="#9a6700" font-family="'Noto Sans JP',sans-serif" font-weight="600">浮動株が少ない銘柄ほど</text>
+        <text x="160" y="218" text-anchor="middle" font-size="11.5" fill="#9a6700" font-family="'Noto Sans JP',sans-serif" font-weight="600">同じ買い金額でも値が大きく動く</text>
+
+        <!-- 区切り線 -->
+        <line x1="320" y1="44" x2="320" y2="248" stroke="#d0d7de" stroke-width="1" stroke-dasharray="4 3"/>
+
+        <!-- 右：除外 -->
+        <text class="s-note-r" x="480" y="48" text-anchor="middle">❌ 指数から除外</text>
+        <rect x="380" y="56" width="200" height="36" rx="6" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="480" y="78" text-anchor="middle" font-size="12" fill="#cf222e" font-family="'Noto Sans JP',sans-serif" font-weight="600">パッシブファンドが一斉に売り</text>
+        <!-- 矢印下 -->
+        <line x1="480" y1="92" x2="480" y2="120" stroke="#cf222e" stroke-width="2"/>
+        <polygon points="475,120 485,120 480,132" fill="#cf222e"/>
+        <!-- 株価下落棒 -->
+        <rect class="s-bar-red" x="420" y="132" width="120" height="30" rx="4"/>
+        <text class="s-bar-value" x="480" y="152" text-anchor="middle">需給↓ 株価下落圧力</text>
+        <!-- 浮動株少ないと増幅 -->
+        <rect x="380" y="178" width="200" height="56" rx="6" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="480" y="200" text-anchor="middle" font-size="11.5" fill="#9a6700" font-family="'Noto Sans JP',sans-serif" font-weight="600">浮動株が少ない銘柄ほど</text>
+        <text x="480" y="218" text-anchor="middle" font-size="11.5" fill="#9a6700" font-family="'Noto Sans JP',sans-serif" font-weight="600">同じ売り金額でも値が大きく動く</text>
+      </svg>
+      <figcaption class="chart-caption">▲ パッシブファンドの組入れ・除外は機械的な売買を通じて純粋な需給変化をもたらす。浮動株比率が低い銘柄ほどその影響が株価に大きく出やすい。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="info-box">
+      <strong>ℹ️ 日経平均とTOPIXの違い</strong>：日経平均は「株価の単純平均」に近く（値がさ株の影響が大）、TOPIXは「自由浮動株時価総額加重型」です。この違いを詳しく知りたい方は <a href="guide-nikkei-vs-topix.html">日経平均とTOPIXの違い</a> の記事も参考にしてください。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 市場区分と時価総額の目安（日本株の場合）</h2>
+    <p>東京証券取引所（TSE）は2022年4月に市場再編を行い、現在は<strong>プライム・スタンダード・グロース</strong>の3区分になっています。時価総額と流動性に関する要件の目安は以下の通りです（出典：JPX上場基準）。</p>
+
+    <div class="mw-scroll-hint">→ 横にスクロールできます</div>
+    <table>
+      <thead>
+        <tr>
+          <th>市場区分</th>
+          <th>位置づけ</th>
+          <th>主な流通時価総額の目安</th>
+          <th>上場企業数（概数）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>プライム</td>
+          <td>大型・グローバル企業向け</td>
+          <td>流通時価総額 100億円以上</td>
+          <td>約 1,640 社</td>
+        </tr>
+        <tr>
+          <td>スタンダード</td>
+          <td>中堅・中小企業向け</td>
+          <td>流通時価総額 10億円以上</td>
+          <td>約 1,590 社</td>
+        </tr>
+        <tr>
+          <td>グロース</td>
+          <td>新興・高成長企業向け</td>
+          <td>最低基準なし（成長性重視）</td>
+          <td>約 610 社</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#6e7781;margin-top:6px">※ 数値・社数は2024年時点の参考値（出典：JPX・Statista）。制度変更により変動します。</p>
+
+    <p>「大型・中型・小型」という区分は法定されておらず、投資会社やインデックスによって定義が異なります。一般的に、<strong>プライム市場の上位層が大型株、それ以外は中小型株</strong>とおおまかに区別されることが多いですが、厳密な境界は使う指標によります。</p>
+
+    <h3>「浮動株時価総額」という考え方</h3>
+    <p>実務では、発行済株式数全体の時価総額より、<strong>「浮動株時価総額（Free-float Market Cap）」</strong>の方がよく使われます。TOPIXや多くの国際指数はこれを指数のウェイト計算に使っており、浮動株比率が低い企業はウェイトが小さくなります。そのため、浮動株比率を高めることは機関投資家の保有比率を上げる（指数ウェイトが増える）メリットにつながり、近年TSEが上場企業にガバナンス改革を求めるなかで、持合株解消が進んでいます。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI の <a href="hot-assets.html">🔥 出来高急増ランキング</a> では、短期間に取引量が急増した銘柄を毎日更新しています。</p>
+    <p>出来高急増は「何か材料が出た＝注目が集まった」シグナルですが、<strong>浮動株の少ない小型株と、浮動株の多い大型株では同じ出来高増でも意味合いが異なります</strong>。大型株で出来高が5倍になれば機関投資家が大量に動いた可能性があり、小型株で出来高が5倍になっても元の絶対数が少なければ個人が少し注目した程度かもしれない。ランキングを見るときは、<strong>銘柄の市場区分（プライム・スタンダード・グロース）と時価総額の大きさを確認する習慣</strong>が役立ちます。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🔥 本日の出来高急増ランキングを見る</div>
+      <div class="cta-box-desc">前日比で出来高が急増した銘柄を日本株・米国株別にランキング表示。市場区分や時価総額と合わせて確認することで、背景の需給をより立体的に読めます。</div>
+      <a class="cta-btn" href="hot-assets.html">出来高急増ランキングを確認する →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>この記事で学んだ内容を整理します。</p>
+    <ul>
+      <li><strong>時価総額 ＝ 株価 × 発行済株式数</strong>。会社の規模を測るものさし。株価が安くても時価総額が大きい会社はたくさんある。</li>
+      <li><strong>「株価が安い ＝ 割安」ではない</strong>。割安かどうかはPER・PBRなど利益・純資産との比較が必要。</li>
+      <li><strong>浮動株</strong>は、発行済株式数から安定保有株（大株主・自己株式・持合等）を引いた、市場で実際に売買できる株。浮動株比率が低い銘柄は「板が薄い」状態になる。</li>
+      <li><strong>浮動株が少ない銘柄は値動きが激しくなりやすい</strong>。同じ金額の売買でも株価への影響が大きく出るため、上げも下げも急になりやすい。</li>
+      <li><strong>指数（TOPIX等）への組入れ・除外</strong>はパッシブファンドの機械的売買を通じて需給に影響し、浮動株比率が低いほどその影響は株価に大きく現れやすい。</li>
+    </ul>
+    <p>時価総額と浮動株の概念を押さえると、「なぜこの銘柄は急に大きく動いたのか」「なぜこの銘柄は機関投資家が参入しにくいのか」といった疑問が、仕組みから理解できるようになります。株価という"スライスの値段"だけでなく、<strong>ピザ全体の大きさ（時価総額）と、その日実際に動ける量（浮動株）</strong>を意識して相場を見ることが、より深い市場理解への第一歩です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-nikkei-vs-topix.html">
+        <div class="related-card-title">📈 日経平均とTOPIXの違い</div>
+        <div class="related-card-desc">株価平均型と時価総額加重型の違いを図解。NT倍率・指数の仕組みを理解すると市場全体の動きが読みやすくなります。</div>
+      </a>
+      <a class="related-card" href="guide-per-pbr.html">
+        <div class="related-card-title">📊 PERとPBRの読み方</div>
+        <div class="related-card-desc">時価総額と利益・純資産を比べた「割安・割高」のものさし。株価が安くても割安ではない理由の実践的な補足記事。</div>
+      </a>
+      <a class="related-card" href="hot-assets.html">
+        <div class="related-card-title">🔥 出来高急増ランキング</div>
+        <div class="related-card-desc">前日比で出来高が急増した銘柄を日々更新。市場区分・時価総額とあわせて需給の変化を確認できます。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は時価総額・浮動株にまつわる株式市場の仕組みを情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載の数値・制度は変更される場合があります。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
