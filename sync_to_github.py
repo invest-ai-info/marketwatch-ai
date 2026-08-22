@@ -162,4 +162,5 @@ SYNC_FILES = [
     "guide-counterparty-risk.html",
     "guide-proverb-aho-ni-narite-kai-no-tane.html",
     "guide-news-2026-08-22-jackson-hole-warsh-debut.html",
+    "guide-liquidity-risk.html",
 ]
