@@ -163,4 +163,5 @@ SYNC_FILES = [
     "guide-proverb-aho-ni-narite-kai-no-tane.html",
     "guide-news-2026-08-22-jackson-hole-warsh-debut.html",
     "guide-liquidity-risk.html",
+    "guide-proverb-shittara-shimai.html",
 ]
