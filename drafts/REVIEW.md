@@ -1,3 +1,7 @@
+## 2026-08-24 autopublish: ✅公開 | guide-settlement-cycle | 決定論🟢 / Opus🟡軽微修正2件（warning-box自己矛盾解消・CTA軟化）＋事実訂正2件（米国株T+2・年末休場前提）→独立Opus🟢白 | https://marketwatch-jp.com/guide-settlement-cycle.html
+
+---
+
 ## 2026-08-24 autodraft: 下書き生成 | regret-aversion | drafts/draft-regret-aversion.html
 
 - **基準日（JST）**: 2026-08-24
