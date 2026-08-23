@@ -27,13 +27,13 @@
 
 ## 2026-08-23 autopublish: ✅公開 | guide-liquidity-risk | 決定論🟢 / Opus🟡軽微修正（板読み誤り修正・スリッページ表現軟化・論理文修正）→独立Opus🟢白 | https://marketwatch-jp.com/guide-liquidity-risk.html
 
-## 2026-08-23 ⏳ゲート実行中 | signal-lab-daily #078 RSI売られすぎ逆張り買い FWD N=232 WCI下限46.2%突破
+## 2026-08-24 ✅公開 | signal-lab-daily #078 RSI売られすぎ逆張り買い FWD N=232 WCI下限46.2%突破
 
 - **記事番号**: #078
 - **テーマ**: RSI売られすぎ逆張り買い FWD N=232——WCI下限46.2%で損益分岐突破・4H足66.7%エッジ確立・1H足44.6%は無エッジ
-- **下書き**: `drafts/draft-signal-lab-078.html`
+- **公開ファイル**: `guide-signal-lab-078.html`
 - **claims**: `drafts/labnotes/lab-078-claims.json`（10件）
-- **生成**: 2026-08-23
+- **公開**: 2026-08-24（ゲート全通過: verify EXIT=0 / Opus🟡軽微修正→白 / 独立Opus INDEPENDENT_OPUS_OK）
 
 ---
 
