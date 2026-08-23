@@ -164,4 +164,5 @@ SYNC_FILES = [
     "guide-news-2026-08-22-jackson-hole-warsh-debut.html",
     "guide-liquidity-risk.html",
     "guide-proverb-shittara-shimai.html",
+    "guide-signal-lab-078.html",
 ]

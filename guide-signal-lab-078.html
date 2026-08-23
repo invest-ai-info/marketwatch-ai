@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>AIシグナル研究日誌 #78｜RSI売られすぎ逆張り買い FWD N=232 WCI下限 46.2%で損益分岐突破——4H足 66.7%のエッジ確立・1H足は無エッジの構造差解明 - MarketWatch AI</title>
+  <meta name="description" content="RSI売られすぎ逆張り買いシグナルの前向きN=232でWilson CI下限46.2%が損益分岐43%を初めて超えた。4H足66.7%の明確エッジ対し1H足44.6%は無エッジ。時間足別構造差とjpy_fx優位性を統計検証。第78回。">
+  <meta name="keywords" content="RSI,売られすぎ,逆張り,rsi_oversold_bounce,4H足,勝率,期待値,Wilson信頼区間,AIシグナル研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-078.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIシグナル研究日誌 #78｜RSI売られすぎ逆張り買い FWD N=232 WCI下限 46.2%で損益分岐突破——4H足 66.7%のエッジ確立・1H足は無エッジの構造差解明">
+  <meta property="og:description" content="RSI売られすぎ逆張り買いシグナルの前向きN=232でWilson CI下限46.2%が損益分岐43%を初めて超えた。4H足66.7%の明確エッジ対し1H足44.6%は無エッジ。時間足別構造差とjpy_fx優位性を統計検">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-078.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AIシグナル研究日誌 #78｜RSI売られすぎ逆張り買い FWD N=232 WCI下限 46.2%で損益分岐突破——4H足 66.7%のエッジ確立・1H足は無エッジの構造差解明",
+    "description": "RSI売られすぎ逆張り買いシグナルの前向きN=232でWilson CI下限46.2%が損益分岐43%を初めて超えた。4H足66.7%の明確エッジ対し1H足44.6%は無エッジ。時間足別構造差とjpy_fx優位性を統計検",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-24",
+    "dateModified": "2026-08-24",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-078.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .neutral-box{background:#f6f8fa;border-left:4px solid #57606a;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#424a53}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0;overflow-x:auto}
+    .chart-figure svg{width:100%;max-width:660px;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    @media(max-width:700px){
+      .article{padding:22px 16px}
+      h1{font-size:1.45rem}
+      .nav-btn{min-width:0;width:calc(50% - 5px);padding:10px 8px;font-size:.82rem}
+    }
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+<div id="reading-progress"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">📈 MarketWatch AI</div>
+    <div class="header-meta">AIが毎日更新する日本人投資家向けマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar" aria-label="メインナビゲーション">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &rsaquo; <a href="guides.html">解説記事</a> &rsaquo; AIシグナル研究日誌 #78
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 AIシグナル研究日誌 #78<br><small style="font-size:.65em;color:#57606a;font-weight:400">RSI売られすぎ逆張り買い FWD N=232——WCI下限46.2%で損益分岐突破・4H足 66.7%エッジ確立・1H足は無エッジ</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年8月24日 &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI過売り反発・−2σタッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第78回です。今回は <strong>rsi_oversold_bounce（RSI売られすぎ逆張り買い）</strong> の前向きデータ N=232 を時間足別・グループ別・トレンド別に解析します。</p>
+
+    <!-- 30秒でわかる -->
+    <div class="info-box" style="background:#e6ffed;border-left-color:#1a7f37;color:#1a7f37">
+      <strong>📋 30秒でわかる今回の検証結果</strong><br>
+      ① FWD全体 122/232（<strong>52.6%</strong>）Wilson CI下限 <strong>46.2%</strong> ——損益分岐43%を初めて上回る<br>
+      ② FWD 4H足 42/63（<strong>66.7%</strong>）WCI[54.4%,77.1%]——CI全域が43%超え・明確なエッジ<br>
+      ③ FWD 1H足 70/157（<strong>44.6%</strong>）WCI[37.0%,52.4%]——CI下限37.0%で無エッジ<br>
+      ④ 4H足と1H足の勝率差 +22.1pp、時間足の選択がエッジの有無を決める<br>
+      ⑤ bb_lower_touch比較: 239/540（<strong>44.3%</strong>）に対しRSIは+8.3pp優位
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📑 目次</div>
+      <ol>
+        <li><a href="#background">前提：rsi_oversold_bounceとは</a></li>
+        <li><a href="#hypotheses">今回の仮説設定</a></li>
+        <li><a href="#results-overview">FWD全体の結果——WCI下限が初の43%超え</a></li>
+        <li><a href="#results-tf">時間足別の構造差——4H vs 1H の非対称</a></li>
+        <li><a href="#results-group">グループ別パターン——jpy_fxの優位性</a></li>
+        <li><a href="#results-trend">トレンド別の偏り</a></li>
+        <li><a href="#comparison">bb_lower_touchとの比較</a></li>
+        <li><a href="#tracker">前向きトラッカー更新</a></li>
+        <li><a href="#conclusion">まとめと今後の観察点</a></li>
+      </ol>
+    </div>
+
+    <!-- §1 背景 -->
+    <h2 id="background">1. 前提：rsi_oversold_bounceとは</h2>
+    <p><strong>rsi_oversold_bounce</strong> は RSI が30以下の売られすぎ圏に達した後に反発するタイミングを逆張りロングで捉えるシグナルです。直感的には「下がりすぎたから買い」という逆張り発想ですが、過去データ（IS期間）では勝率が39.1%（52/133）と損益分岐43%を大きく下回り、エッジがないことが確認されていました。</p>
+    <p>#023（RSI vs BB 比較）では rsi_oversold_bounce が bb_lower_touch より低い勝率であること、#024（jpy_fx×RSI 棄却）では円クロスFXでは特に19.4%と極めて低い勝率だったことが判明しています。当初から逆張りシグナルとして難しさが際立っていました。</p>
+    <p>しかし <strong>前向きトラッカー（2026-06-16 登録開始）</strong> では、N=232 を積み上げた現在（2026-08-23 時点）、様相が変化しています。本記事ではこの変化の統計的意味を時間足別・グループ別・トレンド別に多角解析します。</p>
+
+    <!-- §2 仮説設定 -->
+    <h2 id="hypotheses">2. 今回の仮説設定</h2>
+    <p>今回は3つの事前仮説を検証します。</p>
+    <table>
+      <thead><tr><th>仮説</th><th>内容</th><th>判定基準</th></tr></thead>
+      <tbody>
+        <tr><td>H1</td><td>FWD全体のWilson CI下限が損益分岐43%を超える</td><td>WCI下限 ＞ 43%</td></tr>
+        <tr><td>H2</td><td>FWD 4H足のWilson CI下限が損益分岐43%を超える</td><td>WCI下限 ＞ 43%</td></tr>
+        <tr><td>H3</td><td>FWD 1H足のWilson CI下限が43%以下（エッジなし）</td><td>WCI下限 ≤ 43%</td></tr>
+      </tbody>
+    </table>
+    <p>IS期間（登録前）の39.1%と前向き期間（登録後）の比較が中心です。仮説ではなく探索的発見として、グループ別・トレンド別の交絡も分析します。</p>
+
+    <!-- §3 FWD全体 -->
+    <h2 id="results-overview">3. FWD全体の結果——WCI下限が初の43%超え</h2>
+    <table>
+      <thead><tr><th>期間</th><th>k/n</th><th>勝率</th><th>Wilson CI</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>IS（登録前）</td><td>52/133</td><td>39.1%</td><td>[31.2%, 47.6%]</td><td>❌ 損益分岐割れ</td></tr>
+        <tr><td>FWD（登録後）</td><td>122/232</td><td>52.6%</td><td>[46.2%, 58.9%]</td><td>✅ CI下限43%超</td></tr>
+      </tbody>
+    </table>
+    <div class="positive-box">
+      <strong>H1 ✅ 達成：</strong>FWD 122/232（52.6%）WCI[46.2%, 58.9%]——CI下限 46.2% が損益分岐43%を初めて上回りました。IS期間の39.1%から前向きで13.5pp改善しています。これは今シリーズで継続観察してきた rsi_oversold_edge の前向きトラッカーで、WCI下限が43%を超えた初めてのチェックポイントです。
+    </div>
+    <p>IS期間 39.1%（CI上限47.6%が43%を含む）と比べ、前向き期間は CI 全体が43%より上にあります。ただし勝率 52.6% は損益分岐水準を7.6pp上回る程度であり、CI 幅が依然広いことに注意が必要です。</p>
+
+    <!-- SVG: 期間別・足別比較チャート -->
+    <h3>時間足別勝率の比較</h3>
+    <div class="chart-figure">
+      <svg viewBox="0 0 660 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="rsi_oversold_bounce 時間足別勝率比較チャート">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="660" height="290" fill="#ffffff" rx="8"/>
+        <!-- タイトル -->
+        <text x="330" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#1E3A6E">rsi_oversold_bounce 期間・時間足別勝率</text>
+        <!-- 凡例 -->
+        <rect x="30" y="38" width="14" height="14" fill="#d4d8de" rx="2"/>
+        <text x="50" y="50" font-size="11" fill="#57606a">IS（登録前）</text>
+        <rect x="130" y="38" width="14" height="14" fill="#2C9B5F" rx="2"/>
+        <text x="150" y="50" font-size="11" fill="#57606a">FWD全体</text>
+        <rect x="230" y="38" width="14" height="14" fill="#1E3A6E" rx="2"/>
+        <text x="250" y="50" font-size="11" fill="#57606a">FWD 4H</text>
+        <rect x="330" y="38" width="14" height="14" fill="#E06C00" rx="2"/>
+        <text x="350" y="50" font-size="11" fill="#57606a">FWD 1H</text>
+        <rect x="430" y="38" width="14" height="14" fill="#0969da" rx="2"/>
+        <text x="450" y="50" font-size="11" fill="#57606a">FWD jpy_fx</text>
+
+        <!-- 損益分岐ライン (43%) -->
+        <!-- x軸: 160 ~ 640 (480px = 100%) ; 43% = 160 + 0.43*480 = 366.4 -->
+        <line x1="366" y1="62" x2="366" y2="265" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <text x="363" y="275" text-anchor="middle" font-size="10" fill="#cf222e">43%（損益分岐）</text>
+
+        <!-- 目盛 -->
+        <text x="155" y="275" text-anchor="end" font-size="10" fill="#57606a">0%</text>
+        <text x="400" y="65" text-anchor="middle" font-size="10" fill="#57606a">50%</text>
+        <text x="640" y="275" text-anchor="end" font-size="10" fill="#57606a">100%</text>
+        <!-- y軸 -->
+        <line x1="160" y1="62" x2="160" y2="265" stroke="#d0d7de" stroke-width="1"/>
+        <!-- x軸 -->
+        <line x1="160" y1="265" x2="640" y2="265" stroke="#d0d7de" stroke-width="1"/>
+
+        <!-- バー行: IS 39.1% -->
+        <!-- y=70 -->
+        <text x="155" y="90" text-anchor="end" font-size="12" fill="#424a53">IS 全体</text>
+        <rect x="160" y="72" width="187" height="24" fill="#d4d8de" rx="3"/><!-- 39.1% = 0.391*480=187.7 -->
+        <text x="352" y="89" font-size="11" fill="#666" font-weight="600">39.1%</text>
+
+        <!-- FWD全体 52.6% -->
+        <text x="155" y="130" text-anchor="end" font-size="12" fill="#424a53">FWD 全体</text>
+        <rect x="160" y="112" width="252" height="24" fill="#2C9B5F" rx="3"/><!-- 52.6% = 0.526*480=252.5 -->
+        <text x="417" y="129" font-size="11" fill="#1a7f37" font-weight="600">52.6%</text>
+
+        <!-- FWD 4H 66.7% -->
+        <text x="155" y="170" text-anchor="end" font-size="12" fill="#424a53">FWD 4H</text>
+        <rect x="160" y="152" width="320" height="24" fill="#1E3A6E" rx="3"/><!-- 66.7% = 0.667*480=320 -->
+        <text x="485" y="169" font-size="11" fill="#1E3A6E" font-weight="700">66.7%</text>
+
+        <!-- FWD 1H 44.6% -->
+        <text x="155" y="210" text-anchor="end" font-size="12" fill="#424a53">FWD 1H</text>
+        <rect x="160" y="192" width="214" height="24" fill="#E06C00" rx="3"/><!-- 44.6% = 0.446*480=214.1 -->
+        <text x="379" y="209" font-size="11" fill="#E06C00" font-weight="600">44.6%</text>
+
+        <!-- FWD jpy_fx 66.0% -->
+        <text x="155" y="250" text-anchor="end" font-size="12" fill="#424a53">FWD jpy_fx</text>
+        <rect x="160" y="232" width="317" height="24" fill="#0969da" rx="3"/><!-- 66.0% = 0.66*480=316.8 -->
+        <text x="482" y="249" font-size="11" fill="#0969da" font-weight="600">66.0%</text>
+      </svg>
+    </div>
+
+    <!-- §4 時間足別 -->
+    <h2 id="results-tf">4. 時間足別の構造差——4H vs 1H の非対称</h2>
+    <p>今回の最大の発見は <strong>時間足による大きな勝率格差</strong> です。</p>
+    <table>
+      <thead><tr><th>時間足</th><th>k/n</th><th>勝率</th><th>Wilson CI</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>FWD 4H</td><td>42/63</td><td>66.7%</td><td>[54.4%, 77.1%]</td><td>✅ CI全域が43%超え</td></tr>
+        <tr><td>FWD 1H</td><td>70/157</td><td>44.6%</td><td>[37.0%, 52.4%]</td><td>⚠️ CI下限37.0%で無エッジ</td></tr>
+      </tbody>
+    </table>
+    <div class="positive-box">
+      <strong>H2 ✅ 達成：</strong>FWD 4H足 42/63（66.7%）WCI[54.4%, 77.1%]——CI下限が54.4%と43%を11.4pp上回り、明確なエッジが確認されています（ただし §6 のとおり 4H 足は上昇トレンドと完全に重なっており、両者の寄与は未分離です）。#015で確認した「4H足ロングが1H足に劣る」という全体パターンとは逆に、RSI売られすぎ逆張りでは4H足の方が大きく上回っています。
+    </div>
+    <div class="warning-box">
+      <strong>H3 ✅ 達成：</strong>FWD 1H足 70/157（44.6%）WCI[37.0%, 52.4%]——CI下限は37.0%で43%を下回り、無エッジと判断されます。1H足での RSI 逆張りは現時点では期待値的な優位性を確認できません。
+    </div>
+    <p>4H足と1H足の勝率差は <strong>+22.1pp</strong>（66.7% vs 44.6%）と大きな構造的乖離があります。RSI売られすぎシグナルは発火する時間足に強く依存しており、現時点のデータは <strong>発火した時間足がエッジの有無を左右している可能性</strong> を示唆しています（トレンドとの交絡が未分離のため、確定的な条件とは言えません）。</p>
+
+    <h3>1D足（参考）</h3>
+    <p>FWD 1D足は k=10, n=12（83.3%）ですが、N=12 は小サンプルのため参考値に留めます。WCI[55.2%, 95.3%] は幅が非常に広く、統計的な確定には n≥30 以上の蓄積が必要です。</p>
+
+    <!-- §5 グループ別 -->
+    <h2 id="results-group">5. グループ別パターン——jpy_fx の優位性</h2>
+    <table>
+      <thead><tr><th>グループ</th><th>k/n</th><th>勝率</th><th>Wilson CI</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>jpy_fx（円クロス）</td><td>31/47</td><td>66.0%</td><td>[51.7%, 77.8%]</td><td>CI下限51.7%≫43%</td></tr>
+        <tr><td>metal（金・銀）</td><td>19/34</td><td>55.9%</td><td>[39.5%, 71.1%]</td><td>CI下限43%をわずかに下回る</td></tr>
+        <tr><td>index（指数）</td><td>28/58</td><td>48.3%</td><td>[35.9%, 60.8%]</td><td>CI下限35.9%</td></tr>
+        <tr><td>other_fx（ドル建て）</td><td>28/63</td><td>44.4%</td><td>[32.8%, 56.7%]</td><td>CI下限32.8%</td></tr>
+      </tbody>
+    </table>
+    <p><strong>jpy_fx（USDJPY、EURJPY、GBPJPY、AUDJPY）</strong> が 31/47（66.0%）WCI[51.7%, 77.8%] と最も高い勝率を示しています。IS期間では 19.4%（#024で棄却確認）だった円クロスFXが、前向き期間では大きく改善しています。この逆転は金属グループのレジーム転換（#030/#039）と並ぶ重要な変化です。</p>
+    <div class="positive-box">
+      探索的発見: <strong>FWD 4H×jpy_fx</strong> = 15/16（93.8%）WCI[71.7%, 98.9%]——N=16 の小サンプルながら、4H足かつ円クロスの組み合わせで非常に高い数値となりました。ただし WCI 幅が71.7%〜98.9%と非常に広く、統計的確定には N≥30 以上が必要です。参考値として記録するに留め、特定の通貨ペアの売買を推奨するものではありません。
+    </div>
+    <p>一方で指数グループ（48.3%）とドル建てFX（44.4%）は CI 下限が43%を大きく下回り、グループによって大きな非対称があることが分かります。IS期間での「指数×RSI=60%が BB 逆転」という観察は、前向きでは維持されていません。</p>
+
+    <!-- §6 トレンド別 -->
+    <h2 id="results-trend">6. トレンド別の偏り</h2>
+    <table>
+      <thead><tr><th>上位足トレンド</th><th>k/n</th><th>勝率</th><th>Wilson CI</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>上昇</td><td>42/63</td><td>66.7%</td><td>[54.4%, 77.1%]</td><td>CI全域43%超</td></tr>
+        <tr><td>中立・もみあい</td><td>43/80</td><td>53.8%</td><td>[42.9%, 64.3%]</td><td>CI下限42.9%≒43%（要継続観察）</td></tr>
+        <tr><td>下降</td><td>37/89</td><td>41.6%</td><td>[31.9%, 52.0%]</td><td>CI下限31.9%で損益分岐割れ</td></tr>
+      </tbody>
+    </table>
+    <p>トレンド別では「上昇トレンド中の RSI 売られすぎ逆張り」が 42/63（66.7%）と最も高い勝率を示しています。注目すべきは <strong>4H足と上昇トレンドが完全に一致している</strong> 点です——4H: k=42, n=63（66.7%）と trend=上昇: k=42, n=63（66.7%）がまったく同じ数値であり、前向きデータでは「4H足=上昇トレンド」という強い構造的交絡が存在します。</p>
+    <div class="warning-box">
+      「4H足が良い」のか「上昇トレンドが良い」のかが現時点では分離できません。4H足の内訳でトレンド別分析を行うと k=42, n=63 すべてが trend=上昇 に集中していることが確認されています。今後のデータ蓄積で両者の独立した寄与を分離することが課題です。
+    </div>
+    <p>下降トレンドでは 37/89（41.6%）と損益分岐を下回り、「下落中に RSI が売られすぎ水準に達する」局面でのロング逆張りが機能しないことを示唆しています。この結果は #022（逆張り×トレンド依存性解析）と一致する方向性です。</p>
+
+    <!-- §7 bb_lower_touch 比較 -->
+    <h2 id="comparison">7. bb_lower_touch との比較</h2>
+    <p>同じ逆張り系シグナル bb_lower_touch（BB下限タッチ）との比較は、RSI 逆張りの相対的なポジションを理解するために重要です。</p>
+    <table>
+      <thead><tr><th>シグナル</th><th>FWD k/n</th><th>FWD 勝率</th><th>Wilson CI</th><th>差異</th></tr></thead>
+      <tbody>
+        <tr><td>rsi_oversold_bounce</td><td>122/232</td><td>52.6%</td><td>[46.2%, 58.9%]</td><td>—</td></tr>
+        <tr><td>bb_lower_touch</td><td>239/540</td><td>44.3%</td><td>[40.1%, 48.5%]</td><td>RSI が +8.3pp 優位</td></tr>
+      </tbody>
+    </table>
+    <p>RSI 売られすぎシグナルは、BB 下限タッチと比べて <strong>+8.3pp の勝率優位性</strong> があります。IS 期間では RSI が BB に劣っていたこと（#023 確認）と比較すると、前向き期間では立場が逆転しています。BB の 239/540（44.3%）は WCI[40.1%, 48.5%] とほぼ損益分岐水準です。ただし RSI の CI 下限 46.2% と BB の CI 上限 48.5% は一部重なっており、両者の信頼区間は完全には分離していません。点推定では差が見られるものの、統計的に優劣が確定したとまでは言えず、今後のデータ蓄積での再確認が必要です。</p>
+
+    <!-- §8 トラッカー更新 -->
+    <h2 id="tracker">8. 前向きトラッカー更新</h2>
+    <table>
+      <thead>
+        <tr><th>仮説ID</th><th>登録日</th><th>フィルター</th><th>FWD k/n</th><th>勝率</th><th>WCI</th><th>ステータス</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>rsi_oversold_edge</td>
+          <td>2026-06-16</td>
+          <td>signal=rsi_oversold_bounce</td>
+          <td>122/232</td>
+          <td>52.6%</td>
+          <td>[46.2%, 58.9%]</td>
+          <td>🟡 継続観察（WCI下限が43%を初めて超えた時点）</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>今回の検証でWilson CI 下限が初めて損益分岐 43% を超えました。ただし昇格基準（「E(R) RCI 下限 ＞ 0 を 2 回連続確認」）に対しては、期待値ベースの CI 下限はトラッカーの最新値（rci_lo≒−0.006）でまだゼロをまたいでいます。勝率 CI は43%を超えましたが、期待値 CI はまだゼロ近傍です。継続的な蓄積が必要です。</p>
+    <div class="neutral-box">
+      <strong>次の観察点：</strong>
+      <ul>
+        <li>4H足の N が増えた際に、トレンド別の交絡（4H=上昇の重複）が解消するか</li>
+        <li>jpy_fx 前向き成績の継続（N=47→N≥80 の蓄積を待つ）</li>
+        <li>下降トレンドでのエッジ欠如が続くか（41.6%、N=89 で確認中）</li>
+        <li>1D足（N=12）の成績が蓄積されると 4H と同様のパターンが出るか</li>
+      </ul>
+    </div>
+
+    <!-- §9 まとめ -->
+    <h2 id="conclusion">9. まとめと今後の観察点</h2>
+    <p>今回の検証結果をまとめます。</p>
+    <ul>
+      <li><strong>H1 ✅</strong>：FWD全体 122/232（52.6%）WCI[46.2%, 58.9%]——CI下限46.2%が43%を初めて超えた</li>
+      <li><strong>H2 ✅</strong>：FWD 4H足 42/63（66.7%）WCI[54.4%, 77.1%]——明確なエッジ</li>
+      <li><strong>H3 ✅</strong>：FWD 1H足 70/157（44.6%）WCI[37.0%, 52.4%]——無エッジ</li>
+      <li>4H足と1H足の勝率差 +22.1pp という時間足依存の構造差を確認</li>
+      <li>jpy_fx グループが 31/47（66.0%）と IS 期間の19.4%から大きく改善</li>
+      <li>bb_lower_touch 比較: RSI +8.3pp 優位（IS では逆だった）</li>
+    </ul>
+    <p>RSI売られすぎ逆張り買いは「全体では徐々にエッジが形成されつつあるが、<strong>4H足に限定すると明確、1H足には現時点でエッジなし</strong>」という構造が見えてきています。この知見の意味は、同じシグナルを使う際に時間足の選択が結果を大きく左右する可能性があることを示唆しています。ただし過去の実績は将来を保証せず、確定的な結論を出すためには更なるデータ蓄積が必要です。</p>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連記事</div>
+      <div class="cta-box-desc">同シリーズの関連研究</div>
+      <div class="related-grid">
+        <a class="related-card" href="guide-signal-anatomy.html">
+          <div class="related-card-title">📈 シグナル発火条件の図解カタログ</div>
+          <div class="related-card-desc">RSI売られすぎ反発・BB−2σ等のシグナルをチャートで図解</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-023.html">
+          <div class="related-card-title">🧪 #23: RSI vs BB 全体比較</div>
+          <div class="related-card-desc">IS期間のrsi_oversold vs bb_lower_touchの系統的比較</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-024.html">
+          <div class="related-card-title">🧪 #24: jpy_fx×RSI 棄却確認</div>
+          <div class="related-card-desc">IS期間の円クロスFX×RSI（19.4%）の棄却研究</div>
+        </a>
+        <a class="related-card" href="guide-signal-lab-015.html">
+          <div class="related-card-title">🧪 #15: 4H足ロングの系統的検証</div>
+          <div class="related-card-desc">4H足ロングが全体的に1H足に劣るという研究（RSIでは逆転）</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 末尾免責（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事に掲載されている情報・データはすべて過去の実績および反実仮想シミュレーションに基づくものです。将来の運用成果を保証するものではなく、また投資の勧誘を目的とするものでもありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録を受けていません。掲載内容はあくまで情報提供を目的としており、投資判断・売買の決定はご自身の責任において行ってください。金融商品取引に伴うリスクを十分に理解された上でご利用ください。
+    </p>
+
+  </div><!-- /.article -->
+</main>
+
+<footer>
+  <p>&copy; 2026 <a href="index.html">MarketWatch AI</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+document.addEventListener('scroll',function(){
+  var e=document.getElementById('reading-progress');
+  var s=document.documentElement;
+  var t=s.scrollTop||document.body.scrollTop;
+  var h=s.scrollHeight-s.clientHeight;
+  if(h>0){e.style.width=(t/h*100)+'%';}
+});
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>

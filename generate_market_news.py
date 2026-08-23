@@ -5167,6 +5167,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-24", "line": '・<b>2026-08-24</b>: 🧪 解説「<a href="guide-signal-lab-078.html" style="color:#0969da"><b>RSI売られすぎ逆張り買い FWD N=232 WCI下限46.2%突破・4H足66.7%確立</b></a>」公開'},
         {"date": "2026-08-23", "line": '・<b>2026-08-23</b>: 📡 解説「<a href="guide-proverb-shittara-shimai.html" style="color:#0969da"><b>知ったらしまい</b></a>」公開'},
         {"date": "2026-08-23", "line": '・<b>2026-08-23</b>: 🛡️ 解説「<a href="guide-liquidity-risk.html" style="color:#0969da"><b>流動性リスク（板・スリッページの仕組み）</b></a>」公開'},
         {"date": "2026-08-22", "line": '・<b>2026-08-22</b>: 📰 解説「<a href="guide-news-2026-08-22-jackson-hole-warsh-debut.html" style="color:#0969da"><b>ジャクソンホール2026：ウォーシュ議長就任初講演で9月政策が動く</b></a>」公開'},
