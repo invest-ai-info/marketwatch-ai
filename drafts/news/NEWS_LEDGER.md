@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-24
+- 判定: ✅ 公開済み
+- 選定トピック: エヌビディアQ2 FY2027決算（8/26引け後）：AI半導体需要の真の強さを測る重要テスト（カテゴリ: AI半導体・米国株・日本株連動）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 8/26（水）引け後にNVDA Q2 FY2027決算発表。Q1実績$81.6B(+85%YoY)・Q2ガイダンス$91B±2%・コンセンサス$92B。Blackwellランプ速度・輸出規制・日本株連動（東京エレクトロン/アドバンテスト）の3論点で十分な付加価値あり。同日PCEデフレーター＋翌日ジャクソンホール開幕と重なる重要週の起点として最高スコア。
+- 出典（確認済み）:
+  - Yahoo Finance「Nvidia Q1 FY2027 earnings: record revenue, dividend hike」
+  - TIKR.com「NVIDIA Q1 2027 Earnings: $81.6B Revenue and Three Straight Quarters of Acceleration」
+  - TradingKey「NVIDIA Q2 Earnings Preview: Gross Margin and Rubin Hold Key to Breakout」
+  - itechguides.com「Nvidia Earnings Preview: Q2 FY27 Date, Estimates and NVDA Risks」（Reuters経由）
+  - intellectia.ai「Nvidia Q2 FY27 Earnings Preview」
+  - FinanceCalendar「NVDA Earnings August 2026: Date, Time & What to Expect」
+  - BigGo Finance「NVIDIA's Post-Earnings Drop Weighs on Market; Japanese Stocks Seen Opening Lower」
+  - Nikkei Asia「This rising Japanese chip stock has a close correlation with Nvidia」
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟢白（断定語なし・銘柄推奨なし・kinsho-v1×3箇所・出典8系統確認）→ 修正なし → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典8系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告25件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-24-nvidia-q2-earnings-preview.html
+- commit: c6ed6d1（main へ push 済み）
+
+---
+
 ## 2026-08-22
 - 判定: ✅ 公開済み
 - 選定トピック: ジャクソンホール2026：ウォーシュFRB議長の「就任初講演」で9月以降の政策が動く（カテゴリ: マクロ・金融政策・米国金利）
