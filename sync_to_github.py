@@ -166,4 +166,5 @@ SYNC_FILES = [
     "guide-proverb-shittara-shimai.html",
     "guide-news-2026-08-24-nvidia-q2-earnings-preview.html",
     "guide-signal-lab-078.html",
+    "guide-scam-account-lending.html",
 ]
