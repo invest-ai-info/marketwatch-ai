@@ -1,3 +1,30 @@
+## 2026-08-24 autodraft: 下書き生成 | regret-aversion | drafts/draft-regret-aversion.html
+
+- **基準日（JST）**: 2026-08-24
+- **topic / key**: 投資心理 #44 / `regret-aversion`
+- **仮タイトル**: 後悔したくない気持ちが、買えなくさせ売れなくさせる
+- **生成ファイル**: `drafts/draft-regret-aversion.html`
+- **参照出典**:
+  - Loomes & Sugden (1982) Regret Theory, Economic Journal
+  - Kahneman & Tversky (1982) 行動-非行動の非対称性 実験
+  - Schwab Asset Management "Regret Aversion Bias": https://www.schwabassetmanagement.com/content/regret-aversion-bias
+  - Bajaj AMC "Regret Aversion in Investment Decisions": https://www.bajajamc.com/knowledge-centre/regret-aversion-in-investment-decisions
+  - ResearchGate "THE REGRET AVERSION AS AN INVESTOR BIAS": https://www.researchgate.net/publication/312525979_THE_REGRET_AVERSION_AS_AN_INVESTOR_BIAS
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・教育的解説のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「100%」「儲かる」使用ゼロ）
+  - ✅ kinsho-v1免責あり（冒頭バナー data-disclaimer・本文末 p.disclaimer data-disclaimer・footer data-disclaimer の計3箇所）
+  - ✅ 出典・事実妥当（カーネマン＆トベルスキーの研究・後悔理論はWebSearch確認済み。独自の実測数値は一切使用せず）
+  - ✅ noindex,nofollow 挿入済み
+  - ✅ サンクコスト(#39)との棲み分け明示（冒頭info-box で相互リンク）
+  - ✅ cognitive-biases(#6)への言及・内部リンクあり
+- **SVG**: 3点（概念図①後悔の四象限 ②後悔の強さ比較棒グラフ ③ルール化Before/After）
+  - ⚠️ 要実機ライト/ダーク確認: SVG内の s-box-* クラスのダークモード切り替えが正常か確認要
+- **人間の残作業**:
+  1. SVGのライト/ダークモード実機確認
+  2. タイトル・リード文の微調整
+  3. 公開は毎朝 08:40 の autodraft-publish が自動ゲート（決定論チェック→Opusコンプラ→品質）を経て実行
+
 ## 2026-08-23 autopublish: ✅公開 | guide-liquidity-risk | 決定論🟢 / Opus🟡軽微修正（板読み誤り修正・スリッページ表現軟化・論理文修正）→独立Opus🟢白 | https://marketwatch-jp.com/guide-liquidity-risk.html
 
 ## 2026-08-23 🚩要人間レビュー（コンプラ🔴：事実誤認＋kinsho-v1不足） | signal-lab-daily #077
