@@ -169,4 +169,5 @@ SYNC_FILES = [
     "guide-scam-account-lending.html",
     "guide-settlement-cycle.html",
     "guide-proverb-bulls-bears-pigs.html",
+    "guide-market-cap-float.html",
 ]
