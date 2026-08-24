@@ -168,4 +168,5 @@ SYNC_FILES = [
     "guide-signal-lab-078.html",
     "guide-scam-account-lending.html",
     "guide-settlement-cycle.html",
+    "guide-proverb-bulls-bears-pigs.html",
 ]

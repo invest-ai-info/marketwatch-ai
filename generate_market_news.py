@@ -5167,6 +5167,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-24", "line": '・<b>2026-08-24</b>: 🐖 解説「<a href="guide-proverb-bulls-bears-pigs.html" style="color:#0969da"><b>強気も弱気も儲かるが、豚は屠られる</b></a>」公開'},
         {"date": "2026-08-24", "line": '・<b>2026-08-24</b>: 💰 解説「<a href="guide-settlement-cycle.html" style="color:#0969da"><b>受渡日（T+2）とは何か</b></a>」公開'},
         {"date": "2026-08-24", "line": '・<b>2026-08-24</b>: 🚫 解説「<a href="guide-scam-account-lending.html" style="color:#0969da"><b>口座・名義・携帯の「貸すだけ」</b></a>」公開'},
         {"date": "2026-08-24", "line": '・<b>2026-08-24</b>: 📰 解説「<a href="guide-news-2026-08-24-nvidia-q2-earnings-preview.html" style="color:#0969da"><b>エヌビディアQ2決算（8/26）：AI半導体需要の真の強さを測る重要テスト</b></a>」公開'},
