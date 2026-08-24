@@ -1,3 +1,35 @@
+## 2026-08-24 autodraft: 下書き生成 | trade-journal | drafts/draft-trade-journal.html
+
+- **基準日（JST）**: 2026-08-24
+- **topic / key**: 投資心理 #45 / `trade-journal`
+- **仮タイトル**: 記録をつけると、なぜ判断が変わるのか
+- **生成ファイル**: `drafts/draft-trade-journal.html`
+- **参照出典**:
+  - Barber & Odean (1999) "The Courage of Misguided Convictions", Financial Analysts Journal: http://faculty.haas.berkeley.edu/odean/papers%20current%20versions/faj%20novdec99%20barber%20and%20odean.pdf
+  - "Blaming luck, claiming skill: Self-attribution bias in error assignment" PLOS Computational Biology 2025: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1013787
+  - Brett Steenbarger, TraderFeed "Trading Psychology Techniques #1: Keeping a Journal": http://traderfeed.blogspot.com/2019/05/trading-psychology-techniques-1-keeping.html
+  - ResearchGate "Reflective journaling and metacognitive awareness (longitudinal study)": https://www.researchgate.net/publication/338731732_Reflective_journaling_and_metacognitive_awareness_insights_from_a_longitudinal_study_in_higher_education
+  - Annie Duke, "Thinking in Bets" (2018) — "resulting" concept
+  - Van K. Tharp, "Trade Your Way to Financial Freedom" — R-multiples and expectancy
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・教育的解説のみ）
+  - ✅ 断定・利益保証表現なし（「絶対」「必ず」「100%」「儲かる」使用ゼロ）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末 p.disclaimer data-disclaimer・footer の計3箇所）
+  - ✅ 出典・事実妥当（Barber&Odean/PLOS論文/Annie Duke/Van Tharp はWebSearch確認済み。当サイト独自の実測数値は使用せず）
+  - ✅ noindex,nofollow 挿入済み
+  - ✅ guide-trading-journal.html（#8）との棲み分けを冒頭info-boxで明示・相互リンクあり
+  - ✅ 特定ツール・サービスの推奨なし（「紙でもスプレッドシートでも」明記）
+- **SVG**: 3点（①自己帰属バイアスの非対称図 ②記録3項目タイミング図 ③プロセス×結果2×2マトリクス）
+  - ⚠️ 要実機ライト/ダーク確認: `.s-box-*` `.s-txt-*` `.s-arrow-*` 追加クラスのダークモード切り替えが正常か確認要
+  - ⚠️ SVG内の `<polygon>` arrowhead が `marker` タグなしで使用している箇所あり（`<polygon points="..." fill="...">` でインライン描画）→ライト/ダーク両方で視認性を確認
+- **人間の残作業**:
+  1. SVGのライト/ダークモード実機確認（特にボックス系の新クラス）
+  2. guide-trading-journal.html が実際に公開済みかリンク確認
+  3. タイトル・リード文の微調整
+  4. 公開は毎朝 08:40 の autodraft-publish が自動ゲート（決定論チェック→Opusコンプラ→品質）を経て実行
+
+---
+
 ## 2026-08-24 autopublish: ✅公開 | guide-settlement-cycle | 決定論🟢 / Opus🟡軽微修正2件（warning-box自己矛盾解消・CTA軟化）＋事実訂正2件（米国株T+2・年末休場前提）→独立Opus🟢白 | https://marketwatch-jp.com/guide-settlement-cycle.html
 
 ---
