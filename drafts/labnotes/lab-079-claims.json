@@ -1,0 +1,35 @@
+{
+  "article_id": "079",
+  "claims": [
+    {
+      "label": "tf=1d×reversalL 全件",
+      "filter": {"tf": "1d", "reversal_long": true},
+      "k": 25,
+      "n": 34
+    },
+    {
+      "label": "bb_lower_touch（tf=1d reversal_long）",
+      "filter": {"tf": "1d", "reversal_long": true, "signal": "bb_lower_touch"},
+      "k": 15,
+      "n": 19
+    },
+    {
+      "label": "rsi_oversold_bounce（tf=1d reversal_long）",
+      "filter": {"tf": "1d", "reversal_long": true, "signal": "rsi_oversold_bounce"},
+      "k": 10,
+      "n": 15
+    },
+    {
+      "label": "IS fired_before 2026-07-15（tf=1d reversal_long）",
+      "filter": {"tf": "1d", "reversal_long": true, "fired_before": "2026-07-15"},
+      "k": 18,
+      "n": 25
+    },
+    {
+      "label": "FWD fired_from 2026-07-15（tf=1d reversal_long）",
+      "filter": {"tf": "1d", "reversal_long": true, "fired_from": "2026-07-15"},
+      "k": 7,
+      "n": 9
+    }
+  ]
+}

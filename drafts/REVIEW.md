@@ -1,3 +1,20 @@
+## 2026-08-25 signal-lab: 🟡 下書き生成 | #079 tf=1d×reversalL 日足逆張り買い正式検証 | drafts/draft-signal-lab-079.html
+
+- **基準日（JST）**: 2026-08-25
+- **article_id**: 079
+- **仮説**: tf=1d × reversal_long（bb_lower_touch / rsi_oversold_bounce）は損益分岐43%を有意に超過するか
+- **生成ファイル**: `drafts/draft-signal-lab-079.html` / `drafts/labnotes/lab-079-claims.json` / `drafts/labnotes/lab-079-analysis.md`
+- **verify.py準拠集計**:
+  - 全件: N=34, k=25, 73.5% CI[56.9%,85.4%] E(R)=+0.716 ✅H1
+  - IS（〜7/15）: N=25, k=18, 72.0% ✅H2
+  - FWD（7/15〜）: N=9, k=7, 77.8% ✅H2（N小・暫定）
+  - bb_lower_touch: N=19, k=15, 78.9% CI下限56.7% ✅H3
+  - rsi_oversold_bounce: N=15, k=10, 66.7%
+- **留意点**: 金属グループ（42.9%・N=7）が唯一のアウトライヤー。FWD N=9は極小サンプル。
+- **ゲート状況**: signal_lab_verify.py → Opusコンプラ → 独立Opus → 自動公開（実行中）
+
+---
+
 ## 2026-08-24 autodraft: 下書き生成 | trade-journal | drafts/draft-trade-journal.html
 
 - **基準日（JST）**: 2026-08-24
