@@ -1,3 +1,15 @@
+## 2026-08-25 autopublish: ✅ 公開済み | market-cap-float | https://marketwatch-jp.com/guide-market-cap-float.html
+
+- **決定論ゲート**: GREEN（EXIT=0）× 2回（初回・Opus修正後）
+- **Opusコンプラ初期判定**: 🟡 グレー（軽微）→ 8件修正（免責属性付与・市場区分表誤記修正・TOPIX改革但し書き・ダークモードSVGコントラスト修正等）
+- **Opusコンプラ最終判定**: 🟢 白
+- **独立Opus白確認**: 🟢 白（kinsho-v1 3箇所確認済み）
+- **check_site_consistency.py**: エラー0（警告27件はすべて既存ファイルの既知問題）
+- **プッシュ**: 成功（HEAD → main, commit f6a9e7e）
+- **HTTP確認**: リモート環境からの外部接続制限のため省略（プッシュ成功確認済み）
+
+---
+
 ## 2026-08-25 signal-lab: 🚩 要人間レビュー | #079 tf=1d×reversalL 日足逆張り買い正式検証 | drafts/draft-signal-lab-079.html
 
 - **基準日（JST）**: 2026-08-25
