@@ -154,3 +154,5 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://quantpedia.com/strategies/sector-momentum-rotational-system / https://link.springer.com/article/10.1007/s10690-023-09413-y
 - 検証案: jp-rankings銘柄をjp-stock-info.jsonの業種フィールドでグルーピングし、業種別過去12ヶ月平均リターンを計算。上位3業種 vs 下位3業種の翌3ヶ月リターン差・勝率を算出。業種カバレッジが不足する場合はTOPIX業種別指数（価格データ）で代替検証する。
 - タグ: ◎
+
+## 2026-08-24 在庫過多のためスキップ（未消化12件）
