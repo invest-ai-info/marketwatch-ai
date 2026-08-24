@@ -133,16 +133,16 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
 <main class="s-wrap">
 
-  <!-- 30秒まとめ -->
-  <section class="s-summary" aria-label="30秒まとめ">
-    <div class="s-summary-title">⏱ 30秒まとめ</div>
+  <!-- 30秒でわかる -->
+  <section class="s-summary" aria-label="30秒でわかる">
+    <div class="s-summary-title">⏱ 30秒でわかる</div>
     <p>
-      日足（1D）の逆張り買いシグナル（bb_lower_touch / rsi_oversold_bounce）34件を検証。
-      全件の勝率は<strong>73.5%（95%CI下限 56.9%）</strong>で、損益分岐43%を統計的に上回ることが確認できた。
-      IS期間（72.0%）・前向き期間（77.8%）の両期間でも同様の高勝率が維持されており、
-      一定の整合性がある。一方、<strong>N=34は小サンプル</strong>であり、
+      日足（1D）の逆張り買いシグナル（bb_lower_touch / rsi_oversold_bounce）35件を検証。
+      全件の勝率は<strong>71.4%（95%CI下限 54.9%）</strong>で、損益分岐43%を統計的に上回ることが確認できた。
+      IS期間（72.0%）・前向き期間（70.0%）の両期間でも同方向の高勝率が維持されており、
+      一定の整合性がある。一方、<strong>N=35は小サンプル</strong>であり、
       金属グループ（42.9%・N=7）が全体を引き下げるアウトライヤーとなっている点に留意が必要。
-      前向き検証は引き続き蓄積中（N=9）。
+      前向き検証は引き続き蓄積中（FWD N=10）。
     </p>
   </section>
 
@@ -160,7 +160,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <p class="s-p">
       <strong>reversal_long</strong>（逆張り買い）：
       方向がロング（買い）かつ primary_signal が bb_lower_touch または rsi_oversold_bounce のいずれかに該当するシグナル。
-      拡張ユニバース（HG=F / PL=F / NG=F / ZN=F / ETH-USD / ^GDAXI / ^HSI / ^SOX）は除外。
+      検証対象は標準18銘柄に加え、拡張ユニバース（^SOX 等）の完了済みシグナルも含む（verify.py準拠）。
     </p>
     <p class="s-p">SL = ATR×1.5、TP1 = ATR×2.0（R=+1.33）、TP2 = ATR×3.0（R=+2.0）。損益分岐は43%。</p>
 
@@ -189,28 +189,28 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <tbody>
           <tr class="s-highlight">
             <td class="s-left"><strong>1d × reversalL 全件</strong></td>
-            <td>34</td><td>25</td>
-            <td class="s-win">73.5%</td>
-            <td>[56.9%, 85.4%]</td>
-            <td class="s-win">+0.716R</td>
-            <td>[+0.364, +1.067]</td>
+            <td>35</td><td>25</td>
+            <td class="s-win">71.4%</td>
+            <td>[54.9%, 83.7%]</td>
+            <td class="s-win">+0.667R</td>
+            <td>[+0.312, +1.021]</td>
           </tr>
           <tr>
             <td class="s-left">1d × Long 全般（対照）</td>
-            <td>104</td><td>52</td>
-            <td>50.0%</td>
-            <td>[40.6%, 59.4%]</td>
-            <td>+0.167R</td>
-            <td>[−0.059, +0.392]</td>
+            <td>122</td><td>59</td>
+            <td>48.4%</td>
+            <td>[39.7%, 57.1%]</td>
+            <td>+0.128R</td>
+            <td>[−0.082, +0.338]</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="s-win-box">
-      <strong>✅ H1 クリア</strong>：CI下限 56.9% &gt; 43%、N=34 ≥ 20。
-      対照群（1d Long全般 50.0%）との差は <strong>+23.5pp</strong>。
-      平均R の RCI 下限は +0.364 でプラス圏に収まっている。
+      <strong>✅ H1 クリア</strong>：CI下限 54.9% &gt; 43%、N=35 ≥ 20。
+      対照群（1d Long全般 48.4%）との差は <strong>+23.0pp</strong>。
+      平均R の RCI 下限は +0.312 でプラス圏に収まっている。
     </div>
 
     <!-- SVG 1: チャート風図解 ── 時間足別FWD勝率比較 -->
@@ -222,14 +222,11 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="210" y="37" text-anchor="middle" font-size="10" fill="var(--muted)">#069 (1H) / #074 (4H) / #079 今回 (1D)  ※ FWD N が異なるため直接比較は参考値</text>
 
         <!-- axes -->
-        <!-- Y axis line -->
         <line x1="55" y1="50" x2="55" y2="165" stroke="var(--border)" stroke-width="1.5"/>
-        <!-- X axis line -->
         <line x1="55" y1="165" x2="390" y2="165" stroke="var(--border)" stroke-width="1.5"/>
 
         <!-- Y axis labels (0%, 25%, 50%, 75%, 100%) -->
         <!-- y=165 → 0%,  y=50 → 100%  → 1% = (165-50)/100 = 1.15px -->
-        <!-- 0%: y=165, 25%: y=165-28.75=136.25, 50%: y=165-57.5=107.5, 75%: y=165-86.25=78.75, 100%: y=50 -->
         <text x="50" y="168" text-anchor="end" font-size="10" fill="var(--muted)">0%</text>
         <line x1="53" y1="165" x2="55" y2="165" stroke="var(--muted)" stroke-width="1"/>
         <text x="50" y="139" text-anchor="end" font-size="10" fill="var(--muted)">25%</text>
@@ -246,25 +243,22 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="392" y="119" font-size="10" fill="#e53e3e">43%</text>
 
         <!-- bar 1H: 54.7% → height = 54.7*1.15 = 62.9, top y = 165-62.9 = 102.1 -->
-        <!-- x center at 120, bar width=60 -->
         <rect x="90" y="102" width="60" height="63" fill="#63b3ed" rx="3"/>
         <text x="120" y="97" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">54.7%</text>
         <text x="120" y="178" text-anchor="middle" font-size="11" fill="var(--muted)">1H 足</text>
         <text x="120" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#069 N=179</text>
 
         <!-- bar 4H: 67.8% → height = 67.8*1.15 = 77.97, top y = 165-77.97 = 87.0 -->
-        <!-- x center at 220 -->
         <rect x="190" y="87" width="60" height="78" fill="#4299e1" rx="3"/>
         <text x="220" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">67.8%</text>
         <text x="220" y="178" text-anchor="middle" font-size="11" fill="var(--muted)">4H 足</text>
         <text x="220" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#074 N=59</text>
 
-        <!-- bar 1D: 77.8% → height = 77.8*1.15 = 89.47, top y = 165-89.47 = 75.5 -->
-        <!-- x center at 320 -->
-        <rect x="290" y="76" width="60" height="89" fill="#2b6cb0" rx="3"/>
-        <text x="320" y="71" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">77.8%</text>
+        <!-- bar 1D: 70.0% → height = 70.0*1.15 = 80.5, top y = 165-80.5 = 84.5 → 85 -->
+        <rect x="290" y="85" width="60" height="80" fill="#2b6cb0" rx="3"/>
+        <text x="320" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">70.0%</text>
         <text x="320" y="178" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700">1D 足 ★今回</text>
-        <text x="320" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#079 N=9</text>
+        <text x="320" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#079 N=10</text>
       </svg>
       <p class="s-chart-caption">図1 ─ 時間足別の前向き（FWD）勝率。長い時間足ほど高勝率の傾向が見られるが、N が大きく異なるため直接比較は参考程度。</p>
     </div>
@@ -282,11 +276,11 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <tbody>
           <tr class="s-highlight">
             <td class="s-left">bb_lower_touch（BB下限タッチ）</td>
-            <td>19</td><td>15</td>
-            <td class="s-win">78.9%</td>
-            <td>[56.7%, 91.5%]</td>
-            <td class="s-win">+0.842R</td>
-            <td>[+0.403, +1.282]</td>
+            <td>20</td><td>15</td>
+            <td class="s-win">75.0%</td>
+            <td>[53.1%, 88.8%]</td>
+            <td class="s-win">+0.750R</td>
+            <td>[+0.296, +1.204]</td>
           </tr>
           <tr>
             <td class="s-left">rsi_oversold_bounce（RSI売られすぎ反発）</td>
@@ -301,14 +295,14 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     </div>
 
     <p class="s-p">
-      BB下限タッチ（78.9%・RCI全域プラス）が RSI売られすぎ（66.7%・RCI下限がわずかにマイナス）を上回っている。
-      ただし両者とも N が19件・15件と小サンプルのため、シグナル間の差（12.2pp）を確定的に評価するには
+      BB下限タッチ（75.0%・RCI全域プラス）が RSI売られすぎ（66.7%・RCI下限がわずかにマイナス）を上回っている。
+      ただし両者とも N が20件・15件と小サンプルのため、シグナル間の差（8.3pp）を確定的に評価するには
       追加データの蓄積が必要。
     </p>
 
     <div class="s-win-box">
-      <strong>✅ H3 クリア</strong>：bb_lower_touch の CI下限 56.7% &gt; 43%。
-      RCI の下限も +0.403 でプラス圏に収まっている。
+      <strong>✅ H3 クリア</strong>：bb_lower_touch の CI下限 53.1% &gt; 43%。
+      RCI の下限も +0.296 でプラス圏に収まっている。
     </div>
 
     <!-- SVG 2: BB vs RSI 比較バーチャート -->
@@ -335,11 +329,11 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <line x1="60" y1="97" x2="360" y2="97" stroke="#e53e3e" stroke-width="1" stroke-dasharray="4,3"/>
         <text x="362" y="100" font-size="10" fill="#e53e3e">43%</text>
 
-        <!-- BB bar: 78.9% → height=78.9, top y=140-78.9=61.1 -->
-        <rect x="90" y="61" width="80" height="79" fill="#2b6cb0" rx="3"/>
-        <text x="130" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">78.9%</text>
+        <!-- BB bar: 75.0% → height=75, top y=140-75=65 -->
+        <rect x="90" y="65" width="80" height="75" fill="#2b6cb0" rx="3"/>
+        <text x="130" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">75.0%</text>
         <text x="130" y="155" text-anchor="middle" font-size="11" fill="var(--text)">bb_lower_touch</text>
-        <text x="130" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=19</text>
+        <text x="130" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=20</text>
 
         <!-- RSI bar: 66.7% → height=66.7, top y=140-66.7=73.3 -->
         <rect x="220" y="73" width="80" height="67" fill="#63b3ed" rx="3"/>
@@ -347,7 +341,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="260" y="155" text-anchor="middle" font-size="11" fill="var(--text)">rsi_oversold</text>
         <text x="260" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=15</text>
       </svg>
-      <p class="s-chart-caption">図2 ─ 1D足逆張り買いのシグナル別勝率。BB下限タッチが78.9%でリード。いずれも43%（赤破線）を上回る。</p>
+      <p class="s-chart-caption">図2 ─ 1D足逆張り買いのシグナル別勝率。BB下限タッチが75.0%でリード。いずれも43%（赤破線）を上回る。</p>
     </div>
   </section>
 
@@ -371,20 +365,22 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           </tr>
           <tr class="s-highlight">
             <td class="s-left"><strong>FWD（fired_from 2026-07-15）</strong></td>
-            <td>9</td><td>7</td>
-            <td class="s-win">77.8%</td>
-            <td>[45.3%, 93.7%]</td>
-            <td class="s-win">+0.815R</td>
-            <td>[+0.143, +1.487]</td>
+            <td>10</td><td>7</td>
+            <td class="s-win">70.0%</td>
+            <td>[39.7%, 89.2%]</td>
+            <td class="s-win">+0.633R</td>
+            <td>[−0.065, +1.332]</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="s-win-box">
-      <strong>✅ H2 クリア</strong>：IS 72.0%・FWD 77.8% の両期間で72%以上を確認。
-      方向性の整合がとれている。ただし FWD N=9 は極小サンプルであり、
-      CI 幅が [45.3%, 93.7%] と非常に広い点を強調しておく。
+    <div class="s-note">
+      <div class="s-note-title">⚠️ H2 方向性整合・閾値未達</div>
+      IS 72.0%・FWD 70.0% の両期間で概ね同方向の高勝率が観察された（方向性の整合は確認）。
+      ただし FWD 70.0% は事前宣言の「両期間72%以上」閾値に対して若干未達（−2.0pp）。
+      FWD N=10 は極小サンプルであり CI 幅が [39.7%, 89.2%] と非常に広い点も踏まえ、
+      H2 は「方向性整合・閾値条件付き」と評価する。蓄積継続が必要。
     </div>
 
     <!-- FWD内訳 -->
@@ -395,12 +391,13 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           <tr><th>区分</th><th>N</th><th>k</th><th>勝率</th><th>E(R)</th></tr>
         </thead>
         <tbody>
-          <tr><td class="s-left">FWD bb_lower_touch</td><td>6</td><td>4</td><td>66.7%</td><td>+0.556R</td></tr>
+          <tr><td class="s-left">FWD bb_lower_touch</td><td>7</td><td>4</td><td>57.1%</td><td>+0.333R</td></tr>
           <tr><td class="s-left">FWD rsi_oversold_bounce</td><td>3</td><td>3</td><td class="s-win">100.0%</td><td>+1.333R</td></tr>
           <tr><td class="s-left">FWD index（指数）</td><td>3</td><td>2</td><td>66.7%</td><td>+0.556R</td></tr>
           <tr><td class="s-left">FWD jpy_fx（円クロス）</td><td>5</td><td>4</td><td>80.0%</td><td>+0.867R</td></tr>
           <tr><td class="s-left">FWD other_fx（ドルクロス）</td><td>1</td><td>1</td><td>100.0%</td><td>+1.333R</td></tr>
           <tr><td class="s-left">FWD metal（金属）</td><td>2</td><td>0</td><td class="s-loss">0.0%</td><td>−1.000R</td></tr>
+          <tr><td class="s-left">FWD 拡張指数（^SOX）</td><td>1</td><td>0</td><td class="s-loss">0.0%</td><td>−1.000R</td></tr>
         </tbody>
       </table>
     </div>
@@ -408,7 +405,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <div class="s-note">
       <div class="s-note-title">⚠️ FWD内訳の解釈注意</div>
       FWD rsi_oversold_bounce の100%（3/3）や other_fx の100%（1/1）は N が極小のため短期ノイズの可能性がある。
-      FWD metal の0/2もまた N=2 での参考値に過ぎない。いずれも確定的な判断には至らない。
+      FWD metal・^SOX の敗北もそれぞれ N=2・N=1 の参考値に過ぎない。いずれも確定的な判断には至らない。
     </div>
 
     <!-- SVG 3: IS vs FWD 整合図 -->
@@ -441,13 +438,13 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="130" y="155" text-anchor="middle" font-size="11" fill="var(--text)">IS 期間</text>
         <text x="130" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=25（〜7/15）</text>
 
-        <!-- FWD bar: 77.8% → top y = 140-77.8 = 62.2 -->
-        <rect x="220" y="62" width="80" height="78" fill="#2b6cb0" rx="3"/>
-        <text x="260" y="57" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">77.8%</text>
+        <!-- FWD bar: 70.0% → top y = 140-70 = 70 -->
+        <rect x="220" y="70" width="80" height="70" fill="#2b6cb0" rx="3"/>
+        <text x="260" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">70.0%</text>
         <text x="260" y="155" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700">FWD 期間</text>
-        <text x="260" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=9（7/15〜）</text>
+        <text x="260" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=10（7/15〜）</text>
       </svg>
-      <p class="s-chart-caption">図3 ─ IS期間（72.0%）と前向き期間（77.8%）の比較。方向性の一貫性が確認できるが、FWD N=9 は暫定値。</p>
+      <p class="s-chart-caption">図3 ─ IS期間（72.0%）と前向き期間（70.0%）の比較。方向性の一貫性は確認されるが、FWD N=10 は暫定値。</p>
     </div>
   </section>
 
@@ -467,15 +464,16 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           <tr><td class="s-left">BTC（btc）</td><td>3</td><td>2</td><td>66.7%</td><td>[20.8%, 93.9%]</td><td>+0.556R</td><td>極小サンプル</td></tr>
           <tr><td class="s-left">原油（oil）</td><td>4</td><td>4</td><td class="s-win">100.0%</td><td>[51.0%, 100.0%]</td><td class="s-win">+1.333R</td><td>極小・N=4</td></tr>
           <tr class="s-highlight"><td class="s-left"><strong>金属（metal）</strong></td><td>7</td><td>3</td><td class="s-loss">42.9%</td><td>[15.8%, 75.0%]</td><td>0.000R</td><td>⚠️ 唯一の損益分岐付近</td></tr>
+          <tr><td class="s-left">拡張指数（^SOX）</td><td>1</td><td>0</td><td class="s-loss">0.0%</td><td>[—]</td><td>−1.000R</td><td>拡張ユニバース・N=1</td></tr>
         </tbody>
       </table>
     </div>
 
     <p class="s-p">
-      全グループ合計で N=6+6+8+3+4+7=34、k=5+5+6+2+4+3=25 となり全件の数値と一致する。
+      全グループ合計で N=6+6+8+3+4+7+1=35、k=5+5+6+2+4+3+0=25 となり全件の数値と一致する。
       <strong>金属グループのみ</strong>が勝率42.9%・平均R 0.0R と損益分岐付近にとどまり、
       全体の「引き下げ要因」となっている。
-      金属を除いた5グループ（N=27、推定k≈22）では勝率81%超と大幅に高くなる点は参考になる。
+      金属と拡張^SOX（各1件loss）を除いた5グループ（N=27）では推定勝率81%超と大幅に高くなる。
       ただし指数・他FX・BTC・原油はいずれも N≤6 の極小サンプルであり、CI幅が非常に広い。
     </p>
 
@@ -497,19 +495,19 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           <tr><th>比較軸</th><th>1D × reversalL（今回）</th><th>1D Long 全般（対照）</th><th>差</th></tr>
         </thead>
         <tbody>
-          <tr><td class="s-left">件数 N</td><td>34</td><td>104</td><td>—</td></tr>
-          <tr><td class="s-left">勝率</td><td class="s-win">73.5%</td><td>50.0%</td><td class="s-win">+23.5pp</td></tr>
-          <tr><td class="s-left">95%CI 下限</td><td class="s-win">56.9%</td><td>40.6%</td><td>—</td></tr>
-          <tr><td class="s-left">平均R</td><td class="s-win">+0.716R</td><td>+0.167R</td><td class="s-win">+0.549R</td></tr>
+          <tr><td class="s-left">件数 N</td><td>35</td><td>122</td><td>—</td></tr>
+          <tr><td class="s-left">勝率</td><td class="s-win">71.4%</td><td>48.4%</td><td class="s-win">+23.0pp</td></tr>
+          <tr><td class="s-left">95%CI 下限</td><td class="s-win">54.9%</td><td>39.7%</td><td>—</td></tr>
+          <tr><td class="s-left">平均R</td><td class="s-win">+0.667R</td><td>+0.128R</td><td class="s-win">+0.539R</td></tr>
         </tbody>
       </table>
     </div>
 
     <p class="s-p">
-      1D足全体の50%に対して、逆張り買いシグナルに絞ると73.5%と23.5ppの差がある。
+      1D足全体の48.4%に対して、逆張り買いシグナルに絞ると71.4%と23.0ppの差がある。
       これは「逆張りシグナル（bb_lower_touch / rsi_oversold_bounce）の絞り込みが
       日足レベルでも有効である可能性を示唆している」と言えるが、
-      両者の N（34 vs 104）の違いにも注意が必要で、確定的な結論ではない。
+      両者の N（35 vs 122）の違いにも注意が必要で、確定的な結論ではない。
     </p>
   </section>
 
@@ -519,12 +517,12 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
     <h3 class="s-h3">7-1. 小サンプルの影響</h3>
     <p class="s-p">
-      N=34 は 1H足（#069: N=312）や 4H足（#074: N=312）と比較して大幅に少なく、
-      CI 幅が広い。特に FWD N=9 は暫定値に過ぎず、数件の結果変化でCI が大きく動く。
+      N=35 は 1H足（#069: N=312）や 4H足（#074: N=312）と比較して大幅に少なく、
+      CI 幅が広い。特に FWD N=10 は暫定値に過ぎず、数件の結果変化でCI が大きく動く。
       昇格基準（前向きN≥80）まではまだ遠く、引き続き蓄積が必要。
     </p>
 
-    <h3 class="s-h3">7-2. 金属が唯一のアウトライヤー</h3>
+    <h3 class="s-h3">7-2. 金属が主なアウトライヤー</h3>
     <p class="s-p">
       金属グループ（N=7、42.9%）のみが損益分岐付近にとどまっており、
       他グループ（指数・円FX・ドルFX）は66%以上を示している。
@@ -533,15 +531,15 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
     <h3 class="s-h3">7-3. シグナル間の差異</h3>
     <p class="s-p">
-      BB（78.9%）vs RSI（66.7%）の差は12.2pp。
-      ただし RSI 側の CI が [-0.021, +1.132] でゼロをわずかに含むため、
+      BB（75.0%）vs RSI（66.7%）の差は8.3pp。
+      ただし RSI 側の CI が [−0.021, +1.132] でゼロをわずかに含むため、
       「RSI に有意なエッジがある」と断言できる段階ではなく、N 増加後の再検証が必要。
     </p>
 
     <h3 class="s-h3">7-4. 時間足の比較解釈</h3>
     <p class="s-p">
-      1H(54.7%) → 4H(67.8%) → 1D(77.8%) の時間足勾配は興味深いが、
-      FWD の N が 179/59/9 と大きく異なり単純比較は困難。
+      1H(54.7%) → 4H(67.8%) → 1D(70.0%) の時間足勾配は興味深いが、
+      FWD の N が 179/59/10 と大きく異なり単純比較は困難。
       日足の優位性を主張するには N=80 超の前向きデータが必要。
     </p>
   </section>
@@ -553,17 +551,16 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <div class="s-info">
       <div class="s-info-title">📡 tf=1d×reversalL トラッカー現況</div>
       <ul style="padding-left:18px;font-size:14px;line-height:2">
-        <li>前向きN: 9件（FWD fired_from 2026-07-15）</li>
-        <li>勝率: 7/9 = 77.8%</li>
-        <li>平均R: +0.81R　CI[+0.04, +1.59]</li>
-        <li>CI下限 +0.04 &gt; 0 → 1回目の正値確認（昇格条件は2回連続）</li>
-        <li>昇格基準: 前向きN≥80 かつ CI下限 &gt;0 が2回連続 → まだ<strong>蓄積継続中</strong></li>
+        <li>前向きN: 10件（FWD fired_from 2026-07-15）</li>
+        <li>勝率: 7/10 = 70.0%</li>
+        <li>平均R: +0.633R　RCI[−0.065, +1.332]</li>
+        <li>RCI下限 −0.065 &lt; 0 → 正値未達（蓄積継続）</li>
+        <li>昇格基準: 前向きN≥80 かつ RCI下限 &gt;0 が2回連続 → まだ<strong>蓄積継続中</strong></li>
       </ul>
     </div>
 
     <p class="s-p">
-      CI下限がかろうじてプラスになったことは1つの参考指標だが、
-      N=9 という極小サンプルでは統計的な意味は限定的。
+      FWD N=10 という極小サンプルでは統計的な意味は限定的。
       N=80 に向けてデータを積み重ね、次チェックポイントでの確認が必要。
     </p>
   </section>
@@ -580,7 +577,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <tbody>
           <tr><td>#069</td><td>1H</td><td>rsi_oversold 全体</td><td>54.7%</td><td>+0.277R</td><td>179</td></tr>
           <tr><td>#074</td><td>4H</td><td>rsi_oversold 全体</td><td>67.8%</td><td>+0.580R</td><td>59</td></tr>
-          <tr class="s-highlight"><td><strong>#079 今回</strong></td><td><strong>1D</strong></td><td><strong>reversal全体（BB+RSI）</strong></td><td class="s-win"><strong>77.8%</strong></td><td class="s-win"><strong>+0.815R</strong></td><td>9</td></tr>
+          <tr class="s-highlight"><td><strong>#079 今回</strong></td><td><strong>1D</strong></td><td><strong>reversal全体（BB+RSI）</strong></td><td class="s-win"><strong>70.0%</strong></td><td class="s-win"><strong>+0.633R</strong></td><td>10</td></tr>
         </tbody>
       </table>
     </div>
@@ -604,19 +601,19 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <tbody>
           <tr>
             <td class="s-left">H1: 全件CI下限 &gt; 43% ・ N≥20</td>
-            <td>CI下限56.9% &gt; 43% / N=34≥20</td>
+            <td>CI下限54.9% &gt; 43% / N=35≥20</td>
             <td class="s-win">✅ クリア</td>
             <td>—</td>
           </tr>
           <tr>
             <td class="s-left">H2: IS / FWD 両期間で72%以上</td>
-            <td>IS 72.0% / FWD 77.8%</td>
-            <td class="s-win">✅ クリア</td>
+            <td>IS 72.0% ✅ / FWD 70.0% ⚠️（−2pp未達）</td>
+            <td>⚠️ 方向性整合・閾値未達</td>
             <td>—</td>
           </tr>
           <tr>
             <td class="s-left">H3: bb_lower_touch CI下限 &gt; 43%</td>
-            <td>CI下限56.7% &gt; 43%</td>
+            <td>CI下限53.1% &gt; 43%</td>
             <td class="s-win">✅ クリア</td>
             <td>—</td>
           </tr>
@@ -625,9 +622,10 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     </div>
 
     <p class="s-p">
-      事前宣言したH1・H2・H3の3仮説がすべてクリアされた。
+      H1・H3 の2仮説がクリアされた。H2 は IS=72.0% と FWD=70.0% の両期間で同方向の高勝率が観察されたものの、
+      FWD が事前宣言の72%閾値をわずかに下回ったため「方向性整合・閾値未達」と評価する。
       日足の逆張り買いシグナルが損益分岐43%を有意に超える可能性が示唆されるが、
-      <strong>N=34という小サンプルと、FWD N=9という極小の前向きデータ量を踏まえると、
+      <strong>N=35という小サンプルと、FWD N=10という極小の前向きデータ量を踏まえると、
       現時点では「蓄積継続中」の評価が適切</strong>。
       今後の方針として、前向きN=80 到達を目標にトラッカーでの観察を続ける。
     </p>
@@ -636,9 +634,9 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
       <div class="s-note-title">📌 今後の確認ポイント</div>
       <ul style="padding-left:18px;font-size:14px;line-height:2">
         <li>FWD N≥30（🏁 暫定確認）で CI下限の方向を確認</li>
-        <li>FWD N≥80 かつ CI下限 &gt;0 が2回連続で昇格基準充足</li>
+        <li>FWD N≥80 かつ RCI下限 &gt;0 が2回連続で昇格基準充足</li>
         <li>金属グループ（N=7）の追加データで傾向が続くか確認</li>
-        <li>BB(78.9%) vs RSI(66.7%) の差が N 増加後も維持されるか</li>
+        <li>BB(75.0%) vs RSI(66.7%) の差が N 増加後も維持されるか</li>
       </ul>
     </div>
   </section>
