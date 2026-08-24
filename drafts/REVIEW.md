@@ -1,17 +1,52 @@
-## 2026-08-25 signal-lab: 🟡 下書き生成 | #079 tf=1d×reversalL 日足逆張り買い正式検証 | drafts/draft-signal-lab-079.html
+## 2026-08-25 signal-lab: 🚩 要人間レビュー | #079 tf=1d×reversalL 日足逆張り買い正式検証 | drafts/draft-signal-lab-079.html
 
 - **基準日（JST）**: 2026-08-25
 - **article_id**: 079
 - **仮説**: tf=1d × reversal_long（bb_lower_touch / rsi_oversold_bounce）は損益分岐43%を有意に超過するか
 - **生成ファイル**: `drafts/draft-signal-lab-079.html` / `drafts/labnotes/lab-079-claims.json` / `drafts/labnotes/lab-079-analysis.md`
-- **verify.py準拠集計**:
-  - 全件: N=34, k=25, 73.5% CI[56.9%,85.4%] E(R)=+0.716 ✅H1
-  - IS（〜7/15）: N=25, k=18, 72.0% ✅H2
-  - FWD（7/15〜）: N=9, k=7, 77.8% ✅H2（N小・暫定）
-  - bb_lower_touch: N=19, k=15, 78.9% CI下限56.7% ✅H3
+- **verify.py準拠集計（修正済み・EXIT=0確認）**:
+  - 全件: N=35, k=25, 71.4% CI[54.9%,83.7%] E(R)=+0.667 ✅H1
+  - IS（〜7/15）: N=25, k=18, 72.0%
+  - FWD（7/15〜）: N=10, k=7, 70.0% ⚠️H2方向性整合・閾値未達（N=10極小）
+  - bb_lower_touch: N=20, k=15, 75.0% CI下限53.1% ✅H3
   - rsi_oversold_bounce: N=15, k=10, 66.7%
-- **留意点**: 金属グループ（42.9%・N=7）が唯一のアウトライヤー。FWD N=9は極小サンプル。
-- **ゲート状況**: signal_lab_verify.py → Opusコンプラ → 独立Opus → 自動公開（実行中）
+- **留意点**: 金属グループ（42.9%・N=7）が唯一のアウトライヤー。FWD N=10は極小サンプル。^SOX追加でN=35。
+
+### 🚩 Opusコンプラ判定: グレー（要協議・数値/SVG修正が必要）
+
+verify.py EXIT=0（5クレーム全部緑）達成済み。Opusコンプラが以下3件を指摘。いずれも数値・SVG修正が必要でグレー自己修正レーン（表現軟化・免責のみ）での対応不可 → エスカレ。
+
+**[A] 図1（SVG）の1H足ラベル誤り（最重要・優良誤認方向）**
+- 記事の「1H足 54.7% #069 N=179」は FWD全体（1H+4H混在）の値
+- #069の真の1H単体FWDは signal-lab-ledger.md で確認要（Opusは 47.0%/N=115 と指摘）
+- SVG の棒グラフ + ラベル + 図1キャプション + §1・§9 テキスト修正が必要
+- 「時間足勾配」仮説の主要根拠図なので事実確認・修正必須
+
+**[B] §4 FWD内訳グループ合計 N=12 ≠ FWD総数 N=10**
+- HTML表: index 3 + jpy_fx 5 + other_fx 1 + metal 2 + ^SOX 1 = 12 ≠ 10
+- k合計: 2+4+1+0+0=7（一致）→ N方向で過剰計上2件
+- analysis.md の FWD グループ内訳（99-103行）が元データ→ 台帳との突合・再計算必要
+- 表の修正か、FWDグループ内訳行の削除が必要
+
+**[C] §7-1「#069: N=312」「#074: N=312」が labnotes に存在しない**
+- analysis.md にも台帳にも N=312 という数値は出てこない
+- 参考値は analysis.md:133 に記載（1H FWD=#069 N=179、4H FWD=#074 N=59 等）
+- §7-1 の N=312 を analysis.md に存在する数値に修正が必要
+
+### 推奨アクション（人間）
+1. `signal-lab-ledger.md` の #069・#074 節で各 FWD N（時間足別）を確認
+2. [A] を確認・修正 → SVGバー・ラベル・テキスト更新
+3. [B] FWD グループ内訳の N を再計算（標準グループの FWD 分だけ集計）
+4. [C] §7-1 の N=312 を正しい参照値に差し替え
+5. analysis.md も同時に更新 → `python signal_lab_verify.py` 再実行（EXIT=0維持確認）
+6. Opusコンプラ再実行 → 独立Opus確認 → finalize → publish
+
+### 軽微グレー4件（次回再ゲート時に併せて対応）
+1. §1 30秒まとめ「確認できた」→「上回る結果となった（95%CI下限ベース）」
+2. 図2キャプション: RSIのCI下限41.7% < 43%を補足
+3. §5「運用を検討する際の参考」→「検証で優先的に確認すべき論点」
+4. §7-2「他グループは66%以上」→「^SOX除く他グループ」
+5. フッター `<p>` に `data-disclaimer="kinsho-v1"` 付与
 
 ---
 
