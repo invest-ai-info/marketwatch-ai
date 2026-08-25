@@ -138,7 +138,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <div class="s-summary-title">⏱ 30秒でわかる</div>
     <p>
       日足（1D）の逆張り買いシグナル（bb_lower_touch / rsi_oversold_bounce）35件を検証。
-      全件の勝率は<strong>71.4%（95%CI下限 54.9%）</strong>で、損益分岐43%を統計的に上回ることが確認できた。
+      全件の勝率は<strong>71.4%（95%CI下限 54.9%）</strong>で、95%CI下限ベースでは損益分岐43%を上回る結果となった。
       IS期間（72.0%）・前向き期間（70.0%）の両期間でも同方向の高勝率が維持されており、
       一定の整合性がある。一方、<strong>N=35は小サンプル</strong>であり、
       金属グループ（42.9%・N=7）が全体を引き下げるアウトライヤーとなっている点に留意が必要。
@@ -151,7 +151,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <h2 class="s-h2">1. 背景と事前宣言</h2>
     <p class="s-p">
       これまでの研究で、RSI売られすぎ逆張り買いの前向き勝率は
-      <strong>1H足で54.7%（#069・N=179）、4H足で67.8%（#074・N=59）</strong>と確認されてきた。
+      <strong>1H足で47.0%（#069・FWD N=115）、4H足で67.8%（#074・FWD N=59）</strong>と確認されてきた。
       時間足が長くなるほど勝率が高まる傾向があるとすれば、日足（1D）ではさらに改善する可能性がある。
       本研究ではこの仮説を正式に検証する。
     </p>
@@ -242,11 +242,11 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <line x1="55" y1="116" x2="390" y2="116" stroke="#e53e3e" stroke-width="1" stroke-dasharray="4,3"/>
         <text x="392" y="119" font-size="10" fill="#e53e3e">43%</text>
 
-        <!-- bar 1H: 54.7% → height = 54.7*1.15 = 62.9, top y = 165-62.9 = 102.1 -->
-        <rect x="90" y="102" width="60" height="63" fill="#63b3ed" rx="3"/>
-        <text x="120" y="97" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">54.7%</text>
+        <!-- bar 1H: 47.0% → height = 47.0*1.15 = 54.05 ≈ 54, top y = 165-54 = 111 -->
+        <rect x="90" y="111" width="60" height="54" fill="#63b3ed" rx="3"/>
+        <text x="120" y="106" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">47.0%</text>
         <text x="120" y="178" text-anchor="middle" font-size="11" fill="var(--muted)">1H 足</text>
-        <text x="120" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#069 N=179</text>
+        <text x="120" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#069 N=115</text>
 
         <!-- bar 4H: 67.8% → height = 67.8*1.15 = 77.97, top y = 165-77.97 = 87.0 -->
         <rect x="190" y="87" width="60" height="78" fill="#4299e1" rx="3"/>
@@ -260,7 +260,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="320" y="178" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700">1D 足 ★今回</text>
         <text x="320" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">#079 N=10</text>
       </svg>
-      <p class="s-chart-caption">図1 ─ 時間足別の前向き（FWD）勝率。長い時間足ほど高勝率の傾向が見られるが、N が大きく異なるため直接比較は参考程度。</p>
+      <p class="s-chart-caption">図1 ─ 時間足別の前向き（FWD）勝率。1H は #069 の 1H 単体（54/115）、4H は #074 の 4H 単体（40/59）。長い時間足ほど高勝率の傾向が見られるが、出典回も N も異なるため直接比較は参考程度。</p>
     </div>
   </section>
 
@@ -341,7 +341,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
         <text x="260" y="155" text-anchor="middle" font-size="11" fill="var(--text)">rsi_oversold</text>
         <text x="260" y="167" text-anchor="middle" font-size="10" fill="var(--muted)">N=15</text>
       </svg>
-      <p class="s-chart-caption">図2 ─ 1D足逆張り買いのシグナル別勝率。BB下限タッチが75.0%でリード。いずれも43%（赤破線）を上回る。</p>
+      <p class="s-chart-caption">図2 ─ 1D足逆張り買いのシグナル別勝率。BB下限タッチが75.0%でリード。点推定はいずれも43%（赤破線）を上回るが、RSI 側は95%CI下限が41.7%で43%を下回る（N=15）。</p>
     </div>
   </section>
 
@@ -396,7 +396,6 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           <tr><td class="s-left">FWD index（指数）</td><td>3</td><td>2</td><td>66.7%</td><td>+0.556R</td></tr>
           <tr><td class="s-left">FWD jpy_fx（円クロス）</td><td>5</td><td>4</td><td>80.0%</td><td>+0.867R</td></tr>
           <tr><td class="s-left">FWD other_fx（ドルクロス）</td><td>1</td><td>1</td><td>100.0%</td><td>+1.333R</td></tr>
-          <tr><td class="s-left">FWD metal（金属）</td><td>2</td><td>0</td><td class="s-loss">0.0%</td><td>−1.000R</td></tr>
           <tr><td class="s-left">FWD 拡張指数（^SOX）</td><td>1</td><td>0</td><td class="s-loss">0.0%</td><td>−1.000R</td></tr>
         </tbody>
       </table>
@@ -405,7 +404,8 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <div class="s-note">
       <div class="s-note-title">⚠️ FWD内訳の解釈注意</div>
       FWD rsi_oversold_bounce の100%（3/3）や other_fx の100%（1/1）は N が極小のため短期ノイズの可能性がある。
-      FWD metal・^SOX の敗北もそれぞれ N=2・N=1 の参考値に過ぎない。いずれも確定的な判断には至らない。
+      FWD 拡張指数（^SOX）の敗北も N=1 の参考値に過ぎない。いずれも確定的な判断には至らない。
+      なおグループ別の内訳は 3+5+1+1=10 で FWD 総数と一致する（金属は FWD 期間の発火が 0 件のため行が無い）。
     </div>
 
     <!-- SVG 3: IS vs FWD 整合図 -->
@@ -473,7 +473,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
       全グループ合計で N=6+6+8+3+4+7+1=35、k=5+5+6+2+4+3+0=25 となり全件の数値と一致する。
       <strong>金属グループのみ</strong>が勝率42.9%・平均R 0.0R と損益分岐付近にとどまり、
       全体の「引き下げ要因」となっている。
-      金属と拡張^SOX（各1件loss）を除いた5グループ（N=27）では推定勝率81%超と大幅に高くなる。
+      金属（N=7）と拡張^SOX（N=1）を除いた5グループでは 22/27＝81.5% と大幅に高くなる。
       ただし指数・他FX・BTC・原油はいずれも N≤6 の極小サンプルであり、CI幅が非常に広い。
     </p>
 
@@ -481,7 +481,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
       <div class="s-note-title">⚠️ 金属グループの留意点</div>
       金属（GC=F・SI=F）は過去の研究（#013・#039・#064）でも「ロング逆張りが構造的に弱い」と繰り返し確認されている資産クラス。
       この研究#079でも同様の傾向が現れているが、N=7 では確定的な棄却はできない。
-      金属除外後の全体勝率が高い点は、金属を対象外とする運用を検討する際の参考になりうる（探索的な観察のみ）。
+      金属除外後の全体勝率が高い点は、今後の検証で優先的に確認すべき論点になりうる（探索的な観察のみ）。
     </div>
   </section>
 
@@ -517,7 +517,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
     <h3 class="s-h3">7-1. 小サンプルの影響</h3>
     <p class="s-p">
-      N=35 は 1H足（#069: N=312）や 4H足（#074: N=312）と比較して大幅に少なく、
+      N=35 は先行研究（#069: 全期間 N=312 ／ #074: 全期間 N=353＝IS 133＋FWD 220）と比較して大幅に少なく、
       CI 幅が広い。特に FWD N=10 は暫定値に過ぎず、数件の結果変化でCI が大きく動く。
       昇格基準（前向きN≥80）まではまだ遠く、引き続き蓄積が必要。
     </p>
@@ -525,8 +525,10 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <h3 class="s-h3">7-2. 金属が主なアウトライヤー</h3>
     <p class="s-p">
       金属グループ（N=7、42.9%）のみが損益分岐付近にとどまっており、
-      他グループ（指数・円FX・ドルFX）は66%以上を示している。
+      ^SOX（拡張ユニバース・N=1）を除く他グループ（指数・他FX・円クロス・BTC・原油）は66%以上を示している。
       これは過去研究（#013: 金属ロング20年BT→直近逆転）の知見と整合する。
+      ただし金属の7件はすべて IS 期間（〜2026-07-15）の発火で、FWD 期間の発火は 0 件。
+      したがって FWD 70.0% に金属はまったく寄与していない（IS 72.0% 側だけを引き下げている）。
     </p>
 
     <h3 class="s-h3">7-3. シグナル間の差異</h3>
@@ -538,8 +540,8 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
     <h3 class="s-h3">7-4. 時間足の比較解釈</h3>
     <p class="s-p">
-      1H(54.7%) → 4H(67.8%) → 1D(70.0%) の時間足勾配は興味深いが、
-      FWD の N が 179/59/10 と大きく異なり単純比較は困難。
+      1H(47.0%) → 4H(67.8%) → 1D(70.0%) の時間足勾配は興味深いが、
+      FWD の N が 115/59/10 と大きく異なるうえ出典回も #069／#074／今回とばらばらで、単純比較は困難。
       日足の優位性を主張するには N=80 超の前向きデータが必要。
     </p>
   </section>
@@ -575,7 +577,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
           <tr><th>研究回</th><th>時間足</th><th>対象</th><th>FWD勝率</th><th>FWD E(R)</th><th>FWD N</th></tr>
         </thead>
         <tbody>
-          <tr><td>#069</td><td>1H</td><td>rsi_oversold 全体</td><td>54.7%</td><td>+0.277R</td><td>179</td></tr>
+          <tr><td>#069</td><td>1H</td><td>rsi_oversold（1H 単体）</td><td>47.0%</td><td>+0.095R</td><td>115</td></tr>
           <tr><td>#074</td><td>4H</td><td>rsi_oversold 全体</td><td>67.8%</td><td>+0.580R</td><td>59</td></tr>
           <tr class="s-highlight"><td><strong>#079 今回</strong></td><td><strong>1D</strong></td><td><strong>reversal全体（BB+RSI）</strong></td><td class="s-win"><strong>70.0%</strong></td><td class="s-win"><strong>+0.633R</strong></td><td>10</td></tr>
         </tbody>
@@ -651,7 +653,7 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 <!-- footer [kinsho-v1 3/3] -->
 <footer class="s-footer">
   <p><a href="/guides.html">📚 解説記事一覧</a> ｜ <a href="/track-record.html">📊 シグナル成績</a> ｜ <a href="/index.html">🏠 ホーム</a></p>
-  <p style="margin-top:10px">
+  <p style="margin-top:10px" data-disclaimer="kinsho-v1">
     【免責】本サイトの情報は教育・情報提供のみを目的とし、投資助言ではありません。過去の成績は将来の結果を保証しません。投資の最終判断はご自身でお願いします。
   </p>
   <p style="margin-top:8px">© 2024-2026 marketwatch-jp.com</p>
