@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-08-25
+- 判定: ✅ 公開済み
+- 選定トピック: ドラッケンミラーWSJ寄稿：財務省の国債バイバックを「失策」と批判──30年利回り19年ぶり高水準の背景と日本投資家への含意（カテゴリ: マクロ・米国債・金融政策）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 8/25公開のWSJオペ・エドにてドラッケンミラーが「価格管理であり失策」と批判。8/19の財務省バイバック発表（当サイト8/20記事済み）後に利回りが元水準に戻った事実と合わせ、「介入失敗→著名投資家が公開批判」という新展開として独立した付加価値あり。30年利回り5.335%（19年ぶり高値）・バイバック$4B・ドラッケンミラーの発言5点と日本投資家向けチェックポイント5点を充実させた。8/27-29ジャクソンホール・8/26 GDP第2次速報と合わせて重要週の文脈整理として最高水準のスコア。
+- 出典（確認済み・2系統以上）:
+  - Bloomberg「Stanley Druckenmiller Calls Bessent's Bond Buyback Plan a Mistake」（2026-08-25）
+  - CNBC「30-year Treasury yield tops 5.33%, new 19-year high」（2026-08-18）
+  - CNBC「Treasury doubles debt buybacks as Bessent moves to steady bond market」（2026-08-19）
+  - CNBC「Longer-dated Treasury yields rise as Bessent's bond buyback rally fizzles out」（2026-08-21）
+  - AOL/Bloomberg「US Treasury buybacks a 'mistake' costing credibility, says Druckenmiller」（2026-08-25）
+  - WHTC「US Treasury buybacks a 'mistake' costing credibility, says Druckenmiller」（2026-08-25）
+  - CoinDesk「Druckenmiller says Treasury's $4B bond plan driving BTC higher is flawed」（2026-08-25）
+  - intellectia.ai「30-Year Treasury Yield Hits 19-Year High: What It Means for Investors in 2026」
+  - 外為どっとコム「ドル/円今日の見通し」（2026-08-25・米10年利回り4.708%）
+  - riotimesonline.com「Global Economy Briefing August 25, 2026」
+  - BEA「GDP Advance Estimate 2nd Quarter 2026」（2026-07-30）
+  - Wikipedia・Fox Business（ドラッケンミラー人物背景）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正4件適用（「伝説的」→「著名」に統一×3箇所／運用実績に「過去の実績は将来の成果を示すものではない」追記／「恒常化している」→「恒常化しているとされる」にヘッジ付与／チェックポイント③に「売買水準示唆ではない」旨を追記。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典12系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典12系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告27件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html
+- commit: 925221c（main へ push 済み）
+
+---
+
 ## 2026-08-24
 - 判定: ✅ 公開済み
 - 選定トピック: エヌビディアQ2 FY2027決算（8/26引け後）：AI半導体需要の真の強さを測る重要テスト（カテゴリ: AI半導体・米国株・日本株連動）
