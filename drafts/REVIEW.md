@@ -1,3 +1,12 @@
+## 2026-08-26 | ✅ autopublish 公開 | regret-aversion | 投資の心理・メンタル
+
+- 決定論ゲート: GREEN（初回・修正後とも）
+- Opusコンプラ＋品質: 🟢白（グレー軽微11箇所を自己修正→全5観点✅）
+- 独立Opus確認: 🟢白
+- URL: https://marketwatch-jp.com/guide-regret-aversion.html
+
+---
+
 ## 2026-08-26 | 🆕 下書き生成 | shareholder-benefits | autodraft-article
 
 - **基準日**: 2026-08-26（JST）
