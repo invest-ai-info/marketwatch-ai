@@ -5167,7 +5167,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧪 解説「<a href="guide-signal-lab-079.html" style="color:#0969da"><b>日足の逆張り買いは71.4%——ただし前向きN=10で事前宣言H2は未達</b></a>」公開'},
+        {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧪 解説「<a href="guide-signal-lab-079.html" style="color:#0969da"><b>日足の逆張り買いは71.4%——ただし20年リプレイでは期待値マイナス</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 📰 解説「<a href="guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html" style="color:#0969da"><b>ドラッケンミラー、財務省の国債バイバックを「失策」と批判</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧾 解説「<a href="guide-proverb-ri-wa-moto-ni-ari.html" style="color:#0969da"><b>利は元にあり</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 💰 解説「<a href="guide-market-cap-float.html" style="color:#0969da"><b>時価総額と浮動株（なぜ小型株は激しく動くのか）</b></a>」公開'},
