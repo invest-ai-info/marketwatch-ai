@@ -171,4 +171,5 @@ SYNC_FILES = [
     "guide-proverb-bulls-bears-pigs.html",
     "guide-market-cap-float.html",
     "guide-proverb-ri-wa-moto-ni-ari.html",
+    "guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html",
 ]
