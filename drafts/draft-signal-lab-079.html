@@ -139,8 +139,9 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <p>
       日足（1D）の逆張り買いシグナル（bb_lower_touch / rsi_oversold_bounce）35件を検証。
       全件の勝率は<strong>71.4%（95%CI下限 54.9%）</strong>で、95%CI下限ベースでは損益分岐43%を上回る結果となった。
-      IS期間（72.0%）・前向き期間（70.0%）の両期間でも同方向の高勝率が維持されており、
-      一定の整合性がある。一方、<strong>N=35は小サンプル</strong>であり、
+      IS期間（72.0%）・前向き期間（70.0%）の両期間でも同方向の高勝率が維持されている。
+      ただし<strong>事前宣言 H2（両期間とも閾値以上）は前向き期間がわずかに届かず未達</strong>（詳細は §10）。
+      また<strong>N=35は小サンプル</strong>であり、
       金属グループ（42.9%・N=7）が全体を引き下げるアウトライヤーとなっている点に留意が必要。
       前向き検証は引き続き蓄積中（FWD N=10）。
     </p>
@@ -551,18 +552,27 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
     <h2 class="s-h2">8. 前向きトラッカー状況（2026-08-25更新）</h2>
 
     <div class="s-info">
-      <div class="s-info-title">📡 tf=1d×reversalL トラッカー現況</div>
+      <div class="s-info-title">📡 tf=1d×reversalL トラッカー現況（signal-lab-tracker.json 実測値）</div>
       <ul style="padding-left:18px;font-size:14px;line-height:2">
-        <li>前向きN: 10件（FWD fired_from 2026-07-15）</li>
-        <li>勝率: 7/10 = 70.0%</li>
-        <li>平均R: +0.633R　RCI[−0.065, +1.332]</li>
-        <li>RCI下限 −0.065 &lt; 0 → 正値未達（蓄積継続）</li>
+        <li>前向きN: 9件（登録日 2026-07-15 以降・標準ユニバースのみ）</li>
+        <li>勝率: 7/9 = 77.8%　95%CI[45.3%, 93.7%]</li>
+        <li>平均R: +0.815R　RCI[+0.037, +1.592]</li>
+        <li>RCI下限 +0.037 &gt; 0（ただし N=9 の暫定値であり、1件の増減で符号が変わりうる）</li>
         <li>昇格基準: 前向きN≥80 かつ RCI下限 &gt;0 が2回連続 → まだ<strong>蓄積継続中</strong></li>
       </ul>
     </div>
 
+    <div class="s-note">
+      <div class="s-note-title">⚠️ §4 の FWD N=10 との差はユニバースの扱い</div>
+      本文の検証は verify.py 準拠で<strong>拡張ユニバース（^SOX）を含む</strong>ため FWD N=10・全期間 N=35。
+      一方トラッカーは<strong>標準ユニバースのみ</strong>を数えるため FWD N=9・全期間 N=34。
+      差分の1件（^SOX・2026-07-28・bb_lower_touch）は loss のため k は 7 のまま変わらない。
+      母集団が1件違うだけで平均R の信頼区間の下限は符号をまたぐ（−0.065 ↔ +0.037）。
+      <strong>この規模では「RCI下限がプラスかどうか」は結論として扱えない</strong>という一例として記録しておく。
+    </div>
+
     <p class="s-p">
-      FWD N=10 という極小サンプルでは統計的な意味は限定的。
+      いずれにせよ FWD N=9〜10 という極小サンプルでは統計的な意味は限定的。
       N=80 に向けてデータを積み重ね、次チェックポイントでの確認が必要。
     </p>
   </section>
@@ -586,8 +596,11 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
 
     <p class="s-p">
       FWD Nの違いが大きいため直接比較は慎重に行う必要があるが、
-      「時間足が長いほど逆張りシグナルの前向き勝率が高い傾向がある」という作業仮説を
-      支持する方向の結果が得られている。
+      「時間足が長いほど逆張りシグナルの前向き勝率が高い傾向がある」という作業仮説と
+      矛盾しない結果が得られている。
+      ただし3行は研究回・観測期間・対象シグナルの範囲がいずれも異なり、
+      同一条件で時間足だけを振った比較ではない。確認された事実ではなく、
+      次に同一条件で検証すべき論点として扱う。
     </p>
   </section>
 
