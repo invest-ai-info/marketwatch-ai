@@ -1,3 +1,50 @@
+## 2026-08-25 | ✅ 昇格をライブ配信へ反映 [解決済み] | state_maup_long | signal-lab-tracker
+
+`signal_lab_tracker.py update --date 2026-08-25` で **`state_maup_long`（ステート 上昇配置（>MA25&75）×ロング・kind=edge）が promoted** に変化。
+オーナー指示によりライブ配信フィルタへ反映した。
+
+### 🔴 反映しようとして見つかった欠陥＝昇格しても永久に何も起きない状態だった
+
+`generate_technical_alerts.py` の昇格ゲートは `_gate_probe` を作って固定オラクル `signal_lab_verify.match` に渡すが、
+**probe に `entry` と `indicators_at_signal` が入っていなかった**。オラクルの `ma_pos_of` / `rsi_band_of` / `macd_side_of` は
+この2フィールドを読むので、**`ma_pos`・`rsi_band`・`macd_side` を条件に持つ promoted 仮説は照合が必ず False**＝
+昇格しても1件も通らない。`state_maup_long` の filter は `{"ma_pos":"above_both","direction":"long"}` なので直撃。
+promoted edge 2件のうち通っていたのは `trend=上昇×reversalL` だけだった。
+
+### 直した内容
+
+1. `build_indicators_at_signal(indicators)` を新設し、**記録（signals-log）と照合 probe の両方**がこれを使う形にした
+   （片方だけ直すと同じ穴が再発するため。既存レコードとの出力一致は旧実装との比較テストで確認済み＝完全一致）
+2. `_gate_probe` に `entry` と `indicators_at_signal` を追加
+3. `GATE_PROBE_SUPPORTED_KEYS` を定義し、**probe が担げない次元を条件に持つ promoted 仮説を起動時に 🚨 で鳴らす**
+   （沈黙の不一致を二度と作らない。未対応は news / regime4 / fired_before / fired_from＝理由もコードに明記）
+
+### 検証
+
+- 合成4ケース: 上昇配置×ロング→`state_maup_long` 一致 ✅／下降配置×ロング・上昇配置×ショート・above25_only→不一致（記録のみ）✅
+- 実レコード照合: 直近14日の 4H 発火 310件のうち「昇格エッジ非該当」でブロックされていた 93件中 **66件が通るようになる**
+- ライブ実行 [run 32844994536](https://github.com/invest-ai-info/marketwatch-ai/actions/runs/32844994536)（1H・--no-email）:
+  `🏅 昇格エッジ限定メール: ON — promoted edge 2 件: trend=上昇×reversalL, ステート 上昇配置（>MA25&75）×ロング`
+  で両方ロード・**🚨 probe非対応の警告なし**（このrunは新規シグナル0件のため実照合は未発生）
+
+### 配信量の変化（メールを実際に出すのは 4H レーンのみ。1h/1d は `--no-email`＝収集専用）
+
+| | 反映前 | 反映後（見込み） |
+|---|---|---|
+| 直近14日 | **0通/日** | 約 4.7通/日 |
+| 直近29日 | **0通/日** | 約 4.1通/日 |
+
+⚠️ **4Hのメールレーンは直近29日間ゼロ通だった**（唯一通っていた `trend=上昇×reversalL` が4H足でほとんど発火しないため）。
+今回の反映でアラートメールが実質的に復活する。多すぎる場合のレバー: `EMAIL_PROMOTED_ONLY=0`（ゲート自体を無効化＝全送信なので逆効果）ではなく、
+**仮説側に `tf` を足して 4H 限定にする**か、`state_maup_long` を降格させるのが筋。
+
+📌 **エッジの質は控えめ**: forward avgR **+0.155**・RCI下限 **+0.019**（ゼロ紙一重）／alltime avgR +0.009・RCI[−0.099,+0.116] は 0 を跨ぐ。
+勝率は 45〜49%＝損益分岐43%すれすれで、**利は勝率でなく平均Rに乗っている**タイプ。
+DOCTRINE §0-1「勝ち筋はレジーム依存で減衰」および指数×ロングの winner's curse（昇格時 R+0.57 → N212 で +0.05 → 降格）の前例どおり、
+降格条件（基準割れ2回連続で自動降格）に当たるかを次のチェックポイントで見る。
+
+---
+
 ## 2026-08-25 | ✅ 公開済み | signal-lab-079 | signal-lab-daily
 
 https://marketwatch-jp.com/guide-signal-lab-079.html
