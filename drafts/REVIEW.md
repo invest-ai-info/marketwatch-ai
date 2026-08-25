@@ -1,3 +1,26 @@
+## 2026-08-25 | ✅ 公開済み | signal-lab-079 | signal-lab-daily
+
+https://marketwatch-jp.com/guide-signal-lab-079.html
+
+- **決定論ゲート**: `signal_lab_verify.py` EXIT=0（5クレーム緑・要約未検証0件・SVG警告0件）を修正後3回（下書き／§8修正後／finalize後の公開版）
+- **`check_guide_draft.py`**: GREEN（初回 RED 1件＝ブランドカラー未適用 → `--accent`/`--hero1`/`--hero2` を #2C4F8F / #1E3A6E に、`.s-h2` に `color:var(--accent)` を付与して解消）
+- **`check_site_consistency.py`**: エラー0（警告25件は既存ファイルの既知問題）
+- **コンプラ確認**: 断定語・利益保証・個別銘柄推奨なし／kinsho-v1 3箇所（冒頭バナー・本文末・footer）／noindex 除去済み／出典は台帳と signals-log.json
+  - 追加で軟化した3点: ①30秒まとめに**事前宣言H2の未達**を明記（事前登録が売りのシリーズで最も避けたい省略） ②図2キャプションに RSI の95%CI下限41.7%<43% を補足 ③§9 の締めを「支持する方向」→「矛盾しない／同一条件の比較ではない／次に検証すべき論点」に限定
+  - ⚠️ **独立レビューは別セッションではなく同一セッション内で実施**（通常の「独立Opus確認」とは条件が異なる）
+- **配色実測（ライブ版）**: light h2 #2C4F8F on #fff = 8.01:1 / dark h2 #60a5fa on #111827 = 6.98:1 / 本文 16.98:1 / 図キャプション 6.99:1・横スクロールなし（scrollW=clientW=1265）
+- **公開前に併せて直した2件**:
+  1. `signal-lab-tracker.json` が 2026-08-24 で止まっていた（#079 がエスカレで finalize まで進まずコミット漏れ）→ `signal_lab_tracker.py update --date 2026-08-25` を実行してコミット。**automation-health ② の26h鮮度アラートはこれで解消**
+  2. 下書きの `<style>` が字下げなし（finalize_signal_lab.py は `"  <style>"` をマーカーにするため **公開処理が構造異常で止まっていた**）→ 2スペース字下げに修正。**routine が生成した下書きのままでは finalize できない状態だった＝次回以降のテンプレ要確認**
+- **reconcile**: guides.html / generate_market_news.py をリモート版に寄せ、クラウド公開済みで**ローカル未取得だった4本**（liquidity-risk / market-cap-float / scam-account-lending / settlement-cycle）を取り込み、ローカルの SYNC_FILES に登録（未登録のままだとローカル sync で巻き戻る）
+- **ライブ確認**: 記事 HTTP 200・noindex なし・記事内の修正値（47.0% / 77.8%）反映済み／guides.html にカード掲載／index.html の更新履歴に反映（Update Market News [run 32843642979](https://github.com/invest-ai-info/marketwatch-ai/actions/runs/32843642979) 成功後）
+
+> 📌 **tracker update の副産物（人間レビュー待ち）**: 同じ update 実行で
+> **「ステート 上昇配置（>MA25&75）×ロング」が promoted**（前向き 平均R +0.155 / N=517）に変化した。
+> 昇格＝ライブ配信フィルタ／信頼度への反映“候補”の旗立てのみで、発火エンジンには自動で触れていない。反映するかは人間の判断。
+
+---
+
 ## 2026-08-25 | ✅ 数値修正・再ゲートGREEN [解決済み] | signal-lab-079 | signal-lab-daily
 
 8/25 朝の #079 が Opusコンプラで 🚩 エスカレ（数値・SVG修正が必要でグレー自己修正レーン外）していた件、
