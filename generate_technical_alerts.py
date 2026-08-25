@@ -2713,6 +2713,64 @@ GATE_PROBE_SUPPORTED_KEYS = {
 }
 
 
+EMAIL_POSITIVE_EV_ONLY = os.environ.get("EMAIL_POSITIVE_EV_ONLY", "1") != "0"
+
+
+def filter_positive_ev(promoted_hyps, timeframe):
+    """昇格エッジのうち **実際にメールを出す時間足での前向き期待値がプラス** のものだけ残す。
+
+    🆕 2026-08-25 オーナー指示「期待値がプラスになるものだけ送る」。
+
+    背景（実測）: tracker の昇格判定は **全時間足プールした前向き窓** で行う。しかし
+    メールを出すのは 4H レーンだけ（1h/1d は --no-email＝収集専用）なので、
+    プールで昇格＝そのレーンで儲かる、ではない。実測すると
+      - `trend=上昇×reversalL`  4H 前向き N=75  平均R **-0.004**（唯一メールを通していた仮説）
+      - `state_maup_long`        4H 前向き N=176 平均R **+0.193** RCI[-0.007,+0.393]
+    と、**通していた方が期待値ゼロ**だった。時間足で切り直して測り直す。
+
+    判定は自作せず `signal_lab_tracker.stats/judge` をそのまま使う＝昇格と同じ基準の単一ソース
+    （N >= promote_min_n かつ 平均R の95%CI下限 > 0・SEは日付クラスタ補正）。
+
+    ⚠️ fail-closed。読めない・計算できないときは **送らない**（オーナー選択＝厳格）。
+    無効化は環境変数 EMAIL_POSITIVE_EV_ONLY=0。"""
+    if not EMAIL_POSITIVE_EV_ONLY or not promoted_hyps:
+        return promoted_hyps
+    try:
+        import signal_lab_tracker as _slt
+        root = os.path.dirname(os.path.abspath(__file__))
+        data = json.load(open(os.path.join(root, SIGNALS_LOG_FILE), encoding="utf-8-sig"))
+        if isinstance(data, dict):
+            data = data.get("signals") or []
+        trk = json.load(open(os.path.join(root, "signal-lab-tracker.json"), encoding="utf-8-sig"))
+        min_n = trk.get("promote_min_n", 80)
+    except Exception as e:
+        print(f"🚨 期待値ゲート: 実測できない ({type(e).__name__}: {str(e)[:60]}) → "
+              f"**このrunはメール送信なし**（fail-closed・EMAIL_POSITIVE_EV_ONLY=0 で無効化可）")
+        return []
+    kept = []
+    for h in promoted_hyps:
+        f = dict(h.get("filter") or {})
+        if f.get("tf") and f["tf"] != timeframe:
+            print(f"   ⏭️  {h.get('id')}: tf={f['tf']} 専用のため {timeframe} では対象外")
+            continue
+        f["tf"] = timeframe
+        try:
+            st = _slt.stats(data, f, since=h.get("registered_at"))
+            verdict = _slt.judge(h.get("kind", "edge"), st, min_n=min_n)
+        except Exception as e:
+            print(f"   🚨 {h.get('id')}: 期待値の計算に失敗 ({type(e).__name__}) → 送信対象から除外")
+            continue
+        detail = (f"N={st['n']} 勝率{st['pct']:.1f}% 平均R {st['avgR']:+.3f} "
+                  f"RCI[{st['rci_lo']:+.3f},{st['rci_hi']:+.3f}]")
+        if verdict == "promoted":
+            kept.append(h)
+            print(f"   ✅ {h.get('id')}: {timeframe} 前向き期待値プラスが有意 — {detail}")
+        else:
+            why = f"N<{min_n}" if st["n"] < min_n else "RCI下限が0以下"
+            print(f"   🔇 {h.get('id')}: {timeframe} では基準未達（{why}）→ 送信しない — {detail}")
+    return kept
+
+
 def load_promoted_hypotheses(kind="edge"):
     """signal-lab-tracker.json から status=='promoted' かつ指定 kind の仮説だけ読む。
     ⚠️ kind=='gate' の promoted は「回避が確認された負けパターン」＝メール通行証にしてはいけない
@@ -2797,8 +2855,13 @@ def main():
             if _un:
                 print(f"🚨 昇格ゲート: {_h.get('id')} は probe 非対応キー {_un} を持つ＝**永久に不一致**。"
                       f"_gate_probe に該当フィールドを足すまで、この仮説は配信に反映されない")
+        # 🆕 2026-08-25: 期待値ゲート＝この時間足での前向き実測が「平均Rプラス有意」のものだけ残す
+        if EMAIL_POSITIVE_EV_ONLY:
+            print(f"📐 期待値ゲート: ON — tf={timeframe} の前向き実測で絞り込み"
+                  f"（基準は tracker と同じ N>=promote_min_n かつ RCI下限>0）")
+            promoted_hyps = filter_positive_ev(promoted_hyps, timeframe)
         if not promoted_hyps:
-            print("   （昇格エッジ 0 件＝今回 run はメール送信なし・データ収集のみ）")
+            print("   （送信対象の昇格エッジ 0 件＝今回 run はメール送信なし・データ収集のみ）")
 
     # 履歴ロード（timeframe ごとに別ファイル）
     _orig_history_file = ALERT_HISTORY_FILE
