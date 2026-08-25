@@ -2582,6 +2582,34 @@ def compute_discipline_filter(primary_type, sigdir, indicators, env_score, is_in
     return {"verdict": verdict, "score": score, "reasons": reasons}
 
 
+def build_indicators_at_signal(indicators):
+    """発火時点の指標スナップショット。
+    🆕 2026-08-25: **記録（signals-log）と昇格ゲートの照合 probe の両方**がこれを使う。
+    以前は記録側にしか無く、probe が `indicators_at_signal` / `entry` を持たなかったため
+    固定オラクルの `ma_pos_of` / `rsi_band_of` / `macd_side_of` が必ず None を返し、
+    **ma_pos・rsi_band・macd_side を条件に持つ promoted 仮説は永久に不一致**だった
+    （実例: `state_maup_long` が 2026-08-25 に昇格しても1件も通らない）。
+    片方だけ直すと同じ穴が再発するので、単一の関数から両方に配る。"""
+    return {
+        "rsi": round(float(indicators.get("rsi", 0)), 2),
+        "macd": round(float(indicators.get("macd", 0)), 4),
+        "macd_sig": round(float(indicators.get("macd_sig", 0)), 4),
+        # 🆕 2026-05-28: MA は丸め桁を 4 桁に拡張（FX で同値化バグ回避）
+        "ma25": round(float(indicators.get("ma25", 0)), 4),
+        "ma75": round(float(indicators.get("ma75", 0)), 4),
+        "bb_low": round(float(indicators.get("bb_low", 0)), 4),
+        "bb_up": round(float(indicators.get("bb_up", 0)), 4),
+        "recent_high": round(float(indicators.get("recent_high", 0)), 4),
+        "recent_low": round(float(indicators.get("recent_low", 0)), 4),
+        # 🆕 2026-05-28: ADX / Choppiness / 市況判定（Step C: 記録のみ、当面フィルタには使わない）
+        "adx": round(float(indicators["adx"]), 2) if indicators.get("adx") is not None else None,
+        "chop": round(float(indicators["chop"]), 2) if indicators.get("chop") is not None else None,
+        "ma_dev_pct": indicators.get("ma_dev_pct"),
+        "ma_dir": indicators.get("ma_dir"),
+        "regime": indicators.get("regime"),
+    }
+
+
 def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_plan,
                             news_titles, narrative, fired_at_iso, timeframe="4h"):
     """1 アラート発火を構造化レコードに整形"""
@@ -2617,24 +2645,7 @@ def build_signal_log_entry(ticker, name, fresh_signals, indicators, position_pla
         "tp2_pct": position_plan["tp2_pct"] if position_plan else None,
 
         # 指標スナップショット
-        "indicators_at_signal": {
-            "rsi": round(float(indicators.get("rsi", 0)), 2),
-            "macd": round(float(indicators.get("macd", 0)), 4),
-            "macd_sig": round(float(indicators.get("macd_sig", 0)), 4),
-            # 🆕 2026-05-28: MA は丸め桁を 4 桁に拡張（FX で同値化バグ回避）
-            "ma25": round(float(indicators.get("ma25", 0)), 4),
-            "ma75": round(float(indicators.get("ma75", 0)), 4),
-            "bb_low": round(float(indicators.get("bb_low", 0)), 4),
-            "bb_up": round(float(indicators.get("bb_up", 0)), 4),
-            "recent_high": round(float(indicators.get("recent_high", 0)), 4),
-            "recent_low": round(float(indicators.get("recent_low", 0)), 4),
-            # 🆕 2026-05-28: ADX / Choppiness / 市況判定（Step C: 記録のみ、当面フィルタには使わない）
-            "adx": round(float(indicators["adx"]), 2) if indicators.get("adx") is not None else None,
-            "chop": round(float(indicators["chop"]), 2) if indicators.get("chop") is not None else None,
-            "ma_dev_pct": indicators.get("ma_dev_pct"),
-            "ma_dir": indicators.get("ma_dir"),
-            "regime": indicators.get("regime"),
-        },
+        "indicators_at_signal": build_indicators_at_signal(indicators),
 
         # 🆕 2026-06-03: S/R runway ＋ 選別(quality_tier) タグ（記録のみ・発火/メール/信頼度は不変）。
         # TP前にS/Rが挟まる取引(blocked)・tier別の実勝率を前向き検証するためのデータ蓄積。
@@ -2690,6 +2701,16 @@ def should_alert(history, symbol, signal_type, cooldown_hours=ALERT_COOLDOWN_HOU
 #   無効化は環境変数 EMAIL_PROMOTED_ONLY=0（コード変更不要のキルスイッチ）。
 # ─────────────────────────────────────────────
 EMAIL_PROMOTED_ONLY = os.environ.get("EMAIL_PROMOTED_ONLY", "1") != "0"
+
+# 🆕 2026-08-25: _gate_probe が実際に担げるフィルタ次元（＝固定オラクル match が読めるフィールドを probe が持つもの）。
+#    ここに無いキーを条件に持つ promoted 仮説は照合が必ず False になる＝配信に一生反映されない。
+#    ⚠️ probe にフィールドを足したら**ここも足す**（片方だけ直すと警告が嘘をつく）。
+#    未対応の理由: news=news_count 未搭載 / regime4=ライブ算出なし / fired_before・fired_from=前向き集計専用で配信には無意味。
+GATE_PROBE_SUPPORTED_KEYS = {
+    "ticker", "group", "direction", "trend", "tf", "signal", "signals_all",
+    "reversal_long", "blocked", "tier", "env", "regime",
+    "rsi_band", "ma_pos", "macd_side",
+}
 
 
 def load_promoted_hypotheses(kind="edge"):
@@ -2769,6 +2790,13 @@ def main():
         _labels = ", ".join(f"{h.get('label')}({h.get('id')})" for h in promoted_hyps) or "なし"
         print(f"🏅 昇格エッジ限定メール: ON — promoted edge {len(promoted_hyps)} 件: {_labels}"
               f" ／ 回避gate {len(promoted_gate_hyps or [])} 件（警告表示用）")
+        # 🆕 2026-08-25: probe が担げない次元を条件に持つ仮説は**永久に不一致**になる。
+        #    黙って0件通過し続ける（＝昇格したのに何も変わらない）のが最悪なので起動時に鳴らす。
+        for _h in (promoted_hyps or []) + (promoted_gate_hyps or []):
+            _un = sorted(set(_h.get("filter", {})) - GATE_PROBE_SUPPORTED_KEYS)
+            if _un:
+                print(f"🚨 昇格ゲート: {_h.get('id')} は probe 非対応キー {_un} を持つ＝**永久に不一致**。"
+                      f"_gate_probe に該当フィールドを足すまで、この仮説は配信に反映されない")
         if not promoted_hyps:
             print("   （昇格エッジ 0 件＝今回 run はメール送信なし・データ収集のみ）")
 
@@ -3162,6 +3190,12 @@ MarketWatch AI Alerts
                 "trend_alignment": {"higher_tf_trend": (trend_align or {}).get("higher_tf_trend")},
                 "sr_runway": _sr_probe,
                 "selection": compute_selection_tier(position_plan, indicators, _sr_probe, fresh_signals[0]["type"]),
+                # 🆕 2026-08-25: 指標ステート次元（ma_pos / rsi_band / macd_side）の照合に必要。
+                #    固定オラクルの ma_pos_of は `entry` と `indicators_at_signal.ma25/ma75` を読む。
+                #    これが無かったため state_maup_long（2026-08-25 昇格）が1件も通らなかった。
+                #    記録側と同じ build_indicators_at_signal を使う＝二重実装を作らない。
+                "entry": position_plan["entry"] if position_plan else indicators["price"],
+                "indicators_at_signal": build_indicators_at_signal(indicators),
             }
             promoted_match = match_promoted_hypothesis(promoted_hyps, _gate_probe)
             if promoted_match:
