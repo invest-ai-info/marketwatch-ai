@@ -43,6 +43,26 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: news ticker $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
-            git pull --rebase origin main || true
-            git push
+            # 🆕 2026-08-25 push リトライ（最大3回）。technical-alerts-*.yml と同じ型。
+            # 動機: 8/25 15:00 JST の run が `cannot lock ref 'refs/heads/main'` で失敗した
+            #       ＝fetch と push の間に別ワークフローが main を進めた競合。毎時レーンなので
+            #       次の時間帯で追いつくが、失敗通知が鳴るぶん本物の異常が埋もれる。
+            # news-ticker.json はこのワークフローだけが書く（SYNC禁忌）ので -X theirs＝
+            # 再生成した側を採用してよい。
+            # ⚠️ 3回とも失敗したら **明示的に落とす**（黙って緑にしない＝沈黙の失敗を作らない）。
+            pushed=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then
+                echo "✅ Push success on attempt $i"
+                pushed=1
+                break
+              fi
+              echo "⚠️ Push failed (attempt $i), retrying..."
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+            if [ "$pushed" != "1" ]; then
+              echo "::error::3回試しても push できなかった（main の競合が継続している可能性）"
+              exit 1
+            fi
           fi
