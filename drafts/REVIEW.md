@@ -1,3 +1,36 @@
+## 2026-08-26 | 🆕 下書き生成 | shareholder-benefits | autodraft-article
+
+- **基準日**: 2026-08-26（JST）
+- **topic**: #46「株主優待は、利回りで比べると見誤る」
+- **key**: `shareholder-benefits`
+- **生成ファイル**: `drafts/draft-shareholder-benefits.html`
+- **シリーズ**: 💰 投資の基礎知識
+- **参照出典**:
+  - https://info.monex.co.jp/news/2023/20230510_01.html（権利落ちと株価下落リスク）
+  - https://diamond.jp/zai/articles/-/38313（クロス取引の注意点）
+  - https://kabutan.jp/hikaku/kabu_beginner_shareholder-benefits/（優待制度の仕組み）
+  - https://en.wikipedia.org/wiki/Shareholder_benefit（英語概説）
+  - https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID2777549_code515373.pdf（学術論文: 権利落ち日の株価・出来高）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（優待品の具体例は「例として」「特定銘柄は推奨しない」と明記）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「儲かる」使用なし）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer の3か所）
+  - ✅ noindex,nofollow 入り（下書きは検索除外）
+  - ✅ 制度・日程は「JPX・各社IRページで確認を」と誘導（specific date数値は書かず）
+  - ✅ クロス取引コストの説明は「制度の仕組み」として中立的に記述
+- **SVG状況**: 3点（概念図あり）
+  - SVG1: 優待利回りが「人によって変わる」バー図 → ライト/ダーク実機確認要
+  - SVG2: 権利落ちの株価変動イメージ → ライト/ダーク実機確認要
+  - SVG3: クロス取引の損益相殺イメージ → ライト/ダーク実機確認要
+- **人間の残作業**:
+  1. SVG3の `<rect>` に `rx` が HTMLのstyle属性に混在している書き方を確認・修正（SVGのrxはstyleではなく属性として指定）
+  2. 3つのSVGをライト/ダーク両モードで実機確認
+  3. タイトル・キャプション微調整（必要に応じて）
+  4. 公開前に autodraft-publish ゲート（check_guide_draft.py + Opusコンプラ + 品質ルーブリック）を通す
+  5. 公開時カテゴリ: `💰 投資の基礎知識`、`--emoji 🎁` 推奨
+
+---
+
 ## 2026-08-25 | ✅ 公開済み記事に長期データの反証を追記 | signal-lab-079 | 人間（オーナー指示）
 
 「誠実なのは大事」というオーナー判断により、**公開済みの #079 に20年リプレイの反証を追記**した。
