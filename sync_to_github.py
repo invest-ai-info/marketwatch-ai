@@ -170,4 +170,5 @@ SYNC_FILES = [
     "guide-settlement-cycle.html",
     "guide-proverb-bulls-bears-pigs.html",
     "guide-market-cap-float.html",
+    "guide-proverb-ri-wa-moto-ni-ari.html",
 ]
