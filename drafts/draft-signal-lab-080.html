@@ -246,11 +246,11 @@ window.addEventListener('scroll',function(){
     <div class="info-box">
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
       ① 1D×逆張り買い（N=<strong>35</strong>）: 勝率<strong>71.4%</strong> 95%CI[54.9%, 83.7%] — 1H(<strong>43.9%</strong> N=709)・4H(<strong>46.5%</strong> N=368)との差は<strong>+27.5pp / +24.9pp</strong><br>
-      ② 非金属（N=28）: <strong>78.6%</strong> CI[60.5%, 89.8%] — CI下限60.5%は損益分岐43%を大幅上回る ✅<br>
-      ③ 上昇トレンド（N=25）: <strong>76.0%</strong> CI[56.6%, 88.5%] — CI下限56.6%も大幅上回る ✅<br>
-      ④ 金属グループ（GC=F/SI=F、N=7）だけ<strong>42.9%</strong>と低位——全体の引き下げ要因<br>
-      ⑤ bb_lower_touch（N=20）<strong>75.0%</strong> / rsi_oversold_bounce（N=15）<strong>66.7%</strong><br>
-      ⑥ 最大の交絡：全データが2026年（強気相場）のみ。20年バックテスト（N=4541）は<strong>39.7%</strong>で有意マイナス
+      ② 上昇トレンド（N=25）: <strong>76.0%</strong> CI[56.6%, 88.5%] — 損益分岐43%を大幅上回る ✅<br>
+      ③ 中立・もみあいトレンド（N=6）: <strong>50.0%</strong> CI[18.8%, 81.2%] — 損益分岐水準まで低下 ⚠️<br>
+      ④ 金属グループ（GC=F/SI=F、N=7）: <strong>42.9%</strong> CI[15.8%, 75.0%] — 損益分岐43%を下回る<br>
+      ⑤ bb_lower_touch（N=20）<strong>75.0%</strong> CI[53.1%, 88.8%] / rsi_oversold_bounce（N=15）<strong>66.7%</strong> CI[41.7%, 84.8%]<br>
+      ⑥ 最大の交絡：全データが2026年（強気相場）のみ。20年バックテストとの乖離は本文§交絡点検を参照
     </div>
 
     <div class="toc">
@@ -404,7 +404,7 @@ window.addEventListener('scroll',function(){
 
         <!-- 損益分岐ライン43% -->
         <line x1="70" y1="133" x2="460" y2="133" stroke="#9a6700" stroke-width="1.4" stroke-dasharray="5 4"/>
-        <text x="464" y="137" class="s-label-y" font-size="11">損益分岐 43%</text>
+        <text x="72" y="129" class="s-label-y" font-size="11">損益分岐43%</text>
 
         <!-- Y軸目盛り -->
         <text x="60" y="189" class="s-label-sm" text-anchor="end" font-size="11">0%</text>
@@ -444,7 +444,7 @@ window.addEventListener('scroll',function(){
       <p class="chart-caption">時間足別の逆張り買い勝率比較（閾値：損益分岐43%）。1D足のみが損益分岐を大幅に超えるCI下限54.9%を示す。※ 概念図（実際の勝率から計算した棒グラフ）</p>
     </div>
 
-    <p>1D足と1H足の差は <strong>+27.5pp</strong>、4H足との差は <strong>+24.9pp</strong> です。N=35 の小サンプルという留保はあるものの、95%CI の下限 54.9% は損益分岐 43% を約12pp上回っており、偶然だけでは説明しにくい水準といえます。</p>
+    <p>1D足と1H足の差は <strong>+27.5pp</strong>、4H足との差は <strong>+24.9pp</strong> です。N=35 の小サンプルという留保はあるものの、95%CI の下限 54.9% は損益分岐 43% を約12pp上回っています。ただしこれは<strong>過去の観測データに基づく参考値</strong>であり、偶然のばらつき以外に「観測期間の偏り」という説明も残ります（§⑧交絡点検を参照）。将来も同じ水準が続くことを示すものではありません。</p>
 
     <!-- =============================== -->
     <h2 id="result-group">④ 結果②：グループ別分解——金属が引き下げている</h2>
@@ -460,6 +460,8 @@ window.addEventListener('scroll',function(){
       <tr><td>₿ 暗号（btc）</td><td>BTC-USD</td><td>3</td><td>2</td><td>66.7%</td><td>[20.8%, 93.9%]</td></tr>
       <tr><td>🛢 原油（oil）</td><td>CL=F</td><td>4</td><td>4</td><td>100.0%</td><td>[51.0%, 100%]</td></tr>
     </table>
+
+    <p style="font-size:.84rem;color:var(--text-muted)">※ 原油（CL=F）の 100.0% は<strong>クローズド 4 件のみ</strong>を集計した過去データで、95%CI も[51.0%, 100%]と極めて広い参考値です。「勝率100%」という表示は今後も負けないことを意味するものではなく、件数が増えれば低下しうる数字としてお読みください。</p>
 
     <div class="negative-box">
       <strong>🔴 金属グループ（42.9%）は損益分岐43%を下回る</strong><br>
@@ -605,7 +607,7 @@ window.addEventListener('scroll',function(){
     <!-- =============================== -->
     <h2 id="tracker">📡 前向きトラッカー定点観測</h2>
 
-    <p>以下は本日時点（2026-08-26）の前向きトラッカー全数一覧です。<strong>✅昇格</strong>＝前向きN≥80かつ平均RのCI下限&gt;0が2回連続達成した仮説。今後の更新で本記事の仮説（tf=1d×reversalL）がトラッカーに追加されます。</p>
+    <p>以下は本日時点（2026-08-26）の前向きトラッカー全数一覧です。<strong>✅昇格</strong>＝前向きN≥80かつ平均RのCI下限&gt;0が2回連続達成した仮説。本記事の仮説（tf=1d×reversalL）も前向きトラッカーに登録済みで、下表に🟡蓄積中として含まれています（前向き N=9 と少なく、判定はまだ確定していません）。</p>
 
     <p class="meta-line">基準日 2026-08-26／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
     <div style="overflow-x:auto">
@@ -638,8 +640,8 @@ window.addEventListener('scroll',function(){
 
     <p>今回の検証で得られた主な論点は次の3点です。</p>
     <ol>
-      <li><strong>日足逆張り買いは非金属・上昇トレンドに限れば損益分岐を大幅超え</strong>（H1・H2・H3クリア）</li>
-      <li><strong>金属グループ（GC=F/SI=F）は逆張り買いとの相性が悪い</strong>可能性——別途検証の価値あり</li>
+      <li><strong>過去データ上、日足逆張り買いは非金属・上昇トレンドに限れば損益分岐を上回っていた</strong>（H1・H2・H3クリア。将来の成果を示すものではありません）</li>
+      <li><strong>金属グループ（GC=F/SI=F）では過去データ上の成績が他グループより低かった</strong>（N=7の参考値）——売買の巧拙を示すものではなく、別途検証の価値あり</li>
       <li><strong>20年バックテストとの乖離が最大リスク</strong>——強気相場バイアスかシステム改良の効果かは N≈65 で再検証</li>
     </ol>
 
