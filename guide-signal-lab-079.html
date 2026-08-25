@@ -140,53 +140,6 @@ p.disclaimer{font-size:12px;color:var(--muted);margin-top:28px;padding-top:12px;
   .s-h2{font-size:18px}
 }
 </style>
-<style id="mw-mobile-fit">
-/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
-html,body{overflow-x:hidden}
-.article,main,section,header,footer{max-width:100%}
-*{overflow-wrap:break-word;word-break:normal}
-img,svg,iframe,video{max-width:100%!important;height:auto}
-pre,code{white-space:pre-wrap;overflow-wrap:break-word}
-td strong,td b,th strong{white-space:nowrap}
-.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
-@media(min-width:601px){.mw-scroll-hint{display:none}}
-@media(max-width:600px){
-  body{font-size:.9rem;line-height:1.7}
-  .article{padding:14px 11px}
-  h1{font-size:1.26rem;line-height:1.4}
-  h2{font-size:1.08rem}
-  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
-  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
-  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
-  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
-}
-@media(max-width:380px){
-  body{font-size:.86rem}
-  .article{padding:12px 8px}
-  table{font-size:.76rem}
-}
-</style>
-<script id="mw-mobile-fit-js">
-(function(){try{
-function mark(){
-if(window.innerWidth>600)return;
-var ts=document.getElementsByTagName('table');
-for(var i=0;i<ts.length;i++){(function(t){
-if(t.getAttribute('data-mw-sc'))return;
-if(t.scrollWidth-t.clientWidth>4){
-t.setAttribute('data-mw-sc','1');
-var h=document.createElement('div');
-h.className='mw-scroll-hint';
-h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
-if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
-t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
-}
-})(ts[i]);}
-}
-if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
-window.addEventListener('resize',mark);
-}catch(e){}})();
-</script>
 </head>
 <body>
 
@@ -230,6 +183,7 @@ window.addEventListener('resize',mark);
       また<strong>N=35は小サンプル</strong>であり、
       金属グループ（42.9%・N=7）が全体を引き下げるアウトライヤーとなっている点に留意が必要。
       前向き検証は引き続き蓄積中（FWD N=10）。
+      <strong>さらに、同じ条件を当サイトの20年の日足リプレイで測ると期待値はマイナスで、本文の結果と食い違う</strong>（§7-5）。
     </p>
   </section>
 
@@ -631,6 +585,54 @@ window.addEventListener('resize',mark);
       FWD の N が 115/59/10 と大きく異なるうえ出典回も #069／#074／今回とばらばらで、単純比較は困難。
       日足の優位性を主張するには N=80 超の前向きデータが必要。
     </p>
+
+    <h3 class="s-h3">7-5. 20年の日足リプレイでは、同じ母集団がマイナス</h3>
+    <p class="s-p">
+      本研究の対象（1D足の逆張り買い）を、当サイトの<strong>日足リプレイ</strong>
+      （ライブと同じ発火ロジックを過去20年の日足に当てた検証データ・#013 と同じもの）で測り直すと、
+      結果は本文と逆を向く。
+    </p>
+
+    <div class="s-tbl-wrap">
+      <table class="s-tbl">
+        <thead>
+          <tr><th>母集団</th><th>N</th><th>勝率</th><th>平均R</th><th>平均Rの95%CI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-left">20年リプレイ 全期間</td><td>4,541</td><td>39.7%</td>
+              <td class="s-loss">−0.055</td><td>[−0.099, −0.011]</td></tr>
+          <tr><td class="s-left">同 2026-01-01〜06-10（<strong>ライブ計測の直前</strong>）</td><td>129</td><td>27.9%</td>
+              <td class="s-loss">−0.339</td><td>[−0.54, −0.14]</td></tr>
+          <tr><td class="s-left">同 2026-06-11〜07-17（ライブ計測期間と重複）</td><td>21</td><td>52.4%</td>
+              <td>+0.222</td><td>[−0.39, +0.83]</td></tr>
+          <tr class="s-highlight"><td class="s-left"><strong>本文のライブ計測 2026-06-11〜08-25</strong></td><td>35</td>
+              <td class="s-win">71.4%</td><td class="s-win">+0.667</td><td>[+0.32, +1.02]</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="s-p">
+      20年を年別に割ると、平均Rが<strong>有意にプラスだったのは2017年の1年だけ</strong>で、有意にマイナスは6年ある。
+      探索に一度も使っていない2021年以降（ホールドアウト期間）でも N=1,238 で −0.021［−0.11, +0.06］にとどまり、
+      本文のライブ計測の区間［+0.32, +1.02］とは<strong>重ならない</strong>。
+    </p>
+    <p class="s-p">
+      リプレイ側の不具合ではない。<strong>同じ期間（2026-06-11〜07-17）で突き合わせる</strong>と、
+      全件が −0.025 対 −0.033、ロング全体が +0.018 対 +0.016 とほぼ一致する。
+      食い違いは逆張り買いの筋に限られている。
+    </p>
+
+    <div class="s-note">
+      <div class="s-note-title">⚠️ この並びをどう読むか</div>
+      本文の +0.667 は、<strong>ライブで計測を始めた日から都合よくプラスに転じている</strong>形になっている。
+      直前の同じ年の129件は −0.339 だった。
+      これは「エッジが本物で、たまたま最近から効き始めた」可能性と同じくらい、
+      <strong>観測期間の取り方による見かけ上のもの（観測窓の選択効果）</strong>である可能性を示す。
+      現時点で「日足の逆張り買いにエッジがある」と読むべきではなく、
+      <strong>判断を保留する材料が一つ増えた</strong>と読むのが妥当。
+      なお #013（20年で最良だった金属ロングが直近ライブで最悪）はこの逆向きの例で、
+      長期と直近が食い違うこと自体は当サイトで繰り返し観測されている。
+    </div>
   </section>
 
   <!-- 8. 前向きトラッカー状況 -->
@@ -728,6 +730,8 @@ window.addEventListener('resize',mark);
       日足の逆張り買いシグナルが損益分岐43%を有意に超える可能性が示唆されるが、
       <strong>N=35という小サンプルと、FWD N=10という極小の前向きデータ量を踏まえると、
       現時点では「蓄積継続中」の評価が適切</strong>。
+      加えて §7-5 のとおり、同じ母集団を20年の日足リプレイで測ると期待値はマイナスで、
+      本文の結果は<strong>長期データの裏づけを持たない</strong>。
       今後の方針として、前向きN=80 到達を目標にトラッカーでの観察を続ける。
     </p>
 
@@ -758,6 +762,5 @@ window.addEventListener('resize',mark);
   <p style="margin-top:8px">© 2024-2026 marketwatch-jp.com</p>
 </footer>
 
-<script src="site-search.js" defer></script>
 </body>
 </html>
