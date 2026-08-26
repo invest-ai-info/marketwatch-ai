@@ -174,4 +174,5 @@ SYNC_FILES = [
     "guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html",
     "guide-signal-lab-080.html",
     "guide-regret-aversion.html",
+    "guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html",
 ]

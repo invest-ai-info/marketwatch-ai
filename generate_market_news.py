@@ -5167,6 +5167,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 📰 解説「<a href="guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html" style="color:#0969da"><b>mRNAがんワクチン、人類初の第3相成功──Moderna×Merckのメラノーマ試験</b></a>」公開'},
         {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 🧠 解説「<a href="guide-regret-aversion.html" style="color:#0969da"><b>後悔回避バイアス：「買えない・売れない」正体</b></a>」公開'},
         {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 🧪 解説「<a href="guide-signal-lab-080.html" style="color:#0969da"><b>日足逆張り買い71.4%——1H・4Hとの27pp差をグループ別に解剖</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧪 解説「<a href="guide-signal-lab-079.html" style="color:#0969da"><b>日足の逆張り買いは71.4%——ただし20年リプレイでは期待値マイナス</b></a>」公開'},
