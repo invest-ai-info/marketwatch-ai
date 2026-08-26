@@ -1,3 +1,25 @@
+## 2026-08-27 | 🆕 下書き生成 | signal-lab-081 | signal-lab-daily
+
+- **基準日**: 2026-08-27（JST）
+- **topic**: 1D足ショートは「回避シグナル」へ——前向きFWD22.6%・逆張り買い77.8%との55pp方向非対称
+- **article_id**: 081
+- **生成ファイル**: `drafts/draft-signal-lab-081.html`
+- **priority**: ④定点観測（✅昇格/⛔反証なし、FDR新候補なし）
+- **FDR sweep**: 通過1本（tf=1d×reversalL, q=0.0431）→ 重複スキップ・新規登録0本
+- **主要数値**:
+  - 1DショートFWD: N=31, k=7, 22.6%, avg_R=-0.323, RCI[-0.764,+0.119]
+  - 1D reversalL FWD: N=9, k=7, 77.8%, avg_R=+1.333, RCI[+0.518,+2.148]
+  - 方向非対称: 55.2pp
+  - low_break×1DショートFWD: N=9, k=1, 11.1%, RCI[-1.283,-0.051]（CI全域マイナス）
+  - TF比較(FWD): 1H 41.9% / 4H 39.1% / 1D 22.6%
+- **gate状況**: ゲート実行待ち（signal_lab_verify.py未実行）
+- **人間の残作業**:
+  1. signal_lab_verify.py ゲート実行
+  2. Opusコンプラ審査
+  3. 独立Opus確認 → 公開 or 🚩エスカレ
+
+---
+
 ## 2026-08-26 | 🆕 下書き生成 | rebalancing | autodraft-article
 
 - **基準日**: 2026-08-26（JST）
