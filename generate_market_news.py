@@ -1405,26 +1405,52 @@ def _format_pub_date(pub_str):
 
 
 def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, btc_val=None,
-                                stocks_news=None, commodity_news=None, crypto_news=None):
+                                stocks_news=None, commodity_news=None, crypto_news=None,
+                                fc_ctx=None):
     """AI（Gemini）でアセット別投資判断を生成し HTML セクションを返す。
-    GEMINI_API_KEY 未設定なら空文字。"""
+    GEMINI_API_KEY 未設定なら空文字。
+
+    ⚠️ 根拠に使う見出しは「サイトのマーケットカードに表示しているニュース」と同一。
+       まず検証済みブリーフィング（fundamental-context.json = fc_ctx）を
+       briefing_card_items() 経由で取り、無いカテゴリだけ旧パイプライン
+       （yfinance/NewsAPI/RSS の news.get(...)）にフォールバックする。
+       2026-08-26 に旧パイプライン側の翻訳が壊れ、AI の根拠だけが
+       「システムエラーのため内容が確認できません」になった事故の再発防止。"""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         return ""
 
-    stocks_news = stocks_news or []
-    commodity_news = commodity_news or []
-    crypto_news = crypto_news or []
     # 2026-08-26: 翻訳バックエンド障害でエラーページ本文が見出しに混入した事故があるため、
     #   AI に渡す前に「エラー文らしいタイトル」を落とす（ゴミを渡すと根拠が
     #   「システムエラーのため内容が確認できません」になる＝実際に起きた）
     def _clean_titles(arts):
-        return [t for t in (a.get("title", "") for a in arts[:10])
+        return [t for t in (a.get("title", "") for a in (arts or [])[:CARD_NEWS_LIMIT])
                 if t and not looks_like_error_text(t)]
 
-    stock_titles = _clean_titles(stocks_news)
-    commodity_titles = _clean_titles(commodity_news)
-    crypto_titles = _clean_titles(crypto_news)
+    def _titles_for(cat, raw_news):
+        """カテゴリの見出しリストと出所ラベルを返す。ブリーフィング優先・無ければ生パイプライン。"""
+        items = briefing_card_items(fc_ctx, cat)   # 件数はカード表示と同じ CARD_NEWS_LIMIT
+        titles = [(n.get("headline") or "").strip() for n in items]
+        titles = [t for t in titles if t]
+        if titles:
+            return titles, "検証済みブリーフィング"
+        return _clean_titles(raw_news), "生パイプライン(yf/NewsAPI/RSS)"
+
+    stock_titles, stock_src = _titles_for("stocks", stocks_news)
+    commodity_titles, commodity_src = _titles_for("commodity", commodity_news)
+    crypto_titles, crypto_src = _titles_for("crypto", crypto_news)
+
+    # 🆕 「表示ニュース」と「AI の根拠」が同じ材料かをログで確認できるようにする（2026-08-26）
+    print("  🧭 AI 根拠ニュースの出所（カード表示と同一である必要あり）:")
+    for cat, titles, src in (("stocks", stock_titles, stock_src),
+                             ("commodity", commodity_titles, commodity_src),
+                             ("crypto", crypto_titles, crypto_src)):
+        mark = "✅" if src.startswith("検証済み") else "⚠️"
+        print(f"    {mark} {cat:9s}: {len(titles)}件 ← {src}")
+        for t in titles:
+            print(f"         - {t[:70]}")
+        if not titles:
+            print("         （見出しゼロ＝AI には『関連ニュースなし』として渡る）")
 
     # 4 アセット
     assets = []
@@ -4640,6 +4666,11 @@ def load_fundamental_context_for_site():
 # TOP3 は別途 48h 減衰で制御。ブリーフィング(fundamental-context.json)由来はここで一括カット＝唯一の調整点。
 BRIEFING_NEWS_MAX_AGE_DAYS = 10
 
+# 🆕 マーケットカードに表示する関連ニュースの件数（2026-08-26）。
+# AI 投資判断の根拠に渡す件数もこれと同じ＝「読者が見ている見出し」と
+# 「AI が根拠にした見出し」を一致させるための単一の調整点。
+CARD_NEWS_LIMIT = 3
+
 
 def _briefing_news_too_old(n):
     """published(YYYY-MM-DD)が MAX_AGE 日より古ければ True。日付不明(空/解析不可)は除外しない（False）。"""
@@ -4747,12 +4778,15 @@ _CARD_TICKERS = {
 }
 
 
-def build_card_news_from_briefing(ctx, cat, limit=3):
-    """指定カテゴリ（stocks/fx/commodity/crypto）の信頼性検証済みニュースをカード用HTMLで返す。
-    ⚠️ bias / direction 等は出さない（事実・出典・日付・信頼度のみ）。
-    ctx不在 or 該当ニュース無しなら None（呼び出し側で旧パイプラインにフォールバック）。"""
+def briefing_card_items(ctx, cat, limit=CARD_NEWS_LIMIT):
+    """指定カテゴリ（stocks/fx/commodity/crypto）の信頼性検証済みニュースを
+    「カードに表示するのと同じ順序・同じ件数」で返す（dict のリスト）。
+    ⚠️ カード表示（build_card_news_from_briefing）と AI 投資判断の根拠
+       （build_ai_analysis_section）の唯一の共通入口。ここを両方が通ることで
+       「表示ニュース ≠ AI の根拠」のズレをコードで防ぐ（2026-08-26 事故の再発防止）。
+    該当なしなら空リスト。"""
     if not ctx:
-        return None
+        return []
     want = _CARD_TICKERS.get(cat, set())
     seen, items = set(), []
     for a in ctx.get("assets", []):
@@ -4764,20 +4798,33 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
                 continue
             if _briefing_news_too_old(n):  # 🆕 鮮度カットオフ（古い記事の混入防止）
                 continue
-            key = (n.get("headline") or "").strip()[:24]
+            head = (n.get("headline") or "").strip()
+            if looks_like_error_text(head):  # 翻訳/取得失敗のエラーページ本文を弾く
+                continue
+            key = head[:24]
             if not key or key in seen:
                 continue
             seen.add(key)
             items.append(n)
     if not items:
-        return None
+        return []
     cred_rank = {"HIGH": 0, "MID": 1}
     mat_rank = {"high": 0, "mid": 1, "low": 2}
     items.sort(key=lambda n: (cred_rank.get((n.get("credibility") or "").upper(), 9),
                               mat_rank.get((n.get("materiality") or "").lower(), 9)))
     items.sort(key=lambda n: (n.get("published") or "0000-00-00"), reverse=True)
+    return items[:limit]
+
+
+def build_card_news_from_briefing(ctx, cat, limit=CARD_NEWS_LIMIT):
+    """指定カテゴリの信頼性検証済みニュースをカード用HTMLで返す。
+    ⚠️ bias / direction 等は出さない（事実・出典・日付・信頼度のみ）。
+    ctx不在 or 該当ニュース無しなら None（呼び出し側で旧パイプラインにフォールバック）。"""
+    items = briefing_card_items(ctx, cat, limit)
+    if not items:
+        return None
     out = ""
-    for n in items[:limit]:
+    for n in items:
         cred = (n.get("credibility") or "").upper()
         cred_label = "ソース信頼度 高" if cred == "HIGH" else "ソース信頼度 中"
         cred_color = "#1a7f37" if cred == "HIGH" else "#9a6700"
@@ -5198,10 +5245,28 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     fc_ctx = load_fundamental_context_for_site()
     top_news_html     = build_news_html(news.get("top", []))
     # 🆕 各カードの関連ニュースを信頼性検証済みブリーフィングで置換（無ければ旧パイプラインにフォールバック）
-    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []))
-    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []))
-    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []))
-    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []))
+    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []), CARD_NEWS_LIMIT)
+    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []), CARD_NEWS_LIMIT)
+    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []), CARD_NEWS_LIMIT)
+    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []), CARD_NEWS_LIMIT)
+
+    # 🆕 2026-08-26: カードに表示したニュースの出所と件数をログに出す。
+    #    直後の build_ai_analysis_section が出す「AI 根拠ニュースの出所」と見比べて、
+    #    表示ニュースと AI の根拠が同じ材料かをログだけで確認できるようにする。
+    print(f"  📰 カード表示ニュースの出所（ブリーフィング generated_at="
+          f"{str((fc_ctx or {}).get('generated_at', 'なし'))[:10]}）:")
+    for _cat, _raw_key in (("stocks", "stocks"), ("fx", "fx"),
+                           ("commodity", "commodity"), ("crypto", "crypto")):
+        _items = briefing_card_items(fc_ctx, _cat)
+        if _items:
+            print(f"    ✅ {_cat:9s}: {len(_items)}件 ← 検証済みブリーフィング")
+            for _n in _items:
+                print(f"         - {(_n.get('headline') or '')[:70]}")
+        else:
+            _raw = news.get(_raw_key, []) or []
+            print(f"    ⚠️ {_cat:9s}: {len(_raw[:CARD_NEWS_LIMIT])}件 ← 生パイプライン(yf/NewsAPI/RSS)")
+            for _a in _raw[:CARD_NEWS_LIMIT]:
+                print(f"         - {(_a.get('title') or '')[:70]}")
 
     # 🆕 ブリーフィングのニュースは各マーケットカードに集約済み。専用セクション(trust_news)とTOP3は
     #    重複のため出さない。ブリーフィング不在時のみ従来の TOP3 をフォールバック表示。
@@ -5218,6 +5283,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     ai_analysis_html = build_ai_analysis_section(
         nikkei_val=nk,    sp500_val=sp,
         gold_val=gld,     btc_val=btc,
+        # 🆕 2026-08-26: 表示ニュース（下のカード）と AI の根拠を同じ材料に揃える。
+        #    fc_ctx（検証済みブリーフィング）が優先され、無いカテゴリだけ下の生ニュースへ。
+        fc_ctx=fc_ctx,
         stocks_news=news.get("stocks", []),
         commodity_news=news.get("commodity", []),
         crypto_news=news.get("crypto", []),
