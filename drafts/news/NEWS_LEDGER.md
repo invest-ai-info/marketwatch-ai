@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-26
+- 判定: ✅ 公開済み
+- 選定トピック: mRNAがんワクチン、人類史上初の第3相成功──ModernaとMerckのINTerpath-001試験（カテゴリ: バイオテック・製薬・米国株・個別銘柄）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: ModernaとMerckが2026年8月19日に発表した第3相INTerpath-001試験（mRNA-4157+Keytruda）の成功。mRNAベースがん治療薬として世界初の第3相主要エンドポイント達成。8/25米国セッションでMRNA株が大幅急騰（nearly doublesと報道）、BofAが目標株価を$40→$170へ引き上げ。8/25のS&P500も+0.32%と上昇。mRNA技術のがん領域への応用可能性という歴史的マイルストーンとして15/15の満点スコア。過去記事との重複なし（バイオテック/mRNAがん関連の記事は当サイト初）。
+- 出典（確認済み・8系統）:
+  - Moderna公式「Merck and Moderna Announce Phase 3 INTerpath-001 Trial…Met Endpoints of RFS and DMFS in Melanoma」（2026-08-19）
+  - BusinessWire同日発表（2026-08-19）
+  - Merck.com公式プレスリリース（2026-08-19）
+  - BioPharm International「Merck and Moderna's Intismeran Autogene Plus Pembrolizumab Meets Endpoints in Phase 3 Melanoma Trial」
+  - Dermatology Times「Personalized mRNA-Based Melanoma Vaccine Meets Primary Endpoints in Landmark Phase 3 Trial」
+  - BioSpace「Moderna stock nearly doubles as Merck-partnered mRNA cancer vaccine meets Phase 3 goal」（2026-08-25）
+  - Eastern Herald「S&P 500 Today, August 25, 2026: Moderna Surges on Cancer Vaccine as DICK'S Sporting Goods Craters 29%」（2026-08-25）
+  - Forbes「Moderna Stock Plunges 25%—Wiping Out $18 Billion After Historic Cancer Vaccine Breakthrough」（2026-08-20）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2件適用（①🟡留保ボックス「高いボラティリティが継続する」→「ボラティリティが高くなりやすい傾向が指摘されている（今後の値動きを予測・保証するものではありません）」へ軟化+免責追記 ②🟢ポジティブボックスのBofA目標株価紹介直後に「個別の証券会社の見解・報道ベース・当サイトの見解でなく将来の株価水準を示唆・保証するものではありません」を追記 ／ 事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典8系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告29件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html
+- commit: e04e9e0（main へ push 済み）
+
+---
+
 ## 2026-08-25
 - 判定: ✅ 公開済み
 - 選定トピック: ドラッケンミラーWSJ寄稿：財務省の国債バイバックを「失策」と批判──30年利回り19年ぶり高水準の背景と日本投資家への含意（カテゴリ: マクロ・米国債・金融政策）
