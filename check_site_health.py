@@ -29,6 +29,19 @@ PAGES = [
 MIN_BYTES = 5000  # 途中切れHTML検出の閾値
 TIMEOUT = 20
 
+# 2026-08-26 事故: 翻訳バックエンド(Google)が HTTP 500 を返すと deep_translator が
+#   エラーページ本文を「翻訳結果」として返し、全ニュース見出しがそれに置換された。
+#   結果、AI 投資判断の根拠が「システムエラーのため内容が確認できません」になった。
+#   原因が何であれ、この2種類の症状はライブ側から検知できる。
+GARBAGE_MARKERS = [
+    "Error 500 (Server Error)",
+    "That’s an error",
+    "That's an error",
+    "!!1500",
+]
+# AI が「入力が壊れている」と訴えている文言（＝上流のニュース取得が死んでいるサイン）
+AI_COMPLAINT_MARKERS = ["システムエラー", "内容が確認できません", "エラーを示"]
+
 
 def jst_today() -> datetime.date:
     return datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Tokyo")).date()
@@ -69,6 +82,26 @@ def check_page(path: str) -> list[str]:
                     f"🚨 `index.html` 日付が古い: ページ表示 `{page_date}`, JST 今日 `{today}` "
                     f"(差分 {delta} 日 / 過去の巻き戻り事故と同じ症状)"
                 )
+
+        # ① 取得・翻訳のエラーページ本文がそのまま本文に出ていないか
+        for marker in GARBAGE_MARKERS:
+            if marker in body:
+                errors.append(
+                    f"🚨 `index.html` に取得/翻訳エラーの文字列が混入: `{marker}` "
+                    f"(翻訳バックエンド障害の疑い → Actions ログの「翻訳:」行を確認)"
+                )
+                break
+
+        # ② AI 投資判断の根拠が「入力が壊れている」と訴えていないか
+        for m2 in re.finditer(r'class="ai-reason"[^>]*>(.*?)</div>', body, re.S):
+            reason = re.sub(r"<[^>]+>", "", m2.group(1)).strip()
+            hit = next((w for w in AI_COMPLAINT_MARKERS if w in reason), None)
+            if hit:
+                errors.append(
+                    f"🚨 `index.html` AI 投資判断の根拠が入力不良を訴えている（`{hit}`）: "
+                    f"{reason[:60]}…（上流のニュース取得/翻訳が死んでいる疑い）"
+                )
+                break
 
     return errors
 
