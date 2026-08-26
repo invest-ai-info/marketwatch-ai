@@ -12,11 +12,13 @@
   - 方向非対称: 55.2pp
   - low_break×1DショートFWD: N=9, k=1, 11.1%, RCI[-1.283,-0.051]（CI全域マイナス）
   - TF比較(FWD): 1H 41.9% / 4H 39.1% / 1D 22.6%
-- **gate状況**: ゲート実行待ち（signal_lab_verify.py未実行）
-- **人間の残作業**:
-  1. signal_lab_verify.py ゲート実行
-  2. Opusコンプラ審査
-  3. 独立Opus確認 → 公開 or 🚩エスカレ
+- **gate状況**: ✅ 全ゲート通過・公開済み
+  - signal_lab_verify.py: GREEN 9/9
+  - Opusコンプラ: 🟢白（グレー修正21箇所適用・数値/SVG不変）
+  - 独立Opus: 🟢白
+  - finalize EXIT=0 / check EXIT=0
+- **公開ファイル**: `guide-signal-lab-081.html`（39KB・kinsho-v1×4・svg×3）
+- **人間の残作業**: なし（自動公開完了）
 
 ---
 
