@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>リバランスとは何か——何もしていないのに、リスクだけが増えている｜資産配分のズレを元に戻す仕組みと実践 - MarketWatch AI</title>
+  <meta name="description" content="ポートフォリオは放置しても「そのまま」ではありません。値動きによって配分が自然にズレていく「ドリフト」の仕組みを図解で解説。「年1回」「乖離5%超で」といったリバランスの判断基準の考え方と、コスト・税金との兼ね合いまで初心者から中上級者向けに解説します。">
+  <meta name="keywords" content="リバランス,ポートフォリオ,資産配分,ドリフト,分散投資,年1回,閾値,コスト,税金,長期投資,リスク管理,資金管理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-rebalancing.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="リバランスとは何か——何もしていないのに、リスクだけが増えている">
+  <meta property="og:description" content="放置しても配分は「そのまま」ではない。ドリフトの仕組みと、リバランスの考え方・タイミング・コストの現実を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-rebalancing.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "リバランスとは何か——何もしていないのに、リスクだけが増えている",
+    "description": "ポートフォリオは放置しても「そのまま」ではなく、ドリフトで配分がズレていく。リバランスの仕組みと判断基準・コストの現実を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-08-27",
+    "dateModified": "2026-08-27",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-rebalancing.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* 配分バー用カラー */
+    .s-eq-light{fill:#2C4F8F}
+    .s-bd-light{fill:#57a0e5}
+    .s-eq-dark{fill:#388bfd}
+    .s-bd-dark{fill:#79c0ff}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-eq-light{fill:#388bfd}
+    body.dark .s-bd-light{fill:#79c0ff}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; リバランスとは何か——何もしていないのに、リスクだけが増えている
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はポートフォリオのリバランスという考え方を整理した「情報提供」であり、特定の金融商品・配分比率の推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ 何もしていないのに、リスクだけが増えている——リバランスの仕組みと実践</h1>
+    <div class="meta-line">公開日：2026 年 8 月 27 日 ／ 読了時間：約 13 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <div class="info-box" style="margin-bottom:20px">
+      <strong>📌 この記事と「分散投資」（<a href="guide-diversification.html">別記事</a>）の棲み分け</strong>：<a href="guide-diversification.html">分散投資の記事</a>は「どう資産を分けるか」を扱います。本記事は「分けた後、時間が経つにつれて配分がどうズレていくか、どう元に戻すか」に絞ります。どちらも長期投資の基本ですが、テーマは別物なので両記事をあわせてご覧ください。
+    </div>
+
+    <p>「株に60%、債券に40%」と決めて運用を始めたとします。3年後にポートフォリオを開いてみると——<strong>株が75%、債券が25%になっていた</strong>。何も操作していないのに。これは間違いでも故障でもありません。<strong>株が値上がりし、その分の重みが自然と増えた</strong>だけです。</p>
+    <p>問題は、この変化が「ただの比率の変化」ではないという点です。株式は一般的に債券より値動きが大きく、リスクが高い資産です。比率が上がるということは、<strong>当初自分が許容しようとしたリスクより、ポートフォリオが高リスクになっている</strong>ことを意味します。何もしていないのに、いつの間にかリスクだけが増えていた——これがリバランスを考えるスタート地点です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ポートフォリオは放置しても「そのまま」ではない。値動きによって配分が自然にズレていく「<strong>ドリフト</strong>」が起きる。株が上がるほど株比率が上がり、意図より高リスクになっていく。</li>
+      <li>リバランスとは、ズレた配分を元の比率に戻す操作のこと。「<strong>年1回チェック</strong>」や「<strong>乖離5〜10%超で実施</strong>」といった判断の枠組みを事前に決めておくと迷わない。</li>
+      <li>頻繁にやりすぎると<strong>売買コスト・税金</strong>が積み重なる。リバランスの本来の目的は「<strong>リスク水準を意図した範囲に保つ</strong>」こと——パフォーマンスを最大化する操作ではない。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">放置は「現状維持」ではない——ドリフトとは何か</a></li>
+        <li><a href="#section-2">60:40 が 75:25 になる仕組み（概念図）</a></li>
+        <li><a href="#section-3">リバランスとは——ズレを元に戻す操作</a></li>
+        <li><a href="#section-4">いつ戻すか？二つのアプローチ</a></li>
+        <li><a href="#section-5">「カレンダー × 閾値」——実務的な判断の枠組み</a></li>
+        <li><a href="#section-6">頻繁にやるほど良い？——コストと税金の現実</a></li>
+        <li><a href="#section-7">リバランスの方法——売り減らすか、買い増すか</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 放置は「現状維持」ではない——ドリフトとは何か</h2>
+    <p>多くの人は、「一度配分を決めたらあとは何もしなくていい」と思っています。確かに、長期投資において余計な売買を繰り返すことは勧められません。しかし、<strong>「何もしない」は「変化がない」とは違う</strong>のです。</p>
+    <p>ポートフォリオの資産配分は、それぞれの資産が値動きするたびに、少しずつ変化し続けています。株式が上がった年は、株の比率が自然に増えます。債券や現金の比率は相対的に下がります。この現象を<strong>「ドリフト（drift）」</strong>と呼びます。流れに乗って少しずつ流される、という意味です。</p>
+
+    <div class="negative-box">
+      <strong>⚠️ ドリフトの落とし穴</strong>：株価が上昇する局面ではポートフォリオの見た目の金額は増えます。しかし同時に株比率も上がり、<strong>将来の下落局面でのダメージが当初より大きくなっている</strong>。パフォーマンスが良いときほど、知らない間にリスクが増している——これがドリフトの怖さです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 60:40 が 75:25 になる仕組み（概念図）</h2>
+    <p>具体的なイメージで考えてみましょう。仮に<strong>100万円を株式60万円・債券40万円で運用</strong>したとします。数年後、株式が大きく値上がりして株式部分だけが成長したとします。比率がどう変わるか、図で示します。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="drift-title">
+        <title id="drift-title">資産配分のドリフト：60:40が値動きで75:25にズレていく概念図</title>
+        <text class="s-panel-label" x="40" y="26">資産配分のドリフト——何もしなくても比率は変わる</text>
+
+        <!-- 左：開始時 60:40 -->
+        <text class="s-label-sm" x="120" y="52" text-anchor="middle">開始時</text>
+        <!-- 株式（濃い青）60% = 高さ144px -->
+        <rect class="s-eq-light" x="60" y="60" width="120" height="144" rx="4"/>
+        <text class="s-note" x="120" y="130" text-anchor="middle" font-size="14">株式</text>
+        <text class="s-note" x="120" y="148" text-anchor="middle" font-size="13">60%</text>
+        <!-- 債券（薄い青）40% = 高さ96px -->
+        <rect class="s-bd-light" x="60" y="204" width="120" height="96" rx="4"/>
+        <text class="s-note-g" x="120" y="248" text-anchor="middle" font-size="14">債券</text>
+        <text class="s-note-g" x="120" y="265" text-anchor="middle" font-size="13">40%</text>
+
+        <!-- 矢印（ドリフト発生） -->
+        <text class="s-label-sm" x="235" y="118" text-anchor="middle">株式が</text>
+        <text class="s-label-sm" x="235" y="134" text-anchor="middle">値上がり</text>
+        <text class="s-label-sm" x="235" y="152" text-anchor="middle">↓</text>
+        <text class="s-label-sm" x="235" y="168" text-anchor="middle">配分が</text>
+        <text class="s-label-sm" x="235" y="184" text-anchor="middle">変化</text>
+
+        <!-- 右：ドリフト後 75:25 -->
+        <text class="s-label-sm" x="420" y="52" text-anchor="middle">数年後（ドリフト後）</text>
+        <!-- 株式 75% = 高さ180px -->
+        <rect class="s-eq-light" x="360" y="60" width="120" height="180" rx="4"/>
+        <text class="s-note" x="420" y="142" text-anchor="middle" font-size="14">株式</text>
+        <text class="s-note-r" x="420" y="160" text-anchor="middle" font-size="15">75%</text>
+        <!-- 債券 25% = 高さ60px -->
+        <rect class="s-bd-light" x="360" y="240" width="120" height="60" rx="4"/>
+        <text class="s-note-g" x="420" y="268" text-anchor="middle" font-size="13">債券 25%</text>
+
+        <!-- 差分矢印 -->
+        <line class="s-brk" x1="180" y1="60" x2="360" y2="60"/>
+        <text class="s-note-r" x="270" y="56" text-anchor="middle" font-size="11">株式比率が増加</text>
+        <line class="s-brk" x1="180" y1="240" x2="360" y2="240"/>
+        <text class="s-note-g" x="270" y="256" text-anchor="middle" font-size="11">債券比率が低下</text>
+
+        <!-- 右端 注意ラベル -->
+        <text class="s-note-r" x="510" y="130" text-anchor="start" font-size="11">⚠️ 意図より</text>
+        <text class="s-note-r" x="510" y="145" text-anchor="start" font-size="11">高リスク化</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 開始時は株式60%・債券40%（左）。株式が値上がりすることで株式比率が自然に増え、数年後には75%前後になることも（右）。<strong>何も操作していないのに、当初想定より高リスクな状態</strong>になっている。「何もしない＝現状維持」ではない。※ 概念を示すイメージ図です。実際の変化率は市場環境により異なります。</figcaption>
+    </figure>
+
+    <p>これはわかりやすい例ですが、現実のポートフォリオでも同じことが起きます。株式市場が好調な年が続けば株比率はどんどん増え、当初60%のつもりだったものが気づけば70%、80%に近づいていることもあります。リスクを自覚せずに運用を続けると、<strong>想定外の下落局面で想定外の損失</strong>を受けることになります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ リバランスとは——ズレを元に戻す操作</h2>
+    <p><strong>リバランス（rebalance）</strong>とは、ドリフトによってズレた資産配分を、当初決めた目標の比率に戻す操作のことです。「均衡（balance）を取り直す（re-）」というそのままの意味です。</p>
+
+    <h3>具体的に何をするのか</h3>
+    <p>「株式60%・債券40%」という目標配分があるとして、ドリフトで「株式75%・債券25%」になっているとします。戻す方法は主に二つです。</p>
+    <ul>
+      <li><strong>売り減らす</strong>：増えすぎた株式の一部を売却し、不足した債券を買い足す。最もシンプルで確実に目標比率に戻せる。ただし売却益に税金がかかる場合がある。</li>
+      <li><strong>新規資金で買い増す</strong>：追加で投資できる資金がある場合、不足した側（ここでは債券）にだけ新規で資金を入れる。既存の保有を売らないので、売却による税金が発生しない。定期的に積立投資をしている場合に特に有効。</li>
+    </ul>
+
+    <div class="positive-box">
+      <strong>💡 積立投資中の工夫</strong>：毎月一定額を積み立てている場合は、比率が下がっている資産に重点的に積み立てることでリバランスの代わりになることがあります。「積立の向き先を調整する」という方法で、売却を最小限に抑えられます。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ いつ戻すか？二つのアプローチ</h2>
+    <p>リバランスを「いつやるか」には、大きく二つのアプローチがあります。どちらが正解というわけではなく、自分の運用スタイルや手間の許容度によって選ぶものです。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>アプローチ</th>
+          <th>やり方</th>
+          <th>特徴</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>カレンダー型</td>
+          <td>「年1回」「半年ごと」など、決めた時期に必ずチェック・実施</td>
+          <td>ルールがシンプル・予定に入れやすい。大きなドリフトが起きていない時も機械的に動く</td>
+        </tr>
+        <tr>
+          <td>閾値型（しきい値型）</td>
+          <td>目標比率から◯%以上ズレたら実施（例：5%超でリバランス）</td>
+          <td>大きなズレが生じたときだけ対応。ドリフトが少ない時期はコスト節約。ただし頻繁なモニタリングが必要</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>どちらのアプローチにも一長一短があり、<strong>「閾値型は理論的には効率が高い可能性がある」という研究</strong>もありますが、いずれも長期的に見ると大差ない場合も多く、「どちらが圧倒的に優れている」という結論は出ていません。重要なのは、どちらであれ<strong>「事前にルールを決めておく」</strong>ことです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 「カレンダー × 閾値」——実務的な判断の枠組み</h2>
+    <p>実務的に多く使われるのは、<strong>カレンダー型と閾値型を組み合わせたハイブリッド</strong>です。例えば、「年1回（決まった月に）チェックし、乖離が5%以上あったらリバランスする、なければ見送る」という方法です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="flow-title">
+        <title id="flow-title">カレンダー×閾値型リバランスの判断フロー概念図</title>
+        <text class="s-panel-label" x="40" y="26">「年1回チェック・乖離5%超で実施」の判断フロー</text>
+
+        <!-- START -->
+        <rect x="240" y="42" width="160" height="36" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-legend" x="320" y="65" text-anchor="middle">年1回 定期チェック</text>
+
+        <!-- 下矢印 -->
+        <line class="s-axis" x1="320" y1="78" x2="320" y2="106"/>
+        <polygon points="314,103 320,114 326,103" fill="#8b949e"/>
+
+        <!-- 判断ボックス -->
+        <rect x="200" y="114" width="240" height="40" rx="8" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text style="fill:#6a4c00;font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:600" x="320" y="139" text-anchor="middle">目標比率から 5% 以上ズレているか？</text>
+
+        <!-- YES 矢印（左下） -->
+        <line class="s-axis" x1="200" y1="134" x2="120" y2="134"/>
+        <line class="s-axis" x1="120" y1="134" x2="120" y2="182"/>
+        <polygon points="114,179 120,190 126,179" fill="#8b949e"/>
+        <text class="s-note-r" x="160" y="128" text-anchor="middle" font-size="11">YES（ズレあり）</text>
+
+        <!-- YES 結果 -->
+        <rect x="50" y="190" width="140" height="42" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text class="s-note-g" x="120" y="208" text-anchor="middle" font-size="12">リバランス実施</text>
+        <text class="s-note-g" x="120" y="224" text-anchor="middle" font-size="11">→ 目標比率に戻す</text>
+
+        <!-- NO 矢印（右下） -->
+        <line class="s-axis" x1="440" y1="134" x2="520" y2="134"/>
+        <line class="s-axis" x1="520" y1="134" x2="520" y2="182"/>
+        <polygon points="514,179 520,190 526,179" fill="#8b949e"/>
+        <text class="s-note" x="480" y="128" text-anchor="middle" font-size="11">NO（乖離が小さい）</text>
+
+        <!-- NO 結果 -->
+        <rect x="450" y="190" width="140" height="42" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+        <text class="s-legend" x="520" y="208" text-anchor="middle" font-size="12">今回は見送り</text>
+        <text class="s-label-sm" x="520" y="224" text-anchor="middle">次の年に再チェック</text>
+      </svg>
+      <figcaption class="chart-caption">▲ カレンダー型と閾値型を組み合わせた判断フロー。「年1回チェックし、乖離が5%未満なら見送り、5%以上なら実施」というシンプルなルール。閾値は5%や10%など、自分の手間・コスト感覚で決める枠組みであり、特定の数値が「正解」ではありません。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <div class="info-box">
+      <strong>💡 閾値は何%がいいのか？</strong>：5%・10%・20%など、さまざまな閾値が紹介されることがありますが、「この数値が最適」という普遍的な答えはありません。重要なのは、<strong>「自分のポートフォリオ規模・売買コスト感・ストレス感覚に照らして、事前に決めておく」</strong>こと。決めた閾値をその都合で変えない、という一貫性が実務上は大切です。
+    </div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 頻繁にやるほど良い？——コストと税金の現実</h2>
+    <p>リバランスを知ったばかりの人がよく思うのが、「こまめにやるほどリスクを抑えられるのでは」という発想です。確かにドリフトをすぐ修正すれば比率のズレは小さく保てますが、<strong>頻繁にやりすぎることのデメリット</strong>も見逃せません。</p>
+
+    <h3>① 売買コストの積み上がり</h3>
+    <p>株式や投資信託を売買するたびに、売買手数料やスプレッドが発生します。（ノーロードの投資信託や一部の証券口座では手数料ゼロのものもありますが、すべてのケースでコストがかからないわけではありません。）毎月リバランスをすると、年1回に比べて12倍の売買が発生することになり、<strong>コストが積み重なって長期のリターンを削る</strong>可能性があります。売買コストの詳細については、<a href="guide-fee-impact.html">コストが運用成績に与える影響</a>の記事をご参照ください。</p>
+
+    <h3>② 税金の発生タイミング</h3>
+    <p>利益が出ている資産を売却してリバランスすると、その時点で<strong>譲渡益に対して税金が発生</strong>します（特定口座・一般口座の場合）。頻繁に売却すると、税金の支払いタイミングが早まり、その分の資金が手元を離れることになります。NISA口座内であれば売却益に課税されないため、リバランスの手段として使いやすい面があります。税金の仕組みの詳細は<a href="guide-investment-tax.html">投資の税金・損益通算の基礎</a>をご参照ください。</p>
+
+    <!-- SVG3: コスト概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="cost-title">
+        <title id="cost-title">リバランス頻度とコスト・手間のトレードオフ概念図</title>
+        <text class="s-panel-label" x="40" y="26">リバランス頻度とコスト・ドリフト抑制のトレードオフ</text>
+
+        <!-- 横軸 -->
+        <line class="s-axis" x1="60" y1="210" x2="600" y2="210"/>
+        <text class="s-label-sm" x="60" y="230" text-anchor="start">低頻度</text>
+        <text class="s-label-sm" x="600" y="230" text-anchor="end">高頻度</text>
+        <text class="s-label-sm" x="330" y="248" text-anchor="middle">リバランスの頻度 →</text>
+
+        <!-- 縦軸ラベル -->
+        <text class="s-label-sm" x="56" y="130" text-anchor="end" transform="rotate(-90,56,130)">↑ 大</text>
+
+        <!-- コスト曲線（右上がり） -->
+        <path class="s-curve-l" d="M80,200 C 200,195 350,170 540,80"/>
+        <text class="s-note-r" x="430" y="100" text-anchor="middle">累積コスト・税</text>
+        <text class="s-note-r" x="430" y="115" text-anchor="middle">（頻度が多いほど増える）</text>
+
+        <!-- ドリフト曲線（右下がり） -->
+        <path class="s-curve-g" d="M80,80 C 200,100 350,155 540,200"/>
+        <text class="s-note-g" x="150" y="90" text-anchor="middle">ドリフトのズレ幅</text>
+        <text class="s-note-g" x="150" y="105" text-anchor="middle">（頻度が多いほど減る）</text>
+
+        <!-- 交差付近 -->
+        <line class="s-guide" x1="295" y1="50" x2="295" y2="210"/>
+        <text class="s-note" x="295" y="46" text-anchor="middle" font-size="11">「バランスが取れる帯域」</text>
+      </svg>
+      <figcaption class="chart-caption">▲ リバランスの頻度を高くするほどドリフトは抑えられる（緑）が、累積コスト・税金も増える（赤）というトレードオフ。「頻繁にやるほど良い」わけではなく、<strong>コストとドリフト抑制のバランスが取れる帯域</strong>（点線付近）を探ることが実務的な考え方。帯域の幅は個人の状況によって異なります。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>以上を踏まえると、リバランスとは「パフォーマンスを最大化するための積極的な操作」ではなく、<strong>「当初決めたリスク水準をなるべく維持するための、定期的な調整作業」</strong>です。やりすぎてコストと税金を増やすより、<strong>年1回程度の頻度で規律を持って実施する</strong>ほうが、長期的には合理的であることが多いと一般的には言われています。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ リバランスの方法——売り減らすか、買い増すか</h2>
+    <p>実際にリバランスするとき、手順をシンプルにまとめます。</p>
+
+    <h3>① 現在の比率を把握する</h3>
+    <p>保有しているすべての資産（株式・債券・現金・その他）を時価で集計し、合計に対する各比率を計算します。証券会社のポートフォリオ画面で確認できる場合がほとんどです。</p>
+
+    <h3>② 目標比率からの乖離を確認する</h3>
+    <p>当初決めた目標配分と比べて、どの資産が増えすぎていて、どの資産が減っているかを確認します。乖離が閾値（例：5%）以内なら今回は見送りという判断も選択肢です。</p>
+
+    <h3>③ 方法を選んで実行する</h3>
+    <p>増えすぎた資産を売却して不足している資産を買い足す（売り買い同時）、または新規資金を不足資産に集中投入する（買い増しのみ）、のどちらかを選びます。どちらが合理的かは、<strong>追加投資できる資金の有無・税金の状況・コスト</strong>によって変わります。</p>
+
+    <div class="warning-box">
+      NISA口座と課税口座を両方お持ちの場合、それぞれの口座をまたいで合算した配分を確認することが大切です。口座ごとに別々に管理すると、全体のリスク水準を正確に把握できません。また、NISA口座内での売買と課税口座での売買では税務上の扱いが異なります。詳細は証券会社や税務の専門家にご確認ください。
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI は、日々の価格・ニュース・市場指標を自動でまとめ、<strong>長期投資の判断材料</strong>を提供しています。リバランスを検討するときに活用できるページを紹介します。</p>
+    <ul>
+      <li><strong><a href="market-health.html">市場健康度ダッシュボード</a></strong>：VIX（恐怖指数）・バフェット指標・CAPE レシオなどを一覧で確認できます。相場が大きく動いているとき——ドリフトが加速している可能性があるとき——の状況把握に役立ちます。</li>
+      <li><strong><a href="charts.html">150年価格チャート</a></strong>：長期の資産価格の変動を俯瞰することで、今がドリフトが起きやすい「強気相場の続き」なのかを大局観として確認できます。</li>
+      <li><strong><a href="track-record.html">シグナル成績ダッシュボード</a></strong>：短期のシグナル検証結果を公開しています。長期投資においてリバランスが「売買を増やさない」考え方であるのに対し、こちらはテクニカルシグナルの実績データです。用途・考え方が異なる点をご理解の上、参考にしてください。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績ダッシュボードを見てみる</div>
+      <div class="cta-box-desc">テクニカルシグナルの勝ち負けを全件公開。長期のリバランスとは異なる視点ですが、「ルールで動く」「記録を残す」という姿勢は共通しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績を確認する →</a>
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>リバランスについて学んだことを整理します。</p>
+    <ul>
+      <li>ポートフォリオは放置しても「そのまま」ではなく、値動きで配分が自然にズレていく（<strong>ドリフト</strong>）。株が上がるほど株比率は増え、意図より高リスクになっていく。</li>
+      <li><strong>リバランス</strong>とは、このズレを元の比率に戻す操作。「売り減らし」と「買い増し」の二つの手段がある。</li>
+      <li>「いつやるか」は <strong>カレンダー型（年1回など）</strong> か <strong>閾値型（5%超など）</strong> か、あるいはその組み合わせ。どちらが正解というわけではなく、事前にルールを決めておくことが重要。</li>
+      <li>頻繁にやるほど売買コストと税金が積み上がる。<strong>リバランスの目的はリスク水準を保つこと</strong>であり、パフォーマンスを最大化する操作ではない。</li>
+      <li>「<strong>◯:◯が最適な配分だ</strong>」という答えはこの記事では示しません——目標配分は個々の状況や目的によって異なり、それは投資家ご自身が考えるものです。この記事は、決めた配分を「維持するための仕組み」の話です。</li>
+    </ul>
+    <p><a href="guide-diversification.html">分散投資で資産を「分ける」</a>こと、そして今回の記事で学んだ「分けた後の配分を意図した範囲に保つ」こと——この二つが、長期投資のリスク管理を支える基本的な考え方です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-diversification.html">
+        <div class="related-card-title">🌍 分散投資の基本（ポートフォリオの分け方）</div>
+        <div class="related-card-desc">本記事の前提。どう資産を分けるか——相関・コア/サテライト戦略の基礎。本記事は「分けた後の維持」を扱います。</div>
+      </a>
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">📉 複利と最大ドローダウン・破産確率</div>
+        <div class="related-card-desc">高リスク状態のまま大きな下落を食らうと、複利の恩恵が一瞬で吹き飛ぶ。リバランスが「退場防止」になる理由の裏側。</div>
+      </a>
+      <a class="related-card" href="guide-fee-impact.html">
+        <div class="related-card-title">💸 コストが運用成績に与える影響</div>
+        <div class="related-card-desc">リバランスのたびに発生する売買コストは長期では無視できない。コストの積み重なり方を数字で確認できます。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はポートフォリオのリバランスという考え方を情報提供として解説したものであり、特定の金融商品・資産配分比率・取引手法の推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。税金・手数料に関する具体的な内容は証券会社・税理士等の専門家にご確認ください。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>

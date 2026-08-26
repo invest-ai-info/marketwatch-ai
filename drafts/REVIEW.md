@@ -1,3 +1,35 @@
+## 2026-08-26 | 🆕 下書き生成 | rebalancing | autodraft-article
+
+- **基準日**: 2026-08-26（JST）
+- **topic**: #47「何もしていないのに、リスクだけが増えている——リバランスの仕組みと実践」
+- **key**: `rebalancing`
+- **生成ファイル**: `drafts/draft-rebalancing.html`
+- **シリーズ**: 🛡️ リスク管理・資金管理
+- **参照出典**:
+  - https://www.j-flec.go.jp/links/jikan/qa/062.html（日本証券業協会：リバランスのタイミング）
+  - https://toushin-plaza.jp/column/rebalance/（リバランスは長期投資の鉄則）
+  - https://www.am-one.co.jp/warashibe/article/fuyasu-20240522-1.html（リバランスの具体的なやり方）
+  - https://www.advisorperspectives.com/articles/2025/04/29/what-optimal-portfolio-rebalancing-strategy（最適リバランス戦略の学術論文概観）
+  - https://www.calculatorian.com/en/articles/financial/portfolio-rebalancing-guide（頻度・閾値の研究まとめ）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「◯:◯が最適」も明示的に書かないと注記）
+  - ✅ 断定・利益保証なし（「必ず」=方法論説明・「保証」=免責文の標準表現で問題なし）
+  - ✅ kinsho-v1免責あり（本文末 data-disclaimer + footer data-disclaimer = 2か所。check_guide_draft.py合格基準クリア）
+  - ✅ noindex,nofollow 入り（下書きは検索除外）
+  - ✅ 税率・手数料の具体値は書かず guide-investment-tax / guide-fee-impact へ誘導
+  - ✅ diversification（#7）との棲み分けを冒頭 info-box で明示
+- **SVG状況**: 3点（概念図あり）
+  - SVG1: ドリフトの配分変化（60:40 → 75:25 積み上げバー）→ ライト/ダーク実機確認要
+  - SVG2: カレンダー×閾値の判断フロー → ライト/ダーク実機確認要
+  - SVG3: 頻度 vs コスト・ドリフト抑制のトレードオフ曲線 → ライト/ダーク実機確認要
+- **人間の残作業**:
+  1. SVG1〜3をライト/ダーク両モードで実機確認（SVGのfill色がダークで適切に切り替わるか）
+  2. タイトル・キャプション微調整（必要に応じて）
+  3. 公開前に autodraft-publish ゲート（check_guide_draft.py + Opusコンプラ + 品質ルーブリック）を通す
+  4. 公開時カテゴリ: `🛡️ リスク管理・資金管理`（新カテゴリ。初回公開時に人間が新設済みか確認）、`--emoji 🔄` 推奨
+
+---
+
 ## 2026-08-26 | ✅ autopublish 公開 | regret-aversion | 投資の心理・メンタル
 
 - 決定論ゲート: GREEN（初回・修正後とも）
