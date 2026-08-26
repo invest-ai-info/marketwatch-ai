@@ -18,8 +18,59 @@ from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レ�
 import re as _re_for_ja
 _HAS_JA_RE = _re_for_ja.compile(r'[\u3040-\u30ff\u4e00-\u9fff]')
 
+# ─────────────────────────────────────────
+# 翻訳結果の受理条件（2026-08-26 事故対応）
+#   deep_translator の Google バックエンドは translate.google.com/m を HTML スクレイプ
+#   する実装で、Google が HTTP 500 を返すと **エラーページ本文**
+#   （"Error 500 (Server Error)!!1500.That's an error..."）をそのまま翻訳結果として返す。
+#   旧実装の合否判定は「原文と違えば成功」だけだったため、GitHub Actions の IP からは
+#   全ニュース見出しがこのエラー文に置き換わり、AI 投資判断の根拠が
+#   「システムエラーのため内容が確認できません」になっていた。
+#   → 「日本語を含む・エラーページ本文でない・長さが妥当」を満たさない訳は採用しない。
+# ─────────────────────────────────────────
+_TRANSLATION_ERROR_RE = _re_for_ja.compile(
+    r"(that.{0,2}s an error|server error|error \d{3}|!!1|<\s*/?\s*(html|body|div|script)\b)",
+    _re_for_ja.IGNORECASE,
+)
+
+
+def looks_like_error_text(text, head=120):
+    """取得・翻訳の失敗でエラーページ本文が紛れ込んでいないか（先頭 head 文字で判定）"""
+    if not text:
+        return False
+    return bool(_TRANSLATION_ERROR_RE.search(str(text)[:head]))
+
+
+def _accept_translation(out, src):
+    """翻訳結果として受理してよいか。日本語ゼロ／エラーページ本文／異常な長さ は棄却する。"""
+    if not out or not str(out).strip():
+        return False
+    s = str(out).strip()
+    if not _HAS_JA_RE.search(s):
+        return False   # 「日本語訳」に日本語が1文字も無い＝失敗（英語のエラー文など）
+    if looks_like_error_text(s):
+        return False   # エラーページ本文の混入
+    if len(s) > max(160, len(str(src)) * 4):
+        return False   # 見出しの訳が原文の4倍超＝本文まるごと等の混入
+    return True
+
+
+def _translate_via_gtx(src):
+    """Google 翻訳の JSON API（translate_a/single）を直叩きする。
+    HTML スクレイプと違い、障害は HTTPError / JSON パース失敗として顕在化するので、
+    エラーページ本文が「翻訳結果」として混入しない。"""
+    url = "https://translate.googleapis.com/translate_a/single?" + urllib.parse.urlencode(
+        {"client": "gtx", "sl": "auto", "tl": "ja", "dt": "t", "q": src}
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=15) as res:
+        data = json.loads(res.read().decode("utf-8", "replace"))
+    return "".join(seg[0] for seg in data[0] if seg and seg[0])
+
+
 def translate_to_ja(text):
-    """英文タイトルを日本語に翻訳。失敗時は原文を返すが console にログを残す。"""
+    """英文タイトルを日本語に翻訳。失敗時は原文を返すが console にログを残す。
+    どのバックエンドも「日本語を含む妥当な訳」しか採用しない（_accept_translation）。"""
     if not text or not str(text).strip():
         return text
     # 既に日本語が含まれていれば翻訳不要
@@ -28,27 +79,37 @@ def translate_to_ja(text):
 
     src = str(text).strip()[:4500]  # 5000字制限の保険
 
-    # ① Google 翻訳（deep_translator）
+    # ① Google 翻訳 JSON API（gtx）— 最優先。失敗は例外になるので誤採用しない
+    try:
+        out = _translate_via_gtx(src)
+        if _accept_translation(out, src):
+            return out
+        print(f"  ⚠️ gtx: 不正な翻訳結果を棄却 → fallback ({str(out)[:40]!r})")
+    except Exception as e:
+        print(f"  ⚠️ gtx 失敗: {type(e).__name__}: {str(e)[:60]} → fallback")
+
+    # ② Google 翻訳（deep_translator / HTML スクレイプ）
     try:
         from deep_translator import GoogleTranslator
         out = GoogleTranslator(source="auto", target="ja").translate(src)
-        if out and out.strip() and out.strip().lower() != src.strip().lower():
+        if _accept_translation(out, src):
             return out
-        else:
-            print(f"  ⚠️ GoogleTranslator: 空または無変換 → fallback")
+        print(f"  ⚠️ GoogleTranslator: 不正な翻訳結果を棄却 → fallback ({str(out)[:40]!r})")
     except Exception as e:
         print(f"  ⚠️ GoogleTranslator 失敗: {e} → fallback")
 
-    # ② MyMemory フォールバック
+    # ③ MyMemory フォールバック
     try:
         from deep_translator import MyMemoryTranslator
         out = MyMemoryTranslator(source="en-US", target="ja-JP").translate(src[:480])
-        if out and out.strip():
+        if _accept_translation(out, src[:480]):
             return out
+        print(f"  ⚠️ MyMemoryTranslator: 不正な翻訳結果を棄却 ({str(out)[:40]!r})")
     except Exception as e:
         print(f"  ⚠️ MyMemoryTranslator 失敗: {e}")
 
-    # ③ 全部失敗 → 原文（最低限ニュース内容は伝わる）
+    # ④ 全部失敗 → 原文（英語のままだが、少なくとも中身は伝わる）
+    print(f"  ⚠️ 翻訳フォールバック（原文のまま）: {src[:50]}")
     return text
 
 JST = timezone(timedelta(hours=9))
@@ -1354,9 +1415,16 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
     stocks_news = stocks_news or []
     commodity_news = commodity_news or []
     crypto_news = crypto_news or []
-    stock_titles = [a.get("title", "") for a in stocks_news[:10]]
-    commodity_titles = [a.get("title", "") for a in commodity_news[:10]]
-    crypto_titles = [a.get("title", "") for a in crypto_news[:10]]
+    # 2026-08-26: 翻訳バックエンド障害でエラーページ本文が見出しに混入した事故があるため、
+    #   AI に渡す前に「エラー文らしいタイトル」を落とす（ゴミを渡すと根拠が
+    #   「システムエラーのため内容が確認できません」になる＝実際に起きた）
+    def _clean_titles(arts):
+        return [t for t in (a.get("title", "") for a in arts[:10])
+                if t and not looks_like_error_text(t)]
+
+    stock_titles = _clean_titles(stocks_news)
+    commodity_titles = _clean_titles(commodity_news)
+    crypto_titles = _clean_titles(crypto_news)
 
     # 4 アセット
     assets = []
