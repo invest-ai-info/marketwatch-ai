@@ -1,3 +1,27 @@
+## 2026-08-28 | 🆕 下書き生成 | signal-lab-082 | signal-lab-daily
+
+- **基準日**: 2026-08-28（JST）
+- **article_id**: 082
+- **topic**: rsi_oversold_bounce FWD N=250・時間足二極化（4H 64.3% vs 1H 44.6%）と昇格ストライク1/2折り返し
+- **hypothesis**: rsi_oversold_bounce の IS→FWD 勝率改善と時間足二極化（4H vs 1H）
+- **is_fwd_boundary**: 2026-06-16
+- **生成ファイル**:
+  - `drafts/draft-signal-lab-082.html`
+  - `drafts/labnotes/lab-082-analysis.md`
+  - `drafts/labnotes/lab-082-claims.json`
+  - `signal-lab-ledger.md`（次番号→083、検証済み一覧に#082行追加）
+- **優先度**: ② 最大動意仮説（昇格ストライク1/2到達→折り返し、4H vs 1H二極化）
+- **主な数値**:
+  - IS 52/133=39.1% CI[31.2%,47.6%]
+  - FWD 130/250=52.0% CI[45.8%,58.1%] E(R)=+0.213 RCI[−0.007,+0.433]
+  - FWD 4H 45/70=64.3% E(R)=+0.500 RCI[+0.236,+0.764]
+  - FWD 1H 75/168=44.6% E(R)=+0.042 RCI[−0.134,+0.217]
+  - promote_strikes=1（2026-08-27 RCI_lo=+0.005→2026-08-28 RCI_lo=−0.007 折り返し）
+- **ゲート状態**: signal_lab_verify.py 実行中
+- **人間の残作業**: エスカレ発生時のみ（自動公開パスで対応）
+
+---
+
 ## 2026-08-28 | 🆕 下書き生成 | index-vs-active | autodraft-article
 
 - **基準日**: 2026-08-28（JST）

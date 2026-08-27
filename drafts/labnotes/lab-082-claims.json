@@ -1,0 +1,56 @@
+{
+  "article_id": "082",
+  "article_date": "2026-08-28",
+  "hypothesis": "rsi_oversold_bounce の IS→FWD 勝率改善と時間足二極化（4H vs 1H）",
+  "is_fwd_boundary": "2026-06-16",
+  "claims": [
+    {
+      "label": "IS全体 39.1%（k=52/n=133）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "FWD全体 52.0%（k=130/n=250）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "k": 130,
+      "n": 250
+    },
+    {
+      "label": "FWD 4H足 64.3%（k=45/n=70）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_from": "2026-06-16"},
+      "k": 45,
+      "n": 70
+    },
+    {
+      "label": "FWD 1H足 44.6%（k=75/n=168）",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_from": "2026-06-16"},
+      "k": 75,
+      "n": 168
+    },
+    {
+      "label": "FWD JPY系FX 66.7%（k=32/n=48）",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx", "fired_from": "2026-06-16"},
+      "k": 32,
+      "n": 48
+    },
+    {
+      "label": "FWD その他FX 44.4%（k=32/n=72）",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx", "fired_from": "2026-06-16"},
+      "k": 32,
+      "n": 72
+    },
+    {
+      "label": "FWD 指数 47.5%（k=29/n=61）",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index", "fired_from": "2026-06-16"},
+      "k": 29,
+      "n": 61
+    },
+    {
+      "label": "FWD 貴金属 55.9%（k=19/n=34）",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal", "fired_from": "2026-06-16"},
+      "k": 19,
+      "n": 34
+    }
+  ]
+}
