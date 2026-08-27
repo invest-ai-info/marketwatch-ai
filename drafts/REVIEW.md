@@ -1,3 +1,5 @@
+## 2026-08-27 | ✅ autopublish 公開 | trade-journal | 決定論緑・Opus白（軽微修正→独立Opus白確認） | https://marketwatch-jp.com/guide-trade-journal.html
+
 ## 2026-08-27 | 🆕 下書き生成 | signal-lab-081 | signal-lab-daily
 
 - **基準日**: 2026-08-27（JST）
