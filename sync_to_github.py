@@ -176,4 +176,5 @@ SYNC_FILES = [
     "guide-regret-aversion.html",
     "guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html",
     "guide-signal-lab-081.html",
+    "guide-trade-journal.html",
 ]
