@@ -6,7 +6,11 @@ name: News Ticker
 
 on:
   schedule:
-    - cron: '37 * * * *'   # 毎時37分（:00 混雑回避。遅延・スキップは仕様＝次の時間帯で追いつく）
+    # 🆕 2026-08-27: 単発 '37 * * * *' では GitHub 側のスキップに耐えられず 11時間欠測した
+    #   （実測の発火 03:21→06:08→10:01→停止）。他の健全なレーン（technical-alerts の3重cron、
+    #   update-market-news の4重バックアップ）に合わせ、毎時3回に増やして取りこぼしを吸収する。
+    #   AI不使用の軽量ジョブ＋concurrency cancel-in-progress のため増発のコスト・競合は無害。
+    - cron: '7,27,47 * * * *'   # 毎時 :07/:27/:47（:00 混雑回避。1回落ちても20分後に追いつく）
   workflow_dispatch:
 
 concurrency:
