@@ -177,4 +177,5 @@ SYNC_FILES = [
     "guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html",
     "guide-signal-lab-081.html",
     "guide-trade-journal.html",
+    "guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html",
 ]
