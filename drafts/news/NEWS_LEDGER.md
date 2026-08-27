@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-27
+- 判定: ✅ 公開済み
+- 選定トピック: エヌビディアQ2 FY2027決算確報：売上高$96.2B（+106%）・FY2028成長率70%予告でAI需要神話は続くか（カテゴリ: AI半導体・米国株・日本株・個別銘柄）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年8月26日引け後にNVIDIAがQ2 FY2027決算を発表。売上高$96.2B（コンセンサス$92.2B超え）・データセンター$89B（+117%）・EPS$2.22。さらにCFOが初の通期長期ガイダンス「FY2028成長率70%」を提示（アナリスト平均44%大幅超え）。時間外+6%上昇。8/24に当サイトがプレビュー記事を公開済みだが、今回は確定実数値・Huang CEO発言・AWS 200万GPU契約・FY2028長期予告という新しい事実を持つ独立した内容として選定。日本株（アドバンテスト・東京エレクトロン等）への影響論点を整理。ジャクソンホール開幕日（8/27）との重なりも重要コンテキスト。
+- 出典（確認済み・6系統以上）:
+  - NVIDIA公式SEC 8-K Form「NVIDIA Announces Financial Results for Second Quarter Fiscal 2027」（GlobeNewswire 2026-08-26）
+  - CNBC「Nvidia earnings takeaways: Huang forecasts 70% fiscal 2028 revenue growth, far above estimates」（2026-08-26）
+  - CNBC「Nvidia stock rises 6% after blockbuster earnings boost AI confidence」（2026-08-27）
+  - Fortune「Nvidia doubles Q2 revenue to $96 billion and crushes estimates」（2026-08-26）
+  - Kiplinger「Nvidia Earnings: Live Updates and Commentary August 2026」
+  - CoinDesk「Nvidia tops earnings estimates, guides to $108 billion in revenue next quarter」（2026-08-26）
+  - Shacknews「NVIDIA's (NVDA) data centers accounted for $89.0 billion in Q2 2027 revenue」
+  - invezz.com「Advantest, SoftBank lift Nikkei 225: is Nvidia about to decide next move?」（2026-08-26）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①アドバンテスト「事実上の独占的地位にあり」→「〜にあると報じられており」に帰属明示 ②東京エレクトロン「AI投資サイクルと連動しやすい」→「〜連動しやすいとの見方がある」に軟化 ③「過去にも確認されている」→「過去にも指摘されてきた」に軟化。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典6系統以上）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典15箇所✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html
+- commit: cabfb16（main へ push 済み）
+
+---
+
 ## 2026-08-26
 - 判定: ✅ 公開済み
 - 選定トピック: mRNAがんワクチン、人類史上初の第3相成功──ModernaとMerckのINTerpath-001試験（カテゴリ: バイオテック・製薬・米国株・個別銘柄）
