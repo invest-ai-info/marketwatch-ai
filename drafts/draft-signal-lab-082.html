@@ -8,12 +8,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #82｜RSI売られすぎ逆張り買い FWD N=250：4H 64.3% vs 1H 44.6%の時間足二極化 - MarketWatch AI</title>
-  <meta name="description" content="rsi_oversold_bounce の前向き検証N=250到達。全体52.0%だがIS39.1%から大幅改善。4H足64.3%（CI下限+0.236）vs 1H足44.6%（CI中立）——時間足選択が勝敗を分ける構造を確認。昇格ストライク1/2を記録後、今日折り返し。">
+  <meta name="description" content="rsi_oversold_bounce の前向き検証N=250到達。全体52.0%だがIS39.1%から大幅改善。4H足64.3%（CI下限+0.236）vs 1H足44.6%（CI中立）——時間足によって集計結果が分かれる傾向を記録。昇格ストライク1/2を記録後、今日折り返し。">
   <meta name="keywords" content="AIシグナル,rsi_oversold_bounce,RSI,売られすぎ,逆張り,4H,1H,時間足,勝率,研究日誌,信頼区間">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-082.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #82｜RSI売られすぎ逆張り買い 4H 64.3% vs 1H 44.6%の時間足二極化">
-  <meta property="og:description" content="前向きN=250到達。4H足64.3%（E(R)+0.500）vs 1H足44.6%（E(R)+0.042）——時間足の選択が収益性を分ける構造を確認。昇格条件2日連続未達で折り返し。">
+  <meta property="og:description" content="前向きN=250到達。4H足64.3%（E(R)+0.500）vs 1H足44.6%（E(R)+0.042）——時間足によって集計結果が分かれる傾向を記録。昇格条件2日連続未達で折り返し。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-082.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -362,7 +362,7 @@ window.addEventListener('resize',mark);
       </tr>
     </table>
 
-    <p>IS期間の39.1%（損益分岐 43% 未満）から、前向き期間の52.0%へ大幅に改善しました。差は+12.9ppです。FWDのCI下限45.8%は損益分岐43%を上回っており、<strong>FWD全体では統計的に正の期待値が確認できます</strong>。</p>
+    <p>IS期間の39.1%（損益分岐 43% 未満）から、前向き期間の52.0%へ大幅に改善しました。差は+12.9ppです。FWDのCI下限45.8%は損益分岐43%を上回っており、<strong>FWD全体では集計上プラスの期待値となっています</strong>。ただしこれは過去に発火したシグナルの集計結果であり、将来同じ結果になることを示すものではありません。</p>
 
     <!-- SVG 図1: 概念チャート（ローソク足+RSI） -->
     <div class="chart-figure">
@@ -443,7 +443,7 @@ window.addEventListener('resize',mark);
     <!-- =============================== -->
     <h2 id="result-tf">④ 結果②：4H 64.3% vs 1H 44.6% の時間足二極化</h2>
 
-    <p>FWD期間を4H足・1H足に分けて集計しました。<strong>劇的な差</strong>が現れています。</p>
+    <p>FWD期間を4H足・1H足に分けて集計しました。<strong>両者の間に明確な差</strong>が現れています。</p>
 
     <table>
       <tr><th>時間足</th><th>N</th><th>k（勝ち）</th><th>勝率</th><th>95%CI</th><th>E(R)</th><th>E(R)のRCI</th></tr>
@@ -473,7 +473,7 @@ window.addEventListener('resize',mark);
 
     <div class="positive-box">
       <strong>4H足の E(R) RCI 全域プラス を確認</strong><br>
-      4H足の期待値 RCI 下限 +0.236 は、クラスター補正後も全域でプラスを維持。これはシステム全体の19銘柄相関を考慮しても「4H足×rsi_oversold_bounce は期待値プラス」と言える水準です。
+      4H足の期待値 RCI 下限 +0.236 は、クラスター補正後も全域でプラスを維持。これはシステム全体の19銘柄相関を考慮しても、4H足×rsi_oversold_bounce の期待値が集計期間中はプラス圏にとどまったことを示します。あくまで過去データ上の観測であり、将来の成績を示すものではありません。
     </div>
 
     <!-- SVG 図2: IS/FWD + 時間足 棒グラフ -->
@@ -492,7 +492,7 @@ window.addEventListener('resize',mark);
         <text class="s-label-y" x="57" y="93">損益分岐 43%</text>
         <!-- Bar 1: IS 39.1% → height=(39.1/75)*180=93.8, y_top=200-93.8=106.2≈106 -->
         <rect class="s-fill-r" x="65" y="106" width="80" height="94" rx="3"/>
-        <text class="s-label-r" x="105" y="101" text-anchor="middle">39.1%</text>
+        <text x="105" y="122" text-anchor="middle" fill="white" font-size="12" font-weight="600">39.1%</text>
         <text class="s-label-sm" x="105" y="218" text-anchor="middle">IS</text>
         <text class="s-label-sm" x="105" y="230" text-anchor="middle">（133件）</text>
         <!-- Bar 2: FWD全体 52.0% → height=(52.0/75)*180=124.8, y_top=200-124.8=75.2≈75 -->
@@ -568,7 +568,7 @@ window.addEventListener('resize',mark);
       jpy_fx×4H は N=17 と小サンプルです。94.1%という数字はサンプル揺らぎの可能性が高く、「jpy_fx×4H が非常に有望」と断定するには前向き件数の積み上げが必要です。この数値は探索的観察として記録しています。
     </div>
 
-    <p>other_fx（EUR/USD・GBP/USD等）は44.4%と最低水準で、損益分岐付近にとどまっています。RSI逆張り戦略は<strong>円クロスペアで効きやすく、他の通貨ペアでは効果が薄い</strong>可能性が示唆されます（メカニズムは次回以降の検証候補）。</p>
+    <p>other_fx（EUR/USD・GBP/USD等）は44.4%と最低水準で、損益分岐付近にとどまっています。RSI逆張りシグナルの集計結果は<strong>円クロスペアで相対的に良好、他の通貨ペアでは伸び悩む</strong>傾向がうかがえます（メカニズムは次回以降の検証候補）。</p>
 
     <!-- =============================== -->
     <h2 id="verdict">⑥ 仮説評価——H1✅ H2✅ H3⚠️境界</h2>
@@ -595,7 +595,7 @@ window.addEventListener('resize',mark);
       </tr>
     </table>
 
-    <p>H1・H2 は想定どおりの結果で、時間足二極化の構造を確認しました。H3 は 19.7pp と基準20pp に対して0.3pp届かず、厳密には「クリアせず」ですが実質的に20ppと変わらない差と解釈できます。今後の累積でどちらに動くかを追い続けます。</p>
+    <p>H1・H2 は想定どおりの結果で、時間足二極化の構造を確認しました。H3 は 19.7pp と基準20pp に対して0.3pp届かず、事前宣言どおり「クリアせず」として扱います（基準の事後的な緩和は行いません）。今後の累積でどちらに動くかを追い続けます。</p>
 
     <!-- =============================== -->
     <h2 id="promotion">⑦ 昇格ストライク記録と今日の折り返し</h2>
@@ -633,7 +633,7 @@ window.addEventListener('resize',mark);
       本日の折り返しにより、次回の「2連続通過チャレンジ」に持ち越しとなります。
     </div>
 
-    <p>なお、RCI下限は−0.007と0付近を行き来している状態です。これは「明確に期待値プラスとは言いにくい・しかし明確にマイナスでもない」という境界域を意味します。<strong>クラスター補正が厳しく掛かることで、実態よりも保守的なCIになっている</strong>可能性もあります（実際の4H足サブセットはRCI全域プラス）。</p>
+    <p>なお、RCI下限は−0.007と0付近を行き来している状態です。これは「明確に期待値プラスとは言いにくい・しかし明確にマイナスでもない」という境界域を意味します。<strong>クラスター補正により、全足合計のCIは保守的に算出されている</strong>面もあります（4H足サブセットではRCIが全域プラス）。いずれの解釈も現時点では確定しておらず、判断は今後のデータ蓄積を待ちます。</p>
 
     <!-- =============================== -->
     <h2 id="tracker">⑧ 📡 前向きトラッカー定点観測</h2>
