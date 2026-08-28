@@ -179,4 +179,5 @@ SYNC_FILES = [
     "guide-trade-journal.html",
     "guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html",
     "guide-signal-lab-082.html",
+    "guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html",
 ]

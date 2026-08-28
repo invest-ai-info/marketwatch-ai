@@ -5303,6 +5303,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-28", "line": '・<b>2026-08-28</b>: 📰 解説「<a href="guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html" style="color:#0969da"><b>東京CPI8月コアコア2%到達・BOJ9月利上げ確率80%台</b></a>」公開'},
         {"date": "2026-08-28", "line": '・<b>2026-08-28</b>: 🧪 解説「<a href="guide-signal-lab-082.html" style="color:#0969da"><b>#082 RSI逆張り買い 4H vs 1H 時間足二極化（FWD N=250）</b></a>」公開'},
         {"date": "2026-08-27", "line": '・<b>2026-08-27</b>: 📰 解説「<a href="guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html" style="color:#0969da"><b>エヌビディアQ2決算確報：6.2B・FY2028成長率70%予告</b></a>」公開'},
         {"date": "2026-08-27", "line": '・<b>2026-08-27</b>: 🧠 解説「<a href="guide-trade-journal.html" style="color:#0969da"><b>記録をつけると、なぜ判断が変わるのか</b></a>」公開'},
