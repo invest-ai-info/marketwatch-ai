@@ -1,3 +1,28 @@
+## 2026-08-29 | 🆕 下書き生成 | bid-ask-spread | autodraft-article
+
+- **基準日**: 2026-08-29（JST）
+- **topic**: #49 基礎知識 / bid-ask-spread
+- **仮タイトル**: 手数料0円でも、売買のたびに引かれているもの
+- **生成ファイル**: `drafts/draft-bid-ask-spread.html`
+- **参照出典**:
+  - https://crexgroup.com/ja/fx/basics/fx-bid-ask-meaning-spread/ （FXのBid/Askとスプレッドの基礎）
+  - https://www.threetrader.com/jp/blog/bid-ask-spread （ビッド・アスク・スプレッドの仕組みと特徴）
+  - https://www.gaitame.com/beginner/fx/spread.html （FXのスプレッド解説・外為どっとコム）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄・証券会社・FX業者の推奨なし
+  - ✅ 断定・利益保証なし（絶対・必ず・100%・保証・儲かる を使わず）
+  - ✅ kinsho-v1 免責あり（冒頭バナー＋本文末 p.disclaimer）
+  - ✅ 数値はすべて「架空の値」「イメージ」と明記・出典妥当
+  - ✅ 具体的なスプレッド幅・業者比較なし（AUTODRAFT_GUIDE の注意事項遵守）
+  - ✅ noindex,nofollow 入り
+- **SVG**: 3点作成（Bid/Ask板のイメージ図・買った瞬間の含み損概念図・スプレッドが広がる条件比較棒グラフ）
+- **TODO（人間の残作業）**:
+  - SVGの実機ライト/ダーク表示確認（背景色・文字色の切り替えを目視確認）
+  - タイトル・h1 の微調整（公開前に人間が確認）
+  - 公開は毎朝08:40の autodraft-publish が check_guide_draft.py → Opus コンプラ → 品質ゲートを通過後に自動実行
+
+---
+
 ## 2026-08-28 🚩 要人間レビュー | shareholder-benefits | autopublish
 
 - **判定**: 決定論🟢 → Opus🔴要協議（事実誤認2件）→ **公開せずエスカレ**
