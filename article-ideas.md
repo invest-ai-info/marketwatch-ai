@@ -1,138 +1,131 @@
-# 💡 記事ネタ候補（基準日 2026-08-28 JST）
+# 💡 記事ネタ候補（基準日 2026-08-29 JST）
 
-> **編集用内部メモ** — 公開不可。サイト掲載時は CLAUDE.md の8ステップ＋compliance-reviewer 監査が必須。
-
----
-
-## 📰 当日トレンド要約（2026-08-28）
-
-- **Jackson Hole 経済シンポジウム（8/27〜29）が佳境**。FRBウォーシュ議長が8/29に初の本格講演を控え、インフレ3.4%・景気減速の狭間で「9月利上げ再開 vs 据え置き」の行方が注目される。日米の金融政策が同時進行で交差する稀な局面。
-- **日銀ヒミノ副総裁が8/27に「9月利上げの扉を開放」**。予測市場で9月利上げ確率が84%に急上昇（数週間前は21%）。輸出株・銀行株・住宅ローンへの波及が個人投資家の最大関心事に。
-- **NVIDIAが決算翌日（8/27）に時間外+6%超**。Q2売上高は約$920億で市場予想を上回り、日本の半導体・AI関連株（アドバンテスト・キオクシアなど）への「波及物色」が活発化している。
+> 生成: 2026-08-29 07:39 JST  
+> 担当: article-idea-scout（スケジュール自動実行）
 
 ---
 
-## 🗂️ 記事ネタ候補
+## 📰 当日トレンド要約（2026-08-28〜29）
+
+エヌビディアが8月26日引け後に発表した Q2 FY2027 決算が市場の注目を集めている（売上 $96.2B・前年比 +106%、時間外+4%）。同時期にジャクソンホール会議（8/27〜29）でウォーシュ FRB 議長が就任後初の公式講演を行い、「再利上げ是非」が焦点となった。為替は 158 円台攻防・日経平均は終値 66,405 円（8/29）。金（ゴールド）は ETF 経由の資金流入が続き高水準維持、円安との複合効果で円建て価格は歴史的水準に迫っている。
 
 ---
 
-### 1. こどもNISA（2027年1月開始）徹底解説：年60万円・生涯600万円を子の将来に活かす方法
+## 📋 記事ネタ候補一覧
+
+---
+
+### ① エヌビディア Q2 FY2027 決算解説 ― AI 需要「供給が限界」の意味を読む
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | こどもNISA2027年開始完全ガイド：年60万円の非課税枠を子ども0歳から使い倒す方法 |
-| **30字概要** | 0〜17歳が対象。年間60万円・生涯600万円まで非課税。18歳で自動移行。ジュニアNISA廃止後の穴を埋める新制度を丁寧に解説 |
-| **なぜ今** | 2027年1月開始まで5か月。口座設定・証券会社選びは今から検討が必要。新NISAの上期流入12.5兆円達成で個人の制度関心が最高潮の今が最適タイミング |
-| **読者の検索意図** | 「こどもNISA いつから」「こどもNISA ジュニアNISA 違い」「子供 投資 2027」 |
-| **カテゴリ** | 投資指標解説 / 制度解説 |
+| **仮タイトル** | エヌビディア決算2026年8月速報 ― 売上2倍超・AI需要はなぜ「供給不足」になったのか |
+| **概要（30字）** | NVIDIAのQ2決算内容と市場への示唆をわかりやすく解説 |
+| **なぜ今** | 8/26米引け後発表・翌日株価時間外+4%。ニュース鮮度が高い |
+| **検索意図** | 「エヌビディア 決算 2026」「NVDA 株価 見通し」 |
+| **想定カテゴリ** | 今日のニュース／個別銘柄解説 |
+| **信頼度** | HIGH（複数金融メディア報道・発表資料あり） |
+| **難易度** | 小〜中 |
+| **根拠ソース** | マネクリ（monex）2026-08-26 https://media.monex.co.jp/articles/-/30027 ／ 外為どっとコム 2026-08-26 https://www.gaitame.com/media/entry/2026/08/26/120000 ／ 株帳 2026-08-26 https://kabucho.com/reports/nvda-q2-fy2027-2026-08-26-earnings-preview |
+
+---
+
+### ② ジャクソンホール会議2026 入門 ― ウォーシュ議長初講演と「再利上げ」シナリオを整理する
+
+| 項目 | 内容 |
+|---|---|
+| **仮タイトル** | ジャクソンホール会議2026とは？ウォーシュ議長の初講演が株式・為替に与える影響 |
+| **概要（30字）** | FRB年次シンポジウムの役割と今年の焦点を初心者向けに解説 |
+| **なぜ今** | 8/27〜29 開催中。市場の注目イベントを解説する最旬タイミング |
+| **検索意図** | 「ジャクソンホール 2026 わかりやすく」「FRB 再利上げ 影響」 |
+| **想定カテゴリ** | マクロ経済・投資指標解説 |
+| **信頼度** | HIGH（複数メディア・公式日程確認済み） |
 | **難易度** | 小 |
-| **信頼度** | HIGH（日経新聞 / マネックス証券 Monex / 七十七銀行 複数報道） |
-| **根拠ソース** | 日経新聞（2025-02-26）https://www.nikkei.com/article/DGXZQOUB25BIN0V21C25A2000000/ ／ マネックス解説 https://info.monex.co.jp/nisa/guide/kodomo-nisa.html ／ 七十七銀行コラム https://www.77bank.co.jp/financial-column/article93.html |
+| **根拠ソース** | マネースクエア 2026-08 https://www.m2j.co.jp/market/report/110790/top ／ ファンダメンタルズFX 2026-07 https://www.fundamentals.top/2026/07/jackson-hole-2026-guide.html ／ capulabo 2026-08 https://capulabo.com/jackson-hole-2026/ |
 
 ---
 
-### 2. 日銀9月利上げ確率84%：副総裁発言を受けた「円高・日本株・住宅ローン」への3つの影響
+### ③ 新NISA「3年目の崖」― 2026年こそ運用方針を見直すべき3つの理由
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | 日銀9月利上げ確率84%に急騰：ヒミノ副総裁発言後に個人投資家が確認すべき3つのリスク |
-| **30字概要** | 8/27、日銀副総裁が9月利上げへの明確なけん制を避けた。円高・輸出株下落・変動金利上昇の三重リスクを整理 |
-| **なぜ今** | Japan Times（8/27）がヒミノ副総裁の発言を速報。予測市場84%は過去数週間で21%→84%と急変。9/17〜18の日銀会合まで3週間を切った |
-| **読者の検索意図** | 「日銀 利上げ 9月 いつ」「変動金利 上がる 2026」「ドル円 160円 どうなる」 |
-| **カテゴリ** | マクロ経済 / 投資指標解説 |
+| **仮タイトル** | 新NISA3年目の崖とは？「オルカン一択」でいいのか、2026年の投資戦略見直しポイント |
+| **概要（30字）** | NISA開始から3年目の節目に積立方針を見直すための考え方 |
+| **なぜ今** | 2024年NISA開始から丸2年以上。最初の大きな方針見直し需要 |
+| **検索意図** | 「新NISA 3年目 見直し」「NISA 戦略 2026」「オルカン 乗り換え」 |
+| **想定カテゴリ** | NISA・投資戦略 |
+| **信頼度** | HIGH（会社四季報オンライン・多数のメディア報道） |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Japan Times / Bloomberg / FXStreet / Reuters 複数報道） |
-| **根拠ソース** | Japan Times（2026-08-27）https://www.japantimes.co.jp/business/2026/08/27/boj-deputy-chief-september-rate-increase/ ／ Bloomberg（2026-08-23）https://www.bloomberg.com/news/articles/2026-08-23/boj-set-to-offer-clues-as-markets-bet-heavily-on-september-hike ／ FXStreet（2026-08-14）https://www.fxstreet.com/news/boj-set-to-hike-rates-as-soon-as-september-202608140605 |
+| **根拠ソース** | Yahoo!ニュース（会社四季報）https://news.yahoo.co.jp/articles/5def99921cef4deaa7d66963c33520a840c9e9ba ／ マネーセンス https://money-sense.net/15296/ ／ ダイヤモンドZAi https://diamond.jp/zai/articles/-/1060967 |
 
 ---
 
-### 3. NVIDIA決算+6%翌日：日本の「AI隣接株」光通信・冷却・電力への波及を読む
+### ④ 金（ゴールド）高騰を支える構造要因 ― なぜドルから金へ資金が動くのか
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | NVIDIA決算後+6%が日本株に波及：光通信・冷却システム・電力インフラ関連の注目ポイント |
-| **30字概要** | AI需要は半導体から周辺インフラへ拡大中。アドバンテスト・キオクシアなど国内関連銘柄の動向を中立解説 |
-| **なぜ今** | 8/26決算発表→翌8/27時間外+6%急騰。日本市場が「受け取り局面」にあり投資家の検索が急増している |
-| **読者の検索意図** | 「NVIDIA 日本株 恩恵」「AI 光通信 銘柄 2026」「データセンター 関連株 日本」 |
-| **カテゴリ** | マーケット解説 / 個別銘柄解説 |
+| **仮タイトル** | 金価格2026年高騰の理由5選 ― 米財政リスク・中銀買い・円安トリプル効果をわかりやすく解説 |
+| **概要（30字）** | 金価格上昇の背景にある構造的要因を個人投資家向けに解説 |
+| **なぜ今** | 日経新聞8/26「金ETFへ資金流入」報道・円安加算で円建て価格が歴史的高水準 |
+| **検索意図** | 「金 高騰 理由 2026」「ゴールド 投資 円安」「金ETF 買い時」 |
+| **想定カテゴリ** | コモディティ解説 |
+| **信頼度** | HIGH（日本経済新聞8/26・複数専門メディア） |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Kiplinger / 247WallSt / Investing.com 複数報道） |
-| **根拠ソース** | Kiplinger（2026-08-26）https://www.kiplinger.com/investing/live/nvidia-earnings-live-updates-and-commentary-august-2026 ／ 247WallSt（2026-08-28）https://247wallst.com/cards/tokyo-opens-near-68-714-with-the-bank-of-japan-reportedly-ey-n225-market-bell-01m06j6c8spzwt21na9y5pkm6d ／ Investing.com https://m.investing.com/news/stock-market-news/japans-stock-market-is-facing-these-3-hurdles-in-august-4829459 |
+| **根拠ソース** | 日本経済新聞 2026-08-26 https://www.nikkei.com/article/DGXZQOUB262ND0W6A820C2000000/ ／ お宝屋 2026-08 https://www.otakaraya.jp/contents/gold-platinum/gold/gold-souba/kinsouba-sekaijousei-doukou-kaisetsu/ ／ OANDA 解説 https://www.oanda.jp/lab-education/beginners/aboutcfd/gold_price_forecast/ |
 
 ---
 
-### 4. Jackson Hole 2026：ウォーシュFRB議長の初講演が示す「9月以降の金利シナリオ」
+### ⑤ 日経平均高配当株50インデックス入門 ― NISAで選ぶ高配当戦略の基本
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | ジャクソンホール2026年：ウォーシュ議長発言で変わる9月FOMCの行方と日本人投資家への影響 |
-| **30字概要** | 8/29にFRB議長初の本格演説。インフレ3.4%・景気不透明の中で「利上げ再開 vs 据え置き」が決まる。市場が30%の利上げ確率を織り込む理由を解説 |
-| **なぜ今** | 8/27〜29がシンポジウム本番。明日(8/29)の講演が来週月曜の相場を左右する可能性が高い |
-| **読者の検索意図** | 「ジャクソンホール 2026 結果」「FRB 金利 9月 どうなる」「ウォーシュ 発言 市場影響」 |
-| **カテゴリ** | マクロ経済 / マーケット解説 |
-| **難易度** | 中 |
-| **信頼度** | HIGH（ATFX / TechTimes / TraderFaculty / MaverickTrading 複数報道） |
-| **根拠ソース** | ATFX（2026-08）https://www.atfx.com/en/analysis/financial-events/jackson-hole-symposium-2026-what-you-need-to-know ／ TechTimes（2026-08-21）https://www.techtimes.com/articles/325228/20260821/jackson-hole-2026-what-watch-when-warsh-steps-podium-friday.htm ／ MaverickTrading（2026-08-27）https://www.mavericktrading.com/free-trading-videos/articles/jackson-hole-2026-day-one-rate-policy-signals |
-
----
-
-### 5. 金（ゴールド）年末$6,000シナリオ：JPモルガン予測の根拠と個人投資家の積み立て戦略
-
-| 項目 | 内容 |
-|---|---|
-| **仮タイトル（SEO）** | 金価格は年末に1オンス6,000ドル到達か：JPモルガン予測の背景と個人がゴールドETFで向き合う方法 |
-| **30字概要** | 1月最高値$5,595から調整中も$4,000台をキープ。中銀爆買い・地政学・ドル軟化が下支え。JPモルガンが年末$6,000、2027年$6,300を予測 |
-| **なぜ今** | 8月だけで10%超の急騰。既存のguide-commodity-basics.htmlではゴールド専門に踏み込んでいない。シナリオ入門記事として差別化可能 |
-| **読者の検索意図** | 「金 価格 予測 2026 下半期」「ゴールドETF 積立 方法」「金 投資 今後 見通し」 |
-| **カテゴリ** | コモディティ / マーケット戦略 |
+| **仮タイトル** | 日経平均高配当株50インデックスとは？NISAで「配当＋値上がり」を狙う戦略を解説 |
+| **概要（30字）** | 注目度上昇中の高配当インデックスの仕組みと活用法を解説 |
+| **なぜ今** | 2026年NISAの「オルカン一択」見直し機運・高配当ファンドへの関心増大 |
+| **検索意図** | 「日経高配当50 NISA」「高配当インデックス 比較」「配当再投資」 |
+| **想定カテゴリ** | 投資指標解説・NISA活用 |
+| **信頼度** | MID（複数の投資メディアで言及。ダイヤモンドZAi・楽天証券等） |
 | **難易度** | 小 |
-| **信頼度** | HIGH（J.P.Morgan / Yahoo Finance / Scottsdale Bullion 複数報道） |
-| **根拠ソース** | JPMorgan Global Research https://www.jpmorgan.com/insights/global-research/commodities/gold-prices ／ Yahoo Finance https://finance.yahoo.com/personal-finance/investing/article/gold-forecast-and-tracker-where-will-prices-land-in-2026-130000340.html ／ eToro（2026-08）https://www.etoro.com/news-and-analysis/market-insights/gold-gains-more-than-10-in-a-month-is-it-heading-for-new-highs/ |
+| **根拠ソース** | ダイヤモンドZAi 2026 https://diamond.jp/zai/articles/-/1060967 ／ 楽天証券 https://www.rakuten-sec.co.jp/web/special/highdividend_fund/ ／ tonke-seikatsu 2026 https://tonke-seikatsu.com/nisa-japan-dividend-fund/ |
 
 ---
 
-### 6. 米CPI9月11日発表前に抑えておきたい：インフレ3.4%時代のポートフォリオ再点検
+### ⑥ 米金利「再利上げ」シナリオ ― 高止まりから引き締め再開まで個人投資家は何を備えるか
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | 米CPI9月11日発表直前：インフレ3.4%時代に個人投資家がポートフォリオを見直すための5ステップ |
-| **30字概要** | 9/11CPI発表→9/17FOMC利下げ・利上げ判断という2週間カレンダー。今のうちにリスク配分を整理する実践ガイド |
-| **なぜ今** | ジャクソンホール直後の最適タイミング。FOMCの利上げ確率30%・利下げ確率も残る二方向リスクを前に「守り方」を知りたい読者が急増中 |
-| **読者の検索意図** | 「CPI 9月 2026 発表日」「インフレ 株 どうなる」「ポートフォリオ 見直し 金利」 |
-| **カテゴリ** | マーケット戦略 / 投資指標解説 |
+| **仮タイトル** | FRB再利上げシナリオとは？「利下げ待ち」から「利上げ警戒」に転換した市場を読む |
+| **概要（30字）** | FRBの政策転換リスクが株式・債券・FXに与える影響を解説 |
+| **なぜ今** | FF金利3.5〜3.75%の高止まり・ジャクソンホールで追加引き締め議論が浮上 |
+| **検索意図** | 「FRB 再利上げ 影響」「米金利 株価 関係」「高金利 投資 対策」 |
+| **想定カテゴリ** | マクロ経済・投資戦略 |
+| **信頼度** | MID（マネクリ・フランクリン・テンプルトン等。直近の政策変更はまだ未確定） |
 | **難易度** | 中 |
-| **信頼度** | HIGH（Yahoo Finance / Philly Fed / MUFG Research 複数報道） |
-| **根拠ソース** | Yahoo Finance（2026-08-27）https://finance.yahoo.com/economy/policy/articles/federal-just-released-august-inflation-232824554.html ／ Philadelphia Fed https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/spf-q2-2026 ／ MUFG Research（2026-08）https://www.mufgresearch.com/rates/august-2026-fed-rates-call-update/ |
+| **根拠ソース** | マネクリ（マネックス）2026-08 https://media.monex.co.jp/articles/amp/29881 ／ フランクリン・テンプルトン 2026 https://www.franklintempleton.co.jp/market_info/us/letter/30075.html |
 
 ---
 
-### 7. ビットコインETF流入が再加速：CLARITY Act後の暗号資産市場に何が変わるのか
+### ⑦ ドル円158円台の攻防 ― ジャクソンホール後の円相場シナリオを2つに整理する
 
 | 項目 | 内容 |
 |---|---|
-| **仮タイトル（SEO）** | ビットコインETFへの機関投資家流入が再加速：CLARITY Act通過後の2026年下半期、暗号資産投資の変化点 |
-| **30字概要** | 8/18に$189Mの純流入。CLARITYアクトが規制枠組みを整備中。「暗号資産=投機」から「機関資産クラス」へのシフトを解説 |
-| **なぜ今** | 8/13〜19に連続流入が確認され、ボラティリティが直近最低水準。既存のguide-clarity-act.htmlはアクト解説中心。今回は「通過後の市場実態」という続編角度 |
-| **読者の検索意図** | 「ビットコイン ETF 今後 2026」「暗号資産 規制 どうなる」「BTC 機関投資家 動向」 |
-| **カテゴリ** | マーケット解説 / 暗号資産 |
+| **仮タイトル** | ドル円158円台の意味と今後の見通し ― 円高シナリオ vs 円安継続シナリオを比較 |
+| **概要（30字）** | ジャクソンホール後のドル円相場シナリオを初心者向けに整理 |
+| **なぜ今** | 8/24時点158円台・当局介入警戒ライン意識・ジャクソンホール前後で方向感が定まる |
+| **検索意図** | 「ドル円 今後 見通し」「円高 なぜ」「介入 ライン 2026」 |
+| **想定カテゴリ** | FX・マーケット解説 |
+| **信頼度** | HIGH（外為どっとコム8/24・野村証券・明治安田AM等の複数媒体） |
 | **難易度** | 中 |
-| **信頼度** | HIGH（CoinCall / Cryptonomist / Intellectia 複数報道） |
-| **根拠ソース** | CoinCall（2026-08-19）https://support.coincall.com/hc/en-us/articles/61315330793369-August-19-2026-ETF-Demand-Rebounds-Bitcoin-Volatility-Hits-a-Cycle-Low-U-S-Crypto-Rules-Advance ／ Cryptonomist（2026-08-19）https://en.cryptonomist.ch/2026/08/19/bitcoin-etf-inflows-2026/ ／ Intellectia https://intellectia.ai/blog/bitcoin-etf-inflows-analysis-august-2026 |
+| **根拠ソース** | 外為どっとコム 2026-08-24 https://www.gaitame.com/media/entry/2026/08/24/120722 ／ 野村証券 2026 https://www.nomura.co.jp/wealthstyle/article/0546/ ／ エックスニュース 2026-08 https://www.pondaichi-act2.tech/usdjpy-outlook-august-2026/ |
 
 ---
 
-## 📋 本日の優先度まとめ
+## 🏆 推しネタ（上位3件）
 
-| 優先 | タイトル（略） | 理由 |
-|---|---|---|
-| ⭐⭐⭐ | **こどもNISA2027解説** | 既存記事なし・制度準備期として最高の鮮度 |
-| ⭐⭐⭐ | **Jackson Hole ウォーシュ講演予習** | 明日8/29に講演。今日公開が理想的 |
-| ⭐⭐ | **日銀9月利上げ 副総裁発言後の整理** | 8/27最新情報。昨日のネタからアップデート |
-| ⭐⭐ | **米CPI9/11前のポートフォリオ再点検** | カレンダー活用型で賞味期限2週間 |
-| ⭐ | NVIDIA→日本株AI隣接解説 | 個別銘柄色が強く切り口を工夫必要 |
-| ⭐ | ゴールド$6,000シナリオ | 昨日の金ネタから"シナリオ読解"角度で差別化 |
-| ⭐ | BTC ETF CLARITY Act後の展望 | guide-clarity-act.html の続編として位置付け可 |
+1. **① NVIDIA決算解説** — 8/26発表直後でニュース鮮度が最高。AI投資への関心が高い個人投資家に刺さりやすく、検索流入も見込める。ニュース系記事として当日〜翌日中の公開が理想
+2. **② ジャクソンホール入門** — 8/27〜29 開催中かつ「ウォーシュ議長初講演」という固有のフック。FX投資家・長期投資家の双方に需要あり
+3. **④ ゴールド高騰の構造要因** — 日経新聞でも報じた「ETFへの資金流入」が日本人投資家に響く。「円安＋金高騰＝円建て最高値」の切り口は既存記事と差別化できる
 
 ---
 
-> ※これは編集用メモ。公開時は CLAUDE.md の8ステップ＋compliance-reviewer監査が必須。
+※これは編集用メモです。公開時は CLAUDE.md の8ステップ＋compliance-reviewer監査が必須。断定表現・特定銘柄の売買推奨は避けること。
