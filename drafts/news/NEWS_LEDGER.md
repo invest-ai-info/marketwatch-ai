@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-28
+- 判定: ✅ 公開済み
+- 選定トピック: 東京都区部CPI（8月）コアコア2.0%到達、BOJ9月利上げ確率80%台へ──ドル円・日本株への影響を3視点で整理（カテゴリ: 日銀・金融政策・為替・日本株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年8月28日（金）朝に発表された東京都区部8月CPI。コアCPI1.8%（市場予想1.7%超え）、コアコアCPI2.0%（日銀目標到達）。BOJ9月17-18日会合での利上げ（1.00%→1.25%）確率が80%台（Polymarket84%）に急伸。円高・ドル円159.30円前後。本日（8/28）10時ET予定のウォーシュ講演・米PCE（3.7%/3.3%）とのクロス文脈も整理。直近5本の記事（NVIDIA/Moderna/Druckenmiller/JH-preview/NVIDIA-preview）との重複なし。日本人投資家に最も身近な確定済みニュースとして選定。
+- 出典（確認済み・7系統）:
+  - InvestingLive「Tokyo inflation data strengthens case for September BOJ hike」（2026-08-28）
+  - InvestingLive「Japan August 2026 Tokyo headline CPI 1.9%」（2026-08-28）
+  - FXStreet「Japanese Yen strengthens as Tokyo core CPI inflation bolsters BoJ rate hike chance」（2026-08-28）
+  - ActionForex「Tokyo Core-Core CPI Hits 2% as September BoJ Hike Case Strengthens」（2026-08-28）
+  - EconoTimes「Tokyo Inflation Rises in August as BOJ Rate Hike Bets Grow」（2026-08-28）
+  - ExchangeRates.org.uk「USD/JPY Weekly Forecast: September BoJ Hike Bets Rise As Yen Stalls Near 159」（2026-08-23）
+  - Yahoo Finance「Japan's Inflation Print Just Made a September BOJ Hike Harder to Avoid」（2026-08-28近辺）
+  - CNBC「BOJ holds rates at 1%, warns of core inflation exceeding 2% target」（2026-07-31）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①「9月会合前に発表される全国CPI」→「9月会合前後に発表が見込まれる全国CPI」②「9月会合直前」→「9月会合前後の発表見込み」③「本日10時ET・日本時間29日深夜」→「米東部時間8月28日午前10時」（時刻換算の誤り削除）。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典7系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典7系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html
+- commit: b51977c（main へ push 済み）
+
+---
+
 ## 2026-08-27
 - 判定: ✅ 公開済み
 - 選定トピック: エヌビディアQ2 FY2027決算確報：売上高$96.2B（+106%）・FY2028成長率70%予告でAI需要神話は続くか（カテゴリ: AI半導体・米国株・日本株・個別銘柄）
