@@ -1,3 +1,14 @@
+## 2026-08-29 | 🆕 下書き生成 | signal-lab-083 | signal-lab-daily
+
+- **基準日**: 2026-08-29（JST）
+- **テーマ**: trend=上昇×reversalL（逆張り買い）降格確定——BB主体77%が引き下げ、RSIは健在（前向きN=257・2回連続判定）
+- **生成ファイル**: `drafts/draft-signal-lab-083.html`
+- **labnotes**: `drafts/labnotes/lab-083-analysis.md` / `drafts/labnotes/lab-083-claims.json`
+- **ゲート**: signal_lab_verify.py 未実行（下書き生成直後）
+- **ステータス**: 🔄 ゲート待ち
+
+---
+
 ## 2026-08-29 | 🆕 下書き生成 | bid-ask-spread | autodraft-article
 
 - **基準日**: 2026-08-29（JST）
