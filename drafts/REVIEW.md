@@ -4,8 +4,8 @@
 - **テーマ**: trend=上昇×reversalL（逆張り買い）降格確定——BB主体77%が引き下げ、RSIは健在（前向きN=257・2回連続判定）
 - **生成ファイル**: `drafts/draft-signal-lab-083.html`
 - **labnotes**: `drafts/labnotes/lab-083-analysis.md` / `drafts/labnotes/lab-083-claims.json`
-- **ゲート**: signal_lab_verify.py 未実行（下書き生成直後）
-- **ステータス**: 🔄 ゲート待ち
+- **ゲート**: signal_lab_verify EXIT=0（13/13緑）→ Opusコンプラ🟢白（kinsho-v1属性自己修正・数値不変）→ 独立Opus🟢白 → check_site_consistency EXIT=0
+- **ステータス**: ✅公開（2026-08-29）
 
 ---
 
