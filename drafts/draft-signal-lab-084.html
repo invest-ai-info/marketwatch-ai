@@ -149,7 +149,7 @@ footer { border-top:1px solid var(--border); padding:20px 16px; font-size:0.78re
   <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
   ① 検証対象：「価格がMA25・MA75の上にある状態（上昇MA配置）でのロングシグナル」<br>
   ② <strong>IS（N=480）</strong>：勝率<strong>36.5%</strong>（175/480）、E(R)＝<strong>−0.151</strong>、RCI<strong>全域マイナス</strong>——過去データで有効性なし<br>
-  ③ <strong>FWD（N=582）</strong>：勝率<strong>47.4%</strong>（276/582）、E(R)＝<strong>+0.105</strong>、ナイーブRCI[+0.010,+0.200]、クラスター補正後RCI[−0.037,+0.248]→<strong>CI下限マイナス</strong><br>
+  ③ <strong>FWD（本記事の独立検証 N=582）</strong>：勝率<strong>47.4%</strong>（276/582）、E(R)＝<strong>+0.105</strong>、ナイーブRCI[+0.010,+0.200]／降格判定に用いる<strong>トラッカー（標準18銘柄 N=570）</strong>のクラスター補正後RCI[−0.037,+0.248]→<strong>CI下限マイナス</strong><br>
   ④ 降格ルール発動：CI_lo &lt; 0 が2回連続 → 🟡蓄積中へ降格確定<br>
   ⑤ 逆説：「MAの上＝ロング有利」は過去データでは不成立。下降配置×ロング（N=1340）のほうがRCI全域プラス
 </div>
@@ -173,7 +173,7 @@ footer { border-top:1px solid var(--border); padding:20px 16px; font-size:0.78re
 
 <div class="verdict-box demoted">
   <strong>🟡 判定：降格確定</strong><br>
-  FWD N=570 / CI_lo（クラスター補正）= −0.037 &lt; 0<br>
+  トラッカー（標準18銘柄）FWD N=570 / CI_lo（クラスター補正）= −0.037 &lt; 0<br>
   → 昇格後2回連続でCI_lo &lt; 0 → 降格ルール発動 → 🟡蓄積中へ移行<br>
   再昇格条件：CI_lo &gt; 0 が2回連続
 </div>
@@ -181,7 +181,7 @@ footer { border-top:1px solid var(--border); padding:20px 16px; font-size:0.78re
 <h2 id="s2">§2 IS期間（〜2026-07-19）：N=480で大幅マイナス</h2>
 
 <p>
-登録前の全閉鎖シグナル（標準18銘柄、上昇配置×ロング）は <strong>N=480件</strong>。
+登録前の全閉鎖シグナル（上昇配置×ロング）は <strong>N=480件</strong>。IS期間は拡張ユニバース導入前のため、全銘柄ベースと標準18銘柄ベースが一致する。
 結果は勝率 <strong>36.5%</strong>（175/480）、E(R)＝<span class="neg"><strong>−0.151</strong></span>、RCI <span class="neg"><strong>[−0.251, −0.050]</strong></span>。
 </p>
 
@@ -228,7 +228,7 @@ RCIが全域マイナスという結果は顕著だ。「MAの上でロングを
   <text x="170" y="238" class="s-label-c" font-size="10">IS期間</text>
   <text x="170" y="250" class="s-label-c" font-size="10">N=480</text>
   <text x="260" y="238" class="s-label-c" font-size="10">FWD期間</text>
-  <text x="260" y="250" class="s-label-c" font-size="10">N=570</text>
+  <text x="260" y="250" class="s-label-c" font-size="10">N=582</text>
   <text x="370" y="238" class="s-label-c" font-size="10">下降配置×L</text>
   <text x="370" y="250" class="s-label-c" font-size="10">N=1340</text>
   <text x="460" y="238" class="s-label-c" font-size="10">上昇配置×S</text>
@@ -265,26 +265,27 @@ IS期間では metal・other_fx・btc の3グループが RCI 全域マイナス
 原油（oil）は IS 期間で好成績だが N=13 と少数なため、信頼性は限定的だ。
 </p>
 
-<h2 id="s3">§3 FWD期間（2026-07-20〜）：N=570で表面上プラス、補正で降格</h2>
+<h2 id="s3">§3 FWD期間（2026-07-20〜）：N=582で表面上プラス、補正後（トラッカーN=570）で降格</h2>
 
 <p>
 前向き検証期間の N=582 では、勝率が <strong>47.4%</strong>（276/582）、E(R)＝<strong>+0.105</strong> に改善した。
 ナイーブな RCI（時系列クラスタリングを無視した単純計算）は <strong>[+0.010, +0.200]</strong> で、CI下限がわずかにプラスだ。
 しかし、シグナルの自己相関（同一銘柄での連続発火）を考慮したクラスター補正後は CI下限がマイナスに転じた。
+</p>
 
 <p class="note-box">
 📐 <strong>ユニバースと補正値について</strong>：本記事の独立検証（N=582）はシステムが発火した全銘柄を対象としています。
 前向きトラッカーは標準18銘柄のみを追跡対象としており、同一フィルタで N=570 を計上しています（差分12件は拡張銘柄）。
-降格判定の根拠となるクラスター補正後 RCI <strong>[−0.037, +0.248]</strong> はトラッカーの N=570 ベースで算出された値です。
-本記事の N=582 ベースのナイーブ RCI[+0.010,+0.200] においても、クラスター補正を適用すれば CI 下限はマイナスとなり、降格判定は変わりません。
-</p>
+降格判定の根拠となるクラスター補正後 RCI <strong>[−0.037, +0.248]</strong> は、<strong>トラッカーの N=570 ベース</strong>で算出された値です。
+本記事の N=582 ベースについては、ナイーブ RCI の下限が +0.010 と僅少であるため同様の補正でゼロを割り込むと見込まれますが、
+<strong>N=582 ベースの補正値そのものは本記事では算出していません</strong>。降格判定はトラッカー（N=570）の補正値に基づきます。
 </p>
 
 <div class="verdict-box demoted">
   <strong>数値サマリー（FWD期間）</strong><br>
-  本記事独立検証 N=582 / k=276 / 勝率 47.4% / ナイーブ RCI: <span class="pos">[+0.010, +0.200]</span><br>
-  トラッカー（標準18銘柄 N=570）クラスター補正 RCI: <span class="neg">[−0.037, +0.248]</span>（CI_lo &lt; 0 → <strong>降格判定</strong>）<br>
-  両ユニバースともに CI_lo &lt; 0 → 降格ルール発動
+  本記事独立検証 N=582 / k=276 / 勝率 47.4% / ナイーブ RCI: <span class="pos">[+0.010, +0.200]</span>（補正前）<br>
+  トラッカー（標準18銘柄 N=570）クラスター補正 RCI: <span class="neg">[−0.037, +0.248]</span>（CI_lo &lt; 0）<br>
+  → <strong>降格ルールの発動根拠はトラッカー（N=570）の補正後 CI_lo &lt; 0</strong>。本記事の N=582 はナイーブ下限が +0.010 と僅少で、方向性は整合
 </div>
 
 <p>
@@ -356,6 +357,8 @@ IS期間では metal・other_fx・btc の3グループが RCI 全域マイナス
 
 <h3>FWD期間グループ別詳細</h3>
 
+<p class="meta-line">母集団＝標準18銘柄（N=570・k=270）。合計が本記事の独立検証 N=582 と一致しないのは、拡張ユニバース（PL=F・HG=F・ETH-USD 等）の12件が下記6グループに含まれないため。</p>
+
 <table>
 <thead><tr><th>グループ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI（ナイーブ）</th><th>方向性</th></tr></thead>
 <tbody>
@@ -382,6 +385,8 @@ other_fx（41.3%）が最も低く、FWD全体の CI_lo をマイナスに引っ
 
 <h2 id="s5">§5 月次推移：8月の改善は遅すぎた</h2>
 
+<p class="meta-line">母集団＝標準18銘柄（トラッカーと同一の N=570・k=270）。</p>
+
 <table>
 <thead><tr><th>月</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
 <tbody>
@@ -407,7 +412,7 @@ other_fx（41.3%）が最も低く、FWD全体の CI_lo をマイナスに引っ
 <thead><tr><th>フィルタ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
 <tbody>
 <tr><td>上昇配置×ロング（IS）</td><td>175/480</td><td class="neg">36.5%</td><td class="neg">−0.151</td><td class="neg">[−0.251, −0.050]</td></tr>
-<tr><td>上昇配置×ロング（FWD）</td><td>276/582</td><td class="neu">47.4%</td><td class="pos">+0.105</td><td class="neu">[−0.037, +0.248]（補正後）</td></tr>
+<tr><td>上昇配置×ロング（FWD）</td><td>276/582</td><td class="neu">47.4%</td><td class="pos">+0.105</td><td class="neu">[−0.037, +0.248]（トラッカーN=570の補正後）</td></tr>
 <tr><td>上昇配置×ロング（全期間）</td><td>451/1062</td><td class="neu">42.5%</td><td class="neg">−0.011</td><td class="neu">ゼロ跨ぎ</td></tr>
 <tr><td><strong>下降配置×ロング（全期間）</strong></td><td>613/1340</td><td class="pos">45.7%</td><td class="pos">+0.066</td><td class="pos"><strong>[+0.004, +0.128]</strong></td></tr>
 <tr><td>上昇配置×ショート（全期間）</td><td>147/350</td><td class="neu">42.0%</td><td class="neg">−0.021</td><td class="neu">[−0.142, +0.099]</td></tr>
