@@ -6,16 +6,36 @@ name: Political Alerts (Live Feed)
 
 on:
   schedule:
-    # 🆕 2026-08-29: 8/27 の '13,28,43,58 * * * *'（＝1日96回の要求）は逆効果だった。実測:
-    #   - このレーン: 8/19〜8/25 は 31〜41回/日 → 8/27・8/28 は **2回/日**
-    #   - **1行も変えていない** technical-alerts-1h（'5 * * * *'）も 21回/日 → 2回/日
-    #   - リポジトリ全体の schedule 発火も 83回/日（8/26）→ 37回/日（8/27・8/28）
-    #   ＝ 要求回数を増やすと **リポジトリ単位で絞られ、無関係なレーンまで道連れになる**。
-    #   一方、1行=1日1回の cron しか持たない workflow（Update Market News の10行など）は
-    #   同じ期間も 100% 届いていた。つまり効くのは「行の書き方」ではなく **要求の総量**。
-    #   よって 96回/日 → 24回/日 に落とす。分は :00 混雑を避けて :13 のまま。
-    # GitHub Actions cron は best-effort（遅延 0-30 分あり）＝正確な時刻は期待しない設計のまま。
-    - cron: '13 * * * *'
+    # 🆕 2026-08-29(2): 発火を **米国時間に寄せて** 24回/日 → 15回/日 に減らす。
+    #   根拠（political-feed.json 100件・40日分の実測）:
+    #     - HIGH は11件＝3.6日に1件。このレーンの本体はページ表示ではなく HIGH のメール速報
+    #     - HIGH の 8/11 件が JST 22時〜翌7時に集中（トランプ/WhiteHouse/FRB＝米国の日中）
+    #     - JST 8〜18時は 100件中6件しかない＝毎時発火の昼10回はほぼ空振りだった
+    #   よって「米国時間は毎時・日本の日中は3回」に配分する。均等な6時間おきにすると
+    #   空振りの昼を残したまま肝心の速報が最大6時間遅れるので採らない。
+    # ⚠️ コンマ列（'13,28,43,58 * * * *' 等）は使わない。8/27 にそれをやって
+    #   リポジトリ全体の schedule 発火が 83回/日 → 37回/日 に落ちた（8/29 実測）。
+    #   1行=1日1回 の形は同じ期間も 100% 届いていたので、明示行で並べる。
+    # 分は :23。:00 混雑を避けつつ、news-ticker（:13）や update-market-news（:13/:27/:43/:57）と
+    #   同時刻に走らせない＝main への push 競合を減らすため。
+    #
+    # ── 米国時間（JST 21時〜翌8時）を毎時 ──
+    - cron: '23 12 * * *'   # 21:23 JST
+    - cron: '23 13 * * *'   # 22:23 JST
+    - cron: '23 14 * * *'   # 23:23 JST
+    - cron: '23 15 * * *'   # 00:23 JST
+    - cron: '23 16 * * *'   # 01:23 JST
+    - cron: '23 17 * * *'   # 02:23 JST
+    - cron: '23 18 * * *'   # 03:23 JST
+    - cron: '23 19 * * *'   # 04:23 JST
+    - cron: '23 20 * * *'   # 05:23 JST
+    - cron: '23 21 * * *'   # 06:23 JST
+    - cron: '23 22 * * *'   # 07:23 JST
+    - cron: '23 23 * * *'   # 08:23 JST
+    # ── 日本の日中（発言がほぼ無い時間帯）は3回だけ ──
+    - cron: '23 2 * * *'    # 11:23 JST
+    - cron: '23 5 * * *'    # 14:23 JST
+    - cron: '23 8 * * *'    # 17:23 JST
   workflow_dispatch:
 
 jobs:
@@ -59,6 +79,25 @@ jobs:
             echo "No new political news to commit."
           else
             git commit -m "auto: political feed update $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
-            git pull --rebase origin main || true
-            git push
+            # 🆕 2026-08-29: push リトライ（最大3回）。news-ticker.yml と同じ型。
+            # 旧: `git pull --rebase || true` のあと素の `git push` だったので、
+            #     main が競合すると **その回のデータを丸ごと落として赤くなる**（復旧は次の発火待ち）。
+            # political-feed.json / .html はこのワークフローだけが書くので -X theirs＝
+            # 再生成した側を採用してよい。
+            # ⚠️ 3回とも失敗したら明示的に落とす（黙って緑にしない＝沈黙の失敗を作らない）。
+            pushed=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then
+                echo "✅ Push success on attempt $i"
+                pushed=1
+                break
+              fi
+              echo "⚠️ Push failed (attempt $i), retrying..."
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+            if [ "$pushed" != "1" ]; then
+              echo "::error::3回試しても push できなかった（main の競合が継続している可能性）"
+              exit 1
+            fi
           fi
