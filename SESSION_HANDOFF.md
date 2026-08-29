@@ -1,4 +1,51 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-08-22 15:45）
+# 🔖 セッション引き継ぎ（最終更新: 2026-08-29 16:05）
+
+## 🆕 2026-08-29: 🔴未決2件の実測確認 ＋ 番人 §⑩ の「永久に無音」穴を塞いだ
+
+オーナー指示「🔴未決の2件から続けて」。**2件とも実測の結論は「オーナーの手が要る状態のまま」**
+（下の §③ の表は不変）。その確認の過程で、番人が7日間🟢で嘘をついていた穴が見つかったので塞いだ。
+
+### ✅ 実測した2件の現状（推測ではなく API/ライブで確認）
+
+| 🔴 | 実測結果（2026-08-29 15:50 JST） |
+|---|---|
+| **JQUANTS_API_KEY 未登録** | **まだ未登録**。`GET /actions/secrets` の一覧に無い（登録済み8件＝ALERT_RECIPIENT / EDINET_API_KEY / GEMINI_API_KEY / GMAIL_APP_PASSWORD / GMAIL_USER / MY_TRADES_CSV_URL / NEWSAPI_KEY / YOUTUBE_API_KEY）。リモート `touraku-history.json` は 404・`market-health-history.json` の `health.touraku_ratio` は `last_ok:null / points:0`・ライブ market-health.html は「N/A 取得不可」。**壊れてはいない**（8/22 の申告どおり）が、**7日間ずっと暗いまま** |
+| **弁護士相談の予約** | **未予約**。資料 `_lawyer_consult_2026.md`（11項目）は完成済みで追記不要。期日ゲートは ai-tsukaikata 側 `tools/check_freshness.py` に**実装済み・作動中**（`LAWYER_GATE_DEADLINE=2026-10-31` / `LAWYER_CONSULT_DONE=False` / `RAMP=28日`）＝**残り63日**。10/03 から毎週メールに昇格する。⚠️ **もう一方の「メアド100件」は自動では読めない**（MailerLite 側の数字＝コードから見えない）とコード内に明記あり＝**到達したらオーナーが期日を手前に詰める必要がある** |
+
+### 🐛 見つけて直した穴 — 番人 §⑩ が「一度も取れていない系列」を永久に見逃す
+
+**証拠**: 8/28 の automation-health は `✅ 🟢 監視 5 系列すべて閾値内（観測開始前 1 本）` と報告していた。
+その「観測開始前 1 本」＝ touraku_ratio は**8/22 に追加してから一度も点が入っていない**。
+`eval_series_health` は `last_ok=None` を「新設初日を赤くしない」ために無条件で見逃しており、
+**その猶予に上限が無かった**＝設定漏れ（今回は APIキー未登録）は永久に🟢のまま隠れる。
+＝ 8/5 の教訓「**壊れたのにアラートが鳴らない経路を疑え**」の同型。
+
+- `build_health_history.py`: `SERIES_META` に **`since`（監視開始日）** と `pending_hint` を追加。
+  **`PENDING_GRACE_DAYS = 3`**（自己修復は最初の成功runで1年ぶん埋める＋1日2回runなので3日で6回＝
+  正常なら翌日に点が入る）。`eval_series_health` は**4要素タプル**を返すよう拡張
+  （`stale, pending, watched, overdue`）。`pending` は従来どおり全件＝表示は壊さない
+- `check_automation_health.py` §⑩: `overdue` があれば 🟡 warn（緑にしない）。
+  系列に `pending_hint` があれば原因候補も本文に出す
+- テスト `_test_health_history.py` に **L1〜L5 を追加＝60/60 PASS**
+  （L1は**本番の実データ形をそのまま固定**・L4 は新設当日を鳴らさない性質・L5 は since 書き忘れ検知）
+- **本番で実測済み**: sync 後に `automation-health.yml` を手動起動 → run `33239656779` で
+  `🚨 🟡 一度も取れていない系列 1/5: 騰落レシオ(25日)（新設から7日・猶予3日…）` を Issue #4 に投稿
+- ⚠️ **副作用（意図的）**: JQUANTS_API_KEY を登録するまで**毎朝この🟡が Issue #4 にコメントされる**。
+  止め方は「登録する」か「系列ごと落とす」の2択（黙らせるだけの3択目は作らない）
+- 🔑 `sync` は `check_automation_health.py` で🚫stale になった（同日午前に別経路で ⑪ が入ったため）。
+  **反射で --force せず**、リモート raw を取り直して diff → 削除・変更行が**自分が書き換えた2行だけ**で
+  あることを機械照合してから `--force`（定石どおり）
+
+### 📌 同日に確認した別件（対応不要）
+
+- **main の force-push（8/29 01:11 UTC・299コミット）は同日午前に復旧済み**
+  （`ea2d79ca restore:` ＋ `fc290b10 feat(番人): ⑪`）。`39b939e6...main` は **behind 0**＝欠落なし。
+  番人 §⑪ が30時間ウィンドウで再掲するだけ（時間経過で消える）
+- **Issue #5（health-check 8/29 00:07 JST「index.html の日付が古い」）は自己解消**。
+  ライブ index の最終更新は **2026年8月29日 13:21 JST**＝正常。閉じてよいかはオーナー判断
+- **automation-health は 8/29 の定時（09:30 JST）に走っていない**（最後の schedule 実行は 8/28 11:35 UTC）
+  ＝ Actions の cron スキップ。今回は手動起動で代替した
+
 
 ## 🆕 2026-08-22 午後: 積み残しの設計書差分＋ブランドカラー Phase 2 を実行
 
