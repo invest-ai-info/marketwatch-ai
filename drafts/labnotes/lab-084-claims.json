@@ -1,0 +1,59 @@
+{
+  "article_id": "084",
+  "claims": [
+    {
+      "label": "IS期間（〜2026-07-19）上昇配置×ロング",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_before": "2026-07-20"},
+      "k": 175,
+      "n": 480
+    },
+    {
+      "label": "FWD期間（2026-07-20〜）上昇配置×ロング",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_from": "2026-07-20"},
+      "k": 270,
+      "n": 570
+    },
+    {
+      "label": "全期間 上昇配置×ロング",
+      "filter": {"ma_pos": "above_both", "direction": "long"},
+      "k": 445,
+      "n": 1050
+    },
+    {
+      "label": "FWD×metalグループ",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_from": "2026-07-20", "group": "metal"},
+      "k": 44,
+      "n": 83
+    },
+    {
+      "label": "FWD×indexグループ",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_from": "2026-07-20", "group": "index"},
+      "k": 67,
+      "n": 131
+    },
+    {
+      "label": "FWD×jpy_fxグループ",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_from": "2026-07-20", "group": "jpy_fx"},
+      "k": 67,
+      "n": 139
+    },
+    {
+      "label": "FWD×other_fxグループ",
+      "filter": {"ma_pos": "above_both", "direction": "long", "fired_from": "2026-07-20", "group": "other_fx"},
+      "k": 57,
+      "n": 138
+    },
+    {
+      "label": "上昇配置×ショート（全期間・比較）",
+      "filter": {"ma_pos": "above_both", "direction": "short"},
+      "k": 147,
+      "n": 350
+    },
+    {
+      "label": "下降配置×ロング（全期間・比較）",
+      "filter": {"ma_pos": "below_both", "direction": "long"},
+      "k": 613,
+      "n": 1340
+    }
+  ]
+}

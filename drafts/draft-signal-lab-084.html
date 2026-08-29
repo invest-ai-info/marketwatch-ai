@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AIシグナル研究日誌 #84｜上昇配置ロングが降格——N=570前向きでCI下限2回連続ゼロ割れ</title>
+<meta name="description" content="価格がMA25&75の上にある「上昇MA配置」でのロングシグナルをIS/FWD分離で検証。前向きN=570でもクラスター補正後CI下限がマイナス2回連続となり、昇格仮説を降格。逆説的に「MAの上にいる=ロング有利」は過去データで成立しなかった。">
+<style>
+:root {
+  --bg: #fafafa; --fg: #1a1a1a; --muted: #555; --border: #d0d0d0;
+  --accent: #1a6fd4; --accent2: #c0392b; --accent3: #27ae60;
+  --card-bg: #fff; --tag-bg: #f0f4ff; --tag-fg: #1a6fd4;
+  --warn-bg: #fffbf0; --warn-border: #f0c040;
+  --sum-bg: #f0f4ff; --sum-border: #1a6fd4;
+  --neg-col: #c0392b; --pos-col: #27ae60; --neu-col: #888;
+  --bar-a: #1a6fd4; --bar-b: #e67e22;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111; --fg: #e8e8e8; --muted: #aaa; --border: #333;
+    --accent: #5b9cf6; --accent2: #e74c3c; --accent3: #2ecc71;
+    --card-bg: #1c1c1c; --tag-bg: #1e2a3a; --tag-fg: #5b9cf6;
+    --warn-bg: #2a2200; --warn-border: #c09000;
+    --sum-bg: #1e2a3a; --sum-border: #5b9cf6;
+    --neg-col: #e74c3c; --pos-col: #2ecc71; --neu-col: #aaa;
+    --bar-a: #5b9cf6; --bar-b: #e67e22;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111; --fg: #e8e8e8; --muted: #aaa; --border: #333;
+  --accent: #5b9cf6; --accent2: #e74c3c; --accent3: #2ecc71;
+  --card-bg: #1c1c1c; --tag-bg: #1e2a3a; --tag-fg: #5b9cf6;
+  --warn-bg: #2a2200; --warn-border: #c09000;
+  --sum-bg: #1e2a3a; --sum-border: #5b9cf6;
+  --neg-col: #e74c3c; --pos-col: #2ecc71; --neu-col: #aaa;
+  --bar-a: #5b9cf6; --bar-b: #e67e22;
+}
+body { background: var(--bg); color: var(--fg); font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif; margin: 0; padding: 0; line-height: 1.7; font-size: 15px; }
+.site-header { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); }
+.site-logo-svg { width:32px; height:32px; flex-shrink:0; }
+.site-title { font-size:1.05rem; font-weight:700; color:var(--accent); text-decoration:none; }
+nav { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 6px 8px; }
+.nav-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; max-width:700px; margin:0 auto; }
+.nav-btn { display:block; text-align:center; padding:6px 2px; font-size:0.72rem; color:var(--fg); text-decoration:none; border-radius:6px; border:1px solid var(--border); background:var(--card-bg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nav-btn.current { background:var(--accent); color:#fff; border-color:var(--accent); }
+.nav-btn:hover:not(.current) { background:var(--tag-bg); }
+.disclaimer-banner[data-disclaimer="kinsho-v1"] { background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:8px; padding:10px 14px; margin:16px auto; max-width:760px; font-size:0.8rem; color:var(--muted); }
+.disclaimer-banner[data-disclaimer="kinsho-v1"]::before { content:"⚠️ 免責事項 "; font-weight:bold; }
+main { max-width:760px; margin:0 auto; padding:16px 16px 48px; }
+h1 { font-size:1.35rem; font-weight:800; line-height:1.4; margin-bottom:8px; }
+.meta { font-size:0.8rem; color:var(--muted); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.tag { display:inline-block; background:var(--tag-bg); color:var(--tag-fg); border-radius:12px; padding:2px 10px; font-size:0.75rem; font-weight:600; }
+h2 { font-size:1.08rem; font-weight:700; border-left:4px solid var(--accent); padding-left:10px; margin-top:36px; margin-bottom:12px; }
+h3 { font-size:0.98rem; font-weight:700; margin-top:24px; margin-bottom:8px; color:var(--accent); }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 14px; padding-left: 22px; }
+li { margin-bottom: 6px; }
+.summary-box { background:var(--sum-bg); border-left:4px solid var(--sum-border); border-radius:0 8px 8px 0; padding:14px 18px; margin:20px 0; }
+.summary-box h3 { margin-top:0; color:var(--accent); font-size:0.95rem; }
+.summary-box ul { margin-bottom:0; }
+table { border-collapse:collapse; width:100%; font-size:0.82rem; margin:16px 0; }
+th { background:var(--tag-bg); color:var(--tag-fg); padding:8px 10px; text-align:left; border:1px solid var(--border); font-weight:700; }
+td { padding:7px 10px; border:1px solid var(--border); vertical-align:top; }
+tr:nth-child(even) td { background:var(--card-bg); }
+.pos { color: var(--pos-col); font-weight:700; }
+.neg { color: var(--neg-col); font-weight:700; }
+.neu { color: var(--neu-col); }
+.chart-figure { margin: 24px 0; }
+.chart-caption { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 6px; }
+/* SVG共通クラス */
+.s-axis { stroke: var(--border); stroke-width:1; }
+.s-guide { stroke: var(--border); stroke-width:0.5; stroke-dasharray:4,3; }
+.s-label { fill: var(--fg); font-size:11px; font-family:inherit; }
+.s-label-r { fill: var(--fg); font-size:11px; font-family:inherit; text-anchor:end; }
+.s-label-c { fill: var(--fg); font-size:11px; font-family:inherit; text-anchor:middle; }
+.s-bar-is { fill: var(--bar-a); opacity:0.9; }
+.s-bar-fwd { fill: var(--bar-b); opacity:0.9; }
+.s-bar-pos { fill: var(--pos-col); opacity:0.85; }
+.s-bar-neg { fill: var(--neg-col); opacity:0.85; }
+.s-bar-neu { fill: var(--neu-col); opacity:0.7; }
+.s-fill-r { fill: var(--neg-col); opacity:0.25; }
+.s-fill-g { fill: var(--pos-col); opacity:0.2; }
+.s-line { stroke: var(--accent); stroke-width:1.5; fill:none; }
+.s-line-neg { stroke: var(--neg-col); stroke-width:1.5; fill:none; }
+.s-zero { stroke: var(--muted); stroke-width:1; stroke-dasharray:3,3; }
+.s-ci { stroke: var(--muted); stroke-width:1; stroke-dasharray:2,2; fill:none; }
+.s-title { fill: var(--fg); font-size:12px; font-weight:bold; font-family:inherit; }
+.note-box { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.82rem; color:var(--muted); margin:16px 0; }
+.key-num { font-size:1.5rem; font-weight:800; color:var(--accent); }
+.key-neg { font-size:1.5rem; font-weight:800; color:var(--neg-col); }
+.verdict-box { border-radius:8px; padding:14px 18px; margin:20px 0; font-size:0.9rem; }
+.verdict-box.demoted { background:rgba(192,57,43,0.08); border:1.5px solid var(--neg-col); }
+.tracker-section h2 { border-left-color: var(--accent3); }
+.tracker-section table td:last-child { font-weight:600; }
+.meta-line { font-size:0.78rem; color:var(--muted); margin-bottom:10px; }
+footer { border-top:1px solid var(--border); padding:20px 16px; font-size:0.78rem; color:var(--muted); max-width:760px; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<!-- ロゴヘッダー -->
+<header class="site-header">
+  <svg class="site-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="32" height="32" rx="8" fill="#1a6fd4"/>
+    <polyline points="4,24 10,16 16,20 22,10 28,14" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="28" cy="14" r="2" fill="#f0c040"/>
+  </svg>
+  <a class="site-title" href="/index.html">MarketWatch AI</a>
+</header>
+
+<!-- ナビバー -->
+<nav aria-label="サイトナビゲーション">
+  <div class="nav-grid">
+    <a class="nav-btn" href="/index.html">🏠 ホーム</a>
+    <a class="nav-btn" href="/political-feed.html">🚨 政治速報</a>
+    <a class="nav-btn" href="/track-record.html">📊 実績</a>
+    <a class="nav-btn" href="/calendar.html">📅 カレンダー</a>
+    <a class="nav-btn current" href="/guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="/guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="/market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="/hot-assets.html">🔥 急騰銘柄</a>
+    <a class="nav-btn" href="/charts.html">📈 チャート</a>
+    <a class="nav-btn" href="/youtube-summary.html">📺 YouTube</a>
+  </div>
+</nav>
+
+<!-- 免責バナー -->
+<div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+本記事は過去の自動シグナル発火データを用いた統計的研究であり、特定の金融商品の売買を推奨するものではありません。投資判断はご自身の責任で行ってください。将来の利益を保証するものではありません。
+</div>
+
+<main>
+
+<h1>🧪 AIシグナル研究日誌 #84<br>上昇配置ロングが降格確定<br>——N=570前向き検証でCI下限2回連続ゼロ割れ</h1>
+
+<div class="meta">
+  <span>2026-08-30</span>
+  <span class="tag">AIシグナル研究日誌</span>
+  <span class="tag">ma_pos</span>
+  <span class="tag">IS/FWD分離</span>
+  <span class="tag">降格確定</span>
+  <span>読了 約8分</span>
+</div>
+
+<!-- 30秒まとめ -->
+<div class="summary-box" id="summary">
+  <h3>⏱️ 30秒まとめ</h3>
+  <ul>
+    <li>検証対象：「価格がMA25・MA75の両方より上にある状態でのロング（上昇MA配置×ロング）」</li>
+    <li>登録日 2026-07-20 を境に IS/FWD 分離検証を実施</li>
+    <li><strong>IS（N=480）</strong>：勝率36.5%・E(R)＝<span class="neg">−0.151</span>・RCI<span class="neg">全域マイナス</span>——過去データで有効性なし</li>
+    <li><strong>FWD（N=570）</strong>：勝率47.4%・E(R)＝+0.104・ナイーブRCI[+0.008,+0.199]、しかし<strong>クラスター補正後 RCI[−0.037,+0.248]</strong>——CI下限がマイナス</li>
+    <li>昇格後の再判定（CI_lo &lt; 0）が本日で<strong>2回連続</strong>となり、<strong>降格ルール発動</strong> → 🟡蓄積中へ</li>
+    <li>逆説：「MAの上にいる ＝ ロングに有利」という直感は過去データでは成立しなかった</li>
+    <li>8月単月FWDは E(R)＝+0.144・RCI[+0.034,+0.253]（全域プラス）——再蓄積余地は残存</li>
+  </ul>
+</div>
+
+<h2 id="s1">§1 今回の研究課題と降格ルールの確認</h2>
+
+<p>
+「価格が移動平均線の上にある ＝ 上昇トレンドが続いているから買いが有利」——これは多くの教科書的解説で語られる直感だ。
+本研究日誌では、この直感が我々のシステムシグナルデータで実際に成立するかを定量的に検証する。
+</p>
+
+<p>
+<strong>フィルタ定義</strong>：エントリー価格がMA25・MA75の両方より上（<code>ma_pos = above_both</code>）かつ方向がロング（<code>direction = long</code>）のシグナル。
+登録日は <strong>2026-07-20</strong>。それより前を IS（学習期間）、以降を FWD（前向き検証期間）として分離する。
+</p>
+
+<p>
+<strong>降格ルール</strong>：昇格後（✅状態）に、前向き平均R の 95%CI下限（CI_lo）がマイナスになる判定が2回連続した場合、🟡蓄積中へ降格する。
+本日（2026-08-30）は2回目の確認となり、降格ルールが発動した。
+</p>
+
+<div class="verdict-box demoted">
+  <strong>🟡 判定：降格確定</strong><br>
+  FWD N=570 / CI_lo（クラスター補正）= −0.037 &lt; 0<br>
+  → 昇格後2回連続でCI_lo &lt; 0 → 降格ルール発動 → 🟡蓄積中へ移行<br>
+  再昇格条件：CI_lo &gt; 0 が2回連続
+</div>
+
+<h2 id="s2">§2 IS期間（〜2026-07-19）：N=480で大幅マイナス</h2>
+
+<p>
+登録前の全閉鎖シグナル（標準18銘柄、上昇配置×ロング）は <strong>N=480件</strong>。
+結果は勝率 <strong>36.5%</strong>（175/480）、E(R)＝<span class="neg"><strong>−0.151</strong></span>、RCI <span class="neg"><strong>[−0.251, −0.050]</strong></span>。
+</p>
+
+<p>
+RCIが全域マイナスという結果は顕著だ。「MAの上でロングを打つシグナル」はシステム全体で見ると、IS期間において一貫して損失を出していた。
+なぜ登録時にホールドアウト合格（pct=45.3%、RCI_lo=+0.028）が出たかというと、ホールドアウト計算は全銘柄（拡張ユニバース含む）・全時間足を対象としており、
+本記事の標準18銘柄・閉鎖済みシグナルのみの計算とは母集団が異なる。
+</p>
+
+<!-- SVG Chart 1: IS vs FWD 勝率と期待値の比較 -->
+<div class="chart-figure">
+<svg viewBox="0 0 540 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="IS期間とFWD期間の勝率・期待値比較">
+  <title>IS vs FWD 勝率・期待値比較</title>
+  <!-- 背景グリッド -->
+  <line x1="120" y1="30" x2="120" y2="220" class="s-axis"/>
+  <line x1="120" y1="220" x2="520" y2="220" class="s-axis"/>
+  <!-- グリッドライン 0%, 25%, 50% (勝率軸) -->
+  <line x1="120" y1="220" x2="520" y2="220" class="s-guide"/>
+  <line x1="120" y1="170" x2="520" y2="170" class="s-guide"/>
+  <line x1="120" y1="120" x2="520" y2="120" class="s-guide"/>
+  <line x1="120" y1="70" x2="520" y2="70" class="s-guide"/>
+  <!-- 軸ラベル -->
+  <text x="115" y="224" class="s-label-r">0%</text>
+  <text x="115" y="174" class="s-label-r">25%</text>
+  <text x="115" y="124" class="s-label-r">50%</text>
+  <text x="115" y="74" class="s-label-r">75%</text>
+  <!-- IS 勝率バー: 36.5% → 高さ 36.5/75*150=73px → y=147 -->
+  <rect x="140" y="147" width="60" height="73" class="s-bar-neg"/>
+  <!-- FWD 勝率バー: 47.4% → 高さ 47.4/75*150=94.8px → y=125 -->
+  <rect x="230" y="125" width="60" height="95" class="s-bar-fwd"/>
+  <!-- 比較: below_both×Long: 45.7% → 高さ 91.4px → y=129 -->
+  <rect x="340" y="129" width="60" height="91" class="s-bar-pos"/>
+  <!-- above_both×Short: 42.0% → 高さ 84px → y=136 -->
+  <rect x="430" y="136" width="60" height="84" class="s-bar-neu"/>
+  <!-- 50%ライン -->
+  <line x1="120" y1="120" x2="520" y2="120" stroke="#e74c3c" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="524" y="124" class="s-label" fill="var(--neg-col)">50%</text>
+  <!-- バー内ラベル -->
+  <text x="170" y="165" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">36.5%</text>
+  <text x="260" y="143" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">47.4%</text>
+  <text x="370" y="147" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">45.7%</text>
+  <text x="460" y="154" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">42.0%</text>
+  <!-- X軸ラベル -->
+  <text x="170" y="238" class="s-label-c" font-size="10">IS期間</text>
+  <text x="170" y="250" class="s-label-c" font-size="10">N=480</text>
+  <text x="260" y="238" class="s-label-c" font-size="10">FWD期間</text>
+  <text x="260" y="250" class="s-label-c" font-size="10">N=570</text>
+  <text x="370" y="238" class="s-label-c" font-size="10">下降配置×L</text>
+  <text x="370" y="250" class="s-label-c" font-size="10">N=1340</text>
+  <text x="460" y="238" class="s-label-c" font-size="10">上昇配置×S</text>
+  <text x="460" y="250" class="s-label-c" font-size="10">N=350</text>
+  <!-- タイトル -->
+  <text x="320" y="20" class="s-title" text-anchor="middle">勝率比較（上昇配置×L の IS/FWD vs 比較対象）</text>
+  <!-- 凡例 -->
+  <rect x="130" y="35" width="10" height="10" fill="var(--neg-col)" opacity="0.85"/>
+  <text x="145" y="45" class="s-label">IS（上昇配置×L）</text>
+  <rect x="260" y="35" width="10" height="10" fill="var(--bar-b)" opacity="0.85"/>
+  <text x="275" y="45" class="s-label">FWD（上昇配置×L）</text>
+  <rect x="390" y="35" width="10" height="10" fill="var(--pos-col)" opacity="0.85"/>
+  <text x="405" y="45" class="s-label">下降配置×L</text>
+</svg>
+<p class="chart-caption">図1：IS・FWD期間の勝率比較。IS=36.5%は50%を大きく下回る。FWD=47.4%はやや改善するが、クラスター補正で依然ゼロ跨ぎ。比較として下降配置×ロング（45.7%）を表示。</p>
+</div>
+
+<h3>IS期間のグループ別内訳</h3>
+
+<table>
+<thead><tr><th>グループ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
+<tbody>
+<tr><td>metal（金・銀）</td><td>6/27</td><td class="neg">22.2%</td><td class="neg">−0.422</td><td class="neg">[−0.855, −0.110]</td></tr>
+<tr><td>other_fx（ドルクロス）</td><td>44/134</td><td class="neg">32.8%</td><td class="neg">−0.233</td><td class="neg">[−0.421, −0.049]</td></tr>
+<tr><td>btc</td><td>10/36</td><td class="neg">27.8%</td><td class="neg">−0.381</td><td class="neg">[−0.699, −0.007]</td></tr>
+<tr><td>jpy_fx（円クロス）</td><td>45/125</td><td class="neu">36.0%</td><td class="neg">−0.143</td><td class="neu">[−0.300, +0.015]</td></tr>
+<tr><td>index（指数）</td><td>61/145</td><td class="neu">42.1%</td><td class="neg">−0.043</td><td class="neu">[−0.177, +0.092]</td></tr>
+<tr><td>oil（原油）</td><td>9/13</td><td class="pos">69.2%</td><td class="pos">+0.846</td><td class="pos">[+0.044, +1.648]</td></tr>
+</tbody>
+</table>
+
+<p>
+IS期間では metal・other_fx・btc の3グループが RCI 全域マイナスで引っ張っている。
+原油（oil）は IS 期間で好成績だが N=13 と少数なため、信頼性は限定的だ。
+</p>
+
+<h2 id="s3">§3 FWD期間（2026-07-20〜）：N=570で表面上プラス、補正で降格</h2>
+
+<p>
+前向き検証期間の N=570 では、勝率が <strong>47.4%</strong>（270/570）、E(R)＝<strong>+0.104</strong> に改善した。
+ナイーブな RCI（時系列クラスタリングを無視した単純計算）は <strong>[+0.008, +0.199]</strong> で、CI下限がわずかにプラスだ。
+しかし、シグナルの自己相関（同一銘柄での連続発火）を考慮したクラスター補正後は <strong>[−0.037, +0.248]</strong> となり、CI下限がマイナスに転じた。
+</p>
+
+<div class="verdict-box demoted">
+  <strong>数値サマリー（FWD期間）</strong><br>
+  N=570 / k=270 / 勝率 47.4%<br>
+  ナイーブ RCI: <span class="pos">[+0.008, +0.199]</span><br>
+  クラスター補正 RCI: <span class="neg">[−0.037, +0.248]</span>（CI_lo &lt; 0 → <strong>降格判定</strong>）
+</div>
+
+<p>
+クラスター補正とは何か：同一銘柄（例: USDJPY）が数時間おきにシグナルを発火すると、これらは独立した観測ではなくなる。
+単純なRCI計算はこの依存性を無視してCI幅を過小評価するため、銘柄グループ内の自己相関を考慮した補正を適用している。
+この補正により、N=570 という十分に大きなサンプルでも CI 幅が広がり、下限がマイナスとなった。
+</p>
+
+<!-- SVG Chart 2: FWD グループ別 勝率 -->
+<div class="chart-figure">
+<svg viewBox="0 0 540 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FWD期間のグループ別勝率">
+  <title>FWD期間グループ別勝率（上昇配置×ロング）</title>
+  <!-- 軸 -->
+  <line x1="100" y1="30" x2="100" y2="230" class="s-axis"/>
+  <line x1="100" y1="230" x2="530" y2="230" class="s-axis"/>
+  <!-- 水平グリッド 25%/50%/75% -->
+  <line x1="100" y1="170" x2="530" y2="170" class="s-guide"/>
+  <line x1="100" y1="110" x2="530" y2="110" class="s-guide"/>
+  <line x1="100" y1="50" x2="530" y2="50" class="s-guide"/>
+  <!-- 軸ラベル -->
+  <text x="95" y="234" class="s-label-r">0%</text>
+  <text x="95" y="174" class="s-label-r">25%</text>
+  <text x="95" y="114" class="s-label-r">50%</text>
+  <text x="95" y="54" class="s-label-r">75%</text>
+  <!-- 50%ライン -->
+  <line x1="100" y1="110" x2="530" y2="110" stroke="#e74c3c" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <!-- バー: 各グループのFWD勝率 (scale: 200px for 100%, so 25%=50px, 50%=100px)
+    グループ: metal=53.0% → y=110-6=104, h=126; index=51.1% → h=122; jpy_fx=48.2% → h=115; other_fx=41.3% → h=99; btc=43.5% → h=104; oil=45.5% → h=109
+    y = 230 - (pct/100*200) -->
+  <!-- metal 53.0% → y=230-106=124, h=106 -->
+  <rect x="115" y="124" width="52" height="106" class="s-bar-pos"/>
+  <!-- index 51.1% → y=230-102=128, h=102 -->
+  <rect x="185" y="128" width="52" height="102" class="s-bar-fwd"/>
+  <!-- jpy_fx 48.2% → y=230-96=134, h=96 -->
+  <rect x="255" y="134" width="52" height="96" class="s-bar-fwd"/>
+  <!-- other_fx 41.3% → y=230-82.6=147, h=82.6 -->
+  <rect x="325" y="147" width="52" height="83" class="s-bar-neg" opacity="0.7"/>
+  <!-- btc 43.5% → y=230-87=143, h=87 -->
+  <rect x="395" y="143" width="52" height="87" class="s-bar-neu"/>
+  <!-- oil 45.5% → y=230-91=139, h=91 -->
+  <rect x="465" y="139" width="52" height="91" class="s-bar-neu"/>
+  <!-- バー内 % ラベル -->
+  <text x="141" y="118" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">53%</text>
+  <text x="211" y="122" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">51%</text>
+  <text x="281" y="128" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">48%</text>
+  <text x="351" y="141" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">41%</text>
+  <text x="421" y="137" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">44%</text>
+  <text x="491" y="133" class="s-label-c" fill="#fff" font-size="11" font-weight="bold">46%</text>
+  <!-- X軸ラベル -->
+  <text x="141" y="248" class="s-label-c" font-size="10">metal</text>
+  <text x="141" y="260" class="s-label-c" font-size="10">N=83</text>
+  <text x="211" y="248" class="s-label-c" font-size="10">index</text>
+  <text x="211" y="260" class="s-label-c" font-size="10">N=131</text>
+  <text x="281" y="248" class="s-label-c" font-size="10">jpy_fx</text>
+  <text x="281" y="260" class="s-label-c" font-size="10">N=139</text>
+  <text x="351" y="248" class="s-label-c" font-size="10">other_fx</text>
+  <text x="351" y="260" class="s-label-c" font-size="10">N=138</text>
+  <text x="421" y="248" class="s-label-c" font-size="10">btc</text>
+  <text x="421" y="260" class="s-label-c" font-size="10">N=46</text>
+  <text x="491" y="248" class="s-label-c" font-size="10">oil</text>
+  <text x="491" y="260" class="s-label-c" font-size="10">N=33</text>
+  <!-- タイトル -->
+  <text x="315" y="20" class="s-title" text-anchor="middle">FWD期間グループ別勝率（2026-07-20〜、標準18銘柄）</text>
+</svg>
+<p class="chart-caption">図2：FWD期間グループ別勝率。metal・indexが50%を超え全体を引き上げている。other_fxが41%と低迷し全体の足を引いている。</p>
+</div>
+
+<h2 id="s4">§4 グループ別の明暗</h2>
+
+<h3>FWD期間グループ別詳細</h3>
+
+<table>
+<thead><tr><th>グループ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI（ナイーブ）</th><th>方向性</th></tr></thead>
+<tbody>
+<tr><td>metal（金・銀）</td><td>44/83</td><td class="pos">53.0%</td><td class="pos">+0.235</td><td>[−0.017, +0.487]</td><td>ゼロ跨ぎ</td></tr>
+<tr><td>index（指数）</td><td>67/131</td><td class="pos">51.1%</td><td class="pos">+0.200</td><td>[−0.009, +0.392]</td><td>ゼロ跨ぎ</td></tr>
+<tr><td>jpy_fx（円クロス）</td><td>67/139</td><td class="neu">48.2%</td><td class="pos">+0.123</td><td>[−0.071, +0.317]</td><td>ゼロ跨ぎ</td></tr>
+<tr><td>other_fx（ドルクロス）</td><td>57/138</td><td class="neg">41.3%</td><td class="neg">−0.038</td><td>[−0.230, +0.155]</td><td>ゼロ跨ぎ</td></tr>
+<tr><td>btc</td><td>20/46</td><td class="neu">43.5%</td><td class="pos">+0.025</td><td>[−0.317, +0.367]</td><td>ゼロ跨ぎ</td></tr>
+<tr><td>oil（原油）</td><td>15/33</td><td class="neu">45.5%</td><td class="pos">+0.040</td><td>[−0.316, +0.395]</td><td>ゼロ跨ぎ</td></tr>
+</tbody>
+</table>
+
+<p>
+FWD期間では全グループの RCI がゼロ跨ぎとなっている。個別グループでの確定的なエッジは確認できない。
+metal・index の勝率が 50% 超で全体を支えているが、N が各 80〜130 件と中規模のため、グループ単独での昇格条件（CI_lo > 0 かつ N ≥ 80）は満たせていない。
+other_fx（41.3%）が最も低く、FWD全体の CI_lo をマイナスに引っ張る主要因だ。
+</p>
+
+<p>
+<strong>IS→FWD の変化に注目</strong>：IS で最も悲惨だった metal（IS: 22.2%）が FWD では 53.0% に転換している。
+これは 2026-07 以降の金・銀相場の強いトレンドを反映している可能性がある。
+一方、other_fx は IS（32.8%）から FWD（41.3%）に改善したが、依然として平均を大きく下回る。
+</p>
+
+<h2 id="s5">§5 月次推移：8月の改善は遅すぎた</h2>
+
+<table>
+<thead><tr><th>月</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
+<tbody>
+<tr><td>2026-07</td><td>57/136</td><td class="neg">41.9%</td><td class="neg">−0.023</td><td class="neg">[−0.217, +0.170]</td></tr>
+<tr><td>2026-08</td><td>213/434</td><td class="pos">49.1%</td><td class="pos">+0.144</td><td class="pos">[+0.034, +0.253]</td></tr>
+</tbody>
+</table>
+
+<p>
+8月単月（N=434）は E(R)＝+0.144・RCI[+0.034, +0.253] と全域プラス。これは統計的に有意な水準だ。
+しかし累積の FWD 判定（N=570 全体でクラスター補正後 CI_lo = −0.037）では降格ルールが発動する。
+</p>
+
+<p class="note-box">
+💡 <strong>8月の単月エッジは蓄積中シグナル</strong>：8月の改善が偶然ではなく構造的なものであれば、再蓄積を経て再昇格の可能性がある。
+「降格 ＝ 完全否定」ではなく「蓄積し直して2回連続 CI_lo > 0 を確認するまで保留」が正しい解釈だ。
+</p>
+
+<h2 id="s6">§6 比較分析：向き・配置の組み合わせ</h2>
+
+<table>
+<thead><tr><th>フィルタ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
+<tbody>
+<tr><td>上昇配置×ロング（IS）</td><td>175/480</td><td class="neg">36.5%</td><td class="neg">−0.151</td><td class="neg">[−0.251, −0.050]</td></tr>
+<tr><td>上昇配置×ロング（FWD）</td><td>270/570</td><td class="neu">47.4%</td><td class="pos">+0.104</td><td class="neu">[−0.037, +0.248]（補正後）</td></tr>
+<tr><td>上昇配置×ロング（全期間）</td><td>445/1050</td><td class="neu">42.4%</td><td class="neg">−0.013</td><td class="neu">ゼロ跨ぎ</td></tr>
+<tr><td><strong>下降配置×ロング（全期間）</strong></td><td>613/1340</td><td class="pos">45.7%</td><td class="pos">+0.066</td><td class="pos"><strong>[+0.004, +0.128]</strong></td></tr>
+<tr><td>上昇配置×ショート（全期間）</td><td>147/350</td><td class="neu">42.0%</td><td class="neg">−0.021</td><td class="neu">[−0.142, +0.099]</td></tr>
+</tbody>
+</table>
+
+<p>
+最も注目すべき比較は<strong>「下降配置×ロング（below_both×long）」</strong>だ。
+N=1340 という大きなサンプルで RCI が全域プラス（[+0.004, +0.128]）となっている。
+これは「価格がMAの下にある ＝ 下降MA配置」のときにロングを打つほうが、全体平均として優れている可能性を示唆する。
+</p>
+
+<p>
+直感に逆らう結果に見えるが、解釈の一つとして：<br>
+• <strong>上昇配置でのロング</strong>：すでに上昇した後での追いかけエントリー → 反落リスクが高い<br>
+• <strong>下降配置でのロング</strong>：MAを下から突き抜けるブレイクアップ or 逆張りエントリー → MA抵抗をすでに下に控えているため、そこがサポートになりやすい
+</p>
+
+<h2 id="s7">§7 解釈：トレンドフォローの盲点</h2>
+
+<p>
+「移動平均線の上にいるから買い有利」という直感は、個人投資家の間で広く信じられている。
+しかし本データが示すのは正反対だ。IS N=480 では勝率 36.5%・RCI 全域マイナスという明確なネガティブ結果が出た。
+</p>
+
+<p>
+考えられる構造的理由：
+</p>
+<ol>
+<li><strong>過剰追随のリスク</strong>：価格がMA25・MA75の両方より上にあるとき、それは多くの参加者がすでに「上昇トレンドを確認」している状態を意味する。この段階でのロングは「ニュースが出てから買う」に近く、逆張りの売り圧力を受けやすい。</li>
+<li><strong>システムシグナルの特性</strong>：本システムのシグナルはRSI売られすぎ・BBタッチ・高値ブレイク等を含むが、それらが上昇MA配置のときに発火する場合、すでに「買われすぎ」状態で発火しているケースが多い可能性がある。</li>
+<li><strong>グループの非対称性</strong>：IS期間の金属・FXは RCI 全域マイナスだが、FWD では金属・指数が改善。2026年後半の相場環境（金高騰・指数堅調）が一時的にこの配置を好転させた可能性がある。</li>
+</ol>
+
+<p>
+なお、<strong>「下降配置×ロング」が RCI 全域プラス（[+0.004, +0.128]）</strong>という結果は、別途独立した検証に値する。
+これは「MA の下にある状態でのロング ＝ 反転狙い」が、追いかけエントリーより有効である可能性を示す。次号以降での掘り下げ候補だ。
+</p>
+
+<h2 id="s8">§8 結論と今後の方針</h2>
+
+<p>
+「上昇MA配置（>MA25&75）×ロング」仮説は、前向き N=570 のクラスター補正後 RCI が [−0.037, +0.248]（CI_lo &lt; 0）を2回連続で記録し、<strong>本日をもって降格確定</strong>（🟡蓄積中へ移行）となった。
+</p>
+
+<p>
+<strong>トレード実務への示唆</strong>（統計的参考情報として）：
+</p>
+<ul>
+<li>「MAの上にいるから買い有利」という単純なフィルタは過去データで支持されなかった</li>
+<li>8月単月の改善（RCI全域プラス）は注目すべき変化だが、累積では降格水準</li>
+<li>「下降配置×ロング」の方が過去データでは優れている（次号候補）</li>
+<li>グループ別では other_fx のロングが最も低迷——上昇MA配置でのユーロ系FXロングは特に要注意</li>
+</ul>
+
+<p>
+<strong>次号以降の候補</strong>：
+</p>
+<ul>
+<li>下降配置（below_both）×ロングの詳細検証（全域プラスの構造を解明）</li>
+<li>上昇配置×ロング×金属グループの単独登録（8月改善が持続するか）</li>
+<li>MA配置 × トレンド方向一致フィルタの交差分析</li>
+</ul>
+
+<!-- トラッカーテーブル -->
+<section class="tracker-section" id="tracker">
+<h2>📡 前向きトラッカー定点観測</h2>
+<p class="meta-line">基準日 2026-08-30／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>trend=上昇×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.10 CI[-0.07~+0.27]（122/259・勝率47%）</td><td>✅昇格</td></tr>
+<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.03 CI[-0.03~+0.09]（1232/2784・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.04 CI[-0.03~+0.11]（978/2193・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.06 CI[-0.03~+0.15]（777/1709・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.03 CI[-0.13~+0.07]（317/764・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.09 CI[-0.03~+0.21]（349/745・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.04 CI[-0.06~+0.14]（319/717・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.02 CI[-0.11~+0.15]（274/628・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.02 CI[-0.14~+0.18]（273/624・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ステート 上昇配置（>MA25&75）×ロング</td><td>edge</td><td>前向きN≥30かつ平均RのCI下限>0🏁</td><td>平均R +0.10 CI[-0.04~+0.25]（270/570・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R -0.02 CI[-0.15~+0.11]（213/508・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.07 CI[-0.09~+0.23]（168/366・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.11 CI[-0.11~+0.34]（128/268・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.11 CI[-0.04~+0.26]（123/258・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.21 CI[-0.01~+0.43]（130/251・勝率52%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ロング×上昇トレンド×MA両線の上</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R +0.07 CI[-0.17~+0.30]（97/212・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>注目度ゼロ(news=0)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.14 CI[-0.36~+0.09]（77/208・勝率37%）</td><td>🟡蓄積中</td></tr>
+<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.15 CI[-0.35~+0.04]（75/207・勝率36%）</td><td>🟡蓄積中</td></tr>
+<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.09 CI[-0.11~+0.30]（96/205・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>group=index×reversalL</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限>0</td><td>平均R -0.06 CI[-0.28~+0.16]（82/204・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.07 CI[-0.02~+0.15]（956/2093・勝率46%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.11 CI[+0.02~+0.20]（350/736・勝率48%）</td><td>⛔反証</td></tr>
+<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.14 CI[+0.02~+0.26]（345/706・勝率49%）</td><td>⛔反証</td></tr>
+<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限<0</td><td>平均R +0.26 CI[+0.05~+0.47]（116/215・勝率54%）</td><td>⛔反証</td></tr>
+</table>
+</section>
+
+</main>
+
+<footer>
+<p>本記事は投資判断の参考情報として提供するものであり、特定の金融商品の売買を推奨するものではありません。過去の統計的パターンは将来の成果を保証しません。投資はご自身の判断と責任で行ってください。</p>
+<p>© MarketWatch AI — AIシグナル研究日誌 #84 — 2026-08-30</p>
+</footer>
+
+</body>
+</html>
