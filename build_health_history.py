@@ -266,13 +266,16 @@ SERIES_META = {
     # 2026-08-19 に直近1年の実データで**点と点の実際の間隔**を測って決めた（推測で置かない）。
     # 実測の最大間隔: vix 4日 / cnn_fg 4日 / crypto_fg 1日 / buffett_us 5日。
     # ⚠️ 一律3日にすると vix と cnn_fg は年45〜46回（ほぼ毎週）誤検知する＝3日の間隔は正常。
-    "vix":        {"label": "米VIX", "unit": "", "stale_days": 5,
+    # since＝その系列の監視を始めた日。「一度も取れていない」の経過日数の起点であり、
+    # これが無いと未開始の系列が永久に無音になる（下の PENDING_GRACE_DAYS のコメント参照）。
+    "vix":        {"label": "米VIX", "unit": "", "stale_days": 5, "since": "2026-08-19",
                    "source": "Yahoo Finance (^VIX)"},
-    "cnn_fg":     {"label": "CNN 恐怖&強欲", "unit": "", "stale_days": 5,
+    "cnn_fg":     {"label": "CNN 恐怖&強欲", "unit": "", "stale_days": 5, "since": "2026-08-19",
                    "source": "CNN Business"},
     "crypto_fg":  {"label": "Crypto 恐怖&強欲", "unit": "", "stale_days": 3,  # 24時間365日＝毎日ある
+                   "since": "2026-08-19",
                    "source": "alternative.me"},
-    "buffett_us": {"label": "米バフェット指数", "unit": "%", "stale_days": 6,
+    "buffett_us": {"label": "米バフェット指数", "unit": "%", "stale_days": 6, "since": "2026-08-19",
                    "source": "Yahoo Finance (^W5000) / 米名目GDP (世界銀行・年次)",
                    "note": "分母の名目GDPは年次のため、日々動いているのは分子（株式時価総額）だけです。"},
     # 🆕 2026-08-22。stale_days は暫定値＝touraku-history.json の蓄積は2026-04-16開始で
@@ -281,6 +284,10 @@ SERIES_META = {
     #    他の系列のように「実測の最大間隔+1日」まで詰めるのは、年末年始を跨いだ1年ぶんの
     #    データが溜まってから（目安2027年初）に見直す。
     "touraku_ratio": {"label": "騰落レシオ(25日)", "unit": "%", "stale_days": 10,
+                      "since": "2026-08-22",
+                      "pending_hint": "リポジトリ Secrets に JQUANTS_API_KEY が未登録だと"
+                                      "build_touraku_history.py が毎回失敗し（continue-on-error で"
+                                      "握り潰される）、touraku-history.json がリモートに生成されない",
                       "source": "J-Quants (東証プライム全銘柄の終値集計) の25日騰落レシオ",
                       "note": "元データ touraku-history.json は2026-08-22開始のため、休場日数の"
                               "扱いはまだ1年分の実測に基づいていません（暫定の閾値）。"},
@@ -347,6 +354,17 @@ def save_history(doc, path=HISTORY_PATH):
         json.dump(doc, f, ensure_ascii=False, separators=(",", ":"))
 
 
+# 「観測開始前（last_ok=None）は鳴らさない」は新設初日に赤くしないための猶予だが、
+# 上限が無いと**一度も取れない系列が永久に🟢のまま隠れる**。
+# 実際に起きた（2026-08-29 に発見）: touraku_ratio は 08-22 に追加してから7日間
+# last_ok=null・points=0 のままだったのに、番人 §⑩ は毎朝
+# 「✅ 🟢 監視 5 系列すべて閾値内（観測開始前 1 本）」と報告し続けていた
+# （原因は JQUANTS_API_KEY 未登録＝下の pending_hint）。ライブは「取得不可」表示のまま。
+# ＝「壊れたのにアラートが鳴らない」経路そのもの。
+# 猶予3日の根拠: 自己修復（SELF_HEAL_MIN_POINTS）は最初の成功runで1年ぶん埋めるので、
+# 正常なら新設翌日には点が入る。update-market-news は1日2回＝3日で6回走る。
+PENDING_GRACE_DAYS = 3
+
 # 点がこれ未満の系列は、--backfill を付けなくても自動で1年ぶん取りに行く。
 # 動機＝バフェット指数はローカルでは GDP が取れず0点のままになるので、Actions で初めて
 # GDP が取れた日に自動で1年ぶん埋まってほしい（人が --backfill を打ちに行かなくて済む）。
@@ -360,8 +378,25 @@ def series_range(doc, key, backfill):
     return "5d", 30
 
 
-def eval_series_health(health, now, stale_days=None):
-    """純関数。戻り値: (停止 [(系列, 経過日, 閾値)], 観測開始前 [系列], 監視対象数)。
+def _pending_overdue(key, today, grace_days=None):
+    """一度も取れていない系列が、監視開始からどれだけ経っても空のままかを見る。
+
+    戻り値 (系列, 新設からの経過日, 猶予日) または None（猶予内 / since 未設定）。
+    """
+    since = SERIES_META[key].get("since")
+    if not since:
+        return None
+    grace = PENDING_GRACE_DAYS if grace_days is None else grace_days
+    try:
+        age = (today - dt.date.fromisoformat(since)).days
+    except ValueError:
+        return None
+    return (key, age, grace) if age >= grace else None
+
+
+def eval_series_health(health, now, stale_days=None, grace_days=None):
+    """純関数。戻り値: (停止 [(系列, 経過日, 閾値)], 観測開始前 [系列], 監視対象数,
+    未開始超過 [(系列, 新設からの経過日, 猶予日)])。
 
     閾値は系列ごと（SERIES_META の stale_days）。市場データは土日・祝日で必ず空くので
     一律にすると毎週鳴る＝実データの間隔を測って決めてある（上の SERIES_META のコメント）。
@@ -369,15 +404,21 @@ def eval_series_health(health, now, stale_days=None):
 
     一度も取れていない系列（last_ok が None）は「観測開始前」として鳴らさない
     ＝新しい系列を足した初日に赤くしない（news-ticker の feed_health と同じ方針）。
+    ⚠️ ただし猶予は PENDING_GRACE_DAYS 日まで。それを超えても空のままなら
+    「未開始超過」として別に返す（永久に無音にしない＝2026-08-29 の実害の再発防止）。
+    pending は従来どおり全件を返す（未開始超過はその部分集合）。
     """
     today = now.astimezone(JST).date()
-    stale, pending = [], []
+    stale, pending, overdue = [], [], []
     for key, meta in SERIES_META.items():
         limit = stale_days if stale_days is not None else meta["stale_days"]
         rec = health.get(key) or {}
         last = rec.get("last_ok")
         if not last:
             pending.append(key)
+            od = _pending_overdue(key, today, grace_days)
+            if od:
+                overdue.append(od)
             continue
         try:
             age = (today - dt.date.fromisoformat(last)).days
@@ -387,7 +428,8 @@ def eval_series_health(health, now, stale_days=None):
         if age >= limit:
             stale.append((key, age, limit))
     stale.sort(key=lambda x: -x[1])
-    return stale, pending, len(SERIES_META)
+    overdue.sort(key=lambda x: -x[1])
+    return stale, pending, len(SERIES_META), overdue
 
 
 def main():
