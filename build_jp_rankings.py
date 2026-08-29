@@ -36,6 +36,35 @@ HOT_BASE_DAYS = 20        # 相対出来高の基準＝直前20営業日平均�
 HOT_MIN_BASE = 15         # 基準日数がこれ未満（新規上場等）なら相対出来高は算出しない
 
 
+def modal_date(dates):
+    """銘柄ごとの「最終バー日付」の最頻値を返す（同数なら新しい方）。
+
+    Yahoo は同じ瞬間でも銘柄・エッジによって最終営業日が1日ずれることがある。
+    その混在をそのままランキングにすると**別々の日の騰落率を1つの表に混ぜる**ので、
+    多数派の日付を「その回の営業日」と決め、少数派の銘柄は落とす（下の main を参照）。
+    """
+    if not dates:
+        return ""
+    counts = {}
+    for d in dates:
+        counts[d] = counts.get(d, 0) + 1
+    return sorted(counts.items(), key=lambda kv: (kv[1], kv[0]))[-1][0]
+
+
+def is_regression(asof, prev):
+    """今回取れた営業日が前回より古ければ True（＝書かずに次の回へ委ねる）。純関数。"""
+    return bool(prev) and bool(asof) and asof < prev
+
+
+def previous_asof(path):
+    """既存 jp-rankings.json の asof（無ければ ""）。巻き戻し防止の基準に使う。"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("asof") or ""
+    except Exception:
+        return ""
+
+
 def fetch_2day(code):
     """直近約3ヶ月の (closes[], vols[], 最終営業日ISO) を Yahoo から取得。失敗時 None。
     （関数名は互換のまま。2026-07-21 に range=7d→3mo へ拡張＝相対出来高の基準20日分を確保）"""
@@ -66,7 +95,6 @@ def main():
             fail += 1
             continue
         closes, vols, last_date = res
-        asof = last_date or asof
         c1, c0 = float(closes[-1]), float(closes[-2])      # 直近 / その前
         if c0 <= 0:
             continue
@@ -78,6 +106,7 @@ def main():
         relvol = round(v1 / (sum(base) / len(base)), 1) if (len(base) >= HOT_MIN_BASE and v1 > 0) else None
         meta = stocks[code]
         rows.append({
+            "_last_date": last_date,
             "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
             "akaji": meta.get("akaji"), "price": round(c1, 1), "pct": round(pct, 4),
             "turnover_d1": round(c1 * v1 / 1e8, 1),   # 直近営業日の売買代金（億円）
@@ -87,6 +116,27 @@ def main():
         if (i + 1) % 100 == 0:
             print(f"  ...{i+1}/{len(codes)} fail={fail}", flush=True)
         time.sleep(0.07)
+
+    # 🆕 2026-08-29 日付の混在ガード＋巻き戻しガード。
+    #   実害: 8/29 04:34 JST の回（cron が 17時台→早朝へずれた回）は Yahoo がまだ 8/28 を
+    #   返さず asof=2026-08-27 で完走し、ライブが1営業日ぶん古いまま「成功」と報告されていた。
+    #   ① 最終バー日付の多数派を asof と決め、少数派の銘柄は落とす（別の日の騰落率を混ぜない）
+    #   ② その asof が前回より古ければ**書かずに終了**＝次のバックアップ回に委ねる（前回分を温存）
+    asof = modal_date([r["_last_date"] for r in rows])
+    mixed = [r for r in rows if r["_last_date"] != asof]
+    if mixed:
+        print(f"⚠️ 最終営業日が混在（多数派 {asof} 以外 {len(mixed)}銘柄）＝別の日の騰落率を混ぜないため除外: "
+              + ", ".join(f"{r['code']}({r['_last_date']})" for r in mixed[:5])
+              + (" ほか" if len(mixed) > 5 else ""))
+        rows = [r for r in rows if r["_last_date"] == asof]
+    for r in rows:
+        r.pop("_last_date", None)
+
+    prev = previous_asof(OUT)
+    if is_regression(asof, prev):
+        print(f"⏸ 取得できた最終営業日 {asof} が前回 {prev} より古い（上流がまだ当日分を返していない）＝"
+              f"jp-rankings.json を更新せず終了。次の回に委ねる（前回分を温存）")
+        return
 
     # 🆕 2026-07-03 部分失敗ガード: Yahoo throttle 等で大量失敗した回は、偏った部分集合の
     #   ランキングを「最新」として公開しない（書き込み前に検査・未達は非ゼロexitでcommitさせない）。
