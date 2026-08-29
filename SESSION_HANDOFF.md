@@ -46,7 +46,7 @@ J-Quantsを使うのは①騰落レシオ（8/22新設・**Actions上で動く�
 | 🔴 | 実測結果（2026-08-29 15:50 JST） |
 |---|---|
 | **JQUANTS_API_KEY 未登録** | **まだ未登録**。`GET /actions/secrets` の一覧に無い（登録済み8件＝ALERT_RECIPIENT / EDINET_API_KEY / GEMINI_API_KEY / GMAIL_APP_PASSWORD / GMAIL_USER / MY_TRADES_CSV_URL / NEWSAPI_KEY / YOUTUBE_API_KEY）。リモート `touraku-history.json` は 404・`market-health-history.json` の `health.touraku_ratio` は `last_ok:null / points:0`・ライブ market-health.html は「N/A 取得不可」。**壊れてはいない**（8/22 の申告どおり）が、**7日間ずっと暗いまま** |
-| **弁護士相談の予約** | **未予約**。資料 `_lawyer_consult_2026.md`（11項目）は完成済みで追記不要。期日ゲートは ai-tsukaikata 側 `tools/check_freshness.py` に**実装済み・作動中**（`LAWYER_GATE_DEADLINE=2026-10-31` / `LAWYER_CONSULT_DONE=False` / `RAMP=28日`）＝**残り63日**。10/03 から毎週メールに昇格する。⚠️ **もう一方の「メアド100件」は自動では読めない**（MailerLite 側の数字＝コードから見えない）とコード内に明記あり＝**到達したらオーナーが期日を手前に詰める必要がある** |
+| **弁護士相談の予約** | ⛔ **同日夕に「見送り」で決着**（オーナー判断）。期日ゲートは取り消し済み＝ai-tsukaikata commit `a42642e`。**グレーは恒久的に白のみ設計**。詳細は上の 8/29 夕の節 |
 
 ### 🐛 見つけて直した穴 — 番人 §⑩ が「一度も取れていない系列」を永久に見逃す
 
@@ -183,7 +183,7 @@ J-Quantsを使うのは①騰落レシオ（8/22新設・**Actions上で動く�
 
 | 件 | 状態 |
 |---|---|
-| 🔴 **弁護士相談の予約** | 資料 `_lawyer_consult_2026.md`（11項目）は完成済み。**あとは予約するだけ**。期日ゲート＝メアド100件 or 2026-10-31 |
+| ⛔ **弁護士相談＝見送りで決着（2026-08-29 オーナー判断）** | 予約しない。設計の2分岐のうち「相談しない」側を確定＝**グレー全域は恒久的に白のみ設計**。ai-tsukaikata `tools/check_freshness.py` に `LAWYER_CONSULT_DECLINED` を新設して催促を停止（`LAWYER_CONSULT_DONE` は False のまま＝事実を偽らない）。資料 `_lawyer_consult_2026.md` は破棄せず論点として保管 |
 | **Issue #4 を閉じてよいか** | 中身（#065/#067）は解決済み。8/19 夜時点で **⑧の指摘も解消**＝閉じられる状態 |
 | **詐欺レーンの補充判断** | 残5本・8/24 頃に枯渇。今回は「触らない（8/24 前に再判断）」を選択済み |
 | 未完タスク | ブランドカラー **Phase 2**（承認済み・実測306本895箇所・`--phase 2` 実装済み）／**AdSense 再申請** |
