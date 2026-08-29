@@ -466,6 +466,43 @@ def check_smtp_auth():
         return None, f"SMTP 到達を確認できず（一時障害の可能性・判定しない）: {type(e).__name__}: {str(e)[:80]}"
 
 
+FORCE_PUSH_WINDOW_H = 30   # 09:30 JST の日次点検が1回飛んでも取りこぼさない幅
+
+
+def eval_force_push(events, now, window_h=FORCE_PUSH_WINDOW_H):
+    """純関数（テスト対象）＝ref アクティビティから main の巻き戻しを拾う。
+
+    なぜ要るか＝2026-08-29 に実際に踏んだ穴。8/25 時点の古い作業コピーを持った
+    クラウドのルーティンが main へ force-push し、**299コミット（3.5日分）が消えた**
+    （6コアHTMLの再生成・news-ticker・公開記事・signals-log 追記がまとめて巻き戻り）。
+    厄介なのは、消えたあとも全ワークフローが緑のままだったこと：
+      - 各ジョブは checkout → 生成 → push で完結するので、巻き戻った土台の上でも成功する
+      - health-check.yml の「最終更新が今日か」も、巻き戻り直後の再生成で**今日の日付に戻る**
+        ＝日付だけ見ていると正常に見える（実際 8/29 12:47 の再生成で緑に戻った）
+    つまり既存の番人はどれも履歴の巻き戻りを見ていない。ここで ref の force_push を直接見る。
+    """
+    hits = []
+    for e in events:
+        if e.get("activity_type") != "force_push":
+            continue
+        age = age_hours(e["timestamp"], now)
+        if age <= window_h:
+            hits.append({
+                "at": e["timestamp"],
+                "age_h": round(age, 1),
+                "actor": (e.get("actor") or {}).get("login", "?"),
+                "before": (e.get("before") or "")[:8],
+                "after": (e.get("after") or "")[:8],
+            })
+    return hits
+
+
+def check_force_push(owner, repo, token, now):
+    ev = api(f"https://api.github.com/repos/{owner}/{repo}/activity"
+             f"?ref=refs/heads/main&activity_type=force_push&per_page=20", token)
+    return eval_force_push(ev, now)
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -644,6 +681,32 @@ def main():
     except Exception as e:
         # ③〜⑧と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ 健康度履歴の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑪ main の巻き戻し（force-push）")
+    try:
+        hits = check_force_push(owner, repo, token, now)
+        if hits:
+            det = ", ".join(f"{h['at']}（{h['actor']}・{h['before']}→{h['after']}・{h['age_h']}h前）"
+                            for h in hits)
+            body.append(f"- 🚨 🔴 直近{FORCE_PUSH_WINDOW_H}時間に main の force-push が {len(hits)}件: {det}。"
+                        f"**消えたコミットは GitHub 側にしばらく残る**＝まず退避する: "
+                        f"before の完全SHA に branch を立てる"
+                        f"（POST /repos/{owner}/{repo}/git/refs に "
+                        f'{{"ref":"refs/heads/rescue-YYYYMMDD","sha":"<before の完全SHA>"}}）。'
+                        f"退避後は before を土台に巻き戻り後のコミットを cherry-pick し、"
+                        f"`git merge --no-commit -s ours` + `git read-tree -u --reset` で"
+                        f"**fast-forward の1コミット**にして push する"
+                        f"（force を force で上書きしない＝二重に履歴を壊さない）。"
+                        f"⚠️ データ系（signals-log 等）は行数の多い側＝巻き戻り前を採用する。"
+                        f"恒久対策は main の ruleset に non_fast_forward を入れること"
+                        f"（Settings → Rules → Rulesets → Block force pushes）")
+            bad.append(("mainの巻き戻し", "critical"))
+        else:
+            body.append(f"- ✅ 🟢 直近{FORCE_PUSH_WINDOW_H}時間に main の force-push なし")
+    except Exception as e:
+        # ③〜⑧と同じ方針: API の一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ force-push の確認失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
