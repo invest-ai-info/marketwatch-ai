@@ -5,7 +5,9 @@
 - **生成ファイル**: `drafts/draft-signal-lab-084.html`
 - **labnotes**: `drafts/labnotes/lab-084-analysis.md` / `drafts/labnotes/lab-084-claims.json`
 - **主要データ**: IS 175/480=36.5% RCI[-0.251,-0.050] / FWD 270/570=47.4% 補正後RCI[-0.037,+0.248] / 下降配置×L 613/1340=45.7% RCI[+0.004,+0.128]
-- **状態**: ゲート実行中（verify → Opusコンプラ → 独立Opus → 公開）
+- **ゲート**: signal_lab_verify EXIT=0（9/9緑）/ Opusコンプラ🔴→修正後🟢白 / 独立Opus🟡→修正後🟢白 / check_site_consistency EXIT=0
+- **エスカレ経緯**: 1回目Opusで🔴（FWD母集団混在: 標準18銘柄N=570 vs 全ユニバースN=582を区別なく混在）→ §3注記追加・判定boxの明示化・月次「統計的に有意」留保・見出し変更等で解決。ゲート構造的穴（universe filterキー未対応）はSESSION_HANDOFFへ記録
+- **状態**: ✅公開（2026-08-30公開）
 
 ---
 
