@@ -49,6 +49,11 @@ WORKFLOW_CHECKS = [
     # 🆕 2026-07-09 ⚡最新ニュース・ライブフィード（毎時）。cron滑りは日常なので5h=4〜5回連続消失で検知。
     ("最新ニュース・ティッカー", "news-ticker.yml",         5,  "warn"),
     ("パニック反発スキャン",    "panic-scan.yml",          27, "warn"),
+    # 🆕 2026-08-29 追加。hot-assets 最上段の日本株ランキング（と信用残）を作る唯一のジョブなのに
+    #    監視対象外だった＝止まってもライブが古いまま誰も気づけない口。閾値は実測で置いた:
+    #    直近30runの日跨ぎ間隔は 24〜25h（1日2回・cronの滑りは30〜45分）。8/27 は1日まるごと
+    #    スキップされて 33.5h あいた＝**その形を捕まえる**ために 30h（正常の最大25hに5hの余裕）。
+    ("日本株ランキング",        "jp-rankings.yml",         30, "warn"),
     # 🆕 低頻度ジョブ（2026-07 追加）。7/1 に monthly-report が取りこぼされ6月レポート未生成の事故で、
     #    週次/月次が監視対象外＝盲点と判明。正常運用で誤検知しないよう余裕を持たせた閾値。
     #    max_h は「1回まるごとスキップされたら検知」水準：週次=10日 / 月次=35日。
@@ -466,6 +471,42 @@ def check_smtp_auth():
         return None, f"SMTP 到達を確認できず（一時障害の可能性・判定しない）: {type(e).__name__}: {str(e)[:80]}"
 
 
+# ⑫ 日本株ランキングの鮮度。①は「jp-rankings.yml が走ったか」しか見ないが、走っても
+# 上流(Yahoo)がまだ当日の日足を返していない時刻に走ると、成功したまま前営業日の順位が残る
+# （2026-08-29 実測: cron が 17時台→04:34 JST へずれた回が asof=2026-08-27 で完走）。
+# 祝日カレンダーを持たずに判定するため、**上流自身の最終営業日**と突き合わせる。
+JP_PROBE_TICKER = "7203.T"          # 流動性の高い代表銘柄（上流の営業日を知るためだけに使う）
+JP_SETTLE_HOUR_JST = 15, 30         # 東京クローズ15:00＋余裕。これ以前の当日バーは未確定扱い
+
+
+def latest_settled_trading_date(dates, now):
+    """上流の日付列から「確定済みの最終営業日」を返す（純関数）。
+
+    場中は当日の未確定バーが最後に来るので1本落とす。番人は 09:30 JST に走るため、
+    この処理が無いと毎朝「当日 vs 前営業日」で必ず誤検知する。
+    """
+    if not dates:
+        return None
+    jst = now.astimezone(dt.timezone(dt.timedelta(hours=9)))
+    h, m = JP_SETTLE_HOUR_JST
+    if dates[-1] == jst.date().isoformat() and (jst.hour, jst.minute) < (h, m):
+        return dates[-2] if len(dates) >= 2 else None
+    return dates[-1]
+
+
+def fetch_jp_trading_dates(ticker=JP_PROBE_TICKER):
+    """Yahoo chart から直近1か月の日足の日付列（JST・昇順）を取る。キー不要。"""
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
+           f"?range=1mo&interval=1d")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        d = json.load(r)["chart"]["result"][0]
+    q = d["indicators"]["quote"][0]
+    jstz = dt.timezone(dt.timedelta(hours=9))
+    return [dt.datetime.fromtimestamp(t, jstz).date().isoformat()
+            for t, c in zip(d.get("timestamp", []), q.get("close", [])) if c is not None]
+
+
 FORCE_PUSH_WINDOW_H = 30   # 09:30 JST の日次点検が1回飛んでも取りこぼさない幅
 
 
@@ -723,6 +764,28 @@ def main():
     except Exception as e:
         # ③〜⑧と同じ方針: API の一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ force-push の確認失敗: {e}")
+
+    body.append("")
+    body.append("### ⑫ 日本株ランキングの鮮度（①はworkflow成否しか見ない死角＝データ側で見る）")
+    try:
+        rank = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/jp-rankings.json", token))
+        settled = latest_settled_trading_date(fetch_jp_trading_dates(), now)
+        asof = rank.get("asof") or ""
+        if settled and asof and asof < settled:
+            body.append(f"- 🚨 🟡 日本株ランキングが古い: jp-rankings.json の asof={asof} / "
+                        f"上流(Yahoo)の確定最終営業日={settled}。**ライブ hot-assets は前の営業日の"
+                        f"順位を出したまま**。build_jp_rankings.py は多数派の営業日しか書かない"
+                        f"（2026-08-29 のガード）ので、上流が追いつけば次の回で自動的に直る。"
+                        f"2日以上続くなら cron の実行時刻が上流の公開前にずれていないかを見る")
+            bad.append(("日本株ランキングの鮮度", "warn"))
+        elif settled and asof:
+            body.append(f"- ✅ 🟢 asof={asof}（上流の確定最終営業日と一致）")
+        else:
+            body.append(f"- ⚪ 判定不能（asof={asof or 'なし'} / 上流={settled or 'なし'}）")
+    except Exception as e:
+        # ③〜⑧と同じ方針: API/ネットワークの一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ 日本株ランキングの鮮度確認に失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
