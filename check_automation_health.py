@@ -666,7 +666,8 @@ def main():
         import build_health_history as BHH
         data = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/market-health-history.json", token))
-        stale, pending, watched = BHH.eval_series_health(data.get("health") or {}, now)
+        stale, pending, watched, overdue = BHH.eval_series_health(
+            data.get("health") or {}, now)
         if stale:
             det = ", ".join(f"{n}（{a}日取得なし/閾値{d}日）" for n, a, d in stale)
             body.append(f"- 🚨 🟡 取得が止まっている系列 {len(stale)}/{watched}: {det}。"
@@ -675,7 +676,22 @@ def main():
                         f"⚠️ **代替の別指標を同じ名前で入れない**"
                         f"（発表元ごとに区分が違う＝2026-08-19 に CNN と alternative.me で実測）")
             bad.append(("健康度履歴の停止", "warn"))
-        else:
+        # 「観測開始前」は新設初日を赤くしないための猶予。猶予を過ぎても一度も取れて
+        # いない系列は、放っておくと永久に🟢のまま隠れる（2026-08-29 に touraku_ratio で
+        # 7日間そうなっていた＝実害）。ここで別枠にして必ず自己申告させる。
+        if overdue:
+            parts = []
+            for n, a, g in overdue:
+                meta = BHH.SERIES_META.get(n) or {}
+                hint = meta.get("pending_hint")
+                parts.append(f"{meta.get('label', n)}（新設から{a}日・猶予{g}日・一度も取得できていない）"
+                             + (f"＝{hint}" if hint else ""))
+            body.append(f"- 🚨 🟡 一度も取れていない系列 {len(overdue)}/{watched}: "
+                        + " / ".join(parts)
+                        + "。**ライブは該当指標を「取得不可」表示のまま**＝新設時の設定漏れ"
+                          "（APIキー未登録・URL誤り）を先に疑う。恒久停止なら系列ごと落とす")
+            bad.append(("健康度履歴の未開始", "warn"))
+        if not stale and not overdue:
             note = f"（観測開始前 {len(pending)} 本）" if pending else ""
             body.append(f"- ✅ 🟢 監視 {watched} 系列すべて閾値内{note}")
     except Exception as e:
