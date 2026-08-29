@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-29
+- 判定: ✅ 公開済み
+- 選定トピック: ウォーシュFRB議長のジャクソンホール講演：「インフレはまだ高すぎる、追加利上げも選択肢」──9月利上げ確率57%急上昇・S&P500下落・金急落の影響を3視点で整理（カテゴリ: 米金融政策・インフレ・為替・米国株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年8月28日（米ET午前10時）ウォーシュFRB議長が就任後初の主要JH講演を実施。PCE3.7%を明示し「インフレ高すぎる・追加利上げも選択肢」と発言。9月利上げ確率は35%→57%（CME FedWatch）に急上昇。S&P500-0.25%・Nasdaq-0.52%・2年債利回り4.32%（7月来最高）・ドル指数+0.50%・金-3%。前日8/28記事は同講演を「未発表」として除外しており、今回は結果・市場反応という別内容。重複なし。日本人投資家に身近な「日米同時引き締め（FOMC9/15-16・日銀9/17-18）」シナリオの論点整理として選定。
+- 出典（確認済み・8系統）:
+  - Washington Post「Fed chair Warsh, concerned about inflation, says bank 'has more work to do'」（2026-08-28）
+  - CNBC「Kevin Warsh sharpens inflation warning at Jackson Hole, signaling possible rate hike」（2026-08-28）
+  - Axios「Fed's Warsh: Interest rate increases in play if inflation doesn't fall」（2026-08-28）
+  - NPR「Fed's Kevin Warsh warns inflation is too high, sparking bets rate hikes are coming」（2026-08-28）
+  - Forbes「Forecast: Fed To Hike Interest Rates After Warsh's Jackson Hole Talk」（2026-08-28）
+  - PBS「Watch: Fed Chair Warsh signals stubborn inflation may require rate hikes」（2026-08-28）
+  - Rio Times Online「Global Economy Briefing — August 29, 2026」（2026-08-29）
+  - Tech Times「PCE Holds at 3.7%, Real Spending Stalls: September Rate Hike Odds Rise to Four-in-Ten」（2026-08-26）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 記事内でFOMC日程が「9/17-18」と「9/16-17」に矛盾→事実修正（9/15-16に統一・WebSearch公式確認済）後、再監査→ 🟢白（禁止語なし・kinsho-v1×3箇所・銘柄推奨なし・将来断言なし・出典8系統）。適用修正なし（日程修正は事実確認対応のため修正が先行）
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典8系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-29-warsh-jackson-hole-fed-september-rate-hike.html
+- commit: 36afe16（main へ push 済み）
+
+---
+
 ## 2026-08-28
 - 判定: ✅ 公開済み
 - 選定トピック: 東京都区部CPI（8月）コアコア2.0%到達、BOJ9月利上げ確率80%台へ──ドル円・日本株への影響を3視点で整理（カテゴリ: 日銀・金融政策・為替・日本株）
