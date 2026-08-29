@@ -182,4 +182,5 @@ SYNC_FILES = [
     "guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html",
     "guide-signal-lab-083.html",
     "guide-news-2026-08-29-warsh-jackson-hole-fed-september-rate-hike.html",
+    "guide-signal-lab-084.html",
 ]
