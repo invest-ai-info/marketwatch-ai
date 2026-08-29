@@ -87,6 +87,7 @@ tr:nth-child(even) td { background:var(--card-bg); }
 .s-ci { stroke: var(--muted); stroke-width:1; stroke-dasharray:2,2; fill:none; }
 .s-title { fill: var(--fg); font-size:12px; font-weight:bold; font-family:inherit; }
 .note-box { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.82rem; color:var(--muted); margin:16px 0; }
+.info-box { background:var(--sum-bg); border-left:4px solid var(--sum-border); border-radius:0 8px 8px 0; padding:14px 18px; margin:20px 0; font-size:0.9rem; line-height:1.8; }
 .key-num { font-size:1.5rem; font-weight:800; color:var(--accent); }
 .key-neg { font-size:1.5rem; font-weight:800; color:var(--neg-col); }
 .verdict-box { border-radius:8px; padding:14px 18px; margin:20px 0; font-size:0.9rem; }
@@ -144,17 +145,13 @@ footer { border-top:1px solid var(--border); padding:20px 16px; font-size:0.78re
 </div>
 
 <!-- 30秒まとめ -->
-<div class="summary-box" id="summary">
-  <h3>⏱️ 30秒まとめ</h3>
-  <ul>
-    <li>検証対象：「価格がMA25・MA75の両方より上にある状態でのロング（上昇MA配置×ロング）」</li>
-    <li>登録日 2026-07-20 を境に IS/FWD 分離検証を実施</li>
-    <li><strong>IS（N=480）</strong>：勝率36.5%・E(R)＝<span class="neg">−0.151</span>・RCI<span class="neg">全域マイナス</span>——過去データで有効性なし</li>
-    <li><strong>FWD（N=570）</strong>：勝率47.4%・E(R)＝+0.104・ナイーブRCI[+0.008,+0.199]、しかし<strong>クラスター補正後 RCI[−0.037,+0.248]</strong>——CI下限がマイナス</li>
-    <li>昇格後の再判定（CI_lo &lt; 0）が本日で<strong>2回連続</strong>となり、<strong>降格ルール発動</strong> → 🟡蓄積中へ</li>
-    <li>逆説：「MAの上にいる ＝ ロングに有利」という直感は過去データでは成立しなかった</li>
-    <li>8月単月FWDは E(R)＝+0.144・RCI[+0.034,+0.253]（全域プラス）——再蓄積余地は残存</li>
-  </ul>
+<div class="info-box" id="summary">
+  <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+  ① 検証対象：「価格がMA25・MA75の上にある状態（上昇MA配置）でのロングシグナル」<br>
+  ② <strong>IS（N=480）</strong>：勝率<strong>36.5%</strong>（175/480）、E(R)＝<strong>−0.151</strong>、RCI<strong>全域マイナス</strong>——過去データで有効性なし<br>
+  ③ <strong>FWD（N=582）</strong>：勝率<strong>47.4%</strong>（276/582）、E(R)＝<strong>+0.105</strong>、ナイーブRCI[+0.010,+0.200]、クラスター補正後RCI[−0.037,+0.248]→<strong>CI下限マイナス</strong><br>
+  ④ 降格ルール発動：CI_lo &lt; 0 が2回連続 → 🟡蓄積中へ降格確定<br>
+  ⑤ 逆説：「MAの上＝ロング有利」は過去データでは不成立。下降配置×ロング（N=1340）のほうがRCI全域プラス
 </div>
 
 <h2 id="s1">§1 今回の研究課題と降格ルールの確認</h2>
@@ -221,7 +218,7 @@ RCIが全域マイナスという結果は顕著だ。「MAの上でロングを
   <rect x="430" y="136" width="60" height="84" class="s-bar-neu"/>
   <!-- 50%ライン -->
   <line x1="120" y1="120" x2="520" y2="120" stroke="#e74c3c" stroke-width="1.2" stroke-dasharray="5,3"/>
-  <text x="524" y="124" class="s-label" fill="var(--neg-col)">50%</text>
+  <text x="516" y="118" class="s-label" fill="var(--neg-col)" font-size="10">50%</text>
   <!-- バー内ラベル -->
   <text x="170" y="165" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">36.5%</text>
   <text x="260" y="143" class="s-label-c" fill="#fff" font-size="12" font-weight="bold">47.4%</text>
@@ -271,15 +268,15 @@ IS期間では metal・other_fx・btc の3グループが RCI 全域マイナス
 <h2 id="s3">§3 FWD期間（2026-07-20〜）：N=570で表面上プラス、補正で降格</h2>
 
 <p>
-前向き検証期間の N=570 では、勝率が <strong>47.4%</strong>（270/570）、E(R)＝<strong>+0.104</strong> に改善した。
-ナイーブな RCI（時系列クラスタリングを無視した単純計算）は <strong>[+0.008, +0.199]</strong> で、CI下限がわずかにプラスだ。
+前向き検証期間の N=582 では、勝率が <strong>47.4%</strong>（276/582）、E(R)＝<strong>+0.105</strong> に改善した。
+ナイーブな RCI（時系列クラスタリングを無視した単純計算）は <strong>[+0.010, +0.200]</strong> で、CI下限がわずかにプラスだ。
 しかし、シグナルの自己相関（同一銘柄での連続発火）を考慮したクラスター補正後は <strong>[−0.037, +0.248]</strong> となり、CI下限がマイナスに転じた。
 </p>
 
 <div class="verdict-box demoted">
   <strong>数値サマリー（FWD期間）</strong><br>
-  N=570 / k=270 / 勝率 47.4%<br>
-  ナイーブ RCI: <span class="pos">[+0.008, +0.199]</span><br>
+  N=582 / k=276 / 勝率 47.4%<br>
+  ナイーブ RCI: <span class="pos">[+0.010, +0.200]</span><br>
   クラスター補正 RCI: <span class="neg">[−0.037, +0.248]</span>（CI_lo &lt; 0 → <strong>降格判定</strong>）
 </div>
 
@@ -402,8 +399,8 @@ other_fx（41.3%）が最も低く、FWD全体の CI_lo をマイナスに引っ
 <thead><tr><th>フィルタ</th><th>k/n</th><th>勝率</th><th>E(R)</th><th>RCI</th></tr></thead>
 <tbody>
 <tr><td>上昇配置×ロング（IS）</td><td>175/480</td><td class="neg">36.5%</td><td class="neg">−0.151</td><td class="neg">[−0.251, −0.050]</td></tr>
-<tr><td>上昇配置×ロング（FWD）</td><td>270/570</td><td class="neu">47.4%</td><td class="pos">+0.104</td><td class="neu">[−0.037, +0.248]（補正後）</td></tr>
-<tr><td>上昇配置×ロング（全期間）</td><td>445/1050</td><td class="neu">42.4%</td><td class="neg">−0.013</td><td class="neu">ゼロ跨ぎ</td></tr>
+<tr><td>上昇配置×ロング（FWD）</td><td>276/582</td><td class="neu">47.4%</td><td class="pos">+0.105</td><td class="neu">[−0.037, +0.248]（補正後）</td></tr>
+<tr><td>上昇配置×ロング（全期間）</td><td>451/1062</td><td class="neu">42.5%</td><td class="neg">−0.011</td><td class="neu">ゼロ跨ぎ</td></tr>
 <tr><td><strong>下降配置×ロング（全期間）</strong></td><td>613/1340</td><td class="pos">45.7%</td><td class="pos">+0.066</td><td class="pos"><strong>[+0.004, +0.128]</strong></td></tr>
 <tr><td>上昇配置×ショート（全期間）</td><td>147/350</td><td class="neu">42.0%</td><td class="neg">−0.021</td><td class="neu">[−0.142, +0.099]</td></tr>
 </tbody>
@@ -445,7 +442,7 @@ N=1340 という大きなサンプルで RCI が全域プラス（[+0.004, +0.12
 <h2 id="s8">§8 結論と今後の方針</h2>
 
 <p>
-「上昇MA配置（>MA25&75）×ロング」仮説は、前向き N=570 のクラスター補正後 RCI が [−0.037, +0.248]（CI_lo &lt; 0）を2回連続で記録し、<strong>本日をもって降格確定</strong>（🟡蓄積中へ移行）となった。
+「上昇MA配置（>MA25&75）×ロング」仮説は、前向き N=582 のクラスター補正後 RCI が [−0.037, +0.248]（CI_lo &lt; 0）を2回連続で記録し、<strong>本日をもって降格確定</strong>（🟡蓄積中へ移行）となった。
 </p>
 
 <p>
