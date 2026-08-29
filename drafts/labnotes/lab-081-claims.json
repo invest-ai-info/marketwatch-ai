@@ -1,0 +1,59 @@
+{
+  "article_id": "081",
+  "claims": [
+    {
+      "label": "1Dショート全期間勝率（29.4%）",
+      "filter": {"tf": "1d", "direction": "short"},
+      "k": 10,
+      "n": 34
+    },
+    {
+      "label": "1Dショート IS（fired_before 2026-06-17）勝率（100%・N=3）",
+      "filter": {"tf": "1d", "direction": "short", "fired_before": "2026-06-17"},
+      "k": 3,
+      "n": 3
+    },
+    {
+      "label": "1Dショート FWD（fired_from 2026-06-17）勝率（22.6%）",
+      "filter": {"tf": "1d", "direction": "short", "fired_from": "2026-06-17"},
+      "k": 7,
+      "n": 31
+    },
+    {
+      "label": "1D×逆張り買い（reversalL）全期間勝率（71.4%）",
+      "filter": {"tf": "1d", "reversal_long": true},
+      "k": 25,
+      "n": 35
+    },
+    {
+      "label": "1D×逆張り買い IS（fired_before 2026-07-16）勝率（69.2%）",
+      "filter": {"tf": "1d", "reversal_long": true, "fired_before": "2026-07-16"},
+      "k": 18,
+      "n": 26
+    },
+    {
+      "label": "1D×逆張り買い FWD（fired_from 2026-07-16）勝率（77.8%）",
+      "filter": {"tf": "1d", "reversal_long": true, "fired_from": "2026-07-16"},
+      "k": 7,
+      "n": 9
+    },
+    {
+      "label": "1Dロング全期間勝率（48.8%）",
+      "filter": {"tf": "1d", "direction": "long"},
+      "k": 60,
+      "n": 123
+    },
+    {
+      "label": "1Dショート×MACDデッドクロス FWD勝率（29.4%）",
+      "filter": {"tf": "1d", "direction": "short", "signal": "macd_dead", "fired_from": "2026-06-17"},
+      "k": 5,
+      "n": 17
+    },
+    {
+      "label": "1Dショート×安値ブレイク FWD勝率（11.1%）",
+      "filter": {"tf": "1d", "direction": "short", "signal": "low_break", "fired_from": "2026-06-17"},
+      "k": 1,
+      "n": 9
+    }
+  ]
+}

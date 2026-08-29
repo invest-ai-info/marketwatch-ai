@@ -1,0 +1,83 @@
+{
+  "article_id": "083",
+  "claims": [
+    {
+      "label": "全期間（IS+FWD合計）",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 176,
+      "n": 360
+    },
+    {
+      "label": "IS期間（登録前〜2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-23"},
+      "k": 56,
+      "n": 103
+    },
+    {
+      "label": "FWD期間（2026-06-23〜）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23"},
+      "k": 120,
+      "n": 257
+    },
+    {
+      "label": "FWD RSI売られすぎ逆張り（rsi_oversold_bounce）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "signal": "rsi_oversold_bounce"},
+      "k": 39,
+      "n": 59
+    },
+    {
+      "label": "FWD BBタッチ逆張り（bb_lower_touch）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "signal": "bb_lower_touch"},
+      "k": 81,
+      "n": 198
+    },
+    {
+      "label": "FWD 指数グループ（index）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "group": "index"},
+      "k": 24,
+      "n": 68
+    },
+    {
+      "label": "FWD 円クロスFX（jpy_fx）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "group": "jpy_fx"},
+      "k": 41,
+      "n": 79
+    },
+    {
+      "label": "FWD ドルクロスFX（other_fx）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "group": "other_fx"},
+      "k": 34,
+      "n": 67
+    },
+    {
+      "label": "IS 指数グループ（index）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-23", "group": "index"},
+      "k": 36,
+      "n": 52
+    },
+    {
+      "label": "FWD BB×指数（最悪コンボ）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "signal": "bb_lower_touch", "group": "index"},
+      "k": 17,
+      "n": 54
+    },
+    {
+      "label": "FWD RSI×円クロスFX（最良コンボ）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "signal": "rsi_oversold_bounce", "group": "jpy_fx"},
+      "k": 13,
+      "n": 17
+    },
+    {
+      "label": "FWD 4H足",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "tf": "4h"},
+      "k": 31,
+      "n": 78
+    },
+    {
+      "label": "FWD 1H足",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "tf": "1h"},
+      "k": 76,
+      "n": 163
+    }
+  ]
+}

@@ -172,4 +172,13 @@ SYNC_FILES = [
     "guide-market-cap-float.html",
     "guide-proverb-ri-wa-moto-ni-ari.html",
     "guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html",
+    "guide-signal-lab-080.html",
+    "guide-regret-aversion.html",
+    "guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html",
+    "guide-signal-lab-081.html",
+    "guide-trade-journal.html",
+    "guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html",
+    "guide-signal-lab-082.html",
+    "guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html",
+    "guide-signal-lab-083.html",
 ]

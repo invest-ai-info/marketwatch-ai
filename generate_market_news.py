@@ -18,8 +18,59 @@ from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レ�
 import re as _re_for_ja
 _HAS_JA_RE = _re_for_ja.compile(r'[\u3040-\u30ff\u4e00-\u9fff]')
 
+# ─────────────────────────────────────────
+# 翻訳結果の受理条件（2026-08-26 事故対応）
+#   deep_translator の Google バックエンドは translate.google.com/m を HTML スクレイプ
+#   する実装で、Google が HTTP 500 を返すと **エラーページ本文**
+#   （"Error 500 (Server Error)!!1500.That's an error..."）をそのまま翻訳結果として返す。
+#   旧実装の合否判定は「原文と違えば成功」だけだったため、GitHub Actions の IP からは
+#   全ニュース見出しがこのエラー文に置き換わり、AI 投資判断の根拠が
+#   「システムエラーのため内容が確認できません」になっていた。
+#   → 「日本語を含む・エラーページ本文でない・長さが妥当」を満たさない訳は採用しない。
+# ─────────────────────────────────────────
+_TRANSLATION_ERROR_RE = _re_for_ja.compile(
+    r"(that.{0,2}s an error|server error|error \d{3}|!!1|<\s*/?\s*(html|body|div|script)\b)",
+    _re_for_ja.IGNORECASE,
+)
+
+
+def looks_like_error_text(text, head=120):
+    """取得・翻訳の失敗でエラーページ本文が紛れ込んでいないか（先頭 head 文字で判定）"""
+    if not text:
+        return False
+    return bool(_TRANSLATION_ERROR_RE.search(str(text)[:head]))
+
+
+def _accept_translation(out, src):
+    """翻訳結果として受理してよいか。日本語ゼロ／エラーページ本文／異常な長さ は棄却する。"""
+    if not out or not str(out).strip():
+        return False
+    s = str(out).strip()
+    if not _HAS_JA_RE.search(s):
+        return False   # 「日本語訳」に日本語が1文字も無い＝失敗（英語のエラー文など）
+    if looks_like_error_text(s):
+        return False   # エラーページ本文の混入
+    if len(s) > max(160, len(str(src)) * 4):
+        return False   # 見出しの訳が原文の4倍超＝本文まるごと等の混入
+    return True
+
+
+def _translate_via_gtx(src):
+    """Google 翻訳の JSON API（translate_a/single）を直叩きする。
+    HTML スクレイプと違い、障害は HTTPError / JSON パース失敗として顕在化するので、
+    エラーページ本文が「翻訳結果」として混入しない。"""
+    url = "https://translate.googleapis.com/translate_a/single?" + urllib.parse.urlencode(
+        {"client": "gtx", "sl": "auto", "tl": "ja", "dt": "t", "q": src}
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=15) as res:
+        data = json.loads(res.read().decode("utf-8", "replace"))
+    return "".join(seg[0] for seg in data[0] if seg and seg[0])
+
+
 def translate_to_ja(text):
-    """英文タイトルを日本語に翻訳。失敗時は原文を返すが console にログを残す。"""
+    """英文タイトルを日本語に翻訳。失敗時は原文を返すが console にログを残す。
+    どのバックエンドも「日本語を含む妥当な訳」しか採用しない（_accept_translation）。"""
     if not text or not str(text).strip():
         return text
     # 既に日本語が含まれていれば翻訳不要
@@ -28,27 +79,37 @@ def translate_to_ja(text):
 
     src = str(text).strip()[:4500]  # 5000字制限の保険
 
-    # ① Google 翻訳（deep_translator）
+    # ① Google 翻訳 JSON API（gtx）— 最優先。失敗は例外になるので誤採用しない
+    try:
+        out = _translate_via_gtx(src)
+        if _accept_translation(out, src):
+            return out
+        print(f"  ⚠️ gtx: 不正な翻訳結果を棄却 → fallback ({str(out)[:40]!r})")
+    except Exception as e:
+        print(f"  ⚠️ gtx 失敗: {type(e).__name__}: {str(e)[:60]} → fallback")
+
+    # ② Google 翻訳（deep_translator / HTML スクレイプ）
     try:
         from deep_translator import GoogleTranslator
         out = GoogleTranslator(source="auto", target="ja").translate(src)
-        if out and out.strip() and out.strip().lower() != src.strip().lower():
+        if _accept_translation(out, src):
             return out
-        else:
-            print(f"  ⚠️ GoogleTranslator: 空または無変換 → fallback")
+        print(f"  ⚠️ GoogleTranslator: 不正な翻訳結果を棄却 → fallback ({str(out)[:40]!r})")
     except Exception as e:
         print(f"  ⚠️ GoogleTranslator 失敗: {e} → fallback")
 
-    # ② MyMemory フォールバック
+    # ③ MyMemory フォールバック
     try:
         from deep_translator import MyMemoryTranslator
         out = MyMemoryTranslator(source="en-US", target="ja-JP").translate(src[:480])
-        if out and out.strip():
+        if _accept_translation(out, src[:480]):
             return out
+        print(f"  ⚠️ MyMemoryTranslator: 不正な翻訳結果を棄却 ({str(out)[:40]!r})")
     except Exception as e:
         print(f"  ⚠️ MyMemoryTranslator 失敗: {e}")
 
-    # ③ 全部失敗 → 原文（最低限ニュース内容は伝わる）
+    # ④ 全部失敗 → 原文（英語のままだが、少なくとも中身は伝わる）
+    print(f"  ⚠️ 翻訳フォールバック（原文のまま）: {src[:50]}")
     return text
 
 JST = timezone(timedelta(hours=9))
@@ -1344,19 +1405,52 @@ def _format_pub_date(pub_str):
 
 
 def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, btc_val=None,
-                                stocks_news=None, commodity_news=None, crypto_news=None):
+                                stocks_news=None, commodity_news=None, crypto_news=None,
+                                fc_ctx=None):
     """AI（Gemini）でアセット別投資判断を生成し HTML セクションを返す。
-    GEMINI_API_KEY 未設定なら空文字。"""
+    GEMINI_API_KEY 未設定なら空文字。
+
+    ⚠️ 根拠に使う見出しは「サイトのマーケットカードに表示しているニュース」と同一。
+       まず検証済みブリーフィング（fundamental-context.json = fc_ctx）を
+       briefing_card_items() 経由で取り、無いカテゴリだけ旧パイプライン
+       （yfinance/NewsAPI/RSS の news.get(...)）にフォールバックする。
+       2026-08-26 に旧パイプライン側の翻訳が壊れ、AI の根拠だけが
+       「システムエラーのため内容が確認できません」になった事故の再発防止。"""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         return ""
 
-    stocks_news = stocks_news or []
-    commodity_news = commodity_news or []
-    crypto_news = crypto_news or []
-    stock_titles = [a.get("title", "") for a in stocks_news[:10]]
-    commodity_titles = [a.get("title", "") for a in commodity_news[:10]]
-    crypto_titles = [a.get("title", "") for a in crypto_news[:10]]
+    # 2026-08-26: 翻訳バックエンド障害でエラーページ本文が見出しに混入した事故があるため、
+    #   AI に渡す前に「エラー文らしいタイトル」を落とす（ゴミを渡すと根拠が
+    #   「システムエラーのため内容が確認できません」になる＝実際に起きた）
+    def _clean_titles(arts):
+        return [t for t in (a.get("title", "") for a in (arts or [])[:CARD_NEWS_LIMIT])
+                if t and not looks_like_error_text(t)]
+
+    def _titles_for(cat, raw_news):
+        """カテゴリの見出しリストと出所ラベルを返す。ブリーフィング優先・無ければ生パイプライン。"""
+        items = briefing_card_items(fc_ctx, cat)   # 件数はカード表示と同じ CARD_NEWS_LIMIT
+        titles = [(n.get("headline") or "").strip() for n in items]
+        titles = [t for t in titles if t]
+        if titles:
+            return titles, "検証済みブリーフィング"
+        return _clean_titles(raw_news), "生パイプライン(yf/NewsAPI/RSS)"
+
+    stock_titles, stock_src = _titles_for("stocks", stocks_news)
+    commodity_titles, commodity_src = _titles_for("commodity", commodity_news)
+    crypto_titles, crypto_src = _titles_for("crypto", crypto_news)
+
+    # 🆕 「表示ニュース」と「AI の根拠」が同じ材料かをログで確認できるようにする（2026-08-26）
+    print("  🧭 AI 根拠ニュースの出所（カード表示と同一である必要あり）:")
+    for cat, titles, src in (("stocks", stock_titles, stock_src),
+                             ("commodity", commodity_titles, commodity_src),
+                             ("crypto", crypto_titles, crypto_src)):
+        mark = "✅" if src.startswith("検証済み") else "⚠️"
+        print(f"    {mark} {cat:9s}: {len(titles)}件 ← {src}")
+        for t in titles:
+            print(f"         - {t[:70]}")
+        if not titles:
+            print("         （見出しゼロ＝AI には『関連ニュースなし』として渡る）")
 
     # 4 アセット
     assets = []
@@ -4572,6 +4666,11 @@ def load_fundamental_context_for_site():
 # TOP3 は別途 48h 減衰で制御。ブリーフィング(fundamental-context.json)由来はここで一括カット＝唯一の調整点。
 BRIEFING_NEWS_MAX_AGE_DAYS = 10
 
+# 🆕 マーケットカードに表示する関連ニュースの件数（2026-08-26）。
+# AI 投資判断の根拠に渡す件数もこれと同じ＝「読者が見ている見出し」と
+# 「AI が根拠にした見出し」を一致させるための単一の調整点。
+CARD_NEWS_LIMIT = 3
+
 
 def _briefing_news_too_old(n):
     """published(YYYY-MM-DD)が MAX_AGE 日より古ければ True。日付不明(空/解析不可)は除外しない（False）。"""
@@ -4679,12 +4778,15 @@ _CARD_TICKERS = {
 }
 
 
-def build_card_news_from_briefing(ctx, cat, limit=3):
-    """指定カテゴリ（stocks/fx/commodity/crypto）の信頼性検証済みニュースをカード用HTMLで返す。
-    ⚠️ bias / direction 等は出さない（事実・出典・日付・信頼度のみ）。
-    ctx不在 or 該当ニュース無しなら None（呼び出し側で旧パイプラインにフォールバック）。"""
+def briefing_card_items(ctx, cat, limit=CARD_NEWS_LIMIT):
+    """指定カテゴリ（stocks/fx/commodity/crypto）の信頼性検証済みニュースを
+    「カードに表示するのと同じ順序・同じ件数」で返す（dict のリスト）。
+    ⚠️ カード表示（build_card_news_from_briefing）と AI 投資判断の根拠
+       （build_ai_analysis_section）の唯一の共通入口。ここを両方が通ることで
+       「表示ニュース ≠ AI の根拠」のズレをコードで防ぐ（2026-08-26 事故の再発防止）。
+    該当なしなら空リスト。"""
     if not ctx:
-        return None
+        return []
     want = _CARD_TICKERS.get(cat, set())
     seen, items = set(), []
     for a in ctx.get("assets", []):
@@ -4696,20 +4798,33 @@ def build_card_news_from_briefing(ctx, cat, limit=3):
                 continue
             if _briefing_news_too_old(n):  # 🆕 鮮度カットオフ（古い記事の混入防止）
                 continue
-            key = (n.get("headline") or "").strip()[:24]
+            head = (n.get("headline") or "").strip()
+            if looks_like_error_text(head):  # 翻訳/取得失敗のエラーページ本文を弾く
+                continue
+            key = head[:24]
             if not key or key in seen:
                 continue
             seen.add(key)
             items.append(n)
     if not items:
-        return None
+        return []
     cred_rank = {"HIGH": 0, "MID": 1}
     mat_rank = {"high": 0, "mid": 1, "low": 2}
     items.sort(key=lambda n: (cred_rank.get((n.get("credibility") or "").upper(), 9),
                               mat_rank.get((n.get("materiality") or "").lower(), 9)))
     items.sort(key=lambda n: (n.get("published") or "0000-00-00"), reverse=True)
+    return items[:limit]
+
+
+def build_card_news_from_briefing(ctx, cat, limit=CARD_NEWS_LIMIT):
+    """指定カテゴリの信頼性検証済みニュースをカード用HTMLで返す。
+    ⚠️ bias / direction 等は出さない（事実・出典・日付・信頼度のみ）。
+    ctx不在 or 該当ニュース無しなら None（呼び出し側で旧パイプラインにフォールバック）。"""
+    items = briefing_card_items(ctx, cat, limit)
+    if not items:
+        return None
     out = ""
-    for n in items[:limit]:
+    for n in items:
         cred = (n.get("credibility") or "").upper()
         cred_label = "ソース信頼度 高" if cred == "HIGH" else "ソース信頼度 中"
         cred_color = "#1a7f37" if cred == "HIGH" else "#9a6700"
@@ -5130,10 +5245,28 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     fc_ctx = load_fundamental_context_for_site()
     top_news_html     = build_news_html(news.get("top", []))
     # 🆕 各カードの関連ニュースを信頼性検証済みブリーフィングで置換（無ければ旧パイプラインにフォールバック）
-    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []))
-    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []))
-    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []))
-    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []))
+    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []), CARD_NEWS_LIMIT)
+    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []), CARD_NEWS_LIMIT)
+    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []), CARD_NEWS_LIMIT)
+    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []), CARD_NEWS_LIMIT)
+
+    # 🆕 2026-08-26: カードに表示したニュースの出所と件数をログに出す。
+    #    直後の build_ai_analysis_section が出す「AI 根拠ニュースの出所」と見比べて、
+    #    表示ニュースと AI の根拠が同じ材料かをログだけで確認できるようにする。
+    print(f"  📰 カード表示ニュースの出所（ブリーフィング generated_at="
+          f"{str((fc_ctx or {}).get('generated_at', 'なし'))[:10]}）:")
+    for _cat, _raw_key in (("stocks", "stocks"), ("fx", "fx"),
+                           ("commodity", "commodity"), ("crypto", "crypto")):
+        _items = briefing_card_items(fc_ctx, _cat)
+        if _items:
+            print(f"    ✅ {_cat:9s}: {len(_items)}件 ← 検証済みブリーフィング")
+            for _n in _items:
+                print(f"         - {(_n.get('headline') or '')[:70]}")
+        else:
+            _raw = news.get(_raw_key, []) or []
+            print(f"    ⚠️ {_cat:9s}: {len(_raw[:CARD_NEWS_LIMIT])}件 ← 生パイプライン(yf/NewsAPI/RSS)")
+            for _a in _raw[:CARD_NEWS_LIMIT]:
+                print(f"         - {(_a.get('title') or '')[:70]}")
 
     # 🆕 ブリーフィングのニュースは各マーケットカードに集約済み。専用セクション(trust_news)とTOP3は
     #    重複のため出さない。ブリーフィング不在時のみ従来の TOP3 をフォールバック表示。
@@ -5150,6 +5283,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     ai_analysis_html = build_ai_analysis_section(
         nikkei_val=nk,    sp500_val=sp,
         gold_val=gld,     btc_val=btc,
+        # 🆕 2026-08-26: 表示ニュース（下のカード）と AI の根拠を同じ材料に揃える。
+        #    fc_ctx（検証済みブリーフィング）が優先され、無いカテゴリだけ下の生ニュースへ。
+        fc_ctx=fc_ctx,
         stocks_news=news.get("stocks", []),
         commodity_news=news.get("commodity", []),
         crypto_news=news.get("crypto", []),
@@ -5167,7 +5303,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
-        {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧪 解説「<a href="guide-signal-lab-079.html" style="color:#0969da"><b>日足の逆張り買いは71.4%——ただし前向きN=10で事前宣言H2は未達</b></a>」公開'},
+        {"date": "2026-08-29", "line": '・<b>2026-08-29</b>: 🧪 解説「<a href="guide-signal-lab-083.html" style="color:#0969da"><b>#83 上昇×逆張り 降格確定：BB主体77%が引き下げ、RSIは健在</b></a>」公開'},
+        {"date": "2026-08-28", "line": '・<b>2026-08-28</b>: 📰 解説「<a href="guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html" style="color:#0969da"><b>東京CPI8月コアコア2%到達・BOJ9月利上げ確率80%台</b></a>」公開'},
+        {"date": "2026-08-28", "line": '・<b>2026-08-28</b>: 🧪 解説「<a href="guide-signal-lab-082.html" style="color:#0969da"><b>#082 RSI逆張り買い 4H vs 1H 時間足二極化（FWD N=250）</b></a>」公開'},
+        {"date": "2026-08-27", "line": '・<b>2026-08-27</b>: 📰 解説「<a href="guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html" style="color:#0969da"><b>エヌビディアQ2決算確報：6.2B・FY2028成長率70%予告</b></a>」公開'},
+        {"date": "2026-08-27", "line": '・<b>2026-08-27</b>: 🧠 解説「<a href="guide-trade-journal.html" style="color:#0969da"><b>記録をつけると、なぜ判断が変わるのか</b></a>」公開'},
+        {"date": "2026-08-27", "line": '・<b>2026-08-27</b>: 🧪 解説「<a href="guide-signal-lab-081.html" style="color:#0969da"><b>#081 日足ショート22.6% vs 逆張り買い77.8%——55pp方向非対称の定点観測</b></a>」公開'},
+        {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 📰 解説「<a href="guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html" style="color:#0969da"><b>mRNAがんワクチン、人類初の第3相成功──Moderna×Merckのメラノーマ試験</b></a>」公開'},
+        {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 🧠 解説「<a href="guide-regret-aversion.html" style="color:#0969da"><b>後悔回避バイアス：「買えない・売れない」正体</b></a>」公開'},
+        {"date": "2026-08-26", "line": '・<b>2026-08-26</b>: 🧪 解説「<a href="guide-signal-lab-080.html" style="color:#0969da"><b>日足逆張り買い71.4%——1H・4Hとの27pp差をグループ別に解剖</b></a>」公開'},
+        {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧪 解説「<a href="guide-signal-lab-079.html" style="color:#0969da"><b>日足の逆張り買いは71.4%——ただし20年リプレイでは期待値マイナス</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 📰 解説「<a href="guide-news-2026-08-25-druckenmiller-bond-buyback-warning.html" style="color:#0969da"><b>ドラッケンミラー、財務省の国債バイバックを「失策」と批判</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 🧾 解説「<a href="guide-proverb-ri-wa-moto-ni-ari.html" style="color:#0969da"><b>利は元にあり</b></a>」公開'},
         {"date": "2026-08-25", "line": '・<b>2026-08-25</b>: 💰 解説「<a href="guide-market-cap-float.html" style="color:#0969da"><b>時価総額と浮動株（なぜ小型株は激しく動くのか）</b></a>」公開'},

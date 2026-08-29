@@ -3,6 +3,78 @@
 
 ---
 
+## 2026-08-28
+- 判定: ✅ 公開済み
+- 選定トピック: 東京都区部CPI（8月）コアコア2.0%到達、BOJ9月利上げ確率80%台へ──ドル円・日本株への影響を3視点で整理（カテゴリ: 日銀・金融政策・為替・日本株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年8月28日（金）朝に発表された東京都区部8月CPI。コアCPI1.8%（市場予想1.7%超え）、コアコアCPI2.0%（日銀目標到達）。BOJ9月17-18日会合での利上げ（1.00%→1.25%）確率が80%台（Polymarket84%）に急伸。円高・ドル円159.30円前後。本日（8/28）10時ET予定のウォーシュ講演・米PCE（3.7%/3.3%）とのクロス文脈も整理。直近5本の記事（NVIDIA/Moderna/Druckenmiller/JH-preview/NVIDIA-preview）との重複なし。日本人投資家に最も身近な確定済みニュースとして選定。
+- 出典（確認済み・7系統）:
+  - InvestingLive「Tokyo inflation data strengthens case for September BOJ hike」（2026-08-28）
+  - InvestingLive「Japan August 2026 Tokyo headline CPI 1.9%」（2026-08-28）
+  - FXStreet「Japanese Yen strengthens as Tokyo core CPI inflation bolsters BoJ rate hike chance」（2026-08-28）
+  - ActionForex「Tokyo Core-Core CPI Hits 2% as September BoJ Hike Case Strengthens」（2026-08-28）
+  - EconoTimes「Tokyo Inflation Rises in August as BOJ Rate Hike Bets Grow」（2026-08-28）
+  - ExchangeRates.org.uk「USD/JPY Weekly Forecast: September BoJ Hike Bets Rise As Yen Stalls Near 159」（2026-08-23）
+  - Yahoo Finance「Japan's Inflation Print Just Made a September BOJ Hike Harder to Avoid」（2026-08-28近辺）
+  - CNBC「BOJ holds rates at 1%, warns of core inflation exceeding 2% target」（2026-07-31）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①「9月会合前に発表される全国CPI」→「9月会合前後に発表が見込まれる全国CPI」②「9月会合直前」→「9月会合前後の発表見込み」③「本日10時ET・日本時間29日深夜」→「米東部時間8月28日午前10時」（時刻換算の誤り削除）。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典7系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典7系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-28-tokyo-cpi-boj-september-hike.html
+- commit: b51977c（main へ push 済み）
+
+---
+
+## 2026-08-27
+- 判定: ✅ 公開済み
+- 選定トピック: エヌビディアQ2 FY2027決算確報：売上高$96.2B（+106%）・FY2028成長率70%予告でAI需要神話は続くか（カテゴリ: AI半導体・米国株・日本株・個別銘柄）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年8月26日引け後にNVIDIAがQ2 FY2027決算を発表。売上高$96.2B（コンセンサス$92.2B超え）・データセンター$89B（+117%）・EPS$2.22。さらにCFOが初の通期長期ガイダンス「FY2028成長率70%」を提示（アナリスト平均44%大幅超え）。時間外+6%上昇。8/24に当サイトがプレビュー記事を公開済みだが、今回は確定実数値・Huang CEO発言・AWS 200万GPU契約・FY2028長期予告という新しい事実を持つ独立した内容として選定。日本株（アドバンテスト・東京エレクトロン等）への影響論点を整理。ジャクソンホール開幕日（8/27）との重なりも重要コンテキスト。
+- 出典（確認済み・6系統以上）:
+  - NVIDIA公式SEC 8-K Form「NVIDIA Announces Financial Results for Second Quarter Fiscal 2027」（GlobeNewswire 2026-08-26）
+  - CNBC「Nvidia earnings takeaways: Huang forecasts 70% fiscal 2028 revenue growth, far above estimates」（2026-08-26）
+  - CNBC「Nvidia stock rises 6% after blockbuster earnings boost AI confidence」（2026-08-27）
+  - Fortune「Nvidia doubles Q2 revenue to $96 billion and crushes estimates」（2026-08-26）
+  - Kiplinger「Nvidia Earnings: Live Updates and Commentary August 2026」
+  - CoinDesk「Nvidia tops earnings estimates, guides to $108 billion in revenue next quarter」（2026-08-26）
+  - Shacknews「NVIDIA's (NVDA) data centers accounted for $89.0 billion in Q2 2027 revenue」
+  - invezz.com「Advantest, SoftBank lift Nikkei 225: is Nvidia about to decide next move?」（2026-08-26）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3件適用（①アドバンテスト「事実上の独占的地位にあり」→「〜にあると報じられており」に帰属明示 ②東京エレクトロン「AI投資サイクルと連動しやすい」→「〜連動しやすいとの見方がある」に軟化 ③「過去にも確認されている」→「過去にも指摘されてきた」に軟化。事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典6系統以上）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典15箇所✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-27-nvidia-q2-fy2027-earnings-results.html
+- commit: cabfb16（main へ push 済み）
+
+---
+
+## 2026-08-26
+- 判定: ✅ 公開済み
+- 選定トピック: mRNAがんワクチン、人類史上初の第3相成功──ModernaとMerckのINTerpath-001試験（カテゴリ: バイオテック・製薬・米国株・個別銘柄）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: ModernaとMerckが2026年8月19日に発表した第3相INTerpath-001試験（mRNA-4157+Keytruda）の成功。mRNAベースがん治療薬として世界初の第3相主要エンドポイント達成。8/25米国セッションでMRNA株が大幅急騰（nearly doublesと報道）、BofAが目標株価を$40→$170へ引き上げ。8/25のS&P500も+0.32%と上昇。mRNA技術のがん領域への応用可能性という歴史的マイルストーンとして15/15の満点スコア。過去記事との重複なし（バイオテック/mRNAがん関連の記事は当サイト初）。
+- 出典（確認済み・8系統）:
+  - Moderna公式「Merck and Moderna Announce Phase 3 INTerpath-001 Trial…Met Endpoints of RFS and DMFS in Melanoma」（2026-08-19）
+  - BusinessWire同日発表（2026-08-19）
+  - Merck.com公式プレスリリース（2026-08-19）
+  - BioPharm International「Merck and Moderna's Intismeran Autogene Plus Pembrolizumab Meets Endpoints in Phase 3 Melanoma Trial」
+  - Dermatology Times「Personalized mRNA-Based Melanoma Vaccine Meets Primary Endpoints in Landmark Phase 3 Trial」
+  - BioSpace「Moderna stock nearly doubles as Merck-partnered mRNA cancer vaccine meets Phase 3 goal」（2026-08-25）
+  - Eastern Herald「S&P 500 Today, August 25, 2026: Moderna Surges on Cancer Vaccine as DICK'S Sporting Goods Craters 29%」（2026-08-25）
+  - Forbes「Moderna Stock Plunges 25%—Wiping Out $18 Billion After Historic Cancer Vaccine Breakthrough」（2026-08-20）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2件適用（①🟡留保ボックス「高いボラティリティが継続する」→「ボラティリティが高くなりやすい傾向が指摘されている（今後の値動きを予測・保証するものではありません）」へ軟化+免責追記 ②🟢ポジティブボックスのBofA目標株価紹介直後に「個別の証券会社の見解・報道ベース・当サイトの見解でなく将来の株価水準を示唆・保証するものではありません」を追記 ／ 事実・数値・構造・出典は一切変更なし）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典8系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭バナー/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告29件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html
+- commit: e04e9e0（main へ push 済み）
+
+---
+
 ## 2026-08-25
 - 判定: ✅ 公開済み
 - 選定トピック: ドラッケンミラーWSJ寄稿：財務省の国債バイバックを「失策」と批判──30年利回り19年ぶり高水準の背景と日本投資家への含意（カテゴリ: マクロ・米国債・金融政策）

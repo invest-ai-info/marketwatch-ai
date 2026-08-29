@@ -6,9 +6,11 @@ name: Political Alerts (Live Feed)
 
 on:
   schedule:
-    # 30 分間隔。GitHub Actions cron は best-effort (遅延 0-30 分あり)
-    # 実際は 30-60 分間隔の動作になる
-    - cron: '*/30 * * * *'
+    # 🆕 2026-08-27: '*/30 * * * *' は :00/:30 という最混雑スロットを踏むうえバックアップが無く、
+    #   6時間以上の欠測を起こした（automation-health が検知）。混雑分を外して毎時4回に増やし、
+    #   1〜2回スキップされても実効30分間隔を保てるようにする。
+    # GitHub Actions cron は best-effort（遅延 0-30 分あり）＝正確な時刻は期待しない設計のまま。
+    - cron: '13,28,43,58 * * * *'
   workflow_dispatch:
 
 jobs:
