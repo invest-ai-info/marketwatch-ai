@@ -1,3 +1,24 @@
+## 2026-08-30 autodraft: anchoring-price（自分が買った値段を、相場は知らない）
+
+- **日付（JST）**: 2026-08-30
+- **topic / key**: 投資心理 #50 / `anchoring-price`
+- **生成ファイル**: `drafts/draft-anchoring-price.html`
+- **参照出典**:
+  - Tversky & Kahneman (1974) "Judgment under Uncertainty: Heuristics and Biases" — アンカリング概念の初出・ルーレット実験
+  - https://www.kcsf.co.jp/marketing/anchoring-effect.html — アンカリング効果の解説（日本語）
+  - https://www.meegle.com/en_us/topics/behavioral-finance/anchoring-in-financial-decisions — 投資へのアンカリング応用
+  - ResearchGate: "Behavioral Biases of Individual Investors: The Effect of Anchoring" — 学術確認
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（「日経平均4万円」「ドル円150円」はあくまで説明用の例示）
+  - ✅ 断定・利益保証なし（「保証」「絶対」「必ず」「儲かる」の文字なし）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer 3箇所）
+  - ✅ 出典妥当（Tversky & Kahneman 1974、学術確認済み）
+  - ✅ noindex/nofollow あり
+- **人間の残作業**:
+  - SVG 2点（ルーレット実験・建値と市場価格）のライト/ダーク実機確認（.s-anchor クラスを新追加）
+  - タイトル・リード文の微調整
+  - 公開は毎朝 08:40 の `autodraft-publish` がゲート付きで自動実行
+
 ## 2026-08-29 autopublish: 🚩要人間レビュー: shareholder-benefits・L348事実誤認
 
 - **対象**: `drafts/draft-shareholder-benefits.html` → `guide-shareholder-benefits.html`
