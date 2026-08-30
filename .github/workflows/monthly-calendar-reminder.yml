@@ -50,12 +50,15 @@ jobs:
       - name: Sync economic indicators from ECONOMIC_EVENTS_2026
         run: python sync_economic_events.py --write
 
-      # 🆕 2026-08-30。指数を動かす主要銘柄の決算発表予定を yfinance から取り込む。
-      # J-Quants の決算系は403（プラン外）＝yfinance が唯一の実測済みルート。
-      # ⚠️ ローカルPCでは curl_cffi が CA証明書を見つけられず検証できない（Actionsで測る）。
-      # continue-on-error＝決算が取れなくても休場補充・指標生成・メールを巻き添えにしない。
-      - name: Sync earnings dates for index movers
-        run: pip install yfinance >/dev/null && python sync_earnings_events.py --write
+      # 🆕 2026-08-30。決算予定を更新する。**既存の build_earnings_calendar.py を使う**
+      # （Nasdaq決算カレンダーAPI・米20銘柄＋日本はJP_CURATEDの手動リスト）。
+      # これまで**どのワークフローからも呼ばれておらず**、最後の実行が 2026-06-26 で
+      # earnings-calendar.json が2か月古いまま calendar.html に描画されていた
+      # （範囲が 2026-07-09〜09-03 で止まっていた）。
+      # ⚠️ 新しい取得スクリプトを足さないこと。台帳が増えると今回と同じ「片方だけ死ぬ」形になる。
+      # LOOKAHEAD_DAYS=95 なので、月次実行でも常に2〜3か月先まで埋まる。
+      - name: Refresh earnings calendar (US=Nasdaq API / JP=curated)
+        run: python build_earnings_calendar.py
         continue-on-error: true
 
       - name: Send monthly calendar reminder email
@@ -65,7 +68,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add economic-events.json 2>/dev/null || true
+          git add economic-events.json earnings-calendar.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
