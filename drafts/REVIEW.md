@@ -1,3 +1,11 @@
+## 2026-08-31 autopublish: guide-rebalancing.html（✅公開済み）
+- **key**: rebalancing / シリーズ: リスク管理 #47
+- **ゲート**: 決定論(check_guide_draft.py) EXIT=0 🟢 / Opus初回🟡グレー8件修正→🟢白 / check_site_consistency EXIT=0 🟢 / 独立Opus🟢白
+- **修正内容**: noindex除去・nav11→10ボタン(holdings除去)・日付更新・kinsho-v1バナー属性付与・断定語2件除去・研究引用スタイル軟化・専門用語初出説明追加・頻度言い切り軟化・Section7見出し修正
+- **URL**: https://marketwatch-jp.com/guide-rebalancing.html（push済み・GitHub Pages反映待ち）
+
+---
+
 ## 2026-08-31 signal-lab #085（✅公開済み）
 - **テーマ**: RSI売られすぎ×上昇×ロング 前向きN=21追跡——IS 76.5%からFWD 52.4%への軟化、1H足の落ち込みが主因
 - **記事**: `guide-signal-lab-085.html`
