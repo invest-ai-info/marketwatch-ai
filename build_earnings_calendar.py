@@ -4,8 +4,15 @@
 - 米国（US）: Nasdaq 決算カレンダー API から主要銘柄の次回決算日を自動取得
     https://api.nasdaq.com/api/calendar/earnings?date=YYYY-MM-DD （要 User-Agent）
     今日から約 LOOKAHEAD_DAYS 営業日を走査し、US_TICKERS に一致する行を収集。
-- 日本（JP）: 無料の安定した自動ソースが無いため、JP_CURATED の手動リストを使う
-    （決算発表「予定」日。各社 IR / 適時開示で確定する。四半期ごとにここを更新）
+- 日本（JP）: JP_CURATED は**銘柄リスト**として使い、日付は yfinance で毎回更新する
+    （2026-08-30 まではここが日付ごと手書きで、放置されて20件すべて過去日になっていた）
+- フォールバック（US/JP 共通）: yfinance
+    Nasdaq API はメガキャップを返さないことがある（2026-08-30 実測で AAPL/MSFT/GOOGL/
+    AMZN/META/TSLA が丸ごと欠落＝20銘柄中9件しか取れず、うち3件は過去日だった）。
+    同時刻に yfinance は同じ銘柄を8/8で返したので、取れなかったぶんだけ補う。
+    ⚠️ **出力先はこの earnings-calendar.json ひとつに保つこと。**別ファイルを作ると
+    「台帳が2つあって片方だけ死ぬ」形になる（economic-events.json で実際に起きた）。
+    ⚠️ ローカルPCでは curl_cffi が CA証明書を見つけられず yfinance が動かない。Actions で測る。
 
 出力: earnings-calendar.json {updated, note, us:[...], jp:[...]}
 generate_market_news.py がこれを読んで calendar.html に決算セクションを描画する（取得はしない）。
@@ -117,6 +124,49 @@ def fetch_us():
     return sorted(found.values(), key=lambda x: (x["date"], x["ticker"]))
 
 
+def _yf_next_earnings(symbol, exch_tz):
+    """yfinance で「次の未来の決算日時」を1件返す。取れなければ None。
+
+    Nasdaq API が返さない銘柄の穴埋め専用。時刻は取引所の現地時間に直してから
+    寄付前/場中/引け後を判定する（JSTのまま判定すると米株が全部「寄付前」になる）。
+    """
+    try:
+        import yfinance as yf
+        import datetime as _dt
+        import zoneinfo
+        tz = zoneinfo.ZoneInfo(exch_tz)
+        now = _dt.datetime.now(tz)
+        df = yf.Ticker(symbol).get_earnings_dates(limit=12)
+        if df is None or not len(df):
+            return None
+        cand = []
+        for idx in df.index:
+            try:
+                ts = idx.to_pydatetime()
+            except Exception:
+                continue
+            if ts.tzinfo is None:      # 時刻の裏が取れない行は使わない（推測しない）
+                continue
+            local = ts.astimezone(tz)
+            if local >= now:
+                cand.append(local)
+        if not cand:
+            return None
+        return min(cand)
+    except Exception:
+        return None
+
+
+def _session_label(local_dt, open_h, open_m, close_h):
+    """取引所の現地時刻から 寄付前 / 場中 / 引け後 を決める。"""
+    mins = local_dt.hour * 60 + local_dt.minute
+    if mins < open_h * 60 + open_m:
+        return "寄付前"
+    if mins >= close_h * 60:
+        return "引け後"
+    return "場中"
+
+
 def main():
     print("📊 決算カレンダー生成")
     us = fetch_us()
@@ -126,17 +176,40 @@ def main():
         if tk in US_TICKERS and tk not in fetched:
             us.append({"date": fb["date"], "ticker": tk, "name": US_TICKERS[tk],
                        "time": fb["time"], "tentative": True})
+    # Nasdaq も暫定日も無い銘柄を yfinance で補う（メガキャップがここで埋まる）
+    yf_filled = []
+    for tk in sorted(set(US_TICKERS) - {e["ticker"] for e in us}):
+        d = _yf_next_earnings(tk, "America/New_York")
+        if d:
+            us.append({"date": d.date().isoformat(), "ticker": tk, "name": US_TICKERS[tk],
+                       "time": _session_label(d, 9, 30, 16), "tentative": True})
+            yf_filled.append(tk)
     us = sorted(us, key=lambda x: (x["date"], x["ticker"]))
     missing = sorted(set(US_TICKERS) - {e["ticker"] for e in us})
     print(f"  US: {len(us)}/{len(US_TICKERS)} 件"
           + (f"（自動{len(fetched)}＋暫定{len(us) - len(fetched)}）" if len(us) > len(fetched) else "（全自動）")
+          + (f"＋yfinance{len(yf_filled)}" if yf_filled else "")
           + (f" ／未取得: {', '.join(missing)}" if missing else ""))
-    jp = sorted(JP_CURATED, key=lambda x: (x.get("date", "9999"), x.get("code", "")))
-    print(f"  JP: {len(jp)} 件（キュレーション）")
+    # JP_CURATED は銘柄リストとして使い、日付は毎回 yfinance で更新する。
+    # 取れなかった銘柄はキュレーション値のまま残す（消すと一覧から銘柄ごと消えるため）。
+    jp, jp_updated = [], 0
+    for e in JP_CURATED:
+        row = dict(e)
+        d = _yf_next_earnings(f"{e['code']}.T", "Asia/Tokyo")
+        if d:
+            row["date"] = d.date().isoformat()
+            row["time"] = _session_label(d, 9, 0, 15)
+            row["tentative"] = True
+            jp_updated += 1
+        jp.append(row)
+    jp = sorted(jp, key=lambda x: (x.get("date", "9999"), x.get("code", "")))
+    stale = sum(1 for x in jp if x.get("date", "") < datetime.date.today().isoformat())
+    print(f"  JP: {len(jp)} 件（yfinance更新 {jp_updated} / キュレーション据置 {len(jp) - jp_updated}"
+          + (f" ／過去日のまま {stale} 件" if stale else "") + "）")
 
     payload = {
         "updated": datetime.date.today().isoformat(),
-        "note": "米国はNasdaqから自動取得、日本はキュレーション（発表予定日は変更の可能性あり）。情報提供であり投資助言ではありません。",
+        "note": "米国はNasdaq＋yfinance、日本はyfinanceで自動取得（取れない銘柄はキュレーション値）。発表予定日は変更の可能性あり。情報提供であり投資助言ではありません。",
         "us": us,
         "jp": jp,
     }
