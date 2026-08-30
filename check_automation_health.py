@@ -852,7 +852,7 @@ def main():
         body.append(f"- 🚨 ⚪ 日本株ランキングの鮮度確認に失敗: {e}")
 
     body.append("")
-    body.append("### ⑬ 経済指標カレンダーの先詰まり（①②はworkflow成否しか見ない死角＝中身で見る）")
+    body.append("### ⑬ カレンダーの先詰まり（①②はworkflow成否しか見ない死角＝中身で見る）")
     try:
         cal = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/economic-events.json", token))
@@ -872,6 +872,31 @@ def main():
             bad.append(("経済指標カレンダーの先詰まり", "warn"))
     except Exception as e:
         body.append(f"- 🚨 ⚪ 経済指標カレンダーの確認に失敗: {e}")
+
+    # 決算予定も同じ形で腐る。2026-08-30 実測: build_earnings_calendar.py が
+    # **どのワークフローからも呼ばれておらず**、earnings-calendar.json が
+    # updated=2026-06-26 のまま（US 9/20件・JP は20件すべて過去日）で
+    # calendar.html に描画され続けていた。いまは monthly-calendar-reminder.yml が
+    # 毎月呼ぶが、上流（Nasdaq API / yfinance）が黙って空を返せば同じ形になる。
+    try:
+        ec = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/earnings-calendar.json", token))
+        today = now.astimezone(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
+        fut_us = [x for x in ec.get("us", []) if x.get("date", "") >= today]
+        fut_jp = [x for x in ec.get("jp", []) if x.get("date", "") >= today]
+        if not fut_us or not fut_jp:
+            body.append(
+                f"- 🚨 🟡 決算予定に未来分が無い（米 {len(fut_us)} 件 / 日 {len(fut_jp)} 件・"
+                f"updated={ec.get('updated')}）＝calendar.html が過去の決算を出し続ける。"
+                f"直し方＝monthly-calendar-reminder.yml を手動実行"
+                f"（build_earnings_calendar.py が Nasdaq API と yfinance の2系統で取る）。"
+                f"両方0なら上流の障害、片方だけなら該当国のソースを疑う")
+            bad.append(("決算予定の先詰まり", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 決算予定の未来分: 米 {len(fut_us)} 件 / 日 {len(fut_jp)} 件"
+                        f"（updated={ec.get('updated')}）")
+    except Exception as e:
+        body.append(f"- 🚨 ⚪ 決算予定の確認に失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
