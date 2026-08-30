@@ -1,8 +1,7 @@
-## 2026-08-31 signal-lab #085（ゲート実行中）
+## 2026-08-31 signal-lab #085（✅公開済み）
 - **テーマ**: RSI売られすぎ×上昇×ロング 前向きN=21追跡——IS 76.5%からFWD 52.4%への軟化、1H足の落ち込みが主因
-- **下書き**: `drafts/draft-signal-lab-085.html`
-- **claims**: `drafts/labnotes/lab-085-claims.json`
-- **ゲート**: signal_lab_verify → 実行中
+- **記事**: `guide-signal-lab-085.html`
+- **ゲート**: verify EXIT=0（10/10緑）/ Opus🟡→🟢白（表現過去形化・IS選択バイアス留保・用語解説追加）/ 独立Opus🟢白 / check EXIT=0
 
 ---
 
