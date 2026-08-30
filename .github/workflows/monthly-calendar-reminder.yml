@@ -50,10 +50,12 @@ jobs:
       - name: Sync economic indicators from ECONOMIC_EVENTS_2026
         run: python sync_economic_events.py --write
 
-      # 🆕 2026-08-30。まずドライラン（--write なし）で yfinance の戻りをログで確認する。
-      # ローカルPCは curl_cffi が CA証明書を見つけられず検証できないため、Actions で測る。
-      - name: Probe earnings dates (dry-run)
-        run: pip install yfinance >/dev/null && python sync_earnings_events.py
+      # 🆕 2026-08-30。指数を動かす主要銘柄の決算発表予定を yfinance から取り込む。
+      # J-Quants の決算系は403（プラン外）＝yfinance が唯一の実測済みルート。
+      # ⚠️ ローカルPCでは curl_cffi が CA証明書を見つけられず検証できない（Actionsで測る）。
+      # continue-on-error＝決算が取れなくても休場補充・指標生成・メールを巻き添えにしない。
+      - name: Sync earnings dates for index movers
+        run: pip install yfinance >/dev/null && python sync_earnings_events.py --write
         continue-on-error: true
 
       - name: Send monthly calendar reminder email
