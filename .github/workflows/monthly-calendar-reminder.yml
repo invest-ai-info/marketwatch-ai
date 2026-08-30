@@ -3,6 +3,7 @@ name: Monthly Calendar Reminder
 # 目的:
 # - 毎月 25 日朝に「来月の主要経済指標」を Gemini で取得 → メール送信
 # - 同時に generate_market_holidays.py で 2026-2027 年の市場休場日を自動補充
+# - sync_economic_events.py で経済指標を ECONOMIC_EVENTS_2026 から生成（手動転記の廃止）
 # - economic-events.json に追加された休場日は git push
 
 on:
@@ -38,6 +39,16 @@ jobs:
 
       - name: Auto-add market holidays (2026-2027)
         run: python generate_market_holidays.py
+
+      # 🆕 2026-08-30 追加。economic-events.json の「経済指標」は
+      # monthly_calendar_reminder.py がメールを送るだけで JSON には書かず、
+      # 転記は人手だった（_update_policy「月初に当月分を手動更新」）。7月末で
+      # 止まり、指標が2か月ゼロのまま誰も気づけなかった（メールを送れば
+      # ワークフローは success なので automation-health からも見えない）。
+      # サイトの calendar.html は別台帳 ECONOMIC_EVENTS_2026 で保守が続いていたので、
+      # そちらから生成して台帳の二重管理をやめる＝手動転記の工程自体を無くす。
+      - name: Sync economic indicators from ECONOMIC_EVENTS_2026
+        run: python sync_economic_events.py --write
 
       - name: Send monthly calendar reminder email
         run: python monthly_calendar_reminder.py
