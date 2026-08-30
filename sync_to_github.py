@@ -186,4 +186,5 @@ SYNC_FILES = [
     "guide-shareholder-benefits.html",
     "guide-news-2026-08-30-canada-us-trade-war-tariffs.html",
     "guide-signal-lab-085.html",
+    "guide-rebalancing.html",
 ]
