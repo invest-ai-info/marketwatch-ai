@@ -1,3 +1,17 @@
+## 2026-08-30 autopublish: ✅公開 guide-shareholder-benefits.html（株主優待は、利回りで比べると見誤る）
+
+- **対象**: `drafts/draft-shareholder-benefits.html` → `guide-shareholder-benefits.html`
+- **決定論ゲート**: ✅ GREEN（EXIT=0）
+- **コンプラ+品質（Opus初回）**: 🟢白（軽微修正3件: L349権利落ち日定義・L400趨勢断定軟化・L449制度信用取引初出説明追加。昨日エスカレ修正4件[L350/L400/L446/L449]も適用）
+- **独立Opus①**: 🟡→修正（L323 SVG font-size 17px→12px。ライトモードでバーはみ出し解消）→ゲート再緑
+- **独立Opus②**: 🟡→修正（L308 優待利回り計算式の分母を「株価」→「株価×必要株数」に訂正）→ゲート再緑
+- **独立Opus③（最終）**: 🟢白（独立確認・最終）全修正確認済み・新規ブロッカーなし
+- **整合性チェック**: ✅ EXIT=0（警告30件はすべて既存記事の既知問題）
+- **公開URL**: https://marketwatch-jp.com/guide-shareholder-benefits.html
+- **カテゴリ**: 💰 投資の基礎知識 / シリーズ#46
+
+---
+
 ## 2026-08-30 signal-lab-daily: #084 上昇配置×ロング 降格確定（ゲート実行中）
 
 - **記事番号**: #084
