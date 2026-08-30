@@ -18,6 +18,7 @@ economic-events.json に追加すべき項目をメールで通知する。
 
 GitHub Actions: 毎月 25 日 00:13 UTC = 09:13 JST 25 日
 """
+import json
 import os
 import sys
 import smtplib
@@ -119,67 +120,124 @@ def build_json_template(events_text):
     return "\n".join(json_lines)
 
 
-def send_reminder_email(year, month, raw_text, json_template):
-    """リマインダーメールを送信"""
+def assess_state(now_jst):
+    """自動更新の結果を読み、**人がやるべきことだけ**を todos に返す。
+
+    2026-08-30 まで、このメールは「economic-events.json に翌月の指標を手で追加して
+    ください」という依頼だった。しかし転記は sync_economic_events.py と
+    build_earnings_calendar.py が自動でやるようになったので、依頼は成立しなくなった。
+    ⚠️ **やらなくていい作業を毎月催促するメールは読まれなくなる。**実際、今回の事故
+    （指標が2か月ゼロ）は、このメールが届き続けたのに誰も動かなかった結果でもある。
+    ⇒ 依頼をやめ、状態の報告に変える。todos が空なら「対応不要」と明示する。
+    """
+    here = os.path.dirname(os.path.abspath(__file__))
+    todos, stats = [], {}
+    now_iso = now_jst.isoformat(timespec="minutes")
+
+    # ── 経済指標（sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成）──
+    try:
+        ev = json.load(open(os.path.join(here, "economic-events.json"), encoding="utf-8"))["events"]
+        ind = sorted((e for e in ev if e.get("category") != "market_holiday"),
+                     key=lambda x: x.get("datetime", ""))
+        fut = [e for e in ind if e.get("datetime", "") >= now_iso]
+        stats["ind_future"] = len(fut)
+        stats["ind_last"] = fut[-1]["datetime"][:10] if fut else None
+        stats["ind_next3"] = [(e["datetime"][:16], e["name"]) for e in fut[:3]]
+        if not fut:
+            todos.append(
+                "🚨 経済指標の未来分が **0件**。generate_market_news.py の "
+                "ECONOMIC_EVENTS_2026 に翌月以降を追記してから、このワークフローを再実行してください。"
+                "（economic-events.json を直接編集しても生成対象にはなりません）")
+        else:
+            runway = (datetime.fromisoformat(fut[-1]["datetime"]) - now_jst).days
+            stats["ind_runway"] = runway
+            if runway < 75:
+                todos.append(
+                    f"⚠️ 経済指標が **あと{runway}日ぶん**（最終 {fut[-1]['datetime'][:10]}）。"
+                    f"ECONOMIC_EVENTS_2026 は年ごとのハードコード表なので、"
+                    f"**翌年ぶんを書き足さないと年明けに空になります。**下の候補リストを材料にどうぞ")
+    except Exception as e:
+        todos.append(f"🚨 economic-events.json を読めませんでした: {e}")
+
+    # ── 決算予定（build_earnings_calendar.py が Nasdaq API + yfinance で取得）──
+    try:
+        ec = json.load(open(os.path.join(here, "earnings-calendar.json"), encoding="utf-8"))
+        today = now_jst.date().isoformat()
+        fus = [x for x in ec.get("us", []) if x.get("date", "") >= today]
+        fjp = [x for x in ec.get("jp", []) if x.get("date", "") >= today]
+        stats["ern_us"], stats["ern_jp"] = len(fus), len(fjp)
+        stats["ern_updated"] = ec.get("updated")
+        if not fus or not fjp:
+            todos.append(
+                f"🚨 決算予定の未来分が足りません（米 {len(fus)} 件 / 日 {len(fjp)} 件）。"
+                f"両方0なら上流（Nasdaq API・yfinance）の障害、片方だけなら該当国のソースを疑ってください")
+    except Exception as e:
+        todos.append(f"🚨 earnings-calendar.json を読めませんでした: {e}")
+
+    return todos, stats
+
+
+def send_report_email(year, month, todos, stats, raw_text):
     sender = os.environ.get("GMAIL_USER", "")
     password = os.environ.get("GMAIL_APP_PASSWORD", "")
-    recipient = os.environ.get("ALERT_RECIPIENT", "")
-    if not (sender and password and recipient):
-        print("  ⚠️ メール認証情報未設定、送信スキップ")
+    recipient = os.environ.get("ALERT_RECIPIENT", "") or sender
+    if not sender or not password:
+        print("  ⚠️ GMAIL_USER / GMAIL_APP_PASSWORD 未設定＝送信スキップ")
         return False
 
-    subject = f"📅 [リマインダー] {year}年{month}月 経済指標カレンダー追加お願い"
-
-    body_lines = [
-        "━━━━━━━━━━━━━━━━━━━━━",
-        f"📅 経済指標カレンダー月次リマインダー",
-        f"{year}年{month}月の主要経済指標を economic-events.json に追加してください。",
-        "━━━━━━━━━━━━━━━━━━━━━",
-        "",
-        "🤖 Gemini が生成した候補リスト:",
-        "",
-        raw_text or "(Gemini 取得失敗、手動で WebSearch してください)",
-        "",
-        "━━━━━━━━━━━━━━━━━━━━━",
-        "📋 economic-events.json に貼り付け可能な JSON 形式:",
-        "",
-    ]
-    if json_template:
-        body_lines.append(json_template)
+    if todos:
+        subject = f"⚠️ [要対応 {len(todos)}件] {year}年{month}月 カレンダー自動更新"
     else:
-        body_lines.append("(変換失敗、上記の生データから手動で JSON 化してください)")
+        subject = f"✅ [対応不要] {year}年{month}月 カレンダー自動更新"
 
-    body_lines.extend([
-        "",
-        "━━━━━━━━━━━━━━━━━━━━━",
-        "💡 やること:",
-        "  1. 上記の日時を WebSearch で再確認（Gemini が間違える可能性あり）",
-        "  2. economic-events.json の events 配列に追加",
-        "  3. sync_to_github.py で push",
-        "",
-        "ℹ️ なお、市場休場日は generate_market_holidays.py が自動で追加します。",
-        "  ここでは「重要指標（FOMC・雇用統計・CPI・日銀等）」のみ手動メンテです。",
-        "━━━━━━━━━━━━━━━━━━━━━",
-        "MarketWatch AI Calendar Reminder",
-    ])
+    L = ["━━━━━━━━━━━━━━━━━━━━━",
+         "📅 カレンダー自動更新レポート",
+         "━━━━━━━━━━━━━━━━━━━━━", ""]
+    L += ["【いまの状態】",
+          f"  経済指標   未来 {stats.get('ind_future', '?')} 件"
+          + (f"（最終 {stats['ind_last']} ／あと{stats.get('ind_runway','?')}日ぶん）" if stats.get("ind_last") else ""),
+          f"  決算予定   米 {stats.get('ern_us', '?')} 件 / 日 {stats.get('ern_jp', '?')} 件"
+          f"（更新 {stats.get('ern_updated', '?')}）", ""]
+    if stats.get("ind_next3"):
+        L.append("  直近の指標:")
+        L += [f"    {d}  {n}" for d, n in stats["ind_next3"]]
+        L.append("")
 
-    body = "\n".join(body_lines)
+    if todos:
+        L += ["━━━━━━━━━━━━━━━━━━━━━", "【あなたがやること】", ""]
+        for i, t in enumerate(todos, 1):
+            L += [f"  {i}. {t}", ""]
+        if raw_text:
+            L += ["━━━━━━━━━━━━━━━━━━━━━",
+                  f"【材料】Gemini が挙げた {year}年{month}月の主要指標候補",
+                  "  ※ そのまま貼らず、ECONOMIC_EVENTS_2026 の書式",
+                  "     (月, 日, \"us\", \"high\", \"名称\", \"説明\") に直して追記してください", "",
+                  raw_text, ""]
+    else:
+        L += ["━━━━━━━━━━━━━━━━━━━━━",
+              "✅ 対応は要りません。指標も決算も自動で更新済みです。", ""]
+
+    L += ["━━━━━━━━━━━━━━━━━━━━━",
+          "指標  = sync_economic_events.py（ECONOMIC_EVENTS_2026 から生成）",
+          "決算  = build_earnings_calendar.py（Nasdaq API + yfinance）",
+          "休場  = generate_market_holidays.py（2027年まで自動）",
+          "見張り = automation-health §⑬（先詰まりを毎朝チェック）",
+          "MarketWatch AI Calendar"]
 
     msg = MIMEMultipart()
     msg["From"] = sender
     msg["To"] = recipient
     msg["Subject"] = subject
     msg["Date"] = formatdate(localtime=True)
-    msg.attach(MIMEText(body, "plain", "utf-8"))
-
+    msg.attach(MIMEText(chr(10).join(L), "plain", "utf-8"))
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as server:
             server.login(sender, password)
             server.sendmail(sender, [recipient], msg.as_string())
-        print(f"  📧 リマインダーメール送信完了: {recipient}")
+        print(f"  📧 送信完了: {recipient}（{subject}）")
         return True
     except Exception as e:
-        print(f"  ❌ メール送信失敗: {type(e).__name__}: {str(e)[:80]}")
+        print(f"  ❌ 送信失敗: {e}")
         return False
 
 
@@ -188,36 +246,37 @@ def main():
     today = now_jst.date()
     no_email = "--no-email" in sys.argv
 
-    # 翌月を計算
     if today.month == 12:
         target_year, target_month = today.year + 1, 1
     else:
         target_year, target_month = today.year, today.month + 1
 
-    print(f"📅 経済指標カレンダー月次リマインダー ({today} → 翌月 {target_year}-{target_month:02d})")
+    print(f"📅 カレンダー自動更新レポート ({today} → 翌月 {target_year}-{target_month:02d})")
 
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    print(f"  🤖 Gemini に {target_year}-{target_month:02d} 主要指標を問合せ中...")
+    todos, stats = assess_state(now_jst)
+    print(f"  状態: 指標 未来{stats.get('ind_future','?')}件 / "
+          f"決算 米{stats.get('ern_us','?')}・日{stats.get('ern_jp','?')}件")
+    print(f"  要対応: {len(todos)} 件")
+    for t in todos:
+        print(f"    - {t[:110]}")
 
-    raw_text = ask_gemini_for_calendar(target_year, target_month, api_key)
-    if not raw_text:
-        print(f"  ⚠️ Gemini 取得失敗、フォールバックメッセージで送信")
-        raw_text = f"(Gemini API 取得失敗。WebSearch で「{target_year}年{target_month}月 FOMC 雇用統計 CPI 日銀」を検索して手動追加してください)"
-
-    print(f"  ✅ Gemini から {len(raw_text)} 文字取得")
-    json_template = build_json_template(raw_text)
+    # 対応事項があるときだけ Gemini を叩く（不要な API 呼び出しと待ち時間を作らない）
+    raw_text = ""
+    if todos:
+        api_key = os.environ.get("GEMINI_API_KEY", "")
+        print(f"  🤖 Gemini に {target_year}-{target_month:02d} の主要指標を問合せ中...")
+        raw_text = ask_gemini_for_calendar(target_year, target_month, api_key) or ""
+        if not raw_text:
+            raw_text = (f"(Gemini 取得失敗。WebSearch で「{target_year}年{target_month}月 "
+                        f"FOMC 雇用統計 CPI 日銀」を調べてください)")
+        else:
+            print(f"  ✅ Gemini から {len(raw_text)} 文字取得")
 
     if no_email:
-        print(f"  🔇 メール送信スキップ (--no-email)")
-        print()
-        print("=== 取得した raw text ===")
-        print(raw_text[:1500])
-        print()
-        print("=== JSON テンプレート（先頭 800 文字） ===")
-        print(json_template[:800])
+        print("  🔇 メール送信スキップ (--no-email)")
         return
 
-    send_reminder_email(target_year, target_month, raw_text, json_template)
+    send_report_email(target_year, target_month, todos, stats, raw_text)
 
 
 if __name__ == "__main__":
