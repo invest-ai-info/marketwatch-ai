@@ -5303,6 +5303,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-08-30", "line": '・<b>2026-08-30</b>: 📰 解説「<a href="guide-news-2026-08-30-canada-us-trade-war-tariffs.html" style="color:#0969da"><b>【8/30】米加「50%関税報復合戦」全面衝突</b></a>」公開'},
         {"date": "2026-08-30", "line": '・<b>2026-08-30</b>: 💰 解説「<a href="guide-shareholder-benefits.html" style="color:#0969da"><b>株主優待は、利回りで比べると見誤る</b></a>」公開'},
         {"date": "2026-08-30", "line": '・<b>2026-08-30</b>: 🧪 解説「<a href="guide-signal-lab-084.html" style="color:#0969da"><b>上昇配置ロングが降格確定——前向きN=582でCI下限2回連続ゼロ割れ</b></a>」公開'},
         {"date": "2026-08-29", "line": '・<b>2026-08-29</b>: 📰 解説「<a href="guide-news-2026-08-29-warsh-jackson-hole-fed-september-rate-hike.html" style="color:#0969da"><b>ウォーシュFRB議長JH講演：9月利上げ確率57%急上昇</b></a>」公開'},

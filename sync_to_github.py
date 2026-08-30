@@ -184,4 +184,5 @@ SYNC_FILES = [
     "guide-news-2026-08-29-warsh-jackson-hole-fed-september-rate-hike.html",
     "guide-signal-lab-084.html",
     "guide-shareholder-benefits.html",
+    "guide-news-2026-08-30-canada-us-trade-war-tariffs.html",
 ]

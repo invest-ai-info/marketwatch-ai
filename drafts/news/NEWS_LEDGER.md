@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-08-30
+- 判定: ✅ 公開済み
+- 選定トピック: 米加「50%関税報復合戦」全面衝突──カナダ9月8日発効の対米反撃関税とドル・インフレ・日本株への影響を3視点で整理（カテゴリ: 米加貿易摩擦・インフレ・為替・日本株）
+- スコア: 話題性 4 / 影響 5 / 付加価値 5（合計 14/15）
+- 選定理由: 8月22日に米国が対カナダ50%関税を発動（交渉決裂）、カナダが9月8日発効の276億ドル規模・700品目超の報復関税を宣言。ウォーシュ講演後のFed利上げ懸念と重なり「インフレ再加速→ドル高→円安圧力」という日本人投資家に身近な連鎖を形成。直近5本の記事（NVIDIA/東京CPI/BOJ/ジャクソンホール×2）との重複なし。
+- 出典（確認済み・9系統）:
+  - AFPBB「米加貿易交渉が決裂、50%の関税発動 カナダは対抗措置へ」（2026-08-22）
+  - Bloomberg JP「米国の対カナダ50%関税が発動、カーニー加首相は報復表明」（2026-08-22）
+  - Canada.ca公式「List of products from the United States subject to counter-tariffs effective September 8, 2026」
+  - Al Jazeera「Canada hits US with counter-tariffs on more than 700 products」（2026-08-25）
+  - Washington Post「Canada sets new tariffs on U.S. after Trump's 50% levies」（2026-08-22）
+  - CNBC「'They asked too much': Canadian dollar slides as Ottawa and Washington head for all-out trade war」（2026-08-24）
+  - NPR「As Canada readies retaliatory tariffs, Mark Carney says his nation is 'at war' with U.S.」（2026-08-22）
+  - The Hill「Canada's Prime Minister Mark Carney announces retaliatory tariffs to begin Sept. 8」（2026-08-25）
+  - Yahoo Finance「Dollar Gains on Tariff Escalation」（2026-08-25前後）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2件適用（①投資家ポジション目線表現を金利一般論に軟化 ②TD Economics「前掲」誤記を「報道ベース・一次原典未確認」に訂正）＋リンク404修正2件（guide-us-tariffs→tariff-august-deadline、guide-dollar-yen→yen-intervention-confirmed）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典9系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭banner/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典9系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告30件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-30-canada-us-trade-war-tariffs.html
+
+---
+
 ## 2026-08-29
 - 判定: ✅ 公開済み
 - 選定トピック: ウォーシュFRB議長のジャクソンホール講演：「インフレはまだ高すぎる、追加利上げも選択肢」──9月利上げ確率57%急上昇・S&P500下落・金急落の影響を3視点で整理（カテゴリ: 米金融政策・インフレ・為替・米国株）
