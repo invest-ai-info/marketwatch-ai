@@ -29,6 +29,17 @@ PAGES = [
 MIN_BYTES = 5000  # 途中切れHTML検出の閾値
 TIMEOUT = 20
 
+# 2026-08-30: index.html の鮮度判定を「JSTの今日と日付が一致するか」から
+#   「最終更新からの経過時間」に変更した。
+#   旧実装 (page_date < jst_today()) は、このチェック自身が深夜0時 JST をまたぐと
+#   必ず誤検知した。朝の更新が来るまでの深夜帯は前日日付が正常だからで、
+#   実際 cron '0 11 * * *' (20:00 JST) の回が GitHub 側の遅延で 00:07 / 00:22 JST に
+#   走り、2026-08-29・08-30 の2回とも「日付が古い」で issue 化された（サイトは正常）。
+#   実測: Update Market News の成功実行の最大間隔は 10.5h（直近60回・2026-08-26〜08-30）。
+#   26h は「定時実行の片方が丸ごと来なかった」最悪ケース(≒24h)にも余裕を持たせた値。
+#   ⚠️ この閾値を24h未満に下げないこと。上記の最悪ケースで恒常的に誤検知に戻る。
+STALE_HOURS = 26
+
 # 2026-08-26 事故: 翻訳バックエンド(Google)が HTTP 500 を返すと deep_translator が
 #   エラーページ本文を「翻訳結果」として返し、全ニュース見出しがそれに置換された。
 #   結果、AI 投資判断の根拠が「システムエラーのため内容が確認できません」になった。
@@ -43,8 +54,39 @@ GARBAGE_MARKERS = [
 AI_COMPLAINT_MARKERS = ["システムエラー", "内容が確認できません", "エラーを示"]
 
 
+JST = zoneinfo.ZoneInfo("Asia/Tokyo")
+
+
+def jst_now() -> datetime.datetime:
+    return datetime.datetime.now(JST)
+
+
 def jst_today() -> datetime.date:
-    return datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Tokyo")).date()
+    return jst_now().date()
+
+
+def parse_updated_at(body: str) -> "datetime.datetime | None":
+    """index.html の「最終更新」を JST の datetime にする。読めなければ None。
+
+    例: 最終更新: <span>2026年8月30日 10:47 JST</span>
+    2026-07-05: トップページ整理でタグ構造が変わったため、日付の前に任意個のタグ/空白を許容。
+    時刻は generate_market_news.py が必ず "%H:%M JST" で出すが、書式が変わっても
+    日付だけで動くように任意扱いにしてある。
+    """
+    m = re.search(
+        r"最終更新[:：]\s*(?:<[^>]+>\s*)*(\d{4})年(\d{1,2})月(\d{1,2})日"
+        r"(?:\s*(?:<[^>]+>\s*)*(\d{1,2}):(\d{2}))?",
+        body,
+    )
+    if not m:
+        return None
+    # 時刻が読めないときは 23:59 とみなす＝経過時間を最も短く見積もる。
+    # 誤検知を出さない側に倒す（見逃しは最大1日。巻き戻り事故は数日ずれるので拾える）。
+    hh = int(m.group(4)) if m.group(4) else 23
+    mm = int(m.group(5)) if m.group(5) else 59
+    return datetime.datetime(
+        int(m.group(1)), int(m.group(2)), int(m.group(3)), hh, mm, tzinfo=JST
+    )
 
 
 def check_page(path: str) -> list[str]:
@@ -67,20 +109,17 @@ def check_page(path: str) -> list[str]:
         )
 
     if path == "index.html":
-        # 例: 最終更新: <span>2026年5月6日 22:28 JST</span>
-        # 2026-07-05: 7/4のトップページ整理でタグ構造が変わったため、日付の前に任意個のタグ/空白を許容
-        #（更新履歴<details>化でspan直包みでなくなった。日付鮮度の検査意図は不変）
-        m = re.search(r"最終更新[:：]\s*(?:<[^>]+>\s*)*(\d{4})年(\d{1,2})月(\d{1,2})日", body)
-        if not m:
+        updated_at = parse_updated_at(body)
+        if updated_at is None:
             errors.append("⚠️ `index.html` 「最終更新」の日付要素が見つからない")
         else:
-            page_date = datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
-            today = jst_today()
-            if page_date < today:
-                delta = (today - page_date).days
+            age_h = (jst_now() - updated_at).total_seconds() / 3600
+            if age_h > STALE_HOURS:
                 errors.append(
-                    f"🚨 `index.html` 日付が古い: ページ表示 `{page_date}`, JST 今日 `{today}` "
-                    f"(差分 {delta} 日 / 過去の巻き戻り事故と同じ症状)"
+                    f"🚨 `index.html` の更新が止まっている: 最終更新 "
+                    f"`{updated_at.strftime('%Y-%m-%d %H:%M')} JST`"
+                    f"（{age_h:.1f}時間前 / 閾値 {STALE_HOURS}h・"
+                    f"過去日付への巻き戻り事故と同じ症状）"
                 )
 
         # ① 取得・翻訳のエラーページ本文がそのまま本文に出ていないか
