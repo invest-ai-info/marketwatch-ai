@@ -58,7 +58,7 @@ jobs:
       # ⚠️ 新しい取得スクリプトを足さないこと。台帳が増えると今回と同じ「片方だけ死ぬ」形になる。
       # LOOKAHEAD_DAYS=95 なので、月次実行でも常に2〜3か月先まで埋まる。
       - name: Refresh earnings calendar (US=Nasdaq API / JP=curated)
-        run: python build_earnings_calendar.py
+        run: pip install yfinance >/dev/null && python build_earnings_calendar.py
         continue-on-error: true
 
       - name: Send monthly calendar reminder email
