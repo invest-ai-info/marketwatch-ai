@@ -1,3 +1,31 @@
+## 2026-08-31 autodraft: draft-currency-hedge-cost.html（「為替ヘッジあり」は何を買って何を手放しているのか）
+
+- **基準日**: 2026-08-31（UTC 2026-08-30T20:31Z）
+- **topic / key**: リスク管理 #51 / `currency-hedge-cost`
+- **生成ファイル**: `drafts/draft-currency-hedge-cost.html`
+- **参照出典URL**:
+  - https://www.am-one.co.jp/warashibe/article/fuyasu-20221230-1.html（アセマネOne・ヘッジあり/なしの違い）
+  - https://www.nam.co.jp/seminar/guide/website/1207342_1770.html（野村AM・ヘッジコストの説明）
+  - https://www.smbc.co.jp/kojin/money-viva/toushi-ippo/0012/（三井住友銀行・ヘッジの仕組み）
+  - https://www.pimco.com/jp/ja/resources/education/bond-basic/fixed-income-2/hedge-cost-and-forward-rate（PIMCO・フォワードレートとヘッジコスト）
+  - https://www.lazyportfolioetf.com/hedging/JPY/（円ヘッジコストの実績データ概観）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし（外国資産全般の一般論に限定）
+  - ✅ 断定・利益保証なし（「有利」「不利」は状況依存と明記）
+  - ✅ 具体的なヘッジコスト数値・現在の金利差は記載せず（変動するため一次情報参照を促す）
+  - ✅ kinsho-v1免責：冒頭disclaimer-banner ＋ 本文末 p.disclaimer ＋ footer に計3回挿入
+  - ✅ noindex,nofollow メタタグ入り
+  - ✅ 「どちらを選ぶべきか」の推奨なし（考え方の枠組みのみ）
+  - ✅ 出典妥当（一次情報・金融機関公式）
+- **SVGメモ**: 図1（ヘッジあり・なし比較）・図2（金利差とコスト）の2点は概念図として作成済み。図3（成績乖離グラフ）は TODO コメントとして残し人間が追加・実機ライト/ダーク確認を依頼
+- **人間の残作業**:
+  - [ ] SVG図1・図2のライトモード/ダークモード実機確認（色がテーマで正しく切り替わるか）
+  - [ ] TODO(SVG) 図3「ヘッジあり・なし成績乖離の概念グラフ」の追加（任意）
+  - [ ] タイトル・リード文の微調整
+  - **公開は毎朝08:40の autodraft-publish が compliance-reviewer(Opus)ゲート付きで自動実行**
+
+---
+
 ## 2026-08-30 autopublish: ✅公開 guide-shareholder-benefits.html（株主優待は、利回りで比べると見誤る）
 
 - **対象**: `drafts/draft-shareholder-benefits.html` → `guide-shareholder-benefits.html`
