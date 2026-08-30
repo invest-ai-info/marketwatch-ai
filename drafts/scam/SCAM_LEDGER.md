@@ -257,3 +257,31 @@
 - `recovery-scam`（🛡️）: 事実誤認5件（条番号・逐語引用・一次ソース・日弁連文書名・預金保険機構役割）の修正後に再執筆・公開可
 
 **次のアクションはオーナー判断を要する**（8/25 エスカレの依頼内容と同じ）。
+
+---
+
+## 🚩 2026-08-30 キュー枯渇継続・6日目
+
+**確認日**: 2026-08-30（JST 11:12）
+
+**状況**: SCAM_GUIDE.md【キュー】10件がすべて「公開済み」または「エスカレ中」として SCAM_LEDGER.md に登録済み。新規テーマ追加なし。本日も記事生成なし（SCAM_GUIDE §2 水増し禁止ルール遵守）。
+
+| 手口 | slug | 状態 |
+|---|---|---|
+| SNS型投資詐欺（著名人なりすまし広告） | sns-celebrity-ad | ✅ 公開済み |
+| SNS型ロマンス詐欺（恋愛感情×投資） | romance-invest | ✅ 公開済み |
+| 海外無登録業者の出金拒否 | unregistered-broker | ✅ 公開済み |
+| ポンジ・スキーム（配当の正体） | ponzi-scheme | ✅ 公開済み |
+| 未公開株・私募社債・劇場型 | pre-ipo-stock | ✅ 公開済み |
+| 投資塾・高額情報商材 | investment-seminar | 🚩 エスカレ中（法令条文確認待ち・下書きあり） |
+| 暗号資産系詐欺 | crypto-scam | 🚩 エスカレ中（統計修正待ち・下書きあり） |
+| AIディープフェイク型 | deepfake-scam | ✅ 公開済み |
+| 被害回復詐欺（二次被害） | recovery-scam | 🚩 エスカレ中（🔴黒・本文削除済み・再執筆待ち） |
+| 口座・名義・携帯の「貸すだけ」 | account-lending | ✅ 公開済み |
+
+**エスカレ解消の最短ルート（処理しやすい順）**:
+1. **`investment-seminar`（即公開可）**: e-Gov（https://laws.e-gov.go.jp/）で金商法第207条第1項第2号「5億円以下の罰金」を確認 → `drafts/scam/draft-investment-seminar.html` から noindex 削除 → ルートにコピー → `python mw.py publish --file guide-scam-investment-seminar.html --category "投資詐欺から身を守る" --emoji 🎓 --card-title "投資塾・高額情報商材「無料→有料の階段」" --desc "無料セミナーから高額個別指導へのエスカレート手口を3段階分解。特商法の解約手順も整理。"` → push
+2. **`crypto-scam`（統計修正後公開可）**: 警察庁PDF原本で2026H1暗号資産比率を確認 → `drafts/scam/draft-crypto-scam.html` の統計表を「2026H1全体」「2025年通年・暗号資産送信型」に分割 → 相談窓口時間修正 → publish
+3. **`recovery-scam`（再執筆必要）**: テンプレ(`guide-scam-sns-celebrity-ad.html`)から再執筆（修正5件は SCAM_LEDGER 2026-08-22 エントリ参照）
+
+**キュー補充依頼（6日連続）**: SCAM_GUIDE.md【キュー】表に新テーマを追記してコミット＆プッシュしてください（候補: フィッシング詐欺・自称元機関投資家LINEグループ・配当目的不動産投資勧誘）。
