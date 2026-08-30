@@ -50,6 +50,12 @@ jobs:
       - name: Sync economic indicators from ECONOMIC_EVENTS_2026
         run: python sync_economic_events.py --write
 
+      # 🆕 2026-08-30。まずドライラン（--write なし）で yfinance の戻りをログで確認する。
+      # ローカルPCは curl_cffi が CA証明書を見つけられず検証できないため、Actions で測る。
+      - name: Probe earnings dates (dry-run)
+        run: pip install yfinance >/dev/null && python sync_earnings_events.py
+        continue-on-error: true
+
       - name: Send monthly calendar reminder email
         run: python monthly_calendar_reminder.py
 
