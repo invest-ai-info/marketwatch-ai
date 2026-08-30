@@ -39,15 +39,28 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # ① Actions ワークフロー: (ラベル, ワークフローyml, 直近実行の許容経過[時間], 重大度)
 WORKFLOW_CHECKS = [
-    ("テクニカルアラート(4H)",  "technical-alerts.yml",    6,  "critical"),
-    # 2026-07-05: 3h→5h/4h に緩和。GitHub cron混雑で1H/30分ジョブが3〜4.5h滑るのは日常で、
-    # 3h閾値だと毎日誤検知メール（6月末〜7月に連日発火した実績）。5h=1Hジョブが4回連続で
-    # 消えたら検知＝本物の停止は引き続き当日中に捕まえる。
-    ("1Hシグナル収集",          "technical-alerts-1h.yml", 5,  "warn"),
-    ("政治発言フィード",        "political-alerts.yml",    4,  "critical"),
+    # ⚠️ ここの max_h は「cron が来なかった」を見る②専用の閾値であって、故障検知の閾値ではない。
+    #    judge_runs の①（cancelled を除いた直近の実質結果が failure なら即異常）が本物の故障を
+    #    経過時間と無関係に拾うので、**max_h を上げても故障検知は一切弱まらない**。
+    #    ⇒ max_h は「正常運用で観測されうる最大の空き」より必ず大きく取ること。
+    #
+    # 2026-08-30 再較正: 毎時系4本が実測と乖離し、automation-health が連日 exit 1 して
+    #   issue #4 を鳴らし続けていた（8/27・8/28・8/29×4・8/30。中身はすべて②の誤検知で、
+    #   当該ワークフローは直近100 run すべて success）。鳴りっぱなしは本物の異常
+    #   （⑩ JQUANTS_API_KEY 未登録・⑪ force-push）を埋もれさせるので実測で置き直した。
+    #   直近100回の成功実行の間隔（2026-08-22〜08-30 実測）:
+    #     technical-alerts     median 0.5h / p90 4.3h / MAX 12.6h  （旧閾値 6h）
+    #     technical-alerts-1h  median 1.0h /            MAX 13.3h  （旧閾値 5h）
+    #     political-alerts     median 0.9h /            MAX 16.9h  （旧閾値 4h）
+    #     news-ticker          median 1.0h / p90 2.8h / MAX 10.9h  （旧閾値 5h）
+    #   閾値は jp-rankings と同じ流儀＝**実測MAX + 5h**（＝観測済みの最悪ケースに余裕を足す）。
+    #   ⚠️ 元に戻さないこと。旧値は「1時間ごとの cron が来る」前提だが、GitHub は日常的に
+    #      10〜17時間まとめて実行を作らない（skipped でも cancelled でもなく run 自体が無い）。
+    ("テクニカルアラート(4H)",  "technical-alerts.yml",    18, "critical"),
+    ("1Hシグナル収集",          "technical-alerts-1h.yml", 18, "warn"),
+    ("政治発言フィード",        "political-alerts.yml",    22, "critical"),
     ("市況ニュース生成",        "update-market-news.yml",  15, "warn"),
-    # 🆕 2026-07-09 ⚡最新ニュース・ライブフィード（毎時）。cron滑りは日常なので5h=4〜5回連続消失で検知。
-    ("最新ニュース・ティッカー", "news-ticker.yml",         5,  "warn"),
+    ("最新ニュース・ティッカー", "news-ticker.yml",         16, "warn"),
     ("パニック反発スキャン",    "panic-scan.yml",          27, "warn"),
     # 🆕 2026-08-29 追加。hot-assets 最上段の日本株ランキング（と信用残）を作る唯一のジョブなのに
     #    監視対象外だった＝止まってもライブが古いまま誰も気づけない口。閾値は実測で置いた:
