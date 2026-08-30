@@ -1,3 +1,11 @@
+## 2026-08-31 signal-lab #085（ゲート実行中）
+- **テーマ**: RSI売られすぎ×上昇×ロング 前向きN=21追跡——IS 76.5%からFWD 52.4%への軟化、1H足の落ち込みが主因
+- **下書き**: `drafts/draft-signal-lab-085.html`
+- **claims**: `drafts/labnotes/lab-085-claims.json`
+- **ゲート**: signal_lab_verify → 実行中
+
+---
+
 ## 2026-08-31 autodraft: draft-currency-hedge-cost.html（「為替ヘッジあり」は何を買って何を手放しているのか）
 
 - **基準日**: 2026-08-31（UTC 2026-08-30T20:31Z）

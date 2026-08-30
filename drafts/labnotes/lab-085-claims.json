@@ -1,0 +1,55 @@
+{
+  "article_id": "085",
+  "claims": [
+    {
+      "label": "IS: rsi=os × 上昇 × long (before 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "fired_before": "2026-08-11"},
+      "k": 39, "n": 51
+    },
+    {
+      "label": "FWD: rsi=os × 上昇 × long (from 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "fired_from": "2026-08-11"},
+      "k": 11, "n": 21
+    },
+    {
+      "label": "全期間: rsi=os × 上昇 × long",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long"},
+      "k": 50, "n": 72
+    },
+    {
+      "label": "ベンチ: rsi=os × long × 中立・もみあい",
+      "filter": {"rsi_band": "os", "direction": "long", "trend": "中立・もみあい"},
+      "k": 64, "n": 140
+    },
+    {
+      "label": "ベンチ: rsi=os × long × 下降",
+      "filter": {"rsi_band": "os", "direction": "long", "trend": "下降"},
+      "k": 54, "n": 115
+    },
+    {
+      "label": "方向対比: rsi=os × 上昇 × short",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "short"},
+      "k": 13, "n": 35
+    },
+    {
+      "label": "FWD 1H: rsi=os × 上昇 × long × 1h (from 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "tf": "1h", "fired_from": "2026-08-11"},
+      "k": 7, "n": 17
+    },
+    {
+      "label": "IS signal=rsi_oversold_bounce: rsi=os × 上昇 × long (before 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "signal": "rsi_oversold_bounce", "fired_before": "2026-08-11"},
+      "k": 23, "n": 33
+    },
+    {
+      "label": "IS signal=bb_lower_touch: rsi=os × 上昇 × long (before 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "signal": "bb_lower_touch", "fired_before": "2026-08-11"},
+      "k": 16, "n": 18
+    },
+    {
+      "label": "FWD signal=rsi_oversold_bounce: rsi=os × 上昇 × long (from 2026-08-11)",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "signal": "rsi_oversold_bounce", "fired_from": "2026-08-11"},
+      "k": 6, "n": 14
+    }
+  ]
+}
