@@ -1,7 +1,7 @@
 {
   "_comment": "重要経済イベントカレンダー。シグナル発火時に「6h/24h 以内に重要指標があるか」をチェックして取引非推奨警告を出す。",
   "_format": "datetime は JST (Asia/Tokyo) ISO8601。impact は high/critical。affected_assets は影響を受ける銘柄リスト（all = 全銘柄）。",
-  "_update_policy": "月初に当月分を手動更新。FOMC・雇用統計・CPI など毎月決まったものはハードコード可。WebSearch で発表日を確認すること。",
+  "_update_policy": "経済指標は sync_economic_events.py が generate_market_news.py の ECONOMIC_EVENTS_2026 から自動生成する（monthly-calendar-reminder.yml が毎月25日に実行）。⚠️ 2026-08-30 まではここに『月初に当月分を手動更新』と書いてあったが、その手動転記が2026-07-31 で止まり指標が2か月ゼロになった。指標を足したいときは ECONOMIC_EVENTS_2026 の方を編集すること（このファイルを直接編集しても次回の生成対象にはならない）。市場休場は generate_market_holidays.py が別途補充。",
   "events": [
     {
       "name": "🏖️ 米国市場休場（New Year's Day）",
@@ -592,6 +592,17 @@
       "note": "LSE 終日休場、ポンド系ボラ低下"
     },
     {
+      "name": "米雇用統計 NFP（8月分）",
+      "datetime": "2026-09-04T21:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
       "name": "🏖️ 米国市場休場（Labor Day）",
       "datetime": "2026-09-07T09:00:00+09:00",
       "impact": "high",
@@ -601,6 +612,51 @@
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 終日休場。米国時間のボラ急減"
+    },
+    {
+      "name": "ECB 政策金利発表（金利決定）",
+      "datetime": "2026-09-10T21:15+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "EU",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:15 CEST）"
+    },
+    {
+      "name": "米 CPI（8月分）",
+      "datetime": "2026-09-10T21:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
+      "name": "FOMC 政策金利発表（結果発表）",
+      "datetime": "2026-09-17T03:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:00 EDT）"
+    },
+    {
+      "name": "日銀金融政策決定会合（結果発表）",
+      "datetime": "2026-09-18T12:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "NKD=F",
+        "USDJPY=X"
+      ],
+      "country": "JP",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 12:00 JST）"
     },
     {
       "name": "🏖️ 日本市場休場（敬老の日）",
@@ -635,6 +691,17 @@
       "note": "3 連休（9/21-23）、TSE 連休でボラ蓄積→週明け要警戒"
     },
     {
+      "name": "米雇用統計 NFP（9月分）",
+      "datetime": "2026-10-02T21:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
       "name": "🏖️ 日本市場休場（スポーツの日）",
       "datetime": "2026-10-12T09:00:00+09:00",
       "impact": "high",
@@ -645,6 +712,62 @@
       "category": "market_holiday"
     },
     {
+      "name": "米 CPI（9月分）",
+      "datetime": "2026-10-14T21:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
+      "name": "FOMC 政策金利発表（結果発表）",
+      "datetime": "2026-10-29T03:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:00 EDT）"
+    },
+    {
+      "name": "日銀金融政策決定会合（結果発表）",
+      "datetime": "2026-10-29T12:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "NKD=F",
+        "USDJPY=X"
+      ],
+      "country": "JP",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 12:00 JST）"
+    },
+    {
+      "name": "米 GDP（Q3）",
+      "datetime": "2026-10-29T21:30+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
+      "name": "ECB 政策金利発表（金利決定）",
+      "datetime": "2026-10-29T22:15+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "EU",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:15 CET）"
+    },
+    {
       "name": "🏖️ 日本市場休場（文化の日）",
       "datetime": "2026-11-03T09:00:00+09:00",
       "impact": "high",
@@ -653,6 +776,28 @@
       ],
       "country": "JP",
       "category": "market_holiday"
+    },
+    {
+      "name": "米雇用統計 NFP（10月分）",
+      "datetime": "2026-11-06T22:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EST）"
+    },
+    {
+      "name": "米 CPI（10月分）",
+      "datetime": "2026-11-12T22:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EST）"
     },
     {
       "name": "🏖️ 日本市場休場（勤労感謝の日）",
@@ -686,6 +831,62 @@
       "country": "US",
       "category": "market_holiday",
       "note": "NYSE / Nasdaq 13:00 ET (03:00 JST 土曜) で早仕舞い。米国時間ほぼ休場"
+    },
+    {
+      "name": "米雇用統計 NFP（11月分）",
+      "datetime": "2026-12-04T22:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EST）"
+    },
+    {
+      "name": "FOMC 政策金利発表（結果発表）",
+      "datetime": "2026-12-10T04:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:00 EST）"
+    },
+    {
+      "name": "米 CPI（11月分）",
+      "datetime": "2026-12-10T22:30+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "US",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EST）"
+    },
+    {
+      "name": "ECB 政策金利発表（金利決定）",
+      "datetime": "2026-12-17T22:15+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "all"
+      ],
+      "country": "EU",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:15 CET）"
+    },
+    {
+      "name": "日銀金融政策決定会合（結果発表）",
+      "datetime": "2026-12-18T12:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "NKD=F",
+        "USDJPY=X"
+      ],
+      "country": "JP",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 12:00 JST）"
     },
     {
       "name": "🏖️ 米国市場早仕舞い（Christmas Eve）",
