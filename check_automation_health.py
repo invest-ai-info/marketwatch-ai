@@ -495,6 +495,46 @@ def check_smtp_auth():
         return None, f"SMTP 到達を確認できず（一時障害の可能性・判定しない）: {type(e).__name__}: {str(e)[:80]}"
 
 
+# ⑬ 経済指標カレンダーの先詰まり。①②は「ワークフローが走ったか」しか見ないので、
+#    「走ったが中身が増えていない」を取り逃す。2026-08-30 に実際そうなっていた:
+#    economic-events.json の指標が 2026-07-31 を最後に**2か月ゼロ**だったのに、
+#    monthly-calendar-reminder.yml は「メールを送る」だけで success を返し続けていた。
+#    実害はシグナル側で、8月は指標発表24時間前に出た113本のシグナルに
+#    「🚫 重要指標まで X h」が付かなかった（うち12本は発表0.6時間前）。
+#    いまは sync_economic_events.py が ECONOMIC_EVENTS_2026 から自動生成するので
+#    人手の転記は無いが、**その元表が尽きれば同じ形で静かに空になる**
+#    （2027年ぶんは未整備＝年が変われば実際に起きる）。だからデータ側で見る。
+FORWARD_DAYS = 21      # 先を見る窓。月次補充(25日)＋cron滑りを跨いでも余裕がある長さ
+# 判定は「枯れたか」＝0件かどうかで見る。2件等の下限は根拠が無く、
+# 9月下旬のように元表が薄い時期を誤検知した（2026-08-30 の全日スイープで実測）。
+# 健全なカレンダーなら21日窓に必ず雇用統計かCPIが入るので、0件は本当に異常。
+FORWARD_MIN = 1
+
+
+def judge_calendar_runway(events, now, forward_days=FORWARD_DAYS, min_count=FORWARD_MIN):
+    """純関数（テスト対象）＝今後 forward_days 日に指標イベントが何件あるか。
+
+    市場休場（category=market_holiday）は数えない。あれは
+    generate_market_holidays.py が2027年まで自動補充しており、
+    **これがあるせいで「イベントはある」ように見えてしまう**のが今回の見落としの正体。
+    戻り値: (ok, 件数, 直近イベント名 or None)
+    """
+    horizon = now + dt.timedelta(days=forward_days)
+    upcoming = []
+    for e in events:
+        if e.get("category") == "market_holiday":
+            continue
+        try:
+            t = dt.datetime.fromisoformat(e["datetime"])
+        except Exception:
+            continue
+        if now <= t <= horizon:
+            upcoming.append((t, e.get("name", "")))
+    upcoming.sort()
+    nearest = upcoming[0][1] if upcoming else None
+    return (len(upcoming) >= min_count, len(upcoming), nearest)
+
+
 # ⑫ 日本株ランキングの鮮度。①は「jp-rankings.yml が走ったか」しか見ないが、走っても
 # 上流(Yahoo)がまだ当日の日足を返していない時刻に走ると、成功したまま前営業日の順位が残る
 # （2026-08-29 実測: cron が 17時台→04:34 JST へずれた回が asof=2026-08-27 で完走）。
@@ -810,6 +850,28 @@ def main():
     except Exception as e:
         # ③〜⑧と同じ方針: API/ネットワークの一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ 日本株ランキングの鮮度確認に失敗: {e}")
+
+    body.append("")
+    body.append("### ⑬ 経済指標カレンダーの先詰まり（①②はworkflow成否しか見ない死角＝中身で見る）")
+    try:
+        cal = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/economic-events.json", token))
+        ok_cal, n_cal, nearest = judge_calendar_runway(cal.get("events", []), now)
+        if ok_cal:
+            body.append(f"- ✅ 🟢 今後{FORWARD_DAYS}日に指標 {n_cal} 件（直近: {nearest}）")
+        else:
+            body.append(
+                f"- 🚨 🟡 今後{FORWARD_DAYS}日の経済指標が {n_cal} 件（閾値 {FORWARD_MIN} 以上）"
+                f"＝カレンダーが尽きかけている。**シグナルの「🚫 重要指標まで X h」が出なくなる**"
+                f"（2026-08 に2か月ゼロで113本のシグナルが無警告だった事故と同じ形）。"
+                f"直し方＝generate_market_news.py の ECONOMIC_EVENTS_2026 に翌月以降を追記し、"
+                f"monthly-calendar-reminder.yml を手動実行する（sync_economic_events.py が"
+                f"そこから economic-events.json を生成する）。⚠️ economic-events.json を直接"
+                f"編集しても次回の生成対象にはならない。市場休場は別枠で自動補充されるので"
+                f"**「イベントはある」ように見えても指標はゼロになりうる**")
+            bad.append(("経済指標カレンダーの先詰まり", "warn"))
+    except Exception as e:
+        body.append(f"- 🚨 ⚪ 経済指標カレンダーの確認に失敗: {e}")
 
     body.append("")
     serious = [l for l, s in bad if s in ("critical", "warn")]
