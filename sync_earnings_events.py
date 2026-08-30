@@ -17,7 +17,10 @@
 
 ── 設計上の約束（sync_economic_events.py と揃える）──
 1. 既定はドライラン。`--write` を付けたときだけ economic-events.json に書く。
-2. 追加のみ・冪等。既存エントリと市場休場には触らない。
+2. **未来の自分の登録ぶんだけ入れ替える。**決算日は後から変更されるので、追加のみだと
+   古い日付が残って二重に警告が出る。同じ銘柄の「未来の earnings エントリ」を一度落として
+   から入れ直す＝冪等かつ日程変更に追随する。過去の登録と、他のスクリプトが作った
+   エントリ（経済指標・市場休場）には**一切触らない**。
 3. **推測日を入れない。** yfinance が「日付だけで時刻が無い」や範囲（レンジ）で返すことが
    あるので、確定日時が取れないものは落として一覧に出す。
 4. 取れなかった銘柄は黙って消さず、必ず件数と理由を標準出力に出す。
@@ -114,6 +117,17 @@ def main():
 
     data = json.load(open(TARGET_JSON, encoding="utf-8"))
     existing = data["events"]
+    watched_names = {f"決算発表 {w['label']}（{w['ticker']}）" for w in WATCH}
+    now_iso = now.isoformat(timespec="minutes")
+
+    # 自分が入れた「未来の決算」だけ落とす。過去の記録・他カテゴリは残す。
+    def is_own_future(e):
+        return (e.get("category") == "earnings"
+                and e.get("name") in watched_names
+                and e.get("datetime", "") >= now_iso)
+
+    dropped = [e for e in existing if is_own_future(e)]
+    existing = [e for e in existing if not is_own_future(e)]
     have = {(e["datetime"][:10], e.get("name", "")) for e in existing}
 
     added, report = [], []
@@ -140,12 +154,16 @@ def main():
     for tk, n_all, n_fut, note in report:
         print(f"{tk:8s} {n_all:4d} {n_fut:4d}  {note}")
 
-    print(f"\n追加する: {len(added)} 件")
+    print(f"\n登録する: {len(added)} 件（入れ替えで落とした未来分 {len(dropped)} 件）")
     for e in sorted(added, key=lambda x: x["datetime"]):
         print(f"   + {e['datetime'][:16]} [{e['impact']:8s}] {e['name']}  → {e['affected_assets']}")
 
     if not apply_changes:
         print("\n（--write を付けると書き込みます。いまは何も変更していません）")
+        return
+    if not added and dropped:
+        # yfinance が一時的に何も返さなかった回で、既存の予定を消してしまわない
+        print("\n⚠️ 取得0件。既存の登録を消さずに現状維持する（yfinance の一時障害を疑う）")
         return
     if not added:
         print("\n変更なし。")
