@@ -308,6 +308,41 @@ QUEUE_LANES = [
 ]
 
 
+# 🆕 2026-08-31: キューを持たないレーンは、上の QUEUE_LANES では見張れない。
+#
+# 「数字で見る、話題の企業」（週次）は題材を jp-rankings.json から機械的に選ぶ設計で、
+# **キューが無い＝枯渇しない**のが売り。その代わり「止まったこと」を残量では検知できないので、
+# **台帳の最終更新の鮮度**で見る。
+# 🚨 レーンを足したら必ず何かで見張ること——2026-08-31 に格言5日・詐欺7日の枯渇を
+# 誰も知らないまま放置した原因は「番人に登録する手順が無かった」ことだった。
+#
+# ⚠️ `since` より前は鳴らさない。ルーティンが初回に走る前から赤いと、番人の信用が落ちる。
+LEDGER_WATCH = [
+    # (レーン名, 台帳, 何日で鳴らすか, いつから見張るか)
+    ("company（数字で見る企業・週次）", "drafts/company/COMPANY_LEDGER.md", 10, dt.date(2026, 9, 7)),
+]
+
+
+def check_ledger_freshness(owner, repo, token, path, max_days, since, today):
+    """台帳の最終コミットからの経過日数を返す。戻り値: (状態, 説明)。
+
+    状態は "ok" / "stale" / "missing" / "waiting"（since 前で判定しない）。
+    """
+    if today < since:
+        return "waiting", f"{since.isoformat()} から見張ります"
+    url = (f"https://api.github.com/repos/{owner}/{repo}/commits"
+           f"?path={path}&per_page=1")
+    commits = json.loads(api_raw(url, token))
+    if not commits:
+        return "missing", f"{path} がまだありません（初回の実行が済んでいない可能性）"
+    stamp = commits[0]["commit"]["committer"]["date"][:10]
+    last = dt.date(int(stamp[:4]), int(stamp[5:7]), int(stamp[8:10]))
+    age = (today - last).days
+    if age > max_days:
+        return "stale", f"{path} の最終更新が {stamp}（{age}日前・閾値{max_days}日）"
+    return "ok", f"{path} の最終更新は {stamp}（{age}日前）"
+
+
 def check_topic_queue(owner, repo, token, path=QUEUE_GUIDE_PATH, prefix="", ledger=None):
     """手順書のキュー表から key を抽出し、guides.html に guide-<prefix><key>.html の
     カードが無いもの＝未公開の残りを数える。
@@ -728,6 +763,19 @@ def main():
         except Exception as e:
             # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
             body.append(f"- 🚨 ⚪ {lane}: キュー残量の確認失敗: {e}")
+    for lane, path, max_days, since in LEDGER_WATCH:
+        try:
+            state, detail = check_ledger_freshness(
+                owner, repo, token, path, max_days, since, dt.date.today())
+            if state == "ok":
+                body.append(f"- ✅ 🟢 {lane}: {detail}")
+            elif state == "waiting":
+                body.append(f"- ✅ ⚪ {lane}: {detail}")
+            else:
+                body.append(f"- 🚨 🟡 {lane}: {detail}＝レーンが止まっている可能性")
+                bad.append((f"{lane} 停止の疑い", "warn"))
+        except Exception as e:
+            body.append(f"- 🚨 ⚪ {lane}: 台帳の鮮度確認に失敗: {e}")
 
     body.append("")
     body.append("### ⑥ 事前登録した仮説がトラッカーに実在するか（登録漏れ＝台帳が嘘をつく壊れ方）")
