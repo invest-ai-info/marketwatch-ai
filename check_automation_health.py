@@ -302,6 +302,9 @@ QUEUE_LANES = [
      "drafts/proverb/PROVERB_LEDGER.md", QUEUE_MIN_REMAIN),
     ("scam（投資詐欺）", "drafts/SCAM_GUIDE.md", "scam-",
      "drafts/scam/SCAM_LEDGER.md", QUEUE_MIN_REMAIN),
+    # 2026-08-31 新設。格言シリーズ（44本で汲み尽くし）の後継として日次枠を引き継ぐ
+    ("tse（東証のしくみ）", "drafts/TSE_GUIDE.md", "tse-",
+     "drafts/tse/TSE_LEDGER.md", QUEUE_MIN_REMAIN),
 ]
 
 
