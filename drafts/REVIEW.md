@@ -1,3 +1,11 @@
+## 2026-09-01 autopublish: guide-index-vs-active.html（✅公開済み）
+- **key**: index-vs-active / シリーズ: 投資の基礎知識 #48
+- **ゲート**: 決定論(check_guide_draft.py) EXIT=0 🟢 / Opus初回🟡グレー5件修正→🟢白（断定語軟化・SPIVA版注記・信託報酬時点注記・§8対称化・内部アンカー修正） / check_guide_draft.py 再実行 EXIT=0 🟢 / check_site_consistency.py EXIT=0 🟢 / 独立Opus🟢白
+- **URL**: https://marketwatch-jp.com/guide-index-vs-active.html
+- **HTTP確認**: push PUSH_OK（コンテナからの外部接続制限によりcurl HTTP確認は不可・GitHub Pagesでの配信は正常と推定）
+
+---
+
 ## 2026-08-31 autodraft: draft-outcome-bias.html（儲かった判断が、正しい判断とは限らない）
 
 - **基準日**: 2026-08-31（UTC 2026-08-31T20:31Z）
