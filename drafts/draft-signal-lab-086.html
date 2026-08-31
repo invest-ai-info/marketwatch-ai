@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>AIシグナル研究日誌 #86｜売られすぎ反発シグナル(rsi_oversold_bounce)の足種二極化——4H足でCI下限52%超のエッジ確立、1H足は38%で無エッジ - MarketWatch AI</title>
-  <meta name="description" content="売られすぎ反発シグナル(rsi_oversold_bounce)の前向き検証N=257。4H足は勝率63.9%・CI下限52.4%でエッジ確立。1H足は45.7%・CI下限38.4%で無エッジ。4H×jpy_fx限定では94.1%(n=17)。昇格トラッカーpromote_strikes=1達成。">
+  <meta name="description" content="売られすぎ反発シグナル(rsi_oversold_bounce)の前向き検証N=257。4H足は勝率63.9%・CI下限52.4%でエッジ確立。1H足は45.7%・CI下限38.4%で無エッジ。4H×jpy_fx限定では94.1%(n=17・小サンプル参考値)。昇格トラッカーpromote_strikes=1達成。">
   <meta name="keywords" content="">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-086.html">
   <meta property="og:type" content="article">
@@ -222,7 +222,7 @@ window.addEventListener('resize',mark);
 
     <p>毎回ひとつの仮説を実データで検証し、結果を全公開する研究日誌の第86回です。今回は、2026年6月16日にトラッカーへ登録した仮説 <strong>「売られすぎ反発シグナル(rsi_oversold_bounce)・全足」</strong>の前向き追跡（FWD）成績を詳しく分析します。</p>
 
-    <p>前回（#84・#85）で下降・上昇トレンドとの組み合わせを検証しましたが、今回は <strong>足種（時間足）による二極化</strong> を中心に報告します。4H足がCI下限52%超のエッジを確立した一方、1H足はCI下限38%で無エッジ。合計N=257件の前向き積み上げにより、<a href="guide-signal-lab-078.html">#78（2026-08-21）</a>で報告した足種差がその後も維持されているかを確認します。</p>
+    <p>前回（#84・#85）で下降・上昇トレンドとの組み合わせを検証しましたが、今回は <strong>足種（時間足）による二極化</strong> を中心に報告します。4H足がCI下限52%超のエッジを確立した一方、1H足はCI下限38%で無エッジ。合計N=257件の前向き積み上げにより、<a href="guide-signal-lab-078.html">#78（2026-08-24）</a>で報告した足種差がその後も維持されているかを確認します。</p>
 
     <!-- 30秒まとめ -->
     <div class="info-box">
@@ -274,7 +274,7 @@ window.addEventListener('resize',mark);
       対象足種：全足（1H・4H・1D混合）<br>
       IS/FWD境界：2026-06-16（登録日）<br>
       昇格基準：平均R（期待値）の CI 下限＞0 を2回連続で確認すると「昇格」（メール配信対象に昇格）<br>
-      現在：promote_strikes=1（2026-08-28に一時失敗→2026-09-01に期待値CI下限プラスで1回目確認）
+      現在：promote_strikes=1（2026-08-28〜08-31は期待値CI下限がマイナスで不合格→2026-09-01にプラス転換・1回目確認）
     </div>
 
     <!-- =============================== -->
@@ -557,6 +557,8 @@ window.addEventListener('resize',mark);
 
     <p>高位足トレンドが「上昇」の場合、44/66件で勝率66.7%・CI[54.7%,76.8%]。「下降」では41/100件で勝率41.0%・CI下限が31.9%にとどまります。「逆張り買いは大きな流れが上昇のときに効きやすい」という経験則が、前向きデータでも確認されました。</p>
 
+    <p style="font-size:0.9em;color:#57606a;">※ 本表は対比が明確な上昇/下降の2区分のみを掲載しており、「中立・もみあい」区分は含みません（上昇66＋下降100＝166件で合計N=257と一致しません）。</p>
+
     <p style="font-size:0.9em;color:#57606a;">※ 4H足（N=72）と高位足トレンド=上昇（N=66）は独立集計ですが、サンプルが重複している部分があります（4H×上昇トレンドの組み合わせが両方に計上されています）。両条件を同時に要求した場合のNは66以下になります。</p>
 
     <!-- =============================== -->
@@ -712,7 +714,7 @@ window.addEventListener('resize',mark);
           <th>登録日</th>
           <th>FWD N</th>
           <th>FWD 勝率</th>
-          <th>FWD CI 下限</th>
+          <th>FWD CI 下限（勝率）</th>
           <th>promote_strikes</th>
           <th>状態</th>
         </tr>
@@ -739,9 +741,11 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
+    <p style="font-size:0.85em;color:#57606a;margin:4px 0;">※ 昇格判定は「FWD CI 下限（勝率）」ではなく、期待値（平均R）のウィルソン CI 下限で行います。勝率CI下限46.4%は昇格基準ではありません。</p>
+
     <div class="info-box">
       <strong>📝 promote_strikes について</strong><br>
-      promote_strikes は「期待値（1トレードあたり平均R）のウィルソン CI 下限がゼロを上回るチェックポイントを連続で確認した回数」です。勝率ではなく期待値ベースの基準であることに注意してください。2回連続で確認されると「昇格」となり、このシグナルが実トレードの参考候補として公式に記録されます。2026-08-28の一時失敗でゼロにリセットされましたが、本日（2026-09-01）のチェックポイントで1回目の確認が完了しました。
+      promote_strikes は「期待値（1トレードあたり平均R）のウィルソン CI 下限がゼロを上回るチェックポイントを連続で確認した回数」です。勝率ではなく期待値ベースの基準であることに注意してください。2回連続で確認されると「昇格」となり、本シリーズのアラート配信対象として継続観察されます。<strong>特定の売買を推奨するものではありません。</strong> 2026-08-28〜08-31は期待値CI下限がマイナスで不合格でしたが、2026-09-01にプラス転換し1回目の確認が完了しました。
     </div>
 
     <!-- 関連記事 -->
