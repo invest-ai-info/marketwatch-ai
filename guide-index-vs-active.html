@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「平均でいい」と「平均に勝ちたい」は何が違うのか｜インデックス運用とアクティブ運用の設計思想 - MarketWatch AI</title>
+  <meta name="description" content="インデックス運用とアクティブ運用の設計思想の違いを図解で解説。信託報酬のコスト差が長期でどう効くか、生存バイアスとは何か、どちらを選ぶかの考え方まで初心者〜中上級者向けに網羅します。">
+  <meta name="keywords" content="インデックス投資,アクティブ投資,インデックスファンド,アクティブファンド,信託報酬,コスト,生存バイアス,SPIVA,パッシブ運用,長期投資,投資信託,ETF,設計思想">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-index-vs-active.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「平均でいい」と「平均に勝ちたい」は何が違うのか｜インデックス運用とアクティブ運用の設計思想">
+  <meta property="og:description" content="インデックス運用とアクティブ運用の設計思想の違いを図解で解説。信託報酬のコスト差が長期でどう効くか、生存バイアスとは何か、どちらを選ぶかの考え方まで。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-index-vs-active.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「平均でいい」と「平均に勝ちたい」は何が違うのか｜インデックス運用とアクティブ運用の設計思想",
+    "description": "インデックス運用とアクティブ運用の設計思想の違いを図解で解説。信託報酬のコスト差が長期でどう効くか、生存バイアスとは何か、どちらを選ぶかの考え方まで初心者〜中上級者向けに網羅します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-01",
+    "dateModified": "2026-09-01",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-index-vs-active.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-g{fill:#e6ffed;opacity:.5}
+    .s-fill-r{fill:#ffebe9;opacity:.5}
+    .s-fill-b{fill:#ddf4ff;opacity:.4}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-g{fill:#162416;opacity:.6}
+    body.dark .s-fill-r{fill:#2a1010;opacity:.6}
+    body.dark .s-fill-b{fill:#1a2030;opacity:.6}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 「平均でいい」と「平均に勝ちたい」は何が違うのか
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はインデックス運用・アクティブ運用の仕組みと設計思想を解説した「情報提供」であり、特定のファンド・銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰「平均でいい」と「平均に勝ちたい」は、何が違うのか</h1>
+    <div class="meta-line">公開日：2026 年 9 月 1 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <div class="info-box" style="margin-bottom:20px">
+      <strong>ℹ️ この記事の位置づけ</strong>：<a href="guide-etf-vs-mutual-fund.html">ETFと投資信託の違い</a>では「器（口座の種類・上場かどうか）の話」をしました。本記事は<strong>「中に入っている運用方針」</strong>の話——つまり、その器の中でどんな戦略をとっているかの違い——です。まだ読んでいない方は先にそちらもどうぞ。
+    </div>
+
+    <p>投資信託やETFを調べると、たいてい「インデックス型」と「アクティブ型」という言葉に出会います。初めて見たとき、<strong>「どちらが得なのか」</strong>を調べようとして、かえって混乱した方も多いのではないでしょうか。</p>
+    <p>この記事ではまず、<strong>そもそも何が違うのか——「平均でいい」と「平均を超えたい」という設計思想の根本的な差</strong>——を図解で解きほぐします。そのうえで、<strong>コスト差が長期でどれほど効いてくるか</strong>、そして<strong>「過去に成績が良かったアクティブ」を選べばいいのでは？</strong>という疑問への答えを、生存バイアスの観点から丁寧に説明します。</p>
+    <p>⚠️ なお、この記事は<strong>どちらが優れているかという結論を出しません</strong>。性質をきちんと理解したうえで、自分に合った選び方ができるようになることを目的としています。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>インデックス型は「市場平均と同じ動きをする」設計、アクティブ型は「市場平均を上回る」ことを目指す設計。<strong>目的の違いが、コスト・リスク・難しさの全部に影響する</strong>。</li>
+      <li><strong>コスト差は小さく見えて、長期になるほど大きな差</strong>になる。信託報酬が年0.36%（インデックス平均）か1.12%（アクティブ平均）かは、30年後には元本が同じでも受け取る額が大きく変わる。</li>
+      <li>「過去成績の良いアクティブを選べばいい」は<strong>生存バイアス</strong>の罠。成績の悪いファンドは廃止されてデータから消えるため、残っているものだけを見ると全体が良く見える。どちらを選ぶかは「自分が何を確かめられるか」で判断することが大切。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">そもそも「インデックス」「アクティブ」とは何か</a></li>
+        <li><a href="#section-2">設計思想の違い——シーソー図で理解する</a></li>
+        <li><a href="#section-3">コストの差：信託報酬0.36% vs 1.12%</a></li>
+        <li><a href="#section-4">長期でコスト差はどう効くか（概念図）</a></li>
+        <li><a href="#section-5">「過去成績の良いアクティブを選ぶ」は正しいか</a></li>
+        <li><a href="#section-6">生存バイアス：消えたファンドは「平均」から抜ける</a></li>
+        <li><a href="#section-7">SPIVA報告書が示すもの（参考情報）</a></li>
+        <li><a href="#section-8">どちらを選ぶか——「自分が何を確かめられるか」で考える</a></li>
+        <li><a href="#section-9">当サイトでの活かし方</a></li>
+        <li><a href="#section-10">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ そもそも「インデックス」「アクティブ」とは何か</h2>
+    <p>まず、それぞれの運用方針の定義を整理します。</p>
+
+    <table>
+      <thead>
+        <tr><th>種類</th><th>目標</th><th>運用の考え方</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>インデックス型（パッシブ型）</td>
+          <td>特定の指数（ベンチマーク）と<strong>同じ動きをする</strong></td>
+          <td>指数に含まれる銘柄を同じ比率で保有し、人間の銘柄選択を最小化する</td>
+        </tr>
+        <tr>
+          <td>アクティブ型</td>
+          <td>特定の指数を<strong>上回る成果を目指す</strong></td>
+          <td>ファンドマネージャーやアナリストが調査・判断し、有望と見込む銘柄に集中投資する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>「インデックス」とは「日経平均株価」や「S&P500」「TOPIX」などの<strong>株価指数（市場の平均値）</strong>のこと。インデックス型ファンドは、これら指数の構成銘柄を機械的に保有することで、市場全体の動きに乗ります。</p>
+    <p>アクティブ型は、ファンドマネージャーが「この銘柄は伸びる」「この業種は割安だ」と分析して、指数より高いリターンを狙います。そのぶん、<strong>人件費・調査費・売買コストがかかる</strong>ため、必然的にコストが高くなります。</p>
+
+    <div class="info-box">
+      <strong>💡 よく混同される話</strong>：「ETF＝インデックス型」ではありません。ETFの中にもアクティブ型があります。また「投資信託＝アクティブ型」でもなく、インデックス型の投資信託もあります。<strong>「器（ETFか投信か）」と「中の方針（インデックスかアクティブか）」は別の話</strong>です。詳しくは<a href="guide-etf-vs-mutual-fund.html">ETFと投資信託の違い</a>をご覧ください。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 設計思想の違い——シーソー図で理解する</h2>
+    <p>二つの違いを最も直感的に表すのが、次のような「シーソー」の図解です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="index-active-title">
+        <title id="index-active-title">インデックス型とアクティブ型の設計思想の比較概念図</title>
+        <!-- 分割線 -->
+        <line class="s-divv" x1="320" y1="20" x2="320" y2="280"/>
+        <!-- インデックス側（左） -->
+        <rect class="s-fill-b" x="20" y="20" width="285" height="260" rx="8"/>
+        <text class="s-note" x="162" y="48" text-anchor="middle" font-size="13">📊 インデックス型（パッシブ）</text>
+        <text class="s-note" x="162" y="68" text-anchor="middle" font-size="11">「平均でいい」</text>
+        <!-- インデックス特性 -->
+        <text class="s-legend" x="36" y="98" font-size="12">🎯 目標：市場平均と同じ動き</text>
+        <text class="s-legend" x="36" y="120" font-size="12">💰 コスト：低い（機械的に保有）</text>
+        <text class="s-legend" x="36" y="142" font-size="12">📈 リターン：市場平均とほぼ同じ</text>
+        <text class="s-legend" x="36" y="164" font-size="12">🎲 上振れ期待：低い（設計上なし）</text>
+        <text class="s-legend" x="36" y="186" font-size="12">🔬 調査・判断：最小化</text>
+        <text class="s-legend" x="36" y="208" font-size="12">👤 人の介在：少ない</text>
+        <text class="s-note-g" x="162" y="248" text-anchor="middle" font-size="11.5">コストが低く長期で複利が効きやすい</text>
+        <text class="s-note-g" x="162" y="265" text-anchor="middle" font-size="11.5">ただし「平均超え」は設計上ない</text>
+        <!-- アクティブ側（右） -->
+        <rect class="s-fill-r" x="335" y="20" width="285" height="260" rx="8"/>
+        <text class="s-note-r" x="477" y="48" text-anchor="middle" font-size="13">🏆 アクティブ型</text>
+        <text class="s-note-r" x="477" y="68" text-anchor="middle" font-size="11">「平均を超えたい」</text>
+        <!-- アクティブ特性 -->
+        <text class="s-legend" x="350" y="98" font-size="12">🎯 目標：市場平均を上回る</text>
+        <text class="s-legend" x="350" y="120" font-size="12">💰 コスト：高い（調査・人件費）</text>
+        <text class="s-legend" x="350" y="142" font-size="12">📈 リターン：上回ることも下回ることも</text>
+        <text class="s-legend" x="350" y="164" font-size="12">🎲 上振れ期待：ある（ただし不確実）</text>
+        <text class="s-legend" x="350" y="186" font-size="12">🔬 調査・判断：積極的に行う</text>
+        <text class="s-legend" x="350" y="208" font-size="12">👤 人の介在：多い</text>
+        <text class="s-note-r" x="477" y="248" text-anchor="middle" font-size="11.5">コスト分だけ平均超えが必要</text>
+        <text class="s-note-r" x="477" y="265" text-anchor="middle" font-size="11.5">上振れも下振れもある</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 設計思想の比較概念図。インデックス型は「市場全体の平均に乗る」ことを目指すため、コストが低い代わりに「平均超え」はない。アクティブ型は「平均超え」を目指すが、そのコスト分だけまず指数を上回る必要がある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>ここで大事なのが<strong>「アクティブ型はコスト分だけ、まず指数を超えてから勝負が始まる」</strong>という構造です。たとえば年間コストがインデックスより0.8%高いアクティブ型は、毎年0.8%以上の「超過リターン（アルファ）」を稼がないと、結果としてインデックスに負けることになります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ コストの差：信託報酬0.36% vs 1.12%</h2>
+    <p>投資信託・ETFを持つときにかかる年間のコストを<strong>信託報酬（運用管理費用）</strong>といいます。</p>
+
+    <div class="info-box">
+      <strong>📊 参考数値（2024年3月時点）</strong>：インデックス型の信託報酬平均は約<strong>0.36%</strong>、アクティブ型の平均は約<strong>1.12%</strong>とされています。（出典：各種金融機関の商品比較資料・運用会社各社の目論見書に基づく複数メディアの集計。実際の商品により大きく異なります。また上記は2024年3月時点の集計値のため、現在の水準とは異なる場合があります。各商品の目論見書で最新の信託報酬をご確認ください。）
+    </div>
+
+    <p>「0.36%と1.12%の差なんて、わずか0.76%じゃないか」——と思うかもしれません。しかし、これが<strong>毎年複利で効いてくる</strong>と、長期では無視できない差になります。</p>
+
+    <p>たとえば元本100万円を同じ市場利回りで運用したとして、信託報酬の差だけで考えると：</p>
+    <ul>
+      <li><strong>10年後</strong>：コスト差0.76%が積み重なり、受け取る額に数万〜十数万円の差</li>
+      <li><strong>20年後</strong>：差がさらに広がり、数十万円規模になることも</li>
+      <li><strong>30年後</strong>：長期ほどコスト差の影響は大きくなる</li>
+    </ul>
+
+    <p>これはアクティブ型が「0.76%以上を毎年上乗せして稼ぐ」ことができれば帳消しになります。問題は、<strong>それを毎年安定して続けられるかどうか</strong>、という点です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 長期でコスト差はどう効くか（概念図）</h2>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="cost-impact-title">
+        <title id="cost-impact-title">コスト差が長期の資産成長に与える影響の概念図</title>
+        <text class="s-panel-label" x="40" y="22">コスト差が長期に与える影響（概念図）</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="250" x2="600" y2="250"/><!-- X軸（時間） -->
+        <line class="s-axis" x1="60" y1="250" x2="60" y2="40"/><!-- Y軸（資産） -->
+        <!-- X軸ラベル -->
+        <text class="s-label-sm" x="60" y="270" text-anchor="middle">スタート</text>
+        <text class="s-label-sm" x="195" y="270" text-anchor="middle">10年</text>
+        <text class="s-label-sm" x="330" y="270" text-anchor="middle">20年</text>
+        <text class="s-label-sm" x="465" y="270" text-anchor="middle">30年</text>
+        <text class="s-label-sm" x="590" y="270" text-anchor="middle">（時間）</text>
+        <!-- Y軸ラベル -->
+        <text class="s-label-sm" x="48" y="254" text-anchor="end">元本</text>
+        <text class="s-label-sm" x="48" y="100" text-anchor="end">資産</text>
+        <!-- コスト低（インデックス型イメージ）の成長曲線 -->
+        <polyline class="s-curve-b" points="60,250 120,230 180,205 240,178 300,148 360,118 420,90 480,70 540,56 590,46"/>
+        <text class="s-note" x="595" y="46" text-anchor="start" font-size="11">低コスト</text>
+        <!-- コスト高（アクティブ型 同じ市場リターン想定）の成長曲線 -->
+        <polyline class="s-curve-g" points="60,250 120,232 180,212 240,190 300,166 360,142 420,120 480,102 540,90 590,82"/>
+        <text class="s-note-g" x="595" y="82" text-anchor="start" font-size="11">高コスト</text>
+        <!-- コスト差の矢印・注記 -->
+        <line class="s-guide" x1="590" y1="46" x2="590" y2="82"/>
+        <text class="s-note-r" x="620" y="64" text-anchor="middle" font-size="11" transform="rotate(-90,620,64)">コスト差</text>
+        <!-- 説明注記 -->
+        <text class="s-label-sm" x="100" y="44" font-size="11">※ 市場リターンが同じだった場合、</text>
+        <text class="s-label-sm" x="100" y="58" font-size="11">コスト分だけ最終的な受け取り額が変わる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 市場の利回りが同じだと仮定したとき、コストの違いだけで長期の資産額に差が生まれる仕組みの概念図。差は時間とともに広がる。アクティブ型が「コスト差を超えた超過リターンを上げ続ける」ならこの差は逆転するが、その継続が難しい。※ 概念を示すイメージ図です。実際の数値とは異なります。</figcaption>
+    </figure>
+
+    <p>ポイントは「コスト差そのもの」ではなく、<strong>「コスト差を埋めるだけの超過リターンを、毎年安定して出し続けられるか」</strong>という問いです。1〜2年なら可能なファンドはありますが、10年・20年と継続することはさらに難しくなります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 「過去成績の良いアクティブを選ぶ」は正しいか</h2>
+    <p>「それなら、過去に指数を大幅に上回ったアクティブファンドを選べばいいのでは？」——これは非常に自然な発想です。しかし、ここに重要な落とし穴があります。</p>
+
+    <p>過去の好成績には、大きく分けて二つの問いがあります：</p>
+    <ol>
+      <li><strong>「その好成績は再現できるか」</strong>——運用方針・市場環境・ファンドマネージャーが変わると、過去と同じ結果が出るとは限らない。</li>
+      <li><strong>「そもそも比較の母集合は正しいか」</strong>——これが「生存バイアス」の問題です。</li>
+    </ol>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 生存バイアス：消えたファンドは「平均」から抜ける</h2>
+    <p>投資の世界で「生存バイアス（survivorship bias）」とは、<strong>「現存するもの（生き残ったもの）だけを見て、すでに消えたものを見落とすことで、実態より良い印象を持ってしまう現象」</strong>です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="survivorship-title">
+        <title id="survivorship-title">生存バイアスの概念図：成績不振のファンドは廃止されデータから消える</title>
+        <text class="s-panel-label" x="40" y="22">生存バイアスの構造</text>
+        <!-- 左: スタート時点 -->
+        <text class="s-label-sm" x="145" y="48" text-anchor="middle" font-size="12" font-weight="700">スタート時点（100本のファンド）</text>
+        <rect x="30" y="56" width="230" height="180" rx="6" fill="none" stroke="#8b949e" stroke-width="1.2"/>
+        <!-- 成績良好グループ -->
+        <rect class="s-fill-g" x="40" y="65" width="105" height="80" rx="4"/>
+        <text class="s-note-g" x="93" y="90" text-anchor="middle" font-size="11">好成績グループ</text>
+        <text class="s-label-sm" x="93" y="108" text-anchor="middle" font-size="10">（30本程度）</text>
+        <text class="s-label-sm" x="93" y="124" text-anchor="middle" font-size="10">指数を上回る</text>
+        <!-- 成績不振グループ -->
+        <rect class="s-fill-r" x="155" y="65" width="97" height="80" rx="4"/>
+        <text class="s-note-r" x="203" y="90" text-anchor="middle" font-size="11">不振グループ</text>
+        <text class="s-label-sm" x="203" y="108" text-anchor="middle" font-size="10">（70本程度）</text>
+        <text class="s-label-sm" x="203" y="124" text-anchor="middle" font-size="10">指数を下回る</text>
+        <!-- 廃止される -->
+        <text class="s-note-r" x="145" y="170" text-anchor="middle" font-size="11">不振ファンドは⋯</text>
+        <text class="s-note-r" x="145" y="188" text-anchor="middle" font-size="11.5" font-weight="700">廃止・統合される</text>
+        <text class="s-label-sm" x="145" y="206" text-anchor="middle" font-size="10">データベースから消える</text>
+        <!-- 矢印（右向き） -->
+        <line x1="265" y1="140" x2="305" y2="140" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#8b949e"/></marker></defs>
+        <text class="s-label-sm" x="285" y="132" text-anchor="middle" font-size="10">数年後</text>
+        <!-- 右: 数年後のデータベース -->
+        <text class="s-label-sm" x="475" y="48" text-anchor="middle" font-size="12" font-weight="700">数年後のデータ上（残ったファンド）</text>
+        <rect x="315" y="56" width="300" height="180" rx="6" fill="none" stroke="#8b949e" stroke-width="1.2"/>
+        <!-- 残った好成績 -->
+        <rect class="s-fill-g" x="325" y="65" width="270" height="80" rx="4"/>
+        <text class="s-note-g" x="460" y="92" text-anchor="middle" font-size="11">生き残ったファンドのみ</text>
+        <text class="s-label-sm" x="460" y="112" text-anchor="middle" font-size="10">「どのファンドも平均以上に見える」</text>
+        <text class="s-label-sm" x="460" y="128" text-anchor="middle" font-size="10">（不振ファンドがデータから消えているため）</text>
+        <text class="s-note-r" x="460" y="172" text-anchor="middle" font-size="11.5" font-weight="700">⚠️ これが生存バイアス</text>
+        <text class="s-label-sm" x="460" y="192" text-anchor="middle" font-size="10">実際には多くが指数に負けていたが</text>
+        <text class="s-label-sm" x="460" y="208" text-anchor="middle" font-size="10">残ったもので比較すると「良く見える」</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 成績不振のファンドは廃止・統合されてデータベースから消える。その結果、「残ったファンドだけ」を比較すると実態より成績が良く見える——これが生存バイアス。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>ファンドに置き換えると、次のようなことが起きます：</p>
+    <ul>
+      <li>成績が悪いアクティブファンドは、運用会社が<strong>廃止・他のファンドと統合</strong>する。</li>
+      <li>廃止されたファンドは長期の比較データから外れる。</li>
+      <li>残って比較されるのは<strong>「まだ続いているファンド」だけ</strong>——つまり、比較的成績が良かったもの（または偶然生き残ったもの）。</li>
+      <li>結果、過去データを見ると<strong>「アクティブも案外悪くないな」と錯覚しやすい</strong>。</li>
+    </ul>
+
+    <div class="warning-box">
+      「10年間で成績の良かったアクティブファンド○○本」という統計を見るとき、<strong>その10年間で廃止されたファンドはカウントされていない可能性があります</strong>。開始時点で存在したすべてのファンドを母集合にしているかどうか、確認することが重要です。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ SPIVA報告書が示すもの（参考情報）</h2>
+    <p>S&amp;Pダウ・ジョーンズ・インデックスが毎年公表する<strong>「SPIVA（S&amp;P Indices Versus Active）報告書」</strong>は、アクティブファンドが指数に勝てているかを定期的に集計しています。日本に関するSPIVA Japan 2024年末版の報告によると、以下のような傾向が示されています：</p>
+
+    <ul>
+      <li><strong>1年間</strong>：日本大型株カテゴリで約62%のアクティブファンドが指数に負けた。</li>
+      <li><strong>5年・10年・15年</strong>：日本大型株カテゴリで80%以上が指数に負けた。長期になるほど指数に負けるアクティブの比率が高い。</li>
+      <li><strong>海外株カテゴリ</strong>：海外株を扱うアクティブは78〜91%が指数に負けた（同報告書）。</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>ℹ️ 重要な注釈</strong>：SPIVA報告書も生存バイアスを考慮した調整が行われていますが、計測方法・期間・対象によって結果は変わります。「すべてのアクティブが劣る」という断定にはなりません。また、報告書の数値は毎年更新され変動します。<strong>上記は2024年末版を参照した数値であり、その後に公表された版では数値が更新されています</strong>——とくに「1年間」のような短期の数値は年による振れ幅が大きく、長期（10年・15年）の傾向とは分けて読む必要があります。最新版の数値はS&amp;Pダウ・ジョーンズ・インデックスの公式サイトでご確認ください。（出典：<a href="https://www.spglobal.com/spdji/en/spiva/article/spiva-japan" target="_blank" rel="noopener">SPIVA Japan - S&P Global</a>）
+    </div>
+
+    <p>ただし、「アクティブが一切意味を持たない」という結論ではありません。特定の市場環境・期間・運用担当者によっては、継続して指数を上回るケースも存在します。ここでの要点は<strong>「それを事前に見分けることが非常に難しい」</strong>という点です。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ どちらを選ぶか——「自分が何を確かめられるか」で考える</h2>
+    <p>ここまで読んで、「じゃあインデックスが正解？」と感じた方も多いかもしれません。しかし、<strong>この記事はどちらが優れているという結論を出しません</strong>。それぞれの性質を理解したうえで、<strong>自分の状況・目的・確かめられる能力</strong>に合わせて判断することが大切です。</p>
+
+    <h3>インデックス型が向きやすい考え方・状況</h3>
+    <ul>
+      <li>「市場全体の成長に乗りたい」</li>
+      <li>「個別ファンドを詳しく調べる時間や専門知識が多くない」</li>
+      <li>「コストを最小化して、長期で複利を積みたい」</li>
+      <li>「どのファンドマネージャーが優れているかを事前に判断する自信がない」</li>
+    </ul>
+
+    <h3>アクティブ型が向きやすい考え方・確認したいこと</h3>
+    <p>アクティブ型には、指数が存在しない領域やテーマに投資できる、運用方針そのものに納得して長く保有できる、といったコスト以外の選ぶ理由もあります。そのうえで、次の点を自分で確認できるかが判断材料になります。</p>
+    <ul>
+      <li>そのファンドの運用方針・銘柄選択基準を、自分は理解できているか？</li>
+      <li>過去の好成績が「再現可能な仕組みによるもの」か「運によるもの」かを、どう確かめるか？</li>
+      <li>コスト分の「超過リターン」を長期で出し続けられると判断した根拠は何か？</li>
+      <li>ファンドマネージャーが交代した場合、方針が変わるリスクをどう考えるか？</li>
+    </ul>
+
+    <div class="positive-box">
+      <strong>✅ どちらを選ぶにせよ共通して大切なこと</strong>：手数料（信託報酬・購入時手数料）を正確に把握すること。長期の成績を生存バイアスを意識して評価すること。「なぜこれを選ぶのか」を自分の言葉で説明できること。コストが投資判断に与える影響については<a href="guide-fee-impact.html">手数料・コストの影響</a>もあわせてご覧ください。
+    </div>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AIは個別のファンドを推奨したり、「どちらを買うべきか」を助言するサービスではありません。しかし、<strong>「長期でコストが効く」「生存バイアスに気づく」「再現性を確かめる」</strong>という考え方は、このサイトのシグナル検証にも共通しています。</p>
+    <ul>
+      <li><strong>シグナルの成績を隠さず公開する理由</strong>：勝ちだけでなく負けも含めて記録することで、「うまくいったものだけ見せる」生存バイアスを避けます。<a href="track-record.html">シグナル成績ダッシュボード</a>では、発火したシグナルすべての結果を記録しています。</li>
+      <li><strong>コストの視点</strong>：トレードにも売買コスト・スプレッドがあります。勝率が高くても、コストが大きければトータルは負けます。シグナル研究でもこの視点を大切にしています。</li>
+      <li><strong>長期データの意味</strong>：短期の「連勝」は運かもしれません。どれだけの期間・件数で何を確認できるかを意識しながら、<a href="guides.html#cat-lab">AIシグナル研究日誌</a>シリーズで前向き検証を積み重ねています。</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 「生き残ったものだけ」ではない成績記録を見る</div>
+      <div class="cta-box-desc">勝ちも負けも含めたシグナルの成績を、すべて記録・公開しています。生存バイアスのない記録がどういうものかの参考として。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 10 -->
+    <h2 id="section-10">🔟 まとめ</h2>
+    <ul>
+      <li><strong>インデックス型</strong>は「市場平均に乗る」設計。コストが低く、人の判断を最小化する。「平均超え」は設計上ない。</li>
+      <li><strong>アクティブ型</strong>は「市場平均を上回る」ことを目指す設計。コストが高い分、毎年その差を超えた超過リターンを出し続ける必要がある。</li>
+      <li>コスト差（例：年0.76%）は小さく見えるが、<strong>複利で長期に積み重なると無視できない差</strong>になる。アクティブが有利になるには、コスト差を超え続けることが条件。</li>
+      <li>「過去成績の良いアクティブを選べばいい」には<strong>生存バイアスの罠</strong>がある。成績不振のファンドは廃止されてデータから消えるため、残ったものだけ見ると全体が良く見える。</li>
+      <li>SPIVA報告書などのデータは参考になるが、これも確実な答えではない。大切なのは<strong>「自分が何を確かめられるか」</strong>という問い。</li>
+      <li>どちらが正解かという結論はなく、<strong>自分の状況・目的・判断力に合わせた選択</strong>が重要。</li>
+    </ul>
+    <p>「平均でいい」か「平均に勝ちたい」か——どちらの考え方にも合理的な根拠があります。大切なのは、<strong>その仕組みとコストを正確に理解したうえで、自分が納得できる根拠で選ぶ</strong>ことです。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-etf-vs-mutual-fund.html">
+        <div class="related-card-title">📦 ETFと投資信託の違い</div>
+        <div class="related-card-desc">「器（ETFか投信か）」の話。本記事との棲み分けは「器」vs「中の運用方針」。どちらの器にもインデックス型・アクティブ型がある。</div>
+      </a>
+      <a class="related-card" href="guide-fee-impact.html">
+        <div class="related-card-title">💸 手数料・コストの影響</div>
+        <div class="related-card-desc">信託報酬・売買手数料がリターンに与える影響を図解。コストが長期でどう効くかをさらに詳しく。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">勝ちも負けも含む成績の記録。生存バイアスのない記録とはどういうものかの参考として。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はインデックス運用・アクティブ運用の仕組みと設計思想を情報提供として解説したものであり、特定のファンド・銘柄の売買推奨や投資助言ではありません。記載された情報・数値は執筆時点のものであり、将来の運用成果を保証するものではありません。コスト・税率・制度は変動する場合があります。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>⚠️ 本サイトは投資助言・代理業の登録を行っておらず、特定銘柄の売買推奨や投資助言は行っていません。掲載情報は情報提供のみを目的としており、投資判断はご自身の責任でお願いします。</p>
+  <p style="margin-top:8px"><a href="index.html">トップ</a> | <a href="guides.html">解説記事</a> | <a href="track-record.html">シグナル成績</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシー</a> | <a href="contact.html">お問い合わせ</a></p>
+</footer>
+
+<script>
+  // テーマ切替
+  function toggleTheme(){
+    const b=document.body;
+    const t=document.getElementById('theme-toggle');
+    if(b.classList.contains('dark')){b.classList.remove('dark');t.textContent='🌙';localStorage.setItem('theme','light');}
+    else{b.classList.add('dark');t.textContent='☀️';localStorage.setItem('theme','dark');}
+  }
+  (function(){
+    const saved=localStorage.getItem('theme');
+    if(saved==='dark'){document.body.classList.add('dark');document.getElementById('theme-toggle').textContent='☀️';}
+  })();
+  // 読書プログレスバー
+  window.addEventListener('scroll',function(){
+    const d=document.documentElement;
+    const prog=d.scrollTop/(d.scrollHeight-d.clientHeight)*100;
+    document.getElementById('reading-progress').style.width=prog+'%';
+  },{passive:true});
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>

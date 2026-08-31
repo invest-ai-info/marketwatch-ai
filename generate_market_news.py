@@ -5303,6 +5303,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-01", "line": '・<b>2026-09-01</b>: 💰 解説「<a href="guide-index-vs-active.html" style="color:#0969da"><b>「平均でいい」と「平均に勝ちたい」は何が違うのか</b></a>」公開'},
         {"date": "2026-09-01", "line": '・<b>2026-09-01</b>: 🧪 解説「<a href="guide-signal-lab-086.html" style="color:#0969da"><b>売られすぎ反発(rsi_oversold_bounce)の足種二極化——4H足CI下限52%超・1H足は無エッジ #86</b></a>」公開'},
         {"date": "2026-08-31", "line": '・<b>2026-08-31</b>: 📰 解説「<a href="guide-news-2026-08-31-us-iran-larak-island-hormuz-oil.html" style="color:#0969da"><b>米軍がイランLarak島を攻撃、原油+2.8%急伸（8/31）</b></a>」公開'},
         {"date": "2026-08-31", "line": '・<b>2026-08-31</b>: 🛡️ 解説「<a href="guide-rebalancing.html" style="color:#0969da"><b>何もしていないのに、リスクだけが増えている——リバランスの仕組み</b></a>」公開'},
