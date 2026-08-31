@@ -283,18 +283,49 @@ def check_gate_immutability(owner, repo, token, now):
 QUEUE_GUIDE_PATH = "drafts/AUTODRAFT_GUIDE.md"
 QUEUE_MIN_REMAIN = 5  # 未公開 topic がこれ未満なら warn（1日1本なので約5日前に通知）
 
+# 🚨 2026-08-31 追加: 見ていたのは autodraft レーンだけだった。
+#
+# 同日に測ったら **投資格言は5日連続・投資詐欺は7日連続**、ルーティン自身が台帳に
+# 「🚩キュー枯渇・補充依頼」を書き続けていたのに、誰も気づいていなかった。
+# ⑤は「静かな停止を捕まえる」ために作った番人なのに、**見ている口が1つしかなかった**
+# ＝新しい自動公開レーン（proverb 2026-08-06〜 / scam 2026-08-13〜）が増えたときに
+# ここへ登録する手順が無かった。**レーンを増やしたら必ずこの表に足すこと。**
+#
+# ⚠️ 台帳（LEDGER）に載っている key は残量に数えない。ルーティン自身が
+# 「LEDGER と guides.html のどちらにも未登録の最初の1件」を選ぶので、
+# **台帳に載った時点でその回は選ばれない**（人間判断でクローズした格言、
+# エスカレ中で公開できない手口が該当）。数に入れると、動かせない在庫が床を支えてしまう。
+QUEUE_LANES = [
+    # (レーン名, 手順書, guide- の後ろに付く接頭辞, 台帳, 床)
+    ("autodraft（心理＆リスク管理）", QUEUE_GUIDE_PATH, "", None, QUEUE_MIN_REMAIN),
+    ("proverb（投資格言）", "drafts/PROVERB_GUIDE.md", "proverb-",
+     "drafts/proverb/PROVERB_LEDGER.md", QUEUE_MIN_REMAIN),
+    ("scam（投資詐欺）", "drafts/SCAM_GUIDE.md", "scam-",
+     "drafts/scam/SCAM_LEDGER.md", QUEUE_MIN_REMAIN),
+]
 
-def check_topic_queue(owner, repo, token):
-    """AUTODRAFT_GUIDE.md の topicキュー表から key を抽出し、guides.html に
-    guide-<key>.html のカードが無いもの＝未公開の残り本数を数える。
-    ローカルの陳腐化に惑わされないよう、どちらも GitHub 側の最新を読む（③と同方針）。
-    戻り値: (キュー総数, 未公開keyのリスト)。"""
-    md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{QUEUE_GUIDE_PATH}", token)
-    # 表の行「| 12 | 基礎知識 | `bonds-interest-rates` | …」から key だけを取る
-    keys = re.findall(r"^\|\s*\d+\s*\|[^|]*\|\s*`([a-z0-9-]+)`", md, re.M)
+
+def check_topic_queue(owner, repo, token, path=QUEUE_GUIDE_PATH, prefix="", ledger=None):
+    """手順書のキュー表から key を抽出し、guides.html に guide-<prefix><key>.html の
+    カードが無いもの＝未公開の残りを数える。
+    ローカルの陳腐化に惑わされないよう、どれも GitHub 側の最新を読む（③と同方針）。
+    戻り値: (キュー総数, いま着手できるkeyのリスト, 台帳に載っていて数えないkeyのリスト)。"""
+    md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{path}", token)
+    # 表の行「| 12 | 基礎知識 | `bonds-interest-rates` | …」から key だけを取る。
+    # ⚠️ proverb / scam の表は key をバッククォートで囲っていないので任意にする
+    keys = re.findall(r"^\|\s*\d+\s*\|[^|]*\|\s*`?([a-z0-9-]+)`?\s*\|", md, re.M)
     guides = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/guides.html", token)
-    remaining = [k for k in keys if f'href="guide-{k}.html"' not in guides]
-    return len(keys), remaining
+    unpublished = [k for k in keys if f'href="guide-{prefix}{k}.html"' not in guides]
+
+    held = []
+    if ledger and unpublished:
+        try:
+            text = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{ledger}", token)
+            held = [k for k in unpublished if k in text]
+        except Exception:
+            held = []          # 台帳が読めないだけで番人を止めない（数は多めに出る）
+    remaining = [k for k in unpublished if k not in held]
+    return len(keys), remaining, held
 
 
 # ⑥ 「宣言した仮説」がライブトラッカーに実在するか（＝事前登録の静かな失敗の検知）。
@@ -675,23 +706,25 @@ def main():
         body.append(f"- 🚨 ⚪ ゲート不変条件の確認失敗: {e}")
 
     body.append("")
-    body.append("### ⑤ autodraft topicキューの残量（枯渇＝自動公開レーンの静かな停止）")
-    try:
-        total, remaining = check_topic_queue(owner, repo, token)
-        if not total:
-            body.append(f"- 🚨 ⚪ topicキューを解析できない（{QUEUE_GUIDE_PATH} の表形式を確認）")
-        elif len(remaining) < QUEUE_MIN_REMAIN:
-            nokori = ", ".join(remaining) if remaining else "なし＝レーン停止中"
-            body.append(f"- 🚨 🟡 未公開 topic が残り {len(remaining)}/{total} 件"
-                        f"（閾値 {QUEUE_MIN_REMAIN}）＝キュー補充が必要。"
-                        f"{QUEUE_GUIDE_PATH} の表に topic 行を追加する。残り: {nokori}")
-            bad.append(("topicキュー枯渇", "warn"))
-        else:
-            body.append(f"- ✅ 🟢 未公開 topic 残り {len(remaining)}/{total} 件"
-                        f"（閾値 {QUEUE_MIN_REMAIN} 以上）")
-    except Exception as e:
-        # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
-        body.append(f"- 🚨 ⚪ topicキュー残量の確認失敗: {e}")
+    body.append("### ⑤ 自動公開レーンのキュー残量（枯渇＝静かな停止）")
+    for lane, path, prefix, ledger, floor in QUEUE_LANES:
+        try:
+            total, remaining, held = check_topic_queue(owner, repo, token, path, prefix, ledger)
+            hold = f"／台帳に載っていて数えない {len(held)}件（{', '.join(held)}）" if held else ""
+            if not total:
+                body.append(f"- 🚨 ⚪ {lane}: キューを解析できない（{path} の表形式を確認）")
+            elif len(remaining) < floor:
+                nokori = ", ".join(remaining) if remaining else "なし＝レーン停止中"
+                body.append(f"- 🚨 🟡 {lane}: いま着手できる残りが {len(remaining)}/{total} 件"
+                            f"（閾値 {floor}）{hold}＝キュー補充が必要。"
+                            f"{path} の表に行を追加する。残り: {nokori}")
+                bad.append((f"{lane} キュー枯渇", "warn"))
+            else:
+                body.append(f"- ✅ 🟢 {lane}: いま着手できる残り {len(remaining)}/{total} 件"
+                            f"（閾値 {floor} 以上）{hold}")
+        except Exception as e:
+            # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
+            body.append(f"- 🚨 ⚪ {lane}: キュー残量の確認失敗: {e}")
 
     body.append("")
     body.append("### ⑥ 事前登録した仮説がトラッカーに実在するか（登録漏れ＝台帳が嘘をつく壊れ方）")
