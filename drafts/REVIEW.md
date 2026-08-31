@@ -1,3 +1,30 @@
+## 2026-08-31 autodraft: draft-outcome-bias.html（儲かった判断が、正しい判断とは限らない）
+
+- **基準日**: 2026-08-31（UTC 2026-08-31T20:31Z）
+- **topic / key**: 投資心理 #52 / `outcome-bias`
+- **生成ファイル**: `drafts/draft-outcome-bias.html`
+- **参照出典URL**:
+  - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12372742/（Baron & Hershey (1988) の再現実験レビュー）
+  - https://en.wikipedia.org/wiki/Outcome_bias（結果バイアスの定義・学術的背景）
+  - https://rips-irsp.com/articles/10.5334/irsp.751（IRSP 2025・アウトカムバイアスの実験結果）
+  - https://www.researchgate.net/publication/19789598_Outcome_Bias_in_Decision_Evaluation（Baron & Hershey 1988 原著）
+  - https://www.britannica.com/money/behavioral-biases-in-finance（投資における行動バイアスの解説）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし（投資心理の一般論に限定）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「保証」「儲かる」は使用していない）
+  - ✅ 「何回のトレードが十分か」は断定せず「一般に数十〜数百回と言われる」と幅で表現
+  - ✅ 当サイト独自の実測値は公開済みページへのリンクのみ（数値を新たに掲載していない）
+  - ✅ kinsho-v1免責：冒頭disclaimer-banner（data-disclaimer属性付き）＋本文末p.disclaimer（data-disclaimer属性付き）＋footer（data-disclaimer属性付き）の計3ヵ所
+  - ✅ noindex,nofollow メタタグ入り（head 3行目）
+  - ✅ 出典妥当（査読論文・学術データベース・一次情報）
+- **SVGメモ**: 図1（4象限マトリクス）・図2（試行回数と実力の反映度）の2点を概念図として作成済み。実機ライト/ダーク確認を依頼
+- **人間の残作業**:
+  - [ ] SVG図1・図2のライトモード/ダークモード実機確認（色がテーマで正しく切り替わるか）
+  - [ ] タイトル・リード文の微調整（必要な場合）
+  - **公開は毎朝08:40の autodraft-publish が compliance-reviewer(Opus)ゲート付きで自動実行**
+
+---
+
 ## 2026-08-31 autopublish: guide-rebalancing.html（✅公開済み）
 - **key**: rebalancing / シリーズ: リスク管理 #47
 - **ゲート**: 決定論(check_guide_draft.py) EXIT=0 🟢 / Opus初回🟡グレー8件修正→🟢白 / check_site_consistency EXIT=0 🟢 / 独立Opus🟢白
