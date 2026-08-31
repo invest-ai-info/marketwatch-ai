@@ -3,6 +3,42 @@
 
 ---
 
+## 2026-08-31
+- 判定: ✅ 公開済み
+- 選定トピック: 米軍がイランLarak島の発射台を攻撃──ホルムズ海峡再緊張・原油+2.8%急伸と日本経済への影響を3視点で整理（カテゴリ: 中東地政学・エネルギー・日本経済・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 8月30日（米国時間）、米中央軍（CENTCOM）がホルムズ海峡のイラン管轄Larak島の発射台2基を攻撃（約1か月ぶりの対イラン軍事行動）。イランがヨルダン米軍基地にミサイル報復・ヨルダン軍が8発迎撃。Brent原油+2.85%($90.61)・WTI+2.55%($85.53)・米株先物安・日経-0.14%。日本の原油輸入94%が中東依存・約8割がホルムズ経由という直接的な影響経路がある。シカゴPMI急落（57.6→47.1・コロナ禍以来最大の月次下落）・ミシガン消費者信頼感（55.2→51.7）との複合で、9月FOMC・BOJ会合前の重要局面。直近5本（カナダ関税/JH講演/東京CPI/NVIDIA×2）との重複なし。
+- 出典（確認済み・15系統超）:
+  - Al Arabiya「US strikes Iranian launchers on Larak Island over Strait of Hormuz mine threat」（2026-08-31）
+  - ABC Australia「Breaking: US strikes Iranian launchers on island in Strait of Hormuz」（2026-08-31）
+  - CNBC「US strikes Iranian rocket launchers near Strait of Hormuz」（2026-08-30）
+  - Washington Post「U.S. strikes Iran missile sites on Larak Island」（2026-08-30）
+  - CNN「US and Iran trade attacks, marking first escalation in a month」（2026-08-30）
+  - Time「U.S. Strikes Iran in First Military Action in a Month」（2026-08-31）
+  - CNBC「Oil rises over 1% after U.S. forces strike Iran's Larak Island」（2026-08-31）
+  - RTÉ「Oil jumps over 2% after US attack on Iran's Larak Island」（2026-08-31）
+  - Business Standard「Oil prices jump more than 2% after US attack on Iran's Larak island」（2026-08-31）
+  - Al Jazeera「Iran attacks 'US targets' in Jordan」ライブブログ（2026-08-31）
+  - Gulf News「Iran fires missiles at US base in Jordan after Larak Island strikes」（2026-08-31）
+  - Radio Free Europe「Iran Guards Claim Retaliatory Attack On US Military Assets In Jordan」（2026-08-31）
+  - Newsquawk「US Michigan Consumer Sentiment Final (Aug) 51.7」（2026-08-31）
+  - 外為どっとコム「今日のドル円相場見通し 2026年8月31日」（2026-08-31）
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for August 31」（2026-08-30付け）
+  - EIA Short-Term Energy Outlook 2026年8月版
+  - Congress.gov CRS Report R45281
+  - 野村総合研究所 木内登英「イラン情勢を受けた原油価格上昇の日本経済・国民生活への影響」（2026-03-13）
+  - 第一生命経済研究所「イラン攻撃の2週間停止、日本経済のシナリオ ～どうなる原油価格～」
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟢白（禁止語なし・kinsho-v1×3箇所・銘柄推奨なし・将来断言なし・出典15系統超）。修正なし（Edit未実行）
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典15系統超）✅・公開OK
+- 品質ルーブリック: ①〜⑤全✅（リード30秒OK・CENTCOM/IRGC初出説明あり・数値出典紐づき・中立トーン・見出し一致）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭banner/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典15系統超✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告31件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-08-31-us-iran-larak-island-hormuz-oil.html
+- commit: 9fdccd0（main へ push 済み）
+
+---
+
 ## 2026-08-30
 - 判定: ✅ 公開済み
 - 選定トピック: 米加「50%関税報復合戦」全面衝突──カナダ9月8日発効の対米反撃関税とドル・インフレ・日本株への影響を3視点で整理（カテゴリ: 米加貿易摩擦・インフレ・為替・日本株）
