@@ -192,4 +192,5 @@ SYNC_FILES = [
     "guide-index-vs-active.html",
     "guide-proverb-markets-irrational-solvent.html",
     "guide-scam-phishing-account-takeover.html",
+    "guide-news-2026-09-01-japan-jgb-yield-3-percent-30year-high.html",
 ]
