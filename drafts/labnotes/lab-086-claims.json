@@ -2,52 +2,46 @@
   "article_id": "086",
   "claims": [
     {
-      "label": "FWD全体 rsi_oversold_bounce",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
-      "k": 135,
-      "n": 257
+      "label": "全期間（IS+FWD）：trend=上昇×reversalL クローズ件数と勝ち数",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 180,
+      "n": 371
     },
     {
-      "label": "FWD 1H足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1h"},
-      "k": 79,
-      "n": 173
+      "label": "IS期間（前向き登録前）：trend=上昇×reversalL",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-23"},
+      "k": 56,
+      "n": 103
     },
     {
-      "label": "FWD 4H足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "4h"},
-      "k": 46,
-      "n": 72
+      "label": "FWD期間（前向き）：trend=上昇×reversalL",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23"},
+      "k": 124,
+      "n": 268
     },
     {
-      "label": "FWD 1D足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1d"},
-      "k": 10,
-      "n": 12
+      "label": "FWD期間×RSI売られすぎ逆張り（rsi_oversold_bounce）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-23"},
+      "k": 40,
+      "n": 62
     },
     {
-      "label": "IS全体 rsi_oversold_bounce",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
-      "k": 52,
-      "n": 133
+      "label": "FWD期間×BB下限タッチ（bb_lower_touch）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-23"},
+      "k": 84,
+      "n": 206
     },
     {
-      "label": "FWD jpy_fx",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "group": "jpy_fx"},
-      "k": 32,
-      "n": 48
+      "label": "FWD 2026年7月（月別推移）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-07-01", "fired_before": "2026-08-01"},
+      "k": 61,
+      "n": 128
     },
     {
-      "label": "FWD 4H×jpy_fx",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "4h", "group": "jpy_fx"},
-      "k": 16,
-      "n": 17
-    },
-    {
-      "label": "FWD trend=上昇",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "上昇"},
-      "k": 44,
-      "n": 66
+      "label": "FWD 2026年8月（月別推移）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-08-01", "fired_before": "2026-09-01"},
+      "k": 51,
+      "n": 121
     }
   ]
 }
