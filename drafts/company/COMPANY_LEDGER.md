@@ -52,5 +52,24 @@ COMPANY_GUIDE.md の指示に基づき、まず日本・米国の一次情報ソ
   - 本レーンでのApple既刊なし（初回のため90日ルール該当なし）。個別deep-dive記事も無し（ニュース記事のみ）→⓪節は不要。
 - **一次情報の到達確認**：SEC `data.sec.gov/submissions/CIK0000320193.json`（200）から直近10-K（2025-10-31提出、期末2025-09-27）・10-Q（2026-07-31提出、期末2026-06-27）を特定し、`www.sec.gov/Archives/edgar/data/320193/...` から両文書とも200で本文取得・セグメント別売上・Item 1A Risk Factors・Item 3 Legal Proceedingsを確認。SEC向けUser-Agentは `marketwatch-jp (https://marketwatch-jp.com)` を使用（個人メールアドレスは不使用）。
 - **公開ファイル**：`guide-company-aapl-apple.html`
-- **コンプラ監査**：後続で記録
+
+### コンプラ監査・品質確認（3ラウンド）
+
+- **1回目（Opus・Read/Edit権限だが本セッションではEdit無効）**：初期判定🟡グレー。F1（決算発表日「7月29日」の誤り＝正しくは7月30日。Advantest提出日と混同）／F2（「過去に例のない伸び率」という裏付けのない最上級表現）／F3（「答え合わせ」＝的中率含意の語）／F4（「直近decisionの数字」の英単語混入誤字）を検出。§0の6禁止事項はすべて🟢白。親エージェント（本セッション）がF1〜F4をEditで修正。
+- **2回目（fresh独立Opus・Read/Bash/WebSearchのみ）**：SEC一次情報（data.sec.gov）とXBRLで全数値を再照合。🟡グレー（要修正・自動レーンの「軽微修正」の範囲を超える数値訂正のため本来はエスカレ相当）。A-1（関連記事カードの「過去最高を更新」がQ3実績では成立しない＝Q1 $143.76B・Q2 $111.18B・Q3 $109.42Bで**Q3はFY26で最も低い四半期**。自社速報記事の「6月期の四半期としては」という限定句が抜け落ちていた）／A-2（粗利率50.0%→正しくは50.1%）／A-3（自己株買い$620.94億の出典をNote 7に誤帰属＝実際はキャッシュフロー計算書の数値でNote 7は215百万株・$618億）／A-4（noindex残存・SVG2件の実際のはみ出し/重なりを`check_guide_draft.py`で確認）。すべて修正。
+- **3回目（fresh独立Opus・最終確認）**：SEC一次情報との数値・法務記述の全数照合で**矛盾なし**。§0の6禁止事項すべて🟢白。QUALITY_RUBRIC 5観点で❌0件（⚠️2件＝「Article 6(4)調査」の内容説明不足・年表2行の出典URL不記載）。決定論ゲート`check_guide_draft.py`はGREEN。差し戻し必須1件（年表のWikipedia URL化）＋推奨2件（SVG凡例1行の横はみ出し・本文に時価総額の金額を書かない〔COMPANY_GUIDE.md 2026-09-01追記のルール〕）を検出→すべて修正し再度GREEN確認。**最終判定：公開可**。
+- 3ラウンドを通じ、SEC一次情報（10-K/10-Q/8-K）と本文の数値・日付・法務記述に矛盾は最終的に一切なし。禁止表現（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い/割安/割高/外せない/好機）は本文0件。
+
+### 公開実行
+
+- `python publish_article.py --file guide-company-aapl-apple.html --category "数字で見る企業" --emoji 🔬 --card-title "Apple（AAPL）を数字で見る" --desc "..."` 実行 → guides.html にカード追加・SYNC_FILES登録・更新履歴追加。
+  - ⚠️ **「数字で見る企業」の専用カテゴリ見出し（`<div class="category-title">`）がguides.htmlにまだ無く**、カードは既存の「🧮 計算ツール（常設）」セクション先頭に挿入された（publish_article.pyの仕様＝新規カテゴリは記事一覧の最上段に挿入。専用セクション見出しの新設は手動）。機能上は問題ない（バッジ表示・リンクとも正常）が、**次回以降オーナー判断で専用セクション見出しを追加すると見栄えが良くなる**。
+  - `python apply_back_to_top.py` を実行したところ本記事以外の**既存記事27本の「↑上に戻る」ブロックも差し替え対象**になったため、本記事に無関係な変更は `git checkout` で除外し、コミット対象を本記事関連の4ファイル（`guide-company-aapl-apple.html` / `guides.html` / `generate_market_news.py` / `sync_to_github.py`）に限定した。
+  - `python check_site_consistency.py` → **EXIT=0（エラーなし・警告29件はすべて本記事と無関係な既存ファイルのもの）**。
+- **選定・監査・修正・公開まで一気通貫で完了**。
+
+### 🚨 運用メモ（オーナー確認事項）
+
+- 本セッション実行中、**別セッション/オーナーのローカル環境が同時に同じ会社選定タスクを実行**していたと見られ（`chore: sync 2 files from local [2026-09-01 20:17 JST]` コミットでCOMPANY_GUIDE.md・SESSION_HANDOFF.mdが更新され、本セッションの初期ドラフトを基にした記述が入っていた）、git push が一度衝突（non-fast-forward）。`git rebase origin/main` で解消し、両者の変更を保持。**SESSION_HANDOFF.mdには「✅公開」と記載されていたが、実際にはguides.htmlへの掲載もnoindex解除も未実施の状態だった**（本セッションが完遂）。COMPANY_GUIDE.md側の2026-09-01追記（EDINET/TDnet到達性・Wikipedia許可・時価総額を本文に書かないルール等）は本セッションの調査結果とほぼ同一内容で、正しく反映されている。
+- **jp-rankings.json が2026-08-29を最後に更新されていない**（8/31・9/1が欠落）。この点はCOMPANY_GUIDE.md側にも記載済みだが、automation-health側での確認を推奨。
 
