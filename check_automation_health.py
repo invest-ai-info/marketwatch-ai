@@ -323,6 +323,25 @@ LEDGER_WATCH = [
 ]
 
 
+def escalation_state(total, remaining, held):
+    """キューの内訳から「着手したのに出せていない」状態を判定する。
+
+    held ＝ キューにあり台帳に名前があるが guides.html に無い＝**エスカレした題材**。
+    戻り値: (状態, 公開数)。状態は "none" / "stalled"（公開0件）/ "piling"（滞留）/ "ok"。
+
+    🔑 残量だけ見ると、エスカレのたびに held が増えて remaining が減るので
+    「順調に消化している」ようにしか見えない（2026-09-01 tse で実際に起きた）。
+    """
+    published = total - len(remaining) - len(held)
+    if not held:
+        return "none", published
+    if published == 0:
+        return "stalled", published
+    if len(held) >= 2:
+        return "piling", published
+    return "ok", published
+
+
 def check_ledger_freshness(owner, repo, token, path, max_days, since, today):
     """台帳の最終コミットからの経過日数を返す。戻り値: (状態, 説明)。
 
@@ -760,6 +779,30 @@ def main():
             else:
                 body.append(f"- ✅ 🟢 {lane}: いま着手できる残り {len(remaining)}/{total} 件"
                             f"（閾値 {floor} 以上）{hold}")
+
+            # 🆕 2026-09-01: 残量が足りていても「出ていない」ことがある。
+            #
+            # held ＝ キューにあり台帳に名前があるが guides.html に載っていない
+            #      ＝ **着手したのに公開できなかった（エスカレした）題材**。
+            # 残量だけ見ていると、エスカレのたびに held が増えて remaining が減るので
+            # 「順調に消化している」ようにしか見えない。
+            # 🚨 実例＝2026-09-01、tse レーンは jpx.co.jp の経路遮断で初回からエスカレしたのに
+            #    番人は 🟢17/18 と表示した。このままなら **18日かけて全題材を食い潰し、
+            #    記事は1本も出ず、最後に出る警告は「キュー枯渇」という誤診**になっていた。
+            # 🔑 だから「在庫があるか」ではなく **「実際に出ているか」** を見る。
+            state, published = escalation_state(total, remaining, held)
+            if state != "none":
+                names = ", ".join(held[:5]) + ("…" if len(held) > 5 else "")
+                if state == "stalled":
+                    body.append(f"- 🚨 🔴 {lane}: **1本も公開できていない**のにエスカレが"
+                                f"{len(held)}件（{names}）＝書けない理由が続いている。"
+                                f"台帳の停止理由を読むこと（経路遮断なら許可リスト、"
+                                f"bot判定なら出典の振り替え）")
+                    bad.append((f"{lane} 公開0件のままエスカレ継続", "warn"))
+                elif state == "piling":
+                    body.append(f"- 🚨 🟡 {lane}: エスカレが{len(held)}件たまっている（{names}）"
+                                f"＝公開{published}件。同じ理由で止まっていないか台帳を読むこと")
+                    bad.append((f"{lane} エスカレ滞留{len(held)}件", "warn"))
         except Exception as e:
             # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
             body.append(f"- 🚨 ⚪ {lane}: キュー残量の確認失敗: {e}")

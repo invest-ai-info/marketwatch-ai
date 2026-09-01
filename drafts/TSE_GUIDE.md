@@ -47,6 +47,18 @@
 1. `date -u` → JST(+9) で基準日。
 2. **次に書く題材を決める**：下の【キュー】を上から見て、`drafts/tse/TSE_LEDGER.md` と `guides.html` のどちらにも未登録（＝`guide-tse-<slug>.html` がまだ無い）最初の1件を選ぶ。
    - ★既に当日分の `guide-tse-*.html` をこの実行で作っていれば**何もしない**（1日1本）。
+   - 🆕🚨 **台帳に名前があるだけで「消費済み」にしない**（2026-09-01 追加）。記載を実際に読み、
+     **停止の理由が「経路遮断（`CONNECT tunnel failed` / `EGRESS_BLOCKED`）」や一時的なエラーなら、
+     その題材をもう一度選ぶ**（印が `🔁再試行可` でも `🚩` でも、**理由で判断する**）。
+     選び直さないのは **`🚩要人間レビュー` かつ理由がコンプラ🔴黒・品質❌・先方のbot判定（`cf-mitigated`）**のときだけ。
+     📌 **具体例**＝2026-09-01 の `timely-disclosure` は `🚩` で記録されているが、理由は
+     `www.jpx.co.jp` の**経路遮断**なので**再試行する**（キュー#1から再開する）。
+     🔑 **理由＝2026-09-01 の初回実行で実際に踏んだ。**`www.jpx.co.jp` がクラウドの経路で遮断され
+     `timely-disclosure` がエスカレしたが、**台帳に名前が載ったせいで翌日は #2 へ進む**設計だった。
+     このままだと**1日1題材ずつ食い潰して18日で全滅し、しかも記事は1本も出ない**。
+     原因は「経路が塞がっている」1点なのに、最後に出る警告は「キュー枯渇・補充依頼」という**誤診**になる。
+     ⚠️ これは ai-tsukaikata で既に学んだ教訓の再発＝**「一時的な失敗を永続的な状態として記録すると、
+     原因が直っても復旧しない」**。**再試行の条件を決めずに停止マークを作らないこと。**
    - ★キューが尽きたら**新しい題材を勝手に作らない**。`TSE_LEDGER.md` に「🚩キュー枯渇・補充依頼」を記録してエスカレし終了（水増し＝薄コンテンツ＝厳禁）。
 3. **一次情報を先に開く。**§0の絶対条件のとおり、書く前に `jpx.co.jp` 等の該当ページを実際に取得する。
    - 取得できたURLと確認日を、記事本文と `TSE_LEDGER.md` の両方に残す。
@@ -63,7 +75,18 @@
    - b. `python check_site_consistency.py; echo EXIT=$?`（赤なら中止しエスカレ）
    - c. `git add guide-tse-<slug>.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: 東証のしくみ auto-publish <slug>" && git push origin main`
    - d. `drafts/tse/TSE_LEDGER.md` に「✅公開済み・題材・slug・コンプラ判定・**一次情報URLと確認日**」を追記しコミット＆push。
-9. **エスカレ（公開しない）**：記事を `drafts/tse/draft-<slug>.html` に `<meta name="robots" content="noindex,nofollow">` 付きで保存し、`drafts/tse/TSE_LEDGER.md` に「🚩要人間レビュー（理由）」を記録して `git add drafts/tse/ && git commit -m "chore: tse escalate <slug>" && git push origin main`。
+9. **エスカレ（公開しない）**：記事を `drafts/tse/draft-<slug>.html` に `<meta name="robots" content="noindex,nofollow">` 付きで保存し、`drafts/tse/TSE_LEDGER.md` に理由を記録して `git add drafts/tse/ && git commit -m "chore: tse escalate <slug>" && git push origin main`。
+
+   🆕🚨 **エスカレは必ず2種類のどちらかで記録する（2026-09-01 追加）。書き分けないと手順2が再試行できない。**
+
+   | 印 | どんなとき | 次回の扱い |
+   |---|---|---|
+   | **`🔁再試行可`** | 一次情報に届かなかった（`CONNECT tunnel failed` / `EGRESS_BLOCKED` ＝**経路**）、一時的なエラー、API不調 | **同じ題材をもう一度選ぶ。**外部要因なので、直れば書ける |
+   | **`🚩要人間レビュー`** | コンプラ🔴黒・品質❌・事実が確定しない・**先方のbot判定**（`cf-mitigated` 付き403） | **選び直さない。**人間の判断を待つ（何度やっても同じ結果になる） |
+
+   ⚠️ **どちらか迷ったら `🔁再試行可`。**題材を食い潰すより、もう一度試すほうが安い。
+   ⚠️ 経路遮断のときは**叩いたURLと応答（curl の status と本文の先頭）を必ず書く**。
+   手順2と、`check_automation_health.py` の番人がこの記録を読む。
 
    > 🔒 **🔴黒のときだけの例外**：このリポジトリは **public** で `raw.githubusercontent.com` から誰でも本文を読める。
    > よって **🔴黒（法務リスク）と判定した本文はリポジトリにコミットしない。**台帳には日付・対象・理由の要約だけを書く。
