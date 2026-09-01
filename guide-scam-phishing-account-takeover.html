@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>証券口座の乗っ取り（フィッシング→不正取引）——「注文を出す権利」を盗まれる仕組みと4つの防御手順 - MarketWatch AI</title>
+  <meta name="description" content="証券口座のフィッシング被害は「現金を盗む」ではなく「注文を出す権利を盗む」詐欺。金融庁公表データ（2025年1〜10月：不正アクセス16,641件・不正取引9,348件・売却金額約3,778億円）をもとに、偽メール→認証情報窃取→不正ログイン→株売却→薄商い銘柄買付の5段階と、ブックマーク・多要素認証・通知設定の防御手順を解説。投資詐欺から身を守るシリーズ第11回。">
+  <meta name="keywords" content="証券口座,フィッシング詐欺,不正アクセス,不正取引,証券口座乗っ取り,リアルタイムフィッシング,多要素認証,パスキー,投資詐欺,金融庁">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-scam-phishing-account-takeover.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="証券口座の乗っ取り（フィッシング→不正取引）——「注文を出す権利」を盗まれる仕組みと4つの防御手順">
+  <meta property="og:description" content="金融庁公表（2025年1〜10月）：不正アクセス16,641件・不正取引9,348件・売却金額約3,778億円。5段階の手口分解と実務的な防御手順を解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-scam-phishing-account-takeover.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "証券口座の乗っ取り（フィッシング→不正取引）——「注文を出す権利」を盗まれる仕組みと4つの防御手順",
+    "description": "金融庁公表（2025年1〜10月）：不正アクセス16,641件・不正取引9,348件・売却金額約3,778億円。5段階の手口分解と実務的な防御手順を解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-01",
+    "dateModified": "2026-09-01",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-scam-phishing-account-takeover.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 証券口座の乗っ取り（フィッシング→不正取引）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は投資詐欺の手口と対策に関する一般的な「情報提供」であり、特定銘柄・金融商品の売買推奨や投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🎣 証券口座の乗っ取り（フィッシング→不正取引）——「注文を出す権利」を盗まれる仕組みと4つの防御手順</h1>
+    <div class="meta-line">公開日：2026 年 9 月 1 日 ／ 読了時間：約 9 分 ／ カテゴリ：投資詐欺から身を守る（第11回）</div>
+
+    <p>ある朝、証券会社から「注文確認のお知らせ」メールが届いた。覚えのない銘柄を売って、覚えのない株を買っている——。気づいたときにはすでに、コツコツ積み上げた資産が消えている。これが2025年から急増した「証券口座の乗っ取り」被害の典型的な体験です。</p>
+    <p>この被害の最大の特徴は、<strong>「現金を盗まれる」のではなく「注文を出す権利を盗まれる」</strong>ことです。攻撃者はあなたのIDとパスワードを使って証券口座にログインし、あなたの保有株を売却して、薄商い（出来高の少ない）銘柄を買い付けます。売った代金は一時的に口座内に残りますが、買い付けた銘柄の値段をつり上げるための「出口」として使われ、結果として口座から資金が流出したり、値を戻す見込みの乏しい株だけが残ったりするケースが報告されています。</p>
+    <p>本記事では、この手口の構造を5段階に分解し、「ブックマークからのみログイン」「多要素認証」「注文通知のオン」という、誰でも今日から実行できる3つの手順を中心に解説します。当サイトの<a href="guide-investment-scams.html">総論：投資詐欺の見分け方</a>とあわせてご覧ください。</p>
+
+    <div class="info-box"><strong>⏱️ 3行サマリ</strong><br>
+      ① 金融庁公表（2025年1〜10月）：不正アクセス<strong>16,641件</strong>・不正取引<strong>9,348件</strong>・売却金額<strong>約3,778億円</strong>・買付金額<strong>約3,332億円</strong>。2025年4月がピークで、その後は証券会社の多要素認証導入で減少傾向へ。<br>
+      ② 手口の核心は「リアルタイムフィッシング」——偽サイトで入力したワンタイムパスワードが<strong>数十秒以内に本物のサイトで悪用</strong>される。多要素認証があっても突破される理由がここにある。<br>
+      ③ 守りは「本人性」ではなく「アクセス経路」で——<strong>ブックマークからのみログイン・多要素認証オン・注文通知の設定</strong>の3点セットが最も即効性が高い。
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#section-1">数字で見る規模——2025年に何が起きたか</a></li>
+        <li><a href="#section-2">「注文を出す権利を盗む」——被害の本質を理解する</a></li>
+        <li><a href="#section-3">手口の5段階分解（概念図あり）</a></li>
+        <li><a href="#section-4">「リアルタイムフィッシング」——多要素認証を突破する仕組み</a></li>
+        <li><a href="#section-5">なぜ気づくのが遅れるのか——騙される側の心理</a></li>
+        <li><a href="#section-6">4つの防御手順（今日からできること）</a></li>
+        <li><a href="#section-7">被害に気づいたときの初動</a></li>
+        <li><a href="#section-8">相談窓口</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 数字で見る規模——2025年に何が起きたか</h2>
+    <p>金融庁は、各証券会社等から報告を受けた不正アクセス・不正取引の発生状況を定期的に公表しています。以下は公表データの概要です。</p>
+
+    <table>
+      <tr><th>区分</th><th>件数・金額</th><th>備考</th></tr>
+      <tr><td>不正アクセス件数<br>（2025年1〜10月）</td><td><strong>16,641件</strong></td><td>うち不正取引に至ったのは約56%</td></tr>
+      <tr><td>不正取引件数<br>（同期間）</td><td><strong>9,348件</strong></td><td>—</td></tr>
+      <tr><td>売却金額（同期間）</td><td><strong>約3,778億円</strong></td><td>被害者口座の保有株を不正売却した総額</td></tr>
+      <tr><td>買付金額（同期間）</td><td><strong>約3,332億円</strong></td><td>売却代金で薄商い銘柄を買付した総額</td></tr>
+      <tr><td>ピーク（2025年4月）</td><td>不正アクセス<strong>5,439件</strong>・<br>売却<strong>約1,561億円</strong></td><td>10か月分の不正アクセスの約33%が1か月に集中</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">出典：金融庁「インターネット取引サービスでの不正アクセス・不正取引の被害状況」（同PDFは2026年8月10日版が公表済み。本記事掲載の数値は同PDF旧版（2025年11月10日時点公表分）より。確認日：2026年9月1日）。各証券会社から報告を受けた発生日ベースの暫定値であり、今後修正される可能性があります。最新値は<a href="https://www.fsa.go.jp/ordinary/chuui/chuui_phishing.html" target="_blank" rel="noopener">金融庁公式ページ</a>でご確認ください。⚠️ 自己検証：9,348÷16,641≒56%（不正アクセスのうち不正取引に至った割合）、3,778億÷9,348件≒4,042万円（1件当たり平均売却額）の計算で数値の整合性を確認済み。</p>
+
+    <p>注目すべき点が2つあります。</p>
+    <p>第一に、<strong>2025年4月の一極集中</strong>。10か月間の不正アクセス（16,641件）のうち約33%が4月の1か月だけに発生しました。これは攻撃者グループが組織的・波状的に仕掛けた時期があったことを示唆しています。</p>
+    <p>第二に、<strong>売却金額と買付金額の差（約446億円）</strong>。被害者の口座から株式を売却した代金の約88%が、別の銘柄の買付に充てられています。残り12%相当の差額が、被害者口座から外部に流出した（または現金として待機している）金額の目安になります。ただしこれは統計上の集計値であり、個別の被害者が「差額分だけ被害を受けた」という意味ではありません——<strong>売却された保有株の価値が全損する可能性があります</strong>（後述）。</p>
+    <p>2025年10月に日本証券業協会がガイドラインを改正し、フィッシングに耐性を持つ多要素認証（パスキー等）の必須化を各社に求めた結果、以降は件数が減少傾向に転じたと報じられています。ただし2026年現在も被害がゼロになったわけではなく、手口は進化を続けています。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「注文を出す権利を盗む」——被害の本質を理解する</h2>
+    <p>銀行口座の不正送金と、証券口座の不正取引は、構造がまったく異なります。ここを理解しておくと、被害の深刻さと防御の方向性が見えてきます。</p>
+    <table>
+      <tr><th>比較軸</th><th>銀行口座の不正送金</th><th>証券口座の不正取引</th></tr>
+      <tr><td>攻撃者の目的</td><td>現金を直接外部口座へ移す</td><td>保有株を売り、薄商い銘柄を買い付ける</td></tr>
+      <tr><td>被害の発生経路</td><td>預金残高の直接減少</td><td>①保有株の喪失 ②買付した不良資産が残る</td></tr>
+      <tr><td>気づくタイミング</td><td>残高変動で比較的早期に気づく</td><td>通知をオフにしていると気づきにくい</td></tr>
+      <tr><td>攻撃者の利益</td><td>送金した現金</td><td>買い付けた銘柄の株価が上昇した分（相場操縦）</td></tr>
+    </table>
+    <p>証券口座の攻撃者は「現金を盗む」のではなく、<strong>被害者の口座を「出口」として使って相場を操縦</strong>します。流れは次の通りです：攻撃者はあらかじめ薄商い（出来高の少ない）株を安く仕込んでおき → 乗っ取った被害者口座の保有株をすべて売却して現金化 → その現金で自分が仕込んだ薄商い銘柄を大量に買い付ける → 買付によって株価が急騰 → 攻撃者が自分の保有分を高値で売り抜ける。</p>
+    <p>被害者の口座には、売却代金で買わされた「価値が急落した薄商い株」が残ります。銀行口座と違い、株式は「振り込め詐欺救済法」の保護対象外であることも多く（国内金融機関口座への振込と異なる仕組みのため）、回復が困難になるケースがあります。</p>
+    <div class="warning-box">「保有株を売ったのだから、売却代金は口座に残っているはず」——多くの被害者がここで誤解します。売却代金は確かに一時的に口座に入りますが、それが即座に薄商い株の買付に使われるため、<strong>最終的に急落した薄商い株だけが残る</strong>ケースが報告されています。「口座残高ゼロ」ではなく「値を戻す見込みの乏しい株が残っている」状態になりうる点が、銀行口座との違いです。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 手口の5段階分解</h2>
+    <p>この攻撃は、大きく5つの段階で進行します。段階ごとに、攻撃者がどう動いているかを整理します。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="証券口座フィッシング→不正取引の5段階フロー概念図">
+        <title>証券口座フィッシング→不正取引の5段階フロー（概念図）</title>
+        <rect x="0" y="0" width="700" height="680" fill="#f6f8fa" rx="8"/>
+        <text x="350" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A6E" font-family="sans-serif">証券口座フィッシング→不正取引の典型的な5段階（概念図）</text>
+
+        <!-- STEP 1 -->
+        <rect x="50" y="44" width="600" height="76" rx="9" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="70" y="70" font-size="13" font-weight="700" fill="#1E3A6E" font-family="sans-serif">STEP 1｜フィッシング誘導（偽メール・SMS・偽広告）</text>
+        <text x="70" y="90" font-size="11.5" fill="#424a53" font-family="sans-serif">「ログイン異常を検知しました」「重要なお知らせ」——証券会社を装ったメール・SMSで偽サイトへ誘導</text>
+        <text x="70" y="108" font-size="11" fill="#57606a" font-family="sans-serif">URLは本物にそっくり。サイト上のすべての表示・操作感は本物と区別がつかないように作られている</text>
+        <line x1="350" y1="120" x2="350" y2="140" stroke="#1E3A6E" stroke-width="2" marker-end="url(#arrowB1)"/>
+
+        <!-- STEP 2 -->
+        <rect x="50" y="144" width="600" height="76" rx="9" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="70" y="170" font-size="13" font-weight="700" fill="#1E3A6E" font-family="sans-serif">STEP 2｜認証情報の窃取（ID・パスワード・OTP）</text>
+        <text x="70" y="190" font-size="11.5" fill="#424a53" font-family="sans-serif">偽サイトで入力したID・パスワードは即時に攻撃者サーバーへ転送される</text>
+        <text x="70" y="208" font-size="11" fill="#57606a" font-family="sans-serif">ワンタイムパスワード（OTP）も同様に入力させて即時窃取——これが「リアルタイムフィッシング」の核心</text>
+        <line x1="350" y1="220" x2="350" y2="240" stroke="#9a6700" stroke-width="2" marker-end="url(#arrowY1)"/>
+
+        <!-- STEP 3 -->
+        <rect x="50" y="244" width="600" height="76" rx="9" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text x="70" y="270" font-size="13" font-weight="700" fill="#6a4c00" font-family="sans-serif">STEP 3｜本物の証券口座への不正ログイン（数十秒以内）</text>
+        <text x="70" y="290" font-size="11.5" fill="#424a53" font-family="sans-serif">攻撃者は窃取したID・PW・OTPを使い、本物の証券会社のシステムへ即時ログイン</text>
+        <text x="70" y="308" font-size="11" fill="#57606a" font-family="sans-serif">OTPの有効時間（通常30〜60秒）内に実行するため、多要素認証があっても突破される</text>
+        <line x1="350" y1="320" x2="350" y2="340" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowR1)"/>
+
+        <!-- STEP 4 -->
+        <rect x="50" y="344" width="600" height="86" rx="9" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="70" y="370" font-size="13" font-weight="700" fill="#cf222e" font-family="sans-serif">STEP 4｜保有株の全売却（被害者口座から）</text>
+        <text x="70" y="390" font-size="11.5" fill="#424a53" font-family="sans-serif">攻撃者は被害者が保有するすべての株式・ETF等を成行注文で売却する</text>
+        <text x="70" y="410" font-size="11" fill="#57606a" font-family="sans-serif">「注文確認メール」が届いて初めて気づく被害者が多い。通知をオフにしていると翌日まで気づかない場合も</text>
+        <line x1="350" y1="430" x2="350" y2="450" stroke="#cf222e" stroke-width="2" marker-end="url(#arrowR1)"/>
+
+        <!-- STEP 5 -->
+        <rect x="50" y="454" width="600" height="86" rx="9" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="70" y="480" font-size="13" font-weight="700" fill="#cf222e" font-family="sans-serif">STEP 5｜薄商い銘柄の大量買付（相場操縦・出口戦略）</text>
+        <text x="70" y="500" font-size="11.5" fill="#424a53" font-family="sans-serif">売却代金で、攻撃者があらかじめ仕込んでおいた薄商い（出来高の少ない）銘柄を大量買付</text>
+        <text x="70" y="520" font-size="11" fill="#57606a" font-family="sans-serif">買付で株価が急騰 → 攻撃者が自分の保有分を高値で売り抜け → 被害者口座には急落した株が残る</text>
+
+        <text x="350" y="570" text-anchor="middle" font-size="11.5" font-weight="700" fill="#cf222e" font-family="sans-serif">被害者に残るもの：急落した薄商い株（価値はほぼゼロ）</text>
+        <text x="350" y="590" text-anchor="middle" font-size="11" fill="#57606a" font-family="sans-serif">「現金を盗む」のではなく「注文を出す権利を盗んで相場を操縦する」手口</text>
+        <text x="350" y="660" text-anchor="middle" font-size="10.5" fill="#8b949e" font-family="sans-serif">※概念を示すイメージ図です。実際の手口は個別の事案により異なります。</text>
+
+        <defs>
+          <marker id="arrowB1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1E3A6E"/></marker>
+          <marker id="arrowY1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9a6700"/></marker>
+          <marker id="arrowR1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#cf222e"/></marker>
+        </defs>
+      </svg>
+      <p class="chart-caption">図1：証券口座フィッシング→不正取引の典型的な5段階。「STEP 3の不正ログインがOTP有効時間内に完了する」ことが、この手口が多要素認証を突破できる理由です。※概念を示すイメージ図です。</p>
+    </div>
+
+    <h3>各段階で起きていること</h3>
+    <p><strong>STEP 1（フィッシング誘導）</strong>：証券会社を装ったメール・SMS・偽広告で、本物そっくりの偽サイトへ誘導されます。URLは「英数字をひとつ変えた」「ドット区切りのサブドメインを増やした」などの細工がされており、メール本文のリンクを何となくクリックするだけで到達します。「ログイン異常を検知」「口座が一時停止」「重要なセキュリティアップデート」など、急がせる文言が多いのが特徴です。</p>
+    <p><strong>STEP 2（認証情報窃取）</strong>：偽サイトは本物と見た目が同じため、利用者は通常通りID・パスワードを入力します。入力された情報は即時、攻撃者が管理するサーバーへ転送されます。この段階で<strong>多要素認証のワンタイムパスワード（OTP）も入力するよう求められる</strong>ことが増えており、入力されたOTPも同様に即時転送されます。</p>
+    <p><strong>STEP 3（不正ログイン）</strong>：攻撃者はリアルタイムで受信したID・PW・OTPを使い、本物の証券会社のシステムへログインします。OTPの有効時間は通常30〜60秒。攻撃者はこの時間内に完了させるため、偽サイト側でユーザーに「確認中…」と表示して時間を稼ぎながら裏で高速処理します。</p>
+    <p><strong>STEP 4（保有株売却）</strong>：ログイン後、攻撃者は被害者の保有するすべての株式・ETF・投資信託等を成行注文で売却します。1〜2分で完了することもあります。この時点で証券会社から「注文受付」のメール通知が届く場合がありますが、通知をオフにしている場合は気づかず、翌朝の口座確認まで被害に気づかないケースが多く報告されています。</p>
+    <p><strong>STEP 5（薄商い株の買付）</strong>：売却で生じた現金で、攻撃者があらかじめ安値で仕込んでいた薄商い銘柄を大量に買い付けます。この買注文によって株価が急騰し、攻撃者はその値上がりを利用して自分の保有分を売り抜けます。その後、買い支えがなくなった薄商い銘柄は急落し、被害者の口座には「ほぼ無価値になった株」が残ります。</p>
+    <div class="info-box"><strong>💡 「少額テスト口座」や「高額案件専用」という分業体制</strong><br>
+      金融庁や日本証券業協会の報告によると、攻撃者は組織的に動いていると見られています。フィッシングサイトの構築・運営、認証情報の収集・売買、不正ログインの実行、薄商い株の仕込みと売り抜け——それぞれを別グループが担当し、大規模化・効率化しています。個人の思いつきではなく、<strong>組織的な犯罪インフラ</strong>であることを念頭に置くと、手口の巧妙さが理解できます。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 「リアルタイムフィッシング」——多要素認証を突破する仕組み</h2>
+    <p>「証券会社に多要素認証（MFA）を設定しているから大丈夫」——この認識が危険なのは、<strong>「リアルタイムフィッシング（中間者攻撃型フィッシング）」がMFAを前提として設計されている</strong>からです。</p>
+    <p>従来のフィッシングは、「まず認証情報を盗む → 後でログインを試みる」という手順でした。しかしワンタイムパスワードは有効期限（30〜60秒）があるため、「後で使う」ことができません。リアルタイムフィッシングは、この制約を解決するために登場した手口です。</p>
+
+    <div class="negative-box"><strong>🚨 リアルタイムフィッシングの具体的な流れ（考え方の説明のための仮の例）</strong>
+      <ol style="margin-bottom:0;color:#cf222e">
+        <li>利用者Aが偽サイトにIDとパスワードを入力 → 攻撃者のシステムが即時受信</li>
+        <li>攻撃者のシステムが<strong>同時並行</strong>で本物の証券会社サイトにログインを開始</li>
+        <li>証券会社のシステムがOTP送信 → Aの偽サイト画面に「確認コードを入力してください」と表示</li>
+        <li>Aがコードを入力 → 攻撃者のシステムが即時受信し、本物サイトへ転送</li>
+        <li>30秒以内にログイン完了。Aは「ログイン中…」の画面を見ている間に口座が乗っ取られている</li>
+      </ol>
+      ※上記は「リアルタイムフィッシング」の概念を説明するための仮の例です。実際の手口は個別事案により異なります。
+    </div>
+
+    <p>日本証券業協会が2025年10月に改正したガイドラインでは、「リアルタイムフィッシングに耐性を持つ認証」として<strong>パスキー（FIDO2/WebAuthn）</strong>の導入を各社に求めています。パスキーは、認証情報が「特定のデバイスとドメインにバインドされた秘密鍵」のため、偽サイトに対して秘密鍵を使っても本物のサイトの認証には使えない——という仕組みで、リアルタイムフィッシングを原理的に防げるとされています。</p>
+    <p>ただし、パスキー対応がすべての証券会社で完了しているわけではなく、移行期間中は利用者自身の行動が防御の要になります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ なぜ気づくのが遅れるのか——騙される側の心理</h2>
+    <p>「フィッシングメールなんて怪しいとわかる」という自信がある方ほど、この攻撃に気をつける必要があります。理由は、この手口が人間の心理的な癖（認知バイアス）を段階的に突いてくるからです。</p>
+    <ul>
+      <li><strong>緊急性バイアス（STEP 1）</strong>：「口座が停止される」「不審なアクセスを検知」という文言は、人が冷静な判断より先にクリックするよう設計されています。緊急事態と認識すると、URLを確認するという手順が頭から消えます。</li>
+      <li><strong>本物らしさへの過信（STEP 2）</strong>：偽サイトは本物のデザインを完全にコピーしているため、「見た目が本物と同じ＝本物のサイト」という視覚的な判断を誘います。この判断は実際には「本物のサイトかどうか」を確認していません。</li>
+      <li><strong>作業慣性（STEP 2〜3）</strong>：「いつものログイン操作をするだけ」という慣れが、URLを毎回確認するコストを「省いていい作業」として学習させてしまいます。</li>
+      <li><strong>通知への慣れ（STEP 4）</strong>：「注文確認メール」を受け取っても「また何かの確認か」と後回しにする習慣が、被害発覚を遅らせます。通知をオフにしている場合はさらに遅くなります。</li>
+    </ul>
+    <p>「怪しいメールに引っかからなければいい」という防御は、この手口が緊急性をつくり出す仕組みを理解すると、<strong>条件がそろった瞬間に誰にでも起きうる</strong>ことがわかります。防御は「気をつける意志」より「手順」で作るほうが現実的です。</p>
+    <p>認知バイアスの仕組みは<a href="guide-cognitive-biases.html">認知バイアス大全</a>で詳しく整理しています。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 4つの防御手順（今日からできること）</h2>
+    <p>防御の基本思想は、<strong>「本物のサイトかどうか」を視覚で判断しない</strong>ことです。偽サイトは見た目で本物と区別できません。代わりに、「どういう経路でアクセスしたか」という経路の安全性で守ります。</p>
+
+    <h3>手順①：証券会社のサイトへは「ブックマーク」からのみアクセスする</h3>
+    <p>メール・SMS・検索結果・SNS広告のリンクからは<strong>絶対に証券口座のログイン画面にアクセスしない</strong>——これが最も効果的で、今すぐ実行できる防御です。</p>
+    <ol>
+      <li>利用中の証券会社のURLを今すぐブラウザにブックマーク登録する</li>
+      <li>ログインするときは常にそのブックマークから移動する（URLを直接打ち込むのも可）</li>
+      <li>メール・SMSに記載されたリンクは、ログイン用には使わない（確認したい場合はメールを閉じてからブックマークで移動）</li>
+    </ol>
+    <p>フィッシングサイトへ到達するためには「何らかのリンクをクリックする」経路が必要になります。ブックマーク経由でのアクセスを徹底すれば、メール・SMS・広告のリンクを起点とする到達経路をふさぐことができます。ただし、端末がマルウェアに感染している場合など他の経路によるリスクをすべて解消するものではありません。</p>
+
+    <h3>手順②：多要素認証を「パスキー」または「アプリ型OTP」に設定する</h3>
+    <p>現在設定中の多要素認証が「SMS認証のみ」「メールOTP」の場合、リアルタイムフィッシングに対して弱い面があります。以下の優先順位で設定を確認してください。</p>
+    <ol>
+      <li><strong>パスキー（FIDO2/WebAuthn）</strong>——最も強力。対応している証券会社では優先的に設定する</li>
+      <li><strong>アプリ型OTP（Google Authenticator・Microsoft Authenticator等）</strong>——SMS OTPより攻撃者がSIMスワップで迂回しにくい</li>
+      <li><strong>SMS OTP</strong>——設定している場合はそのまま維持しつつ、手順①（ブックマーク限定）を徹底する</li>
+    </ol>
+    <p>利用中の証券会社で提供されている認証方法は、各社の「セキュリティ設定」または「ログイン設定」のページで確認できます。</p>
+
+    <h3>手順③：注文通知・ログイン通知をオンにする</h3>
+    <p>不正ログインを自分で止めることはできなくても、<strong>「気づく速度」を上げることで被害の拡大を防げる可能性があります</strong>。</p>
+    <ol>
+      <li>証券口座の「ログイン通知」をオンにする（ログインのたびにメールまたはプッシュ通知が届く）</li>
+      <li>「注文受付通知」をオンにする（自分が出していない注文に即座に気づける）</li>
+      <li>通知メールの配信先は、証券口座のログインに使うメールアドレスとは<strong>別のアドレスを使うのが理想</strong>（攻撃者がメールアカウントにもアクセスしている場合に通知を消される可能性を下げる）</li>
+    </ol>
+    <p>「覚えのない注文通知が届いた」と気づいた瞬間が、被害を最小化するための黄金の時間です。<strong>即座に証券会社のコールセンターに電話し、取引を停止するよう依頼してください</strong>（番号はブックマーク先の証券会社公式サイトから確認）。</p>
+
+    <h3>手順④：「緊急」メール・SMSを受け取ったら、リンクをクリックする前に立ち止まる</h3>
+    <p>どれほど本物らしいメール・SMSであっても、次のどれかに当てはまる場合はリンクをクリックせず、<strong>ブックマークから証券会社のサイトへ移動して、本当に問題がないか確認する</strong>という手順を徹底します。</p>
+    <div class="negative-box"><strong>🚨 クリック前に立ち止まるべきパターン</strong>
+      <ul style="margin-bottom:0;color:#cf222e">
+        <li>「異常なログインを検知した」「口座を一時停止した」</li>
+        <li>「セキュリティアップデートが必要」「認証情報の再確認が必要」</li>
+        <li>「〇〇時間以内に手続きしないとアカウントが閉鎖されます」</li>
+        <li>送信者のメールアドレスのドメインが証券会社の正規ドメインと1文字でも異なる</li>
+        <li>本文中のURLが正規ドメインと異なる（マウスオーバーや長押しでURLが確認できる）</li>
+      </ul>
+    </div>
+    <p>「本物のメールだったのに無視してしまった」という損失と、「フィッシングにクリックして口座を失う」という損失を比べれば、後者のリスクが圧倒的に大きい。<strong>「立ち止まって確認する」コストは、クリックひとつでゼロになるリスクより格段に小さい</strong>のです。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 被害に気づいたときの初動</h2>
+    <p>「覚えのない注文通知が届いた」または「口座を見たら保有株が消えて知らない株がある」——気づいた瞬間からの行動が被害規模を左右します。</p>
+    <ol>
+      <li><strong>即座に証券会社のコールセンターへ電話する</strong>——口座の取引を停止・凍結してもらう。番号は証券会社の公式サイト（ブックマーク先）から確認。「不正アクセスが疑われます。取引停止をお願いします」とはっきり伝える。</li>
+      <li><strong>パスワードを変更する</strong>——同じパスワードを他のサービスでも使い回していた場合は、そちらも変更する。変更作業は証券会社のサイトへブックマークからアクセスして行う。</li>
+      <li><strong>警察へ被害届を提出する</strong>——最寄りの警察署またはサイバー犯罪相談窓口（都道府県警察）へ。証拠保全のためにメール・SMS・通知のスクリーンショットを保存しておく。</li>
+      <li><strong>証券会社の補償窓口に相談する</strong>——日本証券業協会の申し合わせ（2025年5月2日付）により、大手・ネット証券10社が一定の補償を行う方針を決定しています（補償の範囲・条件は各社で確認）。ただし、<strong>補償を確約するものではなく</strong>、利用規約や個別事情によって判断が異なる場合があります。</li>
+      <li><strong>「被害金を取り戻します」という接触に注意する</strong>——被害後に「示談屋」「自称弁護士」「元警察官」などを名乗る者が接触してくる「二次被害詐欺」が、金融庁の注意喚起にも掲載されている定番の手口です。回復相談は公的窓口（警察・消費生活センター・弁護士会）経由で行います。</li>
+    </ol>
+
+    <!-- Section 8: 相談窓口 -->
+    <h2 id="section-8">8️⃣ 相談窓口</h2>
+    <p>不審なメール・SMS・アクセスに気づいた段階でも、被害が発生した後でも、公的な相談窓口があります。迷わず使ってください。</p>
+    <table>
+      <tr><th>窓口</th><th>番号</th><th>主な用途</th></tr>
+      <tr><td>警察相談専用電話</td><td><strong>#9110</strong></td><td>不審なメール・SMS・被害が疑われる段階</td></tr>
+      <tr><td>消費者ホットライン</td><td><strong>188</strong></td><td>契約・補償トラブル全般（最寄りの消費生活センターへ）</td></tr>
+      <tr><td>金融庁 詐欺的な投資に関する相談ダイヤル</td><td><strong>0570-050588</strong></td><td>不審な投資勧誘・フィッシング被害の相談（平日10:00〜17:00）</td></tr>
+      <tr><td>証券取引等監視委員会 情報提供窓口</td><td><strong>0570-00-3581</strong></td><td>不正取引・相場操縦の情報提供（平日10:00〜16:00）</td></tr>
+      <tr><td>被害届の提出</td><td><strong>最寄りの警察署</strong>／<br>各都道府県警察のサイバー犯罪相談窓口</td><td>被害届の提出・証拠保全の相談（窓口の連絡先は各都道府県警察の公式サイトでご確認ください）</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">※上記窓口・受付時間は2026年9月1日時点でfsa.go.jpにて確認。変更になる場合があるため、利用時は公式サイトで最新情報をご確認ください。相談窓口の電話番号は、当サイトが生成したものではなく金融庁・警察庁等の公表情報から転記しています。</p>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <ul>
+      <li><strong>被害の本質</strong>：証券口座フィッシングは「現金を盗む」ではなく「注文を出す権利を盗んで相場を操縦する」手口。被害者の口座には急落した薄商い株が残る。</li>
+      <li><strong>規模</strong>：金融庁公表（2025年1〜10月）で不正アクセス16,641件・不正取引9,348件・売却金額約3,778億円。2025年4月がピーク、以降は多要素認証導入で減少傾向。</li>
+      <li><strong>多要素認証の限界</strong>：「リアルタイムフィッシング」はOTPの有効時間（30〜60秒）内に不正ログインを完了させるため、SMS OTP型の多要素認証でも突破される。パスキー（FIDO2）が最も耐性が高い。</li>
+      <li><strong>防御の3点セット</strong>：①ブックマークからのみログイン ②多要素認証をパスキーまたはアプリ型OTPに設定 ③注文・ログイン通知をオン。「本物らしさ」ではなく「経路の安全性」で守る。</li>
+      <li><strong>被害後の初動</strong>：①証券会社コールセンターへ即電話（取引停止）②パスワード変更 ③警察へ被害届 ④証券会社の補償窓口へ相談 ⑤二次被害詐欺への警戒。</li>
+    </ul>
+    <p>攻撃の巧妙さは今後も進化を続けます。しかし「経路を固定する（ブックマーク限定）」「通知を監視する」という防御の構造は、手口の変化に依存しません。手順を1つ今日の設定に落とし込むことが、最も確実な一歩です。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">🛡️ 総論：投資詐欺の見分け方もあわせてどうぞ</div>
+      <div class="cta-box-desc">フィッシング以外の詐欺の見分け方・6つの危険サイン・金融庁登録確認の手順を総論記事でまとめています。シリーズのハブとしてご活用ください。</div>
+      <a class="cta-btn" href="guide-investment-scams.html">投資詐欺の見分け方（総論）を読む →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-investment-scams.html">
+        <div class="related-card-title">🛡️ 投資詐欺の見分け方（総論）</div>
+        <div class="related-card-desc">典型パターン図鑑・「月利5%」の算数・6つの危険サイン・登録確認の手順。シリーズのハブ。</div>
+      </a>
+      <a class="related-card" href="guide-scam-sns-celebrity-ad.html">
+        <div class="related-card-title">📱 SNS型投資詐欺（著名人なりすまし）</div>
+        <div class="related-card-desc">2026年上半期797.9億円。広告→グループ→偽アプリ→出金拒否の5段階と「経路で見抜く」防御。</div>
+      </a>
+      <a class="related-card" href="guide-scam-unregistered-broker.html">
+        <div class="related-card-title">🌐 海外無登録業者の出金拒否</div>
+        <div class="related-card-desc">「利益が出ているのに出金できない」の定番。金融庁登録確認と無登録業者リストの使い方。</div>
+      </a>
+      <a class="related-card" href="guide-sns-information-literacy.html">
+        <div class="related-card-title">📱 SNSの投資情報との付き合い方</div>
+        <div class="related-card-desc">生存者バイアスと切り取りの見抜き方。詐欺未満の「盛った情報」への防御。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は証券口座フィッシング詐欺の手口と対策に関する一般的な情報を提供するものであり、特定銘柄・金融商品の売買推奨や投資助言ではありません。記載の統計値は金融庁の公表情報に基づきますが（2026年9月1日時点で確認・暫定値を含む）、今後修正される可能性があります。個別の被害・補償に関する判断は、警察・証券会社・消費生活センター・弁護士等の専門窓口にご相談ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>

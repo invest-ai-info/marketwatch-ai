@@ -191,4 +191,5 @@ SYNC_FILES = [
     "guide-signal-lab-086.html",
     "guide-index-vs-active.html",
     "guide-proverb-markets-irrational-solvent.html",
+    "guide-scam-phishing-account-takeover.html",
 ]
