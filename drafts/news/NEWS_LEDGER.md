@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-09-01
+- 判定: ✅ 公開済み
+- 選定トピック: 日本の長期金利（10年国債）が30年ぶりに3%突破──BOJ9月利上げ確率8割・ベッセント発言・住宅ローン・財政への影響を3視点で整理（カテゴリ: 日本金融政策・国債・住宅ローン・財政・日経平均・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: 2026年9月1日、日本の10年国債利回りが1996年9月以来30年ぶりに3.000%に到達（NHK・日経・Nikkei Asia等で大規模報道）。G20でのベッセント米財務長官が「日本政府とBOJは円を強くする行動をとる」と発言し、BOJ9月17-18日会合での25bp利上げ（1.00%→1.25%）確率が約80%と報道。日経平均-96.59(-0.15%)一方でTOPIX+0.62%と銘柄分岐も発生。フラット35・9月最低金利3.46%（現行制度最高）、2027年度国債費36兆円・利払積算金利3.8%への引き上げなど家計・財政への影響が豊富。直近5本（イラン/カナダ関税/JH講演/東京CPI/NVIDIA）との重複なし。
+- 出典（確認済み・11系統）:
+  - NHKニュース「長期金利 3%に上昇 約30年ぶり 日銀の早期利上げ観測など背景」（2026-09-01）
+  - 日本経済新聞「長期金利3%、30年ぶり高さ 日米利上げ観測・財政不安で上昇」（2026-09-01）
+  - Nikkei Asia「Japan 10-year bond yield hits 3%, highest in 30 years」（2026-09-01）
+  - CNBC「Japanese borrowing costs hit 30-year high as Bessent says Tokyo may intervene to boost yen」（2026-09-01）
+  - The Japan Times「Bessent expects Japan to take action to boost yen, signals BOJ rate-hike chance」（2026-09-01）
+  - The Japan Times「Japan's 10-year government bond hits 3% for first time in three decades」（2026-09-01）
+  - Reuters/Investing.com「Japan's benchmark bond yield rises to 3% for first time in 30 years」（2026-09-01）
+  - Yahoo Finance「Bessent expects Japan to take action to boost yen, signals BOJ rate-hike chance」（2026-09-01）
+  - News On Japan「Nikkei Edges Lower as 10-Year Yield Hits 3%」（2026-09-01）
+  - 三井住友DSアセットマネジメント「長期金利は3％をうかがう展開か～株式市場への影響を考える」（2026-07-06）
+  - ヤマト帰郷「【9/1】長期金利3％突破は30年ぶり｜住宅ローンと国の利払いが動く」（2026-09-01）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正3点適用（①🟢ボックス見出しから「追い風」を削除しニュートラル化 ②業種言及に三重ヘッジ付記（過去傾向注記・「業種」への限定・個別免責）③データ表注記に一次情報確認先・正確性保証否定を追加）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: 全5項目（①kinsho-v1×3箇所 ②断定禁止語なし ③銘柄推奨なし ④将来断言なし ⑤出典11系統）✅・公開OK
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭banner/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典11系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告34件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-09-01-japan-jgb-yield-3-percent-30year-high.html
+- commit: 9ea2a2d（main へ push 済み）
+
+---
+
 ## 2026-08-31
 - 判定: ✅ 公開済み
 - 選定トピック: 米軍がイランLarak島の発射台を攻撃──ホルムズ海峡再緊張・原油+2.8%急伸と日本経済への影響を3視点で整理（カテゴリ: 中東地政学・エネルギー・日本経済・為替）
