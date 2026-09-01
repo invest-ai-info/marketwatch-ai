@@ -190,4 +190,5 @@ SYNC_FILES = [
     "guide-news-2026-08-31-us-iran-larak-island-hormuz-oil.html",
     "guide-signal-lab-086.html",
     "guide-index-vs-active.html",
+    "guide-proverb-markets-irrational-solvent.html",
 ]
