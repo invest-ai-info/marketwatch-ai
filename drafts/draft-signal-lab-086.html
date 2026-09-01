@@ -270,7 +270,7 @@ window.addEventListener('resize',mark);
       ① 全期間（N=371）勝率<strong>48.5%</strong>、95%CI=[43.5%,53.6%]でベースライン43%超を維持<br>
       ② 前向き月別推移：6月<strong>66.7%</strong>→7月<strong>47.7%</strong>→8月<strong>42.1%</strong>（ベースライン収束）<br>
       ③ RSI型（前向きN=62）は<strong>64.5%</strong>で依然高勝率、BB型（前向きN=206）は<strong>40.8%</strong>で損益分岐割れ<br>
-      ④ BB型が前向きの<strong>77%</strong>を占めるため、全体勝率が引き下げられている
+      ④ BB型が前向き全体の大半（206/268件）を占めるため、全体勝率がBB型に引き下げられている
     </div>
 
     <div class="toc">
@@ -444,7 +444,7 @@ window.addEventListener('resize',mark);
         <text x="62" y="54" text-anchor="end" class="s-label-sm">86%</text>
         <!-- 43%の基準線 -->
         <line x1="70" y1="110" x2="470" y2="110" class="s-guide"/>
-        <text x="475" y="114" class="s-label-y" font-size="10.5">損益分岐43%</text>
+        <text x="440" y="114" class="s-label-y" font-size="10.5">損益分岐43%</text>
         <!-- 6月バー：66.7% → yから: 170 - (66.7/86)*120 = 170 - 93.1 = 76.9 → y≈77 h≈93 -->
         <rect x="100" y="77" width="70" height="93" fill="#1a7f37" opacity="0.7" rx="4"/>
         <text x="135" y="73" text-anchor="middle" class="s-label-g" font-size="13">66.7%</text>
@@ -616,9 +616,9 @@ window.addEventListener('resize',mark);
       </a>
     </div>
 
-    <p class="disclaimer">
-      本記事の検証はMarketWatch AIの自動シグナルシステムが過去に発火した記録（signals-log.json）を対象に、Python スクリプトで集計したものです。結果は過去のデータに基づくものであり、将来の利益を保証するものではありません。相場には不確実性が伴い、損失が生じる可能性があります。<br>
-      本サイトは金融商品取引業者ではなく、投資助言・代理業の登録を受けておりません。本記事の内容は投資判断の参考情報の提供を目的としたものであり、特定の金融商品の売買を推奨するものではありません。投資の最終判断はご自身の責任で行ってください。
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去のシステムシグナルの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
     </p>
 
   </div><!-- /.article -->
