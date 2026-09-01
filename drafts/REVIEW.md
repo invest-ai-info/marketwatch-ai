@@ -1,3 +1,30 @@
+## 2026-09-02 autodraft: draft-equity-offering.html（会社がお金を集めると、なぜ株価が下がるのか）
+
+- **基準日**: 2026-09-02（UTC 2026-09-01T20:30Z / JST 2026-09-02 05:30）
+- **topic / key**: 基礎知識 #53 / `equity-offering`
+- **生成ファイル**: `drafts/draft-equity-offering.html`
+- **参照出典URL**:
+  - https://faq.jpx.co.jp/disclo/tse/web/knowledge7777.html（JPX: 第三者割当関連FAQ）
+  - https://fundbook.co.jp/column/business/third-party-allocation-of-shares-stock-dilution/（希薄化率・25%ルールの解説）
+  - https://www.invest-concierge.com/posts/understanding-stock-dilution-and-its-impact-on-shareholders（希薄化の仕組み解説）
+  - https://www.jpx.co.jp/regulation/public/nlsgeu000001igbj-att/2-03index_pdf_09.pdf（東証: 第三者割当の上場管理業務資料）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の増資評価・予測なし（仕組みの一般論に限定）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「保証」「儲かる」は使用せず）
+  - ✅ 株価反応の図は「傾向の概念図」「個々の会社や市場環境によって異なります」と注記済み
+  - ✅ 25%ルールは「2026年9月時点の概要・最新はJPX公式を確認」と注記済み
+  - ✅ kinsho-v1免責：冒頭disclaimer-banner（data-disclaimer属性付き）＋本文末p.disclaimer（data-disclaimer属性付き）＋footer（data-disclaimer属性付き）の計3ヵ所
+  - ✅ noindex,nofollow メタタグ入り（head 3行目）
+  - ✅ 出典妥当（JPX公式・金融系メディア）
+- **SVGメモ**: 図1（希薄化の円グラフ風直感図）・図2（増資発表後の株価反応パターン）・図3（増資・分割・自社株買い比較）の3点を概念図として作成済み。実機ライト/ダーク確認を依頼
+- **人間の残作業**:
+  - [ ] SVG図1・図2・図3のライトモード/ダークモード実機確認（色がテーマで正しく切り替わるか）
+  - [ ] タイトル・リード文の微調整（必要な場合）
+  - [ ] 制度内容（特に第三者割当の25%ルール）の最新情報確認（JPX公式サイトで要確認）
+  - **公開は毎朝08:40の autodraft-publish が compliance-reviewer(Opus)ゲート付きで自動実行**
+
+---
+
 ## 2026-09-01 autopublish: guide-index-vs-active.html（✅公開済み）
 - **key**: index-vs-active / シリーズ: 投資の基礎知識 #48
 - **ゲート**: 決定論(check_guide_draft.py) EXIT=0 🟢 / Opus初回🟡グレー5件修正→🟢白（断定語軟化・SPIVA版注記・信託報酬時点注記・§8対称化・内部アンカー修正） / check_guide_draft.py 再実行 EXIT=0 🟢 / check_site_consistency.py EXIT=0 🟢 / 独立Opus🟢白

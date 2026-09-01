@@ -49,6 +49,11 @@ SYNC_FORBIDDEN = {
     "jp-margin.json",  # 信用残ウォッチ（jp-rankings.yml が build_jp_margin.py で生成・コミット。ローカルpush禁止）
     "news-ticker.json",  # ⚡最新ニュース・ライブフィード（news-ticker.yml が毎時GitHub側で生成・コミット。ローカルpush禁止）
     "market-health-history.json",  # 市場健康度の日次履歴（update-market-news.yml が GitHub側で生成・コミット。ローカルpush禁止）
+    "economic-events.json",  # 経済指標＋市場休場（monthly-calendar-reminder.yml が GitHub側で
+                             # generate_market_holidays.py と sync_economic_events.py で生成・コミット。
+                             # 元データは generate_market_news.py の ECONOMIC_EVENTS_2026＝そちらを編集する）
+    "earnings-calendar.json",  # 決算予定（同ワークフローが build_earnings_calendar.py で
+                               # Nasdaq API + yfinance から生成・コミット。ローカルpush禁止）
     "touraku-history.json",  # 騰落レシオの日次履歴（update-market-news.yml が GitHub側で生成・コミット。ローカルpush禁止）
     "edinet-holdings.json",  # 大量保有報告書の新着（edinet-holdings.yml が平日GitHub側で生成・コミット。ローカルpush禁止）
     "guide-new-books.html",  # 投資本新刊ウォッチ（routine book-watch-weekly が毎週土曜GitHub側で更新。ローカルpush禁止）

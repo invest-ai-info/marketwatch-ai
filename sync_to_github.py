@@ -194,4 +194,5 @@ SYNC_FILES = [
     "guide-scam-phishing-account-takeover.html",
     "guide-news-2026-09-01-japan-jgb-yield-3-percent-30year-high.html",
     "guide-company-aapl-apple.html",
+    "guide-signal-lab-087.html",
 ]

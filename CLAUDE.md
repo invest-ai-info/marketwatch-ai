@@ -252,6 +252,7 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 | **`publish_article.py`** | 記事公開の②〜⑤を1コマンド・冪等（`mw publish` が内部で使用） |
 | **`apply_logo.py`** 🆕 | サイトロゴ（案C・favicon+ヘッダーSVG）を全HTML+生成スクリプト9本へ冪等適用（2026-07-04導入済み。ロゴ変更時はSVG定数を編集して `--apply`） |
 | **routine `site-qa-lint`** | 土曜10:00 JST にリンターを自動実行→`site-qa-report.md` に報告（人が気づく前に検知） |
+| **`_reconcile.py`** 🆕 | ローカルと本番の差を**向き付き**で出す（ローカル専用・既定dry-run・`--apply`で取り込み・上書き前バックアップ）。このリポジトリは routine が**本番へ直接書く**ので**ローカルは構造的に遅れる**。L(ローカル)/R(本番)/B(`.sync-cache.json` の remote_sha＝前回sync時点) の3shaで「取り込み候補」と「ローカルが新しい」を判別。🚨 **時刻の新しさは正しさではない**ので、取り込む前に本番側のコミットとパッチを見せ、**追加0・削除のみ＝巻き戻しの疑い**に目印を付ける（`--patch` で中身も表示）。⚠️ 記事ミラーの遅行は従来どおり `_pull_mirror.py`（`guide-*.html` のクラウドレーン専用）|
 | **`_doctrine_check.py`＋`mw evolve`** 🆕 | 投資研究の進化ループの番人（ローカル専用・**固定オラクル扱い＝安易に緩めない**）。`research/DOCTRINE.md`（検証済み知識台帳）の数値を出典と機械突合＋事前登録簿ハッシュ＋仮説キュー状態表示。読み方はDOCTRINE冒頭のプロトコル参照（毎回全文Readしない） |
 
 - **記事公開は `python mw.py publish --file ... --category ... --emoji ... --card-title ... --desc ...`** で ②〜⑤→整合性チェック→sync→workflow起動まで一気通貫（`--dry-run` で確認）。
