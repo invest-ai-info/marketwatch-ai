@@ -1,0 +1,53 @@
+{
+  "article_id": "087",
+  "claims": [
+    {
+      "label": "全期間（IS+FWD）：trend=上昇×reversalL クローズ件数と勝ち数",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 180,
+      "n": 371
+    },
+    {
+      "label": "IS期間（前向き登録前）：trend=上昇×reversalL",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-23"},
+      "k": 56,
+      "n": 103
+    },
+    {
+      "label": "FWD期間（前向き）：trend=上昇×reversalL",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23"},
+      "k": 124,
+      "n": 268
+    },
+    {
+      "label": "FWD期間×RSI売られすぎ逆張り（rsi_oversold_bounce）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-23"},
+      "k": 40,
+      "n": 62
+    },
+    {
+      "label": "FWD期間×BB下限タッチ（bb_lower_touch）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-23"},
+      "k": 84,
+      "n": 206
+    },
+    {
+      "label": "FWD 2026年6月（発見月・月別推移）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-23", "fired_before": "2026-07-01"},
+      "k": 12,
+      "n": 18
+    },
+    {
+      "label": "FWD 2026年7月（月別推移）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-07-01", "fired_before": "2026-08-01"},
+      "k": 61,
+      "n": 128
+    },
+    {
+      "label": "FWD 2026年8月（月別推移）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-08-01", "fired_before": "2026-09-01"},
+      "k": 51,
+      "n": 121
+    }
+  ]
+}
