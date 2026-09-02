@@ -198,4 +198,5 @@ SYNC_FILES = [
     "guide-proverb-know-what-you-own.html",
     "guide-scam-line-group-guru.html",
     "guide-tse-timely-disclosure.html",
+    "guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html",
 ]
