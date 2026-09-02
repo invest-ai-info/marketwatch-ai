@@ -197,4 +197,5 @@ SYNC_FILES = [
     "guide-signal-lab-087.html",
     "guide-proverb-know-what-you-own.html",
     "guide-scam-line-group-guru.html",
+    "guide-tse-timely-disclosure.html",
 ]

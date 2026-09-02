@@ -5303,6 +5303,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 📄 解説「<a href="guide-tse-timely-disclosure.html" style="color:#0969da"><b>適時開示（TDnet）とは？ 個人投資家が一次情報を自分で読む方法</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 💬 解説「<a href="guide-scam-line-group-guru.html" style="color:#0969da"><b>「元機関投資家」を名乗るSNS投資グループの手口</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🔎 解説「<a href="guide-proverb-know-what-you-own.html" style="color:#0969da"><b>自分が何を持ち、なぜ持っているかを知れ</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🧪 解説「<a href="guide-signal-lab-087.html" style="color:#0969da"><b>#087 上昇×逆張り昇格仮説の8月成績（前向き268件）</b></a>」公開'},
