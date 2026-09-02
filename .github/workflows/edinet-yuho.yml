@@ -14,6 +14,10 @@ name: EDINET Yuho
 on:
   schedule:
     - cron: '40 10 * * 1-5'   # 平日 19:40 JST（jp-rankings 16:40〜19:10 と edinet-holdings 19:10 の後）
+  # ⏳ 一時的（検証用・main へ入れる前に削除）: ブランチ上で実キー検証するため push でも起動
+  push:
+    branches: [claude/issue-check-do2bbk]
+    paths: [build_edinet_yuho.py, .github/workflows/edinet-yuho.yml]
   workflow_dispatch:
     inputs:
       backfill_days:
