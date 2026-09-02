@@ -1,3 +1,13 @@
+## 2026-09-03 autopublish: guide-bid-ask-spread.html（投資の基礎知識 #49 / スプレッドの仕組み）
+
+- **基準日**: 2026-09-03（JST）
+- **topic / key**: 基礎知識 #49 / `bid-ask-spread`
+- **ゲート結果**: 決定論ゲート🟢GREEN → Opusコンプラ🟡グレー（表現軟化5件適用）→ 再決定論🟢GREEN → 独立Opus🟢白 → 公開
+- **公開URL**: https://marketwatch-jp.com/guide-bid-ask-spread.html
+- **commit**: 765af09（push済み）
+
+---
+
 ## 2026-09-03 signal-lab #088: draft-signal-lab-088.html（rsi_oversold_bounce FWD N=276 時間足二極化）
 
 - **基準日**: 2026-09-03（UTC 2026-09-02 / JST 2026-09-03）
