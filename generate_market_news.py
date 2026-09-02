@@ -4850,6 +4850,9 @@ def _find_latest_weekly_article():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     latest_date = None
     latest_file = None
+    # ⚠️ 未来の週は候補にしない（2026-08-31: cron 遅延で月曜 0 時台に生成された 9/7 記事が
+    #    更新履歴に「2026-09-06 公開」と未来日付で載った）。日曜生成の正規ファイルは週開始＝明日なので +1 日まで許容。
+    horizon = datetime.now(JST).date() + timedelta(days=1)
     for name in os.listdir(script_dir):
         if not (name.startswith("guide-weekly-") and name.endswith(".html")):
             continue
@@ -4859,6 +4862,8 @@ def _find_latest_weekly_article():
         try:
             d = datetime.strptime(ds, "%Y-%m-%d").date()
         except ValueError:
+            continue
+        if d > horizon:
             continue
         if latest_date is None or d > latest_date:
             latest_date, latest_file = d, name
