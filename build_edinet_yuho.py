@@ -321,6 +321,8 @@ def run(api_key, today=None, list_fn=api_list, doc_fn=api_doc_csv, sleep=time.sl
     coverage = dict(prev.get("index_coverage") or {})
     appearances = update_appearances(dict(prev.get("appearances") or {}), rankings, today)
     candidates = pick_candidates(appearances, rankings)
+    log(f"🎯 候補 {len(candidates)}社: " + ", ".join(f"{c['code']} {c['name']}({c['appearances']}回{'・fallback' if c['fallback'] else ''})" for c in candidates)
+        + f" / 遡り {BACKFILL_PER_RUN}日/回")
     companies = dict(prev.get("companies") or {})
     errors = []
 
