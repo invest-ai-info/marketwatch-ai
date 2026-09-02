@@ -1,0 +1,61 @@
+{
+  "article_id": "088",
+  "hypothesis": "rsi_oversold_bounce FWD N=276 — 4H足65.4%が1H足46.4%を引き離す時間足二極化の継続追跡",
+  "reg_date": "2026-06-16",
+  "claims": [
+    {
+      "label": "IS全体",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "FWD全体",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "k": 148,
+      "n": 276
+    },
+    {
+      "label": "FWD 4H",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_from": "2026-06-16"},
+      "k": 53,
+      "n": 81
+    },
+    {
+      "label": "FWD 1H",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_from": "2026-06-16"},
+      "k": 85,
+      "n": 183
+    },
+    {
+      "label": "FWD jpy_fx",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx", "fired_from": "2026-06-16"},
+      "k": 32,
+      "n": 48
+    },
+    {
+      "label": "FWD trend=上昇",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "fired_from": "2026-06-16"},
+      "k": 46,
+      "n": 70
+    },
+    {
+      "label": "FWD trend=下降",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降", "fired_from": "2026-06-16"},
+      "k": 47,
+      "n": 108
+    },
+    {
+      "label": "全期間 4H",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"},
+      "k": 72,
+      "n": 130
+    },
+    {
+      "label": "全期間 1H",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h"},
+      "k": 118,
+      "n": 264
+    }
+  ]
+}

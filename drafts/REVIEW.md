@@ -1,3 +1,14 @@
+## 2026-09-03 signal-lab #088: draft-signal-lab-088.html（rsi_oversold_bounce FWD N=276 時間足二極化）
+
+- **基準日**: 2026-09-03（UTC 2026-09-02 / JST 2026-09-03）
+- **記事番号**: #088
+- **テーマ**: RSI売られすぎ逆張り買い（rsi_oversold_bounce）FWD N=276——4H足65.4%が1H足46.4%を引き離す時間足二極化の継続追跡
+- **claims.json**: drafts/labnotes/lab-088-claims.json（9クレーム）
+- **下書き**: drafts/draft-signal-lab-088.html
+- **ゲート状態**: 🔄実行中
+
+---
+
 ## 2026-09-02 autodraft: draft-cash-allocation.html（現金を残しておくことは、機会損失ではない）
 
 - **基準日**: 2026-09-02（UTC 2026-09-02 / JST 2026-09-02）
