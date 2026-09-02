@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-09-02
+- 判定: ✅ 公開済み
+- 選定トピック: SoftBank傘下のSB EnergyがIPO申請──評価額500億ドル超・OpenAI依存・AI電力インフラ投資の論点を3視点で整理（カテゴリ: AI・テクノロジー・エネルギー・IPO・SoftBank）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 選定理由: SoftBank傘下のSB Energy Corp.が2026年9月1日にSEC S-1を提出、Nasdaq（SBE）上場を目指す。評価額500億ドル超・受注残4390億ドル・OpenAI/Nvidia参画という巨大なAIインフラ案件で、日本人投資家にとってSBG（9984）への影響も含め身近な話題性が高い。前日のJGB3%突破・イラン/原油は既掲で重複なし。ユーロ圏インフレ3.3%もECBテーマとして候補だったが（11/15）、SBEのほうが話題性・付加価値とも高くスコア上位（13/15）。
+- 出典（確認済み・8系統）:
+  - Bloomberg「SoftBank's Data Center and Power Firm SB Energy Files for IPO」（2026-09-01）
+  - CNBC「Softbank's SB Energy files for IPO, says it's 'substantially dependent' on OpenAI」（2026-09-01）
+  - BNN Bloomberg「SoftBank-backed SB Energy files for U.S. IPO as AI turbocharges infrastructure demand」（2026-09-01）
+  - PR Newswire / SB Energy公式「SB Energy Announces Public Filing of Registration Statement for Proposed Initial Public Offering」（2026-09-01）
+  - Morningstar同上配信（2026-09-01）
+  - Cryptobriefing「SB Energy files for US IPO with $439B contracted backlog」（2026-09-01）
+  - OpenAI公式「OpenAI and SoftBank Group partner with SB Energy」（2026-01-09）
+  - Axios / CNBC「Nvidia backing $105 billion in financing for OpenAI data center in Ohio」（2026-08-17）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟡グレー＋🚩要協議（事実誤記）→ 親エージェントが3件修正: ①OpenAI/SoftBank各500億ドル→各5億ドル（計10億ドル）の事実誤記訂正 ②「コミットメントを確約している」→「コミットメントの規模感を示す」に軟化 ③「確定を待つ」→「確定を確認する」に軟化 → 最終🟢白相当
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3箇所 ②断定語なし ③銘柄推奨なし ④将来断言なし ⑤出典8系統 全5項目✅ / 3件の修正が確実に反映されていることを独立確認 → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭banner/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告29件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html
+- commit: a9b8413（main へ push 済み）
+
+---
+
 ## 2026-09-01
 - 判定: ✅ 公開済み
 - 選定トピック: 日本の長期金利（10年国債）が30年ぶりに3%突破──BOJ9月利上げ確率8割・ベッセント発言・住宅ローン・財政への影響を3視点で整理（カテゴリ: 日本金融政策・国債・住宅ローン・財政・日経平均・為替）
