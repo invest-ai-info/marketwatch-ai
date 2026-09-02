@@ -18,6 +18,10 @@ Secrets を実際に見ると **`EDINET_API_KEY` は登録済み**で、`edinet-
 - ⚠️ **ローカルの `sync_to_github.py` の SYNC_FILES に `build_edinet_yuho.py` と `.github/workflows/edinet-yuho.yml` を足すこと**
   （クラウド側の sync_to_github.py はスタブなのでここでは足せない）
 
+**実キー検証（同日・ブランチ上で2回実行・いずれも success）**＝2回目で索引 2,551社（120日ぶん）、候補5社のうち3社
+（スクウェア・エニックスHD／北海道電力／九州電力＝いずれも第102期・第46期の有報 2026-06-23〜24 提出）の**本文5種と主要指標22〜23項目を取得できた**。
+`missing` の2社（パーク24＝10月期・PPIH＝6月期）は索引が届けば取れる。JSON は約1MB（索引が主）。検証用の push トリガーは外した。
+
 **次に見るもの**＝`edinet-yuho.json` の `index_complete` が true になる日（初回は workflow_dispatch で backfill 90日）、
 9/5(土) 14:23 の company-weekly-auto が日本株を `companies` から書けるか。
 
