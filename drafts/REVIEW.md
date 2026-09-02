@@ -5,7 +5,8 @@
 - **テーマ**: RSI売られすぎ逆張り買い（rsi_oversold_bounce）FWD N=276——4H足65.4%が1H足46.4%を引き離す時間足二極化の継続追跡
 - **claims.json**: drafts/labnotes/lab-088-claims.json（9クレーム）
 - **下書き**: drafts/draft-signal-lab-088.html
-- **ゲート状態**: 🔄実行中
+- **ゲート状態**: ✅公開済み（2026-09-03）
+- **ゲート詳細**: signal_lab_verify 9/9緑 → Opus🟡M-1/M-2/R-1/R-2修正 → 再verify GREEN → 独立Opus🟢白 → finalize EXIT=0 → check_guide_draft GREEN → publish_article → push
 
 ---
 
