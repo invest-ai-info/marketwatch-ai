@@ -199,6 +199,7 @@ SYNC_FILES = [
     "guide-scam-line-group-guru.html",
     "guide-tse-timely-disclosure.html",
     "guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html",
+    "guide-signal-lab-088.html",
     "guide-scam-investment-seminar.html",
     "guide-scam-crypto-scam.html",
     "guide-scam-recovery-scam.html",

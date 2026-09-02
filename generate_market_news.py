@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🧪 解説「<a href="guide-signal-lab-088.html" style="color:#0969da"><b>AIシグナル研究日誌 #88｜RSI売られすぎ逆張り買い FWD N=276 — 4H足65%が1H足46%を引き離す時間足二極化</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🛡️ 解説「<a href="guide-scam-recovery-scam.html" style="color:#0969da"><b>被害回復詐欺（二次被害）「取り戻します」詐欺の見分け方</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🪙 解説「<a href="guide-scam-crypto-scam.html" style="color:#0969da"><b>暗号資産詐欺「偽取引所・ICO・ウォレット詐欺」の4類型</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🎓 解説「<a href="guide-scam-investment-seminar.html" style="color:#0969da"><b>投資塾・高額情報商材「無料→有料の階段」</b></a>」公開'},

@@ -1,3 +1,45 @@
+## 2026-09-03 signal-lab #088: draft-signal-lab-088.html（rsi_oversold_bounce FWD N=276 時間足二極化）
+
+- **基準日**: 2026-09-03（UTC 2026-09-02 / JST 2026-09-03）
+- **記事番号**: #088
+- **テーマ**: RSI売られすぎ逆張り買い（rsi_oversold_bounce）FWD N=276——4H足65.4%が1H足46.4%を引き離す時間足二極化の継続追跡
+- **claims.json**: drafts/labnotes/lab-088-claims.json（9クレーム）
+- **下書き**: drafts/draft-signal-lab-088.html
+- **ゲート状態**: ✅公開済み（2026-09-03）
+- **ゲート詳細**: signal_lab_verify 9/9緑 → Opus🟡M-1/M-2/R-1/R-2修正 → 再verify GREEN → 独立Opus🟢白 → finalize EXIT=0 → check_guide_draft GREEN → publish_article → push
+
+---
+
+## 2026-09-02 autodraft: draft-cash-allocation.html（現金を残しておくことは、機会損失ではない）
+
+- **基準日**: 2026-09-02（UTC 2026-09-02 / JST 2026-09-02）
+- **topic / key**: リスク管理 #54 / `cash-allocation`
+- **生成ファイル**: `drafts/draft-cash-allocation.html`
+- **参照出典URL**:
+  - https://moneiro.jp/media/article/portfolio-cash-investment-rate（マネイロ: 現金比率とポートフォリオバランス）
+  - https://zuuonline.com/archives/242144（ZUU online: 現金比率とインフレ）
+  - https://www.whitecoatinvestor.com/does-dry-powder-work/（White Coat Investor: ドライパウダー戦略の有効性）
+  - https://www.yourwealth.com/the-dry-powder-principle/（Capital Investment Advisors: ドライパウダーの原則）
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし（一般論のみ）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」「儲かる」等なし）
+  - ✅ kinsho-v1免責あり（冒頭バナー＋本文末disclaimer＋footer）
+  - ✅ noindex,nofollow設定済み（下書き検索除外）
+  - ✅ 「現金◯%が正解」という数字の断定なし
+  - ✅ 相場観に基づく待機推奨なし（タイミング戦略ではないことを明記）
+  - ✅ emergency-fund（#25）との棲み分けを冒頭で明示
+- **SVG概念図**: 2点作成
+  - ①フルインベストvs現金保有：下落時の行動の違い（ライト/ダーク対応）
+  - ②インフレで現金の実質価値が目減りする概念図（ライト/ダーク対応）
+  - ⚠️ TODO: 実機ライト/ダーク切替確認が必要（s-fill-g/s-fill-r/s-fill-bの視認性）
+- **人間の残作業**:
+  1. SVGの実機ライト/ダーク確認（特にrect塗り色の視認性）
+  2. タイトル・h1の微調整（必要なら）
+  3. compliance-reviewer(Opus)監査 → 白なら autodraft-publish が自動実行（毎朝08:40）
+  4. 公開後は guides.html「🛡️ リスク管理・資金管理」カテゴリに表示される
+
+---
+
 ## 2026-09-02 autopublish: 🚩要人間レビュー: bid-ask-spread（品質③ブロッカー2件・コンプラ白・公開せず）
 
 - **key**: bid-ask-spread / シリーズ: 投資の基礎知識 #49
