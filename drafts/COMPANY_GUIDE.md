@@ -102,6 +102,9 @@
 - **日本株**＝`jp-rankings.json`（`jp-rankings.yml` が平日夕方に生成）の **直近14日ぶん**を `git log` で遡り、
   `gainers` / `losers` / `hot` のいずれかに **2回以上**登場した銘柄。
 
+  🆕 **2026-09-02〜：この選定は `edinet-yuho.json` の `candidates[]` に機械化済み。**まずそれを読む（同じ定義・
+  `fallback: true` なら「2回以上の該当なし・最新 hot のみ」）。以下の git log 手順は JSON が無い／古いときの予備。
+
   🚨 **先に履歴を伸ばすこと（2026-09-01 実測）。**クラウドのクローンは **shallow（50コミット）**で、
   そのままだと `git log -- jp-rankings.json` が**1件しか返らない**（14日分を見ているつもりで見えていない）。
 
@@ -204,25 +207,34 @@
   🔑 これは**UA偽装ではない**——「ブラウザのふりをして bot 判定を迂回する」のは禁止のままで、
   「求められた通り自分の身元を名乗る」のは別物。名乗っても弾かれるなら**エスカレして止まる**。
 
-**日本株 — 決算短信は取れるが、有価証券報告書に届かない（2026-09-01 判明）**
+**日本株 — 有価証券報告書は `edinet-yuho.json` から読む（2026-09-02 解決）**
+
+🔑 **routine は EDINET API を直接叩かない。**クラウド routine は GitHub Secrets を読めないので API v2 は必ず 401 になる
+（2026-09-01 の実測）。代わりに Actions `edinet-yuho.yml`（平日 19:40 JST・`build_edinet_yuho.py`）が
+`EDINET_API_KEY`（edinet-holdings と同じキー・**登録済み**）で取得して **`edinet-yuho.json` にコミット**しておく
+（fundamental-context.json と同じ「Actions が取って置く」型）。**手順＝このファイルを開くだけ。**
+
+| キー | 中身 |
+|---|---|
+| `candidates[]` | §2-1 と同じ定義で機械的に選んだ候補（`code`/`name`/`appearances`/`dates`/`fallback`）。**§2-1 の git log 遡りは不要になった**（登場履歴はこの JSON が自分で積む） |
+| `companies[code].texts` | `risks`＝**事業等のリスク**（§1④の芯）／`history`＝沿革（§1②）／`business`＝事業の内容／`policy`＝経営方針・課題／`mdna`＝MD&A。**有報の記載そのまま**（HTMLタグ除去のみ）。`truncated` に入っているキーは末尾を切ってある＝原文は `url` で確認 |
+| `companies[code].summary` | 「主要な経営指標等の推移」の数値（売上高・経常利益・純利益・純資産・総資産・自己資本比率・ROE・EPS・従業員数など。連結＝`CurrentYearDuration`、個別＝`_NonConsolidatedMember`、前期＝`Prior1Year…`）。**単位は `unit` を見る**（円のまま＝億円換算は自分で・端数は切らずに「約」で） |
+| `companies[code].url` / `docDescription` / `submitDateTime` | 出典リンク（EDINET 閲覧ページ）と書類名・提出日＝**記事の出典欄にそのまま書く** |
+| `missing[]` | 候補なのに本文が無い会社と理由（索引が届いていない／取得予算超過／有報を出さない会社） |
+| `index_complete` / `index_days` | 有報索引が 420日ぶん揃ったか。**初回数日は false**＝候補が `missing` に落ちやすい |
+
+- ✅ **候補が `companies` にあれば日本株を書ける。**§1③は `summary`、§1④は `texts.risks` から。
+- ⏳ **候補が `missing` にしか無いときは、その週は海外株へ切り替える**（従来どおり）。台帳に `missing` の理由を1行写す。
+  `index_complete: false` の間は仕方がない（索引は毎日60日ぶんずつ遡る＝約1週間で揃う）。
+- ⚠️ **`edinet-yuho.json` は SYNC禁忌**（Actions 生成）。routine も人も編集しない。
+- ⚠️ **決算短信（TDnet）はこれまでどおり取れる**が保管は約5〜6週間だけ。§1③の直近四半期はそちら、通期と§1④は有報。
 
 | 何を取るか | どこから | クラウド実測 |
 |---|---|---|
-| **決算短信** | `release.tdnet.info/inbs/I_list_00<N>_<YYYYMMDD>.html` → PDFを直接DL | ✅ **200**（⚠️ **保管は約5〜6週間だけ**。それ以前の日付は404） |
-| EDINET トップ | `disclosure2.edinet-fsa.go.jp` | ✅ 200 |
-| EDINET 書類検索API v1 | `disclosure.edinet-fsa.go.jp/api/v1/documents.json` | ❌ **403（先方のWAF・bot判定）**＝許可リストでは直らない |
-| EDINET 書類検索API v2 | `api.edinet-fsa.go.jp/api/v2/documents.json` | ❌ **401＝Subscription-Key が必要**（未取得） |
-| 統計 | `jpx.co.jp` | ✅ 200 |
-| **各社IRサイト** | `advantest.com`／`global.toyota` 等 | ❌ **経路遮断**（`CONNECT tunnel failed`） |
-
-🚨 **帰結＝いまのままだと日本株は毎週エスカレする。**決算短信は取れるが、
-**§1④の芯である「事業等のリスク」は有価証券報告書にしか無い**（決算短信にはこの節が無い）。
-実際 2026-09-01 の初回は、候補のアドバンテスト（6857）を**この理由でエスカレ**して米国株に切り替えた。
-
-⏭ **オーナー判断が要る（どれか1つ）:**
-1. **EDINET API v2 の Subscription-Key を取得**（金融庁サイトで無料登録）→ GitHub Secrets に入れる。**本筋**
-2. `disclosure2.edinet-fsa.go.jp` の**Web画面から有報PDFに辿れるか**を次回実行で検証させる（API不要ルート・未検証）
-3. 各社IRドメインを許可リストに足す → ⚠️ **毎週別の会社なので、いたちごっこになる。薦めない**
+| **有価証券報告書の本文・主要指標** | **`edinet-yuho.json`**（リポジトリ内） | ✅ ファイルを読むだけ |
+| **決算短信** | `release.tdnet.info/inbs/I_list_00<N>_<YYYYMMDD>.html` → PDFを直接DL | ✅ 200（⚠️ 保管は約5〜6週間だけ） |
+| EDINET 書類検索API v1 / v2 を routine から直接 | — | ❌ 403 / 401＝**やらない**（上記の理由） |
+| 各社IRサイト | `advantest.com`／`global.toyota` 等 | ❌ 経路遮断＝**使わない** |
 
 ⚠️ **迷ったら書かない。**決算短信だけで §1④を埋めようとしないこと（推測でリスクを書くのが最悪の事故）。
 

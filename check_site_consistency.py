@@ -56,6 +56,7 @@ SYNC_FORBIDDEN = {
                                # Nasdaq API + yfinance から生成・コミット。ローカルpush禁止）
     "touraku-history.json",  # 騰落レシオの日次履歴（update-market-news.yml が GitHub側で生成・コミット。ローカルpush禁止）
     "edinet-holdings.json",  # 大量保有報告書の新着（edinet-holdings.yml が平日GitHub側で生成・コミット。ローカルpush禁止）
+    "edinet-yuho.json",  # 話題の企業の有報本文（edinet-yuho.yml が平日GitHub側で生成・コミット。routine company-weekly-auto が読む。ローカルpush禁止）
     "guide-new-books.html",  # 投資本新刊ウォッチ（routine book-watch-weekly が毎週土曜GitHub側で更新。ローカルpush禁止）
     "idea-inbox.md",  # 研究アイデア受信箱 drafts/idea-inbox.md（routine idea-scout-weekly が毎週日曜GitHub側で追記。照合はbasename）
     # 🆕 2026-07-07 進化ループのローカル専用ファイル（非公開研究＝公開リポへ流出させない）
