@@ -5303,6 +5303,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🧪 解説「<a href="guide-signal-lab-088.html" style="color:#0969da"><b>AIシグナル研究日誌 #88｜RSI売られすぎ逆張り買い FWD N=276 — 4H足65%が1H足46%を引き離す時間足二極化</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 📰 解説「<a href="guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html" style="color:#0969da"><b>【9/2】SB Energy IPO申請──AI電力インフラの論点整理</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 📄 解説「<a href="guide-tse-timely-disclosure.html" style="color:#0969da"><b>適時開示（TDnet）とは？ 個人投資家が一次情報を自分で読む方法</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 💬 解説「<a href="guide-scam-line-group-guru.html" style="color:#0969da"><b>「元機関投資家」を名乗るSNS投資グループの手口</b></a>」公開'},
