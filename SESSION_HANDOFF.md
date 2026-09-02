@@ -1,5 +1,18 @@
 # 🔖 セッション引き継ぎ（最終更新: 2026-09-02 夜）
 
+## 🆕 2026-09-02: scam のエスカレ3件をすべて解消（3本公開）＋ proverb 停止を予約
+
+| slug | 結果 | 台帳の「最短ルート」との差 |
+|---|---|---|
+| investment-seminar | ✅ 公開 | **「条文確認のみで即公開可」は誤り**。無登録営業の罰則は令和8年法律第64号（2026-07-23 公布・**2026-08-12 施行**）で **第197条第1項第4号の3（10年以下の拘禁刑/1,000万円）・第207条第1項第1号（法人7億円）**に上がっていた。下書きは改正前条文。e-Gov 法令API の CurrentEnforced 版で確認して差し替え |
+| crypto-scam | ✅ 公開 | 下書きの「2,148件・246.3億円」も、**台帳が示した修正値「6.7%・19.5%」も令和7年の数字**。警察庁 PDF 原本（2026-07-30 付）から 2026年上半期の実数へ全面差し替え。同じ「暗号資産送信型」でも全体/SNS型投資/ロマンスで数字が違う |
+| recovery-scam | ✅ 公開（再執筆） | content-writer 再執筆 → Opus 監査①🔴黒2 → 修正 → 別 Opus 監査②🟢白 → 公開。監査①の「SNS型投資詐欺は特殊詐欺の外数」は旧定義の誤り（2026年から内数・原本に 26.7% 明記） |
+
+- 3本とも `publish_article.py` で②〜⑤登録済み・台帳に ✅エントリ追記済み。番人の scam 残量は 3→6 になる
+- 🔑 **学び＝法令の条番号と統計の区分は「要約」でなく原本で**。台帳の修正指示すら古かった。SOP に「e-Gov CurrentEnforced 版」「PDF 原本の該当段落」を確認日つきで書く運用を足すべき
+- ⏰ **proverb-daily-auto の停止**＝9/5 12:00 JST に自己チェック（send_later `trig_01ErvcKab1avcNkfDApKwjDc`）→ #50 総集編の公開を確認して `update_trigger enabled=false`
+- ⚠️ 本セッションの成果物はすべて **ブランチ `claude/issue-check-do2bbk`**（main 未マージ）。マージ後に update-market-news が index/sitemap を再生成する。ローカル `sync_to_github.py` の SYNC_FILES に `build_edinet_yuho.py`／`.github/workflows/edinet-yuho.yml`／`guide-scam-{investment-seminar,crypto-scam,recovery-scam}.html` を追加すること
+
 ## 🆕 2026-09-02: 有報を Actions が取って置く（`edinet-yuho.yml`）＝日本株の週次エスカレを止める
 
 **きっかけ**＝9/1 の初回で「EDINET API v2 が 401＝Subscription-Key 未取得」としてオーナー判断に上げていたが、
