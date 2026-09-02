@@ -200,4 +200,5 @@ SYNC_FILES = [
     "guide-tse-timely-disclosure.html",
     "guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html",
     "guide-scam-investment-seminar.html",
+    "guide-scam-crypto-scam.html",
 ]
