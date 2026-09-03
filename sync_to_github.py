@@ -202,4 +202,5 @@ SYNC_FILES = [
     "guide-signal-lab-088.html",
     "guide-bid-ask-spread.html",
     "guide-proverb-this-time-is-different.html",
+    "guide-scam-real-estate-yield-pitch.html",
 ]
