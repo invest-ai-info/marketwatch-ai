@@ -5304,6 +5304,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🛑 解説「<a href="guide-tse-price-limits.html" style="color:#0969da"><b>値幅制限（ストップ高・ストップ安）とは</b></a>」公開'},
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🏢 解説「<a href="guide-scam-real-estate-yield-pitch.html" style="color:#0969da"><b>「利回り保証」不動産・事業勧誘の手口</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🔁 解説「<a href="guide-proverb-this-time-is-different.html" style="color:#0969da"><b>「今回は違う」は、いちばん高くつく言葉</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 💰 解説「<a href="guide-bid-ask-spread.html" style="color:#0969da"><b>手数料0円でも引かれているもの</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🧪 解説「<a href="guide-signal-lab-088.html" style="color:#0969da"><b>AIシグナル研究日誌 #88｜RSI売られすぎ逆張り買い FWD N=276 — 4H足65%が1H足46%を引き離す時間足二極化</b></a>」公開'},

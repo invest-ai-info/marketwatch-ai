@@ -203,4 +203,5 @@ SYNC_FILES = [
     "guide-bid-ask-spread.html",
     "guide-proverb-this-time-is-different.html",
     "guide-tse-price-limits.html",
+    "guide-scam-real-estate-yield-pitch.html",
 ]
