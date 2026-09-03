@@ -210,4 +210,5 @@ SYNC_FILES = [
     "guide-scam-recovery-scam.html",
     "guide-news-2026-09-03-yen-crosses-fall-bull-bear-factors.html",
     "guide-signal-lab-089.html",
+    "guide-anchoring-price.html",
 ]

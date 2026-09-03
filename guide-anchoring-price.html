@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>自分が買った値段を、相場は知らない｜アンカリングバイアスを解剖する - MarketWatch AI</title>
+  <meta name="description" content="「買値に戻ったら売ろう」という思考はなぜ生まれるのか。アンカリング（anchoring）は、最初に見た数字が判断の基準になってしまう心理バイアス。建値・高値・きりのいい数字という3つの錨が投資判断を歪める仕組みを行動経済学で解説し、「今の想定」へ問い直す実践法まで図解します。">
+  <meta name="keywords" content="アンカリング,アンカリング効果,建値,投資心理,行動経済学,認知バイアス,損切り,投資初心者,バイアス,カーネマン,トベルスキー">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-anchoring-price.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="自分が買った値段を、相場は知らない｜アンカリングバイアスを解剖する">
+  <meta property="og:description" content="「買値に戻ったら売ろう」はなぜ生まれるか。建値・高値・きりのいい数字という3つの錨が投資判断を歪める仕組みと、問い直しの実践法を図解。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-anchoring-price.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "自分が買った値段を、相場は知らない｜アンカリングバイアスを解剖する",
+    "description": "「買値に戻ったら売ろう」はなぜ生まれるか。建値・高値・きりのいい数字という3つの錨が投資判断を歪める仕組みと、問い直しの実践法を行動経済学で図解する。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-04",
+    "dateModified": "2026-09-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-anchoring-price.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 投資心理 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-anchor{fill:#1E3A6E;opacity:.18}
+    .s-anchor-text{fill:#1E3A6E;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-anchor{fill:#79c0ff;opacity:.15}
+    body.dark .s-anchor-text{fill:#79c0ff}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 自分が買った値段を、相場は知らない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事はアンカリングバイアスにまつわる投資心理・行動経済学の考え方を整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>⚓ 自分が買った値段を、相場は知らない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 4 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <div class="info-box" style="margin-bottom:20px">
+      <strong>📌 この記事の位置づけ（読む前に）</strong>：同じ「過去の数字に縛られる」系のバイアスに、本記事と似たテーマが複数あります。<a href="guide-sunk-cost.html">サンクコスト（#39）</a>は「すでに払ってしまったコストへの未練」の話、<a href="guide-regret-aversion.html">後悔回避（#44）</a>は「これから起きる後悔への先読み」の話。<strong>本記事は「最初に見た数字が基準になってしまう」という別の問題</strong>を扱います。三者の棲み分けを冒頭で明示しました。
+    </div>
+
+    <p>「1,000円で買ったから、1,000円に戻ったら売ろう」——この考え方、一度は浮かんだことがあるのではないでしょうか。一見合理的に聞こえますが、<strong>相場にとってあなたの買値は何の意味も持ちません</strong>。市場は、誰がいくらで買ったかなど一切知らないし、知ろうともしません。それなのに、なぜ買値という数字が判断の基準になってしまうのか。その「なぜ」の正体が、<strong>アンカリング（anchoring）</strong>と呼ばれる認知バイアスです。</p>
+    <p>この記事では、まずアンカリングの仕組みを入門的に図解し、後半では「今の想定」へ問い直す実践法まで踏み込みます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>アンカリングとは、<strong>最初に見た数字（＝錨）が、その後の判断の基準に「貼りついてしまう」</strong>認知バイアス。投資では建値・高値・きりのいい数字の3つが主な錨になる。</li>
+      <li>建値はあなたにしか見えていない数字で、<strong>相場は一切関知しない</strong>。「買値に戻ったら売る」という判断は、無関係な数字を基準にしている。</li>
+      <li>克服のカギは「今これを持っていなかったとしたら、この値段で買うか？」という<strong>問い直し</strong>。判断の基準を"過去の錨"から"今の合理性"へ意識的に置き換える。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">アンカリングとは何か（行動経済学の基礎）</a></li>
+        <li><a href="#section-2">「ルーレット実験」——最初の数字が答えを引きずる</a></li>
+        <li><a href="#section-3">投資で現れる3つの錨（建値・高値・きりのいい数字）</a></li>
+        <li><a href="#section-4">建値は「自分にしか見えていない」という事実</a></li>
+        <li><a href="#section-5">アンカーを外す問い直し（実践・中上級）</a></li>
+        <li><a href="#section-6">アンカリングを利用している側を知る</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ アンカリングとは何か（行動経済学の基礎）</h2>
+    <p>アンカリング（anchoring）とは、<strong>最初に提示された情報（＝錨・アンカー）が、その後の判断や推測を引きずってしまう</strong>認知バイアスです。1974年、心理学者の<strong>エイモス・トベルスキーとダニエル・カーネマン</strong>が「Judgment under Uncertainty: Heuristics and Biases」という論文で提唱しました（カーネマンは2002年にノーベル経済学賞を受賞しています）。</p>
+    <p>日常でも至るところに現れます。</p>
+    <ul>
+      <li>「定価2万円のところ、今回だけ特別に1万5,000円」——最初の2万円が錨になり、1万5,000円を"安い"と感じさせる。</li>
+      <li>レストランのメニューに3万円のコース料理が載っていると、隣の1万5,000円のコースが"手頃"に見える。</li>
+      <li>交渉の席で最初に大きな数字を提示した側が、その後の話し合い全体を引っ張りやすい。</li>
+    </ul>
+    <p>いずれも、「最初に見た数字」が判断の基準点になってしまうという構造です。そしてこの構造は、<strong>投資の判断にも、まったく同じように現れます</strong>。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「ルーレット実験」——最初の数字が答えを引きずる</h2>
+    <p>トベルスキーとカーネマンが行った有名な実験があります。被験者はまず、<strong>0〜100の数字が出るルーレットを目の前で回させられます</strong>。その後、「国連の加盟国のうちアフリカの国が占める割合は何%か」という問いに答えます。</p>
+    <p>ルーレットで「10」が出たグループの回答の中央値は<strong>25%</strong>、「65」が出たグループの中央値は<strong>45%</strong>でした。ルーレットの数字は被験者にとってはその場で偶然出ただけの数字であり、問いの答えとは何の関係もありません。それでも最初に見た数字が推測を引きずった——これがアンカリングの実証です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="anchor-exp-title">
+        <title id="anchor-exp-title">ルーレット実験：最初に見た数字が推測を引きずる概念図</title>
+        <text class="s-panel-label" x="40" y="24">ルーレット実験のイメージ（概念図）</text>
+        <!-- 左：アンカー=10 -->
+        <rect class="s-anchor" x="50" y="44" width="220" height="220" rx="10"/>
+        <text class="s-anchor-text" x="160" y="76" text-anchor="middle">アンカー「10」</text>
+        <!-- ルーレット円 -->
+        <circle cx="160" cy="150" r="52" fill="none" stroke="#8b949e" stroke-width="2"/>
+        <text style="fill:#1E3A6E;font-size:28px;font-weight:700;font-family:'Noto Sans JP',sans-serif" x="160" y="162" text-anchor="middle">10</text>
+        <!-- 推測 -->
+        <text class="s-note-g" x="160" y="232" text-anchor="middle">回答の中央値：25%</text>
+        <!-- 右：アンカー=65 -->
+        <rect class="s-anchor" x="370" y="44" width="220" height="220" rx="10"/>
+        <text class="s-anchor-text" x="480" y="76" text-anchor="middle">アンカー「65」</text>
+        <circle cx="480" cy="150" r="52" fill="none" stroke="#8b949e" stroke-width="2"/>
+        <text style="fill:#cf222e;font-size:28px;font-weight:700;font-family:'Noto Sans JP',sans-serif" x="480" y="162" text-anchor="middle">65</text>
+        <text class="s-note-r" x="480" y="232" text-anchor="middle">回答の中央値：45%</text>
+        <!-- 矢印・比較 -->
+        <line class="s-axis" x1="278" y1="150" x2="362" y2="150"/>
+        <text class="s-label-sm" x="320" y="143" text-anchor="middle">同じ問いなのに</text>
+        <text class="s-label-sm" x="320" y="160" text-anchor="middle">20ポイント差</text>
+        <text class="s-label-sm" x="320" y="230" text-anchor="middle">↑ 答えと無関係なルーレットが引きずる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 答えとは無関係なルーレットの数字（10 vs 65）が、その後の推測を引きずる。アンカリングは無意識のうちに判断を変形させる。※ 概念を示すイメージ図です。出典：Tversky & Kahneman (1974)</figcaption>
+    </figure>
+
+    <p>この実験で大切なのは、「数字を見たから自分の答えを変えよう」と意識した被験者はほぼいないという点です。<strong>アンカリングは無意識に起きる</strong>——これが厄介なところです。「自分は気にしていない」と思っていても、最初に見た数字はすでに判断の中に入り込んでいます。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 投資で現れる3つの錨（建値・高値・きりのいい数字）</h2>
+    <p>投資の世界で錨になりやすい数字には、大きく3種類あります。</p>
+
+    <h3>① 建値（自分の買値）</h3>
+    <p>最もよく見られる錨です。「1,000円で買ったから、1,000円に戻ったら売ろう」「損はしたくないから、せめて元値まで戻したら……」という思考がこれです。建値は取引を始めた瞬間に自動的に設定される、非常に強力なアンカーです。</p>
+
+    <h3>② 過去の高値（シンボリックな価格）</h3>
+    <p>「この株は以前3,000円まで上がっていたから、また戻るはず」「ドル円は160円まで行ったことがあるから、そこが上限のはず」という判断もアンカリングです。過去の価格水準に引きずられて、現在の状況とは独立した分析ができなくなります。</p>
+
+    <h3>③ きりのいい数字</h3>
+    <p>「日経平均4万円」「BTC 100万円」「ドル円150円」のような、きりのいい数字も強力なアンカーになります。値動きのないただの「切りのいい数字」に心理的な意味が発生し、「節目だから反発する」「節目だから重い」といった見方を生みやすくなります。</p>
+
+    <div class="warning-box">
+      3つの錨に共通するのは、<strong>どれも「今、この資産を持ち続けるべきかどうか」という本来の問いとは無関係な数字</strong>だという点です。過去の価格は変えられない事実ですが、将来の価格を決める根拠にはなりません。
+    </div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 建値は「自分にしか見えていない」という事実</h2>
+    <p>ここが、アンカリングバイアスの核心です。<strong>あなたの買値は、あなたの口座にしか存在しません</strong>。市場には、世界中の無数の参加者が異なる価格で買い、売っています。その多様な参加者が織り成す需給の結果が「今の価格」であり、誰か一人の建値に特別な意味は存在しません。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 310" role="img" aria-labelledby="kenzai-title">
+        <title id="kenzai-title">建値と市場価格の関係：建値は自分にしか見えない概念図</title>
+        <text class="s-panel-label" x="40" y="24">「建値」は自分にしか見えていない</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="60" y1="270" x2="600" y2="270"/>
+        <text class="s-label-sm" x="60" y="290">時間 →</text>
+        <!-- 価格曲線（下降→反発） -->
+        <polyline class="s-price" points="60,90 130,100 200,120 280,160 350,200 400,220 440,210 490,180 550,150 595,130"/>
+        <!-- 建値ライン -->
+        <line class="s-brk" x1="60" y1="90" x2="600" y2="90"/>
+        <text class="s-note-r" x="68" y="84">建値（自分の買値）</text>
+        <!-- 含み損の領域 -->
+        <rect x="60" y="91" width="540" height="179" fill="#ffebe9" opacity="0.3"/>
+        <text style="fill:#cf222e;font-size:12px;font-family:'Noto Sans JP',sans-serif" x="290" y="160">含み損</text>
+        <!-- 「自分」マーカー -->
+        <circle class="s-hl" cx="60" cy="90" r="6"/>
+        <text class="s-note" x="76" y="110">あなたがここで買った</text>
+        <!-- 市場はこの建値を知らない -->
+        <text class="s-note-r" x="400" y="244" text-anchor="middle">市場はこの線を知らない・気にしない</text>
+        <!-- 矢印 -->
+        <line style="stroke:#cf222e;stroke-width:1.5;stroke-dasharray:4 3" x1="400" y1="235" x2="400" y2="91"/>
+        <!-- 「今ここ」 -->
+        <circle class="s-rev" cx="595" cy="130" r="7"/>
+        <text class="s-note-g" x="540" y="118">今ここ</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 赤の破線が「建値」。価格曲線はその後、市場の論理で動く。<strong>建値という線は自分の口座にしか存在せず、チャートのどこにも描かれていない</strong>。市場参加者の誰も、あなたの買値を知らず、その価格に特別な意味を与えない。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>それでも建値が判断を引きずる理由は、前出のアンカリングに加えて、<a href="guide-sunk-cost.html">サンクコスト（埋没費用）</a>の影響もあります。「ここまで我慢したのに」という感覚が、建値という錨をさらに強化します。両者は別物ですが、同時に作用して判断を複合的に歪めることがよくあります。</p>
+
+    <div class="info-box">
+      <strong>💡 整理しておきたい三者の違い</strong>：
+      <ul style="margin-top:8px">
+        <li><strong>アンカリング</strong>（本記事）＝最初に見た数字が基準になってしまう → 「建値に戻ったら売る」</li>
+        <li><strong><a href="guide-sunk-cost.html">サンクコスト</a></strong>＝すでに払ったコストへの未練 → 「ここまで持ったのに今さら切れない」</li>
+        <li><strong><a href="guide-regret-aversion.html">後悔回避</a></strong>＝これから起きる後悔の先読み → 「売った後に上がったら後悔する」</li>
+      </ul>
+      三者は重なりながらも別の心理メカニズムです。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ アンカーを外す問い直し（実践・中上級）</h2>
+    <p>アンカリングは無意識に起きる。だから「気合いで気にしないようにする」という精神論は機能しません。効くのは、<strong>判断の基準を意識的に置き換えるための「問い直し」</strong>を習慣にすることです。</p>
+
+    <h3>問い直しの核心：「今これを持っていなかったとしたら？」</h3>
+    <p>含み損を抱えているとき、自分にこう問いかけてみてください。<strong>「もし今この保有ポジションがなかったとして、現在の価格でこの資産を新たに買いたいと思うか？」</strong></p>
+    <p>答えが「買わない」なら、保有を続ける理由が建値という錨だけになっていないか、点検してみる価値があります。答えが「買う」なら、その理由を改めて言語化してみることで、判断の基準が"今の合理性"に戻ってきます。</p>
+
+    <h3>「今の根拠」で判断を再構築する</h3>
+    <p>エントリーした当初の根拠は、今も有効でしょうか。シナリオを支える前提条件は変わっていないか、変わったなら今の価格水準はどう評価すべきか——<strong>「建値からいくら離れているか」ではなく「今の状況からシナリオが生きているか」</strong>を問い直します。根拠が崩れているなら、建値がどこであれ撤退を検討する材料になります。逆に根拠がまだ生きているなら、建値から離れていること自体は撤退の理由にはなりません。ただし、シナリオの生死とは別に、<strong>あらかじめ決めた損失の許容範囲は独立して働かせておく</strong>という考え方が一般的です（損切りの実務は<a href="guide-loss-cut.html">損切りの記事</a>で解説しています）。</p>
+
+    <table>
+      <tr><th>❌ アンカー思考（変えたい）</th><th>✅ 問い直し（目指したい）</th></tr>
+      <tr><td>「建値の1,000円に戻ったら売る」</td><td>「今1,000円になったとき、まだ根拠が生きているか」</td></tr>
+      <tr><td>「あの高値3,000円まで戻るはず」</td><td>「現在の環境で3,000円を正当化する根拠があるか」</td></tr>
+      <tr><td>「節目の150円だから重い」</td><td>「需給・ファンダの観点で150円が何かを意味するか」</td></tr>
+    </table>
+
+    <p>問い直しは一度で完結しません。<strong>相場環境が変わるたびに、自分の判断の基準を「過去」から「今」へリセットする習慣</strong>を持つことが、アンカリングに対する最も現実的な対策です。</p>
+
+    <h3>記録が問い直しを助ける</h3>
+    <p>「エントリーした理由」を事前に書いておくと、問い直しが格段にしやすくなります。「この根拠が崩れたら撤退する」という撤退条件も一緒に書いておくと、建値への執着よりも「シナリオの生死」で判断しやすくなります。売買日誌については<a href="guide-trade-journal.html">売買日誌の記事</a>で詳しく解説しています。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ アンカリングを「利用している側」を知る</h2>
+    <p>アンカリングは自分の中だけの話ではありません。<strong>市場の参加者全体がアンカリングを使い、使われています</strong>。これを知っておくと、相場の動きを読む補助線になることがあります。</p>
+
+    <h3>「節目」は多くの人の共通アンカー</h3>
+    <p>きりのいい価格水準（日経平均4万円、ドル円150円など）は、<strong>大勢の参加者が意識している共通のアンカー</strong>です。意識されているからこそ、実際に価格が近づいたときに売り注文や買い注文が集まりやすくなるという面があります。これは予言の自己成就（多くの人がそうなると信じて動くこと自体が、結果としてその通りの動きを生みやすくすること）的な側面もあり、一概に「アンカリングだから無視すべき」とも言い切れません。</p>
+
+    <h3>「高値から◯%下落」という表現</h3>
+    <p>「最高値から20%下落で調整局面」のような報道表現も、過去の高値をアンカーにしています。これが多くの市場参加者に共有されると、ある水準が「買い場か底か」を判断するうえでの心理的な節目になりやすくなります。</p>
+
+    <div class="warning-box">
+      ただし、「みんながアンカーにしているから反発する」という推測は、あくまで心理的傾向の話であり、特定の価格での反発を保証するものではありません。重要指標の発表、地政学リスク、流動性の低下など、心理より大きな力がはたらけば、アンカーのある水準もあっさり突破されます。アンカリングの知識を「相場予測の根拠」にするのではなく、<strong>「自分の判断が歪められていないか確認するための視点」</strong>として使うのが適切です。
+    </div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>当サイトが公開しているシグナルは、テクニカル指標の条件をルール化し、機械的に検出するものです。</p>
+    <ul>
+      <li><strong>シグナルの発火条件は現在の価格・指標状態が基準</strong>であり、過去のある時点での価格（建値）ではありません。「あの高値のときにこう動いた」という過去価格への参照を、発火ルールの中に組み込まないことで、アンカリングの影響を構造的に抑えています。</li>
+      <li>実際にシグナルを参考にする際も、「以前より上か下か」という建値視点ではなく、<strong>「今の環境でシグナルの根拠が成立しているか」</strong>という問い直しを習慣にしておくと、判断の基準がぶれにくくなります。</li>
+    </ul>
+    <p>当サイトが公開している<a href="track-record.html">シグナル成績ダッシュボード</a>では、勝ちも負けも含めた実績を記録しています。自分のトレードとの比較に活用するなかで、「建値ではなく現在の根拠で判断できているか」を定期的に振り返る機会にしてもらえれば幸いです。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 「今の根拠で動く」シグナルを確認する</div>
+      <div class="cta-box-desc">テクニカルルールに基づいて機械的に発火するシグナルの、勝ちも負けも含めた実際の成績を公開中。建値ではなく条件ベースの記録を参考にどうぞ。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li>アンカリングは、<strong>最初に見た数字が判断の基準に貼りついてしまう</strong>認知バイアス（Tversky & Kahneman, 1974）。無意識に起きるため「気合い」では外れない。</li>
+      <li>投資で現れる主な錨は<strong>①建値 ②過去の高値 ③きりのいい数字</strong>の3種類。いずれも「今、保有を続けるべきか」という本来の問いとは無関係。</li>
+      <li>建値は<strong>自分の口座にしか存在しない数字</strong>で、市場は関知しない。「建値に戻ったら売る」という判断は無関係な数字を基準にしている。</li>
+      <li>克服は<strong>「今これを持っていなかったとしたら、この値段で買うか？」という問い直し</strong>。判断の基準を"過去の錨"から"今の合理性"へ置き換える。</li>
+      <li>類似する心理バイアスである<a href="guide-sunk-cost.html">サンクコスト</a>（過去への未練）・<a href="guide-regret-aversion.html">後悔回避</a>（未来の後悔先読み）と合わせて理解しておくと、自分の判断の歪みに気づきやすくなる。</li>
+    </ul>
+    <p>「相場は自分の建値を知らない」——この一言を頭の片隅に置いておくだけで、含み損の中での判断が少しずつ変わってきます。買値への執着よりも、今の根拠があるかどうか。その習慣が、感情に振り回されない投資判断への入り口です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-sunk-cost.html">
+        <div class="related-card-title">🚢 塩漬けとサンクコスト</div>
+        <div class="related-card-desc">「ここまで持ったのに今さら切れない」——すでに払ったコストへの未練が判断を歪めるサンクコスト効果。アンカリングとの違いも解説。</div>
+      </a>
+      <a class="related-card" href="guide-regret-aversion.html">
+        <div class="related-card-title">😓 後悔したくない気持ちが動けなくさせる</div>
+        <div class="related-card-desc">「売った後に上がったら後悔する」という先読みが行動を縛る後悔回避。アンカリング・サンクコストとは別の心理メカニズム。</div>
+      </a>
+      <a class="related-card" href="guide-cognitive-biases.html">
+        <div class="related-card-title">🧠 投資で陥る認知バイアス10選</div>
+        <div class="related-card-desc">アンカリングを含む主要な認知バイアスの図鑑。各バイアスの外し方チェックリストつき。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">✂️ 損切りができない本当の理由</div>
+        <div class="related-card-desc">損失回避・プロスペクト理論から、淡々と切る技術まで。損切りを阻む心理の全体像。</div>
+      </a>
+      <a class="related-card" href="guide-trade-journal.html">
+        <div class="related-card-title">📓 記録をつけると判断が変わる</div>
+        <div class="related-card-desc">エントリー根拠と撤退条件を事前に書く習慣が、アンカリングの影響を弱める実践的な方法。</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">📊 シグナル成績ダッシュボード</div>
+        <div class="related-card-desc">建値ではなく条件ベースで動くシグナルの、勝ちも負けも含めた実績を公開中。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はアンカリングバイアスにまつわる投資心理・行動経済学の考え方を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載は一般的な解説であり、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
