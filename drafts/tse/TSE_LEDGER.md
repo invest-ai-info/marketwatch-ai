@@ -33,6 +33,27 @@
 
 **公開**: `guide-tse-timely-disclosure.html`（読了約9分）。`publish_article.py`→`check_site_consistency.py`（EXIT=0、本記事に警告なし）→ `apply_back_to_top.py --apply`（本記事へ新規注入・既存33ページの正規化も同時実施）→ git push origin main（commit f60b48c, 3161db1）。
 
+### ✅ 2026-09-03 キュー#2「値幅制限（ストップ高・ストップ安）」 price-limits 🛑
+
+**題材**: TSE_GUIDE.md キュー#2「値幅制限（ストップ高・ストップ安）」（slug: `price-limits`、絵文字: 🛑、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測）**: `www.jpx.co.jp`は素のcurl（UA偽装なし）でHTTP 200・到達可能（トップページ実測含む）。`www.fsa.go.jp`も200。以下3URLを実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/equities/trading/domestic/06.html（制限値幅｜内国株の売買制度・**ページ更新日 2026/09/02**）— 基準値段ごとの制限値幅の全表、臨時拡大の条件（2営業日連続の該当条件／ETF・ETN・レバレッジ商品の別条件）を確認。
+- https://www.jpx.co.jp/glossary/sa/238.html（用語集「ストップ高・ストップ安」）
+- https://www.jpx.co.jp/glossary/sa/239.html（用語集「ストップ配分」）— ストップ配分の具体例（A社5万株/B社7万株/C社6万株→B社→C社→A社の順に100株ずつ、結果A社600株/B社700株/C社700株）を一次情報からそのまま引用。
+
+※WebFetchはjpx.co.jp系に対して403（先方のbot判定）を返したため、curlで取得したHTMLをローカルでテキスト抽出して内容確認した。UA偽装は行っていない（既定のcurl UAで200取得）。
+
+確認日：2026-09-03（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①「調べれば必ず分かる」等の断定語の再生産 ②「投資家を守る」等、制度の効果を言い切る表現 ③見出し「達しやすい」の言い切り ④「安心です」等の不安解消訴求と読まれうる語 ⑤まとめの「実践的な対処になる」という行動を推す語感 ⑥ストップ配分引用への出典リンク明示の余地
+- 6点すべて適用修正（事実・数値・SVG・構造・免責文言は不変、表現の軟化と出所明示の強化のみ。8箇所編集）
+- 【独立最終確認】（別セッション・model=opus・Readのみ）→ 🟢白（修正反映確認・新規リスクなし）。冒頭disclaimer-bannerに`data-disclaimer="kinsho-v1"`属性が欠落している点を指摘されたため、公開前に属性を追加（事実・文言は不変の形式修正）。
+- 品質ルーブリック：自己採点で5観点すべて✅
+
+**公開**: `guide-tse-price-limits.html`（読了約9分）。`check_guide_draft.py`（GREEN）→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告32件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ `apply_back_to_top.py --apply`（本記事へ新規注入。同時に既存の`guide-bid-ask-spread.html`も正規化）→ 同時刻に別クラウドroutine（scam系）がpushしていたため`generate_market_news.py`の更新履歴リストと`sync_to_github.py`のSYNC_FILESで軽微なマージコンフリクトが発生、両エントリを残す形で解消 → git push origin main（commit 7c5e029, 440715a）。
+
 ## エスカレ・要人間レビュー
 
 ### 🚩 2026-09-01 キュー#1「適時開示（TDnet）」 timely-disclosure 📄 — 一次情報（jpx.co.jp）未到達のため見送り

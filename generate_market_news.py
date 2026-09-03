@@ -5308,6 +5308,11 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 📰 解説「<a href="guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html" style="color:#0969da"><b>日銀高田委員「利上げ新局面」＋米ADP下振れでドル円急落</b></a>」公開'},
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🛑 解説「<a href="guide-tse-price-limits.html" style="color:#0969da"><b>値幅制限（ストップ高・ストップ安）とは</b></a>」公開'},
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🏢 解説「<a href="guide-scam-real-estate-yield-pitch.html" style="color:#0969da"><b>「利回り保証」不動産・事業勧誘の手口</b></a>」公開'},
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🔁 解説「<a href="guide-proverb-this-time-is-different.html" style="color:#0969da"><b>「今回は違う」は、いちばん高くつく言葉</b></a>」公開'},
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 💰 解説「<a href="guide-bid-ask-spread.html" style="color:#0969da"><b>手数料0円でも引かれているもの</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🧪 解説「<a href="guide-signal-lab-088.html" style="color:#0969da"><b>AIシグナル研究日誌 #88｜RSI売られすぎ逆張り買い FWD N=276 — 4H足65%が1H足46%を引き離す時間足二極化</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🛡️ 解説「<a href="guide-scam-recovery-scam.html" style="color:#0969da"><b>被害回復詐欺（二次被害）「取り戻します」詐欺の見分け方</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🪙 解説「<a href="guide-scam-crypto-scam.html" style="color:#0969da"><b>暗号資産詐欺「偽取引所・ICO・ウォレット詐欺」の4類型</b></a>」公開'},

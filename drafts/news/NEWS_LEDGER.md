@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-09-03
+- 判定: ✅ 公開済み
+- 選定トピック: 日銀・高田審議委員「利上げ新局面」＋米ADP38,000人大幅下振れ→ドル円160→158円台急落（カテゴリ: 日本金融政策・為替・FX・米雇用）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 日銀高田審議委員（最タカ派・7月会合で単独1.25%提案）が9月2日に「一定ペースにとらわれず機動的な新局面」「連続利上げもあり得る」と宣言。同日の米8月ADP民間雇用が38,000人と予想47,000〜48,000人を大幅下振れ（1月以来の低水準）。両材料が重なりドル円が160円台→158.20円前後に約2円急落。日経平均9/3終値-111円（64,214）。9月18日BOJ会合・9月4日NFPへの注目が高まる中、FX・円資産保有者への論点整理として高付加価値。前日（9/1）のJGB3%記事とは「利上げペース加速宣言」「通貨インパクト」の角度が明確に異なる。
+- 出典（確認済み・12系統）:
+  - Bloomberg「高田日銀委員、連続利上げの可能性にも言及」（2026-09-02）
+  - 日本経済新聞「日銀・高田審議委員『利上げ新局面、機動的に行う』」（2026-09-02）
+  - NHK「日銀 高田審議委員 "機動的に利上げを進めるべき"」（2026-09-02）
+  - Reuters「BOJ must conduct rate hikes nimbly, hawkish board member says」（2026-09-02）
+  - ADP公式プレスリリース「Private-Sector Employment Increased by 38,000 Jobs in August」（2026-09-02）
+  - CNBC「Private payrolls rose by 38,000 in August, fewer than expected」（2026-09-02）
+  - Fox Business「ADP report August 2026: Private sector adds 38,000 jobs」（2026-09-02）
+  - FXStreet「Japanese Yen strengthens on BoJ rate hike signals」（2026-09-03）
+  - FXStreet「BoJ mulls hiking interest rates to 1.25% in September meeting」（2026-09-03）
+  - ActionForex「BOJ's Takata Calls for Rate-Hike 'Regime Change,' Rejects Fixed Six-Month Pace」（2026-09-02）
+  - 外為どっとコム「ドル/円今日の見通し｜158円台へ急落 日米金融政策が焦点に」（2026-09-03）
+  - 財経新聞「日経平均は小幅続落、売り買い交錯でもみ合う展開」（2026-09-03）
+- コンプライアンス監査（Opus 2段階）:
+  - 第1Opus（初期判定）: 🟢白（公開可）。軽微コンプラ外指摘3点（曜日誤り9/4木→金、相対時制「翌9/1」→「9/1」、64,000円割れ出典明示）を親エージェントが修正→HTML無変更のまま最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3箇所✅ ②断定語なし✅ ③銘柄推奨なし✅ ④将来断言なし✅ ⑤出典12系統✅ 全5項目✅・最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所（冒頭banner/本文末p/フッター）✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典12系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告32件はすべて既存他ファイルの既知問題・本記事と無関係）✅
+- 公開ファイル: guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html
+- commit: ca1e130（main へ push 済み）
+
+---
+
 ## 2026-09-02
 - 判定: ✅ 公開済み
 - 選定トピック: SoftBank傘下のSB EnergyがIPO申請──評価額500億ドル超・OpenAI依存・AI電力インフラ投資の論点を3視点で整理（カテゴリ: AI・テクノロジー・エネルギー・IPO・SoftBank）
