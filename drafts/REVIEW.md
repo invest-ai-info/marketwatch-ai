@@ -1,3 +1,17 @@
+## 2026-09-04 autopublish: guide-anchoring-price.html（投資の心理・メンタル #50 / アンカリングバイアス）
+
+- **基準日**: 2026-09-04（JST）
+- **key**: `anchoring-price`
+- **ゲートステータス**: ✅公開完了（2026-09-04）
+  - 決定論ゲート(check_guide_draft.py): 🟢GREEN
+  - Opusコンプラ初期判定: 🟡グレー（表現軟化5箇所：「どこまで下がっても持ち続ける」軟化・「保有理由が錨だけ」断定軟化・「完全にランダム」→事実修正・figcaption整合・「推奨します」軟化）
+  - 決定論ゲート再実行（修正後）: 🟢GREEN
+  - 独立Opus確認: 🟢白
+- **公開URL**: https://marketwatch-jp.com/guide-anchoring-price.html
+- **HTTP確認**: プロキシ制限のため確認不可（push成功・GitHub Pages経由で正常公開のはず）
+
+---
+
 ## 2026-09-04 signal-lab #089: draft-signal-lab-089.html（RSI逆張り FWD N=287 CI全域プラス確認）
 
 - **基準日**: 2026-09-04（JST）
