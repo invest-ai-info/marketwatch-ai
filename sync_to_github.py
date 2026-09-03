@@ -204,4 +204,5 @@ SYNC_FILES = [
     "guide-proverb-this-time-is-different.html",
     "guide-tse-price-limits.html",
     "guide-scam-real-estate-yield-pitch.html",
+    "guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html",
 ]
