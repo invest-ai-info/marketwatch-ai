@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-04", "line": '・<b>2026-09-04</b>: 🧪 解説「<a href="guide-signal-lab-089.html" style="color:#0969da"><b>AIシグナル研究日誌 #89 RSI逆張り FWD N=287 CI全域プラス確認</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 📰 解説「<a href="guide-news-2026-09-03-yen-crosses-fall-bull-bear-factors.html" style="color:#0969da"><b>【9/3】クロス円が一斉安──下げた理由と「下げる材料・上げる材料」</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 📰 解説「<a href="guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html" style="color:#0969da"><b>日銀高田委員「利上げ新局面」＋米ADP下振れでドル円急落</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🛑 解説「<a href="guide-tse-price-limits.html" style="color:#0969da"><b>値幅制限（ストップ高・ストップ安）とは</b></a>」公開'},

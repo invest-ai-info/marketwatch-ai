@@ -5,7 +5,7 @@
 - **topic**: rsi_oversold_bounce FWD N=287——CI全域プラス確認・4H足65.9%・jpy_fx60.4%
 - **生成ファイル**: `drafts/draft-signal-lab-089.html`
 - **claims**: `drafts/labnotes/lab-089-claims.json`（12 claim）
-- **ゲートステータス**: 🔄実行中（signal_lab_verify待ち）
+- **ゲートステータス**: ✅公開完了（2026-09-04）verify緑→Opusコンプラ🟡軽微→verify緑→独立Opus🟢白→finalize→publish
 
 ---
 

@@ -1,193 +1,143 @@
-# Lab-088 Analysis Notes — rsi_oversold_bounce 時間足二極化 継続追跡
+# lab-088-analysis.md — RSI売られすぎ逆張り買い FWD N=287 CI全域プラス解析
 
-**Date**: 2026-09-03  
-**Routine**: signal-lab-daily  
-**REG_DATE**: 2026-06-16 (IS/FWD境界)  
-**Hypothesis priority**: ②大きく動いた仮説（FWD N=276, tracker CI[+0.04, +0.46]）  
-**Previous episodes**: #069, #074, #082
+## 基準日
+2026-09-04（JST）
 
----
+## 仮説
+`signal=rsi_oversold_bounce × direction=long`（RSI売られすぎ逆張り買い）の
+前向きトラッカー N=287 でCI全域プラスに到達。IS期間39.1%→FWD 53.0%の転換を解析。
 
-## Python Analysis Script
+## 事前宣言（CLAIM）
+- H1: FWD全体のE(R) RCI下限>0（昇格条件）
+- H2: FWD 4H足のE(R) > 1H足（時間足優位の継続）
+- H3: FWD jpy_fx のE(R) RCI下限>0
+- H4: FWD trend=上昇のE(R) RCI下限>0
+
+## 検証スクリプト（Python反実仮想集計）
 
 ```python
 import json, math
+from collections import Counter
 
-with open("signals-log.json") as f:
+with open('signals-log.json') as f:
     data = json.load(f)
-all_sigs = data if isinstance(data, list) else list(data.values())
+signals = data if isinstance(data, list) else data.get('signals', [])
 
-GROUPS = {
-    "metal":    {"GC=F","SI=F"},
-    "oil":      {"CL=F"},
-    "index":    {"NKD=F","ES=F","NQ=F","YM=F","^FTSE"},
-    "btc":      {"BTC-USD"},
-    "jpy_fx":   {"USDJPY=X","EURJPY=X","GBPJPY=X","AUDJPY=X"},
-    "other_fx": {"EURUSD=X","GBPUSD=X","AUDUSD=X","EURAUD=X","GBPAUD=X"},
+EXPANSION_TICKERS = {'INTC','BABA','TSM','005930.KS','ASML','ARM','SMCI','NKY','SOX','^SOX'}
+closed = [s for s in signals 
+          if s.get('outcome') in ('sl','tp1','tp2')
+          and s.get('ticker','') not in EXPANSION_TICKERS]
+
+GROUP_MAP = {
+    'GC=F': 'metal', 'SI=F': 'metal',
+    'NKD=F': 'index', 'ES=F': 'index', 'NQ=F': 'index', 'YM=F': 'index', '^FTSE': 'index',
+    'BTC-USD': 'btc', 'CL=F': 'oil',
+    'USDJPY=X': 'jpy_fx', 'EURJPY=X': 'jpy_fx', 'GBPJPY=X': 'jpy_fx', 'AUDJPY=X': 'jpy_fx',
+    'USDJPY': 'jpy_fx', 'EURJPY': 'jpy_fx', 'GBPJPY': 'jpy_fx', 'AUDJPY': 'jpy_fx',
+    'EURUSD=X': 'other_fx', 'GBPUSD=X': 'other_fx', 'AUDUSD=X': 'other_fx',
+    'EURAUD=X': 'other_fx', 'GBPAUD=X': 'other_fx',
 }
+REG_DATE = '2026-06-16'
 
-def get_group(ticker):
-    for g, ts in GROUPS.items():
-        if ticker in ts: return g
-    return None
-
-def get_trend(d):
-    ta = d.get("trend_alignment")
-    if isinstance(ta, dict) and ta.get("higher_tf_trend"):
-        return ta["higher_tf_trend"]
-    return None
-
-def get_fire_date(d):
-    fa = d.get("fired_at","")
-    return fa[:10] if fa else ""
-
-def closed_f(d): return d.get("outcome") in ("tp1","tp2","sl")
-def win_f(d): return d.get("outcome") in ("tp1","tp2")
-def get_r(d):
-    o = d.get("outcome")
-    if o == "tp2": return 2.0
-    if o == "tp1": return 1.333
-    if o == "sl":  return -1.0
-    return 0.0
-
-def wilson_ci(k, n, z=1.96):
-    if n == 0: return (0.0, 0.0)
-    p = k / n
-    denom = 1 + z*z/n
-    center = (p + z*z/(2*n)) / denom
-    margin = (z * math.sqrt(p*(1-p)/n + z*z/(4*n*n))) / denom
-    return (max(0, center - margin), min(1, center + margin))
-
-def r_ci(rs, z=1.96):
-    n = len(rs)
-    if n < 2: return (None, None)
-    mu = sum(rs) / n
-    var = sum((r - mu)**2 for r in rs) / (n - 1)
-    se = math.sqrt(var / n)
-    return (mu - z*se, mu + z*se)
-
-def analyze(sigs, label):
-    closed = [d for d in sigs if closed_f(d)]
-    wins = [d for d in closed if win_f(d)]
-    n, k = len(closed), len(wins)
-    wr = k/n if n > 0 else 0
-    lo, hi = wilson_ci(k, n)
-    rs = [get_r(d) for d in closed]
-    er = sum(rs)/len(rs) if rs else 0
-    rlo, rhi = r_ci(rs)
-    print(f"{label}: N={n}, k={k}, WR={wr*100:.1f}% CI=[{lo*100:.1f}%,{hi*100:.1f}%], E(R)={er:+.3f} RCI=[{rlo:+.3f},{rhi:+.3f}]" if rlo else f"{label}: N={n}, k={k}, WR={wr*100:.1f}% CI=[{lo*100:.1f}%,{hi*100:.1f}%], E(R)={er:+.3f}")
-    return n, k, wr, lo, hi, er, rlo, rhi
-
-REG_DATE = "2026-06-16"
-bounce = [d for d in all_sigs if d.get("primary_signal") == "rsi_oversold_bounce"]
-print(f"Total rsi_oversold_bounce signals: {len(bounce)}")
-
-is_sigs  = [d for d in bounce if get_fire_date(d) < REG_DATE]
-fwd_sigs = [d for d in bounce if get_fire_date(d) >= REG_DATE]
-
-print("=== IS ===")
-analyze(is_sigs, "IS全体")
-
-print("\n=== FWD ===")
-analyze(fwd_sigs, "FWD全体")
-
-for tf in ["4h", "1h"]:
-    sub = [d for d in fwd_sigs if d.get("timeframe") == tf]
-    analyze(sub, f"FWD {tf}")
-
-print()
-for g in ["jpy_fx", "metal", "index", "other_fx"]:
-    sub = [d for d in fwd_sigs if get_group(d.get("ticker","")) == g]
-    if sub: analyze(sub, f"FWD group={g}")
-
-print()
-for tr in ["上昇", "下降", "中立・もみあい"]:
-    sub = [d for d in fwd_sigs if get_trend(d) == tr]
-    analyze(sub, f"FWD trend={tr}")
-
-print("\n=== 4H breakdown ===")
-fwd_4h = [d for d in fwd_sigs if d.get("timeframe") == "4h"]
-for g in ["jpy_fx", "metal", "index", "other_fx"]:
-    sub = [d for d in fwd_4h if get_group(d.get("ticker","")) == g]
-    if sub: analyze(sub, f"4H group={g}")
-for tr in ["上昇", "下降", "中立・もみあい"]:
-    sub = [d for d in fwd_4h if get_trend(d) == tr]
-    if sub: analyze(sub, f"4H trend={tr}")
-
-print("\n=== FWD 期間別 ===")
-p1 = [d for d in fwd_sigs if "2026-06-17" <= get_fire_date(d) <= "2026-07-08"]
-p2 = [d for d in fwd_sigs if "2026-07-08" <  get_fire_date(d) <= "2026-08-14"]
-p3 = [d for d in fwd_sigs if "2026-08-14" <  get_fire_date(d) <= "2026-09-02"]
-analyze(p1, "FWD前期(06-17~07-08)")
-analyze(p2, "FWD中期(07-08~08-14)")
-analyze(p3, "FWD後期(08-14~09-02)")
-
-print("\n=== 全期間(IS+FWD) ===")
-analyze(bounce, "全期間全足")
-analyze([d for d in bounce if d.get("timeframe") == "4h"], "全期間 4H")
-analyze([d for d in bounce if d.get("timeframe") == "1h"], "全期間 1H")
+def group(s): return GROUP_MAP.get(s.get('ticker',''), 'other')
+def tf(s): return s.get('timeframe', '?')
+def is_long(s): return 'ロング' in s.get('direction','')
+def trend(s):
+    ht = (s.get('trend_alignment', {}) or {}).get('higher_tf_trend', '')
+    if '上昇' in str(ht): return '上昇'
+    if '下降' in str(ht): return '下降'
+    if '中立' in str(ht) or 'もみあい' in str(ht): return '中立・もみあい'
+    return 'unknown'
+def is_win(s): return s.get('outcome') in ('tp1','tp2')
+def r_value(s):
+    o = s.get('outcome')
+    if o == 'tp1': return 1.33
+    if o == 'tp2': return 2.0
+    return -1.0
+def is_forward(s): return s.get('fired_at', '') >= REG_DATE
+def is_rsi_os(s): return s.get('primary_signal') == 'rsi_oversold_bounce' and is_long(s)
 ```
 
----
+## 生出力
 
-## Raw Output
+Total closed (standard): 4100
 
-```
-Total rsi_oversold_bounce signals: 409
+=== rsi_oversold_bounce (long) ===
+  全期間: k=204 n=420 (48.6%) WCI[43.8%,53.3%] E(R)=+0.132 RCI[+0.020,+0.243]
+  IS (pre-2026-06-16): k=52 n=133 (39.1%) WCI[31.2%,47.6%] E(R)=-0.089 RCI[-0.283,+0.105]
+  FWD (post-2026-06-16): k=152 n=287 (53.0%) WCI[47.2%,58.7%] E(R)=+0.234 RCI[+0.099,+0.369]
 
-=== IS ===
-IS全体: N=133, k=52, WR=39.1% CI=[31.2%,47.6%], E(R)=-0.088
+--- FWD by timeframe ---
+  FWD tf=1h: k=86 n=190 (45.3%) WCI[38.3%,52.4%] E(R)=+0.055 RCI[-0.111,+0.220]
+  FWD tf=4h: k=56 n=85 (65.9%) WCI[55.3%,75.1%] E(R)=+0.535 RCI[+0.299,+0.771]
+  FWD tf=1d: k=10 n=12 (83.3%) WCI[55.2%,95.3%] E(R)=+0.942 RCI[+0.429,+1.455]
 
-=== FWD ===
-FWD全体: N=276, k=148, WR=53.6% CI=[47.7%,59.4%], E(R)=+0.251 RCI=[+0.114,+0.389]
-FWD 4h: N=81, k=53, WR=65.4% CI=[54.6%,74.9%], E(R)=+0.527 RCI=[+0.283,+0.770]
-FWD 1h: N=183, k=85, WR=46.4% CI=[39.4%,53.7%], E(R)=+0.084 RCI=[-0.085,+0.253]
-FWD group=jpy_fx: N=48, k=32, WR=66.7% CI=[52.5%,78.3%], E(R)=+0.555 RCI=[+0.241,+0.870]
-FWD group=metal: N=40, k=24, WR=60.0% CI=[44.7%,73.6%], E(R)=+0.356 RCI=[+0.047,+0.665]
-FWD group=index: N=63, k=36, WR=57.1% CI=[44.7%,68.7%], E(R)=+0.245 RCI=[+0.001,+0.489]
-FWD group=other_fx: N=52, k=26, WR=50.0% CI=[36.8%,63.2%], E(R)=+0.126 RCI=[-0.149,+0.401]
-FWD trend=上昇: N=70, k=46, WR=65.7% CI=[54.0%,75.8%], E(R)=+0.533 RCI=[+0.272,+0.794]
-FWD trend=下降: N=108, k=47, WR=43.5% CI=[34.5%,52.9%], E(R)=+0.015
-FWD trend=中立・もみあい: N=98, k=55, WR=56.1% CI=[46.3%,65.5%], E(R)=+0.309 RCI=[+0.079,+0.540]
+--- IS by timeframe ---
+  IS tf=1h: k=33 n=81 (40.7%) WCI[30.7%,51.6%] E(R)=-0.051 RCI[-0.302,+0.200]
+  IS tf=4h: k=19 n=49 (38.8%) WCI[26.4%,52.8%] E(R)=-0.097 RCI[-0.418,+0.225]
 
-=== 4H breakdown ===
-4H group=jpy_fx: N=17, k=16, WR=94.1% CI=[73.0%,99.0%], E(R)=+1.196 RCI=[+0.927,+1.465]
-4H group=index: N=20, k=13, WR=65.0% CI=[43.3%,81.9%], E(R)=+0.435 RCI=[+0.030,+0.840]
-4H trend=上昇: N=27, k=19, WR=70.4% CI=[51.3%,84.2%], E(R)=+0.642 RCI=[+0.232,+1.051]
-4H trend=中立・もみあい: N=22, k=17, WR=77.3% CI=[56.6%,89.9%], E(R)=+0.803 RCI=[+0.385,+1.221]
+--- FWD by group ---
+  FWD group=index: k=34 n=68 (50.0%) WCI[38.4%,61.6%] E(R)=+0.165 RCI[-0.114,+0.444]
+  FWD group=jpy_fx: k=32 n=53 (60.4%) WCI[46.9%,72.4%] E(R)=+0.407 RCI[+0.097,+0.717]
+  FWD group=other_fx: k=45 n=90 (50.0%) WCI[39.9%,60.1%] E(R)=+0.165 RCI[-0.077,+0.407]
+  FWD group=metal: k=23 n=41 (56.1%) WCI[41.0%,70.1%] E(R)=+0.307 RCI[-0.051,+0.665]
+  FWD group=btc: k=7 n=13 (53.8%) WCI[29.1%,76.8%] E(R)=+0.255 RCI[-0.403,+0.912]
+  FWD group=oil: k=11 n=22 (50.0%) WCI[30.7%,69.3%] E(R)=+0.165 RCI[-0.333,+0.663]
 
-=== FWD 期間別 ===
-FWD前期(06-17~07-08): N=92, k=45, WR=48.9% CI=[38.8%,59.2%], E(R)=+0.141 RCI=[-0.098,+0.381]
-FWD中期(07-08~08-14): N=92, k=57, WR=62.0% CI=[51.6%,71.4%], E(R)=+0.445 RCI=[+0.213,+0.678]
-FWD後期(08-14~09-02): N=92, k=46, WR=50.0% CI=[39.8%,60.2%], E(R)=+0.167 RCI=[-0.073,+0.406]
+--- FWD by trend ---
+  FWD trend=上昇: k=49 n=74 (66.2%) WCI[54.9%,76.0%] E(R)=+0.543 RCI[+0.290,+0.796]
+  FWD trend=中立・もみあい: k=55 n=101 (54.5%) WCI[44.8%,63.8%] E(R)=+0.269 RCI[+0.041,+0.496]
+  FWD trend=下降: k=48 n=112 (42.9%) WCI[34.1%,52.1%] E(R)=-0.001 RCI[-0.216,+0.213]
 
-=== 全期間(IS+FWD) ===
-全期間全足: N=409, k=200, WR=48.9% CI=[44.1%,53.7%], E(R)=+0.141 RCI=[+0.028,+0.254]
-全期間 4H: N=130, k=72, WR=55.4% CI=[46.8%,63.7%], E(R)=+0.292 RCI=[+0.092,+0.492]
-全期間 1H: N=264, k=118, WR=44.7% CI=[38.8%,50.7%], E(R)=+0.043 RCI=[-0.097,+0.183]
-```
+--- FWD 4H combinations ---
+  FWD 4h x jpy_fx: k=16 n=17 (94.1%) WCI[73.0%,99.0%] E(R)=+1.193 RCI[+0.924,+1.462]
+  FWD 4h x other_fx: k=19 n=35 (54.3%) WCI[38.2%,69.5%] E(R)=+0.265 RCI[-0.125,+0.655]
+  FWD 4h x index: k=9 n=14 (64.3%) WCI[38.8%,83.7%] E(R)=+0.498 RCI[-0.109,+1.105]
+  FWD 4h x metal: k=8 n=11 (72.7%) WCI[43.4%,90.3%] E(R)=+0.695 RCI[+0.051,+1.338]
 
----
+--- FWD 1H combinations ---
+  FWD 1h x jpy_fx: k=13 n=33 (39.4%) WCI[24.7%,56.3%] E(R)=-0.082 RCI[-0.477,+0.312]
+  FWD 1h x other_fx: k=24 n=53 (45.3%) WCI[32.7%,58.5%] E(R)=+0.055 RCI[-0.260,+0.370]
+  FWD 1h x index: k=25 n=54 (46.3%) WCI[33.7%,59.4%] E(R)=+0.079 RCI[-0.234,+0.391]
 
-## Key Findings
+--- FWD time periods ---
+  P1(06-16~07-17): k=54 n=111 (48.6%) WCI[39.6%,57.8%] E(R)=+0.134 RCI[-0.084,+0.351]
+  P2(07-17~08-18): k=53 n=80 (66.2%) WCI[55.4%,75.7%] E(R)=+0.544 RCI[+0.301,+0.787]
+  P3(08-18~09-04): k=45 n=96 (46.9%) WCI[37.2%,56.8%] E(R)=+0.092 RCI[-0.142,+0.326]
 
-1. **IS → FWD 逆転**: IS 39.1% (k=52/N=133, E(R)=-0.088) → FWD 53.6% (k=148/N=276, E(R)=+0.251)。信号が登録後に改善している。
-2. **時間足二極化**: FWD 4H=65.4% vs FWD 1H=46.4%。19ポイント差がCI非重複（4H CI下限54.6% > 1H CI上限53.7%）。
-3. **グループ最強**: FWD jpy_fx=66.7%、特に4H jpy_fx=94.1%（N=17, CI=[73%,99%]）はN小に注意が必要だが極端に高い。
-4. **トレンドフィルタ**: FWD 上昇トレンド=65.7% vs 下降トレンド=43.5%。逆張り買いなのに上昇トレンドで強い（モメンタムの一時調整を捉えている）。
-5. **期間別変動**: 中期(07-08~08-14)が62.0%と突出し、前期・後期は約50%。熱いフェーズと冷えたフェーズが混在。
-6. **時間足差は全期間でも持続**: 全期間4H=55.4% CI=[46.8%,63.7%] vs 全期間1H=44.7% CI=[38.8%,50.7%]。
+--- IS by group ---
+  IS group=index: k=20 n=35 (57.1%) WCI[40.9%,72.0%] E(R)=+0.331 RCI[-0.056,+0.719]
+  IS group=jpy_fx: k=2 n=20 (10.0%) WCI[2.8%,30.1%] E(R)=-0.767 RCI[-1.081,-0.453]
+  IS group=other_fx: k=14 n=23 (60.9%) WCI[40.8%,77.8%] E(R)=+0.418 RCI[-0.057,+0.893]
+  IS group=metal: k=4 n=31 (12.9%) WCI[5.1%,28.9%] E(R)=-0.699 RCI[-0.979,-0.420]
 
-## Claims Verification Cross-check
+=== bb_lower_touch (long, FWD) comparison ===
+  FWD: k=276 n=634 (43.5%) WCI[39.7%,47.4%] E(R)=+0.014 RCI[-0.076,+0.104]
+  IS: k=75 n=175 (42.9%) WCI[35.8%,50.3%] E(R)=-0.001 RCI[-0.173,+0.170]
 
-| Label | k | n | WR |
-|---|---|---|---|
-| IS全体 | 52 | 133 | 39.1% |
-| FWD全体 | 148 | 276 | 53.6% |
-| FWD 4H | 53 | 81 | 65.4% |
-| FWD 1H | 85 | 183 | 46.4% |
-| FWD jpy_fx | 32 | 48 | 66.7% |
-| FWD trend=上昇 | 46 | 70 | 65.7% |
-| FWD trend=下降 | 47 | 108 | 43.5% |
-| 全期間 4H | 72 | 130 | 55.4% |
-| 全期間 1H | 118 | 264 | 44.7% |
+--- RSI FWD trend=上昇 details ---
+  上昇 x jpy_fx: k=14 n=19 (73.7%) WCI[51.2%,88.2%] E(R)=+0.717 RCI[+0.243,+1.191]
+  上昇 x other_fx: k=12 n=20 (60.0%) WCI[38.7%,78.1%] E(R)=+0.398 RCI[-0.115,+0.911]
+  上昇 x index: k=12 n=19 (63.2%) WCI[41.0%,80.9%] E(R)=+0.472 RCI[-0.048,+0.991]
+  上昇 x 1h: k=18 n=35 (51.4%) WCI[35.6%,67.0%] E(R)=+0.198 RCI[-0.193,+0.590]
+  上昇 x 4h: k=22 n=30 (73.3%) WCI[55.6%,85.8%] E(R)=+0.709 RCI[+0.334,+1.084]
+
+## 判定
+- H1: FWD全体 E(R)=+0.234 RCI[+0.099,+0.369] → ✅ CI全域プラス
+- H2: 4H E(R)=+0.535 >> 1H E(R)=+0.055 → ✅ 4H優位（差20.6pp・差0.480R）
+- H3: jpy_fx FWD E(R)=+0.407 RCI[+0.097,+0.717] → ✅ CI全域プラス
+- H4: 上昇 FWD E(R)=+0.543 RCI[+0.290,+0.796] → ✅ CI全域プラス
+
+通過A（4条件全クリア）
+
+## 交絡点検
+1. jpy_fx IS期間10.0% vs FWD 60.4%: IS期間の不振がIS全体39.1%を押し下げていた主因の一つ（金属同様）
+2. 4H足優位はjpy_fx偏在（FWD 4H×jpy_fx=94.1%、N=17）で一部説明できるが、4H全体N=85でも65.9%と高水準
+3. P2(07-17~08-18)の66%高勝率が全体を押し上げ、P3は47%に軟化（下降×P3が多い可能性）
+4. 1D足(N=12)は83.3%だが小サンプル→参考値のみ
+
+## 昇格ストライク状況
+- #082時点: promote_strikes=1（RCI_lo=+0.005→翌日-0.007でリセット）
+- 本日: FWD N=287 E(R)=+0.234 RCI[+0.099,+0.369]→CI全域プラス再到達
+- 昇格には「2回連続」が必要→次のチェックポイントでCI>0が続けば✅昇格
+
