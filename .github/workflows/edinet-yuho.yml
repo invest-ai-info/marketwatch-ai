@@ -1,0 +1,60 @@
+name: EDINET Yuho
+
+# 「数字で見る、話題の企業」レーン用。jp-rankings.json に直近14日で2回以上載った日本株の
+# 有価証券報告書（事業等のリスク／沿革／事業の内容／経営方針／MD&A／主要指標）を EDINET API v2 で取り、
+# edinet-yuho.json だけを commit する軽量レーン。routine company-weekly-auto はこのファイルを読む
+# （クラウド routine は Secrets を読めないので、fundamental-context.json と同じ「Actions が取って置く」型）。
+# ※update-market-news.yml の on:push paths に edinet-yuho.json は含まれない＝連鎖起動しない。
+#
+# ⚠️ EDINET 利用規約（PDL1.0準拠）は「短時間における大量のアクセス」を禁止している。
+#    書類一覧APIは1回の実行で最大90日ぶん（間に1.2秒待機）、書類取得は最大8本（1.5秒待機）。
+#    有報の索引は 420日ぶんを数日かけて遡って積む（初回だけ workflow_dispatch の backfill_days で厚くできる）。
+# ⚠️ Secrets: EDINET_API_KEY（edinet-holdings.yml と同じキー）。未設定はスクリプトが exit 2 で止まる。
+
+on:
+  schedule:
+    - cron: '40 10 * * 1-5'   # 平日 19:40 JST（jp-rankings 16:40〜19:10 と edinet-holdings 19:10 の後）
+  workflow_dispatch:
+    inputs:
+      backfill_days:
+        description: '今回の実行で遡る日数（既定60。初回の索引作りに 90 まで）'
+        required: false
+        default: ''
+
+concurrency:
+  group: edinet-yuho
+  cancel-in-progress: true
+
+jobs:
+  yuho:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build EDINET yuho JSON
+        env:
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+          BACKFILL_PER_RUN: ${{ github.event.inputs.backfill_days }}
+        run: python build_edinet_yuho.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add edinet-yuho.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: edinet yuho $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

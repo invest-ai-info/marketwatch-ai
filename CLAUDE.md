@@ -57,6 +57,7 @@
 | **monthly-calendar-reminder.yml** | 25日 09:13 | 市場休場の自動補充＋**経済指標の生成**（`sync_economic_events.py`）＋**決算予定の更新**（`build_earnings_calendar.py`）＋来月指標のメール |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新の鮮度チェック（2026-08-30〜 **経過時間**で判定＝`STALE_HOURS=26`。旧「JSTの今日と一致するか」は実行が深夜0時JSTをまたぐと必ず誤検知した） |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
+| **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
 | **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
@@ -194,6 +195,7 @@ content-writer と seo-ux-strategist を**同一メッセージ内で並列**に
 
 - **⚡最新ニュース・ライブフィード（2026-07-09／08-06 ソース拡張）**: `news-ticker.json`（Actions `news-ticker.yml`、毎時37分＝`build_news_ticker.py` が固定媒体+公的機関+トピック横断検索（**単一の真実は `FEEDS`**）から最新24件を時刻降順で生成・`feed_health` 付き＝automation-health §⑦ がソース停止を検知。index.html がJSで閲覧時fetch）。**Actions が GitHub側で生成＝ローカルから push 禁止**（SYNC_FORBIDDEN 登録済）
 
+- **話題の企業の有報本文（2026-09-02）**: `edinet-yuho.json`（Actions `edinet-yuho.yml`、平日 19:40 JST＝`build_edinet_yuho.py` が `EDINET_API_KEY` で jp-rankings 由来の候補企業の有報「事業等のリスク」等と主要指標を取得。routine `company-weekly-auto` はこれを読むだけ＝クラウド routine は Secrets を読めないので API を直接叩かない）。**Actions が GitHub側で生成＝ローカルから push 禁止**（SYNC_FORBIDDEN 登録済）
 - **日本株ランキング（2026-06-20）**: `jp-rankings.json`（Actions `jp-rankings.yml`、夕 16:40/17:10 JST＝クローズ後・朝実行はcron遅延で廃止。`build_jp_rankings.py` が Yahoo価格で値上がり/値下がりトップ20生成→`generate_market_news.py` の `build_jp_rankings_section` が hot-assets 最上段に描画）。**Actions が GitHub側で生成＝ローカルから push 禁止**。※`jp-stock-info.json`（赤字黒字/名前/業種の静的）と `build_jp_rankings.py` は SYNC入り＝ローカルで `make_jp_stock_info.py` で四半期更新して push
 
 **理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。

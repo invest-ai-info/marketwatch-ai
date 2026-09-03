@@ -205,4 +205,8 @@ SYNC_FILES = [
     "guide-tse-price-limits.html",
     "guide-scam-real-estate-yield-pitch.html",
     "guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html",
+    "guide-scam-investment-seminar.html",
+    "guide-scam-crypto-scam.html",
+    "guide-scam-recovery-scam.html",
+    "guide-news-2026-09-03-yen-crosses-fall-bull-bear-factors.html",
 ]

@@ -235,10 +235,14 @@ def _render_weekend_section_html(ai_text, news_items):
 
 
 def get_next_monday(today_jst):
-    """次の月曜日の日付を返す"""
-    days_until_monday = (0 - today_jst.weekday()) % 7
-    if days_until_monday == 0:
-        days_until_monday = 7  # 今日が月曜なら次週の月曜
+    """記事が対象にする週の月曜日を返す。
+
+    ⚠️ 2026-08-31 の事故: 日曜 20:13 JST の cron が GitHub 側で4時間遅れ、月曜 00:26 JST に走った。
+    旧実装は「今日が月曜なら次週の月曜」だったため、8/31 のデータで 9/7〜9/11 の記事
+    （guide-weekly-2026-09-07.html・更新履歴の日付 2026-09-06＝未来）を生成してしまった。
+    このスクリプトの用途は常に「これから始まる週」なので、**月曜に走ったらその月曜＝今週**が正しい。
+    """
+    days_until_monday = (0 - today_jst.weekday()) % 7   # 月曜なら 0（＝今日）、日曜なら 1
     return today_jst + timedelta(days=days_until_monday)
 
 

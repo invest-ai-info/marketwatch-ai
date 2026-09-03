@@ -4850,6 +4850,9 @@ def _find_latest_weekly_article():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     latest_date = None
     latest_file = None
+    # ⚠️ 未来の週は候補にしない（2026-08-31: cron 遅延で月曜 0 時台に生成された 9/7 記事が
+    #    更新履歴に「2026-09-06 公開」と未来日付で載った）。日曜生成の正規ファイルは週開始＝明日なので +1 日まで許容。
+    horizon = datetime.now(JST).date() + timedelta(days=1)
     for name in os.listdir(script_dir):
         if not (name.startswith("guide-weekly-") and name.endswith(".html")):
             continue
@@ -4859,6 +4862,8 @@ def _find_latest_weekly_article():
         try:
             d = datetime.strptime(ds, "%Y-%m-%d").date()
         except ValueError:
+            continue
+        if d > horizon:
             continue
         if latest_date is None or d > latest_date:
             latest_date, latest_file = d, name
@@ -5303,12 +5308,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 📰 解説「<a href="guide-news-2026-09-03-yen-crosses-fall-bull-bear-factors.html" style="color:#0969da"><b>【9/3】クロス円が一斉安──下げた理由と「下げる材料・上げる材料」</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 📰 解説「<a href="guide-news-2026-09-03-boj-takata-nimble-hike-adp-miss-usdjpy-drop.html" style="color:#0969da"><b>日銀高田委員「利上げ新局面」＋米ADP下振れでドル円急落</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🛑 解説「<a href="guide-tse-price-limits.html" style="color:#0969da"><b>値幅制限（ストップ高・ストップ安）とは</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🏢 解説「<a href="guide-scam-real-estate-yield-pitch.html" style="color:#0969da"><b>「利回り保証」不動産・事業勧誘の手口</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🔁 解説「<a href="guide-proverb-this-time-is-different.html" style="color:#0969da"><b>「今回は違う」は、いちばん高くつく言葉</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 💰 解説「<a href="guide-bid-ask-spread.html" style="color:#0969da"><b>手数料0円でも引かれているもの</b></a>」公開'},
         {"date": "2026-09-03", "line": '・<b>2026-09-03</b>: 🧪 解説「<a href="guide-signal-lab-088.html" style="color:#0969da"><b>AIシグナル研究日誌 #88｜RSI売られすぎ逆張り買い FWD N=276 — 4H足65%が1H足46%を引き離す時間足二極化</b></a>」公開'},
+        {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🛡️ 解説「<a href="guide-scam-recovery-scam.html" style="color:#0969da"><b>被害回復詐欺（二次被害）「取り戻します」詐欺の見分け方</b></a>」公開'},
+        {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🪙 解説「<a href="guide-scam-crypto-scam.html" style="color:#0969da"><b>暗号資産詐欺「偽取引所・ICO・ウォレット詐欺」の4類型</b></a>」公開'},
+        {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 🎓 解説「<a href="guide-scam-investment-seminar.html" style="color:#0969da"><b>投資塾・高額情報商材「無料→有料の階段」</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 📰 解説「<a href="guide-news-2026-09-02-sb-energy-ipo-softbank-ai-infrastructure.html" style="color:#0969da"><b>【9/2】SB Energy IPO申請──AI電力インフラの論点整理</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 📄 解説「<a href="guide-tse-timely-disclosure.html" style="color:#0969da"><b>適時開示（TDnet）とは？ 個人投資家が一次情報を自分で読む方法</b></a>」公開'},
         {"date": "2026-09-02", "line": '・<b>2026-09-02</b>: 💬 解説「<a href="guide-scam-line-group-guru.html" style="color:#0969da"><b>「元機関投資家」を名乗るSNS投資グループの手口</b></a>」公開'},

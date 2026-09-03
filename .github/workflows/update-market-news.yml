@@ -4,6 +4,9 @@ on:
   # 記事公開で generate_market_news.py が更新されたら即 index 再生成（更新履歴の即反映・遅延ゼロ）。
   # ※このワークフローは generate_market_news.py を commit しないので自己再起動ループは起きない。
   push:
+    # ⚠️ main 限定（2026-09-02）: 作業ブランチへの push でも起動し、shallow checkout の `git pull --rebase origin main`
+    #    が全ファイル add/add 競合→exit 128 で赤くなっていた（PR #7 で実測）。このジョブは main にしか commit できない。
+    branches: [main]
     paths:
       - 'generate_market_news.py'
       - 'jp-rankings.json'        # 日本株ランキング更新時に hot-assets を即再描画（夕方更新を遅延ゼロで反映）

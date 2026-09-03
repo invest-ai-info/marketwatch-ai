@@ -1,4 +1,55 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-08-31 20:30）
+# 🔖 セッション引き継ぎ（最終更新: 2026-09-02 夜）
+
+## 🆕 2026-09-02 夜: 更新履歴に「2026-09-06 公開」の未来日付＝週次戦略の cron 遅延事故（修正済み）
+
+- **症状**: index.html の更新履歴に `今週の投資戦略（9/7〜9/11）` が **2026-09-06 公開**として載った（オーナー報告）。
+- **原因**: 8/30(日) 20:13 JST の `weekly-strategy.yml` が GitHub 側で約4時間遅れ、**8/31(月) 00:19/00:26 JST** に実行。
+  `auto_weekly_strategy.get_next_monday` が「今日が月曜なら次週の月曜」だったため、8/31 のデータで 9/7 週の記事
+  `guide-weekly-2026-09-07.html` を生成（同じ夜に正規の 8/31 記事も既にあった）。`build_weekly_history_item` は
+  最新ファイルの週開始−1日を公開日にするので 9/6 になった。
+- **修正（PR #7 に同梱）**: ①`guide-weekly-2026-09-07.html` を削除（sitemap/guides には未掲載・index のみ参照）
+  ②`get_next_monday`＝月曜に走ったらその月曜（今週）を返す ③`generate_market_news._find_latest_weekly_article`＝
+  週開始が「今日+1日」より先のファイルは候補にしない（防御）。マージ後は `generate_market_news.py` の push で
+  update-market-news が自動起動し、index の履歴とバナーが 8/31 記事に戻る。
+- ⚠️ 9/6(日) の次回実行で 9/7 記事が**正しく**生成されるので、削除したファイル名が復活するのは正常。
+
+## 🆕 2026-09-02: scam のエスカレ3件をすべて解消（3本公開）＋ proverb 停止を予約
+
+| slug | 結果 | 台帳の「最短ルート」との差 |
+|---|---|---|
+| investment-seminar | ✅ 公開 | **「条文確認のみで即公開可」は誤り**。無登録営業の罰則は令和8年法律第64号（2026-07-23 公布・**2026-08-12 施行**）で **第197条第1項第4号の3（10年以下の拘禁刑/1,000万円）・第207条第1項第1号（法人7億円）**に上がっていた。下書きは改正前条文。e-Gov 法令API の CurrentEnforced 版で確認して差し替え |
+| crypto-scam | ✅ 公開 | 下書きの「2,148件・246.3億円」も、**台帳が示した修正値「6.7%・19.5%」も令和7年の数字**。警察庁 PDF 原本（2026-07-30 付）から 2026年上半期の実数へ全面差し替え。同じ「暗号資産送信型」でも全体/SNS型投資/ロマンスで数字が違う |
+| recovery-scam | ✅ 公開（再執筆） | content-writer 再執筆 → Opus 監査①🔴黒2 → 修正 → 別 Opus 監査②🟢白 → 公開。監査①の「SNS型投資詐欺は特殊詐欺の外数」は旧定義の誤り（2026年から内数・原本に 26.7% 明記） |
+
+- 3本とも `publish_article.py` で②〜⑤登録済み・台帳に ✅エントリ追記済み。番人の scam 残量は 3→6 になる
+- 🔑 **学び＝法令の条番号と統計の区分は「要約」でなく原本で**。台帳の修正指示すら古かった。SOP に「e-Gov CurrentEnforced 版」「PDF 原本の該当段落」を確認日つきで書く運用を足すべき
+- ⏰ **proverb-daily-auto の停止**＝9/5 12:00 JST に自己チェック（send_later `trig_01ErvcKab1avcNkfDApKwjDc`）→ #50 総集編の公開を確認して `update_trigger enabled=false`
+- ⚠️ 本セッションの成果物はすべて **ブランチ `claude/issue-check-do2bbk`**（main 未マージ）。マージ後に update-market-news が index/sitemap を再生成する。ローカル `sync_to_github.py` の SYNC_FILES に `build_edinet_yuho.py`／`.github/workflows/edinet-yuho.yml`／`guide-scam-{investment-seminar,crypto-scam,recovery-scam}.html` を追加すること
+
+## 🆕 2026-09-02: 有報を Actions が取って置く（`edinet-yuho.yml`）＝日本株の週次エスカレを止める
+
+**きっかけ**＝9/1 の初回で「EDINET API v2 が 401＝Subscription-Key 未取得」としてオーナー判断に上げていたが、
+Secrets を実際に見ると **`EDINET_API_KEY` は登録済み**で、`edinet-holdings.yml` は 8/10 から20回連続で v2 を叩けていた。
+**routine が読めないのは Secrets を持たないから**であって、キーの有無ではない。
+
+**打ち手（fundamental-context.json と同じ型）**
+- `build_edinet_yuho.py` ＋ `.github/workflows/edinet-yuho.yml`（平日 19:40 JST）→ **`edinet-yuho.json`**（SYNC禁忌・GitHub側生成）
+  - 候補＝`jp-rankings.json` に直近14日で2回以上（§2-1 と同じ定義。登場履歴は JSON 自身が積む＝**routine の git log 遡りが不要**）
+  - 有報（docTypeCode 120）の索引を**日付単位で毎日60日ぶんずつ遡って**積む（規約の「大量アクセス」回避。420日で完成＝約1週間）
+  - 候補ごとに type=5（XBRL→CSV）から **事業等のリスク／沿革／事業の内容／経営方針／MD&A** の本文と
+    **主要な経営指標等の推移**の数値を入れる。**本文は無加工**（HTMLタグ除去のみ）・60,000字で切って `truncated` を立てる
+  - 登録＝`check_site_consistency` SYNC_FORBIDDEN／`check_automation_health` WORKFLOW_CHECKS（80h・warn。
+    ⚠️ **`edinet-holdings.yml` も監視表に無かった**ので同時に登録）
+- `drafts/COMPANY_GUIDE.md` §2-1／§2-2 を「JSON を読むだけ」に書き換え（旧・要オーナー判断の3択は撤回）
+- ⚠️ **ローカルの `sync_to_github.py` の SYNC_FILES に `build_edinet_yuho.py` と `.github/workflows/edinet-yuho.yml` を足すこと**
+  （クラウド側の sync_to_github.py はスタブなのでここでは足せない）
+
+**実キー検証（同日・ブランチ上で2回実行・いずれも success）**＝2回目で索引 2,551社（120日ぶん）、候補5社のうち3社
+（スクウェア・エニックスHD／北海道電力／九州電力＝いずれも第102期・第46期の有報 2026-06-23〜24 提出）の**本文5種と主要指標22〜23項目を取得できた**。
+`missing` の2社（パーク24＝10月期・PPIH＝6月期）は索引が届けば取れる。JSON は約1MB（索引が主）。検証用の push トリガーは外した。
+
+**次に見るもの**＝`edinet-yuho.json` の `index_complete` が true になる日（初回は workflow_dispatch で backfill 90日）、
+9/5(土) 14:23 の company-weekly-auto が日本株を `companies` から書けるか。
 
 ## 🆕 2026-08-31: 自動公開レーンが2本、黙って止まっていた（キュー枯渇・番人の口が1つしか無かった）
 
@@ -95,22 +146,11 @@
 - 🚩 **日本株（アドバンテスト6857）は正しくエスカレ**——決算短信は取れたが**有価証券報告書に到達できず**、
   §2-2「両方に届かなければ書かない」に従って見送り、米国株に切り替えた
 
-#### 🚨 日本株が構造的に書けない（要オーナー判断）
+#### ✅ 日本株が構造的に書けない → 2026-09-02 に解決（下の 9/2 節）
 
-| | クラウド実測 |
-|---|---|
-| TDnet 日別一覧 → 決算短信PDF | ✅ 200（⚠️ **保管は約5〜6週間だけ**。それ以前は404） |
-| EDINET トップ | ✅ 200 |
-| EDINET 書類検索API v1 | ❌ **403（先方のWAF）**＝許可リストでは直らない |
-| EDINET 書類検索API v2 | ❌ **401＝Subscription-Key が必要** |
-| 各社IRサイト | ❌ 経路遮断 |
-
-🔑 **§1④の芯は有報の「事業等のリスク」**で、決算短信にはこの節が無い。だから**このままだと日本株は毎週エスカレする。**
-
-⏭ **オーナー判断（どれか1つ）:**
-1. **EDINET API v2 の Subscription-Key を取得**（金融庁サイトで無料登録）→ GitHub Secrets へ。**本筋**
-2. `disclosure2.edinet-fsa.go.jp` の**Web画面から有報PDFに辿れるか**を次回実行で検証させる（未検証）
-3. 各社IRを許可リストに足す → ⚠️ **毎週別の会社なのでいたちごっこ。薦めない**
+- 前提が間違っていた＝**`EDINET_API_KEY` は Secrets に登録済み**で `edinet-holdings.yml` が毎平日 API v2 を叩けている。
+  routine が 401 になるのは**クラウド routine が Secrets を読めない**から。キー取得ではなく「Actions が取って置く」型で解決。
+- 旧表（TDnet ✅／EDINET v1 403／v2 401／各社IR 遮断）の実測は正しい。**routine から直接叩く前提だけを捨てた。**
 
 #### 記事に見つかった弱点2つ（手順書とプロンプトに反映済み）
 
