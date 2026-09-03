@@ -1,3 +1,31 @@
+## 2026-09-04 autodraft: draft-confirmation-bias.html（投資心理 #55 / 確証バイアス）
+
+- **基準日**: 2026-09-04（JST）
+- **topic / key**: 投資心理 #55 / `confirmation-bias`
+- **生成ファイル**: `drafts/draft-confirmation-bias.html`
+- **仮タイトル**: 調べれば調べるほど、自信だけが増えていく——確証バイアスの正体と外し方
+- **参照出典**:
+  - https://corporatefinanceinstitute.com/resources/career-map/sell-side/capital-markets/confirmation-bias/（定義・投資への影響）
+  - https://www.schwabassetmanagement.com/content/confirmation-bias（Schwab：対策方法）
+  - https://arxiv.org/pdf/2508.11516（アルゴリズムとエコーチェンバーの研究・2025年）
+  - https://www.preprints.org/manuscript/202510.1686（過信と確証バイアスの相互作用・2025年）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・教育目的）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「100%」使用なし）
+  - ✅ kinsho-v1免責あり（冒頭バナー・本文末・footer 3点）
+  - ✅ 特定の情報源・アカウントを名指しで批判せず
+  - ✅ sns-information-literacy（#32）と棲み分けを冒頭で明示
+  - ✅ noindex,nofollow metaタグあり（下書き検索除外）
+  - ✅ cognitive-biases（公開済み）・sns-information-literacy・loss-cut へ内部リンク
+- **SVG図**: 3点（確証バイアスのループ図・フィルターバブル・事前メモの仕組み）。実機ライト/ダーク確認要
+- **人間が行う残作業**:
+  - SVGの実機ライト/ダーク表示確認（特に矢印マーカーの色切り替え）
+  - タイトル・メタ description の微調整（公開前）
+  - compliance-reviewer（Opus）監査
+  - 公開は毎朝 08:40 の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-09-03 autopublish: guide-bid-ask-spread.html（投資の基礎知識 #49 / スプレッドの仕組み）
 
 - **基準日**: 2026-09-03（JST）
