@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「為替ヘッジあり」は何を買って何を手放しているのか｜ヘッジコストと金利差の仕組みを図解 - MarketWatch AI</title>
+  <meta name="description" content="為替ヘッジありファンドが「何を買って何を手放しているのか」を図解で解説。為替変動リスクを打ち消す代わりに支払うヘッジコストの仕組み（金利差・フォワードレート）から、ヘッジあり・なしで成績がどうずれるかまで、投資家向けにわかりやすく説明します。">
+  <meta name="keywords" content="為替ヘッジ,ヘッジコスト,金利差,ヘッジあり,ヘッジなし,投資信託,フォワードレート,為替リスク,円高,外国資産,通貨ヘッジ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-currency-hedge-cost.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「為替ヘッジあり」は何を買って何を手放しているのか｜ヘッジコストと金利差の仕組みを図解">
+  <meta property="og:description" content="為替リスクを打ち消す代わりに支払うヘッジコストの仕組み。金利差・フォワードレートから成績への影響まで図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-currency-hedge-cost.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「為替ヘッジあり」は何を買って何を手放しているのか｜ヘッジコストと金利差の仕組みを図解",
+    "description": "為替リスクを打ち消す代わりに支払うヘッジコストの仕組み（金利差・フォワードレート）から、ヘッジあり・なしで成績がどうずれるかまで。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-05",
+    "dateModified": "2026-09-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-currency-hedge-cost.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-a{fill:#0969da;opacity:.75}
+    .s-bar-b{fill:#cf222e;opacity:.75}
+    .s-bar-g{fill:#1a7f37;opacity:.8}
+    .s-box-bg{fill:#f6f8fa;stroke:#d0d7de;stroke-width:1}
+    .s-box-bg-b{fill:#ddf4ff;stroke:#54aeff;stroke-width:1}
+    .s-box-bg-r{fill:#ffebe9;stroke:#cf222e;stroke-width:1}
+    .s-arrow{stroke:#57606a;stroke-width:2;fill:none;marker-end:url(#arrowhead)}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-a{fill:#58a6ff;opacity:.8}
+    body.dark .s-bar-b{fill:#f85149;opacity:.8}
+    body.dark .s-bar-g{fill:#3fb950;opacity:.8}
+    body.dark .s-box-bg{fill:#161b22;stroke:#30363d}
+    body.dark .s-box-bg-b{fill:#1a2030;stroke:#1f6feb}
+    body.dark .s-box-bg-r{fill:#2a1010;stroke:#cf222e}
+    body.dark .s-arrow{stroke:#8b949e}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+  <style id="mw-mobile-fit">
+  /* 📱 スマホ最適化 v3 */
+  html,body{overflow-x:hidden}
+  .article,main,section,header,footer{max-width:100%}
+  *{overflow-wrap:break-word;word-break:normal}
+  img,svg,iframe,video{max-width:100%!important;height:auto}
+  pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+  td strong,td b,th strong{white-space:nowrap}
+  .mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+  @media(min-width:601px){.mw-scroll-hint{display:none}}
+  @media(max-width:600px){
+    body{font-size:.9rem;line-height:1.7}
+    .article{padding:14px 11px}
+    h1{font-size:1.26rem;line-height:1.4}
+    h2{font-size:1.08rem}
+    table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+    th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+    .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+  }
+  @media(max-width:380px){
+    body{font-size:.86rem}
+    .article{padding:12px 8px}
+    table{font-size:.76rem}
+  }
+  </style>
+  <script id="mw-mobile-fit-js">
+  (function(){try{
+  function mark(){
+  if(window.innerWidth>600)return;
+  var ts=document.getElementsByTagName('table');
+  for(var i=0;i<ts.length;i++){(function(t){
+  if(t.getAttribute('data-mw-sc'))return;
+  if(t.scrollWidth-t.clientWidth>4){
+  t.setAttribute('data-mw-sc','1');
+  var h=document.createElement('div');
+  h.className='mw-scroll-hint';
+  h.textContent='→ 横にスクロールできます';
+  if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+  t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+  }
+  })(ts[i]);}
+  }
+  if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+  window.addEventListener('resize',mark);
+  }catch(e){}})();
+  </script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 「為替ヘッジあり」は何を買って何を手放しているのか
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は為替ヘッジの仕組みと考え方を整理した「情報提供」であり、特定商品の売買推奨や投資助言ではありません。ヘッジコストは時期によって大きく変動するため、具体的な数値は必ずご自身で一次情報をご確認ください。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ 「為替ヘッジあり」は何を買って何を手放しているのか</h1>
+    <div class="meta-line">公開日：2026 年 9 月 5 日 ／ 読了時間：約 12 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <p>外国資産（海外株・海外債券など）に投資する投資信託を選ぶとき、「<strong>為替ヘッジあり</strong>」と「<strong>為替ヘッジなし</strong>」の2種類が並んでいることがあります。多くの人は「ヘッジありは安全そう」「ヘッジなしは怖そう」という印象を持ちがちですが、どちらが「良い」かは状況によって変わり、そもそも<strong>何を買って何を手放しているのか</strong>を理解せずに選ぶのは危険です。</p>
+    <p>この記事では、<strong>為替ヘッジが何をする仕組みか</strong>（前半・初心者向け）と、<strong>ヘッジコストがなぜ金利差から生まれるのか、成績にどう影響するか</strong>（後半・中上級向け）を図解でわかりやすく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>為替ヘッジとは「<strong>為替の上下を打ち消す代わりに、一定のコストを払う</strong>」という取引。リスクはゼロにならず、ヘッジコストというリスクに置き換わる。</li>
+      <li>ヘッジコストの大きさは主に<strong>2通貨間の短期金利差</strong>で決まる。金利差が大きいほどコストが重くなり、成績を押し下げる。</li>
+      <li>どちらが有利かは為替の動き方と金利差の水準によって変わる。「<strong>為替リスクを取りたくない理由がある</strong>か」で選ぶのが基本的な考え方。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">外国資産はなぜ「2つの値動き」がある</a></li>
+        <li><a href="#section-2">為替ヘッジとは何か――直感図解</a></li>
+        <li><a href="#section-3">ヘッジありは「何を買って何を手放すか」</a></li>
+        <li><a href="#section-4">ヘッジコストはなぜ金利差から生まれるのか</a></li>
+        <li><a href="#section-5">金利差が変わるとコストはどう動くか</a></li>
+        <li><a href="#section-6">ヘッジあり・なしで成績はどうずれるか</a></li>
+        <li><a href="#section-7">どちらを選ぶかの考え方</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== Section 1 ===== -->
+    <h2 id="section-1">1️⃣ 外国資産はなぜ「2つの値動き」がある</h2>
+    <p>海外の株式や債券に投資すると、資産の価格変動に加えて<strong>為替の変動</strong>という、もう一つの変動要因が加わります。たとえば米国株ファンドに投資した場合、円建てでの評価額は次の2つがかけ合わさって決まります。</p>
+    <ul>
+      <li><strong>米国株の値動き</strong>（株価の上下）</li>
+      <li><strong>ドル円の値動き</strong>（円高・円安）</li>
+    </ul>
+    <p>株価が上がっても円高が進めば、円換算の利益は相殺されることがあります。逆に、株価が下がっていても大幅な円安なら円換算では「プラス」に見えることもあります。<a href="guide-currency-risk.html">為替リスクの基本（外貨資産は「価格×為替」の二階建て）</a>で詳しく解説していますが、この「二階建て構造」が、外国資産特有の複雑さの源泉です。</p>
+
+    <div class="info-box">
+      <strong>💡 ポイント</strong>：外国資産への投資は「外国市場のリターン」と「為替のリターン」を同時に受け取る仕組みになっています。為替ヘッジとは、このうち「為替のリターン（リスク）」だけを切り離す操作です。
+    </div>
+
+    <!-- ===== Section 2 ===== -->
+    <h2 id="section-2">2️⃣ 為替ヘッジとは何か――直感図解</h2>
+    <p>為替ヘッジとは、<strong>将来の為替レートをあらかじめ決めておく（予約しておく）</strong>ことで、実際の為替変動の影響を打ち消す仕組みです。具体的には「為替予約（フォワード取引）」という金融取引を使います。</p>
+    <p>イメージとしては「今の為替レートで、将来に交換する約束をしておく」ようなものです。円高になろうと円安になろうと、約束したレートで交換できるので、為替変動の損益が（ほぼ）ゼロになります。</p>
+
+    <!-- SVG Figure 1: ヘッジなし vs ヘッジあり の図解 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="hedge-compare-title">
+        <title id="hedge-compare-title">為替ヘッジあり・なしの比較概念図</title>
+        <defs>
+          <marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#57606a"/>
+          </marker>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#0969da"/>
+          </marker>
+        </defs>
+        <!-- タイトル -->
+        <text class="s-panel-label" x="20" y="22">為替ヘッジあり・なし の違い（概念図）</text>
+
+        <!-- ヘッジなし ボックス -->
+        <rect class="s-box-bg" x="20" y="40" width="280" height="200" rx="10"/>
+        <text class="s-legend" x="160" y="65" text-anchor="middle" font-weight="700" font-size="14">ヘッジなし</text>
+        <rect x="50" y="80" width="220" height="44" rx="6" fill="#ddf4ff" stroke="#54aeff" stroke-width="1"/>
+        <text class="s-note" x="160" y="107" text-anchor="middle">外国資産の値動き</text>
+        <text class="s-label-sm" x="160" y="120" text-anchor="middle">（株価・債券価格 etc.）</text>
+        <text x="160" y="148" text-anchor="middle" font-size="20">＋</text>
+        <rect x="50" y="158" width="220" height="44" rx="6" fill="#fff8c5" stroke="#d4a017" stroke-width="1"/>
+        <text fill="#9a6700" font-size="11.5" font-weight="700" font-family="'Noto Sans JP',sans-serif" x="160" y="185" text-anchor="middle">為替変動（円高↑円安↓）</text>
+        <text fill="#9a6700" font-size="11.5" font-family="'Noto Sans JP',sans-serif" x="160" y="199" text-anchor="middle">をそのまま受け取る</text>
+        <text class="s-label-sm" x="160" y="232" text-anchor="middle" font-style="italic">ヘッジコスト：なし</text>
+
+        <!-- ヘッジあり ボックス -->
+        <rect class="s-box-bg" x="340" y="40" width="280" height="200" rx="10"/>
+        <text class="s-legend" x="480" y="65" text-anchor="middle" font-weight="700" font-size="14">ヘッジあり</text>
+        <rect x="370" y="80" width="220" height="44" rx="6" fill="#ddf4ff" stroke="#54aeff" stroke-width="1"/>
+        <text class="s-note" x="480" y="107" text-anchor="middle">外国資産の値動き</text>
+        <text class="s-label-sm" x="480" y="120" text-anchor="middle">（株価・債券価格 etc.）</text>
+        <text x="480" y="148" text-anchor="middle" font-size="20">＋</text>
+        <rect x="370" y="158" width="220" height="44" rx="6" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text class="s-note-g" x="480" y="181" text-anchor="middle">為替変動は（ほぼ）相殺</text>
+        <text class="s-note-g" x="480" y="196" text-anchor="middle">安定した為替レートで評価</text>
+        <text class="s-note-r" x="480" y="222" text-anchor="middle" font-size="11.5" font-weight="700" font-family="'Noto Sans JP',sans-serif">▼ ヘッジコスト が差し引かれる</text>
+        <text class="s-label-sm" x="480" y="236" text-anchor="middle" font-style="italic">（金利差ぶんのコストが発生）</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の成績は市場環境によって異なります。</p>
+    </figure>
+
+    <p>つまり、ヘッジありファンドは「<strong>外国資産の値動きだけ受け取り、為替変動は打ち消す</strong>」という設計です。しかし、その打ち消しにはコスト（=ヘッジコスト）が伴います。ヘッジコストは信託財産（ファンドが預かって運用している財産のこと）から差し引かれ、運用成績に影響します。</p>
+
+    <!-- ===== Section 3 ===== -->
+    <h2 id="section-3">3️⃣ ヘッジありは「何を買って何を手放すか」</h2>
+    <p>為替ヘッジありを選ぶとは、次の取引をしていることに相当します。</p>
+    <ul>
+      <li><strong>買うもの</strong>：外国資産の値動き（株価・債券価格の変動）だけを受け取る権利。為替変動によるブレを取り除いた、比較的「安定した」成績。</li>
+      <li><strong>手放すもの</strong>：円安局面で得られるはずだった為替差益の恩恵。そして代わりに<strong>ヘッジコスト</strong>（毎年一定の費用）を支払う義務。</li>
+    </ul>
+    <div class="info-box">
+      <strong>💡 重要な認識</strong>：ヘッジありは「リスクがゼロになる」わけではありません。為替変動リスクを打ち消す代わりに、<strong>ヘッジコスト（費用の変動リスク）を引き受ける</strong>という構造です。ヘッジコスト自体も市場環境によって変わります。
+    </div>
+    <p>円高を心配する局面でヘッジありを選べば、円高による為替差損の影響を抑えやすくなります（ヘッジは完全ではなく、残存する部分があります）。しかし円安が続く局面でヘッジありを選ぶと、為替差益を受け取れないうえにヘッジコストまで払う、という結果になりえます。どちらが「正解」かは、将来の為替動向によって変わるため、事前にはわかりません。</p>
+
+    <!-- ===== Section 4 ===== -->
+    <h2 id="section-4">4️⃣ ヘッジコストはなぜ金利差から生まれるのか</h2>
+    <p>ここからは中上級向けの説明です。なぜヘッジにコストがかかるのか、その仕組みの核心に踏み込みます。</p>
+    <h3>フォワードレートと金利の関係</h3>
+    <p>為替ヘッジは「為替予約（フォワード取引）」という仕組みを使います。将来のある時点で、あらかじめ決めたレートで通貨を交換する約束です。このとき、予約レート（フォワードレート）は<strong>現在の為替レート（スポットレート）と2通貨の金利差から自動的に決まります</strong>。</p>
+    <p>なぜなら、金利差を利用した裁定（アービトラージ）を防ぐためです。もしフォワードレートが金利差を反映していなければ、誰でも「高金利通貨に投資してヘッジする」だけでリスクなしの利益を得られてしまいます。そのような無リスク利益は市場で速やかに解消されやすいため、フォワードレートは基本的に金利差を織り込んだ水準に近づきます（カバー付き金利平価）。ただし市場環境によっては、この関係からずれが生じることもあります。</p>
+
+    <!-- SVG Figure 2: ヘッジコストと金利差の概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 240" role="img" aria-labelledby="hedgecost-title">
+        <title id="hedgecost-title">ヘッジコストと金利差の仕組み概念図</title>
+        <!-- タイトル -->
+        <text class="s-panel-label" x="20" y="22">ヘッジコストが生まれる仕組み（概念図）</text>
+
+        <!-- 左：低金利通貨（円） -->
+        <rect class="s-box-bg" x="20" y="38" width="170" height="80" rx="8"/>
+        <text class="s-legend" x="105" y="60" text-anchor="middle" font-weight="700" font-size="13">低金利通貨（例：円）</text>
+        <text class="s-note-g" x="105" y="84" text-anchor="middle">短期金利：低い</text>
+        <text class="s-label-sm" x="105" y="105" text-anchor="middle">→ 預けると増えにくい</text>
+
+        <!-- 右：高金利通貨（ドル） -->
+        <rect class="s-box-bg" x="450" y="38" width="170" height="80" rx="8"/>
+        <text class="s-legend" x="535" y="60" text-anchor="middle" font-weight="700" font-size="13">高金利通貨（例：ドル）</text>
+        <text class="s-note-r" x="535" y="84" text-anchor="middle">短期金利：高い</text>
+        <text class="s-label-sm" x="535" y="105" text-anchor="middle">→ 預けると増えやすい</text>
+
+        <!-- 中央：金利差 -->
+        <rect x="220" y="55" width="200" height="50" rx="8" fill="#fff8c5" stroke="#d4a017" stroke-width="1.5"/>
+        <text fill="#9a6700" font-size="12" font-weight="700" font-family="'Noto Sans JP',sans-serif" x="320" y="76" text-anchor="middle">金利差（外国金利－円金利）</text>
+        <text fill="#9a6700" font-size="11" font-family="'Noto Sans JP',sans-serif" x="320" y="96" text-anchor="middle">= ヘッジコストの主な源泉</text>
+
+        <!-- 矢印 左→中 -->
+        <line x1="190" y1="78" x2="218" y2="78" stroke="#57606a" stroke-width="2" marker-end="url(#arr1)"/>
+        <!-- 矢印 右→中 -->
+        <line x1="450" y1="78" x2="422" y2="78" stroke="#57606a" stroke-width="2" marker-end="url(#arr1)"/>
+
+        <!-- 下段：影響 -->
+        <rect x="160" y="148" width="320" height="68" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-note-r" x="320" y="171" text-anchor="middle">金利差が大きい局面</text>
+        <text fill="#cf222e" font-size="11.5" font-family="'Noto Sans JP',sans-serif" x="320" y="190" text-anchor="middle">→ ヘッジコストが重くなる</text>
+        <text fill="#cf222e" font-size="11.5" font-family="'Noto Sans JP',sans-serif" x="320" y="207" text-anchor="middle">→ ヘッジあり ファンドの成績を押し下げる</text>
+
+        <!-- 上→下 矢印 -->
+        <line x1="320" y1="107" x2="320" y2="146" stroke="#cf222e" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。金利差の大きさとヘッジコストの関係は時期によって変動します。</p>
+    </figure>
+
+    <h3>具体的なメカニズム</h3>
+    <p>日本の投資信託が米ドル建て資産を円ヘッジする場合を例に取ると、仕組みはおおむね次のようになります。</p>
+    <ol>
+      <li>運用会社は、将来のある時点でドルを円に交換する約束（フォワード取引）を銀行と結ぶ。</li>
+      <li>フォワードレートは「スポットレート × (1 + 円の短期金利) / (1 + ドルの短期金利)」に相当する水準に決まる。</li>
+      <li>ドルの短期金利 &gt; 円の短期金利 の場合、フォワードレートは現在のスポットレートより<strong>円高ドル安の水準</strong>になる。</li>
+      <li>つまり、今より低いレートで将来のドルを売る約束をすることになり、その差が実質的なヘッジコストになる。</li>
+    </ol>
+    <p>言い換えると、<strong>「高金利通貨（ドル）を借りて低金利通貨（円）で投資するコスト」</strong>をファンドが負担することになります。このコストは信託財産から差し引かれるため、基準価額（ファンドの1口あたりの値段）の上昇を抑える要因として働きます。</p>
+    <div class="warning-box">
+      ヘッジコストの具体的な数値は、各通貨ペアの短期金利水準によってリアルタイムで変動します。運用会社の月報や目論見書、金融機関の公式情報で最新の水準をご確認ください。本記事では特定の数値は載せていません。
+    </div>
+
+    <!-- ===== Section 5 ===== -->
+    <h2 id="section-5">5️⃣ 金利差が変わるとコストはどう動くか</h2>
+    <p>ヘッジコストは固定されたものではなく、<strong>各国の金融政策によって変動</strong>します。金利差が拡大するとヘッジコストが上昇し、縮小するとコストが低下します。</p>
+    <h3>金利差拡大の局面</h3>
+    <p>ある国が利上げを続けて金利が高止まりしている一方、もう一方の国が低金利を維持している場合、両者の金利差は拡大します。この局面では、低金利通貨（円など）で高金利通貨（ドルなど）資産をヘッジするコストが大きくなります。ヘッジありファンドは、運用成績のうちかなりの部分をヘッジコストとして支払わなければなりません。</p>
+    <h3>金利差縮小の局面</h3>
+    <p>利下げや利上げが進んで2通貨間の金利差が縮まると、ヘッジコストも低下します。金利差がほぼゼロに近い局面では、ヘッジコストも小さくなるため、ヘッジあり・なしの成績差が縮まります。</p>
+    <p>このように、ヘッジコストは経済環境に応じて変化します。金利と債券の関係全般については、<a href="guide-bonds-interest-rates.html">金利と債券の関係（なぜ金利が上がると債券価格が下がるのか）</a>も参考にしてください。</p>
+
+    <!-- ===== Section 6 ===== -->
+    <h2 id="section-6">6️⃣ ヘッジあり・なしで成績はどうずれるか</h2>
+    <p>ヘッジコストと為替変動の組み合わせによって、ヘッジあり・なしの成績は次のようなパターンでずれます。</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>状況</th>
+          <th>ヘッジなし</th>
+          <th>ヘッジあり</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>円安進行 ＋ 金利差大</td>
+          <td>為替差益が乗り有利になりやすい</td>
+          <td>為替差益なし＋コスト重く不利になりやすい</td>
+        </tr>
+        <tr>
+          <td>円高進行 ＋ 金利差大</td>
+          <td>為替差損が重くなりやすい</td>
+          <td>為替差損を回避できるがコストは重い</td>
+        </tr>
+        <tr>
+          <td>為替ほぼ横ばい ＋ 金利差大</td>
+          <td>為替の影響小・コストなし</td>
+          <td>コストぶんだけ不利になりやすい</td>
+        </tr>
+        <tr>
+          <td>円高進行 ＋ 金利差小</td>
+          <td>為替差損が出やすい</td>
+          <td>コスト小さく為替差損を回避・比較的有利</td>
+        </tr>
+        <tr>
+          <td>為替横ばい ＋ 金利差小</td>
+          <td>為替影響小・コストなし</td>
+          <td>コストも小さく大きな差は出にくい</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="warning-box">
+      上記は傾向を整理した概念的な比較です。「ヘッジありが常に有利」「ヘッジなしが常に有利」ということはなく、実際の結果は市場環境によって毎回異なります。どちらを選ぶかを判断する際は、最新のコスト水準と将来の不確実性を念頭においてください。
+    </div>
+
+    <!-- SVG Figure 3: コンセプト図（ヘッジあり・なし成績のずれ） -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="perf-gap-title">
+        <title id="perf-gap-title">ヘッジあり・なしの成績ずれ（概念図）</title>
+        <defs>
+          <marker id="arr-pg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#1a7f37"/>
+          </marker>
+        </defs>
+        <!-- タイトル -->
+        <text class="s-panel-label" x="20" y="20">ヘッジあり・なし の成績ずれのイメージ（概念図）</text>
+
+        <!-- Y軸 -->
+        <line class="s-axis" x1="70" y1="195" x2="70" y2="35"/>
+        <!-- ゼロライン（ガイド） -->
+        <line class="s-guide" x1="70" y1="148" x2="625" y2="148"/>
+        <!-- Y軸ラベル -->
+        <text class="s-label-sm" x="64" y="152" text-anchor="end">0%</text>
+        <text class="s-label-sm" x="64" y="90" text-anchor="end">＋▲</text>
+        <text class="s-label-sm" x="64" y="192" text-anchor="end">−▼</text>
+
+        <!-- フェーズ仕切り線 -->
+        <line class="s-divv" x1="275" y1="37" x2="275" y2="197"/>
+        <line class="s-divv" x1="465" y1="37" x2="465" y2="197"/>
+
+        <!-- フェーズラベル -->
+        <text class="s-label-sm" x="173" y="46" text-anchor="middle">① 円安局面</text>
+        <text class="s-label-sm" x="173" y="59" text-anchor="middle">（ヘッジなし有利）</text>
+        <text class="s-label-sm" x="370" y="46" text-anchor="middle">② 為替横ばい</text>
+        <text class="s-label-sm" x="370" y="59" text-anchor="middle">（コスト分だけ差）</text>
+        <text class="s-label-sm" x="545" y="46" text-anchor="middle">③ 円高局面</text>
+        <text class="s-label-sm" x="545" y="59" text-anchor="middle">（ヘッジあり相対有利）</text>
+
+        <!-- ヘッジなし ライン（緑） -->
+        <polyline class="s-curve-g" points="70,148 130,128 190,108 275,90 340,89 405,92 465,97 520,115 575,132 625,140"/>
+
+        <!-- ヘッジあり ライン（赤） -->
+        <polyline class="s-curve-l" points="70,148 130,146 190,144 275,141 340,143 405,145 465,147 520,148 575,152 625,155"/>
+
+        <!-- 凡例 -->
+        <line x1="82" y1="218" x2="112" y2="218" stroke="#1a7f37" stroke-width="2.6"/>
+        <text class="s-label-sm" x="118" y="222">ヘッジなし（為替変動をそのまま受け取る）</text>
+        <line x1="82" y1="236" x2="112" y2="236" stroke="#cf222e" stroke-width="2.6"/>
+        <text class="s-label-sm" x="118" y="240">ヘッジあり（為替を打ち消す＋コスト差し引き）</text>
+
+        <!-- X軸ラベル -->
+        <text class="s-label-sm" x="350" y="210" text-anchor="middle">経過時間 →</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の成績は為替の動きとヘッジコスト水準の組み合わせで変わります。どちらが有利かは事前には分かりません。</p>
+    </figure>
+
+    <h3>コストはどこで確認できるか</h3>
+    <p>ヘッジコストは投資信託の目論見書や月次レポートに記載されている場合があります。また、運用会社の公式ウェブサイトで公表していることもあります。具体的な現在の水準は、それらの一次情報をご確認ください。</p>
+
+    <!-- ===== Section 7 ===== -->
+    <h2 id="section-7">7️⃣ どちらを選ぶかの考え方</h2>
+    <p>「ヘッジあり・なし、どちらが良いか」という問いに、普遍的な答えはありません。ただし、以下のような観点から整理することができます。</p>
+    <h3>ヘッジありを検討する場合の考え方</h3>
+    <ul>
+      <li>投資期間が短く、為替変動による損失を引き受けにくい場合。</li>
+      <li>外国資産の値動きだけを取りたい目的がある場合（たとえば海外債券の利回りを安定して得たい、など）。</li>
+      <li>為替リスクを一定期間コントロールしたい事情がある場合。</li>
+    </ul>
+    <p>ただし、金利差が大きい局面ではヘッジコストも重くなるため、コストを支払ってでもリスク回避を優先する合理的な理由があるかを確認することが重要です。</p>
+    <h3>ヘッジなしを検討する場合の考え方</h3>
+    <ul>
+      <li>長期投資で時間分散が効く場合（長期では為替変動が平均化される傾向があるという考え方）。</li>
+      <li>ヘッジコストを支払いたくない場合。</li>
+      <li>円安局面での為替差益も取り込みたい場合。</li>
+    </ul>
+    <p>ただし、ヘッジなしでは大きな円高局面で評価額が大きく落ちることがあります。自分の投資期間・目的・リスク許容度に照らして判断することが大切です。</p>
+
+    <div class="positive-box">
+      <strong>整理するうえでの問い</strong>：「為替リスクを取りたくない、明確な理由があるか？」——この問いへの答えが選択の出発点です。明確な理由がなければ、ヘッジコストを払ってでも回避する必要があるかを改めて考える材料になります。どちらにも一般的な「正解」はありません。
+    </div>
+
+    <!-- ===== Section 8 ===== -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、FXペア（ドル円・ユーロ円など）の動向や市場のシグナル分析結果を<a href="track-record.html">シグナル成績ダッシュボード</a>で公開しています。為替の動向は外国資産を保有する投資家にとって無視できない変数であり、ヘッジコストの大きさとも直結します。</p>
+    <p>また、<a href="market-health.html">市場健康度ページ</a>では各種リスク指標をまとめており、リスクオフ局面（円高圧力が強まりやすい局面）かどうかを俯瞰する際の参考になります。為替ヘッジの判断はあくまでご自身でお願いしますが、こうした情報を背景知識として活用していただければ幸いです。</p>
+    <p>より深い背景として、<a href="guide-currency-risk.html">為替リスクの基本（外貨資産は「価格×為替」の二階建て）</a>や<a href="guide-bonds-interest-rates.html">金利と債券の関係</a>もあわせてお読みいただくと、ヘッジコストの仕組みがより立体的に理解できます。</p>
+
+    <!-- ===== Section 9 ===== -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>為替ヘッジとは、「<strong>為替の変動リスクを打ち消す代わりに、ヘッジコストという費用を払う</strong>」取引です。ヘッジコストの大きさは主に2通貨間の短期金利差から決まり、金利差が大きいほどコストが重くなります。</p>
+    <ul>
+      <li>ヘッジありは「<strong>為替差益を手放し、為替差損を回避し、コストを払う</strong>」という選択。</li>
+      <li>ヘッジなしは「<strong>為替の変動（利益も損失も）をそのまま受け取り、コストは払わない</strong>」という選択。</li>
+      <li>どちらが有利かは、<strong>為替の実際の動き方と金利差の水準の組み合わせ</strong>によって変わり、事前には分からない。</li>
+    </ul>
+    <p>大切なのは、「ヘッジありだから安全・ヘッジなしだから危険」という単純な図式ではなく、<strong>自分が何を取りに行き、何を手放しているかを理解したうえで選ぶ</strong>ことです。</p>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">【免責事項（kinsho-v1）】本記事は情報提供を目的としており、特定の金融商品・ファンドの売買を推奨するものではありません。為替ヘッジコストや金利水準は市場環境によって変動し、本記事執筆時点の情報が将来も続く保証はありません。投資にはリスクが伴い、元本割れを起こす可能性があります。投資判断はご自身の責任において、各金融機関や専門家の情報を参照のうえ行ってください。なお、当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を確認する</div>
+      <div class="cta-box-desc">FXペアを含む18銘柄のテクニカル分析シグナルの成績を公開中。為替の動向を学ぶ参考としてご活用ください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-currency-risk.html">
+        <div class="related-card-title">🌏 為替リスクの基本</div>
+        <div class="related-card-desc">外貨資産は「価格×為替」の二階建て。円建て評価額が為替でどう変わるかを図解。</div>
+      </a>
+      <a class="related-card" href="guide-bonds-interest-rates.html">
+        <div class="related-card-title">📉 金利と債券の関係</div>
+        <div class="related-card-desc">金利が上がると債券価格が下がる理由、短長金利差とヘッジコストの関係も解説。</div>
+      </a>
+      <a class="related-card" href="guide-swap-points.html">
+        <div class="related-card-title">💱 スワップポイントの仕組み</div>
+        <div class="related-card-desc">FXの金利差収益（スワップ）。ヘッジコストの概念と通じる部分を理解できます。</div>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI ／ <a href="about.html">サイトについて</a> ／ <a href="privacy.html">プライバシーポリシー</a> ／ <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px">【免責事項（kinsho-v1）】本サイトは情報提供を目的としており、投資助言・勧誘を行うものではありません。投資判断はご自身の責任でお願いします。</p>
+</footer>
+
+<script>
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  try{localStorage.setItem('mw-theme', document.body.classList.contains('dark') ? 'dark' : 'light');}catch(e){}
+}
+(function(){
+  try{
+    if(localStorage.getItem('mw-theme')==='dark'){
+      document.body.classList.add('dark');
+      var btn=document.getElementById('theme-toggle');
+      if(btn)btn.textContent='☀️';
+    }
+  }catch(e){}
+})();
+// 読書進捗バー
+window.addEventListener('scroll',function(){
+  var el=document.getElementById('reading-progress');
+  if(!el)return;
+  var h=document.documentElement;
+  var pct=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  el.style.width=Math.min(pct,100)+'%';
+},{passive:true});
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
