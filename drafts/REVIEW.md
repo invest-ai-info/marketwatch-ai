@@ -1,3 +1,30 @@
+## 2026-09-05 autodraft: draft-odd-lot-investing.html（基礎知識 #56 / 単元未満株）
+
+- **基準日**: 2026-09-05（JST）
+- **topic / key**: 基礎知識 #56 / `odd-lot-investing`
+- **仮タイトル**: 単元未満株は、何を引き換えに買いやすくなっているのか
+- **生成ファイル**: `drafts/draft-odd-lot-investing.html`
+- **参照出典URL**:
+  - https://www.jpx.co.jp/equities/improvements/study-group/nlsgeu000004acah-att/t13vrt000000h2uq.pdf （東証・売買単位統一）
+  - https://www.smbcnikko.co.jp/terms/japan/ta/J0354.html （単元未満株用語解説）
+  - https://www.matsui.co.jp/stock/domestic/tangen/ （約定ルール参照例）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし
+  - ✅ 特定証券会社のサービス・手数料の比較なし
+  - ✅ 少額投資を勧める/勧めないの結論を出していない
+  - ✅ 断定・利益保証ワード（絶対・必ず・100%・保証・儲かる）なし
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer）
+  - ✅ 制度数値は一次情報（JPX・会社法）から引用、確認日（2026-09-05）を明記
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+- **SVG TODO**:
+  - TODO(SVG): 3枚ともライト/ダーク実機確認が必要（`.s-cell-ok/.s-cell-ng/.s-cell-hdr` のダーク用上書きをスタイルに追加済みだが目視確認必須）
+- **人間の残作業**:
+  - SVG3枚の実機ライト/ダーク表示確認
+  - タイトル・h1の微調整（任意）
+  - 公開は毎朝 08:40 の `autodraft-publish` ルーティンが自動ゲート付きで実行
+
+---
+
 ## 2026-09-04 autopublish: guide-anchoring-price.html（投資の心理・メンタル #50 / アンカリングバイアス）
 
 - **基準日**: 2026-09-04（JST）
