@@ -211,4 +211,5 @@ SYNC_FILES = [
     "guide-news-2026-09-03-yen-crosses-fall-bull-bear-factors.html",
     "guide-signal-lab-089.html",
     "guide-anchoring-price.html",
+    "guide-proverb-time-in-the-market.html",
 ]
