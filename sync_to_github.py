@@ -214,4 +214,5 @@ SYNC_FILES = [
     "guide-proverb-time-in-the-market.html",
     "guide-tse-tick-size.html",
     "guide-news-2026-09-04-nfp-22k-fed-rate-cut.html",
+    "guide-signal-lab-090.html",
 ]
