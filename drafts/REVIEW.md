@@ -1,3 +1,5 @@
+2026-09-05 autopublish: guide-currency-hedge-cost.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-currency-hedge-cost.html
+
 ## 2026-09-05 autodraft: draft-odd-lot-investing.html（基礎知識 #56 / 単元未満株）
 
 - **基準日**: 2026-09-05（JST）
