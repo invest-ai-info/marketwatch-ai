@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>呼値の単位（ティックサイズ）とは｜東証の制度を一次情報で確認 - MarketWatch AI</title>
+  <meta name="description" content="東証の呼値の単位（ティックサイズ）はなぜ価格帯ごとに違うのか、TOPIX500構成銘柄とその他の銘柄で刻みがどう変わるのか、2027年3月からどう変わる予定かを、JPXの一次情報に基づいて解説します。東証のしくみシリーズ第3回。">
+  <meta name="keywords" content="呼値,ティックサイズ,呼値の単位,東証,JPX,TOPIX500,STR,板,指値,東証のしくみ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-tick-size.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="呼値の単位（ティックサイズ）とは｜東証の制度を一次情報で確認">
+  <meta property="og:description" content="値段は連続していない——東証の呼値の単位（ティックサイズ）の仕組みを、JPXの一次情報に基づいて解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-tick-size.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "呼値の単位（ティックサイズ）とは｜東証の制度を一次情報で確認",
+    "description": "値段は連続していない——東証の呼値の単位（ティックサイズ）の仕組みを、JPXの一次情報に基づいて解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-04",
+    "dateModified": "2026-09-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-tick-size.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 呼値の単位（ティックサイズ）
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東証の売買制度を一般的な知識として整理した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資には元本割れリスクがあります。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📏 呼値の単位（ティックサイズ）とは｜値段は連続していない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 4 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第3回）</div>
+
+    <p>株価チャートは滑らかな線で描かれますが、実際の値段は<strong>「刻み」でしか動けません</strong>。100円の次は101円ではなく100.1円かもしれませんし、10,000円の次は10,010円かもしれません。この最小の値段の刻みを<strong>呼値の単位</strong>（ティックサイズ）と呼びます。<strong>「東証のしくみ」シリーズ</strong>第3回は、この呼値の単位を取り上げます。</p>
+    <p>結論を先に言えば、呼値の単位は<strong>すべての銘柄で同じではありません</strong>。値段の水準と、TOPIX500構成銘柄かどうかという銘柄区分によって、同じ「1,000円の株」でも刻みが0.1円だったり1円だったりします。この違いは、板の見え方や実質的な売買コストに関わりうるため、知っておく価値があります。さらに<strong>2027年3月1日から、この決め方自体が変わる予定</strong>であることも一次情報から確認できます。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>呼値の単位（最小の値段の刻み）は、<strong>値段の水準（価格帯）と銘柄区分</strong>によって変わる。同じ価格帯でも、TOPIX500構成銘柄は刻みが細かく、その他の銘柄は粗い設計になっている。</li>
+      <li>刻みが粗い銘柄ほど、<strong>指値を置ける値段の選択肢が少なく</strong>、板の1段あたりの値幅（実質的なコスト）が大きくなりうる。</li>
+      <li>この「指数区分ベースで刻みを決める」仕組みは、<strong>2027年3月1日から銘柄ごとの流動性指標（STR）に基づく決め方に変わる予定</strong>（JPXの一次情報で確認・確認日を本文に明記）。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">呼値の単位とは何のためにある制度か</a></li>
+        <li><a href="#section-2">価格帯・銘柄区分ごとの呼値表（一次情報の表）</a></li>
+        <li><a href="#section-3">具体例：同じ株価でも刻みが違うと何が起きるか</a></li>
+        <li><a href="#section-4">図解：呼値の刻みと板の見え方</a></li>
+        <li><a href="#section-5">2027年3月からの変更：STRに基づく呼値制度</a></li>
+        <li><a href="#section-6">個人投資家にどこで効いてくるか</a></li>
+        <li><a href="#section-7">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-8">よくある誤解</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 呼値の単位とは何のためにある制度か</h2>
+    <p>株式の売買注文を出すとき、値段は好きな金額を1円単位・1銭単位で自由に指定できるわけではありません。東証では<strong>「売買の注文をする際の値段の刻み」</strong>があらかじめ決められており、これを<strong>呼値の単位</strong>と呼びます（出典：JPX「呼値の単位｜内国株の売買制度」）。注文はこの刻みの倍数の値段でしか出せません。</p>
+    <p>刻みが細かすぎると、板（気配値の一覧）に値段が細かく分散しすぎて、<strong>「今どこに注文が集まっているか」が見えにくくなる</strong>という副作用があります。逆に刻みが粗すぎると、<strong>1段動くだけで値段が大きく飛んでしまい</strong>、細かい値段調整ができなくなります。呼値の単位は、この2つのバランスを取るための制度であり、<strong>値段の水準や銘柄の性質（主要指数に採用されているかどうか）に応じて段階的に変える</strong>ことで対応しています。</p>
+    <div class="info-box"><strong>💡 「値段は連続していない」という感覚：</strong>チャートは連続した線に見えますが、実際にはすべての値動きが呼値の単位の倍数で起きています。同じ「1,000円の銘柄」でも区分によって次章の表のとおり刻みが変わるため、<strong>「見た目の株価」だけでは実際にどれだけ細かく値段が動けるかは分かりません。</strong></div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 価格帯・銘柄区分ごとの呼値表（一次情報の表）</h2>
+    <p>JPX（日本取引所グループ）公式サイト「呼値の単位｜内国株の売買制度」（<a href="https://www.jpx.co.jp/equities/trading/domestic/07.html" target="_blank" rel="noopener">jpx.co.jp/equities/trading/domestic/07.html</a>、ページ更新日 2026/08/06、<strong>本記事の確認日：2026年9月4日</strong>）に掲載されている呼値の単位の表の抜粋は以下の通りです（2026年9月4日時点の現行制度）。値段の水準が上がるほど刻みも段階的に大きくなり、<strong>同じ価格帯でも銘柄区分によって刻みが異なる</strong>ことが分かります。</p>
+    <table>
+      <thead><tr><th>値段の水準</th><th>TOPIX500構成銘柄<br>（TOPIX100・Mid400含む）</th><th>売買単位が1口の<br>ETF等</th><th>その他の銘柄</th></tr></thead>
+      <tbody>
+        <tr><td>1,000円以下</td><td>0.1円</td><td>1円</td><td>1円</td></tr>
+        <tr><td>5,000円以下</td><td>1円</td><td>1円</td><td>5円</td></tr>
+        <tr><td>10,000円以下</td><td>1円</td><td>1円</td><td>10円</td></tr>
+        <tr><td>50,000円以下</td><td>10円</td><td>10円</td><td>50円</td></tr>
+        <tr><td>100,000円以下</td><td>10円</td><td>10円</td><td>100円</td></tr>
+        <tr><td>500,000円以下</td><td>100円</td><td>100円</td><td>500円</td></tr>
+        <tr><td>1,000,000円以下</td><td>100円</td><td>100円</td><td>1,000円</td></tr>
+        <tr><td>5,000,000円以下</td><td>1,000円</td><td>1,000円</td><td>5,000円</td></tr>
+        <tr><td>50,000,000円超</td><td>10,000円</td><td>10,000円</td><td>100,000円</td></tr>
+      </tbody>
+    </table>
+    <p class="chart-caption" style="text-align:left;margin-top:-6px">※上表は一次情報の全区分（1,000円以下〜5,000万円超まで16段階）のうち、傾向が分かりやすい代表的な区分を抜粋したものです。全区分は上記リンク先で確認できます。売買単位が10口以上のETF等にも「ETF等」の列が適用されます。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 具体例：同じ株価でも刻みが違うと何が起きるか</h2>
+    <div class="warning-box">たとえば株価が4,800円の銘柄があるとします（<strong>これは表の読み方を示すための仮の例</strong>で、実在の値動きではありません）。「5,000円以下」の区分に該当するため、<strong>TOPIX500構成銘柄なら刻みは1円</strong>（4,800円→4,801円→4,802円…と細かく動ける）、<strong>その他の銘柄なら刻みは5円</strong>（4,800円→4,805円→4,810円…としか動けない）になります。</div>
+    <p>これは、TOPIX500構成銘柄のほうが<strong>その他の銘柄より5倍細かい値段で注文を出せる</strong>ことを意味します。板の1段あたりの値幅が5倍粗いということは、<strong>買いたい値段と売りたい値段の間（スプレッド）が最低でも刻み1つ分は空きうる</strong>ということでもあり、刻みが粗いほど「もう少しだけ有利な値段で」という細かい調整がしにくくなります。なお、刻みの細かさは制度上の区分による違いであり、銘柄の優劣や投資対象としての有利・不利を示すものではありません。</p>
+    <p>同じことは、より値段が高い区分ほど差が開きます。表の「5,000,000円以下」の区分では、TOPIX500構成銘柄が1,000円刻みなのに対し、その他の銘柄は5,000円刻み（<strong>仮に株価400万円の銘柄なら、その他区分では1回の値動きが5,000円単位</strong>という計算になります）。値段の水準が上がるほど、刻みの差が絶対額として大きくなる点は覚えておく価値があります。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 図解：呼値の刻みと板の見え方</h2>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 600 280" role="img" aria-labelledby="ticksize-title">
+        <title id="ticksize-title">同じ値段の範囲でも、呼値の単位が細かい銘柄と粗い銘柄では板に並ぶ値段の本数が変わることを示す概念図</title>
+        <text class="s-panel-label" x="20" y="20">同じ値幅でも「刻みの細かさ」で板に並ぶ値段の数が変わる</text>
+
+        <!-- 左：細かい刻み -->
+        <text class="s-note" x="150" y="42" text-anchor="middle" font-size="12.5" font-family="'Noto Sans JP',sans-serif">刻みが細かい（例：TOPIX500構成銘柄）</text>
+        <g>
+          <rect class="s-zone-g" x="90" y="55" width="120" height="190" rx="4"/>
+          <line class="s-guide" x1="90" y1="75" x2="210" y2="75"/>
+          <line class="s-guide" x1="90" y1="95" x2="210" y2="95"/>
+          <line class="s-guide" x1="90" y1="115" x2="210" y2="115"/>
+          <line class="s-guide" x1="90" y1="135" x2="210" y2="135"/>
+          <line class="s-guide" x1="90" y1="155" x2="210" y2="155"/>
+          <line class="s-guide" x1="90" y1="175" x2="210" y2="175"/>
+          <line class="s-guide" x1="90" y1="195" x2="210" y2="195"/>
+          <line class="s-guide" x1="90" y1="215" x2="210" y2="215"/>
+          <text class="s-label-sm" x="150" y="235" text-anchor="middle">値段の刻みが多く並ぶ</text>
+        </g>
+
+        <!-- 右：粗い刻み -->
+        <text class="s-note-r" x="450" y="42" text-anchor="middle" font-size="12.5" font-family="'Noto Sans JP',sans-serif">刻みが粗い（例：その他の銘柄）</text>
+        <g>
+          <rect class="s-zone-y" x="390" y="55" width="120" height="190" rx="4"/>
+          <line class="s-guide" x1="390" y1="75" x2="510" y2="75"/>
+          <line class="s-guide" x1="390" y1="135" x2="510" y2="135"/>
+          <line class="s-guide" x1="390" y1="195" x2="510" y2="195"/>
+          <text class="s-label-sm" x="450" y="235" text-anchor="middle">値段の刻みが少なく、間隔が広い</text>
+        </g>
+
+        <text class="s-label-sm" x="300" y="265" text-anchor="middle">同じ「5,000円以下」の区分でも、区分によって板に並ぶ値段の本数は変わる</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 呼値の単位が細かい銘柄ほど、同じ値幅の中により多くの値段が存在する。刻みが粗い銘柄は板の1段あたりの値幅が大きくなり、指値で細かい値段調整をしにくくなる。※ 概念を示すイメージ図です。実際の刻みの本数・比率は章2の表のとおり銘柄区分と値段水準によって変わります。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 2027年3月からの変更：STRに基づく呼値制度</h2>
+    <p>章2の表は<strong>「TOPIX500構成銘柄かどうか」という指数区分</strong>を基準に刻みを決める、現行（2026年9月4日時点）の仕組みです。JPXの一次情報（前掲・呼値の単位ページ）には、<strong>2027年3月1日から、この決め方が銘柄ごとの流動性指標に基づく方式に変わる</strong>と明記されています。</p>
+    <p>新方式で使われる指標は<strong>STR（Spread to Tick Ratio）</strong>と呼ばれるもので、JPXの用語では「銘柄ごとの流動性」を測る指標として説明されています。つまり<strong>「主要な指数に採用されているかどうか」ではなく、「その銘柄が実際にどれだけ活発に取引されているか」を基準に、適用する呼値の単位が個別に決まる制度</strong>へと切り替わる予定です。見直し後の呼値テーブルの詳細や運用の取扱いは、JPXの「呼値の単位の更なる適正化に伴う運用等の取扱いについて」という資料で案内されています（同ページからリンクあり）。</p>
+    <div class="warning-box">この変更は<strong>「決め方の基準」が変わるものであり、すべての銘柄の刻みが一律に細かくなる（または粗くなる）という意味ではありません。</strong>個別の銘柄が2027年3月以降にどの刻みになるかは、その時点のSTRの値によって決まるため、現時点で個別銘柄について断定的なことは言えません。制度の切り替え時期が近づいたら、一次情報で改めて確認することをおすすめします。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 個人投資家にどこで効いてくるか</h2>
+    <p>呼値の単位は、日々の注文の中で次のような場面に直接関わってきます。</p>
+    <h3>① 指値注文は「刻みに合わない値段」を出せない</h3>
+    <p>章2の表のとおり、株価6,000円台のその他の銘柄（「10,000円以下」の区分）なら呼値の単位は10円です。この場合、「6,003円で買いたい」という指値は出せません。刻みの倍数（6,000円や6,010円など）でしか注文できないため、<strong>自分が思っていた値段ぴったりで指値を出せるとは限らない</strong>点は、注文画面で値段を入力する際に意識しておく価値があります。</p>
+    <h3>② 刻みが粗い銘柄ほど、実質的な値動きの単位が大きい</h3>
+    <p>章3の例のように、その他の銘柄はTOPIX500構成銘柄より刻みが数倍粗く設計されている価格帯があります。<strong>板が1段動くだけで値段が大きく動いたように見える</strong>ことがあり、少ない出来高でも値段が飛びやすい銘柄では、この刻みの粗さも一因になりえます。</p>
+    <h3>③ 制度の切り替え（2027年3月〜）で、刻みが変わる銘柄が出てくる可能性がある</h3>
+    <p>章5のとおり、決め方の基準がSTR（流動性指標）に変わる予定です。保有・監視している銘柄の呼値の単位が変わる可能性があるため、<strong>制度切り替えの時期が近づいたら一次情報を確認する</strong>習慣を持っておくと安心です。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>呼値の単位は今後制度自体が変わる予定があるため、<strong>自分で一次情報を確認する習慣</strong>をつけておくとよいでしょう。</p>
+    <ol>
+      <li>JPX公式サイトの「<a href="https://www.jpx.co.jp/equities/trading/domestic/07.html" target="_blank" rel="noopener">内国株の売買制度＞呼値の単位</a>」ページを開く（トップページ→株式・ETF・REIT等→売買制度（内国株）→内国株の売買制度→呼値の単位、の順でもたどれます）。</li>
+      <li>ページ内の「値段の水準」と「呼値の単位」の対応表を確認する。ページ最上部に<strong>更新日</strong>が明記されているので、いつの時点の情報かを必ず確認する。</li>
+      <li>2027年3月1日からの新制度（STRに基づく呼値の単位）については、同ページからリンクされている「呼値の単位の更なる適正化に伴う運用等の取扱いについて」を確認する。</li>
+      <li>自分が保有・監視している銘柄がTOPIX500構成銘柄に含まれるかどうかは、証券会社の取引ツールや、東証・TOPIXの構成銘柄一覧で確認できる。</li>
+    </ol>
+    <div class="info-box"><strong>💡 なぜ自分で確認する癖が大事か：</strong>呼値の単位は、指数の構成銘柄入れ替えや制度改正によって変わることがあります。ニュースや解説記事（本記事も含む）は<strong>ある時点のスナップショット</strong>にすぎません。実際に注文を出す前は、一次情報側の更新日を見て「今も同じ内容か」を確かめる姿勢が、制度を扱うシリーズ全体に共通する基本姿勢です。</div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>実際</th></tr></thead>
+      <tbody>
+        <tr><td>呼値の単位はすべての銘柄で同じ（1円刻みなど）</td><td>値段の水準と銘柄区分（TOPIX500構成銘柄かどうか等）によって、同じ価格帯でも刻みが異なる</td></tr>
+        <tr><td>刻みが細かい＝値動きが小さい銘柄</td><td>刻みは「注文できる値段の間隔」を決める制度であり、実際の値動きの大きさ（ボラティリティ）とは別の話</td></tr>
+        <tr><td>呼値の単位は今後もずっと今の表のまま</td><td>JPXの一次情報によれば、2027年3月1日から指数区分ベースの決め方が銘柄ごとの流動性指標（STR）ベースに変わる予定</td></tr>
+        <tr><td>指値は1円単位ならいつでも自由に出せる</td><td>呼値の単位の倍数でない値段は注文として受け付けられない（例：10円刻みの銘柄で1円単位の指値は出せない）</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>第3回「呼値の単位（ティックサイズ）」を整理します。</p>
+    <ul>
+      <li>呼値の単位は<strong>値段の刻み</strong>を決める制度で、値段の水準と銘柄区分（TOPIX500構成銘柄かどうか等）によって細かさが変わる。</li>
+      <li>同じ価格帯でも<strong>TOPIX500構成銘柄はその他の銘柄より刻みが細かく</strong>設計されており、板の見え方や実質的な値動きの単位に差が出る。</li>
+      <li><strong>2027年3月1日から</strong>、決め方の基準が指数区分から銘柄ごとの流動性指標（STR）に切り替わる予定であることが一次情報から確認できる。</li>
+      <li>個人投資家にとっては、<strong>指値が刻みの倍数でしか出せない</strong>ことと、<strong>制度切り替えで自分の保有銘柄の刻みが変わりうる</strong>ことを踏まえておくと、注文画面での値段入力や今後の情報収集に役立つ。</li>
+    </ul>
+    <p>チャートの滑らかな線の裏側には、実は飛び飛びの「刻み」があります。この違いを理解しておくと、板の見え方や指値注文の仕組みがより正確に読めるようになります。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連ガイドで「注文の仕組み」をさらに深く</div>
+      <div class="cta-box-desc">呼値の単位は、指値注文がどの値段で出せるかに直結します。注文方法の基本や出来高との関係と合わせて理解すると実践的です。</div>
+      <a class="cta-btn" href="guide-order-types.html">注文方法の解説を見る →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">🎯 注文方法の使い分け</div>
+        <div class="related-card-desc">指値・成行など注文方法の基本。呼値の単位は指値で出せる値段そのものを決める制度。</div>
+      </a>
+      <a class="related-card" href="guide-volume.html">
+        <div class="related-card-title">📊 出来高の読み方</div>
+        <div class="related-card-desc">刻みが粗い銘柄は板の1段あたりの値幅が大きく、少ない出来高でも値段が飛びやすくなる一因になりえる。</div>
+      </a>
+      <a class="related-card" href="guide-tse-price-limits.html">
+        <div class="related-card-title">🛑 値幅制限（ストップ高・ストップ安）とは</div>
+        <div class="related-card-desc">「東証のしくみ」シリーズ第2回。値段が動ける幅を決める制度を、呼値の単位と合わせて理解する。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東証の売買制度（呼値の単位）にまつわる一般的な知識を情報提供として解説したものであり、特定銘柄の売買推奨や投資助言ではありません。記載内容はJPX公式サイトの一次情報（確認日：2026年9月4日）に基づいていますが、制度は将来変更される可能性があるため、実際の取引にあたっては必ず最新の一次情報をご自身で確認してください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>

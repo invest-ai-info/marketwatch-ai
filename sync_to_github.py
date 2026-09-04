@@ -212,4 +212,5 @@ SYNC_FILES = [
     "guide-signal-lab-089.html",
     "guide-anchoring-price.html",
     "guide-proverb-time-in-the-market.html",
+    "guide-tse-tick-size.html",
 ]

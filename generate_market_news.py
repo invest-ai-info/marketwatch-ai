@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-04", "line": '・<b>2026-09-04</b>: 📏 解説「<a href="guide-tse-tick-size.html" style="color:#0969da"><b>呼値の単位（ティックサイズ）とは</b></a>」公開'},
         {"date": "2026-09-04", "line": '・<b>2026-09-04</b>: ⏱ 解説「<a href="guide-proverb-time-in-the-market.html" style="color:#0969da"><b>相場に居続けた時間は、当てにいく技術に勝ることがある</b></a>」公開'},
         {"date": "2026-09-04", "line": '・<b>2026-09-04</b>: 🧠 解説「<a href="guide-anchoring-price.html" style="color:#0969da"><b>自分が買った値段を、相場は知らない</b></a>」公開'},
         {"date": "2026-09-04", "line": '・<b>2026-09-04</b>: 🧪 解説「<a href="guide-signal-lab-089.html" style="color:#0969da"><b>AIシグナル研究日誌 #89 RSI逆張り FWD N=287 CI全域プラス確認</b></a>」公開'},
