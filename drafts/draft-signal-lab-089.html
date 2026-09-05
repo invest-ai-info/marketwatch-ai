@@ -295,6 +295,7 @@ window.addEventListener('resize',mark);
     <h2 id="summary">⏱ 30秒まとめ</h2>
 
     <div class="summary-box">
+      <div class="summary-box-title">⏱️ 30秒でわかる</div>
       <h3>🔬 検証結果ダイジェスト（2026-09-06 時点）</h3>
       <div class="summary-row">
         <div class="summary-stat">
@@ -315,13 +316,13 @@ window.addEventListener('resize',mark);
         </div>
       </div>
       <p style="font-size:.87rem;color:#1f6feb;margin:10px 0 0">
-        <strong>ポイント：</strong>RSI売られすぎ逆張り買いは、過去データ（IS）では損益分岐43%を下回っていたが、前向き検証（2026-06-16以降）でN=296に達し、期待値の信頼区間が初めて全域プラスに到達した。主ドライバーは<strong>4H足</strong>（65.1%）で、1H足（46.5%）とは18.6ppの格差がある。BB下限タッチ（43.1%）との比較でもRSIの優位性が明確になっている。なお、クラスター補正後のCI（トラッカー基準値）は[+0.05〜+0.44]であり、昇格条件「CI下限＞0が2回連続」はまだ確定していない。
+        <strong>ポイント：</strong>RSI売られすぎ逆張り買いは、過去データ（IS）では損益分岐43%を下回っていたが、前向き検証（2026-06-16以降）でN=296に達し、期待値の信頼区間が初めて全域プラスに到達した。主ドライバーは<strong>4H足</strong>（65.1%）で、1H足（46.5%）とは18.6ppの格差がある。BB下限タッチ（43.1%）との比較でも、観測期間内ではRSI側のほうが高い数値となっている。なお、クラスター補正後のCI（トラッカー基準値）は[+0.05〜+0.44]であり、昇格条件「CI下限＞0が2回連続」はまだ確定していない。
       </p>
     </div>
 
     <!-- ② 免責2点目: 過去実績の将来保証なし -->
-    <p class="disclaimer" style="margin-top:0;padding-top:12px;border-top:none;font-size:.82rem;color:#6e7781">
-      ※ 本検証はシステムが自動発火した過去シグナルの集計です。過去の成績は将来の結果を保証するものではありません。また、取引には相場の急変・スプレッド拡大・流動性低下などのリスクが伴います。
+    <p class="disclaimer" data-disclaimer="kinsho-v1" style="margin-top:0;padding-top:12px;border-top:none;font-size:.82rem;color:#6e7781">
+      ※ 本検証はシステムが自動発火した過去シグナルの集計を記録・観察したものであり、特定の銘柄・時間足・売買タイミングを推奨するものではありません。過去の成績は将来の結果を保証するものではありません。また、取引には相場の急変・スプレッド拡大・流動性低下などのリスクが伴います。
     </p>
 
     <!-- ④ 背景 -->
@@ -461,8 +462,8 @@ window.addEventListener('resize',mark);
         <text x="72" y="170" text-anchor="end" class="s-label-sm">0%</text>
 
         <!-- 損益分岐ライン -->
-        <line x1="80" y1="138" x2="520" y2="138" class="s-guide"/>
-        <text x="522" y="141" class="s-label-y" font-size="11">損益分岐 43%</text>
+        <line x1="80" y1="138" x2="500" y2="138" class="s-guide"/>
+        <text x="484" y="141" class="s-label-y" font-size="11">損益分岐 43%</text>
 
         <!-- IS棒: 39.1% → height = 120*0.391=46.9 → y=170-46.9=123.1 -->
         <rect x="130" y="123" width="70" height="47" fill="#cf222e" rx="3"/>
@@ -522,8 +523,8 @@ window.addEventListener('resize',mark);
         <!-- 損益分岐ライン: 43% = 170-(124*0.43)=170-53.3=116.7 -->
         <!-- 80%=0%, 0%=170, 1%=124/80=1.55px, 43%=116.7 -->
         <!-- Scaled: y(pct) = 170 - (pct-0)*124/80 = 170 - pct*1.55 -->
-        <line x1="70" y1="137" x2="520" y2="137" class="s-guide"/>
-        <text x="522" y="140" class="s-label-y" font-size="11">損益分岐 43%</text>
+        <line x1="70" y1="137" x2="490" y2="137" class="s-guide"/>
+        <text x="471" y="140" class="s-label-y" font-size="11">損益分岐 43%</text>
 
         <!-- 4H棒: 65.1% → y=170-(65.1*1.55)=170-100.9=69.1 → height=170-69=101 -->
         <rect x="120" y="69" width="90" height="101" fill="#0969da" rx="3"/>
@@ -563,7 +564,7 @@ window.addEventListener('resize',mark);
     </div>
 
     <p>
-      #074では「4H足FWD全域プラス確認・1H足無エッジ確認」を報告しました。#082では1H足占有68%（198/296）が全体CI下限を押し下げる「希釈効果」を特定しました。今回N=296でも同じ構造が確認されており、<strong>4H足が主ドライバーであることはより安定した結論</strong>になりつつあります。
+      #074では「4H足FWD全域プラス確認・1H足無エッジ確認」を報告しました。#082では1H足占有68%（198/296）が全体CI下限を押し下げる「希釈効果」を特定しました。今回N=296でも同じ構造が確認されており、<strong>4H足が主ドライバーであるという観測</strong>がより安定してきています（将来も同じ傾向が続くとは限りません）。
     </p>
 
     <!-- ⑦ トレンド・グループ別 -->
@@ -580,10 +581,10 @@ window.addEventListener('resize',mark);
     </table>
 
     <p>
-      上昇トレンド中のRSI売られすぎは「押し目」として機能しやすく、FWD勝率66.2%と最も高くなっています。下降トレンド中は44.2%と損益分岐に近い水準で、「逆張りで下降トレンドに逆らう」場面では注意が必要です。
+      上昇トレンド中のRSI売られすぎは「押し目」として機能しやすく、FWD勝率66.2%と最も高くなっています。一方、下降トレンド中は44.2%と損益分岐付近にとどまっており、トレンドの向きによって観測値が大きく異なる結果となりました。
     </p>
 
-    <h3>4H足 × トレンド別（FWD）—— 最強組み合わせ</h3>
+    <h3>4H足 × トレンド別（FWD）—— 数値が高かった組み合わせ</h3>
     <table>
       <thead><tr><th>組み合わせ</th><th>FWD N</th><th>FWD勝率</th><th>FWD E(R)</th></tr></thead>
       <tbody>
@@ -609,7 +610,7 @@ window.addEventListener('resize',mark);
     </table>
 
     <p>
-      jpy_fx（円クロス: USDJPY・EURJPY・GBPJPY・AUDJPYなど）でE(R)=+0.430R・CI下限+0.145とCI全域プラスが確認されています。なかでも<strong>jpy_fx × 4H足</strong>（N=18）では88.9%・E(R)=+1.074Rという高い数値が見られます（ただしN=18は小サンプルであり参考値にとどまります）。
+      jpy_fx（円クロス: USDJPY・EURJPY・GBPJPY・AUDJPYなど）でE(R)=+0.430R・CI下限+0.145とCI全域プラスが確認されています。なかでも<strong>jpy_fx × 4H足</strong>（N=18）では88.9%・E(R)=+1.074Rという高い数値が観測されています（ただしN=18は小サンプルで信頼区間も広く、参考値にとどまります。この数値をもって特定の通貨ペアや手法を推奨するものではありません）。
     </p>
 
     <!-- ⑧ bb比較 -->
@@ -628,7 +629,7 @@ window.addEventListener('resize',mark);
     </table>
 
     <p>
-      bb_lower_touchはFWD勝率43.1%と損益分岐43%に非常に近く、期待値のCIはゼロを跨いでいます（[−0.082, +0.098]）。一方、rsi_oversold_bounceはFWD53.4%・E(R)=+0.245Rと明確に優位です。#023（rsi vs bb の系統比較）・#050（上昇トレンド×逆張りでもRSI vs BBで13pp格差）で確認した傾向が、N=296という大きなサンプルでも維持されています。
+      bb_lower_touchはFWD勝率43.1%と損益分岐43%に非常に近く、期待値のCIはゼロを跨いでいます（[−0.082, +0.098]）。一方、rsi_oversold_bounceはFWD53.4%・E(R)=+0.245Rで、観測期間内では上回る数値となりました。#023（rsi vs bb の系統比較）・#050（上昇トレンド×逆張りでもRSI vs BBで13pp格差）で確認した傾向が、N=296という大きなサンプルでも維持されています。
     </p>
 
     <!-- ⑨ 交絡チェック -->
