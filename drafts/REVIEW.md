@@ -1,3 +1,4 @@
+2026-09-06 autopublish: guide-outcome-bias.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-outcome-bias.html
 2026-09-05 autopublish: guide-currency-hedge-cost.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-currency-hedge-cost.html
 
 ## 2026-09-06 autodraft: draft-survivorship-bias.html（投資心理 #57 / 生存者バイアス）
