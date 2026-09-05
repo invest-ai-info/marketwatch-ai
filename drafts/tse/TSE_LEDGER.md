@@ -54,6 +54,27 @@
 
 **公開**: `guide-tse-price-limits.html`（読了約9分）。`check_guide_draft.py`（GREEN）→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告32件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ `apply_back_to_top.py --apply`（本記事へ新規注入。同時に既存の`guide-bid-ask-spread.html`も正規化）→ 同時刻に別クラウドroutine（scam系）がpushしていたため`generate_market_news.py`の更新履歴リストと`sync_to_github.py`のSYNC_FILESで軽微なマージコンフリクトが発生、両エントリを残す形で解消 → git push origin main（commit 7c5e029, 440715a）。
 
+### ✅ 2026-09-05 キュー#4「株式公開買付け（TOB）」 tob 📢
+
+**題材**: TSE_GUIDE.md キュー#4「株式公開買付け（TOB）」（slug: `tob`、絵文字: 📢、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`はcurlで素のUA・HTTP 200（復旧を維持）。`www.fsa.go.jp`もHTTP 200。**e-Gov法令検索API**（`laws.e-gov.go.jp/api/2/law_data/...`）で以下2本の法令原文を直接取得・条文全文を確認：
+- 金融商品取引法（law_id: 323AC0000000025）第27条の13第4項・第5項（買付予定数の上限を超える応募の扱い＝あん分比例方式）
+- 金融商品取引法施行令（law_id: 340CO0000000321）第8条（買付け等の期間＝20日以上60日以内・行政機関の休日不算入／買付価格の均一原則／第5項第3号＝3分の2以上となる場合の全部勧誘義務）
+- 金融庁「株券等の公開買付けに関するQ&A」（令和8年5月1日版、fsa.go.jp/common/law/kaiji/koukaikaitsuke.pdf）をpdfplumberでテキスト抽出し、問2（スクイーズ・アウトに関するTOB適用関係）を確認。
+- ※e-Gov法令検索の通常ページ（laws.e-gov.go.jp/document等）はJS描画のSPAでWebFetchでは本文が取得できなかったため、e-Gov公式APIエンドポイント（`/api/2/law_data/{law_id}`）から条文の構造化JSONを直接取得する方法に切り替えて対応。JPX glossary（TOB用語集ページ）はWebFetch 403（先方bot判定）だったがcurl素のUAで200到達・内容確認。
+
+確認日：2026年9月5日（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①「株価がTOB価格に収れんしていく傾向がある」という見出しの無留保な断定 ②同箇所本文の「制度上そのような傾向が語られる」という、市場慣行を法令上の効果であるかのように含みを持たせた表現 ③「必ず記載されているため、確認すべき最も重要なポイント」という断定＋規範的最上級 ④「判断に直接関わってきます」の断定寄り表現 ⑤結び「判断材料がより正確になります」という便益断定
+- 5点すべて適用修正（事実・数値・法令引用・SVG・構造は不変、表現の軟化のみ。加えて「将来の株価やTOBの成否を予測するものではない」と非予測の範囲を明示的に拡張）
+- 監査エージェントがコンプラ範囲外の事実確認事項を1件検出→自分で修正：本文「自分で一次情報を確かめる手順」章で「金融商品取引法施行令…第8条・第27条の13関連部分」としていたが、第27条の13は施行令ではなく金融商品取引法本体の条文（初期執筆時の誤記）。該当箇所と表見出しを訂正。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・法令条文の引用を重点的に再検証、e-Gov番号・条文趣旨とも整合確認、一次情報リンク4本のHTTP到達も再実施）→ 🟢白（修正・訂正の反映確認、新規リスクなし）
+- 品質ルーブリック：自己採点で5観点すべて✅
+
+**公開**: `guide-tse-tob.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→条文引用訂正→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告37件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit f9c4282）。
+
 ## エスカレ・要人間レビュー
 
 ### 🚩 2026-09-01 キュー#1「適時開示（TDnet）」 timely-disclosure 📄 — 一次情報（jpx.co.jp）未到達のため見送り
