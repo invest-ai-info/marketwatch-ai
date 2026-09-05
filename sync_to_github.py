@@ -218,4 +218,5 @@ SYNC_FILES = [
     "guide-currency-hedge-cost.html",
     "guide-proverb-series-index.html",
     "guide-tse-tob.html",
+    "guide-company-avgo-broadcom.html",
 ]
