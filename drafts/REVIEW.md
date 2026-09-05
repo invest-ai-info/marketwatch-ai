@@ -1,5 +1,34 @@
 2026-09-05 autopublish: guide-currency-hedge-cost.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-currency-hedge-cost.html
 
+## 2026-09-06 autodraft: draft-survivorship-bias.html（投資心理 #57 / 生存者バイアス）
+
+- **基準日**: 2026-09-06（JST）
+- **topic / key**: 投資心理 #57 / `survivorship-bias`
+- **仮タイトル**: 消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響
+- **生成ファイル**: `drafts/draft-survivorship-bias.html`
+- **参照出典URL**:
+  - https://www.toushin.com/q&a/survivor-bias/ （投信まるごとQ&A「生存バイアスとは？」）
+  - https://www.matsui.co.jp/fund/column/survivorship-bias/ （松井証券「日本独特の傾向も？ 投信の生存者バイアス」）
+  - https://www.pfa.or.jp/yogoshu/sa/sa12.html （企業年金連合会 用語集「サバイバーシップバイアス」）
+  - https://globis.jp/article/dic_5_riydjz6c3/ （GLOBIS学び放題「生存バイアスとは？」）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄・特定ファンド・運用会社の売買推奨なし
+  - ✅ 断定・利益保証ワード（絶対・必ず・100%・保証・儲かる）なし
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ 統計数値（ファンド廃止率・リターン）は「傾向がある」等の柔らかい表現にとどめ断定していない
+  - ✅ 出典URLは一次情報ベース（投信まるごとQ&A・松井証券・企業年金連合会）
+  - ✅ 税務・制度の具体数値は記載せず
+- **SVG TODO**:
+  - TODO(SVG): 図1（ファンド廃止の生存バイアス）・図2（成功例フィルター概念）の2枚をライト/ダーク両テーマで実機確認必要
+  - `.s-bar-r/.s-bar-g/.s-bar-b/.s-bar-gray` のダーク上書き定義は追加済みだが、目視確認は人間が行うこと
+- **人間の残作業**:
+  - SVG2枚のライト/ダーク実機確認（特に defs の arrowhead が両テーマで表示されるか）
+  - タイトル・h1の微調整（任意）
+  - 公開は毎朝 08:40 の `autodraft-publish` ルーティンが自動ゲート付きで実行
+
+---
+
 ## 2026-09-05 autodraft: draft-odd-lot-investing.html（基礎知識 #56 / 単元未満株）
 
 - **基準日**: 2026-09-05（JST）

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響 - MarketWatch AI</title>
+  <meta name="description" content="上場廃止・繰上償還・撤退したファンドは集計から抜け落ち、残ったものだけで「平均」が作られる。生存者バイアス（サバイバーシップバイアス）とは何か、なぜ成功例は説得力を持つのか、自分のトレード記録でも同じ歪みが起きる理由まで、初心者〜中上級者向けに図解で解説。">
+  <meta name="keywords" content="生存者バイアス,サバイバーシップバイアス,投資信託,ファンド廃止,上場廃止,平均リターン,認知バイアス,投資心理,行動経済学,パフォーマンス評価,統計的偏り">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-survivorship-bias.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響">
+  <meta property="og:description" content="消えたファンド・廃止銘柄は平均から抜け落ちる。生存者バイアスが成績評価をどう歪めるか、自分の記録にも同じ罠がある理由まで図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-survivorship-bias.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響",
+    "description": "上場廃止・繰上償還・撤退したファンドは集計から抜け落ち、残ったものだけで「平均」が作られる。生存者バイアスの正体、成功例が説得力を持つ理由、自分の記録の歪みまで図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-06",
+    "dateModified": "2026-09-06",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-survivorship-bias.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* バー（生存者バイアス図） */
+    .s-bar-b{fill:#1E3A6E;opacity:.85}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-gray{fill:#8b949e;opacity:.6}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#388bfd;opacity:.85}
+    body.dark .s-bar-g{fill:#3fb950;opacity:.85}
+    body.dark .s-bar-r{fill:#f85149;opacity:.85}
+    body.dark .s-bar-gray{fill:#6e7681;opacity:.6}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 消えたものは、平均に入っていない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は生存者バイアス（サバイバーシップバイアス）という認知の偏りを整理した「情報提供」であり、特定の金融商品・銘柄・運用会社の推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧠 消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響</h1>
+    <div class="meta-line">公開日：2026 年 9 月 6 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <div class="info-box">
+      <strong>📖 棲み分けメモ（関連記事との違い）</strong>：<a href="guide-index-vs-active.html">インデックス vs アクティブ（#48）</a>は生存バイアスに一言触れるだけで、本記事がその各論を担当します。また<a href="guide-outcome-bias.html">アウトカムバイアス（#52）</a>は「結果で評価を誤る歪み」の記事ですが、本記事は「そもそも標本が欠けている歪み」を扱います。対象が違うので、合わせて読むと認知バイアスの全体像が見えてきます。
+    </div>
+
+    <p>「あのファンドは10年で3倍になった」「あの投資家は10年連続でプラスだ」——こうした話を聞くと、「投資はやれば報われる」と感じるものです。しかし、あなたは一つの重要な問いを立てているでしょうか。<strong>「消えたものは、どこへ行ったのか？」</strong></p>
+
+    <p>10年間で廃止・繰上償還されたファンドは集計には入っていません。上場廃止になった銘柄は株価チャートから消えます。撤退したトレーダーは勝率統計に残りません。これが<strong>生存者バイアス（サバイバーシップバイアス）</strong>の正体です。「生き残ったもの」だけを見ていると、世界が実際よりずっとよく見えてしまう——この記事では、その構造を図解でやさしく解き、自分の記録やファンド評価にどう活かすかまで解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li><strong>生存者バイアスとは「消えたものが集計から抜けること」</strong>。廃止されたファンド・上場廃止銘柄・撤退した投資家は平均から脱落するため、残ったものだけの成績は実態より良く見える。</li>
+      <li><strong>成功例が「説得力を持つ」のは標本の歪みが原因</strong>。成功した人だけが声を上げ、失敗した多数は沈黙する——あなたが目にする情報はもとから偏っている。</li>
+      <li><strong>自分の売買記録にも同じ歪みが起きる</strong>。負けトレードのメモを後から見返さなければ、記憶の中の自分は「なぜか勝率が高い」——記録を捨てないことが最初の一歩。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">生存者バイアスとは何か——消えたものが平均を押し上げる</a></li>
+        <li><a href="#section-2">ファンド評価での生存バイアス（直感図解）</a></li>
+        <li><a href="#section-3">「成功例の話」がなぜ説得力を持つのか</a></li>
+        <li><a href="#section-4">自分の記録にも起きる「消えたメモ」の歪み</a></li>
+        <li><a href="#section-5">〔中上級〕標本の欠けを補う発想——データを読むときの問いかた</a></li>
+        <li><a href="#section-6">〔中上級〕当サイトでの活かし方</a></li>
+        <li><a href="#section-7">まとめ：「平均」を読む前に問う一つのこと</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 生存者バイアスとは何か——消えたものが平均を押し上げる</h2>
+
+    <p>生存者バイアス（英: survivorship bias）とは、<strong>「途中で脱落・消滅したものを集計から除外してしまい、残ったものだけで判断を下すこと」</strong>で生じる認知の歪みです。</p>
+
+    <p>投資の文脈でいえば、以下のようなことが典型です。</p>
+    <ul>
+      <li>過去10年で廃止・繰上償還されたファンドは、10年リターンのランキングに登場しない。</li>
+      <li>経営悪化や不正で上場廃止になった銘柄は、株価指数の「過去平均」から抜け落ちている。</li>
+      <li>損失が膨らんで投資をやめた人の経験は、SNSの投資コミュニティに残らない。</li>
+    </ul>
+
+    <p>結果として、私たちが目にする「平均」や「成功率」は、<strong>勝ち残ったものの成績だけを反映した、上方に歪んだ数字</strong>になっています。</p>
+
+    <div class="info-box">
+      <strong>💡 なぜ「バイアス」と呼ぶのか</strong>：本来の平均は「始めた全員」の結果を含むべきですが、消えたものを除いた集計は「生き残った側」だけに傾いています。この傾きを「バイアス（偏り）」と呼びます。意図的な操作ではなく、集計の仕組み上、自然に生じる歪みです。
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ ファンド評価での生存バイアス（直感図解）</h2>
+
+    <p>最もわかりやすい例が、<strong>投資信託（ファンド）の長期成績評価</strong>です。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 310" role="img" aria-labelledby="surv-fig1-title">
+        <title id="surv-fig1-title">生存バイアスの仕組み：スタート時10本のファンドが5年後に半減し、集計に残るのは生き残った5本だけという概念図</title>
+        <!-- 背景ラベル -->
+        <text class="s-panel-label" x="40" y="24">ファンドの「生存バイアス」のしくみ（概念図）</text>
+
+        <!-- スタート列 (x=100) -->
+        <text class="s-label-sm" x="100" y="52" text-anchor="middle">スタート時</text>
+        <!-- ファンドA〜J：10本 -->
+        <rect class="s-bar-b" x="60" y="60" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="75" text-anchor="middle" font-size="11">ファンドA</text>
+        <rect class="s-bar-b" x="60" y="86" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="101" text-anchor="middle" font-size="11">ファンドB</text>
+        <rect class="s-bar-b" x="60" y="112" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="127" text-anchor="middle" font-size="11">ファンドC</text>
+        <rect class="s-bar-b" x="60" y="138" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="153" text-anchor="middle" font-size="11">ファンドD</text>
+        <rect class="s-bar-b" x="60" y="164" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="179" text-anchor="middle" font-size="11">ファンドE</text>
+        <rect class="s-bar-gray" x="60" y="190" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="205" text-anchor="middle" font-size="11">ファンドF</text>
+        <rect class="s-bar-gray" x="60" y="216" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="231" text-anchor="middle" font-size="11">ファンドG</text>
+        <rect class="s-bar-gray" x="60" y="242" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="257" text-anchor="middle" font-size="11">ファンドH</text>
+        <rect class="s-bar-gray" x="60" y="268" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="100" y="283" text-anchor="middle" font-size="11">ファンドI</text>
+
+        <!-- 矢印 -->
+        <line x1="150" y1="170" x2="220" y2="170" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text class="s-label-sm" x="185" y="162" text-anchor="middle">5年後</text>
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/>
+          </marker>
+        </defs>
+
+        <!-- 5年後列 (x=420) -->
+        <text class="s-label-sm" x="420" y="52" text-anchor="middle">5年後</text>
+        <!-- 生き残り5本 -->
+        <rect class="s-bar-g" x="380" y="60" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="420" y="75" text-anchor="middle" font-size="11">ファンドA ✓</text>
+        <rect class="s-bar-g" x="380" y="86" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="420" y="101" text-anchor="middle" font-size="11">ファンドB ✓</text>
+        <rect class="s-bar-g" x="380" y="112" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="420" y="127" text-anchor="middle" font-size="11">ファンドC ✓</text>
+        <rect class="s-bar-g" x="380" y="138" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="420" y="153" text-anchor="middle" font-size="11">ファンドD ✓</text>
+        <rect class="s-bar-g" x="380" y="164" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="420" y="179" text-anchor="middle" font-size="11">ファンドE ✓</text>
+
+        <!-- 廃止4本（点線で消える） -->
+        <rect x="380" y="190" width="80" height="22" rx="4" fill="none" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text class="s-note-r" x="420" y="205" text-anchor="middle" font-size="10">廃止・償還</text>
+        <rect x="380" y="216" width="80" height="22" rx="4" fill="none" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text class="s-note-r" x="420" y="231" text-anchor="middle" font-size="10">廃止・償還</text>
+        <rect x="380" y="242" width="80" height="22" rx="4" fill="none" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text class="s-note-r" x="420" y="257" text-anchor="middle" font-size="10">廃止・償還</text>
+        <rect x="380" y="268" width="80" height="22" rx="4" fill="none" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text class="s-note-r" x="420" y="283" text-anchor="middle" font-size="10">廃止・償還</text>
+
+        <!-- 集計列 -->
+        <text class="s-label-sm" x="575" y="52" text-anchor="middle">集計に入るのは？</text>
+        <rect class="s-bar-g" x="535" y="60" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="575" y="75" text-anchor="middle" font-size="11">ファンドA</text>
+        <rect class="s-bar-g" x="535" y="86" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="575" y="101" text-anchor="middle" font-size="11">ファンドB</text>
+        <rect class="s-bar-g" x="535" y="112" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="575" y="127" text-anchor="middle" font-size="11">ファンドC</text>
+        <rect class="s-bar-g" x="535" y="138" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="575" y="153" text-anchor="middle" font-size="11">ファンドD</text>
+        <rect class="s-bar-g" x="535" y="164" width="80" height="22" rx="4"/>
+        <text class="s-legend" x="575" y="179" text-anchor="middle" font-size="11">ファンドE</text>
+        <text class="s-note-r" x="575" y="220" text-anchor="middle">F〜I は集計外</text>
+        <text class="s-note-r" x="575" y="238" text-anchor="middle">→ 平均が上方に歪む</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際の廃止率・本数は時期・カテゴリによって異なります。廃止・繰上償還されたファンドが集計から外れると、残ったファンドだけで計算した「平均リターン」は実態より高くなる傾向があります。</p>
+    </figure>
+
+    <p>日本においても、投資信託の市場では毎年一定数のファンドが繰上償還（早期解約）や統合によって消えています。繰上償還されるファンドには運用成績が振るわないものが多い傾向があるため（出典：<a href="https://www.toushin.com/q&a/survivor-bias/" target="_blank" rel="noopener">投信まるごとQ&A「生存バイアスとは？」</a>）、消えたファンドを除いた集計は実態よりも良い成績を示しやすくなります。</p>
+
+    <div class="warning-box">「10年間、ずっと好成績を維持した優良ファンドだけを選べばいい」——これも生存バイアスの落とし穴です。10年前に存在していたファンドの多くがすでに消えており、現在並んでいる「10年存続組」はそもそも選別を経た集団です。<strong>「存続した」という事実には、すでに運のフィルターがかかっています</strong>。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 「成功例の話」がなぜ説得力を持つのか</h2>
+
+    <p>「私は◯◯という手法で3年で資産を5倍にした」という話は、なぜ説得力があるように聞こえるのでしょうか。<strong>同じ手法で損を出してやめた人たちは、そもそも声を上げていない</strong>からです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 220" role="img" aria-labelledby="surv-fig2-title">
+        <title id="surv-fig2-title">成功例だけが声を上げる構造——失敗例は沈黙する概念図</title>
+        <text class="s-panel-label" x="40" y="24">「成功例の声」だけが届く構造（概念図）</text>
+
+        <!-- 左：全員 -->
+        <text class="s-label-sm" x="160" y="50" text-anchor="middle">同じ手法を試みた人たち</text>
+        <!-- 小さな丸を複数並べる：赤（失敗）多数、緑（成功）少数 -->
+        <circle cx="80" cy="90" r="13" class="s-bar-r"/>
+        <circle cx="110" cy="80" r="13" class="s-bar-r"/>
+        <circle cx="140" cy="95" r="13" class="s-bar-r"/>
+        <circle cx="170" cy="80" r="13" class="s-bar-r"/>
+        <circle cx="200" cy="95" r="13" class="s-bar-r"/>
+        <circle cx="230" cy="80" r="13" class="s-bar-r"/>
+        <circle cx="80" cy="130" r="13" class="s-bar-r"/>
+        <circle cx="110" cy="120" r="13" class="s-bar-r"/>
+        <circle cx="140" cy="135" r="13" class="s-bar-r"/>
+        <circle cx="170" cy="120" r="13" class="s-bar-r"/>
+        <circle cx="200" cy="135" r="13" class="s-bar-r"/>
+        <circle cx="230" cy="120" r="13" class="s-bar-r"/>
+        <!-- 成功（緑） -->
+        <circle cx="110" cy="160" r="13" class="s-bar-g"/>
+        <circle cx="170" cy="160" r="13" class="s-bar-g"/>
+        <circle cx="230" cy="160" r="13" class="s-bar-g"/>
+
+        <text class="s-note-r" x="155" y="195" text-anchor="middle" font-size="11">● 失敗・撤退（沈黙）</text>
+        <text class="s-note-g" x="155" y="210" text-anchor="middle" font-size="11">● 成功（発信）</text>
+
+        <!-- 矢印 -->
+        <line x1="265" y1="125" x2="330" y2="125" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+        <text class="s-label-sm" x="297" y="118" text-anchor="middle">フィルター</text>
+        <defs>
+          <marker id="arrowhead2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/>
+          </marker>
+        </defs>
+
+        <!-- 右：届く声 -->
+        <text class="s-label-sm" x="500" y="50" text-anchor="middle">あなたが目にする情報</text>
+        <circle cx="450" cy="120" r="13" class="s-bar-g"/>
+        <circle cx="490" cy="110" r="13" class="s-bar-g"/>
+        <circle cx="530" cy="125" r="13" class="s-bar-g"/>
+        <text class="s-note" x="490" y="165" text-anchor="middle" font-size="11">成功例だけが残る</text>
+        <text class="s-note" x="490" y="182" text-anchor="middle" font-size="11">→ 手法が良く見える</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。失敗した人の声は SNS・書籍・セミナーに届きにくく、成功例が過剰に目立つ構造が自然に生まれます。</p>
+    </figure>
+
+    <p>この構造が生むのは、単なる「成功例の偏り」だけではありません。成功した人も「自分は運が良かった」と分析せず、<strong>「この方法が正しかったから成功した」と因果関係を後づけしやすい</strong>（これは<a href="guide-outcome-bias.html">アウトカムバイアス</a>とも絡みます）。結果として、特定の手法の「再現可能な優位性」が実際よりも強く語られてしまいます。</p>
+
+    <p>SNS・ブログ・動画・書籍——どの情報チャネルにも同じフィルターがかかっています。<strong>「この手法で成功した」という話を聞いたとき、まず問うべきは「同じことを試みて成功しなかった人は何人いるか」</strong>です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 自分の記録にも起きる「消えたメモ」の歪み</h2>
+
+    <p>生存バイアスは、外部の統計だけでなく<strong>自分自身の記憶と記録にも起きます</strong>。</p>
+    <ul>
+      <li>うまくいったトレードは「あのときの判断は正しかった」と強く記憶に残る。</li>
+      <li>負けたトレードは「不運だった」と片付け、振り返らない。</li>
+      <li>トレードノートを途中でやめると、後半の成功例だけが残り、前半の失敗が消える。</li>
+    </ul>
+
+    <p>記憶は実際に起きたことを均等に残しません。<strong>感情の強さと繰り返し想起された回数が多いほど記憶に残りやすく</strong>、逆に感情の薄い（あるいは意図的に見たくない）記憶は薄れやすい性質があります（記憶研究の一般的知見）。</p>
+
+    <div class="positive-box">
+      <strong>対策の第一歩：「捨てない記録」</strong>。トレード日誌（<a href="guide-trade-journal.html">trade-journal</a>参照）でエントリー理由・エグジット理由・そのときの根拠を残しておくだけで、「記憶から消えていたはずの失敗」が手元に残ります。重要なのは「損益ではなく判断の記録」です。負けたトレードのメモも消さない——それだけで自分自身の生存バイアスを大きく抑えられます。
+    </div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 〔中上級〕標本の欠けを補う発想——データを読むときの問いかた</h2>
+
+    <p>生存バイアスは完全に排除することはできません。廃止されたファンドの成績データは、一般には公開されていないことも多いためです。しかし、<strong>「消えているかもしれない」という視点を持つこと自体</strong>が、ナイーブな解釈を防ぎます。</p>
+
+    <h3>データを読むときの 3 つの問いかけ</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>問い</th>
+          <th>具体例</th>
+          <th>何を確かめるか</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>①「分母は何か」</td>
+          <td>「10年で上位10本のファンドは年率◯%」</td>
+          <td>10年前にいくつのファンドが存在し、何本が廃止されたか</td>
+        </tr>
+        <tr>
+          <td>②「誰が集計から消えたか」</td>
+          <td>「この投資家は10年勝ち続けた」</td>
+          <td>同じ期間・同じ環境で投資をやめた人の数は把握できているか</td>
+        </tr>
+        <tr>
+          <td>③「廃止された理由は何か」</td>
+          <td>「残ったファンドを選ぼう」</td>
+          <td>廃止されたファンドの大半は成績不振なのか、それとも他の理由か</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>完璧な情報がなくても、「消えたものが含まれているか」を意識するだけで、<strong>過去の成績を額面通りに受け取らずに済む</strong>ようになります。</p>
+
+    <h3>バックテストと生存バイアス</h3>
+    <p>投資手法の有効性を過去データで検証するとき（バックテスト）、<strong>現在存在する銘柄だけを使ってテストすると生存バイアスが混入します</strong>。過去に上場廃止になった銘柄は現在の銘柄リストにないため、「今現在残っている銘柄」だけでバックテストを行うと、実際には存在しなかった好成績を計算してしまいます。これは「先見の明（look-ahead bias）」とも絡む問題で、当サイトのシグナル研究（<a href="track-record.html">📊 シグナル成績</a>）でも対象期間・対象銘柄を事前に固定してから検証を行う設計になっています。</p>
+
+    <div class="info-box">
+      <strong>💡 「過去10年で年率◯%」の数字を見たら</strong>：その期間中に何本のファンド（銘柄）がスタートし、何本が消えたかを調べる習慣を持ちましょう。集計対象の消耗率が高ければ高いほど、数字への割引が必要です。調べ方の例：投資信託協会のデータ（<a href="https://www.toushin.com/" target="_blank" rel="noopener">toushin.com</a>）や金融庁の統計資料で、期間中の純設定・繰上償還・解約の推移を確認できる場合があります（情報の入手可能性は時期によって異なります）。
+    </div>
+
+    <h3>インデックス投資との関係</h3>
+    <p>インデックス（指数）への投資では、構成銘柄が定期的に入れ替わります。業績が悪化した銘柄は指数から除外され、成長した銘柄が採用されるため、インデックスそのものにも一種の「生存フィルター」が組み込まれています。これがインデックスの長期パフォーマンスを見るときの前提です。詳しくは<a href="guide-index-vs-active.html">インデックス vs アクティブ</a>の記事と合わせてご覧ください。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 〔中上級〕当サイトでの活かし方</h2>
+
+    <p>当サイトでは、テクニカルシグナルの成績を<a href="track-record.html">📊 シグナル成績（track-record）</a>で前向きに（prospectively）公開・蓄積しています。生存バイアスとの関係でいえば、以下の設計になっています。</p>
+
+    <ul>
+      <li><strong>シグナル全件を記録</strong>：発火したシグナルはSL到達（損切り）・TP到達（利益確定）・未解決を問わず全て記録。「勝ったシグナルだけ残す」操作をしない。</li>
+      <li><strong>期間固定の検証</strong>：仮説を立てる前にIn-Sample（IS）とOut-of-Sample（FWD）の期間を宣言し、後から期間を選び直さない（<a href="guide-signal-lab-001.html" target="_blank" rel="noopener">AIシグナル研究日誌</a>参照）。</li>
+      <li><strong>小サンプルへの慎重さ</strong>：N数が少ない段階では断定的な結論を出さない（詳しくは<a href="guide-overconfidence.html">過信バイアス</a>の記事参照）。</li>
+    </ul>
+
+    <p>ご自身のトレード記録でも同じ姿勢が有効です。<strong>「今日からの全トレードを記録する」と決めて、負けトレードのメモも保存しておく</strong>——それが後から自分の実際の勝率・損益比を計算する土台になります。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ：「平均」を読む前に問う一つのこと</h2>
+
+    <p>生存バイアスの本質は、<strong>「見えているものが全てではない」</strong>という事実です。ファンドの長期成績、成功投資家の手法、バックテストの結果——どれも、消えたものが除かれた後の世界を映しています。</p>
+
+    <ul>
+      <li><strong>「分母は何か」「消えたものはいくつか」</strong>を常に問う。</li>
+      <li>成功例の話を聞いたら<strong>「同じことを試みた人の全体はどうだったか」</strong>を考える。</li>
+      <li>自分のトレード記録は、<strong>負けた記録を消さずに全件保存</strong>する。</li>
+    </ul>
+
+    <p>これらは「完璧な答え」を出すためではなく、<strong>「見えていないものがある」という謙虚さ</strong>を保つためのものです。投資の世界では、過信が最も高くつきます。記録を捨てず、平均の裏側を問う習慣が、長期的な判断の質を高める土台になります。</p>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ <strong>免責事項</strong>：当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は生存者バイアスという認知の偏りに関する教育的情報提供であり、特定の金融商品・銘柄・運用方針の推奨・勧誘を目的とするものではありません。投資にはリスクが伴い、元本が保証されるものではありません。投資判断はご自身の責任でお願いします。本記事の情報は作成時点のものであり、将来の運用成績・市場動向を保証するものではありません。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を見る</div>
+      <div class="cta-box-desc">生存バイアスを排除するため、発火した全シグナルの成績を前向き（プロスペクティブ）に記録・公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-index-vs-active.html">
+        <div class="related-card-title">📈 インデックス vs アクティブ</div>
+        <div class="related-card-desc">指数連動型と超過収益を目指す運用の設計思想の違いを解説。生存バイアスがアクティブ運用評価に与える影響にも触れています。</div>
+      </a>
+      <a class="related-card" href="guide-outcome-bias.html">
+        <div class="related-card-title">🎲 アウトカムバイアス</div>
+        <div class="related-card-desc">結果だけで「良い判断だった」と評価してしまう歪み。本記事の「標本が欠ける歪み」と合わせて読むと認知バイアスの全体像が見えます。</div>
+      </a>
+      <a class="related-card" href="guide-trade-journal.html">
+        <div class="related-card-title">📒 トレード日誌の書き方</div>
+        <div class="related-card-desc">記録をつけると判断が変わる理由。負けトレードのメモを残すことが生存バイアスへの実践的な対抗策です。</div>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</body>
+</html>
