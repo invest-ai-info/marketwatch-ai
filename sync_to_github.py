@@ -217,4 +217,5 @@ SYNC_FILES = [
     "guide-signal-lab-090.html",
     "guide-currency-hedge-cost.html",
     "guide-proverb-series-index.html",
+    "guide-tse-tob.html",
 ]

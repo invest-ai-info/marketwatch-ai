@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 📢 解説「<a href="guide-tse-tob.html" style="color:#0969da"><b>株式公開買付け（TOB）とは</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 📖 解説「<a href="guide-proverb-series-index.html" style="color:#0969da"><b>投資格言から学ぼう 全48回 総目次</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 🛡️ 解説「<a href="guide-currency-hedge-cost.html" style="color:#0969da"><b>「為替ヘッジあり」のコストと仕組み</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 🧪 解説「<a href="guide-signal-lab-090.html" style="color:#0969da"><b>RSI売られすぎ逆張り買い N=296追跡</b></a>」公開'},
