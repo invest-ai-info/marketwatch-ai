@@ -216,4 +216,5 @@ SYNC_FILES = [
     "guide-news-2026-09-04-nfp-22k-fed-rate-cut.html",
     "guide-signal-lab-090.html",
     "guide-currency-hedge-cost.html",
+    "guide-proverb-series-index.html",
 ]
