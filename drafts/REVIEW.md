@@ -4217,3 +4217,16 @@ verify.py 6/6緑・Opusコンプラ🟢白（免責三層化・統計断定軟�
 - 次番号: 047
 
 ---
+
+## 2026-09-06 signal-lab-daily: draft-signal-lab-089.html（AIシグナル研究日誌 #89）
+
+- **基準日**: 2026-09-06（JST）
+- **仮説**: rsi_oversold_bounce FWD N=296——4H/1H時間足二極化の深化確認
+- **生成ファイル**: `drafts/draft-signal-lab-089.html`
+- **claims**: `drafts/labnotes/lab-089-claims.json`（13件・k/n全数verify.py確認済み）
+- **key numbers**: IS 52/133=39.1% → FWD 158/296=53.4% E(R)=+0.245 raw CI[+0.113,+0.378]
+- **4H**: 56/86=65.1% E(R)=+0.519 RCI[+0.283,+0.756]
+- **1H**: 92/198=46.5% E(R)=+0.084 RCI[-0.078,+0.247]
+- **tracker**: cluster補正後CI[+0.05~+0.44]🟡蓄積中（2回連続未達）
+- **状態**: ゲート実行中
+
