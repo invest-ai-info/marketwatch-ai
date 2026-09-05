@@ -219,4 +219,5 @@ SYNC_FILES = [
     "guide-proverb-series-index.html",
     "guide-tse-tob.html",
     "guide-company-avgo-broadcom.html",
+    "guide-news-2026-09-05-usdjpy-155-gpif-yen-strength.html",
 ]
