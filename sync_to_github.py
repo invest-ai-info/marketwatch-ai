@@ -222,4 +222,5 @@ SYNC_FILES = [
     "guide-news-2026-09-05-usdjpy-155-gpif-yen-strength.html",
     "guide-outcome-bias.html",
     "guide-tse-market-segments.html",
+    "guide-news-2026-09-06-weekly-events-gdp-cpi-sq-fomc-boj.html",
 ]
