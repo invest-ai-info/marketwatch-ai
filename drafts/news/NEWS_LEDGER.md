@@ -3,6 +3,26 @@
 
 ---
 
+## 2026-09-06
+- 判定: ✅ 公開済み
+- 選定トピック: 来週は「5大イベント週」──GDP改定値(9/7)・米CPI＋メジャーSQ(9/11)・FOMC(9/15-16)・BOJ(9/17-18) 日本株と円の行方を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 選定理由: 日曜で市場クローズのため個別ニュースは薄い。一方、来週9/7〜18に5大イベントが連打される構造（GDP改定値→CPI+メジャーSQ→FOMC→BOJ）は既刊（9/5記事=FX中心）と明確に異なる日本株・SQフォーカス。付加価値のある整理記事として採用。
+- 出典（確認済み・7系統）:
+  - 内閣府経済社会総合研究所（ESRI）公式サイト（GDP改定値9/7発表スケジュール）
+  - BLS 公式スケジュール（米CPI9/11発表）
+  - FRB 公式スケジュール（FOMC 9/15-16）
+  - 日銀公式スケジュール（BOJ 9/17-18）
+  - 財経新聞「来週の相場で注目すべき3つのポイント：GDP改定値、メジャーSQ算出日、米CPI」（2026-09-05）
+  - 日本経済新聞「4〜6月の実質GDP年率1.1%増 3四半期連続プラス」（2026-08）
+  - Japan Times「BOJ's Ueda hints at September rate hike as bets on move mount」（2026-09-02）
+  - MUFG Research / FXStreet「Japanese Yen: Sharp rebound and Fed repricing – MUFG」（2026-09-04）
+  - Business Standard「Japan stocks rebound as tech shares lead gains」（2026-09-04）
+- コンプラ判定: 🟢白（Opus初期=🟡グレー→修正[植田総裁表記・OGタイトル・MUFG引用軟化]→最終=🟢白。独立Opus確認=🟢白）
+- 記事URL: guide-news-2026-09-06-weekly-events-gdp-cpi-sq-fomc-boj.html
+
+---
+
 ## 2026-09-05
 - 判定: ✅ 公開済み
 - 選定トピック: ドル円155円台突入──GPIF思惑（ポートフォリオ変更観測の再燃）と日銀利上げ観測が重なり今週5円超の円高、来週CPI・FOMC・BOJ会合の3シナリオを整理（カテゴリ: 為替・FX・日銀・GPIF・FOMC）
