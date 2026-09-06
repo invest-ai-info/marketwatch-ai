@@ -75,6 +75,26 @@
 
 **公開**: `guide-tse-tob.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→条文引用訂正→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告37件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit f9c4282）。
 
+### ✅ 2026-09-06 キュー#5「東証の市場区分」 market-segments 🏛
+
+**題材**: TSE_GUIDE.md キュー#5「東証の市場区分」（slug: `market-segments`、絵文字: 🏛、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`は素のcurl（UA偽装なし）でHTTP 200・到達可能（複数ページで実測。最初にURLを推測して404を踏んだが、これは経路遮断ではなく単なるURL誤り＝WebSearchで正しいURLを特定して解消）。`www.fsa.go.jp`もHTTP 200。以下のJPX一次情報ページを実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/equities/improvements/market-structure/01.html（市場区分見直しの概要・更新日2023/04/01）— 旧4区分の課題、新3区分のコンセプト原文、2022年4月4日一斉移行の経緯・日程を確認。
+- https://www.jpx.co.jp/equities/listing/continue/outline/01.html・02.html・03.html（上場維持基準：プライム/スタンダード/グロース、各ページ更新日2022/04/03・2022/04/03・2025/12/08）— 3市場の株主数・流通株式・売買代金/売買高・時価総額・純資産の全数値を確認。
+- https://www.jpx.co.jp/equities/follow-up/04.html（上場維持基準に関する経過措置の終了・更新日2026/03/18）— 2025年3月1日以後の基準日から本来基準が適用されていること、改善期間（原則1年・売買高基準6か月）→監理・整理銘柄→上場廃止という手順、経過措置中の緩和数値との対比表を確認。
+
+確認日：2026-09-06（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①冒頭disclaimer-bannerに`data-disclaimer="kinsho-v1"`属性欠落（3層のうち1層のみ抜け） ②「格の高い会社」が直線引用符で他所と表記不統一 ③「監理銘柄・整理銘柄に指定された場合＝上場廃止の可能性が高まった段階」という記述が、整理銘柄は実際には上場廃止決定後の段階である点を曖昧にしていた ④「流通株式時価総額や売買代金の基準が低い区分ほど値動きが荒くなりやすい」という文が、区分単位のリスク評価（実質的な格付け）に読まれうる表現＋係り受けの乱れ
+- 4点すべて適用修正（事実・数値・SVG・構造・JPX引用文は不変、属性追加・表記統一・段階の正確化・表現の中立化のみ）。修正はEditツールが一時的に無効だったため、置換前後で出現回数を厳密に検証したBash経由の文字列置換で実施し、タグ均衡・disclaimer属性数（3/3）を確認
+- 事実確認：上場維持基準の全数値・改善期間/監理整理銘柄の期間・経過措置終了日を一次情報および複数の証券会社告知と突合し誤りゼロを確認（唯一「監理銘柄・整理銘柄＝原則6か月」の表現は東証・証券会社側の記載と一致するが、整理銘柄単体は原則1か月という補記が必要と判断→③で対応）
+- 【独立最終確認】（別セッション・model=opus・Readのみ）→ 🟢白（修正反映確認・新規リスクなし）
+- 品質ルーブリック：自己採点で5観点すべて✅（「流通株式時価総額」の初出＝30秒まとめへの平易な補足説明を追加、§3冒頭の「制度上の基準値」の説明を「仮の例」ではなく「JPX公表の実際の基準」であると明確化する軽微修正を実施）
+
+**公開**: `guide-tse-market-segments.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。同時に既存6ページ（guide-anchoring-price / guide-currency-hedge-cost / guide-scam-crypto-scam / guide-scam-investment-seminar / guide-scam-real-estate-yield-pitch / guide-scam-recovery-scam）も正規化）→`check_site_consistency.py`（EXIT=0、警告33件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git commit時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してから git push origin main（commit 0912dd1）。
+
 ## エスカレ・要人間レビュー
 
 ### 🚩 2026-09-01 キュー#1「適時開示（TDnet）」 timely-disclosure 📄 — 一次情報（jpx.co.jp）未到達のため見送り
