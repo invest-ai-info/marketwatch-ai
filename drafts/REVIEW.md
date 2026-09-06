@@ -1,3 +1,7 @@
+2026-09-07 autopublish: guide-equity-offering（増資・希薄化）公開 — 決定論緑→Opus🟡グレー→軽微修正→再緑→独立Opus🔴SVG座標修正→SVG修正→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-equity-offering.html
+
+---
+
 ## 2026-09-07 signal-lab #091（定点観測）
 
 - **基準日**: 2026-09-07（JST）
