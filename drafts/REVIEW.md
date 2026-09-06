@@ -1,3 +1,35 @@
+## 2026-09-06 autodraft: draft-volatility-vs-risk.html（リスク管理 #58 / 値動きの荒さと損失の違い）
+
+- **基準日**: 2026-09-06（JST）
+- **topic / key**: リスク管理 #58 / `volatility-vs-risk`
+- **仮タイトル**: 値動きが荒いことと、損をすることは、同じではない
+- **生成ファイル**: `drafts/draft-volatility-vs-risk.html`
+- **参照出典URL**:
+  - https://www.matsui.co.jp/money-satellite/column/beginner/fx/glossary/cl-volatility.html （松井証券「ボラティリティとは？」）
+  - https://www.businessinsider.jp/article/257953/ （Business Insider Japan「ボラティリティはリスク要素か」）
+  - https://kanjokamoku.k-solution.info/2007/05/_1_662.html （リスクの指標—価格リスク—ボラティリティ・標準偏差）
+  - https://www.nism.ac.in/blog/understanding-the-difference-between-volatility-and-risk-for-smarter-investments （NISM「Volatility vs Risk」）
+  - https://www.xtb.com/en/education/volatility-vs-risk-why-theyre-not-the-same-and-why-that-matters （XTB「Volatility vs Risk: Why They're Not the Same」）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・概念の説明に限定）
+  - ✅ 断定・利益保証ワード（絶対・必ず・100%・保証・儲かる）なし
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ 標準偏差の具体的数値（表の目安）に「時期・市場環境によって大きく変動する」旨の注記あり
+  - ✅ VIX具体値は書かず vix.html へのリンクで案内（条件に合致）
+  - ✅ 「相関リスク（#35）と相互リンク」条件を満たす（guide-correlation-risk.html リンクあり）
+  - ✅ 「position-sizing（#1）＝量の決め方、本記事＝何を危険と呼ぶか」の棲み分けを明示
+  - ✅ 計算例に「あくまで考え方を示す例であり推奨ではない」旨を注記
+- **SVG TODO**:
+  - 図1（同じ最終値で道のりが異なる2本の線）: ライト/ダーク両テーマで実機確認必要
+  - 図2（荒い値動き→感情的売却のメカニズム）: ライト/ダーク両テーマで実機確認必要
+  - 標準偏差の正規分布（ベル型）概念図: TODO(SVG)として本文内に記載済み（未着手）
+- **人間の残作業**:
+  - SVG2枚のライト/ダーク実機確認
+  - 標準偏差ベル型概念図の追加（本文内 TODO コメントに記載）
+  - タイトル・h1の微調整（任意）
+  - 公開は毎朝 08:40 の `autodraft-publish` ルーティンが自動ゲート付きで実行
+
 2026-09-06 autopublish: guide-outcome-bias.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-outcome-bias.html
 2026-09-05 autopublish: guide-currency-hedge-cost.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-currency-hedge-cost.html
 
