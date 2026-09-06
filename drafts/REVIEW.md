@@ -4,7 +4,8 @@
 - **テーマ**: rsi_oversold_bounce FWD N=296 CI下限+0.05（プラス回帰）・昇格ストライク1保持。スイープFDR候補=0。定点観測のみ
 - **下書き**: `drafts/draft-signal-lab-091.html`
 - **claims**: `drafts/labnotes/lab-091-claims.json` (k=158, n=296, 4H k=56/86, 1H k=92/198)
-- **ゲート**: ゲート実行中…
+- **ゲート**: verify緑(3/3)→Opus🟡軽微(kinsho-v1属性・表現軟化5件)→再verify緑→独立Opus🟢白→finalize→publish→check緑(エラー0)
+- **公開URL**: https://marketwatch-jp.com/guide-signal-lab-091.html ✅公開済み（2026-09-07）
 
 ---
 
