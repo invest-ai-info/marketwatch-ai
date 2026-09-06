@@ -178,3 +178,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2312432 / https://link.springer.com/article/10.1007/s11142-018-9470-2
 - 検証案: 東証銘柄の財務データからROA（利益性）・売上成長率（成長性）・負債比率逆数（安全性）・配当性向の4指標をz-score標準化して合算ランキング。上位三分位vs下位三分位の翌年リターン差を算出。piotroski-fscoreとの予測力比較も実施。財務データjoin必要。
 - タグ: ○
+
+## 2026-09-06（JST）
+### slug: vrp-realized-implied
+- 名前: 実現-含意ボラティリティ乖離シグナル（VRP・個別株）
+- 主張: 含意ボラティリティ（VIX等のオプション市場価格）が実現ボラティリティ（直近21日の日次リターン標準偏差）を上回る幅（ボラティリティ・リスク・プレミアム=VRP）が大きいほど、翌月の株価リターンが高くなる傾向がある【出典の主張・未検証】。Eksi & Roy（SSRN 5234112、2025年4月）が米国個別株で実現ボラティリティに平均回帰補正を加えるとVRPベースの戦略の超過リターンが平均42%向上すると報告。Quantpediaの「Volatility Risk Premium Effect」では株価指数先物のショートボラティリティ戦略でシャープレシオ約1.0を確認。low-volatility（水準・tested）・ivol-puzzle-jp（残差ボラ・queued）とは「実現 vs 含意の乖離スプレッド」という異なる角度。
+- 出典: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5234112 / https://quantpedia.com/strategies/volatility-risk-premium-effect
+- 検証案: signals-logの18銘柄のうちES=F・NKD=Fについて21日実現ボラティリティ（log-return標準偏差×√252）と同期間のVIX（^VIX）月次平均を計算し、VRP=VIX－実現ボラが大きい月の翌月リターン上位三分位 vs 下位三分位を比較。平均回帰補正あり/なしで2パターン検証。価格データ＋VIX公開データで完結。
+- タグ: ◎
+
+### slug: jp-low-pbr-tse-reform
+- 名前: 日本株低PBR×TSE資本効率改革アクセラレーター
+- 主張: 2023年の東証による「資本コストや株価を意識した経営」要請（プライム市場でPBR<1倍企業に改善計画の開示義務化）以降、慢性的に割安な銘柄群が市場全体を有意にアウトパフォームした傾向がある【出典の主張・未検証】。D'Ercole, Wagner, Yamada（SSRN 5086589、2025年1月）がTSEのコンプライアンス一覧公開が「顕著な情報イベント」として機能し、持続的割安銘柄に強い市場反応が集中したと報告（短期の実現利益率改善や業績予想修正は未確認）。2022年7月→2025年7月でプライム平均PBRが1.1→1.4に改善・ROEが8.4%→9.0%に上昇。buffett-quality（5基準複合・tested）・jp-high-dividend-yield（配当単独・queued）とは独立した単一PBRファクターの効果検証。
+- 出典: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5086589 / https://www.quant-investing.com/blog/japan-stock-reform-undervalued-companies
+- 検証案: jp-rankings.json銘柄にPBR（株価÷BPS）をjoinし、PBR<1倍群 vs PBR≥1倍群の1年・2年リターン差を算出。TSE要請開始月（2023年3月）前後でファクター効果の変化も確認する。buffett-quality（tested）との相関係数も測定。財務データjoin必要。
+- タグ: ○
+
+### slug: overnight-return-premium-jp
+- 名前: オーバーナイト・リターン・プレミアム（日本株版）
+- 主張: 株式市場の長期リターンの大半は取引時間外（前日終値→当日始値）に発生し、取引時間内（当日始値→終値）リターンの期待値は低い・またはマイナスになる傾向がある【出典の主張・未検証】。Cliff, Cooper, Gulen（Review of Financial Studies 2008）が米国1993〜2006年でS&P500指数の長期超過リターンがほぼ全てオーバーナイト部分に集中すると報告。日本市場（TSE）では米国市場の引け後の動向をオープンギャップに吸収する構造が存在し、個別銘柄レベルでも類似の時間帯分解効果が期待される。jp-dow-effect（曜日別・queued）・pre-holiday-jp（祝日前・tested）とは取引時間帯の分解という独立した別仮説。
+- 出典: https://quantpedia.com/strategies/overnight-return-effect / https://academic.oup.com/rfs/article/21/4/1683/1583413
+- 検証案: jp-rankings.json銘柄の日足OHLC（Open・Close）から「オーバーナイトリターン＝当日Open÷前日Close－1」と「取引時間内リターン＝当日Close÷当日Open－1」を計算し、年率期待値・勝率・シャープレシオを比較。NKD=F先物でも同様の分解を実施し両結果を照合。価格データのみで完結。
+- タグ: ◎
