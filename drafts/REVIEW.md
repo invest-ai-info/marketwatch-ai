@@ -1,3 +1,7 @@
+2026-09-08 autopublish: guide-cash-allocation（現金を残しておくことは、機会損失ではない）公開 — 決定論🟢→Opus🟡軽微修正4件→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-cash-allocation.html
+
+---
+
 ## 2026-09-08 signal-lab #092（ps=1 × ds=1 同日交差）
 
 - **基準日**: 2026-09-08（JST 06:10）
