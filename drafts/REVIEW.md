@@ -1,3 +1,17 @@
+## 2026-09-08 signal-lab #092（ps=1 × ds=1 同日交差）
+
+- **基準日**: 2026-09-08（JST 06:10）
+- **topic**: rsi_oversold_bounce 昇格ストライク1到達 × trend=上昇×reversalL 降格警戒1ストライク目
+- **カテゴリ**: AIシグナル研究日誌
+- **生成ファイル**: `drafts/draft-signal-lab-092.html`
+- **claims**: `drafts/labnotes/lab-092-claims.json`
+- **analysis**: `drafts/labnotes/lab-092-analysis.md`
+- **sweep**: `drafts/labnotes/sweep-2026-09-08.json`（FDR通過0本）
+- **ゲート状態**: 🔄 verify待ち
+- **次のアクション**: signal_lab_verify.py → Opusコンプラ → 独立Opus → finalize → publish
+
+---
+
 ## 2026-09-08 autodraft: draft-benchmark-comparison.html
 
 - **基準日**: 2026-09-08（JST 05:30）
