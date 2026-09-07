@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 🧪 解説「<a href="guide-signal-lab-092.html" style="color:#0969da"><b>#92 ps=1×ds=1 同日交差——rsi_os 昇格接近・上昇トレンド逆張り降格警戒</b></a>」公開'},
         {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 📰 解説「<a href="guide-news-2026-09-07-nikkei-semiconductor-ai-rally.html" style="color:#0969da"><b>【9/7】日経1,378円高・半導体株全面高</b></a>」公開'},
         {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 🤝 解説「<a href="guide-tse-share-lending.html" style="color:#0969da"><b>貸株サービスのしくみ</b></a>」公開'},
         {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 💰 解説「<a href="guide-equity-offering.html" style="color:#0969da"><b>会社がお金を集めると、なぜ株価が下がるのか</b></a>」公開'},
