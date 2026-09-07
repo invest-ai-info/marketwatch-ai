@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>貸株サービスのしくみ｜受け取るのは「配当金」ではない - MarketWatch AI</title>
+  <meta name="description" content="貸株サービスで保有株を証券会社に貸すと品貸料（賃借料）を受け取れますが、配当のときに来るのは「配当金」ではなく別枠の「配当金相当額」。税区分・議決権/株主優待・証券会社の信用リスクへの影響を、国税庁の質疑応答事例と民法の条文という一次情報にもとづき、東証のしくみシリーズ第6回として解説します。">
+  <meta name="keywords" content="貸株サービス,貸株,品貸料,賃借料,配当金相当額,雑所得,消費貸借,民法587条,議決権,株主優待,東証のしくみ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-share-lending.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="貸株サービスのしくみ｜受け取るのは「配当金」ではない">
+  <meta property="og:description" content="貸株で来るのは「配当金」ではなく「配当金相当額」。税区分・議決権/優待・証券会社の信用リスクを一次情報から解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-share-lending.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "貸株サービスのしくみ｜受け取るのは「配当金」ではない",
+    "description": "貸株で来るのは「配当金」ではなく「配当金相当額」。税区分・議決権/優待・証券会社の信用リスクを一次情報から解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-07",
+    "dateModified": "2026-09-07",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-share-lending.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 貸株サービスのしくみ
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東京証券取引所などの制度・手続きを一般的に解説する「情報提供」であり、特定銘柄・特定の証券会社のサービスの利用推奨や投資助言ではありません。制度は変更されることがあるため、実際の取引前に必ずご自身で一次情報をご確認ください。</div>
+
+    <h1>🤝 貸株サービスのしくみ｜受け取るのは「配当金」ではない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 7 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第6回）</div>
+
+    <p>「株を保有しているだけで金利がもらえる」——証券会社の<strong>貸株サービス</strong>は、そんな触れ込みで語られることがあります。仕組み自体は単純で、保有株を証券会社に貸し出し、対価として<strong>品貸料（賃借料）</strong>を受け取るというものです。ただし、この記事の芯はそこではありません。<strong>貸株に出している間、あなたが受け取る配当は「配当金」ではなく、別枠の「配当金相当額」に置き換わる</strong>——この一点を、税務上の一次情報から確かめます。</p>
+    <p>この<strong>「東証のしくみ」シリーズ</strong>は、日本の株式市場の制度・手続きだけを扱い、個別銘柄の評価や売買判断には踏み込みません。第6回のテーマは<strong>貸株サービス</strong>です。制度の数値・法的な位置づけは、国税庁の質疑応答事例と民法の条文という一次情報を実際に確認したうえで解説します（確認日は本文中に記載）。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li><strong>貸株は「消費貸借」（民法587条）</strong>。貸した株そのものではなく、<strong>同じ銘柄・同じ数量の株を後で返してもらう</strong>契約であり、貸している間は証券会社が株式の権利者になる。</li>
+      <li>配当のとき証券会社から支払われるのは<strong>「配当金相当額」</strong>という別の名目の金銭。国税庁の質疑応答事例では、この配当金相当額と品貸料（賃借料）は<strong>どちらも「雑所得」</strong>として扱われ、配当所得の「配当控除」の対象にはならない。</li>
+      <li>権利確定日をまたいで貸株に出したままだと、<strong>議決権・株主優待は原則として得られない</strong>。証券会社によっては優待の権利確定日前に自動的に株を返却する設定を用意している場合があるが、それは各社が任意で提供するサービスの話であり、制度そのものの話ではない。</li>
+      <li>貸している間の株式は証券会社の管理下にあるため、<strong>証券会社が経営破綻した場合に貸株分がそのまま戻ってくる保証はない</strong>という性質のリスクも、消費貸借という契約形態から生じる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">貸株サービスとは何のための制度か</a></li>
+        <li><a href="#section-2">具体例：品貸料はどう計算されるか（仮の設定）</a></li>
+        <li><a href="#section-3">図解：貸株の間、株とお金はどう動くか</a></li>
+        <li><a href="#section-4">個人投資家にどこで効いてくるか</a></li>
+        <li><a href="#section-5">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-6">よくある誤解</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 貸株サービスとは何のための制度か</h2>
+    <p>貸株サービスとは、証券口座で保有している株式を証券会社に貸し出し、貸している間の対価として<strong>品貸料（証券会社によっては「賃借料」とも呼ぶ）</strong>を受け取れる仕組みです。証券会社側は、借りた株式を信用取引で空売り（売り建て）をする投資家に又貸しする原資などに充てます。保有しているだけの株式を、売却せずに追加の収益機会に回せる——というのが、このサービスが語られるときの謳い文句です。</p>
+    <p>法的な性質を確認すると、貸株取引は<strong>「消費貸借」</strong>にあたります。国税庁の質疑応答事例は、株券の貸借取引について次のように整理しています。</p>
+    <div class="info-box"><strong>💡 一次情報（国税庁）の記述：</strong>「株券貸借取引は、金融商品取引業者が取引終了日に、投資家から借り受けた株券と<strong>同種、同等、同数の株券を投資家へ返還する</strong>ことを約する取引であり、その実態は<strong>「消費貸借」（民法587）</strong>であると認められる」（国税庁 質疑応答事例「特約の付された株券貸借取引に係る特約権料等の課税上の取扱い」より）</div>
+    <p style="font-size:.88rem;color:#57606a">※この質疑応答事例は、株券貸借取引に特約権（店頭デリバティブ）を付加した取引類型についての照会ですが、<strong>「貸借取引の実態は消費貸借である」という部分</strong>は、特約権の有無にかかわらず貸株取引に共通する法的性質として引用しています。</p>
+    <p>民法587条が定める消費貸借とは、<strong>「同じ種類・品質・数量のものを返す約束で、相手方から金銭その他の物を受け取る」</strong>契約です。ここが賃貸借（借りた"その物自体"を返す契約）との決定的な違いで、消費貸借では<strong>貸した対象物そのものの権利が、貸している間は相手方（証券会社）に移る</strong>という性質を持ちます。貸株サービスの各種の効果——配当が「配当金」ではなくなること、議決権や株主優待が原則として得られなくなること——は、すべてこの消費貸借という契約の性質から一貫して説明できます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 具体例：品貸料はどう計算されるか（仮の設定）</h2>
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">以下の数値は「考え方を説明するための仮の例」であり、実在の証券会社の料率や、特定銘柄の実際の品貸料率を示すものではありません。品貸料率は銘柄ごと・証券会社ごと・時期ごとに異なります。</div>
+    <p>品貸料は一般に、<strong>「時価評価額 × 品貸料率（年率）× 貸出日数 ÷ 365」</strong>という考え方で計算されます。たとえば、時価100万円分の株式を、仮に年率0.1%の品貸料率で30日間貸し出したとすると——</p>
+    <table>
+      <thead><tr><th>項目</th><th>仮の設定値</th></tr></thead>
+      <tbody>
+        <tr><td>時価評価額</td><td>1,000,000円（仮の例）</td></tr>
+        <tr><td>品貸料率（年率）</td><td>0.1%（仮の例）</td></tr>
+        <tr><td>貸出日数</td><td>30日</td></tr>
+        <tr><td>品貸料（概算）</td><td>1,000,000円 × 0.1% × 30 ÷ 365 ≒ <strong>82円</strong>（仮の例・税引前）</td></tr>
+      </tbody>
+    </table>
+    <p>人気化して品貸料率が跳ね上がる銘柄も話題になりますが、それは<strong>信用取引の「逆日歩（品貸料）」</strong>という別の制度の文脈で語られることが多く、一般の貸株サービスの品貸料率とは仕組み・受益者が異なります。逆日歩そのものは、本シリーズの別回で改めて一次情報から確認します。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 図解：貸株の間、株とお金はどう動くか</h2>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 470" role="img" aria-labelledby="lending-title">
+        <title id="lending-title">貸株サービスにおける株式と金銭の流れの概念図。投資家は証券会社に株式を貸し出し、証券会社は品貸料と配当金相当額を投資家に支払う。貸出期間終了時には同種・同等・同数の株式が返還される</title>
+        <text class="s-panel-label" x="20" y="22">貸株サービス＝「消費貸借」（民法587条）の一種</text>
+
+        <!-- 投資家ボックス -->
+        <rect x="30" y="50" width="150" height="65" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="105" y="78" text-anchor="middle" class="s-note-g" font-size="14">投資家</text>
+        <text x="105" y="97" text-anchor="middle" class="s-label-sm" font-size="11">（証券口座の保有株）</text>
+
+        <!-- 証券会社ボックス -->
+        <rect x="460" y="50" width="150" height="65" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="535" y="78" text-anchor="middle" class="s-note" font-size="14">証券会社</text>
+        <text x="535" y="97" text-anchor="middle" class="s-label-sm" font-size="11">（信用取引の原資等に）</text>
+
+        <!-- 貸株（右向き） -->
+        <text x="320" y="132" text-anchor="middle" class="s-note-g" font-size="12">① 株式を貸す（貸株）</text>
+        <line x1="185" y1="145" x2="455" y2="145" class="s-axis" marker-end="url(#arrowR)"/>
+
+        <!-- 対価（左向き） -->
+        <line x1="455" y1="175" x2="185" y2="175" class="s-axis" marker-end="url(#arrowL)"/>
+        <text x="320" y="197" text-anchor="middle" class="s-note" font-size="12">② 品貸料＋配当金相当額（雑所得）</text>
+
+        <!-- 発行会社（配当の出どころ） -->
+        <rect x="460" y="225" width="150" height="55" rx="10" fill="#fff8c5" stroke="#9a6700" stroke-width="1.3"/>
+        <text x="535" y="257" text-anchor="middle" class="s-note-r" font-size="12.5">株式の発行会社</text>
+        <line x1="535" y1="223" x2="535" y2="182" class="s-axis" marker-end="url(#arrowUp)"/>
+        <text x="545" y="207" class="s-label-sm" font-size="10">配当金を支払う</text>
+        <text x="545" y="220" class="s-label-sm" font-size="10">（証券会社が受領）</text>
+
+        <!-- 返還ループ -->
+        <path d="M 185 245 C 260 290, 360 290, 455 245" fill="none" class="s-guide"/>
+        <text x="320" y="315" text-anchor="middle" class="s-note" font-size="11.5">③ 貸出期間終了時：同種・同等・同数の株式を返還</text>
+        <text x="320" y="333" text-anchor="middle" class="s-label-sm" font-size="10.5">（貸した"その株"そのものが戻るわけではない＝消費貸借）</text>
+
+        <!-- 効果ノート -->
+        <rect x="30" y="355" width="490" height="100" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1"/>
+        <text x="45" y="375" class="s-note-r" font-size="12">貸している間に起きること（3点）</text>
+        <text x="45" y="394" class="s-label-sm" font-size="10.5">・配当は「配当金」ではなく「配当金相当額」（雑所得）として支払われる</text>
+        <text x="45" y="411" class="s-label-sm" font-size="10.5">・権利確定日をまたぐと議決権・株主優待は原則として得られない</text>
+        <text x="45" y="428" class="s-label-sm" font-size="10.5">・証券会社の管理下にあるため信用リスクという性質のリスクが生じる</text>
+
+        <defs>
+          <marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1a7f37"/></marker>
+          <marker id="arrowL" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M8,0 L0,4 L8,8 Z" fill="#0969da"/></marker>
+          <marker id="arrowUp" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto"><path d="M0,8 L4,0 L8,8 Z" fill="#9a6700"/></marker>
+        </defs>
+      </svg>
+      <figcaption class="chart-caption">▲ 貸株は「消費貸借」（民法587条）にあたり、貸している間は証券会社が株式の権利者になる。配当は証券会社を経由した「配当金相当額」として支払われ、貸出終了時には同種・同等・同数の株式が返還される（貸した株そのものではない）。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 個人投資家にどこで効いてくるか</h2>
+    <h3>① 税区分：「配当金」ではなく「雑所得」</h3>
+    <p>国税庁の質疑応答事例は、株券貸借取引から投資家が受け取る<strong>賃借料</strong>と<strong>配当代わり金（配当金相当額）</strong>について、次のように区分しています。</p>
+    <div class="info-box"><strong>💡 一次情報（国税庁）の記述：</strong>「賃借料は、株券貸借取引から生ずる果実であることから、（中略）雑所得となります。また、配当代わり金についても、<strong>株主たる地位に基づいて受ける配当金ではなく</strong>、株券貸借取引から生ずる果実であることから、<strong>配当所得には該当せず</strong>、賃借料と同じく、雑所得となります」</div>
+    <p>雑所得として扱われるということは、通常の配当金で使える<strong>「配当控除」</strong>（国内株の配当について所得税額から一定額を差し引ける仕組み）<strong>の対象にはならない</strong>ほか、上場株式等の譲渡損失との<strong>損益通算</strong>（同じ年の株の売却損と他の利益を相殺して税負担を調整する仕組み）についても、通常の配当所得とは扱いが異なるとされています。「保有しているだけなので税金の扱いも配当と同じだろう」という前提は、この一次情報の記述とは整合しません。</p>
+    <div class="warning-box">上記は、国税庁の質疑応答事例が示す<strong>一般的な考え方</strong>の紹介です。国税庁自身も同ページの注記で「この質疑事例は、照会に係る事実関係を前提とした一般的な回答であり、必ずしも事案の内容の全部を表現したものではありませんから、納税者の方々が行う具体的な取引等に適用する場合においては、<strong>この回答内容と異なる課税関係が生ずることがある</strong>ことにご注意ください」と述べています。実際の課税関係は、口座区分や個々の取引の内容によって異なり得ます。<strong>税務に関する具体的な判断については、税務署・税理士等の専門家にご相談ください。</strong></div>
+    <h3>② 議決権・株主優待：権利確定日をまたぐと原則対象外</h3>
+    <p>民法587条の消費貸借という性質上、貸株に出している間は、株式についての権利が<strong>貸主である投資家の手を離れ、借主である証券会社の側に移る</strong>と整理されます。そのため、権利確定日の時点で株式を貸株に出したままだと、<strong>議決権の行使や株主優待の受給資格は原則として得られないとされています</strong>。証券会社によっては、優待や議決権の権利確定日が近づくと自動的に株式を返却する設定を提供している場合がありますが、それはあくまで<strong>各社が任意で用意しているサービス機能</strong>であり、制度そのものが権利を保障しているわけではない点に注意が必要です。実際に自分の利用している証券会社がどのような設定を提供しているかは、次章の手順で各社の説明を確認してください。</p>
+    <h3>③ 証券会社の信用リスク</h3>
+    <p>消費貸借では、貸している間の株式について証券会社が権利者になります。これは裏を返せば、<strong>貸している株式の扱いが、その証券会社の財務状況と無関係ではなくなる</strong>ということです。貸株サービスを利用する前に、自分の利用している証券会社がどのような契約条件・リスク説明を提示しているかを、重要事項説明などの一次資料で確認しておくことは、制度の性質上、理にかなっています。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>このシリーズの立場として、制度の数値・法的根拠は必ず一次情報で確認します。貸株サービスについては、以下の手順で確かめられます。</p>
+    <ol>
+      <li><strong>国税庁の質疑応答事例</strong>で税区分を確認する：<a href="https://www.nta.go.jp/law/shitsugi/joto/22/01.htm" target="_blank" rel="noopener">nta.go.jp「特約の付された株券貸借取引に係る特約権料等の課税上の取扱い」</a>。ページ内の「２ 賃借料及び配当代わり金」の項が該当箇所です。</li>
+      <li><strong>e-Gov法令検索</strong>で消費貸借の条文そのものを確認する：<a href="https://laws.e-gov.go.jp/law/129AC0000000089" target="_blank" rel="noopener">e-Gov法令検索「民法」</a>で第587条（消費貸借）を検索する。「当事者の一方が種類、品質及び数量の同じ物をもって返還をすることを約して相手方から金銭その他の物を受け取ることによって、その効力を生ずる」という条文の文言を、自分の目で確認できます。</li>
+      <li><strong>利用している証券会社の貸株サービスの契約締結前交付書面・重要事項説明</strong>を確認する：品貸料率の決まり方、配当金相当額の支払いタイミング、議決権・優待に関する自動返却設定の有無と条件は、証券会社ごとに定めが異なります。制度の一般論と、自分の口座で実際に適用される条件は別物として確認してください。</li>
+    </ol>
+    <div class="warning-box">品貸料率や、優待の自動返却設定の対象銘柄・条件は証券会社ごとに異なり、変更されることもあります。本記事は制度の骨格（消費貸借としての性質・税区分）を一次情報から説明するものであり、特定の証券会社のサービス内容を保証するものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>一次情報にもとづく整理</th></tr></thead>
+      <tbody>
+        <tr><td>貸株に出していても配当はそのまま「配当金」として入る</td><td>証券会社を経由した「配当金相当額」という別名目の金銭になり、税務上は雑所得として扱われる（国税庁 質疑応答事例）</td></tr>
+        <tr><td>貸株に出していても議決権や株主優待は自動的に維持される</td><td>権利確定日をまたぐと原則として得られない。証券会社が任意で提供する自動返却設定の有無・条件は各社の説明で確認する必要がある</td></tr>
+        <tr><td>逆日歩と貸株サービスの品貸料は同じ仕組み</td><td>逆日歩は信用取引（制度信用）の枠組みで生じる品貸料であり、一般の貸株サービスとは制度上の位置づけ・受益者の構造が異なる（本シリーズ別回で扱う）</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>東証のしくみシリーズ第6回「貸株サービス」を整理します。</p>
+    <ul>
+      <li>貸株は<strong>「消費貸借」（民法587条）</strong>——貸した株そのものではなく、同種・同等・同数の株式を後で返してもらう契約であり、貸している間は証券会社が株式の権利者になる。</li>
+      <li>配当のときに来るのは<strong>「配当金相当額」</strong>という別枠の金銭で、国税庁の質疑応答事例では品貸料（賃借料）とともに<strong>「雑所得」</strong>として扱われ、配当控除の対象にはならない。</li>
+      <li>権利確定日をまたぐと<strong>議決権・株主優待は原則対象外</strong>。証券会社が用意する自動返却設定はあくまで各社任意のサービスであり、制度が保障するものではない。</li>
+      <li>貸している株式は証券会社の管理下にあるため、<strong>証券会社の信用リスク</strong>という性質のリスクが、消費貸借という契約形態そのものから生じる。</li>
+    </ul>
+    <p>本記事の制度の説明・数値は、<strong>2026年9月7日時点</strong>で国税庁および e-Gov法令検索の該当ページを実際に確認したうえで記載しています（国税庁の質疑応答事例自体は令和7年8月1日現在の法令・通達等にもとづき作成されたものです）。制度は変更されることがあるため、実際に貸株サービスを利用する際は、その時点の一次情報と、利用する証券会社の説明を必ずご自身で確認してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連シリーズで信用取引・税金の基礎をさらに深く</div>
+      <div class="cta-box-desc">貸株の対価の受け取り方は信用取引の仕組みと、税区分は投資全般の税金の考え方とつながっています。関連ガイドもあわせてご覧ください。</div>
+      <a class="cta-btn" href="guides.html">解説記事一覧を見る →</a>
+    </div>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-margin-trading.html">
+        <div class="related-card-title">📊 信用取引の基本</div>
+        <div class="related-card-desc">貸株で貸し出された株式が、信用取引の空売りの原資としてどう使われるかの土台。</div>
+      </a>
+      <a class="related-card" href="guide-counterparty-risk.html">
+        <div class="related-card-title">🏦 カウンターパーティリスクとは</div>
+        <div class="related-card-desc">貸株の消費貸借という性質から生じる、証券会社の信用リスクの考え方。</div>
+      </a>
+      <a class="related-card" href="guide-investment-tax.html">
+        <div class="related-card-title">🧾 投資と税金の基礎</div>
+        <div class="related-card-desc">配当所得・雑所得など所得区分の違いが、確定申告や損益通算にどう影響するか。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東京証券取引所などの制度・手続きに関する一般的な情報提供であり、特定銘柄・特定の証券会社のサービスの利用推奨や投資助言ではありません。制度の内容は変更されることがあるため、実際の取引・サービス利用にあたっては必ずご自身で最新の一次情報をご確認ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。なお、本記事の税務に関する記載は一般的な情報提供であり、個別の課税関係を確定させるものではありません。税務に関する具体的な判断については、税務署・税理士等の専門家にご相談ください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
