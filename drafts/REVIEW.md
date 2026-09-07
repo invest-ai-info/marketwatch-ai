@@ -7,8 +7,9 @@
 - **claims**: `drafts/labnotes/lab-092-claims.json`
 - **analysis**: `drafts/labnotes/lab-092-analysis.md`
 - **sweep**: `drafts/labnotes/sweep-2026-09-08.json`（FDR通過0本）
-- **ゲート状態**: 🔄 verify待ち
-- **次のアクション**: signal_lab_verify.py → Opusコンプラ → 独立Opus → finalize → publish
+- **ゲート状態**: ✅ 自動公開済み（2026-09-08）
+- **公開先**: `guide-signal-lab-092.html`
+- **ゲート**: verify GREEN 4/4 → Opusコンプラ 🟢白（軽微修正6箇所・数値/SVG不変） → 独立Opus 🟢白 → finalize → publish → check ✅ → PUSH-MAIN ✅
 
 ---
 
