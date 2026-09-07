@@ -1,3 +1,28 @@
+## 2026-09-08 autodraft: draft-benchmark-comparison.html
+
+- **基準日**: 2026-09-08（JST 05:30）
+- **topic**: #59 benchmark-comparison「自分の成績は、何と比べれば意味があるのか」
+- **カテゴリ**: 🛡️ リスク管理・資金管理
+- **生成ファイル**: `drafts/draft-benchmark-comparison.html`
+- **参照出典**:
+  - ベンチマーク・トータルリターンの考え方: 一般的な投資教育知識（シャープレシオ・トータルリターン指数の概念は標準的な金融知識。具体的な数値・指数名は記事に掲載せず概念説明に限定）
+  - 配当込み指数の考え方: 一般的な指数の仕組み（概念のみ記述、特定指数名・数値は非掲載）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（具体的な指数名・銘柄名・商品名を一切含めず）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」を使っていない）
+  - ✅ kinsho-v1免責（冒頭バナー＋本文末＋footer）あり
+  - ✅ 特定の指数・商品を推奨していない（「比べ方の枠組みだけ」に限定）
+  - ✅ 当サイト独自の数値は track-record.html への誘導のみで独自数値の主張なし
+  - ✅ noindex,nofollow あり
+- **SVGのTODO**: なし（3枚のSVG概念図を描画済み。ライト/ダーク両対応のCSSクラス適用済）
+- **人間の残作業**:
+  1. SVG 3枚の実機ライト/ダーク表示確認（特に棒グラフの色と背景が切り替わるか）
+  2. 内部リンク先（guide-trade-journal.html / guide-outcome-bias.html / guide-survivorship-bias.html / guide-overconfidence.html / guide-currency-risk.html）が公開済みか確認
+  3. タイトル・リード文の微調整（必要なら）
+  4. 公開は毎朝 08:40 の autopublish-routine が自動ゲート実行
+
+---
+
 2026-09-07 autopublish: guide-equity-offering（増資・希薄化）公開 — 決定論緑→Opus🟡グレー→軽微修正→再緑→独立Opus🔴SVG座標修正→SVG修正→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-equity-offering.html
 
 ---
