@@ -127,3 +127,23 @@
 - 品質ルーブリック：自己採点で5観点すべて✅
 
 **公開**: `guide-tse-tick-size.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告36件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 551ce8e。pushコマンド実行時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してからpush）。
+
+### ✅ 2026-09-07 キュー#6「貸株サービス」 share-lending 🤝
+
+**題材**: TSE_GUIDE.md キュー#6「貸株サービス」（slug: `share-lending`、絵文字: 🤝、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurlで素のUA・HTTP 200・到達可能（トップページ実測）。ただし本テーマ（貸株サービス）は制度の核心が**税務上の扱いと民法上の契約類型**にあり、JPX/FSA固有の制度というより国の一次情報がより直接的だったため、以下を一次情報として使用：
+- **国税庁 質疑応答事例**「特約の付された株券貸借取引に係る特約権料等の課税上の取扱い」（https://www.nta.go.jp/law/shitsugi/joto/22/01.htm・curl素のUAでHTTP 200・Shift_JISでデコードして全文確認）。「株券貸借取引…その実態は『消費貸借』（民法587）」「賃借料…配当代わり金…雑所得となります」を逐語確認。注記「令和7年8月1日現在の法令・通達等に基づいて作成」も確認。
+- **e-Gov法令検索API**（`laws.e-gov.go.jp/api/2/law_data/129AC0000000089`・HTTP 200）で民法第587条（消費貸借）の条文全文を直接取得・確認：「消費貸借は、当事者の一方が種類、品質及び数量の同じ物をもって返還をすることを約して相手方から金銭その他の物を受け取ることによって、その効力を生ずる。」
+- `jipf.or.jp`（日本投資者保護基金）・`www.sbisec.co.jp`・`www.rakuten-sec.co.jp`は**経路遮断**（`CONNECT tunnel failed`）で到達不可だったため、確認できない具体的主張（投資者保護基金の補償対象外の詳細、証券会社ごとの優待自動取得設定の詳細）は本文に書かず、一般的な法的性質（消費貸借＝所有権移転）から導ける範囲の記述に留めた。
+
+確認日：2026-09-07（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①「損益通算の扱いも通常の配当所得とは異なります」が税法上一律の帰結を証券会社の裁量に誤帰属 ②「証券会社が株主名簿上の株主になります」が一次情報（国税庁Q&A・民法587条）の裏付けを超えた具体的断定 ③税務署・税理士への相談導線が自サイトの税務系記事（guide-settlement-cycle.html等）と異なり皆無
+- 3点すべて適用修正（事実・数値・法令引用・SVG・構造は不変、表現の軟化＋一次情報の注記引用追加＋専門家相談導線の追加のみ）
+- 担当者が追加で2点の事実精度向上を実施：a) 民法587条の引用を「文言そのもの」としていた箇所を条文の逐語引用に訂正 b) 引用元Q&Aが「特約付き」株券貸借取引についての照会である旨のスコープ注記を追加 c) 「配当控除」「損益通算」に品質ルーブリック②（専門用語の初出説明）に対応する平易な補足を追加
+- 【独立最終確認】（別セッション・model=opus・Readのみ・国税庁ページを再取得しcp932デコードで全引用を逐語照合、e-Gov APIで民法587条の条文本体も再照合）→ 🟢白（引用精度・免責3箇所・禁止語・個別銘柄/証券会社名ゼロを再確認、追加修正による新規矛盾なし）
+- 品質ルーブリック：自己採点で5観点すべて✅（②の対応で「配当控除」「損益通算」に平易な補足説明を追加）
+
+**公開**: `guide-tse-share-lending.html`（読了約9分）。`check_guide_draft.py`（GREENでSVG重なり4件を先に修正→再度GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-equity-offering.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告34件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 75503af）。
