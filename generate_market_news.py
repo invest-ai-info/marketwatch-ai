@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-09", "line": '・<b>2026-09-09</b>: 🧪 解説「<a href="guide-signal-lab-093.html" style="color:#0969da"><b>#93 RSI 64% vs BB 43%——上昇トレンド逆張りロングで二極化が深まった理由</b></a>」公開'},
         {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 📰 解説「<a href="guide-news-2026-09-08-japan-wages-boj-hike.html" style="color:#0969da"><b>【9/8】7月名目賃金+4.7%・日銀利上げ観測・日経1,130円安</b></a>」公開'},
         {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 💸 解説「<a href="guide-tse-negative-interest.html" style="color:#0969da"><b>逆日歩（品貸料）とは</b></a>」公開'},
         {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 🛡️ 解説「<a href="guide-cash-allocation.html" style="color:#0969da"><b>現金を残しておくことは、機会損失ではない</b></a>」公開'},
