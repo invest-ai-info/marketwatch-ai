@@ -95,6 +95,26 @@
 
 **公開**: `guide-tse-market-segments.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。同時に既存6ページ（guide-anchoring-price / guide-currency-hedge-cost / guide-scam-crypto-scam / guide-scam-investment-seminar / guide-scam-real-estate-yield-pitch / guide-scam-recovery-scam）も正規化）→`check_site_consistency.py`（EXIT=0、警告33件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git commit時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してから git push origin main（commit 0912dd1）。
 
+### ✅ 2026-09-08 キュー#7「逆日歩（品貸料）」 negative-interest 💸
+
+**題材**: TSE_GUIDE.md キュー#7「逆日歩（品貸料）」（slug: `negative-interest`、絵文字: 💸、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurlで素のUA・HTTP 200・到達可能（トップページ実測含む）。以下のJPX一次情報を実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/equities/trading/margin/outline/01.html（信用取引の目的・仕組み・更新日2023/01/10）— 「品貸料（逆日歩）」の定義段落を逐語確認（貸株残高が融資残高を超過し株不足が生じた場合に証券金融会社が入札形式で不足株数を調達し、その入札で決まった料率が品貸料＝逆日歩。制度信用の売り顧客全員が支払い、買い顧客全員が受け取る）。
+- https://www.jpx.co.jp/markets/statistics-equities/margin/01.html（品貸料の実データ公表ページ・アクセス時点で「2026年9月4日申込分」を掲載・「日々16:00を目安に掲載」の記述・同一定義文をJPXが再掲していることを確認）。
+- JPX「信用取引制度の概要」PDF（2023年4月・`jpx.co.jp/equities/trading/margin/outline/tvdivq0000007szb-att/tvdivq000000toqj.pdf`）を`pdftotext`でテキスト抽出し、逆日歩の日数の数え方の図解（通常のケース＝1日分、休業日をまたぐケース＝3日分）と、品貸料の決定主体が制度信用＝取引所、一般信用＝証券会社である旨の対比表を確認。
+- `www.jsf.co.jp`・`www.taisyaku.jp`（日本証券金融＝日証金。品貸入札の最高料率・上限の運用ルールを持つ会社）は**経路遮断**（`CONNECT tunnel failed`・`connect_rejected`＝組織ポリシーによるegress拒否）で到達不可だったため、料率の上限そのものの具体的な制度設計（最高料率の決め方等）には本文で立ち入らず、JPXの一次情報で確認できた「発生条件・支払/受取の方向・日数の数え方・公表の仕組み」の範囲に本文のスコープを絞った。この点は本文中の warning-box で読者にも明示。
+
+確認日：2026-09-08（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— 信用取引そのものの元本超過損失・追証リスクへの言及が本文に一切なく、レバレッジ商品解説として景表法の有利誤認的な印象に近づく余地があると指摘。禁止語・個別銘柄評価・個別証券会社評価・免責三層・仮の例明示・一次情報URL＋確認日は全てクリアと確認。
+- 1点を適用修正（事実・数値・SVG・構造・出典URL・確認日は不変、§5末尾の warning-box に「信用取引は委託保証金を超える規模の取引であり、追証や委託保証金超過損失のおそれがある」旨を追記するのみ）。Editツールが当該エージェントの権限外だったため、置換前後で一致件数を検証したBash文字列置換で適用（バックアップ保存済み）。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・JPX引用文をWebSearchで原文と逐語照合）→ 🟢白（修正反映確認・新規リスクなし）。非ブロッキングの改善提案2件（品貸料公表タイミング「16:00」の独立裏取りが先方403で不可だった旨／買い方受取りの証券会社差の一文補足）を受け、前者は自分でも一次情報を再確認済みのため「数営業日前の申込分」と明記する軽微な文言修正のみ実施。後者は次回改稿事項として保留（公開を妨げない任意改善と判定されたため）。
+- 品質ルーブリック：自己採点で5観点すべて✅
+
+**公開**: `guide-tse-negative-interest.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。既存`guide-cash-allocation.html`のウィジェットも同時に正規化）→`check_site_consistency.py`（EXIT=0、警告35件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 083d86c）。
+
 ## エスカレ・要人間レビュー
 
 ### 🚩 2026-09-01 キュー#1「適時開示（TDnet）」 timely-disclosure 📄 — 一次情報（jpx.co.jp）未到達のため見送り
