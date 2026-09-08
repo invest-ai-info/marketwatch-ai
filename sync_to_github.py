@@ -232,4 +232,5 @@ SYNC_FILES = [
     "guide-tse-negative-interest.html",
     "guide-news-2026-09-08-japan-wages-boj-hike.html",
     "guide-signal-lab-093.html",
+    "guide-confirmation-bias.html",
 ]
