@@ -1,3 +1,28 @@
+## 2026-09-09 autodraft: draft-information-lag.html
+
+- **基準日**: 2026-09-09（JST 05:31、UTC 2026-09-08T20:31Z）
+- **topic**: information-lag（#60）「あなたが読んだときには、もう値段に入っていることがある」
+- **シリーズ**: 投資の基礎知識
+- **生成ファイル**: `drafts/draft-information-lag.html`
+- **参照出典URL**:
+  - 野村証券「効率的市場仮説」用語解説 https://www.nomura.co.jp/terms/japan/ko/A02426.html
+  - 東証マネ部「Buy the rumor, sell the fact」格言コラム https://money-bu-jpx.com/news/article067133/
+  - 明治大学社会科学研究所「市場の効率性と情報消化プロセス」2022 https://meiji.repo.nii.ac.jp/record/12806/files/shakaikagakukiyo_60_2_197.pdf
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし
+  - ✅ 断定・利益保証なし（「傾向がある」「ことがある」「一つの選択肢」表現で統一）
+  - ✅「織り込み済み」を断定せず「そう振る舞うことがある」という書き方
+  - ✅ kinsho-v1免責（冒頭バナー＋本文末p.disclaimer＋footer）入り
+  - ✅ noindex,nofollow メタタグ入り
+  - ✅ SVG図3点：①情報伝達タイムライン ②噂で買い事実で売り ③知名度と価格反映度
+  - ✅ 関連記事リンク：earnings-season / market-participants / sns-information-literacy
+- **人間の残作業**:
+  - SVGライト/ダーク実機確認（body.dark クラスでSVG背景が#0d1117になることを確認）
+  - タイトル・リード文の微調整（必要に応じて）
+  - 公開は毎朝08:40のautodraft-publishが自動ゲート付きで実行
+
+---
+
 2026-09-08 autopublish: guide-cash-allocation（現金を残しておくことは、機会損失ではない）公開 — 決定論🟢→Opus🟡軽微修正4件→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-cash-allocation.html
 
 ---

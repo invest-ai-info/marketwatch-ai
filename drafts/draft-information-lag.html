@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>あなたが読んだときには、もう値段に入っていることがある｜情報の時間差と市場の動き - MarketWatch AI</title>
+  <meta name="description" content="「良いニュースが出たのに株価が下がった」——それは情報の時間差で説明できます。発表→アルゴ→機関→メディア→個人という伝達ラグ、噂で買い事実で売るメカニズム、速さで勝てないなら何で勝つかを図解で解説。">
+  <meta name="keywords" content="情報の時間差,織り込み済み,噂で買い事実で売り,buy the rumor sell the news,情報格差,市場効率性,個人投資家,効率的市場仮説,決算発表,経済指標">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-information-lag.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="あなたが読んだときには、もう値段に入っていることがある｜情報の時間差と市場の動き">
+  <meta property="og:description" content="情報の伝達ラグと「織り込み済み」の構造を図解。速さで勝てないなら期間と視点で勝つ——個人投資家が知っておくべき情報の時間差の話。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-information-lag.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "あなたが読んだときには、もう値段に入っていることがある｜情報の時間差と市場の動き",
+    "description": "情報の伝達ラグと「織り込み済み」の構造を図解。速さで勝てないなら期間と視点で勝つ——個人投資家が知っておくべき情報の時間差の話。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-information-lag.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* SVG概念図（ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; あなたが読んだときには、もう値段に入っていることがある
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は情報の伝達ラグと市場の動く仕組みに関する「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💡 あなたが読んだときには、もう値段に入っていることがある</h1>
+    <div class="meta-line">公開日：2026 年 9 月 9 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「良い決算が出たのに、なぜか株価が下がった」「重要な経済指標が発表されたとたん、予想と逆の方向へ動いた」——投資を始めて間もない人がよく感じる「あれ？」の正体は、<strong>情報が値段に届くまでの「時間差」</strong>で説明できることがあります。</p>
+    <p>市場は情報を処理するスピードが非常に速い場です。発表→プロが動く→値段が変わる——この流れが、あなたがニュースを読む前に済んでいることも少なくありません。これは個人投資家だけが直面する問題ではなく、<strong>情報を使って売買する人なら誰もが意識しておくべき</strong>市場の基本的な性質です。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>情報は「一次情報（原文）→アルゴリズム→機関投資家→メディア報道→個人」という順で届く。<strong>個人が記事を読む頃、値動きの多くはすでに起きていることがある。</strong></li>
+      <li>「良いニュース」が出ても下がる現象の一因は、<strong>期待（噂）が先に値段に乗り、事実の確認で手仕舞いが出るため</strong>。「織り込み済み」と呼ばれるが、常にそうなるわけではない。</li>
+      <li>速さで機関やアルゴに勝つのは難しい。<strong>「速さ」ではなく「期間」「視点」「自分なりの理解」で付加価値を持とうとするアプローチ</strong>が、個人の現実的な選択肢の一つとして語られる。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">情報が値段に入るまでの「タイムライン」</a></li>
+        <li><a href="#section-2">良いニュースで下がる？「噂で買い、事実で売り」のしくみ</a></li>
+        <li><a href="#section-3">「知っている人が多い情報」は優位性が小さくなる</a></li>
+        <li><a href="#section-4">決算・経済指標が逆に動く理由</a></li>
+        <li><a href="#section-5">では個人投資家はどうするか——速さで勝てないなら</a></li>
+        <li><a href="#section-6">当サイトでの活かし方</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== Section 1 ===== -->
+    <h2 id="section-1">1️⃣ 情報が値段に入るまでの「タイムライン」</h2>
+
+    <p>ニュースが出てから値段が動くまで、裏側では次のような流れが起きています。</p>
+
+    <div class="chart-figure">
+      <!-- SVG図1: 情報伝達タイムライン -->
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="情報伝達タイムラインの概念図">
+        <!-- 背景 -->
+        <!-- 横軸（時間） -->
+        <line x1="40" y1="210" x2="680" y2="210" class="s-axis"/>
+        <text x="360" y="248" text-anchor="middle" class="s-label-sm">時間の経過 →</text>
+
+        <!-- 縦方向のフロー -->
+        <!-- ノード1: 一次情報発表 -->
+        <rect x="40" y="60" width="120" height="52" rx="8" fill="#1E3A6E" opacity=".9"/>
+        <text x="100" y="80" text-anchor="middle" fill="#fff" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="700">一次情報</text>
+        <text x="100" y="98" text-anchor="middle" fill="#fff" font-size="10" font-family="'Noto Sans JP',sans-serif">（発表文・データ）</text>
+        <text x="100" y="222" text-anchor="middle" class="s-label-sm">T=0</text>
+
+        <!-- 矢印1 -->
+        <line x1="161" y1="86" x2="195" y2="86" stroke="#0969da" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- ノード2: アルゴ -->
+        <rect x="196" y="60" width="120" height="52" rx="8" fill="#2C4F8F" opacity=".9"/>
+        <text x="256" y="80" text-anchor="middle" fill="#fff" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="700">アルゴリズム</text>
+        <text x="256" y="98" text-anchor="middle" fill="#fff" font-size="10" font-family="'Noto Sans JP',sans-serif">（ミリ秒単位）</text>
+        <text x="256" y="222" text-anchor="middle" class="s-label-sm">秒〜数秒後</text>
+
+        <!-- 矢印2 -->
+        <line x1="317" y1="86" x2="351" y2="86" stroke="#0969da" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- ノード3: 機関投資家 -->
+        <rect x="352" y="60" width="120" height="52" rx="8" fill="#0969da" opacity=".85"/>
+        <text x="412" y="80" text-anchor="middle" fill="#fff" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="700">機関投資家</text>
+        <text x="412" y="98" text-anchor="middle" fill="#fff" font-size="10" font-family="'Noto Sans JP',sans-serif">（専門チーム）</text>
+        <text x="412" y="222" text-anchor="middle" class="s-label-sm">数秒〜数分後</text>
+
+        <!-- 矢印3 -->
+        <line x1="473" y1="86" x2="507" y2="86" stroke="#0969da" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- ノード4: メディア報道 -->
+        <rect x="508" y="60" width="120" height="52" rx="8" fill="#57606a" opacity=".85"/>
+        <text x="568" y="80" text-anchor="middle" fill="#fff" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="700">メディア報道</text>
+        <text x="568" y="98" text-anchor="middle" fill="#fff" font-size="10" font-family="'Noto Sans JP',sans-serif">（記事・SNS）</text>
+        <text x="568" y="222" text-anchor="middle" class="s-label-sm">数分〜数時間後</text>
+
+        <!-- 個人投資家ラベル -->
+        <text x="630" y="88" class="s-note-r" font-size="12">← 個人が</text>
+        <text x="630" y="104" class="s-note-r" font-size="12">記事を読む頃</text>
+
+        <!-- 値動き幅の表示 -->
+        <rect x="196" y="140" width="435" height="22" rx="4" fill="#fff8c5" opacity=".8"/>
+        <text x="413" y="155" text-anchor="middle" fill="#9a6700" font-size="11.5" font-family="'Noto Sans JP',sans-serif" font-weight="600">⬆ この間にすでに値動きが起きていることがある</text>
+
+        <!-- 矢印マーカー定義 -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 Z" fill="#0969da"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際の時間差はニュースの種類・市場・時間帯によって大きく異なります。</p>
+    </div>
+
+    <p>たとえば重要な経済指標が発表された瞬間、数ミリ秒以内にアルゴリズムが内容を解析して注文を出します。機関投資家の専門チームも数秒から数十秒で判断を下し、ポジションを変えます。その後、メディアが「〇〇が発表された」と記事を書き、SNSで拡散され、個人投資家がその記事を読む——という流れです。</p>
+
+    <p>つまり個人が「ニュースを見た」と感じたとき、値動きの多くはすでに反映されていることがあります。これは個人投資家が劣っているのではなく、<strong>情報の伝達には物理的な時間差がある</strong>という事実です。</p>
+
+    <div class="info-box">
+      <strong>「情報の非対称性」と「市場への反映速度」</strong><br>
+      経済学では、情報が均等に行き渡らない状態を「情報の非対称性」と呼びます。市場では一次情報へのアクセス速度に差があり、それが価格形成のタイミングのずれを生む一因とされています。ただし「完全に反映されない」のか「一定の時間差で反映される」のかは状況により異なり、一概には言えません。
+    </div>
+
+    <!-- ===== Section 2 ===== -->
+    <h2 id="section-2">2️⃣ 良いニュースで下がる？「噂で買い、事実で売り」のしくみ</h2>
+
+    <p>「良い決算が出たのに下がった」という経験は、多くの投資家が持っています。この現象の一因として、<strong>「Buy the Rumor, Sell the News（噂で買い、事実で売り）」</strong>という市場の行動パターンがよく挙げられます。</p>
+
+    <div class="chart-figure">
+      <!-- SVG図2: 噂で上昇→事実で下落のイメージ -->
+      <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="噂で上昇・事実で下落の概念図">
+        <!-- 軸 -->
+        <line x1="50" y1="200" x2="640" y2="200" class="s-axis"/>
+        <line x1="50" y1="30" x2="50" y2="200" class="s-axis"/>
+        <text x="345" y="228" text-anchor="middle" class="s-label-sm">時間 →</text>
+        <text x="30" y="120" text-anchor="middle" class="s-label-sm" transform="rotate(-90,30,120)">価格（概念）</text>
+
+        <!-- 価格ライン（上昇→ピーク→下落→落ち着き） -->
+        <polyline points="50,170 120,165 200,145 290,115 340,100 390,108 440,135 500,155 560,150 620,148" class="s-curve-b"/>
+
+        <!-- 発表ライン -->
+        <line x1="340" y1="30" x2="340" y2="200" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="345" y="48" class="s-note-r">← 事実の発表</text>
+
+        <!-- 期間ラベル -->
+        <text x="185" y="185" text-anchor="middle" fill="#1a7f37" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="600">噂・期待で上昇</text>
+        <text x="490" y="185" text-anchor="middle" fill="#cf222e" font-size="11" font-family="'Noto Sans JP',sans-serif" font-weight="600">手仕舞いで下落</text>
+
+        <!-- 矢印（上昇期） -->
+        <line x1="100" y1="163" x2="185" y2="143" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrowg)"/>
+        <!-- 矢印（下落期） -->
+        <line x1="395" y1="110" x2="460" y2="138" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arrowr)"/>
+
+        <!-- 注釈 -->
+        <rect x="55" y="55" width="200" height="36" rx="6" fill="#ddf4ff" opacity=".85"/>
+        <text x="155" y="72" text-anchor="middle" fill="#0969da" font-size="11" font-family="'Noto Sans JP',sans-serif">"良い結果が出るはず"という</text>
+        <text x="155" y="87" text-anchor="middle" fill="#0969da" font-size="11" font-family="'Noto Sans JP',sans-serif">期待が先に値段へ乗る</text>
+
+        <rect x="420" y="55" width="200" height="36" rx="6" fill="#ffebe9" opacity=".85"/>
+        <text x="520" y="72" text-anchor="middle" fill="#cf222e" font-size="11" font-family="'Noto Sans JP',sans-serif">期待通りでも「確認できた」</text>
+        <text x="520" y="87" text-anchor="middle" fill="#cf222e" font-size="11" font-family="'Noto Sans JP',sans-serif">ので手仕舞い売りが出る</text>
+
+        <defs>
+          <marker id="arrowg" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 Z" fill="#1a7f37"/>
+          </marker>
+          <marker id="arrowr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 Z" fill="#cf222e"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際の値動きはこの通りになるとは限りません。「予想を大幅に超えた結果」では発表後も続伸することがあります。</p>
+    </div>
+
+    <p>この現象が起きる流れはおおよそ次のように説明されます：</p>
+    <ol>
+      <li>「〇〇は良い決算になりそう」という期待が広がる段階で、その期待を見越して買いが入る（噂で買い）。</li>
+      <li>期待どおり良い決算が出た瞬間、最初から「良い結果を前提に」買っていた人が利益確定の売りを出す（事実で売り）。</li>
+      <li>「良いニュースなのに下がる」という状況が生まれる。</li>
+    </ol>
+
+    <div class="warning-box">
+      「噂で買い、事実で売り」はいつも起きるわけではありません。予想を大きく上回る結果や、想定外のポジティブサプライズが重なるときは、発表後も買いが続くことがあります。これは「そういう動きが出やすい局面がある」という傾向の話であり、必ずこうなると断定できるものではありません。
+    </div>
+
+    <!-- ===== Section 3 ===== -->
+    <h2 id="section-3">3️⃣ 「知っている人が多い情報」は優位性が小さくなる</h2>
+
+    <p>市場効率性の考え方の一つに、<strong>「多くの人がすでに知っている情報は、すでに値段に乗っている可能性が高い」</strong>という視点があります。</p>
+
+    <p>極端な例で考えてみましょう。もし「A社が大型受注を得た」という情報を、世界中で自分だけが知っていたら、その情報に基づいて株を買えば大きなリターンを得る可能性があります。しかしその情報が報道されて1000万人が知った後に買っても、すでに株価はその情報を反映した水準に上がっているかもしれません。</p>
+
+    <div class="chart-figure">
+      <!-- SVG図3: 情報の参加者数と優位性の関係（概念） -->
+      <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="情報の知名度と価格への反映度の概念図">
+        <!-- 軸 -->
+        <line x1="60" y1="180" x2="560" y2="180" class="s-axis"/>
+        <line x1="60" y1="20" x2="60" y2="180" class="s-axis"/>
+        <text x="310" y="208" text-anchor="middle" class="s-label-sm">情報を知っている人の数（多い →）</text>
+        <text x="20" y="100" text-anchor="middle" class="s-label-sm" transform="rotate(-90,20,100)">値段への反映度</text>
+
+        <!-- 曲線（情報普及と価格反映の関係） -->
+        <path d="M60,165 Q150,155 250,110 Q350,65 460,38 Q510,28 545,25" class="s-curve-b"/>
+
+        <!-- ラベル -->
+        <text x="90" y="172" class="s-note-g" font-size="11">情報が出た直後</text>
+        <text x="90" y="155" class="s-note-g" font-size="10">（少数だけ知っている）</text>
+
+        <text x="420" y="55" class="s-note-r" font-size="11">報道後・拡散後</text>
+        <text x="420" y="70" class="s-note-r" font-size="10">（多数が知っている）</text>
+
+        <!-- 水平ライン（反映度 高い基準） -->
+        <line x1="60" y1="30" x2="550" y2="30" stroke="#d0d7de" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="555" y="34" class="s-label-sm">高</text>
+        <text x="555" y="184" class="s-label-sm">低</text>
+      </svg>
+      <p class="chart-caption">※ 概念を示すイメージ図です。実際には情報の性質・市場の流動性・参加者の多様な解釈によって異なります。</p>
+    </div>
+
+    <p>これは「効率的市場仮説」の考え方と関連しています。完全に効率的な市場では、公開されたすべての情報が即座に株価に反映されるとされています。現実の市場は完全に効率的ではありませんが、<strong>広く知られた情報は、そうでない情報と比べて値動きに与えるインパクトが小さくなる傾向がある</strong>とも言われます。</p>
+
+    <div class="info-box">
+      <strong>三つの「情報の種類」と効率性（概念的整理）</strong><br>
+      効率的市場仮説では情報を①過去の価格情報、②公表された情報（決算・経済指標など）、③未公開の内部情報——の三段階で整理することがあります。②の公開情報は多くの参加者が同時に入手するため、反映速度が速い傾向があるとされます。なお、未公開情報を利用した売買は法律（インサイダー取引規制）で禁止されています。
+    </div>
+
+    <!-- ===== Section 4 ===== -->
+    <h2 id="section-4">4️⃣ 決算・経済指標が逆に動く理由</h2>
+
+    <p>経済指標や決算発表のとき、「予想より良かったのに下がった」「悪かったのに上がった」という経験をした方も多いでしょう。これは「予想との差」が鍵を握っているためです。</p>
+
+    <p>市場参加者は発表前から「コンセンサス（事前予想）」を形成しています。そのコンセンサスが90点という水準なら、<strong>実際の結果が88点でも92点でも「予想より悪い」「予想より良い」という判断</strong>がされ、値動きに影響します。絶対的な数値よりも「期待からのずれ」が反応を決めやすいのです。</p>
+
+    <table>
+      <thead>
+        <tr><th>結果</th><th>よくある反応のパターン（例示）</th><th>備考</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>予想を大きく上回る</td><td>続伸することがある</td><td>サプライズの大きさ次第</td></tr>
+        <tr><td>予想通り</td><td>材料出尽くしで下落することがある</td><td>「織り込み済み」とも言われる</td></tr>
+        <tr><td>予想を若干下回る</td><td>急落することがある</td><td>期待の「剥落」</td></tr>
+        <tr><td>予想を大きく下回る</td><td>下落するが、その後反発することも</td><td>悲観の織り込みが先行した場合</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      上の表はあくまで「こういうパターンが起きることがある」という例示です。同じ条件でも、そのときの地合い・市場全体の流れ・他のニュースとの重なりによって全く異なる動きになることも多く、パターンを覚えれば勝てるというものではありません。
+    </div>
+
+    <p>詳しくは当サイトの「<a href="guide-earnings-season.html">決算発表の見方</a>」もあわせてご覧ください。</p>
+
+    <!-- ===== Section 5（中上級・後半） ===== -->
+    <h2 id="section-5">5️⃣ では個人投資家はどうするか——速さで勝てないなら</h2>
+
+    <h3>速さの競争から降りる</h3>
+
+    <p>高頻度取引（HFT）のアルゴリズムは、光ファイバーの物理的な遅延すら問題にするほどの速度で取引します。経済指標の発表後にニュースを読んで売買しようとするのは、100メートル走でオリンピック選手にハンディなしで挑むようなものです。</p>
+
+    <p>個人投資家が「情報の速さ」で機関投資家やアルゴリズムに勝とうとするのは、現実的には極めて難しい。<strong>ならば、速さではなく別の軸で付加価値を持とうとすることが、個人の現実的な選択肢の一つ</strong>として語られます。</p>
+
+    <h3>「期間」と「視点」という選択肢</h3>
+
+    <p>速さで勝てないなら——という問いへの答えは人によって異なりますが、よく挙げられる視点を整理すると次のようになります。</p>
+
+    <ul>
+      <li><strong>時間軸を伸ばす</strong>：数秒・数分の値動きを追わず、数ヶ月・数年単位で変化するビジネスの実態に注目するアプローチ。このスパンでは機関の短期的な売買ノイズが平均化され、個人でも自分なりの判断を持てる余地があるとされる。</li>
+      <li><strong>自分が詳しい分野に集中する</strong>：プロでも全銘柄・全市場を深く理解することはできない。特定の業界や商品に詳しければ、その分野での情報解釈に独自の視点が持てることがある。</li>
+      <li><strong>反応の「その後」を考える</strong>：情報が出た直後の動きは速いが、市場の解釈が固まるには時間がかかることがある。「最初の反応は過剰か、過小か」という視点で、落ち着いた判断をするアプローチ。</li>
+      <li><strong>「分からない」を認めてインデックスを使う</strong>：個別銘柄の情報ラグや予想ゲームから降りて、市場全体に乗るインデックス投資は、情報の時間差という問題を回避する一つの方法として挙げられることが多い。</li>
+    </ul>
+
+    <div class="positive-box">
+      情報の時間差は、個人投資家にとって「不利な事実」ではあるが、「だから投資ができない」ではありません。自分のリスク許容度・時間軸・得意分野に合ったアプローチを選ぶことが、情報格差と向き合う一つの現実的な態度です。
+    </div>
+
+    <h3>「何を確かめるか」を先に決めておく</h3>
+
+    <p>情報を読んで「良さそう」「悪そう」という感覚で飛びつくのではなく、<strong>「どうなったら自分の判断は正しかったといえるか」を先に決めておく</strong>ことも重要です。</p>
+
+    <p>これは当サイトのシグナル研究（<a href="track-record.html">シグナル成績ページ</a>）で実践している考え方でもあります。条件を先に宣言し、その条件がどのくらいの頻度で機能するかを事後的に検証することで、「良さそうに見えた」という感覚の罠から距離を置くことができます。</p>
+
+    <div class="info-box">
+      <strong>「速さで勝てないなら期間で勝つ」は答えの一つ</strong><br>
+      これはひとつの考え方であり、「長期投資が必ず正しい」という断定ではありません。短期売買でも情報ラグを認識したうえでの戦略はありえます。大切なのは「自分がどの土俵で戦っているのか」を意識することです。
+    </div>
+
+    <!-- ===== Section 6 ===== -->
+    <h2 id="section-6">6️⃣ 当サイトでの活かし方</h2>
+
+    <p>MarketWatch AI では、<a href="calendar.html">経済カレンダー</a>で重要な指標の発表スケジュールを確認できます。指標の直前・直後は値動きが大きくなることがあり、その時間帯にポジションを持ち越すリスクを知っておくことは、リスク管理の観点から有用です。</p>
+
+    <p>また、<a href="track-record.html">シグナル成績ページ</a>では、当サイトのテクニカルシグナルが「どの条件で発火し、その後どうなったか」を検証しています。個別の情報に飛びつくのではなく、あらかじめ定義したルールのもとで成績を記録・確認するスタイルは、情報の時間差に振り回されないための一つのアプローチです。</p>
+
+    <p>情報の時間差を理解したうえで、<a href="guide-market-participants.html">市場参加者（誰が相場を動かしているか）</a>や<a href="guide-sns-information-literacy.html">SNSの投資情報との付き合い方</a>もあわせて読むと、市場の動きの見方がより立体的になります。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を確認する</div>
+      <div class="cta-box-desc">条件を先に宣言して記録する——情報の感覚的な解釈ではなく、ルールベースで成績を検証するアプローチを実践中です。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードへ</a>
+    </div>
+
+    <!-- ===== Section 7 ===== -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+
+    <ul>
+      <li>情報は「一次情報 → アルゴ → 機関 → メディア → 個人」という順で届く。個人が記事を読む頃、値動きの多くはすでに起きていることがある。</li>
+      <li>「良いニュースで下がる」は「噂で買い、事実で売り」のパターンが一因になることがある。ただし常にそうなるわけではなく、「傾向の一つ」として理解することが大切。</li>
+      <li>「織り込み済み」は断定できる概念ではなく、「そう振る舞うことがある」という市場の性質として捉える。</li>
+      <li>速さで機関・アルゴに勝とうとするのは現実的に難しい。時間軸・得意分野・ルールベースの判断など、「速さ以外の軸」でアプローチを組み立てることが一つの選択肢。</li>
+      <li>「どうなったら自分は正しかったか」を先に決めてから情報を処理する習慣が、情報の時間差と感覚的な判断の罠から距離を置く助けになる。</li>
+    </ul>
+
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-earnings-season.html">
+        <div class="related-card-title">📋 決算発表の見方</div>
+        <div class="related-card-desc">市場が動くのは「予想との差」。決算を読む基礎知識。</div>
+      </a>
+      <a class="related-card" href="guide-market-participants.html">
+        <div class="related-card-title">👥 誰が相場を動かしているのか</div>
+        <div class="related-card-desc">海外投資家・機関・個人——市場参加者の内訳と動き方。</div>
+      </a>
+      <a class="related-card" href="guide-sns-information-literacy.html">
+        <div class="related-card-title">📱 SNSの投資情報との付き合い方</div>
+        <div class="related-card-desc">生存者バイアスと切り取り——情報源の見分け方。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer">【免責事項 (kinsho-v1)】本記事は情報提供のみを目的としており、特定の金融商品・銘柄への投資を勧誘・推奨するものではありません。記事中の情報・数値は執筆時点のものであり、将来の結果を保証するものではありません。投資に関する最終的な判断はご自身の責任においてお行いください。金融商品への投資にはリスクが伴い、元本を下回る可能性があります。本記事の内容は、金融商品取引法に基づく投資助言・投資判断の代行を行うものではありません。具体的な投資判断にあたっては、証券会社・ファイナンシャルプランナー等の専門家にご相談ください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>&copy; 2026 MarketWatch AI ／ <a href="index.html">トップ</a> ／ <a href="guides.html">解説記事</a> ／ <a href="privacy.html">プライバシーポリシー</a> ／ <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:8px">【免責】本サイトは情報提供を目的としており、投資の勧誘・助言ではありません。投資判断はご自身の責任でお願いします。</p>
+</footer>
+
+<script>
+(function(){
+  var p=document.getElementById('reading-progress');
+  window.addEventListener('scroll',function(){
+    var s=document.documentElement;
+    var pct=(s.scrollTop||document.body.scrollTop)/(s.scrollHeight-s.clientHeight||1);
+    p.style.width=(pct*100)+'%';
+  },{passive:true});
+})();
+
+function toggleTheme(){
+  var b=document.body;
+  var btn=document.getElementById('theme-toggle');
+  b.classList.toggle('dark');
+  btn.textContent=b.classList.contains('dark')?'☀️':'🌙';
+}
+</script>
+
+</body>
+</html>
