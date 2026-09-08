@@ -621,6 +621,41 @@ window.addEventListener('resize',mark);
       </a>
     </div>
 
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="AIシグナル研究日誌のシリーズ内移動">
+      <div class="mw-sernav-h">📚 AIシグナル研究日誌</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-signal-lab-037.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">AIシグナル研究日誌 #37｜もみあい相場の逆張り買い再評価——IS 32.9%からFWD 58%への急改善</span>
+      </a>
+      <a class="mw-sernav-btn next" href="guide-signal-lab-039.html" rel="next">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">AIシグナル研究日誌 #39｜金属ロングgate N=86昇格確認——「前向き改善」は統計ノイズだった</span>
+      </a>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html#cat-lab">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
     <!-- 末尾免責 -->
     <p class="disclaimer" data-disclaimer="kinsho-v1">
       【免責事項】本記事は過去のシグナルデータを用いた統計的研究であり、将来の投資成果を保証するものではありません。過去の勝率・期待値はバックテスト結果であり、市場環境の変化により異なる結果となる場合があります。当サイトは投資助言業者ではなく、本記事は投資助言に該当しません。最終的な投資判断はご自身の責任において行ってください。

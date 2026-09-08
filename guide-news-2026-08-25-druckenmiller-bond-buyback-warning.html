@@ -297,6 +297,41 @@ window.addEventListener('resize',mark);
       </a>
     </div>
 
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="今日のニュースのシリーズ内移動">
+      <div class="mw-sernav-h">📚 今日のニュース</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-news-2026-08-24-nvidia-q2-earnings-preview.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">【8/24】エヌビディアQ2決算（8/26）：AI半導体需要の真の強さを測る重要テスト──日本株への波及も注目</span>
+      </a>
+      <a class="mw-sernav-btn next" href="guide-news-2026-08-26-moderna-mrna-cancer-vaccine-phase3.html" rel="next">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">【8/26】mRNAがんワクチン、人類史上初の第3相成功──ModernaとMerckのメラノーマ試験が示すバイオテック革命の意義と日本投資家への含意</span>
+      </a>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
     <div class="disclaimer" data-disclaimer="kinsho-v1">
       <strong>【免責事項】</strong>本記事は情報提供のみを目的とした解説記事であり、投資助言・特定の金融商品（株式・FX・債券・暗号資産等）の売買推奨・投資勧誘を構成するものではありません。掲載の数値・発言・論点はすべて2026年8月25日時点の報道・公開情報に基づく参考資料であり、将来の金利水準・市場動向・政策決定を予測・保証するものではありません。投資にはリスクが伴い、元本が保証されるものではありません。スタンレー・ドラッケンミラー氏の見解は同氏個人のものであり、当サイトがその主張の正しさを保証・推奨するものではありません。投資の最終判断はご自身の責任において行ってください。本サイトは金融商品取引業者ではなく、無登録での投資助言業を行うものではありません。
     </div>

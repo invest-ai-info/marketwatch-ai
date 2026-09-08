@@ -91,6 +91,15 @@ jobs:
       - name: Generate market news HTML (6 files)
         run: python generate_market_news.py
 
+      - name: Apply series prev/next navigation
+        # 🆕 2026-09-05 読者要望（シリーズを遡るのに毎回一覧へ戻るのが不便）。
+        # 連続シリーズ（signal-lab / proverb / scam / tse / news）の記事末尾に前後移動ボタンを敷く。
+        # ⚠️ 毎回ここで回すのが要点＝新記事が出ると「1つ前の記事の "次の記事"」も貼り替えが要るので、
+        #    公開時に1回書くだけの方式では必ず腐る。冪等なので変化が無ければ差分ゼロで終わる。
+        # continue-on-error＝ボタンの整形失敗で6コアページの更新を巻き添えにしない。
+        run: python apply_series_nav.py --apply
+        continue-on-error: true
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
@@ -104,6 +113,10 @@ jobs:
           if [ -f touraku-history.json ]; then git add touraku-history.json; fi
           # 自動生成記事（auto_weekly_strategy / auto_indicator_preview の出力）も含める
           git add guide-weekly-*.html guide-auto-*.html 2>/dev/null || true
+          # apply_series_nav.py が触る連続シリーズ。上の pathspec 事故を繰り返さないよう1つずつ足す
+          for g in 'guide-signal-lab-*.html' 'guide-proverb-*.html' 'guide-scam-*.html' 'guide-tse-*.html' 'guide-news-*.html'; do
+            git add $g 2>/dev/null || true
+          done
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else

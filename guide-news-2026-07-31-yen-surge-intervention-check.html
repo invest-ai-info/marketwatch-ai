@@ -335,6 +335,41 @@ window.addEventListener('resize',mark);
   </a>
 </div>
 
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="今日のニュースのシリーズ内移動">
+      <div class="mw-sernav-h">📚 今日のニュース</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-news-2026-07-30-msft-fomc-result.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">【7/30】FOMC 9対3分裂据え置き × Microsoft Azure+43%大幅ビート ── 「5重発火週」答え合わせと今夜のGDP・Amazon</span>
+      </a>
+      <a class="mw-sernav-btn next" href="guide-news-2026-08-01-amazon-aws-boj-yen-gdp.html" rel="next">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">【8/1】Amazon AWS 37%最速成長・株価+15% × 日銀8-1据え置き・日米介入でドル円5円急落（円急騰） × GDP1.5%下振れ──「5重発火週」完結を中立整理</span>
+      </a>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
 <div class="disclaimer" data-disclaimer="kinsho-v1">
   <strong>【免責事項】</strong><br>
   本記事は情報提供・教育目的のみを目的として作成されており、金融商品取引法（金商法）上の投資助言・推奨にはあたりません。記事内の数値（ドル円162.775円→159.233円、安値158.888円、クロス円平均 −1.88%、ドルストレート平均 +0.42% 等）は2026年7月31日6時14分（日本時間）に取得した市場データおよび同時点の公表報道に基づく参考情報であり、その後の改定・訂正により変動する場合があります。為替介入の実施の有無について、本記事は当局による確認を報じるものではなく、報道各社が「観測」として伝えた内容と、当サイトが価格データから検証した「円主導の動きであった」という分析を区別して記載しています。通貨・有価証券の売買を勧誘・推奨するものではなく、将来の為替水準や相場方向を保証・断定するものでもありません。投資に関する最終的な判断はご自身の責任と判断でお願いいたします。損失が生じた場合でも、当サイトは一切の責任を負いません。

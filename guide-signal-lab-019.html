@@ -646,6 +646,41 @@ window.addEventListener('resize',mark);
       </div>
     </div>
 
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="AIシグナル研究日誌のシリーズ内移動">
+      <div class="mw-sernav-h">📚 AIシグナル研究日誌</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-signal-lab-018.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">AIシグナル研究日誌 #18｜逆張りロングは&quot;舞台&quot;を選ぶ——全体42%の罠と、指数グループ専有エッジの発見</span>
+      </a>
+      <a class="mw-sernav-btn next" href="guide-signal-lab-020.html" rel="next">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">AIシグナル研究日誌 #20｜MA デッドクロス（ショート）62.5%の非対称性——ゴールデンクロス（ロング）29.5%との33pp差と blocked=True 交絡の実態</span>
+      </a>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html#cat-lab">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
     <p class="disclaimer" data-disclaimer="kinsho-v1">
       ⚠️ 本記事は情報提供・学習目的で作成されており、投資助言・売買推奨ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録を受けていません。掲載の数値はシグナルログの過去集計であり、将来の投資成果を保証するものではありません。すべての投資判断は読者ご自身の責任と判断で行ってください。過去の成績は将来の成果を示唆・保証するものではありません。
     </p>
