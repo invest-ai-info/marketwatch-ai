@@ -100,6 +100,43 @@ def check_date_gate(date, allow_backdate=False):
     return None
 
 
+# 🔒 2026-09-06 上書き公開事故の根絶（2026-09-08 実装）。
+#   `guide-signal-lab-089.html` は 9/4 に FWD N=287 の記事として公開されたのに、9/6 の実行が
+#   **同じファイル名に別記事（N=296）を書き出し、公開済み本文が消えた**。カードもサイトマップも
+#   SYNC も既に登録済みだったため publish_article の各手順は全て no-op になり、誰も気づかなかった。
+#   → git の HEAD 版と作業ツリーの datePublished を突き合わせ、別日付なら公開を止める。
+#   同じ記事の修正版の再公開（日付が同じ）は素通りする＝冪等性は壊さない。
+def check_overwrite_gate(filename, html, allow_overwrite=False):
+    """公開済み記事を『別の記事』で上書きしようとしていないか。問題なければ None。"""
+    if allow_overwrite:
+        return None
+    import subprocess
+    try:
+        r = subprocess.run(["git", "show", f"HEAD:{filename}"], cwd=SCRIPT_DIR,
+                           capture_output=True, text=True, timeout=20)
+    except Exception as e:
+        print(f"⚠️ 上書きゲートを実行できません（{type(e).__name__}: {str(e)[:60]}）")
+        return None
+    if r.returncode != 0:
+        return None                      # コミット履歴に無い＝新規記事＝正常
+    old = r.stdout
+    def _d(t):
+        m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', t)
+        return m.group(1) if m else None
+    def _t(t):
+        m = re.search(r"<title>(.*?)</title>", t, re.S)
+        return re.sub(r"\s+", " ", m.group(1)).strip()[:70] if m else "(タイトル不明)"
+    old_date, new_date = _d(old), _d(html)
+    if not old_date or not new_date or old_date == new_date:
+        return None
+    return (f"{filename} は既に公開済みです（公開日 {old_date}）。\n"
+            f"     既存: {_t(old)}\n"
+            f"     今回: {_t(html)}（公開日 {new_date}）\n"
+            f"   → 公開日が違う＝別の記事です。**過去番号への再公開は事故**（2026-09-06 に実際に起き、\n"
+            f"      9/4 公開の記事が消えました）。台帳の「📌 次番号」から新しい番号を採ってください。\n"
+            f"      既存記事の差し替えが本当に意図なら --allow-overwrite")
+
+
 # 🔒 2026-06-20 local-drift（巻き戻し）事故の根絶＝公開前に main最新を自動取り込み（ルールをコードで強制）。
 #   guides.html / generate_market_news.py はクラウドのルーティンも毎朝編集する＝私のローカルが古いまま
 #   公開すると当日分のカード・更新履歴を巻き戻す。→ 編集の前に必ず main から取り込む。
@@ -299,6 +336,8 @@ def main():
     ap.add_argument("--badge", default="badge-news", help="バッジCSSクラス（既定: badge-news）")
     ap.add_argument("--allow-backdate", action="store_true", dest="allow_backdate",
                     help="日付ゲート免除（公開日≠JST今日でも公開する。過去記事の再公開など意図的な場合のみ）")
+    ap.add_argument("--allow-overwrite", action="store_true", dest="allow_overwrite",
+                    help="公開済み記事を別内容で上書きすることを明示的に許可（既定は中止）")
     ap.add_argument("--allow-missing-links", action="store_true", dest="allow_missing_links",
                     help="リンクゲート免除（実在しない参照先があっても公開する。同時公開記事の相互リンク等）")
     ap.add_argument("--dry-run", action="store_true", dest="dry", help="書き込まず変更内容のみ表示")
@@ -320,6 +359,10 @@ def main():
     _gate_err = check_date_gate(date, allow_backdate=a.allow_backdate)
     if _gate_err:
         print(f"🚫 日付ゲート: {_gate_err}")
+        sys.exit(1)
+    _ow_err = check_overwrite_gate(a.file, html, allow_overwrite=a.allow_overwrite)
+    if _ow_err:
+        print(f"🚫 上書きゲート: {_ow_err}")
         sys.exit(1)
     _link_errs = check_link_gate(a.file, html, allow_missing=a.allow_missing_links)
     if _link_errs:
