@@ -1,4 +1,125 @@
+2026-09-08 autopublish: guide-cash-allocation（現金を残しておくことは、機会損失ではない）公開 — 決定論🟢→Opus🟡軽微修正4件→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-cash-allocation.html
+
+---
+
+## 2026-09-08 signal-lab #092（ps=1 × ds=1 同日交差）
+
+- **基準日**: 2026-09-08（JST 06:10）
+- **topic**: rsi_oversold_bounce 昇格ストライク1到達 × trend=上昇×reversalL 降格警戒1ストライク目
+- **カテゴリ**: AIシグナル研究日誌
+- **生成ファイル**: `drafts/draft-signal-lab-092.html`
+- **claims**: `drafts/labnotes/lab-092-claims.json`
+- **analysis**: `drafts/labnotes/lab-092-analysis.md`
+- **sweep**: `drafts/labnotes/sweep-2026-09-08.json`（FDR通過0本）
+- **ゲート状態**: ✅ 自動公開済み（2026-09-08）
+- **公開先**: `guide-signal-lab-092.html`
+- **ゲート**: verify GREEN 4/4 → Opusコンプラ 🟢白（軽微修正6箇所・数値/SVG不変） → 独立Opus 🟢白 → finalize → publish → check ✅ → PUSH-MAIN ✅
+
+---
+
+## 2026-09-08 autodraft: draft-benchmark-comparison.html
+
+- **基準日**: 2026-09-08（JST 05:30）
+- **topic**: #59 benchmark-comparison「自分の成績は、何と比べれば意味があるのか」
+- **カテゴリ**: 🛡️ リスク管理・資金管理
+- **生成ファイル**: `drafts/draft-benchmark-comparison.html`
+- **参照出典**:
+  - ベンチマーク・トータルリターンの考え方: 一般的な投資教育知識（シャープレシオ・トータルリターン指数の概念は標準的な金融知識。具体的な数値・指数名は記事に掲載せず概念説明に限定）
+  - 配当込み指数の考え方: 一般的な指数の仕組み（概念のみ記述、特定指数名・数値は非掲載）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（具体的な指数名・銘柄名・商品名を一切含めず）
+  - ✅ 断定・利益保証なし（「絶対」「必ず」「保証」「儲かる」を使っていない）
+  - ✅ kinsho-v1免責（冒頭バナー＋本文末＋footer）あり
+  - ✅ 特定の指数・商品を推奨していない（「比べ方の枠組みだけ」に限定）
+  - ✅ 当サイト独自の数値は track-record.html への誘導のみで独自数値の主張なし
+  - ✅ noindex,nofollow あり
+- **SVGのTODO**: なし（3枚のSVG概念図を描画済み。ライト/ダーク両対応のCSSクラス適用済）
+- **人間の残作業**:
+  1. SVG 3枚の実機ライト/ダーク表示確認（特に棒グラフの色と背景が切り替わるか）
+  2. 内部リンク先（guide-trade-journal.html / guide-outcome-bias.html / guide-survivorship-bias.html / guide-overconfidence.html / guide-currency-risk.html）が公開済みか確認
+  3. タイトル・リード文の微調整（必要なら）
+  4. 公開は毎朝 08:40 の autopublish-routine が自動ゲート実行
+
+---
+
+2026-09-07 autopublish: guide-equity-offering（増資・希薄化）公開 — 決定論緑→Opus🟡グレー→軽微修正→再緑→独立Opus🔴SVG座標修正→SVG修正→再緑→独立Opus🟢白→公開 https://marketwatch-jp.com/guide-equity-offering.html
+
+---
+
+## 2026-09-07 signal-lab #091（定点観測）
+
+- **基準日**: 2026-09-07（JST）
+- **テーマ**: rsi_oversold_bounce FWD N=296 CI下限+0.05（プラス回帰）・昇格ストライク1保持。スイープFDR候補=0。定点観測のみ
+- **下書き**: `drafts/draft-signal-lab-091.html`
+- **claims**: `drafts/labnotes/lab-091-claims.json` (k=158, n=296, 4H k=56/86, 1H k=92/198)
+- **ゲート**: verify緑(3/3)→Opus🟡軽微(kinsho-v1属性・表現軟化5件)→再verify緑→独立Opus🟢白→finalize→publish→check緑(エラー0)
+- **公開URL**: https://marketwatch-jp.com/guide-signal-lab-091.html ✅公開済み（2026-09-07）
+
+---
+
+## 2026-09-06 autodraft: draft-volatility-vs-risk.html（リスク管理 #58 / 値動きの荒さと損失の違い）
+
+- **基準日**: 2026-09-06（JST）
+- **topic / key**: リスク管理 #58 / `volatility-vs-risk`
+- **仮タイトル**: 値動きが荒いことと、損をすることは、同じではない
+- **生成ファイル**: `drafts/draft-volatility-vs-risk.html`
+- **参照出典URL**:
+  - https://www.matsui.co.jp/money-satellite/column/beginner/fx/glossary/cl-volatility.html （松井証券「ボラティリティとは？」）
+  - https://www.businessinsider.jp/article/257953/ （Business Insider Japan「ボラティリティはリスク要素か」）
+  - https://kanjokamoku.k-solution.info/2007/05/_1_662.html （リスクの指標—価格リスク—ボラティリティ・標準偏差）
+  - https://www.nism.ac.in/blog/understanding-the-difference-between-volatility-and-risk-for-smarter-investments （NISM「Volatility vs Risk」）
+  - https://www.xtb.com/en/education/volatility-vs-risk-why-theyre-not-the-same-and-why-that-matters （XTB「Volatility vs Risk: Why They're Not the Same」）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・概念の説明に限定）
+  - ✅ 断定・利益保証ワード（絶対・必ず・100%・保証・儲かる）なし
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ 標準偏差の具体的数値（表の目安）に「時期・市場環境によって大きく変動する」旨の注記あり
+  - ✅ VIX具体値は書かず vix.html へのリンクで案内（条件に合致）
+  - ✅ 「相関リスク（#35）と相互リンク」条件を満たす（guide-correlation-risk.html リンクあり）
+  - ✅ 「position-sizing（#1）＝量の決め方、本記事＝何を危険と呼ぶか」の棲み分けを明示
+  - ✅ 計算例に「あくまで考え方を示す例であり推奨ではない」旨を注記
+- **SVG TODO**:
+  - 図1（同じ最終値で道のりが異なる2本の線）: ライト/ダーク両テーマで実機確認必要
+  - 図2（荒い値動き→感情的売却のメカニズム）: ライト/ダーク両テーマで実機確認必要
+  - 標準偏差の正規分布（ベル型）概念図: TODO(SVG)として本文内に記載済み（未着手）
+- **人間の残作業**:
+  - SVG2枚のライト/ダーク実機確認
+  - 標準偏差ベル型概念図の追加（本文内 TODO コメントに記載）
+  - タイトル・h1の微調整（任意）
+  - 公開は毎朝 08:40 の `autodraft-publish` ルーティンが自動ゲート付きで実行
+
+2026-09-06 autopublish: guide-outcome-bias.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-outcome-bias.html
 2026-09-05 autopublish: guide-currency-hedge-cost.html 公開済み（決定論緑・Opus軽微修正→独立白）https://marketwatch-jp.com/guide-currency-hedge-cost.html
+
+## 2026-09-06 autodraft: draft-survivorship-bias.html（投資心理 #57 / 生存者バイアス）
+
+- **基準日**: 2026-09-06（JST）
+- **topic / key**: 投資心理 #57 / `survivorship-bias`
+- **仮タイトル**: 消えたものは、平均に入っていない——生存者バイアスの正体と投資への影響
+- **生成ファイル**: `drafts/draft-survivorship-bias.html`
+- **参照出典URL**:
+  - https://www.toushin.com/q&a/survivor-bias/ （投信まるごとQ&A「生存バイアスとは？」）
+  - https://www.matsui.co.jp/fund/column/survivorship-bias/ （松井証券「日本独特の傾向も？ 投信の生存者バイアス」）
+  - https://www.pfa.or.jp/yogoshu/sa/sa12.html （企業年金連合会 用語集「サバイバーシップバイアス」）
+  - https://globis.jp/article/dic_5_riydjz6c3/ （GLOBIS学び放題「生存バイアスとは？」）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄・特定ファンド・運用会社の売買推奨なし
+  - ✅ 断定・利益保証ワード（絶対・必ず・100%・保証・儲かる）なし
+  - ✅ kinsho-v1 免責あり（冒頭バナー・本文末・footer）
+  - ✅ noindex,nofollow メタタグあり（下書き検索除外）
+  - ✅ 統計数値（ファンド廃止率・リターン）は「傾向がある」等の柔らかい表現にとどめ断定していない
+  - ✅ 出典URLは一次情報ベース（投信まるごとQ&A・松井証券・企業年金連合会）
+  - ✅ 税務・制度の具体数値は記載せず
+- **SVG TODO**:
+  - TODO(SVG): 図1（ファンド廃止の生存バイアス）・図2（成功例フィルター概念）の2枚をライト/ダーク両テーマで実機確認必要
+  - `.s-bar-r/.s-bar-g/.s-bar-b/.s-bar-gray` のダーク上書き定義は追加済みだが、目視確認は人間が行うこと
+- **人間の残作業**:
+  - SVG2枚のライト/ダーク実機確認（特に defs の arrowhead が両テーマで表示されるか）
+  - タイトル・h1の微調整（任意）
+  - 公開は毎朝 08:40 の `autodraft-publish` ルーティンが自動ゲート付きで実行
+
+---
 
 ## 2026-09-05 autodraft: draft-odd-lot-investing.html（基礎知識 #56 / 単元未満株）
 
@@ -4188,3 +4309,16 @@ verify.py 6/6緑・Opusコンプラ🟢白（免責三層化・統計断定軟�
 - 次番号: 047
 
 ---
+
+## 2026-09-06 signal-lab-daily: draft-signal-lab-089.html（AIシグナル研究日誌 #89）
+
+- **基準日**: 2026-09-06（JST）
+- **仮説**: rsi_oversold_bounce FWD N=296——4H/1H時間足二極化の深化確認
+- **生成ファイル**: `drafts/draft-signal-lab-089.html`
+- **claims**: `drafts/labnotes/lab-089-claims.json`（13件・k/n全数verify.py確認済み）
+- **key numbers**: IS 52/133=39.1% → FWD 158/296=53.4% E(R)=+0.245 raw CI[+0.113,+0.378]
+- **4H**: 56/86=65.1% E(R)=+0.519 RCI[+0.283,+0.756]
+- **1H**: 92/198=46.5% E(R)=+0.084 RCI[-0.078,+0.247]
+- **tracker**: cluster補正後CI[+0.05~+0.44]🟡蓄積中（2回連続未達）
+- **状態**: ゲート実行中
+

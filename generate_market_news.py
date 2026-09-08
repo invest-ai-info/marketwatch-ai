@@ -5308,6 +5308,19 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 📰 解説「<a href="guide-news-2026-09-08-japan-wages-boj-hike.html" style="color:#0969da"><b>【9/8】7月名目賃金+4.7%・日銀利上げ観測・日経1,130円安</b></a>」公開'},
+        {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 💸 解説「<a href="guide-tse-negative-interest.html" style="color:#0969da"><b>逆日歩（品貸料）とは</b></a>」公開'},
+        {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 🛡️ 解説「<a href="guide-cash-allocation.html" style="color:#0969da"><b>現金を残しておくことは、機会損失ではない</b></a>」公開'},
+        {"date": "2026-09-08", "line": '・<b>2026-09-08</b>: 🧪 解説「<a href="guide-signal-lab-092.html" style="color:#0969da"><b>#92 ps=1×ds=1 同日交差——rsi_os 昇格接近・上昇トレンド逆張り降格警戒</b></a>」公開'},
+        {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 📰 解説「<a href="guide-news-2026-09-07-nikkei-semiconductor-ai-rally.html" style="color:#0969da"><b>【9/7】日経1,378円高・半導体株全面高</b></a>」公開'},
+        {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 🤝 解説「<a href="guide-tse-share-lending.html" style="color:#0969da"><b>貸株サービスのしくみ</b></a>」公開'},
+        {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 💰 解説「<a href="guide-equity-offering.html" style="color:#0969da"><b>会社がお金を集めると、なぜ株価が下がるのか</b></a>」公開'},
+        {"date": "2026-09-07", "line": '・<b>2026-09-07</b>: 🧪 解説「<a href="guide-signal-lab-091.html" style="color:#0969da"><b>定点観測 #91：RSI逆張り買いCI下限が再びプラス・昇格ストライク1保持中</b></a>」公開'},
+        {"date": "2026-09-06", "line": '・<b>2026-09-06</b>: 📰 解説「<a href="guide-news-2026-09-06-weekly-events-gdp-cpi-sq-fomc-boj.html" style="color:#0969da"><b>来週5大イベント──GDP改定値・米CPI+メジャーSQ・FOMC・BOJ</b></a>」公開'},
+        {"date": "2026-09-06", "line": '・<b>2026-09-06</b>: 🏛 解説「<a href="guide-tse-market-segments.html" style="color:#0969da"><b>東証の市場区分（プライム/スタンダード/グロース）</b></a>」公開'},
+        {"date": "2026-09-06", "line": '・<b>2026-09-06</b>: 🧠 解説「<a href="guide-outcome-bias.html" style="color:#0969da"><b>儲かった判断が、正しい判断とは限らない</b></a>」公開'},
+        {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 📰 解説「<a href="guide-news-2026-09-05-usdjpy-155-gpif-yen-strength.html" style="color:#0969da"><b>ドル円155円台突入とGPIF思惑──今週5円超の円高</b></a>」公開'},
+        {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 🔬 解説「<a href="guide-company-avgo-broadcom.html" style="color:#0969da"><b>Broadcom（AVGO）を数字で見る</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 📢 解説「<a href="guide-tse-tob.html" style="color:#0969da"><b>株式公開買付け（TOB）とは</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 📖 解説「<a href="guide-proverb-series-index.html" style="color:#0969da"><b>投資格言から学ぼう 全48回 総目次</b></a>」公開'},
         {"date": "2026-09-05", "line": '・<b>2026-09-05</b>: 🛡️ 解説「<a href="guide-currency-hedge-cost.html" style="color:#0969da"><b>「為替ヘッジあり」のコストと仕組み</b></a>」公開'},

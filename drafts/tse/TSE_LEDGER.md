@@ -75,6 +75,46 @@
 
 **公開**: `guide-tse-tob.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→条文引用訂正→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告37件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit f9c4282）。
 
+### ✅ 2026-09-06 キュー#5「東証の市場区分」 market-segments 🏛
+
+**題材**: TSE_GUIDE.md キュー#5「東証の市場区分」（slug: `market-segments`、絵文字: 🏛、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`は素のcurl（UA偽装なし）でHTTP 200・到達可能（複数ページで実測。最初にURLを推測して404を踏んだが、これは経路遮断ではなく単なるURL誤り＝WebSearchで正しいURLを特定して解消）。`www.fsa.go.jp`もHTTP 200。以下のJPX一次情報ページを実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/equities/improvements/market-structure/01.html（市場区分見直しの概要・更新日2023/04/01）— 旧4区分の課題、新3区分のコンセプト原文、2022年4月4日一斉移行の経緯・日程を確認。
+- https://www.jpx.co.jp/equities/listing/continue/outline/01.html・02.html・03.html（上場維持基準：プライム/スタンダード/グロース、各ページ更新日2022/04/03・2022/04/03・2025/12/08）— 3市場の株主数・流通株式・売買代金/売買高・時価総額・純資産の全数値を確認。
+- https://www.jpx.co.jp/equities/follow-up/04.html（上場維持基準に関する経過措置の終了・更新日2026/03/18）— 2025年3月1日以後の基準日から本来基準が適用されていること、改善期間（原則1年・売買高基準6か月）→監理・整理銘柄→上場廃止という手順、経過措置中の緩和数値との対比表を確認。
+
+確認日：2026-09-06（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①冒頭disclaimer-bannerに`data-disclaimer="kinsho-v1"`属性欠落（3層のうち1層のみ抜け） ②「格の高い会社」が直線引用符で他所と表記不統一 ③「監理銘柄・整理銘柄に指定された場合＝上場廃止の可能性が高まった段階」という記述が、整理銘柄は実際には上場廃止決定後の段階である点を曖昧にしていた ④「流通株式時価総額や売買代金の基準が低い区分ほど値動きが荒くなりやすい」という文が、区分単位のリスク評価（実質的な格付け）に読まれうる表現＋係り受けの乱れ
+- 4点すべて適用修正（事実・数値・SVG・構造・JPX引用文は不変、属性追加・表記統一・段階の正確化・表現の中立化のみ）。修正はEditツールが一時的に無効だったため、置換前後で出現回数を厳密に検証したBash経由の文字列置換で実施し、タグ均衡・disclaimer属性数（3/3）を確認
+- 事実確認：上場維持基準の全数値・改善期間/監理整理銘柄の期間・経過措置終了日を一次情報および複数の証券会社告知と突合し誤りゼロを確認（唯一「監理銘柄・整理銘柄＝原則6か月」の表現は東証・証券会社側の記載と一致するが、整理銘柄単体は原則1か月という補記が必要と判断→③で対応）
+- 【独立最終確認】（別セッション・model=opus・Readのみ）→ 🟢白（修正反映確認・新規リスクなし）
+- 品質ルーブリック：自己採点で5観点すべて✅（「流通株式時価総額」の初出＝30秒まとめへの平易な補足説明を追加、§3冒頭の「制度上の基準値」の説明を「仮の例」ではなく「JPX公表の実際の基準」であると明確化する軽微修正を実施）
+
+**公開**: `guide-tse-market-segments.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。同時に既存6ページ（guide-anchoring-price / guide-currency-hedge-cost / guide-scam-crypto-scam / guide-scam-investment-seminar / guide-scam-real-estate-yield-pitch / guide-scam-recovery-scam）も正規化）→`check_site_consistency.py`（EXIT=0、警告33件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git commit時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してから git push origin main（commit 0912dd1）。
+
+### ✅ 2026-09-08 キュー#7「逆日歩（品貸料）」 negative-interest 💸
+
+**題材**: TSE_GUIDE.md キュー#7「逆日歩（品貸料）」（slug: `negative-interest`、絵文字: 💸、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurlで素のUA・HTTP 200・到達可能（トップページ実測含む）。以下のJPX一次情報を実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/equities/trading/margin/outline/01.html（信用取引の目的・仕組み・更新日2023/01/10）— 「品貸料（逆日歩）」の定義段落を逐語確認（貸株残高が融資残高を超過し株不足が生じた場合に証券金融会社が入札形式で不足株数を調達し、その入札で決まった料率が品貸料＝逆日歩。制度信用の売り顧客全員が支払い、買い顧客全員が受け取る）。
+- https://www.jpx.co.jp/markets/statistics-equities/margin/01.html（品貸料の実データ公表ページ・アクセス時点で「2026年9月4日申込分」を掲載・「日々16:00を目安に掲載」の記述・同一定義文をJPXが再掲していることを確認）。
+- JPX「信用取引制度の概要」PDF（2023年4月・`jpx.co.jp/equities/trading/margin/outline/tvdivq0000007szb-att/tvdivq000000toqj.pdf`）を`pdftotext`でテキスト抽出し、逆日歩の日数の数え方の図解（通常のケース＝1日分、休業日をまたぐケース＝3日分）と、品貸料の決定主体が制度信用＝取引所、一般信用＝証券会社である旨の対比表を確認。
+- `www.jsf.co.jp`・`www.taisyaku.jp`（日本証券金融＝日証金。品貸入札の最高料率・上限の運用ルールを持つ会社）は**経路遮断**（`CONNECT tunnel failed`・`connect_rejected`＝組織ポリシーによるegress拒否）で到達不可だったため、料率の上限そのものの具体的な制度設計（最高料率の決め方等）には本文で立ち入らず、JPXの一次情報で確認できた「発生条件・支払/受取の方向・日数の数え方・公表の仕組み」の範囲に本文のスコープを絞った。この点は本文中の warning-box で読者にも明示。
+
+確認日：2026-09-08（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— 信用取引そのものの元本超過損失・追証リスクへの言及が本文に一切なく、レバレッジ商品解説として景表法の有利誤認的な印象に近づく余地があると指摘。禁止語・個別銘柄評価・個別証券会社評価・免責三層・仮の例明示・一次情報URL＋確認日は全てクリアと確認。
+- 1点を適用修正（事実・数値・SVG・構造・出典URL・確認日は不変、§5末尾の warning-box に「信用取引は委託保証金を超える規模の取引であり、追証や委託保証金超過損失のおそれがある」旨を追記するのみ）。Editツールが当該エージェントの権限外だったため、置換前後で一致件数を検証したBash文字列置換で適用（バックアップ保存済み）。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・JPX引用文をWebSearchで原文と逐語照合）→ 🟢白（修正反映確認・新規リスクなし）。非ブロッキングの改善提案2件（品貸料公表タイミング「16:00」の独立裏取りが先方403で不可だった旨／買い方受取りの証券会社差の一文補足）を受け、前者は自分でも一次情報を再確認済みのため「数営業日前の申込分」と明記する軽微な文言修正のみ実施。後者は次回改稿事項として保留（公開を妨げない任意改善と判定されたため）。
+- 品質ルーブリック：自己採点で5観点すべて✅
+
+**公開**: `guide-tse-negative-interest.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。既存`guide-cash-allocation.html`のウィジェットも同時に正規化）→`check_site_consistency.py`（EXIT=0、警告35件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 083d86c）。
+
 ## エスカレ・要人間レビュー
 
 ### 🚩 2026-09-01 キュー#1「適時開示（TDnet）」 timely-disclosure 📄 — 一次情報（jpx.co.jp）未到達のため見送り
@@ -107,3 +147,23 @@
 - 品質ルーブリック：自己採点で5観点すべて✅
 
 **公開**: `guide-tse-tick-size.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`check_site_consistency.py`（EXIT=0、警告36件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 551ce8e。pushコマンド実行時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してからpush）。
+
+### ✅ 2026-09-07 キュー#6「貸株サービス」 share-lending 🤝
+
+**題材**: TSE_GUIDE.md キュー#6「貸株サービス」（slug: `share-lending`、絵文字: 🤝、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurlで素のUA・HTTP 200・到達可能（トップページ実測）。ただし本テーマ（貸株サービス）は制度の核心が**税務上の扱いと民法上の契約類型**にあり、JPX/FSA固有の制度というより国の一次情報がより直接的だったため、以下を一次情報として使用：
+- **国税庁 質疑応答事例**「特約の付された株券貸借取引に係る特約権料等の課税上の取扱い」（https://www.nta.go.jp/law/shitsugi/joto/22/01.htm・curl素のUAでHTTP 200・Shift_JISでデコードして全文確認）。「株券貸借取引…その実態は『消費貸借』（民法587）」「賃借料…配当代わり金…雑所得となります」を逐語確認。注記「令和7年8月1日現在の法令・通達等に基づいて作成」も確認。
+- **e-Gov法令検索API**（`laws.e-gov.go.jp/api/2/law_data/129AC0000000089`・HTTP 200）で民法第587条（消費貸借）の条文全文を直接取得・確認：「消費貸借は、当事者の一方が種類、品質及び数量の同じ物をもって返還をすることを約して相手方から金銭その他の物を受け取ることによって、その効力を生ずる。」
+- `jipf.or.jp`（日本投資者保護基金）・`www.sbisec.co.jp`・`www.rakuten-sec.co.jp`は**経路遮断**（`CONNECT tunnel failed`）で到達不可だったため、確認できない具体的主張（投資者保護基金の補償対象外の詳細、証券会社ごとの優待自動取得設定の詳細）は本文に書かず、一般的な法的性質（消費貸借＝所有権移転）から導ける範囲の記述に留めた。
+
+確認日：2026-09-07（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus）：
+- 【初期判定】🟡グレー（黒0）— ①「損益通算の扱いも通常の配当所得とは異なります」が税法上一律の帰結を証券会社の裁量に誤帰属 ②「証券会社が株主名簿上の株主になります」が一次情報（国税庁Q&A・民法587条）の裏付けを超えた具体的断定 ③税務署・税理士への相談導線が自サイトの税務系記事（guide-settlement-cycle.html等）と異なり皆無
+- 3点すべて適用修正（事実・数値・法令引用・SVG・構造は不変、表現の軟化＋一次情報の注記引用追加＋専門家相談導線の追加のみ）
+- 担当者が追加で2点の事実精度向上を実施：a) 民法587条の引用を「文言そのもの」としていた箇所を条文の逐語引用に訂正 b) 引用元Q&Aが「特約付き」株券貸借取引についての照会である旨のスコープ注記を追加 c) 「配当控除」「損益通算」に品質ルーブリック②（専門用語の初出説明）に対応する平易な補足を追加
+- 【独立最終確認】（別セッション・model=opus・Readのみ・国税庁ページを再取得しcp932デコードで全引用を逐語照合、e-Gov APIで民法587条の条文本体も再照合）→ 🟢白（引用精度・免責3箇所・禁止語・個別銘柄/証券会社名ゼロを再確認、追加修正による新規矛盾なし）
+- 品質ルーブリック：自己採点で5観点すべて✅（②の対応で「配当控除」「損益通算」に平易な補足説明を追加）
+
+**公開**: `guide-tse-share-lending.html`（読了約9分）。`check_guide_draft.py`（GREENでSVG重なり4件を先に修正→再度GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-equity-offering.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告34件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 75503af）。
