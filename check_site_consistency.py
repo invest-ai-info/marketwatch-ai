@@ -207,6 +207,35 @@ def check_liquid_in_markdown(sync_files):
             errors.append("🚨 " + msg + "（.nojekyll が無い＝ライブ更新が止まる）")
 
 
+def check_series_numbering():
+    """連番シリーズ（AIシグナル研究日誌）の回番号を検査する。
+
+    🚨 2026-09-06 事故＝ `guide-signal-lab-089.html`（9/4公開・N=287）に 9/6 の実行が
+       別記事を上書きし、公開済み本文が消えた。カードは9/4版のままで誰も気づかなかった。
+       → 「番号の重複」と「ファイル名の番号 ≠ タイトルの #番号」を機械で見張る。
+    """
+    seen = {}
+    for path in sorted(glob.glob(os.path.join(SD, "guide-signal-lab-*.html"))):
+        name = os.path.basename(path)
+        m = re.search(r"-(\d+)\.html$", name)
+        if not m:
+            continue
+        file_no = int(m.group(1))
+        text = _read(name)
+        tm = re.search(r"<title>(.*?)</title>", text, re.S)
+        title = re.sub(r"\s+", " ", tm.group(1)).strip() if tm else ""
+        nm = re.search(r"#0*(\d+)", title)
+        if not nm:
+            warnings.append(f"{name}: タイトルに回番号(#NN)が無い＝番号の取り違えを検知できない")
+        elif int(nm.group(1)) != file_no:
+            errors.append(f"🚨 {name}: ファイル名の番号({file_no})とタイトルの #{nm.group(1)} が不一致"
+                          f"（番号の取り違え/上書き公開の疑い）")
+        seen.setdefault(file_no, []).append(name)
+    for no, files in sorted(seen.items()):
+        if len(files) > 1:
+            errors.append(f"🚨 回番号 #{no} が重複: {', '.join(files)}")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -309,6 +338,9 @@ def main():
 
     # 5. 経済カレンダーの日付検査（2026-07-02 新設）
     check_economic_events()
+
+    # 6. 連番シリーズの回番号検査（2026-09-08 新設・#089 上書き公開事故の再発防止）
+    check_series_numbering()
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")

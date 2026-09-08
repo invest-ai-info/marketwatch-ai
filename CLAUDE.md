@@ -250,8 +250,8 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 | ツール | 役割 |
 |---|---|
 | **`mw.py`**（司令塔CLI） | `python mw.py check / publish / sync / trigger <wf> / status [wf] / routines`。スクリプト名を覚えずに運用できる単一入口 |
-| **`check_site_consistency.py`**（リンター） | サイト不変条件を自動検査：**🚨SYNC禁忌の混入（巻き戻し事故防止）**／免責 kinsho-v1／10ボタンナビ／SYNC_FILES・sitemap・guidesカード登録／リンク切れ。errorで exit 1。**新ルールはここに検査を追加** |
-| **`publish_article.py`** | 記事公開の②〜⑤を1コマンド・冪等（`mw publish` が内部で使用） |
+| **`check_site_consistency.py`**（リンター） | サイト不変条件を自動検査：**🆕連番シリーズの回番号（重複・ファイル名とタイトルの #番号の不一致）**／**🚨SYNC禁忌の混入（巻き戻し事故防止）**／免責 kinsho-v1／10ボタンナビ／SYNC_FILES・sitemap・guidesカード登録／リンク切れ。errorで exit 1。**新ルールはここに検査を追加** |
+| **`publish_article.py`** | 記事公開の②〜⑤を1コマンド・冪等（`mw publish` が内部で使用）。🆕**上書きゲート**＝git の HEAD 版と `datePublished` が違えば「公開済み記事を別記事で上書き」と判断して中止（`--allow-overwrite` で解除）。2026-09-06 に #089 が消えた事故の再発防止 |
 | **`apply_logo.py`** 🆕 | サイトロゴ（案C・favicon+ヘッダーSVG）を全HTML+生成スクリプト9本へ冪等適用（2026-07-04導入済み。ロゴ変更時はSVG定数を編集して `--apply`） |
 | **`apply_series_nav.py`** 🆕 | 連続シリーズ記事の末尾に「前の記事／次の記事」ボタンを冪等に敷く（2026-09-05 読者要望）。対象＝signal-lab / proverb / scam / tse / news の232本。並び順は記事の `datePublished`（同日はファイル名）＝人が順番を管理しない。**update-market-news.yml が毎回 `--apply` して commit** ＝新記事が出ると「1つ前の記事の“次の記事”」も自動で貼り替わる。⚠️ 手で前後リンクを書かない（必ず腐る） |
 | **routine `site-qa-lint`** | 土曜10:00 JST にリンターを自動実行→`site-qa-report.md` に報告（人が気づく前に検知） |
