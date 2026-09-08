@@ -229,4 +229,5 @@ SYNC_FILES = [
     "guide-news-2026-09-07-nikkei-semiconductor-ai-rally.html",
     "guide-signal-lab-092.html",
     "guide-cash-allocation.html",
+    "guide-tse-negative-interest.html",
 ]
