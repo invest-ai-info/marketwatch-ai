@@ -1,3 +1,15 @@
+## 2026-09-09 signal-lab #093（trend=上昇×reversalL RSI vs BB二極化解剖）
+
+- **基準日**: 2026-09-09（JST）
+- **記事番号**: #093
+- **テーマ**: trend=上昇×reversalL 前向きN=290 降格警戒継続中——RSI 64% vs BB 43%の二極化と指数38%崩落の解剖
+- **生成ファイル**: `drafts/draft-signal-lab-093.html`
+- **claims**: `drafts/labnotes/lab-093-claims.json`（8件）
+- **ステータス**: 🔄 ゲート実行中（signal_lab_verify待ち）
+- **主要数値**: FWD全体 k=139/n=290=47.9% E(R)=+0.118 RCI[-0.016,+0.253] / RSI型 64.3% / BB型 42.7% / RSI×4H 72.4% / 指数 38.2% / demote_strikes=1
+
+---
+
 ## 2026-09-09 autodraft: draft-information-lag.html
 
 - **基準日**: 2026-09-09（JST 05:31、UTC 2026-09-08T20:31Z）
