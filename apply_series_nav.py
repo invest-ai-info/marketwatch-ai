@@ -63,6 +63,19 @@ SERIES = [
     },
 ]
 
+# 記事の途中（関連記事の直前）に置かれている「📚 解説記事一覧に戻る →」ボタン。
+# 2026-09-05 オーナー指摘＝シリーズ内の移動を先に見せ、サイト全体の一覧へ戻るのは最後にしたい。
+# 対象232本のうち64本が持っており、全64本が下の1形だけ（実測）。ブロックの末尾へ移設する。
+BACK_BTN_MARK = "📚 解説記事一覧に戻る →"
+BACK_BTN_RE = re.compile(
+    r'\n*[ \t]*<div[^>]*>\s*<a [^>]*>' + re.escape(BACK_BTN_MARK) + r'</a>\s*</div>\n?', re.S)
+BACK_BTN_HTML = (
+    '      <div style="text-align:center;margin:18px 0 0">\n'
+    '        <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;'
+    'border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;'
+    'font-size:.95rem">' + BACK_BTN_MARK + '</a>\n'
+    '      </div>')
+
 BEGIN = "<!-- series-nav:begin -->"
 END = "<!-- series-nav:end -->"
 BLOCK_RE = re.compile(re.escape(BEGIN) + r".*?" + re.escape(END) + r"\n?", re.S)
@@ -138,8 +151,9 @@ def button(kind, item):
             f'      </a>')
 
 
-def build_block(series, prev_item, next_item):
-    return "\n".join([
+def build_block(series, prev_item, next_item, has_back_btn):
+    """has_back_btn＝その記事が「解説記事一覧に戻る」ボタンを持っていたか（末尾へ移設する）。"""
+    parts = [
         BEGIN,
         STYLE,
         f'    <nav class="mw-sernav" aria-label="{html.escape(series["label"])}のシリーズ内移動">',
@@ -148,11 +162,16 @@ def build_block(series, prev_item, next_item):
         button("prev", prev_item),
         button("next", next_item),
         "      </div>",
-        f'      <div class="mw-sernav-idx"><a href="{series["index"]}">シリーズの記事一覧を見る →</a></div>',
-        "    </nav>",
-        END,
-        "",
-    ])
+    ]
+    # 一覧リンクが guides.html そのものなら、下の「解説記事一覧に戻る」と行き先が同じ＝二重に出さない
+    if not (has_back_btn and series["index"] == "guides.html"):
+        parts.append(
+            f'      <div class="mw-sernav-idx"><a href="{series["index"]}">シリーズの記事一覧を見る →</a></div>')
+    parts.append("    </nav>")
+    if has_back_btn:
+        parts.append(BACK_BTN_HTML)
+    parts += [END, ""]
+    return "\n".join(parts)
 
 
 def read(path):
@@ -165,9 +184,13 @@ def write(path, text):
         f.write(text)
 
 
-def apply_block(text, block):
+def apply_block(text, series, prev_item, next_item):
     """既存ブロックがあれば置換、無ければ </main>（無ければ <footer）の直前に挿入。"""
+    # ⚠️ 判定はブロック除去より前に行う（2回目以降はボタンがブロックの中にいるため）
+    has_back_btn = BACK_BTN_MARK in text
     text = BLOCK_RE.sub("", text)
+    text = BACK_BTN_RE.sub("\n", text)
+    block = build_block(series, prev_item, next_item, has_back_btn)
     # 記事の骨格は3世代ある。新しい順に見て、最初に見つかった閉じ位置の直前へ入れる
     for anchor in ("</main>", "</div><!-- /container -->", "<footer"):
         i = text.find(anchor)
@@ -189,9 +212,8 @@ def run(root, keys, do_apply, log=print):
         for n, item in enumerate(items):
             prev_item = items[n - 1] if n > 0 else None
             next_item = items[n + 1] if n < len(items) - 1 else None
-            block = build_block(series, prev_item, next_item)
             before = read(item["path"])
-            after, err = apply_block(before, block)
+            after, err = apply_block(before, series, prev_item, next_item)
             if err:
                 errors.append(f"{item['file']}: {err}")
                 continue
