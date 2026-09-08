@@ -184,6 +184,40 @@ def write(path, text):
         f.write(text)
 
 
+# 末尾の免責（kinsho-v1 の③末尾バナー等）は記事の一番下に置いたままにする＝ナビはその「上」へ入れる。
+# 2026-09-05 オーナー指摘＝関連記事と免責事項の間が読者の動線として自然。
+DISCLAIMER_EL_RE = re.compile(r'<(p|div)\b[^>]*data-disclaimer="kinsho-v1"[^>]*>.*?</\1>', re.S)
+COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
+CLOSING_TAG_RE = re.compile(r"</[a-zA-Z][^>]*>")
+COMMENT_ONLY_LINE_RE = re.compile(r"^\s*(?:<!--.*?-->\s*)+$", re.S)
+
+
+def tail_disclaimer_pos(text, end_idx):
+    """記事末尾に連なる免責ブロックの先頭（行頭）を返す。見つからなければ None。
+
+    「その位置から end_idx までが免責要素・コメント・閉じタグ・空白だけ」を満たす
+    最も早い免責要素を探す＝中間バナーと末尾バナーが並んでいれば中間の手前が返る。
+    """
+    for m in DISCLAIMER_EL_RE.finditer(text, 0, end_idx):
+        seg = text[m.start():end_idx]
+        seg = DISCLAIMER_EL_RE.sub("", seg)
+        seg = COMMENT_RE.sub("", seg)
+        seg = CLOSING_TAG_RE.sub("", seg)
+        if seg.strip():
+            continue
+        # 行頭まで戻し、直前がコメントだけの行なら（<!-- ② 中間バナー --> 等）そこも含める
+        pos = text.rfind("\n", 0, m.start()) + 1
+        if text[pos:m.start()].strip():
+            return m.start()          # 同じ行に別の中身がある＝要素の直前へ
+        while pos > 0:
+            prev = text.rfind("\n", 0, pos - 1) + 1
+            if not COMMENT_ONLY_LINE_RE.match(text[prev:pos - 1]):
+                break
+            pos = prev
+        return pos
+    return None
+
+
 def apply_block(text, series, prev_item, next_item):
     """既存ブロックがあれば置換、無ければ </main>（無ければ <footer）の直前に挿入。"""
     # ⚠️ 判定はブロック除去より前に行う（2回目以降はボタンがブロックの中にいるため）
@@ -191,11 +225,16 @@ def apply_block(text, series, prev_item, next_item):
     text = BLOCK_RE.sub("", text)
     text = BACK_BTN_RE.sub("\n", text)
     block = build_block(series, prev_item, next_item, has_back_btn)
-    # 記事の骨格は3世代ある。新しい順に見て、最初に見つかった閉じ位置の直前へ入れる
+    # 記事の骨格は3世代ある。新しい順に見て、最初に見つかった閉じ位置を記事の終端とみなす
     for anchor in ("</main>", "</div><!-- /container -->", "<footer"):
         i = text.find(anchor)
-        if i != -1:
+        if i == -1:
+            continue
+        pos = tail_disclaimer_pos(text, i)
+        if pos is None:
             return text[:i] + block + text[i:], None
+        indent = re.match(r"[ \t]*", text[pos:]).group(0)
+        return text[:pos] + block + indent + text[pos + len(indent):], None
     return text, "差し込み位置（</main> も <footer> も）が見つからない"
 
 
