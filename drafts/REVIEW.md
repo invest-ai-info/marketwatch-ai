@@ -1,3 +1,5 @@
+2026-09-09 autopublish: guide-confirmation-bias.html（調べれば調べるほど、自信だけが増えていく——確証バイアスの正体と外し方）公開 — 決定論🟢→「売り推奨」修正→再🟢→Opus🟡軽微5件修正→再🟢→独立Opus構造指摘→修正（nav11本・holdings追加・ルート相対・data-disclaimer）→決定論再🟢→独立Opus🟢白→publish OK → push成功 https://marketwatch-jp.com/guide-confirmation-bias.html
+
 ## 2026-09-09 signal-lab #093（trend=上昇×reversalL RSI vs BB二極化解剖）
 
 - **基準日**: 2026-09-09（JST）
