@@ -283,7 +283,7 @@ window.addEventListener('resize',mark);
         <li><a href="#background">今回の仮説——昇格トラッカーの降格警戒</a></li>
         <li><a href="#method">検証方法（IS/FWD期間分離）</a></li>
         <li><a href="#polarize">RSI vs BBの二極化——ISとFWDの比較</a></li>
-        <li><a href="#rsi-detail">RSI過売り反発：4H足で72%の強さ</a></li>
+        <li><a href="#rsi-detail">RSI過売り反発：4H足は72.4%（N=29）</a></li>
         <li><a href="#index-collapse">指数グループ：38%崩落の背景</a></li>
         <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
         <li><a href="#verdict">今回の評価と次のチェックポイント</a></li>
@@ -396,7 +396,7 @@ window.addEventListener('resize',mark);
 
     <p>ところが前向き期間（トラッカー登録後・N=290）では様相が一変しました。RSI（64.3%・N=70）とBB（42.7%・N=220）の間に<strong>21.6ppの大きな差</strong>が生まれています。BBは損益分岐（43%）とほぼ同水準に落ち込んでいます。</p>
 
-    <p>これは「RSIが前向きで性能向上した」か「BBが前向きで劣化した」か、またはその両方が起きたことを示唆します。IS期間は両者が同等だったため、IS期間中の偶然のサンプリング差では説明できません。</p>
+    <p>これは「RSIが前向きで性能向上した」か「BBが前向きで劣化した」か、またはその両方が起きたことを示唆します。IS期間は両者が同等だったため、偶然のばらつきだけで説明するのは難しいように見えます。ただしIS期間のRSIはN=25と限られるため、断定はできません。</p>
 
     <table>
       <tr><th>期間</th><th>シグナル</th><th>N</th><th>勝ち</th><th>勝率</th><th>95%CI</th><th>平均R</th></tr>
@@ -457,7 +457,7 @@ window.addEventListener('resize',mark);
     </table>
 
     <!-- =============================== -->
-    <h2 id="rsi-detail">④ RSI過売り反発：4H足で72%の強さ</h2>
+    <h2 id="rsi-detail">④ RSI過売り反発：4H足は72.4%（N=29）</h2>
 
     <p>RSI過売り反発（rsi_oversold_bounce）は前向きで64.3%と高い勝率を示していますが、時間足で分解するとさらに興味深い構造が見えます。</p>
 
@@ -469,8 +469,8 @@ window.addEventListener('resize',mark);
     <p>4H足では72%台という高い勝率が出ています。これは以前の研究日誌（#74）で確認した「rsi_oversold_bounce 4H足の優位性（67.8%）」とも整合します。一方、1H足ではCI幅が広く（32〜65%）エッジは不明確です。</p>
 
     <div class="positive-box">
-      <strong>✅ RSI×4H足の前向き成績：72.4% CI[54.3%, 85.3%]（N=29）</strong><br>
-      CI下限54.3%は損益分岐43%を大きく上回っており、統計的にポジティブなエッジがあると考えられます。ただしN=29は小サンプルで、継続観察が必要です。
+      <strong>RSI×4H足の前向き成績：72.4% CI[54.3%, 85.3%]（N=29）</strong><br>
+      過去データ上では、CI下限54.3%が損益分岐43%を上回っていました。ただしN=29は小サンプルで、将来も同様の結果になるとは限りません。継続観察が必要です。
     </div>
 
     <!-- =============================== -->
@@ -590,7 +590,7 @@ window.addEventListener('resize',mark);
 
     <p>指数グループの38.2%は、CI上限49.4%でも損益分岐43%を大きく超えられていません。この傾向は過去の研究（#47・#73）でも繰り返し確認されており、指数での逆張りロングには構造的な弱さがある可能性があります。</p>
 
-    <p>指数グループのシグナル大半はBBシグナル（bb_lower_touch）です。過去の分析から、<strong>BB×指数が最も弱いサブセグメント</strong>（前向きで約32〜33%水準）であることが推定されており、これが指数グループ全体の平均を押し下げていると考えられます。</p>
+    <p>指数グループのシグナル大半はBBシグナル（bb_lower_touch）です。過去の研究日誌（<a href="../guide-signal-lab-073.html">#73</a>）では、BB×指数が最も弱いサブセグメント（約32〜33%水準）として報告されています。本記事では再集計していない参考値ですが、これが指数グループ全体の平均を押し下げている可能性があります。</p>
 
     <div class="negative-box">
       <strong>⚠️ 指数グループへの注意点</strong><br>
@@ -604,16 +604,16 @@ window.addEventListener('resize',mark);
 
     <table>
       <tr><th>項目</th><th>値</th></tr>
-      <tr><td>ステータス</td><td>✅ 昇格（monitoring）</td></tr>
+      <tr><td>ステータス</td><td>📡 監視中（降格警戒）</td></tr>
       <tr><td>前向きN</td><td>290</td></tr>
       <tr><td>前向き勝率</td><td>47.9%（139/290）</td></tr>
       <tr><td>前向き CI</td><td>[42.2%, 53.7%]</td></tr>
       <tr><td>期待リターン E(R)</td><td>+0.118</td></tr>
       <tr><td>E(R) 95%CI下限</td><td>-0.016（マイナス継続）</td></tr>
-      <tr style="background:#fff8c5"><td>demote_strikes</td><td>1（警戒：2回連続で昇格基準未達）</td></tr>
+      <tr style="background:#fff8c5"><td>demote_strikes</td><td>1（警戒：1回目の未達。次回も未達なら降格）</td></tr>
       <tr><td>昇格条件</td><td>前向きN≥80かつRCI下限&gt;0が2回連続（未達）</td></tr>
-      <tr><td>最終評価N</td><td>248（その時点でRCI下限=-0.053）</td></tr>
-      <tr><td>前回のRCI下限</td><td>-0.053（N=253）→ -0.040（N=289）（改善傾向あるが依然マイナス）</td></tr>
+      <tr><td>demote発生時点</td><td>評価N=248（demote_strikes設定）</td></tr>
+      <tr><td>直近RCI下限推移</td><td>-0.053（N=253時点）→ -0.040（N=289）→ -0.016（N=290）（改善傾向あるが依然マイナス）</td></tr>
     </table>
 
     <!-- SVG 3: RCI下限の推移（折れ線グラフ） -->
@@ -662,7 +662,7 @@ window.addEventListener('resize',mark);
         <rect x="80" y="113" width="440" height="52" fill="#ffebe9" opacity="0.25"/>
         <text x="300" y="125" class="s-label-r" font-size="9.5" text-anchor="middle">RCI下限マイナスゾーン（昇格基準未達）</text>
       </svg>
-      <p class="chart-caption">図3：RCI下限（期待リターン95%CI下限）の推移（概念図）。N=248の評価時点で-0.053を記録してdemote_strikes=1が付与。N=289でも-0.040と依然マイナス。N=290時点では-0.016まで改善傾向。</p>
+      <p class="chart-caption">図3：RCI下限（期待リターン95%CI下限）の推移（概念図）。N=248評価時点でdemote_strikes=1が付与。N=253時点でRCI下限=-0.053、N=289で-0.040、N=290で-0.016まで改善傾向。※N=248以降は実測値、N=100・N=200 は推移の向きを示すための概略値です。</p>
     </div>
 
     <p>RCI下限は2026年8月27日（N=253時点）からマイナスが続いており、N=289時点でも-0.040という状態です。N=290時点では-0.016まで改善傾向が見られますが、昇格基準（RCI下限&gt;0）にはまだ届いていません。</p>
@@ -676,7 +676,7 @@ window.addEventListener('resize',mark);
 
     <ul>
       <li><strong>IS期間には存在しなかった二極化</strong>が前向き期間で発生している（RSI 64% vs BB 43%）</li>
-      <li>RSIシグナルは上昇トレンド環境で高い勝率を維持——特に<strong>RSI×4H足（72.4%）</strong>が際立つ</li>
+      <li>RSIシグナルは上昇トレンド環境で高い勝率を示していました（前向き期間）——特に<strong>RSI×4H足（72.4%）</strong>が際立つ</li>
       <li>BBシグナルは期待リターンがほぼゼロ（E(R)=-0.003）で昇格基準を満たせていない</li>
       <li>指数グループは繰り返し弱さが確認されており、構造的な問題がある可能性がある</li>
     </ul>
