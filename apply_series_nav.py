@@ -31,6 +31,10 @@ SERIES = [
         # guides.html 内の該当カテゴリまで飛ばす（この見出しだけ専用セクションがある）
         "index": "guides.html#cat-lab",
         "exclude": set(),
+        # 🔑 このシリーズだけ「公開日」ではなく「ファイル名の回番号」で並べる。
+        # 読者は #88→#89→#90 と番号で辿るため。2026-09-05 のレーン事故で #089 が
+        # #090 より後に公開され、日付順だと 88→90→89→91 と番号が飛んで見えた（オーナー報告）。
+        "order": "number",
     },
     {
         "key": "proverb",
@@ -132,7 +136,14 @@ def collect(series, root):
         if not date:
             continue
         items.append({"file": name, "path": path, "date": date, "title": doc_title(text) or name})
-    items.sort(key=lambda a: (a["date"], a["file"]))
+    if series.get("order") == "number":
+        # 回番号（guide-signal-lab-089.html の 089）。取れない記事は末尾へ
+        def num(a):
+            mm = re.search(r"-(\d+)\.html$", a["file"])
+            return (0, int(mm.group(1))) if mm else (1, 0)
+        items.sort(key=lambda a: (num(a), a["date"], a["file"]))
+    else:
+        items.sort(key=lambda a: (a["date"], a["file"]))
     return items
 
 
