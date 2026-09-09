@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-09-09T15:12:00+09:00",
+  "generated_at": "2026-09-10T06:10:27+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "HIGH",
-    "rationale": "9月15〜16日のFOMC会合での利上げ確率が60〜70%に高まり、債券利回りが上昇。米・イラン軍事緊張が9月2日に再燃し原油が3ヶ月ぶり高値に急騰、インフレ再燃リスクが台頭。米・カナダ貿易戦争の激化が9月8日の株売りを加速した。季節的な「9月効果」も重なり、全般的にリスクオフ傾向が継続している。",
+    "confidence": "MID",
+    "rationale": "米・イラン軍事衝突の激化（米軍がイラン石油タンカー5隻を撃沈）で原油が1バレル100ドルを突破し、インフレ再燃懸念が高まっている。9月FOMC（15-16日）での利上げ確率が60-65%に上昇。円高進行（ドル円153円台）やBTC下落がリスクオフ心理を裏付ける。一方でAI・半導体需要が株式の下値を支え、完全なリスクオフには至っていない。",
     "key_drivers": [
-      "FOMCが9月15〜16日に25bp利上げの可能性60〜70%、PCEインフレが3.6%で高止まり（Fed理事ウォーラー氏が利上げを示唆）",
-      "米・イラン軍事緊張が9月2日に再燃、WTI原油が3ヶ月ぶり高値94ドル台に急騰しホルムズ海峡封鎖リスクが浮上",
-      "米・カナダ貿易戦争が激化し9月8日の米株売りを加速、関税によるインフレ圧力が追加",
-      "9月の季節的弱さ（September Effect）と市場の高値圏での利益確定売り圧力が重なる局面"
+      "米軍がイランの石油タンカー5隻を撃沈、フーシ派もサウジ施設を攻撃し原油100ドル突破",
+      "7月米CPI 3.4%（前年比）とエネルギー高止まりで9月FOMC利上げ確率60-65%に上昇",
+      "円高進行（153円台）：キャリートレード巻き戻し・日銀引き締め期待・米国の円安是正圧力",
+      "9月10日ECB理事会で25bp利上げ（2.50%）が濃厚、9月11日米CPIが次の焦点"
     ]
   },
   "assets": [
@@ -17,138 +17,100 @@
       "ticker": "NKD=F",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "9月2日に米のイラン攻撃ニュースで-1,889pt（-2.85%）と急落し、9月9日終値65,654（+0.59%）と部分的に回復しているが、9月7日の上昇はAI半導体の一握り銘柄による偏った相場（883銘柄下落 vs 630銘柄上昇）で内部強度が弱い。ドル円が9月8日に152.89まで急落（円急騰）し輸出企業収益への圧迫懸念が台頭。BOJが9月17〜18日会合で63%の確率で25bp利上げが見込まれ、利上げ後にドル円150台への下押しリスクも。9月21〜23日が3連休のため、BOJ決定直後のポジションに流動性ギャップリスクあり。",
+      "rationale": "日経225は65,143円で小幅続落（前日比－126点）。円高（153円台）が輸出企業の業績懸念を高め、原油100ドル突破がコスト上昇リスクとなっている。AI・半導体関連が選別的に下支えするも全体的に上値が重い。9月11日SQ（メジャーSQ）週で変動性が高まりやすい。",
       "catalysts": [
-        "BOJ9月17〜18日会合での25bp利上げ確率63%、実施されれば円高加速でNKD=F下押し",
-        "ドル円が9月8日に152.89と円急騰し輸出企業の想定レートを大幅に下回る",
-        "9月7日の反発はAI半導体の一部銘柄主導で内部強度が弱く、AI悪材料1件で反落リスク",
-        "BOJ決定（9/18）直後に3連休（9/21-23）ありギャップリスクが高い局面"
+        "円高（153円台）が輸出株・自動車セクターの重しとなる",
+        "原油100ドル超で製造業・航空のコスト増懸念",
+        "9月11日メジャーSQで短期的な乱高下リスク"
       ],
       "top_news": [
         {
-          "headline": "日経225が9月2日に-1,890pt急落、米のイラン攻撃で地政学ショック",
-          "published": "2026-09-02",
-          "comment": "地政学リスクが高まると安全資産選好でリスク資産の株が売られる",
-          "source": "Vantage Markets",
+          "headline": "日経225が65,143円で続落、円高と原油100ドル突破が輸出株を圧迫",
+          "published": "2026-09-09",
+          "comment": "円高とエネルギーコスト上昇が輸出企業の収益を圧迫するリスクとなっている",
+          "source": "CNBC/superblog.jp",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["superblog.jp", "minkabu"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.superblog.jp/2026/09/202699wed22565700-65100.html"
+        },
+        {
+          "headline": "東京為替：ドル円が153円台で底堅い動き、ドルに買い戻し",
+          "published": "2026-09-09",
+          "comment": "ドル円の急落は限定的で円高一辺倒にはならず、米インフレ指標待ちの状況",
+          "source": "jp.investing.com (Fisco)",
           "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["TechTimes"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.vantagemarkets.com/en/market-analysis/nikkei-225-steadies-64400-iran-boj-september-3-2026/"
-        },
-        {
-          "headline": "日銀・上田総裁、9月17〜18日会合でインフレリスクを精査する方針を表明",
-          "published": "2026-09-02",
-          "comment": "BOJが利上げを示唆しており、円高・輸出株安の同時進行リスクに注意",
-          "source": "Japan Times",
-          "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.japantimes.co.jp/business/2026/09/02/economy/boj-ueda-katayama-rate/"
-        },
-        {
-          "headline": "円が9月7日週に+2.5%上昇し2026年2月以来の高値圏、ドル円が152.89まで下落",
-          "published": "2026-09-07",
-          "comment": "円高が進むと日本の輸出企業の海外収益が円換算で目減りし株安要因に",
-          "source": "Japan Times",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.japantimes.co.jp/business/2026/09/07/markets/japan-yen-gains-154/"
+          "corroborated_by": ["fx.minkabu.jp"],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://jp.investing.com/news/forex-news/article-1673490"
         }
       ]
     },
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "9月8日に原油高と米加貿易戦争の激化を受けて-0.58%下落。9月9日は+0.10%と小反発も7,681ポイント付近でCPI発表前の様子見。FOMC9月15〜16日での利上げ確率が60〜70%と金利上昇がバリュエーションを圧迫。年初来+7.7%（AIキャピタル支出ブームが主因）と高値圏にあり利益確定売りが出やすい状況。",
+      "rationale": "S&P500先物はほぼ横ばい。ダウ先物は21ポイント安と小幅売り。原油100ドルとインフレ再燃懸念がFOMCの追加利上げ期待を高め上値を重くしているが、AI・テック株の底堅さが指数全体を支えている。9月11日のCPIが次の方向性を決める重要指標。",
       "catalysts": [
-        "FOMC9月15〜16日の利上げ確率60〜70%、Gov.ウォーラーが利上げ適切と示唆",
-        "原油94ドル台によるインフレ再燃リスク、PCE3.6%が高止まり",
-        "米・カナダ貿易戦争激化による関税インフレ懸念が9月8日の売りを加速",
-        "8月CPI（9月10〜11日発表予定）が熱ければ利上げほぼ確定で追加下落リスク"
+        "9月11日米CPIがFOMC9月利上げ（15-16日）の判断を左右",
+        "AI・半導体需要の継続的な強さが下値を支援",
+        "原油100ドル突破によるインフレ再燃とFOMC利上げ期待の高まり"
       ],
       "top_news": [
         {
-          "headline": "ダウ・S&P500・ナスダックが下落、原油高と米加貿易戦争が重荷",
-          "published": "2026-09-08",
-          "comment": "インフレ再燃と貿易摩擦の二重圧力で米株が売られた",
-          "source": "Yahoo Finance",
+          "headline": "S&P500先物ほぼ横ばい、原油100ドルとインフレ懸念が上値を抑制",
+          "published": "2026-09-09",
+          "comment": "インフレと利上げ懸念が株式の上値を制限しているが、テック需要が崩れていない",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["TradingEconomics"],
+          "corroborated_by": ["tickmill.com", "ic.com"],
           "materiality": "high",
-          "direction": "bearish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-september-8-dow-sp-500-nasdaq-080440338.html"
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/09/08/stock-market-today-live-updates.html"
         },
         {
-          "headline": "Fed理事ウォーラー氏「9月会合での利上げが適切な可能性」と示唆",
-          "published": "2026-09-03",
-          "comment": "Fed高官が利上げを直接示唆し、金利上昇による株価天井感が高まる",
-          "source": "Cambridge Currencies",
+          "headline": "Fed、9月FOMC利上げ確率60-65%に上昇　エネルギー高とCPI3.4%が背景",
+          "published": "2026-09-07",
+          "comment": "7月に利上げ見送った連銀が今度こそ動くかどうかが株式市場最大の焦点",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Marketplace.org", "Schwab"],
+          "corroborated_by": ["Chase", "Forbes"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://cambridgecurrencies.com/next-federal-reserve-interest-rate-decision/"
-        },
-        {
-          "headline": "FOMC7月会合：9対3で金利据え置き、3名が即時利上げに反対票",
-          "published": "2026-07-29",
-          "comment": "3人の反対票はFOMC内の利上げ圧力が高まっているサインで、9月は本格的な議論に",
-          "source": "Federal Reserve",
-          "tier": 1,
-          "credibility": "HIGH",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260729.htm"
+          "url": "https://www.cnbc.com/2026/08/28/-september-fed-decision-now-a-coin-flip-as-rate-hike-odds-increase.html"
         }
       ]
     },
     {
       "name": "ナスダック",
       "ticker": "NQ=F",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "金利上昇局面でバリュエーションが圧縮されやすいグロース・ハイテク株が主な下げ要因。9月8日にはマイクロソフト-1.1%、パランティア-2.3%、アマゾン-0.6%と主力ハイテク株が連れ安。AI投資ブームが年初来の上昇を支えてきたが、FOMC前に利益確定売りが出やすい局面が続く。8月CPI次第でさらに敏感に反応する可能性がある。",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "ナスダック100先物はほぼ横ばい。AI・半導体関連への選好が続きS&P500を相対的にアウトパフォームしているが、FOMC利上げ実現時はグロース株全般に金利上昇が重荷となる。9月11日CPIが利上げ確率を最終的に決める鍵となる。",
       "catalysts": [
-        "金利上昇でハイテク株のPERが圧縮されやすく、特にグロース株に逆風",
-        "FOMC利上げ確率60〜70%でナスダックが最も影響を受けやすいセクター構成",
-        "8月CPI（9月10〜11日発表）が熱ければナスダックが最大の下落リスク"
+        "AI・クラウドインフラ需要の継続がセクターを支援",
+        "FOMC利上げ実現でバリュエーション高のグロース株に逆風となる可能性",
+        "9月11日米CPI次第でボラティリティが高まる見通し"
       ],
       "top_news": [
         {
-          "headline": "マイクロソフト・パランティア・アマゾンなど主力ハイテク株が下落、金利上昇が圧迫",
-          "published": "2026-09-08",
-          "comment": "金利上昇はハイテク株の将来利益の割引率を高め、株価を押し下げる",
-          "source": "Yahoo Finance",
+          "headline": "ナスダック先物ほぼ変わらず、AI需要が下値を支えFOMC利上げリスクと拮抗",
+          "published": "2026-09-09",
+          "comment": "AI投資テーマが続く一方、利上げ期待の強まりはグロース株の頭を押さえうる",
+          "source": "CNBC",
           "tier": 2,
-          "credibility": "HIGH",
+          "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-september-8-dow-sp-500-nasdaq-080440338.html"
-        },
-        {
-          "headline": "9月効果と利上げリスクが重なり、市場の強気センチメントに限界が見え始める",
-          "published": "2026-09-08",
-          "comment": "9月は歴史的に株が下がりやすい月で、今年は利上げリスクも加わった",
-          "source": "InteractiveCrypto",
-          "tier": 3,
-          "credibility": "LOW",
-          "corroborated_by": ["SharperTrades"],
-          "materiality": "low",
-          "direction": "bearish",
-          "url": "https://www.interactivecrypto.com/why-september-s-risk-off-mood-exposes-the-limits-of-market-sentiment-sep-2026"
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/09/08/stock-market-today-live-updates.html"
         }
       ]
     },
@@ -156,37 +118,37 @@
       "name": "金",
       "ticker": "GC=F",
       "bias": "NEUTRAL",
-      "conviction": "MID",
-      "rationale": "9月8日は4,367.90ドル（前日比-0.84%）と上値が重い。Fed利上げ期待とドル高が上値を抑えるが、米・イラン軍事緊張による地政学的リスクプレミアムと中央銀行の継続的な買いが下支え。前年比+20.42%と構造的上昇トレンドは維持されており、強弱材料が拮抗し横ばい局面が続くとみられる。",
+      "conviction": "LOW",
+      "rationale": "金は4,399ドル近辺で方向感に乏しい。中東地政学リスクの高まりは本来金の強材料だが、米軍のイラン攻撃後に下落するという複雑な反応。FOMC利上げ期待に伴う実質金利上昇が逆風。一方で中央銀行の継続的な買い入れが下値を支える構図が続いている。",
       "catalysts": [
-        "米・イラン軍事緊張が継続し地政学リスクプレミアムを維持（上昇要因）",
-        "FOMC利上げ確率60〜70%でドル高・実質金利上昇（下押し要因）",
-        "中央銀行の継続的な金買いが構造的な下値サポートとなる"
+        "中東紛争の深刻化による安全資産需要が下支え",
+        "FOMC9月利上げ期待と実質金利上昇が上値を抑制",
+        "中央銀行の継続的な金購入が長期的な下値を支える"
       ],
       "top_news": [
         {
-          "headline": "金が4,367.90ドルに下落（前日比-0.84%）、利上げ期待によるドル高が上値を抑制",
-          "published": "2026-09-08",
-          "comment": "Fed利上げ観測でドルが強まると、金は割高に見えて売られやすくなる",
-          "source": "Trading Economics",
+          "headline": "金が4,399ドルに下落、米軍のイラン艦船撃沈後の相場反応が複雑",
+          "published": "2026-09-09",
+          "comment": "地政学リスクと利上げ期待が相殺し合い、金の方向感が定まらない局面が続く",
+          "source": "finance.yahoo.com",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Yahoo Finance"],
-          "materiality": "mid",
+          "corroborated_by": ["tradingeconomics.com", "kitco.com"],
+          "materiality": "high",
           "direction": "bearish",
-          "url": "https://tradingeconomics.com/commodity/gold"
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-wednesday-september-9-2026-gold-prices-drop-following-us-strikes-on-five-iranian-oil-tankers-104123795.html"
         },
         {
-          "headline": "米・イラン緊張が再燃、安全資産需要が一部回復し金の下値をサポート",
-          "published": "2026-09-02",
-          "comment": "地政学リスクが高まると投資家は安全資産の金を買う傾向があり下支えに",
-          "source": "Trading Economics",
+          "headline": "金は4,400ドル付近で上値重し、中東リスクとFED見通しが綱引き",
+          "published": "2026-09-08",
+          "comment": "強い米雇用統計後の債券利回り上昇が金の重しとなっている",
+          "source": "finance.yahoo.com",
           "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "credibility": "HIGH",
+          "corroborated_by": ["tradingeconomics.com"],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://tradingeconomics.com/commodity/gold"
+          "direction": "neutral",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-tuesday-september-8-2026-gold-moves-lower-following-fresh-escalations-with-iran-111035525.html"
         }
       ]
     },
@@ -194,49 +156,37 @@
       "name": "原油",
       "ticker": "CL=F",
       "bias": "BULLISH",
-      "conviction": "MID",
-      "rationale": "9月8日にWTIが94.24ドル（+3.01%）と3ヶ月ぶり高値を記録。米・イラン軍事緊張によるホルムズ海峡の供給途絶リスクが支配的な上昇要因。OPEC+が9月に18.8万bpd増産（自主減産の段階的解除）を実施しているが、地政学リスクプレミアムが完全に打ち消している。IEAの世界的供給過剰予測や週間在庫増は上値抑制要因だが、現状では需給より地政学が優先されている。",
+      "conviction": "HIGH",
+      "rationale": "原油は100ドルを突破。米軍が火曜日にイランの石油タンカー5隻を撃沈したことが直接的な供給ショックとなり、イエメンのフーシ派もサウジアラビアのエネルギー施設を攻撃した。供給不安が即時かつ具体的であり、短期的な上昇圧力は高い。ただしインフレ加速がFOMC利上げを促し、需要後退リスクが中長期的な上値を制限する可能性がある。",
       "catalysts": [
-        "米・イラン軍事緊張の再燃によるホルムズ海峡封鎖リスクが最大の上昇要因",
-        "WTIが3ヶ月ぶり高値94.24ドルまで急騰（+3%）し、EIAが年平均95.39ドルを予測",
-        "OPEC+の増産はすでに市場に織り込み済みで価格への下押し効果は限定的"
+        "米軍がイランの原油輸送タンカー5隻を撃沈、直接的な供給減少",
+        "フーシ派がサウジアラビアのエネルギー施設を攻撃、中東供給全体が不安定化",
+        "米・イラン軍事緊張のさらなる激化リスク（ホルムズ海峡封鎖懸念）"
       ],
       "top_news": [
         {
-          "headline": "原油が3ヶ月ぶり高値の1バレル94ドル台に急騰、中東情勢緊迫化が主因",
-          "published": "2026-09-08",
-          "comment": "イランとの軍事緊張がホルムズ海峡閉鎖リスクを高め原油が急騰した",
-          "source": "Trading Economics",
+          "headline": "原油100ドル突破、米軍がイランの石油タンカー5隻を撃沈",
+          "published": "2026-09-09",
+          "comment": "中東の軍事行動が直接的に原油の供給を脅かし、エネルギー価格を急騰させている",
+          "source": "finance.yahoo.com",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Barchart"],
+          "corroborated_by": ["CNBC", "ic.com", "tickmill.com"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://tradingeconomics.com/commodity/crude-oil"
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-wednesday-september-9-2026-gold-prices-drop-following-us-strikes-on-five-iranian-oil-tankers-104123795.html"
         },
         {
-          "headline": "OPEC+が9月分として18.8万bpdの増産を実施、自主減産の段階的解除を完了",
-          "published": "2026-08-02",
-          "comment": "OPEC+増産は発表済みで既に織り込まれており、地政学リスクが上昇要因に",
+          "headline": "フーシ派がサウジアラビアのエネルギー施設・都市を攻撃、中東緊張が全面化",
+          "published": "2026-09-08",
+          "comment": "サウジアラビアは世界最大の原油輸出国の一つで、施設攻撃は供給リスクを高める",
           "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/08/02/opec-agrees-september-oil-hike-completing-rollback-of-voluntary-cuts.html"
-        },
-        {
-          "headline": "米週間石油在庫が増加し、IEAが2026年の世界的供給過剰を予測",
-          "published": "2026-09-07",
-          "comment": "在庫増と供給過剰予測は原油の上昇を抑制する方向に働く可能性",
-          "source": "Barchart",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.barchart.com/story/news/34125281/crude-oil-falls-on-bearish-weekly-inventory-report-and-iea-oil-surplus-forecast"
+          "corroborated_by": ["finance.yahoo.com"],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.cnbc.com/2026/09/07/stock-market-today-live-updates.html"
         }
       ]
     },
@@ -244,50 +194,37 @@
       "name": "ドル円",
       "ticker": "USDJPY",
       "bias": "BEARISH",
-      "conviction": "HIGH",
-      "rationale": "9月1〜8日でドル円が160.19から152.89まで急落（7.3円の円急騰）。BOJが9月17〜18日会合で63%の確率で25bp利上げが見込まれ（現在1.00%→1.25%へ）、円高のさらなる進行に警戒。米財務長官ベッセント氏が上田総裁との会談で円安是正の必要性を強調し、協調介入への圧力も高い。8月の為替介入で日本の外貨準備が記録的な約79.6十億ドル減少。",
+      "conviction": "MID",
+      "rationale": "ドル円は9月9日にNY市場で153.09円まで下落後、153.80円まで反発。東京市場でも153円25銭まで下落後は153円台中盤に戻した。キャリートレードの巻き戻しと日銀の金融引き締め期待、米国からの円安是正圧力が継続的な円高要因。一方、FOMC利上げ期待がドルを一定程度下支えしており、一方向の動きにはなっていない。9月11日の米CPIが次の方向を決める。",
       "catalysts": [
-        "BOJ9月17〜18日会合での25bp利上げ確率63%（現1.00%→1.25%へ）、円高のさらなる進行リスク",
-        "ドル円が9月8日に152.89まで下落、輸出企業の想定レートを大幅に割り込む",
-        "ベッセント米財務長官と上田日銀総裁が円安是正を協調的に表明",
-        "8月の日本外貨準備が約79.6十億ドル減少（過去最大規模の介入）"
+        "キャリートレードの巻き戻しで円買い圧力が継続",
+        "日銀の引き締め姿勢強化期待と米国からの円安是正要求",
+        "9月11日米CPIがFOMC利上げ期待を左右しドルの反発度合いを決める"
       ],
       "top_news": [
         {
-          "headline": "円が9月7日週に+2.5%上昇し2026年2月以来の高値圏、ドル円が152.89まで下落",
-          "published": "2026-09-07",
-          "comment": "日米が協調して円安是正に動いており、ドル円への下押し圧力が継続している",
-          "source": "Japan Times",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.japantimes.co.jp/business/2026/09/07/markets/japan-yen-gains-154/"
-        },
-        {
-          "headline": "円急騰が日本企業の収益バッファーを侵食、業績リスクが高まるとBloombergが報道",
+          "headline": "ドル円153円台、NY市場で153.09円まで下落後に153.80円へ反発",
           "published": "2026-09-09",
-          "comment": "輸出企業は為替ヘッジレートを超えた円高で業績の下方修正リスクが高まる",
-          "source": "Bloomberg",
-          "tier": 2,
+          "comment": "円高とドル高圧力が拮抗し一方向に動きにくい為替相場、CPI待ちの持ち合い",
+          "source": "jp.investing.com (Fisco)",
+          "tier": 3,
           "credibility": "HIGH",
-          "corroborated_by": [],
+          "corroborated_by": ["fx.minkabu.jp", "smd-am.co.jp"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-09/yen-rally-erodes-japan-corporate-buffers-raises-earnings-risks"
+          "url": "https://jp.investing.com/news/forex-news/article-1674858"
         },
         {
-          "headline": "米財務長官ベッセント氏が上田日銀総裁との会談後、円の過度な下落への断固対応を強調",
-          "published": "2026-09-06",
-          "comment": "米国が円安是正を求める異例の発言で、介入への政治的後押しとなる",
-          "source": "FXStreet",
-          "tier": 2,
+          "headline": "円高が進行しドル円153円台、キャリートレード巻き戻しと日銀引き締め期待が主因",
+          "published": "2026-09-07",
+          "comment": "円は今月3.56%上昇しており、キャリー解消の流れが投機的ポジション整理を促している",
+          "source": "gaitame.com（佐々木融氏寄稿）",
+          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
+          "corroborated_by": ["smd-am.co.jp"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.fxstreet.com"
+          "url": "https://www.gaitame.com/media/entry/2026/09/07/081048"
         }
       ]
     },
@@ -295,92 +232,91 @@
       "name": "ユーロドル",
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "ECBが9月10日に預金金利を2.50%へ25bp利上げを決定する見込みで、Reuters調査ではエコノミスト全員が利上げを予測。しかし市場への織り込みはほぼ完了しており、噂で買って事実で売るリスクが存在。Fedも9月16日に利上げ予定であり米欧同時利上げが相殺し合い、ユーロドルは1.16近辺でのレンジ推移。ECBラガルド総裁の今後の方針が次の方向性を左右する。",
+      "conviction": "MID",
+      "rationale": "EUR/USDは1.1620-1.1650付近で推移。9月10日（木）のECB理事会で25bp利上げ（2.50%へ）が市場に完全に織り込まれており、ラガルド総裁の会見での追加引き締め示唆の有無が次の動意を決める。ドル安（円高連動）がユーロの支えとなっているが、ECBのサイクル終了示唆時はユーロ安に転じる可能性もある。",
       "catalysts": [
-        "ECB9月10日会合で預金金利を2.50%へ利上げが確実視（Reuters調査全員予測）",
-        "Fed9月16日も利上げ観測、米欧同時利上げで金利差が変わらずレンジ推移",
-        "欧州インフレが8月に3.3%と高止まり、ECBのタカ派スタンス継続を正当化",
-        "ラガルド総裁のフォワードガイダンスが今後の方向性を左右"
+        "9月10日ECB理事会で25bp利上げが確実視（2.50%へ）、ラガルド発言が焦点",
+        "ドル安（円高連動）がユーロを下支え",
+        "9月11日米CPIでドル方向が定まりEUR/USDの次のレンジが決まる見通し"
       ],
       "top_news": [
         {
-          "headline": "Reuters調査：全エコノミストがECBの9月10日会合での利上げ（2.50%）を予測",
-          "published": "2026-09-07",
-          "comment": "利上げはほぼ確実だが既に織り込み済みで、次の利上げ見通しが重要",
-          "source": "Reuters",
+          "headline": "EUR/USD、1.1640付近で推移　ECB利上げ前の広範なドル安がユーロを支援",
+          "published": "2026-09-09",
+          "comment": "明日のECB会合での利上げは既定路線で、その後の政策ガイダンスが次の方向を決める",
+          "source": "FXStreet",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Forex.com"],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.forex.com/en-us/news-and-analysis/eur-usd-forecast-currency-pair-of-the-week-september-7-2026/"
+          "corroborated_by": ["stonex.com", "forex.com"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.fxstreet.com/news/euro-benefits-from-broad-us-dollar-weakness-ahead-of-ecb-rate-decision-202609091325"
         },
         {
-          "headline": "ユーロドルは1.1610〜1.1622の狭いレンジ、米欧の同時利上げが相殺し方向感なし",
-          "published": "2026-09-08",
-          "comment": "米欧が同時に利上げすると金利差が変わらず通貨ペアは動きにくくなる",
-          "source": "Vantage Markets",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "headline": "EUR/USD：ECB利上げと米インフレが今週の方向性を試すレンジ相場",
+          "published": "2026-09-07",
+          "comment": "ECBの引き締め継続と米国の利上げ期待が拮抗し、ユーロは方向感を模索している",
+          "source": "StoneX",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["forex.com"],
           "materiality": "mid",
           "direction": "neutral",
-          "url": "https://www.vantagemarkets.com/market-analysis/eurusd-holds-1610-fed-ecb-hikes-september-7-2026/"
+          "url": "https://www.stonex.com/en-gb/news-and-analysis/eur-usd-forecast-ecb-and-us-inflation-set-to-test-the-range-2026-09-07/"
         }
       ]
     },
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "9月3日時点で77,934ドル前後と9月初旬から緩やかな下落基調。Fed利上げ確率60〜70%はリスク資産全般に逆風だが、8月に暗号通貨ETFへ35億ドルの資金流入があり機関投資家の構造的需要が下値を支えている。前年同期（2025年9月）比では約-30%の水準で、現在の77,000〜79,000ドル台がサポートラインとして機能するかが焦点。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "BTCは78,000-78,370ドル付近で前日比1.6%安。米・イラン軍事衝突の激化と原油100ドル突破によるインフレ懸念がリスクオフ売りを誘発。FOMCの9月利上げ期待の高まりもBTCの重し。1年前比では約34,000ドル安の水準だが、1ヶ月前からは約20%の急回復後の調整局面。ETFフローは逆流の兆候（9月初旬のデータ）。",
       "catalysts": [
-        "Fed9月利上げ確率60〜70%でリスク資産全般に逆風、ビットコインも例外でない",
-        "8月の暗号通貨ETFへの35億ドル流入が構造的サポートとなり下値を支える",
-        "前年比-30%圏での底値固めか、さらなる下落かを見極める局面"
+        "米・イラン軍事衝突拡大でリスクオフ売りが暗号資産に波及",
+        "原油100ドルとインフレ懸念によるFOMC利上げ期待がBTCの重し",
+        "ETFフローの逆流（資金流出）の兆候が見られる"
       ],
       "top_news": [
         {
-          "headline": "8月のビットコインETF月間流入額が35億ドル、9月の値動きの方向感が注目される",
-          "published": "2026-09-01",
-          "comment": "ETFへの巨額流入は機関投資家の需要増で価格の下支えになりうる",
-          "source": "Yahoo Finance",
+          "headline": "BTC約78,370ドルへ下落、米・イラン軍事衝突継続でリスクオフ売り拡大",
+          "published": "2026-09-08",
+          "comment": "地政学リスク激化で投資家のリスク回避が強まり、暗号資産から資金が流出している",
+          "source": "finance.yahoo.com",
           "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["fortune.com", "coincall.com"],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-september-8-2026-crypto-prices-sliding-as-us-iran-fighting-continues-113441984.html"
+        },
+        {
+          "headline": "ビットコイン、ETFフロー逆流とFed利上げ観測で78,000ドル付近での攻防",
+          "published": "2026-09-02",
+          "comment": "雇用統計が想定より強く、利上げへのハードルが下がりリスク資産の頭を抑えている",
+          "source": "coincall.com",
+          "tier": 3,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-price-prediction-september-2026-080209568.html"
-        },
-        {
-          "headline": "ビットコインが9月3日時点で77,934ドル、9月初旬は緩やかな下落基調",
-          "published": "2026-09-03",
-          "comment": "Fed利上げ懸念でリスク資産として売られやすい環境が続いている",
-          "source": "Fortune",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [],
-          "materiality": "mid",
           "direction": "bearish",
-          "url": "https://fortune.com/article/price-of-bitcoin-09-03-2026/"
+          "url": "https://support.coincall.com/hc/en-us/articles/61821073094937-September-2-2026-Bitcoin-Holds-78K-as-ETF-Flows-Reverse-and-Fed-Hike-Bets-Rise"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "S&P500構成企業の86%が2026年Q2業績予想を上回った",
-      "reason": "直近3〜5日の材料ではなく1〜2ヶ月前の決算期の情報で、鮮度不足のため除外"
+      "headline": "ビットコイン1万ドル上昇・金急騰（Yahoo Finance旧記事）",
+      "reason": "記事タイトルから時系列・文脈が不明確で現在の相場状況と矛盾する可能性があるため除外"
     },
     {
-      "headline": "EIAが2026年の世界石油生産を年平均99百万bpdと予測（2025年の106百万bpdから大幅減）",
-      "reason": "年間通し予測であり直近のニュースとしての鮮度が不十分。背景情報として原油節に統合済み"
+      "headline": "BTCの9月8日・9月8日8amEDT予測市場の結果（Robinhood/Lines.com）",
+      "reason": "予測市場の決済結果であり一次ニュースではないため除外"
     },
     {
-      "headline": "新興国市場から資金流出、Fed利上げリスクが南アフリカ・韓国・ポーランドの国債利回りを押し上げ",
-      "reason": "Bloomberg単独ソース（tier2）の1件のみ、かつ日本株・主要8資産への直接影響が間接的なため補助情報として扱い除外"
+      "headline": "EUR/USD2026年ロングタームフォーキャスト（BitMEX）",
+      "reason": "年次予測記事で足元の材料ではなく方向性バイアスになりうるため除外"
     }
   ]
 }
