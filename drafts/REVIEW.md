@@ -5,8 +5,9 @@
 - **テーマ**: trend=上昇×reversalL——IS/FWD期間分離 + シグナル種別二極化（RSI 63% vs BB 43%）
 - **生成ファイル**: `drafts/draft-signal-lab-094.html`
 - **claims**: `drafts/labnotes/lab-094-claims.json`（9件）
-- **ステータス**: 🔄 公開ゲート実行中
+- **ステータス**: ✅ 自動公開済み（2026-09-10） — verify GREEN(9/9) → Opus🟡軽微修正（kinsho-v1追加・表現軟化）→ 再verify GREEN → 独立Opus🟢白 → finalize OK → publish OK → check_site_consistency OK(EXIT=0)
 - **主要数値**: IS 53.5%(101) / FWD 48.1%(295) / RSI型 63.4%(71) / BB型 43.3%(224) / 指数 38.5%(78) / demote_strikes=1
+- **URL**: https://marketwatch-jp.com/guide-signal-lab-094.html
 
 ---
 

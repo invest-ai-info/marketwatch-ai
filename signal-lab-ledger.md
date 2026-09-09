@@ -440,6 +440,6 @@
 - **テーマ**: trend=上昇×reversalL IS/FWD比較解剖——RSI戦略63% vs BB戦略43%の20pp分化と降格警戒
 - **仮説**: 採択理由=スイープFDR候補0・トラッカー優先度①（demote_strikes=1・rci_lo=-0.03・昇格維持中）。IS/FWD期間分離でサンプル外汎化を初確認し、シグナル種別二極化・グループ別分化を解剖。
 - **結果**: IS k=54/n=101=53.5% CI[43.8%,62.9%] avgR=+0.247 / **FWD k=142/n=295=48.1% CI[42.5%,53.8%] avgR=+0.123** / FWD RSI型 k=45/n=71=63.4% CI[51.8%,73.6%] / FWD BB型 k=97/n=224=43.3% CI[37.0%,49.9%] / FWD 指数 k=30/n=78=38.5% CI[28.4%,49.6%] / FWD jpy_fx 49.4% / FWD other_fx 52.7% / FWD BTC 59.1% / demote_strikes=1・rci_lo=-0.03
-- **ゲート**: （公開ゲート実行中）
-- **ステータス**: 🔄 下書き生成済み（2026-09-10）— ゲート通過後に公開
-- **記事**: drafts/draft-signal-lab-094.html → guide-signal-lab-094.html（予定）
+- **ゲート**: signal_lab_verify GREEN(9/9) → Opus🟡軽微修正（kinsho-v1追加・表現軟化・N=296→295修正）→ 再verify GREEN → 独立Opus🟢白 → finalize OK → publish_article OK → check_site_consistency OK(EXIT=0)
+- **ステータス**: ✅ 公開済み（2026-09-10）
+- **記事**: guide-signal-lab-094.html
