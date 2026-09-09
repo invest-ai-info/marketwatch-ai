@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>単元株制度とは｜なぜ「100株」という区切りで売買するのか - MarketWatch AI</title>
+  <meta name="description" content="日本株の売買単位はなぜ100株なのか。会社法が定める単元株制度の仕組み、2018年に売買単位が100株へ統一された経緯、単元に満たない「単元未満株式」で制限される権利と買取請求・買増請求の仕組みを、JPXと会社法の一次情報にもとづき東証のしくみシリーズ第8回として解説します。">
+  <meta name="keywords" content="単元株制度,単元未満株,売買単位,100株,買取請求権,買増請求権,会社法188条,議決権,東証のしくみ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-trading-unit.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="単元株制度とは｜なぜ「100株」という区切りで売買するのか">
+  <meta property="og:description" content="売買単位はなぜ100株なのか。会社法の単元株制度、2018年の統一の経緯、単元未満株式の権利と買取・買増請求の仕組みを一次情報から解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-trading-unit.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "単元株制度とは｜なぜ「100株」という区切りで売買するのか",
+    "description": "売買単位はなぜ100株なのか。会社法の単元株制度、2018年の統一の経緯、単元未満株式の権利と買取・買増請求の仕組みを一次情報から解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-trading-unit.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 単元株制度とは
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東京証券取引所などの制度・手続きを一般的に解説する「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。制度は変更されることがあるため、実際の取引前に必ずご自身で一次情報をご確認ください。</div>
+
+    <h1>🔢 単元株制度とは｜なぜ「100株」という区切りで売買するのか</h1>
+    <div class="meta-line">公開日：2026 年 9 月 9 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第8回）</div>
+
+    <p>日本株を証券会社の画面で見ると、多くの銘柄は「100株単位」でしか買えないことに気づきます。これは慣習ではなく、<strong>会社法が定める「単元株制度」</strong>という制度上の区切りです。1単元（現在はほぼすべての銘柄で100株）に満たない株式は「単元未満株式」と呼ばれ、議決権の扱いなど、単元株とは異なる条件が会社法で決められています。</p>
+    <p>この<strong>「東証のしくみ」シリーズ</strong>は、日本の株式市場の制度・手続きだけを扱い、個別銘柄の評価や売買判断には踏み込みません。第8回のテーマは<strong>単元株制度と単元未満株式</strong>です。制度の仕組みは、JPX（日本取引所グループ）と会社法・同施行規則の一次情報を実際に確認したうえで解説します（確認日は本文中に記載）。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li><strong>単元株制度は、会社が定款で定めた「一定数の株式」ごとに1個の議決権を与える制度</strong>（会社法188条）。平成13年（2001年）の商法改正で導入された。</li>
+      <li><strong>2018年10月1日、全国の証券取引所で内国株式の売買単位は「100株」に統一された</strong>。それ以前は100株・1,000株など複数の単位が混在していた（JPX「売買単位の統一」）。</li>
+      <li>単元に満たない<strong>「単元未満株式」も、189条2項が個別に列挙する権利（残余財産の分配・株式無償割当て・買取請求権など）は定款によっても制限できない</strong>（会社法189条）。ただし配当を受ける権利はこの列挙に含まれず、株主総会で議決権を行使することもできない。</li>
+      <li>単元未満株主には、いつでも会社に買い取らせる<strong>「買取請求権」</strong>（会社法192条）があり、逆に単元に届く分を会社から売ってもらう<strong>「買増請求（売渡請求）」</strong>（会社法194条）は、<strong>会社が定款で定めた場合だけ</strong>使える。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">単元株制度とは何のためにある制度か</a></li>
+        <li><a href="#section-2">具体例：単元株式数の変更でどう変わるか</a></li>
+        <li><a href="#section-3">図解：単元株と単元未満株式で何が違うか</a></li>
+        <li><a href="#section-4">個人投資家にどこで効いてくるか</a></li>
+        <li><a href="#section-5">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-6">よくある誤解</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 単元株制度とは何のためにある制度か</h2>
+    <p>単元株制度の根拠は会社法188条です。一次情報の条文はこう定めています。</p>
+    <div class="info-box"><strong>💡 一次情報（会社法第188条）：</strong>「株式会社は、その発行する株式について、一定の数の株式をもって株主が株主総会又は種類株主総会において一個の議決権を行使することができる一単元の株式とする旨を定款で定めることができる。」（第1項）「前項の一定の数は、法務省令で定める数を超えることはできない。」（第2項）</div>
+    <p>つまり、<strong>単元株制度そのものは会社ごとの任意の制度</strong>で、会社が定款に「1単元＝〇株」と定めることで、その株数に達して初めて1個の議決権が発生する仕組みです。この制度は平成13年（2001年）の商法改正で導入されました。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX用語集「単元株制度」）：</strong>「平成13年の商法改正で、会社が定款で一定数の株式を1単元の株式とする旨を定めることができる『単元株制度』が導入されました。これにより、1単元の株式の数に相当する株式につき1議決権が付与されます。」</div>
+    <p>会社が自由に大きな単元数を設定できるわけではありません。<strong>単元株式数の上限は、会社法施行規則34条で「1,000株」と「発行済株式総数の200分の1に当たる数」のいずれか小さい方</strong>と定められています。発行済株式総数が200株に満たない会社は、単元株式数を設けること自体ができない計算になります。</p>
+    <div class="info-box"><strong>💡 一次情報（会社法施行規則第34条）：</strong>「法第百八十八条第二項に規定する法務省令で定める数は、千及び発行済株式の総数の二百分の一に当たる数とする。」</div>
+    <p>現在、東京証券取引所に上場する内国株式の単元株式数は<strong>ほぼすべて100株</strong>に統一されています。これは会社法上の任意の制度とは別に、<strong>証券取引所の上場規則が「売買単位（＝単元株式数）は100株のみ」に統一する取り組みを進めた結果</strong>です。次章で、その統一の経緯と、単元数を変更する際に会社側で何が起きるかを具体的に見ていきます。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 具体例：単元株式数の変更でどう変わるか</h2>
+    <p>東京証券取引所をはじめとする全国の証券取引所は、2007年11月から「売買単位の統一」に向けた行動計画を進め、<strong>2018年10月1日、内国株式の売買単位は100株に統一されました</strong>。それまでは、取組み開始当初に8種類存在した売買単位が、2014年までに「100株」と「1,000株」の2種類に集約され、最終的に100株へ一本化されています（JPX「売買単位の統一」ページ、2018/10/26更新）。</p>
+    <p>単元株式数を1,000株から100株に変更するだけの会社では、<strong>投資単位（＝株価×単元株式数）が単純に10分の1に下がります</strong>。これは個人が投資しやすくなる一方、既存株主にとっては1単元あたりの価値が下がることも意味するため、JPXのQ&Aでは、単元株式数の変更と同時に<strong>株式併合</strong>を組み合わせる会社の実例が示されています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買単位の集約に関するQ&A」、2023/10/10更新）：</strong>「現在の投資単位が100万円（株価1,000円×単元株式数1000株）である場合、単元株式数を1000株から100株に変更するだけでは、投資単位は1/10の10万円（株価1,000円×単元株式数100株）となりますが、同時に2株を1株とする株式併合を行えば、理論上の投資単位を20万円（株価2,000円×単元株式数100株）とすることができます。」</div>
+    <p>この移行手続きには会社法上の決議が必要です。JPXのQ&Aでは、<strong>単元株式数の減少だけなら取締役会決議（会社法195条1項）</strong>で足りる一方、<strong>株式併合を同時に行う場合は株主総会の特別決議（会社法180条2項・309条2項4号）が必要</strong>と整理されています。議決権や配当などの内容が異なる複数の種類の株式（種類株式）を発行している会社では、取締役会決議だけで単元株式数を変更できない点（会社法322条1項2号）にも注意が必要だとされています。</p>
+    <p>この統一が実際に何をもたらしたかを示す数字として、JPXは<strong>1,000株単位から100株単位へ移行した会社の個人株主数の変化</strong>を公表しています。</p>
+    <div class="info-box"><strong>💡 一次情報（同Q&A）：</strong>「100株単位への移行に際して株式併合を行わなかった上場会社について……平均して67％増加しており、増加率の中央値は36％でした。」</div>
+    <p>単元株式数を10分の1に下げるだけで最低投資金額が10分の1になり、個人株主数が平均7割近く増えた——という実測値は、単元の大きさが個人投資家の参加しやすさに直結することを示しています。</p>
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">上記はJPXが公表した実際の統計・条文であり、架空の設定ではありません。ただし個別銘柄について、単元株式数の変更や株式併合が将来行われるかどうかを示唆するものではありません。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 図解：単元株と単元未満株式で何が違うか</h2>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 460" role="img" aria-labelledby="tangen-title">
+        <title id="tangen-title">単元株式（100株）と単元未満株式（例：67株）で、株主としての権利がどう違うかを比較する概念図。会社法189条2項が個別に列挙する権利は単元未満株でも定款によって制限できないが、議決権は行使できず、配当を受ける権利はこの列挙に含まれない</title>
+        <text class="s-panel-label" x="20" y="22">単元株（100株）と単元未満株式、権利はどこが違うか</text>
+
+        <!-- 左：単元株 -->
+        <rect x="30" y="42" width="270" height="200" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="165" y="68" text-anchor="middle" class="s-note-g" font-size="14">1単元＝100株</text>
+        <text x="165" y="86" text-anchor="middle" class="s-label-sm" font-size="10.5">（保有株数が単元に達している）</text>
+        <text x="50" y="110" class="s-note-g" font-size="11.5">○ 議決権：1個</text>
+        <text x="50" y="132" class="s-note-g" font-size="11.5">○ 配当を受ける権利</text>
+        <text x="50" y="154" class="s-note-g" font-size="11.5">○ 残余財産の分配を受ける権利</text>
+        <text x="50" y="176" class="s-note-g" font-size="11.5">○ 株式無償割当てを受ける権利</text>
+        <text x="50" y="198" class="s-note-g" font-size="11.5">○ 単元未満株式買取請求権※</text>
+        <text x="50" y="220" class="s-label-sm" font-size="10">※単元未満株式が生じた場合に限る</text>
+
+        <!-- 右：単元未満株式 -->
+        <rect x="340" y="42" width="270" height="200" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="475" y="68" text-anchor="middle" class="s-note-r" font-size="14">単元未満株式（例：67株）</text>
+        <text x="475" y="86" text-anchor="middle" class="s-label-sm" font-size="10.5">（保有株数が単元に満たない）</text>
+        <text x="360" y="110" class="s-note-r" font-size="11.5">✕ 議決権：行使できない</text>
+        <text x="360" y="132" class="s-note" font-size="11.5">△ 配当を受ける権利＝定款次第</text>
+        <text x="360" y="154" class="s-note-g" font-size="11.5">○ 残余財産の分配を受ける権利</text>
+        <text x="360" y="176" class="s-note-g" font-size="11.5">○ 株式無償割当てを受ける権利</text>
+        <text x="360" y="198" class="s-note-g" font-size="11.5">○ 単元未満株式買取請求権</text>
+        <text x="360" y="220" class="s-label-sm" font-size="10">○＝189条2項の列挙事項／△＝列挙対象外</text>
+
+        <!-- 下段：買取請求・買増請求のやり取り -->
+        <rect x="105" y="288" width="150" height="56" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="180" y="312" text-anchor="middle" class="s-note" font-size="12.5">単元未満株主</text>
+        <text x="180" y="330" text-anchor="middle" class="s-label-sm" font-size="10">（例：67株を保有）</text>
+
+        <rect x="385" y="288" width="150" height="56" rx="10" fill="#f6f8fa" stroke="#57606a" stroke-width="1.5"/>
+        <text x="460" y="312" text-anchor="middle" class="s-legend" font-size="12.5">発行会社</text>
+        <text x="460" y="330" text-anchor="middle" class="s-label-sm" font-size="10">（自己株式で対応）</text>
+
+        <line x1="255" y1="300" x2="383" y2="300" class="s-axis" stroke="#1a7f37" marker-end="url(#arrowT1)"/>
+        <text x="320" y="292" text-anchor="middle" class="s-note-g" font-size="10.5">買取請求（192条）</text>
+        <text x="320" y="316" text-anchor="middle" class="s-label-sm" font-size="9.5">いつでも本人から可能</text>
+
+        <line x1="383" y1="332" x2="255" y2="332" class="s-axis" stroke="#9a6700" stroke-dasharray="4 3" marker-end="url(#arrowT2)"/>
+        <text x="320" y="352" text-anchor="middle" class="s-note" font-size="10.5" fill="#9a6700">買増請求＝売渡請求（194条）</text>
+
+        <rect x="120" y="376" width="400" height="60" rx="8" fill="#fff8c5" stroke="#9a6700" stroke-width="1.2"/>
+        <text x="320" y="398" text-anchor="middle" class="s-note" font-size="11" fill="#9a6700">売渡請求は、会社が定款で「応じる」と</text>
+        <text x="320" y="416" text-anchor="middle" class="s-note" font-size="11" fill="#9a6700">定めている場合だけ利用できる</text>
+
+        <defs>
+          <marker id="arrowT1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1a7f37"/></marker>
+          <marker id="arrowT2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9a6700"/></marker>
+        </defs>
+      </svg>
+      <figcaption class="chart-caption">▲ 単元株式（100株）と単元未満株式（図では67株の仮の例）を比較すると、議決権は単元未満株には認められない。会社法189条2項は、残余財産の分配・株式無償割当て・単元未満株式の買取請求などの権利は定款によっても制限できないと定めるが、<strong>配当を受ける権利はこの列挙に含まれておらず</strong>、制限するかどうかは各社の定款次第となる。単元未満株主は自分から会社に買い取らせる「買取請求権」（192条）をいつでも使えるが、逆に単元に届く分を会社から売ってもらう「買増請求（売渡請求）」（194条）は、会社が定款で定めている場合しか利用できない。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 個人投資家にどこで効いてくるか</h2>
+    <h3>① 最低投資金額が「株価×単元株式数」で決まる</h3>
+    <p>単元株式数が100株に統一されているため、<strong>個別銘柄の最低投資金額は、その銘柄の株価のおおむね100倍</strong>になります。考え方を説明するための仮の例として、株価100円の銘柄なら約1万円、株価5,000円の銘柄なら約50万円が最低単位という計算です（実在の銘柄の価格を示すものではありません）。単元に満たない資金でも株式に投資したいというニーズに応える仕組みとして、証券会社が単元未満の株数を取り扱う枠組みがあり、その考え方の一つがJPX用語集にある「株式ミニ投資制度」です。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX用語集「株式ミニ投資制度」）：</strong>「株式ミニ投資制度は、投資家と証券会社の間で単元未満株（ただし、売買単位の10分の1の整数倍で10分の9以下）を売買をする制度です。証券会社は、この単元未満株を売買単位にまとめて市場で執行します。」</div>
+    <p>今日、証券会社各社が独自ブランドで提供している単元未満株の取引サービスは、名称や仕組みの細部が会社ごとに異なります。本記事はどの証券会社のサービスが優れているかを比較するものではないため、<strong>単元未満株を売買できる制度の存在自体</strong>を押さえておけば十分です。実際に利用する際は、各証券会社の説明を個別に確認してください。</p>
+    <h3>② 議決権は行使できず、配当は189条2項の列挙対象外</h3>
+    <p>単元未満株式を持つ「単元未満株主」は、株主総会・種類株主総会で議決権を行使できません（会社法189条1項）。一方、会社が定款で制限できる権利は<strong>189条2項に列挙された6種類の権利を除いた部分</strong>に限られます。裏を返せば、残余財産の分配を受ける権利・株式無償割当てを受ける権利・単元未満株式の買取りを請求する権利などは、<strong>定款によっても奪えない</strong>権利として条文上保障されています。<strong>配当を受ける権利はこの列挙に含まれていません。</strong>そのため、単元未満株主への配当を制限するかどうかは、189条2項の枠組み上は各社の定款の定め方次第ということになります。</p>
+    <h3>③ 買取請求権と買増請求（売渡請求）は対応が非対称</h3>
+    <p>単元未満株主が「もう議決権のない中途半端な株を持ち続けたくない」と考えたとき、<strong>会社に買い取らせる「買取請求権」（会社法192条）は、定款の定めがなくても常に行使できます</strong>。逆に「単元に足りない分を買い増して1単元にしたい」と考えたときの<strong>「買増請求（正式には単元未満株式売渡請求、会社法194条）」は、会社が定款であらかじめ応じる旨を定めている場合しか使えません</strong>。この非対称性は、単元未満株を売却したい株主と買い増したい株主とで、制度上の扱いが異なることを意味します。</p>
+    <h3>④ 単元株式数の変更・株式併合で保有株数の位置づけが変わる</h3>
+    <p>前章の実例のとおり、会社が単元株式数を変更したり株式併合を行ったりすると、それまで単元株だった保有株数が単元未満になる（またはその逆になる）ことがあります。こうした変更は会社側の決議で行われるため、投資家個人が事前に単元未満株になることを避ける手立ては基本的にありません。単元未満株になった場合に何ができるかは、②③で説明したとおりです。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>このシリーズの立場として、制度の仕組みは必ず一次情報で確認します。単元株制度・単元未満株式については、以下の手順で確かめられます。</p>
+    <ol>
+      <li><strong>JPXの制度解説ページ</strong>で統一の経緯を確認する：<a href="https://www.jpx.co.jp/equities/improvements/unit/index.html" target="_blank" rel="noopener">jpx.co.jp「売買単位の統一」</a>。2018年10月1日の統一までの経緯がまとめられています。</li>
+      <li><strong>JPXのQ&A</strong>で会社側の変更手続きと実例を確認する：<a href="https://www.jpx.co.jp/equities/improvements/unit/02.html" target="_blank" rel="noopener">jpx.co.jp「売買単位の集約に関するQ&A」</a>。単元株式数変更の会社法上の決議・投資単位の変化の実例が載っています。</li>
+      <li><strong>JPX用語集</strong>で定義そのものを確認する：<a href="https://www.jpx.co.jp/glossary/ta/287.html" target="_blank" rel="noopener">jpx.co.jp用語集「単元株制度」</a>、<a href="https://www.jpx.co.jp/glossary/ta/288.html" target="_blank" rel="noopener">「単元未満株式」</a>。</li>
+      <li><strong>e-Gov法令検索</strong>で条文の原文を確認する：会社法188条（単元株式数）・189条（単元未満株式についての権利の制限等）・192条（買取りの請求）・194条（売渡請求）・195条（単元株式数の変更手続き）、および会社法施行規則34条（単元株式数の上限）。いずれもe-Gov法令検索で法令名を検索し、条文番号で該当箇所を開けます。</li>
+    </ol>
+    <div class="warning-box">単元株式数や単元未満株の取扱いに関する会社ごとの詳細（変更予定の有無など）は、各社が開示する適時開示資料や有価証券報告書で確認できます（詳しくは本シリーズ第1回「適時開示（TDnet）」を参照）。証券会社が提供する単元未満株の取引サービスの具体的な条件は、各証券会社の説明書面でご確認ください。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>一次情報にもとづく整理</th></tr></thead>
+      <tbody>
+        <tr><td>単元未満株には株主としての権利がほとんどない</td><td>誤り。<strong>残余財産の分配・株式無償割当て・買取請求権などは定款によっても制限できない</strong>（会社法189条2項）。ただし議決権は行使できず、配当を受ける権利はこの列挙に含まれない</td></tr>
+        <tr><td>単元未満株はいつでも会社に買い増してもらい単元にできる</td><td>誤り。会社に<strong>買い取らせる（売る）</strong>ことはいつでもできるが（192条）、単元に届く分を<strong>買い増してもらう（売渡請求）</strong>のは<strong>会社が定款で定めている場合だけ</strong>（194条）</td></tr>
+        <tr><td>単元株式数は会社が自由にいくつでも設定できる</td><td>誤り。上限は<strong>「1,000株」と「発行済株式総数の200分の1」のいずれか小さい方</strong>（会社法施行規則34条）。上場会社は上場規則上、100株以外への変更ができない</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>東証のしくみシリーズ第8回「単元株制度と単元未満株式」を整理します。</p>
+    <ul>
+      <li>単元株制度は、<strong>会社が定款で定めた一定数の株式ごとに1個の議決権を与える制度</strong>（会社法188条）。現在、上場株式の単元株式数はほぼすべて100株に統一されている（2018年10月1日〜）。</li>
+      <li>単元未満株式は、<strong>残余財産の分配・株式無償割当て・買取請求権など189条2項が列挙する権利は定款によっても制限できない</strong>。ただし議決権は行使できず、<strong>配当を受ける権利はこの列挙に含まれず</strong>各社の定款次第となる。</li>
+      <li>単元未満株主が持つ<strong>「買取請求権」（192条）はいつでも使えるが、「買増請求＝売渡請求」（194条）は会社が定款で定めた場合だけ</strong>使える。この非対称性が実務上のポイント。</li>
+      <li>単元株式数の変更は会社側の決議で行われ（195条など）、変更の実例では最低投資金額と個人株主数の増減が実際に連動することがJPXの統計で確認できる。</li>
+    </ul>
+    <p>本記事の制度の説明は、<strong>2026年9月9日時点</strong>でJPXの該当ページとe-Gov法令検索の会社法・同施行規則を実際に確認したうえで記載しています。制度は変更されることがあるため、実際に取引を行う際は、その時点の一次情報と、利用する証券会社の説明を必ずご自身で確認してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連シリーズで株式数にまつわる制度をさらに深く</div>
+      <div class="cta-box-desc">単元株制度は、株式分割・併合や株主優待の仕組みとも密接に関わります。あわせて理解すると、保有株数が変わったときに何が起きるかがより立体的につかめます。</div>
+      <a class="cta-btn" href="guides.html">解説記事一覧を見る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-stock-split-buyback.html">
+        <div class="related-card-title">✂️ 株式分割と自社株買いの仕組み</div>
+        <div class="related-card-desc">株式分割・併合で1株の価値と保有株数がどう変わるか。単元株式数の変更とセットで起きることが多い制度を解説。</div>
+      </a>
+      <a class="related-card" href="guide-shareholder-benefits.html">
+        <div class="related-card-title">🎁 株主優待の正しい評価</div>
+        <div class="related-card-desc">優待の権利を得るために必要な保有株数（多くは1単元）と、権利落ち・廃止リスクの仕組み。</div>
+      </a>
+      <a class="related-card" href="guide-tse-negative-interest.html">
+        <div class="related-card-title">💸 逆日歩（品貸料）のしくみ</div>
+        <div class="related-card-desc">東証のしくみシリーズ第7回。制度信用取引で株が足りなくなったときに発生するコストの仕組み。</div>
+      </a>
+    </div>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="東証のしくみのシリーズ内移動">
+      <div class="mw-sernav-h">📚 東証のしくみ</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-tse-negative-interest.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">逆日歩（品貸料）とは｜払うのは売り方、受け取るのは買い方</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+    </nav>
+      <div style="text-align:center;margin:18px 0 0">
+        <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+      </div>
+<!-- series-nav:end -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東京証券取引所などの制度・手続きに関する一般的な情報提供であり、特定銘柄の売買推奨や投資助言ではありません。制度の内容は変更されることがあるため、実際の取引にあたっては必ずご自身で最新の一次情報をご確認ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
