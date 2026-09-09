@@ -234,4 +234,5 @@ SYNC_FILES = [
     "guide-signal-lab-093.html",
     "guide-confirmation-bias.html",
     "guide-tse-trading-unit.html",
+    "guide-news-2026-09-09-oil-surge-houthi-saudi.html",
 ]
