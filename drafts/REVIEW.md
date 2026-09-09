@@ -1,3 +1,30 @@
+## 2026-09-09 autodraft: draft-base-rate-neglect.html
+
+- **基準日**: 2026-09-09（JST 05:31、UTC 2026-09-09T20:31Z）
+- **topic**: base-rate-neglect（#61）「よくある話」を、自分だけは例外だと思ってしまう
+- **シリーズ**: 投資の心理・メンタル
+- **生成ファイル**: `drafts/draft-base-rate-neglect.html`
+- **参照出典URL**:
+  - Kahneman & Tversky (1973), "On the Psychology of Prediction", Psychological Review（代表性ヒューリスティックとベースレート無視の原典）
+  - The Behavioral Scientist「Base Rate Neglect Definition and Examples」https://www.thebehavioralscientist.com/glossary/base-rate-neglect
+  - Simply Psychology「Base Rate Fallacy」https://www.simplypsychology.org/base-rate-fallacy.html
+  - 日本証券業協会「証券投資に関する全国調査」https://www.jsda.or.jp/shiryoshitsu/toukei/data/
+  - JPX ワーキングペーパー Vol.49（2025年9月）https://www.jpx.co.jp/corporate/research-study/working-paper/JPXWP_Vol49.pdf
+- **自己コンプラチェック結果**:
+  - ✅ 個別銘柄の売買推奨なし
+  - ✅ 断定・利益保証なし（「傾向がある」「ことがある」「ことが多い」表現で統一）
+  - ✅ 統計の具体的数値は書かず、一次情報の参照先（日本証券業協会・JPX）のみ案内
+  - ✅ kinsho-v1免責（冒頭バナー＋本文末p.disclaimer＋footer）入り
+  - ✅ noindex,nofollow メタタグ入り
+  - ✅ 確証バイアス・生存者バイアスとの棲み分けを本文で明示
+- **人間の残作業**:
+  - SVG 3点の実機ライト/ダーク確認（特に fill-opacity がダークで意図通りか）
+  - nav 10ボタン（holdings除外で10本になっているか確認済・../相対パスを公開時に修正要）
+  - タイトル・見出し微調整（必要に応じて）
+  - 公開は毎朝08:40の autopublish-routine が check_guide_draft.py→Opus コンプラ→品質ゲートを通して自動実行
+
+---
+
 2026-09-09 autopublish: guide-confirmation-bias.html（調べれば調べるほど、自信だけが増えていく——確証バイアスの正体と外し方）公開 — 決定論🟢→「売り推奨」修正→再🟢→Opus🟡軽微5件修正→再🟢→独立Opus構造指摘→修正（nav11本・holdings追加・ルート相対・data-disclaimer）→決定論再🟢→独立Opus🟢白→publish OK → push成功 https://marketwatch-jp.com/guide-confirmation-bias.html
 
 ## 2026-09-09 signal-lab #093（trend=上昇×reversalL RSI vs BB二極化解剖）

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>「よくある話」を、自分だけは例外だと思ってしまう｜ベースレート無視と「外から見る」技術 - MarketWatch AI</title>
+  <meta name="description" content="「うまくいった人の話」に引きずられて、同じことをした人の大半がどうなったかを見落とす「ベースレート無視（基本確率の無視）」。カーネマンが命名した認知バイアスの仕組みと、投資判断に「外から見る視点」を組み込む実務を解説します。">
+  <meta name="keywords" content="ベースレート無視,基本確率,投資心理,認知バイアス,カーネマン,外から見る視点,インサイドビュー,アウトサイドビュー,行動経済学,生存者バイアス,確証バイアス">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-base-rate-neglect.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「よくある話」を、自分だけは例外だと思ってしまう｜ベースレート無視と「外から見る」技術">
+  <meta property="og:description" content="うまくいった人の話が印象的なほど、同じことをした人の大半がどうなったかを見落とす。カーネマンのベースレート無視と「外から見る視点」の実務を解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-base-rate-neglect.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「よくある話」を、自分だけは例外だと思ってしまう｜ベースレート無視と「外から見る」技術",
+    "description": "うまくいった人の話が印象的なほど、同じことをした人の大半がどうなったかを見落とす認知バイアス「ベースレート無視」の仕組みと、投資判断への実践的な対処法を解説します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-base-rate-neglect.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    /* bar chart helpers */
+    .s-bar-b{fill:#0969da}
+    .s-bar-r{fill:#cf222e}
+    .s-bar-g{fill:#1a7f37}
+    .s-bar-y{fill:#d4a017}
+    .s-fill-light{fill:#ddf4ff}
+    .s-fill-warn{fill:#fff8c5}
+    .s-stroke-b{stroke:#0969da;stroke-width:2;fill:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#388bfd}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-y{fill:#e3b341}
+    body.dark .s-fill-light{fill:#1a2030}
+    body.dark .s-fill-warn{fill:#2a1f0e}
+    body.dark .s-stroke-b{stroke:#388bfd}
+    /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）*/
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> &gt; <a href="../guides.html">解説記事</a> &gt; 「よくある話」を、自分だけは例外だと思ってしまう
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は「ベースレート無視」という認知バイアスの仕組みを解説した「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧠 「よくある話」を、自分だけは例外だと思ってしまう</h1>
+    <div class="meta-line">公開日：2026 年 9 月 9 日 ／ 読了時間：約 13 分 ／ カテゴリ：投資の心理・メンタル</div>
+
+    <p>「あの人は○○の株で10倍になった」「このトレード手法で毎月安定して稼いでいる」——そんな話を聞くたびに、「自分もできるかもしれない」と感じたことはないでしょうか。その感覚自体は自然です。問題は、<strong>その話を信じる前に、「同じことを試みた人たちの大半がどうなったか」を調べようとしない</strong>点にあります。</p>
+    <p>これは意志の弱さや勉強不足ではなく、人間の認知の仕組みが持つ根本的な偏りです。心理学者のダニエル・カーネマンとアモス・トヴェルスキーによって名付けられた<strong>「ベースレート無視（Base Rate Neglect）」</strong>——全体の確率（基本確率）を見落として、目の前の個別の話に判断を乗っ取られる傾向——は、投資の世界でとりわけ強く作用します。この記事では、そのバイアスの正体と、「外から見る」という対処法を解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>人間は全体の確率（基本確率）よりも、<strong>目の前の個別の物語・印象を優先してしまう</strong>。これを「ベースレート無視」と呼ぶ（カーネマン＆トヴェルスキー命名）。</li>
+      <li>投資では「うまくいった話」は可視化されやすく、<strong>「同じことをして失敗した人」は見えない</strong>。分母が見えないまま判断すると、確率の歪みが生まれる。</li>
+      <li>対処法は「外から見る（アウトサイドビュー）」。<strong>買う前に「同じことをした人はどうなったか」を1行書いておく</strong>だけで、判断にベースレートを組み込める。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#what">ベースレート無視とは何か</a></li>
+        <li><a href="#story-override">物語が確率を上書きする仕組み</a></li>
+        <li><a href="#svg-invisible-denominator">図解：分母が見えない世界</a></li>
+        <li><a href="#investing-examples">投資場面でよくある3つのパターン</a></li>
+        <li><a href="#svg-inside-outside">図解：インサイドビューとアウトサイドビュー</a></li>
+        <li><a href="#outside-view">「外から見る」技術——アウトサイドビューの実務</a></li>
+        <li><a href="#checklist">買う前の1行チェックリスト</a></li>
+        <li><a href="#svg-confirmation">図解：確証バイアスとの違い</a></li>
+        <li><a href="#related-biases">関連するバイアスとの棲み分け</a></li>
+        <li><a href="#site-connection">当サイトでの活かし方</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== 前半：初心者向け入口 ===== -->
+
+    <h2 id="what">ベースレート無視とは何か</h2>
+    <p>「ベースレート（Base Rate）」とは、ある集団全体のうち、特定のことが起きる割合のことです。たとえば「この病気は100人に1人かかる」という1%が、医療上のベースレートです。</p>
+    <p>「ベースレート無視」とは、<strong>この全体の割合を考慮せず、目の前の具体的な情報（個別の物語・印象・特徴）だけで判断してしまうこと</strong>です。カーネマンとトヴェルスキーは、人間が「代表性ヒューリスティック（Representativeness Heuristic）」——何かが「そのカテゴリに典型的か」で素早く判断するショートカット——を使うため、ベースレートを自然に無視してしまうことを実験で示しました。</p>
+
+    <div class="info-box">
+      <strong>カーネマンとトヴェルスキーの実験（法律家・エンジニア問題）</strong><br>
+      参加者に、あるグループの中に法律家と工学者がいることを伝え、一人の人物の性格描写を読ませて「どちらか」を推測させた。<br>
+      重要なのは、グループの構成比（ベースレート）が「70%が法律家」か「70%が工学者」かを伝えても、<strong>参加者の判断はほぼ性格描写の印象だけで決まり、構成比はほぼ無視された</strong>という結果。<br>
+      出典：Kahneman &amp; Tversky (1973), "On the Psychology of Prediction", Psychological Review
+    </div>
+
+    <h2 id="story-override">物語が確率を上書きする仕組み</h2>
+    <p>なぜ人間は統計よりも物語を信じやすいのでしょうか。カーネマンは著書の中で、「システム1（速い思考）」と「システム2（遅い思考）」という概念を用いて説明しています。</p>
+    <ul>
+      <li><strong>システム1</strong>：直感的・感情的・自動的。鮮やかな物語・具体的なエピソードに強く反応する。</li>
+      <li><strong>システム2</strong>：論理的・意識的・努力を要する。確率の計算・統計の参照はここで行われる。</li>
+    </ul>
+    <p>「Aさんは○○で成功した」という物語は鮮明で感情に訴えかけます。一方、「同じ手法を試みた人全体のうち成功した割合」という統計は抽象的で印象に残りにくい。結果として、<strong>システム1が「自分もできる」という結論を先に出し、システム2による確率計算が追いつかなかったり、完全に飛ばされたりする</strong>わけです。</p>
+
+    <!-- 図1：分母が見えない世界 -->
+    <h2 id="svg-invisible-denominator">図解：分母が見えない世界</h2>
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="分母が見えない世界の概念図">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="640" height="320" rx="8" class="s-fill-light" fill-opacity="0.4"/>
+
+        <!-- 左エリア：全員（分母） -->
+        <rect x="30" y="30" width="260" height="260" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="160" y="58" text-anchor="middle" class="s-panel-label">同じことを試みた人々（全員）</text>
+
+        <!-- 成功した人（小さい円） -->
+        <circle cx="160" cy="140" r="28" fill="#1a7f37" fill-opacity="0.85"/>
+        <text x="160" y="144" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" font-family="Noto Sans JP,sans-serif">成功</text>
+
+        <!-- 苦労・損失・退場した人（大きな群れ） -->
+        <circle cx="110" cy="195" r="14" fill="#cf222e" fill-opacity="0.55"/>
+        <circle cx="140" cy="215" r="16" fill="#cf222e" fill-opacity="0.5"/>
+        <circle cx="170" cy="198" r="13" fill="#cf222e" fill-opacity="0.55"/>
+        <circle cx="195" cy="218" r="15" fill="#cf222e" fill-opacity="0.5"/>
+        <circle cx="218" cy="200" r="12" fill="#cf222e" fill-opacity="0.5"/>
+        <circle cx="105" cy="228" r="11" fill="#cf222e" fill-opacity="0.45"/>
+        <circle cx="225" cy="228" r="13" fill="#cf222e" fill-opacity="0.5"/>
+        <circle cx="155" cy="245" r="10" fill="#cf222e" fill-opacity="0.45"/>
+
+        <!-- ラベル -->
+        <text x="160" y="278" text-anchor="middle" class="s-note-r">多くは苦労・損失・退場</text>
+        <text x="160" y="295" text-anchor="middle" class="s-label-sm">← ここが「分母」</text>
+
+        <!-- 右矢印 -->
+        <line x1="295" y1="160" x2="345" y2="160" stroke="#d0d7de" stroke-width="2"/>
+        <polygon points="345,154 357,160 345,166" fill="#d0d7de"/>
+        <text x="325" y="150" text-anchor="middle" class="s-label-sm">あなたが</text>
+        <text x="325" y="174" text-anchor="middle" class="s-label-sm">見えるのは</text>
+
+        <!-- 右エリア：見えているもの -->
+        <rect x="360" y="30" width="250" height="260" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="485" y="58" text-anchor="middle" class="s-panel-label">あなたの目に届く情報</text>
+
+        <!-- 成功話だけが届く -->
+        <circle cx="485" cy="150" r="40" fill="#1a7f37" fill-opacity="0.85"/>
+        <text x="485" y="147" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700" font-family="Noto Sans JP,sans-serif">「Aさんで</text>
+        <text x="485" y="163" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700" font-family="Noto Sans JP,sans-serif">きた話」</text>
+
+        <!-- 赤い群れが消えている -->
+        <text x="485" y="235" text-anchor="middle" class="s-label-sm" font-style="italic">（失敗した人の話は</text>
+        <text x="485" y="253" text-anchor="middle" class="s-label-sm" font-style="italic"> ほとんど流通しない）</text>
+
+        <!-- 感嘆符 -->
+        <text x="485" y="280" text-anchor="middle" class="s-note">分母が見えないまま判断</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。「成功した話」は流通しやすく、失敗や苦労は投稿・共有されにくい。<br>見えているのが全体だと錯覚すると、確率を著しく高く見積もってしまう。</p>
+    </div>
+
+    <!-- ===== 投資場面でのパターン ===== -->
+
+    <h2 id="investing-examples">投資場面でよくある3つのパターン</h2>
+    <p>ベースレート無視は、日常的な投資判断の中に繰り返し現れます。</p>
+
+    <h3>① 「あの人が成功した手法」を真似しようとする</h3>
+    <p>SNSやYouTubeで「この手法で○○万円稼いだ」という話を見て、「自分も試してみよう」と考えることがあります。問題は、<strong>同じ手法を試みた人全体のうち、どれだけが同様の結果を得たか（ベースレート）が見えていない</strong>点です。成功例は発信されやすく、失敗例は発信されにくい。<br>
+    「うまくいったから話している」という事実を頭に入れておく必要があります（この点は<a href="guide-survivorship-bias.html">生存者バイアス</a>の記事で詳しく扱っています）。</p>
+
+    <h3>② 「自分が調べた銘柄はうまくいくはず」という過信</h3>
+    <p>個別銘柄を深く調べると、「この会社は有望だ」という印象が強まります。しかし、「個人投資家が有望と判断して購入した銘柄の、長期的なパフォーマンスの分布はどうか」というベースレートを調べようとはなりにくい。<strong>調査量が増えるほど確信が高まり、ベースレートを確認しようという動機が薄れる</strong>という逆説があります（この点は<a href="guide-confirmation-bias.html">確証バイアス</a>の記事で扱っています）。</p>
+
+    <h3>③ 「一度うまくいったからまた通じる」という拡張</h3>
+    <p>過去に1回利益を得た手法を「再現性がある」と判断して繰り返す場合です。「同じ手法が同様の環境条件で何回試されて、何回通じたか」というベースレートを持たずに再現性があると信じてしまいます。</p>
+
+    <div class="warning-box">
+      統計を引用するときは、必ず一次情報（金融庁・日本証券業協会・JPX等の公式資料）で確認し、取得日を記録しましょう。「個人投資家の○○%が損失を出している」のような数値は時期・調査方法によって異なるため、思い出しや又聞きで書くのは危険です。
+    </div>
+
+    <!-- 図2：インサイドビューとアウトサイドビュー -->
+    <h2 id="svg-inside-outside">図解：インサイドビューとアウトサイドビュー</h2>
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="インサイドビューとアウトサイドビューの概念図">
+        <!-- 左：インサイドビュー -->
+        <rect x="20" y="20" width="280" height="270" rx="8" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="160" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#cf222e" font-family="Noto Sans JP,sans-serif">インサイドビュー（内側）</text>
+
+        <!-- 虫眼鏡アイコン概念 -->
+        <circle cx="100" cy="135" r="40" fill="#fff8c5" stroke="#d4a017" stroke-width="2"/>
+        <text x="100" y="130" text-anchor="middle" font-size="22" font-family="sans-serif">🔍</text>
+        <text x="100" y="155" text-anchor="middle" font-size="10" fill="#9a6700" font-family="Noto Sans JP,sans-serif">目の前の案件だけ</text>
+
+        <text x="160" y="195" text-anchor="middle" font-size="11.5" fill="#cf222e" font-weight="700" font-family="Noto Sans JP,sans-serif">「この銘柄は特別だ」</text>
+        <text x="160" y="215" text-anchor="middle" font-size="11.5" fill="#cf222e" font-weight="700" font-family="Noto Sans JP,sans-serif">「自分は理解できている」</text>
+        <text x="160" y="237" text-anchor="middle" font-size="10.5" fill="#9a6700" font-family="Noto Sans JP,sans-serif">↑ ベースレートを参照しない</text>
+        <text x="160" y="265" text-anchor="middle" font-size="10" fill="#cf222e" font-family="Noto Sans JP,sans-serif">（人間のデフォルト）</text>
+
+        <!-- 右：アウトサイドビュー -->
+        <rect x="340" y="20" width="280" height="270" rx="8" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="480" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">アウトサイドビュー（外側）</text>
+
+        <!-- 全体感アイコン概念 -->
+        <rect x="420" y="70" width="120" height="80" rx="6" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="480" y="100" text-anchor="middle" font-size="11" fill="#0969da" font-family="Noto Sans JP,sans-serif">同じカテゴリの</text>
+        <text x="480" y="118" text-anchor="middle" font-size="11" fill="#0969da" font-family="Noto Sans JP,sans-serif">過去の事例全体</text>
+        <text x="480" y="136" text-anchor="middle" font-size="11" fill="#0969da" font-family="Noto Sans JP,sans-serif">（ベースレート）</text>
+
+        <text x="480" y="185" text-anchor="middle" font-size="11.5" fill="#1a7f37" font-weight="700" font-family="Noto Sans JP,sans-serif">「同じことをした人は</text>
+        <text x="480" y="203" text-anchor="middle" font-size="11.5" fill="#1a7f37" font-weight="700" font-family="Noto Sans JP,sans-serif"> どうなったか？」</text>
+        <text x="480" y="225" text-anchor="middle" font-size="10.5" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">↑ まずここから始める</text>
+        <text x="480" y="250" text-anchor="middle" font-size="10.5" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">その後で個別事情を足す</text>
+        <text x="480" y="275" text-anchor="middle" font-size="10" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">（努力が必要）</text>
+
+        <!-- 矢印（左から右） -->
+        <line x1="305" y1="155" x2="335" y2="155" stroke="#57606a" stroke-width="2"/>
+        <polygon points="335,149 347,155 335,161" fill="#57606a"/>
+        <text x="320" y="143" text-anchor="middle" font-size="9.5" fill="#57606a" font-family="Noto Sans JP,sans-serif">意識して</text>
+        <text x="320" y="173" text-anchor="middle" font-size="9.5" fill="#57606a" font-family="Noto Sans JP,sans-serif">切り替える</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。カーネマンは著書の中で、予測の精度を上げるには「外から見る（アウトサイドビュー）」から始めることを推奨しています。</p>
+    </div>
+
+    <!-- ===== 後半：中上級向け ===== -->
+
+    <h2 id="outside-view">「外から見る」技術——アウトサイドビューの実務</h2>
+    <p>カーネマンは「ファスト＆スロー（Thinking, Fast and Slow）」の中で、予測の精度を上げる方法として「<strong>アウトサイドビュー（外から見る視点）</strong>」を提唱しています。</p>
+
+    <h3>手順：まず全体の割合を調べ、次に個別事情を足す</h3>
+    <ol>
+      <li><strong>「参照クラス（Reference Class）」を決める</strong><br>今回の判断と同じカテゴリの事例を特定する。例：「個人が新興市場の小型株を短期でトレードした場合」「特定のテクニカル手法を用いたシグナルの結果」など。</li>
+      <li><strong>そのクラス全体の結果分布（ベースレート）を調べる</strong><br>成功した割合・平均・中央値・最悪ケースを一次情報から確認する。SNSの体験談ではなく、公的な調査・論文・取引所のデータを参照する。</li>
+      <li><strong>個別の事情を「調整要素」として後から加える</strong><br>「この案件は平均よりこの点が有利」「この点が不利」を具体的に書き出す。根拠のない過信で上方修正しないよう注意する。</li>
+    </ol>
+
+    <div class="info-box">
+      <strong>参考：日本の個人投資家に関する公的データ</strong><br>
+      日本証券業協会は「個人投資家の証券投資に関する意識調査報告書」を毎年公表しており、証券投資の損益状況や行動に関する調査結果が含まれます。JPXも関連する研究データを公開しています。<br>
+      ベースレートを確認するためにはこうした一次情報を参照してください。<br>
+      （出典：<a href="https://www.jsda.or.jp/shiryoshitsu/toukei/data/" target="_blank" rel="noopener">日本証券業協会 証券投資に関する全国調査</a>、<a href="https://www.jpx.co.jp/corporate/research-study/working-paper/" target="_blank" rel="noopener">JPX ワーキングペーパー</a>）
+    </div>
+
+    <h3>参照クラスの選び方のコツ</h3>
+    <p>参照クラスは「広すぎず、狭すぎず」が重要です。</p>
+    <ul>
+      <li><strong>広すぎる例</strong>：「投資をした人全体」→ 株・債券・不動産・投信など条件がバラバラすぎて参考にならない</li>
+      <li><strong>狭すぎる例</strong>：「自分と全く同じ条件の人」→ 事例が少なすぎてデータが取れない</li>
+      <li><strong>適切な例</strong>：「個人投資家が国内小型株を1〜3か月のスイングで保有した場合」「同じシグナル条件が発火した過去の事例」など</li>
+    </ul>
+
+    <h2 id="checklist">買う前の1行チェックリスト</h2>
+    <p>アウトサイドビューを判断に組み込む最も簡単な方法は、<strong>エントリー前にメモを1行書く</strong>ことです。</p>
+
+    <div class="positive-box">
+      <strong>「同じことをした人は、全体としてどうなったか？」</strong><br>
+      この問いに答えを書いてからエントリーする。答えが「わからない」なら、まず調べる。
+    </div>
+
+    <p>たとえば：</p>
+    <ul>
+      <li>「○○のテクニカルシグナルが発火した過去事例は、当サイトの成績データで確認できる」</li>
+      <li>「同じ業界の赤字転換企業への長期投資の成功率を日本証券業協会の調査報告で確認した」</li>
+      <li>「判断できるデータがないため、まず小額で試す」</li>
+    </ul>
+
+    <p>「調べたがよくわからなかった」も立派な1行です。<strong>「調べようとした」という行動がインサイドビューの暴走を少し抑える</strong>効果があります。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ベースレート無視が起きやすい状況</th>
+          <th>アウトサイドビューで問う</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>「Aさんが成功した手法を真似したい」</td>
+          <td>同じ手法を試みた人全体の結果分布は？</td>
+        </tr>
+        <tr>
+          <td>「この銘柄は有望と確信している」</td>
+          <td>個人が有望と判断して買った銘柄の長期成績の分布は？</td>
+        </tr>
+        <tr>
+          <td>「先月うまくいったからまた入れる」</td>
+          <td>同じ条件が揃った過去事例の勝率・損益比は？</td>
+        </tr>
+        <tr>
+          <td>「今回だけは特別な事情がある」</td>
+          <td>「今回だけ特別」と思って入った人の結果は？</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 図3：確証バイアスとの違い -->
+    <h2 id="svg-confirmation">図解：確証バイアスとの違い</h2>
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="確証バイアスとベースレート無視の違いの概念図">
+        <rect x="0" y="0" width="640" height="280" rx="8" fill="#f6f8fa" stroke="none"/>
+
+        <!-- 左：確証バイアス -->
+        <rect x="20" y="20" width="280" height="240" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="160" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#2C4F8F" font-family="Noto Sans JP,sans-serif">確証バイアス（#55）</text>
+        <text x="160" y="68" text-anchor="middle" font-size="11" fill="#57606a" font-family="Noto Sans JP,sans-serif">「自分に都合よく情報を集める」</text>
+
+        <!-- 情報フィルターの概念 -->
+        <rect x="60" y="90" width="200" height="100" rx="6" fill="#ddf4ff" stroke="#0969da" stroke-width="1"/>
+        <text x="160" y="118" text-anchor="middle" font-size="11" fill="#0969da" font-family="Noto Sans JP,sans-serif">賛成する情報だけを</text>
+        <text x="160" y="136" text-anchor="middle" font-size="11" fill="#0969da" font-family="Noto Sans JP,sans-serif">集め、反証を避ける</text>
+        <text x="160" y="158" text-anchor="middle" font-size="10" fill="#57606a" font-family="Noto Sans JP,sans-serif">調べ方の偏り</text>
+
+        <text x="160" y="205" text-anchor="middle" font-size="11" fill="#424a53" font-family="Noto Sans JP,sans-serif">「自分の考えを</text>
+        <text x="160" y="222" text-anchor="middle" font-size="11" fill="#424a53" font-family="Noto Sans JP,sans-serif"> 支持する情報しか見ない」</text>
+        <text x="160" y="248" text-anchor="middle" font-size="10" fill="#8b949e" font-family="Noto Sans JP,sans-serif">詳細は <a href="guide-confirmation-bias.html">確証バイアス</a> 記事へ</text>
+
+        <!-- 右：ベースレート無視 -->
+        <rect x="340" y="20" width="280" height="240" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+        <text x="480" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#2C4F8F" font-family="Noto Sans JP,sans-serif">ベースレート無視（本記事）</text>
+        <text x="480" y="68" text-anchor="middle" font-size="11" fill="#57606a" font-family="Noto Sans JP,sans-serif">「全体の割合を調べようとしない」</text>
+
+        <!-- ベースレートの概念 -->
+        <rect x="380" y="90" width="200" height="100" rx="6" fill="#e6ffed" stroke="#1a7f37" stroke-width="1"/>
+        <text x="480" y="118" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">そもそも分母（全体の</text>
+        <text x="480" y="136" text-anchor="middle" font-size="11" fill="#1a7f37" font-family="Noto Sans JP,sans-serif">確率）を参照しない</text>
+        <text x="480" y="158" text-anchor="middle" font-size="10" fill="#57606a" font-family="Noto Sans JP,sans-serif">参照すべき視点そのものの欠如</text>
+
+        <text x="480" y="205" text-anchor="middle" font-size="11" fill="#424a53" font-family="Noto Sans JP,sans-serif">「全体でどうなっているか」</text>
+        <text x="480" y="222" text-anchor="middle" font-size="11" fill="#424a53" font-family="Noto Sans JP,sans-serif"> という問いが頭に浮かばない</text>
+        <text x="480" y="248" text-anchor="middle" font-size="10" fill="#8b949e" font-family="Noto Sans JP,sans-serif">本記事が扱うテーマ</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。確証バイアスは「調べ方の偏り」であり、ベースレート無視は「全体の確率を参照しようとしないこと」です。両者は別の歪みですが、重なって現れることが多いです。</p>
+    </div>
+
+    <h2 id="related-biases">関連するバイアスとの棲み分け</h2>
+    <p>ベースレート無視と混同しやすい認知バイアスを整理します。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>バイアス名</th>
+          <th>歪みの本質</th>
+          <th>当サイト記事</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ベースレート無視（本記事）</td>
+          <td>全体の割合（分母）を参照しない</td>
+          <td>本記事</td>
+        </tr>
+        <tr>
+          <td>生存者バイアス</td>
+          <td>消えたものが集計から抜けて成績が良く見える</td>
+          <td><a href="guide-survivorship-bias.html">生存者バイアス</a></td>
+        </tr>
+        <tr>
+          <td>確証バイアス</td>
+          <td>自分の考えを支持する情報だけを集める</td>
+          <td><a href="guide-confirmation-bias.html">確証バイアス</a></td>
+        </tr>
+        <tr>
+          <td>過信（小サンプルの罠）</td>
+          <td>少ない成功事例から実力があると信じる</td>
+          <td><a href="guide-overconfidence.html">連勝のあとが一番危ない</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>「ベースレート無視」と「生存者バイアス」はよく一緒に出てきます。<strong>生存者バイアスは「標本そのものが欠けている」問題</strong>であり、<strong>ベースレート無視は「そもそも全体を調べようとしない」問題</strong>です。どちらも「分母が見えない」状態を生みますが、原因が異なります。詳しくは<a href="guide-survivorship-bias.html">生存者バイアスの記事</a>をご覧ください。</p>
+
+    <h2 id="site-connection">当サイトでの活かし方</h2>
+    <p>当サイトの「<a href="../track-record.html">📊 シグナル成績</a>」ページでは、テクニカルシグナルの発火条件ごとに過去の勝率・損益比・件数が公開されています。これはシグナル研究のベースレートの一つの参照として活用できます。</p>
+    <p>「このシグナルが出たから入る」という判断の前に、「同じシグナル条件が出たときの過去の結果は？」と外から見る習慣は、ベースレートを参照するアウトサイドビューの実践そのものです。</p>
+
+    <div class="info-box">
+      <strong>重要な注意</strong><br>
+      シグナルの過去成績はあくまで参考情報であり、将来の結果を保証するものではありません。また、件数が少ない条件はベースレートとしての信頼性が低い点にも注意が必要です（小サンプルの問題）。
+    </div>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績ダッシュボードを見る</div>
+      <div class="cta-box-desc">18銘柄のテクニカルシグナル発火履歴と成績（勝率・損益比・件数）を条件別に確認できます。アウトサイドビューの一つの参照として活用してください。</div>
+      <a class="cta-btn" href="../track-record.html">成績ダッシュボードを見る →</a>
+    </div>
+
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-survivorship-bias.html">
+        <div class="related-card-title">消えたものは、平均に入っていない</div>
+        <div class="related-card-desc">生存者バイアス：標本から脱落したものが見えない問題。ベースレート無視と重なって現れることが多い。</div>
+      </a>
+      <a class="related-card" href="guide-confirmation-bias.html">
+        <div class="related-card-title">調べれば調べるほど、自信だけが増えていく</div>
+        <div class="related-card-desc">確証バイアス：自分の考えを支持する情報だけを集める歪み。ベースレート無視と別物だが、相互に強化し合う。</div>
+      </a>
+      <a class="related-card" href="guide-overconfidence.html">
+        <div class="related-card-title">連勝のあとが一番危ない</div>
+        <div class="related-card-desc">小サンプルの罠と過信：少ない成功事例から実力を過信してしまう認知バイアスを解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer">【免責事項（kinsho-v1）】本記事は認知バイアスに関する情報提供を目的としており、特定の金融商品の売買を推奨・勧誘するものではありません。投資に関する最終判断はご自身の責任において行ってください。本記事で言及している研究・調査等は記事作成時点の情報に基づいており、内容の正確性・完全性・最新性を保証するものではありません。投資にはリスクが伴い、元本を割り込む可能性があります。</p>
+
+  </article>
+
+</main>
+
+<footer>
+  <div style="max-width:1200px;margin:0 auto">
+    <p>© 2026 MarketWatch AI — 日本人投資家のためのマーケット情報サイト</p>
+    <p style="margin-top:6px"><a href="index.html">トップ</a> | <a href="guides.html">解説記事</a> | <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+    <p style="margin-top:8px;font-size:.72rem;color:#8b949e">本サイトは情報提供を目的としており、投資助言を行うものではありません。投資判断はご自身の責任でお願いします。</p>
+  </div>
+</footer>
+
+<script>
+// テーマ切替
+function toggleTheme(){
+  const b=document.body;
+  const btn=document.getElementById('theme-toggle');
+  if(b.classList.contains('dark')){b.classList.remove('dark');btn.textContent='🌙';try{localStorage.setItem('mw-theme','light');}catch(e){}}
+  else{b.classList.add('dark');btn.textContent='☀️';try{localStorage.setItem('mw-theme','dark');}catch(e){}}
+}
+(function(){try{if(localStorage.getItem('mw-theme')==='dark'){document.body.classList.add('dark');document.getElementById('theme-toggle').textContent='☀️';}}catch(e){}})();
+// 読書進捗バー
+window.addEventListener('scroll',function(){
+  const d=document.documentElement;const bar=document.getElementById('reading-progress');
+  const pct=(d.scrollTop||document.body.scrollTop)/((d.scrollHeight||document.body.scrollHeight)-d.clientHeight)*100;
+  if(bar)bar.style.width=Math.min(pct,100)+'%';
+});
+</script>
+
+</body>
+</html>
