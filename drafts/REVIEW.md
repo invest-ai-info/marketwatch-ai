@@ -1,3 +1,15 @@
+## 2026-09-10 signal-lab #094（trend=上昇×reversalL IS/FWD解剖・RSI63% vs BB43%）
+
+- **基準日**: 2026-09-10（JST）
+- **記事番号**: #094
+- **テーマ**: trend=上昇×reversalL——IS/FWD期間分離 + シグナル種別二極化（RSI 63% vs BB 43%）
+- **生成ファイル**: `drafts/draft-signal-lab-094.html`
+- **claims**: `drafts/labnotes/lab-094-claims.json`（9件）
+- **ステータス**: 🔄 公開ゲート実行中
+- **主要数値**: IS 53.5%(101) / FWD 48.1%(295) / RSI型 63.4%(71) / BB型 43.3%(224) / 指数 38.5%(78) / demote_strikes=1
+
+---
+
 ## 2026-09-09 autodraft: draft-base-rate-neglect.html
 
 - **基準日**: 2026-09-09（JST 05:31、UTC 2026-09-09T20:31Z）
