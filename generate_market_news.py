@@ -5308,6 +5308,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-10", "line": '・<b>2026-09-10</b>: 💰 解説「<a href="guide-odd-lot-investing.html" style="color:#0969da"><b>単元未満株は何を引き換えに買いやすくなっているのか</b></a>」公開'},
         {"date": "2026-09-10", "line": '・<b>2026-09-10</b>: 🧪 解説「<a href="guide-signal-lab-094.html" style="color:#0969da"><b>上昇×逆張り N=295｜RSI63% vs BB43%</b></a>」公開'},
         {"date": "2026-09-09", "line": '・<b>2026-09-09</b>: 📰 解説「<a href="guide-news-2026-09-09-oil-surge-houthi-saudi.html" style="color:#0969da"><b>【9/9】フーシ派がサウジ石油施設攻撃──WTI原油94.73ドル急騰</b></a>」公開'},
         {"date": "2026-09-09", "line": '・<b>2026-09-09</b>: 🔢 解説「<a href="guide-tse-trading-unit.html" style="color:#0969da"><b>単元株制度とは｜なぜ100株区切りなのか</b></a>」公開'},
