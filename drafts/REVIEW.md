@@ -1,3 +1,7 @@
+2026-09-11 autopublish: guide-survivorship-bias.html 公開済み（決定論緑・Opus🟡軽微修正→独立Opus🟢白）https://marketwatch-jp.com/guide-survivorship-bias.html
+
+---
+
 ## 2026-09-11 signal-lab: guide-signal-lab-095.html ✅公開済み
 
 - **公開日**: 2026-09-11（JST）
