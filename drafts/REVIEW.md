@@ -1,3 +1,16 @@
+## 2026-09-11 signal-lab: guide-signal-lab-095.html ✅公開済み
+
+- **公開日**: 2026-09-11（JST）
+- **article_id**: 095
+- **topic**: RSI売られすぎ逆張り買い — 9月37.1%失速でCI下限マイナス転落・昇格ストライク失効
+- **仮説検証**: H1✅（9月37.1%<43%）/ H2✅（CI下限マイナス）/ H3✅（9月jpy_fx 25.6%<25%）
+- **ゲート結果**: signal_lab_verify GREEN(13/13) → Opus🟡→🟢（kinsho-v1三層整備・表現軟化・SVG−23pp・図キャプション修正・テーブル注記追加）→ 再verify GREEN → 独立Opus🟢白確認 → finalize OK → publish OK → check_site_consistency EXIT=0
+- **key correction**: claims.json の7件n値修正（oracle excluded "expired"→FWD全体 332→326 等）
+- **tracker更新**: rsi_oversold_bounce promote_strikes 1→0（CI下限マイナス転落）
+- **URL**: https://marketwatch-jp.com/guide-signal-lab-095.html
+
+---
+
 ## 2026-09-11 autodraft: draft-average-vs-median-return.html
 
 - **基準日**: 2026-09-11（JST 05:30、UTC 2026-09-10T20:30Z）
