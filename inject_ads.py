@@ -61,9 +61,31 @@ ADS = {
 """ + AD_CSS + """
 <!-- ===== /広告 ===== -->
 """,
+    "fx": """<!-- ===== 広告 (A8.net / FX) ===== -->
+<div class="mw-ad" aria-label="広告">
+  <span class="mw-ad-label">広告</span>
+  <a href="https://px.a8.net/svt/ejp?a8mat=4BC736+9U8XPU+25B2+61C2P" rel="nofollow noopener" target="_blank"><img border="0" width="234" height="60" alt="広告" src="https://www29.a8.net/svt/bgt?aid=260909538595&wid=001&eno=01&mid=s00000010019001014000&mc=1"></a>
+  <img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4BC736+9U8XPU+25B2+61C2P" alt="">
+</div>
+""" + AD_CSS + """
+<!-- ===== /広告 ===== -->
+""",
 }
 
 PAGES = {
+    # 2026-09-10 オーナー指示「FXの証券会社の広告を掲載してください」。
+    # 掲載先＝FXが主題の常設解説記事だけ（速報は時間が経つと読まれない・DMM枠とは重複させない）。
+    # ⚠️ 本文に推奨文は足さない＝バナーのみ（金商法の誇大広告／投資勧誘に寄せないため）。
+    # 「広告」ラベルは AD_CSS 付きのブロックが必ず出す（景表法ステマ規制 2023-10-01 施行）。
+    "fx": [
+        "guide-swap-points.html",          # スワップポイント（FX固有）
+        "guide-leverage.html",             # レバレッジとナンピン
+        "guide-currency-risk.html",        # 為替リスクの基本
+        "guide-currency-hedge-cost.html",  # 為替ヘッジコスト
+        "guide-yen-carry-trade.html",      # 円キャリー取引
+        "guide-bid-ask-spread.html",       # スプレッド（業者選びの中心指標）
+        "guide-investment-tax.html",       # 株・FX・投信の税金
+    ],
     "cfd": [
         "guide-nikkei-60000.html",                 # 済
         "guide-nikkei-60k-break-2026-05-20.html",
