@@ -103,9 +103,13 @@
 
 - `guide-proverb-series-index.html`（#50 総集編・48本のテーマ別総目次）が 9/5 に公開され、`PROVERB_LEDGER.md` に
   「🏁 シリーズ完結（48本✅ + #23⛔スキップ + #50🏁）」が記録された。キューは全消化。
-- ⚠️ **`proverb-daily-auto`（`trig_01P8Jjut79fHWoiALk4mfuJQ`）をエージェントからは停止できない**＝この routine は
-  オーナーが画面（http_api）で作ったもので、`update_trigger` は「エージェントは自分が作った routine しか変更できない」
-  と拒否する（実測 2026-09-05）。**停止はオーナーが claude.ai の Routines 画面で行う**。
+- ✅ **`proverb-daily-auto`（`trig_01P8Jjut79fHWoiALk4mfuJQ`）は削除済み**（オーナーが対応。2026-09-10 に
+  `list_triggers` 26件を確認＝一覧に無い・ID検索でも不在）。
+  ⚠️ **エージェントからは停止できなかった**＝オーナーが画面（http_api）で作った routine は `update_trigger` が
+  「エージェントは自分が作った routine しか変更できない」と拒否する（実測 2026-09-05）。
+  📌 **教訓＝オーナー作成の routine は、エージェントが停止まで含めて段取りできない。**停止を伴う計画は
+  最初からオーナーの手作業を1ステップとして見込むこと。**そして「やってもらう前提」で放置せず、
+  次の機会に必ず実態を確認すること**（2026-09-10 まで未対応として案内し続けていた＝確認を怠った）。
 - 放置しても実害は小さい（PROVERB_GUIDE §【キュー】#50 に「以後の実行は何もしない」＝キュー空で手順2が自動停止）が、
   毎日 10:12 JST に空回りしてトークンを消費するので止めるのが望ましい。
 - 📌 **教訓＝オーナー作成の routine は、エージェントが「停止まで含めて」段取りできない。**停止を伴う計画は
@@ -134,7 +138,7 @@
 
 - 3本とも `publish_article.py` で②〜⑤登録済み・台帳に ✅エントリ追記済み。番人の scam 残量は 3→6 になる
 - 🔑 **学び＝法令の条番号と統計の区分は「要約」でなく原本で**。台帳の修正指示すら古かった。SOP に「e-Gov CurrentEnforced 版」「PDF 原本の該当段落」を確認日つきで書く運用を足すべき
-- ⏰ **proverb-daily-auto の停止**＝9/5 12:00 JST の自己チェックで #50 公開を確認済み。ただし停止は**エージェント不可＝オーナーの手作業**（冒頭 2026-09-05 節）
+- ⏰ **proverb-daily-auto の停止**＝9/5 に #50 公開を確認 → オーナーが routine を削除（2026-09-10 に不在を確認済み）
 - ⚠️ 本セッションの成果物はすべて **ブランチ `claude/issue-check-do2bbk`**（main 未マージ）。マージ後に update-market-news が index/sitemap を再生成する。ローカル `sync_to_github.py` の SYNC_FILES に `build_edinet_yuho.py`／`.github/workflows/edinet-yuho.yml`／`guide-scam-{investment-seminar,crypto-scam,recovery-scam}.html` を追加すること
 
 ## 🆕 2026-09-02: 有報を Actions が取って置く（`edinet-yuho.yml`）＝日本株の週次エスカレを止める
