@@ -1,3 +1,13 @@
+## 2026-09-10 autopublish: guide-odd-lot-investing.html（単元未満株 基礎知識 #56）
+
+- **公開日**: 2026-09-10（JST）
+- **key**: odd-lot-investing
+- **ゲート結果**: 決定論ゲート GREEN × 2 / Opus🟡→🟢（4件軽微修正：SVG免責追記・断定表現軟化2件・「ほとんど→多い」）/ 独立Opus🟢白確認
+- **HTTP確認**: プロキシ規制によりクラウド環境から直接確認不可（push成功・GitHub側で公開済み）
+- **URL**: https://marketwatch-jp.com/guide-odd-lot-investing.html
+
+---
+
 ## 2026-09-10 signal-lab #094（trend=上昇×reversalL IS/FWD解剖・RSI63% vs BB43%）
 
 - **基準日**: 2026-09-10（JST）
