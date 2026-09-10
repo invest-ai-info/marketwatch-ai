@@ -1,3 +1,26 @@
+## 2026-09-11 autodraft: draft-average-vs-median-return.html
+
+- **基準日**: 2026-09-11（JST 05:30、UTC 2026-09-10T20:30Z）
+- **topic**: average-vs-median-return（#62）「平均で年◯%」は、自分の結果とは限らない
+- **シリーズ**: 投資の基礎知識
+- **生成ファイル**: `drafts/draft-average-vs-median-return.html`
+- **参照出典URL**:
+  - https://historyofmarket.com/sp500/annual-dist/（S&P 500年次リターン分布）
+  - https://quantflowlab.com/sp-500-average-return/（算術平均 vs CAGR）
+  - https://shisankeisei.jp/20210916-sequence-of-return-risk/（シークエンス・オブ・リターン・リスク）
+  - https://www.schwab.com/learn/story/timing-matters-understanding-sequence-returns-risk（順番リスク）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（一般論・概念説明のみ）
+  - ✅ 断定・利益保証なし（「期待できる」等の表現を避け「傾向がある」等を使用）
+  - ✅ kinsho-v1 免責あり（冒頭バナー＋本文末disclaimer）
+  - ✅ 出典妥当（WebSearch確認済み・推測数値は使用せず）
+  - ✅ noindex,nofollow あり
+  - ⚠️ TODO(SVG): SVG 3点（外れ値・分布・順番リスク）のライト/ダーク実機確認要
+- **SVG TODO**: 3点作成済み、ライト/ダーク実機確認を人間が実施すること
+- **人間の残作業**: SVGの実機ライト/ダーク確認・タイトル微調整・公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 ## 2026-09-10 autopublish: guide-odd-lot-investing.html（単元未満株 基礎知識 #56）
 
 - **公開日**: 2026-09-10（JST）

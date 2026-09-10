@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>「平均で年◯%」は、自分の結果とは限らない｜平均・中央値・複利の落とし穴を図解 - MarketWatch AI</title>
+  <meta name="description" content="「年平均10%」という数字は毎年10%を意味しない。平均と中央値のずれ、算術平均と幾何平均（CAGR）の違い、リターンの順番が結果を変えるシークエンス・オブ・リターン・リスクを図解でやさしく解説。長期投資で「平均」という数字をどう読むべきかを初心者〜中級者向けに徹底解説します。">
+  <meta name="keywords" content="平均リターン,中央値,算術平均,幾何平均,CAGR,複利,シークエンスオブリターンリスク,長期投資,投資基礎知識,分散投資,リスク管理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-average-vs-median-return.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「平均で年◯%」は、自分の結果とは限らない｜平均・中央値・複利の落とし穴を図解">
+  <meta property="og:description" content="「年平均10%」は毎年10%を意味しない。平均と中央値のずれ・算術平均と幾何平均の違い・リターンの順番が結果を変える仕組みを図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-average-vs-median-return.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「平均で年◯%」は、自分の結果とは限らない｜平均・中央値・複利の落とし穴を図解",
+    "description": "「年平均10%」は毎年10%を意味しない。平均と中央値のずれ・算術平均と幾何平均の違い・リターンの順番が結果を変える仕組みを図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-average-vs-median-return.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-b{fill:#0969da;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-bar-b{fill:#58a6ff;opacity:.85}
+    body.dark .s-bar-r{fill:#f85149;opacity:.85}
+    body.dark .s-bar-g{fill:#3fb950;opacity:.85}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 「平均で年◯%」は、自分の結果とは限らない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は投資に関わる統計・数学の考え方を整理した「情報提供」であり、特定商品の購入推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>💰 「平均で年◯%」は、自分の結果とは限らない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 11 日 ／ 読了時間：約 12 分 ／ カテゴリ：投資の基礎知識</div>
+
+    <p>「長期では年平均◯%のリターンが期待できる」——投資の本や記事でよく目にする表現です。しかし、<strong>この「平均」という数字が、実際にあなたの手元に残る金額を表しているかというと、そうとは限りません</strong>。</p>
+    <p>まず疑問を持ってほしい点が2つあります。ひとつは<strong>「平均」と「中央値」は別物</strong>だということ。もうひとつは、<strong>「平均10%」が「毎年10%」を意味しない</strong>ということです。さらに、同じ平均リターンでも<strong>リターンの順番が違えば、最終的な資産額は変わる</strong>という事実があります。</p>
+    <p>これらを知らずに長期投資の計画を立てると、「計算上は増えるはず」なのに「実際にはそこまで届かない」という落とし穴にはまることがあります。この記事では、そのしくみを図解でわかりやすく解説します。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>「平均」は<strong>少数の大きな外れ値に引っ張られる</strong>。分布が偏っているとき、多くの人の実態に近いのは「中央値」のほうが多い。</li>
+      <li>「年平均◯%」という数値は<strong>算術平均（足して割った数）</strong>であることが多く、<strong>実際の資産増加率（幾何平均・CAGR）とは一致しない</strong>。特にばらつきが大きいほど差が広がる。</li>
+      <li>同じ平均リターンでも<strong>マイナスの年が先に来るか後に来るかで資産の最終残高は変わる</strong>（シークエンス・オブ・リターン・リスク）。特に資産を引き出す段階（引退後など）でこの影響が大きい。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">平均と中央値はなぜ違うのか（直感図解）</a></li>
+        <li><a href="#section-2">算術平均と幾何平均（CAGR）の違い</a></li>
+        <li><a href="#section-3">「年平均◯%」が毎年◯%ではない理由</a></li>
+        <li><a href="#section-4">少数の大当たり年が平均を押し上げる</a></li>
+        <li><a href="#section-5">リターンの順番が結果を変える（シークエンス・オブ・リターン・リスク）</a></li>
+        <li><a href="#section-6">「自分は分布のどのあたりにいるか」という問い</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 平均と中央値はなぜ違うのか（直感図解）</h2>
+    <p>最初に、平均と中央値の違いを具体的なイメージで押さえましょう。</p>
+    <p>たとえば、5人のグループの年収が次のようだったとします。</p>
+
+    <div class="info-box">
+      200万円 / 250万円 / 280万円 / 300万円 / <strong>5,000万円</strong><br>
+      ↓<br>
+      <strong>平均：1,206万円</strong>（合計6,030万円 ÷ 5）<br>
+      <strong>中央値：280万円</strong>（並べたとき真ん中の値）
+    </div>
+
+    <p>1人だけ飛び抜けた高収入者がいると、<strong>平均はその1人に大きく引きずられます</strong>。しかし5人のうち4人は300万円以下。「このグループの年収は平均1,206万円」と言われても、4人にとってはまったく自分の実態を表していません。</p>
+    <p>投資のリターン分布でも、同じことが起きます。特に<strong>個別株</strong>では、ごく一部の大きな勝ち銘柄が全体の平均を押し上げる傾向があります。多くの銘柄が平均的なリターンに届かないまま、少数の大きな上昇が「平均」を引き上げているのです。これを分布の<strong>「右裾が長い（右歪み）」</strong>と言います。</p>
+
+    <!-- SVG 1: 平均と中央値のずれ -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="median-title">
+        <title id="median-title">外れ値が平均を引き上げる概念図</title>
+        <text class="s-panel-label" x="32" y="24">外れ値1つで「平均」は大きく変わる</text>
+        <!-- 棒グラフ: 5人の値 -->
+        <!-- x軸 -->
+        <line class="s-axis" x1="60" y1="210" x2="580" y2="210"/>
+        <!-- Person 1: 200 -->
+        <rect class="s-bar-b" x="80" y="158" width="50" height="52"/>
+        <text class="s-label-sm" x="105" y="172" text-anchor="middle">200</text>
+        <!-- Person 2: 250 -->
+        <rect class="s-bar-b" x="150" y="144" width="50" height="66"/>
+        <text class="s-label-sm" x="175" y="158" text-anchor="middle">250</text>
+        <!-- Person 3: 280 (中央値) -->
+        <rect class="s-bar-g" x="220" y="136" width="50" height="74"/>
+        <text class="s-label-sm" x="245" y="150" text-anchor="middle">280</text>
+        <text class="s-note-g" x="245" y="228" text-anchor="middle">中央値</text>
+        <!-- Person 4: 300 -->
+        <rect class="s-bar-b" x="290" y="130" width="50" height="80"/>
+        <text class="s-label-sm" x="315" y="145" text-anchor="middle">300</text>
+        <!-- Person 5: 5000 (外れ値) -->
+        <rect class="s-bar-r" x="360" y="44" width="50" height="166"/>
+        <text class="s-label-sm" x="385" y="58" text-anchor="middle">5,000</text>
+        <text class="s-note-r" x="385" y="228" text-anchor="middle">外れ値</text>
+        <!-- 平均ライン -->
+        <line x1="60" y1="112" x2="530" y2="112" stroke="#0969da" stroke-width="2" stroke-dasharray="6 4"/>
+        <text class="s-note" x="535" y="116">平均 1,206</text>
+        <!-- 単位ラベル -->
+        <text class="s-label-sm" x="60" y="256">（単位：万円）</text>
+        <text class="s-label-sm" x="490" y="256">4人は平均に届かない →</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 1人の外れ値（5,000万円）が平均を大きく引き上げる。5人のうち4人の実態（200〜300万円）は平均（1,206万円）に届かない。投資のリターン分布でも同様に、少数の大きな上昇が平均を押し上げることがある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 算術平均と幾何平均（CAGR）の違い</h2>
+    <p>投資のリターン表示には2種類の「平均」があります。</p>
+    <ul>
+      <li><strong>算術平均（単純平均）</strong>：各年のリターンを足して年数で割った数。計算が簡単で直感的だが、「実際の資産増加率」とは一致しないことが多い。</li>
+      <li><strong>幾何平均（CAGR＝年平均成長率）</strong>：資産が毎年複利で積み上がるときの実質的な年率。実際に投資した場合の資産増加と一致する。</li>
+    </ul>
+    <p>両者の差は、リターンの<strong>ばらつきが大きいほど開きます</strong>。最も分かりやすい例で確認しましょう。</p>
+
+    <div class="negative-box">
+      <strong>極端な例：+100% の年と -50% の年</strong><br>
+      ・算術平均：(+100% − 50%) ÷ 2 = <strong>+25%</strong><br>
+      ・実際の資産：100万円 → 200万円（+100%） → 100万円（−50%）＝ <strong>元に戻る（年率 0%）</strong><br>
+      → 算術平均は +25% と出ているが、実際の利回りは 0% だった。
+    </div>
+
+    <p>これほど極端でなくても、同じ傾向は必ず起きます。たとえば毎年の成績がそれぞれ異なる場合、算術平均は「足して割っただけ」ですが、実際に積み上がる資産は複利の計算になるため、<strong>ばらつきが大きいと算術平均より CAGR のほうが低くなります</strong>。</p>
+
+    <div class="info-box">
+      <strong>ポイント</strong>：運用成績や商品案内に「平均リターン」と書いてあるとき、<strong>算術平均か CAGR か</strong>を確認する習慣をつけましょう。算術平均は印象を良く見せやすく、CAGR は実際の体験に近い数字です。
+    </div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 「年平均◯%」が毎年◯%ではない理由</h2>
+    <p>長期投資の説明でよく使われる「年平均◯%」という表現は、多くの場合 CAGR（年率換算の複利リターン）を指します。しかし、これは<strong>「毎年ほぼ同じ◯%ずつ増える」という意味ではありません</strong>。</p>
+    <p>実際の年ごとのリターンは大きく変動し、<strong>大幅に上がる年もあれば、大幅に下がる年もある</strong>。長い年月をかけて、それらの結果が平均として◯%になる、というのが正確な意味です。</p>
+    <p>この「ばらつきながら平均に落ち着く」という性質には、次の重要な含意があります。</p>
+    <ul>
+      <li>任意の1年だけを切り取ると、「平均」から大きく外れた年であることが大半です。</li>
+      <li>下落の大きかった年は、その後の回復に時間がかかることがあります。</li>
+      <li>「平均◯%」に達するかどうかは、<strong>その人がどのタイミングで資産を入れ、どのタイミングで引き出すか</strong>にも大きく依存します（次の章で詳しく解説）。</li>
+    </ul>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 少数の大当たり年が平均を押し上げる</h2>
+    <p>株式市場の長期リターンについて広く知られた事実があります。<strong>長い年月の中で、市場全体の上昇の大部分が、ごく少数の特に大きく上がった年に集中している</strong>という傾向です（出典：複数の学術研究および市場データ分析で報告されている傾向）。</p>
+    <p>たとえば「20年の平均リターン」があったとして、そのうちの大部分が特定の5〜10年の大きな上昇によって支えられており、残りの多くの年はそれほど印象的な結果ではない——というパターンが観察されています。</p>
+    <p>これが示すことは何でしょうか。</p>
+    <ul>
+      <li>「20年保有すれば平均◯%」という数字は、<strong>保有し続けた人が大当たり年を逃さなかった場合の結果</strong>である。</li>
+      <li>年の途中でタイミングを見計らって売買しようとすると、その数少ない「大当たり年」を逃すリスクがある。</li>
+      <li>分布の平均を「自分が毎年受け取れるもの」と誤解すると、実際の経験とずれが生じる。</li>
+    </ul>
+
+    <!-- SVG 2: 分布の偏り概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 260" role="img" aria-labelledby="dist-title">
+        <title id="dist-title">年次リターン分布の右裾が長い概念図</title>
+        <text class="s-panel-label" x="32" y="24">株式の年次リターン分布のイメージ（右裾が長い）</text>
+        <!-- x軸 -->
+        <line class="s-axis" x1="50" y1="200" x2="610" y2="200"/>
+        <!-- y軸 -->
+        <line class="s-axis" x1="50" y1="40" x2="50" y2="200"/>
+        <!-- ラベル -->
+        <text class="s-label-sm" x="55" y="218">大幅下落</text>
+        <text class="s-label-sm" x="280" y="218">中央値</text>
+        <text class="s-label-sm" x="390" y="218">平均</text>
+        <text class="s-label-sm" x="550" y="218">大幅上昇</text>
+        <!-- 分布曲線（左に峰・右裾が長い） -->
+        <path d="M55,198 C70,196 90,190 110,170 C130,145 150,100 175,70 C190,54 210,48 230,52 C255,58 275,85 295,118 C315,145 340,170 380,186 C420,194 460,196 510,197 C550,198 580,198 605,198" fill="none" stroke="#0969da" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- 中央値の縦線 -->
+        <line x1="290" y1="80" x2="290" y2="200" stroke="#1a7f37" stroke-width="2" stroke-dasharray="5 4"/>
+        <text class="s-note-g" x="292" y="75">中央値</text>
+        <!-- 平均の縦線（中央値より右） -->
+        <line x1="390" y1="110" x2="390" y2="200" stroke="#cf222e" stroke-width="2" stroke-dasharray="5 4"/>
+        <text class="s-note-r" x="392" y="106">平均</text>
+        <!-- 右裾の注釈 -->
+        <text class="s-label-sm" x="490" y="158">大きな上昇年が</text>
+        <text class="s-label-sm" x="490" y="172">平均を引き上げる</text>
+        <!-- y軸ラベル -->
+        <text class="s-label-sm" x="10" y="44" transform="rotate(-90,10,120)">頻度</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 株式リターンの分布は右裾が長い（右歪み）傾向がある。大きな上昇年が右端にあり、平均を引き上げるため、<strong>平均より中央値（真ん中の値）のほうが低くなる</strong>ことがある。「平均◯%」が「自分にとっての典型的な1年」ではない理由がここにある。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ リターンの順番が結果を変える（シークエンス・オブ・リターン・リスク）</h2>
+    <p>ここから後半の実践編です。同じ「年平均◯%」という成績でも、<strong>プラスとマイナスの年が来る順番によって、最終的な資産額は変わります</strong>。これを<strong>「シークエンス・オブ・リターン・リスク（リターンの順番リスク）」</strong>と呼びます。</p>
+
+    <h3>資産を積み立てている段階（入金フェーズ）</h3>
+    <p>毎月一定額を積み立てている場合、順番の影響は比較的小さくなります。早い段階で下がっても、安い価格でより多く買えるため、後の回復で取り戻しやすいという側面があります。積立投資がこのリスクを緩和する仕組みのひとつです。</p>
+
+    <h3>資産を引き出す段階（引退後など）</h3>
+    <p>一方、資産を取り崩す段階（引退後の生活費を運用資産から毎年引き出すなど）では、<strong>順番の影響が非常に大きくなります</strong>。</p>
+
+    <div class="negative-box">
+      <strong>具体的な仕組み</strong><br>
+      同じ「20年間の平均リターン」でも、<strong>最初の数年に大きな下落が来た場合</strong>、資産総額が小さい状態で毎年一定額を引き出すことになり、元本を大きく削ってしまいます。その後市場が回復しても、<strong>残高が少なすぎて回復の恩恵を十分に受けられない</strong>——これが順番リスクの本質です。<br>
+      逆に、<strong>最初の数年に大きな上昇が来た場合</strong>は、残高が豊富な状態で引き出しが続くため、その後の下落にも耐えやすくなります。
+    </div>
+
+    <!-- SVG 3: 順番リスク概念図 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="seq-title">
+        <title id="seq-title">同じ平均リターンでも順番が違うと資産残高が変わる概念図</title>
+        <text class="s-panel-label" x="32" y="24">同じ「平均リターン」でも順番が違うと最終残高が変わる（引き出しフェーズ）</text>
+        <!-- x軸 -->
+        <line class="s-axis" x1="50" y1="256" x2="600" y2="256"/>
+        <!-- y軸 -->
+        <line class="s-axis" x1="50" y1="40" x2="50" y2="256"/>
+        <text class="s-label-sm" x="32" y="58" text-anchor="end">資産額</text>
+        <!-- パターンA：最初に下落（赤） -->
+        <polyline class="s-curve-l" points="50,120 110,160 170,190 230,200 290,196 350,175 410,145 470,110 530,70 580,48"/>
+        <text class="s-note-r" x="575" y="40">A: 最初に下落→回復</text>
+        <!-- パターンB：最初に上昇（緑） -->
+        <polyline class="s-curve-g" points="50,120 110,85 170,65 230,72 290,95 350,118 410,140 470,152 530,155 580,150"/>
+        <text class="s-note-g" x="450" y="170">B: 最初に上昇→下落</text>
+        <!-- 出発点 -->
+        <circle cx="50" cy="120" r="5" fill="#0969da"/>
+        <text class="s-note" x="54" y="116">同じ出発点</text>
+        <!-- 乖離の注釈 -->
+        <line class="s-guide" x1="580" y1="48" x2="580" y2="150"/>
+        <text class="s-note" x="585" y="100">残高の差</text>
+        <!-- x軸ラベル -->
+        <text class="s-label-sm" x="55" y="272">出発</text>
+        <text class="s-label-sm" x="570" y="272">20年後</text>
+        <text class="s-label-sm" x="580" y="44">A は少ない</text>
+        <text class="s-label-sm" x="580" y="154">B は多い</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 同じ出発点・同じ平均リターンでも、資産を引き出す段階では順番が結果を大きく変える。最初に大きく下落したパターン（赤）は、少ない残高から毎年引き出すため最終残高が少なくなりやすい。最初に上昇したパターン（緑）は余力を持って引き出せるため残高が多く残りやすい。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この順番リスクは<strong>自分では制御できません</strong>。しかし<strong>対策を考えることはできます</strong>。たとえば、引き出しを開始する時期に向けて、資産の一部を価格変動の少ない資産に移す考え方や、引き出し額を柔軟にする考え方などが一般に語られています。具体的な手法については、<a href="guide-compounding-drawdown.html">複利とドローダウン・破産確率の記事</a>や、<a href="guide-diversification.html">分散とポートフォリオの記事</a>も参考にしてください。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 「自分は分布のどのあたりにいるか」という問い</h2>
+    <p>ここまで見てきたことをまとめると、投資の「平均◯%」という数字を読むときに持つべき問いは次のようなものです。</p>
+
+    <h3>① どの種類の「平均」か</h3>
+    <p>算術平均（足して割った数）と幾何平均（CAGR）は異なります。特に<strong>ばらつきが大きい投資ほど、算術平均は CAGR より高く出る</strong>傾向があるため、どちらを示しているか確認しましょう。</p>
+
+    <h3>② 期間の設定はどこか</h3>
+    <p>「過去◯年の平均」という表現は、<strong>その期間の始まりと終わりをどこに置くかで大きく変わります</strong>。大きな下落直前が「始まり」か直後が「始まり」かで結果は正反対になることもあります。</p>
+
+    <h3>③ 何が含まれていないか</h3>
+    <p>長期の「平均リターン」の統計には、途中で上場廃止や繰上償還になった銘柄・ファンドが含まれていないことがあります（生存バイアス）。これについては<a href="guide-survivorship-bias.html">生存者バイアスの記事</a>で詳しく解説しています。</p>
+
+    <h3>④ 自分の「在籍期間」はいつか</h3>
+    <p>「20年間の平均」は20年間ずっと保有していた場合の話です。途中で大きく下落した年に売却してしまった場合、その「平均」を体験することはできません。<strong>「長期の平均が良くても、自分が我慢できる期間が短い」なら、その平均は自分の現実に当てはまりません</strong>。</p>
+
+    <div class="warning-box">
+      「平均で年◯%になった」という実績は、その期間を通じて保有し続け、かつその間に大きな下落に直面しながら売らずにいた人の結果です。<strong>続けられたかどうかも、結果を左右する大きな要素</strong>のひとつです。
+    </div>
+
+    <p>これらの問いは「投資しない理由」を探すためではなく、<strong>「平均」という数字を正しく読むため</strong>のものです。数字を適切に理解した上で、自分の状況に合った判断をすることが目的です。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>当サイトでは、テクニカル分析に基づくシグナルの発火・結果を記録した<a href="track-record.html">シグナル成績ページ</a>を公開しています。こちらに掲載されている成績数値を読む際にも、今回の「平均」への問いは参考になります。</p>
+    <ul>
+      <li>記載している数値は<strong>特定期間の集計結果</strong>であり、将来の結果を保証するものではありません。</li>
+      <li>取引件数が少ない段階では、統計的な信頼度は限定的です。</li>
+      <li>分布を見るときは、平均だけでなく<strong>ばらつきの幅（標準偏差・最大の負け幅など）</strong>も合わせて確認することを推奨します。</li>
+    </ul>
+    <p>また、<a href="guide-compounding-drawdown.html">複利と最大ドローダウンの記事</a>では、連敗時に資産がどれだけ減るかを具体的に解説しています。「平均リターンがプラスでも、大きなドローダウンが連続すると退場してしまう」という話は、本記事の「算術平均と幾何平均の差」とも深く関連しています。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績をデータで確認する</div>
+      <div class="cta-box-desc">当サイトが記録・公開しているテクニカルシグナルの成績一覧。平均だけでなくばらつきの幅も合わせて読んでみてください。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ページへ →</a>
+    </div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>この記事では、「平均で年◯%」という数字の背景にある3つの重要なポイントを解説しました。</p>
+    <ol>
+      <li><strong>平均と中央値は違う</strong>：分布が偏っているとき、外れ値が平均を引き上げる。多くの人の実態は中央値のほうが近いことがある。</li>
+      <li><strong>算術平均と CAGR（幾何平均）は違う</strong>：ばらつきが大きいほど、算術平均は実際の資産増加率より高く出る傾向がある。「毎年◯%ずつ増える」という意味ではない。</li>
+      <li><strong>リターンの順番が結果を変える</strong>：特に資産を引き出す段階では、早い時期に大きな下落が来るかどうかが最終残高に影響する（シークエンス・オブ・リターン・リスク）。</li>
+    </ol>
+    <p>「年平均◯%のリターンが期待できる」という表現に出会ったとき、<strong>「それはどの種類の平均か」「自分はその分布のどのあたりに位置するか」「引き出す時期はいつか」</strong>という問いを持つ習慣が、長期投資の計画をより現実に即したものにする助けになります。</p>
+    <p>投資の成否を分けるのは、数字の大きさだけでなく、その数字の意味を正確に理解した上で、自分の状況に合わせて判断し続けることです。</p>
+
+    <p class="disclaimer">【免責事項（kinsho-v1）】本記事は情報提供を目的として作成されたものであり、特定の金融商品の購入・売却を推奨するものではありません。また、投資助言業務に該当する行為は行っておりません。掲載内容は作成時点の情報に基づいており、今後変更される可能性があります。投資にはリスクが伴い、元本が保証されるものではありません。最終的な投資判断はご自身の責任において行ってください。本記事の情報を参考にして生じた損害について、当サイトは一切の責任を負いません。</p>
+
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-compounding-drawdown.html">
+        <div class="related-card-title">🔢 複利と最大ドローダウン・破産確率</div>
+        <div class="related-card-desc">複利の力と、大きな下落が複利をどう壊すかを解説。資産増加と退場リスクの両面から理解する。</div>
+      </a>
+      <a class="related-card" href="guide-survivorship-bias.html">
+        <div class="related-card-title">🔎 消えたものは、平均に入っていない</div>
+        <div class="related-card-desc">廃止・撤退したファンドや上場廃止銘柄が集計から抜けることで平均が良く見える仕組みを解説。</div>
+      </a>
+      <a class="related-card" href="guide-simple-vs-compound.html">
+        <div class="related-card-title">📐 単利と複利の違い</div>
+        <div class="related-card-desc">雪だるま式に増える複利の仕組みと、72の法則。複利が効く3条件も解説。</div>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <a href="index.html">トップ</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル成績</a> ｜ <a href="about.html">このサイトについて</a> ｜ <a href="privacy.html">プライバシーポリシー</a><br>
+  <div style="margin-top:8px">© 2025 MarketWatch AI — 本サイトは情報提供のみを目的としており、投資助言ではありません。</div>
+</footer>
+
+<script>
+(function(){var p=document.getElementById('reading-progress');if(!p)return;function upd(){var h=document.documentElement,b=document.body,st=h.scrollTop||b.scrollTop,sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;p.style.width=sh>0?Math.min(100,st/sh*100)+'%':'0'}window.addEventListener('scroll',upd,{passive:true});upd()})();
+function toggleTheme(){var b=document.body;b.classList.toggle('dark');try{localStorage.setItem('mw-theme',b.classList.contains('dark')?'dark':'light')}catch(e){}}
+(function(){try{if(localStorage.getItem('mw-theme')==='dark')document.body.classList.add('dark')}catch(e){}})();
+</script>
+</body>
+</html>
