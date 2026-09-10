@@ -237,4 +237,5 @@ SYNC_FILES = [
     "guide-news-2026-09-09-oil-surge-houthi-saudi.html",
     "guide-signal-lab-094.html",
     "guide-odd-lot-investing.html",
+    "guide-tse-shareholder-voting.html",
 ]
