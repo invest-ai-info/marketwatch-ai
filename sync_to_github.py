@@ -240,4 +240,5 @@ SYNC_FILES = [
     "guide-tse-shareholder-voting.html",
     "guide-news-2026-09-10-us10y-yield-peak-fomc-boj.html",
     "guide-signal-lab-095.html",
+    "guide-survivorship-bias.html",
 ]
