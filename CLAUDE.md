@@ -58,6 +58,7 @@
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新の鮮度チェック（2026-08-30〜 **経過時間**で判定＝`STALE_HOURS=26`。旧「JSTの今日と一致するか」は実行が深夜0時JSTをまたぐと必ず誤検知した） |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
+| **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米CPI・米雇用統計の発表日を BLS 公式と機械で突合**（`verify_economic_calendar.py`）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
 | **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
@@ -254,6 +255,7 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 | **`publish_article.py`** | 記事公開の②〜⑤を1コマンド・冪等（`mw publish` が内部で使用）。🆕**上書きゲート**＝git の HEAD 版と `datePublished` が違えば「公開済み記事を別記事で上書き」と判断して中止（`--allow-overwrite` で解除）。2026-09-06 に #089 が消えた事故の再発防止 |
 | **`apply_logo.py`** 🆕 | サイトロゴ（案C・favicon+ヘッダーSVG）を全HTML+生成スクリプト9本へ冪等適用（2026-07-04導入済み。ロゴ変更時はSVG定数を編集して `--apply`） |
 | **`apply_series_nav.py`** 🆕 | 連続シリーズ記事の末尾に「前の記事／次の記事」ボタンを冪等に敷く（2026-09-05 読者要望）。対象＝signal-lab / proverb / scam / tse / news（2026-09-09 時点 242本）。並び順は記事の `datePublished`（同日はファイル名）＝人が順番を管理しない。ただし **signal-lab だけ `"order": "number"`＝ファイル名の回番号順**（読者は #88→#89→#90 と番号で辿るため。2026-09-06 の上書き公開事故で公開日と番号が食い違った）。**update-market-news.yml が毎回 `--apply` して commit** ＝新記事が出ると「1つ前の記事の“次の記事”」も自動で貼り替わる。⚠️ 手で前後リンクを書かない（必ず腐る） |
+| **`verify_economic_calendar.py`** 🆕 | 米指標の発表日を**一次情報（BLS 公式スケジュール）と突き合わせる**（2026-09-11 の CPI 日付誤りの恒久対策）。🚨 **曜日ルールは足さない**＝正しい金曜(9/11)を弾いて誤った木曜(9/10)を通してしまう。日付の正しさは推測では決まらない。⚠️ **解析6件未満・今日以降の比較0件も失敗扱い**（「検証できなかった」を「問題なし」と取り違えない）。`verify-calendar.yml` が週1で実行 |
 | **`inject_ads.py`** | A8.net のアフィリエイト広告を記事末へ冪等注入し、**記事ごとの候補から1つをランダム表示**する（`CREATIVES`＝素材の唯一の定義／`POOLS`＝記事→候補。`mw-ads.js` は CREATIVES から自動生成＝直接編集禁止）。🚨 **2026-09-10 に設計上の欠陥を修正**＝旧方式は PC/SP 両方を HTML に置き CSS で隠していたが、ブラウザは `display:none` の `<img>` も読むため**見えていない側の1x1計測gifまで毎回飛び、表示回数が実測で約2倍**になっていた（Chromium 実測）。新方式は選ばれた1つだけを JS で描画＝表示した分だけ計測。JS無効は `<noscript>` で候補の先頭を1つ。**「広告」ラベル必須**（景表法ステマ規制・2023-10-01 施行）。⚠️ **本文に推奨文・煽り文言を足さない**（金商法の誇大広告／投資勧誘に寄せない）。既存＝DMM株・DMM CFD・JFX株式会社（22記事）。移行は `--replace` |
 | **routine `site-qa-lint`** | 土曜10:00 JST にリンターを自動実行→`site-qa-report.md` に報告（人が気づく前に検知） |
 | **`_reconcile.py`** 🆕 | ローカルと本番の差を**向き付き**で出す（ローカル専用・既定dry-run・`--apply`で取り込み・上書き前バックアップ）。このリポジトリは routine が**本番へ直接書く**ので**ローカルは構造的に遅れる**。L(ローカル)/R(本番)/B(`.sync-cache.json` の remote_sha＝前回sync時点) の3shaで「取り込み候補」と「ローカルが新しい」を判別。🚨 **時刻の新しさは正しさではない**ので、取り込む前に本番側のコミットとパッチを見せ、**追加0・削除のみ＝巻き戻しの疑い**に目印を付ける（`--patch` で中身も表示）。⚠️ 記事ミラーの遅行は従来どおり `_pull_mirror.py`（`guide-*.html` のクラウドレーン専用）|

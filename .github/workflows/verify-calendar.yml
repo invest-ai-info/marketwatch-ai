@@ -19,10 +19,6 @@ on:
     - cron: '10 22 * * 0'   # 月曜 07:10 JST（週の頭・指標week入りの前に気づける）
     - cron: '10 22 24 * *'  # 毎月25日 07:10 JST（monthly-calendar-reminder が翌月分を足す直前）
   workflow_dispatch:
-  # ⏳ 一時: ブランチで実地検証するための push トリガー（bls.gov の実ページで解析できるか確認したら消す）
-  push:
-    branches: [claude/issue-check-do2bbk]
-    paths: ['verify_economic_calendar.py', '.github/workflows/verify-calendar.yml']
 
 jobs:
   verify:
