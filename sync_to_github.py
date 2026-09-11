@@ -243,4 +243,5 @@ SYNC_FILES = [
     "guide-survivorship-bias.html",
     "guide-tse-special-quote.html",
     "guide-news-2026-09-11-nikkei-drop-oil-rate-stagflation.html",
+    "guide-signal-lab-096.html",
 ]

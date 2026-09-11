@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-12", "line": '・<b>2026-09-12</b>: 🧪 解説「<a href="guide-signal-lab-096.html" style="color:#0969da"><b>上昇×RSI売られすぎIS/FWD比較</b></a>」公開'},
         {"date": "2026-09-11", "line": '・<b>2026-09-11</b>: 📰 解説「<a href="guide-news-2026-09-11-nikkei-drop-oil-rate-stagflation.html" style="color:#0969da"><b>【9/11】日経平均1,260円安──原油104ドル・長期金利5%目前のスタグフレーション懸念を中立整理</b></a>」公開'},
         {"date": "2026-09-11", "line": '・<b>2026-09-11</b>: ⚖️ 解説「<a href="guide-tse-special-quote.html" style="color:#0969da"><b>特別気配と板寄せとは</b></a>」公開'},
         {"date": "2026-09-11", "line": '・<b>2026-09-11</b>: 🧠 解説「<a href="guide-survivorship-bias.html" style="color:#0969da"><b>消えたものは、平均に入っていない</b></a>」公開'},
