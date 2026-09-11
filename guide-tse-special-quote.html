@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>特別気配と板寄せとは｜注文が偏ったとき、値段はなぜ一足飛びに動かないのか - MarketWatch AI</title>
+  <meta name="description" content="株価が急に大きく動きそうなとき、東証は「特別気配」を表示して値段の即時成立を止めます。気配の更新値幅の一覧表、3分間隔での更新、寄り付き・引けで使われる「板寄せ方式」とザラバ方式の違いを、JPXの一次情報にもとづき東証のしくみシリーズ第10回として解説します。">
+  <meta name="keywords" content="特別気配,板寄せ方式,ザラバ方式,気配の更新値幅,連続約定気配,寄り付き,クロージングオークション,東証のしくみ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-special-quote.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="特別気配と板寄せとは｜注文が偏ったとき、値段はなぜ一足飛びに動かないのか">
+  <meta property="og:description" content="気配の更新値幅を超える注文には「特別気配」を表示し、3分間隔で値段を近づける仕組み。寄り付き・引けで使う「板寄せ方式」の違いをJPXの一次情報から解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-special-quote.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "特別気配と板寄せとは｜注文が偏ったとき、値段はなぜ一足飛びに動かないのか",
+    "description": "気配の更新値幅を超える注文には「特別気配」を表示し、3分間隔で値段を近づける仕組み。寄り付き・引けで使う「板寄せ方式」の違いをJPXの一次情報から解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-special-quote.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 特別気配と板寄せとは
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東京証券取引所などの制度・手続きを一般的に解説する「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。制度は変更されることがあるため、実際の取引前に必ずご自身で一次情報をご確認ください。</div>
+
+    <h1>⚖️ 特別気配と板寄せとは｜注文が偏ったとき、値段はなぜ一足飛びに動かないのか</h1>
+    <div class="meta-line">公開日：2026 年 9 月 11 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第10回）</div>
+
+    <p>寄り付き前の板を見ていて、「気配値」が数分おきにジリジリ切り上がっていくのを見たことがある人は多いはずです。あるいは、大引け間際に急に注文が偏って、なかなか値段が決まらない場面に出くわしたこともあるかもしれません。これらはどちらも偶然ではなく、<strong>東証があらかじめ決めたルールに従って値段を動かしている</strong>結果です。</p>
+    <p>この<strong>「東証のしくみ」シリーズ</strong>は、日本の株式市場の制度・手続きだけを扱い、個別銘柄の評価や売買判断には踏み込みません。第10回のテーマは<strong>特別気配と板寄せ</strong>です。仕組みは日本取引所グループ（JPX）の一次情報を実際に確認したうえで解説します（確認日は本文中に記載）。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>東証では、<strong>直前の価格から一定の値幅（「気配の更新値幅」）を超える値段でしか売買が成立しない状況になると、その場で即座に値段を決めず「特別気配」を表示</strong>する。買い注文が多く値段が上がりそうなら「買」特別気配、売り注文が多く下がりそうなら「売」特別気配になる。</li>
+      <li>気配の更新値幅は<strong>株価の水準ごとに決まっている</strong>（例：株価1,000円未満は15円、1,000円以上1,500円未満は30円など）。反対注文が入らず売買が成立しない場合、<strong>特別気配は3分間隔で更新され、徐々に成立しそうな値段へ近づいていく</strong>。</li>
+      <li>個別競争売買には<strong>「板寄せ方式」と「ザラバ方式」</strong>の2種類があり、板寄せ方式は<strong>寄り付き・引け・売買中断からの再開時・特別気配や連続約定気配の表示時</strong>に使われる。それ以外の通常の取引時間中（ザラバ）は、価格優先・時間優先の原則で順次約定するザラバ方式になる。</li>
+      <li>大口や連続的な注文で急激に価格が動きそうな場合には、<strong>特別気配とは別に「連続約定気配」という仕組み</strong>もあり、1分間の周知表示を挟んで急変動を抑える。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">特別気配とは何か——値段が一足飛びに動かない理由</a></li>
+        <li><a href="#section-2">具体例：気配の更新値幅と3分間隔の更新</a></li>
+        <li><a href="#section-3">図解：板寄せ方式とザラバ方式の使い分け</a></li>
+        <li><a href="#section-4">個人投資家にどこで効いてくるか</a></li>
+        <li><a href="#section-5">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-6">よくある誤解</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 特別気配とは何か——値段が一足飛びに動かない理由</h2>
+    <p>東証の売買は「競争売買」と呼ばれる方法で行われています。価格優先の原則（安い売り注文・高い買い注文が優先）と時間優先の原則（同じ値段なら先に出した注文が優先）にしたがって、最も優先する売り注文と買い注文の値段が合致したときに、その値段で売買が成立します。JPXは、この仕組みの中で価格が急変するのを防ぐルールを次のように説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買成立の方法」より）：</strong>「東証では、価格を決定する場合、直前の価格と比較して一定の値幅の範囲内のときに限り、即時に次の売買を成立させることとしています。その値幅を『気配の更新値幅』といい、直前の価格を基準として定められています。」</div>
+    <p>つまり、<strong>直前の約定値段から一定の範囲内でしか、その場での即時成立を認めない</strong>というルールです。この範囲を超えて値段が動きそうな場合にどうなるかを、JPXは次のように説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（同上）：</strong>「直前の価格から更新値幅を超えた水準で次の売買が成立するような場合には、即時に売買を成立させず、更新値幅の範囲内で『特別気配』を表示します。直前の価格よりも高い値段で売買が成立する状態の場合は『買』特別気配を、安い値段で成立する状態の場合は『売』特別気配を表示します。」</div>
+    <p>特別気配は「値段が止まった」ように見えますが、止まっているのはあくまで<strong>即時の約定</strong>であって、需給そのものではありません。買い注文と売り注文のどちらかに大きく偏っているという状態そのものは変わらず、東証はその偏りを気配として表示することで、市場に「反対注文を出す機会」を与えているのです。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 具体例：気配の更新値幅と3分間隔の更新</h2>
+    <p>JPXは特別気配の仕組みを、具体的な数字を使って次のように説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買成立の方法」より）：</strong>「例えば、直前の約定値段が1,000円のときで、その次の約定値段が1,050円（＋50円）となってしまうような場合には、気配の更新値幅が30円ですから、1,030円に買特別気配を表示して、『1,030円よりも高いところに買注文がありますが、売注文はありませんか』と呼び込みます。」</div>
+    <p>この例のとおり、気配の更新値幅は<strong>株価の水準ごとに金額が決まっています</strong>。JPX「特別気配の更新値幅」（2015年12月22日更新）が公表している表の一部を、実際の水準に沿って抜粋します。</p>
+    <div class="warning-box" style="font-size:.88rem;padding:12px 16px;margin-bottom:10px">以下はJPX（日本取引所グループ）公式サイト「<a href="https://www.jpx.co.jp/equities/trading/domestic/05.html" target="_blank" rel="noopener">特別気配の更新値幅｜内国株の売買制度</a>」（ページ更新日 2015/12/22、<strong>本記事の確認日：2026年9月11日</strong>）が公表する更新値幅の表からの抜粋です（架空の設定ではありません）。全区分（200円未満〜5,000万円以上まで33区分）は上記の一次情報ページで確認できます。</div>
+    <table>
+      <thead><tr><th>気配値段</th><th>更新値幅（上下）</th></tr></thead>
+      <tbody>
+        <tr><td>200円未満</td><td>5円</td></tr>
+        <tr><td>500円未満</td><td>8円</td></tr>
+        <tr><td>1,000円未満</td><td>15円</td></tr>
+        <tr><td>1,500円未満</td><td>30円</td></tr>
+        <tr><td>3,000円未満</td><td>50円</td></tr>
+        <tr><td>10,000円未満</td><td>150円</td></tr>
+        <tr><td>50,000円未満</td><td>700円</td></tr>
+        <tr><td>100,000円未満</td><td>1,500円</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.85rem;color:#6e7781;margin-top:-8px">※ 上記は代表的な区分の抜粋であり、中間の区分（例：700円未満は10円、2,000円未満は40円など）は省略しています。ご自身が確認したい株価水準の正確な更新値幅は、必ず上記リンクの全区分表でご確認ください。</p>
+    <p>特別気配が表示されても反対注文が出てこず、その値段で売買が成立しない場合には、時間の経過とともに値段が動いていきます。JPXの説明は次のとおりです。</p>
+    <div class="info-box"><strong>💡 一次情報（同上）：</strong>「なお、特別気配を表示しても、反対の注文が入ってこないで、その特別気配値段で売買が成立しない場合には、3分間隔で特別気配を更新して徐々に売買が成立する値段に近づけていきます。この値幅は、気配の更新値幅と同じです。」</div>
+    <p>先の例で言えば、1,030円の買特別気配のまま3分経っても売り注文が出てこなければ、更新値幅の30円ずつ、1,060円・1,090円……というように<strong>段階的に切り上がっていく</strong>ことになります。この「3分おきに近づく」動きが、寄り付き前の気配欄で株価がじわじわ上下しているように見える正体です。</p>
+    <p>なお、大口注文や複数の注文が連続して発生し、特別気配を表示する間もなく値段が急変しそうな場合に備えた、<strong>「連続約定気配」という別の仕組み</strong>もあります。起点となる約定値段から更新値幅の2倍を超える水準で連続的に約定が生じる場合に、いったん更新値幅の2倍の値段まで約定させたうえで、1分間「連続約定気配」を表示し、反対注文を呼び込む制度です。特別気配が「即時成立を止める」仕組みなのに対し、連続約定気配は「連続約定そのものはいったん進めつつ、1分間の周知を挟む」という違いがあります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 図解：板寄せ方式とザラバ方式の使い分け</h2>
+    <p>東証の個別競争売買には、「板寄せ方式」と「ザラバ方式」という2つの約定方法があります。JPXは使い分けを次のように整理しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買成立の方法」より）：</strong>板寄せ方式の実施時＝「立会開始時／立会終了時／売買中断後の再開時／特別気配・連続約定気配の表示時」。ザラバ方式の実施時＝「左記以外（寄付と引けの間＝ザラバ等）」。約定価格の決め方は、板寄せ方式が「売注文と買注文から、合致する値段を求め、その値段が単一の約定値段となる」のに対し、ザラバ方式は「価格優先の原則、時間優先の原則に従い、合致したものから順に約定する」。</div>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 430" role="img" aria-labelledby="sq-title">
+        <title id="sq-title">1日の取引の中で板寄せ方式とザラバ方式がどの時間帯に使われるかを示す概念図（仮の例のタイムライン）</title>
+        <text class="s-panel-label" x="20" y="22">1日の取引の中の板寄せ方式とザラバ方式（仮の例）</text>
+
+        <rect x="20" y="46" width="600" height="76" rx="10" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="320" y="72" text-anchor="middle" class="s-note" font-size="13">① 立会開始時（寄り付き）＝板寄せ方式</text>
+        <text x="320" y="92" text-anchor="middle" class="s-label-sm" font-size="11.3">売り注文・買い注文をまとめて、合致する単一の値段（始値）を決める</text>
+
+        <rect x="20" y="138" width="600" height="76" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="320" y="164" text-anchor="middle" class="s-note" font-size="13">② 寄り付きと引けの間（ザラバ）＝ザラバ方式</text>
+        <text x="320" y="184" text-anchor="middle" class="s-label-sm" font-size="11.3">価格優先・時間優先の原則で、合致したものから順に約定</text>
+
+        <rect x="20" y="230" width="600" height="94" rx="10" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="320" y="254" text-anchor="middle" class="s-note" font-size="13">③ ザラバ中に特別気配・連続約定気配が表示される場合＝板寄せ方式</text>
+        <text x="320" y="274" text-anchor="middle" class="s-label-sm" font-size="11.3">気配の更新値幅を超える偏りが生じた瞬間だけ、その値段の決定は板寄せに切り替わる</text>
+        <text x="320" y="294" text-anchor="middle" class="s-label-sm" font-size="11.3">解消すれば通常のザラバ方式に戻る</text>
+
+        <rect x="20" y="348" width="600" height="66" rx="10" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="320" y="374" text-anchor="middle" class="s-note" font-size="13">④ 立会終了時（大引け）＝板寄せ方式</text>
+        <text x="320" y="394" text-anchor="middle" class="s-label-sm" font-size="11.3">クロージング・オークション（後場3:25〜のプレ・クロージングを経て3:30に板寄せ）</text>
+
+        <line x1="320" y1="122" x2="320" y2="136" class="s-axis" stroke="#57606a" marker-end="url(#arrowV2)"/>
+        <line x1="320" y1="214" x2="320" y2="228" class="s-axis" stroke="#57606a" marker-end="url(#arrowV2)"/>
+        <line x1="320" y1="324" x2="320" y2="346" class="s-axis" stroke="#57606a" marker-end="url(#arrowV2)"/>
+        <defs><marker id="arrowV2" markerWidth="9" markerHeight="9" refX="4" refY="7" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#57606a"/></marker></defs>
+      </svg>
+      <figcaption class="chart-caption">▲ 1日の取引の中で、板寄せ方式（複数の注文をまとめて単一値段を決める）とザラバ方式（合致したものから順に約定させる）がどう切り替わるかを示した仮の流れ。実際の時刻・状況は市場・銘柄・その日の需給によって異なる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+    <p>大引け（後場の引け）については、終値決定の透明性を高めるための「クロージング・オークション」という仕組みが導入されています。JPXの説明では、<strong>ザラバ終了時刻（午後3時25分）から5分間の注文受付時間（プレ・クロージング）</strong>を設けたうえで、<strong>午後3時30分に板寄せを行って終値を決定</strong>するとされています。プレ・クロージング中は新規発注や注文の変更・取消はできます（ただし執行条件の変更はできません）が、売買そのものは成立しません。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 個人投資家にどこで効いてくるか</h2>
+    <h3>① 寄り前の「気配値」が動くのは、特別気配の更新ルールそのもの</h3>
+    <p>寄り付き前の板情報で「気配値」が数分おきに切り上がったり切り下がったりするのを見たことがある投資家は多いはずです。これは、<strong>買い注文（または売り注文）が偏った状態で特別気配が表示され、3分間隔で更新値幅ぶんずつ値段が動いている</strong>ためです。成行注文を出す前にこの気配の動きを追うと、実際にどのあたりの値段で始値が決まりそうかの手がかりになります。</p>
+    <h3>② 「値段が動かない」ことと「注文が少ない」ことは別</h3>
+    <p>特別気配が表示されている銘柄は、一見「値段が止まっている」ように見えますが、実際には<strong>片側に大量の注文が積み上がっている</strong>状態であることが多い点に注意が必要です。板の厚み（気配数量）を合わせて確認すると、単に閑散なのか、需給が偏っているのかを区別しやすくなります。</p>
+    <h3>③ 大引け間際の値決めは「その場の1件ずつ」ではない</h3>
+    <p>大引けの値段は、ザラバの延長線上で決まるのではなく、<strong>プレ・クロージングを経て午後3時30分に板寄せで一括して決定</strong>されます。「引け成行」「不成注文」などの執行条件付き注文は、この板寄せの段階でまとめて処理される仕組みだと理解しておくと、引け際の値動きの見え方が変わります。</p>
+    <h3>④ 制限値幅（ストップ高・ストップ安）とは別の仕組み</h3>
+    <p>特別気配は「気配の更新値幅」という比較的小さい値幅の話であり、1日の値動きの上限・下限を定める「制限値幅（ストップ高・ストップ安）」とは別の制度です。特別気配は日中に何度も発生しうる一方、制限値幅は1日の値動きの天井・底を決めるものです。両者の違いは、本シリーズ第2回「値幅制限（ストップ高・ストップ安）」で扱っています。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>このシリーズの立場として、制度の仕組みは必ず一次情報で確認します。特別気配・板寄せについては、以下の手順で確かめられます。</p>
+    <ol>
+      <li>JPXサイトの「株式・ETF・REIT等」→「売買制度（内国株）」→「内国株の売買制度」から「<a href="https://www.jpx.co.jp/equities/trading/domestic/04.html" target="_blank" rel="noopener">売買成立の方法</a>」のページを開く（板寄せ方式・ザラバ方式・特別気配・連続約定気配・クロージングオークションの説明がまとまっている）。</li>
+      <li>同じメニューの「<a href="https://www.jpx.co.jp/equities/trading/domestic/05.html" target="_blank" rel="noopener">特別気配の更新値幅</a>」のページで、株価水準ごとの更新値幅の表（全33区分）を確認する。</li>
+      <li>関連する「<a href="https://www.jpx.co.jp/equities/trading/domestic/06.html" target="_blank" rel="noopener">制限値幅</a>」のページで、特別気配と混同しやすい「1日の値幅上限・下限（ストップ高・ストップ安）」の制度との違いを確認する。</li>
+      <li>取引時間中に実際の特別気配の動きを見たい場合は、証券会社の取引ツールの板情報で「特」「連」などの気配種別の表示を確認する（表示方法は証券会社ごとに異なるため、各社のヘルプページで確認する）。</li>
+    </ol>
+    <div class="warning-box">本記事で引用した数値・条文はJPXの一次情報の要旨・抜粋を含みます。更新値幅の表は今後改定される可能性があるため、実際の取引にあたっては必ず最新の一次情報をご確認ください。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>一次情報にもとづく整理</th></tr></thead>
+      <tbody>
+        <tr><td>特別気配は1日の値幅の上限・下限（ストップ高・ストップ安）と同じ制度である</td><td>誤り。<strong>特別気配は「気配の更新値幅」を超える即時成立を防ぐ制度</strong>で、日中に繰り返し発生しうる。1日の値幅の上限・下限を決めるのは別制度の「制限値幅」</td></tr>
+        <tr><td>特別気配が出ている間は、その銘柄の売買が完全に止まっている</td><td>誤り。<strong>即時の約定を見合わせているだけ</strong>で、反対注文が入れば特別気配の値段で売買は成立する。3分経っても成立しなければ、更新値幅ぶんずつ値段が動く</td></tr>
+        <tr><td>板寄せ方式は寄り付きだけで使われる特別なルールである</td><td>誤り。JPXの説明のとおり<strong>板寄せ方式は寄り付き・引け・売買中断後の再開時・特別気配や連続約定気配の表示時にも使われる</strong>。それ以外の通常の取引時間はザラバ方式</td></tr>
+        <tr><td>大引けの値段は、ザラバの最後の取引がそのまま終値になる</td><td>誤り。<strong>クロージング・オークション</strong>により、午後3時25分からのプレ・クロージングを経て、<strong>午後3時30分の板寄せで終値が決定</strong>される</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>東証のしくみシリーズ第10回「特別気配と板寄せ」を整理します。</p>
+    <ul>
+      <li>直前の価格から<strong>「気配の更新値幅」を超える水準でしか売買が成立しない状況では、即時成立を止めて「特別気配」を表示</strong>する。更新値幅は株価の水準ごとに決まっている。</li>
+      <li>反対注文が入らず成立しない場合、特別気配は<strong>3分間隔で更新値幅ぶんずつ値段を近づける</strong>。急激な連続約定に備えた「連続約定気配」（1分間表示）という別の仕組みもある。</li>
+      <li>個別競争売買には<strong>「板寄せ方式」（複数注文をまとめて単一値段を決める）</strong>と<strong>「ザラバ方式」（価格・時間優先で順次約定）</strong>があり、<strong>寄り付き・引け・売買再開時・特別気配や連続約定気配の表示時は板寄せ方式</strong>が使われる。</li>
+      <li>大引けの値段は<strong>クロージング・オークション</strong>（午後3時25分からのプレ・クロージングを経て午後3時30分に板寄せ）で決まる。</li>
+    </ul>
+    <p>本記事の制度の説明は、<strong>2026年9月11日時点</strong>でJPX公式サイト「<a href="https://www.jpx.co.jp/equities/trading/domestic/04.html" target="_blank" rel="noopener">売買成立の方法</a>」（2024年11月4日更新）および「<a href="https://www.jpx.co.jp/equities/trading/domestic/05.html" target="_blank" rel="noopener">特別気配の更新値幅</a>」（2015年12月22日更新）の該当ページを実際に確認したうえで記載しています。制度は変更されることがあるため、実際の取引にあたっては、その時点の一次情報をご自身で確認してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連シリーズで値動きの制度をさらに深く</div>
+      <div class="cta-box-desc">特別気配が「日中に繰り返し起こりうる小さな値幅の制限」だとすれば、1日の値動き全体の上限・下限を決めるのが「制限値幅（ストップ高・ストップ安）」です。あわせて理解すると、値動きが止まる場面の全体像がつかめます。</div>
+      <a class="cta-btn" href="guide-tse-price-limits.html">値幅制限の記事を見る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-tse-price-limits.html">
+        <div class="related-card-title">🛑 値幅制限（ストップ高・ストップ安）とは</div>
+        <div class="related-card-desc">東証のしくみシリーズ第2回。1日の値動きの上限・下限を決める制限値幅の仕組みと、連続してストップ高・安が続いたときの拡大ルール。</div>
+      </a>
+      <a class="related-card" href="guide-order-types.html">
+        <div class="related-card-title">🎯 注文方法の使い分け</div>
+        <div class="related-card-desc">成行・指値・逆指値の違いと使い分け。板寄せ方式・ザラバ方式のどちらで約定するかは、注文の種類や出すタイミングにも関わる。</div>
+      </a>
+      <a class="related-card" href="guide-market-hours.html">
+        <div class="related-card-title">🕒 取引時間の話</div>
+        <div class="related-card-desc">前場・後場の区切りと、東京・ロンドン・NYの取引時間帯の重なり。板寄せ方式が使われる「立会開始時・終了時」の位置づけがわかる。</div>
+      </a>
+    </div>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="東証のしくみのシリーズ内移動">
+      <div class="mw-sernav-h">📚 東証のしくみ</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-tse-shareholder-voting.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">株主総会と議決権行使とは｜あなたの一票の権利は「いつ」決まるのか</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東京証券取引所などの制度・手続きに関する一般的な情報提供であり、特定銘柄の売買推奨や投資助言ではありません。制度の内容は変更されることがあるため、実際の取引にあたっては必ずご自身で最新の一次情報をご確認ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
