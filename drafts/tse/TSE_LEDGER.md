@@ -209,3 +209,22 @@
 - 【独立最終確認】（別セッション・model=opus・Readのみ・初見）→ 🟢白（そのまま公開可・修正不要）。条文引用（124条・299条・309条・311条・312条・325条の3・325条の5・振替法159条の2・開示府令19条2項9号の2・施行規則63条3号、電子提供措置の施行日2022年9月1日）を独自に再照合し誤りなしと確認。新規の法務リスクなし、弁護士相談アジェンダへの追加項目もなしと報告。
 
 **公開**: `guide-tse-shareholder-voting.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-trading-unit.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-odd-lot-investing.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告36件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git commit時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してから git push origin main（commit dd71f0a）。
+
+### ✅ 2026-09-11 キュー#10「特別気配と板寄せ」 special-quote ⚖️
+
+**題材**: TSE_GUIDE.md キュー#10「特別気配と板寄せ」（slug: `special-quote`、絵文字: ⚖️、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`はcurl（素のUA、偽装なし）でトップページ・各下位ページとも HTTP 200・到達可能。本テーマの核心ページを特定して取得・逐語確認した：
+- **JPX「売買成立の方法」**（`https://www.jpx.co.jp/equities/trading/domestic/04.html`、ページ更新日 2024/11/04、HTTP 200）：競争売買の原則（価格優先・時間優先）、板寄せ方式とザラバ方式の使い分け（板寄せ＝立会開始時・終了時・売買中断後の再開時・特別気配や連続約定気配の表示時／それ以外はザラバ）、特別気配の定義と具体例（1,000円→1,030円の例）、3分間隔での特別気配更新、連続約定気配（更新値幅の2倍超過で1分間表示）、クロージング・オークション（後場3:25〜5分のプレ・クロージング→3:30に板寄せで終値決定、執行条件の変更は不可）の全文を取得・逐語引用。
+- **JPX「特別気配の更新値幅」**（`https://www.jpx.co.jp/equities/trading/domestic/05.html`、ページ更新日 2015/12/22、HTTP 200）：気配値段区分ごとの更新値幅の表（200円未満〜5,000万円以上まで全33区分）を取得し、本文抜粋8行・区分数の両方を突合。
+- 補助的に `https://www.jpx.co.jp/equities/trading/domestic/06.html`（制限値幅）のURLも関連情報として本文・自分で確かめる手順に掲載。
+
+確認日：2026-09-11（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus、別セッション3回）：
+- 【初期判定】🔴黒（法務リスクではなく本シリーズの絶対条件＝一次情報URL・確認日の未充足）— ①本文にJPXのURLが1本もリンクされておらず、しかも「本文末の一次情報リンクから確認できます」と実在しないリンクを案内していた ②「全区分（200円未満〜5,000万円以上まで28段階）」の区分数が誤り（一次情報を機械カウントした正答は33区分）。担当エージェントは編集権限外として修正せず指摘のみ→機械的な修正のため人間判断は不要と判断し、以下を適用：a) 299/368-370/396行にJPXの実URL（04.html/05.html/06.html）を`target="_blank" rel="noopener"`付きで追加 b) 「28段階」を実測どおり「33区分」に訂正。
+- 【再監査】新たに1件（C-1）指摘：「30秒まとめ」の「1,000円台は30円」が1,500〜1,999円の区分（実際は40円）と食い違う→「1,000円以上1,500円未満は30円」に訂正。あわせて任意改善2件を適用：c) 抜粋表が中間区分を省略している旨の注記を追加（誤読防止） d) プレ・クロージング中の「執行条件の変更は不可」を本文に補足。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・JPX3ページを再取得し逐語・数値レベルで突合）→ 🟢白（金商法・景表法・禁止語・免責3層・一次情報URL+確認日・SVG明示の全観点で問題なし、修正3点も過不足なく反映済みと確認）。
+- 品質ルーブリック：自己採点で5観点すべて✅。
+
+**公開**: `guide-tse-special-quote.html`（読了約9分）。`apply_series_nav.py --apply`（前記事`guide-tse-shareholder-voting.html`の「次の記事」リンクを本記事に更新）→コンプラ・品質ゲート通過（初回🔴→修正後🟢白）→`publish_article.py`→`apply_back_to_top.py --apply`（本記事へ新規注入）→`check_site_consistency.py`（EXIT=0、警告37件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git commit時に一時的にHEAD detachedとなったため `git checkout -B main <commit>` で復帰してから git push origin main（commit a0c1e60）。
