@@ -1,3 +1,30 @@
+## 2026-09-12 autodraft: draft-expected-value-thinking.html
+
+- **基準日**: 2026-09-12（JST）
+- **topic**: 期待値思考 / key: `expected-value-thinking` / シリーズ: 🛡️ リスク管理・資金管理
+- **生成ファイル**: `drafts/draft-expected-value-thinking.html`
+- **参照出典**:
+  - https://tsumitatetheta.co.jp/cfd/cfd-expected-value/ （期待値の計算方法・概念）
+  - https://www.bigboss-financial.com/column/fx-expected-value/ （勝率×損益比の関係）
+  - https://blog.kabu-challenge.com/statistics/expected-value-trading （期待値・リスクリワード）
+  - https://www.edgeflo.com/blog/sample-size-trading （サンプルサイズと試行回数）
+  - https://medium.com/bluebloodltd/law-of-large-numbers-in-trading-and-investing-for-non-statisticians-c77d5d559524 （大数の法則・分散）
+- **自己コンプラチェック**:
+  - ✅ 個別銘柄の売買推奨なし（仮の数字で概念説明のみ）
+  - ✅ 断定・利益保証なし（「〜になりやすい」「〜し得る」等の表現に統一）
+  - ✅ kinsho-v1免責：冒頭バナー・本文末・footer の3箇所に配置
+  - ✅ 「期待値がプラスなら儲かる」とは断定せず「ばらつきと試行回数を意識する枠組み」として明示
+  - ✅ 出典は一般論・検証可能な情報のみ
+  - ✅ noindex,nofollow タグ入り（下書き確認済み）
+- **SVG概念図**: 3点作成（①高勝率vs低勝率の比較 ②試行回数と分布のばらつき ③期待値を高める3方向）
+  - ⚠️ TODO(SVG): ライト/ダーク実機確認が必要（特に s-bar-g/r のダーク色適用・テキスト視認性）
+- **人間の残作業**:
+  - SVGの実機ライト/ダーク確認（ダーク時の棒グラフ色・テキスト視認性）
+  - タイトル・h1の微調整（必要に応じて）
+  - 公開は毎朝08:40の autodraft-publish がゲート付きで自動実行
+
+---
+
 2026-09-11 autopublish: guide-survivorship-bias.html 公開済み（決定論緑・Opus🟡軽微修正→独立Opus🟢白）https://marketwatch-jp.com/guide-survivorship-bias.html
 
 ---

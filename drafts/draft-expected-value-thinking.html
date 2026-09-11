@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 下書き：検索エンジンに表示しない -->
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>勝率だけでも、値幅だけでも、決まらない｜期待値思考でトレードの優位性を測る - MarketWatch AI</title>
+  <meta name="description" content="勝率7割でも損をするトレードがある一方、勝率3割でも資産が伸びる手法があります。その違いは「期待値」です。勝率×損益比から期待値を求める考え方、試行回数が少ない間は結果が偏ること、エントリー前に想定を書き残す実務まで、リスク管理の基礎を図解で解説します。">
+  <meta name="keywords" content="期待値,トレード,勝率,損益比,リスクリワード,大数の法則,試行回数,リスク管理,投資,FX,損切り">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-expected-value-thinking.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="勝率だけでも、値幅だけでも、決まらない｜期待値思考でトレードの優位性を測る">
+  <meta property="og:description" content="勝率7割でも損をするトレードがある。勝率3割でも資産が伸びる手法がある。その違いは「期待値」。勝率×損益比から見る投資の本質を図解で解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-expected-value-thinking.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "勝率だけでも、値幅だけでも、決まらない｜期待値思考でトレードの優位性を測る",
+    "description": "勝率×損益比から期待値を求める考え方、試行回数が少ない間は結果が偏ること、エントリー前に想定を書き残す実務まで、リスク管理の基礎を図解で解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-12",
+    "dateModified": "2026-09-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-expected-value-thinking.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-bar-g{fill:#1a7f37;opacity:.85}
+    .s-bar-r{fill:#cf222e;opacity:.85}
+    .s-bar-b{fill:#0969da;opacity:.75}
+    .s-zero{stroke:#8b949e;stroke-width:1.5}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-zero{stroke:#8b949e}
+    body.dark .s-bar-g{fill:#3fb950}
+    body.dark .s-bar-r{fill:#f85149}
+    body.dark .s-bar-b{fill:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 勝率だけでも、値幅だけでも、決まらない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner">⚠️ 本記事は期待値・確率・リスク管理の考え方を整理した「情報提供」であり、特定銘柄・手法の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🎯 勝率だけでも、値幅だけでも、決まらない｜期待値でトレードの優位性を測る</h1>
+    <div class="meta-line">公開日：2026 年 9 月 12 日 ／ 読了時間：約 13 分 ／ カテゴリ：🛡️ リスク管理・資金管理</div>
+
+    <div class="info-box">
+      <strong>🔗 この記事の立ち位置</strong>：<a href="guide-risk-reward.html">リスクリワード（損益比）の記事</a>では「1回の利益と損失の比」を扱いました。本記事はその次の段として、<strong>「損益比に確率（勝率）を掛けると何が分かるか」</strong>を解説します。ポジションサイズの決め方は <a href="guide-position-sizing.html">ポジションサイジングの記事</a> に譲り、本記事は「どんな組み合わせが有利か」という考え方の枠組みに集中します。
+    </div>
+
+    <p>「勝率70%のトレードがある。利益は出るはずだ」——こう思うのは自然ですが、実はそれだけでは何も分かりません。なぜなら、<strong>1回の勝ちで得る金額と1回の負けで失う金額が分からないと、合算した損益は計算できないから</strong>です。</p>
+    <p>逆のケースも同じです。「勝率30%では話にならない」と切り捨てたくなりますが、1勝で大きな利益が入り、2回の負けで小さな損失しか出なければ、<strong>長く続ければ収支はプラス方向になり得ます</strong>。</p>
+    <p>この「勝率と損益の大きさを掛け合わせて判断する」という考え方が<strong>期待値</strong>です。期待値はトレード1回あたりの平均的な損益を示す数字で、優位性（エッジ）があるかどうかを測るものさしになります。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>期待値は <strong>勝率 × 平均利益 − 負率 × 平均損失</strong> で求める。勝率が高くても損益比が悪ければマイナスになる。</li>
+      <li>期待値がプラスでも、<strong>試行回数が少ないうちは結果が大きくばらつく</strong>。「10回やったら分かる」は小さすぎる。</li>
+      <li>エントリー前に「想定する勝率・利益・損失」を書き残しておかないと、後から<strong>結果だけを見て判断を評価してしまう</strong>（結果バイアス）。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">期待値とは何か——勝率×損益比で決まる一本の数字</a></li>
+        <li><a href="#section-2">直感図解：勝率7割で負ける手法と、勝率3割で残る手法</a></li>
+        <li><a href="#section-3">期待値がプラスでも、すぐ結果が出るとは限らない</a></li>
+        <li><a href="#section-4">試行回数が少ないうちは「運」が支配する</a></li>
+        <li><a href="#section-5">エントリー前に想定を書き残す実務</a></li>
+        <li><a href="#section-6">期待値を高める方向性——損切りとの関係</a></li>
+        <li><a href="#section-7">当サイトでの活かし方</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 期待値とは何か——勝率×損益比で決まる一本の数字</h2>
+    <p>期待値（Expected Value）は次の式で求めます。</p>
+    <div class="info-box" style="font-size:1.05rem;text-align:center">
+      <strong>期待値 ＝ 勝率 × 平均利益 − 負率 × 平均損失</strong>
+    </div>
+    <p>ここで「負率」は「1 − 勝率」です。例として、仮の数字で確認してみましょう。</p>
+    <ul>
+      <li>勝率 40%、平均利益 3万円、平均損失 1万円 の場合</li>
+      <li>期待値 ＝ 0.40 × 30,000 − 0.60 × 10,000 ＝ 12,000 − 6,000 ＝ <strong>＋6,000 円</strong></li>
+    </ul>
+    <p>この手法を1回実行するたびに、平均的に6,000円のプラスになる——というのが期待値の意味です。ただし、これは<strong>多数回繰り返したときの平均値</strong>であり、1回1回の結果は大きく違います。</p>
+    <p>逆に、次のケースを見てみます。</p>
+    <ul>
+      <li>勝率 80%、平均利益 5,000円、平均損失 3万円 の場合</li>
+      <li>期待値 ＝ 0.80 × 5,000 − 0.20 × 30,000 ＝ 4,000 − 6,000 ＝ <strong>−2,000 円</strong></li>
+    </ul>
+    <p>勝率が非常に高いのに、期待値はマイナスです。<strong>1回の損失が利益に対して大きすぎるため、少数の負けが多数の勝ちを食いつぶしてしまう</strong>からです。これが「勝率だけでは判断できない」という理由です。</p>
+
+    <div class="warning-box">これらの数値はあくまで概念を理解するための仮の例です。実際の手法の期待値は市場環境・手法の詳細・コストによって異なります。</div>
+
+    <!-- Section 2: SVG図 -->
+    <h2 id="section-2">2️⃣ 直感図解：勝率7割で負ける手法と、勝率3割で残る手法</h2>
+    <p>下の図は、<strong>勝率は高いのに期待値がマイナスの手法（左）</strong>と<strong>勝率は低いのに期待値がプラスの手法（右）</strong>を並べたものです。棒の高さが1回あたりの平均損益を、それぞれの本数が「何回に1回起きるか」を示しています。</p>
+
+    <!-- SVG図1：勝率×損益比の比較 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 300" role="img" aria-labelledby="ev-compare-title">
+        <title id="ev-compare-title">勝率×損益比の比較：高勝率・低損益比 vs 低勝率・高損益比の概念図</title>
+        <text class="s-panel-label" x="20" y="22">勝率×損益比の比較（概念図）</text>
+
+        <!-- 左パネル：高勝率・低損益比（期待値マイナス） -->
+        <text class="s-note-r" x="42" y="44" font-size="12">【手法A】勝率70% でも期待値マイナス</text>
+
+        <!-- 勝ちを7本（小）-->
+        <rect class="s-bar-g" x="30" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="56" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="82" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="108" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="134" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="160" y="150" width="22" height="60"/>
+        <rect class="s-bar-g" x="186" y="150" width="22" height="60"/>
+        <!-- 負けを3本（大）-->
+        <rect class="s-bar-r" x="30" y="50" width="22" height="100"/>
+        <rect class="s-bar-r" x="56" y="50" width="22" height="100"/>
+        <rect class="s-bar-r" x="82" y="50" width="22" height="100"/>
+
+        <!-- ゼロライン -->
+        <line class="s-zero" x1="20" y1="210" x2="225" y2="210"/>
+        <text class="s-label-sm" x="20" y="225">勝（+小）</text>
+        <text class="s-label-sm" x="102" y="46" text-anchor="middle">負（−大）</text>
+        <text class="s-note-r" x="125" y="270" text-anchor="middle" font-size="12.5">合計：勝ちが多くても負け額が大きい</text>
+        <text class="s-note-r" x="125" y="288" text-anchor="middle" font-size="12.5">→ トータルはマイナスになりやすい</text>
+
+        <!-- 区切り線 -->
+        <line x1="310" y1="30" x2="310" y2="290" stroke="#d0d7de" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+        <!-- 右パネル：低勝率・高損益比（期待値プラス） -->
+        <text class="s-note-g" x="322" y="44" font-size="12">【手法B】勝率30% でも期待値プラス</text>
+
+        <!-- 勝ちを3本（大）-->
+        <rect class="s-bar-g" x="330" y="80" width="22" height="130"/>
+        <rect class="s-bar-g" x="356" y="80" width="22" height="130"/>
+        <rect class="s-bar-g" x="382" y="80" width="22" height="130"/>
+        <!-- 負けを7本（小）-->
+        <rect class="s-bar-r" x="330" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="356" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="382" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="408" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="434" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="460" y="160" width="22" height="50"/>
+        <rect class="s-bar-r" x="486" y="160" width="22" height="50"/>
+
+        <!-- ゼロライン -->
+        <line class="s-zero" x1="318" y1="210" x2="524" y2="210"/>
+        <text class="s-label-sm" x="318" y="225">負（−小）</text>
+        <text class="s-label-sm" x="355" y="76" text-anchor="middle">勝（+大）</text>
+        <text class="s-note-g" x="420" y="270" text-anchor="middle" font-size="12.5">合計：負けが多くても勝ち額が大きい</text>
+        <text class="s-note-g" x="420" y="288" text-anchor="middle" font-size="12.5">→ トータルはプラスになりやすい</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。棒の数＝勝ち・負けの回数の割合、棒の高さ＝1回あたりの損益の大きさを示す概念図。実際の結果はランダムに前後します。</p>
+    </figure>
+
+    <p>重要なのは、<strong>どちらの手法が「良い」かではなく、合計の期待値がプラスかどうか</strong>です。手法Bは「7回に5回負ける」ため精神的につらい面もありますが、期待値がプラスであれば長く続けたときに有利方向に傾く性質を持ちます。一方、手法Aは「7割勝てる」という爽快感がある一方で、少数の大きな負けに耐えられるかが鍵になります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 期待値がプラスでも、すぐ結果が出るとは限らない</h2>
+    <p>期待値がプラスの手法を使えば「すぐ利益が出る」と思いたいところですが、そうはなりません。期待値は<strong>大数の法則（Law of Large Numbers）</strong>を前提にした概念であり、<strong>試行回数を増やすほど結果が期待値に近づいていく</strong>という性質です。</p>
+    <p>コインを10回投げて表が8回出ることはよくあります。しかし1,000回投げれば、表の割合はおよそ50%近くに収束します。トレードも同じで、<strong>少ない試行回数では結果が大きくばらつき、期待値は「数字の上では正しくても、手元の体験とは全然違う」という状態</strong>が続きます。</p>
+
+    <div class="info-box">
+      <strong>💡 目安として参考になる考え方</strong>：トレード戦略の評価には最低でも相当な試行回数が必要とされており、数十回程度では分散が大きすぎて傾向を評価しにくいとされています。少ない試行での結果は「実力」よりも「ランダムな揺らぎ」が支配的な期間として扱う方が安全です（参考：定量的トレード研究の一般的見解）。
+    </div>
+
+    <p>よく起きる落とし穴として、「10回やって7回勝ったから、この手法は勝率70%だ」という評価があります。これは<strong>統計的に意味のある母数ではなく、たまたまの結果を実力と誤解するリスク</strong>があります。同様に、「期待値がプラスのはずなのに10連敗した、おかしい」と感じても、数学的には起こりうる範囲内であることも多いです。</p>
+
+    <!-- Section 4: SVG図 -->
+    <h2 id="section-4">4️⃣ 試行回数が少ないうちは「運」が支配する</h2>
+    <p>下の図は、期待値がプラスの同じ手法を少数回と多数回実行したときの結果の分布を概念化したものです。</p>
+
+    <!-- SVG図2：試行回数と結果のばらつき -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 260" role="img" aria-labelledby="sample-size-title">
+        <title id="sample-size-title">試行回数が少ないほど結果がばらつく概念図（大数の法則）</title>
+        <text class="s-panel-label" x="20" y="22">試行回数と結果のばらつき（概念図）</text>
+
+        <!-- 左：少ない試行回数 -->
+        <text class="s-note" x="155" y="44" text-anchor="middle" font-size="12">少ない試行回数（例：20回）</text>
+        <!-- 幅広い分布 -->
+        <rect fill="#0969da" opacity="0.15" x="40" y="60" width="230" height="160" rx="8"/>
+        <!-- 中心帯 -->
+        <rect fill="#0969da" opacity="0.35" x="100" y="80" width="110" height="120" rx="4"/>
+        <!-- 期待値ライン -->
+        <line stroke="#cf222e" stroke-width="2.5" stroke-dasharray="6 3" x1="155" y1="55" x2="155" y2="225"/>
+        <text class="s-note-r" x="155" y="240" text-anchor="middle" font-size="11">期待値</text>
+        <!-- ラベル -->
+        <text class="s-note-r" x="48" y="78" font-size="10.5">マイナス側へ</text>
+        <text class="s-note-r" x="48" y="92" font-size="10.5">外れる範囲も広い</text>
+        <text class="s-note-g" x="214" y="78" font-size="10.5">プラス側も</text>
+        <text class="s-note-g" x="214" y="92" font-size="10.5">大きくばらつく</text>
+        <text class="s-label-sm" x="155" y="160" text-anchor="middle">結果が広範囲に散らばる</text>
+        <text class="s-label-sm" x="155" y="175" text-anchor="middle">「運」が結果を左右しやすい</text>
+
+        <!-- 区切り線 -->
+        <line x1="310" y1="35" x2="310" y2="250" stroke="#d0d7de" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+        <!-- 右：多い試行回数 -->
+        <text class="s-note-g" x="465" y="44" text-anchor="middle" font-size="12">多い試行回数（例：200回）</text>
+        <!-- 狭い分布 -->
+        <rect fill="#1a7f37" opacity="0.15" x="360" y="70" width="210" height="150" rx="8"/>
+        <!-- 中心帯（狭い） -->
+        <rect fill="#1a7f37" opacity="0.45" x="430" y="90" width="70" height="110" rx="4"/>
+        <!-- 期待値ライン -->
+        <line stroke="#cf222e" stroke-width="2.5" stroke-dasharray="6 3" x1="465" y1="55" x2="465" y2="225"/>
+        <text class="s-note-r" x="465" y="240" text-anchor="middle" font-size="11">期待値</text>
+        <!-- ラベル -->
+        <text class="s-label-sm" x="465" y="160" text-anchor="middle">結果が期待値付近に収束</text>
+        <text class="s-label-sm" x="465" y="175" text-anchor="middle">「実力（エッジ）」が現れやすい</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。青・緑の帯＝結果が落ちやすい範囲（確率分布）、赤破線＝期待値の位置を概念的に示しています。実際の分布は手法や市場環境によって異なります。</p>
+    </figure>
+
+    <p>少ない試行回数のうちは、期待値がプラスであっても結果がマイナス側に偏ることが起きます。これは手法が「間違っている」のではなく、<strong>ランダムな揺らぎが優位性（エッジ）を覆い隠している段階</strong>です。逆に言えば、少数回でうまくいった場合も、それだけで「勝てる手法を発見した」と断定するのは早計です。</p>
+
+    <div class="warning-box">「10回で判断しよう」は小さすぎることが多いです。かといって「何回やれば十分か」という単純な答えもなく、手法のばらつき・勝率・損益比によって変わります。大切なのは「今は判断に十分な数か？」と常に問う姿勢です。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ エントリー前に想定を書き残す実務</h2>
+    <p>ここから中上級の実践に入ります。期待値の考え方を実際のトレードに活かすためには、<strong>「エントリー前の想定を記録しておく」</strong>ことが欠かせません。</p>
+    <p>なぜなら、人は結果が分かった後から「最初からそうなると思っていた」と記憶を書き換えてしまうからです（後知恵バイアス）。後から損益だけを見て「この手法は良い・悪い」と評価しても、<strong>そもそも自分が何を想定してエントリーしたかが分からなければ、学習が機能しません</strong>。</p>
+
+    <h3>記録しておくと有益な「エントリー時点の想定」</h3>
+    <ul>
+      <li><strong>エントリー根拠</strong>：なぜ今のタイミングか（テクニカルの条件、ファンダ要因など）</li>
+      <li><strong>想定する損切りライン（損失額）</strong>：これが固まっていないとポジションサイズも決まらない</li>
+      <li><strong>想定する利益確定ライン（利益額）</strong>：リスクリワードの比率として記録</li>
+      <li><strong>「どうなったら自分の根拠が崩れるか」</strong>：価格・期間・状況の変化</li>
+      <li><strong>この手法でのおよその過去の勝率（記録がある場合）</strong>：期待値の参照元</li>
+    </ul>
+
+    <p>これらを一行でも書き残しておくと、<strong>結果が出た後に「根拠は正しかったか」「損切りを守ったか」という「プロセスの評価」</strong>ができるようになります。損益の良し悪しだけでなく、プロセスを評価することが再現性につながります。</p>
+
+    <div class="info-box">
+      <strong>💡 期待値の"見えない前提"</strong>：期待値の計算には「勝率・利益・損失がこれからも同じ分布で続く」という前提が暗に含まれています。市場環境が変わると分布も変わります。定期的に記録を見直し、想定と実態がずれていないか確認することが重要です。
+    </div>
+
+    <!-- Section 6: SVG図 -->
+    <h2 id="section-6">6️⃣ 期待値を高める方向性——損切りとの関係</h2>
+    <p>期待値を上げるには主に3つの方向があります。</p>
+
+    <!-- SVG図3：期待値を上げる3方向 -->
+    <figure class="chart-figure">
+      <svg viewBox="0 0 620 240" role="img" aria-labelledby="ev-improve-title">
+        <title id="ev-improve-title">期待値を高める3つの方向性の概念図</title>
+        <text class="s-panel-label" x="20" y="22">期待値を高める方向性（概念図）</text>
+
+        <!-- ① 勝率を上げる -->
+        <rect fill="#ddf4ff" x="20" y="40" width="175" height="170" rx="10" stroke="#54aeff" stroke-width="1.2"/>
+        <text class="s-note" x="107" y="65" text-anchor="middle" font-size="12.5">① 勝率を上げる</text>
+        <text class="s-label-sm" x="107" y="88" text-anchor="middle">シグナル精度の向上</text>
+        <text class="s-label-sm" x="107" y="104" text-anchor="middle">環境フィルターで</text>
+        <text class="s-label-sm" x="107" y="120" text-anchor="middle">不利な局面を除外</text>
+        <text class="s-note-r" x="107" y="148" text-anchor="middle" font-size="11">⚠️ 勝率を上げすぎると</text>
+        <text class="s-note-r" x="107" y="163" text-anchor="middle" font-size="11">損益比が悪化しやすい</text>
+        <text class="s-note-r" x="107" y="178" text-anchor="middle" font-size="11">（早すぎる利確と連動）</text>
+
+        <!-- ② 平均利益を増やす -->
+        <rect fill="#e6ffed" x="222" y="40" width="175" height="170" rx="10" stroke="#1a7f37" stroke-width="1.2"/>
+        <text class="s-note-g" x="309" y="65" text-anchor="middle" font-size="12.5">② 平均利益を伸ばす</text>
+        <text class="s-label-sm" x="309" y="88" text-anchor="middle">利益確定を遅らせる</text>
+        <text class="s-label-sm" x="309" y="104" text-anchor="middle">（トレーリング等）</text>
+        <text class="s-label-sm" x="309" y="120" text-anchor="middle">TP2まで引っ張る</text>
+        <text class="s-note-r" x="309" y="148" text-anchor="middle" font-size="11">⚠️ 利益が消えることもある</text>
+        <text class="s-note-r" x="309" y="163" text-anchor="middle" font-size="11">精神的にきつい局面も</text>
+
+        <!-- ③ 平均損失を減らす -->
+        <rect fill="#ffebe9" x="424" y="40" width="175" height="170" rx="10" stroke="#cf222e" stroke-width="1.2"/>
+        <text class="s-note-r" x="511" y="65" text-anchor="middle" font-size="12.5">③ 平均損失を減らす</text>
+        <text class="s-label-sm" x="511" y="88" text-anchor="middle">損切りを守る</text>
+        <text class="s-label-sm" x="511" y="104" text-anchor="middle">（逆指値の設定）</text>
+        <text class="s-label-sm" x="511" y="120" text-anchor="middle">SLを引き下げない</text>
+        <text class="s-note-g" x="511" y="148" text-anchor="middle" font-size="11">✅ 実践しやすく</text>
+        <text class="s-note-g" x="511" y="163" text-anchor="middle" font-size="11">効果が安定しやすい</text>
+        <text class="s-note-g" x="511" y="178" text-anchor="middle" font-size="11">（機械的実行が鍵）</text>
+      </svg>
+      <p class="chart-caption">※概念を示すイメージ図です。実際の効果は手法・市場環境によって異なります。</p>
+    </figure>
+
+    <p>このうち<strong>③ 平均損失を減らす（損切りを守る）</strong>は、行動として最もコントロールしやすい部分です。損切りラインを事前に決め、それを機械的に（逆指値などで）実行できれば、1回の負けの大きさに上限を設けることができます。</p>
+    <p>これは期待値の分母側を安定させることであり、<strong>損切りは「損を認めること」ではなく「期待値のマイナス要因を小さく保つための技術」</strong>と見ることができます。損切りの心理的難しさについては <a href="guide-loss-cut.html">損切りができない本当の理由の記事</a> を参照してください。</p>
+
+    <p>また、①〜③はトレードオフの関係になることが多いです。勝率を高めようとして利確を早くすれば平均利益が下がり、損益比が悪化します。逆に利益を伸ばそうとすれば、相場の揺れに巻き込まれて勝率が下がることもあります。<strong>「勝率・平均利益・平均損失」の3つを一体で見る</strong>のが期待値思考の本質です。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 当サイトでの活かし方</h2>
+    <p>当サイトでは <a href="track-record.html">📊 シグナル成績ページ</a> で、各シグナルの勝率・利益・損失をデータとして蓄積・公開しています。これらの数字は、期待値を実際に計算するための素材として使うことができます。</p>
+    <p>特に <strong>試行回数</strong> に注目してください。件数が少ない銘柄・条件では、上述のとおりランダムな揺らぎが大きく、期待値の推定精度は低くなります。シグナル研究日誌（<a href="guides.html">AIシグナル研究日誌シリーズ</a>）では、「仮説を条件として先に宣言し、十分なデータで検証する」という流れを実践しており、まさに本記事で説明した期待値思考と大数の法則を踏まえた設計です。</p>
+
+    <div class="info-box">
+      <strong>🔗 関連する考え方</strong>：<ul style="margin-top:8px">
+        <li><a href="guide-position-sizing.html">ポジションサイジング</a>：期待値がプラスのとき、1回にいくらかけるか（量の決め方）</li>
+        <li><a href="guide-risk-reward.html">リスクリワード（損益比）</a>：本記事で使った「平均利益÷平均損失」の詳細</li>
+        <li><a href="guide-overconfidence.html">連勝のあとが一番危ない</a>：小サンプルの罠と過信の心理</li>
+      </ul>
+    </div>
+
+    <!-- Section 8 まとめ -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <ul>
+      <li>期待値は <strong>勝率 × 平均利益 − 負率 × 平均損失</strong>。勝率が高くても損益比が悪ければマイナスになる。</li>
+      <li>期待値がプラスでも、<strong>試行回数が少ない間は結果が大きくばらつく</strong>。短期の結果だけで手法を評価しない。</li>
+      <li><strong>エントリー前に「根拠・損切り・利確の想定」を書き残す</strong>ことで、後から結果だけでなくプロセスを評価できる。</li>
+      <li>期待値を高めるには ①勝率 ②平均利益 ③平均損失 の3軸があるが、<strong>損切りを守って③を安定させること</strong>が最も行動に落としやすい。</li>
+      <li>本記事の考え方は「期待値がプラスなら儲かる」という断定ではなく、<strong>「ばらつきと試行回数を意識しながら優位性の有無を評価する」という枠組み</strong>です。</li>
+    </ul>
+
+    <p class="disclaimer">【免責事項 kinsho-v1】本記事は一般的な投資教育・情報提供を目的としたものであり、特定の金融商品・銘柄の売買を推奨するものではありません。投資にはリスクが伴い、元本を割り込む可能性があります。掲載情報の正確性・完全性・最新性について保証するものではなく、本記事の情報を利用したことにより生じた損害について、当サイトは一切の責任を負いません。投資判断はご自身の責任において行い、必要に応じて金融の専門家にご相談ください。本記事は金融商品取引法に基づく投資助言ではありません。</p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-box-title">📊 当サイトのシグナル成績を確認する</div>
+      <div class="cta-box-desc">期待値・勝率・試行回数を実データで確認できます。件数の少ない条件への注意点も記載しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ページへ →</a>
+    </div>
+
+    <!-- 関連記事 -->
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-risk-reward.html">
+        <div class="related-card-title">📐 リスクリワードと期待値</div>
+        <div class="related-card-desc">勝率×損益比の詳細。本記事の前段として「損益比の取り方」を解説しています。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">💰 ポジションサイジング</div>
+        <div class="related-card-desc">期待値がプラスの場面で、1回にいくらかけるかを決める方法（2%ルールなど）。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">平均損失を安定させるために欠かせない損切りの心理と技術を解説。</div>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI ／ <a href="guide-privacy.html">プライバシーポリシー</a> ／ <a href="guide-contact.html">お問い合わせ</a> ／ <a href="guide-about.html">運営について</a></p>
+  <p style="margin-top:6px">本サイトは情報提供を目的としており、投資助言ではありません。投資判断はご自身の責任でお願いします。</p>
+</footer>
+
+<script>
+  // 読書進捗バー
+  window.addEventListener('scroll',function(){
+    var d=document.documentElement,b=document.body;
+    var t=d.scrollTop||b.scrollTop,h=(d.scrollHeight||b.scrollHeight)-d.clientHeight;
+    document.getElementById('reading-progress').style.width=(h>0?(t/h*100):0)+'%';
+  },{passive:true});
+
+  // テーマ切替
+  function toggleTheme(){
+    var b=document.body,btn=document.getElementById('theme-toggle');
+    if(b.classList.toggle('dark')){btn.textContent='☀️';localStorage.setItem('mw-theme','dark');}
+    else{btn.textContent='🌙';localStorage.setItem('mw-theme','light');}
+  }
+  (function(){
+    if(localStorage.getItem('mw-theme')==='dark'){
+      document.body.classList.add('dark');
+      var btn=document.getElementById('theme-toggle');
+      if(btn)btn.textContent='☀️';
+    }
+  })();
+</script>
+</body>
+</html>
