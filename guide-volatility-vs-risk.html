@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>値動きが荒いことと損をすることは、同じではない｜ボラティリティとリスクの正体を図解 - MarketWatch AI</title>
+  <meta name="description" content="「ボラティリティが高い＝危険」は本当か？値動きの荒さ（ボラティリティ）と損失（リスク）は別の概念。同じ最終価格でも道のりの荒さで「途中で耐えられるか」が変わり、損は『いつ降りたか』で決まる。標準偏差の意味・限界と、自分が耐えられる幅を先に決める実務まで図解でやさしく解説します。">
+  <meta name="keywords" content="ボラティリティ,リスク,違い,標準偏差,投資リスク,価格変動,損失,投資初心者,リスク管理,資金管理,投資心理">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-volatility-vs-risk.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="値動きが荒いことと損をすることは、同じではない｜ボラティリティとリスクの正体を図解">
+  <meta property="og:description" content="ボラティリティと損失は別概念。荒さは「耐えられるか」に効き、損は「いつ降りたか」で決まる。標準偏差の意味・限界と自分の耐性の決め方を図解。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-volatility-vs-risk.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "値動きが荒いことと損をすることは、同じではない｜ボラティリティとリスクの正体を図解",
+    "description": "ボラティリティと損失は別概念。荒さは「耐えられるか」に効き、損は「いつ降りたか」で決まる。標準偏差の意味・限界と自分の耐性の決め方を図解。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-12",
+    "dateModified": "2026-09-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-volatility-vs-risk.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-brk{stroke:#cf222e;stroke-width:1.5;stroke-dasharray:5 4}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-l{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-fill-g{fill:#1a7f37;opacity:.13}
+    .s-fill-l{fill:#cf222e;opacity:.10}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-brk{stroke:#f85149}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-l{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-fill-g{fill:#3fb950;opacity:.12}
+    body.dark .s-fill-l{fill:#f85149;opacity:.10}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 値動きが荒いことと損をすることは、同じではない
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はボラティリティとリスクの考え方を解説した「情報提供」であり、特定の金融商品の売買推奨や投資助言ではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🛡️ 値動きが荒いことと、損をすることは、同じではない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 12 日 ／ 読了時間：約 13 分 ／ カテゴリ：リスク管理・資金管理</div>
+
+    <p>「ボラティリティが高い銘柄は危険だ」——投資の世界でよく聞くこの言葉、あなたはどんな意味で受け取っていますか？ 多くの人は「値動きが荒い＝損をする」とひと続きに結びつけてしまいます。しかしこの二つは、<strong>まったく別の概念</strong>です。</p>
+    <p>値動きの荒さ（ボラティリティ）は、上にも下にも振れやすいことを指します。損失とは、実際に資金が減って確定した状態を指します。<strong>荒い道のりを通っても、最終的に同じ場所に着くことがある。逆に、穏やかに見えた道でも、降りるタイミング次第で大きく損をすることがある</strong>。この記事では、その違いを図で整理しながら、「自分にとって何が本当のリスクなのか」を考えるヒントをお届けします。</p>
+
+    <h2>📌 この記事の結論（3 行サマリ）</h2>
+    <ul>
+      <li>ボラティリティ（値動きの荒さ）とリスク（損失の可能性）は<strong>別概念</strong>。荒くても損しないことはあるし、穏やかでも降りるタイミング次第で損をすることもある。</li>
+      <li>荒さが実際に効いてくるのは<strong>「途中で耐えられるか」</strong>の問題。含み損に耐えられず感情的に売れば、荒さが損の引き金になる。<strong>損は「いつ降りたか」で決まる</strong>。</li>
+      <li>荒さを数字で測る指標（標準偏差など）は参考になるが、<strong>将来を約束しない</strong>。まず「自分が耐えられる下落幅」を先に決め、それに合ったポジションサイズを組む——これが実務的な答え。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">「荒い＝危険」という思い込みを解く</a></li>
+        <li><a href="#section-2">同じ最終値でも、道のりはまったく違う（図解）</a></li>
+        <li><a href="#section-3">荒さが損を生む本当のメカニズム：「途中で耐えられるか」</a></li>
+        <li><a href="#section-4">損は「いつ降りたか」で決まる</a></li>
+        <li><a href="#section-5">荒さを数字で測る：標準偏差（σ）とは</a></li>
+        <li><a href="#section-6">標準偏差は将来を約束しない</a></li>
+        <li><a href="#section-7">実務編：自分が耐えられる幅を先に決める</a></li>
+        <li><a href="#section-8">当サイトでの活かし方</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- ===== Section 1 ===== -->
+    <h2 id="section-1">1️⃣ 「荒い＝危険」という思い込みを解く</h2>
+    <p>まず、言葉の整理から始めましょう。</p>
+    <ul>
+      <li><strong>ボラティリティ（volatility）</strong>：価格が短期間でどれだけ上下に動くか、という「値動きの荒さ」を指す概念。上に振れることも含む。</li>
+      <li><strong>リスク（risk）</strong>：投資の文脈では「リターンのばらつき（不確実性）」、一般的な感覚では「損をする可能性」を指すことが多い。</li>
+    </ul>
+    <p>この二つは重なる部分もありますが、<strong>イコールではありません</strong>。ボラティリティが高い商品は「上にも下にも大きく動く」だけで、その動きの末に損をするかどうかは、また別の話です。</p>
+    <div class="info-box">
+      <strong>💡 アカデミックな「リスク」の定義</strong>：ファイナンス理論では、リスクは「損失の大きさ」ではなく「<strong>リターンのばらつき（標準偏差）</strong>」として定義されることが多い。つまり上振れも下振れも「リスク」に含まれる。日常語の「リスク＝損の危険」とはやや異なる点に注意。
+    </div>
+    <p>「ボラティリティが高い銘柄を避ければ安全」——そう思っている人は、次の問いを考えてみてください。「ゆっくりと、しかし長期にわたって価値が下がり続ける商品」は、ボラティリティは低くても、<strong>損失という意味では非常に大きなリスクを抱えています</strong>。荒さだけで危険かどうかを判断するのは不完全なのです。</p>
+
+    <!-- ===== Section 2 ===== -->
+    <h2 id="section-2">2️⃣ 同じ最終値でも、道のりはまったく違う（図解）</h2>
+    <p>最も直感的な説明は、グラフで見ることです。次の図は、スタートとゴール（最終価格）がまったく同じ2本の価格の線を示しています。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 320" role="img" aria-labelledby="vol-title">
+        <title id="vol-title">同じ最終値でも道のりの荒さが異なる2本の価格線の概念図</title>
+        <text class="s-panel-label" x="40" y="22">スタートとゴールが同じでも、「道のり」はまったく違う</text>
+        <!-- 軸 -->
+        <line class="s-axis" x1="40" y1="280" x2="612" y2="280"/>
+        <line class="s-axis" x1="40" y1="40" x2="40" y2="280"/>
+        <text class="s-label-sm" x="44" y="296">時間 →</text>
+        <text class="s-label-sm" x="44" y="38">価格 ↑</text>
+        <!-- スタートとゴール共通 -->
+        <circle class="s-hl" cx="60" cy="210" r="5"/>
+        <circle class="s-hl" cx="590" cy="120" r="5"/>
+        <text class="s-label-sm" x="66" y="215">スタート（同じ）</text>
+        <text class="s-label-sm" x="552" y="113">ゴール（同じ）</text>
+        <!-- 穏やかな線（緑） -->
+        <polyline class="s-curve-g" points="60,210 120,196 180,186 240,175 300,164 360,152 420,142 480,132 540,124 590,120"/>
+        <text class="s-note-g" x="280" y="144">穏やかな道のり（低ボラティリティ）</text>
+        <!-- 荒い線（赤） -->
+        <polyline class="s-curve-l" points="60,210 100,168 140,238 180,148 220,250 260,130 300,210 340,100 380,190 420,86 460,170 510,110 550,138 590,120"/>
+        <text class="s-note-r" x="100" y="256">荒い道のり（高ボラティリティ）</text>
+        <!-- 一時的な大底の目印 -->
+        <line class="s-guide" x1="220" y1="250" x2="220" y2="280"/>
+        <text class="s-label-sm" x="178" y="295">←この底で耐えられるか？</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 緑の線は穏やかに上昇（低ボラティリティ）。赤の線は大きく上下しながら最終的には同じ場所へたどり着く（高ボラティリティ）。<strong>最終価格は同じでも、途中の「底」でメンタルが耐えられるかどうかが違う</strong>。そして、その底で感情的に売ってしまうと、荒い道のりが損失の引き金になる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>この図が示す重要なことがあります。<strong>終点だけ見ればどちらも同じ結果</strong>です。しかし赤い線は途中で大きく下落する場面があります。その「底」で保有し続けられたかどうか——これがボラティリティと損失の関係の核心です。</p>
+    <p>最終価格が同じなら、低ボラティリティのほうが安全に見えます。でも例えば、赤い線が長期的に高いリターンを生む銘柄で、緑の線が穏やかだがインフレに追いつかないリターンしか出さない商品だとしたら？ <strong>「荒さ」だけで良し悪しは決められない</strong>のです。</p>
+
+    <!-- ===== Section 3 ===== -->
+    <h2 id="section-3">3️⃣ 荒さが損を生む本当のメカニズム：「途中で耐えられるか」</h2>
+    <p>ではなぜ「高ボラティリティ＝危険」という印象が広まったのか。それは、<strong>荒い値動きが「人間の感情」に直撃するから</strong>です。</p>
+    <p>ボラティリティそのものは価格が動くだけで、含み損が増えるだけで、まだ損失は確定していません。しかし人間の脳は「損失の痛みを非常に重く感じる」という性質があります（<a href="guide-loss-cut.html">損切りの心理・プロスペクト理論</a>）。そのため、大きな含み損が生じると——</p>
+    <ul>
+      <li>「もう耐えられない、売ってしまおう」と感情的に決済する</li>
+      <li>生活資金が必要になり、安いところで換金せざるを得なくなる</li>
+      <li>含み損が大きすぎてロスカット（強制決済）にかかる</li>
+    </ul>
+    <p>これらが<strong>損を確定させる引き金</strong>になります。<strong>荒い値動きは、それ自体ではなく「人間を感情的にさせる」ことで損失を生む</strong>——これが本当のメカニズムです。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 280" role="img" aria-labelledby="emo-title">
+        <title id="emo-title">荒い値動きが感情的売却を引き起こすメカニズムの概念図</title>
+        <text class="s-panel-label" x="40" y="22">荒い値動き → 感情 → 損確定、のメカニズム</text>
+        <!-- 価格線（荒い・下げ局面） -->
+        <line class="s-axis" x1="40" y1="240" x2="612" y2="240"/>
+        <polyline class="s-curve-l" points="60,80 110,130 160,68 210,160 260,100 310,190 340,230"/>
+        <!-- 含み損ゾーンの塗りつぶし（目安） -->
+        <rect x="200" y="150" width="140" height="80" class="s-fill-l"/>
+        <!-- エントリー点 -->
+        <circle class="s-hl" cx="60" cy="80" r="5"/>
+        <text class="s-label-sm" x="68" y="76">エントリー</text>
+        <!-- 大底での感情的売却 -->
+        <circle class="s-rev" cx="340" cy="230" r="8"/>
+        <text class="s-note-r" x="350" y="237">「もう耐えられない」→ 売ってしまう</text>
+        <!-- その後の回復 -->
+        <polyline class="s-price" points="340,230 390,195 440,152 490,100 540,80 590,60" style="opacity:.4"/>
+        <text class="s-label-sm" x="430" y="56">→ その後、回復していった場合</text>
+        <text class="s-label-sm" x="430" y="70">（でももう持っていない）</text>
+        <!-- 含み損帯ラベル -->
+        <text class="s-note-r" x="205" y="200">含み損が大きくなり</text>
+        <text class="s-note-r" x="205" y="214">耐えられなくなるゾーン</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 高ボラティリティの局面で含み損が膨らみ（赤塗り部分）、感情的な売却で損を確定（赤丸）。その後価格が回復しても、すでにポジションを手放しているため恩恵を受けられない。<strong>損失の引き金を引いたのは「価格の荒さ」ではなく「途中で耐えられなかった感情」</strong>。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+
+    <p>つまり、「高ボラティリティが危険かどうか」は一概には言えません。<strong>その人が途中の下落に耐えられる投資期間・資金量・メンタルを持っているかどうか</strong>次第なのです。</p>
+
+    <!-- ===== Section 4 ===== -->
+    <h2 id="section-4">4️⃣ 損は「いつ降りたか」で決まる</h2>
+    <p>ここで大事な考え方を確認します。<strong>投資の損益は、最終的に「いつポジションを手放したか」で決まります</strong>。</p>
+    <p>価格の荒さは、途中の「紙の上の評価額」を動かすだけです。実際に売ったり、強制ロスカットにかかったりした時点で初めて損益が確定します。</p>
+    <div class="negative-box">
+      <strong>損が確定するのは次の3つの瞬間</strong><br>
+      ① 自分の意志で「売った」瞬間（損切り・利益確定）<br>
+      ② 証拠金不足などで「強制決済（ロスカット）」された瞬間<br>
+      ③ 保有している商品が「上場廃止・倒産」した場合
+    </div>
+    <p>逆に言えば、含み損があっても、<strong>売らない限り損は確定しません</strong>（ただし③の事態や、信用取引・FXで<strong>追証</strong>＝担保として預けた証拠金が不足し、追加入金を求められる状態になるリスクは別です。また「確定していない」ことは「含み損が軽い」ことを意味しません）。穏やかな値動きの商品を「安全」と思って長期保有していても、最悪のタイミングで換金せざるを得なくなれば、大きな損が確定します。</p>
+    <p>一方、荒い値動きの商品でも、その後に価格が回復し、十分上がった後に売れれば結果として損が出ないこともあります（もちろん、回復するかどうかは事前には分かりません）。<strong>荒さ自体が損益を決めるのではなく、「どの価格で降りたか」が損益を決める</strong>——という関係です。ボラティリティとリスクの区別は、ここにあります。</p>
+
+    <div class="info-box">
+      <strong>💡 「時間が解決する」は条件付き</strong>：長期保有で荒さを乗り越えられる——という考え方は「商品自体の本質的価値が時間と共に上昇傾向にある」という前提があります。個別株の倒産・廃業、業界の衰退などは「時間が解決しない」ケースもある点に注意が必要です。
+    </div>
+
+    <!-- ===== Section 5 ===== -->
+    <h2 id="section-5">5️⃣ 荒さを数字で測る：標準偏差（σ）とは</h2>
+    <p>ここからが後半、中上級向けの内容です。ボラティリティを定量的に把握するために使われる指標として、<strong>標準偏差（σ／シグマ）</strong>があります。</p>
+    <p>標準偏差とは、「平均値からのバラつき度合い」を表す統計の基本概念です。投資では過去のリターン（収益率）が平均からどれだけ上下に散らばっているかを表す数値として使われます。</p>
+    <h3>イメージで理解する</h3>
+    <p>たとえば年率リターンの平均が5%で、標準偏差が10%の商品があるとします。正規分布（平均の近くにデータが集まり、左右へ均等に裾が伸びる釣鐘型の分布）を仮定すると、リターンは——</p>
+    <ul>
+      <li>約<strong>68%の確率</strong>で「平均±1σ」の範囲（−5%〜+15%）に収まる</li>
+      <li>約<strong>95%の確率</strong>で「平均±2σ」の範囲（−15%〜+25%）に収まる</li>
+    </ul>
+    <p>標準偏差が大きいほど、上下の振れが大きい（高ボラティリティ）ということです。</p>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="bell-title">
+        <title id="bell-title">標準偏差（σ）による正規分布の概念図：リターンのばらつきの目安</title>
+        <text class="s-panel-label" x="40" y="22">標準偏差（σ）とリターンのばらつき：正規分布の概念図</text>
+        <!-- ±2σ 塗り（薄い水色） -->
+        <polygon points="154,255 154,209 180,187 200,166 220,140 237,117 260,85 290,52 320,40 350,52 380,85 403,117 420,140 440,166 460,187 486,209 486,255" fill="#ddf4ff" stroke="none" opacity="0.7"/>
+        <!-- ±1σ 塗り（濃い水色） -->
+        <polygon points="237,255 237,117 260,85 290,52 320,40 350,52 380,85 403,117 403,255" fill="#79c0ff" stroke="none" opacity="0.4"/>
+        <!-- ベルカーブ本体 -->
+        <polyline class="s-curve-g" style="stroke:#0969da;stroke-width:2.4" points="71,253 100,249 130,241 154,229 180,207 200,186 220,160 237,137 260,105 290,72 320,60 350,72 380,105 403,137 420,160 440,186 460,207 486,229 510,241 540,249 569,253"/>
+        <!-- 基準線（ベースライン） -->
+        <line class="s-axis" x1="40" y1="255" x2="612" y2="255"/>
+        <!-- 垂直ガイドライン -->
+        <line class="s-guide" x1="320" y1="60" x2="320" y2="255"/>
+        <line class="s-guide" x1="237" y1="137" x2="237" y2="255"/>
+        <line class="s-guide" x1="403" y1="137" x2="403" y2="255"/>
+        <line class="s-guide" x1="154" y1="229" x2="154" y2="255"/>
+        <line class="s-guide" x1="486" y1="229" x2="486" y2="255"/>
+        <!-- X軸ラベル -->
+        <text class="s-label-sm" x="145" y="272" text-anchor="middle">−2σ</text>
+        <text class="s-label-sm" x="228" y="272" text-anchor="middle">−1σ</text>
+        <text class="s-label-sm" x="320" y="272" text-anchor="middle">平均（μ）</text>
+        <text class="s-label-sm" x="412" y="272" text-anchor="middle">+1σ</text>
+        <text class="s-label-sm" x="494" y="272" text-anchor="middle">+2σ</text>
+        <!-- 68%ラベル -->
+        <text class="s-note" x="320" y="210" text-anchor="middle" style="fill:#0969da">約 68%</text>
+        <line stroke="#0969da" stroke-width="1" x1="237" y1="205" x2="290" y2="205"/>
+        <line stroke="#0969da" stroke-width="1" x1="350" y1="205" x2="403" y2="205"/>
+        <!-- 95%ラベル -->
+        <text class="s-note" x="320" y="243" text-anchor="middle" style="fill:#57606a">約 95%</text>
+        <line stroke="#57606a" stroke-width="1" x1="154" y1="238" x2="290" y2="238"/>
+        <line stroke="#57606a" stroke-width="1" x1="350" y1="238" x2="486" y2="238"/>
+        <!-- 右側の凡例 -->
+        <rect x="545" y="100" width="12" height="12" fill="#79c0ff" opacity="0.7"/>
+        <text class="s-label-sm" x="562" y="111">±1σ（68%）</text>
+        <rect x="545" y="120" width="12" height="12" fill="#ddf4ff" opacity="0.9" stroke="#aaccee" stroke-width="0.5"/>
+        <text class="s-label-sm" x="562" y="131">±2σ（95%）</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 正規分布を仮定したときのリターンのばらつきの概念図。「平均±1σ（標準偏差）」の範囲（濃い青）に約68%のリターンが収まり、「±2σ」（薄い青）の範囲に約95%が収まる。標準偏差が大きいほど山の裾野が広がる（ボラティリティが高い）。<strong>ただしこれは概念モデルであり、実際の金融商品のリターンは正規分布に従わないことも多い点に注意。</strong>※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+    <div class="warning-box">
+      標準偏差はあくまで「上下両方のバラつき」を同等に扱います。大きく上がることも、大きく下がることも、同じ「標準偏差が大きい」扱いになります。多くの投資家が感じる「下がる怖さ」とは非対称な点が、標準偏差の限界のひとつです。
+    </div>
+
+    <table>
+      <tr><th>ボラティリティ（年率標準偏差の目安）</th><th>一般的なイメージ</th></tr>
+      <tr><td>低（〜10%台前半）</td><td>穏やかな値動き（例：先進国債券ファンドなど）</td></tr>
+      <tr><td>中（10%台後半〜30%前後）</td><td>多くの株式指数が含まれる水準</td></tr>
+      <tr><td>高（30%超）</td><td>個別株・暗号資産など荒い値動き</td></tr>
+    </table>
+    <p>⚠️ 上表の水準はあくまで目安であり、時期・市場環境によって大きく変動します。具体的な数値は各商品の目論見書・公式情報でご確認ください。</p>
+
+    <p>なお、市場全体の「恐怖指数」として知られる<strong>VIX指数</strong>も、市場参加者がS&P500オプションから読み取った将来のボラティリティ予測を数値化したものです。当サイトでは<a href="vix.html">VIX恐怖指数ページ</a>でリアルタイムの数値を確認できます（本記事では考え方に絞り、具体的な数値への言及はしていません）。</p>
+
+    <!-- ===== Section 6 ===== -->
+    <h2 id="section-6">6️⃣ 標準偏差は将来を約束しない</h2>
+    <p>標準偏差は非常に便利な指標ですが、<strong>重要な限界</strong>もあります。</p>
+    <h3>① 過去のデータに基づく</h3>
+    <p>標準偏差は過去のリターンのばらつきを計算したものです。相場環境が変わると、ボラティリティは急変します。平時に低ボラティリティだった商品が、金融危機や政策の急変時に突然暴れることは珍しくありません。</p>
+    <h3>② 正規分布を仮定することが多い</h3>
+    <p>実際の相場では、標準的な正規分布の予測を大きく超える動き（テールリスク・ブラックスワン）が想定より頻繁に起きます。「理論上めったに起きない」はずの急落が、現実には起きています。</p>
+    <h3>③ 相関が崩れる</h3>
+    <p>通常は「分散投資」で相関の低い資産を組み合わせることでボラティリティを抑えられます。しかし市場が急落する局面では、多くの資産が同時に下落し、分散効果が薄れることがあります（詳しくは<a href="guide-correlation-risk.html">見えない集中投資：相関リスク</a>）。</p>
+    <div class="warning-box">
+      過去のボラティリティが低かったことは、<strong>これからも低いという保証にはなりません</strong>。ボラティリティを「確定した事実」ではなく「参考情報のひとつ」として使うのが大切です。
+    </div>
+
+    <!-- ===== Section 7 ===== -->
+    <h2 id="section-7">7️⃣ 実務編：自分が耐えられる幅を先に決める</h2>
+    <p>では、ボラティリティとリスクを理解したうえで、実際の投資にどう活かすのか。最も現実的な答えは——<strong>「最大いくらの含み損まで耐えられるかを先に決め、それを超えないようにポジションサイズを組む」</strong>です。</p>
+
+    <h3>ステップ①：自分の「耐えられる幅」を決める</h3>
+    <p>「この商品が一時的に30%下落しても、売らずに保有し続けられるか？」と自問します。過去の資産推移・生活資金との分離・投資期間・メンタルの強さを踏まえて、自分が実際に耐えられる下落幅を先に決めます。</p>
+    <div class="positive-box">
+      <strong>✅ ポイント</strong>：「理論上耐えられる」ではなく「実際に夜も眠れる・生活に影響が出ない」レベルで考えること。含み損を抱えたときの実感は、試算より重くなりがちです。
+    </div>
+
+    <h3>ステップ②：ポジションサイズを逆算する</h3>
+    <p>「耐えられる最大金額（円）」と「商品の最大想定下落幅（%）」から、投じてよい金額を逆算します。</p>
+    <p>例：耐えられる最大損失が50万円、商品の最大想定下落幅が50%なら、投じてよい金額は100万円以内——という考え方です。これをさらに一歩進めたのが、1トレードあたりの許容リスク%から逆算する手法で、詳しくは<a href="guide-position-sizing.html">ポジションサイジング・2%ルール</a>の記事で解説しています。</p>
+    <p>⚠️ ここで示した計算はあくまで考え方を示す例であり、具体的な投資金額を推奨するものではありません。実際の判断はご自身の状況に合わせてお考えください。</p>
+
+    <h3>ステップ③：荒さと保有期間を合わせる</h3>
+    <p>ボラティリティが高い商品ほど、短期的な上下が大きくなります。<strong>「長く持てる」と確信できないものを高ボラティリティの商品で運用するのは、感情的な売却リスクが高まる</strong>ことを意識しておきましょう。自分の投資期間・換金ニーズとボラティリティの水準が合っているかを確認することが、実務的なリスク管理の基本です。</p>
+
+    <!-- ===== Section 8 ===== -->
+    <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
+    <p>MarketWatch AI では、ボラティリティとリスクの考え方を複数の機能に活かしています。</p>
+    <ul>
+      <li><strong>VIX恐怖指数の掲載</strong>：市場が織り込む将来のボラティリティ（VIX）を<a href="vix.html">VIXページ</a>でリアルタイムに確認できます。市場全体の「荒れ具合の予測」を把握するための参考情報として使えます。本記事で解説したように、VIXの水準だけで売買を決めるものではありませんが、「今の市場が荒れている局面かどうか」を確認する目安になります。</li>
+      <li><strong>テクニカルシグナルのATR活用</strong>：当サイトのシグナルは、ATR（平均真の値動き幅）を用いて各銘柄のボラティリティに応じたSL・TPを動的に設定しています。ボラティリティが高いときは損切り幅も広げる——という考え方を実装しています。</li>
+      <li><strong>環境警戒スコア</strong>：VIXが急上昇している局面など「市場が荒れている」環境では、シグナルの信頼度を下げる仕組みがあります。荒さが大きいときは判断を慎重にする——という実務的な発想です。</li>
+    </ul>
+    <p>複数の資産を組み合わせたときに相関が変化することで、意図しない集中リスクが生まれることもあります。その観点は<a href="guide-correlation-risk.html">相関リスクの記事</a>で詳しく解説しています。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 ルールで動くシグナルの成績を見る</div>
+      <div class="cta-box-desc">ボラティリティに応じた損切り幅・利確目標を設定した複合テクニカルシグナルが、実際にどう機能しているか——勝ちも負けも含めて公開しています。</div>
+      <a class="cta-btn" href="track-record.html">シグナル成績ダッシュボードを見る →</a>
+    </div>
+
+    <!-- ===== Section 9 ===== -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>この記事の要点を整理します。</p>
+    <ul>
+      <li><strong>ボラティリティ（値動きの荒さ）</strong>と<strong>リスク（損失の可能性）</strong>は別概念。荒くても最終的に上がれば損はないし、穏やかでも換金タイミング次第で大きな損が出る。</li>
+      <li>荒さが実際に損を生むのは、<strong>含み損が大きくなって「途中で耐えられなくなった」とき</strong>。感情的な売却・強制ロスカット・換金需要がその引き金になる。</li>
+      <li>損は「<strong>いつ降りたか</strong>」で決まる。価格がどれだけ動こうと、売らなければ損は確定しない（ただし信用取引・FXの強制ロスカット、個別株の倒産などの例外はある）。</li>
+      <li>ボラティリティを数値化する<strong>標準偏差</strong>は参考になるが、過去のデータに基づくもので将来を約束しない。テールリスクや相関の崩れも考慮が必要。</li>
+      <li>実務的な答えは「<strong>自分が耐えられる最大下落幅を先に決め、それに合うポジションサイズにする</strong>」こと。荒さと保有期間・換金ニーズを合わせることが基本。</li>
+    </ul>
+    <p>「高ボラティリティは危険、低ボラティリティは安全」という単純な図式を一度外してみると、自分にとっての本当のリスクが見えやすくなります。何を恐れているのか、何を耐えられるのか——それを先に言語化しておくことが、投資の規律を守るための出発点です。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">🛡️ ポジションサイジングの基本</div>
+        <div class="related-card-desc">1回の取引で許容するリスク%を決め、損切り幅から逆算するロット・口数の考え方。</div>
+      </a>
+      <a class="related-card" href="guide-correlation-risk.html">
+        <div class="related-card-title">🔗 見えない集中投資：相関リスク</div>
+        <div class="related-card-desc">分散したつもりでも、相関が高いと1つに賭けているのと同じになる理由を図解。</div>
+      </a>
+      <a class="related-card" href="guide-loss-cut.html">
+        <div class="related-card-title">🧠 損切りができない本当の理由</div>
+        <div class="related-card-desc">プロスペクト理論・処分効果が損切りを妨げる仕組みと、淡々と切る技術を解説。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はボラティリティとリスクの考え方を情報提供として解説したものであり、特定の金融商品の売買推奨や投資助言ではありません。記載の内容は教育・情報提供を目的としており、特定の手法による利益や損失回避を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
