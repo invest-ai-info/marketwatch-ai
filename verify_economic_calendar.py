@@ -43,14 +43,20 @@ SOURCES = [
     ("雇用統計", "https://www.bls.gov/schedule/news_release/empsit.htm", "米雇用統計"),
 ]
 
-MONTHS = {m: i for i, m in enumerate(
-    ["January", "February", "March", "April", "May", "June",
-     "July", "August", "September", "October", "November", "December"], start=1)}
-MONTH_RE = "|".join(MONTHS)
+_FULL = ["January", "February", "March", "April", "May", "June",
+         "July", "August", "September", "October", "November", "December"]
+# BLS は「Jan.」「Sept.」のような略記も使う。両方受ける（2026-09-11 実地検証で判明）
+MONTHS = {}
+for _i, _m in enumerate(_FULL, start=1):
+    MONTHS[_m] = _i
+    MONTHS[_m[:3]] = _i
+    if _m == "September":
+        MONTHS["Sept"] = _i
+MONTH_RE = "|".join(sorted(MONTHS, key=len, reverse=True))
 # 「Friday, September 11, 2026」「September 11, 2026」どちらも拾う
-DATE_RE = re.compile(rf"(?:\w+,\s*)?({MONTH_RE})\s+(\d{{1,2}}),\s*(\d{{4}})")
+DATE_RE = re.compile(rf"(?:\w+,\s*)?({MONTH_RE})\.?\s+(\d{{1,2}}),?\s*(\d{{4}})")
 # 参照期間「for August 2026」「August 2026」
-REF_RE = re.compile(rf"\b({MONTH_RE})\s+(\d{{4}})\b")
+REF_RE = re.compile(rf"\b({MONTH_RE})\.?\s+(\d{{4}})\b")
 
 
 def fetch(url):
@@ -62,7 +68,10 @@ def fetch(url):
 def rows_of(html_text):
     """<tr> 単位でタグを剥いだテキストにする（表の構造が変わっても行単位なら耐える）。"""
     out = []
-    for chunk in re.split(r"<tr\b", html_text, flags=re.I)[1:]:
+    chunks = re.split(r"<tr\b", html_text, flags=re.I)[1:]
+    if len(chunks) < 5:                 # 表でない（リスト等）ページ向けのフォールバック
+        return [ln for ln in plain_text(html_text).splitlines() if DATE_RE.search(ln)]
+    for chunk in chunks:
         chunk = chunk.split("</tr>")[0]
         txt = re.sub(r"<[^>]+>", " | ", chunk)
         txt = re.sub(r"&nbsp;?", " ", txt)
@@ -71,6 +80,15 @@ def rows_of(html_text):
         if txt:
             out.append(txt)
     return out
+
+
+def plain_text(html_text):
+    t = re.sub(r"(?is)<(script|style).*?</\1>", " ", html_text)
+    t = re.sub(r"(?i)<br\s*/?>|</t[dh]>|</tr>|</li>|</p>", "\n", t)
+    t = re.sub(r"<[^>]+>", " ", t)
+    t = re.sub(r"&nbsp;?", " ", t)
+    t = re.sub(r"&amp;", "&", t)
+    return "\n".join(re.sub(r"[ \t]+", " ", ln).strip() for ln in t.splitlines() if ln.strip())
 
 
 def parse_schedule(html_text, debug=False):
@@ -153,15 +171,23 @@ def main():
             problems.append(f"{key}: 公式スケジュールを取得できない（{type(e).__name__}: {str(e)[:80]}）")
             continue
         sched = parse_schedule(html_text, debug=args.debug)
-        if not sched:
-            problems.append(f"{key}: ページを解析できず0件（BLS の表の構造が変わった疑い）→ 要修正")
+        # 🚨 1年分のスケジュールなら十数件あるはず。少なすぎる＝解析が壊れている。
+        #    「解析できなかった」を「問題なし」と取り違えないため、ここで必ず落とす。
+        if len(sched) < 6:
+            problems.append(f"{key}: 解析できた行が {len(sched)} 件しかない"
+                            f"（BLS のページ構造が変わった疑い）→ verify_economic_calendar.py を要修正")
+            print("   --- 解析できなかったので素のテキストを出す（構造を見て直す用）---")
+            for ln in plain_text(html_text).splitlines()[:60]:
+                print(f"      {ln[:160]}")
             continue
         for (yr, mo), rel in sorted(sched.items()):
             print(f"   公式: {yr}年{mo}月分 → {rel} ({'月火水木金土日'[rel.weekday()]})")
 
+        compared = 0
         for (yr, mo), rel in sorted(sched.items()):
             if rel < today:
                 continue                       # 過ぎた回は直しても意味がない
+            compared += 1
             for label, mine in (("economic-events.json", js), ("ECONOMIC_EVENTS_2026", ms)):
                 got = mine.get((yr, mo, key))
                 if got is None:
@@ -170,6 +196,10 @@ def main():
                     problems.append(
                         f"🚨 {label}: {yr}年{mo}月分の{prefix} が {got} になっているが、"
                         f"BLS 公式は {rel}（{'月火水木金土日'[rel.weekday()]}曜）")
+        # 🚨 未来の回を1件も比べていない＝実質何も検証していない。緑にしてはいけない
+        if compared == 0:
+            problems.append(f"{key}: 今日以降の回が公式側に1件も無い"
+                            f"（取得できたのは過去分だけ＝解析ミスか、公式の更新が止まっている）")
 
     print("\n" + "-" * 50)
     for n in notes:
