@@ -4478,3 +4478,17 @@ verify.py 6/6緑・Opusコンプラ🟢白（免責三層化・統計断定軟�
 - **tracker**: cluster補正後CI[+0.05~+0.44]🟡蓄積中（2回連続未達）
 - **状態**: ゲート実行中
 
+
+---
+
+## 2026-09-12 signal-lab #096 ✅ 全ゲート通過・公開済み
+
+- **仮説**: 上昇トレンド×RSI売られすぎ（rsi_band=os × trend=上昇）IS/FWD比較
+- **signal_lab_verify.py**: 8/8 GREEN, EXIT=0
+- **コンプライアンス**: 🟡（6修正）→ 再verify GREEN → 🟢白
+- **独立Opus监査**: 🟡（G-1: IS E(R)誤値修正, G-2: SVGスケール修正）→ 再verify GREEN → 🟢白
+- **finalize_signal_lab.py**: EXIT=0（size=41KB, svg=4, kinsho=4）
+- **publish_article.py**: EXIT=0
+- **check_site_consistency.py**: EXIT=0（エラーなし・警告37件は既存問題）
+- **公開URL**: guide-signal-lab-096.html
+- **コミット**: 618411b → main push ✅
