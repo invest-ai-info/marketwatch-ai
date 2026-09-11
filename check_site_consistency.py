@@ -236,6 +236,43 @@ def check_series_numbering():
             errors.append(f"🚨 回番号 #{no} が重複: {', '.join(files)}")
 
 
+def check_us_monthly_indicators():
+    """米CPI・米雇用統計が「今日以降の各月にちょうど1件」あるかを見る（2026-09-11 新設）。
+
+    🚨 なぜ曜日で検査しないか＝**この事故は曜日の思い込みが原因だった**。
+       2026-09-11(金) が正しい発表日なのに「CPI は火〜木」と決めつけて 9/10(木) と書いていた。
+       曜日ルールを足すと、正しい金曜の日付を誤りとして弾き、誤った木曜を通してしまう。
+       機械で見てよいのは「欠落・重複」と「対象月の翌月の中旬という粗い窓」だけ。
+       **日付そのものは BLS の公式スケジュールで人/エージェントが確認する**（一覧の先頭に明記）。
+    """
+    import datetime as dt
+    if not _exists("generate_market_news.py"):
+        return
+    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", _read("generate_market_news.py"), re.S)
+    if not m:
+        return                      # 解析不能は check_economic_events 側が既に警告する
+    rows = re.findall(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1))
+    today = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
+    year = today.year
+    for label, pat in (("米CPI", r"^米CPI"), ("米雇用統計", r"^米雇用統計")):
+        by_month = {}
+        for mo, dy, _c, _i, name in rows:
+            if re.match(pat, name):
+                by_month.setdefault(int(mo), []).append((int(dy), name))
+        for mo in range(today.month, 13):
+            got = by_month.get(mo, [])
+            if not got:
+                warnings.append(f"カレンダー: {year}/{mo}月に「{label}」が無い（毎月1回の指標＝抜け落ちの疑い）")
+            elif len(got) > 1:
+                warnings.append(f"カレンダー: {year}/{mo}月の「{label}」が {len(got)} 件（{got}）＝重複の疑い")
+        # CPI は「対象月の翌月の中旬」に出る。粗い窓から外れたら要確認（曜日は見ない）
+        if label == "米CPI":
+            for mo, got in by_month.items():
+                for dy, name in got:
+                    if mo >= today.month and not (8 <= dy <= 16):
+                        warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が中旬(8〜16日)から外れる＝BLS公式で要確認")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -341,6 +378,9 @@ def main():
 
     # 6. 連番シリーズの回番号検査（2026-09-08 新設・#089 上書き公開事故の再発防止）
     check_series_numbering()
+
+    # 7. 米月次指標の欠落・重複検査（2026-09-11 新設・米CPI 日付誤りの再発防止）
+    check_us_monthly_indicators()
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
