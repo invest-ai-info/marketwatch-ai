@@ -1,3 +1,5 @@
+2026-09-12 autopublish: guide-volatility-vs-risk.html 公開済み（決定論緑・Opus🟡軽微修正→独立Opus🟢白）https://marketwatch-jp.com/guide-volatility-vs-risk.html
+
 ## 2026-09-12 autodraft: draft-expected-value-thinking.html
 
 - **基準日**: 2026-09-12（JST）
