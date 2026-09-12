@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-13", "line": '・<b>2026-09-13</b>: 🛡️ 解説「<a href="guide-benchmark-comparison.html" style="color:#0969da"><b>自分の成績は、何と比べれば意味があるのか</b></a>」公開'},
         {"date": "2026-09-12", "line": '・<b>2026-09-12</b>: 📰 解説「<a href="guide-news-2026-09-12-us-cpi-aug-fomc-hike.html" style="color:#0969da"><b>【9/12速報】米8月CPIコア前月比+0.3%予想上振れ──FOMC利上げ確率85%超</b></a>」公開'},
         {"date": "2026-09-12", "line": '・<b>2026-09-12</b>: 🔬 解説「<a href="guide-company-4588-oncolys.html" style="color:#0969da"><b>オンコリスバイオファーマ(4588)を数字で見る</b></a>」公開'},
         {"date": "2026-09-12", "line": '・<b>2026-09-12</b>: 🕒 解説「<a href="guide-tse-trading-hours-close.html" style="color:#0969da"><b>立会時間と終値の決め方</b></a>」公開'},
