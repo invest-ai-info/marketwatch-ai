@@ -215,7 +215,7 @@
           <td>75</td>
           <td><strong>52.0%</strong></td>
           <td>[40.9%〜62.9%]</td>
-          <td>✅ 安定</td>
+          <td>🟡 参考（N=75・CI下限は43%未満）</td>
         </tr>
         <tr>
           <td>参考：上昇×順張り買い FWD</td>
@@ -438,9 +438,6 @@
         <text class="s-label-sm" x="46" y="199" text-anchor="end">0%</text>
         <text class="s-label-sm" x="46" y="24" text-anchor="end">70%</text>
         <text class="s-label-sm" x="46" y="112" text-anchor="end">35%</text>
-        <!-- 43% guide line: y = 195 - (43/70)*175 = 195 - 107.5 = 87.5 -->
-        <line class="s-guide" x1="55" y1="88" x2="420" y2="88"/>
-        <text class="s-label-y" x="418" y="84" text-anchor="end">損益分岐 43%</text>
         <!-- Bar1: 全体 47.8% y = 195-(47.8/70)*175 = 195-119.5 = 75.5 -->
         <rect class="s-fill-b" x="75" y="76" width="90" height="119" rx="3"/>
         <text class="s-label-b" x="120" y="71" text-anchor="middle">47.8%</text>
@@ -455,6 +452,9 @@
         <text class="s-label-r" x="360" y="82" text-anchor="middle">43.2%</text>
         <text class="s-label-sm" x="360" y="209" text-anchor="middle">BB系</text>
         <text class="s-label-sm" x="360" y="221" text-anchor="middle">（N=229）</text>
+        <!-- 43% guide line drawn last so it renders on top of bars -->
+        <line class="s-guide" x1="55" y1="88" x2="420" y2="88"/>
+        <text class="s-label-y" x="418" y="100" text-anchor="end">損益分岐 43%</text>
       </svg>
       <p class="chart-caption">図2：シグナル種別の勝率比較（FWD、上昇トレンド中の逆張り買い）。赤の破線が損益分岐43%。RSI系（緑）は62.5%と大きく超過、BB系（赤）は43.2%でぎりぎり超え。実際の価格チャートではありません。</p>
     </div>
@@ -541,13 +541,13 @@
     </div>
 
     <h3>時間足別（Timeframe）</h3>
-    <p>同じ上昇トレンド×逆張り買いでも、時間足による差は限定的でした。</p>
+    <p>同じ上昇トレンド×逆張り買いでも、<strong>1H足と4H足の間では</strong>差は限定的でした（1日足はN=21と小標本のため本節では扱いません）。</p>
     <table>
       <tr><th>時間足</th><th>N（FWD）</th><th>勝ち</th><th>勝率</th><th>95%CI</th></tr>
       <tr><td>1H足</td><td>177</td><td>82</td><td>46.3%</td><td>[39.1%〜53.7%]</td></tr>
       <tr><td>4H足</td><td>103</td><td>47</td><td>45.6%</td><td>[36.3%〜55.2%]</td></tr>
     </table>
-    <p>1H足（N=177、46.3%）と4H足（N=103、45.6%）はほぼ同水準で、どちらも43%超え。シグナル種別（RSI/BB）やグループ（指数か否か）の方が時間足よりも成績への影響が大きいことが示唆されます。</p>
+    <p>1H足（N=177、46.3%）と4H足（N=103、45.6%）はほぼ同水準で、どちらも43%超え。<strong>少なくとも1H/4Hの比較においては</strong>、シグナル種別（RSI/BB）やグループ（指数か否か）の方が時間足よりも成績への影響が大きいことが示唆されます。</p>
 
     <!-- =============================== -->
     <h2 id="result-context">⑥ 結果④——「順張り買い」との比較：数値上は逆張りが高い</h2>
