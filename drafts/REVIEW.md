@@ -1,3 +1,22 @@
+2026-09-13 signal-lab: draft-signal-lab-097.html 生成中（trend=上昇×reversalL IS/FWD解剖・RSI60%vsBB43%分化・指数38%弱点）
+
+## 2026-09-13 signal-lab #097: draft-signal-lab-097.html
+
+- **テーマ**: 上昇トレンド中の逆張り買い——RSI売られすぎ60% vs BB下限43%の真逆結果
+- **基準日**: 2026-09-13（JST）
+- **FWD全体**: k=144/n=307=46.9% CI[41.4%,52.5%] E(R)=+0.114 RCI[-0.015,+0.243]
+- **IS全体**: k=54/n=101=53.5% CI[43.8%,62.9%] E(R)=+0.248
+- **シグナル別（FWD）**: RSI型 60.0%（N=75）/ BB型 42.7%（N=232）→ 17pp内部分裂
+- **グループ別（FWD）**: 指数38.3%（最弱・N=81）/ jpy_fx46.2% / other_fx52.0%
+- **時間足別（FWD）**: 1H46.3% / 4H43.5% / 1D68.2%（N=22小）
+- **全期間合算**: 48.5% CI[43.7%,53.4%] E(R)=+0.147 RCI[+0.035,+0.260]（RCI全域プラス）
+- **コンテキスト**: 上昇×逆張り46.9% vs 上昇×順張り38.9%（+8pp優位）
+- **トラッカー状態**: status=promoted demote_strikes=1 rci_lo=-0.033（CIギリギリ境界）
+- **ゲート状態**: ⏳ signal_lab_verify 実行待ち
+- **生成ファイル**: `drafts/draft-signal-lab-097.html`・`drafts/labnotes/lab-097-claims.json`・`drafts/labnotes/lab-097-analysis.md`
+
+---
+
 2026-09-12 autopublish: guide-volatility-vs-risk.html 公開済み（決定論緑・Opus🟡軽微修正→独立Opus🟢白）https://marketwatch-jp.com/guide-volatility-vs-risk.html
 
 ## 2026-09-12 autodraft: draft-expected-value-thinking.html
