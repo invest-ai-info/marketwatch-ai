@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>立会時間と終値の決め方とは｜終値は「最後の約定」とは限らない - MarketWatch AI</title>
+  <meta name="description" content="東証の前場・後場の区切りと、2024年11月の取引時間30分延伸の経緯。大引けの値段が「ザラバの最後の約定」ではなく「クロージング・オークション」という仕組みで決まること、プレ・クロージングと板寄せの優先順位を、JPXの一次情報にもとづき東証のしくみシリーズ第11回として解説します。">
+  <meta name="keywords" content="立会時間,前場,後場,クロージングオークション,プレクロージング,大引け,終値,板寄せ,ランダムクローズ,東証のしくみ">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-trading-hours-close.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="立会時間と終値の決め方とは｜終値は「最後の約定」とは限らない">
+  <meta property="og:description" content="前場・後場の区切りと2024年の30分延伸、そして大引けの値段を決める「クロージング・オークション」の仕組みをJPXの一次情報から解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-trading-hours-close.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "立会時間と終値の決め方とは｜終値は「最後の約定」とは限らない",
+    "description": "前場・後場の区切りと2024年の30分延伸、そして大引けの値段を決める「クロージング・オークション」の仕組みをJPXの一次情報から解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-12",
+    "dateModified": "2026-09-12",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-trading-hours-close.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 立会時間と終値の決め方とは
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東京証券取引所などの制度・手続きを一般的に解説する「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。制度は変更されることがあるため、実際の取引前に必ずご自身で一次情報をご確認ください。</div>
+
+    <h1>🕒 立会時間と終値の決め方とは｜終値は「最後の約定」とは限らない</h1>
+    <div class="meta-line">公開日：2026 年 9 月 12 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第11回）</div>
+
+    <p>「終値」と聞くと、多くの人は<strong>その日の取引時間中に最後に成立した値段</strong>を思い浮かべるのではないでしょうか。しかし東証の仕組みを一次情報で確認すると、実際にはそうではありません。大引け（後場の引け）の値段は、通常の取引（ザラバ）の延長線上でそのまま決まるのではなく、<strong>「クロージング・オークション」という別の手続き</strong>を経て決定されています。</p>
+    <p>この<strong>「東証のしくみ」シリーズ</strong>は、日本の株式市場の制度・手続きだけを扱い、個別銘柄の評価や売買判断には踏み込みません。第11回のテーマは<strong>立会時間の区分と、終値が決まる仕組み</strong>です。日本取引所グループ（JPX）の一次情報を実際に確認したうえで解説します（確認日は本文中に記載）。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>東証の売買立会時間は<strong>前場9:00〜11:30、後場12:30〜15:30</strong>（注文受付は前場8:00から、後場12:05から）。<strong>2024年11月5日の売買システム（arrowhead）更改にあわせて取引時間が30分延伸</strong>され、あわせて「クロージング・オークション」が導入された。</li>
+      <li>大引けの値段は<strong>ザラバの最後の約定がそのまま終値になるのではない</strong>。ザラバ終了時刻（<strong>午後3時25分</strong>）から5分間の「プレ・クロージング」（注文受付のみ、売買不成立）を経て、<strong>午後3時30分に板寄せを行って終値を決定</strong>する。</li>
+      <li>プレ・クロージング中は新規発注・既存注文の変更・取消は可能だが、<strong>執行条件の変更（成行↔指値の切替など）はできない</strong>。「引成行注文」「不成注文」はプレ・クロージング開始と同時に板へ取り込まれる。</li>
+      <li>大引けの板寄せで同じ値段の注文が競合したときの<strong>優先順位は3段階</strong>に分けてJPXが定めており、単純な「早い者勝ち」ではない部分がある。</li>
+      <li>さらに東証は<strong>2027年10月12日から「ランダムクローズ方式」を導入予定</strong>と公表している（大引けの板寄せ時刻を一定の範囲内でランダム化する制度変更。本記事執筆時点でJPXが公表している予定であり、実施時期・内容は変更されうる）。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">立会時間の区分——いつ売買できるのか</a></li>
+        <li><a href="#section-2">具体例：クロージング・オークションの仕組み</a></li>
+        <li><a href="#section-3">図解：ザラバからプレ・クロージング、板寄せまでの流れ</a></li>
+        <li><a href="#section-4">個人投資家にどこで効いてくるか</a></li>
+        <li><a href="#section-5">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-6">よくある誤解</a></li>
+        <li><a href="#section-7">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 立会時間の区分——いつ売買できるのか</h2>
+    <p>東証の売買立会は「前場（ぜんば）」と「後場（ごば）」の2つに分かれています。JPXの一次情報は次のように定義しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買立会時（立会時間）」より）：</strong>「売買立会は、午前立会（通称、前場（ぜんば））と午後立会（通称、後場（ごば））に分けられ、その売買立会時は、午前立会は9時から11時30分まで、午後立会は12時30分から15時30分までとなっています。また、午前立会は8時から、午後立会は12時5分から注文を受け付けています。」</div>
+    <p>整理すると、立会時間と注文受付時間は次のとおりです。</p>
+    <table>
+      <thead><tr><th></th><th>前場</th><th>後場</th></tr></thead>
+      <tbody>
+        <tr><td>注文受付開始</td><td>8:00〜</td><td>12:05〜</td></tr>
+        <tr><td>立会時間（売買成立）</td><td>9:00〜11:30</td><td>12:30〜15:30</td></tr>
+      </tbody>
+    </table>
+    <p>また、土曜日・日曜日、国民の祝日及び休日、1月1日から1月3日まで、12月31日は休業日として取引は行われないと定められています。</p>
+    <p>この後場の終了時刻「15:30」は、実はずっと変わらなかったわけではありません。JPXは取引時間の見直しの経緯を次のように説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「現物市場の機能強化に向けた取組み（取引時間の延伸等）」より）：</strong>「東京証券取引所は、市場を巡る環境変化や多様化する投資家のニーズに対応するとともに、市場利用者の利便性や国際競争力、レジリエンスをさらに高めていく観点から、2021年5月に『市場機能強化に向けた検討ワーキング・グループ』を設置し、そこでの議論を踏まえ、2021年10月、『現物市場の機能強化に向けたアクション・プログラム』を公表いたしました。当取引所では、本アクション・プログラムに記載のとおり、現物市場の機能強化に向けた取組みとして、<strong>取引時間の30分延伸やクロージング・オークションの導入等を、現物売買システム（arrowhead）の更改（2024年11月5日稼働）にあわせて実施</strong>しました。」</div>
+    <p>つまり、<strong>2024年11月5日より前は後場が15:00に終了していた</strong>ものが、システム更改にあわせて30分延伸され、現在の15:30になっています。同時に、本記事のテーマである「クロージング・オークション」もこのタイミングで導入されました。制度は固定的なものではなく、市場関係者の議論を経て見直されるものだという点が、この経緯からもわかります。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 具体例：クロージング・オークションの仕組み</h2>
+    <p>それでは、後場の終了時刻である15:30には具体的に何が起きているのでしょうか。JPXは「売買成立の方法」のページで次のように説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「売買成立の方法」より）：</strong>「東証では、終値形成における透明性の向上を目的として、後場立会終了時の売買において、クロージング・オークションを導入しております。具体的には、<strong>ザラバの終了時（午後3時25分）から、5分間の注文受付時間（プレ・クロージング）を設けた後、午後3時30分に板寄せを行います。</strong>」</div>
+    <p>つまり、通常の売買（ザラバ）は<strong>午後3時25分でいったん終了</strong>し、そこから午後3時30分までの5分間は「プレ・クロージング」という注文受付専用の時間になります。この間、何が起きているかについてもJPXは具体的に説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（同上）：</strong>「クロージング・オークションでは、まず、ザラバの終了時までに売買が成立しなかった注文について、自動的にプレ・クロージングに引き継がれます。また、プレ・クロージングの開始時（午後3時25分）に、<strong>引条件付注文と不成注文</strong>（ザラバで指値注文が約定しなかった場合の引成行注文）を板に取り込みます。プレ・クロージング中は<strong>注文の受付のみを行うため、売買は成立しません</strong>が、新規の発注や既存注文の変更・取消は可能（ただし、<strong>執行条件の変更は不可</strong>）です。」</div>
+    <p>ここでいう「引条件付注文」「不成注文」とは、証券会社の注文画面で選べる執行条件の一種で、「ザラバ中は約定しなくてよいので、大引けの値段で売買を成立させたい（または、ザラバで約定しなければ引けの成行として処理したい）」という意図の注文です。これらの注文は、プレ・クロージングが始まる午後3時25分の時点で、まとめて板に取り込まれます。なお、こうした執行条件を付けても約定が保証されるわけではなく、反対注文の状況などによっては成立しないこともあります。</p>
+    <p>そして午後3時30分、プレ・クロージングが終わると同時に、<strong>複数の注文をまとめて需給が合う単一の値段を決める「板寄せ」</strong>という方式で大引けの値段（終値）が決定されます。同じ値段の注文が競合した場合の優先順位についても、JPXは明確なルールを定めています。</p>
+    <table>
+      <thead><tr><th>優先順位</th><th>対象となる注文</th><th>順位のつけ方</th></tr></thead>
+      <tbody>
+        <tr><td>①</td><td>後場の始値が決定するまでに受け付けた注文</td><td>同時呼値（時間差をつけない）</td></tr>
+        <tr><td>②</td><td>後場の始値決定後、ザラバ中に受け付けた注文</td><td>時間優先の原則を適用</td></tr>
+        <tr><td>③</td><td>プレ・クロージング開始時に取り込まれた引条件付注文・不成注文、およびプレ・クロージング中に受け付けた注文</td><td>①とは区別した同時呼値</td></tr>
+      </tbody>
+    </table>
+    <p>なお、大引けで売買が成立する値幅にも上限があり、JPXは「大引けで売買が成立する値幅は、ザラバでの最終値段（最終気配値段を含む）における更新値幅の2倍までとなります」と説明しています。この「更新値幅」は、本シリーズ第10回「特別気配と板寄せ」で扱った、株価の水準ごとに定められた値幅のことです。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 図解：ザラバからプレ・クロージング、板寄せまでの流れ</h2>
+    <p>ここまでの内容を、後場終了間際の時間の流れとして整理すると、次のようになります。</p>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 460" role="img" aria-labelledby="thc-title">
+        <title id="thc-title">後場の終了間際、ザラバ・プレクロージング・板寄せがどう切り替わるかを示す概念図（仮の例のタイムライン）</title>
+        <text class="s-panel-label" x="20" y="22">後場終了間際の流れ（仮の例のタイムライン）</text>
+
+        <rect x="20" y="46" width="600" height="80" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+        <text x="320" y="70" text-anchor="middle" class="s-note" font-size="13">① 12:30〜15:25＝ザラバ方式</text>
+        <text x="320" y="90" text-anchor="middle" class="s-label-sm" font-size="11.3">価格優先・時間優先の原則で、合致した注文から順に約定</text>
+        <text x="320" y="107" text-anchor="middle" class="s-label-sm" font-size="11.3">15:25にザラバは終了し、未成立の注文は自動的に次の段階へ引き継がれる</text>
+
+        <rect x="20" y="152" width="600" height="100" rx="10" fill="#fff8c5" stroke="#9a6700" stroke-width="1.5"/>
+        <text x="320" y="176" text-anchor="middle" class="s-note" font-size="13">② 15:25〜15:30＝プレ・クロージング（5分間）</text>
+        <text x="320" y="196" text-anchor="middle" class="s-label-sm" font-size="11.3">引条件付注文・不成注文をこの時点で板に取り込む</text>
+        <text x="320" y="213" text-anchor="middle" class="s-label-sm" font-size="11.3">注文の受付のみ＝売買は成立しない</text>
+        <text x="320" y="230" text-anchor="middle" class="s-label-sm" font-size="11.3">新規発注・変更・取消は可能（執行条件の変更は不可）</text>
+
+        <rect x="20" y="278" width="600" height="150" rx="10" fill="#e6ffed" stroke="#1a7f37" stroke-width="1.5"/>
+        <text x="320" y="302" text-anchor="middle" class="s-note-g" font-size="13">③ 15:30＝板寄せで終値が決定（大引け）</text>
+        <text x="320" y="322" text-anchor="middle" class="s-label-sm" font-size="11.3">優先順位① 後場の始値決定までに受け付けた注文（同時呼値）</text>
+        <text x="320" y="341" text-anchor="middle" class="s-label-sm" font-size="11.3">優先順位② 始値決定後にザラバ中受付の注文（時間優先）</text>
+        <text x="320" y="360" text-anchor="middle" class="s-label-sm" font-size="11.3">優先順位③ プレ・クロージングで取り込んだ注文（①とは別の同時呼値）</text>
+        <text x="320" y="379" text-anchor="middle" class="s-label-sm" font-size="11.3">成立幅の上限＝ザラバ最終値段における更新値幅の2倍まで</text>
+        <text x="320" y="405" text-anchor="middle" class="s-note-g" font-size="12">→ この値段が「終値」になる</text>
+
+        <line x1="320" y1="126" x2="320" y2="150" class="s-axis" stroke="#57606a" marker-end="url(#arrowV3)"/>
+        <line x1="320" y1="252" x2="320" y2="276" class="s-axis" stroke="#57606a" marker-end="url(#arrowV3)"/>
+        <defs><marker id="arrowV3" markerWidth="9" markerHeight="9" refX="4" refY="7" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#57606a"/></marker></defs>
+      </svg>
+      <figcaption class="chart-caption">▲ 後場終了間際、ザラバ→プレ・クロージング→板寄せへと段階が切り替わる仮の流れ。実際の需給・約定状況は銘柄・その日ごとに異なる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+    <p>この図からわかるとおり、「終値」という1つの値段の裏には、<strong>ザラバ終了・注文の引き継ぎ・5分間の受付専用時間・板寄せによる一括決定</strong>という複数の段階があります。「大引けでポンと1回だけ約定して終わり」という単純な仕組みではありません。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 個人投資家にどこで効いてくるか</h2>
+    <h3>① 引け際に出来高が増えて見える理由の一つ</h3>
+    <p>大引け間際になると出来高（売買高）が増えて見えることがありますが、その一因として、プレ・クロージング開始時（15:25）に<strong>引条件付注文・不成注文がまとめて板に取り込まれ、15:30の板寄せで一括して処理される</strong>という制度上の仕組みがあります。個別の需給によって増減の度合いは異なりますが、「引けの値段で約定させたい」という意図の注文が制度上この時間帯に集約される点は押さえておく価値があります。出来高そのものの読み方は、本シリーズと関連する別ガイド「出来高」で扱っています。</p>
+    <h3>② 「引成行」「不成」注文の性質を理解する</h3>
+    <p>証券会社の注文画面にある「引成行（ひけせいこう）」「不成（ふなり）」といった執行条件は、まさにこのクロージング・オークションの仕組みを前提にした注文方法です。プレ・クロージング開始と同時に板に取り込まれ、執行条件そのものは途中で変更できない点を理解したうえで使う必要があります。</p>
+    <h3>③ 大引けの値決めは「早い者勝ち」ではない場面がある</h3>
+    <p>板寄せの優先順位は3段階に分かれており、後場の始値決定前・決定後・プレ・クロージング中のそれぞれで扱いが異なります。とくに①と③は「同時呼値」として扱われ、単純な時間の早い遅いでは順位が決まりません。大引け付近の約定の仕組みを、ザラバ中の通常の時間優先の原則とは分けて理解しておくと、板の動きの見え方が変わります。</p>
+    <h3>④ 取引時間そのものが今後も見直される可能性がある</h3>
+    <p>2024年11月に取引時間が30分延伸された背景には、海外投資家の取引時間帯との重なりを広げる狙いがあったことがJPXの資料からうかがえます。取引時間帯の詳しい話（東京・ロンドン・NYの重なりなど）は、関連ガイド「取引時間の話」で扱っています。加えてJPXは、<strong>2027年10月12日から「ランダムクローズ方式」を導入する予定</strong>であることも公表しています。これは大引けの板寄せの時刻を一定の範囲内で毎営業日ランダムに決定する仕組みで、JPXは「ゲーミング行為（価格操作）や大引け直前における過度な価格変動（ボラティリティ）の抑制」を導入の狙いとして挙げています。本記事執筆時点（2026年9月）ではまだ実施前の予定であり、内容・実施時期は変更されうるため、実際の制度としてどう運用されるかは、施行が近づいた段階で改めて一次情報を確認する必要があります。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>このシリーズの立場として、制度の仕組みは必ず一次情報で確認します。立会時間・クロージング・オークションについては、以下の手順で確かめられます。</p>
+    <ol>
+      <li>JPXサイトの「株式・ETF・REIT等」→「売買制度（内国株）」→「内国株の売買制度」から「<a href="https://www.jpx.co.jp/equities/trading/domestic/01.html" target="_blank" rel="noopener">売買立会時（立会時間）</a>」のページを開く（前場・後場の時刻、注文受付時間、休業日の一覧を確認できる）。</li>
+      <li>同じメニューの「<a href="https://www.jpx.co.jp/equities/trading/domestic/04.html" target="_blank" rel="noopener">売買成立の方法</a>」のページで、「クロージング・オークション」の項目を確認する（プレ・クロージングの時刻、板寄せの優先順位が説明されている）。</li>
+      <li>「<a href="https://www.jpx.co.jp/equities/trading/strengthening/index.html" target="_blank" rel="noopener">現物市場の機能強化に向けた取組み（取引時間の延伸等）</a>」のページで、2024年の取引時間延伸の経緯と、2027年10月に予定されている「ランダムクローズ方式」導入の最新の公表内容を確認する（このページは今後も更新される可能性が高いため、施行時期が近づいたら再確認する）。</li>
+      <li>実際の注文画面で「引成行」「不成」などの執行条件の名称・使い方は証券会社ごとに表示が異なるため、利用している証券会社のヘルプページで確認する。</li>
+    </ol>
+    <div class="warning-box">本記事で引用した制度・日付・時刻はJPXの一次情報の要旨・抜粋を含みます。特に2027年のランダムクローズ方式は本記事執筆時点で「予定」として公表されているものであり、実施時期や具体的な運用は変更される可能性があります。実際の取引にあたっては必ず最新の一次情報をご確認ください。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>一次情報にもとづく整理</th></tr></thead>
+      <tbody>
+        <tr><td>終値は、その日最後にザラバで約定した値段がそのまま採用される</td><td>誤り。<strong>クロージング・オークション</strong>により、15:25からのプレ・クロージングを経て、<strong>15:30の板寄せで終値が別途決定</strong>される</td></tr>
+        <tr><td>プレ・クロージング中（15:25〜15:30）は注文を一切出せない</td><td>誤り。<strong>新規の発注や既存注文の変更・取消は可能</strong>。ただし成行↔指値のような<strong>執行条件の変更はできない</strong>。売買自体は成立しない</td></tr>
+        <tr><td>東証の取引時間は9:00〜15:00のまま昔から変わっていない</td><td>誤り。<strong>2024年11月5日</strong>のarrowhead更改にあわせて<strong>後場終了が15:00から15:30へ30分延伸</strong>され、同時にクロージング・オークションが導入された</td></tr>
+        <tr><td>大引けの値決めルールは今後も今のまま変わらない</td><td>誤り。JPXは<strong>2027年10月12日からランダムクローズ方式を導入予定</strong>と公表している（予定であり、内容・時期は今後変更されうる）</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ まとめ</h2>
+    <p>東証のしくみシリーズ第11回「立会時間と終値の決め方」を整理します。</p>
+    <ul>
+      <li>売買立会時間は<strong>前場9:00〜11:30、後場12:30〜15:30</strong>。<strong>2024年11月5日</strong>のシステム更改にあわせて後場終了が30分延伸された。</li>
+      <li>大引けの値段（終値）は、<strong>15:25からの5分間「プレ・クロージング」</strong>（注文受付のみ、売買不成立）を経て、<strong>15:30の板寄せ</strong>で決定される「クロージング・オークション」という仕組みで決まる。</li>
+      <li>プレ・クロージング中は新規発注・変更・取消は可能だが<strong>執行条件の変更は不可</strong>。板寄せの優先順位は<strong>3段階</strong>に分かれ、単純な時間優先だけでは決まらない部分がある。</li>
+      <li>JPXは<strong>2027年10月12日からランダムクローズ方式の導入を予定</strong>していると公表しており、大引けの決め方自体が今後さらに見直される可能性がある。</li>
+    </ul>
+    <p>本記事の制度の説明は、<strong>2026年9月12日時点</strong>でJPX公式サイト「<a href="https://www.jpx.co.jp/equities/trading/domestic/01.html" target="_blank" rel="noopener">売買立会時（立会時間）</a>」（2024年11月4日更新）、「<a href="https://www.jpx.co.jp/equities/trading/domestic/04.html" target="_blank" rel="noopener">売買成立の方法</a>」（2024年11月4日更新）、「<a href="https://www.jpx.co.jp/equities/trading/strengthening/index.html" target="_blank" rel="noopener">現物市場の機能強化に向けた取組み（取引時間の延伸等）</a>」（2026年8月6日更新）の該当ページを実際に確認したうえで記載しています。制度は変更されることがあるため、実際の取引にあたっては、その時点の一次情報をご自身で確認してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連シリーズで値決めの制度をさらに深く</div>
+      <div class="cta-box-desc">大引けの板寄せは、日中に何度も起こりうる「特別気配」の板寄せと同じ約定方式です。両方をあわせて理解すると、東証の値決めルール全体の見取り図がつかめます。</div>
+      <a class="cta-btn" href="guide-tse-special-quote.html">特別気配と板寄せの記事を見る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-tse-special-quote.html">
+        <div class="related-card-title">⚖️ 特別気配と板寄せとは</div>
+        <div class="related-card-desc">東証のしくみシリーズ第10回。板寄せ方式とザラバ方式の使い分け、気配の更新値幅と3分間隔の更新ルール。</div>
+      </a>
+      <a class="related-card" href="guide-market-hours.html">
+        <div class="related-card-title">🕒 取引時間の話</div>
+        <div class="related-card-desc">前場・後場の区切りと、東京・ロンドン・NYの取引時間帯の重なり。2024年の取引時間延伸が海外市場との関係にどう影響するかがわかる。</div>
+      </a>
+      <a class="related-card" href="guide-volume.html">
+        <div class="related-card-title">📊 出来高の読み方</div>
+        <div class="related-card-desc">出来高が増減する場面の読み方。引け際の出来高増加には、クロージング・オークションで注文が集約される制度上の要因もある。</div>
+      </a>
+    </div>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="東証のしくみのシリーズ内移動">
+      <div class="mw-sernav-h">📚 東証のしくみ</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-tse-special-quote.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">特別気配と板寄せとは｜注文が偏ったとき、値段はなぜ一足飛びに動かないのか</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東京証券取引所などの制度・手続きに関する一般的な情報提供であり、特定銘柄の売買推奨や投資助言ではありません。制度の内容は変更されることがあるため、実際の取引にあたっては必ずご自身で最新の一次情報をご確認ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
