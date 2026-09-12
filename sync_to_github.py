@@ -246,4 +246,5 @@ SYNC_FILES = [
     "guide-signal-lab-096.html",
     "guide-volatility-vs-risk.html",
     "guide-tse-trading-hours-close.html",
+    "guide-company-4588-oncolys.html",
 ]
