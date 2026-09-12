@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-09-12
+- 判定: ✅ 公開済み
+- 選定トピック: 米8月CPIコア前月比+0.3%で予想上振れ──FOMC来週利上げ確率85%超、週明けの論点を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 2026-09-11 21:30 JST に米8月CPI発表。総合前年比+3.4%・前月比+0.4%は予想通りも、コアCPI前月比+0.3%が予想+0.2%を上振れ。ガソリン+3.9%が全体上昇の1/3超を占め、FOMC利上げ確率が85%超に。先物+550円と前日の1260円安からの反転の起点となる可能性。前日記事（9/11）は「日経急落・スタグフレーション懸念」主題で本記事とは明確に角度が異なる（CPI数値・コア加速・FOTMシナリオが中心）。
+- 出典（確認済み・6系統以上）:
+  - 米労働省（BLS）公式「Consumer Price Index Summary - 2026 M08 Results」2026-09-11（bls.gov）
+  - CNBC「CPI inflation report August 2026」2026-09-11
+  - OANDA「速報：8月米CPIはコア前月比が予想上振れ ドル円は発表直後154円台半ばへ」2026-09-11
+  - 財経新聞「米CPI：ドルは乱高下」2026-09-11
+  - 財経新聞「国内株式市場見通し：大型イベント通過後のリバウンドを見据える局面にも」2026-09-12
+  - Washington Post「Fed chair Warsh, concerned about inflation, says bank 'has more work to do'」2026-08-28
+  - CNBC「Kevin Warsh sharpens inflation warning at Jackson Hole, signaling possible rate hike」2026-08-28
+  - CNBC「Markets see Warsh endorsing a rate hike in September」2026-08-31
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🔴エスカレ（議長名誤記「パウエル（Warsh）」×2・未裏取り直接引用「inflation is a choice」・成立しない「2019年以来高水準」の事実3件）→ 執筆側で3件を修正
+  - 第2Opus（独立確認・Read専用）: 🟡グレー（CBS見出し"all but guaranteed"の混入・発言の直接引用カギ括弧）→ 2件を間接話法へ修正
+  - 第3Opus（最終独立確認・Read専用）: 🟢白（公開OK）— kinsho-v1×3✅ 断定語ゼロ✅ 銘柄推奨なし✅ 将来断言なし✅ 引用混入なし✅
+- 決定論チェック: ①kinsho-v1×3箇所✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典6系統以上✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告39件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-12-us-cpi-aug-fomc-hike.html
+
+---
+
 ## 2026-09-11
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均1,260円安──原油104ドル・長期金利5%目前の「スタグフレーション懸念」を中立整理（カテゴリ: 今日のニュース）

@@ -247,4 +247,5 @@ SYNC_FILES = [
     "guide-volatility-vs-risk.html",
     "guide-tse-trading-hours-close.html",
     "guide-company-4588-oncolys.html",
+    "guide-news-2026-09-12-us-cpi-aug-fomc-hike.html",
 ]
