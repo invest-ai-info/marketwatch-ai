@@ -1,3 +1,5 @@
+2026-09-13 autopublish: guide-benchmark-comparison.html 公開（決定論✅・1st Opus🟡→修正→🟢・独立Opus🟢）https://marketwatch-jp.com/guide-benchmark-comparison.html
+
 2026-09-13 signal-lab: draft-signal-lab-097.html 生成中（trend=上昇×reversalL IS/FWD解剖・RSI60%vsBB43%分化・指数38%弱点）
 
 ## 2026-09-13 signal-lab #097: draft-signal-lab-097.html
