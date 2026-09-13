@@ -1,3 +1,5 @@
+2026-09-14 signal-lab: draft-signal-lab-098.html 生成中（rsi_oversold_bounce FWD N=337 CI下限-0.004 ゼロ接触・4H RCI全域プラス・昇格境界1/2到達）
+
 2026-09-13 autopublish: guide-benchmark-comparison.html 公開（決定論✅・1st Opus🟡→修正→🟢・独立Opus🟢）https://marketwatch-jp.com/guide-benchmark-comparison.html
 
 2026-09-13 signal-lab: draft-signal-lab-097.html 生成中（trend=上昇×reversalL IS/FWD解剖・RSI60%vsBB43%分化・指数38%弱点）
