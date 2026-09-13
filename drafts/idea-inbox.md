@@ -200,3 +200,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://quantpedia.com/strategies/overnight-return-effect / https://academic.oup.com/rfs/article/21/4/1683/1583413
 - 検証案: jp-rankings.json銘柄の日足OHLC（Open・Close）から「オーバーナイトリターン＝当日Open÷前日Close－1」と「取引時間内リターン＝当日Close÷当日Open－1」を計算し、年率期待値・勝率・シャープレシオを比較。NKD=F先物でも同様の分解を実施し両結果を照合。価格データのみで完結。
 - タグ: ◎
+
+## 2026-09-13（JST）
+### slug: residual-momentum-jp
+- 名前: 残差モメンタム（市場リターン控除後・日本株版）
+- 主張: 各銘柄日次リターンを市場インデックス（TOPIX代理）に回帰した残差の過去12ヶ月（スキップ1ヶ月）累積値でソートすると、高残差群が低残差群をアウトパフォームする傾向がある【出典の主張・未検証】。標準モメンタム（raw return）が日本株で機能しにくい理由として「市場共通成分が逆張りに相殺する」が挙げられるが、残差版はその成分を除去するため機能するとされる。Blitz, Huij, Martens（2011, JEF）が米国で残差モメンタムの超過リターンを確認し後続研究で日本でも有効と報告。Iwanaga（2024）は先行研究の測定上の問題を指摘しつつ残差効果は再確認。momentum-12-1（raw・tested=棄却）・ivol-puzzle-jp（残差の分散=ボラ・queued）とは仮説が異なる独立検証。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S1057521924001224 / https://alphaarchitect.com/swedroe-spotlight-enhancing-momentum-strategies-via-idiosyncratic-momentum/
+- 検証案: signals-log/jp-rankings銘柄の日足データでNKD=Fへの過去60日回帰を月次実施し残差リターンの12ヶ月累積（スキップ1ヶ月）を計算。高残差三分位 vs 低残差三分位の翌月リターン・勝率を比較。momentum-12-1（tested）との相関係数も測定。価格データのみで完結。
+- タグ: ◎
+
+### slug: bab-factor-jp
+- 名前: ベータ・アゲインスト・ベータ（日本株版）
+- 主張: 市場ベータ（CAPM回帰係数）が低い銘柄群を保有し高ベータ銘柄を売建てするBAB戦略が、リスク調整後に正のアルファを継続的に生む傾向がある【出典の主張・未検証】。メカニズム：レバレッジ制約を持つ投資家が目標リスク達成のため高ベータ株を選好→高ベータ株が過大評価・低ベータ株が割安となる。Frazzini & Pedersen（2014, JFE）が24カ国（日本含む）で確認。Kinoshita（SSRN 4767328, 2024）が日本市場でのベータファクターのサンプル外特性を検証。low-volatility（tested=実現ボラ水準でソート）とは指標（ベータ vs ボラ）が異なる独立仮説。
+- 出典: https://quantpedia.com/strategies/betting-against-beta-factor-in-stocks / https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4767328
+- 検証案: jp-rankings銘柄の日足データでNKD=Fへの過去60日回帰でベータを算出。低ベータ三分位 vs 高ベータ三分位の翌月リターン・勝率・シャープレシオを比較。low-volatility（tested）との相関係数も確認し独立性を検証。価格データのみで完結。
+- タグ: ◎
+
+### slug: roe-acceleration-jp
+- 名前: ROEモメンタム（業績加速ファクター・日本株版）
+- 主張: 直近期のROE（自己資本利益率）が前期比で上昇している銘柄群（ΔROE>0）は、ROEが低下または横ばいの銘柄群より翌年の株価リターンが有意に高い傾向がある【出典の主張・未検証】。静的なROE水準ではなく変化の方向・加速度をシグナルとする「ファンダメンタル・モメンタム」仮説。Chan et al.（1996, JF）が利益成長の加速は価格モメンタムと独立した予測力を持つと報告。2025年の研究（The Many Facets of Stock Momentum, FAJ 2025）がファクター成分とストック固有成分の分解で質（ROE）と価格モメンタムの相互作用を再確認。東証資本効率要請（2023〜）でΔROEへの市場感応度が高まっている可能性あり。buffett-quality（静的5基準・tested）・piotroski-fscore（財務健全スナップショット・queued）・qmj-jp（z-scoreレベル・queued）とは独立した変化率検証。
+- 出典: https://www.tandfonline.com/doi/full/10.1080/0015198X.2025.2562790 / https://alphaarchitect.com/cross-section-of-returns/
+- 検証案: jp-rankings銘柄の四半期/年次財務データからROE変化率（ΔROE＝当期ROE－前期ROE）を算出。ΔROE上位三分位 vs 下位三分位の翌1年リターン差を計算。TSE資本効率要請前（〜2022）と後（2023〜）での効果変化も確認する。財務データjoin必要。
+- タグ: ○
