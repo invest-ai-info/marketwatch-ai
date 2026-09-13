@@ -249,4 +249,5 @@ SYNC_FILES = [
     "guide-company-4588-oncolys.html",
     "guide-news-2026-09-12-us-cpi-aug-fomc-hike.html",
     "guide-benchmark-comparison.html",
+    "guide-tse-delisting-criteria.html",
 ]
