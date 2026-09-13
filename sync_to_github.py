@@ -251,4 +251,5 @@ SYNC_FILES = [
     "guide-benchmark-comparison.html",
     "guide-tse-delisting-criteria.html",
     "guide-news-2026-09-13-fomc-boj-dual-hike-week.html",
+    "guide-information-lag.html",
 ]
