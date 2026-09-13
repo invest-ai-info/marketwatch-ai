@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-09-13
+- 判定: ✅ 公開済み
+- 選定トピック: FOMC＋日銀 同週利上げ観測──日米両中銀が同時に動く「歴史的な週」、ドル円と日本株への影響を3シナリオで中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9月第3週（9/14〜18）にFOMC（9/17 JST早朝結果）と日銀（9/18 JST昼前後結果）が同週に重なる異例の週を前に、FOMC利上げ確率85%超・日銀1.0%→1.25%観測80%という両中銀同時利上げシナリオを整理。前日（9/12）記事はCPI数値とFOMC確率が主題で、本記事は日銀を主軸に置いた「両中銀同時週」「ドル円の引力と反力」という独自角度。
+- 出典（確認済み・6系統以上）:
+  - 米労働省（BLS）「Producer Price Index News Release - 2026 M08 Results」2026-09-10（ppi.nr0.htm）
+  - 日本経済新聞「日銀、9月政策金利1.25%へ 利上げ加速で物価上振れリスク回避」2026-09-10
+  - Japan Times「BOJ set to raise interest rate to 1.25% next week」2026-09-12
+  - The Motley Fool「The Odds of a Rate Hike Are Soaring Ahead of the Sept. 16 FOMC Meeting」2026-09-10
+  - CNBC「Kevin Warsh sharpens inflation warning at Jackson Hole, signaling possible rate hike」2026-08-28
+  - VT Markets「9月FOMCを前に市場は方向感欠く 米CPIと円相場の振れがドルの変動左右」
+  - 外為どっとコム「来週のドル円相場はどうなる？9/14週のイベント予定」2026-09-13
+  - Bloomberg/Yahoo!ニュース「日銀が今月会合で0.25ポイント利上げの公算、ペースも柔軟に」2026-09-12
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🟡グレー相当（コンプラ面は問題なし）→ 曜日誤記5箇所（9/17水→木・9/18木→金）を執筆側で修正 → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3箇所✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④将来断言なし✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典6系統以上✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告41件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-13-fomc-boj-dual-hike-week.html
+
+---
+
 ## 2026-09-12
 - 判定: ✅ 公開済み
 - 選定トピック: 米8月CPIコア前月比+0.3%で予想上振れ──FOMC来週利上げ確率85%超、週明けの論点を中立整理（カテゴリ: 今日のニュース）

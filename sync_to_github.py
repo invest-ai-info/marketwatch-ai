@@ -250,4 +250,5 @@ SYNC_FILES = [
     "guide-news-2026-09-12-us-cpi-aug-fomc-hike.html",
     "guide-benchmark-comparison.html",
     "guide-tse-delisting-criteria.html",
+    "guide-news-2026-09-13-fomc-boj-dual-hike-week.html",
 ]
