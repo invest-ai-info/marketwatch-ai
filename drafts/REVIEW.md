@@ -1,4 +1,60 @@
-2026-09-14 signal-lab: draft-signal-lab-098.html 生成中（rsi_oversold_bounce FWD N=337 CI下限-0.004 ゼロ接触・4H RCI全域プラス・昇格境界1/2到達）
+2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（Opusコンプラ🔴黒①②③・数値訂正3件要人間レビュー）
+
+## 2026-09-14 signal-lab #098: draft-signal-lab-098.html
+
+- **テーマ**: RSI売られすぎ逆張り買い（rsi_oversold_bounce）— FWD N=337 CI下限-0.004 ゼロ接触・4H足全域プラス
+- **基準日**: 2026-09-14（JST）
+- **FWD全体**: k=170/n=337=50.4% CI[45.1%,55.7%] E(R)=+0.177 RCI[-0.004,+0.358]
+- **IS全体**: k=52/n=133=39.1% CI[31.2%,47.6%] E(R)=-0.088
+- **4H足（FWD）**: k=59/n=103=57.3% RCI[+0.028,+0.645]（全域プラス）
+- **上昇トレンド（FWD）**: k=49/n=77=63.6% RCI[+0.186,+0.783]
+- **下降トレンド（FWD）**: k=61/n=151=40.4% RCI[-0.291,+0.176]
+- **中立トレンド（FWD）**: k=60/n=109=55.0% RCI[+0.053,+0.516]
+- **verify**: ✅ GREEN（22/22 claims全緑・SVG警告0件）
+- **Opusコンプラ**: 🔴 黒①②③（自動公開停止・人間エスカレ）
+
+### 🚩 黒①: "昇格1/2到達"・"昇格条件1/2認定" の誤記（数値訂正・要人間レビュー）
+
+**問題**: 記事のタイトル・meta description・og:description・JSON-LD・タグバッジ・30秒まとめ・判定セクション・トラッカー表で、「昇格条件1/2認定」「昇格1/2到達」という表現を使用。しかし `signal-lab-tracker.json` の `rsi_oversold_edge` は `promote_strikes=0` / `status="tracking"` であり、RCI下限=-0.004はゼロ以上（>0）を満たさないため昇格ストライクは積み上がっていない。
+
+さらに記事内で「昇格基準 = RCI下限≥-0.05（2回）」（事前登録H1相当）と「昇格基準 = RCI下限>0が2回連続」という2つの異なる基準が混在している。
+
+**影響箇所**: `<title>` / `<meta name="description">` / `<meta property="og:description">` / JSON-LD `"name"` / タグバッジ「✅昇格境界到達1/2」/ 30秒まとめ / 判定セクション「昇格判定：昇格条件1/2認定」/ トラッカー表の「昇格ストライク1/2」
+
+**修正案** （人間が採用・修正後にsignal_lab_verify.py再実行不要・数値%は変化なし）:
+- 「昇格条件1/2認定」「昇格1/2到達」→「RCI下限-0.004まで改善・昇格基準未達（promote_strikes=0）」
+- タグバッジ「✅昇格境界到達1/2」→削除または「📈RCI下限-0.004（ゼロ接触）」
+
+### 🚩 黒②: トラッカー表 auto_reversal_long-True_trend-下降 の数値誤り（数値訂正・要人間レビュー）
+
+**問題**: L541付近のトラッカー表で `auto_reversal_long-True_trend-下降` の FWD勝率として「42.7%」と「棄却済み（RCI上限<0確認）」を記載。
+
+実際の tracker.json の値:
+- `forward.pct` = 49.0%（148/302）
+- `forward.rci_hi` = +0.313（上限はゼロを超えている）
+- `kind` = "gate"（棄却基準は「CI下限>0が2回連続」であり「RCI上限<0確認」ではない）
+
+**修正案**:
+- FWD勝率: 42.7% → 49.0%（148/302）
+- 棄却理由: 「棄却済み（RCI上限<0確認）」→「フォローアップ対象（RCI下限<0・昇格未達）」または当該行の棄却理由列を正確な状態に修正
+
+### 🚩 黒③: BB比較差分の算術誤り（数値訂正・要人間レビュー）
+
+**問題**:
+1. 本文「10%pt差」: 50.4 - 42.9 = **7.5pt** であり10pt差は誤り
+2. L442付近: 「この10同期間比較」という文字化け（「この同期間比較」と「10」が混入した誤字）
+
+**修正案**:
+- 「10%pt差」→「7.5%pt差」
+- 「この10同期間比較」→「この同期間比較」
+
+### 修正後の再実行手順
+
+1. 上記3点を修正（すべて表現・数値の訂正のみ・claims.json変更不要・SVG変更不要）
+2. `python signal_lab_verify.py drafts/draft-signal-lab-098.html` → ✅ GREEN確認（%値変化なし）
+3. Opusコンプラ再実行 → 🟢白確認
+4. 独立Opus確認 → 🟢白確認
+5. `python finalize_signal_lab.py 098` → `python publish_article.py` → push
 
 2026-09-13 autopublish: guide-benchmark-comparison.html 公開（決定論✅・1st Opus🟡→修正→🟢・独立Opus🟢）https://marketwatch-jp.com/guide-benchmark-comparison.html
 
