@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-14", "line": '・<b>2026-09-14</b>: 🚧 解説「<a href="guide-tse-margin-regulation.html" style="color:#0969da"><b>信用取引の規制（増担保・注意喚起）</b></a>」公開'},
         {"date": "2026-09-14", "line": '・<b>2026-09-14</b>: 💰 解説「<a href="guide-information-lag.html" style="color:#0969da"><b>あなたが読んだときには、もう値段に入っていることがある</b></a>」公開'},
         {"date": "2026-09-13", "line": '・<b>2026-09-13</b>: 📰 解説「<a href="guide-news-2026-09-13-fomc-boj-dual-hike-week.html" style="color:#0969da"><b>FOMC＋日銀 同週利上げ観測──3シナリオで中立整理</b></a>」公開'},
         {"date": "2026-09-13", "line": '・<b>2026-09-13</b>: ⚠️ 解説「<a href="guide-tse-delisting-criteria.html" style="color:#0969da"><b>上場廃止と監理・整理銘柄</b></a>」公開'},
