@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-09-14
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均518円安──中東・原油高＋OpenAI IPO延期が重なった日の2要因を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 選定理由: 9/14（月）の日経平均が-518.35円と続落。9/13記事（FOMC+日銀同週観測）と角度が異なる要因として①中東・ホルムズ海峡緊張による原油高②OpenAI Sam Altman「2026年IPO不適切」（9/12発表）によるAI株調整が2つ重なった構図を整理。既出の9/11（日経急落スタグフレーション）・9/13（両中銀同週）とは明確に差別化。
+- 出典（確認済み・8媒体以上）:
+  - 財経新聞「日経平均大引け：前週末比518.35円安の63492.99円」2026-09-14
+  - 財経新聞「中東不透明感による原油高やAI開発の鈍化懸念から売り優勢【クロージング】」2026-09-14
+  - investing.jp「日経平均大引け：前週末比518.35円安の63492.99円」2026-09-14
+  - Axios「OpenAI delaying IPO amid AI safety concerns, Sam Altman says」2026-09-12
+  - Benzinga「OpenAI Rules Out 2026 IPO as Sam Altman Says Going Public Now Would Be 'Ill-Advised'」2026-09-12
+  - CNBC「OpenAI rules out IPO this year as Altman, Musk & Amodei warn AI is moving too fast」2026-09-12
+  - 247 Wall St.「IPO Delayed: Sam Altman Says an OpenAI Going Public in 2026 Would Be 'Ill-Advised'」2026-09-13
+  - OANDA Japan「WTI原油見通し：中東情勢の悪化によるホルムズ海峡の封鎖継続懸念から原油価格上昇」2026-09-04
+  - 外為どっとコム「来週のドル円相場はどうなる？9/14週のイベント予定」2026-09-13
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🟡グレー（positive-box の「自律反発の動きが出やすい」を伝聞表現に軟化）→ 修正適用 → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3箇所✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④出典8媒体✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3箇所✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典8媒体以上✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告43件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-14-nikkei-drop-openai-ipo-delay.html
+- commit: b0878de（main へ push 済み）
+
+---
+
 ## 2026-09-13
 - 判定: ✅ 公開済み
 - 選定トピック: FOMC＋日銀 同週利上げ観測──日米両中銀が同時に動く「歴史的な週」、ドル円と日本株への影響を3シナリオで中立整理（カテゴリ: 今日のニュース）
