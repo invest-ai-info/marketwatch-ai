@@ -1,3 +1,4 @@
+2026-09-14 autodraft: 全topic下書き済み（63件すべてが draft-*.html または guides.html で確認済み）。新規生成なし。キュー補充が必要です。
 2026-09-14 autopublish: guide-information-lag.html 公開済み ✅ 決定論緑・Opus🟡グレー修正→独立白確認 https://marketwatch-jp.com/guide-information-lag.html
 2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（Opusコンプラ🔴黒①②③・数値訂正3件要人間レビュー）
 
