@@ -273,3 +273,24 @@
 - 品質ルーブリック：自己採点で5観点中②「株式併合」「株式等売渡請求」に初出説明がない点を⚠️と自己判定→§4③に各用語の平易な補足（括弧書き）を追加→再採点で5観点すべて✅。
 
 **公開**: `guide-tse-delisting-criteria.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-trading-hours-close.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-benchmark-comparison.html`・`guide-company-4588-oncolys.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告41件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 7fd37fe）。
+
+### ✅ 2026-09-14 キュー#13「信用取引の規制（増担保・注意喚起）」 margin-regulation 🚧
+
+**題材**: TSE_GUIDE.md キュー#13「信用取引の規制（増担保・注意喚起）」（slug: `margin-regulation`、絵文字: 🚧、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`・`laws.e-gov.go.jp`ともcurl（素のUA、偽装なし）でHTTP 200・到達可能（トップページ実測）。以下のJPX一次情報を実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/markets/equities/margin-daily/index.html（信用取引に関する日々公表・更新日2026/09/11）— 「日々公表銘柄」は「信用取引残高の公表を日々行うことにより投資者に信用取引の利用に関して注意を促すためのものであり、信用取引に関する規制措置を実施している銘柄ではありません」との定義、および「日々公表銘柄への指定に加えて、信用取引に関する規制を行っている銘柄については※」という凡例を逐語確認。
+- https://www.jpx.co.jp/markets/equities/margin-reg/index.html（信用取引に関する規制等・更新日2026/09/11）— 実施中銘柄の一覧（銘柄名・コード・実施日・規制内容・該当基準の列構成）を実際に確認（個別銘柄名は本文に転記せず）。
+- https://www.jpx.co.jp/equities/trading/margin/regulations/index.html（信用取引・貸借取引に関する規制）— 「委託保証金率の引上げ等を行います（『信用取引に関する規制』）」の位置づけと、貸借取引側の別規制（貸株注意喚起通知等）の存在を確認。
+- https://www.jpx.co.jp/rules-participants/rules/doc/agreement/tvdivq0000001wh1-att/guideline_kisei.pdf（信用取引に係る委託保証金の率の引上げ措置等に関するガイドライン、全9頁）— pypdf（cffi依存の破損を`pip install --force-reinstall cffi`で解消後に利用可）で全文抽出し、実施基準（残高基準・信用取引売買比率基準・売買回転率基準・特例基準）、第一次〜第四次措置の内容（各段階+20%・うち現金20%・100%超で新規禁止）、解除基準（5営業日連続で売残高比率12%未満・買残高比率24%未満・株価乖離15%未満）を逐語確認。
+- https://www.jpx.co.jp/equities/trading/margin/outline/tvdivq0000007szb-att/tvdivq000000toqj.pdf（信用取引制度の概要、2023年4月版）— 通常の委託保証金率「新規取引に係る約定価額の30%以上（最低30万円）」を確認。
+
+確認日：2026-09-14（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus、別セッション2回）：
+- 【初期判定】🟡グレー（黒0）— ①「基準を満たす→翌営業日以降に第一次措置が実施される」という言い切りが、ガイドライン注１の「取引所が残高の推移を注視する必要があると判断した場合には、翌営業日に改めて基準への該当を確認したうえで実施することができる」という裁量余地を欠落させていた ②「既存建玉の決済は制限されない」の説明が、取引所の増担保規制としては正しいものの、JPXが別途案内する証券会社独自ルール・貸借取引規制による制限の可能性に触れておらず一面的だった。
+- 2点とも適用修正（事実・数値・SVG・構造・引用ブロックは不変。①「実施されうる」への軟化＋注記追加、②JPX「信用取引制度の概要」「信用取引・貸借取引に関する規制」からの追加引用による留保の補強）。あわせて引用の体裁精度向上として「当取引所が」の「当」の脱落1件を本セッションで追加修正。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・初見のつもりで確認、JPX一次情報を自分で再取得しガイドラインPDFとの逐語照合を実施）→ 🟢白（新規の法務リスクなし、弁護士相談アジェンダへの追加不要）。実在の指定銘柄名を一切転記していない設計を評価。任意所見（30秒まとめに証券会社側ルールの留保を一言足すとより堅牢）は非ブロッキングにつき今回は見送り。
+- 品質ルーブリック：自己採点で5観点すべて✅（委託保証金率などの信用取引基礎用語は既存記事「信用取引の基礎」へスコープを委譲する設計で対応）。
+
+**公開**: `guide-tse-margin-regulation.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-delisting-criteria.html`の「次の記事」リンクを本記事に更新）→`check_site_consistency.py`（EXIT=0、警告43件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 99cb140）。
