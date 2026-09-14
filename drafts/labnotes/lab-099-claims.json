@@ -1,0 +1,47 @@
+{
+  "article_id": "099",
+  "claims": [
+    {
+      "label": "IS全体（登録前・rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "FWD全体（登録後・rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "k": 175,
+      "n": 343
+    },
+    {
+      "label": "FWD 4H足（rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "4h"},
+      "k": 60,
+      "n": 105
+    },
+    {
+      "label": "FWD 1H足（rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1h"},
+      "k": 104,
+      "n": 224
+    },
+    {
+      "label": "FWD trend=上昇（rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "上昇"},
+      "k": 49,
+      "n": 78
+    },
+    {
+      "label": "FWD trend=下降（rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "下降"},
+      "k": 65,
+      "n": 155
+    },
+    {
+      "label": "FWD trend=中立・もみあい（rsi_oversold_bounce）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "中立・もみあい"},
+      "k": 61,
+      "n": 110
+    }
+  ]
+}
