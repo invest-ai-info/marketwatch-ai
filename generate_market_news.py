@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-15", "line": '・<b>2026-09-15</b>: 🧠 解説「<a href="guide-base-rate-neglect.html" style="color:#0969da"><b>ベースレート無視：分母を見ない判断の罠</b></a>」公開'},
         {"date": "2026-09-15", "line": '・<b>2026-09-15</b>: 🧪 解説「<a href="guide-signal-lab-099.html" style="color:#0969da"><b>RSI売られすぎ逆張り FWD N=343 RCI下限+0.012回復・4H足57%と上昇T63%の二極構造</b></a>」公開'},
         {"date": "2026-09-14", "line": '・<b>2026-09-14</b>: 📰 解説「<a href="guide-news-2026-09-14-nikkei-drop-openai-ipo-delay.html" style="color:#0969da"><b>【9/14】日経518円安──OpenAI IPO延期と原油高の2要因を中立整理</b></a>」公開'},
         {"date": "2026-09-14", "line": '・<b>2026-09-14</b>: 🚧 解説「<a href="guide-tse-margin-regulation.html" style="color:#0969da"><b>信用取引の規制（増担保・注意喚起）</b></a>」公開'},
