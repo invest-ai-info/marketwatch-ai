@@ -253,4 +253,5 @@ SYNC_FILES = [
     "guide-news-2026-09-13-fomc-boj-dual-hike-week.html",
     "guide-information-lag.html",
     "guide-tse-margin-regulation.html",
+    "guide-news-2026-09-14-nikkei-drop-openai-ipo-delay.html",
 ]
