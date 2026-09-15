@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-  <title>AIシグナル研究日誌 #100｜上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・昇格157日目） - MarketWatch AI</title>
+  <title>AIシグナル研究日誌 #100｜上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・登録86日目） - MarketWatch AI</title>
   <meta name="description" content="上昇トレンド中の逆張り買い（N=307）をRSI型とBB型に分解。RSI売られすぎ型は61.6%（RCI下限+0.181）と際立つ一方、BB下限タッチ型は43.2%（RCI下限-0.134）と損益分岐付近。指数グループではIS/FWDで29.8pp急落という過学習の痕跡も確認。研究日誌第100回。">
   <meta name="keywords" content="AIシグナル,検証,上昇トレンド,逆張り,RSI売られすぎ,BB下限タッチ,前向き検証,研究日誌">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-100.html">
@@ -24,7 +24,7 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "AIシグナル研究日誌 #100｜上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・昇格157日目）",
+    "headline": "AIシグナル研究日誌 #100｜上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・登録86日目）",
     "description": "上昇トレンド中の逆張り買い（N=307）をRSI型とBB型に分解。RSI売られすぎ型61.6%（RCI下限+0.181）とBB下限タッチ型43.2%（RCI下限-0.134）の分化、指数IS/FWD乖離29.8ppの構造的要因を解析。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
@@ -257,21 +257,21 @@
       ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
     </div>
 
-    <h1>🧪 AIシグナル研究日誌 #100<br><small style="font-size:.65em;color:#57606a;font-weight:400">上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・昇格157日目）</small></h1>
+    <h1>🧪 AIシグナル研究日誌 #100<br><small style="font-size:.65em;color:#57606a;font-weight:400">上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307・登録86日目）</small></h1>
     <div class="meta-line">
       カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年9月16日 &nbsp;|&nbsp; 読了：約12分
     </div>
 
     <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="../guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI売られすぎ反発・BB下限タッチ等）がチャートのどの瞬間かを図解で確認できます。</div>
 
-    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第100回です。今回は、2026年6月22日に登録した「上昇トレンド中の逆張り買い（trend=上昇×reversalL）」仮説の昇格157日目の状態を解剖します。</p>
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第100回です。今回は、2026年6月22日に登録した「上昇トレンド中の逆張り買い（trend=上昇×reversalL）」仮説の登録86日目（2026-06-22登録）の状態を解剖します。</p>
     <p>この仮説はすでに✅昇格ステータスにありますが、<strong>シグナル種別（RSI型 vs BB型）を分解すると、61%と43%という対照的な結果が浮かび上がります</strong>。また、サンプル外（前向き）検証期間の指数グループでは、サンプル内の68.6%から38.8%へと急落するという構造も確認されました。シロも黒も、全部公開します。</p>
 
     <!-- ② 30秒まとめ -->
     <div class="info-box">
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
       ① 前向き全体（FWD N=307）は勝率<strong>47.6%</strong>、期待値<strong>+0.108R</strong>、RCI[−0.021, +0.230]。全期間（N=408）はRCI全域プラス[+0.028, +0.251]<br>
-      ② RSI売られすぎ型（FWD N=73）は<strong>61.6%</strong>・RCI下限<strong>+0.181</strong>——統計的に有意な期待値プラス<br>
+      ② RSI売られすぎ型（FWD N=73）は<strong>61.6%</strong>・RCI下限<strong>+0.181</strong>——CI下限がゼロを上回る状態（事後に分解した部分集合のため確証ではない）<br>
       ③ BB下限タッチ型（FWD N=234）は<strong>43.2%</strong>・RCI下限−0.134——損益分岐43%付近でほぼフラット<br>
       ④ 指数グループはIS（登録前）<strong>68.6%</strong>→FWD（前向き）<strong>38.8%</strong>と29.8pp急落——過学習の痕跡
     </div>
@@ -297,7 +297,7 @@
       <li><strong>フィルタ</strong>: trend=上昇（上位足トレンド判定）× reversal_long=True（RSI売られすぎ反発 or BB下限タッチによるロング）</li>
       <li><strong>種別</strong>: edge（期待値プラスが統計的に有意になることを期待）</li>
       <li><strong>昇格条件</strong>: 前向きN≥80かつ平均RのCI下限&gt;0（2回連続達成）</li>
-      <li><strong>現在の状態</strong>: ✅昇格（promote_strikes=0, demote_strikes=1——降格1回未満で昇格維持中）</li>
+      <li><strong>現在の状態</strong>: ✅昇格（promote_strikes=0, demote_strikes=1——降格確定条件（基準割れ2回連続）には未達のため昇格維持中）</li>
     </ul>
     <p>2026年9月13日時点（#097執筆時）に demote_strikes=1 でした。今日（2026-09-16）の更新でも昇格が維持されています。</p>
 
@@ -416,7 +416,7 @@
       <tr><td>BB下限タッチ（bb_lower_touch）</td><td>234</td><td>43.2%</td><td>+0.006R</td><td>[−0.134, +0.155]</td><td>🟡 ほぼフラット</td></tr>
     </table>
 
-    <p>RSI型はFWD勝率61.6%・RCI下限+0.181と<strong>統計的に有意な期待値プラス</strong>を示しています。一方、BB型は43.2%と損益分岐43%付近にとどまり、RCIはゼロをまたいでいます。</p>
+    <p>RSI型はFWD勝率61.6%・RCI下限+0.181と<strong>CI下限がゼロを上回る状態（事後に分解した部分集合のため確証ではない）</strong>を示しています。一方、BB型は43.2%と損益分岐43%付近にとどまり、RCIはゼロをまたいでいます。</p>
 
     <!-- SVG図2: RSI型 vs BB型 比較バーチャート -->
     <div class="chart-figure">
@@ -512,7 +512,7 @@
       <tr><td>上昇×逆張り（reversal_long=True）</td><td>307</td><td>47.6%</td><td>+0.108R</td><td>[−0.021, +0.230]</td></tr>
     </table>
 
-    <p>上昇トレンド中のロング全体（順張り含む）は42.0%・avgR−0.022Rと損益分岐を下回っています。それに対し、逆張り（reversalL）に絞ると47.6%・avgR+0.108Rと優位な差が見られます。</p>
+    <p>上昇トレンド中のロング全体（順張り含む）は42.0%・avgR−0.022Rと損益分岐を下回っています。それに対し、逆張り（reversalL）に絞ると47.6%・avgR+0.108Rと相対的に高い値となっています（RCIはゼロをまたぐため優位性は未確定）。</p>
     <p>この比較は参考値です（非逆張りを直接フィルタする方法がないため、補集合として計算）。それでも「上昇トレンドに乗るだけでは期待値プラスにならない」「タイミング（押し目）が重要」という示唆は、データの一致した方向性と言えます。</p>
 
     <!-- §7 まとめ -->
@@ -601,6 +601,7 @@
 <tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.18 CI[+0.01〜+0.35]（158/312・勝率51%）</td><td>⛔反証</td></tr>
 <tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R −0.11 CI[−0.27〜+0.05]（109/286・勝率38%）</td><td>⛔反証</td></tr>
 </table>
+    <p class="meta-line" style="font-size:.82em;color:#57606a;margin-top:8px">※ N≤5の行（例：N=1で勝率100%等）は信頼区間が極めて広く参考値です。昇格・降格の判定はN≥80（または🏁N≥30）の行のみ対象となります。</p>
 
     <!-- 関連カード -->
     <div class="cta-box">
@@ -627,7 +628,7 @@
     </div>
 
     <!-- ③ 末尾免責 -->
-    <p class="disclaimer">
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
       本記事は情報提供のみを目的としており、特定の金融商品の売買を勧誘・推奨するものではありません。掲載データはシグナルシステムが過去に発火した記録に基づく統計であり、将来の成果を保証するものではありません。投資にはリスクが伴い、元本を割り込む可能性があります。投資判断はご自身の責任において行ってください。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録を行っておりません。
     </p>
 
