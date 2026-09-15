@@ -1,0 +1,71 @@
+{
+  "article_id": "100",
+  "claims": [
+    {
+      "label": "FWD全体（前向きN=307）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-22"},
+      "k": 146,
+      "n": 307
+    },
+    {
+      "label": "IS全体（登録前 N=101）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-22"},
+      "k": 54,
+      "n": 101
+    },
+    {
+      "label": "AllTime全期間（N=408）",
+      "filter": {"trend": "上昇", "reversal_long": true},
+      "k": 200,
+      "n": 408
+    },
+    {
+      "label": "FWD RSI型（rsi_oversold_bounce × trend=上昇）N=73",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-22"},
+      "k": 45,
+      "n": 73
+    },
+    {
+      "label": "FWD BB型（bb_lower_touch × trend=上昇）N=234",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-22"},
+      "k": 101,
+      "n": 234
+    },
+    {
+      "label": "FWD 日足（1d × trend=上昇 × reversalL）N=22",
+      "filter": {"trend": "上昇", "reversal_long": true, "tf": "1d", "fired_from": "2026-06-22"},
+      "k": 15,
+      "n": 22
+    },
+    {
+      "label": "FWD 1時間足（1h × trend=上昇 × reversalL）N=178",
+      "filter": {"trend": "上昇", "reversal_long": true, "tf": "1h", "fired_from": "2026-06-22"},
+      "k": 83,
+      "n": 178
+    },
+    {
+      "label": "FWD 4時間足（4h × trend=上昇 × reversalL）N=107",
+      "filter": {"trend": "上昇", "reversal_long": true, "tf": "4h", "fired_from": "2026-06-22"},
+      "k": 48,
+      "n": 107
+    },
+    {
+      "label": "IS 指数グループ（index × trend=上昇 × reversalL）N=51",
+      "filter": {"group": "index", "trend": "上昇", "reversal_long": true, "fired_before": "2026-06-22"},
+      "k": 35,
+      "n": 51
+    },
+    {
+      "label": "FWD 指数グループ（index × trend=上昇 × reversalL）N=80",
+      "filter": {"group": "index", "trend": "上昇", "reversal_long": true, "fired_from": "2026-06-22"},
+      "k": 31,
+      "n": 80
+    },
+    {
+      "label": "FWD 上昇×ロング全体（比較対照）N=936",
+      "filter": {"trend": "上昇", "direction": "long", "fired_from": "2026-06-22"},
+      "k": 393,
+      "n": 936
+    }
+  ]
+}
