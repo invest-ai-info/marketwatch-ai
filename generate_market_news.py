@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-16", "line": '・<b>2026-09-16</b>: 🧪 解説「<a href="guide-signal-lab-100.html" style="color:#0969da"><b>上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307）</b></a>」公開'},
         {"date": "2026-09-15", "line": '・<b>2026-09-15</b>: 📰 解説「<a href="guide-news-2026-09-15-us10y-5percent-fomc-open.html" style="color:#0969da"><b>【9/15】米10年債利回り5%突破──2007年7月以来の高水準を中立整理</b></a>」公開'},
         {"date": "2026-09-15", "line": '・<b>2026-09-15</b>: 📦 解説「<a href="guide-tse-off-auction-distribution.html" style="color:#0969da"><b>立会外分売とは</b></a>」公開'},
         {"date": "2026-09-15", "line": '・<b>2026-09-15</b>: 🧠 解説「<a href="guide-base-rate-neglect.html" style="color:#0969da"><b>ベースレート無視：分母を見ない判断の罠</b></a>」公開'},
