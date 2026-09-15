@@ -256,4 +256,5 @@ SYNC_FILES = [
     "guide-news-2026-09-14-nikkei-drop-openai-ipo-delay.html",
     "guide-signal-lab-099.html",
     "guide-base-rate-neglect.html",
+    "guide-tse-off-auction-distribution.html",
 ]
