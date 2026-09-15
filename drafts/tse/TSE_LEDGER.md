@@ -294,3 +294,21 @@
 - 品質ルーブリック：自己採点で5観点すべて✅（委託保証金率などの信用取引基礎用語は既存記事「信用取引の基礎」へスコープを委譲する設計で対応）。
 
 **公開**: `guide-tse-margin-regulation.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-delisting-criteria.html`の「次の記事」リンクを本記事に更新）→`check_site_consistency.py`（EXIT=0、警告43件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 99cb140）。
+
+### ✅ 2026-09-15 キュー#14「立会外分売」 off-auction-distribution 📦
+
+**題材**: TSE_GUIDE.md キュー#14「立会外分売」（slug: `off-auction-distribution`、絵文字: 📦、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurl（素のUA、偽装なし）でHTTP 200・到達可能（トップページ実測）。以下のJPX一次情報を実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/glossary/ta/281.html（用語集「立会外分売」・更新日2025/01/20）— 制度の定義（「売買立会外で、大量の売注文を分売する売買方法」「上場会社の株式分布状況の改善、特に個人株主の増大を図るための方策」）、手順（取引所への届出→立会終了後に条件発表→翌日8:00〜8:45に申込み受付→分売は届出日の最終値段を基準にした固定値段で成立）、禁止事項（分売値段の基準となる終値形成への取引参加者自己等の関与、条件発表前の買付勧誘の禁止）を逐語確認。
+- https://www.jpx.co.jp/markets/equities/off-auction-distro/（立会外分売情報・2026/09/01更新）— 直近2週間分の実施実績一覧（実施日・銘柄名・コード・前日終値・分売数量・1人あたり上限・分売目的・分売値段・約定数量）を実際に確認。直近4件（2026/09/01〜08/19）はいずれも前日終値から約2.9〜3.0%の値引き（当サイトによる算出）で、約定数量が分売数量と一致（全数成立）していたことをデータから確認。
+
+確認日：2026-09-15（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus、別セッション2回）：
+- 【初期判定】🟡グレー（黒0）— ①§6②「値下がり幅が小さければ…早期に市場で売却する投資家が一定数存在する」が、TSE_GUIDE絶対条件「儲かる手法として書かない」に接近する条件付き収益の示唆で、かつ出典が「証券会社の解説コラム等」という検証不能な二次情報の伝聞だった ②§6①「まとまった数量を割引価格で取得できる機会になりえます」が利益示唆寄りのフレーミング ③§4「4件いずれも約定数量が分売数量と一致」が、将来も売り切れる／人気があるという含意に読まれうる余地があった
+- 3点すべて適用修正（事実・数値・表・SVG・見出し構成は不変。表現の軟化と非推奨の明示のみ）：①を削除し「収益が見込める手法として紹介するものではありません」を明記する記述に置換／②を「あらかじめ決まった固定値段でまとまった数量を取得する方法の一つ」に中立化／③に「今後の分売が同じ割引率や成立状況になることを示すものではありません」を追記。修正後に`check_guide_draft.py`再実行しGREEN、kinsho-v1は3箇所を維持。
+- 品質ルーブリック：自己採点で5観点すべて✅（メタキーワードに本文未使用の「ToSTNeT」があったため「分売値段」に差し替え）。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・初見のつもりで確認、断定表現・個別銘柄名・証券会社推奨・kinsho-v1・一次情報の出典と確認日を個別に再検証）→ 🟢白（修正不要。個別銘柄名・証券コードは本文に0件、証券会社の推奨・比較なしを確認。弁護士相談アジェンダへの追加不要）。
+
+**公開**: `guide-tse-off-auction-distribution.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-margin-regulation.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-base-rate-neglect.html`・`guide-information-lag.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告43件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit c8a035f）。
