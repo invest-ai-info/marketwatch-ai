@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-09-15
+- 判定: ✅ 公開済み
+- 選定トピック: 米10年債利回り5%突破──2007年7月以来の高水準、FOMC開幕当日の市場論点を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/15（火）に米10年国債利回りが5.02%に達し2007年7月以来の高水準を更新。FOMC利上げ確率90%超・ブレント原油100ドル超・FOMC開幕当日（結果9/17JST早朝）が重なる複合局面。9/10記事（ピーク観測・5%未達）との差別化は「5%突破確定」という新事実、9/13記事（FOMC+日銀同週）との差別化は「利回り水準・5%の意味」への焦点移動で可能。
+- 出典（確認済み・11系統）:
+  - Bloomberg「US 10-Year Yield Tops 5% as Inflation and Supply Concerns Intensify」2026-09-14
+  - CNBC「10-year Treasury yield hits 5% before reversing as traders await Fed meeting」2026-09-14
+  - UPI「10-year Treasury yields briefly hit 5% mark」2026-09-14
+  - Seoul Economic Daily「U.S. 10-Year Treasury Yield Tops 5% for First Time Since 2023」2026-09-15
+  - Tickmill「Daily Market Outlook, September 15, 2026」
+  - BLS公式（一次情報）「Consumer Price Index Summary - 2026 M08 Results」2026-09-11
+  - 財経新聞「日経平均大引け：前日比8.89円安の63484.10円」2026-09-15
+  - OANDA Japan「WTI原油見通し：原油供給への懸念が続いている影響で、原油価格は反発」2026-09-15
+  - ING THINK「FOMC preview: Fed set to hike 25bp in recalibration move」
+  - Seeking Alpha「FOMC Preview: Fed Set To Hike 25bp In Recalibration Move」
+  - Achiever FX「FOMC September 2026 Preview: Fed Poised to Hike as Oil Reignites Inflation」
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🟢白 → 修正なし → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④出典11系統✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典11系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告43件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-15-us10y-5percent-fomc-open.html
+- commit: 2a62dc0（main へ push 済み）
+
+---
+
 ## 2026-09-14
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均518円安──中東・原油高＋OpenAI IPO延期が重なった日の2要因を中立整理（カテゴリ: 今日のニュース）
