@@ -1,3 +1,4 @@
+2026-09-16 autopublish: guide-average-vs-median-return.html 公開済み ✅ 決定論緑・Opus🟡グレー修正(3件)→独立白確認 https://marketwatch-jp.com/guide-average-vs-median-return.html
 2026-09-15 autopublish: guide-base-rate-neglect.html 公開済み ✅ 決定論緑・Opus🟡グレー修正→独立白確認 https://marketwatch-jp.com/guide-base-rate-neglect.html
 2026-09-15 signal-lab: guide-signal-lab-099.html ✅ 公開済み（verify7/7緑・Opus3rd🟢白・全ゲート通過）
 2026-09-14 autodraft: 全topic下書き済み（63件すべてが draft-*.html または guides.html で確認済み）。新規生成なし。キュー補充が必要です。
