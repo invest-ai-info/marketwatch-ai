@@ -257,4 +257,5 @@ SYNC_FILES = [
     "guide-signal-lab-099.html",
     "guide-base-rate-neglect.html",
     "guide-tse-off-auction-distribution.html",
+    "guide-news-2026-09-15-us10y-5percent-fomc-open.html",
 ]
