@@ -259,4 +259,5 @@ SYNC_FILES = [
     "guide-tse-off-auction-distribution.html",
     "guide-news-2026-09-15-us10y-5percent-fomc-open.html",
     "guide-signal-lab-100.html",
+    "guide-average-vs-median-return.html",
 ]
