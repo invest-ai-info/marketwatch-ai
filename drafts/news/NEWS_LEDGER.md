@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-09-16
+- 判定: ✅ 公開済み
+- 選定トピック: FOMC決定日に日経平均0.7%安──BOJ前夜の円高・輸出株圧力と今夜の3注目点を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/16（水）はFOMC決定日（結果は9/17 JST 3時）とBOJ会合（17〜18日）が連続する歴史的な「二大中銀同週」局面。日経平均が0.7%下落し、BOJ利上げ97%観測（Reuters調査66/68人）による円高プレッシャーと輸出株への重しが明確な市場テーマとして浮上。前日（9/15）の「10年債利回り5%突破・FOMC開幕」との差別化は、今回は「確定した株価下落の原因分析＋3シナリオの論点整理」への焦点移動で可能。
+- 出典（確認済み・11系統以上）:
+  - 24/7 Wall St.「Nikkei 225 slides 0.7% after market opens on Sept 16, 2026」
+  - GuruFocus「Nikkei 225 Drops 0.7% Amid BOJ Rate Hike Speculations」
+  - 財経新聞「日経平均大引け：前日比8.89円安の63484.10円」2026-09-15
+  - FXStreet「Reuters poll: 66/68 economists expect BOJ hike to 1.25%」2026-09-10
+  - OANDA JP「FOMC前の市況」2026-09-16
+  - 外為どっとコム「ドル/円9月16日見通し」2026-09-16
+  - 財経新聞「NY為替：FOMC利上げ織り込みドル買いが再開」2026-09-16
+  - Washington Post「Warsh: inflation still too high, further action may be needed」2026-08-28
+  - FedRateCalc / Kiplinger / KuCoin（FOMC確率・スケジュール）
+  - IDNFinancials「BOJ set to raise rates to 1.25% at September meeting」
+  - Charles Schwab「Nikkei Under Pressure Amid Dual Rate Hike Expectations」
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🟡グレー（断定表現2件・誤字1件） → 軽微修正3件適用 → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④出典9系統✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典9系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告44件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-16-fomc-decision-day-nikkei-boj.html
+- commit: 6d95f8f（main へ push 済み）
+
+---
+
 ## 2026-09-15
 - 判定: ✅ 公開済み
 - 選定トピック: 米10年債利回り5%突破──2007年7月以来の高水準、FOMC開幕当日の市場論点を中立整理（カテゴリ: 今日のニュース）
