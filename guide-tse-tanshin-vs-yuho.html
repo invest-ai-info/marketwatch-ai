@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>決算短信と有価証券報告書の違い｜速さと厳密さ、どちらを見ているか - MarketWatch AI</title>
+  <meta name="description" content="決算短信は取引所の上場規程にもとづく「速報」、有価証券報告書は金融商品取引法にもとづく「法定開示」。開示のタイミング・監査の有無・記載の粒度がなぜ違うのか、JPXの作成要領と金融商品取引法の条文を一次情報として東証のしくみシリーズ第15回で解説します。">
+  <meta name="keywords" content="決算短信,有価証券報告書,EDINET,TDnet,上場規程,金融商品取引法,東証のしくみ,JPX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-tse-tanshin-vs-yuho.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="決算短信と有価証券報告書の違い｜速さと厳密さ、どちらを見ているか">
+  <meta property="og:description" content="決算短信は取引所ルールの速報、有価証券報告書は金商法の法定開示。開示のタイミング・監査の有無・記載粒度の違いをJPXと金商法の一次情報から解説。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-tse-tanshin-vs-yuho.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "決算短信と有価証券報告書の違い｜速さと厳密さ、どちらを見ているか",
+    "description": "決算短信は取引所ルールの速報、有価証券報告書は金商法の法定開示。開示のタイミング・監査の有無・記載粒度の違いをJPXと金商法の一次情報から解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-16",
+    "dateModified": "2026-09-16",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-tse-tanshin-vs-yuho.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 決算短信と有価証券報告書の違い
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は東京証券取引所や金融商品取引法にもとづく開示制度を一般的に解説する「情報提供」であり、特定銘柄の売買推奨や投資助言ではありません。制度は変更されることがあるため、実際の取引前に必ずご自身で一次情報をご確認ください。</div>
+
+    <h1>📑 決算短信と有価証券報告書の違い｜速さと厳密さ、どちらを見ているか</h1>
+    <div class="meta-line">公開日：2026 年 9 月 16 日 ／ 読了時間：約 9 分 ／ カテゴリ：東証のしくみ（第15回）</div>
+
+    <p>「決算発表」というと、多くの投資家がまず思い浮かべるのは<strong>決算短信</strong>でしょう。四半期ごとにニュースサイトが取り上げ、株価がその日に大きく動くこともある、あの資料です。しかし同じ会社の同じ決算について、数か月後に<strong>有価証券報告書（有報）</strong>という、決算短信よりずっと分厚い書類がもう一度公表されることをご存じでしょうか。同じ決算を扱っているのに、なぜ2種類の書類が別々のタイミングで出てくるのか——この疑問に、一次情報だけで答えます。</p>
+    <p>この<strong>「東証のしくみ」シリーズ</strong>は、日本の株式市場の制度・手続きだけを扱い、個別銘柄の業績評価や売買判断には踏み込みません。第15回のテーマは<strong>「決算短信と有価証券報告書の違い」</strong>です。<strong>東証のしくみシリーズ第1回「適時開示（TDnet）」</strong>で、決算短信は適時開示の対象であり、有価証券報告書のような法定開示とは別の取引所ルールだと触れましたが、本記事ではその違いを一次情報から掘り下げます（確認日は本文中に記載）。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li><strong>決算短信</strong>は東証の<strong>上場規程（上場規程第404条）にもとづく取引所ルール</strong>。決算内容が定まったら<strong>「直ちに」</strong>開示する義務があり、実務上は<strong>決算期末後45日以内（30日以内がより望ましい）</strong>に開示するよう東証が要請している。<strong>監査・レビューの終了は開示の要件ではない</strong>ため、決算短信は速報という位置づけになる。</li>
+      <li><strong>有価証券報告書</strong>は<strong>金融商品取引法第24条にもとづく法定開示</strong>。提出期限は<strong>事業年度経過後3か月以内</strong>と法律で定められており、<strong>公認会計士又は監査法人による監査証明（金商法第193条の2）</strong>を受けたうえで金融庁の電子開示システム「EDINET」に提出される。</li>
+      <li>両者の違いをひと言でいえば、<strong>決算短信＝速さを優先した速報、有価証券報告書＝厳密さを優先した法定開示</strong>。決算短信の客観性は、後から出る有報・半期報告書の監査によって担保される、という関係にある。</li>
+      <li>2024年4月以降に開始する事業年度からは<strong>第1・第3四半期の法定「四半期報告書」が廃止</strong>され、四半期については決算短信（四半期決算短信）に一本化された。年1回の有価証券報告書と、半期ごとの半期報告書だけが法定開示として残っている。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">決算短信とは何か——取引所ルールに基づく「速報」</a></li>
+        <li><a href="#section-2">有価証券報告書とは何か——金商法に基づく「法定開示」</a></li>
+        <li><a href="#section-3">図解：決算発表から有報提出までのタイムライン</a></li>
+        <li><a href="#section-4">なぜ決算短信には監査が要らないのか</a></li>
+        <li><a href="#section-5">記載内容の粒度の違い——サマリーと詳細</a></li>
+        <li><a href="#section-6">個人投資家にどこで効いてくるか——どちらをいつ読むか</a></li>
+        <li><a href="#section-7">自分で一次情報を確かめる手順</a></li>
+        <li><a href="#section-8">よくある誤解</a></li>
+        <li><a href="#section-9">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ 決算短信とは何か——取引所ルールに基づく「速報」</h2>
+    <p>決算短信の位置づけは、JPXの「決算短信作成要領」に明記されています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「決算短信作成要領・四半期決算短信作成要領」より）：</strong>「上場会社は、事業年度又は連結会計年度に係る決算の内容、中間会計期間又は中間連結会計期間に係る決算の内容及び四半期累計期間又は四半期連結累計期間に係る決算の内容が定まった場合は、直ちにその内容を開示することが義務づけられています。」（<strong>上場規程第404条第1項、第2項</strong>）</div>
+    <p>ポイントは<strong>「直ちに」</strong>という言葉です。決算短信は、あらかじめ決まったカレンダー上の期日に出すものではなく、<strong>会社の中で決算数値が固まった時点で、すぐに開示しなければならない</strong>という建てつけになっています。とはいえ「すぐに」だけでは投資家にとって予見可能性が低いため、東証は開示時期の目安も具体的に示しています。</p>
+    <div class="info-box"><strong>💡 一次情報（同・作成要領2026年7月版より）：</strong>「事業年度又は連結会計年度に係る決算については、遅くとも決算期末後４５日（４５日目が休日である場合は、翌営業日）以内に内容のとりまとめを行い、その開示を行うことが適当であり、決算期末後３０日以内（期末が月末である場合は、翌月内）の開示が、より望ましいものと考えられます。」</div>
+    <p>この45日・30日という数字は法律上の義務ではなく<strong>東証の「要請」</strong>である点にも注意が必要です。実際、決算期末後50日を超える見込みとなった場合には、理由と今後の開示時期の見込みを開示するよう求められています——つまり<strong>「守れない場合の手続き」まで用意されている目安</strong>であり、絶対的な期限ではありません。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 有価証券報告書とは何か——金商法に基づく「法定開示」</h2>
+    <p>一方、有価証券報告書は決算短信とはまったく別の根拠にもとづいています。</p>
+    <div class="info-box"><strong>💡 一次情報（金融商品取引法第24条第1項より抜粋）：</strong>「有価証券の発行者である会社は…事業年度ごとに…有価証券報告書…を、内国会社にあつては当該事業年度経過後三月以内（やむを得ない理由により当該期間内に提出できないと認められる場合には、内閣府令で定めるところにより、あらかじめ内閣総理大臣の承認を受けた期間内）…に、内閣総理大臣に提出しなければならない。」</div>
+    <p>ここでの違いは明確です。決算短信が東証という<strong>取引所の自主規制ルール（上場規程）</strong>にもとづくのに対し、有価証券報告書は<strong>国会が定めた法律（金融商品取引法）</strong>にもとづく提出義務です。提出期限も「直ちに」ではなく<strong>「事業年度経過後3か月以内」</strong>と明確に数字で定められており、やむを得ない理由がある場合は内閣総理大臣（実務上は財務局長）の承認を受けて期限を延長できる規定も置かれています。</p>
+    <p>もう一つの大きな違いが監査です。金融商品取引法は次のように定めています。</p>
+    <div class="info-box"><strong>💡 一次情報（金融商品取引法第193条の2第1項より抜粋）：</strong>「金融商品取引所に上場されている有価証券の発行会社…が、この法律の規定により提出する貸借対照表、損益計算書その他の財務計算に関する書類…には、その者と特別の利害関係のない公認会計士又は監査法人…の監査証明を受けなければならない。」</div>
+    <p>つまり、有価証券報告書に記載される財務諸表には<strong>公認会計士または監査法人による監査証明が法律上の要件</strong>として課されています。提出先も決算短信とは異なり、金融庁が運営する電子開示システム<strong>EDINET</strong>です。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 図解：決算発表から有報提出までのタイムライン</h2>
+    <p>同じ事業年度の決算について、決算短信と有価証券報告書がどのような順番・間隔で出てくるかを図にすると、次のようになります（日数はJPXの要請・金商法の期限にもとづく仮の例）。</p>
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="tvy-title">
+        <title id="tvy-title">決算期末を起点に、決算短信の開示と有価証券報告書の提出がどのようなタイミングで並ぶかを示す概念図（仮の例）</title>
+        <text class="s-panel-label" x="20" y="22">決算期末からの日数と2つの開示（仮の例）</text>
+
+        <line x1="40" y1="140" x2="600" y2="140" class="s-axis"/>
+        <line x1="40" y1="132" x2="40" y2="148" class="s-axis"/>
+        <text x="40" y="165" text-anchor="middle" class="s-label-sm">決算期末</text>
+
+        <line x1="180" y1="132" x2="180" y2="148" class="s-axis"/>
+        <text x="180" y="165" text-anchor="middle" class="s-label-sm">期末後30日</text>
+        <rect x="120" y="60" width="120" height="56" rx="8" class="s-zone-g" stroke="#1a7f37" stroke-width="1.3"/>
+        <text x="180" y="82" text-anchor="middle" class="s-note-g" font-size="12">より望ましい</text>
+        <text x="180" y="100" text-anchor="middle" class="s-label-sm">決算短信の開示</text>
+
+        <line x1="280" y1="132" x2="280" y2="148" class="s-axis"/>
+        <text x="280" y="165" text-anchor="middle" class="s-label-sm">期末後45日</text>
+        <rect x="240" y="60" width="120" height="56" rx="8" class="s-zone-y" stroke="#9a6700" stroke-width="1.3"/>
+        <text x="300" y="82" text-anchor="middle" class="s-note" font-size="12">適当（目安）</text>
+        <text x="300" y="100" text-anchor="middle" class="s-label-sm">決算短信の開示</text>
+
+        <line x1="560" y1="132" x2="560" y2="148" class="s-axis"/>
+        <text x="560" y="165" text-anchor="middle" class="s-label-sm">期末後3か月</text>
+        <rect x="460" y="190" width="140" height="60" rx="8" fill="#ddf4ff" stroke="#0969da" stroke-width="1.3"/>
+        <text x="530" y="213" text-anchor="middle" class="s-note" font-size="12">法定期限（金商法）</text>
+        <text x="530" y="232" text-anchor="middle" class="s-label-sm">有価証券報告書を提出</text>
+
+        <line x1="180" y1="118" x2="180" y2="128" class="s-guide"/>
+        <line x1="300" y1="118" x2="300" y2="128" class="s-guide"/>
+        <line x1="530" y1="188" x2="530" y2="150" class="s-guide"/>
+
+        <text x="320" y="270" text-anchor="middle" class="s-label-sm">決算短信＝「直ちに」開示義務（30〜45日は東証の要請目安）／有報＝法律で3か月以内と規定</text>
+      </svg>
+      <figcaption class="chart-caption">▲ 決算期末を起点とした、決算短信の開示目安と有価証券報告書の法定提出期限の関係を示した仮の例。実際の開示日は会社ごとに異なる。※ 概念を示すイメージ図です。</figcaption>
+    </figure>
+    <p>図から分かるとおり、決算短信は<strong>事業年度が終わってから1〜1.5か月程度で先に出て</strong>、有価証券報告書は<strong>その後さらに1.5〜2か月ほどかけて</strong>出てきます。同じ決算について「先に速報、後から厳密な確定版」という順番になっているわけです。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ なぜ決算短信には監査が要らないのか</h2>
+    <p>「決算短信の数字と有報の数字が違ったらどうするのか」と疑問に思う人もいるかもしれません。この点についても、JPXの作成要領がはっきり説明しています。</p>
+    <div class="info-box"><strong>💡 一次情報（JPX「決算短信・四半期決算短信 作成要領等」2026年7月版より）：</strong>「通期及び第２四半期（中間期）に係る決算の内容の開示について、上場規程においては、『決算の内容が定まった場合』に直ちにその内容を開示することを求めており、監査やレビューの手続の終了は開示の要件とはしていません。…決算短信及び第２四半期（中間期）決算短信における決算の内容の客観性は、監査等により確定した決算の内容が法定開示として後から開示されることで、担保されることとなります。」</div>
+    <p>整理すると、決算短信と有価証券報告書は<strong>役割分担の関係</strong>にあります。決算短信は監査を待たずにいち早く投資家に決算の概要を届ける<strong>速報</strong>、有価証券報告書は公認会計士等の監査を経て内容を確定させる<strong>法定の確定版</strong>です。同じPDFで同じ会社の同じ決算の数字が2回出てくるのは、間違いではなく、この役割分担にもとづく制度上の仕組みです。実務上は決算短信の数値と有報の確定値が一致しないケースもありえますが、その場合は決算短信側で「決算発表資料の訂正」として開示する手続きが用意されています（上場規程第416条）。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 記載内容の粒度の違い——サマリーと詳細</h2>
+    <p>JPXの開示様式例のページを見ると、決算短信の参考様式は<strong>「サマリー情報」と「添付資料」</strong>で構成される比較的コンパクトな書式であるのに対し、有価証券報告書は「企業の概況」「事業の状況」「設備の状況」「提出会社の状況」「経理の状況」など、内閣府令（企業内容等の開示に関する内閣府令）で定められた多数の項目にわたる、はるかに分量の多い書類です。</p>
+    <table>
+      <thead><tr><th>比較項目</th><th>決算短信</th><th>有価証券報告書</th></tr></thead>
+      <tbody>
+        <tr><td>根拠</td><td>東証の上場規程（第404条）</td><td>金融商品取引法第24条</td></tr>
+        <tr><td>性質</td><td>取引所の自主規制ルール</td><td>法律にもとづく法定開示</td></tr>
+        <tr><td>開示タイミング</td><td>決算内容確定後「直ちに」（目安：期末後45日以内、30日以内がより望ましい）</td><td>事業年度経過後3か月以内</td></tr>
+        <tr><td>監査</td><td>不要（開示の要件ではない）</td><td>公認会計士・監査法人の監査証明が必須（金商法第193条の2）</td></tr>
+        <tr><td>提出・開示先</td><td>TDnet（適時開示情報閲覧サービス）</td><td>EDINET（金融庁の電子開示システム）</td></tr>
+        <tr><td>記載内容</td><td>サマリー情報＋添付資料</td><td>企業の概況・事業の状況・経理の状況など内閣府令で定める多数の項目</td></tr>
+      </tbody>
+    </table>
+    <p>この粒度の違いは、そのまま「何を知りたいときにどちらを読むか」の使い分けにつながります。次章で具体的に整理します。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 個人投資家にどこで効いてくるか——どちらをいつ読むか</h2>
+    <h3>① 決算そのものの数字をいち早く知りたいとき→決算短信</h3>
+    <p>売上高・営業利益・純利益といった主要な数値や、会社が出す業績予想の修正は、決算短信（TDnet）の方が有報より1.5〜2か月ほど早く出ます。決算発表の当日に株価が大きく動くことがあるのは、多くの投資家がこの決算短信をリアルタイムで見ているためです。<strong>本記事はこれを「決算短信さえ読めば十分」と勧めるものではなく、あくまで開示される順番の事実を述べるものです。</strong></p>
+    <h3>② 事業のリスク要因や詳しい財務内容を確認したいとき→有価証券報告書</h3>
+    <p>有価証券報告書には、決算短信には出てこない「事業等のリスク」「コーポレート・ガバナンスの状況」「大株主の状況」「役員報酬」など、監査を経た詳細な情報が記載されています。速報性よりも網羅性・厳密さを重視して確認したいときに向いています。</p>
+    <h3>③ 数字の「確定版」を後から突き合わせたいとき</h3>
+    <p>決算短信の速報値と、監査を経た有価証券報告書の確定値は、制度上あとから照合できる関係にあります。決算短信の段階の数字はあくまで速報であるという前提を踏まえたうえで利用することが、この制度を正しく使うポイントです。</p>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 自分で一次情報を確かめる手順</h2>
+    <p>このシリーズの立場として、制度の仕組みは必ず一次情報で確認します。決算短信と有価証券報告書については、以下の手順で確かめられます。</p>
+    <ol>
+      <li>決算短信そのものは、東証のしくみシリーズ第1回で扱った<strong>「適時開示情報閲覧サービス」</strong>（TDnetの一般公開サイト）で、会社名や証券コードから検索して確認できる。</li>
+      <li>決算短信の制度的な位置づけ・開示時期の目安は、JPXの「<a href="https://www.jpx.co.jp/equities/listed-co/format/summary/index.html" target="_blank" rel="noopener">決算短信作成要領・四半期決算短信作成要領</a>」のページから、掲載されているPDF（作成要領等）で確認できる。</li>
+      <li>有価証券報告書は、金融庁の電子開示システム<strong>「<a href="https://disclosure2.edinet-fsa.go.jp/" target="_blank" rel="noopener">EDINET</a>」</strong>で、会社名から無料で検索・閲覧できる。</li>
+      <li>提出期限・監査証明の根拠条文は、e-Govの法令検索で「<a href="https://laws.e-gov.go.jp/law/323AC0000000025" target="_blank" rel="noopener">金融商品取引法</a>」の第24条（有価証券報告書の提出）・第193条の2（監査証明）を検索して確認できる。</li>
+    </ol>
+    <div class="warning-box">本記事で引用した条文・作成要領の内容は確認日時点のものです。金融商品取引法や上場規程は改正されることがあるため、実際に期限や要件を確認する際は、その時点のe-Gov・JPX・金融庁の一次情報をご自身でご確認ください。</div>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ よくある誤解</h2>
+    <table>
+      <thead><tr><th>誤解</th><th>一次情報にもとづく整理</th></tr></thead>
+      <tbody>
+        <tr><td>決算短信も有価証券報告書も、どちらも監査済みの確定数値だ</td><td>誤り。<strong>決算短信には監査等の終了が開示要件として課されていない</strong>。監査を経た確定版は有価証券報告書（および半期報告書）</td></tr>
+        <tr><td>有価証券報告書の方が「格上」だから決算短信は読まなくてよい</td><td>誤り。両者は<strong>役割分担</strong>の関係。決算短信の方が2か月近く早く出るため、決算発表直後の情報として重要な意味を持つ</td></tr>
+        <tr><td>決算短信の提出期限は法律で決まっている</td><td>誤り。決算短信の開示時期は<strong>東証の要請にもとづく目安（45日・30日）</strong>であり、法律上の期限ではない。法律上「3か月以内」と定められているのは有価証券報告書の方</td></tr>
+        <tr><td>四半期はすべて決算短信と有価証券報告書の両方が出る</td><td>誤り。2024年4月以降開始の事業年度から<strong>第1・第3四半期の法定「四半期報告書」は廃止</strong>されており、その期については決算短信（四半期決算短信）のみが開示される</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Section 9 -->
+    <h2 id="section-9">9️⃣ まとめ</h2>
+    <p>東証のしくみシリーズ第15回「決算短信と有価証券報告書の違い」を整理します。</p>
+    <ul>
+      <li>決算短信は<strong>東証の上場規程（第404条）にもとづく取引所ルール</strong>で、決算内容確定後「直ちに」開示。目安は<strong>期末後45日以内（30日以内がより望ましい）</strong>で、<strong>監査等は開示の要件ではない</strong>速報。</li>
+      <li>有価証券報告書は<strong>金融商品取引法第24条にもとづく法定開示</strong>で、提出期限は<strong>事業年度経過後3か月以内</strong>。<strong>公認会計士・監査法人の監査証明</strong>（金商法第193条の2）を経てEDINETで公開される。</li>
+      <li>両者は優劣ではなく<strong>役割分担</strong>――決算短信＝速報、有価証券報告書＝厳密な確定版――の関係にある。</li>
+      <li>2024年4月以降の事業年度からは第1・第3四半期の法定「四半期報告書」が廃止され、四半期の開示は決算短信に一本化されている。</li>
+    </ul>
+    <p>本記事の制度の説明は、<strong>2026年9月16日時点</strong>でJPX公式サイト「<a href="https://www.jpx.co.jp/equities/listed-co/format/summary/index.html" target="_blank" rel="noopener">決算短信作成要領・四半期決算短信作成要領</a>」（掲載ページ更新日2026年7月22日、作成要領等本文2026年7月版）、およびe-Gov法令検索「<a href="https://laws.e-gov.go.jp/law/323AC0000000025" target="_blank" rel="noopener">金融商品取引法</a>」第24条・第193条の2の該当条文を実際に確認したうえで記載しています。制度は変更されることがあるため、実際の利用にあたっては、その時点の一次情報をご自身で確認してください。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📚 関連記事で決算の読み方をさらに深く</div>
+      <div class="cta-box-desc">決算短信・有価証券報告書に載っている数字そのものの読み方を知っておくと、どちらの書類を読むときにも役立ちます。</div>
+      <a class="cta-btn" href="guide-financial-statements.html">決算書の読み方入門を見る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-financial-statements.html">
+        <div class="related-card-title">📊 決算書の読み方入門</div>
+        <div class="related-card-desc">PL・BS・CFの財務三表を図解。決算短信・有報どちらに載っている数字を見るときにも役立つ基礎。</div>
+      </a>
+      <a class="related-card" href="guide-earnings-season.html">
+        <div class="related-card-title">📈 決算発表の見方入門</div>
+        <div class="related-card-desc">株価が動くのは実績の良し悪しより「予想との差」。決算短信が出た瞬間の値動きの読み方を解説。</div>
+      </a>
+      <a class="related-card" href="guide-tse-timely-disclosure.html">
+        <div class="related-card-title">📄 適時開示（TDnet）とは</div>
+        <div class="related-card-desc">東証のしくみシリーズ第1回。決算短信が開示される仕組みであるTDnetと適時開示制度の基礎。</div>
+      </a>
+    </div>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{max-width:900px;margin:28px auto 0;padding:0 16px}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:1fr}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="東証のしくみのシリーズ内移動">
+      <div class="mw-sernav-h">📚 東証のしくみ</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-tse-off-auction-distribution.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">立会外分売とは｜なぜ前日終値より安く売り出されるのか</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は東京証券取引所や金融商品取引法にもとづく開示制度に関する一般的な情報提供であり、特定銘柄の売買推奨や投資助言ではありません。制度の内容は変更されることがあるため、実際の取引にあたっては必ずご自身で最新の一次情報をご確認ください。投資には元本割れのリスクが伴います。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
