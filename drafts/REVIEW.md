@@ -1,4 +1,4 @@
-2026-09-17 signal-lab: draft-signal-lab-101.html 🔄ゲート中（verify実行前）
+2026-09-17 signal-lab: guide-signal-lab-101.html ✅ 公開済み（verify12/12緑・Opus1st🟡9修正→Opus2nd🟢白・全ゲート通過）
 2026-09-16 autopublish: guide-average-vs-median-return.html 公開済み ✅ 決定論緑・Opus🟡グレー修正(3件)→独立白確認 https://marketwatch-jp.com/guide-average-vs-median-return.html
 2026-09-15 autopublish: guide-base-rate-neglect.html 公開済み ✅ 決定論緑・Opus🟡グレー修正→独立白確認 https://marketwatch-jp.com/guide-base-rate-neglect.html
 2026-09-15 signal-lab: guide-signal-lab-099.html ✅ 公開済み（verify7/7緑・Opus3rd🟢白・全ゲート通過）
