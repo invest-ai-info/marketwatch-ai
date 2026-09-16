@@ -312,3 +312,23 @@
 - 【独立最終確認】（別セッション・model=opus・Readのみ・初見のつもりで確認、断定表現・個別銘柄名・証券会社推奨・kinsho-v1・一次情報の出典と確認日を個別に再検証）→ 🟢白（修正不要。個別銘柄名・証券コードは本文に0件、証券会社の推奨・比較なしを確認。弁護士相談アジェンダへの追加不要）。
 
 **公開**: `guide-tse-off-auction-distribution.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-margin-regulation.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事へ新規注入。既存の`guide-base-rate-neglect.html`・`guide-information-lag.html`のボタンも同時に差し替え）→`check_site_consistency.py`（EXIT=0、警告43件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit c8a035f）。
+
+### ✅ 2026-09-16 キュー#15「決算短信と有価証券報告書の違い」 tanshin-vs-yuho 📑
+
+**題材**: TSE_GUIDE.md キュー#15「決算短信と有価証券報告書の違い」（slug: `tanshin-vs-yuho`、絵文字: 📑、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurl（素のUA、偽装なし）でHTTP 200・到達可能（トップページ実測）。`faq.jpx.co.jp`は引き続き経路遮断（`CONNECT tunnel failed`、`connect_rejected`）だったが、本記事の執筆には`www.jpx.co.jp`本体と`laws.e-gov.go.jp`のAPIで十分な一次情報が得られたため依存なしで執筆完了。以下を実際に取得・確認：
+- https://www.jpx.co.jp/equities/listed-co/format/summary/index.html（決算短信作成要領・四半期決算短信作成要領・ページ更新日2026/07/22）— 決算内容確定後「直ちに」開示する義務（上場規程第404条第1項・第2項）を確認。
+- https://www.jpx.co.jp/equities/listed-co/format/summary/tvdivq0000004wuh-att/t13vrt0000010n9j.pdf（決算短信・四半期決算短信 作成要領等 2026年7月版、全66頁）— pypdf（`pip install --force-reinstall cffi`でcffi破損を解消後に利用可）で本文抽出し、45日以内が「適当」・30日以内が「より望ましい」・50日超過時の事後開示要請・監査等が開示要件ではない旨（上場規程第404条・第416条）を逐語確認。
+- https://laws.e-gov.go.jp/api/2/law_data/323AC0000000025（e-Gov法令API・金融商品取引法）— 第24条第1項「内国会社にあつては当該事業年度経過後三月以内」、第193条の2第1項「公認会計士又は監査法人…の監査証明を受けなければならない」を条文JSONから逐語抽出。
+- WebSearchで2024年4月以降開始事業年度からの第1・第3四半期「四半期報告書」廃止（半期報告書・有報への一本化）を複数の会計事務所解説で裏取り。
+
+確認日：2026-09-16（JST）。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus、別セッション3回）：
+- 【初期判定】🟡グレー（黒0、法務レーンは白）— 一次情報との逐語突合で事実精度2件を検出：①50日超過時の対応が「事前予告」であるかのような書き方だったが、実際は「超過確定後・決算内容の開示後遅滞なく」の事後開示要請だった ②「同じPDFで」という誤記（決算短信と有報は別書類であり本文の自己矛盾）。担当エージェントは編集権限外（事実記述の訂正は軽微修正の範囲外）として指摘のみ→メイン側で一次情報の文言に合わせて2点とも修正。
+- 【独立最終確認・1回目】（別セッション・model=opus・Readのみ・JPX PDFをe-Govと合わせ再取得し逐語照合）→ **🟡グレー（1件）**：上場規程404条の引用が「一次情報」と明示していながら逐語ではなく、「（第２四半期累計期間を除く）」等の除外規定が抜けていた（2024年4月改正後の条文構造）。法務リスクではなく引用精度の問題として弁護士相談アジェンダには追加不要と判定。→ 引用を実際のPDF本文どおりに逐語化（「義務づけ」→「義務付け」表記も公式に合わせる）。あわせて任意の改善提案（監査不要の説明に通期・中間期限定である旨の注記、SVGの目盛り位置微調整）も反映。
+- 【独立最終確認・2回目】（別セッション・model=opus・Readのみ・初見のつもりで再確認）→ 🟢白（291行の引用が除外規定を含む逐語形になっていることを確認、断定表現・個別銘柄推奨なし、免責kinsho-v1が冒頭・本文末・フッターの3箇所、出典・確認日明記）。任意所見（SVGの「期末後3か月」目盛りの微小なズレ）を追加反映。
+- 品質ルーブリック：自己採点で5観点すべて✅（EDINET・TDnet・監査証明等の専門語は本文中またはシリーズ第1回への参照で説明済み）。
+
+**公開**: `guide-tse-tanshin-vs-yuho.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認1回目🟡→修正→独立確認2回目🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-off-auction-distribution.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事は既に注入済み・別記事`guide-average-vs-median-return.html`へ新規注入）→`check_site_consistency.py`（EXIT=0、警告44件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 3da476c）。
