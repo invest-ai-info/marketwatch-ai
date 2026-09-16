@@ -5314,6 +5314,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-16", "line": '・<b>2026-09-16</b>: 📰 解説「<a href="guide-news-2026-09-16-fomc-decision-day-nikkei-boj.html" style="color:#0969da"><b>【9/16】FOMC決定日に日経0.7%安──BOJ前夜の円高圧力と3注目点</b></a>」公開'},
         {"date": "2026-09-16", "line": '・<b>2026-09-16</b>: 📑 解説「<a href="guide-tse-tanshin-vs-yuho.html" style="color:#0969da"><b>決算短信と有価証券報告書の違い</b></a>」公開'},
         {"date": "2026-09-16", "line": '・<b>2026-09-16</b>: 💰 解説「<a href="guide-average-vs-median-return.html" style="color:#0969da"><b>「平均で年◯%」は、自分の結果とは限らない</b></a>」公開'},
         {"date": "2026-09-16", "line": '・<b>2026-09-16</b>: 🧪 解説「<a href="guide-signal-lab-100.html" style="color:#0969da"><b>上昇トレンド中の逆張り買い——RSI型61%・BB型43%の内部分裂（N=307）</b></a>」公開'},
