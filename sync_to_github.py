@@ -262,4 +262,5 @@ SYNC_FILES = [
     "guide-average-vs-median-return.html",
     "guide-tse-tanshin-vs-yuho.html",
     "guide-news-2026-09-16-fomc-decision-day-nikkei-boj.html",
+    "guide-signal-lab-101.html",
 ]
