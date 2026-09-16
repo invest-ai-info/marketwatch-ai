@@ -260,4 +260,5 @@ SYNC_FILES = [
     "guide-news-2026-09-15-us10y-5percent-fomc-open.html",
     "guide-signal-lab-100.html",
     "guide-average-vs-median-return.html",
+    "guide-tse-tanshin-vs-yuho.html",
 ]
