@@ -263,4 +263,5 @@ SYNC_FILES = [
     "guide-tse-tanshin-vs-yuho.html",
     "guide-news-2026-09-16-fomc-decision-day-nikkei-boj.html",
     "guide-signal-lab-101.html",
+    "guide-expected-value-thinking.html",
 ]
