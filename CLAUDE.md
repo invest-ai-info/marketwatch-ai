@@ -44,7 +44,7 @@
 
 | ワークフロー | 頻度 (JST) | 役割 |
 |---|---|---|
-| **update-market-news.yml** | 朝 7 / 夕 16（30-90 分遅延） | 6 コアページ + 解説生成 |
+| **update-market-news.yml** | 朝 7 / 夕 16（cron は実測で1〜3時間遅延）＋**JP Stock Rankings 完了で即起動**（`workflow_run`・2026-09-17〜） | 6 コアページ + 解説生成。⚠️ `concurrency` は `cancel-in-progress: false`＝push 途中で殺されると次の run が古い土台で rebase 衝突して exit 128 になる（2026-09-17 実際に発生）。衝突時は生成物なので `-X theirs` で今回生成した側を採り3回まで再試行する |
 | **technical-alerts.yml** | 4 時間ごと（6 回/日、3 重 cron） | 18 銘柄テクニカル分析 → メール |
 | **technical-alerts-1h.yml** | 1 時間ごと | 1H 足データ収集（メールなし） |
 | **technical-alerts-1d.yml** 🆕 | 毎朝 06:20（NY引け後） | 日足データ収集（メールなし・記録のみ。上位足=週足・クールダウン72h・expired 21日。2026-06-11新設＝時間足勾配 1h<4h<1d? の検証用） |
@@ -296,7 +296,7 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 
 🔑 **区切りの良い時刻（:00 / :30）ほど遅い。半端な分にすると短くなる**（このリポジトリが 07:13 / 09:23 / 11:37 のような時刻を使っているのはそのため）。
 🔑 **時刻の精度が要るものは cron に頼らない**。使える手は2つ:
-1. **予約エージェント(routine)の push に相乗りする**＝routine は定刻に近い（`fundamental-context.json` の朝コミットは実測16件中14件が 06:13〜06:20 JST）。🚨 **ただし相乗りできるのは routine の push だけ**＝Actions が `GITHUB_TOKEN` で押したコミットはワークフローを起動しない（update-market-news の `jp-rankings.json` パス指定は**一度も発火していない**＝「遅延ゼロで反映」というコメントは実態と違う）。
+1. **予約エージェント(routine)の push に相乗りする**＝routine は定刻に近い（`fundamental-context.json` の朝コミットは実測16件中14件が 06:13〜06:20 JST）。🚨 **ただし相乗りできるのは routine の push だけ**＝Actions が `GITHUB_TOKEN` で押したコミットはワークフローを起動しない。実例: update-market-news の `jp-rankings.json` パス指定は**一度も発火していなかった**（push起動100件中0件）。→ **2026-09-17 に `workflow_run` へ繋ぎ替え済み**（相手の `name:` と一字一句合わせる／`conclusion == 'success'` に限定）。⚠️ **書いたつもりの繋ぎが黙って死ぬ**のが今回の教訓なので、`check_automation_health.py` §⑭ が「workflow_run 起動が直近3日にあるか」を見張る。
 2. **cron を複数本に増やして最初に当たったものを使う**（update-market-news が7:27/7:57/8:27/8:57 と4本置いているのはこの考え方）。重複送信の防止が要る場合は`actions/cache` を日付キーで使う（リポジトリに書かないので他を起こさない）。
 
 ---
