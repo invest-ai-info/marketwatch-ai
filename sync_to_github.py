@@ -265,4 +265,5 @@ SYNC_FILES = [
     "guide-signal-lab-101.html",
     "guide-expected-value-thinking.html",
     "guide-scam-debt-funded-investment.html",
+    "guide-tse-offering-schedule.html",
 ]
