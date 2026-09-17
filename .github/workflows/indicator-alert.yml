@@ -1,0 +1,40 @@
+name: Indicator Alert (before release)
+
+# 目的: 発表が迫っているときだけ「まもなく」と知らせる。
+#
+# 🚨 動機: 朝の便だけでは足りない。2026-09-17 の実損は **19:33 に建てて 20:00 発表**＝
+#    朝の記憶が薄れた夕方に起きた。判断の直前に、もう一度目に入れる必要がある。
+#
+# 🕐 精度について正直に（2026-09-17 実測）:
+#    毎時実行の実遅延は中央値 +34分・最大 +60分（news-ticker 200件）。
+#    つまり「きっかり1時間前」には送れない。そこで **残り45〜105分のものだけ送る**設計にした。
+#    毎時どこかで必ずこの窓に入るので、**発表の45分〜105分前に必ず1通**届く。
+#    本文の「あと◯分」は送信時に計算するので、遅延しても数字は常に正しい。
+#    ⚠️ cron の揺らぎで稀に2通届くことがある。状態を持つ複雑さより、
+#       リマインダーが1通余分に来るほうが害が小さいと判断した。
+#
+# ⚠️ 読むだけ。該当が無い時間は静かに終了する（メールは出ない）。
+
+on:
+  schedule:
+    - cron: '13 * * * *'   # 毎時13分（半端な分ほど cron の順番待ちが短い）
+  workflow_dispatch:
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Alert if a release is close
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+        run: python send_indicator_digest.py --mode alert
