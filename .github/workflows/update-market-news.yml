@@ -38,7 +38,11 @@ on:
 
 concurrency:
   group: update-market-news-${{ github.ref }}
-  cancel-in-progress: true
+  # 🚨 2026-09-17 変更: true だと **push の途中で殺される**ことがあり、
+  #    次の run が古い土台のまま走って rebase 衝突 → exit 128 で6コアページが更新されない。
+  #    （PRを短時間に4本マージした日に実際に発生）。生成物をコミットする job なので、
+  #    殺すのではなく**順番待ち**にする。1回2分程度なので待たせても害がない。
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -121,7 +125,24 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: update market news $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
-            # 競合回避: 先に API 経由で push されていた場合に備えて pull --rebase
-            git pull --rebase origin main || true
-            git push
+            # 🚨 2026-09-17 修正: 旧実装は `git pull --rebase origin main || true` だった。
+            #    競合すると **rebase 途中の detached HEAD のまま** 次の git push に進み、
+            #    "You are not currently on a branch" で exit 128（＝6コアページが更新されない）。
+            #    `|| true` が失敗を隠していたのが本質。
+            # 🔑 ここで衝突するのは index.html / sitemap.xml 等の**生成物**なので、
+            #    競合したら「いま生成したほう」を採る＝rebase 中の -X theirs（replay 側）。
+            # ⚠️ market-health-history.json のような追記型は、相手の1点を落とす可能性がある。
+            #    次回実行で新しい点が入るので自己回復する（ワークフロー全体を失敗させるより軽い）。
+            ok=0
+            for try in 1 2 3; do
+              git fetch origin main
+              if git rebase -X theirs origin/main && git push; then ok=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              echo "::warning::push に失敗したので再試行 ($try/3)"
+              sleep $((try * 10))
+            done
+            if [ "$ok" != 1 ]; then
+              echo "::error::生成物を push できなかった（3回試行）"
+              exit 1
+            fi
           fi
