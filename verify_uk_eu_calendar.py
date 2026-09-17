@@ -41,8 +41,11 @@ JST = dt.timezone(dt.timedelta(hours=9))
 UA = "Mozilla/5.0 (compatible; marketwatch-jp calendar verifier; +https://marketwatch-jp.com/)"
 
 # 政策金利の発表日（＝年間日程が公式に出ている＝機械突合に向く）
+# ⚠️ 2026-09-17 実地調査で判明: `upcoming-mpc-dates` は「次回だけ」しか載せない。
+#    年間日程は毎年12月に出る告知ページにある（年ごとに URL が変わるので年次で足す）。
 POLICY_SOURCES = [
-    ("BOE", "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates", "英中銀"),
+    ("BOE2026", "https://www.bankofengland.co.uk/news/2024/december/mpc-dates-for-2026", "英中銀"),
+    ("BOE2027", "https://www.bankofengland.co.uk/news/2025/december/mpc-dates-for-2027", "英中銀"),
     ("ECB", "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html", "ECB"),
 ]
 
@@ -51,7 +54,10 @@ RELEASE_SOURCES = [
     ("ONS 英CPI", "https://www.ons.gov.uk/economy/inflationandpriceindices/bulletins/consumerpriceinflation/latest"),
     ("ONS 英雇用", "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/latest"),
     ("ONS 英GDP", "https://www.ons.gov.uk/economy/grossdomesticproductgdp/bulletins/gdpmonthlyestimateuk/latest"),
-    ("Eurostat 指標", "https://ec.europa.eu/eurostat/web/main/news/euro-indicators"),
+    ("ONS 予定表(CPI)", "https://www.ons.gov.uk/releasecalendar/data?query=consumer+price+inflation"),
+    ("ONS 予定表(labour)", "https://www.ons.gov.uk/releasecalendar/data?query=labour+market+overview"),
+    ("ECB統計暦 HICP", "https://www.ecb.europa.eu/press/calendars/statscal/ges/html/sthicp.en.html"),
+    ("ECB統計暦 GDP", "https://www.ecb.europa.eu/press/calendars/statscal/ges/html/stgdp.en.html"),
 ]
 
 _FULL = ["January", "February", "March", "April", "May", "June",
@@ -80,6 +86,23 @@ def plain_text(html_text):
     return "\n".join(re.sub(r"[ \t]+", " ", ln).strip() for ln in t.splitlines() if ln.strip())
 
 
+SLASH_RE = re.compile(r"^(\d{2})/(\d{2})/(\d{4})$")
+
+
+def join_date_and_label(lines):
+    """「日付だけの行」の次行を説明として連結する（ECB のカレンダーがこの形）。"""
+    out = []
+    for i, ln in enumerate(lines):
+        m = SLASH_RE.match(ln.strip())
+        if not m:
+            out.append(ln)
+            continue
+        d, mo, y = m.groups()
+        nxt = lines[i + 1].strip() if i + 1 < len(lines) else ""
+        out.append(f"{int(d)} {_FULL[int(mo) - 1]} {y} | {nxt}")
+    return out
+
+
 def parse_dates(html_text, want=None):
     """ページから (date, その行のテキスト) を拾う。want があればその語を含む行だけ。
 
@@ -87,7 +110,7 @@ def parse_dates(html_text, want=None):
        **後ろの数字（＝2日目）を採る**（DMY_RE は範囲の前半を捨てる形にしてある）。
     """
     out = []
-    for ln in plain_text(html_text).splitlines():
+    for ln in join_date_and_label(plain_text(html_text).splitlines()):
         if want and want.lower() not in ln.lower():
             continue
         for d, mo, y in DMY_RE.findall(ln):
@@ -136,8 +159,9 @@ def ours_from_master(pattern):
 
 # 我々の登録名 ↔ 公式ページの対応。pattern は economic-events.json / ECONOMIC_EVENTS_2026 側の名前。
 POLICY_MATCH = {
-    "BOE": {"want": None, "pattern": r"英中銀|BOE"},
-    "ECB": {"want": "monetary policy", "pattern": r"ECB"},
+    "BOE2026": {"want": None, "pattern": r"英中銀|BOE"},
+    "BOE2027": {"want": None, "pattern": r"英中銀|BOE"},
+    "ECB": {"want": "(day 2)", "pattern": r"ECB"},
 }
 
 
@@ -157,7 +181,7 @@ def main():
             except Exception as e:
                 print(f"   ❌ 取得できない: {type(e).__name__}: {str(e)[:120]}")
                 continue
-            hits = [ln for ln in text.splitlines()
+            hits = [ln for ln in join_date_and_label(text.splitlines())
                     if DMY_RE.search(ln) or re.search(r"(?i)next release|release date", ln)]
             print(f"   --- 日付を含む行 {len(hits)} 本（先頭60本）---")
             for ln in hits[:60]:
