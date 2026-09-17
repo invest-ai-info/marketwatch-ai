@@ -132,6 +132,13 @@ def collect(series, root):
         if name in series["exclude"]:
             continue
         text = read(path)
+        # 🚨 2026-09-17: noindex の記事は並びに入れない。
+        #    コンプラゲートで🚩エスカレ中の記事が finalize 済みのままルートに残ると、
+        #    前後ナビが「1つ前／次」として**未承認の記事へ読者を連れて行ってしまう**
+        #    （実例: #097 が保留中なのに #096 の「次」と #099 の「前」から到達できた）。
+        #    公開の可否は noindex が唯一の機械可読な印なので、それに従う。
+        if 'name="robots"' in text and "noindex" in text:
+            continue
         date = doc_date(text)
         if not date:
             continue
