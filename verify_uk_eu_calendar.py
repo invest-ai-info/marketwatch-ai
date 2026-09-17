@@ -44,10 +44,11 @@ UA = "Mozilla/5.0 (compatible; marketwatch-jp calendar verifier; +https://market
 # ⚠️ 2026-09-17 実地調査で判明: `upcoming-mpc-dates` は「次回だけ」しか載せない。
 #    年間日程は毎年12月に出る告知ページにある（年ごとに URL が変わるので年次で足す）。
 POLICY_SOURCES = [
-    ("BOE2026", "https://www.bankofengland.co.uk/news/2024/december/mpc-dates-for-2026", "英中銀"),
-    ("BOE2027", "https://www.bankofengland.co.uk/news/2025/december/mpc-dates-for-2027", "英中銀"),
+    ("BOE", "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates", "英中銀"),
     ("ECB", "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html", "ECB"),
 ]
+# --dump のとき全文を出す（日付に年が付かない表かもしれないので行を絞らない）
+FULLTEXT_ON_DUMP = {"BOE"}
 
 # 統計の発表日（各ページの「次回公表」を読む。構造調査のため当面は --dump 用）
 RELEASE_SOURCES = [
@@ -159,8 +160,7 @@ def ours_from_master(pattern):
 
 # 我々の登録名 ↔ 公式ページの対応。pattern は economic-events.json / ECONOMIC_EVENTS_2026 側の名前。
 POLICY_MATCH = {
-    "BOE2026": {"want": None, "pattern": r"英中銀|BOE"},
-    "BOE2027": {"want": None, "pattern": r"英中銀|BOE"},
+    "BOE": {"want": None, "pattern": r"英中銀|BOE"},
     "ECB": {"want": "(day 2)", "pattern": r"ECB"},
 }
 
@@ -180,6 +180,11 @@ def main():
                 text = plain_text(fetch(url))
             except Exception as e:
                 print(f"   ❌ 取得できない: {type(e).__name__}: {str(e)[:120]}")
+                continue
+            if key in FULLTEXT_ON_DUMP:
+                print("   --- 全文（先頭140行）---")
+                for ln in text.splitlines()[:140]:
+                    print(f"      {ln[:170]}")
                 continue
             hits = [ln for ln in join_date_and_label(text.splitlines())
                     if DMY_RE.search(ln) or re.search(r"(?i)next release|release date", ln)]
