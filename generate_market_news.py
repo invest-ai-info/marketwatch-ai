@@ -1881,6 +1881,7 @@ ECONOMIC_EVENTS_2026 = [
     (1, 30, "eu","high","ECB理事会（金利決定）",""),
     # ── 2月 ──
     (2,  3, "us","mid","ISM製造業","製造業の景況感"),
+    (2,  5, "uk","high","英中銀 政策金利発表（MPC）","四半期金融政策報告あり"),
     (2,  7, "us","high","米雇用統計（1月分）","日本時間22:30発表"),
     (2, 12, "us","high","米CPI（1月分）","コアCPIに注目"),
     (2, 21, "jp","mid","全国CPI（1月分）","日銀利上げ判断材料"),
@@ -1894,6 +1895,7 @@ ECONOMIC_EVENTS_2026 = [
     (3, 17, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
     (3, 18, "us","high","FOMC（結果発表）","記者会見あり"),
     (3, 18, "eu","high","ECB理事会（金利決定）",""),
+    (3, 19, "uk","high","英中銀 政策金利発表（MPC）",""),
     (3, 21, "jp","mid","全国CPI（2月分）",""),
     (3, 26, "us","mid","米GDP確定値（Q4）",""),
     # ── 4月 ──
@@ -1915,6 +1917,7 @@ ECONOMIC_EVENTS_2026 = [
     (4, 30, "jp","mid","鉱工業生産（3月速報）",""),
     (4, 30, "eu","mid","ユーロ圏GDP速報（Q1）",""),
     # ── 5月 ──
+    (4, 30, "uk","high","英中銀 政策金利発表（MPC）","四半期金融政策報告あり"),
     (5,  1, "us","mid","ISM製造業",""),
     (5,  1, "cn","mid","財新PMI",""),
     (5,  8, "us","high","米雇用統計（4月分）","GW中に発表"),
@@ -1936,6 +1939,7 @@ ECONOMIC_EVENTS_2026 = [
     (6, 17, "us","high","FOMC（結果発表）","記者会見あり"),
     (6, 17, "jp","high","日銀金融政策決定会合（1日目）",""),
     (6, 18, "jp","high","日銀会合（結果発表）",""),
+    (6, 18, "uk","high","英中銀 政策金利発表（MPC）",""),
     (6, 20, "jp","mid","全国CPI（5月分）",""),
     (6, 25, "us","mid","米GDP確定値（Q1）",""),
     # ── 7月 ──
@@ -1950,6 +1954,7 @@ ECONOMIC_EVENTS_2026 = [
     (7, 29, "us","high","FOMC（結果発表）",""),
     (7, 30, "jp","high","日銀金融政策決定会合（1日目）","展望レポートあり"),
     (7, 30, "us","mid","米GDP速報値（Q2）",""),
+    (7, 30, "uk","high","英中銀 政策金利発表（MPC）","四半期金融政策報告あり"),
     (7, 31, "jp","high","日銀会合（結果発表）",""),
     (7, 31, "us","mid","PCEデフレーター（6月分）","FRB重視のインフレ指標"),
     # ── 8月 ──
@@ -1962,12 +1967,17 @@ ECONOMIC_EVENTS_2026 = [
     (9, 15, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
     (9, 16, "us","high","FOMC（結果発表）","記者会見あり"),
     (9, 17, "jp","high","日銀金融政策決定会合（1日目）",""),
+    (9, 17, "uk","high","英中銀 政策金利発表（MPC）","日本時間20:00（英12:00）"),
     (9, 18, "jp","high","日銀会合（結果発表）",""),
     # ── 10月 ──
     (10, 1, "jp","high","日銀短観（10月調査）",""),
     (10, 2, "us","high","米雇用統計（9月分）",""),
+    (10, 2, "eu","mid","ユーロ圏HICP速報（9月分）","ユーロ圏インフレの速報値"),
     (10,14, "us","high","米CPI（9月分）",""),
     (10,15, "cn","high","中国GDP（第3四半期）",""),
+    (10,15, "uk","mid","英GDP（月次・8月分）",""),
+    (10,20, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    (10,21, "uk","high","英CPI（9月分）","BOEの利下げ判断に直結"),
     (10,27, "us","high","FOMC（1日目）",""),
     (10,28, "us","high","FOMC（結果発表）",""),
     (10,28, "jp","high","日銀金融政策決定会合（1日目）","展望レポートあり"),
@@ -1975,15 +1985,19 @@ ECONOMIC_EVENTS_2026 = [
     (10,29, "eu","high","ECB理事会（金利決定）",""),
     (10,29, "us","mid","米GDP速報値（Q3）",""),
     # ── 11月 ──
+    (11, 4, "eu","mid","ユーロ圏HICP速報（10月分）",""),
+    (11, 5, "uk","high","英中銀 政策金利発表（MPC）","四半期金融政策報告あり・日本時間21:00"),
     (11, 6, "us","high","米雇用統計（10月分）",""),
     (11,10, "us","high","米CPI（10月分）",""),  # BLS公式=2026-11-10(火)。11/12(木)は誤り
     # ── 12月 ──
+    (12, 1, "eu","mid","ユーロ圏HICP速報（11月分）",""),
     (12, 4, "us","high","米雇用統計（11月分）",""),
     (12, 8, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
     (12, 9, "us","high","FOMC（結果発表）","記者会見あり"),
     (12,10, "us","high","米CPI（11月分）",""),
     (12,17, "eu","high","ECB理事会（金利決定）","ECB公式日程"),
     (12,17, "jp","high","日銀金融政策決定会合（1日目）",""),
+    (12,17, "uk","high","英中銀 政策金利発表（MPC）","日本時間21:00（英12:00）"),
     (12,18, "jp","high","日銀会合（結果発表）",""),
 ]
 
@@ -2928,7 +2942,7 @@ def build_calendar_html(now_jst):
         return {"jp": "jp", "us": "us", "eu": "eu", "cn": "cn"}.get(c, "us")
 
     def country_flag(c):
-        return {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}.get(c, "")
+        return {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}.get(c, "")
 
     def imp_star(imp):
         return "⭐" if imp == "high" else "●"
@@ -3068,7 +3082,7 @@ def build_calendar_html(now_jst):
     .event-name{{font-size:.88rem;font-weight:600;color:#1f2328;margin-bottom:4px}}
     .event-desc{{font-size:.78rem;color:#57606a;line-height:1.6}}
     .event-tag{{display:inline-block;font-size:.6rem;font-weight:600;padding:2px 6px;border-radius:4px;margin-right:4px}}
-    .tag-jp{{background:#ffebe9;color:#cf222e}}.tag-us{{background:#ddf4ff;color:#218bff}}.tag-eu{{background:#fff8c5;color:#9a6700}}.tag-cn{{background:#dafbe1;color:#1a7f37}}
+    .tag-jp{{background:#ffebe9;color:#cf222e}}.tag-us{{background:#ddf4ff;color:#218bff}}.tag-eu{{background:#fff8c5;color:#9a6700}}.tag-uk{{background:#eee0ff;color:#6639ba}}.tag-cn{{background:#dafbe1;color:#1a7f37}}
     .tag-high{{background:#da3633;color:#fff}}.tag-mid{{background:#bf8700;color:#ffffff}}
     .tab-bar{{display:flex;gap:8px;margin-bottom:20px}}
     .tab-btn{{padding:8px 20px;border:1px solid #d0d7de;border-radius:8px;background:#f6f8fa;color:#57606a;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}}
@@ -3199,10 +3213,10 @@ def build_preview_html(now_jst):
     DOW_JA = ["月", "火", "水", "木", "金", "土", "日"]
 
     def country_flag(c):
-        return {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}.get(c, "")
+        return {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}.get(c, "")
 
     def country_label(c):
-        return {"jp": "日本", "us": "米国", "eu": "欧州", "cn": "中国"}.get(c, "")
+        return {"jp": "日本", "us": "米国", "eu": "欧州", "uk": "英国", "cn": "中国"}.get(c, "")
 
     def imp_label(imp):
         return "⭐最重要" if imp == "high" else "●重要"
@@ -3444,6 +3458,7 @@ def build_preview_html(now_jst):
     .tag-jp{{background:#ffebe9;color:#cf222e}}
     .tag-us{{background:#ddf4ff;color:#218bff}}
     .tag-eu{{background:#fff8c5;color:#9a6700}}
+    .tag-uk{{background:#eee0ff;color:#6639ba}}
     .tag-cn{{background:#dafbe1;color:#1a7f37}}
     .tag-high{{background:#da3633;color:#fff}}
     .tag-mid{{background:#bf8700;color:#ffffff}}
@@ -4964,7 +4979,7 @@ def build_indicator_preview_banner(now_jst):
     トップの注目指標バナー HTML を返す。📰更新履歴とは別枠。対象が無ければ空文字（自動で消える）。
     index は完全自動生成（SYNC禁忌）なので毎回張り替わる。"""
     try:
-        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
+        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}
         # ── ① 発表後：当日の結果速報があれば「結果」バナーへ刷り替え ──
         _results = _load_indicator_results(now_jst)
         if _results:
@@ -5008,7 +5023,7 @@ def build_morning_digest_banner(now_jst, data, sentiment_label):
     既に取得済みのデータから毎回自動生成する。事実とデータの表示のみ（方向観・売買示唆は出さない）。
     カウントダウンは CPI/FOMC/日銀会合/雇用統計 の「次回」までの日数。失敗時は空文字（自動で消える）。"""
     try:
-        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "cn": "🇨🇳"}
+        flag = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}
         today = now_jst.date()
 
         # ── ① 直近の主な値動き（前日比の絶対値が大きい順に3つ）──
