@@ -664,8 +664,11 @@
       "datetime": "2026-09-18T12:00+09:00",
       "impact": "critical",
       "affected_assets": [
-        "NKD=F",
-        "USDJPY=X"
+        "USDJPY=X",
+        "EURJPY=X",
+        "GBPJPY=X",
+        "AUDJPY=X",
+        "NKD=F"
       ],
       "country": "JP",
       "category": "economic_indicator",
@@ -702,6 +705,21 @@
       "country": "JP",
       "category": "market_holiday",
       "note": "3 連休（9/21-23）、TSE 連休でボラ蓄積→週明け要警戒"
+    },
+    {
+      "name": "日銀短観（10月調査）",
+      "datetime": "2026-10-01T08:50+09:00",
+      "impact": "high",
+      "affected_assets": [
+        "USDJPY=X",
+        "EURJPY=X",
+        "GBPJPY=X",
+        "AUDJPY=X",
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:50 JST）"
     },
     {
       "name": "ユーロ圏HICP速報（9月分）",
@@ -746,6 +764,22 @@
       "country": "US",
       "category": "economic_indicator",
       "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 08:30 EDT）"
+    },
+    {
+      "name": "中国 GDP（第3四半期）",
+      "datetime": "2026-10-15T11:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "AUDJPY=X",
+        "AUDUSD=X",
+        "EURAUD=X",
+        "GBPAUD=X",
+        "NKD=F",
+        "CL=F"
+      ],
+      "country": "CN",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 10:00 CST）"
     },
     {
       "name": "英GDP（月次・8月分）",
@@ -798,18 +832,6 @@
       "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:00 EDT）"
     },
     {
-      "name": "日銀金融政策決定会合（結果発表）",
-      "datetime": "2026-10-29T12:00+09:00",
-      "impact": "critical",
-      "affected_assets": [
-        "NKD=F",
-        "USDJPY=X"
-      ],
-      "country": "JP",
-      "category": "economic_indicator",
-      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 12:00 JST）"
-    },
-    {
       "name": "米 GDP（Q3）",
       "datetime": "2026-10-29T21:30+09:00",
       "impact": "high",
@@ -830,6 +852,21 @@
       "country": "EU",
       "category": "economic_indicator",
       "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 14:15 CET）"
+    },
+    {
+      "name": "日銀金融政策決定会合（結果発表）",
+      "datetime": "2026-10-30T12:00:00+09:00",
+      "impact": "critical",
+      "affected_assets": [
+        "USDJPY=X",
+        "EURJPY=X",
+        "GBPJPY=X",
+        "AUDJPY=X",
+        "NKD=F"
+      ],
+      "country": "JP",
+      "category": "economic_indicator",
+      "note": "sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成（現地 12:00 JST） ⚠️2026-09-17訂正: 日銀公式は10/29・30開催、結果公表は10/30。旧10/29は誤り"
     },
     {
       "name": "🏖️ 日本市場休場（文化の日）",
@@ -995,8 +1032,11 @@
       "datetime": "2026-12-18T12:00+09:00",
       "impact": "critical",
       "affected_assets": [
-        "NKD=F",
-        "USDJPY=X"
+        "USDJPY=X",
+        "EURJPY=X",
+        "GBPJPY=X",
+        "AUDJPY=X",
+        "NKD=F"
       ],
       "country": "JP",
       "category": "economic_indicator",
@@ -1161,9 +1201,7 @@
       "datetime": "2027-02-04T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET = 22:15 JST。記者会見は 14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1219,9 +1257,7 @@
       "datetime": "2027-03-18T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET = 22:15 JST。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1307,9 +1343,7 @@
       "datetime": "2027-04-29T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1393,9 +1427,7 @@
       "datetime": "2027-06-10T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1451,9 +1483,7 @@
       "datetime": "2027-07-22T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1513,9 +1543,7 @@
       "datetime": "2027-09-09T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1571,9 +1599,7 @@
       "datetime": "2027-10-28T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"
@@ -1653,9 +1679,7 @@
       "datetime": "2027-12-16T22:15:00+09:00",
       "impact": "high",
       "affected_assets": [
-        "EURUSD=X",
-        "EURJPY=X",
-        "EURAUD=X"
+        "all"
       ],
       "country": "EU",
       "note": "14:15 CET＝22:15 JST（夏時間中は21:15）。記者会見は14:45 CET。出典: ECB 理事会日程（2026-09-17確認）"

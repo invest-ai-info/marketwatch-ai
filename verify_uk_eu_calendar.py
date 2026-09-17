@@ -36,10 +36,12 @@
 """
 import argparse
 import datetime as dt
+import gzip
 import json
 import os
 import re
 import sys
+import time
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -77,10 +79,25 @@ BOE_DAY_RE = re.compile(rf"^\w+day\s+(\d{{1,2}})\s+({MONTH_RE})$")
 SLASH_RE = re.compile(r"^(\d{2})/(\d{2})/(\d{4})")
 
 
-def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "text/html"})
+def fetch(url, _retry=2):
+    """⚠️ 2026-09-17: 短時間に何度も叩いた回で **BLS がバイナリ（gzip/空バイト）を返し**、
+    解析0件→「構造が変わった」と誤警報して Issue を立てた。番人が狼少年になるのが一番まずい。
+    そこで ①非圧縮を要求し ②それでも gzip なら展開し ③1回だけ間を置いて再試行する。"""
+    req = urllib.request.Request(
+        url, headers={"User-Agent": UA, "Accept": "text/html", "Accept-Encoding": "identity"})
     with urllib.request.urlopen(req, timeout=40) as r:
-        return r.read().decode("utf-8", "replace")
+        raw = r.read()
+    if r.headers.get("Content-Encoding") == "gzip" or raw[:2] == b"\x1f\x8b":
+        raw = gzip.decompress(raw)
+    text = raw.decode("utf-8", "replace")
+    if "\x00" in text[:2000] or len(text) < 500:
+        if _retry:
+            time.sleep(8)
+            return fetch(url, _retry=_retry - 1)
+        # 🔑 「中身が壊れている」と「構造が変わった」は別物。混ぜると直し方を誤る。
+        raise OSError(f"取得内容が不正（{len(text)}バイト・バイナリ混入）。"
+                      f"連続アクセスによる制限の可能性。時間をおいて再実行する")
+    return text
 
 
 def plain_text(html_text):
