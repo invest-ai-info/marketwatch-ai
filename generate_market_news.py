@@ -5329,6 +5329,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-18", "line": '・<b>2026-09-18</b>: 🧪 解説「<a href="guide-signal-lab-102.html" style="color:#0969da"><b>「もみあい×ショート」前向き295件で⛔反証</b></a>」公開'},
         {"date": "2026-09-17", "line": '・<b>2026-09-17</b>: 📰 解説「<a href="guide-news-2026-09-17-fomc-rate-hike-25bp-dot-plot.html" style="color:#0969da"><b>【9/17】FOMCが3年ぶり25bp利上げ決定──ドットチャートで追加利上げ示唆</b></a>」公開'},
         {"date": "2026-09-17", "line": '・<b>2026-09-17</b>: 📅 解説「<a href="guide-tse-offering-schedule.html" style="color:#0969da"><b>公募増資・売出しの日程</b></a>」公開'},
         {"date": "2026-09-17", "line": '・<b>2026-09-17</b>: 💸 解説「<a href="guide-scam-debt-funded-investment.html" style="color:#0969da"><b>副業・投資名目で借金をさせる手口の構造と確認手順</b></a>」公開'},
