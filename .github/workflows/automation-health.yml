@@ -27,6 +27,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      # §⑧ の見出し解析が壊れると、番人は「異常なし」と言いながら何も見なくなる
+      # （2026-09-17 の実害＝#097/#098 が🚩エスカレ中なのに毎朝「未解決 0 件 ✅」）。
+      # 素通りは出力に出ないので、ここで先に固定テストを回して落とす。
+      - name: Test escalation heading parsing
+        run: python tests/test_escalation_parsing.py
+
       - name: Run automation health check
         id: check
         env:
