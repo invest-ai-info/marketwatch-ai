@@ -21,6 +21,9 @@ on:
     - cron: '10 22 * * 0'   # 月曜 07:10 JST（週の頭・指標week入りの前に気づける）
     - cron: '10 22 24 * *'  # 毎月25日 07:10 JST（monthly-calendar-reminder が翌月分を足す直前）
   workflow_dispatch:
+  # ⚠️ 一時トリガー（過去分の日付確認）。確認できたら必ず消す。
+  push:
+    branches: [claude/issue-check-do2bbk]
 
 jobs:
   verify:
@@ -37,6 +40,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: PROBE past-date conflicts
+        shell: bash
+        run: python _probe_calendar.py
 
       - name: Verify against official schedules (US / UK / EU)
         # ⚠️ tee を挟むと既定では tee の終了コードが採られ、検証の失敗が緑になってしまう。

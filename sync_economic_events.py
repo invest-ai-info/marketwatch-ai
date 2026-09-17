@@ -54,6 +54,19 @@ SHANGHAI = zoneinfo.ZoneInfo("Asia/Shanghai")
 #   day_offset : 現地日から見た開催日のズレ（FOMC は現地14:00＝翌日 JST になるが
 #                これは tz 変換が吸収するので 0。ここは開催日そのものの補正用）
 #   impact / assets / country : 既存エントリの値をそのまま踏襲
+# 影響銘柄のまとまり（同じ並びを何度も手で書かない＝取り違え防止）
+# 🚨 2026-09-17: 豪ドル系が中国指標の対象外だった（オーナー指摘「中国の指標も豪ドル系に効く」）。
+#    CLAUDE.md にも「AUDペア中国フォーカス（上海・ハンセン連動）」と明記があるのに、
+#    中国CPI の assets は NKD=F と CL=F だけで、AUDJPY/AUDUSD/EURAUD/GBPAUD が抜けていた。
+# 🚨 同じく日銀は NKD=F と USDJPY=X だけで、EURJPY/GBPJPY/AUDJPY が抜けていた
+#    （＝円クロスを持っていても日銀会合の警告が出ない）。
+AUD_PAIRS = ["AUDJPY=X", "AUDUSD=X", "EURAUD=X", "GBPAUD=X"]
+JPY_CROSS = ["USDJPY=X", "EURJPY=X", "GBPJPY=X", "AUDJPY=X"]
+GBP_SET = ["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"]
+EUR_SET = ["EURUSD=X", "EURJPY=X", "EURAUD=X"]
+CN_SET = AUD_PAIRS + ["NKD=F", "CL=F"]          # 豪ドル＋日経＋原油
+JP_SET = JPY_CROSS + ["NKD=F"]
+
 RULES = [
     # ── 米国（8:30 ET 発表群）──
     dict(pattern=r"米雇用統計",      tz=NY, local_time=(8, 30),  impact="critical",
@@ -75,9 +88,9 @@ RULES = [
     dict(pattern=r"ECB理事会",       tz=FRANKFURT, local_time=(14, 15), impact="high",
          assets=["all"], country="EU", label="ECB 政策金利発表", json_pattern=r"ECB"),
     dict(pattern=r"日銀会合（結果発表）", tz=JST, local_time=(12, 0), impact="critical",
-         assets=["NKD=F", "USDJPY=X"], country="JP", label="日銀金融政策決定会合", json_pattern=r"日銀"),
+         assets=JP_SET, country="JP", label="日銀金融政策決定会合", json_pattern=r"日銀"),
     dict(pattern=r"中国CPI",         tz=SHANGHAI, local_time=(9, 30), impact="high",
-         assets=["NKD=F", "CL=F"], country="CN", label="中国 CPI", json_pattern=r"中国 ?CPI"),
+         assets=CN_SET, country="CN", label="中国 CPI", json_pattern=r"中国 ?CPI"),
     # ── 🚨 英・ユーロ圏（2026-09-17 追加）────────────────────────────────────
     # なぜ必要か: economic-events.json には BOE が **6月と7月の2件だけ手で足されていた**。
     # ここに規則が無かったため月次同期が再生産できず、**8月以降は誰も足さないまま消えた**。
@@ -85,25 +98,59 @@ RULES = [
     # 「48h以内に該当指標なし」＝無警告のままだった（実損につながった）。
     # 🔑 現地時刻＋tz で書けば夏時間は zoneinfo が吸収する＝JST を手計算しない。
     dict(pattern=r"英中銀",          tz=LONDON, local_time=(12, 0), impact="critical",
-         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         assets=GBP_SET, country="UK",
          label="英中銀 政策金利発表", json_pattern=r"英中銀|BOE"),
     dict(pattern=r"^英CPI",          tz=LONDON, local_time=(7, 0),  impact="high",
-         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         assets=GBP_SET, country="UK",
          label="英CPI", json_pattern=r"^英CPI"),
     dict(pattern=r"^英雇用統計",     tz=LONDON, local_time=(7, 0),  impact="high",
-         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         assets=GBP_SET, country="UK",
          label="英雇用統計", json_pattern=r"^英雇用統計"),
     dict(pattern=r"^英GDP",          tz=LONDON, local_time=(7, 0),  impact="high",
-         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         assets=GBP_SET, country="UK",
          label="英GDP（月次）", json_pattern=r"^英GDP"),
     dict(pattern=r"ユーロ圏HICP",    tz=FRANKFURT, local_time=(11, 0), impact="high",
-         assets=["EURUSD=X", "EURJPY=X", "EURAUD=X"], country="EU",
+         assets=EUR_SET, country="EU",
          label="ユーロ圏HICP速報", json_pattern=r"ユーロ圏HICP"),
+    dict(pattern=r"^ユーロ圏GDP",    tz=FRANKFURT, local_time=(11, 0), impact="high",
+         assets=EUR_SET, country="EU",
+         label="ユーロ圏GDP速報", json_pattern=r"ユーロ圏GDP"),
+    # ── 🇨🇳 中国（2026-09-17 追加・オーナー指示「豪ドル系に効くので必ず入れる」）──────
+    #    国家統計局 09:30／財新 09:45／月次指標・GDP 10:00（いずれも北京時間）
+    dict(pattern=r"中国製造業PMI",   tz=SHANGHAI, local_time=(9, 30), impact="high",
+         assets=CN_SET, country="CN", label="中国 製造業PMI", json_pattern=r"中国 ?製造業PMI"),
+    dict(pattern=r"財新PMI",         tz=SHANGHAI, local_time=(9, 45), impact="high",
+         assets=CN_SET, country="CN", label="財新 PMI", json_pattern=r"財新"),
+    dict(pattern=r"^中国経済指標",   tz=SHANGHAI, local_time=(10, 0), impact="high",
+         assets=CN_SET, country="CN", label="中国 月次経済指標",
+         json_pattern=r"中国 ?月次経済指標|中国経済指標"),
+    dict(pattern=r"^中国GDP",        tz=SHANGHAI, local_time=(10, 0), impact="critical",
+         assets=CN_SET, country="CN", label="中国 GDP", json_pattern=r"中国 ?GDP"),
+    # ── 🇯🇵 日本（総務省 08:30／内閣府・経産省・財務省・日銀 08:50）────────────────
+    dict(pattern=r"^全国CPI",        tz=JST, local_time=(8, 30), impact="high",
+         assets=JP_SET, country="JP", label="全国CPI", json_pattern=r"^全国CPI"),
+    dict(pattern=r"^日銀短観",       tz=JST, local_time=(8, 50), impact="high",
+         assets=JP_SET, country="JP", label="日銀短観", json_pattern=r"^日銀短観"),
+    dict(pattern=r"^日本GDP",        tz=JST, local_time=(8, 50), impact="high",
+         assets=JP_SET, country="JP", label="日本GDP速報", json_pattern=r"^日本GDP"),
+    dict(pattern=r"^鉱工業生産",     tz=JST, local_time=(8, 50), impact="high",
+         assets=JP_SET, country="JP", label="鉱工業生産", json_pattern=r"^鉱工業生産"),
+    dict(pattern=r"^貿易統計",       tz=JST, local_time=(8, 50), impact="high",
+         assets=JP_SET, country="JP", label="貿易統計", json_pattern=r"^貿易統計"),
+    # ── 🇺🇸 ISM（10:00 ET）。⚠️ 非製造業を先に置く（先に一致した規則が採用されるため）──
+    dict(pattern=r"ISM非製造業",     tz=NY, local_time=(10, 0), impact="high",
+         assets=["all"], country="US", label="米 ISM非製造業景況感",
+         json_pattern=r"ISM ?非製造業"),
+    dict(pattern=r"ISM製造業",       tz=NY, local_time=(10, 0), impact="high",
+         assets=["all"], country="US", label="米 ISM製造業景況感",
+         json_pattern=r"ISM ?製造業"),
 ]
 
 # 先例が無いので**足さない**種類（黙って落とさず、実行時に一覧を出す）
+# ⚠️ ここに残すのは「発表そのものではない日」だけ。
+#    会合の1日目は結論が出ないので警告の対象にしない（結果発表の日に鳴らす）。
+#    2026-09-17: ISM／全国CPI／日銀短観／中国GDP は RULES を持たせたのでここから外した。
 NO_PRECEDENT = [
-    r"ISM", r"全国CPI", r"日銀短観", r"中国GDP",
     r"FOMC（1日目）", r"日銀金融政策決定会合（1日目）",
 ]
 
