@@ -1,0 +1,36 @@
+name: Indicator Digest (morning)
+
+# 目的: 「今日これがある」を**ポジションを持つ前に**渡す。
+#
+# 🚨 なぜ必要か（2026-09-17 の実損）: 英中銀の政策金利発表の27分前にポンド円を3枚建て、
+#    発表の3秒後に手仕舞って -2,370円（当日損失の約半分）。
+#    環境警戒スコアは **シグナルが出たときのメールの中身**でしか届かないため、
+#    手動の発注は誰も見張っていなかった。判断の直前ではなく朝に先出しする。
+#
+# ⚠️ 読むだけ（HTML もデータも書き換えない）。メールが出ないだけなら赤くしない設計。
+
+on:
+  schedule:
+    # 平日 06:50 JST（= 21:50 UTC 前日）。相場の朝の支度に間に合う時刻。
+    # ⚠️ UTC で前日になるので曜日は日〜木（＝JSTの月〜金）
+    - cron: '50 21 * * 0-4'
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Send today's indicator digest
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+        run: python send_indicator_digest.py
