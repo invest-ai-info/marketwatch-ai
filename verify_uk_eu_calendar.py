@@ -45,6 +45,8 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 JST = dt.timezone(dt.timedelta(hours=9))
 UA = "Mozilla/5.0 (compatible; marketwatch-jp calendar verifier; +https://marketwatch-jp.com/)"
+# 「未登録」を指摘する範囲（これ以上先はカレンダーに載せなくてよい）
+HORIZON = dt.timedelta(days=460)
 
 BOE_URL = "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates"
 ECB_URL = "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
@@ -181,10 +183,14 @@ def check_policy(key, url, label, parse, pattern, today, problems, notes):
         print(f"   公式: {d} ({wd(d)})")
 
     js, ms = ours_from_json(pattern), ours_from_master(pattern)
-    future = [d for d in found if d >= today]
+    # ⚠️ 「未登録」の指摘は HORIZON までに限る。ECB は2年半先まで日程を公開しており、
+    #    そこまで全部要求すると毎週 ℹ️ が大量に出続けて**本当の指摘が埋もれる**。
+    #    食い違い（🚨）の検査は期間を絞らない＝誤りは先の年でも必ず捕まえる。
+    future = [d for d in found if today <= d <= today + HORIZON]
     # 🚨 未来の回を1件も比べていない＝実質何も検証していない。緑にしてはいけない
     if not future:
-        problems.append(f"{key}: 今日以降の回が公式側に1件も無い（解析ミスか、公式の更新停止）")
+        problems.append(f"{key}: 今日から{HORIZON.days}日以内の回が公式側に1件も無い"
+                        f"（解析ミスか、公式の更新停止）")
         return
     for d in future:
         if d not in js:
