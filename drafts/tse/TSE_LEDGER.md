@@ -332,3 +332,27 @@
 - 品質ルーブリック：自己採点で5観点すべて✅（EDINET・TDnet・監査証明等の専門語は本文中またはシリーズ第1回への参照で説明済み）。
 
 **公開**: `guide-tse-tanshin-vs-yuho.html`（読了約9分）。`check_guide_draft.py`（GREEN）→コンプラ・品質ゲート通過（初回🟡→修正→独立確認1回目🟡→修正→独立確認2回目🟢白）→`publish_article.py`→`apply_series_nav.py --apply`（前記事`guide-tse-off-auction-distribution.html`の「次の記事」リンクを本記事に更新）→`apply_back_to_top.py --apply`（本記事は既に注入済み・別記事`guide-average-vs-median-return.html`へ新規注入）→`check_site_consistency.py`（EXIT=0、警告44件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→ git push origin main（commit 3da476c）。
+
+### ✅ 2026-09-17 キュー#16「公募増資・売出しの日程」 offering-schedule 📅
+
+**題材**: TSE_GUIDE.md キュー#16「公募増資・売出しの日程」（slug: `offering-schedule`、絵文字: 📅、カテゴリ「東証のしくみ」）。guides.html・本台帳のどちらにも未登録の先頭項目として選定。当日分の `guide-tse-*.html` は未作成だったため着手（1日1本ルール準拠）。実行開始前に `HEAD detached from refs/heads/main` の状態だったため `git fetch origin main && git checkout -B main origin/main` で復帰してから着手。
+
+**一次情報の到達性（本日実測・クラウド実行環境）**: `www.jpx.co.jp`・`www.fsa.go.jp`ともcurl（素のUA、偽装なし）でHTTP 200・到達可能（トップページ実測）。JPXの制度解説ページ（listing/equities配下）には公募増資の日程そのものを扱うページが見当たらなかったため、JPXの「用語集」を一次情報として使用し、以下を実際にcurlで取得し内容を確認：
+- https://www.jpx.co.jp/glossary/ya/564.html（用語集「有償増資」）— 株主割当増資・第三者割当増資・公募増資の3類型を確認。
+- https://www.jpx.co.jp/glossary/ka/150.html（用語集「公募増資」）— 広く一般投資家に募集し時価基準で新株発行、の定義を確認。
+- https://www.jpx.co.jp/glossary/ta/270.html（用語集「第三者割当増資」）— 特定の第三者への割当という対比を確認。
+- https://www.jpx.co.jp/glossary/a/41.html（用語集「売出し（株式の）」）— 既発行株の売却である点、公募増資との違いを確認。
+- https://www.jpx.co.jp/glossary/ya/563.html（用語集「有価証券届出書」）— 1億円以上の募集・売出しで金商法第4条・第5条にもとづき届出義務、東証アローズでの公衆縦覧を確認。
+- https://www.jpx.co.jp/glossary/ma/431.html（用語集「目論見書」）— 金商法第13条にもとづく交付義務を確認。
+- https://www.jpx.co.jp/glossary/ha/394.html（用語集「ブックビルディング方式」）— 仮条件提示→需要把握→発行価格決定、の手順を確認。
+- https://www.jpx.co.jp/glossary/ha/367.html・368.html（用語集「発行価格」「発行価額」）、https://www.jpx.co.jp/glossary/ha/376.html（「引受価額」）、https://www.jpx.co.jp/glossary/ma/437.html（「元引受証券会社」）— 価格関連用語を確認。
+- e-Gov法令API（https://laws.e-gov.go.jp/api/2/law_data/323AC0000000025 ＝金融商品取引法）から、第4条（届出義務・1億円未満は適用除外）、第8条第1項（受理日から15日経過で効力発生＝待期期間）、第23条の3第1項・第3項（発行登録制度＝発行登録を行った有価証券には第4条が適用されない）、第23条の8第1項（発行登録追補書類の提出義務）、第23条の8第3項（基準日株主向けは基準日10日前までの提出）の条文を全文抽出し逐語確認。
+
+確認日：2026-09-17（JST）。⚠️ JPXの listing/equities 配下に「公募増資の実務日程」を直接解説するページは見つからず、本記事の制度説明は**JPX用語集の各用語定義＋金融商品取引法の該当条文（e-Gov）**を一次情報として構成した。具体的な発表〜価格決定〜払込の日数は会社ごとに異なり一次情報からは一般化できないため、本文では「会社ごとの有価証券届出書・発行登録追補書類で確認する必要がある」と明記し、断定的な日数を書かなかった。
+
+**コンプラ監査**（.claude/agents/compliance-reviewer.md ペルソナ・model=opus、別セッション2回）：
+- 【初期判定】🟢白（黒0・グレー0）— 個別銘柄・個別証券会社の評価なし、断定・将来予測・売買推奨なし、制度数値はすべて一次情報＋確認日（2026-09-17）付きで整理されている、kinsho-v1が冒頭・本文末・フッターの3箇所に確認済み、SVGは「仮の例」「概念を示すイメージ図です」を明示、と判定。修正の必要なしのため編集なし。
+- 【独立最終確認】（別セッション・model=opus・Readのみ・初見のつもりで確認、条文・用語定義の内部整合性とgrepによる断定語・個別企業名の不在を実際に検証）→ 🟢白（新規の法務リスクなし。ナビバーが11ボタンでCLAUDE.md記載の10ボタン標準と食い違う点を任意所見として指摘されたが、コンプラ範疇外＝サイト整合性リンターの管轄と整理し今回は不問）。
+- 品質ルーブリック：自己採点で5観点すべて✅（有償増資・公募増資・第三者割当増資・有価証券届出書・目論見書・発行登録制度・ブックビルディング方式・発行価格/発行価額/引受価額はいずれも本文中に💡boxまたは表で定義済み）。
+
+**公開**: `guide-tse-offering-schedule.html`（読了約9分）。`check_guide_draft.py`初回RED（SVGテキストの左右はみ出し1件）→修正しGREEN確認→コンプラ・品質ゲート通過（初期🟢白・修正なし→独立確認🟢白）→`mw.py publish`→`check_site_consistency.py`（EXIT=0、警告46件はいずれも既存の他記事の警告＝本記事に起因する新規errorなし）→`apply_series_nav.py --apply`（前記事`guide-tse-tanshin-vs-yuho.html`の「次の記事」リンクを本記事に更新）→ git push origin main（commit a4b5f41＝ドラフトWIP、b6149f6＝publish_article.py適用分、fbfd4af＝series-nav適用分）。
