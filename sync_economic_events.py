@@ -78,6 +78,27 @@ RULES = [
          assets=["NKD=F", "USDJPY=X"], country="JP", label="日銀金融政策決定会合", json_pattern=r"日銀"),
     dict(pattern=r"中国CPI",         tz=SHANGHAI, local_time=(9, 30), impact="high",
          assets=["NKD=F", "CL=F"], country="CN", label="中国 CPI", json_pattern=r"中国 ?CPI"),
+    # ── 🚨 英・ユーロ圏（2026-09-17 追加）────────────────────────────────────
+    # なぜ必要か: economic-events.json には BOE が **6月と7月の2件だけ手で足されていた**。
+    # ここに規則が無かったため月次同期が再生産できず、**8月以降は誰も足さないまま消えた**。
+    # その結果 9/17 の英中銀発表がカレンダーに無く、GBPJPY の環境警戒スコアは
+    # 「48h以内に該当指標なし」＝無警告のままだった（実損につながった）。
+    # 🔑 現地時刻＋tz で書けば夏時間は zoneinfo が吸収する＝JST を手計算しない。
+    dict(pattern=r"英中銀",          tz=LONDON, local_time=(12, 0), impact="critical",
+         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         label="英中銀 政策金利発表", json_pattern=r"英中銀|BOE"),
+    dict(pattern=r"^英CPI",          tz=LONDON, local_time=(7, 0),  impact="high",
+         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         label="英CPI", json_pattern=r"^英CPI"),
+    dict(pattern=r"^英雇用統計",     tz=LONDON, local_time=(7, 0),  impact="high",
+         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         label="英雇用統計", json_pattern=r"^英雇用統計"),
+    dict(pattern=r"^英GDP",          tz=LONDON, local_time=(7, 0),  impact="high",
+         assets=["GBPUSD=X", "GBPJPY=X", "GBPAUD=X", "^FTSE"], country="UK",
+         label="英GDP（月次）", json_pattern=r"^英GDP"),
+    dict(pattern=r"ユーロ圏HICP",    tz=FRANKFURT, local_time=(11, 0), impact="high",
+         assets=["EURUSD=X", "EURJPY=X", "EURAUD=X"], country="EU",
+         label="ユーロ圏HICP速報", json_pattern=r"ユーロ圏HICP"),
 ]
 
 # 先例が無いので**足さない**種類（黙って落とさず、実行時に一覧を出す）
