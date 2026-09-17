@@ -36,6 +36,13 @@ jobs:
         with:
           python-version: '3.11'
 
+      # ⚠️ 一時ステップ（構造調査用）。英・ユーロの一次情報ページの中身を見るために置く。
+      #    調査が済んだら消すこと。
+      - name: DUMP uk/eu sources
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: python verify_uk_eu_calendar.py --dump
+
       - name: Verify against BLS official schedule
         # ⚠️ tee を挟むと既定では tee の終了コードが採られ、検証の失敗が緑になってしまう。
         #    pipefail でパイプ内の失敗を拾う（沈黙の失敗を作らない）。
