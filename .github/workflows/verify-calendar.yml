@@ -1,6 +1,8 @@
 name: Verify Economic Calendar
 
-# 目的: 米CPI・米雇用統計の発表日を **BLS の公式スケジュールと機械で突き合わせる**。
+# 目的: 米・英・ユーロ圏の重要指標の発表日を **各国の公式スケジュールと機械で突き合わせる**。
+#   米   = BLS（verify_economic_calendar.py）
+#   英EU = 英中銀 MPC / ECB 理事会 / ONS の Next release（verify_uk_eu_calendar.py）
 #
 # 🚨 なぜ必要か（2026-09-11 事故）: 米CPI（8月分）を 9/10(木) と載せていたが公式は 9/11(金)。
 #    原因は「CPI は火〜木」という曜日からの推測。10月分も 11/12 → 正 11/10 で誤っていた。
@@ -39,19 +41,22 @@ jobs:
         with:
           python-version: '3.11'
 
-      # ⚠️ 一時ステップ（構造調査用）。英・ユーロの一次情報ページの中身を見るために置く。
-      #    調査が済んだら消すこと。
-      - name: DUMP uk/eu sources
-        shell: bash
-        run: python verify_uk_eu_calendar.py --dump
-
-      - name: Verify against BLS official schedule
+      - name: Verify against official schedules (US / UK / EU)
         # ⚠️ tee を挟むと既定では tee の終了コードが採られ、検証の失敗が緑になってしまう。
         #    pipefail でパイプ内の失敗を拾う（沈黙の失敗を作らない）。
+        # 🔑 2本を**1ステップで**回す。別ステップにすると1本目が落ちた時点で2本目が走らず、
+        #    Issue に片方のレポートしか載らない（＝もう片方の異常が見えなくなる）。
         shell: bash
         run: |
+          set +e
           set -o pipefail
           python verify_economic_calendar.py | tee calendar_verify_report.txt
+          us=$?
+          printf '\n%s\n' '================ 英・ユーロ圏 ================' >> calendar_verify_report.txt
+          python verify_uk_eu_calendar.py | tee -a calendar_verify_report.txt
+          ukeu=$?
+          echo "終了コード: 米=$us 英EU=$ukeu"
+          [ $us -eq 0 ] && [ $ukeu -eq 0 ]
 
       - name: Open or update issue on failure
         if: failure() && hashFiles('calendar_verify_report.txt') != ''
