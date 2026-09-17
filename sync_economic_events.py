@@ -88,7 +88,10 @@ RULES = [
     dict(pattern=r"ECB理事会",       tz=FRANKFURT, local_time=(14, 15), impact="high",
          assets=["all"], country="EU", label="ECB 政策金利発表", json_pattern=r"ECB"),
     dict(pattern=r"日銀会合（結果発表）", tz=JST, local_time=(12, 0), impact="critical",
-         assets=JP_SET, country="JP", label="日銀金融政策決定会合", json_pattern=r"日銀"),
+         assets=JP_SET, country="JP", label="日銀金融政策決定会合",
+         # ⚠️ r"日銀" だと **日銀短観** まで拾ってしまい、同じ月の別イベントとして
+         #    誤った食い違い警告＋二重登録を生む（2026-09-17 に実際に発生）。
+         json_pattern=r"日銀金融政策決定会合|日銀会合"),
     dict(pattern=r"中国CPI",         tz=SHANGHAI, local_time=(9, 30), impact="high",
          assets=CN_SET, country="CN", label="中国 CPI", json_pattern=r"中国 ?CPI"),
     # ── 🚨 英・ユーロ圏（2026-09-17 追加）────────────────────────────────────
@@ -260,9 +263,19 @@ def main():
     print(f"  先例が無いので足さない          : {len(skipped_no_precedent)} 件")
     for s in skipped_no_precedent:
         print(f"      - {s}")
-    if conflicts:
-        print(f"  ⚠️ 2つの台帳で日付が食い違う    : {len(conflicts)} 件（どちらも採用しない）")
-        for label, a, b in conflicts:
+    # 🔑 2026-09-17: 食い違いを「今後分」と「過去分」に分ける。
+    #    過ぎた回の食い違いは直しても誰も救われないのに、毎回同じ4件が並んで
+    #    **本当に困る今後分の食い違いが埋もれる**。番人の信用は見やすさで決まる。
+    today10 = dt.datetime.now(JST).date().isoformat()
+    future_c = [c for c in conflicts if max(c[1][:10], c[2][:10]) >= today10]
+    past_c = [c for c in conflicts if max(c[1][:10], c[2][:10]) < today10]
+    if future_c:
+        print(f"  🚨 今後分で日付が食い違う      : {len(future_c)} 件（どちらも採用しない＝人が直す）")
+        for label, a, b in future_c:
+            print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_2026={b}")
+    if past_c:
+        print(f"  （参考）過ぎた回の食い違い      : {len(past_c)} 件（直しても影響なし・記録のみ）")
+        for label, a, b in past_c:
             print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_2026={b}")
     print(f"  追加する                        : {len(added)} 件")
     for e in sorted(added, key=lambda x: x["datetime"]):
