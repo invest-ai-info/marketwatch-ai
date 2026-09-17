@@ -3,6 +3,36 @@
 
 ---
 
+## 2026-09-17
+- 判定: ✅ 公開済み
+- 選定トピック: FOMCが3年ぶりに25bp利上げ決定──FF金利3.75〜4%、ドットチャートで追加利上げ示唆、ダウ一時700ドル安（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 選定理由: FOMCが2023年7月以来初の利上げを全会一致で決定。ドットチャートで16/18人が追加利上げ想定。ダウ一時700ドル安、ドル円155円台、翌日BOJ決定前夜という局面で付加価値・中立整理の余地が最大。9/16記事（事前整理）との明確な差別化（事後結果＋ドットチャート分析）あり。
+- 出典（確認済み・12系統以上）:
+  - Federal Reserve公式声明「FOMC statement September 16, 2026」
+  - CNBC「Fed rate decision September 2026: Rates rise to 3.75%-4%」2026-09-16
+  - Yahoo Finance「Fed meeting live updates: Warsh vows 'timelier return' to 2% inflation」2026-09-16
+  - Fox Business「September FOMC: Federal Reserve hikes rates for first time since 2023」2026-09-16
+  - Invezz「Dow crashes 700 points as Warsh warns inflation is still too high」2026-09-16
+  - MishTalk「Dot Plot of Fed Expectations, Plus an Excellent Press Conference by Warsh」2026-09-16
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for September 17」2026-09-16
+  - OANDA JP「【速報】9月FOMCは約3年ぶりの0.25%利上げを全会一致で決定」2026-09-17
+  - 財経新聞「【市場反応】FOMC、市場の予想通り利上げに踏み切る、ドル買い加速」2026-09-17
+  - tbladvisory「FOMCタカ派でも半導体買い戻し、夜間先物6万4250円」2026-09-17
+  - investinglive「Economic and event calendar in Asia Thursday, September 17, 2026」2026-09-17
+  - BLS公式「Consumer Price Index Summary - 2026 M08 Results」2026-09-11
+  - kabucho.com「日銀利上げ 2026年9月会合で政策金利1.25%へ」2026-09
+- コンプラ判定:
+  - 第1Opus（初期判定）: 🟡グレー（①BOJ見出しの断定→「観測」に軟化②「売られすぎ」→「直近で下落していた」に中立化）→ 軽微修正2件適用 → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④出典12系統✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: ①kinsho-v1×3✅ ②禁止語なし✅ ③銘柄推奨なし✅ ④出典12系統✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告45件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-17-fomc-rate-hike-25bp-dot-plot.html
+- commit: 99f4dba（main へ push 済み）
+
+---
+
 ## 2026-09-16
 - 判定: ✅ 公開済み
 - 選定トピック: FOMC決定日に日経平均0.7%安──BOJ前夜の円高・輸出株圧力と今夜の3注目点を中立整理（カテゴリ: 今日のニュース）
