@@ -304,8 +304,11 @@ QUEUE_MIN_REMAIN = 5  # 未公開 topic がこれ未満なら warn（1日1本な
 QUEUE_LANES = [
     # (レーン名, 手順書, guide- の後ろに付く接頭辞, 台帳, 床)
     ("autodraft（心理＆リスク管理）", QUEUE_GUIDE_PATH, "", None, QUEUE_MIN_REMAIN),
-    ("proverb（投資格言）", "drafts/PROVERB_GUIDE.md", "proverb-",
-     "drafts/proverb/PROVERB_LEDGER.md", QUEUE_MIN_REMAIN),
+    # ⚠️ proverb（投資格言）は 2026-09-05 に #50「全48回 総目次」で**完結**し routine も削除済み。
+    #    レーンが無いのにキュー残量を見張ると**毎朝必ず赤くなる**＝番人の信用が落ちる
+    #    （実際 9/5〜9/17 は「残り0件＝レーン停止中」を毎日鳴らし続けていた。停止は仕様どおり）。
+    #    記事48本と手順書・台帳は読者向けに残すが、**見張りからは外す**。
+    #    🔑 レーンを畳んだら QUEUE_LANES からも外すこと（足すときの登録と対になる手順）。
     ("scam（投資詐欺）", "drafts/SCAM_GUIDE.md", "scam-",
      "drafts/scam/SCAM_LEDGER.md", QUEUE_MIN_REMAIN),
     # 2026-08-31 新設。格言シリーズ（44本で汲み尽くし）の後継として日次枠を引き継ぐ
@@ -741,8 +744,14 @@ def main():
         if not targets:
             body.append("- ⚪ 対象記事（guide-signal-lab-* / guide-news-*）がまだ無い")
         elif missing:
+            # ⚠️ 2026-09-17 文言修正: 旧文言は「巻き戻しの疑い」だけを示していたが、
+            #    実際に起きたのは**もう一つの、より危ない壊れ方**だった＝コンプラゲートで
+            #    🚩エスカレ中の #097 が finalize 済みのままルートに置かれ、カードだけ無い状態。
+            #    カードが無い＝非公開ではない（URLで読め、sitemap に載り、前後ナビも繋ぐ）。
+            #    診断名が片方しか無いと、正しく鳴っていても人が読み違える。
             body.append(f"- 🚨 🟡 {len(missing)}/{len(targets)} 件が guides.html に未掲載"
-                        f"（巻き戻しの疑い）: " + ", ".join(missing))
+                        f"（①カードの巻き戻し ②公開保留のはずの記事がルートに残っている"
+                        f"——②なら sitemap と前後ナビから読めてしまう）: " + ", ".join(missing))
             bad.append(("guides.htmlカード欠落", "warn"))
         else:
             body.append(f"- ✅ 🟢 公開記事 {len(targets)} 件すべてが guides.html に掲載済み")

@@ -1,3 +1,4 @@
+2026-09-17 signal-lab: 🚨 #097 は🚩エスカレ中なのに finalize 済みの `guide-signal-lab-097.html` がルートに残っており、**sitemap に載り #096「次」/#099「前」から読めてしまう状態だった**（9/13〜9/17）。応急処置として ①ルート版に noindex を付与 ②sitemap から削除 ③前後ナビを #096↔#099 に貼り替え ④#100 本文のリンクを解除 を実施。**ファイル自体の削除はオーナー承認待ち**。再発防止＝`check_site_consistency.py` が「カード無し＆noindex無し」を error にする／`apply_series_nav.py` は noindex を並びに入れない。
 2026-09-17 autopublish: guide-expected-value-thinking.html 公開済み ✅ 決定論緑・Opus🟡グレー修正(3件)→独立白確認 https://marketwatch-jp.com/guide-expected-value-thinking.html
 2026-09-17 signal-lab: guide-signal-lab-101.html ✅ 公開済み（verify12/12緑・Opus1st🟡9修正→Opus2nd🟢白・全ゲート通過）
 2026-09-16 autopublish: guide-average-vs-median-return.html 公開済み ✅ 決定論緑・Opus🟡グレー修正(3件)→独立白確認 https://marketwatch-jp.com/guide-average-vs-median-return.html

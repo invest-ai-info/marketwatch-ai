@@ -25,6 +25,7 @@ exit code: error があれば 1、無ければ 0（CI/フックで分岐でき�
 """
 import os
 import re
+import subprocess
 import sys
 import glob
 
@@ -88,6 +89,24 @@ if os.path.exists(_stg):
     elif _is_stub:
         errors.append("🚨 sync_to_github.py がスタブ/破損の疑い（<20KB or staleガード無し）"
                       "→ リモートの616Bスタブで上書きした可能性。OneDriveバージョン履歴から復元すること")
+
+
+def _in_git_worktree():
+    """このチェックが git リポジトリの中で走っているか。
+
+    🔑 ローカルPCの作業フォルダは git リポジトリではない（CLAUDE.md「作業フォルダ」）。
+    クラウド側（GitHub Actions / routine / Claude セッション）は必ずリポジトリ内で走る。
+    guides.html の鮮度が保証されるのはリポジトリ内だけなので、「カードが無い」を
+    **error に格上げしてよいのはリポジトリ内のときだけ**（ローカルは記事ミラーが先に来て
+    カードが後から届くため、error にすると sync が止まって人を困らせる）。
+    """
+    try:
+        r = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"],
+                           cwd=os.path.dirname(os.path.abspath(__file__)),
+                           capture_output=True, text=True, timeout=20)
+        return r.returncode == 0 and r.stdout.strip() == "true"
+    except Exception:
+        return False
 
 
 def _read(p):
@@ -317,9 +336,21 @@ def main():
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
         # 個別チェック不要（漏れない設計）。ここでは検査しない。
         if f'href="{gf}"' not in guides_html:
-            # noindex ページ（重複統合などで意図的に一覧から外した旧版）はカード不要
+            # noindex ページ（重複統合で一覧から外した旧版・ゲート保留中の記事）はカード不要
             if '<meta name="robots" content="noindex' not in html:
-                warnings.append(f"{gf}: guides.html にカードが無い（一覧から辿れない）")
+                # 🚨 2026-09-17 格上げ: これは「一覧から辿れない」だけの話ではない。
+                #    ルートに置かれた記事は**その時点で公開されている**（URLで読め、
+                #    build_sitemap_xml が sitemap に載せ、apply_series_nav が前後ナビで繋ぐ）。
+                #    カードが無く noindex も無い＝**公開するつもりが無いのに公開状態**。
+                #    実例: #097 はコンプラゲートで🚩エスカレ中だったのに finalize 済みの版が
+                #    ルートに残り、sitemap に載り、#096/#099 の前後ナビから到達できた。
+                #    44件ある warning に埋もれて12日気づかなかったので error にする。
+                #    直し方＝公開するなら publish_article.py でカードを作る／
+                #    保留するなら noindex を付ける（どちらかに倒す）。
+                msg = (f"{gf}: guides.html にカードが無いのに noindex も無い"
+                       f"＝**公開するつもりが無いのに公開状態**（sitemap・前後ナビからも辿れる）。"
+                       f"公開するなら publish_article.py、保留なら noindex を付ける")
+                (errors if _in_git_worktree() else warnings).append(msg)
 
     # 3. guides.html のリンク切れ（指している guide が実在するか）
     #    ※ guide-weekly-* / guide-auto-* は GitHub 側で自動生成されローカルに無いのが正常 → 除外
