@@ -2,18 +2,32 @@ name: Indicator Digest (morning)
 
 # 目的: 「今日これがある」を**ポジションを持つ前に**渡す。
 #
-# 🚨 なぜ必要か（2026-09-17 の実損）: 英中銀の政策金利発表の27分前にポンド円を3枚建て、
-#    発表の3秒後に手仕舞って -2,370円（当日損失の約半分）。
-#    環境警戒スコアは **シグナルが出たときのメールの中身**でしか届かないため、
-#    手動の発注は誰も見張っていなかった。判断の直前ではなく朝に先出しする。
+# 🚨 動機（2026-09-17 の実損）: 英中銀の発表27分前にポンド円を3枚建て、発表3秒後に手仕舞って
+#    -2,370円（当日損失の約半分）。環境警戒スコアは*シグナルが出たときのメール*の中身でしか
+#    届かないため、手動の発注は誰も見張っていなかった。
 #
-# ⚠️ 読むだけ（HTML もデータも書き換えない）。メールが出ないだけなら赤くしない設計。
+# 🕐 なぜ cron ではなく push で起動するのか（2026-09-17 実測）:
+#    このリポジトリの cron 遅延は automation-health 中央値 +221分（最大 +666分）、
+#    health-check +160分。**朝の便が3時間遅れたら意味がない。**
+#    一方 routine `fundamental-briefing` が押す fundamental-context.json の朝コミットは
+#    実測16件中14件が **06:13〜06:20 JST** に収まる。
+#    🔑 さらに **routine の push はワークフローを起動できる**（Actions が GITHUB_TOKEN で
+#    押したコミットは起動しない＝update-market-news の jp-rankings.json 指定が一度も
+#    発火していないのが実証）。だから routine の push に相乗りする。
+#    cron は「routine が止まった日」の保険として残す（遅れて届くが届かないよりよい）。
+#
+# ⚠️ 読むだけ（HTML もデータも書き換えない）。
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'fundamental-context.json'   # routine が 06:13-06:20 JST に押す＝これに相乗り
   schedule:
-    # 平日 06:50 JST（= 21:50 UTC 前日）。相場の朝の支度に間に合う時刻。
-    # ⚠️ UTC で前日になるので曜日は日〜木（＝JSTの月〜金）
-    - cron: '50 21 * * 0-4'
+    # 保険。JST 05:20 / 06:20 / 07:20 を狙う（遅延するので複数・半端な分）
+    - cron: '20 20 * * 0-4'
+    - cron: '20 21 * * 0-4'
+    - cron: '20 22 * * 0-4'
   workflow_dispatch:
 
 jobs:
@@ -28,9 +42,25 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Today (JST)
+        id: d
+        run: echo "jst=$(TZ=Asia/Tokyo date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      # 🔑 同じ日に2通送らないための印。push 起動と cron の保険が両方走っても1通で済む。
+      #    リポジトリに何も書かないので他のワークフローを起こさない。
+      - name: Already sent today?
+        id: sent
+        uses: actions/cache@v4
+        with:
+          path: .digest-marker
+          key: indicator-digest-${{ steps.d.outputs.jst }}
+
       - name: Send today's indicator digest
+        if: steps.sent.outputs.cache-hit != 'true'
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
-        run: python send_indicator_digest.py
+        run: |
+          python send_indicator_digest.py
+          date -u > .digest-marker

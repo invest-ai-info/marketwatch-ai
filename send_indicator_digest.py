@@ -19,9 +19,23 @@
 件名で状態がわかるようにする（開かなくても判断できるのが良いメール）:
    🚨 今日ある / 📅 今日は無いが7日以内にある / ⚪ 7日以内に無い
 
+🕐 いつ届くかの設計（2026-09-17 実測に基づく）:
+   GitHub Actions の cron は**当てにならない**。このリポジトリの実績で
+     automation-health(00:30UTC) 中央値 +221分・最大 +666分
+     health-check(00:00/11:00UTC) 中央値 +160分
+     technical-alerts-1d(21:20UTC) 中央値 +59分・90%tile +125分
+   ＝「2〜3時間遅れる」というオーナーの体感どおり。朝の便がこれでは意味がない。
+   🔑 一方、**予約エージェント(routine)は定刻に近い**（fundamental-context.json の朝コミットは
+   実測16件中14件が 06:13〜06:20 JST）。さらに **routine が push したコミットは
+   ワークフローを起動できる**（Actions が GITHUB_TOKEN で push したものは起動しない＝
+   update-market-news の `jp-rankings.json` パス指定が実は一度も発火していないのが証拠）。
+   → だから朝の便は **cron ではなく「routine の push に相乗り」**して飛ばす。cron は保険。
+
 使い方:
-   python send_indicator_digest.py            # 送信
-   python send_indicator_digest.py --dry-run  # 本文を表示するだけ（送らない）
+   python send_indicator_digest.py                  # 朝の便（JST 04:00-10:00 の窓でのみ送る）
+   python send_indicator_digest.py --mode alert     # 発表が近いものだけ「まもなく」通知
+   python send_indicator_digest.py --dry-run        # 本文を表示するだけ（送らない）
+   python send_indicator_digest.py --now 2026-09-18T07:00  # 時刻を指定して確認
 """
 import argparse
 import datetime as dt
@@ -35,6 +49,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 JST = dt.timezone(dt.timedelta(hours=9))
 EVENTS = os.path.join(HERE, "economic-events.json")
 HORIZON_DAYS = 7
+# 朝の便を送ってよい時間帯（JST）。routine の相乗りは 06:13 前後、cron の保険は遅れて来るので広めに取る。
+MORNING_WINDOW = (4, 10)
+# 「まもなく」通知を出す残り時間（分）。⚠️ 幅を実行間隔（毎時）より狭くして二重送信を減らす。
+#    それでも cron の揺らぎで稀に2通来ることがあるが、リマインダーなので害は小さい方を選ぶ。
+ALERT_MIN, ALERT_MAX = 45, 105
 
 # 監視18銘柄の表示名（affected_assets をそのまま出すと読めないので）
 TICKER_JA = {
@@ -128,13 +147,58 @@ def build(now):
     return subject, "\n".join(L)
 
 
+def build_alert(now):
+    """発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っているものだけを返す。無ければ (None, None)。"""
+    ind, _ = load_events(now)
+    soon = [(w, e) for w, e in ind
+            if ALERT_MIN <= (w - now).total_seconds() / 60 <= ALERT_MAX]
+    if not soon:
+        return None, None
+    w, e = soon[0]
+    left = int((w - now).total_seconds() / 60)
+    subject = f"⏰ あと{left}分: {e['name']}"
+    L = ["━━━━━━━━━━━━━━━━━━━━━",
+         f"⏰ まもなく発表  あと {left} 分",
+         "━━━━━━━━━━━━━━━━━━━━━", "",
+         f"  {w:%H:%M} JST  {e['name']}",
+         f"  影響: {assets_ja(e)}", ""]
+    if len(soon) > 1:
+        L.append("  同じ時間帯にもう1件:")
+        L += [f"    {w2:%H:%M}  {e2['name']}" for w2, e2 in soon[1:]]
+        L.append("")
+    L += ["  ⚠️ いまやること（MY_TRADING_RULES §2）",
+          "     ・新規は建てない",
+          "     ・持っているならロット半減 or 手仕舞い",
+          "     ・「戻ったら入る」で待たない（発表前の値動きは根拠にならない）", "",
+          "━━━━━━━━━━━━━━━━━━━━━",
+          "※ 2026-09-17: 英中銀の27分前に建てて当日損失の約半分を出した。その再発防止です。",
+          "※ これは自分用の確認メールであり投資助言ではありません。"]
+    return subject, "\n".join(L)
+
+
 def main():
-    ap = argparse.ArgumentParser(description="今日の重要指標を朝いちでメールする")
+    ap = argparse.ArgumentParser(description="重要指標をメールで知らせる")
+    ap.add_argument("--mode", choices=["digest", "alert"], default="digest",
+                    help="digest=朝の便 / alert=発表が近いものだけ")
     ap.add_argument("--dry-run", action="store_true", help="送信せず本文を表示するだけ")
+    ap.add_argument("--now", help="時刻を指定して確認する（例 2026-09-18T07:00）")
     args = ap.parse_args()
 
-    now = dt.datetime.now(JST)
-    subject, body = build(now)
+    now = (dt.datetime.fromisoformat(args.now).replace(tzinfo=JST)
+           if args.now else dt.datetime.now(JST))
+
+    if args.mode == "alert":
+        subject, body = build_alert(now)
+        if subject is None:
+            print(f"  発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っている指標なし＝送らない")
+            return 0
+    else:
+        lo, hi = MORNING_WINDOW
+        if not (lo <= now.hour < hi) and not args.dry_run:
+            # ⚠️ routine は朝夕2回 push するので、夕方の push で朝の便が飛ばないようにする
+            print(f"  いま {now:%H:%M} JST は朝の窓（{lo}:00-{hi}:00）の外＝送らない")
+            return 0
+        subject, body = build(now)
 
     if args.dry_run:
         print(f"Subject: {subject}\n")
