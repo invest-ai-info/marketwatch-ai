@@ -264,4 +264,5 @@ SYNC_FILES = [
     "guide-news-2026-09-16-fomc-decision-day-nikkei-boj.html",
     "guide-signal-lab-101.html",
     "guide-expected-value-thinking.html",
+    "guide-scam-debt-funded-investment.html",
 ]
