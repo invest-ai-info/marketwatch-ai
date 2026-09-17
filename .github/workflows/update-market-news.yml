@@ -8,9 +8,19 @@ on:
     #    が全ファイル add/add 競合→exit 128 で赤くなっていた（PR #7 で実測）。このジョブは main にしか commit できない。
     branches: [main]
     paths:
+      # ⚠️ ここに効くのは **routine（予約エージェント）が押したコミットだけ**。
+      #    記事公開の routine が publish_article.py 経由で generate_market_news.py を書き換える＝これは効く。
       - 'generate_market_news.py'
-      - 'jp-rankings.json'        # 日本株ランキング更新時に hot-assets を即再描画（夕方更新を遅延ゼロで反映）
-      - 'jp-margin.json'          # 信用残ウォッチ更新時にも hot-assets を即再描画
+  # 🚨 2026-09-17 修正: 以前はここに 'jp-rankings.json' / 'jp-margin.json' を並べて
+  #    「夕方更新を遅延ゼロで反映」と書いていたが、**一度も発火していなかった**。
+  #    GitHub は `GITHUB_TOKEN` で押されたコミットからはワークフローを起動しない仕様で、
+  #    この2ファイルを押しているのは Actions の jp-rankings.yml だから。
+  #    実測: update-market-news の push 起動 直近100件のうち jp-rankings 由来は **0件**。
+  #    → 正しい繋ぎ方は `workflow_run`（ワークフローの完了を受けて次を動かす公式の仕組み）。
+  #      cron の順番待ちも経由しないので、ランキング確定後すぐ hot-assets を描き直せる。
+  workflow_run:
+    workflows: ["JP Stock Rankings"]   # ⚠️ jp-rankings.yml の `name:` と一字一句合わせる
+    types: [completed]
   schedule:
     # ─── 朝の更新（米国市場クローズ後）─── 4回試行でスキップ対策
     - cron: '27 22 * * *'   # 7:27 JST 本命
@@ -46,6 +56,9 @@ concurrency:
 
 jobs:
   update:
+    # ⚠️ workflow_run のときだけ「ランキングが成功した回」に限る。
+    #    失敗した回の後に描き直しても古い jp-rankings.json を読むだけで意味がない。
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
