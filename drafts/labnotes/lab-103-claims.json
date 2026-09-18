@@ -1,0 +1,41 @@
+{
+  "article_id": "103",
+  "claims": [
+    {
+      "label": "IS: trend=上昇×reversalL（発火日<2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_before": "2026-06-22"},
+      "k": 54,
+      "n": 101
+    },
+    {
+      "label": "FWD全体: trend=上昇×reversalL（発火日>=2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "fired_from": "2026-06-22"},
+      "k": 150,
+      "n": 318
+    },
+    {
+      "label": "FWD RSI型: trend=上昇×rsi_oversold_bounce×ロング（発火日>=2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-22"},
+      "k": 48,
+      "n": 77
+    },
+    {
+      "label": "FWD BB型: trend=上昇×bb_lower_touch×ロング（発火日>=2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-22"},
+      "k": 102,
+      "n": 241
+    },
+    {
+      "label": "FWD 日足: trend=上昇×reversalL×tf=1d（発火日>=2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "tf": "1d", "fired_from": "2026-06-22"},
+      "k": 16,
+      "n": 23
+    },
+    {
+      "label": "FWD 指数: trend=上昇×reversalL×group=index（発火日>=2026-06-22）",
+      "filter": {"trend": "上昇", "reversal_long": true, "group": "index", "fired_from": "2026-06-22"},
+      "k": 31,
+      "n": 80
+    }
+  ]
+}
