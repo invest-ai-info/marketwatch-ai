@@ -1,15 +1,16 @@
 {
-  "generated_at": "2026-09-18T06:09:42+09:00",
+  "generated_at": "2026-09-18T15:10:31+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
+    "regime": "RISK_OFF",
     "confidence": "MID",
-    "rationale": "米FRBが9月16日に3年ぶりの利上げ（3.75〜4%）を決定。ECBも9月10日に2.50%へ利上げ。日銀は9月18日決定会合で1.25%への利上げが濃厚。主要3中央銀行の同時引き締めはリスク資産への逆風だが、AI・半導体セクターの好決算が株式市場を下支え。中東イラン・サウジ紛争による原油供給リスクも継続しており、リスクオン・オフが拮抗する中立局面。",
+    "rationale": "FRBが9月16日に25bp利上げ（3.75〜4.00%）を実施し、追加利上げ示唆。FRB議長ウォーシュ氏のタカ派発言で10年債利回りが5%を再び超えた。S&P500は週次-3%と下落。日銀も本日（9/18）1.25%への利上げを決定見通しで、円高圧力・輸出株への逆風が重なる。中東情勢緊迫（サウジアラビアのパイプライン被攻撃）により原油価格は依然高止まり。リスクオフ地合いが優勢だが、ハイテク株の底堅さや一部セクターの回復感が見られ、RISK_OFFとしてコンフィデンスはMID。",
     "key_drivers": [
-      "米FRB 3年ぶり利上げ実施（3.75〜4%、9月16日）",
-      "ECB利上げ（2.50%、9月10日）・日銀も9月18日に利上げ見通し",
-      "中東イラン・サウジ紛争：サウジアラムコ東西パイプライン攻撃で原油供給リスク",
-      "AI・半導体セクターの好決算が株式市場を下支え（マイクロン・ブロードコム）",
-      "金が前年比+18%高水準で安全資産需要が根強い"
+      "FRB 9月16日に25bp利上げ（3.75〜4.00%）、追加利上げも示唆",
+      "米10年債利回りが5%超に再上昇、株式のバリュエーション圧迫",
+      "日銀 本日（9/18）1.25%への利上げを決定見通し、植田総裁会見予定",
+      "ECBも9月10日に25bp利上げ（2.50%）、各中銀一斉引き締め局面",
+      "中東情勢緊迫：サウジパイプライン被攻撃→原油供給不安継続",
+      "S&P500 週次-3%（8/17〜9/17）、リスクオフ優勢"
     ]
   },
   "assets": [
@@ -18,176 +19,200 @@
       "ticker": "NKD=F",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "直近は65,000〜66,400円レンジで推移。9月15日は前日比206円高。日銀が9月18日決定会合で政策金利を1.25%に引き上げると全アナリストが予測しており、実現すれば円高圧力から輸出株に逆風となる可能性。一方、AI・半導体関連（ソフトバンクG、キオクシアHD等）が下支え要因。結果待ちの局面でバイアスは中立。",
+      "rationale": "本日（9/18）の日銀金融政策決定会合で1.25%への利上げがほぼ確実視されており、市場はある程度織り込み済み。日経は64,136円付近で小幅高（+213円）。円高圧力が輸出関連株の重しになる一方、利上げ＝景気への自信と解釈されポジティブな面も。植田総裁の15:30記者会見の内容次第で方向感が定まる。",
       "catalysts": [
-        "日銀9月18日利上げ決定（政策金利1.25%見通し、1995年4月以来の高水準）",
-        "円高進行時の輸出企業株への影響",
-        "AI・半導体関連銘柄（ソフトバンクG・キオクシア等）の堅調"
+        "日銀 本日15:30 植田総裁記者会見の内容（タカ派なら円高→輸出株に逆風）",
+        "FRBの追加利上げ観測がリスクオフとして波及",
+        "中東地政学リスクによる輸入コスト上昇（円安進行があれば二重苦）"
       ],
       "top_news": [
         {
-          "headline": "日銀、9月18日の決定会合で政策金利を1.25%に引き上げ確実 — Bloomberg調査52人全員が利上げを予想",
-          "published": "2026-09-11",
-          "comment": "利上げ実現なら円高に振れ輸出株に逆風の可能性",
+          "headline": "日銀、9月会合で政策金利を1.25%へ引き上げへ——3カ月ぶりの利上げ",
+          "published": "2026-09-18",
+          "comment": "利上げ自体は想定内だが植田会見次第で相場急変も",
+          "source": "日本経済新聞",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Bloomberg", "NHK"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.nikkei.com/article/DGXZQOUB10B710Q6A910C2000000/"
+        },
+        {
+          "headline": "植田日銀総裁「9月含め毎回の会合でしっかり議論する」——G20後の共同会見で発言",
+          "published": "2026-09-01",
+          "comment": "9月利上げを否定せず市場が織り込みを加速させた",
           "source": "Bloomberg",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Reuters", "Japan Times"],
+          "corroborated_by": ["NHK", "日本経済新聞"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-11/boj-watchers-see-follow-up-hike-by-january-after-september-move"
+          "url": "https://www.bloomberg.com/jp/news/articles/2026-09-01/TKMXGAT96OTG00"
+        }
+      ]
+    },
+    {
+      "name": "S&P500先物",
+      "ticker": "ES=F",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "FRBが9月16日に25bp利上げ（3.75〜4.00%）を実施し、SEPで年内追加利上げを示唆。ウォーシュ議長のタカ派姿勢が嫌気され、S&P500は週次-3%と軟調。10年債利回りが5%超に上昇し、株式バリュエーションへの圧迫が続く。ただし利上げ後のリバウンド（歴史的には6週間後から反発）の可能性も残る。",
+      "catalysts": [
+        "FRBの追加利上げ観測と10年利回り5%超の水準維持",
+        "ウォーシュFRB議長のタカ派スタンス継続",
+        "エネルギー・金融・素材の主要セクターが軟調"
+      ],
+      "top_news": [
+        {
+          "headline": "FRBが25bp利上げ（3.75〜4.00%）、年内追加利上げも示唆——12対0の全会一致",
+          "published": "2026-09-16",
+          "comment": "利上げ再開は株式の割引率上昇につながりバリュエーション圧迫",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Bloomberg", "Reuters"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html"
         },
         {
-          "headline": "日経平均、前日比206円高で推移 — ソフトバンクG・リクルートHD・キオクシアHDがプラス寄与",
-          "published": "2026-09-15",
-          "comment": "AI・半導体関連が相場を支えているが上値は重い",
-          "source": "財経新聞",
+          "headline": "FRB決定後にダウ600ドル超安、S&P500が0.45%下落——10年債利回り5%超え",
+          "published": "2026-09-16",
+          "comment": "長期金利5%は株式の「無リスク代替」として資金流出を招く",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["TheStreet", "Motley Fool"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-sept-16-133949098.html"
+        },
+        {
+          "headline": "S&P500が8月〜9月17日の月次で-3%——利上げ再開で9月効果が顕在化",
+          "published": "2026-09-17",
+          "comment": "9月は季節的に弱い月、今年は利上げ再開が重なりリスク高まる",
+          "source": "TheStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-17-2026"
+        }
+      ]
+    },
+    {
+      "name": "ナスダック先物",
+      "ticker": "NQ=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "9月17日のナスダック総合は25,978付近でほぼ変わらず。S&P500に比べてハイテク株は相対的底堅さを示す。ただし高金利環境での成長株バリュエーション圧迫は続く。エヌビディア・マイクロン等の一部銘柄に利益集中が著しく、裾野は脆弱。",
+      "catalysts": [
+        "ハイテク大手（エヌビディア等）のAI関連需要が下支え",
+        "金利5%超が成長株DCFを圧迫するリスク継続",
+        "利益集中リスク：上位2銘柄が市場利益成長の約3分の1を担う"
+      ],
+      "top_news": [
+        {
+          "headline": "ナスダック、FRB利上げ後に横ばい推移——S&P500の下落とは対照的な底堅さ",
+          "published": "2026-09-17",
+          "comment": "AI関連需要が支えだが高金利の逆風は残りNEUTRAL判断",
+          "source": "TheStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-17-2026"
+        },
+        {
+          "headline": "エヌビディア・マイクロンの2社でS&P500利益成長の約3分の1を占める——利益集中リスク警告",
+          "published": "2026-09-01",
+          "comment": "特定銘柄への利益集中は市場全体の脆弱性を高める",
+          "source": "Investing.com",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.investing.com/analysis/september-trading-outlook-2026-the-warning-traders-shouldnt-ignore-200687241"
+        }
+      ]
+    },
+    {
+      "name": "金（ゴールド）",
+      "ticker": "GC=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "金価格は1トロイオンス4,310〜4,380ドル付近で推移。FRB利上げに伴うドル高・金利上昇が金の機会費用を高め上値を抑えるが、中東地政学リスク・インフレ持続・中央銀行の買い意欲が下支え。年初来高値5,589ドルから大きく調整中だが、底堅い水準を維持。相反する力が均衡しNEUTRAL。",
+      "catalysts": [
+        "FRB追加利上げ観測とドル高が金の下押しリスク",
+        "中東情勢緊迫（サウジパイプライン被攻撃）が安全資産需要を下支え",
+        "インフレ持続懸念が実質金利上昇を制限し金を支援"
+      ],
+      "top_news": [
+        {
+          "headline": "金先物、CPI発表前に1カ月ぶり安値水準で取引——FRB利上げ確率60%に上昇を反映",
+          "published": "2026-09-11",
+          "comment": "利上げ期待のドル高が金の重しとなったが中東支援で底堅い",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-friday-september-11-2026-gold-opens-at-lowest-level-in-over-a-month-ahead-of-cpi-data-111016419.html"
+        },
+        {
+          "headline": "金価格 本日4,254〜4,376ドルのレンジ推移見込み——バンク・オブ・アメリカ年平均目標4,360ドル",
+          "published": "2026-09-17",
+          "comment": "大手行の目標水準付近で推移、過熱感は薄れ積立には中立的",
+          "source": "LiteFinance/goldsilver.com",
           "tier": 3,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.zaikei.co.jp/article/20260915/870145.html"
-        }
-      ]
-    },
-    {
-      "name": "S&P500",
-      "ticker": "ES=F",
-      "bias": "NEUTRAL",
-      "conviction": "MID",
-      "rationale": "9月17日に7,596ポイント（前日比+0.59%）。FRBが9月16日に3年ぶりの利上げを実施した翌日に反発した形。直近1ヶ月は1.24%下落だが前年比では+14.54%と水準は高い。雇用統計が8月分で16.2万人増と予想（5.3万人）を大幅上回る強さ。利上げによる引き締め効果と好調な企業業績が拮抗しており方向感が出にくい。",
-      "catalysts": [
-        "FRB利上げ（3.75〜4%）後の市場消化と次回追加利上げ観測",
-        "雇用統計の大幅上振れ（16.2万人増 vs 予想5.3万人）",
-        "AI関連好決算による景気楽観"
-      ],
-      "top_news": [
-        {
-          "headline": "米FRB、3年ぶりに政策金利を0.25%引き上げ3.75〜4%へ — 全会一致（12対0）で決定、追加利上げも示唆",
-          "published": "2026-09-16",
-          "comment": "3年ぶりの利上げ転換で株式市場は短期的に動揺",
-          "source": "Federal Reserve",
-          "tier": 1,
-          "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg", "CNBC"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"
-        },
-        {
-          "headline": "S&P500、FRB利上げ翌日に0.59%反発 — 9月17日時点で7,596ポイント、長期国債利回りの低下が追い風",
-          "published": "2026-09-17",
-          "comment": "利上げ後の反発は市場の消化が進んでいるシグナル",
-          "source": "Bloomberg",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["CNBC"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-16/stock-market-today-dow-s-p-live-updates"
-        }
-      ]
-    },
-    {
-      "name": "ナスダック",
-      "ticker": "NQ=F",
-      "bias": "BULLISH",
-      "conviction": "MID",
-      "rationale": "マイクロン・テクノロジーが四半期売上高414.6億ドル（前年比+346%）を計上しAIデータセンター需要の強さを示した。ブロードコムも+85.5%増収。グローバルAI支出は2026年に2.5兆ドル（ガートナー）に達する見込みで、AIチップ製造・HBM需要は旺盛。半導体銘柄がNasdaq全体を牽引。FRBの利上げが短期的な重しだが、AI需要の構造的強さが上回る。",
-      "catalysts": [
-        "マイクロン・ブロードコムの好決算（AI・データセンター需要の急拡大）",
-        "グローバルAI支出の2.5兆ドル拡大見通し（ガートナー）",
-        "ハイパースケーラーによるカスタムアクセラレーター・HBM発注の前倒し"
-      ],
-      "top_news": [
-        {
-          "headline": "マイクロン・テクノロジー、四半期売上高414億ドルを計上 — 前年比346%増、データセンター収益の年換算は1,000億ドル超",
-          "published": "2026-09-15",
-          "comment": "AI向けメモリ需要が業績を爆発的に押し上げている",
-          "source": "NerdWallet / Yahoo Finance",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Motley Fool", "247WallSt"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.nerdwallet.com/investing/learn/best-semiconductor-stocks"
-        }
-      ]
-    },
-    {
-      "name": "金",
-      "ticker": "GC=F",
-      "bias": "BULLISH",
-      "conviction": "MID",
-      "rationale": "9月17日に1トロイオンス4,307ドル（前日比+1.02%）。前年比では+18.20%と長期的な上昇トレンドを維持。FRBの利上げは通常、金利を生まない金には逆風だが、中東イラン・サウジ紛争による地政学リスクと中央銀行の継続的な金買いが下支え。8月の米コアCPIが予想を上回り高インフレ懸念も残る。ただし短期的な利上げ圧力は上値抑制要因。",
-      "catalysts": [
-        "中東地政学リスク（イラン・サウジ紛争）の継続",
-        "中央銀行の金買い継続",
-        "高インフレ環境下での実物資産・安全資産需要"
-      ],
-      "top_news": [
-        {
-          "headline": "金価格、9月17日に4,307ドルへ上昇 — 前日比+1.02%、前年比18%高水準を維持",
-          "published": "2026-09-17",
-          "comment": "利上げ逆風の中でも中東リスクが安全資産需要を下支え",
-          "source": "Trading Economics",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://tradingeconomics.com/commodity/gold"
-        },
-        {
-          "headline": "米8月コアCPIが市場予想を上回る上昇 — FRBの利上げ判断を後押しする結果",
-          "published": "2026-09-10",
-          "comment": "高インフレ持続がスタグフレーション懸念を意識させる",
-          "source": "goldsilver.com / Bloomberg",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
+          "direction": "neutral",
           "url": "https://goldsilver.com/industry-news/article/gold-price-outlook-september-2026/"
         }
       ]
     },
     {
-      "name": "原油",
+      "name": "原油（WTI）",
       "ticker": "CL=F",
-      "bias": "BULLISH",
-      "conviction": "HIGH",
-      "rationale": "WTI原油は9月17日に102.13ドル（前日比-0.29%）と小幅安だが、ブレント原油は直近1ヶ月で20%超急騰しており中長期的な供給懸念は強い。9月11日にイランのフーシ派がサウジアラビアの東西パイプライン（ホルムズ海峡迂回ルート）をドローンで攻撃し、サウジアラムコが欧州向け出荷を一部遅延。フーシ派はバブ・エル・マンデブ海峡進出と海運攻撃を継続中。米在庫は予想よりも小幅減少（64万バレル）で需給は引き締まり気味。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "WTI原油はサウジアラビアの東西パイプライン被攻撃後の急騰から、修復進捗の報道で反落。9月17日時点では94〜104ドル付近で推移（ソースによりブレントとWTIの差異あり）。UAEがOPECを脱退（5月1日）し、OPECの産量調整力が低下している。供給懸念緩和で直近2セッション連続安。ただし中東情勢は依然不透明。",
       "catalysts": [
-        "9月11日サウジアラビア東西パイプラインへのドローン攻撃で供給不安が高まる",
-        "フーシ派によるバブ・エル・マンデブ海峡進出と海運攻撃の継続",
-        "米原油在庫の小幅減少（予想を下回る64万バレル減）"
+        "サウジパイプライン修復進捗（数日内に半分・6週間で全快の見通し）で供給懸念緩和",
+        "UAEのOPEC脱退（5月1日）でOPECの市場安定化能力が低下",
+        "FRB利上げによる景気減速懸念が需要面での下押しリスク"
       ],
       "top_news": [
         {
-          "headline": "イラン・フーシ派、サウジアラビアの東西パイプラインを攻撃 — 衛星画像で大規模火災と損傷を確認、アラムコが欧州向け出荷を一部延期",
-          "published": "2026-09-14",
-          "comment": "中東の供給リスクが再燃し原油相場の上昇要因に",
-          "source": "CNBC",
+          "headline": "原油、2セッション連続安——サウジが被攻撃パイプラインを数日内に半分復旧と発表",
+          "published": "2026-09-17",
+          "comment": "供給途絶リスクが後退し売りが優勢、ただし中東情勢は未解決",
+          "source": "Fortune / Pressbee",
           "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Reuters", "Wikipedia"],
+          "credibility": "MID",
+          "corroborated_by": [],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.cnbc.com/2026/09/14/iran-war-saudi-arabia-east-west-pipeline-oil.html"
+          "direction": "bearish",
+          "url": "https://fortune.com/article/price-of-oil-09-17-2026/"
         },
         {
-          "headline": "米週次原油在庫、予想を大幅に下回る64万バレル減 — 需給は引き締まり気味で原油価格を下支え",
-          "published": "2026-09-17",
-          "comment": "在庫は市場予想ほど積み増しされず需給が引き締まっている",
-          "source": "Fortune / EIA",
+          "headline": "UAEのOPEC脱退（5月1日発効）でOPEC産量の11%超が管轄外に——市場安定化能力が低下",
+          "published": "2026-05-01",
+          "comment": "OPECの結束低下は長期的に原油の需給不安定要因となりうる",
+          "source": "各通信社",
           "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
           "direction": "bullish",
-          "url": "https://fortune.com/article/price-of-oil-09-17-2026/"
+          "url": "https://oilprice.com/"
         }
       ]
     },
@@ -195,63 +220,75 @@
       "name": "ドル円",
       "ticker": "USDJPY",
       "bias": "BEARISH",
-      "conviction": "HIGH",
-      "rationale": "9月17日時点で155.12円付近（9月2日時点の160.33から約5円の円高進行）。日銀が9月18日の決定会合で政策金利を1.25%に引き上げると予測され（Bloomberg調査52人全員）、実現すれば1995年4月以来の高水準となり円高圧力がさらに強まる見込み。日米金利差の縮小が見込まれる中、次回（12月または来年1月）の追加利上げも93%が織り込んでいる。BEARISH（ドル安・円高方向）。",
+      "conviction": "MID",
+      "rationale": "ドル円は156円付近で推移。本日（9/18）の日銀決定会合で1.00%→1.25%への利上げがほぼ確実視され、15:30からの植田総裁記者会見次第でさらなる円高圧力がかかる可能性。FRBが3.75〜4.00%、日銀が1.25%と金利差は依然大きいため円安基調は中長期的に変わらないが、短期的には円高リスクが高い。BEARISHはドル円の下落方向（円高）を示す。",
       "catalysts": [
-        "日銀9月18日利上げ（政策金利1.25%見通し、52/52アナリスト予想）",
-        "日米金利差縮小見通し（日銀の利上げペース加速）",
-        "次回（12月または来年1月）の追加利上げも93%が予想"
+        "日銀 本日1.25%への利上げ決定見通し（植田会見15:30 JST）",
+        "植田総裁のタカ派発言があれば円買いが加速する可能性",
+        "日米金利差は依然大きく（3.75〜4.00% vs 1.25%）、中長期の円安圧力は継続"
       ],
       "top_news": [
         {
-          "headline": "日銀、9月18日会合で政策金利を1.25%に引き上げへ — 1995年4月以来の高水準、Bloomberg調査52人全員が予測",
-          "published": "2026-09-11",
-          "comment": "日米金利差縮小で円高圧力が高まりやすい局面",
-          "source": "Bloomberg",
+          "headline": "日銀、9月会合で政策金利を1.25%へ引き上げ決定——市場は約8割の確率で織り込み済み",
+          "published": "2026-09-18",
+          "comment": "利上げ確定なら円高進行、会見がタカ派なら156円から急落も",
+          "source": "外為どっとコム/日本経済新聞",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Reuters", "Japan Times"],
+          "corroborated_by": ["Bloomberg", "NHK"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-11/boj-watchers-see-follow-up-hike-by-january-after-september-move"
+          "url": "https://www.gaitame.com/media/entry/2026/09/18/070651"
         },
         {
-          "headline": "ドル円、9月2日時点でRSIが70に上昇し160.33付近 — FOMCと日銀会合を控えたポジション調整",
-          "published": "2026-09-02",
-          "comment": "中銀イベント前後で円高方向への調整リスクあり",
-          "source": "Vantage Markets",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.vantagemarkets.com/en/market-analysis/usdjpy-rsi-70-fed-boj-meetings-september-2-2026/"
+          "headline": "FRBが3.75〜4.00%へ利上げ——日米金利差は依然2.5〜2.75%ポイント、円安構造は変わらず",
+          "published": "2026-09-16",
+          "comment": "金利差縮小ペース次第でドル円の下値は限定的とも解釈できる",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Bloomberg"],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html"
         }
       ]
     },
     {
       "name": "ユーロドル",
       "ticker": "EURUSD",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "9月17日時点で1.1481ドル。ECBが9月10日に預金金利を2.50%へ引き上げ（エコノミスト65人全員が予想通り）。ユーロ圏8月CPI3.3%（前月2.9%から上昇）はエネルギー主因。FRBも9月16日に3.75〜4%へ利上げしており米欧両中銀が同方向の引き締め。12月の追加利上げも90%近くが織り込まれている。方向感は乏しくタイトなレンジ内での推移が続く見通し。",
+      "rationale": "EUR/USDは1.1481付近。ECBが9月10日に25bp利上げ（2.50%）を実施したが、FRBが9月16日に3.75〜4.00%へさらに引き上げたことで日米金利差（USD有利）が拡大し、ドル高・ユーロ安が進んだ。ECBインフレ見通しの上方修正（2027年2.5%）は追加利上げ余地を示すが、FRBとの差は当面埋まりにくい状況。",
       "catalysts": [
-        "ECB9月10日利上げ（2.50%）と12月追加利上げの高確率織り込み",
-        "ユーロ圏8月CPI3.3%（エネルギー主因）でインフレ圧力継続",
-        "FRB利上げとの均衡でレンジ推移が続く見通し"
+        "FRBが3.75〜4.00%に対しECBは2.50%——金利差拡大でドル優勢",
+        "ECBインフレ見通し上方修正（2027年2.5%）——追加利上げ期待でユーロを支援する面もあり",
+        "ユーロ圏景気減速リスクがユーロの上値を制限"
       ],
       "top_news": [
         {
-          "headline": "ECB、9月10日に預金金利を2.50%へ引き上げ — ユーロ圏8月CPI3.3%への上昇を受け全エコノミスト予想通りの決定",
+          "headline": "ECB、9月10日に25bp利上げ（2.50%）——インフレ見通しを上方修正、追加利上げを示唆",
           "published": "2026-09-10",
-          "comment": "ECBもFRBも同方向で利上げし、ユーロドルは方向感が出にくい",
-          "source": "Reuters / ECB",
-          "tier": 1,
+          "comment": "ECBも引き締め継続だが、FRBとの金利差がドル優勢をもたらす",
+          "source": "EBC Financial Group",
+          "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg", "StoneX"],
+          "corroborated_by": ["ECB公式"],
           "materiality": "high",
           "direction": "neutral",
-          "url": "https://www.stonex.com/en-gb/news-and-analysis/eur-usd-forecast-ecb-and-us-inflation-set-to-test-the-range-2026-09-07/"
+          "url": "https://www.ebc.com/forex/ecb-rate-hike-2-5-eur-usd-september-2026"
+        },
+        {
+          "headline": "EUR/USD、FRB利上げ後に1.1481付近に下落——USD金利優位がユーロ圧迫",
+          "published": "2026-09-17",
+          "comment": "FRBとECBの金利差拡大がドル買い・ユーロ売りを誘発",
+          "source": "Trading Economics",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://tradingeconomics.com/euro-area/currency"
         }
       ]
     },
@@ -260,39 +297,40 @@
       "ticker": "BTC-USD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "9月16日時点で77,566ドル（前日比-0.79%）。9月1日の78,154ドルから小幅に下落。9月のレンジは77,247〜80,594ドルと予測される。前年比では約26%の下落水準。FRBの利上げや中東リスクによるリスクオフ環境が逆風。時価総額は1.33兆ドルを維持しており市場機能は保たれているが、特定の上昇材料は乏しく方向性が定まらない。",
+      "rationale": "BTCは9月中旬時点で7万7,000〜8万ドル付近のレンジ推移。リスクオフ地合いが続くなか、暗号資産への資金流入は限定的。FRBの利上げ継続はリスク資産全般への逆風だが、機関投資家の底堅い買いがサポート。明確な方向感を欠きNEUTRAL判断。",
       "catalysts": [
-        "FRBの利上げによるリスク資産全般への逆風",
-        "中東地政学リスクと不確実なマクロ環境"
+        "FRBの利上げ継続がリスク資産としての暗号資産に逆風",
+        "機関投資家の需要が7万7,000〜8万ドル付近での下値を支える",
+        "マクロリスクオフが続く限り上値は追いにくい状況"
       ],
       "top_news": [
         {
-          "headline": "ビットコイン、9月16日時点で77,566ドル — 前年比で約26%の下落水準、FRB利上げがリスク資産に逆風",
+          "headline": "ビットコイン、9月中旬に7万7,566ドル付近——利上げ再開でリスクオフ・レンジ推移",
           "published": "2026-09-16",
-          "comment": "利上げ局面ではリスク資産への資金流入が弱まりやすい",
-          "source": "Fortune",
-          "tier": 3,
+          "comment": "FRB利上げが逆風だが急落もなくレンジ圏での模様眺め",
+          "source": "Fortune / Yahoo Finance",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://fortune.com/article/price-of-bitcoin-09-08-2026/"
+          "direction": "neutral",
+          "url": "https://fortune.com/article/price-of-bitcoin-09-01-2026/"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "金は2026年上半期に5,000ドルに達するとのHSBC予測",
-      "reason": "年初の将来予測記事であり直近の市場動向に基づかない古い情報のため除外"
+      "headline": "ビットコイン9月2026年の価格予測（8万ドル〜8.3万ドル目標）",
+      "reason": "価格予測サイトの推測記事。根拠が薄くLOW信頼度のため除外"
     },
     {
-      "headline": "ビットコイン価格予測2026〜2040の長期予測記事",
-      "reason": "投機的な長期予測であり直近の市場判断材料としての信頼性が低い"
+      "headline": "ゴールドの2月18日予測市場データ（Robinhood）",
+      "reason": "2月18日のデータで日付が古く直近の分析に不適切"
     },
     {
-      "headline": "OPECが2026年の需要見通しを58万bpdに引き下げ",
-      "reason": "数ヶ月前の発表であり直近の地政学リスクよりも時系列が古い（原油バイアス判断には参照済み）"
+      "headline": "S&P500の年初来見通し（Charles Schwab ミッドイヤー）",
+      "reason": "2026年中間時点の見通しで、直近の動向ではなく背景情報として参考に留める"
     }
   ]
 }
