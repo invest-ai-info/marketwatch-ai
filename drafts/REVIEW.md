@@ -1,4 +1,5 @@
-2026-09-18 signal-lab: draft-signal-lab-103.html 🚩エスカレ中（コンプラは🟡グレー→軽微修正5件適用で白相当。ただし品質③＝勝率95%CI列の5行すべてが signals-log から再現不能＝数値訂正が要るため自動公開を停止）
+2026-09-19 signal-lab: guide-signal-lab-103.html ✅ 公開済み（CI値を標準Wilson式に訂正+コンプラ5件軽微修正→verify緑→独立Opus🟢白→全ゲート通過）
+2026-09-18 signal-lab: draft-signal-lab-103.html 🚩エスカレ→✅解決（コンプラ🟡グレー5件修正+CI値標準Wilson訂正で🟢白確認済み）
 2026-09-18 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
 2026-09-18 signal-lab: #102 ✅自動公開済み（テーマ：もみあい×ショート⛔反証解剖。OOS 112/295=38.0%・E(R)=-0.11。verify緑→Opus3回独立監査白→finalize→publish完了）
 2026-09-17 signal-lab: 🚨 #097 は🚩エスカレ中なのに finalize 済みの `guide-signal-lab-097.html` がルートに残っており、**sitemap に載り #096「次」/#099「前」から読めてしまう状態だった**（9/13〜9/17）。応急処置として ①ルート版に noindex を付与 ②sitemap から削除 ③前後ナビを #096↔#099 に貼り替え ④#100 本文のリンクを解除 を実施。**ファイル自体の削除はオーナー承認待ち**。再発防止＝`check_site_consistency.py` が「カード無し＆noindex無し」を error にする／`apply_series_nav.py` は noindex を並びに入れない。

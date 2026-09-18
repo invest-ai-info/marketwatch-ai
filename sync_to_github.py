@@ -270,4 +270,5 @@ SYNC_FILES = [
     "guide-news-2026-09-18-boj-hike-125-yen-weaker.html",
     "guide-signal-lab-102.html",
     "guide-tse-split-adjustment.html",
+    "guide-signal-lab-103.html",
 ]
