@@ -267,6 +267,7 @@ SYNC_FILES = [
     "guide-scam-debt-funded-investment.html",
     "guide-tse-offering-schedule.html",
     "guide-news-2026-09-17-fomc-rate-hike-25bp-dot-plot.html",
+    "guide-news-2026-09-18-boj-hike-125-yen-weaker.html",
     "guide-signal-lab-102.html",
     "guide-tse-split-adjustment.html",
 ]
