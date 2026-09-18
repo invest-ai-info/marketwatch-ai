@@ -1,3 +1,4 @@
+2026-09-19 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
 2026-09-19 signal-lab: guide-signal-lab-103.html ✅ 公開済み（CI値を標準Wilson式に訂正+コンプラ5件軽微修正→verify緑→独立Opus🟢白→全ゲート通過）
 2026-09-18 signal-lab: draft-signal-lab-103.html 🚩エスカレ→✅解決（コンプラ🟡グレー5件修正+CI値標準Wilson訂正で🟢白確認済み）
 2026-09-18 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
