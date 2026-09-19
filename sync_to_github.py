@@ -272,4 +272,5 @@ SYNC_FILES = [
     "guide-tse-split-adjustment.html",
     "guide-signal-lab-103.html",
     "guide-tse-investor-flows.html",
+    "guide-company-nvda-nvidia.html",
 ]
