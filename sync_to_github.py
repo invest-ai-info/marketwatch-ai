@@ -273,4 +273,5 @@ SYNC_FILES = [
     "guide-signal-lab-103.html",
     "guide-tse-investor-flows.html",
     "guide-company-nvda-nvidia.html",
+    "guide-news-2026-09-19-boj-rate-check-intervention-warning-yen.html",
 ]
