@@ -474,9 +474,25 @@ REVIEW_PATH = "drafts/REVIEW.md"
 #    「日が変わると直せない」問題自体は解消したが、**asof を持たない旧claimsは依然として救済不能**で、
 #    かつ 09:30 の本チェックは 06:10 生成の**翌朝**に鳴る＝1日にしないと最短でも2日放置になる。
 ESCALATION_STALE_DAYS = 1
-# 見出しの形: `## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily`
-RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n]+?)\s*\|", re.M)
+# 🚨 2026-09-17 大改修: 見出しの書式は**時期によって変わる**。実測（drafts/REVIEW.md）:
+#     旧: `## 2026-08-11 | 🚩 独立Opus否・FWDデータ修正要 | signal-lab-067 | signal-lab-daily`
+#     新: `## 2026-09-14 signal-lab #098: draft-signal-lab-098.html`
+#     新: `2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（…）`  ← `##` すら付かない
+#   旧書式（パイプ3本）しか拾えない正規表現だったため、**2026-08-29 に書き手が書式を変えた時点で
+#   §⑧ は何も見なくなり**、#097（9/13〜）と #098（9/14〜）が🚩エスカレ中なのに毎朝
+#   「✅ 未解決の 🚩 は 0 件」と報告し続けていた。**番人が静かなのと、異常が無いのは違う。**
+#   → 直し方＝「日付で始まる行」をすべて1件として拾い、対象（target）だけを書式ごとに取り出す。
+#   ⚠️ 取り出せない🚩は**黙って捨てず「解析不能」として鳴らす**。ここが今回の再発防止の芯で、
+#      次に書式が変わっても「0件＝問題なし」には落ちない（静かになったら人に知らせる）。
 
+# 日付で始まる行＝1エントリの先頭。`## ` が付く節も、素のログ行も同じ扱いにする。
+RE_ENTRY_HEAD = re.compile(r"^(?:#{1,6}[ \t]*)?(\d{4}-\d{2}-\d{2})\b[^\n]*$", re.M)
+# 旧書式だけは「3列目＝対象」が確定情報なので、他の推測より優先して使う。
+RE_OLD_PIPE = re.compile(r"^\d{4}-\d{2}-\d{2}\s*\|([^|\n]*)\|\s*([^|\n]+?)\s*\|")
+# `draft-xxx.html` / `guide-xxx.html` が書かれていれば、それが対象の実体。
+RE_ARTIFACT_FILE = re.compile(r"\b(?:draft|guide)-([a-z0-9][a-z0-9-]*?)\.html")
+# 最後の手段＝行内の最初のケバブ語（`bid-ask-spread` `margin-trading` など記事キー）。
+RE_KEBAB = re.compile(r"\b([a-z][a-z0-9]*(?:-[a-z0-9]+)+)\b")
 
 # 見出し3列目（対象）の表記ゆれを実体スラッグへ寄せる。
 # 2026-08-18 実測: signal-lab レーンは回によって `signal-lab-067`（スラッグ）と
@@ -486,6 +502,8 @@ RE_REVIEW_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*\|([^|\n]*)\|\s*([^|\n
 RE_LAB_TARGET = re.compile(r"signal-lab\D*(\d{2,4})")
 # 明示の解決マーク（書き手が見出しに残す）。実体判定が効かない回の保険。
 RESOLVED_MARKS = ("[解消済み]", "[解決済み]", "解消済み", "解決済み")
+# 「公開」という語が入っていても**公開していない**回。これを解決扱いにすると滞留を取りこぼす。
+NOT_PUBLISHED_MARKS = ("公開せず", "未公開", "公開保留", "公開見送り", "公開できず", "公開を見送")
 # ルーティン名と成果物ファイル名が食い違う対象。**表示名（ルーティン名）は変えず、実体照合だけ別名で行う**。
 # 2026-08-19 実測: `book-watch-weekly` の成果物は `guide-new-books.html`（単一ソース＝drafts/BOOKWATCH_GUIDE.md）。
 # 素のままだと `guide-book-watch-weekly.html` を探しに行って必ず不在＝**公開済みでも永久に滞留と誤検知**する
@@ -500,31 +518,77 @@ def normalize_target(tgt):
     return f"signal-lab-{m.group(1)}" if m else (tgt or "").strip()
 
 
+def extract_target(title):
+    """見出し／ログ行1本から対象スラッグを取り出す純関数。取れなければ ""。
+
+    優先順位は「確定情報 → 実体ファイル名 → 推測」の順:
+      ① 旧パイプ書式の3列目（書き手が対象として書いた列＝最も確か）
+      ② `signal-lab` + 番号（レーン名と番号の書き方が4通りあるので専用に処理）
+      ③ `draft-xxx.html` / `guide-xxx.html`（成果物名がそのまま対象）
+      ④ 行内の最初のケバブ語（`🚩要人間レビュー: bid-ask-spread` 等の素の記事キー）
+    """
+    title = (title or "").strip()
+    m = RE_OLD_PIPE.match(title)
+    if m:
+        return normalize_target(m.group(2))
+    m = RE_LAB_TARGET.search(title)
+    if m:
+        return f"signal-lab-{m.group(1)}"
+    m = RE_ARTIFACT_FILE.search(title)
+    if m:
+        return normalize_target(m.group(1))
+    m = RE_KEBAB.search(title)
+    if m:
+        return normalize_target(m.group(1))
+    return ""
+
+
+def iter_review_entries(review_md):
+    """REVIEW.md を「日付で始まる行」ごとの塊に切り出す純関数。
+
+    戻り値: [(日付, 見出し行（`#` を除いたもの）, 続く本文)]。
+    `##` 節も素のログ行も同じ1件として扱う（書き手がどちらで書いても取りこぼさないため）。
+    """
+    heads = list(RE_ENTRY_HEAD.finditer(review_md))
+    out = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(review_md)
+        out.append((m.group(1), m.group(0).lstrip("#").strip(), review_md[m.end():end]))
+    return out
+
+
 def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS):
-    """純関数（テスト対象）。戻り値: (滞留 [(target, 日付, 経過日)], 🚩総数, 未解決総数)。
+    """純関数（テスト対象）。戻り値: (滞留 [(target, 日付, 経過日)], 🚩総数, 未解決総数, 解析不能 [(日付, 見出し)])。
 
     解決の判定は**実体で**行う（宣言でなく成果物を見る＝③と同じ方針）:
       ① `guide-<target>.html`（TARGET_ARTIFACT に別名があればそれ）が公開済みなら解決
       ② 同じ target について、より新しい見出しが 🚩 なしで「公開」と言っていれば解決
     どちらも無ければ未解決。未解決のうち stale_days 以上経過したものだけを滞留として返す。
+    ⚠️ 対象を取り出せなかった🚩は捨てずに「解析不能」として返す（黙って 0 件にしない）。
     """
-    heads = [(d, kind, normalize_target(tgt)) for d, kind, tgt in RE_REVIEW_HEAD.findall(review_md)]
+    entries = [(d, title, extract_target(title)) for d, title, _body in iter_review_entries(review_md)]
     # target ごとの最新の「公開」見出し日
     published_head = {}
-    for d, kind, tgt in heads:
-        if "🚩" not in kind and "公開" in kind:
-            published_head[tgt] = max(published_head.get(tgt, ""), d)
-    flags = [(d, tgt, kind) for d, kind, tgt in heads if "🚩" in kind]
-    stale, unresolved = [], 0
+    for d, title, tgt in entries:
+        if not tgt or "🚩" in title or "公開" not in title:
+            continue
+        if any(m in title for m in NOT_PUBLISHED_MARKS):
+            continue
+        published_head[tgt] = max(published_head.get(tgt, ""), d)
+    flags = [(d, title, tgt) for d, title, tgt in entries if "🚩" in title]
+    stale, unparsed, unresolved = [], [], 0
     seen = set()
-    for d, tgt, kind in flags:
+    for d, title, tgt in flags:
+        if not tgt:                              # 書式が変わって対象を取り出せない＝黙らせない
+            unparsed.append((d, title[:80]))
+            continue
         if tgt in seen:          # 同じ対象の複数エスカレは最新1件で代表させる
             continue
         seen.add(tgt)
         artifact = TARGET_ARTIFACT.get(tgt, tgt)
         if f"guide-{artifact}.html" in published or published_head.get(tgt, "") >= d:
             continue
-        if any(m in kind for m in RESOLVED_MARKS):   # 見出しに明示の解決マーク
+        if any(m in title for m in RESOLVED_MARKS):   # 見出しに明示の解決マーク
             continue
         unresolved += 1
         try:
@@ -534,11 +598,11 @@ def eval_escalations(review_md, published, now, stale_days=ESCALATION_STALE_DAYS
         if age >= stale_days:
             stale.append((tgt, d, age))
     stale.sort(key=lambda x: -x[2])
-    return stale, len(flags), unresolved
+    return stale, len(flags), unresolved, unparsed
 
 
 def check_escalation_backlog(owner, repo, token, now):
-    """戻り値: (滞留リスト, 🚩総数, 未解決総数)。実体＝リポジトリ直下の公開HTML一覧で判定。"""
+    """戻り値: (滞留リスト, 🚩総数, 未解決総数, 解析不能リスト)。実体＝リポジトリ直下の公開HTML一覧で判定。"""
     md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{REVIEW_PATH}", token)
     published = set(list_repo_root_files(owner, repo, token))
     return eval_escalations(md, published, now)
@@ -917,7 +981,16 @@ def main():
     body.append("")
     body.append("### ⑧ エスカレの滞留（走ったが人間待ちで止まっている＝①②③⑤の死角）")
     try:
-        stale, flags, unresolved = check_escalation_backlog(owner, repo, token, now)
+        stale, flags, unresolved, unparsed = check_escalation_backlog(owner, repo, token, now)
+        if unparsed:
+            # 🚨 2026-09-17 追加: 対象を取り出せない🚩は**必ず鳴らす**。ここを黙って捨てたせいで
+            #    「0件＝問題なし」に見えていたのが今回の見落としの正体。書式が次に変わっても
+            #    静かにならないよう、解析不能そのものを異常として扱う。
+            det = ", ".join(f"{d}「{t}」" for d, t in unparsed[:5])
+            body.append(f"- 🚨 🟡 対象を特定できない 🚩 が {len(unparsed)} 件: {det}。"
+                        f"{REVIEW_PATH} の見出し書式が変わった可能性が高い。"
+                        f"extract_target() に書式を1つ足して tests/test_escalation_parsing.py を更新すること")
+            bad.append(("エスカレ見出しの解析不能", "warn"))
         if stale:
             det = ", ".join(f"{t}（{d}・{a}日放置）" for t, d, a in stale)
             body.append(f"- 🚨 🟡 未対応の 🚩 が {len(stale)} 件（{ESCALATION_STALE_DAYS}日以上）: {det}。"
@@ -932,6 +1005,11 @@ def main():
         else:
             body.append(f"- ✅ 🟢 未対応の 🚩 は {unresolved} 件"
                         f"（いずれも{ESCALATION_STALE_DAYS}日未満・🚩通算{flags}件）")
+        # ⚠️ 🚩通算が 0 件は「平和」ではなく「読めていない」疑い（REVIEW.md には必ず過去の🚩がある）。
+        if flags == 0:
+            body.append(f"- 🚨 🟡 {REVIEW_PATH} から 🚩 を1件も読み取れなかった"
+                        f"（過去の🚩は消えないので 0 件は解析漏れを疑う）")
+            bad.append(("エスカレ🚩の読み取り0件", "warn"))
     except Exception as e:
         body.append(f"- 🚨 ⚪ エスカレ滞留の確認失敗: {e}")
 
