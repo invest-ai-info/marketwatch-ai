@@ -4677,3 +4677,22 @@ verify.py 6/6緑・Opusコンプラ🟢白（免責三層化・統計断定軟�
 - **ISBN**: 978-4-04-330226-0
 
 **見送り理由**: タイトル内に「株価が3.53倍、利益253万円に爆増！」という具体的な投資成果の数値が含まれる。BOOKWATCH_GUIDE.md「投資成果の約束を書かない・引用しない」「煽り本は除外」に相当すると判断。CLAUDE.md「情報商材との境界が怖い本は載せず REVIEW.md にメモ」に従い見送り。
+
+---
+
+## 2026-09-19 🚩 guide-scam-crypto-transfer-controls.html 要人間レビュー（決定論ゲートRED）
+
+**シリーズ**: 投資詐欺から身を守る 第16回
+**slug**: crypto-transfer-controls / 絵文字: 🏧
+
+**コンプライアンスゲート**: 🟡グレー → 16件修正適用 → 🟢**白** ✅
+
+**決定論チェック（check_guide_draft.py）**: 🔴 RED
+
+**RED理由**: 「スラッグ重複疑い: guide-scam-crypto-scam.html と主題が重なる可能性（トークン ['crypto', 'scam'] 共通）」
+
+**人間への確認依頼**:
+- `guide-scam-crypto-scam.html`（#9 総論）と `guide-scam-crypto-transfer-controls.html`（#16 換金・FSA要請）の主題が重複していないかご確認ください
+- 重複なければ → `drafts/scam/draft-scam-crypto-transfer-controls.html`（noindex付き・修正済み）のnoindexを削除 → ルートへコピー → publish_article.py
+
+詳細は `drafts/scam/SCAM_LEDGER.md` の 2026-09-19 エントリを参照。
