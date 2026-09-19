@@ -271,4 +271,5 @@ SYNC_FILES = [
     "guide-signal-lab-102.html",
     "guide-tse-split-adjustment.html",
     "guide-signal-lab-103.html",
+    "guide-tse-investor-flows.html",
 ]
