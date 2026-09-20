@@ -222,3 +222,25 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://www.tandfonline.com/doi/full/10.1080/0015198X.2025.2562790 / https://alphaarchitect.com/cross-section-of-returns/
 - 検証案: jp-rankings銘柄の四半期/年次財務データからROE変化率（ΔROE＝当期ROE－前期ROE）を算出。ΔROE上位三分位 vs 下位三分位の翌1年リターン差を計算。TSE資本効率要請前（〜2022）と後（2023〜）での効果変化も確認する。財務データjoin必要。
 - タグ: ○
+
+## 2026-09-20（JST）
+### slug: capex-investment-anomaly-jp
+- 名前: 設備投資強度アノマリー（日本株版）
+- 主張: 売上高や資本総額に対する設備投資（CapEx）比率が高い企業は、翌年以降の株価リターンが有意に低い傾向がある【出典の主張・未検証】。Titman, Wei, Xie（2004, JFQA）が米国株で投資対資本比率（I/K）と将来リターンの負の相関（平均傾き−0.59、t=−6.97）を確認。過剰投資（empire building）および投資家の過信が源泉とされる。queued済みのjp-asset-growth（総資産成長率）とは計算式が異なる——CapExは有形固定資産への支出（CF計上）を分子とし、現金・金融資産の変動を除外した独立指標。
+- 出典: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=441584 / https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis/article/abs/capital-investments-and-stock-returns/2C5E2AD6BEBB31D61A126FC4AB6FBFA2
+- 検証案: jp-rankings銘柄の財務データでCapEx÷前期売上高でソートし、高CapEx三分位 vs 低CapEx三分位の翌年リターン差を算出。jp-asset-growth（queued）と両ファクターの相関係数を確認し独立性を検証。財務データjoin必要。
+- タグ: ○
+
+### slug: eps-revision-momentum-jp
+- 名前: EPS予想修正モメンタム（アナリスト修正ドリフト・日本株版）
+- 主張: アナリストのEPS（1株利益）コンセンサス予想が上方修正された銘柄群は、下方修正銘柄群より翌月リターンが高い傾向がある【出典の主張・未検証】。S&P Global調査（アジア市場）でEPS修正モメンタムは独立した有意な予測力を持つとされる。日本では会社側が「会社予想」を公式ガイダンスとして開示するため修正発表が段階的価格ドリフトを生む。queued済みのpead（Q29予定）は決算発表後の短期ドリフトが対象で、本手法は決算間に継続するアナリスト修正の効果であり別仮説。
+- 出典: https://www.spglobal.com/spdji/en/documents/research/research-do-earnings-revisions-matter-in-asia.pdf / https://alphaarchitect.com/quantitative-momentum-research-price-and-earnings-momentum/
+- 検証案: 会社予想修正（四半期ごとの業績修正IR発表日）を代理変数として、修正IR発表後60日間の価格ドリフトをjp-rankings銘柄でバックテスト。アナリストコンセンサスデータが入手困難な場合は日足OHLCVの出来高急増+価格ブレイクを「修正プロキシ」として近似検証も可。
+- タグ: △
+
+### slug: rd-intensity-jp
+- 名前: 研究開発費強度アノマリー（日本株版）
+- 主張: 売上高に対するR&D費用比率が高い企業ほど翌年以降の株価リターンが高い傾向がある【出典の主張・未検証】。Lev & Sougiannis（1996）が米国で正の相関を確認。日本市場では1985〜2000年サンプルで有意な正の相関を報告（ScienceDirect 2003）する一方、近年サンプルでは有意でないとする結果も混在しており、2010〜2024年の最新データでの独立検証価値が高い仮説。
+- 出典: https://www.sciencedirect.com/science/article/abs/pii/S0927538X03000908 / https://paperswithbacktest.com/strategies/the-valuation-of-r-d-expenditures-in-japan
+- 検証案: jp-rankings銘柄の財務データでR&D費用÷売上高でソートし、高R&D三分位 vs 低R&D三分位（R&D=0除く）の翌1年リターン差を算出。2010〜2024年の最新日本データで再現性を確認。R&D開示は任意のため開示銘柄のみが対象となる点に留意。財務データjoin必要。
+- タグ: ○
