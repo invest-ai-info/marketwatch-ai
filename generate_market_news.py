@@ -5329,6 +5329,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-20", "line": '・<b>2026-09-20</b>: 💴 解説「<a href="guide-fx-intervention-history.html" style="color:#0969da"><b>【保存版】円の為替介入の歴史──プラザ合意から2026年の日米協調まで</b></a>」公開'},
         {"date": "2026-09-20", "line": '・<b>2026-09-20</b>: 🧪 解説「<a href="guide-signal-lab-104.html" style="color:#0969da"><b>逆張り買い×トレンド3区分の前向き比較</b></a>」公開'},
         {"date": "2026-09-19", "line": '・<b>2026-09-19</b>: 📰 解説「<a href="guide-news-2026-09-19-boj-rate-check-intervention-warning-yen.html" style="color:#0969da"><b>【9/19】日銀レートチェック実施──利上げ後の逆円安受け介入準備、円が1円超急騰</b></a>」公開'},
         {"date": "2026-09-19", "line": '・<b>2026-09-19</b>: 🔬 解説「<a href="guide-company-nvda-nvidia.html" style="color:#0969da"><b>NVIDIA(NVDA)を数字で見る</b></a>」公開'},
