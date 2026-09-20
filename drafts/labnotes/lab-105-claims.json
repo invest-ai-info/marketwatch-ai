@@ -1,0 +1,65 @@
+{
+  "article_id": "105",
+  "claims": [
+    {
+      "label": "主仮説: RSI売られすぎ（≤30）×逆張りロング（全体）",
+      "filter": {"reversal_long": true, "rsi_band": "os"},
+      "k": 205,
+      "n": 407
+    },
+    {
+      "label": "全reversalL（参照ベース）",
+      "filter": {"reversal_long": true},
+      "k": 632,
+      "n": 1395
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×trend=上昇",
+      "filter": {"reversal_long": true, "rsi_band": "os", "trend": "上昇"},
+      "k": 57,
+      "n": 87
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×trend=下降",
+      "filter": {"reversal_long": true, "rsi_band": "os", "trend": "下降"},
+      "k": 73,
+      "n": 160
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×trend=中立・もみあい",
+      "filter": {"reversal_long": true, "rsi_band": "os", "trend": "中立・もみあい"},
+      "k": 74,
+      "n": 159
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×tf=1h",
+      "filter": {"reversal_long": true, "rsi_band": "os", "tf": "1h"},
+      "k": 119,
+      "n": 254
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×tf=4h",
+      "filter": {"reversal_long": true, "rsi_band": "os", "tf": "4h"},
+      "k": 75,
+      "n": 140
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×group=jpy_fx",
+      "filter": {"reversal_long": true, "rsi_band": "os", "group": "jpy_fx"},
+      "k": 39,
+      "n": 104
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×group=index",
+      "filter": {"reversal_long": true, "rsi_band": "os", "group": "index"},
+      "k": 60,
+      "n": 108
+    },
+    {
+      "label": "RSI売られすぎ×逆張りロング×group=other_fx",
+      "filter": {"reversal_long": true, "rsi_band": "os", "group": "other_fx"},
+      "k": 59,
+      "n": 103
+    }
+  ]
+}
