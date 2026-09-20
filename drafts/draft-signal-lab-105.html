@@ -247,14 +247,16 @@ window.addEventListener('resize',mark);
     </div>
 
     <h1>🧪 AIシグナル研究日誌 #105<br><small style="font-size:.65em;color:#57606a;font-weight:400">RSI売られすぎ×逆張りロング——「値ごろ感」は本物か？</small></h1>
-    <div class="meta-line">公開：2026年9月（下書き中）｜カテゴリ：AIシグナル研究日誌｜読了目安：約7分</div>
+    <div class="meta-line">
+      カテゴリ：AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年9月21日 &nbsp;|&nbsp; 読了：約7分
+    </div>
 
     <!-- 30秒まとめ -->
     <div class="info-box" style="border-left-color:#1a7f37;background:#e6ffed;">
-      <strong>📋 30秒まとめ</strong><br>
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br>
       RSI≤30（売られすぎ）で発火した逆張りロング <strong>N=407件</strong> を反実仮想検証。<br>
       全体勝率 <strong>50.4%</strong>、期待値 <strong>+0.263R</strong>、Wilson 95%CI <strong>[45.5%〜55.2%]</strong> → CI下限が損益分岐43%を上回り <strong>✅通過A</strong>。<br>
-      一方、RSI売られすぎ以外での逆張りロング（N=988）は勝率43.2%とほぼベース並み。RSI水準が逆張りの質を分けている可能性が浮かぶ。<br>
+      一方、全逆張りロング参照ベース（N=1,395）の勝率は <strong>45.3%</strong>（CI [42.7%〜47.9%]）で、RSI売られすぎ条件が明確な上乗せ効果を持つ。<br>
       ただし <strong>上昇トレンド中は65.5%（+0.793R）</strong> と突出する一方、<strong>JPYクロスは37.5%（損益分岐43%を下回る）</strong> という非対称性が存在。前向き観測ではCI全区間プラス（蓄積中）。
     </div>
 
@@ -342,7 +344,7 @@ window.addEventListener('resize',mark);
 
     <div class="chart-figure">
       <!-- 図2: 勝率比較棒グラフ -->
-      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="700" height="260" fill="#f6f8fa" rx="6"/>
         <text x="350" y="24" class="s-label-b" text-anchor="middle" style="font-size:14px">RSI水準別・逆張りロング勝率の比較（in-sample）</text>
 
@@ -355,7 +357,7 @@ window.addEventListener('resize',mark);
         <text x="85" y="44" class="s-label-sm" text-anchor="end">70%</text>
         <!-- 損益分岐ライン -->
         <line x1="90" y1="167" x2="660" y2="167" class="s-guide"/>
-        <text x="662" y="169" class="s-label-y" style="font-size:11px">損益分岐43%</text>
+        <text x="600" y="163" class="s-label-y" style="font-size:11px">損益分岐43%</text>
 
         <!-- 棒グラフ -->
         <!-- ベース 43.1% -->
@@ -393,7 +395,7 @@ window.addEventListener('resize',mark);
         <!-- X軸 -->
         <line x1="90" y1="210" x2="660" y2="210" class="s-axis"/>
 
-        <text x="350" y="255" class="s-label-sm" text-anchor="middle">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+        <text x="350" y="272" class="s-label-sm" text-anchor="middle">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
       </svg>
       <p class="chart-caption">図2 各条件での逆張りロング勝率比較。RSI非売られすぎの逆張り（43.2%）はベース（43.1%）とほぼ同等だが、RSI売られすぎ（50.4%）は明確に優位。上昇トレンドとの組み合わせで65.5%まで上昇する一方、JPYクロスでは37.5%と損益分岐を下回る。</p>
     </div>
