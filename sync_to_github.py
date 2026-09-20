@@ -278,4 +278,5 @@ SYNC_FILES = [
     "guide-fx-intervention-history.html",
     "guide-scam-fake-government-endorsement.html",
     "guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html",
+    "guide-signal-lab-105.html",
 ]
