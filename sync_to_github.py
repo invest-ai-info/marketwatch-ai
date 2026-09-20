@@ -276,4 +276,5 @@ SYNC_FILES = [
     "guide-news-2026-09-19-boj-rate-check-intervention-warning-yen.html",
     "guide-signal-lab-104.html",
     "guide-fx-intervention-history.html",
+    "guide-scam-fake-government-endorsement.html",
 ]
