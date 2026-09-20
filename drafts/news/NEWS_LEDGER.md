@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-09-20
+- 判定: ✅ 公開済み
+- 選定トピック: シルバーウィーク前夜の円相場──BOJ利上げ後「逆円安」と5連休薄商いリスク（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/19記事（レートチェック当日）との完全差別化＝こちらは「シルバーウィーク5連休突入前夜の構造整理」。Bloomberg 9/20付け「Yen Is Vulnerable With Japan on Holiday After BOJ Disappoints」が直接の背景事象。逆円安の4要因解説＋薄商い構造＋3シナリオ＋9/24再開チェックポイントで付加価値十分。
+- 出典（確認済み・10系統以上）:
+  - Bloomberg「Yen Is Vulnerable With Japan on Holiday After BOJ Disappoints」2026-09-20
+  - 外為どっとコム研究所「ドル円予想レンジ 153〜158円」2026-09-20
+  - ZAI Diamond「シルバーウィーク明けの日経平均予想」2026-09-20
+  - 楽天証券/トウシル「日銀利上げ後の円相場展望」2026-09-20
+  - 株式新聞Web「シルバーウィーク相場の注意点」2026-09-20
+  - 日本経済新聞「連休前に円安けん制」2026-09-19
+  - Yahoo!ニュース（共同通信）「政府日銀、円買い介入準備」2026-09-19
+  - TheStreet「Yen weakens despite BOJ rate hike」2026-09-20
+  - Rio Times「Japan yen paradox – currency weakens after BOJ hike」2026-09-20
+  - Retail News Asia「Yen Traders Brace for Silver Week Intervention as BOJ Decision Looms」2026-09-20
+  - Housing Japan「Japanese Yen hits 158 despite BOJ hike」2026-09-20
+- 公開ファイル: guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html
+- コンプライアンスゲート: Opus×2通過（第1Opus🟢白・シナリオ色記号注記を任意強化適用、第2Opus独立確認🟢白）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+
+---
+
 ## 2026-09-19
 - 判定: ✅ 公開済み
 - 選定トピック: 日銀がレートチェック実施──利上げ後の「逆円安」158円台受け、介入準備入りで円が1円超急騰し156円台へ（カテゴリ: 今日のニュース）
