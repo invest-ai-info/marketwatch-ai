@@ -1,3 +1,4 @@
+2026-09-21 autopublish: スキップ（対象なし：topicキュー全63件中58件にdraft-*.htmlが存在するがすべてguides.htmlに公開済み。残り5件はdraft未生成。キュー補充が必要）
 2026-09-21 signal-lab: guide-signal-lab-105.html ✅公開済み（RSI売られすぎ×逆張りロングN=407, wr=50.4%, EV=+0.263R→✅通過A。上昇65.5%/JPYクロス37.5%非対称性確認。verify10/10緑→Opus1st🟡9件軟化修正→独立Opus🟢白→全ゲート通過）
 2026-09-20 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
 2026-09-20 signal-lab: guide-signal-lab-104.html ✅ 公開済み（verify10/10緑・Opus1st🟡5修正→Opus2nd独立🟡1修正[#103引用数値誤りを定性表現化・4.5pp→4.7pp]→verify緑→全ゲート通過）
