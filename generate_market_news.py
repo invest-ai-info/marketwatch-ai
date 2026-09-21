@@ -5329,6 +5329,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 📜 解説「<a href="guide-scam-promises-that-are-illegal.html" style="color:#0969da"><b>「元本保証」「損失補填」「必ず上がる」——正規業者には言えない約束</b></a>」公開'},
         {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 🧪 解説「<a href="guide-signal-lab-105.html" style="color:#0969da"><b>AIシグナル研究日誌 #105</b></a>」公開'},
         {"date": "2026-09-20", "line": '・<b>2026-09-20</b>: 📰 解説「<a href="guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html" style="color:#0969da"><b>シルバーウィーク前夜の円相場──BOJ利上げ後「逆円安」と5連休薄商いリスク</b></a>」公開'},
         {"date": "2026-09-20", "line": '・<b>2026-09-20</b>: 💴 解説「<a href="guide-fx-intervention-history.html" style="color:#0969da"><b>【保存版】円の為替介入の歴史──プラザ合意から2026年の日米協調まで</b></a>」公開'},

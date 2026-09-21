@@ -279,4 +279,5 @@ SYNC_FILES = [
     "guide-scam-fake-government-endorsement.html",
     "guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html",
     "guide-signal-lab-105.html",
+    "guide-scam-promises-that-are-illegal.html",
 ]
