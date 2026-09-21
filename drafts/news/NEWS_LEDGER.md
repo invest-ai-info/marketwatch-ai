@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-09-21
+- 判定: ✅ 公開済み
+- 選定トピック: トランプ・習近平首脳会談（9/24ワシントン）──米株先物上昇・半導体・関税・台湾の行方と東京市場再開日が重なる5つの焦点（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/24ワシントン首脳会談が公式スケジュール確定済み（今年2回目）。Nvidia/OpenAI/Qualcomm CEOの晩餐出席確認済み。S&P先物+0.6%・Nasdaq先物+0.8%と週明け株高。関税停戦期限（11月）・半導体輸出規制・台湾リスクの3軸が市場参加者の注目を集めている。東京市場が9/24（シルバーウィーク明け）に再開する日がちょうど首脳会談当日（米国時間）と重なる構図は日本人投資家向けの付加価値が高い。9/20記事（逆円安・薄商い）との差別化明確。
+- 出典（確認済み・8系統以上）:
+  - NTD「White House Unveils Official Schedule for Trump–Xi Summit Next Week」
+  - Epoch Times「White House Unveils Official Schedule for Trump–Xi Summit Next Week」
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for September 21」2026-09-20
+  - Tickmill「Daily Market Outlook, September 21, 2026」
+  - Euronews「What to expect from the Trump-Xi summit, from tariffs to a possible $30 billion deal」2026-09-18
+  - FXStreet「Trump–Xi summit: Five things investors should watch」2026-09-17
+  - Saxo「TrumpXi summit 5 things investors should watch and where volatility can show up」2026-09-17
+  - Morgan Stanley「Trump-Xi Summit: Key Risks and Opportunities for Investors」
+  - 外為どっとコム「来週のドル円相場はどうなる？9/21週のイベント予定」2026-09-20
+  - CNBC「White House touts deals on soybeans and rare earths after Trump-Xi summit」2026-05-18
+- コンプライアンスゲート: Opus×2通過（第1Opus→🟡グレー1件→見出し「確定」→「発表されるまでの経緯」に軟化適用→最終🟢白、第2Opus独立確認🟢白）
+- 数値精度修正: 「約4.5兆円」除去・「関税引き下げ」→「合意（関税引き下げ等を含む可能性）」に著者修正
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典8系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告46件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-21-trump-xi-summit-markets.html
+
+---
+
 ## 2026-09-20
 - 判定: ✅ 公開済み
 - 選定トピック: シルバーウィーク前夜の円相場──BOJ利上げ後「逆円安」と5連休薄商いリスク（カテゴリ: 今日のニュース）
