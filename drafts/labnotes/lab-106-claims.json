@@ -1,0 +1,41 @@
+{
+  "article_id": "106",
+  "claims": [
+    {
+      "label": "rsi_oversold_bounce 全体（IS）",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 239,
+      "n": 492
+    },
+    {
+      "label": "rsi_oversold_bounce × 上昇トレンド（IS）",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇"},
+      "k": 61,
+      "n": 102
+    },
+    {
+      "label": "rsi_oversold_bounce × 下降トレンド（IS）",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "下降"},
+      "k": 93,
+      "n": 212
+    },
+    {
+      "label": "rsi_oversold_bounce × 中立・もみあい（IS）",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "中立・もみあい"},
+      "k": 84,
+      "n": 176
+    },
+    {
+      "label": "rsi_oversold_bounce × 上昇 × 4H足（IS）",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "tf": "4h"},
+      "k": 29,
+      "n": 43
+    },
+    {
+      "label": "rsi_oversold_bounce × 上昇 × 1H足（IS）",
+      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "tf": "1h"},
+      "k": 22,
+      "n": 46
+    }
+  ]
+}

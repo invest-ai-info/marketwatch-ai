@@ -1,3 +1,4 @@
+2026-09-22 signal-lab: draft-signal-lab-106.html 🔄ゲート中（RSI売られすぎ×トレンド依存性。IS全体239/492=48.6%・上昇61/102=59.8% CI=[50.1%,68.8%]→通過A。IS/FWD乖離66.2%→48.6%注意。verify実行中）
 2026-09-21 autopublish: スキップ（対象なし：topicキュー全63件中58件にdraft-*.htmlが存在するがすべてguides.htmlに公開済み。残り5件はdraft未生成。キュー補充が必要）
 2026-09-21 signal-lab: guide-signal-lab-105.html ✅公開済み（RSI売られすぎ×逆張りロングN=407, wr=50.4%, EV=+0.263R→✅通過A。上昇65.5%/JPYクロス37.5%非対称性確認。verify10/10緑→Opus1st🟡9件軟化修正→独立Opus🟢白→全ゲート通過）
 2026-09-20 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
