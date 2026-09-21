@@ -40,11 +40,11 @@
     .header-meta{font-size:.85rem;color:#57606a}
     .header-meta span{color:#0969da;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #238636;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #9e6a03;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .sentiment-icon{font-size:4rem;line-height:1;flex-shrink:0}
     .sentiment-body{flex:1;min-width:200px}
     .sentiment-label-small{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}
-    .sentiment-badge{color:#238636;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
+    .sentiment-badge{color:#9e6a03;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
     .sentiment-text{color:#424a53;font-size:.92rem;line-height:1.6}
     .morning-digest{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}
     .md-title{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}
@@ -218,7 +218,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年9月21日 10:45 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年9月21日 11:33 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -257,24 +257,24 @@
 
   <!-- センチメント -->
   <div class="sentiment-banner">
-    <div class="sentiment-icon">😊</div>
+    <div class="sentiment-icon">😐</div>
     <div class="sentiment-body">
       <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">やや強気</span>
+      <span class="sentiment-badge">中立</span>
       <div class="sentiment-text">
         日経 65,019円 ／ S&amp;P500 7,650.50 ／
-        USD/JPY 156.68円 ／ BTC $81,473 ／
-        金 $4,416.00/oz
+        USD/JPY 156.82円 ／ BTC $81,207 ／
+        金 $4,401.20/oz
       </div>
     </div>
   </div>
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（10:45 JST 更新）</span></div>
-    <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼6.5%</span>・ETH <span class="md-up">▲2.0%</span>・日経平均 <span class="md-up">▲1.4%</span>（前日比）</div>
+    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（11:33 JST 更新）</span></div>
+    <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼6.2%</span>・日経平均 <span class="md-up">▲1.4%</span>・ETH <span class="md-up">▲0.9%</span>（前日比）</div>
     <div class="md-line">📅 直近1週間に主要な経済指標の予定はありません</div>
-    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>14.8</b>（落ち着いた水準）・センチメント判定は「<b>やや強気</b>」</div>
+    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>14.8</b>（落ち着いた水準）・センチメント判定は「<b>中立</b>」</div>
     <details class="md-fold"><summary>📅 次の重要イベントまでのカウントダウンを見る</summary><div class="md-chips"><span class="md-chip">🇺🇸 雇用統計 あと11日（10/2）</span><span class="md-chip">🇺🇸 米CPI あと23日（10/14）</span><span class="md-chip">🇺🇸 FOMC あと37日（10/28）</span><span class="md-chip">🇯🇵 日銀会合 あと39日（10/30）</span><a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div></details>
   </div>
 
@@ -290,12 +290,12 @@
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-09-21</b>: 🧪 解説「<a href="guide-signal-lab-105.html" style="color:#0969da"><b>AIシグナル研究日誌 #105</b></a>」公開
+      ・<b>2026-09-21</b>: 📜 解説「<a href="guide-scam-promises-that-are-illegal.html" style="color:#0969da"><b>「元本保証」「損失補填」「必ず上がる」——正規業者には言えない約束</b></a>」公開
       <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+      ・<b>2026-09-21</b>: 🧪 解説「<a href="guide-signal-lab-105.html" style="color:#0969da"><b>AIシグナル研究日誌 #105</b></a>」公開<br>
       ・<b>2026-09-20</b>: 📰 解説「<a href="guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html" style="color:#0969da"><b>シルバーウィーク前夜の円相場──BOJ利上げ後「逆円安」と5連休薄商いリスク</b></a>」公開<br>
       ・<b>2026-09-20</b>: 💴 解説「<a href="guide-fx-intervention-history.html" style="color:#0969da"><b>【保存版】円の為替介入の歴史──プラザ合意から2026年の日米協調まで</b></a>」公開<br>
-      ・<b>2026-09-20</b>: 🏛️ 解説「<a href="guide-scam-fake-government-endorsement.html" style="color:#0969da"><b>「政府公認」「金融庁の免許がある」国のお墨付きを騙る詐欺</b></a>」公開<br>
-      ・<b>2026-09-20</b>: 🧪 解説「<a href="guide-signal-lab-104.html" style="color:#0969da"><b>逆張り買い×トレンド3区分の前向き比較</b></a>」公開
+      ・<b>2026-09-20</b>: 🏛️ 解説「<a href="guide-scam-fake-government-endorsement.html" style="color:#0969da"><b>「政府公認」「金融庁の免許がある」国のお墨付きを騙る詐欺</b></a>」公開
       </div></details>
     </div>
   </div>
@@ -408,12 +408,12 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:30%;background:#cf222e"></div>
+              <div class="ai-meter-dot" style="left:35%;background:#cf222e"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 日経225先物が夜間取引で大きく下落しており、短期的な下落圧力が懸念される。米国市場は堅調だが、国内市場への波及効果は限定的となる可能性がある。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 日経225先物が前日比で下落しており、米国市場の動きもまちまちであることから、短期的には警戒が必要です。65,000円台を維持できるか注視し、下落場面があれば買いを検討します。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -426,19 +426,19 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:55%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> S&P500の価格は7,650.50と、過去のニュースから直接的な判断材料に乏しく、中立と判断します。日経225先物の下落は警戒材料ですが、S&P500自体はAI関連銘柄に牽引され、直近で上昇しているため、現時点では様子見が妥当と考えられます。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> S&P500はトリプルウィッチング日に小幅上昇し、ナスダックはAI関連銘柄に牽引されアウトパフォームしましたが、日経225先物が夜間取引で下落している点は懸念材料です。現状の7,650.50ドルという価格水準からは、積極的な買いも売りも難しい状況と判断します。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🥇</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ゴールド</div>
-              <div class="ai-asset-price">$4,416/oz</div>
+              <div class="ai-asset-price">$4,401/oz</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
           </div>
@@ -449,25 +449,25 @@
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 金価格は週間高値を更新しており、中東原油価格の急騰はインフレ懸念や地政学リスクの高まりを示唆しており、安全資産である金への需要を後押しする可能性がある。現在の価格水準はやや高めだが、さらなる上昇余地も考慮し、押し目があれば買いを検討したい。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 金価格は週間高値を更新しており、地政学リスクを背景とした原油価格の急騰がインフレ懸念を刺激し、安全資産としての金への需要を支える可能性があります。4,377ドル付近のサポートを意識しつつ、押し目があれば買いを検討したいと考えます。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🪙</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$81,473</div>
+              <div class="ai-asset-price">$81,207</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:55%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
           <div class="ai-action"><strong>✏️ アクション:</strong> 様子見</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコインは現在価格81,473ドルで、直近ニュースの想定レンジ内を維持している。リスクオフ環境下でも堅調さを保っているものの、明確な上値・下値の方向性を示す情報がないため、現時点では様子見が適切と判断する。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 現在価格が過去最高値近辺で推移しており、リスクオフ環境でも安定している点はポジティブだが、さらなる急騰には材料不足の可能性も示唆される。目先は8万ドルの水準を維持できるかが焦点となる。</div>
         </div>
     </div>
   </section>
@@ -508,8 +508,8 @@
           <div class="card-icon icon-fx">💱</div>
           <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
         </div>
-        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">156.68円 <span class="up price-change">😊▲0.35%</span></span></div>
-        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">179.95円 <span class="up price-change">😊▲0.42%</span></span></div>
+        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">156.82円 <span class="up price-change">😊▲0.44%</span></span></div>
+        <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">180.07円 <span class="up price-change">😊▲0.49%</span></span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.exchangerates.org.uk/news/47223/2026-09-20-euro-to-dollar-forecast-eur-usd-lost-1-last-week-further-losses-ahead.html" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ EUR/USD、週間で約1%下落して1.1489──FRB利上げ後のドル高が圧迫</span>
@@ -533,8 +533,8 @@
           <div class="card-icon icon-cmd">🛢️</div>
           <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
         </div>
-        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$93.81/bbl <span class="down price-change">😢▼6.47%</span></span></div>
-        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,416.00/oz <span class="down price-change">😢▼0.20%</span></span></div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$94.06/bbl <span class="down price-change">😢▼6.22%</span></span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,401.20/oz <span class="down price-change">😢▼0.54%</span></span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-friday-september-18-2026-gold-hits-weekly-high-as-inflation-concerns-fade-104807567.html" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ 金価格が9月20日に4,377ドル──週間高値を更新</span>
@@ -558,8 +558,8 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$81,473 <span class="up price-change">😊▲0.29%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,684.19 <span class="up price-change">😊▲1.98%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$81,207 <span class="down price-change">😢▼0.03%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,654.80 <span class="up price-change">😊▲0.87%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
         <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://robinhood.com/us/en/prediction-markets/crypto/events/btc-price-on-sep-20-2026-at-5am-edt-sep-20-2026/" target="_blank" rel="noopener nofollow">
           <span class="news-title">✔ ビットコイン、9月20日時点で81,085ドル──リスクオフ環境でも想定レンジ内を維持</span>
