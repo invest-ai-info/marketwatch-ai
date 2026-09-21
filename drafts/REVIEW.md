@@ -1,3 +1,4 @@
+2026-09-22 autopublish: スキップ（対象なし：topicキュー全63件がすべてguides.htmlに公開済み。draft未生成4件（compounding-drawdown/cognitive-biases/diversification/etf-vs-mutual-fund）もguides.htmlにカード確認済み。キュー補充が必要）
 2026-09-22 signal-lab: draft-signal-lab-106.html 🚩エスカレ中（コンプラ🔴黒①IS/FWDラベル優良誤認[claims全6件にfired_before無し・全期間値を「IS」とラベル]②IS/FWD境界1日ズレ疑義。verify 6/6緑・3件グレー修正済み。要人間レビュー・詳細はREVIEW.md 4708行〜）
 2026-09-21 autopublish: スキップ（対象なし：topicキュー全63件中58件にdraft-*.htmlが存在するがすべてguides.htmlに公開済み。残り5件はdraft未生成。キュー補充が必要）
 2026-09-21 signal-lab: guide-signal-lab-105.html ✅公開済み（RSI売られすぎ×逆張りロングN=407, wr=50.4%, EV=+0.263R→✅通過A。上昇65.5%/JPYクロス37.5%非対称性確認。verify10/10緑→Opus1st🟡9件軟化修正→独立Opus🟢白→全ゲート通過）
