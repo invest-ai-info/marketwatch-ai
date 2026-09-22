@@ -27,6 +27,7 @@
 新しいアフィリ追加時 = CREATIVES に素材を足し、POOLS の該当記事に候補キーを足して再実行。
 """
 import argparse
+import glob
 import json
 import os
 import re
@@ -108,6 +109,63 @@ POOLS = {
     "guide-kioxia-2026-05.html": KABU_POOL,
     "guide-oriental-land-2026-06.html": KABU_POOL,
 }
+
+# ── 貼らない場所（2026-09-22 オーナー指示「貼っちゃいけない場所以外すべてのページに」）
+#    ここに入れる基準は2つだけ。①記事の信頼を損なう場所 ②注入しても消える場所。
+DENY_PREFIX = (
+    "guide-scam-",        # ①投資詐欺の注意喚起。「詐欺に気をつけろ」の直下に口座開設広告は本末転倒
+    "guide-signal-lab-",  # ①AIシグナル研究日誌。⛔反証を淡々と出す検証記事＝「売るために書いた」と読まれる
+)
+DENY_EXACT = {
+    "guide-new-books.html",   # ②routine `book-watch-weekly` が毎週まるごと再生成する＝注入しても消える
+}
+# SYNC禁忌の自動生成ページは that 自体が guide-*.html ではないので対象外だが、事故防止に明示しておく
+DENY_EXACT |= {
+    "index.html", "calendar.html", "charts.html", "vix.html", "market-health.html",
+    "hot-assets.html", "political-feed.html", "track-record.html", "youtube-summary.html",
+    "guides.html", "sitemap.xml",
+}
+
+# ── 記事の中身から候補プールを選ぶ（POOLS に明示があればそちらが優先）
+FX_WORDS   = ("ドル円", "為替", "円安", "円高", "日銀", "スワップ", "クロス円",
+              "ユーロ円", "ポンド円", "豪ドル", "為替介入", "FX")
+IDX_WORDS  = ("日経平均", "S&P500", "ナスダック", "NYダウ", "株価指数", "先物", "VIX")
+KABU_WORDS = ("NISA", "個別銘柄", "決算", "配当", "株主", "東証", "証券口座", "iDeCo", "投資信託")
+
+
+def classify(html):
+    """本文の語数で FX / 指数 / 株 のどれが主題かを決める。判定不能なら株（総合）。"""
+    t = re.sub(r"<[^>]+>", " ", html)
+    fx  = sum(t.count(w) for w in FX_WORDS)
+    idx = sum(t.count(w) for w in IDX_WORDS)
+    kab = sum(t.count(w) for w in KABU_WORDS)
+    best = max(fx, idx, kab)
+    if best == 0:
+        return KABU_POOL
+    if best == fx:
+        return FX_POOL
+    if best == idx:
+        return IDX_POOL
+    return KABU_POOL
+
+
+def is_denied(name):
+    return name in DENY_EXACT or name.startswith(DENY_PREFIX)
+
+
+def collect_targets(all_pages):
+    """POOLS（明示指定）＋ --all なら DENY 以外の全 guide-*.html。"""
+    targets = dict(POOLS)
+    if not all_pages:
+        return targets
+    for path in sorted(glob.glob(os.path.join(HERE, "guide-*.html"))):
+        name = os.path.basename(path)
+        if name in targets or is_denied(name):
+            continue
+        with open(path, encoding="utf-8") as fh:
+            targets[name] = classify(fh.read())
+    return targets
+
 
 NL_MARKER = "<!-- ===== MarketWatch 無料メルマガ登録"
 BEGIN = "<!-- ===== 広告 (A8.net) ===== -->"
@@ -193,6 +251,8 @@ def main():
     ap = argparse.ArgumentParser(description="A8広告をランダム表示で記事末に注入（既定＝未注入ページのみ）")
     ap.add_argument("--dry-run", action="store_true", help="書き込まず変更内容だけ表示")
     ap.add_argument("--replace", action="store_true", help="既存の広告ブロックも新形式へ貼り替える")
+    ap.add_argument("--all", action="store_true",
+                    help="DENY以外の全 guide-*.html を対象にする（プールは本文から自動判定）")
     args = ap.parse_args()
 
     # ① mw-ads.js を CREATIVES から再生成
@@ -209,7 +269,9 @@ def main():
 
     # ② 各記事へ注入 / 貼り替え
     injected = replaced = already = missing = noanchor = 0
-    for name, keys in POOLS.items():
+    targets = collect_targets(args.all)
+    print(f"対象ページ: {len(targets)} 件（POOLS明示 {len(POOLS)} 件＋自動判定 {len(targets)-len(POOLS)} 件）")
+    for name, keys in sorted(targets.items()):
         path = os.path.join(HERE, name)
         if not os.path.exists(path):
             missing += 1
