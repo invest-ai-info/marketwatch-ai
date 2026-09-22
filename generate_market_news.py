@@ -5329,6 +5329,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🏧 解説「<a href="guide-scam-crypto-transfer-controls.html" style="color:#0969da"><b>暗号資産への換金を求められたら——お金の出口と歯止め</b></a>」公開'},
+        {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 📲 解説「<a href="guide-scam-screen-share-remote-app.html" style="color:#0969da"><b>「操作を教えます」の正体——画面共有・遠隔操作アプリ</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 📰 解説「<a href="guide-news-2026-09-22-amd-1trillion-nasdaq-record-ai-rally.html" style="color:#0969da"><b>AMDが時価総額1兆ドルを一時突破──Nasdaq史上最高値の背景</b></a>」公開'},
         {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 📰 解説「<a href="guide-news-2026-09-21-trump-xi-summit-markets.html" style="color:#0969da"><b>【9/21】米中首脳会談（9/24）──半導体・関税・台湾の焦点と東京再開日が重なる構図を中立整理</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🤖 解説「<a href="guide-scam-ai-trading-tool.html" style="color:#0969da"><b>「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順</b></a>」公開'},
