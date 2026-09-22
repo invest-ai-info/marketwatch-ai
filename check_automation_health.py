@@ -320,8 +320,9 @@ QUEUE_LANES = [
     #    （実際 9/5〜9/17 は「残り0件＝レーン停止中」を毎日鳴らし続けていた。停止は仕様どおり）。
     #    記事48本と手順書・台帳は読者向けに残すが、**見張りからは外す**。
     #    🔑 レーンを畳んだら QUEUE_LANES からも外すこと（足すときの登録と対になる手順）。
-    ("scam（投資詐欺）", "drafts/SCAM_GUIDE.md", "scam-",
-     "drafts/scam/SCAM_LEDGER.md", QUEUE_MIN_REMAIN),
+    # ⚠️ scam（投資詐欺）は 2026-09-22 に全20回で**完結**し、見張りから外した。
+    #    総目次＝guide-scam-series-index.html。20題材すべて公開し #20 family-rules で結論まで到達。
+    #    routine（scam-daily-auto）はオーナーが claude.ai 側で停止する。
     # 2026-08-31 新設。格言シリーズ（44本で汲み尽くし）の後継として日次枠を引き継ぐ
     # ⚠️ tse（東証のしくみ）は 2026-09-22 に全18回で**完結**し、見張りから外した。
     #    総目次＝guide-tse-series-index.html。個人投資家が日常でぶつかる制度は網羅した判断

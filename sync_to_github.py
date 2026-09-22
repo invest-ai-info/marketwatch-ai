@@ -287,4 +287,6 @@ SYNC_FILES = [
     "guide-scam-crypto-transfer-controls.html",
     "guide-tse-series-index.html",
     "guide-mindset-series-index.html",
+    "guide-scam-family-rules.html",
+    "guide-scam-series-index.html",
 ]
