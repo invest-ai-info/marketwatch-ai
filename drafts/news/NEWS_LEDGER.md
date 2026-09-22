@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-09-22
+- 判定: ✅ 公開済み
+- 選定トピック: AMDが時価総額1兆ドルを一時突破──MetaのAIエージェント「Muse」が起点、Nasdaq史上最高値27,122点の背景を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/21（米国時間）にAMDが一時$613.92の史上最高値・時価総額1兆ドルを一時突破（終値$602.05 +7.54%）。Nasdaq+2.26%で27,122.09の史上最高値。Intel+12%・Arm+14%・Qualcomm+9%超・Meta+11%・SOX+4%超と半導体フルラリー。MetaのAIエージェントMuse（9/8ローンチ→10日で米AppStore無料1位）が背景にあり。東京市場は9/22が国民の休日で休場・9/24再開（Trump-Xi当日）という構図は日本人投資家向けの付加価値が高い。
+- 出典（確認済み・10系統）:
+  - Semafor「AMD reaches a $1 trillion market cap, as chip stocks drive rally」2026-09-21
+  - GuruFocus「AMD Surpasses $1 Trillion Market Cap as AI Stocks Rally」2026-09-21
+  - Yahoo Finance「Stock market today: Nasdaq surges 2% to record high」2026-09-21
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for September 22」2026-09-21
+  - CNBC「Nasdaq jumps 2% to close at a record, buoyed by surge in AI stocks」2026-09-21
+  - QZ.com「AMD stock crosses $1 trillion market cap for first time」2026-09-21
+  - 9to5Mac「Meta AI launches Muse personal agent」2026-09-17
+  - CNBC「Meta's Muse AI agent downloads are surging」2026-09-21
+  - KuCoin「AMD Reaches $1 Trillion Market Cap as Nvidia Gains Less in AI Rally」2026-09-21
+  - みんかぶFX「ニュース配信一時休止のお知らせ」2026-09-22（東京市場休場確認）
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー2件（①Intel「フィラデルフィア上場」誤記削除②「変わっていない」断定軟化）→ 修正適用 → 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3✅ ②断定語ゼロ✅ ③銘柄推奨なし✅ ④将来断言なし✅ ⑤出典10系統✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典10系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告47件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-22-amd-1trillion-nasdaq-record-ai-rally.html
+- commit: f5859b7（main へ push 済み）
+
+---
+
 ## 2026-09-21
 - 判定: ✅ 公開済み
 - 選定トピック: トランプ・習近平首脳会談（9/24ワシントン）──米株先物上昇・半導体・関税・台湾の行方と東京市場再開日が重なる5つの焦点（カテゴリ: 今日のニュース）
