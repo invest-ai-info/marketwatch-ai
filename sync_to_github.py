@@ -282,4 +282,5 @@ SYNC_FILES = [
     "guide-scam-ai-trading-tool.html",
     "guide-scam-promises-that-are-illegal.html",
     "guide-news-2026-09-21-trump-xi-summit-markets.html",
+    "guide-news-2026-09-22-amd-1trillion-nasdaq-record-ai-rally.html",
 ]
