@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順 - MarketWatch AI</title>
+  <meta name="description" content="「AIが選ぶ」「完全自動で利益が出る」という宣伝文句の自動売買・銘柄選定ツールが増えている。SNS型投資詐欺の一形態であり、金融庁もAI診断を謳った誘導を手口として注意喚起。バックテストが「過去の最良期間を選んだ再現」であることを理解し、5つの確認手順で詐欺ツールを見抜く方法を解説。">
+  <meta name="keywords" content="AI自動売買,投資ツール詐欺,バックテスト,フォワードテスト,無登録投資助言業,SNS型投資詐欺,金融庁,確認手順,投資詐欺">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-scam-ai-trading-tool.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順">
+  <meta property="og:description" content="「AIが選ぶ」「完全自動で利益が出る」の宣伝文句の正体と、5つの確認手順で詐欺ツールを見抜く方法を解説。SNS型投資詐欺の一形態であり、金融庁もAI診断を謳った誘導を手口の一つとして注意喚起している。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-scam-ai-trading-tool.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順",
+    "description": "「AIが選ぶ」「完全自動で利益が出る」の宣伝文句の正体と、5つの確認手順で詐欺ツールを見抜く方法を解説。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-22",
+    "dateModified": "2026-09-22",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-scam-ai-trading-tool.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-zone-g{fill:#e6ffed;fill-opacity:0.55}
+    .s-zone-y{fill:#fff8c5;fill-opacity:0.60}
+    .s-zone-r{fill:#ffebe9;fill-opacity:0.50}
+    .s-dot-b{fill:#0969da;stroke:#ffffff;stroke-width:2}
+    .s-dot-g{fill:#1a7f37;stroke:#ffffff;stroke-width:2}
+    .s-dot-r{fill:#cf222e;stroke:#ffffff;stroke-width:2}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-curve-b{stroke:#58a6ff}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-guide{stroke:#6e7781}
+    body.dark .s-zone-g{fill:#162416}
+    body.dark .s-zone-r{fill:#2a1010}
+    body.dark .s-zone-y{fill:#2a1f0e}
+    body.dark .s-dot-b{fill:#58a6ff;stroke:#161b22}
+    body.dark .s-dot-g{fill:#3fb950;stroke:#161b22}
+    body.dark .s-dot-r{fill:#f85149;stroke:#161b22}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 「AIが運用する」自動売買ツール詐欺
+  </div>
+
+  <article class="article">
+
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は投資詐欺の手口と対策に関する一般的な「情報提供」であり、特定銘柄・金融商品の売買推奨や投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🤖 「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順</h1>
+    <div class="meta-line">公開日：2026 年 9 月 22 日 ／ 読了時間：約 10 分 ／ カテゴリ：投資詐欺から身を守る（第19回）</div>
+
+    <p>「AIが最適な銘柄を自動で選ぶ」「ほったらかしで毎月安定収益」——SNSや動画広告でこうした宣伝文句を見かけることが増えています。チャートやグラフ付きで「実績」が提示され、試用期間を勧誘されることも多い。見た目は洗練されていて、一見して詐欺とは判断しにくいケースも少なくありません。</p>
+    <p>金融庁は「それ詐欺です！SNS上の投資勧誘にご注意ください！」（令和8年3月5日更新）において、<strong>「AI診断を謳い文句にウェブサイトへ誘い込み、分析レポートを配信すると偽ってSNSへ誘導し、投資話を持ち掛ける」</strong>手口を詐欺的な誘導の一例として掲げています（2026年9月22日確認）。本記事では、「AIが運用する」ツールが使う主な説明手法の構造——特にバックテストの見せ方——と、5つの確認手順を解説します。</p>
+    <p>当サイトの<a href="guide-investment-scams.html">総論：投資詐欺の見分け方</a>もあわせてご覧ください。</p>
+
+    <div class="info-box"><strong>⏱️ 3行サマリ</strong><br>
+      ① 2026年上半期のSNS型投資詐欺被害は<strong>797.9億円・5,893件</strong>（警察庁公表値）＝1件平均約1,354万円（単純計算）。AI売買ツール詐欺は同被害の一形態。<br>
+      ② 「バックテストで年利○%」の根拠は、<strong>成績の良かった期間を選んで再現したグラフ</strong>である可能性がある。将来の運用成績とは別物。<br>
+      ③ <strong>「AIが選ぶ」は中身を見せない言い換えとしても使える</strong>。5つの確認手順（登録確認・期間確認・フォワードテスト要求・前払い拒否・会社情報確認）で自分でチェックできる。
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#section-1">SNS型投資詐欺の全体像——AI型はその一形態</a></li>
+        <li><a href="#section-2">「AIが選ぶ」という言葉の構造</a></li>
+        <li><a href="#section-3">バックテストの落とし穴——概念図で理解する</a></li>
+        <li><a href="#section-4">5つの確認手順</a></li>
+        <li><a href="#section-5">心理的な引力——なぜ引き込まれるのか</a></li>
+        <li><a href="#section-6">法的な位置づけ（無登録投資助言業）</a></li>
+        <li><a href="#section-7">被害に遭ったら・相談窓口</a></li>
+        <li><a href="#section-8">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ SNS型投資詐欺の全体像——AI型はその一形態</h2>
+    <p>警察庁が公表した2026年上半期（1〜6月）の特殊詐欺等の状況（暫定値）によれば、<strong>SNS型投資詐欺の被害額は797.9億円・5,893件</strong>にのぼります。被害額（797.9億円）を認知件数（5,893件）で単純に割ると、<strong>1件当たり平均で約1,354万円</strong>（単純計算）。退職金や老後の積立が一度に失われる規模です。</p>
+    <table>
+      <tr><th>区分</th><th>被害額</th><th>認知件数</th></tr>
+      <tr><td>特殊詐欺等 全体</td><td><strong>1,816.2億円</strong>（前年同期比 +51.7%）</td><td>22,031件（+18.3%）</td></tr>
+      <tr><td>うち SNS型投資詐欺</td><td><strong>797.9億円</strong>（全体の約43.9%）</td><td>5,893件</td></tr>
+      <tr><td>うち ニセ警察詐欺</td><td>507.9億円</td><td>4,466件</td></tr>
+      <tr><td>うち SNS型ロマンス詐欺</td><td>246.6億円</td><td>2,509件</td></tr>
+    </table>
+    <p style="font-size:.82rem;color:#57606a">出典：警察庁「令和8年上半期における特殊詐欺の認知・検挙状況等について（暫定値）」（2026年7月31日公表）。統計数値は同公表値に基づく（2026年9月22日確認）。暫定値のため今後修正される可能性があります。</p>
+    <p>「AIが運用する」自動売買・銘柄選定ツールをうたう勧誘のなかには、このSNS型投資詐欺の一形態として行われるものがあります。著名人なりすまし広告やLINEグループ勧誘と手口が重なることも多く、「SNSで知り合った人から紹介された」「動画広告から申し込んだ」という経路が典型です。</p>
+    <p>金融庁は「それ詐欺です！SNS上の投資勧誘にご注意ください！」（令和8年3月5日更新）でも、<strong>「AI診断を謳い文句にウェブサイトへ誘い込み、分析レポートを配信すると偽ってSNSへ誘導し、投資話を持ち掛ける」</strong>手口を詐欺的誘導の一形態として列挙しています（2026年9月22日確認）。</p>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 「AIが選ぶ」という言葉の構造</h2>
+    <p>「AI」「機械学習」「ディープラーニング」という言葉には、<strong>「人間の判断よりも正確」「感情を排除した合理的な判断」</strong>というイメージが伴います。ところが、これらの言葉は実態を説明しない使い方もできます。</p>
+
+    <div class="warning-box">「AIが選ぶ」は、中身の説明を省略しているだけの場合がある。どのデータを、どのロジックで、どの期間に訓練したのか——これらが開示されないまま「AI」という言葉だけが前に出るケースに注意が必要です。</div>
+
+    <h3>実態を確認すべき3つのポイント</h3>
+    <ol>
+      <li><strong>訓練データの期間と質</strong>：どの期間のどの市場データで学習したか。特定の相場環境に過剰適合している可能性がある。</li>
+      <li><strong>モデルの開示度</strong>：シグナルの根拠となるロジックが公開されているか。「ブラックボックス」という説明で終わるなら、第三者が検証できない。</li>
+      <li><strong>アップデートの頻度と履歴</strong>：相場環境が変わったとき、モデルがどう変更されたかの履歴が公開されているか。</li>
+    </ol>
+    <p>正規の投資システムや金融機関が使うアルゴリズムでも、上記3点を完全に開示していないことはあります。しかし、詐欺的なツールの多くは「AIが選ぶから大丈夫」という説明だけで終わり、<strong>中身の検証を求めると態度が変わる、または連絡が取れなくなる</strong>という特徴があります。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ バックテストの落とし穴——概念図で理解する</h2>
+    <p>「AI売買ツール」の勧誘で最も多く使われる説得材料が<strong>バックテスト（過去データへの遡及検証）</strong>の結果グラフです。「過去5年で年利○%」「最大ドローダウン○%以内」——数字が並んでいると信頼感が生まれます。</p>
+    <p>しかしバックテストは、<strong>「どの期間を選んだか」によって結果が大きく変わります</strong>。これを「バックテストの過剰適合（カーブフィッティング）」と呼びます。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="バックテストの落とし穴：選択期間と全期間の対比概念図">
+        <title>バックテストの落とし穴（概念図）</title>
+        <!-- 背景 -->
+        <rect x="0" y="0" width="700" height="380" fill="#f6f8fa" rx="8"/>
+        <!-- 左パネル（緑：選択した好調期間） -->
+        <rect x="15" y="44" width="320" height="268" fill="#e6ffed" rx="6" opacity="0.75"/>
+        <!-- 右パネル（赤：全期間） -->
+        <rect x="360" y="44" width="325" height="268" fill="#ffebe9" rx="6" opacity="0.75"/>
+        <!-- 仕切り線 -->
+        <line x1="350" y1="36" x2="350" y2="325" stroke="#d0d7de" stroke-width="1.5"/>
+        <!-- 左パネル X軸 -->
+        <line x1="42" y1="300" x2="328" y2="300" stroke="#8b949e" stroke-width="1.3"/>
+        <!-- 左パネル Y軸 -->
+        <line x1="42" y1="76" x2="42" y2="300" stroke="#8b949e" stroke-width="1.3"/>
+        <!-- 右パネル X軸 -->
+        <line x1="372" y1="300" x2="678" y2="300" stroke="#8b949e" stroke-width="1.3"/>
+        <!-- 右パネル Y軸 -->
+        <line x1="372" y1="76" x2="372" y2="300" stroke="#8b949e" stroke-width="1.3"/>
+        <!-- 左パネル 右肩上がり曲線（選択した好調期間） -->
+        <polyline points="42,282 80,260 115,238 150,208 188,175 222,148 258,118 295,96 328,82" class="s-curve-g" stroke-width="2.5"/>
+        <!-- 右パネル ボラティリティ大・右肩下がり気味（全期間） -->
+        <polyline points="372,188 405,155 435,215 462,135 492,238 520,170 548,258 578,200 612,278 648,298 678,308" class="s-curve-r" stroke-width="2.5"/>
+        <!-- パネル間の矢印 -->
+        <line x1="338" y1="190" x2="356" y2="190" stroke="#57606a" stroke-width="1.8"/>
+        <polygon points="362,187 356,190 362,193" fill="#57606a"/>
+        <!-- テキスト（全てのrect・polylineの後に配置） -->
+        <!-- タイトル -->
+        <text x="350" y="27" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A6E" font-family="sans-serif">バックテストの落とし穴（概念図）</text>
+        <!-- 左パネルヘッダー -->
+        <text x="185" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a7f37" font-family="sans-serif">選択期間のバックテスト</text>
+        <!-- 右パネルヘッダー -->
+        <text x="523" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#cf222e" font-family="sans-serif">実際の相場（全期間）</text>
+        <!-- 左パネル X軸ラベル -->
+        <text x="185" y="322" text-anchor="middle" font-size="11.5" fill="#57606a" font-family="sans-serif">選んだ好調期間のみ</text>
+        <!-- 右パネル X軸ラベル -->
+        <text x="525" y="322" text-anchor="middle" font-size="11.5" fill="#57606a" font-family="sans-serif">好調・低迷を含む全期間</text>
+        <!-- 左パネル 注記 -->
+        <text x="185" y="348" text-anchor="middle" font-size="11" font-weight="700" fill="#1a7f37" font-family="sans-serif">見栄えのよい実績に見える</text>
+        <!-- 右パネル 注記 -->
+        <text x="525" y="348" text-anchor="middle" font-size="11" font-weight="700" fill="#cf222e" font-family="sans-serif">実取引では損失も発生する</text>
+        <!-- 左パネル 凡例 -->
+        <text x="185" y="368" text-anchor="middle" font-size="10.5" fill="#57606a" font-family="sans-serif">（過去最良期間を選ぶと必ず好成績に見える）</text>
+      </svg>
+      <div class="chart-caption">図：バックテストの落とし穴（概念図）。同じ手法でも「見せる期間を選ぶ」だけで成績は大きく変わる。右の全期間グラフでは低迷期も含まれ、実際の運用を近似する。</div>
+    </div>
+
+    <h3>バックテストが「よい結果」を示す4つの理由</h3>
+    <ol>
+      <li><strong>期間選択のバイアス</strong>：その手法が「たまたま当たった」期間を選んで提示できる。</li>
+      <li><strong>過剰適合（カーブフィッティング）</strong>：過去データに合わせてパラメータを調整しすぎると、過去には完璧だが将来には通用しないモデルができる。</li>
+      <li><strong>取引コストの不計上</strong>：スプレッド・手数料・スリッページを入れると実績が下がる。入れないまま提示されることがある。</li>
+      <li><strong>生存者バイアス</strong>：多数の手法のうち「たまたま良かった」ものだけを提示し、失敗した手法は見せない。</li>
+    </ol>
+
+    <div class="negative-box">「過去のバックテストで年利○%」という数字は、将来の運用成績を保証するものではありません。金融商品取引法は、金融商品取引業者等の広告等について、利益の見込みに関し著しく事実に相違する表示や著しく人を誤認させる表示を禁じています（同法第37条・誇大広告等の禁止）。好調期間のみを切り取ったバックテストを一方的に示す勧誘は、この観点からも慎重に見る必要があります。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 5つの確認手順</h2>
+    <p>「AI売買ツール」の勧誘を受けたとき、以下の5つを確認してください。どれか一つでも確認できなければ、その時点で慎重に検討する理由があります。</p>
+
+    <h3>✅ 確認手順1：金融庁の登録業者リストで確認する</h3>
+    <p>報酬を受けて有価証券の売買に関する個別の投資判断を業として助言する行為は、金融商品取引法上、<strong>内閣総理大臣への登録（投資助言・代理業）が必要</strong>です。その内容が個別の投資判断に関する助言に当たる場合に、登録を受けていない業者がこれを行うことは、同法が禁じる無登録行為に該当します。</p>
+    <p>確認先：<strong>金融庁「免許・許可・登録等を受けている業者一覧」（金融庁ウェブサイト内）</strong>で「投資助言・代理業」として登録されているかを調べます。検索は無料・匿名で行えます（2026年9月22日確認）。</p>
+    <div class="positive-box"><strong>登録確認の手順</strong>：金融庁ウェブサイト → 「金融商品取引業者等一覧」→ 業者名または屋号で検索 → 「投資助言・代理業」の登録番号があるか確認。登録が確認できない場合は、無登録業者の可能性があります。</div>
+
+    <h3>✅ 確認手順2：バックテストの期間を確認する</h3>
+    <p>提示されたバックテスト結果グラフについて、<strong>「何年から何年のデータを使っているか」を必ず確認</strong>します。「直近3年」「リーマン前後を含む15年」「コロナ急落を含む期間」で、同じ手法でもグラフの見え方は大きく変わります。好調な相場が続いた期間だけを切り出せば、ほぼどんな手法でも「右肩上がり」に見えます。</p>
+
+    <h3>✅ 確認手順3：フォワードテスト（実際の運用実績）を要求する</h3>
+    <p>バックテストは過去データへの遡及検証です。<strong>フォワードテスト</strong>とは、実際の市場で本当に売買したリアルタイムの成績記録を指します。「○月○日〜○月○日の実際の取引ログ（取引明細）を見せてください」と要求します。正規のツールであれば、この要求に応じられるはずです。</p>
+    <div class="warning-box">フォワードテストの提示を断られたり、「個人情報保護のため見せられない」などの理由で回避された場合は、実取引の成績がないか、見せられない理由がある可能性があります。</div>
+
+    <h3>✅ 確認手順4：「入会金」「保証金」「月額費用の前払い」を求めてきたら立ち止まる</h3>
+    <p>AI売買ツールを使うために高額な前払い費用を求めるケースは、<strong>ツールではなく「費用の支払い」自体が目的</strong>の可能性があります。典型的なパターンは「月額○万円を6ヶ月分まとめて払えば、AI運用で回収できる」という説明です。支払った後でツールにアクセスできない、または「追加費用が必要」と言われるケースが報告されています。</p>
+
+    <h3>✅ 確認手順5：会社の所在地・代表者名・法人番号を確認する</h3>
+    <p><strong>法人番号公表サイト（国税庁）</strong>で法人番号を検索すると、登記上の本店所在地と法人名が確認できます。ウェブサイトに記載された住所が実際に存在するか、法人登記と一致するかを確認します。電話番号が繋がらない、所在地がバーチャルオフィスや海外の場合は注意が必要です。</p>
+
+    <table>
+      <tr><th>確認項目</th><th>確認先・方法</th><th>問題を示すサイン</th></tr>
+      <tr><td>① 金融庁登録</td><td>金融庁 金融商品取引業者等一覧</td><td>登録なし・登録番号が違う</td></tr>
+      <tr><td>② バックテスト期間</td><td>資料を直接確認</td><td>好調期間のみ・期間不明</td></tr>
+      <tr><td>③ フォワードテスト</td><td>取引明細の提示を要求</td><td>提示を拒否・曖昧な回答</td></tr>
+      <tr><td>④ 前払い要求</td><td>支払い条件を確認</td><td>高額の入会金・保証金要求</td></tr>
+      <tr><td>⑤ 法人情報</td><td>法人番号公表サイト（国税庁）</td><td>登記なし・所在地が不明</td></tr>
+    </table>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 心理的な引力——なぜ引き込まれるのか</h2>
+    <p>AI売買ツール詐欺が効果的な理由の一つは、<strong>「技術への信頼」と「自分の判断を委ねたい」という心理</strong>を同時に突くからです。</p>
+    <ul>
+      <li><strong>権威バイアス</strong>：「AI」「機械学習」「ビッグデータ」という言葉が、専門知識があるように見せる。</li>
+      <li><strong>損失回避の反転</strong>：「自分で判断すると損する」という不安を煽り、ツールへの依存を促す。</li>
+      <li><strong>社会的証明</strong>：「すでに○○人が使って実績を出している」という実績紹介（実在しないことがある）。</li>
+      <li><strong>FOMO（機会損失の恐れ）</strong>：「今だけ特別価格」「枠が残りわずか」という限定性の強調。</li>
+      <li><strong>段階的なコミットメント</strong>：最初は無料または低額のトライアルから始め、徐々に高額化する。</li>
+    </ul>
+    <p>これらの心理的な引力については、当サイトの<a href="guide-cognitive-biases.html">投資家が陥りやすい認知バイアス</a>でより詳しく解説しています。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ 法的な位置づけ（無登録投資助言業）</h2>
+    <p>金融商品取引法は、報酬を受けて他人のために有価証券等の売買に関する判断を助言することを業として行う場合に、内閣総理大臣への登録を義務付けています。その内容が個別の投資判断に関する助言に当たる場合に、登録を受けていない業者が有料のアドバイスやツールを提供することは、同法が禁じる無登録行為として位置づけられます。</p>
+    <p>無登録業者から投資ツールを購入した場合、被害を受けても<strong>法的保護が限られます</strong>。正規の金融商品取引業者は、金融庁の監督下に置かれ、顧客への説明義務・書面交付義務・分別管理義務などが課されています。無登録業者にはこれらの義務がなく、業者が突然連絡を絶っても行政からの監督や対応が及ばないことがあります。</p>
+    <div class="info-box"><strong>無登録業者との取引の特徴</strong>：契約書が存在しない・口頭または非公式チャットのみでのやり取り・日本の住所や法人登記がない・金融庁の一覧に名前がない。これらのいずれかに当てはまる場合は、正規の金融機関ではない可能性があります。</div>
+
+    <!-- Section 7 -->
+    <h2 id="section-7">7️⃣ 被害に遭ったら・相談窓口</h2>
+    <p>「おかしい」と感じたらできるだけ早く相談してください。時間が経つほど被害の回収が困難になります。以下の窓口に相談できます。</p>
+    <ul>
+      <li><strong>警察相談専用電話 #9110</strong>（被害届・相談。24時間ではなく平日昼間中心）</li>
+      <li><strong>消費者ホットライン 188</strong>（消費生活センターへの相談。「いやや！」と覚える）</li>
+      <li><strong>金融庁 詐欺的な投資に関する相談ダイヤル 0570-050588</strong>（平日10:00〜17:00）</li>
+      <li><strong>証券取引等監視委員会 情報提供窓口 0570-00-3581</strong></li>
+    </ul>
+    <div class="warning-box">「取り返すための費用を払えば回収できる」という2次的な勧誘は詐欺の典型的な続きです。一度支払った後にこうした話が来た場合は、追加の支払いを絶対にせず、すぐに相談窓口へ連絡してください。</div>
+    <p>投資詐欺被害の経緯は<a href="guide-scam-investment-seminar.html">投資セミナー勧誘詐欺</a>や<a href="guide-scam-line-group-guru.html">LINEグループ「投資の師匠」詐欺</a>とも手口が重なります。あわせてご確認ください。</p>
+
+    <!-- Section 8 -->
+    <h2 id="section-8">8️⃣ まとめ</h2>
+    <p>「AIが運用する」自動売買ツールの勧誘を見抜くための要点は3つです。</p>
+    <ol>
+      <li><strong>「AI」という言葉は中身の開示を求める入口にする</strong>：訓練データの期間、ロジックの開示、アップデート履歴を確認する。回答できない業者は「中身がない可能性がある」と判断する。</li>
+      <li><strong>バックテストは選んだ期間次第で何にでも見える</strong>：フォワードテスト（実際の取引明細）の提示を要求し、断られたら慎重に対処する。</li>
+      <li><strong>5つの確認手順は順に実施できる</strong>：金融庁登録確認→バックテスト期間確認→フォワードテスト要求→前払い拒否→法人情報確認。どれか一つでも確認できなければ、契約や支払いを保留する。</li>
+    </ol>
+    <p>投資判断の主体は常に自分自身です。ツールやシステムが判断を「自動化」することはできますが、そのツールを選ぶ判断は自分がする必要があります。「AIに任せれば安心」という考え方そのものが、詐欺が狙う心理的な隙です。</p>
+
+    <h2>📚 関連記事</h2>
+    <div class="related-grid">
+      <a href="guide-investment-scams.html" class="related-card">
+        <div class="related-card-title">投資詐欺の見分け方（総論）</div>
+        <div class="related-card-desc">各種詐欺手口の全体像と、共通する見抜き方のポイントを解説。</div>
+      </a>
+      <a href="guide-scam-line-group-guru.html" class="related-card">
+        <div class="related-card-title">LINEグループ「投資の師匠」詐欺</div>
+        <div class="related-card-desc">LINE招待からAI運用を謳うグループへ誘導する典型手口。</div>
+      </a>
+      <a href="guide-scam-investment-seminar.html" class="related-card">
+        <div class="related-card-title">投資セミナー勧誘詐欺</div>
+        <div class="related-card-desc">「無料セミナー」から高額ツール・会員権購入へ誘導する流れを分解。</div>
+      </a>
+      <a href="guide-cognitive-biases.html" class="related-card">
+        <div class="related-card-title">投資家が陥りやすい認知バイアス</div>
+        <div class="related-card-desc">詐欺が突く心理的な引力——FOMO・権威バイアス・社会的証明の構造。</div>
+      </a>
+    </div>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">【免責事項】本記事は一般的な情報提供を目的として作成されたものであり、特定の金融商品・サービスへの投資を勧誘または推奨するものではありません。当サイトは金融商品取引業（投資助言・代理業を含む）の登録を受けていません。本記事の情報の正確性・完全性・最新性を保証するものではなく、本記事の内容に基づいて行った投資判断によって生じた損害について、当サイトは一切の責任を負いません。投資に関する最終判断はご自身の責任においてお願いします。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p><a href="index.html">MarketWatch AI</a> ／ <a href="guides.html">解説記事一覧</a> ／ <a href="about.html">運営について</a> ／ <a href="privacy.html">プライバシーポリシー</a> ／ <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:8px">本サイトは投資情報の提供を目的としており、特定銘柄・金融商品の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</p>
+</footer>
+
+<script>
+(function(){
+  var p=document.getElementById('reading-progress');
+  if(!p)return;
+  window.addEventListener('scroll',function(){
+    var s=document.documentElement.scrollTop||document.body.scrollTop;
+    var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    p.style.width=(h>0?Math.min(100,s/h*100):0)+'%';
+  },{passive:true});
+})();
+function toggleTheme(){
+  var b=document.body;
+  var btn=document.getElementById('theme-toggle');
+  if(b.classList.contains('dark')){b.classList.remove('dark');btn.textContent='🌙';try{localStorage.setItem('mw-theme','light');}catch(e){}}
+  else{b.classList.add('dark');btn.textContent='☀️';try{localStorage.setItem('mw-theme','dark');}catch(e){}}
+}
+(function(){try{if(localStorage.getItem('mw-theme')==='dark'){document.body.classList.add('dark');var btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}}catch(e){}})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>

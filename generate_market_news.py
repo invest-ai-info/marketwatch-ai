@@ -5330,6 +5330,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
         {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 📰 解説「<a href="guide-news-2026-09-21-trump-xi-summit-markets.html" style="color:#0969da"><b>【9/21】米中首脳会談（9/24）──半導体・関税・台湾の焦点と東京再開日が重なる構図を中立整理</b></a>」公開'},
+        {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🤖 解説「<a href="guide-scam-ai-trading-tool.html" style="color:#0969da"><b>「AIが運用する」自動売買ツール詐欺——バックテストの落とし穴と5つの確認手順</b></a>」公開'},
         {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 📜 解説「<a href="guide-scam-promises-that-are-illegal.html" style="color:#0969da"><b>「元本保証」「損失補填」「必ず上がる」——正規業者には言えない約束</b></a>」公開'},
         {"date": "2026-09-21", "line": '・<b>2026-09-21</b>: 🧪 解説「<a href="guide-signal-lab-105.html" style="color:#0969da"><b>AIシグナル研究日誌 #105</b></a>」公開'},
         {"date": "2026-09-20", "line": '・<b>2026-09-20</b>: 📰 解説「<a href="guide-news-2026-09-20-silver-week-yen-risk-boj-holiday.html" style="color:#0969da"><b>シルバーウィーク前夜の円相場──BOJ利上げ後「逆円安」と5連休薄商いリスク</b></a>」公開'},
