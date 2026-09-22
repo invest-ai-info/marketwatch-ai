@@ -311,7 +311,10 @@ QUEUE_MIN_REMAIN = 5  # 未公開 topic がこれ未満なら warn（1日1本な
 # エスカレ中で公開できない手口が該当）。数に入れると、動かせない在庫が床を支えてしまう。
 QUEUE_LANES = [
     # (レーン名, 手順書, guide- の後ろに付く接頭辞, 台帳, 床)
-    ("autodraft（心理＆リスク管理）", QUEUE_GUIDE_PATH, "", None, QUEUE_MIN_REMAIN),
+    # ⚠️ autodraft（心理＆リスク管理）は 2026-09-22 に全63回で**完結**し、見張りから外した。
+    #    総目次＝guide-mindset-series-index.html。行動経済学とリスク管理の主要論点を出し切った判断。
+    #    記事63本と手順書・台帳は読者向けに残す。routine（autodraft-article / autodraft-publish）は
+    #    オーナーが claude.ai 側で停止する（エージェントからは http_api 作成のため無効化できない）。
     # ⚠️ proverb（投資格言）は 2026-09-05 に #50「全48回 総目次」で**完結**し routine も削除済み。
     #    レーンが無いのにキュー残量を見張ると**毎朝必ず赤くなる**＝番人の信用が落ちる
     #    （実際 9/5〜9/17 は「残り0件＝レーン停止中」を毎日鳴らし続けていた。停止は仕様どおり）。
@@ -320,8 +323,11 @@ QUEUE_LANES = [
     ("scam（投資詐欺）", "drafts/SCAM_GUIDE.md", "scam-",
      "drafts/scam/SCAM_LEDGER.md", QUEUE_MIN_REMAIN),
     # 2026-08-31 新設。格言シリーズ（44本で汲み尽くし）の後継として日次枠を引き継ぐ
-    ("tse（東証のしくみ）", "drafts/TSE_GUIDE.md", "tse-",
-     "drafts/tse/TSE_LEDGER.md", QUEUE_MIN_REMAIN),
+    # ⚠️ tse（東証のしくみ）は 2026-09-22 に全18回で**完結**し、見張りから外した。
+    #    総目次＝guide-tse-series-index.html。個人投資家が日常でぶつかる制度は網羅した判断
+    #    （空売り規制・大量保有報告書・清算決済など専門性の高い題材は残っているが、
+    #      一次情報の確認コストに対して読者層が狭いため、company レーンへ力を移す方針）。
+    #    routine（tse-daily-auto）はオーナーが claude.ai 側で停止する。
 ]
 
 
