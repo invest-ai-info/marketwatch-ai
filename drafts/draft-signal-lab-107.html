@@ -314,17 +314,17 @@ window.addEventListener('resize',mark);
         <polygon points="310,165 304,158 316,158" fill="#cf222e"/>
 
         <!-- SL/TP ライン -->
-        <line x1="310" y1="165" x2="650" y2="165" stroke="#6e7781" stroke-width="1" stroke-dasharray="4 3"/>
-        <text x="655" y="169" class="s-label-sm">エントリー</text>
-        <line x1="310" y1="180" x2="650" y2="180" stroke="#cf222e" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="655" y="184" class="s-label-r" font-size="11">SL（-1.0R）</text>
-        <line x1="310" y1="145" x2="650" y2="145" stroke="#1a7f37" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="655" y="149" class="s-label-g" font-size="11">TP1（+1.33R）</text>
-        <line x1="310" y1="128" x2="650" y2="128" stroke="#1a7f37" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="655" y="132" class="s-label-g" font-size="11">TP2（+2.0R）</text>
+        <line x1="310" y1="165" x2="640" y2="165" stroke="#6e7781" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="695" y="169" text-anchor="end" class="s-label-sm">エントリー</text>
+        <line x1="310" y1="180" x2="640" y2="180" stroke="#cf222e" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="695" y="184" text-anchor="end" class="s-label-r" font-size="11">SL（-1R）</text>
+        <line x1="310" y1="145" x2="640" y2="145" stroke="#1a7f37" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="695" y="149" text-anchor="end" class="s-label-g" font-size="11">TP1（+1.33R）</text>
+        <line x1="310" y1="128" x2="640" y2="128" stroke="#1a7f37" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="695" y="132" text-anchor="end" class="s-label-g" font-size="11">TP2（+2R）</text>
 
         <!-- RSIエリア (下半分) -->
-        <text x="12" y="188" class="s-label-sm">RSI</text>
+        <text x="12" y="200" class="s-label-sm">RSI</text>
         <line x1="50" y1="178" x2="50" y2="265" class="s-axis"/>
         <line x1="50" y1="265" x2="650" y2="265" class="s-axis"/>
 
@@ -333,7 +333,7 @@ window.addEventListener('resize',mark);
         <text x="38" y="246" text-anchor="end" class="s-label-r" font-size="11">30</text>
         <!-- RSI 70 ガイドライン -->
         <line x1="50" y1="192" x2="650" y2="192" class="s-guide"/>
-        <text x="38" y="196" text-anchor="end" class="s-label-sm" font-size="11">70</text>
+        <text x="38" y="190" text-anchor="end" class="s-label-sm" font-size="11">70</text>
 
         <!-- RSIライン: 低下して30を突破、その後回復 -->
         <polyline points="60,210 120,215 180,222 240,232 280,240 310,252 330,248 350,244 380,238 420,228 460,218 510,210 560,205 610,202 650,200"
@@ -434,8 +434,8 @@ window.addEventListener('resize',mark);
         <line x1="78" y1="67" x2="600" y2="67" class="s-guide"/>
 
         <!-- 損益分岐ライン 43% -->
-        <line x1="80" y1="122" x2="600" y2="122" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
-        <text x="602" y="126" class="s-label-y" font-size="11">43%（損益分岐）</text>
+        <line x1="80" y1="122" x2="590" y2="122" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="595" y="118" text-anchor="end" class="s-label-y" font-size="11">43% 損益分岐</text>
 
         <!-- 棒：上昇トレンド 61.9% → y = 210 - (61.9/100 * 175) = 210 - 108.3 = 101.7 -->
         <rect x="130" y="102" width="90" height="108" class="s-fill-g" rx="4"/>
@@ -512,8 +512,8 @@ window.addEventListener('resize',mark);
 
     <!-- チェックポイント推移グラフ -->
     <div class="chart-figure">
-      <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="680" height="220" rx="8" class="s-fill-gray"/>
+      <svg viewBox="0 0 680 228" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="228" rx="8" class="s-fill-gray"/>
         <text x="340" y="22" text-anchor="middle" class="s-label-b" font-size="14">FWD RCI下限の推移（N=296〜362）</text>
 
         <!-- Y軸 -->
@@ -539,7 +539,7 @@ window.addEventListener('resize',mark);
         <text x="294" y="193" text-anchor="middle" class="s-label-sm">320</text>
         <text x="459" y="193" text-anchor="middle" class="s-label-sm">343</text>
         <text x="620" y="193" text-anchor="middle" class="s-label-sm">362</text>
-        <text x="350" y="207" text-anchor="middle" class="s-label-sm">FWD累積シグナル数 N</text>
+        <text x="350" y="208" text-anchor="middle" class="s-label-sm">FWD累積 N</text>
 
         <!-- データポイント（tracker historyより）
           N=296 rci_lo=0.050 → y=125-50=75
@@ -571,7 +571,6 @@ window.addEventListener('resize',mark);
         <circle cx="620" cy="93" r="5" fill="#1a7f37"/>
         <text x="620" y="80" text-anchor="middle" class="s-label-g" font-size="11">現在 N=362</text>
 
-        <text x="340" y="215" text-anchor="middle" class="s-label-sm">N=320でRCI下限がゼロを割り込み惜しくも不合格。その後N=343より再浮上し、現在は安定プラス圏。</text>
       </svg>
       <div class="chart-caption">図3. FWD期間のRCI（期待値信頼下限）推移。N=320チェックポイントで-0.001（ほぼゼロ）と惜しくも不合格。その後N=343以降は継続してプラス圏を維持。次の節目はN=400。</div>
     </div>
