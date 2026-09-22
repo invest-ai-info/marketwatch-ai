@@ -285,4 +285,6 @@ SYNC_FILES = [
     "guide-news-2026-09-22-amd-1trillion-nasdaq-record-ai-rally.html",
     "guide-scam-screen-share-remote-app.html",
     "guide-scam-crypto-transfer-controls.html",
+    "guide-tse-series-index.html",
+    "guide-mindset-series-index.html",
 ]
