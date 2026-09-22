@@ -1,4 +1,4 @@
-2026-09-23 signal-lab: drafts/draft-signal-lab-107.html 🔄ゲート中（rsi_oversold_bounce×トレンド別 FWD N=362。IS 39.1%(52/133) → FWD 51.7%(187/362)。トレンド別: 上昇61.9%(52/84) / 中立56.4%(66/117) / 下降42.9%(69/161)。IS/FWD分離claims×8件作成。verify通過待ち）
+2026-09-23 signal-lab: drafts/draft-signal-lab-107.html 🚩エスカレ中（rsi_oversold_bounce×トレンド別 FWD N=362。verify 8/8緑・SVG警告0件。Opus1st🟡グレーB1+G1〜G5修正済み・verify再確認GREEN。独立Opus🟡グレー残り5件修正済み・verify再確認GREEN。**SVGエスカレ1件＝図2の43%損益分岐線がy=122（実際は50%位置）→y=135（43%正位置）に修正が必要。1行変更で済む・数値への影響なし。独立Opusが人間承認必要と判定。** 承認後 y1="122"→y1="135" + y="118"→y="131"（ラベル）に修正→verify→finalize→publish）
 2026-09-22 autopublish: スキップ（対象なし：topicキュー全63件がすべてguides.htmlに公開済み。draft未生成4件（compounding-drawdown/cognitive-biases/diversification/etf-vs-mutual-fund）もguides.htmlにカード確認済み。キュー補充が必要）
 2026-09-22 signal-lab: draft-signal-lab-106.html 🚩エスカレ中（コンプラ🔴黒①IS/FWDラベル優良誤認[claims全6件にfired_before無し・全期間値を「IS」とラベル]②IS/FWD境界1日ズレ疑義。verify 6/6緑・3件グレー修正済み。要人間レビュー・詳細はREVIEW.md 4708行〜）
 2026-09-21 autopublish: スキップ（対象なし：topicキュー全63件中58件にdraft-*.htmlが存在するがすべてguides.htmlに公開済み。残り5件はdraft未生成。キュー補充が必要）

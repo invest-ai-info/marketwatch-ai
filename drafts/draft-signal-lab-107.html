@@ -8,12 +8,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <title>AIシグナル研究日誌 #107｜逆張りは市場の方向を選ぶ — rsi_oversold_bounce×トレンド別N=362前向き検証 - MarketWatch AI</title>
-  <meta name="description" content="rsi_oversold_bounce（売られすぎ逆張り）をトレンド別に切り直したFWD N=362検証。上昇トレンド61.9%(52/84)、中立56.4%(66/117)、下降トレンド42.9%(69/161)と鮮明な差が判明。下降トレンドでの逆張りは損益分岐点付近——シグナルより上位足の方向が重要。研究日誌第107回。">
+  <meta name="description" content="rsi_oversold_bounce（売られすぎ逆張り）をトレンド別に切り直したFWD N=362検証。上昇トレンド61.9%(52/84)、中立56.4%(66/117)、下降トレンド42.9%(69/161)と差が見られた。下降トレンドでの逆張りは損益分岐点付近——上位足の方向と成績の関係を観察。研究日誌第107回。">
   <meta name="keywords" content="AIシグナル,売られすぎ,RSI,逆張り,トレンド,検証,研究日誌,rsi_oversold_bounce,前向き検証,シグナル研究">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-107.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIシグナル研究日誌 #107｜逆張りは市場の方向を選ぶ — rsi_oversold_bounce×トレンド別N=362前向き検証">
-  <meta property="og:description" content="rsi_oversold_bounce FWD N=362のトレンド別検証。上昇トレンド61.9% vs 下降トレンド42.9%——損益分岐点付近。逆張りはトレンドの方向が勝敗を左右する。">
+  <meta property="og:description" content="rsi_oversold_bounce FWD N=362のトレンド別検証。上昇トレンド61.9% vs 下降トレンド42.9%——損益分岐点付近。トレンド方向で勝率に差が見られた。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-107.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -261,7 +261,7 @@ window.addEventListener('resize',mark);
     <div class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI売られすぎ反発・ボリンジャー下限タッチ等）がチャートのどの瞬間かを図解で確認できます。</div>
 
     <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第107回です。今回の題材は <strong>rsi_oversold_bounce（RSI売られすぎ反発）</strong> をトレンドの方向で切り直した分析です。</p>
-    <p>前回この仮説を扱った<a href="guide-signal-lab-105.html">#105</a>では、FWD 全体で N=407 のロング方向を分析しました。今回は「<strong>上昇トレンドで出たシグナルと下降トレンドで出たシグナルでは成績がどう違うか</strong>」を問います。結論から言うと、差は想像以上に大きいものでした。</p>
+    <p>近いテーマを扱った<a href="guide-signal-lab-105.html">#105</a>では、RSI売られすぎ時の逆張りロング全体（全期間・条件は本記事と一部異なる）を分析しました。今回は「<strong>上昇トレンドで出たシグナルと下降トレンドで出たシグナルでは成績がどう違うか</strong>」を問います。結論から言うと、はっきりした差が見られました。</p>
 
     <!-- 30秒まとめ -->
     <div class="info-box">
@@ -373,7 +373,7 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <p>IS期間は損益分岐点の43%を大きく下回る <strong>39.1%</strong> でした。これはシグナルが「売られすぎたから買い」と機械的に判定するだけでは不十分だったことを示しています。一方、FWD期間は <strong>51.7%</strong> と明確にプラスに転換しています。</p>
+    <p>IS期間は損益分岐点の43%を大きく下回る <strong>39.1%</strong> でした。これはシグナルが「売られすぎたから買い」と機械的に判定するだけでは不十分だったことを示しています。一方、FWD期間は <strong>51.7%</strong> とプラス圏で推移しています。</p>
     <p>ただし、FWD全体でプラスになっているのは良いニュースですが、中身を見るとトレンドによって大きな差があります。</p>
 
     <h2 id="trend">③ トレンド別の勝率差</h2>
@@ -408,8 +408,8 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <div class="positive-box">上昇トレンドでのrsi_oversold_bounce（52/84）：勝率61.9%、avgR=+0.444。逆張りが上位足のトレンドと<em>同じ方向</em>になるため、買い圧力が機能しやすい。</div>
-    <div class="negative-box">下降トレンドでのrsi_oversold_bounce（69/161）：勝率42.9%、avgR≈0。損益分岐点付近——「売られすぎ」でもトレンドが下向きなら戻りは限定的で、すぐに再度下落するケースが多い。</div>
+    <div class="positive-box">上昇トレンドでのrsi_oversold_bounce（52/84）：勝率61.9%、avgR=+0.444。逆張りが上位足のトレンドと<em>同じ方向</em>になる局面では、戻りが伸びやすかったと考えられます。</div>
+    <div class="negative-box">下降トレンドでのrsi_oversold_bounce（69/161）：勝率42.9%、avgR≈0。損益分岐点付近——「売られすぎ」でもトレンドが下向きなら戻りは限定的にとどまる傾向が観察されました。</div>
 
     <!-- トレンド別棒グラフ -->
     <div class="chart-figure">
@@ -465,12 +465,12 @@ window.addEventListener('resize',mark);
 
     <p>この差のポイントを整理すると：</p>
     <ul>
-      <li><strong>上昇トレンドでの逆張り</strong>：上位足が上向きの中で一時的に売られすぎた状態は「押し目」として機能し、反発しやすい</li>
+      <li><strong>上昇トレンドでの逆張り</strong>：上位足が上向きの中で一時的に売られすぎた状態は、いわゆる「押し目」の局面に近いと解釈できる可能性があります</li>
       <li><strong>中立・もみあいでの逆張り</strong>：方向感がない分、売られすぎからの戻りも発生しやすく、56.4%とプラス圏</li>
-      <li><strong>下降トレンドでの逆張り</strong>：下方向の圧力が継続しているため、RSIが30以下になっても「さらに売られる」展開が多い。avgR≈0は「勝っても負けてもプラスマイナスほぼゼロ」という状態</li>
+      <li><strong>下降トレンドでの逆張り</strong>：RSIが30以下になっても「さらに売られる」展開が多く観察されました。avgR≈0は「勝っても負けてもプラスマイナスほぼゼロ」という状態</li>
     </ul>
 
-    <div class="warning-box">下降トレンド中のrsi_oversold_bounceに手を出すのは、上の数字に限って言えばただのコインフリップに近い状態です。シグナルが出ていても、上位足のトレンドを確認することが重要という示唆があります。ただし、これは過去のデータから観察したパターンであり、将来の成績を保証するものではありません。</div>
+    <div class="warning-box">下降トレンド中の発火は、上の数字の範囲では期待値がほぼゼロでした。トレンド方向によって成績が分かれる傾向が観察されます。ただし、これは過去のデータから観察したパターンであり、将来の成績を保証するものではありません。</div>
 
     <h2 id="timeframe">④ 足別の補足</h2>
     <p>FWD N=362 を足別に分類した補足データです。</p>
@@ -504,7 +504,7 @@ window.addEventListener('resize',mark);
       </tbody>
     </table>
 
-    <div class="warning-box">1d足の83.3%（15/18）は目を引きますが、N=18 という小サンプルです。95%CIが[60.8%, 94.2%]と非常に広く、信頼性は限定的。次の節目（N=30前後）での数字で判断すべきです。</div>
+    <div class="warning-box">1d足の83.3%（15/18）は目を引きますが、N=18 という小サンプルです。95%CIが[60.8%, 94.2%]と非常に広く、信頼性は限定的。次の節目（N=30前後）での数字で判断するのが妥当と考えます。</div>
     <p>4h足（55.5%）は1h足（47.4%）より高い傾向があります。足が長くなるほど「一時的な売られすぎ」のノイズが小さくなる可能性がありますが、N=110（4h）なので引き続き前向き観測を続けます。</p>
 
     <h2 id="checkpoint">⑤ チェックポイントの推移</h2>
@@ -580,7 +580,7 @@ window.addEventListener('resize',mark);
       <li><strong>N=296（2026-09-07）</strong>：RCI下限 +0.050 ——プラス圏で推移</li>
       <li><strong>N=320（2026-09-09）</strong>：チェックポイント到達。RCI下限 −0.001 ——わずかにマイナスで<strong>不合格</strong>。昇格には2回連続のプラスが必要</li>
       <li><strong>N=323〜337（2026-09-10〜14）</strong>：一時的にマイナス圏が続く</li>
-      <li><strong>N=343〜362（2026-09-15〜23）</strong>：RCI下限が再びプラス圏へ回復し安定</li>
+      <li><strong>N=343〜362（2026-09-15〜22）</strong>：RCI下限が再びプラス圏で推移</li>
       <li><strong>次の節目 N=400</strong>：残り38件。今後の発火ペースによっては10〜15日程度で到達する見込み</li>
     </ul>
 
@@ -602,14 +602,14 @@ window.addEventListener('resize',mark);
     </table>
 
     <h2 id="interpretation">⑦ 考察と次の問い</h2>
-    <p>今回の分析から得られた最も重要な知見は「<strong>逆張りシグナルの成否はシグナルより上位足のトレンド方向に強く依存する</strong>」という点です。</p>
-    <p>FWD全体では51.7%でプラス期待値ですが、これは上昇・中立トレンドでの高い勝率が下降トレンドの低い勝率を補っている構造です。下降トレンドを分離すると42.9%（avgR≈0）——つまりほぼコインフリップになります。</p>
+    <p>今回の分析から得られた最も注目できる観察は「<strong>本シグナルでは、成績が上位足のトレンド方向によって大きく分かれた</strong>」という点です。</p>
+    <p>FWD全体では51.7%でプラス期待値ですが、これは上昇・中立トレンドでの高い勝率が下降トレンドの低い勝率を補っている構造です。下降トレンドを分離すると42.9%（avgR≈0）——期待値はほぼゼロでした。</p>
 
     <h3>この研究の限界と注意点</h3>
     <ul>
       <li>観察期間はFWD約3ヶ月（N=362）。期間が特定の相場環境に偏っている可能性がある</li>
-      <li>「上位足のトレンド」の定義は <code>trend_alignment.higher_tf_trend</code> フィールドの値で機械的に区分——判定ロジックは公開されているが、市場参加者の感覚的なトレンド判断とは異なる場合がある</li>
-      <li>RCI下限のプラス圏維持は昇格条件の必要条件のひとつにすぎない（N=400で2回連続プラスの確認が必要）</li>
+      <li>「上位足のトレンド」の定義は <code>trend_alignment.higher_tf_trend</code> フィールドの値で機械的に区分——当サイトの機械判定であり、市場参加者の感覚的なトレンド判断とは異なる場合がある</li>
+      <li>RCI下限のプラス圏維持は昇格条件の必要条件のひとつにすぎない（N=400・N=480の2回連続合格が必要）</li>
       <li>ここで示す数値はすべて過去データに基づく観察であり、将来の成績を示すものではない</li>
     </ul>
 
@@ -620,7 +620,7 @@ window.addEventListener('resize',mark);
       📊 <a href="track-record.html">シグナル成績ダッシュボード（全期間の統計）</a>
     </p>
 
-    <p class="disclaimer">本記事に記載された情報は情報提供のみを目的としており、金融商品の売買を推奨・勧誘するものではありません。当サイトは無登録投資助言業者ではなく、投資判断はご自身の責任と判断においてお願いします。過去の成績は将来の成果を保証しません。記載の数値はsignals-log.jsonの実データに基づく機械的な集計であり、主観的な選別は行っていません。</p>
+    <p class="disclaimer">本記事に記載された情報は情報提供のみを目的としており、金融商品の売買を推奨・勧誘するものではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録も行っていません。投資判断はご自身の責任と判断においてお願いします。過去の成績は将来の成果を保証しません。記載の数値はsignals-log.jsonの実データに基づく機械的な集計であり、主観的な選別は行っていません。</p>
 
     <hr style="margin:32px 0;border:none;border-top:1px solid #d0d7de">
     <h2>関連記事</h2>
@@ -630,8 +630,8 @@ window.addEventListener('resize',mark);
         <div class="related-card-desc">本記事で扱うrsi_oversold_bounceをはじめ、全シグナルタイプの発火条件をチャート図解で解説。</div>
       </a>
       <a class="related-card" href="guide-signal-lab-105.html">
-        <div class="related-card-title">🧪 研究日誌 #105：rsi_oversold_bounce FWD N=407</div>
-        <div class="related-card-desc">ロング方向全体のFWD N=407検証。51.1%(208/407)でプラス期待値。今回の前回分析。</div>
+        <div class="related-card-title">🧪 研究日誌 #105：rsi_oversold_bounce 全期間分析</div>
+        <div class="related-card-desc">RSI売られすぎ×逆張りロング全体（全期間）の検証。本記事とは集計条件が一部異なります。</div>
       </a>
       <a class="related-card" href="guide-signal-lab-001.html">
         <div class="related-card-title">🧪 研究日誌 #1：この研究の始まり</div>
