@@ -331,6 +331,34 @@ def main():
         # クラウド生成記事はテンプレが GitHub 側管理＝ローカル検査すると誤検知になるため対象外。
         if not gf.startswith(CLOUD_PREFIXES) and 'id="mw-back-to-top"' not in html:
             warnings.append(f"{gf}: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`")
+        # 免責の三層（2026-09-22 追加）: 上部バナー／本文末／フッターの3箇所に kinsho-v1 が要る。
+        # 🚨 これが無いと気づけなかった実害: 2026-09-22 に雛形流用で作った記事4本が2層のまま
+        #    check_guide_draft.py を GREEN で通過した（あちらは層数を数えていない）。
+        #    さらに棚卸ししたところ、既存 247本が3層未満だった。
+        # 🔑 判定はクラス名ではなく**位置**で行う（時期とレーンでマークアップが違い、
+        #    クラス名で見ると「あるのに無い」と誤判定する）。修正は `python apply_disclaimer.py --apply`。
+        if not gf.startswith(CLOUD_PREFIXES):
+            _k = 'data-disclaimer="kinsho-v1"'
+            _a = html.find("<article")
+            _ae = html.find("</article>")
+            if _a < 0 or _ae < 0:
+                _a, _ae = html.find("<main"), html.find("</main>")
+            _h1 = html.find("<h1", _a) if _a >= 0 else -1
+            _f, _fe = html.find("<footer"), html.find("</footer>")
+            _got = {"上部バナー": False, "本文末": False, "フッター": False}
+            _i = html.find(_k)
+            while _i >= 0:
+                if _a >= 0 and _h1 > _a and _a < _i < _h1:
+                    _got["上部バナー"] = True
+                elif _a >= 0 and _ae > _a and _a < _i < _ae:
+                    _got["本文末"] = True
+                elif _f >= 0 and _fe > _f and _f < _i < _fe:
+                    _got["フッター"] = True
+                _i = html.find(_k, _i + 1)
+            _lack = [k for k, v in _got.items() if not v]
+            if _lack:
+                warnings.append(f"{gf}: 免責が三層でない（欠け: {'・'.join(_lack)}）"
+                                f" → `python apply_disclaimer.py --apply`")
         if sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES):
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
