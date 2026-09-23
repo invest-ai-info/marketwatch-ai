@@ -14,6 +14,7 @@ from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
 from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
+from inject_ads import build_block as _ad_block  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -5327,6 +5328,8 @@ BAND_ITEMS = [
     ("oil", "WTI原油", "CL=F", 2), ("btc", "ビットコイン", "BTC-USD", 0),
 ]
 
+AD2_BLOCK = _ad_block(["kabu"])  # トップの広告②＝DMM株（①の松井証券FXと別の広告主にして、しつこさを減らす）
+
 TOP_LAYOUT_CSS = """
     /* 指数の帯 */
     .ib-wrap{margin:0 0 16px}
@@ -6451,42 +6454,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <div style="font-size:.82rem;color:#57606a;margin:0 4px 12px">📊 騰落レシオ（東証プライム）は <a href="market-health.html" style="color:#0969da;font-weight:600">市場健康度ページ</a> でご覧ください →</div>
 
 {featured_guides}
-  <!-- 4機能カード（より深い市場分析へ）-->
-  <div style="margin-top:48px;padding-top:24px;border-top:1px solid #d0d7de">
-    <div style="font-size:1.2rem;font-weight:700;color:#1f2328;margin-bottom:6px">🔍 AIが導く、より深い市場分析へ</div>
-    <div style="font-size:.88rem;color:#57606a;margin-bottom:20px">主要機能ページへのショートカット</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
-      <a href="market-health.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
-        <img src="12_feature_market_health.png" alt="市場健康度" style="width:100%;height:140px;object-fit:cover;display:block">
-        <div style="padding:18px 22px">
-          <div style="font-size:1.02rem;font-weight:700;color:#1a7f37;margin-bottom:6px">🩺 市場健康度ダッシュボード</div>
-          <div style="font-size:.78rem;color:#57606a;line-height:1.6">VIX・恐怖と強欲・バフェット指数で市場の過熱感を多角的に可視化</div>
-        </div>
-      </a>
-      <a href="calendar.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
-        <img src="13_feature_macro_calendar.png" alt="マクロ経済カレンダー" style="width:100%;height:140px;object-fit:cover;display:block">
-        <div style="padding:18px 22px">
-          <div style="font-size:1.02rem;font-weight:700;color:#0969da;margin-bottom:6px">📅 マクロ経済カレンダー</div>
-          <div style="font-size:.78rem;color:#57606a;line-height:1.6">日米欧中の主要指標・FOMC・日銀イベントを月間一覧でチェック</div>
-        </div>
-      </a>
-      <a href="charts.html" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
-        <img src="15_feature_50year_chart.png" alt="150年チャート" style="width:100%;height:140px;object-fit:cover;display:block">
-        <div style="padding:18px 22px">
-          <div style="font-size:1.02rem;font-weight:700;color:#9a6700;margin-bottom:6px">📈 150年価格チャート</div>
-          <div style="font-size:.78rem;color:#57606a;line-height:1.6">S&amp;P500は1871年から——超長期150年トレンドと投資史年表・歴史的イベント一覧</div>
-        </div>
-      </a>
-      <a href="market-health.html#vix" style="display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:12px;text-decoration:none;transition:all .25s;overflow:hidden">
-        <img src="14_feature_vix.png" alt="VIX恐怖指数" style="width:100%;height:140px;object-fit:cover;display:block">
-        <div style="padding:18px 22px">
-          <div style="font-size:1.02rem;font-weight:700;color:#cf222e;margin-bottom:6px">😱 恐怖指数（VIX）分析</div>
-          <div style="font-size:.78rem;color:#57606a;line-height:1.6">投資家心理を数値化したVIXでリスクオン・オフを判定</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:26px 30px;margin-top:28px">
     <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
     <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
@@ -6500,12 +6467,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 
-  <!-- A8広告枠②（トップページ・本文の最後＝2026-09-23 カード直下から移動。1画面に広告2つを並べない）-->
-  <div class="ad-gap" style="padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
-    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
-    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
-  </div>
+  <!-- A8広告枠②（トップページ・本文の最後）。2026-09-23 オーナー判断で①（松井証券FX）と別の広告主＝DMM株に。
+       部品は記事と同じ inject_ads.build_block＝表示した1枚だけ計測（PC/SP 両方を置いて隠す旧方式の二重計測を避ける）-->
+{AD2_BLOCK}
 
 </main>
 <footer>
