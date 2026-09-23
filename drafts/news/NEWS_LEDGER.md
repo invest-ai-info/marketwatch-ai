@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-09-23
+- 判定: ✅ 公開済み
+- 選定トピック: イラン外交シグナルで原油安──ホルムズ海峡「7日再開可能」の報道と否定が交錯、マーケットへの影響を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/22（米国時間）にイランUNGA代表団が「ホルムズ海峡を7日以内に再開可能」とロイター・共同通信に語ったと報道。イランのFars Newsは否定したが、トランプが「3時間の非常に良い会議」を確認。WTI原油9/23に$89.36（-1.26%）と11日ぶり低水準。日本の中東石油依存（約90%）・東京市場9/24再開（前提材料として蓄積）との組み合わせで付加価値十分。9/20〜22のBOJ・Nasdaq・AMD・Trump-Xi記事と題材重複なし。
+- 出典（確認済み・6系統以上）:
+  - CNBC「Iran reportedly says it can reopen Strait of Hormuz within 7 days」2026-09-22
+  - International News And Views「Strait of Hormuz Could Reopen in 7 Days, Report Says; Iran Denies Claim」2026-09-22
+  - Yahoo Finance「Oil Prices Fall to 11-Day Low」2026-09-23
+  - Bloomberg「Oil Extends Slump on Iran Talks Optimism, Saudi Pipeline Restart」2026-09-22
+  - OilPrice.com「Oil Tumbles 3% as Iran Floats Hormuz Reopening Within a Week」2026-09-22
+  - Britannica「2026 Iran war」
+  - Congress.gov「U.S.-Iran Ceasefire and Negotiations: Assessment and Issues for Congress」
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（「NHK」→「共同通信（Kyodo News）」表記修正・「必ずしも」→「常に」表現軟化を適用）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤出典6系統以上 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典6系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告19件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-23-iran-hormuz-diplomacy-oil-price.html
+- commit: 11443d2（main へ push 済み）
+
+---
+
 ## 2026-09-22
 - 判定: ✅ 公開済み
 - 選定トピック: AMDが時価総額1兆ドルを一時突破──MetaのAIエージェント「Muse」が起点、Nasdaq史上最高値27,122点の背景を中立整理（カテゴリ: 今日のニュース）
