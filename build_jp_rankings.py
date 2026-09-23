@@ -65,6 +65,26 @@ def previous_asof(path):
         return ""
 
 
+def sector_summary(rows):
+    """全銘柄の前日比から (breadth, sectors) を返す。純関数。🆕 2026-09-23 トップの「業種の強弱」用。
+
+    breadth = {"up": 値上がり数, "down": 値下がり数, "flat": 変わらず数}
+    sectors = [{"sector", "n", "avg"(単純平均), "up"(上昇数)}] を avg の高い順。
+    ⚠️ 東証の業種別指数（時価総額加重）とは別物＝表示側でそう明記する。
+       少数銘柄の業種は1社の値動きで順位が決まるので、足切りは表示側（build_sector_panel）で行う。
+    """
+    breadth = {"up": 0, "down": 0, "flat": 0}
+    by = {}
+    for r in rows:
+        pct = r["pct"]
+        breadth["up" if pct > 0 else "down" if pct < 0 else "flat"] += 1
+        by.setdefault(r.get("sector") or "その他", []).append(pct)
+    sectors = [{"sector": k, "n": len(v), "avg": round(sum(v) / len(v), 4), "up": sum(1 for x in v if x > 0)}
+               for k, v in by.items()]
+    sectors.sort(key=lambda x: x["avg"], reverse=True)
+    return breadth, sectors
+
+
 def fetch_2day(code):
     """直近約3ヶ月の (closes[], vols[], 最終営業日ISO) を Yahoo から取得。失敗時 None。
     （関数名は互換のまま。2026-07-21 に range=7d→3mo へ拡張＝相対出来高の基準20日分を確保）"""
@@ -156,7 +176,9 @@ def main():
     up = [dict(r, rank=i + 1) for i, r in enumerate(up)]
     down = [dict(r, rank=i + 1) for i, r in enumerate(down)]
     hot = [dict(r, rank=i + 1) for i, r in enumerate(hot)]
-    payload = {"asof": asof, "universe": len(rows), "gainers": up, "losers": down, "hot": hot}
+    breadth, sectors = sector_summary(rows)
+    payload = {"asof": asof, "universe": len(rows), "gainers": up, "losers": down, "hot": hot,
+               "breadth": breadth, "sectors": sectors}
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False)
     print(f"✅ {OUT}: as of {asof} / 計算{len(rows)}銘柄(取得失敗{fail}) → 値上がり/値下がり/人気急上昇 各{TOP_N}(人気={len(hot)})")

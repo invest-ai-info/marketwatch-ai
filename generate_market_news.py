@@ -279,7 +279,24 @@ def is_noindex_slug(slug: str) -> bool:
 #   狙い＝トップのタイトルを全ページで統一（旧来は各ページが我流の大見出しでブランド名が無かった）。
 #   ブランド名の色は固定の青グラデで統一。背景・ダーク対応は base の header{} と各ページの dark スクリプトに委譲
 #   （インラインで色を固定しない＝ダークモードを壊さない）。.header-inner の flex は使わず自前 block で2段組み。
-def brand_header(page_emoji, page_title, updated="", extra=""):
+_BRAND_LOGO_SVG = '<svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg>'
+
+
+def brand_header(page_emoji, page_title, updated="", extra="", compact=False):
+    # 🆕 2026-09-23 compact=True（トップ用）: ページ見出しと補足を出さず、サイト説明の直下に最終更新だけ置く
+    #   （オーナー判断「マーケットニュースという表示はいらない。最終更新だけ残す」）
+    if compact:
+        upd = (f'<div class="header-meta" style="font-size:.8rem;margin-top:2px">🕒 最終更新: {updated}</div>'
+               if updated else "")
+        return (
+            '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
+            '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
+            'background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;'
+            '-webkit-text-fill-color:transparent;background-clip:text">' + _BRAND_LOGO_SVG + ' MarketWatch AI</div>'
+            '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
+            f'{upd}'
+            '</div></header>'
+        )
     meta = ""
     if updated:
         meta += f'<div class="header-meta" style="margin-top:2px">最終更新: {updated}</div>'
@@ -468,21 +485,38 @@ HISTORICAL_EVENTS = [
 # ─────────────────────────────────────────
 # データ取得関数
 # ─────────────────────────────────────────
+def _last_two_distinct(closes):
+    """終値の列から (最新, 直前の異なる値) を返す。異なる値が2つ無ければ None。純関数。
+
+    🆕 2026-09-23: トップの S&P500 が「▼0.00%」と表示されていた。休場日明けなどに yfinance が
+    同じ終値の行を2つ返すと、最後の2行を比べるだけでは前日比が 0 になる。指数や為替で
+    2営業日続けて終値が小数2桁まで一致することは実質ないので、同じ値が続いたら遡る。
+    """
+    vals = [float(c) for c in closes]
+    if not vals:
+        return None
+    last = vals[-1]
+    for v in reversed(vals[:-1]):
+        if v != last:
+            return last, v
+    return None
+
+
 def get_price(ticker_symbol):
     """直近終値・前日比を取得。
     短期間 period では yfinance が 0〜1 行しか返さないことがある（特に ^N225 等の
     アジア指数 / 市場クローズ直後）。空なら段階的に期間を広げてリトライする。
     """
     last_err = None
-    for period in ("2d", "5d", "1mo"):
+    for period in ("5d", "1mo"):
         try:
             t = yf.Ticker(ticker_symbol)
             hist = t.history(period=period)
             # NaN を落としてから判定
             closes = hist["Close"].dropna() if not hist.empty else None
-            if closes is not None and len(closes) >= 2:
-                prev = float(closes.iloc[-2])
-                last = float(closes.iloc[-1])
+            pair = _last_two_distinct(list(closes)) if closes is not None else None
+            if pair:
+                last, prev = pair
                 if prev == 0:
                     continue
                 return last, prev, (last - prev) / prev * 100
@@ -1076,10 +1110,13 @@ def generate_news_comment(title, description, category, api_key):
 
 
 # ─────────────────────────────────────────
-# AI（Gemini）でアセット別投資判断（強気度 / スコア / アクション / 根拠）
+# AI（Gemini）でアセット別の地合い判定（強気度 / スコア / 根拠）
+# 🆕 2026-09-23 アクション欄（積極買い/押し目買い準備/…）と「価格目線」を廃止（オーナー判断）。
+#   特定資産の売買を勧める形になり、個別銘柄記事の「買い/売りを推奨しない」より踏み込んでいたため。
+#   指示だけに頼らず、出力の根拠文も sanitize_ai_reason() で機械的に検査する。
 # ─────────────────────────────────────────
 _GEMINI_ASSET_PROMPT = """あなたは日本人個人投資家向けのマーケット・アナリストです。
-以下の {asset_name} の現在価格と直近ニュースから、現時点の投資スタンスを判定してください。
+以下の {asset_name} の現在価格と直近ニュースから、いまの相場の地合い（強気か弱気か）を判定してください。
 
 【現在価格】{price}
 
@@ -1091,15 +1128,31 @@ _GEMINI_ASSET_PROMPT = """あなたは日本人個人投資家向けのマーケ
 (以下から1つ：強気 / やや強気 / ニュートラル / やや弱気 / 弱気)
 ===スコア===
 (-100 から +100 の整数。+100=超強気、0=中立、-100=超弱気)
-===アクション===
-(以下から1つ：積極買い / 押し目買い準備 / 様子見 / 部分利確 / 一部ヘッジ)
 ===根拠===
-(2 文程度。具体的な価格目線も含める)
+(80字前後・2文以内。いまの相場の状態と、判定の元になったニュースの事実だけを書く)
 
 【注意】
 - ニュース内容に基づく（推測の上塗り禁止）
 - 「〜の可能性」など慎重表現
+- 売買の行動は書かない（買う・売る・押し目・利確・エントリー・検討する・推奨 などの言葉を使わない）
+- 目標価格や「◯◯円で買い」のような価格目線は書かない
 - 日本語のみ"""
+
+# 根拠文のうち「売買の行動」を勧める文を見分ける。市場の描写（「売りが優勢」「買われた」）は残す。
+_AI_ADVICE_RE = re.compile(
+    r"押し目|買い(?:を|場|時|増|向か|姿勢|推奨|が妥当|たい)|売り(?:を検討|時|場|推奨|たい)"
+    r"|利確|利益確定|エントリー|仕込|損切|ヘッジ|検討|推奨|おすすめ|狙[いう]|目標(?:株)?価格|スタンス|べき"
+)
+
+
+def sanitize_ai_reason(text):
+    """AI の根拠文から、売買の行動を勧める文（。区切り）を落として返す。純関数。
+    全文が該当すれば空文字（＝根拠欄を出さない）。"""
+    out = []
+    for sent in re.findall(r"[^。]+。?", (text or "").strip()):
+        if sent.strip() and not _AI_ADVICE_RE.search(sent):
+            out.append(sent.strip())
+    return "".join(out)
 
 
 def generate_asset_analysis(asset_name, price_str, news_titles, api_key):
@@ -1127,8 +1180,9 @@ def generate_asset_analysis(asset_name, price_str, news_titles, api_key):
 
 
 def _parse_asset_analysis(text):
-    """Gemini プレーンテキスト出力を {sentiment, score, action, reason} に分解"""
-    result = {"sentiment": "ニュートラル", "score": 0, "action": "様子見", "reason": ""}
+    """Gemini プレーンテキスト出力を {sentiment, score, reason} に分解。
+    アクション欄は 2026-09-23 に廃止＝モデルが出してきても捨てる。根拠は sanitize_ai_reason 済みで返す。"""
+    result = {"sentiment": "ニュートラル", "score": 0, "reason": ""}
     current = None
     import re as _re
     for line in text.splitlines():
@@ -1140,7 +1194,7 @@ def _parse_asset_analysis(text):
         if "===スコア===" in s:
             current = "score"; continue
         if "===アクション===" in s:
-            current = "action"; continue
+            current = None; continue
         if "===根拠===" in s:
             current = "reason"; continue
         if current == "sentiment":
@@ -1152,11 +1206,9 @@ def _parse_asset_analysis(text):
                     result["score"] = max(-100, min(100, int(m.group(0))))
             except Exception:
                 pass
-        elif current == "action":
-            result["action"] = s
         elif current == "reason":
-            result["reason"] += s + " "
-    result["reason"] = result["reason"].strip()
+            result["reason"] += s
+    result["reason"] = sanitize_ai_reason(result["reason"])
     return result
 
 
@@ -1470,7 +1522,7 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
         result = generate_asset_analysis(name, price_str, titles, api_key)
         if result:
             analyses.append((key, icon, name, price_str, result))
-            print(f"    ✅ {name}: {result.get('sentiment', '?')} / {result.get('action', '?')}")
+            print(f"    ✅ {name}: {result.get('sentiment', '?')} / 根拠{len(result.get('reason', ''))}字")
         else:
             print(f"    ⚠️ {name}: 生成失敗（rate limit の可能性）")
         # Gemini 無料枠 15 RPM 対策で 4.5 秒間隔
@@ -1479,8 +1531,12 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
         return ""
 
     # HTML 生成
+    # 🆕 2026-09-23 4列に並べるので見出しは短く（AI に渡す名前＝name は変えない）
+    short_name = {"japan_stocks": "日経平均", "us_stocks": "S&amp;P500", "gold": "ゴールド", "btc": "ビットコイン"}
     cards = []
     for key, icon, name, price_str, a in analyses:
+        reason = sanitize_ai_reason(a.get("reason", ""))
+        reason_html = f'<div class="ai-reason"><strong>💡 根拠:</strong> {reason}</div>' if reason else ""
         score = a.get("score", 0)
         pct = max(0, min(100, (score + 100) / 2))
         sentiment = a.get("sentiment", "ニュートラル")
@@ -1496,7 +1552,7 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
           <div class="ai-asset-header">
             <span class="ai-asset-icon">{icon}</span>
             <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">{name}</div>
+              <div class="ai-asset-name">{short_name.get(key, name)}</div>
               <div class="ai-asset-price">{price_str}</div>
             </div>
             <span class="ai-asset-sentiment" style="background:{color};color:#fff">{sentiment}</span>
@@ -1507,14 +1563,13 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> {a.get("action", "様子見")}</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> {a.get("reason", "")}</div>
+          {reason_html}
         </div>''')
 
     return f'''
-  <!-- AI 投資判断（Gemini） -->
+  <!-- AI 投資判断（Gemini）。2026-09-23 アクション欄を廃止し4列に -->
   <section class="ai-analysis-section" id="ai">
-    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が分析。投資判断は自己責任で）</span></p>
+    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が地合いを判定。売買の推奨ではありません。投資判断は自己責任で）</span></p>
     <div class="ai-analysis-grid">
       {''.join(cards)}
     </div>
@@ -1701,7 +1756,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -2726,7 +2781,7 @@ def build_hot_assets_html(hot_data, now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#bf3989;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#bf3989;color:#bf3989}}
     .nav-btn.current{{background:#3a1f0f;border-color:#bf3989;color:#fff}}
@@ -3093,7 +3148,7 @@ def build_calendar_html(now_jst):
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -3434,7 +3489,7 @@ def build_preview_html(now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#1a7f37;font-weight:600}}
     main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#1a7f37;color:#1a7f37}}
     .nav-btn.current{{background:#dafbe1;border-color:#1a7f37;color:#1a7f37}}
@@ -4008,7 +4063,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .header-title{{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#0969da,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}}
   .header-meta{{font-size:1rem;color:#57606a}}
   main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -4369,7 +4424,7 @@ def build_charts_html(hist, now_jst):
     .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -5250,6 +5305,325 @@ def build_news_ticker_section():
 '''
 
 
+# ─────────────────────────────────────────
+# 🆕 2026-09-23 トップ刷新（Yahoo!ファイナンス型の一覧性・オーナー判断）
+#   指数の帯（左端にセンチメント・5日の折れ線）／日本株ランキングのタブ／
+#   お金の流れ（通貨の強弱＋業種の強弱）。どれも事実のデータの中立提示で、売買の推奨ではない。
+#   データが取れない部品は空文字を返す＝枠ごと消える（トップ全体は止めない）。
+# ─────────────────────────────────────────
+JP_RANKINGS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jp-rankings.json")
+
+# 帯に並べる銘柄（キー, 表示名, Yahoo シンボル, 小数桁）。価格と前日比はカードと同じ data から取る
+#   ＝帯とカードで数字がずれない（オーナー指摘「上の数字とずれている」2026-09-23）
+BAND_ITEMS = [
+    ("nikkei", "日経平均", "^N225", 0), ("dow", "NYダウ", "^DJI", 0),
+    ("sp500", "S&amp;P500", "^GSPC", 2), ("nasdaq", "ナスダック", "^IXIC", 2),
+    ("usdjpy", "ドル円", "JPY=X", 2), ("gold", "金", "GC=F", 2),
+    ("oil", "WTI原油", "CL=F", 2), ("btc", "ビットコイン", "BTC-USD", 0),
+]
+
+# ナビ11ボタンをパソコン幅で 6＋5 の2段に（2026-09-23 オーナー判断）。スマホの2列は既存の @media のまま
+NAV_2ROW_CSS = ("@media(min-width:900px){.nav-bar{max-width:1140px;gap:10px}"
+                ".nav-bar .nav-btn{flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;"
+                "font-size:.9rem;white-space:nowrap}}")
+
+TOP_LAYOUT_CSS = """
+    /* 指数の帯 */
+    .ib-wrap{margin:0 0 16px}
+    .ib-row{display:flex;overflow-x:auto;border:1px solid #d0d7de;border-radius:8px;background:#fff;scrollbar-width:thin}
+    .ib-cell{flex:1 1 0;min-width:104px;display:flex;flex-direction:column;padding:8px 10px;border-right:1px solid #eaeef2;text-decoration:none;color:#1f2328}
+    .ib-cell:last-child{border-right:0}.ib-cell:hover{background:#f6f8fa}
+    .ib-name{font-size:11.5px;color:#57606a;font-weight:600}
+    .ib-price{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.3}
+    .ib-chg{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+    .ib-spark{display:block;width:100%;height:22px;margin-top:4px}
+    .ib-sent{flex:1.15 1 0;min-width:120px}
+    .ib-sent-v{font-size:15px;font-weight:800;line-height:1.35;white-space:nowrap}
+    .ib-sent-s{font-size:11px;color:#6e7781}
+    .ib-meta{font-size:11px;color:#6e7781;text-align:right;margin-top:4px}
+    /* 見出し（ランキング・お金の流れ共通） */
+    .rk-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;border-bottom:2px solid #2C4F8F;padding-bottom:6px}
+    .rk-head h2{margin:0;font-size:18px;color:#1f2328}.rk-asof{font-size:12px;color:#6e7781}
+    /* 日本株ランキング（タブ） */
+    .rk-wrap{margin:24px 0}
+    .rk-tabs{display:flex;gap:4px;margin:10px 0 0}
+    .rk-tab{flex:1;max-width:180px;padding:8px 10px;border:1px solid #d0d7de;border-bottom:0;border-radius:6px 6px 0 0;background:#f6f8fa;font:inherit;font-size:13.5px;font-weight:600;color:#57606a;cursor:pointer;white-space:nowrap}
+    .rk-tab.on{background:#fff;color:#2C4F8F;border-color:#2C4F8F;border-width:2px 1px 0}
+    .rk-table{width:100%;border-collapse:collapse;border:1px solid #d0d7de;background:#fff;font-size:13.5px}
+    .rk-table th{background:#f6f8fa;font-size:12px;color:#57606a;text-align:left;padding:6px 8px;border-bottom:1px solid #d0d7de}
+    .rk-table th:nth-child(n+3){text-align:right}
+    .rk-table td{padding:7px 8px;border-bottom:1px solid #eaeef2;vertical-align:top}
+    .rk-table .rk{width:28px;color:#6e7781;font-weight:700;text-align:center}
+    .rk-table .nm{min-width:0;overflow-wrap:anywhere}
+    .rk-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .rk-table .sub{color:#57606a}
+    .rk-table .cd{display:inline-block;min-width:3.2em;color:#6e7781;font-size:12px;margin-right:6px}
+    .rk-table .sc{display:block;font-size:11px;color:#8c959f;margin-left:3.9em}
+    .rk-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;color:#6e7781;margin-top:6px}
+    .rk-foot a{color:#0969da;font-weight:600}
+    /* お金の流れ（通貨の強弱＋業種の強弱） */
+    .flow-row{margin:0 0 8px}
+    .cs-wrap{margin:24px 0}
+    .cs-box{border:1px solid #d0d7de;border-radius:8px;background:#fff;padding:12px 16px;margin-top:10px}
+    .cs-row{display:grid;grid-template-columns:150px 1fr 64px;align-items:center;gap:10px;padding:5px 0}
+    .cs-cur{font-weight:700;font-size:14px;color:#1f2328}.cs-cur small{color:#6e7781;font-weight:600;margin-left:2px}
+    .cs-cur .sc-n{display:block;font-size:11px;font-weight:500;color:#8c959f;margin:0}
+    .cs-track{position:relative;height:14px;background:#f6f8fa;border-radius:3px}
+    .cs-track::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#8c959f}
+    .cs-bar{position:absolute;top:0;bottom:0;border-radius:3px}
+    .cs-bar.pos{left:50%;background:#1a7f37}.cs-bar.neg{right:50%;background:#cf222e}
+    .cs-val{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+    .cs-note{font-size:12px;color:#6e7781;margin-top:8px;line-height:1.6}
+    .sc-label{font-size:12px;font-weight:700;color:#57606a;margin:10px 0 2px}
+    .br-line{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;white-space:nowrap}
+    .br-bar{flex:1;display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eaeef2}
+    .br-up{background:#1a7f37}.br-dn{background:#cf222e;margin-left:auto}
+    @media(min-width:900px){
+      .flow-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .flow-row .cs-wrap{display:flex;flex-direction:column;margin:24px 0}
+      .flow-row .cs-box{flex:1}
+      .flow-row .cs-row{grid-template-columns:130px 1fr 60px}
+    }
+    /* AI 投資判断を4列に（2026-09-23） */
+    .ai-analysis-grid{grid-template-columns:repeat(4,1fr)!important}
+    @media(max-width:1000px){.ai-analysis-grid{grid-template-columns:repeat(2,1fr)!important}}
+    @media(max-width:560px){.ai-analysis-grid{grid-template-columns:1fr!important}}
+    /* 広告は前後に余白（しつこく見せない）・スマホ用バナーは画面幅に縮める */
+    .ad-gap{margin:40px 0}
+    .a8-mobile img{max-width:100%;height:auto}
+    /* 資産別カードの項目名を折り返さない */
+    .price-label{white-space:nowrap;margin-right:10px}
+    .price-value{text-align:right;white-space:nowrap}
+    @media(max-width:1100px) and (min-width:700px){.price-value{white-space:normal}}
+    @media(max-width:699px){.price-value{white-space:normal}}
+    @media(max-width:560px){
+      .rk-table .sc{display:none}.rk-table td,.rk-table th{padding:6px 5px}.rk-table{font-size:12.5px}
+      .rk-table th:nth-child(5),.rk-table td:nth-child(5){display:none}.rk-table .cd{display:block;margin:0}
+      .rk-tab{font-size:12.5px;padding:8px 4px}
+      .cs-row{grid-template-columns:104px 1fr 56px;gap:6px}.cs-cur small{display:none}.cs-cur small.sc-n{display:block}
+      .cs-cur,.cs-val{font-size:13px}
+      .br-line{flex-wrap:wrap;justify-content:space-between;row-gap:6px}.br-bar{order:3;flex:0 0 100%}
+    }
+    body.dark .ib-row,body.dark .rk-table,body.dark .rk-tab.on,body.dark .cs-box{background:#161b22;border-color:#30363d}
+    body.dark .ib-cell{color:#e6edf3;border-color:#30363d}body.dark .ib-cell:hover{background:#1c2128}
+    body.dark .rk-table th,body.dark .rk-tab{background:#0d1117;color:#8b949e;border-color:#30363d}
+    body.dark .rk-table td{border-color:#21262d}body.dark .rk-tab.on{color:#58a6ff;border-color:#58a6ff}
+    body.dark .rk-head{border-color:#58a6ff}body.dark .rk-head h2,body.dark .cs-cur{color:#e6edf3}
+    body.dark .cs-track{background:#0d1117}body.dark .sc-label{color:#8b949e}body.dark .br-bar{background:#30363d}
+"""
+
+
+def fetch_spark_closes(sym, n=5):
+    """直近 n 営業日の日足終値（帯の折れ線用）。Yahoo chart API 直叩き・失敗時は []。"""
+    try:
+        u = ("https://query1.finance.yahoo.com/v8/finance/chart/" + urllib.parse.quote(sym)
+             + "?range=1mo&interval=1d")
+        req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+        res = json.load(urllib.request.urlopen(req, timeout=15))["chart"]["result"][0]
+        closes = [float(c) for c in res["indicators"]["quote"][0]["close"] if c is not None]
+        return closes[-n:] if len(closes) >= 2 else []
+    except Exception as e:
+        print(f"  ⚠️ 折れ線 {sym}: 取得失敗（その銘柄だけ線なし）: {e}")
+        return []
+
+
+def _spark_svg(vals):
+    """終値の列から小さな折れ線 SVG。5日で上がっていれば緑・下がっていれば赤。"""
+    w, h, pad = 96, 22, 2
+    lo, hi = min(vals), max(vals)
+    rng = (hi - lo) or 1
+    pts = [(pad + i * (w - 2 * pad) / (len(vals) - 1), pad + (hi - v) / rng * (h - 2 * pad))
+           for i, v in enumerate(vals)]
+    col = "#1a7f37" if vals[-1] >= vals[0] else "#cf222e"
+    d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    lx, ly = pts[-1]
+    return (f'<svg class="ib-spark" viewBox="0 0 {w} {h}" preserveAspectRatio="none" aria-hidden="true">'
+            f'<polyline points="{d}" fill="none" stroke="{col}" stroke-width="1.6" stroke-linejoin="round" '
+            f'stroke-linecap="round" vector-effect="non-scaling-stroke"/>'
+            f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="2" fill="{col}"/></svg>')
+
+
+def build_index_band(data, sparks, label, emoji, color):
+    """指数の帯。左端＝本日のセンチメント、続いて8銘柄の価格・前日比・5日の折れ線。
+    価格が取れなかった銘柄はマスごと出さない。"""
+    cells = [f'<a class="ib-cell ib-sent" href="market-health.html" title="本日のマーケットセンチメント" '
+             f'style="background:{color}14"><span class="ib-name">本日の地合い</span>'
+             f'<span class="ib-sent-v" style="color:{color}">{emoji} {label}</span>'
+             f'<span class="ib-sent-s">センチメント判定</span></a>']
+    for key, name, _sym, dec in BAND_ITEMS:
+        last, _prev, chg = data.get(key, (None, None, None))
+        if last is None:
+            continue
+        price = f"{last:,.{dec}f}"
+        if chg is None:
+            chg_html = '<span class="ib-chg">―</span>'
+        else:
+            cls = "up" if chg > 0 else "down" if chg < 0 else ""
+            arrow = "▲" if chg > 0 else "▼" if chg < 0 else "―"
+            chg_html = f'<span class="ib-chg {cls}">{arrow}{abs(chg):.2f}%</span>'
+        sp = sparks.get(key) or []
+        spark = _spark_svg(sp) if len(sp) >= 2 else ""
+        tip = f' title="直近{len(sp)}営業日の推移（{(sp[-1] / sp[0] - 1) * 100:+.2f}%）"' if spark and sp[0] else ""
+        cells.append(f'<a class="ib-cell" href="charts.html"{tip}><span class="ib-name">{name}</span>'
+                     f'<span class="ib-price">{price}</span>{chg_html}{spark}</a>')
+    return ('\n  <!-- 🆕 指数の帯（2026-09-23） -->\n  <div class="ib-wrap" aria-label="主要指数">'
+            f'<div class="ib-row">{"".join(cells)}</div>'
+            '<div class="ib-meta">数字は前日終値比 ・ 線は直近5営業日の推移 ・ 遅延あり</div></div>\n')
+
+
+# 通貨強弱＝テクニカルアラート（generate_technical_alerts.calc_currency_strength）と同じ式。
+#   あちらは yfinance の重い依存ごと読むことになるので、式だけをここに置く（ペア表を変えたら両方直す）
+FX_STRENGTH_PAIRS = {
+    "USDJPY=X": ("USD", "JPY"), "EURJPY=X": ("EUR", "JPY"), "GBPJPY=X": ("GBP", "JPY"),
+    "AUDJPY=X": ("AUD", "JPY"), "EURUSD=X": ("EUR", "USD"), "GBPUSD=X": ("GBP", "USD"),
+    "AUDUSD=X": ("AUD", "USD"), "EURAUD=X": ("EUR", "AUD"), "GBPAUD=X": ("GBP", "AUD"),
+}
+
+
+def calc_currency_strength(pair_changes):
+    """{ペア: 24h変化率%} → {通貨: 強弱%}。base は +、quote は − で集計して平均。純関数。"""
+    if not pair_changes:
+        return None
+    scores = {c: [] for c in ("USD", "EUR", "GBP", "JPY", "AUD")}
+    for pair, ch in pair_changes.items():
+        base, quote = FX_STRENGTH_PAIRS[pair]
+        scores[base].append(ch)
+        scores[quote].append(-ch)
+    return {c: (sum(v) / len(v) if v else None) for c, v in scores.items()}
+
+
+def fetch_currency_strength():
+    """9ペアの1時間足から24時間変化率を取り、通貨強弱を返す。全滅なら None。"""
+    changes = {}
+    for pair in FX_STRENGTH_PAIRS:
+        try:
+            u = ("https://query1.finance.yahoo.com/v8/finance/chart/" + urllib.parse.quote(pair)
+                 + "?range=5d&interval=1h")
+            req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+            res = json.load(urllib.request.urlopen(req, timeout=15))["chart"]["result"][0]
+            c = [float(x) for x in res["indicators"]["quote"][0]["close"] if x is not None]
+            if len(c) >= 25 and c[-24]:
+                changes[pair] = (c[-1] - c[-24]) / c[-24] * 100
+        except Exception as e:
+            print(f"  ⚠️ 通貨強弱 {pair}: 取得失敗: {e}")
+    return calc_currency_strength(changes)
+
+
+def build_currency_strength_panel(cs, now_jst):
+    """通貨の強弱（中央から左右に伸びる棒）。値が無ければ空文字。"""
+    valid = sorted([(c, v) for c, v in (cs or {}).items() if v is not None], key=lambda x: -x[1])
+    if not valid:
+        return ""
+    names = {"USD": ("🇺🇸", "米ドル"), "EUR": ("🇪🇺", "ユーロ"), "GBP": ("🇬🇧", "英ポンド"),
+             "JPY": ("🇯🇵", "日本円"), "AUD": ("🇦🇺", "豪ドル")}
+    mx = max(abs(v) for _, v in valid) or 1
+    rows = []
+    for c, v in valid:
+        side = "pos" if v >= 0 else "neg"
+        cls = "up" if v > 0 else "down" if v < 0 else ""
+        fl, nm = names[c]
+        rows.append(f'<div class="cs-row"><span class="cs-cur">{fl} {nm} <small>{c}</small></span>'
+                    f'<span class="cs-track"><span class="cs-bar {side}" style="width:{abs(v) / mx * 50:.1f}%"></span></span>'
+                    f'<span class="cs-val {cls}">{v:+.2f}%</span></div>')
+    when = f"{now_jst.month}/{now_jst.day} {now_jst:%H:%M}"
+    return f'''
+    <section class="cs-wrap">
+      <div class="rk-head"><h2>💪 通貨の強弱</h2><span class="rk-asof">直近24時間・主要9ペアから算出・{when} 時点</span></div>
+      <div class="cs-box">{"".join(rows)}
+        <div class="cs-note">右に伸びるほど他の通貨に対して買われ、左に伸びるほど売られています。各通貨を含むペアの24時間変化率の平均です。</div>
+      </div>
+    </section>'''
+
+
+def _load_rankings(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def build_top_rankings(path):
+    """日本株ランキング（値上がり・値下がり・出来高急増のタブ、各上位10）。JSON が無ければ空文字。"""
+    import unicodedata
+    d = _load_rankings(path)
+    if not d:
+        return ""
+
+    def _yen(v):
+        v = v or 0
+        return f"{v / 10000:.2f}兆円" if v >= 10000 else f"{v:,.0f}億円"
+
+    def _rows(items, kind):
+        out = []
+        for r in items[:10]:
+            pct = (r.get("pct") or 0) * 100
+            cls = "up" if pct > 0 else "down" if pct < 0 else ""
+            last = f'{r.get("relvol", "")}倍' if kind == "h" else _yen(r.get("turnover_d1"))
+            nm = html.escape(unicodedata.normalize("NFKC", str(r.get("name", ""))))
+            out.append(f'<tr class="rk-row-{kind}"><td class="rk">{r.get("rank", "")}</td>'
+                       f'<td class="nm"><span class="cd">{html.escape(str(r.get("code", "")))}</span>{nm}'
+                       f'<span class="sc">{html.escape(str(r.get("sector", "")))}</span></td>'
+                       f'<td class="num">{(r.get("price") or 0):,.0f}</td>'
+                       f'<td class="num {cls}">{pct:+.2f}%</td><td class="num sub">{last}</td></tr>')
+        return "".join(out)
+
+    tabs = [("g", "gainers", "値上がり", "売買代金"), ("l", "losers", "値下がり", "売買代金"),
+            ("h", "hot", "出来高急増", "出来高(平常比)")]
+    btns = "".join(f'<button class="rk-tab{" on" if i == 0 else ""}" data-t="{k}" role="tab">{lbl}</button>'
+                   for i, (k, _, lbl, _c) in enumerate(tabs))
+    panels = "".join(
+        f'<div class="rk-panel" id="rk-{k}"{" hidden" if i else ""} role="tabpanel"><table class="rk-table"><thead><tr>'
+        f'<th>#</th><th>銘柄</th><th>株価</th><th>騰落率</th><th>{col}</th></tr></thead>'
+        f'<tbody>{_rows(d.get(src, []), k)}</tbody></table></div>'
+        for i, (k, src, _l, col) in enumerate(tabs))
+    return f'''
+  <!-- 🆕 日本株ランキング（タブ・2026-09-23）＝事実の市場データ。売買の推奨ではない -->
+  <section class="rk-wrap">
+    <div class="rk-head"><h2>🏆 日本株ランキング</h2><span class="rk-asof">{html.escape(str(d.get("asof", "")))} 終値・主要{d.get("universe", "")}銘柄</span></div>
+    <div class="rk-tabs" role="tablist">{btns}</div>
+    {panels}
+    <div class="rk-foot"><a href="hot-assets.html">20位まで見る →</a><span>大きく動いた銘柄＝良い投資対象ではありません。値動きの大きさを並べた情報で、売買の推奨ではありません。</span></div>
+  </section>
+  <script>(function(){{var w=document.currentScript.previousElementSibling;w.querySelectorAll('.rk-tab').forEach(function(b){{b.addEventListener('click',function(){{w.querySelectorAll('.rk-tab').forEach(function(x){{x.classList.toggle('on',x===b)}});w.querySelectorAll('.rk-panel').forEach(function(p){{p.hidden=(p.id!=='rk-'+b.dataset.t)}})}})}})}})();</script>
+'''
+
+
+def build_sector_panel(path, min_n=5):
+    """業種の強弱（値上がり/値下がり数＋強い3業種・弱い3業種）。業種集計の無い JSON なら空文字。"""
+    d = _load_rankings(path)
+    if not d or not d.get("sectors") or not d.get("breadth"):
+        return ""
+    ok = [s for s in d["sectors"] if s.get("n", 0) >= min_n]
+    if not ok:
+        return ""
+    top = ok[:3]
+    bot = [s for s in ok[-3:] if s not in top]
+    mx = max(abs(s["avg"]) for s in top + bot) or 1
+
+    def _row(s):
+        v = s["avg"] * 100
+        side = "pos" if v >= 0 else "neg"
+        cls = "up" if v > 0 else "down" if v < 0 else ""
+        return (f'<div class="cs-row"><span class="cs-cur">{html.escape(s["sector"])}'
+                f'<small class="sc-n">{s["n"]}銘柄中{s["up"]}上昇</small></span>'
+                f'<span class="cs-track"><span class="cs-bar {side}" style="width:{abs(s["avg"]) / mx * 50:.1f}%"></span></span>'
+                f'<span class="cs-val {cls}">{v:+.2f}%</span></div>')
+
+    b = d["breadth"]
+    n = max(b.get("up", 0) + b.get("down", 0) + b.get("flat", 0), 1)
+    return f'''
+    <section class="cs-wrap sec-wrap">
+      <div class="rk-head"><h2>🏭 業種の強弱</h2><span class="rk-asof">{html.escape(str(d.get("asof", "")))} 終値・主要{d.get("universe", "")}銘柄</span></div>
+      <div class="cs-box">
+        <div class="br-line"><span class="up">値上がり {b.get("up", 0)}</span><span class="br-bar"><span class="br-up" style="width:{b.get("up", 0) / n * 100:.1f}%"></span><span class="br-dn" style="width:{b.get("down", 0) / n * 100:.1f}%"></span></span><span class="down">値下がり {b.get("down", 0)}</span></div>
+        <div class="sc-label">強かった業種</div>{"".join(_row(s) for s in top)}
+        <div class="sc-label">弱かった業種</div>{"".join(_row(s) for s in bot)}
+        <div class="cs-note">業種ごとの騰落率の単純平均です（東証の業種別指数とは異なります）。{min_n}銘柄未満の業種は、1社の値動きで順位が決まってしまうため除いています。</div>
+      </div>
+    </section>'''
+
+
 def build_html(data, hist, now_jst, news=None, touraku=None):
     date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
     time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
@@ -5270,15 +5644,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         news = {cat: [] for cat in ["top", "stocks", "fx", "commodity", "crypto"]}
     fc_ctx = load_fundamental_context_for_site()
     top_news_html     = build_news_html(news.get("top", []))
-    # 🆕 各カードの関連ニュースを信頼性検証済みブリーフィングで置換（無ければ旧パイプラインにフォールバック）
-    stocks_news_html  = build_card_news_from_briefing(fc_ctx, "stocks")    or build_news_html(news.get("stocks", []), CARD_NEWS_LIMIT)
-    fx_news_html      = build_card_news_from_briefing(fc_ctx, "fx")        or build_news_html(news.get("fx", []), CARD_NEWS_LIMIT)
-    cmd_news_html     = build_card_news_from_briefing(fc_ctx, "commodity") or build_news_html(news.get("commodity", []), CARD_NEWS_LIMIT)
-    crypto_news_html  = build_card_news_from_briefing(fc_ctx, "crypto")    or build_news_html(news.get("crypto", []), CARD_NEWS_LIMIT)
+    # 2026-09-23: 資産別カードの「関連ニュース＋AIコメント」は廃止（オーナー判断「AI投資判断を見た方が効率がいい」）。
+    #   ニュースは上の ⚡最新マーケットニュース で読める。下のログは AI の根拠ニュースの出所確認用に残す。
 
-    # 🆕 2026-08-26: カードに表示したニュースの出所と件数をログに出す。
+    # 🆕 2026-08-26: ブリーフィング（AI の根拠と同じ材料）の出所と件数をログに出す。
     #    直後の build_ai_analysis_section が出す「AI 根拠ニュースの出所」と見比べて、
-    #    表示ニュースと AI の根拠が同じ材料かをログだけで確認できるようにする。
+    #    同じ材料かをログだけで確認できるようにする。
     print(f"  📰 カード表示ニュースの出所（ブリーフィング generated_at="
           f"{str((fc_ctx or {}).get('generated_at', 'なし'))[:10]}）:")
     for _cat, _raw_key in (("stocks", "stocks"), ("fx", "fx"),
@@ -5316,6 +5687,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         commodity_news=news.get("commodity", []),
         crypto_news=news.get("crypto", []),
     )
+
+    # 🆕 2026-09-23 トップ刷新の部品（取れなければ空文字＝枠ごと消える）
+    sparks = {key: fetch_spark_closes(sym) for key, _nm, sym, _d in BAND_ITEMS if data.get(key, (None,))[0] is not None}
+    index_band = build_index_band(data, sparks, label, emoji, badge_color)
+    top_rankings = build_top_rankings(JP_RANKINGS_PATH)
+    _flow = build_currency_strength_panel(fetch_currency_strength(), now_jst) + build_sector_panel(JP_RANKINGS_PATH)
+    money_flow = f'\n  <!-- 🆕 お金の流れ（通貨の強弱＋業種の強弱・2026-09-23） -->\n  <div class="flow-row">{_flow}\n  </div>\n' if _flow else ""
 
     # 🆕 今週の投資戦略への自動導線バナー（最新 guide-weekly を自動検出）
     weekly_strategy_banner = build_weekly_strategy_banner(now_jst)
@@ -5759,12 +6137,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#0969da;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .sentiment-banner{{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid {badge_color};border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}}
-    .sentiment-icon{{font-size:4rem;line-height:1;flex-shrink:0}}
-    .sentiment-body{{flex:1;min-width:200px}}
-    .sentiment-label-small{{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}}
-    .sentiment-badge{{color:{badge_color};font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}}
-    .sentiment-text{{color:#424a53;font-size:.92rem;line-height:1.6}}
     .morning-digest{{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}}
     .md-title{{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}}
     .md-sub{{font-size:.72rem;color:#6e7781;font-weight:500;margin-left:6px}}
@@ -5825,22 +6197,16 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .ai-meter-track{{position:relative;height:8px;background:linear-gradient(90deg,#fee2e2 0%,#fef3c7 50%,#dcfce7 100%);border-radius:4px}}
     .ai-meter-dot{{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:translate(-50%,-50%)}}
     .ai-meter-labels{{display:flex;justify-content:space-between;font-size:.7rem;color:#57606a;margin-top:4px}}
-    .ai-action{{font-size:.85rem;color:#1f2328;margin-bottom:6px;line-height:1.5}}
-    .ai-action strong{{color:#0969da}}
     .ai-reason{{font-size:.82rem;color:#424a53;line-height:1.6}}
     .ai-reason strong{{color:#9a6700}}
     .news-empty{{font-size:.82rem;color:#6e7781;padding:8px 0}}
-    .card-news{{margin-top:14px;padding-top:14px;border-top:1px solid #d0d7de}}
-    .card-news-title{{font-size:.78rem;color:#0969da;font-weight:600;margin-bottom:8px}}
-    .card-news .news-item{{padding:6px 0}}
-    .card-news .news-title{{font-size:.8rem}}
-    .card-news .news-meta{{font-size:.68rem}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
+    {NAV_2ROW_CSS}
     .market-card-img{{width:100%;height:120px;object-fit:cover;object-position:top;display:block}}
     .a8-pc{{display:inline-block}}.a8-mobile{{display:none}}
     .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
@@ -5863,7 +6229,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
       #mwTickerFilters button,#tools a{{min-height:44px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}}
       #theme-toggle,#ss-btn{{min-width:44px;min-height:44px}}
       .header-inner{{flex-direction:column}}
-      .sentiment-banner{{flex-direction:column}}
       .nav-bar{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
       .nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
       .hero-img{{max-height:140px;object-position:center}}
@@ -5883,9 +6248,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark .hero-overlay{{background:linear-gradient(90deg,rgba(13,17,23,.85) 0%,rgba(13,17,23,.5) 60%,rgba(13,17,23,0) 100%)}}
     body.dark .hero-title{{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}}
     body.dark .hero-sub{{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}}
-    body.dark .sentiment-banner{{background:linear-gradient(135deg,#0d2616,#0d1f2a)!important;border-color:#2ea043}}
-    body.dark .sentiment-label-small{{color:#8b949e}}
-    body.dark .sentiment-text{{color:#c9d1d9}}
     body.dark .morning-digest{{background:#161b22;border-color:#30363d;border-left-color:#d4a017}}
     body.dark .md-title{{color:#d4a017}}
     body.dark .md-sub{{color:#8b949e}}
@@ -5907,8 +6269,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark .price-row{{border-bottom-color:#30363d}}
     body.dark .price-label{{color:#8b949e}}
     body.dark .price-value{{color:#e6edf3}}
-    body.dark .card-summary,body.dark .card-news{{border-top-color:#30363d;color:#8b949e}}
-    body.dark .card-news-title{{color:#79c0ff}}
+    body.dark .card-summary{{border-top-color:#30363d;color:#8b949e}}
     body.dark .beginner-box{{background:#0d1f2a!important;border-color:#1f6feb;color:#79c0ff}}
     body.dark .beginner-box::before{{color:#79c0ff}}
     body.dark .news-item:hover{{background:#1c2128}}
@@ -5927,6 +6288,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark div[style*="color:#1f2328"]{{color:#e6edf3!important}}
     body.dark div[style*="color:#57606a"]{{color:#8b949e!important}}
     body.dark .ad-slot{{background:#0d1117!important;border-color:#30363d!important}}
+{TOP_LAYOUT_CSS}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -5937,7 +6299,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-{brand_header("📰", "マーケットニュース", time_str, "GitHub Actions 自動更新")}
+{brand_header("📰", "マーケットニュース", time_str, compact=True)}
 <main>
 
   <!-- ナビゲーション -->
@@ -5963,6 +6325,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a href="calendar.html">📅 今週の予定</a>
   </div>
 
+{index_band}
   <!-- ヒーロー画像 -->
   <div class="hero-banner">
     <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
@@ -5974,19 +6337,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </div>
   </div>
 
-  <!-- センチメント -->
-  <div class="sentiment-banner">
-    <div class="sentiment-icon">{emoji}</div>
-    <div class="sentiment-body">
-      <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">{label}</span>
-      <div class="sentiment-text">
-        日経 {fmt_price(nk, 0, suffix='円')} ／ S&amp;P500 {fmt_price(sp, 2)} ／
-        USD/JPY {fmt_price(fx, 2, suffix='円')} ／ BTC {fmt_price(btc, 0, prefix='$')} ／
-        金 {fmt_price(gld, 2, prefix='$', suffix='/oz')}
-      </div>
-    </div>
-  </div>
+  <!-- センチメントは帯の左端の1マスへ移した（2026-09-23・数字の二重表示をやめる） -->
 
 {morning_digest}
 
@@ -6011,7 +6362,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
   <!-- ⚡ 最新マーケットニュース
        2026-08-01: オーナー判断で **📰更新履歴の直下** へ移動。
-       旧位置＝A8広告枠②の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
+       旧位置＝2つ目の広告枠の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
        中身は build_news_ticker_section()＝閲覧時に JS が news-ticker.json を fetch するので
        HTML 再生成なしで最新化される（毎時 news-ticker.yml が JSON を更新）。 -->
 {news_ticker_section}
@@ -6019,16 +6370,18 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   {indicator_preview_banner}
   {weekly_strategy_banner}
 
-  <!-- A8広告枠①（トップページ・ニュース上）-->
-  <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+
+{top_rankings}
+  {top3_block}
+
+  {ai_analysis_html}
+{money_flow}
+  <!-- A8広告枠①（トップページ・お金の流れの下＝2026-09-23 移動）-->
+  <div class="ad-gap" style="padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
     <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
     <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
     <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
-
-  {top3_block}
-
-  {ai_analysis_html}
 
   <!-- 今日のカード -->
   <p class="section-title" id="market">本日のマーケット</p>
@@ -6043,7 +6396,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">{fmt_price(nk, 0, suffix='円')} {fmt_change(nk_chg)}</span></div>
         <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">{fmt_price(sp, 2)} {fmt_change(sp_chg)}</span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{stocks_news_html}<div class="mw-ticker-mini" data-mwcat="stocks"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -6056,7 +6408,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">{fmt_price(fx, 2, suffix='円')} {fmt_change(fx_chg)}</span></div>
         <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">{fmt_price(efx, 2, suffix='円')} {fmt_change(efx_chg)}</span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{fx_news_html}<div class="mw-ticker-mini" data-mwcat="fx"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -6069,7 +6420,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">{fmt_price(oil, 2, prefix='$', suffix='/bbl')} {fmt_change(oil_chg)}</span></div>
         <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">{fmt_price(gld, 2, prefix='$', suffix='/oz')} {fmt_change(gld_chg)}</span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{cmd_news_html}<div class="mw-ticker-mini" data-mwcat="commodity"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -6082,16 +6432,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">{fmt_price(btc, 0, prefix='$')} {fmt_change(btc_chg)}</span></div>
         <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">{fmt_price(eth, 2, prefix='$')} {fmt_change(eth_chg)}</span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div>{crypto_news_html}<div class="mw-ticker-mini" data-mwcat="crypto"></div></div>
       </div>
     </div>
-  </div>
-
-  <!-- A8広告枠②（トップページ・フッター上）-->
-  <div style="margin:32px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
-    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
-    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
@@ -6155,6 +6497,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     </ul>
     <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+  </div>
+
+  <!-- A8広告枠②（トップページ・本文の最後＝2026-09-23 カード直下から移動。1画面に広告2つを並べない）-->
+  <div class="ad-gap" style="padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
+    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
+    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
 </main>
