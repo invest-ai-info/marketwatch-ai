@@ -2,6 +2,8 @@
 
 （2026-06-16 新設。`signal-lab-daily` routine はこの手順に従う。人間が編集する手順書＝SYNC_FILES入り）
 
+> ✍️ **文章は「やさしい日本語」（2026-09-23〜・オーナー指示）**＝決まりは `QUALITY_RUBRIC.md` の同名節。下書きができたら `python check_plain_japanese.py drafts/draft-signal-lab-NNN.html` を通す（赤なら言葉だけ直して再実行・数値は不変）。手本 `guide-signal-lab-015.html` は HTML の構造だけを使い、文体は真似しない。
+
 ## 設計思想（なぜこの形か）
 - 検証は signals-log への決定論計算。**同じデータを何度回しても新情報は増えない／回しすぎると偶然の“勝てそう”を掴む(p-hacking)**。
 - だから二段構え：
