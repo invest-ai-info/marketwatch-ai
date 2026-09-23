@@ -5380,7 +5380,7 @@ TOP_LAYOUT_CSS = """
     .sc-label{font-size:12px;font-weight:700;color:#57606a;margin:10px 0 2px}
     .br-line{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;white-space:nowrap}
     .br-bar{flex:1;display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eaeef2}
-    .br-up{background:#1a7f37}.br-dn{background:#cf222e;margin-left:auto}
+    .br-dn{background:#cf222e}.br-up{background:#1a7f37;margin-left:auto}
     @media(min-width:900px){
       .flow-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
       .flow-row .cs-wrap{display:flex;flex-direction:column;margin:24px 0}
@@ -5619,7 +5619,7 @@ def build_sector_panel(path, min_n=5):
     <section class="cs-wrap sec-wrap">
       <div class="rk-head"><h2>🏭 業種の強弱</h2><span class="rk-asof">{html.escape(str(d.get("asof", "")))} 終値・主要{d.get("universe", "")}銘柄</span></div>
       <div class="cs-box">
-        <div class="br-line"><span class="up">値上がり {b.get("up", 0)}</span><span class="br-bar"><span class="br-up" style="width:{b.get("up", 0) / n * 100:.1f}%"></span><span class="br-dn" style="width:{b.get("down", 0) / n * 100:.1f}%"></span></span><span class="down">値下がり {b.get("down", 0)}</span></div>
+        <div class="br-line"><span class="down">値下がり {b.get("down", 0)}</span><span class="br-bar"><span class="br-dn" style="width:{b.get("down", 0) / n * 100:.1f}%"></span><span class="br-up" style="width:{b.get("up", 0) / n * 100:.1f}%"></span></span><span class="up">値上がり {b.get("up", 0)}</span></div>
         <div class="sc-label">強かった業種</div>{"".join(_row(s) for s in top)}
         <div class="sc-label">弱かった業種</div>{"".join(_row(s) for s in bot)}
         <div class="cs-note">業種ごとの騰落率の単純平均です（東証の業種別指数とは異なります）。{min_n}銘柄未満の業種は、1社の値動きで順位が決まってしまうため除いています。</div>
