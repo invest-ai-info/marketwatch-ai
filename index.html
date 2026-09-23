@@ -40,12 +40,6 @@
     .header-meta{font-size:.85rem;color:#57606a}
     .header-meta span{color:#0969da;font-weight:600}
     main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .sentiment-banner{background:linear-gradient(135deg,#dafbe1,#ddf4ff);border:1px solid #da3633;border-radius:12px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-    .sentiment-icon{font-size:4rem;line-height:1;flex-shrink:0}
-    .sentiment-body{flex:1;min-width:200px}
-    .sentiment-label-small{font-size:.78rem;color:#57606a;font-weight:600;letter-spacing:.08em;margin-bottom:4px}
-    .sentiment-badge{color:#da3633;font-weight:800;font-size:2.4rem;line-height:1.1;margin-bottom:6px;display:block}
-    .sentiment-text{color:#424a53;font-size:.92rem;line-height:1.6}
     .morning-digest{background:#ffffff;border:1px solid #d0d7de;border-left:4px solid #bc4c00;border-radius:10px;padding:16px 22px;margin-bottom:16px}
     .md-title{font-size:.98rem;font-weight:700;color:#bc4c00;margin-bottom:8px}
     .md-sub{font-size:.72rem;color:#6e7781;font-weight:500;margin-left:6px}
@@ -106,22 +100,16 @@
     .ai-meter-track{position:relative;height:8px;background:linear-gradient(90deg,#fee2e2 0%,#fef3c7 50%,#dcfce7 100%);border-radius:4px}
     .ai-meter-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
     .ai-meter-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#57606a;margin-top:4px}
-    .ai-action{font-size:.85rem;color:#1f2328;margin-bottom:6px;line-height:1.5}
-    .ai-action strong{color:#0969da}
     .ai-reason{font-size:.82rem;color:#424a53;line-height:1.6}
     .ai-reason strong{color:#9a6700}
     .news-empty{font-size:.82rem;color:#6e7781;padding:8px 0}
-    .card-news{margin-top:14px;padding-top:14px;border-top:1px solid #d0d7de}
-    .card-news-title{font-size:.78rem;color:#0969da;font-weight:600;margin-bottom:8px}
-    .card-news .news-item{padding:6px 0}
-    .card-news .news-title{font-size:.8rem}
-    .card-news .news-meta{font-size:.68rem}
     footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}
     footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
     .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}
     .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
     .nav-btn:hover{border-color:#0969da;color:#0969da}
     .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    @media(min-width:900px){.nav-bar{max-width:1140px;gap:10px}.nav-bar .nav-btn{flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}
     .market-card-img{width:100%;height:120px;object-fit:cover;object-position:top;display:block}
     .a8-pc{display:inline-block}.a8-mobile{display:none}
     .hero-banner{position:relative;border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
@@ -144,7 +132,6 @@
       #mwTickerFilters button,#tools a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}
       #theme-toggle,#ss-btn{min-width:44px;min-height:44px}
       .header-inner{flex-direction:column}
-      .sentiment-banner{flex-direction:column}
       .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
       .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
       .hero-img{max-height:140px;object-position:center}
@@ -164,9 +151,6 @@
     body.dark .hero-overlay{background:linear-gradient(90deg,rgba(13,17,23,.85) 0%,rgba(13,17,23,.5) 60%,rgba(13,17,23,0) 100%)}
     body.dark .hero-title{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}
     body.dark .hero-sub{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}
-    body.dark .sentiment-banner{background:linear-gradient(135deg,#0d2616,#0d1f2a)!important;border-color:#2ea043}
-    body.dark .sentiment-label-small{color:#8b949e}
-    body.dark .sentiment-text{color:#c9d1d9}
     body.dark .morning-digest{background:#161b22;border-color:#30363d;border-left-color:#d4a017}
     body.dark .md-title{color:#d4a017}
     body.dark .md-sub{color:#8b949e}
@@ -188,8 +172,7 @@
     body.dark .price-row{border-bottom-color:#30363d}
     body.dark .price-label{color:#8b949e}
     body.dark .price-value{color:#e6edf3}
-    body.dark .card-summary,body.dark .card-news{border-top-color:#30363d;color:#8b949e}
-    body.dark .card-news-title{color:#79c0ff}
+    body.dark .card-summary{border-top-color:#30363d;color:#8b949e}
     body.dark .beginner-box{background:#0d1f2a!important;border-color:#1f6feb;color:#79c0ff}
     body.dark .beginner-box::before{color:#79c0ff}
     body.dark .news-item:hover{background:#1c2128}
@@ -208,6 +191,90 @@
     body.dark div[style*="color:#1f2328"]{color:#e6edf3!important}
     body.dark div[style*="color:#57606a"]{color:#8b949e!important}
     body.dark .ad-slot{background:#0d1117!important;border-color:#30363d!important}
+
+    /* 指数の帯 */
+    .ib-wrap{margin:0 0 16px}
+    .ib-row{display:flex;overflow-x:auto;border:1px solid #d0d7de;border-radius:8px;background:#fff;scrollbar-width:thin}
+    .ib-cell{flex:1 1 0;min-width:104px;display:flex;flex-direction:column;padding:8px 10px;border-right:1px solid #eaeef2;text-decoration:none;color:#1f2328}
+    .ib-cell:last-child{border-right:0}.ib-cell:hover{background:#f6f8fa}
+    .ib-name{font-size:11.5px;color:#57606a;font-weight:600}
+    .ib-price{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.3}
+    .ib-chg{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+    .ib-spark{display:block;width:100%;height:22px;margin-top:4px}
+    .ib-sent{flex:1.15 1 0;min-width:120px}
+    .ib-sent-v{font-size:15px;font-weight:800;line-height:1.35;white-space:nowrap}
+    .ib-sent-s{font-size:11px;color:#6e7781}
+    .ib-meta{font-size:11px;color:#6e7781;text-align:right;margin-top:4px}
+    /* 見出し（ランキング・お金の流れ共通） */
+    .rk-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;border-bottom:2px solid #2C4F8F;padding-bottom:6px}
+    .rk-head h2{margin:0;font-size:18px;color:#1f2328}.rk-asof{font-size:12px;color:#6e7781}
+    /* 日本株ランキング（タブ） */
+    .rk-wrap{margin:24px 0}
+    .rk-tabs{display:flex;gap:4px;margin:10px 0 0}
+    .rk-tab{flex:1;max-width:180px;padding:8px 10px;border:1px solid #d0d7de;border-bottom:0;border-radius:6px 6px 0 0;background:#f6f8fa;font:inherit;font-size:13.5px;font-weight:600;color:#57606a;cursor:pointer;white-space:nowrap}
+    .rk-tab.on{background:#fff;color:#2C4F8F;border-color:#2C4F8F;border-width:2px 1px 0}
+    .rk-table{width:100%;border-collapse:collapse;border:1px solid #d0d7de;background:#fff;font-size:13.5px}
+    .rk-table th{background:#f6f8fa;font-size:12px;color:#57606a;text-align:left;padding:6px 8px;border-bottom:1px solid #d0d7de}
+    .rk-table th:nth-child(n+3){text-align:right}
+    .rk-table td{padding:7px 8px;border-bottom:1px solid #eaeef2;vertical-align:top}
+    .rk-table .rk{width:28px;color:#6e7781;font-weight:700;text-align:center}
+    .rk-table .nm{min-width:0;overflow-wrap:anywhere}
+    .rk-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .rk-table .sub{color:#57606a}
+    .rk-table .cd{display:inline-block;min-width:3.2em;color:#6e7781;font-size:12px;margin-right:6px}
+    .rk-table .sc{display:block;font-size:11px;color:#8c959f;margin-left:3.9em}
+    .rk-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;color:#6e7781;margin-top:6px}
+    .rk-foot a{color:#0969da;font-weight:600}
+    /* お金の流れ（通貨の強弱＋業種の強弱） */
+    .flow-row{margin:0 0 8px}
+    .cs-wrap{margin:24px 0}
+    .cs-box{border:1px solid #d0d7de;border-radius:8px;background:#fff;padding:12px 16px;margin-top:10px}
+    .cs-row{display:grid;grid-template-columns:150px 1fr 64px;align-items:center;gap:10px;padding:5px 0}
+    .cs-cur{font-weight:700;font-size:14px;color:#1f2328}.cs-cur small{color:#6e7781;font-weight:600;margin-left:2px}
+    .cs-cur .sc-n{display:block;font-size:11px;font-weight:500;color:#8c959f;margin:0}
+    .cs-track{position:relative;height:14px;background:#f6f8fa;border-radius:3px}
+    .cs-track::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#8c959f}
+    .cs-bar{position:absolute;top:0;bottom:0;border-radius:3px}
+    .cs-bar.pos{left:50%;background:#1a7f37}.cs-bar.neg{right:50%;background:#cf222e}
+    .cs-val{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+    .cs-note{font-size:12px;color:#6e7781;margin-top:8px;line-height:1.6}
+    .sc-label{font-size:12px;font-weight:700;color:#57606a;margin:10px 0 2px}
+    .br-line{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;white-space:nowrap}
+    .br-bar{flex:1;display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eaeef2}
+    .br-up{background:#1a7f37}.br-dn{background:#cf222e;margin-left:auto}
+    @media(min-width:900px){
+      .flow-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .flow-row .cs-wrap{display:flex;flex-direction:column;margin:24px 0}
+      .flow-row .cs-box{flex:1}
+      .flow-row .cs-row{grid-template-columns:130px 1fr 60px}
+    }
+    /* AI 投資判断を4列に（2026-09-23） */
+    .ai-analysis-grid{grid-template-columns:repeat(4,1fr)!important}
+    @media(max-width:1000px){.ai-analysis-grid{grid-template-columns:repeat(2,1fr)!important}}
+    @media(max-width:560px){.ai-analysis-grid{grid-template-columns:1fr!important}}
+    /* 広告は前後に余白（しつこく見せない）・スマホ用バナーは画面幅に縮める */
+    .ad-gap{margin:40px 0}
+    .a8-mobile img{max-width:100%;height:auto}
+    /* 資産別カードの項目名を折り返さない */
+    .price-label{white-space:nowrap;margin-right:10px}
+    .price-value{text-align:right;white-space:nowrap}
+    @media(max-width:1100px) and (min-width:700px){.price-value{white-space:normal}}
+    @media(max-width:699px){.price-value{white-space:normal}}
+    @media(max-width:560px){
+      .rk-table .sc{display:none}.rk-table td,.rk-table th{padding:6px 5px}.rk-table{font-size:12.5px}
+      .rk-table th:nth-child(5),.rk-table td:nth-child(5){display:none}.rk-table .cd{display:block;margin:0}
+      .rk-tab{font-size:12.5px;padding:8px 4px}
+      .cs-row{grid-template-columns:104px 1fr 56px;gap:6px}.cs-cur small{display:none}.cs-cur small.sc-n{display:block}
+      .cs-cur,.cs-val{font-size:13px}
+      .br-line{flex-wrap:wrap;justify-content:space-between;row-gap:6px}.br-bar{order:3;flex:0 0 100%}
+    }
+    body.dark .ib-row,body.dark .rk-table,body.dark .rk-tab.on,body.dark .cs-box{background:#161b22;border-color:#30363d}
+    body.dark .ib-cell{color:#e6edf3;border-color:#30363d}body.dark .ib-cell:hover{background:#1c2128}
+    body.dark .rk-table th,body.dark .rk-tab{background:#0d1117;color:#8b949e;border-color:#30363d}
+    body.dark .rk-table td{border-color:#21262d}body.dark .rk-tab.on{color:#58a6ff;border-color:#58a6ff}
+    body.dark .rk-head{border-color:#58a6ff}body.dark .rk-head h2,body.dark .cs-cur{color:#e6edf3}
+    body.dark .cs-track{background:#0d1117}body.dark .sc-label{color:#8b949e}body.dark .br-bar{background:#30363d}
+
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
   <!-- A8.net広告タグはここに貼る予定 -->
@@ -218,7 +285,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">📰 マーケットニュース</div><div class="header-meta" style="margin-top:2px">最終更新: 2026年9月23日 10:52 JST</div><div class="header-meta" style="margin-top:1px;font-size:.78rem">GitHub Actions 自動更新</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div class="header-meta" style="font-size:.8rem;margin-top:2px">🕒 最終更新: 2026年9月23日 16:40 JST</div></div></header>
 <main>
 
   <!-- ナビゲーション -->
@@ -244,6 +311,10 @@
     <a href="calendar.html">📅 今週の予定</a>
   </div>
 
+
+  <!-- 🆕 指数の帯（2026-09-23） -->
+  <div class="ib-wrap" aria-label="主要指数"><div class="ib-row"><a class="ib-cell ib-sent" href="market-health.html" title="本日のマーケットセンチメント" style="background:#9e6a0314"><span class="ib-name">本日の地合い</span><span class="ib-sent-v" style="color:#9e6a03">😐 中立</span><span class="ib-sent-s">センチメント判定</span></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+2.40%）"><span class="ib-name">日経平均</span><span class="ib-price">65,019</span><span class="ib-chg up">▲1.38%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,19.9 25.0,20.0 48.0,14.9 71.0,12.4 94.0,2.0" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="2.0" r="2" fill="#1a7f37"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+2.36%）"><span class="ib-name">S&amp;P500</span><span class="ib-price">7,764.70</span><span class="ib-chg up">▲1.49%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,17.1 25.0,20.0 48.0,12.7 71.0,11.7 94.0,2.0" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="2.0" r="2" fill="#1a7f37"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+1.17%）"><span class="ib-name">ドル円</span><span class="ib-price">157.82</span><span class="ib-chg up">▲0.29%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,20.0 25.0,18.9 48.0,9.8 71.0,6.6 94.0,2.0" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="2.0" r="2" fill="#1a7f37"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.88%）"><span class="ib-name">金</span><span class="ib-price">4,359.90</span><span class="ib-chg down">▼0.38%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,9.1 25.0,2.0 48.0,13.5 71.0,15.7 94.0,20.0" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="20.0" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-12.03%）"><span class="ib-name">WTI原油</span><span class="ib-price">89.79</span><span class="ib-chg down">▼5.07%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,4.4 48.0,11.0 71.0,12.7 94.0,20.0" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="20.0" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+6.59%）"><span class="ib-name">ビットコイン</span><span class="ib-price">86,229</span><span class="ib-chg down">▼0.43%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,20.0 25.0,19.0 48.0,19.2 71.0,2.0 94.0,3.2" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="3.2" r="2" fill="#1a7f37"/></svg></a></div><div class="ib-meta">数字は前日終値比 ・ 線は直近5営業日の推移 ・ 遅延あり</div></div>
+
   <!-- ヒーロー画像 -->
   <div class="hero-banner">
     <img src="01_hero_tokyo_market_banner.png" alt="マーケットニュース" class="hero-img">
@@ -255,26 +326,14 @@
     </div>
   </div>
 
-  <!-- センチメント -->
-  <div class="sentiment-banner">
-    <div class="sentiment-icon">😢</div>
-    <div class="sentiment-body">
-      <div class="sentiment-label-small">本日のマーケットセンチメント</div>
-      <span class="sentiment-badge">やや弱気</span>
-      <div class="sentiment-text">
-        日経 65,019円 ／ S&amp;P500 7,764.64 ／
-        USD/JPY 157.60円 ／ BTC $86,201 ／
-        金 $4,380.40/oz
-      </div>
-    </div>
-  </div>
+  <!-- センチメントは帯の左端の1マスへ移した（2026-09-23・数字の二重表示をやめる） -->
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌅 今朝の3行 <span class="md-sub">忙しい人のための30秒まとめ（10:52 JST 更新）</span></div>
-    <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼5.8%</span>・日経平均 <span class="md-up">▲1.4%</span>・ETH <span class="md-down">▼1.0%</span>（前日比）</div>
+    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（16:40 JST 更新）</span></div>
+    <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼5.1%</span>・S&P500 <span class="md-up">▲1.5%</span>・日経平均 <span class="md-up">▲1.4%</span>（前日比）</div>
     <div class="md-line">📅 直近1週間に主要な経済指標の予定はありません</div>
-    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>14.2</b>（落ち着いた水準）・センチメント判定は「<b>やや弱気</b>」</div>
+    <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>14.2</b>（落ち着いた水準）・センチメント判定は「<b>中立</b>」</div>
     <details class="md-fold"><summary>📅 次の重要イベントまでのカウントダウンを見る</summary><div class="md-chips"><span class="md-chip">🇺🇸 雇用統計 あと9日（10/2）</span><span class="md-chip">🇺🇸 米CPI あと21日（10/14）</span><span class="md-chip">🇺🇸 FOMC あと35日（10/28）</span><span class="md-chip">🇯🇵 日銀会合 あと37日（10/30）</span><a href="calendar.html" class="md-chip" style="text-decoration:none">📅 カレンダー →</a></div></details>
   </div>
 
@@ -302,7 +361,7 @@
 
   <!-- ⚡ 最新マーケットニュース
        2026-08-01: オーナー判断で **📰更新履歴の直下** へ移動。
-       旧位置＝A8広告枠②の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
+       旧位置＝2つ目の広告枠の下（4カードよりさらに下）で埋もれていた。鮮度が売りの枠なので上へ。
        中身は build_news_ticker_section()＝閲覧時に JS が news-ticker.json を fetch するので
        HTML 再生成なしで最新化される（毎時 news-ticker.yml が JSON を更新）。 -->
   <!-- ⚡ 最新ニュース・ライブフィード（news-ticker.json を閲覧時に取得・毎時Action更新・AI不使用） -->
@@ -381,45 +440,48 @@
     <!-- 今週の投資戦略（最新の guide-weekly へ自動リンク。手動編集不要。2026-07-04 薄型化）-->
   <a href="guide-weekly-2026-09-21.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">📅 今週の投資戦略（9/21〜9/25）— 注目指標と3シナリオ別展望を読む →</a>
 
-  <!-- A8広告枠①（トップページ・ニュース上）-->
-  <div style="margin:24px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
-    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
-    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
-  </div>
+
+
+  <!-- 🆕 日本株ランキング（タブ・2026-09-23）＝事実の市場データ。売買の推奨ではない -->
+  <section class="rk-wrap">
+    <div class="rk-head"><h2>🏆 日本株ランキング</h2><span class="rk-asof">2026-09-18 終値・主要399銘柄</span></div>
+    <div class="rk-tabs" role="tablist"><button class="rk-tab on" data-t="g" role="tab">値上がり</button><button class="rk-tab" data-t="l" role="tab">値下がり</button><button class="rk-tab" data-t="h" role="tab">出来高急増</button></div>
+    <div class="rk-panel" id="rk-g" role="tabpanel"><table class="rk-table"><thead><tr><th>#</th><th>銘柄</th><th>株価</th><th>騰落率</th><th>売買代金</th></tr></thead><tbody><tr class="rk-row-g"><td class="rk">1</td><td class="nm"><span class="cd">485A</span>パワーエックス<span class="sc">電気機器</span></td><td class="num">2,404</td><td class="num up">+13.56%</td><td class="num sub">389億円</td></tr><tr class="rk-row-g"><td class="rk">2</td><td class="nm"><span class="cd">285A</span>キオクシアホールディングス<span class="sc">電気機器</span></td><td class="num">54,570</td><td class="num up">+9.40%</td><td class="num sub">1.88兆円</td></tr><tr class="rk-row-g"><td class="rk">3</td><td class="nm"><span class="cd">290A</span>Synspective<span class="sc">情報・通信業</span></td><td class="num">1,563</td><td class="num up">+9.38%</td><td class="num sub">32億円</td></tr><tr class="rk-row-g"><td class="rk">4</td><td class="nm"><span class="cd">6920</span>レーザーテック<span class="sc">電気機器</span></td><td class="num">39,090</td><td class="num up">+8.70%</td><td class="num sub">1,845億円</td></tr><tr class="rk-row-g"><td class="rk">5</td><td class="nm"><span class="cd">2160</span>ジーエヌアイグループ<span class="sc">医薬品</span></td><td class="num">3,250</td><td class="num up">+8.59%</td><td class="num sub">74億円</td></tr><tr class="rk-row-g"><td class="rk">6</td><td class="nm"><span class="cd">186A</span>アストロスケールホールディングス<span class="sc">サービス業</span></td><td class="num">1,153</td><td class="num up">+7.86%</td><td class="num sub">56億円</td></tr><tr class="rk-row-g"><td class="rk">7</td><td class="nm"><span class="cd">4588</span>オンコリスバイオファーマ<span class="sc">医薬品</span></td><td class="num">6,770</td><td class="num up">+7.46%</td><td class="num sub">185億円</td></tr><tr class="rk-row-g"><td class="rk">8</td><td class="nm"><span class="cd">5706</span>三井金属<span class="sc">非鉄金属</span></td><td class="num">22,795</td><td class="num up">+7.35%</td><td class="num sub">601億円</td></tr><tr class="rk-row-g"><td class="rk">9</td><td class="nm"><span class="cd">6525</span>KOKUSAI ELECTRIC<span class="sc">電気機器</span></td><td class="num">8,884</td><td class="num up">+7.24%</td><td class="num sub">910億円</td></tr><tr class="rk-row-g"><td class="rk">10</td><td class="nm"><span class="cd">3905</span>データセクション<span class="sc">情報・通信業</span></td><td class="num">1,542</td><td class="num up">+7.23%</td><td class="num sub">40億円</td></tr></tbody></table></div><div class="rk-panel" id="rk-l" hidden role="tabpanel"><table class="rk-table"><thead><tr><th>#</th><th>銘柄</th><th>株価</th><th>騰落率</th><th>売買代金</th></tr></thead><tbody><tr class="rk-row-l"><td class="rk">1</td><td class="nm"><span class="cd">5032</span>ANYCOLOR<span class="sc">情報・通信業</span></td><td class="num">3,110</td><td class="num down">-6.18%</td><td class="num sub">30億円</td></tr><tr class="rk-row-l"><td class="rk">2</td><td class="nm"><span class="cd">9506</span>東北電力<span class="sc">電気・ガス業</span></td><td class="num">1,377</td><td class="num down">-5.36%</td><td class="num sub">132億円</td></tr><tr class="rk-row-l"><td class="rk">3</td><td class="nm"><span class="cd">6753</span>シャープ<span class="sc">電気機器</span></td><td class="num">649</td><td class="num down">-4.08%</td><td class="num sub">32億円</td></tr><tr class="rk-row-l"><td class="rk">4</td><td class="nm"><span class="cd">6740</span>ジャパンディスプレイ<span class="sc">電気機器</span></td><td class="num">49</td><td class="num down">-3.92%</td><td class="num sub">10億円</td></tr><tr class="rk-row-l"><td class="rk">5</td><td class="nm"><span class="cd">5021</span>コスモエネルギーホールディングス<span class="sc">石油・石炭製品</span></td><td class="num">4,456</td><td class="num down">-3.63%</td><td class="num sub">81億円</td></tr><tr class="rk-row-l"><td class="rk">6</td><td class="nm"><span class="cd">6417</span>SANKYO<span class="sc">機械</span></td><td class="num">2,071</td><td class="num down">-3.61%</td><td class="num sub">102億円</td></tr><tr class="rk-row-l"><td class="rk">7</td><td class="nm"><span class="cd">9504</span>中国電力<span class="sc">電気・ガス業</span></td><td class="num">1,084</td><td class="num down">-3.56%</td><td class="num sub">41億円</td></tr><tr class="rk-row-l"><td class="rk">8</td><td class="nm"><span class="cd">2282</span>日本ハム<span class="sc">食料品</span></td><td class="num">6,078</td><td class="num down">-3.40%</td><td class="num sub">74億円</td></tr><tr class="rk-row-l"><td class="rk">9</td><td class="nm"><span class="cd">9142</span>九州旅客鉄道<span class="sc">陸運業</span></td><td class="num">3,461</td><td class="num down">-3.40%</td><td class="num sub">43億円</td></tr><tr class="rk-row-l"><td class="rk">10</td><td class="nm"><span class="cd">2212</span>山崎製パン<span class="sc">食料品</span></td><td class="num">3,647</td><td class="num down">-3.39%</td><td class="num sub">46億円</td></tr></tbody></table></div><div class="rk-panel" id="rk-h" hidden role="tabpanel"><table class="rk-table"><thead><tr><th>#</th><th>銘柄</th><th>株価</th><th>騰落率</th><th>出来高(平常比)</th></tr></thead><tbody><tr class="rk-row-h"><td class="rk">1</td><td class="nm"><span class="cd">1721</span>コムシスホールディングス<span class="sc">建設業</span></td><td class="num">5,868</td><td class="num up">+3.90%</td><td class="num sub">5.9倍</td></tr><tr class="rk-row-h"><td class="rk">2</td><td class="nm"><span class="cd">6417</span>SANKYO<span class="sc">機械</span></td><td class="num">2,071</td><td class="num down">-3.61%</td><td class="num sub">5.2倍</td></tr><tr class="rk-row-h"><td class="rk">3</td><td class="nm"><span class="cd">8056</span>BIPROGY<span class="sc">情報・通信業</span></td><td class="num">4,750</td><td class="num down">-2.00%</td><td class="num sub">3.8倍</td></tr><tr class="rk-row-h"><td class="rk">4</td><td class="nm"><span class="cd">3659</span>ネクソン<span class="sc">情報・通信業</span></td><td class="num">3,200</td><td class="num up">+2.30%</td><td class="num sub">3.7倍</td></tr><tr class="rk-row-h"><td class="rk">5</td><td class="nm"><span class="cd">8804</span>東京建物<span class="sc">不動産業</span></td><td class="num">3,236</td><td class="num down">-2.44%</td><td class="num sub">3.7倍</td></tr><tr class="rk-row-h"><td class="rk">6</td><td class="nm"><span class="cd">2809</span>キユーピー<span class="sc">食料品</span></td><td class="num">4,440</td><td class="num down">-3.35%</td><td class="num sub">3.6倍</td></tr><tr class="rk-row-h"><td class="rk">7</td><td class="nm"><span class="cd">4536</span>参天製薬<span class="sc">医薬品</span></td><td class="num">1,710</td><td class="num down">-3.17%</td><td class="num sub">3.4倍</td></tr><tr class="rk-row-h"><td class="rk">8</td><td class="nm"><span class="cd">9041</span>近鉄グループホールディングス<span class="sc">陸運業</span></td><td class="num">3,547</td><td class="num down">-0.76%</td><td class="num sub">3.3倍</td></tr><tr class="rk-row-h"><td class="rk">9</td><td class="nm"><span class="cd">4902</span>コニカミノルタ<span class="sc">電気機器</span></td><td class="num">641</td><td class="num down">-1.91%</td><td class="num sub">3.3倍</td></tr><tr class="rk-row-h"><td class="rk">10</td><td class="nm"><span class="cd">3405</span>クラレ<span class="sc">化学</span></td><td class="num">1,763</td><td class="num down">-3.11%</td><td class="num sub">3.1倍</td></tr></tbody></table></div>
+    <div class="rk-foot"><a href="hot-assets.html">20位まで見る →</a><span>大きく動いた銘柄＝良い投資対象ではありません。値動きの大きさを並べた情報で、売買の推奨ではありません。</span></div>
+  </section>
+  <script>(function(){var w=document.currentScript.previousElementSibling;w.querySelectorAll('.rk-tab').forEach(function(b){b.addEventListener('click',function(){w.querySelectorAll('.rk-tab').forEach(function(x){x.classList.toggle('on',x===b)});w.querySelectorAll('.rk-panel').forEach(function(p){p.hidden=(p.id!=='rk-'+b.dataset.t)})})})})();</script>
 
   
 
   
-  <!-- AI 投資判断（Gemini） -->
+  <!-- AI 投資判断（Gemini）。2026-09-23 アクション欄を廃止し4列に -->
   <section class="ai-analysis-section" id="ai">
-    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が分析。投資判断は自己責任で）</span></p>
+    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が地合いを判定。売買の推奨ではありません。投資判断は自己責任で）</span></p>
     <div class="ai-analysis-grid">
       
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🇯🇵</span>
             <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">日本株（日経平均）</div>
+              <div class="ai-asset-name">日経平均</div>
               <div class="ai-asset-price">65,019円</div>
             </div>
-            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
+            <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:65%;background:#1a7f37"></div>
+              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 米株価指数は最高値を更新しており、日本株もその流れに追随する可能性が高い。日銀の利上げは国内金利上昇のシグナルだが、市場は既に織り込み済みで、当面は高値圏での推移が続くと見込まれる。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 米国市場はAI株主導で最高値を更新したものの、ダウ平均は下落した。日本市場は海外市場の動向と連休明けの市場再開を待つ状況となっている。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🇺🇸</span>
             <div class="ai-asset-name-wrap">
-              <div class="ai-asset-name">米国株（S&P500）</div>
-              <div class="ai-asset-price">7,764.64</div>
+              <div class="ai-asset-name">S&amp;P500</div>
+              <div class="ai-asset-price">7,764.70</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
           </div>
@@ -429,48 +491,62 @@
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> S&P500が続伸し、Nasdaqも最高値を更新していることは、米国の株式市場に引き続き強気なモメンタムがあることを示唆しています。日銀の利上げは日本の市場に影響を与える可能性がありますが、米国の経済指標や企業業績が良好であれば、S&P500の上昇基調は維持される可能性が高いと考えられます。押し目があれば買いを検討するスタンスが妥当でしょう。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> ナスダックがAI株主導で最高値を更新しており、市場全体にポジティブなセンチメントが見られます。S&P500は横ばいですが、グロース株への関心が市場を支えています。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🥇</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ゴールド</div>
-              <div class="ai-asset-price">$4,380/oz</div>
+              <div class="ai-asset-price">$4,360/oz</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#9a6700;color:#fff">ニュートラル</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:55%;background:#9a6700"></div>
+              <div class="ai-meter-dot" style="left:50%;background:#9a6700"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 原油価格の下落によりインフレ懸念が後退し、金価格は直近の週次高値からやや下落しているものの、依然として4,300ドル台後半で堅調に推移している。インフレ懸念の再燃や地政学リスクの高まりといった金価格を押し上げる要因が再び顕在化する可能性も考慮し、押し目での買いを検討する。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 原油安は金価格の下落要因となりうる一方、インフレ懸念後退は金価格の上昇要因ともなりえます。両方のニュースは相反する影響を示唆しており、相場は均衡状態です。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🪙</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$86,201</div>
+              <div class="ai-asset-price">$86,229</div>
             </div>
-            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">やや強気</span>
+            <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">強気</span>
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:80%;background:#1a7f37"></div>
+              <div class="ai-meter-dot" style="left:88%;background:#1a7f37"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-action"><strong>✏️ アクション:</strong> 押し目買い準備</div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコインは8.6万ドル台まで急騰し、年初来高値を更新している。この上昇トレンドは短期的に継続する可能性があり、押し目があれば買いを検討したい。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコインは87,000ドルに迫り、マイクロストラテジーが追加購入したことが伝わっている。この大手企業の購入は、市場に買い圧力を加えている。</div>
         </div>
     </div>
   </section>
 
+
+  <!-- 🆕 お金の流れ（通貨の強弱＋業種の強弱・2026-09-23） -->
+  <div class="flow-row">
+    <section class="cs-wrap">
+      <div class="rk-head"><h2>💪 通貨の強弱</h2><span class="rk-asof">直近24時間・主要9ペアから算出・9/23 16:40 時点</span></div>
+      <div class="cs-box"><div class="cs-row"><span class="cs-cur">🇺🇸 米ドル <small>USD</small></span><span class="cs-track"><span class="cs-bar pos" style="width:50.0%"></span></span><span class="cs-val up">+0.47%</span></div><div class="cs-row"><span class="cs-cur">🇪🇺 ユーロ <small>EUR</small></span><span class="cs-track"><span class="cs-bar neg" style="width:2.2%"></span></span><span class="cs-val down">-0.02%</span></div><div class="cs-row"><span class="cs-cur">🇬🇧 英ポンド <small>GBP</small></span><span class="cs-track"><span class="cs-bar neg" style="width:10.7%"></span></span><span class="cs-val down">-0.10%</span></div><div class="cs-row"><span class="cs-cur">🇦🇺 豪ドル <small>AUD</small></span><span class="cs-track"><span class="cs-bar neg" style="width:10.7%"></span></span><span class="cs-val down">-0.10%</span></div><div class="cs-row"><span class="cs-cur">🇯🇵 日本円 <small>JPY</small></span><span class="cs-track"><span class="cs-bar neg" style="width:29.6%"></span></span><span class="cs-val down">-0.28%</span></div>
+        <div class="cs-note">右に伸びるほど他の通貨に対して買われ、左に伸びるほど売られています。各通貨を含むペアの24時間変化率の平均です。</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- A8広告枠①（トップページ・お金の流れの下＝2026-09-23 移動）-->
+  <div class="ad-gap" style="padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
+    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
+    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
+  </div>
 
   <!-- 今日のカード -->
   <p class="section-title" id="market">本日のマーケット</p>
@@ -483,21 +559,8 @@
           <div><div class="card-title">株式市場</div><div class="card-subtitle">日本株・米国株</div></div>
         </div>
         <div class="price-row"><span class="price-label">日経平均</span><span class="price-value">65,019円 <span class="up price-change">😊▲1.38%</span></span></div>
-        <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,764.64 <span class="down price-change">😢▼0.00%</span></span></div>
+        <div class="price-row"><span class="price-label">S&amp;P500</span><span class="price-value">7,764.70 <span class="up price-change">😊▲1.49%</span></span></div>
         <div class="beginner-box">日経平均は日本を代表する225社の株価の平均です。上がると「日本経済が好調」のサイン。S&P500はアメリカの代表的な500社の指数で、世界経済の体温計ともいわれます。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.cnbc.com/2026/09/20/stock-market-today-live-updates.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ S&amp;P500が1.49%高・7,764.70で続伸——Nasdaqは最高値を更新し27,122で引け</span>
-          <span class="news-ai">💡 Fed利上げ週を超えて株高が続き、投資家がインフレ後退と企業業績への楽観を強めている</span>
-          <span class="news-meta">CNBC / TheStreet · 2026-09-21 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.cnbc.com/2026/09/20/stock-market-today-live-updates.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ Nasdaq総合指数が最高値終値27,122を更新——Fed利上げ週にも関わらず2.26%高</span>
-          <span class="news-ai">💡 利上げ再開後も最高値更新が続くのは、市場がインフレ鎮静と企業収益への楽観を優先している証左</span>
-          <span class="news-meta">CNBC / TheStreet · 2026-09-21 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.cnbc.com/2026/09/18/japan-raises-rates-30-year-high-yen-jgb.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 日銀、政策金利を1.25%に引き上げ——31年ぶりの高水準、7対2の賛成多数で決定</span>
-          <span class="news-ai">💡 利上げ幅はコンセンサス通りで、反対票がハト派と受け止められ株高・円安の両立につながった</span>
-          <span class="news-meta">CNBC / 財経新聞 · 2026-09-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><div class="mw-ticker-mini" data-mwcat="stocks"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -507,22 +570,9 @@
           <div class="card-icon icon-fx">💱</div>
           <div><div class="card-title">為替（FX）</div><div class="card-subtitle">ドル円・ユーロ円</div></div>
         </div>
-        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">157.60円 <span class="up price-change">😊▲0.15%</span></span></div>
+        <div class="price-row"><span class="price-label">USD/JPY</span><span class="price-value">157.82円 <span class="up price-change">😊▲0.29%</span></span></div>
         <div class="price-row"><span class="price-label">EUR/JPY</span><span class="price-value">180.29円 <span class="down price-change">😢▼0.06%</span></span></div>
         <div class="beginner-box">1ドルを買うのに何円必要かを示します。数字が大きいほど「円安（ドル高）」。円安は輸出企業に有利ですが、輸入品や旅行が割高になります。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.federalreserve.gov/releases/h10/hist/dat00_ja.htm" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ ドル円9月22日は157.16円——月次では円が1.21%強含みも年間では6.47%安の水準</span>
-          <span class="news-ai">💡 短期では円高方向だが中長期では円安トレンドが続いており、方向感は出にくい状況</span>
-          <span class="news-meta">Federal Reserve / Trading Economics · 2026-09-22 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://www.vantagemarkets.com/market-analysis/eurusd-fed-hike-ecb-september-22-2026/" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ EUR/USD、Fed利上げがECBを上回りドル優位——9月22日は1.1467付近で小動き</span>
-          <span class="news-ai">💡 米欧の金利差拡大がドル高圧力の主因。原油下落でやや下げ渋るが、ユーロの上値は重い</span>
-          <span class="news-meta">Vantage Markets / Daily Forex · 2026-09-22 · <span style="color:#9a6700;font-weight:600">ソース信頼度 中</span></span>
-        </a><a class="news-item" href="https://www.cnbc.com/2026/09/18/japan-raises-rates-30-year-high-yen-jgb.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 日銀1.25%利上げ後に円安進展——審議委員2名反対でハト派と解釈、157円台でのドル高が続く</span>
-          <span class="news-ai">💡 利上げでも円安が進んだのは、Fedが同様に利上げし日米金利差が縮小しなかったため</span>
-          <span class="news-meta">CNBC / 外為どっとコム · 2026-09-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><div class="mw-ticker-mini" data-mwcat="fx"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -532,22 +582,9 @@
           <div class="card-icon icon-cmd">🛢️</div>
           <div><div class="card-title">コモディティ</div><div class="card-subtitle">原油・金</div></div>
         </div>
-        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$90.22/bbl <span class="down price-change">😢▼5.80%</span></span></div>
-        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,380.40/oz <span class="down price-change">😢▼0.08%</span></span></div>
+        <div class="price-row"><span class="price-label">WTI原油</span><span class="price-value">$89.79/bbl <span class="down price-change">😢▼5.07%</span></span></div>
+        <div class="price-row"><span class="price-label">金（スポット）</span><span class="price-value">$4,359.90/oz <span class="down price-change">😢▼0.38%</span></span></div>
         <div class="beginner-box">原油価格が上がるとガソリンや電気代に影響します。金は「有事の金」と呼ばれ、世界が不安定なときに買われる安全資産です。金が上がるときは要注意サインのことも。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://www.bloomberg.com/news/articles/2026-09-22/gold-edges-higher-as-lower-oil-prices-damp-chance-of-rate-hikes" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 金、原油の急落でインフレ懸念が後退——9月22日は1オンス約4,360ドル付近で推移</span>
-          <span class="news-ai">💡 原油価格の下落がインフレ圧力を和らげ、追加利上げ観測が薄まることで金に資金が向かいやすい</span>
-          <span class="news-meta">Bloomberg · 2026-09-22 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://fortune.com/article/price-of-oil-09-21-2026/" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 原油、停戦外交進展で4日続落——Brent101ドル台、9月16日のピーク108ドルから約10%下落</span>
-          <span class="news-ai">💡 停戦期待で中東からの供給遮断リスクが後退し、原油売りが優勢。ただし地政学リスクは残存</span>
-          <span class="news-meta">Fortune / Al Jazeera · 2026-09-21 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-friday-september-18-2026-gold-hits-weekly-high-as-inflation-concerns-fade-104807567.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ 金、週次3回目の上昇——インフレ指標鈍化で9月18日に週間高値4,421ドルを記録</span>
-          <span class="news-ai">💡 インフレ指標が落ち着きを見せる中、安全資産としての金需要が続き高値圏を維持している</span>
-          <span class="news-meta">Yahoo Finance · 2026-09-18 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><div class="mw-ticker-mini" data-mwcat="commodity"></div></div>
       </div>
     </div>
     <div class="card" style="overflow:hidden;padding:0">
@@ -557,23 +594,11 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$86,201 <span class="down price-change">😢▼0.46%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,747.79 <span class="down price-change">😢▼1.03%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$86,229 <span class="down price-change">😢▼0.43%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,743.29 <span class="down price-change">😢▼1.19%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
-        <div class="card-news"><div class="card-news-title">📰 関連ニュース</div><a class="news-item" href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-tuesday-september-22-2026-crypto-prices-continue-to-surge-to-prices-last-seen-in-january-114724449.html" target="_blank" rel="noopener nofollow">
-          <span class="news-title">✔ ビットコイン、1月来の水準・約8.6万ドル台へ急騰——前日比+6.7%、時価総額1.33兆ドル</span>
-          <span class="news-ai">💡 株式市場のリスクオンと連動し暗号資産も上昇。ただし急騰後の調整リスクには注意が必要</span>
-          <span class="news-meta">Yahoo Finance / Fortune · 2026-09-22 · <span style="color:#1a7f37;font-weight:600">ソース信頼度 高</span></span>
-        </a><div class="mw-ticker-mini" data-mwcat="crypto"></div></div>
       </div>
     </div>
-  </div>
-
-  <!-- A8広告枠②（トップページ・フッター上）-->
-  <div style="margin:32px 0;padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
-    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
-    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
-    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
   <!-- 🧮 常設ツール導線（2026-07-04 固定・生成テンプレに埋め込み＝消えない） -->
@@ -668,6 +693,13 @@
     </ul>
     <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
+  </div>
+
+  <!-- A8広告枠②（トップページ・本文の最後＝2026-09-23 カード直下から移動。1画面に広告2つを並べない）-->
+  <div class="ad-gap" style="padding:14px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;text-align:center">
+    <div style="font-size:.7rem;color:#6e7781;letter-spacing:.12em;margin-bottom:8px">広告 / PR</div>
+    <a class="a8-pc" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+614CX" rel="nofollow"><img border="0" width="728" height="90" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001013000&amp;mc=1"></a><img class="a8-pc" border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+614CX" alt="">
+    <a class="a8-mobile" href="https://px.a8.net/svt/ejp?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" rel="nofollow"><img border="0" width="320" height="50" alt="" src="https://www25.a8.net/svt/bgt?aid=260429404793&amp;wid=001&amp;eno=01&amp;mid=s00000022371001005000&amp;mc=1"></a><img class="a8-mobile" border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B1WM4+D44RHU+4SM6+5ZEMP" alt="">
   </div>
 
 </main>
