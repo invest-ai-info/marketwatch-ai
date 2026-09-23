@@ -21,6 +21,7 @@ import sys
 import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
@@ -441,6 +442,7 @@ footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-a
 footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 @media(max-width:600px){{.article{{padding:24px 20px}}h1{{font-size:1.35rem}}.nav-bar{{display:grid;grid-template-columns:1fr 1fr}}.nav-btn{{min-width:0;width:100%}}}}
 </style>
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <header><div class="header-inner"><div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div></div></header>

@@ -13,6 +13,7 @@ import urllib.parse
 from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -282,7 +283,7 @@ def is_noindex_slug(slug: str) -> bool:
 _BRAND_LOGO_SVG = '<svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg>'
 
 
-def brand_header(page_emoji, page_title, updated="", extra="", compact=False):
+def brand_header(page_emoji, page_title, updated="", compact=False):
     # 🆕 2026-09-23 compact=True（トップ用）: ページ見出しと補足を出さず、サイト説明の直下に最終更新だけ置く
     #   （オーナー判断「マーケットニュースという表示はいらない。最終更新だけ残す」）
     if compact:
@@ -297,11 +298,9 @@ def brand_header(page_emoji, page_title, updated="", extra="", compact=False):
             f'{upd}'
             '</div></header>'
         )
-    meta = ""
-    if updated:
-        meta += f'<div class="header-meta" style="margin-top:2px">最終更新: {updated}</div>'
-    if extra:
-        meta += f'<div class="header-meta" style="margin-top:1px;font-size:.78rem">{extra}</div>'
+    # 🆕 2026-09-23 他ページも同じ枠に（オーナー判断「共通の枠だけ」）: 見出しの下の補足行は出さず、
+    #   最終更新だけをトップと同じ 🕒 付きで置く（補足の中身は各ページの本文側にある）
+    meta = f'<div class="header-meta" style="margin-top:2px">🕒 最終更新: {updated}</div>' if updated else ""
     return (
         '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
         '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
@@ -1756,7 +1755,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
     .level-dot{{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -1767,6 +1766,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
@@ -2781,7 +2781,7 @@ def build_hot_assets_html(hot_data, now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#bf3989;font-weight:600}}
     main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#bf3989;color:#bf3989}}
     .nav-btn.current{{background:#3a1f0f;border-color:#bf3989;color:#fff}}
@@ -2850,11 +2850,12 @@ def build_hot_assets_html(hot_data, now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-{brand_header("🔥", "出来高急増ランキング", time_str, "本日出来高 ÷ 20日平均")}
+{brand_header("🔥", "出来高急増ランキング", time_str)}
 <main>
 
   <!-- ナビゲーション -->
@@ -3148,7 +3149,7 @@ def build_calendar_html(now_jst):
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
     @media(max-width:768px){{.cal-cell{{min-height:60px;padding:3px}}.cal-event{{font-size:.55rem}}.header-inner{{flex-direction:column}}}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -3167,6 +3168,7 @@ def build_calendar_html(now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
@@ -3489,7 +3491,7 @@ def build_preview_html(now_jst):
     .header-meta{{font-size:.85rem;color:#57606a}}
     .header-meta span{{color:#1a7f37;font-weight:600}}
     main{{max-width:1100px;margin:0 auto;padding:32px 24px}}
-    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+    .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#1a7f37;color:#1a7f37}}
     .nav-btn.current{{background:#dafbe1;border-color:#1a7f37;color:#1a7f37}}
@@ -3559,6 +3561,7 @@ def build_preview_html(now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
@@ -4063,7 +4066,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   .header-title{{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,#0969da,#7cf2c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}}
   .header-meta{{font-size:1rem;color:#57606a}}
   main{{max-width:1200px;margin:0 auto;padding:32px 24px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -4099,11 +4102,12 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-{brand_header("🩺", "市場健康度ダッシュボード", date_str, "投資家心理・バリュエーション・ボラティリティを総合診断")}
+{brand_header("🩺", "市場健康度ダッシュボード", date_str)}
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -4424,7 +4428,7 @@ def build_charts_html(hist, now_jst):
     .badge{{display:inline-block;background:#d0d7de;color:#1f6feb;border:1px solid #d0d7de;border-radius:4px;padding:2px 6px;font-size:.72rem;margin:2px 2px 2px 0;white-space:nowrap}}
     footer{{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781}}
     footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
-  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}{NAV_2ROW_CSS}
+  .nav-bar{{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px}}
   .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
   .nav-btn:hover{{border-color:#0969da;color:#0969da}}
   .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
@@ -4435,6 +4439,7 @@ def build_charts_html(hist, now_jst):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>
@@ -5322,11 +5327,6 @@ BAND_ITEMS = [
     ("oil", "WTI原油", "CL=F", 2), ("btc", "ビットコイン", "BTC-USD", 0),
 ]
 
-# ナビ11ボタンをパソコン幅で 6＋5 の2段に（2026-09-23 オーナー判断）。スマホの2列は既存の @media のまま
-NAV_2ROW_CSS = ("@media(min-width:900px){.nav-bar{max-width:1140px;gap:10px}"
-                ".nav-bar .nav-btn{flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;"
-                "font-size:.9rem;white-space:nowrap}}")
-
 TOP_LAYOUT_CSS = """
     /* 指数の帯 */
     .ib-wrap{margin:0 0 16px}
@@ -6206,7 +6206,6 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .nav-btn{{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}}
     .nav-btn:hover{{border-color:#0969da;color:#0969da}}
     .nav-btn.current{{background:#1E3A6E;border-color:#1E3A6E;color:#fff}}
-    {NAV_2ROW_CSS}
     .market-card-img{{width:100%;height:120px;object-fit:cover;object-position:top;display:block}}
     .a8-pc{{display:inline-block}}.a8-mobile{{display:none}}
     .hero-banner{{position:relative;border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
@@ -6295,6 +6294,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>

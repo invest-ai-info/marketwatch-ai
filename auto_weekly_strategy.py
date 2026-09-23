@@ -25,6 +25,7 @@ from email.utils import parsedate_to_datetime
 #    LLM の自己申告に頼る形で、weekly-review が黒を量産したのと構造は同型。
 #    禁止語の定義は compliance_gate.py が単一の真実。
 from compliance_gate import forbidden_terms_in, forbidden_terms_prompt
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 JST = timezone(timedelta(hours=9))
 
@@ -500,6 +501,7 @@ def build_weekly_html(week_start, week_end, today_jst):
     .a8-pc{{display:inline-block}}.a8-mobile{{display:none}}
     @media(max-width:600px){{.a8-pc{{display:none}}.a8-mobile{{display:inline-block}}}}
   </style>
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <div id="reading-progress"></div>

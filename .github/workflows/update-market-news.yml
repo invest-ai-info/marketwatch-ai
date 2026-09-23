@@ -128,6 +128,15 @@ jobs:
         run: python inject_ads.py --all
         continue-on-error: true
 
+      - name: Apply the common site frame (nav 2 rows / header / nav buttons)
+        # 🆕 2026-09-23 オーナー判断「残りのページも同じようなレイアウトで」＝共通の枠だけ。
+        # 解説記事のヘッダーとナビを標準形に揃え、ナビをパソコン幅で 6＋5 の2段にする。
+        # ⚠️ 毎回ここで回すのが要点＝クラウドの記事レーンは毎日 AI にヘッダーとナビを書かせるので形が揺れる
+        #    （実測: 495本中ヘッダー187本・ナビ282本が標準外）。冪等＝揃っていれば差分ゼロで終わる。
+        # continue-on-error＝枠の整形失敗で6コアページの更新を巻き添えにしない。
+        run: python apply_site_frame.py --all
+        continue-on-error: true
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
@@ -150,6 +159,10 @@ jobs:
           # CREATIVES から再生成される mw-ads.js を足す。存在しない場合に備えて || true は残す。
           git add guide-*.html 2>/dev/null || true
           if [ -f mw-ads.js ]; then git add mw-ads.js; fi
+          # apply_site_frame.py --all が触る静的ページ（存在するものだけ1つずつ＝pathspec 事故を避ける）
+          for p in guides.html about.html contact.html privacy.html holdings.html; do
+            if [ -f "$p" ]; then git add "$p"; fi
+          done
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else

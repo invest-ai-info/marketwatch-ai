@@ -18,6 +18,7 @@ import sys
 import json
 from datetime import datetime, timezone, timedelta
 from collections import defaultdict
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -1418,6 +1419,7 @@ def build_html(signals, trades, tracker=None):
     body.dark .win-cat-tag{{background:#0a3014;color:#7ee787;border-color:#1a7f37}}
     body.dark footer{{background:#161b22;border-top-color:#30363d;color:#8b949e}}
   </style>
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>

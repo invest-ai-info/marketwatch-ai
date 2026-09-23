@@ -14,6 +14,7 @@ import json
 import html
 from datetime import datetime, timedelta, timezone
 from collections import Counter
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 JST = timezone(timedelta(hours=9))
 FEED_FILE = "political-feed.json"
@@ -246,6 +247,7 @@ body.dark .source-label{{color:#79c0ff}}
 body.dark .src-bar-bg{{background:#0d1117;border-color:#30363d}}
 body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </style>
+{FRAME_STYLE_TAG}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>

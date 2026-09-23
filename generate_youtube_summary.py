@@ -14,6 +14,7 @@ import urllib.error
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
+from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 # Windows コンソール (cp932) でも絵文字を出せるようにする
 if hasattr(sys.stdout, "reconfigure"):
@@ -729,6 +730,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       .nav-btn{{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}
     }}
   </style>
+{frame_style}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
@@ -863,6 +865,7 @@ def build_html(summaries):
                   if len(tabs) > 1 else "")
         videos_html = tabbar + "\n" + "\n".join(sections)
     return PAGE_TEMPLATE.format(
+        frame_style=FRAME_STYLE_TAG,
         updated_at=now_jst,
         n_channels=len(CHANNELS),
         channel_list=channel_list,
