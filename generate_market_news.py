@@ -5710,6 +5710,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-23", "line": '・<b>2026-09-23</b>: 📉 新シリーズ「<a href="guide-trap-001.html" style="color:#0969da"><b>株の落とし穴を数字で見る</b></a>」開始——#1 5日で30%を超えて上がった株のその後'},
         {"date": "2026-09-23", "line": '・<b>2026-09-23</b>: 🔎 「<a href="guide-sore-honto.html" style="color:#0969da"><b>それ、本当？ 検証室</b></a>」開設——気になる投資の定説を送っていただければ、データで確かめて記事にします'},
         {"date": "2026-09-23", "line": '・<b>2026-09-23</b>: 📰 解説「<a href="guide-news-2026-09-23-iran-hormuz-diplomacy-oil-price.html" style="color:#0969da"><b>【9/23】イラン外交シグナルで原油安──ホルムズ海峡「7日再開」報道と否定の構図</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🛡️ 解説「<a href="guide-scam-series-index.html" style="color:#0969da"><b>投資詐欺から身を守る — 全20回 総目次（シリーズ完結）</b></a>」公開'},

@@ -39,6 +39,16 @@ SERIES = [
         "cta": ("guide-sore-honto.html", "🔎 気になる投資の「定説」はありますか？ データで確かめて記事にします →"),
     },
     {
+        # 📉 株の落とし穴を数字で見る（2026-09-23〜・ランチェスター打ち手④）。回番号で並べる
+        "key": "trap",
+        "glob": "guide-trap-*.html",
+        "label": "株の落とし穴を数字で見る",
+        "index": "guides.html#cat-trap",
+        "exclude": set(),
+        "order": "number",
+        # 検証室への入口は記事の本文側に持たせる（1本目は前後ボタンが出ないため）
+    },
+    {
         "key": "proverb",
         "glob": "guide-proverb-*.html",
         "label": "投資格言から学ぼう",
