@@ -835,3 +835,16 @@ datePublished・dateModified・本文の公開日表記を 2026-09-22 に更新�
 **レーンの終了処理**: `check_automation_health.py` の QUEUE_LANES から scam を解除した
 （これで QUEUE_LANES は空になった＝キュー駆動のレーンは全て完結）。
 routine `scam-daily-auto`（trig_01Vt1tdpbcPqPkRZvNYPc5HT）はオーナーが claude.ai 側で停止する。
+
+---
+
+## 🚩 2026-09-23 キュー枯渇・シリーズ完結（記録）
+
+**確認日**: 2026-09-23（JST 11:13）
+
+**状況**: SCAM_GUIDE.md【キュー】#1〜#20 の全20件が公開済み。シリーズは 2026-09-22 に全20回で完結しています。  
+当日分の guide-scam-*.html は存在しないため、SCAM_GUIDE §2 の「キュー枯渇→水増し禁止」ルールを適用し記事生成を中止しました。
+
+**オーナーへの依頼**:  
+routine `scam-daily-auto`（trig_01Vt1tdpbcPqPkRZvNYPc5HT）を claude.ai 側で停止してください（前回エントリの指示通り）。  
+完結後もこの routine が発火し続けるため、毎日このエスカレエントリが追記される状態です。
