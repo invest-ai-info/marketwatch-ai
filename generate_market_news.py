@@ -6645,6 +6645,9 @@ def main():
         "eurjpy": "EURJPY=X", "oil": "CL=F", "gold": "GC=F",
         "btc": "BTC-USD", "eth": "ETH-USD",
     }
+    # 🆕 2026-09-23 指数の帯に並べる銘柄は必ず取得する（帯の単一の真実＝BAND_ITEMS。NYダウ・ナスダック）
+    for _key, _nm, _sym, _dec in BAND_ITEMS:
+        tickers.setdefault(_key, _sym)
     data = {}
     for key, sym in tickers.items():
         try:
