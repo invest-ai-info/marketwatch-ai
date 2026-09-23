@@ -289,4 +289,5 @@ SYNC_FILES = [
     "guide-mindset-series-index.html",
     "guide-scam-family-rules.html",
     "guide-scam-series-index.html",
+    "guide-news-2026-09-23-iran-hormuz-diplomacy-oil-price.html",
 ]

@@ -5707,6 +5707,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-23", "line": '・<b>2026-09-23</b>: 📰 解説「<a href="guide-news-2026-09-23-iran-hormuz-diplomacy-oil-price.html" style="color:#0969da"><b>【9/23】イラン外交シグナルで原油安──ホルムズ海峡「7日再開」報道と否定の構図</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🛡️ 解説「<a href="guide-scam-series-index.html" style="color:#0969da"><b>投資詐欺から身を守る — 全20回 総目次（シリーズ完結）</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 👨‍👩‍👧 解説「<a href="guide-scam-family-rules.html" style="color:#0969da"><b>「誰にも言わないで」と言われたら——家族で決めておく3つのルール</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🧭 解説「<a href="guide-mindset-series-index.html" style="color:#0969da"><b>投資の心理とリスク管理 — 全63回 総目次（シリーズ完結）</b></a>」公開'},
