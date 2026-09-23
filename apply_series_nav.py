@@ -35,6 +35,8 @@ SERIES = [
         # 読者は #88→#89→#90 と番号で辿るため。2026-09-05 のレーン事故で #089 が
         # #090 より後に公開され、日付順だと 88→90→89→91 と番号が飛んで見えた（オーナー報告）。
         "order": "number",
+        # 🔎 読者の質問を受け付ける入口（2026-09-23「それ、本当？」検証室）。シリーズの全記事の末尾に出す
+        "cta": ("guide-sore-honto.html", "🔎 気になる投資の「定説」はありますか？ データで確かめて記事にします →"),
     },
     {
         "key": "proverb",
@@ -66,6 +68,13 @@ SERIES = [
         "exclude": set(),
     },
 ]
+
+# 入口の一文（"cta" を持つシリーズだけ）。STYLE に入れると全シリーズのブロックが書き換わるので別にする
+CTA_STYLE = ("<style>.mw-sernav-cta{margin-top:12px;padding:12px 14px;border:1px dashed #0969da;border-radius:10px;"
+             "background:#f6f9ff;text-align:center;font-size:13.5px;line-height:1.6}"
+             ".mw-sernav-cta a{color:#0969da;font-weight:700;text-decoration:none}"
+             "body.dark .mw-sernav-cta{background:#0d1a2b;border-color:#388bfd}"
+             "body.dark .mw-sernav-cta a{color:#58a6ff}</style>")
 
 # 記事の途中（関連記事の直前）に置かれている「📚 解説記事一覧に戻る →」ボタン。
 # 2026-09-05 オーナー指摘＝シリーズ内の移動を先に見せ、サイト全体の一覧へ戻るのは最後にしたい。
@@ -181,6 +190,10 @@ def build_block(series, prev_item, next_item, has_back_btn):
         button("next", next_item),
         "      </div>",
     ]
+    if series.get("cta"):
+        href, text = series["cta"]
+        parts[1] = STYLE + "\n" + CTA_STYLE
+        parts.append(f'      <div class="mw-sernav-cta"><a href="{href}">{html.escape(text)}</a></div>')
     # 一覧リンクが guides.html そのものなら、下の「解説記事一覧に戻る」と行き先が同じ＝二重に出さない
     if not (has_back_btn and series["index"] == "guides.html"):
         parts.append(
