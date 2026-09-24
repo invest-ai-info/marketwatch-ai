@@ -112,6 +112,7 @@ L の結果（日足：30%だけ入ったのは3%のみ＝値段は 1.3 と 2 �
 import argparse
 import json
 import math
+import os
 import sys
 import time
 
@@ -511,6 +512,57 @@ def evaluate(ts):
     }
 
 
+REGISTRY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exit-lab-hypotheses.json")
+RULE_NAME = {"A": "いまの方式", "B": "すぐ全部(1.3以上)", **LADDER_NAME}
+
+
+def forward_clusters(t):
+    """前向きは期間が短い＝時期を年ではなく年月で区切る（年だと区切りが1〜2個しかなく幅が出ない）。"""
+    return t["ticker"], (t["time"].year, t["time"].month)
+
+
+def evaluate_forward(frames, reg=None):
+    """登録台帳（exit-lab-hypotheses.json）の仮説を、forward_from 以降に出たシグナルだけで確かめる。"""
+    reg = reg or json.load(open(REGISTRY, encoding="utf-8"))
+    results = []
+    for h in reg["hypotheses"]:
+        start = pd.Timestamp(h["forward_from"])
+        en = h["entry"]
+        by_tf = {}
+        for c in h["comparisons"]:
+            if c["tf"] not in by_tf:
+                ts = []
+                for (ticker, tf), df in frames.items():
+                    if tf == c["tf"]:
+                        ts += [t for t in trades(df, signals(df), ticker, tf, en["signal"], en["side"], en["exit_signal"])
+                               if t["time"].tz_localize(None) >= start]
+                by_tf[c["tf"]] = ts
+            ts = by_tf[c["tf"]]
+            x, y = per_signal(ts, c["rule"]), per_signal(ts, c["vs"])
+            d = diff(x, y, [forward_clusters(t) for t in ts])
+            n = d.get("n", 0)
+            if n < h["min_n"]:
+                status = "🟡蓄積中"
+            elif d["lo"] > 0 and d["avg"] >= MIN_EFFECT:
+                status = "✅合格（2回続けば確定）"
+            elif d["hi"] < 0:
+                status = "⛔反対向き"
+            else:
+                status = "🟡まだ判断できない"
+            results.append({"id": h["id"], "label": h["label"], "role": c["role"], "tf": c["tf"], "desc": c["desc"],
+                            "n": n, "min_n": h["min_n"], "diff": d, "status": status})
+    return results
+
+
+def report_forward(results, asof):
+    lines = [f"# 出口・入り方の仮説：前向きの確かめ（基準日 {asof}・登録日の翌日以降に出たシグナルだけ）", "",
+             "| 仮説 | 役割 | 足 | 比べるもの | 件数（必要） | 差（1シグナルあたり）[95%] | 状態 |", "|---|---|---|---|---|---|---|"]
+    for r in results:
+        lines.append(f"| {r['label']} | {r['role']} | {r['tf']} | {r['desc']} | {r['n']}（{r['min_n']}） | "
+                     f"{fmt(r['diff'])} | {r['status']} |")
+    return "\n".join(lines)
+
+
 def fetch(ticker, tf, tries=3):
     import yfinance as yf
     for k in range(tries):
@@ -779,7 +831,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="exit_rule_backtest.json")
     ap.add_argument("--tf", default="1d,4h")
+    ap.add_argument("--forward", action="store_true", help="登録台帳の仮説を、登録日の翌日以降のシグナルだけで確かめる")
     args = ap.parse_args()
+    if args.forward:
+        reg = json.load(open(REGISTRY, encoding="utf-8"))
+        tfs = sorted({c["tf"] for h in reg["hypotheses"] for c in h["comparisons"]})
+        frames = {(t, tf): df for tf in tfs for t in sorted(LEGACY_UNIVERSE) if (df := fetch(t, tf)) is not None}
+        res = evaluate_forward(frames, reg)
+        print(report_forward(res, pd.Timestamp.now(tz="Asia/Tokyo").strftime("%Y-%m-%d")))
+        with open(args.out, "w", encoding="utf-8") as f:
+            json.dump(res, f, ensure_ascii=False, indent=1, default=str)
+        return
     frames, missing = {}, []
     for tf in args.tf.split(","):
         for t in sorted(LEGACY_UNIVERSE):
