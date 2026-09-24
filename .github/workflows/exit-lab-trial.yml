@@ -1,0 +1,35 @@
+# 一回限りの試走: exit_lab.py を本物の価格で1回まわして、結果をログと Summary に出す（リポジトリには書かない）。
+# ⚠️ 作業ブランチ専用。確認が済んだら消す（定期実行は exit-lab.yml）。
+name: Exit Lab Trial (one-off)
+
+on:
+  push:
+    branches: [claude/great-planck-07jpht]
+    paths:
+      - .github/workflows/exit-lab-trial.yml
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install yfinance pandas numpy certifi
+      - name: Run exit lab
+        run: |
+          python exit_lab.py --json exit-lab.json --md exit-lab.md
+          ls -la exit-lab.json exit-lab.md
+          cat exit-lab.md
+          cat exit-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: exit-lab
+          path: |
+            exit-lab.json
+            exit-lab.md
