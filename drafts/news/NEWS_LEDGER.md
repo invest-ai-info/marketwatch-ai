@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-09-24
+- 判定: ✅ 公開済み
+- 選定トピック: 米中関税休戦を2027年1月10日まで延長──トランプ・習近平首脳会談の実際の結果と市場への影響を中立整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/24（日本時間）、ベッセント財務長官が「釜山合意（旧来の報復関税引き上げ凍結協定）を2027年1月10日まで約2ヶ月延長」と発表。Xiがジョイントベース・アンドリュースに到着しトランプが異例の空港出迎え（60年ぶり）。東京市場もシルバーウィーク明け当日。9/21の予告記事（5つの焦点）とは異なる「実際の結果」記事として付加価値十分。9/21〜23の既出記事（トランプ・習会談予告/AMD/イラン）との重複なし。
+- 出典（確認済み・7系統以上）:
+  - CNBC「U.S.-China trade truce extended for two months, Bessent says, as Xi begins state visit」2026-09-24
+  - Bloomberg「US and China Extend Trade Truce as Trump and Xi Meet」2026-09-24
+  - Business Standard「Trump welcomes Xi Jinping as US-China trade truce extended by 2 months」2026-09-24
+  - CNBC Daily Open「A tarmac welcome buys U.S.-China truce a longer runway」2026-09-24
+  - Vantage Markets「Nikkei 225 Today: Index Tops 66,000 After Three-Day Tokyo Break」2026-09-24
+  - Trading Key「Japan Stocks Open Higher After Three-Day Holiday, SoftBank Rises Over 6%, Kioxia Up Nearly 4%」2026-09-24
+  - The Conversation「Three Ts will dominate Trump-Xi summit – but expect little movement on trade」2026-09-24
+  - CNBC「America's Asian allies want a Trump-Xi truce — but not at their expense」2026-09-24
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（「FOMC（利下げペース）」→「FOMC（金融政策の方向性）」表現軟化を適用）→ 最終🟢白
+  - 著者修正（事実精度）: ①釜山合意の説明を「100%超の関税を停止」→「それ以上の関税引き上げを一時凍結」に修正 ②日付表現の明確化（Xi到着9/23米国時間・会談9/24）③「100%超の関税を再び引き上げ始めるリスク」→「関税引き上げ競争はいったん凍結」に修正
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤出典7系統以上 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック（check_guide_draft.py）: GREEN（決定論ゲート通過） ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告19件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-24-trump-xi-trade-truce-extended-jan2027.html
+
+---
+
 ## 2026-09-23
 - 判定: ✅ 公開済み
 - 選定トピック: イラン外交シグナルで原油安──ホルムズ海峡「7日再開可能」の報道と否定が交錯、マーケットへの影響を中立整理（カテゴリ: 今日のニュース）

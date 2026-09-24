@@ -5710,6 +5710,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-24", "line": '・<b>2026-09-24</b>: 📰 解説「<a href="guide-news-2026-09-24-trump-xi-trade-truce-extended-jan2027.html" style="color:#0969da"><b>米中関税休戦を1月10日まで延長──首脳会談の結果を中立整理</b></a>」公開'},
         {"date": "2026-09-24", "line": '・<b>2026-09-24</b>: 🧪 解説「<a href="guide-signal-lab-108.html" style="color:#0969da"><b>上昇中に下がったところで買うと勝ちやすい？ 324回の前向き検証で「降格」になった理由【#108】</b></a>」公開'},
         {"date": "2026-09-23", "line": '・<b>2026-09-23</b>: 🧪 解説「<a href="guide-signal-lab-107.html" style="color:#0969da"><b>売られすぎで買う作戦は、トレンドの向きで結果が変わる？ 362回の前向き検証で確かめた【#107】</b></a>」公開'},
         {"date": "2026-09-22", "line": '・<b>2026-09-22</b>: 🧪 解説「<a href="guide-signal-lab-106.html" style="color:#0969da"><b>RSIの売られすぎで買うと、トレンドで勝率は変わる？ 過去492回で確かめた【#106】</b></a>」公開'},
