@@ -1,4 +1,4 @@
-2026-09-25 signal-lab: #109 🟡ゲート中（RSI売られすぎ逆張り買いIS/FWD比較。IS52/133=39.1%・FWD188/372=50.5%・rci_lo=+0.008初プラス。金属+40pp・円FX+40pp改善。check_plain_japanese→verify→Opus→公開へ）
+2026-09-25 signal-lab: #109 ✅公開済み（RSI売られすぎ逆張り買いIS/FWD比較。IS52/133=39.1%・FWD188/374=50.3%・rci_lo=+0.008初プラス。金属+40pp・円FX+40pp改善。verify10/10緑・Opus🟢・独立Opus🟢・check_site OK）
 2026-09-24 signal-lab: #106・#107・#108 ✅解消済み（人間が復旧して公開。3本とも verify 緑のまま Opus コンプラ🔴＝オラクルが見ていない型だった［期間キーの無い「（IS）」ラベル／境界を登録日当日／図の縮尺］。signal_lab_verify.py に3検査を足し、[直せる] の赤は routine が直して再実行できるようにした。詳細＝SIGLAB_ESCALATION_RECOVERY.md §4・SIGNAL_LAB_SOP.md「直せる赤」）
 2026-09-24 signal-lab: drafts/draft-signal-lab-108.html ✅解消済み（2026-09-24 人間が復旧・公開）／旧: エスカレ中（コンプラOpus🔴黒: IS/FWD境界誤り）
   詳細: claims の fired_before/fired_from が `2026-06-22`（登録日当日）→ SOP では `<登録日翌日>=2026-06-23` が正しい。

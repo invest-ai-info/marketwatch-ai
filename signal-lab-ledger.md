@@ -19,7 +19,7 @@
 **ファイル**: drafts/draft-signal-lab-109.html
 **claims**: drafts/labnotes/lab-109-claims.json
 **分析メモ**: drafts/labnotes/lab-109-analysis.md
-**状態**: 🟡 ゲート中（2026-09-25）
+**状態**: ✅ 公開済み（2026-09-25）
 
 核心:
 - IS（〜2026-06-16）: 52/133 = 39.1%、E(R)=-0.09R
