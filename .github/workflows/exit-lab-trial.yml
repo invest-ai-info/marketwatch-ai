@@ -1,0 +1,42 @@
+# 一回限りの試走: 資産クラス別の exit_lab.py を本物の価格で1回まわして、結果をログに出す（リポジトリには書かない）。
+# ⚠️ 作業ブランチ専用。確認が済んだら消す（定期実行は exit-lab.yml）。
+name: Exit Lab Trial (one-off)
+
+on:
+  push:
+    branches: [claude/great-planck-07jpht]
+    paths:
+      - .github/workflows/exit-lab-trial.yml
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install yfinance pandas numpy certifi
+      - name: Run exit lab
+        run: |
+          python exit_lab.py --json exit-lab.json --md exit-lab.md
+          ls -la exit-lab.json exit-lab.md
+          sed -n '/## 資産クラス別/,/## 目立つ組の前向き/p' exit-lab.md
+      - name: Class diagnostics
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open("exit-lab.json", encoding="utf-8"))
+          cs = [c for c in d["cells"] if c["period"] == "is" and c.get("vs_base")]
+          for g in ("index", "fx", "commodity", "crypto"):
+              x = [c for c in cs if c["group"] == g and c["vs_base"].get("avg") is not None and c["vs_base"].get("n", 0) >= 200]
+              x.sort(key=lambda c: c["vs_base"]["avg"])
+              print(f"== {g}: 比べたマス(n>=200) {len(x)} / ボンフェローニ通過 {sum(1 for c in cs if c['group']==g and c.get('bonf'))} / 目立つ {sum(1 for c in cs if c['group']==g and c.get('flag'))}")
+              for c in x[:3] + x[-3:]:
+                  v = c["vs_base"]
+                  print("  ", c["tf"], c["entry"], c["side"], c["sl"], c["tp"], "n=", v["n"], "差=", v["avg"], "[", v["lo"], v["hi"], "] p=", c.get("p"), "flag=", c.get("flag"))
+          PY
