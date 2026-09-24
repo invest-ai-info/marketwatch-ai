@@ -28,7 +28,7 @@
 2026-09-15 signal-lab: guide-signal-lab-099.html ✅ 公開済み（verify7/7緑・Opus3rd🟢白・全ゲート通過）
 2026-09-14 autodraft: 全topic下書き済み（63件すべてが draft-*.html または guides.html で確認済み）。新規生成なし。キュー補充が必要です。
 2026-09-14 autopublish: guide-information-lag.html 公開済み ✅ 決定論緑・Opus🟡グレー修正→独立白確認 https://marketwatch-jp.com/guide-information-lag.html
-2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（Opusコンプラ🔴黒①②③・数値訂正3件要人間レビュー）
+2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（Opusコンプラ🔴黒①②③・数値訂正3件要人間レビュー）　【2026-09-24 追記・現状】[解決済み]（公開見送りで決着＝公開したのではない）＝オーナー判断で #098 は公開しない。理由＝同じ仮説（rsi_oversold_bounce）の翌日版 #099（2026-09-15 公開）と、より新しい版 #107（2026-09-23 付け公開）が既に出ており、#098 を後から出しても同じ内容の古い断面が1本増えるだけ。下書き `drafts/draft-signal-lab-098.html` と labnotes は保持。🔖 **この `[解決済み]` は番人（automation-health §⑧）を黙らせるための印であって、コンプラ審査を通ったという意味ではない**（黒①②③は未修正のまま）。公開する場合は、黒①②③を直して正規手順（verify→Opus2段→finalize→publish）を通し、この印ごと書き直すこと。
 
 
 ## 2026-09-18 signal-lab #103: drafts/draft-signal-lab-103.html
@@ -80,6 +80,7 @@
 - **中立トレンド（FWD）**: k=60/n=109=55.0% RCI[+0.053,+0.516]
 - **verify**: ✅ GREEN（22/22 claims全緑・SVG警告0件）
 - **Opusコンプラ**: 🔴 黒①②③（自動公開停止・人間エスカレ）
+- **決着（2026-09-24・オーナー判断）**: 🗂 公開見送り。同じ仮説の翌日版 #099（9/15）と新しい版 #107（9/23）が公開済みのため。下書きは保持・黒①②③は未修正。
 
 ### 🚩 黒①: "昇格1/2到達"・"昇格条件1/2認定" の誤記（数値訂正・要人間レビュー）
 
