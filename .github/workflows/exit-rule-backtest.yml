@@ -1,0 +1,46 @@
+# 一回限りの研究: 「同じ指標のシグナルでしか手じまわない」ルールの検証（exit_rule_backtest.py）。
+# クラウドの Claude セッションからは Yahoo に届かないので、価格の取得と計算をランナーで行う。
+# 結果はジョブのログと Summary に出し、JSON は artifact に残す。リポジトリには何も書き込まない。
+# ⚠️ 作業ブランチ専用。main に入れる前に消す（main で定期実行するものではない）。
+name: Exit Rule Backtest (one-off)
+
+on:
+  push:
+    branches: [claude/great-planck-07jpht]
+    paths:
+      - exit_rule_backtest.py
+      - .github/workflows/exit-rule-backtest.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: pip install yfinance pandas numpy
+
+      - name: Run backtest
+        run: |
+          python exit_rule_backtest.py --out exit_rule_backtest.json > exit_rule_backtest.md
+          cat exit_rule_backtest.md
+          cat exit_rule_backtest.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: exit-rule-backtest
+          path: |
+            exit_rule_backtest.md
+            exit_rule_backtest.json

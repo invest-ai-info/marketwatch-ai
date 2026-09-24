@@ -89,6 +89,24 @@ L の結果（日足：30%だけ入ったのは3%のみ＝値段は 1.3 と 2 �
   それ以外（節目・指値の寿命・同じ足の扱い・R の単位・主指標・判定）は L とまったく同じ。
   主に見る差＝L3−A・L3−B・L3−L。r=3.0 の値段は「直近の値幅の下から25%」（r=2.0 は33%、r=1.3 は43%）。
 
+【追加の事前登録（2026-09-25・トレンドに逆らわない条件＝F）— 結果を見る前にコミットして固定する】
+オーナー指示「MAより上でショートしない・MAより下でロングしない・直近高値より上でショートしない・直近安値より下で
+ロングしない、という条件を加えて検証」。
+  条件（買い）: 出た足の終値 > MA かつ 終値 ≥ 直近20本の安値。 条件（売り）: 終値 < MA かつ 終値 ≤ 直近20本の高値。
+  直近20本   : 出た足を**含まない**20本（エンジンの高値ブレイク／安値割れと同じ）。含めると終値が安値を下回ることは起きず無意味。
+  MA         : 「MA」がどちらかを決めていないので **25本線（F25）と75本線（F75）の両方を別々に**出す（主従は付けない）。
+  見るもの   : 条件を満たすシグナルと満たさないシグナルの、1シグナルあたり平均R（コスト後）の差（別々の集まりの差＝diff2）。
+               ルールは A（いまの方式）・B（1.3以上ならすぐ全部）・L3（分けて入る 1.3と3）の3つ。
+               あわせて、条件を満たすシグナルだけで B−A・L3−A（対応のある差）も出す。
+  判定       : 上と同じ（95%幅・0.10R 以上・日足は前後半で向きがそろう）。MA2本×ルール3つ×組8つ＝比較が多いので、
+               1つだけ「差がある」と出ても偶然の可能性を割り引いて読む。
+  主に見る差 : **A（毎回入る）での 満たす−満たさない**。B・L3 は「入らなければ0R」なので、両側で入った割合が違うと
+               その違いがそのまま差に出る（作り物の値動きで実測: 条件を満たす側は B でほぼ入らない＝0.1%、満たさない側は83%。
+               「MAより上で買う」と「直近安値の近くで買う（節目でRR1.3以上）」はほぼ両立しない）。
+               ⇒ B・L3 の差は参考。表に「B で入った割合」「L3 で入った割合」（満たす／満たさない）を必ず並べる。
+  作り物の値動きでの確認: A の差 −0.009R（≒0）。条件の判定は手で作った例（上昇中の買い＝満たす・売り＝満たさない・
+               直近安値割れの買い＝外れる）どおり。前回までの結果（S・A・B・L・L3）との差 0件。
+
 使い方（Yahoo に届く所で）: python exit_rule_backtest.py [--out exit_rule_backtest.json]
 """
 import argparse
@@ -220,6 +238,7 @@ def trades(df, sig, ticker, tf, entry_sig, side, exit_sig):
     """1銘柄×1組の全取引。戻り値＝[{time, S, A, Splus, bars_S, cost}]（R は未決済なら None）。"""
     o, h, l, c = (df[k].to_numpy(float) for k in ("Open", "High", "Low", "Close"))
     atr = calc_atr(df["High"], df["Low"], df["Close"]).to_numpy(float)
+    ma = {w: df["Close"].rolling(w).mean().to_numpy(float) for w in (25, 75)}
     ent, ext = sig[entry_sig].to_numpy(bool), sig[exit_sig].to_numpy(bool)
     d = 1 if side == "long" else -1
     n, out, last = len(c), [], -10 ** 9
@@ -279,10 +298,16 @@ def trades(df, sig, ticker, tf, entry_sig, side, exit_sig):
             costB = cost_r_of({"entry": e, "stop_loss": slb, "ticker": ticker})
         spread_abs = cost_r_of({"entry": e, "stop_loss": e - 1.0, "ticker": ticker})  # 往復スプレッド×1.5（価格の単位）
         lad = {k: ladder(o, h, l, c, i, side, e, slb, tpb, tf, lv, spread_abs) for k, lv in LADDERS.items()}
+        # F: トレンドに逆らわない条件（出た足を含まない直近20本の高値・安値／MA25・MA75）
+        prh, prl = h[i - 20:i].max(), l[i - 20:i].min()
+        lvl_ok = (e >= prl) if side == "long" else (e <= prh)
+        ma_ok = {w: bool((e > ma[w][i]) if side == "long" else (e < ma[w][i])) for w in (25, 75)}
         out.append({"ticker": ticker, "tf": tf, "time": df.index[i], "S": S, "A": A, "Splus": Sp,
                     "bars_S": bars, "cost": cost,
                     "open_S_mtm": r(c[-1]) if S is None else None,
-                    "b_state": state, "rr": rr, "B": B, "bars_B": bars_B, "costB": costB, "lad": lad})
+                    "b_state": state, "rr": rr, "B": B, "bars_B": bars_B, "costB": costB, "lad": lad,
+                    "lvl_ok": bool(lvl_ok), "ma_ok25": ma_ok[25], "ma_ok75": ma_ok[75],
+                    "ok25": bool(lvl_ok and ma_ok[25]), "ok75": bool(lvl_ok and ma_ok[75])})
     return out
 
 
@@ -427,6 +452,44 @@ def evaluate_ladder(ts, main, comps):
     return out
 
 
+FILTER_RULES = ("A", "B", "L3")
+
+
+def per_signal(ts, rule):
+    """1シグナルあたりのR（コスト後・入れなければ0・未決済は None）。"""
+    if rule == "A":
+        return [t["A"] - t["cost"] if t["A"] is not None else None for t in ts]
+    if rule == "B":
+        return [0.0 if t["b_state"] != "pass" else (t["B"] - t["costB"] if t["B"] is not None else None) for t in ts]
+    return [t["lad"][rule]["R"] - t["lad"][rule]["cost"] if t["lad"][rule]["R"] is not None else None for t in ts]
+
+
+def evaluate_filter(ts, key):
+    """F: 条件を満たすシグナル vs 満たさないシグナル（ルールごと）＋ 満たす中での B−A・L3−A。"""
+    if not ts:
+        return {}
+    g = [clusters_of(t) for t in ts]
+    ok = [i for i, t in enumerate(ts) if t[key]]
+    ng = [i for i, t in enumerate(ts) if not t[key]]
+    pick = lambda xs, ii: [xs[i] for i in ii]
+    out = {"n": len(ts), "n_ok": len(ok), "share_ok": len(ok) / len(ts),
+           "share_lvl_ng": sum(1 for t in ts if not t["lvl_ok"]) / len(ts)}
+    per = {r: per_signal(ts, r) for r in FILTER_RULES}
+    for r in FILTER_RULES:
+        x1 = [(v, gg) for v, gg in zip(pick(per[r], ok), pick(g, ok)) if v is not None]
+        x0 = [(v, gg) for v, gg in zip(pick(per[r], ng), pick(g, ng)) if v is not None]
+        out[f"{r}_ok"] = summarize([v for v, _ in x1], [gg for _, gg in x1])
+        out[f"{r}_ng"] = summarize([v for v, _ in x0], [gg for _, gg in x0])
+        out[f"{r}_diff"] = diff2([v for v, _ in x1], [gg for _, gg in x1], [v for v, _ in x0], [gg for _, gg in x0])
+    for r in ("B", "L3"):
+        out[f"{r}_minus_A_ok"] = diff(pick(per[r], ok), pick(per["A"], ok), pick(g, ok))
+    traded = {"B": lambda t: t["b_state"] == "pass", "L3": lambda t: t["lad"]["L3"]["legs"] > 0}
+    for r, f in traded.items():
+        out[f"{r}_trade_ok"] = sum(1 for i in ok if f(ts[i])) / len(ok) if ok else None
+        out[f"{r}_trade_ng"] = sum(1 for i in ng if f(ts[i])) / len(ng) if ng else None
+    return out
+
+
 def evaluate(ts):
     """取引の束 → S/A/S+ の要約（コスト後）と差。"""
     if not ts:
@@ -444,6 +507,7 @@ def evaluate(ts):
         "gross_S_avg": float(np.mean(gS)) if gS else None,
         "Bx": evaluate_b(ts),
         **{name: evaluate_ladder(ts, m, c) for name, (m, c) in LADDER_SETS.items()},
+        "F25": evaluate_filter(ts, "ok25"), "F75": evaluate_filter(ts, "ok75"),
     }
 
 
@@ -558,6 +622,47 @@ def report(out):
     lines.append(report_b(out))
     for field, (m, c) in LADDER_SETS.items():
         lines.append(report_ladder(out, field, m, c))
+    lines.append(report_filter(out))
+    return "\n".join(lines)
+
+
+def report_filter(out):
+    """F: トレンドに逆らわない条件（MA25／MA75）の節。"""
+    lines = ["\n# トレンドに逆らわない条件（買いは終値＞MA かつ 直近20本の安値以上／売りは逆）"]
+    for field, ma in (("F25", "MA25"), ("F75", "MA75")):
+        for tf, title in (("1d", "日足（2006年〜）"), ("4h", "4時間足（直近2年）")):
+            keys = [k for k in out if k.startswith(tf + "|") and k != f"{tf}|全体"] + [f"{tf}|全体"]
+            keys = [k for k in keys if k in out and out[k].get(field)]
+            if not keys:
+                continue
+            lines.append(f"\n## {ma}・{title}：1シグナルあたりの平均R（コスト後）\n")
+            lines.append("| 入口 | 向き | 件数 | 条件を満たす | うち直近高安で外れ | A 満たす | A 満たさない | **A の差** | "
+                         "B 満たす | B の差（参考） | B で入った割合 満たす/満たさない | L3 満たす | L3 の差（参考） | "
+                         "L3 で入った割合 満たす/満たさない | 満たす中で B−A | 満たす中で L3−A |")
+            lines.append("|" + "---|" * 16)
+            for k in keys:
+                p = k.split("|")
+                x = out[k][field]
+                name = "全体" if len(p) == 2 else LABEL[p[2]]
+                side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
+                e, la = out[k].get("early", {}).get(field, {}), out[k].get("late", {}).get(field, {})
+                v = lambda d: f"{fmt(x[d])}＝**{verdict(x[d], e.get(d), la.get(d))}**"
+                pct = lambda a: "—" if a is None else f"{100 * a:.0f}%"
+                lines.append(f"| {name} | {side} | {x['n']} | {100 * x['share_ok']:.0f}% | {100 * x['share_lvl_ng']:.0f}% | "
+                             f"{fmt(x['A_ok'])} | {fmt(x['A_ng'])} | {v('A_diff')} | {fmt(x['B_ok'])} | {v('B_diff')} | "
+                             f"{pct(x['B_trade_ok'])}/{pct(x['B_trade_ng'])} | {fmt(x['L3_ok'])} | {v('L3_diff')} | "
+                             f"{pct(x['L3_trade_ok'])}/{pct(x['L3_trade_ng'])} | {v('B_minus_A_ok')} | {v('L3_minus_A_ok')} |")
+            if tf == "1d":
+                lines.append(f"\n### {ma}・日足・時期別（A の差＝満たす−満たさない）\n")
+                lines.append("| 入口 | 向き | A 満たす 前半 | A 満たす 後半 | A の差 前半 | A の差 後半 |")
+                lines.append("|---|---|---|---|---|---|")
+                for k in keys:
+                    p = k.split("|")
+                    if len(p) == 2:
+                        continue
+                    e, la = out[k]["early"].get(field, {}), out[k]["late"].get(field, {})
+                    lines.append(f"| {LABEL[p[2]]} | {'買い' if p[3] == 'long' else '売り'} | {fmt(e.get('A_ok'))} | "
+                                 f"{fmt(la.get('A_ok'))} | {fmt(e.get('A_diff'))} | {fmt(la.get('A_diff'))} |")
     return "\n".join(lines)
 
 
