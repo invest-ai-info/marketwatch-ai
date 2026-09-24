@@ -82,6 +82,13 @@ R の単位 : 入った足の ATR(14)×1.5 を 1R（3通り共通）。
                  A は毎回入る、B は 1.3未満なら 0R。対応のある差 L−A・L−B を、上と同じ判定（95%幅・0.10R 以上・日足は前後半）で見る。
   あわせて出す : 一部だけ入った／全部入った／利確に先に届いて入れず（取り逃し）／期限で入れず の割合、入れた取引の勝率・最悪・使ったリスク。
 
+【追加の事前登録（2026-09-25・段を広げる＝L3）— 結果を見る前にコミットして固定する】
+L の結果（日足：30%だけ入ったのは3%のみ＝値段は 1.3 と 2 の間で止まらず「全部入る／入れない」に分かれた）を受けた
+オーナー指示「1.3 と 3 に広げて同じように検証」。
+  L3（オーナー案）: 30%＠r=1.3 ＋ 70%＠r=3.0。比べ役「3で全部」を足す（「1.3で全部」「L（1.3と2）」も並べる）。
+  それ以外（節目・指値の寿命・同じ足の扱い・R の単位・主指標・判定）は L とまったく同じ。
+  主に見る差＝L3−A・L3−B・L3−L。r=3.0 の値段は「直近の値幅の下から25%」（r=2.0 は33%、r=1.3 は43%）。
+
 使い方（Yahoo に届く所で）: python exit_rule_backtest.py [--out exit_rule_backtest.json]
 """
 import argparse
@@ -117,7 +124,15 @@ LADDERS = {  # 分けて入る（名前: ((リスクリワード, 割合), ...)�
     "L": ((1.3, 0.3), (2.0, 0.7)),   # オーナー案
     "L13": ((1.3, 1.0),),            # 比べ役: 1.3 で全部
     "L2": ((2.0, 1.0),),             # 比べ役: 2 で全部
+    "L3": ((1.3, 0.3), (3.0, 0.7)),  # オーナー案（段を広げる・2026-09-25）
+    "L3only": ((3.0, 1.0),),         # 比べ役: 3 で全部
 }
+LADDER_SETS = {  # 表にする組み合わせ（主役, 比べ役...）
+    "Lx": ("L", ("L13", "L2")),
+    "L3x": ("L3", ("L", "L13", "L3only")),
+}
+LADDER_NAME = {"L": "L 分けて入る(1.3と2)", "L13": "1.3で全部", "L2": "2で全部",
+               "L3": "L3 分けて入る(1.3と3)", "L3only": "3で全部"}
 
 
 def signals(df):
@@ -383,32 +398,33 @@ def evaluate_b(ts):
     }
 
 
-def evaluate_l(ts):
-    """分けて入る（L）: 1シグナルあたりの平均R（入れなければ0R）で A・B・比べ役と比べる。"""
+def evaluate_ladder(ts, main, comps):
+    """分けて入る: 1シグナルあたりの平均R（入れなければ0R）で A・B・比べ役と比べる。
+    戻り値のキー＝A・B・各ラダー名（例 L, L13）・"<主役>_minus_<相手>"・share_*・<主役>_trades・<主役>_risk_used。"""
     if not ts:
         return {}
     g = [clusters_of(t) for t in ts]
     A = [t["A"] - t["cost"] if t["A"] is not None else None for t in ts]
     B = [0.0 if t["b_state"] != "pass" else (t["B"] - t["costB"] if t["B"] is not None else None) for t in ts]
     per = {k: [t["lad"][k]["R"] - t["lad"][k]["cost"] if t["lad"][k]["R"] is not None else None for t in ts]
-           for k in LADDERS}
-    L = [t["lad"]["L"] for t in ts]
+           for k in (main,) + tuple(comps)}
+    M = [t["lad"][main] for t in ts]
     n = len(ts)
-    cnt = lambda f: sum(1 for x in L if f(x)) / n
-    traded = [i for i, x in enumerate(L) if x["legs"] > 0 and x["R"] is not None]
-    trade_R = [per["L"][i] for i in traded]
-    return {
-        "n": n,
-        "A": summarize(A, g), "B": summarize(B, g),
-        "L": summarize(per["L"], g), "L13": summarize(per["L13"], g), "L2": summarize(per["L2"], g),
-        "L_minus_A": diff(per["L"], A, g), "L_minus_B": diff(per["L"], B, g),
-        "L_minus_L13": diff(per["L"], per["L13"], g), "L_minus_L2": diff(per["L"], per["L2"], g),
-        "share_1leg": cnt(lambda x: x["legs"] == 1), "share_2leg": cnt(lambda x: x["legs"] == 2),
-        "share_missed": cnt(lambda x: x["state"] == "missed"), "share_unfilled": cnt(lambda x: x["state"] == "unfilled"),
-        "L_trades": summarize(trade_R, [g[i] for i in traded], [L[i]["R"] for i in traded],
-                              [L[i]["bars"] for i in traded if L[i]["bars"] is not None]),
-        "L_risk_used": float(np.mean([L[i]["risk_used"] for i in traded])) if traded else None,
-    }
+    cnt = lambda f: sum(1 for x in M if f(x)) / n
+    traded = [i for i, x in enumerate(M) if x["legs"] > 0 and x["R"] is not None]
+    out = {"n": n, "A": summarize(A, g), "B": summarize(B, g),
+           f"{main}_minus_A": diff(per[main], A, g), f"{main}_minus_B": diff(per[main], B, g),
+           "share_1leg": cnt(lambda x: x["legs"] == 1), "share_2leg": cnt(lambda x: x["legs"] == 2),
+           "share_missed": cnt(lambda x: x["state"] == "missed"), "share_unfilled": cnt(lambda x: x["state"] == "unfilled"),
+           f"{main}_trades": summarize([per[main][i] for i in traded], [g[i] for i in traded],
+                                       [M[i]["R"] for i in traded],
+                                       [M[i]["bars"] for i in traded if M[i]["bars"] is not None]),
+           f"{main}_risk_used": float(np.mean([M[i]["risk_used"] for i in traded])) if traded else None}
+    for k in (main,) + tuple(comps):
+        out[k] = summarize(per[k], g)
+    for k in comps:
+        out[f"{main}_minus_{k}"] = diff(per[main], per[k], g)
+    return out
 
 
 def evaluate(ts):
@@ -427,7 +443,7 @@ def evaluate(ts):
         "open_S": sum(1 for t in ts if t["S"] is None),
         "gross_S_avg": float(np.mean(gS)) if gS else None,
         "Bx": evaluate_b(ts),
-        "Lx": evaluate_l(ts),
+        **{name: evaluate_ladder(ts, m, c) for name, (m, c) in LADDER_SETS.items()},
     }
 
 
@@ -540,56 +556,64 @@ def report(out):
                              f"{fmt(e['S'])} | {fmt(la['S'])} | {fmt(e['A'])} | {fmt(la['A'])} | "
                              f"{fmt(e['S_minus_A'])} | {fmt(la['S_minus_A'])} |")
     lines.append(report_b(out))
-    lines.append(report_l(out))
+    for field, (m, c) in LADDER_SETS.items():
+        lines.append(report_ladder(out, field, m, c))
     return "\n".join(lines)
 
 
-def report_l(out):
-    """分けて入る（L）の節。"""
-    lines = ["\n# 分けて入る（L＝30%＠リスクリワード1.3・70%＠2.0。損切り・利確は節目）"]
+def report_ladder(out, field, main, comps):
+    """分けて入る の節（field＝Lx / L3x）。"""
+    lines = [f"\n# {LADDER_NAME[main]}（損切り・利確は節目。比べ役: " + "・".join(LADDER_NAME[c] for c in comps) + "）"]
+    diffs = ["A", "B"] + list(comps)
     for tf, title in (("1d", "日足（2006年〜）"), ("4h", "4時間足（直近2年）")):
         keys = [k for k in out if k.startswith(tf + "|") and k != f"{tf}|全体"] + [f"{tf}|全体"]
-        keys = [k for k in keys if k in out and out[k].get("Lx")]
+        keys = [k for k in keys if k in out and out[k].get(field)]
         if not keys:
             continue
         lines.append(f"\n## {title}：1シグナルあたりの平均R（入れなければ0R・コスト後）\n")
-        lines.append("| 入口 | 向き | 件数 | A いまの方式 | B すぐ全部(1.3以上) | L 分けて入る | 1.3で全部 | 2で全部 | L−A | L−B | L−(1.3で全部) | L−(2で全部) |")
-        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        cols = ["A いまの方式", "B すぐ全部(1.3以上)", LADDER_NAME[main]] + [LADDER_NAME[c] for c in comps]
+        dcols = [f"{main}−{d}" for d in diffs]
+        lines.append("| 入口 | 向き | 件数 | " + " | ".join(cols + dcols) + " |")
+        lines.append("|" + "---|" * (3 + len(cols) + len(dcols)))
         for k in keys:
             p = k.split("|")
-            x = out[k]["Lx"]
+            x = out[k][field]
             name = "全体" if len(p) == 2 else LABEL[p[2]]
             side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
-            e, la = out[k].get("early", {}).get("Lx", {}), out[k].get("late", {}).get("Lx", {})
-            vs = {d: verdict(x[d], e.get(d), la.get(d)) for d in ("L_minus_A", "L_minus_B", "L_minus_L13", "L_minus_L2")}
-            lines.append(f"| {name} | {side} | {x['n']} | {fmt(x['A'])} | {fmt(x['B'])} | {fmt(x['L'])} | "
-                         f"{fmt(x['L13'])} | {fmt(x['L2'])} | " +
-                         " | ".join(f"{fmt(x[d])}＝**{vs[d]}**" for d in ("L_minus_A", "L_minus_B", "L_minus_L13", "L_minus_L2")) + " |")
-        lines.append(f"\n### {title}：L の中身（入れた取引）\n")
+            e, la = out[k].get("early", {}).get(field, {}), out[k].get("late", {}).get(field, {})
+            vals = [fmt(x["A"]), fmt(x["B"]), fmt(x[main])] + [fmt(x[c]) for c in comps]
+            ds = []
+            for d in diffs:
+                dk = f"{main}_minus_{d}"
+                ds.append(f"{fmt(x[dk])}＝**{verdict(x[dk], e.get(dk), la.get(dk))}**")
+            lines.append(f"| {name} | {side} | {x['n']} | " + " | ".join(vals + ds) + " |")
+        lines.append(f"\n### {title}：{LADDER_NAME[main]} の中身（入れた取引）\n")
         lines.append("| 入口 | 向き | 一部だけ入った | 全部入った | 利確に先に届いて入れず | 期限で入れず | 入れた取引の勝率 | 入れた取引の平均R | −1R超 | 最悪 | 使ったリスク(平均) | 保有(中央) |")
         lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
         for k in keys:
             p = k.split("|")
-            x = out[k]["Lx"]
-            t = x["L_trades"]
+            x = out[k][field]
+            t = x[f"{main}_trades"]
             name = "全体" if len(p) == 2 else LABEL[p[2]]
             side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
             tr = (f"{100 * t['win']:.1f}% | {fmt(t)} | {100 * t['beyond_1R']:.1f}% | {t['worst']:+.2f} | "
-                  f"{x['L_risk_used']:.2f}R | {t.get('bars_median', 0):.0f}本" if t.get("n") else "— | — | — | — | — | —")
+                  f"{x[f'{main}_risk_used']:.2f}R | {t.get('bars_median', 0):.0f}本" if t.get("n") else "— | — | — | — | — | —")
             lines.append(f"| {name} | {side} | {100 * x['share_1leg']:.0f}% | {100 * x['share_2leg']:.0f}% | "
                          f"{100 * x['share_missed']:.0f}% | {100 * x['share_unfilled']:.0f}% | {tr} |")
         if tf == "1d":
-            lines.append("\n### 日足・時期別（1シグナルあたり・前半 2006–2015 ／ 後半 2016–）\n")
-            lines.append("| 入口 | 向き | L 前半 | L 後半 | L−A 前半 | L−A 後半 | L−B 前半 | L−B 後半 |")
-            lines.append("|---|---|---|---|---|---|---|---|")
+            lines.append(f"\n### 日足・時期別（1シグナルあたり・前半 2006–2015 ／ 後半 2016–）\n")
+            hd = [f"{main} 前半", f"{main} 後半"] + [f"{main}−{d} {h}" for d in diffs for h in ("前半", "後半")]
+            lines.append("| 入口 | 向き | " + " | ".join(hd) + " |")
+            lines.append("|" + "---|" * (2 + len(hd)))
             for k in keys:
                 p = k.split("|")
                 if len(p) == 2:
                     continue
-                e, la = out[k]["early"].get("Lx", {}), out[k]["late"].get("Lx", {})
-                lines.append(f"| {LABEL[p[2]]} | {'買い' if p[3] == 'long' else '売り'} | {fmt(e.get('L'))} | "
-                             f"{fmt(la.get('L'))} | {fmt(e.get('L_minus_A'))} | {fmt(la.get('L_minus_A'))} | "
-                             f"{fmt(e.get('L_minus_B'))} | {fmt(la.get('L_minus_B'))} |")
+                e, la = out[k]["early"].get(field, {}), out[k]["late"].get(field, {})
+                cells = [fmt(e.get(main)), fmt(la.get(main))]
+                for d in diffs:
+                    cells += [fmt(e.get(f"{main}_minus_{d}")), fmt(la.get(f"{main}_minus_{d}"))]
+                lines.append(f"| {LABEL[p[2]]} | {'買い' if p[3] == 'long' else '売り'} | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
