@@ -43,6 +43,27 @@ R の単位 : 入った足の ATR(14)×1.5 を 1R（3通り共通）。
 限界（先に書いておく）: 先物のつなぎ目（限月の乗り換え）で値段が飛ぶ。TP2 は使わない（エンジンでも先に TP1 に触れる）。
            エンジンは同じ足に複数のシグナルが出ると多数決で向きを決めるが、ここでは組ごとに向きを固定する。
 
+【追加の事前登録（2026-09-24 夜・出口 B＝節目）— 結果を見る前にコミットして固定する】
+オーナーの案「利確と損切りを節目で決め、リスクリワードが 1対1.3 以上のときだけ入る」。S/S+/A の結果とは別に判定する。
+  節目   : シグナルが出た足を**含む**直近20本の高値・安値（チャートを見て入る人にはその足のヒゲも見えている）。
+           ※ エンジンの sr_runway（出た足を含まない20本）とは1本ずれる＝ここでは手じまいの置き方を問うので含める。
+  B 買い : 損切り＝直近20本の安値 − 0.3ATR（ぎりぎりに置くとヒゲで刈られる）。利確＝直近20本の高値ちょうど。
+           入る条件＝（利確−入値）÷（入値−損切り）≥ 1.3。利確が入値より上に無い（高値更新中）なら「節目なし」で見送る。
+  B 売り : 上下を逆に（損切り＝直近20本の高値＋0.3ATR、利確＝直近20本の安値）。
+  約定   : A と同じ（先に触れた方・同じ足で両方なら損切り・損切りは窓なら始値・利確はちょうど・期限は日足21本／4時間足42本で終値）。
+  R の単位: **B 自身の損切り幅を 1R**（ロットを損切り幅から逆算する運用＝MY_TRADING_RULES #5 と同じ。A は 1.5ATR が 1R）。
+           コストも B の損切り幅で R に換算する（損切りが近いほど、同じスプレッドが重くなる）。
+  比べ方（2つを分ける）:
+    ① 入る条件の効果＝A（いまの方式）で、1.3 以上に絞った入口 と それ以外（1.3未満＋節目なし）の平均の差
+    ② 出口の効果  ＝1.3 以上に絞った**同じ入口**での B − A（対応のある差）
+  判定   : 上と同じ（95%幅が0をまたがない・差 0.10R 以上・日足は前後半で向きがそろう）。
+           ① は2つの別の集まりの差なので、幅はそれぞれの幅を二乗和で合わせる（同じ時期の相関を無視＝幅は広め＝保守側）。
+  事前の確認（作り物の値動き＝癖なしの足し算ランダムウォーク×18銘柄）:
+           ・B のコスト前の平均は +0.008R（≒0＝計算は正しい）。マイナスに出た分はコスト（平均 0.155R）だった。
+             B は損切りが近いので、同じスプレッドでも R に直すと重くなる（本物の相場でも起きる実在の差）。
+           ・RSI とボリンジャーの買いは 99% が「1.3以上」を満たす（安値のそばで入る＝損切りが近く利確が遠い。RR の中央値 4〜5）。
+             高値ブレイク／安値割れの組は B では入らない（節目の外で入るため・設計どおり）。
+
 使い方（Yahoo に届く所で）: python exit_rule_backtest.py [--out exit_rule_backtest.json]
 """
 import argparse
@@ -73,6 +94,7 @@ WARMUP = 80
 SL_ATR, TP_ATR = 1.5, 2.0
 EXPIRY = {"1d": 21, "4h": 42}
 SPLIT = pd.Timestamp("2016-01-01")
+B_LOOKBACK, B_BUFFER_ATR, B_MIN_RR = 20, 0.3, 1.3   # 出口 B（節目）＝事前登録どおり
 
 
 def signals(df):
@@ -148,9 +170,31 @@ def trades(df, sig, ticker, tf, entry_sig, side, exit_sig):
             if j == i + EXPIRY[tf]:
                 A = r(c[j])
         cost = cost_r_of({"entry": e, "stop_loss": sl, "ticker": ticker})
+        # B: 節目（出た足を含む直近20本の高値・安値）で利確・損切り、リスクリワード 1.3 以上だけ入る
+        rh, rl = h[i - B_LOOKBACK + 1:i + 1].max(), l[i - B_LOOKBACK + 1:i + 1].min()
+        slb, tpb = (rl - B_BUFFER_ATR * atr[i], rh) if side == "long" else (rh + B_BUFFER_ATR * atr[i], rl)
+        riskb, rewb = d * (e - slb), d * (tpb - e)
+        rr = rewb / riskb if riskb > 0 and rewb > 0 else None
+        state = "undefined" if rr is None else ("pass" if rr >= B_MIN_RR else "reject")
+        B = bars_B = None
+        costB = 0.0
+        if state == "pass":
+            rb = lambda px: d * (px - e) / riskb
+            for j in range(i + 1, min(n, i + EXPIRY[tf] + 1)):
+                f = _sl_fill(side, slb, o[j], h[j], l[j])
+                if f is not None:
+                    B, bars_B = rb(f), j - i
+                    break
+                if (side == "long" and h[j] >= tpb) or (side == "short" and l[j] <= tpb):
+                    B, bars_B = rr, j - i
+                    break
+                if j == i + EXPIRY[tf]:
+                    B, bars_B = rb(c[j]), j - i
+            costB = cost_r_of({"entry": e, "stop_loss": slb, "ticker": ticker})
         out.append({"ticker": ticker, "tf": tf, "time": df.index[i], "S": S, "A": A, "Splus": Sp,
                     "bars_S": bars, "cost": cost,
-                    "open_S_mtm": r(c[-1]) if S is None else None})
+                    "open_S_mtm": r(c[-1]) if S is None else None,
+                    "b_state": state, "rr": rr, "B": B, "bars_B": bars_B, "costB": costB})
     return out
 
 
@@ -175,10 +219,16 @@ def clusters_of(t):
 
 def _mean_ci(vals, groups):
     """平均と95%幅。groups＝[(銘柄, 時期)]。二方向クラスタ（CR1）＋ t(G−1)、G＝少ない方のまとまり数。"""
+    m, se, c = _mean_se(vals, groups)
+    return m, m - c * se, m + c * se
+
+
+def _mean_se(vals, groups):
+    """平均・標準誤差・t の臨界値（_mean_ci の中身。2つの集まりの差を出すときにも使う）。"""
     a = np.array(vals, float)
     n, m = len(a), float(a.mean())
     if n < 2:
-        return m, m, m
+        return m, 0.0, 0.0
     e = a - m
 
     def ss(keyf):
@@ -196,10 +246,9 @@ def _mean_ci(vals, groups):
         v = max(s1, s2)
     G = min(g1, g2)
     if G < 2:
-        return m, float("-inf"), float("inf")
+        return m, float("inf"), 1.0
     se = math.sqrt(v * G / (G - 1)) / n
-    c = t975(G - 1)
-    return m, m - c * se, m + c * se
+    return m, se, t975(G - 1)
 
 
 def summarize(rs, groups, gross=None, bars=None):
@@ -226,6 +275,41 @@ def diff(xs, ys, groups):
     return {"n": len(keep), "avg": m, "lo": lo, "hi": hi}
 
 
+def diff2(x1, g1, x0, g0):
+    """別々の2つの集まりの平均の差（x1−x0）と95%幅。幅は二乗和で合わせ、臨界値は大きい方（保守側）。"""
+    if len(x1) < 2 or len(x0) < 2:
+        return {"n": len(x1) + len(x0)}
+    m1, se1, c1 = _mean_se(x1, g1)
+    m0, se0, c0 = _mean_se(x0, g0)
+    se, c = math.sqrt(se1 ** 2 + se0 ** 2), max(c1, c0)
+    return {"n": len(x1) + len(x0), "avg": m1 - m0, "lo": m1 - m0 - c * se, "hi": m1 - m0 + c * se}
+
+
+def evaluate_b(ts):
+    """出口 B（節目）: ①入る条件の効果（A で 1.3以上 vs それ以外）②出口の効果（同じ入口で B−A）。"""
+    if not ts:
+        return {}
+    g = [clusters_of(t) for t in ts]
+    A = [t["A"] - t["cost"] if t["A"] is not None else None for t in ts]
+    idx = {k: [i for i, t in enumerate(ts) if t["b_state"] == k and A[i] is not None]
+           for k in ("pass", "reject", "undefined")}
+    rest = idx["reject"] + idx["undefined"]
+    B = [t["B"] - t["costB"] if t["B"] is not None else None for t in ts]
+    pick = lambda xs, ii: [xs[i] for i in ii]
+    passed = [i for i in idx["pass"] if B[i] is not None]
+    return {
+        "n_all": len(ts), "n_pass": len(idx["pass"]), "n_reject": len(idx["reject"]), "n_undef": len(idx["undefined"]),
+        "A_pass": summarize(pick(A, idx["pass"]), pick(g, idx["pass"])),
+        "A_reject": summarize(pick(A, idx["reject"]), pick(g, idx["reject"])),
+        "A_undef": summarize(pick(A, idx["undefined"]), pick(g, idx["undefined"])),
+        "filter_diff": diff2(pick(A, idx["pass"]), pick(g, idx["pass"]), pick(A, rest), pick(g, rest)),
+        "B": summarize(pick(B, passed), pick(g, passed), [ts[i]["B"] for i in passed],
+                       [ts[i]["bars_B"] for i in passed]),
+        "B_minus_A": diff(pick(B, passed), pick(A, passed), pick(g, passed)),
+        "rr_median": float(np.median([ts[i]["rr"] for i in idx["pass"]])) if idx["pass"] else None,
+    }
+
+
 def evaluate(ts):
     """取引の束 → S/A/S+ の要約（コスト後）と差。"""
     if not ts:
@@ -241,6 +325,7 @@ def evaluate(ts):
         "S_minus_A": diff(S, A, g), "Splus_minus_A": diff(Sp, A, g),
         "open_S": sum(1 for t in ts if t["S"] is None),
         "gross_S_avg": float(np.mean(gS)) if gS else None,
+        "Bx": evaluate_b(ts),
     }
 
 
@@ -309,7 +394,7 @@ def verdict(d, early=None, late=None):
 
 
 def fmt(s):
-    if not s or not s.get("n"):
+    if not s or not s.get("n") or "avg" not in s:
         return "—"
     return f"{s['avg']:+.3f} [{s['lo']:+.3f}〜{s['hi']:+.3f}]"
 
@@ -352,7 +437,61 @@ def report(out):
                 lines.append(f"| {LABEL[p[2]]} → {LABEL[p[4]]} | {'買い' if p[3] == 'long' else '売り'} | "
                              f"{fmt(e['S'])} | {fmt(la['S'])} | {fmt(e['A'])} | {fmt(la['A'])} | "
                              f"{fmt(e['S_minus_A'])} | {fmt(la['S_minus_A'])} |")
+    lines.append(report_b(out))
     return "\n".join(lines)
+
+
+def report_b(out):
+    """出口 B（節目）の節。①入る条件の効果 ②出口の効果。"""
+    lines = ["\n# 出口 B（節目で利確・損切り＋リスクリワード1.3以上だけ入る）"]
+    for tf, title in (("1d", "日足（2006年〜）"), ("4h", "4時間足（直近2年）")):
+        keys = [k for k in out if k.startswith(tf + "|") and k != f"{tf}|全体"] + [f"{tf}|全体"]
+        keys = [k for k in keys if k in out and out[k].get("Bx")]
+        if not keys:
+            continue
+        lines.append(f"\n## {title}\n")
+        lines.append("| 入口 | 向き | 入った割合（1.3以上／1.3未満／節目なし） | A 1.3以上 | A それ以外 | ① 絞り込みの効果 | "
+                     "B 勝率 | B 平均R [95%] | B −1R超 | B 最悪 | 保有(中央) | 入った時のRR(中央) | ② B−A 同じ入口 |")
+        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for k in keys:
+            p = k.split("|")
+            x = out[k]["Bx"]
+            name = "全体" if len(p) == 2 else LABEL[p[2]]
+            side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
+            e, la = out[k].get("early", {}).get("Bx", {}), out[k].get("late", {}).get("Bx", {})
+            v1 = verdict(x["filter_diff"], e.get("filter_diff"), la.get("filter_diff"))
+            v2 = verdict(x["B_minus_A"], e.get("B_minus_A"), la.get("B_minus_A"))
+            b = x["B"]
+            share = (f"{100 * x['n_pass'] / x['n_all']:.0f}%／{100 * x['n_reject'] / x['n_all']:.0f}%／"
+                     f"{100 * x['n_undef'] / x['n_all']:.0f}%" if x["n_all"] else "—")
+            brow = (f"{100 * b['win']:.1f}% | {fmt(b)} | {100 * b['beyond_1R']:.1f}% | {b['worst']:+.2f} | "
+                    f"{b.get('bars_median', 0):.0f}本" if b.get("n") else "— | — | — | — | —")
+            rr = f"{x['rr_median']:.2f}" if x["rr_median"] else "—"
+            lines.append(f"| {name} | {side} | {share}（{x['n_all']}件） | {fmt(x['A_pass'])} | "
+                         f"{_rest_avg(x)} | {fmt(x['filter_diff'])}＝**{v1}** | {brow} | {rr} | "
+                         f"{fmt(x['B_minus_A'])}＝**{v2}** |")
+        if tf == "1d":
+            lines.append("\n### 日足・時期別（前半 2006–2015 ／ 後半 2016–）\n")
+            lines.append("| 入口 | 向き | ① 前半 | ① 後半 | B 前半 | B 後半 | ② 前半 | ② 後半 |")
+            lines.append("|---|---|---|---|---|---|---|---|")
+            for k in keys:
+                p = k.split("|")
+                if len(p) == 2:
+                    continue
+                e, la = out[k]["early"].get("Bx", {}), out[k]["late"].get("Bx", {})
+                lines.append(f"| {LABEL[p[2]]} | {'買い' if p[3] == 'long' else '売り'} | "
+                             f"{fmt(e.get('filter_diff'))} | {fmt(la.get('filter_diff'))} | {fmt(e.get('B'))} | "
+                             f"{fmt(la.get('B'))} | {fmt(e.get('B_minus_A'))} | {fmt(la.get('B_minus_A'))} |")
+    return "\n".join(lines)
+
+
+def _rest_avg(x):
+    """「それ以外」（1.3未満＋節目なし）の A の平均（件数で重み付け）。差の幅は ① の列で見る。"""
+    parts = [x[k] for k in ("A_reject", "A_undef") if x[k].get("n")]
+    if not parts:
+        return "—"
+    n = sum(q["n"] for q in parts)
+    return f"{sum(q['avg'] * q['n'] for q in parts) / n:+.3f}"
 
 
 def main():
