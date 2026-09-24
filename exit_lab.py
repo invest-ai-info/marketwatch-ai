@@ -34,6 +34,14 @@ R の単位 : その組の**最初の損切り幅**を 1R（ロットを損切�
            それは本物の相場でも起きる実在の差（作り物の値動きは値段に対する値幅が小さく、コストが5〜10倍重く出る点に注意）。
            ⚠️ 組み合わせが 8入口×72組×2足＝1,152 と多い＝「目立つ」は**候補**であって結論ではない。
            候補は exit-lab-hypotheses.json に登録し、前向き（FWD）で確かめて初めて「確かめられた」と書く。
+前向きの確かめ方（2026-09-24・前向きのデータが1件も無いうちに固定）:
+           探索期間で「目立つ」になったマスごとに、前向き期間の「いまの方式との差」を見る。件数100以上で、
+           95%幅が0をまたがず探索期間と同じ向き、かつ差が0.10R以上なら「前向きでも同じ向き」。100件ごとに見直し、
+           2回続けて同じ向きなら「確かめられた」（exit-lab-hypotheses.json・研究日誌のトラッカーと同じ考え方）。
+           前向き期間は全マス共通で 2026-09-25 以降＝探索期間の判定に前向きのデータは入らない（後から目立ったマスでも同じ）。
+4時間足の注意: Yahoo の1時間足は直近730日しか取れないので、4時間足の探索期間は毎週古い側が少しずつ削れる。
+           そのため p値が境目のマスは週ごとに「目立つ」を出入りする（1回目と2回目の試走でも1マス入れ替わった）。
+           日足の探索期間は 2006〜2026-09-24 で固定＝入れ替わらない。
 公開     : 研究日誌で「検証結果」として公開してよい（オーナー判断 2026-09-24）。ただし「この入口にはこの出口が合う／
            おすすめ」とは書かない。良い組も悪い組も並べ、組み合わせが多いぶん偶然で良く見える可能性を必ず書く。
 
@@ -309,8 +317,45 @@ def report_md(cells, fwd_results, asof):
                      f"{TP_TYPES[c['tp']]} | {c['n']} | {c['avg']:+.3f} | {d['avg']:+.3f} [{d['lo']:+.3f}〜{d['hi']:+.3f}] |")
     else:
         L.append("なし")
+    L += ["", "## 目立つ組の前向き（2026-09-25以降に出たシグナルだけ）", ""]
+    if flagged:
+        L += ["| 足 | 入口 | 損切り | 利確 | 探索での差 | 前向きの件数（必要100） | 前向きの差 [95%] | 状態 |",
+              "|---|---|---|---|---|---|---|---|"]
+        for c in sorted(flagged, key=lambda c: (c["tf"], c["entry"], c["sl"], c["tp"])):
+            f = fwd_check(c, idx)
+            d = f.get("vs_base") or {}
+            rng = f"{d['avg']:+.3f} [{d['lo']:+.3f}〜{d['hi']:+.3f}]" if "avg" in d else "—"
+            L.append(f"| {c['tf']} | {X.LABEL[c['entry']]}（{'買い' if c['side'] == 'long' else '売り'}） | "
+                     f"{SL_TYPES[c['sl']]} | {TP_TYPES[c['tp']]} | {c['vs_base']['avg']:+.3f} | {d.get('n', 0)} | "
+                     f"{rng} | {f['state']} |")
+    else:
+        L.append("なし")
     L += ["", X.report_forward(fwd_results, asof) if fwd_results else "", ""]
     return "\n".join(L)
+
+
+FWD_MIN_N = 100
+FWD_MIN_EFFECT = 0.10
+
+
+def fwd_check(c, idx):
+    """探索で目立ったマスの前向き（事前登録どおり: 件数100以上・95%幅が0をまたがず同じ向き・差0.10R以上）。"""
+    f = idx.get((c["tf"], c["entry"], c["side"], c["sl"], c["tp"], "fwd"), {})
+    d = f.get("vs_base") or {}
+    n = d.get("n", 0)
+    if n < FWD_MIN_N or "avg" not in d:
+        state = "🟡蓄積中"
+    else:
+        up = c["vs_base"]["avg"] > 0
+        same = (d["lo"] > 0) if up else (d["hi"] < 0)
+        opposite = (d["hi"] < 0) if up else (d["lo"] > 0)
+        if same and abs(d["avg"]) >= FWD_MIN_EFFECT:
+            state = "🟢前向きでも同じ向き"
+        elif opposite:
+            state = "⛔前向きでは逆向き"
+        else:
+            state = "⚪まだ判断できない"
+    return {"vs_base": d, "state": state}
 
 
 def _rounded(x):
@@ -344,9 +389,12 @@ def main():
     cells = evaluate_lab(run_lab(frames))
     fwd = X.evaluate_forward(frames)
     asof = pd.Timestamp.now(tz="Asia/Tokyo").strftime("%Y-%m-%d")
+    idx = {(c["tf"], c["entry"], c["side"], c["sl"], c["tp"], c["period"]): c for c in cells}
+    flagged_fwd = [{"tf": c["tf"], "entry": c["entry"], "side": c["side"], "sl": c["sl"], "tp": c["tp"],
+                    "is_vs_base": c["vs_base"], **fwd_check(c, idx)} for c in cells if c.get("flag")]
     out = {"asof": asof, "is_until": str(IS_UNTIL.date()), "missing": missing,
            "sl_types": SL_TYPES, "tp_types": TP_TYPES, "base": list(BASE), "max_hold": MAX_HOLD,
-           "cells": cells, "forward_hypotheses": fwd}
+           "cells": cells, "flagged_forward": flagged_fwd, "forward_hypotheses": fwd}
     with open(args.json, "w", encoding="utf-8") as f:
         json.dump(_rounded(out), f, ensure_ascii=False, indent=0, default=str)
     with open(args.md, "w", encoding="utf-8") as f:
