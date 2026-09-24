@@ -1,0 +1,78 @@
+{
+  "article_id": 109,
+  "hypothesis_id": "rsi_oversold_edge",
+  "asof": "2026-09-25T06:10:00+09:00",
+  "description": "RSI売られすぎ逆張り買い（rsi_oversold_bounce）のIS/FWD比較：IS期間（2026-06-16まで）133回 vs FWD期間（2026-06-17以降）372回。金属・円FXグループが大幅改善。",
+  "claims": [
+    {
+      "label": "IS全体（2026-06-16まで）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17"},
+      "k": 52,
+      "n": 133,
+      "note": "標準18銘柄（1d拡張除く）のみ。IS期間勝率39.1%"
+    },
+    {
+      "label": "FWD全体（2026-06-17以降）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17"},
+      "k": 188,
+      "n": 372,
+      "note": "標準18銘柄（1d拡張除く）のみ。FWD期間勝率50.5%、rci_lo=+0.008"
+    },
+    {
+      "label": "IS×金・銀（貴金属）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17", "group": "metal"},
+      "k": 4,
+      "n": 31,
+      "note": "IS期間の貴金属。勝率12.9%と最悪グループ"
+    },
+    {
+      "label": "IS×円の通貨ペア",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17", "group": "jpy_fx"},
+      "k": 2,
+      "n": 20,
+      "note": "IS期間の円FX。勝率10.0%と最悪グループ"
+    },
+    {
+      "label": "FWD×金・銀（貴金属）",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "group": "metal"},
+      "k": 24,
+      "n": 45,
+      "note": "FWD期間の貴金属。勝率53.3%（IS比+40.4pp改善）"
+    },
+    {
+      "label": "FWD×円の通貨ペア",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "group": "jpy_fx"},
+      "k": 48,
+      "n": 95,
+      "note": "FWD期間の円FX。勝率50.5%（IS比+40.5pp改善）"
+    },
+    {
+      "label": "FWD×株価指数",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "group": "index"},
+      "k": 40,
+      "n": 79,
+      "note": "FWD期間の株価指数。勝率50.6%"
+    },
+    {
+      "label": "FWD×円以外の通貨ペア",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "group": "other_fx"},
+      "k": 56,
+      "n": 114,
+      "note": "FWD期間の円以外FX。勝率49.1%"
+    },
+    {
+      "label": "FWD×1時間足",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "tf": "1h"},
+      "k": 111,
+      "n": 238,
+      "note": "FWD期間の1時間足。勝率46.6%"
+    },
+    {
+      "label": "FWD×4時間足",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17", "tf": "4h"},
+      "k": 62,
+      "n": 116,
+      "note": "FWD期間の4時間足。勝率53.4%"
+    }
+  ]
+}

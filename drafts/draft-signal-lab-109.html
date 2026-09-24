@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <title>RSIが30を下回ったときの買いシグナルは、前向き372回で勝ちやすくなった？ グループ別に確かめた【研究日誌 #109】 - MarketWatch AI</title>
+  <meta name="description" content="RSI売られすぎ逆張り買い（rsi_oversold_bounce）の検証期間133回・前向き期間372回を比較。前向き勝率50.5%・期待値CIが初めてプラス域。主因は金属・円FXの大幅改善（+40pp）。研究日誌第109回。">
+  <meta name="keywords" content="AIシグナル,RSI,売られすぎ,逆張り,IS,FWD,グループ別,勝率,研究日誌,貴金属,円FX">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-109.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RSIが30を下回ったときの買いシグナルは、前向き372回で勝ちやすくなった？ グループ別に確かめた【研究日誌 #109】">
+  <meta property="og:description" content="RSI売られすぎ逆張り買い（rsi_oversold_bounce）の検証期間133回・前向き期間372回を比較。前向き勝率50.5%・期待値CIが初めてプラス域。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-109.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RSIが30を下回ったときの買いシグナルは、前向き372回で勝ちやすくなった？ グループ別に確かめた【研究日誌 #109】",
+    "description": "RSI売られすぎ逆張り買い（rsi_oversold_bounce）の検証期間133回・前向き期間372回を比較。前向き勝率50.5%・期待値CIが初めてプラス域。主因は金属・円FXの大幅改善。研究日誌第109回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-25",
+    "dateModified": "2026-09-25",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-109.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}/*mw-brand*/body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar mwf-nav">
+    <a class="nav-btn" href="../index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="../political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="../track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="../calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="../guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="../guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="../holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="../market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="../hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="../charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="../youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> ＞ <a href="../guides.html">解説記事</a> ＞ AIシグナル研究日誌 #109
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 RSIが30を下回ったときの買いシグナルは、前向き372回で勝ちやすくなった？ グループ別に確かめた<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #109</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年9月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="../guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（売られすぎ反発・帯の下線タッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第109回です。<a href="../guide-signal-lab-108.html">前回（#108）</a>に続き、今回は「RSI（相場の勢いを0〜100で表す指標。30以下は売られすぎの目安）が30を下回ったとき（売られすぎ）に出る買いシグナル」を取り上げます。</p>
+
+    <p>このシグナルは2026年6月16日に仮説として登録され、翌日（2026年6月17日）から前向き検証がスタートしました。それ以前の133回のデータを使った「確かめ直し」では勝率39.1%と不振でしたが、<strong>前向き期間の372回で50.5%まで改善し、期待値のぶれ幅（信頼区間）が初めてゼロを超えました</strong>。どのグループが改善に貢献したかを掘り下げます。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 確かめ直し期間（133回）の勝率は<strong>39.1%</strong>・損益分岐（43%）を下回る不振（期待値マイナス）<br>
+      ② 前向き期間（372回）の勝率は<strong>50.5%</strong>・1回あたりの損益の幅の下限が初めてゼロを超えた（損切り幅の0.01倍）<br>
+      ③ 確かめ直し期間に最悪だった<strong>金・銀（12.9%）と円の通貨ペア（10.0%）</strong>が、前向き期間ではそれぞれ<strong>53.3%・50.5%</strong>へ大幅改善（+40ポイント超）<br>
+      ④ 昇格基準（期待値の幅の下限がゼロを超えることを2回連続）の<strong>1回目をクリア</strong>——次回が合格なら昇格
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——RSI売られすぎ逆張り買い</a></li>
+        <li><a href="#method">確かめ方（2つの期間を分けた理由）</a></li>
+        <li><a href="#result-is">確かめ直し期間の結果（133回・39.1%）</a></li>
+        <li><a href="#result-fwd">前向き期間の結果（372回・50.5%）</a></li>
+        <li><a href="#group">グループ別：何が改善したか</a></li>
+        <li><a href="#tf">時間足別：1時間足 vs 4時間足</a></li>
+        <li><a href="#status">昇格基準の現状</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——RSI売られすぎ逆張り買い</h2>
+
+    <p>「RSI（相場の勢いを0〜100で表す指標）が30を下回ったとき」は、売られすぎのサインとして知られています。このとき出た買いシグナル（逆張り買い）が、長期的にプラスの期待値を持つかどうかを確かめるのが今回の仮説です。</p>
+
+    <p>仮説は2026年6月16日に登録されました。</p>
+
+    <div class="info-box">
+      <strong>💡 損益分岐43%とは</strong><br>
+      このシステムの損切り幅を1とすると、利益確定1は1.33倍のもうけです。収支がゼロになる最低勝率は約43%です。43%を下回り続けると、長期的に損が出ます。
+    </div>
+
+    <div class="warning-box">
+      本記事のデータはすべて「AIシグナルシステムの過去ログ」をもとにした参考集計です。将来の相場での再現を保証するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 確かめ方（2つの期間を分けた理由）</h2>
+
+    <p>この仮説の検証では、データを2つの期間に分けて集計しています。</p>
+
+    <ul>
+      <li><strong>確かめ直し期間</strong>（以下「確認期間」）：仮説を登録した日より前のデータ（〜2026年6月16日）。過去のデータで検証した期間です。</li>
+      <li><strong>前向き期間</strong>（以下「前向き期間」）：仮説を登録した翌日（2026年6月17日）以降のデータ。仮説を知らずに積み上がったリアルタイムの記録です。</li>
+    </ul>
+
+    <p>この分け方をする理由は、「過去データに合わせてルールを作ると、偶然うまく見えることがある（過学習）」という問題を避けるためです。前向きデータは、ルールを決めた後に積み上がったデータなので、より信頼できる評価になります。</p>
+
+    <p>集計対象は標準18銘柄（金・銀・原油・株価指数5種・円の通貨ペア4種・円以外の通貨ペア5種・ビットコイン）のうち、結果が確定したもの（利益確定1到達または損切り到達）。未決済や失効は除外しました。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-is">③ 確かめ直し期間の結果（133回・39.1%）</h2>
+
+    <p>確かめ直し期間（2026年6月16日まで）は<strong>133回</strong>のシグナルが集まりました。</p>
+
+    <table>
+      <tr><th>期間</th><th>回数</th><th>勝ち/負け</th><th>勝率</th><th>偶然のぶれを考えた幅（95%）</th><th>期待値</th></tr>
+      <tr style="background:#fff8f8">
+        <td>確かめ直し期間</td>
+        <td>133回</td>
+        <td>52勝 / 81負</td>
+        <td style="color:#cf222e"><strong>39.1%</strong></td>
+        <td>[31.2%〜47.6%]</td>
+        <td style="color:#cf222e">損切り幅の−0.09倍</td>
+      </tr>
+    </table>
+
+    <div class="negative-box">
+      <strong>確かめ直し期間：勝率39.1%、損益分岐（43%）を下回る</strong><br>
+      偶然のぶれを考えた幅の上限47.6%は43%を超えているため、「損益分岐に届かない」とは確定できません。ただし期待値はマイナスで、全体としては不振でした。
+    </div>
+
+    <p>グループ別に見ると、差が非常に大きかったことがわかります（後の⑤節で詳しく比較します）。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-fwd">④ 前向き期間の結果（372回・50.5%）</h2>
+
+    <p>前向き期間（2026年6月17日以降）は<strong>372回</strong>まで積み上がりました。</p>
+
+    <table>
+      <tr><th>期間</th><th>回数</th><th>勝ち/負け</th><th>勝率</th><th>偶然のぶれを考えた幅（95%）</th><th>期待値</th></tr>
+      <tr style="background:#f0fff4">
+        <td>前向き期間</td>
+        <td>372回</td>
+        <td>188勝 / 184負</td>
+        <td style="color:#1a7f37"><strong>50.5%</strong></td>
+        <td>[45.5%〜55.6%]</td>
+        <td style="color:#1a7f37">損切り幅の+0.18倍</td>
+      </tr>
+    </table>
+
+    <div class="positive-box">
+      <strong>前向き期間：勝率50.5%、期待値の幅の下限が初めてゼロを超えた</strong><br>
+      偶然のぶれを考えた幅（95%）の下限がプラス域に達しました。昇格基準（2回連続で期待値の幅の下限がゼロを超える）の1回目をクリアしています。
+    </div>
+
+    <!-- SVG 1: IS vs FWD 全体比較 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 500 230" role="img" aria-label="確かめ直し期間と前向き期間の勝率比較棒グラフ">
+        <!-- Y axis -->
+        <line class="s-axis" x1="55" y1="20" x2="55" y2="190"/>
+        <!-- X axis -->
+        <line class="s-axis" x1="55" y1="190" x2="460" y2="190"/>
+        <!-- Y labels (0% to 65%) -->
+        <text class="s-label-sm" x="48" y="194" text-anchor="end">0%</text>
+        <text class="s-label-sm" x="48" y="60" text-anchor="end">50%</text>
+        <text class="s-label-sm" x="48" y="27" text-anchor="end">65%</text>
+        <!-- 43% breakeven: y = 190 - (43/65)*170 = 190 - 112.5 = 77.5 ≈ 78 -->
+        <line class="s-guide" x1="55" y1="78" x2="460" y2="78"/>
+        <text class="s-label-y" x="60" y="74">損益分岐 43%</text>
+        <!-- IS bar: 39.1% → height = (39.1/65)*170 = 102.2, y_top = 190-102.2 = 87.8 ≈ 88 -->
+        <rect class="s-fill-r" x="90" y="88" width="120" height="102" rx="4"/>
+        <text class="s-label-r" x="150" y="83" text-anchor="middle">39.1%</text>
+        <text class="s-label-sm" x="150" y="210" text-anchor="middle">確かめ直し期間（133回）</text>
+        <!-- FWD bar: 50.5% → height = (50.5/65)*170 = 132.0, y_top = 190-132.0 = 58 -->
+        <rect class="s-fill-g" x="270" y="58" width="120" height="132" rx="4"/>
+        <text class="s-label-g" x="330" y="53" text-anchor="middle">50.5%</text>
+        <text class="s-label-sm" x="330" y="210" text-anchor="middle">前向き期間（372回）</text>
+      </svg>
+      <p class="chart-caption">図1：確かめ直し期間と前向き期間の勝率比較。点線は損益分岐43%。前向き期間では損益分岐を超え、期待値の幅の下限も初めてゼロを超えました。実際の価格チャートではありません。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="group">⑤ グループ別：何が改善したか</h2>
+
+    <p>全体の改善を引っ張ったのはどのグループでしょうか。確かめ直し期間と前向き期間を、銘柄グループ別に並べます。</p>
+
+    <table>
+      <tr><th>グループ</th><th>確かめ直し期間（IS）</th><th>前向き期間（FWD）</th><th>変化</th></tr>
+      <tr style="background:#f0fff4">
+        <td>金・銀（貴金属）</td>
+        <td style="color:#cf222e">31回中4回 = <strong>12.9%</strong></td>
+        <td style="color:#1a7f37">45回中24回 = <strong>53.3%</strong></td>
+        <td style="color:#1a7f37"><strong>+40.4ポイント</strong></td>
+      </tr>
+      <tr style="background:#f0fff4">
+        <td>円の通貨ペア</td>
+        <td style="color:#cf222e">20回中2回 = <strong>10.0%</strong></td>
+        <td style="color:#1a7f37">95回中48回 = <strong>50.5%</strong></td>
+        <td style="color:#1a7f37"><strong>+40.5ポイント</strong></td>
+      </tr>
+      <tr>
+        <td>株価指数</td>
+        <td>35回中20回 = 57.1%</td>
+        <td>79回中40回 = 50.6%</td>
+        <td style="color:#9a6700">−6.5ポイント</td>
+      </tr>
+      <tr>
+        <td>円以外の通貨ペア</td>
+        <td>23回中14回 = 60.9%</td>
+        <td>114回中56回 = 49.1%</td>
+        <td style="color:#9a6700">−11.8ポイント</td>
+      </tr>
+      <tr>
+        <td>ビットコイン</td>
+        <td>14回中4回 = 28.6%</td>
+        <td>14回中8回 = 57.1%</td>
+        <td style="color:#1a7f37">+28.5ポイント</td>
+      </tr>
+      <tr>
+        <td>原油</td>
+        <td>10回中8回 = 80.0%</td>
+        <td>25回中12回 = 48.0%</td>
+        <td style="color:#9a6700">−32.0ポイント</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>📌 読み方の注意</strong><br>
+      確かめ直し期間の回数は少なく（金・銀31回、円の通貨ペア20回など）、偶然のぶれの幅が非常に広いため、個別グループの数字は偶然のぶれが大きいです。「回数が少ない ＝ 信頼度が低い」と理解してください。全体（133回 / 372回）の数字の方が安定しています。
+    </div>
+
+    <!-- SVG 2: グループ別 IS→FWD 変化 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 540 290" role="img" aria-label="グループ別の確かめ直し期間と前向き期間の勝率変化図">
+        <!-- Y axis -->
+        <line class="s-axis" x1="55" y1="20" x2="55" y2="255"/>
+        <!-- X axis -->
+        <line class="s-axis" x1="55" y1="255" x2="510" y2="255"/>
+        <!-- Y labels: 0% to 90%, scale: y = 255 - (pct/90)*235 -->
+        <text class="s-label-sm" x="48" y="258" text-anchor="end">0%</text>
+        <text class="s-label-sm" x="48" y="127" text-anchor="end">45%</text>
+        <text class="s-label-sm" x="48" y="24" text-anchor="end">90%</text>
+        <!-- 43% breakeven: y = 255 - (43/90)*235 = 255 - 112.3 = 142.7 ≈ 143 -->
+        <line class="s-guide" x1="55" y1="143" x2="510" y2="143"/>
+        <text class="s-label-y" x="58" y="139" font-size="10.5">損益分岐 43%</text>
+        <!-- Column headers -->
+        <text class="s-label-b" x="160" y="14" text-anchor="middle" font-size="11.5">確かめ直し期間</text>
+        <text class="s-label-g" x="390" y="14" text-anchor="middle" font-size="11.5">前向き期間</text>
+        <!-- Connecting lines and dots for each group -->
+        <!-- metal: IS=12.9% y=255-(12.9/90)*235=255-33.7=221.3, FWD=53.3% y=255-(53.3/90)*235=255-139.1=115.9 -->
+        <line stroke="#0969da" stroke-width="1.5" stroke-dasharray="5,3" x1="160" y1="221" x2="390" y2="116"/>
+        <circle cx="160" cy="221" r="6" fill="#cf222e"/>
+        <circle cx="390" cy="116" r="6" fill="#1a7f37"/>
+        <text class="s-label-r" x="155" y="237" text-anchor="middle" font-size="11">12.9%</text>
+        <text class="s-label-g" x="395" y="112" text-anchor="start" font-size="11">53.3%</text>
+        <text class="s-label-sm" x="270" y="177" text-anchor="middle" font-size="10">金・銀</text>
+        <!-- jpy_fx: IS=10.0% y=255-(10/90)*235=255-26.1=228.9, FWD=50.5% y=255-(50.5/90)*235=255-131.8=123.2 -->
+        <line stroke="#0969da" stroke-width="1.5" stroke-dasharray="5,3" x1="160" y1="229" x2="390" y2="123"/>
+        <circle cx="160" cy="229" r="6" fill="#cf222e"/>
+        <circle cx="390" cy="123" r="6" fill="#1a7f37"/>
+        <text class="s-label-r" x="115" y="233" text-anchor="middle" font-size="11">10.0%</text>
+        <text class="s-label-g" x="398" y="127" text-anchor="start" font-size="11">50.5%</text>
+        <text class="s-label-sm" x="270" y="192" text-anchor="middle" font-size="10">円の通貨ペア</text>
+        <!-- index: IS=57.1% y=255-(57.1/90)*235=255-149.1=105.9, FWD=50.6% y=255-(50.6/90)*235=255-132.1=122.9 -->
+        <line stroke="#8b949e" stroke-width="1.5" stroke-dasharray="5,3" x1="160" y1="106" x2="390" y2="123"/>
+        <circle cx="160" cy="106" r="6" fill="#9a6700"/>
+        <circle cx="390" cy="123" r="6" fill="#1a7f37"/>
+        <text class="s-label-y" x="120" y="105" text-anchor="middle" font-size="11">57.1%</text>
+        <text class="s-label-g" x="398" y="140" text-anchor="start" font-size="11">50.6%</text>
+        <text class="s-label-sm" x="270" y="108" text-anchor="middle" font-size="10">株価指数</text>
+        <!-- other_fx: IS=60.9% y=255-(60.9/90)*235=255-159.0=96.0, FWD=49.1% y=255-(49.1/90)*235=255-128.2=126.8 -->
+        <line stroke="#8b949e" stroke-width="1.5" stroke-dasharray="5,3" x1="160" y1="96" x2="390" y2="127"/>
+        <circle cx="160" cy="96" r="6" fill="#9a6700"/>
+        <circle cx="390" cy="127" r="6" fill="#1a7f37"/>
+        <text class="s-label-y" x="110" y="92" text-anchor="middle" font-size="11">60.9%</text>
+        <text class="s-label-g" x="398" y="155" text-anchor="start" font-size="11">49.1%</text>
+        <text class="s-label-sm" x="270" y="97" text-anchor="middle" font-size="10">円以外の通貨ペア</text>
+      </svg>
+      <p class="chart-caption">図2：グループ別の勝率変化（確かめ直し期間から前向き期間へ）。青の点線は変化の向き。赤丸は損益分岐を下回る、緑丸は損益分岐以上。金・銀と円の通貨ペアの大幅な改善が見てとれます。確かめ直し期間の回数は少なく（20〜35回）、個別グループの変化には偶然のぶれが含まれます。</p>
+    </div>
+
+    <h3>改善の「なぜ」はわかるか</h3>
+    <p>金・銀と円の通貨ペアが確かめ直し期間に特に悪かった理由は、このデータからは特定できません。確かめ直し期間は回数が少なく（金・銀31回、円FX20回）、偶然の不運が重なった可能性もあります。前向き期間でも引き続き追跡が必要です。</p>
+
+    <!-- =============================== -->
+    <h2 id="tf">⑥ 時間足別：1時間足と4時間足の比較</h2>
+
+    <p>前向き期間（372回）を時間足別に分けると、次のとおりです。</p>
+
+    <table>
+      <tr><th>時間足</th><th>回数</th><th>勝ち/負け</th><th>勝率</th><th>偶然のぶれを考えた幅（95%）</th></tr>
+      <tr>
+        <td>1時間足</td>
+        <td>238回</td>
+        <td>111勝 / 127負</td>
+        <td>46.6%</td>
+        <td>[40.4%〜53.0%]</td>
+      </tr>
+      <tr style="background:#f0fff4">
+        <td>4時間足</td>
+        <td>116回</td>
+        <td>62勝 / 54負</td>
+        <td style="color:#1a7f37"><strong>53.4%</strong></td>
+        <td>[44.4%〜62.3%]</td>
+      </tr>
+    </table>
+
+    <p>4時間足の方がやや高い勝率を示していますが、偶然のぶれの幅が広く重なっており、「4時間足の方が確実に有利」とは言えません。全体として前向き期間は損益分岐を超えており、時間足の差は参考程度に留めます。</p>
+
+    <!-- =============================== -->
+    <h2 id="status">⑦ 昇格基準の現状</h2>
+
+    <p>この仮説が「確かめられた有利さ」として昇格するには、次の基準を2回連続でクリアする必要があります。</p>
+
+    <ul>
+      <li>前向き回数が80回以上 ✅（372回でクリア済み）</li>
+      <li>期待値の偶然のぶれ幅の下限がゼロを超える ✅（今回クリア）</li>
+      <li>上記2つを<strong>2回連続</strong>でクリア（今回が1回目、次回が合格で昇格）</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>📊 トラッカー現在値（2026-09-25時点）</strong><br>
+      前向き372回、勝率 50.5%、1回あたり損益の幅（偶然のぶれを考慮した95%幅）の下限が初めてゼロを超えた<br>
+      状態：🟡 蓄積中（昇格基準1回目クリア。次回が合格なら昇格）
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+    <p class="meta-line">基準日 2026-09-25／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+    <div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（13語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li></ul></details></div>
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.02~+0.09]（1596/3604・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしのシグナル（買いも売りも）<br><small style="opacity:.7">blocked=False</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.02~+0.10]（1278/2873・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしの買い<br><small style="opacity:.7">blocked=False×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.03~+0.13]（1017/2264・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>買い全般（4時間足のみ）<br><small style="opacity:.7">tf=4h×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.07~+0.14]（452/1015・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数のシグナル（買いも売りも）<br><small style="opacity:.7">group=index</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.00 CI[-0.09~+0.10]（409/954・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>選別ランク「普通」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=neutral</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.03~+0.13]（427/950・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.10~+0.12]（354/820・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.04 CI[-0.10~+0.19]（343/767・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（&gt;MA25&amp;75）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.06 CI[-0.07~+0.19]（325/717・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしの売り<br><small style="opacity:.7">blocked=False×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.01 CI[-0.11~+0.12]（273/633・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀のシグナル（買いも売りも）<br><small style="opacity:.7">group=metal</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[-0.08~+0.21]（204/446・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr style="background:#f0fff4"><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.18 CI[+0.01~+0.35]（188/372・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>関連ニュースなしのシグナル（買いも売りも）<br><small style="opacity:.7">注目度ゼロ(news=0)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.03 CI[-0.18~+0.13]（152/364・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>もみあい中の逆張り買い<br><small style="opacity:.7">trend=中立・もみあい×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.05~+0.21]（155/336・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀の買い<br><small style="opacity:.7">group=metal×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.09 CI[-0.11~+0.30]（153/327・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>上昇トレンド中の逆張り買い<br><small style="opacity:.7">trend=上昇×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.09 CI[-0.06~+0.24]（152/326・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中の売り<br><small style="opacity:.7">trend=下降×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.09~+0.25]（129/278・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁ありの売り<br><small style="opacity:.7">blocked=True×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.06 CI[-0.22~+0.11]（111/274・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>円以外の通貨ペアの逆張り買い<br><small style="opacity:.7">other_fx×逆張り買い(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.05 CI[-0.13~+0.23]（122/271・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>上昇トレンド中、値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ロング×上昇トレンド×MA両線の上</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.01 CI[-0.21~+0.22]（116/269・勝率43%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数の逆張り買い<br><small style="opacity:.7">group=index×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.02 CI[-0.22~+0.18]（106/252・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「直近20本の安値を下抜け」のシグナル<br><small style="opacity:.7">signal=low_break</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.14~+0.17]（108/248・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数の売り<br><small style="opacity:.7">group=index×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.10~+0.26]（108/234・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ビットコインの買い<br><small style="opacity:.7">group=btc×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.07 CI[-0.10~+0.24]（97/211・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>値段が2本の移動平均線より下で出た「MACDのゴールデンクロス」<br><small style="opacity:.7">ステート MACDゴールデン×両MA下（底値圏転換）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.16 CI[-0.05~+0.37]（73/147・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀の逆張り買い<br><small style="opacity:.7">group=metal×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[-0.19~+0.46]（58/119・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>買い全般（日足のみ）<br><small style="opacity:.7">ロング全般(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.06 CI[-0.20~+0.32]（53/117・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「移動平均線のデッドクロス」のシグナル<br><small style="opacity:.7">signal=ma_dead</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.05 CI[-0.29~+0.19]（45/111・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>上昇トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">ステート RSI≥70×上昇トレンド（強さは続く）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.11 CI[-0.14~+0.36]（52/109・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ビットコインのシグナル（1時間足のみ／買いも売りも）<br><small style="opacity:.7">BTC×1時間足(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.03 CI[-0.18~+0.23]（47/107・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>RSI45〜55（中立）で出た「サポート（下値の支え）での反発」<br><small style="opacity:.7">ステート サポート反発×RSI中立（弱い逆張り＝回避）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.34~+0.13]（39/102・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>円の通貨ペア、RSI45〜55（中立）のシグナル（買いも売りも）<br><small style="opacity:.7">JPYクロス×RSI中立帯(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.02 CI[-0.24~+0.19]（41/98・勝率42%）</td><td>🟡蓄積中</td></tr>
+<tr><td>RSI45〜55（中立）で出た「ボリンジャーバンド−2σタッチ」<br><small style="opacity:.7">ステート BB下限タッチ×RSI中立（弱い逆張り＝回避）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.07 CI[-0.35~+0.22]（30/75・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ビットコインの逆張り買い<br><small style="opacity:.7">group=btc×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.23 CI[-0.08~+0.55]（38/72・勝率53%）</td><td>🟡蓄積中</td></tr>
+<tr><td>上昇トレンド中、RSI30以下（売られすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">rsi=os×trend=上昇</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.15 CI[-0.10~+0.40]（35/71・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「直近20本の高値を上抜け」と「RSI買われすぎ」が同時に出たシグナル<br><small style="opacity:.7">コンボ 高値ブレイク×RSI買われすぎ</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.05 CI[-0.30~+0.40]（31/69・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>円以外の通貨ペアのシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">other_fxクロス(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥30かつ平均RのCI上限&lt;0🏁</td><td>平均R +0.05 CI[-0.29~+0.38]（22/49・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>売り全般（日足のみ）<br><small style="opacity:.7">ショート全般(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.19 CI[-0.48~+0.10]（16/46・勝率35%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「ボリンジャーバンド+2σ突破」と「RSI買われすぎ」が同時に出たシグナル<br><small style="opacity:.7">コンボ +2σ突破×RSI買われすぎ</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.08 CI[-0.36~+0.52]（19/41・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中のシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">下降トレンド発火(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.05 CI[-0.41~+0.30]（15/37・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀の買い（日足のみ）<br><small style="opacity:.7">メタル×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.07 CI[-0.45~+0.59]（11/24・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>逆張り買い全般（日足のみ）<br><small style="opacity:.7">tf=1d×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.36 CI[-0.20~+0.92]（14/24・勝率58%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数の買い（日足のみ）<br><small style="opacity:.7">指数×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.11 CI[-0.68~+0.46]（8/21・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">rsi=ob×trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.58~+0.36]（8/21・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ビットコインの買い（日足のみ）<br><small style="opacity:.7">BTC×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.50 CI[-0.11~+1.11]（9/14・勝率64%）</td><td>🟡蓄積中</td></tr>
+<tr><td>ビットコインのシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">BTC全方向(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥30かつ平均RのCI下限&gt;0🏁</td><td>平均R +0.17 CI[-0.47~+0.80]（7/14・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「ボリンジャーバンド−2σタッチ」のシグナル（日足のみ）<br><small style="opacity:.7">BB下限タッチ(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.10 CI[-0.82~+0.62]（5/13・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数の逆張り買い（日足のみ）<br><small style="opacity:.7">指数×逆張り買い(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.75 CI[-0.56~+2.06]（3/4・勝率75%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「ダブルボトム（二番底）」と「直近20本の高値を上抜け」が同時に出たシグナル<br><small style="opacity:.7">コンボ ダブルボトム×高値ブレイク</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +1.33 CI[+1.33~+1.33]（1/1・勝率100%）</td><td>🟡蓄積中</td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.05 CI[-0.02~+0.12]（1224/2721・勝率45%）</td><td>⛔反証</td></tr>
+<tr><td>下降トレンド中のシグナル（買いも売りも）<br><small style="opacity:.7">trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.12 CI[+0.04~+0.19]（508/1061・勝率48%）</td><td>⛔反証</td></tr>
+<tr><td>逆張り買い全般<br><small style="opacity:.7">reversalL（逆張り買い）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.11 CI[+0.01~+0.20]（467/982・勝率48%）</td><td>⛔反証</td></tr>
+<tr><td>もみあい中の買い<br><small style="opacity:.7">trend=中立・もみあい×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.04~+0.15]（444/980・勝率45%）</td><td>⛔反証</td></tr>
+<tr><td>下降トレンド中の買い<br><small style="opacity:.7">trend=下降×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[+0.03~+0.24]（401/824・勝率49%）</td><td>⛔反証</td></tr>
+<tr><td>選別ランク「良」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=good</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[+0.04~+0.28]（348/697・勝率50%）</td><td>⛔反証</td></tr>
+<tr><td>選別ランク「良」の買い<br><small style="opacity:.7">tier=good×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.16 CI[+0.04~+0.29]（331/664・勝率50%）</td><td>⛔反証</td></tr>
+<tr><td>下降トレンド中の逆張り買い<br><small style="opacity:.7">trend=下降×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.19 CI[+0.03~+0.34]（176/346・勝率51%）</td><td>⛔反証</td></tr>
+<tr><td>もみあい中の売り<br><small style="opacity:.7">trend=中立・もみあい×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.09 CI[-0.24~+0.07]（117/299・勝率39%）</td><td>⛔反証</td></tr>
+</table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑨ 次回に向けて</h2>
+
+    <p>今回の検証で明らかになったこと：</p>
+    <ul>
+      <li>前向き372回で勝率50.5%・期待値の幅の下限が初めてゼロを超えた</li>
+      <li>確かめ直し期間に不振だった金・銀と円の通貨ペアが、前向き期間で大幅に改善</li>
+      <li>昇格基準（2回連続）の1回目をクリア——次回が合格なら「確かめられた有利さ」として昇格</li>
+    </ul>
+
+    <p>引き続き回数が積み上がり次第、次回の定点観測で2回目の合否を確認します（次回が合格なら「確かめられた有利さ」として昇格します）。</p>
+
+    <div class="cta-box">
+      <div class="cta-box-title">📊 シグナル成績をリアルタイムで確認</div>
+      <div class="cta-box-desc">本日時点のシグナル成績・勝率・期待値をダッシュボードで一覧できます。</div>
+      <a href="../track-record.html" style="display:inline-block;background:#1E3A6E;color:#fff;padding:10px 22px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem">シグナル成績を見る →</a>
+    </div>
+
+    <div class="cta-box" style="margin-top:16px">
+      <div class="cta-box-title">🗂️ 関連記事</div>
+      <div class="related-grid">
+        <a class="related-card" href="../guide-signal-lab-108.html">
+          <div class="related-card-title">研究日誌 #108</div>
+          <div class="related-card-desc">前回の研究日誌</div>
+        </a>
+        <a class="related-card" href="../guide-signal-anatomy.html">
+          <div class="related-card-title">シグナル図解カタログ</div>
+          <div class="related-card-desc">RSI売られすぎなど各シグナルの発火条件を図解で解説</div>
+        </a>
+        <a class="related-card" href="../guide-signal-lab-001.html">
+          <div class="related-card-title">研究日誌 #1（最初の回）</div>
+          <div class="related-card-desc">この日誌の目的と検証ルールを説明した第1回</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ② 末尾免責（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイトは金融商品取引法に基づく金融商品取引業者ではなく、投資助言・代理業の登録も行っておりません。記事内の数値・集計はAIシグナルシステムの過去ログをもとにした参考情報であり、将来の相場や成績を保証するものではありません。投資判断はご自身の責任で行い、必要に応じて専門家にご相談ください。
+    </p>
+
+  </div>
+</main>
+
+<footer>
+  <p><a href="../index.html">MarketWatch AI</a> | <a href="../guides.html">解説記事一覧</a> | <a href="../about.html">サイトについて</a> | <a href="../privacy.html">プライバシーポリシー</a></p>
+  <p style="margin-top:8px">© 2024-2026 MarketWatch AI. 本サイトは情報提供のみを目的としており、投資助言ではありません。</p>
+</footer>
+
+<script>
+document.addEventListener('scroll',function(){
+  var el=document.getElementById('reading-progress');
+  if(!el)return;
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  el.style.width=h>0?Math.min(100,window.scrollY/h*100)+'%':'0';
+},{passive:true});
+function toggleTheme(){
+  var b=document.body;
+  var btn=document.getElementById('theme-toggle');
+  if(b.classList.contains('dark')){b.classList.remove('dark');btn.textContent='🌙';try{localStorage.setItem('mw-theme','light');}catch(e){}}
+  else{b.classList.add('dark');btn.textContent='☀️';try{localStorage.setItem('mw-theme','dark');}catch(e){}}
+}
+try{if(localStorage.getItem('mw-theme')==='dark'){document.body.classList.add('dark');var btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}}catch(e){}
+</script>
+</body>
+</html>
