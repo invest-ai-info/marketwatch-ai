@@ -100,6 +100,9 @@ WORKFLOW_CHECKS = [
     # 🆕 2026-08-16 追加。8/2・8/9・8/16 と3週連続で失敗していたのに、監視対象外だったので
     #    誰も気づけなかった（原因＝Gmailアプリパスワードの失効。⑨で毎朝直接確かめる）。
     ("週次ゾーンメール",        "weekly-zone-email.yml",   24 * 10, "warn"),
+    # 🆕 2026-09-24: 出口の相性ラボ（週1・日曜早朝）。研究日誌が exit-lab.json を読むので、
+    #    止まると日誌が古い表を読み続ける。⚠️ 新設直後は「実行履歴なし」になる＝マージ後に1回手動実行する。
+    ("出口の相性ラボ",          "exit-lab.yml",            24 * 8,  "warn"),
     ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
     ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
     ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),
@@ -129,6 +132,8 @@ GATE_FILES = [
     "check_guide_draft.py",
     "signal_lab_verify.py",
     "publish_article.py",
+    # 🆕 2026-09-24: 研究日誌「出口の相性」回の数字の照合（exit-lab.json と突き合わせる固定オラクル）
+    "exit_lab_verify.py",
 ]
 GATE_WINDOW_H = 26  # 毎日09:30実行＋cron滑りをカバー（>24h。稀に同じ違反を2日連続報告するのは許容）
 

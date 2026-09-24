@@ -1,0 +1,60 @@
+name: Exit Lab
+
+# 出口の相性ラボ（exit_lab.py）: 入口シグナル8つ × 損切りの型8 × 利確の型9 を同じ入口に全部当てて比べる。
+# 2026-09-24 オーナー指示「どのシグナルで入ったときにどの損切り・利確が合うのかを研究日誌で日々検証したい」。
+# 研究日誌の routine（signal-lab-daily）は Yahoo に届かないので、価格の取得と計算はここで行い、
+# exit-lab.json / exit-lab.md をコミットする。routine はそれを読むだけ。
+# ⚠️ 判定のしかた（事前登録）は exit_lab.py の冒頭に固定してある。結果を見てから基準を動かさない。
+# ⚠️ exit-lab.json / exit-lab.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# 週1で十分（探索期間の数字は過去データなのでほぼ動かない。前向きの件数が少しずつ増えるだけ）。
+
+on:
+  schedule:
+    - cron: '43 19 * * 6'   # 日曜 04:43 JST 本命（週末で値動きが少なく、研究日誌 06:10 より前）
+    - cron: '17 21 * * 6'   # 日曜 06:17 JST バックアップ（cron遅延対策。変化が無ければコミットしない）
+  workflow_dispatch:        # 手動実行も可能
+
+concurrency:
+  group: exit-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy certifi
+
+      - name: Run exit lab (writes exit-lab.json / exit-lab.md)
+        run: |
+          python exit_lab.py --json exit-lab.json --md exit-lab.md
+          cat exit-lab.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit exit-lab.json / exit-lab.md if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add exit-lab.json exit-lab.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: exit lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+          # 生成物なので、衝突したら今回生成した側を採る（update-market-news と同じ考え方）
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin main && git push && exit 0
+            echo "push に失敗（${i}回目）。少し待って再試行"
+            sleep $((i * 10))
+          done
+          exit 1

@@ -30,6 +30,7 @@ signal_lab_tracker.py — 前向きトラッカー（登録→out-of-sample で�
 """
 import argparse
 import datetime
+import html
 import json
 import os
 import sys
@@ -529,6 +530,129 @@ def cmd_register(args, data, today):
           f"（重複スキップ {len(src.get('candidates', [])) - added - annotated}本）。次に update で前向き計測。")
 
 
+# 🆕 2026-09-24 表の「仮説」をやさしい日本語に（オーナー指示「慣れていない人が見ると何の機構か全くわからない」）。
+#   スイープが自動登録した仮説の label は「group=metal×dir=long」のような機械名のまま＝読者に意味が通じない。
+#   label は台帳・REVIEW.md・番人 §⑥ が参照するので書き換えず、表を描くときに filter から名前を組み立てる
+#   （filter が真実＝自動登録の新仮説も自動で日本語になる）。意味は signal_lab_verify.match() に合わせる:
+#   reversal_long=True は「買い かつ RSI売られすぎ反発 / −2σタッチ」で direction より優先、False は条件にならない。
+PLAIN_GROUP = {
+    "all": "全銘柄", "index": "株価指数", "metal": "金・銀", "btc": "ビットコイン", "oil": "原油",
+    "jpy_fx": "円の通貨ペア", "other_fx": "円以外の通貨ペア",
+    "metal_x": "銅・プラチナ", "energy_x": "天然ガス", "rates": "米国債先物",
+    "crypto_x": "イーサリアム", "index_x": "独DAX・香港ハンセン・半導体SOX",
+}
+PLAIN_SIGNAL = {
+    "rsi_oversold_bounce": "RSI売られすぎからの反発", "rsi_overbought": "RSI買われすぎ",
+    "macd_golden": "MACDのゴールデンクロス", "macd_dead": "MACDのデッドクロス",
+    "ma_golden": "移動平均線のゴールデンクロス", "ma_dead": "移動平均線のデッドクロス",
+    "bb_lower_touch": "ボリンジャーバンド−2σタッチ", "bb_upper_break": "ボリンジャーバンド+2σ突破",
+    "high_break": "直近20本の高値を上抜け", "low_break": "直近20本の安値を下抜け",
+    "support_bounce": "サポート（下値の支え）での反発",
+    "double_bottom": "ダブルボトム（二番底）", "double_top": "ダブルトップ（二番天井）",
+    "fib_pullback_long": "フィボナッチ押し目", "triangle_squeeze": "三角もちあい",
+    "volume_climax_bounce": "出来高急増からの反発",
+}
+PLAIN_TF = {"1h": "1時間足", "4h": "4時間足", "1d": "日足"}
+PLAIN_SITUATION = {  # filter キー → 値 → 場面を表す名詞句（後ろに「の」が付く）
+    "trend": {"上昇": "上昇トレンド中", "下降": "下降トレンド中", "中立・もみあい": "もみあい中",
+              "unknown": "トレンド判定なし"},
+    "ma_pos": {"above_both": "値段が2本の移動平均線より上", "below_both": "値段が2本の移動平均線より下",
+               "above25_only": "値段が25本の移動平均線より上・75本の線より下",
+               "above75_only": "値段が75本の移動平均線より上・25本の線より下"},
+    "rsi_band": {"os": "RSI30以下（売られすぎ）", "low": "RSI30〜45", "mid": "RSI45〜55（中立）",
+                 "high": "RSI55〜70", "ob": "RSI70以上（買われすぎ）"},
+    "macd_side": {"pos": "MACDが0より上", "neg": "MACDが0以下"},
+    "blocked": {True: "目標の手前に壁あり", False: "目標の手前に壁なし"},
+    "tier": {"elite": "選別ランク「最上位」", "good": "選別ランク「良」", "neutral": "選別ランク「普通」",
+             "avoid": "選別ランク「避けたい」"},
+    "env": {k: f"環境警戒スコア{k}" for k in "ABCD"},
+    "regime": {"RISK_ON": "リスクオン（強気ムード）", "RISK_OFF": "リスクオフ（弱気ムード）", "NEUTRAL": "ムード中立"},
+    "regime4": {"UP_LOW": "上昇相場・値動き小", "UP_HIGH": "上昇相場・値動き大",
+                "DOWN_LOW": "下落相場・値動き小", "DOWN_HIGH": "下落相場・値動き大"},
+    "news": {"0": "関連ニュースなし", "1-2": "関連ニュース1〜2本", "3+": "関連ニュース3本以上"},
+}
+PLAIN_KIND = {"edge": "勝ちやすいか", "gate": "負けやすいか"}
+# 名前に出てきた言葉だけ表の上で説明する（出てこない言葉の説明は載せない＝表の上を短く保つ）
+PLAIN_TERMS = [
+    ("全銘柄", "全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）"),
+    ("株価指数", "株価指数＝日経平均・S&P500・ナスダック100・NYダウ・英FTSE100"),
+    ("円の通貨ペア", "円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円"),
+    ("円以外の通貨ペア", "円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル"),
+    ("逆張り買い", "逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か"
+                  "「ボリンジャーバンド−2σタッチ」で買ったもの）"),
+    ("壁", "壁＝利益確定の目標までの間にある直近の高値（売りなら安値）"),
+    ("選別ランク", "選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安"),
+    ("移動平均線", "移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）"),
+    ("RSI", "RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）"),
+    ("MACD", "MACD＝2本の移動平均の差で勢いの変わり目を見る指標"),
+    ("ボリンジャーバンド", "ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）"),
+    ("クロス", "ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）"),
+    ("環境警戒スコア", "環境警戒スコア＝重要な指標の発表や相場の荒れ具合から決める警戒度（A＝穏やか〜D＝最も警戒）"),
+    ("関連ニュース", "関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数"),
+]
+
+
+def plain_name(f):
+    """filter dict → 読者向けの日本語の名前（例 {"group":"metal","direction":"long"} → 「金・銀の買い」）。
+    知らないキー・値は「キー=値」のまま残す（黙って消さない）。"""
+    scope = PLAIN_GROUP.get(f["group"], f["group"]) if "group" in f else f.get("ticker")
+    situ = []
+    for k, table in PLAIN_SITUATION.items():
+        if k in f:
+            situ.append(table.get(f[k], f"{k}={f[k]}"))
+    known = {"group", "ticker", "tf", "direction", "reversal_long", "signal", "signals_all", *PLAIN_SITUATION}
+    situ += [f"{k}={v}" for k, v in f.items() if k not in known]
+    ctx = "、".join(([scope] if scope else []) + situ)
+    side = "逆張り買い" if f.get("reversal_long") else {"long": "買い", "short": "売り"}.get(f.get("direction"))
+    sigs = f.get("signals_all") or ([f["signal"]] if "signal" in f else [])
+    trig = "と".join(f"「{PLAIN_SIGNAL.get(s, s)}」" for s in sigs)
+    if len(sigs) >= 2:
+        core = f"{trig}が同時に出たときの{side}" if side else f"{trig}が同時に出たシグナル"
+        name = f"{ctx}で{core}" if ctx else core
+    elif trig:
+        if side:
+            name = f"{ctx}、{trig}が出たときの{side}" if ctx else f"{trig}が出たときの{side}"
+        else:
+            name = f"{ctx}で出た{trig}" if ctx else f"{trig}のシグナル"
+    elif side:
+        name = f"{ctx}の{side}" if ctx else f"{side}全般"
+    else:
+        name = f"{ctx}のシグナル" if ctx else "シグナル全般"
+    note = [f"{PLAIN_TF.get(f['tf'], f['tf'])}のみ"] if "tf" in f else []
+    if not side and not trig:
+        note.append("買いも売りも")
+    return name + (f"（{'／'.join(note)}）" if note else "")
+
+
+def plain_legend(names):
+    """表の直前に置く「表の見方」の要素（HTML）。names＝表に出る日本語の名前（使われた言葉だけ説明する）。
+    言葉の説明は折りたたむ＝表が見出しから遠くならないように。class="meta-line" は check_plain_japanese が飛ばす。"""
+    text = ("表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。"
+            "「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。"
+            "「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。"
+            "「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。"
+            "時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。")
+    joined = "".join(names)
+    terms = [html.escape(d) for w, d in PLAIN_TERMS if w in joined]
+    if terms:
+        items = "".join(f"<li>{d}</li>" for d in terms)
+        text += (f'<details><summary>言葉の意味（{len(terms)}語・タップで開く）</summary>'
+                 f'<ul style="margin:6px 0 0;padding-left:1.2em">{items}</ul></details>')
+    return f'<div class="meta-line" data-mw-tracker-legend>{text}</div>'
+
+
+def plain_cell(f, label, extra=""):
+    """表の「仮説」セル＝日本語の名前＋小さな管理名（label）。extra＝記事側で足された印（「★本回」など）。"""
+    return (f'{html.escape(plain_name(f))}{extra}'
+            f'<br><small style="opacity:.7">{html.escape(label)}</small>')
+
+
+def plain_kind_cell(kind):
+    # nowrap＝PC幅で「負けや／すいか」と途中で折れないように
+    return (f'<span style="white-space:nowrap">{PLAIN_KIND.get(kind, kind)}</span>'
+            f'<br><small style="opacity:.7">{kind}</small>')
+
+
 def cmd_table(args, data, today):
     t = load_tracker()
     rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
@@ -538,6 +662,8 @@ def cmd_table(args, data, today):
                f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない'
                f'・基準合格2回連続で確定（2026-07-19〜）'
                f'／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>',
+               plain_legend([plain_name(h["filter"]) for h in rows]),
+               # ⚠️ 見出しの「前向き現在値(平均R)」と素の <table> は変えない＝check_plain_japanese.py がこの2つで表を見分けている
                '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}
         for h in rows:
@@ -547,8 +673,8 @@ def cmd_table(args, data, today):
             crit = (f"前向きN≥{mn}かつ平均RのCI下限>0" if h["kind"] == "edge"
                     else f"前向きN≥{mn}かつ平均RのCI上限<0") + ho
             val = f"平均R {fwd.get('avgR',0):+.2f} CI[{fwd.get('rci_lo',0):+.2f}~{fwd.get('rci_hi',0):+.2f}]（{fwd['k']}/{fwd['n']}・勝率{fwd['pct']:.0f}%）"
-            out.append(f'<tr><td>{h["label"]}</td><td>{h["kind"]}</td><td>{crit}</td>'
-                       f'<td>{val}</td><td>{icon[h.get("status","tracking")]}</td></tr>')
+            out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
+                       f'<td>{crit}</td><td>{val}</td><td>{icon[h.get("status","tracking")]}</td></tr>')
         out.append("</table>")
         print("\n".join(out))
     else:

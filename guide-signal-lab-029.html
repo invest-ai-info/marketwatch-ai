@@ -504,32 +504,33 @@ window.addEventListener('resize',mark);
 
     <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
 <p class="meta-line">基準日 2026-07-04／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない</p>
-<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
-<tr><td>指数×ロング(全足ライブ)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.35 CI[+0.06~+0.65]（70/121・勝率58%）</td><td>✅昇格</td></tr>
-<tr><td>group=all</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.08~+0.17]（116/259・勝率45%）</td><td>🟡蓄積中</td></tr>
-<tr><td>blocked=False</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.10~+0.19]（94/210・勝率45%）</td><td>🟡蓄積中</td></tr>
-<tr><td>dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[-0.00~+0.29]（94/192・勝率49%）</td><td>🟡蓄積中</td></tr>
-<tr><td>blocked=False×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.12~+0.28]（74/160・勝率46%）</td><td>🟡蓄積中</td></tr>
-<tr><td>tier=neutral</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.12 CI[-0.34~+0.10]（48/127・勝率38%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=中立・もみあい×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.09~+0.42]（58/116・勝率50%）</td><td>🟡蓄積中</td></tr>
-<tr><td>tf=4h×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.07~+0.33]（56/116・勝率48%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=下降</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.21~+0.32]（48/106・勝率45%）</td><td>🟡蓄積中</td></tr>
-<tr><td>group=other_fx×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.00~+0.34]（49/98・勝率50%）</td><td>🟡蓄積中</td></tr>
-<tr><td>group=metal</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.41~+0.20]（34/89・勝率38%）</td><td>🟡蓄積中</td></tr>
-<tr><td>group=index</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.09 CI[-0.30~+0.11]（33/85・勝率39%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=下降×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.12~+0.32]（39/83・勝率47%）</td><td>🟡蓄積中</td></tr>
-<tr><td>売られすぎ逆張り買い(rsi_oversold_bounce・全足)</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.07 CI[-0.40~+0.26]（29/73・勝率40%）</td><td>🟡蓄積中</td></tr>
-<tr><td>blocked=False×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.37~+0.41]（32/73・勝率44%）</td><td>🟡蓄積中</td></tr>
-<tr><td>reversalL（逆張り買い）</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.35 CI[-0.01~+0.71]（41/71・勝率58%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=下降×dir=short</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.30~+0.56]（31/64・勝率48%）</td><td>🟡蓄積中</td></tr>
-<tr><td>group=metal×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.58~+0.40]（21/54・勝率39%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=中立・もみあい×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.27 CI[-0.70~+0.17]（17/54・勝率32%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=下降×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[-0.26~+0.84]（21/38・勝率55%）</td><td>🟡蓄積中</td></tr>
-<tr><td>group=metal×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.76~+0.57]（14/36・勝率39%）</td><td>🟡蓄積中</td></tr>
-<tr><td>tier=good</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.69 CI[+0.30~+1.07]（26/36・勝率72%）</td><td>🟡蓄積中</td></tr>
-<tr><td>trend=中立・もみあい×reversalL</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.53 CI[+0.04~+1.02]（23/35・勝率66%）</td><td>🟡蓄積中</td></tr>
-<tr><td>tier=good×dir=long</td><td>gate</td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.70 CI[+0.25~+1.14]（24/33・勝率73%）</td><td>🟡蓄積中</td></tr>
-<tr><td>blocked=True×dir=short</td><td>edge</td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.72 CI[-0.91~-0.54]（2/17・勝率12%）</td><td>🟡蓄積中</td></tr>
+<div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（7語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li></ul></details></div>
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R +0.35 CI[+0.06~+0.65]（70/121・勝率58%）</td><td>✅昇格</td></tr>
+<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.08~+0.17]（116/259・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしのシグナル（買いも売りも）<br><small style="opacity:.7">blocked=False</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.04 CI[-0.10~+0.19]（94/210・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.14 CI[-0.00~+0.29]（94/192・勝率49%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしの買い<br><small style="opacity:.7">blocked=False×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.08 CI[-0.12~+0.28]（74/160・勝率46%）</td><td>🟡蓄積中</td></tr>
+<tr><td>選別ランク「普通」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=neutral</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.12 CI[-0.34~+0.10]（48/127・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>もみあい中の買い<br><small style="opacity:.7">trend=中立・もみあい×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.09~+0.42]（58/116・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>買い全般（4時間足のみ）<br><small style="opacity:.7">tf=4h×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.07~+0.33]（56/116・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中のシグナル（買いも売りも）<br><small style="opacity:.7">trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.06 CI[-0.21~+0.32]（48/106・勝率45%）</td><td>🟡蓄積中</td></tr>
+<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.17 CI[-0.00~+0.34]（49/98・勝率50%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀のシグナル（買いも売りも）<br><small style="opacity:.7">group=metal</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.11 CI[-0.41~+0.20]（34/89・勝率38%）</td><td>🟡蓄積中</td></tr>
+<tr><td>株価指数のシグナル（買いも売りも）<br><small style="opacity:.7">group=index</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.09 CI[-0.30~+0.11]（33/85・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中の買い<br><small style="opacity:.7">trend=下降×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.10 CI[-0.12~+0.32]（39/83・勝率47%）</td><td>🟡蓄積中</td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.07 CI[-0.40~+0.26]（29/73・勝率40%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁なしの売り<br><small style="opacity:.7">blocked=False×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.02 CI[-0.37~+0.41]（32/73・勝率44%）</td><td>🟡蓄積中</td></tr>
+<tr><td>逆張り買い全般<br><small style="opacity:.7">reversalL（逆張り買い）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.35 CI[-0.01~+0.71]（41/71・勝率58%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中の売り<br><small style="opacity:.7">trend=下降×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.13 CI[-0.30~+0.56]（31/64・勝率48%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀の買い<br><small style="opacity:.7">group=metal×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.58~+0.40]（21/54・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>もみあい中の売り<br><small style="opacity:.7">trend=中立・もみあい×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.27 CI[-0.70~+0.17]（17/54・勝率32%）</td><td>🟡蓄積中</td></tr>
+<tr><td>下降トレンド中の逆張り買い<br><small style="opacity:.7">trend=下降×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.29 CI[-0.26~+0.84]（21/38・勝率55%）</td><td>🟡蓄積中</td></tr>
+<tr><td>金・銀の逆張り買い<br><small style="opacity:.7">group=metal×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R -0.09 CI[-0.76~+0.57]（14/36・勝率39%）</td><td>🟡蓄積中</td></tr>
+<tr><td>選別ランク「良」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=good</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.69 CI[+0.30~+1.07]（26/36・勝率72%）</td><td>🟡蓄積中</td></tr>
+<tr><td>もみあい中の逆張り買い<br><small style="opacity:.7">trend=中立・もみあい×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.53 CI[+0.04~+1.02]（23/35・勝率66%）</td><td>🟡蓄積中</td></tr>
+<tr><td>選別ランク「良」の買い<br><small style="opacity:.7">tier=good×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td>前向きN≥80かつ平均RのCI上限&lt;0</td><td>平均R +0.70 CI[+0.25~+1.14]（24/33・勝率73%）</td><td>🟡蓄積中</td></tr>
+<tr><td>目標の手前に壁ありの売り<br><small style="opacity:.7">blocked=True×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td>前向きN≥80かつ平均RのCI下限&gt;0</td><td>平均R -0.72 CI[-0.91~-0.54]（2/17・勝率12%）</td><td>🟡蓄積中</td></tr>
 </table>
 
     <!-- ③ 末尾免責（kinsho 補足） -->
