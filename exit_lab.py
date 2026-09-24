@@ -198,7 +198,7 @@ def run_lab(frames):
                 b["meta"].append({"ticker": ticker, "tf": tf, "time": df.index[i]})
                 for k in COMBOS:
                     r = sim_long(A, i, *k)
-                    b["R"][k].append(None if r is None else (r[0] - spread / r[3], r[0], r[1]))
+                    b["R"][k].append(None if r is None else (r[0] - spread / r[3], r[0], r[1], r[3] / A["atr"][i]))
     return book
 
 
@@ -236,6 +236,8 @@ def evaluate_lab(book):
                                     [R[i][2] for i in ii])
                     cell.update({kk: s[kk] for kk in ("avg", "lo", "hi", "win", "p5", "worst", "beyond_1R", "bars_median")
                                  if kk in s})
+                    # 1R の大きさ（ATR何本ぶんか）。1R が小さい組ほど R の値が大きく振れる（表示用・判定には使わない）
+                    cell["risk_atr_median"] = float(np.median([R[i][3] for i in ii]))
                 if k != BASE:
                     jj = [i for i in ii if base[i] is not None]
                     d = X.diff([R[i][0] for i in jj], [base[i][0] for i in jj], [g_all[i] for i in jj])
@@ -262,13 +264,17 @@ def evaluate_lab(book):
     return cells
 
 
+SHOW_N_BELOW = 100   # 件数がこれ未満のマスは件数を添える（表示だけ・判定には使わない）
+
+
 def _cellstr(c):
     if not c or "avg" not in c:
         return "—"
     mark = ""
     if c.get("flag"):
         mark = " ▲" if c["vs_base"]["avg"] > 0 else " ▼"
-    return f"{c['avg']:+.2f}{mark}"
+    small = f" (n={c['n']})" if c.get("n", 0) < SHOW_N_BELOW else ""
+    return f"{c['avg']:+.2f}{mark}{small}"
 
 
 def report_md(cells, fwd_results, asof):
@@ -277,7 +283,11 @@ def report_md(cells, fwd_results, asof):
          "▲▼＝いまの方式（ATRの1.5倍／ATRの2倍）より良い／悪いと「目立つ」組（ボンフェローニ法10%・差0.15R以上・日足は前後半で同じ向き）。",
          "📏 物差し：癖のない値動きで同じ手順を回すと、「目立つ」は1回あたり平均0.3マス出る（較正3回で0・1・0マス）。",
          f"⚠️ 組み合わせが多い（8入口×{len(COMBOS)}組×2足）ので、目立つ組も**候補**にすぎない。前向き（2026-09-25以降）で確かめるまで結論にしない。",
-         "⚠️ 売りの行は値段を上下反転して計算（+2σ↔−2σ、RSI70↔30、安値↔高値）。", ""]
+         "⚠️ 売りの行は値段を上下反転して計算（+2σ↔−2σ、RSI70↔30、安値↔高値）。",
+         "「—」＝その組は対象外（例: 25本線より下で出る買いは「25本線割れで損切り」が置けない／高値ブレイクの買いはもう真ん中の線より上）。",
+         f"「(n=…)」＝その組で数えられた取引が{SHOW_N_BELOW}件未満＝ぶれが大きいので、平均Rの大きさを真に受けない。",
+         "⚠️ マスどうしは対象の入口がそろっていない（組ごとに対象外が違う）。比べるときは json の vs_base（同じ入口どうしの差）を使う。"
+         "1R が小さい組（損切りが近い組・json の risk_atr_median）ほど R の値は大きく振れる。", ""]
     idx = {(c["tf"], c["entry"], c["side"], c["sl"], c["tp"], c["period"]): c for c in cells}
     keys = sorted({(c["tf"], c["entry"], c["side"]) for c in cells}, key=lambda k: (k[0] != "1d", k[1], k[2]))
     for tf, es, side in keys:
