@@ -120,6 +120,8 @@ DENY_PREFIX = (
 DENY_EXACT = {
     "guide-new-books.html",   # ②routine `book-watch-weekly` が毎週まるごと再生成する＝注入しても消える
     "guide-sore-honto.html",  # ①それ、本当？ 検証室＝研究日誌の入口。検証の中立性を疑われないように
+    "guide-exit-methods.html",  # ①利確・損切りの決め方（2026-09-24 オーナー指示「広告は貼らない」）。
+                                #   当サイト自身の出口の検証を載せる＝研究日誌と同じ理由（コンプラ監査の指摘9）
 }
 # SYNC禁忌の自動生成ページは that 自体が guide-*.html ではないので対象外だが、事故防止に明示しておく
 DENY_EXACT |= {
