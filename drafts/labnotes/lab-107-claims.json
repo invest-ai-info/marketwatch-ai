@@ -1,60 +1,91 @@
 {
   "article_id": 107,
   "hypothesis_id": "rsi_oversold_edge",
+  "asof": "2026-09-23T06:28:18+09:00",
   "description": "rsi_oversold_bounce × トレンド別 FWD検証 N=362",
   "claims": [
     {
-      "label": "IS全体（2026-06-16以前）",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "label": "IS全体（2026-06-16まで）",
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_before": "2026-06-17"
+      },
       "k": 52,
       "n": 133,
       "note": "IS期間 勝率39.1% — 損益分岐点43%を下回る"
     },
     {
-      "label": "FWD全体（2026-06-16以降）",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "label": "FWD全体（2026-06-17以降）",
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17"
+      },
       "k": 187,
       "n": 362,
       "note": "FWD期間 勝率51.7% — ISから12.6ポイント上昇"
     },
     {
       "label": "FWD×上昇トレンド",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "上昇"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "trend": "上昇"
+      },
       "k": 52,
       "n": 84,
       "note": "FWD 上昇トレンド時 勝率61.9% avgR=+0.444"
     },
     {
       "label": "FWD×下降トレンド",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "下降"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "trend": "下降"
+      },
       "k": 69,
       "n": 161,
       "note": "FWD 下降トレンド時 勝率42.9% avgR≈0 — 損益分岐点付近"
     },
     {
       "label": "FWD×中立トレンド",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "trend": "中立・もみあい"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "trend": "中立・もみあい"
+      },
       "k": 66,
       "n": 117,
       "note": "FWD 中立・もみあい時 勝率56.4% avgR=+0.316"
     },
     {
       "label": "FWD×1h足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1h"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "tf": "1h"
+      },
       "k": 111,
       "n": 234,
       "note": "FWD 1h足 勝率47.4% — 損益分岐点付近"
     },
     {
       "label": "FWD×4h足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "4h"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "tf": "4h"
+      },
       "k": 61,
       "n": 110,
       "note": "FWD 4h足 勝率55.5% avgR=+0.294"
     },
     {
       "label": "FWD×1d足",
-      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16", "tf": "1d"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "fired_from": "2026-06-17",
+        "tf": "1d"
+      },
       "k": 15,
       "n": 18,
       "note": "FWD 1d足 勝率83.3% — N=18の小サンプル注意"

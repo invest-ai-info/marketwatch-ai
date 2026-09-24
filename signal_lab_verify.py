@@ -423,9 +423,12 @@ def main():
             continue
         _key = period_bucket(f)
         _buckets[_key].add(round(100 * _k / _n, 1))
-    period_bad = period_label_check(html, _buckets)
+    period_bad = [f"{FIXABLE} 期間ラベル: {x}" for x in period_label_check(html, _buckets)]
+    # 🆕 2026-09-24 追加の3検査（下の定義を参照）。どれも直し方が決まる＝FIXABLE
+    period_bad += (period_boundary_check(claims, load_registered()) + period_label_claims_check(claims)
+                   + svg_scale_check(html))
     for pb in period_bad:
-        print(f"  ❌ 期間ラベル: {pb}")
+        print(f"  ❌ {pb}")
     fails.extend(period_bad)
 
     # SVGチェック：①縦はみ出し(text/rectのy) ②text同士の重なり・横はみ出し
@@ -442,6 +445,9 @@ def main():
         print("RED（要人間レビュー）:")
         for f in fails:
             print("   - " + f)
+        if all(f.startswith(FIXABLE) for f in fails):
+            # routine 向けの合図（SIGNAL_LAB_SOP「直せる赤」）: 全部が直し方の決まった赤＝直して再実行してよい
+            print(f"→ 赤はすべて {FIXABLE}。指示どおり直して再実行（数字は計算し直す・最大3回）。緑にならなければエスカレ")
         sys.exit(1)
     if svg_warn:
         print("RED（SVGはみ出しの恐れ→人間レビュー）")
@@ -477,6 +483,7 @@ RE_PERIOD_IS  = re.compile(r"(?<![A-Za-z])IS(?![A-Za-z])")
 RE_PERIOD_FWD = re.compile(r"(?<![A-Za-z])(FWD|OOS)(?![A-Za-z])")
 RE_CELL_PCT   = re.compile(r"(\d+(?:\.\d+)?)\s*%")
 RE_CI_HEAD    = re.compile(r"CI|信頼区間")
+RE_FULL_PERIOD = re.compile(r"全期間|全件|合計|合算")
 
 
 def period_bucket(f):
@@ -503,8 +510,9 @@ def period_label_check(html, bucket_pcts):
 
     bucket_pcts = {"IS": {…%}, "FWD": {…%}, "none": {…%}}（呼び出し側が claim から作る）
     """
-    if not (bucket_pcts.get("IS") or bucket_pcts.get("FWD")):
-        return []          # 限定①: 期間キーを使っていない記事は対象外
+    # 🆕 2026-09-24 限定①を撤廃。期間キーが無い記事こそ「IS列に全期間の数字」を書ける（#106 で素通り＝コンプラ黒）。
+    #    実測（公開済みで claims のある記事・claims の主張値で照合）: 撤廃で赤になるのは #028〜#066 の9本だけ＝
+    #    期間キー導入（8/12）より前の記事で、過去記事は再検証しない。8/12 以降の記事は 0本。
     out = []
     for t in re.findall(r"<table.*?</table>", html, re.S):
         rows = re.findall(r"<tr[^>]*>(.*?)</tr>", t, re.S)
@@ -515,6 +523,8 @@ def period_label_check(html, bucket_pcts):
         for i, h in enumerate(heads):
             if RE_CI_HEAD.search(h):           # 限定②: CI列は見ない
                 continue
+            if RE_FULL_PERIOD.search(h) or (RE_PERIOD_IS.search(h) and RE_PERIOD_FWD.search(h)):
+                continue                       # 「全件（IS+FWD）」など全期間を名乗る列＝期間列ではない（#061 で実測）
             if RE_PERIOD_IS.search(h):
                 cols[i] = "IS"
             elif RE_PERIOD_FWD.search(h):
@@ -713,6 +723,209 @@ def band_parallel_check(html, min_ratio=1.2):
                          f"＝最大/最小 {ratio:.2f}倍 < {min_ratio}）＝σに連動していない。"
                          f"`_gen_bb_panel.py` で計算し直す")
     return warns
+
+
+# ── 🆕 2026-09-24 追加の3検査（人間による正式拡張／制約を増やす方向・オーナー承認）
+#
+# 動機＝3日連続でレーンが止まった実例（9/22〜9/24）。どれも verify は緑、Opus コンプラが🔴で止め、
+#   人待ちのまま公開ゼロが続いた（#105 の後、#106・#107・#108 がすべてエスカレ）:
+#   #106: claims に期間キーが1つも無く、上の period_label_check が限定①でスキップ →「（IS）」の全期間値が緑
+#   #108（と #107）: IS/FWD の境界を登録日「当日」にした（SOP は翌日）→ 境界の値は誰も照合していなかった
+#   #107: 図2の「43% 損益分岐」の線が 50% の高さ。#106 は目盛りと棒が別の縮尺 → SVG 検査ははみ出し・重なりしか見ない
+# 3つとも「どこをどう直すか」が機械的に決まる。メッセージの頭に FIXABLE を付け、routine が直して再実行できるようにする
+# （それでも緑にならなければ従来どおりエスカレ）。数字は依然として実ログとの完全一致が要る＝緩める拡張ではない。
+FIXABLE = "[直せる]"
+TRACKER_PATH = os.path.join(ROOT, "signal-lab-tracker.json")
+
+
+def _next_day(ymd):
+    return (_dt.date.fromisoformat(ymd) + _dt.timedelta(days=1)).isoformat()
+
+
+def load_registered(path=TRACKER_PATH):
+    """仮説ID → 登録日（registered_at）。読めなければ空 dict。"""
+    try:
+        t = json.load(open(path, encoding="utf-8-sig"))
+    except (OSError, ValueError):
+        return {}
+    hs = t.get("hypotheses", []) if isinstance(t, dict) else t
+    return {h.get("id"): h.get("registered_at") for h in hs if isinstance(h, dict) and h.get("id")}
+
+
+def period_boundary_check(claims, registered):
+    """期間キー（fired_before/fired_from）の境界が「仮説の登録日の翌日」に合っているか。
+
+    SOP: IS＝登録日まで（fired_before=<翌日>）、FWD＝翌日から（fired_from=<翌日>）。
+      - FWD（fired_from を持つ claim）は境界より前から始めない＝登録日当日の発火を FWD に入れない
+        （#108: 当日の2件が勝ち→FWD が有利側に出た＝コンプラ黒）
+      - IS だけの claim（fired_before のみ）は境界より後まで伸ばさない＝IS に前向きの期間を混ぜない
+    ⚠️ トラッカー本体（signal_lab_tracker.stats）は登録日当日から数える。記事の数字は SOP に従う。
+    """
+    keyed = [cl for cl in claims.get("claims", []) if {"fired_before", "fired_from"} & set(cl.get("filter") or {})]
+    if not keyed:
+        return []
+    hid = claims.get("hypothesis_id")
+    reg = registered.get(hid) if hid else None
+    if not reg:
+        return [f"{FIXABLE} 期間の区切り: claims.json に hypothesis_id（signal-lab-tracker.json の仮説ID）が無いか、"
+                f"トラッカーに無い（{hid!r}）。区切りの日付は、その仮説の registered_at の翌日にする"]
+    b = _next_day(reg)
+    out = []
+    for cl in keyed:
+        f = cl["filter"]
+        lab = cl.get("label", "")
+        if "fired_from" in f and f["fired_from"] < b:
+            out.append(f"{FIXABLE} 期間の区切り: 「{lab}」の fired_from={f['fired_from']} は、仮説 {hid} の登録日 {reg} の"
+                       f"翌日 {b} より前＝登録日当日を前向き（FWD）に入れている。fired_from={b} にして k/n を計算し直し、"
+                       f"本文・表・図・30秒まとめの数字と期間の書き方も合わせる")
+        if "fired_before" in f and "fired_from" not in f and f["fired_before"] > b:
+            out.append(f"{FIXABLE} 期間の区切り: 「{lab}」の fired_before={f['fired_before']} は区切り {b} より後＝"
+                       f"IS に前向きの期間が混ざる。fired_before={b} にして計算し直す")
+    return out
+
+
+def period_label_claims_check(claims):
+    """claim の名前が IS / FWD を名乗るのに、その期間で絞っていない（＝全期間の数字の疑い）。#106 の型。"""
+    out = []
+    for cl in claims.get("claims", []):
+        lab = cl.get("label", "")
+        f = cl.get("filter") or {}
+        says_is, says_fwd = bool(RE_PERIOD_IS.search(lab)), bool(RE_PERIOD_FWD.search(lab))
+        if RE_FULL_PERIOD.search(lab) or says_is == says_fwd:
+            continue                  # 「全期間（IS+FWD合計）」など全期間を名乗る／どちらとも言えない名前は見ない
+        if says_is and "fired_before" not in f:
+            out.append(f"{FIXABLE} 期間ラベル: 「{lab}」は IS を名乗るのに filter に fired_before が無い＝全期間の数字を"
+                       f"IS と呼んでいる疑い（景表法上の優良誤認の型）。IS なら fired_before=<登録日の翌日> を足して計算し直す。"
+                       f"全期間の数字なら、名前と本文を「全期間」にする")
+        if says_fwd and "fired_from" not in f:
+            out.append(f"{FIXABLE} 期間ラベル: 「{lab}」は FWD を名乗るのに filter に fired_from が無い。"
+                       f"fired_from=<登録日の翌日> を足して計算し直す")
+    return out
+
+
+# 図（SVG）の縮尺: 目盛り線・基準線（「43% 損益分岐」など）・縦棒の上端が同じ縮尺か。
+#   縦軸が % の縦棒グラフだけを見る（%付きの横線が3本未満の図＝概念図・横棒は対象外）。
+#   実測（2026-09-24・公開済み102本）: 17本で3ポイント以上のずれ。開いて確かめた5本（#031 #048 #089 #096 #104）はどれも実際の誤り。
+SVG_TOL_PT = 3.0   # 勝率で3ポイント分。2だと手描きの丸め（4px前後・読者には見分けられない）まで拾う
+SVG_TOL_PX = 4.0
+SVG_PAIR_DY = 8.0  # 線と「N%」の文字の縦の距離
+SVG_END_DX = 12.0  # 目盛りの文字は線の端にあるものだけ（棒の上の「53.0%」を目盛りと取り違えない＝#089）
+_RE_NUM = r"(-?\d+(?:\.\d+)?)"
+
+
+def _svg_attrs(tag):
+    return dict(re.findall(r'([a-zA-Z_:][-a-zA-Z0-9_:.]*)="([^"]*)"', tag))
+
+
+def _svg_float(a, k):
+    try:
+        return float(a.get(k, ""))
+    except ValueError:
+        return None
+
+
+def _svg_parse(svg):
+    lines, texts, rects = [], [], []
+    for tag in re.findall(r"<line\b[^>]*>", svg):
+        a = _svg_attrs(tag)
+        x1, x2, y1, y2 = (_svg_float(a, k) for k in ("x1", "x2", "y1", "y2"))
+        if None in (x1, x2, y1, y2) or abs(y1 - y2) > 0.01 or abs(x2 - x1) < 40:
+            continue
+        lines.append((min(x1, x2), max(x1, x2), y1))
+    for tag, body in re.findall(r"(<text\b[^>]*>)([^<]*)</text>", svg):
+        a = _svg_attrs(tag)
+        x, y = _svg_float(a, "x"), _svg_float(a, "y")
+        if x is not None and y is not None:
+            texts.append((x, y, body.strip()))
+    for tag in re.findall(r"<rect\b[^>]*>", svg):
+        a = _svg_attrs(tag)
+        x, y, w, h = (_svg_float(a, k) for k in ("x", "y", "width", "height"))
+        if None not in (x, y, w, h) and w > 0 and h >= 3 and w <= 200:
+            rects.append((x, y, w, h))
+    return lines, texts, rects
+
+
+def _svg_match(cand):
+    """線と文字を1対1で結ぶ（組の数が最大、そのうえで距離の合計が最小）。
+    近い2本の線が1つの文字を取り合うと、近いほうに付けるだけでは片方を取り違える（#029 で実測）。"""
+    by_line = {}
+    for c in cand:
+        by_line.setdefault(c[0], []).append(c)
+    keys = sorted(by_line)
+    best = [[], 0.0]
+
+    def go(i, used, chosen, cost):
+        if len(chosen) + (len(keys) - i) < len(best[0]):
+            return
+        if i == len(keys):
+            if len(chosen) > len(best[0]) or (len(chosen) == len(best[0]) and cost < best[1]):
+                best[0], best[1] = list(chosen), cost
+            return
+        for c in by_line[keys[i]]:
+            if c[1] not in used:
+                used.add(c[1]); chosen.append(c)
+                go(i + 1, used, chosen, cost + c[2])
+                chosen.pop(); used.discard(c[1])
+        go(i + 1, used, chosen, cost)
+
+    go(0, set(), [], 0.0)
+    return best[0]
+
+
+def _theil_sen(pts):
+    from statistics import median
+    sl = [(y2 - y1) / (v2 - v1) for i, (v1, y1) in enumerate(pts) for (v2, y2) in pts[i + 1:] if v2 != v1]
+    if not sl:
+        return None
+    s = median(sl)
+    return s, median(y - s * v for v, y in pts)
+
+
+def svg_scale_check(html):
+    """戻り値: 指摘メッセージの list（FIXABLE 付き）。"""
+    out = []
+    for si, svg in enumerate(re.findall(r"<svg\b.*?</svg>", html, re.S), 1):
+        lines, texts, rects = _svg_parse(svg)
+        cand = []
+        for li, (x1, x2, ly) in enumerate(lines):
+            for ti, (tx, ty, body) in enumerate(texts):
+                m = re.match(_RE_NUM + r"\s*%", body)
+                if not m or abs(ty - ly) > SVG_PAIR_DY:
+                    continue
+                if not (x1 - 60 <= tx <= x1 + SVG_END_DX or x2 - SVG_END_DX <= tx <= x2 + 60):
+                    continue
+                cand.append((li, ti, abs(ty - ly), float(m.group(1)), ly))
+        pts = {}
+        for _li, _ti, _d, v, ly in _svg_match(cand):
+            pts.setdefault(v, ly)
+        if len(pts) < 3:
+            continue
+        fit = _theil_sen(sorted(pts.items()))
+        if not fit or fit[0] >= 0:
+            continue
+        s, b = fit
+
+        def bad(dy):
+            return abs(dy) > SVG_TOL_PX and abs(dy) / abs(s) > SVG_TOL_PT
+
+        seen = set()
+        for v, ly in sorted(pts.items()):
+            exp = s * v + b
+            if bad(ly - exp):
+                out.append(f"{FIXABLE} 図{si}の縮尺: 「{v:g}%」の線が y={ly:g} にあるが、ほかの目盛りから計算すると y={exp:.0f}"
+                           f"（約{abs(ly - exp) / abs(s):.1f}ポイント分ずれ）。目盛り・基準線・棒を同じ式（y = 基準 − 縮尺×勝率）で描き直す")
+        for rx, ry, rw, rh in rects:
+            for tx, ty, body in texts:
+                m = re.fullmatch(_RE_NUM + r"\s*%", body)
+                if not m or not (rx - 2 <= tx <= rx + rw + 2) or not (ry - 22 <= ty <= ry + 2):
+                    continue
+                exp = s * float(m.group(1)) + b
+                if bad(ry - exp) and (body, ry) not in seen:
+                    seen.add((body, ry))
+                    out.append(f"{FIXABLE} 図{si}の縮尺: 「{body}」の棒の上端が y={ry:g} にあるが、目盛りから計算すると y={exp:.0f}"
+                               f"（約{abs(ry - exp) / abs(s):.1f}ポイント分ずれ）。目盛り・基準線・棒を同じ式で描き直す")
+                break
+    return out
 
 
 if __name__ == "__main__":

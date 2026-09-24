@@ -1,13 +1,14 @@
-2026-09-24 signal-lab: drafts/draft-signal-lab-108.html 🚩エスカレ中（コンプラOpus🔴黒: IS/FWD境界誤り）
+2026-09-24 signal-lab: #106・#107・#108 ✅解消済み（人間が復旧して公開。3本とも verify 緑のまま Opus コンプラ🔴＝オラクルが見ていない型だった［期間キーの無い「（IS）」ラベル／境界を登録日当日／図の縮尺］。signal_lab_verify.py に3検査を足し、[直せる] の赤は routine が直して再実行できるようにした。詳細＝SIGLAB_ESCALATION_RECOVERY.md §4・SIGNAL_LAB_SOP.md「直せる赤」）
+2026-09-24 signal-lab: drafts/draft-signal-lab-108.html ✅解消済み（2026-09-24 人間が復旧・公開）／旧: エスカレ中（コンプラOpus🔴黒: IS/FWD境界誤り）
   詳細: claims の fired_before/fired_from が `2026-06-22`（登録日当日）→ SOP では `<登録日翌日>=2026-06-23` が正しい。
   正しい境界で再計算: IS 56/103, FWD全体 150/324, BB 102/246, RSI 48/79（不変）, 指数 30/81。
   さらに定点観測表の n=323 と本文 n=326 の食い違いも要確認（集計時点ズレ）。
   Opus指摘の🟡グレー（Y1〜Y4も要適用）: ①「43%に届かず」→「43%は上回ったが下端が43%を下回る」②「追跡終了」→「観察中に戻す」③「向いていない可能性」表現軟化 ④#107リンク切れカード削除。
   対応手順: claims.json を 2026-06-23 境界で再作成 → 本文数値更新（30秒まとめ・表・メタ）→ verify → Opus再審 → 独立Opus確認 → 公開。
   verify結果: 5/5緑（境界チェックはverify.pyの対象外）。check_plain_japanese EXIT=0。
-2026-09-23 signal-lab: drafts/draft-signal-lab-107.html 🚩エスカレ中（rsi_oversold_bounce×トレンド別 FWD N=362。verify 8/8緑・SVG警告0件。Opus1st🟡グレーB1+G1〜G5修正済み・verify再確認GREEN。独立Opus🟡グレー残り5件修正済み・verify再確認GREEN。**SVGエスカレ1件＝図2の43%損益分岐線がy=122（実際は50%位置）→y=135（43%正位置）に修正が必要。1行変更で済む・数値への影響なし。独立Opusが人間承認必要と判定。** 承認後 y1="122"→y1="135" + y="118"→y="131"（ラベル）に修正→verify→finalize→publish）
+2026-09-23 signal-lab: drafts/draft-signal-lab-107.html ✅解消済み（2026-09-24 人間が復旧・公開）／旧: エスカレ中（rsi_oversold_bounce×トレンド別 FWD N=362。verify 8/8緑・SVG警告0件。Opus1st🟡グレーB1+G1〜G5修正済み・verify再確認GREEN。独立Opus🟡グレー残り5件修正済み・verify再確認GREEN。**SVGエスカレ1件＝図2の43%損益分岐線がy=122（実際は50%位置）→y=135（43%正位置）に修正が必要。1行変更で済む・数値への影響なし。独立Opusが人間承認必要と判定。** 承認後 y1="122"→y1="135" + y="118"→y="131"（ラベル）に修正→verify→finalize→publish）
 2026-09-22 autopublish: スキップ（対象なし：topicキュー全63件がすべてguides.htmlに公開済み。draft未生成4件（compounding-drawdown/cognitive-biases/diversification/etf-vs-mutual-fund）もguides.htmlにカード確認済み。キュー補充が必要）
-2026-09-22 signal-lab: draft-signal-lab-106.html 🚩エスカレ中（コンプラ🔴黒①IS/FWDラベル優良誤認[claims全6件にfired_before無し・全期間値を「IS」とラベル]②IS/FWD境界1日ズレ疑義。verify 6/6緑・3件グレー修正済み。要人間レビュー・詳細はREVIEW.md 4708行〜）
+2026-09-22 signal-lab: draft-signal-lab-106.html ✅解消済み（2026-09-24 人間が復旧・公開）／旧: エスカレ中（コンプラ🔴黒①IS/FWDラベル優良誤認[claims全6件にfired_before無し・全期間値を「IS」とラベル]②IS/FWD境界1日ズレ疑義。verify 6/6緑・3件グレー修正済み。要人間レビュー・詳細はREVIEW.md 4708行〜）
 2026-09-21 autopublish: スキップ（対象なし：topicキュー全63件中58件にdraft-*.htmlが存在するがすべてguides.htmlに公開済み。残り5件はdraft未生成。キュー補充が必要）
 2026-09-21 signal-lab: guide-signal-lab-105.html ✅公開済み（RSI売られすぎ×逆張りロングN=407, wr=50.4%, EV=+0.263R→✅通過A。上昇65.5%/JPYクロス37.5%非対称性確認。verify10/10緑→Opus1st🟡9件軟化修正→独立Opus🟢白→全ゲート通過）
 2026-09-20 autopublish: スキップ（対象なし：topicキュー全63件が公開済み。新規下書きなし。キュー補充が必要）
@@ -4714,7 +4715,7 @@ verify.py 6/6緑・Opusコンプラ🟢白（免責三層化・統計断定軟�
 
 ---
 
-## 2026-09-22 🚩 draft-signal-lab-106.html 要人間レビュー（コンプラ🔴黒：IS/FWDラベルの優良誤認）
+## 2026-09-22 [解消済み] draft-signal-lab-106.html 要人間レビュー（コンプラ🔴黒：IS/FWDラベルの優良誤認）→ 2026-09-24 人間が復旧・公開
 
 **シリーズ**: AIシグナル研究日誌 #106（RSI売られすぎ逆張り × トレンド）
 

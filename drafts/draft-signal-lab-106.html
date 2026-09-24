@@ -7,13 +7,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>AIシグナル研究日誌 #106｜RSI売られすぎ逆張りはトレンドで変わるか——上昇中59.8%・IS/FWD乖離を正直に報告 - MarketWatch AI</title>
-  <meta name="description" content="RSI売られすぎ逆張り（rsi_oversold_bounce）N=492の全体比較。上昇中は59.8%（CI下限50.1%）、下降中は43.9%（フラット）という15.9pp差。4H足×上昇67.4%。IS 66.2%→FWD 48.6%の乖離も正直に報告。研究日誌第106回。">
-  <meta name="keywords" content="AIシグナル,RSI,売られすぎ,逆張り,トレンド,検証,研究日誌,勝率,期待値,4H足">
+  <title>RSIの売られすぎで買うと、トレンドで勝率は変わる？ 過去492回で確かめた【研究日誌 #106】 - MarketWatch AI</title>
+  <meta name="description" content="RSI（相対力指数）が売られすぎの水準まで下がったところで買うシグナル492回を、トレンドの向きで分けて集計。上昇トレンドのときは59.8%、下降トレンドのときは43.9%で、差は15.9ポイント。登録日の翌日からの前向きの期間では47.2%に下がったことも正直に報告。研究日誌第106回。">
+  <meta name="keywords" content="AIシグナル,RSI,売られすぎ,逆張り,トレンド,検証,研究日誌,勝率,期待値,4時間足">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-106.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AIシグナル研究日誌 #106｜RSI売られすぎ逆張りはトレンドで変わるか">
-  <meta property="og:description" content="RSI売られすぎ逆張りN=492の全体比較。上昇中59.8%・下降中43.9%という15.9pp差。IS/FWD乖離も正直に報告。">
+  <meta property="og:title" content="RSIの売られすぎで買うと、トレンドで勝率は変わる？ 過去492回で確かめた【研究日誌 #106】">
+  <meta property="og:description" content="RSIが売られすぎのところで買うシグナル492回をトレンド別に集計。上昇トレンド59.8%・下降トレンド43.9%で差は15.9ポイント。登録後は47.2%に下がったことも報告。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-106.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -24,8 +24,8 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "AIシグナル研究日誌 #106｜RSI売られすぎ逆張りはトレンドで変わるか",
-    "description": "RSI売られすぎ逆張りN=492の全体比較。上昇中59.8%・下降中43.9%という15.9pp差。IS/FWD乖離も正直に報告。",
+    "headline": "RSIの売られすぎで買うと、トレンドで勝率は変わる？ 過去492回で確かめた【研究日誌 #106】",
+    "description": "RSIが売られすぎのところで買うシグナル492回をトレンド別に集計。上昇トレンド59.8%・下降トレンド43.9%で差は15.9ポイント。登録後は47.2%に下がったことも報告。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-09-22",
@@ -248,45 +248,45 @@
       ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
     </div>
 
-    <h1>🧪 AIシグナル研究日誌 #106</h1>
-    <h1 style="font-size:1.5rem;margin-top:8px;color:#2C4F8F">RSI売られすぎ逆張りはトレンドで変わるか——上昇中59.8%、IS/FWD乖離も正直に報告</h1>
+    <h1>🧪 RSIの売られすぎで買うと、トレンドで勝率は変わる？ 過去492回で確かめた<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #106</small></h1>
     <p class="meta-line">公開：2026年9月22日｜カテゴリ：AIシグナル研究日誌｜読了目安：約6分</p>
 
     <!-- ② 30秒まとめ -->
     <div class="info-box" style="border-left-color:#1a7f37;background:#e6ffed;">
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br>
-      RSI売られすぎ逆張り（rsi_oversold_bounce）の全体勝率は<strong>48.6%</strong>（N=492）。損益分岐43%を超えるものの大きな優位ではない。<br>
-      トレンド環境で大きく変わる：<strong>上昇中59.8%</strong>（N=102・CI下限50.1%）、下降中43.9%（N=212）という<strong>15.9pp差</strong>（pp＝パーセントポイント）。<br>
-      4H足×上昇中は<strong>67.4%</strong>（N=43）とさらに高く、期待値も+0.571Rとプラス圏だった（いずれも過去データ上の集計値）。<br>
-      ただし<strong>IS→FWD間で約17.6pp後退</strong>（前向き期間は上昇中でも48.6%に収縮、N=37で継続観察中）が確認されており、IS結果がそのまま続く保証はない。<br>
-      今後も同じ結果が出るとは限らず、本データは情報提供であり投資助言ではない。
+      RSI（相対力指数：値動きの勢いを0〜100で表す指標）が「売られすぎ」の水準まで下がったところで買うシグナルを、492回ぶん集計しました。全体の勝率は<strong>48.6%</strong>。勝ち負けがとんとんになる勝率（43%）は上回りましたが、大きな差ではありません。<br>
+      トレンドの向きで結果が大きく変わりました。<strong>上昇トレンドのときは59.8%</strong>（102回・偶然のぶれの幅の下の端は50.1%）、下降トレンドのときは43.9%（212回）で、差は<strong>15.9ポイント</strong>です。<br>
+      4時間足で上昇トレンドのときは<strong>67.4%</strong>（43回）とさらに高く、1回あたりの平均損益も損切り幅の0.571倍のもうけでした（どれも過去の記録を集計した数字です）。<br>
+      ただし上昇トレンドの数字を、関連する仮説を登録した日の翌日（2026-08-12）で前と後に分けると、<strong>約19.5ポイント下がっています</strong>（登録日までは66.7%、翌日からの前向きの期間は47.2%・36回で、観察を続けています）。過去の結果がそのまま続く保証はありません。<br>
+      今後も同じ結果が出るとは限らず、このデータは情報提供であり投資助言ではありません。
     </div>
+    <!-- k/n data: 全体=239/492, 上昇=61/102, 下降=93/212, 中立=84/176, 4時間足・上昇=29/43, 1時間足・上昇=22/46, 登録日まで=44/66, 翌日から=17/36（境界＝2026-08-12） -->
 
     <div class="toc">
       <div class="toc-title">📋 目次</div>
       <ol>
         <li><a href="#background">背景と仮説</a></li>
-        <li><a href="#chart-overview">図解：上昇中の発火場面</a></li>
+        <li><a href="#chart-overview">図解：上昇トレンドでシグナルが出る場面</a></li>
         <li><a href="#results">検証結果</a></li>
-        <li><a href="#trend-chart">トレンド別勝率の比較図</a></li>
-        <li><a href="#is-fwd">IS/FWD分離：正直な自己点検</a></li>
-        <li><a href="#discussion">考察と交絡の点検</a></li>
-        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+        <li><a href="#trend-chart">トレンド別の勝率の比較図</a></li>
+        <li><a href="#is-fwd">登録日の前と後に分けて見る：正直な自己点検</a></li>
+        <li><a href="#discussion">考察と、ほかの原因が混ざっていないかの点検</a></li>
+        <li><a href="#tracker">前向きの集計の定点観測</a></li>
         <li><a href="#related">関連記事</a></li>
       </ol>
     </div>
 
     <h2 id="background">§1 背景と仮説</h2>
-    <p>前回の#105では RSI売られすぎ逆張り全体（N=407）が<strong>勝率50.4%・期待値+0.263R</strong>と損益分岐（43%）を超えることを確認した。しかし「平均」の裏に隠れた差はないか？　特に<strong>トレンドが向かい風か追い風か</strong>で結果は変わるはずという直感がある。</p>
-    <p>今回の仮説は2つ。</p>
+    <p>前回の #105 では、RSI が売られすぎの水準まで下がったところで買うシグナル全体（407回）が<strong>勝率50.4%・1回あたりの平均損益は損切り幅の0.263倍のもうけ</strong>で、勝ち負けがとんとんになる勝率（43%）を上回ることを確かめました。では、この「平均」の裏に隠れた差はないでしょうか。とくに、<strong>トレンドが向かい風か追い風か</strong>で結果は変わるのではないか、という直感があります。</p>
+    <p>今回の仮説は2つです。</p>
     <ul>
-      <li><strong>H1（主）：</strong>上昇トレンド中の rsi_oversold_bounce はCI下限が43%以上（N≥20）</li>
-      <li><strong>H2（副）：</strong>下降トレンド中の勝率は上昇中より10pp以上低い</li>
+      <li><strong>仮説①（主）：</strong>上昇トレンドのときにこのシグナルで買うと、勝率の偶然のぶれの幅の下の端が43%以上になる（回数は20回以上あること）</li>
+      <li><strong>仮説②（副）：</strong>下降トレンドのときの勝率は、上昇トレンドのときより10ポイント以上低い</li>
     </ul>
-    <p>集計対象は signals-log.json の決済済みシグナル（outcome=tp1/tp2/sl）全4,613件のうち rsi_oversold_bounce が primary_signal の492件。IS（in-sample）は全期間の集計、FWD（forward）は本仮説をトラッカーに登録した2026-08-11以降。</p>
+    <p>集計の対象は、シグナルの記録のうち決済まで終わったもの（利益確定か損切りで終わったもの）全4,613回のうち、このシグナルが主なきっかけだった492回です。§3・§4 の数字は全期間の集計です。§5 では、関連する仮説を前向きの集計表（トラッカー）に登録した日（2026-08-11）までと、翌日（2026-08-12）からの前向きの期間に分けて比べます。</p>
 
     <!-- ③ チャート風図解（概念） -->
-    <h2 id="chart-overview">§2 図解：上昇中の発火場面（概念チャート）</h2>
+    <h2 id="chart-overview">§2 図解：上昇トレンドでシグナルが出る場面（イメージ図）</h2>
     <div class="chart-figure">
       <!-- チャート風図解：RSI oversold in uptrend -->
       <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RSI売られすぎ逆張り×上昇トレンドの概念チャート">
@@ -327,21 +327,21 @@
         <rect x="460" y="76" width="10" height="16" fill="#2ea043" rx="1"/>
         <rect x="480" y="72" width="10" height="15" fill="#2ea043" rx="1"/>
         <!-- MA25ラベル -->
-        <text x="655" y="60" class="s-label-b" font-size="11">MA25↗</text>
-        <text x="655" y="88" class="s-label-sm" font-size="10">MA75</text>
+        <text x="655" y="60" class="s-label-b" font-size="11">短期平均</text>
+        <text x="655" y="88" class="s-label-sm" font-size="10">長期平均</text>
         <!-- TP1ライン -->
         <line x1="200" y1="112" x2="320" y2="112" stroke="#1a7f37" stroke-width="1.2" stroke-dasharray="4 3"/>
-        <text x="326" y="116" class="s-label-g" font-size="10">TP1</text>
+        <text x="326" y="116" class="s-label-g" font-size="10">利確</text>
         <!-- SLライン -->
         <line x1="200" y1="170" x2="280" y2="170" stroke="#cf222e" stroke-width="1" stroke-dasharray="4 3"/>
-        <text x="285" y="174" class="s-label-r" font-size="10">SL</text>
+        <text x="285" y="174" class="s-label-r" font-size="10">損切り</text>
+        <!-- RSIエリア（下） -->
+        <rect x="60" y="195" width="600" height="60" fill="#f0f3f6" rx="4" stroke="#d0d7de" stroke-width="1"/>
         <!-- 引き出し線：「RSI 30割れ」 -->
         <line x1="206" y1="163" x2="206" y2="190" stroke="#c97d00" stroke-width="1.2"/>
         <rect x="155" y="190" width="105" height="22" rx="4" fill="#fff8c5" stroke="#c97d00" stroke-width="1"/>
-        <text x="207" y="204" text-anchor="middle" class="s-label-y" font-size="11">RSI 30割れ逆張り</text>
+        <text x="207" y="204" text-anchor="middle" class="s-label-y" font-size="11">RSI 30割れ</text>
 
-        <!-- RSIエリア（下） -->
-        <rect x="60" y="195" width="600" height="60" fill="#f0f3f6" rx="4" stroke="#d0d7de" stroke-width="1"/>
         <text x="30" y="228" text-anchor="middle" class="s-label-sm" font-size="10">RSI</text>
         <!-- RSI ライン（概念） -->
         <polyline points="70,225 130,220 150,218 160,230 170,240 180,245 200,248 220,235 240,218 260,212 300,215 340,218 360,222 380,232 400,245 420,228 440,215 460,210 500,212 540,215" fill="none" stroke="#0969da" stroke-width="2" class="s-axis"/>
@@ -355,57 +355,57 @@
         <!-- 凡例 -->
         <rect x="68" y="24" width="14" height="14" rx="2" fill="#E8A317" stroke="#c97d00" stroke-width="1.5"/>
         <text x="87" y="36" class="s-label" font-size="11">発火バー（RSI 30割れ）</text>
-        <line x1="225" y1="31" x2="250" y2="31" stroke="#0969da" stroke-width="2" stroke-dasharray="5 3"/>
-        <text x="255" y="36" class="s-label-b" font-size="11">MA25（上昇中）</text>
+        <line x1="240" y1="31" x2="265" y2="31" stroke="#0969da" stroke-width="2" stroke-dasharray="5 3"/>
+        <text x="270" y="36" class="s-label-b" font-size="11">短期平均（上向き）</text>
         <line x1="400" y1="31" x2="425" y2="31" stroke="#1a7f37" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text x="430" y="36" class="s-label-g" font-size="11">TP1ライン</text>
+        <text x="430" y="36" class="s-label-g" font-size="11">利確の線</text>
       </svg>
     </div>
-    <p class="chart-caption">※ 概念を示すイメージ図です（実際の値動きではありません）。上昇トレンド（MA25が右上がり）の押し目でRSIが30を割り込んだ瞬間が発火バー（オレンジ）。図は「トレンドが追い風のときに反発しやすいのではないか」という今回の仮説の形を示したもので、実際の成績は§3以降の集計をご確認ください。</p>
+    <p class="chart-caption">※ 考え方を示すイメージ図です（実際の値動きではありません）。「短期平均」は25本ぶんの終値の平均をつないだ線、「長期平均」は75本ぶんの線です。上昇トレンド（短期平均が右上がり）の途中で値下がりし、RSI が30を下回った瞬間がシグナルの出た足（オレンジ）です。「利確」は利益を確定する価格、「損切り」は損失を確定する価格です。この図は「トレンドが追い風のときは反発しやすいのではないか」という今回の仮説の形を示したもので、実際の成績は§3以降の集計をご覧ください。</p>
 
     <h2 id="results">§3 検証結果</h2>
     <h3>トレンド3区分の比較</h3>
-    <p>rsi_oversold_bounce の決済済みシグナル計492件をトレンド環境別に分類した。トレンドは1H/4H足の上位足トレンドを使用（higher_tf_trend フィールド）。</p>
+    <p>このシグナルで決済まで終わった492回のうち、トレンドが記録されている490回をトレンドの向きで分けました（記録が無い2回は1勝1敗）。トレンドは、それぞれの時間足より1段長い時間足のトレンドを使っています。</p>
 
     <table>
       <thead>
-        <tr><th>トレンド環境</th><th>N（件数）</th><th>勝率</th><th>95%CI（勝率）</th><th>期待値 E(R)</th><th>E(R) 95%CI</th></tr>
+        <tr><th>トレンドの向き</th><th>回数</th><th>勝率</th><th>勝率の偶然のぶれの幅</th><th>1回あたりの平均損益（損切り幅を1とした倍率）</th><th>平均損益の偶然のぶれの幅</th></tr>
       </thead>
       <tbody>
-        <tr><td>全体</td><td>492</td><td>48.6%</td><td>[44.2%, 53.0%]</td><td>+0.132R</td><td>[+0.029, +0.235]</td></tr>
-        <tr style="background:#e6ffed"><td>上昇 ✅</td><td>102</td><td><strong>59.8%</strong></td><td>[50.1%, 68.8%]</td><td><strong>+0.393R</strong></td><td>[+0.170, +0.617]</td></tr>
-        <tr><td>中立・もみあい</td><td>176</td><td>47.7%</td><td>[40.5%, 55.1%]</td><td>+0.112R</td><td>[−0.061, +0.285]</td></tr>
-        <tr style="background:#fff8c5"><td>下降</td><td>212</td><td>43.9%</td><td>[37.4%, 50.6%]</td><td>+0.022R</td><td>[−0.134, +0.179]</td></tr>
+        <tr><td>全体</td><td>492</td><td>48.6%</td><td>44.2%〜53.0%</td><td>+0.132</td><td>+0.029〜+0.235</td></tr>
+        <tr style="background:#e6ffed"><td>上昇 ✅</td><td>102</td><td><strong>59.8%</strong></td><td>50.1%〜68.8%</td><td><strong>+0.393</strong></td><td>+0.170〜+0.617</td></tr>
+        <tr><td>中立・もみあい</td><td>176</td><td>47.7%</td><td>40.5%〜55.1%</td><td>+0.112</td><td>−0.061〜+0.285</td></tr>
+        <tr style="background:#fff8c5"><td>下降</td><td>212</td><td>43.9%</td><td>37.4%〜50.6%</td><td>+0.022</td><td>−0.134〜+0.179</td></tr>
       </tbody>
     </table>
 
     <div class="positive-box">
-      <strong>H1 通過（IS全体）：</strong>上昇中のCI下限 50.1%≥43%（N=102≥20）、E(R) CI下限 +0.170R＞0 の両条件を達成。
+      <strong>仮説① は条件を満たした（全期間）：</strong>上昇トレンドのときの勝率の偶然のぶれの幅の下の端は50.1%で、43%以上です（回数も102回で、20回以上）。あわせて、平均損益の偶然のぶれの幅の下の端も+0.170で、0より上でした。ただし新しいデータ（翌日からの前向きの期間の36回）だけで見ると、下の端は32.0%で、仮説① の基準に届いていません（§5）。
     </div>
     <div class="info-box">
-      <strong>H2 通過：</strong>上昇59.8% − 下降43.9% ＝ <strong>15.9pp差</strong>（事前宣言10pp超の条件をクリア）。
+      <strong>仮説② は条件を満たした：</strong>上昇の59.8%から下降の43.9%を引くと<strong>15.9ポイントの差</strong>で、記事の最初に置いた「10ポイント以上」の基準を上回りました。
     </div>
     <div class="warning-box">
-      下降中の勝率43.9%は損益分岐43%とほぼ同水準。期待値+0.022Rと事実上フラット。逆張り買いの優位はほとんど見られない。
+      下降トレンドのときの勝率43.9%は、勝ち負けがとんとんになる勝率（43%）とほぼ同じです。1回あたりの平均損益も損切り幅の0.022倍で、ほぼゼロでした。下降トレンドでの逆張り買い（下がったところで買うこと）に有利さは、ほとんど見られません。
     </div>
 
-    <h3>時間足との交差（上昇中）</h3>
-    <p>上昇中102件を1H足と4H足に分けると大きな差がある。</p>
+    <h3>時間足との組み合わせ（上昇トレンドのとき）</h3>
+    <p>上昇トレンドの102回のうち、1時間足（46回）と4時間足（43回）を比べると大きな差があります（残りの13回は日足で、10勝3敗）。</p>
 
     <table>
       <thead>
-        <tr><th>足種</th><th>N</th><th>勝率</th><th>95%CI（勝率）</th><th>期待値 E(R)</th><th>E(R) 95%CI</th></tr>
+        <tr><th>時間足</th><th>回数</th><th>勝率</th><th>勝率の偶然のぶれの幅</th><th>1回あたりの平均損益（損切り幅を1とした倍率）</th><th>平均損益の偶然のぶれの幅</th></tr>
       </thead>
       <tbody>
-        <tr><td>1H足 × 上昇</td><td>46</td><td>47.8%</td><td>[34.1%, 61.9%]</td><td>+0.114R</td><td>[−0.229, +0.458]</td></tr>
-        <tr style="background:#e6ffed"><td>4H足 × 上昇 ✅</td><td>43</td><td><strong>67.4%</strong></td><td>[52.5%, 79.5%]</td><td><strong>+0.571R</strong></td><td>[+0.237, +0.906]</td></tr>
+        <tr><td>1時間足・上昇</td><td>46</td><td>47.8%</td><td>34.1%〜61.9%</td><td>+0.114</td><td>−0.229〜+0.458</td></tr>
+        <tr style="background:#e6ffed"><td>4時間足・上昇</td><td>43</td><td><strong>67.4%</strong></td><td>52.5%〜79.5%</td><td><strong>+0.571</strong></td><td>+0.237〜+0.906</td></tr>
       </tbody>
     </table>
 
-    <p>4H足×上昇中の67.4%は本研究日誌の中でも高い部類に入る。ただし<strong>N=43と小さく、IS段階の値</strong>であることに注意が必要。後述のIS/FWD分離で確認する。</p>
+    <p>4時間足で上昇トレンドのときの67.4%は、この研究日誌の中でも高いほうです。ただし<strong>43回と少なく、登録日の前と後を合わせた全期間の数字</strong>である点に注意が必要です。§5 で、前と後に分けて確かめます。</p>
 
     <!-- ④ トレンド別棒グラフ -->
-    <h2 id="trend-chart">§4 トレンド別勝率の比較図</h2>
+    <h2 id="trend-chart">§4 トレンド別の勝率の比較図</h2>
     <div class="chart-figure">
       <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="トレンド別勝率棒グラフ">
         <rect width="620" height="300" fill="#ffffff" rx="8"/>
@@ -415,94 +415,92 @@
         <!-- Y軸メモリ（0%→70%） -->
         <line x1="76" y1="240" x2="580" y2="240" stroke="#8b949e" stroke-width="1" class="s-guide"/>
         <text x="72" y="244" text-anchor="end" class="s-label-sm" font-size="11">0%</text>
-        <line x1="76" y1="196" x2="580" y2="196" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="72" y="200" text-anchor="end" class="s-label-sm" font-size="11">15%</text>
-        <line x1="76" y1="153" x2="580" y2="153" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="72" y="157" text-anchor="end" class="s-label-sm" font-size="11">30%</text>
+        <line x1="76" y1="193" x2="580" y2="193" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="72" y="197" text-anchor="end" class="s-label-sm" font-size="11">15%</text>
+        <line x1="76" y1="146" x2="580" y2="146" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="72" y="150" text-anchor="end" class="s-label-sm" font-size="11">30%</text>
         <!-- 損益分岐43%ライン -->
-        <line x1="76" y1="122" x2="580" y2="122" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 4"/>
-        <text x="72" y="120" text-anchor="end" class="s-label-r" font-size="11">43%</text>
-        <text x="440" y="118" class="s-label-r" font-size="10">← 損益分岐ライン</text>
-        <line x1="76" y1="91" x2="580" y2="91" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="72" y="95" text-anchor="end" class="s-label-sm" font-size="11">53%</text>
-        <line x1="76" y1="43" x2="580" y2="43" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="72" y="47" text-anchor="end" class="s-label-sm" font-size="11">68%</text>
+        <line x1="76" y1="105" x2="580" y2="105" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="72" y="103" text-anchor="end" class="s-label-r" font-size="11">43%</text>
+        <line x1="76" y1="73" x2="580" y2="73" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="72" y="77" text-anchor="end" class="s-label-sm" font-size="11">53%</text>
+        <line x1="76" y1="26" x2="580" y2="26" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="72" y="30" text-anchor="end" class="s-label-sm" font-size="11">68%</text>
 
         <!-- スケール: 70% → height 220px. 1% = 220/70 = 3.143px, y=240-val*3.143 -->
         <!-- 全体: 48.6% → y=240-48.6*3.143=87.3 height=152.7 -->
         <rect x="115" y="87" width="70" height="153" rx="4" fill="#0969da" opacity="0.7"/>
         <text x="150" y="83" text-anchor="middle" class="s-label-b" font-size="12">48.6%</text>
         <text x="150" y="261" text-anchor="middle" class="s-label-sm" font-size="11">全体</text>
-        <text x="150" y="273" text-anchor="middle" class="s-label-sm" font-size="10">(N=492)</text>
+        <text x="150" y="273" text-anchor="middle" class="s-label-sm" font-size="10">（492回）</text>
 
         <!-- 上昇: 59.8% → y=240-59.8*3.143=52.1 height=187.9 -->
         <rect x="225" y="52" width="70" height="188" rx="4" fill="#1a7f37" opacity="0.85"/>
         <text x="260" y="48" text-anchor="middle" class="s-label-g" font-size="12">59.8%</text>
-        <text x="260" y="261" text-anchor="middle" class="s-label-sm" font-size="11">上昇中</text>
-        <text x="260" y="273" text-anchor="middle" class="s-label-sm" font-size="10">(N=102)</text>
+        <text x="260" y="261" text-anchor="middle" class="s-label-sm" font-size="11">上昇</text>
+        <text x="260" y="273" text-anchor="middle" class="s-label-sm" font-size="10">（102回）</text>
 
         <!-- 中立: 47.7% → y=240-47.7*3.143=90.1 height=149.9 -->
         <rect x="335" y="90" width="70" height="150" rx="4" fill="#8b949e" opacity="0.7"/>
         <text x="370" y="86" text-anchor="middle" class="s-label" font-size="12">47.7%</text>
         <text x="370" y="261" text-anchor="middle" class="s-label-sm" font-size="11">中立</text>
-        <text x="370" y="273" text-anchor="middle" class="s-label-sm" font-size="10">(N=176)</text>
+        <text x="370" y="273" text-anchor="middle" class="s-label-sm" font-size="10">（176回）</text>
 
         <!-- 下降: 43.9% → y=240-43.9*3.143=102 height=138 -->
         <rect x="445" y="102" width="70" height="138" rx="4" fill="#cf222e" opacity="0.65"/>
         <text x="480" y="98" text-anchor="middle" class="s-label-r" font-size="12">43.9%</text>
-        <text x="480" y="261" text-anchor="middle" class="s-label-sm" font-size="11">下降中</text>
-        <text x="480" y="273" text-anchor="middle" class="s-label-sm" font-size="10">(N=212)</text>
+        <text x="480" y="261" text-anchor="middle" class="s-label-sm" font-size="11">下降</text>
+        <text x="480" y="273" text-anchor="middle" class="s-label-sm" font-size="10">（212回）</text>
       </svg>
     </div>
-    <p class="chart-caption">赤い破線が損益分岐（43%）。上昇中は59.8%と明確に超えているが、下降中は43.9%とほぼ同水準。中立は47.7%と微妙な位置。この差（15.9pp）は仮説H2の事前基準（10pp差）を上回る。</p>
+    <p class="chart-caption">赤い破線が、勝ち負けがとんとんになる勝率（43%）です。全期間では、上昇トレンドのときは59.8%で43%を上回りましたが、下降トレンドのときは43.9%で、ほぼ同じ水準でした。中立は47.7%で、どちらとも言いにくい位置です。この差（15.9ポイント）は、記事の最初に置いた仮説② の基準（10ポイントの差）を上回ります。</p>
 
-    <h2 id="is-fwd">§5 IS/FWD分離：正直な自己点検</h2>
-    <p>本仮説を前向きトラッカーに登録したのは2026-08-11。それ以前（IS）と以降（FWD）に分けて比較する。</p>
+    <h2 id="is-fwd">§5 登録日の前と後に分けて見る：正直な自己点検</h2>
+    <p>関連する仮説「RSI の値が売られすぎの帯にあり、上昇トレンドのとき」を、前向きの集計表（トラッカー）に登録したのは 2026-08-11 です。この仮説は RSI の値で絞っているので、この記事の「RSI 売られすぎ反発シグナル」とは対象が少し違います。ただ、上昇トレンドと売られすぎの組み合わせに注目し始めた日なので、この日で区切ります。登録日まで（登録する前からあった過去の期間）と、翌日の 2026-08-12 から（その後の前向きの期間）に分けて比べます。</p>
 
     <table>
       <thead>
-        <tr><th>期間</th><th>N</th><th>勝率</th><th>95%CI</th><th>期待値 E(R)</th></tr>
+        <tr><th>期間</th><th>回数</th><th>勝率</th><th>勝率の偶然のぶれの幅</th><th>1回あたりの平均損益（損切り幅を1とした倍率）</th></tr>
       </thead>
       <tbody>
-        <tr><td>IS（〜2026-08-10）</td><td>65</td><td>66.2%</td><td>[54.0%, 76.5%]</td><td>+0.541R</td></tr>
-        <tr><td>FWD（2026-08-11〜）</td><td>37</td><td>48.6%</td><td>[33.4%, 64.1%]</td><td>+0.134R</td></tr>
+        <tr><td>登録日まで（〜2026-08-11）</td><td>66</td><td>66.7%</td><td>54.7%〜76.8%</td><td>+0.553</td></tr>
+        <tr><td>翌日から（2026-08-12〜）</td><td>36</td><td>47.2%</td><td>32.0%〜63.0%</td><td>+0.100</td></tr>
       </tbody>
     </table>
 
     <div class="warning-box">
-      IS 66.2% → FWD 48.6% という<strong>17.6ppの後退</strong>が見られる。FWD N=37と小さいためCIが[33.4%,64.1%]と広く、統計的な確定判断はできない。ただしIS段階の高い数字をそのまま期待するのは危険。継続して前向きデータを積み上げる必要がある。
+      登録日までの66.7%から、翌日からの47.2%へ、<strong>19.5ポイント下がっています</strong>。翌日からは36回と少ないため、偶然のぶれの幅が32.0%〜63.0%と広く、はっきりしたことは言えません。ただ、登録日までの高い数字をそのまま期待するのは危険です。前向きのデータを積み上げ続ける必要があります。
     </div>
 
-    <h3>IS/FWD × 時間足</h3>
-    <p>4H足では IS=76.0%（N=25）→ FWD=55.6%（N=18）という変化。FWD 55.6%はまだ損益分岐を上回っているが、N=18と非常に少ない段階。</p>
+    <h3>登録日の前と後を、時間足ごとに見る</h3>
+    <p>4時間足では、登録日までが76.0%（25回）、翌日からが55.6%（18回）と変わりました。翌日からの55.6%は、勝ち負けがとんとんになる勝率をまだ上回っていますが、18回ととても少ない段階です。</p>
 
     <table>
       <thead>
-        <tr><th>組み合わせ</th><th>N</th><th>勝率</th><th>95%CI</th><th>期待値</th></tr>
+        <tr><th>組み合わせ</th><th>回数</th><th>勝率</th><th>勝率の偶然のぶれの幅</th><th>1回あたりの平均損益（損切り幅を1とした倍率）</th></tr>
       </thead>
       <tbody>
-        <tr><td>1H×上昇（IS）</td><td>29</td><td>51.7%</td><td>[34.4%, 68.6%]</td><td>+0.205R</td></tr>
-        <tr><td>1H×上昇（FWD）</td><td>17</td><td>41.2%</td><td>[21.6%, 64.0%]</td><td>−0.041R</td></tr>
-        <tr style="background:#e6ffed"><td>4H×上昇（IS）</td><td>25</td><td>76.0%</td><td>[56.6%, 88.5%]</td><td>+0.771R</td></tr>
-        <tr style="background:#fff8c5"><td>4H×上昇（FWD）</td><td>18</td><td>55.6%</td><td>[33.7%, 75.4%]</td><td>+0.294R</td></tr>
+        <tr><td>1時間足・上昇（登録日まで）</td><td>30</td><td>53.3%</td><td>36.1%〜69.8%</td><td>+0.243</td></tr>
+        <tr><td>1時間足・上昇（翌日から）</td><td>16</td><td>37.5%</td><td>18.5%〜61.4%</td><td>−0.126</td></tr>
+        <tr style="background:#e6ffed"><td>4時間足・上昇（登録日まで）</td><td>25</td><td>76.0%</td><td>56.6%〜88.5%</td><td>+0.771</td></tr>
+        <tr style="background:#fff8c5"><td>4時間足・上昇（翌日から）</td><td>18</td><td>55.6%</td><td>33.7%〜75.4%</td><td>+0.294</td></tr>
       </tbody>
     </table>
 
-    <p>4H×上昇のISが特に高い数字（76.0%）を出しているが、IS/FWDの乖離が20pp以上あり、過剰フィッティングの可能性を否定できない。FWD 55.6%は損益分岐を超えているが、更なる前向き蓄積が必要な段階と考えられる。</p>
+    <p>4時間足で上昇トレンドのときは、登録日までの数字がとくに高い（76.0%）のですが、前と後で20ポイント以上の開きがあり、過去のデータにたまたま合いすぎていた可能性を否定できません。翌日からの55.6%は、勝ち負けがとんとんになる勝率を上回っていますが、さらに前向きのデータを積み上げる必要がある段階と考えられます。</p>
 
-    <h2 id="discussion">§6 考察と交絡の点検</h2>
-    <h3>指数グループへの偏り</h3>
-    <p>上昇中102件の銘柄分布は YM=F（14件）・ES=F（9件）・NQ=F（8件）と米国株指数3銘柄で全体の30%を占める。指数は#21/#103で確認したように上昇中のロングシグナルが強い傾向がある。RSI売られすぎ×上昇の優位性は「指数が上昇中に強い」という先行研究の反映という可能性がある。</p>
+    <h2 id="discussion">§6 考察と、ほかの原因が混ざっていないかの点検</h2>
+    <h3>株価指数への偏り</h3>
+    <p>上昇トレンドの102回を銘柄ごとに見ると、ダウ平均の先物（14回）・S&amp;P500の先物（9回）・ナスダック100の先物（8回）の米国の株価指数3銘柄で、全体の30%を占めます。株価指数は、#21 や #103 で確かめたように、上昇トレンドのときの買いのシグナルが強い傾向があります。「RSI 売られすぎで上昇トレンドのとき」の有利さは、「株価指数は上昇トレンドのときに強い」という以前の研究の結果が表れているだけ、という可能性があります。</p>
 
-    <h3>下降×メタルの危険域</h3>
-    <p>下降中212件のうち金属（GC=F・SI=F）は47件で、勝率は<strong>14/47=29.8%</strong>（CI[18.7%,44.0%]）と損益分岐を大幅に下回る。下降中のメタル逆張りは、本シリーズの過去の集計でも成績が振るわない傾向が繰り返し観測されている組み合わせのひとつ。</p>
+    <h3>下降トレンドの金属は特に弱い</h3>
+    <p>下降トレンドの212回のうち、金属（金と銀）は47回で、勝率は<strong>47回中14回＝29.8%</strong>（偶然のぶれの幅 18.7%〜44.0%）と、勝ち負けがとんとんになる勝率を大きく下回りました。下降トレンドでの金属の逆張り買いは、このシリーズの過去の集計でも成績が振るわない傾向がくり返し見られている組み合わせのひとつです。</p>
 
-    <h3>なぜ上昇中に強いのか（仮説）</h3>
-    <p>逆張りの典型は「下がりすぎたものが戻る」だが、より重要なのは<strong>「下がりすぎてもトレンドの方向に引き戻される力」</strong>の有無かもしれない。上昇トレンド中は買い手が多く、RSIが一時的に30を割っても反発しやすい可能性がある。下降トレンド中は逆に「下がりすぎ」でも更に下がり続けるリスクが高い。ただしこれはデータからの推測であり、因果関係は確認できない。</p>
+    <h3>なぜ上昇トレンドのときに強いのか（仮説）</h3>
+    <p>逆張りの典型は「下がりすぎたものが戻る」という考え方ですが、より大事なのは<strong>「下がりすぎても、トレンドの向きに引き戻される力」</strong>があるかどうかかもしれません。上昇トレンドのときは買い手が多く、RSI が一時的に30を下回っても反発しやすい可能性があります。下降トレンドのときは反対に、「下がりすぎ」でもさらに下がり続けるおそれが高くなります。ただしこれはデータからの推測で、原因と結果の関係までは確かめられていません。</p>
 
-    <h2 id="tracker">§7 前向きトラッカー定点観測</h2>
-    <p>本記事に関連する `rsi=os×trend=上昇` は前向きN=60・勝率52%・R=+0.21/CI[-0.07~+0.48]で蓄積中（昇格基準: 前向きN≥80かつCI下限＞0）。</p>
-
+    <h2 id="tracker">§7 前向きの集計の定点観測</h2>
+    <p>この記事に関連する仮説「RSI の値が売られすぎの帯にあり、上昇トレンドのとき」は、前向きの期間で60回・勝率52%・1回あたりの平均損益は損切り幅の0.21倍のもうけ（偶然のぶれの幅は−0.07〜+0.48）で、集計を続けています。昇格の基準は「前向きの期間で80回以上、かつ平均損益の偶然のぶれの幅の下の端が0より上」です。これは RSI の値で絞った集計なので、§5 の翌日からの36回（RSI 売られすぎ反発シグナル）とは対象が違います。</p>
     <h2 id="tracker-table">📡 前向きトラッカー定点観測（期待値ベース）</h2>
     <p class="meta-line">基準日 2026-09-22／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
     <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
@@ -533,14 +531,15 @@
       </a>
     </div>
 
-    <p class="disclaimer">
-      本記事は過去の signals-log.json の集計に基づく研究記録です。過去の成績は将来の成果を保証するものではなく、投資の元本割れリスクがあります。当サイトは金融商品取引業者ではなく、個別の投資助言は行いません。投資に関する意思決定はご自身の判断と責任で行ってください。本統計は情報提供のみを目的としており、いかなる売買推奨も含みません。
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事は、このサイトのシグナルの過去の記録を集計した研究記録です。過去の成績は将来の成果を保証するものではなく、投資の元本割れリスクがあります。当サイトは金融商品取引業者ではなく、個別の投資助言は行いません。投資に関する意思決定はご自身の判断と責任で行ってください。本統計は情報提供のみを目的としており、いかなる売買推奨も含みません。
     </p>
   </div>
 </main>
 
 <footer>
   <p>© 2026 MarketWatch AI — <a href="about.html">このサイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
 </footer>
 
 <script>

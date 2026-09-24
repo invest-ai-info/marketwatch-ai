@@ -1,35 +1,60 @@
 {
   "article_id": "108",
+  "hypothesis_id": "auto_reversal_long-True_trend-上昇",
+  "asof": "2026-09-24T06:39:59+09:00",
   "claims": [
     {
       "label": "IS（検証に使った期間）: 上昇トレンドでの逆張り買い 勝率",
-      "filter": {"reversal_long": true, "trend": "上昇", "fired_before": "2026-06-22"},
-      "k": 54,
-      "n": 101
+      "filter": {
+        "reversal_long": true,
+        "trend": "上昇",
+        "fired_before": "2026-06-23"
+      },
+      "k": 56,
+      "n": 103
     },
     {
       "label": "FWD（その後の期間）全体: 上昇トレンドでの逆張り買い 勝率",
-      "filter": {"reversal_long": true, "trend": "上昇", "fired_from": "2026-06-22"},
-      "k": 152,
-      "n": 326
+      "filter": {
+        "reversal_long": true,
+        "trend": "上昇",
+        "fired_from": "2026-06-23"
+      },
+      "k": 150,
+      "n": 324
     },
     {
       "label": "FWD: BB下限タッチのみ（上昇トレンド）勝率",
-      "filter": {"signal": "bb_lower_touch", "trend": "上昇", "fired_from": "2026-06-22"},
-      "k": 104,
-      "n": 248
+      "filter": {
+        "signal": "bb_lower_touch",
+        "trend": "上昇",
+        "fired_from": "2026-06-23",
+        "reversal_long": true
+      },
+      "k": 102,
+      "n": 245
     },
     {
       "label": "FWD: RSI売られすぎ反発のみ（上昇トレンド）勝率",
-      "filter": {"signal": "rsi_oversold_bounce", "trend": "上昇", "fired_from": "2026-06-22"},
+      "filter": {
+        "signal": "rsi_oversold_bounce",
+        "trend": "上昇",
+        "fired_from": "2026-06-23",
+        "reversal_long": true
+      },
       "k": 48,
       "n": 79
     },
     {
       "label": "FWD: 株価指数のみ（上昇トレンド・逆張り買い）勝率",
-      "filter": {"group": "index", "reversal_long": true, "trend": "上昇", "fired_from": "2026-06-22"},
-      "k": 31,
-      "n": 82
+      "filter": {
+        "group": "index",
+        "reversal_long": true,
+        "trend": "上昇",
+        "fired_from": "2026-06-23"
+      },
+      "k": 30,
+      "n": 81
     }
   ]
 }
