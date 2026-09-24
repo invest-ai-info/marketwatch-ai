@@ -64,6 +64,24 @@ R の単位 : 入った足の ATR(14)×1.5 を 1R（3通り共通）。
            ・RSI とボリンジャーの買いは 99% が「1.3以上」を満たす（安値のそばで入る＝損切りが近く利確が遠い。RR の中央値 4〜5）。
              高値ブレイク／安値割れの組は B では入らない（節目の外で入るため・設計どおり）。
 
+【追加の事前登録（2026-09-25・分けて入る＝L）— 結果を見る前にコミットして固定する】
+オーナーの案「シグナルが出てもすぐ入らない。損切りと利確を先に決め、リスクリワードが 1対1.3 になったら予定の30%、
+1対2 になったら残り70%を入れる」。
+  損切り・利確 : B と同じ節目（出た足を含む直近20本の安値−0.3ATR／高値。売りは逆）＝「シグナルが効くところ」。
+  入る値段     : リスクリワード r になる値段 p(r)＝(利確＋r×損切り)÷(1＋r)。値段が損切りへ近づくほど r は良くなる。
+                 出た足の終値ですでに r 以上なら、その段は終値ですぐ入る。届いていなければ p(r) に指値で待つ。
+  L（オーナー案）: 30%＠r=1.3 ＋ 70%＠r=2.0。比べ役として「1.3で全部」「2で全部」も同じやり方で回す（待つ効果と分ける効果を分ける）。
+  指値の寿命   : 出てから日足21本／4時間足42本のうちに1段も約定しなければ取り消し。利確に触れたら残りの指値も取り消し。
+                 1段でも約定したら、残りの指値は手じまうまで生かす。持つのは最初の約定から同じ本数まで（届かなければ終値）。
+  同じ足の扱い : 損切りに触れた足＝待っていた指値は全部約定してから損切り（買いの指値は損切りより上にあるので、
+                 値段は必ずその上を通る）。利確に触れた足で指値にも触れた＝利確が先とみなし、その足の指値は約定させない（保守側）。
+                 指値は窓で下に開けば始値で約定。損切りは窓なら始値（A と同じ）。
+  R の単位     : 全段が約定して損切りになったときの損を 1R（各段の予定価格から損切りまで×割合 の合計）。
+                 1段だけ約定して損切りなら、損は 1R より小さい。コストは約定した段ぶんのスプレッドを同じ 1R で割る。
+  主指標       : **1シグナルあたり**の平均R（入れなかったシグナルは 0R）。入る回数が違うルールを公平に比べるため。
+                 A は毎回入る、B は 1.3未満なら 0R。対応のある差 L−A・L−B を、上と同じ判定（95%幅・0.10R 以上・日足は前後半）で見る。
+  あわせて出す : 一部だけ入った／全部入った／利確に先に届いて入れず（取り逃し）／期限で入れず の割合、入れた取引の勝率・最悪・使ったリスク。
+
 使い方（Yahoo に届く所で）: python exit_rule_backtest.py [--out exit_rule_backtest.json]
 """
 import argparse
@@ -95,6 +113,11 @@ SL_ATR, TP_ATR = 1.5, 2.0
 EXPIRY = {"1d": 21, "4h": 42}
 SPLIT = pd.Timestamp("2016-01-01")
 B_LOOKBACK, B_BUFFER_ATR, B_MIN_RR = 20, 0.3, 1.3   # 出口 B（節目）＝事前登録どおり
+LADDERS = {  # 分けて入る（名前: ((リスクリワード, 割合), ...)）＝事前登録どおり
+    "L": ((1.3, 0.3), (2.0, 0.7)),   # オーナー案
+    "L13": ((1.3, 1.0),),            # 比べ役: 1.3 で全部
+    "L2": ((2.0, 1.0),),             # 比べ役: 2 で全部
+}
 
 
 def signals(df):
@@ -128,6 +151,54 @@ def _sl_fill(side, sl, o, h, l):
     if side == "short" and h >= sl:
         return max(o, sl)
     return None
+
+
+def ladder(o, h, l, c, i, side, e, slb, tpb, tf, levels, spread_abs):
+    """分けて入る。levels＝((リスクリワード, 割合), ...)。戻り値＝{R, cost, state, legs, risk_used, bars}。
+    R はコスト前・全段約定で損切りなら −1R。入れなければ R=0（state で理由）。データの最後まで決着しなければ R=None。"""
+    d = 1 if side == "long" else -1
+    n = len(c)
+    rr_now = d * (tpb - e) / (d * (e - slb))
+    legs = []
+    for r, w in levels:
+        now = rr_now >= r
+        px = e if now else (tpb + r * slb) / (1 + r)
+        legs.append({"w": w, "px": px, "fill": e if now else None})
+    unit = sum(g["w"] * d * (g["px"] - slb) for g in legs)
+    first = i if any(g["fill"] is not None for g in legs) else None
+    state, exit_px, j_end = None, None, None
+    for j in range(i + 1, n):
+        if first is None and j > i + EXPIRY[tf]:
+            state = "unfilled"
+            break
+        f = _sl_fill(side, slb, o[j], h[j], l[j])
+        if f is not None:                       # 損切り: 待っていた指値は全部約定してから損切り
+            for g in legs:
+                if g["fill"] is None:
+                    g["fill"] = min(o[j], g["px"]) if side == "long" else max(o[j], g["px"])
+            first = j if first is None else first
+            state, exit_px, j_end = "sl", f, j
+            break
+        if (side == "long" and h[j] >= tpb) or (side == "short" and l[j] <= tpb):
+            state, exit_px, j_end = ("tp", tpb, j) if first is not None else ("missed", None, j)
+            break
+        for g in legs:                          # 指値に触れた段を約定（窓なら始値）
+            if g["fill"] is None and ((side == "long" and l[j] <= g["px"]) or (side == "short" and h[j] >= g["px"])):
+                g["fill"] = min(o[j], g["px"]) if side == "long" else max(o[j], g["px"])
+                first = j if first is None else first
+        if first is not None and j - first >= EXPIRY[tf]:
+            state, exit_px, j_end = "expiry", c[j], j
+            break
+    filled = [g for g in legs if g["fill"] is not None]
+    if state is None:                           # データの最後まで決着せず
+        return {"R": None if filled else 0.0, "cost": 0.0, "state": "open" if filled else "unfilled",
+                "legs": len(filled), "risk_used": 0.0, "bars": None}
+    if state in ("unfilled", "missed") or not filled:
+        return {"R": 0.0, "cost": 0.0, "state": state, "legs": 0, "risk_used": 0.0, "bars": None}
+    R = sum(g["w"] * d * (exit_px - g["fill"]) for g in filled) / unit
+    cost = sum(g["w"] for g in filled) * spread_abs / unit
+    used = sum(g["w"] * d * (g["fill"] - slb) for g in filled) / unit
+    return {"R": R, "cost": cost, "state": state, "legs": len(filled), "risk_used": used, "bars": j_end - first}
 
 
 def trades(df, sig, ticker, tf, entry_sig, side, exit_sig):
@@ -191,10 +262,12 @@ def trades(df, sig, ticker, tf, entry_sig, side, exit_sig):
                 if j == i + EXPIRY[tf]:
                     B, bars_B = rb(c[j]), j - i
             costB = cost_r_of({"entry": e, "stop_loss": slb, "ticker": ticker})
+        spread_abs = cost_r_of({"entry": e, "stop_loss": e - 1.0, "ticker": ticker})  # 往復スプレッド×1.5（価格の単位）
+        lad = {k: ladder(o, h, l, c, i, side, e, slb, tpb, tf, lv, spread_abs) for k, lv in LADDERS.items()}
         out.append({"ticker": ticker, "tf": tf, "time": df.index[i], "S": S, "A": A, "Splus": Sp,
                     "bars_S": bars, "cost": cost,
                     "open_S_mtm": r(c[-1]) if S is None else None,
-                    "b_state": state, "rr": rr, "B": B, "bars_B": bars_B, "costB": costB})
+                    "b_state": state, "rr": rr, "B": B, "bars_B": bars_B, "costB": costB, "lad": lad})
     return out
 
 
@@ -310,6 +383,34 @@ def evaluate_b(ts):
     }
 
 
+def evaluate_l(ts):
+    """分けて入る（L）: 1シグナルあたりの平均R（入れなければ0R）で A・B・比べ役と比べる。"""
+    if not ts:
+        return {}
+    g = [clusters_of(t) for t in ts]
+    A = [t["A"] - t["cost"] if t["A"] is not None else None for t in ts]
+    B = [0.0 if t["b_state"] != "pass" else (t["B"] - t["costB"] if t["B"] is not None else None) for t in ts]
+    per = {k: [t["lad"][k]["R"] - t["lad"][k]["cost"] if t["lad"][k]["R"] is not None else None for t in ts]
+           for k in LADDERS}
+    L = [t["lad"]["L"] for t in ts]
+    n = len(ts)
+    cnt = lambda f: sum(1 for x in L if f(x)) / n
+    traded = [i for i, x in enumerate(L) if x["legs"] > 0 and x["R"] is not None]
+    trade_R = [per["L"][i] for i in traded]
+    return {
+        "n": n,
+        "A": summarize(A, g), "B": summarize(B, g),
+        "L": summarize(per["L"], g), "L13": summarize(per["L13"], g), "L2": summarize(per["L2"], g),
+        "L_minus_A": diff(per["L"], A, g), "L_minus_B": diff(per["L"], B, g),
+        "L_minus_L13": diff(per["L"], per["L13"], g), "L_minus_L2": diff(per["L"], per["L2"], g),
+        "share_1leg": cnt(lambda x: x["legs"] == 1), "share_2leg": cnt(lambda x: x["legs"] == 2),
+        "share_missed": cnt(lambda x: x["state"] == "missed"), "share_unfilled": cnt(lambda x: x["state"] == "unfilled"),
+        "L_trades": summarize(trade_R, [g[i] for i in traded], [L[i]["R"] for i in traded],
+                              [L[i]["bars"] for i in traded if L[i]["bars"] is not None]),
+        "L_risk_used": float(np.mean([L[i]["risk_used"] for i in traded])) if traded else None,
+    }
+
+
 def evaluate(ts):
     """取引の束 → S/A/S+ の要約（コスト後）と差。"""
     if not ts:
@@ -326,6 +427,7 @@ def evaluate(ts):
         "open_S": sum(1 for t in ts if t["S"] is None),
         "gross_S_avg": float(np.mean(gS)) if gS else None,
         "Bx": evaluate_b(ts),
+        "Lx": evaluate_l(ts),
     }
 
 
@@ -438,6 +540,56 @@ def report(out):
                              f"{fmt(e['S'])} | {fmt(la['S'])} | {fmt(e['A'])} | {fmt(la['A'])} | "
                              f"{fmt(e['S_minus_A'])} | {fmt(la['S_minus_A'])} |")
     lines.append(report_b(out))
+    lines.append(report_l(out))
+    return "\n".join(lines)
+
+
+def report_l(out):
+    """分けて入る（L）の節。"""
+    lines = ["\n# 分けて入る（L＝30%＠リスクリワード1.3・70%＠2.0。損切り・利確は節目）"]
+    for tf, title in (("1d", "日足（2006年〜）"), ("4h", "4時間足（直近2年）")):
+        keys = [k for k in out if k.startswith(tf + "|") and k != f"{tf}|全体"] + [f"{tf}|全体"]
+        keys = [k for k in keys if k in out and out[k].get("Lx")]
+        if not keys:
+            continue
+        lines.append(f"\n## {title}：1シグナルあたりの平均R（入れなければ0R・コスト後）\n")
+        lines.append("| 入口 | 向き | 件数 | A いまの方式 | B すぐ全部(1.3以上) | L 分けて入る | 1.3で全部 | 2で全部 | L−A | L−B | L−(1.3で全部) | L−(2で全部) |")
+        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for k in keys:
+            p = k.split("|")
+            x = out[k]["Lx"]
+            name = "全体" if len(p) == 2 else LABEL[p[2]]
+            side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
+            e, la = out[k].get("early", {}).get("Lx", {}), out[k].get("late", {}).get("Lx", {})
+            vs = {d: verdict(x[d], e.get(d), la.get(d)) for d in ("L_minus_A", "L_minus_B", "L_minus_L13", "L_minus_L2")}
+            lines.append(f"| {name} | {side} | {x['n']} | {fmt(x['A'])} | {fmt(x['B'])} | {fmt(x['L'])} | "
+                         f"{fmt(x['L13'])} | {fmt(x['L2'])} | " +
+                         " | ".join(f"{fmt(x[d])}＝**{vs[d]}**" for d in ("L_minus_A", "L_minus_B", "L_minus_L13", "L_minus_L2")) + " |")
+        lines.append(f"\n### {title}：L の中身（入れた取引）\n")
+        lines.append("| 入口 | 向き | 一部だけ入った | 全部入った | 利確に先に届いて入れず | 期限で入れず | 入れた取引の勝率 | 入れた取引の平均R | −1R超 | 最悪 | 使ったリスク(平均) | 保有(中央) |")
+        lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for k in keys:
+            p = k.split("|")
+            x = out[k]["Lx"]
+            t = x["L_trades"]
+            name = "全体" if len(p) == 2 else LABEL[p[2]]
+            side = "" if len(p) == 2 else ("買い" if p[3] == "long" else "売り")
+            tr = (f"{100 * t['win']:.1f}% | {fmt(t)} | {100 * t['beyond_1R']:.1f}% | {t['worst']:+.2f} | "
+                  f"{x['L_risk_used']:.2f}R | {t.get('bars_median', 0):.0f}本" if t.get("n") else "— | — | — | — | — | —")
+            lines.append(f"| {name} | {side} | {100 * x['share_1leg']:.0f}% | {100 * x['share_2leg']:.0f}% | "
+                         f"{100 * x['share_missed']:.0f}% | {100 * x['share_unfilled']:.0f}% | {tr} |")
+        if tf == "1d":
+            lines.append("\n### 日足・時期別（1シグナルあたり・前半 2006–2015 ／ 後半 2016–）\n")
+            lines.append("| 入口 | 向き | L 前半 | L 後半 | L−A 前半 | L−A 後半 | L−B 前半 | L−B 後半 |")
+            lines.append("|---|---|---|---|---|---|---|---|")
+            for k in keys:
+                p = k.split("|")
+                if len(p) == 2:
+                    continue
+                e, la = out[k]["early"].get("Lx", {}), out[k]["late"].get("Lx", {})
+                lines.append(f"| {LABEL[p[2]]} | {'買い' if p[3] == 'long' else '売り'} | {fmt(e.get('L'))} | "
+                             f"{fmt(la.get('L'))} | {fmt(e.get('L_minus_A'))} | {fmt(la.get('L_minus_A'))} | "
+                             f"{fmt(e.get('L_minus_B'))} | {fmt(la.get('L_minus_B'))} |")
     return "\n".join(lines)
 
 
