@@ -88,7 +88,7 @@
 
 - **1日1本まで**（当日分の `guide-entry-*.html` が既にあれば何もしない）。
 - **研究の数字は、実際に見た出典からだけ**（§0-A）。確かめられない数字は書かない。
-- **広告を入れない**（`inject_ads.py` が除外済み。本文にも広告・アフィリエイトリンクを書かない）。
+- **広告を入れない**（`inject_ads.py` が除外済み。本文にも広告・アフィリエイトリンクを書かない。テンプレには Google AdSense の読み込みも無い＝**足さない**。2026-09-25 オーナー指示「広告はなしでいいです」）。
 - 6コアHTML（index/calendar/charts/vix/market-health/hot-assets）・political-feed・track-record・sitemap.xml に直接触れない。
 - 発火エンジン(`generate_technical_alerts.py`)・signal_lab系・固定オラクル(`signal_lab_verify.py`/`exit_lab_verify.py`/`check_site_consistency.py`/`check_guide_draft.py`/`check_plain_japanese.py`/`publish_article.py`)は**書き換えない（実行はOK）**。
 - 推奨・利益示唆・断定（必ず/絶対/保証/儲かる/一択）禁止。**情報提供であり投資助言ではない。**
