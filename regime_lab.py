@@ -65,6 +65,8 @@ regime_lab.py — テクニカル指標が「効く環境・効かない環境�
            間接的）／同じ銘柄の取引は重なる（クラスタで扱う）／E1〜E3・E6 は互いに似た物を測る（同じ現象を別の
            物差しで数回数えることになる）／重要指標の発表日やセンチメントは過去20年分のデータが無いので扱えない
            （前向きの確認でだけ環境警戒スコアを参考に見る）。
+追加（2026-09-26・主の結果を見た後）: 年ごと・資産クラスごとの成績と、その年の環境の平均の表（yearly / by_class）を
+           出すようにした。**読むための表で、判定には使わない**（事前登録の基準・比べ方は変えていない）。
 公開   : しない（オーナー個人向けの研究。結果の読み方は「検証結果」であって売買の推奨ではない）。
 
 使い方（Yahoo に届く所で）: python regime_lab.py --json regime-lab.json --md regime-lab.md
@@ -217,7 +219,9 @@ def lab_trades(df, ticker, tf, vix_prev):
             h10 = d * (c[i + H_BARS] - c[i]) / F["atr"][i] if i + H_BARS < n else None
             out.append({"ticker": ticker, "cls": CLASS_OF.get(ticker, "?"), "tf": tf, "es": es, "side": side,
                         "fam": FAMILY[(es, side)], "time": times[i], "exit_time": times[j],
-                        "gross": A, "cost": cost, "net": A - cost, "h10": h10, "b": buckets(F, i, c[i], side)})
+                        "gross": A, "cost": cost, "net": A - cost, "h10": h10, "b": buckets(F, i, c[i], side),
+                        "raw": {k: (float(F[k][i]) if np.isfinite(F[k][i]) else None)
+                                for k in ("adx", "vix", "volp", "erp", "volchg")}})
     return out
 
 
@@ -348,7 +352,27 @@ def evaluate(ts1d, ts4h, live=None):
             sel = fam(ts, F)
             if sel:
                 baseline[f"{tf}|{F}"] = X.summarize([t["net"] for t in sel], [cluster(t) for t in sel])
-    return {"primary": primary, "explore": explore, "combos": combos, "baseline": baseline}
+    # 追加（2026-09-26・主の結果を見た後に足した「読むための表」＝判定には使わない）:
+    #   年ごと・資産クラスごとの族の成績と、その年の環境の平均（効く時期・効かない時期が環境と重なるかを眺める）。
+    yearly = []
+    for F in ("tf", "mr"):
+        base = fam(ts1d, F)
+        for y in sorted({t["time"].year for t in base}):
+            sel = [t for t in base if t["time"].year == y]
+            raw = lambda k: [t["raw"][k] for t in sel if t.get("raw", {}).get(k) is not None]
+            mean = lambda xs: float(np.mean(xs)) if xs else None
+            yearly.append({"fam": F, "year": y, "n": len(sel), "avg": mean([t["net"] for t in sel]),
+                           "win": mean([t["net"] > 0 for t in sel]), "h10": mean([t["h10"] for t in sel if t["h10"] is not None]),
+                           "vix": mean(raw("vix")), "adx": mean(raw("adx")), "volp": mean(raw("volp")), "erp": mean(raw("erp"))})
+    by_class = {}
+    for tf, ts in (("1d", ts1d), ("4h", ts4h)):
+        for F in ("tf", "mr"):
+            for k in ("index", "fx", "commodity", "crypto"):
+                sel = [t for t in fam(ts, F) if t["cls"] == k]
+                if len(sel) >= 2:
+                    by_class[f"{tf}|{F}|{k}"] = X.summarize([t["net"] for t in sel], [cluster(t) for t in sel])
+    return {"primary": primary, "explore": explore, "combos": combos, "baseline": baseline,
+            "yearly": yearly, "by_class": by_class}
 
 
 # ───────────────────────── 前向き（signals-log） ─────────────────────────
