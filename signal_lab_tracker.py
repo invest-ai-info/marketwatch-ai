@@ -220,6 +220,49 @@ REGISTER_2026_08_11 = {"register": [
      "kind": "edge", "registered_at": "2026-08-11"},   # Q24 主張1本・σ=1.165R・6.48件/日・N80のMDE=0.365R
 ]}
 
+# 🆕 2026-09-26 環境の相性ラボ（regime_lab.py）の候補3つを前向きに追う（**オーナー指示 2026-09-26**
+#   「3つともトラッカーに登録して前向きに追跡して」・確定後は変更しない）。
+#   出どころ: regime_lab.py（事前登録 2026-09-25・日足2006〜・18銘柄・いまの方式のコスト後R）。
+#     主の14比較で基準（ボンフェローニ＋差0.10R以上＋前後半で同じ向き）を満たしたものは0。以下は「候補」。
+#     ① 順張り×ADX: 弱(<20) +0.040R（n6166）／強(≥25) −0.037R（n5042）。差 −0.077R p=0.0066・前後半とも同じ向き・
+#        差が0.10R未満で基準外。4時間足（直近2年）では再現せず（−0.006R）。実シグナル（5/20〜）は同じ向き（−0.051R）。
+#        ⇒ 教科書（ADXが強いほど順張り）と逆向きの候補。「弱」を edge、「強」を gate として**対で**登録する。
+#     ② 逆張り×VIX: 高(≥25) +0.052R（n1246）／低(<15) −0.077R（n1215）。差 +0.129R p=0.22（基準外）。
+#        4時間足では同じ向きで大きい（高 +0.151R n294）。文献（Nagel 2012: 短期の逆張りの取り分は VIX とともに増える）と同じ向き。
+#        ⇒「高」を edge、「低」を gate として対で登録する。
+#     ③ FX×逆張り買い×日足: −0.148R [−0.19, −0.11]（n2918）。前半 −0.181R・後半 −0.119R（どちらも0をまたがない）・
+#        9通貨ペアすべてマイナス。ただし資産クラス別の「読むための表」から出たもので事前登録の比較ではない。
+#        4時間足と実シグナル（大半が1h/4h）ではほぼ0＝日足に限った現象の可能性。⇒ tf=1d の gate として登録する。
+#   ①② は「差」の主張だが、トラッカーは1本ずつ（平均Rの95%幅が0の上か下か）で判定する仕組みなので、
+#     両端を edge / gate の対で登録し、**差は2行を並べて読む**（新しい種類の判定を足すと記事・メール・番人の
+#     読み手が全部影響を受けるため、既存の意味のまま使う）。①② は全足、③ は日足（証拠の範囲に合わせる）。
+#   ⚠️⚠️ **検出力の開示（登録前に実測・signals-log 5/20〜9/25 の決済済み・凍結ユニバース）**:
+#     σ≈1.15R。トラッカー標準の N=80 では **MDE≈0.36R**（素朴・日クラスタ補正前）。
+#     期待される効果は ±0.04〜0.15R ＝**最初のチェックポイント(N=80)では、どれも期待される規模の効果を構造的に確認できない**。
+#       順張り×ADX弱 6.4件/日（+0.040R に要る N≈6,600＝約2.8年）／順張り×ADX強 8.3件/日（N≈7,600＝約2.5年）
+#       逆張り×VIX高 **0件**（5/20以降 VIX≥25 が一度も無い＝VIX が上がるまで溜まらない）
+#       逆張り×VIX低 1.2件/日（−0.077R に要る N≈1,800＝約4年）／FX×逆張り日足 0.22件/日（−0.148R に要る N≈480＝約6年）
+#     ⇒ **N=80 で非有意でも「効果なし」と読まない**（Q24 と同じ扱い）。①② の実質の読みは「対の2行の差」。
+#   ⚠️ 新しい条件キー（family / adx_band / vix_band / asset_class）はエンジンのメール照合
+#      （generate_technical_alerts.GATE_PROBE_SUPPORTED_KEYS）に入っていない＝昇格しても配信には反映されない（人間が別途判断）。
+REGISTER_2026_09_26 = {"register": [
+    {"id": "rl_tf_adx_weak", "label": "順張り×ADX弱(20未満)", "filter": {"family": "tf", "adx_band": "weak"},
+     "kind": "edge", "registered_at": "2026-09-26",
+     "pair": "rl_tf_adx_strong"},   # 日足BT +0.040R n6166（強との差 −0.077R p=0.0066・基準外）
+    {"id": "rl_tf_adx_strong", "label": "順張り×ADX強(25以上)(回避)", "filter": {"family": "tf", "adx_band": "strong"},
+     "kind": "gate", "registered_at": "2026-09-26",
+     "pair": "rl_tf_adx_weak"},     # 日足BT −0.037R n5042
+    {"id": "rl_mr_vix_high", "label": "逆張り買い×VIX高(25以上)", "filter": {"family": "mr", "vix_band": "high"},
+     "kind": "edge", "registered_at": "2026-09-26",
+     "pair": "rl_mr_vix_low"},      # 日足BT +0.052R n1246（低との差 +0.129R p=0.22・基準外）
+    {"id": "rl_mr_vix_low", "label": "逆張り買い×VIX低(15未満)(回避)", "filter": {"family": "mr", "vix_band": "low"},
+     "kind": "gate", "registered_at": "2026-09-26",
+     "pair": "rl_mr_vix_high"},     # 日足BT −0.077R n1215
+    {"id": "rl_fx_mr_1d", "label": "FX×逆張り買い(日足)(回避)",
+     "filter": {"asset_class": "fx", "family": "mr", "tf": "1d"},
+     "kind": "gate", "registered_at": "2026-09-26"},   # 日足BT −0.148R [−0.19,−0.11] n2918・前後半とも負・9ペア全て負
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -292,7 +335,7 @@ def _filter_key(f):
 
 
 def apply_holdout_bootstrap(t):
-    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 / STATE_2026_07_20 / REGISTER_2026_07_27 を tracker に
+    """HOLDOUT_2026_07_02 / COMBO_2026_07_19 / STATE_2026_07_20 / REGISTER_2026_07_27 / 08_11 / 09_26 を tracker に
     冪等適用（注記は未設定の仮説のみ・登録は filter 非重複のみ）＋ TF_SCOPE_FIX の適用。"""
     changed = 0
     for h in t["hypotheses"]:
@@ -318,7 +361,7 @@ def apply_holdout_bootstrap(t):
     existing_ids = {h.get("id") for h in t["hypotheses"]}
     for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
               + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
-              + REGISTER_2026_08_11["register"]):
+              + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
@@ -570,7 +613,14 @@ PLAIN_SITUATION = {  # filter キー → 値 → 場面を表す名詞句（後�
     "regime4": {"UP_LOW": "上昇相場・値動き小", "UP_HIGH": "上昇相場・値動き大",
                 "DOWN_LOW": "下落相場・値動き小", "DOWN_HIGH": "下落相場・値動き大"},
     "news": {"0": "関連ニュースなし", "1-2": "関連ニュース1〜2本", "3+": "関連ニュース3本以上"},
+    # 🆕 2026-09-26 環境の相性ラボの次元（signal_lab_verify の adx_band / vix_band と同じ境界）
+    "adx_band": {"weak": "トレンドが弱いとき（ADX20未満）", "mid": "ADX20〜25のとき",
+                 "strong": "トレンドが強いとき（ADX25以上）"},
+    "vix_band": {"low": "市場が落ち着いているとき（VIX15未満）", "mid": "VIX15〜25のとき",
+                 "high": "市場が不安なとき（VIX25以上）"},
 }
+PLAIN_ASSET_CLASS = {"index": "株価指数", "fx": "為替（FX）", "commodity": "金・銀・原油", "crypto": "ビットコイン"}
+PLAIN_FAMILY = {"tf": "順張り", "mr": "逆張り買い"}
 PLAIN_KIND = {"edge": "勝ちやすいか", "gate": "負けやすいか"}
 # 名前に出てきた言葉だけ表の上で説明する（出てこない言葉の説明は載せない＝表の上を短く保つ）
 PLAIN_TERMS = [
@@ -589,21 +639,27 @@ PLAIN_TERMS = [
     ("クロス", "ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）"),
     ("環境警戒スコア", "環境警戒スコア＝重要な指標の発表や相場の荒れ具合から決める警戒度（A＝穏やか〜D＝最も警戒）"),
     ("関連ニュース", "関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数"),
+    ("順張り", "順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）"),
+    ("ADX", "ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）"),
+    ("VIX", "VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）"),
 ]
 
 
 def plain_name(f):
     """filter dict → 読者向けの日本語の名前（例 {"group":"metal","direction":"long"} → 「金・銀の買い」）。
     知らないキー・値は「キー=値」のまま残す（黙って消さない）。"""
-    scope = PLAIN_GROUP.get(f["group"], f["group"]) if "group" in f else f.get("ticker")
+    scope = (PLAIN_GROUP.get(f["group"], f["group"]) if "group" in f else
+             PLAIN_ASSET_CLASS.get(f["asset_class"], f["asset_class"]) if "asset_class" in f else f.get("ticker"))
     situ = []
     for k, table in PLAIN_SITUATION.items():
         if k in f:
             situ.append(table.get(f[k], f"{k}={f[k]}"))
-    known = {"group", "ticker", "tf", "direction", "reversal_long", "signal", "signals_all", *PLAIN_SITUATION}
+    known = {"group", "ticker", "tf", "direction", "reversal_long", "signal", "signals_all", "asset_class", "family",
+             *PLAIN_SITUATION}
     situ += [f"{k}={v}" for k, v in f.items() if k not in known]
     ctx = "、".join(([scope] if scope else []) + situ)
-    side = "逆張り買い" if f.get("reversal_long") else {"long": "買い", "short": "売り"}.get(f.get("direction"))
+    side = ("逆張り買い" if f.get("reversal_long") else PLAIN_FAMILY.get(f.get("family"))
+            or {"long": "買い", "short": "売り"}.get(f.get("direction")))
     sigs = f.get("signals_all") or ([f["signal"]] if "signal" in f else [])
     trig = "と".join(f"「{PLAIN_SIGNAL.get(s, s)}」" for s in sigs)
     if len(sigs) >= 2:

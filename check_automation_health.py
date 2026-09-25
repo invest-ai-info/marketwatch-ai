@@ -449,8 +449,20 @@ def declared_hypotheses(T):
     return out
 
 
-def check_tracker_registration(owner, repo, token):
-    """コードで宣言した仮説が GitHub 側 tracker に実在するか。戻り値: (宣言総数, 欠落リスト)。"""
+def split_missing(absent, today_jst):
+    """不在の宣言を「登録漏れ」と「反映待ち」に分ける（純関数・テスト対象）。
+
+    🆕 2026-09-26: 宣言は main に入った後、翌朝の研究日誌 routine（signal-lab-daily 06:10 JST）の
+    `update` で初めて tracker.json に入る。登録日が今日か昨日のものを即「登録漏れ」とすると、
+    宣言を足した日に毎回誤警告が出る＝番人の信用が落ちる。1日だけ「反映待ち」として待つ。"""
+    cut = (today_jst - dt.timedelta(days=1)).isoformat()
+    missing = sorted({s["id"] for s in absent if (s.get("registered_at") or "") < cut})
+    pending = sorted({s["id"] for s in absent if (s.get("registered_at") or "") >= cut})
+    return missing, pending
+
+
+def check_tracker_registration(owner, repo, token, today_jst=None):
+    """コードで宣言した仮説が GitHub 側 tracker に実在するか。戻り値: (宣言総数, 欠落リスト, 反映待ちリスト)。"""
     import signal_lab_tracker as T
 
     declared = declared_hypotheses(T)
@@ -460,9 +472,12 @@ def check_tracker_registration(owner, repo, token):
     live_ids = {h.get("id") for h in live.get("hypotheses", [])}
     live_filters = {T._filter_key(h["filter"]) for h in live.get("hypotheses", []) if h.get("filter")}
 
-    missing = [s["id"] for s in declared
-               if s["id"] not in live_ids and T._filter_key(s["filter"]) not in live_filters]
-    return len(declared), sorted(set(missing))
+    absent = [s for s in declared
+              if s["id"] not in live_ids and T._filter_key(s["filter"]) not in live_filters]
+    if today_jst is None:
+        today_jst = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
+    missing, pending = split_missing(absent, today_jst)
+    return len(declared), missing, pending
 
 
 # ⑦ ティッカー用フィードのソース単位の停止検知（2026-08-06 追加）。
@@ -964,14 +979,17 @@ def main():
     body.append("")
     body.append("### ⑥ 事前登録した仮説がトラッカーに実在するか（登録漏れ＝台帳が嘘をつく壊れ方）")
     try:
-        total, missing = check_tracker_registration(owner, repo, token)
+        total, missing, pending = check_tracker_registration(owner, repo, token)
+        if pending:
+            body.append(f"- ⚪ 反映待ち {len(pending)} 件（登録日が今日か昨日＝翌朝の研究日誌 routine の update で入る）: "
+                        + ", ".join(pending))
         if missing:
             body.append(f"- 🚨 🟡 宣言 {total} 件のうち **{len(missing)} 件が tracker に不在**"
                         f"（id も filter も無い＝重複スキップではない登録漏れ）: " + ", ".join(missing)
                         + "。`signal_lab_tracker.py` の SEED に足しただけになっていないか確認する"
                           "（SEEDはトラッカー未作成時にしか使われない＝2026-07-27 の実バグ）")
             bad.append(("トラッカー登録漏れ", "warn"))
-        else:
+        elif not pending:
             body.append(f"- ✅ 🟢 宣言 {total} 件すべてが tracker に実在（または filter 重複で正常スキップ）")
     except Exception as e:
         # ③④⑤と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
