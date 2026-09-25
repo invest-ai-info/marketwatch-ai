@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>トレンドフォローは本当に効くの？ 研究でわかっていること【エントリー方法の研究 #01】 - MarketWatch AI</title>
+  <meta name="description" content="値動きの向きに乗る「トレンドフォロー」は、研究でどこまで確かめられているのか。58の市場を調べた研究、100年以上さかのぼった研究、それに対する反論を出典つきで整理し、株・為替・コモディティでの違いも見ます。">
+  <meta name="keywords" content="トレンドフォロー,モメンタム,順張り,エントリー,投資初心者,テクニカル分析,時系列モメンタム">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-entry-trend-following.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="トレンドフォローは本当に効くの？ 研究でわかっていること【エントリー方法の研究 #01】">
+  <meta property="og:description" content="値動きの向きに乗る「トレンドフォロー」を、58の市場を調べた研究・100年さかのぼった研究・反論の3本の出典から整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-entry-trend-following.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "トレンドフォローは本当に効くの？ 研究でわかっていること【エントリー方法の研究 #01】",
+    "description": "値動きの向きに乗る「トレンドフォロー」を、58の市場を調べた研究・100年さかのぼった研究・反論の3本の出典から整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-25",
+    "dateModified": "2026-09-25",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-entry-trend-following.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-price{stroke:#57606a;stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-hl{fill:#1a7f37;stroke:#ffffff;stroke-width:1.5}
+    .s-rev{fill:#ffffff;stroke:#cf222e;stroke-width:2.5}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-price{stroke:#c9d1d9}
+    body.dark .s-hl{fill:#3fb950;stroke:#161b22}
+    body.dark .s-rev{fill:#161b22;stroke:#f85149}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-axis{stroke:#8b949e}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; トレンドフォローは効くのか（エントリー方法の研究 #01）
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事はエントリー（買う・売るタイミング）の決め方についての考え方や、公開されている研究の紹介を目的とした「情報提供」であり、特定の手法・銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🧭 トレンドフォローは本当に効くの？ 研究でわかっていること【エントリー方法の研究 #01】</h1>
+    <div class="meta-line">公開：2026年9月25日 ／ 読了時間：約 9 分 ／ カテゴリ：🚪 エントリー方法の研究</div>
+
+    <p>「上がっているものを買い、下がっているものを売る」——トレンドフォロー（順張り）は、いちばんなじみのある入り方かもしれません。この記事では、その考え方が学術研究でどこまで確かめられているのかを、実際に研究の要旨を確認しながら整理します。「効く・効かない」の結論を押しつけるのではなく、どんな市場で・どんな期間で・何がわかっていて・何がわかっていないのかを、読者が自分で判断できる材料として渡すことが目的です。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>株価指数・通貨・商品・国債の先物など58種類の市場を調べた研究で、過去1年ほどの値動きの向きに乗る方法に、偶然とは言いにくいプラスの効果が、調べたすべての市場で報告されました。効果は1か月から12か月ほど続きやすいとされています。</li>
+      <li>別の研究では、1880年までさかのぼっても、10年ごとの区切りのすべてでこの方法の平均はプラスで、株と債券を組み合わせた運用が大きく値下がりした10回の場面のうち8回で、良い成績だったと報告されています。</li>
+      <li>一方で、銘柄を1つずつ調べ直すと、この効果ははっきりしなかった、という反論もあります。向きがはっきりしない「もみ合い」の相場では、損が続きやすいともされています。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな方法か</a></li>
+        <li><a href="#section-2">研究でわかっていること</a></li>
+        <li><a href="#section-3">反論・限界</a></li>
+        <li><a href="#section-4">株・為替・コモディティでは？</a></li>
+        <li><a href="#section-5">よくある誤解</a></li>
+        <li><a href="#section-6">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな方法か</h2>
+    <p>トレンドフォローは、会社の業績や割安・割高を見るのではなく、その銘柄自身の「過去の値動き」だけを見て、値上がりが続いていれば買い、値下がりが続いていれば売る方法です。値動きの勢いに乗る、という意味で「モメンタム（勢い）」と呼ばれる考え方の一種でもあります。</p>
+    <p><strong>仮の例（考え方を説明するための仮の例です）：</strong> ある銘柄が、今日から数えて過去1年のあいだ、値上がりを続けてきたとします。トレンドフォローの考え方では、この「過去1年の向き」をそのまま材料にして、これから先も同じ向きに動きやすいと考え、買いを検討します。反対に、過去1年のあいだ値下がりを続けてきた銘柄については、売りを検討します。値動きの向きが変わるまで、その持ち方を続けるのが基本の考え方です。</p>
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 390" role="img" aria-labelledby="fig-trend-title">
+        <title id="fig-trend-title">トレンドフォロー（値動きの向きに乗る考え方）の概念図</title>
+        <text class="s-panel-label" x="40" y="26">トレンドフォローの考え方（イメージ図・実際の値動きではありません）</text>
+        <line class="s-axis" x1="60" y1="250" x2="600" y2="250"/>
+        <polyline class="s-price" points="60,230 110,226 150,222 190,205 230,180 270,150 310,120 340,100 370,108 400,95 430,118 460,100 490,140 520,175 550,205 580,225"/>
+        <circle class="s-hl" cx="150" cy="222" r="5"/>
+        <text class="s-legend" x="150" y="205" text-anchor="middle">1</text>
+        <circle class="s-hl" cx="340" cy="100" r="5"/>
+        <text class="s-legend" x="340" y="80" text-anchor="middle">2</text>
+        <circle class="s-rev" cx="430" cy="118" r="5"/>
+        <text class="s-legend" x="430" y="98" text-anchor="middle">3</text>
+        <circle class="s-rev" cx="550" cy="205" r="5"/>
+        <text class="s-legend" x="550" y="185" text-anchor="middle">4</text>
+        <text class="s-label-sm" x="70" y="288">1. 過去1年ほど値上がりが続いていたら、その向きに乗って買いを検討する（仮の例）</text>
+        <text class="s-label-sm" x="70" y="308">2. 上がる向きが続くあいだは、そのまま持ち続けるという考え方</text>
+        <text class="s-label-sm" x="70" y="328">3. 向きがはっきりしない「もみ合い」の場面では、損が続きやすいとされる</text>
+        <text class="s-label-sm" x="70" y="348">4. 値動きが下向きに変わったら、売りを検討する（仮の例）</text>
+      </svg>
+      <figcaption class="chart-caption">図：トレンドフォローの考え方を示したイメージ図。※概念を示すイメージ図です（実際の値動きではありません）。</figcaption>
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 研究でわかっていること</h2>
+    <h3>先物・為替など58の市場を調べた研究（モスコウィッツ氏らの研究、2012年）</h3>
+    <p>モスコウィッツ氏・ウー氏・ピーダーセン氏による研究は、株価指数・通貨・商品・国債の先物やそれに準じる契約58種類（流動性の高いものを選んだもの）を対象に、25年を超えるデータを使って調べました。その結果、過去1年ほどの値動きの向きに乗る方法に、調べた58種類のすべての市場で、偶然とは言いにくいプラスの効果があったと報告しています。この効果は1か月から12か月ほど続きやすく、12か月を超えると、一部は反対向きに戻る傾向も見られたとしています。</p>
+    <h3>1880年までさかのぼった研究（ハースト氏らの研究、2017年）</h3>
+    <p>ハースト氏・ウー氏・ピーダーセン氏による別の研究は、対象期間を1880年から2016年までにのばし、世界の67の市場（商品・株価指数・国債・通貨のペア）でこの方法の成績を調べ直しました。その結果、1880年代から2016年までの10年ごとの区切りのすべてで、この方法の平均の成績はプラスだったと報告しています。また、株を60%・債券を40%持つ組み合わせの運用が大きく値下がりした場面を10回選び、そのうち8回で、この方法は良い成績だったとしています。景気の良い時期・悪い時期、戦争のある時期・ない時期、金利の高い時期・低い時期など、さまざまな状況をまたいで調べても、同じように良い成績だったとも報告しています。なお、これらの成績は、多くの市場に分けて持ち、値動きの大きさに合わせて持つ量を調整した組み合わせ全体としてのものです。1つの市場だけで同じ結果になるとは限りません。</p>
+    <div class="info-box"><strong>当サイトとの関係：</strong> 当サイトのシグナルの一部（移動平均線の並び方など）も、値動きの向いている方向に乗るという、同じ考え方を使っています。ただし、ここで紹介した研究が調べたのは1か月から12か月という長い期間の値動きです。当サイトのシグナルが見ているのは、数時間から数日という、それよりずっと短い期間の値動きです。そうした短い期間でも同じ効果があるかは、この研究からはわかりません。研究の結果を、当サイトのシグナルの裏づけとして読むことはできません。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 反論・限界</h2>
+    <p>ホアン氏・リー氏・ワン氏・チョウ氏による研究（2020年）は、モスコウィッツ氏らの研究と同じような対象を、契約1つずつ個別に調べ直すと、過去1年ほどの値動きの向きが次の1か月の値動きを予測する力は、データの範囲の中でも、その外でも、はっきりしなかったと報告しています。多くの契約をまとめて計算すると効果が大きく見えることについても、統計的な基準（ブートストラップと呼ばれる方法で作った基準）と比べると、確かなものとは言いにくいとしています。</p>
+    <p>また、値動きの向きがはっきりしない「もみ合い」の相場では、この方法は損が続きやすいとよく言われます。ただし、その損の大きさを示す具体的な数字は、今回確認できませんでした。数字がないぶん、「もみ合いでは損が続きやすい」という傾向として読んでいただくのが安全です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 株・為替・コモディティでは？</h2>
+    <p>紹介した2つの研究がどの市場を調べたものかを、表に整理します。</p>
+    <table>
+      <tr><th>市場</th><th>研究はあるか</th><th>内容</th></tr>
+      <tr><td>株価指数（先物）</td><td>あり</td><td>58の市場の中に、主要国の株価指数の先物が含まれています。</td></tr>
+      <tr><td>個別の株式</td><td>この研究からはわからない</td><td>2つの研究は、いずれも株価指数・通貨・商品・国債の先物が対象で、個別の会社の株式は対象に含まれていません。</td></tr>
+      <tr><td>為替（FX）</td><td>あり</td><td>58の市場の中に、複数の通貨のペアが含まれています。</td></tr>
+      <tr><td>コモディティ（商品）</td><td>あり</td><td>58の市場の中に、金・原油などの商品先物が含まれています。</td></tr>
+    </table>
+    <p>株価指数・為替・コモディティのいずれも、58市場の研究の対象に含まれています。ただし、それぞれの市場だけを取り出した場合の細かい成績の違いまでは、今回確認できませんでした。個別の会社の株式については、ここで紹介した研究の対象外であり、この記事の研究からはわかりません（ほかの銘柄と比べて強いものを買う、別の型の方法については、このシリーズの別の回で扱います）。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ よくある誤解</h2>
+    <h3>誤解1：会社の業績や割安・割高を見て入る方法だと思われがち</h3>
+    <p>トレンドフォローは、値動きだけを材料にする方法です。決算や業績の分析にもとづく考え方とは別のものです。</p>
+    <h3>誤解2：昔の研究で確かめられているので、これからも同じように効くと思われがち</h3>
+    <p>紹介した研究の数字は、あくまで過去のデータを使って計算した結果です。将来も同じ結果になることを保証するものではありません。このシリーズの後の回では、研究で見つかった傾向が、発表されたあとに弱まった例も扱う予定です。</p>
+    <h3>誤解3：短い期間の売買でも同じように効くと思われがち</h3>
+    <p>紹介した研究が調べたのは、1か月から12か月という長い期間の値動きです。数日や数週間といった短い期間でも同じ効果があるかどうかは、この研究からはわかりません。</p>
+
+    <div class="warning-box">この記事は、公開されている学術研究を当サイトが要約したものです。研究の数字は、それぞれの研究が使った期間・市場・条件のもとでの結果であり、将来も同じになるとは限りません。特定の手法・銘柄の売買を勧めるものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ</h2>
+    <ul>
+      <li>58の市場を調べた研究では、過去の値動きの向きに乗る方法に、偶然とは言いにくいプラスの効果が報告されています。1880年から2016年までさかのぼった研究でも、10年ごとの区切りのすべてで平均の成績はプラスだったと報告されています。</li>
+      <li>一方で、契約を1つずつ調べ直すと効果がはっきりしなかった、という反論もあります。「もみ合い」の場面では損が続きやすいとも言われますが、その大きさの数字は今回確認できませんでした。</li>
+      <li>紹介した研究は、株価指数・為替・商品の先物が対象で、個別の会社の株式は対象に含まれていません。研究が調べたのは1か月から12か月という長い期間で、数日単位の短い期間で同じ効果があるかはわかりません。</li>
+      <li>当サイトのシグナルの一部も同じ考え方を使っていますが、研究が調べた期間（1か月から12か月）とシグナルが見ている期間（数時間から数日）は大きく違い、判定のルールも同じではないため、研究の結果をシグナルの裏づけとして読むことはできません。</li>
+    </ul>
+    <p>次回は、一定期間の高値・安値を抜けたら入る「ブレイク」の方法について、研究でわかっていることを見ていきます。</p>
+
+    <div style="text-align:center;margin:24px 0">
+      <a href="guides.html" style="display:inline-block;padding:12px 28px;background:#ffffff;border:1px solid #0969da;border-radius:8px;color:#1f6feb;text-decoration:none;font-weight:600;font-size:.95rem">📚 解説記事一覧に戻る →</a>
+    </div>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-masters-002-trend.html">
+        <div class="related-card-title">📈 巨匠の教えをデータで検証 #2（順張り）</div>
+        <div class="related-card-desc">「順張りの教科書」は日本株で通用するのかを、3人の巨匠・8つの仮説で確かめた回。本記事のトレンドフォローに関連。</div>
+      </a>
+      <a class="related-card" href="guide-proverb-trend-is-your-friend.html">
+        <div class="related-card-title">💬 投資格言「トレンドは友」の意味</div>
+        <div class="related-card-desc">順張りの規律を投資格言の側面から解説。本記事の考え方の背景として。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://www.sciencedirect.com/science/article/pii/S0304405X11002613" target="_blank" rel="noopener">Moskowitz, Ooi &amp; Pedersen (2012) "Time Series Momentum", Journal of Financial Economics 104(2)</a>（出版社ページの要旨で確認）</li>
+      <li><a href="https://jpm.pm-research.com/content/44/1/15.abstract" target="_blank" rel="noopener">Hurst, Ooi &amp; Pedersen (2017) "A Century of Evidence on Trend-Following Investing", The Journal of Portfolio Management 44(1)</a>（出版社ページの要旨で確認）</li>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X19301953" target="_blank" rel="noopener">Huang, Li, Wang &amp; Zhou (2020) "Time series momentum: Is it there?", Journal of Financial Economics 135(3)</a>（出版社ページの要旨で確認）</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はエントリー（買う・売るタイミング）の決め方についての考え方と、公開されている学術研究の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。研究の内容は当サイトによる要約です。正確な内容は各原文をご確認ください。記載の数値・方法による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
