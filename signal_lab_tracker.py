@@ -653,6 +653,33 @@ def plain_kind_cell(kind):
             f'<br><small style="opacity:.7">{kind}</small>')
 
 
+NOWRAP = '<span style="white-space:nowrap">{}</span>'
+STATE_WORDS = ("🟡蓄積中", "⛔反証", "✅昇格")
+
+
+def crit_cell(kind, mn, holdout=False):
+    """「宣言基準」セル＝件数の条件と平均Rの条件を2行に（2026-09-25 オーナー指示「改行をうまく使って見やすく」）。"""
+    side = "平均RのCI下限&gt;0" if kind == "edge" else "平均RのCI上限&lt;0"
+    return f'{NOWRAP.format(f"前向きN≥{mn}" + ("🏁" if holdout else ""))}<br>{NOWRAP.format(side)}'
+
+
+def value_cell(avg, lo, hi, k, n, rest, sep="~"):
+    """「前向き現在値」セル＝平均R／CI／件数・勝率 の3行。数字の文字（符号・区切り）は受け取ったまま使う。"""
+    return (f'{NOWRAP.format(f"平均R {avg}")}<br>{NOWRAP.format(f"CI[{lo}{sep}{hi}]")}'
+            f'<br><small style="opacity:.8;white-space:nowrap">{k}/{n}・{rest}</small>')
+
+
+def state_cell(text):
+    """「状態」セル＝「🟡蓄積中」などが途中で折れないように（後ろの注記はそのまま）。"""
+    if 'style="white-space:nowrap"' in text:      # 整え済み＝何もしない（2回目以降・冪等）
+        return text
+    hits = [(text.find(w), w) for w in STATE_WORDS if w in text]
+    if not hits:
+        return text
+    _pos, w = min(hits)                           # 先頭に近い1語だけ（注記の中の「⛔反証接近」などは包まない）
+    return text.replace(w, NOWRAP.format(w), 1)
+
+
 def cmd_table(args, data, today):
     t = load_tracker()
     rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
@@ -670,11 +697,11 @@ def cmd_table(args, data, today):
             fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
             mn = min_n_of(h)
             ho = "🏁" if h.get("holdout_pass") else ""
-            crit = (f"前向きN≥{mn}かつ平均RのCI下限>0" if h["kind"] == "edge"
-                    else f"前向きN≥{mn}かつ平均RのCI上限<0") + ho
-            val = f"平均R {fwd.get('avgR',0):+.2f} CI[{fwd.get('rci_lo',0):+.2f}~{fwd.get('rci_hi',0):+.2f}]（{fwd['k']}/{fwd['n']}・勝率{fwd['pct']:.0f}%）"
+            crit = crit_cell(h["kind"], mn, bool(ho))
+            val = value_cell(f"{fwd.get('avgR',0):+.2f}", f"{fwd.get('rci_lo',0):+.2f}", f"{fwd.get('rci_hi',0):+.2f}",
+                             fwd["k"], fwd["n"], f"勝率{fwd['pct']:.0f}%")
             out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
-                       f'<td>{crit}</td><td>{val}</td><td>{icon[h.get("status","tracking")]}</td></tr>')
+                       f'<td>{crit}</td><td>{val}</td><td>{state_cell(icon[h.get("status","tracking")])}</td></tr>')
         out.append("</table>")
         print("\n".join(out))
     else:
