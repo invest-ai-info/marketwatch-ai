@@ -294,4 +294,5 @@ SYNC_FILES = [
     "guide-signal-lab-109.html",
     "guide-entry-trend-following.html",
     "guide-news-2026-09-25-trump-yen-concern-katayama-rate-check.html",
+    "guide-signal-lab-110.html",
 ]

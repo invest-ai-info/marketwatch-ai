@@ -5710,6 +5710,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 🧪 解説「<a href="guide-signal-lab-110.html" style="color:#0969da"><b>MACDゴールデンクロスが「移動平均線の下」で起きたとき — 146回の前向き確認 #110</b></a>」公開'},
         {"date": "2026-09-25", "line": '・<b>2026-09-25</b>: 📰 解説「<a href="guide-news-2026-09-25-trump-yen-concern-katayama-rate-check.html" style="color:#0969da"><b>【9/25】トランプが「円安懸念」表明──片山財務相が異例開示、レートチェックで158円攻防</b></a>」公開'},
         {"date": "2026-09-25", "line": '・<b>2026-09-25</b>: 🧭 解説「<a href="guide-entry-trend-following.html" style="color:#0969da"><b>トレンドフォローは効くのか？</b></a>」公開'},
         {"date": "2026-09-25", "line": '・<b>2026-09-25</b>: 🧪 解説「<a href="guide-signal-lab-109.html" style="color:#0969da"><b>RSIが30を下回ったときの買いシグナルは、前向き374回で勝ちやすくなった？【#109】</b></a>」公開'},
