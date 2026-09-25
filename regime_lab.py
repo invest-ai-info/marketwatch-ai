@@ -433,8 +433,10 @@ SYN = {  # 価格の水準・1日の値動き（標準偏差）
 }
 
 
-def synthetic(seed, tf="1d"):
-    """上下の偏りゼロ・値動きの大きさが資産クラスごとにゆっくり変わる（対数ボラの AR(1)）・クラス内で連動する作り物。"""
+def synthetic(seed, tf="1d", steps=8):
+    """上下の偏りゼロ・値動きの大きさが資産クラスごとにゆっくり変わる（対数ボラの AR(1)）・クラス内で連動する作り物。
+    steps＝1本の足の中の歩数。🆕 2026-09-26: 追いかける損切りのように損切りでしか手じまわない方式は、歩数が少ないと
+    「線を1歩で飛び越えた分」を無視して線ちょうどで約定するぶん有利に出る（8歩で約+0.12R）。出口の比較の較正では多く刻む。"""
     rng = np.random.default_rng(seed)
     if tf == "1d":
         idx = pd.bdate_range("2006-01-02", "2026-09-24")
@@ -461,7 +463,6 @@ def synthetic(seed, tf="1d"):
         sig = s * scale * np.exp(cls_h[k] + hid - 0.5 * (0.12 ** 2 / (1 - 0.985 ** 2) + 0.06 ** 2 / (1 - 0.97 ** 2)))
         rho = 0.6 if k == "index" else 0.3
         z = math.sqrt(rho) * cls_f[k] + math.sqrt(1 - rho) * rng.standard_t(5, n) / math.sqrt(5 / 3)
-        steps = 8
         sub = rng.standard_normal((n, steps)) / math.sqrt(steps)
         sub = sub - sub.mean(axis=1, keepdims=True) + (z / steps)[:, None]   # 足全体の動き＝z
         gap = 0.15 * rng.standard_normal(n)
