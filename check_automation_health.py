@@ -728,26 +728,34 @@ def judge_calendar_runway(events, now, forward_days=FORWARD_DAYS, min_count=FORW
 #    実測: push 起動 直近100件のうち jp-rankings 由来 0件。
 #    → `workflow_run` に繋ぎ替えたが、**効いている保証は実行されるまで得られない**。
 #    書いたつもりの繋ぎが黙って死んでいるのが今回の教訓なので、**繋ぎ自体を見張る**。
+# 🆕 2026-09-25: jp-rankings.yml を routine の push（news-daily-auto の台帳／sns-post-daily）に相乗りさせた。
+#    cron が約5時間遅れ、ランキングが毎日 21〜23時台にしか更新されていなかったため。
+#    push 起動は「routine が定刻に push する」「その push がワークフローを起動する」の両方が要る＝同じく繋ぎを見張る。
+CHAIN_HINT = {
+    "workflow_run": "`workflows:` の名前が相手の `name:` と一致しているか確認",
+    "push": "`paths:` と routine の書き込み先が一致しているか・routine が止まっていないか確認",
+}
 CHAIN_WATCH = [
-    # (説明, ワークフロー, 何日以内に workflow_run 起動があるべきか, いつから見張るか)
-    ("ランキング→hot-assets 再描画", "update-market-news.yml", 3, dt.date(2026, 9, 19)),
+    # (説明, ワークフロー, 何日以内にその event の起動があるべきか, いつから見張るか, event)
+    ("ランキング→hot-assets 再描画", "update-market-news.yml", 3, dt.date(2026, 9, 19), "workflow_run"),
+    ("routine の push→日本株ランキング", "jp-rankings.yml", 3, dt.date(2026, 9, 28), "push"),
 ]
 
 
-def check_chain(owner, repo, token, wf, max_days, since, now):
-    """workflow_run で起動した実績が直近にあるか。戻り値: (状態, 説明)。"""
+def check_chain(owner, repo, token, wf, max_days, since, now, event="workflow_run"):
+    """event（workflow_run / push）で起動した実績が直近にあるか。戻り値: (状態, 説明)。"""
     if now.astimezone(dt.timezone(dt.timedelta(hours=9))).date() < since:
         return "waiting", f"{since.isoformat()} から見張ります"
     data = api(f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{wf}"
-               f"/runs?per_page=50&event=workflow_run", token)
+               f"/runs?per_page=50&event={event}", token)
     runs = data.get("workflow_runs", [])
     if not runs:
-        return "dead", ("workflow_run 起動が1件も無い＝繋ぎが効いていない"
-                        "（`workflows:` の名前が相手の `name:` と一致しているか確認）")
+        return "dead", (f"{event} 起動が1件も無い＝繋ぎが効いていない"
+                        f"（{CHAIN_HINT.get(event, '')}）")
     a = age_hours(runs[0]["run_started_at"], now)
     if a > max_days * 24:
-        return "stale", f"直近の workflow_run 起動が {a/24:.1f}日前（{max_days}日超）"
-    return "ok", f"直近の workflow_run 起動は {a:.1f}h前"
+        return "stale", f"直近の {event} 起動が {a/24:.1f}日前（{max_days}日超）"
+    return "ok", f"直近の {event} 起動は {a:.1f}h前"
 
 
 # ⑫ 日本株ランキングの鮮度。①は「jp-rankings.yml が走ったか」しか見ないが、走っても
@@ -1175,9 +1183,9 @@ def main():
     body.append("")
 
     body.append("### ⑭ ワークフロー連鎖が効いているか（書いたつもりの繋ぎが黙って死ぬ）")
-    for label, wf, max_days, since in CHAIN_WATCH:
+    for label, wf, max_days, since, event in CHAIN_WATCH:
         try:
-            st, msg = check_chain(owner, repo, token, wf, max_days, since, now)
+            st, msg = check_chain(owner, repo, token, wf, max_days, since, now, event)
         except Exception as e:
             body.append(f"- ⚪ {label}: 判定不可（{type(e).__name__}）")
             continue

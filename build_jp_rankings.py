@@ -19,6 +19,7 @@ import os
 import sys
 import json
 import time
+import datetime
 import urllib.request
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -34,6 +35,8 @@ TOP_N = 20
 HOT_MIN_TURNOVER = 10.0   # 人気急上昇の流動性フロア（億円）。薄商いの見かけ倍率を公開面に出さない
 HOT_BASE_DAYS = 20        # 相対出来高の基準＝直前20営業日平均（当日は含まない）
 HOT_MIN_BASE = 15         # 基準日数がこれ未満（新規上場等）なら相対出来高は算出しない
+SETTLE_JST = (16, 0)      # 東証の大引け15:30＋余裕。これより前に取れた「当日」のバーは場中の値＝書かない
+JST = datetime.timezone(datetime.timedelta(hours=9))
 
 
 def modal_date(dates):
@@ -54,6 +57,15 @@ def modal_date(dates):
 def is_regression(asof, prev):
     """今回取れた営業日が前回より古ければ True（＝書かずに次の回へ委ねる）。純関数。"""
     return bool(prev) and bool(asof) and asof < prev
+
+
+def is_unsettled(asof, now_jst):
+    """当日のバーを大引け前（SETTLE_JST より前）に取った＝場中の値なら True。純関数。
+
+    🆕 2026-09-25: routine の push でも起動するようにした（jp-rankings.yml）ので、起動時刻が
+    こちらの管理外になった。場中に走っても「2026-09-25 終値」と書いて途中の値を出さないためのガード。
+    """
+    return bool(asof) and asof == now_jst.date().isoformat() and (now_jst.hour, now_jst.minute) < SETTLE_JST
 
 
 def previous_asof(path):
@@ -156,6 +168,11 @@ def main():
     if is_regression(asof, prev):
         print(f"⏸ 取得できた最終営業日 {asof} が前回 {prev} より古い（上流がまだ当日分を返していない）＝"
               f"jp-rankings.json を更新せず終了。次の回に委ねる（前回分を温存）")
+        return
+    now_jst = datetime.datetime.now(JST)
+    if is_unsettled(asof, now_jst):
+        print(f"⏸ 取得できた最終営業日 {asof} は今日で、いま {now_jst:%H:%M} JST＝大引け前後の未確定の値。"
+              f"「終値」として書かずに終了（{SETTLE_JST[0]}:{SETTLE_JST[1]:02d} 以降の回に委ねる）")
         return
 
     # 🆕 2026-07-03 部分失敗ガード: Yahoo throttle 等で大量失敗した回は、偏った部分集合の

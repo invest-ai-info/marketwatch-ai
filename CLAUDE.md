@@ -62,7 +62,7 @@
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
 | **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`。**2本を1ステップで回す**＝片方が落ちても両方のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
-| **jp-rankings.yml** 🆕 | 夕 16:40 / 17:10（クローズ後） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
+| **jp-rankings.yml** 🆕 | **routine の push に相乗り**（news 台帳 17:5x・sns 19:1x JST）＋cron 保険4本（16:40〜19:10 のつもりが実測 21〜23時台） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
 
@@ -295,6 +295,7 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 | health-check | 00:00/11:00 UTC | +160分 | +325分 | +617分 |
 | technical-alerts-1d | 21:20 UTC | +59分 | +125分 | +485分 |
 | news-ticker（毎時） | :37 | +34分 | +55分 | +60分 |
+| jp-rankings（9/8〜25） | 07:40 UTC | **約+5h10m** | — | +6h51m |
 
 🔑 **区切りの良い時刻（:00 / :30）ほど遅い。半端な分にすると短くなる**（このリポジトリが 07:13 / 09:23 / 11:37 のような時刻を使っているのはそのため）。
 🔑 **時刻の精度が要るものは cron に頼らない**。使える手は2つ:
