@@ -65,7 +65,8 @@ ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", 
                        "rsi_band", "ma_pos", "macd_side",  # 🆕 2026-07-20 指標ステート（人間による正式拡張）
                        "news",  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
                        "regime4",  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
-                       "fired_before", "fired_from"}  # 🆕 2026-08-12 IS/FWD分離（#067・人間による正式拡張＝下記コメント）
+                       "fired_before", "fired_from",  # 🆕 2026-08-12 IS/FWD分離（#067・人間による正式拡張＝下記コメント）
+                       "family", "adx_band", "vix_band", "asset_class"}  # 🆕 2026-09-26 環境の相性ラボ（人間による正式拡張＝下記）
 # ⚠️ `regime` と `regime4` は**別次元**（同じものにしない）。
 #   regime  = ライブの risk_regime（RISK_ON 等）＝エンジンが発火時に記録する既存の語彙。
 #   regime4 = 固定オラクル `research/_regime_state.py`（Q27で凍結・MA200×60日実現ボラの750日分位×
@@ -74,6 +75,60 @@ ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", 
 #   値はレコードの `regime4` フィールドを読むだけ＝オラクルはローカル専用ファイルに依存しない
 #   （クラウドroutineは research/ 配下を読めないので、直読みさせるとローカルとクラウドで挙動が割れる）。
 #   バックテストへの後付けはローカルの `research/_regime4_annotate.py` が行う。
+
+
+# 🆕 2026-09-26 環境の相性ラボ（regime_lab.py）の候補を前向きに追う次元（オーナー指示「3つともトラッカーに登録して
+#   前向きに追跡して」・人間による正式拡張・数式ロック）。境界は regime_lab.py の事前登録（2026-09-25）と同じ＝以後変更しない。
+#   記録が無い・数値でない場合は None＝マッチしない（blocked/tier/env と同じ意味論）。
+#   family      : tf＝順張り（高値ブレイク買い・安値割れ売り・MACD/25-75本線のゴールデン買い・デッド売り）
+#                 mr＝逆張り（RSI売られすぎ反発の買い・−2σタッチの買い＝reversal_long と同じ母集団）
+#   adx_band    : indicators_at_signal.adx  weak(<20) / mid(20〜25) / strong(≥25)
+#   vix_band    : environment.vix.current   low(<15) / mid(15〜25) / high(≥25)
+#   asset_class : index / fx（jpy_fx＋other_fx）/ commodity（metal＋oil）/ crypto（btc）＝exit_lab・regime_lab と同じ区切り。
+#                 拡張ユニバース（metal_x 等）は含めない。
+#   ⚠️ エンジンのメール照合（generate_technical_alerts.GATE_PROBE_SUPPORTED_KEYS）には入れていない＝
+#      これらの条件の仮説が昇格しても、配信に反映するにはエンジン側の拡張が別に要る（人間が判断）。
+TF_FAMILY = {("high_break", "long"), ("low_break", "short"), ("macd_golden", "long"), ("macd_dead", "short"),
+             ("ma_golden", "long"), ("ma_dead", "short")}
+MR_FAMILY = {("rsi_oversold_bounce", "long"), ("bb_lower_touch", "long")}
+ASSET_CLASS_GROUPS = {"index": ("index",), "fx": ("jpy_fx", "other_fx"), "commodity": ("metal", "oil"),
+                      "crypto": ("btc",)}
+
+
+def family_of(d):
+    """順張り(tf) / 逆張り(mr) / どちらでもない(None)。主シグナルと向きの組で決める。"""
+    dr = d.get("direction") or ""
+    side = "long" if "ロング" in dr else ("short" if "ショート" in dr else None)
+    key = (d.get("primary_signal"), side)
+    return "tf" if key in TF_FAMILY else ("mr" if key in MR_FAMILY else None)
+
+
+def adx_band_of(d):
+    """発火時点の ADX14: weak(<20) / mid(20≤a<25) / strong(≥25)。"""
+    ind = d.get("indicators_at_signal")
+    a = ind.get("adx") if isinstance(ind, dict) else None
+    if isinstance(a, bool) or not isinstance(a, (int, float)):
+        return None
+    return "weak" if a < 20 else ("mid" if a < 25 else "strong")
+
+
+def vix_band_of(d):
+    """発火時点の VIX: low(<15) / mid(15≤v<25) / high(≥25)。"""
+    envd = d.get("environment")
+    vx = envd.get("vix") if isinstance(envd, dict) else None
+    v = vx.get("current") if isinstance(vx, dict) else None
+    if isinstance(v, bool) or not isinstance(v, (int, float)):
+        return None
+    return "low" if v < 15 else ("mid" if v < 25 else "high")
+
+
+def asset_class_of(d):
+    """銘柄の資産クラス: index / fx / commodity / crypto（どれでもなければ None）。"""
+    t = d.get("ticker")
+    for k, gs in ASSET_CLASS_GROUPS.items():
+        if any(t in GROUPS.get(g, set()) for g in gs):
+            return k
+    return None
 
 
 # 🆕 2026-07-23 注目度バンド（Q24・バンド境界は事前宣言＝以後変更しない。Q21 H-V2 と同じ 0 / 1-2 / 3+）
@@ -215,6 +270,15 @@ def match(d, f):
         return False
     if "regime4" in f and d.get("regime4") != f["regime4"]:
         # 🆕 2026-07-27 レジーム4状態（Q34・記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
+        return False
+    # 🆕 2026-09-26 環境の相性ラボの次元（記録が無いレコードはマッチしない＝blocked/tier/envと同じ意味論）
+    if "family" in f and family_of(d) != f["family"]:
+        return False
+    if "adx_band" in f and adx_band_of(d) != f["adx_band"]:
+        return False
+    if "vix_band" in f and vix_band_of(d) != f["vix_band"]:
+        return False
+    if "asset_class" in f and asset_class_of(d) != f["asset_class"]:
         return False
     # 🆕 2026-08-12 IS/FWD分離（#067ループの構造修正・人間による正式拡張）:
     #   fired_before / fired_from = 発火時刻 fired_at の境界。値は "YYYY-MM-DD"（JST日付）。
