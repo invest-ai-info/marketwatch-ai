@@ -57,6 +57,13 @@ exit_wall_lab.py — 出口の壁ラボ：「壁が近ければ早めに利確�
          ②二方向クラスタの幅が狭すぎた（上の「事前登録の修正」）。直したあとの作り物20回（乱数1〜20・日足＋4時間足）:
            主の10比較で「差がある」は**0回**。最小p値が0.01を下回ったのは20回中2回（理屈どおり約10%）。
            作り物の方式ごとの平均（コスト後）は −0.04〜+0.02R（どれも0に近い）。
+前向き（🆕 2026-09-26 追加・オーナー指示「4つとも登録して前向きに検証して」の①。探索の結果を見た後の登録）:
+         登録する仮説は1つ＝「日足の順張りで、2.67R 以内に壁が無い場面では、P2（伸ばす）が P0（いまの方式）より良い」
+         （探索〜2015 +0.128R〔n645〕・2016〜 +0.131R〔n791〕。ただし偽薬でも +0.163R＝相場の性質の疑い・4時間足では逆向き）。
+         lab_forward.FWD_FROM（2026-09-26）以降に入った取引だけで、lab_forward の決まり（件数100ごと・95%幅が0をまたがず
+         同じ向き・差0.10R以上で合格・合格2回連続で確定・逆向きは1回で確定）で毎週判定する。偽薬の前向きも並べる。
+         探索（主の比較・期待値の地図）は登録日より前の取引だけで出す（前向きのデータを混ぜない）。
+         ⚠️ 検出力: この場面は日足の順張りの約1割＝18銘柄で年に約70件。100件たまるまで1年半ほどかかる見込み。
 限界   : 壁の候補はここに挙げたものだけ（キリのいい数字・出来高の多い価格帯は入れていない）／ボリンジャーや移動平均線は
          動くが、入った足の値で固定している／先物のつなぎ目／逆張りは買いだけ。
 公開   : しない（オーナー個人向けの研究。売買の推奨ではない）。
@@ -75,6 +82,7 @@ import numpy as np
 import pandas as pd
 
 import exit_rule_backtest as X
+import lab_forward as LF
 import regime_lab as RL
 from generate_technical_alerts import calc_atr, calc_bbands
 from signal_lab_sweep import cost_r_of
@@ -259,32 +267,13 @@ def apply_p5(ts, choice):
 
 # ───────────────────────── 集計 ─────────────────────────
 def mean_ci_safe(vals, groups):
-    """平均と95%幅。二方向クラスタ（銘柄×時期）の分散 V1+V2−V12 が、まとまりが少ないと小さく出すぎることがあるので
-    （較正で実測: 差の標準偏差1.30R・8,370件なのに幅 ±0.004R）、V1+V2−V12・V1・V2・V12 のうち**最大**を使う（保守側）。
-    臨界値は exit_rule_backtest と同じ t(G−1)、G＝少ない方のまとまり数。"""
-    a = np.asarray(vals, float)
-    n = len(a)
-    if n < 2:
-        return {"n": n}
-    m = float(a.mean())
-    e = a - m
-
-    def ss(keyf):
-        sums = defaultdict(float)
-        for x, g in zip(e, groups):
-            sums[keyf(g)] += x
-        return sum(v * v for v in sums.values()), len(sums)
-
-    s1, g1 = ss(lambda g: g[0])
-    s2, g2 = ss(lambda g: g[1])
-    s12, _ = ss(lambda g: g)
-    v = max(s1 + s2 - s12, s1, s2, s12)
-    G = min(g1, g2)
-    if G < 2:
-        return {"n": n, "avg": m}
-    se = math.sqrt(v * G / (G - 1)) / n
-    c = X.t975(G - 1)
-    return {"n": n, "avg": m, "lo": m - c * se, "hi": m + c * se}
+    """平均と95%幅（保守版＝exit_rule_backtest._mean_se_safe。理由は同関数と上の「事前登録の修正」）。"""
+    if len(vals) < 2:
+        return {"n": len(vals)}
+    m, se, c = X._mean_se_safe(vals, groups)
+    if not math.isfinite(se):
+        return {"n": len(vals), "avg": m}
+    return {"n": len(vals), "avg": m, "lo": m - c * se, "hi": m + c * se}
 
 
 def paired(ts, a, b="P0"):
@@ -355,6 +344,33 @@ def evaluate(ts1d, ts4h, pl1d, pl4h):
     return {"primary": primary, "maps": maps, "baseline": baseline, "bucket_share": share, "p5_choice": p5}
 
 
+FWD_HYPOTHESES = [
+    # (キー, 族, 足, 壁までの距離, 方式, 比べる方式, 説明)
+    ("tf_open_trail_1d", "tf", "1d", "≥2.67R/なし", "P2", "P0",
+     "日足の順張り・2.67R以内に壁なし: 伸ばす − いまの方式"),
+]
+
+
+def forward_section(hist1d, fwd1d, fwdpl1d, prev, today):
+    """登録した仮説の前向き（登録日以降の取引だけ）。探索の差の向きを基準に lab_forward で判定を積み上げる。"""
+    out = {}
+    for key, F, _tf, b, p, q, desc in FWD_HYPOTHESES:
+        cell = lambda ts: [t for t in ts if t["fam"] == F and t["bucket"] == b]
+        is_d = paired(cell(hist1d), p, q)
+        d = paired_fwd(cell(fwd1d), p, q)
+        e = LF.step((prev or {}).get(key), d, RL._sign(is_d) or 1, today)
+        e.update({"desc": desc, "insample": is_d, "placebo_now": paired_fwd(cell(fwdpl1d), p, q)})
+        out[key] = e
+    return out
+
+
+def paired_fwd(ts, a, b="P0"):
+    sel = [t for t in ts if a in t["R"] and b in t["R"]]
+    dd = mean_ci_safe([t["R"][a] - t["R"][b] for t in sel], [LF.fwd_cluster(t) for t in sel])
+    dd["p"] = RL.p_value(dd)
+    return dd
+
+
 def live_check(path):
     """いまの方式の実成績を、エンジンの d_res_atr（直近20本の高値までの距離）ごとに並べる（買い・参考）。"""
     import signal_lab_verify as V
@@ -412,6 +428,11 @@ def report_md(res, asof, n1, n4):
                 L.append(f"| {b} | {m['n']:,} | " + " | ".join("—" if m[p] is None else f"{m[p]:+.3f}" for p in POLICIES) + " |")
             L.append("")
     L += ["## P5 が探索期間で選んだ方式", "", json.dumps(res["p5_choice"], ensure_ascii=False)]
+    if res.get("forward"):
+        L += ["", f"## 前向き（{LF.FWD_FROM.date()} 以降に入った取引だけ）", ""]
+        for k, f in res["forward"].items():
+            L.append(f"- {f['desc']}: n={f['n']} {fmt(f.get('now'))}（偽薬 {fmt(f.get('placebo_now'))}）"
+                     f" {f['state']}／探索 {fmt(f.get('insample'))}")
     return "\n".join(L)
 
 
@@ -456,13 +477,19 @@ def main():
             if df4 is not None:
                 f4[tk] = df4
         print(f"  {tk}: 日足{len(f1.get(tk, [])):,} 4h{len(f4.get(tk, [])):,}", flush=True)
-    ts1d, pl1d = build(f1, "1d")
-    ts4h, pl4h = build(f4, "4h") if f4 else ([], [])
+    all1d, pl1d_all = build(f1, "1d")
+    all4h, pl4h_all = build(f4, "4h") if f4 else ([], [])
+    ts1d, fwd1d = LF.split(all1d)          # 探索は登録日より前だけ・前向きは登録日以降
+    pl1d, fwdpl1d = LF.split(pl1d_all)
+    ts4h, _ = LF.split(all4h)
+    pl4h, _ = LF.split(pl4h_all)
     res = evaluate(ts1d, ts4h, pl1d, pl4h)
     if a.live:
         res["live"] = live_check(a.live)
     asof = pd.Timestamp.now(tz="Asia/Tokyo").strftime("%Y-%m-%d")
-    out = {"asof": asof, "n_1d": len(ts1d), "n_4h": len(ts4h), "n_placebo_1d": len(pl1d), **res}
+    res["forward"] = forward_section(ts1d, fwd1d, fwdpl1d, LF.load_prev(a.json), asof)
+    out = {"asof": asof, "fwd_from": str(LF.FWD_FROM.date()), "n_1d": len(ts1d), "n_4h": len(ts4h),
+           "n_placebo_1d": len(pl1d), "n_fwd_1d": len(fwd1d), **res}
     if a.json:
         json.dump(RL._jsonable(out), open(a.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
     md = report_md(res, asof, len(ts1d), len(ts4h))

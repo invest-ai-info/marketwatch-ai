@@ -365,6 +365,36 @@ def _mean_se(vals, groups):
     return m, se, t975(G - 1)
 
 
+def _mean_se_safe(vals, groups):
+    """_mean_se の保守版（🆕 2026-09-26）。二方向クラスタの分散 V1+V2−V12 は、まとまり（銘柄18・年11〜20）が少ないと
+    引き算で小さく出すぎることがある（出口の壁ラボの較正で実測: 差の標準偏差1.30R・8,370件なのに幅 ±0.004R）。
+    V1+V2−V12・V1・V2・V12 のうち最大を使う。臨界値・自由度は _mean_se と同じ。
+    ⚠️ _mean_se 自体は変えない（公開済みの出口の相性ラボ・事前登録の判定がそれを使っている）。
+       出し直すときは exit_lab.py --safe-se（中で _mean_se をこれに差し替える）。"""
+    a = np.array(vals, float)
+    n, m = len(a), float(a.mean())
+    if n < 2:
+        return m, 0.0, 0.0
+    e = a - m
+
+    def ss(keyf):
+        sums = {}
+        for x, g in zip(e, groups):
+            k = keyf(g)
+            sums[k] = sums.get(k, 0.0) + x
+        return sum(v * v for v in sums.values()), len(sums)
+
+    s1, g1 = ss(lambda g: g[0])
+    s2, g2 = ss(lambda g: g[1])
+    s12, _ = ss(lambda g: g)
+    v = max(s1 + s2 - s12, s1, s2, s12)
+    G = min(g1, g2)
+    if G < 2:
+        return m, float("inf"), 1.0
+    se = math.sqrt(v * G / (G - 1)) / n
+    return m, se, t975(G - 1)
+
+
 def summarize(rs, groups, gross=None, bars=None):
     keep = [i for i, x in enumerate(rs) if x is not None]
     if not keep:

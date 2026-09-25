@@ -102,12 +102,20 @@ def test_registration_is_idempotent():
     import json
     import signal_lab_tracker as T
     t = json.load(open(os.path.join(ROOT, "signal-lab-tracker.json"), encoding="utf-8-sig"))
-    new_ids = {h["id"] for h in T.REGISTER_2026_09_26["register"]}
+    new_ids = {h["id"] for h in T.REGISTER_2026_09_26["register"] + T.REGISTER_EXIT_2026_09_26["register"]}
     already = new_ids & {h["id"] for h in t["hypotheses"]}
     first = T.apply_holdout_bootstrap(t)
     assert first == len(new_ids - already), first
     assert T.apply_holdout_bootstrap(t) == 0
     assert new_ids <= {h["id"] for h in t["hypotheses"]}
+
+
+def test_blocked_gate_declared():
+    import signal_lab_tracker as T
+    (h,) = T.REGISTER_EXIT_2026_09_26["register"]
+    assert h["id"] == "rl_tf_blocked" and h["kind"] == "gate" and h["filter"] == {"family": "tf", "blocked": True}
+    d = {"primary_signal": "high_break", "direction": "ロング（買い）", "sr_runway": {"blocked": True}}
+    assert V.match(d, h["filter"]) and not V.match(dict(d, sr_runway={"blocked": False}), h["filter"])
 
 
 def test_watcher_grace_for_new_declarations():

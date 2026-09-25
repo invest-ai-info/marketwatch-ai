@@ -103,6 +103,7 @@ WORKFLOW_CHECKS = [
     # 🆕 2026-09-24: 出口の相性ラボ（週1・日曜早朝）。研究日誌が exit-lab.json を読むので、
     #    止まると日誌が古い表を読み続ける。⚠️ 新設直後は「実行履歴なし」になる＝マージ後に1回手動実行する。
     ("出口の相性ラボ",          "exit-lab.yml",            24 * 8,  "warn"),
+    ("出口の研究（壁・損切り・出し直し）", "exit-research.yml", 24 * 8, "warn"),   # 🆕 2026-09-26 週1・前向きを積み上げる
     ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
     ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
     ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),

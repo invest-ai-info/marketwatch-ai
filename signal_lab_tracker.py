@@ -263,6 +263,22 @@ REGISTER_2026_09_26 = {"register": [
      "kind": "gate", "registered_at": "2026-09-26"},   # 日足BT −0.148R [−0.19,−0.11] n2918・前後半とも負・9ペア全て負
 ]}
 
+# 🆕 2026-09-26（2本目）出口の壁ラボ（exit_wall_lab.py）の付随の発見を前向きに追う（**オーナー指示 2026-09-26**
+#   「4つとも登録して前向きに検証して」の②）。確定後は変更しない。
+#   出どころ: 出口の壁ラボ（日足2006〜・順張り）で、利確までの道の途中（0.67〜1.33R）に壁がある取引は、どの出口でも
+#     最も悪いマス（いまの方式 −0.098R〔〜2015・n773〕／−0.112R〔2016〜・n827〕／4時間足 −0.050R〔n1280〕）。
+#   条件はエンジンが発火時に記録する sr_runway.blocked（直近20本の高値〔売りは安値〕が入値と利確1の間にある）を使う。
+#   ⚠️ **ラボの「壁」とは定義が違う**（ラボ＝20/60本の高値・山・25/75/200本線・+2σ のいちばん近いもの・0.67〜1.33R）。
+#      エンジンの blocked は「直近20本の高値」1本だけで、距離は0〜1.33R 全部＝実際に使える形に寄せた。全足で追う。
+#   ⚠️ **実シグナル（6/3〜9/25・全足）では逆向き**: 順張り×blocked +0.058R（n732）／非blocked −0.021R（n1502）。
+#      エンジンの注記（過去集計 blocked −0.337R vs clear +0.110R）とも向きが食い違う＝だからこそ前向きで白黒をつける。
+#   ⚠️ 検出力: 6.4件/日・σ≈1.16R。N=80 の MDE≈0.36R。−0.10R を確かめるには N≈1,060（約5.5か月）。N80で非有意でも
+#      「効果なし」と読まない。条件キーはすべて既存（family・blocked）＝ family はエンジンのメール照合に未対応（上と同じ）。
+REGISTER_EXIT_2026_09_26 = {"register": [
+    {"id": "rl_tf_blocked", "label": "順張り×利確の手前に壁(回避)", "filter": {"family": "tf", "blocked": True},
+     "kind": "gate", "registered_at": "2026-09-26"},   # 出口の壁ラボ 日足 −0.098R/−0.112R（道の途中に壁）・実シグナルは +0.058R（逆向き）
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -361,7 +377,8 @@ def apply_holdout_bootstrap(t):
     existing_ids = {h.get("id") for h in t["hypotheses"]}
     for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
               + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
-              + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]):
+              + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]
+              + REGISTER_EXIT_2026_09_26["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy

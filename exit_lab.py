@@ -444,7 +444,15 @@ def main():
     ap.add_argument("--json", default="exit-lab.json")
     ap.add_argument("--md", default="exit-lab.md")
     ap.add_argument("--tf", default="1d,4h")
+    ap.add_argument("--safe-se", action="store_true",
+                    help="🆕 2026-09-26 出し直し: 幅を保守版（X._mean_se_safe）で出す。既定の判定・出力は変えない"
+                         "（公開済み・事前登録どおり）。出力先は別のファイルを指定する")
     args = ap.parse_args()
+    if args.safe_se:
+        if args.json == "exit-lab.json" or args.md == "exit-lab.md":
+            print("--safe-se は公開用の exit-lab.json/.md を上書きしない＝別の --json/--md を指定する", file=sys.stderr)
+            sys.exit(2)
+        X._mean_se = X._mean_se_safe   # X.diff / X._mean_ci / X.diff2 が中で呼ぶ関数を差し替える
     frames, missing = {}, []
     for tf in args.tf.split(","):
         for t in sorted(LEGACY_UNIVERSE):
