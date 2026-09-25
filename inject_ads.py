@@ -116,6 +116,7 @@ DENY_PREFIX = (
     "guide-scam-",        # ①投資詐欺の注意喚起。「詐欺に気をつけろ」の直下に口座開設広告は本末転倒
     "guide-signal-lab-",  # ①AIシグナル研究日誌。⛔反証を淡々と出す検証記事＝「売るために書いた」と読まれる
     "guide-trap-",        # ①株の落とし穴（2026-09-23〜）。急騰株などの統計＝研究日誌と同じ理由
+    "guide-entry-",       # ①エントリー方法の研究（2026-09-25〜・オーナー指示「広告はなし」）。総論 guide-entry-methods も含む
 )
 DENY_EXACT = {
     "guide-new-books.html",   # ②routine `book-watch-weekly` が毎週まるごと再生成する＝注入しても消える

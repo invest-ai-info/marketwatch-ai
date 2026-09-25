@@ -71,6 +71,15 @@ SERIES = [
         "exclude": set(),
     },
     {
+        # 🚪 エントリー方法の研究（2026-09-25〜・routine entry-daily-auto が毎日1本）
+        "key": "entry",
+        "glob": "guide-entry-*.html",
+        "label": "エントリー方法の研究",
+        "index": "guides.html",
+        # 総論（11の型の一覧）はシリーズの外に置く（公開時期がシリーズと別・前後ボタンの並びを乱さない）
+        "exclude": {"guide-entry-methods.html"},
+    },
+    {
         "key": "news",
         "glob": "guide-news-*.html",
         "label": "今日のニュース",
