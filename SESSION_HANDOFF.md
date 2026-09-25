@@ -1,4 +1,32 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-09-22）
+# 🔖 セッション引き継ぎ（最終更新: 2026-09-25）
+
+## 🆕 2026-09-24〜25: 「出口の相性ラボ」と「エントリー方法の研究」シリーズを新設（PR #50・#51 マージ済み）
+
+**オーナー方針**: 入口×出口の相性は**検証結果だけを公開**し、「この入口にはこの出口が合う／おすすめ」とは**絶対に書かない**。株・FX・コモディティは**分けて**検証する。出口・エントリーの記事と entry シリーズは**広告なし**（A8・AdSense とも）。
+
+### できたもの
+- **`exit_lab.py`＋`exit-lab.yml`**（日曜 04:43／06:17 JST）→ `exit-lab.json`／`exit-lab.md`（Actions 生成＝ローカルから push しない）。事前登録＝合成ランダムウォークで較正・Bonferroni・効果量・前半後半一致・ticker×時刻の2方向クラスタ頑健CI。「全体」と資産クラス（index/fx/commodity/crypto）は別の族で判定し、クラス側は基準を厳しくした（効果0.25R・n≥200。crypto は1銘柄なので旗を立てない）
+  - 実データ初回（5c31065）: 目立つ組＝全体4／fx7／commodity1／index0。**全体4は「偶然でも平均2.2個出る」範囲内**＝記事ではそう正直に書く
+- **`exit_lab_verify.py`**（固定オラクル・`GATE_FILES` 登録済み）＋ `tests/test_exit_lab_verify.py`（13件）
+- **研究日誌「🚪 出口の相性の回」**＝週1（日曜）。`SIGNAL_LAB_SOP.md` に手順。signal-lab-daily の指示文には**追加④をオーナーが UI で貼付済み**（この routine は http_api 製＝`update_trigger` が効かない）
+- **routine `entry-daily-auto`**（`trig_01Q9rvYpxzrYon35SYx6sFkr`・毎日 12:23 JST・sonnet-5）＝手順書 `drafts/ENTRY_GUIDE.md`（題材26件）→ `guide-entry-*.html`。`QUEUE_LANES`・`apply_series_nav.py`（key=entry）・`inject_ads.py` の `DENY_PREFIX` に登録済み。**#01 trend-following を 9/25 に公開**（main へ push できた）。全25回＋総まとめで完結したら `QUEUE_LANES` から外して routine を止める
+- **研究日誌のトラッカー表**を改行して読みやすくした（宣言基準2行・前向き現在値3行。`signal_lab_tracker.py`＋`apply_tracker_plain_names.py` の relayout で既存72本も変換済み・冪等）
+- **CLAUDE.md**: セッションで作った PR はテストが通れば Claude がマージしてよい（見た目・自動実行が大きく変わるものは事前に一言）
+
+### 未公開の下書き（公開はオーナー判断）
+- `drafts/draft-entry-methods.html`（エントリー方法11種の総覧・出典31件）＝**TODO(要原文確認) 6件**。うち1件は「58市場すべてプラス・うち52で有意」の **52 の出どころ**（要旨は「58すべて significant」。公開済み #01 は要旨どおり）
+- `drafts/draft-exit-methods.html`＝TODO 10件
+
+### ネットワーク（9/25）
+- それまでこの環境から開ける学術サイトは **arXiv だけ**だった（sciencedirect／ssrn／doi.org／nber／aqr／federalreserve／bis は egress 遮断）。entry #01 は WebSearch に出る要旨の逐語引用で数字を確かめた（台帳に明記・数字は要旨と一致を確認済み）
+- **オーナーが Default 環境の許可リストに学術系ドメインを追加**（9/25 夜）。効いたかは 9/26 の entry #02 の台帳メモ（「出版社ページが遮断」の記述が消えるか）で確かめる
+
+### 予定している確認（新しいセッションへ移した）
+- **9/26 13:30 JST**: entry #02（breakout）の公開と中身（出典リンク・株FXコモディティの節・広告なし・noindex 無し・`check_guide_draft.py`／`check_plain_japanese.py` 緑）＋ automation-health の 9/26 実行（§④ の赤は 9/24 23:52 UTC の ed1aef7 が 26h 窓を抜ければ消える見込み）。**緑なら Issue #6 を閉じてよいかオーナーに確認**（勝手に閉じない）
+- **9/27 13:30 JST**: exit-lab の日曜実行／最初の「出口の相性の回」（1d `bb_lower_touch` long）が signal-lab-ledger・REVIEW.md・labnotes に出たか。手元で `exit_lab_verify.py`（`--signal-claims` 付き）と `signal_lab_verify.py` を回して緑を確かめる。良い組と悪い組の両方・「偶然」「前向き」の断り・資産クラス別・「合う／おすすめ」と読める文が無いか。＋ entry #03 ＋ トラッカー表の新しい改行
+
+### オーナー側の宿題
+- `check_site_consistency.py`（ゲートファイル）の SYNC_FORBIDDEN に `exit-lab.json`／`exit-lab.md` を足す。ローカルで sync する前に pull する
 
 ## 🎉 2026-09-22: キュー駆動レーンを全て完結させ、サイト全体の品質を一括で底上げ
 
