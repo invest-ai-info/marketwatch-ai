@@ -5,6 +5,7 @@
 ## 作業フォルダ
 - ホストパス: `C:\Users\info0\OneDrive\デスクトップ\新しいフォルダー`
 - GitHub: `invest-ai-info/marketwatch-ai`（branch: main）
+- 🆕 **PR のマージ（2026-09-25 オーナー決定）**: Claude がセッションで作った PR は、テスト・検査（`tests/`・`check_site_consistency.py` など）が通ったら **Claude がマージしてよい**（マージ後に何を反映したかを報告）。ただし**サイトの見た目や自動実行の動きが大きく変わるもの**は、反映の前にオーナーへ一言確認する。routine・Actions の自動生成物は従来どおり main へ直接入る（PR 不要）
 
 ---
 
