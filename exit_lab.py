@@ -42,6 +42,17 @@ R の単位 : その組の**最初の損切り幅**を 1R（ロットを損切�
 4時間足の注意: Yahoo の1時間足は直近730日しか取れないので、4時間足の探索期間は毎週古い側が少しずつ削れる。
            そのため p値が境目のマスは週ごとに「目立つ」を出入りする（1回目と2回目の試走でも1マス入れ替わった）。
            日足の探索期間は 2006〜2026-09-24 で固定＝入れ替わらない。
+🔁 較正の訂正（2026-09-25）: 上の「0・1・0マス（平均0.3）」は乱数3つ（1000・3000・7000）だけの結果だった。別の乱数3つ
+           （0・100・200）では6・3・3マス＝6回で平均約2.2。誤検出の多くは4時間足のシャンデリア型（1R が小さい組）。
+           「目立つ」の基準そのものは事前登録どおり変えない（実データを見た後なので）。ただし**目立つ組が数マスなら、
+           偶然でも出る数の範囲**と読む（2026-09-24 の実データは4マス）。
+資産クラス別（2026-09-25 オーナー指示「株・FX・コモディティは分けて考えて」。実データのクラス別の数字を見る前に固定）:
+           株価指数（5銘柄）・FX（9銘柄）・コモディティ（金・銀・原油）・暗号資産（ビットコイン）に分けて、同じ72組を当てる。
+           割り振りは signal_lab_verify.GROUPS（研究日誌の group と同じ）。json の各マスの "group"（"all" が全18銘柄）。
+           「目立つ」は全18銘柄とは別の家族として数え（ボンフェローニ法の分母も別）、条件は全18銘柄と同じ3つに加えて
+           **差0.25R以上・いまの方式と比べられた取引が200件以上**。較正: 作り物の値動き6回で
+           0・1・1・0・0・0マス（平均0.3）。差0.15R・件数制限なしのままだと6〜11マス（平均8）出たため厳しくした。
+           暗号資産は1銘柄＝銘柄のまとまりで幅を出せないので、数字は出すが「目立つ」の判定はしない。
 公開     : 研究日誌で「検証結果」として公開してよい（オーナー判断 2026-09-24）。ただし「この入口にはこの出口が合う／
            おすすめ」とは書かない。良い組も悪い組も並べ、組み合わせが多いぶん偶然で良く見える可能性を必ず書く。
 
@@ -59,6 +70,7 @@ import exit_rule_backtest as X
 from generate_technical_alerts import calc_atr, calc_bbands, calc_rsi
 from signal_lab_sweep import cost_r_of
 from signal_lab_tracker import LEGACY_UNIVERSE
+from signal_lab_verify import GROUPS
 
 SL_TYPES = {
     "atr": "ATRの1.5倍（いまの方式）",
@@ -87,7 +99,20 @@ MIN_RISK_ATR = 0.3
 IS_UNTIL = pd.Timestamp("2026-09-25")
 ALPHA = 0.10            # ボンフェローニ法の誤りの確率（全マス合わせて）
 MIN_EFFECT_LAB = 0.15   # 目立つと言う差の大きさ（較正で決めた）
+CLASS_MIN_EFFECT = 0.25  # 資産クラス別の家族だけ: 差の大きさ（2026-09-25 較正で決めた・実データのクラス別を見る前）
+CLASS_MIN_N = 200        # 資産クラス別の家族だけ: いまの方式と比べられた取引の件数
 COMBOS = [(s, t) for s in SL_TYPES for t in TP_TYPES]
+
+# 資産クラス別（2026-09-25 オーナー指示「株・FX・コモディティはそれぞれ分けて考えて。入り方も出方も違うと思う」）。
+# 銘柄の割り振りは signal_lab_verify.GROUPS（固定オラクル）から作る＝研究日誌の group と同じ区切り。
+ASSET_CLASSES = {
+    "index": ("株価指数", ("index",)),
+    "fx": ("FX", ("jpy_fx", "other_fx")),
+    "commodity": ("コモディティ", ("metal", "oil")),
+    "crypto": ("暗号資産", ("btc",)),
+}
+FLAG_CLASSES = ("index", "fx", "commodity")   # 暗号資産は1銘柄＝銘柄のまとまりで幅を出せないので参考表示だけ
+CLASS_OF = {t: key for key, (_lab, gs) in ASSET_CLASSES.items() for g in gs for t in GROUPS[g]}
 
 
 def arrays(df):
@@ -224,42 +249,63 @@ def _p_value(d):
 
 
 def evaluate_lab(book):
-    """組ごとの要約・いまの方式との差・ボンフェローニ法・前後半。"""
+    """組ごとの要約・いまの方式との差・ボンフェローニ法・前後半。
+    group＝"all"（全18銘柄）と資産クラス（ASSET_CLASSES）ごと。目立つの判定は "all" と資産クラスで別の家族として数える。"""
     cells = []
     for (tf, es, side), b in book.items():
         meta = b["meta"]
-        for period in ("is", "fwd"):
-            idx = [i for i, m in enumerate(meta) if (m["time"].tz_localize(None) < IS_UNTIL) == (period == "is")]
-            if not idx:
-                continue
-            g_all = _groups(meta, period == "fwd")
-            base = b["R"][BASE]
-            for k in COMBOS:
-                R = b["R"][k]
-                ii = [i for i in idx if R[i] is not None]
-                cell = {"tf": tf, "entry": es, "side": side, "sl": k[0], "tp": k[1], "period": period,
-                        "n_entries": len(idx), "n": len(ii)}
-                if ii:
-                    s = X.summarize([R[i][0] for i in ii], [g_all[i] for i in ii], [R[i][1] for i in ii],
-                                    [R[i][2] for i in ii])
-                    cell.update({kk: s[kk] for kk in ("avg", "lo", "hi", "win", "p5", "worst", "beyond_1R", "bars_median")
-                                 if kk in s})
-                    # 1R の大きさ（ATR何本ぶんか）。1R が小さい組ほど R の値が大きく振れる（表示用・判定には使わない）
-                    cell["risk_atr_median"] = float(np.median([R[i][3] for i in ii]))
-                if k != BASE:
-                    jj = [i for i in ii if base[i] is not None]
-                    d = X.diff([R[i][0] for i in jj], [base[i][0] for i in jj], [g_all[i] for i in jj])
-                    cell["vs_base"] = d
-                    cell["p"] = _p_value(d)
-                    if period == "is" and tf == "1d":
-                        for half, cond in (("early", lambda t: t < X.SPLIT), ("late", lambda t: t >= X.SPLIT)):
-                            hh = [i for i in jj if cond(meta[i]["time"].tz_localize(None))]
-                            cell[f"vs_base_{half}"] = X.diff([R[i][0] for i in hh], [base[i][0] for i in hh],
-                                                             [g_all[i] for i in hh])
-                cells.append(cell)
-    # ボンフェローニ法（IS の全セル・いまの方式との差）
-    tests = [c for c in cells if c["period"] == "is" and "p" in c]
-    m = len(tests)
+        for group in ("all",) + tuple(ASSET_CLASSES):
+            in_group = [group == "all" or CLASS_OF.get(m["ticker"]) == group for m in meta]
+            for period in ("is", "fwd"):
+                idx = [i for i, m in enumerate(meta)
+                       if in_group[i] and (m["time"].tz_localize(None) < IS_UNTIL) == (period == "is")]
+                if idx:
+                    cells += _cells_for(tf, es, side, group, period, idx, b)
+    _flag([c for c in cells if c["period"] == "is" and "p" in c and c["group"] == "all"], MIN_EFFECT_LAB, 0)
+    _flag([c for c in cells if c["period"] == "is" and "p" in c and c["group"] in FLAG_CLASSES],
+          CLASS_MIN_EFFECT, CLASS_MIN_N)
+    for c in cells:
+        if c["group"] not in ("all",) + FLAG_CLASSES:
+            c["flag"] = False   # 暗号資産（1銘柄）は判定しない
+    return cells
+
+
+def _cells_for(tf, es, side, group, period, idx, b):
+    """1つの入口×足×group×期間の72組ぶんのマス。idx＝その group・期間に入る入口の番号。"""
+    meta = b["meta"]
+    out = []
+    g_all = _groups(meta, period == "fwd")
+    base = b["R"][BASE]
+    for k in COMBOS:
+        R = b["R"][k]
+        ii = [i for i in idx if R[i] is not None]
+        cell = {"tf": tf, "entry": es, "side": side, "group": group, "sl": k[0], "tp": k[1], "period": period,
+                "n_entries": len(idx), "n": len(ii)}
+        if ii:
+            s = X.summarize([R[i][0] for i in ii], [g_all[i] for i in ii], [R[i][1] for i in ii],
+                            [R[i][2] for i in ii])
+            cell.update({kk: s[kk] for kk in ("avg", "lo", "hi", "win", "p5", "worst", "beyond_1R", "bars_median")
+                         if kk in s})
+            # 1R の大きさ（ATR何本ぶんか）。1R が小さい組ほど R の値が大きく振れる（表示用・判定には使わない）
+            cell["risk_atr_median"] = float(np.median([R[i][3] for i in ii]))
+        if k != BASE:
+            jj = [i for i in ii if base[i] is not None]
+            d = X.diff([R[i][0] for i in jj], [base[i][0] for i in jj], [g_all[i] for i in jj])
+            cell["vs_base"] = d
+            cell["p"] = _p_value(d)
+            if period == "is" and tf == "1d":
+                for half, cond in (("early", lambda t: t < X.SPLIT), ("late", lambda t: t >= X.SPLIT)):
+                    hh = [i for i in jj if cond(meta[i]["time"].tz_localize(None))]
+                    cell[f"vs_base_{half}"] = X.diff([R[i][0] for i in hh], [base[i][0] for i in hh],
+                                                     [g_all[i] for i in hh])
+        out.append(cell)
+    return out
+
+
+def _flag(tests, min_effect, min_n):
+    """ボンフェローニ法（その家族の IS の全マス・いまの方式との差）＋差 min_effect 以上＋件数 min_n 以上
+    ＋日足は前後半で同じ向き。"""
+    m = max(1, len(tests))
     for c in tests:
         c["bonf"] = c["p"] < ALPHA / m
         d = c["vs_base"]
@@ -268,8 +314,7 @@ def evaluate_lab(book):
             e_, l_ = c.get("vs_base_early", {}), c.get("vs_base_late", {})
             same_dir = ("avg" in e_ and "avg" in l_ and "avg" in d
                         and (e_["avg"] > 0) == (l_["avg"] > 0) == (d["avg"] > 0))
-        c["flag"] = bool(c["bonf"] and abs(d.get("avg", 0)) >= MIN_EFFECT_LAB and same_dir)
-    return cells
+        c["flag"] = bool(c["bonf"] and abs(d.get("avg", 0)) >= min_effect and d.get("n", 0) >= min_n and same_dir)
 
 
 SHOW_N_BELOW = 100   # 件数がこれ未満のマスは件数を添える（表示だけ・判定には使わない）
@@ -289,43 +334,60 @@ def report_md(cells, fwd_results, asof):
     L = [f"# 出口の相性ラボ（基準日 {asof}）", "",
          "各マスは **1取引あたりの平均R（コスト後）**。R はその組の最初の損切り幅を 1 とした値。",
          "▲▼＝いまの方式（ATRの1.5倍／ATRの2倍）より良い／悪いと「目立つ」組（ボンフェローニ法10%・差0.15R以上・日足は前後半で同じ向き）。",
-         "📏 物差し：癖のない値動きで同じ手順を回すと、「目立つ」は1回あたり平均0.3マス出る（較正3回で0・1・0マス）。",
+         "📏 物差し：癖のない値動き（作り物）で同じ手順を回すと、全18銘柄の表でも「目立つ」が出る。6回で0・1・0・6・3・3マス（平均約2.2）。"
+         "⇒ **目立つ組が数マスなら、偶然でも出る数の範囲**。最初の3回（0・1・0）だけで「平均0.3」と書いていたのは少なく見積もりすぎだった（2026-09-25 訂正）。",
+         "📏 資産クラス別は、より厳しく「差0.25R以上・件数200以上」も足した（作り物6回で0・1・1・0・0・0マス＝平均0.3）。",
          f"⚠️ 組み合わせが多い（8入口×{len(COMBOS)}組×2足）ので、目立つ組も**候補**にすぎない。前向き（2026-09-25以降）で確かめるまで結論にしない。",
          "⚠️ 売りの行は値段を上下反転して計算（+2σ↔−2σ、RSI70↔30、安値↔高値）。",
          "「—」＝その組は対象外（例: 25本線より下で出る買いは「25本線割れで損切り」が置けない／高値ブレイクの買いはもう真ん中の線より上）。",
          f"「(n=…)」＝その組で数えられた取引が{SHOW_N_BELOW}件未満＝ぶれが大きいので、平均Rの大きさを真に受けない。",
          "⚠️ マスどうしは対象の入口がそろっていない（組ごとに対象外が違う）。比べるときは json の vs_base（同じ入口どうしの差）を使う。"
          "1R が小さい組（損切りが近い組・json の risk_atr_median）ほど R の値は大きく振れる。", ""]
-    idx = {(c["tf"], c["entry"], c["side"], c["sl"], c["tp"], c["period"]): c for c in cells}
+    idx = cell_index(cells)
     keys = sorted({(c["tf"], c["entry"], c["side"]) for c in cells}, key=lambda k: (k[0] != "1d", k[1], k[2]))
     for tf, es, side in keys:
-        base = idx.get((tf, es, side, *BASE, "is"), {})
+        base = idx.get((tf, es, side, "all", *BASE, "is"), {})
         title = f"{'日足' if tf == '1d' else '4時間足'}｜{X.LABEL[es]}の{'買い' if side == 'long' else '売り'}"
         L += [f"## {title}（探索期間・入口 {base.get('n_entries', 0)}件・いまの方式 {_cellstr(base)}）", "",
               "| 損切り ＼ 利確 | " + " | ".join(TP_TYPES[t] for t in TP_TYPES) + " |",
               "|" + "---|" * (1 + len(TP_TYPES))]
         for s in SL_TYPES:
-            L.append(f"| {SL_TYPES[s]} | " + " | ".join(_cellstr(idx.get((tf, es, side, s, t, "is"))) for t in TP_TYPES) + " |")
+            L.append(f"| {SL_TYPES[s]} | " + " | ".join(_cellstr(idx.get((tf, es, side, "all", s, t, "is"))) for t in TP_TYPES) + " |")
         L.append("")
+    L += ["## 資産クラス別（探索期間）", "",
+          "各マス＝入口の件数／いまの方式の平均R。組ごとの数字は json の group（index / fx / commodity / crypto）にある。"
+          "暗号資産は1銘柄なので「目立つ」の判定はしない（参考）。", "",
+          "| 足・入口 | " + " | ".join(lab for lab, _g in ASSET_CLASSES.values()) + " |",
+          "|" + "---|" * (1 + len(ASSET_CLASSES))]
+    for tf, es, side in keys:
+        row = []
+        for g in ASSET_CLASSES:
+            b = idx.get((tf, es, side, g, *BASE, "is"), {})
+            row.append(f"{b.get('n_entries', 0)}件／{_cellstr(b)}" if b else "—")
+        L.append(f"| {'日足' if tf == '1d' else '4時間足'}・{X.LABEL[es]}の{'買い' if side == 'long' else '売り'} | "
+                 + " | ".join(row) + " |")
+    L.append("")
     flagged = [c for c in cells if c.get("flag")]
-    L += ["## 目立つ組（探索期間・候補）", ""]
+    L += ["## 目立つ組（探索期間・候補）", "",
+          "「全体」＝全18銘柄の家族、各資産クラス＝資産クラス別の家族（それぞれ別にボンフェローニ法で数える）。", ""]
     if flagged:
-        L += ["| 足 | 入口 | 損切り | 利確 | 件数 | 平均R | いまの方式との差 [95%] |", "|---|---|---|---|---|---|---|"]
-        for c in sorted(flagged, key=lambda c: -c["vs_base"]["avg"]):
+        L += ["| 足 | 入口 | 対象 | 損切り | 利確 | 件数 | 平均R | いまの方式との差 [95%] |", "|---|---|---|---|---|---|---|---|"]
+        for c in sorted(flagged, key=lambda c: (c["group"] != "all", -c["vs_base"]["avg"])):
             d = c["vs_base"]
-            L.append(f"| {c['tf']} | {X.LABEL[c['entry']]}（{'買い' if c['side'] == 'long' else '売り'}） | {SL_TYPES[c['sl']]} | "
-                     f"{TP_TYPES[c['tp']]} | {c['n']} | {c['avg']:+.3f} | {d['avg']:+.3f} [{d['lo']:+.3f}〜{d['hi']:+.3f}] |")
+            L.append(f"| {c['tf']} | {X.LABEL[c['entry']]}（{'買い' if c['side'] == 'long' else '売り'}） | {group_label(c['group'])} | "
+                     f"{SL_TYPES[c['sl']]} | {TP_TYPES[c['tp']]} | {c['n']} | {c['avg']:+.3f} | "
+                     f"{d['avg']:+.3f} [{d['lo']:+.3f}〜{d['hi']:+.3f}] |")
     else:
         L.append("なし")
     L += ["", "## 目立つ組の前向き（2026-09-25以降に出たシグナルだけ）", ""]
     if flagged:
-        L += ["| 足 | 入口 | 損切り | 利確 | 探索での差 | 前向きの件数（必要100） | 前向きの差 [95%] | 状態 |",
-              "|---|---|---|---|---|---|---|---|"]
-        for c in sorted(flagged, key=lambda c: (c["tf"], c["entry"], c["sl"], c["tp"])):
+        L += ["| 足 | 入口 | 対象 | 損切り | 利確 | 探索での差 | 前向きの件数（必要100） | 前向きの差 [95%] | 状態 |",
+              "|---|---|---|---|---|---|---|---|---|"]
+        for c in sorted(flagged, key=lambda c: (c["group"] != "all", c["tf"], c["entry"], c["sl"], c["tp"])):
             f = fwd_check(c, idx)
             d = f.get("vs_base") or {}
             rng = f"{d['avg']:+.3f} [{d['lo']:+.3f}〜{d['hi']:+.3f}]" if "avg" in d else "—"
-            L.append(f"| {c['tf']} | {X.LABEL[c['entry']]}（{'買い' if c['side'] == 'long' else '売り'}） | "
+            L.append(f"| {c['tf']} | {X.LABEL[c['entry']]}（{'買い' if c['side'] == 'long' else '売り'}） | {group_label(c['group'])} | "
                      f"{SL_TYPES[c['sl']]} | {TP_TYPES[c['tp']]} | {c['vs_base']['avg']:+.3f} | {d.get('n', 0)} | "
                      f"{rng} | {f['state']} |")
     else:
@@ -334,13 +396,21 @@ def report_md(cells, fwd_results, asof):
     return "\n".join(L)
 
 
+def cell_index(cells):
+    return {(c["tf"], c["entry"], c["side"], c["group"], c["sl"], c["tp"], c["period"]): c for c in cells}
+
+
+def group_label(g):
+    return "全体" if g == "all" else ASSET_CLASSES[g][0]
+
+
 FWD_MIN_N = 100
 FWD_MIN_EFFECT = 0.10
 
 
 def fwd_check(c, idx):
     """探索で目立ったマスの前向き（事前登録どおり: 件数100以上・95%幅が0をまたがず同じ向き・差0.10R以上）。"""
-    f = idx.get((c["tf"], c["entry"], c["side"], c["sl"], c["tp"], "fwd"), {})
+    f = idx.get((c["tf"], c["entry"], c["side"], c["group"], c["sl"], c["tp"], "fwd"), {})
     d = f.get("vs_base") or {}
     n = d.get("n", 0)
     if n < FWD_MIN_N or "avg" not in d:
@@ -389,11 +459,14 @@ def main():
     cells = evaluate_lab(run_lab(frames))
     fwd = X.evaluate_forward(frames)
     asof = pd.Timestamp.now(tz="Asia/Tokyo").strftime("%Y-%m-%d")
-    idx = {(c["tf"], c["entry"], c["side"], c["sl"], c["tp"], c["period"]): c for c in cells}
-    flagged_fwd = [{"tf": c["tf"], "entry": c["entry"], "side": c["side"], "sl": c["sl"], "tp": c["tp"],
-                    "is_vs_base": c["vs_base"], **fwd_check(c, idx)} for c in cells if c.get("flag")]
+    idx = cell_index(cells)
+    flagged_fwd = [{"tf": c["tf"], "entry": c["entry"], "side": c["side"], "group": c["group"], "sl": c["sl"],
+                    "tp": c["tp"], "is_vs_base": c["vs_base"], **fwd_check(c, idx)} for c in cells if c.get("flag")]
+    classes = {k: {"label": lab, "tickers": sorted(t for t, g in CLASS_OF.items() if g == k), "flag": k in FLAG_CLASSES}
+               for k, (lab, _g) in ASSET_CLASSES.items()}
     out = {"asof": asof, "is_until": str(IS_UNTIL.date()), "missing": missing,
            "sl_types": SL_TYPES, "tp_types": TP_TYPES, "base": list(BASE), "max_hold": MAX_HOLD,
+           "asset_classes": classes,
            "cells": cells, "flagged_forward": flagged_fwd, "forward_hypotheses": fwd}
     with open(args.json, "w", encoding="utf-8") as f:
         json.dump(_rounded(out), f, ensure_ascii=False, indent=0, default=str)

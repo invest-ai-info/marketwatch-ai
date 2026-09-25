@@ -157,6 +157,24 @@ def test_signal_claims_numbers_are_allowed():
     assert code == 1 and "46.3" in out, out
 
 
+def test_asset_class_group_is_matched_separately():
+    # 資産クラス別（2026-09-25）: group を付けた claim は、その group のマスと照合する
+    lab = json.loads(json.dumps(LAB))
+    fx = _cell("atr", "none", 0.35, vs=0.41)
+    fx["group"] = "fx"
+    lab["cells"].append(fx)
+    c = json.loads(json.dumps(GOOD_CLAIMS))
+    c["claims"].append({"label": "FXだけ", "tf": "1d", "entry": "bb_lower_touch", "side": "long", "group": "fx",
+                        "sl": "atr", "tp": "none", "period": "is", "field": "vs_base", "value": 0.41})
+    html = GOOD_HTML.replace("目立つ組でした。", "目立つ組でした。FXだけでは +0.41R 上でした。")
+    code, out = run(html, c, lab=lab)
+    assert code == 0, out
+    # 同じ値を group 無し（＝全18銘柄）として主張すると、全体のマス（+0.27）と合わず赤
+    c["claims"][-1].pop("group")
+    code, out = run(html, c, lab=lab)
+    assert code == 1 and "0.41" in out, out
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

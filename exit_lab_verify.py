@@ -16,9 +16,10 @@ exit-claims.json の形:
   "exit_lab_asof": "2026-09-27",          # 使った exit-lab.json の "asof"（週1で変わる）
   "claims": [
     {"label": "−2σタッチの買い・ATR損切り・利確なし", "tf": "1d", "entry": "bb_lower_touch", "side": "long",
-     "sl": "atr", "tp": "none", "period": "is", "field": "vs_base", "value": 0.27}
+     "group": "all", "sl": "atr", "tp": "none", "period": "is", "field": "vs_base", "value": 0.27}
   ]
 }
+group＝"all"（全18銘柄・書かなければこれ）／"index"（株価指数）／"fx"／"commodity"（コモディティ）／"crypto"（暗号資産）。
 field に使えるもの: FIELDS（下）。R の値は小数2桁、win は % で小数1桁（例 38.5）、件数は整数、flag は true/false。
 
 検査（どれも赤＝公開しない）:
@@ -91,7 +92,7 @@ def load_lab(asof):
 
 
 def cell_key(c):
-    return (c.get("tf"), c.get("entry"), c.get("side"), c.get("sl"), c.get("tp"), c.get("period"))
+    return (c.get("tf"), c.get("entry"), c.get("side"), c.get("group", "all"), c.get("sl"), c.get("tp"), c.get("period"))
 
 
 def field_value(cell, field):
@@ -266,16 +267,17 @@ def main():
     for c in claimed_cells:
         if (c.get("sl"), c.get("tp")) == BASE:
             continue
-        blocks.setdefault((c["tf"], c["entry"], c["side"], c["period"]), set()).add(
+        blocks.setdefault((c["tf"], c["entry"], c["side"], c.get("group", "all"), c["period"]), set()).add(
             c["sl"] + "/" + c["tp"])
-    for (tf, es, side, period), combos in blocks.items():
-        in_block = [c for c in lab["cells"] if (c["tf"], c["entry"], c["side"], c["period"]) == (tf, es, side, period)
+    for (tf, es, side, group, period), combos in blocks.items():
+        in_block = [c for c in lab["cells"]
+                    if (c["tf"], c["entry"], c["side"], c.get("group", "all"), c["period"]) == (tf, es, side, group, period)
                     and isinstance(c.get("vs_base"), dict) and c["vs_base"].get("avg") is not None]
         signs_all = {c["vs_base"]["avg"] > 0 for c in in_block}
         signs_claimed = {c["vs_base"]["avg"] > 0 for c in in_block if c["sl"] + "/" + c["tp"] in combos}
         if len(signs_all) == 2 and len(signs_claimed) < 2:
             lack = "悪い組（いまの方式より下）" if True in signs_claimed else "良い組（いまの方式より上）"
-            fails.append(f"{FIXABLE} {tf}・{es}・{side}（{period}）の組が片側だけ。{lack}も1つ以上 claim と本文に入れる")
+            fails.append(f"{FIXABLE} {tf}・{es}・{side}・{group}（{period}）の組が片側だけ。{lack}も1つ以上 claim と本文に入れる")
 
     # ⑤ 言い方
     for pat, why in BANNED:

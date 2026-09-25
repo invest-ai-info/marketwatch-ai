@@ -334,6 +334,9 @@ QUEUE_LANES = [
     #    （空売り規制・大量保有報告書・清算決済など専門性の高い題材は残っているが、
     #      一次情報の確認コストに対して読者層が狭いため、company レーンへ力を移す方針）。
     #    routine（tse-daily-auto）はオーナーが claude.ai 側で停止する。
+    # 🆕 2026-09-25: エントリー方法の研究（routine entry-daily-auto・毎日1本・全25回＋総まとめで完結）。
+    #    完結したら、ここからも外す（上の3レーンと同じ畳み方）。床3＝残り3回を切ったら知らせる。
+    ("entry（エントリー方法の研究）", "drafts/ENTRY_GUIDE.md", "entry-", "drafts/entry/ENTRY_LEDGER.md", 3),
 ]
 
 
