@@ -371,8 +371,21 @@ def evaluate(ts1d, ts4h, live=None):
                 sel = [t for t in fam(ts, F) if t["cls"] == k]
                 if len(sel) >= 2:
                     by_class[f"{tf}|{F}|{k}"] = X.summarize([t["net"] for t in sel], [cluster(t) for t in sel])
+                    if tf == "1d":
+                        for half, cond in (("early", lambda t: t["time"] < SPLIT), ("late", lambda t: t["time"] >= SPLIT)):
+                            hs = [t for t in sel if cond(t)]
+                            if len(hs) >= 2:
+                                by_class[f"{tf}|{F}|{k}|{half}"] = X.summarize([t["net"] for t in hs], [cluster(t) for t in hs])
+    by_ticker = {}
+    for tf, ts in (("1d", ts1d), ("4h", ts4h)):
+        for F in ("tf", "mr"):
+            for tk in sorted({t["ticker"] for t in ts}):
+                sel = [t for t in fam(ts, F) if t["ticker"] == tk]
+                if sel:
+                    by_ticker[f"{tf}|{F}|{tk}"] = {"n": len(sel), "avg": float(np.mean([t["net"] for t in sel])),
+                                                   "win": float(np.mean([t["net"] > 0 for t in sel]))}
     return {"primary": primary, "explore": explore, "combos": combos, "baseline": baseline,
-            "yearly": yearly, "by_class": by_class}
+            "yearly": yearly, "by_class": by_class, "by_ticker": by_ticker}
 
 
 # ───────────────────────── 前向き（signals-log） ─────────────────────────
