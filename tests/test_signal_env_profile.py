@@ -46,6 +46,30 @@ def test_buckets_use_only_values_known_at_signal_time():
     assert "loss_analysis" not in code and "win_analysis" not in code
 
 
+def test_monthly_change_section_reports_verdict_changes():
+    # 前回の月の判定と違う区分があれば「前回からの変化」に出る／前向きの表も出る
+    rows = P.load()
+    K = sum(len(o) for _k, _t, _f, o in P.DIMS)
+    res = P.analyze(rows, K)
+    meta = {"asof": "2026-10-02 10:17", "first": "2026-05-21", "last": "2026-10-01", "excluded": 0}
+    prev = P.snapshot(res, dict(meta, asof="2026-09-26 17:00"), K)
+    prev["month"] = "2026-09"
+    key = next(iter(prev["cells"]))
+    prev["cells"][key]["verdict"] = "確かめられた・効きやすい"      # わざと違う判定にする
+    md = P.render(res, [], K, meta, prev=prev, fwd=P.forward_fbias(rows))
+    sec = md.split("## 前回からの変化", 1)[1].split("## 項目ごとの表", 1)[0]
+    c = prev["cells"][key]
+    assert f"{c['title']}＝{c['bucket']}：確かめられた・効きやすい → " in sec
+    assert "前回 2026-09" in sec and "前向きの追跡：ファンダの見立てと逆向き" in md
+
+
+def test_forward_counts_only_after_registration():
+    rows = P.load()
+    fwd = P.forward_fbias(rows)
+    n_expected = sum(1 for x in rows if x["date"] >= P.FWD_FROM and P.V.fbias_of(x["d"]) == "mismatch")
+    assert fwd["mismatch"]["n"] == n_expected
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

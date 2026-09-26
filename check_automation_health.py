@@ -104,6 +104,7 @@ WORKFLOW_CHECKS = [
     #    止まると日誌が古い表を読み続ける。⚠️ 新設直後は「実行履歴なし」になる＝マージ後に1回手動実行する。
     ("出口の相性ラボ",          "exit-lab.yml",            24 * 8,  "warn"),
     ("出口の研究（壁・損切り・出し直し）", "exit-research.yml", 24 * 8, "warn"),   # 🆕 2026-09-26 週1・前向きを積み上げる
+    ("シグナルの環境の統計（月1）", "env-profile.yml", 24 * 35, "warn"),   # 🆕 2026-09-26 月1・同じ物差しで数え直す
     ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
     ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
     ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),

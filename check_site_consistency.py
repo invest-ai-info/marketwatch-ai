@@ -71,6 +71,8 @@ SYNC_FORBIDDEN = {
     "exit-wall-lab.json", "exit-wall-lab.md",  # 出口の壁ラボ（exit-research.yml・日曜）
     "stop-lab.json", "stop-lab.md",            # 損切りラボ（exit-research.yml・日曜）
     "regime-lab.json", "regime-lab.md",        # 環境の相性ラボ（regime-lab.yml・手動）
+    # 🆕 2026-09-26 シグナルの環境の統計（env-profile.yml・月1。月ごとの履歴を持つ＝古い版で上書きすると変化が追えなくなる）
+    "signal-env-profile.md", "signal-env-profile.json", "signal-env-profile-history.json",
 }
 
 errors = []

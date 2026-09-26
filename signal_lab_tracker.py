@@ -279,6 +279,26 @@ REGISTER_EXIT_2026_09_26 = {"register": [
      "kind": "gate", "registered_at": "2026-09-26"},   # 出口の壁ラボ 日足 −0.098R/−0.112R（道の途中に壁）・実シグナルは +0.058R（逆向き）
 ]}
 
+# 🆕 2026-09-26（3本目）シグナルの環境の統計（signal_env_profile.py）の「傾向あり」を前向きに追う
+#   （**オーナー指示 2026-09-26「一と二両方進めてください」**の①）。確定後は変更しない。
+#   出どころ: 実シグナル 4,785件（5/21〜9/25・全足）で、ファンダの見立て（朝夕のブリーフィング）とシグナルの向きが
+#     **逆**のとき、同じ種類のシグナルの平均より勝率 +5.7 ポイント（幅 +0.0〜+11.5・700件・前半 +4.5／後半 +6.8）。
+#     **同じ向き**は −0.2 ポイント（596件・差なし）。見立てが中立・記録なしは 3,489件（どちらにも入らない）。
+#   ⚠️ **結果を見たあとの登録**＝51区分を調べて「傾向あり」になった唯一の区分。事前登録の厳しい基準
+#      （ボンフェローニ）は満たしていない＝偶然の可能性が十分ある。直感（ファンダに沿うほうが勝つ）とも逆向き。
+#   ⚠️ 読み方: トラッカーは平均Rの 95% の幅を 0 と比べる（絶対値）。今回の発見は「同じ種類の平均より上」（相対）なので、
+#      実質の読みは**対の2行（逆向き−同じ向き）の差**（REGISTER_2026_09_26 の ADX 強弱と同じ）。
+#   ⚠️ 検出力: 逆向き 約5.6件/日・σ≈1.16R。N=80 の MDE≈0.36R。見つかった規模（相対 +5.7 ポイント≈+0.13R）を確かめるには
+#      N≈620（約4か月）が要る＝N80 で非有意でも「効果なし」と読まない。
+REGISTER_ENVPROFILE_2026_09_26 = {"register": [
+    {"id": "ep_fbias_mismatch", "label": "ファンダの見立てと逆向き", "filter": {"fbias": "mismatch"},
+     "kind": "edge", "registered_at": "2026-09-26",
+     "pair": "ep_fbias_aligned"},   # 実シグナル 勝率49%・超過 +5.7pt [+0.0,+11.5] n700
+    {"id": "ep_fbias_aligned", "label": "ファンダの見立てと同じ向き(対照)", "filter": {"fbias": "aligned"},
+     "kind": "gate", "registered_at": "2026-09-26",
+     "pair": "ep_fbias_mismatch"},  # 実シグナル 勝率43%・超過 −0.2pt [−6.7,+6.4] n596（対の差を読むための相手）
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -378,7 +398,7 @@ def apply_holdout_bootstrap(t):
     for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
               + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
               + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]
-              + REGISTER_EXIT_2026_09_26["register"]):
+              + REGISTER_EXIT_2026_09_26["register"] + REGISTER_ENVPROFILE_2026_09_26["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
@@ -635,6 +655,8 @@ PLAIN_SITUATION = {  # filter キー → 値 → 場面を表す名詞句（後�
                  "strong": "トレンドが強いとき（ADX25以上）"},
     "vix_band": {"low": "市場が落ち着いているとき（VIX15未満）", "mid": "VIX15〜25のとき",
                  "high": "市場が不安なとき（VIX25以上）"},
+    # 🆕 2026-09-26 ファンダの見立てとの向き（signal_lab_verify.fbias_of と同じ）
+    "fbias": {"mismatch": "ファンダの見立てと逆向き", "aligned": "ファンダの見立てと同じ向き"},
 }
 PLAIN_ASSET_CLASS = {"index": "株価指数", "fx": "為替（FX）", "commodity": "金・銀・原油", "crypto": "ビットコイン"}
 PLAIN_FAMILY = {"tf": "順張り", "mr": "逆張り買い"}
@@ -659,6 +681,7 @@ PLAIN_TERMS = [
     ("順張り", "順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）"),
     ("ADX", "ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）"),
     ("VIX", "VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）"),
+    ("ファンダの見立て", "ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て"),
 ]
 
 

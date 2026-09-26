@@ -1,0 +1,56 @@
+name: Signal Environment Profile (monthly)
+
+# シグナルが「効いたとき・効かなかったとき」の環境の統計を、毎月同じ物差しで数え直す。
+# 2026-09-26 オーナー指示「一と二両方進めてください」の②（①＝「ファンダの見立てと逆向き」の前向き登録はトラッカー側）。
+# ⚠️ 区分・判定の基準は signal_env_profile.py の冒頭に固定してある（結果を見てから動かさない）。
+# ⚠️ 出力（signal-env-profile.md / .json / -history.json）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# ⚠️ 月ごとの履歴は signal-env-profile-history.json に積み上がる＝手で消さない（前回からの変化が出せなくなる）。
+
+on:
+  schedule:
+    - cron: '17 1 2 * *'    # 毎月2日 10:17 JST（月次成績レポートの後）
+    - cron: '43 3 3 * *'    # 毎月3日 12:43 JST 保険（今月分が履歴にあれば何もしない）
+  workflow_dispatch:
+
+concurrency:
+  group: env-profile
+  cancel-in-progress: false
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy
+      - name: Count again with the same ruler
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python signal_env_profile.py --once-per-month > /dev/null
+          else
+            python signal_env_profile.py > /dev/null
+          fi
+          [ -f signal-env-profile.md ] && cat signal-env-profile.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add signal-env-profile.md signal-env-profile.json signal-env-profile-history.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: signal environment profile $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 生成物なので、衝突したら今回生成した側を採る（exit-research.yml と同じ考え方）
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi

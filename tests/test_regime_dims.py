@@ -98,11 +98,13 @@ def test_tracker_declares_the_five():
 
 
 def test_registration_is_idempotent():
-    # 本物の tracker.json（登録前の状態）に当てる: 1回目で5本だけ増え、2回目は何も変えない
+    # 本物の tracker.json（登録前の状態）に当てる: 1回目で 9/26 の宣言分だけ増え、2回目は何も変えない
     import json
     import signal_lab_tracker as T
     t = json.load(open(os.path.join(ROOT, "signal-lab-tracker.json"), encoding="utf-8-sig"))
-    new_ids = {h["id"] for h in T.REGISTER_2026_09_26["register"] + T.REGISTER_EXIT_2026_09_26["register"]}
+    # 9/26 に宣言した登録すべて（名前が *_2026_09_26 の register 定数＝あとから足しても数え漏れない）
+    new_ids = {h["id"] for name in dir(T) if name.endswith("_2026_09_26")
+               for h in (getattr(T, name) or {}).get("register", [])}
     already = new_ids & {h["id"] for h in t["hypotheses"]}
     first = T.apply_holdout_bootstrap(t)
     assert first == len(new_ids - already), first
