@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-09-26
+- 判定: ✅ 公開済み
+- 選定トピック: ベッセント米財務長官「経済ファンダメンタルズを反映した強い円が望ましい」──日米財務相電話会談でNYドル円156円台へ急落（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: ベッセント米財務長官が9/25（米国時間）片山財務相との電話会談後、「日本の強固なファンダメンタルズを反映した強い円が望ましい（desirable）」とSNSに投稿。日本財務省も「円の過小評価への懸念を再確認」と公表。NYドル円は一時156円台へ急落（前日9/25の158円台からさらに2円以上）。米財務長官が外国通貨の上昇を「望ましい」と明言するのは異例。9/25記事（トランプ首脳会談・レートチェック）の後続ではなく異なる発言主体・別チャネルの新展開として付加価値十分。
+- 出典（確認済み・7系統以上）:
+  - Bloomberg「Bessent, Katayama Discuss Strong Yen and US-Japan Currency Cooperation」2026-09-25
+  - Nippon.com「U.S. Sec. Bessent Says Strong Yen Desired in Talks with Japan」2026-09-26
+  - Newsquawk「US Treasury Secretary Bessent spoke with Japan about the desirability of a strong JPY」2026-09-25
+  - SBS English「US Treasury Secretary: 'Stronger Yen Reflecting Economic Fundamentals is Desirable'」2026-09-25
+  - 日本経済新聞「片山財務相『円の過小評価は問題と再確認』 ベッセント氏との協議で」2026-09-25
+  - みんかぶFX「ドル円、一時156円台に下落 日米の口先介入で円高が強まる＝NY為替概況」2026-09-26
+  - Nikkei Asia「US, Japan finance chiefs discuss yen after Trump raises concerns in summit」2026-09-25
+  - Kabutan/株探ニュース「ベッセント財務長官、片山財務相と『円高の望ましさについて議論した』」2026-09-26
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（①「異例中の異例」→「異例とされ」に軟化 ②「非常に強い意味合いを持つ」→「強い意味合いを持つと受け止められている」に軟化 ③「円安が再進行」→「ドル円は再び上昇を始め」に誤表現修正 ④「機能したとも言える」→「位置づける見方もある」に軟化 ⑤「2022年・2026年7月の協調介入」→「2022年の介入や2026年7月の協調介入」に史実修正）→ 最終🟢白
+  - 著者修正（事実精度・Opus指摘を受けて）: ①「10月3日（金）米雇用統計」→「10月2日（金）」（曜日修正）②「9月29日（月）東京寄り付き」→「9月28日（月）」（曜日修正）③「guide-fx-basics.html」→「guide-fx-intervention-history.html」（存在するリンクに差し替え）
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤出典7系統以上 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典7系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告27件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html
+- commit: 6606a00（main へ push 済み）
+
+---
+
 ## 2026-09-25
 - 判定: ✅ 公開済み
 - 選定トピック: 日米首脳会談でトランプ大統領が「円安懸念」──片山財務相が異例開示、東京市場でレートチェック実施し158円台で攻防（カテゴリ: 今日のニュース）
