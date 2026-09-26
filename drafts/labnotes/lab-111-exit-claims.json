@@ -45,6 +45,12 @@
       "field": "avg", "value": 0.08
     },
     {
+      "label": "全18銘柄・ATR損切り・RSI70超え利確・いまの方式との差・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "all", "sl": "atr", "tp": "rsi70", "period": "is",
+      "field": "vs_base", "value": 0.15
+    },
+    {
       "label": "全18銘柄・シャンデリア損切り・損切り幅2倍利確・平均R（悪い組）・探索期間",
       "tf": "1d", "entry": "bb_lower_touch", "side": "long",
       "group": "all", "sl": "chandelier", "tp": "rr2", "period": "is",
@@ -105,12 +111,6 @@
       "field": "n", "value": 2996
     },
     {
-      "label": "全18銘柄・タートル型損切り・損切り幅2倍利確・旗フラグ・探索期間",
-      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
-      "group": "all", "sl": "turtle", "tp": "rr2", "period": "is",
-      "field": "flag", "value": true
-    },
-    {
       "label": "為替9銘柄・ATR損切り・ATR2倍利確（いまの方式）・平均R・探索期間",
       "tf": "1d", "entry": "bb_lower_touch", "side": "long",
       "group": "fx", "sl": "atr", "tp": "atr2", "period": "is",
@@ -121,6 +121,18 @@
       "tf": "1d", "entry": "bb_lower_touch", "side": "long",
       "group": "fx", "sl": "atr", "tp": "atr2", "period": "is",
       "field": "n", "value": 2320
+    },
+    {
+      "label": "為替9銘柄・ATR損切り・利確なし・平均R・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "fx", "sl": "atr", "tp": "none", "period": "is",
+      "field": "avg", "value": -0.09
+    },
+    {
+      "label": "為替9銘柄・ATR損切り・利確なし・いまの方式との差（良い組）・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "fx", "sl": "atr", "tp": "none", "period": "is",
+      "field": "vs_base", "value": 0.08
     },
     {
       "label": "為替9銘柄・シャンデリア損切り・損切り幅2倍利確・平均R（悪い組）・探索期間",
@@ -171,6 +183,18 @@
       "field": "n", "value": 1088
     },
     {
+      "label": "株価指数・シャンデリア損切り・損切り幅2倍利確・平均R・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "index", "sl": "chandelier", "tp": "rr2", "period": "is",
+      "field": "avg", "value": -0.03
+    },
+    {
+      "label": "株価指数・タートル型損切り・損切り幅2倍利確・いまの方式との差（悪い組）・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "index", "sl": "turtle", "tp": "rr2", "period": "is",
+      "field": "vs_base", "value": -0.06
+    },
+    {
       "label": "コモディティ・ATR損切り・ATR2倍利確（いまの方式）・平均R・探索期間",
       "tf": "1d", "entry": "bb_lower_touch", "side": "long",
       "group": "commodity", "sl": "atr", "tp": "atr2", "period": "is",
@@ -193,6 +217,18 @@
       "tf": "1d", "entry": "bb_lower_touch", "side": "long",
       "group": "commodity", "sl": "atr", "tp": "none", "period": "is",
       "field": "n", "value": 516
+    },
+    {
+      "label": "コモディティ・タートル型損切り・損切り幅2倍利確・平均R（悪い組）・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "commodity", "sl": "turtle", "tp": "rr2", "period": "is",
+      "field": "avg", "value": -0.26
+    },
+    {
+      "label": "コモディティ・タートル型損切り・損切り幅2倍利確・いまの方式との差（悪い組）・探索期間",
+      "tf": "1d", "entry": "bb_lower_touch", "side": "long",
+      "group": "commodity", "sl": "turtle", "tp": "rr2", "period": "is",
+      "field": "vs_base", "value": -0.20
     }
   ]
 }
