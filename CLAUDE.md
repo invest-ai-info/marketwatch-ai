@@ -30,7 +30,7 @@
 ### ナビバー（10 ボタン、利用頻度順、2026-06-15 に 📖 投資本 を追加）
 
 ```
-🏠 index → 🚨 political-feed → 📊 track-record → 📅 calendar → 📚 guides → 📖 投資本(guide-investment-books)
+🏠 index → 🚨 political-feed → 🧪 track-record(シグナル研究・2026-09-26 に「シグナル成績」から改名) → 📅 calendar → 📚 guides → 📖 投資本(guide-investment-books)
 → 🩺 market-health → 🔥 hot-assets → 📈 charts → 📺 youtube-summary
 ```
 

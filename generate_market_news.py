@@ -6332,12 +6332,13 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     .rs-band{{background:#fff;border:1px solid #d0d7de;border-left:4px solid #8250df;border-radius:10px;padding:16px 22px;margin-bottom:16px}}
     .rs-lead{{font-size:.98rem;line-height:1.8;color:#1f2328;margin-bottom:10px}}
     .rs-stats{{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}}
-    .rs-stats div{{flex:1 1 130px;background:#f6f8fa;border-radius:8px;padding:8px 12px}}
+    .rs-stats div{{flex:1 1 90px;background:#f6f8fa;border-radius:8px;padding:8px 12px}}
     .rs-stats b{{display:block;font-size:1.25rem;color:#8250df}}
     .rs-stats span{{font-size:.78rem;color:#57606a}}
     .rs-today{{font-size:.9rem;margin-bottom:12px;line-height:1.7}}
-    .rs-btns{{display:flex;flex-wrap:wrap;gap:8px}}
-    .rs-btns a{{flex:1 1 180px;text-align:center;padding:10px 12px;border-radius:8px;border:1px solid #8250df;color:#8250df;font-weight:700;text-decoration:none;font-size:.9rem}}
+    .rs-btns{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}}
+    @media(max-width:700px){{.rs-band{{padding:14px 14px}}.rs-btns{{grid-template-columns:1fr 1fr}}.rs-btns a{{font-size:.84rem;padding:9px 6px}}.rs-stats div{{padding:7px 9px}}.rs-stats b{{font-size:1.1rem}}}}
+    .rs-btns a{{display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 12px;border-radius:8px;border:1px solid #8250df;color:#8250df;font-weight:700;text-decoration:none;font-size:.9rem}}
     .rs-btns a.pri{{background:#8250df;color:#fff}}
     body.dark .rs-band{{background:#161b22;border-color:#30363d;border-left-color:#a371f7}}
     body.dark .rs-lead{{color:#e6edf3}}
