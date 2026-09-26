@@ -75,7 +75,7 @@ SERIES = [
         "key": "entry",
         "glob": "guide-entry-*.html",
         "label": "エントリー方法の研究",
-        "index": "guides.html",
+        "index": "guides.html#cat-entry",
         # 総論（11の型の一覧）はシリーズの外に置く（公開時期がシリーズと別・前後ボタンの並びを乱さない）
         "exclude": {"guide-entry-methods.html"},
     },
