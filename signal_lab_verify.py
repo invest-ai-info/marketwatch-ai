@@ -66,7 +66,8 @@ ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", 
                        "news",  # 🆕 2026-07-23 注目度次元（Q24・人間による正式拡張＝Q21 H-V2「人気過熱の劣後」の攻め転用）
                        "regime4",  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
                        "fired_before", "fired_from",  # 🆕 2026-08-12 IS/FWD分離（#067・人間による正式拡張＝下記コメント）
-                       "family", "adx_band", "vix_band", "asset_class"}  # 🆕 2026-09-26 環境の相性ラボ（人間による正式拡張＝下記）
+                       "family", "adx_band", "vix_band", "asset_class",  # 🆕 2026-09-26 環境の相性ラボ（人間による正式拡張＝下記）
+                       "fbias"}  # 🆕 2026-09-26 シグナルの環境の統計（オーナー指示・人間による正式拡張＝下記 fbias_of）
 # ⚠️ `regime` と `regime4` は**別次元**（同じものにしない）。
 #   regime  = ライブの risk_regime（RISK_ON 等）＝エンジンが発火時に記録する既存の語彙。
 #   regime4 = 固定オラクル `research/_regime_state.py`（Q27で凍結・MA200×60日実現ボラの750日分位×
@@ -129,6 +130,22 @@ def asset_class_of(d):
         if any(t in GROUPS.get(g, set()) for g in gs):
             return k
     return None
+
+
+# 🆕 2026-09-26 ファンダの見立てとシグナルの向き（signal_env_profile.py の「傾向あり」を前向きに追う次元。
+#   オーナー指示「一と二両方進めてください」＝①前向きで確かめる。人間による正式拡張・数式ロック＝以後変更しない）。
+#   エンジンが発火時に記録する fundamental_context.bias_aligned をそのまま読む（generate_technical_alerts の L2）:
+#     ブリーフィングのその銘柄の見立てが BULLISH/BEARISH のとき、シグナルの向き（買い/売り）と同じなら True、逆なら False。
+#     見立てが NEUTRAL・ブリーフィングが無い・向きの無いシグナルは None。
+#   aligned＝同じ向き / mismatch＝逆向き / None＝マッチしない（blocked/tier/env と同じ意味論）。
+#   ⚠️ エンジンのメール照合（generate_technical_alerts.GATE_PROBE_SUPPORTED_KEYS）には入れていない（family 等と同じ）。
+def fbias_of(d):
+    """ファンダの見立てとの向き: "aligned"（同じ）/ "mismatch"（逆）/ None（見立てが中立・記録なし）。"""
+    fc = d.get("fundamental_context")
+    a = fc.get("bias_aligned") if isinstance(fc, dict) else None
+    if not isinstance(a, bool):
+        return None
+    return "aligned" if a else "mismatch"
 
 
 # 🆕 2026-07-23 注目度バンド（Q24・バンド境界は事前宣言＝以後変更しない。Q21 H-V2 と同じ 0 / 1-2 / 3+）
@@ -279,6 +296,8 @@ def match(d, f):
     if "vix_band" in f and vix_band_of(d) != f["vix_band"]:
         return False
     if "asset_class" in f and asset_class_of(d) != f["asset_class"]:
+        return False
+    if "fbias" in f and fbias_of(d) != f["fbias"]:   # 🆕 2026-09-26 ファンダの見立てとの向き
         return False
     # 🆕 2026-08-12 IS/FWD分離（#067ループの構造修正・人間による正式拡張）:
     #   fired_before / fired_from = 発火時刻 fired_at の境界。値は "YYYY-MM-DD"（JST日付）。

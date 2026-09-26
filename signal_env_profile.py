@@ -20,7 +20,14 @@
          それ以外＝差なし。どの区分も件数 40 未満は判定しない。
 副次   : 順張り・逆張りに分けた同じ表（主張には使わず、読むための表）。
 
-使い方:  python signal_env_profile.py            → signal-env-profile.md / .json を書く
+月1の出し直し（2026-09-26 オーナー指示「一と二両方進めてください」の②）:
+  Actions `env-profile.yml` が毎月2日に同じ物差しで数え直す（データは積み上がる＝全期間）。
+  結果は signal-env-profile-history.json に月ごとに残し、md に「前回からの変化」を出す。区分・基準は上のまま変えない。
+  あわせて、前向きに登録した「ファンダの見立てと逆向き」（トラッカー ep_fbias_mismatch／対照 ep_fbias_aligned）の
+  登録後（FWD_FROM 以降）に出たシグナルだけの成績を並べる（判定はトラッカーが行う＝ここは読むための表）。
+
+使い方:  python signal_env_profile.py                    → signal-env-profile.md / .json / -history.json を書く
+         python signal_env_profile.py --once-per-month   → 今月分が履歴にあれば何もしない（定期実行の保険の回）
 """
 import collections
 import datetime
@@ -32,6 +39,8 @@ import numpy as np
 
 import signal_lab_verify as V
 
+HISTORY = "signal-env-profile-history.json"
+FWD_FROM = "2026-09-27"   # ファンダの見立てと逆向き（前向き登録 2026-09-26）の前向きの始まり＝登録日の翌日
 MIN_N = 40
 MIN_EFF = 0.05        # 5 ポイント
 ALPHA = 0.05
@@ -293,13 +302,44 @@ def analyze(rows, K, tag=""):
     return {"n": len(rows), "n_win": n_win, "n_loss": n_loss, "dims": res, "split_date": mid, "tag": tag}
 
 
+def snapshot(res, meta, K):
+    cells = {}
+    for dm in res["dims"]:
+        for b in dm["buckets"]:
+            if "excess" in b:
+                cells[f"{dm['key']}|{b['bucket']}"] = {"title": dm["title"], "bucket": b["bucket"], "n": b["n"],
+                                                       "excess": round(b["excess"], 4), "lo": round(b["lo"], 4),
+                                                       "hi": round(b["hi"], 4), "verdict": b["verdict"]}
+    return {"month": meta["asof"][:7], "asof": meta["asof"], "first": meta["first"], "last": meta["last"],
+            "n": res["n"], "win_rate": round(res["n_win"] / res["n"], 4), "K": K, "cells": cells}
+
+
+def load_history():
+    try:
+        h = json.load(open(HISTORY, encoding="utf-8"))
+        return h if isinstance(h, list) else []
+    except (OSError, ValueError):
+        return []
+
+
+def forward_fbias(rows):
+    """前向き（FWD_FROM 以降に出たシグナル）だけの、ファンダの見立てと逆向き・同じ向きの成績（読むための表）。"""
+    out = {}
+    for lab in ("mismatch", "aligned"):
+        xs = [x for x in rows if x["date"] >= FWD_FROM and V.fbias_of(x["d"]) == lab]
+        n = len(xs)
+        out[lab] = {"n": n, "win": (sum(x["win"] for x in xs) / n) if n else None,
+                    "avg_r": (sum(x["r"] for x in xs) / n) if n else None}
+    return out
+
+
 def pct(x, sign=False):
     if x is None:
         return "—"
     return f"{x * 100:+.1f}" if sign else f"{x * 100:.1f}"
 
 
-def render(main, fams, K, meta):
+def render(main, fams, K, meta, prev=None, fwd=None):
     L = [f"# シグナルが「効いたとき」「効かなかったとき」の環境（{meta['asof']} 時点）", "",
          "オーナー依頼「テクニカル指標が効いたとき・効かなかったとき、どんな環境だったか」。実際に出たシグナルの記録"
          "（signals-log.json）だけで数えた。ルールは `signal_env_profile.py` の冒頭に、結果を見る前に固定してある。", "",
@@ -323,6 +363,33 @@ def render(main, fams, K, meta):
     for dm, b in tend:
         L.append(f"  - {dm['title']}＝{b['bucket']}：{pct(b['excess'], True)} ポイント（{pct(b['lo'], True)}〜{pct(b['hi'], True)}・"
                  f"{b['n']:,}件・前半 {pct(b['half1'], True)}／後半 {pct(b['half2'], True)}）")
+    L += ["", "## 前回からの変化", ""]
+    if not prev:
+        L.append("- 初回（比べる前回が無い）。毎月2日に同じ物差しで数え直し、ここに変化を出す。")
+    else:
+        cur = snapshot(main, meta, K)["cells"]
+        L.append(f"- 前回 {prev['month']}（{prev['n']:,}件・勝率 {prev['win_rate'] * 100:.1f}%）→ 今回 {main['n']:,}件・"
+                 f"勝率 {main['n_win'] / main['n'] * 100:.1f}%")
+        changed = [(k, prev["cells"].get(k), c) for k, c in cur.items()
+                   if (prev["cells"].get(k) or {}).get("verdict") != c["verdict"]]
+        if changed:
+            for k, p, c in changed:
+                was = p["verdict"] if p else "（前回は判定なし）"
+                L.append(f"- {c['title']}＝{c['bucket']}：{was} → **{c['verdict']}**（超過 {pct(c['excess'], True)} ポイント）")
+        else:
+            L.append("- 判定が変わった区分はなし")
+    if fwd:
+        mm, al = fwd["mismatch"], fwd["aligned"]
+        L += ["", f"## 前向きの追跡：ファンダの見立てと逆向き（{FWD_FROM} 以降に出たシグナルだけ）", "",
+              "登録した日（2026-09-26）より後に出たシグナルだけで数える。**判定は研究日誌のトラッカー（ep_fbias_mismatch・"
+              "対照 ep_fbias_aligned）が行う**。ここは読むための表。見つかった規模を確かめるには、逆向きが約620件たまる必要がある"
+              "（約4か月）。", "",
+              "| 区分 | 件数 | 勝率 | 平均の損益（R） |", "|---|---:|---:|---:|"]
+        for name, x in (("ファンダの見立てと逆向き", mm), ("ファンダの見立てと同じ向き（対照）", al)):
+            ar = "—" if x["avg_r"] is None else "%+.3f" % x["avg_r"]
+            L.append(f"| {name} | {x['n']:,} | {pct(x['win'])}% | {ar} |")
+        if mm["win"] is not None and al["win"] is not None:
+            L.append(f"\n逆向き − 同じ向き の勝率の差：{(mm['win'] - al['win']) * 100:+.1f} ポイント（件数が少ないうちは大きく揺れる）")
     L += ["", "## 項目ごとの表", "",
           "「効いた中の割合」「効かなかった中の割合」＝効いたシグナル（または効かなかったシグナル）のうち、その環境だった割合。"
           "両者が近ければ、その環境は勝ち負けと関係が薄い。", ""]
@@ -355,7 +422,13 @@ def render(main, fams, K, meta):
     return "\n".join(L) + "\n"
 
 
-def main():
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    month = datetime.datetime.now(JST).strftime("%Y-%m")
+    hist = load_history()
+    if "--once-per-month" in argv and any(h.get("month") == month for h in hist):
+        print(f"今月（{month}）の分は履歴にある＝何もしない")
+        return 0
     rows = load()
     recs = json.load(open("signals-log.json", encoding="utf-8"))
     K = sum(len(o) for _k, _t, _f, o in DIMS)
@@ -365,9 +438,17 @@ def main():
     res = analyze(rows, K)
     fams = [("順張り（高値・安値ブレイク／MACD・移動平均の交差）", analyze([x for x in rows if x["fam"] == "tf"], K)),
             ("逆張り（RSI 売られすぎ反発／ボリンジャー下限タッチ）", analyze([x for x in rows if x["fam"] == "mr"], K))]
-    md = render(res, fams, K, meta)
+    prev = next((h for h in sorted(hist, key=lambda h: h.get("month", ""), reverse=True)
+                 if h.get("month") != month), None)
+    fwd = forward_fbias(rows)
+    md = render(res, fams, K, meta, prev=prev, fwd=fwd)
     open("signal-env-profile.md", "w", encoding="utf-8").write(md)
-    json.dump({"meta": meta, "K": K, "main": res, "families": {n: r for n, r in fams}},
+    snap = snapshot(res, meta, K)
+    snap["forward_fbias"] = fwd
+    hist = [h for h in hist if h.get("month") != month] + [snap]
+    json.dump(sorted(hist, key=lambda h: h["month"]), open(HISTORY, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+    json.dump({"meta": meta, "K": K, "main": res, "families": {n: r for n, r in fams}, "forward_fbias": fwd},
               open("signal-env-profile.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
     print(md)
     return 0
