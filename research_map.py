@@ -87,18 +87,41 @@ SCOPE_PLAIN = dict(T.PLAIN_GROUP, fx="為替（FX）", index="株価指数", com
 # 出口の壁ラボ・損切りラボの前向きの確認（キー → やさしい説明）。無いキーはラボの説明文をそのまま出す
 FORWARD_PLAIN = {
     "tf_open_trail_1d": "日足の順張りで、利確の目標の先にしばらく壁（値動きを止めそうな節目）がないときは、"
-                        "利確を置かずに利益を伸ばすほうが、いまの方式よりよいか",
-    "1d|mr|A30": "日足の逆張り買いは、損切りの幅をいまの2倍に広げたほうが、成績がよいか",
+                        "利確を置かずに利益を伸ばすと、いまの方式と比べて成績は変わるか",
+    "1d|mr|A30": "日足の逆張り買いで、損切りの幅をいまの2倍に広げると、成績は変わるか",
 }
+# 結果を見たあとに登録した仮説の注記（id → 注記）。偶然よく見えただけの可能性を、その行で必ず伝える
+_SEEN = "結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）"
+_BELOW = "事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）"
+POST_HOC_NOTES = {
+    "ep_fbias_mismatch": "結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）",
+    "ep_fbias_aligned": "結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）",
+    "rl_fx_mr_1d": _SEEN, "rl_tf_blocked": _SEEN,
+    "rl_tf_adx_weak": _BELOW, "rl_tf_adx_strong": _BELOW, "rl_mr_vix_high": _BELOW, "rl_mr_vix_low": _BELOW,
+    "tf_open_trail_1d": _SEEN,      # 出口の壁ラボ（exit_wall_lab.py の冒頭「探索の結果を見た後の登録」）
+}
+# 相場の環境の統計の判定（データ側の文字列）→ 表示の言い方（断定に読めないように）
+VERDICT_PLAIN = [("確かめられた・効きやすい", "厳しい基準を満たした・平均より成績がよかった区分（過去の記録）"),
+                 ("確かめられた・効きにくい", "厳しい基準を満たした・平均より成績が悪かった区分（過去の記録）"),
+                 ("効きやすい側", "平均より成績がよかった側（過去の記録）"),
+                 ("効きにくい側", "平均より成績が悪かった側（過去の記録）")]
+
+
+def verdict_plain(v):
+    for a, b in VERDICT_PLAIN:
+        v = v.replace(a, b)
+    return v
+
+
 # 出口の相性ラボの前向きの仮説（id → 題名／比べ方の説明 → やさしい言い方）。無いものはラボの文をそのまま出す
 EXIT_TITLE_PLAIN = {
-    "bb_lower_deep_wait": "「ボリンジャーバンド−2σタッチ」の買いは、すぐに入らず、見込める利益が損失の3倍になる値段まで"
-                          "下がるのを待って入るほうがよいか",
+    "bb_lower_deep_wait": "「ボリンジャーバンド−2σタッチ」の買いで、すぐに入らず、見込める利益が損失の3倍になる値段まで"
+                          "下がるのを待って入ると、成績は変わるか",
 }
 EXIT_DESC_PLAIN = {
-    "3で全部 − いまの方式（損切り1.5ATR・利確2.0ATR）": "日足で、待って入るやり方は、いまの方式より成績がよいか",
-    "3で全部 − すぐ全部（節目・1.3以上）＝待つ効果そのもの": "日足で、待って入るやり方は、すぐに入る場合より成績がよいか（待つことそのものの効果）",
-    "分けて入る（30%＠1.3・70%＠3）− いまの方式": "日足で、2回に分けて入るやり方は、いまの方式より成績がよいか",
+    "3で全部 − いまの方式（損切り1.5ATR・利確2.0ATR）": "日足で、待って入るやり方は、いまの方式と比べて成績が変わるか",
+    "3で全部 − すぐ全部（節目・1.3以上）＝待つ効果そのもの": "日足で、待って入るやり方は、すぐに入る場合と比べて成績が変わるか（待つことそのものの効果）",
+    "分けて入る（30%＠1.3・70%＠3）− いまの方式": "日足で、2回に分けて入るやり方は、いまの方式と比べて成績が変わるか",
     "4時間足で再現するか（過去2年では再現しなかった）": "4時間足でも同じ結果になるか（過去2年のデータでは同じにならなかった）",
 }
 
@@ -150,9 +173,9 @@ def _stage(h):
     if st == "pending":
         return "new", "🆕 登録したばかり（次の朝から数える）"
     if st == "promoted":
-        return "done", "✅ 確かめられた（昇格中）"
+        return "done", "✅ 判定の基準を満たした（昇格中・今後外れることもある）"
     if h.get("holdout_pass"):
-        return "cand", "🌟 昇格の候補（データを集めている）"
+        return "cand", "🌟 過去のデータの確認は通過（登録後のデータを集めている）"
     return "track", "🌱 データを集めている"
 
 
@@ -160,7 +183,8 @@ def _question(h):
     label = h.get("label") or ""
     if "対照" in label:
         return "比べる相手（対照）"
-    return "負けやすいか（避けたほうがよいか）" if h.get("kind") == "gate" else "勝ちやすいか"
+    return ("負けやすいか（記録上の損益の平均がマイナスか）" if h.get("kind") == "gate"
+            else "勝ちやすいか（記録上の損益の平均がプラスか）")
 
 
 def collect(root="."):
@@ -188,7 +212,8 @@ def collect(root="."):
         return {"id": h.get("id"), "name": T.plain_name(h.get("filter") or {}), "question": _question(h),
                 "stage": stage, "stage_key": stage_key, "registered": (h.get("registered_at") or "")[:10],
                 "n": n, "checkpoint": cp,
-                "pair_name": T.plain_name(pair.get("filter") or {}) if pair else None}
+                "pair_name": T.plain_name(pair.get("filter") or {}) if pair else None,
+                "note": POST_HOC_NOTES.get(h.get("id"))}
 
     themes = []
     for key, title, desc, _ks in THEMES:
@@ -255,7 +280,7 @@ def collect_exits(root="."):
             out.append({"title": FORWARD_PLAIN.get(key) or v.get("desc") or key,
                         "registered": reg[:10],
                         "note": f"{lab_name}で見つかった候補を、登録した日より後のデータで確かめています。"
-                                + ("（結果を見たあとの登録＝偶然の可能性も十分あります）" if "結果を見た" in reg else ""),
+                                + (f"{_SEEN}。" if "結果を見た" in reg or key in POST_HOC_NOTES else ""),
                         "rows": [{"desc": "いまの方式との差", "n": v.get("n") or 0, "goal": v.get("min_n"),
                                   "state": _state(v.get("state"))}]})
     return out
@@ -267,7 +292,7 @@ def collect_env(root="."):
         return None
     last = hist[-1]
     cells = last.get("cells") or {}
-    notable = [f"{c.get('title')}＝{c.get('bucket')}：{c.get('verdict')}" for c in cells.values()
+    notable = [f"{c.get('title')}＝{c.get('bucket')}：{verdict_plain(c.get('verdict'))}" for c in cells.values()
                if str(c.get("verdict", "")).startswith(("確かめられた", "傾向あり"))]
     try:
         y, m = map(int, str(last.get("month", "")).split("-"))
@@ -345,7 +370,8 @@ def build_pane(root=".", model=None):
   <div class="rm-lead">
     当サイトが<strong>いま何を確かめているか</strong>を1か所にまとめた一覧です。新しい検証を始めると自動でここに加わり、
     終わると下の「終わった検証」へ移ります（仮説の一覧の基準日：{_e(m['asof'] or '—')}）。<br>
-    どの検証も、<strong>登録した日より後に出たシグナルだけ</strong>で採点します。あとから都合のよい条件を選び直すことはできない仕組みです。
+    どの検証も、<strong>登録した日より後に出たシグナルだけ</strong>で採点します。登録した条件と日付は記録に残し、あとから都合のよい条件に選び直さないきまりにしています。
+    ここに並ぶ仮説は過去のデータを見て見つけた条件なので、偶然よく見えただけのものも多く含まれ、大半は判定で外れます。
     条件がめったに起きない仮説は、判定までに何か月〜何年もかかります。判定の前に途中の数字だけで結論を出さないのが、この研究のきまりです。
   </div>
   <div class="rm-sum">
@@ -363,7 +389,8 @@ def build_pane(root=".", model=None):
 
     parts.append('<h3 style="margin-top:28px">② 仮説の前向きの採点</h3>'
                  '<p class="rm-desc">「どんな場面で出たシグナルか」を仮説として登録し、その場面のシグナルが'
-                 '「勝ちやすいか」「負けやすいか（避けたほうがよいか）」を確かめています。'
+                 '「勝ちやすいか（記録上の損益の平均がプラスか）」「負けやすいか（マイナスか）」を確かめています。'
+                 '売買のタイミングや銘柄を示すものではありません。'
                  '決まった件数がたまるごとに判定し、基準を2回続けて満たすと昇格、反対の結果が出ると終わりになります。'
                  '成績の数字は <a href="#banzuke">🏆 エッジ番付</a> のタブで見られます。</p>')
     names = " ".join(r["name"] for th in m["themes"] for r in th["rows"])
@@ -377,6 +404,8 @@ def build_pane(root=".", model=None):
         for r in rows:
             pair = (f'<br><span class="rm-sub">対になる仮説「{_e(r["pair_name"])}」と並べて、差を見ます</span>'
                     if r["pair_name"] else "")
+            if r.get("note"):
+                pair += f'<br><span class="rm-sub">⚠️ {_e(r["note"])}</span>'
             out.append(
                 f'<tr><td><strong>{_e(r["name"])}</strong>{pair}'
                 f'<br><span class="rm-sub">登録 {_e(r["registered"])}</span> <span class="meta-line rm-sub">{_e(r["id"])}</span></td>'
@@ -393,7 +422,7 @@ def build_pane(root=".", model=None):
     parts.append('<h4 class="rm-theme">📂 テーマ別の一覧（すべての仮説・クリックで開く）</h4>')
     for th in m["themes"]:
         cnt = {k: sum(1 for r in th["rows"] if r["stage_key"] == k) for k in ("done", "cand", "new")}
-        extra = "・".join(f"{lab}{cnt[k]}本" for k, lab in (("done", "確かめられた"), ("cand", "昇格の候補"),
+        extra = "・".join(f"{lab}{cnt[k]}本" for k, lab in (("done", "基準を満たした"), ("cand", "過去のデータの確認を通過"),
                                                               ("new", "集計待ち")) if cnt[k])
         parts.append(f'<details class="rm-det"><summary><strong>{_e(th["title"])}</strong>（{len(th["rows"])}本'
                      f'{"：" + extra if extra else ""}）</summary>'
@@ -402,7 +431,9 @@ def build_pane(root=".", model=None):
     parts.append('<h3 style="margin-top:28px">③ 出口（利確・損切り）の研究</h3>'
                  '<p class="rm-desc">入るところは同じでも、利確と損切りの置き方で成績は変わります。'
                  '過去のデータでよさそう（または悪そう）に見えた置き方を登録し、その後のデータでも同じかを確かめています。'
-                 '組み合わせをたくさん試したぶん、偶然よく見えただけの可能性があるので、判定は100件たまってからです。</p>')
+                 '組み合わせをたくさん試したぶん、偶然よく見えただけの可能性があるので、判定は100件たまってからです。'
+                 '「いまの方式」とは、このサイトがシグナルの記録を採点するときに使っている決まった置き方で、'
+                 '損切りをATR（値動きの平均的な幅）の1.5倍、利確を2.0倍の位置に置きます。</p>')
     if not m["exits"]:
         parts.append('<p class="rm-desc">いま前向きに確かめている出口の研究はありません。</p>')
     for x in m["exits"]:
@@ -447,7 +478,9 @@ def build_pane(root=".", model=None):
             f'{rows}</table></div></details>')
 
     parts.append('<p style="font-size:.82rem;color:#8b949e;margin-top:22px">'
-                 '※ この一覧は研究の進み具合の記録です。「確かめられた」となった仮説も、特定の取引や銘柄の売買をすすめるものではありません。'
+                 '※ この一覧は研究の進み具合の記録です。「基準を満たした」仮説も、特定の取引や銘柄の売買をすすめるものではありません。'
+                 '採点は、シグナルを決まったルールで機械的に記録した仮想の結果で、実際の取引ではありません'
+                 '（手数料や価格の滑りなど、実際の取引で生じる差は十分には反映されていません）。'
                  '過去や途中の成績は、これからの成績を約束するものではありません。投資の判断はご自身の責任でお願いします。</p>\n</div>')
     return "\n".join(parts)
 

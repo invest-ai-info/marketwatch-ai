@@ -103,6 +103,24 @@ def test_track_record_page_survives_broken_map():
     assert 'id="pane-map"' in pane and "作れませんでした" in pane
 
 
+def test_post_hoc_notes_point_at_real_ids_and_are_shown():
+    # 注記の id の打ち間違いで注記が黙って消えないように（2026-09-26 法務チェック G3）
+    reg = {s["id"] for name in dir(T) if name.isupper() for v in [getattr(T, name)]
+           if isinstance(v, dict) and isinstance(v.get("register"), list) for s in v["register"]}
+    wall = set((json.load(open(R.WALL_LAB, encoding="utf-8")).get("forward") or {}))
+    assert set(R.POST_HOC_NOTES) <= reg | wall
+    html = R.build_pane()
+    assert "約50の区分を調べて見つかった1つ" in html
+
+
+def test_wording_avoids_assertive_labels():
+    # 法務チェック（2026-09-26）: 断定に読める「確かめられた」「避けたほうがよい」を表示に出さない
+    html = R.build_pane()
+    assert "確かめられた" not in html and "避けたほうがよい" not in html
+    assert R.verdict_plain("確かめられた・効きやすい").startswith("厳しい基準を満たした")
+    assert "確かめられた" not in R.verdict_plain("確かめられた・効きにくい")
+
+
 def test_plain_japanese_only_indicator_names_remain():
     # やさしい日本語の検査で残してよいのは、説明を付けた指標名 ADX だけ（ほかの規則の指摘は 0 件）
     found = C.check_html("<html><head><title>いま検証中のこと</title></head><body><main>"
