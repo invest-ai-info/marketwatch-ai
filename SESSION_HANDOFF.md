@@ -7,7 +7,7 @@
   - `_local_edits.py`＝触らなかったファイルの「いちばん近い GitHub の版 → ローカル」の差分を書き出す。`--take` は、統合後の GitHub 版にローカルで書き足した行が1行残らず入っていることを確かめてから置き換える。
 - **統合した手元の作業**（9/23〜24 の手元のセッションの分。GitHub に送られていなかった）＝下の「9/24 夜」〜「9/23: mw check」の5節／CLAUDE.md の3行（`apply_site_frame.py`・`check_plain_japanese.py`）／`check_site_consistency.py` の 9/23 の変更（CLOUD_PREFIXES に tse/scam/company・台帳 `_cloud_ledger.txt`・SYNC_FORBIDDEN を未登録エラーから外す・免責三層のクラウド除外を撤去）。競合は2か所＝この引き継ぎの先頭（日付順に並べた）／免責三層のクラウド除外（9/22 の GitHub 版は除外あり→9/23 の手元の判断＝外す側を採った）。
 - ⚠️ `_pull_latest_zip.py --register` で 53本を手元の SYNC_FILES に入れたが、クラウドの記事は SYNC 外（CLAUDE.md）＝ **`_local_edits.py --take` がその塊を外し、代わりに `_cloud_ledger.txt` を ZIP のクラウドスタブから書き直す**。
-- **オーナー判断待ち**＝`MY_TRADING_RULES.md`（手元は 6/19 の大改訂版・GitHub は 6/7 版のまま＝3か月送られていない）。次の sync で公開リポジトリに載る。
+- ✅ `MY_TRADING_RULES.md`（手元は 6/19 の大改訂版・GitHub は 6/7 版のまま＝3か月送られていなかった）＝**オーナー判断「送る」**（公開リポジトリで誰でも読めることは説明済み）。手元の差分（+132/−24）から復元して Claude が反映＝手元で sync しなくてよい（API が不調だったため）。
 
 ## 🔁 2026-09-26: 幅の出し方を安全側へ切り替え（オーナー決定「安全側の計算に切り替えて」）
 - `exit_rule_backtest._mean_se` を保守版（V1+V2−V12・V1・V2・V12 の最大＝`_mean_se_safe`）に切り替えた。旧は `_mean_se_legacy`（`exit_lab.py --legacy-se` で比べる時だけ）。**出口の相性ラボ・環境の相性ラボ・出口の仮説の前向き（evaluate_forward）がすべて安全側になる**。「目立つ」の3条件そのものは変えていない
