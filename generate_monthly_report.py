@@ -7,7 +7,7 @@ guide-monthly-report-YYYY-MM.html として配置する。
 
 データソース:
 - signals-log.json: 先月のシグナル発火履歴
-- my-trades.json:   先月のユーザー実取引
+（実取引＝my-trades.json の欄は 2026-09-26 に廃止＝オーナー判断「続けて記録できないので消す」）
 
 使い方:
     python generate_monthly_report.py            # 月初 (1〜3 日) のみ実行
@@ -31,7 +31,6 @@ from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2�
 
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
-TRADES_FILE = "my-trades.json"
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -160,42 +159,14 @@ def summarize_signals(signals, month_start, month_end):
     }
 
 
-def summarize_trades(trades, month_start, month_end):
-    in_month = []
-    for t in trades:
-        e_dt = _parse_iso(t.get("entry_at"))
-        x_dt = _parse_iso(t.get("exit_at"))
-        if (e_dt and month_start <= e_dt < month_end) or \
-           (x_dt and month_start <= x_dt < month_end):
-            in_month.append(t)
-
-    closed = [t for t in in_month if t.get("status") == "closed"]
-    wins = sum(1 for t in closed if (t.get("pnl_pct") or 0) > 0)
-    losses = sum(1 for t in closed if (t.get("pnl_pct") or 0) < 0)
-    total_pnl_pct = sum((t.get("pnl_pct") or 0) for t in closed)
-    best = max(closed, key=lambda t: t.get("pnl_pct") or 0, default=None)
-    worst = min(closed, key=lambda t: t.get("pnl_pct") or 0, default=None)
-
-    return {
-        "total": len(in_month),
-        "closed": len(closed),
-        "wins": wins,
-        "losses": losses,
-        "win_rate": round(wins / len(closed) * 100, 1) if closed else 0,
-        "total_pnl_pct": round(total_pnl_pct, 2),
-        "best": best, "worst": worst,
-        "trades": closed,
-    }
-
-
-def ai_summary(year, month, sig_stats, trade_stats, api_key):
+def ai_summary(year, month, sig_stats, api_key):
     """Gemini で「今月の総評」を生成"""
     if not api_key:
-        return _fallback_summary(sig_stats, trade_stats)
+        return _fallback_summary(sig_stats)
     try:
         import google.generativeai as genai
     except ImportError:
-        return _fallback_summary(sig_stats, trade_stats)
+        return _fallback_summary(sig_stats)
     genai.configure(api_key=api_key)
 
     # 信頼度・環境スコアごとの勝率
@@ -212,8 +183,8 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
         for k, v in sorted(tfw.items()) if v.get("total")
     ) or "データなし"
 
-    prompt = f"""あなたは日本人個人投資家（サラリーマン × 4H スイング × MT4）向けの投資メディア編集長です。
-{year}年{month}月の AI シグナルと実取引データから、月次成績レポートの中核セクションを執筆してください。
+    prompt = f"""あなたは日本人個人投資家（4H スイング × MT4）向けの投資メディア編集長です。
+{year}年{month}月の AI シグナルのデータから、月次成績レポートの中核セクションを執筆してください。
 
 【シグナル統計】
 - 発火数: {sig_stats['total']} 件（4H {sig_stats['by_tf'].get('4h', 0)} / 1H {sig_stats['by_tf'].get('1h', 0)}）
@@ -224,9 +195,6 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
 - 環境スコア別 勝率: {env_wr}
 - ベスト銘柄: {top_winner[0] if top_winner[0] else "なし"}（勝-負 = {(top_winner[1] or {{}}).get("wins", 0) - (top_winner[1] or {{}}).get("sl", 0) if top_winner[1] else 0}）
 - ワースト銘柄: {top_loser[0] if top_loser[0] else "なし"}（勝-負 = {(top_loser[1] or {{}}).get("wins", 0) - (top_loser[1] or {{}}).get("sl", 0) if top_loser[1] else 0}）
-
-【実取引】
-- 取引数: {trade_stats['closed']} 件 / 勝率: {trade_stats['win_rate']}% / 通算 P&L: {trade_stats['total_pnl_pct']}%
 
 【執筆要件】（必ず守る）
 - 「今月のハイライト」を 1 段落 (200-250 字): 数値を必ず引用、定量的な発見を最低 2 つ含める。例「{month}月は HIGH スコア勝率 {{HIGH_WR}} が MID {{MID_WR}} を 20pt 上回り、信頼度スコアの予測力が確認された月となった」
@@ -263,18 +231,17 @@ def ai_summary(year, month, sig_stats, trade_stats, api_key):
                 return text
         except Exception:
             continue
-    return _fallback_summary(sig_stats, trade_stats)
+    return _fallback_summary(sig_stats)
 
 
-def _fallback_summary(sig_stats, trade_stats):
+def _fallback_summary(sig_stats):
     if sig_stats["closed"] == 0:
         return "今月は確定したシグナルが少なく、月次集計に十分なデータがありません。来月以降の蓄積に期待します。"
     return f"""今月のシグナル勝率は {sig_stats['win_rate']}%、期待 R は {sig_stats['expected_r']:+.2f}R でした。
-確定 {sig_stats['closed']} 件のうち、TP1 {sig_stats['tp1']} / TP2 {sig_stats['tp2']} / SL {sig_stats['sl']}。
-実取引は {trade_stats['closed']} 件・勝率 {trade_stats['win_rate']}%・通算 {trade_stats['total_pnl_pct']:+.2f}% でした。"""
+確定 {sig_stats['closed']} 件のうち、TP1 {sig_stats['tp1']} / TP2 {sig_stats['tp2']} / SL {sig_stats['sl']}。"""
 
 
-def render_html(year, month, today, sig_stats, trade_stats, summary_text):
+def render_html(year, month, today, sig_stats, summary_text):
     month_str = f"{year}-{month:02d}"
     today_jp = today.strftime("%Y年%m月%d日")
 
@@ -333,16 +300,6 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
                            f'<td style="text-align:right;color:{color};font-weight:700">{wr:.1f}%</td></tr>')
     ticker_html = "\n".join(ticker_rows) or '<tr><td colspan="5" style="text-align:center;color:#6e7781">確定シグナルなし</td></tr>'
 
-    # 実取引ベスト/ワースト
-    best_html = "—"
-    worst_html = "—"
-    if trade_stats["best"]:
-        b = trade_stats["best"]
-        best_html = f'<b>{b.get("symbol")}</b> ({b.get("direction","")[:1]}): <span style="color:#1a7f37;font-weight:700">{b.get("pnl_pct"):+.2f}%</span>'
-    if trade_stats["worst"]:
-        w = trade_stats["worst"]
-        worst_html = f'<b>{w.get("symbol")}</b> ({w.get("direction","")[:1]}): <span style="color:#cf222e;font-weight:700">{w.get("pnl_pct"):+.2f}%</span>'
-
     # 総評を HTML 化
     summary_parts = []
     for para in summary_text.split("\n\n"):
@@ -356,7 +313,6 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
             summary_parts.append(f"<p>{para}</p>")
     summary_html = "\n".join(summary_parts)
 
-    pnl_color = "#1a7f37" if trade_stats["total_pnl_pct"] >= 0 else "#cf222e"
     wr_color = "#1a7f37" if sig_stats["win_rate"] >= 60 else "#9a6700" if sig_stats["win_rate"] >= 45 else "#cf222e"
 
     return f"""<!DOCTYPE html>
@@ -369,11 +325,11 @@ def render_html(year, month, today, sig_stats, trade_stats, summary_text):
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="robots" content="noindex,follow"><!-- 自動生成の月次成績レポート：インデックス除外（AdSense低価値対策） -->
 <title>📊 {year}年{month}月 AI トレード成績レポート｜MarketWatch AI</title>
-<meta name="description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、実取引と AI 総評。">
+<meta name="description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、AI 総評。">
 <link rel="canonical" href="https://marketwatch-jp.com/guide-monthly-report-{month_str}.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="📊 {year}年{month}月 AI トレード成績レポート｜MarketWatch AI">
-<meta property="og:description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、実取引と AI 総評。">
+<meta property="og:description" content="{year}年{month}月の MarketWatch AI シグナル成績を完全公開。月間勝率・期待 R・信頼度別・環境スコア別・銘柄別を集計、AI 総評。">
 <meta property="og:url" content="https://marketwatch-jp.com/guide-monthly-report-{month_str}.html">
 <meta property="og:site_name" content="MarketWatch AI">
 <meta property="og:locale" content="ja_JP">
@@ -456,16 +412,6 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
   <div class="kpi"><div class="kpi-num" style="color:{'#1a7f37' if sig_stats['expected_r'] > 0 else '#cf222e'}">{sig_stats['expected_r']:+.2f}R</div><div class="kpi-label">期待 R</div></div>
 </div>
 
-<h2>💼 実取引 サマリ</h2>
-<div class="kpi-grid">
-  <div class="kpi"><div class="kpi-num">{trade_stats['closed']}</div><div class="kpi-label">クローズ取引</div></div>
-  <div class="kpi"><div class="kpi-num up">{trade_stats['wins']}</div><div class="kpi-label">勝ち</div></div>
-  <div class="kpi"><div class="kpi-num down">{trade_stats['losses']}</div><div class="kpi-label">負け</div></div>
-  <div class="kpi"><div class="kpi-num" style="color:{wr_color}">{trade_stats['win_rate']:.1f}%</div><div class="kpi-label">実取引勝率</div></div>
-  <div class="kpi"><div class="kpi-num" style="color:{pnl_color}">{trade_stats['total_pnl_pct']:+.2f}%</div><div class="kpi-label">通算 P&L</div></div>
-</div>
-<p>🥇 ベスト取引: {best_html}　／　🥶 ワースト取引: {worst_html}</p>
-
 <h2>⏱️ 時間足別 勝率（月間勝率の内訳）</h2>
 <p style="font-size:.9rem;color:#57606a">上部の月間勝率は <b>4H（メール配信＝実運用の商品）</b> と <b>1H（メール送信なし＝実験・データ収集）</b> の<b>混在値</b>です。実運用の実力は下表の <b>4H の行</b>でご確認ください。</p>
 <table>
@@ -495,7 +441,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 {summary_html}
 
 <div class="info-box">
-本レポートは <a href="track-record.html">🧪 シグナル研究のページ</a> と同じデータソース（signals-log.json + my-trades.json）から月次集計したものです。詳細な日別・時間帯別分析はダッシュボード側でご確認ください。
+本レポートは <a href="track-record.html">🧪 シグナル研究のページ</a> と同じデータソース（signals-log.json）から月次集計したものです。詳細な日別・時間帯別分析はダッシュボード側でご確認ください。
 </div>
 
 <div class="warning-box">
@@ -541,19 +487,17 @@ def main():
         return
 
     signals = load_json(SIGNALS_LOG_FILE, [])
-    trades = load_json(TRADES_FILE, [])
     n_all = len(signals)
     signals = [s for s in signals if not is_weekend_closed_fire(s)]
     print(f"  📒 週末閉場中の発火 {n_all - len(signals)} 件を集計から除外")
 
     sig_stats = summarize_signals(signals, month_start, month_end)
-    trade_stats = summarize_trades(trades, month_start, month_end)
-    print(f"  📊 シグナル {sig_stats['total']} / 確定 {sig_stats['closed']} / 勝率 {sig_stats['win_rate']}% / 実取引 {trade_stats['closed']} / P&L {trade_stats['total_pnl_pct']}%")
+    print(f"  📊 シグナル {sig_stats['total']} / 確定 {sig_stats['closed']} / 勝率 {sig_stats['win_rate']}%")
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
-    summary_text = ai_summary(target_year, target_month, sig_stats, trade_stats, api_key)
+    summary_text = ai_summary(target_year, target_month, sig_stats, api_key)
 
-    html = render_html(target_year, target_month, today, sig_stats, trade_stats, summary_text)
+    html = render_html(target_year, target_month, today, sig_stats, summary_text)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  ✅ {filename}: 生成完了 ({os.path.getsize(filepath) / 1024:.1f} KB)")

@@ -7,7 +7,7 @@ guide-weekly-review-YYYY-MM-DD.html として配置する。
 
 データソース:
 - signals-log.json: 過去 7 日のシグナル発火履歴
-- my-trades.json:   過去 7 日のユーザー実取引
+（実取引＝my-trades.json の欄は 2026-09-26 に廃止＝オーナー判断「続けて記録できないので消す」）
 - economic-events.json: 来週の重要指標
 
 使い方:
@@ -25,7 +25,6 @@ from apply_site_frame import FRAME_STYLE_TAG  # サイト共通の枠（ナビ2�
 
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
-TRADES_FILE = "my-trades.json"
 EVENTS_FILE = "economic-events.json"
 TRACKER_FILE = "signal-lab-tracker.json"  # エッジ番付の元データ（Actions実行時はrepo内に存在）
 
@@ -115,33 +114,6 @@ def summarize_signals(signals, week_start, week_end):
     }
 
 
-def summarize_trades(trades, week_start, week_end):
-    """過去 1 週間の実取引を集計"""
-    in_week = []
-    for t in trades:
-        # entry_at か exit_at どちらかが週内ならカウント
-        e_dt = _parse_iso(t.get("entry_at"))
-        x_dt = _parse_iso(t.get("exit_at"))
-        if (e_dt and week_start <= e_dt < week_end) or \
-           (x_dt and week_start <= x_dt < week_end):
-            in_week.append(t)
-
-    closed = [t for t in in_week if t.get("status") == "closed"]
-    wins = sum(1 for t in closed if (t.get("pnl_pct") or 0) > 0)
-    losses = sum(1 for t in closed if (t.get("pnl_pct") or 0) < 0)
-    total_pnl_pct = sum((t.get("pnl_pct") or 0) for t in closed)
-
-    return {
-        "total": len(in_week),
-        "closed": len(closed),
-        "wins": wins,
-        "losses": losses,
-        "win_rate": round(wins / len(closed) * 100, 1) if closed else 0,
-        "total_pnl_pct": round(total_pnl_pct, 2),
-        "trades_in_week": closed,
-    }
-
-
 def summarize_banzuke(tracker, week_start, week_end):
     """エッジ番付（signal-lab-tracker.json）の現況と直近1週間の昇進・降格を集計。
     昇降の判定はトラッカーの promoted_at / demoted_at（事前宣言ルールの自動執行）を読むだけで、
@@ -211,14 +183,14 @@ def next_week_events(events_data, week_end):
     return upcoming
 
 
-def ai_lessons(sig_stats, trade_stats, api_key):
+def ai_lessons(sig_stats, api_key):
     """Gemini で「先週の学び」セクションを生成。失敗時はテンプレ。"""
     if not api_key:
-        return _fallback_lessons(sig_stats, trade_stats)
+        return _fallback_lessons(sig_stats)
     try:
         import google.generativeai as genai
     except ImportError:
-        return _fallback_lessons(sig_stats, trade_stats)
+        return _fallback_lessons(sig_stats)
     genai.configure(api_key=api_key)
 
     # 主要シグナル種別をリストアップ
@@ -238,8 +210,8 @@ def ai_lessons(sig_stats, trade_stats, api_key):
     top_winner = max(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
     top_loser = min(by_t.items(), key=lambda x: x[1]["wins"] - x[1]["sl"], default=(None, None))
 
-    prompt = f"""あなたは日本人個人投資家（サラリーマン × 4H スイング × MT4）向けの投資メディアの編集者です。
-過去 1 週間の AI シグナル成績と実取引データを読み取り、「振り返り記事の核心セクション」を執筆してください。
+    prompt = f"""あなたは日本人個人投資家（4H スイング × MT4）向けの投資メディアの編集者です。
+過去 1 週間の AI シグナル成績を読み取り、「振り返り記事の核心セクション」を執筆してください。
 
 【シグナル統計】
 - 発火数: {sig_stats['total']} 件（4H {sig_stats['by_tf'].get('4h', 0)} / 1H {sig_stats['by_tf'].get('1h', 0)}）
@@ -249,9 +221,6 @@ def ai_lessons(sig_stats, trade_stats, api_key):
 - 主要シグナル種別: {dict(sig_types)}
 - ベスト銘柄: {top_winner[0] if top_winner[0] else "なし"} (勝-負 = {(top_winner[1] or {{}}).get("wins", 0) - (top_winner[1] or {{}}).get("sl", 0) if top_winner[1] else 0})
 - ワースト銘柄: {top_loser[0] if top_loser[0] else "なし"} (勝-負 = {(top_loser[1] or {{}}).get("wins", 0) - (top_loser[1] or {{}}).get("sl", 0) if top_loser[1] else 0})
-
-【実取引】
-- 取引数: {trade_stats['closed']} 件 / 勝率: {trade_stats['win_rate']}% / 通算 P&L: {trade_stats['total_pnl_pct']}%
 
 【執筆要件】（必ず守ること）
 - 「先週の総評」を 1 段落 (200 字程度): 数値を必ず引用、感想ではなく事実に基づく分析。例「勝率 65% は前週から +5pt 改善、これは HIGH スコアシグナルが 3/3 で TP1 到達したことが寄与」
@@ -285,7 +254,7 @@ def ai_lessons(sig_stats, trade_stats, api_key):
                 return text
         except Exception:
             continue
-    return _fallback_lessons(sig_stats, trade_stats)
+    return _fallback_lessons(sig_stats)
 
 
 # 🚨 2026-08-01 追加＝このレーンだけコンプラゲートが無く、Gemini 出力が無審査で公開されていた。
@@ -305,7 +274,7 @@ from compliance_gate import (  # noqa: E402  (定義位置を動かさないた�
 )
 
 
-def _fallback_lessons(sig_stats, trade_stats):
+def _fallback_lessons(sig_stats):
     """Gemini 失敗時／コンプラゲートで弾かれた時の決定論テンプレ"""
     if sig_stats["closed"] == 0:
         return "今週はまだ確定したシグナルが少なく、振り返り集計には十分なデータがありません。来週以降の蓄積に期待します。"
@@ -315,7 +284,7 @@ def _fallback_lessons(sig_stats, trade_stats):
 信頼度スコア HIGH のシグナルがどれだけ勝てているか、引き続き観察していきます。"""
 
 
-def render_html(today, week_start, week_end, sig_stats, trade_stats, events, lessons_text, banzuke=None):
+def render_html(today, week_start, week_end, sig_stats, events, lessons_text, banzuke=None):
     """振り返り記事 HTML を組み立て"""
     week_start_str = week_start.strftime("%Y-%m-%d")
     week_end_str = (week_end - timedelta(days=1)).strftime("%Y-%m-%d")
@@ -344,17 +313,6 @@ def render_html(today, week_start, week_end, sig_stats, trade_stats, events, les
                            f'<td style="text-align:right;color:#cf222e">{d["sl"]}</td>'
                            f'<td style="text-align:right;font-weight:700">{net:+d}</td></tr>')
     ticker_html = "\n".join(ticker_rows) or '<tr><td colspan="4" style="text-align:center;color:#6e7781">確定シグナルなし</td></tr>'
-
-    # 取引テーブル
-    trade_rows = []
-    for t in trade_stats["trades_in_week"]:
-        pnl = t.get("pnl_pct") or 0
-        color = "#1a7f37" if pnl > 0 else "#cf222e"
-        trade_rows.append(f'<tr><td>{(t.get("entry_at","")[:10])}</td>'
-                          f'<td><b>{t.get("symbol","")}</b></td>'
-                          f'<td>{t.get("direction","")[:1]}</td>'
-                          f'<td style="text-align:right;color:{color};font-weight:700">{pnl:+.2f}%</td></tr>')
-    trade_html = "\n".join(trade_rows) or '<tr><td colspan="4" style="text-align:center;color:#6e7781">今週は記録された実取引なし</td></tr>'
 
     # 来週イベント
     event_rows = []
@@ -490,12 +448,6 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 </table>
 {render_banzuke_section(banzuke)}
 
-<h2>💼 先週の実取引</h2>
-<table>
-  <thead><tr><th>日付</th><th>銘柄</th><th>方向</th><th style="text-align:right">P&L</th></tr></thead>
-  <tbody>{trade_html}</tbody>
-</table>
-<div class="info-box">確定 {trade_stats['closed']} 件 / 勝率 {trade_stats['win_rate']}% / 通算 {trade_stats['total_pnl_pct']:+.2f}%</div>
 <p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 確定数が少ない場合、勝率の統計的信頼性は限定的です。過去の結果は将来の取引成績を保証しません。本ページは情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</p>
 
 <h2>💡 先週の総評と教訓</h2>
@@ -508,7 +460,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 </table>
 
 <div class="warning-box">
-本記事は月曜朝に自動生成された週次レポートです。シグナル統計は signals-log.json と my-trades.json を機械的に集計したもので、実際の投資判断は <a href="track-record.html">🧪 シグナル研究</a> も合わせてご確認ください。投資は自己責任で。
+本記事は月曜朝に自動生成された週次レポートです。シグナル統計は signals-log.json を機械的に集計したもので、実際の投資判断は <a href="track-record.html">🧪 シグナル研究</a> も合わせてご確認ください。投資は自己責任で。
 </div>
 
 </article>
@@ -547,23 +499,21 @@ def main():
         return
 
     signals = load_json(SIGNALS_LOG_FILE, [])
-    trades = load_json(TRADES_FILE, [])
     events_data = load_json(EVENTS_FILE, {"events": []})
     n_all = len(signals)
     signals = [s for s in signals if not is_weekend_closed_fire(s)]
-    print(f"  📒 signals: {len(signals)}（週末閉場中 {n_all - len(signals)} 件除外） / trades: {len(trades)} / events: {len(events_data.get('events') or [])}")
+    print(f"  📒 signals: {len(signals)}（週末閉場中 {n_all - len(signals)} 件除外） / events: {len(events_data.get('events') or [])}")
 
     sig_stats = summarize_signals(signals, last_monday, this_monday)
-    trade_stats = summarize_trades(trades, last_monday, this_monday)
     events = next_week_events(events_data, this_monday)
     banzuke = summarize_banzuke(load_json(TRACKER_FILE, {}), last_monday, this_monday)
     print(f"  📊 先週シグナル {sig_stats['total']} / 確定 {sig_stats['closed']} / 勝率 {sig_stats['win_rate']}%"
           + (f" / 番付 幕内{banzuke['n_makuuchi']}・昇降 {len(banzuke['ups'])+len(banzuke['downs'])}件" if banzuke else " / 番付データなし"))
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
-    lessons_text = ai_lessons(sig_stats, trade_stats, api_key)
+    lessons_text = ai_lessons(sig_stats, api_key)
 
-    html = render_html(today, last_monday, this_monday, sig_stats, trade_stats, events, lessons_text, banzuke)
+    html = render_html(today, last_monday, this_monday, sig_stats, events, lessons_text, banzuke)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  ✅ {filename}: 生成完了 ({os.path.getsize(filepath) / 1024:.1f} KB)")
