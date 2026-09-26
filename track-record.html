@@ -7,11 +7,11 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>📊 シグナル品質トラッキング - MarketWatch AI</title>
-  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。サラリーマン投資家の実取引ログも公開。">
+  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。登録した仮説の、その後の成績も公開。">
   <link rel="canonical" href="https://marketwatch-jp.com/track-record.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="📊 シグナル品質トラッキング - MarketWatch AI">
-  <meta property="og:description" content="4H テクニカルシグナルの的中率・実取引ログを完全公開。AI 投資の透明性を追求。">
+  <meta property="og:description" content="4H テクニカルシグナルの的中率を完全公開。AI 投資の透明性を追求。">
   <meta property="og:url" content="https://marketwatch-jp.com/track-record.html">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
@@ -107,14 +107,14 @@
 <header>
   <div class="header-inner">
     <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
-    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📊 シグナル成績</div></div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">🧪 シグナル研究</div></div>
   </div>
 </header>
 <main>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn current" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn current" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -133,8 +133,8 @@
     <h1>📊 シグナル品質トラッキング</h1>
     <div class="page-desc">
       MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
-      AI シグナルの透明性を追求し、サラリーマン投資家として実際にどう活用しているかを公開しています。
-      <span style="color:#6e7781">（最終更新: 2026-09-26 16:34 JST）</span>
+      AI シグナルの透明性を追求し、勝ちも負けもすべて記録しています。
+      <span style="color:#6e7781">（最終更新: 2026-09-26 21:51 JST）</span>
     </div>
   </div>
 
@@ -144,7 +144,7 @@
       <li>本ページの数値は過去シグナルを機械的に集計した <b>記録</b> であり、<b>将来の取引成績を保証するものではありません</b>。</li>
       <li>市場閉場中（土 07:00〜月 06:00 JST・24時間市場の暗号資産を除く）に発火したシグナルは、<b>古いレートに基づく記録のため集計から除外</b>しています（2026-07-11 導入・除外前の生データはページ下部のダウンロードに全件含まれます）。</li>
       <li>銘柄別・曜日別・時間帯別の勝率は <b>サンプル数（N）が少ないとブレが大きく、統計的信頼性は限定的</b> です（特に N&lt;10）。「勝率 100%」のような表示も同様です。</li>
-      <li>本ページの「⭐⭐⭐ HIGH」「🟢 推奨」等の表現は過去統計に基づく分類であり、<b>特定銘柄・時間帯への投資勧誘ではありません</b>。</li>
+      <li>本ページの「⭐⭐⭐ HIGH」等の表現は過去統計に基づく分類であり、<b>特定銘柄・時間帯への投資勧誘ではありません</b>。</li>
       <li>本ページは情報提供を目的としており、<b>投資助言ではありません</b>。<b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません</b>。投資判断はご自身の責任で行ってください。</li>
     </ul>
   </div>
@@ -155,283 +155,13 @@
     <b>R:R 期待値</b> は「リスク 1 単位あたり何倍リターンしたか」の指標で、+0.3R 以上が安定。
   </div>
 
-  
-      <div style="background:linear-gradient(135deg,#ddf4ff,#ffffff);border:1px solid #54aeff;border-radius:12px;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:1.2rem;color:#1E3A6E;margin-bottom:12px">💼 実取引ログ（サラリーマン投資家モデル）</h2>
-        <p style="font-size:.85rem;color:#57606a;margin-bottom:16px">
-          AI シグナルを参考に、平日仕事中に行った実際の取引を記録しています。
-          金額はプライバシー保護のため % 表示にしています。
-        </p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px">
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">クローズ済</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#1f2328">23</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">勝率</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#cf222e">47.8%</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">通算 P&L</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#1a7f37">+9.20%</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">オープン中</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#9a6700">0</div>
-          </div>
-        </div>
-        <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-          <thead><tr style="background:#f6f8fa;border-bottom:2px solid #d0d7de">
-            <th style="padding:8px;text-align:left">日付</th>
-            <th style="padding:8px;text-align:left">銘柄</th>
-            <th style="padding:8px">L/S</th>
-            <th style="padding:8px;text-align:right">エントリー</th>
-            <th style="padding:8px;text-align:right">クローズ</th>
-            <th style="padding:8px;text-align:right">P&L%</th>
-            <th style="padding:8px">メモ</th>
-            <th style="padding:8px">状態</th>
-          </tr></thead>
-          <tbody>
-        <tr>
-          <td style="white-space:nowrap">2026-06-04</td>
-          <td><b>nasdaq_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">30241.0</td>
-          <td style="text-align:right">30118.6</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.41%</span></td>
-          <td style="font-size:.82rem">第 23 号トレード。MT4 注文番号 28428733。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-06-04</td>
-          <td><b>n225_jpy</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">67392.9</td>
-          <td style="text-align:right">66686.1</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-1.05%</span></td>
-          <td style="font-size:.82rem">第 22 号トレード。MT4 注文番号 28428720。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-06-02</td>
-          <td><b>n225_jpy</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">65757.9</td>
-          <td style="text-align:right">65714.2</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.07%</span></td>
-          <td style="font-size:.82rem">第 21 号トレード。MT4 注文番号 28388662。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-06-01</td>
-          <td><b>gold_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">4473.24</td>
-          <td style="text-align:right">4484.24</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.25%</span></td>
-          <td style="font-size:.82rem">第 20 号トレード。MT4 注文番号 28375280。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-06-01</td>
-          <td><b>n225_jpy</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">67025.0</td>
-          <td style="text-align:right">66175.0</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-1.27%</span></td>
-          <td style="font-size:.82rem">第 19 号トレード。MT4 注文番号 28375299。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-06-01</td>
-          <td><b>gold_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">4505.94</td>
-          <td style="text-align:right">4484.35</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.48%</span></td>
-          <td style="font-size:.82rem">第 18 号トレード。MT4 注文番号 28375278。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-28</td>
-          <td><b>gbpaud</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">1.88413</td>
-          <td style="text-align:right">1.88323</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.05%</span></td>
-          <td style="font-size:.82rem">第 17 号トレード。MT4 注文番号 28330037。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-28</td>
-          <td><b>oilwti_usd</b></td>
-          <td style="text-align:center">シ</td>
-          <td style="text-align:right">89.561</td>
-          <td style="text-align:right">88.708</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.95%</span></td>
-          <td style="font-size:.82rem">第 15 号トレード。MT4 注文番号 28329939。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-28</td>
-          <td><b>sp500_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">7542.79</td>
-          <td style="text-align:right">7512.0</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.41%</span></td>
-          <td style="font-size:.82rem">第 16 号トレード。MT4 注文番号 28329815。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-27</td>
-          <td><b>euraud</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">1.62312</td>
-          <td style="text-align:right">1.62571</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.16%</span></td>
-          <td style="font-size:.82rem">第 14 号トレード。MT4 注文番号 28319764。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-27</td>
-          <td><b>btcusdt</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">75790.9</td>
-          <td style="text-align:right">75751.4</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.05%</span></td>
-          <td style="font-size:.82rem">第 13 号トレード。MT4 注文番号 28319743。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-26</td>
-          <td><b>nasdaq_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">29793.4</td>
-          <td style="text-align:right">30091.4</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+1.00%</span></td>
-          <td style="font-size:.82rem">第 12 号トレード。MT4 注文番号 28310436。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-26</td>
-          <td><b>sp500_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">7537.09</td>
-          <td style="text-align:right">7536.02</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.01%</span></td>
-          <td style="font-size:.82rem">第 11 号トレード。MT4 注文番号 28310400。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-26</td>
-          <td><b>dow30_usd</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">50989.5</td>
-          <td style="text-align:right">50616.0</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.73%</span></td>
-          <td style="font-size:.82rem">第 10 号トレード。MT4 注文番号 28310133。損</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-26</td>
-          <td><b>n225_jpy</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">65091.9</td>
-          <td style="text-align:right">65631.2</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.83%</span></td>
-          <td style="font-size:.82rem">第 7 号トレード。MT4 注文番号 28310063。損益</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-26</td>
-          <td><b>gbpjpy</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">214.47</td>
-          <td style="text-align:right">214.149</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.15%</span></td>
-          <td style="font-size:.82rem">第 9 号トレード。MT4 注文番号 28299254。損益</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-25</td>
-          <td><b>eurjpy</b></td>
-          <td style="text-align:center">シ</td>
-          <td style="text-align:right">184.918</td>
-          <td style="text-align:right">185.296</td>
-          <td style="text-align:right"><span style="color:#cf222e;font-weight:700">-0.20%</span></td>
-          <td style="font-size:.82rem">第 8 号トレード。MT4 注文番号 28295780。損益</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-21</td>
-          <td><b>ゴールド</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">4521.035</td>
-          <td style="text-align:right">4527.6</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.14%</span></td>
-          <td style="font-size:.82rem">第 6 号トレード。MT4 注文番号 28267698。ゴー</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-21</td>
-          <td><b>日経CME (NKD=F)</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">61462.9</td>
-          <td style="text-align:right">63008.2</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+2.51%</span></td>
-          <td style="font-size:.82rem">第 5 号トレード。MT4 注文番号 28267663。日経</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-21</td>
-          <td><b>原油 (CL=F)</b></td>
-          <td style="text-align:center">シ</td>
-          <td style="text-align:right">98.611</td>
-          <td style="text-align:right">96.758</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+1.88%</span></td>
-          <td style="font-size:.82rem">第 4 号トレード。MT4 注文番号 28267616。原油</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-21</td>
-          <td><b>日経CME (NKD=F)</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">61062.9</td>
-          <td style="text-align:right">63015.2</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+3.20%</span></td>
-          <td style="font-size:.82rem">第 3 号トレード。MT4 注文番号 28263396。日経</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-20</td>
-          <td><b>ゴールド</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">4462.01</td>
-          <td style="text-align:right">4560.05</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+2.20%</span></td>
-          <td style="font-size:.82rem">第 1 号トレード（AI シグナル経由）。GC=F 4H 足</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap">2026-05-19</td>
-          <td><b>BTC-USD</b></td>
-          <td style="text-align:center">ロ</td>
-          <td style="text-align:right">76827.1</td>
-          <td style="text-align:right">77564.2</td>
-          <td style="text-align:right"><span style="color:#1a7f37;font-weight:700">+0.96%</span></td>
-          <td style="font-size:.82rem">第 2 号トレード。MT4 注文番号 28229543。BT</td>
-          <td style="color:#0969da;white-space:nowrap">✅ CLOSED</td>
-        </tr></tbody>
-        </table>
-        </div>
-      </div>
 
   <div class="tab-bar">
     <button class="tab-btn" data-tab="all">🌐 全体（5837）</button>
     <button class="tab-btn active" data-tab="4h">🕓 4H 足（2171）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（3252）</button>
     <button class="tab-btn" data-tab="1d">📆 日足（414）</button>
+    <button class="tab-btn" data-tab="map">🗺️ いま検証中のこと</button>
     <button class="tab-btn" data-tab="banzuke">🏆 エッジ番付</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
@@ -3860,6 +3590,79 @@
   </table></div>
 </div>
   
+<div class="tab-pane" id="pane-map">
+  <style>
+    .rm-lead{background:#ddf4ff;border:1px solid #54aeff66;border-radius:8px;padding:14px 16px;font-size:.92rem;line-height:1.75;margin-bottom:18px}
+    .rm-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 22px}
+    .rm-sum div{border:1px solid #d0d7de;border-radius:8px;padding:10px 12px;background:#fff}
+    .rm-sum b{display:block;font-size:1.35rem;color:#0969da}
+    .rm-sum span{font-size:.82rem;color:#57606a}
+    .rm-theme{margin:22px 0 6px}
+    .rm-desc{font-size:.86rem;color:#57606a;margin:0 0 8px;line-height:1.7}
+    .rm-prog span{font-size:.8rem;white-space:nowrap}
+    .rm-bar{height:6px;background:#eaeef2;border-radius:3px;margin-top:4px;min-width:90px}
+    .rm-bar i{display:block;height:6px;background:#0969da;border-radius:3px}
+    .rm-new{color:#8250df;font-weight:700} .rm-cand{color:#9a6700;font-weight:700} .rm-done{color:#1a7f37;font-weight:700}
+    .rm-sub{font-size:.78rem;color:#8b949e}
+    .rm-det{border:1px solid #d0d7de;border-radius:8px;padding:10px 14px;margin:0 0 10px;background:#fff}
+    .rm-det summary{cursor:pointer;font-size:.93rem;line-height:1.6}
+    body.dark .rm-det{background:#161b22;border-color:#30363d}
+    @media (max-width:640px){
+      .rm-t,.rm-t tbody,.rm-t tr,.rm-t td{display:block;width:auto}
+      .rm-t tr:first-child{display:none}
+      .rm-t tr{border-top:1px solid #d0d7de;padding:8px 2px}
+      .rm-t td{border:0;padding:3px 4px;white-space:normal!important}
+      .rm-t td[data-l]::before{content:attr(data-l) "："; color:#8b949e;font-size:.78rem}
+      .rm-t td[data-l] .rm-prog{display:inline-block;vertical-align:top;min-width:60%}
+      .rm-det{padding:8px 10px}
+    }
+    .rm-card{border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;margin:0 0 12px;background:#fff}
+    body.dark .rm-lead{background:#0d1a2b;border-color:#388bfd66}
+    body.dark .rm-sum div,body.dark .rm-card{background:#161b22;border-color:#30363d}
+    body.dark .rm-sum b{color:#58a6ff} body.dark .rm-desc,body.dark .rm-sum span{color:#8b949e}
+    body.dark .rm-bar{background:#30363d} body.dark .rm-bar i{background:#58a6ff}
+  </style>
+  <h2>🗺️ いま検証中のこと</h2>
+  <div class="rm-lead">
+    当サイトが<strong>いま何を確かめているか</strong>を1か所にまとめた一覧です。新しい検証を始めると自動でここに加わり、
+    終わると下の「終わった検証」へ移ります（仮説の一覧の基準日：2026-09-26）。<br>
+    どの検証も、<strong>登録した日より後に出たシグナルだけ</strong>で採点します。登録した条件と日付は記録に残し、あとから都合のよい条件に選び直さないきまりにしています。
+    ここに並ぶ仮説は過去のデータを見て見つけた条件なので、偶然よく見えただけのものも多く含まれ、大半は判定で外れます。
+    条件がめったに起きない仮説は、判定までに何か月〜何年もかかります。判定の前に途中の数字だけで結論を出さないのが、この研究のきまりです。
+    確かめ方のきまりと数字の読み方は、<a href="guide-how-we-research.html">🧭 はじめての方へ</a>で説明しています。
+  </div>
+  <div class="rm-sum">
+    <div><b>57本</b><span>前向きに追っている仮説</span></div>
+    <div><b>4件</b><span>出口（利確・損切り）の研究</span></div>
+    <div><b>50区分</b><span>毎月数え直す相場の環境</span></div>
+    <div><b>9本</b><span>終わった検証（記録は残す）</span></div>
+  </div>
+  <h3>① 定期的に回している研究</h3>
+  <div class="scroll-x"><table class="rm-t"><tr><th>研究</th><th>いつ</th><th>何をしているか</th></tr>
+<tr><td><strong>🧪 AIシグナル研究日誌</strong></td><td data-l="いつ" style="white-space:nowrap">毎朝</td><td>過去のシグナルを使って「こういう場面だけに絞ったら成績は変わるか」を1日に1つ確かめ、記事にしています。 <a href="guides.html#cat-lab">記事の一覧へ →</a></td></tr>
+<tr><td><strong>🏆 仮説の前向きの採点（番付）</strong></td><td data-l="いつ" style="white-space:nowrap">毎日</td><td>登録した仮説を、登録した日より後に出たシグナルだけで採点しています。下の「仮説の前向きの採点」がその一覧です。 <a href="#banzuke">🏆 エッジ番付のタブへ →</a></td></tr>
+<tr><td><strong>🚪 出口の研究（利確と損切りの置き方）</strong></td><td data-l="いつ" style="white-space:nowrap">毎週日曜</td><td>過去の長い値動きで、利確・損切りの置き方を変えると成績がどう変わるかを比べ、よさそうに見えたものは登録して、その後のデータで確かめています。</td></tr>
+<tr><td><strong>🌡️ 相場の環境の統計</strong></td><td data-l="いつ" style="white-space:nowrap">毎月2日</td><td>シグナルが効いたとき・効かなかったときに、相場がどんな環境だったかを、毎月同じ物差しで数え直しています。</td></tr>
+</table></div>
+<h3 style="margin-top:28px">② 仮説の前向きの採点</h3><p class="rm-desc">「どんな場面で出たシグナルか」を仮説として登録し、その場面のシグナルが「勝ちやすいか（記録上の損益の平均がプラスか）」「負けやすいか（マイナスか）」を確かめています。売買のタイミングや銘柄を示すものではありません。決まった件数がたまるごとに判定し、基準を2回続けて満たすと昇格、反対の結果が出ると終わりになります。成績の数字は <a href="#banzuke">🏆 エッジ番付</a> のタブで見られます。</p>
+<p class="rm-desc">表に出てくる言葉：ADX（トレンドの強さを表す指標。数字が大きいほどトレンドが強い）／VIX（米国株の先行きへの不安の大きさを表す指数。恐怖指数とも呼ばれる）／RSI（相対力指数：買われすぎ・売られすぎの目安。70以上は買われすぎ、30以下は売られすぎ）／MACD（2本の移動平均線の差から、値動きの勢いを見る指標）／ボリンジャーバンド（値動きのふだんの幅を表す線。−2σは下の線、+2σは上の線）</p>
+<h4 class="rm-theme">🆕 最近始めた検証（直近30日に登録・8本）</h4><div class="scroll-x"><table class="rm-t"><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr><tr><td><strong>目標の手前に壁ありの順張り</strong><br><span class="rm-sub">⚠️ 結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_blocked</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>トレンドが弱いとき（ADX20未満）の順張り</strong><br><span class="rm-sub">対になる仮説「トレンドが強いとき（ADX25以上）の順張り」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_adx_weak</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>トレンドが強いとき（ADX25以上）の順張り</strong><br><span class="rm-sub">対になる仮説「トレンドが弱いとき（ADX20未満）の順張り」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_adx_strong</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>市場が落ち着いているとき（VIX15未満）の逆張り買い</strong><br><span class="rm-sub">対になる仮説「市場が不安なとき（VIX25以上）の逆張り買い」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_mr_vix_low</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>市場が不安なとき（VIX25以上）の逆張り買い</strong><br><span class="rm-sub">対になる仮説「市場が落ち着いているとき（VIX15未満）の逆張り買い」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_mr_vix_high</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>為替（FX）の逆張り買い（日足のみ）</strong><br><span class="rm-sub">⚠️ 結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_fx_mr_1d</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>ファンダの見立てと逆向きのシグナル（買いも売りも）</strong><br><span class="rm-sub">対になる仮説「ファンダの見立てと同じ向きのシグナル（買いも売りも）」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">ep_fbias_mismatch</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>ファンダの見立てと同じ向きのシグナル（買いも売りも）</strong><br><span class="rm-sub">対になる仮説「ファンダの見立てと逆向きのシグナル（買いも売りも）」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">ep_fbias_aligned</span></td><td data-l="確かめていること">比べる相手（対照）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr></table></div>
+<h4 class="rm-theme">📂 テーマ別の一覧（すべての仮説・クリックで開く）</h4>
+<details class="rm-det"><summary><strong>🌦️ 相場の環境で、効き方が変わるか</strong>（7本：集計待ち6本）</summary><p class="rm-desc" style="margin-top:8px">同じシグナルでも、相場が落ち着いているとき・荒れているとき・ニュースが多いとき・ファンダ（経済や政治の材料）の見立てと向きが合っているかどうかで、成績が変わるかを確かめています。</p><div class="scroll-x"><table class="rm-t"><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr><tr><td><strong>トレンドが弱いとき（ADX20未満）の順張り</strong><br><span class="rm-sub">対になる仮説「トレンドが強いとき（ADX25以上）の順張り」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_adx_weak</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>トレンドが強いとき（ADX25以上）の順張り</strong><br><span class="rm-sub">対になる仮説「トレンドが弱いとき（ADX20未満）の順張り」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_adx_strong</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>市場が落ち着いているとき（VIX15未満）の逆張り買い</strong><br><span class="rm-sub">対になる仮説「市場が不安なとき（VIX25以上）の逆張り買い」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_mr_vix_low</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>市場が不安なとき（VIX25以上）の逆張り買い</strong><br><span class="rm-sub">対になる仮説「市場が落ち着いているとき（VIX15未満）の逆張り買い」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 事前に決めた基準には届かなかった候補の登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_mr_vix_high</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>ファンダの見立てと逆向きのシグナル（買いも売りも）</strong><br><span class="rm-sub">対になる仮説「ファンダの見立てと同じ向きのシグナル（買いも売りも）」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">ep_fbias_mismatch</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>ファンダの見立てと同じ向きのシグナル（買いも売りも）</strong><br><span class="rm-sub">対になる仮説「ファンダの見立てと逆向きのシグナル（買いも売りも）」と並べて、差を見ます</span><br><span class="rm-sub">⚠️ 結果を見たあとの登録（約50の区分を調べて見つかった1つ。偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">ep_fbias_aligned</span></td><td data-l="確かめていること">比べる相手（対照）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>関連ニュースなしのシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-08-11</span> <span class="meta-line rm-sub">news_zero_edge</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>367回／次の判定 400回</span><div class="rm-bar"><i style="width:92%"></i></div></div></td></tr></table></div></details>
+<details class="rm-det"><summary><strong>🧩 指標の状態・組み合わせ</strong>（12本：過去のデータの確認を通過3本）</summary><p class="rm-desc" style="margin-top:8px">RSI（買われすぎ・売られすぎの目安）や移動平均線などの指標がどんな状態のときに出たシグナルか、2つのシグナルが同時に出たときはどうか、を確かめています。</p><div class="scroll-x"><table class="rm-t"><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr><tr><td><strong>下降トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-08-18</span> <span class="meta-line rm-sub">auto_rsi_band-ob_trend-下降</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>24回／次の判定 80回</span><div class="rm-bar"><i style="width:30%"></i></div></div></td></tr><tr><td><strong>上昇トレンド中、RSI30以下（売られすぎ）のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-08-11</span> <span class="meta-line rm-sub">auto_rsi_band-os_trend-上昇</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>71回／次の判定 80回</span><div class="rm-bar"><i style="width:89%"></i></div></div></td></tr><tr><td><strong>上昇トレンド中、値段が2本の移動平均線より上の買い</strong><br><span class="rm-sub">登録 2026-07-27</span> <span class="meta-line rm-sub">long_up_above_edge</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>273回／次の判定 320回</span><div class="rm-bar"><i style="width:85%"></i></div></div></td></tr><tr><td><strong>円の通貨ペア、RSI45〜55（中立）のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-07-27</span> <span class="meta-line rm-sub">jpyfx_rsimid_gate</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>98回／次の判定 160回</span><div class="rm-bar"><i style="width:61%"></i></div></div></td></tr><tr><td><strong>RSI45〜55（中立）で出た「サポート（下値の支え）での反発」</strong><br><span class="rm-sub">登録 2026-07-20</span> <span class="meta-line rm-sub">state_sb_rsimid</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>103回／次の判定 160回</span><div class="rm-bar"><i style="width:64%"></i></div></div></td></tr><tr><td><strong>上昇トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-07-20</span> <span class="meta-line rm-sub">state_rsiob_uptrend</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>109回／次の判定 120回</span><div class="rm-bar"><i style="width:91%"></i></div></div></td></tr><tr><td><strong>値段が2本の移動平均線より上の買い</strong><br><span class="rm-sub">登録 2026-07-20</span> <span class="meta-line rm-sub">state_maup_long</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>725回／次の判定 750回</span><div class="rm-bar"><i style="width:97%"></i></div></div></td></tr><tr><td><strong>値段が2本の移動平均線より下で出た「MACDのゴールデンクロス」</strong><br><span class="rm-sub">登録 2026-07-20</span> <span class="meta-line rm-sub">state_macdg_below</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>147回／次の判定 150回</span><div class="rm-bar"><i style="width:98%"></i></div></div></td></tr><tr><td><strong>RSI45〜55（中立）で出た「ボリンジャーバンド−2σタッチ」</strong><br><span class="rm-sub">登録 2026-07-20</span> <span class="meta-line rm-sub">state_bblt_rsimid</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>77回／次の判定 80回</span><div class="rm-bar"><i style="width:96%"></i></div></div></td></tr><tr><td><strong>「直近20本の高値を上抜け」と「RSI買われすぎ」が同時に出たシグナル</strong><br><span class="rm-sub">登録 2026-07-19</span> <span class="meta-line rm-sub">combo_hb_rsiob</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>70回／次の判定 80回</span><div class="rm-bar"><i style="width:88%"></i></div></div></td></tr><tr><td><strong>「ダブルボトム（二番底）」と「直近20本の高値を上抜け」が同時に出たシグナル</strong><br><span class="rm-sub">登録 2026-07-19</span> <span class="meta-line rm-sub">combo_db_hb</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>1回／次の判定 80回</span><div class="rm-bar"><i style="width:1%"></i></div></div></td></tr><tr><td><strong>「ボリンジャーバンド+2σ突破」と「RSI買われすぎ」が同時に出たシグナル</strong><br><span class="rm-sub">登録 2026-07-19</span> <span class="meta-line rm-sub">combo_bbub_rsiob</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>41回／次の判定 80回</span><div class="rm-bar"><i style="width:51%"></i></div></div></td></tr></table></div></details>
+<details class="rm-det"><summary><strong>🧱 利確までの壁・シグナルの選別ランク</strong>（6本：集計待ち1本）</summary><p class="rm-desc" style="margin-top:8px">利確の目標までの間に、値動きを止めそうな節目（壁）があるかどうか、シグナルに付けている選別ランクで成績が変わるかを確かめています。</p><div class="scroll-x"><table class="rm-t"><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr><tr><td><strong>目標の手前に壁ありの順張り</strong><br><span class="rm-sub">⚠️ 結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_tf_blocked</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>目標の手前に壁ありの売り</strong><br><span class="rm-sub">登録 2026-06-25</span> <span class="meta-line rm-sub">auto_blocked-True_direction-short</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>275回／次の判定 320回</span><div class="rm-bar"><i style="width:86%"></i></div></div></td></tr><tr><td><strong>目標の手前に壁なしの買い</strong><br><span class="rm-sub">登録 2026-06-25</span> <span class="meta-line rm-sub">auto_blocked-False_direction-long</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>2284回／次の判定 2320回</span><div class="rm-bar"><i style="width:98%"></i></div></div></td></tr><tr><td><strong>目標の手前に壁なしのシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-25</span> <span class="meta-line rm-sub">auto_blocked-False</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>2900回／次の判定 2960回</span><div class="rm-bar"><i style="width:98%"></i></div></div></td></tr><tr><td><strong>選別ランク「普通」のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_tier-neutral</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>961回／次の判定 1040回</span><div class="rm-bar"><i style="width:92%"></i></div></div></td></tr><tr><td><strong>目標の手前に壁なしの売り</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_blocked-False_direction-short</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>640回／次の判定 720回</span><div class="rm-bar"><i style="width:89%"></i></div></div></td></tr></table></div></details>
+<details class="rm-det"><summary><strong>🎯 銘柄・向き・トレンド・シグナルの種類</strong>（32本：過去のデータの確認を通過5本・集計待ち1本）</summary><p class="rm-desc" style="margin-top:8px">どの銘柄で、買いか売りか、トレンドの向き、シグナルの種類によって、勝ちやすさが違うかを確かめています。</p><div class="scroll-x"><table class="rm-t"><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr><tr><td><strong>為替（FX）の逆張り買い（日足のみ）</strong><br><span class="rm-sub">⚠️ 結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）</span><br><span class="rm-sub">登録 2026-09-26</span> <span class="meta-line rm-sub">rl_fx_mr_1d</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-new">🆕 登録したばかり（次の朝から数える）</span></td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 80回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td></tr><tr><td><strong>ビットコインのシグナル（1時間足のみ／買いも売りも）</strong><br><span class="rm-sub">登録 2026-07-27</span> <span class="meta-line rm-sub">btc_1h_gate</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>109回／次の判定 160回</span><div class="rm-bar"><i style="width:68%"></i></div></div></td></tr><tr><td><strong>「ボリンジャーバンド−2σタッチ」のシグナル（日足のみ）</strong><br><span class="rm-sub">登録 2026-07-27</span> <span class="meta-line rm-sub">bb_lower_1d_gate</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>13回／次の判定 80回</span><div class="rm-bar"><i style="width:16%"></i></div></div></td></tr><tr><td><strong>逆張り買い全般（日足のみ）</strong><br><span class="rm-sub">登録 2026-07-15</span> <span class="meta-line rm-sub">auto_reversal_long-True_tf-1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>24回／次の判定 80回</span><div class="rm-bar"><i style="width:30%"></i></div></div></td></tr><tr><td><strong>円以外の通貨ペアの逆張り買い</strong><br><span class="rm-sub">登録 2026-07-02</span> <span class="meta-line rm-sub">other_fx_revL</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>272回／次の判定 300回</span><div class="rm-bar"><i style="width:91%"></i></div></div></td></tr><tr><td><strong>買い全般（日足のみ）</strong><br><span class="rm-sub">登録 2026-07-02</span> <span class="meta-line rm-sub">long_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>118回／次の判定 160回</span><div class="rm-bar"><i style="width:74%"></i></div></div></td></tr><tr><td><strong>ビットコインのシグナル（日足のみ／買いも売りも）</strong><br><span class="rm-sub">登録 2026-07-02</span> <span class="meta-line rm-sub">btc_all_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>14回／次の判定 90回</span><div class="rm-bar"><i style="width:16%"></i></div></div></td></tr><tr><td><strong>株価指数の売り</strong><br><span class="rm-sub">登録 2026-06-30</span> <span class="meta-line rm-sub">auto_direction-short_group-index</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>236回／次の判定 240回</span><div class="rm-bar"><i style="width:98%"></i></div></div></td></tr><tr><td><strong>「移動平均線のデッドクロス」のシグナル</strong><br><span class="rm-sub">登録 2026-06-25</span> <span class="meta-line rm-sub">auto_signal-ma_dead</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>111回／次の判定 160回</span><div class="rm-bar"><i style="width:69%"></i></div></div></td></tr><tr><td><strong>全銘柄のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-25</span> <span class="meta-line rm-sub">auto_group-all</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>3634回／次の判定 3680回</span><div class="rm-bar"><i style="width:99%"></i></div></div></td></tr><tr><td><strong>「直近20本の安値を下抜け」のシグナル</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_signal-low_break</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>252回／次の判定 320回</span><div class="rm-bar"><i style="width:79%"></i></div></div></td></tr><tr><td><strong>上昇トレンド中の逆張り買い</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_reversal_long-True_trend-上昇</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>330回／次の判定 400回</span><div class="rm-bar"><i style="width:82%"></i></div></div></td></tr><tr><td><strong>株価指数の逆張り買い</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_group-index_reversal_long-True</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>254回／次の判定 320回</span><div class="rm-bar"><i style="width:79%"></i></div></div></td></tr><tr><td><strong>株価指数のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-22</span> <span class="meta-line rm-sub">auto_group-index</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>960回／次の判定 1040回</span><div class="rm-bar"><i style="width:92%"></i></div></div></td></tr><tr><td><strong>買い全般（4時間足のみ）</strong><br><span class="rm-sub">登録 2026-06-20</span> <span class="meta-line rm-sub">auto_direction-long_tf-4h</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>1023回／次の判定 1040回</span><div class="rm-bar"><i style="width:98%"></i></div></div></td></tr><tr><td><strong>もみあい中の逆張り買い</strong><br><span class="rm-sub">登録 2026-06-19</span> <span class="meta-line rm-sub">auto_reversal_long-True_trend-中立・もみあい</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>337回／次の判定 400回</span><div class="rm-bar"><i style="width:84%"></i></div></div></td></tr><tr><td><strong>ビットコインの逆張り買い</strong><br><span class="rm-sub">登録 2026-06-19</span> <span class="meta-line rm-sub">auto_group-btc_reversal_long-True</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>73回／次の判定 80回</span><div class="rm-bar"><i style="width:91%"></i></div></div></td></tr><tr><td><strong>円以外の通貨ペアの買い</strong><br><span class="rm-sub">登録 2026-06-19</span> <span class="meta-line rm-sub">auto_direction-long_group-other_fx</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>824回／次の判定 880回</span><div class="rm-bar"><i style="width:94%"></i></div></div></td></tr><tr><td><strong>ビットコインの買い</strong><br><span class="rm-sub">登録 2026-06-19</span> <span class="meta-line rm-sub">auto_direction-long_group-btc</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>212回／次の判定 240回</span><div class="rm-bar"><i style="width:88%"></i></div></div></td></tr><tr><td><strong>金・銀の逆張り買い</strong><br><span class="rm-sub">登録 2026-06-17</span> <span class="meta-line rm-sub">auto_group-metal_reversal_long-True</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>119回／次の判定 160回</span><div class="rm-bar"><i style="width:74%"></i></div></div></td></tr><tr><td><strong>金・銀のシグナル（買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-17</span> <span class="meta-line rm-sub">auto_group-metal</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>447回／次の判定 480回</span><div class="rm-bar"><i style="width:93%"></i></div></div></td></tr><tr><td><strong>下降トレンド中の売り</strong><br><span class="rm-sub">登録 2026-06-17</span> <span class="meta-line rm-sub">auto_direction-short_trend-下降</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>281回／次の判定 320回</span><div class="rm-bar"><i style="width:88%"></i></div></div></td></tr><tr><td><strong>金・銀の買い</strong><br><span class="rm-sub">登録 2026-06-17</span> <span class="meta-line rm-sub">auto_direction-long_group-metal</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>327回／次の判定 400回</span><div class="rm-bar"><i style="width:82%"></i></div></div></td></tr><tr><td><strong>売り全般（日足のみ）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">short_1d</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>46回／次の判定 80回</span><div class="rm-bar"><i style="width:58%"></i></div></div></td></tr><tr><td><strong>「RSI売られすぎからの反発」のシグナル</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">rsi_oversold_edge</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>372回／次の判定 400回</span><div class="rm-bar"><i style="width:93%"></i></div></div></td></tr><tr><td><strong>円以外の通貨ペアのシグナル（日足のみ／買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">other_fx_1d</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>50回／次の判定 60回</span><div class="rm-bar"><i style="width:83%"></i></div></div></td></tr><tr><td><strong>金・銀の買い（日足のみ）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">metal_long_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>24回／次の判定 30回</span><div class="rm-bar"><i style="width:80%"></i></div></div></td></tr><tr><td><strong>株価指数の逆張り買い（日足のみ）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">index_revL_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>4回／次の判定 80回</span><div class="rm-bar"><i style="width:5%"></i></div></div></td></tr><tr><td><strong>株価指数の買い（日足のみ）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">index_long_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>21回／次の判定 80回</span><div class="rm-bar"><i style="width:26%"></i></div></div></td></tr><tr><td><strong>下降トレンド中のシグナル（日足のみ／買いも売りも）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">dntrend_1d</span></td><td data-l="確かめていること">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>38回／次の判定 80回</span><div class="rm-bar"><i style="width:48%"></i></div></div></td></tr><tr><td><strong>ビットコインの買い（日足のみ）</strong><br><span class="rm-sub">登録 2026-06-16</span> <span class="meta-line rm-sub">btc_long_1d</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-cand">🌟 過去のデータの確認は通過（登録後のデータを集めている）</span></td><td data-l="件数"><div class="rm-prog"><span>14回／次の判定 30回</span><div class="rm-bar"><i style="width:47%"></i></div></div></td></tr><tr><td><strong>株価指数の買い</strong><br><span class="rm-sub">登録 2026-06-12</span> <span class="meta-line rm-sub">index_long_live</span></td><td data-l="確かめていること">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="段階"><span class="rm-track">🌱 データを集めている</span></td><td data-l="件数"><div class="rm-prog"><span>771回／次の判定 800回</span><div class="rm-bar"><i style="width:96%"></i></div></div></td></tr></table></div></details>
+<h3 style="margin-top:28px">③ 出口（利確・損切り）の研究</h3><p class="rm-desc">入るところは同じでも、利確と損切りの置き方で成績は変わります。過去のデータでよさそう（または悪そう）に見えた置き方を登録し、その後のデータでも同じかを確かめています。組み合わせをたくさん試したぶん、偶然よく見えただけの可能性があるので、判定は100件たまってからです。「いまの方式」とは、このサイトがシグナルの記録を採点するときに使っている決まった置き方で、損切りをATR（値動きの平均的な幅）の1.5倍、利確を2.0倍の位置に置きます。</p>
+<div class="rm-card"><strong>「ボリンジャーバンド−2σタッチ」の買いで、すぐに入らず、見込める利益が損失の3倍になる値段まで下がるのを待って入ると、成績は変わるか</strong><br><span class="rm-sub">登録 2026-09-24</span><p class="rm-desc" style="margin-top:6px">入り方と出口をまとめて変えたルールを、登録した日の翌日より後に出たシグナルで、いまの方式と比べています。</p><div class="scroll-x"><table class="rm-t"><tr><th>比べていること</th><th>登録した日より後の件数</th><th>状態</th></tr><tr><td>主な比較：日足で、待って入るやり方は、いまの方式と比べて成績が変わるか</td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 100回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>補足の比較：日足で、待って入るやり方は、すぐに入る場合と比べて成績が変わるか（待つことそのものの効果）</td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 100回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>補足の比較：日足で、2回に分けて入るやり方は、いまの方式と比べて成績が変わるか</td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 100回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>補足の比較：4時間足でも同じ結果になるか（過去2年のデータでは同じにならなかった）</td><td data-l="件数"><div class="rm-prog"><span>3回／次の判定 100回</span><div class="rm-bar"><i style="width:3%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr></table></div></div>
+<div class="rm-card"><strong>過去のデータで「いまの方式より悪い」と出た出口の組み合わせを見張る</strong><br><span class="rm-sub">登録 2026-09-25</span><p class="rm-desc" style="margin-top:6px">過去のデータ（2026-09-25まで）で、いまの方式よりはっきり悪かった7通りの組み合わせです。その後のデータでも悪いままかを見ています。</p><details><summary style="cursor:pointer;font-size:.88rem;color:#0969da">7通りの中身を開く</summary><div class="scroll-x"><table class="rm-t"><tr><th>比べていること</th><th>登録した日より後の件数</th><th>状態</th></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い：損切り＝高値から一定の幅で追いかける方式／利確＝損切り幅の2倍</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い：損切り＝高値から一定の幅で追いかける方式／利確＝損切り幅の3倍</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い（為替（FX））：損切り＝高値から一定の幅で追いかける方式／利確＝いまの方式</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い（為替（FX））：損切り＝高値から一定の幅で追いかける方式／利確＝直近の高値</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い（為替（FX））：損切り＝高値から一定の幅で追いかける方式／利確＝損切り幅の2倍</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い（為替（FX））：損切り＝高値から一定の幅で追いかける方式／利確＝損切り幅の3倍</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr><tr><td>日足・「ボリンジャーバンド−2σタッチ」の買い（為替（FX））：損切り＝高値から一定の幅で追いかける方式／利確＝半分を先に利確・残りは建値で</td><td data-l="件数">0回</td><td data-l="状態">🟡 データを集めている</td></tr></table></div></details></div>
+<div class="rm-card"><strong>日足の順張りで、利確の目標の先にしばらく壁（値動きを止めそうな節目）がないときは、利確を置かずに利益を伸ばすと、いまの方式と比べて成績は変わるか</strong><br><span class="rm-sub">登録 2026-09-26</span><p class="rm-desc" style="margin-top:6px">出口の壁ラボで見つかった候補を、登録した日より後のデータで確かめています。結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）。</p><div class="scroll-x"><table class="rm-t"><tr><th>比べていること</th><th>登録した日より後の件数</th><th>状態</th></tr><tr><td>いまの方式との差</td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 100回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr></table></div></div>
+<div class="rm-card"><strong>日足の逆張り買いで、損切りの幅をいまの2倍に広げると、成績は変わるか</strong><br><span class="rm-sub">登録 2026-09-26</span><p class="rm-desc" style="margin-top:6px">損切りラボで見つかった候補を、登録した日より後のデータで確かめています。結果を見たあとの登録（偶然よく見えただけの可能性も十分あります）。</p><div class="scroll-x"><table class="rm-t"><tr><th>比べていること</th><th>登録した日より後の件数</th><th>状態</th></tr><tr><td>いまの方式との差</td><td data-l="件数"><div class="rm-prog"><span>0回／次の判定 100回</span><div class="rm-bar"><i style="width:0%"></i></div></div></td><td data-l="状態">🟡 データを集めている</td></tr></table></div></div>
+<h3 style="margin-top:28px">④ 相場の環境の統計（毎月）</h3>
+<div class="rm-card"><p class="rm-desc" style="margin:0">シグナルが出たときの相場の環境（警戒の度合い・市場の不安の大きさ・トレンドの強さ・ニュースの多さ・ファンダの見立てなど）を50の区分に分け、区分ごとに勝ちやすさが平均と違うかを数えています。前回は 2026-09-26 18:02 に、2026-05-21〜2026-09-25 のシグナル 4,785件で数えました。次回は 2026-10-02 の予定です。</p><p class="rm-desc" style="margin:8px 0 2px">前回、差がありそうだった区分：</p><ul class="rm-desc"><li>ファンダの向きとシグナルの向き＝不一致：傾向あり（まだ偶然の可能性）・平均より成績がよかった側（過去の記録）</li></ul><p class="rm-desc" style="margin:0">差がありそうな区分は、偶然の可能性があるので②の仮説として登録し、その後のデータで確かめています。</p></div>
+<h3 style="margin-top:28px">⑤ 終わった検証（9本）</h3><details><summary style="cursor:pointer;font-size:.9rem;color:#57606a">思ったとおりにならなかった検証も、消さずに残しています（開く）</summary><div class="scroll-x" style="margin-top:10px"><table class="rm-t"><tr><th>仮説</th><th>確かめていたこと</th><th>登録</th></tr><tr><td>下降トレンド中の逆張り買い</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>買い全般</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>下降トレンド中のシグナル（買いも売りも）</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>下降トレンド中の買い</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>選別ランク「良」の買い</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>選別ランク「良」のシグナル（買いも売りも）</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>逆張り買い全般</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-25</td></tr><tr><td>もみあい中の売り</td><td data-l="確かめていたこと">勝ちやすいか（記録上の損益の平均がプラスか）</td><td data-l="登録">2026-06-17</td></tr><tr><td>もみあい中の買い</td><td data-l="確かめていたこと">負けやすいか（記録上の損益の平均がマイナスか）</td><td data-l="登録">2026-06-17</td></tr></table></div></details>
+<p style="font-size:.82rem;color:#8b949e;margin-top:22px">※ この一覧は研究の進み具合の記録です。「基準を満たした」仮説も、特定の取引や銘柄の売買をすすめるものではありません。採点は、シグナルを決まったルールで機械的に記録した仮想の結果で、実際の取引ではありません（手数料や価格の滑りなど、実際の取引で生じる差は十分には反映されていません）。過去や途中の成績は、これからの成績を約束するものではありません。投資の判断はご自身の責任でお願いします。</p>
+</div>
+  
 <div class="tab-pane" id="pane-banzuke">
   <h2>🏆 エッジ番付 — 仮説58本の公開リーグ戦</h2>
   <div style="background:#ddf4ff;border:1px solid #54aeff66;border-radius:8px;padding:14px 16px;font-size:.9rem;margin-bottom:18px">
@@ -4157,82 +3960,6 @@
     💡 <b>使い方</b>: 1 時間単位で見たいときに。FOMC や ECB の発言時刻周辺で勝率が変動するパターンを発見できます。
   </p>
 
-  <h2 style="margin-top:32px">⏰ 時間別取引推奨度（サラリーマン投資家向け）</h2>
-  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
-    各セッションの勝率・期待 R から「取引すべき時間帯」を 5 段階で評価。「平日昼は仕事中だから取引しない」のような時間制約を最適化するためのガイド。
-  </p>
-  <div class="scroll-x"><table>
-    <thead><tr>
-      <th>セッション (JST)</th>
-      <th style="text-align:center">推奨度</th>
-      <th style="text-align:right">勝率</th>
-      <th style="text-align:right">期待 R</th>
-      <th style="text-align:right">確定数</th>
-      <th>サラリーマン視点アクション</th>
-    </tr></thead>
-    <tbody>
-        <tr>
-          <td><b>深夜 (0-6)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">40.8%</td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">-0.04R</td>
-          <td style="text-align:right">1187</td>
-          <td style="font-size:.82rem;color:#57606a">📱 仕事終わり〜就寝前。NY 後半 〜 翌朝アジア早朝 ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr>
-
-        <tr>
-          <td><b>早朝 (6-9)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">41.6%</td>
-          <td style="text-align:right;color:#9a6700;font-weight:700">+0.02R</td>
-          <td style="text-align:right">875</td>
-          <td style="font-size:.82rem;color:#57606a">📱 出勤前。東京オープン直前のチェック向き ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr>
-
-        <tr>
-          <td><b>東京 (9-15)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#9a6700;font-weight:700">47.4%</td>
-          <td style="text-align:right;color:#9a6700;font-weight:700">+0.12R</td>
-          <td style="text-align:right">898</td>
-          <td style="font-size:.82rem;color:#57606a">💼 仕事中。スマホで通知確認のみ推奨 ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr>
-
-        <tr>
-          <td><b>欧州オープン (15-17)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">43.4%</td>
-          <td style="text-align:right;color:#9a6700;font-weight:700">+0.02R</td>
-          <td style="text-align:right">302</td>
-          <td style="font-size:.82rem;color:#57606a">💼 仕事中〜退勤直前。トレンド転換多発時間帯 ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr>
-
-        <tr>
-          <td><b>欧州 (17-22)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">41.4%</td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">-0.03R</td>
-          <td style="text-align:right">880</td>
-          <td style="font-size:.82rem;color:#57606a">📱 退勤後〜夜。ロンドンフィキシング (16:00 GMT) ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr>
-
-        <tr>
-          <td><b>NY (22-24)</b></td>
-          <td style="text-align:center"><span style="color:#bc4c00;font-weight:700">🟠 注意</span></td>
-          <td style="text-align:right;color:#cf222e;font-weight:700">42.7%</td>
-          <td style="text-align:right;color:#9a6700;font-weight:700">+0.01R</td>
-          <td style="text-align:right">531</td>
-          <td style="font-size:.82rem;color:#57606a">📱 夜〜深夜。NY オープン直後のボラ拡大 ／ HIGH かつトレンド順張りに限定、 SL は浅め</td>
-        </tr></tbody>
-  </table></div>
-  <p style="font-size:.82rem;color:#6e7781;margin-top:8px">
-    💡 <b>判定ルール</b>:
-    🟢 推奨 = 勝率 60%+ & 期待 R +0.3+ & 確定 5 件以上 ／
-    🟡 中立 = 勝率 50-60% ／
-    🟠 注意 = 勝率 40-50% ／
-    🔴 非推奨 = 勝率 40% 未満 ／
-    ⚪ データ不足 = 確定 5 件未満
-  </p>
 </div>
   
 <div class="tab-pane" id="pane-quality">
@@ -4833,139 +4560,116 @@
 <div class="tab-pane" id="pane-loss">
   <h2>🔬 勝因・敗因分析</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を Gemini が自動分析。「次回も再現する条件」と「避けるべき条件」を学べるデータベース。
+    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を、AI（Gemini）が結果のあとに自動で分類した記録です。
+    AI の説明は結果が出たあとの見立てで、正しいとは限りません。次の取引をすすめるものではありません。
   </p>
 
   <h2 style="margin-top:32px;color:#1a7f37;border-bottom-color:#1a7f37">✨ 勝因分析（TP1/TP2 到達: 1978 件）</h2>
-  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
-    再現性: 🟢 HIGH 847 / 🟡 MID 1127 / 🔴 LOW 4
-  </p>
-
-  <h3 style="margin-top:20px">🏷️ カテゴリ別 集計と教訓</h3>
+  <h3 style="margin-top:20px">🏷️ カテゴリ別の集計</h3>
   <div class="scroll-x"><table>
     <thead><tr>
-      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th>
     </tr></thead>
     <tbody>
         <tr>
           <td><b>テクニカル順当</b></td>
           <td style="text-align:right">1647</td>
           <td style="text-align:right">83.3%</td>
-          <td style="font-size:.82rem;color:#424a53">・ボリンジャーバンド+MAのサポート転換、マルチTF整合、信頼度HIGHは再現性高く、積極的にエントリーサイズを検討すべき<br>・売られすぎ水準からの反発や、ネガティブニュースの過度な反応修正は、テクニカルと合わせて有効。同条件で積極的にエントリーを</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度高の的中 / マルチTF整合</b></td>
           <td style="text-align:right">87</td>
           <td style="text-align:right">4.4%</td>
-          <td style="font-size:.82rem;color:#424a53">・高信頼度・マルチTF整合・明確なトレンドサイン（RSI・MA）が揃えば、積極的なエントリー・サイズアップを検討すべき。<br>・強い上昇トレンドと地政学的リスクという複合的な好材料は、過熱感のあるRSIでもエントリーを正当化する。同条件で積極的にリ</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風</b></td>
           <td style="text-align:right">52</td>
           <td style="text-align:right">2.6%</td>
-          <td style="font-size:.82rem;color:#424a53">・MAサポート確認とトレンド継続の兆候を重視。VIX上昇やドル安基調の時も買いエントリーを検討する。<br>・テクニカルとファンダメンタルズが強く一致する状況は、信頼度スコアが低くても積極的にロングで狙うべき。TP1到達後は状況を</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 環境追い風 / 信頼度高の的中</b></td>
           <td style="text-align:right">44</td>
           <td style="text-align:right">2.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・RSI過売りと円安トレンドが重なる状況は、再現性が高いと判断。次回も同様の条件であれば、積極的にエントリーサイズを検討し<br>・テクニカル、ファンダメンタルズ、市場センチメントが揃った際は、信頼度MIDでも積極的にエントリーし、TP1到達を狙う。V</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度高の的中</b></td>
           <td style="text-align:right">29</td>
           <td style="text-align:right">1.5%</td>
-          <td style="font-size:.82rem;color:#424a53">・RSI・MACD・MA・通貨強弱の揃ったショートシグナルは再現性が高い。同条件で積極的にエントリーサイズを検討すべき。<br>・RSI過熱でも高値ブレイクは強力な買いシグナル。25MAサポート確認で積極的にエントリー。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続</b></td>
           <td style="text-align:right">27</td>
           <td style="text-align:right">1.4%</td>
-          <td style="font-size:.82rem;color:#424a53">・信頼度HIGH、マルチTF整合の順張りシグナルは、短期的な過熱感があってもトレンド継続と判断できる場合に有効。次回も同様<br>・低信頼度でもマルチTF整合性の順張りは有効。MAサポートとMACDクロスを複合的に監視し、エントリー判断の精度を高める。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 環境追い風 / 信頼度高の的中 / マルチTF整合</b></td>
           <td style="text-align:right">27</td>
           <td style="text-align:right">1.4%</td>
-          <td style="font-size:.82rem;color:#424a53">・RSI売られすぎ＋上位足順張り＋良好な環境スコアの組み合わせは高勝率。次回も積極的なエントリーを検討すべき。<br>・信頼度・環境スコアが高く、テクニカル・ファンダメンタルズ・マルチTF整合が揃った場合、積極的にエントリーサイズを増やすこ</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 環境追い風</b></td>
           <td style="text-align:right">20</td>
           <td style="text-align:right">1.0%</td>
-          <td style="font-size:.82rem;color:#424a53">・信頼度スコアが低くても、複数の好材料が揃えば積極的に狙う。ただし、往復ビンタ警告は注視する。<br>・レンジ下限での反発＋マクロ好材料は優位性あり。次回も同様の条件で積極的なエントリーを検討。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / マルチTF整合</b></td>
           <td style="text-align:right">11</td>
           <td style="text-align:right">0.6%</td>
-          <td style="font-size:.82rem;color:#424a53">・直近高値ブレイクと明確なトレンド、ファンダメンタルズ要因が揃った場合、逆行リスクは低く、積極的にエントリーを検討できる。<br>・信頼度スコアは低かったものの、マルチTF整合とファンダメンタルズが強固。同条件かつファンダメンタルズも同様なら、積極的に</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 環境追い風 / マルチTF整合</b></td>
           <td style="text-align:right">10</td>
           <td style="text-align:right">0.5%</td>
-          <td style="font-size:.82rem;color:#424a53">・信頼度LOWでも、良好な環境スコアとマルチTF整合を重視。リスクオン継続なら同条件でのエントリーは有効。<br>・75MA支持＋ファンダ追い風＋上位足整合の条件は今後も注目。信頼度MIDでも積極的にサイズ調整を検討。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 信頼度高の的中</b></td>
           <td style="text-align:right">6</td>
           <td style="text-align:right">0.3%</td>
-          <td style="font-size:.82rem;color:#424a53">・75MA付近での反発期待は有効。VIX安定時、短期指標の過熱感とMAサポートを重視したエントリーを継続。<br>・売られすぎからの反発シナリオは信頼度が高い。同様のテクニカル状況かつ、環境スコアが良好であれば積極的にエントリーを検討。</td>
         </tr>
         <tr>
           <td><b>マルチTF整合</b></td>
           <td style="text-align:right">4</td>
           <td style="text-align:right">0.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・上位足整合時は、逆張りより順張りを優先。低信頼度でも上位足整合なら積極的に検討する。<br>・上位足整合を重視し、短期シグナルが環境スコア「C」でも、整合性が高ければ積極的にエントリーを検討する。</td>
         </tr>
         <tr>
           <td><b>信頼度高の的中</b></td>
           <td style="text-align:right">4</td>
           <td style="text-align:right">0.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・信頼度スコアHIGHかつ環境スコアAのトレードは、テクニカルとファンダメンタルズが整合した場合に高い確率で成功するため、<br>・信頼度HIGHのシグナルは、RSIの過売り反発といった明確なテクニカル根拠と環境要因が重なった際に、より高い確度で利益に</td>
         </tr>
         <tr>
           <td><b>トレンド継続</b></td>
           <td style="text-align:right">3</td>
           <td style="text-align:right">0.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・環境スコアA、MAクロス、ファンダメンタルズ、通貨強弱が揃えば、信頼度スコアが低くても積極的にエントリーを検討。TP1到<br>・信頼度LOWでも、MAの明確な上向きと上位足整合を重視。同条件なら積極的にエントリーを検討。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / 信頼度高の的中 / マルチTF整合</b></td>
           <td style="text-align:right">2</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・信頼度 HIGH かつマルチTF整合時は、一時的なテクニカル指標の悪化も乗り越える可能性。エントリー判断は慎重に。<br>・RSIの過売り反発と上位足整合は強力な買いシグナル。次回も同様の条件で積極的なエントリーやサイズアップを検討すべき。</td>
         </tr>
         <tr>
           <td><b>環境追い風</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスクやインフレ懸念といったマクロ経済要因が、テクニカルシグナルの効果を増幅させた。次回も同様のニュースフローがあ</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度中</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・高信頼度ではないが、AI関連期待のようなテーマ性が重なれば、過熱感シグナルを無視した順張りも有効。次回も類似テーマなら積</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度高の的中 / マルチTF整合 のいずれか</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・テクニカル、ファンダメンタルズ、通貨強弱が全て高確率で一致する場面は、積極的にエントリーまたはロットアップを検討すべき。</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度中 / マルチTF整合</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスクやドル高など、マクロ要因がテクニカルと連動する際は、信頼度MIDでも積極的なエントリーを検討。TP1到達後の</td>
         </tr>
         <tr>
           <td><b>テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度低だが結果良</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・低信頼度でも、明確なテクニカルブレイクと環境要因が合致すれば勝機あり。次回も同様の条件でエントリーを検討。</td>
         </tr></tbody>
   </table></div>
 
@@ -4984,10 +4688,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ RSI過売からの反発とMAサポート</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">4HチャートでRSIが21.9と過売水準に達し、反発の兆候が見られました。AI解説にもあったように、直近安値ゾーンで下げ止まり、25MA（1.1425）への接近もサポート要因となり、ターゲットTP1（1.14128）まで上昇したと考えられます。ドル高の優位性は示唆されていましたが、ユーロドルのテクニカル的な買われすぎからの反転が優位に働きました。ATRが0でボラティリティが低かったことも、小幅ながらも順調な上昇に寄与した可能性があります。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> RSI過売からの反発は強力なシグナル。25MA近辺でのエントリーは有効。但し、ドル優位のコンテキストには注意し、シナリオ崩壊リスクも考慮。
-          </div>
-          <span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5002,10 +4702,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ サポートゾーンでの反発と短期MAへの到達</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSI 39.8は売られすぎではないが、MACDは下落を示唆する中、直近安値ゾーンで下げ止まり、ボリンジャーバンド-2σ近辺からの反発がロングの根拠となった。25MA（52153.28）近辺まで上昇し、TP1（52196.24）に到達したことは、短期的なテクニカルの有効性を示唆する。VIXの低下も市場の安定に寄与した可能性がある。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> RSIが売られすぎでない状況で、サポートゾーンからの反発と短期MAへの到達を確認できれば、TP1到達の可能性は高い。次回も同様の条件で積極的にエントリーを検討すべき。
-          </div>
-          <span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5020,10 +4716,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ RSIの過売反転からの反発勝利</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSIが30近辺まで下落し、過度な売り圧力が一服したことが反転のトリガーとなりました。MACDのデッドクロス示唆にもかかわらず、MAが水平に推移し、サポートとして機能したことがロング戦略の成功に寄与しました。ボリンジャーバンド-2σ近辺での下げ止まりも、短期的な反発の兆候を強めたと考えられます。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> RSI30近辺での反発は有力なロングシグナル。MAの方向性やボラティリティも考慮し、積極的にエントリーを検討すべき。
-          </div>
-          <span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5038,10 +4730,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ MACDデッドクロスと75MAへの圧力</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">MACDのデッドクロスによる下降転換の示唆が機能しました。RSIが中立圏にあったにも関わらず、短期的なテクニカル指標のシグナルが先行し、エントリーポイントの妥当性を高めました。75MAへの抵抗が意識され、ショートポジションを支える要因となりました。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> MACDデッドクロスとMA抵抗を重視。上位足整合と環境スコアBを考慮し、エントリー判断を慎重に行う。
-          </div>
-          <span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5056,10 +4744,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ ボリンジャーバンド-2σタッチからの反発が成功</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">シグナル発火時、S&P500先物はボリンジャーバンド-2σにタッチし、AI解説が示唆した通り反発しました。RSI45近辺、MACDデッドクロス後という条件も短期的な売られすぎ感からの反転を後押し。75MA（7704.72）を下抜けることなく、短期的にTP1に到達したことは、AI解説とテクニカル指標の整合性が高かったことを示唆します。VIXの低下も市場心理の改善に寄与しました。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> ボリンジャーバンド-2σタッチとAI解説の整合性を重視。高信頼度・環境Bでも、AI解説がリスク回避を示唆しない場合は積極的にエントリーを検討。
-          </div>
-          <span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5074,10 +4758,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ 安値更新とMAレジスタンスでのショート成功</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">直近安値割れがショートのトリガーとなり、RSI44.7、MACD下落といったテクニカル要因が下降圧力を支持。25MAをレジスタンスに機能させることで、想定通りの下落を誘発しました。上位足整合の順張りも成功要因です。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> 安値更新とMAレジスタンスが重なる状況はショートの好機。信頼度MIDでも積極的に狙う価値あり。
-          </div>
-          <span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5092,10 +4772,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ 売られすぎからの短期的な買い戻しが奏功</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSIが売られすぎ水準に近く、ボリンジャーバンド-2σタッチからの反発というテクニカル的根拠が機能しました。AI解説にあったレンジ内での反発期待が短期で達成されたと考えられます。ドル高圧力にもかかわらず、短期的なテクニカル優位性が勝った形です。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> 信頼度LOWでも、短期的なテクニカルサインとレンジ内での反発期待が重なれば、短期トレードとして有効な場合がある。
-          </div>
-          <span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5110,10 +4786,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ ボトム圏からの反発が機能</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">ボリンジャーバンド-2σタッチと直近安値での下げ止まりが、AI解説の通り反発のトリガーとなった。RSI45近辺は売られすぎではなく、25MAが75MAを上回るゴールデンクロス寸前の状況が短期上昇を後押し。VIXの低下はリスクオン環境を示唆し、買い安心感につながった。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> ボトム圏でのテクニカルサインは信頼度が高い。類似パターン出現時は、AI解説の崩壊シナリオ（-2σ再下抜け）を警戒しつつ、積極的にロングを検討する。
-          </div>
-          <span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5128,10 +4800,6 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ MACDデッドクロスとMA乖離による短期下降トレンド化</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">MACDのデッドクロスは短期的な下降圧力を示唆し、25MAを上回っていた価格が一時的に下落した。75MAが依然として上昇トレンドにあったため、この下降は一時的と判断され、TP1到達に繋がった。ファンダメンタルズ要因（米国債利回り、USD高）もショート目線に合致していた。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> MACDデッドクロスをトリガーに、MAとの乖離を意識した順張りショートは有効。ただし、75MAの動向も注視すべき。
-          </div>
-          <span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>
         </div>
         <div class="win-card">
           <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:8px;flex-wrap:wrap">
@@ -5146,103 +4814,86 @@
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ 直近高値ブレイクと明確な上昇トレンド</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">直近20本高値¥158.05のブレイクは、上昇トレンド継続の明確なサインでした。RSI 68.6は買われすぎ寸前ながらも上昇余地を示唆し、25MAが75MAを上回るゴールデンクロスもテクニカルに後押し。米国債利回り上昇と日本国債利回り低下による円安圧力、USDの通貨強弱の強さが、ロングの成功要因となりました。</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> 直近高値ブレイクは強力なエントリーシグナル。RSIが過熱気味でも、MAのクロスとファンダメンタルズが一致すれば積極的に狙いたい。
-          </div>
-          <span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>
         </div></div>
 
   <h2 style="margin-top:48px;color:#cf222e;border-bottom-color:#cf222e">🔬 敗因分析（SL ヒット案件: 2605 件）</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。失敗から学ぶデータベースとして活用してください。
+    SL に達したシグナルについて、AI（Gemini）が「カテゴリ・主な要因・詳細」を結果のあとに自動で分類した記録です。
   </p>
 
   <h3 style="margin-top:24px">📊 カテゴリ別分布</h3>
   <div class="chart-box" style="height:280px"><canvas id="lossCategoryChart"></canvas></div>
 
-  <h3 style="margin-top:32px">🏷️ カテゴリ別 集計と教訓</h3>
+  <h3 style="margin-top:32px">🏷️ カテゴリ別の集計</h3>
   <div class="scroll-x"><table>
     <thead><tr>
-      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th>
     </tr></thead>
     <tbody>
         <tr>
           <td><b>テクニカル悪化</b></td>
           <td style="text-align:right">1679</td>
           <td style="text-align:right">64.5%</td>
-          <td style="font-size:.82rem;color:#424a53">・RSI買われすぎ、MACD乖離時には、エントリーを慎重にするか、よりタイトなSL設定を検討する。<br>・短期的なテクニカルサインだけでなく、より長期的な視点や、急落に備えたトレーリングストップの検討も必要。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ファンダメンタル</b></td>
           <td style="text-align:right">425</td>
           <td style="text-align:right">16.3%</td>
-          <td style="font-size:.82rem;color:#424a53">・RSI買われすぎ、ファンダ・通貨強弱の逆風時は慎重に。VIX変動も複合的に分析する。<br>・VIXの動向を注視し、リスクオフの兆候が見られたらエントリーを慎重に。MAクロス転換を早期に検知する仕組みを強化します。</td>
         </tr>
         <tr>
           <td><b>ファンダメンタル</b></td>
           <td style="text-align:right">271</td>
           <td style="text-align:right">10.4%</td>
-          <td style="font-size:.82rem;color:#424a53">・ファンダメンタルズの強さを軽視せず、テクニカルとファンダメンタルの乖離を早期に察知する訓練を積む。<br>・テクニカルだけでなく、主要なファンダメンタルズ（需要見通し等）の動向も注視し、悪材料出尽くしを確認してからエントリーする</td>
         </tr>
         <tr>
           <td><b>ボラ拡大</b></td>
           <td style="text-align:right">136</td>
           <td style="text-align:right">5.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXの急騰には細心の注意を払い、リスクオフの兆候を早期に察知して損切りを迅速に行う。<br>・VIXの変動は市場のセンチメントを敏感に反映。エントリー前にVIXの動向を確認し、リスクオフの兆候があれば慎重な判断を。</td>
         </tr>
         <tr>
           <td><b>地政学・突発</b></td>
           <td style="text-align:right">51</td>
           <td style="text-align:right">2.0%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスクや突発的なイベントを常に監視し、リスク管理を徹底する。AI解説の「崩れるシナリオ」を重視する。<br>・地政学リスク発生時は、テクニカル指標の回復を待たず、即座にリスク管理を優先する。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ボラ拡大</b></td>
           <td style="text-align:right">16</td>
           <td style="text-align:right">0.6%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXの急上昇は、テクニカルシグナルよりも優先されるリスク要因。エントリー前にVIXの変動を確認し、リスクオフの兆候があ<br>・VIXの急上昇時は、テクニカルシグナルよりもリスクオフの動きを優先。MA乖離が大きい場合は、エントリーを慎重に判断する。</td>
         </tr>
         <tr>
           <td><b>ボラ拡大 / ファンダメンタル</b></td>
           <td style="text-align:right">11</td>
           <td style="text-align:right">0.4%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXや他のリスク指標を監視し、市場センチメントの変化を早期に察知する。ATRが低い場合でも、突発的なボラ拡大に注意する<br>・VIX指数や市場センチメントの急変に注意し、リスクオフ時のポンドの動向を注視する。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ファンダメンタル / 地政学・突発</b></td>
           <td style="text-align:right">6</td>
           <td style="text-align:right">0.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスクとVIXの動向を重視し、ポジティブニュースの信頼性を慎重に評価する。テクニカルと乖離する場合は要注意。<br>・VIXの低下はリスクオンの兆候。ショートシナリオでも、VIXの動きと75MAの攻防を注視し、早期損切りを徹底する。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ファンダメンタル / 地政学・突発 / ボラ拡大 / シグナル品質</b></td>
           <td style="text-align:right">5</td>
           <td style="text-align:right">0.2%</td>
-          <td style="font-size:.82rem;color:#424a53">・地政学リスクの動向を常に監視し、急激なニュースフローには注意。テクニカルとファンダメンタルズの乖離に敏感になる。<br>・VIX指数の急上昇はリスクオン・シグナルを無効化する可能性。エントリー前にVIXの動向も確認する。</td>
         </tr>
         <tr>
           <td><b>ボラ拡大 / 地政学・突発</b></td>
           <td style="text-align:right">2</td>
           <td style="text-align:right">0.1%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXの急上昇はリスクオフの兆候。テクニカル好転でも、VIX動向に注意し、損切りラインを柔軟に見直す。<br>・VIXの急変動は市場のセンチメント悪化の兆候。エントリー後のVIX監視を強化し、リスク回避行動を早める。</td>
         </tr>
         <tr>
           <td><b>テクニカル悪化 / ファンダメンタル / ボラ拡大</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.0%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXの急上昇時は、テクニカル指標だけでなく、市場全体のリスクセンチメントを重視し、ショートポジションの損切りを早める、</td>
         </tr>
         <tr>
           <td><b>ボラ拡大 / テクニカル悪化</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.0%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIXや他の市場センチメント指標を常に監視し、リスクオフの兆候があればエントリーを慎重に判断する。</td>
         </tr>
         <tr>
           <td><b>VIX 変動</b></td>
           <td style="text-align:right">1</td>
           <td style="text-align:right">0.0%</td>
-          <td style="font-size:.82rem;color:#424a53">・VIX指数や地政学リスクに注意。リスクオフ時は安全資産への資金移動を考慮し、トレード判断を慎重に行う。</td>
         </tr></tbody>
   </table></div>
 
@@ -5261,9 +4912,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ RSI過熱とMA乖離からの反転</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">エントリー時、RSIは71.93と過熱圏にあり、25MA（1.6154）、75MA（1.6157）から大きく乖離していた。直近高値ブレイクというシグナルはあったものの、MAからの距離が広すぎたため、短期的な調整（反落）リスクが高まっていた。MACDが0近辺だったことも、方向感の乏しさを示唆していた。VIXの小幅低下はリスクオンを示唆したが、EUR/AUDのテクニカル要因が優位に働いた。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> RSI過熱時、MAとの乖離が大きい場合は、エントリーを見送るか、よりタイトなSL設定を検討する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.14 → 15.04 (-0.7%)</span>
           
         </div>
@@ -5280,9 +4928,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ MA下抜けとRSIの弱さ</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">シグナル発火時、25MA（209.97）を価格（209.13）が下回っており、25MAと75MAの乖離が拡大傾向にあった。RSIも40台前半と明確な反転の兆候が見られなかった。ボリンジャーバンド-2σタッチは短期的な売られすぎを示唆したが、全体的なテクニカルはロングに弱く、SLヒットは予想された結果。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> MAを下抜けた状態でのロングはリスクが高い。RSIの反転兆候をより重視し、MAのサポートを条件に加える。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.59 → 15.25 (-2.2%)</span>
           
         </div>
@@ -5299,9 +4944,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ MAからの乖離とRSIの停滞</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">エントリー時点では25MAと75MAがクロスし、RSIも50超えでしたが、MACDは依然マイナス圏でした。エントリー後、価格はMAから乖離し、RSIも上昇の勢いを欠き、54.39からさらに低下。最終的にMAを割り込み、SLに達しました。短期的な上昇転換の兆しが持続しませんでした。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> MAとの距離とRSIの勢いを再確認。MAからの乖離が大きい場合やRSIが停滞する場合は慎重に。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.35 → 15.23 (-0.8%)</span>
           
         </div>
@@ -5318,9 +4960,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ MAが下落トレンドを示唆、反発が継続せず</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">エントリー時点ではボリンジャーバンドの-2σタッチとRSI中立圏からの反発が期待されたものの、25MAが75MAを下回る状況は下降トレンドの継続を示唆していました。MACDのゴールデンクロスも勢いを失い、短期的な買い圧力が持続せず、下落トレンドに押し切られたと考えられます。VIXの変動がないことから、市場全体のリスクオフ要因は限定的でした。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> MAのクロス状況とトレンド方向の確認を強化し、短期的な反発期待だけでのエントリーを避ける。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.72 → 15.72 (+0.0%)</span>
           <div style='margin-top:10px;font-size:.82rem;color:#57606a'><b>期間中のニュース:</b><ul style='margin:6px 0 0 20px'><li>Anthropicの新たな120億ドルのコンピューティング契約について知っておくべきこと</li><li>今日の株式市場：米国とイランの平和への期待からダウ平均が上昇。マイクロン、サンディスクは急騰、メタ株は下落（ライブ速報）</li></ul></div>
         </div>
@@ -5337,9 +4976,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ 一時的な反発でSLをヒット</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSI 37.6、MACDデッドクロス、25MA、75MAのデッドクロスなど、テクニカルには弱気シグナルが複数出ていたものの、エントリー後に一時的な反発が発生。VIXの低下（リスクオンの兆候）も影響し、短期的な上昇圧力に押されてSLにヒットした可能性が高い。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> 弱気シグナルでも短期的な反発は起こりうる。VIXの動向も注視し、エントリー根拠を再確認する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.98 → 15.04 (-5.9%)</span>
           
         </div>
@@ -5356,9 +4992,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ MAのデッドクロス発生による下降圧力</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">シグナル発火時は25MAが75MAを上回るゴールデンクロスを示唆するも、実際にはその後MAがデッドクロスを形成し、下降トレンドに転換した可能性が高い。RSIが50近辺に留まり、明確な上昇モメンタムを欠いていたことも、弱含みの要因となった。VIXの低下はリスクオンを示唆したが、原油自体のテクニカルが悪化した。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> MAのクロスシグナルは確定を待つ。RSIのモメンタム確認を強化し、早期の下降転換に警戒する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.42 → 15.04 (-2.5%)</span>
           
         </div>
@@ -5375,9 +5008,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ RSI過熱、MA乖離、短期反落</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSIが70を超え過熱気味の中、MACDゴールデンクロスでロングシグナルが点灯したが、25MAとの乖離が大きく、短期的な調整局面に入った可能性が高い。VIXの微増はリスクオフの兆候とは言えず、テクニカル要因による反落と推測される。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> RSI過熱時、MA乖離率を考慮したエントリータイミングの微調整、または一旦見送りの判断も検討する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 14.78 → 15.05 (+1.8%)</span>
           
         </div>
@@ -5394,9 +5024,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ 75MAのサポートが機能せず下落</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">エントリー時、75MA（158.046）が下値を支える見込みだったが、市場はそれを上抜け、157.80のサポートラインも下抜けてSLにヒットした。RSI（38.05）は売られすぎを示唆していたものの、 MACD（-0.048）のデッドクロス後も下落圧力が優勢だった。VIXの安定は突発的なボラティリティ上昇を示唆していない。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> MAサポートは絶対ではない。下落圧力が強い場合は、MAタッチでのエントリーを慎重に判断する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.35 → 15.34 (-0.1%)</span>
           
         </div>
@@ -5413,9 +5040,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ RSI低下とMA乖離が限定的だった</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">RSI 36.35 は短期的な反発を示唆するも、25MA (180.46) と 75MA (180.25) からの乖離は限定的でした。ボリンジャーバンド-2σタッチも、その後の下落圧力に打ち勝てず、通貨強弱のユーロ弱・円強というファンダメンタル要因がテコ入れされ、想定より早くSLに到達したと考えられます。VIX の安定は、市場全体のリスクオフの兆候が薄かったことを示唆します。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> RSI低下とMA乖離は、通貨強弱や長期トレンドも考慮して判断する。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.35 → 15.34 (-0.1%)</span>
           
         </div>
@@ -5432,9 +5056,6 @@
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ ポンド弱さと円強さが重なる</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">テクニカル的には売られすぎサインが出ていたものの、AI解説にもあったように、ポンドの弱さと円の強さが市場で優位に働いた結果、テクニカルな反発の期待が裏目に出ました。VIXの安定はリスクオフの直接的な影響は低かったことを示唆しています。</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> テクニカル指標と通貨強弱・ファンダメンタルズの乖離に注意。乖離が大きい場合は、より慎重な判断を心がける。
-          </div>
           <span style='font-size:.82rem;color:#cf222e'>VIX: 15.35 → 15.34 (-0.1%)</span>
           
         </div></div>
@@ -5443,9 +5064,9 @@
   <div class="tab-pane" id="pane-data">
     <h2>📥 生データのダウンロード</h2>
     <p style="font-size:.93rem;color:#57606a;margin-bottom:20px">
-      シグナルログ・実取引ログの生データを CSV / JSON でダウンロードできます。
+      シグナルログの生データを CSV / JSON でダウンロードできます。
       Excel / Google Sheets / Python pandas で自由に分析してください。
-      <br>毎回のワークフロー実行で自動更新されています（最終更新: 2026-09-26 16:34 JST）。
+      <br>毎回のワークフロー実行で自動更新されています（最終更新: 2026-09-26 21:51 JST）。
     </p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
       <a href="signals-log.csv" download class="dl-card">
@@ -5453,20 +5074,10 @@
         <div class="dl-card-title">signals-log.csv</div>
         <div class="dl-card-desc">全シグナル発火履歴（曜日・時間帯フィールド付き）<br>Excel で開くだけで分析可能</div>
       </a>
-      <a href="my-trades.csv" download class="dl-card">
-        <div class="dl-card-icon">💼</div>
-        <div class="dl-card-title">my-trades.csv</div>
-        <div class="dl-card-desc">実取引履歴（エントリー曜日・決済曜日フィールド付き）</div>
-      </a>
       <a href="signals-log.json" download class="dl-card">
         <div class="dl-card-icon">🗃️</div>
         <div class="dl-card-title">signals-log.json</div>
         <div class="dl-card-desc">構造化生データ。プログラム処理向き</div>
-      </a>
-      <a href="my-trades.json" download class="dl-card">
-        <div class="dl-card-icon">💼</div>
-        <div class="dl-card-title">my-trades.json</div>
-        <div class="dl-card-desc">実取引 JSON。プログラム処理向き</div>
       </a>
     </div>
     <h3 style="margin-top:32px">📦 月次バックアップ（GitHub Releases）</h3>
@@ -5505,17 +5116,24 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
 
 <script>
   // タブ切替
+  function showTab(target) {
+    if (!document.getElementById(`pane-${target}`)) return false;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === `pane-${target}`));
+    // Chart.js は表示後に resize しないと canvas サイズが 0 のまま
+    window.dispatchEvent(new Event('resize'));
+    return true;
+  }
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === `pane-${target}`));
-      // Chart.js は表示後に resize しないと canvas サイズが 0 のまま
-      window.dispatchEvent(new Event('resize'));
-    });
+    btn.addEventListener('click', () => showTab(btn.dataset.tab));
   });
-  // 初期状態：4H 足タブ active（本番配信シグナルの成績を既定表示）
-  document.getElementById('pane-4h').classList.add('active');
+  // 初期状態：4H 足タブ active（本番配信シグナルの成績を既定表示）。
+  // track-record.html#map のようにタブ名が付いていれば、そのタブを開く（研究日誌の一覧などからの直リンク用）
+  const _hashTab = () => { try { return decodeURIComponent(location.hash.slice(1)); } catch (e) { return ''; } };
+  if (!showTab(_hashTab())) document.getElementById('pane-4h').classList.add('active');
+  window.addEventListener('hashchange', () => {
+    if (showTab(_hashTab())) document.querySelector('.tab-bar').scrollIntoView({behavior: 'smooth'});
+  });
 
   // エクイティカーブ生成ヘルパー
   function makeEquityChart(canvasId, labels, values, color) {
