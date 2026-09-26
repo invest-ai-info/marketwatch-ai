@@ -2782,11 +2782,57 @@ def load_promoted_hypotheses(kind="edge"):
     try:
         data = json.load(open(path, encoding="utf-8-sig"))
         hyps = data.get("hypotheses", [])
-        return [h for h in hyps if h.get("status") == "promoted" and h.get("kind") == kind
-                and isinstance(h.get("filter"), dict)]
+        # 照合用に期間の条件（fired_from/fired_before）を外す＝live_filter の説明を参照
+        return [dict(h, filter=live_filter(h["filter"])) for h in hyps
+                if h.get("status") == "promoted" and h.get("kind") == kind and isinstance(h.get("filter"), dict)]
     except Exception as e:
         print(f"⚠️ 昇格ゲート: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 従来どおり全送信")
         return None
+
+
+# ─────────────────────────────────────────────
+# 🆕 2026-09-26 観察中の候補のメール（**オーナー決定「成績を上げる」の④**）
+#   昇格した仮説が0本のため、7/22 を最後にシグナルのメールが0通になり、研究の成果が売買に届いていなかった。
+#   tracker で watch=True（オーナーが決めた観察中の候補）かつ status=='tracking' の仮説に当てはまる4時間足のシグナルだけ、
+#   件名「👀観察中」・本文の先頭に「未確定」と登録前後の成績を付けて送る。昇格した仮説のメール（🏅）とは別扱い。
+#   昇格すれば🏅へ、却下されれば自動で対象外。止めるときは環境変数 EMAIL_WATCH=0。
+#   ⚠️ 読めない・照合できないときは観察中のメールを出さない（fail-closed＝昇格メールの動きには影響しない）。
+# ─────────────────────────────────────────────
+EMAIL_WATCH = os.environ.get("EMAIL_WATCH", "1") != "0"
+_WINDOW_KEYS = ("fired_from", "fired_before")
+
+
+def live_filter(f):
+    """前向きの集計だけに使う期間の条件（fired_from/fired_before）を外した条件。
+    いま出たシグナルは常にその期間の中にあり、probe は発火時刻を持たない＝付けたままだと**永久に一致しない**。
+    （逆向きで登録し直した仮説は fired_from を持つ＝これが無いと昇格しても配信に届かない）"""
+    return {k: v for k, v in (f or {}).items() if k not in _WINDOW_KEYS}
+
+
+def load_watch_hypotheses(path=None):
+    """tracker の watch==True かつ status=='tracking' かつ kind=='edge' の仮説（照合用に期間の条件を外したコピー）。"""
+    path = path or os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
+    try:
+        hyps = json.load(open(path, encoding="utf-8-sig")).get("hypotheses", [])
+    except Exception as e:
+        print(f"⚠️ 観察中の候補: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 観察中のメールは出さない")
+        return []
+    return [dict(h, filter=live_filter(h["filter"])) for h in hyps
+            if h.get("watch") is True and h.get("status") == "tracking" and h.get("kind") == "edge"
+            and isinstance(h.get("filter"), dict)]
+
+
+def watch_email_header(h):
+    """観察中のメールの本文の先頭（未確定であることと、登録前後の成績）。"""
+    ev = h.get("watch_evidence") or h.get("flip_evidence") or {}
+    fw = h.get("forward") or {}
+    lines = [f"👀 観察中の候補（未確定）: {h.get('label')}",
+             "   まだ勝ち筋として確定していません（前向きの検証中）。確定した仮説のメール（🏅）とは別扱いです。"]
+    if ev:
+        lines.append(f"   登録前の成績（{ev.get('window', '')}）: 平均 {ev.get('avgR', 0):+.2f}R・{ev.get('n', 0)}件"
+                     f"（95%の幅 {ev.get('rci_lo', 0):+.2f}〜{ev.get('rci_hi', 0):+.2f}）")
+    lines.append(f"   登録後（{h.get('registered_at', '')}〜）: {fw.get('n', 0)}件・平均 {fw.get('avgR', 0):+.2f}R")
+    return "\n".join(lines)
 
 
 def match_promoted_hypothesis(promoted_hyps, probe):
@@ -2861,7 +2907,12 @@ def main():
                   f"（基準は tracker と同じ N>=promote_min_n かつ RCI下限>0）")
             promoted_hyps = filter_positive_ev(promoted_hyps, timeframe)
         if not promoted_hyps:
-            print("   （送信対象の昇格エッジ 0 件＝今回 run はメール送信なし・データ収集のみ）")
+            print("   （送信対象の昇格エッジ 0 件＝今回 run は昇格メールなし）")
+    # 🆕 2026-09-26 観察中の候補（昇格メールの絞り込みが ON のときだけ意味がある）
+    watch_hyps = load_watch_hypotheses() if (EMAIL_PROMOTED_ONLY and promoted_hyps is not None and EMAIL_WATCH) else []
+    if EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
+        print(f"👀 観察中の候補のメール: {'ON' if EMAIL_WATCH else 'OFF（EMAIL_WATCH=0）'} — {len(watch_hyps)} 件: "
+              + (", ".join(f"{h.get('label')}({h.get('id')})" for h in watch_hyps) or "なし"))
 
     # 履歴ロード（timeframe ごとに別ファイル）
     _orig_history_file = ALERT_HISTORY_FILE
@@ -3238,6 +3289,7 @@ MarketWatch AI Alerts
         #    照合属性は build_signal_log_entry と同じ計算（固定オラクル match が読むキーのみ）。
         promoted_match = None
         gate_hit = None
+        watch_hit_id = None
         if filter_send_email and EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
             _sr_probe = compute_sr_runway(position_plan, indicators)
             _gate_probe = {
@@ -3277,9 +3329,17 @@ MarketWatch AI Alerts
                                 f"＝エッジと回避の重複時は見送り優先\n" + body)
                         print(f"    ⚠️ 回避パターン重複: {gate_hit.get('id')}")
             else:
-                filter_send_email = False
-                filter_block_reason = f"昇格エッジ非該当（promoted {len(promoted_hyps)} 件に不一致）"
-                print(f"    🔇 昇格ゲート: {filter_block_reason} → 記録のみ")
+                # 🆕 2026-09-26 観察中の候補に当てはまれば「👀観察中（未確定）」として送る
+                watch_match = match_promoted_hypothesis(watch_hyps, _gate_probe) if watch_hyps else None
+                if watch_match and watch_match.get("id") != "_gate_error":   # 照合エラーでは送らない（fail-closed）
+                    watch_hit_id = watch_match.get("id")
+                    subject = "👀観察中 " + subject
+                    body = watch_email_header(watch_match) + "\n\n" + body
+                    print(f"    👀 観察中の候補に該当: {watch_match.get('label')} ({watch_hit_id}) → 未確定として送信")
+                else:
+                    filter_send_email = False
+                    filter_block_reason = f"昇格エッジ非該当（promoted {len(promoted_hyps)} 件に不一致）"
+                    print(f"    🔇 昇格ゲート: {filter_block_reason} → 記録のみ")
 
         # 送信（--no-email 時は完全スキップ、フィルタで弾かれた場合もスキップ）
         # 🆕 2026-05-28: filter_send_email が False なら記録のみでメール送信せず
@@ -3313,6 +3373,8 @@ MarketWatch AI Alerts
             fired_at_iso=now_iso, timeframe=timeframe,
         )
         log_entry["email_sent"] = email_sent
+        if email_sent and watch_hit_id:
+            log_entry["watch_hit"] = watch_hit_id     # 🆕 2026-09-26 観察中のメールで送った印（後で成績を測る）
         # 🆕 往復ビンタ防止データを記録
         log_entry["whipsaw_check"] = {
             "is_reversal": reversal.get("is_reversal") if reversal else False,
@@ -3372,6 +3434,7 @@ MarketWatch AI Alerts
             "enabled": bool(EMAIL_PROMOTED_ONLY and promoted_hyps is not None),
             "matched": promoted_match.get("id") if promoted_match else None,
             "n_promoted": len(promoted_hyps) if promoted_hyps is not None else None,
+            "watch_matched": watch_hit_id,     # 🆕 2026-09-26 観察中の候補で送った場合のID
             # 🆕 2026-07-19: 送信メールが回避gate仮説にも該当した場合のID（警告表示の監査用）
             "avoid_matched": gate_hit.get("id") if gate_hit else None,
         }

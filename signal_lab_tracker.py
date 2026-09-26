@@ -299,6 +299,42 @@ REGISTER_ENVPROFILE_2026_09_26 = {"register": [
      "pair": "ep_fbias_mismatch"},  # 実シグナル 勝率43%・超過 −0.2pt [−6.7,+6.4] n596（対の差を読むための相手）
 ]}
 
+# 🆕 2026-09-26（4本目）**オーナー決定「成績を上げる」の①③**（拾い損ね防止・押し目買いに集中）。確定後は変更しない。
+#   診断: 合図は「でたらめな入口」と差が無く（stop-lab の偽薬）、昇格0本＝7/22 を最後にメール0通。
+#   一方、前向きで押し目買いの系統だけがプラス。
+#   ① 「避けるはず（gate）」で登録した仮説のうち、前向きで**逆にはっきりプラス**だった2本を「勝ち筋（edge）」として
+#      登録し直す。却下の判定に使ったデータを使わないよう fired_from で 2026-09-27 以降の発火だけを数える（真っさらな前向き）。
+#      根拠（6/25〜9/26・却下の棚にあった値）: 下降中の逆張り買い +0.190R［+0.038,+0.342］n349／
+#      環境ランク good +0.163R［+0.045,+0.281］n706。
+#      ⚠️ 却下の棚には同じ系統（下降トレンド全体・下降×買い・good×買い・逆張り買い全体）もあるが、重なりが大きいので
+#         代表の2本に絞る（多重比較を増やさない）。以後の自動の登録し直しは cmd_update の make_flip が行う。
+#   ③ 押し目買いを4時間足・日足に絞る（1時間足は損切り幅の中央値0.31%＝手数料が重く、RSI売られすぎ買いでも
+#      +0.088R［−0.12,+0.30］と弱い）。根拠（6/16〜9/26）: RSI売られすぎ買い 4h +0.247R［−0.033,+0.527］n116／
+#      1d +0.750R［+0.29,+1.21］n20。逆張り買い×日足は登録済み（auto_reversal_long-True_tf-1d）なので足さない。
+#   ⚠️ 押し目買いが良かったのは主に7〜8月（6月・9月はほぼ0）＝今年の相場頼みの可能性がある。だからこそ前向きで確かめる。
+#   watch=True は「👀観察中（未確定）」として4時間足のメールで届く（generate_technical_alerts.load_watch_hypotheses）。
+#   昇格すれば通常のメールへ、却下されれば自動で対象外になる。
+#   watch は押し目買いの2本（RSI売られすぎ買い×4時間足・下降中の逆張り買い）だけ＝直近60日の4時間足で約2.1通/日。
+#   環境ランク good にも付けると約4.7通/日（good だけで3.9通）＝多すぎるので付けない（前向きの検証は続ける）。
+FOCUS_FROM = "2026-09-27"
+REGISTER_FOCUS_2026_09_26 = {"register": [
+    {"id": "auto_reversal_long-True_trend-下降__flip", "label": "下降トレンド中の逆張り買い（逆向きで再登録）",
+     "kind": "edge", "filter": {"trend": "下降", "reversal_long": True, "fired_from": FOCUS_FROM},
+     "registered_at": FOCUS_FROM, "flipped_from": "auto_reversal_long-True_trend-下降", "watch": True,
+     "flip_evidence": {"n": 349, "avgR": 0.19, "rci_lo": 0.038, "rci_hi": 0.342, "window": "2026-06-25〜2026-09-26"}},
+    {"id": "auto_tier-good__flip", "label": "環境ランク good（逆向きで再登録）",
+     "kind": "edge", "filter": {"tier": "good", "fired_from": FOCUS_FROM},
+     "registered_at": FOCUS_FROM, "flipped_from": "auto_tier-good",
+     "flip_evidence": {"n": 706, "avgR": 0.163, "rci_lo": 0.045, "rci_hi": 0.281, "window": "2026-06-25〜2026-09-26"}},
+    {"id": "rsi_oversold_4h", "label": "売られすぎ逆張り買い×4時間足", "kind": "edge",
+     "filter": {"signal": "rsi_oversold_bounce", "tf": "4h"}, "registered_at": FOCUS_FROM, "watch": True,
+     "watch_evidence": {"n": 116, "avgR": 0.247, "rci_lo": -0.033, "rci_hi": 0.527, "window": "2026-06-16〜2026-09-26"}},
+    {"id": "rsi_oversold_1d", "label": "売られすぎ逆張り買い×日足", "kind": "edge",
+     "filter": {"signal": "rsi_oversold_bounce", "tf": "1d"}, "registered_at": FOCUS_FROM},
+    {"id": "revL_4h", "label": "逆張り買い×4時間足", "kind": "edge",
+     "filter": {"reversal_long": True, "tf": "4h"}, "registered_at": FOCUS_FROM},
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -398,7 +434,8 @@ def apply_holdout_bootstrap(t):
     for s in (HOLDOUT_2026_07_02["register"] + COMBO_2026_07_19["register"]
               + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
               + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]
-              + REGISTER_EXIT_2026_09_26["register"] + REGISTER_ENVPROFILE_2026_09_26["register"]):
+              + REGISTER_EXIT_2026_09_26["register"] + REGISTER_ENVPROFILE_2026_09_26["register"]
+              + REGISTER_FOCUS_2026_09_26["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
@@ -459,6 +496,76 @@ def judge(kind, fwd, min_n=PROMOTE_MIN_N):
     return "tracking"
 
 
+# 🆕 2026-09-26 ② 物差し（**オーナー決定**「成績を上げる」の②）。
+#   judge は「平均Rが0より上か」しか見ない。ところが相場全体が上げた時期は、買いならどこで入っても平均Rが
+#   プラスになる＝**相場の上げを合図の実力と見誤る**（stop-lab の偽薬＝でたらめな入口と本物の差がほぼ0）。
+#   そこで「同じ時期・同じ向き（・同じ時間足）のシグナル全体」の平均Rを並べ、その差（excess）を毎回記録する。
+#   新しく昇格するときは、この差が edge ならプラス・gate ならマイナスであることも条件にする（既存の昇格は無い＝不遡及）。
+#   ⚠️ 仮説は比べる相手の一部なので、差の幅（誤差）はここでは出さない＝差の向きだけを条件にする軽い歯止め。
+#   ⚠️ 比べる相手に銘柄の群は入れない（群そのものの上げ＝たとえば金の上昇も差に残る）。
+BASELINE_KEYS = ("tf", "fired_from", "fired_before")
+
+
+def baseline_filter(f, rows=()):
+    """比べる相手の条件＝時間足・期間はそのまま、向きは 指定→逆張り買いは買い→当てはまった行の95%以上が片方ならその向き。"""
+    b = {k: f[k] for k in BASELINE_KEYS if k in f}
+    d = f.get("direction")
+    if not d and f.get("reversal_long"):
+        d = "long"
+    rows = list(rows)
+    if not d and rows:
+        n_long = sum(1 for r in rows if "ロング" in (r.get("direction") or ""))
+        n_short = sum(1 for r in rows if "ショート" in (r.get("direction") or ""))
+        if n_long >= 0.95 * len(rows):
+            d = "long"
+        elif n_short >= 0.95 * len(rows):
+            d = "short"
+    if d in ("long", "short"):
+        b["direction"] = d
+    return b
+
+
+def baseline_excess(data, h, fwd):
+    """同じ時期・同じ向きの全体の平均Rと、仮説の前向き平均Rとの差。"""
+    since = h["registered_at"]
+    rows = [d for d in data if closed(d) and match(d, h["filter"]) and fired_date(d) >= since]
+    bf = baseline_filter(h["filter"], rows)
+    base = stats(data, bf, since=since)
+    return {"filter": bf, "n": base["n"], "avgR": base["avgR"],
+            "excess": round(fwd["avgR"] - base["avgR"], 3) if fwd["n"] and base["n"] else None}
+
+
+def beats_baseline(kind, base):
+    """新しい昇格の追加条件：edge は差がプラス、gate は差がマイナス（差が計算できないときは不合格＝保守側）。"""
+    ex = (base or {}).get("excess")
+    if ex is None:
+        return False
+    return ex > 0 if kind == "edge" else ex < 0
+
+
+# 🆕 2026-09-26 ① 拾い損ね防止（**オーナー決定**「成績を上げる」の①）。
+#   「避けるはず（gate）」で登録した仮説が前向きで逆にはっきりプラス（CI下限>0）だと judge は rejected を返すが、
+#   それは「勝ち筋が見つかった」という意味でもある。2026-09-26 まで、それを勝ち筋として登録し直す仕組みが無く、
+#   前向きで最も成績の良い仮説が「却下」の棚に眠っていた（下降中の逆張り買い +0.19R・環境ランク good +0.16R）。
+#   → 却下が決まった瞬間に、同じ条件の逆向きの仮説を登録する。**却下の判定に使ったデータは使わない**
+#     （fired_from＝翌日以降の発火だけ・registered_at も翌日）。edge が逆にはっきりマイナスなら回避(gate)として登録する。
+def _next_day(today):
+    return (datetime.date.fromisoformat(today) + datetime.timedelta(days=1)).isoformat()
+
+
+def make_flip(h, fwd, today):
+    start = _next_day(today)
+    to_edge = h["kind"] == "gate"
+    label = h["label"].replace("(回避)", "").replace("（回避）", "").strip()
+    label = label + ("（逆向きで再登録）" if to_edge else "(回避)（逆向きで再登録）")
+    f = {k: v for k, v in h["filter"].items() if k not in ("fired_from", "fired_before")}
+    f["fired_from"] = start
+    return {"id": h["id"] + "__flip", "label": label, "kind": "edge" if to_edge else "gate",
+            "filter": f, "registered_at": start, "flipped_from": h["id"],
+            "flip_evidence": {"n": fwd["n"], "avgR": fwd["avgR"], "rci_lo": fwd["rci_lo"], "rci_hi": fwd["rci_hi"],
+                              "window": f"{h['registered_at']}〜{today}"}}
+
+
 def load_tracker():
     if os.path.exists(TRACKER):
         return json.load(open(TRACKER, encoding="utf-8-sig"))
@@ -477,10 +584,14 @@ def cmd_update(args, data, today, data_full=None):
     if boot:
         print(f"🕰️ ホールドアウト検証(2026-07-02)を適用: 注記/新規登録 {boot}件")
     newly = []
+    flips = []
+    existing_ids = {x.get("id") for x in t["hypotheses"]}
     for h in t["hypotheses"]:
         dat = pick_data(h, data, data_full if data_full is not None else data)  # Q23: 拡張group仮説のみ全量
         fwd = stats(dat, h["filter"], since=h["registered_at"])
         allt = stats(dat, h["filter"])
+        base = baseline_excess(dat, h, fwd)     # 🆕 2026-09-26 ② 同じ時期・同じ向きの全体との差
+        h["baseline"] = base
         prev = h.get("status", "tracking")
         # 🆕 2026-07-03 チェックポイント検定: 毎日CIを覗く逐次検定は「たまたま越えた日」に
         #    昇格が確定してしまい実質αが膨張する。判定は前向きNが min_n の倍数
@@ -514,10 +625,19 @@ def cmd_update(args, data, today, data_full=None):
             if verdict == "rejected":
                 st = "rejected"              # 反証は従来どおり1CPで確定（保守側）
                 newly.append((h, st))
+                # 🆕 2026-09-26 ① 逆にはっきり出た＝逆向きの勝ち筋（回避）候補として登録し直す
+                fl = make_flip(h, fwd, today)
+                if fl["id"] not in existing_ids:
+                    flips.append(fl)
+                    existing_ids.add(fl["id"])
             elif verdict == "promoted":
                 # 🆕 2026-07-19 昇格入口の対称化（詳細は冒頭docstring）
                 if h.get("holdout_pass") is False:
                     h["promote_block"] = "holdout_fail"   # ライブCIのみでの昇格を禁止
+                elif not beats_baseline(h["kind"], base):
+                    # 🆕 2026-09-26 ② 相場全体の上げ下げと区別できない＝この回は不合格扱い（連続要件もリセット）
+                    h["promote_block"] = "below_baseline"
+                    h["promote_strikes"] = 0
                 else:
                     h.pop("promote_block", None)
                     h["promote_strikes"] = h.get("promote_strikes", 0) + 1
@@ -535,6 +655,14 @@ def cmd_update(args, data, today, data_full=None):
         h.setdefault("history", [])
         h["history"].append({"date": today, "fwd_n": fwd["n"], "fwd_avgR": fwd["avgR"], "fwd_rci_lo": fwd["rci_lo"]})
         h["history"] = h["history"][-30:]  # 直近30点キープ
+    for fl in flips:                           # 🆕 2026-09-26 ① 逆向きの登録（翌日以降の発火だけを数える）
+        dat = pick_data(fl, data, data_full if data_full is not None else data)
+        fwd = stats(dat, fl["filter"], since=fl["registered_at"])
+        fl["forward"], fl["alltime"], fl["status"] = fwd, stats(dat, fl["filter"]), "tracking"
+        fl["baseline"] = baseline_excess(dat, fl, fwd)
+        fl["history"] = [{"date": today, "fwd_n": fwd["n"], "fwd_avgR": fwd["avgR"], "fwd_rci_lo": fwd["rci_lo"]}]
+        t["hypotheses"].append(fl)
+        newly.append((fl, f"逆向きで再登録（{fl['flipped_from']} の却下を受けて・{fl['registered_at']} 以降を数える）"))
     t["updated_at"] = today
     save_tracker(t)
 
@@ -543,7 +671,9 @@ def cmd_update(args, data, today, data_full=None):
           f"／ edge=平均RのCI下限>0 ／ gate=平均RのCI上限<0"
           f"\n判定方式（2026-07-03〜）: 日付クラスタ補正SE＋チェックポイント検定（Nがmin_nの倍数を越えた時のみ判定＝覗き見バイアス抑制）"
           f"\n降格（2026-07-18〜）: 昇格後もチェックポイントごとに再判定し、基準割れ2回連続で tracking へ降格（再昇格可・反証⛔のみラチェット）"
-          f"\n昇格（2026-07-19〜）: 基準合格2回連続(promote_strikes)ではじめて昇格＝降格と対称。holdout不合格(False)確定の仮説はライブCIのみで昇格しない")
+          f"\n昇格（2026-07-19〜）: 基準合格2回連続(promote_strikes)ではじめて昇格＝降格と対称。holdout不合格(False)確定の仮説はライブCIのみで昇格しない"
+          f"\n物差し（2026-09-26〜）: 同じ時期・同じ向き（・同じ時間足）の全体との差（全体差）も見て、edge は差がプラス・gate は差がマイナスでないと新しく昇格しない"
+          f"\n拾い損ね防止（2026-09-26〜）: 却下が決まった仮説は、逆向き（gate→edge／edge→gate）で翌日以降の発火だけを数える形に自動で登録し直す")
     print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
     print("-" * 108)
     order = {"promoted": 0, "tracking": 1, "rejected": 2}
@@ -552,9 +682,11 @@ def cmd_update(args, data, today, data_full=None):
         rci = f"[{fwd['rci_lo']:+.2f}~{fwd['rci_hi']:+.2f}]"
         icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}[h["status"]]
         ho = f" 🏁N≥{PROMOTE_MIN_N_HOLDOUT}" if h.get("holdout_pass") else ""
+        ex = (h.get("baseline") or {}).get("excess")
+        exs = f" 全体差{ex:+.2f}" if ex is not None else ""
         print(f"{h['label']:<26}{h['kind']:>5}{h['registered_at']:>12}"
               f"{str(fwd['k'])+'/'+str(fwd['n']):>11}{fwd['pct']:>5.0f}%{fwd['avgR']:>+8.3f}{rci:>17}  {icon}"
-              f"  (全期間R {h['alltime']['avgR']:+.2f}){ho}")
+              f"  (全期間R {h['alltime']['avgR']:+.2f}){exs}{ho}")
     if newly:
         print("-" * 108)
         print("🚩 今回ステータス変化（人間レビュー＝ライブ配信/信頼度への反映を検討）:")
@@ -685,6 +817,15 @@ PLAIN_TERMS = [
 ]
 
 
+def _plain_date(s):
+    """"2026-09-27" → 「9月27日」（読めない値はそのまま）"""
+    try:
+        d = datetime.date.fromisoformat(str(s)[:10])
+        return f"{d.month}月{d.day}日"
+    except ValueError:
+        return str(s)
+
+
 def plain_name(f):
     """filter dict → 読者向けの日本語の名前（例 {"group":"metal","direction":"long"} → 「金・銀の買い」）。
     知らないキー・値は「キー=値」のまま残す（黙って消さない）。"""
@@ -695,7 +836,7 @@ def plain_name(f):
         if k in f:
             situ.append(table.get(f[k], f"{k}={f[k]}"))
     known = {"group", "ticker", "tf", "direction", "reversal_long", "signal", "signals_all", "asset_class", "family",
-             *PLAIN_SITUATION}
+             "fired_from", "fired_before", *PLAIN_SITUATION}
     situ += [f"{k}={v}" for k, v in f.items() if k not in known]
     ctx = "、".join(([scope] if scope else []) + situ)
     side = ("逆張り買い" if f.get("reversal_long") else PLAIN_FAMILY.get(f.get("family"))
@@ -715,6 +856,11 @@ def plain_name(f):
     else:
         name = f"{ctx}のシグナル" if ctx else "シグナル全般"
     note = [f"{PLAIN_TF.get(f['tf'], f['tf'])}のみ"] if "tf" in f else []
+    # 🆕 2026-09-26 期間の条件（逆向きで登録し直した仮説などが持つ）を日本語に
+    if "fired_from" in f:
+        note.append(f"{_plain_date(f['fired_from'])}以降に出たもの")
+    if "fired_before" in f:
+        note.append(f"{_plain_date(f['fired_before'])}より前に出たもの")
     if not side and not trig:
         note.append("買いも売りも")
     return name + (f"（{'／'.join(note)}）" if note else "")
