@@ -269,11 +269,13 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 | **`apply_site_frame.py`** 🆕 | サイト共通の枠を冪等に敷く（2026-09-23）。①`<style data-mw-frame>`（ナビ6+5・広告余白）②解説記事のヘッダーを標準形へ（`<h1>`入りの表紙ヘッダーは残す）③ナビを11ボタンへ（置換分は `nav-bar mwf-nav`＝ページ側CSSに依らず同じ見た目）。⚠️ 本文・記事メタ行には触らない |
 | **`inject_ads.py`** | A8.net のアフィリエイト広告を記事末へ冪等注入し、**記事ごとの候補から1つをランダム表示**する（`CREATIVES`＝素材の唯一の定義／`POOLS`＝記事→候補。`mw-ads.js` は CREATIVES から自動生成＝直接編集禁止）。🚨 **2026-09-10 に設計上の欠陥を修正**＝旧方式は PC/SP 両方を HTML に置き CSS で隠していたが、ブラウザは `display:none` の `<img>` も読むため**見えていない側の1x1計測gifまで毎回飛び、表示回数が実測で約2倍**になっていた（Chromium 実測）。新方式は選ばれた1つだけを JS で描画＝表示した分だけ計測。JS無効は `<noscript>` で候補の先頭を1つ。**「広告」ラベル必須**（景表法ステマ規制・2023-10-01 施行）。⚠️ **本文に推奨文・煽り文言を足さない**（金商法の誇大広告／投資勧誘に寄せない）。既存＝DMM株・DMM CFD・JFX株式会社（22記事）。移行は `--replace` |
 | **routine `site-qa-lint`** | 土曜10:00 JST にリンターを自動実行→`site-qa-report.md` に報告（人が気づく前に検知） |
+| **`auto_pull.py`** 🆕 | **手元の Claude Code の起動時に、手元を GitHub の最新へ自動でそろえる**（2026-09-26・オーナー指示「研究はとても大事なので作って」。手元専用＝クラウドでは何もしない）。GitHub の ZIP を1回取るだけ＝API 不使用。手元で書き換えていないファイルだけ更新／**手元で書き換えたファイルは触らず「手元だけ変更＝送ればよい」「両方で変更＝統合が必要」を見分ける**（判定は前回そろえた版の指紋＝`_auto_pull_state.json`・時刻では決めない）／GitHub 側で作るデータ（SYNC禁忌）は控えを残して最新に／`_cloud_ledger.txt` も更新。**触らない**＝`research/`・`_`始まり・`sync_to_github.py`・`mw.py`・`.sync-cache.json`。設定は `python auto_pull.py --install-hook`（`.claude/settings.local.json` の SessionStart）。テスト＝`tests/test_auto_pull.py` |
 | **`_reconcile.py`** 🆕 | ローカルと本番の差を**向き付き**で出す（ローカル専用・既定dry-run・`--apply`で取り込み・上書き前バックアップ）。このリポジトリは routine が**本番へ直接書く**ので**ローカルは構造的に遅れる**。L(ローカル)/R(本番)/B(`.sync-cache.json` の remote_sha＝前回sync時点) の3shaで「取り込み候補」と「ローカルが新しい」を判別。🚨 **時刻の新しさは正しさではない**ので、取り込む前に本番側のコミットとパッチを見せ、**追加0・削除のみ＝巻き戻しの疑い**に目印を付ける（`--patch` で中身も表示）。⚠️ 記事ミラーの遅行は従来どおり `_pull_mirror.py`（`guide-*.html` のクラウドレーン専用）|
 | **`_doctrine_check.py`＋`mw evolve`** 🆕 | 投資研究の進化ループの番人（ローカル専用・**固定オラクル扱い＝安易に緩めない**）。`research/DOCTRINE.md`（検証済み知識台帳）の数値を出典と機械突合＋事前登録簿ハッシュ＋仮説キュー状態表示。読み方はDOCTRINE冒頭のプロトコル参照（毎回全文Readしない） |
 
 - **記事公開は `python mw.py publish --file ... --category ... --emoji ... --card-title ... --desc ...`** で ②〜⑤→整合性チェック→sync→workflow起動まで一気通貫（`--dry-run` で確認）。
 - **sync 前に `python mw.py check`** を習慣に（特に SYNC禁忌の混入を自動で止められる）。
+- 🆕 **手元のセッションは起動時に `[auto_pull]` の行が文脈に入る**（auto_pull.py の結果）。**⚠️「まだ GitHub に送っていないファイル」が出ていたら、ほかの作業の前に片付ける**：「手元だけ変更」→ `mw check` → `mw sync`／「両方で変更」→ `_auto_pull_conflicts/<ファイル>`（GitHub 側の版）と手元の版を統合してから sync（`--force` で押し切らない）。取得に失敗した回は、送る前に `python auto_pull.py` をやり直す
 
 ---
 
