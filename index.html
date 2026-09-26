@@ -151,6 +151,22 @@
     body.dark .hero-title{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}
     body.dark .hero-sub{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}
     body.dark .morning-digest{background:#161b22;border-color:#30363d;border-left-color:#d4a017}
+    .rs-band{background:#fff;border:1px solid #d0d7de;border-left:4px solid #8250df;border-radius:10px;padding:16px 22px;margin-bottom:16px}
+    .rs-lead{font-size:.98rem;line-height:1.8;color:#1f2328;margin-bottom:10px}
+    .rs-stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+    .rs-stats div{flex:1 1 90px;background:#f6f8fa;border-radius:8px;padding:8px 12px}
+    .rs-stats b{display:block;font-size:1.25rem;color:#8250df}
+    .rs-stats span{font-size:.78rem;color:#57606a}
+    .rs-today{font-size:.9rem;margin-bottom:12px;line-height:1.7}
+    .rs-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    @media(max-width:700px){.rs-band{padding:14px 14px}.rs-btns{grid-template-columns:1fr 1fr}.rs-btns a{font-size:.84rem;padding:9px 6px}.rs-stats div{padding:7px 9px}.rs-stats b{font-size:1.1rem}}
+    .rs-btns a{display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 12px;border-radius:8px;border:1px solid #8250df;color:#8250df;font-weight:700;text-decoration:none;font-size:.9rem}
+    .rs-btns a.pri{background:#8250df;color:#fff}
+    body.dark .rs-band{background:#161b22;border-color:#30363d;border-left-color:#a371f7}
+    body.dark .rs-lead{color:#e6edf3}
+    body.dark .rs-stats div{background:#0d1117}
+    body.dark .rs-stats b{color:#d2a8ff} body.dark .rs-stats span{color:#8b949e}
+    body.dark .rs-btns a{border-color:#a371f7;color:#d2a8ff} body.dark .rs-btns a.pri{background:#8957e5;color:#fff}
     body.dark .md-title{color:#d4a017}
     body.dark .md-sub{color:#8b949e}
     body.dark .md-line{color:#c9d1d9}
@@ -285,14 +301,14 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div class="header-meta" style="font-size:.8rem;margin-top:2px">🕒 最終更新: 2026年9月26日 19:14 JST</div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div class="header-meta" style="font-size:.8rem;margin-top:2px">🕒 最終更新: 2026年9月26日 19:51 JST</div></div></header>
 <main>
 
   <!-- ナビゲーション -->
   <nav class="nav-bar">
     <a class="nav-btn current" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -313,7 +329,7 @@
 
 
   <!-- 🆕 指数の帯（2026-09-23） -->
-  <div class="ib-wrap" aria-label="主要指数"><div class="ib-row"><a class="ib-cell ib-sent" href="market-health.html" title="本日のマーケットセンチメント" style="background:#23863614"><span class="ib-name">本日の地合い</span><span class="ib-sent-v" style="color:#238636">😊 やや強気</span><span class="ib-sent-s">センチメント判定</span></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+3.82%）"><span class="ib-name">日経平均</span><span class="ib-price">66,364</span><span class="ib-chg up">▲1.30%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,20.0 25.0,18.4 48.0,11.9 71.0,8.3 94.0,2.0" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="2.0" r="2" fill="#1a7f37"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.42%）"><span class="ib-name">NYダウ</span><span class="ib-price">51,829</span><span class="ib-chg up">▲0.93%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,6.8 48.0,15.8 71.0,20.0 94.0,7.7" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="7.7" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.27%）"><span class="ib-name">S&amp;P500</span><span class="ib-price">7,743.41</span><span class="ib-chg up">▲0.51%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,2.0 48.0,19.4 71.0,20.0 94.0,8.3" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="8.3" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.20%）"><span class="ib-name">ナスダック</span><span class="ib-price">27,068.72</span><span class="ib-chg up">▲0.48%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,9.1 25.0,2.0 48.0,20.0 71.0,19.8 94.0,12.3" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="12.3" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.12%）"><span class="ib-name">ドル円</span><span class="ib-price">157.18</span><span class="ib-chg down">▼1.02%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,18.0 25.0,16.9 48.0,8.0 71.0,2.0 94.0,20.0" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="20.0" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-1.43%）"><span class="ib-name">金</span><span class="ib-price">4,321.20</span><span class="ib-chg up">▲0.54%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,3.6 48.0,15.7 71.0,20.0 94.0,15.1" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="15.1" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-3.52%）"><span class="ib-name">WTI原油</span><span class="ib-price">92.41</span><span class="ib-chg down">▼2.33%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,7.9 48.0,20.0 71.0,7.8 94.0,18.8" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="18.8" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-2.41%）"><span class="ib-name">ビットコイン</span><span class="ib-price">84,094</span><span class="ib-chg up">▲0.07%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,17.1 48.0,17.1 71.0,20.0 94.0,19.5" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="19.5" r="2" fill="#cf222e"/></svg></a></div><div class="ib-meta">数字は前日終値比 ・ 線は直近5営業日の推移 ・ 遅延あり</div></div>
+  <div class="ib-wrap" aria-label="主要指数"><div class="ib-row"><a class="ib-cell ib-sent" href="market-health.html" title="本日のマーケットセンチメント" style="background:#23863614"><span class="ib-name">本日の地合い</span><span class="ib-sent-v" style="color:#238636">😊 やや強気</span><span class="ib-sent-s">センチメント判定</span></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（+3.82%）"><span class="ib-name">日経平均</span><span class="ib-price">66,364</span><span class="ib-chg up">▲1.30%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,20.0 25.0,18.4 48.0,11.9 71.0,8.3 94.0,2.0" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="2.0" r="2" fill="#1a7f37"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.42%）"><span class="ib-name">NYダウ</span><span class="ib-price">51,829</span><span class="ib-chg up">▲0.93%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,6.8 48.0,15.8 71.0,20.0 94.0,7.7" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="7.7" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.27%）"><span class="ib-name">S&amp;P500</span><span class="ib-price">7,743.41</span><span class="ib-chg up">▲0.51%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,2.0 48.0,19.4 71.0,20.0 94.0,8.3" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="8.3" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.20%）"><span class="ib-name">ナスダック</span><span class="ib-price">27,068.72</span><span class="ib-chg up">▲0.48%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,9.1 25.0,2.0 48.0,20.0 71.0,19.8 94.0,12.3" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="12.3" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-0.12%）"><span class="ib-name">ドル円</span><span class="ib-price">157.18</span><span class="ib-chg down">▼1.02%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,18.0 25.0,16.9 48.0,8.0 71.0,2.0 94.0,20.0" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="20.0" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-1.43%）"><span class="ib-name">金</span><span class="ib-price">4,321.20</span><span class="ib-chg up">▲0.54%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,3.6 48.0,15.7 71.0,20.0 94.0,15.1" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="15.1" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-3.52%）"><span class="ib-name">WTI原油</span><span class="ib-price">92.41</span><span class="ib-chg down">▼2.33%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,7.9 48.0,20.0 71.0,7.8 94.0,18.8" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="18.8" r="2" fill="#cf222e"/></svg></a><a class="ib-cell" href="charts.html" title="直近5営業日の推移（-2.33%）"><span class="ib-name">ビットコイン</span><span class="ib-price">84,139</span><span class="ib-chg up">▲0.12%</span><svg class="ib-spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,2.0 25.0,17.1 48.0,17.1 71.0,20.0 94.0,18.9" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="94.0" cy="18.9" r="2" fill="#cf222e"/></svg></a></div><div class="ib-meta">数字は前日終値比 ・ 線は直近5営業日の推移 ・ 遅延あり</div></div>
 
   <!-- ヒーロー画像 -->
   <div class="hero-banner">
@@ -321,8 +337,26 @@
     <div class="hero-overlay">
       <div>
         <div class="hero-title"><span style="display:inline-block">お金の不安が消える、</span><span style="display:inline-block">毎朝の 5 分。</span></div>
-        <div class="hero-sub"><span style="display:inline-block">暮らしを楽しむための、</span><span style="display:inline-block">日本人投資家サイト</span></div>
+        <div class="hero-sub"><span style="display:inline-block">投資の「定説」を、</span><span style="display:inline-block">データで確かめる日本人投資家サイト</span></div>
       </div>
+    </div>
+  </div>
+
+
+  <div class="rs-band">
+    <div class="rs-lead">🧪 <b>このサイトがしていること</b>：投資の「定説」や売買の合図が本当に効くのかを、<b>データで確かめて記録</b>しています。
+    見つけた条件は登録してから、その後のデータで採点し直し、<b>うまくいかなかった結果も消さずに公開</b>しています。</div>
+    <div class="rs-stats">
+      <div><b>57本</b><span>登録後のデータで追っている仮説（結論はまだ）</span></div>
+      <div><b>107本</b><span>研究日誌（毎朝1本）</span></div>
+      <div><b>9本</b><span>終わった検証（記録は残す）</span></div>
+    </div>
+    <div class="rs-today">📖 最新の研究日誌（9月26日）：<a href="guide-signal-lab-110.html">MACDゴールデンクロスが「2本の移動平均線の下」で起きたとき、反発をねらう買いは勝ちやすい？【研究日誌 #110】</a><br><span style="font-size:.8rem;color:#6e7781">※ 問いの答えは記事の中で、偶然のぶれも含めて説明しています。売買のおすすめではありません。</span></div>
+    <div class="rs-btns">
+      <a class="pri" href="track-record.html#map">🗺️ いま検証中のこと</a>
+      <a href="guides.html#cat-lab">🧪 研究日誌を読む</a>
+      <a href="guide-sore-honto.html">🔎 それ、本当？ 定説を送る</a>
+      <a href="guide-how-we-research.html">🧭 はじめての方へ</a>
     </div>
   </div>
 
@@ -330,7 +364,7 @@
 
   <!-- 今朝の3行ダイジェスト＋重要イベントカウントダウン（毎回自動生成・事実とデータのみ）-->
   <div class="morning-digest">
-    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（19:14 JST 更新）</span></div>
+    <div class="md-title">🌇 今日の3行 <span class="md-sub">忙しい人のための30秒まとめ（19:51 JST 更新）</span></div>
     <div class="md-line">📈 値動きが大きい順：原油 <span class="md-down">▼2.3%</span>・日経平均 <span class="md-up">▲1.3%</span>・ドル円 <span class="md-down">▼1.0%</span>（前日比）</div>
     <div class="md-line">📅 本日の重要指標はなし。次は 🇯🇵 日銀短観（10月調査）（10/1・あと5日）</div>
     <div class="md-line">🌡️ 市場の温度：恐怖指数VIX <b>14.9</b>（落ち着いた水準）・センチメント判定は「<b>やや強気</b>」</div>
@@ -349,12 +383,12 @@
       <a href="guides.html" style="color:#1f6feb;font-size:.8rem;font-weight:600;text-decoration:none">📚 記事一覧 →</a>
     </div>
     <div style="color:#424a53">
-      ・<b>2026-09-26</b>: 📰 解説「<a href="guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html" style="color:#0969da"><b>ベッセント財務長官「強い円が望ましい」──ドル円156円台</b></a>」公開
+      ・<b>2026-09-26</b>: 🧭 解説「<a href="guide-how-we-research.html" style="color:#0969da"><b>はじめての方へ：このサイトは何をしているの？ 投資の定説をデータで確かめるしくみ</b></a>」公開
       <details style="margin-top:4px"><summary style="cursor:pointer;color:#0969da;font-size:.8rem;font-weight:600;list-style-position:inside">最近の更新をもっと見る</summary><div style="margin-top:4px">
+      ・<b>2026-09-26</b>: 📰 解説「<a href="guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html" style="color:#0969da"><b>ベッセント財務長官「強い円が望ましい」──ドル円156円台</b></a>」公開<br>
       ・<b>2026-09-26</b>: 🔬 解説「<a href="guide-company-3563-foodandlife.html" style="color:#0969da"><b>FOOD&LIFE COMPANIES（3563）を数字で見る</b></a>」公開<br>
       ・<b>2026-09-26</b>: ⛰ 解説「<a href="guide-entry-breakout.html" style="color:#0969da"><b>高値・安値のブレイクは効くのか</b></a>」公開<br>
-      ・<b>2026-09-26</b>: 🧪 解説「<a href="guide-signal-lab-110.html" style="color:#0969da"><b>MACDゴールデンクロスが「移動平均線の下」で起きたとき — 146回の前向き確認 #110</b></a>」公開<br>
-      ・<b>2026-09-25</b>: 📰 解説「<a href="guide-news-2026-09-25-trump-yen-concern-katayama-rate-check.html" style="color:#0969da"><b>【9/25】トランプが「円安懸念」表明──片山財務相が異例開示、レートチェックで158円攻防</b></a>」公開
+      ・<b>2026-09-26</b>: 🧪 解説「<a href="guide-signal-lab-110.html" style="color:#0969da"><b>MACDゴールデンクロスが「移動平均線の下」で起きたとき — 146回の前向き確認 #110</b></a>」公開
       </div></details>
     </div>
   </div>
@@ -471,11 +505,11 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:88%;background:#1a7f37"></div>
+              <div class="ai-meter-dot" style="left:85%;background:#1a7f37"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均が5日続伸し、銀行やAI半導体関連が相場をけん引している。海外市場でもS&P500などが週間で上昇しており、投資意欲は高まっている。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 日経平均は銀行とAI半導体セクターの牽引で5日続伸している。米株市場の反発やAI関連の大型契約も、投資意欲を後押ししている。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -488,11 +522,11 @@
           </div>
           <div class="ai-meter">
             <div class="ai-meter-track">
-              <div class="ai-meter-dot" style="left:80%;background:#1a7f37"></div>
+              <div class="ai-meter-dot" style="left:70%;background:#1a7f37"></div>
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> S&P500が週間でプラスとなったこと、AkamaiのAIクラウド契約締結がAI投資サイクルの継続を示唆していることが背景にある。日経平均も好調で、市場全体に前向きな雰囲気が見られる。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> S&P500は週間でプラスとなり、AI関連の大型契約も報じられている。これは市場のポジティブなセンチメントを示唆している。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
@@ -509,14 +543,14 @@
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> 米国・イランがホルムズ海峡の段階的再開を協議し、原油価格が下落。米10年債利回りは2007年以来の高水準で、金には短期的な売り圧力がかかっています。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> 米10年債利回りは2007年以来最高水準にあり、金には短期的な売り圧力がかかっています。原油価格の下落は地政学的リスクの緩和を示唆しています。</div>
         </div>
         <div class="ai-asset-card">
           <div class="ai-asset-header">
             <span class="ai-asset-icon">🪙</span>
             <div class="ai-asset-name-wrap">
               <div class="ai-asset-name">ビットコイン</div>
-              <div class="ai-asset-price">$84,094</div>
+              <div class="ai-asset-price">$84,139</div>
             </div>
             <span class="ai-asset-sentiment" style="background:#1a7f37;color:#fff">強気</span>
           </div>
@@ -526,7 +560,7 @@
             </div>
             <div class="ai-meter-labels"><span>弱気</span><span>中立</span><span>強気</span></div>
           </div>
-          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコイン現物ETFへの巨額流入が確認され、価格は8ヶ月ぶりの高値を更新しています。大手運用会社の追加購入も相場を後押しする材料です。</div>
+          <div class="ai-reason"><strong>💡 根拠:</strong> ビットコイン現物ETFへの巨額流入と、大手投資会社による追加購入が確認されています。</div>
         </div>
     </div>
   </section>
@@ -535,7 +569,7 @@
   <!-- 🆕 お金の流れ（通貨の強弱＋業種の強弱・2026-09-23） -->
   <div class="flow-row">
     <section class="cs-wrap">
-      <div class="rk-head"><h2>💪 通貨の強弱</h2><span class="rk-asof">直近24時間・主要9ペアから算出・9/26 19:14 時点</span></div>
+      <div class="rk-head"><h2>💪 通貨の強弱</h2><span class="rk-asof">直近24時間・主要9ペアから算出・9/26 19:51 時点</span></div>
       <div class="cs-box"><div class="cs-row"><span class="cs-cur">🇯🇵 日本円 <small>JPY</small></span><span class="cs-track"><span class="cs-bar pos" style="width:50.0%"></span></span><span class="cs-val up">+0.84%</span></div><div class="cs-row"><span class="cs-cur">🇦🇺 豪ドル <small>AUD</small></span><span class="cs-track"><span class="cs-bar neg" style="width:8.0%"></span></span><span class="cs-val down">-0.13%</span></div><div class="cs-row"><span class="cs-cur">🇬🇧 英ポンド <small>GBP</small></span><span class="cs-track"><span class="cs-bar neg" style="width:10.1%"></span></span><span class="cs-val down">-0.17%</span></div><div class="cs-row"><span class="cs-cur">🇪🇺 ユーロ <small>EUR</small></span><span class="cs-track"><span class="cs-bar neg" style="width:16.3%"></span></span><span class="cs-val down">-0.27%</span></div><div class="cs-row"><span class="cs-cur">🇺🇸 米ドル <small>USD</small></span><span class="cs-track"><span class="cs-bar neg" style="width:22.1%"></span></span><span class="cs-val down">-0.37%</span></div>
         <div class="cs-note">右に伸びるほど他の通貨に対して買われ、左に伸びるほど売られています。各通貨を含むペアの24時間変化率の平均です。</div>
       </div>
@@ -604,8 +638,8 @@
           <div class="card-icon icon-crypto">₿</div>
           <div><div class="card-title">暗号資産</div><div class="card-subtitle">BTC・ETH</div></div>
         </div>
-        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$84,094 <span class="up price-change">😊▲0.07%</span></span></div>
-        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,686.54 <span class="down price-change">😢▼0.15%</span></span></div>
+        <div class="price-row"><span class="price-label">Bitcoin (BTC)</span><span class="price-value">$84,139 <span class="up price-change">😊▲0.12%</span></span></div>
+        <div class="price-row"><span class="price-label">Ethereum (ETH)</span><span class="price-value">$2,689.65 <span class="down price-change">😢▼0.03%</span></span></div>
         <div class="beginner-box">ビットコインは世界最大の暗号資産で「デジタルゴールド」とも呼ばれます。イーサリアムはスマートコントラクト技術の基盤で、NFTやDeFiに使われます。値動きが大きいので注意が必要です。</div>
       </div>
     </div>
@@ -660,12 +694,12 @@
     <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
     <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
     <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
+      <li style="margin-bottom:10px">🧪 <strong><a href="track-record.html" style="color:#0969da">シグナル研究（成績と検証を隠さず公開）</a></strong> — 投資の「定説」や売買の合図が本当に効くのかを、見つけた条件を登録してから、その後のデータで確かめ直し、<strong>うまくいかなかった結果も</strong>そのまま公開しています。いま確かめていることは<a href="track-record.html#map" style="color:#0969da">「いま検証中のこと」</a>で、しくみは<a href="guide-how-we-research.html" style="color:#0969da">「はじめての方へ」</a>で見られます。</li>
       <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
       <li style="margin-bottom:10px">🩺 <strong>市場の“温度”を読む</strong> — <a href="market-health.html" style="color:#0969da">市場健康度</a>・<a href="vix.html" style="color:#0969da">VIX恐怖指数</a>・<a href="calendar.html" style="color:#0969da">経済カレンダー</a>・<a href="hot-assets.html" style="color:#0969da">出来高急増</a>を、データだけでなく<strong>「読み方・活用法」つき</strong>で。</li>
-      <li style="margin-bottom:10px">📊 <strong><a href="track-record.html" style="color:#0969da">シグナル成績を隠さず公開</a></strong> — 自動テクニカルシグナルの発火履歴と結果を、<strong>勝ちも負けも</strong>そのまま公開。実データで検証し、機能しない手法は正直に見直す姿勢を大切にしています。</li>
       <li>🚨 <a href="political-feed.html" style="color:#0969da">政治発言ライブ</a>・<a href="youtube-summary.html" style="color:#0969da">YouTube要約</a>など、忙しい個人投資家の<strong>情報収集の時間を短縮</strong>する機能も。</li>
     </ul>
-    <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
+    <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guide-how-we-research.html" style="color:#0969da">はじめての方へ（このサイトのしくみ）</a> ／ <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 
