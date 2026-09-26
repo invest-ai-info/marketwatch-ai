@@ -3,7 +3,7 @@
 publish_article.py — 解説記事公開の機械化（CLAUDE.md 8ステップの ②〜⑤ を1コマンドに集約）
 ================================================================================
 すでに書き上げた guide-*.html を渡すと、以下を「冪等に」自動実行する:
-  ② guides.html に記事カードを追加（該当カテゴリの最上段）
+  ② guides.html に記事カードを追加（該当カテゴリの最上段。入れる欄が無ければ公開を止める＝カテゴリゲート）
   ④ sync_to_github.py の SYNC_FILES に追加
   ⑤ generate_market_news.py の更新履歴(_history_items)に追加
   （③ sitemap.xml は generate_market_news.py が全guideを自動収集・再生成するため手動追加は不要になった）
@@ -86,6 +86,54 @@ def check_link_gate(filename, html, allow_missing=False):
         print(f"⚠️ リンクゲートを実行できません（{type(e).__name__}: {str(e)[:60]}）")
         return []
     return internal_link_check(html, os.path.join(SCRIPT_DIR, filename))
+
+
+# 🔒 2026-09-26 カテゴリゲート（🧮 計算ツール欄への紛れ込み47枚の恒久対策）。
+#   旧 add_to_guides は同じバッジのカードが1枚も無いと、記事一覧の最初のカード（＝計算ツール欄）の
+#   前へ黙って入れていた（出力は ℹ️ の1行だけ＝公開は成功扱い）。新シリーズの1本目がそこに入り、
+#   2本目以降もそのカードの前に続いた結果、東証19・詐欺21・企業5・エントリー2 が溜まった
+#   （09-05 に21枚で見つけ、判断待ちの間に45枚へ増えた）。→ 入れる欄が決まらなければ公開を止める。
+#   新シリーズの1本目は、guides.html に data-category="<カテゴリ名>" を付けた空の欄を先に作ればそこへ入る。
+def _guides_insert_pos(g, category):
+    """このカテゴリの新しいカードを入れる位置を返す。(位置, 説明) か、決まらなければ (None, None)。
+    ① data-category="<カテゴリ>" を宣言した欄があれば、その欄の最上段（空の欄でもよい）
+    ② 無ければ、同じバッジのカードの前（＝そのカテゴリの最上段）"""
+    sec = re.search(r'<div class="category-section"[^>]*\sdata-category="' + re.escape(category) + r'"[^>]*>', g)
+    if sec:
+        lst = re.compile(r'<div class="article-list">[ \t]*\n').search(g, sec.end())
+        nxt = g.find('<div class="category-section"', sec.end())
+        if lst and (nxt == -1 or lst.start() < nxt):
+            return lst.end(), f"欄「{category}」の最上段"
+    m = re.search(
+        r'      <a class="article-card" href="[^"]+">\s*\n\s*'
+        r'<span class="article-badge [^"]*">' + re.escape(category) + r'</span>', g)
+    if m:
+        return m.start(), f"カテゴリ「{category}」の最上段"
+    return None, None
+
+
+def check_category_gate(filename, category, guides_html):
+    """guides.html にこの記事のカードを入れる欄が決まるか。決まれば None、決まらなければエラー文。"""
+    if f'href="{filename}"' in guides_html:
+        return None                      # カード登録済み＝add_to_guides はスキップする（再実行の冪等性）
+    if _guides_insert_pos(guides_html, category)[0] is not None:
+        return None
+    import difflib
+    names = set(re.findall(r'<span class="article-badge [^"]*">([^<]*)</span>', guides_html))
+    names |= set(re.findall(r'<div class="category-section"[^>]*\sdata-category="([^"]+)"', guides_html))
+    near = difflib.get_close_matches(category, sorted(names), n=3, cutoff=0.5)
+    msg = (f"guides.html に「{category}」のカードも欄もありません。このまま進めると記事一覧の先頭"
+           f"（🧮 計算ツール欄）に紛れ込むため止めました。")
+    if near:
+        msg += f"\n   → 打ち間違いなら、近いカテゴリ名: {' ／ '.join(near)}"
+    msg += ("\n   → 新しいシリーズなら、guides.html に空の欄を先に作ってから再実行してください。例:"
+            f'\n      <div class="category-section" id="cat-xxx" data-category="{category}">'
+            f'\n        <div class="category-title">（絵文字） 欄の見出し</div>'
+            f'\n        <div class="article-list">'
+            f'\n        </div>'
+            f'\n      </div>'
+            "\n     （上部のジャンプ欄 cat-jump にも1行足す）")
+    return msg
 
 
 def check_date_gate(date, allow_backdate=False):
@@ -234,22 +282,14 @@ def add_to_guides(file, category, emoji, card_title, desc, date, readmin, badge,
         f'        </div>\n'
         f'      </a>\n'
     )
-    # 該当カテゴリの最初のカードの「前」に挿入（＝そのカテゴリの最上段＝最新）
-    pat = re.compile(
-        r'      <a class="article-card" href="[^"]+">\s*\n\s*'
-        r'<span class="article-badge [^"]*">' + re.escape(category) + r'</span>'
-    )
-    m = pat.search(g)
-    if m:
-        g2 = g[:m.start()] + card + g[m.start():]
-        print(f"  ✅ guides.html: カード追加（カテゴリ「{category}」の最上段）")
-    else:
-        m2 = re.search(r'      <a class="article-card" href="', g)
-        if not m2:
-            print("  ⚠️ guides.html: 挿入位置が見つからない、スキップ")
-            return False
-        g2 = g[:m2.start()] + card + g[m2.start():]
-        print(f"  ℹ️ guides.html: カテゴリ「{category}」が無いため記事一覧の最上段に挿入")
+    # 該当カテゴリの最上段（＝最新）に挿入。決まらなければ入れない
+    # （旧版は記事一覧の先頭＝計算ツール欄へ黙って入れていた。通常は check_category_gate が先に止める）
+    pos, where = _guides_insert_pos(g, category)
+    if pos is None:
+        print(f"  🚫 guides.html: カテゴリ「{category}」を入れる欄が無いため追加しません")
+        return False
+    g2 = g[:pos] + card + g[pos:]
+    print(f"  ✅ guides.html: カード追加（{where}）")
     if not dry:
         _write("guides.html", g2)
     return True
@@ -379,6 +419,12 @@ def main():
     print("────────────────────────────")
     if not a.dry and not a.no_reconcile:
         reconcile_from_main()   # 🔒 編集の前に必ず main 最新を取り込む（巻き戻し事故をコードで防止）
+    # 🔒 カテゴリゲート＝取り込み後の guides.html で判定（main で作ったばかりの欄を見落とさない）。
+    #    記事HTMLや一覧を書き換える前に止める
+    _cat_err = check_category_gate(a.file, a.category, _read("guides.html"))
+    if _cat_err:
+        print(f"🚫 カテゴリゲート: {_cat_err}")
+        sys.exit(1)
     # 🆕 スマホ横はみ出し防止CSSを注入（未注入なら）＝公開記事は必ずモバイル最適化
     if not a.dry and _MF_BLOCK and _MF_MARKER not in html and "</head>" in html:
         html = html.replace("</head>", _MF_BLOCK + "</head>", 1)
