@@ -11,7 +11,8 @@ signals-log.json から統計を集計し、track-record.html を生成する。
   - エクイティカーブ（模擬：等額 $1000 ずつ取引と仮定）
   - 直近 30 件のシグナル詳細テーブル
 
-実取引ログ（my-trades.json）が存在すれば、それも統合表示する（P3.5 用）。
+※ 実取引ログ（my-trades.json）の表示は 2026-09-26 に廃止（オーナー判断「続けて記録できないので消す」）。
+   ファイル自体は週次の自己レビュー等で使うので残す。このページには載せない。
 """
 import os
 import sys
@@ -27,7 +28,6 @@ if hasattr(sys.stderr, "reconfigure"):
 
 JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
-TRADES_LOG_FILE = "my-trades.json"  # P3.5 用、なくても OK
 TRACKER_FILE = "signal-lab-tracker.json"  # 🏆エッジ番付タブ用（なくても OK＝タブは案内文のみ）
 OUTPUT_FILE = "track-record.html"
 
@@ -246,90 +246,6 @@ def render_equity_curve_data(entries):
         labels.append(e.get("outcome_resolved_at", "")[:10])
         values.append(round(equity, 2))
     return labels, values
-
-
-def render_my_trades_section(trades):
-    """実取引ログがあれば表示。なければプレースホルダ"""
-    if not trades:
-        return """
-      <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;padding:24px;margin-bottom:32px;text-align:center">
-        <div style="font-size:1rem;color:#57606a;margin-bottom:8px">📒 実取引ログは準備中です</div>
-        <div style="font-size:.85rem;color:#6e7781">サラリーマン投資家として AI シグナルをどう活用したか、実際の取引記録を順次公開予定です。</div>
-      </div>"""
-
-    # 取引集計
-    closed_trades = [t for t in trades if t.get("status") == "closed"]
-    open_trades = [t for t in trades if t.get("status") == "open"]
-    if closed_trades:
-        wins = sum(1 for t in closed_trades if (t.get("pnl_pct") or 0) > 0)
-        losses = sum(1 for t in closed_trades if (t.get("pnl_pct") or 0) < 0)
-        win_rate = wins / len(closed_trades) * 100 if closed_trades else 0
-        total_pnl_pct = sum((t.get("pnl_pct") or 0) for t in closed_trades)
-    else:
-        wins = losses = 0
-        win_rate = 0
-        total_pnl_pct = 0
-
-    trade_rows = []
-    for t in sorted(trades, key=lambda x: x.get("entry_at", ""), reverse=True)[:30]:
-        status = t.get("status", "open")
-        status_emoji = "🟢 OPEN" if status == "open" else "✅ CLOSED"
-        status_color = "#1a7f37" if status == "open" else "#0969da"
-        pnl = t.get("pnl_pct")
-        pnl_html = f'<span style="color:{"#1a7f37" if (pnl or 0) > 0 else "#cf222e"};font-weight:700">{pnl:+.2f}%</span>' if pnl is not None else "—"
-        trade_rows.append(f"""
-        <tr>
-          <td style="white-space:nowrap">{(t.get("entry_at","")[:10])}</td>
-          <td><b>{t.get("symbol","")}</b></td>
-          <td style="text-align:center">{t.get("direction","")[:1]}</td>
-          <td style="text-align:right">{t.get("entry_price","-")}</td>
-          <td style="text-align:right">{t.get("exit_price","-")}</td>
-          <td style="text-align:right">{pnl_html}</td>
-          <td style="font-size:.82rem">{t.get("note","")[:30]}</td>
-          <td style="color:{status_color};white-space:nowrap">{status_emoji}</td>
-        </tr>""")
-
-    return f"""
-      <div style="background:linear-gradient(135deg,#ddf4ff,#ffffff);border:1px solid #54aeff;border-radius:12px;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:1.2rem;color:#1E3A6E;margin-bottom:12px">💼 実取引ログ（サラリーマン投資家モデル）</h2>
-        <p style="font-size:.85rem;color:#57606a;margin-bottom:16px">
-          AI シグナルを参考に、平日仕事中に行った実際の取引を記録しています。
-          金額はプライバシー保護のため % 表示にしています。
-        </p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px">
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">クローズ済</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#1f2328">{len(closed_trades)}</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">勝率</div>
-            <div style="font-size:1.4rem;font-weight:700;color:{'#1a7f37' if win_rate>=50 else '#cf222e'}">{win_rate:.1f}%</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">通算 P&L</div>
-            <div style="font-size:1.4rem;font-weight:700;color:{'#1a7f37' if total_pnl_pct>=0 else '#cf222e'}">{total_pnl_pct:+.2f}%</div>
-          </div>
-          <div style="background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:.75rem;color:#57606a">オープン中</div>
-            <div style="font-size:1.4rem;font-weight:700;color:#9a6700">{len(open_trades)}</div>
-          </div>
-        </div>
-        <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-          <thead><tr style="background:#f6f8fa;border-bottom:2px solid #d0d7de">
-            <th style="padding:8px;text-align:left">日付</th>
-            <th style="padding:8px;text-align:left">銘柄</th>
-            <th style="padding:8px">L/S</th>
-            <th style="padding:8px;text-align:right">エントリー</th>
-            <th style="padding:8px;text-align:right">クローズ</th>
-            <th style="padding:8px;text-align:right">P&L%</th>
-            <th style="padding:8px">メモ</th>
-            <th style="padding:8px">状態</th>
-          </tr></thead>
-          <tbody>{''.join(trade_rows) or '<tr><td colspan="8" style="text-align:center;color:#6e7781;padding:16px">取引記録なし</td></tr>'}</tbody>
-        </table>
-        </div>
-      </div>"""
 
 
 def build_dashboard_section(signals, tab_id, tab_label, chart_canvas_id, note=""):
@@ -1221,7 +1137,7 @@ def build_research_map_section():
                 "<p>一覧を作れませんでした。次回の更新で表示されます。</p></div>")
 
 
-def build_html(signals, trades, tracker=None):
+def build_html(signals, tracker=None):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
     signals_1h = [s for s in signals if s.get("timeframe") == "1h"]
@@ -1287,7 +1203,6 @@ def build_html(signals, trades, tracker=None):
     eq_1h_labels, eq_1h_values = render_equity_curve_data(signals_1h)
     eq_1d_labels, eq_1d_values = render_equity_curve_data(signals_1d)
 
-    my_trades_html = render_my_trades_section(trades)
     last_updated = datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")
     count_all = len(signals)
     count_4h = len(signals_4h)
@@ -1303,11 +1218,11 @@ def build_html(signals, trades, tracker=None):
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>📊 シグナル品質トラッキング - MarketWatch AI</title>
-  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。サラリーマン投資家の実取引ログも公開。">
+  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。登録した仮説の、その後の成績も公開。">
   <link rel="canonical" href="https://marketwatch-jp.com/track-record.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="📊 シグナル品質トラッキング - MarketWatch AI">
-  <meta property="og:description" content="4H テクニカルシグナルの的中率・実取引ログを完全公開。AI 投資の透明性を追求。">
+  <meta property="og:description" content="4H テクニカルシグナルの的中率を完全公開。AI 投資の透明性を追求。">
   <meta property="og:url" content="https://marketwatch-jp.com/track-record.html">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-FMVFEV7Q2E');</script>
@@ -1429,7 +1344,7 @@ def build_html(signals, trades, tracker=None):
     <h1>📊 シグナル品質トラッキング</h1>
     <div class="page-desc">
       MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
-      AI シグナルの透明性を追求し、サラリーマン投資家として実際にどう活用しているかを公開しています。
+      AI シグナルの透明性を追求し、勝ちも負けもすべて記録しています。
       <span style="color:#6e7781">（最終更新: {last_updated}）</span>
     </div>
   </div>
@@ -1451,7 +1366,6 @@ def build_html(signals, trades, tracker=None):
     <b>R:R 期待値</b> は「リスク 1 単位あたり何倍リターンしたか」の指標で、+0.3R 以上が安定。
   </div>
 
-  {my_trades_html}
 
   <div class="tab-bar">
     <button class="tab-btn" data-tab="all">🌐 全体（{count_all}）</button>
@@ -1479,7 +1393,7 @@ def build_html(signals, trades, tracker=None):
   <div class="tab-pane" id="pane-data">
     <h2>📥 生データのダウンロード</h2>
     <p style="font-size:.93rem;color:#57606a;margin-bottom:20px">
-      シグナルログ・実取引ログの生データを CSV / JSON でダウンロードできます。
+      シグナルログの生データを CSV / JSON でダウンロードできます。
       Excel / Google Sheets / Python pandas で自由に分析してください。
       <br>毎回のワークフロー実行で自動更新されています（最終更新: {last_updated}）。
     </p>
@@ -1489,20 +1403,10 @@ def build_html(signals, trades, tracker=None):
         <div class="dl-card-title">signals-log.csv</div>
         <div class="dl-card-desc">全シグナル発火履歴（曜日・時間帯フィールド付き）<br>Excel で開くだけで分析可能</div>
       </a>
-      <a href="my-trades.csv" download class="dl-card">
-        <div class="dl-card-icon">💼</div>
-        <div class="dl-card-title">my-trades.csv</div>
-        <div class="dl-card-desc">実取引履歴（エントリー曜日・決済曜日フィールド付き）</div>
-      </a>
       <a href="signals-log.json" download class="dl-card">
         <div class="dl-card-icon">🗃️</div>
         <div class="dl-card-title">signals-log.json</div>
         <div class="dl-card-desc">構造化生データ。プログラム処理向き</div>
-      </a>
-      <a href="my-trades.json" download class="dl-card">
-        <div class="dl-card-icon">💼</div>
-        <div class="dl-card-title">my-trades.json</div>
-        <div class="dl-card-desc">実取引 JSON。プログラム処理向き</div>
       </a>
     </div>
     <h3 style="margin-top:32px">📦 月次バックアップ（GitHub Releases）</h3>
@@ -1686,13 +1590,12 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
 def main():
     print("📊 track-record.html を生成中...")
     signals = load_json(SIGNALS_LOG_FILE)
-    trades = load_json(TRADES_LOG_FILE)
     tracker = load_json(TRACKER_FILE) or None   # 🏆番付タブ用（Actions実行時はリポジトリ直下に必ずある）
     n_all = len(signals)
     signals = [s for s in signals if not is_weekend_closed_fire(s)]
-    print(f"  シグナル: {len(signals)} 件（週末閉場中の発火 {n_all - len(signals)} 件を集計から除外）、実取引: {len(trades)} 件")
+    print(f"  シグナル: {len(signals)} 件（週末閉場中の発火 {n_all - len(signals)} 件を集計から除外）")
 
-    html = build_html(signals, trades, tracker)
+    html = build_html(signals, tracker)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     size_kb = os.path.getsize(OUTPUT_FILE) / 1024

@@ -84,7 +84,7 @@ def test_text_is_escaped():
 
 def test_track_record_page_has_tab_and_direct_link():
     sig = [s for s in G.load_json(G.SIGNALS_LOG_FILE) if not G.is_weekend_closed_fire(s)][:50]
-    html = G.build_html(sig, [], G.load_json(G.TRACKER_FILE) or None)
+    html = G.build_html(sig, G.load_json(G.TRACKER_FILE) or None)
     assert html.count('data-tab="map"') == 1 and html.count('id="pane-map"') == 1
     assert "location.hash" in html and "hashchange" in html
     assert html.index('data-tab="map"') < html.index('data-tab="banzuke"')
