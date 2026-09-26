@@ -21,7 +21,7 @@
 | market-health.html | 市場健康度（VIX/恐怖&強欲/バフェット/CAPE） | update-market-news.yml |
 | hot-assets.html | 出来高急増ランキング | update-market-news.yml |
 | guides.html | 解説記事一覧 | 手動更新 |
-| **track-record.html** ⭐ | シグナル成績ダッシュボード（7 タブ） | technical-alerts.yml |
+| **track-record.html** ⭐ | シグナル成績ダッシュボード（10 タブ。🗺️ いま検証中のこと＝`research_map.py` が毎回データから組み立てる・`#map` で直リンク） | technical-alerts.yml |
 | youtube-summary.html | 投資系 YouTube 要約 | update-youtube-summary.yml |
 | **political-feed.html** 🆕 | 政治発言ライブフィード | political-alerts.yml |
 

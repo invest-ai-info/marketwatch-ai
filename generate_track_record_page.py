@@ -1245,6 +1245,17 @@ def build_banzuke_section(tracker):
 </div>"""
 
 
+def build_research_map_section():
+    """🗺️ いま検証中のこと（research_map.py）。一覧の組み立てに失敗しても成績ページ全体は落とさない。"""
+    try:
+        import research_map
+        return research_map.build_pane()
+    except Exception as e:  # noqa: BLE001 — 成績ページは4時間ごとの本番出力。地図の不具合で止めない
+        print(f"  ⚠️ 研究の地図を作れませんでした: {e}")
+        return ('<div class="tab-pane" id="pane-map"><h2>🗺️ いま検証中のこと</h2>'
+                "<p>一覧を作れませんでした。次回の更新で表示されます。</p></div>")
+
+
 def build_html(signals, trades, tracker=None):
     # timeframe ごとに分割
     signals_4h = [s for s in signals if s.get("timeframe", "4h") == "4h"]
@@ -1275,6 +1286,7 @@ def build_html(signals, trades, tracker=None):
     pane_quality = build_quality_analysis_section(signals)
     pane_loss = build_outcome_analysis_section(signals)
     pane_banzuke = build_banzuke_section(tracker)
+    pane_map = build_research_map_section()
 
     # 敗因カテゴリチャート用データ
     loss_cat_counts = defaultdict(int)
@@ -1481,6 +1493,7 @@ def build_html(signals, trades, tracker=None):
     <button class="tab-btn active" data-tab="4h">🕓 4H 足（{count_4h}）</button>
     <button class="tab-btn" data-tab="1h">⏱️ 1H 足（{count_1h}）</button>
     <button class="tab-btn" data-tab="1d">📆 日足（{count_1d}）</button>
+    <button class="tab-btn" data-tab="map">🗺️ いま検証中のこと</button>
     <button class="tab-btn" data-tab="banzuke">🏆 エッジ番付</button>
     <button class="tab-btn" data-tab="analytics">📅 時間・曜日分析</button>
     <button class="tab-btn" data-tab="quality">🧬 シグナル品質分析</button>
@@ -1492,6 +1505,7 @@ def build_html(signals, trades, tracker=None):
   {pane_4h}
   {pane_1h}
   {pane_1d}
+  {pane_map}
   {pane_banzuke}
   {pane_analytics}
   {pane_quality}
@@ -1562,17 +1576,24 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
 
 <script>
   // タブ切替
+  function showTab(target) {{
+    if (!document.getElementById(`pane-${{target}}`)) return false;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === `pane-${{target}}`));
+    // Chart.js は表示後に resize しないと canvas サイズが 0 のまま
+    window.dispatchEvent(new Event('resize'));
+    return true;
+  }}
   document.querySelectorAll('.tab-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{
-      const target = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === `pane-${{target}}`));
-      // Chart.js は表示後に resize しないと canvas サイズが 0 のまま
-      window.dispatchEvent(new Event('resize'));
-    }});
+    btn.addEventListener('click', () => showTab(btn.dataset.tab));
   }});
-  // 初期状態：4H 足タブ active（本番配信シグナルの成績を既定表示）
-  document.getElementById('pane-4h').classList.add('active');
+  // 初期状態：4H 足タブ active（本番配信シグナルの成績を既定表示）。
+  // track-record.html#map のようにタブ名が付いていれば、そのタブを開く（研究日誌の一覧などからの直リンク用）
+  const _hashTab = () => {{ try {{ return decodeURIComponent(location.hash.slice(1)); }} catch (e) {{ return ''; }} }};
+  if (!showTab(_hashTab())) document.getElementById('pane-4h').classList.add('active');
+  window.addEventListener('hashchange', () => {{
+    if (showTab(_hashTab())) document.querySelector('.tab-bar').scrollIntoView({{behavior: 'smooth'}});
+  }});
 
   // エクイティカーブ生成ヘルパー
   function makeEquityChart(canvasId, labels, values, color) {{
