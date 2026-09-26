@@ -71,6 +71,11 @@ STOP_LABEL = {"A10": "ATRの1.0倍", "A15": "ATRの1.5倍（いまの方式）",
 SYN_STEPS = W.SYN_STEPS
 # 前向きに判定する比較（キー＝"1d|族|方式"）。探索で「差がある」になったものは自動で加わる。
 FWD_REGISTERED = {"1d|mr|A30": "2026-09-26 結果を見た後の登録（オーナー指示）: 逆張りは損切りを ATR3倍に"}
+# 🆕 2026-09-26（夜）4時間足も前向きに判定する（**オーナー決定「成績を上げる」の③＝押し目買いに集中**）。
+#   探索での4時間足の差 A30−A15 +0.051R［+0.01,+0.09］（日足の表の「4時間足」列）。これまで 4時間足の前向きの取引は
+#   split したまま捨てていた。決まりは日足と同じ（lab_forward：件数100ごと・95%幅・差0.10R以上・合格2回連続）。
+#   ⚠️ 差 0.10R 未満なら前向きでも合格にならない（決まりは緩めない）＝「同じ向きだが小さい」は「まだ判断できない」と出る。
+FWD_REGISTERED_4H = {"4h|mr|A30": "2026-09-26 オーナー決定（押し目買いに集中）: 4時間足でも逆張りは損切りを ATR3倍に"}
 
 
 def run_sl(A, i, sl_dist, tp):
@@ -156,7 +161,7 @@ def key_of(F, s):
     return f"1d|{F}|{s}"
 
 
-def evaluate(ts1d, ts4h, pl1d, pl4h, fwd1d=None, prev_forward=None, today=None):
+def evaluate(ts1d, ts4h, pl1d, pl4h, fwd1d=None, prev_forward=None, today=None, fwd4h=None):
     fam = lambda ts, F: [t for t in ts if t["fam"] == F]
     primary = []
     for F in ("tf", "mr"):
@@ -203,6 +208,12 @@ def evaluate(ts1d, ts4h, pl1d, pl4h, fwd1d=None, prev_forward=None, today=None):
                 forward[k]["registered"] = FWD_REGISTERED.get(k, "探索で「差がある」")
             else:
                 forward[k] = {"n": d.get("n", 0), "now": d, "state": "（探索で差なし＝参考表示）"}
+    if fwd4h is not None:
+        for k, note in FWD_REGISTERED_4H.items():
+            _, F, s = k.split("|")
+            d = paired(fam(fwd4h, F), s, cluster=LF.fwd_cluster)
+            forward[k] = LF.step((prev_forward or {}).get(k), d, 1, today)   # 期待の向き＝ATR3倍が良い（+）
+            forward[k]["registered"] = note
     return {"primary": primary, "baseline": baseline, "forward": forward}
 
 
@@ -279,13 +290,13 @@ def main():
     all1d, pl1d_all = build(f1, "1d", fixed=fixed)
     all4h, pl4h_all = build(f4, "4h") if f4 else ([], [])   # 4時間足は自分の足の大きさで固定％を決める（下の注）
     ts1d, fwd1d = LF.split(all1d)
-    ts4h, _ = LF.split(all4h)
+    ts4h, fwd4h = LF.split(all4h)
     pl1d, _ = LF.split(pl1d_all)
     pl4h, _ = LF.split(pl4h_all)
     today = pd.Timestamp.now(tz="Asia/Tokyo").strftime("%Y-%m-%d")
-    res = evaluate(ts1d, ts4h, pl1d, pl4h, fwd1d, LF.load_prev(a.json), today)
+    res = evaluate(ts1d, ts4h, pl1d, pl4h, fwd1d, LF.load_prev(a.json), today, fwd4h=fwd4h if f4 else None)
     out = {"asof": today, "fwd_from": str(LF.FWD_FROM.date()), "n_1d": len(ts1d), "n_4h": len(ts4h),
-           "n_fwd_1d": len(fwd1d), "fixed_pct": fixed, **res}
+           "n_fwd_1d": len(fwd1d), "n_fwd_4h": len(fwd4h), "fixed_pct": fixed, **res}
     if a.json:
         json.dump(RL._jsonable(out), open(a.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
     md = report_md(res, today, len(ts1d), len(ts4h), fixed)
