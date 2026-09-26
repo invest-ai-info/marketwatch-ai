@@ -65,6 +65,12 @@ SYNC_FORBIDDEN = {
     # 🆕 2026-07-31 アーカイブ2種（basename でも止める＝research/ プレフィックス無しで
     # 書かれた場合の保険。ディレクトリ規則は上の検査1の research/ 分岐が担う）
     "DOCTRINE_ARCHIVE.md", "hypothesis_queue_archive.md",
+    # 🆕 2026-09-26 研究ラボの出力（GitHub の Actions が生成・前向きの判定の履歴を持つ＝ローカルから push 禁止。
+    #   古い版で上書きすると積み上げた前向きの判定が消える）。オーナー指示で Claude が追加。
+    "exit-lab.json", "exit-lab.md",            # 出口の相性ラボ（exit-lab.yml・日曜）
+    "exit-wall-lab.json", "exit-wall-lab.md",  # 出口の壁ラボ（exit-research.yml・日曜）
+    "stop-lab.json", "stop-lab.md",            # 損切りラボ（exit-research.yml・日曜）
+    "regime-lab.json", "regime-lab.md",        # 環境の相性ラボ（regime-lab.yml・手動）
 }
 
 errors = []
