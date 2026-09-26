@@ -60,14 +60,14 @@ SERIES = [
         "key": "scam",
         "glob": "guide-scam-*.html",
         "label": "投資詐欺から身を守る",
-        "index": "guides.html",
+        "index": "guides.html#cat-scam",
         "exclude": set(),
     },
     {
         "key": "tse",
         "glob": "guide-tse-*.html",
         "label": "東証のしくみ",
-        "index": "guides.html",
+        "index": "guides.html#cat-tse",
         "exclude": set(),
     },
     {
