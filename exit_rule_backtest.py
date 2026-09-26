@@ -337,8 +337,10 @@ def _mean_ci(vals, groups):
     return m, m - c * se, m + c * se
 
 
-def _mean_se(vals, groups):
-    """平均・標準誤差・t の臨界値（_mean_ci の中身。2つの集まりの差を出すときにも使う）。"""
+def _mean_se_legacy(vals, groups):
+    """（旧・2026-09-26 まで）平均・標準誤差・t の臨界値。V1+V2−V12 をそのまま使う。
+    ⚠️ まとまりが少ないと幅が狭く出すぎる＝2026-09-26 オーナー決定で既定を _mean_se_safe に切り替えた（下の _mean_se）。
+       古い結果を再現するときだけ使う（exit_lab.py --legacy-se）。"""
     a = np.array(vals, float)
     n, m = len(a), float(a.mean())
     if n < 2:
@@ -393,6 +395,13 @@ def _mean_se_safe(vals, groups):
         return m, float("inf"), 1.0
     se = math.sqrt(v * G / (G - 1)) / n
     return m, se, t975(G - 1)
+
+
+# 🔁 2026-09-26 オーナー決定「安全側の計算に切り替えて」: 既定の幅を保守版にする。
+#   _mean_ci / diff / diff2 はここを呼ぶ＝出口の相性ラボ・環境の相性ラボ・出口の仮説の前向き（evaluate_forward）が
+#   すべて保守版になる。根拠＝較正（細かい作り物5回・出口の相性ラボの全18銘柄の表）で、偶然の「目立つ」が
+#   旧 1.2マス/回 → 保守版 0.2マス/回（資産クラス別 0.6 → 0）。旧は _mean_se_legacy。
+_mean_se = _mean_se_safe
 
 
 def summarize(rs, groups, gross=None, bars=None):

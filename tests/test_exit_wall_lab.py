@@ -104,6 +104,18 @@ def test_mirror_short_is_long_math():
     assert M["h"][0] == -99.0 and M["l"][0] == -101.0 and M["bbu"][0] == -98.0 and M["c"][0] == -100.5
 
 
+def test_default_se_is_safe_and_not_narrower():
+    # 2026-09-26 オーナー決定: 既定の幅は安全側（旧い出し方より狭くならない）
+    import exit_rule_backtest as X
+    assert X._mean_se is X._mean_se_safe
+    rng = np.random.default_rng(0)
+    vals = rng.standard_normal(600)
+    groups = [(f"t{i % 6}", 2006 + (i // 6) % 11) for i in range(600)]   # 銘柄6×年11
+    _m, se_new, _c = X._mean_se(vals, groups)
+    _m, se_old, _c = X._mean_se_legacy(vals, groups)
+    assert se_new >= se_old - 1e-12
+
+
 def test_dist_buckets():
     assert W.dist_bucket(None) == "≥2.67R/なし"
     assert W.dist_bucket(0.5) == "<0.67R"
