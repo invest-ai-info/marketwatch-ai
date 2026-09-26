@@ -23,7 +23,7 @@ model: sonnet
 | index.html | メイン（自動生成、触らない） |
 | guides.html | 解説記事一覧（記事追加時はカード追加） |
 | guide-*.html | 個別解説記事 25+ 件（あなたの主戦場） |
-| track-record.html | シグナル成績（自動生成、触らない） |
+| track-record.html | 🧪 シグナル研究（自動生成、触らない。リンク文は「シグナル研究」＝旧名「シグナル成績」は使わない） |
 | political-feed.html | 政治発言フィード（自動生成、触らない） |
 
 ## 既存記事カテゴリ

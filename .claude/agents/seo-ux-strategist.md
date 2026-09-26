@@ -24,7 +24,7 @@ model: sonnet
 | index.html | メイン | 🔥 最重要、ブランド名 + 主要キーワード |
 | guides.html | 解説記事一覧 | 🔥 「投資 解説」「FX 入門」等の中核流入 |
 | guide-*.html | 個別解説 25+ 件 | 🔥 ロングテール SEO の主戦場 |
-| track-record.html | シグナル成績 | 🟡 独自データ、被リンク獲得期待 |
+| track-record.html | 🧪 シグナル研究（旧名「シグナル成績」） | 🟡 独自データ、被リンク獲得期待 |
 | political-feed.html | 政治発言フィード | 🟡 速報性、検索よりは直接アクセス |
 | calendar.html / charts.html / vix.html / market-health.html / hot-assets.html | データ系 | 🟢 補助、ナビ経由のアクセス |
 | youtube-summary.html | YouTube 要約 | 🟢 SEO よりはユーザー価値 |
