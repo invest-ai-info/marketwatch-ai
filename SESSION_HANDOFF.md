@@ -12,7 +12,7 @@
 - ② トラッカー `REGISTER_EXIT_2026_09_26`: 順張り×blocked（回避）。⚠️ 実シグナル（6/3〜）は逆向き（+0.058R vs 非blocked −0.021R）と開示
 - ③ （→ 下の🔁で本体を切り替えたので出し直しは終了）`exit_lab.py --safe-se`（公開用 exit-lab.json は上書き不可）。**公開中の「目立つ」12マスのうち7マスが残る**（全部「−2σタッチ買い×シャンデリア損切りは大きく悪い」）。消えた5マスの例＝4h コモディティ安値割れ売り（幅 [−0.44,−0.36]→[−0.84,+0.09]）。較正（作り物・各5回）: いまの幅は細かい値動きでも偶然 1.2マス/回・保守版 0.2マス/回。**記事側の判定を保守版に切り替えるかはオーナー判断（未）**
 - ④ `stop_lab.py`: 順張りは損切り1〜3ATR・固定％で差 ±0.015R 以内（「何％でもいい」はほぼ本当）。逆張りは広いほど良い（ATR3倍−1.5倍 +0.046R p=0.001・前後半・4時間足とも同じ・偽薬では出ない・0.10R未満で基準外）→ **結果を見た後の登録として前向きへ**（`FWD_REGISTERED`）。ATR基準 vs 固定％は差なし
-- オーナー側の宿題に追加: `check_site_consistency.py` の SYNC_FORBIDDEN に `exit-wall-lab.*`／`stop-lab.*`／`regime-lab.*` も（`exit-lab.*` と同じ）
+- ✅ 済（2026-09-26・オーナー指示で Claude が代行）: `check_site_consistency.py` の SYNC_FORBIDDEN に `exit-lab.*`／`exit-wall-lab.*`／`stop-lab.*`／`regime-lab.*` を追加。ゲートファイルの Claude 変更なので automation-health §④ が一度赤くなる（signal_lab_verify.py と同じ日）
 
 ## 🆕 2026-09-26: 「出口の壁ラボ」＝近い壁で早めに利確／壁が無ければ伸ばす、は期待値を上げるか（オーナー指示）
 - **`exit_wall_lab.py`＋`.github/workflows/exit-wall-lab.yml`**（作業ブランチ push か手動だけ）。損切りは全方式 1.5ATR 固定・利確だけ比べる。壁＝入値より上のいちばん近い水準（直近20/60本高値・山・25/75/200本線・+2σ）。方式 P0 いまの方式／P1 壁で早め／P2 伸ばす（最高値−3ATR を追う）／P3 壁で半分＋残り伸ばす／P4 場合分け／P5 期待値で選ぶ（〜2015学習→2016〜）。**偽薬**＝ランダムな入口に同じ方式を当てて相場全体の上げ下げ分を差し引く。結果 `exit-wall-lab.json`／`.md`
@@ -57,7 +57,7 @@
 - **9/27 13:30 JST**: exit-lab の日曜実行／最初の「出口の相性の回」（1d `bb_lower_touch` long）が signal-lab-ledger・REVIEW.md・labnotes に出たか。手元で `exit_lab_verify.py`（`--signal-claims` 付き）と `signal_lab_verify.py` を回して緑を確かめる。良い組と悪い組の両方・「偶然」「前向き」の断り・資産クラス別・「合う／おすすめ」と読める文が無いか。＋ entry #03 ＋ トラッカー表の新しい改行
 
 ### オーナー側の宿題
-- `check_site_consistency.py`（ゲートファイル）の SYNC_FORBIDDEN に `exit-lab.json`／`exit-lab.md` を足す。ローカルで sync する前に pull する
+- ~~`check_site_consistency.py`（ゲートファイル）の SYNC_FORBIDDEN に `exit-lab.json`／`exit-lab.md` を足す~~ → ✅ 2026-09-26 Claude が代行（研究ラボの出力もまとめて）。ローカルで sync する前に pull する
 
 ## 🎉 2026-09-22: キュー駆動レーンを全て完結させ、サイト全体の品質を一括で底上げ
 
