@@ -300,6 +300,37 @@ def check_us_monthly_indicators():
                         warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が中旬(8〜16日)から外れる＝BLS公式で要確認")
 
 
+def check_guides_sections(guides_html):
+    """guides.html: data-category を宣言した欄と、カードのバッジが一致するか（2026-09-26 新設）。
+    🚨 旧 publish_article は入れる欄が無いと記事一覧の先頭（🧮 計算ツール欄）へ黙って入れており、
+       東証・詐欺・企業・エントリーの47枚が1か月溜まった。公開側はカテゴリゲートで止めるようにしたが、
+       手作業の編集など publish_article を通らない紛れ込みもここで捕まえる。
+       「解説」のように複数の欄で使うバッジがあるので、宣言した欄だけを見る（宣言の無い欄は混在を許す）。"""
+    tags = list(re.finditer(r'<div class="category-section"[^>]*>', guides_html))
+    bounds = [m.start() for m in tags] + [len(guides_html)]
+    secs, home = [], {}
+    for i, m in enumerate(tags):
+        sid = re.search(r'\bid="([^"]+)"', m.group(0))
+        sid = sid.group(1) if sid else f"欄{i + 1}"
+        dc = re.search(r'\sdata-category="([^"]+)"', m.group(0))
+        dc = dc.group(1) if dc else None
+        cards = re.findall(r'<a class="article-card" href="([^"]+)">\s*<span class="article-badge [^"]*">([^<]*)</span>',
+                           guides_html[m.start():bounds[i + 1]])
+        secs.append((sid, dc, cards))
+        if dc:
+            if dc in home:
+                errors.append(f"🚨 guides.html: data-category「{dc}」が #{home[dc]} と #{sid} の2か所で宣言されている")
+            home.setdefault(dc, sid)
+    for sid, dc, cards in secs:
+        for href, badge in cards:
+            if badge == dc:
+                continue
+            if dc is not None or badge in home:
+                where = f"欄 #{sid}" + (f"（{dc}）" if dc else "")
+                to = f"#{home[badge]} へ移す" if badge in home else "正しい欄へ移す（無ければ欄を作る）"
+                errors.append(f"🚨 guides.html: 「{badge}」のカード {href} が {where} に紛れ込んでいる → {to}")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -464,6 +495,9 @@ def main():
 
     # 7. 米月次指標の欠落・重複検査（2026-09-11 新設・米CPI 日付誤りの再発防止）
     check_us_monthly_indicators()
+
+    # 8. guides.html の欄とカードの対応（2026-09-26 新設・計算ツール欄への紛れ込み47枚の再発防止）
+    check_guides_sections(guides_html)
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
