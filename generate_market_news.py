@@ -5710,6 +5710,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 📰 解説「<a href="guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html" style="color:#0969da"><b>ベッセント財務長官「強い円が望ましい」──ドル円156円台</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 🔬 解説「<a href="guide-company-3563-foodandlife.html" style="color:#0969da"><b>FOOD&LIFE COMPANIES（3563）を数字で見る</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: ⛰ 解説「<a href="guide-entry-breakout.html" style="color:#0969da"><b>高値・安値のブレイクは効くのか</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 🧪 解説「<a href="guide-signal-lab-110.html" style="color:#0969da"><b>MACDゴールデンクロスが「移動平均線の下」で起きたとき — 146回の前向き確認 #110</b></a>」公開'},
