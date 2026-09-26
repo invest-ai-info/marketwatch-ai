@@ -775,7 +775,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <li><strong>断定・煽りに注意</strong>：「必ず上がる」「今すぐ買え」式の断定は鵜呑みにしない。</li>
       <li><strong>“なぜそう言えるのか”を見る</strong>：結論より根拠（データ・ロジック）を確認すると学びになります。</li>
     </ul>
-    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">情報に流されない損切りの技術</a> ／ <a href="track-record.html" style="color:#0969da">当サイトのシグナル成績（実データ）</a></p>
+    <p style="font-size:.9rem;color:#57606a;margin-bottom:8px">▶ あわせて読む：<a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="guide-loss-cut.html" style="color:#0969da">情報に流されない損切りの技術</a> ／ <a href="track-record.html" style="color:#0969da">当サイトのシグナル研究（実データ）</a></p>
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 本ページはAIによる要約・紹介であり、特定銘柄の売買推奨や投資助言ではありません。要約に誤りがある場合があります。正確な情報は元動画でご確認ください。</p>
   </div>
 
