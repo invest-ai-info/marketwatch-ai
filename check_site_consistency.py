@@ -316,7 +316,19 @@ def main():
     # クラウド routine が GitHub 側で公開・管理する記事シリーズ。ローカルに無い／SYNC_FILES 非登録が
     # 正常なので、ローカル publish 向けの検査（SYNC_FILES登録・リンク切れ・ナビ）は誤検知になる→除外。
     # カードの巻き戻し検知は check_automation_health.py §③（毎朝の番人）が別途担保する。
-    CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-", "guide-proverb-")
+    # 🆕 2026-09-23: tse/scam/company の3レーンを追加（いずれも routine が GitHub 側で公開。
+    #    ミラー取り込み後に「SYNC_FILES 未登録」53件の誤検知が出て発覚）。
+    CLOUD_PREFIXES = ("guide-news-", "guide-signal-lab-", "guide-proverb-",
+                      "guide-tse-", "guide-scam-", "guide-company-")
+    # 接頭辞を持たないクラウド公開記事（autodraft の投資心理＝guide-survivorship-bias 等・総目次）は
+    # 名前で判別できない→**台帳で判別**する。台帳＝リモートのクラウドスタブ sync_to_github.py の
+    # SYNC_FILES（publish_article.py が公開のたびに追記）を `_pull_mirror.py` が取り込み時に
+    # `_cloud_ledger.txt` へ書き出したもの。ミラーと同時に更新されるので、ミラーで入ってきた記事は
+    # 必ず台帳にも載る（名前の手書き列挙は足し忘れが穴になるのでしない）。
+    cloud_ledger = set()
+    if _exists("_cloud_ledger.txt"):
+        cloud_ledger = {l.strip() for l in _read("_cloud_ledger.txt").splitlines()
+                        if l.strip() and not l.startswith("#")}
     checked = 0
     for gf in guide_files:
         html = _read(gf)
@@ -343,29 +355,33 @@ def main():
         #    さらに棚卸ししたところ、既存 247本が3層未満だった。
         # 🔑 判定はクラス名ではなく**位置**で行う（時期とレーンでマークアップが違い、
         #    クラス名で見ると「あるのに無い」と誤判定する）。修正は `python apply_disclaimer.py --apply`。
-        if not gf.startswith(CLOUD_PREFIXES):
-            _k = 'data-disclaimer="kinsho-v1"'
-            _a = html.find("<article")
-            _ae = html.find("</article>")
-            if _a < 0 or _ae < 0:
-                _a, _ae = html.find("<main"), html.find("</main>")
-            _h1 = html.find("<h1", _a) if _a >= 0 else -1
-            _f, _fe = html.find("<footer"), html.find("</footer>")
-            _got = {"上部バナー": False, "本文末": False, "フッター": False}
-            _i = html.find(_k)
-            while _i >= 0:
-                if _a >= 0 and _h1 > _a and _a < _i < _h1:
-                    _got["上部バナー"] = True
-                elif _a >= 0 and _ae > _a and _a < _i < _ae:
-                    _got["本文末"] = True
-                elif _f >= 0 and _fe > _f and _f < _i < _fe:
-                    _got["フッター"] = True
-                _i = html.find(_k, _i + 1)
-            _lack = [k for k, v in _got.items() if not v]
-            if _lack:
-                warnings.append(f"{gf}: 免責が三層でない（欠け: {'・'.join(_lack)}）"
-                                f" → `python apply_disclaimer.py --apply`")
-        if sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES):
+        # 🆕 2026-09-23: CLOUD_PREFIXES の除外を外した。免責は生成レーンを問わない不変条件
+        #    （上の kinsho-v1 有無と同じ理屈）で、apply_disclaimer.py はクラウド記事も対象にしている。
+        #    クラウド記事で欠けていたら直す先は GitHub 側のテンプレ＝ここで気づけないと直せない。
+        _k = 'data-disclaimer="kinsho-v1"'
+        _a = html.find("<article")
+        _ae = html.find("</article>")
+        if _a < 0 or _ae < 0:
+            _a, _ae = html.find("<main"), html.find("</main>")
+        _h1 = html.find("<h1", _a) if _a >= 0 else -1
+        _f, _fe = html.find("<footer"), html.find("</footer>")
+        _got = {"上部バナー": False, "本文末": False, "フッター": False}
+        _i = html.find(_k)
+        while _i >= 0:
+            if _a >= 0 and _h1 > _a and _a < _i < _h1:
+                _got["上部バナー"] = True
+            elif _a >= 0 and _ae > _a and _a < _i < _ae:
+                _got["本文末"] = True
+            elif _f >= 0 and _fe > _f and _f < _i < _fe:
+                _got["フッター"] = True
+            _i = html.find(_k, _i + 1)
+        _lack = [k for k, v in _got.items() if not v]
+        if _lack:
+            warnings.append(f"{gf}: 免責が三層でない（欠け: {'・'.join(_lack)}）"
+                            f" → `python apply_disclaimer.py --apply`")
+        # SYNC_FORBIDDEN（guide-new-books.html 等）は登録してはいけない側＝未登録が正しい
+        if (sync_known and gf not in sync_files and not gf.startswith(CLOUD_PREFIXES)
+                and gf not in cloud_ledger and gf not in SYNC_FORBIDDEN):
             errors.append(f"{gf}: SYNC_FILES に未登録（sync されずライブに出ない）")
         # sitemap.xml は generate_market_news.py が全guideを自動収集して再生成するため、
         # 個別チェック不要（漏れない設計）。ここでは検査しない。
