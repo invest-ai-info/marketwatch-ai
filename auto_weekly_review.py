@@ -192,7 +192,7 @@ def render_banzuke_section(banzuke):
 <h2>🏆 エッジ番付の変動</h2>
 <p>検証中の仮説を力士に見立てた公開リーグ「エッジ番付」の先週の動きです。昇進・降格は事前に宣言した統計ルール
 （前向き成績の信頼区間チェック）による自動判定で、人間の裁量は入りません。現在の番付は
-<a href="track-record.html">📊 シグナル成績</a> の「🏆 エッジ番付」タブで確認できます。</p>
+<a href="track-record.html">🧪 シグナル研究</a> の「🏆 エッジ番付」タブで確認できます。</p>
 {table}
 <div class="info-box">現在の勢力図：幕内（昇格中）{banzuke['n_makuuchi']} 本 ／ 十両（昇格候補）{banzuke['n_juryo']} 本 ／ 全 {banzuke['n_total']} 仮説を追跡中</div>
 <p style="font-size:.78rem;color:#6e7781;margin-top:6px;line-height:1.6">⚠️ 番付は過去データの検証結果を整理したものであり、将来の成績を保証するものではありません。特定の売買を推奨するものでもありません。</p>
@@ -450,7 +450,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>

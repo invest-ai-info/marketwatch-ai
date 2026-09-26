@@ -298,4 +298,5 @@ SYNC_FILES = [
     "guide-entry-breakout.html",
     "guide-company-3563-foodandlife.html",
     "guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html",
+    "guide-how-we-research.html",
 ]

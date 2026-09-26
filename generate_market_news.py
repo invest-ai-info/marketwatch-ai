@@ -1778,7 +1778,7 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -2863,7 +2863,7 @@ def build_hot_assets_html(hot_data, now_jst):
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -3179,7 +3179,7 @@ def build_calendar_html(now_jst):
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn current" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -3572,7 +3572,7 @@ def build_preview_html(now_jst):
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -4113,7 +4113,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -4451,7 +4451,7 @@ def build_charts_html(hist, now_jst):
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -5075,6 +5075,85 @@ def build_indicator_preview_banner(now_jst):
   <a href="preview.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#cf222e,#bc4c00);color:#fff;border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:.9rem;font-weight:600;line-height:1.6">{emoji} <span style="background:rgba(255,255,255,.22);border-radius:6px;padding:1px 8px">{when0}</span> {flag.get(e0["country"], "")} {e0["name"]}（{date0}）{more} — 結果別シナリオを見る →</a>'''
     except Exception as e:
         print(f"  ⚠️ indicator preview banner 生成スキップ: {e}")
+        return ""
+
+
+def _latest_signal_lab():
+    """公開中（noindex でない）の研究日誌の本数と、番号がいちばん大きい1本の (ファイル名, 題名, 公開日)。"""
+    import glob as _glob
+    found = []
+    for path in _glob.glob("guide-signal-lab-*.html"):
+        m = re.match(r"guide-signal-lab-(\d+)\.html$", os.path.basename(path))
+        if not m:
+            continue
+        with open(path, encoding="utf-8") as f:
+            h = f.read()
+        if '<meta name="robots" content="noindex' in h:
+            continue
+        found.append((int(m.group(1)), path, h))
+    if not found:
+        return 0, None
+    num, path, h = max(found)
+    t = re.search(r"<title>(.*?)</title>", h, re.S)
+    title = re.sub(r"\s*[-|｜]\s*MarketWatch AI\s*$", "", html.unescape(t.group(1)).strip()) if t else f"研究日誌 #{num}"
+    d = re.search(r'"datePublished"\s*:\s*"(\d{4})-(\d{2})-(\d{2})', h)
+    date = f"{int(d.group(2))}月{int(d.group(3))}日" if d else ""
+    return len(found), (os.path.basename(path), title, date)
+
+
+def research_band_title(title, fn=""):
+    """トップに出す研究日誌の題名＝「？」までの問いと【研究日誌 #N】だけ（2026-09-26 法務チェック・グレー1）。
+    題名の後半には勝率などの数字が入ることが多い（例「4時間足だけ63.9%で優位」）＝トップ（広告のあるページ）に
+    成績の数字を出さない方針が日によって自動で破られるので、問いだけにする。数字が残るなら番号だけにする。"""
+    mnum = re.search(r"【研究日誌 #\d+】", title)
+    num = mnum.group(0) if mnum else ""
+    if not num:
+        mf = re.search(r"guide-signal-lab-(\d+)\.html", fn or "")
+        num = f"【研究日誌 #{int(mf.group(1)):03d}】" if mf else ""
+    head = title.split("？", 1)[0] + "？" if "？" in title else ""
+    shown = head + num if head else ""
+    if not shown or re.search(r"\d+(?:\.\d+)?\s*[%％]|勝率|ポイント", shown):
+        shown = num.strip("【】") or "研究日誌"
+    return shown
+
+
+def build_research_band():
+    """🧪 このサイトがしていること（トップのヒーロー画像の直後・2026-09-26 オーナー判断「研究を主軸に」）。
+    数字は research_map（🗺️ いま検証中のこと と同じ組み立て）、最新の研究日誌はファイルから毎回拾う。
+    ⚠️ 成績の数字（勝率など）はトップに出さない＝「このサイトで勝てる」と読ませない（法務チェック 2026-09-26）。
+    組み立てに失敗しても空文字を返す＝トップ全体は落とさない。"""
+    try:
+        import research_map
+        m = research_map.collect()
+        n_journal, latest = _latest_signal_lab()
+        today = ""
+        if latest:
+            fn, title, date = latest
+            when = f"（{date}）" if date else ""
+            today = (f'<div class="rs-today">📖 最新の研究日誌{when}：'
+                     f'<a href="{html.escape(fn)}">{html.escape(research_band_title(title, fn))}</a>'
+                     f'<br><span style="font-size:.8rem;color:#6e7781">※ 問いの答えは記事の中で、偶然のぶれも含めて説明しています。'
+                     f'売買のおすすめではありません。</span></div>')
+        return f"""
+  <div class="rs-band">
+    <div class="rs-lead">🧪 <b>このサイトがしていること</b>：投資の「定説」や売買の合図が本当に効くのかを、<b>データで確かめて記録</b>しています。
+    見つけた条件は登録してから、その後のデータで採点し直し、<b>うまくいかなかった結果も消さずに公開</b>しています。</div>
+    <div class="rs-stats">
+      <div><b>{m["n_active"]}本</b><span>登録後のデータで追っている仮説（結論はまだ）</span></div>
+      <div><b>{n_journal}本</b><span>研究日誌（毎朝1本）</span></div>
+      <div><b>{len(m["ended"])}本</b><span>終わった検証（記録は残す）</span></div>
+    </div>
+    {today}
+    <div class="rs-btns">
+      <a class="pri" href="track-record.html#map">🗺️ いま検証中のこと</a>
+      <a href="guides.html#cat-lab">🧪 研究日誌を読む</a>
+      <a href="guide-sore-honto.html">🔎 それ、本当？ 定説を送る</a>
+      <a href="guide-how-we-research.html">🧭 はじめての方へ</a>
+    </div>
+  </div>
+"""
+    except Exception as e:  # noqa: BLE001 — トップは本番出力。帯の不具合で止めない
+        print(f"  ⚠️ 研究の帯を作れませんでした: {e}")
         return ""
 
 
@@ -5704,12 +5783,15 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     indicator_preview_banner = build_indicator_preview_banner(now_jst)
     # 🆕 今朝の3行ダイジェスト＋重要イベントカウントダウン（2026-06-11）
     morning_digest = build_morning_digest_banner(now_jst, data, label)
+    # 🆕 🧪 このサイトがしていること（2026-09-26 オーナー判断＝研究を主軸に。数字と最新の研究日誌は毎回自動）
+    research_band = build_research_band()
     # 🆕 ⚡最新ニュース・ライブフィード（2026-07-09・news-ticker.json を閲覧時にJSで取得＝常に最新）
     news_ticker_section = build_news_ticker_section()
     # 🆕 📰 更新履歴：手動エントリ＋週次自動エントリを「日付降順」に並べ、最新5件のみ表示。
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 🧭 解説「<a href="guide-how-we-research.html" style="color:#0969da"><b>はじめての方へ：このサイトは何をしているの？ 投資の定説をデータで確かめるしくみ</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 📰 解説「<a href="guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html" style="color:#0969da"><b>ベッセント財務長官「強い円が望ましい」──ドル円156円台</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: 🔬 解説「<a href="guide-company-3563-foodandlife.html" style="color:#0969da"><b>FOOD&LIFE COMPANIES（3563）を数字で見る</b></a>」公開'},
         {"date": "2026-09-26", "line": '・<b>2026-09-26</b>: ⛰ 解説「<a href="guide-entry-breakout.html" style="color:#0969da"><b>高値・安値のブレイクは効くのか</b></a>」公開'},
@@ -6265,6 +6347,22 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     body.dark .hero-title{{color:#79c0ff;text-shadow:0 1px 3px rgba(13,17,23,.9)}}
     body.dark .hero-sub{{color:#e6edf3;text-shadow:0 1px 2px rgba(13,17,23,.9)}}
     body.dark .morning-digest{{background:#161b22;border-color:#30363d;border-left-color:#d4a017}}
+    .rs-band{{background:#fff;border:1px solid #d0d7de;border-left:4px solid #8250df;border-radius:10px;padding:16px 22px;margin-bottom:16px}}
+    .rs-lead{{font-size:.98rem;line-height:1.8;color:#1f2328;margin-bottom:10px}}
+    .rs-stats{{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}}
+    .rs-stats div{{flex:1 1 90px;background:#f6f8fa;border-radius:8px;padding:8px 12px}}
+    .rs-stats b{{display:block;font-size:1.25rem;color:#8250df}}
+    .rs-stats span{{font-size:.78rem;color:#57606a}}
+    .rs-today{{font-size:.9rem;margin-bottom:12px;line-height:1.7}}
+    .rs-btns{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}}
+    @media(max-width:700px){{.rs-band{{padding:14px 14px}}.rs-btns{{grid-template-columns:1fr 1fr}}.rs-btns a{{font-size:.84rem;padding:9px 6px}}.rs-stats div{{padding:7px 9px}}.rs-stats b{{font-size:1.1rem}}}}
+    .rs-btns a{{display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 12px;border-radius:8px;border:1px solid #8250df;color:#8250df;font-weight:700;text-decoration:none;font-size:.9rem}}
+    .rs-btns a.pri{{background:#8250df;color:#fff}}
+    body.dark .rs-band{{background:#161b22;border-color:#30363d;border-left-color:#a371f7}}
+    body.dark .rs-lead{{color:#e6edf3}}
+    body.dark .rs-stats div{{background:#0d1117}}
+    body.dark .rs-stats b{{color:#d2a8ff}} body.dark .rs-stats span{{color:#8b949e}}
+    body.dark .rs-btns a{{border-color:#a371f7;color:#d2a8ff}} body.dark .rs-btns a.pri{{background:#8957e5;color:#fff}}
     body.dark .md-title{{color:#d4a017}}
     body.dark .md-sub{{color:#8b949e}}
     body.dark .md-line{{color:#c9d1d9}}
@@ -6323,7 +6421,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
   <nav class="nav-bar">
     <a class="nav-btn current" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -6349,11 +6447,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <div class="hero-overlay">
       <div>
         <div class="hero-title"><span style="display:inline-block">お金の不安が消える、</span><span style="display:inline-block">毎朝の 5 分。</span></div>
-        <div class="hero-sub"><span style="display:inline-block">暮らしを楽しむための、</span><span style="display:inline-block">日本人投資家サイト</span></div>
+        <div class="hero-sub"><span style="display:inline-block">投資の「定説」を、</span><span style="display:inline-block">データで確かめる日本人投資家サイト</span></div>
       </div>
     </div>
   </div>
 
+{research_band}
   <!-- センチメントは帯の左端の1マスへ移した（2026-09-23・数字の二重表示をやめる） -->
 
 {morning_digest}
@@ -6471,12 +6570,12 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
     <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
     <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
+      <li style="margin-bottom:10px">🧪 <strong><a href="track-record.html" style="color:#0969da">シグナル研究（成績と検証を隠さず公開）</a></strong> — 投資の「定説」や売買の合図が本当に効くのかを、見つけた条件を登録してから、その後のデータで確かめ直し、<strong>うまくいかなかった結果も</strong>そのまま公開しています。いま確かめていることは<a href="track-record.html#map" style="color:#0969da">「いま検証中のこと」</a>で、しくみは<a href="guide-how-we-research.html" style="color:#0969da">「はじめての方へ」</a>で見られます。</li>
       <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
       <li style="margin-bottom:10px">🩺 <strong>市場の“温度”を読む</strong> — <a href="market-health.html" style="color:#0969da">市場健康度</a>・<a href="vix.html" style="color:#0969da">VIX恐怖指数</a>・<a href="calendar.html" style="color:#0969da">経済カレンダー</a>・<a href="hot-assets.html" style="color:#0969da">出来高急増</a>を、データだけでなく<strong>「読み方・活用法」つき</strong>で。</li>
-      <li style="margin-bottom:10px">📊 <strong><a href="track-record.html" style="color:#0969da">シグナル成績を隠さず公開</a></strong> — 自動テクニカルシグナルの発火履歴と結果を、<strong>勝ちも負けも</strong>そのまま公開。実データで検証し、機能しない手法は正直に見直す姿勢を大切にしています。</li>
       <li>🚨 <a href="political-feed.html" style="color:#0969da">政治発言ライブ</a>・<a href="youtube-summary.html" style="color:#0969da">YouTube要約</a>など、忙しい個人投資家の<strong>情報収集の時間を短縮</strong>する機能も。</li>
     </ul>
-    <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
+    <p style="font-size:.86rem;color:#57606a;margin-bottom:8px">▶ はじめての方は <a href="guide-how-we-research.html" style="color:#0969da">はじめての方へ（このサイトのしくみ）</a> ／ <a href="guides.html" style="color:#0969da">解説記事一覧</a> ／ <a href="about.html" style="color:#0969da">運営者情報</a> もどうぞ。</p>
     <p style="font-size:.8rem;color:#6e7781;margin:0">※ 当サイトは情報提供を目的としており、特定銘柄の売買推奨や投資助言ではありません。投資判断はご自身の責任で行ってください。</p>
   </div>
 

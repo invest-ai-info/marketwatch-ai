@@ -430,7 +430,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
   <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-  <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
   <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
   <a class="nav-btn current" href="guides.html">📚 解説記事</a>
   <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -495,7 +495,7 @@ footer a{{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}}
 {summary_html}
 
 <div class="info-box">
-本レポートは <a href="track-record.html">📊 シグナル成績ダッシュボード</a> と同じデータソース（signals-log.json + my-trades.json）から月次集計したものです。詳細な日別・時間帯別分析はダッシュボード側でご確認ください。
+本レポートは <a href="track-record.html">🧪 シグナル研究のページ</a> と同じデータソース（signals-log.json + my-trades.json）から月次集計したものです。詳細な日別・時間帯別分析はダッシュボード側でご確認ください。
 </div>
 
 <div class="warning-box">

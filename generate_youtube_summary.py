@@ -744,7 +744,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>

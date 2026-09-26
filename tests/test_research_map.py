@@ -129,6 +129,89 @@ def test_plain_japanese_only_indicator_names_remain():
     assert not others, others
 
 
+
+# ── トップの「このサイトがしていること」の帯・はじめての方へ・ナビの名前（2026-09-26 オーナー判断「研究を主軸に」）
+def test_research_band_counts_published_journal_and_picks_latest():
+    import glob
+    import re
+    import generate_market_news as M
+    n, latest = M._latest_signal_lab()
+    pub = []
+    for p in glob.glob("guide-signal-lab-*.html"):
+        mm = re.match(r"guide-signal-lab-(\d+)\.html$", p)
+        if mm and '<meta name="robots" content="noindex' not in open(p, encoding="utf-8").read():
+            pub.append((int(mm.group(1)), p))
+    assert n == len(pub) and latest[0] == max(pub)[1]
+    band = M.build_research_band()
+    assert 'href="track-record.html#map"' in band and 'href="guide-how-we-research.html"' in band
+    assert "勝率" not in band                      # トップに成績の数字は出さない（法務チェック）
+
+
+def test_research_band_never_breaks_the_top_page():
+    import generate_market_news as M
+    orig = R.collect
+
+    def boom(*a, **k):
+        raise RuntimeError("壊れた")
+    R.collect = boom
+    try:
+        assert M.build_research_band() == ""
+    finally:
+        R.collect = orig
+
+
+def test_start_page_is_linked_ad_free_and_plain():
+    import inject_ads as I
+    name = "guide-how-we-research.html"
+    assert name in I.DENY_EXACT
+    assert f'href="{name}"' in open("guides.html", encoding="utf-8").read()
+    assert f'href="{name}"' in R.build_pane()
+    page = open(name, encoding="utf-8").read()
+    assert page.count('data-disclaimer="kinsho-v1"') >= 3
+    assert not C.check_html(page), C.check_html(page)
+
+
+def test_nav_label_for_track_record_is_the_same_everywhere():
+    # ナビの名前の単一の真実は apply_site_frame.NAV_BUTTONS。生成スクリプトのナビも同じ名前であること
+    import glob
+    import re
+    import apply_site_frame as F
+    label = dict(F.NAV_BUTTONS)["track-record.html"]
+    bad = []
+    for p in glob.glob("*.py") + ["guides.html", "about.html", "contact.html", "privacy.html", "holdings.html"]:
+        for m in re.finditer(r'<a class="nav-btn(?: current)?" href="track-record\.html">([^<]*)</a>',
+                             open(p, encoding="utf-8").read()):
+            if m.group(1) != label:
+                bad.append((p, m.group(1)))
+    assert not bad, bad
+
+
+def test_top_band_title_never_shows_win_rates():
+    # 法務チェック（2026-09-26 グレー1）: トップ（広告のあるページ）に研究日誌の題名の勝率を出さない
+    import re
+    import generate_market_news as M
+    cases = {
+        "4時間足だけ63.9%で優位？ 時間足の比較【研究日誌 #086】": "研究日誌 #086",
+        "株価指数68.6%から38.8%に急落【研究日誌 #100】": "研究日誌 #100",
+        "ゴールデンクロスは買いの合図？ 勝率の比較【研究日誌 #008】": "ゴールデンクロスは買いの合図？【研究日誌 #008】",
+    }
+    for title, want in cases.items():
+        assert M.research_band_title(title) == want, (title, M.research_band_title(title))
+    import glob
+    for p in glob.glob("guide-signal-lab-*.html"):
+        t = re.search(r"<title>(.*?)</title>", open(p, encoding="utf-8").read(), re.S)
+        if t:
+            shown = M.research_band_title(t.group(1), p)
+            assert not re.search(r"\d+(?:\.\d+)?\s*[%％]|勝率|ポイント", shown), (p, shown)
+
+
+def test_track_record_hides_ai_lessons_and_repeatability():
+    # 法務チェック（2026-09-26 黒）: AI が書いた「教訓」「再現性」は公開ページに出さない（データは残す）
+    sig = [s for s in G.load_json(G.SIGNALS_LOG_FILE) if not G.is_weekend_closed_fire(s)]
+    pane = G.build_outcome_analysis_section(sig)
+    for w in ("教訓", "再現性", "積極的", "サイズアップ"):
+        assert w not in pane, w
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

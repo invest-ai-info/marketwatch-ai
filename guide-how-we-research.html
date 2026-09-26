@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>はじめての方へ：MarketWatch AI は何をしているサイト？ 投資の「定説」をデータで確かめるしくみ - MarketWatch AI</title>
+  <meta name="description" content="このサイトは、投資の定説や売買の合図が本当に効くのかを、実際の記録で確かめて公開しています。確かめ方を先に決める・登録した日より後のデータだけで採点する・うまくいかなかった結果も残す、の3つのきまりと、どこで何が見られるかを、はじめての方向けに説明します。">
+  <meta name="keywords" content="投資 定説 検証,テクニカル分析 検証,売買シグナル 成績,バックテスト 前向き,投資 データ 確かめる">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-how-we-research.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="はじめての方へ：MarketWatch AI は何をしているサイト？ 投資の「定説」をデータで確かめるしくみ | MarketWatch AI">
+  <meta property="og:description" content="このサイトは、投資の定説や売買の合図が本当に効くのかを、実際の記録で確かめて公開しています。確かめ方を先に決める・登録した日より後のデータだけで採点する・うまくいかなかった結果も残す、の3つのきまりと、どこで何が見られるかを、はじめての方向けに説明します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-how-we-research.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "はじめての方へ：MarketWatch AI は何をしているサイト？ 投資の「定説」をデータで確かめるしくみ",
+  "description": "このサイトは、投資の定説や売買の合図が本当に効くのかを、実際の記録で確かめて公開しています。確かめ方を先に決める・登録した日より後のデータだけで採点する・うまくいかなかった結果も残す、の3つのきまりと、どこで何が見られるかを、はじめての方向けに説明します。",
+  "url": "https://marketwatch-jp.com/guide-how-we-research.html",
+  "datePublished": "2026-09-26",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MarketWatch AI",
+    "url": "https://marketwatch-jp.com/"
+  }
+}
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1100px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.85rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.3rem;color:#2C4F8F;margin-top:32px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:14px 18px;margin:16px 0;font-size:.92rem;color:#1f6feb}
+    .info-box::before{content:"💡 ";font-weight:700}
+    .disclaimer-banner{background:#ffebe9;border:2px solid #cf222e;border-radius:8px;padding:14px 18px;margin:0 0 22px;font-size:.9rem;color:#cf222e;font-weight:600;text-align:center}
+    /* ── ロードマップ専用 ── */
+    .rm-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 8px}
+    .rm-ov{display:block;border:1px solid #d0d7de;border-radius:10px;padding:12px 14px;background:#fff;text-decoration:none;transition:all .15s}
+    .rm-ov:hover{border-color:#0969da;background:#ddf4ff;text-decoration:none}
+    .rm-ov-num{font-size:.72rem;font-weight:700;color:#fff;background:#0969da;border-radius:999px;padding:2px 9px}
+    .rm-ov-title{font-size:.88rem;font-weight:700;color:#24292f;margin-top:8px;line-height:1.4}
+    .rm-step{background:#fff;border:1px solid #d0d7de;border-radius:12px;padding:22px 24px;margin:18px 0;scroll-margin-top:16px}
+    .rm-step-head{display:flex;align-items:center;gap:14px}
+    .rm-step-num{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#0969da,#1f6feb);color:#fff;font-weight:700;font-size:1.15rem;display:flex;align-items:center;justify-content:center}
+    .rm-step-title{font-size:1.15rem;font-weight:700;color:#1f6feb;line-height:1.4}
+    .rm-step-why{font-size:.9rem;color:#57606a;margin:12px 0 16px}
+    .rm-step-why strong{color:#1a7f37}
+    .rm-lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:10px}
+    .rm-lesson{display:flex;align-items:center;gap:11px;padding:11px 14px;border:1px solid #d0d7de;border-radius:8px;background:#f6f8fa;text-decoration:none;transition:all .15s}
+    .rm-lesson:hover{border-color:#0969da;background:#ddf4ff;text-decoration:none}
+    .rm-lesson-no{flex:0 0 auto;font-size:.8rem;font-weight:700;color:#0969da;background:#fff;border:1px solid #d0d7de;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+    .rm-lesson-txt{flex:1;min-width:0}
+    .rm-lesson-title{font-size:.9rem;font-weight:600;color:#24292f;line-height:1.4}
+    .rm-lesson-meta{font-size:.72rem;color:#8b949e;margin-top:2px}
+    .rm-goal{font-size:.85rem;color:#1a7f37;background:#dafbe1;border-left:4px solid #1a7f37;border-radius:6px;padding:8px 14px;margin-top:14px}
+    .rm-goal::before{content:"🎯 到達点：";font-weight:700}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 24px;margin:24px 0;text-align:center}
+    .cta-box h3{font-size:1.1rem;color:#0969da;margin-bottom:8px}
+    .cta-box p{font-size:.9rem;color:#424a53;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:11px 24px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem}
+    .cta-btn:hover{background:#1f6feb;text-decoration:none}
+    .related-section{margin-top:32px;padding-top:24px;border-top:1px solid #d0d7de}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;display:block}
+    .related-card:hover{border-color:#0969da}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a}
+    .disclaimer{background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:14px 18px;margin-top:24px;font-size:.82rem;color:#57606a;line-height:1.7}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    @media(max-width:600px){
+      .article{padding:24px 20px}h1{font-size:1.35rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+      .rm-step{padding:18px 16px}
+    }
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+<style>
+.sh-send{display:inline-block;margin:6px 0 10px;padding:14px 28px;background:#0969da;color:#fff!important;border-radius:10px;text-decoration:none!important;font-weight:700;font-size:1.02rem;box-shadow:0 2px 8px rgba(9,105,218,.25)}
+.sh-send:hover{background:#1f6feb}
+.sh-center{text-align:center}
+.sh-alt{font-size:.86rem;color:#57606a}
+.sh-copy{margin-left:6px;padding:3px 10px;border:1px solid #d0d7de;border-radius:6px;background:#fff;color:#24292f;font-size:.78rem;cursor:pointer}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 18px}
+.sh-col{border-radius:10px;padding:16px 18px;border:1px solid #d0d7de;background:#fff}
+.sh-col.ok{border-color:#1a7f37}
+.sh-col.ng{border-color:#cf222e}
+.sh-col h3{font-size:1rem;margin-bottom:8px}
+.sh-col.ok h3{color:#1a7f37}
+.sh-col.ng h3{color:#cf222e}
+.sh-col ul{margin:0 0 0 1.1em;font-size:.92rem;color:#424a53}
+.sh-col li{margin-bottom:8px}
+.sh-ex{display:block;font-size:.84rem;color:#57606a}
+.sh-list{display:grid;gap:12px;margin:10px 0 8px}
+.sh-card{display:block;background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:14px 16px;text-decoration:none!important;color:#1f2328}
+.sh-card:hover{border-color:#0969da}
+.sh-q{font-weight:700;color:#1E3A6E;font-size:.98rem;margin-bottom:6px}
+.sh-a{font-size:.9rem;color:#424a53;line-height:1.75}
+.sh-more{font-size:.82rem;color:#0969da;font-weight:600;margin-top:6px}
+.sh-note{font-size:.8rem;color:#6e7781}
+.sh-flow{margin:6px 0 16px 1.3em;color:#424a53}
+.sh-flow li{margin-bottom:8px}
+.sh-plain{margin:0 0 16px 1.2em;color:#424a53;font-size:.95rem}
+.sh-plain li{margin-bottom:6px}
+@media(max-width:600px){.sh-grid{grid-template-columns:1fr}.sh-send{display:block;text-align:center}}
+body.dark .sh-col,body.dark .sh-card{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .sh-col.ok{border-color:#2ea043}
+body.dark .sh-col.ng{border-color:#f85149}
+body.dark .sh-q{color:#79c0ff}
+body.dark .sh-a,body.dark .sh-col ul,body.dark .sh-flow,body.dark .sh-plain{color:#c9d1d9}
+body.dark .sh-copy{background:#0d1117;color:#e6edf3;border-color:#30363d}
+</style>
+<style>
+.hw-steps{display:flex;gap:14px;margin:14px 0 18px;align-items:stretch}
+.hw-step{flex:1;position:relative;background:#fff;border:1px solid #d0d7de;border-top:4px solid #8250df;border-radius:10px;padding:14px 16px}
+.hw-step .hw-n{display:inline-block;width:28px;height:28px;border-radius:50%;background:#8250df;color:#fff;font-weight:700;text-align:center;line-height:28px;margin-right:6px}
+.hw-step .hw-t{font-weight:700;color:#1E3A6E;font-size:1rem}
+.hw-step p{font-size:.9rem;color:#424a53;line-height:1.75;margin:8px 0 0}
+.hw-step:not(:last-child)::after{content:"";position:absolute;right:-13px;top:50%;margin-top:-8px;border:8px solid transparent;border-left:10px solid #8250df}
+@media(max-width:700px){.hw-steps{flex-direction:column}.hw-step:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-19px;margin:0 0 0 -8px;border:8px solid transparent;border-top:10px solid #8250df}}
+body.dark .hw-step{background:#161b22;border-color:#30363d;border-top-color:#a371f7}
+body.dark .hw-step .hw-t{color:#79c0ff} body.dark .hw-step p{color:#c9d1d9}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+<main>
+<nav class="nav-bar mwf-nav">
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+</nav>
+
+<div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ はじめての方へ</div>
+
+<article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供のみを目的としており、投資助言・特定金融商品の売買推奨・投資勧誘を構成するものではありません。掲載内容は公開情報にもとづく参考解説であり、将来の価格や成果を予測・保証するものではありません。<strong>投資の判断はご自身の責任でお願いいたします。</strong>
+    </div>
+
+<h1>🧭 はじめての方へ：このサイトは、投資の「定説」をデータで確かめるサイトです</h1>
+<div class="meta-line">公開：2026年9月26日 ／ はじめての方へ</div>
+
+<div class="info-box"><strong>⏱️ 30秒でわかるこのページ</strong><br>
+「RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）が30を下回ったら買い」「ゴールデンクロスは買いの合図」。投資の本やネットでよく見る「定説」は、本当に効くのでしょうか。<br>
+このサイトは、実際に出た売買の合図の記録を使って、定説や条件を1つずつ確かめ、<strong>うまくいった結果も、うまくいかなかった結果も</strong>そのまま公開しています。<br>
+売買をすすめるサイトではありません。確かめた結果を、ご自身で考えるための材料として置いておく場所です。
+</div>
+
+<h2>🔬 確かめ方の3つのきまり</h2>
+<p>「よさそうな結果」だけを並べると、どんな方法でもよく見えてしまいます。そうならないように、「前向きの確認」（番付・いま検証中のこと）では、次の3つを守っています。</p>
+<div class="hw-steps">
+  <div class="hw-step"><span class="hw-n">1</span><span class="hw-t">先に決める</span>
+    <p>「どんな場面の合図を」「何で採点するか」を、採点を始める前に決めて、日付と一緒に記録します。</p></div>
+  <div class="hw-step"><span class="hw-n">2</span><span class="hw-t">あとのデータで採点する</span>
+    <p>登録した日より後に出た合図だけで採点します。過去のデータに合わせて作った条件を、新しいデータで確かめ直すためです。</p></div>
+  <div class="hw-step"><span class="hw-n">3</span><span class="hw-t">外れても残す</span>
+    <p>判定で外れた条件も、消さずに記録を残して公開します。多くの条件は、この判定で外れます。</p></div>
+</div>
+<p>なぜ2番目が大切なのかを、少しだけ説明します。過去のデータをたくさん調べると、偶然よく見えるだけの条件がいくつも見つかります。たとえば100通りの条件を試せば、何の意味もない条件でも、いくつかはたまたま好成績に見えます。そこで、見つけた条件はいったん登録し、<strong>その日より後に出た合図だけ</strong>で、もう一度採点します。この採点を、このサイトでは「前向きの確認」と呼んでいます。</p>
+<p>なお、研究日誌には、過去のデータを調べて手がかりを探す回もあります。その結果は偶然よく見えている可能性があるため、登録して前向きに採点し直すまでは「手がかり」の扱いです。結果を見たあとに登録した条件は、「いま検証中のこと」にその旨を書いています。</p>
+
+<h2>🧮 採点のしかたと、数字の読み方</h2>
+<ul class="sh-plain">
+  <li><strong>何を記録しているか</strong>：金・原油・日経平均・ビットコイン・ドル円など、主に18の銘柄で、チャートの売買の合図を自動で出しています。合図のあと、「利益を確定する値段」と「損切りの値段」のどちらに先に届いたかを、機械で記録しています。これは決まったルールで記録した仮想の結果で、実際の取引ではありません（手数料や価格の滑りなど、実際の取引で生じる差は十分には入っていません）。</li>
+  <li><strong>勝ち負けがとんとんになる勝率は約43%</strong>：利益を確定する幅は、損切りの幅の約1.3倍です。そのため、43%より多く勝てれば、計算の上では差し引きプラスになります。</li>
+  <li><strong>回数が少ないうちは、偶然のぶれが大きい</strong>：10回や20回の結果では、たまたま勝った・負けたが大きく出ます。そこで、決まった回数（多くは80回）がたまるごとに判定し、偶然のぶれを考えても差が残るかを見ます。</li>
+  <li><strong>「基準を満たした」も約束ではありません</strong>：判定の基準を満たした条件も、その後に外れることがあります。過去や途中の成績は、これからの成績を約束するものではありません。</li>
+</ul>
+
+<h2>🗺️ どこで何が見られるか</h2>
+<div class="sh-list">
+  <a class="sh-card" href="track-record.html#map">
+    <div class="sh-q">🗺️ いま検証中のこと</div>
+    <div class="sh-a">いま確かめている条件と研究の一覧です。新しい検証を始めると自動でここに加わり、終わると「終わった検証」へ移ります。</div>
+  </a>
+  <a class="sh-card" href="guides.html#cat-lab">
+    <div class="sh-q">🧪 AIシグナル研究日誌</div>
+    <div class="sh-a">毎朝1つ、「こういう場面だけに絞ったら成績は変わるか」を確かめて記事にしています。これまでに100本を超えました。</div>
+  </a>
+  <a class="sh-card" href="track-record.html#banzuke">
+    <div class="sh-q">🏆 番付（登録した条件の、その後の成績）</div>
+    <div class="sh-a">登録した条件ごとに、登録した日より後の成績を並べています。外れた条件も「引退」として残しています。</div>
+  </a>
+  <a class="sh-card" href="guide-sore-honto.html">
+    <div class="sh-q">🔎 それ、本当？（定説の受付）</div>
+    <div class="sh-a">気になる投資の定説を、メールで送ってください。確かめられるものは記事にします。</div>
+  </a>
+  <a class="sh-card" href="guides.html#cat-trap">
+    <div class="sh-q">📉 株の落とし穴を数字で見る</div>
+    <div class="sh-a">株でよくある「やられ方」が、どのくらいの割合で起きているかを数字で見るシリーズです。</div>
+  </a>
+  <a class="sh-card" href="guide-learning-roadmap.html">
+    <div class="sh-q">📚 投資の学習ロードマップ</div>
+    <div class="sh-a">基礎から学びたい方へ。解説記事を、学ぶ順番に並べています。</div>
+  </a>
+</div>
+
+<h2>🚫 このサイトがしないこと</h2>
+<div class="sh-grid">
+  <div class="sh-col ng">
+    <h3>しないこと</h3>
+    <ul>
+      <li>特定の銘柄や金融商品の売買をすすめること</li>
+      <li>「いま買う・いま売る」を、メールやSNSで読者に知らせること（有料の会員サービスもありません）</li>
+      <li>お金の配分や銘柄選びなど、一人ひとりの状況にあわせた相談にお答えすること</li>
+    </ul>
+    <p class="sh-note">当サイトは投資助言・代理業の登録をしていないため、これらはしていません。</p>
+    <p class="sh-note">※「シグナル研究」のページには、採点のために、自動で出た合図の記録（まだ結果の出ていないものを含む）を載せています。これは検証の記録で、売買のおすすめではありません。</p>
+  </div>
+  <div class="sh-col ok">
+    <h3>していること</h3>
+    <ul>
+      <li>定説や条件を、先に決めた方法で確かめ、結果を公開すること</li>
+      <li>確かめた結果を、やさしい言葉で説明すること</li>
+      <li>うまくいかなかった結果も含めて、記録を残すこと</li>
+    </ul>
+  </div>
+</div>
+
+<h2>🙋 こんな方に読んでほしいサイトです</h2>
+<ul class="sh-plain">
+  <li>本やネットで見た投資の定説を、そのまま信じてよいか迷っている方</li>
+  <li>自分の売買のルールを、数字で見直してみたい方</li>
+  <li>大きな損を避ける考え方を、数字で確かめたい方</li>
+</ul>
+<p>まずは<a href="track-record.html#map">「いま検証中のこと」</a>で、どんなことを確かめているかを眺めてみてください。</p>
+
+<div class="related-section">
+  <h2>🔗 あわせて読みたい</h2>
+  <div class="related-grid">
+    <a class="related-card" href="guide-sore-honto.html">
+      <div class="related-card-title">🔎 それ、本当？ 検証室</div>
+      <div class="related-card-desc">これまでに確かめた定説と、質問の送り方</div>
+    </a>
+    <a class="related-card" href="track-record.html">
+      <div class="related-card-title">🧪 シグナル研究</div>
+      <div class="related-card-desc">売買の合図の勝ち負けを、負けも含めて公開しています</div>
+    </a>
+    <a class="related-card" href="guide-signal-lab-011.html">
+      <div class="related-card-title">🛡️ 当てるより、飛ばさない</div>
+      <div class="related-card-desc">勝てる手法でも、賭け方を間違えると資産は減ります</div>
+    </a>
+  </div>
+</div>
+
+<p class="disclaimer" data-disclaimer="kinsho-v1">
+  ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本ページと研究日誌は <strong>情報提供・教育目的</strong> で、特定の銘柄・金融商品の購入や売却をすすめるものではありません。紹介している数字は過去の記録の集計で、将来の成果を約束するものではありません。投資の判断は、ご自身の責任で行ってください。
+</p>
+
+
+</article>
+</main>
+
+
+
+
+<!-- ===== MarketWatch 無料メルマガ登録 (MailerLite 2419467/189793597614196622) ===== -->
+<div class="mw-newsletter">
+<div id="mlb2-42383897" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42383897">
+  <div class="ml-form-align-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <div class="ml-form-embedContent">
+          <span class="mw-nl-badge">🎁 無料PDFプレゼント</span>
+          <h4>登録特典『投資をはじめる前の基礎チェックリスト』(PDF)を無料プレゼント</h4>
+          <p>初心者が確認したい12項目のチェックリスト(PDF)を無料ダウンロード。さらに毎週の相場振り返りと注目ポイントをメールでお届けします。登録無料・1クリックで解除OK・投資助言ではありません。</p>
+        </div>
+        <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/subscribe" data-code="" method="post" target="_blank">
+          <div class="ml-form-formContent">
+            <div class="ml-form-fieldRow ml-last-item">
+              <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="メールアドレスを入力" autocomplete="email">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1">
+          <div class="ml-form-embedSubmit">
+            <button type="submit" class="primary">登録する</button>
+            <button disabled="disabled" style="display:none" type="button" class="loading"><div class="ml-form-embedSubmitLoad"></div><span class="sr-only">送信中...</span></button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true">
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success" style="display:none">
+        <div class="ml-form-successContent">
+          <h4>✅ 登録ありがとうございます！</h4>
+          <p>下のボタンから特典PDFをダウンロードできます。次回のメルマガ配信もお楽しみに。</p>
+          <a href="/investing-checklist.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:11px 22px;background:#0969da;color:#fff;border-radius:8px;text-decoration:none;font-weight:700">📥 チェックリスト(PDF)をダウンロード</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.mw-newsletter{max-width:680px;margin:40px auto;padding:0 16px}
+.mw-newsletter *{box-sizing:border-box}
+.mw-newsletter .ml-form-embedContainer{width:100%;margin:0}
+.mw-newsletter .ml-form-align-center{text-align:left}
+.mw-newsletter .ml-form-embedWrapper{display:block;width:100%;max-width:100%;background:#f6f8fa;border:1px solid #d0d7de;border-radius:14px}
+.mw-newsletter .ml-form-embedBody{padding:26px 24px}
+.mw-newsletter .ml-form-embedContent{margin:0 0 18px}
+.mw-newsletter .mw-nl-badge{display:inline-block;font-size:.78rem;font-weight:700;color:#0969da;background:rgba(9,105,218,.1);border:1px solid rgba(9,105,218,.3);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.mw-newsletter .ml-form-embedContent h4{color:#24292f;font-size:1.18rem;font-weight:700;line-height:1.5;margin:0 0 8px}
+.mw-newsletter .ml-form-embedContent p{color:#57606a;font-size:.86rem;line-height:1.7;margin:0}
+.mw-newsletter .ml-form-formContent{margin:0}
+.mw-newsletter .ml-form-fieldRow{margin:0 0 10px}
+.mw-newsletter .ml-form-fieldRow input{width:100%;background:#fff;color:#24292f;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;font-size:.95rem}
+.mw-newsletter .ml-form-fieldRow input:focus{border-color:#0969da;box-shadow:0 0 0 3px rgba(9,105,218,.2);outline:none}
+.mw-newsletter .ml-form-fieldRow input::placeholder{color:#8b949e}
+.mw-newsletter .ml-form-embedSubmit{margin:0}
+.mw-newsletter .ml-form-embedSubmit button{width:100%;background:#1f6feb;color:#fff;border:none;border-radius:8px;padding:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s}
+.mw-newsletter .ml-form-embedSubmit button.primary:hover{background:#388bfd}
+.mw-newsletter .ml-form-successContent h4{color:#1a7f37;font-size:1.1rem;font-weight:700;margin:0 0 8px;text-align:center}
+.mw-newsletter .ml-form-successContent p{color:#57606a;font-size:.86rem;line-height:1.7;text-align:center;margin:0}
+.mw-newsletter .ml-error input{border-color:#cf222e !important}
+.mw-newsletter .ml-form-embedSubmitLoad{display:inline-block;width:20px;height:20px}
+.mw-newsletter .ml-form-embedSubmitLoad:after{content:" ";display:block;width:11px;height:11px;margin:0 auto;border-radius:50%;border:3px solid #fff;border-color:#fff #fff #fff transparent;animation:mw-nl-spin 1.2s linear infinite}
+@keyframes mw-nl-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.mw-newsletter .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+body.dark .mw-newsletter .ml-form-embedWrapper{background:linear-gradient(180deg,#161b22,#0d1117);border-color:#30363d}
+body.dark .mw-newsletter .mw-nl-badge{color:#79c0ff;background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.35)}
+body.dark .mw-newsletter .ml-form-embedContent h4{color:#e6edf3}
+body.dark .mw-newsletter .ml-form-embedContent p{color:#8b949e}
+body.dark .mw-newsletter .ml-form-fieldRow input{background:#0d1117;color:#e6edf3;border-color:#30363d}
+body.dark .mw-newsletter .ml-form-fieldRow input::placeholder{color:#6e7681}
+body.dark .mw-newsletter .ml-form-successContent h4{color:#3fb950}
+body.dark .mw-newsletter .ml-form-successContent p{color:#8b949e}
+</style>
+<script>
+function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-form-42383897 .row-success').show();$('.ml-subscribe-form-42383897 .row-form').hide();}
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>fetch("https://assets.mailerlite.com/jsonp/2419467/forms/189793597614196622/takel")</script>
+<!-- ===== /無料メルマガ登録 ===== -->
+<footer>
+  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a>
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
+</footer>
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style>
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+<script>
+document.querySelectorAll('.sh-copy').forEach(function(b){b.addEventListener('click',function(){
+  var v=b.getAttribute('data-copy');
+  if(navigator.clipboard){navigator.clipboard.writeText(v).then(function(){b.textContent='コピーしました';});}
+});});
+</script>
+</body>
+</html>
