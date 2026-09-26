@@ -63,7 +63,7 @@
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
 | **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`。**2本を1ステップで回す**＝片方が落ちても両方のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
 | **jp-rankings.yml** 🆕 | **routine の push に相乗り**（news 台帳 17:5x・sns 19:1x JST）＋cron 保険4本（16:40〜19:10 のつもりが実測 21〜23時台） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目） |
-| **exit-research.yml** 🆕 | 日曜 05:23（＋07:47 保険） | 出口の研究を週1で前向きに積み上げる（壁ラボ・損切りラボ・出口の相性ラボの保守版の出し直し。2026-09-26 オーナー指示・詳細は SESSION_HANDOFF）。出力は GitHub 側生成＝push 禁止 |
+| **exit-research.yml** 🆕 | 日曜 05:23（＋07:47 保険） | 出口の研究を週1で前向きに積み上げる（壁ラボ・損切りラボ。2026-09-26 オーナー指示・詳細は SESSION_HANDOFF）。🔁 同日、幅の出し方（`exit_rule_backtest._mean_se`）を安全側に切り替えた（オーナー決定）。出力は GitHub 側生成＝push 禁止 |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
 

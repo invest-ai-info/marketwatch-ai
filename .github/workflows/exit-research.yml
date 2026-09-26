@@ -3,11 +3,11 @@ name: Exit Research (weekly)
 # 出口の研究（週1）: 3つのラボをまとめて回し、前向き（2026-09-26 以降に入った取引）を積み上げる。
 # 2026-09-26 オーナー指示「4つとも登録して前向きに検証して」。
 #   ① exit_wall_lab.py … 出口の壁ラボ（壁が近ければ早めに利確／無ければ伸ばす）＋前向き「上が空いた場面は日足で伸ばす」
-#   ③ exit_lab.py --safe-se … 出口の相性ラボの幅を保守版で出し直す（公開用の exit-lab.json は上書きしない）
+#   ③ 出口の相性ラボの出し直しは 2026-09-26 に終了（オーナー決定で exit_lab.py 本体の幅を安全側へ切り替えたため＝exit-lab.yml が正）
 #   ④ stop_lab.py … 損切りラボ（ATRの何倍か／固定％か）＋前向き
 # Claude のセッションからは Yahoo に届かないので、価格の取得と計算はここで行う（exit-lab.yml と同じ考え方）。
 # ⚠️ 判定のしかた（事前登録）は各スクリプトの冒頭に固定してある。結果を見てから基準を動かさない。
-# ⚠️ 出力（exit-wall-lab.* / stop-lab.* / exit-lab-safe.*）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# ⚠️ 出力（exit-wall-lab.* / stop-lab.*）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
 # ⚠️ 前向きの判定の履歴は前回の出力 JSON から引き継ぐ（lab_forward.py）＝出力ファイルを手で消さない。
 
 on:
@@ -41,14 +41,13 @@ jobs:
           fail=0
           python exit_wall_lab.py --live signals-log.json --json exit-wall-lab.json --md exit-wall-lab.md || { echo "::error::exit_wall_lab failed"; fail=1; }
           python stop_lab.py --json stop-lab.json --md stop-lab.md || { echo "::error::stop_lab failed"; fail=1; }
-          python exit_lab.py --safe-se --json exit-lab-safe.json --md exit-lab-safe.md || { echo "::error::exit_lab --safe-se failed"; fail=1; }
           for f in exit-wall-lab.md stop-lab.md; do [ -f "$f" ] && cat "$f" >> "$GITHUB_STEP_SUMMARY"; done
           echo "FAIL=$fail" >> "$GITHUB_ENV"
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add exit-wall-lab.json exit-wall-lab.md stop-lab.json stop-lab.md exit-lab-safe.json exit-lab-safe.md 2>/dev/null || true
+          git add exit-wall-lab.json exit-wall-lab.md stop-lab.json stop-lab.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else
