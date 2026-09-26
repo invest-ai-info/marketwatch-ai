@@ -924,7 +924,9 @@ def build_quality_analysis_section(signals):
 
 
 def build_outcome_analysis_section(signals):
-    """勝因 (TP1/TP2) + 敗因 (SL) を統合分析するタブ（R4 で勝因追加）"""
+    """勝因 (TP1/TP2) + 敗因 (SL) を統合分析するタブ（R4 で勝因追加）。
+    ⚠️ 2026-09-26 法務チェック（黒）: AI が書いた「教訓」と「再現性」の表示は公開ページに出さない
+    （「積極的なエントリーやサイズアップを検討すべき」等が売買をすすめる言い方になっていた）。データは signals-log に残す。"""
     # 勝因対象: TP1/TP2 + win_analysis あり
     win_signals = [
         s for s in signals
@@ -945,23 +947,19 @@ def build_outcome_analysis_section(signals):
     <div style="font-size:1.6rem;margin-bottom:8px">🌱</div>
     <div style="font-size:1rem;margin-bottom:6px">確定シグナルが蓄積されるとここに分析が表示されます</div>
     <div style="font-size:.85rem;color:#6e7781">
-      ✨ <b>勝因分析</b>: TP1/TP2 到達時に Gemini が「成功要因・再現性・教訓」を自動分析<br>
-      🔬 <b>敗因分析</b>: SL ヒット時に Gemini が「敗因・カテゴリ・教訓」を自動分析<br>
-      → どちらも次回への学びデータベースとして活用
+      ✨ <b>勝因分析</b>: TP1/TP2 到達時に AI（Gemini）が「主な要因・カテゴリ」を自動で分類<br>
+      🔬 <b>敗因分析</b>: SL ヒット時に AI（Gemini）が「主な要因・カテゴリ」を自動で分類<br>
+      ※ 結果が出たあとの説明の記録で、次の取引をすすめるものではありません
     </div>
   </div>
 </div>"""
 
     # カテゴリ別集計
     cat_counts = defaultdict(int)
-    cat_lessons = defaultdict(list)
     for s in sl_signals:
         ai = s.get("loss_analysis", {}).get("ai_result", {})
         cat = ai.get("primary_category") or "未分類"
         cat_counts[cat] += 1
-        lesson = ai.get("lesson") or ""
-        if lesson:
-            cat_lessons[cat].append(lesson)
 
     # カテゴリ別バーチャート用データ
     cat_labels = list(cat_counts.keys())
@@ -972,14 +970,11 @@ def build_outcome_analysis_section(signals):
     total_sl = len(sl_signals)
     for cat in sorted(cat_counts.keys(), key=lambda k: -cat_counts[k]):
         pct = cat_counts[cat] / total_sl * 100
-        sample_lessons = list(set(cat_lessons[cat]))[:2]
-        lesson_html = "<br>".join([f"・{l[:60]}" for l in sample_lessons]) if sample_lessons else "—"
         cat_rows.append(f"""
         <tr>
           <td><b>{cat}</b></td>
           <td style="text-align:right">{cat_counts[cat]}</td>
           <td style="text-align:right">{pct:.1f}%</td>
-          <td style="font-size:.82rem;color:#424a53">{lesson_html}</td>
         </tr>""")
 
     # 直近 SL 案件詳細
@@ -992,7 +987,6 @@ def build_outcome_analysis_section(signals):
         cat = ai.get("primary_category") or "—"
         cause = ai.get("primary_cause") or "—"
         diag = ai.get("ai_diagnosis") or "—"
-        lesson = ai.get("lesson") or "—"
         vix_html = ""
         if vix:
             vix_html = f"<span style='font-size:.82rem;color:#cf222e'>VIX: {vix.get('start')} → {vix.get('end')} ({vix.get('change_pct'):+.1f}%)</span>"
@@ -1017,41 +1011,28 @@ def build_outcome_analysis_section(signals):
           </div>
           <div style="font-weight:600;color:#cf222e;font-size:.95rem;margin-bottom:6px">❌ {cause}</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">{diag}</div>
-          <div style="background:#fff8c5;border-left:3px solid #d4a72c;padding:8px 12px;font-size:.85rem;color:#6e5d00;margin-bottom:6px">
-            💡 <b>教訓:</b> {lesson}
-          </div>
           {vix_html}
           {news_html}
         </div>""")
 
     # === R4: 勝因セクションの構築 ===
     win_cat_counts = defaultdict(int)
-    win_cat_lessons = defaultdict(list)
-    win_repeatable = defaultdict(int)
     for s in win_signals:
         ai = s.get("win_analysis", {}).get("ai_result", {})
         cat = ai.get("primary_category") or "未分類"
         win_cat_counts[cat] += 1
-        lesson = ai.get("lesson") or ""
-        if lesson:
-            win_cat_lessons[cat].append(lesson)
-        rep = (ai.get("repeatable") or "?").lower()
-        win_repeatable[rep] += 1
 
     total_win = len(win_signals)
     win_cat_rows = []
     for cat in sorted(win_cat_counts.keys(), key=lambda k: -win_cat_counts[k]):
         pct = win_cat_counts[cat] / total_win * 100 if total_win else 0
-        sample_lessons = list(set(win_cat_lessons[cat]))[:2]
-        lesson_html = "<br>".join([f"・{l[:60]}" for l in sample_lessons]) if sample_lessons else "—"
         win_cat_rows.append(f"""
         <tr>
           <td><b>{cat}</b></td>
           <td style="text-align:right">{win_cat_counts[cat]}</td>
           <td style="text-align:right">{pct:.1f}%</td>
-          <td style="font-size:.82rem;color:#424a53">{lesson_html}</td>
         </tr>""")
-    win_cat_html = "".join(win_cat_rows) or '<tr><td colspan="4" style="text-align:center;color:#6e7781;padding:16px">勝因データ蓄積中</td></tr>'
+    win_cat_html = "".join(win_cat_rows) or '<tr><td colspan="3" style="text-align:center;color:#6e7781;padding:16px">勝因データ蓄積中</td></tr>'
 
     # 勝因 直近 10 件詳細カード
     win_detail_cards = []
@@ -1063,13 +1044,6 @@ def build_outcome_analysis_section(signals):
         cat = ai.get("primary_category") or "—"
         cause = ai.get("primary_cause") or "—"
         diag = ai.get("ai_diagnosis") or "—"
-        lesson = ai.get("lesson") or "—"
-        rep = (ai.get("repeatable") or "?").lower()
-        rep_badge = {
-            "high": '<span style="color:#1a7f37;font-weight:700">🔁 再現性 HIGH</span>',
-            "medium": '<span style="color:#9a6700;font-weight:700">🔁 再現性 MID</span>',
-            "low": '<span style="color:#cf222e;font-weight:700">🔁 再現性 LOW</span>',
-        }.get(rep, '<span style="color:#6e7781">🔁 再現性 ?</span>')
 
         win_detail_cards.append(f"""
         <div class="win-card">
@@ -1085,32 +1059,23 @@ def build_outcome_analysis_section(signals):
           </div>
           <div style="font-weight:600;color:#1a7f37;font-size:.95rem;margin-bottom:6px">✨ {cause}</div>
           <div style="font-size:.88rem;color:#424a53;margin-bottom:8px">{diag}</div>
-          <div style="background:#dafbe1;border-left:3px solid #1a7f37;padding:8px 12px;font-size:.85rem;color:#1a4d2a;margin-bottom:6px">
-            💡 <b>教訓:</b> {lesson}
-          </div>
-          {rep_badge}
         </div>""")
     win_detail_html = "".join(win_detail_cards) or '<div style="color:#6e7781;padding:16px;text-align:center">勝因分析の蓄積待ち</div>'
 
-    # 再現性サマリ
-    win_rep_summary = f"再現性: 🟢 HIGH {win_repeatable.get('high', 0)} / 🟡 MID {win_repeatable.get('medium', 0)} / 🔴 LOW {win_repeatable.get('low', 0)}"
 
     return f"""
 <div class="tab-pane" id="pane-loss">
   <h2>🔬 勝因・敗因分析</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を Gemini が自動分析。「次回も再現する条件」と「避けるべき条件」を学べるデータベース。
+    TP1/TP2 到達時の <b>勝因</b> と SL ヒット時の <b>敗因</b> を、AI（Gemini）が結果のあとに自動で分類した記録です。
+    AI の説明は結果が出たあとの見立てで、正しいとは限りません。次の取引をすすめるものではありません。
   </p>
 
   <h2 style="margin-top:32px;color:#1a7f37;border-bottom-color:#1a7f37">✨ 勝因分析（TP1/TP2 到達: {total_win} 件）</h2>
-  <p style="font-size:.88rem;color:#57606a;margin-bottom:12px">
-    {win_rep_summary}
-  </p>
-
-  <h3 style="margin-top:20px">🏷️ カテゴリ別 集計と教訓</h3>
+  <h3 style="margin-top:20px">🏷️ カテゴリ別の集計</h3>
   <div class="scroll-x"><table>
     <thead><tr>
-      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th>
     </tr></thead>
     <tbody>{win_cat_html}</tbody>
   </table></div>
@@ -1120,16 +1085,16 @@ def build_outcome_analysis_section(signals):
 
   <h2 style="margin-top:48px;color:#cf222e;border-bottom-color:#cf222e">🔬 敗因分析（SL ヒット案件: {total_sl} 件）</h2>
   <p style="font-size:.92rem;color:#57606a;margin-bottom:18px">
-    SL に達したトレードについて Gemini が「カテゴリ・主要因・詳細・教訓」を自動分析しています。失敗から学ぶデータベースとして活用してください。
+    SL に達したシグナルについて、AI（Gemini）が「カテゴリ・主な要因・詳細」を結果のあとに自動で分類した記録です。
   </p>
 
   <h3 style="margin-top:24px">📊 カテゴリ別分布</h3>
   <div class="chart-box" style="height:280px"><canvas id="lossCategoryChart"></canvas></div>
 
-  <h3 style="margin-top:32px">🏷️ カテゴリ別 集計と教訓</h3>
+  <h3 style="margin-top:32px">🏷️ カテゴリ別の集計</h3>
   <div class="scroll-x"><table>
     <thead><tr>
-      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th><th>主な教訓</th>
+      <th>カテゴリ</th><th style="text-align:right">件数</th><th style="text-align:right">割合</th>
     </tr></thead>
     <tbody>{''.join(cat_rows)}</tbody>
   </table></div>

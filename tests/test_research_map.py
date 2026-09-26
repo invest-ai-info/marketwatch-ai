@@ -185,6 +185,33 @@ def test_nav_label_for_track_record_is_the_same_everywhere():
                 bad.append((p, m.group(1)))
     assert not bad, bad
 
+
+def test_top_band_title_never_shows_win_rates():
+    # 法務チェック（2026-09-26 グレー1）: トップ（広告のあるページ）に研究日誌の題名の勝率を出さない
+    import re
+    import generate_market_news as M
+    cases = {
+        "4時間足だけ63.9%で優位？ 時間足の比較【研究日誌 #086】": "研究日誌 #086",
+        "株価指数68.6%から38.8%に急落【研究日誌 #100】": "研究日誌 #100",
+        "ゴールデンクロスは買いの合図？ 勝率の比較【研究日誌 #008】": "ゴールデンクロスは買いの合図？【研究日誌 #008】",
+    }
+    for title, want in cases.items():
+        assert M.research_band_title(title) == want, (title, M.research_band_title(title))
+    import glob
+    for p in glob.glob("guide-signal-lab-*.html"):
+        t = re.search(r"<title>(.*?)</title>", open(p, encoding="utf-8").read(), re.S)
+        if t:
+            shown = M.research_band_title(t.group(1), p)
+            assert not re.search(r"\d+(?:\.\d+)?\s*[%％]|勝率|ポイント", shown), (p, shown)
+
+
+def test_track_record_hides_ai_lessons_and_repeatability():
+    # 法務チェック（2026-09-26 黒）: AI が書いた「教訓」「再現性」は公開ページに出さない（データは残す）
+    sig = [s for s in G.load_json(G.SIGNALS_LOG_FILE) if not G.is_weekend_closed_fire(s)]
+    pane = G.build_outcome_analysis_section(sig)
+    for w in ("教訓", "再現性", "積極的", "サイズアップ"):
+        assert w not in pane, w
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

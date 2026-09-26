@@ -5101,6 +5101,22 @@ def _latest_signal_lab():
     return len(found), (os.path.basename(path), title, date)
 
 
+def research_band_title(title, fn=""):
+    """トップに出す研究日誌の題名＝「？」までの問いと【研究日誌 #N】だけ（2026-09-26 法務チェック・グレー1）。
+    題名の後半には勝率などの数字が入ることが多い（例「4時間足だけ63.9%で優位」）＝トップ（広告のあるページ）に
+    成績の数字を出さない方針が日によって自動で破られるので、問いだけにする。数字が残るなら番号だけにする。"""
+    mnum = re.search(r"【研究日誌 #\d+】", title)
+    num = mnum.group(0) if mnum else ""
+    if not num:
+        mf = re.search(r"guide-signal-lab-(\d+)\.html", fn or "")
+        num = f"【研究日誌 #{int(mf.group(1)):03d}】" if mf else ""
+    head = title.split("？", 1)[0] + "？" if "？" in title else ""
+    shown = head + num if head else ""
+    if not shown or re.search(r"\d+(?:\.\d+)?\s*[%％]|勝率|ポイント", shown):
+        shown = num.strip("【】") or "研究日誌"
+    return shown
+
+
 def build_research_band():
     """🧪 このサイトがしていること（トップのヒーロー画像の直後・2026-09-26 オーナー判断「研究を主軸に」）。
     数字は research_map（🗺️ いま検証中のこと と同じ組み立て）、最新の研究日誌はファイルから毎回拾う。
@@ -5115,13 +5131,15 @@ def build_research_band():
             fn, title, date = latest
             when = f"（{date}）" if date else ""
             today = (f'<div class="rs-today">📖 最新の研究日誌{when}：'
-                     f'<a href="{html.escape(fn)}">{html.escape(title)}</a></div>')
+                     f'<a href="{html.escape(fn)}">{html.escape(research_band_title(title, fn))}</a>'
+                     f'<br><span style="font-size:.8rem;color:#6e7781">※ 問いの答えは記事の中で、偶然のぶれも含めて説明しています。'
+                     f'売買のおすすめではありません。</span></div>')
         return f"""
   <div class="rs-band">
     <div class="rs-lead">🧪 <b>このサイトがしていること</b>：投資の「定説」や売買の合図が本当に効くのかを、<b>データで確かめて記録</b>しています。
-    確かめ方は先に決めておき、<b>うまくいかなかった結果も消さずに公開</b>しています。</div>
+    見つけた条件は登録してから、その後のデータで採点し直し、<b>うまくいかなかった結果も消さずに公開</b>しています。</div>
     <div class="rs-stats">
-      <div><b>{m["n_active"]}本</b><span>いま前向きに追っている仮説</span></div>
+      <div><b>{m["n_active"]}本</b><span>登録後のデータで追っている仮説（結論はまだ）</span></div>
       <div><b>{n_journal}本</b><span>研究日誌（毎朝1本）</span></div>
       <div><b>{len(m["ended"])}本</b><span>終わった検証（記録は残す）</span></div>
     </div>
@@ -6552,7 +6570,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
     <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
     <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
-      <li style="margin-bottom:10px">🧪 <strong><a href="track-record.html" style="color:#0969da">シグナル研究（成績と検証を隠さず公開）</a></strong> — 投資の「定説」や売買の合図が本当に効くのかを、確かめ方を先に決めてからデータで確かめ、<strong>うまくいかなかった結果も</strong>そのまま公開しています。いま確かめていることは<a href="track-record.html#map" style="color:#0969da">「いま検証中のこと」</a>で、しくみは<a href="guide-how-we-research.html" style="color:#0969da">「はじめての方へ」</a>で見られます。</li>
+      <li style="margin-bottom:10px">🧪 <strong><a href="track-record.html" style="color:#0969da">シグナル研究（成績と検証を隠さず公開）</a></strong> — 投資の「定説」や売買の合図が本当に効くのかを、見つけた条件を登録してから、その後のデータで確かめ直し、<strong>うまくいかなかった結果も</strong>そのまま公開しています。いま確かめていることは<a href="track-record.html#map" style="color:#0969da">「いま検証中のこと」</a>で、しくみは<a href="guide-how-we-research.html" style="color:#0969da">「はじめての方へ」</a>で見られます。</li>
       <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
       <li style="margin-bottom:10px">🩺 <strong>市場の“温度”を読む</strong> — <a href="market-health.html" style="color:#0969da">市場健康度</a>・<a href="vix.html" style="color:#0969da">VIX恐怖指数</a>・<a href="calendar.html" style="color:#0969da">経済カレンダー</a>・<a href="hot-assets.html" style="color:#0969da">出来高急増</a>を、データだけでなく<strong>「読み方・活用法」つき</strong>で。</li>
       <li>🚨 <a href="political-feed.html" style="color:#0969da">政治発言ライブ</a>・<a href="youtube-summary.html" style="color:#0969da">YouTube要約</a>など、忙しい個人投資家の<strong>情報収集の時間を短縮</strong>する機能も。</li>
