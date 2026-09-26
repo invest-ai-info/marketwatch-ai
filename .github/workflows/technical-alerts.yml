@@ -33,6 +33,9 @@ jobs:
       ALERT_RECIPIENT:    ${{ secrets.ALERT_RECIPIENT }}
       GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
       MY_TRADES_CSV_URL:  ${{ secrets.MY_TRADES_CSV_URL }}
+      # 🆕 2026-09-26 観察中の候補のメール（👀観察中・未確定）の停止スイッチ。GitHub の Settings → Variables で
+      #    EMAIL_WATCH=0 にすると止まる（変数が無ければ '1'＝オン）。
+      EMAIL_WATCH:        ${{ vars.EMAIL_WATCH || '1' }}
 
     steps:
       - name: Checkout repository
