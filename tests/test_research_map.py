@@ -129,6 +129,62 @@ def test_plain_japanese_only_indicator_names_remain():
     assert not others, others
 
 
+
+# ── トップの「このサイトがしていること」の帯・はじめての方へ・ナビの名前（2026-09-26 オーナー判断「研究を主軸に」）
+def test_research_band_counts_published_journal_and_picks_latest():
+    import glob
+    import re
+    import generate_market_news as M
+    n, latest = M._latest_signal_lab()
+    pub = []
+    for p in glob.glob("guide-signal-lab-*.html"):
+        mm = re.match(r"guide-signal-lab-(\d+)\.html$", p)
+        if mm and '<meta name="robots" content="noindex' not in open(p, encoding="utf-8").read():
+            pub.append((int(mm.group(1)), p))
+    assert n == len(pub) and latest[0] == max(pub)[1]
+    band = M.build_research_band()
+    assert 'href="track-record.html#map"' in band and 'href="guide-how-we-research.html"' in band
+    assert "勝率" not in band                      # トップに成績の数字は出さない（法務チェック）
+
+
+def test_research_band_never_breaks_the_top_page():
+    import generate_market_news as M
+    orig = R.collect
+
+    def boom(*a, **k):
+        raise RuntimeError("壊れた")
+    R.collect = boom
+    try:
+        assert M.build_research_band() == ""
+    finally:
+        R.collect = orig
+
+
+def test_start_page_is_linked_ad_free_and_plain():
+    import inject_ads as I
+    name = "guide-how-we-research.html"
+    assert name in I.DENY_EXACT
+    assert f'href="{name}"' in open("guides.html", encoding="utf-8").read()
+    assert f'href="{name}"' in R.build_pane()
+    page = open(name, encoding="utf-8").read()
+    assert page.count('data-disclaimer="kinsho-v1"') >= 3
+    assert not C.check_html(page), C.check_html(page)
+
+
+def test_nav_label_for_track_record_is_the_same_everywhere():
+    # ナビの名前の単一の真実は apply_site_frame.NAV_BUTTONS。生成スクリプトのナビも同じ名前であること
+    import glob
+    import re
+    import apply_site_frame as F
+    label = dict(F.NAV_BUTTONS)["track-record.html"]
+    bad = []
+    for p in glob.glob("*.py") + ["guides.html", "about.html", "contact.html", "privacy.html", "holdings.html"]:
+        for m in re.finditer(r'<a class="nav-btn(?: current)?" href="track-record\.html">([^<]*)</a>',
+                             open(p, encoding="utf-8").read()):
+            if m.group(1) != label:
+                bad.append((p, m.group(1)))
+    assert not bad, bad
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

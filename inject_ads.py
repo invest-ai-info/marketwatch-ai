@@ -121,6 +121,7 @@ DENY_PREFIX = (
 DENY_EXACT = {
     "guide-new-books.html",   # ②routine `book-watch-weekly` が毎週まるごと再生成する＝注入しても消える
     "guide-sore-honto.html",  # ①それ、本当？ 検証室＝研究日誌の入口。検証の中立性を疑われないように
+    "guide-how-we-research.html",  # ①はじめての方へ（研究のしくみ・2026-09-26）＝研究の入口。同じ理由
     "guide-exit-methods.html",  # ①利確・損切りの決め方（2026-09-24 オーナー指示「広告は貼らない」）。
                                 #   当サイト自身の出口の検証を載せる＝研究日誌と同じ理由（コンプラ監査の指摘9）
     "guide-entry-methods.html",  # ①エントリーの決め方（2026-09-25・利確・損切り版と対）。研究の紹介記事＝同じ扱い

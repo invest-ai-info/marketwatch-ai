@@ -39,7 +39,7 @@ SEC_OPEN = ('<div style="margin-top:11px;padding-top:11px;border-top:1px solid r
 NAV_BUTTONS = [
     ("index.html", "🏠 トップページ"),
     ("political-feed.html", "🚨 政治発言ライブ"),
-    ("track-record.html", "📊 シグナル成績"),
+    ("track-record.html", "🧪 シグナル研究"),   # 2026-09-26 オーナー判断「シグナル成績」→研究を主軸に
     ("calendar.html", "📅 経済カレンダー"),
     ("guides.html", "📚 解説記事"),
     ("guide-investment-books.html", "📖 投資本"),

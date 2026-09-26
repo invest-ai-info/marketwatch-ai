@@ -101,7 +101,7 @@
     body.dark .search-count b{color:#79c0ff}
     body.dark .search-no-results{background:#161b22;border-color:#30363d;color:#8b949e}
     /* 検索中の表示制御（特異度で .cat-hidden / モバイル表示を上書き） */
-    body.searching #roadmap-banner{display:none!important}
+    body.searching #roadmap-banner,body.searching #start-banner{display:none!important}
     body.searching .article-card{display:none}
     body.searching .article-card.search-match{display:block}
     body.searching .cat-more-btn{display:none}
@@ -129,7 +129,7 @@
   <nav class="nav-bar">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">📊 シグナル成績</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
     <a class="nav-btn current" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
@@ -147,6 +147,11 @@
     <div class="page-desc">投資判断に役立つ解説記事や緊急速報をカテゴリ別にまとめています。</div>
   </div>
 
+  <a id="start-banner" href="guide-how-we-research.html" style="display:block;margin:0 0 12px;padding:18px 22px;background:linear-gradient(135deg,#6e40c9,#8250df);border-radius:12px;text-decoration:none;color:#fff;box-shadow:0 2px 8px rgba(130,80,223,.25)">
+    <div style="font-size:.8rem;font-weight:700;opacity:.92;letter-spacing:.04em">🧭 はじめての方へ</div>
+    <div style="font-size:1.15rem;font-weight:700;margin-top:5px;line-height:1.45">🧪 このサイトは何をしているの？ — 投資の「定説」をデータで確かめるしくみ</div>
+    <div style="font-size:.85rem;opacity:.93;margin-top:7px;line-height:1.6">確かめ方の3つのきまり・数字の読み方・どこで何が見られるかを、ひとつのページにまとめました。</div>
+  </a>
   <a id="roadmap-banner" href="guide-learning-roadmap.html" style="display:block;margin:0 0 26px;padding:18px 22px;background:linear-gradient(135deg,#0969da,#1f6feb);border-radius:12px;text-decoration:none;color:#fff;box-shadow:0 2px 8px rgba(9,105,218,.25)">
     <div style="font-size:.8rem;font-weight:700;opacity:.92;letter-spacing:.04em">🧭 はじめての方へ</div>
     <div style="font-size:1.15rem;font-weight:700;margin-top:5px;line-height:1.45">📚 投資の学習ロードマップ — 何から学ぶ？「順番」で迷わない地図</div>
