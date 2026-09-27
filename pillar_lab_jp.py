@@ -422,6 +422,27 @@ def run_j3():
     return out
 
 
+# 2026-09-27 の1回目の調べ：銘柄別の週末残高は直近数週の PDF だけ（過去分を機械で集められない）。
+# 市場全体の「信用取引現在高 過去推移表」は xls があるので、その中身の形（列・先頭の数行・行数）だけを見る。
+J3_FILES_PAGE = "https://www.jpx.co.jp/markets/statistics-equities/margin/06.html"
+
+
+def run_j3f():
+    html = P.http_get(J3_FILES_PAGE)
+    urls = sorted({"https://www.jpx.co.jp" + h for h in re.findall(r'href="(/markets/statistics-equities/margin/[^"]+\.xls)"', html)})
+    files = []
+    for url in urls[:6]:
+        try:
+            st, raw = P.http_get_bytes(url)
+            if st != 200 or not raw:
+                files.append({"url": url, "ok": False, "error": f"HTTP {st}"})
+                continue
+            files.append(dict(P.summarize_table(raw, P.file_kind(raw)), url=url, ok=True))
+        except Exception as e:  # noqa: BLE001
+            files.append({"url": url, "ok": False, "error": f"{type(e).__name__}: {str(e)[:120]}"})
+    return {"files": files}
+
+
 # ════════════════════ 出力 ════════════════════
 
 def render_md(res):
@@ -475,11 +496,21 @@ def render_md(res):
                 kw = ", ".join(f"{k}={v}" for k, v in p["keywords"].items() if v)
                 L.append(f"- {p['url']}：資料らしいリンク {len(p['links'])} 件／キーワード {kw or 'なし'}")
         L.append("")
+    j3f = res.get("j3f")
+    if isinstance(j3f, dict) and j3f.get("files"):
+        L += ["### J3 市場全体の信用残の資料の中身の形", ""]
+        for x in j3f["files"]:
+            if not x.get("ok"):
+                L.append(f"- {x['url']}：取得できず（{x.get('error', '')}）")
+            else:
+                sh = "、".join(f"{k}（{v['rows']}行×{v['cols']}列）" for k, v in (x.get("sheets") or {}).items())
+                L.append(f"- {x['url']}：{x['kind']}・{sh or x.get('rows')}")
+        L.append("")
     L += ["---", "", "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
     return "\n".join(L) + "\n"
 
 
-PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3}
+PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f}
 
 
 def main(argv=None):
@@ -507,6 +538,8 @@ def main(argv=None):
         except Exception as e:  # noqa: BLE001
             res[part] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
             print(f"  ⚠️ {part} 失敗: {res[part]['error']}", file=sys.stderr)
+    if isinstance(res.get("j3f"), dict):
+        print(json.dumps(res["j3f"], ensure_ascii=False)[:12000])
     if isinstance(res.get("j3"), list):
         for p in res["j3"]:
             print(json.dumps(p, ensure_ascii=False)[:6000])
