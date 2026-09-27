@@ -105,6 +105,7 @@ WORKFLOW_CHECKS = [
     ("出口の相性ラボ",          "exit-lab.yml",            24 * 8,  "warn"),
     ("出口の研究（壁・損切り・出し直し）", "exit-research.yml", 24 * 8, "warn"),   # 🆕 2026-09-26 週1・前向きを積み上げる
     ("シグナルの環境の統計（月1）", "env-profile.yml", 24 * 35, "warn"),   # 🆕 2026-09-26 月1・同じ物差しで数え直す
+    ("組み合わせの前向きの観察（月1）", "combo-forward.yml", 24 * 35, "warn"),   # 🆕 2026-09-27 月1・登録後のデータだけで数える
     ("月次成績レポート",        "monthly-report.yml",      24 * 35, "warn"),
     ("月次バックアップ",        "monthly-backup.yml",      24 * 35, "warn"),
     ("月次カレンダー補充",      "monthly-calendar-reminder.yml", 24 * 35, "warn"),

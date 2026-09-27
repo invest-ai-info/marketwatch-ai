@@ -1,0 +1,59 @@
+name: Combo Forward Watch (monthly)
+
+# 前向きの観察：一目均衡表の三役 × ボリンジャー下限タッチ × 追いかける損切り（2026-09-27 夜登録）。
+# オーナー「両方進めてください」＝相性ラボで向きだけ残った1つを、登録後の新しいデータだけで毎月数え直す。
+# ⚠️ 数え方・区切り・判定は PILLAR_PREREG.md「前向きの観察」（事前登録）と combo_forward.py の冒頭に固定。
+# ⚠️ 出力（combo-forward.json / .md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    区切りの数字は一度出たら固定＝古い版で上書きすると記録が消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  schedule:
+    - cron: '47 1 3 * *'    # 毎月3日 10:47 JST（2日の環境の統計の翌日）
+    - cron: '29 4 4 * *'    # 毎月4日 13:29 JST 保険（今月分が履歴にあれば何もしない）
+  workflow_dispatch:
+
+concurrency:
+  group: combo-forward
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}   # 動き出した時点の最新（先の実行の記録を消さないため）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Count only the data after registration
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python combo_forward.py --once-per-month
+          else
+            python combo_forward.py
+          fi
+          [ -f combo-forward.md ] && cat combo-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add combo-forward.json combo-forward.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: combo forward watch $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 生成物なので、衝突したら今回生成した側を採る（exit-research.yml と同じ考え方）
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
