@@ -65,6 +65,14 @@ TICKER_JA = {
 }
 WD = "月火水木金土日"
 
+# 🆕 2026-09-27 オーナー決定「メールに1行足してください」: 発表直後2時間の値動きが普段の何倍かの実測
+#    （新しい柱 B2②・pillar_lab.py が GitHub Actions で計算して pillar-lab.json に書いたもの）を「まもなく」に添える。
+#    期待値の話ではなく「ぶれ」の話＝いつもの損切り幅（ATR）では足りなくなりやすいことを、数字で思い出すため。
+#    ⚠️ 読めない・測っていない発表では何も足さない（推測の倍率は書かない）。
+PILLAR = os.path.join(HERE, "pillar-lab.json")
+SHOCK_KIND = [(r"^FOMC.*政策金利", "fomc"), (r"^米\s*CPI", "cpi"), (r"^米雇用統計", "nfp")]
+SHOCK_TOP = 3
+
 
 def load_events(now):
     """(指標, 休場) を (日時, イベント) の昇順タプルで返す。"""
@@ -147,6 +155,30 @@ def build(now):
     return subject, "\n".join(L)
 
 
+def shock_line(e, path=PILLAR):
+    """この発表の直後2時間は普段の何倍動いたか（過去2年の実測）を1行で。無ければ None"""
+    import re
+    kind = next((k for pat, k in SHOCK_KIND if re.search(pat, e.get("name", ""))), None)
+    if not kind:
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            ratio = ((json.load(f).get("b2") or {}).get("ratio") or {}).get(kind) or {}
+    except (OSError, ValueError):
+        return None
+    assets = e.get("affected_assets") or ["all"]
+    rows = [(tk, r) for tk, r in ratio.items()
+            if ("all" in assets or tk in assets) and r.get("ratio") and r.get("n")]
+    if not rows:
+        return None
+    rows.sort(key=lambda x: -x[1]["ratio"])
+    top = rows[:SHOCK_TOP]
+    parts = "・".join(f"{TICKER_JA.get(tk, tk)} {r['ratio']:.1f}倍" for tk, r in top)
+    ns = [r["n"] for _, r in top]
+    times = f"{min(ns)}〜{max(ns)}回" if min(ns) != max(ns) else f"{ns[0]}回"
+    return f"  📏 過去2年の実測: 発表直後2時間の値動きは普段の同じ時間帯の {parts}（{times}）"
+
+
 def build_alert(now):
     """発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っているものだけを返す。無ければ (None, None)。"""
     ind, _ = load_events(now)
@@ -162,6 +194,9 @@ def build_alert(now):
          "━━━━━━━━━━━━━━━━━━━━━", "",
          f"  {w:%H:%M} JST  {e['name']}",
          f"  影響: {assets_ja(e)}", ""]
+    sl = shock_line(e)
+    if sl:
+        L += [sl, "     → いつもの損切り幅（ATR）では足りなくなりやすい", ""]
     if len(soon) > 1:
         L.append("  同じ時間帯にもう1件:")
         L += [f"    {w2:%H:%M}  {e2['name']}" for w2, e2 in soon[1:]]
