@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-09-27
+- 判定: ✅ 公開済み
+- 選定トピック: 米10年国債利回りが5.2%台──2007年以来19年ぶり高水準、日本JGBも3.055%で30年ぶり（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/25に米10年債が5.228%まで上昇し2007年以来最高値。30年債も5.5%と22年ぶり高水準。日本JGBも3.055%と1996年8月以来30年ぶり。同時に米国・日本で数十年ぶりの高水準という「歴史的な日」。前日まで3日連続でドル円/介入ネタを扱ったが、今回は別角度（金利・国債需給・Fed）で重複なし。付加価値：背景4要因・3シナリオ・チェックポイントが書ける中身あり。
+- 出典（確認済み・9系統以上）:
+  - CNBC「10-year Treasury yield hits 5.1% for first time in 19 years」2026-09-23
+  - CNBC「Historic day for global bonds as 10-year Treasury and JGB yields hit highest in decades」2026-09-24
+  - CNBC「The 10-year Treasury yield is at its highest in nearly two decades. How we got here」2026-09-26
+  - CNN Business「10-year Treasury yield hits 5%, critical threshold for US economy and markets」2026-09-14
+  - CNN Business「The bond market is having a wild month. Oil is making things even worse」2026-09-25
+  - Charles Schwab「Stocks Up on Oil, Yields, Tracking for Weekly Rise」2026-09-25
+  - CoinCentral「Weekly Recap: S&P 500 and Nasdaq Post Weekly Gains Amid Bond Market Volatility」2026-09-26
+  - JP Morgan Asset Management「FOMC Statement: September 2026」2026-09-16
+  - marketintelshot.com「[2026-09-27] Yield, Yields, Fed – Global Market Outlook」2026-09-27
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟢白（修正なし・kinsho-v1×3/断定語なし/銘柄推奨なし/出典多数）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④出典9系統以上 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典9系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告20件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-27-us10y-yield-52pct-19year-high.html
+- commit: 5681dab（main へ push 済み）
+
+---
+
+
 ## 2026-09-26
 - 判定: ✅ 公開済み
 - 選定トピック: ベッセント米財務長官「経済ファンダメンタルズを反映した強い円が望ましい」──日米財務相電話会談でNYドル円156円台へ急落（カテゴリ: 今日のニュース）
