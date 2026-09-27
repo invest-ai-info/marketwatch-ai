@@ -311,6 +311,24 @@ def check_us_monthly_indicators():
                         warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が中旬(8〜16日)から外れる＝BLS公式で要確認")
 
 
+def check_tools_strip(guides_html, gen_py="generate_market_news.py"):
+    """記事一覧の「🧮 計算ツール」欄のカードが、トップページの「🧮 計算ツール」の並びにもあるか（2026-09-27 新設）。
+    🚨 トップの並びは generate_market_news.py の生成テンプレに直に書かれていて publish_article.py は触らない。
+       投資のクセ診断を公開したとき、記事一覧にだけ入りトップの並びに無かった（オーナーがスマホで気づいた）。"""
+    m = re.search(r'<div class="category-section" id="cat-tools"[^>]*>(.*?)(?=<div class="category-section"|\Z)', guides_html, re.S)
+    if not m or not _exists(gen_py):
+        return
+    cards = re.findall(r'<a class="article-card" href="([^"]+)"', m.group(1))
+    with open(gen_py, encoding="utf-8") as fh:
+        gen = fh.read()
+    strip = re.search(r'<div id="tools"[^>]*>(.*?)</div>', gen, re.S)
+    have = set(re.findall(r'href="([^"]+)"', strip.group(1))) if strip else set()
+    for href in cards:
+        if href not in have:
+            errors.append(f"🚨 計算ツール {href} が記事一覧にはあるが、トップページの「🧮 計算ツール」の並び"
+                          f"（{gen_py} の <div id=\"tools\">）に無い → ボタンを1つ足す")
+
+
 def check_guides_sections(guides_html):
     """guides.html: data-category を宣言した欄と、カードのバッジが一致するか（2026-09-26 新設）。
     🚨 旧 publish_article は入れる欄が無いと記事一覧の先頭（🧮 計算ツール欄）へ黙って入れており、
@@ -509,6 +527,9 @@ def main():
 
     # 8. guides.html の欄とカードの対応（2026-09-26 新設・計算ツール欄への紛れ込み47枚の再発防止）
     check_guides_sections(guides_html)
+
+    # 9. 計算ツールがトップの並びにもあるか（2026-09-27 新設・クセ診断がトップに出ていなかった）
+    check_tools_strip(guides_html)
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
