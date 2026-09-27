@@ -209,13 +209,22 @@ def test_b2_nothing_planted_is_not_seen():
     assert out["fomc_eq"]["verdict"] == "見えない"
 
 
+def test_b4_file_kind_and_csv_shape():
+    assert P.file_kind(b"\xd0\xcf\x11\xe0rest") == "xls" and P.file_kind(b"PK\x03\x04") == "xlsx"
+    assert P.file_kind(b"<!DOCTYPE html><html>") == "html"
+    raw = "日付,通貨ペア,売建玉,買建玉\n2026/09/25,USD/JPY,100,300\n2026/09/24,USD/JPY,110,290\n".encode("cp932")
+    s = P.summarize_table(raw, P.file_kind(raw))
+    assert s["kind"] == "text" and s["rows"] == 3 and s["head"][0][2] == "売建玉" and s["tail"][-1][3] == "290"
+
+
 def test_render_md_runs_on_partial_results():
     res = {"generated_at": "2026-09-27T12:00+09:00", "prereg_sha256": "ab" * 32,
            "a1": {"error": "x"}, "b1": {P.B1_TICKER: {"error": "値動きを取得できず"}},
            "b2": {"fomc_eq": {"verdict": "見えない", "n_events": 0}, "sources": {"fomc": "ok"}, "ratio": {}},
-           "b4": [{"url": "u", "ok": False, "error": "e"}]}
+           "b4": [{"url": "u", "ok": False, "error": "e"}],
+           "b4_files": {"files": [{"url": "f", "ok": True, "kind": "text", "rows": 3}], "archive": {"003-20250925": {"status": 404}}}}
     md = P.render_md(res)
-    assert "投資助言ではありません" in md and "B4" in md and "計算できず" in md
+    assert "投資助言ではありません" in md and "B4" in md and "計算できず" in md and "003-20250925=404" in md
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       part:
-        description: 'all / a1 / b1 / b2 / b4'
+        description: 'all / a1 / b1 / b2 / b4 / b4f（資料の中身の形）'
         required: false
         default: 'all'
 
@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install numpy pandas yfinance holidays
+        run: pip install numpy pandas yfinance holidays xlrd openpyxl
       - name: Count with the pre-registered ruler
         run: |
           python pillar_lab.py --part "${{ inputs.part || 'all' }}"

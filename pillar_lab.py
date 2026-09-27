@@ -73,6 +73,15 @@ B4_URLS = ["https://www.tfx.co.jp/historical/fx/",
            "https://www.click365.jp/market.html",
            "https://www.click365.jp/newsfile/news/article/20060710-01"]
 B4_WORDS = ["売建玉", "買建玉", "建玉", "売買別", "CSV", "csv", "ダウンロード", "二次利用", "転載", "禁止"]
+# 2026-09-27 の1回目の調べで見つかった資料（中身の形＝列・先頭の数行・何年分あるか だけを見る。数字の検証はしない）
+B4_FILES = ["https://www.tfx.co.jp/kawase/document/fx_sellbuy.xls",          # 売買別建玉の公表（2006年のお知らせからのリンク）
+            "https://www.click365.jp/resorces/doc/weekly_sellbuy.xls",        # 為替売買動向（週次）
+            "https://www.click365.jp/resorces/doc/fxfile.xls",                # 日別取引数量/建玉数量（当月）
+            "https://www.click365.jp/resorces/doc/monthlyfx.xls",
+            "https://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-20260925.CSV",
+            "https://www.tfx.co.jp/kawase/document/PRT-010-CSV-016-20260925.CSV"]
+# 日々の CSV が昔の日付でも同じ名前の形で取れるか（取れる＝過去分を機械で集められる）
+B4_ARCHIVE_DATES = ["20250925", "20240925", "20200925", "20150925", "20100924"]
 
 TICKER_NAME = {"NKD=F": "日経225先物", "ES=F": "S&P500先物", "NQ=F": "ナスダック100先物", "GC=F": "金",
                "CL=F": "原油", "USDJPY=X": "ドル円", "EURUSD=X": "ユーロドル", "BTC-USD": "ビットコイン",
@@ -644,6 +653,102 @@ def b4_probe():
     return out
 
 
+def http_get_bytes(url, tries=2):
+    """(HTTPの状態, 中身)。見つからない（404 など）は1回で諦める"""
+    import urllib.error
+    import urllib.request
+    err = None
+    for k in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Encoding": "identity"})
+            with urllib.request.urlopen(req, timeout=40) as r:
+                return r.status, r.read()
+        except urllib.error.HTTPError as e:
+            return e.code, b""
+        except Exception as e:  # noqa: BLE001
+            err = e
+            time.sleep(2 * (k + 1))
+    raise err
+
+
+def file_kind(raw):
+    if raw[:4] == b"\xd0\xcf\x11\xe0":
+        return "xls"
+    if raw[:2] == b"PK":
+        return "xlsx"
+    if raw[:5] == b"%PDF-":
+        return "pdf"
+    head = raw[:400].lower()
+    if b"<html" in head or b"<!doctype" in head:
+        return "html"
+    return "text"
+
+
+def _cell(v):
+    s = str(v).strip()
+    return s[:24]
+
+
+def summarize_table(raw, kind):
+    """表の形だけ：シート名・行数・先頭6行・末尾2行（各行は先頭12列・1セル24文字まで）"""
+    out = {"kind": kind, "bytes": len(raw)}
+    if kind == "text":
+        text = None
+        for enc in ("cp932", "utf-8"):
+            try:
+                text = raw.decode(enc)
+                break
+            except UnicodeDecodeError:
+                continue
+        lines = (text or raw.decode("utf-8", "ignore")).splitlines()
+        rows = [ln.split(",")[:12] for ln in lines]
+        out.update({"rows": len(rows), "head": [[_cell(c) for c in r] for r in rows[:6]],
+                    "tail": [[_cell(c) for c in r] for r in rows[-2:]]})
+        return out
+    if kind in ("xls", "xlsx"):
+        import io
+        sheets = pd.read_excel(io.BytesIO(raw), sheet_name=None, header=None,
+                               engine="xlrd" if kind == "xls" else "openpyxl")
+        out["sheets"] = {}
+        for name, df in list(sheets.items())[:8]:
+            df = df.dropna(how="all")
+            rows = df.iloc[:, :12].astype(str).values.tolist()
+            out["sheets"][str(name)[:30]] = {"rows": len(rows), "cols": int(df.shape[1]),
+                                             "head": [[_cell(c) for c in r] for r in rows[:6]],
+                                             "tail": [[_cell(c) for c in r] for r in rows[-2:]]}
+        return out
+    return out
+
+
+def b4_files():
+    """1回目で見つかった資料の中身の形と、日々の CSV が何年前まで同じ名前で取れるか"""
+    files = []
+    for url in B4_FILES:
+        try:
+            st, raw = http_get_bytes(url)
+        except Exception as e:  # noqa: BLE001
+            files.append({"url": url, "ok": False, "error": f"{type(e).__name__}: {str(e)[:120]}"})
+            continue
+        if st != 200 or not raw:
+            files.append({"url": url, "ok": False, "error": f"HTTP {st}"})
+            continue
+        try:
+            files.append(dict(summarize_table(raw, file_kind(raw)), url=url, ok=True))
+        except Exception as e:  # noqa: BLE001
+            files.append({"url": url, "ok": False, "kind": file_kind(raw), "bytes": len(raw),
+                          "error": f"読めず: {type(e).__name__}: {str(e)[:120]}"})
+    archive = {}
+    for d in B4_ARCHIVE_DATES:
+        for kind in ("003", "016"):
+            url = f"https://www.tfx.co.jp/kawase/document/PRT-010-CSV-{kind}-{d}.CSV"
+            try:
+                st, raw = http_get_bytes(url)
+                archive[f"{kind}-{d}"] = {"status": st, "bytes": len(raw)}
+            except Exception as e:  # noqa: BLE001
+                archive[f"{kind}-{d}"] = {"status": None, "error": type(e).__name__}
+    return {"files": files, "archive": archive}
+
+
 # ════════════════════ 出力 ════════════════════
 
 def _f(x, d=3, sign=True):
@@ -744,13 +849,33 @@ def render_md(res):
                 kw = ", ".join(f"{k}={v}" for k, v in p["keywords"].items() if v)
                 L.append(f"- {p['url']}：資料らしいリンク {len(p['links'])} 件／キーワード {kw or 'なし'}／フォーム {len(p['forms'])} 個")
         L.append("")
+    bf = res.get("b4_files")
+    if bf:
+        L += ["### B4 資料の中身の形（2回目の調べ・数字の検証はしない）", ""]
+        for f in bf.get("files") or []:
+            if not f.get("ok"):
+                L.append(f"- {f['url']}：取得できず（{f.get('error', '')}）")
+            elif f.get("sheets"):
+                sh = "、".join(f"{k}（{v['rows']}行×{v['cols']}列）" for k, v in f["sheets"].items())
+                L.append(f"- {f['url']}：{f['kind']}・シート {sh}")
+            else:
+                L.append(f"- {f['url']}：{f['kind']}・{f.get('rows', '—')}行")
+        arch = bf.get("archive") or {}
+        if arch:
+            L.append("- 日々の CSV を昔の日付で取れるか：" + "、".join(f"{k}={v.get('status')}" for k, v in arch.items()))
+        L.append("")
     L += ["---", "", "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
     return "\n".join(L) + "\n"
 
 
+# (--part の名前, 出力の中の名前, 関数)
+PARTS = [("a1", "a1", run_a1), ("b1", "b1", run_b1), ("b2", "b2", run_b2), ("b4", "b4", b4_probe),
+         ("b4f", "b4_files", b4_files)]
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--part", default="all", choices=["all", "a1", "b1", "b2", "b4"])
+    ap.add_argument("--part", default="all", choices=["all", "a1", "b1", "b2", "b4", "b4f"])
     a = ap.parse_args(argv)
     res = {"generated_at": dt.datetime.now(JST).isoformat(timespec="minutes"),
            "prereg_file": PREREG, "prereg_sha256": prereg_sha256()}
@@ -758,20 +883,22 @@ def main(argv=None):
         try:
             with open(OUT_JSON, encoding="utf-8") as f:
                 prev = json.load(f)
-            for k in ("a1", "b1", "b2", "b4"):
-                if k in prev and a.part not in ("all", k):
+            for part, k, _ in PARTS:
+                if k in prev and a.part not in ("all", part):
                     res[k] = prev[k]
         except (OSError, ValueError):
             pass
-    for part, fn in (("a1", run_a1), ("b1", run_b1), ("b2", run_b2), ("b4", b4_probe)):
+    for part, key, fn in PARTS:
         if a.part not in ("all", part):
             continue
         print(f"▶ {part}", flush=True)
         try:
-            res[part] = fn()
+            res[key] = fn()
         except Exception as e:  # noqa: BLE001
-            res[part] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
-            print(f"  ⚠️ {part} 失敗: {res[part]['error']}", file=sys.stderr)
+            res[key] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
+            print(f"  ⚠️ {part} 失敗: {res[key]['error']}", file=sys.stderr)
+    if isinstance(res.get("b4_files"), dict):
+        print(json.dumps(res["b4_files"], ensure_ascii=False)[:12000])
     if "b4" in res and isinstance(res["b4"], list):
         for p in res["b4"]:     # 手で読むため、ログにだけ詳しく出す（本文は保存しない）
             print(json.dumps(p, ensure_ascii=False)[:4000])
