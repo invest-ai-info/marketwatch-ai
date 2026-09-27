@@ -244,3 +244,5 @@ routineが追記のみ・削除禁止。取り込みはローカルの進化ル�
 - 出典: https://www.sciencedirect.com/science/article/abs/pii/S0927538X03000908 / https://paperswithbacktest.com/strategies/the-valuation-of-r-d-expenditures-in-japan
 - 検証案: jp-rankings銘柄の財務データでR&D費用÷売上高でソートし、高R&D三分位 vs 低R&D三分位（R&D=0除く）の翌1年リターン差を算出。2010〜2024年の最新日本データで再現性を確認。R&D開示は任意のため開示銘柄のみが対象となる点に留意。財務データjoin必要。
 - タグ: ○
+
+## 2026-09-27 在庫過多のためスキップ（未消化10件）
