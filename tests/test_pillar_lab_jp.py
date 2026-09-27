@@ -32,6 +32,7 @@ def test_prereg_numbers_match_the_code():
     assert J.J1_GAP == 60 and "60営業日以内に重なったら最初の1件だけ" in text and J.J1_BENCH == "1306.T"
     assert J.J2_T2_FROM == D(2019, 7, 16) and "2019年7月16日" in text and "2営業日前" in text and "3営業日前" in text
     assert J.J2_WINDOW == 10 and "10営業日前の終値" in text and J.J2_SPLIT == "2008-01-01" and "2008年から" in text
+    assert J.J1B_MIN_N == 50 and "50件未満" in text and all(g in text for g in J.J1B_GROUPS)
     assert J.J3W_WEEKLY_GAP == 20 and "間が20日を超えたところ" in text
     assert J.J3W_WINDOW == 156 and "直前156週" in text and J.J3W_MIN_HIST == 104 and "104週以上" in text
     assert J.J3W_LAG == 4 and "4営業日後" in text and J.J3W_HOLD == 20 and "20営業日後" in text
@@ -187,6 +188,61 @@ def test_j3w_finds_planted_contrarian_and_not_nothing():
     assert J.j3w_stats(J.j3w_rows(J.j3w_signals(ser), close), n_perm=300)["verdict"] == "差なし（偶然の範囲）"
     ser, close = _j3w_data(-0.05, seed=9)
     assert J.j3w_stats(J.j3w_rows(J.j3w_signals(ser), close), n_perm=300)["verdict"] == "個人と同じ向きの兆し"
+
+
+def test_j1b_classify_follows_the_registered_order():
+    C = J.classify
+    assert C({"proposal": "取締役の選任について株主提案を行う", "purpose": "純投資"}) == "物言う"
+    assert C({"proposal": "該当事項なし", "purpose": "純投資"}) == "純投資"
+    assert C({"purpose": "純投資及び状況に応じて重要提案行為等を行うこと"}) == "物言う"
+    assert C({"purpose": "純投資。重要提案行為等を行うことはない"}) == "純投資"
+    assert C({"purpose": "純投資", "residual": 1000000.0}) == "潜在株あり"
+    assert C({"purpose": "第三者割当の引受による保有"}) == "潜在株あり"
+    assert C({"purpose": "経営参加を目的とする"}) == "経営参加・支配"
+    assert C({"purpose": "資本業務提携に基づく保有"}) == "政策・提携"
+    assert C({"purpose": "資産運用"}) == "その他"
+
+
+def test_parse_doc_fields_reads_the_elements():
+    head = "要素ID\t項目名\tコンテキストID\t相対年度\t連結・個別\t期間・時点\tユニットID\t単位\t値\n"
+    rows = [("jplvh_cor:PurposeOfHolding", "FilingDateInstant_A", "純投資"),
+            ("jplvh_cor:PurposeOfHolding", "FilingDateInstant_B", "純投資"),
+            ("jplvh_cor:ActOfMakingImportantProposalEtc", "FilingDateInstant_A", "該当事項なし"),
+            ("jplvh_cor:NumberOfResidualStocksHeld", "FilingDateInstant_A", "１，２００"),
+            ("jplvh_cor:TotalAmountOfFundingForAcquisition", "FilingDateInstant_A", "1000"),
+            ("jplvh_cor:TotalAmountOfBorrowings", "FilingDateInstant_A", "600")]
+    txt = head + "".join(f"{e}\tx\t{c}\t当期\tその他\t時点\tJPY\t円\t{v}\n" for e, c, v in rows)
+    f = J.parse_doc_fields(txt)
+    assert f["purpose"] == "純投資" and f["proposal"] == "該当事項なし" and f["residual"] == 1200.0
+    assert f["fund_total"] == 1000.0 and f["fund_borrow"] == 600.0 and J.classify(f) == "潜在株あり"
+
+
+def _j1b_rows(effect_by_group, n=120, seed=11):
+    rng = np.random.default_rng(seed)
+    rows, docs, base = [], {}, {}
+    purpose = {"物言う": {"purpose": "重要提案行為等を行うこと"}, "潜在株あり": {"purpose": "純投資", "residual": 5.0},
+               "純投資": {"purpose": "純投資"}}
+    k = 0
+    for g, eff in effect_by_group.items():
+        for i in range(n):
+            tk = f"{2000 + k}.T"
+            k += 1
+            d = D(2022, 1, 3) + dt.timedelta(days=int(rng.integers(0, 1400)))
+            base[tk] = -0.03
+            rows.append({"ticker": tk, "date": d.isoformat(), "i0": 100, "x": -0.03 + eff + rng.normal(0, 0.05), "id": f"S{k}"})
+            docs[f"S{k}"] = dict(purpose[g], ok=True)
+    return rows, docs, base
+
+
+def test_j1b_judges_each_group_against_its_own_baseline():
+    rows, docs, base = _j1b_rows({"物言う": 0.05, "潜在株あり": -0.05, "純投資": 0.0})
+    out = J.j1b_stats(rows, docs, base)
+    assert out["groups"]["物言う"]["verdict"] == "物言う株主の届出のあと上がりやすい兆し"
+    assert out["groups"]["潜在株あり"]["verdict"] == "資金調達の引受先の届出のあと下がりやすい兆し"
+    assert out["groups"]["純投資"]["verdict"] == "読むための表" and out["groups"]["その他"]["verdict"] == "件数不足"
+    rows, docs, base = _j1b_rows({"物言う": 0.0, "潜在株あり": 0.0}, seed=12)
+    out = J.j1b_stats(rows, docs, base)
+    assert out["groups"]["物言う"]["verdict"] == "見えない" and out["groups"]["潜在株あり"]["verdict"] == "見えない"
 
 
 def test_render_md_runs_on_partial_results():

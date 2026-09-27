@@ -187,7 +187,7 @@ def j1_events(hist):
             d = dt.date.fromisoformat((r.get("dt") or r["date"])[:10])
         except ValueError:
             continue
-        ev.append({"ticker": tk, "date": d})
+        ev.append({"ticker": tk, "date": d, "id": r.get("id", "")})
     return sorted(ev, key=lambda x: (x["ticker"], x["date"]))
 
 
@@ -202,7 +202,7 @@ def j1_rows(events, prices, bench, hold=J1_HOLD):
     """events: [{ticker, date}]（ticker 順）。prices: {ticker: 終値の Series}。1件＝60営業日の超過（対数）"""
     rows, by = [], {}
     for e in events:
-        by.setdefault(e["ticker"], []).append(e["date"])
+        by.setdefault(e["ticker"], []).append((e["date"], e.get("id", "")))
     for tk, dates in by.items():
         c = prices.get(tk)
         if c is None or len(c) < hold + 5:
@@ -210,7 +210,7 @@ def j1_rows(events, prices, bench, hold=J1_HOLD):
         lc, lb = excess_path(c, bench)
         days = np.array([x.date() for x in lc.index])
         last_i = -10 ** 9
-        for d in sorted(dates):
+        for d, doc_id in sorted(dates):
             i0 = int(np.searchsorted(days, d, side="right"))      # 提出日の翌営業日
             if i0 >= len(days) or (days[i0] - d).days > J1_MAX_ENTRY_LAG_DAYS:
                 continue
@@ -220,7 +220,7 @@ def j1_rows(events, prices, bench, hold=J1_HOLD):
             if i0 + hold >= len(days):
                 continue
             x = (lc.iloc[i0 + hold] - lc.iloc[i0]) - (lb.iloc[i0 + hold] - lb.iloc[i0])
-            row = {"ticker": tk, "date": days[i0].isoformat(), "i0": i0, "x": float(x)}
+            row = {"ticker": tk, "date": days[i0].isoformat(), "i0": i0, "x": float(x), "id": doc_id}
             if i0 + J1_HOLD_SUB < len(days):
                 row["x20"] = float((lc.iloc[i0 + J1_HOLD_SUB] - lc.iloc[i0]) - (lb.iloc[i0 + J1_HOLD_SUB] - lb.iloc[i0]))
             rows.append(row)
@@ -639,6 +639,197 @@ def run_j1probe(n_docs=6, sleep=time.sleep):
     return {"docs": docs}
 
 
+J1B_MIN_N = 50
+J1B_GROUPS = ["物言う", "潜在株あり", "経営参加・支配", "政策・提携", "純投資", "その他"]
+EL_PURPOSE = "jplvh_cor:PurposeOfHolding"
+EL_PROPOSAL = "jplvh_cor:ActOfMakingImportantProposalEtc"
+EL_RESIDUAL = ("jplvh_cor:NumberOfResidualStocksHeld", "jplvh_cor:NumberOfResidualStocksEtcHeldByFilersAndJointHolders")
+EL_FUND_TOTAL = "jplvh_cor:TotalAmountOfFundingForAcquisition"
+EL_FUND_OWN = "jplvh_cor:AmountOfOwnFund"
+EL_FUND_BORROW = "jplvh_cor:TotalAmountOfBorrowings"
+DOCS_FILE = "docs.jsonl"
+NEG_PROPOSAL = re.compile(r"^(該当事項|該当)?(は)?(なし|無し|ありません|ない)[。．]?$")
+NEG_AFTER = re.compile(r"重要提案行為[^。]{0,40}?(行わ|行う予定は|予定はな|予定はあり|ことはな|ことはあり|意図はな|考えていな)")
+
+
+def _num(v):
+    import unicodedata
+    t = unicodedata.normalize("NFKC", str(v or "")).replace(",", "").strip()
+    m = re.search(r"-?\d+(?:\.\d+)?", t)
+    return float(m.group(0)) if m else None
+
+
+def parse_doc_fields(csv_text):
+    """届出の CSV → {purpose, proposal, residual, fund_total, fund_own, fund_borrow}（共同保有者がいれば足し合わせ・文は重ねる）"""
+    purpose, proposal = [], []
+    residual = fund_total = fund_own = fund_borrow = None
+    for line in (csv_text or "").splitlines()[1:]:
+        f = [c.strip('"') for c in line.split("\t")]
+        if len(f) < 9:
+            continue
+        eid, val = f[0], f[8].strip()
+        if not val or val in ("－", "-"):
+            continue
+        if eid == EL_PURPOSE and val not in purpose:
+            purpose.append(val)
+        elif eid == EL_PROPOSAL and val not in proposal:
+            proposal.append(val)
+        elif eid in EL_RESIDUAL:
+            x = _num(val)
+            if x is not None:
+                residual = max(residual or 0.0, x)
+        elif eid in (EL_FUND_TOTAL, EL_FUND_OWN, EL_FUND_BORROW):
+            x = _num(val)
+            if x is not None:
+                if eid == EL_FUND_TOTAL:
+                    fund_total = (fund_total or 0.0) + x
+                elif eid == EL_FUND_OWN:
+                    fund_own = (fund_own or 0.0) + x
+                else:
+                    fund_borrow = (fund_borrow or 0.0) + x
+    return {"purpose": " / ".join(purpose)[:600], "proposal": " / ".join(proposal)[:300], "residual": residual,
+            "fund_total": fund_total, "fund_own": fund_own, "fund_borrow": fund_borrow}
+
+
+def classify(f):
+    """事前登録（J1b）の分け方。上から順に最初に当てはまったもの"""
+    pur, prop = f.get("purpose") or "", (f.get("proposal") or "").strip()
+    has_prop = bool(prop) and not all(NEG_PROPOSAL.match(p.strip()) for p in prop.split(" / "))
+    if has_prop or ("重要提案行為" in pur and not NEG_AFTER.search(pur)):
+        return "物言う"
+    if (f.get("residual") or 0) > 0 or any(w in pur for w in ("新株予約権", "転換社債", "第三者割当", "引受")):
+        return "潜在株あり"
+    if any(w in pur for w in ("経営参加", "経営権", "支配", "子会社")):
+        return "経営参加・支配"
+    if any(w in pur for w in ("政策", "提携", "取引関係", "安定株主")):
+        return "政策・提携"
+    if "純投資" in pur:
+        return "純投資"
+    return "その他"
+
+
+def load_docs():
+    out = {}
+    path = os.path.join(HIST_DIR, DOCS_FILE)
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                try:
+                    d = json.loads(line)
+                    out[d["id"]] = d
+                except (ValueError, KeyError):
+                    continue
+    return out
+
+
+def collect_docs(max_minutes=COLLECT_MAX_MIN, sleep=time.sleep):
+    """新規の届出（証券コードが分かるもの）の中身を1件ずつ取り足す（1.5秒おき・取った分は docs.jsonl）"""
+    import build_edinet_holdings as E
+    key = E.get_api_key()
+    if not key:
+        return {"error": "EDINET_API_KEY が無い"}
+    have = load_docs()
+    todo = [e for e in j1_events(load_history()) if e.get("id") and e["id"] not in have]
+    t0, n_ok, n_fail = time.time(), 0, 0
+    with open(os.path.join(HIST_DIR, DOCS_FILE), "a", encoding="utf-8") as f:
+        for e in todo:
+            if (time.time() - t0) / 60 > max_minutes:
+                break
+            try:
+                txt = fetch_doc_csv(e["id"], key)
+                rec = dict(parse_doc_fields(txt), id=e["id"], ok=txt is not None)
+            except Exception as ex:  # noqa: BLE001
+                rec = {"id": e["id"], "ok": False, "error": type(ex).__name__}
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            n_ok += rec.get("ok", False)
+            n_fail += not rec.get("ok", False)
+            sleep(E.RATIO_FETCH_WAIT)
+    have = load_docs()
+    left = len([e for e in j1_events(load_history()) if e.get("id") and e["id"] not in have])
+    return {"fetched_ok": n_ok, "fetched_fail": n_fail, "docs_total": len(have), "docs_left": left}
+
+
+def stock_baseline(prices, bench, rows, hold=J1_HOLD):
+    """銘柄ごとの「ふだんの60営業日の対 TOPIX 超過」の平均（届出の前後60営業日を除いた全部の日）"""
+    by, out = {}, {}
+    for r in rows:
+        by.setdefault(r["ticker"], []).append(r["i0"])
+    for tk, starts in by.items():
+        lc, lb = excess_path(prices[tk], bench)
+        ex = (lc.values[hold:] - lc.values[:-hold]) - (lb.values[hold:] - lb.values[:-hold])
+        bad = np.zeros(len(ex), bool)
+        for i0 in starts:
+            bad[max(0, i0 - J1_GAP): i0 + J1_GAP + 1] = True
+        pool = ex[~bad[:len(ex)]]
+        if len(pool) >= 20:
+            out[tk] = float(pool.mean())
+    return out
+
+
+def judge_j1b(group, r):
+    if r.get("n", 0) < J1B_MIN_N:
+        return "件数不足"
+    lo, hi, e, l = r.get("lo"), r.get("hi"), r.get("early"), r.get("late")
+    if None in (lo, hi, e, l):
+        return "見えない"
+    if group == "物言う" and lo > 0 and e > 0 and l > 0:
+        return "物言う株主の届出のあと上がりやすい兆し"
+    if group == "潜在株あり" and hi < 0 and e < 0 and l < 0:
+        return "資金調達の引受先の届出のあと下がりやすい兆し"
+    return "見えない" if group in ("物言う", "潜在株あり") else "読むための表"
+
+
+def j1b_stats(rows, docs, base):
+    """rows（J1 の件）に 分け方・ふだんとの差 を付けて、グループごとに数える"""
+    items = []
+    for r in rows:
+        d = docs.get(r.get("id"))
+        if not d or not d.get("ok") or r["ticker"] not in base:
+            continue
+        ft, fb = d.get("fund_total"), d.get("fund_borrow")
+        items.append({"ticker": r["ticker"], "date": r["date"], "v": r["x"] - base[r["ticker"]],
+                      "g": classify(d), "borrow": bool(ft and fb and ft > 0 and fb / ft > 0.5)})
+    if not items:
+        return {"n": 0}
+    mid = sorted(x["date"] for x in items)[len(items) // 2]
+    out = {"n": len(items), "split": mid, "groups": {}, "by_borrow": {}}
+
+    def one(xs):
+        r = P.mean_ci([x["v"] for x in xs], [(x["ticker"], x["date"][:7]) for x in xs])
+        r["early"] = P._mean(x["v"] for x in xs if x["date"] < mid)
+        r["late"] = P._mean(x["v"] for x in xs if x["date"] >= mid)
+        return r
+    for g in J1B_GROUPS:
+        xs = [x for x in items if x["g"] == g]
+        r = one(xs) if xs else {"n": 0}
+        r["verdict"] = judge_j1b(g, r)
+        out["groups"][g] = r
+    for k, name in ((True, "借入が半分超"), (False, "それ以外")):
+        xs = [x for x in items if x["borrow"] == k]
+        out["by_borrow"][name] = one(xs) if xs else {"n": 0}
+    out["all"] = one(items)
+    return out
+
+
+def run_j1b():
+    hist = load_history()
+    docs = load_docs()
+    if not hist or not docs:
+        return {"error": "EDINET の一覧か届出の中身がまだ無い（collect・docs を先に）"}
+    ev = j1_events(hist)
+    start = (min(e["date"] for e in ev) - dt.timedelta(days=400)).isoformat()
+    prices = fetch_many([e["ticker"] for e in ev] + [J1_BENCH], start)
+    bench = prices.pop(J1_BENCH, None)
+    if bench is None:
+        return {"error": "TOPIX 連動 ETF の値段を取得できず"}
+    rows = j1_rows(ev, prices, bench)
+    base = stock_baseline(prices, bench, rows)
+    out = j1b_stats(rows, docs, base)
+    out.update({"rows_j1": len(rows), "docs_ok": sum(1 for d in docs.values() if d.get("ok")),
+                "docs_total": len(docs)})
+    return out
+
+
 # ════════════════════ 出力 ════════════════════
 
 def render_md(res):
@@ -692,6 +883,26 @@ def render_md(res):
                 kw = ", ".join(f"{k}={v}" for k, v in p["keywords"].items() if v)
                 L.append(f"- {p['url']}：資料らしいリンク {len(p['links'])} 件／キーワード {kw or 'なし'}")
         L.append("")
+    b = res.get("j1b")
+    if b:
+        L += ["## J1b 届出の中身で分ける（その銘柄のふだんとの差）", ""]
+        if b.get("error"):
+            L += [f"- ⚠️ 計算できず: {b['error']}", ""]
+        else:
+            a = b.get("all") or {}
+            L += [f"- 値＝届出のあと60営業日の対 TOPIX 超過 − その銘柄のふだんの60営業日の対 TOPIX 超過の平均（プラス＝その銘柄にしては上）",
+                  f"- 全体 {a.get('n', 0)}件・平均 {f(a.get('mean'), 4)}（95%の幅 {f(a.get('lo'), 4)}〜{f(a.get('hi'), 4)}）・前半 {f(a.get('early'), 4)}／後半 {f(a.get('late'), 4)}（境 {b.get('split')}）", "",
+                  "| 分け方 | 件数 | 平均 | 95%の幅 | 前半 | 後半 | 判定 |", "|---|---:|---:|---|---:|---:|---|"]
+            for g, r in (b.get("groups") or {}).items():
+                L.append(f"| {g} | {r.get('n', 0)} | {f(r.get('mean'), 4)} | {f(r.get('lo'), 4)}〜{f(r.get('hi'), 4)} | "
+                         f"{f(r.get('early'), 4)} | {f(r.get('late'), 4)} | {r.get('verdict', '—')} |")
+            L += ["", "読むための表（取得資金に占める借入）", "", "| 区分 | 件数 | 平均 | 95%の幅 |", "|---|---:|---:|---|"]
+            for g, r in (b.get("by_borrow") or {}).items():
+                L.append(f"| {g} | {r.get('n', 0)} | {f(r.get('mean'), 4)} | {f(r.get('lo'), 4)}〜{f(r.get('hi'), 4)} |")
+            L += ["", f"- 中身が取れた届出 {b.get('docs_ok')}/{b.get('docs_total')}・J1 の件 {b.get('rows_j1')}", ""]
+    dc = res.get("docs")
+    if dc:
+        L += ["## 届出の中身の取り足し", "", f"- {json.dumps(dc, ensure_ascii=False)}", ""]
     w = res.get("j3w")
     if w:
         L += ["## J3w 市場全体の信用倍率（お客さんの口座）と、その後の日経平均", ""]
@@ -720,7 +931,7 @@ def render_md(res):
 
 
 PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f, "j3w": run_j3w,
-         "j1probe": run_j1probe}
+         "j1probe": run_j1probe, "docs": collect_docs, "j1b": run_j1b}
 
 
 def main(argv=None):
@@ -744,7 +955,7 @@ def main(argv=None):
     for part in parts:
         print(f"▶ {part}", flush=True)
         try:
-            res[part] = PARTS[part](max_minutes=a.max_minutes) if part == "collect" else PARTS[part]()
+            res[part] = PARTS[part](max_minutes=a.max_minutes) if part in ("collect", "docs") else PARTS[part]()
         except Exception as e:  # noqa: BLE001
             res[part] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
             print(f"  ⚠️ {part} 失敗: {res[part]['error']}", file=sys.stderr)
