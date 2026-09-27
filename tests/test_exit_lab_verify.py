@@ -53,7 +53,7 @@ GOOD_CLAIMS = {"article_id": "110", "exit_lab_asof": "2026-09-27", "claims": [
 GOOD_HTML = """<html><head><title>t</title></head><body>
 <div class="info-box">30秒でわかる: −2σタッチの買い 4,105件で、いまの方式は平均 -0.06R。
 利確を置かない組は、いまの方式より +0.27R 上、シャンデリア型の損切りは -0.25R 下で、目立つ組でした。</div>
-<p>1R は損切り幅。差が 0.15R 以上で目立つと呼びます。組み合わせが多いので、偶然で良く見える組も出ます。
+<p>1R は損切り幅。差が 0.15R 以上で目立つと呼びます。組み合わせが多いので、偶然で良く見える組も出ます。目立つ組が1マス程度なら、まだ偶然の可能性があります。
 2026-09-25 以降の前向きのシグナルで確かめます。安値−0.3ATR に損切り。</p>
 <svg viewBox="0 0 100 50"><text x="1" y="10">+0.2</text><text x="1" y="40">-0.2</text><text x="50" y="20">+0.27</text></svg>
 <div class="meta-line" data-mw-tracker-legend>表の見方</div><table><tr><td>平均R +0.04 CI[-0.02~+0.09]（1581/3564・勝率44%）</td></tr></table>
@@ -84,6 +84,19 @@ def run(html, claims, lab=LAB, extra=None):
 def test_good_draft_is_green():
     code, out = run(GOOD_HTML, GOOD_CLAIMS)
     assert code == 0, out
+
+
+def test_missing_ruler_is_red():
+    # 2026-09-27: #111 が物差しの文を落としたまま GREEN で公開された → 機械で見る
+    code, out = run(GOOD_HTML.replace("目立つ組が1マス程度なら、まだ偶然の可能性があります。", ""), GOOD_CLAIMS)
+    assert code == 1 and "物差しの文が無い" in out, out
+
+
+def test_old_ruler_is_red():
+    html = GOOD_HTML.replace("目立つ組が1マス程度なら、まだ偶然の可能性があります。",
+                             "目立つ組が1マス程度なら、まだ偶然の可能性があります。偶然でも平均約2.2マスは出ます。")
+    code, out = run(html, GOOD_CLAIMS)
+    assert code == 1 and "旧い物差し" in out, out
 
 
 def test_wrong_value_is_red():
@@ -124,8 +137,11 @@ def test_disclaimer_negation_is_not_banned():
 
 
 def test_missing_caveat_is_red():
-    code, out = run(GOOD_HTML.replace("偶然で良く見える組も出ます。", ""), GOOD_CLAIMS)
-    assert code == 1 and "偶然" in out, out
+    # 物差しの文にも「偶然」が入るので一緒に消す（断り書きの有無だけを見る）
+    html = GOOD_HTML.replace("偶然で良く見える組も出ます。", "").replace(
+        "目立つ組が1マス程度なら、まだ偶然の可能性があります。", "")
+    code, out = run(html, GOOD_CLAIMS)
+    assert code == 1 and "断り書きが無い:「偶然」" in out, out
 
 
 def test_medatsu_needs_flag_claim():
