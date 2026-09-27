@@ -1,0 +1,70 @@
+name: Pillar Lab JP (manual)
+
+# 新しい柱・第2波＝日本株（2026-09-27 オーナー決定「2つを並行して進めてください」）。
+# J1 大量保有報告書のあとの株価／J2 権利付き最終日に向けた日経平均／J3 信用残の資料の形。
+# ⚠️ 物差しと判定は PILLAR_PREREG.md「第2波・日本株」（事前登録）と pillar_lab_jp.py の冒頭に固定。
+# ⚠️ 手動実行のみ（定期実行を足すときはオーナーに確認）。
+# ⚠️ EDINET の書類一覧は actions/cache（edinet-hist/）に置き、リポジトリには入れない（毎時のワークフローの取得を重くしないため）。
+#    1回の取得は150分まで。残りは次の実行で取り足す（取った日は state.json に記録）。
+# ⚠️ 出力（pillar-lab-jp.json / .md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。銘柄名は出さない。
+
+on:
+  workflow_dispatch:
+    inputs:
+      part:
+        description: 'collect,j1,j2,j3 をカンマ区切り（例: collect,j1）'
+        required: false
+        default: 'j2,j3'
+
+concurrency:
+  group: pillar-lab-jp
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    permissions:
+      contents: write
+    env:
+      EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance holidays xlrd openpyxl
+      - name: Restore EDINET list cache
+        uses: actions/cache/restore@v4
+        with:
+          path: edinet-hist
+          key: edinet-hist-${{ github.run_id }}
+          restore-keys: edinet-hist-
+      - name: Count with the pre-registered ruler
+        run: |
+          mkdir -p edinet-hist
+          python pillar_lab_jp.py --part "${{ inputs.part || 'j2,j3' }}"
+          [ -f pillar-lab-jp.md ] && cat pillar-lab-jp.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Save EDINET list cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: edinet-hist
+          key: edinet-hist-${{ github.run_id }}
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pillar-lab-jp.json pillar-lab-jp.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: pillar lab JP $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
