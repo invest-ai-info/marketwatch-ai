@@ -139,8 +139,9 @@ def test_business_days_skip_weekends_and_holidays():
 def test_render_md_runs_on_partial_results():
     md = J.render_md({"generated_at": "x", "prereg_sha256": "a" * 64, "j1": {"error": "e"},
                       "j2": {"verdict": "見えない（偶然の範囲）", "by_month": {3: {"n": 1, "run": 1.0}}},
-                      "j3": [{"url": "u", "ok": False, "error": "e"}], "collect": {"days_left": 3}})
-    assert "投資助言ではありません" in md and "J3" in md and "計算できず" in md
+                      "j3": [{"url": "u", "ok": False, "error": "e"}], "collect": {"days_left": 3},
+                      "j3f": {"files": [{"url": "f", "ok": True, "kind": "xls", "sheets": {"s": {"rows": 9, "cols": 4}}}]}})
+    assert "投資助言ではありません" in md and "J3" in md and "計算できず" in md and "s（9行×4列）" in md
 
 
 if __name__ == "__main__":
