@@ -1,0 +1,58 @@
+name: Pillar Lab (manual)
+
+# 新しい柱・第1波（2026-09-27 オーナー決定「明日から第一波の3つをまとめて進めていきましょう」）。
+# A1 AIの見立てと逆向き／B1 ゴトー日の仲値／B2 重要な発表の前後／B4 くりっく365 の資料の形を調べる。
+# ⚠️ 物差しと判定は PILLAR_PREREG.md（事前登録）と pillar_lab.py の冒頭に固定（結果を見てから動かさない）。
+# ⚠️ 手動実行のみ（定期実行を足すときはオーナーに確認）。
+# ⚠️ 出力（pillar-lab.json / pillar-lab.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# 🔑 クラウドの Claude セッションからは Yahoo・米労働統計局・東京金融取引所に届かないが、Actions のランナーからは届く。
+
+on:
+  workflow_dispatch:
+    inputs:
+      part:
+        description: 'all / a1 / b1 / b2 / b4'
+        required: false
+        default: 'all'
+
+concurrency:
+  group: pillar-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # A1 は fundamental-context.json の履歴をすべて読む
+          filter: blob:none       # 中身は必要な版だけ後から取る（全履歴の中身は大きい）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance holidays
+      - name: Count with the pre-registered ruler
+        run: |
+          python pillar_lab.py --part "${{ inputs.part || 'all' }}"
+          [ -f pillar-lab.md ] && cat pillar-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pillar-lab.json pillar-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: pillar lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 生成物なので、衝突したら今回生成した側を採る（exit-research.yml と同じ考え方）
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
