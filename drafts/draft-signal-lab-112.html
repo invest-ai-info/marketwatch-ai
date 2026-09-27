@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>逆張り買いは、足が長いほど勝ちやすいのか？ 1時間足・4時間足・日足で比べた【AIシグナル研究日誌 #112】</title>
+  <meta name="description" content="「売られすぎ反発」や「バンドの下の線タッチ」で買ったとき、1時間足・4時間足・日足で勝率を比べました。日足は57.9%と他より高く見えますが、57回と少なく、偶然のぶれを考えると45%〜70%の幅があります。前向きで確かめています。">
+  <meta name="keywords" content="逆張り,RSI,ボリンジャーバンド,日足,時間足,勝率,シグナル研究">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-112.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="逆張り買いは、足が長いほど勝ちやすいのか？ 1時間足・4時間足・日足で比べた【AIシグナル研究日誌 #112】">
+  <meta property="og:description" content="「売られすぎ反発」や「バンドの下の線タッチ」で買ったとき、1時間足・4時間足・日足で勝率を比べました。日足は57.9%と他より高く見えますが、57回と少なく、偶然のぶれを考えると45%〜70%の幅があります。前向きで確かめています。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-112.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "逆張り買いは、足が長いほど勝ちやすいのか？ 1時間足・4時間足・日足で比べた【AIシグナル研究日誌 #112】",
+    "description": "「売られすぎ反発」や「バンドの下の線タッチ」で買ったとき、1時間足・4時間足・日足で勝率を比べました。日足は57.9%と他より高く見えますが、57回と少なく、偶然のぶれを考えると45%〜70%の幅があります。前向きで確かめています。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-09-28",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-112.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --c-bg: #f8f9fb; --c-surface: #fff; --c-border: #e2e6ed;
+      --c-text: #1a1d23; --c-muted: #5a6072; --c-accent: #2563eb;
+      --c-green: #16a34a; --c-red: #dc2626; --c-warn: #d97706;
+      --c-tag: #eff6ff; --c-tag-text: #1d4ed8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+        --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+        --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+        --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+      }
+    }
+    :root[data-theme="dark"] {
+      --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+      --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+      --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+      --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--c-bg); color: var(--c-text); font-family: system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.7; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+
+    .s-nav { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 8px 16px; }
+    .s-nav-inner { max-width: 900px; margin: 0 auto; }
+    .s-nav-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    @media (max-width: 699px) { .s-nav-grid { grid-template-columns: repeat(5, 1fr); } }
+    .s-nav-btn { display: block; text-align: center; padding: 6px 4px; font-size: 12px; border-radius: 6px; background: var(--c-tag); color: var(--c-tag-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .s-nav-btn:hover { opacity: .85; text-decoration: none; }
+    .s-nav-btn.current { background: var(--c-accent); color: #fff; }
+
+    .s-hero { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 28px 16px 24px; text-align: center; }
+    .s-hero-inner { max-width: 780px; margin: 0 auto; }
+    .s-tag { display: inline-block; background: var(--c-tag); color: var(--c-tag-text); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; letter-spacing: .04em; }
+    .s-hero h1 { font-size: clamp(19px, 2.6vw, 26px); font-weight: 800; line-height: 1.4; margin-bottom: 10px; }
+    .meta-line { font-size: 13px; color: var(--c-muted); }
+
+    .s-main { max-width: 780px; margin: 0 auto; padding: 28px 16px 60px; }
+    .s-section { margin-bottom: 40px; }
+    .s-section h2 { font-size: 20px; font-weight: 700; border-left: 4px solid var(--c-accent); padding-left: 12px; margin-bottom: 16px; }
+    .s-section h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; }
+    .s-section p { margin-bottom: 12px; }
+
+    .s-summary { background: var(--c-surface); border: 2px solid var(--c-accent); border-radius: 10px; padding: 20px 22px; margin-bottom: 36px; }
+    .s-summary-head { font-weight: 800; font-size: 15px; color: var(--c-accent); margin-bottom: 10px; }
+    .s-summary ul { padding-left: 1.4em; }
+    .s-summary li { margin-bottom: 6px; font-size: 15px; }
+
+    .s-disclaimer { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 16px 18px; font-size: 13px; color: var(--c-muted); margin-bottom: 32px; }
+    .s-disclaimer b { color: var(--c-text); }
+
+    .s-table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+    table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 14px; }
+    th { background: var(--c-surface); border: 1px solid var(--c-border); padding: 8px 10px; text-align: center; font-weight: 700; font-size: 13px; }
+    td { border: 1px solid var(--c-border); padding: 8px 10px; text-align: center; }
+    tr:nth-child(even) td { background: var(--c-bg); }
+    .flag { color: var(--c-red); font-weight: 700; }
+    .pos { color: var(--c-green); font-weight: 700; }
+    .neg { color: var(--c-red); }
+    .base-row td { background: var(--c-tag) !important; font-weight: 700; }
+    .hi-row td { background: #f0fdf4 !important; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .hi-row td { background: #052e16 !important; }
+    }
+    :root[data-theme="dark"] .hi-row td { background: #052e16 !important; }
+
+    .info-box { background: var(--c-tag); border-left: 4px solid var(--c-accent); border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 14px; margin: 16px 0; }
+    .warn-box { background: #fffbeb; border-left: 4px solid var(--c-warn); border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 14px; margin: 16px 0; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .warn-box { background: #2d2200; }
+    }
+    :root[data-theme="dark"] .warn-box { background: #2d2200; }
+
+    .s-related { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+    .related-card { display: block; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--c-text); transition: box-shadow .15s; }
+    .related-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.12); text-decoration: none; }
+    .related-card .card-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+    .related-card .card-title { font-weight: 700; font-size: 14px; color: var(--c-accent); }
+    .related-card .card-desc { font-size: 12px; color: var(--c-muted); margin-top: 4px; }
+
+    .s-fig { margin: 20px 0; text-align: center; }
+    .s-fig-caption { font-size: 12px; color: var(--c-muted); margin-top: 6px; }
+    svg text { font-family: system-ui, sans-serif; }
+
+    #tracker { scroll-margin-top: 64px; }
+    #tracker table { min-width: 600px; }
+    #tracker th, #tracker td { font-size: 13px; padding: 7px 9px; }
+  </style>
+  <style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.s-fig-caption,.s-disclaimer{font-size:.74rem}
+}
+@media(max-width:380px){body{font-size:.86rem}table{font-size:.76rem}}
+  </style>
+  <style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}</style>
+</head>
+<body>
+<header data-mw-frame>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<!-- ナビバー -->
+<nav class="nav-bar mwf-nav">
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+</nav>
+
+<article>
+<!-- 免責 kinsho-v1 -->
+  <div class="s-disclaimer" id="disclaimer-kinsho-v1" data-disclaimer="kinsho-v1">
+    <b>【免責事項】</b>
+    この記事は投資の参考情報として過去のシグナルデータを整理したものです。
+    <b>特定の金融商品の売買を勧めるものではありません。</b>
+    投資にはリスクがあり、損失を生じる可能性があります。
+    <b>売買の判断はご自身の責任で行ってください。</b>
+    過去の傾向が将来の結果を保証するものではありません。
+    本サイトは金融商品取引業者ではなく、投資助言業の登録もしていません。
+  </div>
+
+<!-- ヘッダー -->
+<header class="s-hero">
+  <div class="s-hero-inner">
+    <div class="s-tag">🧪 AIシグナル研究日誌</div>
+    <h1>逆張り買いは、足が長いほど勝ちやすいのか？ 1時間足・4時間足・日足で比べた【研究日誌 #112】</h1>
+    <p class="meta-line">公開：2026年9月28日 ／ カテゴリ：定点観測 ／ 入口：逆張り買い（1時間足・4時間足・日足の比較）</p>
+  </div>
+</header>
+
+<main class="s-main">
+
+  <!-- 30秒まとめ -->
+  <div class="s-summary">
+    <div class="s-summary-head">30秒でわかる</div>
+    <ul>
+      <li>「RSI（値動きの勢いを示す指標）が売られすぎの状態を示したときの反発」または「バンドの下の線（マイナス2シグマ）にタッチ」で買いシグナルが出た場面を「逆張り買い」と呼んでいます。全体（4786回のうち2059回が勝ち）と比べたとき、足の長さで成績は変わるかを調べました。</li>
+      <li>1時間足（897回のうち397回が勝ち、勝率44.3%）と4時間足（491回のうち215回が勝ち、勝率43.8%）は全体とほぼ同じです。偶然のぶれを考えた範囲（95%）は1時間足が41%〜48%、4時間足が40%〜48%で、どちらも損益分岐点（43%前後）をまたいでいます。</li>
+      <li>日足（57回のうち33回が勝ち、勝率57.9%）は1時間足・4時間足より高く見えます。平均すると、損切り幅の0.35倍ぶんのプラスになっています。ただし57回は少なく、偶然のぶれを考えた範囲は45%〜70%と幅が広いです。</li>
+      <li>日足の逆張り買いは、すでに前向き（これから発火するシグナルだけ）で確かめているところです。現時点で24回のうち14回が勝ち（58%）と、過去の傾向に近い数字が出ています。</li>
+    </ul>
+  </div>
+
+  <div class="s-section">
+    <h2>「逆張り買い」とは何か</h2>
+    <p>このサイトのAIシグナルには、大きく「順張り（値動きの向きに乗る）」と「逆張り（値動きに逆らって買う）」の2種類があります。逆張り買いは、次の2つの条件のどちらかを満たしたときに発火します。</p>
+    <ul style="padding-left:1.4em;margin-bottom:12px">
+      <li><b>売られすぎからの反発</b>：RSI（値動きの勢いを示す指標、30以下が売られすぎの目安）が「売られすぎ」の水準に達したとき</li>
+      <li><b>バンドの下の線タッチ</b>：ボリンジャーバンド（値段の平均からのばらつきを帯で示す指標）のマイナス2シグマ（下の線）まで値段が下がったとき</li>
+    </ul>
+    <p>直感的には「大きく下がったところで買えば反発が取れる」という考え方ですが、実際にはすべての時間足で同じように機能するわけではありません。今回は1時間足・4時間足・日足に分けて、勝率を比べてみました。</p>
+  </div>
+
+  <div class="s-section">
+    <h2>3つの足で比べた勝率</h2>
+
+    <!-- SVG棒グラフ -->
+    <div class="s-fig">
+      <svg viewBox="0 0 370 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="足別の逆張り買い勝率比較棒グラフ" style="max-width:500px;width:100%">
+        <!-- グリッドライン -->
+        <line x1="48" y1="20" x2="340" y2="20" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="48" y1="54" x2="340" y2="54" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="48" y1="89" x2="340" y2="89" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- 損益分岐線（43%付近） -->
+        <line x1="48" y1="82" x2="340" y2="82" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="343" y="86" font-size="10" fill="#ef4444" font-weight="600">損益分岐</text>
+        <!-- y軸ラベル -->
+        <text x="44" y="23" text-anchor="end" font-size="10" fill="#6b7280">70%</text>
+        <text x="44" y="57" text-anchor="end" font-size="10" fill="#6b7280">55%</text>
+        <text x="44" y="92" text-anchor="end" font-size="10" fill="#6b7280">40%</text>
+        <!-- 棒: 全体 43.0% (top y=82, height=98) -->
+        <rect x="52" y="82" width="55" height="98" fill="#9ca3af" rx="3"/>
+        <text x="79" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#4b5563">43.0%</text>
+        <!-- 棒: 1時間足 44.3% (top y=79, height=101) -->
+        <rect x="122" y="79" width="55" height="101" fill="#3b82f6" rx="3" opacity="0.85"/>
+        <text x="149" y="73" text-anchor="middle" font-size="12" font-weight="bold" fill="#2563eb">44.3%</text>
+        <!-- 棒: 4時間足 43.8% (top y=80, height=100) -->
+        <rect x="192" y="80" width="55" height="100" fill="#3b82f6" rx="3" opacity="0.7"/>
+        <text x="219" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#2563eb">43.8%</text>
+        <!-- 棒: 日足 57.9% (top y=48, height=132) -->
+        <rect x="262" y="48" width="55" height="132" fill="#16a34a" rx="3"/>
+        <text x="289" y="42" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">57.9%</text>
+        <!-- x軸ラベル -->
+        <text x="79" y="196" text-anchor="middle" font-size="11" fill="#6b7280">全体</text>
+        <text x="149" y="196" text-anchor="middle" font-size="11" fill="#6b7280">1時間足</text>
+        <text x="219" y="196" text-anchor="middle" font-size="11" fill="#6b7280">4時間足</text>
+        <text x="289" y="196" text-anchor="middle" font-size="11" fill="#15803d" font-weight="bold">日足</text>
+        <!-- 回数ラベル -->
+        <text x="79" y="207" text-anchor="middle" font-size="9" fill="#9ca3af">4786回</text>
+        <text x="149" y="207" text-anchor="middle" font-size="9" fill="#9ca3af">897回</text>
+        <text x="219" y="207" text-anchor="middle" font-size="9" fill="#9ca3af">491回</text>
+        <text x="289" y="207" text-anchor="middle" font-size="9" fill="#16a34a">57回</text>
+      </svg>
+      <p class="s-fig-caption">図1：逆張り買いの足別勝率（赤の点線は損益分岐目安43%）</p>
+    </div>
+
+    <div class="s-table-wrap">
+<table>
+        <thead>
+          <tr>
+            <th>対象</th>
+            <th>勝った回数</th>
+            <th>全体の回数</th>
+            <th>勝率</th>
+            <th>偶然のぶれを考えた勝率（95%）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="base-row">
+            <td>全体ベースライン</td>
+            <td>2059回</td>
+            <td>4786回</td>
+            <td>43.0%</td>
+            <td>41.6% 〜 44.4%</td>
+          </tr>
+          <tr>
+            <td>逆張り買い・1時間足</td>
+            <td>397回</td>
+            <td>897回</td>
+            <td>44.3%</td>
+            <td>41.0% 〜 47.5%</td>
+          </tr>
+          <tr>
+            <td>逆張り買い・4時間足</td>
+            <td>215回</td>
+            <td>491回</td>
+            <td>43.8%</td>
+            <td>39.5% 〜 48.2%</td>
+          </tr>
+          <tr class="hi-row">
+            <td><b>逆張り買い・日足</b></td>
+            <td><b>33回</b></td>
+            <td><b>57回</b></td>
+            <td><b class="pos">57.9%</b></td>
+            <td><b>45.0% 〜 69.8%</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="meta-line" style="margin-top:4px">※「偶然のぶれを考えた勝率」は、もし同じ条件を無限に繰り返したとき、本当の勝率が95%の確率で入ると考えられる幅です。幅が広いほど、回数が少なく「たまたま」の可能性が大きいことを示しています。</p>
+  </div>
+
+  <div class="s-section">
+    <h2>日足の結果をもう少し詳しく</h2>
+    <p>日足の逆張り買い（57回）を細かく見ると、すべての勝ちが第1目標（損切り幅の1.33倍の位置での利確）で、第2目標（損切り幅の2倍の位置での利確）は1回もありませんでした。負けた24回はすべて損切りです。</p>
+    <div class="info-box">
+      <b>勝ち：33回（第1目標での利確）、負け：24回（損切り）</b><br>
+      平均すると1回あたり、損切り幅の約0.35倍ぶんのプラス
+    </div>
+    <p>1時間足・4時間足では損益分岐点（約43%）とほぼ変わらない勝率でした。日足の57.9%はそれより高いですが、57回という少ない回数では「運が良かった」だけの可能性もあります。偶然のぶれを考えた範囲が45%〜70%と非常に広いことがそれを示しています。</p>
+    <div class="warn-box">
+      <b>「足が長いほど勝ちやすい」と言えるか？</b><br>
+      今の過去のデータだけでは、「日足の逆張り買いは勝ちやすい」と自信を持って言うには回数が足りません。これから実際に発火するシグナルで確かめる必要があります（前向きの確認）。
+    </div>
+  </div>
+
+  <div class="s-section">
+    <h2>前向きで確かめているところ</h2>
+    <p>日足の逆張り買いは、2025年9月10日を基準日として「前向きの確認」を始めています。これはシグナルを登録した日以降に発火したものだけを集計する仕組みで、後から都合の良い条件を選んでいないことを保証します。</p>
+    <p>現時点（2026年9月28日）で24回のうち14回が勝ち（58.3%）という数字が出ています。過去の傾向（57.9%）と近い値ですが、まだ80回に達しておらず「蓄積中」の段階です。引き続き積み上げていきます。</p>
+  </div>
+
+  <!-- 定点観測 -->
+  <div class="s-section" id="tracker">
+    <div class="s-table-wrap">
+      <div class="mw-scroll-hint">横にスクロールできます</div>
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-09-28／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+<div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.02~+0.08]</span><br><small style="opacity:.8;white-space:nowrap">1605/3634・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしのシグナル（買いも売りも）<br><small style="opacity:.7">blocked=False</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.04</span><br><span style="white-space:nowrap">CI[-0.02~+0.09]</span><br><small style="opacity:.8;white-space:nowrap">1287/2900・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしの買い<br><small style="opacity:.7">blocked=False×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.04</span><br><span style="white-space:nowrap">CI[-0.03~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">1023/2284・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般（4時間足のみ）<br><small style="opacity:.7">tf=4h×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.04</span><br><span style="white-space:nowrap">CI[-0.06~+0.14]</span><br><small style="opacity:.8;white-space:nowrap">456/1023・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>選別ランク「普通」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=neutral</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.05</span><br><span style="white-space:nowrap">CI[-0.03~+0.13]</span><br><small style="opacity:.8;white-space:nowrap">432/961・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数のシグナル（買いも売りも）<br><small style="opacity:.7">group=index</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[-0.09~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">412/960・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.10~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">357/824・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.05</span><br><span style="white-space:nowrap">CI[-0.10~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">346/771・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（&gt;MA25&amp;75）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.05</span><br><span style="white-space:nowrap">CI[-0.08~+0.17]</span><br><small style="opacity:.8;white-space:nowrap">325/725・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしの売り<br><small style="opacity:.7">blocked=False×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.11~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">276/640・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>金・銀のシグナル（買いも売りも）<br><small style="opacity:.7">group=metal</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.08~+0.21]</span><br><small style="opacity:.8;white-space:nowrap">204/447・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.18</span><br><span style="white-space:nowrap">CI[+0.01~+0.35]</span><br><small style="opacity:.8;white-space:nowrap">188/372・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>関連ニュースなしのシグナル（買いも売りも）<br><small style="opacity:.7">注目度ゼロ(news=0)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.02</span><br><span style="white-space:nowrap">CI[-0.18~+0.14]</span><br><small style="opacity:.8;white-space:nowrap">154/367・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>もみあい中の逆張り買い<br><small style="opacity:.7">trend=中立・もみあい×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.06~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">155/337・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>上昇トレンド中の逆張り買い<br><small style="opacity:.7">trend=上昇×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.08</span><br><span style="white-space:nowrap">CI[-0.07~+0.23]</span><br><small style="opacity:.8;white-space:nowrap">153/330・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>金・銀の買い<br><small style="opacity:.7">group=metal×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.09</span><br><span style="white-space:nowrap">CI[-0.11~+0.30]</span><br><small style="opacity:.8;white-space:nowrap">153/327・勝率47%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>下降トレンド中の売り<br><small style="opacity:.7">trend=下降×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.10</span><br><span style="white-space:nowrap">CI[-0.07~+0.27]</span><br><small style="opacity:.8;white-space:nowrap">132/281・勝率47%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁ありの売り<br><small style="opacity:.7">blocked=True×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.06</span><br><span style="white-space:nowrap">CI[-0.22~+0.11]</span><br><small style="opacity:.8;white-space:nowrap">111/275・勝率40%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>上昇トレンド中、値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ロング×上昇トレンド×MA両線の上</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.01</span><br><span style="white-space:nowrap">CI[-0.22~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">116/273・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>円以外の通貨ペアの逆張り買い<br><small style="opacity:.7">other_fx×逆張り買い(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.06</span><br><span style="white-space:nowrap">CI[-0.13~+0.24]</span><br><small style="opacity:.8;white-space:nowrap">123/272・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の逆張り買い<br><small style="opacity:.7">group=index×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.01</span><br><span style="white-space:nowrap">CI[-0.21~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">108/254・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「直近20本の安値を下抜け」のシグナル<br><small style="opacity:.7">signal=low_break</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.14~+0.16]</span><br><small style="opacity:.8;white-space:nowrap">109/252・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の売り<br><small style="opacity:.7">group=index×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.11~+0.25]</span><br><small style="opacity:.8;white-space:nowrap">108/236・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ビットコインの買い<br><small style="opacity:.7">group=btc×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.10~+0.24]</span><br><small style="opacity:.8;white-space:nowrap">97/212・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>値段が2本の移動平均線より下で出た「MACDのゴールデンクロス」<br><small style="opacity:.7">ステート MACDゴールデン×両MA下（底値圏転換）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.16</span><br><span style="white-space:nowrap">CI[-0.05~+0.37]</span><br><small style="opacity:.8;white-space:nowrap">73/147・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>金・銀の逆張り買い<br><small style="opacity:.7">group=metal×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.14</span><br><span style="white-space:nowrap">CI[-0.19~+0.46]</span><br><small style="opacity:.8;white-space:nowrap">58/119・勝率49%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般（日足のみ）<br><small style="opacity:.7">ロング全般(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.19~+0.33]</span><br><small style="opacity:.8;white-space:nowrap">54/118・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「移動平均線のデッドクロス」のシグナル<br><small style="opacity:.7">signal=ma_dead</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.05</span><br><span style="white-space:nowrap">CI[-0.29~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">45/111・勝率40%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>上昇トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">ステート RSI≥70×上昇トレンド（強さは続く）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.11</span><br><span style="white-space:nowrap">CI[-0.14~+0.36]</span><br><small style="opacity:.8;white-space:nowrap">52/109・勝率48%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ビットコインのシグナル（1時間足のみ／買いも売りも）<br><small style="opacity:.7">BTC×1時間足(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.20~+0.21]</span><br><small style="opacity:.8;white-space:nowrap">47/109・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>RSI45〜55（中立）で出た「サポート（下値の支え）での反発」<br><small style="opacity:.7">ステート サポート反発×RSI中立（弱い逆張り＝回避）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.12</span><br><span style="white-space:nowrap">CI[-0.35~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">39/103・勝率38%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>円の通貨ペア、RSI45〜55（中立）のシグナル（買いも売りも）<br><small style="opacity:.7">JPYクロス×RSI中立帯(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.02</span><br><span style="white-space:nowrap">CI[-0.24~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">41/98・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>RSI45〜55（中立）で出た「ボリンジャーバンド−2σタッチ」<br><small style="opacity:.7">ステート BB下限タッチ×RSI中立（弱い逆張り＝回避）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.03</span><br><span style="white-space:nowrap">CI[-0.32~+0.26]</span><br><small style="opacity:.8;white-space:nowrap">32/77・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ビットコインの逆張り買い<br><small style="opacity:.7">group=btc×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.21</span><br><span style="white-space:nowrap">CI[-0.10~+0.53]</span><br><small style="opacity:.8;white-space:nowrap">38/73・勝率52%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>上昇トレンド中、RSI30以下（売られすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">rsi=os×trend=上昇</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.15</span><br><span style="white-space:nowrap">CI[-0.10~+0.40]</span><br><small style="opacity:.8;white-space:nowrap">35/71・勝率49%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「直近20本の高値を上抜け」と「RSI買われすぎ」が同時に出たシグナル<br><small style="opacity:.7">コンボ 高値ブレイク×RSI買われすぎ</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.32~+0.38]</span><br><small style="opacity:.8;white-space:nowrap">31/70・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>円以外の通貨ペアのシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">other_fxクロス(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.26~+0.41]</span><br><small style="opacity:.8;white-space:nowrap">23/50・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>売り全般（日足のみ）<br><small style="opacity:.7">ショート全般(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.19</span><br><span style="white-space:nowrap">CI[-0.48~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">16/46・勝率35%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「ボリンジャーバンド+2σ突破」と「RSI買われすぎ」が同時に出たシグナル<br><small style="opacity:.7">コンボ +2σ突破×RSI買われすぎ</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.08</span><br><span style="white-space:nowrap">CI[-0.36~+0.52]</span><br><small style="opacity:.8;white-space:nowrap">19/41・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>下降トレンド中のシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">下降トレンド発火(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.02</span><br><span style="white-space:nowrap">CI[-0.37~+0.34]</span><br><small style="opacity:.8;white-space:nowrap">16/38・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>金・銀の買い（日足のみ）<br><small style="opacity:.7">メタル×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.45~+0.59]</span><br><small style="opacity:.8;white-space:nowrap">11/24・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>逆張り買い全般（日足のみ）<br><small style="opacity:.7">tf=1d×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.36</span><br><span style="white-space:nowrap">CI[-0.20~+0.92]</span><br><small style="opacity:.8;white-space:nowrap">14/24・勝率58%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>下降トレンド中、RSI70以上（買われすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">rsi=ob×trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.22</span><br><span style="white-space:nowrap">CI[-0.68~+0.23]</span><br><small style="opacity:.8;white-space:nowrap">8/24・勝率33%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の買い（日足のみ）<br><small style="opacity:.7">指数×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.11</span><br><span style="white-space:nowrap">CI[-0.68~+0.46]</span><br><small style="opacity:.8;white-space:nowrap">8/21・勝率38%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ビットコインの買い（日足のみ）<br><small style="opacity:.7">BTC×ロング(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.50</span><br><span style="white-space:nowrap">CI[-0.11~+1.11]</span><br><small style="opacity:.8;white-space:nowrap">9/14・勝率64%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ビットコインのシグナル（日足のみ／買いも売りも）<br><small style="opacity:.7">BTC全方向(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.17</span><br><span style="white-space:nowrap">CI[-0.47~+0.80]</span><br><small style="opacity:.8;white-space:nowrap">7/14・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「ボリンジャーバンド−2σタッチ」のシグナル（日足のみ）<br><small style="opacity:.7">BB下限タッチ(日足・回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.10</span><br><span style="white-space:nowrap">CI[-0.82~+0.62]</span><br><small style="opacity:.8;white-space:nowrap">5/13・勝率38%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の逆張り買い（日足のみ）<br><small style="opacity:.7">指数×逆張り買い(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.75</span><br><span style="white-space:nowrap">CI[-0.56~+2.06]</span><br><small style="opacity:.8;white-space:nowrap">3/4・勝率75%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「ダブルボトム（二番底）」と「直近20本の高値を上抜け」が同時に出たシグナル<br><small style="opacity:.7">コンボ ダブルボトム×高値ブレイク</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +1.33</span><br><span style="white-space:nowrap">CI[+1.33~+1.33]</span><br><small style="opacity:.8;white-space:nowrap">1/1・勝率100%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>トレンドが弱いとき（ADX20未満）の順張り<br><small style="opacity:.7">順張り×ADX弱(20未満)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>トレンドが強いとき（ADX25以上）の順張り<br><small style="opacity:.7">順張り×ADX強(25以上)(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>市場が不安なとき（VIX25以上）の逆張り買い<br><small style="opacity:.7">逆張り買い×VIX高(25以上)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>市場が落ち着いているとき（VIX15未満）の逆張り買い<br><small style="opacity:.7">逆張り買い×VIX低(15未満)(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>為替（FX）の逆張り買い（日足のみ）<br><small style="opacity:.7">FX×逆張り買い(日足)(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁ありの順張り<br><small style="opacity:.7">順張り×利確の手前に壁(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ファンダの見立てと逆向きのシグナル（買いも売りも）<br><small style="opacity:.7">ファンダの見立てと逆向き</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>ファンダの見立てと同じ向きのシグナル（買いも売りも）<br><small style="opacity:.7">ファンダの見立てと同じ向き(対照)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>下降トレンド中の逆張り買い（9月27日以降に出たもの）<br><small style="opacity:.7">下降トレンド中の逆張り買い（逆向きで再登録）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>選別ランク「良」のシグナル（9月27日以降に出たもの／買いも売りも）<br><small style="opacity:.7">環境ランク good（逆向きで再登録）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル（4時間足のみ）<br><small style="opacity:.7">売られすぎ逆張り買い×4時間足</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル（日足のみ）<br><small style="opacity:.7">売られすぎ逆張り買い×日足</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>逆張り買い全般（4時間足のみ）<br><small style="opacity:.7">逆張り買い×4時間足</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>通貨の強弱と同じ向きのシグナル（9月28日以降に出たもの／買いも売りも）<br><small style="opacity:.7">通貨の強弱と同じ向き</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>通貨の強弱と逆向きのシグナル（9月28日以降に出たもの／買いも売りも）<br><small style="opacity:.7">通貨の強弱と逆向き(対照)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[+0.00~+0.00]</span><br><small style="opacity:.8;white-space:nowrap">0/0・勝率0%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.05</span><br><span style="white-space:nowrap">CI[-0.03~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">1230/2743・勝率45%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中のシグナル（買いも売りも）<br><small style="opacity:.7">trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.12</span><br><span style="white-space:nowrap">CI[+0.04~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">514/1072・勝率48%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>逆張り買い全般<br><small style="opacity:.7">reversalL（逆張り買い）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.11</span><br><span style="white-space:nowrap">CI[+0.01~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">470/990・勝率48%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>もみあい中の買い<br><small style="opacity:.7">trend=中立・もみあい×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.06</span><br><span style="white-space:nowrap">CI[-0.04~+0.15]</span><br><small style="opacity:.8;white-space:nowrap">446/984・勝率45%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中の買い<br><small style="opacity:.7">trend=下降×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.13</span><br><span style="white-space:nowrap">CI[+0.03~+0.23]</span><br><small style="opacity:.8;white-space:nowrap">404/832・勝率49%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>選別ランク「良」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=good</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.16</span><br><span style="white-space:nowrap">CI[+0.04~+0.28]</span><br><small style="opacity:.8;white-space:nowrap">352/706・勝率50%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>選別ランク「良」の買い<br><small style="opacity:.7">tier=good×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.16</span><br><span style="white-space:nowrap">CI[+0.04~+0.29]</span><br><small style="opacity:.8;white-space:nowrap">335/673・勝率50%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中の逆張り買い<br><small style="opacity:.7">trend=下降×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.19</span><br><span style="white-space:nowrap">CI[+0.04~+0.34]</span><br><small style="opacity:.8;white-space:nowrap">178/349・勝率51%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>もみあい中の売り<br><small style="opacity:.7">trend=中立・もみあい×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.10</span><br><span style="white-space:nowrap">CI[-0.25~+0.05]</span><br><small style="opacity:.8;white-space:nowrap">117/303・勝率39%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+</table>
+    </div>
+  </div>
+
+  <!-- 関連記事 -->
+  <div class="s-section">
+    <h2>関連記事</h2>
+    <div class="s-related">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <span class="card-icon">🔬</span>
+        <span class="card-title">発火条件の図解カタログ</span>
+        <span class="card-desc">RSI売られすぎ・ボリンジャーバンドなど、シグナルの種類と仕組みをわかりやすく解説</span>
+      </a>
+      <a class="related-card" href="guide-signal-lab-111.html">
+        <span class="card-icon">📖</span>
+        <span class="card-title">研究日誌 #111</span>
+        <span class="card-desc">バンドの下の線タッチで買ったとき、損切りの置き方で結果は変わる？（日足4000回）</span>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <span class="card-icon">🧪</span>
+        <span class="card-title">シグナル研究ページ</span>
+        <span class="card-desc">すべてのシグナルの成績をタブで見られる研究ページ</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+</article>
+
+<script>
+(function(){try{
+function mark(){
+  if(window.innerWidth>600)return;
+  var ts=document.getElementsByTagName('table');
+  for(var i=0;i<ts.length;i++){(function(t){
+    if(t.getAttribute('data-mw-sc'))return;
+    if(t.scrollWidth-t.clientWidth>4){
+      t.setAttribute('data-mw-sc','1');
+      var h=document.createElement('div');
+      h.className='mw-scroll-hint';
+      h.textContent='\u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+      if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+      t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+    }
+  })(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</body>
+</html>
