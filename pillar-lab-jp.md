@@ -1,6 +1,6 @@
 # 新しい柱・第2波（日本株）の結果
 
-作成: 2026-09-27T16:35+09:00（GitHub Actions で計算）。事前登録＝`PILLAR_PREREG.md` の「第2波・日本株」（指紋 sha256 `bd8d5440295418a2…`）。
+作成: 2026-09-27T16:39+09:00（GitHub Actions で計算）。事前登録＝`PILLAR_PREREG.md` の「第2波・日本株」（指紋 sha256 `85e7b3293e530670…`）。
 **個別の銘柄名は載せない**（統計だけ）。どれも売買の決まりではない。
 
 ## J1 大量保有報告書（新しく5%を超えた届出）のあとの株価
@@ -49,6 +49,10 @@
 - https://www.jpx.co.jp/markets/statistics-equities/margin/index.html：資料らしいリンク 19 件／キーワード 銘柄別=1, 週末=1, 信用取引残高=12
 - https://www.jpx.co.jp/markets/statistics-equities/margin/05.html：資料らしいリンク 20 件／キーワード 銘柄別=4, 週末=4, 信用取引残高=8
 - https://www.jpx.co.jp/markets/statistics-equities/margin/06.html：資料らしいリンク 17 件／キーワード 銘柄別=1, 週末=1, 信用取引残高=6
+
+## 届出の中身の取り足し
+
+- {"fetched_ok": 4819, "fetched_fail": 1, "docs_total": 4820, "docs_left": 3735}
 
 ## J3w 市場全体の信用倍率（お客さんの口座）と、その後の日経平均
 
