@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-28", "line": '・<b>2026-09-28</b>: 🧪 解説「<a href="guide-signal-lab-112.html" style="color:#0969da"><b>逆張り買いは足が長いほど勝ちやすいか？ 1時間足・4時間足・日足で比べた</b></a>」公開'},
         {"date": "2026-09-27", "line": '・<b>2026-09-27</b>: 🧠 解説「<a href="guide-kuse-check.html" style="color:#0969da"><b>投資のクセ診断（17問でつまずきやすさを知る）</b></a>」公開'},
         {"date": "2026-09-27", "line": '・<b>2026-09-27</b>: 📰 解説「<a href="guide-news-2026-09-27-us10y-yield-52pct-19year-high.html" style="color:#0969da"><b>【9/27】米10年国債5.2%──19年ぶり高水準、日本JGBも3%超</b></a>」公開'},
         {"date": "2026-09-27", "line": '・<b>2026-09-27</b>: 〰 解説「<a href="guide-entry-ma-crossover-rules.html" style="color:#0969da"><b>移動平均線の交差は効くの？【エントリー方法の研究 #03】</b></a>」公開'},
