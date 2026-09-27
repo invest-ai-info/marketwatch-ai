@@ -102,8 +102,9 @@ def test_registration_is_idempotent():
     import json
     import signal_lab_tracker as T
     t = json.load(open(os.path.join(ROOT, "signal-lab-tracker.json"), encoding="utf-8-sig"))
-    # 9/26 に宣言した登録すべて（名前が *_2026_09_26 の register 定数＝あとから足しても数え漏れない）
-    new_ids = {h["id"] for name in dir(T) if name.endswith("_2026_09_26")
+    # 9/26 以降に宣言した登録すべて（名前が *_2026_09_26 / *_2026_09_27 の register 定数＝あとから足しても数え漏れない）
+    #   9/27＝通貨の強弱とシグナルの向き（REGISTER_FXBOOKS_2026_09_27）。本物の tracker.json にはまだ無いので1回目で増える
+    new_ids = {h["id"] for name in dir(T) if name.endswith(("_2026_09_26", "_2026_09_27"))
                for h in (getattr(T, name) or {}).get("register", [])}
     already = new_ids & {h["id"] for h in t["hypotheses"]}
     first = T.apply_holdout_bootstrap(t)
