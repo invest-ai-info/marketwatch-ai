@@ -32,6 +32,7 @@ def test_prereg_numbers_match_the_code():
     assert J.J1_GAP == 60 and "60営業日以内に重なったら最初の1件だけ" in text and J.J1_BENCH == "1306.T"
     assert J.J2_T2_FROM == D(2019, 7, 16) and "2019年7月16日" in text and "2営業日前" in text and "3営業日前" in text
     assert J.J2_WINDOW == 10 and "10営業日前の終値" in text and J.J2_SPLIT == "2008-01-01" and "2008年から" in text
+    assert J.J3W_WEEKLY_GAP == 20 and "間が20日を超えたところ" in text
     assert J.J3W_WINDOW == 156 and "直前156週" in text and J.J3W_MIN_HIST == 104 and "104週以上" in text
     assert J.J3W_LAG == 4 and "4営業日後" in text and J.J3W_HOLD == 20 and "20営業日後" in text
     assert J.J3W_SPLIT == "2015-01-01" and "2015年から" in text and J.J3W_MIN_N == 100 and "件数100未満" in text
@@ -156,6 +157,9 @@ def test_parse_margin_sheet_keeps_weekly_part_only():
     weeks = [D(2002, 1, 4) + dt.timedelta(days=7 * k) for k in range(30)]
     ser = J.parse_margin_sheet(_margin_sheet(weeks, lambda k: 3.0))
     assert len(ser) == 30 and ser[0][0] == D(2002, 1, 4) and ser[0][1] == 1000 and ser[0][2] == 3000
+    # 祝日で1週抜けた（間が14日）ところで切らない（2026-09-27 の1回目はここで切れて19週しか残らなかった）
+    holiday = weeks[:10] + weeks[11:]
+    assert len(J.parse_margin_sheet(_margin_sheet(holiday, lambda k: 3.0))) == 29
 
 
 def _j3w_data(effect, seed=7, n_weeks=1100):

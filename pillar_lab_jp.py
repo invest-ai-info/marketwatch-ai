@@ -444,7 +444,7 @@ def run_j3f():
 
 # ── J3w 市場全体の信用倍率（2026-09-27 午後に PILLAR_PREREG.md へ追記して登録）──
 J3W_SHEET = "信用取引現在高"      # 委託・自己・合計の売残高／買残高（株数・金額）
-J3W_WEEKLY_GAP = 10              # 日付どうしの間が10日以内に続く部分だけ（週ごと）
+J3W_WEEKLY_GAP = 20              # 月ごとの部分との境＝間が20日を超えたところ（🔧 2026-09-27 訂正：10日では祝日の14日の間で切れた）
 J3W_WINDOW = 156                 # 直前156週（その週は含まない）の中での順位
 J3W_MIN_HIST = 104
 J3W_TAIL = 0.2
@@ -484,7 +484,7 @@ def parse_margin_sheet(df):
         if sell > 0 and buy > 0:
             out.append((d, sell, buy))
     out.sort()
-    # 週ごとに続く部分だけ（最後に10日を超えて空いた所より後）
+    # 週ごとに続く部分だけ（最後に20日を超えて空いた所＝月ごとの部分との境より後）
     start = 0
     for i in range(1, len(out)):
         if (out[i][0] - out[i - 1][0]).days > J3W_WEEKLY_GAP:
