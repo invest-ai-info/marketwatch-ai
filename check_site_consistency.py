@@ -200,6 +200,10 @@ def check_sync_forbidden(sync_files):
         elif base.startswith("_"):
             # 🆕 2026-07-07: 「_プレフィックス＝ローカル専用（非公開研究/個人データ）」規約をコードで強制
             errors.append(f"🚨 ローカル専用（_プレフィックス）ファイルが SYNC_FILES に混入: {f}（非公開研究の流出防止）")
+        elif re.match(r"(?i)(detailed)?statement.*\.html?$", base):
+            # 🆕 2026-09-27: MT4 の口座履歴（Statement.htm）＝名前・口座番号・全取引が入った個人の記録。
+            #   投資スタイル診断（style_diagnosis.py）の入力で、置き場所は research/ の下。名前で止める保険
+            errors.append(f"🚨 MT4 の口座履歴が SYNC_FILES に混入: {f}（個人の取引記録の流出防止）")
         elif f.replace("\\", "/").startswith("research/"):
             # 🆕 2026-07-31: 「research/ 配下は丸ごとローカル専用」をディレクトリ単位で強制。
             # 列挙式（SYNC_FORBIDDEN に1件ずつ足す）は足し忘れが穴になる＝実測で research/ の
