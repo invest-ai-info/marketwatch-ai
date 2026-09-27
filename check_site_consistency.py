@@ -76,6 +76,7 @@ SYNC_FORBIDDEN = {
     # 🆕 2026-09-27 新しい柱・第1波（pillar-lab.yml・手動。事前登録 PILLAR_PREREG.md の指紋付きの結果）
     "pillar-lab.json", "pillar-lab.md",
     "pillar-lab-jp.json", "pillar-lab-jp.md",   # 第2波・日本株（pillar-lab-jp.yml・手動）
+    "trend-lab.json", "trend-lab.md",           # トレンドの見方の比べ比べ（trend-lab.yml・手動）
 }
 
 errors = []
