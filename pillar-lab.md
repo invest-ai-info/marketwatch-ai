@@ -1,6 +1,6 @@
 # 新しい柱・第1波の結果
 
-作成: 2026-09-27T11:57+09:00（GitHub Actions で計算）。事前登録＝`PILLAR_PREREG.md`（指紋 sha256 `314c2ebdef4fd8ec…`）。
+作成: 2026-09-27T12:03+09:00（GitHub Actions で計算）。事前登録＝`PILLAR_PREREG.md`（指紋 sha256 `314c2ebdef4fd8ec…`）。
 判定の基準は事前登録どおり。**どれも売買の決まりではない**＝兆しが出ても、登録後のデータだけで数え直してから柱にする。
 
 ## A1 AIの見立てと、その後の値動き
@@ -94,6 +94,16 @@
 - https://www.click365.jp/service/resorces/：資料らしいリンク 9 件／キーワード 建玉=3／フォーム 0 個
 - https://www.click365.jp/market.html：資料らしいリンク 3 件／キーワード なし／フォーム 0 個
 - https://www.click365.jp/newsfile/news/article/20060710-01：資料らしいリンク 3 件／キーワード 建玉=4, 売買別=3／フォーム 0 個
+
+### B4 資料の中身の形（2回目の調べ・数字の検証はしない）
+
+- https://www.tfx.co.jp/kawase/document/fx_sellbuy.xls：xls・シート 売買動向（27行×12列）、過去データ（26行×47列）
+- https://www.click365.jp/resorces/doc/weekly_sellbuy.xls：xls・シート w_sellbuy（203行×67列）
+- https://www.click365.jp/resorces/doc/fxfile.xls：取得できず（HTTP 404）
+- https://www.click365.jp/resorces/doc/monthlyfx.xls：xls・シート データ（140行×6列）
+- https://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-20260925.CSV：text・35行
+- https://www.tfx.co.jp/kawase/document/PRT-010-CSV-016-20260925.CSV：text・35行
+- 日々の CSV を昔の日付で取れるか：003-20250925=200、016-20250925=200、003-20240925=200、016-20240925=200、003-20200925=200、016-20200925=200、003-20150925=200、016-20150925=404、003-20100924=200、016-20100924=404
 
 ---
 
