@@ -6564,6 +6564,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a href="guide-fee-impact.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧾 手数料インパクト</a>
     <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
     <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
+    <a href="guide-kuse-check.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧠 クセ診断</a>
   </div>
 
   <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
