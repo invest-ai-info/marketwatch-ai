@@ -73,6 +73,7 @@
 | **pillar-lab-jp.yml** 🆕 | 手動のみ | 新しい柱・第2波＝日本株（2026-09-27 オーナー決定）＝J1 大量保有報告書のあと／J2 権利付き最終日に向けた日経平均／J3 信用残の資料の形。事前登録＝`PILLAR_PREREG.md`「第2波・日本株」。EDINET の書類一覧は `EDINET_API_KEY` で取り、**actions/cache（edinet-hist/）に置いてリポジトリに入れない**（1回150分まで・残りは次の実行で）。`pillar_lab_jp.py`。出力に銘柄名は出さない・GitHub 側生成＝push 禁止 |
 | **trend-lab.yml** 🆕 | 手動のみ | トレンドの見方の比べ比べ（2026-09-27 オーナー決定）＝機械で数えられる9つ（移動平均・200日線・ダウ理論・一目均衡表・ドンチャン55日・スーパートレンド・GMMA・平均足・ADX）を18銘柄の日足・月ごとで偽薬と比べる。一覧＝`TREND_INDICATORS.md`・事前登録＝`PILLAR_PREREG.md`。`trend_lab.py`。出力は GitHub 側生成＝push 禁止 |
 | **combo-lab.yml** 🆕 | 手動のみ | 組み合わせの相性ラボ（2026-09-27 オーナー）＝トレンド10×オシレーター6×出口6＝360通り。**前半（2015年まで）で上位3つを選び、後半（2016年から）で1回だけ確かめる**（偽薬 p＜0.05÷3）。`combo_lab.py`。出力は GitHub 側生成＝push 禁止 |
+| **combo-forward.yml** 🆕 | 毎月3日 10:47（＋4日 保険） | 前向きの観察（2026-09-27 オーナー「両方進めてください」）＝相性ラボで向きだけ残った 一目三役×ボリンジャー下限×追いかける損切り を**入る日 2026-09-28 以降の取引だけ**で数える。区切り 50/100/150件は一度出たら固定。事前登録＝`PILLAR_PREREG.md`「前向きの観察」。`combo_forward.py`。出力は GitHub 側生成＝push 禁止。📌 **合図の組み合わせ探しはここで区切り**（同日）＝次は J1b と⑤ |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
 
@@ -211,7 +212,7 @@ content-writer と seo-ux-strategist を**同一メッセージ内で並列**に
 - **⚡最新ニュース・ライブフィード（2026-07-09／08-06 ソース拡張）**: `news-ticker.json`（Actions `news-ticker.yml`、毎時37分＝`build_news_ticker.py` が固定媒体+公的機関+トピック横断検索（**単一の真実は `FEEDS`**）から最新24件を時刻降順で生成・`feed_health` 付き＝automation-health §⑦ がソース停止を検知。index.html がJSで閲覧時fetch）。**Actions が GitHub側で生成＝ローカルから push 禁止**（SYNC_FORBIDDEN 登録済）
 
 - **話題の企業の有報本文（2026-09-02）**: `edinet-yuho.json`（Actions `edinet-yuho.yml`、平日 19:40 JST＝`build_edinet_yuho.py` が `EDINET_API_KEY` で jp-rankings 由来の候補企業の有報「事業等のリスク」等と主要指標を取得。routine `company-weekly-auto` はこれを読むだけ＝クラウド routine は Secrets を読めないので API を直接叩かない）。**Actions が GitHub側で生成＝ローカルから push 禁止**（SYNC_FORBIDDEN 登録済）
-- **研究ラボの出力（2026-09-26）**: `exit-lab.*`／`exit-wall-lab.*`／`stop-lab.*`／`regime-lab.*`／`signal-env-profile*`／`pillar-lab.*`／`pillar-lab-jp.*`／`trend-lab.*`／`combo-lab.*`（Actions が生成・**前向きの判定の履歴を持つ**＝古い版で上書きすると積み上げた判定が消える）。SYNC_FORBIDDEN 登録済み
+- **研究ラボの出力（2026-09-26）**: `exit-lab.*`／`exit-wall-lab.*`／`stop-lab.*`／`regime-lab.*`／`signal-env-profile*`／`pillar-lab.*`／`pillar-lab-jp.*`／`trend-lab.*`／`combo-lab.*`／`combo-forward.*`（Actions が生成・**前向きの判定の履歴を持つ**＝古い版で上書きすると積み上げた判定が消える）。SYNC_FORBIDDEN 登録済み
 - **日本株ランキング（2026-06-20）**: `jp-rankings.json`（Actions `jp-rankings.yml`、夕 16:40/17:10 JST＝クローズ後・朝実行はcron遅延で廃止。`build_jp_rankings.py` が Yahoo価格で値上がり/値下がりトップ20生成→`generate_market_news.py` の `build_jp_rankings_section` が hot-assets 最上段に描画）。**Actions が GitHub側で生成＝ローカルから push 禁止**。※`jp-stock-info.json`（赤字黒字/名前/業種の静的）と `build_jp_rankings.py` は SYNC入り＝ローカルで `make_jp_stock_info.py` で四半期更新して push
 
 **理由**: これらは cron / 予約エージェントが GitHub 側で生成・push するファイル。ローカルから push すると古いファイルで上書きされ、**ライブページが過去日付に巻き戻る事故**（実例: 2026-04-24）。

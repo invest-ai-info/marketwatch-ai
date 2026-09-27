@@ -78,6 +78,7 @@ SYNC_FORBIDDEN = {
     "pillar-lab-jp.json", "pillar-lab-jp.md",   # 第2波・日本株（pillar-lab-jp.yml・手動）
     "trend-lab.json", "trend-lab.md",           # トレンドの見方の比べ比べ（trend-lab.yml・手動）
     "combo-lab.json", "combo-lab.md",           # 組み合わせの相性ラボ（combo-lab.yml・手動）
+    "combo-forward.json", "combo-forward.md",   # 🆕 2026-09-27 前向きの観察（combo-forward.yml・月1。区切りの記録を持つ）
 }
 
 errors = []
