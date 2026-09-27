@@ -335,6 +335,29 @@ REGISTER_FOCUS_2026_09_26 = {"register": [
      "filter": {"reversal_long": True, "tf": "4h"}, "registered_at": FOCUS_FROM},
 ]}
 
+# 🆕 2026-09-27 通貨の強弱とシグナルの向き（**オーナー了承 2026-09-27「1で進めてください」**）。確定後は変更しない。
+#   出どころ: FXの実用書100冊（2019-10〜2026-08）の下調べ（research/fx-books・非公開）で、7冊が「強い通貨を買い、
+#     弱い通貨を売る」を勧めているのに正式な検定が無い。エンジンは FX のシグナルごとに fx_alignment を記録している
+#     （2026-09-27 時点：一致 804件・逆 808件・中立 787件）。memory/03_initiatives の CS-5 検証（5月予定）は未完了のまま。
+#   ⚠️ **開示＝結果を見る前の登録ではない**: 公開ページ track-record の「CS-5」表に、一致（順張り）・中立・逆（逆張り）別の
+#      勝率がすでに出ている（境目は 0.05 で数え直した別物）。この登録を書いたセッションは数字を見ていないが、人の目には
+#      触れている。だから **fired_from で登録の翌日以降の発火だけ**を数える（過去のぶんは判定に使わない＝真っさらな前向き）。
+#   ⚠️ 読み方: トラッカーは平均Rの 95% の幅を 0 と比べる（絶対値）。本の主張は「一致のほうが逆より良い」（相対）なので、
+#      実質の読みは**対の2行（同じ向き−逆向き）の差**（REGISTER_ENVPROFILE_2026_09_26 の fbias と同じ）。
+#   ⚠️ 検出力: 一致・逆それぞれ 約7件/日（8月の件数だけ）・σ≈1.16R。N=80（約2週間）の MDE≈0.36R。
+#      0.13R ほどの差を確かめるには各 N≈620（約3か月）が要る＝N80 で非有意でも「効果なし」と読まない。
+#   条件キー cs_align は signal_lab_verify.cs_align_of（fx_alignment.aligned をそのまま読む・境目 0.2）。
+#   エンジンのメール照合には未対応＝メールは変わらない。
+CS_FROM = "2026-09-28"
+REGISTER_FXBOOKS_2026_09_27 = {"register": [
+    {"id": "cs_aligned", "label": "通貨の強弱と同じ向き", "kind": "edge",
+     "filter": {"cs_align": "aligned", "fired_from": CS_FROM}, "registered_at": CS_FROM,
+     "pair": "cs_against"},
+    {"id": "cs_against", "label": "通貨の強弱と逆向き(対照)", "kind": "gate",
+     "filter": {"cs_align": "against", "fired_from": CS_FROM}, "registered_at": CS_FROM,
+     "pair": "cs_aligned"},
+]}
+
 # 🆕 2026-07-27 tf スコープ補正（**オーナー決定 2026-07-27**「1d と 1h を分離する」・冪等）。
 #   btc_all_1d は id も label も「日足」を名乗り、証拠も 20年**日足**BT（signals-log-backtest.json）
 #   なのに filter に tf が無く、ライブでは 1h/4h の発火まで前向きNに算入していた＝**レーンの混在**。
@@ -435,7 +458,7 @@ def apply_holdout_bootstrap(t):
               + STATE_2026_07_20["register"] + REGISTER_2026_07_27["register"]
               + REGISTER_2026_08_11["register"] + REGISTER_2026_09_26["register"]
               + REGISTER_EXIT_2026_09_26["register"] + REGISTER_ENVPROFILE_2026_09_26["register"]
-              + REGISTER_FOCUS_2026_09_26["register"]):
+              + REGISTER_FOCUS_2026_09_26["register"] + REGISTER_FXBOOKS_2026_09_27["register"]):
         if _filter_key(s["filter"]) in existing or s["id"] in existing_ids:
             continue
         t["hypotheses"].append(json.loads(json.dumps(s)))  # deep copy
@@ -789,6 +812,8 @@ PLAIN_SITUATION = {  # filter キー → 値 → 場面を表す名詞句（後�
                  "high": "市場が不安なとき（VIX25以上）"},
     # 🆕 2026-09-26 ファンダの見立てとの向き（signal_lab_verify.fbias_of と同じ）
     "fbias": {"mismatch": "ファンダの見立てと逆向き", "aligned": "ファンダの見立てと同じ向き"},
+    # 🆕 2026-09-27 通貨の強弱との向き（signal_lab_verify.cs_align_of と同じ）
+    "cs_align": {"aligned": "通貨の強弱と同じ向き", "against": "通貨の強弱と逆向き"},
 }
 PLAIN_ASSET_CLASS = {"index": "株価指数", "fx": "為替（FX）", "commodity": "金・銀・原油", "crypto": "ビットコイン"}
 PLAIN_FAMILY = {"tf": "順張り", "mr": "逆張り買い"}
