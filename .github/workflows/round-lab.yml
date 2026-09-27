@@ -1,0 +1,51 @@
+name: Round Number Lab (manual)
+
+# S3 キリの良い値（00・50）に初めて触れたあと、抜けるか跳ね返るか。2026-09-28 未明登録・オーナー「キリの良い登録はもう作ってください」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「S3 キリの良い値」（事前登録・計算より先にコミット済み）と round_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ（1回だけ数える。データの取得に失敗したときだけやり直す）。
+# ⚠️ 出力（round-lab.json / round-lab.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: round-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}   # 動き出した時点の最新（先の実行の結果を消さないため）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance holidays
+      - name: Test with made-up prices
+        run: python tests/test_round_lab.py
+      - name: Count with the pre-registered ruler
+        run: |
+          python round_lab.py
+          [ -f round-lab.md ] && cat round-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add round-lab.json round-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: round number lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
