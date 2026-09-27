@@ -67,7 +67,8 @@ ALLOWED_FILTER_KEYS = {"ticker", "group", "direction", "trend", "tf", "signal", 
                        "regime4",  # 🆕 2026-07-27 レジーム4状態（Q34・人間による正式拡張）
                        "fired_before", "fired_from",  # 🆕 2026-08-12 IS/FWD分離（#067・人間による正式拡張＝下記コメント）
                        "family", "adx_band", "vix_band", "asset_class",  # 🆕 2026-09-26 環境の相性ラボ（人間による正式拡張＝下記）
-                       "fbias"}  # 🆕 2026-09-26 シグナルの環境の統計（オーナー指示・人間による正式拡張＝下記 fbias_of）
+                       "fbias",  # 🆕 2026-09-26 シグナルの環境の統計（オーナー指示・人間による正式拡張＝下記 fbias_of）
+                       "cs_align"}  # 🆕 2026-09-27 通貨の強弱とシグナルの向き（FX本100冊の候補・オーナー了承・人間による正式拡張＝下記 cs_align_of）
 # ⚠️ `regime` と `regime4` は**別次元**（同じものにしない）。
 #   regime  = ライブの risk_regime（RISK_ON 等）＝エンジンが発火時に記録する既存の語彙。
 #   regime4 = 固定オラクル `research/_regime_state.py`（Q27で凍結・MA200×60日実現ボラの750日分位×
@@ -146,6 +147,23 @@ def fbias_of(d):
     if not isinstance(a, bool):
         return None
     return "aligned" if a else "mismatch"
+
+
+# 🆕 2026-09-27 通貨の強弱とシグナルの向き（FXの実用書100冊の下調べで「多くの本が勧めるのに正式な検定が無い」候補。
+#   オーナー了承「1で進めてください」。人間による正式拡張・数式ロック＝以後変更しない）。
+#   エンジンが発火時に記録する fx_alignment.aligned をそのまま読む（generate_technical_alerts.evaluate_currency_strength_alignment）:
+#     24時間の通貨の強弱で、ペアの基軸通貨−決済通貨の差が 0.2 以上のとき、その差の向きとシグナルの向きが同じなら True、逆なら False。
+#     差が 0.2 未満（中立）・FX 以外・記録なしは None。
+#   ⚠️ 公開ページ track-record の「CS-5」表は境目 0.05 で数え直している＝ここの 0.2 とは別物（記録にない値は作り直さない）。
+#   aligned＝同じ向き / against＝逆向き / None＝マッチしない（fbias と同じ意味論）。
+#   ⚠️ エンジンのメール照合（generate_technical_alerts.GATE_PROBE_SUPPORTED_KEYS）には入れていない（fbias 等と同じ）。
+def cs_align_of(d):
+    """通貨の強弱との向き: "aligned"（同じ）/ "against"（逆）/ None（中立・記録なし）。"""
+    fa = d.get("fx_alignment")
+    a = fa.get("aligned") if isinstance(fa, dict) else None
+    if not isinstance(a, bool):
+        return None
+    return "aligned" if a else "against"
 
 
 # 🆕 2026-07-23 注目度バンド（Q24・バンド境界は事前宣言＝以後変更しない。Q21 H-V2 と同じ 0 / 1-2 / 3+）
@@ -298,6 +316,8 @@ def match(d, f):
     if "asset_class" in f and asset_class_of(d) != f["asset_class"]:
         return False
     if "fbias" in f and fbias_of(d) != f["fbias"]:   # 🆕 2026-09-26 ファンダの見立てとの向き
+        return False
+    if "cs_align" in f and cs_align_of(d) != f["cs_align"]:   # 🆕 2026-09-27 通貨の強弱との向き
         return False
     # 🆕 2026-08-12 IS/FWD分離（#067ループの構造修正・人間による正式拡張）:
     #   fired_before / fired_from = 発火時刻 fired_at の境界。値は "YYYY-MM-DD"（JST日付）。
