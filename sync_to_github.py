@@ -300,4 +300,5 @@ SYNC_FILES = [
     "guide-news-2026-09-26-bessent-strong-yen-desirable-usdjpy-156.html",
     "guide-how-we-research.html",
     "guide-signal-lab-111.html",
+    "guide-entry-ma-crossover-rules.html",
 ]
