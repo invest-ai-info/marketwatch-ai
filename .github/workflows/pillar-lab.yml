@@ -28,6 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref }}   # 起動した時点ではなく、動き出した時点の最新（先の実行の結果を消さないため）
           fetch-depth: 0          # A1 は fundamental-context.json の履歴をすべて読む
           filter: blob:none       # 中身は必要な版だけ後から取る（全履歴の中身は大きい）
       - uses: actions/setup-python@v5
