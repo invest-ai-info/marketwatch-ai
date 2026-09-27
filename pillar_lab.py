@@ -80,6 +80,18 @@ B4_FILES = ["https://www.tfx.co.jp/kawase/document/fx_sellbuy.xls",          # �
             "https://www.click365.jp/resorces/doc/monthlyfx.xls",
             "https://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-20260925.CSV",
             "https://www.tfx.co.jp/kawase/document/PRT-010-CSV-016-20260925.CSV"]
+# ── B4 本番（2026-09-27 午後に PILLAR_PREREG.md へ追記して登録）──
+B4W_URL = "https://www.click365.jp/resorces/doc/weekly_sellbuy.xls"   # 為替売買動向（週次・毎週火曜の取引終了時点）
+B4W_MAIN = ["USD/JPY", "EUR/JPY", "GBP/JPY", "AUD/JPY", "EUR/USD", "GBP/USD", "AUD/USD"]   # 監視18銘柄にあるペア
+B4W_WINDOW = 52          # 直前52週（その週を含む）の中での順位
+B4W_MIN_HIST = 26        # 直前に26週以上の記録がある週だけ
+B4W_TAIL = 0.2           # 上位2割・下位2割
+B4W_LAG_DAYS = 8         # データの日付の8日後の終値で入る（公表までの日数が分からないため安全側）
+B4W_HOLD = 5             # 5本後の終値で出る（20本後は読むための表）
+B4W_HOLD_SUB = 20
+B4W_SPLIT = "2025-01-01"  # 探索＝2024年まで／確かめ＝2025年から（入る日で分ける）
+B4W_MIN_N = 100
+B4W_COST = {"JPY": 0.003, "other": 0.00003}   # 往復 0.3銭／0.3ピップ
 # 日々の CSV が昔の日付でも同じ名前の形で取れるか（取れる＝過去分を機械で集められる）
 B4_ARCHIVE_DATES = ["20250925", "20240925", "20200925", "20150925", "20100924"]
 
@@ -181,15 +193,16 @@ def http_get(url, tries=3):
     raise err
 
 
-def fetch(ticker, interval, tries=3):
-    """Yahoo の足。1時間足＝過去730日（添字は UTC）／日足＝過去2年（添字は日付・時刻なし）"""
+def fetch(ticker, interval, tries=3, start=None):
+    """Yahoo の足。1時間足＝過去730日（添字は UTC）／日足＝過去2年か start から（添字は日付・時刻なし）"""
     import yfinance as yf
     for k in range(tries):
         try:
             if interval == "1h":
                 df = yf.download(ticker, period="730d", interval="1h", progress=False, auto_adjust=True)
             else:
-                df = yf.download(ticker, period="2y", interval="1d", progress=False, auto_adjust=True)
+                kw = {"start": start} if start else {"period": "2y"}
+                df = yf.download(ticker, interval="1d", progress=False, auto_adjust=True, **kw)
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
             df = df.dropna(subset=["Open", "Close"])
@@ -749,6 +762,144 @@ def b4_files():
     return {"files": files, "archive": archive}
 
 
+def parse_weekly_sellbuy(df):
+    """為替売買動向（週次）の表 → {'USD/JPY': [(日付, 売り, 買い), ...]}。
+    形（2026-09-27 に確認）：1行目にペア名（売りの列にだけ書いてある）、次の行に 日付/売り/買い、その次に date/sell/buy、
+    以降が1週1行（1列目が MM/DD/YYYY）"""
+    vals = df.values.tolist()
+    pair_row = next(i for i, r in enumerate(vals)
+                    if sum(1 for c in r if re.fullmatch(r"[A-Z]{3}/[A-Z]{3}", str(c).strip())) >= 3)
+    side_row = next(i for i in range(pair_row + 1, len(vals))
+                    if any(str(c).strip() in ("売り", "sell") for c in vals[i]))
+    cols, cur = {}, None
+    for c, name in enumerate(vals[pair_row]):
+        name = str(name).strip()
+        if re.fullmatch(r"[A-Z]{3}/[A-Z]{3}", name):
+            cur = name
+        side = str(vals[side_row][c]).strip()
+        if cur and side in ("売り", "買い"):
+            cols.setdefault(cur, {})["sell" if side == "売り" else "buy"] = c
+    out = {}
+    for r in vals[side_row + 1:]:
+        raw = r[0]
+        d = None
+        if isinstance(raw, (dt.date, pd.Timestamp)):
+            d = pd.Timestamp(raw).date()
+        else:
+            for fmt in ("%m/%d/%Y", "%Y-%m-%d", "%Y/%m/%d"):
+                try:
+                    d = dt.datetime.strptime(str(raw).strip()[:10], fmt).date()
+                    break
+                except ValueError:
+                    continue
+        if d is None:
+            continue
+        for pair, cc in cols.items():
+            if "sell" not in cc or "buy" not in cc:
+                continue
+            try:
+                sell, buy = float(r[cc["sell"]]), float(r[cc["buy"]])
+            except (TypeError, ValueError):
+                continue
+            if math.isfinite(sell) and math.isfinite(buy) and sell + buy > 0:
+                out.setdefault(pair, []).append((d, sell, buy))
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def b4w_signals(series):
+    """[(日付, 売り, 買い)] → [(日付, ＋1 か −1)]。買いの割合が直前52週の中で上位2割なら −1、下位2割なら ＋1"""
+    ratios = [(d, b / (s + b)) for d, s, b in series]
+    out = []
+    for i, (d, x) in enumerate(ratios):
+        past = [y for _, y in ratios[max(0, i - B4W_WINDOW + 1):i]]
+        if len(past) < B4W_MIN_HIST:
+            continue
+        rank = sum(1 for y in past if y < x) / len(past)
+        if rank >= 1 - B4W_TAIL:
+            out.append((d, -1))
+        elif rank <= B4W_TAIL:
+            out.append((d, 1))
+    return out
+
+
+def b4w_rows(parsed, daily_by):
+    rows = []
+    for pair, series in parsed.items():
+        daily = daily_by.get(pair)
+        if daily is None or not len(daily):
+            continue
+        days = [x.date() for x in daily.index]
+        close = np.asarray(daily["Close"].values, float)
+        for d, s in b4w_signals(series):
+            entry = d + dt.timedelta(days=B4W_LAG_DAYS)
+            i0 = int(np.searchsorted(np.array(days, dtype="datetime64[D]"), np.datetime64(entry)))
+            if i0 < 21 or i0 + B4W_HOLD >= len(close):
+                continue
+            r = np.diff(np.log(close[i0 - 20:i0 + 1]))
+            v = float(np.std(r, ddof=1))
+            if not v > 0:
+                continue
+            lr5 = math.log(close[i0 + B4W_HOLD] / close[i0])
+            cost = (B4W_COST["JPY"] if pair.endswith("/JPY") else B4W_COST["other"]) / close[i0] * 1e4
+            row = {"ticker": pair, "date": days[i0].isoformat(), "sign": s, "conv": "",
+                   "raw": lr5 / (v * math.sqrt(B4W_HOLD)), "net_bps": s * lr5 * 1e4 - cost, "cost_bps": cost,
+                   "main": pair in B4W_MAIN}
+            row["z"] = s * row["raw"]
+            if i0 + B4W_HOLD_SUB < len(close):
+                row["raw20"] = math.log(close[i0 + B4W_HOLD_SUB] / close[i0]) / (v * math.sqrt(B4W_HOLD_SUB))
+            rows.append(row)
+    return rows
+
+
+def judge_b4w(r):
+    if r.get("n", 0) < B4W_MIN_N:
+        return "件数不足"
+    lo, hi, e, l, p, net = (r.get(k) for k in ("lo", "hi", "early", "late", "p_perm", "net_bps"))
+    if None in (lo, hi, e, l, p, net):
+        return "差なし（偶然の範囲）"
+    if lo > 0 and e > 0 and l > 0 and p < 0.05 and net > 0:
+        return "個人の逆張りの兆し"
+    if hi < 0 and e < 0 and l < 0 and p < 0.05:
+        return "個人と同じ向きの兆し"
+    return "差なし（偶然の範囲）"
+
+
+def b4w_stats(rows):
+    main = [r for r in rows if r["main"]]
+    res = a1_stats(main, split=B4W_SPLIT) if main else {"n": 0}
+    res.pop("by_conv", None)
+    res["net_bps"] = _mean(r["net_bps"] for r in main)
+    res["cost_bps"] = _mean(r["cost_bps"] for r in main)
+    res["verdict"] = judge_b4w(res)
+    sub = [dict(r, z=r["sign"] * r["raw20"]) for r in main if "raw20" in r]
+    res["hold20"] = {"n": len(sub), "mean": _mean(r["z"] for r in sub)}
+    others = [r for r in rows if not r["main"]]
+    res["others"] = {pair: {"n": len(v), "mean": _mean(v)} for pair in sorted({r["ticker"] for r in others})
+                     for v in [[r["z"] for r in others if r["ticker"] == pair]]}
+    res["n_long_side"] = sum(1 for r in main if r["sign"] > 0)
+    res["n_short_side"] = sum(1 for r in main if r["sign"] < 0)
+    return res
+
+
+def run_b4w():
+    import io
+    st, raw = http_get_bytes(B4W_URL)
+    if st != 200 or not raw:
+        return {"error": f"資料を取得できず（HTTP {st}）"}
+    df = pd.read_excel(io.BytesIO(raw), sheet_name=0, header=None, engine="xlrd")
+    parsed = parse_weekly_sellbuy(df)
+    daily_by = {}
+    for pair in parsed:
+        tk = pair.replace("/", "") + "=X"
+        daily_by[pair] = fetch(tk, "1d", start="2021-06-01")
+    out = {"source": B4W_URL, "pairs": len(parsed),
+           "weeks": {p: {"n": len(v), "first": v[0][0].isoformat(), "last": v[-1][0].isoformat()}
+                     for p, v in parsed.items() if p in B4W_MAIN},
+           "missing_prices": [p for p in parsed if daily_by.get(p) is None]}
+    out.update(b4w_stats(b4w_rows(parsed, daily_by)))
+    return out
+
+
 # ════════════════════ 出力 ════════════════════
 
 def _f(x, d=3, sign=True):
@@ -864,18 +1015,41 @@ def render_md(res):
         if arch:
             L.append("- 日々の CSV を昔の日付で取れるか：" + "、".join(f"{k}={v.get('status')}" for k, v in arch.items()))
         L.append("")
+    w = res.get("b4w")
+    if w:
+        L += ["## B4 くりっく365 の個人の偏りと、その後の値動き（2026-09-27 午後に追記した登録）", ""]
+        if w.get("error"):
+            L += [f"- ⚠️ 計算できず: {w['error']}", ""]
+        else:
+            L += [f"- **判定（主なペア・5本後）：{w.get('verdict')}**",
+                  f"- 値＝（買いに偏った週は−1・売りに偏った週は＋1）×その後の値動き÷普段のばらつき。**プラスなら個人の逆が当たり**",
+                  f"- 件数 {w.get('n', 0)}（上を予想 {w.get('n_long_side', 0)}・下を予想 {w.get('n_short_side', 0)}）・平均 {_f(w.get('mean'))}"
+                  f"（95%の幅 {_f(w.get('lo'))}〜{_f(w.get('hi'))}）・前半（2024年まで）{_f(w.get('early'))}（{w.get('n_early', 0)}件）／"
+                  f"後半（2025年から）{_f(w.get('late'))}（{w.get('n_late', 0)}件）・偽薬との比較 p={_f(w.get('p_perm'), 3, False)}",
+                  f"- 費用を引いた平均＝{_f(w.get('net_bps'), 1)} ベーシスポイント（費用 {_f(w.get('cost_bps'), 2, False)}）"
+                  f"／20本後（読むための表）{_f((w.get('hold20') or {}).get('mean'))}（{(w.get('hold20') or {}).get('n', 0)}件）", ""]
+            if w.get("by_ticker"):
+                L += ["| ペア | 件数 | 平均 |", "|---|---:|---:|"]
+                L += [f"| {k} | {v['n']} | {_f(v['mean'])} |" for k, v in w["by_ticker"].items()]
+                L.append("")
+            if w.get("others"):
+                L.append("読むための表（監視外のペア）：" + "、".join(f"{k} {_f(v['mean'])}（{v['n']}件）"
+                                                          for k, v in w["others"].items() if v["n"]))
+                L.append("")
+            L.append("- 生の建玉の数字は載せない（資料の二次利用の決まりが未確認のため）")
+            L.append("")
     L += ["---", "", "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
     return "\n".join(L) + "\n"
 
 
 # (--part の名前, 出力の中の名前, 関数)
 PARTS = [("a1", "a1", run_a1), ("b1", "b1", run_b1), ("b2", "b2", run_b2), ("b4", "b4", b4_probe),
-         ("b4f", "b4_files", b4_files)]
+         ("b4f", "b4_files", b4_files), ("b4w", "b4w", run_b4w)]
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--part", default="all", choices=["all", "a1", "b1", "b2", "b4", "b4f"])
+    ap.add_argument("--part", default="all", choices=["all", "a1", "b1", "b2", "b4", "b4f", "b4w"])
     a = ap.parse_args(argv)
     res = {"generated_at": dt.datetime.now(JST).isoformat(timespec="minutes"),
            "prereg_file": PREREG, "prereg_sha256": prereg_sha256()}

@@ -47,6 +47,10 @@ def test_prereg_numbers_match_the_code():
     assert P.B1_PRE == (7, 10) and "7時の足の始値 → 9時の足の終値（＝10時）" in text
     assert P.B1_POST == (10, 15) and "10時の足の始値 → 14時の足の終値（＝15時）" in text
     assert P.EVENT_TIME_ET == {"fomc": (14, 0), "cpi": (8, 30), "nfp": (8, 30)}
+    assert P.B4W_LAG_DAYS == 8 and "8日後" in text and P.B4W_HOLD == 5 and "5本後" in text
+    assert P.B4W_SPLIT == "2025-01-01" and "2025年1月1日から" in text
+    assert P.B4W_WINDOW == 52 and "直前52週" in text and P.B4W_MIN_HIST == 26 and "26週以上" in text
+    assert P.B4W_TAIL == 0.2 and "上位2割" in text and P.B4W_MIN_N == 100
     assert P.prereg_sha256() == hashlib.sha256(open(P.PREREG, "rb").read()).hexdigest()
 
 
@@ -215,6 +219,73 @@ def test_b4_file_kind_and_csv_shape():
     raw = "日付,通貨ペア,売建玉,買建玉\n2026/09/25,USD/JPY,100,300\n2026/09/24,USD/JPY,110,290\n".encode("cp932")
     s = P.summarize_table(raw, P.file_kind(raw))
     assert s["kind"] == "text" and s["rows"] == 3 and s["head"][0][2] == "売建玉" and s["tail"][-1][3] == "290"
+
+
+def _weekly_sheet(weeks, pairs=("USD/JPY", "EUR/USD", "CHF/JPY"), seed=3, crowd=None):
+    """為替売買動向（週次）と同じ形の表（1行目にペア名・次に 日付/売り/買い・次に date/sell/buy）"""
+    rng = np.random.default_rng(seed)
+    head1 = ["nan"] + [x for p in pairs for x in (p, "nan")]
+    head2 = ["日付"] + ["売り", "買い"] * len(pairs)
+    head3 = ["date"] + ["sell", "buy"] * len(pairs)
+    rows = [head1, head2, head3]
+    for k, d in enumerate(weeks):
+        r = [d.strftime("%m/%d/%Y")]
+        for p in pairs:
+            share = crowd(p, k) if crowd else 0.5 + 0.1 * rng.normal()
+            r += [str(1000 * (1 - share)), str(1000 * share)]
+        rows.append(r)
+    return pd.DataFrame(rows)
+
+
+def test_parse_weekly_sellbuy_and_signals():
+    weeks = [D(2023, 1, 3) + dt.timedelta(days=7 * k) for k in range(60)]
+    parsed = P.parse_weekly_sellbuy(_weekly_sheet(weeks))
+    assert sorted(parsed) == ["CHF/JPY", "EUR/USD", "USD/JPY"] and len(parsed["USD/JPY"]) == 60
+    d, sell, buy = parsed["USD/JPY"][0]
+    assert d == D(2023, 1, 3) and abs(sell + buy - 1000) < 1e-6
+    # 買いの割合がどんどん増える＝毎週「過去最高」→ 27週目から毎週 −1（買いに偏り＝下を予想）
+    ser = [(w, 1000 - (400 + k), 400 + k) for k, w in enumerate(weeks)]
+    sig = P.b4w_signals(ser)
+    assert len(sig) == 60 - P.B4W_MIN_HIST and all(s == -1 for _, s in sig) and sig[0][0] == weeks[P.B4W_MIN_HIST]
+
+
+def _b4w_data(effect, n_weeks=200, seed=4):
+    """週ごとに偏りをランダムに作り、effect>0 なら「偏りの逆」に値が動く作り物の日足"""
+    rng = np.random.default_rng(seed)
+    weeks = [D(2022, 11, 1) + dt.timedelta(days=7 * k) for k in range(n_weeks)]
+    pairs = P.B4W_MAIN
+    share = {p: rng.uniform(0.3, 0.7, n_weeks) for p in pairs}
+    sheet = _weekly_sheet(weeks, pairs=pairs, crowd=lambda p, k: share[p][k])
+    parsed = P.parse_weekly_sellbuy(sheet)
+    days = pd.bdate_range("2022-06-01", "2026-12-31")
+    daily_by = {}
+    for p in pairs:
+        sig = dict(P.b4w_signals(parsed[p]))
+        drift = np.zeros(len(days))
+        for d, s in sig.items():                       # 入る日（8日後）から5本の間だけ、予想の向きに動かす
+            i0 = int(np.searchsorted(days.values, np.datetime64(d + dt.timedelta(days=P.B4W_LAG_DAYS))))
+            drift[i0 + 1:i0 + 1 + P.B4W_HOLD] += effect * s
+        r = rng.normal(0, 0.005, len(days)) + drift
+        daily_by[p] = pd.DataFrame({"Open": 100.0, "Close": 100 * np.exp(np.cumsum(r))}, index=days)
+    return parsed, daily_by
+
+
+def test_b4w_finds_planted_contrarian_and_not_nothing():
+    parsed, daily = _b4w_data(0.004)
+    r = P.b4w_stats(P.b4w_rows(parsed, daily))
+    assert r["n"] >= P.B4W_MIN_N and r["verdict"] == "個人の逆張りの兆し", (r["n"], r["verdict"], r.get("mean"))
+    parsed, daily = _b4w_data(0.0)
+    assert P.b4w_stats(P.b4w_rows(parsed, daily))["verdict"] == "差なし（偶然の範囲）"
+    parsed, daily = _b4w_data(-0.004)
+    assert P.b4w_stats(P.b4w_rows(parsed, daily))["verdict"] == "個人と同じ向きの兆し"
+
+
+def test_b4w_entry_waits_eight_days():
+    parsed, daily = _b4w_data(0.0, n_weeks=40)
+    rows = P.b4w_rows(parsed, daily)
+    first_sig = P.b4w_signals(parsed["USD/JPY"])[0][0]
+    first_row = min(r["date"] for r in rows if r["ticker"] == "USD/JPY")
+    assert first_row >= (first_sig + dt.timedelta(days=P.B4W_LAG_DAYS)).isoformat()
 
 
 def test_render_md_runs_on_partial_results():
