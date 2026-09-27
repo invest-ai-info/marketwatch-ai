@@ -587,6 +587,58 @@ def run_j3w():
     return out
 
 
+# ── J1b 届出の中身（保有目的・取得資金）で分ける（2026-09-27 夜 オーナー「進めてください」）──
+# まず中身の形だけを見る（j1probe）。要素の名前が分かってから、分け方と判定を PILLAR_PREREG.md に登録して数える。
+
+def fetch_doc_csv(doc_id, key):
+    """書類取得API（type=5＝XBRL の CSV・タブ区切り・UTF-16）の本文。取れなければ None"""
+    import io
+    import urllib.parse
+    import urllib.request
+    import zipfile
+    url = (f"https://api.edinet-fsa.go.jp/api/v2/documents/{urllib.parse.quote(doc_id)}"
+           f"?type=5&Subscription-Key={urllib.parse.quote(key)}")
+    req = urllib.request.Request(url, headers={"User-Agent": "marketwatch-jp/1.0"})
+    with urllib.request.urlopen(req, timeout=40) as r:
+        raw = r.read()
+    if raw[:2] != b"PK":
+        return None
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    names = [n for n in z.namelist() if n.lower().endswith(".csv")]
+    return z.read(names[0]).decode("utf-16", errors="replace") if names else None
+
+
+def run_j1probe(n_docs=6, sleep=time.sleep):
+    """新規の大量保有報告書を数件だけ取り、要素の名前と値の先頭（60字）を並べる（値動きは見ない）"""
+    import build_edinet_holdings as E
+    key = E.get_api_key()
+    if not key:
+        return {"error": "EDINET_API_KEY が無い"}
+    hist = [r for r in load_history() if is_new_report(r.get("desc"))]
+    hist.sort(key=lambda r: r.get("dt") or r["date"], reverse=True)
+    picks = hist[:: max(1, len(hist) // n_docs)][:n_docs]
+    docs = []
+    for r in picks:
+        try:
+            txt = fetch_doc_csv(r["id"], key)
+        except Exception as e:  # noqa: BLE001
+            docs.append({"desc": r.get("desc"), "error": f"{type(e).__name__}"})
+            continue
+        rows = []
+        for line in (txt or "").splitlines()[1:]:
+            f = [c.strip('"') for c in line.split("\t")]
+            if len(f) >= 9:
+                rows.append([f[0], f[1][:30], f[2][:30], f[8].replace("\n", " ")[:60]])
+        # ⚠️ 値（会社名などを含む）は結果のファイルに残さず、実行の記録（ログ）にだけ出す
+        print(f"--- doc {r['date']} {r.get('desc')}")
+        for x in rows[:160]:
+            print("   " + " | ".join(x))
+        docs.append({"desc": r.get("desc"), "date": r["date"], "n_rows": len(rows),
+                     "elements": sorted({(x[0], x[1]) for x in rows})})
+        sleep(E.RATIO_FETCH_WAIT)
+    return {"docs": docs}
+
+
 # ════════════════════ 出力 ════════════════════
 
 def render_md(res):
@@ -667,7 +719,8 @@ def render_md(res):
     return "\n".join(L) + "\n"
 
 
-PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f, "j3w": run_j3w}
+PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f, "j3w": run_j3w,
+         "j1probe": run_j1probe}
 
 
 def main(argv=None):
