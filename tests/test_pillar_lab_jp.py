@@ -32,6 +32,9 @@ def test_prereg_numbers_match_the_code():
     assert J.J1_GAP == 60 and "60営業日以内に重なったら最初の1件だけ" in text and J.J1_BENCH == "1306.T"
     assert J.J2_T2_FROM == D(2019, 7, 16) and "2019年7月16日" in text and "2営業日前" in text and "3営業日前" in text
     assert J.J2_WINDOW == 10 and "10営業日前の終値" in text and J.J2_SPLIT == "2008-01-01" and "2008年から" in text
+    assert J.J3W_WINDOW == 156 and "直前156週" in text and J.J3W_MIN_HIST == 104 and "104週以上" in text
+    assert J.J3W_LAG == 4 and "4営業日後" in text and J.J3W_HOLD == 20 and "20営業日後" in text
+    assert J.J3W_SPLIT == "2015-01-01" and "2015年から" in text and J.J3W_MIN_N == 100 and "件数100未満" in text
 
 
 def test_new_report_and_yahoo_code():
@@ -136,11 +139,58 @@ def test_business_days_skip_weekends_and_holidays():
     assert bd == [D(2026, 5, 1), D(2026, 5, 7), D(2026, 5, 8)]           # 連休（4〜6日）と土日を飛ばす
 
 
+def _margin_sheet(weeks, ratio_of):
+    """「信用取引現在高」と同じ形の表（月日の行＋委託/自己/合計、次の行に 売残高/買残高・各2列）"""
+    rows = [["信用取引現在高"] + ["nan"] * 12, ["Outstanding"] + ["nan"] * 12, ["nan"] * 13,
+            ["月日", "委託", "nan", "nan", "nan", "自己", "nan", "nan", "nan", "合計", "nan", "nan", "nan"],
+            ["nan", "売残高", "nan", "買残高", "nan", "売残高", "nan", "買残高", "nan", "売残高", "nan", "買残高", "nan"]]
+    rows.append([D(2001, 1, 31), "100", "1", "300", "1"] + ["1"] * 8)      # 古い月ごとの部分（使わない）
+    rows.append([D(2001, 3, 31), "100", "1", "300", "1"] + ["1"] * 8)
+    for k, d in enumerate(weeks):
+        rows.append([d, "1000", "1", str(1000 * ratio_of(k)), "1"] + ["1"] * 8)
+    rows.append(["注:", "nan"] + ["nan"] * 11)
+    return pd.DataFrame(rows)
+
+
+def test_parse_margin_sheet_keeps_weekly_part_only():
+    weeks = [D(2002, 1, 4) + dt.timedelta(days=7 * k) for k in range(30)]
+    ser = J.parse_margin_sheet(_margin_sheet(weeks, lambda k: 3.0))
+    assert len(ser) == 30 and ser[0][0] == D(2002, 1, 4) and ser[0][1] == 1000 and ser[0][2] == 3000
+
+
+def _j3w_data(effect, seed=7, n_weeks=1100):
+    rng = np.random.default_rng(seed)
+    weeks = [D(2003, 1, 3) + dt.timedelta(days=7 * k) for k in range(n_weeks)]
+    ratio = np.exp(np.cumsum(rng.normal(0, 0.05, n_weeks)))
+    ser = J.parse_margin_sheet(_margin_sheet(weeks, lambda k: ratio[k]))
+    sig = dict(J.j3w_signals(ser))
+    days = pd.bdate_range("2002-11-01", "2024-12-31")
+    r = rng.normal(0, 0.012, len(days))
+    dd = days.values.astype("datetime64[D]")
+    for d, sgn in sig.items():                                        # 入る日から20営業日、予想の向きに動かす
+        k = int(np.searchsorted(dd, np.datetime64(d), side="right")) - 1
+        i0 = k + J.J3W_LAG
+        r[i0 + 1:i0 + 1 + J.J3W_HOLD] += effect * sgn / J.J3W_HOLD
+    close = pd.Series(10000 * np.exp(np.cumsum(r)), index=days)
+    return ser, close
+
+
+def test_j3w_finds_planted_contrarian_and_not_nothing():
+    ser, close = _j3w_data(0.05)
+    r = J.j3w_stats(J.j3w_rows(J.j3w_signals(ser), close), n_perm=300)
+    assert r["n"] >= J.J3W_MIN_N and r["verdict"] == "個人の信用の偏りの逆の兆し", (r["n"], r["verdict"], r.get("mean"))
+    ser, close = _j3w_data(0.0, seed=8)
+    assert J.j3w_stats(J.j3w_rows(J.j3w_signals(ser), close), n_perm=300)["verdict"] == "差なし（偶然の範囲）"
+    ser, close = _j3w_data(-0.05, seed=9)
+    assert J.j3w_stats(J.j3w_rows(J.j3w_signals(ser), close), n_perm=300)["verdict"] == "個人と同じ向きの兆し"
+
+
 def test_render_md_runs_on_partial_results():
     md = J.render_md({"generated_at": "x", "prereg_sha256": "a" * 64, "j1": {"error": "e"},
                       "j2": {"verdict": "見えない（偶然の範囲）", "by_month": {3: {"n": 1, "run": 1.0}}},
                       "j3": [{"url": "u", "ok": False, "error": "e"}], "collect": {"days_left": 3},
-                      "j3f": {"files": [{"url": "f", "ok": True, "kind": "xls", "sheets": {"s": {"rows": 9, "cols": 4}}}]}})
+                      "j3f": {"files": [{"url": "f", "ok": True, "kind": "xls", "sheets": {"s": {"rows": 9, "cols": 4}}}]},
+                      "j3w": {"verdict": "差なし（偶然の範囲）", "n": 120, "hold60": {"n": 1, "mean": 0.1}}})
     assert "投資助言ではありません" in md and "J3" in md and "計算できず" in md and "s（9行×4列）" in md
 
 

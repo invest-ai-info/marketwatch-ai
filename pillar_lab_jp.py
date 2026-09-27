@@ -230,19 +230,18 @@ def j1_rows(events, prices, bench, hold=J1_HOLD):
 def j1_placebo(rows, prices, bench, n_perm=N_PERM, seed=SEED, hold=J1_HOLD):
     """偽薬：同じ銘柄で、届出の前後60営業日を避けたランダムな日に入った場合の平均（件数は同じ）"""
     rng = np.random.default_rng(seed)
-    pools, counts = {}, {}
+    pools, by = {}, {}
     for r in rows:
-        counts[r["ticker"]] = counts.get(r["ticker"], 0) + 1
-    for tk, k in counts.items():
+        by.setdefault(r["ticker"], []).append(r["i0"])
+    for tk, starts in by.items():
         lc, lb = excess_path(prices[tk], bench)
         ex = (lc.values[hold:] - lc.values[:-hold]) - (lb.values[hold:] - lb.values[:-hold])
         bad = np.zeros(len(ex), bool)
-        for r in rows:
-            if r["ticker"] == tk:
-                bad[max(0, r["i0"] - J1_GAP): r["i0"] + J1_GAP + 1] = True
+        for i0 in starts:
+            bad[max(0, i0 - J1_GAP): i0 + J1_GAP + 1] = True
         pool = ex[~bad[:len(ex)]]
         if len(pool):
-            pools[tk] = (pool, k)
+            pools[tk] = (pool, len(starts))
     if not pools:
         return None
     total = sum(k for _, k in pools.values())
@@ -443,6 +442,151 @@ def run_j3f():
     return {"files": files}
 
 
+# ── J3w 市場全体の信用倍率（2026-09-27 午後に PILLAR_PREREG.md へ追記して登録）──
+J3W_SHEET = "信用取引現在高"      # 委託・自己・合計の売残高／買残高（株数・金額）
+J3W_WEEKLY_GAP = 10              # 日付どうしの間が10日以内に続く部分だけ（週ごと）
+J3W_WINDOW = 156                 # 直前156週（その週は含まない）の中での順位
+J3W_MIN_HIST = 104
+J3W_TAIL = 0.2
+J3W_LAG = 4                      # データの日付（金曜）から4営業日後の終値で入る
+J3W_HOLD, J3W_HOLD_SUB = 20, 60
+J3W_SPLIT = "2015-01-01"
+J3W_MIN_N = 100
+
+
+def _to_date(v):
+    if isinstance(v, (dt.date, pd.Timestamp)):
+        return pd.Timestamp(v).date()
+    try:
+        return pd.Timestamp(str(v).strip()[:10]).date()
+    except (ValueError, TypeError):
+        return None
+
+
+def parse_margin_sheet(df):
+    """「信用取引現在高」の表 → [(日付, 委託の売残株数, 委託の買残株数)]。
+    形（2026-09-27 に確認）：「月日」の行に 委託／自己／合計 の見出し、次の行に 売残高・買残高（各2列＝株数・金額）"""
+    vals = df.values.tolist()
+    hi = next(i for i, r in enumerate(vals) if str(r[0]).strip() == "月日")
+    base = next(c for c, v in enumerate(vals[hi]) if str(v).strip().startswith("委託"))
+    sub = [str(x).strip() for x in vals[hi + 1]]
+    if not (sub[base].startswith("売残") and sub[base + 2].startswith("買残")):
+        raise ValueError(f"見出しの並びが想定と違う: {sub[base:base + 4]}")
+    out = []
+    for r in vals[hi + 2:]:
+        d = _to_date(r[0])
+        if d is None:
+            continue
+        try:
+            sell, buy = float(str(r[base]).replace(",", "")), float(str(r[base + 2]).replace(",", ""))
+        except ValueError:
+            continue
+        if sell > 0 and buy > 0:
+            out.append((d, sell, buy))
+    out.sort()
+    # 週ごとに続く部分だけ（最後に10日を超えて空いた所より後）
+    start = 0
+    for i in range(1, len(out)):
+        if (out[i][0] - out[i - 1][0]).days > J3W_WEEKLY_GAP:
+            start = i
+    return out[start:]
+
+
+def j3w_signals(series):
+    """[(日付, 売残, 買残)] → [(日付, ＋1 か −1)]。信用倍率が直前156週の中で上位2割なら −1、下位2割なら ＋1"""
+    ratios = [(d, b / s) for d, s, b in series]
+    out = []
+    for i, (d, x) in enumerate(ratios):
+        past = [y for _, y in ratios[max(0, i - J3W_WINDOW):i]]
+        if len(past) < J3W_MIN_HIST:
+            continue
+        rank = sum(1 for y in past if y < x) / len(past)
+        if rank >= 1 - J3W_TAIL:
+            out.append((d, -1))
+        elif rank <= J3W_TAIL:
+            out.append((d, 1))
+    return out
+
+
+def j3w_rows(signals, close):
+    days = [x.date() for x in close.index]
+    c = np.asarray(close.values, float)
+    dd = np.array(days, dtype="datetime64[D]")
+    rows = []
+    for d, s in signals:
+        k = int(np.searchsorted(dd, np.datetime64(d), side="right")) - 1   # データの日付（その日か直前の取引日）
+        i0 = k + J3W_LAG
+        if k < 0 or i0 < 21 or i0 + J3W_HOLD >= len(c):
+            continue
+        v = float(np.std(np.diff(np.log(c[i0 - 20:i0 + 1])), ddof=1))
+        if not v > 0:
+            continue
+        raw = math.log(c[i0 + J3W_HOLD] / c[i0]) / (v * math.sqrt(J3W_HOLD))
+        row = {"ticker": "N225", "date": days[i0].isoformat(), "sign": s, "raw": raw, "z": s * raw, "conv": ""}
+        if i0 + J3W_HOLD_SUB < len(c):
+            row["z60"] = s * math.log(c[i0 + J3W_HOLD_SUB] / c[i0]) / (v * math.sqrt(J3W_HOLD_SUB))
+        rows.append(row)
+    return rows
+
+
+def judge_j3w(r):
+    if r.get("n", 0) < J3W_MIN_N:
+        return "件数不足"
+    lo, hi, e, l, p = (r.get(k) for k in ("lo", "hi", "early", "late", "p_perm"))
+    if None in (lo, hi, e, l, p):
+        return "差なし（偶然の範囲）"
+    if lo > 0 and e > 0 and l > 0 and p < 0.05:
+        return "個人の信用の偏りの逆の兆し"
+    if hi < 0 and e < 0 and l < 0 and p < 0.05:
+        return "個人と同じ向きの兆し"
+    return "差なし（偶然の範囲）"
+
+
+def _quarter(date_iso):
+    y, m = int(date_iso[:4]), int(date_iso[5:7])
+    return f"{y}Q{(m - 1) // 3 + 1}"
+
+
+def j3w_stats(rows, n_perm=N_PERM, seed=SEED):
+    if not rows:
+        return {"n": 0, "verdict": "件数不足"}
+    res = P.mean_ci([r["z"] for r in rows], [(_quarter(r["date"]), _quarter(r["date"])) for r in rows])
+    early = [r["z"] for r in rows if r["date"] < J3W_SPLIT]
+    late = [r["z"] for r in rows if r["date"] >= J3W_SPLIT]
+    res.update({"early": P._mean(early), "late": P._mean(late), "n_early": len(early), "n_late": len(late),
+                "p_perm": P.perm_p(rows, n_perm, seed), "first": rows[0]["date"], "last": rows[-1]["date"],
+                "n_long_side": sum(r["sign"] > 0 for r in rows), "n_short_side": sum(r["sign"] < 0 for r in rows)})
+    z60 = [r["z60"] for r in rows if "z60" in r]
+    res["hold60"] = {"n": len(z60), "mean": P._mean(z60)}
+    res["verdict"] = judge_j3w(res)
+    return res
+
+
+def run_j3w():
+    import io
+    html = P.http_get(J3_FILES_PAGE)
+    urls = sorted({"https://www.jpx.co.jp" + h for h in re.findall(r'href="(/markets/statistics-equities/margin/[^"]+\.xls)"', html)})
+    series = None
+    for url in urls:
+        st, raw = P.http_get_bytes(url)
+        if st != 200 or not raw:
+            continue
+        sheets = pd.read_excel(io.BytesIO(raw), sheet_name=None, header=None, engine="xlrd")
+        if J3W_SHEET in sheets:
+            series = parse_margin_sheet(sheets[J3W_SHEET])
+            src = url
+            break
+    if not series:
+        return {"error": "「信用取引現在高」の表が見つからない"}
+    s = P.fetch("^N225", "1d", start=(series[0][0] - dt.timedelta(days=60)).isoformat())
+    if s is None:
+        return {"error": "日経平均の値段を取得できず"}
+    out = j3w_stats(j3w_rows(j3w_signals(series), s["Close"]))
+    out.update({"source": src, "weeks": len(series), "weeks_first": series[0][0].isoformat(),
+                "weeks_last": series[-1][0].isoformat()})
+    return out
+
+
 # ════════════════════ 出力 ════════════════════
 
 def render_md(res):
@@ -496,6 +640,19 @@ def render_md(res):
                 kw = ", ".join(f"{k}={v}" for k, v in p["keywords"].items() if v)
                 L.append(f"- {p['url']}：資料らしいリンク {len(p['links'])} 件／キーワード {kw or 'なし'}")
         L.append("")
+    w = res.get("j3w")
+    if w:
+        L += ["## J3w 市場全体の信用倍率（お客さんの口座）と、その後の日経平均", ""]
+        if w.get("error"):
+            L += [f"- ⚠️ 計算できず: {w['error']}", ""]
+        else:
+            L += [f"- **判定（20営業日）：{w.get('verdict')}**（週ごとのデータ {w.get('weeks')} 週・{w.get('weeks_first')}〜{w.get('weeks_last')}）",
+                  "- 値＝（買いに偏った週は−1・売りに偏った週は＋1）×その後の日経平均の値動き÷普段のばらつき。**プラスなら個人の逆が当たり**",
+                  f"- 件数 {w.get('n', 0)}（上を予想 {w.get('n_long_side', 0)}・下を予想 {w.get('n_short_side', 0)}）・平均 {f(w.get('mean'))}"
+                  f"（95%の幅 {f(w.get('lo'))}〜{f(w.get('hi'))}）",
+                  f"- 前半（2014年まで）{f(w.get('early'))}（{w.get('n_early', 0)}件）／後半（2015年から）{f(w.get('late'))}（{w.get('n_late', 0)}件）・偽薬との比較 p={f(w.get('p_perm'), 3, False)}",
+                  f"- 60営業日（読むための表）{f((w.get('hold60') or {}).get('mean'))}（{(w.get('hold60') or {}).get('n', 0)}件）",
+                  "- 生の残高の数字は載せない（二次利用の決まりが未確認のため）", ""]
     j3f = res.get("j3f")
     if isinstance(j3f, dict) and j3f.get("files"):
         L += ["### J3 市場全体の信用残の資料の中身の形", ""]
@@ -510,7 +667,7 @@ def render_md(res):
     return "\n".join(L) + "\n"
 
 
-PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f}
+PARTS = {"collect": collect, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j3f": run_j3f, "j3w": run_j3w}
 
 
 def main(argv=None):

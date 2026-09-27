@@ -30,6 +30,8 @@ jobs:
       EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}   # 起動した時点ではなく、動き出した時点の最新（先の実行の結果を消さないため）
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
