@@ -73,6 +73,8 @@ SYNC_FORBIDDEN = {
     "regime-lab.json", "regime-lab.md",        # 環境の相性ラボ（regime-lab.yml・手動）
     # 🆕 2026-09-26 シグナルの環境の統計（env-profile.yml・月1。月ごとの履歴を持つ＝古い版で上書きすると変化が追えなくなる）
     "signal-env-profile.md", "signal-env-profile.json", "signal-env-profile-history.json",
+    # 🆕 2026-09-27 新しい柱・第1波（pillar-lab.yml・手動。事前登録 PILLAR_PREREG.md の指紋付きの結果）
+    "pillar-lab.json", "pillar-lab.md",
 }
 
 errors = []

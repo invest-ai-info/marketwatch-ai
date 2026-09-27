@@ -108,6 +108,7 @@ def test_post_hoc_notes_point_at_real_ids_and_are_shown():
     reg = {s["id"] for name in dir(T) if name.isupper() for v in [getattr(T, name)]
            if isinstance(v, dict) and isinstance(v.get("register"), list) for s in v["register"]}
     wall = set((json.load(open(R.WALL_LAB, encoding="utf-8")).get("forward") or {}))
+    wall |= set((json.load(open(R.STOP_LAB, encoding="utf-8")).get("forward") or {}))   # 損切りラボ（4h|mr|A30 など）
     assert set(R.POST_HOC_NOTES) <= reg | wall
     html = R.build_pane()
     assert "約50の区分を調べて見つかった1つ" in html
