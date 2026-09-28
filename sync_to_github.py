@@ -305,4 +305,5 @@ SYNC_FILES = [
     "guide-kuse-check.html",
     "guide-signal-lab-112.html",
     "guide-entry-technical-indicators.html",
+    "guide-news-2026-09-28-japan-2year-yield-1975-boj-rate-hike-bets.html",
 ]
