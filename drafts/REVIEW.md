@@ -1,3 +1,4 @@
+2026-09-29 signal-lab: #113 ✅公開済み（RSI版とボリンジャーバンド版の逆張り買い比較1456回・定点観察。RSI47.6%[43.3-51.9]・BB43.0%[39.9-46.2]。plain_japanese✅・signal_verify12/12緑✅・Opus1st🟡4件修正→plain_japanese✅・verify✅・Opus2nd🟡3件修正→plain_japanese✅・verify✅・Opus3rd🟢・check_site OK・push済み）
 2026-09-28 signal-lab: #112 ✅公開済み（逆張り買い×足別比較・定点観測。1h44.3%/4h43.8%/1d57.9%[45-70%CI]・平均R=+0.35。plain_japanese✅・signal_verify✅・Opus🟢・独立Opus🟢・check_site OK・push済み）
 2026-09-27 signal-lab: #111 ✅公開済み（出口の相性ラボ第1回・日足 −2σタッチ×ロング。シャンデリア損切り🚩×2（rr2・rr3）・ATR損切り利確なし+0.21（旗なし）。plain_japanese✅・signal_verify✅・exit_verify 38/38✅・Opus🟡→🟢・独立Opus🟢・check_site OK・push済み）
 2026-09-26 signal-lab: #110 ✅公開済み（MACDゴールデンクロス×両MA下IS/FWD比較。IS48/110=43.6%・FWD71/146=48.6%・CI=[40.7%~56.7%]。コモディティ77.8%・その他FX35.4%。verify11/11緑・Opus🟡自己修正→verify緑→独立Opus🟢・check_site OK）
