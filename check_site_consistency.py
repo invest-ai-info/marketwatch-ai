@@ -79,6 +79,7 @@ SYNC_FORBIDDEN = {
     "trend-lab.json", "trend-lab.md",           # トレンドの見方の比べ比べ（trend-lab.yml・手動）
     "combo-lab.json", "combo-lab.md",           # 組み合わせの相性ラボ（combo-lab.yml・手動）
     "combo-forward.json", "combo-forward.md",   # 🆕 2026-09-27 前向きの観察（combo-forward.yml・月1。区切りの記録を持つ）
+    "yori-lab.json", "yori-lab.md",             # 🆕 2026-09-28 J4 寄り付きラボ（yori-lab.yml・手動。銘柄名は出さない）
     "box-lab.json", "box-lab.md",               # 🆕 2026-09-27 S1 時間帯の箱の抜け（box-lab.yml・手動。スキャルピング本の整理から）
     "event-dir-lab.json", "event-dir-lab.md",   # 🆕 2026-09-27 S2 重要な発表のあとの向き（event-dir-lab.yml・手動。B2 の続き）
     "round-lab.json", "round-lab.md",           # 🆕 2026-09-28 S3 キリの良い値（round-lab.yml・手動。スキャルピング本の最後の候補）
