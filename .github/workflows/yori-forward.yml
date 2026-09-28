@@ -1,0 +1,58 @@
+name: Yori Forward (weekdays)
+
+# J4F 寄り付きの前向き（2026-09-28 夕登録・オーナー「前向きに数える仕組みを作って進めてください。検証結果が1000回を超えて
+# 期待値がプラスにならないようだったら検証はストップして検証済みリストに追加していってください」）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J4F」（事前登録）と yori_forward.py の冒頭に固定。
+# ⚠️ その日より前の日だけを数える＝実行の時刻がずれても結果は同じ（cron の遅れは問題にならない）。
+#    5分足は直近約60日しか取れない＝60日以上止まるとその間は数えられない（automation-health が見張る）。
+# ⚠️ 出力（yori-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた取引と判定を持つ＝古い版で上書きすると消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  schedule:
+    - cron: '17 23 * * 0-4'   # 月〜金 08:17 JST（前の営業日までを数える）
+    - cron: '43 10 * * 1-5'   # 月〜金 19:43 JST 保険（数えた日は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: yori-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}   # 動き出した時点の最新（先の実行の記録を消さないため）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Count only the trades after registration
+        run: |
+          python yori_forward.py
+          python verified_list.py > /dev/null
+          [ -f yori-forward.md ] && cat yori-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add yori-forward.json yori-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: yori forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 生成物なので、衝突したら今回生成した側を採る（combo-forward.yml と同じ考え方）
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
