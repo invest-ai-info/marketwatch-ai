@@ -1,0 +1,78 @@
+{
+  "article_id": "113",
+  "asof": "2026-09-29T06:15:00+09:00",
+  "claims": [
+    {
+      "label": "全体ベースライン",
+      "filter": {},
+      "k": 2075,
+      "n": 4836
+    },
+    {
+      "label": "逆張り買い全体（RSIもBBも含む）",
+      "filter": {"reversal_long": true},
+      "k": 650,
+      "n": 1456
+    },
+    {
+      "label": "RSI売られすぎ買い（rsi_oversold_bounce）全体",
+      "filter": {"signal": "rsi_oversold_bounce"},
+      "k": 244,
+      "n": 513
+    },
+    {
+      "label": "BBバンド下限タッチ買い（bb_lower_touch）全体",
+      "filter": {"signal": "bb_lower_touch"},
+      "k": 406,
+      "n": 944
+    },
+    {
+      "label": "RSI売られすぎ買い × 株価指数",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "index"},
+      "k": 60,
+      "n": 114
+    },
+    {
+      "label": "RSI売られすぎ買い × 円FX",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "jpy_fx"},
+      "k": 53,
+      "n": 119
+    },
+    {
+      "label": "RSI売られすぎ買い × ドル建てFX",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "other_fx"},
+      "k": 71,
+      "n": 139
+    },
+    {
+      "label": "RSI売られすぎ買い × 金・銀",
+      "filter": {"signal": "rsi_oversold_bounce", "group": "metal"},
+      "k": 28,
+      "n": 76
+    },
+    {
+      "label": "BBバンド下限タッチ買い × 株価指数",
+      "filter": {"signal": "bb_lower_touch", "group": "index"},
+      "k": 99,
+      "n": 228
+    },
+    {
+      "label": "BBバンド下限タッチ買い × 円FX",
+      "filter": {"signal": "bb_lower_touch", "group": "jpy_fx"},
+      "k": 102,
+      "n": 211
+    },
+    {
+      "label": "BBバンド下限タッチ買い × ドル建てFX",
+      "filter": {"signal": "bb_lower_touch", "group": "other_fx"},
+      "k": 113,
+      "n": 280
+    },
+    {
+      "label": "BBバンド下限タッチ買い × 金・銀",
+      "filter": {"signal": "bb_lower_touch", "group": "metal"},
+      "k": 40,
+      "n": 101
+    }
+  ]
+}
