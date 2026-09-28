@@ -304,4 +304,5 @@ SYNC_FILES = [
     "guide-news-2026-09-27-us10y-yield-52pct-19year-high.html",
     "guide-kuse-check.html",
     "guide-signal-lab-112.html",
+    "guide-entry-technical-indicators.html",
 ]
