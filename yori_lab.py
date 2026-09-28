@@ -394,9 +394,71 @@ def render_md(res):
     return "\n".join(L) + "\n"
 
 
+def fetch_raw(code, interval, rng):
+    """Yahoo chart API の生の行（値の欠けた足も残す）→ [(JSTの時刻, 始, 高, 安, 終, 出来高)]。--diag 用"""
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=30))["chart"]["result"][0]
+    except Exception:  # noqa: BLE001
+        return None
+    q = d["indicators"]["quote"][0]
+    return [(dt.datetime.fromtimestamp(t, P.JST), o, h, l, c, v)
+            for t, o, h, l, c, v in zip(d.get("timestamp") or [], q["open"], q["high"], q["low"], q["close"], q["volume"])]
+
+
+def raw_shape(codes, fetch=fetch_raw):
+    """最初の足が 9:00 の日と 9:05 の日で、生の行の形を比べる（9:00 の行が空か／時刻が5分ずれているか）"""
+    out = {}
+    for code in codes:
+        m, d = fetch(code, "5m", "60d"), fetch(code, "1d", "6mo")
+        if not m or not d:
+            continue
+        daily = {t.date(): (o, v) for t, o, h, l, c, v in d if o is not None}
+        by = {}
+        for row in m:
+            by.setdefault(row[0].date(), []).append(row)
+        for day, rows in by.items():
+            if day not in daily:
+                continue
+            rows.sort(key=lambda r: r[0])
+            ok = [r for r in rows if None not in r[1:5]]
+            if not ok:
+                continue
+            kind = ok[0][0].strftime("%H:%M")
+            kind = kind if kind in ("09:00", "09:05") else "そのほか"
+            b = out.setdefault(kind, {"日数": 0, "曜日": {}, "空の行の時刻": {}, "最初の行の時刻": {}, "最後の足の時刻": {},
+                                      "出来高の比": [], "最初の足の始値÷日足の始値": []})
+            b["日数"] += 1
+            wd = WEEK[day.weekday()]
+            b["曜日"][wd] = b["曜日"].get(wd, 0) + 1
+            for r in rows:
+                if None in r[1:5] and r[0].hour == 9 and r[0].minute < 15:
+                    k = r[0].strftime("%H:%M") + ("（出来高あり）" if r[5] else "")
+                    b["空の行の時刻"][k] = b["空の行の時刻"].get(k, 0) + 1
+            k0 = rows[0][0].strftime("%H:%M")
+            b["最初の行の時刻"][k0] = b["最初の行の時刻"].get(k0, 0) + 1
+            kl = ok[-1][0].strftime("%H:%M")
+            b["最後の足の時刻"][kl] = b["最後の足の時刻"].get(kl, 0) + 1
+            dop, dv = daily[day]
+            if dv:
+                b["出来高の比"].append(sum(r[5] or 0 for r in ok) / dv)
+            if dop:
+                b["最初の足の始値÷日足の始値"].append(ok[0][1] / dop)
+    for b in out.values():
+        for k in ("出来高の比", "最初の足の始値÷日足の始値"):
+            xs = sorted(b[k])
+            b[k] = {"中央値": round(xs[len(xs) // 2], 4), "ちょうど1の割合": round(sum(abs(x - 1) < 1e-9 for x in xs) / len(xs), 3),
+                    "件数": len(xs)} if xs else {}
+    return out
+
+
 def main_diag():
     """データの抜けを調べる（集計だけ・銘柄名なし・何も書き出さない）"""
     info = json.load(open(UNIVERSE, encoding="utf-8"))["stocks"]
+    if "--raw" in sys.argv:
+        print(json.dumps(raw_shape(list(info)[:60]), ensure_ascii=False, indent=1))
+        return 0
     diag = {}
     recs, missing = load_all(list(info), info, today_cutoff(), diag=diag)
     diag["n_recs"], diag["n_hot"], diag["n_missing"] = len(recs), sum(r["hot"] for r in recs), len(missing)

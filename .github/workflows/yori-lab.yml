@@ -36,6 +36,8 @@ jobs:
       - name: Diagnose data gaps (no commit)
         if: ${{ inputs.diag }}
         run: |
+          python yori_lab.py --diag --raw | tee diag-raw.json
+          { echo '```json'; cat diag-raw.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           python yori_lab.py --diag | tee diag.json
           { echo '```json'; cat diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - name: Count with the pre-registered ruler
