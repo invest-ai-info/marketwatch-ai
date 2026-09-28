@@ -2809,6 +2809,15 @@ def live_filter(f):
     return {k: v for k, v in (f or {}).items() if k not in _WINDOW_KEYS}
 
 
+def watch_can_override(filter_send_email, momentum_blocked, watch_hyps):
+    """勢いの絞り込み（モメンタムフィルタ）だけで止まったシグナルでも、観察中の候補の照合はする（2026-09-28）。
+    観察中の候補（押し目買い・逆張り買い）は、そもそも勢いと逆向きに入る形＝勢いの絞り込みとは相性が合わない。
+    実測（2026-08-28〜09-28 の4時間足）：候補に当てはまった94件が**すべて**勢いの絞り込みで止まり、メールが1通も出ていなかった。
+    tracker の前向きの成績は絞り込みの前の全件で数えている＝届くメールも同じ母集団にそろえる。
+    ⚠️ ほかの絞り込み（方向感なし・email_silent・ma_golden 単独）で止まったものは対象外。昇格した仮説の配信は変えない。"""
+    return (not filter_send_email) and bool(momentum_blocked) and bool(watch_hyps)
+
+
 def load_watch_hypotheses(path=None):
     """tracker の watch==True かつ status=='tracking' かつ kind=='edge' の仮説（照合用に期間の条件を外したコピー）。"""
     path = path or os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
@@ -3025,6 +3034,8 @@ def main():
         # 🆕 2026-05-28: フィルタ初期化（メール送信判定、signals-log は常に残す）
         filter_send_email = True
         filter_block_reason = None
+        momentum_blocked = False      # 🆕 2026-09-28 勢いの絞り込み「だけ」で止まったか（観察中の候補の照合に使う）
+        watch_override = False        # 🆕 2026-09-28 勢いの絞り込みでは止まるが、観察中の候補として送る
 
         # 🆕 2026-05-28: Step B - ma_golden 単独シグナルは無条件で送信スキップ
         # 検証 (N=11) で 0 勝。複合発火時は他シグナルが主導なので問題なし。
@@ -3104,6 +3115,7 @@ def main():
             if not passed:
                 filter_send_email = False
                 filter_block_reason = f"モメンタム不足: {reason}"
+                momentum_blocked = True
                 print(f"    🚫 フィルタ: {filter_block_reason}")
             else:
                 print(f"    ✅ モメンタム通過: {reason}")
@@ -3290,7 +3302,8 @@ MarketWatch AI Alerts
         promoted_match = None
         gate_hit = None
         watch_hit_id = None
-        if filter_send_email and EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
+        watch_only = watch_can_override(filter_send_email, momentum_blocked, watch_hyps)
+        if (filter_send_email or watch_only) and EMAIL_PROMOTED_ONLY and promoted_hyps is not None:
             _sr_probe = compute_sr_runway(position_plan, indicators)
             _gate_probe = {
                 "ticker": ticker,
@@ -3312,7 +3325,7 @@ MarketWatch AI Alerts
                 "entry": position_plan["entry"] if position_plan else indicators["price"],
                 "indicators_at_signal": build_indicators_at_signal(indicators),
             }
-            promoted_match = match_promoted_hypothesis(promoted_hyps, _gate_probe)
+            promoted_match = None if watch_only else match_promoted_hypothesis(promoted_hyps, _gate_probe)
             if promoted_match:
                 print(f"    🏅 昇格ゲート通過: {promoted_match.get('label')} ({promoted_match.get('id')})")
                 body = f"🏅 検証済みエッジ該当: {promoted_match.get('label')}\n\n" + body
@@ -3335,8 +3348,15 @@ MarketWatch AI Alerts
                     watch_hit_id = watch_match.get("id")
                     subject = "👀観察中 " + subject
                     body = watch_email_header(watch_match) + "\n\n" + body
-                    print(f"    👀 観察中の候補に該当: {watch_match.get('label')} ({watch_hit_id}) → 未確定として送信")
-                else:
+                    if watch_only:
+                        # 🆕 2026-09-28 勢いの絞り込みでは止まる合図だが、観察中の候補の条件そのものなので送る
+                        watch_override = True
+                        filter_send_email = True
+                        body = ("⚠️ いつもの勢いの絞り込みでは止まる合図です（逆張りの候補のため）。"
+                                "観察中の候補の条件に当てはまるので、未確定のまま送っています。\n") + body
+                    print(f"    👀 観察中の候補に該当: {watch_match.get('label')} ({watch_hit_id}) → 未確定として送信"
+                          + ("（勢いの絞り込みは通っていない）" if watch_only else ""))
+                elif not watch_only:
                     filter_send_email = False
                     filter_block_reason = f"昇格エッジ非該当（promoted {len(promoted_hyps)} 件に不一致）"
                     print(f"    🔇 昇格ゲート: {filter_block_reason} → 記録のみ")
@@ -3422,8 +3442,10 @@ MarketWatch AI Alerts
         log_entry["confidence"] = confidence
         # 🆕 2026-05-28: モメンタムフィルタ判定とスコアを記録（次回検証用）
         log_entry["momentum_filter"] = {
-            "passed": filter_send_email,
-            "reason": filter_block_reason if not filter_send_email else "通過",
+            # 🆕 2026-09-28 観察中の候補として送った場合も「勢いの絞り込みは通っていない」と残す（集計を混ぜない）
+            "passed": filter_send_email and not watch_override,
+            "reason": (f"{filter_block_reason}（観察中の候補として送信）" if watch_override
+                       else filter_block_reason if not filter_send_email else "通過"),
             "score": momentum_info["score"] if momentum_info else None,
             "entry_vs_ma25_signed": momentum_info["entry_vs_ma25_signed"] if momentum_info else None,
             "range_pos": momentum_info["range_pos"] if momentum_info else None,

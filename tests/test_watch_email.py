@@ -37,6 +37,24 @@ def _tracker_file(hyps):
     return path
 
 
+def test_watch_can_override_only_when_momentum_alone_blocked():
+    """2026-09-28：観察中の候補（逆張りの買い）は勢いの絞り込みと相性が合わず、当てはまった94件が全部そこで止まっていた。
+    勢いの絞り込み「だけ」で止まったときに限り、観察中の候補の照合をする。"""
+    hyps = [{"id": "w"}]
+    assert G.watch_can_override(False, True, hyps) is True        # 勢いだけで止まった → 照合する
+    assert G.watch_can_override(True, False, hyps) is False       # もともと通っている → いつもの道
+    assert G.watch_can_override(False, False, hyps) is False      # ほかの絞り込み（方向感なし等）で止まった → 送らない
+    assert G.watch_can_override(False, True, []) is False         # 観察中の候補が無い／読めない → 送らない（fail-closed）
+
+
+def test_gate_keeps_momentum_record_honest():
+    """観察中の候補として送っても、記録の「勢いの絞り込みを通ったか」は通っていない扱いのまま（集計を混ぜない）"""
+    src = open("generate_technical_alerts.py", encoding="utf-8").read()
+    assert '"passed": filter_send_email and not watch_override' in src
+    assert "watch_only = watch_can_override(filter_send_email, momentum_blocked, watch_hyps)" in src
+    assert "promoted_match = None if watch_only else match_promoted_hypothesis" in src   # 昇格した仮説の配信は変えない
+
+
 def test_live_filter_drops_only_window_keys():
     assert G.live_filter({"tier": "good", "fired_from": "2026-09-27", "fired_before": "2026-10-01"}) == {"tier": "good"}
     assert G.live_filter(None) == {}
