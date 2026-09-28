@@ -41,21 +41,34 @@ def num(v):
         return None
 
 
-def main():
-    idx = fetch(IDX).decode("utf-8", "replace")
-    m = re.search(r'href="([^"]*mtdaily[^"]*\.xls)"', idx, re.I)
-    if not m:
-        print("❌ mtdaily リンクが index に無い"); sys.exit(1)
-    url = "https://www.jpx.co.jp" + m.group(1)
-    dm = re.search(r"(\d{8})", url)
-    asof = f"{dm.group(1)[:4]}-{dm.group(1)[4:6]}-{dm.group(1)[6:8]}" if dm else ""
-    print("📥", url, "asof", asof)
-    df = pd.read_excel(io.BytesIO(fetch(url)), sheet_name=0, header=None)
+# 🚨 2026-09-28: JPX が 9/25 公表分から Excel を .xls（mtdailyk2026092400.xls）→ .xlsx（20260925_mtdaily.xlsx）
+#    に変えた。旧版は `\.xls"` 決め打ちでリンクを見つけられず「❌ mtdaily リンクが index に無い」で止まり、
+#    ワークフロー側は non-fatal なので緑のまま、サイトの信用残は 9/24 のまま残った。列の並びは同じだった。
+#    → 両方の拡張子を受け、.xlsx を優先する（.xlsx を読むには openpyxl が要る＝jp-rankings.yml で入れる）。
+LINK_RE = re.compile(r'href="([^"]*mtdaily[^"]*\.xlsx?)"', re.I)
+# 株式コード欄は5桁（4桁＋末尾0）。2024年からの英字入りコード（例 278A0）も数える（旧版は数字だけで約12銘柄が漏れていた）
+CODE_RE = re.compile(r"\d{3}[0-9A-Z]\d")
 
+
+def find_excel_link(html):
+    """index の HTML から日次 Excel の URL と asof（YYYY-MM-DD）を返す（純関数）。無ければ (None, "")。"""
+    links = LINK_RE.findall(html)
+    if not links:
+        return None, ""
+    links.sort(key=lambda h: not h.lower().endswith(".xlsx"))   # .xlsx を優先
+    href = links[0]
+    url = href if href.startswith("http") else "https://www.jpx.co.jp" + href
+    dm = re.search(r"(20\d{6})", href.rsplit("/", 1)[-1])      # 日付はファイル名から（フォルダ名の数字を拾わない）
+    asof = f"{dm.group(1)[:4]}-{dm.group(1)[4:6]}-{dm.group(1)[6:8]}" if dm else ""
+    return url, asof
+
+
+def parse_rows(df):
+    """Excel（header=None で読んだ DataFrame）から銘柄の行を取り出す（純関数）。"""
     rows = []
     for i in range(df.shape[0]):
         code = str(df.iloc[i, C_CODE]).strip()
-        if not re.fullmatch(r"\d{5}", code):
+        if not CODE_RE.fullmatch(code):
             continue
         sell, buy = num(df.iloc[i, C_SELL]), num(df.iloc[i, C_BUY])
         if sell is None and buy is None:
@@ -71,6 +84,20 @@ def main():
             "sell_pl": num(df.iloc[i, C_SELL_PL]), "buy_pl": num(df.iloc[i, C_BUY_PL]),
             "ratio": ratio,
         })
+    return rows
+
+
+def main():
+    idx = fetch(IDX).decode("utf-8", "replace")
+    url, asof = find_excel_link(idx)
+    if not url:
+        print("❌ mtdaily リンクが index に無い"); sys.exit(1)
+    print("📥", url, "asof", asof)
+    df = pd.read_excel(io.BytesIO(fetch(url)), sheet_name=0, header=None)
+    rows = parse_rows(df)
+    if not rows:
+        # 列の並びが変わった等。空の JSON で前回の正しいデータを上書きしない
+        print("❌ 銘柄の行が0件（Excel の列の並びが変わった可能性）＝ jp-margin.json は書き換えない"); sys.exit(1)
 
     out = {"asof": asof, "source": "JPX 個別銘柄信用取引残高（日々公表銘柄）", "count": len(rows), "rows": rows}
     json.dump(out, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))

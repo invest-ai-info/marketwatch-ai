@@ -814,6 +814,26 @@ def fetch_jp_trading_dates(ticker=JP_PROBE_TICKER):
             for t, c in zip(d.get("timestamp", []), q.get("close", [])) if c is not None]
 
 
+# ⑫b 信用残（jp-margin.json）の鮮度。jp-rankings.yml の信用残ステップは `|| echo "…(non-fatal)"` なので、
+# 取得に失敗してもワークフローは緑のまま＝①では見えない。
+# 実例（2026-09-28）: JPX が Excel を .xls → .xlsx に変え、build_jp_margin.py が「❌ mtdaily リンクが index に
+# 無い」で止まった。サイトの信用残は 9/24 のまま残り、ログを読むまで誰も気づかなかった。
+# JPX は「前の営業日の申込み現在」の残高を次の営業日に出す＝ 09:30 JST の点検時、正常なら
+# 確定最終営業日より 1 営業日遅れ。公表時刻のずれで1回取りこぼしても鳴らないよう、2 営業日遅れまでは正常とする。
+MARGIN_LAG_MAX = 2
+
+
+def margin_lag_days(asof, trading_dates, settled):
+    """純関数（テスト対象）: 信用残の asof が確定最終営業日から何営業日遅れているか。
+
+    営業日は上流（Yahoo）の日付列で数える＝祝日カレンダーを持たない（⑫と同じ流儀）。
+    asof より後で settled 以前の営業日の数を返す。判定できないときは None。
+    """
+    if not asof or not settled or not trading_dates:
+        return None
+    return sum(1 for d in trading_dates if asof < d <= settled)
+
+
 FORCE_PUSH_WINDOW_H = 30   # 09:30 JST の日次点検が1回飛んでも取りこぼさない幅
 
 
@@ -1135,11 +1155,13 @@ def main():
         body.append(f"- 🚨 ⚪ force-push の確認失敗: {e}")
 
     body.append("")
-    body.append("### ⑫ 日本株ランキングの鮮度（①はworkflow成否しか見ない死角＝データ側で見る）")
+    body.append("### ⑫ 日本株ランキング・信用残の鮮度（①はworkflow成否しか見ない死角＝データ側で見る）")
+    jp_dates = None
     try:
         rank = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/jp-rankings.json", token))
-        settled = latest_settled_trading_date(fetch_jp_trading_dates(), now)
+        jp_dates = fetch_jp_trading_dates()
+        settled = latest_settled_trading_date(jp_dates, now)
         asof = rank.get("asof") or ""
         if settled and asof and asof < settled:
             body.append(f"- 🚨 🟡 日本株ランキングが古い: jp-rankings.json の asof={asof} / "
@@ -1155,6 +1177,26 @@ def main():
     except Exception as e:
         # ③〜⑧と同じ方針: API/ネットワークの一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ 日本株ランキングの鮮度確認に失敗: {e}")
+    try:
+        mg = json.loads(api_raw(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/jp-margin.json", token))
+        dates = jp_dates or fetch_jp_trading_dates()
+        m_settled = latest_settled_trading_date(dates, now)
+        m_asof = mg.get("asof") or ""
+        lag = margin_lag_days(m_asof, dates, m_settled)
+        if lag is None:
+            body.append(f"- ⚪ 信用残: 判定不能（asof={m_asof or 'なし'} / 上流={m_settled or 'なし'}）")
+        elif lag > MARGIN_LAG_MAX:
+            body.append(f"- 🚨 🟡 信用残が古い: jp-margin.json の asof={m_asof}（確定最終営業日 {m_settled} から"
+                        f" {lag} 営業日遅れ・正常は1）。**hot-assets の「信用残ウォッチ」が古い残高を出したまま**。"
+                        f"jp-rankings.yml の信用残ステップは失敗しても緑（non-fatal）なので、ログの"
+                        f"「Build JP margin balance」を見る。2026-09-28 の実例＝JPX の Excel の形式変更"
+                        f"（.xls→.xlsx）で build_jp_margin.py がリンクを見つけられなかった")
+            bad.append(("信用残の鮮度", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 信用残 asof={m_asof}（確定最終営業日から {lag} 営業日遅れ・{MARGIN_LAG_MAX} まで正常）")
+    except Exception as e:
+        body.append(f"- 🚨 ⚪ 信用残の鮮度確認に失敗: {e}")
 
     body.append("")
     body.append("### ⑬ カレンダーの先詰まり（①②はworkflow成否しか見ない死角＝中身で見る）")
