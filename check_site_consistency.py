@@ -83,6 +83,7 @@ SYNC_FORBIDDEN = {
     "event-dir-lab.json", "event-dir-lab.md",   # 🆕 2026-09-27 S2 重要な発表のあとの向き（event-dir-lab.yml・手動。B2 の続き）
     "round-lab.json", "round-lab.md",           # 🆕 2026-09-28 S3 キリの良い値（round-lab.yml・手動。スキャルピング本の最後の候補）
     "candle-lab.json", "candle-lab.md",         # 🆕 2026-09-27 C1 シグナルの直前の足の形（candle-lab.yml・手動。FX本100冊の下調べから）
+    "pattern-lab.json", "pattern-lab.md",       # 🆕 2026-09-28 C2 チャートパターン（pattern-lab.yml・手動。FX本100冊の最後の候補）
 }
 
 errors = []
