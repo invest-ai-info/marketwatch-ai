@@ -175,6 +175,24 @@ def test_workflow_installs_the_import_chain():
     for pkg in ("numpy", "pandas", "yfinance"):
         assert pkg in line.split(), pkg
 
+def test_raw_shape_tells_empty_900_from_shift():
+    day1, day2 = dt.date(2026, 9, 1), dt.date(2026, 9, 2)
+
+    def fetch(code, interval, rng):
+        if interval == "1d":
+            return [(dt.datetime.combine(d, dt.time(9, 0), JST), 100.0, 101, 99, 100, 1000) for d in (day1, day2)]
+        rows = [(dt.datetime.combine(day1, dt.time(9, 0), JST), 100.0, 101, 99, 100, 500)]      # ふつうの日
+        rows += [(dt.datetime.combine(day1, dt.time(9, 5), JST), 100.0, 101, 99, 100, 500)]
+        rows += [(dt.datetime.combine(day2, dt.time(9, 0), JST), None, None, None, None, 400)]   # 9:00 が空（出来高だけある）
+        rows += [(dt.datetime.combine(day2, dt.time(9, 5), JST), 102.0, 103, 101, 102, 300)]
+        return rows
+
+    out = Y.raw_shape(["X"], fetch=fetch)
+    assert out["09:00"]["日数"] == 1 and out["09:05"]["日数"] == 1
+    assert out["09:05"]["空の行の時刻"] == {"09:00（出来高あり）": 1}
+    assert out["09:05"]["出来高の比"]["中央値"] == 0.3 and out["09:00"]["出来高の比"]["中央値"] == 1.0
+    assert out["09:05"]["最初の足の始値÷日足の始値"]["中央値"] == 1.02
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
