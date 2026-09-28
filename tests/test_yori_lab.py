@@ -66,8 +66,13 @@ def test_day_record_classes_and_wick():
     assert r["path"]["15:30"] == 101 and abs(Y.ret(r, "09:15", "15:30") - (101 / 103 - 1)) < 1e-12
     bars2 = _bars(day, [(100, 100, 97, 97.5)] * 3 + [(97.5, 97.5, 97.5, 97.5)] * 70)
     assert Y.day_record(bars2, 100, 100, 1000, 97)["cls"] == "down"
-    late = _bars(day, [(100, 100, 100, 100)] * 10, start=(9, 5))
-    assert Y.day_record(late, 100, 100, 1000, 100) is None                   # 9:00 の足が無い
+    late = _bars(day, [(101, 102, 100, 101)] * 10, start=(9, 5))
+    assert Y.day_record(late, 100, 100, 1000, 100) is None                   # 9:00 の足が無く、寄り（日足の始値）も無い
+    r2 = Y.day_record(late, 98, 100, 1000, 100, day_open=100)                # Yahoo が 9:00 を空で返した日＝寄りは日足の始値
+    assert r2 is not None and abs(r2["r15"] - 0.01) < 1e-12 and abs(r2["gap"] - (100 / 98 - 1)) < 1e-12
+    assert r2["wick"] is None and r2["vol_share"] is None                    # 最初の5分が分からない＝上ヒゲと出来高は数えない
+    delayed = _bars(day, [(100, 100, 100, 100)] * 10, start=(9, 20))
+    assert Y.day_record(delayed, 100, 100, 1000, 100, day_open=100) is None   # 寄り付きが 9:15 より遅れた日は使わない
 
 
 def test_hot_lists_same_rule_as_rankings():
@@ -112,6 +117,9 @@ def test_analyze_verdicts():
     assert res["days"] == 40 and res["cut"] == days[20]
     md = Y.render_md({"generated_at": "x", "prereg_sha256": "a" * 64, "result": dict(res, missing=[])})
     assert "投資助言ではありません" in md and "U0" not in md and "K1" not in md
+    no_wick = [dict(r, wick=None) for r in recs]                                      # 上ヒゲが分からない日は P4 に入れない
+    res2 = Y.analyze(no_wick)
+    assert res2["p4"]["verdict"] == "見えない" and res2["n_up_with_900"] == 0 and res2["p1"]["verdict"] == res["p1"]["verdict"]
     flat = [dict(r, cls="flat") for r in recs if r["code"].startswith("K")]           # 急騰が無ければ P1 は見えない
     assert Y.analyze(flat)["p1"]["verdict"] == "見えない"
 
@@ -161,9 +169,21 @@ def test_load_all_uses_prev_day_list_and_skips_today():
     assert len(recs2) == len(recs)                                            # 調べる版でも記録は同じ
     assert diag["5m_range"] == {"60d": 4} and diag["first_bar_time"] == {"09:00": 12}
     why = diag["hot_next_day_by_weekday"]                                     # 上位だった日の次の日＝記録になった／5分足なし
-    assert sum(v.get("記録になった", 0) for v in why.values()) >= 1
+    assert sum(v.get("記録になった（9:00 の足あり）", 0) for v in why.values()) >= 1
     assert sum(v.get("次の日の5分足なし", 0) for v in why.values()) >= 1
     assert diag["5m_days_per_stock"] == {"min": 3, "median": 3, "max": 3} and "HOT" not in str(diag)
+    top = Y.TOP_N
+
+    def fetch905(code, interval, rng):                                        # 5分足の最初が 9:05（9:00 は空で捨てられた）
+        rows = fetch(code, interval, rng)
+        return rows if interval == "1d" else [b for b in rows if b[0].time() != dt.time(9, 0)]
+
+    Y.TOP_N = 1
+    try:
+        recs3, _ = Y.load_all(["HOT", "Z", "A", "B"], {}, today.isoformat(), fetch=fetch905)
+    finally:
+        Y.TOP_N = top
+    assert len(recs3) == len(recs) and all(r["wick"] is None for r in recs3)   # 捨てずに数える（上ヒゲだけ無し）
     assert Y.today_cutoff(dt.datetime(2026, 9, 28, 13, 40, tzinfo=JST)) == "2026-09-28"
     assert Y.today_cutoff(dt.datetime(2026, 9, 28, 16, 0, tzinfo=JST)) == "2026-09-29"
 
