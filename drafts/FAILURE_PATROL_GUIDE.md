@@ -86,13 +86,14 @@ python failure_patrol.py            # 直近26時間
 
 ```
 A=https://api.github.com/repos/invest-ai-info/marketwatch-ai
+# ⚠️ POST/PUT は Content-Type: application/json が無いと断られる（2026-09-28 確認）
 # PR を作る（題名・本文は日本語。原因・該当の行・直したこと・確かめたこと。本文の最後に「🤖 Generated with Claude Code」）
 python -c "import json;print(json.dumps({'title':'<題名>','head':'claude/failure-patrol-<YYYYMMDD>','base':'main','body':open('pr.md',encoding='utf-8').read()}))" > pr.json
-curl -sS -X POST -H "Accept: application/vnd.github+json" "$A/pulls" --data @pr.json | python -c "import json,sys;d=json.load(sys.stdin);print(d.get('number'),d.get('html_url'),d.get('message'))"
+curl -sS -X POST -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" "$A/pulls" --data @pr.json | python -c "import json,sys;d=json.load(sys.stdin);print(d.get('number'),d.get('html_url'),d.get('message'))"
 # 検査が通っていればマージ（<番号> と、push したコミットの40桁 <sha>）
-curl -sS -X PUT -H "Accept: application/vnd.github+json" "$A/pulls/<番号>/merge" -d '{"merge_method":"merge","sha":"<sha>"}'
+curl -sS -X PUT -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" "$A/pulls/<番号>/merge" -d '{"merge_method":"merge","sha":"<sha>"}'
 # 再実行してよい種類（§2 の表）なら1回だけ
-curl -sS -X POST "$A/actions/runs/<失敗した回の番号>/rerun-failed-jobs"
+curl -sS -X POST -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" "$A/actions/runs/<失敗した回の番号>/rerun-failed-jobs"
 ```
 
 - `pr.json`・`pr.md` はコミットしない（作業が済んだら消す）。
