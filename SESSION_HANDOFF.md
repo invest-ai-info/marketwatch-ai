@@ -10,7 +10,7 @@
 ## 🆕 2026-09-28 夜: 失敗の巡回役（routine `failure-mail-patrol`）を新設（オーナー依頼「1日1回 Gmail を巡回して失敗メールを確認」）
 - 毎朝 08:57 JST・毎回新しいセッション（`trig_01BYipEtVEsakf4bSFMe5sEc`）。手順書＝`drafts/FAILURE_PATROL_GUIDE.md`。まず `python failure_patrol.py`（直近26時間の失敗した実行の一覧）→ 1件ずつ「✅解決済み／🔄一時的／🔧直した（PR）／🙋オーナーの対応が必要」に分けて報告。報告は routine の最後の要約＝通知（スマホ＋メール）
 - 🚨 **試運転（10:43）で判明：定時のセッションには Gmail の道具も GitHub の道具（mcp__github__*）も入らない**（`create_trigger` の connectors もこの組織では不可）。一方 `api.github.com` は curl で認証つきで読み書きできる（プロキシが付ける・上限15000/時）→ 道具に頼らない `failure_patrol.py` を作って手順を書き直した。失敗メールは GitHub の失敗した実行から出るので、GitHub から集めれば同じものが拾える
-- ⚠️ **ログ本体は読めない**（保管先 `productionresultssa5.blob.core.windows.net` が環境の通信設定で 403）。読めるようにするならオーナーが環境の設定で許可するドメインに足す。それまでは失敗した段階の名前＋手元で再現
+- **ログ本体は読まない**（保管先 `productionresultssa5.blob.core.windows.net` はこの環境の通信設定で 403）。オーナー判断（同日）「ログを読まなくても原因がわかって直せればよい」＝通信設定は変えない。原因は失敗した段階の名前＋手元で再現。鍵が要る段階（メール送信・Gemini など）は再現できない＝そのあと成功したかで判断し、続くなら手で動かすセッションの候補として報告
 - ⚠️ ほかのリポジトリ（ai-tsukaikata・jp-momentum-research）はこの環境から読めない（403）＝巡回の対象外。ai-tsukaikata の Freshness Check が 9/21・9/28 に失敗メールを出している
 - 見張り番（Automation Health Watch）は**異常があるとわざと失敗で終わる**作り。9/15 から毎日の失敗メールは §④（ゲートのファイルの変更＝26時間鳴る）。9/28 分の7件は `failure_patrol.py` で**すべてマージ済みの PR 経由**（#87・#90・#100・#102・#104・#105・#108）と確認
 
