@@ -262,11 +262,22 @@ def analyze(recs):
 
 # ════════════════════ 実行 ════════════════════
 
-def load_all(codes, meta, today, fetch=fetch_chart):
+def load_all(codes, meta, today, fetch=fetch_chart, diag=None):
+    """diag に dict を渡すと、データがどこで抜けたかを数えて入れる（集計だけ・銘柄名なし。--diag 用）"""
     daily, intraday, missing = {}, {}, []
     for i, code in enumerate(codes):
         d = fetch(code, "1d", "6mo")
-        m = fetch(code, "5m", "60d") or fetch(code, "5m", "1mo")   # 60日が断られたら1か月
+        m60 = fetch(code, "5m", "60d")
+        m = m60 or fetch(code, "5m", "1mo")   # 60日が断られたら1か月
+        if diag is not None:
+            diag.setdefault("5m_range", {}).setdefault("60d" if m60 else "1mo" if m else "none", 0)
+            diag["5m_range"]["60d" if m60 else "1mo" if m else "none"] += 1
+            for t, *_ in d or []:
+                k = t.strftime("%H:%M")
+                diag.setdefault("daily_time", {}).setdefault(k, 0)
+                diag["daily_time"][k] += 1
+            n_days = len({b[0].date() for b in m or []})
+            diag.setdefault("5m_days_per_stock", []).append(n_days)
         if not d or not m:
             missing.append(code)
             continue
@@ -294,7 +305,43 @@ def load_all(codes, meta, today, fetch=fetch_chart):
             rec.update(code=code, date=day, hot=code in hot.get(prev_d, set()), akaji=meta.get(code, {}).get("akaji"),
                        relvol=prev_v / (sum(base) / len(base)) if base else 0.0)
             recs.append(rec)
+    if diag is not None:
+        _diagnose(daily, intraday, hot, today, diag)
     return recs, missing
+
+
+def _diagnose(daily, intraday, hot, today, diag):
+    """前の日の上位20に入った銘柄が、次の日の記録になるまでにどこで落ちたかを、次の日の曜日ごとに数える"""
+    why, first_bar = {}, {}
+    for code, rows in daily.items():
+        by = intraday.get(code, {})
+        for day, bars in by.items():
+            t0 = min(bars)[0].strftime("%H:%M")
+            first_bar[t0] = first_bar.get(t0, 0) + 1
+        for k in range(len(rows) - 1):
+            d0, d1 = rows[k][0], rows[k + 1][0]
+            if code not in hot.get(d0, ()) or d1 >= today:
+                continue
+            bars = sorted(by.get(d1, []))
+            if not bars:
+                r = "次の日の5分足なし"
+            elif (bars[0][0].hour, bars[0][0].minute) != (9, 0):
+                r = "最初の足が9:00でない"
+            elif day_record(bars, rows[k][1], rows[k - 1][1] if k else None, rows[k][2], rows[k + 1][1]) is None:
+                r = "そのほか記録にならない"
+            else:
+                r = "記録になった"
+            wd = WEEK[dt.date.fromisoformat(d1).weekday()]
+            why.setdefault(wd, {}).setdefault(r, 0)
+            why[wd][r] += 1
+    days5 = sorted({d for by in intraday.values() for d in by})
+    diag["hot_next_day_by_weekday"] = why
+    diag["first_bar_time"] = dict(sorted(first_bar.items(), key=lambda kv: -kv[1])[:10])
+    diag["5m_dates"] = {"n": len(days5), "first": days5[0] if days5 else None, "last": days5[-1] if days5 else None}
+    diag["stocks_with_5m_by_date"] = {d: sum(1 for by in intraday.values() if d in by) for d in days5}
+    diag["hot_size_by_date"] = {d: len(v) for d, v in sorted(hot.items()) if days5 and d >= days5[0]}
+    xs = sorted(diag.pop("5m_days_per_stock", []))
+    diag["5m_days_per_stock"] = {"min": xs[0], "median": xs[len(xs) // 2], "max": xs[-1]} if xs else {}
 
 
 def today_cutoff(now=None):
@@ -347,6 +394,16 @@ def render_md(res):
     return "\n".join(L) + "\n"
 
 
+def main_diag():
+    """データの抜けを調べる（集計だけ・銘柄名なし・何も書き出さない）"""
+    info = json.load(open(UNIVERSE, encoding="utf-8"))["stocks"]
+    diag = {}
+    recs, missing = load_all(list(info), info, today_cutoff(), diag=diag)
+    diag["n_recs"], diag["n_hot"], diag["n_missing"] = len(recs), sum(r["hot"] for r in recs), len(missing)
+    print(json.dumps(diag, ensure_ascii=False, indent=1))
+    return 0
+
+
 def main():
     res = {"generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_file": P.PREREG,
            "prereg_sha256": P.prereg_sha256()}
@@ -368,4 +425,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main_diag() if "--diag" in sys.argv else main())

@@ -150,12 +150,20 @@ def test_load_all_uses_prev_day_list_and_skips_today():
     Y.TOP_N = 1                                                               # 銘柄が少ないので上位1つだけを「上位」にする
     try:
         recs, missing = Y.load_all(["HOT", "Z", "A", "B"], {}, today.isoformat(), fetch=fetch)
+        diag = {}
+        recs2, _ = Y.load_all(["HOT", "Z", "A", "B"], {}, today.isoformat(), fetch=fetch, diag=diag)
     finally:
         Y.TOP_N = top
     assert missing == [] and all(r["date"] < today.isoformat() for r in recs)
     hot_days = {r["date"] for r in recs if r["hot"] and r["code"] == "HOT"}
     assert hot_days == {days[-2].isoformat()}                                 # 急増の翌日だけが「前の日の上位」
     assert not any(r["hot"] for r in recs if r["code"] in ("A", "B"))         # 売買代金10億円未満は入らない
+    assert len(recs2) == len(recs)                                            # 調べる版でも記録は同じ
+    assert diag["5m_range"] == {"60d": 4} and diag["first_bar_time"] == {"09:00": 12}
+    why = diag["hot_next_day_by_weekday"]                                     # 上位だった日の次の日＝記録になった／5分足なし
+    assert sum(v.get("記録になった", 0) for v in why.values()) >= 1
+    assert sum(v.get("次の日の5分足なし", 0) for v in why.values()) >= 1
+    assert diag["5m_days_per_stock"] == {"min": 3, "median": 3, "max": 3} and "HOT" not in str(diag)
     assert Y.today_cutoff(dt.datetime(2026, 9, 28, 13, 40, tzinfo=JST)) == "2026-09-28"
     assert Y.today_cutoff(dt.datetime(2026, 9, 28, 16, 0, tzinfo=JST)) == "2026-09-29"
 

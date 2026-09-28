@@ -8,6 +8,11 @@ name: Yori Lab (manual)
 
 on:
   workflow_dispatch:
+    inputs:
+      diag:
+        description: 'データの抜けを調べるだけ（集計をログに出す・コミットしない）'
+        type: boolean
+        default: false
 
 concurrency:
   group: yori-lab
@@ -28,11 +33,18 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install numpy pandas yfinance
+      - name: Diagnose data gaps (no commit)
+        if: ${{ inputs.diag }}
+        run: |
+          python yori_lab.py --diag | tee diag.json
+          { echo '```json'; cat diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - name: Count with the pre-registered ruler
+        if: ${{ !inputs.diag }}
         run: |
           python yori_lab.py
           [ -f yori-lab.md ] && cat yori-lab.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results
+        if: ${{ !inputs.diag }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
