@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install numpy pandas
+        run: pip install numpy pandas yfinance
       - name: Count with the pre-registered ruler
         run: |
           python yori_lab.py

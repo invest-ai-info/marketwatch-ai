@@ -160,6 +160,13 @@ def test_load_all_uses_prev_day_list_and_skips_today():
     assert Y.today_cutoff(dt.datetime(2026, 9, 28, 16, 0, tzinfo=JST)) == "2026-09-29"
 
 
+def test_workflow_installs_the_import_chain():
+    """yori_lab → pillar_lab → exit_rule_backtest → generate_technical_alerts が yfinance を読む（2026-09-28 初回の実行がこれで落ちた）"""
+    wf = open(".github/workflows/yori-lab.yml", encoding="utf-8").read()
+    line = [l for l in wf.splitlines() if "pip install" in l][0]
+    for pkg in ("numpy", "pandas", "yfinance"):
+        assert pkg in line.split(), pkg
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
