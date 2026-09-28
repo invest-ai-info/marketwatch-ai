@@ -11,13 +11,14 @@ routine `failure-mail-patrol`（毎朝 08:57 JST）が最初に実行する。�
 - 失敗の回数・最初と最後の時刻（JST）・ブランチ・起動のされ方
 - いまの状態＝そのあと同じワークフロー・同じブランチで成功した回があるか（あれば「解決済み」の候補）
 - 最新の失敗の「失敗した段階」の名前と、エラーの注記（決まり文句は除く）
-- ログの末尾（取れれば。ログの保管先は環境の通信設定で止められていることがある＝取れなくても続ける）
+- ログは既定では取りにいかない（2026-09-28 オーナー判断「原因がわかって直せればログは読まなくてよい」。
+  保管先 productionresultssa*.blob.core.windows.net はこの環境の通信設定で止められている）。原因は段階の名前＋再現でつかむ
 - 見張り番（automation-health）なら、Issue の最新コメントの 🚨 行と、§④ のコミットが PR 経由かどうか
 
 使い方:
   python failure_patrol.py                 # 直近26時間
   python failure_patrol.py --hours 50      # 期間を変える
-  python failure_patrol.py --no-logs       # ログを取りにいかない
+  python failure_patrol.py --logs          # ログも取りにいく（通信が許可された環境だけで意味がある）
 """
 import argparse
 import datetime as dt
@@ -160,8 +161,7 @@ def failure_detail(run, want_logs):
                 end = (cut[0] + 3) if cut else len(lines)
                 detail["log_tail"] = lines[max(0, end - LOG_TAIL):end]
             except Exception as e:
-                detail["log_error"] = (f"ログを取れない（{e}）＝ログの保管先"
-                                       f"（productionresultssa*.blob.core.windows.net）が環境の通信設定で止められている可能性")
+                detail["log_error"] = f"ログを取れない（{e}）＝段階の名前と再現で原因を確かめる"
     return detail
 
 
@@ -188,7 +188,7 @@ def health_detail(since):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--hours", type=float, default=26)
-    ap.add_argument("--no-logs", action="store_true")
+    ap.add_argument("--logs", action="store_true", help="ログも取りにいく（既定は取らない）")
     a = ap.parse_args()
     now = dt.datetime.now(dt.timezone.utc)
     since = now - dt.timedelta(hours=a.hours)
@@ -215,7 +215,7 @@ def main():
         print(f"- 最新の失敗: {last['html_url']}")
         print(f"- いまの状態: {state}")
         try:
-            d = failure_detail(last, want_logs=not a.no_logs)
+            d = failure_detail(last, want_logs=a.logs)
         except Exception as e:
             print(f"- 詳細の取得に失敗: {e}\n"); continue
         for s in d["steps"]:
