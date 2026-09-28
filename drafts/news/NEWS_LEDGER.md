@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-09-28
+- 判定: ✅ 公開済み
+- 選定トピック: 日本2年国債利回りが1.975%──1995年以来31年ぶり高水準、市場が日銀追加利上げを織り込む（カテゴリ: 今日のニュース）
+- スコア: 話題性 4 / 影響 5 / 付加価値 4（合計 13/15）
+- 選定理由: 日本2年国債が1.975%と1995年以来31年ぶり高水準。5年債も過去最高2.43%。前日記事（9/27）は米10年・日本10年の長期債に焦点。今日の記事は「短期債＝日銀政策金利見通し」という異なる角度。Bloomberg専用記事あり（9/28）。日銀9/18利上げ（1.25%）から10日で次回の織り込みが進む構図。日経486円安との関係も書ける。
+- 出典（確認済み・6系統以上）:
+  - Bloomberg「Japan's Two-Year Bond Yield Nears 2% as BOJ Rate Hike Bets Mount」2026-09-28
+  - 日本経済新聞「債券15時 長期金利、一時3.095%に上昇 5年債利回りは過去最高」2026-09-28
+  - CNBC「Bank of Japan raises interest rates to 31-year high, flags concerns over inflation」2026-09-18
+  - Al Jazeera「Bank of Japan raises rates to 31-year high of 1.25% as inflation rises」2026-09-18
+  - Bloomberg「日銀は情勢次第で10月利上げも、『12月はほぼ確実』－門間元理事」2026-09-27
+  - 財経新聞「日経平均は6日ぶり反落、大引けにかけて下げ幅拡大」2026-09-28
+  - The Standard「Japan bond yields rise on faster BOJ rate hike bets, inflation concerns」2026-09-28
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（①門間元理事「12月はほぼ確実」の引用に「個人の見方」注記を追加 ②事実誤り指摘：9月30日（火）→（水）、「前日」→「前週末」を自分で修正）→ 最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤出典6系統以上 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典6系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告22件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-28-japan-2year-yield-1975-boj-rate-hike-bets.html
+- commit: 180ad07（main へ push 済み）
+
+---
+
 ## 2026-09-27
 - 判定: ✅ 公開済み
 - 選定トピック: 米10年国債利回りが5.2%台──2007年以来19年ぶり高水準、日本JGBも3.055%で30年ぶり（カテゴリ: 今日のニュース）
