@@ -83,22 +83,25 @@ def price_at(bars, hhmm):
     return last[1] if gap_min <= 30 else None
 
 
-def day_record(bars, prev_close, prev_prev_close, prev_vol, close):
-    """その日の5分足（9:00 から並ぶ）→ 1件の記録。9:00 の足が無ければ None"""
-    if not bars or (bars[0][0].hour, bars[0][0].minute) != (9, 0) or not prev_close or not close:
+def day_record(bars, prev_close, prev_prev_close, prev_vol, close, day_open=None):
+    """その日の5分足 → 1件の記録。寄り＝日足の始値（渡されなければ 9:00 の足の始値）。9:15 の値が無ければ None。
+    ⚠️ Yahoo は火〜金の多くの日で 9:00 の足を値の無い行で返す（2026-09-28 に判明・PILLAR_PREREG「J4」の追記）。
+    その日は最初の5分の高値と出来高が分からないので、上ヒゲと最初の15分の出来高は 9:00 の足がある日だけで数える（無い日は None）"""
+    if not bars or not prev_close or not close:
         return None
-    op = bars[0][1]
+    full = (bars[0][0].hour, bars[0][0].minute) == (9, 0)
+    op = day_open or (bars[0][1] if full else None)
     first = [b for b in bars if (b[0].hour, b[0].minute) < (9, 15)]
     p915 = price_at(bars, "09:15")
     if not op or p915 is None or not first:
         return None
-    hi15 = max(b[2] for b in first)
+    hi15 = max([op] + [b[2] for b in first])
     vol15 = sum(b[5] for b in first)
     path = {t: (close if t == "15:30" else price_at(bars, t)) for t in TIMES}
     r15 = p915 / op - 1
-    wick = (hi15 - p915) / (hi15 - op) if hi15 > op else 0.0
+    wick = ((hi15 - p915) / (hi15 - op) if hi15 > op else 0.0) if full else None
     return {"gap": op / prev_close - 1, "r15": r15, "cls": "up" if r15 >= UP else "down" if r15 <= DOWN else "flat",
-            "wick": wick, "vol_share": vol15 / prev_vol if prev_vol else None,
+            "wick": wick, "vol_share": vol15 / prev_vol if (full and prev_vol) else None,
             "prev_ret": prev_close / prev_prev_close - 1 if prev_prev_close else None,
             "open": op, "p915": p915, "path": path, "price": prev_close}
 
@@ -225,8 +228,9 @@ def analyze(recs):
                  "verdict": "窓が大きいと、寄りのあとも上がりやすい兆し" if judge_diff(d3, e3, c3, +1) else "見えない"}
     # P4
     a4 = lambda r: r["wick"] >= WICK  # noqa: E731
-    e_up, c_up, _ = [r for r in up if r["date"] < cut], [r for r in up if r["date"] >= cut], None
-    d4, e4, c4 = boot_diff(up, f1, a4), boot_diff(e_up, f1, a4), boot_diff(c_up, f1, a4)
+    up_w = [r for r in up if r["wick"] is not None]          # 9:00 の足がある日だけ（最初の5分の高値が要る）
+    e_up, c_up = [r for r in up_w if r["date"] < cut], [r for r in up_w if r["date"] >= cut]
+    d4, e4, c4 = boot_diff(up_w, f1, a4), boot_diff(e_up, f1, a4), boot_diff(c_up, f1, a4)
     res["p4"] = {"all": d4, "early": e4, "late": c4,
                  "verdict": "上ヒゲの長い寄りの急騰は、その後さらに下げやすい兆し" if judge_diff(d4, e4, c4, -1) else "見えない"}
     # 読むための表
@@ -253,10 +257,12 @@ def analyze(recs):
                        "急騰のあと（9:15→大引け）": bins_table(up, kf, labs, f1)}
     share["最初の15分の出来高÷前の日の出来高"] = {
         "急騰のあと（9:15→大引け）": bins_table(up, lambda r: share_band(r["vol_share"]), ["10％未満", "10〜30％", "30％以上"], f1)}
-    share["上ヒゲ"] = {"急騰のあと（9:15→大引け）": bins_table(up, lambda r: "長い（半分以上戻した）" if r["wick"] >= WICK else "短い",
+    share["上ヒゲ"] = {"急騰のあと（9:15→大引け）": bins_table(up, lambda r: None if r["wick"] is None else "長い（半分以上戻した）" if r["wick"] >= WICK else "短い",
                                                         ["長い（半分以上戻した）", "短い"], f1)}
     res["tables"] = share
     res["cls_counts"] = {k: sum(1 for r in hot if r["cls"] == k) for k in ("up", "flat", "down")}
+    res["n_hot_with_900"] = sum(1 for r in hot if r["wick"] is not None)
+    res["n_up_with_900"] = len(up_w)
     return res
 
 
@@ -264,7 +270,7 @@ def analyze(recs):
 
 def load_all(codes, meta, today, fetch=fetch_chart, diag=None):
     """diag に dict を渡すと、データがどこで抜けたかを数えて入れる（集計だけ・銘柄名なし。--diag 用）"""
-    daily, intraday, missing = {}, {}, []
+    daily, intraday, opens, missing = {}, {}, {}, []
     for i, code in enumerate(codes):
         d = fetch(code, "1d", "6mo")
         m60 = fetch(code, "5m", "60d")
@@ -282,6 +288,7 @@ def load_all(codes, meta, today, fetch=fetch_chart, diag=None):
             missing.append(code)
             continue
         daily[code] = [(t.date().isoformat(), c, v) for t, o, h, l, c, v in d]
+        opens[code] = {t.date().isoformat(): o for t, o, h, l, c, v in d}
         by = {}
         for b in m:
             by.setdefault(b[0].date().isoformat(), []).append(b)
@@ -298,7 +305,7 @@ def load_all(codes, meta, today, fetch=fetch_chart, diag=None):
             if k is None or k < 2 or day >= today:
                 continue
             prev_d, prev_c, prev_v = rows[k - 1]
-            rec = day_record(sorted(bars), prev_c, rows[k - 2][1], prev_v, rows[k][1])
+            rec = day_record(sorted(bars), prev_c, rows[k - 2][1], prev_v, rows[k][1], day_open=opens[code].get(day))
             if rec is None:
                 continue
             base = [x for _, _, x in rows[max(0, k - 1 - HOT_BASE_DAYS):k - 1] if x]
@@ -306,11 +313,11 @@ def load_all(codes, meta, today, fetch=fetch_chart, diag=None):
                        relvol=prev_v / (sum(base) / len(base)) if base else 0.0)
             recs.append(rec)
     if diag is not None:
-        _diagnose(daily, intraday, hot, today, diag)
+        _diagnose(daily, intraday, hot, today, diag, opens)
     return recs, missing
 
 
-def _diagnose(daily, intraday, hot, today, diag):
+def _diagnose(daily, intraday, hot, today, diag, opens=None):
     """前の日の上位20に入った銘柄が、次の日の記録になるまでにどこで落ちたかを、次の日の曜日ごとに数える"""
     why, first_bar = {}, {}
     for code, rows in daily.items():
@@ -325,12 +332,13 @@ def _diagnose(daily, intraday, hot, today, diag):
             bars = sorted(by.get(d1, []))
             if not bars:
                 r = "次の日の5分足なし"
+            elif day_record(bars, rows[k][1], rows[k - 1][1] if k else None, rows[k][2], rows[k + 1][1],
+                            day_open=(opens or {}).get(code, {}).get(d1)) is None:
+                r = "記録にならない（9:15 の値が無い など）"
             elif (bars[0][0].hour, bars[0][0].minute) != (9, 0):
-                r = "最初の足が9:00でない"
-            elif day_record(bars, rows[k][1], rows[k - 1][1] if k else None, rows[k][2], rows[k + 1][1]) is None:
-                r = "そのほか記録にならない"
+                r = "記録になった（9:00 の足なし）"
             else:
-                r = "記録になった"
+                r = "記録になった（9:00 の足あり）"
             wd = WEEK[dt.date.fromisoformat(d1).weekday()]
             why.setdefault(wd, {}).setdefault(r, 0)
             why[wd][r] += 1
@@ -364,7 +372,10 @@ def render_md(res):
     cc = r.get("cls_counts", {})
     L += [f"- 期間 {r.get('first')}〜{r.get('last')}（{r.get('days')}営業日・前半と後半の境 {r.get('cut')}）",
           f"- 前の日の上位20：{r.get('n_hot')}件（急騰 {cc.get('up', 0)}・変わらず {cc.get('flat', 0)}・急落 {cc.get('down', 0)}）／対照 {r.get('n_ctl')}件",
-          f"- 値段を取れなかった銘柄 {len(r.get('missing') or [])}", "", "## 判定（事前登録の4つ）", ""]
+          f"- 値段を取れなかった銘柄 {len(r.get('missing') or [])}",
+          f"- 寄り＝日足の始値。9:00 の5分足がそろっている日＝上位 {r.get('n_hot_with_900', '—')}件（うち急騰 {r.get('n_up_with_900', '—')}件）"
+          "＝上ヒゲ（P4）と最初の15分の出来高はこの日だけで数える（Yahoo が火〜金の多くの日で 9:00 の足を値の無い行で返すため。事前登録「J4」の追記）",
+          "", "## 判定（事前登録の4つ）", ""]
     p1, p2, p3, p4 = r["p1"], r["p2"], r["p3"], r["p4"]
     a = p1["all"]
     L += [f"- **P1 寄り天**：急騰を 9:15 に買って大引けまで＝平均 {_pct(a.get('mean'))}（幅 {_pct(a.get('lo'))}〜{_pct(a.get('hi'))}・{a.get('n', 0)}件）"
