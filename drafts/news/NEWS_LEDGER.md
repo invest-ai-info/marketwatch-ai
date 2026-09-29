@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-09-29
+- 判定: ✅ 公開済み
+- 選定トピック: トランプ大統領がホルムズ海峡再開提案を拒否──原油急騰・米10年金利5.25%・日経396円安の連鎖（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: 9/26（土・米国東部時間）トランプがイランの「7日間停戦ロードマップ」提案を拒否。週明け9/28のアジア市場でWTI原油が94ドル台・ブレント107ドル台に急騰。米10年国債が5.25%（19年ぶり高水準）・30年が5.57%（2004年以来）。日経は9/29大引け396円安（65,481円・一時957円安）。同日RBAも4.60%へ利上げ（中東エネルギー価格上昇を明示）。9/29は3月期企業の中間配当権利落ち日でもあった。9/27記事（米債5.2%台）と角度が異なる地政学・商品価格トピック。
+- 出典（確認済み・8系統以上）:
+  - Bloomberg「Trump Rejects Iran Proposal to Reopen Strait of Hormuz」2026-09-26
+  - Al Jazeera「Trump rejects Iran's seven-day roadmap to reopen Strait of Hormuz」2026-09-26
+  - NPR「Trump rejects plan to reopen Strait of Hormuz」2026-09-26
+  - CNBC「Oil gains over 1% as Trump rejects Iranian proposal to reopen Hormuz Strait」2026-09-28
+  - Bloomberg「Treasuries Selloff Deepens as Trump Spurns Iran's Latest Offer」2026-09-28
+  - ABC News「Interest rates decision live: RBA hikes cash rate to 4.6 per cent」2026-09-29
+  - SBS「RBA hikes rates to 15-year high amid rising energy costs」2026-09-29
+  - 財経新聞「日経平均は957円安、米経済指標や金融当局者の発言に関心」2026-09-29
+  - 株式新聞「29日大引けの日経平均株価＝396円35銭安の65,481円27銭」2026-09-29
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟢白（表現）＋事実修正要求（9/26→修正・WTI価格統一・曜日修正）→修正後は「表現面は白のまま」確認
+  - 著者修正: ①「9月28日（日曜）」→「9月26日（土）」（Bloomberg/Al Jazeera/NPRで確認）②WTIの「93ドル台」→「94ドル台」に統一（CNBC 1.87%上昇=$94.14）③JSON-LD descriptionの日付修正④Consumer Confidence「8月→9月」→「9月分」⑤footer リンクを実在ファイルに修正⑥related article リンクを実在ファイルに修正
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④出典8系統以上 ✅ ⑤中立整理 ✅ → 最終判定 🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典8系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告24件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-09-29-trump-iran-hormuz-oil-surge-nikkei.html
+- commit: 4d9c9b0（main へ push 済み）
+
+---
+
 ## 2026-09-28
 - 判定: ✅ 公開済み
 - 選定トピック: 日本2年国債利回りが1.975%──1995年以来31年ぶり高水準、市場が日銀追加利上げを織り込む（カテゴリ: 今日のニュース）
