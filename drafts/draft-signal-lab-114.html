@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】 - MarketWatch AI</title>
+  <meta name="description" content="AIシグナルには「環境の警戒スコア（A〜D）」が一緒に届きます。スコア別に4868回の成績を分けて調べました。通常（A）43.1%・注意（B）41.1%・警戒（C）46.0%・危険（D）44.4%。定点観察 第114回。">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="keywords" content="AIシグナル,環境スコア,警戒スコア,勝率,定点観察,研究日誌,投資">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-114.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】">
+  <meta property="og:description" content="AIシグナルの「環境の警戒スコア（A〜D）」別に4868回の成績を分けました。通常（A）43.1%・注意（B）41.1%・警戒（C）46.0%・危険（D）44.4%。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-114.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】",
+    "description": "AIシグナルの「環境の警戒スコア（A〜D）」別に4868回の成績を分けました。通常（A）43.1%・注意（B）41.1%・警戒（C）46.0%・危険（D）44.4%。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-30",
+    "dateModified": "2026-09-30",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-114.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-note{font-size:.78rem;color:#6e7781;margin-top:6px;text-align:center;font-style:italic}
+    /* s-* クラス（シグナル研究日誌共通） */
+    .s-label{font-size:.78rem;background:#e8f4fd;color:#0969da;border:1px solid #b8d4ea;border-radius:4px;padding:2px 7px;font-weight:600;display:inline-block;margin-bottom:4px}
+    .s-result-pass{background:#e6ffed;border:1.5px solid #1a7f37;border-radius:8px;padding:14px 18px;margin:16px 0;font-size:.95rem;color:#1a7f37;font-weight:600}
+    .s-result-fail{background:#ffebe9;border:1.5px solid #cf222e;border-radius:8px;padding:14px 18px;margin:16px 0;font-size:.95rem;color:#cf222e;font-weight:600}
+    .s-result-gray{background:#f6f8fa;border:1.5px solid #57606a;border-radius:8px;padding:14px 18px;margin:16px 0;font-size:.95rem;color:#57606a;font-weight:600}
+    .tracker-wrap{overflow-x:auto;margin:18px 0}
+    .tracker-wrap table{min-width:540px;font-size:.88rem}
+    .tracker-wrap th,.tracker-wrap td{padding:9px 12px}
+    @media(max-width:600px){.article{padding:22px 16px}.nav-bar{gap:7px}.nav-btn{min-width:140px;font-size:.88rem;padding:9px 14px}h1{font-size:1.4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">MarketWatch AI — AIシグナル研究日誌</div>
+    <div class="header-meta">投資シグナルを毎日1本、データで確かめる研究記録</div>
+  </div>
+</header>
+
+<main>
+  <!-- ナビバー（10ボタン） -->
+  <nav class="nav-bar" aria-label="サイトナビゲーション">
+    <a href="index.html" class="nav-btn">🏠 ホーム</a>
+    <a href="political-feed.html" class="nav-btn">🚨 政治発言</a>
+    <a href="track-record.html" class="nav-btn current">🧪 シグナル研究</a>
+    <a href="calendar.html" class="nav-btn">📅 カレンダー</a>
+    <a href="guides.html" class="nav-btn">📚 解説記事</a>
+    <a href="guide-investment-books.html" class="nav-btn">📖 投資本</a>
+    <a href="market-health.html" class="nav-btn">🩺 市場健康度</a>
+    <a href="hot-assets.html" class="nav-btn">🔥 出来高急増</a>
+    <a href="charts.html" class="nav-btn">📈 チャート</a>
+    <a href="youtube-summary.html" class="nav-btn">📺 YouTube</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="guides.html">解説記事一覧</a> &rsaquo; AIシグナル研究日誌 &rsaquo; #114
+  </div>
+
+  <article class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #114</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年9月（下書き中） &nbsp;|&nbsp; 読了：約8分
+    </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI（売られすぎ・買われすぎを数値で示す指標）過売り反発・ボリンジャーバンド（値動きの幅から引いた帯）タッチ・高値ブレイク等）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの視点からデータを確かめる研究日誌の第114回です。今日は定点観察として「環境の警戒スコア（A〜D）」でシグナルの成績がどう変わるかを調べました。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      AIシグナルには、その日の「環境の警戒スコア（A〜D）」が一緒に届きます。スコア別に4868回の結果を分けて調べました。<br><br>
+      ・<strong>通常（A）の日</strong>：勝った割合 <strong>43.1%</strong>（3036回）<br>
+      ・<strong>注意（B）の日</strong>：勝った割合 <strong>41.1%</strong>（1347回）— 全体より少し低め<br>
+      ・<strong>警戒（C）の日</strong>：勝った割合 <strong>46.0%</strong>（415回）— 高く見えるが幅が広く、はっきりとは言えない<br>
+      ・<strong>危険（D）の日</strong>：勝った割合 <strong>44.4%</strong>（63回）— 件数が少なすぎて何も言えない<br><br>
+      今日は定点観察なので、合否の判定はしていません。
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#what-is-env">「環境の警戒スコア」とは何か</a></li>
+        <li><a href="#method">調べ方</a></li>
+        <li><a href="#result">結果：スコア別に見た成績</a></li>
+        <li><a href="#analysis">注目ポイント — 直感と少し違う結果</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="what-is-env">① 「環境の警戒スコア」とは何か</h2>
+
+    <p>このシグナルシステムは、売買のタイミングを示すだけでなく、「その日の環境がシグナルにとって良いかどうか」も一緒に計算しています。これが「環境の警戒スコア」です。</p>
+
+    <p>スコアはA〜Dの4段階で、次のような意味を持ちます。</p>
+
+    <table>
+      <tr><th>スコア</th><th>意味</th><th>典型的な状況</th></tr>
+      <tr><td>A（通常）</td><td>特別な警戒なし</td><td>落ち着いた相場・目立ったニュースなし</td></tr>
+      <tr><td>B（注意）</td><td>軽い警戒あり</td><td>一部の危機ニュース・VIX（恐怖指数）が少し上昇</td></tr>
+      <tr><td>C（警戒）</td><td>警戒が高い</td><td>複数の危機ニュース・VIX急騰・重要指標の発表日</td></tr>
+      <tr><td>D（危険）</td><td>強い警戒</td><td>相場が大きく荒れている・複数の危機が重なる</td></tr>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 VIX（恐怖指数）とは</strong><br>
+      米国株の「恐怖指数」とも呼ばれる指標です。市場の不安が大きいほど数字が高くなります。15以下は落ち着いた状態、25以上は不安が高まっている目安とされています。
+    </div>
+
+    <p>「警戒スコアが高い日はシグナルに入らないほうがいい」と考える方もいます。実際はどうなのか、過去のデータで確かめます。</p>
+
+    <!-- チャート風図解 -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="環境スコアが変わる場面の概念図">
+        <!-- 背景帯 -->
+        <rect x="0" y="0" width="640" height="260" fill="#ffffff"/>
+        <!-- 環境A帯（通常） -->
+        <rect x="30" y="20" width="180" height="200" fill="#e6ffed" opacity="0.7"/>
+        <text x="120" y="14" text-anchor="middle" fill="#1a7f37" font-size="11" font-family="sans-serif">通常（A）</text>
+        <!-- 環境B帯（注意） -->
+        <rect x="210" y="20" width="140" height="200" fill="#fff8c5" opacity="0.7"/>
+        <text x="280" y="14" text-anchor="middle" fill="#9a6700" font-size="11" font-family="sans-serif">注意（B）</text>
+        <!-- 環境C帯（警戒） -->
+        <rect x="350" y="20" width="140" height="200" fill="#fff3cd" opacity="0.8"/>
+        <text x="420" y="14" text-anchor="middle" fill="#cf222e" font-size="11" font-family="sans-serif">警戒（C）</text>
+        <!-- 環境A再び -->
+        <rect x="490" y="20" width="120" height="200" fill="#e6ffed" opacity="0.7"/>
+        <text x="550" y="14" text-anchor="middle" fill="#1a7f37" font-size="11" font-family="sans-serif">通常（A）</text>
+        <!-- 価格折れ線（概念） -->
+        <polyline points="30,150 80,140 120,155 160,130 210,145 250,170 280,180 320,160 350,175 390,140 420,120 450,145 490,160 520,150 560,140 610,155" fill="none" stroke="#2C4F8F" stroke-width="2.5"/>
+        <!-- VIXライン（概念） -->
+        <polyline points="30,200 80,195 120,198 160,193 210,190 250,182 280,178 320,185 350,182 390,168 420,155 450,168 490,180 520,185 560,190 610,195" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <!-- シグナル発火バー（通常A） -->
+        <rect x="78" y="30" width="8" height="180" fill="none" stroke="#f5a623" stroke-width="2.5" rx="2"/>
+        <text x="82" y="225" text-anchor="middle" fill="#f5a623" font-size="9" font-family="sans-serif">発火</text>
+        <rect x="155" y="30" width="8" height="180" fill="none" stroke="#f5a623" stroke-width="2.5" rx="2"/>
+        <text x="159" y="225" text-anchor="middle" fill="#f5a623" font-size="9" font-family="sans-serif">発火</text>
+        <!-- シグナル発火バー（注意B） -->
+        <rect x="248" y="30" width="8" height="180" fill="none" stroke="#f5a623" stroke-width="2" rx="2"/>
+        <text x="252" y="225" text-anchor="middle" fill="#9a6700" font-size="9" font-family="sans-serif">発火</text>
+        <!-- シグナル発火バー（警戒C） -->
+        <rect x="418" y="30" width="8" height="180" fill="none" stroke="#f5a623" stroke-width="2" rx="2"/>
+        <text x="422" y="225" text-anchor="middle" fill="#cf222e" font-size="9" font-family="sans-serif">発火</text>
+        <!-- ラベル（VIX） -->
+        <text x="600" y="175" fill="#e74c3c" font-size="9" font-family="sans-serif">VIX</text>
+        <text x="600" y="155" fill="#2C4F8F" font-size="9" font-family="sans-serif">価格</text>
+        <!-- 軸 -->
+        <line x1="30" y1="220" x2="620" y2="220" stroke="#d0d7de" stroke-width="1"/>
+        <text x="325" y="242" text-anchor="middle" fill="#57606a" font-size="10" font-family="sans-serif">時間（概念）</text>
+      </svg>
+      <p class="chart-note">※ 概念を示すイメージ図です（実際の値動きではありません）。VIX（赤点線）が上がると警戒スコアが上がる場面を表しています。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="method">② 調べ方</h2>
+
+    <p>使ったデータはシグナルの発火と結果の記録です。次のルールで集計しました。</p>
+    <ul>
+      <li><strong>使う件数</strong>：結果が出たもの（利益確定・損切り）のみ。未決済・有効期限切れは除く</li>
+      <li><strong>勝ちの定義</strong>：利益確定（第1目標か第2目標）に達したもの</li>
+      <li><strong>負けの定義</strong>：損切りに達したもの</li>
+      <li><strong>有効件数</strong>：4868回（今日の集計時点）</li>
+      <li><strong>偶然のぶれの幅</strong>：95%の幅で計算</li>
+    </ul>
+
+    <div class="warning-box">
+      これは「過去の自システムデータ内での集計」です。将来の相場への適用可能性を保証するものではありません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result">③ 結果：スコア別に見た成績</h2>
+
+    <table>
+      <tr>
+        <th>警戒スコア</th>
+        <th>回数</th>
+        <th>勝った回数</th>
+        <th>勝った割合</th>
+        <th>偶然のぶれの幅（信頼区間）</th>
+        <th>1回の平均損益（損切り幅を1としたとき）</th>
+      </tr>
+      <tr>
+        <td>A（通常）</td>
+        <td>3036回</td>
+        <td>1309回</td>
+        <td><strong>43.1%</strong></td>
+        <td>41.4%〜44.9%</td>
+        <td>+0.293倍</td>
+      </tr>
+      <tr>
+        <td>B（注意）</td>
+        <td>1347回</td>
+        <td>554回</td>
+        <td><strong>41.1%</strong></td>
+        <td>38.5%〜43.8%</td>
+        <td>+0.234倍</td>
+      </tr>
+      <tr>
+        <td>C（警戒）</td>
+        <td>415回</td>
+        <td>191回</td>
+        <td><strong>46.0%</strong></td>
+        <td>41.3%〜50.8%</td>
+        <td>+0.381倍</td>
+      </tr>
+      <tr>
+        <td>D（危険）</td>
+        <td>63回</td>
+        <td>28回</td>
+        <td><strong>44.4%</strong></td>
+        <td>32.8%〜56.7%</td>
+        <td>+0.333倍</td>
+      </tr>
+      <tr style="background:#f6f8fa;font-weight:600">
+        <td>全体</td>
+        <td>4868回</td>
+        <td>2085回</td>
+        <td><strong>42.8%</strong></td>
+        <td>41.4%〜44.2%</td>
+        <td>+0.285倍</td>
+      </tr>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 「1回の平均損益」とは</strong><br>
+      損切りになったときの損失を「1」として、1回あたりの平均の損益を表した数字です。たとえば「+0.293倍」とは、損切り幅の0.293倍のもうけが平均で出たことを意味します。利益確定は第1目標（損切り幅の1.33倍相当）か第2目標（損切り幅の2.0倍相当）に届いた場合に計算しています。損切りのときは損切り幅の1.0倍の損失です。
+    </div>
+
+    <!-- SVG棒グラフ -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="環境スコア別の勝率棒グラフ">
+        <rect x="0" y="0" width="500" height="260" fill="#ffffff"/>
+        <!-- グリッド線 -->
+        <line x1="70" y1="200" x2="480" y2="200" stroke="#d0d7de" stroke-width="1"/>
+        <line x1="70" y1="170" x2="480" y2="170" stroke="#e8eef4" stroke-width="1"/>
+        <line x1="70" y1="140" x2="480" y2="140" stroke="#e8eef4" stroke-width="1"/>
+        <line x1="70" y1="110" x2="480" y2="110" stroke="#e8eef4" stroke-width="1"/>
+        <line x1="70" y1="80" x2="480" y2="80" stroke="#e8eef4" stroke-width="1"/>
+        <!-- Y軸ラベル -->
+        <text x="60" y="203" text-anchor="end" fill="#57606a" font-size="10" font-family="sans-serif">35%</text>
+        <text x="60" y="173" text-anchor="end" fill="#57606a" font-size="10" font-family="sans-serif">40%</text>
+        <text x="60" y="143" text-anchor="end" fill="#57606a" font-size="10" font-family="sans-serif">45%</text>
+        <text x="60" y="113" text-anchor="end" fill="#57606a" font-size="10" font-family="sans-serif">50%</text>
+        <text x="60" y="83" text-anchor="end" fill="#57606a" font-size="10" font-family="sans-serif">55%</text>
+        <!-- ベースライン（43%） -->
+        <line x1="70" y1="164" x2="480" y2="164" stroke="#0969da" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="485" y="167" fill="#0969da" font-size="9" font-family="sans-serif">43%</text>
+        <!-- 棒グラフ（各envの勝率） -->
+        <!-- A: 43.1% → y = 200 - (43.1-35)/1 = 200 - 48.6 = 151.4... scale: (val-35)/(55-35)*120 -->
+        <!-- スケール: 35〜55% が y=200〜y=80。1%あたり6px -->
+        <!-- A: 43.1% → height = (43.1-35)*6=48.6 → bar from 151.4 to 200 -->
+        <rect x="95" y="151" width="50" height="49" fill="#1a7f37" opacity="0.8" rx="3"/>
+        <text x="120" y="147" text-anchor="middle" fill="#1a7f37" font-size="11" font-weight="bold" font-family="sans-serif">43.1%</text>
+        <!-- B: 41.1% → y = 200 - (41.1-35)*6 = 200-36.6 = 163.4 -->
+        <rect x="185" y="163" width="50" height="37" fill="#9a6700" opacity="0.8" rx="3"/>
+        <text x="210" y="159" text-anchor="middle" fill="#9a6700" font-size="11" font-weight="bold" font-family="sans-serif">41.1%</text>
+        <!-- C: 46.0% → y = 200 - (46.0-35)*6 = 200-66 = 134 -->
+        <rect x="275" y="134" width="50" height="66" fill="#e67e22" opacity="0.8" rx="3"/>
+        <text x="300" y="130" text-anchor="middle" fill="#e67e22" font-size="11" font-weight="bold" font-family="sans-serif">46.0%</text>
+        <!-- D: 44.4% → y = 200 - (44.4-35)*6 = 200-56.4 = 143.6 -->
+        <rect x="365" y="144" width="50" height="56" fill="#cf222e" opacity="0.7" rx="3"/>
+        <text x="390" y="140" text-anchor="middle" fill="#cf222e" font-size="11" font-weight="bold" font-family="sans-serif">44.4%</text>
+        <!-- エラーバー（CI） -->
+        <!-- A: CI=[41.4%〜44.9%] → y_lo=200-(41.4-35)*6=200-38.4=161.6 y_hi=200-(44.9-35)*6=200-59.4=140.6 -->
+        <line x1="120" y1="142" x2="120" y2="162" stroke="#1a7f37" stroke-width="2"/>
+        <line x1="114" y1="142" x2="126" y2="142" stroke="#1a7f37" stroke-width="2"/>
+        <line x1="114" y1="162" x2="126" y2="162" stroke="#1a7f37" stroke-width="2"/>
+        <!-- B: CI=[38.5%〜43.8%] → y_lo=200-(38.5-35)*6=200-21=179 y_hi=200-(43.8-35)*6=200-52.8=147.2 -->
+        <line x1="210" y1="147" x2="210" y2="179" stroke="#9a6700" stroke-width="2"/>
+        <line x1="204" y1="147" x2="216" y2="147" stroke="#9a6700" stroke-width="2"/>
+        <line x1="204" y1="179" x2="216" y2="179" stroke="#9a6700" stroke-width="2"/>
+        <!-- C: CI=[41.3%〜50.8%] → y_lo=200-(41.3-35)*6=200-37.8=162.2 y_hi=200-(50.8-35)*6=200-94.8=105.2 -->
+        <line x1="300" y1="105" x2="300" y2="162" stroke="#e67e22" stroke-width="2"/>
+        <line x1="294" y1="105" x2="306" y2="105" stroke="#e67e22" stroke-width="2"/>
+        <line x1="294" y1="162" x2="306" y2="162" stroke="#e67e22" stroke-width="2"/>
+        <!-- D: CI=[32.8%〜56.7%] → y_lo=200-(32.8-35)*6= 200+13.2=213 → クリップ200 / y_hi=200-(56.7-35)*6=200-130.2=69.8 -->
+        <line x1="390" y1="70" x2="390" y2="200" stroke="#cf222e" stroke-width="2"/>
+        <line x1="384" y1="70" x2="396" y2="70" stroke="#cf222e" stroke-width="2"/>
+        <!-- X軸ラベル -->
+        <text x="120" y="218" text-anchor="middle" fill="#1a7f37" font-size="12" font-weight="bold" font-family="sans-serif">A</text>
+        <text x="120" y="230" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">通常</text>
+        <text x="120" y="240" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">3036回</text>
+        <text x="210" y="218" text-anchor="middle" fill="#9a6700" font-size="12" font-weight="bold" font-family="sans-serif">B</text>
+        <text x="210" y="230" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">注意</text>
+        <text x="210" y="240" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">1347回</text>
+        <text x="300" y="218" text-anchor="middle" fill="#e67e22" font-size="12" font-weight="bold" font-family="sans-serif">C</text>
+        <text x="300" y="230" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">警戒</text>
+        <text x="300" y="240" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">415回</text>
+        <text x="390" y="218" text-anchor="middle" fill="#cf222e" font-size="12" font-weight="bold" font-family="sans-serif">D</text>
+        <text x="390" y="230" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">危険</text>
+        <text x="390" y="240" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">63回</text>
+        <!-- 凡例 -->
+        <rect x="75" y="250" width="12" height="8" fill="#0969da" opacity="0.6"/>
+        <text x="91" y="258" fill="#0969da" font-size="9" font-family="sans-serif">-----  勝ち負けがとんとんになる勝率（43%）</text>
+        <text x="91" y="258" fill="#0969da" font-size="9" font-family="sans-serif">     </text>
+        <!-- 縦線（区切り） -->
+        <line x1="70" y1="80" x2="70" y2="200" stroke="#d0d7de" stroke-width="1"/>
+        <text x="275" y="258" text-anchor="middle" fill="#57606a" font-size="9" font-family="sans-serif">縦線はぶれの幅（信頼区間）</text>
+      </svg>
+      <p class="chart-note">※ 縦線はぶれの幅（95%信頼区間）を示します。点線（43%）は勝ち負けがとんとんになる勝率です。※ 概念を示すイメージ図です（実際の値動きではありません）</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="analysis">④ 注目ポイント — 直感と少し違う結果</h2>
+
+    <p>「警戒スコアが上がるほど成績が悪くなる」という直感とは、少し違う結果が出ました。注目できる点を整理します。</p>
+
+    <h3>1. 注意（B）の日は全体より少し低い傾向</h3>
+    <p>注意（B）の日の勝った割合は <strong>41.1%</strong> で、偶然のぶれを考えた幅は <strong>38.5%〜43.8%</strong> です。この幅の上の端（43.8%）が全体の平均（42.8%）に近い水準です。注意（B）の日は通常（A）より少し下回る傾向が出ていると言えそうです。</p>
+
+    <h3>2. 警戒（C）の日は高く見えるが、幅が広い</h3>
+    <p>警戒（C）の日は <strong>46.0%</strong> と最も高い数字ですが、件数が415回と少ないため、偶然のぶれを考えた幅は <strong>41.3%〜50.8%</strong> と広くなっています。この幅の中にはベースライン（42.8%）も含まれているため、「本当に通常よりも高いのか」は現時点では断定できません。</p>
+
+    <div class="warning-box">
+      警戒（C）の日には「VIXが急騰した日」「複数の危機ニュースがあった日」が多く含まれています。こうした日には「いったん下がってから反発」するシグナルが多く発火する可能性があり、それが勝率を押し上げている可能性もあります。件数が増えれば、もう少しはっきりした答えが出ます。
+    </div>
+
+    <h3>3. 危険（D）の日は63回しかなく何も言えない</h3>
+    <p>危険（D）の日はわずか63回しかありません。偶然のぶれを考えた幅は <strong>32.8%〜56.7%</strong> と非常に広く、「勝ちやすいか負けやすいか」はまったくわかりません。このシステムの規律では「環境スコアD＝入らない」というルールがあります（参考：<a href="guide-signal-anatomy.html">発火条件図解カタログ</a>）。件数が少ないのはそのルールが守られているためと考えられます。</p>
+
+    <div class="s-result-gray">
+      今回は定点観察です。合否の判定はありません。注意（B）の日に少し下がる傾向がある一方、警戒（C）の日は「高い」とも「普通」とも言えず、データが増えるのを待っています。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+    <p>下の表は「この場面のシグナルは勝ちやすいか」などの仮説を、登録日から先の結果だけで確かめた前向き追跡表です（2026-09-30 時点）。</p>
+
+    <div class="tracker-wrap">
+<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+<p class="meta-line">基準日 2026-09-30／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+<div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.03~+0.08]</span><br><small style="opacity:.8;white-space:nowrap">1631/3714・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしのシグナル（買いも売りも）<br><small style="opacity:.7">blocked=False</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.03~+0.09]</span><br><small style="opacity:.8;white-space:nowrap">1303/2960・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしの買い<br><small style="opacity:.7">blocked=False×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.04~+0.11]</span><br><small style="opacity:.8;white-space:nowrap">1035/2336・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般（4時間足のみ）<br><small style="opacity:.7">tf=4h×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.08~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">460/1051・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>選別ランク「普通」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=neutral</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.04</span><br><span style="white-space:nowrap">CI[-0.04~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">436/977・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数のシグナル（買いも売りも）<br><small style="opacity:.7">group=index</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[-0.09~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">418/972・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.18</span><br><span style="white-space:nowrap">CI[+0.01~+0.35]</span><br><small style="opacity:.8;white-space:nowrap">194/384・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>上昇トレンド中の逆張り買い<br><small style="opacity:.7">trend=上昇×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.08~+0.22]</span><br><small style="opacity:.8;white-space:nowrap">153/333・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>値段が2本の移動平均線より下で出た「MACDのゴールデンクロス」<br><small style="opacity:.7">ステート MACDゴールデン×両MA下（底値圏転換）</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.09</span><br><span style="white-space:nowrap">CI[-0.12~+0.30]</span><br><small style="opacity:.8;white-space:nowrap">73/156・勝率47%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>逆張り買い全般（日足のみ）<br><small style="opacity:.7">tf=1d×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.31</span><br><span style="white-space:nowrap">CI[-0.25~+0.87]</span><br><small style="opacity:.8;white-space:nowrap">14/25・勝率56%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般（日足のみ）<br><small style="opacity:.7">ロング全般(日足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.23~+0.28]</span><br><small style="opacity:.8;white-space:nowrap">54/123・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.04~+0.11]</span><br><small style="opacity:.8;white-space:nowrap">1243/2804・勝率44%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中のシグナル（買いも売りも）<br><small style="opacity:.7">trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.11</span><br><span style="white-space:nowrap">CI[+0.04~+0.18]</span><br><small style="opacity:.8;white-space:nowrap">526/1103・勝率48%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>逆張り買い全般<br><small style="opacity:.7">reversalL（逆張り買い）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.10</span><br><span style="white-space:nowrap">CI[+0.00~+0.19]</span><br><small style="opacity:.8;white-space:nowrap">477/1013・勝率47%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中の買い<br><small style="opacity:.7">trend=下降×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.12</span><br><span style="white-space:nowrap">CI[+0.02~+0.22]</span><br><small style="opacity:.8;white-space:nowrap">411/855・勝率48%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>選別ランク「良」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=good</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.15</span><br><span style="white-space:nowrap">CI[+0.03~+0.27]</span><br><small style="opacity:.8;white-space:nowrap">357/726・勝率49%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>もみあい中の売り<br><small style="opacity:.7">trend=中立・もみあい×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.08</span><br><span style="white-space:nowrap">CI[-0.23~+0.07]</span><br><small style="opacity:.8;white-space:nowrap">123/312・勝率39%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+</table>
+    </div>
+
+    <!-- 関連カード -->
+    <h2>関連記事</h2>
+    <div class="related-grid">
+      <a href="guide-signal-anatomy.html" class="related-card">
+        <div class="related-card-title">📈 発火条件の図解カタログ</div>
+        <div class="related-card-desc">RSI売られすぎ・ボリンジャーバンドタッチ・高値ブレイクなど、シグナルがチャートのどの場面で出るかを図解で解説。</div>
+      </a>
+      <a href="guide-signal-lab-113.html" class="related-card">
+        <div class="related-card-title">🧪 前回（#113）— RSI版とBB版の比較</div>
+        <div class="related-card-desc">「売られすぎ」で買う2つの方法（RSI版・ボリンジャーバンド版）の成績を1456回で比較した定点観察。</div>
+      </a>
+      <a href="guide-signal-lab-109.html" class="related-card">
+        <div class="related-card-title">🧪 #109 — RSI売られすぎ逆張り買い</div>
+        <div class="related-card-desc">「RSI売られすぎからの反発」買いを過去と最近（登録日以降）に分けて比較。前向きCIが0を超えた回。</div>
+      </a>
+    </div>
+
+    <!-- series-nav:begin -->
+    <!-- series-nav:end -->
+
+    <!-- ② 本文末尾（kinsho-v1） -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">
+      本記事は情報提供を目的としており、投資助言・売買推奨ではありません。当サイトは金融商品取引業者・投資助言業者ではなく、投資助言・代理業の登録を行っていません。掲載されている情報は作成時点のものであり、正確性・完全性を保証するものではありません。投資に関する最終判断は、ご自身の責任において行ってください。過去の実績は将来の成果を保証するものではありません。
+    </p>
+
+  </article>
+</main>
+
+<footer>
+  <div>
+    <a href="index.html">ホーム</a> | <a href="guides.html">解説記事</a> | <a href="track-record.html">シグナル研究</a> | <a href="about.html">About</a> | <a href="privacy.html">プライバシーポリシー</a>
+  </div>
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
+  <div style="margin-top:8px">© 2024–2026 MarketWatch AI</div>
+</footer>
+
+</body>
+</html>
