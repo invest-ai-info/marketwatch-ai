@@ -1,14 +1,15 @@
 {
-  "generated_at": "2026-09-29T06:08:10+09:00",
+  "generated_at": "2026-09-29T15:08:23+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
     "confidence": "HIGH",
-    "rationale": "イランとホルムズ海峡をめぐる地政学リスクが原油を1バレル100ドル超に押し上げ、インフレ再燃懸念から米国債10年金利が5.2%台（2007年以来最高水準）に上昇。FRBの10月追加利上げ確率が70%超に高まり、株式・金が下落。ドルが全面高となりリスク資産全般に逆風。",
+    "rationale": "トランプ大統領がイランのホルムズ海峡再開提案を拒否し、原油がブレント $108超に急騰。米10年国債利回りが5.2%付近（2007年来の高水準）まで上昇し、FOMCの10月利上げ観測が約70%に高まった。世界株が1週間ぶりの安値圏に沈み、金も急落（-約4%）するなど、インフレ再燃懸念と地政学リスクが重なるリスクオフ環境。",
     "key_drivers": [
-      "イランがホルムズ海峡の緊張緩和提案を拒否、トランプ政権も交渉に応じず原油高継続",
-      "米国債10年利回りが5.24〜5.27%まで上昇し株式・金に売り圧力",
-      "FRBが9月16日に政策金利を3.75〜4.00%へ引き上げ後、10月の追加利上げ確率70%超",
-      "日銀は9月18日会合で金利据え置き、日米金利差拡大でドル円上昇・日本株の重し"
+      "トランプ大統領がイランのホルムズ海峡停戦案を拒否→原油ブレント $108超に急騰",
+      "米10年国債利回りが5.2%付近へ上昇（2007年以来の高水準）",
+      "FOMCの10月28日会合での25bp利上げ観測が約70%（CME FedWatch）に上昇",
+      "原油高によるインフレ再燃懸念がFedの金融引き締め長期化観測を強化",
+      "半導体株（SOX）大幅安・ARM株急落がリスク資産全体に売り波及"
     ]
   },
   "assets": [
@@ -16,37 +17,38 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "9月28日の東京市場は寄り付き後に67,035円まで上昇したが、半導体・AI関連に利食いが広がり65,878円（前日比−486円、−0.73%）で引け。日銀の次の政策決定への不透明感が大型株の上値を抑えており、原油高・高金利の外部環境も逆風。",
+      "conviction": "HIGH",
+      "rationale": "配当権利落ち（約385円の下押し要因）に加え、米国株安・SOX急落・ARM株急落によるソフトバンクG下落が重なり午後時点で930円超安の64,950円付近。65,000円の心理的節目を割り込んだ。",
       "catalysts": [
-        "日銀の次回政策決定への不透明感が機関投資家の大きなポジション変更を阻む",
-        "原油高によるエネルギーコスト上昇が製造業・航空株の重し",
-        "9月29日の配当再投資に絡む先物買い（試算1.6兆円）が下支え要因"
+        "9月配当権利落ち日（約385円の機械的な指数押し下げ）",
+        "SOX（フィラデルフィア半導体株指数）大幅安でアドバンテスト・イビデン下落",
+        "ARM株急落→ソフトバンクG（日経ウェート大）下落",
+        "米国とイランの停戦期待後退で米国株が反落"
       ],
       "top_news": [
         {
-          "headline": "日経平均は一時67,000円超えも利食いで失速、65,878円で引け（前日比−486円）",
-          "published": "2026-09-28",
-          "comment": "半導体高も続かず、高金利・原油高の外部環境が上値を抑えた",
-          "source": "News On Japan",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["zaikei.co.jp"],
+          "headline": "日経平均は930円超安の64,950円付近、配当権利落ちと米株安が重なり65,000円割れ",
+          "published": "2026-09-29",
+          "comment": "配当落ちの機械的な押し下げに加え米国株安が重なり、心理的節目割れとなった",
+          "source": "kabushiki.jp / nikkei.com",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["日本経済新聞", "株式新聞Web"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://newsonjapan.com/article/150884.php"
+          "url": "https://kabushiki.jp/news/768982"
         },
         {
-          "headline": "配当再投資に絡む先物買いが1.6兆円規模、9月末決算のクッション",
+          "headline": "SOX大幅下落・ARM株急落でソフトバンクGの売りが目立つ、日経の下押し材料に",
           "published": "2026-09-28",
-          "comment": "株価下落に対する短期的な下支え材料だが、根本的な反転材料ではない",
-          "source": "News On Japan",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://newsonjapan.com/article/150872.php"
+          "comment": "半導体セクターの下落が日本の半導体関連・日経の主要銘柄に連鎖した",
+          "source": "nikkei.com",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["日本経済新聞"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.nikkei.com/article/DGXZQOFL291JM0Z20C26A9000000/"
         }
       ]
     },
@@ -54,37 +56,37 @@
       "name": "S&P500",
       "ticker": "ES=F",
       "bias": "BEARISH",
-      "conviction": "HIGH",
-      "rationale": "S&P500は約0.8%下落し7,683〜7,744近辺で推移。9月の月間上昇分をほぼ吐き出した。原油高→インフレ再燃→FRB追加利上げ観測という悪循環が株式に売り圧力をかけている。10年国債利回りが5.24%と2007年以来最高水準に達しバリュエーション圧縮懸念。",
+      "conviction": "MID",
+      "rationale": "トランプ大統領のイラン停戦案拒否で原油急騰・長期金利上昇が重なり、S&P500は7,700付近（前日比約-0.5%）で推移。利上げ観測が高まる中でバリュエーションへの圧力が続いている。",
       "catalysts": [
-        "FRBの10月追加利上げ確率が70%超に上昇",
-        "10年国債利回りが5.24〜5.27%、2007年来の最高水準",
-        "原油高でエネルギー関連以外の企業コスト上昇懸念"
+        "トランプ大統領がイランのホルムズ海峡提案を拒否→リスクオフ加速",
+        "米10年国債利回りが5.2%付近に上昇し株式のバリュエーション割高感を強める",
+        "FOMCの10月利上げ観測（70%）が株式の重荷に"
       ],
       "top_news": [
         {
-          "headline": "S&P500が約0.8%下落、月間上昇分をほぼ消化—米国債利回り5.2%台が重し",
+          "headline": "S&P500が7,700付近に下落、トランプ大統領がイランの停戦提案を拒否し原油と金利が上昇",
           "published": "2026-09-28",
-          "comment": "利回り急騰で割高感が増し、株式の下落圧力が強まっている",
-          "source": "Bloomberg",
+          "comment": "地政学リスクの高まりと金利上昇が株式市場を圧迫している",
+          "source": "TheStreet / BabyPips",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["CNBC", "Schwab"],
+          "corroborated_by": ["TheStreet", "BabyPips", "Vanderbilt Report"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-27/stock-market-today-dow-s-p-live-updates"
+          "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-28-2026"
         },
         {
-          "headline": "イラン・ホルムズ海峡緊張でトランプ政権が交渉拒否、インフレ懸念が再燃",
+          "headline": "米10年国債利回りが5.2%付近に上昇、2007年以来の高水準",
           "published": "2026-09-28",
-          "comment": "原油高がインフレを再加速させFRBの利上げ長期化を市場が織り込み始めた",
-          "source": "Fortune",
+          "comment": "長期金利の急上昇は株式の相対的な魅力を低下させ、バリュエーション圧力となる",
+          "source": "BabyPips",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Al Jazeera", "Reuters"],
+          "corroborated_by": ["BabyPips", "FinanceFeeds"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://fortune.com/2026/08/11/u-s-stocks-fall-after-iran-says-strait-of-hormuz-will-remain-shut/"
+          "url": "https://www.babypips.com/news/financial-forex-market-recap-2026-09-28"
         }
       ]
     },
@@ -92,37 +94,25 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "HIGH",
-      "rationale": "ナスダック総合指数は約0.9%下落し26,820近辺。高金利環境がグロース株のバリュエーション圧縮に直撃。テック・AI関連銘柄の利食いが加速しており、ナスダック100も約1%下落。ただし米中首脳会談でトランプ・習合意が報じられ半導体輸出規制への若干の期待感も。",
+      "conviction": "MID",
+      "rationale": "SOX（半導体株指数）が大幅下落、ARM株急落がテック株全体に売りを波及。ナスダック100先物は0.4%下落で推移。金利上昇がグロース株のバリュエーションを圧迫。",
       "catalysts": [
-        "高金利長期化でグロース株のDCFバリュエーションが圧縮",
-        "日経で確認された半導体・AIセクターの利食い圧力が米国にも波及",
-        "米中首脳会談（トランプ・習会談）での合意が半導体関連にやや好材料"
+        "SOX大幅安（ARM株急落が半導体セクター全体に波及）",
+        "米10年金利5.2%付近→グロース株のDCF評価を下押し",
+        "AI関連株は先週まで堅調だったが、油・金利上昇で一服感"
       ],
       "top_news": [
         {
-          "headline": "ナスダック100が約1%下落、AI・半導体関連銘柄に利食い広がる",
+          "headline": "ナスダックが3日ぶりに反落、SOX大幅安・ARM株急落がテック株全体を圧迫",
           "published": "2026-09-28",
-          "comment": "高金利が続く環境では成長株の割高感が増し、売りが出やすい状況",
-          "source": "CNBC",
+          "comment": "半導体の要となるARM急落がテック全体への売りを誘発した",
+          "source": "kabushiki.jp / TheStreet",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg"],
+          "corroborated_by": ["日本経済新聞", "TheStreet"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/09/27/stock-market-today-live-updates.html"
-        },
-        {
-          "headline": "米中首脳会談でトランプ・習が合意、テック関連輸出規制に若干の緩和期待",
-          "published": "2026-09-28",
-          "comment": "規制緩和への期待が一定の下値支持になるが、確定材料ではない",
-          "source": "TechTimes",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.techtimes.com/articles/328143/20260928/iran-oil-shock-warsh-hike-trump-xi-truce-reshape-tech-investing-after-summit.htm"
+          "url": "https://kabushiki.jp/news/768921"
         }
       ]
     },
@@ -130,25 +120,25 @@
       "name": "金",
       "ticker": "GC=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "金スポット価格は3%下落し4,148〜4,156ドル/オンス（8月5日以来の安値）。通常、地政学リスクは金に追い風だが、今回は原油高→インフレ→FRB利上げ→ドル高・利回り上昇という連鎖が無利子資産の金に逆風。ただし中央銀行の買い需要が下値を一定程度支える可能性。",
+      "conviction": "HIGH",
+      "rationale": "実質金利の上昇と米ドル高が金の重荷となり、スポット金価格は約4%急落して$4,110〜$4,150付近（8月5日以来約7週間ぶり安値）。原油急騰によるインフレ再燃懸念がFedの引き締め長期化観測を高め、金利上昇が金の機会コストを押し上げた。",
       "catalysts": [
-        "米国債10年利回りが5.24%まで上昇し金の機会費用が拡大",
-        "ドル全面高が金の相対的な割高感を演出",
-        "中央銀行の継続的な金購入が長期の下値を支持"
+        "原油急騰→FedのHFL（高金利長期化）観測強化→実質金利上昇→金に下押し圧力",
+        "米ドル指数が上昇（101.19）し、ドル建て金の割高感を強める",
+        "安全資産需要がリスクオフにもかかわらず長期金利上昇で相殺"
       ],
       "top_news": [
         {
-          "headline": "金スポット3%急落し4,156ドル—原油高がFRB利上げ観測を再燃させ安値を更新",
+          "headline": "金スポットが約4%急落し$4,115付近、8月5日以来7週間ぶりの安値に",
           "published": "2026-09-28",
-          "comment": "地政学リスクよりも利上げ懸念が勝り、金が7週ぶり安値に沈んだ",
-          "source": "Yahoo Finance",
+          "comment": "原油高によるインフレ再燃→金利上昇が金の保有コストを高め急落につながった",
+          "source": "TradingEconomics / EquityClock",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["USAGOLD", "FX Leaders"],
+          "corroborated_by": ["Trading Economics", "EquityClock", "CapitalStreetFX"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-monday-september-28-2026-gold-prices-slump-as-iran-tensions-and-oil-prices-rise-110730952.html"
+          "url": "https://equityclock.com/2026/09/28/stock-market-outlook-for-september-29-2026/"
         }
       ]
     },
@@ -157,36 +147,36 @@
       "ticker": "CL=F",
       "bias": "BULLISH",
       "conviction": "HIGH",
-      "rationale": "ブレント原油は106ドル台（+1.5〜2.1%）、WTIも100ドルを突破。トランプ大統領がイランのホルムズ海峡緊張緩和提案を拒否し、フーシ派のサウジインフラ攻撃が重なり供給懸念が強まった。地政学プレミアムが根強く、当面は高止まりのシナリオが優勢。",
+      "rationale": "トランプ大統領がイランのホルムズ海峡再開提案を拒否したことでブレント原油が$108超に急騰。WTIも$93〜$100台で推移し月間+8.6%・前年比+46.8%の大幅上昇。中東情勢の不透明感から需給ひっ迫懸念が続いている。",
       "catalysts": [
-        "トランプ大統領がイランのホルムズ海峡開放提案を拒否",
-        "フーシ派によるサウジアラビアのエネルギーインフラへの攻撃が継続",
-        "ホルムズ海峡を通じる原油は世界海上貿易の約20〜25%を占める"
+        "トランプ大統領がイランのホルムズ海峡提案を拒否→ホルムズ海峡封鎖リスク継続",
+        "サウジアラビアが主要パイプライン修復後の供給を日量350万バレルに回復済みも需給緩和は限定的",
+        "中東地政学リスクプレミアムが高止まり"
       ],
       "top_news": [
         {
-          "headline": "トランプ大統領がイランの海峡緊張緩和提案を拒否、ブレントが106ドル台に上昇",
+          "headline": "トランプ大統領がイランのホルムズ海峡再開提案を拒否、ブレント原油が$108超に急騰",
           "published": "2026-09-28",
-          "comment": "産油量の2割近くが通過する要衝の緊張が続き、原油の高値が長引く可能性",
-          "source": "Babypips",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["Al Jazeera", "Yahoo Finance"],
+          "comment": "海峡封鎖リスクが続く限り原油の地政学プレミアムが高い水準を維持しやすい",
+          "source": "StartupFortune / Yahoo Finance",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Yahoo Finance", "StartupFortune", "TheStreet"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.babypips.com/news/financial-forex-market-recap-2026-09-28"
+          "url": "https://startupfortune.com/trump-rejected-irans-hormuz-plan-and-oil-jumped-past-108-a-barrel/"
         },
         {
-          "headline": "フーシ派がサウジアラビアのエネルギーインフラを攻撃、供給不安が高まる",
+          "headline": "原油WTIは前年比約47%高の水準、サウジのパイプライン修復後も中東リスクで高止まり",
           "published": "2026-09-28",
-          "comment": "産油国への物理的攻撃は原油の供給リスクプレミアムをさらに高める材料",
-          "source": "NordFX",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "comment": "供給は一部回復したが、ホルムズ海峡リスクが払拭されない限り高値が続きやすい",
+          "source": "TradingEconomics",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Trading Economics"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://nordfx.com/market-news/market-pulse-september-28-2026"
+          "url": "https://tradingeconomics.com/commodity/crude-oil"
         }
       ]
     },
@@ -194,37 +184,25 @@
       "name": "ドル円",
       "ticker": "USDJPY",
       "bias": "BULLISH",
-      "conviction": "HIGH",
-      "rationale": "ドル円は157.30〜157.86のレンジで推移し上昇傾向。FRBが9月16日に3.75〜4.00%へ利上げした一方、日銀は9月18日会合で金利据え置きを決定。日米金利差が拡大しドル高・円安が加速。原油高・高インフレ環境がドル優位を後押しするも、介入警戒水準に近づきつつある。",
+      "conviction": "MID",
+      "rationale": "米10年国債利回りの5.2%付近への上昇とFedの利上げ観測強化でドル需要が高まり、ドル円は157円50銭付近で円安推移。三村財務官の口先介入で一時的に円高に振れる場面も見られたが効果は限定的。",
       "catalysts": [
-        "FRBが3.75〜4.00%に利上げ後も10月の追加利上げ観測が強まる",
-        "日銀が9月18日会合で金利据え置きを決定、日米金利差は拡大傾向",
-        "日本当局の為替介入への警戒感が上値を抑える可能性"
+        "米10年金利5.2%付近→日米金利差拡大が続き円安圧力",
+        "FOMCの10月利上げ観測（70%）がドル買いを下支え",
+        "三村財務官が口先介入も市場の円安傾向を反転させるには至らず"
       ],
       "top_news": [
         {
-          "headline": "ドル円が157円台後半に上昇—日米金利差拡大と原油高によるドル全面高",
-          "published": "2026-09-28",
-          "comment": "日銀が動かない限り円安トレンドは続くが、介入リスクも高まっている",
-          "source": "MUFG Research",
+          "headline": "ドル円は157円50銭付近で推移、米国・イラン停戦期待後退でドル高・円安が続く",
+          "published": "2026-09-29",
+          "comment": "日米金利差が拡大傾向で円安圧力が継続、口先介入の効果は限定的",
+          "source": "OANDA Japan",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Robinhood Prediction Markets"],
+          "corroborated_by": ["OANDA Japan", "nippon.com"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.mufgresearch.com/fx/jpy-weekly-28-september-2026/"
-        },
-        {
-          "headline": "日銀が9月18日会合で金利据え置き決定、次回政策変更への不透明感が残る",
-          "published": "2026-09-18",
-          "comment": "日銀の慎重姿勢が円安の構造的要因となっているが、急変リスクも内在",
-          "source": "CNBC",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.cnbc.com/2026/09/03/yen-japan-intervention-boj.html"
+          "url": "https://www.oanda.jp/lab-education/market_news/2026_09_29_usdjpy/"
         }
       ]
     },
@@ -233,24 +211,24 @@
       "ticker": "EURUSD",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "ユーロドルは1.1368〜1.1387近辺で推移。米国債利回り急騰によるドル全面高に押されており、欧州のエネルギーコスト高（原油高）もユーロの重しとなっている。一方でECBも引き締め継続中であり、極端なユーロ安にはなりにくい面もある。",
+      "rationale": "米金利上昇とドル高を背景にユーロドルは1.1366に下落。過去1ヶ月で2.16%安、過去1年で3.14%安と下落トレンドが継続。中東情勢の不透明感も欧州リスク資産に重しとなっている。",
       "catalysts": [
-        "米国債利回り急騰によるドル全面高がユーロを圧迫",
-        "原油高が欧州のエネルギー輸入コストを押し上げ貿易収支を悪化",
-        "ECBの引き締め継続がユーロの下支えに"
+        "FedのHFL観測が強まりドル高が継続",
+        "欧州のエネルギーコスト上昇懸念（原油高の波及）",
+        "米ドル指数が101.19に上昇し、ユーロの相対的な弱さが顕在化"
       ],
       "top_news": [
         {
-          "headline": "ユーロドルが1.136〜1.139で推移、ドル高の中でじりじり軟化",
-          "published": "2026-09-28",
-          "comment": "米金利上昇に伴うドル高がユーロを圧迫。欧州エネルギー事情も重し",
-          "source": "Investing.com",
+          "headline": "ユーロドルが1.1366に下落、過去1ヶ月で2.16%安と下落基調が続く",
+          "published": "2026-09-29",
+          "comment": "米金利上昇とドル独歩高がユーロを押し下げる構図が続いている",
+          "source": "TradingEconomics / Fed H.10",
           "tier": 2,
           "credibility": "MID",
-          "corroborated_by": ["XE.com"],
+          "corroborated_by": ["Federal Reserve H.10"],
           "materiality": "mid",
           "direction": "bearish",
-          "url": "https://www.investing.com/currencies/eur-usd"
+          "url": "https://tradingeconomics.com/euro-area/currency"
         }
       ]
     },
@@ -259,21 +237,21 @@
       "ticker": "BTC-USD",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "ビットコインは83,000ドル前後で推移（2025年10月のATH約126,000ドルから約34%下落）。リスクオフ環境、米国債利回り急騰、ドル全面高が暗号資産全般の売り圧力となっている。FRBの利上げ継続観測は流動性引き締めとして暗号資産にも逆風。",
+      "rationale": "リスクオフムードの広がりでBTCは$83,000付近（前日比約-1,345ドル）に下落。米長期金利の急上昇とFed利上げ観測がリスク資産全般への売り圧力として機能。当面の上値は重い可能性。",
       "catalysts": [
-        "リスクオフ環境での安全資産回帰でビットコインへの投機的資金が流出",
-        "米国債10年利回り5.2%台でリスク資産全般の魅力が低下",
-        "ビットコインのマーケットキャップは約1.33兆ドルと依然大きく流動性はある"
+        "リスクオフ環境の広がり（原油高・金利急上昇）がBTCを含むリスク資産に圧力",
+        "FedのHFL観測強化→流動性縮小懸念→暗号資産への逆風",
+        "ナスダック・テック株安との連動感"
       ],
       "top_news": [
         {
-          "headline": "ビットコインが83,000ドル台で推移、2025年10月のATH12万6千ドルから約34%の下落水準",
+          "headline": "ビットコインが$83,000付近に下落、前日比約1,345ドル安とリスクオフムードに押される",
           "published": "2026-09-28",
-          "comment": "高金利・リスクオフが続く中、暗号資産に戻りにくい環境が続いている",
+          "comment": "株式・金と同様にリスク資産として売られており、金利上昇局面では上値が重い",
           "source": "Fortune",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["CoinDesk"],
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["Fortune"],
           "materiality": "mid",
           "direction": "bearish",
           "url": "https://fortune.com/article/price-of-bitcoin-09-28-2026/"
@@ -283,12 +261,12 @@
   ],
   "discarded": [
     {
-      "headline": "シルバー価格が62ドル割れに急落",
-      "reason": "金と同様の理由で下落しているが、監視対象外銘柄のため除外"
+      "headline": "9月22日ナスダックが新高値27,244に上昇、メタ・AMD・インテルが急騰",
+      "reason": "9月22日の情報で日付が古く、その後の相場環境が大きく変化しており当日の参考にならない"
     },
     {
-      "headline": "ゴールドマン・サックスの2026年市場見通し（年初予測）",
-      "reason": "公開日が直近でなく古い予測データのため除外"
+      "headline": "サウジアラビアがパイプライン修復後に日量350万バレルの供給を回復",
+      "reason": "供給回復の事実は原油関連ニュースに組み込み済み。単独でリスクオンに傾く材料ではなくホルムズ問題の方が影響が大きいため除外"
     }
   ]
 }
