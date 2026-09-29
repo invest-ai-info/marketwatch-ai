@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>ほかの銘柄と比べて強いものを買う「相対的な強さ」は、研究で効くとわかっている？【エントリー方法の研究 #05】 - MarketWatch AI</title>
+  <meta name="description" content="値上がりが目立つ銘柄を買い、値下がりが目立つ銘柄を売る「相対的な強さ（モメンタム）」というエントリーの決め方を、ジェガディーシュ氏・ティットマン氏の研究、アスネス氏らの8市場研究、売買コストからの反論まで、出典つきで整理します。">
+  <meta name="keywords" content="モメンタム,相対的な強さ,クロスセクション,エントリー,トレンドフォロー,取引コスト,投資初心者,為替">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-entry-cross-sectional-momentum.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ほかの銘柄と比べて強いものを買う「相対的な強さ」は、研究で効くとわかっている？【エントリー方法の研究 #05】">
+  <meta property="og:description" content="値上がりが目立つ銘柄を買い、値下がりが目立つ銘柄を売る「相対的な強さ（モメンタム）」を、研究でわかっていること・反論とあわせて整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-entry-cross-sectional-momentum.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ほかの銘柄と比べて強いものを買う「相対的な強さ」は、研究で効くとわかっている？【エントリー方法の研究 #05】",
+    "description": "値上がりが目立つ銘柄を買い、値下がりが目立つ銘柄を売る「相対的な強さ（モメンタム）」を、研究でわかっていること・反論とあわせて整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-09-29",
+    "dateModified": "2026-09-29",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-entry-cross-sectional-momentum.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-bar-buy{fill:#1a7f37}
+    .s-bar-sell{fill:#cf222e}
+    .s-bar-flat{fill:#8b949e}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-bar-buy{fill:#3fb950}
+    body.dark .s-bar-sell{fill:#f85149}
+    body.dark .s-bar-flat{fill:#8b949e}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 相対的な強さは効くのか（エントリー方法の研究 #05）
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事はエントリー（買う・売るタイミング）の決め方についての考え方や、公開されている研究の紹介を目的とした「情報提供」であり、特定の手法・銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🏃 ほかの銘柄と比べて強いものを買う「相対的な強さ」は、研究で効くとわかっている？【エントリー方法の研究 #05】</h1>
+    <div class="meta-line">公開：2026年9月29日 ／ 読了時間：約 10 分 ／ カテゴリ：🚪 エントリー方法の研究</div>
+
+    <p>シリーズ第1回（<a href="guide-entry-trend-following.html">#01</a>）で扱ったトレンドフォローは、「その銘柄自身の、過去の値動き」と比べて売買を決める方法でした。この記事で扱う相対的な強さ（モメンタムとも呼ばれます）は、比べる相手が違います。同じ市場の中にある、ほかのたくさんの銘柄と比べて、値上がりが目立つ銘柄を買い、値下がりが目立つ銘柄を売る方法です。投資の研究の世界ではよく知られた考え方です。この記事では、この方法の元になった研究と、その後の反論、対象になった市場を出典つきで整理します。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>ジェガディーシュ氏とティットマン氏の研究（1993年）は、米国の個別株で、過去の値動きが強かった銘柄を買い、弱かった銘柄を売る方法が、3か月から12か月の保有期間で、偶然とは言いにくいプラスの成績を上げたと報告しました。</li>
+      <li>アスネス氏・モスコウィッツ氏・ペダーセン氏の研究（2013年）は、個別株だけでなく、国の株価指数、長期国債、為替、コモディティ（商品）の先物という8つの市場・資産で、同じような「強いものを買う」傾向を報告しました。</li>
+      <li>一方で、レスモンド氏・シル氏・周氏の研究（2004年）は、値動きが強い銘柄ほど売買のコストも高いことを示し、コストを差し引くと、この方法のもうけの多くは見かけ上のものだったと反論しています。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな方法か</a></li>
+        <li><a href="#section-2">研究でわかっていること</a></li>
+        <li><a href="#section-3">反論・限界</a></li>
+        <li><a href="#section-4">株・FX・コモディティでは？</a></li>
+        <li><a href="#section-5">よくある誤解</a></li>
+        <li><a href="#section-6">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな方法か</h2>
+    <p>#01のトレンドフォローが「その銘柄自身の、過去と比べて今どうか」を見るのに対し、相対的な強さは「同じ市場の中の、ほかの銘柄と比べてどうか」を見る方法です。たとえば米国の個別株を対象にするなら、過去3か月から12か月の値上がり率で全銘柄を順位づけし、上位の銘柄をまとめて買い、下位の銘柄をまとめて売る、という組み方になります。</p>
+    <p><strong>仮の例（考え方を説明するための仮の例です）：</strong> 100銘柄を集め、過去半年の値上がり率で並べ替えたとします。相対的な強さの考え方では、値上がり率が上位の銘柄をまとめて買い、下位の銘柄をまとめて売ります。真ん中あたりの銘柄には手を出しません。</p>
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 340" role="img" aria-labelledby="fig-csmom-title">
+        <title id="fig-csmom-title">銘柄を過去の値上がり率の順に並べ、上位を買い・下位を売る考え方の概念図</title>
+        <text class="s-panel-label" x="40" y="24">銘柄を過去の値上がり率で並べ替える（イメージ図・実際の値動きではありません）</text>
+        <text class="s-label-sm" x="40" y="44">左から右へ、過去の値上がり率が高い順に並べています</text>
+        <line class="s-axis" x1="55" y1="290" x2="605" y2="290"/>
+        <rect class="s-bar-buy" x="60" y="120" width="68" height="170"/>
+        <rect class="s-bar-buy" x="150" y="150" width="68" height="140"/>
+        <rect class="s-bar-flat" x="240" y="180" width="68" height="110"/>
+        <rect class="s-bar-flat" x="330" y="205" width="68" height="85"/>
+        <rect class="s-bar-sell" x="420" y="230" width="68" height="60"/>
+        <rect class="s-bar-sell" x="510" y="255" width="68" height="35"/>
+        <text class="s-label-sm" x="94" y="308" text-anchor="middle">銘柄A</text>
+        <text class="s-label-sm" x="184" y="308" text-anchor="middle">銘柄B</text>
+        <text class="s-label-sm" x="274" y="308" text-anchor="middle">銘柄C</text>
+        <text class="s-label-sm" x="364" y="308" text-anchor="middle">銘柄D</text>
+        <text class="s-label-sm" x="454" y="308" text-anchor="middle">銘柄E</text>
+        <text class="s-label-sm" x="544" y="308" text-anchor="middle">銘柄F</text>
+        <text class="s-note-g" x="139" y="105" text-anchor="middle">上位2つ＝買い</text>
+        <text class="s-note" x="329" y="105" text-anchor="middle">真ん中＝見送り</text>
+        <text class="s-note-r" x="499" y="105" text-anchor="middle">下位2つ＝売り</text>
+      </svg>
+      <figcaption class="chart-caption">図：過去の値上がり率でほかの銘柄と比べて順位をつけ、上位を買い、下位を売る考え方の概念図。銘柄名は仮のものです。※概念を示すイメージ図です（実際の値動きではありません）。</figcaption>
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 研究でわかっていること</h2>
+    <h3>米国の個別株で確かめた研究（ジェガディーシュ氏とティットマン氏の研究、1993年）</h3>
+    <p>ジェガディーシュ氏とティットマン氏の研究は、過去の値動きが強かった銘柄を買い、弱かった銘柄を売る方法が、3か月から12か月の保有期間で、偶然とは言いにくいプラスの成績を上げたことを報告しました。このもうけは、市場全体の値動きに対するリスクの取り方の違いや、共通の要因への反応の遅れでは説明できなかった、としています。ただし、最初の1年で出たプラスの一部は、その後の2年間で薄れていったことも同じ研究で報告されています。値上がりしていた銘柄と値下がりしていた銘柄で、それぞれの決算発表の前後の値動きにも、似たような傾向が見られました。</p>
+    <h3>8つの市場・資産で確かめた研究（アスネス氏・モスコウィッツ氏・ペダーセン氏の研究、2013年）</h3>
+    <p>アスネス氏らの研究は、個別株だけでなく、国の株価指数の先物、長期国債、為替、コモディティ（商品）の先物をあわせた8つの市場・資産で、値動きの傾向をあらためて確かめました。その結果、これらの市場・資産をまたいで、強いものを買う方法に共通した傾向が見られたことを報告しています。さらに、この傾向は、割安なものを買う方法（バリュー投資）とは反対向きに動く傾向があることも報告されており、両方を組み合わせると値動きのぶれが打ち消し合う可能性があると論じられています（研究が調べた期間・市場での結果です）。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 反論・限界</h2>
+    <h3>売買のコストを差し引くと（レスモンド氏・シル氏・周氏の研究、2004年）</h3>
+    <p>レスモンド氏らの研究は、相対的な強さの方法で選ばれる銘柄が、そもそも売買のコストが高い銘柄にかたよっていることを示しました。値動きが強い銘柄ほど頻繁に入れ替えて売買する必要があるうえに、その売買のコスト自体も高くなりやすい、というのです。研究者たちは、この売買のコストを差し引くと、それまで報告されてきたもうけの大きさは「見かけ上のもの」であり、実際に利益の出る機会はほとんど無かった可能性がある、と結論づけています。</p>
+    <p><strong>気をつけたい点：</strong> この研究が対象にしているのは、1990年代までの米国の個別株です。現在は当時より売買のコストが下がっている市場が多いため、同じ大きさの影響が今も残っているかどうかは、この研究だけからはわかりません。また、ジェガディーシュ氏とティットマン氏の研究が報告したとおり、最初の1年のプラスの一部は、その後の2年間で薄れていく傾向もあります。</p>
+    <div class="info-box"><strong>当サイトとの関係：</strong> 当サイトのシグナルは、それぞれの銘柄を単独で判定するしくみで、ほかの銘柄と比べて順位づけをする機能は持っていません。この記事で紹介した研究は、多数の銘柄を集めて順位づけをする方法についてのものであり、当サイトのシグナルの裏づけとして読むことはできません。研究が調べた期間・市場と、当サイトの期間・市場も違います。</div>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 株・FX・コモディティでは？</h2>
+    <p>紹介した研究が、どの市場を対象にしているかを表に整理します。</p>
+    <table>
+      <tr><th>市場</th><th>研究はあるか</th><th>内容</th></tr>
+      <tr><td>株価指数・個別株</td><td>あり</td><td>ジェガディーシュ氏・ティットマン氏の研究は米国の個別株が対象です。アスネス氏らの研究も、個別株を8つの市場・資産の1つとして調べています。</td></tr>
+      <tr><td>為替（FX）</td><td>あり</td><td>アスネス氏らの研究が対象にした8つの市場・資産の中に為替が含まれています。ただし、為替だけを取り出した結果の大きさは、今回の要旨からは確認できませんでした。</td></tr>
+      <tr><td>コモディティ（先物）</td><td>あり</td><td>アスネス氏らの研究の対象に、コモディティ（商品）の先物も含まれています。個別の商品ごとの結果までは、今回は確認できませんでした。</td></tr>
+    </table>
+    <p>まとめると、相対的な強さという考え方そのものは、株・為替・コモディティを含む複数の市場・資産で、共通した傾向として報告されています。ただし、もうけの大きさや、売買のコストを差し引いたあとの成績は市場によって違う可能性があり、アスネス氏らの研究の要旨からは、市場ごとの詳しい数字までは確認できませんでした。</p>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ よくある誤解</h2>
+    <h3>誤解1：順位が高い銘柄は、そのまま持ち続けて良いと思われがち</h3>
+    <p>ジェガディーシュ氏とティットマン氏の研究では、最初の1年に出たプラスの一部が、その後の2年間で薄れていったことも報告されています。順位づけをしたときの強さが、いつまでも続くわけではありません。</p>
+    <h3>誤解2：#01のトレンドフォローと同じものだと思われがち</h3>
+    <p>どちらも「値動きの強さに乗る」という考え方は共通していますが、比べる相手が違います。#01は銘柄自身の過去と比べ、この記事の方法はほかの銘柄と比べます。#01で紹介したとおり、トレンドフォローの研究には、もみ合いの相場では損が続きやすいという指摘がありました。この記事の方法にも、別の弱点（売買のコストが高くなりやすいこと）が指摘されています。</p>
+    <h3>誤解3：学術研究で確かめられているのだから、コストを引いても十分もうかると思われがち</h3>
+    <p>レスモンド氏らの研究が示すとおり、値動きが強い銘柄は、売買のコスト自体も高くなりやすい銘柄です。コストを差し引く前の数字だけを見て判断すると、実際の成績を過大に見積もることになりかねません。</p>
+
+    <div class="warning-box">この記事は、公開されている学術研究を当サイトが要約したものです。研究の数字は、それぞれの研究が使った期間・市場・条件のもとでの結果であり、将来も同じになるとは限りません。特定の手法・銘柄の売買を勧めるものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ</h2>
+    <ul>
+      <li>相対的な強さ（モメンタム）は、同じ市場の中のほかの銘柄と比べて、値上がりが目立つ銘柄を買い、値下がりが目立つ銘柄を売る方法です。</li>
+      <li>ジェガディーシュ氏とティットマン氏の研究（1993年）は、米国の個別株で、3か月から12か月の保有期間にプラスの成績が出たことを報告しました。ただし、最初の1年のプラスの一部は、その後の2年間で薄れていました。</li>
+      <li>アスネス氏らの研究（2013年）は、個別株・国の株価指数・長期国債・為替・コモディティを合わせた8つの市場・資産で、同じような傾向を報告しました。</li>
+      <li>レスモンド氏らの研究（2004年）は、値動きが強い銘柄ほど売買のコストも高くなりやすく、コストを差し引くと、もうけの多くは見かけ上のものだった可能性があると反論しています。</li>
+    </ul>
+    <p>次回は、この方法とは反対に、強く動いたものが急に反転しやすい「モメンタムの急な反転」という研究を見ていきます。</p>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-entry-trend-following.html">
+        <div class="related-card-title">🧭 トレンドフォローは本当に効くの？ 研究でわかっていること【エントリー方法の研究 #01】</div>
+        <div class="related-card-desc">「その銘柄自身の過去」と比べる決め方を扱ったシリーズ第1回の記事。この記事の方法との違いを2章・5章で扱っています。</div>
+      </a>
+      <a class="related-card" href="guide-masters-006-dual-momentum.html">
+        <div class="related-card-title">📈 巨匠の教えをデータで検証 #6（デュアルモメンタム）</div>
+        <div class="related-card-desc">相対的な強さの考え方を取り入れた運用手法を、日経225・S&amp;P500・金などの資産の乗り換えで検証した回。</div>
+      </a>
+      <a class="related-card" href="guide-masters-002-trend.html">
+        <div class="related-card-title">📊 巨匠の教えをデータで検証 #2（順張り）</div>
+        <div class="related-card-desc">「順張りの教科書」を日本株で検証した回。値動きの強さに乗る考え方の関連記事。</div>
+      </a>
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">⚖️ ポジションサイジングとは</div>
+        <div class="related-card-desc">どの入り方を選ぶ場合でも必要になる、量の決め方の基礎知識。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-6261.1993.tb04702.x" target="_blank" rel="noopener">Jegadeesh &amp; Titman (1993) "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency", The Journal of Finance 48(1)</a>（出版社ページの要旨で確認）</li>
+      <li><a href="https://onlinelibrary.wiley.com/doi/10.1111/jofi.12021" target="_blank" rel="noopener">Asness, Moskowitz &amp; Pedersen (2013) "Value and Momentum Everywhere", The Journal of Finance 68(3)</a>（出版社ページの要旨で確認）</li>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X0300206X" target="_blank" rel="noopener">Lesmond, Schill &amp; Zhou (2004) "The Illusory Nature of Momentum Profits", Journal of Financial Economics 71(2)</a>（出版社ページの要旨で確認）</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はエントリー（買う・売るタイミング）の決め方についての考え方と、公開されている学術研究の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。研究の内容は当サイトによる要約です。正確な内容は各原文をご確認ください。記載の数値・方法による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>

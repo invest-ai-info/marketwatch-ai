@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-29", "line": '・<b>2026-09-29</b>: 🏃 解説「<a href="guide-entry-cross-sectional-momentum.html" style="color:#0969da"><b>相対的な強さ（モメンタム）は効くの？ 研究でわかっていること</b></a>」公開'},
         {"date": "2026-09-29", "line": '・<b>2026-09-29</b>: 🧪 解説「<a href="guide-signal-lab-113.html" style="color:#0969da"><b>RSI版とボリンジャーバンド版、どちらが勝ちやすい？</b></a>」公開'},
         {"date": "2026-09-28", "line": '・<b>2026-09-28</b>: 📰 解説「<a href="guide-news-2026-09-28-japan-2year-yield-1975-boj-rate-hike-bets.html" style="color:#0969da"><b>【9/28】日本2年国債利回り1.975%──31年ぶり高水準、市場が日銀追加利上げを織り込む</b></a>」公開'},
         {"date": "2026-09-28", "line": '・<b>2026-09-28</b>: 📐 解説「<a href="guide-entry-technical-indicators.html" style="color:#0969da"><b>RSI・MACDなどの指標のシグナル</b></a>」公開'},
