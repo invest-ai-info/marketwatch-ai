@@ -1,4 +1,4 @@
-2026-09-30 signal-lab: #114 🔄処理中（警戒スコアA〜D×シグナル勝率の定点観察。env=A 43.1%[41.4-44.9]/B 41.1%[38.5-43.8]/C 46.0%[41.3-50.8]/D 44.4%[32.8-56.7]・全体4868回。plain_japanese実行中）
+2026-09-30 signal-lab: #114 ✅公開済み（警戒スコアA〜D×シグナル勝率の定点観察4868回。env=A 43.1%[41.4-44.9]/B 41.1%[38.5-43.8]/C 46.0%[41.3-50.8]/D 44.4%[32.8-56.7]。plain_japanese✅・verify 5/5✅・Opus1st🟡4修正→Opus2nd🔴avg-R削除→Opus3rd🟢・check_site OK・push済み）
 2026-09-29 signal-lab: #113 ✅公開済み（RSI版とボリンジャーバンド版の逆張り買い比較1456回・定点観察。RSI47.6%[43.3-51.9]・BB43.0%[39.9-46.2]。plain_japanese✅・signal_verify12/12緑✅・Opus1st🟡4件修正→plain_japanese✅・verify✅・Opus2nd🟡3件修正→plain_japanese✅・verify✅・Opus3rd🟢・check_site OK・push済み）
 2026-09-28 signal-lab: #112 ✅公開済み（逆張り買い×足別比較・定点観測。1h44.3%/4h43.8%/1d57.9%[45-70%CI]・平均R=+0.35。plain_japanese✅・signal_verify✅・Opus🟢・独立Opus🟢・check_site OK・push済み）
 2026-09-27 signal-lab: #111 ✅公開済み（出口の相性ラボ第1回・日足 −2σタッチ×ロング。シャンデリア損切り🚩×2（rr2・rr3）・ATR損切り利確なし+0.21（旗なし）。plain_japanese✅・signal_verify✅・exit_verify 38/38✅・Opus🟡→🟢・独立Opus🟢・check_site OK・push済み）
