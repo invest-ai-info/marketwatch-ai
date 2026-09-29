@@ -308,4 +308,5 @@ SYNC_FILES = [
     "guide-news-2026-09-28-japan-2year-yield-1975-boj-rate-hike-bets.html",
     "guide-signal-lab-113.html",
     "guide-entry-cross-sectional-momentum.html",
+    "guide-news-2026-09-29-trump-iran-hormuz-oil-surge-nikkei.html",
 ]
