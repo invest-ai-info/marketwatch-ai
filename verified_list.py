@@ -19,6 +19,7 @@ SOURCES = [
     ("london-lab.json", "L1・L2 ロンドン時間のドルの流れ（過去2年・1回だけ数えた）", ""),   # 🆕 2026-09-30 過去のデータで1000回以上
     ("london-hold-lab.json", "L4 ロンドン時間に入って長めに持つ（過去2年・1回だけ数えた）", "L4"),   # 🆕 2026-09-30
     ("s4-level-fade.json", "S4 前日のロンドン時間の高値・安値の反発×勝率型の出口（過去のデータ・1回だけ数えた・手元の MT5）", ""),   # 🆕 2026-09-30 手元で数えた記録の書き出し
+    ("auto-forward.json", "AT3 4時間足のメールの合図をデモ口座で自動に建てる（前向き・手元の MT4）", ""),   # 🆕 2026-09-30 数字は R（unit: R）
 ]
 # 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
@@ -35,6 +36,11 @@ def _pct(x):
     return "—" if x is None else f"{x * 100:+.2f}％"
 
 
+def _num(x, unit):
+    """記録の単位で書く（unit: R＝損切りまでの幅を1とした単位／既定＝損益率）"""
+    return _r(x) if unit == "R" else _pct(x)
+
+
 def collect(sources=SOURCES):
     stop, plus, watching = [], [], []
     for path, name, sec in sources:
@@ -48,7 +54,7 @@ def collect(sources=SOURCES):
             v = (data.get("verdicts") or {}).get(cid)
             if not v and data.get("kind") == "backtest":
                 continue          # 過去のデータで1回だけ数えたもの＝ストップ以外は載せない（前向きは別に登録する）
-            row = {"src": name, "sec": sec, "id": cid, "title": title, "goal": goal, "v": v,
+            row = {"src": name, "sec": sec, "id": cid, "title": title, "goal": goal, "v": v, "unit": data.get("unit", "pct"),
                    "n": sum(1 for t in data.get("trades", []) if t.get("c") == cid)}
             (watching if not v else plus if v["status"] == "plus" else stop).append(row)
     return stop, plus, watching
@@ -127,14 +133,15 @@ def render(stop, plus, watching, now=None, screens=()):
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
          "決まり（2026-09-28 オーナー）：検証（前向き、または過去のデータで1回だけ数えたもの）で**1000回を超えて期待値がプラスにならなかったものは、検証をストップしてここに載せる**。"
-         "「プラス」は費用後の平均の95％の幅がまるごと0より上のとき。数字は費用を引いた1回あたりの損益率。銘柄名は出さない。", "",
+         "「プラス」は費用後の平均の95％の幅がまるごと0より上のとき。数字は費用を引いた1回あたりの損益率（末尾が R のものは、損切りまでの幅を1とした単位）。銘柄名は出さない。", "",
          "## ⏹ ストップ（期待値がプラスにならなかった）", ""]
     if stop:
         L += ["| 検証 | 決まり | 判定日 | 回数 | 平均（費用後） | 95％の幅 | 理由 |", "|---|---|---|---:|---:|---|---|"]
         for r in stop:
             v = r["v"]
-            L.append(f"| {_label(r)} | {r['title']} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | "
-                     f"{_pct(v['lo'])}〜{_pct(v['hi'])} | {v['reason']} |")
+            u = r.get("unit")
+            L.append(f"| {_label(r)} | {r['title']} | {v['decided_on']} | {v['n']} | {_num(v['mean'], u)} | "
+                     f"{_num(v['lo'], u)}〜{_num(v['hi'], u)} | {v['reason']} |")
     else:
         L.append("- まだ無い")
     L += ["", "## ✅ プラスを確認（使うかどうかはオーナーが決める）", ""]
@@ -142,7 +149,8 @@ def render(stop, plus, watching, now=None, screens=()):
         L += ["| 検証 | 決まり | 判定日 | 回数 | 平均（費用後） | 95％の幅 |", "|---|---|---|---:|---:|---|"]
         for r in plus:
             v = r["v"]
-            L.append(f"| {_label(r)} | {r['title']} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | {_pct(v['lo'])}〜{_pct(v['hi'])} |")
+            u = r.get("unit")
+            L.append(f"| {_label(r)} | {r['title']} | {v['decided_on']} | {v['n']} | {_num(v['mean'], u)} | {_num(v['lo'], u)}〜{_num(v['hi'], u)} |")
     else:
         L.append("- まだ無い")
     L += ["", "## 👀 いま前向きで数えているもの", ""]

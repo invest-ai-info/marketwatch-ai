@@ -49,7 +49,8 @@ def render(plus, screens, now=None):
             L.append(f"| {it['id']}（{it['round']}） | {s['src']}・{J.describe(s, it['id'])} | {f.get('decided_on', '—')} | {_brief_line(f)} |")
         for r in plus:
             v = r["v"]
-            L.append(f"| {V._label(r)} | {r['title']} | {v['decided_on']} | {v['n']}回・平均 {V._pct(v['mean'])}［{V._pct(v['lo'])}〜{V._pct(v['hi'])}］ |")
+            u = r.get("unit")
+            L.append(f"| {V._label(r)} | {r['title']} | {v['decided_on']} | {v['n']}回・平均 {V._num(v['mean'], u)}［{V._num(v['lo'], u)}〜{V._num(v['hi'], u)}］ |")
     else:
         L.append("- まだ無い")
     L += ["", "## 👀 前向きで数えている（過去の関門と MT5 の確かめを通った・まだ決めない）", ""]

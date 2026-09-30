@@ -86,6 +86,7 @@ SYNC_FORBIDDEN = {
     "london-hold-lab.json", "london-hold-lab.md",   # 🆕 2026-09-30 L4 ロンドン時間に入って長めに持つ（london-hold-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
+    "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
     "box-lab.json", "box-lab.md",               # 🆕 2026-09-27 S1 時間帯の箱の抜け（box-lab.yml・手動。スキャルピング本の整理から）
     "event-dir-lab.json", "event-dir-lab.md",   # 🆕 2026-09-27 S2 重要な発表のあとの向き（event-dir-lab.yml・手動。B2 の続き）
     "round-lab.json", "round-lab.md",           # 🆕 2026-09-28 S3 キリの良い値（round-lab.yml・手動。スキャルピング本の最後の候補）
