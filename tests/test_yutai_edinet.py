@@ -58,8 +58,11 @@ def test_not_found():
 
 def test_months_only_head_and_valid():
     assert B.months_in("毎年6月末日及び12月末日現在") == [6, 12]
+    assert B.months_in("毎年3月31日現在および9月30日現在で、4月1日から使える券") == [3, 9]   # 使える日・発送の月は拾わない
+    assert B.months_in("3月末日及び9月末日を基準日として") == [3, 9]
+    assert B.months_in("5月下旬に発送します") == []
     assert B.months_in("13月1日 と 0月5日") == []
-    assert B.months_in("x" * 500 + "3月31日") == []          # 頭の400字の外は見ない
+    assert B.months_in("x" * 500 + "3月31日現在") == []          # 頭の400字の外は見ない
 
 
 def test_yuho_from_list_filters():
@@ -88,7 +91,7 @@ def test_collect_end_to_end(tmp_path):
                       list_fn=lambda ds, k: lists.get(ds, []), doc_fn=lambda i, k: docs[i], sleep=lambda s: None)
         assert r["docs_parsed_total"] == 2 and r["has_true"] == 1 and r["has_false"] == 1 and r["docs_left"] == 0
         parsed = B.read_parsed(str(tmp_path))
-        assert parsed["S1"]["months"] == [3] and parsed["S2"]["benefit_head"] == ""
+        assert parsed["S1"]["months"] == [3] and parsed["S2"]["benefit_head"].startswith("該当事項")
         r2 = B.collect("k", 10, today=day + dt.timedelta(days=1), out_dir=str(tmp_path),
                        list_fn=lambda ds, k: lists.get(ds, []), doc_fn=lambda i, k: docs[i], sleep=lambda s: None)
         assert r2["days_fetched"] == 0 and r2["docs_parsed_now"] == 0          # 2回目は何もしない（冪等）
@@ -120,3 +123,19 @@ def test_parsed_file_is_deterministic(tmp_path):
     a = (tmp_path / "parsed-2026.jsonl.gz").read_bytes()
     B.write_parsed(rows, str(tmp_path))
     assert (tmp_path / "parsed-2026.jsonl.gz").read_bytes() == a
+
+
+def test_record_row_fallback_and_note_ref():
+    block = ("<table><tr><td>基準日</td><td>３月31日</td></tr><tr><td>剰余金の配当の基準日</td><td>９月30日</td></tr>"
+             "<tr><td>株主に対する特典</td><td>基準日現在、100株以上の株主に入浴券を贈呈</td></tr></table>")
+    p = B.parse_doc(_csv([("jpcrp_cor:OverviewOfOperationalProceduresForSharesTextBlock", "株式事務の概要", block)]))
+    assert p["has_yutai"] is True and p["months"] == [3] and p["months_how"] == "record_row"
+    block2 = ("<table><tr><td>基準日</td><td>３月31日</td></tr>"
+              "<tr><td>株主に対する特典</td><td>注２</td></tr></table>"
+              "（注）１．当社の株主は、単元未満株式について権利を行使できません。"
+              "２．毎年３月31日及び９月30日現在の株主にクオカードを贈呈します。")
+    p2 = B.parse_doc(_csv([("jpcrp_cor:OverviewOfOperationalProceduresForSharesTextBlock", "株式事務の概要", block2)]))
+    assert p2["note_ref"] is True and p2["has_yutai"] is True and p2["months"] == [3, 9] and p2["months_how"] == "benefit"
+    block3 = block2.replace("２．毎年３月31日及び９月30日現在の株主にクオカードを贈呈します。", "２．株主優待制度は導入しておりません。")
+    p3 = B.parse_doc(_csv([("jpcrp_cor:OverviewOfOperationalProceduresForSharesTextBlock", "株式事務の概要", block3)]))
+    assert p3["has_yutai"] is False and p3["months"] == []

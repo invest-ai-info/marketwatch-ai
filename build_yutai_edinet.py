@@ -44,7 +44,12 @@ INDEX_FIELDS = ["id", "date", "submit", "sec", "period_start", "period_end", "fi
 LABEL = "株主に対する特典"
 NONE_RE = re.compile(r"^[\s　]*(該当事項(は|が)?(ありません|ございません|なし)|該当なし|なし|ありません|特になし|[―－\-‐ー—]+)[\s。．.]*($|\n|（|\()")
 NEG_FIRST_RE = re.compile(r"(ありません|ございません|おりません|いません|廃止)")   # 最初の一文にあれば「なし」
+DATE = r"\d{1,2}\s*月\s*(?:末日|末|\d{1,2}\s*日)"
 MONTH_RE = re.compile(r"(\d{1,2})\s*月\s*(?:末日|末|\d{1,2}\s*日)")
+# 「◯月◯日（及び◯月◯日）現在／を基準日／の株主名簿」＝権利の日として書かれた日付だけを拾う（発送の月などを拾わない）
+GROUP_RE = re.compile(rf"((?:{DATE}\s*(?:現在)?\s*(?:及び|および|並びに|ならびに|又は|または|、|,|・|と)?\s*)+)"
+                      r"(?:現在|を基準日|基準日|の株主名簿|時点|の最終の株主名簿)")
+NOTE_REF_RE = re.compile(r"^\s*\(?注\s*(\d+)\)?")
 
 
 # ───────────────────────── 純関数 ─────────────────────────
@@ -80,6 +85,34 @@ def benefit_text(csv_texts):
     return None, None
 
 
+def resolve_note(text):
+    """欄が「注2」のように注を指すだけのとき、その注の本文を返す（見つからなければ元のまま）"""
+    n = norm(text or "")
+    m = NOTE_REF_RE.match(n)
+    if not m:
+        return text
+    k = int(m.group(1))
+    i = n.find("(注)")
+    if i < 0:
+        return text
+    notes = n[i:]
+    a = re.search(rf"(?:^|[\s)。、]){k}\s*\.", notes)
+    if not a:
+        return text
+    b = re.search(rf"[\s。、]{k + 1}\s*\.", notes[a.end():])
+    return notes[a.end(): a.end() + b.start()] if b else notes[a.end():]
+
+
+def record_row(csv_texts):
+    """表の「基準日」の行（剰余金の配当の基準日ではない方）の中身"""
+    for f in csv_rows(csv_texts):
+        if f[0].endswith("TextBlock") and LABEL in (f[8] or ""):
+            t = norm(Y.strip_html(f[8]))
+            k = re.search(r"(?<!配当の)基準日[	 ]*(.{0,40})", t)
+            return re.split(r"剰余金|1単元|単元", k.group(1))[0].strip() if k else ""
+    return ""
+
+
 def record_date_text(csv_texts):
     """「基準日」「剰余金の配当の基準日」の欄（表の中の行）。読むための控え"""
     for f in csv_rows(csv_texts):
@@ -106,17 +139,33 @@ def classify(text):
 
 
 def months_in(text, head=400):
-    """特典の欄の頭に出てくる「◯月末日」「◯月◯日」の月（重複なし・昇順）"""
+    """特典の欄の頭で、権利の日として書かれた「◯月◯日（及び◯月◯日）現在／を基準日」の月（重複なし・昇順）"""
     t = norm(text or "")[:head]
-    return sorted({int(m) for m in MONTH_RE.findall(t) if 1 <= int(m) <= 12})
+    out = set()
+    for g in GROUP_RE.findall(t):
+        out |= {int(m) for m in MONTH_RE.findall(g) if 1 <= int(m) <= 12}
+    return sorted(out)
+
+
+def yutai_months(text, rec_row):
+    """(月, 読み方)。①特典の欄の権利の日 ②無ければ表の「基準日」の行（期末）"""
+    m = months_in(text)
+    if m:
+        return m, "benefit"
+    r = sorted({int(x) for x in MONTH_RE.findall(norm(rec_row or "")) if 1 <= int(x) <= 12})
+    return r, ("record_row" if r else "none")
 
 
 def parse_doc(csv_texts):
-    text, how = benefit_text(csv_texts)
+    raw, how = benefit_text(csv_texts)
+    text = resolve_note(raw) if raw else raw
     has = classify(text)
-    return {"found": how, "has_yutai": has, "months": months_in(text) if has else [],
-            "benefit_head": (text or "")[:KEEP_CHARS] if has else "", "benefit_len": len(text or ""),
-            "record_dates": record_date_text(csv_texts)}
+    rec = record_row(csv_texts)
+    months, mhow = yutai_months(text, rec) if has else ([], "")
+    keep = KEEP_CHARS if has is not False else 120          # 読み方を後で直せるよう、なしの会社も頭だけ残す
+    return {"found": how, "note_ref": raw != text, "has_yutai": has, "months": months, "months_how": mhow,
+            "benefit_head": (raw or "")[:keep], "benefit_len": len(raw or ""),
+            "record_row": rec, "record_dates": record_date_text(csv_texts)}
 
 
 def yuho_from_list(results, date_str):
