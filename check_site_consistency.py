@@ -83,6 +83,7 @@ SYNC_FORBIDDEN = {
     "yori-lab.json", "yori-lab.md",             # 🆕 2026-09-28 J4 寄り付きラボ（yori-lab.yml・手動。銘柄名は出さない）
     "yori-forward.json", "yori-forward.md",     # 🆕 2026-09-28 J4F 寄り付きの前向き（yori-forward.yml・平日。積み上げた取引と判定を持つ）
     "london-lab.json", "london-lab.md",         # 🆕 2026-09-30 L1・L2 ロンドン時間のドルの流れ（london-lab.yml・手動。検証済みリストの元にもなる）
+    "london-hold-lab.json", "london-hold-lab.md",   # 🆕 2026-09-30 L4 ロンドン時間に入って長めに持つ（london-hold-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "box-lab.json", "box-lab.md",               # 🆕 2026-09-27 S1 時間帯の箱の抜け（box-lab.yml・手動。スキャルピング本の整理から）
     "event-dir-lab.json", "event-dir-lab.md",   # 🆕 2026-09-27 S2 重要な発表のあとの向き（event-dir-lab.yml・手動。B2 の続き）
