@@ -345,6 +345,17 @@ def cmd_evolve(argv):
         print("evolve はローカル専用（_doctrine_check.py はリモートに存在しないのが正常＝再作成禁止）")
         return 0
     rc = _run(["_doctrine_check.py", "--agenda"] + argv)
+    # 🆕 2026-09-30 研究全体の試行台帳（試した数・データの長さに対する上限・偶然の天井）。無ければ黙ってスキップ
+    try:
+        _rp = os.path.join(SD, "research")
+        if _rp not in sys.path:
+            sys.path.insert(0, _rp)
+        import _trial_ledger as _tl
+        _led = _tl.load()
+        if _led:
+            print("\n" + _tl.render(_tl.summarize(_led)))
+    except Exception as _e:  # noqa: BLE001
+        print(f"\n🧾 試行台帳の表示に失敗: {_e}")
     # レジーム状態（未導入なら黙ってスキップ）
     try:
         _rp = os.path.join(SD, "research")
