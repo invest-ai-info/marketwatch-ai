@@ -1,0 +1,62 @@
+name: Research Lists
+
+# 検証済みリスト（verified-list.md）と昇格リスト（promotion-list.md）を、記録から組み立て直す（2026-09-30 オーナー
+# 「成績の良いものは昇格リスト、悪いものは検証済みリスト…後に改善して再検証したい」）。
+# 手元で数えた記録（*-screen.json＝総当たりのふるい分け・s4-level-fade.json）が mw sync で届いたときと、組み立てのコードが変わったときに動く。
+# ⚠️ 決まりは PILLAR_PREREG.md「M6」。判定は screen_judge.py（手元の計算が import する）。ここでは数え直さない＝組み立てるだけ。
+# ⚠️ 出力（verified-list.md / promotion-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*-screen.json'
+      - 's4-level-fade.json'
+      - 'verified_list.py'
+      - 'promotion_list.py'
+      - 'screen_judge.py'
+  workflow_dispatch:
+
+concurrency:
+  group: research-lists
+  cancel-in-progress: false
+
+jobs:
+  lists:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy
+      - name: Test the judge and the lists
+        run: python tests/test_screen_judge.py
+      - name: Build the lists
+        run: |
+          python verified_list.py > /dev/null
+          python promotion_list.py > /dev/null
+          cat promotion-list.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add verified-list.md promotion-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: research lists $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            # 生成物なので、衝突したら今回生成した側を採る（yori-forward.yml と同じ考え方）
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
