@@ -1,0 +1,68 @@
+name: Yutai EDINET
+
+# 株主優待の有無と権利の月を、有価証券報告書（EDINET）の「株主に対する特典」の欄から集める
+# （2026-09-30 オーナー「すべて進めてください」＝J9 株主優待の下ごしらえ。値動きは読まない）。
+# ⚠️ 1回の実行は時間で区切る（既定140分）。残りは次の実行で取り足す＝最初は数日かけて2020年からの有報を読む。
+#    その後は新しい日の一覧と新しい有報だけ（6月に集中）。EDINET への間隔は edinet-yuho と同じ（一覧1.2秒・書類1.5秒）。
+# ⚠️ 出力（yutai-edinet/）は GitHub 側で生成＝ローカルから push しない（check_site_consistency のディレクトリ規則）。
+# 試し読み: Run workflow → mode=probe（1日分の一覧から25本だけ読み、yutai-edinet/probe.json に欄の見つかり方を書く）
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'collect または probe'
+        required: false
+        default: 'collect'
+      probe_date:
+        description: 'probe のときの提出日（有報の多い日）'
+        required: false
+        default: '2026-06-26'
+  schedule:
+    - cron: '41 17 * * *'   # 02:41 JST
+    - cron: '41 1 * * *'    # 10:41 JST
+    - cron: '41 9 * * *'    # 18:41 JST
+
+concurrency:
+  group: yutai-edinet
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    permissions:
+      contents: write
+    env:
+      EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Read the yuho
+        run: |
+          if [ "${{ inputs.mode }}" = "probe" ]; then
+            python build_yutai_edinet.py --probe "${{ inputs.probe_date || '2026-06-26' }}" --probe-n 25
+          else
+            python build_yutai_edinet.py --max-minutes 140
+          fi
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add yutai-edinet 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: yutai edinet $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
