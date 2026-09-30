@@ -311,4 +311,5 @@ SYNC_FILES = [
     "guide-news-2026-09-29-trump-iran-hormuz-oil-surge-nikkei.html",
     "guide-signal-lab-114.html",
     "guide-entry-momentum-crash.html",
+    "guide-news-2026-09-30-consumer-confidence-819-12year-low.html",
 ]
