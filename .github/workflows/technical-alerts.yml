@@ -64,11 +64,15 @@ jobs:
       - name: Export to CSV (signals-log.csv / my-trades.csv)
         run: python export_to_csv.py
 
+      # 🆕 2026-09-30 AT3：手元の ea_bridge.py が取りに来る小さな写し（直近7日の4時間足）。失敗しても止めない
+      - name: Build recent signals feed (signals-recent.json)
+        run: python build_signals_recent.py || true
+
       - name: Commit history & track-record if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add technical-alerts-history.json signals-log.json signals-log.csv my-trades.json my-trades.csv track-record.html 2>/dev/null || true
+          git add technical-alerts-history.json signals-log.json signals-log.csv my-trades.json my-trades.csv track-record.html signals-recent.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
