@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-09-30", "line": '・<b>2026-09-30</b>: 💥 解説「<a href="guide-entry-momentum-crash.html" style="color:#0969da"><b>モメンタムが急に大負けする理由</b></a>」公開'},
         {"date": "2026-09-30", "line": '・<b>2026-09-30</b>: 🧪 解説「<a href="guide-signal-lab-114.html" style="color:#0969da"><b>警戒スコアA〜D別の勝率 4868回 #114</b></a>」公開'},
         {"date": "2026-09-29", "line": '・<b>2026-09-29</b>: 📰 解説「<a href="guide-news-2026-09-29-trump-iran-hormuz-oil-surge-nikkei.html" style="color:#0969da"><b>【9/29】トランプがホルムズ提案を拒否──原油急騰・米金利5.25%・日経396円安</b></a>」公開'},
         {"date": "2026-09-29", "line": '・<b>2026-09-29</b>: 🏃 解説「<a href="guide-entry-cross-sectional-momentum.html" style="color:#0969da"><b>相対的な強さ（モメンタム）は効くの？ 研究でわかっていること</b></a>」公開'},

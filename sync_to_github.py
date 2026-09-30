@@ -310,4 +310,5 @@ SYNC_FILES = [
     "guide-entry-cross-sectional-momentum.html",
     "guide-news-2026-09-29-trump-iran-hormuz-oil-surge-nikkei.html",
     "guide-signal-lab-114.html",
+    "guide-entry-momentum-crash.html",
 ]
