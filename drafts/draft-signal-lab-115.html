@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSIが30を下回ったときの逆張り買い、前向き391回での現状 ── 昇格の2回目チェックまであと9回【研究日誌 #115】</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="RSI（相対力指数）が売られすぎ水準を下回ったあとの逆張り買いシグナルについて、前向き391回の現状を報告します。勝率50.6%、損益の幅の下限はプラス0.02倍でプラスを維持。昇格の2回目チェックまであと9回。">
+  <meta property="og:title" content="RSIが30を下回ったときの逆張り買い、前向き391回での現状【研究日誌 #115】">
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-10-01">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RSIが30を下回ったときの逆張り買い、前向き391回での現状 ── 昇格の2回目チェックまであと9回【研究日誌 #115】",
+    "datePublished": "2026-10-01",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI", "url": "https://marketwatch-jp.com"}
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg2: #f8f9fa;
+      --text: #1a1a2e;
+      --text2: #555570;
+      --accent: #2563eb;
+      --border: #e2e8f0;
+      --green: #16a34a;
+      --red: #dc2626;
+      --yellow: #d97706;
+      --win-bg: #dcfce7;
+      --lose-bg: #fee2e2;
+      --neutral: #f1f5f9;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f172a; --bg2: #1e293b; --text: #e2e8f0; --text2: #94a3b8;
+        --accent: #60a5fa; --border: #334155;
+        --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
+        --win-bg: #14532d; --lose-bg: #450a0a; --neutral: #1e293b;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f172a; --bg2: #1e293b; --text: #e2e8f0; --text2: #94a3b8;
+      --accent: #60a5fa; --border: #334155;
+      --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
+      --win-bg: #14532d; --lose-bg: #450a0a; --neutral: #1e293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
+      font-size: 16px; line-height: 1.75;
+    }
+    #reading-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: var(--accent); width: 0%; z-index: 1000; transition: width 0.1s;
+    }
+    .theme-toggle {
+      position: fixed; top: 8px; right: 8px; z-index: 999;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 8px; cursor: pointer;
+      color: var(--text); font-size: 0.85rem;
+    }
+    header {
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .logo-link { text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .logo-text span { color: var(--accent); }
+    nav.site-nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 8px 16px; }
+    .nav-inner { display: flex; flex-wrap: wrap; gap: 5px; max-width: 960px; margin: 0 auto; }
+    .nav-btn {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 5px 10px; border-radius: 6px;
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--text); text-decoration: none;
+      font-size: 0.8rem; white-space: nowrap; transition: background 0.15s;
+    }
+    .nav-btn:hover, .nav-btn.current { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 16px 16px 56px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text2); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .kinsho-v1 {
+      background: var(--neutral); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 0.78rem; color: var(--text2); margin-bottom: 20px; line-height: 1.5;
+    }
+    .kinsho-v1 strong { color: var(--text); }
+    article h1 {
+      font-size: clamp(1.25rem, 4vw, 1.65rem); font-weight: 700;
+      line-height: 1.4; margin-bottom: 12px;
+    }
+    .meta-line { font-size: 0.8rem; color: var(--text2); margin-bottom: 12px; }
+    .anatomy-link { margin-bottom: 18px; }
+    .anatomy-link a { font-size: 0.85rem; color: var(--accent); text-decoration: none; }
+    p { margin-bottom: 1em; }
+    article h2 {
+      font-size: 1.18rem; font-weight: 700;
+      border-left: 4px solid var(--accent); padding-left: 10px;
+      margin: 2em 0 0.8em;
+    }
+    article h3 { font-size: 1.03rem; font-weight: 700; margin: 1.5em 0 0.6em; }
+    article ul, article ol { padding-left: 1.6em; margin-bottom: 1em; }
+    article li { margin-bottom: 0.4em; }
+    .info-box {
+      background: var(--win-bg); border: 1px solid #86efac;
+      border-radius: 8px; padding: 16px 18px; margin: 1.5em 0;
+    }
+    .info-box h4 { font-weight: 700; font-size: 1rem; margin-bottom: 10px; }
+    .info-box ol { padding-left: 1.5em; }
+    .info-box li { margin-bottom: 6px; font-size: 0.92rem; }
+    .toc {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px 18px; margin: 1.5em 0;
+    }
+    .toc h4 { font-weight: 700; margin-bottom: 8px; }
+    .toc ol { padding-left: 1.5em; }
+    .toc li { margin-bottom: 4px; }
+    .toc a { color: var(--accent); text-decoration: none; }
+    .svg-wrap { margin: 1.5em 0; overflow-x: auto; }
+    .svg-caption { font-size: 0.78rem; color: var(--text2); text-align: center; margin-top: 6px; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin: 1em 0; }
+    .data-table th {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 8px 10px; text-align: center; font-weight: 700;
+    }
+    .data-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
+    .data-table tr:nth-child(even) td { background: var(--bg2); }
+    .badge-green { color: var(--green); font-weight: 700; }
+    .badge-red { color: var(--red); font-weight: 700; }
+    .badge-yellow { color: var(--yellow); font-weight: 700; }
+    .tracker-wrap { overflow-x: auto; margin: 1em 0; }
+    .tracker-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .tracker-table th {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 8px; text-align: center; font-weight: 700;
+    }
+    .tracker-table td { border: 1px solid var(--border); padding: 8px; vertical-align: top; }
+    .cta-boxes { display: flex; gap: 12px; flex-wrap: wrap; margin: 2em 0; }
+    .cta-box {
+      flex: 1; min-width: 200px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px;
+    }
+    .cta-box h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 8px; }
+    .cta-box p { font-size: 0.84rem; color: var(--text2); margin: 0 0 8px; }
+    .cta-box a { color: var(--accent); text-decoration: none; }
+    .related-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px; margin: 1em 0;
+    }
+    .related-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .related-card a { color: var(--accent); text-decoration: none; font-size: 0.87rem; font-weight: 600; }
+    .related-card p { font-size: 0.8rem; color: var(--text2); margin: 4px 0 0; }
+    .series-nav { display: flex; gap: 12px; margin: 2em 0; flex-wrap: wrap; }
+    .series-nav-btn {
+      flex: 1; min-width: 200px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      text-decoration: none; color: var(--text); font-size: 0.85rem;
+      transition: border-color 0.15s; display: block;
+    }
+    .series-nav-btn:hover { border-color: var(--accent); }
+    .series-nav-btn .nav-dir { font-size: 0.75rem; color: var(--text2); margin-bottom: 4px; }
+    .series-nav-btn.is-off { opacity: 0.45; pointer-events: none; }
+    footer {
+      text-align: center; padding: 24px 16px;
+      font-size: 0.8rem; color: var(--text2);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div id="reading-progress"></div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">🌙</button>
+
+  <header>
+    <a href="index.html" class="logo-link">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <rect width="28" height="28" rx="6" fill="#2563eb"/>
+        <polyline points="4,20 10,12 16,16 22,8" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="22" cy="8" r="2.5" fill="#facc15"/>
+      </svg>
+      <span class="logo-text">Market<span>Watch</span></span>
+    </a>
+  </header>
+
+  <nav class="site-nav" data-mw-frame aria-label="サイトナビゲーション">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-btn">🏠 ホーム</a>
+      <a href="political-feed.html" class="nav-btn">🚨 政治速報</a>
+      <a href="track-record.html" class="nav-btn current">🧪 シグナル研究</a>
+      <a href="calendar.html" class="nav-btn">📅 カレンダー</a>
+      <a href="guides.html" class="nav-btn">📚 解説記事</a>
+      <a href="guide-investment-books.html" class="nav-btn">📖 投資本</a>
+      <a href="market-health.html" class="nav-btn">🩺 市場健康度</a>
+      <a href="hot-assets.html" class="nav-btn">🔥 出来高急増</a>
+      <a href="charts.html" class="nav-btn">📈 チャート</a>
+      <a href="youtube-summary.html" class="nav-btn">📺 YouTube</a>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <nav class="breadcrumb" aria-label="パンくずリスト">
+      <a href="guides.html">解説記事</a> &rsaquo;
+      <a href="guides.html#signal-lab">AIシグナル研究日誌</a> &rsaquo;
+      研究日誌 #115
+    </nav>
+
+    <article>
+      <div class="kinsho-v1">
+        <strong>免責事項</strong>：本記事はシグナル研究の記録を目的とした情報提供であり、投資助言ではありません。掲載データはシステムによる集計値です。実際の投資判断はご自身の責任で行ってください。金融商品取引法に基づく登録を受けた業者ではありません。過去の成績は将来の結果を保証するものではありません。
+      </div>
+
+      <h1>RSIが30を下回ったときの逆張り買い、前向き391回での現状<br>── 昇格の2回目チェックまであと9回【研究日誌 #115】</h1>
+
+      <div class="meta-line">
+        <time datetime="2026-10-01">2026年10月1日</time>
+        ・約8分で読めます
+        ・カテゴリ：AIシグナル研究日誌
+      </div>
+
+      <div class="anatomy-link">
+        <a href="track-record.html#map">▶ いま検証中のことを地図で見る</a>
+      </div>
+
+      <p>
+        RSI（相対力指数）が30を下回ったあとに価格が反発する動きを買いで取ろうとするシグナル「RSI売られすぎ逆張り買い」について、2026年6月16日に仮説として登録しました。それ以降のリアルタイムデータで成績を積み上げています。
+      </p>
+      <p>
+        今回は前向きの回数が391回に達したので現状を報告します。前回この仮説を取り上げた研究日誌 #109（374回時点）では、損益の幅の下限がゼロを超えた最初のチェックでした。今回は2回目のチェックに向けてあと9回という段階です。
+      </p>
+
+      <div class="info-box">
+        <h4>30秒まとめ</h4>
+        <ol>
+          <li>登録前のデータ（133回）では勝率39.1%。損益分岐の43%を下回っており、後ろ向きの集計では有利な根拠が見当たりませんでした。</li>
+          <li>登録後の前向きデータ（391回）では勝率50.6%。損益の幅の平均はプラス0.18倍、幅の下限はプラス0.02倍でプラスを維持しています。</li>
+          <li>前回（研究日誌 #109・374回）から17回増えて391回になりました。幅の下限は引き続きプラス0.02倍でした。</li>
+          <li>昇格の条件（損益の幅の下限がゼロを超えることを2回連続）の1回目はクリア済み。あと9回で400回（2回目のチェック）となります。</li>
+        </ol>
+      </div>
+
+      <div class="toc">
+        <h4>目次</h4>
+        <ol>
+          <li><a href="#what">この仮説とデータの区切り方</a></li>
+          <li><a href="#is">登録前データ（確かめ直し期間）の結果</a></li>
+          <li><a href="#fwd">前向き期間全体の成績</a></li>
+          <li><a href="#group">商品・通貨・指数ごとの成績</a></li>
+          <li><a href="#tf">時間足ごとの成績</a></li>
+          <li><a href="#tracker">昇格基準と現在地</a></li>
+          <li><a href="#next">次のチェックポイントに向けて</a></li>
+        </ol>
+      </div>
+
+      <h2 id="what">1. この仮説とデータの区切り方</h2>
+      <p>
+        「RSI売られすぎ逆張り買い」は、RSI（相対力指数）が30を下回ったあとに価格が反発する動きを、買いのシグナルとして記録する仮説です。買いの向きのみを対象にしています。
+      </p>
+      <p>
+        仮説の登録日は2026年6月16日です。データは2種類に分けて管理しています。
+      </p>
+      <ul>
+        <li><strong>確かめ直し期間（2026年6月16日以前）</strong>：登録前の過去データで後ろ向きに集計したもの</li>
+        <li><strong>前向き期間（2026年6月17日以降）</strong>：登録後にリアルタイムで積み上げたもの</li>
+      </ul>
+      <p>
+        後ろ向きの集計は「良さそうなデータを後から選んだ」可能性を排除できません。このサイトでは登録後のリアルタイムデータを成績の主軸にしています。
+      </p>
+
+      <h2 id="is">2. 登録前データ（確かめ直し期間）の結果</h2>
+      <p>
+        登録前の133回のデータを集計すると、勝率は39.1%でした。損益分岐の43%を下回っており、損益の幅の平均はマイナス0.09倍（95%の確かさで含まれる範囲：マイナス0.20倍からプラス0.03倍）でした。
+      </p>
+      <p>
+        この時期のデータは「過去に遡って評価したもの」です。登録後の前向きの成績とは分けて考える必要があります。
+      </p>
+
+      <h2 id="fwd">3. 前向き期間全体の成績</h2>
+      <p>
+        2026年6月17日以降に発火した391回のシグナルを集計しました。
+      </p>
+
+      <div class="svg-wrap">
+        <svg viewBox="0 0 500 230" width="100%" style="max-width:500px;display:block;margin:0 auto" role="img" aria-label="登録前と前向き期間の勝率比較">
+          <!-- Axes -->
+          <line x1="80" y1="20" x2="80" y2="192" stroke="#aaa" stroke-width="1"/>
+          <line x1="80" y1="192" x2="430" y2="192" stroke="#aaa" stroke-width="1"/>
+          <!-- Y gridlines: 0% y=192, 65% y=20 → 172px / 65 = 2.646px per 1% -->
+          <!-- 20% = 192 - 20*2.646 = 192 - 52.9 = 139.1 → y=139 -->
+          <line x1="78" y1="139" x2="430" y2="139" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="74" y="143" font-size="11" text-anchor="end" fill="var(--text2)">20%</text>
+          <!-- 40% = 192 - 40*2.646 = 192 - 105.8 = 86.2 → y=86 -->
+          <line x1="78" y1="86" x2="430" y2="86" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="74" y="90" font-size="11" text-anchor="end" fill="var(--text2)">40%</text>
+          <!-- 60% = 192 - 60*2.646 = 192 - 158.8 = 33.2 → y=33 -->
+          <line x1="78" y1="33" x2="430" y2="33" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="74" y="37" font-size="11" text-anchor="end" fill="var(--text2)">60%</text>
+          <!-- 0% label -->
+          <text x="74" y="196" font-size="11" text-anchor="end" fill="var(--text2)">0%</text>
+
+          <!-- Breakeven 43% = 192 - 43*2.646 = 192 - 113.8 = 78.2 → y=78 -->
+          <line x1="80" y1="78" x2="430" y2="78" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="432" y="82" font-size="10" fill="#f59e0b" font-weight="600">損益分岐43%</text>
+
+          <!-- IS bar: 39.1% → y_top = 192 - 39.1*2.646 = 192 - 103.5 = 88.5 → y=89, h=103 -->
+          <rect x="130" y="89" width="75" height="103" fill="#f87171" rx="3"/>
+          <text x="167" y="85" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="700">39.1%</text>
+          <text x="167" y="212" font-size="11" text-anchor="middle" fill="var(--text2)">登録前（133回）</text>
+
+          <!-- FWD bar: 50.6% → y_top = 192 - 50.6*2.646 = 192 - 133.9 = 58.1 → y=58, h=134 -->
+          <rect x="290" y="58" width="75" height="134" fill="#4ade80" rx="3"/>
+          <text x="327" y="54" font-size="12" text-anchor="middle" fill="#16a34a" font-weight="700">50.6%</text>
+          <text x="327" y="212" font-size="11" text-anchor="middle" fill="var(--text2)">前向き（391回）</text>
+        </svg>
+        <p class="svg-caption">図1：登録前と前向き期間の勝率（黄点線が損益分岐43%）</p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>期間</th>
+            <th>回数</th>
+            <th>勝率</th>
+            <th>勝率の幅（95%）</th>
+            <th>損益の幅（平均・1回あたり）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>登録前（〜2026-06-16）</td>
+            <td>133回</td>
+            <td class="badge-red">39.1%</td>
+            <td>31.2〜47.6%</td>
+            <td class="badge-red">マイナス0.09倍</td>
+          </tr>
+          <tr>
+            <td>前向き（2026-06-17〜）</td>
+            <td>391回</td>
+            <td class="badge-green">50.6%</td>
+            <td>45.7〜55.6%</td>
+            <td class="badge-green">プラス0.18倍</td>
+          </tr>
+          <tr>
+            <td>全体ベースライン（前向き期間・全シグナル）</td>
+            <td>4,141回</td>
+            <td>43.4%</td>
+            <td>41.9〜44.9%</td>
+            <td>プラス0.01倍</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        前向き期間の勝率は50.6%で、損益分岐（43%）と全体のベースライン（43.4%）をどちらも上回っています。損益の幅の平均はプラス0.18倍で、95%の確かさで含まれる範囲はプラス0.02倍からプラス0.36倍でした。
+      </p>
+
+      <h2 id="group">4. 商品・通貨・指数ごとの成績</h2>
+      <p>
+        前向き期間の391回を、銘柄の種類ごとに分けて集計しました。
+      </p>
+
+      <div class="svg-wrap">
+        <svg viewBox="0 0 520 255" width="100%" style="max-width:520px;display:block;margin:0 auto" role="img" aria-label="グループ別勝率（前向き期間）">
+          <!-- Header labels -->
+          <text x="155" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">0%</text>
+          <text x="235" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">20%</text>
+          <text x="315" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">40%</text>
+          <text x="395" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">60%</text>
+          <text x="475" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">80%</text>
+          <!-- Grid: 0% at x=155, 80% at x=475 → 320px/80% → 4px per 1% -->
+          <line x1="155" y1="18" x2="155" y2="240" stroke="var(--border)" stroke-width="1"/>
+          <line x1="235" y1="18" x2="235" y2="240" stroke="var(--border)" stroke-width="1"/>
+          <line x1="315" y1="18" x2="315" y2="240" stroke="var(--border)" stroke-width="1"/>
+          <line x1="395" y1="18" x2="395" y2="240" stroke="var(--border)" stroke-width="1"/>
+          <line x1="475" y1="18" x2="475" y2="240" stroke="var(--border)" stroke-width="1"/>
+          <!-- Breakeven 43%: x = 155 + 43*4 = 155 + 172 = 327 -->
+          <line x1="327" y1="16" x2="327" y2="240" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="328" y="11" font-size="9" fill="#f59e0b" font-weight="600">43%</text>
+
+          <!-- Row 1: 金・銀 57.1% → w=57.1*4=228.4→228; y=30 -->
+          <text x="148" y="36" font-size="11" text-anchor="end" fill="var(--text2)">金・銀</text>
+          <rect x="155" y="24" width="228" height="18" fill="#4ade80" rx="2"/>
+          <text x="387" y="37" font-size="11" fill="#16a34a" font-weight="700">57.1%（49回中28回）</text>
+
+          <!-- Row 2: 原油 50.0% → w=200; y=65 -->
+          <text x="148" y="71" font-size="11" text-anchor="end" fill="var(--text2)">原油</text>
+          <rect x="155" y="59" width="200" height="18" fill="#4ade80" rx="2"/>
+          <text x="359" y="72" font-size="11" fill="#16a34a" font-weight="700">50.0%（26回中13回）</text>
+
+          <!-- Row 3: 株価指数 50.6% → w=202; y=100 -->
+          <text x="148" y="106" font-size="11" text-anchor="end" fill="var(--text2)">株価指数</text>
+          <rect x="155" y="94" width="202" height="18" fill="#4ade80" rx="2"/>
+          <text x="361" y="107" font-size="11" fill="#16a34a" font-weight="700">50.6%（79回中40回）</text>
+
+          <!-- Row 4: 円の通貨ペア 51.5% → w=206; y=135 -->
+          <text x="148" y="141" font-size="11" text-anchor="end" fill="var(--text2)">円の通貨ペア</text>
+          <rect x="155" y="129" width="206" height="18" fill="#4ade80" rx="2"/>
+          <text x="365" y="142" font-size="11" fill="#16a34a" font-weight="700">51.5%（99回中51回）</text>
+
+          <!-- Row 5: 円以外の通貨ペア 47.5% → w=190; y=170 -->
+          <text x="148" y="176" font-size="11" text-anchor="end" fill="var(--text2)">円以外の通貨ペア</text>
+          <rect x="155" y="164" width="190" height="18" fill="#86efac" rx="2"/>
+          <text x="349" y="177" font-size="11" fill="#16a34a" font-weight="700">47.5%（122回中58回）</text>
+
+          <!-- Row 6: ビットコイン 57.1% → w=228; y=205 -->
+          <text x="148" y="211" font-size="11" text-anchor="end" fill="var(--text2)">ビットコイン</text>
+          <rect x="155" y="199" width="228" height="18" fill="#4ade80" rx="2"/>
+          <text x="387" y="212" font-size="11" fill="#16a34a" font-weight="700">57.1%（14回中8回）</text>
+        </svg>
+        <p class="svg-caption">図2：グループ別の勝率（前向き期間）。黄点線が損益分岐43%</p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>グループ</th>
+            <th>回数</th>
+            <th>勝率</th>
+            <th>勝率の幅（95%）</th>
+            <th>損益の幅（平均）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>金・銀（コモディティ）</td>
+            <td>49回</td>
+            <td class="badge-green">57.1%</td>
+            <td>43.3〜70.0%</td>
+            <td class="badge-green">プラス0.33倍</td>
+          </tr>
+          <tr>
+            <td>原油</td>
+            <td>26回</td>
+            <td class="badge-green">50.0%</td>
+            <td>32.1〜67.9%</td>
+            <td class="badge-green">プラス0.17倍</td>
+          </tr>
+          <tr>
+            <td>株価指数</td>
+            <td>79回</td>
+            <td class="badge-green">50.6%</td>
+            <td>39.8〜61.4%</td>
+            <td class="badge-green">プラス0.18倍</td>
+          </tr>
+          <tr>
+            <td>円の通貨ペア</td>
+            <td>99回</td>
+            <td class="badge-green">51.5%</td>
+            <td>41.8〜61.1%</td>
+            <td class="badge-green">プラス0.20倍</td>
+          </tr>
+          <tr>
+            <td>円以外の通貨ペア</td>
+            <td>122回</td>
+            <td>47.5%</td>
+            <td>38.9〜56.3%</td>
+            <td>プラス0.11倍</td>
+          </tr>
+          <tr>
+            <td>ビットコイン</td>
+            <td>14回</td>
+            <td class="badge-green">57.1%</td>
+            <td>32.6〜78.6%</td>
+            <td class="badge-green">プラス0.33倍</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        6グループすべてで勝率が43%を上回っています。ただし円以外の通貨ペアは95%の確かさで含まれる範囲（38.9〜56.3%）が43%をまたいでいるため、この区分だけでは現時点で有利と断言できません。ビットコインは14回と回数が少ないため、参考程度にとどめてください。
+      </p>
+
+      <h2 id="tf">5. 時間足ごとの成績</h2>
+      <p>
+        前向き期間の391回を、シグナルが発火した時間足ごとに分けて集計しました。
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>時間足</th>
+            <th>回数</th>
+            <th>勝率</th>
+            <th>勝率の幅（95%）</th>
+            <th>損益の幅（平均）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1時間足</td>
+            <td>246回</td>
+            <td>48.0%</td>
+            <td>41.8〜54.2%</td>
+            <td>プラス0.12倍</td>
+          </tr>
+          <tr>
+            <td>4時間足</td>
+            <td>125回</td>
+            <td class="badge-green">52.0%</td>
+            <td>43.3〜60.6%</td>
+            <td class="badge-green">プラス0.21倍</td>
+          </tr>
+          <tr>
+            <td>日足</td>
+            <td>20回</td>
+            <td class="badge-green">75.0%</td>
+            <td>53.1〜88.8%</td>
+            <td class="badge-green">プラス0.75倍</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        1時間足と4時間足は95%の確かさで含まれる範囲が43%を含んでいるため、時間足ごとの違いは現時点では明確ではありません。日足は20回と回数が少なく、引き続き様子を見る段階です。
+      </p>
+
+      <h2 id="tracker">6. 昇格基準と現在地</h2>
+      <p>
+        このサイトでは、仮説が「使えるシグナル」として認められるまでに段階を設けています。
+      </p>
+
+      <h3>昇格の条件</h3>
+      <ul>
+        <li>前向きの回数が80回以上であること</li>
+        <li>損益の幅の平均の、95%の確かさで含まれる範囲の下限がゼロを超えること</li>
+        <li>上の2つを2回連続でクリアすること（確認の間隔は80回ごと）</li>
+      </ul>
+
+      <h3>前回（研究日誌 #109）からの変化</h3>
+      <p>
+        研究日誌 #109（374回時点）で1回目の条件をクリアしました。損益の幅の下限はプラス0.01倍でゼロを超えていました。今回（391回）も引き続きプラス0.02倍でゼロを超えています。
+      </p>
+
+      <div class="svg-wrap">
+        <svg viewBox="0 0 460 120" width="100%" style="max-width:460px;display:block;margin:0 auto" role="img" aria-label="前向き回数の進捗、374回から391回、次のチェックは400回">
+          <!-- Base line -->
+          <line x1="60" y1="58" x2="420" y2="58" stroke="var(--border)" stroke-width="3" stroke-linecap="round"/>
+          <!-- Scale: 374 at x=60, 400 at x=420 → 360px / 26 units = 13.85px/unit -->
+          <!-- 391: x = 60 + (391-374)*13.85 = 60 + 235.4 = 295 -->
+
+          <!-- Completed segment -->
+          <line x1="60" y1="58" x2="295" y2="58" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Remaining dashed -->
+          <line x1="295" y1="58" x2="420" y2="58" stroke="#93c5fd" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round"/>
+
+          <!-- 374 point -->
+          <circle cx="60" cy="58" r="7" fill="#94a3b8"/>
+          <text x="60" y="82" font-size="11" text-anchor="middle" fill="var(--text2)">374回</text>
+          <text x="60" y="96" font-size="10" text-anchor="middle" fill="var(--text2)">（#109）</text>
+
+          <!-- 391 point (current) -->
+          <circle cx="295" cy="58" r="10" fill="#2563eb"/>
+          <text x="295" y="38" font-size="12" text-anchor="middle" fill="#2563eb" font-weight="700">391回</text>
+          <text x="295" y="52" font-size="10" text-anchor="middle" fill="white" font-weight="700">いまここ</text>
+          <text x="295" y="82" font-size="11" text-anchor="middle" fill="#2563eb">（#115）</text>
+
+          <!-- 400 point -->
+          <circle cx="420" cy="58" r="8" fill="var(--bg2)" stroke="#94a3b8" stroke-width="2"/>
+          <text x="420" y="82" font-size="11" text-anchor="middle" fill="var(--text2)">400回</text>
+          <text x="420" y="96" font-size="10" text-anchor="middle" fill="var(--text2)">（2回目チェック）</text>
+
+          <!-- "あと9回" label without arrows -->
+          <text x="357" y="46" font-size="11" text-anchor="middle" fill="#93c5fd" font-weight="600">あと9回</text>
+        </svg>
+        <p class="svg-caption">図3：前向き回数の進捗（374回から391回へ、次のチェックは400回）</p>
+      </div>
+
+      <div class="tracker-wrap">
+        <table class="tracker-table">
+          <thead>
+            <tr>
+              <th>仮説</th>
+              <th>種別</th>
+              <th>昇格条件</th>
+              <th>現在値</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f0fff4">
+              <td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い（全足）</small></td>
+              <td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">有利さの確認</small></td>
+              <td><span style="white-space:nowrap">前向き80回以上</span><br><span style="white-space:nowrap">損益の幅の下限が0を超えること</span></td>
+              <td><span style="white-space:nowrap">損益の幅 プラス0.18倍</span><br><span style="white-space:nowrap">幅の下限〜上限 [プラス0.02〜プラス0.36]</span><br><small style="opacity:.8;white-space:nowrap">391回中198回・勝率51%</small></td>
+              <td><span style="white-space:nowrap">🟡蓄積中</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.83rem;color:var(--text2);margin-top:6px">
+        ※ すべての追跡中の仮説は <a href="track-record.html" style="color:var(--accent)">シグナル研究ページ</a> で確認できます。
+      </p>
+
+      <h2 id="next">7. 次のチェックポイントに向けて</h2>
+      <p>
+        あと9回の発火で400回に達します。そのタイミングで損益の幅の下限が再びゼロを超えていれば、2回連続クリアとなり昇格の基準を満たします。
+      </p>
+      <p>
+        現在の幅の下限はプラス0.02倍で、ゼロに近い状態で推移しています。次の9回の結果次第で変わる可能性があります。引き続き前向きでの積み上げを続け、次のチェック時点での報告をお届けします。
+      </p>
+
+      <div class="cta-boxes">
+        <div class="cta-box">
+          <h4>📊 シグナル研究の全体像を見る</h4>
+          <p>現在追跡中のすべての仮説と成績をまとめたページです。</p>
+          <p><a href="track-record.html">シグナル研究ページへ →</a></p>
+        </div>
+        <div class="cta-box">
+          <h4>📅 前回の報告（374回時点）</h4>
+          <p>1回目の条件クリア時点での報告です。</p>
+          <p><a href="guide-signal-lab-109.html">研究日誌 #109 を読む →</a></p>
+        </div>
+      </div>
+
+      <h2>関連記事</h2>
+      <div class="related-grid">
+        <div class="related-card">
+          <a href="guide-signal-lab-109.html">RSI逆張り買いの前向き374回目の検証、1回目のチェック通過【研究日誌 #109】</a>
+          <p>374回時点での報告。1回目の条件クリア</p>
+        </div>
+        <div class="related-card">
+          <a href="track-record.html">シグナル研究ページ</a>
+          <p>すべての追跡中の仮説と成績一覧</p>
+        </div>
+        <div class="related-card">
+          <a href="guide-signal-lab-114.html">警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】</a>
+          <p>前号：環境警戒スコアと成績の関係</p>
+        </div>
+      </div>
+
+      <div class="series-nav" aria-label="連載ナビゲーション">
+        <a href="guide-signal-lab-114.html" class="series-nav-btn">
+          <div class="nav-dir">← 前の記事（#114）</div>
+          警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】
+        </a>
+        <a href="guide-signal-lab-116.html" class="series-nav-btn is-off" aria-hidden="true">
+          <div class="nav-dir">次の記事（#116）→</div>
+          研究日誌 #116（準備中）
+        </a>
+      </div>
+
+      <div class="kinsho-v1" style="margin-top:2em">
+        <strong>免責事項</strong>：本記事はシグナル研究の記録を目的とした情報提供であり、投資助言ではありません。掲載データはシステムによる集計値です。実際の投資判断はご自身の責任で行ってください。金融商品取引法に基づく登録を受けた業者ではありません。過去の成績は将来の結果を保証するものではありません。
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <p>© 2026 MarketWatch AI — 投資情報の提供を目的とした情報収集サイトです。</p>
+  </footer>
+
+  <script>
+    const bar = document.getElementById('reading-progress');
+    window.addEventListener('scroll', () => {
+      const h = document.body.scrollHeight - window.innerHeight;
+      if (h > 0) bar.style.width = (window.scrollY / h * 100) + '%';
+    });
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+      const d = document.documentElement;
+      const cur = d.getAttribute('data-theme');
+      if (cur === 'dark') { d.setAttribute('data-theme', 'light'); toggle.textContent = '🌙'; }
+      else { d.setAttribute('data-theme', 'dark'); toggle.textContent = '☀️'; }
+    });
+  </script>
+</body>
+</html>

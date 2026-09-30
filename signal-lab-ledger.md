@@ -694,3 +694,11 @@
 - **ゲート**: verify 6/6緑→Opus1stコンプラ🔴黒①IS/FWDラベル優良誤認（claims全6件fired_before無し）②IS/FWD境界1日ズレ疑義＋🟡3件修正済み→エスカレ
 - **ステータス**: ✅ 公開済み（2026-09-22 付け・2026-09-24 人間が復旧: 全期間の数字を「全期間」と表記・§5 の IS/FWD を 2026-08-12 区切りで再計算＝IS 44/66・FWD 17/36・§4 図の目盛りを棒と同じ縮尺に・やさしい日本語に書き直し（数値不変）。Opus 2段で白）
 - **記事**: guide-signal-lab-106.html
+
+## 2026-10-01 #115
+
+**テーマ**: RSI売られすぎ逆張り買い（rsi_oversold_edge）前向き391回での現状——昇格の2回目チェックまであと9回
+**仮説ID**: rsi_oversold_edge
+**ファイル**: drafts/draft-signal-lab-115.html
+**claims**: drafts/labnotes/lab-115-claims.json
+**分析メモ**: drafts/labnotes/lab-115-analysis.md
