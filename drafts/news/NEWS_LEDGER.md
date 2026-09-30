@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-09-30
+- 判定: ✅ 公開済み
+- 選定トピック: 米消費者信頼感指数が81.9に急落──2014年以来12年ぶりの最低水準、中東・高金利・エネルギー高が家計心理の重荷に（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 選定理由: Conference Boardが9/30発表。CCI 81.9（前月比-6.7pt、予想89.2を7pt超下回る）は2014年4月以来12年ぶり最低。「現況指数」109.3・「期待指数」63.6（3カ月連続低下・景気後退ライン80割れ）。家計財政「悪い」>「良い」が4年ぶり。JOLTs求人7.079百万件も予想下回る。日経は3日ぶり反発+1,272円（PCE期待・中東一時停戦・円高一服の複合）。
+- 出典（確認済み・9系統）:
+  - Conference Board「Consumer Confidence Index, September 2026」2026-09-30
+  - Bloomberg「US Consumer Confidence Falls to 12-Year Low on Geopolitical, Rate Concerns」2026-09-30
+  - U.S. News「Consumer Confidence Falls to Lowest Level Since 2014」2026-09-30
+  - Axios「Consumer confidence falls sharply in September」2026-09-30
+  - Yahoo Finance「JOLTS: Job openings fall to 7.079M in August」2026-09-30
+  - CNBC「Consumer confidence plunges as Americans grow more pessimistic」2026-09-30
+  - 財経新聞「日経平均、3日ぶり反発1272円高の66753円」2026-09-30
+  - OANDA Japan「米消費者信頼感指数が急落、12年ぶり最低水準」2026-09-30
+  - nordfx.com「米消費者信頼感指数──2014年以来の最低水準」2026-09-30
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡軽微（曜日誤記3件・算術誤り1件・タイトル表現やや扇情的・禁止語「必ずしも」誤用）→著者修正→🟢白
+  - 著者修正: ①9/29（月）→9/29（火）②10/2（木）→10/2（金）③「17ポイント以上」→「16ポイント以上（80−63.6＝16.4ポイント）」④h1/og等「家計を直撃」→「家計心理の重荷に」⑤「必ずしも～通らない」→「この水準を通らずに景気後退になる場合もある」⑥「プラスになりうる」→「支えになりうる」
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅（「必ず」は否定文内のため問題なし）③銘柄推奨なし ✅ ④出典9系統 ✅ ⑤中立整理 ✅ → 最終判定 🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典9系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告25件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 品質ルーブリック（QUALITY_RUBRIC.md）: ①②③④⑤ 全✅
+- 公開ファイル: guide-news-2026-09-30-consumer-confidence-819-12year-low.html
+- commit: e2794a4（temp-news-30 → origin/main へ push 済み）
+
+---
+
 ## 2026-09-29
 - 判定: ✅ 公開済み
 - 選定トピック: トランプ大統領がホルムズ海峡再開提案を拒否──原油急騰・米10年金利5.25%・日経396円安の連鎖（カテゴリ: 今日のニュース）
