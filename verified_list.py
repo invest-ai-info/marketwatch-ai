@@ -3,6 +3,7 @@
 期待値がプラスにならないようだったら検証はストップして検証済みリストに追加していってください」）。
 
 ⚠️ 手で書かない＝記録（SOURCES の JSON の verdicts）から毎回組み立てる。前向きの検証を足したら SOURCES に1行足す。
+🆕 2026-09-30 総当たりのふるい分け（M6 など・kind: screen）は SCREEN_SOURCES に1行（理由ごとの件数と直す出発点の候補を載せる）。
 ⚠️ GitHub 側で生成＝手元から送らない（SYNC禁忌）。
 
 実行: python verified_list.py   （前向きの検証のワークフローが、それぞれの計算のあとに回す）
@@ -18,6 +19,11 @@ SOURCES = [
     ("london-lab.json", "L1・L2 ロンドン時間のドルの流れ（過去2年・1回だけ数えた）", ""),   # 🆕 2026-09-30 過去のデータで1000回以上
     ("london-hold-lab.json", "L4 ロンドン時間に入って長めに持つ（過去2年・1回だけ数えた）", "L4"),   # 🆕 2026-09-30
     ("s4-level-fade.json", "S4 前日のロンドン時間の高値・安値の反発×勝率型の出口（過去のデータ・1回だけ数えた・手元の MT5）", ""),   # 🆕 2026-09-30 手元で数えた記録の書き出し
+]
+# 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
+# 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
+SCREEN_SOURCES = [
+    ("m6-screen.json", "M6 ポンド円・ロンドン時間の総当たり（手元の MT5 の5分足・過去に1回ずつ）"),
 ]
 
 
@@ -48,7 +54,75 @@ def collect(sources=SOURCES):
     return stop, plus, watching
 
 
-def render(stop, plus, watching, now=None):
+def collect_screens(sources=None):
+    out = []
+    for path, name in (SCREEN_SOURCES if sources is None else sources):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        if data.get("kind") == "screen":
+            out.append(dict(data, src=name))
+    return out
+
+
+def _r(x):
+    return "—" if x is None else f"{x:+.3f}R"
+
+
+def _p(x):
+    return "—" if x is None else f"{x * 100:.1f}％"
+
+
+def render_screens(screens):
+    """総当たりのふるい分けの節（落ちたもの）"""
+    import screen_judge as J
+    L = ["## 🧮 総当たりのふるい分け（過去のデータで1回ずつ・落ちたもの）", "",
+         "組み合わせが数千あるので、理由ごとの件数だけを載せる（全部の表は手元の `research/` の下）。"
+         "関門を越えたものは `promotion-list.md`（昇格リスト）へ。数字は1回あたりの損益（R＝損切りまでの幅を1とした単位・費用後）。", ""]
+    if not screens:
+        return L + ["- まだ無い（手元で数えた記録が届くと載る）", ""]
+    for s in screens:
+        L += [f"### {s['src']}", ""]
+        for rd in s.get("rounds", []):
+            c = s.get("counts", {}).get(rd["round"], {})
+            parts = [f"{J.REASONS[k]} {c.get(k, 0):,}" for k in J.SCREEN_REASONS]
+            L.append(f"- ラウンド {rd['round']}（{rd['ran_on']} 実行・{rd['n_combos']:,}通り・多重検定の総数 {rd['m_total']:,}）："
+                     + "／".join(parts) + f"／**昇格候補 {c.get('candidate', 0):,}**")
+            rdg = s.get("reading", {}).get(rd["round"], {})
+            if rdg:
+                tfname = {"M5": "5分足", "M15": "15分足", "H1": "1時間足"}
+                L.append("  - 読むための数字（判定ではない）：" + "／".join(
+                    f"{tfname.get(k, k)} 期待値がプラス {v['plus']}/{v['combos']}・期待値の中央値 {_r(v['median_mean'])}・勝率の中央値 {_p(v['median_win'])}"
+                    for k, v in rdg.items()))
+        for r in s.get("redo", []):
+            L.append(f"- やり直し：ラウンド {r['round']}（{r['on']}）理由＝{r['reason']}")
+        gone = s.get("stopped_after_promotion", [])
+        L += ["", "#### 昇格のあとで消えたもの", ""]
+        if gone:
+            L += ["| 組み合わせ | ラウンド | 段階 | 判定日 | 回数 | 期待値 | 95％の幅 |", "|---|---|---|---|---:|---:|---|"]
+            for g in gone:
+                L.append(f"| {g['id']} {J.describe(s, g['id'])} | {g['round']} | {J.REASONS.get(g['reason'], g['reason'])} | "
+                         f"{g['decided_on']} | {g['n']} | {_r(g['mean'])} | {_r(g['lo'])}〜{_r(g['hi'])} |")
+        else:
+            L.append("- 無い")
+        near = s.get("near_misses", [])
+        L += ["", f"#### 直す出発点の候補（上位{J.NEAR_TOP}・t＝期待値÷ぶれ の大きい順）", ""]
+        if near:
+            L += ["| 組み合わせ | ラウンド | 落ちた理由 | 回数 | 勝率 | 期待値 | 95％の幅 | PF |", "|---|---|---|---:|---:|---:|---|---:|"]
+            for x in near:
+                pf = "—" if x.get("pf") is None else f"{x['pf']:.2f}"
+                L.append(f"| {x['id']} {J.describe(s, x['id'])} | {x['round']} | {J.REASONS.get(x['reason'], x['reason'])} | {x['n']} | "
+                         f"{_p(x['win'])} | {_r(x['mean'])} | {_r(x['lo'])}〜{_r(x['hi'])} | {pf} |")
+            L += ["", "⚠️ ここから選んで同じ期間で数え直すと、偶然の当たりを拾いやすい。直すときは、直す中身と理由を先に登録する（`PILLAR_PREREG.md`「M6」の「直して数え直す」）。"]
+        else:
+            L.append("- 無い")
+        L.append("")
+    return L
+
+
+def render(stop, plus, watching, now=None, screens=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
@@ -73,13 +147,14 @@ def render(stop, plus, watching, now=None):
         L.append("- まだ無い")
     L += ["", "## 👀 いま前向きで数えているもの", ""]
     L += [f"- {_label(r)} {r['title']}（{r['n']}/{r['goal']}回）" for r in watching] or ["- 無い"]
-    L += ["", "詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
+    L += [""] + render_screens(screens)
+    L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
           "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
     return "\n".join(L) + "\n"
 
 
 def main():
-    md = render(*collect())
+    md = render(*collect(), screens=collect_screens())
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)

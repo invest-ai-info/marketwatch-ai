@@ -38,12 +38,13 @@ jobs:
         run: |
           python yori_forward.py
           python verified_list.py > /dev/null
+          python promotion_list.py > /dev/null
           [ -f yori-forward.md ] && cat yori-forward.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add yori-forward.json yori-forward.md verified-list.md 2>/dev/null || true
+          git add yori-forward.json yori-forward.md verified-list.md promotion-list.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else
