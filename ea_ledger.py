@@ -19,6 +19,9 @@
   🆕 2026-10-01 AT3 の振り返り（PILLAR_PREREG.md「AT」の追記）→ research/ea/at3-review.md と auto-forward.json の review（集計だけ）
       ずれ（遅れ・入った値のずれ・結果が変わった回・サイトの記録との差）／見送りの答え合わせ／負けの理由（AI の敗因分析）／直す候補
       ⚠️ 直す候補は文を出すだけ。いまの1か月の決まりは変えない（次の期間を登録するときに選ぶ）。サイトの記録は signals-log.json（--signals-log）
+  🆕 2026-10-01 AT4 約定の試験（デモ・1日約100回・PILLAR_PREREG.md「AT」の追記）→ research/ea/at4-probe.md（手元専用・判定しない）
+      mw_probe_log.csv 列: utc,symbol,side,bid,ask,fill_open,lat_open_ms,bid_close,ask_close,fill_close,lat_close_ms,atr_m5,atr_h4,event
+      1往復の費用＝送った時のスプレッド＋建ての滑り＋決済の滑り（不利な向きがプラス）。5分足と4時間足の 1R（ATR×1.5）に対する割合も出す
 
 実行: python ea_ledger.py --files "C:\\Users\\...\\MetaQuotes\\Terminal\\Common\\Files"
 """
@@ -283,6 +286,92 @@ def at3_review(rows, ps, index):
     return review, tr
 
 
+# ───────── AT4 約定の試験（読むための表・判定しない） ─────────
+PROBE_LOG = "mw_probe_log.csv"
+
+
+def _pip(sym):
+    return 0.01 if "JPY" in str(sym or "").upper() else 0.0001
+
+
+def _q(xs, q):
+    """分位（q＝0.5 で中央値・0.9 で90%点）。値が無ければ None"""
+    xs = sorted(x for x in xs if x is not None)
+    if not xs:
+        return None
+    k = (len(xs) - 1) * q
+    lo = int(k)
+    return xs[lo] + (xs[min(lo + 1, len(xs) - 1)] - xs[lo]) * (k - lo)
+
+
+def probe_rows(rows):
+    """約定の試験の1行 → スプレッド・滑り・費用（pips と R）"""
+    out = []
+    for r in rows:
+        side = 1 if int(_f(r.get("side"), 1)) > 0 else -1
+        bid, ask, fo = _f(r.get("bid")), _f(r.get("ask")), _f(r.get("fill_open"))
+        bc, ac, fc = _f(r.get("bid_close")), _f(r.get("ask_close")), _f(r.get("fill_close"))
+        if not all((bid, ask, fo, bc, ac, fc)):
+            continue
+        spread = ask - bid
+        slip_o = (fo - ask) if side > 0 else (bid - fo)             # 買いは売値（ask）より高く、売りは買値（bid）より安く約定したら不利
+        slip_c = (bc - fc) if side > 0 else (fc - ac)
+        cost = spread + slip_o + slip_c
+        a5, a4, pip = _f(r.get("atr_m5")), _f(r.get("atr_h4")), _pip(r.get("symbol"))
+        out.append({"symbol": r.get("symbol", ""), "hour": dt.datetime.fromtimestamp(int(_f(r.get("utc"))), JST).hour,
+                    "event": str(r.get("event", "")).strip() in ("1", "true", "True"),
+                    "spread_pip": spread / pip, "slip_open_pip": slip_o / pip, "slip_close_pip": slip_c / pip,
+                    "lat_open": _f(r.get("lat_open_ms"), None), "lat_close": _f(r.get("lat_close_ms"), None),
+                    "cost_r5": cost / (1.5 * a5) if a5 > 0 else None, "cost_r4": cost / (1.5 * a4) if a4 > 0 else None})
+    return out
+
+
+def probe_summary(ps):
+    def col(k):
+        return [p[k] for p in ps]
+    return {"n": len(ps), "spread_med": _q(col("spread_pip"), .5), "spread_p90": _q(col("spread_pip"), .9),
+            "slip_open_mean": _mean(col("slip_open_pip")), "slip_open_p90": _q(col("slip_open_pip"), .9),
+            "slip_close_mean": _mean(col("slip_close_pip")), "slip_close_p90": _q(col("slip_close_pip"), .9),
+            "lat_med": _q(col("lat_open") + col("lat_close"), .5), "lat_p90": _q(col("lat_open") + col("lat_close"), .9),
+            "cost_r5_med": _q(col("cost_r5"), .5), "cost_r5_p90": _q(col("cost_r5"), .9),
+            "cost_r4_med": _q(col("cost_r4"), .5), "cost_r4_p90": _q(col("cost_r4"), .9)}
+
+
+def probe_report(rows):
+    ps = probe_rows(rows)
+    s = probe_summary(ps)
+
+    def n_(x, f="{:.2f}"):
+        return "—" if x is None else f.format(x)
+
+    def pct(x):
+        return "—" if x is None else f"{x * 100:.1f}%"
+    L = ["# AT4 約定の試験（デモ・手元専用・読むための表＝判定しない）", "",
+         "⚠️ デモの約定は本番より良いことがある。本番の値は AT2 の実際の取引（予定価格と約定）で確かめる。", "",
+         f"- 回数 {s['n']}・スプレッド 中央値 {n_(s['spread_med'])}pips（90%点 {n_(s['spread_p90'])}）",
+         f"- 滑り（不利がプラス）：建て 平均 {n_(s['slip_open_mean'])}pips（90%点 {n_(s['slip_open_p90'])}）／決済 平均 {n_(s['slip_close_mean'])}pips（90%点 {n_(s['slip_close_p90'])}）",
+         f"- 約定までの時間：中央値 {n_(s['lat_med'], '{:.0f}')}ミリ秒（90%点 {n_(s['lat_p90'], '{:.0f}')}）",
+         f"- **1往復の費用が損切り幅に占める割合**：5分足 中央値 {pct(s['cost_r5_med'])}（90%点 {pct(s['cost_r5_p90'])}）／4時間足 中央値 {pct(s['cost_r4_med'])}（90%点 {pct(s['cost_r4_p90'])}）",
+         "", "## ペアごと", "", "| ペア | 回数 | スプレッド中央値 | 滑り（建て）平均 | 費用÷5分足の1R | 費用÷4時間足の1R |", "|---|---:|---:|---:|---:|---:|"]
+    by = collections.defaultdict(list)
+    for p in ps:
+        by[p["symbol"]].append(p)
+    for sym, xs in sorted(by.items()):
+        q = probe_summary(xs)
+        L.append(f"| {sym} | {q['n']} | {n_(q['spread_med'])} | {n_(q['slip_open_mean'])} | {pct(q['cost_r5_med'])} | {pct(q['cost_r4_med'])} |")
+    L += ["", "## 日本時間の1時間ごと（全部のペア）", "", "| 時 | 回数 | スプレッド中央値 | 費用÷5分足の1R（中央値） |", "|---:|---:|---:|---:|"]
+    byh = collections.defaultdict(list)
+    for p in ps:
+        byh[p["hour"]].append(p)
+    for h in sorted(byh, key=lambda h: (h - 15) % 24):                      # 15時から並べる
+        q = probe_summary(byh[h])
+        L.append(f"| {h} | {q['n']} | {n_(q['spread_med'])} | {pct(q['cost_r5_med'])} |")
+    ev = [p for p in ps if p["event"]]
+    L += ["", f"- 重要な発表の前後：{len(ev)}回・費用÷5分足の1R 中央値 {pct(probe_summary(ev)['cost_r5_med'])}"
+          f"（それ以外 {pct(probe_summary([p for p in ps if not p['event']])['cost_r5_med'])}）"]
+    return "\n".join(L) + "\n", s
+
+
 FLIP_TXT = {"worse": "負けに変わった", "better": "得に変わった"}
 
 
@@ -411,12 +500,16 @@ def main(argv=None):
     in_period = [r for r in swing if FWD_START <= jst_date(r.get("signal_utc")) <= CUT_END]
     ps, _ = plans(in_period, "signal_utc")
     review, tr = at3_review(in_period, ps, index)
-    for name, md in (("at1-guard.md", g_md), ("at2-scalp5.md", s_md), ("at3-review.md", review_md(review, tr))):
+    probe = read_csv(os.path.join(a.files, PROBE_LOG))
+    reports = [("at1-guard.md", g_md), ("at2-scalp5.md", s_md), ("at3-review.md", review_md(review, tr))]
+    if probe:
+        reports.append(("at4-probe.md", probe_report(probe)[0]))
+    for name, md in reports:
         with open(os.path.join(a.report_dir, name), "w", encoding="utf-8") as fh:
             fh.write(md)
     s = at3["summary"]
     print(f"AT3：{s['n']}回（開いている {s['open_plans']}）・{s['state']}・判定 {at3['verdicts'].get('AT3', {}).get('status', 'まだ')} → {a.json_out}")
-    print(f"AT1・AT2 の報告と AT3 の振り返り → {a.report_dir}（送らない）・直す候補 {len(review['proposals'])}件"
+    print(f"AT1・AT2 の報告と AT3 の振り返り{'・AT4 約定の試験' if probe else ''} → {a.report_dir}（送らない）・直す候補 {len(review['proposals'])}件"
           + ("" if index[0] else "（signals-log.json が読めず、サイトの記録との突き合わせは空）"))
     return 0
 
