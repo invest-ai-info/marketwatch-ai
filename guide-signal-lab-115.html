@@ -6,14 +6,11 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>RSIが30を下回ったときの逆張り買い、前向き391回での現状 ── 昇格の2回目チェックまであと9回【研究日誌 #115】</title>
-  <meta name="description" content="RSI（相対力指数）が売られすぎ水準を下回ったあとの逆張り買いシグナルについて、前向き391回の現状を報告します。勝率50.6%、損益の幅の下限はプラス0.02倍でプラスを維持。昇格の2回目チェックまであと9回。">
-  <meta name="keywords" content="">
-  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-115.html">
+  <title>ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】 - MarketWatch AI</title>
+  <meta name="description" content="移動平均線のゴールデンクロス（短い平均線が長い平均線を下から上へ抜けた瞬間）で出る買いシグナル177回の勝率は40.1%（偶然のぶれを考えた幅33.2%〜47.5%）。全体ベースライン42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="RSIが30を下回ったときの逆張り買い、前向き391回での現状 ── 昇格の2回目チェックまであと9回【研究日誌 #115】">
-  <meta property="og:description" content="RSI（相対力指数）が売られすぎ水準を下回ったあとの逆張り買いシグナルについて、前向き391回の現状を報告します。勝率50.6%、損益の幅の下限はプラス0.02倍でプラスを維持。昇格の2回目チェックまであと9回。">
-  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-115.html">
+  <meta property="og:title" content="ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】">
+  <meta property="og:description" content="移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
@@ -23,12 +20,12 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "RSIが30を下回ったときの逆張り買い、前向き391回での現状 ── 昇格の2回目チェックまであと9回【研究日誌 #115】",
-    "description": "RSI（相対力指数）が売られすぎ水準を下回ったあとの逆張り買いシグナルについて、前向き391回の現状を報告します。勝率50.6%、損益の幅の下限はプラス0.02倍でプラスを維持。昇格の2回目チェックまであと9回。",
+    "headline": "ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】",
+    "description": "移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
-    "datePublished": "2026-10-01",
-    "dateModified": "2026-10-01",
+    "datePublished": "2026-10-02",
+    "dateModified": "2026-10-02",
     "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-115.html"
   }
   </script>
@@ -45,177 +42,132 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #ffffff;
-      --bg2: #f8f9fa;
-      --text: #1a1a2e;
-      --text2: #555570;
-      --accent: #2563eb;
-      --border: #e2e8f0;
-      --green: #16a34a;
-      --red: #dc2626;
-      --yellow: #d97706;
-      --win-bg: #dcfce7;
-      --lose-bg: #fee2e2;
-      --neutral: #f1f5f9;
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-y{stroke:#e8a317;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
     }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #0f172a; --bg2: #1e293b; --text: #e2e8f0; --text2: #94a3b8;
-        --accent: #60a5fa; --border: #334155;
-        --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
-        --win-bg: #14532d; --lose-bg: #450a0a; --neutral: #1e293b;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: #0f172a; --bg2: #1e293b; --text: #e2e8f0; --text2: #94a3b8;
-      --accent: #60a5fa; --border: #334155;
-      --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
-      --win-bg: #14532d; --lose-bg: #450a0a; --neutral: #1e293b;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
-      font-size: 16px; line-height: 1.75;
-    }
-    #reading-progress {
-      position: fixed; top: 0; left: 0; height: 3px;
-      background: var(--accent); width: 0%; z-index: 1000; transition: width 0.1s;
-    }
-    .theme-toggle {
-      position: fixed; top: 8px; right: 8px; z-index: 999;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 4px 8px; cursor: pointer;
-      color: var(--text); font-size: 0.85rem;
-    }
-    header {
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
-    }
-    .logo-link { text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .logo-text span { color: var(--accent); }
-    nav.site-nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 8px 16px; }
-    .nav-inner { display: flex; flex-wrap: wrap; gap: 5px; max-width: 960px; margin: 0 auto; }
-    .nav-btn {
-      display: inline-flex; align-items: center; gap: 3px;
-      padding: 5px 10px; border-radius: 6px;
-      background: var(--bg); border: 1px solid var(--border);
-      color: var(--text); text-decoration: none;
-      font-size: 0.8rem; white-space: nowrap; transition: background 0.15s;
-    }
-    .nav-btn:hover, .nav-btn.current { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .page-wrap { max-width: 860px; margin: 0 auto; padding: 16px 16px 56px; }
-    .breadcrumb { font-size: 0.8rem; color: var(--text2); margin-bottom: 16px; }
-    .breadcrumb a { color: var(--accent); text-decoration: none; }
-    .kinsho-v1 {
-      background: var(--neutral); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 16px;
-      font-size: 0.78rem; color: var(--text2); margin-bottom: 20px; line-height: 1.5;
-    }
-    .kinsho-v1 strong { color: var(--text); }
-    article h1 {
-      font-size: clamp(1.25rem, 4vw, 1.65rem); font-weight: 700;
-      line-height: 1.4; margin-bottom: 12px;
-    }
-    .meta-line { font-size: 0.8rem; color: var(--text2); margin-bottom: 12px; }
-    .anatomy-link { margin-bottom: 18px; }
-    .anatomy-link a { font-size: 0.85rem; color: var(--accent); text-decoration: none; }
-    p { margin-bottom: 1em; }
-    article h2 {
-      font-size: 1.18rem; font-weight: 700;
-      border-left: 4px solid var(--accent); padding-left: 10px;
-      margin: 2em 0 0.8em;
-    }
-    article h3 { font-size: 1.03rem; font-weight: 700; margin: 1.5em 0 0.6em; }
-    article ul, article ol { padding-left: 1.6em; margin-bottom: 1em; }
-    article li { margin-bottom: 0.4em; }
-    .info-box {
-      background: var(--win-bg); border: 1px solid #86efac;
-      border-radius: 8px; padding: 16px 18px; margin: 1.5em 0;
-    }
-    .info-box h4 { font-weight: 700; font-size: 1rem; margin-bottom: 10px; }
-    .info-box ol { padding-left: 1.5em; }
-    .info-box li { margin-bottom: 6px; font-size: 0.92rem; }
-    .toc {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 16px 18px; margin: 1.5em 0;
-    }
-    .toc h4 { font-weight: 700; margin-bottom: 8px; }
-    .toc ol { padding-left: 1.5em; }
-    .toc li { margin-bottom: 4px; }
-    .toc a { color: var(--accent); text-decoration: none; }
-    .svg-wrap { margin: 1.5em 0; overflow-x: auto; }
-    .svg-caption { font-size: 0.78rem; color: var(--text2); text-align: center; margin-top: 6px; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin: 1em 0; }
-    .data-table th {
-      background: var(--bg2); border: 1px solid var(--border);
-      padding: 8px 10px; text-align: center; font-weight: 700;
-    }
-    .data-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
-    .data-table tr:nth-child(even) td { background: var(--bg2); }
-    .badge-green { color: var(--green); font-weight: 700; }
-    .badge-red { color: var(--red); font-weight: 700; }
-    .badge-yellow { color: var(--yellow); font-weight: 700; }
-    .tracker-wrap { overflow-x: auto; margin: 1em 0; }
-    .tracker-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    .tracker-table th {
-      background: var(--bg2); border: 1px solid var(--border);
-      padding: 8px; text-align: center; font-weight: 700;
-    }
-    .tracker-table td { border: 1px solid var(--border); padding: 8px; vertical-align: top; }
-    .cta-boxes { display: flex; gap: 12px; flex-wrap: wrap; margin: 2em 0; }
-    .cta-box {
-      flex: 1; min-width: 200px;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 16px;
-    }
-    .cta-box h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 8px; }
-    .cta-box p { font-size: 0.84rem; color: var(--text2); margin: 0 0 8px; }
-    .cta-box a { color: var(--accent); text-decoration: none; }
-    .related-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px; margin: 1em 0;
-    }
-    .related-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 14px;
-    }
-    .related-card a { color: var(--accent); text-decoration: none; font-size: 0.87rem; font-weight: 600; }
-    .related-card p { font-size: 0.8rem; color: var(--text2); margin: 4px 0 0; }
-    .series-nav { display: flex; gap: 12px; margin: 2em 0; flex-wrap: wrap; }
-    .series-nav-btn {
-      flex: 1; min-width: 200px;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 16px;
-      text-decoration: none; color: var(--text); font-size: 0.85rem;
-      transition: border-color 0.15s; display: block;
-    }
-    .series-nav-btn:hover { border-color: var(--accent); }
-    .series-nav-btn .nav-dir { font-size: 0.75rem; color: var(--text2); margin-bottom: 4px; }
-    .series-nav-btn.is-off { opacity: 0.45; pointer-events: none; }
-    footer {
-      text-align: center; padding: 24px 16px;
-      font-size: 0.8rem; color: var(--text2);
-      border-top: 1px solid var(--border);
-    }
-    .disclaimer-banner {
-      background: #fff8c5; border: 1px solid #d4a017;
-      border-radius: 8px; padding: 14px 18px;
-      margin-bottom: 24px; font-size: .88rem;
-      color: #6a4c00; font-weight: 600;
-    }
-    p.disclaimer {
-      font-size: .8rem; color: #6e7781;
-      line-height: 1.7; margin-top: 28px;
-      padding-top: 18px; border-top: 1px dashed #d0d7de;
-    }
-    .footer-disclaimer { margin-top: 8px; font-size: 0.78rem; }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    /* readable-width v1 */@media(min-width:900px){.article p{max-width:40em}}
   </style>
 <style id="mw-mobile-fit">
-/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
 html,body{overflow-x:hidden}
 .article,main,section,header,footer{max-width:100%}
 *{overflow-wrap:break-word;word-break:normal}
@@ -229,7 +181,6 @@ td strong,td b,th strong{white-space:nowrap}
   .article{padding:14px 11px}
   h1{font-size:1.26rem;line-height:1.4}
   h2{font-size:1.08rem}
-  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
   table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
   th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
   .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
@@ -240,574 +191,584 @@ td strong,td b,th strong{white-space:nowrap}
   table{font-size:.76rem}
 }
 </style>
-<script id="mw-mobile-fit-js">
-(function(){try{
-function mark(){
-if(window.innerWidth>600)return;
-var ts=document.getElementsByTagName('table');
-for(var i=0;i<ts.length;i++){(function(t){
-if(t.getAttribute('data-mw-sc'))return;
-if(t.scrollWidth-t.clientWidth>4){
-t.setAttribute('data-mw-sc','1');
-var h=document.createElement('div');
-h.className='mw-scroll-hint';
-h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
-if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
-t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
-}
-})(ts[i]);}
-}
-if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
-window.addEventListener('resize',mark);
-}catch(e){}})();
-</script>
-<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
 </head>
 <body>
-<header data-mw-frame>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
   <div class="header-inner">
     <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
     <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
   </div>
 </header>
-  <div id="reading-progress"></div>
-  <button class="theme-toggle" id="theme-toggle" aria-label="テーマ切替">🌙</button>
 
-  <header>
-    <a href="index.html" class="logo-link">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <rect width="28" height="28" rx="6" fill="#2563eb"/>
-        <polyline points="4,20 10,12 16,16 22,8" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="22" cy="8" r="2.5" fill="#facc15"/>
-      </svg>
-      <span class="logo-text">Market<span>Watch</span></span>
-    </a>
-  </header>
-
+<main>
   <nav class="nav-bar mwf-nav">
     <a class="nav-btn" href="index.html">🏠 トップページ</a>
     <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn current" href="track-record.html">🧪 シグナル研究</a>
     <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guides.html">📚 解説記事</a>
     <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
-    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
     <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
     <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
     <a class="nav-btn" href="charts.html">📈 150年チャート</a>
     <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
   </nav>
 
-  <div class="page-wrap">
-    <nav class="breadcrumb" aria-label="パンくずリスト">
-      <a href="guides.html">解説記事</a> &rsaquo;
-      <a href="guides.html#signal-lab">AIシグナル研究日誌</a> &rsaquo;
-      研究日誌 #115
-    </nav>
-
-    <article>
-      <!-- ① 冒頭バナー（kinsho-v1） -->
-      <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
-        ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
-      </div>
-
-      <h1>RSIが30を下回ったときの逆張り買い、前向き391回での現状<br>── 昇格の2回目チェックまであと9回【研究日誌 #115】</h1>
-
-      <div class="meta-line">
-        <time datetime="2026-10-01">2026年10月1日</time>
-        ・約8分で読めます
-        ・カテゴリ：AIシグナル研究日誌
-      </div>
-
-      <div class="anatomy-link">
-        <a href="track-record.html#map">▶ いま検証中のことを地図で見る</a>
-      </div>
-
-      <p>
-        RSI（相対力指数）が30を下回ったあとに価格が反発する動きを買いで取ろうとするシグナル「RSI売られすぎ逆張り買い」について、2026年6月16日に仮説として登録しました。それ以降のリアルタイムデータで成績を積み上げています。
-      </p>
-      <p>
-        今回は前向きの回数が391回に達したので現状を報告します。前回この仮説を取り上げた研究日誌 #109（374回時点）では、損益の幅の下限がゼロを超えた最初のチェックでした。今回は2回目のチェックに向けてあと9回という段階です。
-      </p>
-
-      <div class="info-box">
-        <h4>30秒でわかる</h4>
-        <ol>
-          <li>登録前のデータ（133回）では勝率39.1%。損益分岐の43%を下回っており、後ろ向きの集計では有利な根拠が見当たりませんでした。</li>
-          <li>登録後の前向きデータ（391回）では勝率50.6%。損益の幅の平均はプラス0.18倍、幅の下限はプラス0.02倍でプラスを維持しています。</li>
-          <li>前回（研究日誌 #109・374回）から17回増えて391回になりました。幅の下限は前回のプラス0.01倍からプラス0.02倍となり、引き続きゼロを超えています。</li>
-          <li>昇格の条件（損益の幅の下限がゼロを超えることを2回連続）の1回目はクリア済み。あと9回で400回（2回目のチェック）となります。</li>
-        </ol>
-      </div>
-
-      <div class="toc">
-        <h4>目次</h4>
-        <ol>
-          <li><a href="#what">この仮説とデータの区切り方</a></li>
-          <li><a href="#is">登録前データ（確かめ直し期間）の結果</a></li>
-          <li><a href="#fwd">前向き期間全体の成績</a></li>
-          <li><a href="#group">商品・通貨・指数ごとの成績</a></li>
-          <li><a href="#tf">時間足ごとの成績</a></li>
-          <li><a href="#tracker">昇格基準と現在地</a></li>
-          <li><a href="#next">次のチェックポイントに向けて</a></li>
-        </ol>
-      </div>
-
-      <h2 id="what">1. この仮説とデータの区切り方</h2>
-      <p>
-        「RSI売られすぎ逆張り買い」は、RSI（相対力指数）が30を下回ったあとに価格が反発する動きを、買いのシグナルとして記録する仮説です。買いの向きのみを対象にしています。
-      </p>
-      <p>
-        仮説の登録日は2026年6月16日です。データは2種類に分けて管理しています。
-      </p>
-      <ul>
-        <li><strong>確かめ直し期間（2026年6月16日以前）</strong>：登録前の過去データで後ろ向きに集計したもの</li>
-        <li><strong>前向き期間（2026年6月17日以降）</strong>：登録後にリアルタイムで積み上げたもの</li>
-      </ul>
-      <p>
-        後ろ向きの集計は「良さそうなデータを後から選んだ」可能性を排除できません。このサイトでは登録後のリアルタイムデータを成績の主軸にしています。
-      </p>
-
-      <h2 id="is">2. 登録前データ（確かめ直し期間）の結果</h2>
-      <p>
-        登録前の133回のデータを集計すると、勝率は39.1%でした。損益分岐の43%を下回っており、損益の幅の平均はマイナス0.09倍（95%の確かさで含まれる範囲：マイナス0.20倍からプラス0.03倍）でした。
-      </p>
-      <p>
-        この時期のデータは「過去に遡って評価したもの」です。登録後の前向きの成績とは分けて考える必要があります。
-      </p>
-
-      <h2 id="fwd">3. 前向き期間全体の成績</h2>
-      <p>
-        2026年6月17日以降に発火した391回のシグナルを集計しました。
-      </p>
-
-      <div class="svg-wrap">
-        <svg viewBox="0 0 500 230" width="100%" style="max-width:500px;display:block;margin:0 auto" role="img" aria-label="登録前と前向き期間の勝率比較">
-          <!-- Axes -->
-          <line x1="80" y1="20" x2="80" y2="192" stroke="#aaa" stroke-width="1"/>
-          <line x1="80" y1="192" x2="430" y2="192" stroke="#aaa" stroke-width="1"/>
-          <!-- Y gridlines: 0% y=192, 65% y=20 → 172px / 65 = 2.646px per 1% -->
-          <!-- 20% = 192 - 20*2.646 = 192 - 52.9 = 139.1 → y=139 -->
-          <line x1="78" y1="139" x2="430" y2="139" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="74" y="143" font-size="11" text-anchor="end" fill="var(--text2)">20%</text>
-          <!-- 40% = 192 - 40*2.646 = 192 - 105.8 = 86.2 → y=86 -->
-          <line x1="78" y1="86" x2="430" y2="86" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="74" y="90" font-size="11" text-anchor="end" fill="var(--text2)">40%</text>
-          <!-- 60% = 192 - 60*2.646 = 192 - 158.8 = 33.2 → y=33 -->
-          <line x1="78" y1="33" x2="430" y2="33" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="74" y="37" font-size="11" text-anchor="end" fill="var(--text2)">60%</text>
-          <!-- 0% label -->
-          <text x="74" y="196" font-size="11" text-anchor="end" fill="var(--text2)">0%</text>
-
-          <!-- Breakeven 43% = 192 - 43*2.646 = 192 - 113.8 = 78.2 → y=78 -->
-          <line x1="80" y1="78" x2="430" y2="78" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
-          <text x="432" y="82" font-size="10" fill="#f59e0b" font-weight="600">損益分岐43%</text>
-
-          <!-- IS bar: 39.1% → y_top = 192 - 39.1*2.646 = 192 - 103.5 = 88.5 → y=89, h=103 -->
-          <rect x="130" y="89" width="75" height="103" fill="#f87171" rx="3"/>
-          <text x="167" y="85" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="700">39.1%</text>
-          <text x="167" y="212" font-size="11" text-anchor="middle" fill="var(--text2)">登録前（133回）</text>
-
-          <!-- FWD bar: 50.6% → y_top = 192 - 50.6*2.646 = 192 - 133.9 = 58.1 → y=58, h=134 -->
-          <rect x="290" y="58" width="75" height="134" fill="#4ade80" rx="3"/>
-          <text x="327" y="54" font-size="12" text-anchor="middle" fill="#16a34a" font-weight="700">50.6%</text>
-          <text x="327" y="212" font-size="11" text-anchor="middle" fill="var(--text2)">前向き（391回）</text>
-        </svg>
-        <p class="svg-caption">図1：登録前と前向き期間の勝率（黄点線が損益分岐43%）</p>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>期間</th>
-            <th>回数</th>
-            <th>勝率</th>
-            <th>勝率の幅（95%）</th>
-            <th>損益の幅（平均・1回あたり）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>登録前（〜2026-06-16）</td>
-            <td>133回</td>
-            <td class="badge-red">39.1%</td>
-            <td>31.2〜47.6%</td>
-            <td class="badge-red">マイナス0.09倍</td>
-          </tr>
-          <tr>
-            <td>前向き（2026-06-17〜）</td>
-            <td>391回</td>
-            <td class="badge-green">50.6%</td>
-            <td>45.7〜55.6%</td>
-            <td class="badge-green">プラス0.18倍</td>
-          </tr>
-          <tr>
-            <td>全体ベースライン（前向き期間・全シグナル）</td>
-            <td>4,141回</td>
-            <td>43.4%</td>
-            <td>41.9〜44.9%</td>
-            <td>プラス0.01倍</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>
-        前向き期間の勝率は50.6%で、損益分岐（43%）と全体のベースライン（43.4%）をどちらも上回っています。損益の幅の平均はプラス0.18倍で、95%の確かさで含まれる範囲はプラス0.02倍からプラス0.36倍でした。
-      </p>
-
-      <h2 id="group">4. 商品・通貨・指数ごとの成績</h2>
-      <p>
-        前向き期間の391回を、銘柄の種類ごとに分けて集計しました。
-      </p>
-
-      <div class="svg-wrap">
-        <svg viewBox="0 0 520 255" width="100%" style="max-width:520px;display:block;margin:0 auto" role="img" aria-label="グループ別勝率（前向き期間）">
-          <!-- Header labels -->
-          <text x="155" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">0%</text>
-          <text x="235" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">20%</text>
-          <text x="315" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">40%</text>
-          <text x="395" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">60%</text>
-          <text x="475" y="14" font-size="10" text-anchor="middle" fill="var(--text2)">80%</text>
-          <!-- Grid: 0% at x=155, 80% at x=475 → 320px/80% → 4px per 1% -->
-          <line x1="155" y1="18" x2="155" y2="240" stroke="var(--border)" stroke-width="1"/>
-          <line x1="235" y1="18" x2="235" y2="240" stroke="var(--border)" stroke-width="1"/>
-          <line x1="315" y1="18" x2="315" y2="240" stroke="var(--border)" stroke-width="1"/>
-          <line x1="395" y1="18" x2="395" y2="240" stroke="var(--border)" stroke-width="1"/>
-          <line x1="475" y1="18" x2="475" y2="240" stroke="var(--border)" stroke-width="1"/>
-          <!-- Breakeven 43%: x = 155 + 43*4 = 155 + 172 = 327 -->
-          <line x1="327" y1="16" x2="327" y2="240" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
-          <text x="328" y="11" font-size="9" fill="#f59e0b" font-weight="600">43%</text>
-
-          <!-- Row 1: 金・銀 57.1% → w=57.1*4=228.4→228; y=30 -->
-          <text x="148" y="36" font-size="11" text-anchor="end" fill="var(--text2)">金・銀</text>
-          <rect x="155" y="24" width="228" height="18" fill="#4ade80" rx="2"/>
-          <text x="387" y="37" font-size="11" fill="#16a34a" font-weight="700">57.1%（49回中28回）</text>
-
-          <!-- Row 2: 原油 50.0% → w=200; y=65 -->
-          <text x="148" y="71" font-size="11" text-anchor="end" fill="var(--text2)">原油</text>
-          <rect x="155" y="59" width="200" height="18" fill="#4ade80" rx="2"/>
-          <text x="359" y="72" font-size="11" fill="#16a34a" font-weight="700">50.0%（26回中13回）</text>
-
-          <!-- Row 3: 株価指数 50.6% → w=202; y=100 -->
-          <text x="148" y="106" font-size="11" text-anchor="end" fill="var(--text2)">株価指数</text>
-          <rect x="155" y="94" width="202" height="18" fill="#4ade80" rx="2"/>
-          <text x="361" y="107" font-size="11" fill="#16a34a" font-weight="700">50.6%（79回中40回）</text>
-
-          <!-- Row 4: 円の通貨ペア 51.5% → w=206; y=135 -->
-          <text x="148" y="141" font-size="11" text-anchor="end" fill="var(--text2)">円の通貨ペア</text>
-          <rect x="155" y="129" width="206" height="18" fill="#4ade80" rx="2"/>
-          <text x="365" y="142" font-size="11" fill="#16a34a" font-weight="700">51.5%（99回中51回）</text>
-
-          <!-- Row 5: 円以外の通貨ペア 47.5% → w=190; y=170 -->
-          <text x="148" y="176" font-size="11" text-anchor="end" fill="var(--text2)">円以外の通貨ペア</text>
-          <rect x="155" y="164" width="190" height="18" fill="#86efac" rx="2"/>
-          <text x="349" y="177" font-size="11" fill="#16a34a" font-weight="700">47.5%（122回中58回）</text>
-
-          <!-- Row 6: ビットコイン 57.1% → w=228; y=205 -->
-          <text x="148" y="211" font-size="11" text-anchor="end" fill="var(--text2)">ビットコイン</text>
-          <rect x="155" y="199" width="228" height="18" fill="#4ade80" rx="2"/>
-          <text x="387" y="212" font-size="11" fill="#16a34a" font-weight="700">57.1%（14回中8回）</text>
-        </svg>
-        <p class="svg-caption">図2：グループ別の勝率（前向き期間）。黄点線が損益分岐43%</p>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>グループ</th>
-            <th>回数</th>
-            <th>勝率</th>
-            <th>勝率の幅（95%）</th>
-            <th>損益の幅（平均）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>金・銀（コモディティ）</td>
-            <td>49回</td>
-            <td class="badge-green">57.1%</td>
-            <td>43.3〜70.0%</td>
-            <td class="badge-green">プラス0.33倍</td>
-          </tr>
-          <tr>
-            <td>原油</td>
-            <td>26回</td>
-            <td class="badge-green">50.0%</td>
-            <td>32.1〜67.9%</td>
-            <td class="badge-green">プラス0.17倍</td>
-          </tr>
-          <tr>
-            <td>株価指数</td>
-            <td>79回</td>
-            <td class="badge-green">50.6%</td>
-            <td>39.8〜61.4%</td>
-            <td class="badge-green">プラス0.18倍</td>
-          </tr>
-          <tr>
-            <td>円の通貨ペア</td>
-            <td>99回</td>
-            <td class="badge-green">51.5%</td>
-            <td>41.8〜61.1%</td>
-            <td class="badge-green">プラス0.20倍</td>
-          </tr>
-          <tr>
-            <td>円以外の通貨ペア</td>
-            <td>122回</td>
-            <td>47.5%</td>
-            <td>38.9〜56.3%</td>
-            <td>プラス0.11倍</td>
-          </tr>
-          <tr>
-            <td>ビットコイン</td>
-            <td>14回</td>
-            <td class="badge-green">57.1%</td>
-            <td>32.6〜78.6%</td>
-            <td class="badge-green">プラス0.33倍</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>
-        6グループすべてで勝率が43%を上回っています。ただし円以外の通貨ペアは95%の確かさで含まれる範囲（38.9〜56.3%）が43%をまたいでいるため、この区分だけでは現時点で有利と断言できません。ビットコインは14回と回数が少ないため、参考程度にとどめてください。なお6グループの合計（389回）と前向き期間全体（391回）の差分2回は、いずれのグループにも分類されない銘柄によるものです。
-      </p>
-
-      <h2 id="tf">5. 時間足ごとの成績</h2>
-      <p>
-        前向き期間の391回を、シグナルが発火した時間足ごとに分けて集計しました。
-      </p>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>時間足</th>
-            <th>回数</th>
-            <th>勝率</th>
-            <th>勝率の幅（95%）</th>
-            <th>損益の幅（平均）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1時間足</td>
-            <td>246回</td>
-            <td>48.0%</td>
-            <td>41.8〜54.2%</td>
-            <td>プラス0.12倍</td>
-          </tr>
-          <tr>
-            <td>4時間足</td>
-            <td>125回</td>
-            <td class="badge-green">52.0%</td>
-            <td>43.3〜60.6%</td>
-            <td class="badge-green">プラス0.21倍</td>
-          </tr>
-          <tr>
-            <td>日足</td>
-            <td>20回</td>
-            <td class="badge-green">75.0%</td>
-            <td>53.1〜88.8%</td>
-            <td class="badge-green">プラス0.75倍</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>
-        1時間足は95%の確かさで含まれる範囲（41.8〜54.2%）が43%を含んでいます。4時間足の下限は43.3%と損益分岐のすぐ上で、現時点では明確な差とは言えません。日足は20回と回数が少なく、引き続き様子を見る段階です。時間足ごとの違いは今後の回数の積み上げで確かめる必要があります。
-      </p>
-
-      <h2 id="tracker">6. 昇格基準と現在地</h2>
-      <p>
-        このサイトでは、仮説が「昇格」（有利さが前向きで2回連続して確認された状態）と判定されるまでに段階を設けています。
-      </p>
-
-      <h3>昇格の条件</h3>
-      <ul>
-        <li>前向きの回数が80回以上であること</li>
-        <li>損益の幅の平均の、95%の確かさで含まれる範囲の下限がゼロを超えること</li>
-        <li>上の2つをあらかじめ決めたチェックポイントで2回連続でクリアすること</li>
-      </ul>
-
-      <h3>前回（研究日誌 #109）からの変化</h3>
-      <p>
-        研究日誌 #109（374回時点）で1回目の条件をクリアしました。そのときの幅の下限はプラス0.01倍でした。今回（391回）は前回のプラス0.01倍から上昇し、プラス0.02倍となっています。引き続きゼロを超えています。
-      </p>
-
-      <div class="svg-wrap">
-        <svg viewBox="0 0 460 120" width="100%" style="max-width:460px;display:block;margin:0 auto" role="img" aria-label="前向き回数の進捗、374回から391回、次のチェックは400回">
-          <!-- Base line -->
-          <line x1="60" y1="58" x2="420" y2="58" stroke="var(--border)" stroke-width="3" stroke-linecap="round"/>
-          <!-- Scale: 374 at x=60, 400 at x=420 → 360px / 26 units = 13.85px/unit -->
-          <!-- 391: x = 60 + (391-374)*13.85 = 60 + 235.4 = 295 -->
-
-          <!-- Completed segment -->
-          <line x1="60" y1="58" x2="295" y2="58" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
-
-          <!-- Remaining dashed -->
-          <line x1="295" y1="58" x2="420" y2="58" stroke="#93c5fd" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round"/>
-
-          <!-- 374 point -->
-          <circle cx="60" cy="58" r="7" fill="#94a3b8"/>
-          <text x="60" y="82" font-size="11" text-anchor="middle" fill="var(--text2)">374回</text>
-          <text x="60" y="96" font-size="10" text-anchor="middle" fill="var(--text2)">（#109）</text>
-
-          <!-- 391 point (current) -->
-          <circle cx="295" cy="58" r="10" fill="#2563eb"/>
-          <text x="295" y="38" font-size="12" text-anchor="middle" fill="#2563eb" font-weight="700">391回</text>
-          <text x="295" y="52" font-size="10" text-anchor="middle" fill="white" font-weight="700">いまここ</text>
-          <text x="295" y="82" font-size="11" text-anchor="middle" fill="#2563eb">（#115）</text>
-
-          <!-- 400 point -->
-          <circle cx="420" cy="58" r="8" fill="var(--bg2)" stroke="#94a3b8" stroke-width="2"/>
-          <text x="420" y="82" font-size="11" text-anchor="middle" fill="var(--text2)">400回</text>
-          <text x="420" y="96" font-size="9" text-anchor="middle" fill="var(--text2)">2回目チェック</text>
-
-          <!-- "あと9回" label without arrows -->
-          <text x="357" y="46" font-size="11" text-anchor="middle" fill="#93c5fd" font-weight="600">あと9回</text>
-        </svg>
-        <p class="svg-caption">図3：前向き回数の進捗（374回から391回へ、次のチェックは400回）</p>
-      </div>
-
-      <div class="tracker-wrap">
-        <table class="tracker-table">
-          <thead>
-            <tr>
-              <th>仮説</th>
-              <th>種別</th>
-              <th>昇格条件</th>
-              <th>現在値</th>
-              <th>状態</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="background:#f0fff4">
-              <td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い（全足）</small></td>
-              <td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">有利さの確認</small></td>
-              <td><span style="white-space:nowrap">前向き80回以上</span><br><span style="white-space:nowrap">損益の幅の下限が0を超えること</span></td>
-              <td><span style="white-space:nowrap">損益の幅 プラス0.18倍</span><br><span style="white-space:nowrap">幅の下限〜上限 [プラス0.02〜プラス0.36]</span><br><small style="opacity:.8;white-space:nowrap">391回中198回・勝率51%</small></td>
-              <td><span style="white-space:nowrap">🟡蓄積中</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:0.83rem;color:var(--text2);margin-top:6px">
-        ※ すべての追跡中の仮説は <a href="track-record.html" style="color:var(--accent)">シグナル研究ページ</a> で確認できます。
-      </p>
-
-      <h2 id="next">7. 次のチェックポイントに向けて</h2>
-      <p>
-        あと9回の発火で400回に達します。そのタイミングで損益の幅の下限が再びゼロを超えていれば、2回連続クリアとなり昇格の基準を満たすことになります（将来の成績を保証するものではありません）。
-      </p>
-      <p>
-        現在の幅の下限はプラス0.02倍で、ゼロに近い状態で推移しています。次の9回の結果次第で変わる可能性があります。引き続き前向きでの積み上げを続け、次のチェック時点での報告をお届けします。
-      </p>
-
-      <div class="cta-boxes">
-        <div class="cta-box">
-          <h4>📊 シグナル研究の全体像を見る</h4>
-          <p>現在追跡中のすべての仮説と成績をまとめたページです。</p>
-          <p><a href="track-record.html">シグナル研究ページへ →</a></p>
-        </div>
-        <div class="cta-box">
-          <h4>📅 前回の報告（374回時点）</h4>
-          <p>1回目の条件クリア時点での報告です。</p>
-          <p><a href="guide-signal-lab-109.html">研究日誌 #109 を読む →</a></p>
-        </div>
-      </div>
-
-      <h2>関連記事</h2>
-      <div class="related-grid">
-        <div class="related-card">
-          <a href="guide-signal-lab-109.html">RSI逆張り買いの前向き374回目の検証、1回目のチェック通過【研究日誌 #109】</a>
-          <p>374回時点での報告。1回目の条件クリア</p>
-        </div>
-        <div class="related-card">
-          <a href="track-record.html">シグナル研究ページ</a>
-          <p>すべての追跡中の仮説と成績一覧</p>
-        </div>
-        <div class="related-card">
-          <a href="guide-signal-lab-114.html">警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】</a>
-          <p>前号：環境警戒スコアと成績の関係</p>
-        </div>
-      </div>
-
-      <div class="series-nav" aria-label="連載ナビゲーション">
-        <a href="guide-signal-lab-114.html" class="series-nav-btn">
-          <div class="nav-dir">← 前の記事（#114）</div>
-          警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】
-        </a>
-        <a href="guide-signal-lab-116.html" class="series-nav-btn is-off" aria-hidden="true">
-          <div class="nav-dir">次の記事（#116）→</div>
-          研究日誌 #116（準備中）
-        </a>
-      </div>
-
-<!-- series-nav:begin -->
-<style>
-.mw-sernav{display:block;max-width:900px;margin:28px auto 0;padding:0 16px;background:none;border:0;box-shadow:none}
-.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
-.mw-sernav-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a;min-width:0;white-space:normal}
-.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
-.mw-sernav-btn.next{text-align:right}
-.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
-.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
-.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
-.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
-.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
-@media(max-width:520px){.mw-sernav-row{grid-template-columns:minmax(0,1fr)}.mw-sernav-btn.next{text-align:left}}
-body.dark .mw-sernav-h{color:#58a6ff}
-body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
-body.dark .mw-sernav-btn.is-off{background:#0d1117}
-body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
-body.dark .mw-sernav-idx a{color:#58a6ff}
-</style>
-<style>.mw-sernav-cta{margin-top:12px;padding:12px 14px;border:1px dashed #0969da;border-radius:10px;background:#f6f9ff;text-align:center;font-size:13.5px;line-height:1.6}.mw-sernav-cta a{color:#0969da;font-weight:700;text-decoration:none;white-space:normal;padding:0}body.dark .mw-sernav-cta{background:#0d1a2b;border-color:#388bfd}body.dark .mw-sernav-cta a{color:#58a6ff}</style>
-    <nav class="mw-sernav" aria-label="AIシグナル研究日誌のシリーズ内移動">
-      <div class="mw-sernav-h">📚 AIシグナル研究日誌</div>
-      <div class="mw-sernav-row">
-      <a class="mw-sernav-btn prev" href="guide-signal-lab-114.html" rel="prev">
-        <span class="mw-sernav-dir">← 前の記事</span>
-        <span class="mw-sernav-t">警戒スコアが高い日のシグナルは勝ちにくい？ 4868回のデータで確かめた【研究日誌 #114】</span>
-      </a>
-      <span class="mw-sernav-btn next is-off" aria-hidden="true">
-        <span class="mw-sernav-dir">次の記事 →</span>
-        <span class="mw-sernav-t">これが最新の記事です</span>
-      </span>
-      </div>
-      <div class="mw-sernav-cta"><a href="guide-sore-honto.html">🔎 気になる投資の「定説」はありますか？ データで確かめて記事にします →</a></div>
-      <div class="mw-sernav-idx"><a href="guides.html#cat-lab">シリーズの記事一覧を見る →</a></div>
-    </nav>
-<!-- series-nav:end -->
-      <!-- ② 本文末尾（kinsho-v1） -->
-      <p class="disclaimer" data-disclaimer="kinsho-v1">
-        本記事は情報提供を目的としており、投資助言・売買推奨ではありません。当サイトは金融商品取引業者・投資助言業者ではなく、投資助言・代理業の登録を行っていません。掲載されている情報は作成時点のものであり、正確性・完全性を保証するものではありません。投資に関する最終判断は、ご自身の責任において行ってください。過去の実績は将来の成果を保証するものではありません。
-      </p>
-    </article>
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #115
   </div>
 
-  <footer>
-    <div>
-      <a href="index.html">ホーム</a> | <a href="guides.html">解説記事</a> | <a href="track-record.html">シグナル研究</a> | <a href="about.html">About</a> | <a href="privacy.html">プライバシーポリシー</a>
-    </div>
-    <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
-    <div style="margin-top:8px">© 2024–2026 MarketWatch AI</div>
-  </footer>
+  <div class="article">
 
-  <script>
-    const bar = document.getElementById('reading-progress');
-    window.addEventListener('scroll', () => {
-      const h = document.body.scrollHeight - window.innerHeight;
-      if (h > 0) bar.style.width = (window.scrollY / h * 100) + '%';
-    });
-    const toggle = document.getElementById('theme-toggle');
-    toggle.addEventListener('click', () => {
-      const d = document.documentElement;
-      const cur = d.getAttribute('data-theme');
-      if (cur === 'dark') { d.setAttribute('data-theme', 'light'); toggle.textContent = '🌙'; }
-      else { d.setAttribute('data-theme', 'dark'); toggle.textContent = '☀️'; }
-    });
-  </script>
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #115</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月2日 &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（移動平均線のゴールデンクロス・デッドクロス等）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで検証し、勝っても負けても全公開する研究日誌の第115回です。<a href="guide-signal-lab-114.html">前回（#114）</a>では環境警戒スコアの定点観察をおこないました。</p>
+    <p>今回は「移動平均線のゴールデンクロス（短い期間の平均が長い期間の平均を下から上へ抜ける）で出る買いシグナルは、全体の勝率よりも高いのか」を検証します。ゴールデンクロスは多くの投資の教科書や解説記事で「買いのサイン」として紹介されていますが、実際のデータではどうか確かめます。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 調べた仮説：移動平均線のゴールデンクロスで出た買いシグナル（177回）の勝率は、全体の平均を上回るか<br>
+      ② 結果：勝率<strong>40.1%</strong>（偶然のぶれを考えた幅 33.2%〜47.5%）<br>
+      ③ 全体ベースライン：<strong>42.8%</strong>（偶然のぶれを考えた幅 41.5%〜44.2%）<br>
+      ④ 判定：<strong>差なし（偶然のぶれの範囲内で、差があるとは言いにくい）</strong><br>
+      ⑤ 注目点：為替（FX）では34.4%〜34.5%と低め。逆にデッドクロスの売りは46.3%とやや高め
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#hypothesis">今回の仮説——ゴールデンクロスは買いに有利か</a></li>
+        <li><a href="#concept-chart">ゴールデンクロスとは——チャートで見るしくみ</a></li>
+        <li><a href="#method">検証の方法</a></li>
+        <li><a href="#result-overall">結果①：全体の勝率</a></li>
+        <li><a href="#result-tf">結果②：時間足別の勝率</a></li>
+        <li><a href="#result-group">結果③：銘柄のカテゴリ別の勝率</a></li>
+        <li><a href="#result-dead">結果④：デッドクロス（売り）との比較</a></li>
+        <li><a href="#verdict">判定と考察</a></li>
+        <li><a href="#tracker">📡 前向きトラッカー定点観測</a></li>
+        <li><a href="#next">次回に向けて</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="hypothesis">① 今回の仮説——ゴールデンクロスは買いに有利か</h2>
+
+    <p>移動平均線（いどうへいきんせん）とは、過去の一定期間の値段の平均をつないだ線のことです。この研究では、短い期間の平均（25本分）と長い期間の平均（75本分）の2本の線を使っています。</p>
+    <p>この2本の線の関係に注目します。短い期間の線（速く動く）が長い期間の線（ゆっくり動く）を下から上へ抜けた瞬間を「ゴールデンクロス」といい、上昇の始まりを示す「買いのサイン」として古くから知られています。逆に、短い線が上から下へ抜ける「デッドクロス」は「売りのサイン」とされています。</p>
+
+    <p>今回の仮説：</p>
+    <div class="info-box">
+      <strong>仮説</strong>：ゴールデンクロスで出た買いシグナルの勝率は、全体の平均（42.8%）を上回る
+    </div>
+
+    <p>合否の判断基準（結果を見る前に決めておきます）：</p>
+    <ul>
+      <li><strong>有利と言える</strong>：偶然のぶれを考えた幅の下の端が 44.2%（全体の幅の上の端）を超える場合</li>
+      <li><strong>不利と言える</strong>：偶然のぶれを考えた幅の上の端が 41.5%（全体の幅の下の端）を下回る場合</li>
+      <li><strong>差なし</strong>：幅が全体と重なる場合（どちらとも言えない）</li>
+    </ul>
+
+    <!-- =============================== -->
+    <h2 id="concept-chart">② ゴールデンクロスとは——チャートで見るしくみ</h2>
+
+    <p>「ゴールデンクロスで買うシグナル」がチャートのどの場面で出るかを、図で説明します。</p>
+
+    <div class="chart-figure">
+      <!-- SVG 1: チャート風図解 — MA golden cross concept -->
+      <svg viewBox="0 0 700 300" role="img" aria-label="ゴールデンクロスの概念図">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="700" height="300" fill="#ffffff" rx="8"/>
+
+        <!-- タイトル -->
+        <text x="350" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">ゴールデンクロスが出る場面（概念図・実際の価格ではありません）</text>
+
+        <!-- Y軸ガイドライン -->
+        <line x1="60" y1="40" x2="60" y2="260" class="s-axis"/>
+        <line x1="60" y1="260" x2="660" y2="260" class="s-axis"/>
+
+        <!-- ローソク足（概念） -->
+        <!-- 下げ相場のローソク -->
+        <rect x="70" y="190" width="8" height="30" fill="#cf222e" opacity="0.5"/>
+        <line x1="74" y1="185" x2="74" y2="225" stroke="#cf222e" stroke-width="1.5" opacity="0.5"/>
+        <rect x="90" y="195" width="8" height="25" fill="#cf222e" opacity="0.5"/>
+        <line x1="94" y1="190" x2="94" y2="225" stroke="#cf222e" stroke-width="1.5" opacity="0.5"/>
+        <rect x="110" y="188" width="8" height="28" fill="#cf222e" opacity="0.5"/>
+        <line x1="114" y1="183" x2="114" y2="220" stroke="#cf222e" stroke-width="1.5" opacity="0.5"/>
+        <rect x="130" y="195" width="8" height="22" fill="#cf222e" opacity="0.5"/>
+        <line x1="134" y1="190" x2="134" y2="222" stroke="#cf222e" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- 横ばい〜上げ -->
+        <rect x="150" y="195" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <line x1="154" y1="190" x2="154" y2="218" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="170" y="188" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <line x1="174" y1="183" x2="174" y2="213" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="190" y="182" width="8" height="22" fill="#1a7f37" opacity="0.5"/>
+        <line x1="194" y1="177" x2="194" y2="209" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="210" y="175" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <line x1="214" y1="170" x2="214" y2="200" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- 上げ相場 -->
+        <rect x="230" y="162" width="8" height="22" fill="#1a7f37" opacity="0.5"/>
+        <line x1="234" y1="157" x2="234" y2="189" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="250" y="150" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <line x1="254" y1="145" x2="254" y2="175" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="270" y="138" width="8" height="22" fill="#1a7f37" opacity="0.5"/>
+        <line x1="274" y1="133" x2="274" y2="165" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="290" y="128" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <line x1="294" y1="123" x2="294" y2="153" stroke="#1a7f37" stroke-width="1.5" opacity="0.5"/>
+        <rect x="310" y="118" width="8" height="22" fill="#1a7f37" opacity="0.5"/>
+        <rect x="330" y="108" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <rect x="350" y="100" width="8" height="22" fill="#1a7f37" opacity="0.5"/>
+        <rect x="370" y="92" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <rect x="390" y="86" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="410" y="82" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+
+        <!-- 横ばい後 -->
+        <rect x="430" y="78" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="450" y="80" width="8" height="16" fill="#1a7f37" opacity="0.5"/>
+        <rect x="470" y="76" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="490" y="72" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <rect x="510" y="70" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="530" y="68" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <rect x="550" y="65" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="570" y="62" width="8" height="20" fill="#1a7f37" opacity="0.5"/>
+        <rect x="590" y="60" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="610" y="58" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+        <rect x="630" y="55" width="8" height="18" fill="#1a7f37" opacity="0.5"/>
+
+        <!-- MA75（長い期間の平均・青・ゆっくり動く） -->
+        <polyline points="60,218 80,217 100,216 120,215 140,214 160,213 180,211 200,209 220,206 240,202 260,197 280,192 300,186 320,179 340,170 360,162 380,155 400,148 420,143 440,140 460,138 480,136 500,134 520,132 540,130 560,128 580,126 600,124 620,122 640,120 660,118" class="s-curve-b"/>
+
+        <!-- MA25（短い期間の平均・橙・速く動く） -->
+        <polyline points="60,215 80,214 100,213 120,212 140,211 160,207 180,201 200,192 220,183 240,170 260,158 280,146 300,135 320,125 340,115 360,107 380,100 400,94 420,88 440,83 460,79 480,76 500,73 520,71 540,69 560,67 580,65 600,63 620,61 640,59 660,57" class="s-curve-y"/>
+
+        <!-- ゴールデンクロスの点（MA25がMA75を上抜けた場所：約x=230付近） -->
+        <!-- 交差点を強調 -->
+        <circle cx="238" cy="171" r="10" fill="#fff8c5" stroke="#e8a317" stroke-width="2.5"/>
+        <text x="238" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="#9a6700" font-family="'Noto Sans JP',sans-serif">交差</text>
+
+        <!-- シグナル発火のマーク（三角） -->
+        <polygon points="238,156 228,140 248,140" fill="#0969da" opacity="0.85"/>
+        <text x="238" y="136" text-anchor="middle" class="s-label-b" font-size="11">買いシグナル</text>
+
+        <!-- 凡例 -->
+        <line x1="80" y1="276" x2="110" y2="276" class="s-curve-y" stroke-width="2"/>
+        <text x="116" y="280" class="s-label-sm">短い平均線（速く動く）</text>
+        <line x1="290" y1="276" x2="320" y2="276" class="s-curve-b" stroke-width="2"/>
+        <text x="326" y="280" class="s-label-sm">長い平均線（ゆっくり動く）</text>
+        <circle cx="515" cy="276" r="6" fill="#fff8c5" stroke="#e8a317" stroke-width="2"/>
+        <text x="526" y="280" class="s-label-sm">クロス（交差した点）</text>
+      </svg>
+      <div class="chart-caption">【概念図】短い期間の平均（橙）が長い期間の平均（青）を下から上へ抜けた瞬間が「ゴールデンクロス」。このタイミングで出た買いシグナルを集計しました。図中の値段・形は説明用のイメージです。</div>
+    </div>
+
+    <p>ゴールデンクロスが「買いのサイン」とされる理由は、「短い期間の勢いが長い期間の勢いを上回った」と読めるからです。しかし、すでに値段がある程度上がってから2本の線が交差するため、「入るのが遅すぎる」という批判もあります。実際にどうかをデータで確かめます。</p>
+
+    <!-- =============================== -->
+    <h2 id="method">③ 検証の方法</h2>
+
+    <p>2026年の運用開始から2026年10月2日朝6時15分（日本時間）までに結果が確定したシグナル全4,982回を対象にします。</p>
+
+    <ul>
+      <li><strong>使うデータ</strong>：結果が確定したもの（利益確定の目標1・目標2・損切りのどれかに到達したもの）</li>
+      <li><strong>勝ち</strong>：利益確定の目標1または目標2に到達（プラス1.33倍または2.0倍）</li>
+      <li><strong>負け</strong>：損切りに到達（マイナス1.0倍）</li>
+      <li><strong>今回取り出す条件</strong>：「ゴールデンクロス（短い移動平均線が長い移動平均線を下から上へ抜け）」で出た買いシグナル</li>
+      <li><strong>全体ベースライン</strong>：すべての結果確定シグナル4,982回の勝率（比較の基準）</li>
+    </ul>
+
+    <p>勝率の「偶然のぶれを考えた幅」は、少ない件数でも正確に計算できる手法（信頼度95%）を使います。</p>
+
+    <div class="warning-box">
+      これは過去のシステムのデータ内で集計した数字です。同じシステムが将来同じように動くとは限りません。また、この集計だけで「買ったほうがよい・やめたほうがよい」の判断はできません。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="result-overall">④ 結果①——全体の勝率</h2>
+
+    <p>まず全体の数字を比べます。</p>
+
+    <table>
+      <tr><th>条件</th><th>件数</th><th>勝ち</th><th>勝率</th><th>偶然のぶれを考えた幅（95%）</th><th>平均の損益</th></tr>
+      <tr>
+        <td>全体ベースライン</td>
+        <td>4,982回</td>
+        <td>2,134回</td>
+        <td>42.8%</td>
+        <td>41.5%〜44.2%</td>
+        <td style="color:#9a6700">-0.00</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td>ゴールデンクロス（買い・全体）</td>
+        <td>177回</td>
+        <td>71回</td>
+        <td>40.1%</td>
+        <td>33.2%〜47.5%</td>
+        <td style="color:#cf222e">-0.07</td>
+      </tr>
+      <tr style="background:#f0fff4">
+        <td>デッドクロス（売り・全体）</td>
+        <td>149回</td>
+        <td>69回</td>
+        <td>46.3%</td>
+        <td>38.5%〜54.3%</td>
+        <td style="color:#1a7f37">+0.08</td>
+      </tr>
+    </table>
+
+    <!-- SVG 2: 勝率比較バーチャート -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 260" role="img" aria-label="ゴールデンクロス・デッドクロス・全体ベースラインの勝率比較">
+        <rect x="0" y="0" width="700" height="260" fill="#ffffff" rx="8"/>
+        <text x="350" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">勝率の比較（棒の幅は偶然のぶれを考えた幅）</text>
+
+        <!-- 目盛り線 -->
+        <!-- X軸: 0% = x:160, 60% = x:640 -->
+        <!-- 10% ごとに目盛り = (640-160)/60*10 = 80px per 10% -->
+        <line x1="160" y1="50" x2="160" y2="220" class="s-axis"/>
+        <line x1="160" y1="220" x2="640" y2="220" class="s-axis"/>
+
+        <!-- 目盛りラベル（10%刻み） -->
+        <text x="160" y="235" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="240" y="235" text-anchor="middle" class="s-label-sm">10%</text>
+        <text x="320" y="235" text-anchor="middle" class="s-label-sm">20%</text>
+        <text x="400" y="235" text-anchor="middle" class="s-label-sm">30%</text>
+        <text x="480" y="235" text-anchor="middle" class="s-label-sm">40%</text>
+        <text x="560" y="235" text-anchor="middle" class="s-label-sm">50%</text>
+        <text x="640" y="235" text-anchor="middle" class="s-label-sm">60%</text>
+
+        <!-- 目盛りガイドライン -->
+        <line x1="240" y1="50" x2="240" y2="220" class="s-guide"/>
+        <line x1="320" y1="50" x2="320" y2="220" class="s-guide"/>
+        <line x1="400" y1="50" x2="400" y2="220" class="s-guide"/>
+        <line x1="480" y1="50" x2="480" y2="220" class="s-guide"/>
+        <line x1="560" y1="50" x2="560" y2="220" class="s-guide"/>
+        <line x1="640" y1="50" x2="640" y2="220" class="s-guide"/>
+
+        <!-- ベースライン参照線（42.8% → x = 160 + 42.8*8 = 160+342 = 502） -->
+        <line x1="502" y1="50" x2="502" y2="220" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="504" y="48" class="s-label-y" font-size="11">ベースライン 42.8%</text>
+
+        <!-- 行ラベル（text-anchor=end, x=155） -->
+        <text x="155" y="85" text-anchor="end" class="s-label" font-size="12">全体ベースライン</text>
+        <text x="155" y="140" text-anchor="end" class="s-label" font-size="12">ゴールデンクロス（買い）</text>
+        <text x="155" y="195" text-anchor="end" class="s-label" font-size="12">デッドクロス（売り）</text>
+
+        <!-- 全体ベースライン: 42.8%, 1%=8px -->
+        <!-- 点推定: 160 + 42.8*8 = 502 -->
+        <!-- CI下限: 160 + 41.5*8 = 492, 上限: 160 + 44.2*8 = 514 -->
+        <rect x="160" y="70" width="342" height="22" class="s-fill-gray" rx="3"/>
+        <rect x="492" y="79" width="22" height="4" fill="#8b949e" rx="1"/>
+        <circle cx="502" cy="81" r="5" fill="#8b949e"/>
+        <text x="507" y="94" class="s-label-sm" font-size="11">42.8%</text>
+
+        <!-- ゴールデンクロス（買い）: 40.1% -->
+        <!-- 点推定: 160 + 40.1*8 = 481, CI下限: 160+33.2*8=426, 上限: 160+47.5*8=540 -->
+        <rect x="160" y="126" width="321" height="22" class="s-fill-r" rx="3"/>
+        <line x1="426" y1="137" x2="540" y2="137" stroke="#cf222e" stroke-width="3" stroke-linecap="round"/>
+        <line x1="426" y1="131" x2="426" y2="143" stroke="#cf222e" stroke-width="2"/>
+        <line x1="540" y1="131" x2="540" y2="143" stroke="#cf222e" stroke-width="2"/>
+        <circle cx="481" cy="137" r="5" fill="#cf222e"/>
+        <text x="486" y="150" class="s-label-sm" font-size="11">40.1%（幅33.2%〜47.5%）</text>
+
+        <!-- デッドクロス（売り）: 46.3% -->
+        <!-- 点推定: 160 + 46.3*8 = 530, CI下限: 160+38.5*8=468, 上限: 160+54.3*8=594 -->
+        <rect x="160" y="181" width="370" height="22" class="s-fill-g" rx="3"/>
+        <line x1="468" y1="192" x2="594" y2="192" stroke="#1a7f37" stroke-width="3" stroke-linecap="round"/>
+        <line x1="468" y1="186" x2="468" y2="198" stroke="#1a7f37" stroke-width="2"/>
+        <line x1="594" y1="186" x2="594" y2="198" stroke="#1a7f37" stroke-width="2"/>
+        <circle cx="530" cy="192" r="5" fill="#1a7f37"/>
+        <text x="535" y="205" class="s-label-sm" font-size="11">46.3%（幅38.5%〜54.3%）</text>
+      </svg>
+      <div class="chart-caption">ベースライン（灰）・ゴールデンクロス買い（赤）・デッドクロス売り（緑）の勝率と偶然のぶれを考えた幅の比較。横棒の長さが勝率で、横線がぶれの範囲です。</div>
+    </div>
+
+    <p>ゴールデンクロスの買いは40.1%で、全体の42.8%を下回っています。ただし、「偶然のぶれを考えた幅」（33.2%〜47.5%）は全体の幅（41.5%〜44.2%）と重なっているため、今回の判断基準では「差なし」となります。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-tf">⑤ 結果②——時間足別の勝率</h2>
+
+    <p>1時間足と4時間足に分けて見ます。</p>
+
+    <table>
+      <tr><th>条件</th><th>件数</th><th>勝ち</th><th>勝率</th><th>偶然のぶれを考えた幅</th><th>平均の損益</th></tr>
+      <tr>
+        <td>ゴールデンクロス 1時間足</td>
+        <td>102回</td>
+        <td>44回</td>
+        <td>43.1%</td>
+        <td>33.9%〜52.8%</td>
+        <td style="color:#424a53">+0.01</td>
+      </tr>
+      <tr style="background:#fff8f8">
+        <td>ゴールデンクロス 4時間足</td>
+        <td>63回</td>
+        <td>22回</td>
+        <td>34.9%</td>
+        <td>24.3%〜47.2%</td>
+        <td style="color:#cf222e">-0.19</td>
+      </tr>
+      <tr>
+        <td>デッドクロス 1時間足</td>
+        <td>85回</td>
+        <td>37回</td>
+        <td>43.5%</td>
+        <td>33.5%〜54.1%</td>
+        <td style="color:#424a53">+0.01</td>
+      </tr>
+      <tr style="background:#f0fff4">
+        <td>デッドクロス 4時間足</td>
+        <td>56回</td>
+        <td>30回</td>
+        <td>53.6%</td>
+        <td>40.7%〜66.0%</td>
+        <td style="color:#1a7f37">+0.25</td>
+      </tr>
+    </table>
+
+    <p>4時間足のゴールデンクロスは34.9%と、点だけを見るとベースラインより低くなっています。ただし63回と件数が少なく、ぶれの幅が広い（24.3%〜47.2%）ため、偶然とは言いにくいほど低いとは言えません。</p>
+    <p>注目すべきは、デッドクロスの4時間足が53.6%と高い点です。こちらも幅が広いため確定はできませんが、点の数字はベースラインを10ポイント以上上回っています。</p>
+
+    <!-- =============================== -->
+    <h2 id="result-group">⑥ 結果③——銘柄のカテゴリ別の勝率</h2>
+
+    <p>銘柄を「株価指数」「円の通貨ペア（為替）」「円以外の通貨ペア」「金・銀」に分けて見ます。</p>
+
+    <!-- SVG 3: グループ別 ma_golden -->
+    <div class="chart-figure">
+      <svg viewBox="0 0 700 280" role="img" aria-label="カテゴリ別のゴールデンクロス勝率">
+        <rect x="0" y="0" width="700" height="280" fill="#ffffff" rx="8"/>
+        <text x="350" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">カテゴリ別 ゴールデンクロス（買い）の勝率</text>
+
+        <!-- 軸 -->
+        <line x1="190" y1="40" x2="190" y2="240" class="s-axis"/>
+        <line x1="190" y1="240" x2="660" y2="240" class="s-axis"/>
+
+        <!-- 目盛り（20%刻み） x=190が0%, x=660が60%, 1%=7.83px -->
+        <!-- 0% = 190, 20% = 346, 40% = 503, 60% = 659 -->
+        <text x="190" y="254" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="346" y="254" text-anchor="middle" class="s-label-sm">20%</text>
+        <text x="503" y="254" text-anchor="middle" class="s-label-sm">40%</text>
+        <text x="659" y="254" text-anchor="middle" class="s-label-sm">60%</text>
+
+        <line x1="346" y1="40" x2="346" y2="240" class="s-guide"/>
+        <line x1="503" y1="40" x2="503" y2="240" class="s-guide"/>
+        <line x1="659" y1="40" x2="659" y2="240" class="s-guide"/>
+
+        <!-- ベースライン 42.8% = 190 + 42.8*7.83 = 190+335 = 525 -->
+        <line x1="525" y1="40" x2="525" y2="240" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="527" y="38" class="s-label-y" font-size="11">全体 42.8%</text>
+
+        <!-- 行ラベル -->
+        <text x="186" y="75" text-anchor="end" class="s-label" font-size="12">株価指数</text>
+        <text x="186" y="130" text-anchor="end" class="s-label" font-size="12">円の通貨ペア</text>
+        <text x="186" y="185" text-anchor="end" class="s-label" font-size="12">円以外の通貨ペア</text>
+        <text x="186" y="228" text-anchor="end" class="s-label" font-size="12">金・銀</text>
+
+        <!-- 株価指数: 18/39 = 46.2%, CI 31.6%〜61.4% -->
+        <!-- 46.2% = 190 + 46.2*7.83 = 190+361.7 = 552 -->
+        <!-- 31.6% = 190+247.4 = 437, 61.4% = 190+480.4 = 670→660 clamp -->
+        <rect x="190" y="60" width="362" height="22" class="s-fill-g" rx="3"/>
+        <line x1="437" y1="71" x2="660" y2="71" stroke="#1a7f37" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="437" y1="65" x2="437" y2="77" stroke="#1a7f37" stroke-width="2"/>
+        <line x1="660" y1="65" x2="660" y2="77" stroke="#1a7f37" stroke-width="2"/>
+        <circle cx="552" cy="71" r="5" fill="#1a7f37"/>
+        <text x="556" y="90" class="s-label-sm" font-size="11">46.2%（39回）</text>
+
+        <!-- 円の通貨ペア: 11/32 = 34.4%, CI 20.4%〜51.7% -->
+        <!-- 34.4% = 190+269.3 = 459, 20.4%=190+159.7=350, 51.7%=190+404.8=595 -->
+        <rect x="190" y="115" width="270" height="22" class="s-fill-r" rx="3"/>
+        <line x1="350" y1="126" x2="595" y2="126" stroke="#cf222e" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="350" y1="120" x2="350" y2="132" stroke="#cf222e" stroke-width="2"/>
+        <line x1="595" y1="120" x2="595" y2="132" stroke="#cf222e" stroke-width="2"/>
+        <circle cx="459" cy="126" r="5" fill="#cf222e"/>
+        <text x="463" y="145" class="s-label-sm" font-size="11">34.4%（32回）</text>
+
+        <!-- 円以外の通貨ペア: 20/58 = 34.5%, CI 23.6%〜47.3% -->
+        <!-- 34.5% = 190+270 = 460, 23.6%=190+184.8=375, 47.3%=190+370.4=560 -->
+        <rect x="190" y="170" width="270" height="22" class="s-fill-r" rx="3"/>
+        <line x1="375" y1="181" x2="560" y2="181" stroke="#cf222e" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="375" y1="175" x2="375" y2="187" stroke="#cf222e" stroke-width="2"/>
+        <line x1="560" y1="175" x2="560" y2="187" stroke="#cf222e" stroke-width="2"/>
+        <circle cx="460" cy="181" r="5" fill="#cf222e"/>
+        <text x="464" y="200" class="s-label-sm" font-size="11">34.5%（58回）</text>
+
+        <!-- 金・銀: 6/20 = 30.0%, CI 14.5%〜51.9% -->
+        <!-- 30.0% = 190+234.9 = 425, 14.5%=190+113.5=304, 51.9%=190+406.4=596 -->
+        <rect x="190" y="215" width="235" height="16" class="s-fill-r" rx="3"/>
+        <line x1="304" y1="223" x2="596" y2="223" stroke="#cf222e" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="304" y1="217" x2="304" y2="229" stroke="#cf222e" stroke-width="2"/>
+        <line x1="596" y1="217" x2="596" y2="229" stroke="#cf222e" stroke-width="2"/>
+        <circle cx="425" cy="223" r="5" fill="#cf222e"/>
+        <text x="429" y="235" class="s-label-sm" font-size="11">30.0%（20回）</text>
+      </svg>
+      <div class="chart-caption">カテゴリ別のゴールデンクロス（買い）の勝率。横線がぶれの範囲。点線が全体ベースライン（42.8%）。株価指数は比較的高め、為替（FX）では低め。</div>
+    </div>
+
+    <p>株価指数（日経平均・S&P500など）は46.2%とベースラインを上回る方向ですが、幅が広く（31.6%〜61.4%）件数も39回と少ないため確定はできません。</p>
+    <p>注目は為替（FX）です。円の通貨ペアは34.4%、円以外の通貨ペアも34.5%と、どちらもベースラインを8ポイント以上下回っています。これはゴールデンクロスという「遅れて動く指標」が、短い時間で行き来しやすい為替相場では入り時が遅すぎる可能性を示しています。</p>
+
+    <table>
+      <tr><th>カテゴリ</th><th>ゴールデンクロス（買い）</th><th>デッドクロス（売り）</th></tr>
+      <tr><td>株価指数（5銘柄）</td><td>46.2%（39回中18回）</td><td>47.2%（36回中17回）</td></tr>
+      <tr><td>円の通貨ペア（4ペア）</td><td>34.4%（32回中11回）</td><td>54.8%（31回中17回）</td></tr>
+      <tr><td>円以外の通貨ペア（5ペア）</td><td>34.5%（58回中20回）</td><td>46.9%（49回中23回）</td></tr>
+      <tr><td>金・銀（2銘柄）</td><td>30.0%（20回中6回）</td><td>46.7%（15回中7回）</td></tr>
+    </table>
+
+    <!-- =============================== -->
+    <h2 id="result-dead">⑦ 結果④——デッドクロス（売り）との比較</h2>
+
+    <p>ゴールデンクロスと対になる「デッドクロス（短い期間の平均が長い期間の平均を上から下へ抜けるタイミングで出る売りシグナル）」の数字も確認します。</p>
+
+    <p>興味深いことに、デッドクロスの売りはゴールデンクロスの買いと逆の傾向を示しています：</p>
+    <ul>
+      <li>ゴールデンクロス（買い）全体：40.1%（全体より低め）</li>
+      <li>デッドクロス（売り）全体：46.3%（全体より高め）</li>
+      <li>特にデッドクロス 4時間足：53.6%（全体より大きく高め）</li>
+      <li>円の通貨ペアのデッドクロス：54.8%（最も高い）</li>
+    </ul>
+
+    <p>ただし、どの数字も「偶然のぶれを考えた幅」が全体と重なっているため、今回の判断基準では「差なし」です。点の数字として参考にとどめます。</p>
+
+    <div class="positive-box">
+      デッドクロスの4時間足（56回中30回・53.6%）は点の数字では高めですが、件数が56回と少なく幅（40.7%〜66.0%）も広く差は確認できません。デッドクロスのシグナルは前向きトラッカーで観察中です（下の定点観測表を参照）。4時間足に限った傾向かどうかは、件数が増えてから確かめます。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="verdict">⑧ 判定と考察</h2>
+
+    <h3>事前の判断基準との照らし合わせ</h3>
+    <p>結果を事前に決めておいた基準と比べます：</p>
+
+    <ul>
+      <li>「有利」の基準（幅の下の端が44.2%を超える）：<strong>満たさない</strong>（下の端は33.2%）</li>
+      <li>「不利」の基準（幅の上の端が41.5%を下回る）：<strong>満たさない</strong>（上の端は47.5%）</li>
+      <li>判定：<strong>差なし（どちらとも言えない）</strong></li>
+    </ul>
+
+    <div class="info-box">
+      <strong>判定：差なし（偶然のぶれの範囲内で、差があるとは言いにくい）</strong><br><br>
+      ゴールデンクロスで出た買いシグナル177回の勝率は40.1%。偶然のぶれを考えた幅（33.2%〜47.5%）が全体（41.5%〜44.2%）と重なっており、「有利」とも「不利」とも言えません。
+    </div>
+
+    <h3>考察のポイント</h3>
+    <p>3つの観点で整理します：</p>
+
+    <ul>
+      <li><strong>移動平均線のクロスは「遅れて動く」サイン</strong>：2本の平均線が交差するのは、すでに値段が動き始めた後です。入るタイミングが市場の動きより遅れる傾向があり、特に短い時間で行き来しやすい為替では「入りが遅すぎる」可能性があります。</li>
+      <li><strong>ゴールデンクロスとデッドクロスで逆の傾向</strong>：今回の数字では、買い（ゴールデン）は40.1%でやや低め、売り（デッド）は46.3%でやや高めです。これが偶然かどうかは件数が増えるとより明らかになります。</li>
+      <li><strong>データは2026年分のみ</strong>：今回の集計は2026年の運用開始以降の分です。相場の状況（上げ相場・下げ相場・もみあい）によって結果が変わる可能性があります。</li>
+    </ul>
+
+    <div class="warning-box">
+      この集計は過去のデータ（学習データ）内での集計です。実際に役立つかどうかは、今後の前向きの観察（新しいシグナルを積み上げていく集計）で確かめる必要があります。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+
+    <p class="meta-line">基準日 2026-10-02／昇格＝前向き80回以上（🏁ホールドアウト合格は30回以上）・平均の損益の幅の下の端が0を超える・基準合格2回続けて確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回続けて→🟡へ（2026-07-18〜・再昇格可）</p>
+    <div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.03~+0.07]</span><br><small style="opacity:.8;white-space:nowrap">1680/3827・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしのシグナル（買いも売りも）<br><small style="opacity:.7">blocked=False</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.03~+0.08]</span><br><small style="opacity:.8;white-space:nowrap">1343/3058・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>目標の手前に壁なしの買い<br><small style="opacity:.7">blocked=False×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.04~+0.11]</span><br><small style="opacity:.8;white-space:nowrap">1068/2417・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般（4時間足のみ）<br><small style="opacity:.7">tf=4h×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.08~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">478/1093・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>選別ランク「普通」のシグナル（買いも売りも）<br><small style="opacity:.7">tier=neutral</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.04</span><br><span style="white-space:nowrap">CI[-0.04~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">451/1011・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数のシグナル（買いも売りも）<br><small style="opacity:.7">group=index</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.00</span><br><span style="white-space:nowrap">CI[-0.10~+0.09]</span><br><small style="opacity:.8;white-space:nowrap">431/1006・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.16</span><br><span style="white-space:nowrap">CI[+0.00~+0.33]</span><br><small style="opacity:.8;white-space:nowrap">199/399・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「移動平均線のデッドクロス」のシグナル<br><small style="opacity:.7">signal=ma_dead</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.01</span><br><span style="white-space:nowrap">CI[-0.26~+0.23]</span><br><small style="opacity:.8;white-space:nowrap">49/116・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.04~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">1280/2891・勝率44%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中のシグナル（買いも売りも）<br><small style="opacity:.7">trend=下降</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.11</span><br><span style="white-space:nowrap">CI[+0.04~+0.18]</span><br><small style="opacity:.8;white-space:nowrap">551/1157・勝率48%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>逆張り買い全般<br><small style="opacity:.7">reversalL（逆張り買い）</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.10</span><br><span style="white-space:nowrap">CI[+0.01~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">495/1049・勝率47%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+</table>
+
+    <!-- =============================== -->
+    <h2 id="next">⑨ 次回に向けて</h2>
+
+    <p>今回の結果をまとめます：</p>
+    <ul>
+      <li>ゴールデンクロスで出た買いシグナル（177回）の勝率は40.1%。全体の平均42.8%との差は統計的に確認できない（差なし）</li>
+      <li>特に為替（FX）では34.4%〜34.5%と低め。移動平均線のクロスは動きの遅い指標で、短期で行き来する為替には合いにくい可能性</li>
+      <li>デッドクロスの売りは46.3%と点の数字では全体を上回る（ただし偶然のぶれの範囲内で、差は確認できない）</li>
+      <li>このデータは過去の集計（学習データ）であり、これから出るシグナルに同じことが起きるかは前向きの観察が必要</li>
+    </ul>
+
+    <p>次回は別の角度から仮説を確かめます。新しい結果は<a href="track-record.html">シグナル研究ページ</a>で随時公開しています。</p>
+
+    <!-- 関連記事 -->
+    <h2>関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-anatomy.html">
+        <div class="related-card-title">📈 シグナル解剖図鑑</div>
+        <div class="related-card-desc">ゴールデンクロス・デッドクロスなどの発火条件をチャートで図解したカタログ</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-114.html">
+        <div class="related-card-title">🧪 研究日誌 #114</div>
+        <div class="related-card-desc">前回：環境警戒スコアの定点観察（2026-10-01）</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-110.html">
+        <div class="related-card-title">🧪 研究日誌 #110</div>
+        <div class="related-card-desc">MACDゴールデンクロスの検証——移動平均線との違い</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">🧪 シグナル研究ページ</div>
+        <div class="related-card-desc">全研究日誌の一覧と前向きトラッカーの最新状況</div>
+      </a>
+    </div>
+
+    <!-- 免責事項 -->
+    <p class="disclaimer">
+      本記事は情報提供のみを目的としており、特定の金融商品の売買を推奨するものではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。記事内に登場する勝率・期待値などの数値はシステムの過去データの集計であり、将来の成績を保証するものではありません。掲載情報の正確性・完全性については最善を尽くしていますが、一切の保証をするものではありません。投資に関する最終的な判断はご自身の責任においておこなってください。
+    </p>
+
+  </div><!-- /.article -->
+</main>
+
+<footer>
+  <p><a href="index.html">MarketWatch AI</a> — 日本人投資家のためのマーケット情報サイト</p>
+  <p style="margin-top:6px"><a href="guides.html">解説記事一覧</a> | <a href="track-record.html">シグナル研究</a> | <a href="about.html">サイトについて</a> | <a href="privacy.html">プライバシーポリシー</a></p>
+</footer>
+
+<script>
+(function(){
+  var el=document.getElementById('reading-progress');
+  if(!el)return;
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+    el.style.width=Math.min(pct,100)+'%';
+  },{passive:true});
+})();
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+  try{localStorage.setItem('mw-theme',document.body.classList.contains('dark')?'dark':'light');}catch(e){}
+}
+(function(){
+  try{var t=localStorage.getItem('mw-theme');if(t==='dark'){document.body.classList.add('dark');var b=document.getElementById('theme-toggle');if(b)b.textContent='☀️';}}catch(e){}
+})();
+</script>
 <script src="site-search.js" defer></script>
 </body>
 </html>

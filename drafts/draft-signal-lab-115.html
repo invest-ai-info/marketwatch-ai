@@ -8,10 +8,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <title>ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】 - MarketWatch AI</title>
-  <meta name="description" content="移動平均線のゴールデンクロス（MA25がMA75を下から上へ抜けた瞬間）で出る買いシグナル177回の勝率は40.1%（偶然のぶれを考えた幅33.2%〜47.5%）。全体ベースライン42.8%との差は統計的に確認できない。為替では34%台と低め。研究日誌第115回。">
+  <meta name="description" content="移動平均線のゴールデンクロス（短い平均線が長い平均線を下から上へ抜けた瞬間）で出る買いシグナル177回の勝率は40.1%（偶然のぶれを考えた幅33.2%〜47.5%）。全体ベースライン42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。">
   <meta property="og:type" content="article">
   <meta property="og:title" content="ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】">
-  <meta property="og:description" content="移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は統計的に確認できない。為替では34%台と低め。研究日誌第115回。">
+  <meta property="og:description" content="移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
@@ -22,7 +22,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた【研究日誌 #115】",
-    "description": "移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は統計的に確認できない。為替では34%台と低め。研究日誌第115回。",
+    "description": "移動平均線のゴールデンクロス177回の勝率は40.1%。全体42.8%との差は確認できない。為替では34.4%〜34.5%と低め。研究日誌第115回。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
     "datePublished": "2026-10-02",
@@ -234,7 +234,7 @@ td strong,td b,th strong{white-space:nowrap}
 
     <h1>🧪 ゴールデンクロスで買うと、勝率は上がるのか？ 177回で確かめた<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #115</small></h1>
     <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月（下書き中） &nbsp;|&nbsp; 読了：約10分
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月2日 &nbsp;|&nbsp; 読了：約10分
     </div>
 
     <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="../guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（移動平均線のゴールデンクロス・デッドクロス等）がチャートのどの瞬間かを図解で確認できます。</div>
@@ -249,7 +249,7 @@ td strong,td b,th strong{white-space:nowrap}
       ② 結果：勝率<strong>40.1%</strong>（偶然のぶれを考えた幅 33.2%〜47.5%）<br>
       ③ 全体ベースライン：<strong>42.8%</strong>（偶然のぶれを考えた幅 41.5%〜44.2%）<br>
       ④ 判定：<strong>差なし（偶然のぶれの範囲内で、差があるとは言いにくい）</strong><br>
-      ⑤ 注目点：為替（FX）では34%台と低め。逆にデッドクロスの売りは46.3%とやや高め
+      ⑤ 注目点：為替（FX）では34.4%〜34.5%と低め。逆にデッドクロスの売りは46.3%とやや高め
     </div>
 
     <div class="toc">
@@ -441,74 +441,62 @@ td strong,td b,th strong{white-space:nowrap}
         <text x="350" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">勝率の比較（棒の幅は偶然のぶれを考えた幅）</text>
 
         <!-- 目盛り線 -->
-        <!-- X軸: 0% = x:80, 60% = x:620 -->
-        <!-- 10% ごとに目盛り = (620-80)/60*10 = 90px per 10% -->
-        <line x1="80" y1="50" x2="80" y2="220" class="s-axis"/>
-        <line x1="80" y1="220" x2="640" y2="220" class="s-axis"/>
+        <!-- X軸: 0% = x:160, 60% = x:640 -->
+        <!-- 10% ごとに目盛り = (640-160)/60*10 = 80px per 10% -->
+        <line x1="160" y1="50" x2="160" y2="220" class="s-axis"/>
+        <line x1="160" y1="220" x2="640" y2="220" class="s-axis"/>
 
-        <!-- 目盛りラベル（20%刻み） -->
-        <text x="80" y="235" text-anchor="middle" class="s-label-sm">0%</text>
-        <text x="170" y="235" text-anchor="middle" class="s-label-sm">10%</text>
-        <text x="260" y="235" text-anchor="middle" class="s-label-sm">20%</text>
-        <text x="350" y="235" text-anchor="middle" class="s-label-sm">30%</text>
-        <text x="440" y="235" text-anchor="middle" class="s-label-sm">40%</text>
-        <text x="530" y="235" text-anchor="middle" class="s-label-sm">50%</text>
-        <text x="620" y="235" text-anchor="middle" class="s-label-sm">60%</text>
+        <!-- 目盛りラベル（10%刻み） -->
+        <text x="160" y="235" text-anchor="middle" class="s-label-sm">0%</text>
+        <text x="240" y="235" text-anchor="middle" class="s-label-sm">10%</text>
+        <text x="320" y="235" text-anchor="middle" class="s-label-sm">20%</text>
+        <text x="400" y="235" text-anchor="middle" class="s-label-sm">30%</text>
+        <text x="480" y="235" text-anchor="middle" class="s-label-sm">40%</text>
+        <text x="560" y="235" text-anchor="middle" class="s-label-sm">50%</text>
+        <text x="640" y="235" text-anchor="middle" class="s-label-sm">60%</text>
 
         <!-- 目盛りガイドライン -->
-        <line x1="170" y1="50" x2="170" y2="220" class="s-guide"/>
-        <line x1="260" y1="50" x2="260" y2="220" class="s-guide"/>
-        <line x1="350" y1="50" x2="350" y2="220" class="s-guide"/>
-        <line x1="440" y1="50" x2="440" y2="220" class="s-guide"/>
-        <line x1="530" y1="50" x2="530" y2="220" class="s-guide"/>
-        <line x1="620" y1="50" x2="620" y2="220" class="s-guide"/>
+        <line x1="240" y1="50" x2="240" y2="220" class="s-guide"/>
+        <line x1="320" y1="50" x2="320" y2="220" class="s-guide"/>
+        <line x1="400" y1="50" x2="400" y2="220" class="s-guide"/>
+        <line x1="480" y1="50" x2="480" y2="220" class="s-guide"/>
+        <line x1="560" y1="50" x2="560" y2="220" class="s-guide"/>
+        <line x1="640" y1="50" x2="640" y2="220" class="s-guide"/>
 
-        <!-- ベースライン参照線（42.8% → x = 80 + 42.8/60*540 = 80 + 385 = 465 ） -->
-        <!-- 1% = 9px, 42.8% = 80 + 42.8*9 = 80+385.2 = 465 -->
-        <line x1="465" y1="50" x2="465" y2="220" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
-        <text x="467" y="48" class="s-label-y" font-size="11">ベースライン 42.8%</text>
+        <!-- ベースライン参照線（42.8% → x = 160 + 42.8*8 = 160+342 = 502） -->
+        <line x1="502" y1="50" x2="502" y2="220" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="504" y="48" class="s-label-y" font-size="11">ベースライン 42.8%</text>
 
-        <!-- 行ラベル -->
-        <text x="76" y="85" text-anchor="end" class="s-label" font-size="12">全体ベースライン</text>
-        <text x="76" y="140" text-anchor="end" class="s-label" font-size="12">ゴールデンクロス（買い）</text>
-        <text x="76" y="195" text-anchor="end" class="s-label" font-size="12">デッドクロス（売り）</text>
+        <!-- 行ラベル（text-anchor=end, x=155） -->
+        <text x="155" y="85" text-anchor="end" class="s-label" font-size="12">全体ベースライン</text>
+        <text x="155" y="140" text-anchor="end" class="s-label" font-size="12">ゴールデンクロス（買い）</text>
+        <text x="155" y="195" text-anchor="end" class="s-label" font-size="12">デッドクロス（売り）</text>
 
-        <!-- 全体ベースライン: 42.8%, CI: 41.5%〜44.2% -->
-        <!-- 点推定: 80 + 42.8*9 = 465.2 -->
-        <!-- CI下限: 80 + 41.5*9 = 453.5 -->
-        <!-- CI上限: 80 + 44.2*9 = 477.8 -->
-        <rect x="80" y="70" width="385" height="22" class="s-fill-gray" rx="3"/>
-        <!-- CI bar -->
-        <rect x="454" y="79" width="24" height="4" fill="#8b949e" rx="1"/>
-        <!-- 点 -->
-        <circle cx="465" cy="81" r="5" fill="#8b949e"/>
-        <text x="470" y="94" class="s-label-sm" font-size="11">42.8%</text>
+        <!-- 全体ベースライン: 42.8%, 1%=8px -->
+        <!-- 点推定: 160 + 42.8*8 = 502 -->
+        <!-- CI下限: 160 + 41.5*8 = 492, 上限: 160 + 44.2*8 = 514 -->
+        <rect x="160" y="70" width="342" height="22" class="s-fill-gray" rx="3"/>
+        <rect x="492" y="79" width="22" height="4" fill="#8b949e" rx="1"/>
+        <circle cx="502" cy="81" r="5" fill="#8b949e"/>
+        <text x="507" y="94" class="s-label-sm" font-size="11">42.8%</text>
 
-        <!-- ゴールデンクロス（買い）: 40.1%, CI: 33.2%〜47.5% -->
-        <!-- 点推定: 80 + 40.1*9 = 80+360.9 = 441 -->
-        <!-- CI下限: 80 + 33.2*9 = 80+298.8 = 379 -->
-        <!-- CI上限: 80 + 47.5*9 = 80+427.5 = 508 -->
-        <rect x="80" y="126" width="361" height="22" class="s-fill-r" rx="3"/>
-        <!-- CI range line -->
-        <line x1="379" y1="137" x2="508" y2="137" stroke="#cf222e" stroke-width="3" stroke-linecap="round"/>
-        <!-- CI endpoints -->
-        <line x1="379" y1="131" x2="379" y2="143" stroke="#cf222e" stroke-width="2"/>
-        <line x1="508" y1="131" x2="508" y2="143" stroke="#cf222e" stroke-width="2"/>
-        <!-- 点推定 -->
-        <circle cx="441" cy="137" r="5" fill="#cf222e"/>
-        <text x="445" y="150" class="s-label-sm" font-size="11">40.1%（幅33.2%〜47.5%）</text>
+        <!-- ゴールデンクロス（買い）: 40.1% -->
+        <!-- 点推定: 160 + 40.1*8 = 481, CI下限: 160+33.2*8=426, 上限: 160+47.5*8=540 -->
+        <rect x="160" y="126" width="321" height="22" class="s-fill-r" rx="3"/>
+        <line x1="426" y1="137" x2="540" y2="137" stroke="#cf222e" stroke-width="3" stroke-linecap="round"/>
+        <line x1="426" y1="131" x2="426" y2="143" stroke="#cf222e" stroke-width="2"/>
+        <line x1="540" y1="131" x2="540" y2="143" stroke="#cf222e" stroke-width="2"/>
+        <circle cx="481" cy="137" r="5" fill="#cf222e"/>
+        <text x="486" y="150" class="s-label-sm" font-size="11">40.1%（幅33.2%〜47.5%）</text>
 
-        <!-- デッドクロス（売り）: 46.3%, CI: 38.5%〜54.3% -->
-        <!-- 点推定: 80 + 46.3*9 = 80+416.7 = 497 -->
-        <!-- CI下限: 80 + 38.5*9 = 80+346.5 = 427 -->
-        <!-- CI上限: 80 + 54.3*9 = 80+488.7 = 569 -->
-        <rect x="80" y="181" width="417" height="22" class="s-fill-g" rx="3"/>
-        <!-- CI range line -->
-        <line x1="427" y1="192" x2="569" y2="192" stroke="#1a7f37" stroke-width="3" stroke-linecap="round"/>
-        <line x1="427" y1="186" x2="427" y2="198" stroke="#1a7f37" stroke-width="2"/>
-        <line x1="569" y1="186" x2="569" y2="198" stroke="#1a7f37" stroke-width="2"/>
-        <circle cx="497" cy="192" r="5" fill="#1a7f37"/>
-        <text x="501" y="205" class="s-label-sm" font-size="11">46.3%（幅38.5%〜54.3%）</text>
+        <!-- デッドクロス（売り）: 46.3% -->
+        <!-- 点推定: 160 + 46.3*8 = 530, CI下限: 160+38.5*8=468, 上限: 160+54.3*8=594 -->
+        <rect x="160" y="181" width="370" height="22" class="s-fill-g" rx="3"/>
+        <line x1="468" y1="192" x2="594" y2="192" stroke="#1a7f37" stroke-width="3" stroke-linecap="round"/>
+        <line x1="468" y1="186" x2="468" y2="198" stroke="#1a7f37" stroke-width="2"/>
+        <line x1="594" y1="186" x2="594" y2="198" stroke="#1a7f37" stroke-width="2"/>
+        <circle cx="530" cy="192" r="5" fill="#1a7f37"/>
+        <text x="535" y="205" class="s-label-sm" font-size="11">46.3%（幅38.5%〜54.3%）</text>
       </svg>
       <div class="chart-caption">ベースライン（灰）・ゴールデンクロス買い（赤）・デッドクロス売り（緑）の勝率と偶然のぶれを考えた幅の比較。横棒の長さが勝率で、横線がぶれの範囲です。</div>
     </div>
@@ -636,7 +624,7 @@ td strong,td b,th strong{white-space:nowrap}
     </div>
 
     <p>株価指数（日経平均・S&P500など）は46.2%とベースラインを上回る方向ですが、幅が広く（31.6%〜61.4%）件数も39回と少ないため確定はできません。</p>
-    <p>注目は為替（FX）です。円の通貨ペアは34.4%、円以外の通貨ペアも34.5%と、どちらも34%台にとどまっています。これはゴールデンクロスという「遅れて動く指標」が、短い時間で行き来しやすい為替相場では入り時が遅すぎる可能性を示しています。</p>
+    <p>注目は為替（FX）です。円の通貨ペアは34.4%、円以外の通貨ペアも34.5%と、どちらもベースラインを8ポイント以上下回っています。これはゴールデンクロスという「遅れて動く指標」が、短い時間で行き来しやすい為替相場では入り時が遅すぎる可能性を示しています。</p>
 
     <table>
       <tr><th>カテゴリ</th><th>ゴールデンクロス（買い）</th><th>デッドクロス（売り）</th></tr>
@@ -662,7 +650,7 @@ td strong,td b,th strong{white-space:nowrap}
     <p>ただし、どの数字も「偶然のぶれを考えた幅」が全体と重なっているため、今回の判断基準では「差なし」です。点の数字として参考にとどめます。</p>
 
     <div class="positive-box">
-      デッドクロスの4時間足（56回中30回・53.6%）は特に注目ですが、件数が56回と少なく幅（40.7%〜66.0%）も広いため、前向きの観察で積み上げる必要があります。このシグナルはトラッカーに登録し引き続き経過を見ます。
+      デッドクロスの4時間足（56回中30回・53.6%）は点の数字では高めですが、件数が56回と少なく幅（40.7%〜66.0%）も広く差は確認できません。デッドクロスのシグナルは前向きトラッカーで観察中です（下の定点観測表を参照）。4時間足に限った傾向かどうかは、件数が増えてから確かめます。
     </div>
 
     <!-- =============================== -->
@@ -688,7 +676,7 @@ td strong,td b,th strong{white-space:nowrap}
     <ul>
       <li><strong>移動平均線のクロスは「遅れて動く」サイン</strong>：2本の平均線が交差するのは、すでに値段が動き始めた後です。入るタイミングが市場の動きより遅れる傾向があり、特に短い時間で行き来しやすい為替では「入りが遅すぎる」可能性があります。</li>
       <li><strong>ゴールデンクロスとデッドクロスで逆の傾向</strong>：今回の数字では、買い（ゴールデン）は40.1%でやや低め、売り（デッド）は46.3%でやや高めです。これが偶然かどうかは件数が増えるとより明らかになります。</li>
-      <li><strong>データは2026年分のみ</strong>：今回の集計は2026年の運用開始から現在までの約1年分です。相場の状況（上げ相場・下げ相場・もみあい）によって結果が変わる可能性があります。</li>
+      <li><strong>データは2026年分のみ</strong>：今回の集計は2026年の運用開始以降の分です。相場の状況（上げ相場・下げ相場・もみあい）によって結果が変わる可能性があります。</li>
     </ul>
 
     <div class="warning-box">
@@ -721,8 +709,8 @@ td strong,td b,th strong{white-space:nowrap}
     <p>今回の結果をまとめます：</p>
     <ul>
       <li>ゴールデンクロスで出た買いシグナル（177回）の勝率は40.1%。全体の平均42.8%との差は統計的に確認できない（差なし）</li>
-      <li>特に為替（FX）では34%台と低め。移動平均線のクロスは動きの遅い指標で、短期で行き来する為替には合いにくい可能性</li>
-      <li>デッドクロスの売りは46.3%と相対的に高め（こちらも差なしだが点の数字では優位）</li>
+      <li>特に為替（FX）では34.4%〜34.5%と低め。移動平均線のクロスは動きの遅い指標で、短期で行き来する為替には合いにくい可能性</li>
+      <li>デッドクロスの売りは46.3%と点の数字では全体を上回る（ただし偶然のぶれの範囲内で、差は確認できない）</li>
       <li>このデータは過去の集計（学習データ）であり、これから出るシグナルに同じことが起きるかは前向きの観察が必要</li>
     </ul>
 
@@ -782,5 +770,6 @@ function toggleTheme(){
   try{var t=localStorage.getItem('mw-theme');if(t==='dark'){document.body.classList.add('dark');var b=document.getElementById('theme-toggle');if(b)b.textContent='☀️';}}catch(e){}
 })();
 </script>
+<script src="site-search.js" defer></script>
 </body>
 </html>
