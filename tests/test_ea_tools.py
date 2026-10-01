@@ -351,6 +351,53 @@ def test_review_prereg():
     assert L.PAPER_R == {"tp1": 4 / 3, "tp2": 2.0, "sl": -1.0, "expired": 0.0}
 
 
+PROBE_HEAD = ["utc", "symbol", "side", "bid", "ask", "fill_open", "lat_open_ms", "bid_close", "ask_close", "fill_close",
+              "lat_close_ms", "atr_m5", "atr_h4", "event"]
+
+
+def _probe_rows():
+    t15 = int(dt.datetime(2026, 10, 2, 6, 3, tzinfo=UTC).timestamp())          # 日本時間 15:03
+    t22 = int(dt.datetime(2026, 10, 2, 13, 9, tzinfo=UTC).timestamp())         # 日本時間 22:09
+    raw = [[t15, "GBPJPY", 1, 200.000, 200.015, 200.017, 120, 200.050, 200.065, 200.049, 130, 0.05, 0.6, 0],
+           [t22, "EURUSD", -1, 1.10000, 1.10010, 1.09999, 80, 1.09980, 1.09990, 1.09990, 90, 0.0004, 0.0030, 1],
+           [t22, "EURUSD", 1, 1.1, 1.1001, "", 80, 1.1, 1.1001, "", 90, 0.0004, 0.003, 0]]         # 約定が無い行は数えない
+    return [dict(zip(PROBE_HEAD, map(str, r))) for r in raw]
+
+
+def test_at4_probe_costs():
+    ps = L.probe_rows(_probe_rows())
+    assert len(ps) == 2
+    g, e = ps
+    assert abs(g["spread_pip"] - 1.5) < 1e-6 and abs(g["slip_open_pip"] - 0.2) < 1e-6 and abs(g["slip_close_pip"] - 0.1) < 1e-6
+    assert abs(g["cost_r5"] - 0.018 / 0.075) < 1e-6 and abs(g["cost_r4"] - 0.018 / 0.9) < 1e-6 and g["hour"] == 15
+    assert abs(e["spread_pip"] - 1.0) < 1e-6 and abs(e["slip_open_pip"] - 0.1) < 1e-6 and abs(e["slip_close_pip"]) < 1e-6
+    assert abs(e["cost_r5"] - 0.00011 / 0.0006) < 1e-6 and e["event"] and e["hour"] == 22
+    md, s = L.probe_report(_probe_rows())
+    assert s["n"] == 2 and "ペアごと" in md and "| GBPJPY | 1 |" in md and "デモの約定は本番より良いことがある" in md
+    assert md.index("| 15 | 1 |") < md.index("| 22 | 1 |") and "重要な発表の前後：1回" in md
+    assert L._q([1, 2, 3, 4], 0.5) == 2.5 and L._q([], 0.5) is None
+
+
+def test_main_writes_probe_report():
+    d, out = tempfile.mkdtemp(), tempfile.mkdtemp()
+    _write_log(os.path.join(d, "mw_probe_log.csv"), PROBE_HEAD, [[r[k] for k in PROBE_HEAD] for r in _probe_rows()])
+    js = os.path.join(out, "auto-forward.json")
+    assert L.main(["--files", d, "--report-dir", out, "--json-out", js, "--signals-log", os.path.join(out, "none.json"),
+                   "--today", "2026-10-05"]) == 0
+    assert sorted(f for f in os.listdir(out) if f.endswith(".md")) == ["at1-guard.md", "at2-scalp5.md", "at3-review.md", "at4-probe.md"]
+    assert "mw_probe" not in open(js, encoding="utf-8").read()                       # 試験の取引は AT3 の記録に混ぜない
+
+
+def test_probe_prereg():
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    i = text.find("\n## AT ")
+    sec = text[i:text.find("\n## ", i + 1)]
+    for s in ("**AT4 約定の試験（デモ・1日約100回）**", "**6分ごと**", "**0.01 ロットを成行で建て、60秒後に成行で決済**",
+              "**3営業日**", "**AT3 の判定・見送りに影響させない**", "本番口座では行わない", ",".join(PROBE_HEAD)):
+        assert s in sec, s
+    assert ",".join(PROBE_HEAD) in open("ea_ledger.py", encoding="utf-8").read()
+
+
 def test_workflow_and_sync():
     wf = open(".github/workflows/technical-alerts.yml", encoding="utf-8").read()
     assert "python build_signals_recent.py || true" in wf and "track-record.html signals-recent.json" in wf
