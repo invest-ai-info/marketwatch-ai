@@ -445,11 +445,14 @@ def _studies_html(root, m):
     st = m.get("studies") or collect_studies(root, m)
     priv = ('<p class="rm-sub" style="margin:6px 0 0">このほかに、手元だけで進めている研究があります'
             '（個人の取引の記録や、外に出せないデータを使うため、ここには載せていません）。</p>')
+    # ⚠️ f-string の {} の中にバックスラッシュを書かない＝Actions の Python 3.11 では構文エラーになり、
+    #    成績ページの地図とトップの研究の帯が黙って消える（2026-10-01 実際に発生）。先に変数へ出す。
+    research = _study_list(st["research"]) if st["research"] else '<p class="rm-desc">いまはありません。</p>'
     return ('<h3>📋 研究中・検証中の一覧</h3>'
             '<p class="rm-desc">いま進めている研究を短く並べました。判定が出たものは一覧から外れます。くわしい中身はこの下の①〜④にあります。</p>'
             f'<div class="rm-card"><strong>🧪 検証中</strong>（登録した日より後のデータで数えていて、判定はまだ）{_study_list(st["verify"])}</div>'
             f'<div class="rm-card"><strong>🔬 研究中</strong>（数える前の準備・データを集めている途中）'
-            f'{_study_list(st["research"]) if st["research"] else "<p class=\"rm-desc\">いまはありません。</p>"}{priv}</div>')
+            f'{research}{priv}</div>')
 
 
 def build_pane(root=".", model=None):
