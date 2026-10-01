@@ -1,84 +1,120 @@
-# 研究日誌 #115 分析メモ
+# lab-115 分析メモ — MAゴールデンクロスは買いシグナルとして有利か？
 
-## 基準日
-2026-10-01（JST）
+基準日: 2026-10-02  
+担当: signal-lab-daily routine  
 
-## 題材
-RSI売られすぎ逆張り買い（rsi_oversold_bounce）の前向き積み上がり状況 — 391回で期待値のプラスが示唆される
+---
 
-## 仮説ID
-rsi_oversold_edge（登録日: 2026-06-16、IS/FWD境界: 2026-06-17）
+## 仮説
 
-## トラッカー更新
-- 前向き: 198/389=51%, E(R)=+0.188R, CI=[+0.02~+0.36] 🟡蓄積中
-- #109（前回同テーマ）から17回追加（374→391）
-- CI下限+0.02で依然プラス維持
-- 次チェックポイント: N=400（あと9回）
-- 昇格基準: CI下限>0を2回連続 → 1回目はパス済、2回目待ち
+移動平均線のゴールデンクロス（MA25がMA75を下から上に抜ける瞬間）で出るロング（買い）シグナルは、全体ベースラインの勝率（42.8%）を上回るか。
 
-## 検証スクリプト（使用フィルタ）
+事前合否基準:
+- 合格（有利と言える）: ウィルソン 95%CI 下限 > 44.2%（ベースライン CI 上限を超える）
+- 不合格（不利と言える）: ウィルソン 95%CI 上限 < 41.5%（ベースライン CI 下限を下回る）
+- 差なし（判断保留）: CI がベースラインと重なる
+
+---
+
+## スクリプト
 
 ```python
 import json, math
-from signal_lab_verify import GROUPS
+from collections import Counter
 
-with open("signals-log.json") as f:
-    logs = json.load(f)
+with open('signals-log.json') as f:
+    signals = json.load(f)
 
-def closed(d): return d.get("outcome") in ("tp1", "tp2", "sl")
-def win(d): return d.get("outcome") in ("tp1", "tp2")
-def r_of(d): return {"tp2": 2.0, "tp1": 4/3, "sl": -1.0}.get(d.get("outcome"), 0)
-def fa(d): return d.get("fired_at","")[:10]
+closed = [s for s in signals if s.get('outcome') in ['tp1','tp2','sl']]
 
-FWD = "2026-06-17"
+def wilson_ci(k, n, z=1.96):
+    if n == 0: return 0, 0
+    p = k/n
+    c = (p + z**2/(2*n)) / (1 + z**2/n)
+    m = z * math.sqrt(p*(1-p)/n + z**2/(4*n**2)) / (1 + z**2/n)
+    return c - m, c + m
 
-def matches(s, f):
-    if not closed(s): return False
-    if f.get("signal"):
-        if s.get("primary_signal") != f["signal"]: return False
-    if f.get("direction") == "long":
-        if not s.get("direction","").startswith("ロング"): return False
-    if f.get("group"):
-        if s.get("ticker") not in GROUPS.get(f["group"], set()): return False
-    if f.get("tf"):
-        if s.get("timeframe") != f["tf"]: return False
-    if f.get("fired_from"):
-        if not fa(s) or not (fa(s) >= f["fired_from"]): return False
-    if f.get("fired_before"):
-        if not fa(s) or not (fa(s) < f["fired_before"]): return False
-    return True
+def avg_r(subset):
+    if not subset: return 0
+    total = sum(1.33 if s.get('outcome')=='tp1' else 2.0 if s.get('outcome')=='tp2' else -1.0 for s in subset)
+    return total / len(subset)
+
+TICKER_GROUP = {
+    'GC=F':'metal','SI=F':'metal','CL=F':'oil',
+    'NKD=F':'index','ES=F':'index','NQ=F':'index','YM=F':'index','^FTSE':'index',
+    'BTC-USD':'btc',
+    'USDJPY=X':'jpy_fx','EURJPY=X':'jpy_fx','GBPJPY=X':'jpy_fx','AUDJPY=X':'jpy_fx',
+    'EURUSD=X':'other_fx','GBPUSD=X':'other_fx','AUDUSD=X':'other_fx',
+    'EURAUD=X':'other_fx','GBPAUD=X':'other_fx'
+}
 ```
 
-## 生出力（全数値）
+---
 
-### 全体ベースライン（FWD期間 2026-06-17以降）
-全体FWD: n=4141, k=1797, pct=43.4%, CI=[41.9~44.9%], E(R)=0.013
+## 生出力
 
-### RSI売られすぎ逆張り買い
-IS（登録前 〜2026-06-16）: n=133, k=52, pct=39.1%, CI=[31.2~47.6%], E(R)=-0.088
+### ベースライン
+- closed total: 4982
+- wins (tp1+tp2): 2134
+- 勝率: 42.8%, CI=[41.5%~44.2%], avgR=-0.002
 
-FWD（登録後 2026-06-17〜）: n=391, k=198, pct=50.6%, CI=[45.7~55.6%], E(R)=0.182
+### ma_golden (MAゴールデンクロス → ロング)
+- direction: {'ロング（買い）': 177} （全件ロング）
+- 全体: 71/177 = 40.1%, CI=[33.2%~47.5%], avgR=-0.065
+- 1時間足: 44/102 = 43.1%, CI=[33.9%~52.8%], avgR=+0.005
+- 4時間足: 22/63 = 34.9%, CI=[24.3%~47.2%], avgR=-0.186
+- 日足: 5/12 = 41.7%, CI=[19.3%~68.0%], avgR=-0.029
 
-### FWDグループ別
-- metal（金・銀）: n=49, k=28, pct=57.1%, CI=[43.3~70.0%], E(R)=0.333
-- oil（原油）: n=26, k=13, pct=50.0%, CI=[32.1~67.9%], E(R)=0.167
-- index（株価指数）: n=79, k=40, pct=50.6%, CI=[39.8~61.4%], E(R)=0.181
-- jpy_fx（円の通貨ペア）: n=99, k=51, pct=51.5%, CI=[41.8~61.1%], E(R)=0.202
-- other_fx（円以外の通貨ペア）: n=122, k=58, pct=47.5%, CI=[38.9~56.3%], E(R)=0.109
-- btc（ビットコイン）: n=14, k=8, pct=57.1%, CI=[32.6~78.6%], E(R)=0.333
+グループ別:
+- metal (金・銀): 6/20 = 30.0%, CI=[14.5%~51.9%], avgR=-0.301
+- index (株価指数): 18/39 = 46.2%, CI=[31.6%~61.4%], avgR=+0.075
+- jpy_fx (円の通貨ペア): 11/32 = 34.4%, CI=[20.4%~51.7%], avgR=-0.199
+- other_fx (円以外の通貨ペア): 20/58 = 34.5%, CI=[23.6%~47.3%], avgR=-0.197
+- btc (ビットコイン): 7/15 = 46.7%, CI=[24.8%~69.9%], avgR=+0.087
+- oil (原油): 7/9 = 77.8%, CI=[45.3%~93.7%], avgR=+0.812 ← N=9 非常に少ない
 
-### FWD時間足別
-- 1時間足: n=246, k=118, pct=48.0%, CI=[41.8~54.2%], E(R)=0.119
-- 4時間足: n=125, k=65, pct=52.0%, CI=[43.3~60.6%], E(R)=0.213
-- 日足: n=20, k=15, pct=75.0%, CI=[53.1~88.8%], E(R)=0.750
+### ma_dead (MAデッドクロス → ショート)
+- direction: {'ショート（売り）': 149} （全件ショート）
+- 全体: 69/149 = 46.3%, CI=[38.5%~54.3%], avgR=+0.079
+- 1時間足: 37/85 = 43.5%, CI=[33.5%~54.1%], avgR=+0.014
+- 4時間足: 30/56 = 53.6%, CI=[40.7%~66.0%], avgR=+0.248
+- 日足: 2/8 = 25.0%, CI=[7.1%~59.1%], avgR=-0.417
 
-## 交絡チェック
-- IS vs FWD: IS期間は登録前のデータで後ろ向き集計。FWD期間は登録後のリアルタイム集計 → 分割は適切
-- FWDグループ: 全6グループで43%を上回る（円以外の通貨ペアのみCI範囲が43%をまたぐ）
-- FWD時間足: 1時間足・4時間足のCIは43%を含む → 足ごとの差は現時点で明確でない（日足はN少）
+グループ別:
+- metal: 7/15 = 46.7%, CI=[24.8%~69.9%], avgR=+0.087
+- index: 17/36 = 47.2%, CI=[32.0%~63.0%], avgR=+0.100
+- jpy_fx: 17/31 = 54.8%, CI=[37.8%~70.8%], avgR=+0.278
+- other_fx: 23/49 = 46.9%, CI=[33.7%~60.6%], avgR=+0.094
+- btc: 1/10 = 10.0%, CI=[1.8%~40.4%], avgR=-0.767 ← N=10 少ない・低い
+- oil: 4/7 = 57.1%, CI=[25.0%~84.2%], avgR=+0.331
 
-## 前回（#109）との差分
-- FWD: 374→391（+17回）
-- FWD勝率: 50.3%→50.6%（+0.3pp）
-- E(R): 0.18前後で安定
-- CI下限（E(R)）: 依然+0.02でプラス維持（昇格条件の1つ目クリア済み）
+---
+
+## 判定
+
+**合否基準の結果: 差なし（判断保留）**
+
+- ma_golden全体: CI=[33.2%~47.5%] → ベースライン [41.5%~44.2%] と重なる
+- 事前基準「不合格（CI上限<41.5%）」には届かない（上限47.5%）
+- 事前基準「合格（CI下限>44.2%）」にも届かない（下限33.2%）
+- → 「差なし」
+
+ma_golden 4h: CI=[24.3%~47.2%] → ベースライン CI と重なる（有意差なし）
+- しかし点推定 34.9% はベースライン 42.8% を下回っており注目に値する
+
+for FX（jpy_fx 34.4%, other_fx 34.5%）: CIがベースラインに一部重なるが低め
+
+交絡点検:
+- 年別データ: 全データが2026年（シグナルログの運用開始年）のみ
+- 全件でゴールデンクロスはロング、デッドクロスはショート（方向の交絡なし）
+- FXでゴールデンクロスが34%台になる理由: MA25/75クロスはトレンド転換の「遅行指標」であり、FXの短期的な往来相場では入りが遅すぎる可能性
+
+---
+
+## 結論
+
+- ゴールデンクロスのロングは、過去4982件のデータでは全体42.8%に対して40.1%（CI=[33.2%~47.5%]）
+- 差なし（統計的に有意な差は確認できない）
+- 特にFX（円ペア・非円ペア）では34%台と低め
+- デッドクロスのショートは46.3%（CI=[38.5%~54.3%]）と相対的に高め（差なしだが点推定はやや有利）
+- これは過去データ（in-sample）の分析。前向き確認は別途必要
