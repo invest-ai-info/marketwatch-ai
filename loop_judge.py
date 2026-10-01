@@ -169,9 +169,12 @@ def _brief(st):
     return {k: (st[k] if k in ("days", "trades", "stop_days") else J._f(st.get(k), 5)) for k in keys}
 
 
-def new_ledger():
-    return {"kind": "loop", "id": "LP", "prereg_sha256": J.section_sha256(head=SECTION), "status": "open", "closed_reason": None,
-            "confirm_tests": CONFIRM_BASE, "fwd_fails": 0, "rounds": []}
+def new_ledger(ledger_id="LP", section=SECTION, confirm_base=CONFIRM_BASE, max_rounds=MAX_ROUNDS, title=None, scope=None):
+    """台帳を新しく作る。既定は LP。別の出どころの節（例：LQ）を登録したときは、その節の見出し・確かめた回数の累計の出発点・ラウンド数の上限を渡す
+    （同じ確かめ期間を使い回すときは、累計は前の節の最後から続ける＝2026-10-01 LQ）"""
+    return {"kind": "loop", "id": ledger_id, "title": title, "scope": scope, "section": section,
+            "prereg_sha256": J.section_sha256(head=section), "status": "open", "closed_reason": None,
+            "confirm_tests": confirm_base, "max_rounds": max_rounds, "fwd_fails": 0, "rounds": []}
 
 
 def load(path):
@@ -261,8 +264,9 @@ def _close_check(led):
     best = max((r["stage"] for r in led["rounds"]), default=0)
     if led["fwd_fails"] >= MAX_FWD_FAILS:
         led["status"], led["closed_reason"] = "closed", f"段0の決まりが{MAX_FWD_FAILS}回続けてデモで消えた（当てはめすぎの印）"
-    elif len(done) >= MAX_ROUNDS and best < 1:
-        led["status"], led["closed_reason"] = "closed", f"{MAX_ROUNDS}ラウンドで段1に届かなかった（ドル円の5分足・この業者の費用では、前向きで残る決まりは見つからなかった）"
+    elif len(done) >= led.get("max_rounds", MAX_ROUNDS) and best < 1:
+        led["status"], led["closed_reason"] = "closed", (f"{led.get('max_rounds', MAX_ROUNDS)}ラウンドで段1に届かなかった"
+                                                         f"（{led.get('scope') or 'ドル円の5分足・この業者の費用では'}、前向きで残る決まりは見つからなかった）")
 
 
 # ───────── 振り返り（読むための表・判定しない） ─────────
@@ -290,8 +294,10 @@ def render_md(led):
 
     def rng(st):
         return "—" if not st or st.get("lo") is None else f"{pct(st['lo'])}〜{pct(st['hi'])}"
-    L = ["# LP ドル円5分足の「取引→検証→改善」の台帳（手元専用・送らない）", "",
-         f"状態：{'回している' if led['status'] == 'open' else '止めた＝' + str(led['closed_reason'])}・ラウンド {len(led['rounds'])}／{MAX_ROUNDS}・"
+    mx = led.get("max_rounds", MAX_ROUNDS)
+    name = led.get("section", SECTION).replace("#", "").strip().split()[0]
+    L = [led.get("title") or "# LP ドル円5分足の「取引→検証→改善」の台帳（手元専用・送らない）", "",
+         f"状態：{'回している' if led['status'] == 'open' else '止めた＝' + str(led['closed_reason'])}・ラウンド {len(led['rounds'])}／{mx}・"
          f"確かめた回数の累計 {led['confirm_tests']}（関門A の p＜{ALPHA / max(led['confirm_tests'], 1):.4f}）・デモで続けて消えた数 {led['fwd_fails']}／{MAX_FWD_FAILS}", "",
          "目標の段階（デモの日次平均の幅の下限で上がる）：" + "／".join(f"{s[0]} {s[1]}" for s in STAGES), "",
          "| ラウンド | 親 | 仕組み | 直した中身 | 状態 | 段 | 過去：確かめ期間の日次平均（幅） | 偽薬 p（要る p） | デモ：日次平均（幅）・日数・回数 | 理由 |",
@@ -302,7 +308,7 @@ def render_md(led):
         L.append(f"| {r['round']} | {r['parent'] or '—'} | {r['mechanism']} | {r['change']} | {r['status']} | {STAGES[r['stage']][0]} | "
                  f"{pct(con.get('mean'))}（{rng(con)}） | {bt.get('placebo_p', '—')}（{bt.get('p_needed', '—')}） | "
                  f"{pct(fw.get('mean'))}（{rng(fw)}）・{fw.get('days', 0)}日・{fw.get('trades', 0)}回 | {r.get('out_reason') or ''} |")
-    L += ["", "決まりは `PILLAR_PREREG.md`「LP」。段は前向き（デモ）の数字だけで上がる。直す候補は仕組みの理由が言えるものだけ登録する。", "",
+    L += ["", f"決まりは `PILLAR_PREREG.md`「{name}」。段は前向き（デモ）の数字だけで上がる。直す候補は仕組みの理由が言えるものだけ登録する。", "",
           "※ 個人の取引の記録です。投資助言ではありません。"]
     return "\n".join(L) + "\n"
 
