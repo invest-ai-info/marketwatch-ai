@@ -16,6 +16,9 @@
 出力:
   AT3 → auto-forward.json（リポジトリ直下。R だけ・デモ口座・金額なし＝送ってよい。検証済みリストが読む）
   AT1・AT2 → --report-dir の md（既定 research/ea/。個人の取引なので送らない）
+  🆕 2026-10-01 AT3 の振り返り（PILLAR_PREREG.md「AT」の追記）→ research/ea/at3-review.md と auto-forward.json の review（集計だけ）
+      ずれ（遅れ・入った値のずれ・結果が変わった回・サイトの記録との差）／見送りの答え合わせ／負けの理由（AI の敗因分析）／直す候補
+      ⚠️ 直す候補は文を出すだけ。いまの1か月の決まりは変えない（次の期間を登録するときに選ぶ）。サイトの記録は signals-log.json（--signals-log）
 
 実行: python ea_ledger.py --files "C:\\Users\\...\\MetaQuotes\\Terminal\\Common\\Files"
 """
@@ -26,6 +29,7 @@ import datetime as dt
 import io
 import json
 import os
+import re
 import sys
 
 import screen_judge as J
@@ -43,6 +47,13 @@ SECTION = "## AT "
 OUT_JSON = "auto-forward.json"
 TITLE_AT3 = "4時間足のメールの合図を、デモ口座で自動に建てる（前向き・費用込みの R）"
 LABELS = {"ok": "機能している", "unknown": "まだ分からない", "stop": "反証（手を止めて設計に戻る）"}
+SIG_LOG = "signals-log.json"
+PAPER_R = {"tp1": 4 / 3, "tp2": 2.0, "sl": -1.0, "expired": 0.0}   # サイトの成績表と同じ近似（利確1＝ATR×2÷ATR×1.5）
+MATCH_SEC = 180                   # 記録の合図とサイトの合図を（銘柄・時刻）で突き合わせるときの許し（秒）
+LEG_TOL = 0.15                    # 出た値が利確・損切りの値から「損切りまでの幅×0.15」以内ならそこで出たと読む
+# 直す候補を出す条件（PILLAR_PREREG.md「AT」の追記①〜⑥。結果を見て変えない）
+PROPOSE = {"delay_min": 60, "entry_gap_r": 0.10, "flips": 3, "skip_n": 5, "skip_gap_r": 0.3, "lot_min_share": 0.30,
+           "paper_gap_n": 10, "paper_gap_r": 0.2}
 
 
 # ───────── 読む ─────────
@@ -154,7 +165,157 @@ def at3_state(v, today, still_open):
     return f"期間の注文のうち {still_open} 回がまだ閉じていない＝閉じてから判定"
 
 
-def build_at3(swing_rows, prev=None, today=None, now=None):
+# ───────── AT3 の振り返り（読むための表・判定に使わない） ─────────
+def _base(sym):
+    """銘柄名を比べやすく（GBPJPY=X・GBPJPY.m → GBPJPY）"""
+    return re.sub(r"[^A-Z]", "", str(sym or "").upper())[:6]
+
+
+def load_signal_index(path=SIG_LOG):
+    """signals-log.json の4時間足を、id と（銘柄・時刻）で引けるようにする。無ければ空"""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        return {}, {}
+    by_id, by_sym = {}, collections.defaultdict(list)
+    for s in data if isinstance(data, list) else []:
+        if s.get("timeframe") != "4h":
+            continue
+        try:
+            ts = int(dt.datetime.fromisoformat(str(s["fired_at"])).timestamp())
+        except (KeyError, ValueError):
+            continue
+        rec = {"id": s.get("id"), "t": ts, "outcome": s.get("outcome"),
+               "cause": (((s.get("loss_analysis") or {}).get("ai_result")) or {}).get("primary_category")}
+        by_id[rec["id"]] = rec
+        by_sym[_base(s.get("ticker"))].append(rec)
+    return by_id, by_sym
+
+
+def find_signal(index, plan, symbol, signal_utc):
+    """記録の注文 → サイトの合図（id が同じもの、無ければ同じ銘柄で時刻がいちばん近いもの・180秒以内）"""
+    by_id, by_sym = index or ({}, {})
+    if plan in by_id:
+        return by_id[plan]
+    t, best = int(_f(signal_utc)), None
+    for rec in by_sym.get(_base(symbol), []):
+        d = abs(rec["t"] - t)
+        if d <= MATCH_SEC and (best is None or d < best[0]):
+            best = (d, rec)
+    return best[1] if best else None
+
+
+def _mean(xs):
+    xs = [x for x in xs if x is not None]
+    return sum(xs) / len(xs) if xs else None
+
+
+def trade_review(p, index):
+    """1回の注文の振り返り：遅れ・入った値のずれ（R）・1本目（利確1）の結果とサイトの記録の結果"""
+    rs, first = p["rows"], p["rows"][0]
+    sp, sl, fill = _f(first.get("signal_price")), _f(first.get("sl")), _f(first.get("fill"))
+    d = 1 if int(_f(first.get("dir"), 1)) > 0 else -1
+    dist = abs(sp - sl)
+    gap = (fill - sp) * d / dist if dist > 0 and fill else None
+    demo = None
+    if dist > 0:
+        leg1 = min(rs, key=lambda r: abs(_f(r.get("tp")) - sp))          # 合図の値に近いほうの利確＝利確1の建玉
+        cp, tp = _f(leg1.get("close_price")), _f(leg1.get("tp"))
+        demo = "tp" if tp and abs(cp - tp) <= LEG_TOL * dist else "sl" if abs(cp - sl) <= LEG_TOL * dist else "other"
+    sig = find_signal(index, p["plan"], first.get("symbol"), first.get("signal_utc"))
+    outcome = sig["outcome"] if sig else None
+    paper = {"tp1": "tp", "tp2": "tp", "sl": "sl", "expired": "other"}.get(outcome)
+    flip = None
+    if demo in ("tp", "sl") and paper in ("tp", "sl") and demo != paper:
+        flip = "worse" if demo == "sl" else "better"
+    return {"plan": p["plan"], "date": p["date"], "symbol": first.get("symbol", ""), "r": p["r"], "delay_min": p["delay_min"],
+            "entry_gap_r": gap, "demo_leg1": demo, "paper": outcome, "paper_r": PAPER_R.get(outcome), "flip": flip,
+            "cause": (sig or {}).get("cause") if p["r"] < 0 else None}
+
+
+def skip_review(rows, index):
+    """見送った合図（1つの合図は1回だけ数える）のサイトの記録の成績を、見送りの理由ごとに"""
+    seen, by = set(), collections.defaultdict(list)
+    for r in rows:
+        if r.get("status") != "skipped" or r.get("plan") in seen:
+            continue
+        seen.add(r.get("plan"))
+        sig = find_signal(index, r.get("plan"), r.get("symbol"), r.get("signal_utc"))
+        by[r.get("reason") or "（理由なし）"].append(PAPER_R.get(sig["outcome"]) if sig else None)
+    return {k: {"n": len(v), "paper_n": sum(1 for x in v if x is not None), "paper_mean": J._f(_mean(v))} for k, v in by.items()}
+
+
+def propose(gap, skips):
+    """直す候補（決まった条件で文を出すだけ。自動では入れない）"""
+    out, tail = [], "（次の期間を登録するときに選ぶ・いまの1か月は変えない）"
+    c = PROPOSE
+    if gap["delay_min"] is not None and gap["delay_min"] > c["delay_min"]:
+        out.append({"id": "①", "text": f"合図を受け取るまでの遅れが平均 {gap['delay_min']:.0f}分。橋渡しの間隔や Actions の遅れを減らす{tail}"})
+    if gap["entry_gap_r"] is not None and gap["entry_gap_r"] > c["entry_gap_r"]:
+        out.append({"id": "②", "text": f"入った値のずれで1回あたり {gap['entry_gap_r']:.2f}R 不利。合図の値の指値で入る形を試す{tail}"})
+    if gap["worse_flips"] >= c["flips"] and gap["worse_flips"] > gap["better_flips"]:
+        out.append({"id": "③", "text": f"ずれでサイトの記録の利確がデモでは損切りに変わった回が {gap['worse_flips']}回（逆は {gap['better_flips']}回）。遅れ・入り方を見直す{tail}"})
+    taken = gap["paper_mean"]
+    for reason, s in sorted(skips.items()):
+        if s["paper_n"] >= c["skip_n"] and taken is not None and s["paper_mean"] is not None and s["paper_mean"] - taken >= c["skip_gap_r"]:
+            out.append({"id": "④", "text": f"見送りの理由「{reason}」の合図はサイトの記録で平均 {s['paper_mean']:+.2f}R（建てた合図は {taken:+.2f}R）。この見送りで良い取引を外している可能性{tail}"})
+    total = sum(s["n"] for s in skips.values())
+    lot = sum(s["n"] for k, s in skips.items() if "lot_min" in k)
+    if total and lot / total > c["lot_min_share"]:
+        out.append({"id": "⑤", "text": f"見送りの {lot / total:.0%} が最小ロット（lot_min）。損切りの広い合図が建てられず偏る。残高か口座の最小ロットを見直す{tail}"})
+    if gap["paper_n"] >= c["paper_gap_n"] and gap["demo_mean"] is not None and gap["paper_mean"] is not None \
+            and gap["demo_mean"] - gap["paper_mean"] <= -c["paper_gap_r"]:
+        out.append({"id": "⑥", "text": f"デモの平均 {gap['demo_mean']:+.2f}R がサイトの記録 {gap['paper_mean']:+.2f}R より悪い。メールを見て手で建てても同じだけ悪くなる可能性{tail}"})
+    return out
+
+
+def at3_review(rows, ps, index):
+    tr = [trade_review(p, index) for p in ps]
+    with_paper = [t for t in tr if t["paper_r"] is not None]
+    gap = {"n": len(tr), "delay_min": _mean(t["delay_min"] for t in tr), "entry_gap_r": _mean(t["entry_gap_r"] for t in tr),
+           "worse_flips": sum(1 for t in tr if t["flip"] == "worse"), "better_flips": sum(1 for t in tr if t["flip"] == "better"),
+           "paper_n": len(with_paper), "demo_mean": _mean(t["r"] for t in with_paper), "paper_mean": _mean(t["paper_r"] for t in with_paper)}
+    skips = skip_review(rows, index)
+    causes = collections.Counter(t["cause"] for t in tr if t["cause"])
+    review = {"gap": {k: (J._f(v) if isinstance(v, float) else v) for k, v in gap.items()}, "skips": skips,
+              "loss_causes": dict(causes.most_common()), "proposals": propose(gap, skips)}
+    return review, tr
+
+
+FLIP_TXT = {"worse": "負けに変わった", "better": "得に変わった"}
+
+
+def review_md(review, tr):
+    g = review["gap"]
+
+    def r_(x):
+        return "—" if x is None else f"{x:+.3f}R"
+    L = ["# AT3 の振り返り（手元専用・読むための表＝判定には使わない）", "",
+         "## ずれ（自動で建てたときに、サイトの記録からどれだけ離れたか）", "",
+         f"- 閉じた注文 {g['n']} 回",
+         f"- 受け取りの遅れの平均：{'—' if g['delay_min'] is None else str(round(g['delay_min'])) + '分'}",
+         f"- 入った値のずれの平均（不利な向きがプラス）：{r_(g['entry_gap_r'])}",
+         f"- 1本目（利確1）の結果がサイトの記録と変わった回：負けに変わった {g['worse_flips']}回／得に変わった {g['better_flips']}回",
+         f"- サイトの記録と比べられた {g['paper_n']}回：デモ {r_(g['demo_mean'])}／サイトの記録 {r_(g['paper_mean'])}（デモは半分ずつ・金曜決済なので計画の違いも入る）",
+         "", "## 見送りの答え合わせ（見送った合図のサイトの記録の成績）", ""]
+    if review["skips"]:
+        L += ["| 見送りの理由 | 回数 | 記録で比べられた回数 | サイトの記録の平均 |", "|---|---:|---:|---:|"]
+        L += [f"| {k} | {s['n']} | {s['paper_n']} | {r_(s['paper_mean'])} |" for k, s in sorted(review["skips"].items(), key=lambda x: -x[1]["n"])]
+        L.append(f"| （建てた合図） | {g['n']} | {g['paper_n']} | {r_(g['paper_mean'])} |")
+    else:
+        L.append("- まだ無い")
+    L += ["", "## 負けの理由（デモで負けた回の合図の AI の敗因分析）", ""]
+    L += [f"- {k}：{n}回" for k, n in review["loss_causes"].items()] or ["- まだ無い（敗因分析が付くのはサイトの記録で損切りに届いた合図だけ）"]
+    L += ["", "## 直す候補（自動では入れない＝11/8 の判定のあと、次の期間を登録するときに選ぶ）", ""]
+    L += [f"- {x['id']} {x['text']}" for x in review["proposals"]] or ["- いまは無い"]
+    L += ["", "## 注文ごと", "", "| 日付 | 銘柄 | R | 遅れ | 入った値のずれ | 1本目 | サイトの記録 | 変化 |", "|---|---|---:|---:|---:|---|---|---|"]
+    L += [f"| {t['date']} | {t['symbol']} | {t['r']:+.2f} | {'—' if t['delay_min'] is None else t['delay_min']} | {r_(t['entry_gap_r'])} | "
+          f"{t['demo_leg1'] or '—'} | {t['paper'] or '—'} | {FLIP_TXT.get(t['flip'], '')} |" for t in tr]
+    return "\n".join(L) + "\n"
+
+
+def build_at3(swing_rows, prev=None, today=None, now=None, index=None):
     today = today or dt.datetime.now(JST).date().isoformat()
 
     def in_period(r):
@@ -175,6 +336,7 @@ def build_at3(swing_rows, prev=None, today=None, now=None):
                         "win": J._f(st["win"]), "open_plans": still_open, "after_cut_signals": len(after),
                         "state": at3_state(v, today, still_open)},
             "checkpoints": checkpoints(rs, dates), "skipped": dict(skipped),
+            "review": at3_review(rows, ps, index)[0],
             "trades": [{"c": "AT3", "d": p["date"], "r": round(p["r"], 4), "kind": p["kind"], "delay_min": p["delay_min"]}
                        for p in ps]}
 
@@ -231,24 +393,31 @@ def main(argv=None):
     ap.add_argument("--report-dir", default=os.path.join("research", "ea"))
     ap.add_argument("--json-out", default=OUT_JSON)
     ap.add_argument("--today")
+    ap.add_argument("--signals-log", default=SIG_LOG, help="サイトの記録（振り返りで突き合わせる）")
     a = ap.parse_args(argv)
+    index = load_signal_index(a.signals_log)
     prev = None
     if os.path.exists(a.json_out):
         with open(a.json_out, encoding="utf-8") as fh:
             prev = json.load(fh)
-    at3 = build_at3(read_csv(os.path.join(a.files, "mw_swing4h_log.csv")), prev, a.today)
+    swing = read_csv(os.path.join(a.files, "mw_swing4h_log.csv"))
+    at3 = build_at3(swing, prev, a.today, index=index)
     with open(a.json_out, "w", encoding="utf-8") as fh:
         json.dump(at3, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
     os.makedirs(a.report_dir, exist_ok=True)
     g_md, _ = guard_report(read_csv(os.path.join(a.files, "mw_guard_log.csv")))
     s_md, _ = scalp_report(read_csv(os.path.join(a.files, "mw_scalp5_log.csv")))
-    for name, md in (("at1-guard.md", g_md), ("at2-scalp5.md", s_md)):
+    in_period = [r for r in swing if FWD_START <= jst_date(r.get("signal_utc")) <= CUT_END]
+    ps, _ = plans(in_period, "signal_utc")
+    review, tr = at3_review(in_period, ps, index)
+    for name, md in (("at1-guard.md", g_md), ("at2-scalp5.md", s_md), ("at3-review.md", review_md(review, tr))):
         with open(os.path.join(a.report_dir, name), "w", encoding="utf-8") as fh:
             fh.write(md)
     s = at3["summary"]
     print(f"AT3：{s['n']}回（開いている {s['open_plans']}）・{s['state']}・判定 {at3['verdicts'].get('AT3', {}).get('status', 'まだ')} → {a.json_out}")
-    print(f"AT1・AT2 の報告 → {a.report_dir}（送らない）")
+    print(f"AT1・AT2 の報告と AT3 の振り返り → {a.report_dir}（送らない）・直す候補 {len(review['proposals'])}件"
+          + ("" if index[0] else "（signals-log.json が読めず、サイトの記録との突き合わせは空）"))
     return 0
 
 
