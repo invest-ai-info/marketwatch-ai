@@ -35,9 +35,12 @@ def test_prereg_matches_the_code():
     for s in ("**60分前〜30分後**", "**−3%**", "0.25 を超える", "**90分より後**", "ATR×0.5", "`research/ea/`",
               "`signals-recent.json`", "`auto-forward.json`", "`ea_bridge.py`", "`ea_ledger.py`", "2026-10-01 以降",
               "**300回以上で幅がまるごと0より下＝ストップ**", "**1000回で判定**", "30回ごと", "**デモ口座だけ**",
-              "G3 に当たる", "日本時間 15:00〜17:59", "**日本時間 18:00**", "金曜 15:00"):
+              "G3 に当たる", "日本時間 15:00〜17:59", "**日本時間 18:00**", "金曜 15:00",
+              # 🆕 2026-10-01 オーナー決定（追記）：橋渡しは5分ごと・AT3 は1か月で1回だけ区切る
+              "**橋渡し（`ea_bridge.py`）は登録どおり5分ごと**", "**2026-10-01〜2026-10-31（日本時間）に届いた合図**",
+              "**2026-11-08 以降に1回だけ**", "AT3 には300回・1000回の決まりは使わない", "デモ30回以上で幅の下限＞0"):
         assert s in sec, s
-    assert (L.FWD_START, L.STEP, L.STOP_MIN, L.GOAL) == ("2026-10-01", 30, 300, 1000)
+    assert (L.FWD_START, L.CUT_END, L.DECIDE_ON, L.STEP, L.REAL_MIN) == ("2026-10-01", "2026-10-31", "2026-11-08", 30, 30)
     assert (B.KEEP_DAYS, B.TF) == (7, "4h") and E.IMPACTS == ("high", "critical")
     assert len(J_sha()) == 64
 
@@ -130,40 +133,69 @@ def test_plans_r_and_open_legs():
     assert ps[0]["delay_min"] == 10.0 and ps[0]["date"] == "2026-10-01"
 
 
-def test_at3_checkpoints_and_verdicts():
-    good = [dict(zip(SWING_HEAD, map(str, r))) for r in _swing(1010, lambda k: 0.4 + (1 if (k // 3) % 2 else -1) * 0.5)]
-    old = [dict(zip(SWING_HEAD, map(str, r))) for r in _swing(5, lambda k: 9.0, start=dt.datetime(2026, 9, 20, tzinfo=UTC), prefix="OLD")]
-    skip = [dict(zip(SWING_HEAD, map(str, ["X1", 2, "watch", "skipped", "", int(NOW.timestamp()), "", "", "", "GBPJPY", 1,
-                                            "", "", "", "", "", "", "", "", "", "", "", "", "90分より後"])))]
-    out = L.build_at3(old + good + skip, today="2027-06-01", now="x")
-    assert out["summary"]["n"] == 1010 and out["skipped"] == {"90分より後": 1}           # 登録日より前の5回は数えない
+def _rows(raw):
+    return [dict(zip(SWING_HEAD, map(str, r))) for r in raw]
+
+
+def _alt(base):
+    """3回ずつ ±0.5 を入れ替える（平均は base）"""
+    return lambda k: base + (1 if (k // 3) % 2 else -1) * 0.5
+
+
+def test_at3_one_month_cut_and_verdicts():
+    # 8時間おき・10/1 10時（日本時間）から100回＝10/31 までに届いたのは92回、残り8回は区切りのあと
+    good = _rows(_swing(100, _alt(0.4)))
+    old = _rows(_swing(5, lambda k: 9.0, start=dt.datetime(2026, 9, 20, tzinfo=UTC), prefix="OLD"))
+    skip = _rows([["X1", 2, "watch", "skipped", "", int(NOW.timestamp()), "", "", "", "GBPJPY", 1,
+                   "", "", "", "", "", "", "", "", "", "", "", "", "late_over_90min"]])
+    late = _rows([["X2", 0, "watch", "skipped", "", int(dt.datetime(2026, 11, 2, tzinfo=UTC).timestamp()), "", "", "", "GBPJPY", 1,
+                   "", "", "", "", "", "", "", "", "", "", "", "", "after_cut"]])
+    rows = old + good + skip + late
+    during = L.build_at3(rows, today="2026-10-20", now="x")
+    assert not during["verdicts"] and "数えている途中" in during["summary"]["state"]
+    waiting = L.build_at3(rows, today="2026-11-07", now="x")
+    assert not waiting["verdicts"] and "2026-11-08 に判定" in waiting["summary"]["state"]
+    out = L.build_at3(rows, today="2026-11-08", now="x")
+    s = out["summary"]
+    assert s["n"] == 92 and s["after_cut_signals"] == 9 and out["skipped"] == {"late_over_90min": 1}   # 登録より前の5回・区切りのあとは数えない
     v = out["verdicts"]["AT3"]
-    assert v["status"] == "plus" and v["n"] == 1000 and v["lo"] > 0 and out["unit"] == "R"
-    assert out["checkpoints"][0]["n"] == 30 and out["checkpoints"][-1]["n"] == 990
-    assert all("r" in t and "d" in t and t["c"] == "AT3" for t in out["trades"])
+    assert v["status"] == "plus" and v["n"] == 92 and v["lo"] > 0 and v["decided_on"] == "2026-11-08" and out["unit"] == "R"
+    assert "本番へは移さない" not in v["reason"] and "2026-10-01〜2026-10-31" in v["reason"]
+    assert (out["cut_end"], out["decide_on"]) == ("2026-10-31", "2026-11-08") and isinstance(out["goal"], str)
+    assert [c["n"] for c in out["checkpoints"]] == [30, 60, 90]                             # 読むための区切り（判定ではない）
+    assert all("r" in t and "d" in t and t["c"] == "AT3" for t in out["trades"]) and len(out["trades"]) == 92
     assert "profit" not in json.dumps(out) and "balance" not in json.dumps(out)          # 金額は書かない
-    frozen = L.build_at3(old + good[:600] + skip, prev=out, today="2027-07-01", now="x")
+    frozen = L.build_at3(old + _rows(_swing(100, _alt(-0.4))), prev=out, today="2026-12-01", now="x")
     assert frozen["verdicts"]["AT3"] == v                                                 # 判定は変えない
-    bad = [dict(zip(SWING_HEAD, map(str, r))) for r in _swing(330, lambda k: -0.4 + (1 if (k // 3) % 2 else -1) * 0.5)]
-    s = L.build_at3(bad, today="2027-01-01", now="x")["verdicts"]["AT3"]
-    assert s["status"] == "stop" and s["n"] == 300 and s["hi"] < 0                       # 300回の区切りでストップ
-    few = L.build_at3(bad[:200], today="2027-01-01", now="x")
-    assert not few["verdicts"] and [c["label"] for c in few["checkpoints"]][-1] in ("stop", "unknown")
+    # 期間の注文が1本だけ閉じていない＝閉じるまで待つ
+    opened = L.build_at3(old + good[:101] + good[102:], today="2026-11-09", now="x")   # 50回目（10/17）の2本目を抜く
+    assert not opened["verdicts"] and "まだ閉じていない" in opened["summary"]["state"] and opened["summary"]["open_plans"] == 1
+
+
+def test_at3_stop_cases():
+    bad = L.build_at3(_rows(_swing(100, _alt(-0.4))), today="2026-11-08", now="x")["verdicts"]["AT3"]
+    assert bad["status"] == "stop" and bad["hi"] < 0 and "まるごと0より下" in bad["reason"]
+    zero = L.build_at3([], today="2026-11-08", now="x")["verdicts"]["AT3"]
+    assert zero["status"] == "stop" and zero["n"] == 0 and zero["mean"] is None and "0" in zero["reason"]
+    one_week = L.build_at3(_rows(_swing(6, lambda k: 0.5)), today="2026-11-08", now="x")["verdicts"]["AT3"]
+    assert one_week["status"] == "stop" and "言い切れない" in one_week["reason"]            # 1週だけ＝幅が出せない
+    few = L.build_at3(_rows(_swing(15, lambda k: 0.5)), today="2026-11-08", now="x")["verdicts"]["AT3"]
+    assert few["status"] == "plus" and few["n"] == 15 and "30回に届かないので本番へは移さない" in few["reason"]
 
 
 def test_lists_show_at3_in_r():
-    bad = [dict(zip(SWING_HEAD, map(str, r))) for r in _swing(330, lambda k: -0.4 + (1 if (k // 3) % 2 else -1) * 0.5)]
     d = tempfile.mkdtemp()
     p = os.path.join(d, "auto-forward.json")
-    json.dump(L.build_at3(bad, today="2027-01-01", now="x"), open(p, "w", encoding="utf-8"), ensure_ascii=False)
+    json.dump(L.build_at3(_rows(_swing(100, _alt(-0.4))), today="2026-11-08", now="x"), open(p, "w", encoding="utf-8"), ensure_ascii=False)
     stop, plus, watching = V.collect([(p, "AT3 デモ", "")])
     assert [r["id"] for r in stop] == ["AT3"] and not watching
     txt = V.render(stop, plus, watching, now="x")
     assert "| AT3 |" in txt and "R |" in txt and "％ |" not in txt.split("## ⏹")[1].split("## ✅")[0]
-    running = [dict(zip(SWING_HEAD, map(str, r))) for r in _swing(40, lambda k: 0.1)]
-    json.dump(L.build_at3(running, today="2026-11-01", now="x"), open(p, "w", encoding="utf-8"), ensure_ascii=False)
+    json.dump(L.build_at3(_rows(_swing(40, lambda k: 0.1)), today="2026-10-20", now="x"), open(p, "w", encoding="utf-8"), ensure_ascii=False)
     stop, plus, watching = V.collect([(p, "AT3 デモ", "")])
-    assert not stop and watching[0]["n"] == 40 and "AT3 " in V.render(stop, plus, watching, now="x")
+    txt = V.render(stop, plus, watching, now="x")
+    assert not stop and watching[0]["n"] == 40 and "（40回・2026-10-01〜2026-10-31 に届いた合図" in txt
+    assert "（3/1000回）" in V.render([], [], [{"sec": "J4F", "id": "F1", "title": "t", "n": 3, "goal": 1000}], now="x")   # 回数の登録は従来どおり
     fr = {"src": "x", "sec": "", "id": "AT3", "title": "デモ", "goal": 1000, "n": 1000, "unit": "R",
           "v": {"status": "plus", "decided_on": "2027-06-01", "n": 1000, "mean": 0.12, "lo": 0.03, "hi": 0.2}}
     assert "+0.120R" in P.render([fr], [], now="x")
@@ -198,6 +230,56 @@ def test_read_csv_encodings():
         _write_log(p, ["a", "b"], [[1, "日本語"]], utf16=utf16)
         assert L.read_csv(p) == [{"a": "1", "b": "日本語"}]
     assert L.read_csv(os.path.join(d, "none.csv")) == []
+
+
+def test_bridge_survives_missing_signals_file_and_locked_target():
+    """2026-10-01 手元で見つけた穴：signals-recent.json が GitHub にまだ無い（404）と橋渡しが落ちて、
+    mw_events.csv も mw_bridge_status.csv も書かれず、見張り番が「データが古い」と鳴り続け G4 が効かない。
+    404 は「合図0件」で続ける。それ以外の失敗（ネットワーク障害など）は隠さない。MT4 が開いているファイルへの置き換え失敗はやり直す"""
+    import urllib.error
+    d = tempfile.mkdtemp()
+    real = E.fetch_json
+
+    def fake_404(name, local=False, timeout=30):
+        if name == "signals-recent.json":
+            raise urllib.error.HTTPError("u", 404, "Not Found", {}, None)
+        return {"events": [{"name": "英 CPI", "datetime": "2026-10-01T15:00+09:00", "impact": "high",
+                            "affected_assets": ["GBPJPY=X"], "country": "UK"}]}
+
+    def fake_500(name, local=False, timeout=30):
+        raise urllib.error.HTTPError("u", 500, "Server Error", {}, None)
+
+    try:
+        E.fetch_json = fake_404
+        E.main(["--out-dir", d])
+        assert sorted(os.listdir(d)) == ["mw_bridge_status.csv", "mw_events.csv", "mw_orders.csv"]
+        assert len(L.read_csv(os.path.join(d, "mw_orders.csv"))) == 0                       # 合図は0件
+        assert L.read_csv(os.path.join(d, "mw_bridge_status.csv"))[0]["orders"] == "0"
+        E.fetch_json = fake_500
+        try:
+            E.main(["--out-dir", d])
+            raise AssertionError("500 を隠した")
+        except urllib.error.HTTPError:
+            pass
+    finally:
+        E.fetch_json = real
+    # 置き換え先を MT4 が開いていて PermissionError になっても、少し待ってやり直す
+    calls = {"n": 0}
+    real_replace, real_sleep = os.replace, E.time.sleep
+
+    def flaky(src, dst):
+        calls["n"] += 1
+        if calls["n"] <= 2:
+            raise PermissionError("locked")
+        return real_replace(src, dst)
+
+    try:
+        os.replace, E.time.sleep = flaky, lambda s: None
+        E.write_csv_utf16(os.path.join(d, "x.csv"), ["a"], [[1]])
+    finally:
+        os.replace, E.time.sleep = real_replace, real_sleep
+    assert calls["n"] == 3 and L.read_csv(os.path.join(d, "x.csv")) == [{"a": "1"}]
+    assert not os.path.exists(os.path.join(d, "x.csv.tmp"))
 
 
 def test_workflow_and_sync():

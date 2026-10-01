@@ -6,25 +6,28 @@ EA（MT4 のプログラム）は手元の research/ea/ に置き、リポジト
 入力（既定は GitHub から取る。--local ならリポジトリの手元の写しを使う）:
   signals-recent.json  …… 直近7日の4時間足の合図（build_signals_recent.py が technical-alerts のあとに書く）
   economic-events.json …… 重要な発表の日程
-出力（--out-dir＝MT4 の MQL4\\Files。書きかけを読ませないよう、別名に書いてから置き換える）:
+出力（--out-dir＝MT4 の共通フォルダ %APPDATA%\\MetaQuotes\\Terminal\\Common\\Files。EA は FILE_COMMON で読む。
+書きかけを読ませないよう、別名に書いてから置き換える）:
   mw_events.csv        …… 重要な発表（AT1 の G4・AT2）。列: utc,name,country,currencies,symbols
                           utc＝発表の時刻（UTC の 1970年からの秒）。symbols＝業者の銘柄名を ; でつなぐ。「*」＝全部
   mw_orders.csv        …… メールで届いた4時間足の合図（AT3）。列: id,fired_utc,symbol,dir,entry,sl,tp1,tp2,atr,kind
                           dir＝1（買い）／-1（売り）。kind＝promoted（昇格エッジ）／watch（観察中の候補）
   mw_bridge_status.csv …… 最後に書いた時刻（列: written_utc,events,orders,unmapped）。EA がデータの古さを確かめる
-文字は UTF-16（BOM つき）。EA は FileOpen(name, FILE_READ|FILE_CSV, ',')（Unicode の既定のまま）で読む。
+文字は UTF-16（BOM つき）。EA は FileOpen(name, FILE_READ|FILE_CSV|FILE_COMMON, ',')（Unicode の既定のまま）で読む。
 
 銘柄名：サイトのティッカー → 業者の銘柄名。為替は「=X」を外して --suffix を足す（例 GBPJPY=X → GBPJPY）。
 為替以外（GC=F・NKD=F など）は --symbols の JSON（{"GC=F": "GOLD", ...}・手元の research/ea/ に置く）で決める。無いものは書かない。
 
 実行例（Windows のタスクで5分ごと）:
-  python ea_bridge.py --out-dir "C:\\...\\MQL4\\Files" --symbols research\\ea\\symbols.json
+  python ea_bridge.py --out-dir "%APPDATA%\\MetaQuotes\\Terminal\\Common\\Files" --symbols research\\ea\\symbols.json
 """
 import argparse
 import datetime as dt
 import json
 import os
 import sys
+import time
+import urllib.error
 import urllib.request
 
 RAW = "https://raw.githubusercontent.com/invest-ai-info/marketwatch-ai/main/"
@@ -46,6 +49,20 @@ def fetch_json(name, local=False, timeout=30):
     req = urllib.request.Request(RAW + name, headers={"User-Agent": "mw-ea-bridge"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
+
+
+def fetch_json_optional(name, local=False, default=None):
+    """まだ無いファイル（GitHub で 404・手元に無い）は default を返す。ネットワーク障害など他の失敗は隠さず上げる。
+    2026-10-01：signals-recent.json は technical-alerts の次の実行まで GitHub に無い。そこで落ちると発表のファイルも
+    状態のファイルも書かれず、見張り番が「データが古い」と鳴り続けて G4 が効かなくなる"""
+    try:
+        return fetch_json(name, local)
+    except urllib.error.HTTPError as ex:
+        if ex.code == 404:
+            return default
+        raise
+    except FileNotFoundError:
+        return default
 
 
 def map_symbol(ticker, suffix="", extra=None):
@@ -127,7 +144,14 @@ def write_csv_utf16(path, head, rows):
     text = "\r\n".join(",".join(str(c) for c in r) for r in [head] + list(rows)) + "\r\n"
     with open(tmp, "wb") as fh:
         fh.write(text.encode("utf-16"))          # Python の utf-16 は BOM（リトルエンディアン）つき
-    os.replace(tmp, path)
+    for k in range(5):                           # MT4 がそのファイルを読んでいる最中は置き換えに失敗する（Windows）。少し待ってやり直す
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            if k == 4:
+                raise
+            time.sleep(0.2)
 
 
 def run(out_dir, events, recent, now, suffix="", extra=None):
@@ -143,7 +167,7 @@ def run(out_dir, events, recent, now, suffix="", extra=None):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="EA へ渡すデータを作る（AT1〜AT3）")
-    ap.add_argument("--out-dir", required=True, help="MT4 の MQL4\\Files")
+    ap.add_argument("--out-dir", required=True, help="MT4 の共通フォルダ Common\\Files")
     ap.add_argument("--suffix", default="", help="業者の銘柄名の後ろの文字（例 .m）")
     ap.add_argument("--symbols", help="為替以外の銘柄名の対応（JSON）")
     ap.add_argument("--local", action="store_true", help="GitHub から取らず、手元の写しを使う")
@@ -153,7 +177,10 @@ def main(argv=None):
         with open(a.symbols, encoding="utf-8") as fh:
             extra = json.load(fh)
     events = fetch_json("economic-events.json", a.local)["events"]
-    recent = fetch_json("signals-recent.json", a.local)
+    recent = fetch_json_optional("signals-recent.json", a.local)
+    if recent is None:
+        print("signals-recent.json がまだ無い（technical-alerts の次の実行まで）。合図は0件として続ける")
+        recent = {"signals": []}
     ev, orders, unmapped = run(a.out_dir, events, recent, dt.datetime.now(UTC), a.suffix, extra)
     print(f"発表 {len(ev)} 件・合図 {len(orders)} 件を書いた（{a.out_dir}）。銘柄名が決まらないもの: {unmapped or 'なし'}")
     return 0

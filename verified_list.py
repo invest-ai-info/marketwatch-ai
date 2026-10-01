@@ -32,6 +32,12 @@ def _label(r):
     return f"{r['sec']}-{r['id']}" if r["sec"] else r["id"]
 
 
+def _progress(r):
+    """数えている途中の書き方。goal が回数なら「n/goal回」、期間の区切り（文字）なら「n回・期間」"""
+    g = r.get("goal")
+    return f"{r['n']}/{g}回" if isinstance(g, int) else f"{r['n']}回・{g}"
+
+
 def _pct(x):
     return "—" if x is None else f"{x * 100:+.2f}％"
 
@@ -154,7 +160,7 @@ def render(stop, plus, watching, now=None, screens=()):
     else:
         L.append("- まだ無い")
     L += ["", "## 👀 いま前向きで数えているもの", ""]
-    L += [f"- {_label(r)} {r['title']}（{r['n']}/{r['goal']}回）" for r in watching] or ["- 無い"]
+    L += [f"- {_label(r)} {r['title']}（{_progress(r)}）" for r in watching] or ["- 無い"]
     L += [""] + render_screens(screens)
     L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
           "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]

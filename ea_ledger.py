@@ -32,7 +32,13 @@ import screen_judge as J
 
 JST = dt.timezone(dt.timedelta(hours=9))
 FWD_START = "2026-10-01"          # AT3：この日（日本時間）以降に届いた合図だけ数える
-STEP, STOP_MIN, GOAL = 30, 300, 1000
+# 🆕 2026-10-01 オーナー決定「2年も検証していたら長すぎる」＝AT3 は1か月で1回だけ区切る（PILLAR_PREREG.md「AT」の追記）。
+# 300回・1000回の決まりは AT3 には使わない。この日（日本時間）までに届いた合図だけ数え、DECIDE_ON 以降に1回だけ判定する
+CUT_END = "2026-10-31"
+DECIDE_ON = "2026-11-08"          # 期間の建玉は7日で閉じる＝この日にはすべて閉じている（閉じていない注文があれば閉じるまで待つ）
+STEP = 30                         # 読むための区切り（判定ではない）
+REAL_MIN = 30                     # 本番へ移す条件の回数（デモ30回以上で幅の下限＞0。変えない）
+GOAL = f"{FWD_START}〜{CUT_END} に届いた合図・{DECIDE_ON} 以降に1回だけ判定"
 SECTION = "## AT "
 OUT_JSON = "auto-forward.json"
 TITLE_AT3 = "4時間足のメールの合図を、デモ口座で自動に建てる（前向き・費用込みの R）"
@@ -110,40 +116,64 @@ def checkpoints(rs, dates):
     return out
 
 
-def at3_verdict(prev, rs, dates, today):
-    """オーナーの決まり：300回以上の区切りで幅がまるごと0より下＝ストップ／1000回で判定。一度出たら変えない"""
+def at3_verdict(prev, rs, dates, today, still_open):
+    """オーナーの決まり（2026-10-01）：期間（FWD_START〜CUT_END に届いた合図）の注文がすべて閉じたあと、DECIDE_ON 以降に1回だけ。
+    幅の下限が0より上＝プラス／それ以外（0をまたぐ・まるごと下・0回）＝ストップ。一度出たら変えない"""
     if prev:
         return prev
-    if len(rs) >= GOAL:
-        st = J.cluster_stats(rs[:GOAL], dates[:GOAL])
-        ok = st["lo"] is not None and st["lo"] > 0
-        return {"status": "plus" if ok else "stop", "decided_on": today, "n": GOAL, "mean": J._f(st["mean"]),
-                "lo": J._f(st["lo"]), "hi": J._f(st["hi"]),
-                "reason": "1000回で費用込みの平均の幅がまるごと0より上" if ok else
-                          ("1000回で費用込みの平均がマイナス" if st["mean"] <= 0 else "1000回でプラスと言い切れない（幅が0をまたぐ）")}
-    for k in range(STOP_MIN, len(rs) + 1, STEP):
-        st = J.cluster_stats(rs[:k], dates[:k])
-        if st["hi"] is not None and st["hi"] < 0:
-            return {"status": "stop", "decided_on": today, "n": k, "mean": J._f(st["mean"]), "lo": J._f(st["lo"]),
-                    "hi": J._f(st["hi"]), "reason": f"{k}回で費用込みの平均の幅がまるごと0より下"}
-    return None
+    if today < DECIDE_ON or still_open:
+        return None
+    period = f"{FWD_START}〜{CUT_END} に届いた合図"
+    n = len(rs)
+    if n == 0:
+        return {"status": "stop", "decided_on": today, "n": 0, "mean": None, "lo": None, "hi": None,
+                "reason": f"{period}で建てた回数が0"}
+    st = J.cluster_stats(rs, dates)
+    lo, hi = J._f(st["lo"]), J._f(st["hi"])
+    if lo is not None and lo > 0:
+        status = "plus"
+        reason = f"{period}の{n}回で費用込みの平均の幅がまるごと0より上" + (
+            f"（{REAL_MIN}回に届かないので本番へは移さない）" if n < REAL_MIN else "")
+    elif hi is not None and hi < 0:
+        status, reason = "stop", f"{period}の{n}回で費用込みの平均の幅がまるごと0より下"
+    elif st["mean"] <= 0:
+        status, reason = "stop", f"{period}の{n}回で費用込みの平均がマイナス（幅は0をまたぐ）"
+    else:
+        status, reason = "stop", f"{period}の{n}回ではプラスと言い切れない（幅が0をまたぐ）"
+    return {"status": status, "decided_on": today, "n": n, "mean": J._f(st["mean"]), "lo": lo, "hi": hi, "reason": reason}
+
+
+def at3_state(v, today, still_open):
+    """判定がまだのとき、いまどこにいるか（読むための一言）"""
+    if v:
+        return "判定済み（変えない）"
+    if today <= CUT_END:
+        return f"数えている途中（{CUT_END} までに届いた合図）"
+    if today < DECIDE_ON:
+        return f"区切りのあと＝期間の建玉が閉じるのを待っている（{DECIDE_ON} に判定）"
+    return f"期間の注文のうち {still_open} 回がまだ閉じていない＝閉じてから判定"
 
 
 def build_at3(swing_rows, prev=None, today=None, now=None):
     today = today or dt.datetime.now(JST).date().isoformat()
-    ps, still_open = plans(swing_rows, "signal_utc")
-    ps = [p for p in ps if p["date"] >= FWD_START]
+
+    def in_period(r):
+        return FWD_START <= jst_date(r.get("signal_utc")) <= CUT_END
+
+    rows = [r for r in swing_rows if in_period(r)]                      # 期間の外（登録より前・区切りのあと）は数えない
+    after = {r.get("plan") for r in swing_rows if jst_date(r.get("signal_utc")) > CUT_END}
+    ps, still_open = plans(rows, "signal_utc")
     rs, dates = [p["r"] for p in ps], [p["date"] for p in ps]
-    skipped = collections.Counter(r.get("reason") or "（理由なし）" for r in swing_rows
-                                  if r.get("status") == "skipped" and jst_date(r.get("signal_utc")) >= FWD_START)
-    v = at3_verdict(((prev or {}).get("verdicts") or {}).get("AT3"), rs, dates, today)
+    skipped = collections.Counter(r.get("reason") or "（理由なし）" for r in rows if r.get("status") == "skipped")
+    v = at3_verdict(((prev or {}).get("verdicts") or {}).get("AT3"), rs, dates, today, still_open)
     st = J.cluster_stats(rs, dates)
-    return {"kind": "forward", "unit": "R", "goal": GOAL, "fwd_start": FWD_START,
+    return {"kind": "forward", "unit": "R", "goal": GOAL, "fwd_start": FWD_START, "cut_end": CUT_END, "decide_on": DECIDE_ON,
             "generated_jst": now or dt.datetime.now(JST).isoformat(timespec="minutes"),
             "prereg_sha256": J.section_sha256(head=SECTION),
             "titles": {"AT3": TITLE_AT3}, "verdicts": {"AT3": v} if v else {},
             "summary": {"n": len(rs), "mean": J._f(st["mean"]), "lo": J._f(st["lo"]), "hi": J._f(st["hi"]),
-                        "win": J._f(st["win"]), "open_plans": still_open},
+                        "win": J._f(st["win"]), "open_plans": still_open, "after_cut_signals": len(after),
+                        "state": at3_state(v, today, still_open)},
             "checkpoints": checkpoints(rs, dates), "skipped": dict(skipped),
             "trades": [{"c": "AT3", "d": p["date"], "r": round(p["r"], 4), "kind": p["kind"], "delay_min": p["delay_min"]}
                        for p in ps]}
@@ -217,7 +247,7 @@ def main(argv=None):
         with open(os.path.join(a.report_dir, name), "w", encoding="utf-8") as fh:
             fh.write(md)
     s = at3["summary"]
-    print(f"AT3：{s['n']}回（開いている {s['open_plans']}）・判定 {at3['verdicts'].get('AT3', {}).get('status', 'まだ')} → {a.json_out}")
+    print(f"AT3：{s['n']}回（開いている {s['open_plans']}）・{s['state']}・判定 {at3['verdicts'].get('AT3', {}).get('status', 'まだ')} → {a.json_out}")
     print(f"AT1・AT2 の報告 → {a.report_dir}（送らない）")
     return 0
 
