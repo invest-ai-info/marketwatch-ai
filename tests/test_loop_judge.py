@@ -196,6 +196,22 @@ def test_review_tables_and_render_without_money():
         pass
 
 
+def test_second_ledger_for_a_new_section():
+    """別の出どころの節（LQ）用：確かめた回数の累計の出発点・ラウンド数の上限・題名を渡せる。既定（LP）は変わらない"""
+    base = LJ.new_ledger()
+    assert (base["id"], base["confirm_tests"], base["max_rounds"]) == ("LP", 6, 20)
+    led = LJ.new_ledger("LQ", LJ.SECTION, 26, 3, title="# LQ テスト台帳", scope="テストの範囲では")      # 見出しは存在する節（LP）で代用
+    assert (led["id"], led["confirm_tests"], led["max_rounds"]) == ("LQ", 26, 3)
+    for k in range(3):
+        LJ.register_round(led, f"LQ-{k + 1:02d}", "x", "y", "z", on="2026-10-02")
+        assert led["rounds"][-1]["confirm_count_at_gate"] == 27 + k
+        LJ.record_backtest(led, f"LQ-{k + 1:02d}", _days([0.0] * 10), _days([0.01, -0.01] * 8), placebo_p=0.5)
+    assert led["status"] == "closed" and "3ラウンドで段1に届かなかった（テストの範囲では" in led["closed_reason"]
+    md = LJ.render_md(led)
+    assert md.startswith("# LQ テスト台帳") and "ラウンド 3／3" in md and "p＜0.0017" in md
+    assert LJ.render_md(LJ.new_ledger()).startswith("# LP ドル円5分足")
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
