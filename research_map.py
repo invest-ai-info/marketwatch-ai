@@ -12,6 +12,10 @@
   exit-lab.json / exit-lab-hypotheses.json … 出口の相性ラボの前向きの確認
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
+  🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
+  yori-forward.json / combo-forward.json / auto-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yutai-edinet/                       … 株主優待のデータ集め（研究中）
+  ⚠️ 個人の取引の記録（守りの見張り番・5分足の執行・取引の記録）と research/ だけの研究は載せない（件数も出さない）
 
 使い方:
   python research_map.py            # 一覧を文字で表示（セッションでの確認用）
@@ -32,6 +36,10 @@ EXIT_HYPS = "exit-lab-hypotheses.json"
 WALL_LAB = "exit-wall-lab.json"
 STOP_LAB = "stop-lab.json"
 ENV_HISTORY = "signal-env-profile-history.json"
+YORI_FWD = "yori-forward.json"
+COMBO_FWD = "combo-forward.json"
+AUTO_FWD = "auto-forward.json"
+YUTAI_DIR = "yutai-edinet"
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
 THEMES = [
@@ -307,6 +315,106 @@ def collect_env(root="."):
 
 
 # ---------------------------------------------------------------- 表示（HTML）
+# ---------------------------------------------------------------- 研究中・検証中の一覧（短く）
+def _md(iso):
+    """2026-10-31 → 10月31日"""
+    try:
+        d = datetime.date.fromisoformat(str(iso)[:10])
+    except ValueError:
+        return str(iso)
+    return f"{d.month}月{d.day}日"
+
+
+def _ea_dates(root="."):
+    """自動で建てる検証の区切りの日（ea_ledger.py の決まり）。読み込まずに文字から取る（重い部品を読まない）。読めなければ None"""
+    import re
+    try:
+        src = open(os.path.join(root, "ea_ledger.py"), encoding="utf-8").read()
+    except OSError:
+        src = ""
+    got = [re.search(rf'^{k}\s*=\s*"(\d{{4}}-\d{{2}}-\d{{2}})"', src, re.M) for k in ("FWD_START", "CUT_END", "DECIDE_ON")]
+    return tuple(g.group(1) for g in got) if all(got) else None
+
+
+def collect_studies(root, m):
+    """いま進めている研究を短く並べる。前向きの検証は記録から進み具合を読み、判定が出たら一覧から外す。
+    m は collect() の結果（仮説の採点・出口・環境の件数をそこから取る）"""
+    p = lambda name: os.path.join(root, name)
+    verify, research = [], []
+
+    y = _load(p(YORI_FWD))
+    if y:
+        codes = list((y.get("titles") or {}).keys())
+        done = set((y.get("verdicts") or {}).keys())
+        live = [c for c in codes if c not in done]
+        if live:
+            cnt = {}
+            for t in y.get("trades") or []:
+                cnt[t.get("c")] = cnt.get(t.get("c"), 0) + 1
+            prog = "・".join(f"形{i + 1} {cnt.get(c, 0)}回" for i, c in enumerate(codes) if c in live)
+            extra = f"・判定が出た形 {len(done)}つ" if done else ""
+            verify.append({"name": "前の日に出来高が急に増えた日本株の、次の日の寄り付き",
+                           "what": "出来高（売買された株の数）が前の日に急に増えた銘柄について、次の日の朝いちばんの取引から"
+                                   "決まった形で数え、手数料などを引いても平均がプラスになるかを4つの形で確かめています",
+                           "since": y.get("fwd_start") or "",
+                           "progress": f"{prog}（それぞれ{y.get('goal') or 1000}回で1回だけ判定）{extra}"})
+
+    a = _load(p(AUTO_FWD))
+    if not (a and (a.get("verdicts") or {}).get("AT3")):
+        dates = ((a.get("fwd_start"), a.get("cut_end"), a.get("decide_on")) if a and a.get("cut_end")
+                 else (_ea_dates(root) or _ea_dates(os.path.dirname(os.path.abspath(__file__)))))
+        n = ((a or {}).get("summary") or {}).get("n", 0)
+        when = (f"{_md(dates[1])}までに届いた合図を数え、{_md(dates[2])}以降に1回だけ判定" if dates
+                else "1か月のあいだに届いた合図を数え、そのあと1回だけ判定")
+        verify.append({"name": "4時間足の合図を、練習用の口座で自動に建てる",
+                       "what": "メールで届く4時間足の合図どおりに、練習用の口座（デモ口座）で自動に注文を出し、"
+                               "実際の約定の値・費用・届くまでの遅れで、記録上の成績とどれだけずれるかを確かめています",
+                       "since": dates[0] if dates else "",
+                       "progress": f"{n}回（{when}）"})
+
+    c = _load(p(COMBO_FWD))
+    if c:
+        r = c.get("result") or {}
+        cps = r.get("checkpoints") or {}
+        nxt = next((k for k in (50, 100, 150) if str(k) not in cps and k not in cps), None)
+        if nxt is not None:
+            n = (r.get("now") or {}).get("n", 0)
+            verify.append({"name": "過去の確かめで向きだけ残った組み合わせ",
+                           "what": "一目均衡表（いちもくきんこうひょう：トレンドの向きを見る指標）と、ボリンジャーバンド"
+                                   "（値動きのふだんの幅を表す線）の下の線、値動きを追いかける損切りの組み合わせが、"
+                                   "新しいデータでも同じ向きに残るかを見ています",
+                           "since": "2026-09-28",
+                           "progress": f"{n}件（次の区切りは{nxt}件。1年に30件ほどなので時間がかかります）"})
+
+    verify.append({"name": "シグナルが出た場面の条件（仮説）の採点",
+                   "what": "どんな場面で出たシグナルなら勝ちやすいか（負けやすいか）を仮説として登録し、登録した日より後のシグナルだけで採点しています",
+                   "since": "", "progress": f"{m['n_active']}本を採点中（くわしくは下の②）"})
+    if m["exits"]:
+        verify.append({"name": "利確と損切りの置き方", "what": "利確と損切りの置き方を変えると成績がどう変わるかを、登録した日より後のデータで確かめています",
+                       "since": "", "progress": f"{len(m['exits'])}件（くわしくは下の③）"})
+    if m["env"]:
+        verify.append({"name": "相場の環境の統計", "what": "シグナルが効いたとき・効かなかったときの相場の環境を、毎月同じ物差しで数え直しています",
+                       "since": "", "progress": "毎月2日に数え直し（くわしくは下の④）"})
+
+    if os.path.isdir(p(YUTAI_DIR)):
+        research.append({"name": "株主優待のある銘柄の値動き",
+                         "what": "株主優待のある銘柄は、権利の日の3か月ほど前から値動きに偏りがあるか、"
+                                 "空売りしにくい銘柄ほどその偏りが大きいかを確かめる準備をしています",
+                         "since": "2026-09-30",
+                         "progress": "有価証券報告書（会社が毎年出す報告書）から優待の中身を集めている途中。集め終わったら1回だけ数えます"})
+    return {"verify": verify, "research": research}
+
+
+def _study_list(rows):
+    out = ['<ul class="rm-list">']
+    for r in rows:
+        since = f"{_e(r['since'])} から・" if r.get("since") else ""
+        out.append(f'<li><strong>{_e(r["name"])}</strong>：{_e(r["what"])}'
+                   f'<br><span class="rm-sub">{since}{_e(r["progress"])}</span></li>')
+    out.append("</ul>")
+    return "".join(out)
+
+
 def _e(s):
     return html.escape(str(s), quote=True)
 
@@ -331,6 +439,17 @@ def recent_rows(m):
     since = (base - datetime.timedelta(days=RECENT_DAYS)).isoformat()
     rows = [r for th in m["themes"] for r in th["rows"] if r["registered"] >= since]
     return sorted(rows, key=lambda r: (r["registered"], r["id"] or ""), reverse=True)
+
+
+def _studies_html(root, m):
+    st = m.get("studies") or collect_studies(root, m)
+    priv = ('<p class="rm-sub" style="margin:6px 0 0">このほかに、手元だけで進めている研究があります'
+            '（個人の取引の記録や、外に出せないデータを使うため、ここには載せていません）。</p>')
+    return ('<h3>📋 研究中・検証中の一覧</h3>'
+            '<p class="rm-desc">いま進めている研究を短く並べました。判定が出たものは一覧から外れます。くわしい中身はこの下の①〜④にあります。</p>'
+            f'<div class="rm-card"><strong>🧪 検証中</strong>（登録した日より後のデータで数えていて、判定はまだ）{_study_list(st["verify"])}</div>'
+            f'<div class="rm-card"><strong>🔬 研究中</strong>（数える前の準備・データを集めている途中）'
+            f'{_study_list(st["research"]) if st["research"] else "<p class=\"rm-desc\">いまはありません。</p>"}{priv}</div>')
 
 
 def build_pane(root=".", model=None):
@@ -363,6 +482,7 @@ def build_pane(root=".", model=None):
       .rm-det{{padding:8px 10px}}
     }}
     .rm-card{{border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;margin:0 0 12px;background:#fff}}
+    .rm-list{{margin:8px 0 4px;padding-left:20px;font-size:.9rem;line-height:1.7}} .rm-list li{{margin:0 0 8px}}
     body.dark .rm-lead{{background:#0d1a2b;border-color:#388bfd66}}
     body.dark .rm-sum div,body.dark .rm-card{{background:#161b22;border-color:#30363d}}
     body.dark .rm-sum b{{color:#58a6ff}} body.dark .rm-desc,body.dark .rm-sum span{{color:#8b949e}}
@@ -383,6 +503,7 @@ def build_pane(root=".", model=None):
     <div><b>{(m['env'] or {}).get('cells', 0)}区分</b><span>毎月数え直す相場の環境</span></div>
     <div><b>{len(m['ended'])}本</b><span>終わった検証（記録は残す）</span></div>
   </div>
+  {_studies_html(root, m)}
   <h3>① 定期的に回している研究</h3>
   <div class="scroll-x"><table class="rm-t"><tr><th>研究</th><th>いつ</th><th>何をしているか</th></tr>"""]
     for name, when, what, href, link in ROUTINES:
@@ -490,7 +611,10 @@ def build_pane(root=".", model=None):
 
 # ---------------------------------------------------------------- 表示（文字）
 def render_text(m):
-    L = [f"いま検証中のこと（仮説の基準日 {m['asof'] or '—'}）",
+    st = m.get("studies") or collect_studies(".", m)
+    L = ["研究中・検証中の一覧"] + [f"  検証中: {r['name']}（{r['progress']}）" for r in st["verify"]] \
+        + [f"  研究中: {r['name']}（{r['progress']}）" for r in st["research"]] + [""]
+    L += [f"いま検証中のこと（仮説の基準日 {m['asof'] or '—'}）",
          f"前向きに追っている仮説 {m['n_active']}本（うち集計待ち {m['n_pending']}本）／出口の研究 {len(m['exits'])}件／"
          f"終わった検証 {len(m['ended'])}本", ""]
     for th in m["themes"]:

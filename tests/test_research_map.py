@@ -131,6 +131,44 @@ def test_plain_japanese_only_indicator_names_remain():
 
 
 
+def _dump(d, name, obj):
+    with open(os.path.join(d, name), "w", encoding="utf-8") as fh:
+        json.dump(obj, fh, ensure_ascii=False)
+
+
+def test_study_lists_read_forward_records_and_drop_judged():
+    # 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」
+    d = tempfile.mkdtemp()
+    _dump(d, R.YORI_FWD, {"fwd_start": "2026-09-29", "goal": 1000, "titles": {"F1": "a", "F2": "b"}, "verdicts": {},
+                          "trades": [{"c": "F1"}, {"c": "F1"}]})
+    _dump(d, R.COMBO_FWD, {"result": {"now": {"n": 3}, "checkpoints": {}}})
+    head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    assert "📋 研究中・検証中の一覧" in head and "🧪 検証中" in head and "🔬 研究中" in head
+    assert "形1 2回・形2 0回（それぞれ1000回で1回だけ判定）" in head and "3件（次の区切りは50件" in head
+    assert "10月31日までに届いた合図を数え、11月8日以降に1回だけ判定" in head   # 記録ができる前から載る
+    assert "株主優待" not in head                                                  # データ集めのフォルダが無ければ出さない
+    assert "手元だけで進めている研究があります" in head
+    for private in ("見張り番", "5分足", "取引の記録から", "MT5", "AT3", "J4F"):   # 個人の取引・記号は出さない
+        assert private not in head, private
+    # 判定が出たら一覧から外れる
+    _dump(d, R.YORI_FWD, {"fwd_start": "2026-09-29", "goal": 1000, "titles": {"F1": "a"}, "verdicts": {"F1": {"status": "stop"}}, "trades": []})
+    _dump(d, R.AUTO_FWD, {"kind": "forward", "cut_end": "2026-10-31", "decide_on": "2026-11-08", "summary": {"n": 30},
+                          "verdicts": {"AT3": {"status": "stop"}}})
+    _dump(d, R.COMBO_FWD, {"result": {"now": {"n": 150}, "checkpoints": {"50": {}, "100": {}, "150": {}}}})
+    os.makedirs(os.path.join(d, R.YUTAI_DIR))
+    head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    assert "寄り付き" not in head and "練習用の口座" not in head and "向きだけ残った" not in head
+    assert "株主優待のある銘柄の値動き" in head
+
+
+def test_study_list_shows_progress_from_the_ea_record():
+    d = tempfile.mkdtemp()
+    _dump(d, R.AUTO_FWD, {"kind": "forward", "fwd_start": "2026-10-01", "cut_end": "2026-10-31", "decide_on": "2026-11-08",
+                          "summary": {"n": 12}, "verdicts": {}})
+    assert "12回（10月31日までに届いた合図を数え、11月8日以降に1回だけ判定）" in R.build_pane(root=d)
+    assert R._ea_dates(ROOT) == ("2026-10-01", "2026-10-31", "2026-11-08")       # ea_ledger.py の決まりと同じ日
+
+
 # ── トップの「このサイトがしていること」の帯・はじめての方へ・ナビの名前（2026-09-26 オーナー判断「研究を主軸に」）
 def test_research_band_counts_published_journal_and_picks_latest():
     import glob
