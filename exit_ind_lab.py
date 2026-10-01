@@ -270,10 +270,16 @@ def random_pool(data, ctxs, t, S, Pn):
     return pool
 
 
-def run(n_perm=N_PERM):
+def _daily(tk):
+    return P.fetch(tk, "1d", start=TL.START)
+
+
+def run(n_perm=N_PERM, loader=None):
+    """loader＝銘柄→足（既定は日足）。🆕 2026-10-01 M7 の腕A（4時間足）が束ねた足を渡す。既定の動きは変わらない"""
+    load = loader or _daily
     data, ctxs, entries, missing = {}, {}, [], []
     for tk in TL.TICKERS:
-        df = P.fetch(tk, "1d", start=TL.START)
+        df = load(tk)
         if df is None or len(df) < TL.WARMUP + 80:
             missing.append(tk)
             continue
@@ -322,15 +328,17 @@ def _name(r):
     return f"{CL.TREND_NAMES[r['t']]} × {CL.OSCS[r['osc']]} × 損切り:{STOPS[r['s']]} × 利確:{TPS[r['p']]}"
 
 
-def render_md(res):
+def render_md(res, title="出口にテクニカル指標を使う研究 E1（損切り8 × 利確8 × 入口60）", section="E1",
+              front="2015年まで", back="2016年から"):
+    """🆕 2026-10-01 title・section・前半後半の言葉は M7 の腕A（4時間足）が差し替える。既定は E1 のまま"""
     f = P._f
-    L = ["# 出口にテクニカル指標を使う研究 E1（損切り8 × 利確8 × 入口60）", "",
-         f"作成: {res['generated_at']}（GitHub Actions で計算）。事前登録＝`{P.PREREG}`「E1」（指紋 sha256 `{(res.get('prereg_sha256') or '')[:16]}…`）。",
+    L = [f"# {title}", "",
+         f"作成: {res['generated_at']}（GitHub Actions で計算）。事前登録＝`{P.PREREG}`「{section}」（指紋 sha256 `{(res.get('prereg_sha256') or '')[:16]}…`）。",
          "値＝1回の取引の損益（R・費用後。1R＝入る時の ATR×1.5）。**売買の決まりではない**。", ""]
     r = res.get("result") or {}
     if r.get("error"):
         return "\n".join(L + [f"- ⚠️ 計算できず: {r['error']}", ""]) + "\n"
-    L += [f"## 前半（2015年まで）で選んだ上位{TOP_K}つを、後半（2016年から）で1回だけ確かめた結果（{r['combos']}通りから）", "",
+    L += [f"## 前半（{front}）で選んだ上位{TOP_K}つを、後半（{back}）で1回だけ確かめた結果（{r['combos']}通りから）", "",
           f"判定＝後半の平均Rの95%の幅がまるごと0より上・偽薬との比較 p＜{P_LIMIT:.4f}", "",
           "| 組み合わせ | 前半 件数 | 前半 平均R | 後半 件数 | 後半 平均R | 95%の幅 | 偽薬の平均 | p | 判定 |",
           "|---|---:|---:|---:|---:|---|---:|---:|---|"]
