@@ -4,7 +4,7 @@
 取引はすべて作り物（ネットワークに出ない）。確かめること＝①事前登録と定数の一致 ②日本時間 07:00 区切り
 ③1日の損失の上限 −3% を過去の計算に入れる ④デモの記録から％だけ ⑤日ごとの幅・落ち込み ⑥段は幅の下限で上がる
 ⑦関門A（確かめた回数の累計で厳しくなる）と登録の決まり ⑧デモの窓（途中で消える・窓の終わり・段は下がらない）
-⑨止める決まり（12ラウンド・3回続けて消えた）⑩振り返りの表 ⑪台帳に金額を書かない。
+⑨止める決まり（20ラウンド〔登録は12→追記①で20〕・3回続けて消えた）⑩振り返りの表 ⑪台帳に金額を書かない。
 
 実行:  python tests/test_loop_judge.py     （pytest 不要。pytest でも動く）
 """
@@ -31,13 +31,13 @@ def test_prereg_matches_the_code():
     i = text.find("\n## LP ")
     sec = text[i:text.find("\n## ", i + 1)]
     for s in ("日本時間 07:00 区切り", "**1日の損失の上限 −3%**", "段4", "+3%（オーナーの目標）", "+0.3%", "+1%",
-              "**12ラウンド**", "**3回続けてデモで消えた**", "**窓＝100回以上かつ10営業日以上**", "5営業日かつ30回以上",
+              "**12ラウンド**", "**止める決まりを12ラウンドから20ラウンドに改める**", "**3回続けてデモで消えた**", "**窓＝100回以上かつ10営業日以上**", "5営業日かつ30回以上",
               "**累計は M5-3 の確かめ6回から始める**", "最大3つまで", "`loop_judge.py`", "`research/loop/loop-ledger.json`",
               "2022-06-01〜2024-07-31／確かめ＝2024-08-01〜2026-09-24"):
         assert s in sec, s
     assert (LJ.RISK_PCT, LJ.DAILY_STOP, LJ.DAY_CUT_HOUR) == (0.01, -0.03, 7)
     assert [s[2] for s in LJ.STAGES] == [None, 0.0, 0.003, 0.01, 0.03]
-    assert (LJ.CONFIRM_BASE, LJ.MAX_VARIANTS, LJ.MAX_ROUNDS, LJ.MAX_FWD_FAILS) == (6, 3, 12, 3)
+    assert (LJ.CONFIRM_BASE, LJ.MAX_VARIANTS, LJ.MAX_ROUNDS, LJ.MAX_FWD_FAILS) == (6, 3, 20, 3)
     assert (LJ.FWD_MIN_TRADES, LJ.FWD_MIN_DAYS, LJ.EARLY_TRADES, LJ.EARLY_DAYS) == (100, 10, 30, 5)
     assert LJ.SELECT == ("2022-06-01", "2024-07-31") and LJ.CONFIRM == ("2024-08-01", "2026-09-24")
     assert len(LJ.new_ledger()["prereg_sha256"]) == 64
@@ -166,11 +166,11 @@ def test_stop_rules():
     except ValueError:
         pass
     led2 = LJ.new_ledger()
-    for k in range(12):
+    for k in range(LJ.MAX_ROUNDS):
         LJ.register_round(led2, f"LP-{k + 1:02d}", "x", "y", "z", on="2026-10-02")
         LJ.record_backtest(led2, f"LP-{k + 1:02d}", _days([0.0] * 10), _days([0.01, -0.01] * 8), placebo_p=0.5)
         assert led2["rounds"][-1]["out_reason"] == "確かめ期間で費用後プラスでない"
-    assert led2["status"] == "closed" and "12ラウンド" in led2["closed_reason"] and led2["confirm_tests"] == 18
+    assert led2["status"] == "closed" and "20ラウンド" in led2["closed_reason"] and led2["confirm_tests"] == 6 + 20
 
 
 def test_review_tables_and_render_without_money():
