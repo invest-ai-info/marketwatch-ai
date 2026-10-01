@@ -284,6 +284,73 @@ def test_bridge_survives_missing_signals_file_and_locked_target():
     assert not os.path.exists(os.path.join(d, "x.csv.tmp"))
 
 
+def _review_rows():
+    """振り返りのテスト用：合図の値 200・損切り 199（幅1）・約定 200.2（0.2R 不利）・利確1 201.333／利確2 202"""
+    base = int(dt.datetime(2026, 10, 2, 0, tzinfo=UTC).timestamp())
+    plans = [("X0", 199.0, -1.0), ("X1", 201.333, 1.2), ("X2", 199.0, -1.0), ("X3", 199.0, -1.0), ("X4", 199.0, -1.0)]
+    rows = []
+    for k, (pid, leg1_close, r) in enumerate(plans):
+        t = base + 86400 * k
+        for leg, (tp, close) in enumerate(((201.333, leg1_close), (202.0, 199.0 if r < 0 else 202.0))):
+            rows.append(dict(zip(SWING_HEAD, map(str, [pid, 2, "watch", "filled", f"{pid}-{leg}", t, t + 600, t + 610, t + 90000,
+                                                         "GBPJPY", 1, 200.0, 200.2, 0.02, 0.05, 1000, 100000, 199.0, tp, close,
+                                                         r * 500 + 1.0, -0.5, -0.5, "x"]))))
+    for k in range(8):                                                  # 見送り：90分より後×6・最小ロット×2
+        t = base + 3600 * (k + 1)
+        reason = "late_90min" if k < 6 else "lot_min"
+        rows.append(dict(zip(SWING_HEAD, map(str, [f"K{k}", 2, "watch", "skipped", "", t, "", "", "", "GBPJPY", 1,
+                                                     "", "", "", "", "", "", "", "", "", "", "", "", reason]))))
+    sigs = []
+    outcomes = ["tp1", "sl", "sl", "tp1", "tp1"]
+    for k, oc in enumerate(outcomes):
+        t = dt.datetime.fromtimestamp(base + 86400 * k + 30, JST)              # 時刻は30秒ずれていても突き合わせる
+        sigs.append({"id": f"GBPJPY=X_4h_{k}", "fired_at": t.isoformat(), "timeframe": "4h", "ticker": "GBPJPY=X",
+                     "outcome": oc, "loss_analysis": {"ai_result": {"primary_category": "テクニカル悪化"}} if oc == "sl" else None})
+    for k in range(8):
+        t = dt.datetime.fromtimestamp(base + 3600 * (k + 1), JST)
+        sigs.append({"id": f"K{k}", "fired_at": t.isoformat(), "timeframe": "4h", "ticker": "GBPJPY=X", "outcome": "tp2"})
+    d = tempfile.mkdtemp()
+    path = os.path.join(d, "signals-log.json")
+    json.dump(sigs, open(path, "w", encoding="utf-8"), ensure_ascii=False)
+    return rows, path
+
+
+def test_at3_review_and_proposals():
+    rows, path = _review_rows()
+    index = L.load_signal_index(path)
+    ps, _ = L.plans(rows, "signal_utc")
+    review, tr = L.at3_review(rows, ps, index)
+    g = review["gap"]
+    assert g["n"] == 5 and g["delay_min"] == 10.0 and abs(g["entry_gap_r"] - 0.2) < 1e-6
+    assert [x["flip"] for x in tr] == ["worse", "better", None, "worse", "worse"]       # 1本目の結果とサイトの記録
+    assert (g["worse_flips"], g["better_flips"], g["paper_n"]) == (3, 1, 5)
+    assert abs(g["paper_mean"] - (4 / 3 * 3 - 2) / 5) < 1e-3
+    assert review["skips"]["late_90min"] == {"n": 6, "paper_n": 6, "paper_mean": 2.0}
+    assert review["loss_causes"] == {"テクニカル悪化": 1}                              # デモで負けた回（X2）の敗因だけ
+    assert [x["id"] for x in review["proposals"]] == ["②", "③", "④"]                # ⑤は 2/8＝25%・⑥は10回未満
+    assert all("いまの1か月は変えない" in x["text"] for x in review["proposals"])
+    md = L.review_md(review, tr)
+    assert "負けに変わった" in md and "{" not in md and "直す候補" in md
+    out = L.build_at3(rows, today="2026-10-20", now="x", index=index)
+    assert out["review"]["gap"]["n"] == 5 and "profit" not in json.dumps(out["review"]) and "balance" not in json.dumps(out)
+    lots = [dict(r, reason="lot_min") if r["status"] == "skipped" else r for r in rows]
+    assert "⑤" in [x["id"] for x in L.at3_review(lots, ps, index)[0]["proposals"]]
+    empty = L.at3_review(rows, ps, L.load_signal_index(os.path.join(tempfile.mkdtemp(), "none.json")))[0]
+    assert empty["gap"]["paper_n"] == 0 and [x["id"] for x in empty["proposals"]] == ["②"]   # サイトの記録が無くても落ちない
+
+
+def test_review_prereg():
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    i = text.find("\n## AT ")
+    sec = text[i:text.find("\n## ", i + 1)]
+    for s in ("**AT3 の振り返りと「直す候補」**", "**候補は自動では入れない**", "60分超", "0.10R超", "3回以上", "5件以上",
+              "0.3R以上", "30%超", "10回以上", "0.2R以上", "利確1＝+1.33R・利確2＝+2.0R・損切り＝−1R・期限＝0R"):
+        assert s in sec, s
+    assert L.PROPOSE == {"delay_min": 60, "entry_gap_r": 0.10, "flips": 3, "skip_n": 5, "skip_gap_r": 0.3,
+                         "lot_min_share": 0.30, "paper_gap_n": 10, "paper_gap_r": 0.2}
+    assert L.PAPER_R == {"tp1": 4 / 3, "tp2": 2.0, "sl": -1.0, "expired": 0.0}
+
+
 def test_workflow_and_sync():
     wf = open(".github/workflows/technical-alerts.yml", encoding="utf-8").read()
     assert "python build_signals_recent.py || true" in wf and "track-record.html signals-recent.json" in wf
