@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-01", "line": '・<b>2026-10-01</b>: 📰 解説「<a href="guide-news-2026-10-01-micron-q4-earnings-nikkei-tankan.html" style="color:#0969da"><b>マイクロン好決算でAI需要再確認──アドテスト+11.8%・日経一時68,000円台・日銀短観+24</b></a>」公開'},
         {"date": "2026-10-01", "line": '・<b>2026-10-01</b>: ↩️ 解説「<a href="guide-entry-short-term-reversal.html" style="color:#0969da"><b>短期の逆張りは研究で効くとわかっている？</b></a>」公開'},
         {"date": "2026-10-01", "line": '・<b>2026-10-01</b>: 🧪 解説「<a href="guide-signal-lab-115.html" style="color:#0969da"><b>RSI売られすぎ逆張り買い、前向き391回での現状</b></a>」公開'},
         {"date": "2026-09-30", "line": '・<b>2026-09-30</b>: 📰 解説「<a href="guide-news-2026-09-30-consumer-confidence-819-12year-low.html" style="color:#0969da"><b>【9/30】米消費者信頼感81.9──12年ぶり最低</b></a>」公開'},

@@ -314,4 +314,5 @@ SYNC_FILES = [
     "guide-news-2026-09-30-consumer-confidence-819-12year-low.html",
     "guide-signal-lab-115.html",
     "guide-entry-short-term-reversal.html",
+    "guide-news-2026-10-01-micron-q4-earnings-nikkei-tankan.html",
 ]
