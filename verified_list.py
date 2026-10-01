@@ -25,6 +25,7 @@ SOURCES = [
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
 SCREEN_SOURCES = [
     ("m6-screen.json", "M6 ポンド円・ロンドン時間の総当たり（手元の MT5 の5分足・過去に1回ずつ）"),
+    ("m7-screen.json", "M7 4時間足の総当たり（為替8ペア・手元の MT5 の実スプレッド・1回ずつ）"),   # 🆕 2026-10-01
 ]
 
 
@@ -104,7 +105,7 @@ def render_screens(screens):
                      + "／".join(parts) + f"／**昇格候補 {c.get('candidate', 0):,}**")
             rdg = s.get("reading", {}).get(rd["round"], {})
             if rdg:
-                tfname = {"M5": "5分足", "M15": "15分足", "H1": "1時間足"}
+                tfname = {"M5": "5分足", "M15": "15分足", "H1": "1時間足", "H4": "4時間足"}
                 L.append("  - 読むための数字（判定ではない）：" + "／".join(
                     f"{tfname.get(k, k)} 期待値がプラス {v['plus']}/{v['combos']}・期待値の中央値 {_r(v['median_mean'])}・勝率の中央値 {_p(v['median_win'])}"
                     for k, v in rdg.items()))
