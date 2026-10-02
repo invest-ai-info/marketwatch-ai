@@ -317,5 +317,6 @@ SYNC_FILES = [
     "guide-news-2026-10-01-micron-q4-earnings-nikkei-tankan.html",
     "guide-entry-carry-trade.html",
     "guide-news-2026-10-02-tokyo-cpi-sep-2026.html",
+    "guide-signal-lab-116.html",
     "drafts/draft-signal-lab-115.html",
 ]
