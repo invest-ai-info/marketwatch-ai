@@ -1,0 +1,37 @@
+{
+  "article_id": "116",
+  "asof": "2026-10-03T06:11:00+09:00",
+  "hypothesis_id": "rsi_oversold_edge",
+  "claims": [
+    {
+      "label": "事前登録前（過去データ）全体: RSI売られすぎ反発",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-16"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "前向き追跡（全足）: RSI売られすぎ反発",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-16"},
+      "k": 200,
+      "n": 403
+    },
+    {
+      "label": "前向き追跡（1時間足）: RSI売られすぎ反発",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "1h", "fired_from": "2026-06-16"},
+      "k": 119,
+      "n": 249
+    },
+    {
+      "label": "前向き追跡（4時間足）: RSI売られすぎ反発",
+      "filter": {"signal": "rsi_oversold_bounce", "tf": "4h", "fired_from": "2026-06-16"},
+      "k": 66,
+      "n": 132
+    },
+    {
+      "label": "前向き期間ベースライン（全シグナル）",
+      "filter": {"fired_from": "2026-06-16"},
+      "k": 1844,
+      "n": 4264
+    }
+  ]
+}

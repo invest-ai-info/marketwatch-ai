@@ -1,3 +1,4 @@
+2026-10-03 signal-lab: #116 ⏳下書き中（RSI30割れ反発・rsi_oversold_edge・promote_strikes=1定点観測。IS52/133=39.1%・FWD200/403=49.6%・CI=[44.8%~54.5%]・avgR=+0.158。ベースライン43.2%超え。plain_japanese待ち・verify待ち）
 2026-09-30 signal-lab: #114 ✅公開済み（警戒スコアA〜D×シグナル勝率の定点観察4868回。env=A 43.1%[41.4-44.9]/B 41.1%[38.5-43.8]/C 46.0%[41.3-50.8]/D 44.4%[32.8-56.7]。plain_japanese✅・verify 5/5✅・Opus1st🟡4修正→Opus2nd🔴avg-R削除→Opus3rd🟢・check_site OK・push済み）
 2026-09-29 signal-lab: #113 ✅公開済み（RSI版とボリンジャーバンド版の逆張り買い比較1456回・定点観察。RSI47.6%[43.3-51.9]・BB43.0%[39.9-46.2]。plain_japanese✅・signal_verify12/12緑✅・Opus1st🟡4件修正→plain_japanese✅・verify✅・Opus2nd🟡3件修正→plain_japanese✅・verify✅・Opus3rd🟢・check_site OK・push済み）
 2026-09-28 signal-lab: #112 ✅公開済み（逆張り買い×足別比較・定点観測。1h44.3%/4h43.8%/1d57.9%[45-70%CI]・平均R=+0.35。plain_japanese✅・signal_verify✅・Opus🟢・独立Opus🟢・check_site OK・push済み）
