@@ -315,5 +315,6 @@ SYNC_FILES = [
     "guide-signal-lab-115.html",
     "guide-entry-short-term-reversal.html",
     "guide-news-2026-10-01-micron-q4-earnings-nikkei-tankan.html",
+    "guide-entry-carry-trade.html",
     "drafts/draft-signal-lab-115.html",
 ]

@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-02", "line": '・<b>2026-10-02</b>: 💱 解説「<a href="guide-entry-carry-trade.html" style="color:#0969da"><b>少しずつ勝ち、たまに大きく負ける？ キャリートレード</b></a>」公開'},
         {"date": "2026-10-02", "line": '・<b>2026-10-02</b>: 🧪 解説「<a href="drafts/draft-signal-lab-115.html" style="color:#0969da"><b>MAゴールデンクロスは有利か？ 177回で確かめた【研究日誌#115】</b></a>」公開'},
         {"date": "2026-10-01", "line": '・<b>2026-10-01</b>: 📰 解説「<a href="guide-news-2026-10-01-micron-q4-earnings-nikkei-tankan.html" style="color:#0969da"><b>マイクロン好決算でAI需要再確認──アドテスト+11.8%・日経一時68,000円台・日銀短観+24</b></a>」公開'},
         {"date": "2026-10-01", "line": '・<b>2026-10-01</b>: ↩️ 解説「<a href="guide-entry-short-term-reversal.html" style="color:#0969da"><b>短期の逆張りは研究で効くとわかっている？</b></a>」公開'},
