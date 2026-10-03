@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-03", "line": '・<b>2026-10-03</b>: 📰 解説「<a href="guide-news-2026-10-03-us-jobs-report-sep-2026.html" style="color:#0969da"><b>【10/3】米9月雇用統計 +2.9万人で予想大幅下回る</b></a>」公開'},
         {"date": "2026-10-03", "line": '・<b>2026-10-03</b>: 🔬 解説「<a href="guide-company-amat-appliedmaterials.html" style="color:#0969da"><b>Applied Materials（AMAT）を数字で見る</b></a>」公開'},
         {"date": "2026-10-03", "line": '・<b>2026-10-03</b>: 🏦 解説「<a href="guide-entry-pre-fomc.html" style="color:#0969da"><b>FOMC前は株が上がりやすい？</b></a>」公開'},
         {"date": "2026-10-03", "line": '・<b>2026-10-03</b>: 🧪 解説「<a href="guide-signal-lab-116.html" style="color:#0969da"><b>RSI30割れ反発の前向き成績【研究日誌#116】</b></a>」公開'},
