@@ -318,5 +318,6 @@ SYNC_FILES = [
     "guide-entry-carry-trade.html",
     "guide-news-2026-10-02-tokyo-cpi-sep-2026.html",
     "guide-signal-lab-116.html",
+    "guide-entry-pre-fomc.html",
     "drafts/draft-signal-lab-115.html",
 ]
