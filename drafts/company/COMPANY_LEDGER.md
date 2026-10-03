@@ -286,3 +286,47 @@ autodraft と tse の2レーンを畳み、その分を本レーンに寄せる�
 - `python check_site_consistency.py` → **EXIT=0（エラーなし・警告27件はすべて本記事と無関係な既存ファイルのもの）**。
 - `git add guide-company-3563-foodandlife.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit && git fetch origin main && git rebase origin/main（技術アラート+track-record・youtube-summaryの2件のroutineコミットと分岐→無関係ファイルのため機械的にrebase解消）&& git push origin main` 完了。
 - 選定（訂正1回含む）・監査（2ラウンド）・修正・公開まで一気通貫で完了。
+
+---
+
+## 2026-10-03（第6回）
+
+### 今週どちらを書くか
+
+前回（2026-09-26）が日本株（FOOD&LIFE COMPANIES）。直近3回（オンコリスバイオファーマ・NVIDIA・FOOD&LIFE COMPANIES）のうちNVIDIAが海外株のため、2026-09-22改訂ルール（直近3回のうち海外株が1回以上あれば日本株）に従えば本来は日本株の番だった。
+
+### 日本株候補の検討→全滅（熱残り）→海外株へ切替
+
+- `edinet-yuho.json` の`candidates[]`（`rankings_asof: 2026-10-02`、15銘柄）を確認。2026-09-21〜23の東証3連休は期間外（対象日は9/24〜10/2で全部平日）のため曜日通りの営業日計算でよいことを`economic-events.json`で確認。
+- 全15銘柄の最終登場日が2026年9月30日〜10月2日に集中しており、「ランキング入りの直近日から中3営業日あいていない銘柄を外す」規定（熱が残っているうちは書かない）を満たす銘柄が**1社もなし**（最も条件に近い近鉄グループホールディングスも最終登場9/30で、2026-10-03時点の経過営業日数は2日のみ＝3日未達）。
+- 日本株側に候補が無い週のみ海外へ回してよい規定（COMPANY_GUIDE.md §2-1手順1）に従い、今週は海外株とした。
+
+### 海外株：Applied Materials（AMAT）を選定・公開
+
+- **①決算カレンダーでの機械選定**：`earnings-calendar.json`の`us`で決算発表日が2営業日前〜14日前（目安2026-09-19〜10-01）の企業を確認したが該当なし（直近はBroadcomの9/3発表で期間外）。
+- **②ニュースレーン主役の機械選定**：直近15〜60日（2026-08-04〜09-18）の`guide-news-*.html`で単独の主役として扱われた海外企業を確認。候補＝Applied Materials（8/14公開記事、AMAT Q3決算・AI需要）とModerna（8/26公開記事、Merckとの共同開発のmRNAがんワクチン第3相試験。共同開発のため単独主役性はAMATより弱い）の2社（SpaceXは非上場のためSEC 10-K対象外、Walmart/Target/HomeDepot記事は複数企業の消費動向比較記事で単独主役なし、NVIDIAは本レーン既刊〈第4回〉のため対象外）。
+- **時価総額比較**：WebSearchで確認（2026-10-03時点、Applied Materialsが約4,200億ドル超、Modernaは数十億〜700億ドル台で変動）。候補の中で時価総額が最大だったApplied Materialsを選定（金額はCOMPANY_GUIDE.md 2026-09-01追記の規定により本文には非記載）。
+- **90日以内の本レーン既刊確認**：過去5回（Apple・Broadcom・オンコリスバイオファーマ・NVIDIA・FOOD&LIFE COMPANIES）にApplied Materialsの記載なし→該当なし。
+- **既刊（個別deep-dive記事）確認**：`ls guide-*.html`と`guides.html`を「Applied Materials」「AMAT」でgrepし、既刊なしを確認→§0節は不要。
+- **ニュースレーン重複確認**：直近14日（2026-09-19〜10-03）の`guide-news-*.html`・`NEWS_LEDGER.md`にApplied Materials単独主役の記事なし（唯一の関連記事は8/14公開で14日超過）→重複なし。
+- **熱冷却確認**：直近決算発表は2026-08-13（51日前）で§0⑥の当日・翌日規定に抵触せず。
+- **一次情報の到達確認**：SEC `data.sec.gov/submissions/CIK0000006951.json`（200）から10-K（2025-12-12提出・2025年10月26日終了のFY2025）・10-Q（2026-08-20提出・2026年7月26日終了のFY2026 Q3）・8-K（2026-08-13提出・Q3決算発表Exhibit 99.1）を特定。`www.sec.gov/Archives/edgar/data/6951/...`から全文書とも200で本文取得。SEC向けUser-Agentは`marketwatch-jp (https://marketwatch-jp.com)`を使用（個人メールアドレス不使用）。10-Qの「Item 1A: Risk Factors」・「Note: Legal Matters」で、2026年2月11日の対中国輸出管理コンプライアンス調査に関するBIS（米商務省産業安全保障局）との和解（2億5,300万ドル支払い）という重要な一次情報を確認（Wikipediaが「$252M・DOJ」と記載していたのに対し、primary sourceは「$253M・BIS」で金額・担当機関とも異なっていたため、本文はSEC一次情報の数値のみを採用し、Wikipedia側の数値は不採用とした）。歴史年表の一部（創業日・初期の製品史・M&A史等、10-Kに記載のない事実）は`en.wikipedia.org/wiki/Applied_Materials`を使用（§1②③のみ・④⑤⑥の数字とリスクには不使用）。
+- **公開ファイル**：`guide-company-amat-appliedmaterials.html`
+
+### コンプラ監査・品質確認（2ラウンド）
+
+- **1回目（Opus・Read/Editだが本セッションではEdit無効のため親エージェントが代行修正）**：初期判定🟡グレー・黒/要協議なし。§0の6禁止事項・§1②の禁止事項はすべて🟢白。数値73項目超をSEC一次情報と突合し計算誤りなし。グレーの原因は書き手が足した軽微な推論・表現6点：F1（「DRAM向け売上比率…AI向けサーバーで需要が伸びている」が出典のない書き手の主張）／F2（会社の非GAAP EPS見通しに「記録的な水準」という書き手の評価を付加）／F3・F4（材料カードの「効くと」欄に書き手の推測混入）／F5（CFOの粗利率改善コメントが会社全体の発言なのにセグメント単位の話にすり替わっていた）／F6（選定根拠欄で「本文に時価総額を書かない」と明言した直後に時価総額の金額〔しかも出典不明確〕を書いており自己矛盾）。親エージェント（本セッション）がF1〜F6をEditで修正（数値・構造・SVGは不変）。
+- **2回目（fresh独立Opus・Read専用・初見）**：F1〜F6の修正をすべて確認した上で全項目を再監査。§0の6禁止事項・§1②の禁止事項・免責三層（冒頭バナー・本文末・フッター、data-disclaimer="kinsho-v1"）・断定表現・材料5対5の対称性・数値の一次情報整合（セグメント合計・前年同期比・利益率差・株主還元・用途別比率）すべて🟢白。**最終判定：公開可（🟢白）**。任意の手直し3件（出典の呼び方の精度向上・推論表現の軟化・見出しの中立化）を推奨されたため追加で反映（数値・構造は不変）。
+- 2ラウンドを通じ、SEC一次情報（10-K/10-Q/8-K）と本文の数値・日付・法務記述に矛盾は最終的に一切なし。禁止表現（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い/割安/割高/外せない/好機）は本文0件。レーン専用の絶対禁止6項目もすべて🟢白。
+
+### 品質ルーブリック自己採点（QUALITY_RUBRIC.md 5観点）
+
+①リードで結論が30秒で伝わる=✅（「30秒でわかるこの記事」box）②専門用語に初出説明=✅（DRAM・BIS・GAAP/非GAAP・denial order・Form 10-K/10-Q/8-K・CVD・EPIC Centerにすべて説明を追加済み）③主張に根拠/数値が紐づく=✅（材料は全件に出典+確認日+効くと）④断定でなく中立トーン=✅⑤見出しと中身が一致=✅。❌0件・エスカレ該当なし。
+
+### 公開実行
+
+- `python publish_article.py --file guide-company-amat-appliedmaterials.html --category "数字で見る企業" --emoji 🔬 --card-title "Applied Materials（AMAT）を数字で見る" --desc "..."` 実行 → guides.html にカード追加（「数字で見る企業」カテゴリ最上段）・SYNC_FILES登録・更新履歴追加。
+- `python check_site_consistency.py` → **EXIT=0（エラーなし・警告30件はすべて本記事と無関係な既存ファイルのもの）**。
+- 🚨 **運用メモ（shallowクローン起因のrebase事故未遂）**：コミット後、クラウドの作業ツリーが detached HEAD かつ shallow clone の状態で、ローカルの`main`参照が実際のoriginより古い内容を指していたため、`git rebase main`を素朴に実行すると無関係な数十ファイルで`add/add`コンフリクトが多発した（shallowクローンの浅い履歴が原因で共通祖先を正しく解決できなかったとみられる）。直ちに`git rebase --abort`で中断し、`git fetch origin main`で最新を取得した上で**`git rebase origin/main`**（ローカルのstaleな`main`ではなく、フェッチ直後の`origin/main`）に対して再実行したところ、競合0件でクリーンにリベースできた（この間に生成された新しい上流コミットは`signals-log.json`等1件のみで、本記事が触れたファイルと無関係だったため）。リベース後に記事ファイルのdiffが空（バイト同一）であることを確認してから`git branch -f main HEAD`でローカル`main`を更新し、通常のfast-forward pushで完了。巻き戻し・データ損失なし。**教訓＝このリポジトリのクラウド実行環境でrebaseする際は、ローカルの`main`参照ではなく必ず`git fetch`直後の`origin/main`を基準にすること**（ローカル`main`はセッション開始時点で既に古くなっている場合がある）。
+- `git add guide-company-amat-appliedmaterials.html guides.html generate_market_news.py sync_to_github.py && git commit && git push origin main` 完了（fast-forward、コンフリクトなし）。
+- 選定（日本株全滅→海外株切替）・監査（2ラウンド）・修正・公開まで一気通貫で完了。
