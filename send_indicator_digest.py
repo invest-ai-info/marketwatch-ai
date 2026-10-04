@@ -34,6 +34,7 @@
 使い方:
    python send_indicator_digest.py                  # 朝の便（JST 04:00-10:00 の窓でのみ送る）
    python send_indicator_digest.py --mode alert     # 発表が近いものだけ「まもなく」通知
+   python send_indicator_digest.py --mode alert --sent-file .indicator-alert-sent.json  # 同じ発表は1通だけ
    python send_indicator_digest.py --dry-run        # 本文を表示するだけ（送らない）
    python send_indicator_digest.py --now 2026-09-18T07:00  # 時刻を指定して確認
 """
@@ -53,7 +54,13 @@ HORIZON_DAYS = 7
 MORNING_WINDOW = (4, 10)
 # 「まもなく」通知を出す残り時間（分）。⚠️ 幅を実行間隔（毎時）より狭くして二重送信を減らす。
 #    それでも cron の揺らぎで稀に2通来ることがあるが、リマインダーなので害は小さい方を選ぶ。
-ALERT_MIN, ALERT_MAX = 45, 105
+# 🔁 2026-10-04 改定（旧 45〜105分）: 毎時の cron は GitHub に間引かれ、実際は1日4〜5回しか動いていなかった
+#    （9/18〜10/4 の87回・間隔の中央値4.7時間）。10/2 のユーロ圏HICP・米雇用統計は「まもなく」が届かなかった。
+#    → ワークフローを頻繁な他のワークフローの完了に相乗りさせ（1日約65回・間隔の中央値14分）、
+#      範囲を 15〜120分に広げて「範囲に入った最初の回で、その発表について1通だけ」送る（--sent-file で記録）。
+#    今週の実績の実行時刻での試算＝取りこぼし 旧81% → 新0.6%。
+ALERT_MIN, ALERT_MAX = 15, 120
+SENT_KEEP_HOURS = 36   # 送った記録をどれだけ残すか（発表時刻から）。範囲の上限より十分長ければよい
 
 # 監視18銘柄の表示名（affected_assets をそのまま出すと読めないので）
 TICKER_JA = {
@@ -179,11 +186,47 @@ def shock_line(e, path=PILLAR):
     return f"  📏 過去2年の実測: 発表直後2時間の値動きは普段の同じ時間帯の {parts}（{times}）"
 
 
-def build_alert(now):
-    """発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っているものだけを返す。無ければ (None, None)。"""
+def event_key(w, e):
+    """送った記録のキー＝発表時刻（JST）＋指標名。"""
+    return f"{w.astimezone(JST):%Y-%m-%dT%H:%M}|{e.get('name', '')}"
+
+
+def load_sent(path, now):
+    """送った記録 {キー: 送った時刻} を読む。発表から SENT_KEEP_HOURS 過ぎたものは捨てる。"""
+    if not path or not os.path.exists(path):
+        return {}
+    try:
+        sent = json.load(open(path, encoding="utf-8")).get("sent", {})
+    except Exception:
+        return {}           # 壊れていたら空から（同じ発表に2通届くことはあっても、届かないよりよい）
+    keep = {}
+    for k, v in sent.items():
+        try:
+            when = dt.datetime.fromisoformat(k.split("|", 1)[0]).replace(tzinfo=JST)
+        except ValueError:
+            continue
+        if now - when <= dt.timedelta(hours=SENT_KEEP_HOURS):
+            keep[k] = v
+    return keep
+
+
+def save_sent(path, sent):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump({"sent": sent}, f, ensure_ascii=False, indent=1)
+
+
+def alert_targets(now, sent=None):
+    """発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っていて、まだ知らせていないもの [(日時, イベント)]。"""
     ind, _ = load_events(now)
     soon = [(w, e) for w, e in ind
             if ALERT_MIN <= (w - now).total_seconds() / 60 <= ALERT_MAX]
+    sent = sent or {}
+    return [(w, e) for w, e in soon if event_key(w, e) not in sent]
+
+
+def build_alert(now, sent=None):
+    """発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っていて、まだ知らせていないものを返す。無ければ (None, None)。"""
+    soon = alert_targets(now, sent)
     if not soon:
         return None, None
     w, e = soon[0]
@@ -217,15 +260,21 @@ def main():
                     help="digest=朝の便 / alert=発表が近いものだけ")
     ap.add_argument("--dry-run", action="store_true", help="送信せず本文を表示するだけ")
     ap.add_argument("--now", help="時刻を指定して確認する（例 2026-09-18T07:00）")
+    ap.add_argument("--sent-file", help="alert: 送った発表の記録（同じ発表に2通送らないため。"
+                                        "ワークフローは actions/cache で次の回へ渡す）")
     args = ap.parse_args()
 
     now = (dt.datetime.fromisoformat(args.now).replace(tzinfo=JST)
            if args.now else dt.datetime.now(JST))
 
+    sent, new_keys = {}, []
     if args.mode == "alert":
-        subject, body = build_alert(now)
+        sent = load_sent(args.sent_file, now)
+        new_keys = [event_key(w, e) for w, e in alert_targets(now, sent)]
+        subject, body = build_alert(now, sent)
         if subject is None:
-            print(f"  発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っている指標なし＝送らない")
+            print(f"  発表が {ALERT_MIN}〜{ALERT_MAX} 分後に迫っていて、まだ知らせていない指標なし＝送らない"
+                  f"（知らせ済み {len(sent)} 件）")
             return 0
     else:
         lo, hi = MORNING_WINDOW
@@ -257,6 +306,15 @@ def main():
         server.login(sender, password)
         server.send_message(msg)
     print(f"✅ 送信しました: {subject}")
+    if args.mode == "alert" and args.sent_file:
+        # 送れたときだけ記録する＝送信に失敗した回は、次の回がもう一度送る
+        stamp = dt.datetime.now(JST).isoformat(timespec="minutes")
+        sent.update({k: stamp for k in new_keys})
+        save_sent(args.sent_file, sent)
+        out = os.environ.get("GITHUB_OUTPUT")
+        if out:
+            with open(out, "a", encoding="utf-8") as f:
+                f.write("sent=1\n")
     return 0
 
 

@@ -5,20 +5,35 @@ name: Indicator Alert (before release)
 # 🚨 動機: 朝の便だけでは足りない。2026-09-17 の実損は **19:33 に建てて 20:00 発表**＝
 #    朝の記憶が薄れた夕方に起きた。判断の直前に、もう一度目に入れる必要がある。
 #
-# 🕐 精度について正直に（2026-09-17 実測）:
-#    毎時実行の実遅延は中央値 +34分・最大 +60分（news-ticker 200件）。
-#    つまり「きっかり1時間前」には送れない。そこで **残り45〜105分のものだけ送る**設計にした。
-#    毎時どこかで必ずこの窓に入るので、**発表の45分〜105分前に必ず1通**届く。
-#    本文の「あと◯分」は送信時に計算するので、遅延しても数字は常に正しい。
-#    ⚠️ cron の揺らぎで稀に2通届くことがある。状態を持つ複雑さより、
-#       リマインダーが1通余分に来るほうが害が小さいと判断した。
+# 🔁 2026-10-04 改定（日曜の週次点検で発覚）:
+#    毎時の cron は GitHub に間引かれ、**実際は1日4〜5回**しか動いていなかった
+#    （9/18 の新設から87回・間隔の中央値4.7時間・最大8.6時間）。旧設計の「毎時どこかで必ず
+#    45〜105分前の窓に入る」は成り立たず、10/2 のユーロ圏HICP・米雇用統計は「まもなく」が届かなかった。
+#    → 頻繁に動く他のワークフローの**完了に相乗り**する（workflow_run＝cron の順番待ちを通らない）。
+#      今週の実績で1日約65回・間隔の中央値14分。範囲を **15〜120分前**に広げ、
+#      **範囲に入った最初の回で、その発表について1通だけ**送る（送った記録を actions/cache で次の回へ渡す）。
+#      試算の取りこぼし＝旧81% → 新0.6%。
+#    ⚠️ 相乗り先の `name:` と一字一句合わせる（ずれると黙って起動しなくなる＝automation-health §⑭ が見張る）。
 #
 # ⚠️ 読むだけ。該当が無い時間は静かに終了する（メールは出ない）。
 
 on:
+  workflow_run:
+    workflows:
+      - "Political Alerts (Live Feed)"   # 30分ごとの予定・実測で1日13〜16回
+      - "News Ticker"                    # 毎時・実測11〜13回
+      - "Technical Alerts (4H)"          # 実測8〜12回
+      - "Technical Alerts (1H Data Only)"
+      - "Update Market News"             # 実測14〜23回
+    types: [completed]
   schedule:
-    - cron: '13 * * * *'   # 毎時13分（半端な分ほど cron の順番待ちが短い）
+    - cron: '13 * * * *'   # 保険（毎時13分）。相乗りが止まっても最低限は動く
   workflow_dispatch:
+
+# 同時に2つ走ると、送った記録を互いに見られず2通届く＝1本ずつ順番に動かす
+concurrency:
+  group: indicator-alert
+  cancel-in-progress: false
 
 jobs:
   alert:
@@ -27,14 +42,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Restore the list of releases already alerted
+        uses: actions/cache/restore@v4
         with:
-          python-version: '3.11'
+          path: .indicator-alert-sent.json
+          key: indicator-alert-sent-${{ github.run_id }}
+          restore-keys: indicator-alert-sent-
 
       - name: Alert if a release is close
+        id: alert
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
-        run: python send_indicator_digest.py --mode alert
+        run: python3 send_indicator_digest.py --mode alert --sent-file .indicator-alert-sent.json
+
+      # 送れた回だけ、新しい記録を保存する（次の回は restore-keys で最新を拾う）
+      - name: Save the updated list
+        if: steps.alert.outputs.sent == '1'
+        uses: actions/cache/save@v4
+        with:
+          path: .indicator-alert-sent.json
+          key: indicator-alert-sent-${{ github.run_id }}-${{ github.run_attempt }}
