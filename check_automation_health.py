@@ -358,7 +358,8 @@ QUEUE_LANES = [
 # ⚠️ `since` より前は鳴らさない。ルーティンが初回に走る前から赤いと、番人の信用が落ちる。
 LEDGER_WATCH = [
     # (レーン名, 台帳, 何日で鳴らすか, いつから見張るか)
-    ("company（数字で見る企業・週次）", "drafts/company/COMPANY_LEDGER.md", 10, dt.date(2026, 9, 7)),
+    # 🔁 2026-10-04 週1本→毎日1本以上（オーナー指示）に合わせて 10日→2日
+    ("company（数字で見る企業・毎日）", "drafts/company/COMPANY_LEDGER.md", 2, dt.date(2026, 10, 6)),
 ]
 
 
