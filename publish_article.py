@@ -31,6 +31,7 @@ import re
 import sys
 import argparse
 import urllib.request
+import urllib.error
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -154,30 +155,87 @@ def check_date_gate(date, allow_backdate=False):
 #   SYNC も既に登録済みだったため publish_article の各手順は全て no-op になり、誰も気づかなかった。
 #   → git の HEAD 版と作業ツリーの datePublished を突き合わせ、別日付なら公開を止める。
 #   同じ記事の修正版の再公開（日付が同じ）は素通りする＝冪等性は壊さない。
-def check_overwrite_gate(filename, html, allow_overwrite=False):
-    """公開済み記事を『別の記事』で上書きしようとしていないか。問題なければ None。"""
+#
+# 🔒 2026-10-04 追加（#115 上書き事故）: 10/2 の研究日誌は ①下書きのパス（drafts/draft-signal-lab-115.html）を
+#   publish_article に通し、ゲートは下書き同士を比べて素通りした ②公開ファイルはゲートを通らずに上書きされた。
+#   → 公開できるのはサイト直下の記事だけにする（check_path_gate）。比べる相手も HEAD だけでなく
+#     GitHub の main 最新（origin/main。git 管理外の手元では raw の main）にする＝作業場所の HEAD が
+#     古い・浅い取得でも、公開中の版と比べられる。
+def check_path_gate(filename):
+    """公開できるのはサイト直下の記事だけ。下書き（drafts/）やサブフォルダなら理由を返す。"""
+    norm = os.path.normpath(filename).replace("\\", "/")
+    if "/" not in norm:
+        return None
+    return (f"{filename} はサイト直下の記事ではありません。公開できるのは直下の guide-*.html だけです。\n"
+            f"   → 下書きなら直下へ移して（例: drafts/draft-x.html → guide-x.html）、そのファイルを --file に渡してください。\n"
+            f"      下書きのまま通すと、カードと更新履歴が非公開の下書きを指し、上書きゲートも効きません（2026-10-02 #115 事故）")
+
+
+def _published_versions(filename):
+    """公開済みの版を [(どこの版, 本文)] で返す。無ければ空（＝新規記事）。"""
+    import subprocess
+    out = []
+    if not os.path.isdir(os.path.join(SCRIPT_DIR, ".git")):
+        owner, repo, branch = _repo_branch()      # 手元（git 管理外）＝GitHub の main の版と比べる
+        url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{filename}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "publish-overwrite-gate", "Cache-Control": "no-cache"})
+            out.append(("GitHub の main", urllib.request.urlopen(req, timeout=30).read().decode("utf-8")))
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                print(f"⚠️ 上書きゲート: GitHub の main を読めません（HTTP {e.code}）＝比べずに進みます")
+        except Exception as e:
+            print(f"⚠️ 上書きゲート: GitHub の main を読めません（{type(e).__name__}）＝比べずに進みます")
+        return out
+
+    def _show(ref):
+        try:
+            r = subprocess.run(["git", "show", f"{ref}:{filename}"], cwd=SCRIPT_DIR,
+                               capture_output=True, text=True, timeout=20)
+        except Exception as e:
+            print(f"⚠️ 上書きゲート: {ref} を読めません（{type(e).__name__}: {str(e)[:60]}）")
+            return None
+        return r.stdout if r.returncode == 0 else None
+
+    head = _show("HEAD")
+    if head is not None:
+        out.append(("HEAD", head))
+    try:
+        subprocess.run(["git", "fetch", "-q", "origin", "main"], cwd=SCRIPT_DIR,
+                       capture_output=True, text=True, timeout=60)
+    except Exception as e:
+        print(f"⚠️ 上書きゲート: origin/main を取りにいけません（{type(e).__name__}）＝手元の origin/main で比べます")
+    remote = _show("origin/main")
+    if remote is not None:
+        out.append(("origin/main", remote))
+    return out
+
+
+def check_overwrite_gate(filename, html, allow_overwrite=False, versions=None):
+    """公開済み記事を『別の記事』で上書きしようとしていないか。問題なければ None。
+
+    versions: [(どこの版, 本文)]。省略時は _published_versions() で集める（テストは直接渡す）。
+    """
     if allow_overwrite:
         return None
-    import subprocess
-    try:
-        r = subprocess.run(["git", "show", f"HEAD:{filename}"], cwd=SCRIPT_DIR,
-                           capture_output=True, text=True, timeout=20)
-    except Exception as e:
-        print(f"⚠️ 上書きゲートを実行できません（{type(e).__name__}: {str(e)[:60]}）")
-        return None
-    if r.returncode != 0:
-        return None                      # コミット履歴に無い＝新規記事＝正常
-    old = r.stdout
+    if versions is None:
+        versions = _published_versions(filename)
     def _d(t):
         m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', t)
         return m.group(1) if m else None
     def _t(t):
         m = re.search(r"<title>(.*?)</title>", t, re.S)
         return re.sub(r"\s+", " ", m.group(1)).strip()[:70] if m else "(タイトル不明)"
-    old_date, new_date = _d(old), _d(html)
-    if not old_date or not new_date or old_date == new_date:
+    new_date = _d(html)
+    if not new_date:
         return None
-    return (f"{filename} は既に公開済みです（公開日 {old_date}）。\n"
+    hit = next(((where, old) for where, old in versions
+                if _d(old) and _d(old) != new_date), None)
+    if not hit:
+        return None                      # どこにも無い＝新規／同じ日付＝同じ記事の修正版
+    where, old = hit
+    old_date = _d(old)
+    return (f"{filename} は既に公開済みです（公開日 {old_date}・{where} の版）。\n"
             f"     既存: {_t(old)}\n"
             f"     今回: {_t(html)}（公開日 {new_date}）\n"
             f"   → 公開日が違う＝別の記事です。**過去番号への再公開は事故**（2026-09-06 に実際に起き、\n"
@@ -385,6 +443,10 @@ def main():
                     help="公開前の main 自動取り込みを無効化（非常時のみ・巻き戻し事故の危険）")
     a = ap.parse_args()
 
+    _path_err = check_path_gate(a.file)
+    if _path_err:
+        print(f"🚫 置き場所ゲート: {_path_err}")
+        sys.exit(1)
     if not os.path.exists(os.path.join(SCRIPT_DIR, a.file)):
         print(f"❌ 記事HTMLが見つかりません: {a.file}（先に①記事を作成してください）")
         sys.exit(1)

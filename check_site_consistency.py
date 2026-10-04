@@ -218,6 +218,10 @@ def check_sync_forbidden(sync_files):
             # 🆕 2026-09-27: MT4 の口座履歴（Statement.htm）＝名前・口座番号・全取引が入った個人の記録。
             #   投資スタイル診断（style_diagnosis.py）の入力で、置き場所は research/ の下。名前で止める保険
             errors.append(f"🚨 MT4 の口座履歴が SYNC_FILES に混入: {f}（個人の取引記録の流出防止）")
+        elif f.replace("\\", "/").startswith("drafts/") and base.startswith("draft-"):
+            # 🆕 2026-10-04: 下書き（drafts/draft-*.html）はルーティンが GitHub 側で作る非公開の置き場。
+            #   10/2 の研究日誌が下書きのパスのまま publish_article に通し、SYNC_FILES に入った
+            errors.append(f"🚨 下書き（drafts/draft-*）が SYNC_FILES に混入: {f}（公開物ではない・GitHub 側で生成）")
         elif f.replace("\\", "/").startswith("yutai-edinet/"):
             # 🆕 2026-09-30: 株主優待の有報あつめ（yutai-edinet.yml が GitHub 側で積み上げる）。
             #   古い版で上書きすると取り終えた日・読んだ有報の記録が消える＝ローカルから push しない
@@ -289,6 +293,33 @@ def check_series_numbering():
     for no, files in sorted(seen.items()):
         if len(files) > 1:
             errors.append(f"🚨 回番号 #{no} が重複: {', '.join(files)}")
+
+
+def check_card_dates(guides_html, gen_py="generate_market_news.py"):
+    """記事一覧のカードと記事本体の食い違いを検査する（2026-10-04 新設・#115 上書き公開事故の再発防止）。
+
+    🚨 2026-10-02 事故＝研究日誌が publish_article を**下書きのパス**（drafts/draft-signal-lab-115.html）に
+       通したため上書きゲートが下書き同士を比べて素通りし、10/1 公開の #115 が別の記事で上書きされた。
+       一覧には「下書きを指すカード」と「中身と違う題名・日付のカード」が残った。
+       → ①カード・更新履歴が drafts/ を指していないか ②カードの日付＝記事の datePublished か を見る。
+       ②は導入時に全484枚で実測し、食い違いは #115 の1枚だけ（誤検知0）。
+    """
+    for href, body in re.findall(r'<a class="article-card" href="([^"]+)">(.*?)</a>', guides_html, re.S):
+        h = href.replace("\\", "/")
+        if h.startswith("drafts/"):
+            errors.append(f"🚨 記事一覧のカードが下書きを指している: {href}"
+                          f"（drafts/ は非公開の置き場＝読者に noindex の下書きが出る）")
+            continue
+        if "/" in h or h.startswith("#") or not h.endswith(".html") or not _exists(h):
+            continue  # 外部リンク・欄内リンク・リンク切れ（別の検査）は対象外
+        cm = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})"', body)
+        am = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', _read(h))
+        if cm and am and cm.group(1) != am.group(1):
+            errors.append(f"🚨 {h}: 一覧のカードの日付({cm.group(1)})と記事の公開日({am.group(1)})が違う"
+                          f"（公開済みの記事が別の記事で上書きされた疑い）")
+    if _exists(gen_py):
+        for m in re.finditer(r'href="(drafts/[^"]+)"', _read(gen_py)):
+            errors.append(f"🚨 {gen_py} の更新履歴が下書きを指している: {m.group(1)}（トップに下書きへのリンクが出る）")
 
 
 def check_us_monthly_indicators():
@@ -547,6 +578,9 @@ def main():
 
     # 9. 計算ツールがトップの並びにもあるか（2026-09-27 新設・クセ診断がトップに出ていなかった）
     check_tools_strip(guides_html)
+
+    # 10. カードと記事の食い違い・下書きへのリンク（2026-10-04 新設・#115 上書き公開事故の再発防止）
+    check_card_dates(guides_html)
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
