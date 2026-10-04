@@ -761,6 +761,9 @@ CHAIN_WATCH = [
     # (説明, ワークフロー, 何日以内にその event の起動があるべきか, いつから見張るか, event)
     ("ランキング→hot-assets 再描画", "update-market-news.yml", 3, dt.date(2026, 9, 19), "workflow_run"),
     ("routine の push→日本株ランキング", "jp-rankings.yml", 3, dt.date(2026, 9, 28), "push"),
+    # 🆕 2026-10-04: 発表前アラートを頻繁なワークフローの完了に相乗りさせた（cron だけでは1日4〜5回しか動かず、
+    #    10/2 の米雇用統計の「まもなく」が届かなかった）。1日数十回起動するはずなので1日空いたら異常
+    ("他のワークフローの完了→発表前アラート", "indicator-alert.yml", 1, dt.date(2026, 10, 5), "workflow_run"),
 ]
 
 

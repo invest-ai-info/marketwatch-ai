@@ -61,7 +61,7 @@
 | **monthly-backup.yml** | 毎月 1〜3 日 09:10（同上・冪等） | signals-log の GitHub Release |
 | **monthly-calendar-reminder.yml** | 25日 09:13 | 市場休場の自動補充＋**経済指標の生成**（`sync_economic_events.py`）＋**決算予定の更新**（`build_earnings_calendar.py`）＋来月指標のメール |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新の鮮度チェック（2026-08-30〜 **経過時間**で判定＝`STALE_HOURS=26`。旧「JSTの今日と一致するか」は実行が深夜0時JSTをまたぐと必ず誤検知した） |
-| **indicator-alert.yml** 🆕 | 毎時13分 | **発表の45〜105分前に「まもなく」メール**（`send_indicator_digest.py --mode alert`）。朝の便だけでは足りない＝2026-09-17 の実損は**19:33に建てて20:00発表**で、朝の記憶が薄れた夕方に起きた。⚠️ 毎時実行の実遅延は中央値+34分・最大+60分なので「きっかり1時間前」は無理。**残り45〜105分の窓**にすることで必ず1通入る設計。本文の「あと◯分」は送信時に計算するので遅れても正しい |
+| **indicator-alert.yml** 🆕 | **他のワークフローの完了に相乗り**（政治発言・ティッカー・4H/1H・市況ニュース＝1日約65回）＋毎時13分の保険 | **発表の15〜120分前に「まもなく」メールを1発表1通**（`send_indicator_digest.py --mode alert --sent-file`・送った記録は actions/cache で持ち回す）。動機＝2026-09-17 の実損（19:33 に建てて 20:00 発表）。🔁 **2026-10-04 改定**＝毎時の cron は GitHub に間引かれ実際は1日4〜5回（間隔の中央値4.7時間）で、10/2 のユーロ圏HICP・米雇用統計に届かなかった（旧45〜105分の窓・試算の取りこぼし81%→新0.6%）。⚠️ 相乗り先の `name:` は一字一句合わせる（`tests/test_indicator_alert_dedup.py` と automation-health §⑭ が見張る） |
 | **indicator-digest.yml** 🆕 | **routine の push に相乗り（06:13-06:20 JST）**＋cron保険 | **今日の重要指標を朝いちでメール**（`send_indicator_digest.py`）。🚨 2026-09-17 の実損が動機＝英中銀の発表27分前に建てて当日損失の約半分を出した。環境警戒スコアは**シグナルが出たときのメールの中身でしか届かない**ので、手動の発注は誰も見張っていなかった。**判断の直前ではなくポジションを持つ前に渡す**のが趣旨。件名で状態がわかる（🚨今日ある／📅7日以内／⚪無し）。読むだけでデータは書き換えない |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
