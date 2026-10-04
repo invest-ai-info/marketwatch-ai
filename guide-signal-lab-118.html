@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「良」が「上の上」より勝率が高い？ 全5020回で調べた品質ランク別の成績【AIシグナル研究日誌 #118】 - MarketWatch AI</title>
+  <meta name="description" content="シグナルの品質ランク別に勝率を集計すると、最高品質「上の上」が41.3%（749回中309回）、次のランク「良」が45.4%（984回中447回）と、順序が逆になっています。ぶれの幅は重なっているためまだ断言できませんが、定点観測として記録します。研究日誌第118回。">
+  <meta name="keywords" content="品質ランク,シグナル研究,勝率,定点観測,AIシグナル,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-118.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「良」が「上の上」より勝率が高い？ 全5020回で調べた品質ランク別の成績【AIシグナル研究日誌 #118】">
+  <meta property="og:description" content="シグナルの品質ランク別に勝率を集計すると、最高品質「上の上」が41.3%（749回中309回）、次のランク「良」が45.4%（984回中447回）と、順序が逆になっています。ぶれの幅は重なっているためまだ断言できませんが">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-118.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「良」が「上の上」より勝率が高い？ 全5020回で調べた品質ランク別の成績【AIシグナル研究日誌 #118】",
+    "description": "シグナルの品質ランク別に勝率を集計すると、最高品質「上の上」が41.3%（749回中309回）、次のランク「良」が45.4%（984回中447回）と、順序が逆になっています。ぶれの幅は重なっているためまだ断言できませんが",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-05",
+    "dateModified": "2026-10-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-118.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    .kinsho-v1{font-size:.82rem;color:#57606a}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#d0d7de;stroke-width:1}
+    .s-grid{stroke:#e8ecf0;stroke-width:1;stroke-dasharray:4,3}
+    .s-base{stroke:#2C4F8F;stroke-width:1.5;stroke-dasharray:6,4}
+    @media(max-width:700px){
+      .article{padding:24px 18px}
+      h1{font-size:1.5rem}
+    }
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark h1{color:#58a6ff}
+    body.dark h2{color:#79c0ff}
+    body.dark th{color:#58a6ff}
+    body.dark .info-box{background:#0d2035;color:#58a6ff;border-left-color:#388bfd}
+    body.dark .info-box strong{color:#58a6ff}
+    body.dark .warning-box{background:#2d2407;color:#d29922}
+    body.dark .positive-box{background:#0d2d1a;color:#3fb950}
+    body.dark .negative-box{background:#2d1117;color:#f85149}
+    body.dark .disclaimer-banner{background:#2d2407;border-color:#9a6700;color:#d29922}
+    body.dark p.disclaimer{color:#8b949e}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark td{border-bottom-color:#30363d}
+    body.dark th{background:#0d1117;border-bottom-color:#30363d}
+    @media(prefers-color-scheme:dark){
+      body:not([data-theme="light"]){background:#0d1117;color:#e6edf3}
+      body:not([data-theme="light"]) .article{background:#161b22;border-color:#30363d}
+    }
+  </style>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<header data-mw-frame>
+  <div class="header-inner">
+    <div class="header-title">MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar mwf-nav">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; AIシグナル研究日誌 #118
+  </div>
+
+  <div class="article">
+
+    <!-- ① 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 「良」が「上の上」より勝率が高い？ 全5020回で調べた品質ランク別の成績<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #118</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月5日 &nbsp;|&nbsp; 読了：約7分
+    </div>
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（相対力指数の売られすぎ反発・ボリンジャーバンド（価格の変動幅を示すバンド）下限タッチ・高値ブレイクなど）がチャートのどの瞬間かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで確かめ、勝っても負けても全公開する研究日誌の第118回です。<a href="guide-signal-lab-117.html">前回（#117）</a>では「日足の高値ブレイク買いで、損切りと利確の置き方を変えると結果が変わるか」を約3700回のデータで調べました。</p>
+    <p>今回は少し視点を変えて、このサイトのシグナルに付いている「品質ランク」という評価値を切り口に成績を集計した定点観測をお届けします。「品質が高いほど勝ちやすい」という期待どおりの結果になっているでしょうか。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
+      ① 全シグナル5020回（5020回中2150回）の勝率は<strong>42.8%</strong>。これが全体の基準です<br>
+      ② ランク別の勝率：上の上<strong>41.3%</strong>（749回中309回）、良<strong>45.4%</strong>（984回中447回）、普通<strong>42.4%</strong>（1265回中536回）、避ける<strong>43.0%</strong>（1696回中730回）<br>
+      ③ 最高ランク「上の上」より次の「良」の方が勝率が高く、逆の順番になっている<br>
+      ④ ただし、ぶれの幅（95%の信頼区間）が大きく重なっているため、まだ断言できる状態ではない。引き続き記録を積み重ねる
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#whatis">「品質ランク」とはなにか</a></li>
+        <li><a href="#method">確かめ方</a></li>
+        <li><a href="#results">ランク別の勝率（全5020回）</a></li>
+        <li><a href="#chart">棒グラフで比べる</a></li>
+        <li><a href="#range">ぶれの幅を確認する</a></li>
+        <li><a href="#summary">まとめと今後の見どころ</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="whatis">① 「品質ランク」とはなにか</h2>
+
+    <p>このサイトのシグナルシステムは、シグナルが発火するたびに「品質ランク」という評価値を自動で付けています。ランクは4段階あります。</p>
+
+    <table>
+      <tr><th>ランク名</th><th>読み方</th><th>主な判定基準</th></tr>
+      <tr><td>上の上</td><td>最高品質</td><td>トレンドの向きが全時間足でそろっている、複数のシグナルが同時に発火しているなど、条件が複数重なったとき</td></tr>
+      <tr><td>良</td><td>高品質</td><td>トレンドと方向がある程度そろっているが、最高品質ほど条件が重なっていないとき</td></tr>
+      <tr><td>普通</td><td>標準的</td><td>特別な強みも弱みもない一般的なシグナル</td></tr>
+      <tr><td>避ける</td><td>低品質</td><td>トレンドと逆向きなど、成績が出にくいと判断された条件のとき</td></tr>
+    </table>
+
+    <p>直感的には「最高品質が一番勝ちやすい」と思いたいところです。今回はこの直感が本当に成り立つかをデータで確かめます。</p>
+
+    <!-- =============================== -->
+    <h2 id="method">② 確かめ方</h2>
+
+    <p>過去の全シグナルのうち、すでに決済（利確または損切り）が確定したもの5020回を対象にしました。このサイトのシグナルは、利確に当たれば「勝ち」、損切りに当たれば「負け」として記録されています。</p>
+
+    <p>品質ランク別に「何回中何回勝ったか」を数え、勝率（勝った回数を全回数で割った割合）を計算しました。また、偶然のぶれを考えた「95%の信頼区間（ぶれの幅）」も合わせて計算しています。この幅の中に、本当の勝率が95%の確率で入ると考えてください。</p>
+
+    <div class="warning-box">
+      5020回のうち4694回にランクが付いています（残り326回はランクが付いていないシグナルです）。全体の基準（42.8%）は5020回全体の数字です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="results">③ ランク別の勝率（全5020回）</h2>
+
+    <table>
+      <tr>
+        <th>ランク</th>
+        <th>件数</th>
+        <th>勝ち回数</th>
+        <th>勝率</th>
+        <th>ぶれの幅（95%）</th>
+      </tr>
+      <tr>
+        <td>全体（基準）</td>
+        <td>5020</td>
+        <td>2150</td>
+        <td><strong>42.8%</strong></td>
+        <td>41.5%〜44.2%</td>
+      </tr>
+      <tr>
+        <td>上の上</td>
+        <td>749</td>
+        <td>309</td>
+        <td>41.3%</td>
+        <td>37.8%〜44.8%</td>
+      </tr>
+      <tr style="background:#e6ffed">
+        <td>良</td>
+        <td>984</td>
+        <td>447</td>
+        <td><strong>45.4%</strong></td>
+        <td>42.3%〜48.5%</td>
+      </tr>
+      <tr>
+        <td>普通</td>
+        <td>1265</td>
+        <td>536</td>
+        <td>42.4%</td>
+        <td>39.7%〜45.1%</td>
+      </tr>
+      <tr>
+        <td>避ける</td>
+        <td>1696</td>
+        <td>730</td>
+        <td>43.0%</td>
+        <td>40.7%〜45.4%</td>
+      </tr>
+    </table>
+
+    <p>注目すべき点は、最高品質の「上の上」が41.3%と全体の基準（42.8%）を<strong>下回っている</strong>一方で、次の「良」が45.4%と全体を<strong>上回っている</strong>点です。</p>
+
+    <p>また、「避ける」も43.0%と、「上の上」を上回っています。つまり、ランクの高い順に勝率が並んでいるわけではありません。</p>
+
+    <!-- =============================== -->
+    <h2 id="chart">④ 棒グラフで比べる</h2>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 580 270" role="img" aria-label="品質ランク別の勝率の棒グラフ">
+        <!-- 背景 -->
+        <rect x="0" y="0" width="580" height="270" fill="#ffffff" rx="8"/>
+
+        <!-- グリッド線と軸ラベル（Y軸: 30%〜60%、チャートエリア: x=70〜540, y=25〜230） -->
+        <!-- Y=93: 50% -->
+        <line class="s-grid" x1="70" y1="93" x2="540" y2="93"/>
+        <text class="s-label" x="60" y="97" text-anchor="end" font-size="12">50%</text>
+        <!-- Y=162: 40% -->
+        <line class="s-grid" x1="70" y1="162" x2="540" y2="162"/>
+        <text class="s-label" x="60" y="166" text-anchor="end" font-size="12">40%</text>
+        <!-- Y=230: 30% -->
+        <line class="s-axis" x1="70" y1="230" x2="540" y2="230"/>
+        <text class="s-label" x="60" y="234" text-anchor="end" font-size="12">30%</text>
+
+        <!-- 全体の基準線（42.8%: y=143）ラベルを線の左端に配置 -->
+        <line class="s-base" x1="70" y1="143" x2="540" y2="143"/>
+        <text x="75" y="136" font-size="11" fill="#2C4F8F" text-anchor="start">全体42.8%</text>
+
+        <!-- 棒: 上の上 (41.3%: y=153, height=77), x=104〜179 -->
+        <rect x="104" y="153" width="75" height="77" fill="#cf222e" opacity="0.75" rx="3"/>
+        <text class="s-label" x="141" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#cf222e">41.3%</text>
+        <text class="s-label" x="141" y="248" text-anchor="middle" font-size="11">上の上</text>
+        <text class="s-label" x="141" y="262" text-anchor="middle" font-size="10" fill="#8b949e">749回中309回</text>
+
+        <!-- 棒: 良 (45.4%: y=125, height=105), x=213〜288 -->
+        <rect x="213" y="125" width="75" height="105" fill="#1a7f37" opacity="0.75" rx="3"/>
+        <text class="s-label" x="250" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f37">45.4%</text>
+        <text class="s-label" x="250" y="248" text-anchor="middle" font-size="11">良</text>
+        <text class="s-label" x="250" y="262" text-anchor="middle" font-size="10" fill="#8b949e">984回中447回</text>
+
+        <!-- 棒: 普通 (42.4%: y=145, height=85), x=322〜397 -->
+        <rect x="322" y="145" width="75" height="85" fill="#4B9CD3" opacity="0.75" rx="3"/>
+        <text class="s-label" x="359" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#4B9CD3">42.4%</text>
+        <text class="s-label" x="359" y="248" text-anchor="middle" font-size="11">普通</text>
+        <text class="s-label" x="359" y="262" text-anchor="middle" font-size="10" fill="#8b949e">1265回中536回</text>
+
+        <!-- 棒: 避ける (43.0%: y=141, height=89), x=431〜506 -->
+        <rect x="431" y="141" width="75" height="89" fill="#8b949e" opacity="0.75" rx="3"/>
+        <text class="s-label" x="468" y="136" text-anchor="middle" font-size="12" font-weight="700" fill="#57606a">43.0%</text>
+        <text class="s-label" x="468" y="248" text-anchor="middle" font-size="11">避ける</text>
+        <text class="s-label" x="468" y="262" text-anchor="middle" font-size="10" fill="#8b949e">1696回中730回</text>
+
+        <!-- Y軸線 -->
+        <line class="s-axis" x1="70" y1="25" x2="70" y2="230"/>
+      </svg>
+      <p class="chart-caption">品質ランク別の勝率（全期間 5020回のデータ）。破線は全体の基準（42.8%）。棒の下の数字は「全回数中の勝ち回数」。</p>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="range">⑤ ぶれの幅を確認する</h2>
+
+    <p>「良が45.4%で上の上の41.3%を上回っている」という数字は一見はっきりしていますが、データが有限なため、偶然のぶれが含まれています。ぶれの幅（95%の信頼区間）を見ると次のようになります。</p>
+
+    <table>
+      <tr>
+        <th>ランク</th>
+        <th>勝率</th>
+        <th>ぶれの幅（95%）</th>
+        <th>読み方</th>
+      </tr>
+      <tr>
+        <td>上の上</td>
+        <td>41.3%（749回中309回）</td>
+        <td>37.8%〜44.8%</td>
+        <td>本当の勝率は37.8%から44.8%の間にある可能性が高い</td>
+      </tr>
+      <tr style="background:#e6ffed">
+        <td>良</td>
+        <td>45.4%（984回中447回）</td>
+        <td>42.3%〜48.5%</td>
+        <td>本当の勝率は42.3%から48.5%の間にある可能性が高い</td>
+      </tr>
+    </table>
+
+    <p>「上の上」のぶれの幅の上の端は44.8%、「良」のぶれの幅の下の端は42.3%です。この幅が重なっているため、「良が上の上を偶然とは言えない差で上回っている」とはまだ言えません。今の差（約4ポイント）が本物なのか、偶然のぶれなのかは、もっとデータが積み重なるとわかってきます。</p>
+
+    <div class="warning-box">
+      このデータは定点観測です。「良が上の上より良い」という結論を出すためには、ぶれの幅が重ならなくなる程度まで件数が増える必要があります。現時点では「そういう傾向がある」という記録にとどまります。
+    </div>
+
+    <h3>なぜ「上の上」が低いのか？（考えられる理由）</h3>
+
+    <p>直感に反する結果の理由として、いくつかの可能性が考えられます。</p>
+
+    <ul>
+      <li><strong>価格の動きすぎ</strong>：「上の上」はトレンドが強い場面で出やすいため、すでに大きく動いたあとのシグナルが多い可能性があります。</li>
+      <li><strong>損切り幅が相対的に小さい</strong>：強いトレンドの場面では値動きが大きく、固定の損切り幅では少しの揺り戻しで損切りに当たりやすいことがあります。</li>
+      <li><strong>市場環境との相性</strong>：今の期間が「上の上」の条件が出やすい環境と相性が悪い可能性があります。</li>
+    </ul>
+
+    <p>ただし、これらはあくまでも「考えられる理由」であり、データで確かめたわけではありません。今後の前向きな記録の中で、傾向が続くかどうかを見守ります。</p>
+
+    <!-- =============================== -->
+    <h2 id="summary">⑥ まとめと今後の見どころ</h2>
+
+    <p>全5020回のデータを品質ランク別に集計した結果をまとめます。</p>
+
+    <ul>
+      <li>全体の勝率は<strong>42.8%</strong>（5020回中2150回）</li>
+      <li>品質ランク「良」が<strong>45.4%</strong>（984回中447回）と全体を上回り、4ランク中で最も高い</li>
+      <li>最高品質「上の上」は<strong>41.3%</strong>（749回中309回）と全体を下回っている</li>
+      <li>ただし、ぶれの幅が重なっており、偶然によるものか本物の差かはまだはっきりしない</li>
+    </ul>
+
+    <div class="positive-box">
+      今後の見どころ：「良」のぶれの幅の下の端（現在42.3%）が全体基準（42.8%）を継続して上回るか、「上の上」のぶれの幅の下の端が基準を下回ったままになるかを観察します。差が大きくなれば、「品質ランクの見直し」の検討材料になります。
+    </div>
+
+    <p>次回の研究日誌もどうぞお楽しみに。前回と今回の記事は、下のリンクから続けて読めます。</p>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <strong>🔎 気になる投資の「定説」はありますか？</strong><br>
+      <span style="font-size:.9rem;color:#424a53">データで確かめてほしいことがあれば、<a href="guide-sore-honto.html">こちら</a>からリクエストできます。</span>
+    </div>
+
+    <div class="related-grid">
+      <a class="related-card" href="guide-signal-lab-117.html">
+        <div class="related-card-title">研究日誌 #117</div>
+        <div class="related-card-desc">日足の高値ブレイク買いで損切りと利確の置き方を変えると結果は変わるか</div>
+      </a>
+      <a class="related-card" href="guide-signal-lab-115.html">
+        <div class="related-card-title">研究日誌 #115</div>
+        <div class="related-card-desc">ゴールデンクロスで買うと勝率は上がるのか（177回で確かめた）</div>
+      </a>
+      <a class="related-card" href="track-record.html">
+        <div class="related-card-title">シグナル研究ページ</div>
+        <div class="related-card-desc">最新の成績や前向き検証の一覧をすべて確認できます</div>
+      </a>
+    </div>
+
+    <!-- ② 末尾免責（kinsho-v1） -->
+    <p class="disclaimer kinsho-v1" data-disclaimer="kinsho-v1">
+      ⚠️ <strong>免責事項</strong>：本記事は過去のデータに基づく情報提供を目的としており、特定の金融商品の購入・売却・保有を勧めるものではありません。当サイトは金融商品取引業者ではなく、投資助言業の登録は行っていません。掲載された数値・分析結果は将来の利益を保証するものではなく、投資には損失リスクが伴います。すべての投資判断は、ご自身の判断と責任において行ってください。
+    </p>
+
+  </div><!-- .article -->
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{display:block;max-width:900px;margin:28px auto 0;padding:0 16px;background:none;border:0;box-shadow:none}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a;min-width:0;white-space:normal}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:minmax(0,1fr)}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+<style>.mw-sernav-cta{margin-top:12px;padding:12px 14px;border:1px dashed #0969da;border-radius:10px;background:#f6f9ff;text-align:center;font-size:13.5px;line-height:1.6}.mw-sernav-cta a{color:#0969da;font-weight:700;text-decoration:none;white-space:normal;padding:0}body.dark .mw-sernav-cta{background:#0d1a2b;border-color:#388bfd}body.dark .mw-sernav-cta a{color:#58a6ff}</style>
+    <nav class="mw-sernav" aria-label="AIシグナル研究日誌のシリーズ内移動">
+      <div class="mw-sernav-h">📚 AIシグナル研究日誌</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-signal-lab-117.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">直近20本の最高値を上抜け（高値ブレイク）で買ったとき、損切りと利確の置き方で結果は変わる？ 日足の約3700回で調べた【研究日誌 #117】</span>
+      </a>
+      <a class="mw-sernav-btn next is-off" href="#" rel="next">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">次の記事は準備中です</span>
+      </a>
+      </div>
+      <div class="mw-sernav-cta"><a href="guide-sore-honto.html">🔎 気になる投資の「定説」はありますか？ データで確かめて記事にします →</a></div>
+      <div class="mw-sernav-idx"><a href="guides.html#cat-lab">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+</main>
+
+<footer>
+  <a href="index.html">トップページ</a> | <a href="guides.html">解説記事一覧</a> | <a href="about.html">サイトについて</a> | <a href="contact.html">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a><br>
+  &copy; 2026 MarketWatch AI — 日本人投資家のためのマーケット情報サイト
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
+</footer>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>

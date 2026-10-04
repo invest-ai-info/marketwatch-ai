@@ -5791,6 +5791,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-05", "line": '・<b>2026-10-05</b>: 🧪 解説「<a href="guide-signal-lab-118.html" style="color:#0969da"><b>品質ランク別の勝率【全5020回】</b></a>」公開'},
         {"date": "2026-10-04", "line": '・<b>2026-10-04</b>: 📰 解説「<a href="guide-news-2026-10-04-opec-november-output.html" style="color:#0969da"><b>OPEC+11月産油目標を据え置き・イラン戦争で実生産大幅下回る</b></a>」公開'},
         {"date": "2026-10-04", "line": '・<b>2026-10-04</b>: 📆 解説「<a href="guide-entry-turn-of-month.html" style="color:#0969da"><b>月替わりは株が上がりやすい？</b></a>」公開'},
         {"date": "2026-10-04", "line": '・<b>2026-10-04</b>: 🧪 解説「<a href="guide-signal-lab-117.html" style="color:#0969da"><b>損切りと利確の相性、日足・高値ブレイク買い〜約3700回で調べた【研究日誌 #117】</b></a>」公開'},
