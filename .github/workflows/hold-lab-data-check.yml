@@ -1,0 +1,23 @@
+name: Hold Lab Data Check (manual)
+
+# R1 のデータの点検（表示だけ・数えない・コミットしない）。2026-10-05 新設。
+# 1回目の結果で 1306.T の1日の変化 947.9%・米国株（円建て）22.2% と出たため、どの日のどの元データかを確かめる。
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Show the largest daily changes
+        run: python hold_lab_datacheck.py | tee -a "$GITHUB_STEP_SUMMARY"
