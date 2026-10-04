@@ -175,7 +175,8 @@ def _published_versions(filename):
     """公開済みの版を [(どこの版, 本文)] で返す。無ければ空（＝新規記事）。"""
     import subprocess
     out = []
-    if not os.path.isdir(os.path.join(SCRIPT_DIR, ".git")):
+    # ⚠️ exists で判定する（isdir だと git worktree＝.git がファイルの作業場所を「git 管理外」と取り違える）
+    if not os.path.exists(os.path.join(SCRIPT_DIR, ".git")):
         owner, repo, branch = _repo_branch()      # 手元（git 管理外）＝GitHub の main の版と比べる
         url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{filename}"
         try:
@@ -283,7 +284,8 @@ def reconcile_from_main():
     """公開前に main 最新の guides.html / generate_market_news.py をローカルへ取り込む（巻き戻し事故の根絶）。"""
     # クラウド・ルーティンは git チェックアウト＝既に main HEAD 上なので reconcile 不要（raw CDN で逆に古くするのを防ぐ）。
     # 私のローカル作業フォルダは git 管理外（.git 無し）＝drift が起きる側なので reconcile する。
-    if os.path.isdir(os.path.join(SCRIPT_DIR, ".git")):
+    # ⚠️ exists で判定（2026-10-04: ルーティンが origin/main の git worktree で作業する＝.git はファイル）
+    if os.path.exists(os.path.join(SCRIPT_DIR, ".git")):
         print("  ✓ reconcile: git チェックアウト環境（クラウド・ルーティン＝既に main 上）ゆえスキップ")
         return True
     owner, repo, branch = _repo_branch()

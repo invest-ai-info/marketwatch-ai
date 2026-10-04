@@ -58,7 +58,12 @@ DOCTYPE_YUHO = "120"          # 有価証券報告書（訂正 130 は部分訂�
 APPEAR_WINDOW_DAYS = 14       # 直近14日
 APPEAR_MIN = 2                # 2回以上登場
 FALLBACK_HOT_TOP = 5          # 該当0件のときの受け皿＝最新 hot 上位
-MAX_CANDIDATES = 15
+MAX_CANDIDATES = 20           # 🔁 2026-10-04 15→20（毎日1本に上げたため・本文の取得は DOC_BUDGET が別に上限を守る）
+# 🆕 2026-10-04: 「熱が冷めた会社」を先に並べる（COMPANY_GUIDE §2-1 の5「中3営業日」と同じ物差し）。
+#    旧版は「回数の多い順・同じ回数なら最近載った順」の上位15社だけを候補にしていたため、話題の真っ最中の会社
+#    ばかりが残り、ルーティンが「中3営業日」で全部はじいて日本株が全滅した（10/3。条件を満たす会社は23社あった）。
+HEAT_DAYS = 3                 # 直近3回のランキング日（＝東証の営業日。休場日はランキングが無いので自然に飛ぶ）に載った会社はまだ熱い
+ROTATION_DAYS = 90            # 本レーンで90日以内に書いた会社は候補に入れない（§2-1 の3）
 
 # ── EDINET への負荷上限（規約対策。上げないこと） ──────────────────────────
 INDEX_TARGET_DAYS = 420       # 有報は年1回＝1年+余裕を索引すれば必ず1本ある
@@ -252,17 +257,46 @@ def update_appearances(appearances, rankings, today):
     return appearances
 
 
-def pick_candidates(appearances, rankings):
-    """直近14日に2回以上登場 → 候補（回数降順・最新日降順）。0件なら最新 hot 上位を fallback。"""
+def covered_codes(today, root=HERE, days=ROTATION_DAYS):
+    """本レーンで days 日以内に公開した会社のコード（guide-company-<コード>-*.html の datePublished で判定）。"""
+    import glob
+    out = set()
+    floor = (today - datetime.timedelta(days=days)).isoformat()
+    for path in glob.glob(os.path.join(root, "guide-company-*.html")):
+        m = re.match(r"guide-company-([0-9a-z]+)-", os.path.basename(path))
+        if not m:
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                d = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', f.read())
+        except OSError:
+            continue
+        if d and d.group(1) >= floor:
+            out.add(m.group(1).upper())
+    return out
+
+
+def pick_candidates(appearances, rankings, covered=frozenset()):
+    """直近14日に2回以上登場 → 候補。0件なら最新 hot 上位を fallback。
+
+    並べ方（2026-10-04〜）: ①熱が冷めた会社（最終登場が直近 HEAT_DAYS 回のランキング日より前＝中3営業日を満たす）
+    を先に ②その中で登場回数の多い順 ③同じ回数なら最近載った順。本レーンで ROTATION_DAYS 日以内に書いた会社は外す。
+    各候補に `last_seen`（最終登場日）と `cooled`（中3営業日を満たすか）を付ける＝ルーティンが自分で数え直さなくてよい。
+    """
+    all_dates = sorted({d for ent in appearances.values() for d in ent["dates"]}, reverse=True)
+    hot_dates = set(all_dates[:HEAT_DAYS])
     scored = []
     for code, ent in appearances.items():
         n = len(ent["dates"])
-        if n >= APPEAR_MIN:
-            scored.append((n, max(ent["dates"]), code))
+        if n < APPEAR_MIN or code.upper() in covered:
+            continue
+        last = max(ent["dates"])
+        scored.append((last not in hot_dates, n, last, code))
     scored.sort(reverse=True)
     cands = [{"code": c, "name": appearances[c]["name"], "appearances": n,
-              "dates": sorted(appearances[c]["dates"]), "fallback": False}
-             for n, _, c in scored[:MAX_CANDIDATES]]
+              "dates": sorted(appearances[c]["dates"]), "last_seen": last, "cooled": cooled,
+              "fallback": False}
+             for cooled, n, last, c in scored[:MAX_CANDIDATES]]
     if cands:
         return cands
     for row in (rankings or {}).get("hot") or []:
@@ -270,8 +304,9 @@ def pick_candidates(appearances, rankings):
             break
         code = str(row.get("code") or "").strip()
         if code:
+            asof = rankings.get("asof") or ""
             cands.append({"code": code, "name": row.get("name") or "", "appearances": 1,
-                          "dates": [rankings.get("asof") or ""], "fallback": True})
+                          "dates": [asof], "last_seen": asof, "cooled": False, "fallback": True})
     return cands
 
 
@@ -312,7 +347,7 @@ def load_json(path, default):
 
 
 def run(api_key, today=None, list_fn=api_list, doc_fn=api_doc_csv, sleep=time.sleep,
-        prev=None, rankings=None, log=print):
+        prev=None, rankings=None, log=print, covered=None):
     today = today or datetime.datetime.now(JST).date()
     prev = prev if prev is not None else load_json(OUT, {})
     rankings = rankings if rankings is not None else load_json(RANKINGS, {})
@@ -320,8 +355,10 @@ def run(api_key, today=None, list_fn=api_list, doc_fn=api_doc_csv, sleep=time.sl
     index = dict(prev.get("index") or {})
     coverage = dict(prev.get("index_coverage") or {})
     appearances = update_appearances(dict(prev.get("appearances") or {}), rankings, today)
-    candidates = pick_candidates(appearances, rankings)
-    log(f"🎯 候補 {len(candidates)}社: " + ", ".join(f"{c['code']} {c['name']}({c['appearances']}回{'・fallback' if c['fallback'] else ''})" for c in candidates)
+    covered = covered_codes(today) if covered is None else covered
+    candidates = pick_candidates(appearances, rankings, covered)
+    log(f"🎯 候補 {len(candidates)}社（熱が冷めた {sum(c['cooled'] for c in candidates)}社が先頭・本レーン{ROTATION_DAYS}日以内の {len(covered)}社は除外）: "
+        + ", ".join(f"{c['code']} {c['name']}({c['appearances']}回{'・冷' if c['cooled'] else '・熱'}{'・fallback' if c['fallback'] else ''})" for c in candidates)
         + f" / 遡り {BACKFILL_PER_RUN}日/回")
     companies = dict(prev.get("companies") or {})
     errors = []
@@ -416,7 +453,9 @@ def run(api_key, today=None, list_fn=api_list, doc_fn=api_doc_csv, sleep=time.sl
             "note": "本文は有価証券報告書の記載をそのまま（HTMLタグ除去のみ）。出典は各社 url（EDINET 閲覧ページ）。",
         },
         "rankings_asof": (rankings or {}).get("asof") or "",
-        "candidate_rule": f"jp-rankings.json の gainers/losers/hot に直近{APPEAR_WINDOW_DAYS}日で{APPEAR_MIN}回以上",
+        "candidate_rule": (f"jp-rankings.json の gainers/losers/hot に直近{APPEAR_WINDOW_DAYS}日で{APPEAR_MIN}回以上。"
+                           f"並びは cooled（直近{HEAT_DAYS}回のランキング日に載っていない＝中3営業日を満たす）が先・回数の多い順。"
+                           f"本レーンで{ROTATION_DAYS}日以内に書いた会社は除外"),
         "candidates": candidates,
         "missing": missing,
         "companies": companies,
