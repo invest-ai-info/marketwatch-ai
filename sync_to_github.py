@@ -323,5 +323,6 @@ SYNC_FILES = [
     "guide-news-2026-10-03-us-jobs-report-sep-2026.html",
     "guide-signal-lab-117.html",
     "guide-entry-turn-of-month.html",
+    "guide-news-2026-10-04-opec-november-output.html",
     "drafts/draft-signal-lab-115.html",
 ]
