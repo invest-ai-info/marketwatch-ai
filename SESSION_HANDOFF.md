@@ -28,8 +28,9 @@
   - 本物の🟡＝週次記事の雛形（`auto_weekly_strategy.py`）の合言葉「押し目があれば積立加速」→「重要指標の通過までは様子見も選択肢、積立は決めたルールどおりに」に言い換え。既存の週次記事22本も同じ文に置き換えた。
 - **F 話題の企業シリーズを週1本→毎日1本以上へ**（オーナー指示「最低でも1日1本以上は上げてください。必ず話題になる銘柄は出ているので、必ず1本以上は上げてください」）
   - 状態: 9/1〜10/3 の6週連続で毎週公開（日本株2・海外株4）。方針「日本株3：海外株1」が守れていなかった原因＝`build_edinet_yuho.pick_candidates` が「回数の多い順・同じ回数なら最近載った順」の上位15社だけを候補にし、話題の真っ最中の会社ばかりが残って手順書の「中3営業日」で全部はじかれた（10/3。条件を満たす日本株は23社あった）。
-  - 直し: ①候補を「熱が冷めた会社（直近3回のランキング日に載っていない）」が先・本レーン90日以内の会社は除外・`cooled`/`last_seen` を付与・上限15→20（テスト `tests/test_company_candidates.py`） ②`COMPANY_GUIDE.md` を毎日化し「候補なしの日は書かない」を廃止→§2-1 の7「代わりの順」 ③LEDGER_WATCH 10日→2日（10/6 から） ④`publish_article.py` の git 判定を isdir→exists（worktree の .git はファイル） ⑤新 routine `company-daily-auto` `trig_01AGAoLaAeMhjxU1NAT1kM8s`（毎日 10:23 JST・エージェント作成）。
-  - ⏳ オーナー作業: 新 routine にリポジトリ invest-ai-info/marketwatch-ai を付ける（create_trigger には項目が無い）／旧 `company-weekly-auto` を停止する。付いたらエージェントが試運転（fire_trigger）できる。
+  - 直し: ①候補を「熱が冷めた会社（直近3回のランキング日に載っていない）」が先・本レーン90日以内の会社は除外・`cooled`/`last_seen` を付与・上限15→20（テスト `tests/test_company_candidates.py`） ②`COMPANY_GUIDE.md` を毎日化し「候補なしの日は書かない」を廃止→§2-1 の7「代わりの順」 ③LEDGER_WATCH 10日→2日（10/6 から） ④`publish_article.py` の git 判定を isdir→exists（worktree の .git はファイル） ⑤新 routine `company-daily-auto` `trig_01ERd5oZBggR1LaxF6c2BXw3`（毎日 10:23 JST）＝**リポジトリ付きの専用セッション `session_0193RuD1wE9JzE6VKK4pMa3U` を毎朝起こす型**。
+  - 🔑 オーナー「最後まで自動でできるようにできませんか」→ 試験で判明＝**エージェントが作る「毎回新しいセッション」型のルーティンは、リポジトリも add_repo も無い**（使い捨ての試験ルーティンで確認・削除済み）。一方 `create_session(source_url=…)` で作ったセッションはリポジトリ付きで push --dry-run も通った → `create_trigger(persistent_session_id=…)` で毎朝そのセッションを起こす。オーナーの画面操作は不要。⚠️ 同じセッションに毎日たまるので、プロンプトで「前日までの会話に頼らない・下書きと監査はサブエージェント」と指示。
+  - 旧 `company-weekly-auto` はエージェントから止められないが自分自身は止められる → 手順書の先頭に「旧ルーティンとして起動したら記事を書かず update_trigger(enabled=false) で自分を止め、台帳に1行」と書いた（次の土曜 10/10 14:23 に止まる見込み）。
 
 ## 🧪 2026-10-02: BT 4時間足BTG改（FXism の会員教材）を教材どおりに1回だけ数えた＝4つともストップ（手元）
 - オーナー「fxizm のフォルダの中身を確認してまとめてください」→「検証お願いします」。教材＝デスクトップ `fxizm`（PDF 38本・2025-01〜10 配布＋ロット計算表）。中心の BTG シグナルは**中身非公開の指標2つ**を含む＝数えない。数えたのは文章で決まっている4つ
