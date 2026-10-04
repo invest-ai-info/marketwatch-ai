@@ -322,5 +322,6 @@ SYNC_FILES = [
     "guide-company-amat-appliedmaterials.html",
     "guide-news-2026-10-03-us-jobs-report-sep-2026.html",
     "guide-signal-lab-117.html",
+    "guide-entry-turn-of-month.html",
     "drafts/draft-signal-lab-115.html",
 ]

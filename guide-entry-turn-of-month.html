@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>月替わりになると株は上がりやすい？ 90年分のデータでわかったこと【エントリー方法の研究 #10】 - MarketWatch AI</title>
+  <meta name="description" content="月末の最後の取引日から、次の月のはじめの数日間だけ株価指数が上がりやすいという「月替わり効果」。アリエル氏（1987年）とラコニショック氏・スミット氏（1988年）が見つけた傾向が、マコネル氏とシュー氏の研究（2008年）でその後どうなったのかまで、出典つきで整理します。">
+  <meta name="keywords" content="月替わり効果,ターンオブザマンス,カレンダー効果,アノマリー,エントリー,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-entry-turn-of-month.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="月替わりになると株は上がりやすい？ 90年分のデータでわかったこと【エントリー方法の研究 #10】">
+  <meta property="og:description" content="月末の最後の取引日から、次の月のはじめの数日間だけ株価指数が上がりやすいという「月替わり効果」を、見つかった経緯からその後の検証まで出典つきで整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-entry-turn-of-month.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "月替わりになると株は上がりやすい？ 90年分のデータでわかったこと【エントリー方法の研究 #10】",
+    "description": "月末の最後の取引日から、次の月のはじめの数日間だけ株価指数が上がりやすいという「月替わり効果」を、見つかった経緯からその後の検証まで出典つきで整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-04",
+    "dateModified": "2026-10-04",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-entry-turn-of-month.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-bar-a{fill:#0969da;opacity:.85}
+    .s-bar-b{fill:#54aeff;opacity:.85}
+    .s-bar-c{fill:#9a6700;opacity:.8}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-bar-a{fill:#58a6ff}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-c{fill:#d29922}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 月替わり（エントリー方法の研究 #10）
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事はエントリー（買う・売るタイミング）の決め方についての考え方や、公開されている研究の紹介を目的とした「情報提供」であり、特定の手法・銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>📆 月替わりになると株は上がりやすい？ 90年分のデータでわかったこと【エントリー方法の研究 #10】</h1>
+    <div class="meta-line">公開：2026年10月4日 ／ 読了時間：約 9 分 ／ カテゴリ：🚪 エントリー方法の研究</div>
+
+    <p>シリーズ第9回（<a href="guide-entry-pre-fomc.html">#09</a>）で扱った「FOMC（米国の金融政策を決める会合）前の値動き」は、1年に8回だけ訪れる発表の日時をきっかけにする方法でした。この記事で扱う「月替わり」も、同じく日付をきっかけにする方法ですが、FOMCのように特別な日ではなく、毎月かならず訪れる「月の終わりと始まり」に注目します。月末の最後の取引日から、次の月のはじめの数日間だけ、株価指数の上がり方が他の日と大きく違う、という傾向が1980年代の研究で報告されました。この記事では、見つかった経緯、90年分のデータで確かめ直された範囲、そして今も残る「なぜそうなるのか」という疑問まで整理します。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>アリエル氏の研究（1987年）は、1963年から1981年までの米国株の指数（学術研究で使われる価格データ）を調べ、月の前半にリターンが集まり、後半はほぼゼロに近かったことを報告しました。</li>
+      <li>ラコニショック氏とスミット氏の研究（1988年）は、1897年から1986年までの90年間のダウ平均を調べ、月末の最後の取引日から次の月の3日目までの「4日間」だけで、この90年間の上昇のすべてが生まれていたと報告しました。</li>
+      <li>マコネル氏とシュー氏の研究（2008年）は、1926年から2005年までの米国株と、調べた35か国のうち31か国の株価指数で、同じように月替わりにリターンが集まる傾向を確かめました。ただし、月末の資金の流れでは説明がつかないとされ、研究自身が「まだ答えの見つかっていない謎」と結論づけています。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな方法か</a></li>
+        <li><a href="#section-2">研究でわかっていること</a></li>
+        <li><a href="#section-3">反論・限界</a></li>
+        <li><a href="#section-4">株・FX・コモディティでは？</a></li>
+        <li><a href="#section-5">よくある誤解</a></li>
+        <li><a href="#section-6">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな方法か</h2>
+    <p>「月替わり」に注目する方法は、月末の最後の取引日に買っておき（または、その数日前から買っておき）、次の月のはじめの数日が過ぎたら手放す、という入り方です。これまでの回で見た「値動きの向き」や「金利の差」とは違い、この方法が注目するのは、カレンダー上の「日付」そのものです。</p>
+    <p><strong>仮の例（考え方を説明するための仮の例です）：</strong> ある月の最後の取引日の終値で買い、次の月の3営業日目の終値で手放す、という入り方を考えてみます。どの銘柄が強いか、どちらに流れが向いているかを見るのではなく、「暦の上で、月が替わる前後である」ということだけをきっかけにする方法です。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="fig-tom-title">
+        <title id="fig-tom-title">月替わりの4日間と、残りの日の、平均的な上がり方の違いを示す図</title>
+        <text class="s-panel-label" x="320" y="24" text-anchor="middle">月替わりの4日間と、残りの日の、上がり方の違い（イメージ図）</text>
+        <line class="s-axis" x1="60" y1="250" x2="600" y2="250"/>
+        <line class="s-divv" x1="60" y1="120" x2="600" y2="120"/>
+        <text class="s-label-sm" x="54" y="124" text-anchor="end">高い</text>
+        <text class="s-label-sm" x="54" y="254" text-anchor="end">0</text>
+        <rect class="s-bar-a" x="150" y="120" width="150" height="130"/>
+        <rect class="s-bar-b" x="390" y="243" width="150" height="7"/>
+        <text class="s-legend" x="225" y="104" text-anchor="middle">月替わりの4日間</text>
+        <text class="s-legend" x="465" y="104" text-anchor="middle">残りの日（約16日間）</text>
+        <text class="s-label-sm" x="320" y="288" text-anchor="middle">ラコニショック氏とスミット氏（1988年）などの報告をもとに当サイトが作図</text>
+      </svg>
+      <figcaption class="chart-caption">図：ラコニショック氏とスミット氏（1988年）の報告をもとにした考え方です。「月替わりの4日間」とは、月末の最後の取引日から、次の月の3日目までを指します。※概念を示すイメージ図です（実際の値動きではありません）。</figcaption>
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 研究でわかっていること</h2>
+    <h3>月の前半にリターンが集まる（アリエル氏、1987年）</h3>
+    <p>アリエル氏の研究は、学術研究で使われる米国株の価格データのうち、時価総額で重みづけした指数と、銘柄数で均等に重みづけした指数の両方を使い、1963年から1981年までの日々のリターンを調べました。その結果、月の最後の取引日の直前と、次の月の前半にあたる日々は平均でプラスのリターンがあったのに対し、月の後半にあたる日々の平均リターンは、ゼロと区別できないほど小さかったと報告しています。言い換えると、この19年間に積み上がった株価指数の上昇は、ほとんどが月の前半だけで生まれていた、という報告です。</p>
+    <h3>90年間の上昇が、たった4日間に集まっていた（ラコニショック氏とスミット氏、1988年）</h3>
+    <p>ラコニショック氏とスミット氏の研究は、アリエル氏よりもさらに長い期間、1897年から1986年までの90年間にわたる、ダウ平均の日々のリターンを調べました。研究は「月替わり」を、月の最後の取引日から、次の月の3日目までの4日間と定義しています。その結果、この4日間だけで、90年間のダウ平均の上昇のすべてが生まれていた、と報告しています。残りの、1か月のうちの16日前後では、平均のリターンはプラスになっていなかった、という内容です。同じ研究は、月替わりだけでなく、週替わり（金曜から月曜にかけて）や、年末年始、祝日の前後にも、同じように目立った傾向があったことも報告しています。</p>
+    <h3>その後も、より新しい期間・より多くの国で確かめられている（マコネル氏とシュー氏、2008年）</h3>
+    <p>マコネル氏とシュー氏の研究は、1926年から2005年までの80年間、米国株の価格データを使い、ラコニショック氏とスミット氏と同じ「4日間」の定義で確かめ直しました。その結果、時価総額で重みづけした指数の1日あたりの平均リターンは、月替わりの4日間で0.15％だったのに対し、残りの16日間では0％に近い小さなマイナスだったと報告しています。銘柄数で均等に重みづけした指数でも、1日あたりの平均で、月替わりの4日間が0.22％、残りの日が0.04％という結果でした。研究は、この傾向が小型株や低価格株に限られたものではないこと、12月末や四半期末に限られたものでもないこと、米国だけの現象でもないことも確かめています。調べた35か国のうち31か国の株価指数で、同じように月替わりの日にリターンが集まる傾向が見られたと報告しています。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 反論・限界</h2>
+    <h3>なぜ起こるのか、はっきりした説明がない</h3>
+    <p>オグデン氏の研究（1990年）は、月替わりに合わせて給料や利子の支払いが集中する「支払いの時期がそろうこと」が、月替わりの株価の上昇を引き起こしている、という仮説を立て、1969年から1986年までの米国の株価指数のデータで、この仮説を支持する結果を報告しました。この仮説が正しければ、月末に投資信託などへ流れ込むお金の量の多さが、月替わりの上昇の理由になるはずです。しかし、マコネル氏とシュー氏の研究（2008年）は、月替わりの日の売買の量や、株式の投資信託への資金の流出入を調べても、ほかの日より多くなっていなかったと報告しており、資金の流れそのものでは、この傾向を説明できないとしています。マコネル氏とシュー氏は、結論として、月替わりの株価の型は「まだ答えの見つかっていない謎」であると述べています。</p>
+    <h3>似たカレンダーの傾向の中でも、消えたものと残ったものがある</h3>
+    <p>マーカリング氏・ニッサー氏・ヴァラ氏の研究（2006年）は、週替わり・祝日・月の中の細かい時期・1月など、複数のカレンダーの傾向を、論文で発表された前と後とで比べ直しました。その結果、週替わりの傾向・祝日の傾向・月の中の細かい時期による傾向（「月替わり」とは別の傾向）・1月の傾向は、発表されたあとに見られなくなっていた一方、月替わりの傾向は、発表されたあとも見られ続けていたと報告しています。このシリーズの第9回で見たFOMC前の値動きのように、見つかった傾向のすべてが同じように弱まるわけではなく、傾向によって残り方が違う、という例です。</p>
+    <h3>取引コストの注意</h3>
+    <p>ここで紹介した研究の多くは、取引コストを引く前の数字です。月替わりの4日間だけ売買を繰り返すと、1か月に1往復、1年に12往復の売買が発生し、売値と買値の差（スプレッド）や手数料の分だけ、報告された上昇の大きさから差し引かれます。マコネル氏とシュー氏が報告した0.15％は、月替わりの4日間の「1日あたりの平均」で、取引コストを引く前の数字です。実際の売買では、スプレッドや手数料のほか、使う商品によってはそれ以外の費用もかかるため、報告された大きさがそのまま手元に残るわけではありません。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 株・FX・コモディティでは？</h2>
+    <p>紹介した研究のうち、株価指数を調べた3つの研究が、どの市場を対象にしているかを表に整理します。</p>
+    <table>
+      <tr><th>市場</th><th>研究はあるか</th><th>内容</th></tr>
+      <tr><td>株価指数</td><td>あり（研究の中心）</td><td>アリエル氏、ラコニショック氏とスミット氏の研究は米国株の指数が中心で、マコネル氏とシュー氏の研究は、調べた35か国のうち31か国の株価指数で同じ傾向を確かめています。</td></tr>
+      <tr><td>為替（FX）</td><td>この記事で確かめられた研究の範囲ではわからない</td><td>今回紹介した3つの研究は、いずれも株価指数を対象にしたものです。為替を対象にした研究も見かけましたが、出典（出版社の要旨や公式ページ）に実際に届いて数字を確かめることができなかったため、この記事では書きません。</td></tr>
+      <tr><td>コモディティ（金・原油など）</td><td>この記事で確かめられた研究の範囲ではわからない</td><td>為替と同様に、コモディティを対象にした研究の要旨や公式ページに今回は届けませんでした。コモディティで同じ傾向があるかは、この記事からはわかりません。</td></tr>
+    </table>
+
+    <div class="info-box"><strong>当サイトとの関係：</strong> 当サイトの監視18銘柄には、日経平均先物やS&amp;P500先物のような株価指数、金・原油などのコモディティ、為替（FX）が含まれています。当サイトのシグナルは、RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）・MACD（移動平均線を使って、流れの変わり目をとらえる指標）・移動平均・ボリンジャーバンド（値動きの広がりを統計的な幅で示す線）・高値安値のブレイクといった値動きの型を見るもので、カレンダー上の日付（月替わりかどうか）を判定材料にしていません。この記事で紹介した研究が調べたのは、おもに米国の株価指数で、期間も1897年から2005年までです。当サイトのシグナルの期間・市場とは違うため、この記事の研究結果は、当サイトのシグナルの成績を裏づけるものではありません。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ よくある誤解</h2>
+    <h3>誤解1：「月末に投資信託などへお金が流れ込むから、株が上がる」と説明がついていると思われがち</h3>
+    <p>オグデン氏の研究（1990年）はそうした仮説を立てていますが、マコネル氏とシュー氏の研究（2008年）は、月替わりの日の売買の量や投資信託への資金の流出入を調べても、ほかの日より多くなっていなかったと報告しています。研究自身が、月替わりの株価の型を「まだ答えの見つかっていない謎」と結論づけており、はっきりした説明は、この2本の研究からはまだ付いていません。</p>
+    <h3>誤解2：「カレンダーに関する傾向は、論文で発表されるとみな消える」と思われがち</h3>
+    <p>マーカリング氏らの研究（2006年）は、週替わりや1月の傾向など、いくつかのカレンダーの傾向が発表後に見られなくなった一方で、月替わりの傾向は発表されたあとも見られ続けていたと報告しています。見つかった傾向のすべてが同じように弱まるわけではない、という例です。</p>
+    <h3>誤解3：「月替わりの上昇は、日本の株や為替でも確かめられている」と思われがち</h3>
+    <p>今回確かめられた研究は、いずれも米国の株価指数と、米国以外の一部の株価指数についての報告です。日本の株や、為替（FX）、コモディティについて、同じ傾向が確かめられているかは、今回調べた範囲の出典からは言えません。インターネット上には日本の株価指数を対象にしたと見える記事も見かけますが、今回、出版社の要旨や公式ページに実際に届いて数字を確かめることができなかったため、この記事では採用していません。</p>
+
+    <div class="warning-box">この記事は、公開されている学術研究を当サイトが要約したものです。研究の数字は、それぞれの研究が使った期間・市場・条件のもとでの結果であり、将来も同じになるとは限りません。特定の手法・銘柄の売買を勧めるものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ</h2>
+    <ul>
+      <li>アリエル氏の研究（1987年）は、1963年から1981年までの米国株で、月の前半にリターンが集まり、後半はほぼゼロに近かったことを報告しました。</li>
+      <li>ラコニショック氏とスミット氏の研究（1988年）は、1897年から1986年までの90年間のダウ平均で、月替わりの4日間だけに上昇のすべてが生まれていたと報告しました。</li>
+      <li>マコネル氏とシュー氏の研究（2008年）は、1926年から2005年までの米国株と、調べた35か国のうち31か国の株価指数で同じ傾向を確かめましたが、月末の資金の流れでは説明がつかず、「まだ答えの見つかっていない謎」と結論づけています。</li>
+      <li>マーカリング氏らの研究（2006年）によると、似たカレンダーの傾向の中にも、発表後に消えたものと、月替わりのように残ったものがあります。「見つかった傾向が、あとで消える」とは限らない例です。</li>
+    </ul>
+    <p>次回は、曜日の傾向について、もっとも有名になった「月曜日」の傾向と、その後の検証を見ていきます。</p>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-entry-pre-fomc.html">
+        <div class="related-card-title">🏦 FOMCの発表前は株が上がりやすい？【エントリー方法の研究 #09】</div>
+        <div class="related-card-desc">日付をきっかけにする別の入り方。見つかった傾向が、あとで消えた例として対比できます。</div>
+      </a>
+      <a class="related-card" href="guide-sell-in-may.html">
+        <div class="related-card-title">📅 Sell in May（5月に売れ）は本当か？</div>
+        <div class="related-card-desc">月の中の日付ではなく、季節（月そのもの）に注目したカレンダーの傾向を検証した記事。</div>
+      </a>
+      <a class="related-card" href="calendar.html">
+        <div class="related-card-title">📅 経済カレンダー</div>
+        <div class="related-card-desc">当サイトが掲載している重要指標の開催予定と、市場の休場日の一覧。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/0304405X87900663" target="_blank" rel="noopener">Ariel (1987) "A Monthly Effect in Stock Returns", Journal of Financial Economics 18(1)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://doi.org/10.1093/rfs/1.4.403" target="_blank" rel="noopener">Lakonishok &amp; Smidt (1988) "Are Seasonal Anomalies Real? A Ninety-Year Perspective", The Review of Financial Studies 1(4)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://ideas.repec.org/a/taf/ufajxx/v64y2008i2p49-64.html" target="_blank" rel="noopener">McConnell &amp; Xu (2008) "Equity Returns at the Turn of the Month", Financial Analysts Journal 64(2)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨・本文の数値で確認）</li>
+      <li><a href="https://ideas.repec.org/a/bla/jfinan/v45y1990i4p1259-72.html" target="_blank" rel="noopener">Ogden (1990) "Turn-of-Month Evaluations of Liquid Profits and Stock Returns: A Common Explanation for the Monthly and January Effects", The Journal of Finance 45(4)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://doi.org/10.1080/09603100500400361" target="_blank" rel="noopener">Marquering, Nisser &amp; Valla (2006) "Disappearing Anomalies: A Dynamic Analysis of the Persistence of Anomalies", Applied Financial Economics 16(4)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はエントリー（買う・売るタイミング）の決め方についての考え方と、公開されている学術研究の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。研究の内容は当サイトによる要約です。正確な内容は各原文をご確認ください。記載の数値・方法による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
