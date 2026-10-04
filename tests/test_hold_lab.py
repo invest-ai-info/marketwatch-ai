@@ -191,6 +191,83 @@ def test_constants_match_preregistration():
     assert "3年繰り越す" in sec and H.CARRY_YEARS == 3
 
 
+# ── 2026-10-05 追記：データの取得の失敗の直し方 ──
+
+def _s(vals, start="2026-03-25"):
+    return pd.Series(np.array(vals, float), index=pd.bdate_range(start, periods=len(vals)))
+
+
+def test_clean_unit_shift_that_never_comes_back_rescales_the_past():
+    s, fx = H.clean(_s([1000, 1010, 101, 102, 103]))      # 1306.T の 2015-01-05 の形
+    assert np.allclose(s.values, [100, 101, 101, 102, 103]) and len(fx) == 1 and "それより前" in fx[0]["kind"]
+
+
+def test_clean_unit_window_that_comes_back_is_restored():
+    s, fx = H.clean(_s([380, 382.7, 37.64, 37.14, 389.2, 383]))   # 1306.T の 2026-03-30・31 の形
+    assert np.allclose(s.values, [380, 382.7, 376.4, 371.4, 389.2, 383]) and "その間だけ" in fx[0]["kind"]
+
+
+def test_clean_one_day_fx_spike_only_for_fx():
+    raw = _s([92.5, 92.82, 109.24, 92.303, 92.0])         # ドル円の 2008-12-08 の形
+    s, fx = H.clean(raw, fx=True)
+    assert s.iloc[2] == 92.82 and fx[0]["kind"] == "1日だけの跳ね"
+    s2, fx2 = H.clean(raw, fx=False)
+    assert np.allclose(s2.values, raw.values) and fx2 == []
+    s3, _ = H.clean(_s([101.5, 110.09, 99.51, 99.8]), fx=True)   # 2008-10-08 の形（戻りは −1.96%）
+    assert s3.iloc[1] == 101.5
+
+
+def test_clean_leaves_real_moves_alone():
+    for vals, fx in (([1436.56, 1602.93, 1595, 1450, 1460], False),    # 2008年10月の米国株
+                     ([826962, 520074, 580000], False),                 # 2020-03-12 のビットコイン
+                     ([3671.65, 4323.15, 4315, 4300], False),           # 2009-05-18 のインド株
+                     ([130.34, 121.65, 116, 118], True),                # 1998-10 のドル円（戻らない大きな動き）
+                     ([93.5, 97.9, 97.6, 98.0], True)):                 # 2008-10-28 の円安（戻らない）
+        s, f = H.clean(_s(vals), fx=fx)
+        assert np.allclose(s.values, vals) and f == [], (vals, f)
+
+
+def test_rerun_only_recounts_listed_assets_and_keeps_the_rest():
+    import json
+    import tempfile
+    rng = np.random.default_rng(9)
+    d = pd.bdate_range("2015-01-01", "2026-10-05")
+    base = {a: pd.Series(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.012, len(d)))), index=d) for a in H.ASSETS}
+    src = {"BTC": "BTC-JPY", "SP500": "^SP500TR×USDJPY=X", "TOPIX": "1306.T", "NIFTY": "^NSEI×INRJPY=X"}
+    state = {"prices": base, "fixes": {}}
+
+    def fake_load(until=None):
+        cut = {a: (v[v.index <= pd.Timestamp(until)] if until else v) for a, v in state["prices"].items()}
+        return cut, [], dict(src), state["fixes"]
+
+    orig_load, orig_eval, cwd = H.load_prices, H.evaluate, os.getcwd()
+    tmp = tempfile.mkdtemp()
+    try:
+        H.load_prices = fake_load
+        H.evaluate = lambda px, cfg: orig_eval(px, cfg, n_boot=20, n_placebo=5)
+        os.chdir(tmp)
+        assert H.main([]) == 0
+        first = json.load(open(H.OUT_JSON, encoding="utf-8"))
+        state["prices"] = dict(base, TOPIX=base["TOPIX"] * 1.0001)
+        state["fixes"] = {"1306.T": [{"kind": "単位のずれ（その間だけ）", "from": "2026-03-30", "to": "2026-03-31",
+                                      "factor": 10.0}]}
+        assert H.main(["--only", "TOPIX", "--until", "2026-10-02"]) == 0
+        second = json.load(open(H.OUT_JSON, encoding="utf-8"))
+        for a in ("BTC", "SP500", "NIFTY"):
+            assert second["assets"][a]["results"] == first["assets"][a]["results"], a
+            assert second["assets"][a]["counted_jst"] == first["generated_jst"]
+        t = second["assets"]["TOPIX"]
+        assert t["info"]["eval_end"] == "2026-10-02" and "1306.T" in t["data_fixes"]
+        assert len(second["reruns"]) == 1 and second["reruns"][0]["assets"] == ["TOPIX"]
+        assert list(second["assets"]) == list(H.ASSETS)
+        md = open(H.OUT_MD, encoding="utf-8").read()
+        assert "やり直し" in md and "単位のずれ" in md
+        assert H.main(["--only", "XYZ"]) == 2
+    finally:
+        os.chdir(cwd)
+        H.load_prices, H.evaluate = orig_load, orig_eval
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

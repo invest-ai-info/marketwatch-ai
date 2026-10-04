@@ -61,6 +61,11 @@ ASSETS = {
 }
 VERDICTS = ("◎ 確認", "◯ 傾向", "△ 守りだけ", "✕")
 OUT_JSON, OUT_MD = "hold-lab.json", "hold-lab.md"
+# 🆕 2026-10-05 追記：データの取得の失敗の直し方（PILLAR_PREREG.md「R1」の追記・数え直しより先にコミット）
+UNIT_LO, UNIT_HI = 8.7, 11.5   # 前の日との比がこの範囲（またはその逆数）＝10倍の単位のずれ
+UNIT_BACK_DAYS = 10            # この日数のうちに逆向きの同じずれで戻れば「その間だけのずれ」
+FX_SPIKE, FX_BACK = 0.04, 0.025   # 為替：4%以上動いて、次の日に戻り、2日の変化が2.5%以内＝1日だけの跳ね
+FX_TICKERS = ("USDJPY=X", "INRJPY=X", "INR=X")
 
 
 # ════════════════════ データ ════════════════════
@@ -72,14 +77,67 @@ def to_jpy(px, fx):
     return (px * f).dropna()
 
 
-def load_prices(fetcher=fetch):
-    """→ ({資産: 円建ての終値の Series}, 取れなかった資産, {資産: 使った表記})"""
+def _unit(r):
+    if UNIT_LO <= r <= UNIT_HI:
+        return 10.0
+    if 1 / UNIT_HI <= r <= 1 / UNIT_LO:
+        return 0.1
+    return None
+
+
+def clean(s, fx=False):
+    """取得の失敗だけを直す（2026-10-05 追記）。→ (直した Series, 直した記録のリスト)
+    ① 単位のずれ（どの元データも）：前の日との比が10倍か1/10に近い日。10日以内に逆向きの同じずれで戻るなら、
+       その間の値を戻す。戻らなければ、それより前の値をすべて同じ比で直す（分割の調整漏れ）
+    ② 1日だけの跳ね（為替だけ）：前の日から4%以上動き、次の日に逆向きへ戻って2日の変化が2.5%以内なら、前の日の値に置き換える"""
+    v = s.to_numpy(float).copy()
+    ix = s.index
+    fixes = []
+    t = 1
+    while t < len(v):
+        f = _unit(v[t] / v[t - 1])
+        if f is None:
+            t += 1
+            continue
+        back = next((k for k in range(t + 1, min(len(v), t + UNIT_BACK_DAYS + 1))
+                     if _unit(v[k] / v[k - 1]) == 1 / f), None)
+        if back is not None:
+            fixes.append({"kind": "単位のずれ（その間だけ）", "from": str(ix[t].date()), "to": str(ix[back - 1].date()),
+                          "factor": 1 / f})
+            v[t:back] /= f
+            t = back + 1
+        else:
+            fixes.append({"kind": "単位のずれ（それより前をすべて）", "from": str(ix[0].date()),
+                          "to": str(ix[t - 1].date()), "factor": f})
+            v[:t] *= f
+            t += 1
+    if fx:
+        for t in range(1, len(v) - 1):
+            r1, r2 = v[t] / v[t - 1] - 1, v[t + 1] / v[t] - 1
+            if abs(r1) >= FX_SPIKE and r1 * r2 < 0 and abs(v[t + 1] / v[t - 1] - 1) <= FX_BACK:
+                fixes.append({"kind": "1日だけの跳ね", "from": str(ix[t].date()), "to": str(ix[t].date()),
+                              "was": float(v[t]), "now": float(v[t - 1])})
+                v[t] = v[t - 1]
+    return pd.Series(v, index=ix, name=s.name), fixes
+
+
+def load_prices(fetcher=fetch, until=None):
+    """→ ({資産: 円建ての終値の Series}, 取れなかった資産, {資産: 使った表記}, {元データ: 直した記録})
+    until＝この日までに切る（数え直しで期間を1回目とそろえるため）"""
+    fixes = {}
+
     def get(tk):
         df = fetcher(tk, "1d", start=FETCH_START)
         if df is None:
             return None
         s = df["Close"].astype(float)
-        return s[s > 0]
+        s = s[s > 0]
+        if until is not None:
+            s = s[s.index <= pd.Timestamp(until)]
+        s, fx = clean(s, fx=tk in FX_TICKERS)
+        if fx:
+            fixes[tk] = fx
+        return s
 
     out, missing, src = {}, [], {}
     usd = get("USDJPY=X")
@@ -111,7 +169,17 @@ def load_prices(fetcher=fetch):
         out["NIFTY"], src["NIFTY"] = to_jpy(nf, cross), "^NSEI×(USDJPY=X÷INR=X)（INRJPY=X が取れず同じ値を作った）"
     else:
         missing.append("NIFTY")
-    return out, missing, src
+    return out, missing, src, fixes
+
+
+ASSET_TICKERS = {"BTC": ("BTC-JPY", "BTC-USD", "USDJPY=X"), "SP500": ("^SP500TR", "USDJPY=X"), "TOPIX": ("1306.T",),
+                 "NIFTY": ("^NSEI", "INRJPY=X", "INR=X", "USDJPY=X")}
+
+
+def fixes_for(asset, src, fixes):
+    """その資産に使った元データのうち、直しが入ったもの"""
+    used = [tk for tk in ASSET_TICKERS[asset] if tk in src.get(asset, "")]
+    return {tk: fixes[tk] for tk in used if tk in fixes}
 
 
 # ════════════════════ 持つ割合 ════════════════════
@@ -497,7 +565,11 @@ def render_md(out):
          f"- 生成: {out['generated_jst']}　事前登録の指紋（PILLAR_PREREG.md の sha256）: `{out['prereg_sha256']}`",
          "- 物差しと判定＝PILLAR_PREREG.md「R1 持ち方の研究」（計算より先にコミット）。**過去のデータで1回だけ数えた結果**",
          "- 課税口座で持つとして、費用と税を引いたあと。最初の資金を1として計算（金額は書かない）",
-         f"- 関門＝ブートストラップと偽薬の片側 p＜0.05÷{N_COMPARE}（{ALPHA:.5f}）", ""]
+         f"- 関門＝ブートストラップと偽薬の片側 p＜0.05÷{N_COMPARE}（{ALPHA:.5f}）"]
+    for rr in out.get("reruns", []):
+        L.append(f"- やり直し: {rr['jst']} に {'・'.join(rr['assets'])} だけ数え直した（{rr['reason']}・"
+                 f"データは {rr['until'] or '最後'} まで）。ほかの資産は1回目の結果のまま")
+    L.append("")
     if out["missing"]:
         L += [f"## ⚠️ データが取れなかった資産：{'・'.join(out['missing'])}", "",
               "何も数えていない（1回だけ数えるため）。この資産のデータが取れたときだけ、やり直してよい。", ""]
@@ -512,6 +584,11 @@ def render_md(out):
         L += [f"## {ASSETS[a]['name']}", "",
               f"- データ: {out['sources'].get(a, '')}／評価 {i['eval_start']}〜{i['eval_end']}（{i['years']:.1f}年・"
               f"前半と後半の境 {i['mid_date']}）／1日の最大の変化 {_pct(i['max_abs_daily_change'])}",
+              f"- 数えた日: {r.get('counted_jst', out['generated_jst'])}／事前登録の指紋 "
+              f"`{(r.get('prereg_sha256') or out['prereg_sha256'] or '')[:12]}…`",
+              "- データの直し: " + ("なし" if not r.get("data_fixes") else "／".join(
+                  f"{tk} {x['kind']} {x['from']}" + (f"〜{x['to']}" if x['to'] != x['from'] else "")
+                  for tk, xs in r["data_fixes"].items() for x in xs)),
               f"- 費用 片道 {ASSETS[a]['cost'] * 100:.2f}%／税 {ASSETS[a]['tax'] * 100:.3g}%"
               + ("（損は繰り越さない）" if ASSETS[a]["kind"] == "btc" else "（損は3年繰り越す）"), "",
               "| 持ち方 | 判定 | Calmar 全期間 | 前半 | 後半 | 最大の下落 全期間 | 前半 | 後半 | 年率（税のあと） | "
@@ -555,17 +632,46 @@ def render_md(out):
     return "\n".join(L) + "\n"
 
 
-def main():
-    prices, missing, src = load_prices()
-    out = {"generated_jst": dt.datetime.now(JST).strftime("%Y-%m-%dT%H:%M+09:00"), "prereg_sha256": prereg_sha256(),
-           "kind": "backtest", "section": "R1", "missing": missing, "sources": src,
-           "settings": {"warmup": WARMUP, "alpha": ALPHA, "n_boot": N_BOOT, "block": BLOCK, "n_placebo": N_PLACEBO,
-                        "seed": SEED, "dd_ratio": DD_RATIO},
-           "assets": {}}
+def main(argv=None):
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only", default="", help="数え直す資産（カンマ区切り）。ほかは今の hold-lab.json の結果をそのまま使う")
+    ap.add_argument("--until", default="", help="この日までのデータで数える（YYYY-MM-DD）")
+    a = ap.parse_args(argv)
+    only = [x for x in a.only.split(",") if x]
+    if any(x not in ASSETS for x in only):
+        print(f"知らない資産: {only}", file=sys.stderr)
+        return 2
+    now = dt.datetime.now(JST).strftime("%Y-%m-%dT%H:%M+09:00")
+    prices, missing, src, fixes = load_prices(until=a.until or None)
+    targets = only or list(ASSETS)
+    missing = [x for x in missing if x in targets]
+    if only:
+        with open(OUT_JSON, encoding="utf-8") as f:
+            out = json.load(f)
+        for k, r in out["assets"].items():            # 1回目の結果に、いつ・どの登録で数えたかを書き足す
+            r.setdefault("counted_jst", out["generated_jst"])
+            r.setdefault("prereg_sha256", out["prereg_sha256"])
+        if missing:
+            print(f"数え直す資産のデータが取れない: {missing}（何も書き換えない）", file=sys.stderr)
+            return 1
+        out.setdefault("reruns", []).append({"jst": now, "assets": only, "until": a.until or None,
+                                            "prereg_sha256": prereg_sha256(),
+                                            "reason": "データの取得の失敗（PILLAR_PREREG.md「R1」の追記）"})
+    else:
+        out = {"generated_jst": now, "prereg_sha256": prereg_sha256(),
+               "kind": "backtest", "section": "R1", "missing": missing, "sources": {},
+               "settings": {"warmup": WARMUP, "alpha": ALPHA, "n_boot": N_BOOT, "block": BLOCK,
+                            "n_placebo": N_PLACEBO, "seed": SEED, "dd_ratio": DD_RATIO},
+               "assets": {}}
     if not missing:
-        for a, cfg in ASSETS.items():
-            print(f"{a}: {len(prices[a])} 日 を数える", file=sys.stderr)
-            out["assets"][a] = evaluate(prices[a], cfg)
+        for x in targets:
+            print(f"{x}: {len(prices[x])} 日 を数える", file=sys.stderr)
+            r = evaluate(prices[x], ASSETS[x])
+            r.update({"counted_jst": now, "prereg_sha256": prereg_sha256(), "data_fixes": fixes_for(x, src, fixes)})
+            out["assets"][x] = r
+            out["sources"][x] = src[x]
+    out["assets"] = {x: out["assets"][x] for x in ASSETS if x in out["assets"]}
     with open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     md = render_md(out)
