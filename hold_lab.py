@@ -66,6 +66,7 @@ UNIT_LO, UNIT_HI = 8.7, 11.5   # 前の日との比がこの範囲（または�
 UNIT_BACK_DAYS = 10            # この日数のうちに逆向きの同じずれで戻れば「その間だけのずれ」
 FX_SPIKE, FX_BACK = 0.04, 0.025   # 為替：4%以上動いて、次の日に戻り、2日の変化が2.5%以内＝1日だけの跳ね
 FX_TICKERS = ("USDJPY=X", "INRJPY=X", "INR=X")
+CROSS_GAP = 0.10               # 🆕 追記2：1306.T と 1348.T の1日の変化がこれ以上食い違う日＝1306.T の段差
 
 
 # ════════════════════ データ ════════════════════
@@ -121,6 +122,24 @@ def clean(s, fx=False):
     return pd.Series(v, index=ix, name=s.name), fixes
 
 
+def cross_fix(s, ref, ref_name, gap=CROSS_GAP):
+    """③（追記2）同じ指数に連動するもう1本の ETF と、両方の値がある日の1日の変化が gap 以上食い違う日は、
+    s のその日の変化を ref の変化に置き換える（その日より前の s をすべて同じ比で直す）。→ (直した Series, 記録)"""
+    j = pd.concat([s, ref], axis=1, keys=["s", "r"]).dropna()
+    rs, rr = j["s"].pct_change(), j["r"].pct_change()
+    bad = j.index[((rs - rr).abs() > gap).to_numpy()]
+    v = s.copy()
+    fixes = []
+    for d in bad:
+        k = (1 + rs[d]) / (1 + rr[d])
+        before = v.index < d
+        fixes.append({"kind": f"{ref_name} との食い違い（それより前をすべて）", "from": str(v.index[0].date()),
+                      "to": str(v.index[before][-1].date()), "factor": float(k),
+                      "day": str(d.date()), "own": float(rs[d]), "ref": float(rr[d])})
+        v[before] = v[before] * k
+    return v, fixes
+
+
 def load_prices(fetcher=fetch, until=None):
     """→ ({資産: 円建ての終値の Series}, 取れなかった資産, {資産: 使った表記}, {元データ: 直した記録})
     until＝この日までに切る（数え直しで期間を1回目とそろえるため）"""
@@ -156,8 +175,12 @@ def load_prices(fetcher=fetch, until=None):
     else:
         missing.append("SP500")
     tp = get("1306.T")
-    if tp is not None:
-        out["TOPIX"], src["TOPIX"] = tp, "1306.T"
+    ref = get("1348.T") if tp is not None else None
+    if tp is not None and ref is not None:
+        tp, f3 = cross_fix(tp, ref, "1348.T")
+        if f3:
+            fixes.setdefault("1306.T", []).extend(f3)
+        out["TOPIX"], src["TOPIX"] = tp, "1306.T（1348.T と突き合わせ）"
     else:
         missing.append("TOPIX")
     nf, inr = get("^NSEI"), get("INRJPY=X")
@@ -172,7 +195,7 @@ def load_prices(fetcher=fetch, until=None):
     return out, missing, src, fixes
 
 
-ASSET_TICKERS = {"BTC": ("BTC-JPY", "BTC-USD", "USDJPY=X"), "SP500": ("^SP500TR", "USDJPY=X"), "TOPIX": ("1306.T",),
+ASSET_TICKERS = {"BTC": ("BTC-JPY", "BTC-USD", "USDJPY=X"), "SP500": ("^SP500TR", "USDJPY=X"), "TOPIX": ("1306.T", "1348.T"),
                  "NIFTY": ("^NSEI", "INRJPY=X", "INR=X", "USDJPY=X")}
 
 

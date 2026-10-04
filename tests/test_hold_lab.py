@@ -268,6 +268,28 @@ def test_rerun_only_recounts_listed_assets_and_keeps_the_rest():
         H.load_prices, H.evaluate = orig_load, orig_eval
 
 
+def test_cross_fix_aligns_a_step_with_the_other_etf_and_leaves_normal_days():
+    # 1306.T の 2015-07-10 の形：自分は +16.8%、もう1本は +0.2%。ほかの日の小さな食い違い（2024-08-05 の形 7.2%）は直さない
+    own = _s([100, 101, 102, 119.136, 120, 107.04, 113.46], start="2015-07-07")
+    ref = _s([100, 101.2, 101.8, 102.0, 103, 84.46, 95.4], start="2015-07-07")
+    v, fx = H.cross_fix(own, ref, "1348.T")
+    assert len(fx) == 1 and fx[0]["day"] == "2015-07-10"
+    r = v.pct_change()
+    assert abs(r.iloc[3] - (102.0 / 101.8 - 1)) < 1e-12
+    assert np.allclose(r.iloc[[1, 2, 4, 5, 6]].values, own.pct_change().iloc[[1, 2, 4, 5, 6]].values)
+    assert np.allclose(v.iloc[3:].values, own.iloc[3:].values)      # その日からあとはそのまま
+
+
+def test_topix_needs_the_reference_etf():
+    def fetcher(tk, interval, start=None):
+        if tk == "1348.T":
+            return None
+        d = pd.bdate_range("2015-01-01", periods=400)
+        return pd.DataFrame({"Close": np.linspace(100, 120, 400)}, index=d)
+    _, missing, src, _ = H.load_prices(fetcher=fetcher)
+    assert "TOPIX" in missing and "TOPIX" not in src
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
