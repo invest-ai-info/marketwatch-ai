@@ -6,8 +6,20 @@ name: Hold Lab (manual)
 # ⚠️ 手動実行のみ（1回だけ数える。データが取れない資産があれば何も数えず失敗する＝そのときだけやり直す）。
 # ⚠️ 出力（hold-lab.json / hold-lab.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。研究資金の金額は書かない。
 
+# 🆕 2026-10-05 追記：データの取得の失敗で数え直すときは only（資産）と until（1回目と同じ最後の日）を入れる。
+#    ほかの資産は今の hold-lab.json の結果をそのまま使う（PILLAR_PREREG.md「R1」の追記）。
+
 on:
   workflow_dispatch:
+    inputs:
+      only:
+        description: '数え直す資産（カンマ区切り・空なら全部）例: SP500,TOPIX'
+        required: false
+        default: ''
+      until:
+        description: 'この日までのデータで数える（YYYY-MM-DD・空なら最後まで）'
+        required: false
+        default: ''
 
 concurrency:
   group: hold-lab
@@ -32,7 +44,7 @@ jobs:
         run: python tests/test_hold_lab.py
       - name: Count with the pre-registered ruler
         run: |
-          python hold_lab.py
+          python hold_lab.py --only "${{ inputs.only }}" --until "${{ inputs.until }}"
           [ -f hold-lab.md ] && cat hold-lab.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results
         run: |
@@ -42,7 +54,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes."
           else
-            git commit -m "chore: hold lab R1 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            git commit -m "chore: hold lab R1 ${{ inputs.only }} $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
             ok=0
             for i in 1 2 3; do
               if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
