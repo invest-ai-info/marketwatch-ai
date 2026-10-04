@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-10-04
+- 判定: ✅ 公開済み
+- 選定トピック: OPEC+が11月産油目標を据え置き──イラン戦争で湾岸産油国の実生産が目標を大幅下回る中、名目増産を見送り（カテゴリ: 今日のニュース）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 選定理由: 10/4（日曜）にOPEC+8カ国オンライン会合。11月産油目標を10月水準から据え置き。イラン戦争（米・イスラエル対イラン）によりコア7カ国の実生産がJuly比+63万bpd改善も戦前水準比-500万bpd。CL=F・AUD・日本エネルギーコストへの波及を中立整理。付加価値十分でスコア12/15
+- 出典（確認済み・5系統）:
+  - The Moscow Times「OPEC+ Set to Keep November Oil Output Targets Steady, Sources Say」2026-10-04
+  - Business Standard「Opec+ set to keep November oil output targets steady amid war disruptions」2026-10-04
+  - Whalesbook「OPEC+ Keeps Oil Output Targets Unchanged Through November」2026-10-04
+  - AGBI「Opec+ likely to keep output targets steady at Sunday meeting」2026-09-30
+  - Newsquawk「Week in Focus 4-9th October 2026」2026-10-04
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟢白（修正不要。kinsho-v1×3・断定語なし・銘柄推奨なし・将来断言なし・出典5系統・中立整理確認）
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典5系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告32件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-04-opec-november-output.html
+- commit: 7d85190（main へ push 済み）
+
+---
+
 ## 2026-10-03
 - 判定: ✅ 公開済み
 - 選定トピック: 米9月雇用統計 非農業部門+2.9万人で予想大幅下回る──FRB10月利上げ見送り観測急浮上、ドル円・株式市場への影響を中立整理（カテゴリ: 今日のニュース）
