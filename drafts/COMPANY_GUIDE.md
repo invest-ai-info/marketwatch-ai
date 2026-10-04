@@ -1,5 +1,7 @@
 # 数字で見る、話題の企業 — 毎日公開 手順書（COMPANY_GUIDE.md）
 
+> 🛑 **旧ルーティン `company-weekly-auto`（trig_017X6e1WvUm2FBvyegzFkAUh・毎週土曜 14:23 JST）として起動したセッションへ**（プロンプトに「**週1本**」と書かれていれば旧ルーティン）：2026-10-04 に毎日の担当へ引き継いだ（オーナー指示「最低でも1日1本以上」）。**記事は書かずに**、`mcp__claude-code-remote__update_trigger` を `trigger_id="trig_017X6e1WvUm2FBvyegzFkAUh"`, `enabled=false` で呼んで**自分を止め**（自分自身を止めることはできる）、その結果を `drafts/company/COMPANY_LEDGER.md` に1行（「旧 weekly を停止・日付」）書いて commit・`git push origin HEAD:main` して終える。止められなかったときも記事は書かず、理由を台帳に1行書いて終える。
+
 クラウドルーティン **company-daily-auto**（旧 company-weekly-auto）が毎日読む正式手順書。**毎日1本以上**、いま出来高や値動きで話題になっている企業を、**一次情報の数字と歴史**で深掘りする。コンプラ＆品質ゲートを通れば自動公開、危ういものは公開せずエスカレ。
 **人が編集する＝SYNC_FILES入り。** ⚠️ 発火エンジン・signal_lab系・固定オラクル・6コアHTMLには触れない（実行のみ）。
 
