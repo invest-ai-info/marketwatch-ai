@@ -1,1 +1,352 @@
-ewogICJnZW5lcmF0ZWRfYXQiOiAiMjAyNi0xMC0wNFQwNjowODoyOSswOTowMCIsCiAgInJpc2tfcmVnaW1lIjogewogICAgInJlZ2ltZSI6ICJORVVUUkFMIiwKICAgICJjb25maWRlbmNlIjogIk1JRCIsCiAgICAicmF0aW9uYWxlIjogIuaXpee1jDIyNeOBjOWNiuWwjuS9k+ODu0FJ5qCq5Li75bCO44GnMyXotoXjga7lpKfluYXpq5jjgajjgarjgorjgIFTJlA1MDDjga/lupXloIXjgY/mjqjnp7vjgZcwLjczJemrmOOAguODk+ODg+ODiOOCs+OCpOODs+OBr+ebtOi/kTYw5pel44Gn57SEMzAl5Zue5b6p44Go5pqX5Y+36LOH55Sj5biC5aC044KC5oyB44Gh55u044GX44Gm44GE44KL44CCRk9NQ++8iDEw5pyIMjfjgJwyOOaXpe+8ieOBp+OBruiKseWKoOWIqeS4iuOBkuaHuOW/teOBjOS4iuWApOOCkuaKkeOBiOOAgemHkeOBrzQsMzAw44CcNCw0MDDjg4njg6vlj7Djga7pq5jmsLTmupbjgpLntq3mjIHjgIHljp/msrnjga/jgqTjg6njg7Pmg4Xli6LjgpLlt6Hjgorpq5jlgKTlnI/jgafkuI3lronlrprjgILlhajkvZPjgajjgZfjgabjg6rjgrnjgq/jgqrjg7Pjgajjg6rjgrnjgq/jgqrjg5XjgYzmt7flnKjjgZnjgovjg4njg6Xjg7zjg4jjg6njg6vlsYDpnaLjgIIiLAogICAgImtleV9kcml2ZXJzIjogWwogICAgICAiRlJC44GuMTDmnIgyOOaXpUZPTUPkvJrlkIjjgafjga7liKnkuIrjgZLmnInnhKHjgYzmnIDlpKfjga7luILloLTliIblspDngrkiLAogICAgICAi5pel57WMMjI144GM5Y2K5bCO5L2T44O7QUnplqLpgKPmoKrjga7kuIrmmIfjgaflpKfluYXpq5jjgIHjgqLjgrjjgqLluILloLTjgYzlhYjlsI4iLAogICAgICAi44Kk44Op44Oz5oOF5Yui44Gu5LiN6YCP5piO5oSf44GL44KJ5Y6f5rK55L6h5qC844GM6auY5q2i44G+44KK44CB44Ko44ON44Or44Gu44Ki44Oz44Kv5a+W5Yiw44KS5bem5Y+zIiwKICAgICAgIuODk+ODg+ODiOOCs+OCpOODs+OCkuWQq+OCgOaal+WPt+izh+eUo+OBjOebtOi/kTLjgqvmnIjjgaflm57lvqnln7roqr8iLAogICAgICAi44OJ44Or5YaG44GMMTU344CcMTU45YaG5Y+w44Go5YaG5a6J5Z+66Kq/57aZ57aa44CB5pel5pys5qCq44Gu6L+944GE6aKo44GrIgogICAgXQogIH0sCiAgImFzc2V0cyI6IFsKICAgIHsKICAgICAgIm5hbWUiOiAi5pel57WMMjI1IiwKICAgICAgInRpY2tlciI6ICJOS0Q9RiIsCiAgICAgICJiaWFzIjogIkJVTExJU0giLAogICAgICAiY29udmljdGlvbiI6ICJNSUQiLAogICAgICAicmF0aW9uYWxlIjogIuWNiuWwjuS9k+ODu0FJ6Zai6YCj5qCq44Gu5LiK5piH5Li75bCO44Gn5pel57WMMjI144GvMy4zJemrmOOBqOOBquOCijY4LDk1NuWGhuOBp+W8leOBkeOAglRPUElY44KCMC41NyXpq5jjga80LDEzMeODneOCpOODs+ODiOOAguWGhuWuie+8iDE1N+OAnDE1OOWGhuWPsO+8ieOBjOi8uOWHuuS8gealreOBrui/veOBhOmiqOOAguOBn+OBoOOBl0ZPTUPjga7ntZDmnpzmrKHnrKzjgafmtbflpJbmipXos4flrrbjga7os4fph5Hjg5Xjg63jg7zjgYzlpInjgo/jgovjg6rjgrnjgq/jgYzjgYLjgorjgIHlvLfmsJfntpnntprjga/kuI3norrlrp/jgIIiLAogICAgICAiY2F0YWx5c3RzIjogWwogICAgICAgICLljYrlsI7kvZPjg7tBSeagquOBruS4lueVjOeahOOBquODquODkOOCpuODs+ODieOBjOaXpeacrOagquOCkuS4u+WwjiIsCiAgICAgICAgIuWGhuWuie+8iDE1N+OAnDE1OOWGhuWPsO+8ieOBq+OCiOOCi+i8uOWHuuS8gealreOBuOOBruaBqeaBtSIsCiAgICAgICAgIkZPTUPjgYzliKnkuIrjgZLopovpgIHjgorjgarjgonlhoblronjg7vml6XmnKzmoKrjga7jgZXjgonjgarjgovjg6rjgrnjgq/jgYzjgYLjgoIiCiAgICAgIF0sCiAgICAgICJ0b3BfbmV3cyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZGxpbmUiOiAi5pel57WMMjI144GMMy4zJeS4iuaYh+OBlzY4LDk1NuWGhuOBp+W8leOBkeOAgeWNiuWwjuS9k+ODu0FJ5qCq44GM5Li75bCOIiwKICAgICAgICAgICJwdWJsaXNoZWQiOiAiMjAyNi0xMC0wMiIsCiAgICAgICAgICAiY29tbWVudCI6ICJBSeODu+WNiuWwjuS9k+agquOBruS4lueVjOeahOOBquiyt+OBhOaIu+OBl+OBp+aXpeacrOagquOCguWkp+W5hemrmOOAguWklumDqOeSsOWig+asoeesrOOBp+OBr+aMr+OCjOOChOOBmeOBhCIsCiAgICAgICAgICAic291cmNlIjogIlRpY2ttaWxsIC8gTm9yZEZYIiwKICAgICAgICAgICJ0aWVyIjogMiwKICAgICAgICAgICJjcmVkaWJpbGl0eSI6ICJISUdIIiwKICAgICAgICAgICJjb3Jyb2JvcmF0ZWRfYnkiOiBbIlRpY2ttaWxsIiwgIk5vcmRGWCJdLAogICAgICAgICAgIm1hdGVyaWFsaXR5IjogImhpZ2giLAogICAgICAgICAgImRpcmVjdGlvbiI6ICJidWxsaXNoIiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9ub3JkZnguY29tL21hcmtldC1uZXdzL21hcmtldC1wdWxzZS1vY3RvYmVyLTAxLTIwMjYiCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICJTJlA1MDAiLAogICAgICAidGlja2VyIjogIkVTPUYiLAogICAgICAiYmlhcyI6ICJORVVUUkFMIiwKICAgICAgImNvbnZpY3Rpb24iOiAiTUlEIiwKICAgICAgInJhdGlvbmFsZSI6ICJTJlA1MDDjga8xMOaciDLml6Xjgas3LDcyM+ODneOCpOODs+ODiOOBvuOBp+WbnuW+qeOBl+WJjeaXpeavlDAuNzMl6auY44CC44Gf44Gg44GXMjAw5pel56e75YuV5bmz5Z2H57ea44KS5LiL5Zue44KL6YqY5p+E44GM5YWo5L2T44Gu57SENjAl44Gr6YGU44GX44CB5YaF6YOo55qE44Gq5by344GV44Gv6ZmQ5a6a55qE44CCRk9NQ+OBruWIqeS4iuOBkuaHuOW/teOBqOmrmOatouOBvuOCiOOBmemVt+acn+mHkeWIqeOBjOS4iuWApOOCkuaKkeWItuOAgiIsCiAgICAgICJjYXRhbHlzdHMiOiBbCiAgICAgICAgIkZPTUPjgYwxMOaciDI45pel44Gr5Yip5LiK44GS6KaL6YCB44KK44Gq44KJ6YeR5Yip5L2O5LiL44Gn5LiK5piH5L2Z5ZywIiwKICAgICAgICAi6ZuH55So57Wx6KiI44GM5LqI5oOz44KS5LiL5Zue44KM44Gw5Yip5LiK44GS5pyf5b6F5b6M6YCA44Gn44Oq44K544Kv44Kq44OzIiwKICAgICAgICAi5YCL5Yil5qCq44GnQUnjg7vljYrlsI7kvZPplqLpgKPjgYznm7jloLTjgpLjgZHjgpPlvJXjgZnjgorjj6/og73mgKciCiAgICAgIF0sCiAgICAgICJ0b3BfbmV3cyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZGxpbmUiOiAiUyZQNTAw44GMNyw3MjPjg53jgqTjg7Pjg4jjgavlm57lvqnjgZfjgZ/jgYzlhajkvZPjga7ntIQ2MCXjga8yMDDml6Xnt5rjgpLkuIvlm57jgosiLAogICAgICAgICAgInB1Ymxpc2hlZCI6ICIyMDI2LTEwLTAyIiwKICAgICAgICAgICJjb21tZW50IjogIuaMh+aVsOOBr+WPjeeZuuOBl+OBn+OBjOWGhemDqOOBruW8t+OBleOBjOS5j+OBl+OBj+OAgeacrOagvOWbnuW+qeOBi+OBqeOBhuOBi+OBr+anmOWtkOimi+OBjOW/heimgSIsCiAgICAgICAgICAic291cmNlIjogIkNOQkMiLAogICAgICAgICAgInRpZXIiOiAyLAogICAgICAgICAgImNyZWRpYmlsaXR5IjogIkhJR0giLAogICAgICAgICAgImNvcnJvYm9yYXRlZF9ieSI6IFsiWWFob28gRmluYW5jZSJdLAogICAgICAgICAgIm1hdGVyaWFsaXR5IjogImhpZ2giLAogICAgICAgICAgImRpcmVjdGlvbiI6ICJuZXV0cmFsIiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly93d3cuY25iYy5jb20vMjAyNi8wOS8zMC9zdG9jay1tYXJrZXQtdG9kYXktbGl2ZS11cGRhdGVzLmh0bWwiCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICLjg4rjgrnjg4Djg4Pjgq8iLAogICAgICAidGlja2VyIjogIk5RPUYiLAogICAgICAiYmlhcyI6ICJCVUxMSVNIIiwKICAgICAgImNvbnZpY3Rpb24iOiAiTUlEIiwKICAgICAgInJhdGlvbmFsZSI6ICLljYrlsI7kvZPjg7tBSemWoumAo+mKmOafhOOBruWPjeeZuuOBjOe2muOBhOOBpuOBiuOCiuOAgeODiuOCueODgOODg+OCr+OBr1MmUDUwMOOCkuS4iuWbnuOCi+ODkeODleOCqeODvOODnuODs+OCueOBjOekuuWUhuOBleOCjOOCi+OAguOCpOODs+ODhuODq+OBjOi7n+iqv+OBquS4gOaWueOBp0FJ6Zai6YCj5qCq44Gv5aCF6Kq/44CCRk9NQ+OBrue1kOaenOasoeesrOOBp+aWueWQkeaEn+OBjOaxuuOBvuOCi+WxgOmdouOAgiIsCiAgICAgICJjYXRhbHlzdHMiOiBbCiAgICAgICAgIkFJ44O75Y2K5bCO5L2T5qCq44Gu44Oq44OQ44Km44Oz44OJ57aZ57aa44GM44OK44K544OA44OD44Kv5YWo5L2T44KS5LiL5pSv44GIIiwKICAgICAgICAiRlJC44Gu5Yip5LiK44GS5YGc5q2i6Kaz5ris44GM44OP44Kk44OG44Kv5qCq44Gu5Ymy5byV546H5L2O5LiL44Gr44Gk44Gq44GM44KL5Y+v6IO95oCnIiwKICAgICAgICAi5pel57WMMjI144GuQUnmoKrkuIrmmIfjgYnjg4rjgrnjg4Djg4Pjgq/jgajjga7pgKPli5XjgpLnpLrllIYiCiAgICAgIF0sCiAgICAgICJ0b3BfbmV3cyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZGxpbmUiOiAi44Kk44Oz44OG44Or44GM6Luf6Kq/44Gq5LiA5pa544GnQUnjg7vljYrlsI7kvZPmoKrjgYzlj43nmbrjgZfjg4Hjg4Pjg5fjgrvjgq/jgr/jg7zlhajkvZPjgpLkuIvmlK/jgYgiLAogICAgICAgICAgInB1Ymxpc2hlZCI6ICIyMDI2LTEwLTAxIiwKICAgICAgICAgICJjb21tZW50IjogIuWNiuWwjuS9k+OCu+OCr+OCv+ODvOOBr+mKmOafhOmWk+OBrumBuOWIpeOBjOmAsuOCk+OBp+OBhOOCi+OAgkFJ6Zai6YCj44Gv5by344GP5LiA6YOo44Os44Ks44K344O85LyB5qWt44Gv5byx44GEIiwKICAgICAgICAgICJzb3VyY2UiOiAiQ05CQyIsCiAgICAgICAgICAidGllciI6IDIsCiAgICAgICAgICAiY3JlZGliaWxpdHkiOiAiTUlEIiwKICAgICAgICAgICJjb3Jyb2JvcmF0ZWRfYnkiOiBbXSwKICAgICAgICAgICJtYXRlcmlhbGl0eSI6ICJtaWQiLAogICAgICAgICAgImRpcmVjdGlvbiI6ICJidWxsaXNoIiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly93d3cuY25iYy5jb20vMjAyNi8wOS8zMC9zdG9jay1tYXJrZXQtdG9kYXktbGl2ZS11cGRhdGVzLmh0bWwiCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICLph5EiLAogICAgICAidGlja2VyIjogIkdDPUYiLAogICAgICAiYmlhcyI6ICJORVVUUkFMIiwKICAgICAgImNvbnZpY3Rpb24iOiAiTUlEIiwKICAgICAgInJhdGlvbmFsZSI6ICLph5Hjga80LDE3NX44CcNCwzODHjg4njg6vjga7pq5jmsLTmupbjgafljijoSb744CCRlJC44Gu5Yip5LiK44GS57aa44Gw5by344GM5LiK5YCk44KS5pKd44GI44KL44KC44CB5Zyw5pS/5a2m44Oq44K544Kv44Go5ZCF5aSW5Lit5aSu6YqA6KGM44Gu8gIOizvOWFpeOBjOS4i+aUr+OBiOOAgjEw5pyIMjjml6Xjga9HT01D5qyh56ys44GnNCwxMDDjgJw0LDQwMOODieODq+OBruODrOODs+OCuOWGheOBp+WLleOBj+imi+i+vOOBv+OAgiIsCiAgICAgICJjYXRhbHlzdHMiOiBbCiAgICAgICAgIkZPTUPjgYzliKnkuIrjgZLopovpgIHjgorjgarjgonph5Hjga7kuIrlgKTkvZnlnLDjgYzlho3luqbmi6HlpKciLAogICAgICAgICLjgqTjg6njg7PjgpLlt6HjgorjgarjgonlnLDmlL/lrabjg6rjgrnjgq/jgYzlronlhajos4fnlKPpnIDopoHjgpLkuIvmlK/jgYgiLAogICAgICAgICLlkITlm73kuK3pioDjga7ntpnntprnmoTjgarph5Hos7zlhaXjgYzlupXlgKTjgpLmlK/jgYjjgormp4vpgKAiCiAgICAgIF0sCiAgICAgICJ0b3BfbmV3cyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZGxpbmUiOiAi6YeR44GvNCwzNDTjg4njg6rku5jov5Hjgafmjqjnp7vjgIFGT01D77yIMTDmnIgyOOaXpe+8ieOBruWIqeS4iuOBkuWPr+WQpuOBjOasoeOBruWIhuWykOeCuSIsCiAgICAgICAgICAicHVibGlzaGVkIjogIjIwMjYtMTAtMDIiLAogICAgICAgICAgImNvbW1lbnQiOiAiRlJC44GM5Yip5LiK44GS44GZ44KM44Gw6YeR5Yip5LiK5piH44Gn5LiL6JC95Zyn5Yqb44CB6KaL6YCB44KK44Gq44KJ5YaN6aiw44Gu5Y+v6IO95oCn44GM44GC44KLIiwKICAgICAgICAgICJzb3VyY2UiOiAiQ3J1eCBJbnZlc3RvciAvIFZUIE1hcmtldHMiLAogICAgICAgICAgInRpZXIiOiAyLAogICAgICAgICAgImNyZWRpYmlsaXR5IjogIk1JRCIsCiAgICAgICAgICAiY29ycm9ib3JhdGVkX2J5IjogWyJXb3JsZCBHb2xkIENvdW5jaWwiXSwKICAgICAgICAgICJtYXRlcmlhbGl0eSI6ICJoaWdoIiwKICAgICAgICAgICJkaXJlY3Rpb24iOiAibmV1dHJhbCIsCiAgICAgICAgICAidXJsIjogImh0dHBzOi8vd3d3LmNydXhpbnZlc3Rvci5jb20vcG9zdHMvZmVkLXNpZ25hbHMtbW9yZS1oaWtlcy1rZWVwaW5nLWdvbGQtYmVsb3ctNC00MDAtaW50by1vY3RvYmVyIgogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAi5Y6f5rK5IiwKICAgICAgInRpY2tlciI6ICJDTD1GIiwKICAgICAgImJpYXMiOiAiTkVVVFJBTCIsCiAgICAgICJjb252aWN0aW9uIjogIkxPVyIsCiAgICAgICJyYXRpb25hbGUiOiAiV1RJ5Y6f5rK544GvMS40JeWuieOBrjg5LjIw44OJ44Or5YmN5b6M44Gn5o6o56e744CCQnJlbnTjga85N+ODieODq+WJsuOCjOOAgk9QRUMr44Gu5aKX55Sj57aZ57aa44Go44Kk44Op44Oz5oOF5Yui44Gu5LiN6YCP5piO5oSf44GM57ax5byV44GN54q25oWL44CC5a6f5L6b57Wm44G444Gu5a6f6Zqb44Gu5b2x6Z+/44Gv6ZmQ5a6a55qE44Go44GV44KM44KL44KC44CB5Zyw5pS/5a2m55qE44Gq6KaL5Ye644GX44GM55u45aC044KS5o+644GV44G244KL5bGV6ZaL44GM57aa44GP44CCIiwKICAgICAgImNhdGFseXN0cyI6IFsKICAgICAgICAi57Gz5Zu944O744Kk44Op44Oz44Gu5Lqk5riJ6YCy5bGV44GM44GC44KM44Gw5Zyw5pS/5a2m44OX44Os44Of44Ki44Ag5Yml6JC944Gn5LiL6JC944Oq44K544KvIiwKICAgICAgICAiT1BFQ+OBjDIwMjblubTnrKwx5Zub5Y2K5pyf5Lul6ZmN44Gr5aKX55Sj44KS5YGc5q2i44GZ44KM44Gw5LiL5YCk44KS5pSv44GI44KL5Y+v6IO95oCnIiwKICAgICAgICAi5LiW55WM6ZyA6KaB44Gu6YiN5YyW44GM57aZ57aa44GX44Gw5qeL6YCg55qE44Gq5LiK5YCk44GM6ZmQ5a6a55qEIgogICAgICBdLAogICAgICAidG9wX25ld3MiOiBbCiAgICAgICAgewogICAgICAgICAgImhlYWRsaW5lIjogIldUSeWOn+ayueOBjDEuNCXlronjga44OS4yMOODieODq+OBq+S4i+iQveOAgeOCpOODqeODs+S6pOa4ieOBq+alveims+irluOCguS+m+e1pumBjuWJsOOBjOWcp+i/qyIsCiAgICAgICAgICAicHVibGlzaGVkIjogIjIwMjYtMTAtMDEiLAogICAgICAgICAgImNvbW1lbnQiOiAi5Zyw5pS/5a2m44Oq44K544Kv44Gn5LiK5LiL44GZ44KL44GM5a6f5L6b57Wm44G444Gu5b2x6Z+/44Gv6ZmQ44KJ44KM44Gm44GK44KK44OI44Os44Oz44OJ44GM5Ye644Gr44GP44GE5bGA6Z2iIiwKICAgICAgICAgICJzb3VyY2UiOiAiVGlja21pbGwgLyBOZXdzcXVhd2siLAogICAgICAgICAgInRpZXIiOiAyLAogICAgICAgICAgImNyZWRpYmlsaXR5IjogIk1JRCIsCiAgICAgICAgICAiY29ycm9ib3JhdGVkX2J5IjogWyJCdW5rZXJpc3QiXSwKICAgICAgICAgICJtYXRlcmlhbGl0eSI6ICJtaWQiLAogICAgICAgICAgImRpcmVjdGlvbiI6ICJiZWFyaXNoIiwKICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly93d3cudGlja21pbGwuY29tL2Jsb2cvZGFpbHktbWFya2V0LW91dGxvb2stb2N0b2Jlci0xLTIwMjYiCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICLjg4njg6vlhoYiLAogICAgICAidGlja2VyIjogIlVTREpQWSIsCiAgICAgICJiaWFzIjogIkJVTExJU0giLAogICAgICAiY29udmljdGlvbiI6ICJNSUQiLAogICAgICAicmF0aW9uYWxlIjogIuODieODq+WGhuOBrzE1N+OAnDE1OOWGhuWPsOOBp+aOqOenu+OBl+WGhuWuieWfuuiqv+OBjOe2mee2muOAguaXpeexs+mHkeWIqeW3ru+8iEZSQiAzLjUw44CcMy43NSXlr77ml6XpioDotoXkvY7ph5HliKnvvInjgYzmoLnlvLfjgYTjg4njg6rpq5jjga/og4zmma/jgIJGT01D44Gn5Yip5LiK44GS44GM56S65ZSG44GV44KM44KM44Gw44GV44KJ44Gq44KL5YaG5a6J5Zyn5Yqb44GM55Sf44GI44KL5Y+v6IO95oCn44GM44GC44KL5LiA5pa544CB5oCl5r+A44Gq5YaG5a6J6YCy6KGM44Gv5pel6YqA5LuL5YWl44Oq44K544Kv44KC5Ly044GG44CCIiwKICAgICAgImNhdGFseXN0cyI6IFsKICAgICAgICAiRk9NQ+OBp+OBruWIqeS4iuOBkuekuuWUhuOBjOODieODq+OCkuOBleOCieOBq+aKvOOBl+S4iuOBkuOCi+WPr+iDveaApyIsCiAgICAgICAgIuaXpemKgOOBrui2hee3qeWSjOe2mee2muOBjOWGhuWuieWcp+WKm+OBruani+mAoOeahOOBquimgeWboCIsCiAgICAgICAgIuaXpeexs+OBruWkp+W5heOBqumHkeWIqeW3ruOBjOaKleapn+eahOOBquODieODq+iyt+OBhOOCkuW+jOaKvOOBlyIKICAgICAgXSwKICAgICAgInRvcF9uZXdzIjogWwogICAgICAgIHsKICAgICAgICAgICJoZWFkbGluZSI6ICLjg4njg6vlhobjgYwxNTguMDLlhobjgb7jgafkuIrmmIfjgIHnsbPml6Xph5HliKnlt67jgpLog4zmma/jgavlhoblronln7roqr/ntpnntpoiLAogICAgICAgICAgInB1Ymxpc2hlZCI6ICIyMDI2LTEwLTAyIiwKICAgICAgICAgICJjb21tZW50IjogIuaXpeexs+OBrumHkeWIqeW3ruOBjOS+neeEtuWkp+OBjeOBj+WGhuWuieOBjOe2muOBjeOChOOBmeOBhOeSsOWig+OAgui8uOWFpeeJqeS+oeOBruS4iuaYh+OBq+OBr+azqOaEj+OBjOW/heimgSIsCiAgICAgICAgICAic291cmNlIjogIk9BTkRBIEphcGFuIiwKICAgICAgICAgICJ0aWVyIjogMiwKICAgICAgICAgICJjcmVkaWJpbGl0eSI6ICJISUdIIiwKICAgICAgICAgICJjb3Jyb2JvcmF0ZWRfYnkiOiBbIllhaG9vIEZpbmFuY2UgSmFwYW4iXSwKICAgICAgICAgICJtYXRlcmlhbGl0eSI6ICJoaWdoIiwKICAgICAgICAgICJkaXJlY3Rpb24iOiAiYnVsbGlzaCIsCiAgICAgICAgICAidXJsIjogImh0dHBzOi8vd3d3Lm9hbmRhLmpwL2xhYi1lZHVjYXRpb24vaGlzdG9yaWNhbC1yYXRlL3VzZGpweS8yMDI2MTAwMi8iCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAibmFtZSI6ICLjg6bjg7zjg63jg4njg6siLAogICAgICAidGlja2VyIjogIkVVUlVTRCIsCiAgICAgICJiaWFzIjogIk5FVVRSQUwiLAogICAgICAiY29udmljdGlvbiI6ICJMT1ciLAogICAgICAicmF0aW9uYWxlIjogIkVDQuaUv+etlumHkeWIqe+8iDIuMDAl77yJ44GoRlJC6KqY5bCO55uu5qiZ77yIMy41MOOAnDMuNzUl77yJ44Gu5beu44GM57SEMTYyYnBz44Go5aSn44GN44GP44CBjg4OJg6viCjmr6Hjgajlm57lnZ3jgZ3jga7jgarjgorjgILjgZ/jgBoRRlJC44Gu6L+95Yqg5Yip5LiK44GS6Kaz5ris44GM5b6M6YCA44GX44GC44KM44Gw5beu44GM57iu5bCP44GX44Om44O844Ot44GM5oyB44Gh55u044GZ5L2Z5Zyw44GC44KK44CCUTQgMjAyNuOBruS6iOa4rOODrOODs+OCuOOBrzEuMjDjgJwxLjI144CCIiwKICAgICAgImNhdGFseXN0cyI6IFsKICAgICAgICAiRlJC44Gu5Yip5LiK44GS57WC5LqG6Kaz5ris44GM5by344G+44KM44Gw44Om44O844Ot44OJ44Or44Gu5LiL5YCk5pSv5oyB44GM6auY44G+44KLIiwKICAgICAgICAiRUNC44GM6L+95Yqg5Yip5LiL44GS44KS56S65ZSG44GX44Gw44Om44O844Ot5aOy44KK5Zyn5Yqb44GM5YaN5rWu5LiKIiwKICAgICAgICAiRVXntYzmuIjmjIfmqJnjga7mlLnlloTjgYzjg6bjg7zjg63jga7lj43nmbrjgpLjgrXjg53jg7zjg4jjgZnjgorjj6/og73mgKciCiAgICAgIF0sCiAgICAgICJ0b3BfbmV3cyI6IFsKICAgICAgICB7CiAgICAgICAgICAiaGVhZGxpbmUiOiAiRUNC44GoRlJC44Gu6YeR5Yip5beuMTYyYnDjgpLog4zmma/jgavjg6bjg7zjg63jg4njg6vjga/larnllJHmhJ/jgavmrKDjgZHjgorjgIHmrI3nrb7jgYzmjKHjga7jgZfjgY0iLAogICAgICAgICAgInB1Ymxpc2hlZCI6ICIyMDI2LTEwLTAxIiwKICAgICAgICAgICJjb21tZW50IjogIumHkeWIqeW3ruOBjOOBguOCi+mZkOOCiuODieODq+OBjOW8t+OBhOani+Wbs+OBoOOBjOOAgUZSQuOBruWnv+WLoui7ouaPm+OBjOOBguOCM44Gw5a1i44KM44Gm5YmN44KP44KK44GF44KLIiwKICAgICAgICAgICJzb3VyY2UiOiAiRlggU3RyZWV0IC8gQml0TUVYIIWKCICJ0aWVyIjogMiwKICAgICAgICAgICJjcmVkaWJpbGl0eSI6ICJNSUQiLAogICAgICAgICAgImNvcnJvYm9yYXRlZF9ieSI6IFsiR29sZG1hbiBTYWNocyBmb3JlY2FzdCIsICJKLlAuIE1vcmdhbiBmb3JlY2FzdCJdLAogICAgICAgICAgIm1hdGVyaWFsaXR5IjogIm1pZCIsCiAgICAgICAgICAiZGlyZWN0aW9uIjogIm5ldXRyYWwiLAogICAgICAgICAgInVybCI6ICJodHRwczovL3d3dy5meHN0cmVldC5jb20vbmV3cy9ldXItdXNkLWVkZ2VzLWFib3ZlLTExNzUwLWR1ZS10by1lY2ItZmVkLXBvbGljeS1kaXZlcmdlbmNlLTIwMjYwMTAyMDEyMCIKICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJuYW1lIjogIuODk+ODg+ODiOOCs+OCpOODsyIsCiAgICAgICJ0aWNrZXIiOiAiQlRDLVVTRCIsCiAgICAgICJiaWFzIjogIkJVTExJU0giLAogICAgICAiY29udmljdGlvbiI6ICJNSUQiLAogICAgICAicmF0aW9uYWxlIjogIuODk+ODg+ODiOOCs+OCpOODsyTjga8xMOaciDPml6XmmYLngrnjgaflpKfgNCw4NzHjg4njg6vjgIIxMOaciDHml6Xjga44Myw0NDjjg4njg6rjgIExMOaciDLml6Xjga444Niw2ODLjg4njg6rjgaflm57lvqnln7roqr/jgYzrq67mmI7jgILnm7Tov5E2MOaXpeOBp+e0hDMwJeOAgTkw5pel44Gn57SENDQl5LiK5piH44CCFOMC+OBrue1kOaenO+8iDEw5pyIMjfjgJwyOOaXpe+8ieOBjOODquOCueOCr+izh+eUo+WFqOS9k+OBrua1geOCjOOCkuaxuuOCgeOCi+mHjeimgeOBquWkieaVsOOAguaOqOWumuODrOODs+OCuOOBrzc1LDU4NeOAnDg3LDM5N+ODieODq+OAgiIsCiAgICAgICJjYXRhbHlzdHMiOiBbCiAgICAgICAgIkZPTUPjgYzliKnkuIrjgZLopovpgIHjgorjgarjgonjg6rjgrnjgq/jgqrjg7PjgYzlvLfjgb7jgorjg5Pjg4Pjg4jjgrPjgqTjg7Pjga7kuIrlgKTkvZnlnLAiLAogICAgICAgICLnm7Tov5E2MOaXpeOBpzMwJeS4iuaYh+OBqOW8t+OBhOODouODoeODs+OCv+ODoOOBjOe2mee2miIsCiAgICAgICAgIjg3LDAwMOODieODq+WPsOOBruevgOebruOCkueqgeegtOOBp+OBjeOCi+OBi+OBjOefreacn+OBrueEpueCuSIKICAgICAgXSwKICAgICAgInRvcF9uZXdzIjogWwogICAgICAgIHsKICAgICAgICAgICJoZWFkbGluZSI6ICLjg5Pjg4Pjg4jjgrPjgqTjg7PjgYw4NCw4NzHjg4njg6rjgavlm57lvqnjgIHnm7Tov5E2MOaXpeOBp+e0hDMwJeS4iuaYh+OBqOODouODoeODs+OCv+ODoOe2mee2miIsCiAgICAgICAgICAicHVibGlzaGVkIjogIjIwMjYtMTAtMDMiLAogICAgICAgICAgImNvbW1lbnQiOiAi5Zue5b6p44Gv6a6u5piO44Gg44GMMeW5tOWJjeOCiOOCijPkuIc15Y2D44OJ44Or5L2O44GE44CCRk9NQ+W+jOOBruaWueWQkeaAp+OBq+azqOebruOBjOmbhuOBvuOCiyIsCiAgICAgICAgICAic291cmNlIjogIkZvcnR1bmUgLyBDb2luRENYIiwKICAgICAgICAgICJ0aWVyIjogMiwKICAgICAgICAgICJjcmVkaWJpbGl0eSI6ICJISUdIIiwKICAgICAgICAgICJjb3Jyb2JvcmF0ZWRfYnkiOiBbIkZvcnR1bmUiLCAiMjQ3V2FsbFN0Il0sCiAgICAgICAgICAibWF0ZXJpYWxpdHkiOiAibWlkIiwKICAgICAgICAgICJkaXJlY3Rpb24iOiAiYnVsbGlzaCIsCiAgICAgICAgICAidXJsIjogImh0dHBzOi8vZm9ydHVuZS5jb20vYXJ0aWNsZS9wcmljZS1vZi1iaXRjb2luLTEwLTAyLTIwMjYvIgogICAgICAgIH0KICAgICAgXQogICAgfQogIF0sCiAgImRpc2NhcmRlZCI6IFsKICAgIHsKICAgICAgImhlYWRsaW5lIjogIkJyZW505Y6f5rK544GMMTA444OJ44Or6LaF44G+44Gn5oCl6aiw44Go44Gu5aCx6YGTIiwKICAgICAgInJlYXNvbiI6ICLnsbPln7PjgrvjgqTjg6njg7PkuqTmuInmnJ/lvoXjgYzlvozpgIDjgZfjgZ/nibnlrprjgr/jgqTjg5/jg7PjgrDjga7nnqzplpPlgKTjgafjgYLjgorjgIHnj77lnKjjga85N+ODieODq+WJsuOCjOOBvuOBp+aIu+OBl+OBpuOBiuOCiue2mee2muaAp+ODu+acgOaWsOaAp+OBq+asoOOBkeOCiyIKICAgIH0sCiAgICB7CiAgICAgICJoZWFkbGluZSI6ICLjg4njg6vlhobjgYwxMOaciOS4reaXrOOAnOS4i+aXrOOBqzE2MeWGhuOBvuOBp+S4iuaYh+OBmeOCi+OBqOOBruS6iOa4rCIsCiAgICAgICJyZWFzb24iOiAi5Y2Y5LiA44Gu5LqI5ris44K144O844OT44K544Gr44KI44KL44KC44Gu44Gn44CBjg5LiA5qyh5oOF5aCx44O76YCa5L+h56S+44Gu6KOP5LuY44GR44Gq44GX44CC5LqI5ris5YCk44Gu44Gf44KB5LqL5a6f44Go44GX44Gm5o6h55So44Gb44GaIgogICAgfQogIF0KfQo=
+{
+  "generated_at": "2026-10-04T15:08:00+09:00",
+  "risk_regime": {
+    "regime": "NEUTRAL",
+    "confidence": "MID",
+    "rationale": "9月米雇用統計が+29千人と予想+89千人を大幅下回り、10月FRB利上げ観測が後退。一方、米10年債利回りは5.2〜5.34%と約20年ぶりの高水準で推移し、米イランの軍事的緊張に伴う原油高（WTI 90〜91ドル台）も継続。金融引き締め懸念と景気鈍化サインが混在し、リスクオンとリスクオフが交錯する中立的な地合い。",
+    "key_drivers": [
+      "9月米雇用統計が大幅下振れ（+29千人 vs 予想+89千人）、10月FRB利上げ観測が後退",
+      "米10年債利回りが5.2〜5.34%と約20年ぶりの高水準で推移、株・金に逆風",
+      "米イランの軍事的緊張が継続、ホルムズ海峡をめぐる外交交渉が決裂し原油高が持続",
+      "日銀が9月18日に政策金利を1.25%へ引き上げも「次を急がない」姿勢で円安が続く",
+      "東京都区部コアCPIの上振れで日銀10月利上げ観測が再燃の芽、ドル円の方向感に影響"
+    ]
+  },
+  "assets": [
+    {
+      "name": "日経225",
+      "ticker": "NKD=F",
+      "bias": "NEUTRAL",
+      "conviction": "MID",
+      "rationale": "10月2日の日経平均は前日比647円安（-0.94%）の68,309円と反落。来週（10月5〜9日）の予想レンジは66,000〜70,000円で7万円台を試す展開が焦点。世界的な金利上昇が重荷だが下げ幅は限定的。植田日銀総裁の発言と米長期金利の方向性が鍵を握る。弱い米雇用統計後のドル安・円高転換なら日本株の追加下落リスクも。",
+      "catalysts": [
+        "植田日銀総裁の発言（10月5〜9日週、円相場を通じた波及に注目）",
+        "米10年債利回りの方向性（現在5.2〜5.3%台、低下なら株高）",
+        "7万円の心理的節目の攻防",
+        "フランスの財政不安を含む欧州リスクの動向"
+      ],
+      "top_news": [
+        {
+          "headline": "日経平均が10月2日に648円安の68,309円へ反落、世界的な金利上昇が重荷",
+          "published": "2026-10-02",
+          "comment": "米長期金利の上昇が世界株式に波及、日経も売り優勢となったが下げ幅は限定的だった",
+          "source": "財経新聞",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["外為どっとコム"],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.zaikei.co.jp/article/20261002/872176.html"
+        },
+        {
+          "headline": "来週の日経平均見通し、66,000〜70,000円レンジで7万円台が視野に",
+          "published": "2026-10-02",
+          "comment": "植田総裁の発言と米長期金利の動向次第で上下に振れうる、方向感は定まらない状況",
+          "source": "外為どっとコム マネ育チャンネル",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.gaitame.com/media/entry/2026/10/02/173855"
+        }
+      ]
+    },
+    {
+      "name": "S&P500",
+      "ticker": "ES=F",
+      "bias": "NEUTRAL",
+      "conviction": "MID",
+      "rationale": "S&P500は週間で0.3%安。10月1日は国債利回り低下で小幅反発。弱い9月雇用統計（+29千人）は10月利上げ観測を後退させたが、高金利と高い原油価格が引き続き上値を抑制。10月13日から3Q決算シーズンが大手銀行を皮切りに開始。市場上昇が一部のテック株に集中しており、S&P500全体の約75%は下落という偏った状況が続く。",
+      "catalysts": [
+        "9月米雇用統計の大幅下振れ（+29千人）で10月FRB利上げ観測が後退",
+        "10月13日から3Q決算シーズン開始、大手銀行が先陣を切る",
+        "原油価格と米国債利回りの動向が主要ドライバー",
+        "ナスダックなど一部の大型テック株が市場下支え"
+      ],
+      "top_news": [
+        {
+          "headline": "9月米雇用統計が予想を大幅下回る（実績+29千人 vs 予想+89千人）、10月FRB利上げ観測が後退",
+          "published": "2026-10-02",
+          "comment": "雇用が急減速し景気鈍化懸念が浮上、FRBの次の一手を巡り市場の神経質な動きが続く",
+          "source": "BLS / マネースクエア",
+          "tier": 1,
+          "credibility": "HIGH",
+          "corroborated_by": ["Reuters", "Bloomberg"],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.bls.gov/news.release/empsit.htm"
+        },
+        {
+          "headline": "米10年債利回りが一時5.34%と2002年以来の最高水準、株式市場の重荷に",
+          "published": "2026-10-02",
+          "comment": "超高金利は企業の資金調達コストを押し上げ、株式のバリュエーションに低下圧力をかけている",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Reuters", "Bloomberg"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/10/02/stock-market-next-week-outlook-for-oct-5-9-2026-.html"
+        },
+        {
+          "headline": "10月13日から3Q決算シーズンが開始、大手金融機関が先陣",
+          "published": "2026-10-02",
+          "comment": "決算が好業績なら下支えになりうるが、高金利が収益に与えた影響が焦点となる",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/10/02/stock-market-next-week-outlook-for-oct-5-9-2026-.html"
+        }
+      ]
+    },
+    {
+      "name": "ナスダック",
+      "ticker": "NQ=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "ナスダックとS&P500ミッドキャップは週前半に上昇し、ダウとS&P500に比べ底堅さを示した。テック株が市場をけん引しているが、市場の上昇が一部の大型株に集中するという偏りが続く。高い国債利回りがグロース株のバリュエーション圧力となっており、弱い雇用統計後の利上げ観測後退がわずかに追い風。方向感は定まらず。",
+      "catalysts": [
+        "大型テック株（AI関連など）が引き続き市場全体を下支え",
+        "高い国債利回り（5%台）がグロース株のバリュエーションを圧迫",
+        "弱い雇用統計でFRB利上げ観測後退が一定の支援材料",
+        "S&P500の約75%は下落というナロー（狭い）マーケットが継続"
+      ],
+      "top_news": [
+        {
+          "headline": "週前半にナスダックとS&P500ミッドキャップが上昇、テック株がけん引",
+          "published": "2026-10-02",
+          "comment": "市場全体が軟調な中でテック株の強さが際立っているが、上昇の裾野は依然として狭い",
+          "source": "T. Rowe Price",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.troweprice.com/personal-investing/resources/insights/global-markets-weekly-update.html"
+        }
+      ]
+    },
+    {
+      "name": "金",
+      "ticker": "GC=F",
+      "bias": "NEUTRAL",
+      "conviction": "MID",
+      "rationale": "金は10月2日時点で4,140ドル/トロイオンス（前日比-0.9%）。FRBの10月利上げ確率が一時72.5%まで上昇しドル高・金利高が上値を抑制。一方、米イランの軍事的緊張と中央銀行の継続的な買い入れが下値を支持。弱い雇用統計後に利上げ観測が後退すれば反発余地あり。短期的には金利動向次第で方向感が決まりやすい局面。",
+      "catalysts": [
+        "FRBの10月利上げ確率（当初72.5%）が弱い雇用統計後に低下→金に追い風",
+        "米イランの軍事的緊張継続が地政学リスクプレミアムを維持し下値を支持",
+        "中央銀行による継続的な金買い入れが構造的な支援",
+        "米ドルと国債利回りの動向が短期的な方向性を左右"
+      ],
+      "top_news": [
+        {
+          "headline": "金価格が4,140ドルに低下、FRBの10月利上げ確率が72.5%まで上昇し上値重い",
+          "published": "2026-10-02",
+          "comment": "利上げ確率上昇はドル高・金利高を通じて金に逆風、ただし地政学リスクが下値を支えている",
+          "source": "Trading Economics",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": ["FX Leaders"],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://tradingeconomics.com/commodity/gold"
+        },
+        {
+          "headline": "金価格が7週ぶり安値に低下、原油高でFRBの利上げ観測が強まり押し下げ",
+          "published": "2026-09-28",
+          "comment": "原油高→インフレ懸念→利上げ→ドル高、という連鎖で金が売られる構図となった",
+          "source": "USA Gold",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.usagold.com/daily-precious-metals-market-report-september-28-2026/"
+        },
+        {
+          "headline": "ゴールドマン・サックス、中央銀行の持続的な金買いを背景に金価格は上昇が続くと予測",
+          "published": "2026-09-01",
+          "comment": "短期的な利上げ圧力があっても、中銀の買いが構造的な下支えになるとの見立て",
+          "source": "Goldman Sachs",
+          "tier": 1,
+          "credibility": "HIGH",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.goldmansachs.com/insights/articles/gold-is-forecast-to-climb-as-central-banks-buy-the-precious-metal"
+        }
+      ]
+    },
+    {
+      "name": "原油",
+      "ticker": "CL=F",
+      "bias": "BULLISH",
+      "conviction": "MID",
+      "rationale": "WTI原油は10月3日時点で1バレル90〜91ドル台。米イランの軍事的緊張が続き、ホルムズ海峡をめぐる交渉が決裂。米国が中東への追加空母・1万人部隊派遣を検討との報道で地政学リスクプレミアムが高止まり。財務省OFACによるイランへの追加制裁も供給懸念を強める。EIAの4Q平均予想は84ドルだが地政学リスクが上振れバイアスをかけている。",
+      "catalysts": [
+        "米国がイランの提案を拒否、ホルムズ海峡問題が未解決で供給懸念継続",
+        "米軍が中東への追加空母・1万人部隊の派遣を検討と報道",
+        "財務省OFACによるイランへの追加制裁で石油輸出制限が強化",
+        "EIAは4Q平均84ドル予想も地政学リスクが上振れバイアスを付加"
+      ],
+      "top_news": [
+        {
+          "headline": "WTI原油が90〜91ドル台、米イランのホルムズ海峡交渉失敗で地政学リスク継続",
+          "published": "2026-10-03",
+          "comment": "中東の緊張がエネルギー供給不安を高めており、インフレ再燃につながるリスクも意識される",
+          "source": "oilprice.com",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": ["EIA"],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://oilprice.com/futures/wti"
+        },
+        {
+          "headline": "トランプ大統領がイランの提案を拒否、ホルムズ海峡の封鎖リスクが残存",
+          "published": "2026-09-28",
+          "comment": "外交交渉が行き詰まり、ホルムズ海峡経由の原油供給に不確実性が高まっている",
+          "source": "Al Jazeera",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.aljazeera.com/economy/2026/8/10/oil-prices-climb-as-iranian-demands-cloud-outlook-for-strait-of-hormuz"
+        }
+      ]
+    },
+    {
+      "name": "ドル円",
+      "ticker": "USDJPY",
+      "bias": "NEUTRAL",
+      "conviction": "MID",
+      "rationale": "来週（10月5〜9日）の予想レンジは155.50〜159.00円。日銀は9月18日に1.25%へ利上げしたが採決7対2で「次を急がない」姿勢から円安継続。東京都区部コアCPIの上振れが10月日銀利上げ観測を再燃させる余地あり。一方、米雇用統計の大幅下振れでFRBの利上げ観測が後退しドルの上値が限定的。158.50円と156.65円が来週の分岐点。",
+      "catalysts": [
+        "日銀の9月利上げ（1.25%）後も「次を急がない」姿勢で円安継続",
+        "東京都区部コアCPIの上振れで日銀10月利上げ観測が再燃の可能性",
+        "9月米雇用統計の大幅下振れでFRBの利上げ観測後退→ドル安・円高方向",
+        "植田日銀総裁・片山財務相の発言が方向感を左右",
+        "158.50円と156.65円が来週の重要な分岐点"
+      ],
+      "top_news": [
+        {
+          "headline": "来週のドル円予想は155.50〜159.00円、日銀・FRBのどちらが先に利上げするかが焦点",
+          "published": "2026-10-03",
+          "comment": "日銀とFRBの利上げ競争が円の方向性を左右、どちらが先に動くかで大きく振れる可能性",
+          "source": "外為どっとコム マネ育チャンネル",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.gaitame.com/media/entry/2026/10/03/060200"
+        },
+        {
+          "headline": "日銀が9月18日に政策金利を1.00%→1.25%へ引き上げ、採決は7対2",
+          "published": "2026-09-18",
+          "comment": "利上げは実施したが採決の割れと次回を急がない姿勢が市場の円高期待を抑えた",
+          "source": "外為どっとコム マネ育チャンネル",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.gaitame.com/media/entry/2026/09/28/121735"
+        },
+        {
+          "headline": "9月米雇用統計が弱め（+29千人）、FRBの10月利上げ観測が一段と後退",
+          "published": "2026-10-02",
+          "comment": "雇用悪化でドルの上値が重くなり、円高方向に振れる可能性が高まった局面",
+          "source": "マネースクエア",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["外為どっとコム"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.m2j.co.jp/market/report/114915/top"
+        }
+      ]
+    },
+    {
+      "name": "ユーロドル",
+      "ticker": "EURUSD",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "ECBの政策金利は預金ファシリティ2.0%と米国に比べ低水準。年初来でユーロ高の傾向があり、主要機関（J.P.Morgan 1.22、Goldman 1.25、MUFG 1.18）は年末に向けたユーロ上昇を予想。短期的にはFRBの利上げ観測残存とフランスの財政不安が上値を抑制。弱い米雇用統計後のドル安局面ではユーロへの買い戻しが入りやすい環境。",
+      "catalysts": [
+        "弱い米雇用統計でFRBの利上げ観測後退→ドル安・ユーロ高の可能性",
+        "フランスの財政不安が欧州リスクとして浮上し上値を抑制",
+        "ECBと米FRBの金利格差がドル高・ユーロ安の構造的要因として継続",
+        "主要機関の年末予想は1.18〜1.25のユーロ高方向"
+      ],
+      "top_news": [
+        {
+          "headline": "フランスの財政不安が欧州市場リスクとして浮上、ユーロの重荷に",
+          "published": "2026-10-02",
+          "comment": "欧州の財政問題が再燃するとユーロ安につながるため、来週も引き続き注視が必要",
+          "source": "外為どっとコム マネ育チャンネル",
+          "tier": 3,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.gaitame.com/media/entry/2026/10/02/173855"
+        },
+        {
+          "headline": "MUFGはユーロドルの年末1.18を予想、ECBが利上げサイクルの終盤に近づくとの見方",
+          "published": "2026-07-01",
+          "comment": "中長期ではユーロ高が予想されているが、短期的な地政学リスクとドル高が上値を抑えている",
+          "source": "MUFG / Pound Sterling Live",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "low",
+          "direction": "bullish",
+          "url": "https://investinglive.com/centralbank/mufg-sees-euro-rallying-to-120-against-dollar-by-2027-as-ecb-nears-rate-peak-20260701/"
+        }
+      ]
+    },
+    {
+      "name": "ビットコイン",
+      "ticker": "BTC-USD",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "ビットコインは10月上旬時点で84,000〜85,000ドル台。直近7日間で+5.56%、過去1か月で+6.23%と上昇基調にある。時価総額は1.7兆ドルを超え仮想通貨市場でのリーダーシップを維持。ただし高金利環境がリスク資産全般に重荷であり、一部アナリストは10月5日前後に底打ちの可能性を指摘。株式市場との相関も高まっており、全体的な地合いに左右されやすい。",
+      "catalysts": [
+        "直近7日間で+5.56%、過去1か月で+6.23%と短期的な上昇モメンタムが継続",
+        "時価総額1.7兆ドル超で仮想通貨市場No.1の地位を堅持",
+        "高金利・リスクオフ局面では売られやすいリスク資産としての性質",
+        "一部アナリストが10月5日前後に底打ちの可能性を指摘"
+      ],
+      "top_news": [
+        {
+          "headline": "ビットコインが84,000〜85,000ドル台で推移、直近1か月で6%超の上昇",
+          "published": "2026-10-03",
+          "comment": "仮想通貨市場は直近上昇基調だが、高金利環境と地政学リスクで上値の重さも意識される",
+          "source": "Changelly / MEXC",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.mexc.com/news/465528"
+        }
+      ]
+    }
+  ],
+  "discarded": [
+    {
+      "headline": "ビットコイン、10月に12万ドル到達予測",
+      "reason": "価格予測専門のアグリゲーターサイト（accrue.com）による投機的予測で信頼性LOW、根拠が示されていないため除外"
+    },
+    {
+      "headline": "2026年年初来の各社株価ターゲット（S&P500 8,000予想等）",
+      "reason": "年初来の中長期見通しで直近1週間の市場動向を反映せず、鮮度・具体性が不足のため除外"
+    }
+  ]
+}
