@@ -87,6 +87,7 @@ SYNC_FORBIDDEN = {
     "london-hold-lab.json", "london-hold-lab.md",   # 🆕 2026-09-30 L4 ロンドン時間に入って長めに持つ（london-hold-lab.yml・手動）
     "hold-lab.json", "hold-lab.md",             # 🆕 2026-10-05 R1 持ち方の研究（hold-lab.yml・手動。ビットコインと株価指数）
     "buy-lab.json", "buy-lab.md",               # 🆕 2026-10-05 R2 余剰資金の入れ方（buy-lab.yml・手動。一括・分ける・下がったら買う）
+    "calendar-lab.json", "calendar-lab.md",     # 🆕 2026-10-05 R3 株価指数の時間の癖（calendar-lab.yml・手動。月末月初・日中のモメンタム）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
