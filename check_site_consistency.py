@@ -90,6 +90,7 @@ SYNC_FORBIDDEN = {
     "calendar-lab.json", "calendar-lab.md",     # 🆕 2026-10-05 R3 株価指数の時間の癖（calendar-lab.yml・手動。月末月初・日中のモメンタム）
     "calendar-forward.json", "calendar-forward.md",   # 🆕 2026-10-05 R3F 月末月初の前向きの観察（calendar-forward.yml・月1。取引の記録を持つ）
     "fx-month-end-lab.json", "fx-month-end-lab.md",   # 🆕 2026-10-05 R4 月末の値決め前の為替ヘッジ（fx-month-end-lab.yml・手動）
+    "holiday-lab.json", "holiday-lab.md",       # 🆕 2026-10-05 R5 日本の祝日の前の日（holiday-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
