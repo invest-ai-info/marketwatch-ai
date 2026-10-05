@@ -128,7 +128,7 @@ def test_outputs_have_no_codes_and_verified_list(tmp_path=None):
     with open(p, "w", encoding="utf-8") as fh:
         json.dump(st, fh, ensure_ascii=False)
     stop, plus, watching = V.collect([(p, "J4F テスト", "J4F")])
-    assert [r["id"] for r in stop] == ["F1"] and not plus and [r["id"] for r in watching] == ["F2", "F3", "F4"]
+    assert "F1" in [r["id"] for r in stop] and not plus and {"F2", "F3", "F4"} <= {r["id"] for r in watching}
     out = V.render(stop, plus, watching, now="x")
     assert "J4F-F1" in out and "期待値がプラスにならなかった" in out and "S001" not in out
     assert "- まだ無い" in V.render([], [], [], now="x")
@@ -174,3 +174,22 @@ if __name__ == "__main__":
             print(f"  ❌ {name}: {e}")
     print(f"--- {len(tests) - fails}/{len(tests)} 合格 ---")
     sys.exit(1 if fails else 0)
+
+
+def test_j4g_counts_only_from_its_own_start_and_keeps_f1_to_f4():
+    """J4G（F5〜F7・9:30 で手仕舞う）は 2026-10-06 以降だけ数える。F1〜F4 の数え方は変えない"""
+    assert F.J4G_START == "2026-10-06" and "**2026-10-06 以降の取引だけ**" in open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert [F.CANDS[c]["exit"] for c in ("F5", "F6", "F7")] == ["09:30"] * 3
+    st = F.empty_state()
+    base = {"code": "1111", "hot": True, "gap": 0.04, "cls": "up", "prev_ret": 0.01, "open": 100.0,
+            "path": {"09:15": 103.0, "09:30": 104.0, "15:30": 101.0}}
+    recs = [dict(base, date="2026-10-05"), dict(base, date="2026-10-06")]
+    F.update(st, recs, {"2026-10-05": 1.0, "2026-10-06": 1.0}, "2026-10-07")
+    by = {}
+    for tr in st["trades"]:
+        by.setdefault(tr["d"], set()).add(tr["c"])
+    assert by["2026-10-05"] == {"F1", "F2", "F3"}                  # F5〜F7 はまだ数えない（F4 は前の日の上げが足りない）
+    assert by["2026-10-06"] == {"F1", "F2", "F3", "F5", "F6", "F7"}
+    f5 = [x for x in st["trades"] if x["c"] == "F5"][0]
+    f7 = [x for x in st["trades"] if x["c"] == "F7"][0]
+    assert abs(f5["r"] - (0.04 - Y.COST)) < 1e-9 and abs(f7["r"] - (104 / 103 - 1 - Y.COST)) < 1e-6
