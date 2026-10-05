@@ -236,30 +236,38 @@ def parse_duka(data, day, pair):
 
 
 class Duka:
-    """1日ずつ取りに行き、覚えておく。取れなかった日（404 以外の失敗）を数える"""
+    """1日ずつ取りに行き、覚えておく。取れなかった日（404 以外の失敗）を数える。
+    混雑の断り（429・5xx）は長めに待って取り直す。取りに行く手順の細部で、数える決まりではない"""
+    BUSY_WAITS = (5, 15, 30, 60, 90)
+    OTHER_WAITS = (2, 4, 8, 16, 32)
 
-    def __init__(self, opener=None, pause=0.05, tries=3):
-        self.opener = opener or (lambda req: urllib.request.urlopen(req, timeout=30))
-        self.pause, self.tries = pause, tries
-        self.cache, self.errors, self.fetched = {}, [], 0
+    def __init__(self, opener=None, pause=0.2, tries=6, timeout=60, wait=time.sleep):
+        self.opener = opener or (lambda req: urllib.request.urlopen(req, timeout=timeout))
+        self.pause, self.tries, self.wait = pause, tries, wait
+        self.cache, self.errors, self.fetched, self.times = {}, [], 0, []
 
     def raw(self, pair, day):
         url = DUKA_URL.format(sym=SYM[pair], y=day.year, m=day.month - 1, d=day.day)
         last = None
         for k in range(self.tries):
+            t0 = time.monotonic()
             try:
                 with self.opener(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (research)"})) as r:
                     body = r.read()
                 self.fetched += 1
-                time.sleep(self.pause)
+                self.times.append(time.monotonic() - t0)
+                self.wait(self.pause)
                 return lzma.decompress(body) if body else b""
             except urllib.error.HTTPError as e:
                 if e.code == 404:
                     return b""
                 last = f"HTTP {e.code}"
+                waits = self.BUSY_WAITS if (e.code == 429 or e.code >= 500) else self.OTHER_WAITS
             except Exception as e:  # noqa: BLE001  通信の失敗はまとめて数える
                 last = f"{type(e).__name__}: {e}"
-            time.sleep(2 ** k)
+                waits = self.OTHER_WAITS
+            if k < self.tries - 1:
+                self.wait(waits[min(k, len(waits) - 1)])
         self.errors.append(f"{SYM[pair]} {day}：{last}")
         return None
 
@@ -269,6 +277,27 @@ class Duka:
             data = self.raw(pair, day)
             self.cache[key] = None if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
         return self.cache[key]
+
+    def prefetch(self, keys, workers=4):
+        """先にまとめて取っておく（同時に workers 本まで）。結果は window と同じ覚え方"""
+        from concurrent.futures import ThreadPoolExecutor
+        todo = [k for k in dict.fromkeys(keys) if k not in self.cache]
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            list(ex.map(lambda k: self.window(*k), todo))
+
+
+def first_candidates(start, end, pairs=tuple(PAIRS)):
+    """月ごとに最初に見に行く日（月の最後の平日・15日以上の最初の平日）。休場でとばす日は、あとで1日ずつ取りに行く"""
+    end_d = pd.Timestamp(end).date()
+    keys = []
+    for y, m in months_between(start, end):
+        wd = weekdays(y, m)
+        if wd[-1] > end_d:
+            continue
+        mid = [d for d in wd if d.day >= 15]
+        for p in pairs:
+            keys += [(p, wd[-1])] + ([(p, mid[0])] if mid else [])
+    return keys
 
 
 # ---------------------------------------------------------------- データの取り込み：MT5 の書き出し（腕B）
@@ -457,21 +486,35 @@ def write(out, source):
     print(md)
 
 
-def probe():
-    """届くかだけ（値動きは数えない）：4ペアの決まった1日を取り、足の数と最初の3本の時刻だけを表示"""
+def probe(n_seq=3, n_par=8):
+    """届くか・1回の取得に何秒かかるかだけ（値動きは数えない）。足の数と最初の3本の時刻、かかった時間を表示"""
     d = Duka()
-    day = dt.date(2015, 1, 15)
     ok = True
     for p in PAIRS:
-        data = d.raw(p, day)
-        if data is None:
-            ok = False
-            print(f"❌ {SYM[p]} {day}：{d.errors[-1]}")
-            continue
-        b = parse_duka(data, day, p)
-        print(f"✅ {SYM[p]} {day}：{len(b)}本（取引量が0より大きい足 {(b['vol'] > 0).sum()}本）。最初の3本の時刻＝{[str(x) for x in b.index[:3]]}")
-    print("届く" if ok else "届かない（腕B を判定にする）")
-    return 0 if ok else 1
+        for day in [dt.date(2015, 1, 15), dt.date(2019, 6, 14), dt.date(2024, 3, 15)][:n_seq]:
+            t0 = time.monotonic()
+            data = d.raw(p, day)
+            sec = time.monotonic() - t0
+            if data is None:
+                ok = False
+                print(f"❌ {SYM[p]} {day}：{d.errors[-1]}（{sec:.1f}秒）", flush=True)
+                continue
+            b = parse_duka(data, day, p)
+            print(f"✅ {SYM[p]} {day}：{len(b)}本（取引量が0より大きい足 {(b['vol'] > 0).sum()}本）・{sec:.1f}秒。"
+                  f"最初の3本の時刻＝{[str(x) for x in b.index[:3]]}", flush=True)
+    days = [dt.date(2016, 2, 15) + dt.timedelta(days=7 * i) for i in range(n_par)]
+    t0 = time.monotonic()
+    d.prefetch([(p, x) for p in PAIRS for x in days if x.weekday() < 5], workers=4)
+    par = time.monotonic() - t0
+    n = sum(1 for p in PAIRS for x in days if x.weekday() < 5)
+    per = par / max(n, 1)
+    print(f"同時に4本で {n}ファイル：{par:.1f}秒（1ファイルあたり {per:.1f}秒）。取れなかった {len(d.errors)}件", flush=True)
+    est = len(first_candidates(*PERIOD["dukascopy"])) * per / 60
+    print(f"本番の見込み：約{len(first_candidates(*PERIOD['dukascopy']))}ファイル × {per:.1f}秒 ≈ {est:.0f}分", flush=True)
+    if d.times:
+        print(f"1回の取得の秒数：中央値 {np.median(d.times):.1f}・最大 {max(d.times):.1f}", flush=True)
+    print("届く" if ok and not d.errors else "一部届かない（混雑なら取り直しで足りるかを見る）", flush=True)
+    return 0 if ok and not d.errors else 1
 
 
 def main(argv=None):
@@ -505,10 +548,13 @@ def main(argv=None):
         failed, role, extra, window_fn = [], "判定", {}, src.window
     equities, eq_failed = load_equity()
     failed = list(failed) + eq_failed
+    if a.source == "dukascopy" and not failed:
+        src.prefetch(first_candidates(start, end), workers=4)
     end_rows, mid_rows, cover = ([], [], {}) if failed else run(a.source, window_fn, equities, start, end, rng)
-    if a.source == "dukascopy" and src.errors:
+    if a.source == "dukascopy":
         extra["fetch_errors"] = src.errors[:20]
         extra["fetched_files"] = src.fetched
+        print(f"取得 {src.fetched}ファイル・取れなかった {len(src.errors)}件", flush=True)
     out = build(a.source, end_rows, mid_rows, cover, failed, role, rng, today, extra)
     write(out, a.source)
     return 0 if not out["failed"] else 1
