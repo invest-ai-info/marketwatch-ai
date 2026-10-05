@@ -313,13 +313,18 @@ def first_candidates(start, end, pairs=tuple(PAIRS)):
     return keys
 
 
-def fetch_only(pair, span_start, span_end, cache_dir, end=PERIOD["dukascopy"][1], duka=None):
+def fetch_only(pair, span_start, span_end, cache_dir, end=PERIOD["dukascopy"][1], duka=None, budget_min=None, clock=time.monotonic):
     """取得だけ（数えない）：span の月の、月末と真ん中に使う日のファイルを cache_dir に置く。
-    取りに行く日は数えるときと同じ pick_day で決める（休場でとばす日も同じ）。→ (取れなかった件数, 取得した件数)"""
+    取りに行く日は数えるときと同じ pick_day で決める（休場でとばす日も同じ）。→ (取れなかった件数, 取得した件数)
+    budget_min を過ぎたら新しい月に入らずに終わる（取れた分は置き場に残る＝数える段が残りを取り直す）"""
     d = duka or Duka(cache_dir=cache_dir)
     end_d = pd.Timestamp(end).date()
     months = [(y, m) for y, m in months_between(span_start, span_end) if weekdays(y, m)[-1] <= end_d]
+    t0 = clock()
     for k, (y, m) in enumerate(months):
+        if budget_min is not None and clock() - t0 > budget_min * 60:
+            print(f"{SYM[pair]}：時間の上限（{budget_min}分）で {y}-{m:02d} から先は取らずに終わる（数える段が取り直す）", flush=True)
+            break
         for rule in ("last", "mid"):
             pick_day(d.window, pair, y, m, rule, end_d)
         if (k + 1) % 12 == 0 or k + 1 == len(months):
@@ -549,13 +554,14 @@ def main(argv=None):
     ap.add_argument("--pair", default=None, help="EURUSD など（--fetch-only のとき）")
     ap.add_argument("--span", default=None, help="取得する月の範囲 2015-01-01,2020-12-31（--fetch-only のとき）")
     ap.add_argument("--cache-dir", default=None, help="腕C：取得したファイルの置き場（リポジトリには入れない）")
+    ap.add_argument("--budget-min", type=float, default=None, help="--fetch-only の時間の上限（分）")
     a = ap.parse_args(argv)
     if a.probe:
         return probe()
     if a.fetch_only:
         pair = {v: k for k, v in SYM.items()}[a.pair]
         s0, s1 = a.span.split(",")
-        n_err, _ = fetch_only(pair, s0, s1, a.cache_dir)
+        n_err, _ = fetch_only(pair, s0, s1, a.cache_dir, budget_min=a.budget_min)
         return 0 if n_err == 0 else 1
     start, end = PERIOD[a.source]
     rng = np.random.default_rng(SEED)

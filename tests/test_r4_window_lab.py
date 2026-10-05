@@ -191,6 +191,16 @@ def test_first_candidates_and_disk_cache():
         assert os.path.getsize(os.path.join(tmp, "EURUSD_2024-01-25.bi5")) == 0            # データの無い日も覚える
 
 
+def test_fetch_only_stops_at_time_budget():
+    body = _duka_bytes([(28800, 1.1, 1.0), (57600, 1.2, 1.0)], 0.00001)
+    ticks = iter([0, 0, 61, 61, 61, 61])                                               # 1か月目のあとで1分を超える
+    with tempfile.TemporaryDirectory() as tmp:
+        d = W.Duka(opener=lambda req: _Resp(body), wait=lambda s: None, cache_dir=tmp)
+        n_err, n = W.fetch_only("EURUSD=X", "2024-01-01", "2024-03-31", tmp, end="2024-12-31", duka=d,
+                                budget_min=1, clock=lambda: next(ticks))
+        assert (n_err, n) == (0, 2)                                                      # 1月の2日分だけ取って終わる
+
+
 def test_read_mt5_csv_variants():
     rows = ["2024.01.15 10:00,150.100,150.2,150.0,150.15,12,5,9", "2024.01.15 10:05,150.15,150.3,150.1,150.2,0,6,8"]
     with tempfile.TemporaryDirectory() as tmp:
