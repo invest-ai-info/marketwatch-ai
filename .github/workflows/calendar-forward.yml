@@ -1,0 +1,57 @@
+name: Calendar Forward (monthly)
+
+# R3F 月末月初の前向きの観察＝R3 の Q1（米国の月末月初）・Q3（日本の早い窓）を、買う日が 2026-10-06 以降の取引だけで数える。
+# 2026-10-05 登録・オーナー「おすすめ通りにお願いします」。
+# ⚠️ 決まりは PILLAR_PREREG.md「R3F」と calendar_forward.py の冒頭に固定（窓・費用は calendar_lab.py の関数をそのまま使う）。
+# ⚠️ 一度記録した取引は書き換えない。36回ごとに前向きの費用後の平均がマイナスなら止める（検証済みリストへ）。
+# ⚠️ 出力（calendar-forward.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# ⚠️ 月1回なので、半端な分の cron を2本（6日が本命・8日が保険）。何度動いても同じ取引は二重に数えない。
+
+on:
+  schedule:
+    - cron: '17 1 6 * *'    # 毎月6日 10:17 JST（月の3日目に売る米国の窓がそろったあと）
+    - cron: '47 2 8 * *'    # 毎月8日 11:47 JST 保険
+  workflow_dispatch:
+
+concurrency:
+  group: calendar-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_calendar_forward.py
+      - name: Count the new months
+        run: |
+          python calendar_forward.py
+          python verified_list.py > /dev/null
+          [ -f calendar-forward.md ] && cat calendar-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add calendar-forward.json calendar-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: calendar forward R3F $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
