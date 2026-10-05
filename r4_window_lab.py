@@ -23,6 +23,8 @@
 実行:
   腕C（クラウド）     python r4_window_lab.py --source dukascopy        （Actions の r4-window-lab.yml から手動で）
   届くかだけ（数えない） python r4_window_lab.py --probe
+  取得だけ（数えない）   python r4_window_lab.py --fetch-only --pair EURUSD --span 2015-01-01,2020-12-31 --cache-dir duka-cache
+  腕C を置き場から数える python r4_window_lab.py --source dukascopy --cache-dir duka-cache
   腕B（手元）         python r4_window_lab.py --source mt5 --dir C:\\mt5run
   手元の点検だけ       python r4_window_lab.py --source mt5 --dir C:\\mt5run --check   （損益は数えない）
 """
@@ -241,12 +243,28 @@ class Duka:
     BUSY_WAITS = (5, 15, 30, 60, 90)
     OTHER_WAITS = (2, 4, 8, 16, 32)
 
-    def __init__(self, opener=None, pause=0.2, tries=6, timeout=60, wait=time.sleep):
+    def __init__(self, opener=None, pause=0.2, tries=6, timeout=60, wait=time.sleep, cache_dir=None):
         self.opener = opener or (lambda req: urllib.request.urlopen(req, timeout=timeout))
-        self.pause, self.tries, self.wait = pause, tries, wait
-        self.cache, self.errors, self.fetched, self.times = {}, [], 0, []
+        self.pause, self.tries, self.wait, self.cache_dir = pause, tries, wait, cache_dir
+        self.cache, self.errors, self.fetched, self.times, self.from_disk = {}, [], 0, [], 0
+
+    def _path(self, pair, day):
+        return os.path.join(self.cache_dir, f"{SYM[pair]}_{day}.bi5") if self.cache_dir else None
+
+    def _save(self, pair, day, body):
+        if self.cache_dir:
+            os.makedirs(self.cache_dir, exist_ok=True)
+            with open(self._path(pair, day), "wb") as f:
+                f.write(body)
 
     def raw(self, pair, day):
+        """伸張後のバイト列（データの無い日は b""・取れなければ None）。cache_dir があれば、取れたものを置いて次は読むだけにする"""
+        path = self._path(pair, day)
+        if path and os.path.exists(path):
+            with open(path, "rb") as f:
+                body = f.read()
+            self.from_disk += 1
+            return lzma.decompress(body) if body else b""
         url = DUKA_URL.format(sym=SYM[pair], y=day.year, m=day.month - 1, d=day.day)
         last = None
         for k in range(self.tries):
@@ -256,10 +274,12 @@ class Duka:
                     body = r.read()
                 self.fetched += 1
                 self.times.append(time.monotonic() - t0)
+                self._save(pair, day, body)
                 self.wait(self.pause)
                 return lzma.decompress(body) if body else b""
             except urllib.error.HTTPError as e:
                 if e.code == 404:
+                    self._save(pair, day, b"")
                     return b""
                 last = f"HTTP {e.code}"
                 waits = self.BUSY_WAITS if (e.code == 429 or e.code >= 500) else self.OTHER_WAITS
@@ -278,13 +298,6 @@ class Duka:
             self.cache[key] = None if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
         return self.cache[key]
 
-    def prefetch(self, keys, workers=4):
-        """先にまとめて取っておく（同時に workers 本まで）。結果は window と同じ覚え方"""
-        from concurrent.futures import ThreadPoolExecutor
-        todo = [k for k in dict.fromkeys(keys) if k not in self.cache]
-        with ThreadPoolExecutor(max_workers=workers) as ex:
-            list(ex.map(lambda k: self.window(*k), todo))
-
 
 def first_candidates(start, end, pairs=tuple(PAIRS)):
     """月ごとに最初に見に行く日（月の最後の平日・15日以上の最初の平日）。休場でとばす日は、あとで1日ずつ取りに行く"""
@@ -298,6 +311,23 @@ def first_candidates(start, end, pairs=tuple(PAIRS)):
         for p in pairs:
             keys += [(p, wd[-1])] + ([(p, mid[0])] if mid else [])
     return keys
+
+
+def fetch_only(pair, span_start, span_end, cache_dir, end=PERIOD["dukascopy"][1], duka=None):
+    """取得だけ（数えない）：span の月の、月末と真ん中に使う日のファイルを cache_dir に置く。
+    取りに行く日は数えるときと同じ pick_day で決める（休場でとばす日も同じ）。→ (取れなかった件数, 取得した件数)"""
+    d = duka or Duka(cache_dir=cache_dir)
+    end_d = pd.Timestamp(end).date()
+    months = [(y, m) for y, m in months_between(span_start, span_end) if weekdays(y, m)[-1] <= end_d]
+    for k, (y, m) in enumerate(months):
+        for rule in ("last", "mid"):
+            pick_day(d.window, pair, y, m, rule, end_d)
+        if (k + 1) % 12 == 0 or k + 1 == len(months):
+            med = f"{np.median(d.times):.1f}" if d.times else "—"
+            print(f"{SYM[pair]} {y}-{m:02d} まで：取得 {d.fetched}・手元から {d.from_disk}・取れなかった {len(d.errors)}（1回の中央値 {med}秒）", flush=True)
+    for e in d.errors:
+        print(f"  取れなかった：{e}", flush=True)
+    return len(d.errors), d.fetched
 
 
 # ---------------------------------------------------------------- データの取り込み：MT5 の書き出し（腕B）
@@ -486,12 +516,12 @@ def write(out, source):
     print(md)
 
 
-def probe(n_seq=3, n_par=8):
-    """届くか・1回の取得に何秒かかるかだけ（値動きは数えない）。足の数と最初の3本の時刻、かかった時間を表示"""
+def probe(days=(dt.date(2015, 1, 15), dt.date(2019, 6, 14), dt.date(2024, 3, 15))):
+    """届くか・1回の取得に何秒かかるかだけ（値動きは数えない）。足の数と、ロンドン 08時台・16時台に取引量のある足の数を表示"""
     d = Duka()
     ok = True
     for p in PAIRS:
-        for day in [dt.date(2015, 1, 15), dt.date(2019, 6, 14), dt.date(2024, 3, 15)][:n_seq]:
+        for day in days:
             t0 = time.monotonic()
             data = d.raw(p, day)
             sec = time.monotonic() - t0
@@ -500,21 +530,13 @@ def probe(n_seq=3, n_par=8):
                 print(f"❌ {SYM[p]} {day}：{d.errors[-1]}（{sec:.1f}秒）", flush=True)
                 continue
             b = parse_duka(data, day, p)
-            print(f"✅ {SYM[p]} {day}：{len(b)}本（取引量が0より大きい足 {(b['vol'] > 0).sum()}本）・{sec:.1f}秒。"
-                  f"最初の3本の時刻＝{[str(x) for x in b.index[:3]]}", flush=True)
-    days = [dt.date(2016, 2, 15) + dt.timedelta(days=7 * i) for i in range(n_par)]
-    t0 = time.monotonic()
-    d.prefetch([(p, x) for p in PAIRS for x in days if x.weekday() < 5], workers=4)
-    par = time.monotonic() - t0
-    n = sum(1 for p in PAIRS for x in days if x.weekday() < 5)
-    per = par / max(n, 1)
-    print(f"同時に4本で {n}ファイル：{par:.1f}秒（1ファイルあたり {per:.1f}秒）。取れなかった {len(d.errors)}件", flush=True)
-    est = len(first_candidates(*PERIOD["dukascopy"])) * per / 60
-    print(f"本番の見込み：約{len(first_candidates(*PERIOD['dukascopy']))}ファイル × {per:.1f}秒 ≈ {est:.0f}分", flush=True)
+            h = b[b["vol"] > 0].index.tz_convert(LON).hour
+            print(f"✅ {SYM[p]} {day}：{len(b)}本（取引量あり {(b['vol'] > 0).sum()}本・ロンドン08時台 {(h == ENTRY_H).sum()}本・"
+                  f"16時台 {(h == EXIT_H).sum()}本）・{sec:.1f}秒", flush=True)
     if d.times:
-        print(f"1回の取得の秒数：中央値 {np.median(d.times):.1f}・最大 {max(d.times):.1f}", flush=True)
-    print("届く" if ok and not d.errors else "一部届かない（混雑なら取り直しで足りるかを見る）", flush=True)
-    return 0 if ok and not d.errors else 1
+        print(f"1回の取得の秒数（取り直しの待ちを除く）：中央値 {np.median(d.times):.1f}・最大 {max(d.times):.1f}", flush=True)
+    print("届く" if ok else "一部届かない", flush=True)
+    return 0 if ok else 1
 
 
 def main(argv=None):
@@ -523,9 +545,18 @@ def main(argv=None):
     ap.add_argument("--dir", default=r"C:\mt5run", help="腕B：m5tick_*.csv のあるフォルダ")
     ap.add_argument("--probe", action="store_true", help="Dukascopy に届くかだけ（数えない）")
     ap.add_argument("--check", action="store_true", help="腕B：読めた行・時刻・スプレッドだけ（損益は数えない）")
+    ap.add_argument("--fetch-only", action="store_true", help="腕C：取得だけ（数えない）。--pair と --span と --cache-dir と一緒に")
+    ap.add_argument("--pair", default=None, help="EURUSD など（--fetch-only のとき）")
+    ap.add_argument("--span", default=None, help="取得する月の範囲 2015-01-01,2020-12-31（--fetch-only のとき）")
+    ap.add_argument("--cache-dir", default=None, help="腕C：取得したファイルの置き場（リポジトリには入れない）")
     a = ap.parse_args(argv)
     if a.probe:
         return probe()
+    if a.fetch_only:
+        pair = {v: k for k, v in SYM.items()}[a.pair]
+        s0, s1 = a.span.split(",")
+        n_err, _ = fetch_only(pair, s0, s1, a.cache_dir)
+        return 0 if n_err == 0 else 1
     start, end = PERIOD[a.source]
     rng = np.random.default_rng(SEED)
     today = str(dt.datetime.now(JST).date())
@@ -544,17 +575,16 @@ def main(argv=None):
         extra = {"spread_pips": sp}
         window_fn = src.window
     else:
-        src = Duka()
+        src = Duka(cache_dir=a.cache_dir)
         failed, role, extra, window_fn = [], "判定", {}, src.window
     equities, eq_failed = load_equity()
     failed = list(failed) + eq_failed
-    if a.source == "dukascopy" and not failed:
-        src.prefetch(first_candidates(start, end), workers=4)
     end_rows, mid_rows, cover = ([], [], {}) if failed else run(a.source, window_fn, equities, start, end, rng)
     if a.source == "dukascopy":
         extra["fetch_errors"] = src.errors[:20]
         extra["fetched_files"] = src.fetched
-        print(f"取得 {src.fetched}ファイル・取れなかった {len(src.errors)}件", flush=True)
+        extra["from_cache"] = src.from_disk
+        print(f"手元から {src.from_disk}・新しく取得 {src.fetched}・取れなかった {len(src.errors)}件", flush=True)
     out = build(a.source, end_rows, mid_rows, cover, failed, role, rng, today, extra)
     write(out, a.source)
     return 0 if not out["failed"] else 1

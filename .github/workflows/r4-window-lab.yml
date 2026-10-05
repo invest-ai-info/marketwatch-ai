@@ -4,15 +4,17 @@ name: R4 Window Lab (manual)
 # 通貨を、月の最後の取引日のロンドン 08:00 に売り 16:00 に出る。比べる相手＝同じ決まりを月の真ん中の日に。Dukascopy の1分足・4ペア・2015-01〜2026-09。
 # 2026-10-05 夜 登録・オーナー「続けてください」。
 # ⚠️ 物差し・判定は PILLAR_PREREG.md「R4」の腕B と「R4 腕B の補足と腕C」（事前登録・計算より先にコミット済み）と r4_window_lab.py の冒頭に固定。
-# ⚠️ 手動実行のみ。mode=probe は「届くか」だけ（値動きは数えない・何も書かない）。mode=run で1回だけ数える
-#    （データが取れなければ何も数えず失敗する＝その場合は手元の MT5 の腕B が判定になる）。
+# ⚠️ 手動実行のみ。mode=probe は「届くか・1回の取得の秒数」だけ（値動きは数えない・何も書かない）。
+#    mode=run は ①ペア×前後半の8台で同時に取得だけ（1ファイル10〜120秒かかり、1台では6時間に収まらないため）
+#    ②取得したファイルを1台に集めて1回だけ数える（足りない日はその場で取り直す。データが取れなければ何も数えず失敗＝手元の腕B が判定）。
+#    取得したファイルは実行中の受け渡し（artifact・7日で消える）だけに使い、リポジトリには入れない。
 # ⚠️ 出力（r4-window-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
 
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe＝届くかだけ／run＝数える"
+        description: "probe＝届くかだけ／run＝取得して数える"
         required: true
         default: probe
         type: choice
@@ -23,9 +25,55 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  lab:
+  probe:
+    if: ${{ inputs.mode == 'probe' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Probe (reachability only, no counting)
+        shell: bash
+        run: python -u r4_window_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+
+  fetch:
+    if: ${{ inputs.mode == 'run' }}
     runs-on: ubuntu-latest
     timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        pair: [EURUSD, GBPUSD, USDJPY, AUDUSD]
+        part: [a, b]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Fetch only (no counting)
+        shell: bash
+        run: |
+          if [ "${{ matrix.part }}" = "a" ]; then span="2015-01-01,2020-12-31"; else span="2021-01-01,2026-09-30"; fi
+          # 取れなかった日があっても、数える段がその場で取り直すので、ここは失敗にしない
+          python -u r4_window_lab.py --fetch-only --pair "${{ matrix.pair }}" --span "$span" --cache-dir duka-cache || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: duka-${{ matrix.pair }}-${{ matrix.part }}
+          path: duka-cache/
+          retention-days: 7
+          if-no-files-found: warn
+
+  count:
+    needs: fetch
+    if: ${{ always() && inputs.mode == 'run' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
     permissions:
       contents: write
     steps:
@@ -39,18 +87,18 @@ jobs:
         run: pip install numpy pandas yfinance
       - name: Test with made-up bars
         run: python tests/test_r4_window_lab.py
-      - name: Probe (reachability only, no counting)
-        if: ${{ inputs.mode == 'probe' }}
-        shell: bash
-        run: python -u r4_window_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: duka-*
+          path: duka-cache
+          merge-multiple: true
       - name: Count with the pre-registered ruler
-        if: ${{ inputs.mode == 'run' }}
         run: |
-          python -u r4_window_lab.py --source dukascopy
+          ls duka-cache | wc -l
+          python -u r4_window_lab.py --source dukascopy --cache-dir duka-cache
           python verified_list.py > /dev/null
           [ -f r4-window-lab.md ] && cat r4-window-lab.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results
-        if: ${{ inputs.mode == 'run' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
