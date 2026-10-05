@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「月曜日は株が下がりやすい」は本当？ 見つかった理由と、今も残っているのかを研究で確かめる【エントリー方法の研究 #11】 - MarketWatch AI</title>
+  <meta name="description" content="フレンチ氏（1980年）が見つけた「月曜日は株価指数が下がりやすい」という傾向。個人投資家の売り・空売りの動きという説明、国によって低い曜日が違うという国際比較、そしてその後弱まったり逆転したりしたという検証まで、出典つきで整理します。">
+  <meta name="keywords" content="曜日の傾向,月曜日効果,週末効果,カレンダー効果,アノマリー,エントリー,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-entry-day-of-week.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「月曜日は株が下がりやすい」は本当？ 見つかった理由と、今も残っているのかを研究で確かめる【エントリー方法の研究 #11】">
+  <meta property="og:description" content="月曜日の株価指数が下がりやすいという「曜日の傾向」を、見つかった経緯・原因をめぐる議論・その後の検証まで出典つきで整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-entry-day-of-week.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「月曜日は株が下がりやすい」は本当？ 見つかった理由と、今も残っているのかを研究で確かめる【エントリー方法の研究 #11】",
+    "description": "月曜日の株価指数が下がりやすいという「曜日の傾向」を、見つかった経緯・原因をめぐる議論・その後の検証まで出典つきで整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-05",
+    "dateModified": "2026-10-05",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-entry-day-of-week.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-bar-a{fill:#0969da;opacity:.85}
+    .s-bar-b{fill:#54aeff;opacity:.85}
+    .s-bar-c{fill:#9a6700;opacity:.8}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-bar-a{fill:#58a6ff}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-c{fill:#d29922}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 曜日の傾向（エントリー方法の研究 #11）
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事はエントリー（買う・売るタイミング）の決め方についての考え方や、公開されている研究の紹介を目的とした「情報提供」であり、特定の手法・銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🗓 「月曜日は株が下がりやすい」は本当？ 見つかった理由と、今も残っているのかを研究で確かめる【エントリー方法の研究 #11】</h1>
+    <div class="meta-line">公開：2026年10月5日 ／ 読了時間：約 9 分 ／ カテゴリ：🚪 エントリー方法の研究</div>
+
+    <p>シリーズ第10回（<a href="guide-entry-turn-of-month.html">#10</a>）で扱った「月替わり」は、月の中の日付に注目する方法でした。この記事で扱う「曜日」も、同じく暦（カレンダー）に注目する方法です。なかでもよく知られているのが、「月曜日は株価指数が下がりやすい」という傾向です。1980年にこの傾向をはっきりと報告した研究のあとには、なぜそうなるのかをめぐる議論が続き、さらにあとの研究では、傾向そのものが弱まったり、逆に向きが変わったりしたとも報告されています。この記事では、見つかった経緯、原因をめぐる議論、そして今も残っているのかを、出典つきで整理します。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>フレンチ氏の研究（1980年）は、1953年から1977年までの米国株の代表的な指数（S&amp;P総合指数）を調べ、月曜日の平均リターンがマイナス0.17％ほどと、他の曜日に比べて偶然とは言いにくいほど低かったことを報告しました。</li>
+      <li>ジャッフィ氏とウエスターフィールド氏の研究（1985年）は、カナダ・英国・日本・オーストラリアの株価指数でも似た傾向を調べましたが、日本とオーストラリアでは、いちばん低い曜日は月曜日ではなく火曜日だったと報告しています。</li>
+      <li>スミス氏とロビンズ氏の研究（2016年）は、1926年から2014年までの米国株を調べ直し、月曜日の低さが目立っていたのはおもに1974年までで、1975年以降は偶然のぶれの範囲から外れないほど小さくなっていたと報告しました。グー氏の研究（2004年）は、1980年代後半から1990年代にかけて、米国の代表的な株価指数で、月曜日の平均リターンがむしろプラス側に回っていた（逆転した）という報告もしています。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな方法か</a></li>
+        <li><a href="#section-2">研究でわかっていること</a></li>
+        <li><a href="#section-3">反論・限界</a></li>
+        <li><a href="#section-4">株・FX・コモディティでは？</a></li>
+        <li><a href="#section-5">よくある誤解</a></li>
+        <li><a href="#section-6">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな方法か</h2>
+    <p>「曜日」に注目する方法は、暦の中で「何曜日か」だけをきっかけにして入る方法です。会社の業績や値動きの強さを見るのではなく、「市場がいつ閉まって、いつ開くか」という暦の構造だけに注目します。</p>
+    <p><strong>仮の例（考え方を説明するための仮の例です）：</strong> ある株価指数を、金曜日の終値で買い、次の月曜日の終値で売ることを毎週繰り返す、という入り方を考えてみます。土曜日と日曜日（週末）をまたいだ値動きだけを取りにいく、という考え方です。これは方法の形を示すための例であり、この売買が有利だという意味ではありません。</p>
+
+    <div class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="fig-dow-title">
+        <title id="fig-dow-title">米国株の月曜日の平均リターンが、時代によって変わってきた様子を示す図</title>
+        <text class="s-panel-label" x="320" y="24" text-anchor="middle">米国株・月曜日の平均リターンの変化（イメージ図）</text>
+        <line class="s-axis" x1="60" y1="150" x2="600" y2="150"/>
+        <line class="s-divv" x1="60" y1="80" x2="600" y2="80"/>
+        <text class="s-label-sm" x="54" y="84" text-anchor="end">プラス</text>
+        <text class="s-label-sm" x="54" y="154" text-anchor="end">0</text>
+        <rect class="s-bar-a" x="150" y="150" width="130" height="95"/>
+        <text class="s-legend" x="215" y="262" text-anchor="middle">1926〜1974年</text>
+        <text class="s-note-r" x="215" y="135" text-anchor="middle">マイナス0.18％ほど</text>
+        <rect class="s-bar-b" x="360" y="150" width="130" height="26"/>
+        <text class="s-legend" x="425" y="262" text-anchor="middle">1975〜2014年</text>
+        <text class="s-note" x="425" y="135" text-anchor="middle">マイナス0.05％ほど（偶然の範囲内）</text>
+        <text class="s-label-sm" x="320" y="286" text-anchor="middle">スミス氏とロビンズ氏（2016年）の報告をもとに当サイトが作図</text>
+      </svg>
+      <figcaption class="chart-caption">図：1926年から1974年までは月曜日の低さが目立っていましたが、1975年から2014年までは、その低さは偶然のぶれの範囲から外れないほど小さくなっていたと報告されています。※概念を示すイメージ図です（実際の値動きではありません）。</figcaption>
+    </div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 研究でわかっていること</h2>
+    <h3>月曜日はマイナスになりやすい（フレンチ氏、1980年）</h3>
+    <p>フレンチ氏の研究は、米国株の代表的な指数であるS&amp;P総合指数の、1953年から1977年までの日々のリターンを調べました。その結果、月曜日の平均リターンが、マイナス0.17％ほどと、他の曜日に比べて偶然とは言いにくいほど低かったことを報告しています。市場が2日間（土曜日・日曜日）閉まっていたぶんのリターンが積もっただけ、という考え方もありますが、フレンチ氏は、休場をまたいだ月曜日以外の日（祝日の翌日など）では同じような低さが見られなかったことも確かめ、休んだ日数の長さだけでは説明がつかないことを示しました。</p>
+    <h3>個人投資家の売りが関わっている（エイブラハム氏とアイケンベリー氏、1994年）</h3>
+    <p>エイブラハム氏とアイケンベリー氏の研究は、金曜日のリターンと、次の月曜日のリターンの結びつきを調べました。その結果、金曜日のリターンがマイナスだった週は、次の月曜日のリターンもマイナスになることが約8割で、その平均はマイナス0.61％ほどでした。反対に、金曜日のリターンがプラスだった週は、次の月曜日の平均リターンはプラス0.11％ほどでした。この結びつきは、ほかのどの曜日の組み合わせよりも強く、小型株・中型株でとくに目立ったと報告されています。研究は、個人投資家が月曜日に売り手として多く動いていたこと、とくに悪いニュースのあとにその傾向が強かったことを、この結びつきの一因として挙げています。</p>
+    <h3>空売りが関わっているという考え方（チェン氏とシンガル氏、2003年）</h3>
+    <p>チェン氏とシンガル氏の研究は、値下がりを見込んで株を借りて売る「空売り」をする投資家が、週末のあいだ取引できないことを避けるため、金曜日に空売りの持ち高を一度手放し、月曜日にあらためて空売りを組み直す、という行動をとることが、金曜日の株価を上げ、月曜日の株価を下げる一因になっている、という考え方を示しました。研究は、空売りが多い銘柄と少ない銘柄、オプション（あらかじめ決めた値段で売買できる権利）が取引できる銘柄とできない銘柄、新規上場株などを比べ、この考え方を支持する結果を報告しています。</p>
+    <h3>国によって、低い曜日が違う（ジャッフィ氏とウエスターフィールド氏、1985年）</h3>
+    <p>ジャッフィ氏とウエスターフィールド氏の研究は、米国以外の4つの国（カナダ・英国・日本・オーストラリア）の株価指数を調べました。その結果、カナダと英国では米国と同じように月曜日がいちばん低かった一方、日本とオーストラリアでは、いちばん低い曜日は月曜日ではなく火曜日だったと報告しています。各国の市場が閉まる時刻と、ニューヨーク市場が閉まる時刻のずれ（時差）がこの違いに関係しているのではないか、という問いも研究の中で取り上げられていますが、時差だけで説明できるかは、この記事で確かめられた範囲からはわかりません。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 反論・限界</h2>
+    <h3>空売りの説明には反論もある</h3>
+    <p>ブラウ氏・ヴァンネス氏・ヴァンネス氏の研究（2009年）は、実際の空売りの量を調べ直し、空売りの量がいちばん少ない曜日は、むしろ月曜日だったと報告しました。これは、チェン氏とシンガル氏の考え方の前提（月曜日に空売りを組み直す動きが多い）とは逆の結果であり、空売りだけでは月曜日の低さを説明しきれないことを示しています。</p>
+    <h3>見つかったあと、傾向は弱まり、逆転した時期もある</h3>
+    <p>グー氏の研究（2004年）は、「よく知られた週末の傾向は、1980年代後半から1990年代にかけて、米国の代表的な株価指数で逆転している」と報告しています。さらに、スミス氏とロビンズ氏の研究（2016年）は、1926年から2014年までの米国株1,000銘柄を調べ直し、月曜日の低さが目立っていたのはおもに1974年までで、1975年以降は、偶然のぶれの範囲から外れないほど小さくなっていたと報告しました。マーカリング氏らの研究（2006年）も、週替わり（週末の傾向）は、論文で発表されたあとに見られなくなっていたと報告しています。このシリーズ第10回で扱った「月替わり」は発表後も見られ続けていた傾向でしたが、月曜日の傾向は、それとは対照的に弱まった例です。</p>
+    <h3>取引コストの注意</h3>
+    <p>ここで紹介した研究の多くは、取引コストを引く前の数字です。金曜日に買って月曜日に売る、という入り方を毎週繰り返すと、1年に50回前後の売買が発生し、売値と買値の差（スプレッド）や手数料の分だけ、報告された大きさから差し引かれます。フレンチ氏が報告したマイナス0.17％や、エイブラハム氏とアイケンベリー氏が報告した数字も、いずれも取引コストを引く前の、1日あたりの平均の数字です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 株・FX・コモディティでは？</h2>
+    <p>紹介した研究のうち、曜日の傾向を調べた研究が、どの市場を対象にしているかを表に整理します。</p>
+    <table>
+      <tr><th>市場</th><th>研究はあるか</th><th>内容</th></tr>
+      <tr><td>株価指数</td><td>あり（研究の中心）</td><td>フレンチ氏の研究は米国株の指数が中心です。ジャッフィ氏とウエスターフィールド氏の研究は、米国以外にカナダ・英国・日本・オーストラリアの株価指数も調べていますが、日本とオーストラリアでは、低い曜日が月曜日ではなく火曜日でした。</td></tr>
+      <tr><td>為替（FX）</td><td>この記事で確かめられた研究の範囲ではわからない</td><td>今回紹介した研究は、いずれも株価指数を対象にしたものです。為替を対象にした研究も見かけましたが、出典（出版社の要旨や公式ページ）に実際に届いて数字を確かめることができなかったため、この記事では書きません。</td></tr>
+      <tr><td>コモディティ（金・原油など）</td><td>この記事で確かめられた研究の範囲ではわからない</td><td>為替と同様に、コモディティを対象にした研究の要旨や公式ページに今回は届けませんでした。コモディティで同じ傾向があるかは、この記事からはわかりません。</td></tr>
+    </table>
+
+    <div class="info-box"><strong>当サイトとの関係：</strong> 当サイトの監視18銘柄には、日経平均先物やS&amp;P500先物のような株価指数、金・原油などのコモディティ、為替（FX）が含まれています。当サイトのシグナルは、RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）・MACD（移動平均線を使って、流れの変わり目をとらえる指標）・移動平均・ボリンジャーバンド（値動きの広がりを統計的な幅で示す線）・高値安値のブレイクといった値動きの型を見るもので、カレンダー上の曜日を判定材料にしていません。この記事で紹介した研究が調べたのは、おもに1920年代から2014年までの米国株（個別の株や株価指数）と、ほかの4つの国の株価指数です。当サイトのシグナルの期間・市場とは違うため、この記事の研究結果は、当サイトのシグナルの成績を裏づけるものではありません。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ よくある誤解</h2>
+    <h3>誤解1：「月曜日は今でも株価指数が下がりやすい」と思われがち</h3>
+    <p>フレンチ氏の研究（1980年）が有名になったため、今でもこの傾向が続いていると思われがちです。しかし、グー氏の研究（2004年）は1980年代後半から1990年代にかけての逆転を、スミス氏とロビンズ氏の研究（2016年）は1975年以降に傾向が偶然の範囲まで小さくなったことを報告しています。見つかった時点の傾向が、その後もそのまま続くとは限りません。なお、これらの研究が調べたのは2014年までで、それより後の期間に傾向があるか無いかは、この記事からはわかりません。</p>
+    <h3>誤解2：「空売りが原因だと研究でわかっている」と思われがち</h3>
+    <p>チェン氏とシンガル氏の研究（2003年）はその考え方を示していますが、ブラウ氏らの研究（2009年）は、実際の空売りの量がいちばん少ない曜日はむしろ月曜日だったと報告しており、この考え方の前提に反する結果を示しています。原因は、研究者のあいだでも意見が分かれています。</p>
+    <h3>誤解3：「日本株でも、米国株と同じ理由で月曜日が下がりやすい」と思われがち</h3>
+    <p>ジャッフィ氏とウエスターフィールド氏の研究（1985年）は、日本とオーストラリアでは、いちばん低い曜日は月曜日ではなく火曜日だったと報告しています。この研究が調べたのは1970年代から1980年代前半の期間であり、今の日本株に同じ傾向がそのまま当てはまるかは、この記事で確かめられた範囲からはわかりません。</p>
+
+    <div class="warning-box">この記事は、公開されている学術研究を当サイトが要約したものです。研究の数字は、それぞれの研究が使った期間・市場・条件のもとでの結果であり、将来も同じになるとは限りません。特定の手法・銘柄の売買を勧めるものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ</h2>
+    <ul>
+      <li>フレンチ氏の研究（1980年）は、1953年から1977年までの米国株で、月曜日の平均リターンがマイナス0.17％ほどと、偶然とは言いにくいほど低かったことを報告しました。</li>
+      <li>原因については、個人投資家の売り（エイブラハム氏とアイケンベリー氏、1994年）や空売り（チェン氏とシンガル氏、2003年）という考え方が示されていますが、空売りの考え方には反論（ブラウ氏ら、2009年）もあります。</li>
+      <li>ジャッフィ氏とウエスターフィールド氏の研究（1985年）は、日本とオーストラリアでは、いちばん低い曜日が月曜日ではなく火曜日だったと報告しました。</li>
+      <li>グー氏の研究（2004年）は1980年代後半から1990年代の逆転を、スミス氏とロビンズ氏の研究（2016年）は1975年以降に傾向が小さくなったことを報告しており、見つかった時点の傾向が、その後も続くとは限らないことを示す例です。</li>
+    </ul>
+    <p>次回は、夜のあいだと取引時間の中とで、もうけの出方が違うという研究を見ていきます。</p>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-entry-turn-of-month.html">
+        <div class="related-card-title">📆 月替わりになると株は上がりやすい？【エントリー方法の研究 #10】</div>
+        <div class="related-card-desc">同じく日付（暦）に注目する入り方。発表後も傾向が残った例として対比できます。</div>
+      </a>
+      <a class="related-card" href="guide-market-hours.html">
+        <div class="related-card-title">🕐 取引時間の話｜東京・ロンドン・NYと動きやすい時間帯を図解</div>
+        <div class="related-card-desc">曜日だけでなく、1日の中の時間帯による動きやすさの違いを図解した記事。</div>
+      </a>
+      <a class="related-card" href="guide-sell-in-may.html">
+        <div class="related-card-title">📅 Sell in May（5月に売れ）は本当か？</div>
+        <div class="related-card-desc">曜日ではなく季節（月そのもの）に注目したカレンダーの傾向を検証した記事。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/0304405X80900213" target="_blank" rel="noopener">French (1980) "Stock Returns and the Weekend Effect", Journal of Financial Economics 8(1)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://ideas.repec.org/p/fth/pennfi/3-85.html" target="_blank" rel="noopener">Jaffe &amp; Westerfield (1985) "The Week-End Effect in Common Stock Returns: The International Evidence", The Journal of Finance 40(2)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://www.cambridge.org/core/product/identifier/S0022109000008929/type/journal_article" target="_blank" rel="noopener">Abraham &amp; Ikenberry (1994) "The Individual Investor and the Weekend Effect", Journal of Financial and Quantitative Analysis 29(2)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://ideas.repec.org/a/bla/jfinan/v58y2003i2p685-705.html" target="_blank" rel="noopener">Chen &amp; Singal (2003) "Role of Speculative Short Sales in Price Formation: The Case of the Weekend Effect", The Journal of Finance 58(2)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://ideas.repec.org/a/bla/finmgt/v38y2009i3p603-630.html" target="_blank" rel="noopener">Blau, Van Ness &amp; Van Ness (2009) "Short Selling and the Weekend Effect for NYSE Securities", Financial Management 38(3)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://ideas.repec.org/a/kap/rqfnac/v22y2004i1p5-14.html" target="_blank" rel="noopener">Gu (2004) "The Reversing Weekend Effect: Evidence from the U.S. Equity Markets", Review of Quantitative Finance and Accounting 22(1)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+      <li><a href="https://doi.org/10.1561/104.00000038" target="_blank" rel="noopener">Smith &amp; Robins (2016) "No More Weekend Effect", Critical Finance Review 5(2)</a>（出版社ページは直接の取得が遮断されたため、大学の報道発表の引用と検索結果に引用された本文で確認）</li>
+      <li><a href="https://doi.org/10.1080/09603100500400361" target="_blank" rel="noopener">Marquering, Nisser &amp; Valla (2006) "Disappearing Anomalies: A Dynamic Analysis of the Persistence of Anomalies", Applied Financial Economics 16(4)</a>（出版社ページは直接の取得が遮断されたため、検索結果に引用された要旨本文で確認）</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はエントリー（買う・売るタイミング）の決め方についての考え方と、公開されている学術研究の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。研究の内容は当サイトによる要約です。正確な内容は各原文をご確認ください。記載の数値・方法による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>

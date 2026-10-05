@@ -326,4 +326,5 @@ SYNC_FILES = [
     "guide-news-2026-10-04-opec-november-output.html",
     "guide-signal-lab-118.html",
     "guide-company-8725-msad.html",
+    "guide-entry-day-of-week.html",
 ]
