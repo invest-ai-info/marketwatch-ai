@@ -1,0 +1,53 @@
+name: Buy Lab (manual)
+
+# R2 余剰資金の入れ方：一括・12/24か月に分ける・下がったら買う・積立＋下がったら前倒し を、10年後の資産で比べる。
+# 2026-10-05 登録・オーナー「ニーサは50%程度の下落なら耐えて買い増しする準備がある。そのためのシステムトレードの研究を」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「R2 余剰資金の入れ方」（事前登録・計算より先にコミット済み）と buy_lab.py の冒頭に固定。
+# ⚠️ データは R1 と同じ直し方①〜③を当てた円建ての日足（2026-10-02 まで）。税なし・買うだけ。
+# ⚠️ 手動実行のみ（1回だけ数える。データが取れなければ何も数えず失敗する＝そのときだけやり直す）。
+# ⚠️ 出力（buy-lab.json / buy-lab.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。金額は書かない。
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: buy-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_buy_lab.py
+      - name: Count with the pre-registered ruler
+        run: |
+          python buy_lab.py
+          [ -f buy-lab.md ] && cat buy-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add buy-lab.json buy-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: buy lab R2 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
