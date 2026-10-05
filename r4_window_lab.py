@@ -105,12 +105,19 @@ def weekdays(y, m):
     return [x.date() for x in d if x.weekday() < 5]
 
 
+FAILED = object()                  # 取得に失敗した日（「足が無い日」とは別）
+
+
 def pick_day(window_fn, pair, y, m, rule, end):
-    """rule＝last：両方に足がある最後の平日／mid：15日以上で両方に足がある最初の平日。見つからなければ None"""
+    """rule＝last：両方に足がある最後の平日／mid：15日以上で両方に足がある最初の平日。見つからなければ None。
+    取得に失敗した日（FAILED）に当たったら、次の日へ進まずに None（決まりと違う日を使わない＝その月は見つからなかった扱い）"""
     wd = [d for d in weekdays(y, m) if d <= end]
     cands = wd[::-1][:SEARCH_DAYS] if rule == "last" else [d for d in wd if d.day >= 15][:SEARCH_DAYS]
     for d in cands:
-        if window_fn(pair, d) is not None:
+        w = window_fn(pair, d)
+        if w is FAILED:
+            return None
+        if w is not None:
             return d
     return None
 
@@ -295,7 +302,7 @@ class Duka:
         key = (pair, day)
         if key not in self.cache:
             data = self.raw(pair, day)
-            self.cache[key] = None if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
+            self.cache[key] = FAILED if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
         return self.cache[key]
 
 
