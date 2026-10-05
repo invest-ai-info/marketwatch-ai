@@ -171,17 +171,24 @@ def test_dukascopy_retries_when_busy():
     assert bad.window("EURUSD=X", dt.date(2024, 1, 15)) is None and len(bad.errors) == 1
 
 
-def test_prefetch_and_first_candidates():
+def test_first_candidates_and_disk_cache():
     keys = W.first_candidates("2026-08-01", "2026-09-24")
     assert ("EURUSD=X", dt.date(2026, 8, 31)) in keys and ("EURUSD=X", dt.date(2026, 8, 17)) in keys
     assert all(k[1].month == 8 for k in keys) and len(keys) == 8                         # 9月は書き出しの途中で終わる＝数えない
     body = _duka_bytes([(28800, 1.1, 1.0), (57600, 1.2, 1.0)], 0.00001)
     seen = []
-    d = W.Duka(opener=lambda req: (seen.append(req.full_url), _Resp(body))[1], wait=lambda s: None)
-    d.prefetch(keys, workers=3)
-    assert len(seen) == 8 and len(d.cache) == 8
-    d.prefetch(keys)
-    assert len(seen) == 8
+    with tempfile.TemporaryDirectory() as tmp:
+        d = W.Duka(opener=lambda req: (seen.append(req.full_url), _Resp(body))[1], wait=lambda s: None, cache_dir=tmp)
+        n_err, n = W.fetch_only("EURUSD=X", "2024-01-01", "2024-01-31", tmp, end="2024-12-31", duka=d)
+        assert (n_err, n) == (0, 2) and len(os.listdir(tmp)) == 2                         # 冬の月末（1/31）と真ん中（1/15）
+        d2 = W.Duka(opener=lambda req: 1 / 0, wait=lambda s: None, cache_dir=tmp)       # 2回目は置き場から読むだけ
+        w = d2.window("EURUSD=X", dt.date(2024, 1, 31))
+        assert d2.from_disk == 1 and d2.fetched == 0 and _close(w[0], 1.1)
+        import urllib.error
+        d3 = W.Duka(opener=lambda req: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 404, "x", {}, None)),
+                    wait=lambda s: None, cache_dir=tmp)
+        assert d3.window("EURUSD=X", dt.date(2024, 1, 25)) is None
+        assert os.path.getsize(os.path.join(tmp, "EURUSD_2024-01-25.bi5")) == 0            # データの無い日も覚える
 
 
 def test_read_mt5_csv_variants():
