@@ -12,10 +12,12 @@
       期間の始まりは日本の新聞・証券会社の慣例どおり **4〜12月＝その年の1月1日／1〜3月＝前の年の1月1日**
       （1〜3月は「昨年来高値」と呼ぶ）。window_start() が単一の真実。
   ・上場来高値＝その日の高値が、記録のある全期間（月足 range=max）の高値をすべて上回った。
-      🚨 Yahoo の日本株の記録は古い銘柄だと途中（2000年ごろ）からしかない＝1989年のバブル期の高値などとは
-      比べられない。そこで**記録の始まりがトヨタ（1949年上場＝Yahoo の記録の床）と同じ銘柄は
-      「上場来」と言い切らず「記録のある期間（YYYY年〜）の最高値」として出す**（listing_confirmed）。
-      床は毎回トヨタの記録から測る＝決め打ちしない。
+      🚨 Yahoo の日本株の記録は古い銘柄だと途中（1999〜2001年ごろ）からしかない＝1989年のバブル期の高値などとは
+      比べられない。そこで**記録の始まりが LISTING_CUTOFF（2004-01-01）より前の銘柄は「上場来」と言い切らず
+      「記録のある期間（YYYY年〜）の最高値」として出す**（listing_confirmed）。
+      ⚠️ 初版（2026-10-06 朝）はトヨタの記録の始まり（1999-06）を「床」にしたが、ほかの古い銘柄は
+      2000-02・2001-01 などばらばらに始まり、小松製作所（1949年上場）などを「上場来」と誤って出した＝床は銘柄ごとに違う。
+      区切りが安全かは `python build_jp_highs.py --audit`（jp-highs-audit.yml・手動）で全銘柄の記録の始まりを並べて確かめる。
 
 ガード（build_jp_rankings.py と同じ流儀＝関数をそのまま使う）:
   ・最終バーの日付の多数派を asof にし、少数派の銘柄は落とす（別の日を混ぜない）
@@ -41,8 +43,8 @@ OUT = os.path.join(HERE, "jp-highs.json")
 RANKINGS = os.path.join(HERE, "jp-rankings.json")
 MIN_PRIOR_BARS = 20       # 期間内に前の営業日がこれ未満（上場直後）は数えない＝数日分の「高値」は意味が薄い
 MAX_JUMP = 1.5            # その日の高値 ÷ 前の日の終値 がこれを超えたらデータの誤りとして数えない
-FLOOR_PROBE = "7203"      # トヨタ（1949年上場）＝Yahoo の日本株の記録の床を知るためだけに使う
-FLOOR_SLACK_DAYS = 45     # 記録の始まりが床からこの日数以内なら「上場時からの記録ではない」とみなす
+LISTING_CUTOFF = "2004-01-01"  # 記録の始まりがこれより前＝Yahoo の記録の床（1999〜2001年ごろ）に当たる＝上場来とは言わない
+RULE_VERSION = 2          # 判定の決まりを変えたら上げる＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
 
@@ -126,16 +128,12 @@ def all_time_high(monthly, daily):
     return daily[-1][1] > prev_max, round(prev_max, 1), first
 
 
-def listing_confirmed(first_date, floor_date):
-    """記録の始まりが Yahoo の床より十分あと＝上場時からの記録とみなせるか。純関数。
+def listing_confirmed(first_date, cutoff=LISTING_CUTOFF):
+    """記録の始まりが区切り以降＝上場時からの記録とみなせるか。純関数。
 
-    床が分からない（トヨタの記録が取れなかった）ときは False＝「上場来」と言い切らない側に倒す。
+    分からないときは False＝「上場来」と言い切らない側に倒す。
     """
-    if not first_date or not floor_date:
-        return False
-    f = datetime.date.fromisoformat(first_date)
-    fl = datetime.date.fromisoformat(floor_date)
-    return (f - fl).days > FLOOR_SLACK_DAYS
+    return bool(first_date) and first_date >= cutoff
 
 
 def update_history(history, asof, n_ytd, n_ath):
@@ -144,6 +142,11 @@ def update_history(history, asof, n_ytd, n_ath):
     h.append({"date": asof, "ytd": n_ytd, "ath": n_ath})
     h.sort(key=lambda x: x["date"])
     return h[-HISTORY_KEEP:]
+
+
+def already_done(prev, rank_asof):
+    """jp-rankings.json と同じ営業日・同じ決まりの一覧がもうあるか（＝取りに行かない）。純関数。"""
+    return bool(rank_asof) and prev.get("asof") == rank_asof and prev.get("rule") == RULE_VERSION
 
 
 def read_json(path):
@@ -158,8 +161,8 @@ def main(force=False):
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
     rank_asof = read_json(RANKINGS).get("asof") or ""
-    if not force and rank_asof and prev_asof == rank_asof:
-        print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日）＝取りに行かずに終了")
+    if not force and already_done(prev, rank_asof):
+        print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
 
     stocks = json.load(open(INFO, encoding="utf-8"))["stocks"]
@@ -199,10 +202,6 @@ def main(force=False):
         print(f"⚠️ jp-rankings.json は {rank_asof}・こちらは {asof}（取得のあいだに上流が更新された）＝各欄に日付を出すので続行")
 
     start, label = window_start(asof)
-    floor_bars = fetch_bars(FLOOR_PROBE, "max", "1mo")
-    floor = floor_bars[0][0] if floor_bars else ""
-    if not floor:
-        print("⚠️ トヨタの記録が取れず Yahoo の記録の床が分からない＝今回は「上場来」と言い切らない")
 
     rows, skipped_bad = [], 0
     for code, bars in daily.items():
@@ -227,24 +226,58 @@ def main(force=False):
             "ath": bool(ath),                            # 記録のある全期間の高値を更新した
             "ath_prev": ath_prev,                        # それまでの記録上の最高値
             "hist_from": first,                          # 比べた記録の始まり
-            "listed": listing_confirmed(first, floor) if ath else None,  # True＝上場時からの記録＝「上場来」と言える
+            "listed": listing_confirmed(first) if ath else None,  # True＝上場時からの記録＝「上場来」と言える
         })
     rows.sort(key=lambda r: r["turnover"], reverse=True)
     n_ath = sum(1 for r in rows if r["ath"])
     payload = {
         "asof": asof, "universe": len(daily), "window_start": start, "label": label,
-        "floor": floor, "rows": rows,
+        "rule": RULE_VERSION, "listing_cutoff": LISTING_CUTOFF, "rows": rows,
         "history": update_history(prev.get("history"), asof, len(rows), n_ath),
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False)
     print(f"✅ {OUT}: as of {asof} / {len(daily)}銘柄（取得失敗{fail}・データの誤りで除外{skipped_bad}）"
           f" → {label} {len(rows)}銘柄（{start}〜）・記録上の最高値 {n_ath}銘柄"
-          f"（うち上場来と言えるもの {sum(1 for r in rows if r['ath'] and r['listed'])}）・記録の床 {floor or '不明'}")
+          f"（うち上場来と言えるもの {sum(1 for r in rows if r['ath'] and r['listed'])}・区切り {LISTING_CUTOFF}）")
     for r in rows[:5]:
         print(f"   {r['code']} {r['name']} 高値{r['high']}（前の高値 {r['prev_high']} {r['prev_high_date']}）"
               f"{' 🏆' if r['ath'] else ''}")
 
 
+def audit():
+    """全銘柄の Yahoo の記録の始まりを並べる（表示だけ・何も書かない）。LISTING_CUTOFF が安全かを確かめる用。
+
+    見るところ＝区切り（2004年）以降に記録が始まる銘柄が、本当にその頃に上場した銘柄か。
+    古くから上場している会社がここに出たら、その銘柄は Yahoo の記録が途中からしかない＝区切りを遅らせる。
+    """
+    stocks = json.load(open(INFO, encoding="utf-8"))["stocks"]
+    firsts, fail = {}, []
+    for code in stocks:
+        bars = fetch_bars(code, "max", "1mo")
+        if bars:
+            firsts[code] = bars[0][0]
+        else:
+            fail.append(code)
+        time.sleep(0.07)
+    by_year = {}
+    for d in firsts.values():
+        by_year[d[:4]] = by_year.get(d[:4], 0) + 1
+    print(f"記録の始まり（{len(firsts)}銘柄・取得失敗 {len(fail)}）")
+    for y in sorted(by_year):
+        print(f"  {y}: {by_year[y]}")
+    late = sorted((d, c) for c, d in firsts.items() if d >= LISTING_CUTOFF)
+    print(f"\n区切り {LISTING_CUTOFF} 以降に始まる＝「上場来」と言う側 {len(late)}銘柄（上場がその頃か確かめる）:")
+    for d, c in late:
+        print(f"  {d}  {c}  {stocks[c].get('name', '')}")
+    early = sorted((d, c) for c, d in firsts.items() if d < LISTING_CUTOFF)
+    print(f"\n区切りより前に始まる＝「YYYY年〜※」と出す側 {len(early)}銘柄のうち、最も遅く始まる10銘柄:")
+    for d, c in early[-10:]:
+        print(f"  {d}  {c}  {stocks[c].get('name', '')}")
+
+
 if __name__ == "__main__":
-    main(force="--force" in sys.argv)
+    if "--audit" in sys.argv:
+        audit()
+    else:
+        main(force="--force" in sys.argv)

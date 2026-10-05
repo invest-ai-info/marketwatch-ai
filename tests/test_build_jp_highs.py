@@ -103,15 +103,29 @@ def test_ath_without_monthly_is_unknown():
     assert H.all_time_high([], _days("2026-01-05", 30)) == (None, None, None)
 
 
-def test_listing_confirmed_only_when_record_starts_after_floor():
-    floor = "2000-01-01"
-    assert H.listing_confirmed("2014-03-19", floor) is True      # 2014年上場＝記録は上場時から
-    assert H.listing_confirmed("2000-01-04", floor) is False     # 床と同じ＝それより前の高値は比べていない
-    assert H.listing_confirmed("2000-02-10", floor) is False     # 床から45日以内も同じ扱い
-    assert H.listing_confirmed("2014-03-19", "") is False        # 床が分からないときは言い切らない
+def test_listing_confirmed_only_when_record_starts_after_cutoff():
+    assert H.listing_confirmed("2014-03-19") is True      # 2014年上場＝記録は上場時から
+    assert H.listing_confirmed("2024-12-18") is True
+    # 2026-10-06 の実データ＝Yahoo の記録の始まりは銘柄ごとにばらばら（トヨタ 1999-06・小松 2000-02・カプコン 2001-02）。
+    # 初版はトヨタを床にして、小松（1949年上場）などを「上場来」と誤って出した＝どれも言い切らない側
+    assert H.listing_confirmed("1999-06-01") is False
+    assert H.listing_confirmed("2000-02-01") is False
+    assert H.listing_confirmed("2001-02-01") is False
+    assert H.listing_confirmed("2003-12-01") is False
+    assert H.listing_confirmed("") is False and H.listing_confirmed(None) is False   # 分からないときは言い切らない
 
 
 # ── その他 ─────────────────────────────────────────────
+
+def test_already_done_needs_same_day_and_same_rule():
+    prev = {"asof": "2026-10-05", "rule": H.RULE_VERSION}
+    assert H.already_done(prev, "2026-10-05") is True
+    assert H.already_done(prev, "2026-10-06") is False                  # 新しい営業日＝作る
+    assert H.already_done({"asof": "2026-10-05", "rule": 1}, "2026-10-05") is False   # 決まりが変わった＝作り直す
+    assert H.already_done({"asof": "2026-10-05"}, "2026-10-05") is False  # 初版（rule なし）も作り直す
+    assert H.already_done({}, "2026-10-05") is False
+    assert H.already_done(prev, "") is False
+
 
 def test_update_history_replaces_same_day_and_keeps_order():
     h = [{"date": "2026-10-01", "ytd": 3, "ath": 1}, {"date": "2026-10-02", "ytd": 5, "ath": 2}]

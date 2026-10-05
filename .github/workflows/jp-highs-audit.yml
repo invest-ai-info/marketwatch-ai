@@ -1,0 +1,23 @@
+name: JP Highs Audit
+
+# 高値更新銘柄（build_jp_highs.py）の「上場来」の区切りが安全かを確かめる（手動・表示だけ・何も書かない）。
+# 2026-10-06: Yahoo の日本株の記録の始まりは銘柄ごとにばらばら（トヨタ 1999-06・小松 2000-02・カプコン 2001-02）で、
+#   初版は小松製作所（1949年上場）などを「上場来高値」と誤って出した。全銘柄の記録の始まりを並べ、
+#   区切り（LISTING_CUTOFF）以降に始まる銘柄が本当にその頃に上場した銘柄かをログで見る。
+#   ユニバース（jp-stock-info.json）を入れ替えたときにも1回回す。
+
+on:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Audit Yahoo history start per stock
+        run: python build_jp_highs.py --audit
