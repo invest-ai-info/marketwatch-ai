@@ -10,6 +10,13 @@ name: Intl Turn-of-Month Lab (manual)
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝データの点検だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
 
 concurrency:
   group: intl-tom-lab
@@ -32,12 +39,18 @@ jobs:
         run: pip install numpy pandas yfinance
       - name: Test with made-up prices
         run: python tests/test_intl_tom_lab.py
+      - name: Data check only (no counting)
+        if: ${{ inputs.mode == 'check' }}
+        shell: bash
+        run: python -u intl_tom_lab.py --check | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
         run: |
           python intl_tom_lab.py
           python verified_list.py > /dev/null
           [ -f intl-tom-lab.md ] && cat intl-tom-lab.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
