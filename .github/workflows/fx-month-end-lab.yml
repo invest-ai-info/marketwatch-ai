@@ -1,0 +1,53 @@
+name: FX Month-End Lab (manual)
+
+# R4 月末のロンドン16時の値決め前の、為替ヘッジの売り買い（Melvin & Prins 2015）＝その月の株の上げ（外国−米国）がプラスの国の
+# 通貨を、月の最後の取引日に売る（日足の近い形・4ペア・2015-01〜2026-09）。2026-10-05 登録・オーナー「おすすめ通りにお願いします」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「R4」（事前登録・計算より先にコミット済み）と fx_month_end_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ（1回だけ数える。データの取得に失敗したら何も数えず失敗する＝直し方を登録してからやり直す）。
+# ⚠️ 出力（fx-month-end-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: fx-month-end-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_fx_month_end_lab.py
+      - name: Count with the pre-registered ruler
+        run: |
+          python fx_month_end_lab.py
+          python verified_list.py > /dev/null
+          [ -f fx-month-end-lab.md ] && cat fx-month-end-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fx-month-end-lab.json fx-month-end-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: fx month-end lab R4 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
