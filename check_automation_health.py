@@ -1204,7 +1204,7 @@ def main():
             body.append(f"- ✅ 🟢 信用残 asof={m_asof}（確定最終営業日から {lag} 営業日遅れ・{MARGIN_LAG_MAX} まで正常）")
     except Exception as e:
         body.append(f"- 🚨 ⚪ 信用残の鮮度確認に失敗: {e}")
-    # ⑫c 高値更新銘柄（jp-highs.json・2026-10-06〜）。jp-rankings.yml の高値ステップも non-fatal＝失敗しても緑なので、
+    # ⑫c 高値・安値の更新銘柄（jp-highs.json・2026-10-06〜）。jp-rankings.yml の高値ステップも non-fatal＝失敗しても緑なので、
     #     ランキングと同じく「上流の確定最終営業日」と突き合わせる（同じジョブで続けて作るので、正常なら一致する）
     try:
         hi = json.loads(api_raw(
@@ -1213,16 +1213,16 @@ def main():
         h_settled = latest_settled_trading_date(dates, now)
         h_asof = hi.get("asof") or ""
         if h_settled and h_asof and h_asof < h_settled:
-            body.append(f"- 🚨 🟡 高値更新銘柄が古い: jp-highs.json の asof={h_asof} / 上流の確定最終営業日={h_settled}。"
-                        f"**hot-assets の「高値更新銘柄」が前の営業日の一覧のまま**。jp-rankings.yml の高値ステップは"
-                        f"失敗しても緑（non-fatal）なので、ログの「Build JP new highs」を見る")
-            bad.append(("高値更新銘柄の鮮度", "warn"))
+            body.append(f"- 🚨 🟡 高値・安値の更新銘柄が古い: jp-highs.json の asof={h_asof} / 上流の確定最終営業日={h_settled}。"
+                        f"**hot-assets の「高値・安値の更新銘柄」が前の営業日の一覧のまま**。jp-rankings.yml の高値ステップは"
+                        f"失敗しても緑（non-fatal）なので、ログの「Build JP new highs and lows」を見る")
+            bad.append(("高値・安値の更新銘柄の鮮度", "warn"))
         elif h_settled and h_asof:
-            body.append(f"- ✅ 🟢 高値更新銘柄 asof={h_asof}（上流の確定最終営業日と一致）")
+            body.append(f"- ✅ 🟢 高値・安値の更新銘柄 asof={h_asof}（上流の確定最終営業日と一致）")
         else:
-            body.append(f"- ⚪ 高値更新銘柄: 判定不能（asof={h_asof or 'なし'} / 上流={h_settled or 'なし'}）")
+            body.append(f"- ⚪ 高値・安値の更新銘柄: 判定不能（asof={h_asof or 'なし'} / 上流={h_settled or 'なし'}）")
     except Exception as e:
-        body.append(f"- 🚨 ⚪ 高値更新銘柄の鮮度確認に失敗: {e}")
+        body.append(f"- 🚨 ⚪ 高値・安値の更新銘柄の鮮度確認に失敗: {e}")
 
     body.append("")
     body.append("### ⑬ カレンダーの先詰まり（①②はworkflow成否しか見ない死角＝中身で見る）")

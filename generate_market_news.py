@@ -2718,9 +2718,10 @@ def build_jp_margin_section(now_jst):
 
 
 def build_jp_highs_section(now_jst):
-    """年初来高値・上場来高値を更新した銘柄（jp-highs.json＝build_jp_highs.py）を hot-assets に描画。🆕 2026-10-06
+    """年初来・上場来の高値と安値を更新した銘柄（jp-highs.json＝build_jp_highs.py）を hot-assets に描画。
+    🆕 2026-10-06 高値（オーナー依頼）→ 同日夕に安値も（「安値の方も追加して」）。左＝高値・右＝安値（スマホは縦に並ぶ）。
     事実の市場データの中立提示＋見方の注記。買い/売り推奨ではない。データ無ければ空文字。jprank-* のCSSを流用。
-    ⚠️ Yahoo の記録が上場時から揃っていない古い銘柄は「上場来」と言い切らない（listed=False は「YYYY年〜」と出す）。"""
+    ⚠️ Yahoo の記録が上場時から揃っていない古い銘柄は「上場来」と言い切らない（listed=False は「YYYY年〜※」と出す）。"""
     import json as _json
     p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jp-highs.json")
     if not os.path.exists(p):
@@ -2729,10 +2730,12 @@ def build_jp_highs_section(now_jst):
         d = _json.load(open(p, encoding="utf-8"))
     except Exception:
         return ""
-    rows = d.get("rows", [])
+    if "highs" not in d:   # 安値を足す前の形（rule 3 以前）＝作り直されるまで出さない
+        return ""
+    highs, lows = d.get("highs", []), d.get("lows", [])
     asof = d.get("asof", "")
-    label = d.get("label", "年初来高値")
-    start = d.get("window_start", "")
+    period = d.get("period", "年初来")
+    sy = str(d.get("window_start", ""))[:4]
     uni = d.get("universe", 0)
 
     def _fin(a):
@@ -2742,10 +2745,10 @@ def build_jp_highs_section(now_jst):
             return '<span title="直近開示の決算が黒字" aria-label="黒字">🟢</span>'
         return '<span title="決算情報なし" style="color:#8b949e">—</span>'
 
-    def _name(r, badge=False):
+    def _name(r, badge=""):
         nm = str(r.get("name", ""))[:14]
         sec = str(r.get("sector", ""))[:6]
-        b = ' <span title="記録のある期間の最高値も更新">🏆</span>' if badge and r.get("ath") else ""
+        b = f' <span title="記録のある期間の最高値・最安値も更新">{badge}</span>' if badge and r.get("record") else ""
         return f'<td class="jph-nm"><div class="jpr-nm">{nm}{b}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
 
     def _pct(r):
@@ -2756,49 +2759,67 @@ def build_jp_highs_section(now_jst):
         y = str(r.get("hist_from") or "")[:4]
         if r.get("listed"):
             return f'上場来<br><span class="jpr-to2">{y}年〜</span>'
-        return f'{y}年〜<span title="Yahoo の記録がこの年からしかないため、それより前（1990年前後のバブル期など）の高値とは比べていません">※</span>'
+        return f'{y}年〜<span title="Yahoo の記録がこの年からしかないため、それより前（1990年前後のバブル期など）の値とは比べていません">※</span>'
 
-    ath_rows = [r for r in rows if r.get("ath")]
-    ath_body = "".join(
-        f'<tr><td class="jpr-rk">{i}</td>{_name(r)}'
-        f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
-        f'<td class="jpr-to" style="text-align:center">{_since(r)}</td>'
-        f'<td class="jpr-to">{(r.get("turnover") or 0):,.0f}</td><td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>'
-        for i, r in enumerate(ath_rows, 1)
-    ) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">この日は該当なし</td></tr>'
-    ytd_body = "".join(
-        f'<tr><td class="jpr-rk">{i}</td>{_name(r, badge=True)}'
-        f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
-        f'<td class="jpr-to">{(r.get("prev_high") or 0):,.1f}<br><span class="jpr-to2">{str(r.get("prev_high_date",""))[5:].replace("-", "/")}</span></td>'
-        f'<td class="jpr-to">{(r.get("turnover") or 0):,.0f}</td><td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>'
-        for i, r in enumerate(rows, 1)
-    ) or '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">この日は該当なし</td></tr>'
+    empty = '<tr><td colspan="7" style="text-align:center;color:#6e7781;padding:16px">この日は該当なし</td></tr>'
 
-    # 前の営業日の件数（履歴は build_jp_highs.py が日ごとに1件ずつ積む）
+    def _rec_body(items):
+        return "".join(
+            f'<tr><td class="jpr-rk">{i}</td>{_name(r)}'
+            f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
+            f'<td class="jpr-to" style="text-align:center">{_since(r)}</td>'
+            f'<td class="jpr-to">{(r.get("turnover") or 0):,.0f}</td><td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>'
+            for i, r in enumerate(items, 1)) or empty
+
+    def _ytd_body(items, badge):
+        return "".join(
+            f'<tr><td class="jpr-rk">{i}</td>{_name(r, badge)}'
+            f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
+            f'<td class="jpr-to">{(r.get("prev") or 0):,.1f}<br><span class="jpr-to2">{str(r.get("prev_date",""))[5:].replace("-", "/")}</span></td>'
+            f'<td class="jpr-to">{(r.get("turnover") or 0):,.0f}</td><td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>'
+            for i, r in enumerate(items, 1)) or empty
+
+    def _head(col):
+        return ('<tr><th>#</th><th>銘柄</th><th class="jph-sp-hide" style="text-align:right">終値</th>'
+                f'<th style="text-align:right">前日比</th>{col}<th style="text-align:right">代金億</th>'
+                '<th style="text-align:center">決算</th></tr>')
+
+    rec_head = _head('<th style="text-align:center">比べた期間</th>')
+    hi_head = _head('<th style="text-align:right">それまでの<br>高値（日付）</th>')
+    lo_head = _head('<th style="text-align:right">それまでの<br>安値（日付）</th>')
+    rec_hi = [r for r in highs if r.get("record")]
+    rec_lo = [r for r in lows if r.get("record")]
+
+    # 前の記録の件数（履歴は build_jp_highs.py が日ごとに1件ずつ積む。安値は 2026-10-06 夕から）
     hist = [h for h in d.get("history", []) if h.get("date") != asof]
-    prev_txt = f"（前の記録 {hist[-1]['date'][5:].replace('-', '/')}：{hist[-1]['ytd']}銘柄）" if hist else ""
-    sy = start[:4]
-    ath_head = ('<tr><th>#</th><th>銘柄</th><th class="jph-sp-hide" style="text-align:right">終値</th><th style="text-align:right">前日比</th>'
-                '<th style="text-align:center">比べた期間</th><th style="text-align:right">代金億</th>'
-                '<th style="text-align:center">決算</th></tr>')
-    ytd_head = ('<tr><th>#</th><th>銘柄</th><th class="jph-sp-hide" style="text-align:right">終値</th><th style="text-align:right">前日比</th>'
-                '<th style="text-align:right">それまでの<br>高値（日付）</th><th style="text-align:right">代金億</th>'
-                '<th style="text-align:center">決算</th></tr>')
+    prev_txt = ""
+    if hist:
+        h0 = hist[-1]
+        lo_prev = f"・安値 {h0['ytd_low']}" if "ytd_low" in h0 else ""
+        prev_txt = f"（前の記録 {h0['date'][5:].replace('-', '/')}：高値 {h0.get('ytd', 0)}{lo_prev}）"
+    scroll = 'style="max-height:620px;overflow-y:auto"'
     return f"""
   <section class="jprank">
-    <div class="jprank-h">🏔️ 高値更新銘柄（{label}・上場来高値）</div>
-    <div class="jprank-sub">流動性上位 約{uni}銘柄のうち、{asof} の高値（取引時間中の高値）がそれまでの高値を上回った銘柄（大引け後に自動集計／無保証・東証の全銘柄ではありません）。
-    <b>{label}＝{sy}年1月以降の高値</b>（日本の慣例どおり、1〜3月は前の年の1月からの「昨年来高値」）。並びは売買代金（終値×出来高の概算・億円）の大きい順。
-    <b>⚠️ 高値を更新した銘柄＝良い投資対象ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
-    <div class="jprank-col"><h3 style="color:#9a6700">🏆 上場来高値・記録上の最高値を更新 {len(ath_rows)}銘柄</h3>
-      <div class="table-wrap"><table class="jprank-table"><thead>{ath_head}</thead><tbody>{ath_body}</tbody></table></div>
-      <div class="jprank-foot" style="margin-top:8px">「比べた期間」＝上場来＝上場した日からの記録すべてと比べた。<b>※の銘柄は、Yahoo の記録がその年からしかなく、それより前（1990年前後のバブル期など）の高値とは比べていません</b>＝上場来高値かどうかは確かめられていません（記録のある期間の最高値です）。</div>
+    <div class="jprank-h">🏔️ 高値・安値の更新銘柄（{period}・上場来）</div>
+    <div class="jprank-sub">流動性上位 約{uni}銘柄のうち、{asof} の高値（安値）＝取引時間中の値がそれまでの高値（安値）を上回った（下回った）銘柄（大引け後に自動集計／無保証・東証の全銘柄ではありません）。
+    <b>{period}高値・安値＝{sy}年1月以降の高値・安値</b>（日本の慣例どおり、1〜3月は前の年の1月からの「昨年来」）。並びは売買代金（終値×出来高の概算・億円）の大きい順。
+    <b>この日：{period}高値 {len(highs)}銘柄・{period}安値 {len(lows)}銘柄</b>{prev_txt}。
+    <b>⚠️ 高値を更新した銘柄＝良い投資対象、安値を更新した銘柄＝割安・買い場、という意味ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <div class="jprank-grid">
+      <div class="jprank-col up"><h3>🏆 上場来高値・記録上の最高値 {len(rec_hi)}銘柄</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_hi)}</tbody></table></div></div>
+      <div class="jprank-col down"><h3>🔻 上場来安値・記録上の最安値 {len(rec_lo)}銘柄</h3>
+        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_lo)}</tbody></table></div></div>
     </div>
-    <div class="jprank-col" style="margin-top:18px"><h3 style="color:#1a7f37">📈 {label}を更新 {len(rows)}銘柄{prev_txt}</h3>
-      <div class="table-wrap" style="max-height:620px;overflow-y:auto"><table class="jprank-table"><thead>{ytd_head}</thead><tbody>{ytd_body}</tbody></table></div>
-      <div class="jprank-foot" style="margin-top:8px">🏆＝記録のある期間の最高値も更新。「それまでの高値」＝{sy}年1月〜前の営業日までの一番高い値（下はその日付）。上場から20営業日未満の銘柄・値が明らかにおかしい日は数えていません。</div>
+    <div class="jprank-foot" style="margin-top:8px">「比べた期間」＝上場来＝上場した日からの記録すべてと比べた。<b>※の銘柄は、Yahoo の記録がその年からしかなく、それより前（1990年前後のバブル期など）の値とは比べていません</b>＝上場来高値・上場来安値かどうかは確かめられていません（記録のある期間の最高値・最安値です）。</div>
+    <div class="jprank-grid" style="margin-top:18px">
+      <div class="jprank-col up"><h3>📈 {period}高値を更新 {len(highs)}銘柄</h3>
+        <div class="table-wrap" {scroll}><table class="jprank-table"><thead>{hi_head}</thead><tbody>{_ytd_body(highs, "🏆")}</tbody></table></div></div>
+      <div class="jprank-col down"><h3>📉 {period}安値を更新 {len(lows)}銘柄</h3>
+        <div class="table-wrap" {scroll}><table class="jprank-table"><thead>{lo_head}</thead><tbody>{_ytd_body(lows, "🔻")}</tbody></table></div></div>
     </div>
-    <div class="jprank-foot">💡 高値を更新した銘柄は「その期間に買った人がみな含み益になり、戻り売りが出にくい」と言われる一方、短期の過熱のあとで反落することもあり、この表だけでは区別できません。高値更新の銘柄数は相場全体の勢いを見る目安としても使われます。
+    <div class="jprank-foot" style="margin-top:8px">🏆／🔻＝記録のある期間の最高値／最安値も更新。「それまでの高値（安値）」＝{sy}年1月〜前の営業日までの一番高い（安い）値（下はその日付）。同じ値は更新に数えません。上場から20営業日未満の銘柄・値が明らかにおかしい日は数えていません。</div>
+    <div class="jprank-foot">💡 高値の更新は「その期間に買った人がみな含み益になり、戻り売りが出にくい」、安値の更新は「その期間に買った人がみな含み損になり、戻ったところで売りが出やすい」と言われます。一方、どちらも短期の行き過ぎのあとで反対に動くことがあり（安値更新の銘柄への逆張りは「落ちるナイフ」になりやすいとも言われます）、この表だけでは区別できません。高値更新と安値更新の銘柄数の差は、相場全体の勢いを見る目安としても使われます。
     「新高値を付けた強い株を買う」という教えを当サイトのデータで確かめた結果は、期間によって答えが割れました（前半は確認できず・後半だけプラス）＝相場の地合いしだいで、いつでも通用する決まりとは言えません。
     ▶ <a href="guide-masters-002-trend.html">順張りの教えをデータで検証</a> ／ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>"""
@@ -2967,7 +2988,7 @@ def build_hot_assets_html(hot_data, now_jst):
   <!-- ページ内ジャンプ（2026-07-20 UX改善: 約12,000pxの縦長ページ用の目次） -->
   <div class="jump-bar">
     <a href="#sec-jp-rank">🇯🇵 値上がり/値下がり</a>
-    <a href="#sec-jp-highs">🏔️ 高値更新</a>
+    <a href="#sec-jp-highs">🏔️ 高値・安値更新</a>
     <a href="#sec-jp-margin">🔴 信用残</a>
     <a href="#sec-sectors">🇺🇸 米国セクター</a>
     <a href="#sec-japan">🇯🇵 主要銘柄</a>
