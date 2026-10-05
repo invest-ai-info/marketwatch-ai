@@ -142,7 +142,12 @@ def test_study_lists_read_forward_records_and_drop_judged():
     _dump(d, R.YORI_FWD, {"fwd_start": "2026-09-29", "goal": 1000, "titles": {"F1": "a", "F2": "b"}, "verdicts": {},
                           "trades": [{"c": "F1"}, {"c": "F1"}]})
     _dump(d, R.COMBO_FWD, {"result": {"now": {"n": 3}, "checkpoints": {}}})
-    head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    paused = R._ea_paused
+    R._ea_paused = lambda root=".": None                                            # 動いているときの表示を確かめる
+    try:
+        head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    finally:
+        R._ea_paused = paused
     assert "📋 研究中・検証中の一覧" in head and "🧪 検証中" in head and "🔬 研究中" in head
     assert "形1 2回・形2 0回（それぞれ1000回で1回だけ判定）" in head and "3件（次の区切りは50件" in head
     assert "10月31日までに届いた合図を数え、11月8日以降に1回だけ判定" in head   # 記録ができる前から載る
@@ -165,8 +170,36 @@ def test_study_list_shows_progress_from_the_ea_record():
     d = tempfile.mkdtemp()
     _dump(d, R.AUTO_FWD, {"kind": "forward", "fwd_start": "2026-10-01", "cut_end": "2026-10-31", "decide_on": "2026-11-08",
                           "summary": {"n": 12}, "verdicts": {}})
-    assert "12回（10月31日までに届いた合図を数え、11月8日以降に1回だけ判定）" in R.build_pane(root=d)
+    paused = R._ea_paused
+    R._ea_paused = lambda root=".": None
+    try:
+        assert "12回（10月31日までに届いた合図を数え、11月8日以降に1回だけ判定）" in R.build_pane(root=d)
+    finally:
+        R._ea_paused = paused
     assert R._ea_dates(ROOT) == ("2026-10-01", "2026-10-31", "2026-11-08")       # ea_ledger.py の決まりと同じ日
+
+
+def test_paused_ea_study_is_not_shown_as_ongoing():
+    # 2026-10-01 夜 オーナー決定で自動で建てる検証は止めている＝「検証中」に出さない（ea_ledger.py の PAUSED_SINCE が単一の真実）
+    assert R._ea_paused(ROOT) == "2026-10-01"
+    d = tempfile.mkdtemp()
+    _dump(d, R.AUTO_FWD, {"kind": "forward", "summary": {"n": 3}, "verdicts": {}})
+    assert "練習用の口座" not in R.build_pane(root=d)
+
+
+def test_month_turn_forward_is_listed_until_both_are_stopped():
+    d = tempfile.mkdtemp()
+    head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    assert "株価指数の月末月初（米国・日本）" in head and "2026-10-06 から" in head      # 記録ができる前から載る
+    assert "米国 0回・日本 0回" in head and "最初の記録は11月上旬" in head
+    _dump(d, R.CAL_FWD, {"section": "R3F", "fwd_start": "2026-10-06", "goal": 36, "verdicts": {"Q3": {"status": "stop"}},
+                         "trades": [{"c": "Q1"}, {"c": "Q1"}, {"c": "Q3"}]})
+    head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    assert "株価指数の月末月初（米国）" in head and "米国 2回" in head and "日本" not in head.split("株価指数の月末月初")[1][:40]
+    assert "最初の記録は" not in head
+    _dump(d, R.CAL_FWD, {"section": "R3F", "fwd_start": "2026-10-06", "goal": 36,
+                         "verdicts": {"Q1": {"status": "stop"}, "Q3": {"status": "stop"}}, "trades": []})
+    assert "株価指数の月末月初" not in R.build_pane(root=d)
 
 
 # ── トップの「このサイトがしていること」の帯・はじめての方へ・ナビの名前（2026-09-26 オーナー判断「研究を主軸に」）

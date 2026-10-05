@@ -13,7 +13,8 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
   ⚠️ 個人の取引の記録（守りの見張り番・5分足の執行・取引の記録）と research/ だけの研究は載せない（件数も出さない）
 
@@ -39,6 +40,7 @@ ENV_HISTORY = "signal-env-profile-history.json"
 YORI_FWD = "yori-forward.json"
 COMBO_FWD = "combo-forward.json"
 AUTO_FWD = "auto-forward.json"
+CAL_FWD = "calendar-forward.json"
 YUTAI_DIR = "yutai-edinet"
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
@@ -325,6 +327,26 @@ def _md(iso):
     return f"{d.month}月{d.day}日"
 
 
+def _const(root, filename, name):
+    """部品を読み込まずに、ファイルの中の `NAME = "YYYY-MM-DD"`（または数字）を文字から取る。読めなければ None"""
+    import re
+    try:
+        src = open(os.path.join(root, filename), encoding="utf-8").read()
+    except OSError:
+        return None
+    g = re.search(rf'^{name}\s*=\s*"?(\d{{4}}-\d{{2}}-\d{{2}}|\d+)"?\s*(#.*)?$', src, re.M)
+    return g.group(1) if g else None
+
+
+def _ea_paused(root="."):
+    """自動で建てる検証を止めている日（ea_ledger.py の PAUSED_SINCE）。動いていれば None"""
+    here = os.path.dirname(os.path.abspath(__file__))
+    for r in (root, here):
+        if os.path.exists(os.path.join(r, "ea_ledger.py")):
+            return _const(r, "ea_ledger.py", "PAUSED_SINCE")
+    return None
+
+
 def _ea_dates(root="."):
     """自動で建てる検証の区切りの日（ea_ledger.py の決まり）。読み込まずに文字から取る（重い部品を読まない）。読めなければ None"""
     import re
@@ -355,12 +377,13 @@ def collect_studies(root, m):
             extra = f"・判定が出た形 {len(done)}つ" if done else ""
             verify.append({"name": "前の日に出来高が急に増えた日本株の、次の日の寄り付き",
                            "what": "出来高（売買された株の数）が前の日に急に増えた銘柄について、次の日の朝いちばんの取引から"
-                                   "決まった形で数え、手数料などを引いても平均がプラスになるかを4つの形で確かめています",
+                                   "決まった形で数え、手数料などを引いても平均がプラスになるかを確かめています"
+                                   "（形1〜4は朝から持つ形、形5〜7は9時30分までに手じまう形で、10月6日から数えています）",
                            "since": y.get("fwd_start") or "",
                            "progress": f"{prog}（それぞれ{y.get('goal') or 1000}回で1回だけ判定）{extra}"})
 
     a = _load(p(AUTO_FWD))
-    if not (a and (a.get("verdicts") or {}).get("AT3")):
+    if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):
         dates = ((a.get("fwd_start"), a.get("cut_end"), a.get("decide_on")) if a and a.get("cut_end")
                  else (_ea_dates(root) or _ea_dates(os.path.dirname(os.path.abspath(__file__)))))
         n = ((a or {}).get("summary") or {}).get("n", 0)
@@ -371,6 +394,28 @@ def collect_studies(root, m):
                                "実際の約定の値・費用・届くまでの遅れで、記録上の成績とどれだけずれるかを確かめています",
                        "since": dates[0] if dates else "",
                        "progress": f"{n}回（{when}）"})
+
+    cf = _load(p(CAL_FWD))
+    cal_start = (cf or {}).get("fwd_start") or _const(root, "calendar_forward.py", "FWD_START") \
+        or _const(os.path.dirname(os.path.abspath(__file__)), "calendar_forward.py", "FWD_START")
+    if cal_start:
+        every = (cf or {}).get("goal") or 36
+        names = {"Q1": "米国", "Q3": "日本"}
+        stopped = set(((cf or {}).get("verdicts") or {}).keys())
+        live = [q for q in ("Q1", "Q3") if q not in stopped]
+        if live:
+            cnt = {q: sum(1 for t in (cf or {}).get("trades") or [] if t.get("c") == q) for q in live}
+            prog = "・".join(f"{names[q]} {cnt[q]}回" for q in live)
+            try:
+                nxt = datetime.date.fromisoformat(cal_start).month % 12 + 1
+                first = "" if any(cnt.values()) else f"。最初の記録は{nxt}月上旬"
+            except ValueError:
+                first = ""
+            verify.append({"name": "株価指数の月末月初（" + "・".join(names[q] for q in live) + "）",
+                           "what": "月の変わり目の数日は株価指数が上がりやすい、という論文の癖（過去のデータでは傾向あり）が、"
+                                   "登録した日より後の新しい月でも、売り買いの費用と持ち越しの金利を引いて崩れていないかを見張っています",
+                           "since": cal_start,
+                           "progress": f"{prog}。{every}回ごとに、費用を引いた平均がマイナスなら止めます（月に1回なので時間がかかります{first}）"})
 
     c = _load(p(COMBO_FWD))
     if c:
