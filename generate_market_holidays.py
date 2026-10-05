@@ -56,7 +56,8 @@ US_HOLIDAYS = [
     ("2027-09-06", "🏖️ 米国市場休場（Labor Day）", "NYSE / Nasdaq 終日休場"),
     ("2027-11-25", "🏖️ 米国市場休場（Thanksgiving）", "NYSE / Nasdaq 終日休場"),
     ("2027-11-26", "🏖️ 米国市場早仕舞い（Black Friday）", "NYSE / Nasdaq 13:00 ET で早仕舞い"),
-    ("2027-12-23", "🏖️ 米国市場早仕舞い（Christmas Eve 前日）", "12/24 が金曜、Christmas Eve も平日のため要確認"),
+    # ⚠️ 2027-12-23 の早仕舞いは無い（2026-10-05 訂正）。NYSE の公式の休場表（nyse.com/trade/hours-calendars）で、
+    #    2027 年の早仕舞いは 11/26（感謝祭の翌日）だけ・12/24（金）がクリスマスの振替休場。旧版は「要確認」のまま載せていた
     ("2027-12-24", "🏖️ 米国市場休場（Christmas Day 振替）", "12/25 が土曜のため前倒し休場"),
 ]
 
@@ -111,7 +112,8 @@ JP_HOLIDAYS = [
     ("2026-12-31", "🏖️ 日本市場休場（年末 / 大納会後）", "12/31-1/3 まで TSE 休場"),
     # 2027
     ("2027-01-01", "🏖️ 日本市場休場（年始 / 元日）", "TSE 年始休場"),
-    ("2027-01-04", "🏖️ 日本市場休場（年始）", "TSE 年始休場"),
+    # ⚠️ 2027-01-04 は休場でない（2026-10-05 訂正）。東証の休業日は 1/1〜1/3 と 12/31 だけで、1/4（月）は大発会＝取引日。
+    #    旧版はここを「年始休場」としていた → RETRACTED で economic-events.json からも取り除く
     ("2027-01-11", "🏖️ 日本市場休場（成人の日）", "第 2 月曜"),
     ("2027-02-11", "🏖️ 日本市場休場（建国記念の日）", ""),
     ("2027-02-23", "🏖️ 日本市場休場（天皇誕生日）", ""),
@@ -129,6 +131,26 @@ JP_HOLIDAYS = [
     ("2027-11-23", "🏖️ 日本市場休場（勤労感謝の日）", ""),
     ("2027-12-31", "🏖️ 日本市場休場（年末 / 大納会後）", "12/31-1/3 まで TSE 休場"),
 ]
+
+
+# 誤って載せてしまい、取り下げたもの。このスクリプトは「足すだけ」なので、一覧から外しても economic-events.json
+# には残る。ここに書いたもの（国＋日付の休場）は実行のたびに取り除く（冪等）。tests/test_market_holidays.py が見張る
+RETRACTED = [
+    {"country": "JP", "date": "2027-01-04", "reason": "東証の休業日は 1/1〜1/3 と 12/31。1/4（月）は大発会＝取引日"},
+    {"country": "US", "date": "2027-12-23", "reason": "NYSE の 2027 年の早仕舞いは 11/26 だけ（12/24 は終日休場）"},
+]
+
+
+def prune_retracted(events):
+    """→ (残すイベント, 取り除いたイベント)。市場休場（category=market_holiday）のうち RETRACTED の国＋日付だけを外す"""
+    bad = {(r["country"], r["date"]) for r in RETRACTED}
+    kept, removed = [], []
+    for e in events:
+        if e.get("category") == "market_holiday" and (e.get("country"), (e.get("datetime") or "")[:10]) in bad:
+            removed.append(e)
+        else:
+            kept.append(e)
+    return kept, removed
 
 
 def build_event(date_str, name, note, country, affected):
@@ -155,6 +177,9 @@ def main():
         data = json.load(f)
     existing_events = data.get("events", [])
 
+    # 取り下げたもの（誤って載せた休場）を先に外す
+    existing_events, retracted = prune_retracted(existing_events)
+
     # 既存の (datetime, name) セットで重複判定
     existing_keys = {(e.get("datetime", ""), e.get("name", "")) for e in existing_events}
 
@@ -173,6 +198,9 @@ def main():
     print(f"📅 候補総数: {len(candidates)} 件")
     print(f"   既存と重複: {len(candidates) - len(new_events)} 件")
     print(f"   新規追加候補: {len(new_events)} 件")
+    print(f"   取り下げて外す: {len(retracted)} 件")
+    for ev in retracted:
+        print(f"  - {ev['datetime'][:10]} | {ev['name']}")
 
     if dry_run:
         print()
@@ -181,7 +209,7 @@ def main():
             print(f"  {ev['datetime'][:10]} | {ev['name']}")
         return
 
-    if not new_events:
+    if not new_events and not retracted:
         print("✅ 全て登録済み、追加なし")
         return
 
@@ -193,7 +221,7 @@ def main():
     with open(EVENTS_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ {EVENTS_FILE} に {len(new_events)} 件追加（合計 {len(all_events)} 件）")
+    print(f"✅ {EVENTS_FILE} に {len(new_events)} 件追加・{len(retracted)} 件取り下げ（合計 {len(all_events)} 件）")
     for ev in new_events[:20]:
         print(f"  + {ev['datetime'][:10]} | {ev['name']}")
     if len(new_events) > 20:
