@@ -28,22 +28,33 @@ MAX_MISSING = 0.02                # 値段を取れなかった銘柄がこの�
 PREV_BIG = 0.05                   # F4 前の日に+5％以上（yori_lab.prev_band の「+5％以上」と同じ）
 OUT_JSON, OUT_MD = "yori-forward.json", "yori-forward.md"
 
+J4G_START = "2026-10-06"          # 🆕 J4G（9:30 で手仕舞う版・F5〜F7）はこの日以降の取引だけ（PILLAR_PREREG.md「J4G」）
 CANDS = {
     "F1": {"title": "前の日の上位20を寄りで買い、9:15 で手仕舞う", "entry": "open", "exit": "09:15"},
     "F2": {"title": "窓+3％以上で寄った上位を寄りで買い、9:15 で手仕舞う", "entry": "open", "exit": "09:15"},
     "F3": {"title": "9:15 に急騰（寄りから+2％以上）している上位を 9:15 で買い、大引けで手仕舞う", "entry": "09:15", "exit": "15:30"},
     "F4": {"title": "前の日に+5％以上上げ、9:15 に急騰している上位を 9:15 で買い、大引けで手仕舞う", "entry": "09:15", "exit": "15:30"},
+    # 🆕 2026-10-05 J4G＝オーナーの取引時間（9:00〜9:30）に収まる版。F1〜F4 の数え方と判定は変えない
+    "F5": {"title": "前の日の上位20を寄りで買い、9:30 で手仕舞う", "entry": "open", "exit": "09:30", "from": J4G_START},
+    "F6": {"title": "窓+3％以上で寄った上位を寄りで買い、9:30 で手仕舞う", "entry": "open", "exit": "09:30", "from": J4G_START},
+    "F7": {"title": "9:15 に急騰（寄りから+2％以上）している上位を 9:15 で買い、9:30 で手仕舞う", "entry": "09:15", "exit": "09:30",
+           "from": J4G_START},
 }
+
+
+def cand_from(cid):
+    """その候補を数え始める日（F1〜F4＝FWD_START／F5〜F7＝J4G_START）"""
+    return CANDS[cid].get("from", FWD_START)
 
 
 def qualifies(cid, r):
     if not r.get("hot"):
         return False
-    if cid == "F1":
+    if cid in ("F1", "F5"):
         return True
-    if cid == "F2":
+    if cid in ("F2", "F6"):
         return r["gap"] >= Y.GAP_BIG
-    if cid == "F3":
+    if cid in ("F3", "F7"):
         return r["cls"] == "up"
     if cid == "F4":
         return r["cls"] == "up" and r.get("prev_ret") is not None and r["prev_ret"] >= PREV_BIG
@@ -82,7 +93,7 @@ def update(state, recs, cover, today):
         state["days"][day] = {"hot": sum(1 for r in rows if r["hot"]), "cover": round(cover[day], 3)}
         for r in sorted(rows, key=lambda x: x["code"]):
             for cid in CANDS:
-                if cid in stopped or not qualifies(cid, r):
+                if cid in stopped or day < cand_from(cid) or not qualifies(cid, r):
                     continue
                 v = trade_return(cid, r)
                 if v is not None:
@@ -135,7 +146,8 @@ def summary(state):
     for cid in CANDS:
         ts = [t for t in state["trades"] if t["c"] == cid]
         st = stats(ts)
-        pace = len(ts) / len(days) if days else None
+        my_days = [d for d in days if d >= cand_from(cid)]
+        pace = len(ts) / len(my_days) if my_days else None
         left = None if not pace or cid in state["verdicts"] else max(0, GOAL - len(ts)) / pace
         out[cid] = dict(st, per_day=pace, days_left=left)
     return out
@@ -150,7 +162,7 @@ def render_md(state):
     sm = summary(state)
     L = ["# J4F 寄り付きの前向き（前の日に出来高が急増した銘柄）", "",
          f"更新: {state.get('generated_at', '')}（GitHub Actions）。事前登録＝`{P.PREREG}`「J4F」（指紋 sha256 `{(state.get('prereg_sha256') or '')[:16]}…`）。",
-         f"数えるのは **{FWD_START} 以降**の取引だけ。1回の損益は費用（往復{Y.COST * 100:.1f}％）を引いた値。銘柄名は出しません。**売買の決まりではない**。", "",
+         f"数えるのは **{FWD_START} 以降**の取引だけ（9:30 で手仕舞う F5〜F7＝J4G は **{J4G_START} 以降**）。1回の損益は費用（往復{Y.COST * 100:.1f}％）を引いた値。銘柄名は出しません。**売買の決まりではない**。", "",
          f"- 数えた日：{len(days)}日" + (f"（{days[0]}〜{days[-1]}）" if days else "（まだ無い）"),
          f"- 判定：取引が **{GOAL}回** に届いた日に1回だけ。費用後の平均の95％の幅がまるごと0より上なら「✅ プラスを確認」、"
          "それ以外は「⏹ ストップ」＝数えるのをやめて `verified-list.md`（検証済みリスト）に載せる", "",
@@ -186,6 +198,7 @@ def load_state(path=OUT_JSON):
 
 def main():
     state = load_state()
+    state["titles"] = {k: v["title"] for k, v in CANDS.items()}      # 🆕 候補を足したとき（J4G）に検証済みリストへ載るように
     info = json.load(open(Y.UNIVERSE, encoding="utf-8"))["stocks"]
     today = dt.datetime.now(P.JST).date().isoformat()
     diag = {}
