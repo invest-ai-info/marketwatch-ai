@@ -330,3 +330,19 @@ autodraft と tse の2レーンを畳み、その分を本レーンに寄せる�
 - 🚨 **運用メモ（shallowクローン起因のrebase事故未遂）**：コミット後、クラウドの作業ツリーが detached HEAD かつ shallow clone の状態で、ローカルの`main`参照が実際のoriginより古い内容を指していたため、`git rebase main`を素朴に実行すると無関係な数十ファイルで`add/add`コンフリクトが多発した（shallowクローンの浅い履歴が原因で共通祖先を正しく解決できなかったとみられる）。直ちに`git rebase --abort`で中断し、`git fetch origin main`で最新を取得した上で**`git rebase origin/main`**（ローカルのstaleな`main`ではなく、フェッチ直後の`origin/main`）に対して再実行したところ、競合0件でクリーンにリベースできた（この間に生成された新しい上流コミットは`signals-log.json`等1件のみで、本記事が触れたファイルと無関係だったため）。リベース後に記事ファイルのdiffが空（バイト同一）であることを確認してから`git branch -f main HEAD`でローカル`main`を更新し、通常のfast-forward pushで完了。巻き戻し・データ損失なし。**教訓＝このリポジトリのクラウド実行環境でrebaseする際は、ローカルの`main`参照ではなく必ず`git fetch`直後の`origin/main`を基準にすること**（ローカル`main`はセッション開始時点で既に古くなっている場合がある）。
 - `git add guide-company-amat-appliedmaterials.html guides.html generate_market_news.py sync_to_github.py && git commit && git push origin main` 完了（fast-forward、コンフリクトなし）。
 - 選定（日本株全滅→海外株切替）・監査（2ラウンド）・修正・公開まで一気通貫で完了。
+
+---
+
+## 2026-10-05（第7回・毎日1本体制の2日目の朝の予約）
+
+### 今日どちらを書くか
+直近3本（FOOD&LIFE・Applied Materials ほか）に海外株（AMAT）が入っているため日本株。
+
+### ✅ 公開済み：MS＆ADインシュアランスグループホールディングス（8725・日本株）
+- 選定の根拠：`edinet-yuho.json`（生成 2026-10-04 20:10 JST・rankings_asof 2026-10-02）の candidates で、cooled: true・登場2回（2026-09-24・09-29）・last_seen 2026-09-29・有報本文あり。cooled の候補のうち時価総額が最大級の1社（金額は本文に非記載）。
+- 既刊：なし（⓪節は不要）。ニュース側の重複：直近14日の guide-news に該当なし。
+- 一次情報（確認日 2026-10-05）：有価証券報告書 第18期（2025/4/1〜2026/3/31・IFRS・2026-06-30提出）https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100YNCJ ／TDnet 自己株式の取得状況（2026-10-02）https://www.release.tdnet.info/inbs/140120261002545393.pdf。決算短信（4〜6月期）は保管期間切れで取れず＝通期は有報のみで書き、その旨を記事に明記。次の決算発表日は一次情報で確認できず「会社IRで確認」。年表のうち有報にない行だけ Wikipedia（各行URL付き）、2024-10 の公取委は一次（jftc.go.jp・先方の bot 判定でこちらからは 403・内容は WebSearch と監査役が確認）。
+- コンプラ：Opus 監査1回目＝🟡（軽微4点：年表の行政処分を一次情報へ／上がる材料の落ち／引用を原文に／目標の出典注記）→修正→fresh Opus の独立確認＝🟡（軽微2点：引用の混ぜ合わせ・ROE の説明）→修正。§0 の6点・§1②・§1⑥・免責三層は全て🟢白。品質ルーブリック5観点は修正後すべて◯。
+- 📝 運用メモ：独立確認の Opus が公取委 URL の 403 を調べる際に、UA を指定した curl を1回だけ再試行した（結果は同じ 403）。手順書は UA での迂回を禁じているため、ここに申告する。以後、403 は再試行せず WebSearch で内容確認に切り替える。
+- 📌 弁護士相談アジェンダへの候補：個別企業の記事の末尾に証券口座の広告（DMM株）が並ぶこと（現状は「広告」ラベル付きで本文に推奨なし）。
+- ファイル：`guide-company-8725-msad.html`
