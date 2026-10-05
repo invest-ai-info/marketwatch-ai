@@ -16,7 +16,8 @@
   - 月ごとのまとまり＝窓の月。95%の幅は月を引き直す 10,000回の 2.5%〜97.5%。片側 p＝(差の引き直しが0以下だった回数＋1)÷(回数＋1)
   - 前半・後半＝窓の月を古い順に並べてちょうど半分で分ける
 
-実行: python intl_tom_lab.py   （Actions の intl-tom-lab.yml から手動で）
+実行: python intl_tom_lab.py           （Actions の intl-tom-lab.yml から手動で・1回だけ）
+      python intl_tom_lab.py --check   （データの点検だけ・損益は数えない）
 """
 import datetime as dt
 import json
@@ -162,7 +163,18 @@ def run(series, cut, rng):
     return rows, pooled(rows, rng)
 
 
+def check():
+    """データの点検だけ（値動きの損益は数えない）：指数ごとの行数・期間・単位のずれの直し・25%超の変化の有無を表示"""
+    series, failed, fixes = load()
+    for tk, s in series.items():
+        print(f"{MARKETS[tk]}（{tk}）：{len(s)}行・{s.index.min().date()}〜{s.index.max().date()}・直した箇所 {len(fixes.get(tk, []))}", flush=True)
+    print("点検だけ（損益は数えていない）。" + ("⚠️ " + " / ".join(failed) if failed else "7つとも取れて、25%を超える変化なし"))
+    return 1 if failed else 0
+
+
 def main():
+    if "--check" in sys.argv[1:]:
+        return check()
     rng = np.random.default_rng(SEED)
     now = dt.datetime.now(dt.timezone.utc)
     cut = str(now.date())                                    # この日より前の終値だけ（途中の値を使わない）

@@ -93,6 +93,23 @@ def test_data_check_and_unit_fix():
     assert any(f.startswith("^FTSE") for f in failed) and len(failed) == 1
 
 
+def test_check_mode_prints_data_only():
+    import io
+    import contextlib
+    d = pd.bdate_range("2007-01-01", "2026-10-02")
+    orig = I.load
+    I.load = lambda fetcher=None: ({tk: _bump(d) for tk in I.MARKETS}, [], {})
+    try:
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = I.check()
+    finally:
+        I.load = orig
+    out = buf.getvalue()
+    assert rc == 0 and "7つとも取れて" in out and "ドイツ（^GDAXI）" in out
+    assert "%" not in out.replace("25%", "")                                          # 損益の数字は出さない
+
+
 def test_constants_match_preregistration():
     txt = open(os.path.join(ROOT, "PILLAR_PREREG.md"), encoding="utf-8").read()
     sec = txt.split("## R6 月末月初の窓は", 1)[1].split("\n## ", 1)[0]
