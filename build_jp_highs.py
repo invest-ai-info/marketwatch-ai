@@ -5,8 +5,11 @@
 一覧表を出来高急増のページに追加してほしい」）。同日夕、オーナー依頼「安値の方も追加して」で安値も。
 高値と安値は同じ関数で判定する（違いは見る値と向きだけ＝ytd_extreme / all_time_extreme の side）。
 
-対象＝build_jp_rankings.py と同じ流動性上位ユニバース（jp-stock-info.json の約400銘柄）。
-東証の全銘柄ではない（大手の網羅はしない＝サイトの方針。表示側でも「約400銘柄のうち」と書く）。
+対象＝**東証プライム・スタンダード・グロースの全上場銘柄（約3,700・内国株式と外国株式）**。一覧は JPX の
+「東証上場銘柄一覧」（data_j.xlsx・月1回更新）を毎回取る（load_universe）。ETF・REIT・PRO Market は入れない。
+🔁 2026-10-06 夜 オーナー依頼「全銘柄に広げて」で、流動性上位の約400銘柄（jp-stock-info.json）から広げた。
+   Yahoo に約3,700回取りに行く＝1回13〜15分かかるので、日本株ランキングのジョブから分けて jp-highs.yml で動かす。
+   赤字・黒字（akaji）は約400銘柄にしか無いので、表からは決算の列を外して市場区分を出す。
 
 判定（数字はすべて Yahoo chart API の日足・月足＝キー不要・株式分割は調整済み）:
   ・年初来高値＝その日の高値（ザラ場の高値）が、期間の始まり〜前の営業日までの高値をすべて上回った。
@@ -22,7 +25,10 @@
           日本郵船・川崎重工業・三菱瓦斯化学 2004-12、レーザーテック 2010-03、北洋銀行 2012-10）
         ・月の途中＝上場の週から記録がある（2017-09 以降の新規上場28銘柄すべて。古い銘柄は1つも無い）
       ⚠️ 経緯: 初版はトヨタの記録の始まりを床にして小松製作所（1949年上場）などを、2版は「2004年以降に始まる」で
-      日本郵船などを「上場来」と言いうる形だった。銘柄の入れ替え（jp-stock-info.json）のときは監査をもう一度回す。
+      日本郵船などを「上場来」と言いうる形だった。全銘柄に広げたので、監査（--audit）も全銘柄で回し、
+      2022年以降の分は JPX の新規上場の一覧（上場日）と突き合わせる。
+      ⚠️ ここでの「上場来」＝**東証に上場してからの記録**（Yahoo の .T の記録）。名証などほかの取引所から東証に
+      来た銘柄（例: 中部鋼鈑 2022-12）は、それより前のほかの取引所での売買を含まない＝表示の注記にそう書く。
 
 ガード（build_jp_rankings.py と同じ流儀＝関数をそのまま使う）:
   ・最終バーの日付の多数派を asof にし、少数派の銘柄は落とす（別の日を混ぜない）
@@ -40,6 +46,8 @@ import sys
 import json
 import time
 import datetime
+import re
+import urllib.error
 import urllib.request
 
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
@@ -50,9 +58,16 @@ RANKINGS = os.path.join(HERE, "jp-rankings.json")
 MIN_PRIOR_BARS = 20       # 期間内に前の営業日がこれ未満（上場直後）は数えない＝数日分の「高値」は意味が薄い
 MAX_JUMP = 1.5            # その日の高値 ÷ 前の日の終値 がこれを超えたら（安値は 1/これ 未満なら）データの誤りとして数えない
 LISTING_CUTOFF = "2004-01-01"  # 念のための下限（月の途中から始まる記録でも、これより前なら上場来とは言わない）
-RULE_VERSION = 4          # 判定の決まりを変えたら上げる（4＝安値を足した 2026-10-06 夕）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
+RULE_VERSION = 5          # 判定の決まりを変えたら上げる（4＝安値を足した 2026-10-06 夕・5＝全銘柄に広げた 同日夜）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
+SCOPE = "all"             # 対象の範囲（履歴の件数は同じ範囲どうしでしか比べない＝400銘柄の日と混ぜない）
+JPX_LIST_PAGE = "https://www.jpx.co.jp/markets/statistics-equities/misc/01.html"   # 東証上場銘柄一覧
+JPX_NEW_PAGES = ["https://www.jpx.co.jp/listing/stocks/new/index.html"] + [
+    f"https://www.jpx.co.jp/listing/stocks/new/00-archives-{n:02d}.html" for n in range(1, 5)]  # 新規上場（2022年〜）
+MARKETS = ("プライム", "スタンダード", "グロース")
+UA = {"User-Agent": "Mozilla/5.0"}
+THROTTLED = {"n": 0}      # Yahoo に「混んでいる」（429・5xx）と言われた回数（ログ用）
 
 
 def window_start(asof):
@@ -81,15 +96,102 @@ def parse_bars(result):
     return out
 
 
-def fetch_bars(code, rng, interval):
-    """Yahoo から日足/月足を取る。失敗したら []。"""
+def fetch_bars(code, rng, interval, tries=3):
+    """Yahoo から日足/月足を取る。失敗したら []。
+
+    全銘柄で約3,700回取りに行くので、「混んでいる」（429・5xx）や通信の途切れは間を空けて2回までやり直す。
+    404（Yahoo に無い銘柄）はやり直さない。
+    """
     u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
-    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+    for k in range(tries):
+        try:
+            req = urllib.request.Request(u, headers=UA)
+            d = json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0]
+            return parse_bars(d)
+        except urllib.error.HTTPError as e:
+            if e.code == 429 or e.code >= 500:
+                THROTTLED["n"] += 1
+                time.sleep(3 * (k + 1) ** 2)
+                continue
+            return []
+        except Exception:
+            time.sleep(1 + k)
+    return []
+
+
+def find_list_link(html):
+    """JPX「東証上場銘柄一覧」のページから data_j.xls(x) の絶対 URL を返す（無ければ ""）。純関数。"""
+    m = re.search(r'href="([^"]*data_j\.xlsx?)"', html, re.I)
+    if not m:
+        return ""
+    href = m.group(1)
+    return href if href.startswith("http") else "https://www.jpx.co.jp" + href
+
+
+def parse_universe(records, info_stocks=None):
+    """JPX の一覧の行（dict）から {コード: {name, sector, market, akaji}} と一覧の日付を返す。純関数。
+
+    プライム・スタンダード・グロース（内国株式・外国株式）だけ。ETF・REIT・PRO Market・出資証券は入れない。
+    赤字・黒字は jp-stock-info.json にある約400銘柄だけ（無ければ None）。
+    """
+    info_stocks = info_stocks or {}
+    out, list_date = {}, ""
+    for r in records:
+        market = str(r.get("市場・商品区分") or "")
+        code = str(r.get("コード") or "").strip()
+        if not code or not market.startswith(MARKETS):
+            continue
+        sector = str(r.get("33業種区分") or "").strip()
+        out[code] = {"name": str(r.get("銘柄名") or "").strip(),
+                     "sector": "" if sector in ("-", "nan") else sector,
+                     "market": market.split("（")[0],
+                     "akaji": (info_stocks.get(code) or {}).get("akaji")}
+        d = str(r.get("日付") or "").strip()
+        if len(d) == 8 and d.isdigit():
+            list_date = max(list_date, f"{d[:4]}-{d[4:6]}-{d[6:]}")
+    return out, list_date
+
+
+def load_universe():
+    """JPX から東証上場銘柄一覧を取って parse_universe する。失敗したら例外。"""
+    import io
+    import pandas as pd
+    html = urllib.request.urlopen(urllib.request.Request(JPX_LIST_PAGE, headers=UA), timeout=30).read().decode("utf-8", "replace")
+    url = find_list_link(html)
+    if not url:
+        raise RuntimeError("東証上場銘柄一覧のページに data_j.xls(x) のリンクが無い（JPX のページの形が変わった？）")
+    raw = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60).read()
+    df = pd.read_excel(io.BytesIO(raw), dtype=str)
     try:
-        d = json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0]
-        return parse_bars(d)
+        info = json.load(open(INFO, encoding="utf-8"))["stocks"]
     except Exception:
-        return []
+        info = {}
+    stocks, list_date = parse_universe(df.to_dict("records"), info)
+    if len(stocks) < 3000:
+        raise RuntimeError(f"東証上場銘柄一覧から取れた銘柄が {len(stocks)} しかない（約3,700のはず）＝列名か区分の名前が変わった？")
+    return stocks, list_date
+
+
+def parse_jpx_new_listings(html):
+    """JPX「新規上場銘柄一覧」の表から [(上場日, コード, 公開価格あり)] を返す。純関数。（点検用）
+
+    公開価格が「-」＝新規公開（IPO）ではない上場（ほかの取引所からの上場・持株会社の設立など）。
+    """
+    out = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S):
+        cells = [c.strip() for c in re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "|", row)).split("|")]
+        cells = [c for c in cells if c]
+        date = next((c for c in cells if re.fullmatch(r"20\d\d/\d\d/\d\d", c)), "")
+        if not date:
+            continue
+        rest = cells[cells.index(date) + 1:]
+        code = next((c for c in rest if re.fullmatch(r"\d[0-9A-Z]{2}[0-9A-Z]", c)), "")
+        if not code:
+            continue
+        after = rest[rest.index(code) + 1:]
+        ipo = any(re.search(r"\d", c) for c in after[:2])   # 仮条件・公開価格の欄に数字がある
+        out.append((date.replace("/", "-"), code, ipo))
+    return out
 
 
 def sane_today(bars):
@@ -168,7 +270,7 @@ def make_row(code, meta, bars, hit, record, record_prev, first):
     prev_c = bars[-2][3]
     return {
         "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
-        "akaji": meta.get("akaji"),
+        "market": meta.get("market", ""), "akaji": meta.get("akaji"),
         "price": round(c, 1), "pct": round(c / prev_c - 1.0, 4),
         "ext": round(h if hit["side"] == "high" else lo, 1),
         "prev": hit["prev"], "prev_date": hit["prev_date"],   # 期間内のそれまでの一番高い（安い）値と日付
@@ -205,15 +307,22 @@ def read_json(path):
         return {}
 
 
-def main(force=False):
+def main(force=False, dry_run=False):
+    """dry_run＝最後まで数えて結果を表示するが jp-highs.json は書かない（点検のワークフローで本番の前に試す用）。"""
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
     rank_asof = read_json(RANKINGS).get("asof") or ""
-    if not force and already_done(prev, rank_asof):
+    if not force and not dry_run and already_done(prev, rank_asof):
         print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
 
-    stocks = json.load(open(INFO, encoding="utf-8"))["stocks"]
+    t0 = time.time()
+    try:
+        stocks, list_date = load_universe()
+    except Exception as e:
+        print(f"🚨 東証上場銘柄一覧（JPX）が取れない: {e}＝jp-highs.json を更新せず終了（前回分を温存）")
+        sys.exit(1)
+    print(f"対象＝東証上場銘柄一覧（{list_date} 時点）のプライム・スタンダード・グロース {len(stocks)}銘柄")
     codes = list(stocks.keys())
     daily, fail = {}, 0
     for i, code in enumerate(codes):
@@ -222,14 +331,16 @@ def main(force=False):
             fail += 1
         else:
             daily[code] = bars
-        if (i + 1) % 100 == 0:
-            print(f"  ...{i+1}/{len(codes)} fail={fail}", flush=True)
+        if (i + 1) % 500 == 0:
+            print(f"  ...{i+1}/{len(codes)} 取得失敗={fail} 混雑={THROTTLED['n']} 経過{(time.time()-t0)/60:.1f}分", flush=True)
         time.sleep(0.07)
+    fetched = len(daily)
 
     asof = modal_date([b[-1][0] for b in daily.values()])
     mixed = [c for c, b in daily.items() if b[-1][0] != asof]
     if mixed:
-        print(f"⚠️ 最終営業日が混在（多数派 {asof} 以外 {len(mixed)}銘柄）＝除外: {', '.join(mixed[:5])}"
+        # 全銘柄では、その日に売買が成立しなかった銘柄（最後のバーが前の日）もここに入る＝その日は更新しようがない
+        print(f"ℹ️ 最終営業日が {asof} でない {len(mixed)}銘柄（その日に売買が無かった銘柄など）＝除外: {', '.join(mixed[:5])}"
               + (" ほか" if len(mixed) > 5 else ""))
         for c in mixed:
             daily.pop(c)
@@ -241,9 +352,9 @@ def main(force=False):
         print(f"⏸ {asof} はきょうで、いま {now_jst:%H:%M} JST＝大引け前後の未確定の値。"
               f"書かずに終了（{SETTLE_JST[0]}:{SETTLE_JST[1]:02d} 以降の回に委ねる）")
         return
-    coverage = len(daily) / max(len(codes), 1)
+    coverage = fetched / max(len(codes), 1)    # 取れたかどうかで見る（売買の無かった銘柄は取れている）
     if coverage < MIN_COVERAGE:
-        print(f"🚨 取得成功 {len(daily)}/{len(codes)} 銘柄（{coverage:.0%} < {MIN_COVERAGE:.0%}）＝"
+        print(f"🚨 取得成功 {fetched}/{len(codes)} 銘柄（{coverage:.0%} < {MIN_COVERAGE:.0%}・混雑 {THROTTLED['n']}回）＝"
               f"偏った一覧になるため jp-highs.json を更新せず終了（前回分を温存）")
         sys.exit(1)
     if rank_asof and asof != rank_asof:
@@ -271,16 +382,20 @@ def main(force=False):
     for side in out:
         out[side].sort(key=lambda r: r["turnover"], reverse=True)
     highs, lows = out["high"], out["low"]
-    counts = {"ytd": len(highs), "ath": sum(1 for r in highs if r["record"]),
+    counts = {"scope": SCOPE, "n": len(daily), "ytd": len(highs), "ath": sum(1 for r in highs if r["record"]),
               "ytd_low": len(lows), "atl": sum(1 for r in lows if r["record"])}
     payload = {
-        "asof": asof, "universe": len(daily), "window_start": start, "period": period,
+        "asof": asof, "scope": SCOPE, "listed_total": len(stocks), "list_date": list_date,
+        "universe": len(daily), "window_start": start, "period": period,
         "rule": RULE_VERSION, "listing_cutoff": LISTING_CUTOFF, "highs": highs, "lows": lows,
         "history": update_history(prev.get("history"), asof, counts),
     }
-    with open(OUT, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False)
-    print(f"✅ {OUT}: as of {asof} / {len(daily)}銘柄（取得失敗{fail}・データの誤りで除外{skipped_bad}）・{period}＝{start}〜")
+    if not dry_run:
+        with open(OUT, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False)
+    print(f"{'🧪 試し（書かない）' if dry_run else '✅ ' + OUT}: as of {asof} / 一覧 {len(stocks)}銘柄 → 取れた {fetched}"
+          f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}）"
+          f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
     for side, name, rec in (("high", "高値", "最高値"), ("low", "安値", "最安値")):
         rows = out[side]
         print(f"   {period}{name} {len(rows)}銘柄・記録上の{rec} {sum(1 for r in rows if r['record'])}銘柄"
@@ -291,12 +406,16 @@ def main(force=False):
 
 
 def audit():
-    """全銘柄の Yahoo の記録の始まりを並べる（表示だけ・何も書かない）。LISTING_CUTOFF が安全かを確かめる用。
+    """全銘柄の Yahoo の記録の始まりを並べる（表示だけ・何も書かない）。「上場来」の見分け方が安全かを確かめる用。
 
-    見るところ＝区切り（2004年）以降に記録が始まる銘柄が、本当にその頃に上場した銘柄か。
-    古くから上場している会社がここに出たら、その銘柄は Yahoo の記録が途中からしかない＝区切りを遅らせる。
+    見るところ:
+      ① 月の途中から記録が始まる（＝上場来と言う側）銘柄が、2017-09 より前に無いか（あれば Yahoo の記録の途中が
+         月の途中から始まる古い銘柄がある＝見分け方の前提が崩れる）
+      ② 2022年以降に月の途中から始まる銘柄が、JPX の新規上場の一覧の上場日（前後10日）と合うか
+      ③ JPX で新規上場したのに、記録が月の1日から始まる銘柄（言い切らない側に落ちている＝害はないが数を見る）
     """
-    stocks = json.load(open(INFO, encoding="utf-8"))["stocks"]
+    stocks, list_date = load_universe()
+    print(f"点検の対象＝東証上場銘柄一覧（{list_date}）{len(stocks)}銘柄")
     firsts, fail = {}, []
     for code in stocks:
         bars = fetch_bars(code, "max", "1mo")
@@ -305,29 +424,55 @@ def audit():
         else:
             fail.append(code)
         time.sleep(0.07)
-    by_year = {}
-    for d in firsts.values():
-        by_year[d[:4]] = by_year.get(d[:4], 0) + 1
-    print(f"記録の始まり（{len(firsts)}銘柄・取得失敗 {len(fail)}）")
-    for y in sorted(by_year):
-        print(f"  {y}: {by_year[y]}")
-    yes = sorted((d, c) for c, d in firsts.items() if listing_confirmed(d))
-    print(f"\n「上場来」と言う側 {len(yes)}銘柄（記録が月の途中＝上場の週から始まる。上場がその頃か確かめる）:")
-    for d, c in yes:
-        print(f"  {d}  {c}  {stocks[c].get('name', '')}")
-    late_no = sorted((d, c) for c, d in firsts.items() if not listing_confirmed(d) and d >= LISTING_CUTOFF)
-    print(f"\n{LISTING_CUTOFF} 以降に始まるが言い切らない側 {len(late_no)}銘柄（月の1日に始まる＝古い銘柄の記録の途中もここ）:")
-    for d, c in late_no:
-        print(f"  {d}  {c}  {stocks[c].get('name', '')}")
-    odd = sorted((d, c) for c, d in firsts.items() if d < LISTING_CUTOFF and d[8:10] != "01")
-    if odd:
-        print(f"\n⚠️ {LISTING_CUTOFF} より前なのに月の途中から始まる {len(odd)}銘柄（見分け方の前提が崩れていないか見る）:")
-        for d, c in odd:
-            print(f"  {d}  {c}  {stocks[c].get('name', '')}")
+
+    def nm(c):
+        return f"{c}  {stocks[c].get('name', '')}（{stocks[c].get('market', '')}）"
+
+    def hist(ds):
+        by = {}
+        for d in ds:
+            by[d[:4]] = by.get(d[:4], 0) + 1
+        return "  ".join(f"{y}:{by[y]}" for y in sorted(by))
+
+    print(f"記録の始まり（{len(firsts)}銘柄・取得失敗 {len(fail)}・混雑 {THROTTLED['n']}回）年ごと:\n  {hist(firsts.values())}")
+    mid = {c: d for c, d in firsts.items() if d[8:10] != "01"}
+    yes = {c: d for c, d in firsts.items() if listing_confirmed(d)}
+    print(f"\n月の途中から始まる {len(mid)}銘柄（うち「上場来」と言う側 {len(yes)}）年ごと:\n  {hist(mid.values())}")
+    early = sorted((d, c) for c, d in mid.items() if d < "2017-09-01")
+    print(f"\n① 2017-09 より前に月の途中から始まる {len(early)}銘柄（0 なら見分け方の前提どおり）:")
+    for d, c in early[:60]:
+        print(f"  {d}  {nm(c)}{'  ←上場来と言う側' if c in yes else ''}")
+
+    jpx = {}
+    for u in JPX_NEW_PAGES:
+        try:
+            html = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30).read().decode("utf-8", "replace")
+            for d, c, ipo in parse_jpx_new_listings(html):
+                jpx.setdefault(c, (d, ipo))
+        except Exception as e:
+            print(f"  ⚠️ JPX の新規上場の一覧が取れない {u}: {e}")
+    print(f"\nJPX の新規上場の一覧（2022年〜）{len(jpx)}件")
+
+    def near(a, b, days=10):
+        return abs((datetime.date.fromisoformat(a) - datetime.date.fromisoformat(b)).days) <= days
+
+    recent = sorted((d, c) for c, d in yes.items() if d >= "2022-01-01")
+    ok = [(d, c) for d, c in recent if c in jpx and near(d, jpx[c][0])]
+    bad = [(d, c) for d, c in recent if (d, c) not in ok]
+    print(f"② 2022年以降に月の途中から始まり「上場来」と言う側 {len(recent)}銘柄 → JPX の上場日と合う {len(ok)}"
+          f"（うち新規公開 {sum(1 for d, c in ok if jpx[c][1])}・ほかの取引所からの上場や持株会社など {sum(1 for d, c in ok if not jpx[c][1])}）")
+    if bad:
+        print(f"   ⚠️ 合わない {len(bad)}銘柄（記録の始まり／JPX の上場日）:")
+        for d, c in bad[:60]:
+            print(f"   {d} / {jpx.get(c, ('一覧に無い',))[0]}  {nm(c)}")
+    miss = sorted((jpx[c][0], c) for c in jpx if c in firsts and c not in yes)
+    print(f"③ JPX で2022年以降に新規上場したのに「上場来」と言わない側 {len(miss)}銘柄（記録が月の1日から・害はない）:")
+    for d, c in miss[:30]:
+        print(f"   {d}（記録 {firsts[c]}）  {nm(c)}")
 
 
 if __name__ == "__main__":
     if "--audit" in sys.argv:
         audit()
     else:
-        main(force="--force" in sys.argv)
+        main(force="--force" in sys.argv, dry_run="--dry-run" in sys.argv)

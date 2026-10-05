@@ -175,11 +175,52 @@ def test_listing_confirmed_only_when_record_starts_mid_month():
 def test_make_row_uses_high_or_low_by_side():
     bars = _days("2026-01-05", 60) + [_today(94.0, 85.0, 86.0)]
     hit = dict(H.ytd_extreme(bars, "2026-01-01", "low"), side="low")
-    r = H.make_row("7203", {"name": "テスト", "sector": "輸送用機器", "akaji": False}, bars, hit, True, 88.0, "2018-06-18")
+    r = H.make_row("7203", {"name": "テスト", "sector": "輸送用機器", "market": "プライム", "akaji": False},
+                   bars, hit, True, 88.0, "2018-06-18")
     assert r["ext"] == 85.0 and r["prev"] == 90.0 and r["record"] is True and r["listed"] is True
+    assert r["market"] == "プライム" and r["sector"] == "輸送用機器"
     assert r["price"] == 86.0 and round(r["pct"], 4) == round(86.0 / 95.0 - 1, 4)
     r = H.make_row("7203", {}, bars, hit, False, 80.0, "2000-02-01")
     assert r["record"] is False and r["listed"] is None
+
+
+# ── 全銘柄の一覧（JPX） ────────────────────────────────────
+
+def test_find_list_link_makes_absolute_url():
+    html = '<a href="/markets/statistics-equities/misc/tvdivq0000001vg2-att/data_j.xlsx">一覧</a>'
+    assert H.find_list_link(html) == \
+        "https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000001vg2-att/data_j.xlsx"
+    assert H.find_list_link('<a href="/x/data_j.xls">') == "https://www.jpx.co.jp/x/data_j.xls"
+    assert H.find_list_link("<p>リンクなし</p>") == ""
+
+
+def test_parse_universe_keeps_only_three_markets():
+    # 2026-09-30 の実際の一覧の形（列名・区分の名前）
+    recs = [
+        {"日付": "20260930", "コード": "1301", "銘柄名": "極洋", "市場・商品区分": "プライム（内国株式）", "33業種区分": "水産・農林業"},
+        {"日付": "20260930", "コード": "1305", "銘柄名": "ｉＦｒｅｅＥＴＦ", "市場・商品区分": "ETF・ETN", "33業種区分": "-"},
+        {"日付": "20260930", "コード": "285A", "銘柄名": "キオクシアＨＤ", "市場・商品区分": "プライム（内国株式）", "33業種区分": "電気機器"},
+        {"日付": "20260930", "コード": "9999", "銘柄名": "外国の会社", "市場・商品区分": "グロース（外国株式）", "33業種区分": "-"},
+        {"日付": "20260930", "コード": "8951", "銘柄名": "ＲＥＩＴ", "市場・商品区分": "REIT・ベンチャーファンド・カントリーファンド・インフラファンド", "33業種区分": "-"},
+        {"日付": "20260930", "コード": "1111", "銘柄名": "プロ", "市場・商品区分": "PRO Market", "33業種区分": "-"},
+        {"日付": "20260930", "コード": "2222", "銘柄名": "スタ", "市場・商品区分": "スタンダード（内国株式）", "33業種区分": "化学"},
+    ]
+    st, d = H.parse_universe(recs, {"285A": {"akaji": False}})
+    assert sorted(st) == ["1301", "2222", "285A", "9999"] and d == "2026-09-30"
+    assert st["285A"] == {"name": "キオクシアＨＤ", "sector": "電気機器", "market": "プライム", "akaji": False}
+    assert st["1301"]["akaji"] is None              # 約400銘柄の外＝赤字・黒字は分からない
+    assert st["9999"]["market"] == "グロース" and st["9999"]["sector"] == ""
+
+
+def test_parse_jpx_new_listings_reads_date_code_and_ipo():
+    # JPX「新規上場銘柄一覧」の表の行の形（2022 の一覧から）
+    html = ("<table><tr><th>上場日</th><th>会社名</th><th>コード</th><th>公開価格</th></tr>"
+            "<tr><td>2022/12/29</td><td>（2022/11/25）</td><td>（株）スマサポ</td><td>代表者インタビュー</td>"
+            "<td>9342</td><td></td><td>720～800</td><td>150</td><td>100</td></tr>"
+            "<tr><td>グロース</td><td>800</td></tr>"
+            "<tr><td>2022/12/28</td><td>（2022/12/21）</td><td>中部鋼鈑（株）</td><td>5461</td>"
+            "<td>-</td><td>-</td><td>100</td></tr></table>")
+    assert H.parse_jpx_new_listings(html) == [("2022-12-29", "9342", True), ("2022-12-28", "5461", False)]
 
 
 # ── その他 ─────────────────────────────────────────────
