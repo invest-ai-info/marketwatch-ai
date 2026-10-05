@@ -2798,7 +2798,7 @@ def build_jp_highs_section(now_jst):
       <div class="table-wrap" style="max-height:620px;overflow-y:auto"><table class="jprank-table"><thead>{ytd_head}</thead><tbody>{ytd_body}</tbody></table></div>
       <div class="jprank-foot" style="margin-top:8px">🏆＝記録のある期間の最高値も更新。「それまでの高値」＝{sy}年1月〜前の営業日までの一番高い値（下はその日付）。上場から20営業日未満の銘柄・値が明らかにおかしい日は数えていません。</div>
     </div>
-    <div class="jprank-foot">💡 高値を更新した銘柄は「それより上で買った人がいない＝戻り売りが出にくい」と言われる一方、短期の過熱のあとで反落することもあり、この表だけでは区別できません。高値更新の銘柄数は相場全体の勢いを見る目安としても使われます。
+    <div class="jprank-foot">💡 高値を更新した銘柄は「その期間に買った人がみな含み益になり、戻り売りが出にくい」と言われる一方、短期の過熱のあとで反落することもあり、この表だけでは区別できません。高値更新の銘柄数は相場全体の勢いを見る目安としても使われます。
     「新高値を付けた強い株を買う」という教えを当サイトのデータで確かめた結果は、期間によって答えが割れました（前半は確認できず・後半だけプラス）＝相場の地合いしだいで、いつでも通用する決まりとは言えません。
     ▶ <a href="guide-masters-002-trend.html">順張りの教えをデータで検証</a> ／ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>"""
