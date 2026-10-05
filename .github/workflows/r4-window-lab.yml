@@ -1,0 +1,67 @@
+name: R4 Window Lab (manual)
+
+# R4 腕C 正確なロンドン 08:00→16:00 の窓（月末の値決めの前・Melvin & Prins 2015）＝その月の株の上げ（外国−米国）がプラスの国の
+# 通貨を、月の最後の取引日のロンドン 08:00 に売り 16:00 に出る。比べる相手＝同じ決まりを月の真ん中の日に。Dukascopy の1分足・4ペア・2015-01〜2026-09。
+# 2026-10-05 夜 登録・オーナー「続けてください」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「R4」の腕B と「R4 腕B の補足と腕C」（事前登録・計算より先にコミット済み）と r4_window_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。mode=probe は「届くか」だけ（値動きは数えない・何も書かない）。mode=run で1回だけ数える
+#    （データが取れなければ何も数えず失敗する＝その場合は手元の MT5 の腕B が判定になる）。
+# ⚠️ 出力（r4-window-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe＝届くかだけ／run＝数える"
+        required: true
+        default: probe
+        type: choice
+        options: [probe, run]
+
+concurrency:
+  group: r4-window-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up bars
+        run: python tests/test_r4_window_lab.py
+      - name: Probe (reachability only, no counting)
+        if: ${{ inputs.mode == 'probe' }}
+        run: python r4_window_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python r4_window_lab.py --source dukascopy
+          python verified_list.py > /dev/null
+          [ -f r4-window-lab.md ] && cat r4-window-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add r4-window-lab.json r4-window-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: R4 window lab (arm C) $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
