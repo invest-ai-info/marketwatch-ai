@@ -25,7 +25,7 @@ concurrency:
 jobs:
   lab:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 300
     permissions:
       contents: write
     steps:
@@ -41,11 +41,12 @@ jobs:
         run: python tests/test_r4_window_lab.py
       - name: Probe (reachability only, no counting)
         if: ${{ inputs.mode == 'probe' }}
-        run: python r4_window_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+        shell: bash
+        run: python -u r4_window_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Count with the pre-registered ruler
         if: ${{ inputs.mode == 'run' }}
         run: |
-          python r4_window_lab.py --source dukascopy
+          python -u r4_window_lab.py --source dukascopy
           python verified_list.py > /dev/null
           [ -f r4-window-lab.md ] && cat r4-window-lab.md >> "$GITHUB_STEP_SUMMARY"
       - name: Commit results

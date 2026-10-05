@@ -141,7 +141,7 @@ def test_dukascopy_parse_and_fetch():
     def opener(req):
         seen.append(req.full_url)
         return _Resp(body)
-    d = W.Duka(opener=opener, pause=0)
+    d = W.Duka(opener=opener, pause=0, wait=lambda s: None)
     w = d.window("USDJPY=X", dt.date(2024, 1, 15))
     assert seen[0].endswith("/USDJPY/2024/00/15/BID_candles_min_1.bi5")                 # 月は0から数える
     assert _close(w[0], 150.125) and _close(w[2], 150.5) and w[1] == 0.0               # 取引量0の足はとばす
@@ -149,6 +149,39 @@ def test_dukascopy_parse_and_fetch():
     assert len(seen) == 1                                                             # 覚えておく
     e = W.parse_duka(lzma.decompress(_duka_bytes([(28800, 1.08765, 1.0)], 0.00001)), dt.date(2024, 1, 15), "EURUSD=X")
     assert _close(float(e["open"].iloc[0]), 1.08765)
+
+
+def test_dukascopy_retries_when_busy():
+    import urllib.error
+    body = _duka_bytes([(28800, 1.1, 1.0), (57600, 1.2, 1.0)], 0.00001)
+    calls, waits = [], []
+
+    def opener(req):
+        calls.append(1)
+        if len(calls) < 3:
+            raise urllib.error.HTTPError(req.full_url, 503, "busy", {}, None)
+        return _Resp(body)
+    d = W.Duka(opener=opener, wait=waits.append)
+    w = d.window("EURUSD=X", dt.date(2024, 1, 15))
+    assert _close(w[0], 1.1) and _close(w[2], 1.2), w
+    assert waits[:2] == [5, 15] and not d.errors                                       # 混雑は長めに待って取り直す
+    gone = W.Duka(opener=lambda req: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 404, "x", {}, None)), wait=waits.append)
+    assert gone.window("EURUSD=X", dt.date(2024, 1, 13)) is None and not gone.errors   # 404＝データの無い日（失敗ではない）
+    bad = W.Duka(opener=lambda req: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 503, "x", {}, None)), tries=2, wait=lambda s: None)
+    assert bad.window("EURUSD=X", dt.date(2024, 1, 15)) is None and len(bad.errors) == 1
+
+
+def test_prefetch_and_first_candidates():
+    keys = W.first_candidates("2026-08-01", "2026-09-24")
+    assert ("EURUSD=X", dt.date(2026, 8, 31)) in keys and ("EURUSD=X", dt.date(2026, 8, 17)) in keys
+    assert all(k[1].month == 8 for k in keys) and len(keys) == 8                         # 9月は書き出しの途中で終わる＝数えない
+    body = _duka_bytes([(28800, 1.1, 1.0), (57600, 1.2, 1.0)], 0.00001)
+    seen = []
+    d = W.Duka(opener=lambda req: (seen.append(req.full_url), _Resp(body))[1], wait=lambda s: None)
+    d.prefetch(keys, workers=3)
+    assert len(seen) == 8 and len(d.cache) == 8
+    d.prefetch(keys)
+    assert len(seen) == 8
 
 
 def test_read_mt5_csv_variants():
