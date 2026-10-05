@@ -61,8 +61,10 @@ jobs:
         run: |
           if [ "${{ matrix.part }}" = "a" ]; then span="2015-01-01,2020-12-31"; else span="2021-01-01,2026-09-30"; fi
           # 取れなかった日があっても、数える段がその場で取り直すので、ここは失敗にしない
-          python -u r4_window_lab.py --fetch-only --pair "${{ matrix.pair }}" --span "$span" --cache-dir duka-cache || true
+          # 270分で新しい月に入らずに終わる＝必ず次の段（受け渡し）まで進む。残りは数える段が取り直す
+          python -u r4_window_lab.py --fetch-only --pair "${{ matrix.pair }}" --span "$span" --cache-dir duka-cache --budget-min 270 || true
       - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
         with:
           name: duka-${{ matrix.pair }}-${{ matrix.part }}
           path: duka-cache/
