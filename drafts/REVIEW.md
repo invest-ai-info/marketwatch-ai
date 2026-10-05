@@ -1,3 +1,4 @@
+2026-10-06 signal-lab: #119 ✅公開済み（9種類の入り方の定点観測・全5050回。RSI売られすぎ反発買い46.7%[42.5-50.9%]が最高・高値ブレイク買い39.2%[34.8-43.8%]が最低。全シグナルのCIが重なり統計的有意差なし。plain_japanese✅・signal_verify 14/14 GREEN✅・Opus1st🟡3件修正→verify再確認✅・独立Opus2nd🟢・apply_disclaimer三層補完✅・check_site OK・push済み）
 2026-10-05 signal-lab: #118 ✅公開済み（品質ランク別の勝率・全5020回。上の上=41.3%/良=45.4%/普通=42.4%/避ける=43.0%。4ランク間で有意差なし（信頼区間が重なる）。plain_japanese✅・signal_verify 5/5 GREEN✅・Opus1st🟢・独立Opus2nd🟢・disclaimer三層補完・check_site OK・push済み）
 2026-10-04 signal-lab: #117 ✅公開済み（出口の相性ラボ日足第2回・高値ブレイク買い3688回。基準+0.06R。節目損切りで差の幅プラス4組あり（+0.18〜+0.34）・ボンフェローニ補正未通過・flag全なし。ATR損切りと節目利確−0.11（CI全域マイナス）。plain_japanese✅・signal_verify GREEN 0/0・exit_verify GREEN 38/38・Opus1st🟢・独立Opus2nd🟢・check_site OK・push済み）
 2026-10-03 signal-lab: #116 ✅公開済み（RSI30割れ反発・rsi_oversold_edge・promote_strikes=1定点観測。IS52/133=39.1%・FWD200/403=49.6%・CI=[44.8%~54.5%]・avgR=+0.158。ベースライン43.2%超え。plain_japanese✅・verify5/5✅・Opus1st🟡7件修正→Opus2nd🟡4件修正→plain_japanese✅・verify✅・push済み）
