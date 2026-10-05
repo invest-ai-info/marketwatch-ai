@@ -12,12 +12,15 @@
       期間の始まりは日本の新聞・証券会社の慣例どおり **4〜12月＝その年の1月1日／1〜3月＝前の年の1月1日**
       （1〜3月は「昨年来高値」と呼ぶ）。window_start() が単一の真実。
   ・上場来高値＝その日の高値が、記録のある全期間（月足 range=max）の高値をすべて上回った。
-      🚨 Yahoo の日本株の記録は古い銘柄だと途中（1999〜2001年ごろ）からしかない＝1989年のバブル期の高値などとは
-      比べられない。そこで**記録の始まりが LISTING_CUTOFF（2004-01-01）より前の銘柄は「上場来」と言い切らず
-      「記録のある期間（YYYY年〜）の最高値」として出す**（listing_confirmed）。
-      ⚠️ 初版（2026-10-06 朝）はトヨタの記録の始まり（1999-06）を「床」にしたが、ほかの古い銘柄は
-      2000-02・2001-01 などばらばらに始まり、小松製作所（1949年上場）などを「上場来」と誤って出した＝床は銘柄ごとに違う。
-      区切りが安全かは `python build_jp_highs.py --audit`（jp-highs-audit.yml・手動）で全銘柄の記録の始まりを並べて確かめる。
+      🚨 Yahoo の日本株の記録は古い銘柄だと途中からしかない＝1989年のバブル期の高値などとは比べられない。
+      そこで**「上場来」と言い切るのは、記録が上場の週から始まっている銘柄だけ**（listing_confirmed）。
+      それ以外は「記録のある期間（YYYY年〜）の最高値」として出す。
+      見分け方（2026-10-06 の全399銘柄の監査＝`--audit`）: 月足の最初のバーの日付が
+        ・月の1日＝Yahoo の記録がその月から始まっただけ（古い銘柄はすべてこれ。2004年以降に始まる古い銘柄もある＝
+          日本郵船・川崎重工業・三菱瓦斯化学 2004-12、レーザーテック 2010-03、北洋銀行 2012-10）
+        ・月の途中＝上場の週から記録がある（2017-09 以降の新規上場29銘柄すべて。古い銘柄は1つも無い）
+      ⚠️ 経緯: 初版はトヨタの記録の始まりを床にして小松製作所（1949年上場）などを、2版は「2004年以降に始まる」で
+      日本郵船などを「上場来」と言いうる形だった。銘柄の入れ替え（jp-stock-info.json）のときは監査をもう一度回す。
 
 ガード（build_jp_rankings.py と同じ流儀＝関数をそのまま使う）:
   ・最終バーの日付の多数派を asof にし、少数派の銘柄は落とす（別の日を混ぜない）
@@ -43,8 +46,8 @@ OUT = os.path.join(HERE, "jp-highs.json")
 RANKINGS = os.path.join(HERE, "jp-rankings.json")
 MIN_PRIOR_BARS = 20       # 期間内に前の営業日がこれ未満（上場直後）は数えない＝数日分の「高値」は意味が薄い
 MAX_JUMP = 1.5            # その日の高値 ÷ 前の日の終値 がこれを超えたらデータの誤りとして数えない
-LISTING_CUTOFF = "2004-01-01"  # 記録の始まりがこれより前＝Yahoo の記録の床（1999〜2001年ごろ）に当たる＝上場来とは言わない
-RULE_VERSION = 2          # 判定の決まりを変えたら上げる＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
+LISTING_CUTOFF = "2004-01-01"  # 念のための下限（月の途中から始まる記録でも、これより前なら上場来とは言わない）
+RULE_VERSION = 3          # 判定の決まりを変えたら上げる＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
 
@@ -129,11 +132,13 @@ def all_time_high(monthly, daily):
 
 
 def listing_confirmed(first_date, cutoff=LISTING_CUTOFF):
-    """記録の始まりが区切り以降＝上場時からの記録とみなせるか。純関数。
+    """記録が上場の週から始まっている＝上場来と言えるか。純関数。
 
+    月足の最初のバーが月の途中の日付＝上場の週から記録がある。月の1日＝Yahoo の記録がその月から始まっただけ
+    （古い銘柄。上場が月の初めの週だった新しい銘柄もここに入るが、言い切らない側なので害はない）。
     分からないときは False＝「上場来」と言い切らない側に倒す。
     """
-    return bool(first_date) and first_date >= cutoff
+    return bool(first_date) and first_date >= cutoff and first_date[8:10] != "01"
 
 
 def update_history(history, asof, n_ytd, n_ath):
@@ -266,14 +271,19 @@ def audit():
     print(f"記録の始まり（{len(firsts)}銘柄・取得失敗 {len(fail)}）")
     for y in sorted(by_year):
         print(f"  {y}: {by_year[y]}")
-    late = sorted((d, c) for c, d in firsts.items() if d >= LISTING_CUTOFF)
-    print(f"\n区切り {LISTING_CUTOFF} 以降に始まる＝「上場来」と言う側 {len(late)}銘柄（上場がその頃か確かめる）:")
-    for d, c in late:
+    yes = sorted((d, c) for c, d in firsts.items() if listing_confirmed(d))
+    print(f"\n「上場来」と言う側 {len(yes)}銘柄（記録が月の途中＝上場の週から始まる。上場がその頃か確かめる）:")
+    for d, c in yes:
         print(f"  {d}  {c}  {stocks[c].get('name', '')}")
-    early = sorted((d, c) for c, d in firsts.items() if d < LISTING_CUTOFF)
-    print(f"\n区切りより前に始まる＝「YYYY年〜※」と出す側 {len(early)}銘柄のうち、最も遅く始まる10銘柄:")
-    for d, c in early[-10:]:
+    late_no = sorted((d, c) for c, d in firsts.items() if not listing_confirmed(d) and d >= LISTING_CUTOFF)
+    print(f"\n{LISTING_CUTOFF} 以降に始まるが言い切らない側 {len(late_no)}銘柄（月の1日に始まる＝古い銘柄の記録の途中もここ）:")
+    for d, c in late_no:
         print(f"  {d}  {c}  {stocks[c].get('name', '')}")
+    odd = sorted((d, c) for c, d in firsts.items() if d < LISTING_CUTOFF and d[8:10] != "01")
+    if odd:
+        print(f"\n⚠️ {LISTING_CUTOFF} より前なのに月の途中から始まる {len(odd)}銘柄（見分け方の前提が崩れていないか見る）:")
+        for d, c in odd:
+            print(f"  {d}  {c}  {stocks[c].get('name', '')}")
 
 
 if __name__ == "__main__":
