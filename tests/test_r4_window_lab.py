@@ -54,6 +54,8 @@ def test_pick_day_skips_days_without_data():
     assert W.pick_day(fn, "EURUSD=X", 2024, 5, "last", dt.date(2024, 12, 31)) == dt.date(2024, 5, 30)   # 31日（金）は無い
     assert W.pick_day(fn, "EURUSD=X", 2024, 5, "mid", dt.date(2024, 12, 31)) == dt.date(2024, 5, 15)
     assert W.pick_day(fn, "EURUSD=X", 2024, 6, "last", dt.date(2024, 12, 31)) is None
+    failed = lambda pair, d: W.FAILED if d == dt.date(2024, 5, 15) else (1, 0, 1, 0)   # noqa: E731
+    assert W.pick_day(failed, "EURUSD=X", 2024, 5, "mid", dt.date(2024, 12, 31)) is None   # 取れなかった日で次の日へ進まない
 
 
 def _equities(f_up, us_up):
@@ -168,7 +170,7 @@ def test_dukascopy_retries_when_busy():
     gone = W.Duka(opener=lambda req: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 404, "x", {}, None)), wait=waits.append)
     assert gone.window("EURUSD=X", dt.date(2024, 1, 13)) is None and not gone.errors   # 404＝データの無い日（失敗ではない）
     bad = W.Duka(opener=lambda req: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 503, "x", {}, None)), tries=2, wait=lambda s: None)
-    assert bad.window("EURUSD=X", dt.date(2024, 1, 15)) is None and len(bad.errors) == 1
+    assert bad.window("EURUSD=X", dt.date(2024, 1, 15)) is W.FAILED and len(bad.errors) == 1
 
 
 def test_first_candidates_and_disk_cache():

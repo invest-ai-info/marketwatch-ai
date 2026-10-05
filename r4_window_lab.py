@@ -5,7 +5,8 @@
 
   腕C（クラウド）＝Dukascopy の公開の1分足（売値）・2015-01〜2026-09・費用は腕A と同じ控えめな値（box_lab.cost_price）
   腕B（手元）  ＝MT5（BigBoss）の5分足の書き出し（C:\\mt5run\\m5tick_*.csv）・2022-06-01〜2026-09-24・費用は足の実際のスプレッド
-  判定に使うのは1つだけ：腕C のデータが取れれば腕C、取れなければ腕B（腕B は r4-window-lab.json を見て自分の役目を決める）
+  ⚠️ 判定は元の登録どおり腕B（手元で 2026-10-05 10:36 に数え済み＝差なし）。腕C は同じ問いを別のデータで確かめた数字
+     （PREREG「R4 の記録の訂正」。下の「腕C が取れれば腕C が判定」の作りは取り消した補足のなごり）
 
 ⚠️ 物差しと判定は PILLAR_PREREG.md「R4」の腕B と「R4 腕B の補足と腕C」（事前登録・計算より先にコミット）と下の定数に固定。
    結果を見てから動かさない。出力には事前登録の中身の指紋（sha256）を書き込む。
@@ -105,12 +106,19 @@ def weekdays(y, m):
     return [x.date() for x in d if x.weekday() < 5]
 
 
+FAILED = object()                  # 取得に失敗した日（「足が無い日」とは別）
+
+
 def pick_day(window_fn, pair, y, m, rule, end):
-    """rule＝last：両方に足がある最後の平日／mid：15日以上で両方に足がある最初の平日。見つからなければ None"""
+    """rule＝last：両方に足がある最後の平日／mid：15日以上で両方に足がある最初の平日。見つからなければ None。
+    取得に失敗した日（FAILED）に当たったら、次の日へ進まずに None（決まりと違う日を使わない＝その月は見つからなかった扱い）"""
     wd = [d for d in weekdays(y, m) if d <= end]
     cands = wd[::-1][:SEARCH_DAYS] if rule == "last" else [d for d in wd if d.day >= 15][:SEARCH_DAYS]
     for d in cands:
-        if window_fn(pair, d) is not None:
+        w = window_fn(pair, d)
+        if w is FAILED:
+            return None
+        if w is not None:
             return d
     return None
 
@@ -295,7 +303,7 @@ class Duka:
         key = (pair, day)
         if key not in self.cache:
             data = self.raw(pair, day)
-            self.cache[key] = None if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
+            self.cache[key] = FAILED if data is None else windows_from_bars(parse_duka(data, day, pair)).get(day)
         return self.cache[key]
 
 
