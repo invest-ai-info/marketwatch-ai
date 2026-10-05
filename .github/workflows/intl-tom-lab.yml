@@ -1,0 +1,55 @@
+name: Intl Turn-of-Month Lab (manual)
+
+# R6 月末月初の窓は、ほかの国の株価指数でも論文のあとに残っているか（R3F を育てる確かめ）。McConnell & Xu (2008) のあとの
+# 2009-01〜2026-09・ドイツ・英国・フランス・ユーロ圏50・スペイン・豪州・香港・R3 の Q1 と同じ窓・往復0.05%＋年3%。
+# 2026-10-05 深夜 登録・オーナー「おすすめ通りにお願いします」→「続けてください」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「R6」（事前登録・計算より先にコミット済み）と intl_tom_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ（1回だけ数える）。数える日の前の日（UTC）までの終値だけを使う＝9月の窓の売りの日（10/5〜10/6）の
+#    終値がそろう 2026-10-07 以降（UTC）に実行する。
+# ⚠️ 出力（intl-tom-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: intl-tom-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_intl_tom_lab.py
+      - name: Count with the pre-registered ruler
+        run: |
+          python intl_tom_lab.py
+          python verified_list.py > /dev/null
+          [ -f intl-tom-lab.md ] && cat intl-tom-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add intl-tom-lab.json intl-tom-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: intl turn-of-month lab R6 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
