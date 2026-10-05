@@ -48,7 +48,7 @@ SYNC_FORBIDDEN = {
     "signals-log-backtest.json",  # 日足リプレイ出力（ローカル/週次再生成の派生データ・大容量。ローカルpush禁止）
     "jp-rankings.json",  # 値上がり/値下がりランキング（jp-rankings.yml が GitHub 側で毎朝生成・コミット。ローカルpush禁止）
     "jp-margin.json",  # 信用残ウォッチ（jp-rankings.yml が build_jp_margin.py で生成・コミット。ローカルpush禁止）
-    "jp-highs.json",  # 高値更新銘柄（jp-rankings.yml が build_jp_highs.py で生成・コミット。日ごとの件数の履歴を持つ＝ローカルpush禁止）
+    "jp-highs.json",  # 高値・安値の更新銘柄（jp-rankings.yml が build_jp_highs.py で生成・コミット。日ごとの件数の履歴を持つ＝ローカルpush禁止）
     "news-ticker.json",  # ⚡最新ニュース・ライブフィード（news-ticker.yml が毎時GitHub側で生成・コミット。ローカルpush禁止）
     "market-health-history.json",  # 市場健康度の日次履歴（update-market-news.yml が GitHub側で生成・コミット。ローカルpush禁止）
     "economic-events.json",  # 経済指標＋市場休場（monthly-calendar-reminder.yml が GitHub側で
