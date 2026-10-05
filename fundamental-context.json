@@ -1,91 +1,90 @@
 {
-  "generated_at": "2026-10-05T15:08:00+09:00",
+  "generated_at": "2026-10-06T06:07:31+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
+    "regime": "RISK_ON",
     "confidence": "MID",
-    "rationale": "米国・日本株は小幅高で推移しているが、市場の幅が狭く構成銘柄の多くが下落。原油価格が90ドル近辺に高止まりし中東（米・イラン対立）リスクが続く。FRBの10月利上げ確率が45%→28%へ低下したことやAI・半導体株の上昇はリスクオン材料だが、長期金利の高止まりが全体の上値を抑制。総合的にはNEUTRAL。",
+    "rationale": "米9月雇用統計が予想（+8.8万人）を大幅下回る+2.9万人となり、Fedの利上げ継続懸念が後退。日経平均が+2.40%・S&P500が+0.73%と株式市場は上昇し、リスクオンの流れが優勢。ただし原油は90ドル台で高止まりし、中東情勢（イエメン・サウジ衝突）の緊張が下押しリスクとして残存。",
     "key_drivers": [
-      "米9月雇用統計が予想を下回りFRBの10月利上げ確率が45%→28%へ低下",
-      "WTI原油90ドル付近、米・イラン対立によるホルムズ海峡供給制約が継続",
-      "ナスダックがAI・半導体株主導で過去最高値、ただし市場の幅は狭い",
-      "日銀が9月会合で政策金利1.25%に据え置き、追加利上げ観測が後退し円安進行",
-      "東京都区部CPI 2.70%で日銀の物価目標は意識されるが慎重姿勢維持"
+      "米9月NFPが+2.9万人と大幅下振れ→Fed10月利上げ確率が17%まで急低下",
+      "日本株が半導体・AI関連株主導で約3カ月ぶりの高値圏（69,946円）",
+      "G7が最大1億バレルの原油緊急備蓄放出を決定し、インフレ圧力を緩和",
+      "ビットコインがETF需要回復と弱い雇用統計を受けて86,000ドル台に浮上"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "NEUTRAL",
-      "conviction": "MID",
-      "rationale": "現物日経平均は68,309円（前日比-0.94%）と下落したが、先物は69,760円（+1,110円）と底堅い。日銀短観の改善が企業業績を支援。日銀の追加利上げ観測後退でドル円が158円台の高値更新となり、輸出株に追い風。ただし原油高が輸入コストを押し上げ、上値は重い。",
+      "bias": "BULLISH",
+      "conviction": "HIGH",
+      "rationale": "10月5日に前週末比+1,637円（+2.40%）の69,946円で大引け。米雇用統計の大幅下振れで利上げ懸念が和らぎ、AI・半導体関連に大量の買いが入った。約3カ月ぶりの高値圏を回復し、円安（157円台）も輸出株の支援材料。",
       "catalysts": [
-        "日銀短観の改善が企業業績の前向きな見方を後押し",
-        "日銀利上げ観測後退と円安進行（158円台）で輸出関連株を支援",
-        "原油高による原材料・エネルギーコスト増加が下押し圧力"
+        "米NFP下振れによる利上げ懸念後退でリスク選好が強まった",
+        "AI・半導体関連（ソフトバンクG・東京エレクトロン等）が相場を牽引",
+        "ドル円157円台の円安が輸出企業の収益期待を下支え"
       ],
       "top_news": [
         {
-          "headline": "10月5日の日経225先物が6万9,760円で寄り付き、前日比1,110円高",
+          "headline": "日経平均が前週末比1,637円高の69,946円で大引け　AI・半導体株が牽引",
           "published": "2026-10-05",
-          "comment": "先物が現物を上回る動きは、翌営業日以降の上昇期待を示唆することがある",
-          "source": "mikenのブログ",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://miken.muragon.com/entry/3247.html"
-        },
-        {
-          "headline": "日銀9月会合：政策金利を1.25%に据え置き（賛成7対反対2）",
-          "published": "2026-09-18",
-          "comment": "日銀が利上げを急がず、円安が続きやすい環境で輸出株の下支えにつながった",
-          "source": "Vantage Markets",
+          "comment": "米雇用統計の下振れで利上げ懸念が後退し、日本株に大量の買いが流入した",
+          "source": "Investing.com（Fisco）",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics"],
+          "corroborated_by": ["外為どっとコム", "F-frontier"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.vantagemarkets.com/market-analysis/usdjpy-news-today-tokyo-cpi-boj-nfp-october-2-2026/"
+          "url": "https://jp.investing.com/news/forex-news/article-1700851"
+        },
+        {
+          "headline": "NASDAQと日経が世界株式の中で際立った強さを維持　週初め",
+          "published": "2026-10-05",
+          "comment": "世界の中でも日経とナスダックが特に強く、資金が集中しやすい状況が続いている",
+          "source": "The Market Mentor / Substack",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["HDFC Sky"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://themarketmentor.substack.com/p/nasdaq-and-nikkei-hold-strong-while"
         }
       ]
     },
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "NEUTRAL",
+      "bias": "BULLISH",
       "conviction": "MID",
-      "rationale": "10月1日に7,666.45（+0.19%）で小幅高。しかし構成銘柄の約4分の3が下落し市場の幅は狭い。長期国債利回りが20年超ぶりの高水準と原油高が金利感応株を圧迫。FRBの10月利上げ確率低下が下支えも、上値は重い展開。",
+      "rationale": "10月5日終値7,722.72（+0.73%）。弱い雇用統計でFedの10月追加利上げ観測が大幅後退（確率17%）し、株式に買いが入った。JPモルガンが年末目標を7,800へ引き上げ。ただし12月利上げ観測（約58%）が残存するため上値追いには慎重さも必要。",
       "catalysts": [
-        "FRBの10月利上げ確率が28%へ低下し金利への過度な懸念が和らいだ",
-        "AI・テック株が市場全体を下支えするも、広範な上昇ではない",
-        "長期国債利回りが20年超ぶりの高水準で金利敏感セクターを圧迫"
+        "9月NFP +2.9万人の大幅下振れでFed10月利上げ確率が17%まで急低下",
+        "JPモルガンがS&P500年末目標を7,800へ引き上げ",
+        "グロース株・ハイテク銘柄に利上げ懸念後退の恩恵"
       ],
       "top_news": [
         {
-          "headline": "S&P500が10月1日に7,666.45で小幅高――構成銘柄の約4分の3が下落し市場の幅は狭い",
-          "published": "2026-10-01",
-          "comment": "指数は上昇でも多くの銘柄が下げており、一部の大型株だけが引っ張る展開",
-          "source": "CNBC",
-          "tier": 2,
+          "headline": "米9月雇用統計は+2.9万人と予想の3分の1以下、Fed10月利上げはほぼ消滅",
+          "published": "2026-10-03",
+          "comment": "予想外に弱い雇用統計で株買い・ドル売りが進んだが、年内の利上げ観測は完全には消えていない",
+          "source": "CNBC / BLS",
+          "tier": 1,
           "credibility": "HIGH",
-          "corroborated_by": ["QZ"],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.cnbc.com/2026/09/30/stock-market-today-live-updates.html"
-        },
-        {
-          "headline": "米9月雇用統計が予想を下回り、FRBの10月利上げ確率が45%から28%に低下",
-          "published": "2026-10-02",
-          "comment": "雇用の鈍化がFRBの積極的な引き締めを抑制し、株式市場にとっては追い風",
-          "source": "CNBC / Yahoo Finance",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Yahoo Finance"],
+          "corroborated_by": ["BLS", "CNBC", "Investing.com"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.cnbc.com/2026/10/01/gold-holds-steady-with-us-jobs-data-on-radar.html"
+          "url": "https://www.cnbc.com/2026/10/02/fed-rate-hike-odds-decline-after-september-jobs-report.html"
+        },
+        {
+          "headline": "JPモルガンがS&P500年末目標を7,800へ引き上げ、株式に建設的スタンス",
+          "published": "2026-10-01",
+          "comment": "大手金融機関がリスク資産に前向きで、機関投資家の買い意欲の後押しになりやすい",
+          "source": "JPMorgan Global Research",
+          "tier": 1,
+          "credibility": "HIGH",
+          "corroborated_by": ["HDFC Sky"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.jpmorgan.com/insights/global-research/outlook/mid-year-outlook"
         }
       ]
     },
@@ -94,62 +93,62 @@
       "ticker": "NQ=F",
       "bias": "BULLISH",
       "conviction": "MID",
-      "rationale": "ナスダック総合指数が10月1日に26,871.60で過去最高値を更新。NVIDIAが最高値を更新し、マイクロン・テクノロジーの好決算がAI・半導体セクター全体に波及。AI需要主導の企業業績期待が継続し、他の指数をアウトパフォームする展開。",
+      "rationale": "日経・ナスダックが世界株式の中で相対的な強さを維持。AI・半導体株主導の上昇が継続し、利上げ懸念後退がグロース株の追い風になっている。12月利上げ観測が残存するため過熱感には注意が必要。",
       "catalysts": [
-        "NVIDIAが過去最高値を更新、AI需要の力強さを再確認",
-        "マイクロン・テクノロジーの好決算が半導体株全体に波及",
-        "FRBの利上げ観測後退がグロース・ハイテク株を下支え"
+        "AI・半導体セクターへの資金流入が継続",
+        "利上げ懸念後退でグロース株・ハイテクに恩恵",
+        "弱い雇用統計が金利感応度の高いテック株に追い風"
       ],
       "top_news": [
         {
-          "headline": "ナスダック総合指数が過去最高値の26,871を更新、NVIDIAと半導体株が牽引",
-          "published": "2026-10-01",
-          "comment": "AIブームが半導体・ソフトウェア株を押し上げ、ナスダックがほかの指数を大きくしのいでいる",
-          "source": "CNBC / QZ",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["QZ"],
-          "materiality": "high",
+          "headline": "ナスダックと日経が世界株式の中で際立った強さ　テック・AI株主導の上昇続く",
+          "published": "2026-10-05",
+          "comment": "AI・半導体関連への買いがナスダックを支えており、世界の資金が集まりやすい状況",
+          "source": "The Market Mentor / Substack",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["HDFC Sky"],
+          "materiality": "mid",
           "direction": "bullish",
-          "url": "https://qz.com/dow-sp500-nasdaq-october-gains-ai-stocks-100126"
+          "url": "https://themarketmentor.substack.com/p/nasdaq-and-nikkei-hold-strong-while"
         }
       ]
     },
     {
       "name": "金",
       "ticker": "GC=F",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "10月5日の金価格は4,138.78ドル（前日比-0.03%）。過去1ヶ月で約6%下落。強いドルと長期金利の高止まりが主な圧迫要因。FRBの10月利上げ確率が28%へ低下したことで急落は抑制されているが、前月比ではなお下落基調。前年比+4.45%と中期的な底堅さは残る。",
+      "rationale": "10月5日の金価格は4,138.78ドル（前日比-0.03%）と横ばい圏。過去1カ月で-6.04%と調整局面にあるが、前年比では+4.45%と水準は高い。株高でリスクオンの資金が流出しやすい一方、米利上げ懸念後退によるドル弱含みが下支え。JPモルガンは中長期で5,000ドルを目標とする。",
       "catalysts": [
-        "ドル高・長期金利高止まりが無利子資産の金の魅力を低下させる",
-        "FRBの10月利上げ確率低下（45%→28%）が下落幅を抑制",
-        "中東情勢悪化が続けば安全資産需要で反発の可能性"
+        "中央銀行の継続的な金購入が長期的な下支えになっている",
+        "米NFP下振れによるドル弱含みが金の下落を限定",
+        "株式市場の上昇が短期的に安全資産からの資金流出を促す"
       ],
       "top_news": [
         {
-          "headline": "金価格10月5日に4,138ドル付近、過去1ヶ月で約6%下落――ドル高・金利高止まりが圧迫",
+          "headline": "金価格は4,138ドル付近で小幅下落、直近1カ月で6%超の調整局面",
           "published": "2026-10-05",
-          "comment": "金利が高い局面では金は保有コストが相対的に大きくなり、売られやすくなる",
-          "source": "Trading Economics",
+          "comment": "株高でリスクオンの流れが続くと金は上値が重くなりやすく、短期的な方向感が乏しい",
+          "source": "TradingEconomics",
           "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Yahoo Finance"],
-          "materiality": "high",
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
           "direction": "bearish",
           "url": "https://tradingeconomics.com/commodity/gold"
         },
         {
-          "headline": "金、週2度目の下落へ――原油高と米・イラン対立が安全資産の構図を複雑にする",
-          "published": "2026-10-02",
-          "comment": "中東情勢が緊迫化しても、ドル高と金利高が金の上昇を相殺している",
-          "source": "CNBC",
-          "tier": 2,
+          "headline": "JPモルガンが金の長期目標を5,000ドルに設定、中央銀行買いと投資家需要を根拠に",
+          "published": "2026-10-01",
+          "comment": "長期視点では上昇期待が根強いが、短期の調整は別の話として切り分けて考えたい",
+          "source": "JPMorgan Global Research",
+          "tier": 1,
           "credibility": "HIGH",
-          "corroborated_by": [],
+          "corroborated_by": ["HDFC Sky"],
           "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/10/01/gold-holds-steady-with-us-jobs-data-on-radar.html"
+          "direction": "bullish",
+          "url": "https://www.jpmorgan.com/insights/global-research/outlook/mid-year-outlook"
         }
       ]
     },
@@ -158,74 +157,74 @@
       "ticker": "CL=F",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "WTI原油は10月5日に90ドル（前日比-1.22%）。米・イラン対立によるホルムズ海峡の供給制約が続き高値圏を維持。EIAは日量300万バレル超の在庫減少を予測。一部タンカー・パイプラインの再稼働ニュースが上値を抑制しているが、地政学リスクが下値を支えている。",
+      "rationale": "WTI原油は90.62ドル（前日比-0.53%）。中東情勢（イエメンのフーシ派とサウジの軍事衝突激化）が価格の高止まりを支えるが、G7の緊急備蓄放出決定が上値を抑制。OPEC+は生産枠を来月も維持。強弱材料が拮抗しNEUTRALと判断。",
       "catalysts": [
-        "米・イラン対立によるホルムズ海峡通過制限で供給不安継続",
-        "EIA推計：日量300万バレル超の在庫減少が続く見込み",
-        "一部パイプライン・タンカー再稼働のニュースが上値を抑制"
+        "中東緊張（イエメン・サウジ軍事衝突の激化）が供給懸念を下支え",
+        "G7が最大1億バレルの緊急備蓄放出を決定し価格上昇を抑制",
+        "OPEC+が生産枠を来月も据え置きと決定"
       ],
       "top_news": [
         {
-          "headline": "WTI原油が90ドルで推移――米・イラン対立によるホルムズ海峡供給制約が価格を支える",
-          "published": "2026-10-05",
-          "comment": "ホルムズ海峡は世界の石油輸送量の約2割が通過する要衝で、封鎖懸念が価格を押し上げる",
-          "source": "Trading Economics",
+          "headline": "G7が最大1億バレルの原油緊急備蓄放出を決定、先物価格が軟化",
+          "published": "2026-10-04",
+          "comment": "G7の在庫放出決定で需給懸念が和らぎ、原油価格の急騰リスクが低下した",
+          "source": "外為どっとコム / F-frontier",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["J.P. Morgan Global Research"],
+          "corroborated_by": ["外為どっとコム", "F-frontier"],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://tradingeconomics.com/commodity/crude-oil"
+          "direction": "bearish",
+          "url": "https://stock.f-frontier.com/2026/10/05/235208/"
         },
         {
-          "headline": "J.P.モルガン：中東紛争でブレント原油は年末78ドル予想を上方修正",
-          "published": "2026-09-30",
-          "comment": "大手投資銀行が原油の高止まりを想定、エネルギー株や航空・輸送株のコストに影響",
-          "source": "J.P. Morgan Global Research",
-          "tier": 2,
-          "credibility": "HIGH",
+          "headline": "サウジ支援勢力がイエメン・フーシ派への全面作戦を開始、中東緊張が高まる",
+          "published": "2026-10-04",
+          "comment": "中東の軍事衝突は原油の供給途絶懸念につながり、価格の急騰リスクが残る",
+          "source": "NordFX Market Pulse",
+          "tier": 3,
+          "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "mid",
+          "materiality": "high",
           "direction": "bullish",
-          "url": "https://www.jpmorgan.com/insights/global-research/outlook/market-outlook"
+          "url": "https://nordfx.com/market-news/market-pulse-october-05-2026"
         }
       ]
     },
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "BULLISH",
+      "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "ドル円は10月5日に158.12〜158.28円圏で高値を更新。FRBが3.75〜4.00%を維持する一方、日銀は1.25%（9月据え置き）で金利差は大きく、円安バイアスが継続。日銀の追加利上げ観測が後退しており、東京CPI 2.70%でも日銀の動き出しは緩慢との市場の見方。三村財務官の発言後に一時円高も、すぐに戻した。",
+      "rationale": "10月5日のドル円は157.73円（前日比-0.08%）。米9月NFP大幅下振れでドル売り・円買いが入ったが、クロス円でのショート構築の流れが強くドルの下落は限定的。今夜の米ISM非製造業指数が158円台への鍵を握るとされている。",
       "catalysts": [
-        "日米金利差（FRB 3.75-4.00% vs 日銀 1.25%）が大きくドル高・円安バイアスが維持",
-        "日銀の追加利上げ観測後退が円売りを促す地合いを形成",
-        "東京CPI 2.70%でも日銀は慎重姿勢を継続との見方"
+        "米NFP下振れでドル売り圧力がある一方、クロス円ショートがドルを下支え",
+        "今夜の米ISM非製造業指数が158円台回復の分岐点",
+        "日銀の政策変更観測の動向が注目される"
       ],
       "top_news": [
         {
-          "headline": "ドル円が10月5日に158.28円へ高値更新――日銀利上げ観測後退が背景",
+          "headline": "ドル円157.73円、米雇用悪化を跳ね返すドル買い圧力―今夜のISM非製造業が158円台の鍵",
           "published": "2026-10-05",
-          "comment": "日米の金利差が大きい間はドル高・円安の流れが続きやすい点に注目",
-          "source": "みんかぶFX",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["Vantage Markets"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://fx.minkabu.jp/news/380721"
-        },
-        {
-          "headline": "日銀9月会合で政策金利1.25%に据え置き、東京CPI 2.70%でも追加利上げを急がない姿勢",
-          "published": "2026-09-18",
-          "comment": "日銀が利上げを慎重に進めている間、円売り圧力が持続しやすい",
-          "source": "Vantage Markets",
+          "comment": "弱い米雇用統計でも円高が限定的な背景には、他のクロス円売りによるドル需要がある",
+          "source": "外為どっとコム",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics"],
+          "corroborated_by": ["OANDA Japan"],
           "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.vantagemarkets.com/market-analysis/usdjpy-news-today-tokyo-cpi-boj-nfp-october-2-2026/"
+          "direction": "neutral",
+          "url": "https://www.gaitame.com/media/entry/2026/10/05/070814"
+        },
+        {
+          "headline": "FX個人投資家動向：クロス円でショート構築の流れが強まる、ドル円に一極集中",
+          "published": "2026-10-05",
+          "comment": "個人投資家がドル円以外の円クロスで売りポジションを積み上げており、相場展開に影響",
+          "source": "外為どっとコム",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.gaitame.com/media/entry/2026/10/05/151743"
         }
       ]
     },
@@ -233,79 +232,87 @@
       "name": "ユーロドル",
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "直近の具体的な価格情報は限定的だが、ドル高基調が続くなか上値は重い。MUFG等は年末に向けて1.19〜1.21を目標とする見通しを示す。FRBの利下げ転換が中期的なドル安・ユーロ高の主要な牽引役になると見られる。現時点では材料が薄くNEUTRAL。",
+      "conviction": "MID",
+      "rationale": "ユーロドルは1.1256付近。9月25日のECB参照レート1.1403から軟化しているが、米NFP下振れによるドル売りで下げが一服。10月27〜28日のFed・28〜29日のECB会合が次の大きな材料。ECBが年内金利据え置きならFedとの政策ギャップが縮まる可能性。",
       "catalysts": [
-        "ドル高継続がユーロドルの上値を抑制（短期バイアスは弱含み）",
-        "FRBが利下げに本格転換すれば中長期的にユーロ高方向",
-        "ECBの政策スタンスと米欧金利格差が方向性を左右"
+        "米NFP下振れでドルが弱含みとなりユーロを下支え",
+        "Fed10月利上げ確率17%低下でユーロの相対的な強さが意識される",
+        "ECB・Fed会合（10月27〜29日）が次の大きな方向性の分岐点"
       ],
       "top_news": [
         {
-          "headline": "ユーロドルの年末目標は1.19〜1.21――FRBの利下げと米ドル軟化が中期の牽引役",
-          "published": "2025-12-19",
-          "comment": "FRBが利下げに動くほどドル安・ユーロ高の流れになりやすいが、実現は先の話",
-          "source": "IG / MUFG Research",
+          "headline": "ユーロドル1.1256付近、Fed10月利上げ確率が17%まで低下しドル売り優勢",
+          "published": "2026-10-05",
+          "comment": "米雇用統計の弱さでドルが売られたが、ユーロ自身も経済減速懸念を抱えており上値は限定的",
+          "source": "StoneX / RoboForex",
           "tier": 2,
           "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "low",
+          "corroborated_by": ["RoboForex"],
+          "materiality": "mid",
           "direction": "bullish",
-          "url": "https://www.ig.com/en/news-and-trade-ideas/forex-market-outlook-for-2026-251211"
+          "url": "https://www.stonex.com/en-gb/news-and-analysis/eur-usd-q4-2026-outlook-euro-at-a-crossroads-as-fed-ecb-tighten/"
+        },
+        {
+          "headline": "ECBは2026年通年で金利2%を据え置く見通し、12月利上げ確率は93%",
+          "published": "2026-10-02",
+          "comment": "ECBが慎重姿勢を続けるとFedとの政策差が縮まり、ユーロ相場の先行きに影響する",
+          "source": "Mitrade / TradingKey",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.mitrade.com/insights/more/mores/insights-eur-gen-20251226"
         }
       ]
     },
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "10月5日に約86,563ドル。2026年の最高値126,210ドルから約3割下落しているが、直近のレンジ（75,585〜87,397ドル）の上限近辺で推移。過去13年中10回が10月に月間プラスと季節性は良好。ただしリスク資産全般と連動しやすく、リスクオフ時は株と共に下落しやすい。",
+      "bias": "BULLISH",
+      "conviction": "MID",
+      "rationale": "10月5日のBTC価格は86,103〜86,377ドル付近。10月初め以来+2.7%上昇し、2026年の年初来水準の奪回を試みている。BTCスポットETFへの資金流入再加速・弱い米雇用統計によるリスクオン・デジタル資産保管規制見直しへの期待が複数の強気材料として重なっている。",
       "catalysts": [
-        "10月は過去13年中10回が月間プラスで季節性は良好（中央値+12.73%）",
-        "2026年の最高値12万6,210ドルから3割超下落し、長期投資家の押し目買いも",
-        "リスクオフ局面では株式と連動して下落するリスクに注意"
+        "BTCスポットETFへの資金流入が再加速",
+        "米NFP下振れによるリスクオン・ドル安がBTCを支援",
+        "デジタル資産の保管規制見直しへの期待"
       ],
       "top_news": [
         {
-          "headline": "ビットコイン10月5日に約86,563ドル――2026年最高値12万6,210ドルから3割超下落した水準",
+          "headline": "ビットコインが10月に入り+2.7%上昇、86,100ドル台で2026年年初来水準の奪回を試みる",
           "published": "2026-10-05",
-          "comment": "高値からの大幅下落で拾いやすい水準とも言われるが、リスク資産全般の動向と連動する",
-          "source": "Coinbase / Fortune",
+          "comment": "リスクオンの流れとETF需要回復でビットコインに買いが入っているが、高値更新はまだ先",
+          "source": "CoinTelegraph / Fortune",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Fortune"],
+          "corroborated_by": ["Fortune", "CoinStats"],
           "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://fortune.com/article/price-of-bitcoin-10-02-2026/"
+          "direction": "bullish",
+          "url": "https://fortune.com/article/price-of-bitcoin-10-05-2026"
         },
         {
-          "headline": "ビットコイン10月の予測レンジ：79,950〜84,914ドル――現在は上限突破",
-          "published": "2026-09-30",
-          "comment": "アナリスト予測レンジを上回って推移しており、モメンタムは比較的強い",
-          "source": "CoinDCX / 24/7 Wall St.",
+          "headline": "BTC需要を支えるのはETF流入・弱い米雇用統計・デジタル資産保管規制の見直しの3点",
+          "published": "2026-10-05",
+          "comment": "複数の強気材料が重なっており、仮想通貨全体の地合いが良い状況が続いている",
+          "source": "CoinStats AI",
           "tier": 3,
           "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "low",
+          "materiality": "mid",
           "direction": "bullish",
-          "url": "https://247wallst.com/investing/cryptocurrency/2026/09/30/bitcoin-price-prediction-for-october-2026/"
+          "url": "https://coinstats.app/ai/a/latest-news-for-bitcoin"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "ウォール街、2026年S&P500目標8,000超の予測が相次ぐ",
-      "reason": "年初来の通年予測であり、直近の市場動向への短期的な影響は限定的なため除外"
+      "headline": "ビットコインの週次予測でBTC82,000ドル方向との見方",
+      "reason": "単一ブログ（CoinDCX）による価格予測のみで根拠が薄く、実際の価格動向と乖離している。"
     },
     {
-      "headline": "金の2026年通年平均価格4,753ドル・年末5,000ドル予測",
-      "reason": "通年の見通しであり、直近の短期バイアス判断には使用しない"
-    },
-    {
-      "headline": "J.P.モルガン：2026年の世界成長は堅調、ただしダウンサイドリスク高い",
-      "reason": "年間マクロ見通しであり、直近の日次動向判断への影響は薄い"
+      "headline": "2026年ロボフォレックスのEURUSD予測とテクニカル分析",
+      "reason": "単独ブログのテクニカル予測のみで独立した一次情報がないため除外。"
     }
   ]
 }
