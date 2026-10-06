@@ -39,6 +39,8 @@ ALPHA = 0.05 / N_Q
 MAX_DAILY = 0.25
 MAX_SAME_OPEN = 0.30
 CHECK_FROM, CHECK_TO = "2008-12-01", "2026-10-02"   # 点検を当てる範囲＝数える期間で使う値（PILLAR_PREREG「R7」の追記）
+JP_START = "2011-01-01"        # 1321.T は 2009〜2010年の行がまばら（PILLAR_PREREG「R7」の追記その2）
+MAX_ROW_GAP = 12              # 行と行の間がこの暦日を超える組はデータの穴として数えない（祝日の連休は最大11日）
 SEED = 20261012
 VERDICTS = ("◎ 残っている", "◯ 傾向", "差なし")
 QS = {
@@ -69,15 +71,28 @@ def data_ok(df):
 
 # ════════════════════ 取引 ════════════════════
 
+def _stale(d):
+    """値の付いていない日（始値＝高値＝安値＝終値）。High・Low が無ければ始値＝終値で見る"""
+    o, c = d["Open"].to_numpy(float), d["Close"].to_numpy(float)
+    st = o == c
+    if "High" in d and "Low" in d:
+        h, lo = d["High"].to_numpy(float), d["Low"].to_numpy(float)
+        st = st & (h == lo) & (h == o)
+    return st
+
+
 def gap_trades(df, cost, start=START, end=END, cut="2100-12-31"):
     """窓が GAP 以上の日に寄りで逆向き→大引け。→ [{day, month, gap, dir, gross, net}]"""
     d = df[df.index < pd.Timestamp(cut)]
     o, c = d["Open"].astype(float).to_numpy(), d["Close"].astype(float).to_numpy()
     days = pd.DatetimeIndex(d.index)
+    stale = _stale(d)
     out = []
     for i in range(1, len(d)):
         day = days[i]
         if not (pd.Timestamp(start) <= day <= pd.Timestamp(end)):
+            continue
+        if stale[i] or stale[i - 1] or (day - days[i - 1]).days > MAX_ROW_GAP:
             continue
         g = o[i] / c[i - 1] - 1
         if abs(g) < GAP or g == 0:
@@ -94,12 +109,15 @@ def night_trades(df, cost, start=START, end=END, cut="2100-12-31"):
     d = df[df.index < pd.Timestamp(cut)]
     o, c = d["Open"].astype(float).to_numpy(), d["Close"].astype(float).to_numpy()
     days = pd.DatetimeIndex(d.index)
+    stale = _stale(d)
     out = []
     for i in range(len(d) - 1):
         day = days[i]
         if not (pd.Timestamp(start) <= day <= pd.Timestamp(end)):
             continue
         cal = int((days[i + 1] - day).days)
+        if stale[i] or stale[i + 1] or cal > MAX_ROW_GAP:
+            continue
         gross = o[i + 1] / c[i] - 1
         out.append({"day": str(day.date()), "month": str(day.date())[:7], "days": cal, "gross": float(gross),
                     "net": float(gross - cost - FIN_RATE * cal / 365.0), "intra": float(c[i + 1] / o[i + 1] - 1),
@@ -203,7 +221,8 @@ def run(data, cut, rng):
     res = {}
     for q, cfg in QS.items():
         df = data[cfg["ticker"]]
-        rows = (gap_trades if cfg["kind"] == "gap" else night_trades)(df, cfg["cost"], cut=cut)
+        start = JP_START if cfg["ticker"] == "1321.T" else START
+        rows = (gap_trades if cfg["kind"] == "gap" else night_trades)(df, cfg["cost"], start=start, cut=cut)
         res[q] = {"name": cfg["name"], "stats": stats(rows, cfg["kind"], rng), "reading": reading(rows, cfg["kind"]),
                   "first_day": rows[0]["day"] if rows else None, "last_day": rows[-1]["day"] if rows else None}
     return res
@@ -216,7 +235,8 @@ def _p(x, nd=3):
 def render_md(out):
     L = ["# R7 株価指数の朝の窓・夜の上げ（JP225・US500 の CFD の代わりに 1321.T・SPY の日足）", "",
          f"- 生成: {out['generated_jst']}　事前登録の指紋（PILLAR_PREREG.md の sha256）: `{out.get('prereg_sha256')}`",
-         f"- 決まり＝PILLAR_PREREG.md「R7」。期間 {START}〜{END}・数える日の前の日（UTC）までの値だけ。p＜0.05÷{N_Q}",
+         f"- 決まり＝PILLAR_PREREG.md「R7」。期間 {START}〜{END}（1321.T は {JP_START} から＝追記その2）・数える日の前の日（UTC）までの値だけ。p＜0.05÷{N_Q}",
+         f"- 値の付いていない日（始値＝高値＝安値＝終値）がからむ取引と、行の間が{MAX_ROW_GAP}日を超える組は数えない（追記その2）",
          "- 費用＝往復の売り買いの差（日本 0.03%・米国 0.02%）。夜の上げは持ち越しの金利 年3%（暦日）も引く", ""]
     if out.get("failed"):
         return "\n".join(L + ["⚠️ データの取得の失敗＝何も数えていない：" + " / ".join(out["failed"]), ""]) + "\n"

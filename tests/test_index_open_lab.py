@@ -32,19 +32,20 @@ def test_prereg_matches_the_code():
     assert R.FIN_RATE == 0.03 and "年3％" in text and R.N_Q == 4 and "p＜0.05÷4" in text and R.N_BOOT == 10000
     assert R.MAX_DAILY == 0.25 and R.MAX_SAME_OPEN == 0.30 and "30％を超える" in text
     assert (R.CHECK_FROM, R.CHECK_TO) == ("2008-12-01", "2026-10-02") and "2008-12-01〜2026-10-02" in text
+    assert R.JP_START == "2011-01-01" and "**1321.T（Q1・Q3）は 2011-01-01 から**" in text and R.MAX_ROW_GAP == 12 and "12日を超える" in text
     assert R.QS["Q1"]["ticker"] == "1321.T" and R.QS["Q2"]["ticker"] == "SPY" and "**1321.T**" in text and "**SPY**" in text
 
 
 def test_gap_trades_pick_and_fade():
     days = ["2009-01-05", "2009-01-06", "2009-01-07", "2009-01-08", "2009-01-09"]
     closes = [100.0, 101.0, 100.0, 100.4, 99.0]
-    opens = [100.0, 100.4, 101.6, 100.0, 100.4]     # 窓: +0.4%（入らない）/ +0.594%（売り）/ 0%（入らない）/ 0%
+    opens = [99.8, 100.4, 101.6, 100.0, 100.4]      # 窓: +0.4%（入らない）/ +0.594%（売り）/ 0%（入らない）/ 0%
     t = R.gap_trades(_df(days, opens, closes), 0.0003)
     assert [x["day"] for x in t] == ["2009-01-07"]
     x = t[0]
     assert x["dir"] == -1.0 and _close(x["gross"], -(100.0 / 101.6 - 1)) and _close(x["net"], x["gross"] - 0.0003)
     days2 = ["2009-01-05", "2009-01-06"]
-    t2 = R.gap_trades(_df(days2, [100.0, 99.5], [100.0, 100.0]), 0.0)                 # ちょうど −0.5% は入る（買い）
+    t2 = R.gap_trades(_df(days2, [100.2, 99.5], [100.0, 100.0]), 0.0)                 # ちょうど −0.5% は入る（買い）
     assert len(t2) == 1 and t2[0]["dir"] == 1.0 and _close(t2[0]["gross"], 100.0 / 99.5 - 1)
 
 
@@ -96,6 +97,29 @@ def test_check_range_ignores_moves_outside_the_counted_period():
     assert len(failed) == 2
     mv = R.biggest_moves(df)
     assert [m[0] for m in mv] == ["2026-10-02", "2026-10-05", "2026-10-06"]
+
+
+def test_stale_days_and_row_gaps_are_skipped():
+    days = ["2011-01-04", "2011-01-05", "2011-01-06", "2011-01-07", "2011-01-31", "2011-02-01"]
+    o = [100.0, 101.0, 102.0, 103.0, 104.0, 106.0]
+    c = [100.0, 101.0, 102.0, 103.5, 105.0, 105.0]
+    df = pd.DataFrame({"Open": o, "High": [x + 1 for x in o], "Low": [x - 1 for x in o], "Close": c}, index=pd.DatetimeIndex(days))
+    df.loc[pd.Timestamp("2011-01-05"), ["Open", "High", "Low", "Close"]] = 101.0               # 値の付いていない日
+    g = R.gap_trades(df, 0.0)
+    assert [x["day"] for x in g] == ["2011-01-07", "2011-02-01"]      # 1/5・1/6 は値の付かない日がからむ／1/31 は 24日の穴
+    n = R.night_trades(df, 0.0)
+    assert [x["day"] for x in n] == ["2011-01-06", "2011-01-31"]    # 1/4→1/5・1/5→1/6 は値の付かない日／1/7→1/31 は穴
+
+
+def test_japan_starts_in_2011():
+    d = pd.bdate_range("2008-12-01", "2026-10-09")
+    rng = np.random.default_rng(4)
+    c = 100 * np.exp(np.cumsum(rng.normal(0, 0.01, len(d))))
+    o = c * np.exp(rng.normal(0, 0.006, len(d)))
+    data = {"1321.T": _df(d, o, c), "SPY": _df(d, o, c)}
+    res = R.run(data, "2026-10-07", np.random.default_rng(1))
+    assert res["Q1"]["first_day"] >= "2011-01-01" and res["Q3"]["first_day"] >= "2011-01-01"
+    assert res["Q2"]["first_day"] < "2009-02-01" and res["Q4"]["first_day"] < "2009-02-01"
 
 
 def _rows(n, mean, sd, seed, kind):
