@@ -329,4 +329,5 @@ SYNC_FILES = [
     "guide-entry-day-of-week.html",
     "guide-news-2026-10-05-nikkei-semis-rally.html",
     "guide-signal-lab-119.html",
+    "guide-company-4519-chugai.html",
 ]
