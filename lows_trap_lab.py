@@ -21,6 +21,7 @@ import time
 
 import build_jp_highs as H
 import highs_trap_lab as T
+import jp_bars
 import highs_trap_small as S
 import pillar_lab as P
 import yori_lab as Y
@@ -277,12 +278,13 @@ def main(argv):
     res = {"generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_file": P.PREREG,
            "prereg_sha256": P.prereg_sha256(), "end_day": T.END_DAY}
     try:
-        stocks, list_date = H.load_universe()
+        stocks, list_date = jp_bars.load_universe()      # 値段の置き場があればその一覧（無ければ JPX から）
         codes = sorted(stocks)
         with open(Y.UNIVERSE, encoding="utf-8") as fh:
             big = frozenset(json.load(fh)["stocks"])
         jpx = H.load_new_listings()
-        ev, ctl, missing, drops, shape = load(codes, jpx)
+        ev, ctl, missing, drops, shape = load(codes, jpx, fetch=jp_bars.fetcher())
+        res["price_store"] = jp_bars.info()
         if "--diag" in argv:
             print(json.dumps(diag_summary(ev, ctl, missing, shape, len(codes)), ensure_ascii=False, indent=1))
             return 0

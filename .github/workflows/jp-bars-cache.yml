@@ -1,0 +1,63 @@
+name: JP Bars Cache (manual)
+
+# 研究ラボ共通の値段の置き場（2026-10-06 夜 オーナー「研究ペースをもっと加速させてください」）。
+# 東証の全上場（約3,700）の日足5年・1時間足729日・5分足60日を **8台で並列に取り**（1台約460銘柄・約8分）、
+# 1つのファイルにまとめて actions/cache（鍵 jp-bars-<実行番号>）に置く。研究ラボは restore-keys: jp-bars- で一番新しいものを読む。
+# ⚠️ 手動のみ。ラボを回す前（同じ日）に1回。置き場は作った日のデータ＝ラボの出力に作った日時が入る。
+# ⚠️ リポジトリには何も書かない（大きい・銘柄ごとの値段＝Pages で配信されてしまう）。artifact は1日だけ残す。
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: jp-bars-cache
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Fetch one shard
+        run: python -u jp_bars.py fetch --shard ${{ matrix.shard }} --of 8 --out part-${{ matrix.shard }}.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jp-bars-part-${{ matrix.shard }}
+          path: part-${{ matrix.shard }}.npz
+          retention-days: 1
+
+  merge:
+    needs: fetch
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: jp-bars-part-*
+          merge-multiple: true
+          path: parts
+      - name: Merge into one store
+        run: |
+          ls -la parts
+          [ "$(ls parts/part-*.npz | wc -l)" = 8 ] || { echo "8台分そろっていない"; exit 1; }
+          python -u jp_bars.py merge --out jp-bars/jp-bars.npz "parts/part-*.npz" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/cache/save@v4
+        with:
+          path: jp-bars
+          key: jp-bars-${{ github.run_id }}
