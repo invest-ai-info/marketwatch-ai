@@ -70,6 +70,8 @@ def test_prereg_numbers_match_the_code():
     assert T.N_Q == 5 and abs(T.ALPHA - 0.01) < 1e-12 and "p＜0.05÷5＝99％ の幅" in text and T.N_BOOT == 10000
     assert T.MIN_N == 30 and "30件未満" in text and T.MAX_MOVE == 0.25 and "±25％" in text
     assert T.END_DAY == "2026-10-05" and "翌朝が 2026-10-05 までの日だけ" in text
+    assert T.DAILY_RANGE == "5y" and "日足を**約5年**にする" in text
+    assert T.MIN_WINDOW_START == "2022-01-01" and "**2022-01-01 より前**になる日は" in text
 
 
 def test_ytd_flags_match_build_jp_highs():
@@ -153,6 +155,17 @@ def test_end_day_excludes_later_mornings():
     assert not [r for r in ev if r["date"] == t]
     ev, _ = T.stock_records("9999", daily, {}, h1, end_day=t)
     assert [r for r in ev if r["date"] == t]
+
+
+def test_days_whose_window_is_not_covered_are_skipped():
+    # 年初来の期間の始まり（その年の1月1日）が MIN_WINDOW_START より前の日は、高値更新にも比べる相手にも数えない
+    days, daily, k = _stock()
+    t = days[k + 1]
+    h1 = {t: _1h(t, [(9, 112, 113)]), days[k + 2]: _1h(days[k + 2], [(9, 100, 101)])}
+    ev, ctl = T.stock_records("9999", daily, {}, h1, end_day="2026-12-31", min_window_start="2027-01-01")
+    assert ev == [] and ctl == []
+    ev, ctl = T.stock_records("9999", daily, {}, h1, end_day="2026-12-31", min_window_start="2026-01-01")
+    assert len(ev) == 1 and len(ctl) == 1
 
 
 def test_bad_values_are_dropped():
