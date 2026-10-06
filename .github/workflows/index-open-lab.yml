@@ -1,0 +1,67 @@
+name: Index Open Lab (manual)
+
+# R7 株価指数の朝の窓は、その日のうちに埋まる向きに動くか／夜の上げは費用のあとも残るか（JP225・US500 の CFD を
+# MT4 で全自動にできる形・1321.T と SPY の日足の始値と終値・2009-01〜2026-09）。
+# 2026-10-06 登録・オーナー「その調子でどんどん研究を進めてください」。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「R7」（事前登録・計算より先にコミット済み）と index_open_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ（check＝点検だけを先に1回 → run＝1回だけ数える）。数える日の前の日（UTC）までの値だけを使う。
+# ⚠️ 出力（index-open-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝データの点検だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: index-open-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_index_open_lab.py
+      - name: Data check only (no counting)
+        if: ${{ inputs.mode == 'check' }}
+        shell: bash
+        run: python -u index_open_lab.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python index_open_lab.py
+          python verified_list.py > /dev/null
+          [ -f index-open-lab.md ] && cat index-open-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index-open-lab.json index-open-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: intl index open lab R7 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
