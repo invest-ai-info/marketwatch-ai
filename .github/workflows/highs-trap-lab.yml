@@ -1,0 +1,62 @@
+name: Highs Trap Lab (manual)
+
+# J10 高値更新の翌朝、寄りで買うと負ける「罠」を、寄りの時点までにわかることで見分けられるか
+# （2026-10-06 オーナー「進めてください。これで罠銘柄が見分けられるかどうかを分析してください」）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J10」（事前登録）と highs_trap_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。本番の前に diag（データの形と件数だけ・値動きは出さない・コミットしない）を1回。本番は1回だけ。
+# ⚠️ 出力（highs-trap-lab.json / highs-trap-lab.md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      diag:
+        description: 'データの形と件数だけを見る（値動きは出さない・コミットしない）'
+        type: boolean
+        default: true
+
+concurrency:
+  group: highs-trap-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Diagnose data shape (no commit)
+        if: ${{ inputs.diag }}
+        run: |
+          python highs_trap_lab.py --diag | tee diag.json
+          { echo '```json'; tail -n +1 diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ !inputs.diag }}
+        run: |
+          python highs_trap_lab.py
+          [ -f highs-trap-lab.md ] && cat highs-trap-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ !inputs.diag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-trap-lab.json highs-trap-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs trap lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
