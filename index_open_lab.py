@@ -253,6 +253,20 @@ def biggest_moves(df, k=1):
             for d, o, cl in zip(df.index[lo:hi], df["Open"].iloc[lo:hi], df["Close"].iloc[lo:hi])]
 
 
+def shape_by_year(df):
+    """点検用：年ごとの行数・値の付いていない日（始値＝高値＝安値＝終値）・行と行の間の最大の暦日（損益は出さない）"""
+    d = df.copy()
+    d["gapdays"] = pd.Series(d.index, index=d.index).diff().dt.days
+    stale = (d["Open"] == d["Close"])
+    if "High" in d and "Low" in d:
+        stale = stale & (d["High"] == d["Low"]) & (d["High"] == d["Open"])
+    out = {}
+    for y, g in d.groupby(d.index.year):
+        out[int(y)] = {"rows": int(len(g)), "stale": int(stale.loc[g.index].sum()), "max_gap_days": int(g["gapdays"].max() or 0),
+                       "gaps_over_5d": int((g["gapdays"] > 5).sum())}
+    return out
+
+
 def check():
     data, failed, notes = load()
     for tk, df in data.items():
@@ -260,6 +274,8 @@ def check():
         print(f"  全体でいちばん大きい変化の前後：{biggest_moves(df)}", flush=True)
         rng_df = df[(df.index >= pd.Timestamp(CHECK_FROM)) & (df.index <= pd.Timestamp(CHECK_TO))]
         print(f"  点検の範囲でいちばん大きい変化の前後：{biggest_moves(rng_df)}", flush=True)
+        for y, v in shape_by_year(rng_df).items():
+            print(f"  {y}年：{v['rows']}行・値の付いていない日 {v['stale']}・行の間の最大 {v['max_gap_days']}日・5日を超える間 {v['gaps_over_5d']}", flush=True)
     print("点検だけ（損益は数えていない）。" + ("⚠️ " + " / ".join(failed) if failed else "2つとも取れて、データの失敗なし"))
     return 1 if failed else 0
 
