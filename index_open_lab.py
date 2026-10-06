@@ -38,6 +38,7 @@ N_Q = 4
 ALPHA = 0.05 / N_Q
 MAX_DAILY = 0.25
 MAX_SAME_OPEN = 0.30
+CHECK_FROM, CHECK_TO = "2008-12-01", "2026-10-02"   # 点検を当てる範囲＝数える期間で使う値（PILLAR_PREREG「R7」の追記）
 SEED = 20261012
 VERDICTS = ("◎ 残っている", "◯ 傾向", "差なし")
 QS = {
@@ -190,7 +191,7 @@ def load(fetcher=fetch):
             failed.append(f"{tk}: 取れない")
             continue
         df = df[(df["Open"] > 0) & (df["Close"] > 0)]
-        ok, why = data_ok(df[df.index >= pd.Timestamp("2008-06-01")])
+        ok, why = data_ok(df[(df.index >= pd.Timestamp(CHECK_FROM)) & (df.index <= pd.Timestamp(CHECK_TO))])
         notes[tk] = why
         if not ok:
             failed.append(f"{tk}: {why}")
@@ -240,10 +241,25 @@ def render_md(out):
     return "\n".join(L) + "\n"
 
 
+def biggest_moves(df, k=1):
+    """点検用：いちばん大きい終値の変化の日の前後の値（日付・始値・終値）。損益は出さない"""
+    c = df["Close"].astype(float)
+    ch = c.pct_change().abs()
+    if ch.dropna().empty:
+        return []
+    i = int(np.nanargmax(ch.to_numpy()))
+    lo, hi = max(0, i - k), min(len(df), i + k + 1)
+    return [(str(pd.Timestamp(d).date()), round(float(o), 4), round(float(cl), 4))
+            for d, o, cl in zip(df.index[lo:hi], df["Open"].iloc[lo:hi], df["Close"].iloc[lo:hi])]
+
+
 def check():
     data, failed, notes = load()
     for tk, df in data.items():
-        print(f"{tk}：{len(df)}行・{df.index.min().date()}〜{df.index.max().date()}・{notes.get(tk)}", flush=True)
+        print(f"{tk}：{len(df)}行・{df.index.min().date()}〜{df.index.max().date()}・点検の範囲 {CHECK_FROM}〜{CHECK_TO}：{notes.get(tk)}", flush=True)
+        print(f"  全体でいちばん大きい変化の前後：{biggest_moves(df)}", flush=True)
+        rng_df = df[(df.index >= pd.Timestamp(CHECK_FROM)) & (df.index <= pd.Timestamp(CHECK_TO))]
+        print(f"  点検の範囲でいちばん大きい変化の前後：{biggest_moves(rng_df)}", flush=True)
     print("点検だけ（損益は数えていない）。" + ("⚠️ " + " / ".join(failed) if failed else "2つとも取れて、データの失敗なし"))
     return 1 if failed else 0
 

@@ -31,6 +31,7 @@ def test_prereg_matches_the_code():
     assert R.QS["Q1"]["cost"] == 0.0003 and "往復 0.03％" in text and R.QS["Q2"]["cost"] == 0.0002 and "往復 0.02％" in text
     assert R.FIN_RATE == 0.03 and "年3％" in text and R.N_Q == 4 and "p＜0.05÷4" in text and R.N_BOOT == 10000
     assert R.MAX_DAILY == 0.25 and R.MAX_SAME_OPEN == 0.30 and "30％を超える" in text
+    assert (R.CHECK_FROM, R.CHECK_TO) == ("2008-12-01", "2026-10-02") and "2008-12-01〜2026-10-02" in text
     assert R.QS["Q1"]["ticker"] == "1321.T" and R.QS["Q2"]["ticker"] == "SPY" and "**1321.T**" in text and "**SPY**" in text
 
 
@@ -79,6 +80,22 @@ def test_data_check():
     assert not ok and "終値の変化" in why
     ok, why = R.data_ok(pd.DataFrame({"Open": c.shift(1).bfill(), "Close": c}))
     assert not ok and "始値が前日終値" in why
+
+
+def test_check_range_ignores_moves_outside_the_counted_period():
+    d = pd.bdate_range("2008-11-03", "2026-10-09")
+    c = pd.Series(np.linspace(100, 200, len(d)), index=d)
+    c[pd.Timestamp("2026-10-05")] = c[pd.Timestamp("2026-10-02")] * 1.99          # 数える期間の外の異常
+    df = pd.DataFrame({"Open": c * 1.001, "Close": c})
+    data, failed, _ = R.load(lambda tk, iv, start=None: df)
+    assert failed == [] and set(data) == {"1321.T", "SPY"}
+    c2 = c.copy()
+    c2[pd.Timestamp("2015-06-01")] = c2[pd.Timestamp("2015-05-29")] * 1.5           # 数える期間の中の異常
+    df2 = pd.DataFrame({"Open": c2 * 1.001, "Close": c2})
+    _, failed, _ = R.load(lambda tk, iv, start=None: df2)
+    assert len(failed) == 2
+    mv = R.biggest_moves(df)
+    assert [m[0] for m in mv] == ["2026-10-02", "2026-10-05", "2026-10-06"]
 
 
 def _rows(n, mean, sd, seed, kind):
