@@ -332,4 +332,5 @@ SYNC_FILES = [
     "guide-company-4519-chugai.html",
     "guide-entry-overnight-intraday.html",
     "guide-news-2026-10-06-nasdaq-record-yield-surge.html",
+    "guide-signal-lab-120.html",
 ]
