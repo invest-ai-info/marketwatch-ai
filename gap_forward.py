@@ -338,7 +338,7 @@ def finalize(st):
     """検証済みリスト・研究の地図が読む欄（いまの回数と判定の目安）"""
     sm = summary(st)
     st["progress"] = {"A": sm["groups"]["up1"]["n"], "B": sm["groups"]["dn3"]["n"]}
-    st["goal"] = f"{GOAL_DAYS}営業日で判定（いま {sm['days']}営業日）"
+    st["goal"] = f"{GOAL_DAYS}営業日で判定・いま {sm['days']}営業日"
     st["summary"] = sm
     return st
 
