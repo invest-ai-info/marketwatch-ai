@@ -28,6 +28,11 @@ SOURCES = [
     ("r4-armb.json", "R4 腕B 月末のロンドン 08:00→16:00 の為替ヘッジ（手元の MT5 の1時間足・月の真ん中の日と比べた・1回だけ数えた）", "R4"),   # 🆕 2026-10-05
     ("intl-tom-lab.json", "R6 ほかの国の株価指数の月末月初（論文のあと・1回だけ数えた）", ""),   # 🆕 2026-10-05 深夜 R3F を育てる確かめ
 ]
+# 🆕 2026-10-06 目印（見分け方）の前向き（kind: marker）。「期待値がプラスか」ではなく「目印あり−なしの差が0より下か」を
+# 判定するので、上の SOURCES とは別の節に載せる（確認＝confirm／ストップ＝stop）
+MARKER_SOURCES = [
+    ("highs-trap-forward.json", "J10F 高値更新の翌朝の罠の目印・前向き", "J10F"),
+]
 # 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
 SCREEN_SOURCES = [
@@ -72,6 +77,43 @@ def collect(sources=SOURCES):
                    "n": sum(1 for t in data.get("trades", []) if t.get("c") == cid)}
             (watching if not v else plus if v["status"] == "plus" else stop).append(row)
     return stop, plus, watching
+
+
+def collect_markers(sources=None):
+    """目印の前向き（kind: marker）→ 行の一覧。n＝目印ありの取引の回数"""
+    out = []
+    for path, name, sec in (MARKER_SOURCES if sources is None else sources):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        if data.get("kind") != "marker":
+            continue
+        for cid, title in data.get("titles", {}).items():
+            out.append({"src": name, "sec": sec, "id": cid, "title": title, "goal": data.get("goal"),
+                        "v": (data.get("verdicts") or {}).get(cid),
+                        "n": sum(1 for t in data.get("trades", []) if t.get("c") == cid and t.get("f"))})
+    return out
+
+
+def render_markers(rows):
+    """目印（見分け方）の前向きの節"""
+    L = ["## 🔎 目印（見分け方）の前向き", "",
+         "「入らない方がいい」目印が本当に効くかを、登録のあとの取引だけで数えたもの。数字は目印あり−なしの平均の差（費用前）。"
+         "目印ありが決めた回数に届いた日に1回だけ判定し、差の95％の幅がまるごと0より下なら「確認」、それ以外は「ストップ」。", ""]
+    if not rows:
+        return L + ["- まだ無い", ""]
+    done = [r for r in rows if r["v"]]
+    if done:
+        L += ["| 検証 | 目印 | 結果 | 判定日 | 目印ありの回数 | 差 | 95％の幅 | 理由 |", "|---|---|---|---|---:|---:|---|---|"]
+        for r in done:
+            v = r["v"]
+            res = "✅ 確認" if v["status"] == "confirm" else "⏹ ストップ"
+            L.append(f"| {_label(r)} | {r['title']} | {res} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | "
+                     f"{_pct(v['lo'])}〜{_pct(v['hi'])} | {v['reason']} |")
+    L += [f"- 👀 {_label(r)} {r['title']}（目印あり {r['n']}/{r['goal']}回）" for r in rows if not r["v"]]
+    return L + [""]
 
 
 def collect_screens(sources=None):
@@ -142,7 +184,7 @@ def render_screens(screens):
     return L
 
 
-def render(stop, plus, watching, now=None, screens=()):
+def render(stop, plus, watching, now=None, screens=(), markers=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
@@ -169,14 +211,15 @@ def render(stop, plus, watching, now=None, screens=()):
         L.append("- まだ無い")
     L += ["", "## 👀 いま前向きで数えているもの", ""]
     L += [f"- {_label(r)} {r['title']}（{_progress(r)}）" for r in watching] or ["- 無い"]
-    L += [""] + render_screens(screens)
+    L += [""] + render_markers(list(markers))
+    L += render_screens(screens)
     L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
           "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
     return "\n".join(L) + "\n"
 
 
 def main():
-    md = render(*collect(), screens=collect_screens())
+    md = render(*collect(), screens=collect_screens(), markers=collect_markers())
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)

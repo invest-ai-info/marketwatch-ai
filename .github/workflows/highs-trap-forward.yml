@@ -1,0 +1,66 @@
+name: Highs Trap Forward (weekdays)
+
+# J10F 高値更新の翌朝の罠の目印・前向き（2026-10-06 登録・オーナー「進めてください」）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J10F」（事前登録）と highs_trap_forward.py の冒頭に固定。
+# ⚠️ 「JP Highs Lows」の完了で、サイトの高値更新の一覧を写すだけ（B 組・値段は取りに行かない）。
+#    平日の朝（08:47 JST・12:47 JST の保険）に、A 組（約400銘柄・日足から決め直す）と写した一覧の翌朝を数える。
+#    その日より前の日だけを数える＝実行の時刻がずれても結果は同じ。5分足は直近約60日しか取れない（automation-health が見張る）。
+# ⚠️ 出力（highs-trap-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた取引と判定を持つ＝古い版で上書きすると消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  workflow_run:
+    workflows: ["JP Highs Lows"]
+    types: [completed]
+  schedule:
+    - cron: '47 23 * * 0-4'   # 月〜金 08:47 JST（前の営業日までを数える）
+    - cron: '47 3 * * 1-5'    # 月〜金 12:47 JST 保険（数えた日は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: highs-trap-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 一覧（jp-highs.json）と記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Capture the site's highs list only (after JP Highs Lows)
+        if: ${{ github.event_name == 'workflow_run' }}
+        run: python highs_trap_forward.py --capture-only
+      - name: Count only the trades after registration
+        if: ${{ github.event_name != 'workflow_run' }}
+        run: |
+          python highs_trap_forward.py
+          python verified_list.py > /dev/null
+          [ -f highs-trap-forward.md ] && cat highs-trap-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-trap-forward.json highs-trap-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs trap forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
