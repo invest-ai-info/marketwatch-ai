@@ -1,0 +1,63 @@
+name: Highs Trap Small (manual)
+
+# J11 J10 の罠の目印（窓 +1% 以上で寄る）は、約400銘柄の外の株（東証の全上場から約400を除いた約3,300）でも成り立つか。
+# 2026-10-06 登録・オーナー「その調子でどんどん研究を進めてください」。
+# ⚠️ 決まりは PILLAR_PREREG.md「J11」（事前登録）と highs_trap_small.py の冒頭に固定。
+# ⚠️ 手動実行のみ。本番の前に diag（件数とデータの形だけ・値動きは出さない・コミットしない）を1回。本番は1回だけ。
+#    約3,300銘柄×3種類の足を Yahoo から取る＝1〜2時間かかる。
+# ⚠️ 出力（highs-trap-small.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      diag:
+        description: 'データの形と件数だけを見る（値動きは出さない・コミットしない）'
+        type: boolean
+        default: true
+
+concurrency:
+  group: highs-trap-small
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Diagnose data shape (no commit)
+        if: ${{ inputs.diag }}
+        run: |
+          python highs_trap_small.py --diag | tee diag.json
+          { echo '```json'; tail -n +1 diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ !inputs.diag }}
+        run: |
+          python highs_trap_small.py
+          [ -f highs-trap-small.md ] && cat highs-trap-small.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ !inputs.diag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-trap-small.json highs-trap-small.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs trap small $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
