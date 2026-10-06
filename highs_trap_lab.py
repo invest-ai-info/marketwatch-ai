@@ -38,8 +38,9 @@ ALPHA = 0.05 / N_Q            # 99％ の幅
 N_BOOT = 10000
 MIN_N = 30
 MAX_MISSING = 0.05            # 日足か1時間足を取れなかった銘柄がユニバースのこれを超えたら判定しない
-DAILY_RANGE = "3y"
-H1_RANGES = ("729d", "1y")    # 1時間足は Yahoo が約2年（730日）まで
+DAILY_RANGE = "5y"            # 年初来の期間をまるごと覆うため（PILLAR_PREREG「J10」の追記）
+MIN_WINDOW_START = "2022-01-01"   # 年初来の期間の始まりがこれより前の日は数えない（日足が期間を覆う日だけ）
+H1_RANGES = ("729d", "1y")    # 1時間足は取れる全期間（diag では約3年分が返った・PILLAR_PREREG「J10」の追記）
 M5_RANGES = ("60d", "1mo")    # 5分足は約60日まで
 
 FLAGS = [
@@ -120,16 +121,17 @@ def outcomes(op, close, bars5, bars1h, drops=None):
     return o
 
 
-def stock_records(code, daily, m5, h1, akaji=None, end_day=END_DAY, drops=None):
+def stock_records(code, daily, m5, h1, akaji=None, end_day=END_DAY, drops=None, min_window_start=MIN_WINDOW_START):
     """1銘柄 → (高値更新の翌朝の記録, 比べる相手の記録)。
-    daily＝[(日付, 始, 高, 安, 終, 出来高)]（日付順）、m5／h1＝{日付: [(時刻, 始, 高, 安, 終, 出来高)…]}"""
+    daily＝[(日付, 始, 高, 安, 終, 出来高)]（日付順）、m5／h1＝{日付: [(時刻, 始, 高, 安, 終, 出来高)…]}
+    年初来の期間の始まりが min_window_start より前になる日（日足が期間をまるごと覆えない日）は、どちらにも数えない。"""
     flags = ytd_flags([(d, h, lo, c, v) for d, o, h, lo, c, v in daily])
     ev, ctl = [], []
     for k in range(1, len(daily) - 1):
         day, op, close = daily[k + 1][0], daily[k + 1][1], daily[k + 1][4]
         if day > end_day:
             break
-        if not op or op <= 0:
+        if not op or op <= 0 or H.window_start(daily[k][0])[0] < min_window_start:
             continue
         out = outcomes(op, close, m5.get(day), h1.get(day), drops)
         if out is None:
@@ -405,7 +407,7 @@ def render_md(res):
     r = res.get("result") or {}
     if r.get("error"):
         return "\n".join(L + [f"- ⚠️ 計算できず: {r['error']}", ""]) + "\n"
-    L += [f"- 1時間足（判定の主・寄り→10:00）：{r['first']}〜{r['last']}・{r['days_2y']}営業日・{r['n_2y']}件（前半と後半の境 {r['cut']}）。"
+    L += [f"- 1時間足（判定の主・寄り→10:00・取れる全期間）：{r['first']}〜{r['last']}・{r['days_2y']}営業日・{r['n_2y']}件（前半と後半の境 {r['cut']}）。"
           f"年ごと {r['by_year']}。10:00 の値を「10:00 から始まる足の始値」で代えた件数 {r['n_fallback_1000']}",
           f"- 5分足（オーナーの取引時間・寄り→9:30）：{r['first_60d']}〜{r['last_60d']}・{r['days_60d']}営業日・{r['n_60d']}件",
           f"- 比べる相手（前の日に高値を更新していない銘柄）：1時間足 {r['n_ctl_2y']}件・5分足 {r['n_ctl_60d']}件",
