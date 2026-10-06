@@ -1,0 +1,63 @@
+name: Gap Lab (manual)
+
+# J13 窓を開けて寄った株は、寄りのあとに戻されるか（高値更新に限らず、東証の全上場のすべての朝）。
+# 2026-10-06 夜 登録・オーナー「続けてください」。
+# ⚠️ 決まりは PILLAR_PREREG.md「J13」（事前登録）と gap_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。本番の前に diag（件数とデータの形だけ・値動きは出さない・コミットしない）を1回。本番は1回だけ。
+#    約3,700銘柄×3種類の足を Yahoo から取る＝45分〜1時間ほどかかる。
+# ⚠️ 出力（gap-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      diag:
+        description: 'データの形と件数だけを見る（値動きは出さない・コミットしない）'
+        type: boolean
+        default: true
+
+concurrency:
+  group: gap-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Diagnose data shape (no commit)
+        if: ${{ inputs.diag }}
+        run: |
+          python gap_lab.py --diag | tee diag.json
+          { echo '```json'; tail -n +1 diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ !inputs.diag }}
+        run: |
+          python gap_lab.py
+          [ -f gap-lab.md ] && cat gap-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ !inputs.diag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gap-lab.json gap-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: gap lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
