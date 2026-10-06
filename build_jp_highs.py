@@ -18,15 +18,20 @@
       （1〜3月は「昨年来高値」と呼ぶ）。window_start() が単一の真実。
   ・上場来高値（安値）＝その日の高値（安値）が、記録のある全期間（月足 range=max）の高値（安値）をすべて上回った（下回った）。
       🚨 Yahoo の日本株の記録は古い銘柄だと途中からしかない＝1989年のバブル期の高値などとは比べられない。
-      そこで**「上場来」と言い切るのは、記録が上場の週から始まっている銘柄だけ**（listing_confirmed）。
-      それ以外は「記録のある期間（YYYY年〜）の最高値」として出す。
-      見分け方（2026-10-06 の全399銘柄の監査＝`--audit`）: 月足の最初のバーの日付が
-        ・月の1日＝Yahoo の記録がその月から始まっただけ（古い銘柄はすべてこれ。2004年以降に始まる古い銘柄もある＝
-          日本郵船・川崎重工業・三菱瓦斯化学 2004-12、レーザーテック 2010-03、北洋銀行 2012-10）
-        ・月の途中＝上場の週から記録がある（2017-09 以降の新規上場28銘柄すべて。古い銘柄は1つも無い）
+      そこで**「上場来」と言い切るのは、記録が上場から始まっていると確かめられた銘柄だけ**（listing_confirmed）。
+      それ以外は「記録のある期間（YYYY年〜）の最高値」として出す。確かめ方:
+        ・記録が 2022年以降に始まる＝**JPX の新規上場の一覧に、記録の始まりの前後10日の上場日があること**
+        ・記録が 2017-06〜2021年に始まる＝月足の最初のバーが月の途中（上場の週から記録がある）こと
+          （JPX の一覧は2022年からしか無い。月の1日に始まる記録＝Yahoo の記録がその月から始まっただけ）
+        ・それより前に始まる記録＝言い切らない
       ⚠️ 経緯: 初版はトヨタの記録の始まりを床にして小松製作所（1949年上場）などを、2版は「2004年以降に始まる」で
-      日本郵船などを「上場来」と言いうる形だった。全銘柄に広げたので、監査（--audit）も全銘柄で回し、
-      2022年以降の分は JPX の新規上場の一覧（上場日）と突き合わせる。
+      日本郵船などを「上場来」と言いうる形だった（399銘柄の監査）。全銘柄の監査（2026-10-06 夜）では「月の途中」
+      だけでも足りなかった＝ネポン・カワセコンピュータサプライ・協立情報通信（昔からの上場）の記録が 2026-07-17 から
+      急に始まり、名証から来たカノークス・名古屋電機工業・ニッソウは記録が東証の上場日より1〜6か月遅れて始まる。
+      → 2022年以降は JPX の上場日で確かめる形にした。
+  ・年初来の期間の途中から記録が始まる銘柄（上の 2026-07-17 の3銘柄など＝1〜7月の値が無い）は、JPX で上場を
+    確かめられたとき（期間の途中で上場した銘柄＝上場からの値で数える）だけ数え、それ以外は数えない（window_covered）。
+  ・コードが4桁でない銘柄（5桁＝社債型種類株式）は対象に入れない（普通株ではない）。
       ⚠️ ここでの「上場来」＝**東証に上場してからの記録**（Yahoo の .T の記録）。名証などほかの取引所から東証に
       来た銘柄（例: 中部鋼鈑 2022-12）は、それより前のほかの取引所での売買を含まない＝表示の注記にそう書く。
 
@@ -57,8 +62,10 @@ OUT = os.path.join(HERE, "jp-highs.json")
 RANKINGS = os.path.join(HERE, "jp-rankings.json")
 MIN_PRIOR_BARS = 20       # 期間内に前の営業日がこれ未満（上場直後）は数えない＝数日分の「高値」は意味が薄い
 MAX_JUMP = 1.5            # その日の高値 ÷ 前の日の終値 がこれを超えたら（安値は 1/これ 未満なら）データの誤りとして数えない
-LISTING_CUTOFF = "2004-01-01"  # 念のための下限（月の途中から始まる記録でも、これより前なら上場来とは言わない）
-RULE_VERSION = 5          # 判定の決まりを変えたら上げる（4＝安値を足した 2026-10-06 夕・5＝全銘柄に広げた 同日夜）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
+JPX_FROM = "2022-01-01"         # JPX の新規上場の一覧がある年（これ以降に始まる記録は JPX の上場日で確かめる）
+MID_MONTH_FROM = "2017-06-01"   # 新規上場の記録が「月の途中」から始まる形が出始めた頃（全銘柄の監査で最初は 2017-06-12）
+NEAR_DAYS = 10                  # 記録の始まりと JPX の上場日のずれの許し（月足の日付は上場の週の月曜などになる）
+RULE_VERSION = 6          # 判定の決まりを変えたら上げる（4＝安値 2026-10-06 夕・5＝全銘柄 同日夜・6＝JPX の上場日で確かめる 同日夜）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
 SCOPE = "all"             # 対象の範囲（履歴の件数は同じ範囲どうしでしか比べない＝400銘柄の日と混ぜない）
@@ -139,7 +146,7 @@ def parse_universe(records, info_stocks=None):
     for r in records:
         market = str(r.get("市場・商品区分") or "")
         code = str(r.get("コード") or "").strip()
-        if not code or not market.startswith(MARKETS):
+        if len(code) != 4 or not market.startswith(MARKETS):   # 5桁＝社債型種類株式（普通株ではない）
             continue
         sector = str(r.get("33業種区分") or "").strip()
         out[code] = {"name": str(r.get("銘柄名") or "").strip(),
@@ -191,6 +198,25 @@ def parse_jpx_new_listings(html):
         after = rest[rest.index(code) + 1:]
         ipo = any(re.search(r"\d", c) for c in after[:2])   # 仮条件・公開価格の欄に数字がある
         out.append((date.replace("/", "-"), code, ipo))
+    return out
+
+
+def load_new_listings():
+    """JPX の新規上場の一覧（2022年〜）から {コード: [上場日, ...]} を返す。取れないページは飛ばす（取れなければ {}）。
+
+    同じコードが2回出ることがある（TOKYO PRO Market からグロースへ、など）ので日付は全部持つ。
+    """
+    out, ng = {}, 0
+    for u in JPX_NEW_PAGES:
+        try:
+            html = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30).read().decode("utf-8", "replace")
+            for d, c, _ipo in parse_jpx_new_listings(html):
+                out.setdefault(c, []).append(d)
+        except Exception as e:
+            ng += 1
+            print(f"  ⚠️ JPX の新規上場の一覧が取れない {u}: {e}")
+    print(f"JPX の新規上場の一覧（2022年〜）{sum(len(v) for v in out.values())}件"
+          + (f"（取れないページ {ng}＝2022年以降に始まる記録は「上場来」と言い切らない側に倒れる）" if ng else ""))
     return out
 
 
@@ -254,17 +280,43 @@ def all_time_extreme(monthly, daily, side="high"):
     return _beyond(daily[-1][i], prev, side), round(prev, 1), first
 
 
-def listing_confirmed(first_date, cutoff=LISTING_CUTOFF):
-    """記録が上場の週から始まっている＝上場来と言えるか。純関数。
+def near_listing(date, code, jpx, days=NEAR_DAYS):
+    """JPX の新規上場の一覧に、date の前後 days 日の上場日がその銘柄にあるか。純関数。"""
+    try:
+        d0 = datetime.date.fromisoformat(date)
+        return any(abs((datetime.date.fromisoformat(d) - d0).days) <= days for d in (jpx or {}).get(code, []))
+    except Exception:
+        return False
 
-    月足の最初のバーが月の途中の日付＝上場の週から記録がある。月の1日＝Yahoo の記録がその月から始まっただけ
-    （古い銘柄。上場が月の初めの週だった新しい銘柄もここに入るが、言い切らない側なので害はない）。
+
+def listing_confirmed(first_date, code="", jpx=None):
+    """記録が上場から始まっている＝上場来と言えるか。純関数。
+
+    2022年以降に始まる記録＝JPX の新規上場の一覧に前後10日の上場日があること（JPX が取れないときは言い切らない）。
+    2017-06〜2021年＝月足の最初のバーが月の途中（上場の週から記録がある）こと。それより前＝言い切らない。
     分からないときは False＝「上場来」と言い切らない側に倒す。
     """
-    return bool(first_date) and first_date >= cutoff and first_date[8:10] != "01"
+    if not first_date:
+        return False
+    if first_date >= JPX_FROM:
+        return near_listing(first_date, code, jpx)
+    return first_date >= MID_MONTH_FROM and first_date[8:10] != "01"
 
 
-def make_row(code, meta, bars, hit, record, record_prev, first):
+def window_covered(bars, start, code="", jpx=None):
+    """年初来の期間の始まりから日足の記録があるか（無ければ、期間の途中で上場した銘柄と JPX で確かめられたか）。純関数。
+
+    Yahoo の記録が途中から急に始まる銘柄（2026-07-17 から始まる昔からの上場3銘柄など）は、期間の前半の値が無い＝
+    年初来の判定ができないので数えない。
+    """
+    if not bars:
+        return False
+    first = bars[0][0]
+    limit = (datetime.date.fromisoformat(start) + datetime.timedelta(days=NEAR_DAYS)).isoformat()
+    return first <= limit or near_listing(first, code, jpx)
+
+
+def make_row(code, meta, bars, hit, record, record_prev, first, jpx=None):
     """一覧の1行。高値・安値で同じ形（ext＝その日の高値または安値）。"""
     _, h, lo, c, v = bars[-1]
     prev_c = bars[-2][3]
@@ -278,7 +330,7 @@ def make_row(code, meta, bars, hit, record, record_prev, first):
         "record": bool(record),                      # 記録のある全期間の高値（安値）も更新した
         "record_prev": record_prev,                  # それまでの記録上の最高値（最安値）
         "hist_from": first,                          # 比べた記録の始まり
-        "listed": listing_confirmed(first) if record else None,  # True＝上場時からの記録＝「上場来」と言える
+        "listed": listing_confirmed(first, code, jpx) if record else None,  # True＝上場時からの記録＝「上場来」と言える
     }
 
 
@@ -361,11 +413,15 @@ def main(force=False, dry_run=False):
         print(f"⚠️ jp-rankings.json は {rank_asof}・こちらは {asof}（取得のあいだに上流が更新された）＝各欄に日付を出すので続行")
 
     start, period = window_start(asof)
+    jpx = load_new_listings()
 
-    out, skipped_bad = {"high": [], "low": []}, 0
+    out, skipped_bad, skipped_gap = {"high": [], "low": []}, 0, []
     for code, bars in daily.items():
         if not sane_today(bars):
             skipped_bad += 1
+            continue
+        if not window_covered(bars, start, code, jpx):
+            skipped_gap.append(code)
             continue
         hits = {}
         for side in ("high", "low"):
@@ -378,7 +434,7 @@ def main(force=False, dry_run=False):
         time.sleep(0.07)
         for side, hit in hits.items():
             record, record_prev, first = all_time_extreme(monthly, bars, side)
-            out[side].append(make_row(code, stocks[code], bars, hit, record, record_prev, first))
+            out[side].append(make_row(code, stocks[code], bars, hit, record, record_prev, first, jpx))
     for side in out:
         out[side].sort(key=lambda r: r["turnover"], reverse=True)
     highs, lows = out["high"], out["low"]
@@ -387,14 +443,15 @@ def main(force=False, dry_run=False):
     payload = {
         "asof": asof, "scope": SCOPE, "listed_total": len(stocks), "list_date": list_date,
         "universe": len(daily), "window_start": start, "period": period,
-        "rule": RULE_VERSION, "listing_cutoff": LISTING_CUTOFF, "highs": highs, "lows": lows,
+        "rule": RULE_VERSION, "jpx_listings": len(jpx), "highs": highs, "lows": lows,
         "history": update_history(prev.get("history"), asof, counts),
     }
     if not dry_run:
         with open(OUT, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False)
     print(f"{'🧪 試し（書かない）' if dry_run else '✅ ' + OUT}: as of {asof} / 一覧 {len(stocks)}銘柄 → 取れた {fetched}"
-          f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}）"
+          f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
+          f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
     for side, name, rec in (("high", "高値", "最高値"), ("low", "安値", "最安値")):
         rows = out[side]
@@ -406,13 +463,13 @@ def main(force=False, dry_run=False):
 
 
 def audit():
-    """全銘柄の Yahoo の記録の始まりを並べる（表示だけ・何も書かない）。「上場来」の見分け方が安全かを確かめる用。
+    """全銘柄の Yahoo の記録の始まりを並べる（表示だけ・何も書かない）。「上場来」と年初来の判定が安全かを確かめる用。
 
     見るところ:
-      ① 月の途中から記録が始まる（＝上場来と言う側）銘柄が、2017-09 より前に無いか（あれば Yahoo の記録の途中が
-         月の途中から始まる古い銘柄がある＝見分け方の前提が崩れる）
-      ② 2022年以降に月の途中から始まる銘柄が、JPX の新規上場の一覧の上場日（前後10日）と合うか
-      ③ JPX で新規上場したのに、記録が月の1日から始まる銘柄（言い切らない側に落ちている＝害はないが数を見る）
+      ① 月の途中から記録が始まる銘柄が 2017-06 より前に無いか（あれば 2017-06〜2021年の見分け方の前提が崩れる）
+      ② 2022年以降に記録が始まるのに JPX の上場日で確かめられない銘柄（言い切らない側＝Yahoo の記録の途中・
+         ほかの取引所から来て記録が遅れて始まる銘柄など）
+      ③ 年初来の期間の途中から記録が始まり、上場も確かめられない＝年初来を数えない銘柄
     """
     stocks, list_date = load_universe()
     print(f"点検の対象＝東証上場銘柄一覧（{list_date}）{len(stocks)}銘柄")
@@ -424,6 +481,7 @@ def audit():
         else:
             fail.append(code)
         time.sleep(0.07)
+    jpx = load_new_listings()
 
     def nm(c):
         return f"{c}  {stocks[c].get('name', '')}（{stocks[c].get('market', '')}）"
@@ -435,40 +493,24 @@ def audit():
         return "  ".join(f"{y}:{by[y]}" for y in sorted(by))
 
     print(f"記録の始まり（{len(firsts)}銘柄・取得失敗 {len(fail)}・混雑 {THROTTLED['n']}回）年ごと:\n  {hist(firsts.values())}")
-    mid = {c: d for c, d in firsts.items() if d[8:10] != "01"}
-    yes = {c: d for c, d in firsts.items() if listing_confirmed(d)}
-    print(f"\n月の途中から始まる {len(mid)}銘柄（うち「上場来」と言う側 {len(yes)}）年ごと:\n  {hist(mid.values())}")
-    early = sorted((d, c) for c, d in mid.items() if d < "2017-09-01")
-    print(f"\n① 2017-09 より前に月の途中から始まる {len(early)}銘柄（0 なら見分け方の前提どおり）:")
-    for d, c in early[:60]:
-        print(f"  {d}  {nm(c)}{'  ←上場来と言う側' if c in yes else ''}")
-
-    jpx = {}
-    for u in JPX_NEW_PAGES:
-        try:
-            html = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30).read().decode("utf-8", "replace")
-            for d, c, ipo in parse_jpx_new_listings(html):
-                jpx.setdefault(c, (d, ipo))
-        except Exception as e:
-            print(f"  ⚠️ JPX の新規上場の一覧が取れない {u}: {e}")
-    print(f"\nJPX の新規上場の一覧（2022年〜）{len(jpx)}件")
-
-    def near(a, b, days=10):
-        return abs((datetime.date.fromisoformat(a) - datetime.date.fromisoformat(b)).days) <= days
-
-    recent = sorted((d, c) for c, d in yes.items() if d >= "2022-01-01")
-    ok = [(d, c) for d, c in recent if c in jpx and near(d, jpx[c][0])]
-    bad = [(d, c) for d, c in recent if (d, c) not in ok]
-    print(f"② 2022年以降に月の途中から始まり「上場来」と言う側 {len(recent)}銘柄 → JPX の上場日と合う {len(ok)}"
-          f"（うち新規公開 {sum(1 for d, c in ok if jpx[c][1])}・ほかの取引所からの上場や持株会社など {sum(1 for d, c in ok if not jpx[c][1])}）")
-    if bad:
-        print(f"   ⚠️ 合わない {len(bad)}銘柄（記録の始まり／JPX の上場日）:")
-        for d, c in bad[:60]:
-            print(f"   {d} / {jpx.get(c, ('一覧に無い',))[0]}  {nm(c)}")
-    miss = sorted((jpx[c][0], c) for c in jpx if c in firsts and c not in yes)
-    print(f"③ JPX で2022年以降に新規上場したのに「上場来」と言わない側 {len(miss)}銘柄（記録が月の1日から・害はない）:")
-    for d, c in miss[:30]:
-        print(f"   {d}（記録 {firsts[c]}）  {nm(c)}")
+    yes = {c: d for c, d in firsts.items() if listing_confirmed(d, c, jpx)}
+    by_jpx = sum(1 for d in yes.values() if d >= JPX_FROM)
+    print(f"\n「上場来」と言う側 {len(yes)}銘柄＝JPX の上場日で確かめた {by_jpx}（2022年〜）・"
+          f"月の途中から始まる {len(yes) - by_jpx}（2017-06〜2021年）年ごと:\n  {hist(yes.values())}")
+    early = sorted((d, c) for c, d in firsts.items() if d < MID_MONTH_FROM and d[8:10] != "01")
+    print(f"\n① {MID_MONTH_FROM} より前に月の途中から始まる {len(early)}銘柄（0 なら前提どおり）:")
+    for d, c in early[:40]:
+        print(f"  {d}  {nm(c)}")
+    no = sorted((d, c) for c, d in firsts.items() if d >= JPX_FROM and c not in yes)
+    print(f"\n② 2022年以降に記録が始まるのに JPX の上場日（前後{NEAR_DAYS}日）で確かめられない {len(no)}銘柄（言い切らない側）:")
+    for d, c in no[:80]:
+        print(f"  記録 {d} / JPX {','.join(jpx.get(c, [])) or '一覧に無い'}  {nm(c)}")
+    start, period = window_start(datetime.date.today().isoformat())
+    gap = sorted((d, c) for c, d in firsts.items()
+                 if not window_covered([(d,)], start, c, jpx))
+    print(f"\n③ {period}の期間（{start}〜）の途中から記録が始まり、上場も確かめられない＝{period}を数えない {len(gap)}銘柄:")
+    for d, c in gap[:60]:
+        print(f"  記録 {d}  {nm(c)}")
 
 
 if __name__ == "__main__":

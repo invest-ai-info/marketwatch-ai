@@ -153,21 +153,49 @@ def test_ath_without_monthly_is_unknown():
     assert H.all_time_extreme([], _days("2026-01-05", 30), "low") == (None, None, None)
 
 
-def test_listing_confirmed_only_when_record_starts_mid_month():
-    # 2026-10-06 の全399銘柄の監査（--audit）の実データ
-    # 上場の週から記録がある＝月足の最初のバーが月の途中（2017-09 以降の新規上場はすべてこれ）
+def test_listing_confirmed_before_2022_uses_mid_month_rule():
+    # 2017-06〜2021年に始まる記録＝月足の最初のバーが月の途中（上場の週から記録がある）なら上場来
     assert H.listing_confirmed("2018-06-18") is True      # メルカリ
-    assert H.listing_confirmed("2024-12-18") is True      # キオクシア
+    assert H.listing_confirmed("2017-06-12") is True      # ビーブレイクシステムズ（全銘柄の監査で最も早い月の途中）
     # Yahoo の記録がその月から始まっただけ＝月の1日（古い銘柄はすべてこれ）
     assert H.listing_confirmed("1999-06-01") is False     # トヨタ
     assert H.listing_confirmed("2000-02-01") is False     # 小松製作所（初版はここを「上場来」と誤った）
     assert H.listing_confirmed("2004-12-01") is False     # 日本郵船・川崎重工業（2版の「2004年以降」だと誤る）
     assert H.listing_confirmed("2010-03-01") is False     # レーザーテック（1990年上場）
-    assert H.listing_confirmed("2012-10-01") is False     # 北洋銀行
     assert H.listing_confirmed("2014-11-01") is False     # リクルート（2014-10 上場だが記録は翌月から＝言い切らない側）
-    # 念のための下限・分からないとき
-    assert H.listing_confirmed("2001-02-15") is False
+    # 2017-06 より前は月の途中でも言い切らない・分からないとき
+    assert H.listing_confirmed("2016-11-15") is False
     assert H.listing_confirmed("") is False and H.listing_confirmed(None) is False
+
+
+def test_listing_confirmed_from_2022_needs_jpx_listing_date():
+    # 2026-10-06 夜の全銘柄の監査の実データ
+    jpx = {"285A": ["2024-12-18"], "5036": ["2022-08-02"], "8076": ["2022-11-21"],
+           "1444": ["2022-07-25"], "9225": ["2023-06-26", "2022-05-31"]}
+    assert H.listing_confirmed("2024-12-18", "285A", jpx) is True     # キオクシア
+    assert H.listing_confirmed("2022-08-01", "5036", jpx) is True     # 月の1日でも JPX の上場日（8/2）と合えば上場来
+    assert H.listing_confirmed("2022-05-30", "9225", jpx) is True     # 同じコードが2回出るときは日付を全部見る（作った例）
+    # 昔からの上場なのに記録が 2026-07-17 から急に始まる（ネポン など）＝JPX の一覧に無い
+    assert H.listing_confirmed("2026-07-17", "7985", jpx) is False
+    # 名証から来て、記録が東証の上場日より遅れて始まる（カノークス 4週間・ニッソウ 6か月）
+    assert H.listing_confirmed("2022-12-19", "8076", jpx) is False
+    assert H.listing_confirmed("2023-01-23", "1444", jpx) is False
+    # JPX の一覧が取れないときは言い切らない
+    assert H.listing_confirmed("2024-12-18", "285A", {}) is False
+    assert H.listing_confirmed("2024-12-18", "285A", None) is False
+
+
+def test_window_covered_skips_records_that_start_mid_window():
+    jpx = {"999A": ["2026-05-20"]}
+    old = _days("2024-10-07", 300)                       # 期間の始まり（2026-01-01）より前から記録がある
+    assert H.window_covered(old, "2026-01-01", "7203", jpx) is True
+    ipo = _days("2026-05-20", 90)                        # 期間の途中で上場した銘柄＝上場からの値で数える
+    assert H.window_covered(ipo, "2026-01-01", "999A", jpx) is True
+    gap = _days("2026-07-17", 60)                        # 昔からの上場なのに記録が途中から＝数えない
+    assert H.window_covered(gap, "2026-01-01", "7985", jpx) is False
+    assert H.window_covered(gap, "2026-01-01", "7985", None) is False
+    assert H.window_covered(_days("2026-01-05", 60), "2026-01-01", "1111", None) is True   # 大発会から（10日以内）
+    assert H.window_covered([], "2026-01-01", "1111", jpx) is False
 
 
 # ── 1行の形 ───────────────────────────────────────────
@@ -204,6 +232,8 @@ def test_parse_universe_keeps_only_three_markets():
         {"日付": "20260930", "コード": "8951", "銘柄名": "ＲＥＩＴ", "市場・商品区分": "REIT・ベンチャーファンド・カントリーファンド・インフラファンド", "33業種区分": "-"},
         {"日付": "20260930", "コード": "1111", "銘柄名": "プロ", "市場・商品区分": "PRO Market", "33業種区分": "-"},
         {"日付": "20260930", "コード": "2222", "銘柄名": "スタ", "市場・商品区分": "スタンダード（内国株式）", "33業種区分": "化学"},
+        # 5桁＝社債型種類株式（普通株ではない）は入れない
+        {"日付": "20260930", "コード": "94345", "銘柄名": "ソフトバンク第１回社債型種類株式", "市場・商品区分": "プライム（内国株式）", "33業種区分": "-"},
     ]
     st, d = H.parse_universe(recs, {"285A": {"akaji": False}})
     assert sorted(st) == ["1301", "2222", "285A", "9999"] and d == "2026-09-30"

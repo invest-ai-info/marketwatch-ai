@@ -2819,14 +2819,14 @@ def build_jp_highs_section(now_jst):
       <div class="jprank-col down"><h3>🔻 上場来安値・記録上の最安値 {len(rec_lo)}銘柄</h3>
         <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_lo)}</tbody></table></div></div>
     </div>
-    <div class="jprank-foot" style="margin-top:8px">「比べた期間」＝上場来＝東証に上場した日からの記録すべてと比べた（名証などほかの取引所から東証に来た銘柄は、それより前のほかの取引所での売買を含みません）。<b>※の銘柄は、Yahoo の記録がその年からしかなく、それより前（1990年前後のバブル期など）の値とは比べていません</b>＝上場来高値・上場来安値かどうかは確かめられていません（記録のある期間の最高値・最安値です）。</div>
+    <div class="jprank-foot" style="margin-top:8px">「比べた期間」＝上場来＝東証に上場した日からの記録すべてと比べた（記録が上場から始まっていると確かめられた銘柄だけ＝2022年以降の上場は JPX の新規上場の一覧の上場日で確かめています。名証などほかの取引所から東証に来た銘柄は、それより前のほかの取引所での売買を含みません）。<b>※の銘柄は、Yahoo の記録がその年からしかなく、それより前（1990年前後のバブル期など）の値とは比べていません</b>＝上場来高値・上場来安値かどうかは確かめられていません（記録のある期間の最高値・最安値です）。</div>
     <div class="jprank-grid" style="margin-top:18px">
       <div class="jprank-col up"><h3>📈 {period}高値を更新 {len(highs)}銘柄</h3>
         <div class="table-wrap" {scroll}><table class="jprank-table"><thead>{hi_head}</thead><tbody>{_ytd_body(highs, "🏆")}</tbody></table></div></div>
       <div class="jprank-col down"><h3>📉 {period}安値を更新 {len(lows)}銘柄</h3>
         <div class="table-wrap" {scroll}><table class="jprank-table"><thead>{lo_head}</thead><tbody>{_ytd_body(lows, "🔻")}</tbody></table></div></div>
     </div>
-    <div class="jprank-foot" style="margin-top:8px">🏆／🔻＝記録のある期間の最高値／最安値も更新。「それまでの高値（安値）」＝{sy}年1月〜前の営業日までの一番高い（安い）値（下はその日付）。同じ値は更新に数えません。上場から20営業日未満の銘柄・値が明らかにおかしい日・その日に売買の無かった銘柄は数えていません。売買代金の小さい銘柄は少しの売買で高値・安値が動きやすいので、代金も合わせて見てください。</div>
+    <div class="jprank-foot" style="margin-top:8px">🏆／🔻＝記録のある期間の最高値／最安値も更新。「それまでの高値（安値）」＝{sy}年1月〜前の営業日までの一番高い（安い）値（下はその日付）。同じ値は更新に数えません。上場から20営業日未満の銘柄・値が明らかにおかしい日・その日に売買の無かった銘柄・記録が期間の途中から始まり上場も確かめられない銘柄（期間の前半の値が無い）は数えていません。売買代金の小さい銘柄は少しの売買で高値・安値が動きやすいので、代金も合わせて見てください。</div>
     <div class="jprank-foot">💡 高値の更新は「その期間に買った人がみな含み益になり、戻り売りが出にくい」、安値の更新は「その期間に買った人がみな含み損になり、戻ったところで売りが出やすい」と言われます。一方、どちらも短期の行き過ぎのあとで反対に動くことがあり（安値更新の銘柄への逆張りは「落ちるナイフ」になりやすいとも言われます）、この表だけでは区別できません。高値更新と安値更新の銘柄数の差は、相場全体の勢いを見る目安としても使われます。
     「新高値を付けた強い株を買う」という教えを当サイトのデータで確かめた結果は、期間によって答えが割れました（前半は確認できず・後半だけプラス）＝相場の地合いしだいで、いつでも通用する決まりとは言えません。
     ▶ <a href="guide-masters-002-trend.html">順張りの教えをデータで検証</a> ／ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
