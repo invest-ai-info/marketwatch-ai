@@ -192,8 +192,8 @@ def boot(vals, keys, flags=None, alpha=ALPHA, n_boot=N_BOOT, seed=P.SEED):
     return point, float(lo), float(hi)
 
 
-def safe(rows, f, flag=None):
-    """日で引き直した幅と銘柄で引き直した幅の、広いほう（安全側）"""
+def safe(rows, f, flag=None, alpha=ALPHA):
+    """日で引き直した幅と銘柄で引き直した幅の、広いほう（安全側）。alpha の既定は J10 の 99％（J10F は 95％ を渡す）"""
     xs = [(f(r), r) for r in rows]
     xs = [(v, r) for v, r in xs if v is not None]
     key = "mean" if flag is None else "diff"
@@ -207,8 +207,8 @@ def safe(rows, f, flag=None):
         out.update(n_a=sum(fl), n_b=len(fl) - sum(fl))
         if out["n_a"] == 0 or out["n_b"] == 0:
             return out
-    pt, lo_d, hi_d = boot(vals, [r["date"] for _, r in xs], fl)
-    _, lo_c, hi_c = boot(vals, [r["code"] for _, r in xs], fl)
+    pt, lo_d, hi_d = boot(vals, [r["date"] for _, r in xs], fl, alpha=alpha)
+    _, lo_c, hi_c = boot(vals, [r["code"] for _, r in xs], fl, alpha=alpha)
     out.update({key: pt, "by_day": [lo_d, hi_d], "by_stock": [lo_c, hi_c]})
     if None not in (lo_d, lo_c, hi_d, hi_c):
         out.update(lo=min(lo_d, lo_c), hi=max(hi_d, hi_c))

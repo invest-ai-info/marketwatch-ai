@@ -13,7 +13,7 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json … 前向きの検証（判定が出たら一覧から外れる）
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
   ⚠️ 個人の取引の記録（守りの見張り番・5分足の執行・取引の記録）と research/ だけの研究は載せない（件数も出さない）
@@ -41,6 +41,7 @@ YORI_FWD = "yori-forward.json"
 COMBO_FWD = "combo-forward.json"
 AUTO_FWD = "auto-forward.json"
 CAL_FWD = "calendar-forward.json"
+HIGHS_FWD = "highs-trap-forward.json"     # 🆕 2026-10-06 J10F 高値更新の翌朝の罠の目印・前向き
 YUTAI_DIR = "yutai-edinet"
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
@@ -381,6 +382,21 @@ def collect_studies(root, m):
                                    "（形1〜4は朝から持つ形、形5〜7は9時30分までに手じまう形で、10月6日から数えています）",
                            "since": y.get("fwd_start") or "",
                            "progress": f"{prog}（それぞれ{y.get('goal') or 1000}回で1回だけ判定）{extra}"})
+
+    h = _load(p(HIGHS_FWD))
+    if h:
+        done = set((h.get("verdicts") or {}).keys())
+        live = [c for c in ("A", "B") if c not in done]
+        if live:
+            cnt = {c: sum(1 for t in h.get("trades") or [] if t.get("c") == c and t.get("f")) for c in live}
+            names = {"A": "よく売買される約400銘柄", "B": "サイトの高値更新の一覧"}
+            prog = "・".join(f"{names[c]} {cnt[c]}回" for c in live)
+            verify.append({"name": "高値を更新した日本株の、次の日の寄り付き",
+                           "what": "年初来高値を更新した銘柄のうち、次の日の朝いちばんの値段（寄り付き）が前の日の終わりの値段より"
+                                   "1パーセント以上高かったものは、9時30分までに値下がりしやすいか（入らない方がいい目印になるか）を、"
+                                   "登録した日より後の取引だけで確かめています",
+                           "since": h.get("fwd_start") or "",
+                           "progress": f"目印にあてはまった取引 {prog}（それぞれ{h.get('goal') or 1000}回で1回だけ判定）"})
 
     a = _load(p(AUTO_FWD))
     if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):
