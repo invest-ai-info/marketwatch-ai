@@ -19,6 +19,7 @@ routine `failure-mail-patrol`（毎朝 08:57 JST）が最初に実行する。�
   python failure_patrol.py                 # 直近26時間
   python failure_patrol.py --hours 50      # 期間を変える
   python failure_patrol.py --logs          # ログも取りにいく（通信が許可された環境だけで意味がある）
+  python failure_patrol.py --repo invest-ai-info/ai-tsukaikata   # 姉妹サイト（routine にそのリポジトリが付いているときだけ読める）
 """
 import argparse
 import datetime as dt
@@ -45,9 +46,12 @@ BORING = (
 LOG_TAIL = 60
 
 
-def api(path, repo=REPO, raw=False):
-    """GitHub API を読む。GITHUB_TOKEN があれば使う（手元用）。クラウドではプロキシが認証を付ける。"""
-    url = path if path.startswith("http") else API + repo + path
+def api(path, repo=None, raw=False):
+    """GitHub API を読む。GITHUB_TOKEN があれば使う（手元用）。クラウドではプロキシが認証を付ける。
+
+    repo を省くと、その時点の REPO（--repo で差し替えられる）を読む。
+    """
+    url = path if path.startswith("http") else API + (repo or REPO) + path
     req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json",
                                                "User-Agent": "failure-patrol"})
     tok = os.environ.get("GITHUB_TOKEN")
@@ -186,10 +190,14 @@ def health_detail(since):
 
 
 def main():
+    global REPO
     ap = argparse.ArgumentParser()
     ap.add_argument("--hours", type=float, default=26)
     ap.add_argument("--logs", action="store_true", help="ログも取りにいく（既定は取らない）")
+    ap.add_argument("--repo", default=REPO,
+                    help="読むリポジトリ（owner/name）。姉妹サイト ai-tsukaikata は routine に付いているときだけ読める")
     a = ap.parse_args()
+    REPO = a.repo
     now = dt.datetime.now(dt.timezone.utc)
     since = now - dt.timedelta(hours=a.hours)
 
