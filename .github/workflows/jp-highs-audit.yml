@@ -1,10 +1,13 @@
 name: JP Highs Audit
 
-# 高値更新銘柄（build_jp_highs.py）の「上場来」の区切りが安全かを確かめる（手動・表示だけ・何も書かない）。
-# 2026-10-06: Yahoo の日本株の記録の始まりは銘柄ごとにばらばら（トヨタ 1999-06・小松 2000-02・カプコン 2001-02）で、
-#   初版は小松製作所（1949年上場）などを「上場来高値」と誤って出した。全銘柄の記録の始まりを並べ、
-#   区切り（LISTING_CUTOFF）以降に始まる銘柄が本当にその頃に上場した銘柄かをログで見る。
-#   ユニバース（jp-stock-info.json）を入れ替えたときにも1回回す。
+# 高値・安値の更新銘柄（build_jp_highs.py）の点検（手動・表示だけ・何も書かない）。2つのジョブが並んで走る:
+#   audit … 全銘柄の Yahoo の記録の始まりを並べ、「上場来」と言い切る見分け方（記録が月の途中＝上場の週から始まる）が
+#           安全かを見る。2022年以降の分は JPX の新規上場の一覧（上場日）と突き合わせる。
+#   trial … 本番と同じ計算を最後まで回し、件数・所要時間・Yahoo の混雑を表示する（jp-highs.json は書かない）。
+#           ブランチを指定して動かせば、マージの前に本番の形を試せる。
+# 経緯: 2026-10-06 Yahoo の記録の始まりは銘柄ごとにばらばら（トヨタ 1999-06・小松 2000-02・日本郵船 2004-12）で、
+#   初版・2版は古い銘柄を「上場来」と言いうる形だった → 399銘柄の監査で見分け方を決めた → 同日夜に全銘柄へ広げたので
+#   全銘柄で点検し直す。対象の一覧（JPX）が大きく変わったときにも回す。
 
 on:
   workflow_dispatch:
@@ -12,6 +15,7 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: read
     steps:
@@ -19,5 +23,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Audit Yahoo history start per stock
+      - name: Install deps
+        run: pip install pandas openpyxl xlrd
+      - name: Audit Yahoo history start per stock (all TSE stocks)
         run: python build_jp_highs.py --audit
+
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install pandas openpyxl xlrd
+      - name: Trial run (same as production, does not write)
+        run: python build_jp_highs.py --dry-run

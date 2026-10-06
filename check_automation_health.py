@@ -67,6 +67,8 @@ WORKFLOW_CHECKS = [
     #    直近30runの日跨ぎ間隔は 24〜25h（1日2回・cronの滑りは30〜45分）。8/27 は1日まるごと
     #    スキップされて 33.5h あいた＝**その形を捕まえる**ために 30h（正常の最大25hに5hの余裕）。
     ("日本株ランキング",        "jp-rankings.yml",         30, "warn"),
+    # 🆕 2026-10-06 夜: 高値・安値の更新銘柄（全銘柄）をランキングから分けた。ランキングの完了で毎回起動する＝同じ 30h
+    ("日本株の高値・安値",      "jp-highs.yml",            30, "warn"),
     # 🆕 2026-09-02 追加。「数字で見る、話題の企業」の日本株が読む有報本文（edinet-yuho.json）を作る唯一の
     #    ジョブ。平日1回（19:40 JST）なので、jp-rankings と同じ流儀で「1回まるごと飛んだ形」を捕まえる。
     #    金曜→月曜の空きが正常でも約72h あるため、そこに余裕5h を足して 80h。
@@ -763,6 +765,8 @@ CHAIN_WATCH = [
     # (説明, ワークフロー, 何日以内にその event の起動があるべきか, いつから見張るか, event)
     ("ランキング→hot-assets 再描画", "update-market-news.yml", 3, dt.date(2026, 9, 19), "workflow_run"),
     ("routine の push→日本株ランキング", "jp-rankings.yml", 3, dt.date(2026, 9, 28), "push"),
+    # 🆕 2026-10-06 夜: 高値・安値（jp-highs.yml）はランキングの完了（workflow_run）で起動する
+    ("ランキング→高値・安値の更新銘柄", "jp-highs.yml", 3, dt.date(2026, 10, 8), "workflow_run"),
     # 🆕 2026-10-04: 発表前アラートを頻繁なワークフローの完了に相乗りさせた（cron だけでは1日4〜5回しか動かず、
     #    10/2 の米雇用統計の「まもなく」が届かなかった）。1日数十回起動するはずなので1日空いたら異常
     ("他のワークフローの完了→発表前アラート", "indicator-alert.yml", 1, dt.date(2026, 10, 5), "workflow_run"),
@@ -1204,8 +1208,8 @@ def main():
             body.append(f"- ✅ 🟢 信用残 asof={m_asof}（確定最終営業日から {lag} 営業日遅れ・{MARGIN_LAG_MAX} まで正常）")
     except Exception as e:
         body.append(f"- 🚨 ⚪ 信用残の鮮度確認に失敗: {e}")
-    # ⑫c 高値・安値の更新銘柄（jp-highs.json・2026-10-06〜）。jp-rankings.yml の高値ステップも non-fatal＝失敗しても緑なので、
-    #     ランキングと同じく「上流の確定最終営業日」と突き合わせる（同じジョブで続けて作るので、正常なら一致する）
+    # ⑫c 高値・安値の更新銘柄（jp-highs.json・2026-10-06〜）。ランキングの完了で jp-highs.yml が作る（全銘柄で約15分）。
+    #     ①は「走ったか」しか見ないので、ランキングと同じく「上流の確定最終営業日」と突き合わせる（正常なら一致する）
     try:
         hi = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/jp-highs.json", token))
@@ -1214,8 +1218,8 @@ def main():
         h_asof = hi.get("asof") or ""
         if h_settled and h_asof and h_asof < h_settled:
             body.append(f"- 🚨 🟡 高値・安値の更新銘柄が古い: jp-highs.json の asof={h_asof} / 上流の確定最終営業日={h_settled}。"
-                        f"**hot-assets の「高値・安値の更新銘柄」が前の営業日の一覧のまま**。jp-rankings.yml の高値ステップは"
-                        f"失敗しても緑（non-fatal）なので、ログの「Build JP new highs and lows」を見る")
+                        f"**hot-assets の「高値・安値の更新銘柄」が前の営業日の一覧のまま**。jp-highs.yml（ランキングの完了で起動）の"
+                        f"ログ「Build JP new highs and lows」を見る（JPX の一覧が取れない・Yahoo の混雑で取得8割未満など）")
             bad.append(("高値・安値の更新銘柄の鮮度", "warn"))
         elif h_settled and h_asof:
             body.append(f"- ✅ 🟢 高値・安値の更新銘柄 asof={h_asof}（上流の確定最終営業日と一致）")

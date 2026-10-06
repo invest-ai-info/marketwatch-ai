@@ -1,0 +1,68 @@
+name: JP Highs Lows
+
+# 日本株の「年初来・上場来の高値と安値を更新した銘柄」（build_jp_highs.py → jp-highs.json → hot-assets）を作る。
+# 2026-10-06 オーナー依頼で新設（高値 → 同日夕に安値 → 同日夜「全銘柄に広げて」で東証の全上場 約3,700銘柄に）。
+#
+# なぜ jp-rankings.yml から分けたか:
+#   全銘柄は Yahoo に約3,700回取りに行く＝1回13〜15分かかる。同じジョブのままだと日本株ランキングの公開まで
+#   15分遅れる。そこでランキングの完了（workflow_run）を合図に、別のワークフローとして動かす。
+#   同じ営業日・同じ決まりの一覧がもうあれば数秒で終わる（build_jp_highs.already_done）。
+#
+# なぜ再描画を workflow_dispatch で頼むか:
+#   GITHUB_TOKEN で押したコミットは update-market-news を起動しない。完了（workflow_run）に相乗りさせると、
+#   何も変わらない回（ランキングは1日に約7回走る）まで AI（Gemini）を使う再描画が走ってしまう。
+#   jp-highs.json を更新できたときだけ頼む（workflow_dispatch は GITHUB_TOKEN でも起動できる例外）。
+#
+# ⚠️ この繋ぎが黙って死んでいないかは check_automation_health.py（①の実行の成否・⑭の workflow_run 起動・⑫c の鮮度）が見張る。
+
+on:
+  workflow_run:
+    workflows: ["JP Stock Rankings"]   # ⚠️ jp-rankings.yml の `name:` と一字一句合わせる
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: jp-highs
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # ランキングが失敗した回は動かない（失敗の回の後に作っても同じ営業日を数え直すだけ）
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      actions: write   # 再描画（update-market-news）を workflow_dispatch で頼むため
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps (pandas/openpyxl for the JPX listed-stocks Excel)
+        run: pip install pandas openpyxl xlrd
+      - name: Build JP new highs and lows (all TSE stocks, Yahoo prices only, no key)
+        run: python build_jp_highs.py
+      - name: Commit jp-highs.json and ask for a redraw
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add jp-highs.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "chore: jp highs/lows $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+          pushed=0
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then pushed=1; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 10))
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "🚨 jp-highs.json を push できなかった"
+            exit 1
+          fi
+          gh workflow run update-market-news.yml --ref main
