@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-06
+- 判定: ✅ 公開済み
+- 選定トピック: Nasdaqが史上最高値27,477.31（+1.05%）──米10年債利回りが24年ぶり高水準5.31%でも上昇するAI相場の構造を整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 4 / 影響 4 / 付加価値 5（合計 13/15）
+- 選定理由: Nasdaq総合が終値ベース史上最高値27,477.31（+1.05%）を10/5（現地）に記録。米10年債利回り5.31%と2002年以来24年ぶり高水準にもかかわらず株高が続く逆説的な構造（AI利益成長・FRB利上げ確率低下・狭い市場ブレッドス31.5%）に付加価値があり13/15。
+- 出典（確認済み・5系統）:
+  - devdiscourse「US STOCKS-Nasdaq reaches record high close, AI stocks rally」2026-10-05
+  - The Hill「US Treasury yields hit 24-year high amid soaring debt」2026-10
+  - f-frontier.com「2026年10月6日のマーケット情報」2026-10-06
+  - nordfx.com「Market Pulse October 06, 2026」2026-10-06
+  - coinpaper「Nasdaq Hits Record Even With 5.3% Treasury Yield: Why Tech Is Still Winning」2026-10-05
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（「7万円台を明確に維持した」→「7万円台で取引を終えた」等3点の表現軟化）→修正適用→最終🟢白
+  - 第2Opus（独立確認・Read専用）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典5系統 ✅ → 最終判定🟢白（公開OK）
+  - 著者追加修正: 警戒箱の「上昇に参加しているのが31.5%」→「50日移動平均線を上回っているのが31.5%にとどまる」（第2Opus指摘の事実精度向上・コンプラ問題なし）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典5系統 ✅ / noindexなし ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告31件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-06-nasdaq-record-yield-surge.html
+- commit: 41b1787（main へ push 済み）
+
+---
+
 ## 2026-10-05
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均+1,637円（+2.40%）で7万円台に迫る──米雇用統計余震（FRB利上げ後退）とNasdaq100が52週高値31,100台テスト（SMH+2.07%）が複合（カテゴリ: 今日のニュース）
