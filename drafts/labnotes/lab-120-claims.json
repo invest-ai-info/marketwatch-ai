@@ -1,0 +1,67 @@
+{
+  "article_id": "120",
+  "asof": "2026-10-07T06:15:00+09:00",
+  "hypothesis_id": "trend_down_reversal_l",
+  "claims": [
+    {
+      "label": "IS 下降トレンド×逆張り買い（〜2026-06-25）",
+      "filter": {"trend": "下降", "reversal_long": true, "fired_before": "2026-06-26"},
+      "k": 63,
+      "n": 186
+    },
+    {
+      "label": "FWD 下降トレンド×逆張り買い（2026-06-26〜）",
+      "filter": {"trend": "下降", "reversal_long": true, "fired_from": "2026-06-26"},
+      "k": 188,
+      "n": 370
+    },
+    {
+      "label": "FWD 1時間足×下降トレンド×逆張り買い",
+      "filter": {"trend": "下降", "reversal_long": true, "tf": "1h", "fired_from": "2026-06-26"},
+      "k": 122,
+      "n": 252
+    },
+    {
+      "label": "FWD 4時間足×下降トレンド×逆張り買い",
+      "filter": {"trend": "下降", "reversal_long": true, "tf": "4h", "fired_from": "2026-06-26"},
+      "k": 63,
+      "n": 104
+    },
+    {
+      "label": "FWD 日足×下降トレンド×逆張り買い",
+      "filter": {"trend": "下降", "reversal_long": true, "tf": "1d", "fired_from": "2026-06-26"},
+      "k": 3,
+      "n": 14
+    },
+    {
+      "label": "FWD 逆張り買い（全トレンド）",
+      "filter": {"reversal_long": true, "fired_from": "2026-06-26"},
+      "k": 494,
+      "n": 1059
+    },
+    {
+      "label": "FWD 下降トレンド×買い（全シグナル）",
+      "filter": {"trend": "下降", "direction": "long", "fired_from": "2026-06-26"},
+      "k": 433,
+      "n": 912
+    },
+    {
+      "label": "FWD ベースライン（全体ロング）",
+      "filter": {"direction": "long", "fired_from": "2026-06-26"},
+      "k": 1304,
+      "n": 2955
+    },
+    {
+      "label": "FWD RSI売られすぎ×下降トレンド×逆張り買い",
+      "filter": {"trend": "下降", "reversal_long": true, "signal": "rsi_oversold_bounce", "fired_from": "2026-06-26"},
+      "k": 66,
+      "n": 135
+    },
+    {
+      "label": "FWD ボリンジャー下限タッチ×下降トレンド×逆張り買い",
+      "filter": {"trend": "下降", "reversal_long": true, "signal": "bb_lower_touch", "fired_from": "2026-06-26"},
+      "k": 122,
+      "n": 235
+    }
+  ]
+}
