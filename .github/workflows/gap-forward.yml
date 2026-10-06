@@ -1,0 +1,58 @@
+name: Gap Forward (weekdays)
+
+# J13F 窓の戻し・前向き（2026-10-06 夜 登録・オーナー「進めてください」＝前向きの登録と毎日の自動実行の追加を了承）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J13F」（事前登録）と gap_forward.py の冒頭に固定。
+# ⚠️ 東証の全上場（約3,700）の日足と5分足を取り、2026-10-07 以降で「今日より前」の朝だけを数える＝実行の時刻がずれても結果は同じ。
+#    一度数えた朝は数え直さない。値段を取れない銘柄が5％を超えた回は1日も数えない（次の回に取り直す）。
+#    5分足は直近約60日しか取れない（automation-health が見張る）。1回25〜35分。
+# ⚠️ 出力（gap-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた合計と判定を持つ＝古い版で上書きすると消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  schedule:
+    - cron: '53 22 * * 0-4'   # 月〜金 07:53 JST（前の営業日までを数える）
+    - cron: '23 3 * * 1-5'    # 月〜金 12:23 JST 保険（数えた朝は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: gap-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Count only the mornings after registration
+        run: |
+          python gap_forward.py
+          python verified_list.py > /dev/null
+          [ -f gap-forward.md ] && cat gap-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gap-forward.json gap-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: gap forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi

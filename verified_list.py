@@ -28,11 +28,13 @@ SOURCES = [
     ("r4-armb.json", "R4 腕B 月末のロンドン 08:00→16:00 の為替ヘッジ（手元の MT5 の1時間足・月の真ん中の日と比べた・1回だけ数えた）", "R4"),   # 🆕 2026-10-05
     ("intl-tom-lab.json", "R6 ほかの国の株価指数の月末月初（論文のあと・1回だけ数えた）", ""),   # 🆕 2026-10-05 深夜 R3F を育てる確かめ
     ("index-open-lab.json", "R7 株価指数の朝の窓・夜の上げ（1321.T・SPY の日足・2009〜2026-09・1回だけ数えた）", "R7"),   # 🆕 2026-10-06
+    ("gap-forward.json", "J13F 窓の戻し・前向き（全上場の毎朝・寄り→9:30）", "J13F"),   # 🆕 2026-10-06 夜 腕B。取引は持たず progress に回数
 ]
 # 🆕 2026-10-06 目印（見分け方）の前向き（kind: marker）。「期待値がプラスか」ではなく「目印あり−なしの差が0より下か」を
 # 判定するので、上の SOURCES とは別の節に載せる（確認＝confirm／ストップ＝stop）
 MARKER_SOURCES = [
     ("highs-trap-forward.json", "J10F 高値更新の翌朝の罠の目印・前向き", "J10F"),
+    ("gap-forward.json", "J13F 窓の戻し・前向き（全上場の毎朝・寄り→9:30）", "J13F"),   # 🆕 2026-10-06 夜 腕A（marker_titles）
 ]
 # 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
@@ -56,6 +58,13 @@ def _pct(x):
     return "—" if x is None else f"{x * 100:+.2f}％"
 
 
+def _count(data, cid, flagged=False):
+    """数えた回数。取引を1行ずつ持たない記録（J13F）は progress に回数を書く"""
+    if cid in (data.get("progress") or {}):
+        return data["progress"][cid]
+    return sum(1 for t in data.get("trades", []) if t.get("c") == cid and (t.get("f") or not flagged))
+
+
 def _num(x, unit):
     """記録の単位で書く（unit: R＝損切りまでの幅を1とした単位／既定＝損益率）"""
     return _r(x) if unit == "R" else _pct(x)
@@ -75,7 +84,7 @@ def collect(sources=SOURCES):
             if not v and data.get("kind") == "backtest":
                 continue          # 過去のデータで1回だけ数えたもの＝ストップ以外は載せない（前向きは別に登録する）
             row = {"src": name, "sec": sec, "id": cid, "title": title, "goal": goal, "v": v, "unit": data.get("unit", "pct"),
-                   "n": sum(1 for t in data.get("trades", []) if t.get("c") == cid)}
+                   "n": _count(data, cid)}
             (watching if not v else plus if v["status"] == "plus" else stop).append(row)
     return stop, plus, watching
 
@@ -89,12 +98,15 @@ def collect_markers(sources=None):
                 data = json.load(fh)
         except (OSError, ValueError):
             continue
-        if data.get("kind") != "marker":
+        if data.get("kind") == "marker":
+            titles, verdicts = data.get("titles", {}), data.get("verdicts")
+        elif data.get("marker_titles"):          # 🆕 J13F：1つの記録に買いの腕（titles）と目印の腕（marker_titles）がある
+            titles, verdicts = data["marker_titles"], data.get("marker_verdicts")
+        else:
             continue
-        for cid, title in data.get("titles", {}).items():
+        for cid, title in titles.items():
             out.append({"src": name, "sec": sec, "id": cid, "title": title, "goal": data.get("goal"),
-                        "v": (data.get("verdicts") or {}).get(cid),
-                        "n": sum(1 for t in data.get("trades", []) if t.get("c") == cid and t.get("f"))})
+                        "v": (verdicts or {}).get(cid), "n": _count(data, cid, flagged=True)})
     return out
 
 
@@ -113,7 +125,7 @@ def render_markers(rows):
             res = "✅ 確認" if v["status"] == "confirm" else "⏹ ストップ"
             L.append(f"| {_label(r)} | {r['title']} | {res} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | "
                      f"{_pct(v['lo'])}〜{_pct(v['hi'])} | {v['reason']} |")
-    L += [f"- 👀 {_label(r)} {r['title']}（目印あり {r['n']}/{r['goal']}回）" for r in rows if not r["v"]]
+    L += [f"- 👀 {_label(r)} {r['title']}（目印あり {_progress(r)}）" for r in rows if not r["v"]]
     return L + [""]
 
 
