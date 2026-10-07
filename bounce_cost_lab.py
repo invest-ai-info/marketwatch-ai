@@ -11,6 +11,7 @@
 
 実行: python bounce_cost_lab.py --check   （点検だけ＝行数・費用の見積もり・形ごとの回数。損益は数えない・何も書き出さない）
       python bounce_cost_lab.py           （本番。Actions の bounce-cost-lab.yml から手動で・1回だけ）
+      python bounce_cost_lab.py --relist  （数え直さずに、書き出した結果へ検証済みリストの欄を足す）
 """
 import datetime as dt
 import json
@@ -189,6 +190,31 @@ def analyze(A):
     return res
 
 
+def listing(res, today):
+    """検証済みリスト（verified_list.SOURCES）が読む欄。「費用で消える」「選べる形なし」だけストップとして載せる"""
+    r = res.get("result") or {}
+    out = {"kind": "backtest", "section": "J19", "titles": {"J19": "その銘柄だけ −1％以下安く寄った株を寄りで買う（銘柄ごとの売り買いの差を引く・2006〜2016年で27通りから選ぶ）"},
+           "verdicts": {}}
+    if r.get("overall") in (GONE, NOSEL):
+        g = (r.get("grid") or {}).get(BASE) or {}
+        b, c = (r.get("base") or {}).get("b") or {}, (r.get("base") or {}).get("c") or {}
+        why = "27通りとも費用後プラスの形が無い（選べる形なし）" if r["overall"] == NOSEL else "選んだ形が確かめの期間で費用後プラスにならない"
+        out["verdicts"]["J19"] = {"status": "stop", "decided_on": today, "n": g.get("n"), "mean": g.get("net"), "lo": None, "hi": None,
+                                  "reason": f"過去のデータで1回だけ数えて{why}（いちばん広い形の費用後 2006〜2016 {_p(g.get('net'))}・"
+                                            f"2016〜2023 {_p(b.get('net'))}・2023〜2026 {_p(c.get('net'))}・費用は推定で大きい株では重めの可能性）"}
+    return out
+
+
+def relist(path=OUT_JSON):
+    """数え直さずに、書き出した結果へ検証済みリストの欄を足す（2026-10-07：1回目の本番のあとに欄を足したため）"""
+    with open(path, encoding="utf-8") as fh:
+        res = json.load(fh)
+    res.update(listing(res, dt.datetime.now(P.JST).date().isoformat()))
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(res, fh, ensure_ascii=False, indent=1, default=str)
+    return res
+
+
 # ════════════════════ 読む ════════════════════
 
 def stock_rows(ci, daily, m5, h1, drops=None):
@@ -281,6 +307,10 @@ def render_md(res):
 
 
 def main(argv):
+    if "--relist" in argv:
+        res = relist()
+        print(json.dumps(res.get("verdicts"), ensure_ascii=False, indent=1))
+        return 0
     res = {"generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_file": P.PREREG,
            "prereg_sha256": P.prereg_sha256()}
     try:
@@ -305,6 +335,7 @@ def main(argv):
         if "--check" in argv:
             return 1
         res["result"] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
+    res.update(listing(res, dt.datetime.now(P.JST).date().isoformat()))
     with open(OUT_JSON, "w", encoding="utf-8") as fh:
         json.dump(res, fh, ensure_ascii=False, indent=1, default=str)
     md = render_md(res)
