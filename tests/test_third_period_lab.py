@@ -28,7 +28,7 @@ def test_prereg_matches_the_code():
     assert M.N_Q == 7 and abs(M.ALPHA - 0.05 / 7) < 1e-12 and "p＜0.05÷7＝99.29％ の幅" in text
     assert [j[3] for j in M.JUDGES] == [-1, +1, -1, -1, -1, -1, +1]
     import jp_bars
-    assert jp_bars.SPECS[0] == ("1d", ("max", "10y")) and jp_bars.DAILY_MAX_SPACING == 5 and "間隔の中央値が5日を超えたら" in text
+    assert jp_bars.SPECS[0] == ("1d", (jp_bars.FULL_DAILY, "10y")) and jp_bars.DAILY_MAX_SPACING == 5 and "間隔の中央値が5日を超えたら" in text
 
 
 def _shape(oc=None):
@@ -107,7 +107,7 @@ def test_replicate_same_opposite_and_render():
     assert rev["judges"]["p1"]["replicate"] == M.OPP and rev["judges"]["p2"]["replicate"] == M.OPP
     assert M.replicate(PD.NONE, -1) == M.NONE and M.replicate(PD.DOWN + "（…）", -1) == M.SAME
     u = M.usable_start(_shape(), {y: 0.0 for y in range(2006, 2017)})
-    out = {"generated_at": "x", "prereg_sha256": "0" * 64, "price_store": {"built_at": "b", "daily_range": "max", "fallback": {"1d": 3}},
+    out = {"generated_at": "x", "prereg_sha256": "0" * 64, "price_store": {"built_at": "b", "daily_range": "from:1990", "fallback": {"1d": 3}},
            "result": dict(res, usable=u, n_codes=600, list_date="2026-09-30", n_missing=0, n_dropped=0)}
     md = M.render_md(out)
     assert "## まとめ" in md and "6／6" in md and "P7 その銘柄だけ安く寄った朝" in md and "投資助言ではありません" in md
@@ -117,7 +117,7 @@ def test_replicate_same_opposite_and_render():
 def test_check_summary_has_no_returns():
     A = _rows(n_days=20)
     sh = _shape()
-    out = M.check_summary(A, [], sh, 600, {"daily_range": "max"})
+    out = M.check_summary(A, [], sh, 600, {"daily_range": "from:1990"})
     keys = set(out) | {k for y in out["years"].values() for k in y}
     assert not any(w in " ".join(map(str, keys)) for w in ("diff", "mean", "rclose", "judge"))
     assert out["years"]["2010"]["stocks"] == 3000 and out["years"]["2010"]["thin_share"] == 0.0

@@ -32,9 +32,19 @@ N_BOOT = 2000
 
 # ════════════════════ データ ════════════════════
 
+def chart_url(code, interval, rng):
+    """rng は range の値（5y・60d など）か "from:YYYY"（その年の1月1日〜今日を period1/period2 で頼む）。
+    2026-10-07：range=max に日足を頼むと、ほとんどの銘柄で月ごとの足が返った（J18）＝全期間の日足は from: で取る"""
+    base = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T"
+    if str(rng).startswith("from:"):
+        p1 = int(dt.datetime(int(str(rng)[5:]), 1, 1, tzinfo=dt.timezone.utc).timestamp())
+        return f"{base}?period1={p1}&period2={int(time.time())}&interval={interval}"
+    return f"{base}?range={rng}&interval={interval}"
+
+
 def fetch_chart(code, interval, rng, tries=3):
     """Yahoo chart API → [(JSTの時刻, 始, 高, 安, 終, 出来高)]（値の欠けた足は除く）"""
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
+    url = chart_url(code, interval, rng)
     for k in range(tries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
