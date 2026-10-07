@@ -4,7 +4,8 @@
 これまでは研究ラボ1本ごとに約3,700銘柄×3種類の足を Yahoo から取り直し、1回45〜60分（点検と本番で2回）かかっていた。
 ここで **1回だけ8台で並列に取って1つのファイルにまとめ、actions/cache に置く**。各ラボはそこから読む＝数秒。
 
-- 取るもの：日足 10年（ラボが 5年を頼めば 5年に切って返す）／1時間足 729日（だめなら1年）／5分足 60日（だめなら1か月）
+- 取るもの：日足 取れる全期間（ラボが 10年・5年を頼めばそこで切って返す。取れた足が日ごとでなければ10年に戻す）／
+  1時間足 729日（だめなら1年）／5分足 60日（だめなら1か月）
 - 置き方：足の種類ごとに「銘柄の番号・時刻（秒）・始高安終出来高（float32）」の配列。Yahoo の値はもともと float32 の精度
 - 読み方：`fetch(code, interval, rng)` は yori_lab.fetch_chart と同じ形（[(JST の時刻, 始, 高, 安, 終, 出来高)]）を返す。
   置き場に無い足の種類・銘柄は Yahoo から取る（遅いが同じ答え）。範囲（rng＝5y・729d・60d など）は置き場を作った日から数えて切る
@@ -33,7 +34,8 @@ import pillar_lab as P
 import yori_lab as Y
 
 DEFAULT_PATH = os.environ.get("JP_BARS", "jp-bars/jp-bars.npz")
-SPECS = (("1d", ("10y",)), ("60m", T.H1_RANGES), ("5m", T.M5_RANGES))   # 日足は10年（2026-10-07・昔の期間で確かめるため）
+SPECS = (("1d", ("max", "10y")), ("60m", T.H1_RANGES), ("5m", T.M5_RANGES))   # 日足は取れる全期間（2026-10-07 J18・2016年より前で確かめるため）
+DAILY_MAX_SPACING = 5         # 日足の間隔の中央値（暦日）がこれを超えたら日足ではない＝次の範囲（10年）で取り直す
 RANGE_DAYS = {"d": 1, "mo": 30.44, "y": 365.25}
 IV_KEY = {"1d": "d", "60m": "h", "5m": "m"}
 
@@ -60,21 +62,41 @@ def _pack(rows_by_code, codes):
     return np.concatenate(idx), np.concatenate(ts), np.vstack(vals)
 
 
+def daily_ok(rows):
+    """日足として使えるか（足の間隔の中央値が DAILY_MAX_SPACING 日以下）。range=max で月ごとの足が返ったときに弾く"""
+    if len(rows) < 3:
+        return True
+    gaps = sorted((rows[i + 1][0] - rows[i][0]).days for i in range(len(rows) - 1))
+    return gaps[len(gaps) // 2] <= DAILY_MAX_SPACING
+
+
+def fetch_spec(fetch, code, iv, ranges):
+    """→ (足, 使った範囲)。範囲を順に試し、日足は daily_ok を満たすものだけ使う"""
+    for rg in ranges:
+        x = fetch(code, iv, rg)
+        if x and (iv != "1d" or daily_ok(x)):
+            return x, rg
+    return None, None
+
+
 def fetch_shard(codes, fetch=Y.fetch_chart, pause=0.03):
-    """→ {"codes", "d_*", "h_*", "m_*", "missing"}（1台分）"""
+    """→ {"codes", "d_*", "h_*", "m_*", "missing", "fallback"}（1台分）。fallback＝最初の範囲で取れず次の範囲を使った銘柄"""
     got = {iv: {} for iv, _ in SPECS}
     missing = {iv: [] for iv, _ in SPECS}
+    fallback = {iv: [] for iv, _ in SPECS}
     for n, code in enumerate(codes):
         for iv, ranges in SPECS:
-            rows = T._first(fetch, code, iv, ranges)
+            rows, used = fetch_spec(fetch, code, iv, ranges)
             if rows:
                 got[iv][code] = rows
+                if used != ranges[0]:
+                    fallback[iv].append(code)
             else:
                 missing[iv].append(code)
         if (n + 1) % 100 == 0:
             print(f"  ...{n + 1}/{len(codes)}", flush=True)
         time.sleep(pause)
-    out = {"codes": np.array(codes), "missing": json.dumps(missing)}
+    out = {"codes": np.array(codes), "missing": json.dumps(missing), "fallback": json.dumps(fallback)}
     for iv, _ in SPECS:
         k = IV_KEY[iv]
         out[f"{k}_code"], out[f"{k}_t"], out[f"{k}_v"] = _pack(got[iv], codes)
@@ -89,10 +111,14 @@ def merge(parts, meta):
     pos = {c: i for i, c in enumerate(codes)}
     out = {"codes": np.array(codes), "meta": json.dumps(meta, ensure_ascii=False)}
     missing = {iv: [] for iv, _ in SPECS}
+    fallback = {iv: [] for iv, _ in SPECS}
     for p in parts:
         for iv, lst in json.loads(str(p["missing"])).items():
             missing[iv] += lst
+        for iv, lst in json.loads(str(p["fallback"]) if "fallback" in p else "{}").items():
+            fallback[iv] += lst
     out["missing"] = json.dumps(missing)
+    out["fallback"] = json.dumps(fallback)
     for iv, _ in SPECS:
         k = IV_KEY[iv]
         ci, ts, vs = [], [], []
@@ -121,6 +147,7 @@ class Bars:
         self.pos = {c: i for i, c in enumerate(self.codes)}
         self.meta = json.loads(str(z["meta"]))
         self.missing = json.loads(str(z["missing"]))
+        self.fallback = json.loads(str(z["fallback"])) if "fallback" in z.files else {}
         self.arr = {}
         for iv, k in IV_KEY.items():
             ci = z[f"{k}_code"]
@@ -196,7 +223,8 @@ def info(path=None):
     if not b:
         return None
     return {"built_at": b.meta.get("built_at"), "list_date": b.meta.get("list_date"), "n_codes": len(b.codes),
-            "missing": {k: len(v) for k, v in b.missing.items()}, "live_fetches": b.live}
+            "missing": {k: len(v) for k, v in b.missing.items()}, "fallback": {k: len(v) for k, v in b.fallback.items()},
+            "daily_range": (b.meta.get("specs") or {}).get("1d", ["10y"])[0], "live_fetches": b.live}
 
 
 # ════════════════════ コマンド ════════════════════
@@ -219,7 +247,9 @@ def main(argv):
         out = fetch_shard(codes)
         np.savez_compressed(args.out, **out)
         miss = json.loads(out["missing"])
-        print(f"保存 {args.out}：取れなかった 日足 {len(miss['1d'])}・1時間足 {len(miss['60m'])}・5分足 {len(miss['5m'])}")
+        fb = json.loads(out["fallback"])
+        print(f"保存 {args.out}：取れなかった 日足 {len(miss['1d'])}・1時間足 {len(miss['60m'])}・5分足 {len(miss['5m'])}"
+              f"・日足を10年で取り直した {len(fb['1d'])}")
         return 0
     stocks, list_date = H.load_universe()
     paths = sorted(p for pat in args.parts for p in glob.glob(pat))
@@ -232,7 +262,9 @@ def main(argv):
     miss = json.loads(out["missing"])
     size = os.path.getsize(args.out) / 1e6
     print(f"まとめ {args.out}：{len(out['codes'])}銘柄・{size:.0f}MB・日足 {len(out['d_t']):,}本・1時間足 {len(out['h_t']):,}本・"
-          f"5分足 {len(out['m_t']):,}本・取れなかった 日足 {len(miss['1d'])}・1時間足 {len(miss['60m'])}・5分足 {len(miss['5m'])}")
+          f"5分足 {len(out['m_t']):,}本・取れなかった 日足 {len(miss['1d'])}・1時間足 {len(miss['60m'])}・5分足 {len(miss['5m'])}"
+          f"・日足を10年で取り直した {len(json.loads(out['fallback'])['1d'])}"
+          f"・日足の最初 {dt.datetime.fromtimestamp(int(out['d_t'].min()), P.JST).date() if len(out['d_t']) else '—'}")
     return 0
 
 
