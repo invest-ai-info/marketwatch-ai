@@ -33,7 +33,7 @@ def test_prereg_matches_the_code():
     assert "**60日以上**たち" in text and "**2年（730日）より長く**" in text
     assert "**根拠にその前向き自身の途中の数字は使わない**" in text
     for r in V.RETIRED:                                    # 止めた腕は、どれも登録の文に名前がある
-        sec = {"F2": "J4F F2", "F4": "J4F F4", "F6": "J4G F6", "B": "J13F 腕B"}[r["id"]]
+        sec = {"F2": "J4F F2", "F4": "J4F F4", "F6": "J4G F6"}[r["id"]]
         assert f"**{sec}**" in text, sec
 
 
@@ -130,7 +130,7 @@ def test_retired_arms_leave_the_lists():
     assert "形1 2回" in yori and "形3 1回" in yori and "形5 0回" in yori and "形7 0回" in yori
     assert "形2" not in yori and "形4" not in yori and "形6" not in yori and "見込みなしで止めた形 3つ" in yori
     gap = st["前の日の終わりの値段から離れて始まった日本株の、9時30分までの値動き"]["what"]
-    assert "1パーセント以上高く始まった" in gap and "安く始まった銘柄をその値段で買う" not in gap
+    assert "1パーセント以上高く始まった" in gap and "安く始まった銘柄をその値段で買う" in gap   # 腕B は J28 のあと取り消した
     ids = [r["id"] for th in m["themes"] for r in th["rows"]]
     assert "zz_small" not in ids and "zz_live" in ids                       # ⏹ は仮説の表から外れる
     ended = {r["name"]: r for r in m["ended"]}
@@ -144,7 +144,7 @@ def test_list_page_shows_what_moved_in_plain_words():
     page = R.build_list_page(root=d)
     jp = page.split('<h2 id="jp">', 1)[1].split("<h2 ", 1)[0]
     com = page.split('<h2 id="commodity">', 1)[1].split("<h2 ", 1)[0]
-    assert "⏹ 検証済みリストへ移したもの：4件" in jp and all(r["name"] in jp for r in V.RETIRED)
+    assert "⏹ 検証済みリストへ移したもの：3件" in jp and all(r["name"] in jp for r in V.RETIRED)
     assert "⏹ 検証済みリストへ移したもの：1件" in com and "損切りの幅の1割に届かない" in com
     found = [f for f in C.check_html(page) if not (f[0] == "英字の略語" and "ADX" in f[1])]
     assert not found, found
@@ -167,7 +167,7 @@ def test_verified_list_shows_retired_arms_and_tracker_endings():
     stop2, plus2, _ = V.collect([(path, "J4F", "J4F")])
     assert [r["id"] for r in plus2] == ["F2"] and "F2" not in [r["id"] for r in stop2]
     gstop, _, gw = V.collect([(os.path.join(d, R.GAP_FWD), "J13F", "J13F")])
-    assert [r["id"] for r in gstop] == ["B"] and not gw
+    assert not gstop and [r["id"] for r in gw] == ["B"]                     # 腕B は J28 のあと検証中に戻した
     marks = V.collect_markers([(os.path.join(d, R.GAP_FWD), "J13F", "J13F")])
     assert [r["id"] for r in marks] == ["A"] and marks[0]["v"] is None       # 目印の腕Aは数え続ける
     rows = V.collect_tracker(os.path.join(d, R.TRACKER_FILE))
