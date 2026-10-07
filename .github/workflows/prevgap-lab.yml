@@ -1,0 +1,68 @@
+name: Prevgap Lab (manual)
+
+# J17 2つの目印を重ねると足し算になるか：前の日の大きな上げ × その銘柄だけの今朝の窓（昔の期間と最近の期間の両方で）。
+# 2026-10-07 登録・オーナー「続けてください」（研究の加速）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J17」（事前登録）と prevgap_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache を同じ日に1回。本番の前に diag を1回。本番は1回だけ。
+# ⚠️ 出力（prevgap-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      diag:
+        description: 'データの形と件数だけを見る（値動きは出さない・コミットしない）'
+        type: boolean
+        default: true
+
+concurrency:
+  group: prevgap-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Diagnose data shape (no commit)
+        if: ${{ inputs.diag }}
+        run: |
+          python prevgap_lab.py --diag | tee diag.json
+          { echo '```json'; tail -n +1 diag.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ !inputs.diag }}
+        run: |
+          python prevgap_lab.py
+          [ -f prevgap-lab.md ] && cat prevgap-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ !inputs.diag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add prevgap-lab.json prevgap-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: prevgap lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
