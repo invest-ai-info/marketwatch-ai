@@ -108,6 +108,7 @@ SYNC_FORBIDDEN = {
     "third-period-lab.json", "third-period-lab.md",   # 🆕 2026-10-07 J18 目印を2006〜2016年で確かめる（third-period-lab.yml・手動）
     "bounce-cost-lab.json", "bounce-cost-lab.md",     # 🆕 2026-10-07 J19 安く寄った株の戻りを銘柄ごとの費用で（bounce-cost-lab.yml・手動）
     "prevgap-forward.json", "prevgap-forward.md",   # 🆕 2026-10-07 J17F 寄りで買わない目印の前向き（prevgap-forward.yml・平日）
+    "main-field-lab.json", "main-field-lab.md",       # 🆕 2026-10-07 J20 主戦場を翌朝の寄りで買うと（main-field-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
