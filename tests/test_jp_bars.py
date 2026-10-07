@@ -59,6 +59,8 @@ def test_pack_merge_and_read_back_same_rows():
         assert b.fetch("9999", "1d", "5y", live=lambda c, i, r: [("live", c, i)]) == [("live", "9999", "1d")]   # 置き場に無い銘柄
         assert b.fetch("1301", "1wk", "5y", live=lambda c, i, r: "live-1wk") == "live-1wk"                      # 置き場に無い足
         assert b.live == 2 and b.missing["1d"] == ["X999"]
+        b.meta["built_at"] = "2026-09-05T12:00+09:00"                     # 作った日から数えて範囲を切る
+        assert len(b.fetch("1301", "1d", "2d", live=lambda *a: 1 / 0)) == 2 and len(b.fetch("1301", "1d", "max", live=lambda *a: 1 / 0)) == 5
 
 
 def test_fetcher_and_universe_use_the_store_when_present():

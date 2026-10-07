@@ -4,10 +4,10 @@
 これまでは研究ラボ1本ごとに約3,700銘柄×3種類の足を Yahoo から取り直し、1回45〜60分（点検と本番で2回）かかっていた。
 ここで **1回だけ8台で並列に取って1つのファイルにまとめ、actions/cache に置く**。各ラボはそこから読む＝数秒。
 
-- 取るもの（ラボと同じ）：日足 5年／1時間足 729日（だめなら1年）／5分足 60日（だめなら1か月）
+- 取るもの：日足 10年（ラボが 5年を頼めば 5年に切って返す）／1時間足 729日（だめなら1年）／5分足 60日（だめなら1か月）
 - 置き方：足の種類ごとに「銘柄の番号・時刻（秒）・始高安終出来高（float32）」の配列。Yahoo の値はもともと float32 の精度
 - 読み方：`fetch(code, interval, rng)` は yori_lab.fetch_chart と同じ形（[(JST の時刻, 始, 高, 安, 終, 出来高)]）を返す。
-  置き場に無い足の種類・銘柄は Yahoo から取る（遅いが同じ答え）。範囲（rng）は置き場を作った日から数えた全部を返す
+  置き場に無い足の種類・銘柄は Yahoo から取る（遅いが同じ答え）。範囲（rng＝5y・729d・60d など）は置き場を作った日から数えて切る
 - ⚠️ 置き場は**作った日のデータ**。ラボの出力には置き場を作った日時と一覧の日付を書く（`info()`）
 - ⚠️ リポジトリには入れない（大きい・銘柄ごとの値段＝Pages で配信されてしまう）。actions/cache と artifact だけ
 
@@ -21,6 +21,7 @@ import datetime as dt
 import glob
 import json
 import os
+import re
 import sys
 import time
 
@@ -32,7 +33,8 @@ import pillar_lab as P
 import yori_lab as Y
 
 DEFAULT_PATH = os.environ.get("JP_BARS", "jp-bars/jp-bars.npz")
-SPECS = (("1d", (T.DAILY_RANGE,)), ("60m", T.H1_RANGES), ("5m", T.M5_RANGES))
+SPECS = (("1d", ("10y",)), ("60m", T.H1_RANGES), ("5m", T.M5_RANGES))   # 日足は10年（2026-10-07・昔の期間で確かめるため）
+RANGE_DAYS = {"d": 1, "mo": 30.44, "y": 365.25}
 IV_KEY = {"1d": "d", "60m": "h", "5m": "m"}
 
 
@@ -137,11 +139,24 @@ class Bars:
         return [(dt.datetime.fromtimestamp(int(t), P.JST), float(v[0]), float(v[1]), float(v[2]), float(v[3]), float(v[4]))
                 for t, v in zip(ts[a:b], vs[a:b])]
 
+    def cutoff(self, rng):
+        """範囲（5y・729d・60d・1mo など）→ 置き場を作った日時から数えた始まりの時刻（読めなければ None＝全部）"""
+        m = re.fullmatch(r"(\d+)(d|mo|y)", str(rng))
+        built = self.meta.get("built_at")
+        if not m or not built:
+            return None
+        try:
+            start = dt.datetime.fromisoformat(built)
+        except ValueError:
+            return None
+        return start - dt.timedelta(days=int(m.group(1)) * RANGE_DAYS[m.group(2)])
+
     def fetch(self, code, interval, rng, live=Y.fetch_chart):
-        """置き場にあればそれを、無ければ Yahoo から（取れなかった記録がある銘柄は置き場と同じく None）"""
+        """置き場にあればそれを（頼まれた範囲に切って）、無ければ Yahoo から（取れなかった記録がある銘柄は置き場と同じく None）"""
         r = self.rows(code, interval)
         if r is not None:
-            return r
+            c = self.cutoff(rng)
+            return [x for x in r if x[0] >= c] if c else r
         if code in self.pos and code in self.missing.get(interval, []):
             return None
         self.live += 1
