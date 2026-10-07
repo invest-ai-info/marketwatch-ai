@@ -1,0 +1,72 @@
+name: Bounce Cost Lab (manual)
+
+# J19 安く寄った株の戻りは、銘柄ごとの売り買いの差を引いても残るか（2006〜2016年で形を選び、2016〜2026年で確かめる）。
+# 2026-10-07 登録・オーナー「続けてください」（研究の加速）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J19」（事前登録）と bounce_cost_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache（日足＝取れる全期間版）を1回。check（損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（bounce-cost-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝行数・費用の見積もり・形ごとの回数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: bounce-cost-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_bounce_cost_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u bounce_cost_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python bounce_cost_lab.py
+          [ -f bounce-cost-lab.md ] && cat bounce-cost-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add bounce-cost-lab.json bounce-cost-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: bounce cost lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
