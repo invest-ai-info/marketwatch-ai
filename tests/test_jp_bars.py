@@ -8,6 +8,7 @@ Yahoo から取ったのと同じ形・同じ値（float32 の精度）になる
 実行:  python tests/test_jp_bars.py     （pytest 不要。pytest でも動く）
 """
 import datetime as dt
+import json
 import os
 import sys
 import tempfile
@@ -61,6 +62,24 @@ def test_pack_merge_and_read_back_same_rows():
         assert b.live == 2 and b.missing["1d"] == ["X999"]
         b.meta["built_at"] = "2026-09-05T12:00+09:00"                     # 作った日から数えて範囲を切る
         assert len(b.fetch("1301", "1d", "2d", live=lambda *a: 1 / 0)) == 2 and len(b.fetch("1301", "1d", "max", live=lambda *a: 1 / 0)) == 5
+
+
+def test_daily_uses_max_and_falls_back_when_bars_are_not_daily():
+    def fake(code, interval, rng):
+        t0 = dt.datetime(2006, 1, 4, 9, 0, tzinfo=P.JST)
+        if interval == "1d" and rng == "max" and code == "1301":          # 月ごとの足が返った＝日足ではない
+            return [(t0 + dt.timedelta(days=30 * k), 1, 1, 1, 1, 1) for k in range(12)]
+        return _fake(code, interval, rng)
+    out = J.fetch_shard(["1301", "7203"], fetch=fake, pause=0)
+    assert J.SPECS[0] == ("1d", ("max", "10y")) and json.loads(out["fallback"])["1d"] == ["1301"]
+    merged = J.merge([out], {"built_at": "2026-10-07T12:00+09:00", "specs": {"1d": ["max", "10y"]}})
+    assert json.loads(merged["fallback"])["1d"] == ["1301"]
+    with tempfile.TemporaryDirectory() as tmp:
+        path = os.path.join(tmp, "jp-bars.npz")
+        np.savez_compressed(path, **merged)
+        b = J.Bars(path)
+        assert b.fallback["1d"] == ["1301"] and len(b.fetch("7203", "1d", "max", live=lambda *a: 1 / 0)) == 5
+    assert J.daily_ok(_fake("1301", "1d", "max")) and not J.daily_ok([(dt.datetime(2006, 1, 1) + dt.timedelta(days=30 * k),) for k in range(5)])
 
 
 def test_fetcher_and_universe_use_the_store_when_present():

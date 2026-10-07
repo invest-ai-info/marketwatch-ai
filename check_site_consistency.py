@@ -105,6 +105,7 @@ SYNC_FORBIDDEN = {
     "gap-split-lab.json", "gap-split-lab.md",         # 🆕 2026-10-07 J15 その銘柄だけの窓か相場全体の窓か（gap-split-lab.yml・手動）
     "prevday-lab.json", "prevday-lab.md",             # 🆕 2026-10-07 J16 前の日に大きく動いた株の翌朝（prevday-lab.yml・手動）
     "prevgap-lab.json", "prevgap-lab.md",             # 🆕 2026-10-07 J17 前の日の上げ×その銘柄だけの窓（prevgap-lab.yml・手動）
+    "third-period-lab.json", "third-period-lab.md",   # 🆕 2026-10-07 J18 目印を2006〜2016年で確かめる（third-period-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
