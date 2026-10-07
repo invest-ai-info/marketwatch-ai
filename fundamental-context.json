@@ -1,53 +1,54 @@
 {
-  "generated_at": "2026-10-07T15:07:54+09:00",
+  "generated_at": "2026-10-08T06:08:30+09:00",
   "risk_regime": {
     "regime": "NEUTRAL",
     "confidence": "MID",
-    "rationale": "AIテック株の急騰でNasdaq・S&P500が最高値を更新しリスクオン気配が強まる一方、ホルムズ海峡危機が続き原油は90ドル台で高止まり。エネルギーコスト上昇がインフレ再燃とFRBの利下げ幅縮小リスクを高め、強気一辺倒にはなりきれない。BTCはETF資金流出、円は対ドル158円台と複合的な緊張が残る。",
+    "rationale": "AIテック株の急騰でNasdaq・S&P500が最高値を更新しリスクオン気配が強まる一方、日経平均は10月7日に648円安と反落しリスクオン一色ではない。FRBは9月に0.25%利上げ（FF金利3.75〜4.0%）を実施し次回10月27〜28日FOMCでの追加利上げ有無が焦点。ホルムズ海峡危機が続き原油高止まり、ECBも9月に利上げ（預金金利2.5%）と先進国の高金利環境が同時進行しており、総じてニュートラルと判断する。",
     "key_drivers": [
       "NvidiaがAI需要・自社株買いを背景に史上最高値更新、Nasdaq23回目の最高値",
-      "2026年イラン戦争によるホルムズ海峡封鎖が続き原油は年初比40%超高",
-      "日銀10月会合が意識されドル円158円台で円安進行",
-      "米10年債利回り5.3%付近の高止まりがバリュエーションへの懸念を下支え",
-      "Bitcoin ETFから9,000万ドル流出、暗号資産は地政学リスクに敏感な動き"
+      "日経平均は10月7日に648円安で反落、東京CPIが予想上振れ日銀引き締め観測が重石",
+      "FRBが9月に0.25%利上げ（FF金利3.75〜4.0%）、10月FOMC（27〜28日）が次の焦点",
+      "2026年イラン戦争によるホルムズ海峡封鎖が続き原油は高水準（ブレント101ドル台）",
+      "日銀10月29〜30日会合が意識されドル円158円台で方向感を欠く展開",
+      "米10年債利回り5.27%付近の高止まりがバリュエーションへの懸念を下支え"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "BULLISH",
+      "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "10月6日に71,054pt（前日比+1.58%）と3か月ぶり高値圏。ウォール街テックラリーの波及が主因。ただし日銀10月会合での利上げ判断が円安・円高方向のどちらにも大きく振れるリスクがあり、上値追いは一時的となる可能性がある。",
+      "rationale": "10月7日は648円安（終値約70,035円）で反落。前日6日は71,054ptと3か月ぶり高値圏に上昇したが、翌7日は東京CPIが予想を上回り日銀の早期引き締め観測が再燃し売りが先行した。日銀の10月29〜30日会合が次の焦点で、米金利高止まりも心理的に重石となっている。",
       "catalysts": [
-        "NvidiaはじめAI関連の米株高が東京市場に波及",
-        "日銀10月政策会合の結果待ち：利上げなら円高・株安圧力、据え置きなら円安継続",
-        "円安（158円台）は輸出株を下支え"
+        "東京CPI（予想上振れ）で日銀10月利上げ観測が浮上し株売りを促す",
+        "日銀10月29〜30日会合：利上げなら円高・株安、据え置きなら円安継続",
+        "米10年債利回り5.27%水準が継続し高バリュエーション株に圧力"
       ],
       "top_news": [
         {
-          "headline": "日本株、米テックラリーに連動して3か月ぶり高値—日銀10月会合が焦点",
+          "headline": "日経平均が648円安で反落、インフレ懸念で米株高に追随できず（終値約70,035円）",
           "published": "2026-10-07",
-          "comment": "米株高の波及で上昇も、日銀の政策判断次第で円相場が急変する可能性に注意",
+          "comment": "東京CPIが予想を上回り日銀引き締め観測が再燃、米株最高値でも追随できなかった",
+          "source": "日本経済新聞・OANDA",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["外為どっとコム"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.oanda.jp/lab-education/market_news/2026_10_07_us500/"
+        },
+        {
+          "headline": "日本株、前日は米テックラリーに連動して3か月ぶり高値—日銀10月会合が焦点",
+          "published": "2026-10-06",
+          "comment": "前日は米株高の波及で上昇、ただし日銀の政策判断次第で円相場が急変するリスクも",
           "source": "MarketScreener",
           "tier": 2,
           "credibility": "MID",
           "corroborated_by": ["Trading Economics"],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://www.marketscreener.com/news/japanese-stocks-advance-on-us-tech-rally-boj-october-decision-in-focus-ce785adcdb89f122"
-        },
-        {
-          "headline": "日経225、10月1日に新四半期入りで+0.34%スタート—日銀政策タイミング意識",
-          "published": "2026-10-01",
-          "comment": "新四半期初日に小幅高スタート、市場は日銀の次の一手を慎重に見極めている",
-          "source": "247wallst.com",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
           "materiality": "mid",
           "direction": "bullish",
-          "url": "https://247wallst.com/cards/tokyo-set-a-0-34-higher-tone-for-the-new-quarter-the-first-n225-market-bell-01m3te2q3pah942v39sm6c0h7r"
+          "url": "https://www.marketscreener.com/news/japanese-stocks-advance-on-us-tech-rally-boj-october-decision-in-focus-ce785adcdb89f122"
         }
       ]
     },
@@ -258,36 +259,37 @@
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "10月6日に1.1253（前日比+0.27%）。ECB政策金利2.40%対Fed3.75%という金利差がユーロの上値を抑える一方、月間では-3.18%と調整が一巡した後の反発も見られる。ECBが追加利下げを示唆するかどうかが短期の方向感を左右する。",
+      "rationale": "10月7日ECB公式参照レートで1.1177ドル。ECBが9月に0.25%利上げ（預金金利2.5%）実施、次回決定は10月29日。FRBの10月利上げ確率が68.6%から26%に低下しており、ドル高圧力が若干後退。ただしユーロ圏ではフランスの財政リスクが再燃しており、下値懸念も残る。",
       "catalysts": [
-        "ECB政策金利2.40%とFed3.75%の金利差（-1.35%）がドル優位を示す",
-        "ECBの追加利下げ観測：実施ならユーロ安圧力が再燃",
-        "ホルムズ危機によるエネルギー輸入コスト増加がユーロ圏経済の重し"
+        "FRBの10月利上げ確率低下（68.6%→26%）でドル高圧力が緩和",
+        "ECBが9月に0.25%利上げ（預金金利2.5%）、10月29日次回決定",
+        "フランスの財政不安が再燃しユーロの重石",
+        "ECB9月会合議事録が10月8日に公表予定"
       ],
       "top_news": [
         {
-          "headline": "ユーロドル1.1253—ECB金利2.40%対Fed3.75%の差がドル優位構造を維持",
-          "published": "2026-10-06",
-          "comment": "金利差がドルを支えつつも月間の下落が一服、今後のECB発言が次の動きを左右する",
-          "source": "Trading Economics",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["ECB"],
-          "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://tradingeconomics.com/euro-area/currency"
-        },
-        {
-          "headline": "ECB公式レート1.1204（10月5日）—月間-3.18%でユーロ弱含みが続く",
-          "published": "2026-10-05",
-          "comment": "ECBの公式為替参照レートで確認されたユーロ安基調、エネルギー高も欧州経済に逆風",
+          "headline": "ユーロドル、ECB公式参照レート1.1177—FRBの利上げ確率低下でドル安一服",
+          "published": "2026-10-07",
+          "comment": "FRBとECBの政策変化が複合的に作用し、ユーロドルは方向感が出にくい状況",
           "source": "ECB",
           "tier": 1,
           "credibility": "HIGH",
+          "corroborated_by": ["RoboForex"],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
+        },
+        {
+          "headline": "フランスの財政不安が再燃、2027年度予算の議会承認に不透明感",
+          "published": "2026-10-06",
+          "comment": "フランスの財政リスクはユーロ圏全体の信用リスクに波及しうる潜在的な懸念材料",
+          "source": "IMF Connect",
+          "tier": 2,
+          "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
           "direction": "bearish",
-          "url": "https://www.ecb.europa.eu/stats/shared/pdf/eurofxref.pdf"
+          "url": "https://www.imfconnect.org/content/imf/en/gmm.html"
         }
       ]
     },
@@ -296,7 +298,7 @@
       "ticker": "BTC-USD",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "10月7日時点で84,329〜85,306ドル付近。史上最高値126,210ドル（同日時点）から約32%下の水準で低迷。Bitcoin ETFから9,000万ドルの資金流出が確認され機関投資家の慎重姿勢が続く。イランのタンカー攻撃報道でリスク回避が高まりBTCが下落する場面もあり、地政学リスクに敏感な状態。",
+      "rationale": "10月7日朝（米国東部時間）に83,759ドル、前日86,590ドルから約2,831ドル下落。1年前の121,386ドルと比べると約31%の下落水準にある。Bitcoin ETFから9,000万ドルの資金流出が確認され機関投資家の慎重姿勢が続く。高金利環境がリスク資産全般への圧力となっており短期的には上値が重い状態。",
       "catalysts": [
         "Bitcoin ETFから9,000万ドルの純流出—機関投資家の資金流出が重し",
         "イランのタンカー攻撃報道でリスク回避が強まりBTCが84,000ドル割れの場面",
@@ -304,19 +306,19 @@
       ],
       "top_news": [
         {
-          "headline": "ビットコイン、イランタンカー攻撃報道で84,000ドル割れ—地政学リスクで売り圧力",
+          "headline": "ビットコインが83,759ドルに下落（前日86,590ドルから約2,800ドル安）",
           "published": "2026-10-07",
-          "comment": "地政学リスクが高まると安全資産への逃避が起き、暗号資産は売られやすい傾向がある",
-          "source": "Polymarket/CoinCodex",
-          "tier": 4,
+          "comment": "高金利環境が続くなかで暗号資産も売り圧力を受けており、短期的な反発力が乏しい",
+          "source": "Fortune",
+          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": ["CoinDCX"],
+          "corroborated_by": ["Charles Schwab"],
           "materiality": "mid",
           "direction": "bearish",
-          "url": "https://polymarket.com/event/bitcoin-above-on-october-7-2026"
+          "url": "https://fortune.com/article/price-of-bitcoin-10-07-2026/"
         },
         {
-          "headline": "Bitcoin ETFから9,000万ドル純流出—史上最高値から32%下の水準で低迷",
+          "headline": "Bitcoin ETFから9,000万ドル純流出—1年前比31%安の水準で低迷が続く",
           "published": "2026-10-07",
           "comment": "ETFへの資金流入が期待されていたが実際は流出超過、機関投資家も慎重な姿勢を維持",
           "source": "247wallst.com",
