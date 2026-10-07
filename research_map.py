@@ -13,7 +13,7 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json … 前向きの検証（判定が出たら一覧から外れる）
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
   ⚠️ 個人の取引の記録（守りの見張り番・5分足の執行・取引の記録）と research/ だけの研究は載せない（件数も出さない）
@@ -43,6 +43,7 @@ AUTO_FWD = "auto-forward.json"
 CAL_FWD = "calendar-forward.json"
 HIGHS_FWD = "highs-trap-forward.json"     # 🆕 2026-10-06 J10F 高値更新の翌朝の罠の目印・前向き
 GAP_FWD = "gap-forward.json"              # 🆕 2026-10-06 夜 J13F 窓の戻し・前向き
+PREVGAP_FWD = "prevgap-forward.json"      # 🆕 2026-10-07 J17F 「寄りで買わない」目印の前向き
 YUTAI_DIR = "yutai-edinet"
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
@@ -409,6 +410,16 @@ def collect_studies(root, m):
                                "東証のすべての銘柄の毎朝について、登録した日より後の朝だけで確かめています",
                        "since": g.get("fwd_start") or "",
                        "progress": f"数えた朝 {days}営業日（{g.get('goal_days') or 250}営業日で1回だけ判定）"})
+
+    pg = _load(p(PREVGAP_FWD))
+    if pg and not all(k in (pg.get("marker_verdicts") or {}) for k in ("A", "B")):
+        days = (pg.get("summary") or {}).get("days", 0)
+        verify.append({"name": "「寄りで買わない」目印（日本株の寄り付き）",
+                       "what": "その銘柄だけが相場全体より1パーセント以上高く始まった銘柄と、前の日に5パーセント以上上がったうえに今朝も"
+                               "そうして始まった銘柄は、9時30分までに値下がりしやすいかを、東証のすべての銘柄の毎朝について、"
+                               "登録した日より後の朝だけで確かめています（オーナーの発注前の点検表に入れた目印）",
+                       "since": pg.get("fwd_start") or "",
+                       "progress": f"数えた朝 {days}営業日（{pg.get('goal_days') or 250}営業日で1回だけ判定）"})
 
     a = _load(p(AUTO_FWD))
     if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):
