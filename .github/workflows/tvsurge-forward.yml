@@ -1,0 +1,58 @@
+name: Tvsurge Forward (weekdays)
+
+# J26F 目印C「前の日の売買代金の急増」の前向き（2026-10-07 夜 登録・オーナー「登録して続けてください」＝点検表への追加と前向きの登録・毎日の自動実行を了承）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J26F」（事前登録）と tvsurge_forward.py の冒頭に固定。
+# ⚠️ 東証の全上場（約3,700）の日足と5分足を取り、2026-10-08 以降で「今日より前」の朝だけを数える（朝の値の取り方は J17F と同じ）＝実行の時刻がずれても結果は同じ。
+#    一度数えた朝は数え直さない。値段を取れない銘柄が5％を超えた回は1日も数えない（次の回に取り直す）。
+#    5分足は直近約60日しか取れない（automation-health が見張る）。1回25〜35分。
+# ⚠️ 出力（tvsurge-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた合計と判定を持つ＝古い版で上書きすると消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  schedule:
+    - cron: '33 23 * * 0-4'   # 月〜金 08:33 JST（前の営業日までを数える・J17F のあと）
+    - cron: '53 3 * * 1-5'    # 月〜金 12:53 JST 保険（数えた朝は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: tvsurge-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Count only the mornings after registration
+        run: |
+          python tvsurge_forward.py
+          python verified_list.py > /dev/null
+          [ -f tvsurge-forward.md ] && cat tvsurge-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tvsurge-forward.json tvsurge-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: tvsurge forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
