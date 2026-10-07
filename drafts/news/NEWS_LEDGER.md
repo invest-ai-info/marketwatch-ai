@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-07
+- 判定: ✅ 公開済み
+- 選定トピック: S&P 500が7,818で4日連続最高値──9月FOMC全会一致0.25%利上げ（3.75-4.00%）、本日議事録公開（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 選定理由: S&P 500が10月6日終値7,818で4日連続最高値圏。9月FOMCは25bp利上げ（12-0票）済み・16/18名が年内追加利上げを支持。本日10/7に議事録公開予定。高金利下での株高継続の構造整理に付加価値あり。スコア14/15
+- 出典（確認済み・複数系統）:
+  - TheStreet「Stock Market Today (Oct. 6, 2026): S&P 500 sets new record」2026-10-06
+  - Saxo Bank「Market Quick Take - SP 500 sets a fourth record before Fed minutes - 07 October 2026」2026-10-07
+  - Charles Schwab「Fed Hikes in 12-0 Vote, Commits to Inflation Fight」2026-09
+  - FedAndMarkets Newsletter「FOMC September 2026 report」
+  - Reuters Tankan / Vantage Markets「Japan manufacturers' mood highest since 2021」2026-10-07
+  - 財経新聞「10月6日のNY為替概況」2026-10-07
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 法務面🟢白・ただし事実の矛盾4件（雇用統計日付・短観名称・議事録フレーミング）→主が修正適用
+  - 第2Opus（独立確認・Readのみ）: 法務面🟢白・事実3件指摘（日付・FOMC次回月・リンク切れ）→主が修正適用→再確認で全て解消
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典6系統 ✅ / noindexなし ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告33件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-07-sp500-record-fomc-minutes.html
+- commit: 808b958（main へ push 済み）
+
+---
+
 ## 2026-10-06
 - 判定: ✅ 公開済み
 - 選定トピック: Nasdaqが史上最高値27,477.31（+1.05%）──米10年債利回りが24年ぶり高水準5.31%でも上昇するAI相場の構造を整理（カテゴリ: 今日のニュース）
