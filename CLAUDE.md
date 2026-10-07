@@ -24,7 +24,7 @@
 | hot-assets.html | 出来高急増ランキング | update-market-news.yml |
 | guides.html | 解説記事一覧 | 手動更新 |
 | **track-record.html** ⭐ | 🧪 シグナル研究（旧名「シグナル成績」＝2026-09-26 にナビ・記事内のリンク文とも改名。10 タブ。🗺️ いま検証中のこと＝`research_map.py` が毎回データから組み立てる・`#map` で直リンク） | technical-alerts.yml |
-| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開・日本株・FX で分けて」）＝研究の地図と同じデータを **🇯🇵 日本株／💱 為替（FX）／📈 株価指数・先物／🪙 金・銀・原油・ビットコイン／🧭 すべての市場に共通** に仕分けて並べる（前向きの検証・研究中・4時間足の仮説を市場ごとの表に）。`research_map.build_list_page`（仮説の市場＝`market_of`・前向きの検証＝`collect_studies` の `cat`）。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。トップの研究の帯・地図のタブ・sitemap からリンク。SYNC禁忌。🆕 **見込みなしで止める決まり（2026-10-07 オーナー「見込みがないと思ったら検証済みリストに移動」・PREREG 同名節）**＝仮説はトラッカーが毎日自動で ⏹見込みなし（`status=retired`＝N≥300 で良い側の端が 0.10R 未満／60日以上で最初の判定まで2年超）・前向きの腕は `verified_list.RETIRED` に1行（根拠＝結果の出たほかの検証だけ）→ 一覧から外れ、検証済みリストと各市場の最後「⏹ 検証済みリストへ移したもの」へ | technical-alerts.yml（`generate_track_record_page.py` が track-record.html と同じ回に書く） |
+| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー）＝研究の地図と同じデータを市場ごと（🇯🇵 日本株／💱 FX／📈 株価指数・先物／🪙 金・銀・原油・BTC／🧭 共通）に並べる。`research_map.build_list_page`。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。**見込みなしで止める決まり**（PREREG 同名節）＝仮説はトラッカーが毎日自動で ⏹（`status=retired`）・前向きの腕は `verified_list.RETIRED` に1行 → 検証済みリストへ。SYNC禁忌。全文は OPERATIONS.md「CLAUDE.md から移した詳しい説明」 | technical-alerts.yml（`generate_track_record_page.py`） |
 | youtube-summary.html | 投資系 YouTube 要約 | update-youtube-summary.yml |
 | **political-feed.html** 🆕 | 政治発言ライブフィード | political-alerts.yml |
 
@@ -68,7 +68,7 @@
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
 | **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`。**2本を1ステップで回す**＝片方が落ちても両方のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
 | **jp-rankings.yml** 🆕 | **routine の push に相乗り**（news 台帳 17:5x・sns 19:1x JST）＋cron 保険4本（16:40〜19:10 のつもりが実測 21〜23時台） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目）＋ 完了で **jp-highs.yml** を起動（下の行） |
-| **jp-highs.yml** 🆕 | **jp-rankings の完了**（`workflow_run`）＝同じ営業日の一覧があれば数秒で終わる | **高値・安値の更新銘柄**（2026-10-06 オーナー依頼・同日夕に安値・同日夜に**東証の全上場 約3,700銘柄**へ＝`build_jp_highs.py`→`jp-highs.json`→hot-assets「🏔️ 高値・安値更新」。対象の一覧は JPX「東証上場銘柄一覧」を毎回取る・1回13〜15分のためランキングから分けた・**一覧が変わったときだけ** update-market-news を workflow_dispatch で頼む（相乗りだと何も変わらない回まで AI を使う）。高値と安値は同じ関数（`side`）で判定。年初来＝1〜3月は前の年の1月から／上場来は Yahoo の記録が上場の週からある銘柄（月足の最初のバーが月の途中）だけ言い切る＝「上場来」＝東証に上場してからの記録・2022年以降に始まる記録は JPX の新規上場の上場日（前後10日）で確かめたものだけ・年初来の期間の途中から記録が始まり上場も確かめられない銘柄は数えない（Yahoo の記録が途中から急に始まる銘柄がある）。見分け方の点検と本番と同じ計算の試しは `jp-highs-audit.yml`（手動・ブランチ指定でマージ前に試せる）。テスト `tests/test_build_jp_highs.py`・鮮度は automation-health §⑫c） |
+| **jp-highs.yml** 🆕 | **jp-rankings の完了**（`workflow_run`） | **高値・安値の更新銘柄**（2026-10-06 オーナー依頼・東証の全上場 約3,700）＝`build_jp_highs.py`→`jp-highs.json`→hot-assets「🏔️ 高値・安値更新」。1回13〜15分・**一覧が変わったときだけ** update-market-news を起動。年初来・上場来の決め方（Yahoo の記録の始まりと JPX の上場日の確かめ）は OPERATIONS.md「CLAUDE.md から移した詳しい説明」。点検 `jp-highs-audit.yml`・テスト `tests/test_build_jp_highs.py`・鮮度は automation-health §⑫c |
 | **研究ラボ・前向きの検証（約50本）** 🆕 | 手動のみ／前向きは平日・毎月 | **一覧・登録・結果＝`RESEARCH_LABS.md`**（2026-10-08 に CLAUDE.md から移した＝CLAUDE.md が上限 32KB の4倍の約130KBになり、10/8 朝の signal-lab-daily が文脈あふれ〔autocompact thrashing〕で止まったため）。🚨 **新しいラボ・前向きを足したら `RESEARCH_LABS.md` に1行（CLAUDE.md には書かない）**。共通の決まり＝事前登録 `PILLAR_PREREG.md`（結果を見る前にコミット）・check（損益なし）→ run 1回・出力は GitHub 側生成＝push 禁止（SYNC禁忌）・前向きは研究の地図（`research_map.collect_studies` に `cat` 付き）・見張り番（`check_automation_health.py`）・検証済みリスト（`verified_list.SOURCES`／`MARKER_SOURCES`）に登録・値段の置き場は `jp-bars-cache.yml` |
 | **research-lists.yml** 🆕 | 手元の記録が届いたとき（push）＋手動 | 検証済みリスト `verified-list.md` と**昇格リスト `promotion-list.md`** を記録から組み立て直す（2026-09-30 オーナー「成績の良いものは昇格リスト、悪いものは検証済みリスト…後に改善して再検証」）。M6＝ポンド円・ロンドン時間の総当たり（足3×入口32×出口64＝6,144通り）を**手元で1回ずつ**数え、判定は **`screen_judge.py`（計算より先にコミット・手元が import）**＝件数200・幅・多重検定（これまでの総数で割る）・時期・偽薬→昇格候補→MT5 の実ティック→前向き1000回。記録＝`m6-screen.json`（手元で作って送る・判定と集計だけ）。直して数え直すときは新しいラウンドを登録してから。**昇格リストはメールの昇格エッジとは別物**。事前登録＝`PILLAR_PREREG.md`「M6」・テスト `tests/test_screen_judge.py` |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
@@ -126,51 +126,15 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 
 ---
 
-## 🤖 トレード分析チーム（Claude Code カスタム subagent、2026-05-27 構築）
+## 🤖 Claude Code の subagent（2つのチーム・全文は OPERATIONS.md「CLAUDE.md から移した詳しい説明」）
 
-**目的**: トレード成績向上のため、テクニカル × ファンダ × リスク管理の 3 視点で意思決定を支援。サイト運営の自動化とは別目的の組織。
+| チーム | Agent（`.claude/agents/*.md`） | 流れ |
+|---|---|---|
+| **トレード分析**（2026-05-27・成績向上の意思決定支援） | technical-analyst・fundamental-analyst（Sonnet）／**risk-manager**（Opus・規律の門番＝金曜大引け・環境警戒 D・反転検知ありは無条件見送り） | テクニカルとファンダを**同じメッセージで並列**→ 結果をテキストで risk-manager へ（🟢／🟡／🔴＋SL/TP/ロット）→ ユーザーが最終判断 |
+| **サイト運営**（2026-05-28・品質向上） | content-writer・seo-ux-strategist（Sonnet）／**compliance-reviewer**（Opus・黒/グレー/白） | 執筆と SEO を並列 → compliance-reviewer → **8ステップ**で公開 |
 
-| Agent | 配置 | 役割 | モデル |
-|---|---|---|---|
-| **technical-analyst** | `.claude/agents/technical-analyst.md` | チャート / シグナル / ATR / RSI / MACD / BB / MA / 出来高 | Sonnet |
-| **fundamental-analyst** | `.claude/agents/fundamental-analyst.md` | 経済指標 / 決算 / 地政学 / 政治発言 / 金融政策 | Sonnet |
-| **risk-manager** ⭐ | `.claude/agents/risk-manager.md` | 統合判断・規律遵守の門番。SL/TP/ロット算出、過信防止 | **Opus** |
-
-### 想定ワークフロー
-technical-analyst と fundamental-analyst を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで risk-manager に渡して統合判断（🟢条件成立／🟡グレー／🔴見送り推奨＋SL/TP/ロット）→ ユーザーが最終判断。
-
-⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**＝二重管理を避ける。明示呼び出し例＝「risk-manager に聞いて、今 GC=F に入っていい？」
-
-### 設計原則
-1. **投資助言ではなく参考分析** — 各 agent は出力に必ず明記
-2. **N=6 戦 6 勝の罠に注意** — 直近実績は小サンプル、risk-manager が過信を抑える
-3. **規律の門番は妥協しない** — 金曜大引け・環境警戒 D・反転検知ありは無条件見送り
-4. **サイト公開しない** — agent 出力はユーザー個人向け（無登録投資助言業リスク回避）
-5. **連携はテキスト経由** — メインがテキストを橋渡し（subagent 間の直接通信なし）
-
----
-
-## 🌐 サイト運営チーム（Claude Code カスタム subagent、2026-05-28 構築）
-
-**目的**: marketwatch-jp.com のクオリティ向上。記事執筆・法務監査・SEO/UX の 3 観点で並列に動かし、サイト規模拡大と検索流入増を加速させる。
-
-| Agent | 配置 | 役割 | モデル |
-|---|---|---|---|
-| **content-writer** | `.claude/agents/content-writer.md` | 解説記事の執筆・編集、個別銘柄解説、速報記事、見出し作成 | Sonnet |
-| **compliance-reviewer** ⭐ | `.claude/agents/compliance-reviewer.md` | 法務監査（金商法・景表法・AdSense）、無登録投資助言業リスク判定、黒/グレー/白 3 段階評価 | **Opus** |
-| **seo-ux-strategist** | `.claude/agents/seo-ux-strategist.md` | SEO（メタタグ・構造化データ・sitemap）、ナビバー・内部リンク、Core Web Vitals、モバイル最適化 | Sonnet |
-
-### 想定ワークフロー
-content-writer と seo-ux-strategist を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで compliance-reviewer に渡す（断定表現／個別銘柄推奨該当性／黒・グレー・白判定＋修正案）→ 統合して**8ステップルール**で公開。
-
-⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**。明示呼び出し例＝「compliance-reviewer に新記事 AMD を事前チェック頼んで」
-
-### 設計原則
-1. **投資助言ではなく情報提供** — content-writer は断定表現を避ける、compliance-reviewer が事後監査
-2. **黒/グレー/白の 3 段階評価** — compliance-reviewer は曖昧な「リスクあり」ではなく明確な判定
-3. **SEO はホワイトハットのみ** — リンクファーム・隠しテキスト等は禁止
-4. **8 ステップルール厳守** — 新記事追加時は必ず CLAUDE.md の 8 ステップに従う
-5. **触ってはいけないファイルを認識** — 6 コア HTML + political-feed.html + track-record.html 等は cron 管理
+- 投資助言ではなく参考分析・情報提供（出力に明記）／agent の出力はサイトに公開しない／agent どうしは直接話さない（メインがテキストで橋渡し）
+- ⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実＝**ここに書き写さない**
 
 ---
 
@@ -247,15 +211,7 @@ content-writer と seo-ux-strategist を**同一メッセージ内で並列**に
 
 ## 🕐 GitHub Actions の cron は当てにならない（2026-09-17 実測）
 
-**このリポジトリの実績**（予定時刻からの遅れ）:
-
-| ワークフロー | 予定 | 中央値 | 90%tile | 最大 |
-|---|---|---|---|---|
-| automation-health | 00:30 UTC | **+221分** | +294分 | +666分 |
-| health-check | 00:00/11:00 UTC | +160分 | +325分 | +617分 |
-| technical-alerts-1d | 21:20 UTC | +59分 | +125分 | +485分 |
-| news-ticker（毎時） | :37 | +34分 | +55分 | +60分 |
-| jp-rankings（9/8〜25） | 07:40 UTC | **約+5h10m** | — | +6h51m |
+**実測**（2026-09-17）：automation-health は中央値 +221分・jp-rankings は約 +5時間・毎時の news-ticker でも +34分（表は OPERATIONS.md「CLAUDE.md から移した詳しい説明」）。
 
 🔑 **区切りの良い時刻（:00 / :30）ほど遅い。半端な分にすると短くなる**（このリポジトリが 07:13 / 09:23 / 11:37 のような時刻を使っているのはそのため）。
 🔑 **時刻の精度が要るものは cron に頼らない**。使える手は2つ:

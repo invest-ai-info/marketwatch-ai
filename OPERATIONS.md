@@ -94,3 +94,131 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 - 🆕 **手元のセッションは起動時に `[auto_pull]` の行が文脈に入る**（auto_pull.py の結果）。**⚠️「まだ GitHub に送っていないファイル」が出ていたら、ほかの作業の前に片付ける**：「手元だけ変更」→ `mw check` → `mw sync`／「両方で変更」→ `_auto_pull_conflicts/<ファイル>`（GitHub 側の版）と手元の版を統合してから sync（`--force` で押し切らない）。取得に失敗した回は、送る前に `python auto_pull.py` をやり直す
 
 ---
+
+---
+
+## 🛡️ コードが強制しているルール一覧（2026-10-08 に SESSION_HANDOFF から移した）（"覚える"でなく"コードで強制"）
+
+> 設計思想（CLAUDE.md／auto-memory `feedback_rules_as_code`）＝**人が手で守るルールを、コードが自動で守る形へ**。
+> 新ルールは「文書に書いて記憶で守る」より「**チェックを1個足す**」。私が記憶で守るルール数をゼロに近づける。
+> 文書が長くなったら、必須ルールはコードへ移して文書から消し、古い履歴はアーカイブする（このスリム化もその一環）。
+
+| 強制しているルール | 受け皿コード（単一の真実） | 効果 |
+|---|---|---|
+| SYNC禁忌ファイルを誤って push しない | `check_site_consistency.py` の `SYNC_FORBIDDEN`（`mw check`） | 巻き戻し事故を push 前に **error 停止** |
+| **ドキュメントの文字でライブが止まるのを防止** 🆕8/5 | `.nojekyll`（Jekyll を丸ごと迂回）＋ `check_site_consistency.py` の `check_liquid_in_markdown` | Jekyll は**同期対象の .md 24件を Liquid として解釈**する。手順書に波括弧2連を書いただけで**Pages ビルドが12時間全失敗**（`duration=0` の即失敗・本文は "Page build failed." のみ）。**ライブは古いビルドを配信し続け health-check も緑**＝人力では気づけない。検査は `.nojekyll` 有無で error/warning を切替（無ければ実際に落ちるので error）。誤検知ゼロを実測 |
+| **新記事が旧テンプレ/旧色で公開されるのを防止** 🆕8/5 | `check_guide_draft.py` 検査9（判定は `apply_brand_color` の RULES/TOKENS を流用＝**色の知識を複製しない**） | ①Phase1の役割に旧色が残る ②ブランド色が1つも無い（＝既存と構造が違うテンプレ）の2条件で公開ブロック。`guide-signal-lab-060` はクラウドが**CSS変数式の別テンプレ**で出したため既存ルールが1つも当たらず、60本中1本だけ未適用だった。**誤検知率を全295本で実測＝0本**（真陽性1のみ） |
+| **ロゴのラスタ画像が旧色で取り残されるのを防止** 🆕8/5 | `make_favicons.py`（`favicon.svg` を**単一の真実**として Pillow で描き直す。cairosvg 等の依存は足さない） | `apply_logo.py` はHTML内のインラインSVGしか直せず、**favicon-32/192・apple-touch-icon・ico は旧色のまま残る**（SVG対応ブラウザだけ新色という食い違い）。旧SVGで描き起こして現物と照合＝画素の96〜99.6%が一致することを実測してから配色を変えた。⚠️ロゴを変えたら `apply_logo.py --apply` と**両方**回す |
+| **コミット連打で Pages のビルド上限を叩かない** 🆕8/5 | `sync_to_github.py --batch`（Git Data API で blob/tree→**1コミット**。テキストは tree に content 直埋め・バイナリのみ blob 化） | Contents API は**1ファイル＝1コミット**なので 257件の sync がビルド連打になる（実測 JST04時台48件/05時台11件/06時台25件・目安は10回/時）。一括なら**内容一致251件は tree 取得1回で通信ゼロ判定**＝往復も激減。staleness ガードと `--force` の意味は逐次版と同一 |
+| 公開前に main を取り込む（reconcile） | `publish_article.py` 内蔵 reconcile | ローカル公開での巻き戻しを防止 |
+| **ローカルが古い状態での sync 巻き戻し防止** 🆕 | `sync_to_github.py` の staleness ガード（remote_sha baseline 比較） | 前回 sync 後に GitHub 側が更新されたファイルの push を **🚫中止**（意図的なら `--force`） |
+| **公開記事が guides.html カードから消えていないか** 🆕 | `check_automation_health.py` §③（`automation-health.yml` 毎朝09:30 JST） | 巻き戻し（local-drift）を **翌朝 Issue で即検知** |
+| **同一 workflow の同時実行レース防止** 🆕 | `update-market-news.yml` の `concurrency`（cancel-in-progress: true） | push(on:push)＋手動trigger の二重起動を新しい方に一本化＝失敗run・誤アラートを根絶 |
+| kinsho-v1 免責 / 10ボタンナビ / リンク切れ / SYNC_FILES登録 | `check_site_consistency.py`（`mw check`／土曜 `site-qa-lint`） | 不変条件を push 前に検査・exit 1 |
+| 研究日誌の数値捏造防止 | `signal_lab_verify.py`（固定オラクル・編集禁止） | claims.json を signals-log から独立再計算して突合 |
+| 更新履歴の整列・最新5件 | `generate_market_news.py` の `_history_items` | 手で削らない（日付降順・自動整列） |
+| **発注前ルールの遵守を数値監視** 🆕 | `_trade_discipline_check.py`（`mw discipline`・週次 /loop） | 指標持ち越し/指数重ね張り/SL未設定/損切りずらし/JP✕を **EVダメージ順に可視化** |
+| **相関ポジ合算リスク2%・実スリッページ** 🆕7/5 | 同上 R6/SLP（フォーム任意3欄=口座残高/リスク額/予定価格の入力分から自動判定） | 同テーマ×同方向の同時保有を横断検出し合算%で2%判定（金銀・FXも対象＝指数限定R3の一般化）。前向き検証の群割当は登録時5ルール固定＝R6は参考枠 |
+| **公開日のUTC日付ミス防止** 🆕7/6 | `signal_lab_verify.py` の `date_check()`（再監査は `SIGNAL_LAB_SKIP_DATE_CHECK=1`） | datePublished/公開表記≠JST今日なら**赤=公開ブロック**（#031が7/5付けで公開された事故の再発防止） |
+| **似スラッグの重複記事防止** 🆕7/6 | `check_guide_draft.py` 検査7 スラッグ重複検査（トークン集合の同一/包含） | ⑫⑬型の「語順違い/部分一致スラッグの同一主題」自動公開を**RED=人間エスカレ**（82記事総当たりで誤検知ゼロ） |
+| **研究台帳の数値転記ミス・改竄・肥大化防止** 🆕7/7 | `_doctrine_check.py`（`mw evolve`・固定オラクル扱い） | DOCTRINEのアンカー**全件**（件数は書かない＝古びる）を出典JSON/mdと突合＋事前登録簿SHA256＋サイズ予算＋§1構造検査で**error停止**。予算は7/31に30/36KBへ改定＝上の(d)節が根拠。⚠️prose は**部分一致**なので、退避時は必ず前後で `_doctrine_check.py` を回す（偽陽性通過の実例あり） |
+| **自動生成レーンの投資助言化を防止** 🆕8/1 | **`compliance_gate.py`**＝禁止語の単一の真実（SYNC対象）。**3レーン全部**が import＝`auto_weekly_review`／`generate_monthly_report`／`auto_weekly_strategy`（テスト=**`_test_weekly_review_gate.py` 18件＋`_test_compliance_gate.py` 31件**） | 禁止語に触れた生成文は不採用→次モデル→全滅なら決定論テンプレへ。**LLMの自己申告に頼らずコードで止める**（プロンプト修正だけでは再発する）。⚠️**8/1夕方の追加調査で、同じ穴が月次・週次戦略にも在ると判明**＝weekly-review を直した時点では塞がっていなかった。良性マスク（`BENIGN_PHRASES`＝「注目すべき」等）で週次戦略の誤検知を 1/10→0/10 に実測 |
+| **免責(kinsho-v1)の全レーン検査** 🆕8/1 | `check_site_consistency.py` の免責検査を `AUTO_PREFIXES` の `continue` **より前**へ移動 | 除外が SYNC登録/リンク切れの誤検知回避のために置かれ、**巻き添えで免責検査まで飛んでいた**＝免責ゼロ2本を1本も検知できず。免責は生成レーンを問わない共通不変条件。誤検知は実測ゼロ（278本中、未設置は真に2本） |
+| **銘柄チャートを記事に埋め込む** 🆕8/1 | `_gen_stock_panel.py`（テスト=**`_test_gen_stock_panel.py` 30件**） | 座標は全て計算（目分量のSVGは必ず破綻）。**10倍超の値動きは自動で対数軸**／軸に負の株価を出さない／x軸右端は必ず最終足／**最終足の出来高が未確定なら描かず注記**（決算日の出来高が中央値の2.9%＝Yahooの未確定値で「急騰は薄商い」と逆の示唆になる事故を防止）／トレンドライン・目標株価・売買示唆は描かない |
+| **「登録したが走らない設計」の防止** 🆕7/31 | `_precheck_feasibility.py`（`control`＝同日対照が必要本数取れるか／`dim`＝使う次元が対象ログに在るか。テスト=**`_test_precheck_feasibility.py` 13件**）＋`mw evolve` の次候補に欠落欄を併記 | 必須欄チェックは**欄が埋まっているか**しか見ておらず、**埋めた設計が実行可能かは見ていない**。Q10（19銘柄に `min_ctl=30`＝理論上限18）と Q24（BTログの `news_count` 保有0.0%）を1本ずつ失って追加。⚠️**独立warningは足さず、提案するその場で欠落を出す**＝鳴りっぱなしを1本も増やさない設計 |
+| **非公開研究（research/）の公開リポ流出防止** 🆕7/31 | `check_site_consistency.py` 検査1 `check_sync_forbidden`＝**ディレクトリ単位**の規則（テスト=**`_test_sync_research_guard.py` 22件**） | 列挙式は足し忘れが穴になる＝実測で research/ の非アンダースコア .md **13件中 登録済みは2件だけ**（`hypothesis_queue_archive.md`＝非公開仮説の全文147KB すら未登録）。境界は実態と一致（SYNC_FILES に research/ 配下は皆無）＝**誤検知率は全件でテストが毎回実測** |
+| **非公開研究ファイルの公開リポ流出防止** 🆕7/7 | `check_site_consistency.py`＝SYNC_FORBIDDEN追加＋**`_`プレフィックス=ローカル専用規約** | DOCTRINE/queue/`_jp_*`等が SYNC_FILES に混入したら**error停止**（REDテスト7ケース済） |
+| **公開記事への下書き残骸混入防止** 🆕7/7 | `signal_lab_verify.py` date_check の残骸検査 | 「下書き中」が本文に残っていたら**赤=公開ブロック**（#032実例の再発防止） |
+| **休場中の発火を勝率に含めない** 🆕7/11 | エンジン=`generate_technical_alerts.py`週末閉場ガード（土07:00〜月06:00 JST・BTC除外・発火スキップ）＋集計=`is_weekend_closed_fire`（track-record/週次/月次の3本に同一定義複製） | 塩漬けデータ発火（実測214件・勝率33% vs 全体41.6%＝週明けギャップでSL直撃の測定アーティファクト）を源流と集計の両方で遮断。生ログは不変・ページに除外注記あり |
+| **ローカル公開の日付事故防止** 🆕7/22 | `publish_article.py` の `check_date_gate`（免除は `--allow-backdate`・テスト=`_test_publish_date_gate.py` 5件） | 公開日≠JST今日なら **🚫 exit 1 で公開停止**（7/15事故の恒久対策・signal-lab date_check と同型） |
+| **自動公開レーンの「静かな停止」検知** 🆕7/26 | `check_automation_health.py` §⑤（`automation-health.yml` 毎朝09:30 JST・テスト=`_test_topic_queue.py` 12件） | autodraft の未公開 topic が5件未満で **Issue**。①②は「走ったか」しか見ないのでキュー枯渇による仕様どおりの停止を捕まえられなかった（7/20〜24 に5日連続スキップを誰も検知できなかった実例）|
+| **事前登録した仮説の「登録漏れ」検知** 🆕7/27 | `check_automation_health.py` §⑥（同 09:30 JST・`check_tracker_registration`） | コード側の宣言（`SEED`＋register定数）と実体（`signal-lab-tracker.json`）を突合し、**idもfilterも不在**なら **Issue**。7/27 に Q35の3件が「SEEDに足しただけ＝一度も登録されず」なのに台帳が「観測開始」と書いていた事故の恒久対策。**filter重複による正常スキップ（`metal_all_1d`等4件）は誤検知しない**ことを実データで確認済み |
+| **エスカレした研究日誌が「直せなくなる」のを防止** 🆕8/11 | `signal_lab_verify.py` の **基準時刻凍結**（claims.json の `"asof"` ／ CLI `--asof`。打ち切りは `outcome_resolved_at`＝決済確定時刻。テスト=**`_test_asof_freeze.py` 16件**）。**使い方の正は `SIGLAB_ESCALATION_RECOVERY.md`** | 🚩が付いた回は**後日ライブログが進むと永久にREDで直せなかった**（#065 0/6・#067 は当日夕方に 11/11→2/11）。凍結で **#065 6/6・#067 11/11 に完全再現**を実測。⚠️捏造不可は不変＝数字は実ログとの完全一致が必要で asof は断面を選べるだけ。しかも **asof の日付は記事の公開日と一致必須**。⚠️`fired_at` で切ると誤り |
+| **エスカレの滞留検知** 🆕8/11 | `check_automation_health.py` §⑧（`ESCALATION_STALE_DAYS=1`・テスト=**`_test_escalation_backlog.py` 13件**） | 「走ったが人間待ちで止まっている」形は①②③⑤の全部の死角だった＝オーナーが**目視**で気づくまで #065 が2日滞留。解決判定は公開実体（`guide-<target>.html` の有無）。🚩当日は鳴らさない（ゲートが働いた正常系） |
+| **やりかけの仮説を増やしすぎない（WIP上限）** 🆕8/11 | `_doctrine_check.py` の `QUEUE_WARN_N/QUEUE_ERR_N`＝**12本で黄信号・16本で error**（`check_queue_wip`・テスト10件。**根拠と閾値の単一ソースは同ファイルの定数コメント**） | 旧・キューのバイト予算(36KB)を置換。要点＝36KBは「1.3KB/本」前提だったが、証拠要件を入れた **7/26以降**のブロックは平均7.8KB／以前は1.6KB＝**厚く書くほど罰せられる**逆向きの予算だった（較正が1日ずれていた）。error は**1本閉じるまで新規登録しない**WIP上限。⚠️`declutter_audit.py` の表からキューを外した（二次側が一次側と食い違う対処を出すため） |
+| **事前登録の「空欄のまま登録済み」防止** 🆕7/26 | `_doctrine_check.py` の `REQUIRED_Q_FIELDS`＋`_q_field_gaps`（回帰テスト=**`_test_doctrine_registry.py` 23件**・実キュー31件でE2E確認） | 新Qは 登録日/ルール素案/検証設計/**対照**/主要評価指標/合格基準/**検出力** が埋まるまで **error＝登録簿に載せない**。SHA256は登録"後"の改竄しか見ておらず、テンプレのまま登録される穴があった。既存Qには遡及しない |
+| **取り直せないスナップショットの欠測検知** 🆕7/28 | `_doctrine_check.py --agenda`（`mw evolve`）の心拍鮮度＋`_jp_earnings_cal_logger.py` の追記/冪等 | 決算カレンダーは**翌営業日1日分・履歴なし＝走らなかった日は永久欠測**。3日沈黙で ⚠️。**automation-health は GitHub 側でローカル専用ロガーを見られない**ため番人をここに置いた。BOM有無/沈黙/正常の3分岐を実測（BOMで例外→握り潰し→**番人が黙る**壊れ方を実際に踏んで修正済み） |
+| **実在しない記事へのリンク公開を防止** 🆕7/30 | `publish_article.py` の `check_link_gate`（判定は `check_guide_draft.internal_link_check` に一本化＝基準の単一ソース。テスト=**`_test_guide_link_check.py` 20件＋`_test_publish_link_gate.py` 7件**） | 参照先が実ファイルとして存在しなければ **🚫 exit 1 で公開停止**（免除は `--allow-missing-links`）。Search Console の404の恒久対策。**要点は「全レーンが通る関門に置く」**＝`check_guide_draft` 側だけでは news/proverb レーンが素通りする。併せて `CLOUD_GENERATED` でSYNC禁忌ページを除外しないと**ナビ経由で全記事RED**（実測217/217→5件） |
+| **ローカルミラーの遅行を解消** 🆕7/31 | `_pull_mirror.py`（ローカル専用・冪等・dry-run既定） | クラウドが公開/更新した記事を取り込む。**内容ハッシュ(git blob sha)で比較**するので「ローカルに在るが古い」も検出。取り込み内容＝リモートと同一なので **sync は「⏭️内容変更なし」でスキップ＝無駄なコミットが出ない**。`guide-new-books.html` は SYNC_FORBIDDEN のため除外。⚠️これを怠ると `mw check`・404監査・FPテストが**揃って誤検知**する（7/31 に3回） |
+| sitemap 全記事網羅 | `generate_market_news.py` の `build_sitemap_xml`＋`is_noindex_slug`（除外の単一ソース） | 全 guide を自動収集・手動編集不要。未掲載＝noindex 対象の意図的除外（7/31 実測で55本中54本が該当＝**不具合ではない**）。⚠️新記事公開時は sync 後に **workflow を手動 trigger**（下記の push 順序） |
+| **「Run failed」の誤判定を防ぐ** 🆕8/8 | `judge_runs`（`check_automation_health.py`・テスト16件） | 8/6の失敗11件は**10件がcancelled・失敗step0**＋1件が GitHub の `Service Unavailable`＝コード起因ゼロ。旧番人は直近1件の`!=success`判定＝**誤Issueの時限爆弾**。新＝cancelled除外・閾値内にsuccess 0なら異常。⚠️`signal-workflows`群は`signals-log.json`共有＝**分割禁止**（詳細=auto-memory `reference_actions_failure_triage`） |
+| **tickerフィードの停止検知** 🆕8/6 | `build_news_ticker.py` の `feed_health`＋§⑦（閾値=`FEEDS`の`stale_days`・テスト27件） | workflow緑のまま特定フィードだけ死ぬ形（8/1 Bloomberg型）を捕捉。同日ソース10→18本（公的機関+トピック横断・バッジは実発行元）。トピック検索は監視外＝誤検知ゼロ方針 |
+
+🆕＝2026-06-20 追加（B＝カバレッジ番人 ／ C＝sync staleness ガード）。新ルールはこの表に1行＋チェック1個で増やす。
+
+---
+
+---
+
+## 📎 CLAUDE.md から移した詳しい説明（2026-10-08・CLAUDE.md を目安 32KB に収めるため。中身は変えていない）
+
+### サイト構成の表：research-list.html の行（全文）
+
+| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開・日本株・FX で分けて」）＝研究の地図と同じデータを **🇯🇵 日本株／💱 為替（FX）／📈 株価指数・先物／🪙 金・銀・原油・ビットコイン／🧭 すべての市場に共通** に仕分けて並べる（前向きの検証・研究中・4時間足の仮説を市場ごとの表に）。`research_map.build_list_page`（仮説の市場＝`market_of`・前向きの検証＝`collect_studies` の `cat`）。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。トップの研究の帯・地図のタブ・sitemap からリンク。SYNC禁忌。🆕 **見込みなしで止める決まり（2026-10-07 オーナー「見込みがないと思ったら検証済みリストに移動」・PREREG 同名節）**＝仮説はトラッカーが毎日自動で ⏹見込みなし（`status=retired`＝N≥300 で良い側の端が 0.10R 未満／60日以上で最初の判定まで2年超）・前向きの腕は `verified_list.RETIRED` に1行（根拠＝結果の出たほかの検証だけ）→ 一覧から外れ、検証済みリストと各市場の最後「⏹ 検証済みリストへ移したもの」へ | technical-alerts.yml（`generate_track_record_page.py` が track-record.html と同じ回に書く） |
+
+### 自動化の表：jp-highs.yml の行（全文）
+
+| **jp-highs.yml** 🆕 | **jp-rankings の完了**（`workflow_run`）＝同じ営業日の一覧があれば数秒で終わる | **高値・安値の更新銘柄**（2026-10-06 オーナー依頼・同日夕に安値・同日夜に**東証の全上場 約3,700銘柄**へ＝`build_jp_highs.py`→`jp-highs.json`→hot-assets「🏔️ 高値・安値更新」。対象の一覧は JPX「東証上場銘柄一覧」を毎回取る・1回13〜15分のためランキングから分けた・**一覧が変わったときだけ** update-market-news を workflow_dispatch で頼む（相乗りだと何も変わらない回まで AI を使う）。高値と安値は同じ関数（`side`）で判定。年初来＝1〜3月は前の年の1月から／上場来は Yahoo の記録が上場の週からある銘柄（月足の最初のバーが月の途中）だけ言い切る＝「上場来」＝東証に上場してからの記録・2022年以降に始まる記録は JPX の新規上場の上場日（前後10日）で確かめたものだけ・年初来の期間の途中から記録が始まり上場も確かめられない銘柄は数えない（Yahoo の記録が途中から急に始まる銘柄がある）。見分け方の点検と本番と同じ計算の試しは `jp-highs-audit.yml`（手動・ブランチ指定でマージ前に試せる）。テスト `tests/test_build_jp_highs.py`・鮮度は automation-health §⑫c） |
+
+### トレード分析チーム・サイト運営チーム（全文）
+
+### 🤖 トレード分析チーム（Claude Code カスタム subagent、2026-05-27 構築）
+
+**目的**: トレード成績向上のため、テクニカル × ファンダ × リスク管理の 3 視点で意思決定を支援。サイト運営の自動化とは別目的の組織。
+
+| Agent | 配置 | 役割 | モデル |
+|---|---|---|---|
+| **technical-analyst** | `.claude/agents/technical-analyst.md` | チャート / シグナル / ATR / RSI / MACD / BB / MA / 出来高 | Sonnet |
+| **fundamental-analyst** | `.claude/agents/fundamental-analyst.md` | 経済指標 / 決算 / 地政学 / 政治発言 / 金融政策 | Sonnet |
+| **risk-manager** ⭐ | `.claude/agents/risk-manager.md` | 統合判断・規律遵守の門番。SL/TP/ロット算出、過信防止 | **Opus** |
+
+#### 想定ワークフロー
+technical-analyst と fundamental-analyst を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで risk-manager に渡して統合判断（🟢条件成立／🟡グレー／🔴見送り推奨＋SL/TP/ロット）→ ユーザーが最終判断。
+
+⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**＝二重管理を避ける。明示呼び出し例＝「risk-manager に聞いて、今 GC=F に入っていい？」
+
+#### 設計原則
+1. **投資助言ではなく参考分析** — 各 agent は出力に必ず明記
+2. **N=6 戦 6 勝の罠に注意** — 直近実績は小サンプル、risk-manager が過信を抑える
+3. **規律の門番は妥協しない** — 金曜大引け・環境警戒 D・反転検知ありは無条件見送り
+4. **サイト公開しない** — agent 出力はユーザー個人向け（無登録投資助言業リスク回避）
+5. **連携はテキスト経由** — メインがテキストを橋渡し（subagent 間の直接通信なし）
+
+---
+
+### 🌐 サイト運営チーム（Claude Code カスタム subagent、2026-05-28 構築）
+
+**目的**: marketwatch-jp.com のクオリティ向上。記事執筆・法務監査・SEO/UX の 3 観点で並列に動かし、サイト規模拡大と検索流入増を加速させる。
+
+| Agent | 配置 | 役割 | モデル |
+|---|---|---|---|
+| **content-writer** | `.claude/agents/content-writer.md` | 解説記事の執筆・編集、個別銘柄解説、速報記事、見出し作成 | Sonnet |
+| **compliance-reviewer** ⭐ | `.claude/agents/compliance-reviewer.md` | 法務監査（金商法・景表法・AdSense）、無登録投資助言業リスク判定、黒/グレー/白 3 段階評価 | **Opus** |
+| **seo-ux-strategist** | `.claude/agents/seo-ux-strategist.md` | SEO（メタタグ・構造化データ・sitemap）、ナビバー・内部リンク、Core Web Vitals、モバイル最適化 | Sonnet |
+
+#### 想定ワークフロー
+content-writer と seo-ux-strategist を**同一メッセージ内で並列**に呼ぶ → 両方の結果をテキストで compliance-reviewer に渡す（断定表現／個別銘柄推奨該当性／黒・グレー・白判定＋修正案）→ 統合して**8ステップルール**で公開。
+
+⚠️ 自動委譲のトリガー語は各 agent の `description` が唯一の真実（Claude Code が自動ロード）。**ここに書き写さない**。明示呼び出し例＝「compliance-reviewer に新記事 AMD を事前チェック頼んで」
+
+#### 設計原則
+1. **投資助言ではなく情報提供** — content-writer は断定表現を避ける、compliance-reviewer が事後監査
+2. **黒/グレー/白の 3 段階評価** — compliance-reviewer は曖昧な「リスクあり」ではなく明確な判定
+3. **SEO はホワイトハットのみ** — リンクファーム・隠しテキスト等は禁止
+4. **8 ステップルール厳守** — 新記事追加時は必ず CLAUDE.md の 8 ステップに従う
+5. **触ってはいけないファイルを認識** — 6 コア HTML + political-feed.html + track-record.html 等は cron 管理
+
+---
+
+
+### cron の遅れの実測の表（2026-09-17）
+
+**このリポジトリの実績**（予定時刻からの遅れ）:
+
+| ワークフロー | 予定 | 中央値 | 90%tile | 最大 |
+|---|---|---|---|---|
+| automation-health | 00:30 UTC | **+221分** | +294分 | +666分 |
+| health-check | 00:00/11:00 UTC | +160分 | +325分 | +617分 |
+| technical-alerts-1d | 21:20 UTC | +59分 | +125分 | +485分 |
+| news-ticker（毎時） | :37 | +34分 | +55分 | +60分 |
+| jp-rankings（9/8〜25） | 07:40 UTC | **約+5h10m** | — | +6h51m |
