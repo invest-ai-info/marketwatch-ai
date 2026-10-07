@@ -111,6 +111,7 @@ SYNC_FORBIDDEN = {
     "main-field-lab.json", "main-field-lab.md",       # 🆕 2026-10-07 J20 主戦場を翌朝の寄りで買うと（main-field-lab.yml・手動）
     "landmine-lab.json", "landmine-lab.md",           # 🆕 2026-10-07 J21 主戦場から地雷を外すと（landmine-lab.yml・手動）
     "open30-lab.json", "open30-lab.md",               # 🆕 2026-10-07 J22 9:00〜9:30 に上がった株・下がった株の法則（open30-lab.yml・手動）
+    "dip-lab.json", "dip-lab.md",                     # 🆕 2026-10-07 J23 寄りのあとの急落は何％で反転するか（dip-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
