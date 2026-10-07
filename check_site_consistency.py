@@ -102,6 +102,7 @@ SYNC_FORBIDDEN = {
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）
     "gap-forward.json", "gap-forward.md",             # 🆕 2026-10-06 J13F 窓の戻し・前向き（gap-forward.yml・平日）
     "gap-history-lab.json", "gap-history-lab.md",     # 🆕 2026-10-07 J14 窓の戻しを昔の期間で（gap-history-lab.yml・手動）
+    "gap-split-lab.json", "gap-split-lab.md",         # 🆕 2026-10-07 J15 その銘柄だけの窓か相場全体の窓か（gap-split-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
