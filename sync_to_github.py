@@ -335,4 +335,5 @@ SYNC_FILES = [
     "guide-signal-lab-120.html",
     "guide-company-8411-mizuho.html",
     "guide-entry-earnings-drift.html",
+    "guide-news-2026-10-07-sp500-record-fomc-minutes.html",
 ]
