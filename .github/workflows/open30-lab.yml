@@ -1,0 +1,72 @@
+name: Open30 Lab (manual)
+
+# J22 9:00〜9:30 に上がった銘柄と下がった銘柄、それぞれの法則（寄りの前に分かる特徴・30分の値動きの形・朝の地合い）。
+# 2026-10-07 登録・オーナー「9時から9時半までの間に上がった銘柄と下がった銘柄で分けて、それぞれの法則性を見つけてください」。
+# ⚠️ 決まりは PILLAR_PREREG.md「J22」（事前登録）と open30_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache を1回（5分足は約60日だけなので、置き場が新しいほど主の朝が新しくなる）。check（損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（open30-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝行数と組ごとの回数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: open30-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_open30_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u open30_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python open30_lab.py
+          [ -f open30-lab.md ] && cat open30-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add open30-lab.json open30-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: open30 lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
