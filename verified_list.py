@@ -36,6 +36,7 @@ SOURCES = [
 MARKER_SOURCES = [
     ("highs-trap-forward.json", "J10F 高値更新の翌朝の罠の目印・前向き", "J10F"),
     ("gap-forward.json", "J13F 窓の戻し・前向き（全上場の毎朝・寄り→9:30）", "J13F"),   # 🆕 2026-10-06 夜 腕A（marker_titles）
+    ("prevgap-forward.json", "J17F 「寄りで買わない」目印の前向き（その銘柄だけの窓・前の日 +5％以上との重なり・寄り→9:30）", "J17F"),   # 🆕 2026-10-07
 ]
 # 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
