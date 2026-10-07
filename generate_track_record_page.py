@@ -1526,6 +1526,18 @@ def main():
         f.write(html)
     size_kb = os.path.getsize(OUTPUT_FILE) / 1024
     print(f"✅ {OUTPUT_FILE} を生成 ({size_kb:.1f} KB)")
+    write_research_list()
+
+
+def write_research_list():
+    """🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ・research-list.html）を同じ回で書き出す。
+    作れなくても成績ページは止めない（前回のページがそのまま残る）。"""
+    try:
+        import research_map
+        path = research_map.write_list_page()
+        print(f"✅ {path} を生成")
+    except Exception as e:  # noqa: BLE001 — 成績ページは4時間ごとの本番出力。一覧の不具合で止めない
+        print(f"  ⚠️ 検証中リストを作れませんでした: {e}")
 
 
 if __name__ == "__main__":

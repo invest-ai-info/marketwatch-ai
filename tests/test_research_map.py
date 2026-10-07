@@ -202,6 +202,85 @@ def test_month_turn_forward_is_listed_until_both_are_stopped():
     assert "株価指数の月末月初" not in R.build_pane(root=d)
 
 
+
+# ── 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ・research-list.html）
+def test_market_of_filter():
+    assert R.market_of({"group": "jpy_fx"}) == R.market_of({"group": "other_fx"}) == R.market_of({"asset_class": "fx"}) == "fx"
+    assert R.market_of({"ticker": "USDJPY"}) == R.market_of({"ticker": "EURUSD=X"}) == "fx"
+    assert R.market_of({"group": "index"}) == R.market_of({"ticker": "NKD=F"}) == R.market_of({"group": "rates"}) == "index"
+    assert R.market_of({"group": "metal"}) == R.market_of({"group": "btc"}) == R.market_of({"ticker": "CL=F"}) == "commodity"
+    assert R.market_of({}) == R.market_of({"group": "all", "direction": "long"}) == "all"
+    assert [k for k, *_ in R.MARKETS] == ["jp", "fx", "index", "commodity", "all"]
+
+
+def _list_root():
+    d = tempfile.mkdtemp()
+    hyps = [{"id": "zz_fx", "filter": {"group": "jpy_fx", "direction": "long"}, "status": "tracking",
+             "registered_at": "2026-09-01", "forward": {"n": 3}},
+            {"id": "zz_ix", "filter": {"group": "index", "direction": "short"}, "status": "tracking",
+             "registered_at": "2026-09-02", "forward": {"n": 4}},
+            {"id": "zz_all", "filter": {"direction": "long", "tf": "4h"}, "status": "tracking",
+             "registered_at": "2026-09-03", "forward": {"n": 5}}]
+    _dump(d, R.TRACKER_FILE, {"updated_at": "2026-10-07", "hypotheses": hyps})
+    _dump(d, R.GAP_FWD, {"fwd_start": "2026-10-07", "goal_days": 250, "verdicts": {}, "marker_verdicts": {}, "summary": {"days": 3}})
+    _dump(d, R.MARKET_DIP_FWD, {"fwd_start": "2026-10-08", "goal_down_days": 30, "titles": {"X5": "a"}, "verdicts": {},
+                                "summary": {"days": 2, "down_days": 1}})
+    _dump(d, R.J10B_RECORDS, {"registered": "J10b", "start": "2026-10-07", "goal_days": 20, "records": [], "verdict": None})
+    _dump(d, R.CAL_FWD, {"fwd_start": "2026-10-06", "goal": 36, "verdicts": {}, "trades": []})
+    return d
+
+
+def _section(page, key):
+    after = page.split(f'<h2 id="{key}">', 1)[1]
+    return after.split("<h2 ", 1)[0]
+
+
+def test_list_page_sorts_everything_by_market():
+    page = R.build_list_page(root=_list_root())
+    jp, fx, ix, al = (_section(page, k) for k in ("jp", "fx", "index", "all"))
+    assert "前の日の終わりの値段から離れて始まった日本株" in jp and "相場全体が安く始まった朝" in jp and "寄り付きの前の気配" in jp
+    assert "株価指数の月末月初" in ix and "株価指数の月末月初" not in jp
+    names = {h: R.T.plain_name(f) for h, f in (("fx", {"group": "jpy_fx", "direction": "long"}),
+                                                ("ix", {"group": "index", "direction": "short"}))}
+    assert names["fx"] in fx and names["fx"] not in jp and names["ix"] in ix
+    assert "為替だけを対象にした前向きの確かめは、いまはありません" in fx
+    assert "シグナルが出た場面の条件（仮説）の採点" not in page               # 仮説は市場ごとの表に分けて載せる
+    for private in ("J4F", "J10b", "J13F", "J25F", "AT3", "MT5", "5分足", "見張り番"):   # 記号・個人の取引は出さない
+        assert private not in page, private
+
+
+def test_list_page_is_plain_framed_and_has_disclaimers():
+    page = R.build_list_page(root=_list_root())
+    found = [f for f in C.check_html(page) if not (f[0] == "英字の略語" and "ADX" in f[1])]
+    assert not found, found
+    import re
+    import apply_site_frame as F
+    navs = set(re.findall(r'class="nav-btn[^"]*"\s+href="([^"]+)"', page))
+    assert navs == {h for h, _ in F.NAV_BUTTONS} and 'class="nav-btn current" href="track-record.html"' in page
+    assert page.count('data-disclaimer="kinsho-v1"') >= 2 and "<title>検証中リスト｜MarketWatch AI</title>" in page
+    assert "<style data-mw-frame>" in page and 'href="track-record.html#map"' in page
+    empty = tempfile.mkdtemp()
+    assert "いまはありません" in R.build_list_page(root=empty)                # データが無くてもページは作る
+
+
+def test_list_page_is_written_committed_sitemapped_and_linked():
+    import generate_market_news as M
+    orig = R.write_list_page
+
+    def boom(*a, **k):
+        raise RuntimeError("壊れた")
+    R.write_list_page = boom
+    try:
+        G.write_research_list()                                               # 作れなくても成績ページは止めない
+    finally:
+        R.write_list_page = orig
+    wf = open(".github/workflows/technical-alerts.yml", encoding="utf-8").read()
+    assert "track-record.html research-list.html" in wf
+    assert '"research-list.html",' in open("check_site_consistency.py", encoding="utf-8").read()
+    assert '("research-list.html",' in open("generate_market_news.py", encoding="utf-8").read()
+    assert 'href="research-list.html"' in R.build_pane() and 'href="research-list.html"' in M.build_research_band()
+
+
 # ── トップの「このサイトがしていること」の帯・はじめての方へ・ナビの名前（2026-09-26 オーナー判断「研究を主軸に」）
 def test_research_band_counts_published_journal_and_picks_latest():
     import glob

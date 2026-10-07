@@ -364,6 +364,7 @@ def build_sitemap_xml(now_jst) -> str:
         ("preview.html",        "0.9", "daily"),
         ("vix.html",            "0.9", "daily"),
         ("market-health.html",  "0.9", "daily"),
+        ("research-list.html",  "0.7", "daily"),   # 🆕 2026-10-07 検証中リスト（市場ごと）
         ("hot-assets.html",     "0.9", "daily"),
         ("calendar.html",       "0.8", "daily"),
         ("charts.html",         "0.7", "weekly"),
@@ -5269,6 +5270,7 @@ def build_research_band():
     {today}
     <div class="rs-btns">
       <a class="pri" href="track-record.html#map">🗺️ いま検証中のこと</a>
+      <a href="research-list.html">📋 検証中リスト（日本株・為替など）</a>
       <a href="guides.html#cat-lab">🧪 研究日誌を読む</a>
       <a href="guide-sore-honto.html">🔎 それ、本当？ 定説を送る</a>
       <a href="guide-how-we-research.html">🧭 はじめての方へ</a>
