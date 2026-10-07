@@ -94,6 +94,7 @@ SYNC_FORBIDDEN = {
     "fx-month-end-lab.json", "fx-month-end-lab.md",   # 🆕 2026-10-05 R4 月末の値決め前の為替ヘッジ（fx-month-end-lab.yml・手動）
     "holiday-lab.json", "holiday-lab.md",       # 🆕 2026-10-05 R5 日本の祝日の前の日（holiday-lab.yml・手動）
     "r4-window-lab.json", "r4-window-lab.md",   # 🆕 2026-10-05 夜 R4 腕C 正確なロンドンの窓（r4-window-lab.yml・手動）。腕B の r4-armb.* は手元の成果なので入れない
+    "fx-clock-lab.json", "fx-clock-lab.md",     # 🆕 2026-10-07 X 為替の時計の癖（fx-clock-lab.yml・手動）
     "intl-tom-lab.json", "intl-tom-lab.md",     # 🆕 2026-10-05 深夜 R6 ほかの国の月末月初（intl-tom-lab.yml・手動）
     "highs-trap-lab.json", "highs-trap-lab.md", # 🆕 2026-10-06 J10 高値更新の翌朝の罠（highs-trap-lab.yml・手動。銘柄名は出さない）
     "highs-trap-forward.json", "highs-trap-forward.md",   # 🆕 2026-10-06 J10F 罠の目印の前向き（highs-trap-forward.yml・平日。積み上げた取引と判定を持つ）
