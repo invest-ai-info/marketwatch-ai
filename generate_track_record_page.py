@@ -996,7 +996,8 @@ def build_banzuke_section(tracker):
     makuuchi.sort(key=lambda h: -((h.get("forward") or {}).get("avgR") or -9))
     juryo.sort(key=lambda h: -_n(h))
     makushita.sort(key=lambda h: -_n(h))
-    intai.sort(key=lambda h: h.get("demoted_at") or h.get("registered_at") or "", reverse=True)
+    intai.sort(key=lambda h: h.get("retired_at") or h.get("rejected_at") or h.get("demoted_at") or h.get("registered_at") or "",
+               reverse=True)
 
     def _rows(hs, extra_fn=None):
         out = []
@@ -1043,7 +1044,7 @@ def build_banzuke_section(tracker):
   <h3 style="margin-top:26px">🌱 幕下（前向き追跡中 {len(makushita)}本）</h3>
   <p style="font-size:.85rem;color:#57606a">登録済みでデータ蓄積中の仮説。大半はここで消えます＝それが検証の正常な姿です。</p>
   <div class="scroll-x"><table>{head}{_rows(makushita, _strike_extra)}</table></div>
-  <h3 style="margin-top:26px">⚰️ 引退（{len(intai)}本）— 棄却・陥落の記録</h3>
+  <h3 style="margin-top:26px">⚰️ 引退（{len(intai)}本）— 棄却・陥落・見込みなしの記録</h3>
   <details><summary style="cursor:pointer;font-size:.9rem;color:#57606a">負けの記録も消さずに公開しています（クリックで展開）</summary>
   <div class="scroll-x" style="margin-top:10px"><table>{head}{_rows(intai, _makuuchi_extra)}</table></div></details>
   <p style="font-size:.82rem;color:#8b949e;margin-top:18px">

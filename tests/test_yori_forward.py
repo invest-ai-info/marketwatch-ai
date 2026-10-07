@@ -128,7 +128,8 @@ def test_outputs_have_no_codes_and_verified_list(tmp_path=None):
     with open(p, "w", encoding="utf-8") as fh:
         json.dump(st, fh, ensure_ascii=False)
     stop, plus, watching = V.collect([(p, "J4F テスト", "J4F")])
-    assert "F1" in [r["id"] for r in stop] and not plus and {"F2", "F3", "F4"} <= {r["id"] for r in watching}
+    assert "F1" in [r["id"] for r in stop] and not plus and "F3" in {r["id"] for r in watching}
+    assert {"F2", "F4"} <= {r["id"] for r in stop if r["v"].get("retired")}      # 2026-10-07 見込みなしで止めた（RETIRED）
     out = V.render(stop, plus, watching, now="x")
     assert "J4F-F1" in out and "期待値がプラスにならなかった" in out and "S001" not in out
     assert "- まだ無い" in V.render([], [], [], now="x")

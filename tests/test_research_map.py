@@ -139,7 +139,7 @@ def _dump(d, name, obj):
 def test_study_lists_read_forward_records_and_drop_judged():
     # 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」
     d = tempfile.mkdtemp()
-    _dump(d, R.YORI_FWD, {"fwd_start": "2026-09-29", "goal": 1000, "titles": {"F1": "a", "F2": "b"}, "verdicts": {},
+    _dump(d, R.YORI_FWD, {"fwd_start": "2026-09-29", "goal": 1000, "titles": {"F1": "a", "F3": "b"}, "verdicts": {},   # F2 は見込みなしで止めた（RETIRED）
                           "trades": [{"c": "F1"}, {"c": "F1"}]})
     _dump(d, R.COMBO_FWD, {"result": {"now": {"n": 3}, "checkpoints": {}}})
     paused = R._ea_paused

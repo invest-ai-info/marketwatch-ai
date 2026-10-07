@@ -24,7 +24,7 @@
 | hot-assets.html | 出来高急増ランキング | update-market-news.yml |
 | guides.html | 解説記事一覧 | 手動更新 |
 | **track-record.html** ⭐ | 🧪 シグナル研究（旧名「シグナル成績」＝2026-09-26 にナビ・記事内のリンク文とも改名。10 タブ。🗺️ いま検証中のこと＝`research_map.py` が毎回データから組み立てる・`#map` で直リンク） | technical-alerts.yml |
-| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開・日本株・FX で分けて」）＝研究の地図と同じデータを **🇯🇵 日本株／💱 為替（FX）／📈 株価指数・先物／🪙 金・銀・原油・ビットコイン／🧭 すべての市場に共通** に仕分けて並べる（前向きの検証・研究中・4時間足の仮説を市場ごとの表に）。`research_map.build_list_page`（仮説の市場＝`market_of`・前向きの検証＝`collect_studies` の `cat`）。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。トップの研究の帯・地図のタブ・sitemap からリンク。SYNC禁忌 | technical-alerts.yml（`generate_track_record_page.py` が track-record.html と同じ回に書く） |
+| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開・日本株・FX で分けて」）＝研究の地図と同じデータを **🇯🇵 日本株／💱 為替（FX）／📈 株価指数・先物／🪙 金・銀・原油・ビットコイン／🧭 すべての市場に共通** に仕分けて並べる（前向きの検証・研究中・4時間足の仮説を市場ごとの表に）。`research_map.build_list_page`（仮説の市場＝`market_of`・前向きの検証＝`collect_studies` の `cat`）。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。トップの研究の帯・地図のタブ・sitemap からリンク。SYNC禁忌。🆕 **見込みなしで止める決まり（2026-10-07 オーナー「見込みがないと思ったら検証済みリストに移動」・PREREG 同名節）**＝仮説はトラッカーが毎日自動で ⏹見込みなし（`status=retired`＝N≥300 で良い側の端が 0.10R 未満／60日以上で最初の判定まで2年超）・前向きの腕は `verified_list.RETIRED` に1行（根拠＝結果の出たほかの検証だけ）→ 一覧から外れ、検証済みリストと各市場の最後「⏹ 検証済みリストへ移したもの」へ | technical-alerts.yml（`generate_track_record_page.py` が track-record.html と同じ回に書く） |
 | youtube-summary.html | 投資系 YouTube 要約 | update-youtube-summary.yml |
 | **political-feed.html** 🆕 | 政治発言ライブフィード | political-alerts.yml |
 
