@@ -334,4 +334,5 @@ SYNC_FILES = [
     "guide-news-2026-10-06-nasdaq-record-yield-surge.html",
     "guide-signal-lab-120.html",
     "guide-company-8411-mizuho.html",
+    "guide-entry-earnings-drift.html",
 ]
