@@ -171,7 +171,7 @@ def analyze(A, start):
 def load(codes, fetch):
     parts, missing, drops, shape = [], [], {"n": 0}, {}
     for i, code in enumerate(codes):
-        d = fetch(code, "1d", "max")
+        d = fetch(code, "1d", jp_bars.FULL_DAILY)
         if not d:
             missing.append(code)
             continue
@@ -248,8 +248,10 @@ def main(argv):
         if "--check" in argv:
             print(json.dumps(check_summary(A, missing, shape, len(codes), store), ensure_ascii=False, indent=1))
             return 0
-        if not store or store.get("daily_range") != "max":
+        if not store or store.get("daily_range") != jp_bars.FULL_DAILY:
             raise RuntimeError("値段の置き場の日足が全期間版ではない（先に jp-bars-cache を回す）")
+        if (store.get("fallback") or {}).get("1d", 0) > T.MAX_MISSING * len(codes):
+            raise RuntimeError(f"日足を10年で取り直した銘柄が {store['fallback']['1d']}/{len(codes)}＝5％超（全期間の日足が取れていない）")
         if len(missing) > T.MAX_MISSING * len(codes):
             raise RuntimeError(f"日足を取れなかった銘柄が {len(missing)}/{len(codes)}＝5％超。偏った組で判定しない（取り直す）")
         u = usable_start(shape, thin_by_year(A))
