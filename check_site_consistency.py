@@ -120,6 +120,7 @@ SYNC_FORBIDDEN = {
     "open30-history-lab.json", "open30-history-lab.md",   # 🆕 2026-10-07 夜 J26 J22 の目印を昔の2つの時代で（open30-history-lab.yml・手動）
     "open5-skip-lab.json", "open5-skip-lab.md",   # 🆕 2026-10-07 夜 J27 最初の5分のあと足を1本空けても戻るか（open5-skip-lab.yml・手動）
     "spread-lab.json", "spread-lab.md",   # 🆕 2026-10-07 夜 J28 売り買いの差の見積もりを日足と5分足で比べる（spread-lab.yml・手動）
+    "bounce-range-lab.json", "bounce-range-lab.md",   # 🆕 2026-10-07 夜 J29 安く寄った株の戻りを費用に幅を持たせて数え直す（bounce-range-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
