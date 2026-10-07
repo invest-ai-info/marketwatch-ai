@@ -13,7 +13,7 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / market-dip-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / tvsurge-forward.json / market-dip-forward.json … 前向きの検証（判定が出たら一覧から外れる）
   🆕 2026-10-07 見込みなしで途中で止めた腕（verified_list.RETIRED）と、トラッカーで ⏹見込みなし（status=retired）になった仮説は外す
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
@@ -48,6 +48,7 @@ CAL_FWD = "calendar-forward.json"
 HIGHS_FWD = "highs-trap-forward.json"     # 🆕 2026-10-06 J10F 高値更新の翌朝の罠の目印・前向き
 GAP_FWD = "gap-forward.json"              # 🆕 2026-10-06 夜 J13F 窓の戻し・前向き
 PREVGAP_FWD = "prevgap-forward.json"      # 🆕 2026-10-07 J17F 「寄りで買わない」目印の前向き
+TVSURGE_FWD = "tvsurge-forward.json"      # 🆕 2026-10-07 夜 J26F 目印C「前の日の売買代金の急増」の前向き
 MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体が安く寄った朝の深い下げ・前向き
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
@@ -478,6 +479,15 @@ def collect_studies(root, m):
                                "登録した日より後の朝だけで確かめています（オーナーの発注前の点検表に入れた目印）",
                        "since": pg.get("fwd_start") or "",
                        "progress": f"数えた朝 {days}営業日（{pg.get('goal_days') or 250}営業日で1回だけ判定）"})
+
+    tv = _load(p(TVSURGE_FWD))
+    if tv and not all(k in (tv.get("marker_verdicts") or {}) or V.retired(TVSURGE_FWD, k) for k in ("C", "C2")):
+        days = (tv.get("summary") or {}).get("days", 0)
+        verify.append({"cat": "jp", "name": "「寄りで買わない」目印C：前の日に売買代金が急に増えた日本株",
+                       "what": "前の日の売買代金（売買された金額）が、その前の20営業日の平均の5倍以上だった銘柄は、9時30分までに値下がりしやすいかを、"
+                               "東証のすべての銘柄の毎朝について、登録した日より後の朝だけで確かめています（オーナーの発注前の点検表に入れた3つめの目印）",
+                       "since": tv.get("fwd_start") or "",
+                       "progress": f"数えた朝 {days}営業日（{tv.get('goal_days') or 250}営業日で1回だけ判定）"})
 
     md = _load(p(MARKET_DIP_FWD))
     if md and not all(k in (md.get("verdicts") or {}) or V.retired(MARKET_DIP_FWD, k) for k in (md.get("titles") or {})):

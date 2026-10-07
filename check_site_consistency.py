@@ -109,6 +109,7 @@ SYNC_FORBIDDEN = {
     "third-period-lab.json", "third-period-lab.md",   # 🆕 2026-10-07 J18 目印を2006〜2016年で確かめる（third-period-lab.yml・手動）
     "bounce-cost-lab.json", "bounce-cost-lab.md",     # 🆕 2026-10-07 J19 安く寄った株の戻りを銘柄ごとの費用で（bounce-cost-lab.yml・手動）
     "prevgap-forward.json", "prevgap-forward.md",   # 🆕 2026-10-07 J17F 寄りで買わない目印の前向き（prevgap-forward.yml・平日）
+    "tvsurge-forward.json", "tvsurge-forward.md",   # 🆕 2026-10-07 夜 J26F 目印C 前の日の売買代金の急増の前向き（tvsurge-forward.yml・平日）
     "main-field-lab.json", "main-field-lab.md",       # 🆕 2026-10-07 J20 主戦場を翌朝の寄りで買うと（main-field-lab.yml・手動）
     "landmine-lab.json", "landmine-lab.md",           # 🆕 2026-10-07 J21 主戦場から地雷を外すと（landmine-lab.yml・手動）
     "open30-lab.json", "open30-lab.md",               # 🆕 2026-10-07 J22 9:00〜9:30 に上がった株・下がった株の法則（open30-lab.yml・手動）
