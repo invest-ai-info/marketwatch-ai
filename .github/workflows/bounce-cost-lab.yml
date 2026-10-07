@@ -10,11 +10,11 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "check＝行数・費用の見積もり・形ごとの回数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        description: "check＝行数・費用の見積もり・形ごとの回数だけ（損益は数えない・何も書かない）／run＝1回だけ数える／relist＝数え直さずに検証済みリストの欄を足す"
         required: true
         default: check
         type: choice
-        options: [check, run]
+        options: [check, run, relist]
 
 concurrency:
   group: bounce-cost-lab
@@ -52,13 +52,19 @@ jobs:
         if: ${{ inputs.mode == 'run' }}
         run: |
           python bounce_cost_lab.py
+          python verified_list.py > /dev/null
           [ -f bounce-cost-lab.md ] && cat bounce-cost-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Add the verified-list fields without recounting
+        if: ${{ inputs.mode == 'relist' }}
+        run: |
+          python bounce_cost_lab.py --relist
+          python verified_list.py > /dev/null
       - name: Commit results
-        if: ${{ inputs.mode == 'run' }}
+        if: ${{ inputs.mode == 'run' || inputs.mode == 'relist' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add bounce-cost-lab.json bounce-cost-lab.md 2>/dev/null || true
+          git add bounce-cost-lab.json bounce-cost-lab.md verified-list.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else

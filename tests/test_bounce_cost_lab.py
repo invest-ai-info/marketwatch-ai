@@ -121,10 +121,31 @@ def test_stock_rows_attach_cost_and_check_has_no_returns():
     assert not any(w in keys for w in ("net", "gross", "mean", "diff")) and len(out["select_counts"]) == 27
 
 
+def test_listing_only_stops_when_costs_win_and_relist_keeps_numbers():
+    import json
+    import tempfile
+    grid = {M.BASE: {"n": 1000, "net": -0.006}}
+    base = {"b": {"net": -0.007}, "c": {"net": -0.008}}
+    for overall, stop in ((M.NOSEL, True), (M.GONE, True), (M.ONE, False), (M.BOTH, False)):
+        out = M.listing({"result": {"overall": overall, "grid": grid, "base": base}}, "2026-10-07")
+        assert out["kind"] == "backtest" and set(out["titles"]) == {"J19"} and (("J19" in out["verdicts"]) == stop), overall
+    v = M.listing({"result": {"overall": M.NOSEL, "grid": grid, "base": base}}, "2026-10-07")["verdicts"]["J19"]
+    assert v["status"] == "stop" and v["n"] == 1000 and v["mean"] == -0.006 and "選べる形なし" in v["reason"] and "-0.70％" in v["reason"]
+    with tempfile.TemporaryDirectory() as tmp:
+        path = os.path.join(tmp, "x.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump({"generated_at": "g", "result": {"overall": M.NOSEL, "grid": grid, "base": base, "chosen": None}}, fh)
+        res = M.relist(path)
+        assert res["result"]["grid"] == grid and res["verdicts"]["J19"]["status"] == "stop" and res["generated_at"] == "g"
+    import verified_list as V
+    assert any(p == "bounce-cost-lab.json" for p, *_ in V.SOURCES)
+
+
 def test_workflow_and_sync_forbidden():
     wf = open(".github/workflows/bounce-cost-lab.yml", encoding="utf-8").read()
     assert "python -u bounce_cost_lab.py --check" in wf and "restore-keys: jp-bars-" in wf
-    assert "bounce-cost-lab.json bounce-cost-lab.md" in wf and "options: [check, run]" in wf
+    assert "bounce-cost-lab.json bounce-cost-lab.md verified-list.md" in wf and "options: [check, run, relist]" in wf
+    assert "python bounce_cost_lab.py --relist" in wf
     assert '"bounce-cost-lab.json", "bounce-cost-lab.md"' in open("check_site_consistency.py", encoding="utf-8").read()
 
 
