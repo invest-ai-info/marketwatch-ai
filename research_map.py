@@ -14,6 +14,7 @@
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
   yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / market-dip-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  🆕 2026-10-07 見込みなしで途中で止めた腕（verified_list.RETIRED）と、トラッカーで ⏹見込みなし（status=retired）になった仮説は外す
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
   ⚠️ 個人の取引の記録（守りの見張り番・5分足の執行・取引の記録）と research/ だけの研究は載せない（件数も出さない）
@@ -32,6 +33,7 @@ import os
 import sys
 
 import signal_lab_tracker as T
+import verified_list as V
 
 TRACKER_FILE = "signal-lab-tracker.json"
 EXIT_LAB = "exit-lab.json"
@@ -237,6 +239,20 @@ def _question(h):
             else "勝ちやすいか（記録上の損益の平均がプラスか）")
 
 
+# 🆕 2026-10-07 終わった仮説の理由（公開ページ用のやさしい言葉。R などの記号は使わない）
+RETIRE_PLAIN = {"small": "件数は十分にたまったのに、効きがとても小さい（良く見ても損切りの幅の1割に届かない）ので、見込みなしで止めました",
+                "slow": "当てはまるシグナルが少なく、最初の判定まで2年より長くかかるので、見込みなしで止めました"}
+
+
+def _ended_why(h):
+    st = h.get("status")
+    if st == "retired":
+        return RETIRE_PLAIN.get(h.get("retire_reason"), "見込みなしで止めました")
+    if st == "rejected":
+        return "期待とは逆の向きにはっきり出ました（逆の向きの仮説として登録し直したものもあります）"
+    return "終わりました"
+
+
 def collect(root="."):
     """表示に使う中身を集める（純粋にデータだけ。HTML も文字も作らない）。"""
     p = lambda name: os.path.join(root, name)
@@ -271,9 +287,12 @@ def collect(root="."):
         rows.sort(key=lambda r: (r["registered"], r["id"] or ""), reverse=True)
         if rows:
             themes.append({"key": key, "title": title, "desc": desc, "rows": rows})
-    ended_rows = sorted(({"name": T.plain_name(h.get("filter") or {}), "question": _question(h),
+    flip_day = {h.get("flipped_from"): ((h.get("flip_evidence") or {}).get("window") or "").split("〜")[-1]
+                for h in hyps if h.get("flipped_from")}      # 却下の日の記録が無い古い仮説は、逆向きの登録の日から
+    ended_rows = sorted(({"name": T.plain_name(h.get("filter") or {}), "question": _question(h), "why": _ended_why(h),
                           "registered": (h.get("registered_at") or "")[:10],
-                          "ended": h.get("demoted_at") or ""} for h in ended),
+                          "ended": h.get("retired_at") or h.get("rejected_at") or h.get("demoted_at") or flip_day.get(h.get("id"), ""),
+                          "status": h.get("status"), "market": market_of(h.get("filter"))} for h in ended),
                         key=lambda r: r["registered"], reverse=True)
 
     return {"asof": tracker.get("updated_at") or "", "themes": themes, "ended": ended_rows,
@@ -406,13 +425,15 @@ def collect_studies(root, m):
     if y:
         codes = list((y.get("titles") or {}).keys())
         done = set((y.get("verdicts") or {}).keys())
-        live = [c for c in codes if c not in done]
+        gone = {c for c in codes if c not in done and V.retired(YORI_FWD, c)}     # 🆕 2026-10-07 見込みなしで止めた形
+        live = [c for c in codes if c not in done and c not in gone]
         if live:
             cnt = {}
             for t in y.get("trades") or []:
                 cnt[t.get("c")] = cnt.get(t.get("c"), 0) + 1
             prog = "・".join(f"形{i + 1} {cnt.get(c, 0)}回" for i, c in enumerate(codes) if c in live)
-            extra = f"・判定が出た形 {len(done)}つ" if done else ""
+            extra = (f"・判定が出た形 {len(done)}つ" if done else "") + \
+                (f"・見込みなしで止めた形 {len(gone)}つ（検証済みリストへ）" if gone else "")
             verify.append({"cat": "jp", "name": "前の日に出来高が急に増えた日本株の、次の日の寄り付き",
                            "what": "出来高（売買された株の数）が前の日に急に増えた銘柄について、次の日の朝いちばんの取引から"
                                    "決まった形で数え、手数料などを引いても平均がプラスになるかを確かめています"
@@ -423,7 +444,7 @@ def collect_studies(root, m):
     h = _load(p(HIGHS_FWD))
     if h:
         done = set((h.get("verdicts") or {}).keys())
-        live = [c for c in ("A", "B") if c not in done]
+        live = [c for c in ("A", "B") if c not in done and not V.retired(HIGHS_FWD, c)]
         if live:
             cnt = {c: sum(1 for t in h.get("trades") or [] if t.get("c") == c and t.get("f")) for c in live}
             names = {"A": "よく売買される約400銘柄", "B": "サイトの高値更新の一覧"}
@@ -436,18 +457,20 @@ def collect_studies(root, m):
                            "progress": f"目印にあてはまった取引 {prog}（それぞれ{h.get('goal') or 1000}回で1回だけ判定）"})
 
     g = _load(p(GAP_FWD))
-    if g and not ((g.get("verdicts") or {}).get("B") and (g.get("marker_verdicts") or {}).get("A")):
+    gap_a = bool(g) and not (g.get("marker_verdicts") or {}).get("A") and not V.retired(GAP_FWD, "A")
+    gap_b = bool(g) and not (g.get("verdicts") or {}).get("B") and not V.retired(GAP_FWD, "B")
+    if gap_a or gap_b:
         sm = g.get("summary") or {}
         days = sm.get("days", 0)
+        parts = (["朝いちばんの値段（寄り付き）が前の日の終わりの値段より1パーセント以上高く始まった銘柄は9時30分までに値下がりしやすいか"] if gap_a else []) + \
+                (["3パーセント以上安く始まった銘柄をその値段で買うと手数料などを引いてもプラスになるか"] if gap_b else [])
         verify.append({"cat": "jp", "name": "前の日の終わりの値段から離れて始まった日本株の、9時30分までの値動き",
-                       "what": "朝いちばんの値段（寄り付き）が前の日の終わりの値段より1パーセント以上高く始まった銘柄は9時30分までに値下がりしやすいか、"
-                               "3パーセント以上安く始まった銘柄をその値段で買うと手数料などを引いてもプラスになるかを、"
-                               "東証のすべての銘柄の毎朝について、登録した日より後の朝だけで確かめています",
+                       "what": "、".join(parts) + "を、東証のすべての銘柄の毎朝について、登録した日より後の朝だけで確かめています",
                        "since": g.get("fwd_start") or "",
                        "progress": f"数えた朝 {days}営業日（{g.get('goal_days') or 250}営業日で1回だけ判定）"})
 
     pg = _load(p(PREVGAP_FWD))
-    if pg and not all(k in (pg.get("marker_verdicts") or {}) for k in ("A", "B")):
+    if pg and not all(k in (pg.get("marker_verdicts") or {}) or V.retired(PREVGAP_FWD, k) for k in ("A", "B")):
         days = (pg.get("summary") or {}).get("days", 0)
         verify.append({"cat": "jp", "name": "「寄りで買わない」目印（日本株の寄り付き）",
                        "what": "その銘柄だけが相場全体より1パーセント以上高く始まった銘柄と、前の日に5パーセント以上上がったうえに今朝も"
@@ -457,7 +480,7 @@ def collect_studies(root, m):
                        "progress": f"数えた朝 {days}営業日（{pg.get('goal_days') or 250}営業日で1回だけ判定）"})
 
     md = _load(p(MARKET_DIP_FWD))
-    if md and not all(k in (md.get("verdicts") or {}) for k in (md.get("titles") or {})):
+    if md and not all(k in (md.get("verdicts") or {}) or V.retired(MARKET_DIP_FWD, k) for k in (md.get("titles") or {})):
         sm = md.get("summary") or {}
         verify.append({"cat": "jp", "name": "相場全体が安く始まった朝に、大きく下げた日本株を拾う",
                        "what": "東証のすべての銘柄の朝いちばんの値段（寄り付き）が、まん中で前の日の終わりの値段より0.5パーセント以上安く始まった朝に、"
@@ -734,13 +757,14 @@ def build_pane(root=".", model=None):
 
     if m["ended"]:
         rows = "".join(f'<tr><td>{_e(r["name"])}</td><td data-l="確かめていたこと">{_e(r["question"])}</td>'
+                       f'<td data-l="終わり方">{_e(r["why"])}</td>'
                        f'<td data-l="登録">{_e(r["registered"])}</td></tr>'
                        for r in m["ended"])
         parts.append(
             f'<h3 style="margin-top:28px">⑤ 終わった検証（{len(m["ended"])}本）</h3>'
             f'<details><summary style="cursor:pointer;font-size:.9rem;color:#57606a">'
             f'思ったとおりにならなかった検証も、消さずに残しています（開く）</summary>'
-            f'<div class="scroll-x" style="margin-top:10px"><table class="rm-t"><tr><th>仮説</th><th>確かめていたこと</th><th>登録</th></tr>'
+            f'<div class="scroll-x" style="margin-top:10px"><table class="rm-t"><tr><th>仮説</th><th>確かめていたこと</th><th>終わり方</th><th>登録</th></tr>'
             f'{rows}</table></div></details>')
 
     parts.append('<p style="font-size:.82rem;color:#8b949e;margin-top:22px">'
@@ -813,6 +837,29 @@ def _hyp_table(rows):
     return "".join(out)
 
 
+def moved_rows(root, m, key):
+    """🆕 2026-10-07 検証中リストから検証済みリストへ移したもの（その市場の分）＝見込みなしで止めた前向きの腕
+    （verified_list.RETIRED・本当の判定がまだ無いもの）と、採点が終わった仮説（⛔反証・⏹見込みなし）。新しい順"""
+    out = []
+    for r in V.RETIRED:
+        if r.get("cat") != key:
+            continue
+        data = _load(os.path.join(root, r["src"])) or {}
+        if r["id"] in (data.get("verdicts") or {}) or r["id"] in (data.get("marker_verdicts") or {}):
+            continue                                # 本当の判定が出た＝判定のほうを検証済みリストに載せる
+        out.append({"name": r["name"], "why": "見込みなしで止めました：" + r["reason"], "on": r["on"]})
+    out += [{"name": r["name"], "why": r["why"], "on": r["ended"]}
+            for r in m["ended"] if r.get("market") == key and r.get("status") in ("rejected", "retired")]
+    return sorted(out, key=lambda r: r["on"] or "", reverse=True)
+
+
+def _moved_table(rows):
+    out = ['<div class="scroll-x"><table><tr><th>止めたもの</th><th>止めた理由</th><th>止めた日</th></tr>']
+    out += [f'<tr><td>{_e(r["name"])}</td><td>{_e(r["why"])}</td><td>{_e(r["on"] or "記録なし")}</td></tr>' for r in rows]
+    out.append("</table></div>")
+    return "".join(out)
+
+
 def list_model(root=".", m=None):
     """市場ごとの中身 → {key: {"title", "desc", "studies", "research", "hyps"}}・合計"""
     m = m if m is not None else collect(root)
@@ -824,7 +871,8 @@ def list_model(root=".", m=None):
                     "studies": [r for r in st["verify"] if r.get("cat") == key and r.get("kind") != "tracker"],
                     "research": [r for r in st["research"] if r.get("cat") == key],
                     "hyps": sorted((r for r in rows if r.get("market") == key),
-                                   key=lambda r: (r["registered"], r["id"] or ""), reverse=True)}
+                                   key=lambda r: (r["registered"], r["id"] or ""), reverse=True),
+                    "moved": moved_rows(root, m, key)}
     return {"markets": out, "asof": m.get("asof"), "n_ended": len(m["ended"]), "n_exits": len(m["exits"])}
 
 
@@ -860,6 +908,9 @@ def build_list_page(root=".", now=None, model=None):
                         '過去のデータで確かめましたが、売り買いの費用を引くと差が見えなかったので止めています。</p>')
         if not count[key]:
             body.append('<p class="none">いまはありません。</p>')
+        if v.get("moved"):
+            body.append(f'<details><summary>⏹ 検証済みリストへ移したもの：{len(v["moved"])}件（開く）</summary>'
+                        f'{_moved_table(v["moved"])}</details>')
         secs.append("".join(body))
     upd = now.strftime("%Y-%m-%d %H:%M")
     names = " ".join(r["name"] for v in mk.values() for r in v["hyps"])
@@ -885,7 +936,7 @@ def build_list_page(root=".", now=None, model=None):
 <h1>🧪 検証中リスト（市場ごと）</h1>
 <div class="lead">当サイトが<strong>いま確かめている途中</strong>の研究を、市場ごとに並べた一覧です（更新：{upd}）。
 どれも<strong>登録した日より後のデータだけ</strong>で数えていて、決めた回数や日数に届くまで結論を出しません。
-判定が出たものはこの一覧から外れ、思ったとおりにならなかった結果も消さずに残しています。
+判定が出たものと、途中で見込みがないとわかったものはこの一覧から外し、各市場の最後の「⏹ 検証済みリストへ移したもの」に理由と一緒に残しています。
 仮説の成績や、出口・相場の環境の研究のくわしい中身は <a href="track-record.html#map">🧪 シグナル研究の「🗺️ いま検証中のこと」</a> にあります。</div>
 <div class="warn">ここに並ぶのは「確かめている途中」のものです。過去のデータで良さそうに見えただけのものも多く、大半は判定で外れます。
 売買のおすすめではありません。{disclaimer}</div>

@@ -589,6 +589,40 @@ def make_flip(h, fwd, today):
                               "window": f"{h['registered_at']}〜{today}"}}
 
 
+# 🆕 2026-10-07 見込みなしで止める（**オーナー決定**「検証中リストは増えすぎても見づらくなるので、見込みがないと思ったら
+#   検証済みリストに移動させてください」）。事前登録＝PILLAR_PREREG.md「見込みなしで止める決まり」。
+#   ① 効きが小さすぎる：前向き N≥300 なのに、平均R の95%の幅の「良い側の端」でも 0.10R に届かない
+#      （edge＝上の端 < +0.10R／gate＝下の端 > −0.10R）。0.10R はこれまでの比較の「意味のある差」の基準（上の Q 系と同じ）。
+#   ② 時間がかかりすぎる：登録から60日以上たち、いまの速さでは最初の判定（min_n）まで2年（730日）より長くかかる。
+#   status="retired"（反証と同じく戻さない・逆向きの登録もしない）。止めるだけで昇格には使わない＝偶然の昇格は増えない。
+#   昇格の連続の途中（promote_strikes≥1）と、対で登録したもの（pair＝比べる相手つき）は止めない。
+RETIRE_MIN_N = 300
+RETIRE_EFFECT_R = 0.10
+RETIRE_MIN_DAYS = 60
+RETIRE_MAX_DAYS = 730
+RETIRE_WORDS = {"small": "効きが小さすぎる（件数が十分なのに、良い側の端でも 0.10R に届かない）",
+                "slow": "時間がかかりすぎる（いまの速さでは最初の判定まで2年を超える）"}
+
+
+def futility(h, fwd, today):
+    """見込みなしなら理由のキー（small／slow）、そうでなければ None。"""
+    if h.get("promote_strikes") or h.get("pair"):
+        return None
+    n = fwd.get("n") or 0
+    if n >= min_n_of(h) and ((h.get("kind") == "edge" and fwd["rci_lo"] > 0) or (h.get("kind") == "gate" and fwd["rci_hi"] < 0)):
+        return None                       # 判定できる件数で、期待した向きにはっきり出ている＝昇格の判定に任せる（小さくても止めない）
+    if n >= RETIRE_MIN_N:
+        if h.get("kind") == "edge" and fwd["rci_hi"] < RETIRE_EFFECT_R:
+            return "small"
+        if h.get("kind") == "gate" and fwd["rci_lo"] > -RETIRE_EFFECT_R:
+            return "small"
+    days = (datetime.date.fromisoformat(today) - datetime.date.fromisoformat(h["registered_at"][:10])).days
+    mn = min_n_of(h)
+    if days >= RETIRE_MIN_DAYS and n < mn and (n == 0 or (mn - n) * days / n > RETIRE_MAX_DAYS):
+        return "slow"
+    return None
+
+
 def load_tracker():
     if os.path.exists(TRACKER):
         return json.load(open(TRACKER, encoding="utf-8-sig"))
@@ -621,8 +655,8 @@ def cmd_update(args, data, today, data_full=None):
         #    （例 30/60/90…）を新たに越えたときだけ実施（look回数を日次→数回に削減）。
         mn = min_n_of(h)
         next_cp = ((h.get("last_eval_n", 0) // mn) + 1) * mn
-        if prev == "rejected":
-            st = prev                       # 反証はラチェット維持（終了扱い）
+        if prev in ("rejected", "retired"):
+            st = prev                       # 反証・見込みなしはラチェット維持（終了扱い）
         elif prev == "promoted":
             # 🆕 2026-07-18 降格ルール（事前登録・オーナー承認＝案A）: 昇格後もチェック
             #    ポイントごとに再判定し、昇格基準を満たさない判定が【2回連続】したら
@@ -647,6 +681,7 @@ def cmd_update(args, data, today, data_full=None):
             st = "tracking"
             if verdict == "rejected":
                 st = "rejected"              # 反証は従来どおり1CPで確定（保守側）
+                h["rejected_at"] = today     # 🆕 2026-10-07 検証済みリストに止めた日を出すため
                 newly.append((h, st))
                 # 🆕 2026-09-26 ① 逆にはっきり出た＝逆向きの勝ち筋（回避）候補として登録し直す
                 fl = make_flip(h, fwd, today)
@@ -674,6 +709,12 @@ def cmd_update(args, data, today, data_full=None):
                 h.pop("promote_block", None)
         else:
             st = "tracking"                 # チェックポイント未到達＝判定しない（蓄積のみ）
+        if st == "tracking" and prev == "tracking":
+            why = futility(h, fwd, today)   # 🆕 2026-10-07 見込みなしで止める（上の RETIRE_*）
+            if why:
+                st = "retired"
+                h["retired_at"], h["retire_reason"] = today, why
+                newly.append((h, f"retired（見込みなし＝{RETIRE_WORDS[why]}）"))
         h["forward"], h["alltime"], h["status"] = fwd, allt, st
         h.setdefault("history", [])
         h["history"].append({"date": today, "fwd_n": fwd["n"], "fwd_avgR": fwd["avgR"], "fwd_rci_lo": fwd["rci_lo"]})
@@ -696,14 +737,15 @@ def cmd_update(args, data, today, data_full=None):
           f"\n降格（2026-07-18〜）: 昇格後もチェックポイントごとに再判定し、基準割れ2回連続で tracking へ降格（再昇格可・反証⛔のみラチェット）"
           f"\n昇格（2026-07-19〜）: 基準合格2回連続(promote_strikes)ではじめて昇格＝降格と対称。holdout不合格(False)確定の仮説はライブCIのみで昇格しない"
           f"\n物差し（2026-09-26〜）: 同じ時期・同じ向き（・同じ時間足）の全体との差（全体差）も見て、edge は差がプラス・gate は差がマイナスでないと新しく昇格しない"
-          f"\n拾い損ね防止（2026-09-26〜）: 却下が決まった仮説は、逆向き（gate→edge／edge→gate）で翌日以降の発火だけを数える形に自動で登録し直す")
+          f"\n拾い損ね防止（2026-09-26〜）: 却下が決まった仮説は、逆向き（gate→edge／edge→gate）で翌日以降の発火だけを数える形に自動で登録し直す"
+          f"\n見込みなし（2026-10-07〜）: N≥{RETIRE_MIN_N} で良い側の端が {RETIRE_EFFECT_R:.2f}R に届かない／登録{RETIRE_MIN_DAYS}日以上で最初の判定まで{RETIRE_MAX_DAYS}日超 → ⏹（戻さない）")
     print(f"{'仮説':<26}{'種別':>5}{'登録日':>12}{'前向きk/n':>11}{'勝率':>6}{'平均R':>8}{'  R 95%CI':>17}  状態")
     print("-" * 108)
-    order = {"promoted": 0, "tracking": 1, "rejected": 2}
+    order = {"promoted": 0, "tracking": 1, "rejected": 2, "retired": 3}
     for h in sorted(t["hypotheses"], key=lambda x: (order.get(x["status"], 9), -x["forward"]["n"])):
         fwd = h["forward"]
         rci = f"[{fwd['rci_lo']:+.2f}~{fwd['rci_hi']:+.2f}]"
-        icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}[h["status"]]
+        icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証", "retired": "⏹見込みなし"}[h["status"]]
         ho = f" 🏁N≥{PROMOTE_MIN_N_HOLDOUT}" if h.get("holdout_pass") else ""
         ex = (h.get("baseline") or {}).get("excess")
         exs = f" 全体差{ex:+.2f}" if ex is not None else ""
@@ -921,7 +963,7 @@ def plain_kind_cell(kind):
 
 
 NOWRAP = '<span style="white-space:nowrap">{}</span>'
-STATE_WORDS = ("🟡蓄積中", "⛔反証", "✅昇格")
+STATE_WORDS = ("🟡蓄積中", "⛔反証", "✅昇格", "⏹見込みなし")
 
 
 def crit_cell(kind, mn, holdout=False):
@@ -949,7 +991,7 @@ def state_cell(text):
 
 def cmd_table(args, data, today):
     t = load_tracker()
-    rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
+    rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2, "retired": 3}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
     if args.html:
         out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
                f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
@@ -959,7 +1001,7 @@ def cmd_table(args, data, today):
                plain_legend([plain_name(h["filter"]) for h in rows]),
                # ⚠️ 見出しの「前向き現在値(平均R)」と素の <table> は変えない＝check_plain_japanese.py がこの2つで表を見分けている
                '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
-        icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証"}
+        icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証", "retired": "⏹見込みなし"}
         for h in rows:
             fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
             mn = min_n_of(h)

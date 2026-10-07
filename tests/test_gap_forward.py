@@ -152,7 +152,7 @@ def test_outputs_verified_list_and_map():
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(st, fh, ensure_ascii=False)
         stop, plus, watching = V.collect([(path, "J13F", "J13F")])
-        assert [r["id"] for r in watching] == ["B"] and watching[0]["n"] == st["progress"]["B"]
+        assert [r["id"] for r in stop] == ["B"] and stop[0]["v"].get("retired") and not watching   # 腕B は見込みなしで止めた（2026-10-07 RETIRED）
         mk = V.collect_markers([(path, "J13F", "J13F")])
         assert [r["id"] for r in mk] == ["A"] and mk[0]["n"] == st["progress"]["A"]
         assert "目印あり" in "\n".join(V.render_markers(mk)) and "250営業日で判定" in "\n".join(V.render_markers(mk))

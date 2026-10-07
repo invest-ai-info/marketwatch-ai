@@ -39,6 +39,39 @@ MARKER_SOURCES = [
     ("gap-forward.json", "J13F 窓の戻し・前向き（全上場の毎朝・寄り→9:30）", "J13F"),   # 🆕 2026-10-06 夜 腕A（marker_titles）
     ("prevgap-forward.json", "J17F 「寄りで買わない」目印の前向き（その銘柄だけの窓・前の日 +5％以上との重なり・寄り→9:30）", "J17F"),   # 🆕 2026-10-07
 ]
+# 🆕 2026-10-07 見込みなしで途中で止めた前向きの腕（オーナー「検証中リストは増えすぎても見づらくなるので、見込みがないと
+# 思ったら検証済みリストに移動させてください」・決まり＝PILLAR_PREREG.md「見込みなしで止める決まり」③）。前向きの記録
+# （Actions が書く）は書き換えない＝ここに1行足すと、検証中リスト・研究の地図から外れ、この一覧の「⏹ ストップ」に載る。
+# 根拠は結果の出たほかの検証だけ（その前向き自身の途中の数字は見ない）。n＝止めた日の回数。あとで決めた回数に届いて
+# 本当の判定が出たら、そちらを優先して載せる。reason は公開ページにも出す＝記号や検証の番号を入れない（番号は evidence へ）
+RETIRED = [
+    {"src": "yori-forward.json", "id": "F2", "on": "2026-10-07", "n": 4, "cat": "jp",
+     "name": "前の日に出来高が急に増えた株のうち、前の日の終わりより3パーセント以上高く始まったものを寄りで買い、9時15分に売る形", "evidence": "J13・J14・J15・J18・J22",
+     "reason": "高く始まった株は寄りのあとにほかの株より値下がりしやすい（戻されやすい）と、ほかの検証で昔の期間も最近も出ている。判定まで4〜5年かかる"},
+    {"src": "yori-forward.json", "id": "F4", "on": "2026-10-07", "n": 3, "cat": "jp",
+     "name": "前の日に出来高が急に増えた株のうち、前の日に5パーセント以上上がり、9時15分に寄りから2パーセント以上上がっているものを買い、大引けで売る形", "evidence": "J16・J20",
+     "reason": "前の日に5パーセント以上上がった株は寄りのあとにほかの株より値下がりしやすいと、ほかの検証で昔の期間も最近も出ている。判定まで約6年かかる"},
+    {"src": "yori-forward.json", "id": "F6", "on": "2026-10-07", "n": 1, "cat": "jp",
+     "name": "前の日に出来高が急に増えた株のうち、前の日の終わりより3パーセント以上高く始まったものを寄りで買い、9時30分に売る形", "evidence": "J13・J14・J15・J18・J22",
+     "reason": "高く始まった株は寄りのあとにほかの株より値下がりしやすい（戻されやすい）と、ほかの検証で昔の期間も最近も出ている。判定まで4〜5年かかる"},
+    {"src": "gap-forward.json", "id": "B", "on": "2026-10-07", "n": 0, "cat": "jp",
+     "name": "前の日の終わりより3パーセント以上安く始まった株を寄りで買い、9時30分に売る形", "evidence": "J19・J24",
+     "reason": "大きく安く始まった株の戻りは、ほかの検証で銘柄ごとの売り買いの値段の差を引くと消えると出ている。この前向きの費用の見込みは甘く、プラスが出ても使えない"},
+]
+TRACKER = "signal-lab-tracker.json"     # 🆕 2026-10-07 シグナルの条件（仮説）の採点で終わったもの（⛔反証・⏹見込みなし）
+
+
+def retired(src, cid):
+    """見込みなしで止めた腕なら RETIRED の1行、そうでなければ None（src は記録の JSON のファイル名）"""
+    base = src.replace("\\", "/").rsplit("/", 1)[-1]
+    return next((r for r in RETIRED if r["src"] == base and r["id"] == cid), None)
+
+
+def retired_verdict(r):
+    return {"status": "stop", "decided_on": r["on"], "n": r["n"], "mean": None, "lo": None, "hi": None,
+            "reason": f"見込みなしで途中で止めた：{r['reason']}（根拠：{r['evidence']}・途中の数字は見ていない）", "retired": True}
+
+
 # 🆕 2026-09-30 総当たりのふるい分け（kind: screen・判定は screen_judge.py）。組み合わせが数千あるので、1行ずつではなく
 # 理由ごとの件数・昇格のあとで消えたもの・直す出発点の候補だけを載せる。関門を越えたものは昇格リスト（promotion_list.py）へ
 SCREEN_SOURCES = [
@@ -84,6 +117,8 @@ def collect(sources=SOURCES):
         titles, goal = data.get("titles", {}), data.get("goal")
         for cid, title in titles.items():
             v = (data.get("verdicts") or {}).get(cid)
+            if not v and retired(path, cid):
+                v = retired_verdict(retired(path, cid))      # 🆕 2026-10-07 見込みなしで途中で止めた
             if not v and data.get("kind") == "backtest":
                 continue          # 過去のデータで1回だけ数えたもの＝ストップ以外は載せない（前向きは別に登録する）
             row = {"src": name, "sec": sec, "id": cid, "title": title, "goal": goal, "v": v, "unit": data.get("unit", "pct"),
@@ -108,8 +143,11 @@ def collect_markers(sources=None):
         else:
             continue
         for cid, title in titles.items():
+            v = (verdicts or {}).get(cid)
+            if not v and retired(path, cid):
+                v = retired_verdict(retired(path, cid))      # 🆕 2026-10-07 見込みなしで途中で止めた
             out.append({"src": name, "sec": sec, "id": cid, "title": title, "goal": data.get("goal"),
-                        "v": (verdicts or {}).get(cid), "n": _count(data, cid, flagged=True)})
+                        "v": v, "n": _count(data, cid, flagged=True)})
     return out
 
 
@@ -129,6 +167,52 @@ def render_markers(rows):
             L.append(f"| {_label(r)} | {r['title']} | {res} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | "
                      f"{_pct(v['lo'])}〜{_pct(v['hi'])} | {v['reason']} |")
     L += [f"- 👀 {_label(r)} {r['title']}（目印あり {_progress(r)}）" for r in rows if not r["v"]]
+    return L + [""]
+
+
+def collect_tracker(path=TRACKER):
+    """シグナルの条件（仮説）の採点で終わったもの → 行の一覧（新しく止めた順）。⛔反証＝期待と逆向きにはっきり出た／
+    ⏹見込みなし＝signal_lab_tracker.futility（効きが小さすぎる・時間がかかりすぎる）"""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            hyps = json.load(fh).get("hypotheses") or []
+    except (OSError, ValueError):
+        return []
+    import signal_lab_tracker as T
+    flips = {h.get("flipped_from"): h for h in hyps if h.get("flipped_from")}
+    out = []
+    for h in hyps:
+        st = h.get("status")
+        if st not in ("rejected", "retired"):
+            continue
+        f = h.get("forward") or {}
+        fl = flips.get(h.get("id")) or {}
+        on = (h.get("retired_at") or h.get("rejected_at")
+              or ((fl.get("flip_evidence") or {}).get("window") or "").split("〜")[-1] or "")
+        if st == "retired":
+            why = T.RETIRE_WORDS.get(h.get("retire_reason"), "見込みなし")
+        else:
+            why = "期待と逆向きにはっきり出た" + (f"（逆向きで登録し直した：{fl['id']}）" if fl.get("id") else "")
+        out.append({"id": h.get("id"), "name": T.plain_name(h.get("filter") or {}), "kind": h.get("kind"), "status": st,
+                    "registered": (h.get("registered_at") or "")[:10], "on": on, "n": f.get("n") or 0,
+                    "mean": f.get("avgR"), "lo": f.get("rci_lo"), "hi": f.get("rci_hi"), "why": why})
+    return sorted(out, key=lambda r: (r["on"], r["id"] or ""), reverse=True)
+
+
+def render_tracker(rows):
+    """シグナルの条件（仮説）の採点で終わったものの節"""
+    L = ["## 🧪 シグナルの条件（仮説）の採点で終わったもの", "",
+         "登録した日より後に出たシグナルだけで採点した仮説のうち、期待と逆向きにはっきり出た（⛔ 反証）か、見込みなしで止めた（⏹）もの。"
+         "数字はいまの記録の1回あたりの損益（R＝損切りまでの幅を1とした単位）と、その95％の幅（止めたあとも採点は続くので、止めた日の数字とは違うことがある）。決まりは `signal_lab_tracker.py` と "
+         "`PILLAR_PREREG.md`「見込みなしで止める決まり」。", ""]
+    if not rows:
+        return L + ["- まだ無い", ""]
+    L += ["| 仮説 | 問い | 結果 | 止めた日 | 前向きの回数 | 平均 | 95％の幅 | 理由 |", "|---|---|---|---|---:|---:|---|---|"]
+    for r in rows:
+        q = "負けやすいか" if r["kind"] == "gate" else "勝ちやすいか"
+        res = "⏹ 見込みなし" if r["status"] == "retired" else "⛔ 反証"
+        L.append(f"| {r['id']} {r['name']} | {q} | {res} | {r['on'] or '—'} | {r['n']} | {_r(r['mean'])} | "
+                 f"{_r(r['lo'])}〜{_r(r['hi'])} | {r['why']} |")
     return L + [""]
 
 
@@ -200,13 +284,14 @@ def render_screens(screens):
     return L
 
 
-def render(stop, plus, watching, now=None, screens=(), markers=()):
+def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
          "決まり（2026-09-28 オーナー）：検証（前向き、または過去のデータで1回だけ数えたもの）で**1000回を超えて期待値がプラスにならなかったものは、検証をストップしてここに載せる**。"
          "「プラス」は費用後の平均の95％の幅がまるごと0より上のとき。数字は費用を引いた1回あたりの損益率（末尾が R のものは、損切りまでの幅を1とした単位）。銘柄名は出さない。", "",
-         "## ⏹ ストップ（期待値がプラスにならなかった）", ""]
+         "🆕 2026-10-07〜 判定を待たずに**見込みなしで途中で止めたもの**も「⏹ ストップ」に載せる（理由の欄に「見込みなし」・決まりは `PILLAR_PREREG.md`「見込みなしで止める決まり」）。", "",
+         "## ⏹ ストップ（期待値がプラスにならなかった・見込みなしで止めた）", ""]
     if stop:
         L += ["| 検証 | 決まり | 判定日 | 回数 | 平均（費用後） | 95％の幅 | 理由 |", "|---|---|---|---:|---:|---|---|"]
         for r in stop:
@@ -228,6 +313,7 @@ def render(stop, plus, watching, now=None, screens=(), markers=()):
     L += ["", "## 👀 いま前向きで数えているもの", ""]
     L += [f"- {_label(r)} {r['title']}（{_progress(r)}）" for r in watching] or ["- 無い"]
     L += [""] + render_markers(list(markers))
+    L += render_tracker(list(tracker))
     L += render_screens(screens)
     L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
           "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
@@ -235,7 +321,7 @@ def render(stop, plus, watching, now=None, screens=(), markers=()):
 
 
 def main():
-    md = render(*collect(), screens=collect_screens(), markers=collect_markers())
+    md = render(*collect(), screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker())
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)
