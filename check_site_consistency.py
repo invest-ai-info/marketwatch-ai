@@ -116,6 +116,7 @@ SYNC_FORBIDDEN = {
     "cost-recount-lab.json", "cost-recount-lab.md",   # 🆕 2026-10-07 J24 J19・J23 の費用の数え直し（cost-recount-lab.yml・手動）
     "market-dip-lab.json", "market-dip-lab.md",       # 🆕 2026-10-07 J25 相場全体が安く寄った朝の深い下げ（market-dip-lab.yml・手動）
     "market-dip-forward.json", "market-dip-forward.md",   # 🆕 2026-10-07 J25F 同・前向き（market-dip-forward.yml・平日）
+    "open30-history-lab.json", "open30-history-lab.md",   # 🆕 2026-10-07 夜 J26 J22 の目印を昔の2つの時代で（open30-history-lab.yml・手動）
     "verified-list.md",                         # 🆕 2026-09-28 検証済みリスト（verified_list.py が前向きの記録から組み立てる）
     "promotion-list.md",                        # 🆕 2026-09-30 昇格リスト（promotion_list.py が記録から組み立てる・research-lists.yml／yori-forward.yml）
     "signals-recent.json",                      # 🆕 2026-09-30 AT3 直近7日の4時間足の合図の写し（technical-alerts.yml が build_signals_recent.py で書く）
