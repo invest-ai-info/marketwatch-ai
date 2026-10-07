@@ -12,6 +12,7 @@ J22 の W2（最初の5分で −1％以下 → 9:05→9:30 で戻る）は、�
 
 実行: python open5_skip_lab.py --check   （点検だけ＝朝の数と組ごとの件数。損益は数えない・何も書き出さない）
       python open5_skip_lab.py           （本番。Actions の open5-skip-lab.yml から手動で・1回だけ）
+      python open5_skip_lab.py --relist  （数え直さずに、書き出した結果へ検証済みリストの欄を足す）
 """
 import datetime as dt
 import json
@@ -173,6 +174,31 @@ def analyze(A):
     return res
 
 
+def listing(res, today):
+    """検証済みリスト（verified_list.SOURCES）が読む欄。Q3（下げた組を 9:10 に買い 9:30 に売る・費用後）がプラスでなければストップ"""
+    j = ((res.get("result") or {}).get("judges") or {})
+    q3, q1 = j.get("Q3") or {}, j.get("Q1") or {}
+    out = {"kind": "backtest", "section": "J27",
+           "titles": {"J27": "最初の5分で −1％以下まで下げた株を 9:10 に買い 9:30 に売る（足を1本空ける・銘柄ごとの売り買いの差を引く・約40朝）"},
+           "verdicts": {}}
+    if q3 and not q3.get("ok"):
+        out["verdicts"]["J27"] = {"status": "stop", "decided_on": today, "n": q3.get("n"), "mean": q3.get("value"),
+                                  "lo": q3.get("lo"), "hi": q3.get("hi"),
+                                  "reason": f"過去のデータで1回だけ数えて費用後プラスにならない（9:05→9:30 の戻りの大半は最初の1本の跳ね返り・"
+                                            f"足を空けた戻りは ふつうとの差 {_p(q1.get('value'))}・幅は 98.33％・費用は推定）"}
+    return out
+
+
+def relist(path=OUT_JSON):
+    """数え直さずに、書き出した結果へ検証済みリストの欄を足す（2026-10-07：1回目の本番のあとに欄を足したため）"""
+    with open(path, encoding="utf-8") as fh:
+        res = json.load(fh)
+    res.update(listing(res, dt.datetime.now(P.JST).date().isoformat()))
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(res, fh, ensure_ascii=False, indent=1, default=str)
+    return res
+
+
 # ════════════════════ 読む ════════════════════
 
 def load(codes, fetch):
@@ -260,6 +286,10 @@ def render_md(res):
 
 
 def main(argv):
+    if "--relist" in argv:
+        res = relist()
+        print(json.dumps(res.get("verdicts"), ensure_ascii=False, indent=1))
+        return 0
     res = {"generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_file": P.PREREG,
            "prereg_sha256": P.prereg_sha256()}
     try:
@@ -274,6 +304,7 @@ def main(argv):
         if len(missing["daily"]) > T.MAX_MISSING * len(codes):
             raise RuntimeError(f"日足を取れなかった銘柄が {len(missing['daily'])}/{len(codes)}＝5％超。偏った組で判定しない（取り直す）")
         res["result"] = dict(analyze(A), n_codes=len(codes), list_date=list_date, n_missing={k: len(v) for k, v in missing.items()})
+        res.update(listing(res, dt.datetime.now(P.JST).date().isoformat()))
     except Exception as e:  # noqa: BLE001
         import traceback
         traceback.print_exc()

@@ -118,10 +118,30 @@ def test_render_and_check_have_no_codes_or_returns():
     assert set(out["groups"]) == {"down", "up", "flat"}
 
 
+def test_listing_puts_a_failed_buy_into_the_verified_list():
+    import json
+    import tempfile
+    import verified_list as V
+    gone = {"result": K.analyze(_synthetic("bounce", seed=4))}
+    out = K.listing(gone, "2026-10-07")
+    assert out["kind"] == "backtest" and out["verdicts"]["J27"]["status"] == "stop" and out["verdicts"]["J27"]["decided_on"] == "2026-10-07"
+    real = K.listing({"result": K.analyze(_synthetic("real"))}, "2026-10-07")
+    assert real["verdicts"] == {}                                                     # 費用後もプラスならストップにしない
+    with tempfile.TemporaryDirectory() as d:
+        path = os.path.join(d, "open5-skip-lab.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(gone, fh)
+        K.relist(path)                                                                # 数え直さずに欄を足す
+        stop, plus, watching = V.collect([(path, "J27", "")])
+        assert [r["id"] for r in stop] == ["J27"] and not plus and not watching
+    assert any(s[0] == "open5-skip-lab.json" for s in V.SOURCES)
+
+
 def test_workflow_and_sync_forbidden():
     wf = open(".github/workflows/open5-skip-lab.yml", encoding="utf-8").read()
     assert "python -u open5_skip_lab.py --check" in wf and "restore-keys: jp-bars-" in wf
-    assert "python tests/test_open5_skip_lab.py" in wf and "open5-skip-lab.json open5-skip-lab.md" in wf and "options: [check, run]" in wf
+    assert "python tests/test_open5_skip_lab.py" in wf and "open5-skip-lab.json open5-skip-lab.md verified-list.md" in wf
+    assert "options: [check, run, relist]" in wf and "python open5_skip_lab.py --relist" in wf
     assert '"open5-skip-lab.json", "open5-skip-lab.md"' in open("check_site_consistency.py", encoding="utf-8").read()
 
 
