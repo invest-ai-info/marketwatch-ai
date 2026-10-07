@@ -85,9 +85,9 @@ def _ok_low(lo, op):
     return lo if np.isfinite(lo) and lo > 0 and lo / op - 1 >= -T.MAX_MOVE else np.nan
 
 
-def stock_rows(ci, daily, m5, h1, drops=None):
-    """J16 の行（2016-11〜2026-10）＋費用の見積もり＋3つの窓の安値と出口（どれも前日の終値で割った値）"""
-    A = PD.stock_rows(ci, daily, m5, h1, first=FIRST, last=LAST, recent_from=NEW_FROM, drops=drops)
+def stock_rows(ci, daily, m5, h1, drops=None, first=FIRST):
+    """J16 の行（2016-11〜2026-10。J25 は first で 2006 から）＋費用の見積もり＋3つの窓の安値と出口（どれも前日の終値で割った値）"""
+    A = PD.stock_rows(ci, daily, m5, h1, first=first, last=LAST, recent_from=NEW_FROM, drops=drops)
     if not len(A):
         return np.zeros((0, len(COLS)))
     sp = {dt.date.fromisoformat(d).toordinal(): v for d, v in BC.ar_spread(daily).items()}

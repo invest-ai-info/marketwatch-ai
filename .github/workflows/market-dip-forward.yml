@@ -1,0 +1,58 @@
+name: Market Dip Forward (weekdays)
+
+# J25F 相場全体が安く寄った朝の深い下げ・前向き（2026-10-07 登録・オーナー「一二を登録して続けてください」＝前向きの登録と毎日の自動実行）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J25」（事前登録）と market_dip_forward.py の冒頭に固定。
+# ⚠️ 東証の全上場（約3,700）の日足（6か月＝費用の見積もりに使う）と5分足を取り、2026-10-08 以降で「今日より前」の朝だけを数える（相場全体が安く寄った朝＝全銘柄の窓の中央値 −0.5％以下）＝実行の時刻がずれても結果は同じ。
+#    一度数えた朝は数え直さない。値段を取れない銘柄が5％を超えた回は1日も数えない（次の回に取り直す）。
+#    5分足は直近約60日しか取れない（automation-health が見張る）。1回25〜35分。
+# ⚠️ 出力（market-dip-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた合計と判定を持つ＝古い版で上書きすると消える。
+# ⚠️ メール・エンジン・売買の決まりには触れない（読むための記録だけ）。
+
+on:
+  schedule:
+    - cron: '19 23 * * 0-4'   # 月〜金 08:19 JST（前の営業日までを数える・J17F の少しあと）
+    - cron: '49 3 * * 1-5'    # 月〜金 12:49 JST 保険（数えた朝は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: market-dip-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Count only the mornings after registration
+        run: |
+          python market_dip_forward.py
+          python verified_list.py > /dev/null
+          [ -f market-dip-forward.md ] && cat market-dip-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add market-dip-forward.json market-dip-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: market dip forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
