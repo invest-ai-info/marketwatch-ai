@@ -1,0 +1,101 @@
+name: FX Bars Cache (manual)
+
+# 為替の値段の置き場（FX の研究ラボ共通・2026-10-07 オーナー「FX短期トレードの期待値向上の研究を加速させてください」）。
+# Dukascopy の1時間足（売値と買値）を12ペア×2012年から、16台で並列に取り、actions/cache（鍵 fx-bars-<実行番号>）に置く。
+# 為替のラボは actions/cache/restore（restore-keys: fx-bars-）で一番新しいものを読み、fx_bars.load(pair) で使う。
+# ⚠️ 手動のみ。mode=probe は「届くか・1回の秒数・中身の点検」だけ（何も置かない）。
+#    mode=fetch は置き場に無い月だけ取る（1台300分まで）。取り切れなければもう一度 fetch を回す（取った月は残る）。
+#    毎月の初めに1回 fetch すれば前の月が足される。
+# ⚠️ リポジトリには何も書かない（fx-bars/ は .gitignore・SYNC 禁忌）。artifact は1日だけ残す。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe＝届くかだけ／fetch＝取って置き場に足す"
+        required: true
+        default: probe
+        type: choice
+        options: [probe, fetch]
+
+concurrency:
+  group: fx-bars-cache
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    if: ${{ inputs.mode == 'probe' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas
+      - name: Test with made-up files
+        run: python tests/test_fx_bars.py
+      - name: Probe (reachability and contents only)
+        shell: bash
+        run: python -u fx_bars.py probe | tee -a "$GITHUB_STEP_SUMMARY"
+
+  fetch:
+    if: ${{ inputs.mode == 'fetch' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas
+      - uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - name: Fetch the months this shard does not have yet
+        run: python -u fx_bars.py fetch --shard ${{ matrix.shard }} --of 16 --budget-min 300
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: fx-new-${{ matrix.shard }}
+          path: fx-new/
+          retention-days: 1
+          if-no-files-found: ignore
+
+  merge:
+    needs: fetch
+    if: ${{ always() && inputs.mode == 'fetch' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas
+      - uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: fx-new-*
+          merge-multiple: true
+          path: fx-new
+      - name: Merge into the store
+        shell: bash
+        run: python -u fx_bars.py merge --new fx-new | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/cache/save@v4
+        with:
+          path: fx-bars
+          key: fx-bars-${{ github.run_id }}

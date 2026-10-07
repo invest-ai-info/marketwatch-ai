@@ -262,6 +262,9 @@ def check_sync_forbidden(sync_files):
             # 🆕 2026-09-30: 株主優待の有報あつめ（yutai-edinet.yml が GitHub 側で積み上げる）。
             #   古い版で上書きすると取り終えた日・読んだ有報の記録が消える＝ローカルから push しない
             errors.append(f"🚨 GitHub 側で生成する yutai-edinet/ が SYNC_FILES に混入: {f}（巻き戻し事故の恐れ）")
+        elif f.replace("\\", "/").startswith(("fx-bars/", "fx-new/")) or base.endswith(".bi5"):
+            # 🆕 2026-10-07: 為替の値段の置き場（fx_bars.py・Dukascopy の1時間足）。actions/cache と artifact だけに置く
+            errors.append(f"🚨 為替の値段の置き場（fx-bars/・*.bi5）が SYNC_FILES に混入: {f}（actions/cache だけに置く）")
         elif f.replace("\\", "/").startswith("jp-bars/") or base.endswith(".npz"):
             # 🆕 2026-10-06 夜: 研究ラボ共通の値段の置き場（jp_bars.py）。actions/cache と artifact だけに置く＝
             #   銘柄ごとの値段の大きなファイル。リポジトリに入れると Pages で配信されてしまう
