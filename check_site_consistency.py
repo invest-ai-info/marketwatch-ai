@@ -39,6 +39,7 @@ SYNC_FORBIDDEN = {
     "index.html", "calendar.html", "charts.html", "vix.html",
     "market-health.html", "hot-assets.html", "sitemap.xml",
     "signals-log.json", "signals-log.csv", "track-record.html",
+    "research-list.html",   # 🆕 2026-10-07 検証中リスト（technical-alerts が track-record.html と一緒に生成）
     "political-feed.html", "political-feed.json",
     "youtube-summary.html", "youtube-summary-data.json",
     "fundamental-context.json", "weekly-levels.json", "weekly-zone-plan.md",

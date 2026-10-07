@@ -22,6 +22,8 @@
   python research_map.py            # 一覧を文字で表示（セッションでの確認用）
   generate_track_record_page.py が build_pane() を呼んで track-record.html の「🗺️ いま検証中のこと」タブにする
   （track-record.html#map で直接そのタブが開く）
+  🆕 2026-10-07 同じデータを市場ごと（日本株・為替・株価指数・金や原油・すべての市場に共通）に並べ直した
+  「📋 検証中リスト」＝ research-list.html も、generate_track_record_page.py が同じ回に書き出す（build_list_page）
 """
 import datetime
 import html
@@ -45,6 +47,38 @@ HIGHS_FWD = "highs-trap-forward.json"     # 🆕 2026-10-06 J10F 高値更新の
 GAP_FWD = "gap-forward.json"              # 🆕 2026-10-06 夜 J13F 窓の戻し・前向き
 PREVGAP_FWD = "prevgap-forward.json"      # 🆕 2026-10-07 J17F 「寄りで買わない」目印の前向き
 MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体が安く寄った朝の深い下げ・前向き
+J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
+LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
+
+# 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
+# 市場ごとの仕分け（上から順に表示）。仮説の対象は filter の ticker／group／asset_class から決める（market_of）
+MARKETS = (
+    ("jp", "🇯🇵 日本株", "東証の銘柄です。主に朝いちばんの取引（寄り付き・9時）から9時30分までの値動きを確かめています。"),
+    ("fx", "💱 為替（FX）", "円・米ドル・ユーロなどの通貨の組み合わせ（通貨ペア）です。"),
+    ("index", "📈 株価指数・先物", "日経平均や米国の株価指数などの先物です。"),
+    ("commodity", "🪙 金・銀・原油・ビットコイン", "金・銀・原油などの商品と、ビットコインなどの暗号資産です。"),
+    ("all", "🧭 すべての市場に共通", "このサイトが見張っている18銘柄（為替・株価指数・金・原油・ビットコイン）の4時間足のシグナル全体に関わる研究です。"),
+)
+_FX_GROUPS = {"jpy_fx", "other_fx"}
+_INDEX_GROUPS = {"index", "index_x", "rates"}
+_COMMODITY_GROUPS = {"metal", "oil", "btc", "metal_x", "energy_x", "crypto_x"}
+_INDEX_TICKERS = {"NKD=F", "ES=F", "NQ=F", "YM=F", "^FTSE"}
+_COMMODITY_TICKERS = {"GC=F", "SI=F", "CL=F", "BTC-USD"}
+
+
+def market_of(f):
+    """仮説の条件（filter）→ 市場のキー（MARKETS の1つ目）。対象を絞っていない仮説は all"""
+    f = f or {}
+    g, a, tk = f.get("group"), f.get("asset_class"), str(f.get("ticker") or "")
+    if g in _FX_GROUPS or a == "fx":
+        return "fx"
+    if g in _INDEX_GROUPS or a == "index" or tk in _INDEX_TICKERS:
+        return "index"
+    if g in _COMMODITY_GROUPS or a in ("commodity", "crypto") or tk in _COMMODITY_TICKERS:
+        return "commodity"
+    if tk and (tk.endswith("=X") or (len(tk) == 6 and tk.isalpha())):
+        return "fx"
+    return "all"
 YUTAI_DIR = "yutai-edinet"
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
@@ -229,7 +263,7 @@ def collect(root="."):
                 "stage": stage, "stage_key": stage_key, "registered": (h.get("registered_at") or "")[:10],
                 "n": n, "checkpoint": cp,
                 "pair_name": T.plain_name(pair.get("filter") or {}) if pair else None,
-                "note": POST_HOC_NOTES.get(h.get("id"))}
+                "note": POST_HOC_NOTES.get(h.get("id")), "market": market_of(h.get("filter"))}
 
     themes = []
     for key, title, desc, _ks in THEMES:
@@ -379,7 +413,7 @@ def collect_studies(root, m):
                 cnt[t.get("c")] = cnt.get(t.get("c"), 0) + 1
             prog = "・".join(f"形{i + 1} {cnt.get(c, 0)}回" for i, c in enumerate(codes) if c in live)
             extra = f"・判定が出た形 {len(done)}つ" if done else ""
-            verify.append({"name": "前の日に出来高が急に増えた日本株の、次の日の寄り付き",
+            verify.append({"cat": "jp", "name": "前の日に出来高が急に増えた日本株の、次の日の寄り付き",
                            "what": "出来高（売買された株の数）が前の日に急に増えた銘柄について、次の日の朝いちばんの取引から"
                                    "決まった形で数え、手数料などを引いても平均がプラスになるかを確かめています"
                                    "（形1〜4は朝から持つ形、形5〜7は9時30分までに手じまう形で、10月6日から数えています）",
@@ -394,7 +428,7 @@ def collect_studies(root, m):
             cnt = {c: sum(1 for t in h.get("trades") or [] if t.get("c") == c and t.get("f")) for c in live}
             names = {"A": "よく売買される約400銘柄", "B": "サイトの高値更新の一覧"}
             prog = "・".join(f"{names[c]} {cnt[c]}回" for c in live)
-            verify.append({"name": "高値を更新した日本株の、次の日の寄り付き",
+            verify.append({"cat": "jp", "name": "高値を更新した日本株の、次の日の寄り付き",
                            "what": "年初来高値を更新した銘柄のうち、次の日の朝いちばんの値段（寄り付き）が前の日の終わりの値段より"
                                    "1パーセント以上高かったものは、9時30分までに値下がりしやすいか（入らない方がいい目印になるか）を、"
                                    "登録した日より後の取引だけで確かめています",
@@ -405,7 +439,7 @@ def collect_studies(root, m):
     if g and not ((g.get("verdicts") or {}).get("B") and (g.get("marker_verdicts") or {}).get("A")):
         sm = g.get("summary") or {}
         days = sm.get("days", 0)
-        verify.append({"name": "前の日の終わりの値段から離れて始まった日本株の、9時30分までの値動き",
+        verify.append({"cat": "jp", "name": "前の日の終わりの値段から離れて始まった日本株の、9時30分までの値動き",
                        "what": "朝いちばんの値段（寄り付き）が前の日の終わりの値段より1パーセント以上高く始まった銘柄は9時30分までに値下がりしやすいか、"
                                "3パーセント以上安く始まった銘柄をその値段で買うと手数料などを引いてもプラスになるかを、"
                                "東証のすべての銘柄の毎朝について、登録した日より後の朝だけで確かめています",
@@ -415,7 +449,7 @@ def collect_studies(root, m):
     pg = _load(p(PREVGAP_FWD))
     if pg and not all(k in (pg.get("marker_verdicts") or {}) for k in ("A", "B")):
         days = (pg.get("summary") or {}).get("days", 0)
-        verify.append({"name": "「寄りで買わない」目印（日本株の寄り付き）",
+        verify.append({"cat": "jp", "name": "「寄りで買わない」目印（日本株の寄り付き）",
                        "what": "その銘柄だけが相場全体より1パーセント以上高く始まった銘柄と、前の日に5パーセント以上上がったうえに今朝も"
                                "そうして始まった銘柄は、9時30分までに値下がりしやすいかを、東証のすべての銘柄の毎朝について、"
                                "登録した日より後の朝だけで確かめています（オーナーの発注前の点検表に入れた目印）",
@@ -425,12 +459,21 @@ def collect_studies(root, m):
     md = _load(p(MARKET_DIP_FWD))
     if md and not all(k in (md.get("verdicts") or {}) for k in (md.get("titles") or {})):
         sm = md.get("summary") or {}
-        verify.append({"name": "相場全体が安く始まった朝に、大きく下げた日本株を拾う",
+        verify.append({"cat": "jp", "name": "相場全体が安く始まった朝に、大きく下げた日本株を拾う",
                        "what": "東証のすべての銘柄の朝いちばんの値段（寄り付き）が、まん中で前の日の終わりの値段より0.5パーセント以上安く始まった朝に、"
                                "前の日の終わりの値段より5・8・10パーセント下に買いの注文を置いておき、9時30分に売ると手数料などを引いてもプラスになるかを、"
                                "登録した日より後の朝だけで確かめています",
                        "since": md.get("fwd_start") or "",
                        "progress": f"相場全体が安く始まった朝 {sm.get('down_days', 0)}朝（{md.get('goal_down_days') or 30}朝で1回だけ判定・数えた朝 {sm.get('days', 0)}営業日）"})
+
+    jb = _load(p(J10B_RECORDS))
+    if jb and not jb.get("verdict"):
+        days = len({r.get("date") for r in jb.get("records") or [] if isinstance(r, dict)})
+        verify.append({"cat": "jp", "name": "寄り付きの前の気配と、実際の寄り値の差",
+                       "what": "朝9時の取引が始まる前に画面に出ている値段（気配）が、実際の寄り値までにどれだけ動くかを、"
+                               "前の日の終わりの値段との比率だけで記録しています（気配を見て寄りで買うかを決めるときの参考にするため）",
+                       "since": jb.get("start") or "",
+                       "progress": f"記録した朝 {days}営業日（{jb.get('goal_days') or 20}営業日で1回だけ判定）"})
 
     a = _load(p(AUTO_FWD))
     if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):
@@ -439,7 +482,7 @@ def collect_studies(root, m):
         n = ((a or {}).get("summary") or {}).get("n", 0)
         when = (f"{_md(dates[1])}までに届いた合図を数え、{_md(dates[2])}以降に1回だけ判定" if dates
                 else "1か月のあいだに届いた合図を数え、そのあと1回だけ判定")
-        verify.append({"name": "4時間足の合図を、練習用の口座で自動に建てる",
+        verify.append({"cat": "all", "name": "4時間足の合図を、練習用の口座で自動に建てる",
                        "what": "メールで届く4時間足の合図どおりに、練習用の口座（デモ口座）で自動に注文を出し、"
                                "実際の約定の値・費用・届くまでの遅れで、記録上の成績とどれだけずれるかを確かめています",
                        "since": dates[0] if dates else "",
@@ -461,7 +504,7 @@ def collect_studies(root, m):
                 first = "" if any(cnt.values()) else f"。最初の記録は{nxt}月上旬"
             except ValueError:
                 first = ""
-            verify.append({"name": "株価指数の月末月初（" + "・".join(names[q] for q in live) + "）",
+            verify.append({"cat": "index", "name": "株価指数の月末月初（" + "・".join(names[q] for q in live) + "）",
                            "what": "月の変わり目の数日は株価指数が上がりやすい、という論文の癖（過去のデータでは傾向あり）が、"
                                    "登録した日より後の新しい月でも、売り買いの費用と持ち越しの金利を引いて崩れていないかを見張っています",
                            "since": cal_start,
@@ -474,25 +517,25 @@ def collect_studies(root, m):
         nxt = next((k for k in (50, 100, 150) if str(k) not in cps and k not in cps), None)
         if nxt is not None:
             n = (r.get("now") or {}).get("n", 0)
-            verify.append({"name": "過去の確かめで向きだけ残った組み合わせ",
+            verify.append({"cat": "all", "name": "過去の確かめで向きだけ残った組み合わせ",
                            "what": "一目均衡表（いちもくきんこうひょう：トレンドの向きを見る指標）と、ボリンジャーバンド"
                                    "（値動きのふだんの幅を表す線）の下の線、値動きを追いかける損切りの組み合わせが、"
                                    "新しいデータでも同じ向きに残るかを見ています",
                            "since": "2026-09-28",
                            "progress": f"{n}件（次の区切りは{nxt}件。1年に30件ほどなので時間がかかります）"})
 
-    verify.append({"name": "シグナルが出た場面の条件（仮説）の採点",
+    verify.append({"cat": "all", "kind": "tracker", "name": "シグナルが出た場面の条件（仮説）の採点",
                    "what": "どんな場面で出たシグナルなら勝ちやすいか（負けやすいか）を仮説として登録し、登録した日より後のシグナルだけで採点しています",
                    "since": "", "progress": f"{m['n_active']}本を採点中（くわしくは下の②）"})
     if m["exits"]:
-        verify.append({"name": "利確と損切りの置き方", "what": "利確と損切りの置き方を変えると成績がどう変わるかを、登録した日より後のデータで確かめています",
+        verify.append({"cat": "all", "name": "利確と損切りの置き方", "what": "利確と損切りの置き方を変えると成績がどう変わるかを、登録した日より後のデータで確かめています",
                        "since": "", "progress": f"{len(m['exits'])}件（くわしくは下の③）"})
     if m["env"]:
-        verify.append({"name": "相場の環境の統計", "what": "シグナルが効いたとき・効かなかったときの相場の環境を、毎月同じ物差しで数え直しています",
+        verify.append({"cat": "all", "name": "相場の環境の統計", "what": "シグナルが効いたとき・効かなかったときの相場の環境を、毎月同じ物差しで数え直しています",
                        "since": "", "progress": "毎月2日に数え直し（くわしくは下の④）"})
 
     if os.path.isdir(p(YUTAI_DIR)):
-        research.append({"name": "株主優待のある銘柄の値動き",
+        research.append({"cat": "jp", "name": "株主優待のある銘柄の値動き",
                          "what": "株主優待のある銘柄は、権利の日の3か月ほど前から値動きに偏りがあるか、"
                                  "空売りしにくい銘柄ほどその偏りが大きいかを確かめる準備をしています",
                          "since": "2026-09-30",
@@ -544,7 +587,8 @@ def _studies_html(root, m):
     #    成績ページの地図とトップの研究の帯が黙って消える（2026-10-01 実際に発生）。先に変数へ出す。
     research = _study_list(st["research"]) if st["research"] else '<p class="rm-desc">いまはありません。</p>'
     return ('<h3>📋 研究中・検証中の一覧</h3>'
-            '<p class="rm-desc">いま進めている研究を短く並べました。判定が出たものは一覧から外れます。くわしい中身はこの下の①〜④にあります。</p>'
+            '<p class="rm-desc">いま進めている研究を短く並べました。判定が出たものは一覧から外れます。くわしい中身はこの下の①〜④にあります。'
+            '日本株・為替・株価指数などの市場ごとに分けた一覧は <a href="research-list.html">📋 検証中リスト</a> にあります。</p>'
             f'<div class="rm-card"><strong>🧪 検証中</strong>（登録した日より後のデータで数えていて、判定はまだ）{_study_list(st["verify"])}</div>'
             f'<div class="rm-card"><strong>🔬 研究中</strong>（数える前の準備・データを集めている途中）'
             f'{research}{priv}</div>')
@@ -705,6 +749,172 @@ def build_pane(root=".", model=None):
                  '（手数料や価格の滑りなど、実際の取引で生じる差は十分には反映されていません）。'
                  '過去や途中の成績は、これからの成績を約束するものではありません。投資の判断はご自身の責任でお願いします。</p>\n</div>')
     return "\n".join(parts)
+
+
+# ---------------------------------------------------------------- 検証中リスト（市場ごとに仕分けた公開ページ）
+# 🆕 2026-10-07 オーナー「これまで検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく」
+# 成績ページの「🗺️ いま検証中のこと」と同じデータ（collect／collect_studies）から、市場ごとに並べ直した別ページを作る。
+# generate_track_record_page.py が track-record.html と一緒に書き出す（technical-alerts が4時間ごとに commit）。
+LIST_CSS = """
+body{margin:0;background:#fff;color:#1f2328;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.7}
+main{max-width:1000px;margin:0 auto;padding:0 16px 40px}
+h1{font-size:1.5rem;margin:18px 0 8px} h2{font-size:1.25rem;margin:34px 0 8px;padding-bottom:6px;border-bottom:2px solid #d0d7de}
+.crumb{font-size:.82rem;color:#57606a;margin:4px 0 0} .crumb a{color:#0969da}
+.lead{background:#ddf4ff;border:1px solid #54aeff66;border-radius:8px;padding:14px 16px;font-size:.92rem;margin:12px 0 16px}
+.warn{background:#fff8c5;border:1px solid #d4a72c66;border-radius:8px;padding:10px 14px;font-size:.85rem;margin:0 0 16px}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:0 0 8px}
+.chips a{display:block;border:1px solid #d0d7de;border-radius:8px;padding:10px 12px;background:#fff;text-decoration:none;color:#1f2328}
+.chips b{display:block;font-size:1.3rem;color:#0969da} .chips span{font-size:.82rem;color:#57606a}
+.desc{font-size:.88rem;color:#57606a;margin:0 0 10px}
+.card{border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;margin:0 0 10px;background:#fff}
+.card .sub,.sub{font-size:.8rem;color:#6e7781}
+.tag{display:inline-block;font-size:.75rem;border-radius:10px;padding:1px 8px;margin-right:6px;background:#eaeef2;color:#57606a}
+.tag.v{background:#dafbe1;color:#1a7f37} .tag.r{background:#fbefff;color:#8250df}
+table{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff}
+th,td{border-bottom:1px solid #eaeef2;padding:7px 8px;text-align:left;vertical-align:top} th{background:#f6f8fa;font-weight:600}
+.scroll-x{overflow-x:auto;border:1px solid #d0d7de;border-radius:8px;margin:6px 0 10px}
+.bar{height:6px;background:#eaeef2;border-radius:3px;margin-top:4px;min-width:80px} .bar i{display:block;height:6px;background:#0969da;border-radius:3px}
+details{border:1px solid #d0d7de;border-radius:8px;padding:10px 14px;margin:0 0 10px;background:#fff} summary{cursor:pointer}
+.none{font-size:.88rem;color:#6e7781;margin:0 0 10px}
+footer{border-top:1px solid #d0d7de;margin-top:30px;padding:18px 16px;font-size:.8rem;color:#6e7781;text-align:center}
+footer a{color:#57606a}
+@media(max-width:640px){td,th{padding:6px} h1{font-size:1.3rem}}
+body.dark{background:#0d1117;color:#e6edf3}
+body.dark .lead{background:#0d1a2b;border-color:#388bfd66} body.dark .warn{background:#2b2111;border-color:#d4a72c66}
+body.dark .chips a,body.dark .card,body.dark details,body.dark table{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark th{background:#0d1117} body.dark td,body.dark th{border-bottom-color:#21262d}
+body.dark .chips b{color:#58a6ff} body.dark .desc,body.dark .chips span{color:#8b949e} body.dark h2{border-bottom-color:#30363d}
+body.dark .bar{background:#30363d} body.dark .bar i{background:#58a6ff} body.dark .tag{background:#21262d;color:#8b949e}
+"""
+
+
+def _list_progress(n, goal):
+    if not goal:
+        return f"{n}件"
+    pct = max(0, min(100, round(100 * n / goal)))
+    return f'{n}件／次の判定 {goal}件<div class="bar"><i style="width:{pct}%"></i></div>'
+
+
+def _list_card(r, tag):
+    since = f"{_e(r['since'])} から・" if r.get("since") else ""
+    return (f'<div class="card"><span class="tag {tag[0]}">{_e(tag[1])}</span><strong>{_e(r["name"])}</strong>'
+            f'<div style="font-size:.9rem;margin-top:4px">{_e(r["what"])}</div>'
+            f'<div class="sub" style="margin-top:4px">{since}{_e(r["progress"])}</div></div>')
+
+
+def _hyp_table(rows):
+    out = ['<div class="scroll-x"><table><tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th>'
+           '<th>段階</th><th>登録した日より後の件数</th></tr>']
+    for r in rows:
+        note = f'<br><span class="sub">⚠️ {_e(r["note"])}</span>' if r.get("note") else ""
+        out.append(f'<tr><td><strong>{_e(r["name"])}</strong><br><span class="sub">登録 {_e(r["registered"])}</span>{note}</td>'
+                   f'<td>{_e(r["question"])}</td><td>{_e(r["stage"])}</td><td>{_list_progress(r["n"], r["checkpoint"])}</td></tr>')
+    out.append("</table></div>")
+    return "".join(out)
+
+
+def list_model(root=".", m=None):
+    """市場ごとの中身 → {key: {"title", "desc", "studies", "research", "hyps"}}・合計"""
+    m = m if m is not None else collect(root)
+    st = collect_studies(root, m)
+    rows = [r for th in m["themes"] for r in th["rows"]]
+    out = {}
+    for key, title, desc in MARKETS:
+        out[key] = {"title": title, "desc": desc,
+                    "studies": [r for r in st["verify"] if r.get("cat") == key and r.get("kind") != "tracker"],
+                    "research": [r for r in st["research"] if r.get("cat") == key],
+                    "hyps": sorted((r for r in rows if r.get("market") == key),
+                                   key=lambda r: (r["registered"], r["id"] or ""), reverse=True)}
+    return {"markets": out, "asof": m.get("asof"), "n_ended": len(m["ended"]), "n_exits": len(m["exits"])}
+
+
+def build_list_page(root=".", now=None, model=None):
+    """検証中リスト（市場ごと）の1ページぶんの HTML。データが欠けても空の節にするだけでページは作る"""
+    import apply_site_frame as F
+    now = now or datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    lm = model if model is not None else list_model(root)
+    mk = lm["markets"]
+    count = {k: len(v["studies"]) + len(v["research"]) + len(v["hyps"]) for k, v in mk.items()}
+    chips = "".join(f'<a href="#{k}"><b>{count[k]}件</b><span>{_e(mk[k]["title"])}</span></a>' for k, *_ in MARKETS)
+    disclaimer = ('<p data-disclaimer="kinsho-v1" style="font-size:.82rem;color:#6e7781;margin:8px 0 0">⚠️ <b>当サイトは金融商品取引業者ではなく、'
+                  '投資助言・代理業の登録もしていません。</b> この一覧は研究の進み具合の記録で、特定の銘柄や取引をすすめるものではありません。'
+                  '投資の判断はご自身の責任でお願いします。</p>')
+    secs = []
+    for key, title, desc in MARKETS:
+        v = mk[key]
+        body = [f'<h2 id="{key}">{_e(title)}（{count[key]}件）</h2><p class="desc">{_e(desc)}</p>']
+        if v["studies"]:
+            body += [_list_card(r, ("v", "検証中")) for r in v["studies"]]
+        if v["research"]:
+            body += [_list_card(r, ("r", "研究中（準備中）")) for r in v["research"]]
+        if v["hyps"]:
+            label = (f'4時間足のシグナルの仮説（{_e(title.split(" ", 1)[-1])}が対象）'
+                     if key != "all" else "4時間足のシグナルの仮説（対象の市場を絞っていないもの）")
+            tbl = _hyp_table(v["hyps"])
+            if len(v["hyps"]) > 8:
+                body.append(f'<details><summary><strong>{label}</strong>：{len(v["hyps"])}本（開く）</summary>{tbl}</details>')
+            else:
+                body.append(f'<p class="desc" style="margin-top:12px"><strong>{label}</strong>：{len(v["hyps"])}本</p>{tbl}')
+        if key == "fx" and not v["studies"]:
+            body.append('<p class="none">為替だけを対象にした前向きの確かめは、いまはありません。ロンドン時間の値動きの癖などは'
+                        '過去のデータで確かめましたが、売り買いの費用を引くと差が見えなかったので止めています。</p>')
+        if not count[key]:
+            body.append('<p class="none">いまはありません。</p>')
+        secs.append("".join(body))
+    upd = now.strftime("%Y-%m-%d %H:%M")
+    names = " ".join(r["name"] for v in mk.values() for r in v["hyps"])
+    used = [text for term, text in TERMS if term in names]
+    terms = f'<p class="desc">表に出てくる言葉：{_e("／".join(used))}</p>' if used else ""
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>検証中リスト｜MarketWatch AI</title>
+<meta name="description" content="MarketWatch AI がいま確かめている投資の研究を、日本株・為替（FX）・株価指数・金や原油・すべての市場に共通、に分けて並べた一覧です。登録した日より後のデータだけで採点し、判定が出るまで結論を出しません。">
+<link rel="canonical" href="https://marketwatch-jp.com/{LIST_PAGE}">
+<style>{LIST_CSS}</style>
+{F.FRAME_STYLE_TAG}
+</head>
+<body>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="{F.THEME_BTN_STYLE}">🌙</button>
+{F.build_header("🧪 検証中リスト")}
+<main>
+{F.build_nav("  ", current="track-record.html")}
+<p class="crumb"><a href="index.html">ホーム</a> ／ <a href="track-record.html">シグナル研究</a> ／ 検証中リスト</p>
+<h1>🧪 検証中リスト（市場ごと）</h1>
+<div class="lead">当サイトが<strong>いま確かめている途中</strong>の研究を、市場ごとに並べた一覧です（更新：{upd}）。
+どれも<strong>登録した日より後のデータだけ</strong>で数えていて、決めた回数や日数に届くまで結論を出しません。
+判定が出たものはこの一覧から外れ、思ったとおりにならなかった結果も消さずに残しています。
+仮説の成績や、出口・相場の環境の研究のくわしい中身は <a href="track-record.html#map">🧪 シグナル研究の「🗺️ いま検証中のこと」</a> にあります。</div>
+<div class="warn">ここに並ぶのは「確かめている途中」のものです。過去のデータで良さそうに見えただけのものも多く、大半は判定で外れます。
+売買のおすすめではありません。{disclaimer}</div>
+<div class="chips">{chips}</div>
+{terms}
+{''.join(secs)}
+<p class="sub" style="margin-top:24px">終わった検証（4時間足のシグナルの仮説）：{lm['n_ended']}本（記録は残しています）。仮説の一覧の基準日：{_e(lm['asof'] or '—')}。</p>
+<p class="sub">※ 採点は、決まったルールで機械的に記録した仮想の結果で、実際の取引ではありません（手数料や価格の滑りなど、実際の取引で生じる差は十分には反映されていません）。
+過去や途中の成績は、これからの成績を約束するものではありません。</p>
+</main>
+<footer>
+<p data-disclaimer="kinsho-v1">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+<p><a href="about.html">運営者情報</a>・<a href="privacy.html">プライバシーポリシー</a>・<a href="contact.html">お問い合わせ</a></p>
+</footer>
+<script>
+function toggleTheme(){{document.body.classList.toggle('dark');var d=document.body.classList.contains('dark');
+try{{localStorage.setItem('theme',d?'dark':'light');}}catch(e){{}}document.getElementById('theme-toggle').textContent=d?'☀️':'🌙';}}
+try{{if(localStorage.getItem('theme')==='dark'){{document.body.classList.add('dark');document.getElementById('theme-toggle').textContent='☀️';}}}}catch(e){{}}
+</script>
+</body>
+</html>
+"""
+
+
+def write_list_page(path=LIST_PAGE, root="."):
+    html_text = build_list_page(root=root)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(html_text)
+    return path
 
 
 # ---------------------------------------------------------------- 表示（文字）
