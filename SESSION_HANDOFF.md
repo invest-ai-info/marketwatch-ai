@@ -1,5 +1,13 @@
 # 🔖 セッション引き継ぎ（最終更新: 2026-10-07 夜）
 
+## 🧹 2026-10-08 朝: CLAUDE.md を 130KB → 67KB に（研究ラボの行を `RESEARCH_LABS.md` へ）
+
+- **きっかけ**：10/8 06:11 の signal-lab-daily が **文脈あふれ（autocompact thrashing・47手目）で失敗**＝研究日誌 #121 は出ず、トラッカーの集計（見込みなしの12本を含む）も入っていない。手元で `signal_lab_tracker.py update` を再現すると正常（EXIT 0・見込みなし12本）＝コードの不具合ではない
+- **原因の見立て**：CLAUDE.md が上限 32KB の約4倍（10/3 85KB → 10/7 130KB＝研究ラボの行を足し続けた）。CLAUDE.md はすべてのセッションと予約の頭に入り、signal-lab-daily は手順⑤でもう一度読む＋`signals-log.json`（44MB）も読む
+- **やったこと**：研究ラボ・前向きの50行と、保留中の自動売買（AT・LP）の2行を `RESEARCH_LABS.md` にそのまま移し、CLAUDE.md には案内の1行。SYNC禁忌の研究ラボの出力の並びも `*-lab.*`・`*-forward.*` の形に縮めた（正しい一覧は `check_site_consistency.SYNC_FORBIDDEN`）
+- 🚨 **これから**：新しいラボ・前向きは `RESEARCH_LABS.md` に1行（CLAUDE.md には書かない）。CLAUDE.md はまだ 67KB（上限の2倍）＝SYNC禁忌の routine の長い説明（約20KB）を `drafts/*_GUIDE.md` 側へ寄せるのが次の候補。SESSION_HANDOFF.md も約355KB（上限 30KB）＝古い節を SESSION_ARCHIVE.md へ
+- 📌 signal-lab-daily の今日の分はやり直していない（次は 10/9 06:10）。やり直すならオーナーの判断で予約を手動で動かす
+
 ## 💴 2026-10-07 夜(7): J28 費用の見積もりは小さい株で日足が約3倍重い → J13F 腕B を検証中に戻した（オーナー「登録して続けてください」）
 
 - **J28**（`PILLAR_PREREG.md`「J28」・`spread_lab.py`・`spread-lab.md`・損益は数えない）＝Abdi & Ranaldo の同じ式を日足と5分足（すべて／9:00〜9:30）に当てて並べた（3,700銘柄）
