@@ -103,6 +103,8 @@ SYNC_FORBIDDEN = {
     "short-side-lab.json", "short-side-lab.md",   # 🆕 2026-10-08 J30 目印の付いた株を寄りで売る（short-side-lab.yml・手動）
     "auction-lab.json", "auction-lab.md",   # 🆕 2026-10-08 J31 板寄せどうしで数え直す（auction-lab.yml・手動）
     "stop-short-lab.json", "stop-short-lab.md",   # 🆕 2026-10-08 J32 J31 の売りに損切り（stop-short-lab.yml・手動）
+    "auction-forward.json", "auction-forward.md",   # 🆕 2026-10-08 J31F 空売りの前向き（auction-forward.yml・平日）
+    "size-short-lab.json", "size-short-lab.md",   # 🆕 2026-10-08 J33 建玉の大きさ（size-short-lab.yml・手動）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
     "lows-trap-lab.json", "lows-trap-lab.md",         # 🆕 2026-10-06 J12 安値更新の翌朝（lows-trap-lab.yml・手動）
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）
