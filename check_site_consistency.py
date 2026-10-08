@@ -112,6 +112,8 @@ SYNC_FORBIDDEN = {
     "size-tai-lab.json", "size-tai-lab.md",   # 🆕 2026-10-08 J37 貸借銘柄だけの建玉の大きさ（size-tai-lab.yml・手動）
     "b-split-lab.json", "b-split-lab.md",     # 🆕 2026-10-08 J38 目印B を区切りで分ける（b-split-lab.yml・手動）
     "size-w6-lab.json", "size-w6-lab.md",     # 🆕 2026-10-08 J39 窓 +6% 以上だけの建玉の大きさ（size-w6-lab.yml・手動）
+    "sq-week-lab.json", "sq-week-lab.md",     # 🆕 2026-10-08 R9 SQ週（sq-week-lab.yml・手動）
+    "short-limits.json", "short-limits.md",   # 🆕 2026-10-08 J40 売り禁・規制の前向き記録（short-limits.yml）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
     "lows-trap-lab.json", "lows-trap-lab.md",         # 🆕 2026-10-06 J12 安値更新の翌朝（lows-trap-lab.yml・手動）
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）

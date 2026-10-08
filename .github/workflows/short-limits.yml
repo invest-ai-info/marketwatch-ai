@@ -1,0 +1,40 @@
+name: Short Limits (J40)
+
+# J40 売り禁・規制はどれくらいかかるか：J31F の売りの対象に、その朝かかっていた規制を前向きで記録する（読むだけ）。
+# 2026-10-08 登録・オーナー「両方登録して進めてください」。
+# ⚠️ 決まりは PILLAR_PREREG.md「J40」（事前登録）と short_limits.py の冒頭に固定。いまは probe だけ（資料の場所と形・損益は数えない・何も書かない）。
+#    読み方を PREREG の追記に書いてから、毎朝の記録（寄りの前）をここに足す。
+# ⚠️ 出力（short-limits.json / .md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe＝資料の場所と形だけ（損益は数えない・何も書かない）"
+        required: true
+        default: probe
+        type: choice
+        options: [probe]
+
+concurrency:
+  group: short-limits
+  cancel-in-progress: false
+
+jobs:
+  limits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pandas openpyxl xlrd
+      - name: Test with made-up pages
+        run: python tests/test_short_limits.py
+      - name: Probe the published lists (shape only)
+        if: ${{ inputs.mode == 'probe' }}
+        run: python -u short_limits.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
