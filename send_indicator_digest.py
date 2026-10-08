@@ -44,9 +44,9 @@ import json
 import os
 import smtplib
 import sys
-from email.mime.text import MIMEText
 
 import jp_markers
+import mail_html      # 🆕 2026-10-09 色付きの HTML メール（文字の本文はそのまま）
 import jp_momentum    # 🆕 2026-10-08 夜 強すぎる株（過去12か月で一番上げた10銘柄・J42／J42F）
 import morning_brief  # 🆕 2026-10-08 夜 今日のファンダ・決算・研究から分かっていること
 
@@ -321,6 +321,7 @@ def main():
                     help="digest=朝の便 / alert=発表が近いものだけ")
     ap.add_argument("--dry-run", action="store_true", help="送信せず本文を表示するだけ")
     ap.add_argument("--now", help="時刻を指定して確認する（例 2026-09-18T07:00）")
+    ap.add_argument("--html-out", help="送るメールの HTML（色付き）をこのファイルにも書く（試し表示の確認用）")
     ap.add_argument("--sent-file", help="alert: 送った発表の記録（同じ発表に2通送らないため。"
                                         "ワークフローは actions/cache で次の回へ渡す）")
     args = ap.parse_args()
@@ -345,6 +346,9 @@ def main():
             return 0
         subject, body = build(now)
 
+    if args.html_out:
+        with open(args.html_out, "w", encoding="utf-8") as fh:
+            fh.write(mail_html.to_html(body, subject))
     if args.dry_run:
         print(f"Subject: {subject}\n")
         print(body)
@@ -359,10 +363,7 @@ def main():
         print(f"Subject: {subject}\n{body}")
         return 0
 
-    msg = MIMEText(body, "plain", "utf-8")
-    msg["Subject"] = subject
-    msg["From"] = sender
-    msg["To"] = recipient
+    msg = mail_html.message(subject, body, sender, recipient)      # 文字＋色付きの HTML（2026-10-09〜）
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as server:
         server.login(sender, password)
         server.send_message(msg)

@@ -20,10 +20,10 @@ import os
 import re
 import smtplib
 import sys
-from email.mime.text import MIMEText
 
 import asia_news
 import fx_strength as FX
+import mail_html      # 🆕 2026-10-09 色付きの HTML メール（文字の本文はそのまま）
 import morning_brief as MB
 import send_indicator_digest as D
 
@@ -237,6 +237,7 @@ def main(argv=None):
     ap.add_argument("--session", choices=list(SESSIONS), help="省略すると、いまの時刻から決める")
     ap.add_argument("--now", help="時刻を指定して確認する（例 2026-10-09T14:00）")
     ap.add_argument("--dry-run", action="store_true", help="送信せず本文を表示するだけ")
+    ap.add_argument("--html-out", help="送るメールの HTML（色付き）をこのファイルにも書く（試し表示の確認用）")
     args = ap.parse_args(argv)
     now = dt.datetime.fromisoformat(args.now).replace(tzinfo=JST) if args.now else dt.datetime.now(JST)
     session = args.session or session_now(now)
@@ -253,6 +254,9 @@ def main(argv=None):
     except Exception:  # noqa: BLE001
         news = None
     subject, body = build(session, now, fx, news, _load(MB.FUND), kind or "send")
+    if args.html_out:
+        with open(args.html_out, "w", encoding="utf-8") as fh:
+            fh.write(mail_html.to_html(body, subject))
     if args.dry_run:
         print(f"Subject: {subject}\n\n{body}")
         return 0
@@ -262,8 +266,7 @@ def main(argv=None):
         print("  ⚠️ GMAIL_USER / GMAIL_APP_PASSWORD 未設定＝送信スキップ")
         print(f"Subject: {subject}\n{body}")
         return 0
-    msg = MIMEText(body, "plain", "utf-8")
-    msg["Subject"], msg["From"], msg["To"] = subject, sender, recipient
+    msg = mail_html.message(subject, body, sender, recipient)      # 文字＋色付きの HTML（2026-10-09〜）
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as smtp:
         smtp.login(sender, password)
         smtp.send_message(msg)
