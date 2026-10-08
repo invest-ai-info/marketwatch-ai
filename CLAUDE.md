@@ -120,7 +120,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 | `signals-log.json` / `.csv` | 全シグナル発火履歴 + 結果（環境/通貨強弱/中国/反転/トレンド/敗因/勝因） |
 | `my-trades.json` / `.csv` | ユーザーの実取引ログ |
 | `technical-alerts-history*.json` | クールダウン管理（4H / 1H） |
-| `economic-events.json` | 重要指標カレンダー + 市場休場 77 件（2026-2027 完全カバー） |
+| `economic-events.json` | 重要指標カレンダー + 市場休場（東証2028・米英2027まで） |
 | `political-feed.json` | 政治発言フィード（30 分更新） |
 | `youtube-summary-data.json` | YouTube 要約データ |
 

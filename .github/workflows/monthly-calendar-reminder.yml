@@ -2,7 +2,7 @@ name: Monthly Calendar Reminder
 
 # 目的:
 # - 毎月 25 日朝に「来月の主要経済指標」を Gemini で取得 → メール送信
-# - 同時に generate_market_holidays.py で 2026-2027 年の市場休場日を自動補充
+# - 同時に generate_market_holidays.py で 2026-2027 年の市場休場日を自動補充（東証は 2028 年まで）
 # - sync_economic_events.py で経済指標を ECONOMIC_EVENTS_2026 から生成（手動転記の廃止）
 # - economic-events.json に追加された休場日は git push
 
@@ -11,6 +11,12 @@ on:
     # 25 日 00:13 UTC = 25 日 09:13 JST (cron 混雑回避のため :00 を避ける)
     - cron: '13 0 25 * *'
   workflow_dispatch:
+    inputs:
+      holidays_only:
+        description: "true＝市場休場の補充だけ（指標の生成・決算の更新・リマインダーのメールはしない）。2026-10-09 追加＝休場の表を直した日にすぐ入れる"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   calendar-reminder:
@@ -37,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: pip install google-generativeai
 
-      - name: Auto-add market holidays (2026-2027)
+      - name: Auto-add market holidays (2026-2027 / TSE 2028)
         run: python generate_market_holidays.py
 
       # 🆕 2026-08-30 追加。economic-events.json の「経済指標」は
@@ -48,6 +54,7 @@ jobs:
       # サイトの calendar.html は別台帳 ECONOMIC_EVENTS_2026 で保守が続いていたので、
       # そちらから生成して台帳の二重管理をやめる＝手動転記の工程自体を無くす。
       - name: Sync economic indicators from ECONOMIC_EVENTS_2026
+        if: ${{ !inputs.holidays_only }}
         run: python sync_economic_events.py --write
 
       # 🆕 2026-08-30。決算予定を更新する。**既存の build_earnings_calendar.py を使う**
@@ -58,10 +65,12 @@ jobs:
       # ⚠️ 新しい取得スクリプトを足さないこと。台帳が増えると今回と同じ「片方だけ死ぬ」形になる。
       # LOOKAHEAD_DAYS=95 なので、月次実行でも常に2〜3か月先まで埋まる。
       - name: Refresh earnings calendar (US=Nasdaq API / JP=curated)
+        if: ${{ !inputs.holidays_only }}
         run: pip install yfinance >/dev/null && python build_earnings_calendar.py
         continue-on-error: true
 
       - name: Send monthly calendar reminder email
+        if: ${{ !inputs.holidays_only }}
         run: python monthly_calendar_reminder.py
 
       - name: Commit & push if economic-events.json updated
