@@ -221,7 +221,11 @@ def fomc_dates(opener=None):
             try:
                 got = sorted(set(got) | set(parse_fomc_hist(http_get(FOMC_HIST.format(y=y), opener))))
             except Exception as e:  # noqa: BLE001
-                status[str(y)] = f"取得できず: {type(e).__name__}"
+                if not got:                       # 日程のページにも無い年だけ「取得できず」（今年は過去のページがまだ無い）
+                    status[str(y)] = f"取得できず: {type(e).__name__}"
+                    continue
+                status[str(y)] = f"{len(got)}件（日程のページ・過去のページは {type(e).__name__}）"
+                dates |= set(got)
                 continue
         status[str(y)] = f"{len(got)}件"
         dates |= set(got)
