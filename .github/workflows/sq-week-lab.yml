@@ -1,0 +1,65 @@
+name: SQ Week Lab (manual)
+
+# R9 SQ週（オプションの満期の週）は特別か：日経平均（第2金曜日）と S&P500（第3金曜日）の週の値動き。
+# 2026-10-08 登録・オーナー「両方登録して進めてください」。まだ誰も数えていない問い。
+# ⚠️ 決まりは PILLAR_PREREG.md「R9」（事前登録）と sq_week_lab.py の冒頭に固定。手動実行のみ。check（週の数だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（sq-week-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝データの点検だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: sq-week-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_sq_week_lab.py
+      - name: Data check only (no counting)
+        if: ${{ inputs.mode == 'check' }}
+        shell: bash
+        run: python -u sq_week_lab.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python sq_week_lab.py
+          python verified_list.py > /dev/null
+          [ -f sq-week-lab.md ] && cat sq-week-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sq-week-lab.json sq-week-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: sq week lab R9 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
