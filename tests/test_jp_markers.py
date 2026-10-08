@@ -73,6 +73,23 @@ def test_section():
     assert "…ほか 5銘柄" in "\n".join(M.section(many, dt.date(2026, 10, 8)))
 
 
+def test_one_merged_list():
+    """2026-10-09 オーナー「1と2を進めて」＝C と B候補の一覧を1つに（売買代金の大きい順・同じ銘柄は1回・印〔C〕〔B候補〕★両方）"""
+    r = lambda code, tv, c, b: {"code": code, "name": f"会社{code}", "tv": tv, "ratio": 6.0 if c else 1.0, "ret": 0.07 if b else 0.01,
+                                "c": c, "b": b, "tai": None, "dev25": None, "streak": 0}
+    rows = [r("1000", 50, True, True), r("2000", 40, True, False), r("3000", 30, False, True), r("4000", 20, True, False),
+            r("5000", 10, False, True), r("6000", 5, True, False)]
+    assert [x["code"] for x in M.merged(rows, top=2)] == ["1000", "2000", "3000"]              # C の上位2＝1000・2000／B候補の上位2＝1000・3000
+    assert [x["code"] for x in M.merged(rows, top=25)] == [x["code"] for x in rows]
+    mk = {"asof": "2026-10-07", "universe": 3600, "n_c": 4, "n_b": 3, "keep_min_tv": 1.0, "rows": rows}
+    s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
+    assert s.count("1000 会社1000") == 1 and "1000 会社1000  売買代金 50.0億円（6.0倍）・前の日 +7.0% ★C・B候補の両方" in s
+    assert "2000 会社2000  売買代金 40.0億円（6.0倍）・前の日 +1.0% 〔C〕" in s and "3000 会社3000  売買代金 30.0億円（1.0倍）・前の日 +7.0% 〔B候補〕" in s
+    assert "★C・B候補の両方 1銘柄" in s and "C と B候補それぞれ大きい順に25までを1つの一覧に" in s and s.count("     1. ") == 1
+    assert M.fresh(mk, dt.date(2026, 10, 8)) and not M.fresh(mk, dt.date(2026, 10, 7)) and not M.fresh(mk, dt.date(2026, 10, 14))
+    assert not M.fresh(None, dt.date(2026, 10, 8))
+
+
 def test_wired_into_digest_and_jp_highs():
     import send_indicator_digest as D
     mk = M.compute({"1111": _bars(last_vol=8e5)}, {"1111": {"name": "甲"}}, "2026-10-07")
@@ -94,7 +111,7 @@ def test_taishaku_tag():
     tai = {r["code"]: r["tai"] for r in mk["rows"]}
     assert tai == {"1111": False, "3333": True} and mk["taishaku"] == {"asof": "2026年10月1日現在", "n": 2}
     s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
-    assert "乙  売買代金" in s and s.count("〔貸借〕") == 1 + 2              # 説明の1行＋C と B候補の両方に出る乙
+    assert "乙  売買代金" in s and s.count("〔貸借〕") == 1 + 1              # 説明の1行＋一覧の乙（2026-10-09〜 一覧は1つ＝1回）
     assert "制度信用で空売りできる銘柄（日本取引所グループの一覧 2026年10月1日現在・2銘柄）" in s and "空売りの決まりではない" in s
     no = M.compute(daily, stocks, "2026-10-07", None)                       # 一覧が取れなかった
     assert no["taishaku"] is None and all(r["tai"] is None for r in no["rows"])

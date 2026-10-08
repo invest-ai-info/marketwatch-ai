@@ -240,6 +240,75 @@ def research_section(today):
            ["  ・くわしくはサイトの検証済みリスト（verified-list.md）と研究の地図", ""]
 
 
+SUMMARY_FX = 2        # 要点に出す通貨（強い・弱いそれぞれ）
+SUMMARY_ITEMS = 3     # 要点に出す発表・決算の数（ほかは「ほか N件」）
+
+
+def _more(xs, n=SUMMARY_ITEMS):
+    return "・".join(xs[:n]) + (f" ほか{len(xs) - n}件" if len(xs) > n else "")
+
+
+def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None):
+    """一番上の「今日の要点」。2026-10-09 オーナー「1と2を進めて」（朝のメールが長い＝ここだけ見れば朝の判断に要る点がわかる形）。
+    下の各欄から数字を拾うだけ（新しい判断はしない）。発表の行はいつも出す。地合い・通貨・日本株・決算は平日だけ（下の欄と同じ）。
+    データが無い行は出さない（下の欄が「取れなかった」と書く）。ind＝load_events の指標（今より後・昇順）。純関数"""
+    import fx_strength as FX
+    import jp_markers
+    import jp_momentum
+    today = now.date()
+    L = ["【⭐ 今日の要点（くわしくは下の各欄）】"]
+    today_ev = [(w, e) for w, e in ind if w.date() == today]
+    if today_ev:
+        near = any((w - now).total_seconds() <= 6 * 3600 for w, _ in today_ev)          # 【今日】の 🚫 と同じ（6時間以内）
+        names = [f"{w:%H:%M} {e['name']}" for w, e in today_ev]
+        L.append(f"  {'🚫' if near else '🟡'} 発表：{_more(names)}（数時間前〜は新規を建てない）")
+    else:
+        nxt = next(((w, e) for w, e in ind if w.date() != today), None)
+        L.append("  ・発表：今日はなし" + (f"（次は {nxt[0]:%m/%d}({WD[nxt[0].weekday()]}) {nxt[0]:%H:%M} {nxt[1]['name']}）" if nxt else ""))
+    if today.weekday() >= 5:
+        return L + [""]
+    stale = "（⚠️ 今朝の見立てではない）" if fc and str(fc.get("generated_at") or "")[:10] != today.isoformat() else ""
+    r = (fc or {}).get("risk_regime") or {}
+    if r.get("regime"):
+        assets = {a.get("ticker"): a for a in (fc.get("assets") or [])}
+        dirs = [f"{a['name']} {BIAS.get(a.get('bias'), a.get('bias') or '—')}"
+                for t in ("NKD=F", "USDJPY", "USDJPY=X") if (a := assets.get(t)) and a.get("name")]
+        L.append(f"  ・地合い（AI）：{REGIME.get(r['regime'], r['regime'])}・確度 {CONF.get(r.get('confidence'), r.get('confidence') or '—')}"
+                 + ("／" + "・".join(dirs) if dirs else "") + stale)
+    h = (fx or {}).get("h24") or {}
+    strong = sorted(((c, v) for c, v in h.items() if v is not None and v >= FX.EDGE), key=lambda x: -x[1])[:SUMMARY_FX]
+    weak = sorted(((c, v) for c, v in h.items() if v is not None and v <= -FX.EDGE), key=lambda x: x[1])[:SUMMARY_FX]
+    if strong or weak:
+        fmt = lambda xs: "・".join(f"{FX.NAMES.get(c, c)} {v:+.2f}%" for c, v in xs) or "なし"
+        L.append(f"  ・通貨（24時間の値動き）：強い {fmt(strong)} ／ 弱い {fmt(weak)}")
+    cur = [c for c in (fc or {}).get("currencies") or [] if c.get("code")]
+    if cur:
+        pick = lambda lean: "・".join(f"{FX.NAMES.get(c['code'], c['code'])}（{CONF.get(c.get('conviction'), '—')}）"
+                                      for c in cur if c.get("lean") == lean) or "なし"
+        L.append(f"  ・通貨（AIの見立て）：強い {pick('STRONG')} ／ 弱い {pick('WEAK')}{stale}")
+    if jp_markers.fresh(markers, today):
+        rows = markers.get("rows") or []
+        n_both = sum(1 for x in rows if x.get("c") and x.get("b"))
+        n_mine = sum(1 for x in rows if jp_markers.mines(x))
+        part = f"寄りで買わない目印 {len(rows)}銘柄（★C・B候補の両方 {n_both}・💣地雷 {n_mine}）"
+        try:
+            x = jp_momentum.pick(mom, today)
+        except Exception:  # noqa: BLE001  壊れた欄でも要点のほかの行は出す（下の欄が「作れなかった」と書く）
+            x = None
+        if x:
+            part += f"／強すぎる株 {len(x['rows'])}銘柄（新しく買わない側）"
+        L.append("  ・日本株：" + part)
+    if ec:
+        prev = _prev_weekday(today)
+        jp = [f"{e.get('code', '')} {e.get('name', '')}（{prev:%m/%d} 引け後＝今日の寄りに効く）" for e in ec.get("jp") or []
+              if e.get("date") == prev.isoformat() and "引け後" in str(e.get("time") or "")]
+        jp += [f"{e.get('code', '')} {e.get('name', '')}（今日 {e.get('time') or '時間未定'}）" for e in ec.get("jp") or []
+               if e.get("date") == today.isoformat()]
+        if jp:
+            L.append(f"  ・決算（日本の主な銘柄）：{_more(jp)}")
+    return L + [""]
+
+
 def sections(today, fund_path=FUND, earn_path=EARN, fx=None, today_events=None, news=None, results_path=RESULTS):
     """朝のメールに足す節（ファンダ・通貨の強弱・中国と豪州のニュース・決算）。研究の要約は日本株の節のあとに置くので別"""
     fc = _load(fund_path)

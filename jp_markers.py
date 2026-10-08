@@ -111,11 +111,26 @@ def compute(daily, stocks, asof, tai=None):
 def _fmt(r):
     ratio = "—" if r.get("ratio") is None else f"{r['ratio']:.1f}倍"
     ret = "—" if r.get("ret") is None else f"{r['ret'] * 100:+.1f}%"
-    both = " ★C・B候補の両方" if r.get("c") and r.get("b") else ""
+    both = " ★C・B候補の両方" if r.get("c") and r.get("b") else " 〔C〕" if r.get("c") else " 〔B候補〕" if r.get("b") else ""
     tai = " 〔貸借〕" if r.get("tai") is True else ""
     m = mines(r)
     mine = f" 💣地雷：{'・'.join(m)}" if m else ""
     return f"{r['code']} {r['name']}  売買代金 {r['tv']:.1f}億円（{ratio}）・前の日 {ret}{both}{tai}{mine}"
+
+
+def fresh(markers, today):
+    """今朝使ってよい一覧か（前の取引日の引けの分＝今日より前・STALE_DAYS 日以内）"""
+    if not markers or not markers.get("asof"):
+        return False
+    age = (today - dt.date.fromisoformat(markers["asof"])).days
+    return 0 < age <= STALE_DAYS
+
+
+def merged(rows, top=SHOW_TOP):
+    """C の大きい順 top と B候補の大きい順 top を1つの一覧に（売買代金の大きい順・同じ銘柄は1回）。
+    2026-10-09 オーナー「1と2を進めて」＝前は C と B候補の2つの一覧で、両方に当てはまる銘柄が2回出ていた（10/9 は25のうち16）"""
+    keep = {r["code"] for r in [r for r in rows if r.get("c")][:top]} | {r["code"] for r in [r for r in rows if r.get("b")][:top]}
+    return [r for r in rows if r["code"] in keep]
 
 
 def section(markers, today):
@@ -126,24 +141,24 @@ def section(markers, today):
     if not markers or not markers.get("asof"):
         return [head, "  ⚠️ 一覧を作れていない（jp-highs.json に目印の欄が無い）＝今朝は証券会社の画面で確かめる", ""]
     asof = dt.date.fromisoformat(markers["asof"])
-    age = (today - asof).days
-    if age <= 0 or age > STALE_DAYS:
+    if not fresh(markers, today):
         return [head, f"  ⚠️ 一覧の日付が {asof}（今朝の前の取引日ではない）＝今朝は使わない", ""]
     rows = markers.get("rows") or []
     keep = markers.get("keep_min_tv", KEEP_MIN_TV)
     cs = [r for r in rows if r.get("c")]
     bs = [r for r in rows if r.get("b")]
-    L = [head, f"  {asof} の引けで判定・東証の全上場 {markers.get('universe', 0)}銘柄から（売買代金{keep:g}億円以上を大きい順に{SHOW_TOP}まで）", "",
+    show = merged(rows)
+    n_both = sum(1 for r in rows if r.get("c") and r.get("b"))
+    L = [head, f"  {asof} の引けで判定・東証の全上場 {markers.get('universe', 0)}銘柄から（売買代金{keep:g}億円以上・"
+               f"C と B候補それぞれ大きい順に{SHOW_TOP}までを1つの一覧に）", "",
          f"  🚫 C 前の日の売買代金が20営業日平均の5倍以上：{markers.get('n_c', 0)}銘柄（うち{keep:g}億円以上 {len(cs)}）",
-         f"     → 寄りでは買わない（{TV_STRONG:g}倍以上はもっと強い・気配がふつうでも買わない）"]
-    L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(cs[:SHOW_TOP], 1)] or ["     （なし）"]
-    if len(cs) > SHOW_TOP:
-        L.append(f"     …ほか {len(cs) - SHOW_TOP}銘柄")
-    L += ["", f"  🚫🚫 B候補 前の日に +5% 以上：{markers.get('n_b', 0)}銘柄（うち{keep:g}億円以上 {len(bs)}）",
-          "     → 今朝その銘柄だけ全体より +1% 以上高く寄ったら B＝寄りでは買わない（いちばん強い目印・大きい株でも強い）"]
-    L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(bs[:SHOW_TOP], 1)] or ["     （なし）"]
-    if len(bs) > SHOW_TOP:
-        L.append(f"     …ほか {len(bs) - SHOW_TOP}銘柄")
+         f"     → 寄りでは買わない（{TV_STRONG:g}倍以上はもっと強い・気配がふつうでも買わない）",
+         f"  🚫🚫 B候補 前の日に +5% 以上：{markers.get('n_b', 0)}銘柄（うち{keep:g}億円以上 {len(bs)}）",
+         "     → 今朝その銘柄だけ全体より +1% 以上高く寄ったら B＝寄りでは買わない（いちばん強い目印・大きい株でも強い）", "",
+         f"  一覧（C と B候補をまとめて売買代金の大きい順・印＝〔C〕〔B候補〕★C・B候補の両方 {n_both}銘柄）："]
+    L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(show, 1)] or ["     （なし）"]
+    if len(rows) > len(show):
+        L.append(f"     …ほか {len(rows) - len(show)}銘柄（売買代金の小さいもの）")
     n_mine = sum(1 for r in rows if mines(r))
     L += ["", f"  💣 地雷（研究 J21）＝前の日 +5%以上・売買代金10億円以上の株のうち、過熱（25日線 +15%超）・連騰（4日以上）・"
               f"急騰（+15%以上）・売買代金の急増（5倍以上）のどれかに当てはまるもの：{n_mine}銘柄（上の一覧に印）",
