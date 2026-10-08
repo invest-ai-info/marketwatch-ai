@@ -337,4 +337,5 @@ SYNC_FILES = [
     "guide-entry-earnings-drift.html",
     "guide-news-2026-10-07-sp500-record-fomc-minutes.html",
     "guide-company-amd-amd.html",
+    "guide-entry-macro-surprise.html",
 ]
