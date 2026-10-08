@@ -73,7 +73,7 @@ def prereg_sha(path="PILLAR_PREREG.md"):
 
 # ════════════════════ 足の下ごしらえ ════════════════════
 
-def prep(df, pair):
+def prep(df, pair, start=None, end=None):
     """中値の始高安終・売り買いの差（始値・終値）を足す。差がおかしい足は落とす → (DataFrame, 落とした数)"""
     if df.empty:
         return df.assign(mo=[], mh=[], ml=[], mc=[], so=[], sc=[]), 0
@@ -87,7 +87,8 @@ def prep(df, pair):
     lim = MAX_SPREAD_PIPS * pip(pair)
     bad = (d["so"] < 0) | (d["sc"] < 0) | (d["so"] > lim) | (d["sc"] > lim)
     d = d[~bad]
-    d = d[(d.index >= pd.Timestamp(START, tz="UTC")) & (d.index < pd.Timestamp(END, tz="UTC") + pd.Timedelta(days=1))]
+    start, end = start or START, end or END              # 既定は X の期間（XC は昔の期間を渡す）
+    d = d[(d.index >= pd.Timestamp(start, tz="UTC")) & (d.index < pd.Timestamp(end, tz="UTC") + pd.Timedelta(days=1))]
     return d, int(bad.sum())
 
 
@@ -104,8 +105,8 @@ def trade_arrays(d, pair, t_in, t_out, sign):
 
 # ════════════════════ 日の一覧 ════════════════════
 
-def weekdays(start=START, end=END):
-    d = pd.date_range(start, end, freq="D")
+def weekdays(start=None, end=None):
+    d = pd.date_range(start or START, end or END, freq="D")
     return [x.date() for x in d if x.weekday() < 5]
 
 
@@ -148,9 +149,10 @@ def fix_windows(kind, days):
     raise ValueError(kind)
 
 
-def days_for(kind, fomc=None):
-    wd = weekdays()
-    years = range(int(START[:4]), int(END[:4]) + 1)
+def days_for(kind, fomc=None, start=None, end=None):
+    start, end = start or START, end or END
+    wd = weekdays(start, end)
+    years = range(int(start[:4]), int(end[:4]) + 1)
     if kind == "X2":
         return wd
     if kind == "X3":
@@ -160,7 +162,7 @@ def days_for(kind, fomc=None):
         h = tokyo_bank_holidays(years)
         return [d for d in wd if d not in h]
     if kind == "X5":
-        return sorted(d for d in (fomc or []) if pd.Timestamp(START).date() <= d <= pd.Timestamp(END).date())
+        return sorted(d for d in (fomc or []) if pd.Timestamp(start).date() <= d <= pd.Timestamp(end).date())
     raise ValueError(kind)
 
 
@@ -321,7 +323,8 @@ def gap_trades(d, pair, gap_min=GAP_READ):
         cost = max(fixed_cost(pair), (so[q] + sc[r]) / 2) / entry * 1e4
         out.append({"week": mon0.date().isoformat(), "pair": pair, "g": abs(gap) / atr, "up": bool(up), "traded": True,
                     "filled": hit, "gross": gross, "net": gross - cost, "cost": cost,
-                    "spread_over": bool((so[q] + sc[r]) / 2 > fixed_cost(pair))})
+                    "spread_over": bool((so[q] + sc[r]) / 2 > fixed_cost(pair)),
+                    "actual": (so[q] + sc[r]) / 2 / entry * 1e4, "entry": float(entry)})   # 実際の差（往復・bp）と入った値＝XC の低い費用で使う
     return out
 
 
