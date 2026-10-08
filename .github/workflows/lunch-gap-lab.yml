@@ -1,0 +1,65 @@
+name: Lunch Gap Lab (manual)
+
+# R10 日本の昼休みの窓：前場の引けから後場の寄りまでの動きのあと、後場は続くか戻るか（1321.T の1時間足・約730日）。
+# 2026-10-08 登録・オーナー「両方登録して進めてください」。まだ誰も数えていない問い。
+# ⚠️ 決まりは PILLAR_PREREG.md「R10」（事前登録）と lunch_gap_lab.py の冒頭に固定。手動実行のみ。check（日数と足の時刻だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（lunch-gap-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝データの点検だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: lunch-gap-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_lunch_gap_lab.py
+      - name: Data check only (no counting)
+        if: ${{ inputs.mode == 'check' }}
+        shell: bash
+        run: python -u lunch_gap_lab.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python lunch_gap_lab.py
+          python verified_list.py > /dev/null
+          [ -f lunch-gap-lab.md ] && cat lunch-gap-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lunch-gap-lab.json lunch-gap-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: lunch gap lab R10 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
