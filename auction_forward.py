@@ -8,7 +8,8 @@
 - 腕：B0・C0（損切りなし）／B10・C10（損切り +10％・滑り 0.2％）。費用 0.03％
 - 250営業日で1回だけ判定（98.75％の幅・朝と銘柄の広いほう）。60営業日ごとに費用後の平均がマイナスの腕は止める
 - 読むだけの欄（判定に使わない）：相場全体を差し引いた平均（10/8 追記）／貸借銘柄だけの割合と平均（10/8 夕方の追記・J36 を受けて）／
-  目印B・貸借銘柄・その銘柄だけの窓 +6％以上（10/8 夕方(2)の追記・J38 を受けて）
+  目印B・貸借銘柄・その銘柄だけの窓 +6％以上（10/8 夕方(2)の追記・J38 を受けて）／
+  売り禁・規制がかかっていた割合と売り禁でなかった回だけの平均（J40・short-limits.json の毎朝の記録）
 
 ⚠️ 決まりは PILLAR_PREREG.md「J31F」と下の定数に固定。途中の数字を見て動かさない。行は J31 と同じ prevday_lab.stock_rows、
    倍率は landmine_lab.prev_more、幅は gap_forward._boot_agg、日の選び方は gap_forward.trading_days をそのまま使う。
@@ -28,6 +29,7 @@ import numpy as np
 import build_jp_highs as H
 import gap_forward as GF
 import jp_taishaku as JT
+import short_limits as SL
 import landmine_lab as LM
 import pillar_lab as P
 import prevday_lab as PD
@@ -115,7 +117,11 @@ def arm_net(arm, rclose, rhigh):
 
 # ════════════════════ 合計を足す ════════════════════
 
-def add_day(st, day, rows, tai=None):
+LIM_ARMS = ("B0T", "BW6")      # J40 の欄：目印B のうち貸借銘柄の回／BW6 の回
+LIM_LEN = 8                    # 記録のあった回・売り禁・注意喚起・その他・増担保・日々公表・売り禁でない回・その合計
+
+
+def add_day(st, day, rows, tai=None, lim=None):
     """rows＝[(印, 窓, 前の日比, 倍率, 売買代金, 始→終, 始→高)]。数えた銘柄が MIN_STOCKS 未満なら足さない（False）。
     tai＝{"tags": 貸借銘柄の印の集合, "asof": 一覧の日付} か None（一覧が取れなかった回＝貸借の欄を空けたまま）"""
     if len(rows) < MIN_STOCKS:
@@ -127,10 +133,23 @@ def add_day(st, day, rows, tai=None):
     g = {k: [0, 0.0, 0, 0, 0.0, 0, 0.0] for k in ARMS + EXTRA}
     # 回数・損益の合計・損切りに届いた回数・（読むだけ）相場全体を差し引いた回数・合計・（読むだけ・10/8 夕方の追記）貸借銘柄の回数・合計
     tags = tai["tags"] if tai else None
+    use = lim if lim and lim.get("jsf_ok") else None                     # J40：日本証券金融の表が読めた朝だけ
+    lt = {k: set((use or {}).get("tags", {}).get(k, [])) for k in SL.CATS}
+    lg = {k: [0] * (LIM_LEN - 1) + [0.0] for k in LIM_ARMS}
     for sid, gap, rprev, ratio, tv, rc, rh in rows:
         arms = arms_of(gap - med, rprev, ratio, tv)
         if "B0" in arms and gap - med >= W6 and tags is not None and sid in tags:
             arms.append("BW6")                                 # 読むだけ（一覧が無い朝は入れない）
+        if use is not None and tags is not None and sid in tags and "B0" in arms:
+            v0 = arm_net("B0", rc, rh)
+            for k in [a for a in ("B0T", "BW6") if a == "B0T" or "BW6" in arms]:
+                c = lg[k]
+                c[0] += 1
+                for i, cat in enumerate(("ban", "jsf_alert", "jsf_other", "zoutanpo", "daily"), 1):
+                    c[i] += int(sid in lt[cat])
+                if sid not in lt["ban"]:
+                    c[6] += 1
+                    c[7] += v0
         for arm in arms:
             v = arm_net(arm, rc, rh)
             g[arm][0] += 1
@@ -146,7 +165,8 @@ def add_day(st, day, rows, tai=None):
                 c = st["stocks"].setdefault(sid, {}).setdefault(arm, [0, 0.0])
                 c[0] += 1
                 c[1] += v
-    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows), "market": mkt, "tai_asof": (tai["asof"] or "日付不明") if tai else None}
+    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows), "market": mkt, "tai_asof": (tai["asof"] or "日付不明") if tai else None,
+                       "lim": lg if use is not None else None}
     st.get("skipped", {}).pop(day, None)
     return True
 
@@ -215,7 +235,7 @@ def done(st):
 
 # ════════════════════ 実行 ════════════════════
 
-def run(st, codes, fetch, today, tai_loader=lambda: None):
+def run(st, codes, fetch, today, tai_loader=lambda: None, limits=None):
     """1回分：まだ数えていない朝を数えて足す。→ (足した朝, 取れなかった銘柄数)。
     tai_loader＝貸借銘柄の一覧を取る関数（jp_taishaku.load_or_none の形）。足す朝があるときだけ1回呼ぶ"""
     dailies, missing = {}, 0
@@ -241,7 +261,7 @@ def run(st, codes, fetch, today, tai_loader=lambda: None):
         if done(st):
             break
         rows = [(tag(code), *per[code][day]) for code in sorted(per) if day in per[code]]
-        if add_day(st, day, rows, tai):
+        if add_day(st, day, rows, tai, ((limits or {}).get("days") or {}).get(day)):
             after_day(st, day)
             added.append(day)
     return added, missing
@@ -265,7 +285,12 @@ def summary(st):
         vals = [st["days"][d]["g"][k][1] / st["days"][d]["g"][k][0] for d in days if st["days"][d]["g"][k][0]]
         daily[k] = {"days": len(vals), "lose": (sum(v < 0 for v in vals) / len(vals)) if vals else None,
                     "worst": min(vals) if vals else None}
-    return {"days": len(days), "first": days[0] if days else None, "last": days[-1] if days else None,
+    lim_days = [d for d in days if st["days"][d].get("lim")]
+    lim = {k: [sum(st["days"][d]["lim"][k][i] for d in lim_days) for i in range(LIM_LEN)] for k in LIM_ARMS}
+    limits = {"days": len(lim_days), "arms": {k: {"n": v[0], **{cat: (v[i] / v[0] if v[0] else None) for i, cat in
+                                                   enumerate(("ban", "jsf_alert", "jsf_other", "zoutanpo", "daily"), 1)},
+                                              "ok_n": v[6], "ok_mean": v[7] / v[6] if v[6] else None} for k, v in lim.items()}}
+    return {"days": len(days), "first": days[0] if days else None, "last": days[-1] if days else None, "limits": limits,
             "arms": {k: {"n": v[0], "mean": v[1] / v[0] if v[0] else None, "hit": v[2] / v[0] if v[0] else None,
                          "adj": v[4] / v[3] if v[3] else None, "tai_n": v[5],
                          "tai_share": v[5] / n_listed[k] if n_listed[k] else None,
@@ -303,7 +328,15 @@ def render_md(st, now):
           "（同じ金額だけ相場全体を買って打ち消した形・2026-10-08 の追記・判定には使わない）",
           f"- 貸借銘柄だけ＝制度信用で空売りできる銘柄（日本取引所グループの一覧・いちばん新しい朝は {sm['tai_asof'] or '—'}）の回数の割合と費用後の平均"
           f"（2026-10-08 夕方の追記・J36 を受けて・判定には使わない）。一覧があった朝 {sm['tai_days']}／{sm['days']}営業日。"
-          "売り禁（貸借取引の申込停止）と証券会社ごとの在庫は入っていない", "", "## 腕ごとの判定", ""]
+          "売り禁（貸借取引の申込停止）と証券会社ごとの在庫は入っていない"]
+    lm = sm["limits"]
+    for k, name in (("B0T", "目印B・貸借銘柄"), ("BW6", "目印B・貸借銘柄・窓 +6％以上")):
+        a = lm["arms"][k]
+        pc = lambda x: "—" if x is None else f"{x * 100:.0f}％"  # noqa: E731
+        L.append(f"- 読むだけ（J40・2026-10-08 夕方の登録）：{name}の回のうち、その朝 売り禁 {pc(a['ban'])}・注意喚起 {pc(a['jsf_alert'])}・"
+                 f"その他の措置 {pc(a['jsf_other'])}・増担保 {pc(a['zoutanpo'])}・日々公表 {pc(a['daily'])}（記録のある回 {a['n']:,}・朝 {lm['days']}）／"
+                 f"売り禁でなかった回だけの費用後の平均 {GF._p(a['ok_mean'])}（{a['ok_n']:,}回）")
+    L += ["", "## 腕ごとの判定", ""]
     for k in ARMS:
         vd = st["verdicts"].get(k)
         if vd:
@@ -338,7 +371,7 @@ def main(argv):
         stocks, _ = H.load_universe()
         got = {}
         added, missing = run(st, sorted(stocks), Y.fetch_chart, now.date().isoformat(),
-                             tai_loader=lambda: got.setdefault("list", JT.load_or_none()))
+                             tai_loader=lambda: got.setdefault("list", JT.load_or_none()), limits=SL.load_json(SL.STATE))
         lst = got.get("list")
         st["runs"] = (st.get("runs") or [])[-30:] + [{"at": now.isoformat(timespec="minutes"), "added": added,
                                                        "n_codes": len(stocks), "missing": missing,

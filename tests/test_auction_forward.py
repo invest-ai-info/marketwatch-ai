@@ -188,6 +188,31 @@ def test_w6_reading_column():
     assert st["summary"]["arms"]["BW6"]["n"] == 26
 
 
+def test_limits_reading_column():
+    """J40（2026-10-08 夕方の登録）：売り禁・規制の割合と売り禁でなかった回だけの平均（読むだけ・日本証券金融の表が読めた朝だけ）"""
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "## J40 売り禁・規制はどれくらいかかるか" in text and "「売り禁でなかった回だけ」の費用後の平均" in text
+    rng = np.random.default_rng(8)
+    rows = _rows(rng, 0.01)
+    rows = [(sid, 0.08 if (i % 5 == 0 and i % 10 == 0) else gap, *rest) for i, (sid, gap, *rest) in enumerate(rows)]
+    hot = [r for i, r in enumerate(rows) if i % 5 == 0]
+    tags = {r[0] for r in hot}                                                 # 目印の株は全部が貸借銘柄
+    ban = {r[0] for i, r in enumerate(rows) if i % 20 == 0}                     # 窓 +8％の半分（26）が売り禁
+    lim = {"jsf_ok": True, "tags": {"ban": sorted(ban), "daily": [hot[1][0]], "zoutanpo": [], "jsf_alert": [], "jsf_other": []}}
+    st = F.empty_state()
+    F.add_day(st, "2026-10-09", rows, {"tags": tags, "asof": "x"}, lim)
+    b, w = st["days"]["2026-10-09"]["lim"]["B0T"], st["days"]["2026-10-09"]["lim"]["BW6"]
+    assert b[0] == 104 and b[1] == 26 and b[5] == 1 and b[6] == 78 and w[0] == 52 and w[1] == 26 and w[6] == 26
+    want = [F.arm_net("B0", r[5], r[6]) for r in hot if r[0] not in ban]
+    assert abs(b[7] - sum(want)) < 1e-9
+    F.add_day(st, "2026-10-13", rows, {"tags": tags, "asof": "x"}, {"jsf_ok": False, "tags": {"ban": sorted(ban)}})
+    assert st["days"]["2026-10-13"]["lim"] is None                          # 日本証券金融の表が読めなかった朝は数えない
+    F.finalize(st)
+    a = st["summary"]["limits"]["arms"]["BW6"]
+    assert st["summary"]["limits"]["days"] == 1 and a["ban"] == 0.5 and a["ok_n"] == 26
+    assert "売り禁 50％" in F.render_md(st, "x") and "J40" in F.render_md(st, "x")
+
+
 def test_run_loads_the_list_only_when_there_are_new_mornings():
     days_all = TL._bdays("2026-09-01", 35)
     codes = [str(1000 + i) for i in range(520)]
@@ -262,7 +287,7 @@ def test_outputs_verified_list_and_map():
 def test_workflow_health_and_sync_forbidden():
     wf = open(".github/workflows/auction-forward.yml", encoding="utf-8").read()
     assert "python auction_forward.py" in wf and "python verified_list.py" in wf
-    assert "auction-forward.json auction-forward.md verified-list.md" in wf and "41 23 * * 0-4" in wf and "11 4 * * 1-5" in wf
+    assert "auction-forward.json auction-forward.md short-limits.json short-limits.md verified-list.md" in wf and "41 23 * * 0-4" in wf and "11 4 * * 1-5" in wf
     assert '"auction-forward.json", "auction-forward.md"' in open("check_site_consistency.py", encoding="utf-8").read()
     assert '"auction-forward.yml", 24 * 4' in open("check_automation_health.py", encoding="utf-8").read()
 
