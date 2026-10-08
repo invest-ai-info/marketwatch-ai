@@ -109,6 +109,8 @@ SYNC_FORBIDDEN = {
     "market-adj-lab.json", "market-adj-lab.md",   # 🆕 2026-10-08 J34 相場全体を差し引く（market-adj-lab.yml・手動）
     "hedge-short-lab.json", "hedge-short-lab.md",   # 🆕 2026-10-08 J35 1321.T で打ち消す（hedge-short-lab.yml・手動）
     "taishaku-lab.json", "taishaku-lab.md",   # 🆕 2026-10-08 J36 貸借銘柄だけ（taishaku-lab.yml・手動）
+    "size-tai-lab.json", "size-tai-lab.md",   # 🆕 2026-10-08 J37 貸借銘柄だけの建玉の大きさ（size-tai-lab.yml・手動）
+    "b-split-lab.json", "b-split-lab.md",     # 🆕 2026-10-08 J38 目印B を区切りで分ける（b-split-lab.yml・手動）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
     "lows-trap-lab.json", "lows-trap-lab.md",         # 🆕 2026-10-06 J12 安値更新の翌朝（lows-trap-lab.yml・手動）
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）
