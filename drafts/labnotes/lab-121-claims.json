@@ -1,25 +1,26 @@
 {
   "article_id": "121",
+  "hypothesis_id": "rsi_oversold_edge",
   "asof": "2026-10-09T06:10:00+09:00",
   "claims": [
     {
       "label": "全シグナルFWD勝率（group=all・2026-06-26以降）",
       "hypothesis_id": "auto_group-all",
-      "filter": {"group": "all"},
-      "k": 1723,
-      "n": 3984
+      "filter": {"group": "all", "fired_from": "2026-06-26"},
+      "k": 1726,
+      "n": 3991
     },
     {
       "label": "4時間足の買い全般FWD勝率（2026-06-21以降）",
       "hypothesis_id": "auto_direction-long_tf-4h",
-      "filter": {"tf": "4h", "direction": "long"},
+      "filter": {"tf": "4h", "direction": "long", "fired_from": "2026-06-21"},
       "k": 497,
-      "n": 1143
+      "n": 1146
     },
     {
       "label": "RSI売られすぎ逆張り買いFWD勝率（2026-06-17以降）",
       "hypothesis_id": "rsi_oversold_edge",
-      "filter": {"signal": "rsi_oversold_bounce"},
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17"},
       "k": 203,
       "n": 412
     }
