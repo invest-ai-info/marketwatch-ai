@@ -1,0 +1,73 @@
+name: Stop Short Lab (manual)
+
+# J32 J31 の売り（目印 B・C・前の日の売買代金10億円以上・寄り成行で売り引け成行で買い戻す）に損切り（寄り値から +3／+5／+10％・
+# 滑り 0.2％）を置くと、成績と落ち込み（1日ごと・最大ドローダウン・連続20営業日）はどう変わるか。
+# 2026-10-08 登録・オーナー「続けてください」。目隠しではない（同じ行を J31 で数えた）。既存の stop-lab（exit-research）とは別物。
+# ⚠️ 決まりは PILLAR_PREREG.md「J32」（事前登録）と stop_short_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache（日足＝取れる全期間版）を1回。check（行数と組ごとの件数だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（stop-short-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝行数と組ごとの件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: stop-short-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_stop_short_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u stop_short_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python stop_short_lab.py
+          [ -f stop-short-lab.md ] && cat stop-short-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stop-short-lab.json stop-short-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: stop short lab J32 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
