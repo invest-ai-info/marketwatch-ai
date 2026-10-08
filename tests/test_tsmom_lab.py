@@ -150,6 +150,10 @@ def test_outputs_and_registrations():
     json.dumps(L.M.rounded(res), ensure_ascii=False)
     v = L.verdicts_of({"q1": dict(a, verdict=L.NONE), "q2": dict(a, verdict=L.SKIP)}, "2026-10-08")
     assert set(v) == {"Q1"} and v["Q1"]["status"] == "stop"
+    assert "でたらめな向きには勝つ" in L.verdicts_of({"q1": dict(a, verdict=L.NONE, placebo_p=0.001)}, "x")["Q1"]["reason"]
+    assert "でたらめな向きと区別できない" in L.verdicts_of({"q1": dict(a, verdict=L.NONE, placebo_p=0.5)}, "x")["Q1"]["reason"]
+    import verified_list as V
+    assert ("tsmom-lab.json", "Q1") in V.REASON_FIX and "でたらめな向きには勝つ" in V.REASON_FIX[("tsmom-lab.json", "Q1")]
     wf = open(".github/workflows/tsmom-lab.yml", encoding="utf-8").read()
     assert "python -u tsmom_lab.py --check" in wf and "restore-keys: fx-bars-" in wf and "python tests/test_tsmom_lab.py" in wf
     assert "tsmom-lab.json tsmom-lab.md verified-list.md" in wf

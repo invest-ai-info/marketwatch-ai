@@ -72,6 +72,15 @@ RETIRED = [
 TRACKER = "signal-lab-tracker.json"     # 🆕 2026-10-07 シグナルの条件（仮説）の採点で終わったもの（⛔反証・⏹見込みなし）
 
 
+# 🆕 2026-10-08 夜 判定の数字はそのままで、記録に書かれた理由の文だけを正確なものに直す表（記録のファイル名, 腕）→ 理由。
+#    R11 の道具は「偽薬に勝ったか」で言い分けずに「偽薬やいつも買いと区別できない」と書いた＝Q1 は偽薬には勝っている（p 0.0035）ので直す
+REASON_FIX = {
+    ("tsmom-lab.json", "Q1"): "過去のデータで1回だけ数えて、でたらめな向きには勝つが、いつも買い（同じ量・同じ費用）より成績が低く、"
+                              "費用後の平均の幅も0をまたぐ（1990-01〜2026-08）",
+    ("tsmom-lab.json", "Q2"): "過去のデータで1回だけ数えて、スワップ込みの費用後の平均がマイナス寄りで、でたらめな向きと区別できない（2005-04〜2026-08）",
+}
+
+
 def retired(src, cid):
     """見込みなしで止めた腕なら RETIRED の1行、そうでなければ None（src は記録の JSON のファイル名）"""
     base = src.replace("\\", "/").rsplit("/", 1)[-1]
@@ -132,6 +141,9 @@ def collect(sources=SOURCES):
                 v = retired_verdict(retired(path, cid))      # 🆕 2026-10-07 見込みなしで途中で止めた
             if not v and data.get("kind") == "backtest":
                 continue          # 過去のデータで1回だけ数えたもの＝ストップ以外は載せない（前向きは別に登録する）
+            fix = REASON_FIX.get((path.replace("\\", "/").rsplit("/", 1)[-1], cid))
+            if v and fix:
+                v = dict(v, reason=fix)
             row = {"src": name, "sec": sec, "id": cid, "title": title, "goal": goal, "v": v, "unit": data.get("unit", "pct"),
                    "n": _count(data, cid)}
             (watching if not v else plus if v["status"] == "plus" else stop).append(row)
