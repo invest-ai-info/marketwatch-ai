@@ -131,15 +131,19 @@ RSS = """<?xml version="1.0"?><rss><channel>
 <item><title>中国の9月の輸出が予想を下回る</title><link>https://x/3</link><pubDate>Thu, 08 Oct 2026 10:00:00 GMT</pubDate><source>Bloomberg</source></item>
 <item><title>古い人民元のニュース記事です</title><link>https://x/4</link><pubDate>Mon, 05 Oct 2026 10:00:00 GMT</pubDate><source>共同</source></item>
 <item><title>English only headline</title><link>https://x/5</link><pubDate>Thu, 08 Oct 2026 20:00:00 GMT</pubDate><source>X</source></item>
+<item><title>欧州為替：ドル・円はじり高、米金利高で</title><link>https://x/6</link><pubDate>Thu, 08 Oct 2026 20:00:00 GMT</pubDate><source>47NEWS</source></item>
+<item><title>上海総合の指数情報・推移</title><link>https://x/7</link><pubDate>Thu, 08 Oct 2026 20:00:00 GMT</pubDate><source>Yahoo!ファイナンス</source></item>
+<item><title>豪ドルが上昇、RBA の発言で 執筆： Fisco - Investing.com - FX</title><link>https://x/8</link><pubDate>Thu, 08 Oct 2026 18:00:00 GMT</pubDate><source>Investing.com</source></item>
 </channel></rss>"""
 
 
 def test_asia_news_parse_and_pick():
     now = dt.datetime(2026, 10, 8, 21, 0, tzinfo=dt.timezone.utc)
     xs = AN.parse(RSS, "CN", now)
-    assert [x["t"] for x in xs] == ["豪ドルが上昇、RBA の発言で", "豪ドルが上昇、RBA の発言で", "中国の9月の輸出が予想を下回る"]
+    assert [x["t"] for x in xs][:3] == ["豪ドルが上昇、RBA の発言で", "豪ドルが上昇、RBA の発言で", "中国の9月の輸出が予想を下回る"]
+    assert len(xs) == 4 and not any("ドル・円" in x["t"] or "指数情報" in x["t"] for x in xs)   # 豪州・中国の言葉が無い見出し・相場のページは拾わない
     assert xs[0]["r"] == "AU" and xs[2]["r"] == "CN" and xs[0]["dt"] == "2026-10-09T05:00+09:00" and xs[0]["s"] == "ロイター"
-    assert [x["s"] for x in AN.pick(xs)] == ["ロイター", "Bloomberg"]                  # 似た見出しは1つ・新しい順
+    assert [x["s"] for x in AN.pick(xs)] == ["ロイター", "Bloomberg"]                  # 似た見出しは1つ（末尾が違う同じ記事も）・新しい順
     assert AN.parse("<rss>壊れた", "CN", now) == []
     d = AN.collect(lambda q: RSS, now)
     assert len(d["items"]) == 2 and d["errors"] == 0 and AN.collect(lambda q: 1 / 0, now) == {"items": [], "errors": 3}
