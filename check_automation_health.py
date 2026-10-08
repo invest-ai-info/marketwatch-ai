@@ -119,6 +119,7 @@ WORKFLOW_CHECKS = [
     ("寄りで買わない目印の前向き（平日）", "prevgap-forward.yml", 24 * 4, "warn"),
     ("前の日の売買代金の急増の目印の前向き（平日）", "tvsurge-forward.yml", 24 * 4, "warn"),
     ("空売りの前向き・寄り成行→引け成行（平日）", "auction-forward.yml", 24 * 4, "warn"),
+    ("昼休みの窓の前向き・株価指数（平日）", "lunch-gap-forward.yml", 24 * 4, "warn"),   # 🆕 2026-10-08 R10F
     ("相場全体が安く寄った朝の深い下げの前向き（平日）", "market-dip-forward.yml", 24 * 4, "warn"),
     # 🆕 2026-09-30 1日3回。株主優待の有報あつめ（J9 の下ごしらえ）。止まると6月の新しい有報を取りこぼす
     ("株主優待の有報あつめ", "yutai-edinet.yml", 24 * 2, "warn"),
