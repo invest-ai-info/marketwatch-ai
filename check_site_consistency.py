@@ -101,6 +101,7 @@ SYNC_FORBIDDEN = {
     "index-open-lab.json", "index-open-lab.md",   # 🆕 2026-10-06 R7 株価指数の朝の窓・夜の上げ（index-open-lab.yml・手動）
     "night-history-lab.json", "night-history-lab.md",   # 🆕 2026-10-08 R8 日経平均の夜の上げを昔の時代で（night-history-lab.yml・手動）
     "short-side-lab.json", "short-side-lab.md",   # 🆕 2026-10-08 J30 目印の付いた株を寄りで売る（short-side-lab.yml・手動）
+    "auction-lab.json", "auction-lab.md",   # 🆕 2026-10-08 J31 板寄せどうしで数え直す（auction-lab.yml・手動）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
     "lows-trap-lab.json", "lows-trap-lab.md",         # 🆕 2026-10-06 J12 安値更新の翌朝（lows-trap-lab.yml・手動）
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）
