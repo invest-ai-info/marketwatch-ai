@@ -130,7 +130,7 @@ def fx_section(fx, fc, today_events, today, results=None):
             L.append(f"   ・{FX.NAMES.get(c['code'], c['code'])} {LEAN.get(c.get('lean'), c.get('lean') or '—')}"
                      f"（{CONF.get(c.get('conviction'), c.get('conviction') or '—')}）：{_cut(c.get('reason'), 70)}")
     else:
-        L.append("  ファンダの見立て（AI・通貨ごと）：まだ無い（予約 fundamental-briefing の指示に通貨の欄を足すと、ここに出る）")
+        L.append("  ファンダの見立て（AI・通貨ごと）：まだ無い（今朝のブリーフィングにこの欄が無い＝ブリーフィングの遅れか失敗）")
     rr = recent_results(results, today)
     if rr:
         L.append("  前の日〜今朝の指標の結果（予想との差と市場の反応）：")
@@ -171,7 +171,7 @@ def asia_section(fc, today, news=None):
 
 def _asia_ai(fc):
     if not fc or "asia_watch" not in fc:
-        return ["  AI が選んだもの：まだ無い（予約 fundamental-briefing の指示に欄を足すと、ここに出る）"]
+        return ["  AI が選んだもの：まだ無い（今朝のブリーフィングにこの欄が無い＝ブリーフィングの遅れか失敗）"]
     items = [x for x in fc.get("asia_watch") or [] if x.get("headline")]
     rank = {"high": 0, "mid": 1, "low": 2}
     def newest(x):
