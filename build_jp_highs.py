@@ -56,6 +56,7 @@ import urllib.error
 import urllib.request
 
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
+import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "jp-highs.json")
@@ -445,6 +446,8 @@ def main(force=False, dry_run=False):
         "universe": len(daily), "window_start": start, "period": period,
         "rule": RULE_VERSION, "jpx_listings": len(jpx), "highs": highs, "lows": lows,
         "history": update_history(prev.get("history"), asof, counts),
+        # 🆕 2026-10-08 目印C（売買代金の急増）・B候補（前の日 +5% 以上）＝朝の指標メールが読む（サイトには出さない）
+        "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof),
     }
     if not dry_run:
         with open(OUT, "w", encoding="utf-8") as f:
@@ -453,6 +456,9 @@ def main(force=False, dry_run=False):
           f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
+    mk = payload["markers"]
+    print(f"   朝のメール用の目印：C（売買代金が20営業日平均の{jp_markers.TV_HIGH:g}倍以上）{mk['n_c']}銘柄・"
+          f"B候補（前の日 +{jp_markers.UP * 100:g}% 以上）{mk['n_b']}銘柄（うち売買代金{mk['keep_min_tv']:g}億円以上を {len(mk['rows'])}件保存）")
     for side, name, rec in (("high", "高値", "最高値"), ("low", "安値", "最安値")):
         rows = out[side]
         print(f"   {period}{name} {len(rows)}銘柄・記録上の{rec} {sum(1 for r in rows if r['record'])}銘柄"
